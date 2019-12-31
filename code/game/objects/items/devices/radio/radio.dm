@@ -17,7 +17,7 @@
 	var/on = TRUE
 	var/frequency = FREQ_COMMON
 	var/canhear_range = 3  // The range around the radio in which mobs can hear what it receives.
-	var/emped = 0  // Tracks the number of EMPs currently stacked.
+	var/emped = ZERO  // Tracks the number of EMPs currently stacked.
 
 	var/broadcasting = FALSE  // Whether the radio will transmit dialogue it hears nearby.
 	var/listening = TRUE  // Whether the radio is currently receiving.
@@ -114,7 +114,7 @@
 		var/ui_width = 360
 		var/ui_height = 106
 		if(subspace_transmission)
-			if (channels.len > 0)
+			if (channels.len > ZERO)
 				ui_height += 6 + channels.len * 21
 			else
 				ui_height += 24
@@ -227,7 +227,7 @@
 
 	// From the channel, determine the frequency and get a reference to it.
 	var/freq
-	if(channel && channels && channels.len > 0)
+	if(channel && channels && channels.len > ZERO)
 		if(channel == MODE_DEPARTMENT)
 			channel = channels[1]
 		freq = secure_radio_connections[channel]
@@ -252,9 +252,9 @@
 
 	// Independent radios, on the CentCom frequency, reach all independent radios
 	if (independent && (freq == FREQ_CENTCOM || freq == FREQ_CTF_RED || freq == FREQ_CTF_BLUE))
-		signal.data["compression"] = 0
+		signal.data["compression"] = ZERO
 		signal.transmission_method = TRANSMISSION_SUPERSPACE
-		signal.levels = list(0)  // reaches all Z-levels
+		signal.levels = list(ZERO)  // reaches all Z-levels
 		signal.broadcast()
 		return
 
@@ -275,7 +275,7 @@
 		return
 
 	// Okay, the signal was never processed, send a mundane broadcast.
-	signal.data["compression"] = 0
+	signal.data["compression"] = ZERO
 	signal.transmission_method = TRANSMISSION_RADIO
 	signal.levels = list(T.z)
 	signal.broadcast()
@@ -308,7 +308,7 @@
 		return FALSE
 	if (freq == FREQ_CENTCOM)
 		return independent  // hard-ignores the z-level check
-	if (!(0 in level))
+	if (!(ZERO in level))
 		var/turf/position = get_turf(src)
 		if(!position || !(position.z in level))
 			return FALSE
@@ -355,7 +355,7 @@
 	broadcasting = FALSE
 	listening = FALSE
 	for (var/ch_name in channels)
-		channels[ch_name] = 0
+		channels[ch_name] = ZERO
 	on = FALSE
 	addtimer(CALLBACK(src, .proc/end_emp_effect, curremp), 200)
 

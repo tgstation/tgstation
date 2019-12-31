@@ -13,7 +13,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/body =""
 	var/list/authorCensorTime = list()
 	var/list/bodyCensorTime = list()
-	var/is_admin_message = 0
+	var/is_admin_message = ZERO
 	var/icon/img = null
 	var/time_stamp = ""
 	var/list/datum/newscaster/feed_comment/comments = list()
@@ -61,11 +61,11 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/list/datum/newscaster/feed_message/messages = list()
 	var/locked = FALSE
 	var/author = ""
-	var/censored = 0
+	var/censored = ZERO
 	var/list/authorCensorTime = list()
 	var/list/DclassCensorTime = list()
 	var/authorCensor
-	var/is_admin_channel = 0
+	var/is_admin_channel = ZERO
 
 /datum/newscaster/feed_channel/proc/returnAuthor(censor)
 	if(censor == -1)
@@ -110,7 +110,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	CreateFeedChannel("Station Announcements", "SS13", 1)
 	wanted_issue = new /datum/newscaster/wanted_message
 
-/datum/newscaster/feed_network/proc/CreateFeedChannel(channel_name, author, locked, adminChannel = 0)
+/datum/newscaster/feed_network/proc/CreateFeedChannel(channel_name, author, locked, adminChannel = ZERO)
 	var/datum/newscaster/feed_channel/newChannel = new /datum/newscaster/feed_channel
 	newChannel.channel_name = channel_name
 	newChannel.author = author
@@ -118,7 +118,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	newChannel.is_admin_channel = adminChannel
 	network_channels += newChannel
 
-/datum/newscaster/feed_network/proc/SubmitArticle(msg, author, channel_name, datum/picture/picture, adminMessage = 0, allow_comments = 1)
+/datum/newscaster/feed_network/proc/SubmitArticle(msg, author, channel_name, datum/picture/picture, adminMessage = ZERO, allow_comments = 1)
 	var/datum/newscaster/feed_message/newMsg = new /datum/newscaster/feed_message
 	newMsg.author = author
 	newMsg.body = msg
@@ -138,7 +138,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	lastAction ++
 	newMsg.creationTime = lastAction
 
-/datum/newscaster/feed_network/proc/submitWanted(criminal, body, scanned_user, datum/picture/picture, adminMsg = 0, newMessage = 0)
+/datum/newscaster/feed_network/proc/submitWanted(criminal, body, scanned_user, datum/picture/picture, adminMsg = ZERO, newMessage = ZERO)
 	wanted_issue.active = 1
 	wanted_issue.criminal = criminal
 	wanted_issue.body = body
@@ -153,7 +153,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			N.update_icon()
 
 /datum/newscaster/feed_network/proc/deleteWanted()
-	wanted_issue.active = 0
+	wanted_issue.active = ZERO
 	wanted_issue.criminal = null
 	wanted_issue.body = null
 	wanted_issue.scannedUser = null
@@ -166,7 +166,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	if(!fexists("[GLOB.log_directory]/photos/[photo_file].png"))
 		//Clean up repeated frames
 		var/icon/clean = new /icon()
-		clean.Insert(photo, "", SOUTH, 1, 0)
+		clean.Insert(photo, "", SOUTH, 1, ZERO)
 		fcopy(clean, "[GLOB.log_directory]/photos/[photo_file].png")
 	return photo_file
 
@@ -189,17 +189,17 @@ GLOBAL_LIST_EMPTY(allCasters)
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
 	max_integrity = 200
 	integrity_failure = 0.25
-	var/screen = 0
+	var/screen = ZERO
 	var/paper_remaining = 15
-	var/securityCaster = 0
-	var/unit_no = 0
+	var/securityCaster = ZERO
+	var/unit_no = ZERO
 	var/alert_delay = 500
 	var/alert = FALSE
 	var/scanned_user = "Unknown"
 	var/msg = ""
 	var/datum/picture/picture
 	var/channel_name = ""
-	var/c_locked=0
+	var/c_locked=ZERO
 	var/datum/newscaster/feed_channel/viewing_channel = null
 	var/allow_comments = 1
 
@@ -211,8 +211,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 	. = ..()
 	if(building)
 		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
-		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
+		pixel_x = (dir & 3)? ZERO : (dir == 4 ? -32 : 32)
+		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : ZERO
 
 	GLOB.allCasters += src
 	unit_no = GLOB.allCasters.len
@@ -250,7 +250,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		else
 			. += "crack3"
 
-/obj/machinery/newscaster/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+/obj/machinery/newscaster/take_damage(damage_amount, damage_type = BRUTE, damage_flag = ZERO, sound_effect = 1, attack_dir)
 	. = ..()
 	update_icon()
 
@@ -261,7 +261,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		var/dat
 		scan_user(human_or_robot_user)
 		switch(screen)
-			if(0)
+			if(ZERO)
 				dat += "Welcome to Newscasting Unit #[unit_no].<BR> Interface & News networks Operational."
 				dat += "<BR><FONT SIZE=1>Property of Nanotrasen Inc</FONT>"
 				if(GLOB.news_network.wanted_issue.active)
@@ -273,7 +273,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				dat+= "<BR><A href='?src=[REF(src)];refresh=1'>Re-scan User</A>"
 				dat+= "<BR><BR><A href='?src=[REF(human_or_robot_user)];mach_close=newscaster_main'>Exit</A>"
 				if(securityCaster)
-					var/wanted_already = 0
+					var/wanted_already = ZERO
 					if(GLOB.news_network.wanted_issue.active)
 						wanted_already = 1
 					dat+="<HR><B>Feed Security functions:</B><BR>"
@@ -334,7 +334,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 					dat+="<FONT COLOR='maroon'>There is already a Feed channel under your name.</FONT><BR>"
 				if(channel_name=="" || channel_name == "\[REDACTED\]")
 					dat+="<FONT COLOR='maroon'>Invalid channel name.</FONT><BR>"
-				var/check = 0
+				var/check = ZERO
 				for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 					if(FC.channel_name == channel_name)
 						check = 1
@@ -347,7 +347,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			if(8)
 				var/total_num=length(GLOB.news_network.network_channels)
 				var/active_num=total_num
-				var/message_num=0
+				var/message_num=ZERO
 				for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 					if(!FC.censored)
 						message_num += length(FC.messages)
@@ -366,7 +366,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 					if( isemptylist(viewing_channel.messages) )
 						dat+="<I>No feed messages found in channel...</I><BR>"
 					else
-						var/i = 0
+						var/i = ZERO
 						for(var/datum/newscaster/feed_message/MESSAGE in viewing_channel.messages)
 							i++
 							dat+="-[MESSAGE.returnBody(-1)] <BR>"
@@ -436,7 +436,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				dat+="<BR><A href='?src=[REF(src)];setScreen=[11]'>Back</A>"
 			if(14)
 				dat+="<B>Wanted Issue Handler:</B>"
-				var/wanted_already = 0
+				var/wanted_already = ZERO
 				var/end_param = 1
 				if(GLOB.news_network.wanted_issue.active)
 					wanted_already = 1
@@ -519,7 +519,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 					existing_authors += GLOB.news_network.redactedText
 				else
 					existing_authors += FC.author
-			var/check = 0
+			var/check = ZERO
 			for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 				if(FC.channel_name == channel_name)
 					check = 1
@@ -553,7 +553,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			if(msg =="" || msg=="\[REDACTED\]" || scanned_user == "Unknown" || channel_name == "" )
 				screen=6
 			else
-				GLOB.news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsemarkdown(msg, usr)]</font>", scanned_user, channel_name, picture, 0, allow_comments)
+				GLOB.news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsemarkdown(msg, usr)]</font>", scanned_user, channel_name, picture, ZERO, allow_comments)
 				SSblackbox.record_feedback("amount", "newscaster_stories", 1)
 				screen=4
 				msg = ""
@@ -581,7 +581,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			screen=11
 			updateUsrDialog()
 		else if(href_list["menu_wanted"])
-			var/already_wanted = 0
+			var/already_wanted = ZERO
 			if(GLOB.news_network.wanted_issue.active)
 				already_wanted = 1
 			if(already_wanted)
@@ -604,7 +604,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				if(choice=="Confirm")
 					scan_user(usr)
 					if(input_param==1)          //If input_param == 1 we're submitting a new wanted issue. At 2 we're just editing an existing one.
-						GLOB.news_network.submitWanted(channel_name, msg, scanned_user, picture, 0 , 1)
+						GLOB.news_network.submitWanted(channel_name, msg, scanned_user, picture, ZERO , 1)
 						screen = 15
 					else
 						if(GLOB.news_network.wanted_issue.isAdminMsg)
@@ -663,10 +663,10 @@ GLOBAL_LIST_EMPTY(allCasters)
 			updateUsrDialog()
 		else if(href_list["setScreen"])
 			screen = text2num(href_list["setScreen"])
-			if (screen == 0)
+			if (screen == ZERO)
 				scanned_user = "Unknown";
 				msg = "";
-				c_locked=0;
+				c_locked=ZERO;
 				channel_name="";
 				viewing_channel = null
 			updateUsrDialog()
@@ -726,7 +726,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			qdel(src)
 	else if(I.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
 		if(stat & BROKEN)
-			if(!I.tool_start_check(user, amount=0))
+			if(!I.tool_start_check(user, amount=ZERO))
 				return
 			user.visible_message("<span class='notice'>[user] is repairing [src].</span>", \
 							"<span class='notice'>You begin repairing [src]...</span>", \
@@ -743,7 +743,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	else
 		return ..()
 
-/obj/machinery/newscaster/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
+/obj/machinery/newscaster/play_attack_sound(damage, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BRUTE)
 			if(stat & BROKEN)
@@ -864,9 +864,9 @@ GLOBAL_LIST_EMPTY(allCasters)
 	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("bapped")
-	var/screen = 0
-	var/pages = 0
-	var/curr_page = 0
+	var/screen = ZERO
+	var/pages = ZERO
+	var/curr_page = ZERO
 	var/list/datum/newscaster/feed_channel/news_content = list()
 	var/scribble=""
 	var/scribble_page = null
@@ -891,9 +891,9 @@ GLOBAL_LIST_EMPTY(allCasters)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		var/dat
-		pages = 0
+		pages = ZERO
 		switch(screen)
-			if(0) //Cover
+			if(ZERO) //Cover
 				dat+="<DIV ALIGN='center'><B><FONT SIZE=6>The Griffon</FONT></B></div>"
 				dat+="<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasen? Space Facilities</FONT></div><HR>"
 				if(isemptylist(news_content))
@@ -907,7 +907,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 						pages++
 					if(wantedAuthor)
 						dat+="<B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [pages+2]\]</FONT><BR>"
-					var/temp_page=0
+					var/temp_page=ZERO
 					for(var/datum/newscaster/feed_channel/NP in news_content)
 						temp_page++
 						dat+="<B>[NP.channel_name]</B> <FONT SIZE=2>\[page [temp_page+1]\]</FONT><BR>"
@@ -926,13 +926,13 @@ GLOBAL_LIST_EMPTY(allCasters)
 					if(isemptylist(C.messages))
 						dat+="No Feed stories stem from this channel..."
 					else
-						var/i = 0
+						var/i = ZERO
 						for(var/datum/newscaster/feed_message/MESSAGE in C.messages)
 							if(MESSAGE.creationTime > creationTime)
-								if(i == 0)
+								if(i == ZERO)
 									dat+="No Feed stories stem from this channel..."
 								break
-							if(i == 0)
+							if(i == ZERO)
 								dat+="<ul>"
 							i++
 							dat+="-[MESSAGE.returnBody(notContent(MESSAGE.bodyCensorTime))] <BR>"
@@ -970,17 +970,17 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 /obj/item/newspaper/proc/notContent(list/L)
 	if(!L.len)
-		return 0
-	for(var/i=L.len;i>0;i--)
+		return ZERO
+	for(var/i=L.len;i>ZERO;i--)
 		var/num = abs(L[i])
 		if(creationTime <= num)
 			continue
 		else
-			if(L[i] > 0)
+			if(L[i] > ZERO)
 				return 1
 			else
-				return 0
-	return 0
+				return ZERO
+	return ZERO
 
 /obj/item/newspaper/Topic(href, href_list)
 	var/mob/living/U = usr
@@ -998,10 +998,10 @@ GLOBAL_LIST_EMPTY(allCasters)
 			curr_page++
 			playsound(loc, "pageturn", 50, TRUE)
 		else if(href_list["prev_page"])
-			if(curr_page == 0)
+			if(curr_page == ZERO)
 				return
 			if(curr_page == 1)
-				screen = 0
+				screen = ZERO
 			else
 				if(curr_page == pages+1) //we're at the end, let's go back to the middle.
 					screen = 1

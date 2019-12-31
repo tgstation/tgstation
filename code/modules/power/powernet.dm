@@ -7,13 +7,13 @@
 	var/list/cables = list()	// all cables & junctions
 	var/list/nodes = list()		// all connected machines
 
-	var/load = 0				// the current load on the powernet, increased by each machine at processing
-	var/newavail = 0			// what available power was gathered last tick, then becomes...
-	var/avail = 0				//...the current available power in the powernet
-	var/viewavail = 0			// the available power as it appears on the power console (gradually updated)
-	var/viewload = 0			// the load as it appears on the power console (gradually updated)
-	var/netexcess = 0			// excess power on the powernet (typically avail-load)///////
-	var/delayedload = 0			// load applied to powernet between power ticks.
+	var/load = ZERO				// the current load on the powernet, increased by each machine at processing
+	var/newavail = ZERO			// what available power was gathered last tick, then becomes...
+	var/avail = ZERO				//...the current available power in the powernet
+	var/viewavail = ZERO			// the available power as it appears on the power console (gradually updated)
+	var/viewload = ZERO			// the load as it appears on the power console (gradually updated)
+	var/netexcess = ZERO			// excess power on the powernet (typically avail-load)///////
+	var/delayedload = ZERO			// load applied to powernet between power ticks.
 
 /datum/powernet/New()
 	SSmachines.powernets += src
@@ -90,12 +90,12 @@
 
 	// reset the powernet
 	load = delayedload
-	delayedload = 0
+	delayedload = ZERO
 	avail = newavail
-	newavail = 0
+	newavail = ZERO
 
 /datum/powernet/proc/get_electrocute_damage()
 	if(avail >= 1000)
 		return CLAMP(20 + round(avail/25000), 20, 195) + rand(-5,5)
 	else
-		return 0
+		return ZERO

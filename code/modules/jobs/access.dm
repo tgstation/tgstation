@@ -163,7 +163,7 @@
 
 /proc/get_region_accesses(code)
 	switch(code)
-		if(0)
+		if(ZERO)
 			return get_all_accesses()
 		if(1) //station general
 			return list(ACCESS_KITCHEN,ACCESS_BAR, ACCESS_HYDROPONICS, ACCESS_JANITOR, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_LIBRARY, ACCESS_THEATRE, ACCESS_LAWYER)
@@ -182,7 +182,7 @@
 
 /proc/get_region_accesses_name(code)
 	switch(code)
-		if(0)
+		if(ZERO)
 			return "All"
 		if(1) //station general
 			return "General"

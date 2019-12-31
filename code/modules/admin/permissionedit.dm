@@ -25,9 +25,9 @@
 		var/search
 		if(searchlist.len > 1)
 			search = searchlist.Join("")
-		var/logcount = 0
+		var/logcount = ZERO
 		var/logssperpage = 20
-		var/pagecount = 0
+		var/pagecount = ZERO
 		page = text2num(page)
 		var/datum/DBQuery/query_count_admin_logs = SSdbcore.NewQuery("SELECT COUNT(id) FROM [format_table_name("admin_log")][search]")
 		if(!query_count_admin_logs.warn_execute())
@@ -38,7 +38,7 @@
 		qdel(query_count_admin_logs)
 		if(logcount > logssperpage)
 			output += "<br><b>Page: </b>"
-			while(logcount > 0)
+			while(logcount > ZERO)
 				output += "|<a href='?_src_=holder;[HrefToken()];editrightsbrowserlog=1;editrightstarget=[target];editrightsoperation=[operation];editrightspage=[pagecount]'>[pagecount == page ? "<b>\[[pagecount]\]</b>" : "\[[pagecount]\]"]</a>"
 				logcount -= logssperpage
 				pagecount++

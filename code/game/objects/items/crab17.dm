@@ -65,7 +65,7 @@
 				return
 			to_chat(user, "<span class='warning'>You quickly cash out your funds to a more secure banking location. Funds are safu.</span>") // This is a reference and not a typo
 			card.registered_account.being_dumped = FALSE
-			card.registered_account.withdrawDelay = 0
+			card.registered_account.withdrawDelay = ZERO
 			if(check_if_finished())
 				qdel(src)
 				return
@@ -149,7 +149,7 @@
 	stop_dumping()
 	STOP_PROCESSING(SSfastprocess, src)
 	priority_announce("The credit deposit machine at [get_area(src)] has been destroyed. Station funds have stopped draining!", sender_override = "CRAB-17 Protocol")
-	explosion(src, 0,0,1, flame_range = 2)
+	explosion(src, ZERO,ZERO,1, flame_range = 2)
 	return ..()
 
 /obj/structure/checkoutmachine/proc/start_dumping()

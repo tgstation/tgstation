@@ -15,7 +15,7 @@
 	var/lock_cursor_range = 5
 	var/list/locked_weakrefs
 	var/update_disabled = FALSE
-	var/current_ranging_id = 0
+	var/current_ranging_id = ZERO
 	var/list/last_location
 	var/datum/callback/on_lock
 	var/datum/callback/can_target_callback
@@ -161,13 +161,13 @@
 	var/this_id = current_ranging_id
 	var/list/L = list()
 	var/turf/center = get_turf(T)
-	if(amount < 1 || range < 0 || !istype(center) || !islist(typecache))
+	if(amount < 1 || range < ZERO || !istype(center) || !islist(typecache))
 		return
-	if(range == 0)
+	if(range == ZERO)
 		return typecache_filter_list(T.contents + T, typecache)
-	var/x = 0
-	var/y = 0
-	var/cd = 0
+	var/x = ZERO
+	var/y = ZERO
+	var/cd = ZERO
 	while(cd <= range)
 		x = center.x - cd + 1
 		y = center.y + cd

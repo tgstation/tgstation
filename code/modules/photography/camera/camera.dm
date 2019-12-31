@@ -165,8 +165,8 @@
 	if(!isturf(target_turf))
 		blending = FALSE
 		return FALSE
-	size_x = CLAMP(size_x, 0, CAMERA_PICTURE_SIZE_HARD_LIMIT)
-	size_y = CLAMP(size_y, 0, CAMERA_PICTURE_SIZE_HARD_LIMIT)
+	size_x = CLAMP(size_x, ZERO, CAMERA_PICTURE_SIZE_HARD_LIMIT)
+	size_y = CLAMP(size_y, ZERO, CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	var/list/desc = list("This is a photo of an area of [size_x+1] meters by [size_y+1] meters.")
 	var/list/mobs_spotted = list()
 	var/list/dead_spotted = list()

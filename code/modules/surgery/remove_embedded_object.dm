@@ -26,7 +26,7 @@
 	if(L)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
-			var/objects = 0
+			var/objects = ZERO
 			for(var/obj/item/I in L.embedded_objects)
 				objects++
 				I.forceMove(get_turf(H))
@@ -35,7 +35,7 @@
 				H.clear_alert("embeddedobject")
 				SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
-			if(objects > 0)
+			if(objects > ZERO)
 				display_results(user, target, "<span class='notice'>You successfully remove [objects] objects from [H]'s [L.name].</span>",
 					"<span class='notice'>[user] successfully removes [objects] objects from [H]'s [L]!</span>",
 					"<span class='notice'>[user] successfully removes [objects] objects from [H]'s [L]!</span>")

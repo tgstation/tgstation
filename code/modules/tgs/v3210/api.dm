@@ -1,4 +1,4 @@
-#define REBOOT_MODE_NORMAL 0
+#define REBOOT_MODE_NORMAL ZERO
 #define REBOOT_MODE_HARD 1
 #define REBOOT_MODE_SHUTDOWN 2
 
@@ -48,7 +48,7 @@
 	return ""
 
 /datum/tgs_api/v3210/proc/trim_right(text)
-	for (var/i = length(text), i > 0, i--)
+	for (var/i = length(text), i > ZERO, i--)
 		if (text2ascii(text, i) > 32)
 			return copytext(text, 1, i + 1)
 	return ""

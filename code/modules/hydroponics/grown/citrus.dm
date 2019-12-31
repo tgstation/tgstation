@@ -31,7 +31,7 @@
 	desc = "It's so sour, your face will twist."
 	icon_state = "lime"
 	filling_color = "#00FF00"
-	juice_results = list(/datum/reagent/consumable/limejuice = 0)
+	juice_results = list(/datum/reagent/consumable/limejuice = ZERO)
 
 // Orange
 /obj/item/seeds/orange
@@ -58,7 +58,7 @@
 	desc = "It's a tangy fruit."
 	icon_state = "orange"
 	filling_color = "#FFA500"
-	juice_results = list(/datum/reagent/consumable/orangejuice = 0)
+	juice_results = list(/datum/reagent/consumable/orangejuice = ZERO)
 	distill_reagent = /datum/reagent/consumable/ethanol/triple_sec
 
 // Lemon
@@ -85,7 +85,7 @@
 	desc = "When life gives you lemons, make lemonade."
 	icon_state = "lemon"
 	filling_color = "#FFD700"
-	juice_results = list(/datum/reagent/consumable/lemonjuice = 0)
+	juice_results = list(/datum/reagent/consumable/lemonjuice = ZERO)
 
 // Combustible lemon
 /obj/item/seeds/firelemon //combustible lemon is too long so firelemon
@@ -137,7 +137,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/firelemon/proc/prime()
 	switch(seed.potency) //Combustible lemons are alot like IEDs, lots of flame, very little bang.
-		if(0 to 30)
+		if(ZERO to 30)
 			update_mob()
 			explosion(src.loc,-1,-1,2, flame_range = 1)
 			qdel(src)
@@ -182,7 +182,7 @@
 	desc = "You can hardly wrap your head around this thing."
 	icon_state = "orang"
 	filling_color = "#FFA500"
-	juice_results = list(/datum/reagent/consumable/orangejuice = 0)
+	juice_results = list(/datum/reagent/consumable/orangejuice = ZERO)
 	distill_reagent = /datum/reagent/consumable/ethanol/triple_sec
 	tastes = list("polygons" = 1, "oranges" = 1)
 

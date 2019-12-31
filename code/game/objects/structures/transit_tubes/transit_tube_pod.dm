@@ -92,7 +92,7 @@
 		return ..()
 
 /obj/structure/transit_tube_pod/proc/follow_tube()
-	set waitfor = 0
+	set waitfor = ZERO
 	if(moving)
 		return
 
@@ -101,7 +101,7 @@
 	var/obj/structure/transit_tube/current_tube = null
 	var/next_dir
 	var/next_loc
-	var/last_delay = 0
+	var/last_delay = ZERO
 	var/exit_delay
 
 	for(var/obj/structure/transit_tube/tube in loc)

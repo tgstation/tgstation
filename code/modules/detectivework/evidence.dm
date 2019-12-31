@@ -58,8 +58,8 @@
 	var/mutable_appearance/in_evidence = new(I)
 	in_evidence.plane = FLOAT_PLANE
 	in_evidence.layer = FLOAT_LAYER
-	in_evidence.pixel_x = 0
-	in_evidence.pixel_y = 0
+	in_evidence.pixel_x = ZERO
+	in_evidence.pixel_y = ZERO
 	add_overlay(in_evidence)
 	add_overlay("evidence")	//should look nicer for transparent stuff. not really that important, but hey.
 

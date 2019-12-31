@@ -123,7 +123,7 @@
 	if(!istype(T))
 		return
 	else if(T.cooldown)
-		var/seconds_left = max(0, (T.cooldown_timer - world.time) / 10)
+		var/seconds_left = max(ZERO, (T.cooldown_timer - world.time) / 10)
 		return "[round(seconds_left)]"
 
 /obj/effect/countdown/doomsday
@@ -144,7 +144,7 @@
 	if(!istype(A))
 		return
 	else
-		var/time_left = max(0, (A.death_time - world.time) / 10)
+		var/time_left = max(ZERO, (A.death_time - world.time) / 10)
 		return round(time_left)
 
 /obj/effect/countdown/hourglass
@@ -155,11 +155,11 @@
 	if(!istype(H))
 		return
 	else
-		var/time_left = max(0, (H.finish_time - world.time) / 10)
+		var/time_left = max(ZERO, (H.finish_time - world.time) / 10)
 		return round(time_left)
 
 /obj/effect/countdown/arena
-	invisibility = 0
+	invisibility = ZERO
 	name = "arena countdown"
 
 /obj/effect/countdown/arena/get_value()
@@ -168,5 +168,5 @@
 		return
 	else
 		var/obj/machinery/computer/arena/C = A.get_controller()
-		var/time_left = max(0, (C.start_time - world.time) / 10)
+		var/time_left = max(ZERO, (C.start_time - world.time) / 10)
 		return round(time_left)

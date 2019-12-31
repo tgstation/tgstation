@@ -20,7 +20,7 @@
 	else
 		. += E.bang_protect
 
-/mob/living/carbon/is_mouth_covered(head_only = 0, mask_only = 0)
+/mob/living/carbon/is_mouth_covered(head_only = ZERO, mask_only = ZERO)
 	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
 		return TRUE
 
@@ -128,7 +128,7 @@
 			if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
 				if(S.next_step(user, user.a_intent))
 					return 1
-	return 0
+	return ZERO
 
 
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
@@ -146,7 +146,7 @@
 
 	if(M.a_intent == INTENT_HELP)
 		help_shake_act(M)
-		return 0
+		return ZERO
 
 	if(..()) //successful monkey bite.
 		for(var/thing in M.diseases)
@@ -157,18 +157,18 @@
 
 /mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
-		if(M.powerlevel > 0)
+		if(M.powerlevel > ZERO)
 			var/stunprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
 			if(prob(stunprob))
 				M.powerlevel -= 3
-				if(M.powerlevel < 0)
-					M.powerlevel = 0
+				if(M.powerlevel < ZERO)
+					M.powerlevel = ZERO
 
 				visible_message("<span class='danger'>The [M.name] has shocked [src]!</span>", \
 				"<span class='userdanger'>The [M.name] has shocked you!</span>")
 
 				do_sparks(5, TRUE, src)
-				var/power = M.powerlevel + rand(0,3)
+				var/power = M.powerlevel + rand(ZERO,3)
 				Paralyze(power*20)
 				if(stuttering < power)
 					stuttering = power
@@ -287,7 +287,7 @@
 	playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 
-/mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
+/mob/living/carbon/flash_act(intensity = 1, override_blindness_check = ZERO, affect_silicon = ZERO, visual = ZERO)
 	var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
 	if(!eyes) //can't flash what can't see!
 		return
@@ -332,11 +332,11 @@
 		if(has_bane(BANE_LIGHT))
 			mind.disrupt_spells(-500)
 		return 1
-	else if(damage == 0) // just enough protection
+	else if(damage == ZERO) // just enough protection
 		if(prob(20))
 			to_chat(src, "<span class='notice'>Something bright flashes in the corner of your vision!</span>")
 		if(has_bane(BANE_LIGHT))
-			mind.disrupt_spells(0)
+			mind.disrupt_spells(ZERO)
 
 
 /mob/living/carbon/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)
@@ -346,7 +346,7 @@
 	var/ear_safety = get_ear_protection()
 	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	var/effect_amount = intensity - ear_safety
-	if(effect_amount > 0)
+	if(effect_amount > ZERO)
 		if(stun_pwr)
 			Paralyze((stun_pwr*effect_amount)*0.1)
 			Knockdown(stun_pwr*effect_amount)
@@ -364,11 +364,11 @@
 					// you need earmuffs, inacusiate, or replacement
 			else if(ears.damage >= 5)
 				to_chat(src, "<span class='warning'>Your ears start to ring!</span>")
-			SEND_SOUND(src, sound('sound/weapons/flash_ring.ogg',0,1,0,250))
+			SEND_SOUND(src, sound('sound/weapons/flash_ring.ogg',ZERO,1,ZERO,250))
 		return effect_amount //how soundbanged we are
 
 
-/mob/living/carbon/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
+/mob/living/carbon/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = ZERO, def_zone)
 	if(damage_type != BRUTE && damage_type != BURN)
 		return
 	damage_amount *= 0.5 //0.5 multiplier for balance reason, we don't want clothes to be too easily destroyed
@@ -381,7 +381,7 @@
 		if(head)
 			hit_clothes = head
 		if(hit_clothes)
-			hit_clothes.take_damage(damage_amount, damage_type, damage_flag, 0)
+			hit_clothes.take_damage(damage_amount, damage_type, damage_flag, ZERO)
 
 /mob/living/carbon/can_hear()
 	. = FALSE

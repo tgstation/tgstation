@@ -401,7 +401,7 @@
 
 /datum/quirk/insanity/on_process()
 	if(quirk_holder.reagents.has_reagent(/datum/reagent/toxin/mindbreaker, needs_metabolizing = TRUE))
-		quirk_holder.hallucination = 0
+		quirk_holder.hallucination = ZERO
 		return
 	if(prob(2)) //we'll all be mad soon enough
 		madness()
@@ -425,7 +425,7 @@
 	var/dumb_thing = TRUE
 
 /datum/quirk/social_anxiety/on_process()
-	var/nearby_people = 0
+	var/nearby_people = ZERO
 	for(var/mob/living/carbon/human/H in oview(3, quirk_holder))
 		if(H.client)
 			nearby_people++
@@ -456,7 +456,7 @@
 	var/where_accessory //! where the accessory spawned
 	var/obj/item/accessory_type //! If this is null, an accessory won't be spawned.
 	var/process_interval = 30 SECONDS //! how frequently the quirk processes
-	var/next_process = 0 //! ticker for processing
+	var/next_process = ZERO //! ticker for processing
 
 /datum/quirk/junkie/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -504,7 +504,7 @@
 			if(!reagent_instance)
 				reagent_instance = new reagent_type()
 			else
-				reagent_instance.addiction_stage = 0
+				reagent_instance.addiction_stage = ZERO
 			H.reagents.addiction_list += reagent_instance
 			to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you suddenly feel like you need [reagent_instance.name] again...</span>")
 

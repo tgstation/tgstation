@@ -1,8 +1,8 @@
 #define LINKIFY_READY(string, value) "<a href='byond://?src=[REF(src)];ready=[value]'>[string]</a>"
 
 /mob/dead/new_player
-	var/ready = 0
-	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
+	var/ready = ZERO
+	var/spawning = ZERO//Referenced when you want to delete the new_player later on in the code.
 
 	flags_1 = NONE
 
@@ -58,13 +58,13 @@
 
 	if(!IsGuestKey(src.key))
 		if (SSdbcore.Connect())
-			var/isadmin = 0
+			var/isadmin = ZERO
 			if(src.client && src.client.holder)
 				isadmin = 1
 			var/datum/DBQuery/query_get_new_polls = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[sanitizeSQL(ckey)]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[sanitizeSQL(ckey)]\")")
 			var/rs = REF(src)
 			if(query_get_new_polls.Execute())
-				var/newpoll = 0
+				var/newpoll = ZERO
 				if(query_get_new_polls.NextRow())
 					newpoll = 1
 
@@ -86,10 +86,10 @@
 
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr)
-		return 0
+		return ZERO
 
 	if(!client)
-		return 0
+		return ZERO
 
 	//Determines Relevent Population Cap
 	var/relevant_cap
@@ -235,7 +235,7 @@
 					if(!isnull(href_list["option_[optionid]"]))	//Test if this optionid was selected
 						var/i = vote_on_multi_poll(pollid, optionid)
 						switch(i)
-							if(0)
+							if(ZERO)
 								continue
 							if(1)
 								to_chat(usr, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
@@ -437,7 +437,7 @@
 		if(prioritized_job.current_positions >= prioritized_job.total_positions)
 			SSjob.prioritized_jobs -= prioritized_job
 	dat += "<table><tr><td valign='top'>"
-	var/column_counter = 0
+	var/column_counter = ZERO
 	for(var/list/category in list(GLOB.command_positions) + list(GLOB.engineering_positions) + list(GLOB.supply_positions) + list(GLOB.nonhuman_positions - "pAI") + list(GLOB.civilian_positions) + list(GLOB.medical_positions) + list(GLOB.science_positions) + list(GLOB.security_positions))
 		var/cat_color = SSjob.name_occupations[category[1]].selection_color //use the color of the first job in the category (the department head) as the category color
 		dat += "<fieldset style='width: 185px; border: 2px solid [cat_color]; display: inline'>"
@@ -458,7 +458,7 @@
 		dat += jointext(dept_dat, "")
 		dat += "</fieldset><br>"
 		column_counter++
-		if(column_counter > 0 && (column_counter % 3 == 0))
+		if(column_counter > ZERO && (column_counter % 3 == ZERO))
 			dat += "</td><td valign='top'>"
 	dat += "</td></tr></table></center>"
 	dat += "</div></div>"
@@ -491,7 +491,7 @@
 	if(mind)
 		if(transfer_after)
 			mind.late_joiner = TRUE
-		mind.active = 0					//we wish to transfer the key manually
+		mind.active = ZERO					//we wish to transfer the key manually
 		mind.transfer_to(H)					//won't transfer key since the mind is not active
 
 	H.name = real_name
@@ -517,7 +517,7 @@
 	src << browse(dat, "window=manifest;size=387x420;can_close=1")
 
 /mob/dead/new_player/Move()
-	return 0
+	return ZERO
 
 
 /mob/dead/new_player/proc/close_spawn_windows()
@@ -540,9 +540,9 @@
 		return TRUE
 	// If they have antags enabled, they're potentially doing this on purpose instead of by accident. Notify admins if so.
 	var/has_antags = FALSE
-	if(client.prefs.be_special.len > 0)
+	if(client.prefs.be_special.len > ZERO)
 		has_antags = TRUE
-	if(client.prefs.job_preferences.len == 0)
+	if(client.prefs.job_preferences.len == ZERO)
 		if(!ineligible_for_roles)
 			to_chat(src, "<span class='danger'>You have no jobs enabled, along with return to lobby if job is unavailable. This makes you ineligible for any round start role, please update your job preferences.</span>")
 		ineligible_for_roles = TRUE

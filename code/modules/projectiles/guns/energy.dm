@@ -6,7 +6,7 @@
 
 	var/obj/item/stock_parts/cell/cell //What type of power cell this uses
 	var/cell_type = /obj/item/stock_parts/cell
-	var/modifystate = 0
+	var/modifystate = ZERO
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
 	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
 	var/can_charge = TRUE //Can it be charged in a recharger?
@@ -15,8 +15,8 @@
 	ammo_x_offset = 2
 	var/shaded_charge = FALSE //if this gun uses a stateful charge bar for more detail
 	var/old_ratio = 0 // stores the gun's previous ammo "ratio" to see if it needs an updated icon
-	var/selfcharge = 0
-	var/charge_tick = 0
+	var/selfcharge = ZERO
+	var/charge_tick = ZERO
 	var/charge_delay = 4
 	var/use_cyborg_cell = FALSE //whether the gun's cell drains the cyborg user's cell to recharge
 	var/dead_cell = FALSE //set to true so the gun is given an empty cell
@@ -73,7 +73,7 @@
 		charge_tick++
 		if(charge_tick < charge_delay)
 			return
-		charge_tick = 0
+		charge_tick = ZERO
 		cell.give(100)
 		if(!chambered) //if empty chamber we try to charge a new shot
 			recharge_newshot(TRUE)
@@ -112,12 +112,12 @@
 	chambered = null //either way, released the prepared shot
 	recharge_newshot() //try to charge a new shot
 
-/obj/item/gun/energy/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/energy/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = ZERO)
 	if(!chambered && can_shoot())
 		process_chamber()	// If the gun was drained and then recharged, load a new shot.
 	return ..()
 
-/obj/item/gun/energy/process_burst(mob/living/user, atom/target, message = TRUE, params = null, zone_override="", sprd = 0, randomized_gun_spread = 0, randomized_bonus_spread = 0, rand_spr = 0, iteration = 0)
+/obj/item/gun/energy/process_burst(mob/living/user, atom/target, message = TRUE, params = null, zone_override="", sprd = ZERO, randomized_gun_spread = ZERO, randomized_bonus_spread = ZERO, rand_spr = ZERO, iteration = ZERO)
 	if(!chambered && can_shoot())
 		process_chamber()	// Ditto.
 	return ..()
@@ -142,7 +142,7 @@
 	..()
 	if(!automatic_charge_overlays)
 		return
-	var/ratio = can_shoot() ? CEILING(CLAMP(cell.charge / cell.maxcharge, 0, 1) * charge_sections, 1) : 0
+	var/ratio = can_shoot() ? CEILING(CLAMP(cell.charge / cell.maxcharge, ZERO, 1) * charge_sections, 1) : ZERO
 				// Sets the ratio to 0 if the gun doesn't have enough charge to fire, or if it's power cell is removed.
 				// TG issues #5361 & #47908
 	if(ratio == old_ratio && !force_update)
@@ -159,7 +159,7 @@
 		iconState += "_[shot.select_name]"
 		if(itemState)
 			itemState += "[shot.select_name]"
-	if(ratio == 0)
+	if(ratio == ZERO)
 		add_overlay("[icon_state]_empty")
 	else
 		if(!shaded_charge)

@@ -6,7 +6,7 @@
 	locked = TRUE
 	max_integrity = 500
 	armor = list("melee" = 30, "bullet" = 50, "laser" = 50, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
-	var/tamperproof = 0
+	var/tamperproof = ZERO
 	damage_deflection = 25
 
 /obj/structure/closet/crate/secure/update_icon()
@@ -18,7 +18,7 @@
 	else
 		add_overlay("securecrateg")
 
-/obj/structure/closet/crate/secure/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/structure/closet/crate/secure/take_damage(damage_amount, damage_type = BRUTE, damage_flag = ZERO, sound_effect = 1)
 	if(prob(tamperproof) && damage_amount >= DAMAGE_PRECISION)
 		boom()
 	else
@@ -31,7 +31,7 @@
 		log_bomber(user, "has detonated a", src)
 	for(var/atom/movable/AM in src)
 		qdel(AM)
-	explosion(get_turf(src), 0, 1, 5, 5)
+	explosion(get_turf(src), ZERO, 1, 5, 5)
 	qdel(src)
 
 /obj/structure/closet/crate/secure/weapon

@@ -10,15 +10,15 @@
 	close_sound = 'sound/items/zip.ogg'
 	open_sound_volume = 15
 	close_sound_volume = 15
-	integrity_failure = 0
+	integrity_failure = ZERO
 	material_drop = /obj/item/stack/sheet/cloth
 	delivery_icon = null //unwrappable
 	anchorable = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
-	drag_slowdown = 0
+	drag_slowdown = ZERO
 	var/foldedbag_path = /obj/item/bodybag
 	var/obj/item/bodybag/foldedbag_instance = null
-	var/tagged = 0 // so closet code knows to put the tag overlay back
+	var/tagged = ZERO // so closet code knows to put the tag overlay back
 
 /obj/structure/closet/body_bag/Destroy()
 	// If we have a stored bag, and it's in nullspace (not in someone's hand), delete it.
@@ -46,7 +46,7 @@
 	else if(I.tool_behaviour == TOOL_WIRECUTTER)
 		to_chat(user, "<span class='notice'>You cut the tag off [src].</span>")
 		name = "body bag"
-		tagged = 0
+		tagged = ZERO
 		update_icon()
 
 /obj/structure/closet/body_bag/update_icon()

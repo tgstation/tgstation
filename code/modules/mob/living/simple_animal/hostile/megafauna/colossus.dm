@@ -87,7 +87,7 @@ Difficulty: Very Hard
 	chosen_attack_num = 4
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
-	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
+	anger_modifier = CLAMP(((maxHealth - health)/50),ZERO,20)
 	ranged_cooldown = world.time + 120
 
 	if(client)
@@ -234,7 +234,7 @@ Difficulty: Very Hard
 /obj/effect/temp_visual/at_shield/Initialize(mapload, new_target)
 	. = ..()
 	target = new_target
-	INVOKE_ASYNC(src, /atom/movable/proc/orbit, target, 0, FALSE, 0, 0, FALSE, TRUE)
+	INVOKE_ASYNC(src, /atom/movable/proc/orbit, target, ZERO, FALSE, ZERO, ZERO, FALSE, TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/bullet_act(obj/projectile/P)
 	if(!stat)
@@ -242,7 +242,7 @@ Difficulty: Very Hard
 		var/random_x = rand(-32, 32)
 		AT.pixel_x += random_x
 
-		var/random_y = rand(0, 72)
+		var/random_y = rand(ZERO, 72)
 		AT.pixel_y += random_y
 	return ..()
 
@@ -252,7 +252,7 @@ Difficulty: Very Hard
 	damage = 25
 	armour_penetration = 100
 	speed = 2
-	eyeblur = 0
+	eyeblur = ZERO
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 
@@ -395,7 +395,7 @@ Difficulty: Very Hard
 	var/list/possible_methods = list(ACTIVATE_TOUCH, ACTIVATE_SPEECH, ACTIVATE_HEAT, ACTIVATE_BULLET, ACTIVATE_ENERGY, ACTIVATE_BOMB, ACTIVATE_MOB_BUMP, ACTIVATE_WEAPON, ACTIVATE_MAGIC)
 
 	var/activation_damage_type = null
-	var/last_use_timer = 0
+	var/last_use_timer = ZERO
 	var/cooldown_add = 30
 	var/list/affected_targets = list()
 	var/activation_sound = 'sound/effects/break_stone.ogg'
@@ -560,16 +560,16 @@ Difficulty: Very Hard
 		switch(dir)
 			if(NORTH)
 				P.yo = 20
-				P.xo = 0
+				P.xo = ZERO
 			if(EAST)
-				P.yo = 0
+				P.yo = ZERO
 				P.xo = 20
 			if(WEST)
-				P.yo = 0
+				P.yo = ZERO
 				P.xo = -20
 			else
 				P.yo = -20
-				P.xo = 0
+				P.xo = ZERO
 		P.fire()
 
 /obj/machinery/anomalous_crystal/dark_reprise //Revives anyone nearby, but turns them into shadowpeople and renders them uncloneable, so the crystal is your only hope of getting up again if you go down.
@@ -658,14 +658,14 @@ Difficulty: Very Hard
 	verb_exclaim = "zaps"
 	verb_yell = "bangs"
 	initial_language_holder = /datum/language_holder/lightbringer
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = ZERO, CLONE = ZERO, STAMINA = ZERO, OXY = ZERO)
 	light_range = 4
 	faction = list("neutral")
 	del_on_death = TRUE
-	unsuitable_atmos_damage = 0
-	minbodytemp = 0
+	unsuitable_atmos_damage = ZERO
+	minbodytemp = ZERO
 	maxbodytemp = 1500
-	obj_damage = 0
+	obj_damage = ZERO
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	AIStatus = AI_OFF
 	stop_automated_movement = TRUE
@@ -769,12 +769,12 @@ Difficulty: Very Hard
 	for(var/mob/living/L in src)
 		REMOVE_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
 		L.status_flags &= ~GODMODE
-		L.notransform = 0
+		L.notransform = ZERO
 		if(holder_animal)
 			holder_animal.mind.transfer_to(L)
 			L.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/exit_possession)
 		if(kill || !isanimal(loc))
-			L.death(0)
+			L.death(ZERO)
 	..()
 
 /obj/structure/closet/stasis/emp_act()
@@ -787,7 +787,7 @@ Difficulty: Very Hard
 	name = "Exit Possession"
 	desc = "Exits the body you are possessing."
 	charge_max = 60
-	clothes_req = 0
+	clothes_req = ZERO
 	invocation_type = "none"
 	max_targets = 1
 	range = -1
@@ -804,7 +804,7 @@ Difficulty: Very Hard
 	for(var/i in user)
 		if(istype(i, /obj/structure/closet/stasis))
 			var/obj/structure/closet/stasis/S = i
-			S.dump_contents(0)
+			S.dump_contents(ZERO)
 			qdel(S)
 			break
 	user.gib()

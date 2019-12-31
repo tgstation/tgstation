@@ -40,7 +40,7 @@
 
   obj/proc/receive_signal(datum/signal/signal, var/receive_method as num, var/receive_param)
     Handler from received signals. By default does nothing. Define your own for your object.
-    Avoid of sending signals directly from this proc, use spawn(0). Do not use sleep() here please.
+    Avoid of sending signals directly from this proc, use spawn(ZERO). Do not use sleep() here please.
       parameters:
         signal - see description below. Extract all needed data from the signal before doing sleep(), spawn() or return!
         receive_method - may be TRANSMISSION_WIRE or TRANSMISSION_RADIO.
@@ -129,7 +129,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 /datum/radio_frequency/New(freq)
 	frequency = freq
 
-//If range > 0, only post to devices on the same z_level and within range
+//If range > ZERO, only post to devices on the same z_level and within range
 //Use range = -1, to restrain to the same z_level without limiting range
 /datum/radio_frequency/proc/post_signal(obj/source as obj|null, datum/signal/signal, filter = null as text|null, range = null as num|null)
 	// Ensure the signal's data is fully filled
@@ -150,7 +150,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 	if(range)
 		start_point = get_turf(source)
 		if(!start_point)
-			return 0
+			return ZERO
 
 	//Send the data
 	for(var/current_filter in filter_list)
@@ -161,7 +161,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 				var/turf/end_point = get_turf(device)
 				if(!end_point)
 					continue
-				if(start_point.z != end_point.z || (range > 0 && get_dist(start_point, end_point) > range))
+				if(start_point.z != end_point.z || (range > ZERO && get_dist(start_point, end_point) > range))
 					continue
 			device.receive_signal(signal)
 
@@ -190,7 +190,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 
 /datum/signal
 	var/obj/source
-	var/frequency = 0
+	var/frequency = ZERO
 	var/transmission_method
 	var/list/data
 

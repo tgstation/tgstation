@@ -28,7 +28,7 @@
 
 /obj/machinery/processor/proc/process_food(datum/food_processor_process/recipe, atom/movable/what)
 	if (recipe.output && loc && !QDELETED(src))
-		for(var/i = 0, i < rating_amount, i++)
+		for(var/i = ZERO, i < rating_amount, i++)
 			new recipe.output(drop_location())
 	if (ismob(what))
 		var/mob/themob = what
@@ -61,7 +61,7 @@
 
 	if(istype(O, /obj/item/storage/bag/tray))
 		var/obj/item/storage/T = O
-		var/loaded = 0
+		var/loaded = ZERO
 		for(var/obj/item/reagent_containers/food/snacks/S in T.contents)
 			var/datum/food_processor_process/P = select_recipe(S)
 			if(P)
@@ -98,7 +98,7 @@
 		pushed_mob.forceMove(src)
 		user.stop_pulling()
 		return
-	if(contents.len == 0)
+	if(contents.len == ZERO)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return TRUE
 	processing = TRUE
@@ -107,7 +107,7 @@
 		"<span class='hear'>You hear a food processor.</span>")
 	playsound(src.loc, 'sound/machines/blender.ogg', 50, TRUE)
 	use_power(500)
-	var/total_time = 0
+	var/total_time = ZERO
 	for(var/O in src.contents)
 		var/datum/food_processor_process/P = select_recipe(O)
 		if (!P)
@@ -161,7 +161,7 @@
 
 /obj/machinery/processor/slime/adjust_item_drop_location(atom/movable/AM)
 	var/static/list/slimecores = subtypesof(/obj/item/slime_extract)
-	var/i = 0
+	var/i = ZERO
 	if(!(i = slimecores.Find(AM.type))) // If the item is not found
 		return
 	if (i <= 16) // If in the first 12 slots

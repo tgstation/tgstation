@@ -1,7 +1,7 @@
 
-#define ENGSEC			(1<<0)
+#define ENGSEC			(1<<ZERO)
 
-#define CAPTAIN			(1<<0)
+#define CAPTAIN			(1<<ZERO)
 #define HOS				(1<<1)
 #define WARDEN			(1<<2)
 #define DETECTIVE		(1<<3)
@@ -16,7 +16,7 @@
 
 #define MEDSCI			(1<<1)
 
-#define RD_JF			(1<<0)
+#define RD_JF			(1<<ZERO)
 #define SCIENTIST		(1<<1)
 #define CHEMIST			(1<<2)
 #define CMO_JF			(1<<3)
@@ -28,7 +28,7 @@
 
 #define CIVILIAN		(1<<2)
 
-#define HOP				(1<<0)
+#define HOP				(1<<ZERO)
 #define BARTENDER		(1<<1)
 #define BOTANIST		(1<<2)
 #define COOK			(1<<3)
@@ -43,7 +43,7 @@
 #define MIME			(1<<12)
 #define ASSISTANT		(1<<13)
 
-#define JOB_AVAILABLE 0
+#define JOB_AVAILABLE ZERO
 #define JOB_UNAVAILABLE_GENERIC 1
 #define JOB_UNAVAILABLE_BANNED 2
 #define JOB_UNAVAILABLE_PLAYTIME 3
@@ -53,7 +53,7 @@
 #define DEFAULT_RELIGION "Christianity"
 #define DEFAULT_DEITY "Space Jesus"
 
-#define JOB_DISPLAY_ORDER_DEFAULT 0
+#define JOB_DISPLAY_ORDER_DEFAULT ZERO
 
 #define JOB_DISPLAY_ORDER_ASSISTANT 1
 #define JOB_DISPLAY_ORDER_CAPTAIN 2

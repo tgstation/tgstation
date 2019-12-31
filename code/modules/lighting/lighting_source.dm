@@ -158,7 +158,7 @@
 	LAZYINITLIST(effect_str)
 	if (effect_str[C]) // Already have one.
 		REMOVE_CORNER(C)
-		effect_str[C] = 0
+		effect_str[C] = ZERO
 
 	APPLY_CORNER(C)
 	UNSETEMPTY(effect_str)
@@ -235,7 +235,7 @@
 		for(T in view(CEILING(light_range, 1), source_turf))
 			for (thing in T.get_corners(source_turf))
 				C = thing
-				corners[C] = 0
+				corners[C] = ZERO
 			turfs += T
 		source_turf.luminosity = oldlum
 
@@ -258,7 +258,7 @@
 			C = thing
 			LAZYADD(C.affecting, src)
 			if (!C.active)
-				effect_str[C] = 0
+				effect_str[C] = ZERO
 				continue
 			APPLY_CORNER(C)
 	else
@@ -267,14 +267,14 @@
 			C = thing
 			LAZYADD(C.affecting, src)
 			if (!C.active)
-				effect_str[C] = 0
+				effect_str[C] = ZERO
 				continue
 			APPLY_CORNER(C)
 
 		for (thing in corners - L) // Existing corners
 			C = thing
 			if (!C.active)
-				effect_str[C] = 0
+				effect_str[C] = ZERO
 				continue
 			APPLY_CORNER(C)
 

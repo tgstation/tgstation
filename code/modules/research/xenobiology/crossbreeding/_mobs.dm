@@ -9,8 +9,8 @@ Slimecrossing Mobs
 	name = "Slime Transformation"
 	desc = "Transform from a human to a slime, or back again!"
 	action_icon_state = "transformslime"
-	cooldown_min = 0
-	charge_max = 0
+	cooldown_min = ZERO
+	charge_max = ZERO
 	invocation_type = "none"
 	shapeshift_type = /mob/living/simple_animal/slime/transformedslime
 	convert_damage = TRUE

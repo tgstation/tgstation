@@ -11,7 +11,7 @@
 	icon = 'icons/mob/alien.dmi'
 	max_integrity = 100
 
-/obj/structure/alien/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/structure/alien/run_obj_armor(damage_amount, damage_type, damage_flag = ZERO, attack_dir)
 	if(damage_flag == "melee")
 		switch(damage_type)
 			if(BRUTE)
@@ -20,7 +20,7 @@
 				damage_amount *= 2
 	. = ..()
 
-/obj/structure/alien/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/alien/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
@@ -89,7 +89,7 @@
 	desc = "Resin just thin enough to let light pass through."
 	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
 	icon_state = "smooth"
-	opacity = 0
+	opacity = ZERO
 	max_integrity = 160
 	resintype = "membrane"
 	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
@@ -120,7 +120,7 @@
 	max_integrity = 15
 	canSmoothWith = list(/obj/structure/alien/weeds, /turf/closed/wall)
 	smooth = SMOOTH_MORE
-	var/last_expand = 0 //last world.time this weed expanded
+	var/last_expand = ZERO //last world.time this weed expanded
 	var/growth_cooldown_low = 150
 	var/growth_cooldown_high = 200
 	var/static/list/blacklisted_turfs
@@ -165,7 +165,7 @@
 
 /obj/structure/alien/weeds/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
-		take_damage(5, BURN, 0, 0)
+		take_damage(5, BURN, ZERO, ZERO)
 
 //Weed nodes
 /obj/structure/alien/weeds/node
@@ -230,7 +230,7 @@
 		child = new(src)
 	if(status == GROWING)
 		addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
-	proximity_monitor = new(src, status == GROWN ? 1 : 0)
+	proximity_monitor = new(src, status == GROWN ? 1 : ZERO)
 	if(status == BURST)
 		obj_integrity = integrity_failure * max_integrity
 
@@ -281,7 +281,7 @@
 //drops and kills the hugger if any is remaining
 /obj/structure/alien/egg/proc/Burst(kill = TRUE)
 	if(status == GROWN || status == GROWING)
-		proximity_monitor.SetRange(0)
+		proximity_monitor.SetRange(ZERO)
 		status = BURST
 		update_icon()
 		flick("egg_opening", src)
@@ -307,7 +307,7 @@
 
 /obj/structure/alien/egg/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 500)
-		take_damage(5, BURN, 0, 0)
+		take_damage(5, BURN, ZERO, ZERO)
 
 
 /obj/structure/alien/egg/HasProximity(atom/movable/AM)

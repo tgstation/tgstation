@@ -5,7 +5,7 @@
 	icon_state = "tdoppler"
 	density = TRUE
 	var/cooldown = 10
-	var/next_announce = 0
+	var/next_announce = ZERO
 	var/max_dist = 150
 	verb_say = "states coldly"
 	var/list/message_log = list()
@@ -124,7 +124,7 @@
 		say("Warning: No linked research system!")
 		return
 
-	var/point_gain = 0
+	var/point_gain = ZERO
 
 	/*****The Point Calculator*****/
 

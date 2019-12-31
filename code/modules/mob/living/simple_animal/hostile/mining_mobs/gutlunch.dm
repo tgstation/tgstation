@@ -15,7 +15,7 @@
 	density = FALSE
 	speak_chance = 1
 	turns_per_move = 8
-	obj_damage = 0
+	obj_damage = ZERO
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	move_to_delay = 15
 	response_help_continuous = "pets"
@@ -128,7 +128,7 @@
 	name = "grublunch"
 	wanted_objects = list() //They don't eat.
 	gold_core_spawnable = NO_SPAWN
-	var/growth = 0
+	var/growth = ZERO
 
 //Baby gutlunch
 /mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch/Initialize()

@@ -14,7 +14,7 @@
  PE|PE|PE
 
 */
-#define PA_CONSTRUCTION_UNSECURED  0
+#define PA_CONSTRUCTION_UNSECURED  ZERO
 #define PA_CONSTRUCTION_UNWIRED    1
 #define PA_CONSTRUCTION_PANEL_OPEN 2
 #define PA_CONSTRUCTION_COMPLETE   3
@@ -32,7 +32,7 @@
 	var/obj/machinery/particle_accelerator/control_box/master = null
 	var/construction_state = PA_CONSTRUCTION_UNSECURED
 	var/reference = null
-	var/powered = 0
+	var/powered = ZERO
 	var/strength = null
 
 /obj/structure/particle_accelerator/examine(mob/user)
@@ -50,7 +50,7 @@
 	construction_state = PA_CONSTRUCTION_UNSECURED
 	if(master)
 		master.connected_parts -= src
-		master.assembled = 0
+		master.assembled = ZERO
 		master = null
 	return ..()
 
@@ -145,7 +145,7 @@
 	if(O.dir == dir)
 		master = O
 		return 1
-	return 0
+	return ZERO
 
 ///////////
 // PARTS //

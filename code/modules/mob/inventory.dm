@@ -15,18 +15,18 @@
 //Finds the opposite index for the active one (eg: upper left arm will find the item in upper right arm)
 //So we're treating each "pair" of limbs as a team, so "both" refers to them
 /mob/proc/get_inactive_hand_index()
-	var/other_hand = 0
+	var/other_hand = ZERO
 	if(!(active_hand_index % 2))
 		other_hand = active_hand_index-1 //finding the matching "left" limb
 	else
 		other_hand = active_hand_index+1 //finding the matching "right" limb
-	if(other_hand < 0 || other_hand > held_items.len)
-		other_hand = 0
+	if(other_hand < ZERO || other_hand > held_items.len)
+		other_hand = ZERO
 	return other_hand
 
 
 /mob/proc/get_item_for_held_index(i)
-	if(i > 0 && i <= held_items.len)
+	if(i > ZERO && i <= held_items.len)
 		return held_items[i]
 	return FALSE
 
@@ -120,7 +120,7 @@
 	var/list/hand = list()
 	if(i > 2)
 		hand += "upper "
-	var/num = 0
+	var/num = ZERO
 	if(!(i % 2))
 		num = i-2
 		hand += "right hand"

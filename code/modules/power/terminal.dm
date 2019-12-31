@@ -32,7 +32,7 @@
 		invisibility = INVISIBILITY_MAXIMUM
 		icon_state = "term-f"
 	else
-		invisibility = 0
+		invisibility = ZERO
 		icon_state = "term"
 
 

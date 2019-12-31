@@ -42,7 +42,7 @@
 		protection_sources += parent
 		reaction?.Invoke(user, chargecost)
 		charges -= chargecost
-		if(charges <= 0)
+		if(charges <= ZERO)
 			expire?.Invoke(user)
 			qdel(src)
 		return COMPONENT_BLOCK_MAGIC

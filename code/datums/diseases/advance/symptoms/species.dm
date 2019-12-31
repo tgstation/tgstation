@@ -4,9 +4,9 @@
 	stealth = 2
 	resistance = -2
 	stage_speed = 1
-	transmittable = 0
+	transmittable = ZERO
 	level = 5
-	severity = 0
+	severity = ZERO
 
 /datum/symptom/undead_adaptation/OnAdd(datum/disease/advance/A)
 	A.process_dead = TRUE
@@ -24,7 +24,7 @@
 	stage_speed = -2
 	transmittable = 3
 	level = 5
-	severity = 0
+	severity = ZERO
 
 /datum/symptom/inorganic_adaptation/OnAdd(datum/disease/advance/A)
 	A.infectable_biotypes |= MOB_MINERAL //Mineral covers plasmamen and golems.

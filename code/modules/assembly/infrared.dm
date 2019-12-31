@@ -9,7 +9,7 @@
 	var/visible = FALSE
 	var/maxlength = 8
 	var/list/obj/effect/beam/i_beam/beams
-	var/olddir = 0
+	var/olddir = ZERO
 	var/turf/listeningTo
 	var/hearing_range = 3
 	drop_sound = 'sound/items/handling/component_drop.ogg'
@@ -120,7 +120,7 @@
 			beams += I
 			I.master = src
 			I.setDir(_dir)
-			I.invisibility = visible? 0 : INVISIBILITY_ABSTRACT
+			I.invisibility = visible? ZERO : INVISIBILITY_ABSTRACT
 			T = _T
 			_T = get_step(_T, _dir)
 			CHECK_TICK
@@ -140,7 +140,7 @@
 	. = ..()
 	setDir(t)
 
-/obj/item/assembly/infra/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
+/obj/item/assembly/infra/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = ZERO, datum/callback/callback, force)
 	. = ..()
 	olddir = dir
 

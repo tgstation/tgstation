@@ -19,7 +19,7 @@
 	var/awakened = FALSE
 	var/bloodthirst = HIS_GRACE_SATIATED
 	var/prev_bloodthirst = HIS_GRACE_SATIATED
-	var/force_bonus = 0
+	var/force_bonus = ZERO
 	var/ascended = FALSE
 	var/victims_needed = 25
 	var/ascend_bonus = 15
@@ -144,10 +144,10 @@
 		var/matrix/M2 = matrix()
 		var/matrix/M3 = matrix()
 		var/matrix/M4 = matrix()
-		M1.Translate(-1, 0)
-		M2.Translate(0, 1)
-		M3.Translate(1, 0)
-		M4.Translate(0, -1)
+		M1.Translate(-1, ZERO)
+		M2.Translate(ZERO, 1)
+		M3.Translate(1, ZERO)
+		M4.Translate(ZERO, -1)
 		transforms = list(M1, M2, M3, M4)
 
 	animate(src, transform=transforms[1], time=0.2, loop=-1)
@@ -169,12 +169,12 @@
 	force = initial(force)
 	force_bonus = initial(force_bonus)
 	awakened = FALSE
-	bloodthirst = 0
+	bloodthirst = ZERO
 
 /obj/item/his_grace/proc/consume(mob/living/meal) //Here's your dinner, Mr. Grace.
 	if(!meal)
 		return
-	var/victims = 0
+	var/victims = ZERO
 	meal.visible_message("<span class='warning'>[src] swings open and devours [meal]!</span>", "<span class='his_grace big bold'>[src] consumes you!</span>")
 	meal.adjustBruteLoss(200)
 	playsound(meal, 'sound/misc/desceration-02.ogg', 75, TRUE)

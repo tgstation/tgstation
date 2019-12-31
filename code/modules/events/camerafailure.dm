@@ -18,5 +18,5 @@
 		if (!("ss13" in C.network))
 			continue
 		if(C.status)
-			C.toggle_cam(null, 0)
+			C.toggle_cam(null, ZERO)
 		iterations *= 2.5

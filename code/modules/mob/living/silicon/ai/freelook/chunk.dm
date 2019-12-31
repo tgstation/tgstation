@@ -11,10 +11,10 @@
 	var/list/cameras = list()
 	var/list/turfs = list()
 	var/list/seenby = list()
-	var/changed = 0
-	var/x = 0
-	var/y = 0
-	var/z = 0
+	var/changed = ZERO
+	var/x = ZERO
+	var/y = ZERO
+	var/z = ZERO
 
 // Add an AI eye to the chunk, then update if changed.
 
@@ -48,7 +48,7 @@
 // Updates the chunk, makes sure that it doesn't update too much. If the chunk isn't being watched it will
 // instead be flagged to update the next time an AI Eye moves near it.
 
-/datum/camerachunk/proc/hasChanged(update_now = 0)
+/datum/camerachunk/proc/hasChanged(update_now = ZERO)
 	if(seenby.len || update_now)
 		addtimer(CALLBACK(src, .proc/update), UPDATE_BUFFER, TIMER_UNIQUE)
 	else
@@ -96,7 +96,7 @@
 		if(obscuredTurfs[t] && !istype(t, /turf/open/ai_visible))
 			t.vis_contents += GLOB.cameranet.vis_contents_objects
 
-	changed = 0
+	changed = ZERO
 
 // Create a new camera chunk, since the chunks are made as they are needed.
 

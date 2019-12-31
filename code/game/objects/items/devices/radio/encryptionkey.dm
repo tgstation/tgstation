@@ -77,7 +77,7 @@
 /obj/item/encryptionkey/heads/captain
 	name = "\proper the captain's encryption key"
 	icon_state = "cap_cypherkey"
-	channels = list(RADIO_CHANNEL_COMMAND = 1, RADIO_CHANNEL_SECURITY = 1, RADIO_CHANNEL_ENGINEERING = 0, RADIO_CHANNEL_SCIENCE = 0, RADIO_CHANNEL_MEDICAL = 0, RADIO_CHANNEL_SUPPLY = 0, RADIO_CHANNEL_SERVICE = 0)
+	channels = list(RADIO_CHANNEL_COMMAND = 1, RADIO_CHANNEL_SECURITY = 1, RADIO_CHANNEL_ENGINEERING = ZERO, RADIO_CHANNEL_SCIENCE = ZERO, RADIO_CHANNEL_MEDICAL = ZERO, RADIO_CHANNEL_SUPPLY = ZERO, RADIO_CHANNEL_SERVICE = ZERO)
 
 /obj/item/encryptionkey/heads/rd
 	name = "\proper the research director's encryption key"

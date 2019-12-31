@@ -49,7 +49,7 @@
 
 /datum/reagents
 	var/list/datum/reagent/reagent_list = new/list()
-	var/total_volume = 0
+	var/total_volume = ZERO
 	var/maximum_volume = 100
 	var/atom/my_atom = null
 	var/chem_temp = 150
@@ -58,7 +58,7 @@
 	var/list/datum/reagent/addiction_list = new/list()
 	var/flags
 
-/datum/reagents/New(maximum=100, new_flags=0)
+/datum/reagents/New(maximum=100, new_flags=ZERO)
 	maximum_volume = maximum
 
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
@@ -102,7 +102,7 @@
 
 /datum/reagents/proc/remove_any(amount = 1)
 	var/list/cached_reagents = reagent_list
-	var/total_transfered = 0
+	var/total_transfered = ZERO
 	var/current_list_element = 1
 
 	current_list_element = rand(1, cached_reagents.len)
@@ -110,7 +110,7 @@
 	while(total_transfered != amount)
 		if(total_transfered >= amount)
 			break
-		if(total_volume <= 0 || !cached_reagents.len)
+		if(total_volume <= ZERO || !cached_reagents.len)
 			break
 
 		if(current_list_element > cached_reagents.len)
@@ -128,7 +128,7 @@
 
 /datum/reagents/proc/remove_all(amount = 1)
 	var/list/cached_reagents = reagent_list
-	if(total_volume > 0)
+	if(total_volume > ZERO)
 		var/part = amount / total_volume
 		for(var/reagent in cached_reagents)
 			var/datum/reagent/R = reagent
@@ -141,7 +141,7 @@
 /datum/reagents/proc/get_master_reagent_name()
 	var/list/cached_reagents = reagent_list
 	var/name
-	var/max_volume = 0
+	var/max_volume = ZERO
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		if(R.volume > max_volume)
@@ -153,7 +153,7 @@
 /datum/reagents/proc/get_master_reagent_id()
 	var/list/cached_reagents = reagent_list
 	var/max_type
-	var/max_volume = 0
+	var/max_volume = ZERO
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		if(R.volume > max_volume)
@@ -165,7 +165,7 @@
 /datum/reagents/proc/get_master_reagent()
 	var/list/cached_reagents = reagent_list
 	var/datum/reagent/master
-	var/max_volume = 0
+	var/max_volume = ZERO
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		if(R.volume > max_volume)
@@ -180,7 +180,7 @@
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
-	if(amount < 0)
+	if(amount < ZERO)
 		return
 
 	var/atom/target_atom
@@ -226,7 +226,7 @@
 			if(amount > T.volume)
 				transfer_amount = T.volume
 			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1)
-			to_transfer = max(to_transfer - transfer_amount , 0)
+			to_transfer = max(to_transfer - transfer_amount , ZERO)
 			if(method)
 				R.react_single(T, target_atom, method, transfer_amount, show_message)
 				T.on_transfer(target_atom, method, transfer_amount * multiplier)
@@ -257,7 +257,7 @@
 			return
 		R = target.reagents
 
-	if(amount < 0)
+	if(amount < ZERO)
 		return
 	amount = min(min(amount, total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / total_volume
@@ -279,9 +279,9 @@
 	var/list/cached_reagents = reagent_list
 	if (!target)
 		return
-	if (!target.reagents || src.total_volume<=0 || !src.get_reagent_amount(reagent))
+	if (!target.reagents || src.total_volume<=ZERO || !src.get_reagent_amount(reagent))
 		return
-	if(amount < 0)
+	if(amount < ZERO)
 		return
 
 	var/datum/reagents/R = target.reagents
@@ -308,7 +308,7 @@
 	var/list/cached_addictions = addiction_list
 	if(C)
 		expose_temperature(C.bodytemperature, 0.25)
-	var/need_mob_update = 0
+	var/need_mob_update = ZERO
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		if(QDELETED(R.holder))
@@ -392,7 +392,7 @@
 			R.metabolizing = FALSE
 			R.on_mob_end_metabolize(C)
 
-/datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
+/datum/reagents/proc/conditional_update_move(atom/A, Running = ZERO)
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
@@ -414,10 +414,10 @@
 	var/list/cached_reactions = GLOB.chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
 
-	var/reaction_occurred = 0
+	var/reaction_occurred = ZERO
 	do
 		var/list/possible_reactions = list()
-		reaction_occurred = 0
+		reaction_occurred = ZERO
 		for(var/reagent in cached_reagents)
 			var/datum/reagent/R = reagent
 			for(var/reaction in cached_reactions[R.type]) // Was a big list but now it should be smaller since we filtered it with our reagent id
@@ -427,15 +427,15 @@
 				var/datum/chemical_reaction/C = reaction
 				var/list/cached_required_reagents = C.required_reagents
 				var/total_required_reagents = cached_required_reagents.len
-				var/total_matching_reagents = 0
+				var/total_matching_reagents = ZERO
 				var/list/cached_required_catalysts = C.required_catalysts
 				var/total_required_catalysts = cached_required_catalysts.len
-				var/total_matching_catalysts= 0
-				var/matching_container = 0
-				var/matching_other = 0
+				var/total_matching_catalysts= ZERO
+				var/matching_container = ZERO
+				var/matching_other = ZERO
 				var/required_temp = C.required_temp
 				var/is_cold_recipe = C.is_cold_recipe
-				var/meets_temp_requirement = 0
+				var/meets_temp_requirement = ZERO
 
 				for(var/B in cached_required_reagents)
 					if(!has_reagent(B, cached_required_reagents[B]))
@@ -460,7 +460,7 @@
 					else if(istype(cached_my_atom, /obj/item/slime_extract))
 						var/obj/item/slime_extract/M = cached_my_atom
 
-						if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
+						if(M.Uses > ZERO) // added a limit to slime cores -- Muskets requested this
 							matching_other = 1
 				else
 					if(!C.required_container)
@@ -468,7 +468,7 @@
 					if(!C.required_other)
 						matching_other = 1
 
-				if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
+				if(required_temp == ZERO || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
 					meets_temp_requirement = 1
 
 				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement)
@@ -512,7 +512,7 @@
 				if(istype(cached_my_atom, /obj/item/slime_extract))
 					var/obj/item/slime_extract/ME2 = my_atom
 					ME2.Uses--
-					if(ME2.Uses <= 0) // give the notification that the slime core is dead
+					if(ME2.Uses <= ZERO) // give the notification that the slime core is dead
 						for(var/mob/M in seen)
 							to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
 							ME2.name = "used slime extract"
@@ -524,7 +524,7 @@
 
 	while(reaction_occurred)
 	update_total()
-	return 0
+	return ZERO
 
 /datum/reagents/proc/isolate_reagent(reagent)
 	var/list/cached_reagents = reagent_list
@@ -556,7 +556,7 @@
 
 /datum/reagents/proc/update_total()
 	var/list/cached_reagents = reagent_list
-	total_volume = 0
+	total_volume = ZERO
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		if(R.volume < 0.1)
@@ -564,7 +564,7 @@
 		else
 			total_volume += R.volume
 
-	return 0
+	return ZERO
 
 /datum/reagents/proc/clear_reagents()
 	var/list/cached_reagents = reagent_list
@@ -573,7 +573,7 @@
 		del_reagent(R.type)
 	if(my_atom)
 		my_atom.on_reagent_change(CLEAR_REAGENTS)
-	return 0
+	return ZERO
 
 /datum/reagents/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)
 	var/react_type
@@ -593,7 +593,7 @@
 		var/datum/reagent/R = reagent
 		switch(react_type)
 			if("LIVING")
-				var/touch_protection = 0
+				var/touch_protection = ZERO
 				if(method == VAPOR)
 					var/mob/living/L = A
 					touch_protection = L.get_permeability_protection()
@@ -618,7 +618,7 @@
 		return
 	switch(react_type)
 		if("LIVING")
-			var/touch_protection = 0
+			var/touch_protection = ZERO
 			if(method == VAPOR)
 				var/mob/living/L = A
 				touch_protection = L.get_permeability_protection()
@@ -635,7 +635,7 @@
 
 //Returns the average specific heat for all reagents currently in this holder.
 /datum/reagents/proc/specific_heat()
-	. = 0
+	. = ZERO
 	var/cached_amount = total_volume		//cache amount
 	var/list/cached_reagents = reagent_list		//cache reagents
 	for(var/I in cached_reagents)
@@ -646,11 +646,11 @@
 	var/S = specific_heat()
 	chem_temp = CLAMP(chem_temp + (J / (S * total_volume)), 2.7, 1000)
 
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = ZERO)
 	if(!isnum(amount) || !amount)
 		return FALSE
 
-	if(amount <= 0)
+	if(amount <= ZERO)
 		return FALSE
 
 	var/datum/reagent/D = GLOB.chemical_reagents_list[reagent]
@@ -662,15 +662,15 @@
 	var/cached_total = total_volume
 	if(cached_total + amount > maximum_volume)
 		amount = (maximum_volume - cached_total) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
-		if(amount <= 0)
+		if(amount <= ZERO)
 			return FALSE
 	var/new_total = cached_total + amount
 	var/cached_temp = chem_temp
 	var/list/cached_reagents = reagent_list
 
 	//Equalize temperature - Not using specific_heat() because the new chemical isn't in yet.
-	var/specific_heat = 0
-	var/thermal_energy = 0
+	var/specific_heat = ZERO
+	var/thermal_energy = ZERO
 	for(var/i in cached_reagents)
 		var/datum/reagent/R = i
 		specific_heat += R.specific_heat * (R.volume / new_total)
@@ -719,13 +719,13 @@
 /datum/reagents/proc/remove_reagent(reagent, amount, safety)//Added a safety check for the trans_id_to
 
 	if(isnull(amount))
-		amount = 0
+		amount = ZERO
 		CRASH("null amount passed to reagent code")
 
 	if(!isnum(amount))
 		return FALSE
 
-	if(amount < 0)
+	if(amount < ZERO)
 		return FALSE
 
 	var/list/cached_reagents = reagent_list
@@ -735,7 +735,7 @@
 		if (R.type == reagent)
 			//clamp the removal amount to be between current reagent amount
 			//and zero, to prevent removing more than the holder has stored
-			amount = CLAMP(amount, 0, R.volume)
+			amount = CLAMP(amount, ZERO, R.volume)
 			R.volume -= amount
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
@@ -753,17 +753,17 @@
 		if (R.type == reagent)
 			if(!amount)
 				if(needs_metabolizing && !R.metabolizing)
-					return 0
+					return ZERO
 				return R
 			else
 				if(round(R.volume, CHEMICAL_QUANTISATION_LEVEL) >= amount)
 					if(needs_metabolizing && !R.metabolizing)
-						return 0
+						return ZERO
 					return R
 				else
-					return 0
+					return ZERO
 
-	return 0
+	return ZERO
 
 /datum/reagents/proc/get_reagent_amount(reagent)
 	var/list/cached_reagents = reagent_list
@@ -772,7 +772,7 @@
 		if (R.type == reagent)
 			return round(R.volume, CHEMICAL_QUANTISATION_LEVEL)
 
-	return 0
+	return ZERO
 
 /datum/reagents/proc/get_reagents()
 	var/list/names = list()
@@ -783,15 +783,15 @@
 
 	return jointext(names, ",")
 
-/datum/reagents/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
+/datum/reagents/proc/remove_all_type(reagent_type, amount, strict = ZERO, safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
 	if(!isnum(amount))
 		return 1
 	var/list/cached_reagents = reagent_list
-	var/has_removed_reagent = 0
+	var/has_removed_reagent = ZERO
 
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		var/matches = 0
+		var/matches = ZERO
 		// Switch between how we check the reagent type
 		if(strict)
 			if(R.type == reagent_type)
@@ -874,7 +874,7 @@
 		//deal with percentages
 		// TODO it would be great if we could sort these from strong to weak
 		var/total_taste = counterlist_sum(tastes)
-		if(total_taste > 0)
+		if(total_taste > ZERO)
 			for(var/taste_desc in tastes)
 				var/percent = tastes[taste_desc]/total_taste * 100
 				if(percent < minimum_percent)
@@ -897,7 +897,7 @@
 		if(RCs.reagent_flags & NO_REACT) //stasis holders IE cryobeaker
 			return
 	var/temp_delta = (temperature - chem_temp) * coeff
-	if(temp_delta > 0)
+	if(temp_delta > ZERO)
 		chem_temp = min(chem_temp + max(temp_delta, 1), temperature)
 	else
 		chem_temp = max(chem_temp + min(temp_delta, -1), temperature)

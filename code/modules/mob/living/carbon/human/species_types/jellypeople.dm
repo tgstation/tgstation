@@ -76,10 +76,10 @@
 		var/mob/living/carbon/human/H = owner
 		var/list/limbs_to_heal = H.get_missing_limbs()
 		if(limbs_to_heal.len < 1)
-			return 0
+			return ZERO
 		if(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
 			return 1
-		return 0
+		return ZERO
 
 /datum/action/innate/regenerate_limbs/Activate()
 	var/mob/living/carbon/human/H = owner
@@ -184,7 +184,7 @@
 		var/mob/living/carbon/human/H = owner
 		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 			return 1
-		return 0
+		return ZERO
 
 /datum/action/innate/split_body/Activate()
 	var/mob/living/carbon/human/H = owner
@@ -232,7 +232,7 @@
 		SEND_SIGNAL(spare, COMSIG_NANITE_SYNC, owner_nanites, TRUE, TRUE) //The trues are to copy activation as well
 
 	H.blood_volume *= 0.45
-	H.notransform = 0
+	H.notransform = ZERO
 
 	var/datum/species/jelly/slime/origin_datum = H.dna.species
 	origin_datum.bodies |= spare
@@ -401,7 +401,7 @@
 	var/datum/action/innate/integrate_extract/integrate_extract
 	var/datum/action/innate/use_extract/extract_minor
 	var/datum/action/innate/use_extract/major/extract_major
-	var/extract_cooldown = 0
+	var/extract_cooldown = ZERO
 
 /datum/species/jelly/luminescent/on_species_loss(mob/living/carbon/C)
 	..()
@@ -566,7 +566,7 @@
 	var/list/mob/living/linked_mobs = list()
 	var/list/datum/action/innate/linked_speech/linked_actions = list()
 	var/mob/living/carbon/human/slimelink_owner
-	var/current_link_id = 0
+	var/current_link_id = ZERO
 
 /datum/species/jelly/stargazer/on_species_loss(mob/living/carbon/C)
 	..()
@@ -596,7 +596,7 @@
 		return FALSE
 	if(HAS_TRAIT(M, TRAIT_MINDSHIELD)) //mindshield implant, no dice
 		return FALSE
-	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
+	if(M.anti_magic_check(FALSE, FALSE, TRUE, ZERO))
 		return FALSE
 	if(M in linked_mobs)
 		return FALSE
@@ -679,12 +679,12 @@
 	var/mob/living/M = input("Select who to send your message to:","Send thought to?",null) as null|mob in sortNames(options)
 	if(!M)
 		return
-	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
+	if(M.anti_magic_check(FALSE, FALSE, TRUE, ZERO))
 		to_chat(H, "<span class='notice'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
 		return
 	var/msg = sanitize(input("Message:", "Telepathy") as text|null)
 	if(msg)
-		if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
+		if(M.anti_magic_check(FALSE, FALSE, TRUE, ZERO))
 			to_chat(H, "<span class='notice'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
 			return
 		log_directed_talk(H, M, msg, LOG_SAY, "slime telepathy")

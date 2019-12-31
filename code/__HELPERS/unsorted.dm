@@ -25,48 +25,48 @@
 
 /proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
 	if(!start || !end)
-		return 0
+		return ZERO
 	var/dy
 	var/dx
 	dy=(32*end.y+end.pixel_y)-(32*start.y+start.pixel_y)
 	dx=(32*end.x+end.pixel_x)-(32*start.x+start.pixel_x)
 	if(!dy)
-		return (dx>=0)?90:270
+		return (dx>=ZERO)?90:270
 	.=arctan(dx/dy)
-	if(dy<0)
+	if(dy<ZERO)
 		.+=180
-	else if(dx<0)
+	else if(dx<ZERO)
 		.+=360
 
 /proc/Get_Pixel_Angle(y, x)//for getting the angle when animating something's pixel_x and pixel_y
 	if(!y)
-		return (x>=0)?90:270
+		return (x>=ZERO)?90:270
 	.=arctan(x/y)
-	if(y<0)
+	if(y<ZERO)
 		.+=180
-	else if(x<0)
+	else if(x<ZERO)
 		.+=360
 
 //Returns location. Returns null if no location was found.
-/proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = FALSE, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
+/proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = FALSE, errorx = ZERO, errory = ZERO, eoffsetx = ZERO, eoffsety = ZERO)
 /*
-Location where the teleport begins, target that will teleport, distance to go, density checking 0/1(yes/no).
+Location where the teleport begins, target that will teleport, distance to go, density checking ZERO/1(yes/no).
 Random error in tile placement x, error in tile placement y, and block offset.
 Block offset tells the proc how to place the box. Behind teleport location, relative to starting location, forward, etc.
 Negative values for offset are accepted, think of it in relation to North, -x is west, -y is south. Error defaults to positive.
 Turf and target are separate in case you want to teleport some distance from a turf the target is not standing on or something.
 */
 
-	var/dirx = 0//Generic location finding variable.
-	var/diry = 0
+	var/dirx = ZERO//Generic location finding variable.
+	var/diry = ZERO
 
-	var/xoffset = 0//Generic counter for offset location.
-	var/yoffset = 0
+	var/xoffset = ZERO//Generic counter for offset location.
+	var/yoffset = ZERO
 
-	var/b1xerror = 0//Generic placing for point A in box. The lower left.
-	var/b1yerror = 0
-	var/b2xerror = 0//Generic placing for point B in box. The upper right.
-	var/b2yerror = 0
+	var/b1xerror = ZERO//Generic placing for point A in box. The lower left.
+	var/b1yerror = ZERO
+	var/b2xerror = ZERO//Generic placing for point B in box. The upper right.
+	var/b2yerror = ZERO
 
 	errorx = abs(errorx)//Error should never be negative.
 	errory = abs(errory)
@@ -169,7 +169,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 			px+=sdx		//Step on in x direction
 			line+=locate(px,py,M.z)//Add the turf to the list
 	else
-		for(j=0;j<dyabs;j++)
+		for(j=ZERO;j<dyabs;j++)
 			x+=dxabs
 			if(x>=dyabs)
 				x-=dyabs
@@ -181,14 +181,14 @@ Turf and target are separate in case you want to teleport some distance from a t
 //Returns whether or not a player is a guest using their ckey as an input
 /proc/IsGuestKey(key)
 	if (findtext(key, "Guest-", 1, 7) != 1) //was findtextEx
-		return 0
+		return ZERO
 
 	var/i, ch, len = length(key)
 
 	for (i = 7, i <= len, ++i)
 		ch = text2ascii(key, i)
 		if (ch < 48 || ch > 57)
-			return 0
+			return ZERO
 	return 1
 
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
@@ -198,7 +198,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/oldname = real_name
 	var/newname
 	var/loop = 1
-	var/safety = 0
+	var/safety = ZERO
 
 	var/banned = C ? is_banned_from(C.ckey, "Appearance") : null
 
@@ -251,7 +251,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		. += R
 
 //Returns a list of AI's
-/proc/active_ais(check_mind=0)
+/proc/active_ais(check_mind=ZERO)
 	. = list()
 	for(var/mob/living/silicon/ai/A in GLOB.alive_mob_list)
 		if(A.stat == DEAD)
@@ -293,7 +293,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return .
 
 //Returns a list of all items of interest with their name
-/proc/getpois(mobs_only=0,skip_mindless=0)
+/proc/getpois(mobs_only=ZERO,skip_mindless=ZERO)
 	var/list/mobs = sortmobs()
 	var/list/namecounts = list()
 	var/list/pois = list()
@@ -405,7 +405,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 /proc/get_edge_target_turf(atom/A, direction)
 	var/turf/target = locate(A.x, A.y, A.z)
 	if(!A || !target)
-		return 0
+		return ZERO
 		//since NORTHEAST == NORTH|EAST, etc, doing it this way allows for diagonal mass drivers in the future
 		//and isn't really any more complicated
 
@@ -506,13 +506,13 @@ Turf and target are separate in case you want to teleport some distance from a t
 		current = get_step_towards(current, target_turf)
 		while(current != target_turf)
 			if(steps > length)
-				return 0
+				return ZERO
 			if(current.opacity)
-				return 0
+				return ZERO
 			for(var/thing in current)
 				var/atom/A = thing
 				if(A.opacity)
-					return 0
+					return ZERO
 			current = get_step_towards(current, target_turf)
 			steps++
 
@@ -525,7 +525,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		var/atom/A = i
 		if(A.density && (!exclude_mobs || !ismob(A)))
 			return 1
-	return 0
+	return ZERO
 
 /proc/is_anchored_dense_turf(turf/T) //like the older version of the above, fails only if also anchored
 	if(T.density)
@@ -534,7 +534,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		var/atom/movable/A = i
 		if(A.density && A.anchored)
 			return 1
-	return 0
+	return ZERO
 
 /proc/get_step_towards2(atom/ref , atom/trg)
 	var/base_dir = get_dir(ref, get_step_towards(ref,trg))
@@ -546,7 +546,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		var/turf/turf_last1 = temp
 		var/turf/turf_last2 = temp
 		var/free_tile = null
-		var/breakpoint = 0
+		var/breakpoint = ZERO
 
 		while(!free_tile && breakpoint < 10)
 			if(!is_blocked_turf(turf_last1))
@@ -568,12 +568,12 @@ Turf and target are separate in case you want to teleport some distance from a t
 		return get_step(ref, base_dir)
 
 //Takes: Anything that could possibly have variables and a varname to check.
-//Returns: 1 if found, 0 if not.
+//Returns: 1 if found, ZERO if not.
 /proc/hasvar(datum/A, varname)
 	if(A.vars.Find(lowertext(varname)))
 		return 1
 	else
-		return 0
+		return ZERO
 
 //Repopulates sortedAreas list
 /proc/repopulate_sorted_areas()
@@ -622,7 +622,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all turfs in areas of that type of that type in the world.
-/proc/get_area_turfs(areatype, target_z = 0, subtypes=FALSE)
+/proc/get_area_turfs(areatype, target_z = ZERO, subtypes=FALSE)
 	if(istext(areatype))
 		areatype = text2path(areatype)
 	else if(isarea(areatype))
@@ -639,7 +639,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 			if(!cache[A.type])
 				continue
 			for(var/turf/T in A)
-				if(target_z == 0 || target_z == T.z)
+				if(target_z == ZERO || target_z == T.z)
 					turfs += T
 	else
 		for(var/V in GLOB.sortedAreas)
@@ -647,7 +647,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 			if(A.type != areatype)
 				continue
 			for(var/turf/T in A)
-				if(target_z == 0 || target_z == T.z)
+				if(target_z == ZERO || target_z == T.z)
 					turfs += T
 	return turfs
 
@@ -733,7 +733,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 //of course mathematically this is just adding world.icon_size on again
 /proc/getPixelDistance(atom/A, atom/B, centered = TRUE)
 	if(!istype(A)||!istype(B))
-		return 0
+		return ZERO
 	. = bounds_dist(A, B) + sqrt((((A.pixel_x+B.pixel_x)**2) + ((A.pixel_y+B.pixel_y)**2)))
 	if(centered)
 		. += world.icon_size
@@ -784,7 +784,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	/obj/structure/light_construct, /obj/machinery/light)))
 
 
-/proc/gotwallitem(loc, dir, check_external = 0)
+/proc/gotwallitem(loc, dir, check_external = ZERO)
 	var/locdir = get_step(loc, dir)
 	for(var/obj/O in loc)
 		if(is_type_in_typecache(O, GLOB.WALLITEMS) && check_external != 2)
@@ -810,9 +810,9 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	//Some stuff is placed directly on the wallturf (signs)
 	for(var/obj/O in locdir)
 		if(is_type_in_typecache(O, GLOB.WALLITEMS) && check_external != 2)
-			if(O.pixel_x == 0 && O.pixel_y == 0)
+			if(O.pixel_x == ZERO && O.pixel_y == ZERO)
 				return 1
-	return 0
+	return ZERO
 
 /proc/format_text(text)
 	return replacetext(replacetext(text,"\proper ",""),"\improper ","")
@@ -833,14 +833,14 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 
 /proc/random_step(atom/movable/AM, steps, chance)
 	var/initial_chance = chance
-	while(steps > 0)
+	while(steps > ZERO)
 		if(prob(chance))
 			step(AM, pick(GLOB.alldirs))
-		chance = max(chance - (initial_chance / steps), 0)
+		chance = max(chance - (initial_chance / steps), ZERO)
 		steps--
 
 /proc/living_player_count()
-	var/living_player_count = 0
+	var/living_player_count = ZERO
 	for(var/mob in GLOB.player_list)
 		if(mob in GLOB.alive_mob_list)
 			living_player_count += 1
@@ -848,7 +848,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 
 /proc/randomColor(mode = 0)	//if 1 it doesn't pick white, black or gray
 	switch(mode)
-		if(0)
+		if(ZERO)
 			return pick("white","black","gray","red","green","blue","brown","yellow","orange","darkred",
 						"crimson","lime","darkgreen","cyan","navy","teal","purple","indigo")
 		if(1)
@@ -888,7 +888,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 /proc/IsValidSrc(datum/D)
 	if(istype(D))
 		return !QDELETED(D)
-	return 0
+	return ZERO
 
 //Compare A's dir, the clockwise dir of A and the anticlockwise dir of A
 //To the opposite dir of the dir returned by get_dir(B,A)
@@ -939,7 +939,7 @@ B --><-- A
 // eg: center_image(I, 32,32)
 // eg2: center_image(I, 96,96)
 
-/proc/center_image(var/image/I, x_dimension = 0, y_dimension = 0)
+/proc/center_image(var/image/I, x_dimension = ZERO, y_dimension = ZERO)
 	if(!I)
 		return
 
@@ -967,7 +967,7 @@ B --><-- A
 	return I
 
 //ultra range (no limitations on distance, faster than range for distances > 8); including areas drastically decreases performance
-/proc/urange(dist=0, atom/center=usr, orange=0, areas=0)
+/proc/urange(dist=ZERO, atom/center=usr, orange=ZERO, areas=ZERO)
 	if(!dist)
 		if(!orange)
 			return list(center)
@@ -986,7 +986,7 @@ B --><-- A
 			. |= T.loc
 
 //similar function to range(), but with no limitations on the distance; will search spiralling outwards from the center
-/proc/spiral_range(dist=0, center=usr, orange=0)
+/proc/spiral_range(dist=ZERO, center=usr, orange=ZERO)
 	var/list/L = list()
 	var/turf/t_center = get_turf(center)
 	if(!t_center)
@@ -1043,7 +1043,7 @@ B --><-- A
 	return L
 
 //similar function to RANGE_TURFS(), but will search spiralling outwards from the center (like the above, but only turfs)
-/proc/spiral_range_turfs(dist=0, center=usr, orange=0, list/outlist = list(), tick_checked)
+/proc/spiral_range_turfs(dist=ZERO, center=usr, orange=ZERO, list/outlist = list(), tick_checked)
 	outlist.Cut()
 	if(!dist)
 		outlist += center
@@ -1098,13 +1098,13 @@ B --><-- A
 
 /atom/proc/contains(var/atom/A)
 	if(!A)
-		return 0
+		return ZERO
 	for(var/atom/location = A.loc, location, location = location.loc)
 		if(location == src)
 			return 1
 
 /proc/flick_overlay_static(O, atom/A, duration)
-	set waitfor = 0
+	set waitfor = ZERO
 	if(!A || !O)
 		return
 	A.add_overlay(O)
@@ -1162,7 +1162,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	if(!isnull(value) && value != "")
 		matches = filter_fancy_list(matches, value)
 
-	if(matches.len==0)
+	if(matches.len==ZERO)
 		return
 
 	var/chosen
@@ -1203,7 +1203,7 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 		return 1
 	if (!initial_delay)
 		initial_delay = world.tick_lag
-	. = 0
+	. = ZERO
 	var/i = DS2TICKS(initial_delay)
 	do
 		. += CEILING(i*DELTA_CALC, 1)
@@ -1231,10 +1231,10 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 	C.color = flash_color
 	animate(C, color = animate_color, time = flash_time)
 
-#define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
+#define RANDOM_COLOUR (rgb(rand(ZERO,255),rand(ZERO,255),rand(ZERO,255)))
 
 /proc/random_nukecode()
-	var/val = rand(0, 99999)
+	var/val = rand(ZERO, 99999)
 	var/str = "[val]"
 	while(length(str) < 5)
 		str = "0" + str
@@ -1269,7 +1269,7 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 //Version of view() which ignores darkness, because BYOND doesn't have it (I actually suggested it but it was tagged redundant, BUT HEARERS IS A T- /rant).
-/proc/dview(range = world.view, center, invis_flags = 0)
+/proc/dview(range = world.view, center, invis_flags = ZERO)
 	if(!center)
 		return
 
@@ -1357,17 +1357,17 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	return temp
 
 //same as do_mob except for movables and it allows both to drift and doesn't draw progressbar
-/proc/do_atom(atom/movable/user , atom/movable/target, time = 30, uninterruptible = 0,datum/callback/extra_checks = null)
+/proc/do_atom(atom/movable/user , atom/movable/target, time = 30, uninterruptible = ZERO,datum/callback/extra_checks = null)
 	if(!user || !target)
 		return TRUE
 	var/user_loc = user.loc
 
 	var/drifting = FALSE
-	if(!user.Process_Spacemove(0) && user.inertia_dir)
+	if(!user.Process_Spacemove(ZERO) && user.inertia_dir)
 		drifting = TRUE
 
 	var/target_drifting = FALSE
-	if(!target.Process_Spacemove(0) && target.inertia_dir)
+	if(!target.Process_Spacemove(ZERO) && target.inertia_dir)
 		target_drifting = TRUE
 
 	var/target_loc = target.loc
@@ -1377,7 +1377,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	while (world.time < endtime)
 		stoplag(1)
 		if(QDELETED(user) || QDELETED(target))
-			. = 0
+			. = ZERO
 			break
 		if(uninterruptible)
 			continue
@@ -1596,12 +1596,12 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		world.TgsChatBroadcast()
 
 /proc/num2sign(numeric)
-	if(numeric > 0)
+	if(numeric > ZERO)
 		return 1
-	else if(numeric < 0)
+	else if(numeric < ZERO)
 		return -1
 	else
-		return 0
+		return ZERO
 
 /proc/CallAsync(datum/source, proctype, list/arguments)
 	set waitfor = FALSE

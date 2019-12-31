@@ -3,11 +3,11 @@
 // Should probably move these up and refactor modules so these can be mixed with other ones
 
 /datum/mapGenerator/ca
-	var/list/b_rule = list() // 0 -> 1, 1 -> 1
-	var/list/s_rule = list() // 0 -> 0, 1 -> 1
+	var/list/b_rule = list() // ZERO -> 1, 1 -> 1
+	var/list/s_rule = list() // ZERO -> ZERO, 1 -> 1
 	var/iterations = 1
-	var/loop_edges = 0
-	var/edge_value = 1 //if loop_edges = 0
+	var/loop_edges = ZERO
+	var/edge_value = 1 //if loop_edges = ZERO
 	var/list/old_state
 	var/list/current_state
 	var/width = 10
@@ -15,7 +15,7 @@
 	var/list/type_map = list(/turf/open/floor/plating, /turf/closed/wall)
 	var/turf/start = null
 
-/datum/mapGenerator/ca/defineRegion(turf/Start, turf/End, replace = 0)
+/datum/mapGenerator/ca/defineRegion(turf/Start, turf/End, replace = ZERO)
 	. = ..()
 
 	var/min_x = min(Start.x,End.x)
@@ -33,7 +33,7 @@
 	for(var/i = 1,i<=width,i++)
 		old_state[i] = new/list(height)
 		for(var/j = 1,j<=height,j++)
-			old_state[i][j] = rand(0,1)
+			old_state[i][j] = rand(ZERO,1)
 
 	current_state = old_state.Copy()
 
@@ -42,7 +42,7 @@
 	//Maybe some less basic implemetation later, but this is just simple admin tool
 	initialize()
 
-	for(var/generation = 0,generation<iterations,generation++)
+	for(var/generation = ZERO,generation<iterations,generation++)
 		for(var/i = 1,i<=width,i++)
 			for(var/j = 1,j<=height,j++)
 				current_state[i][j] = apply_rule(i,j)
@@ -56,7 +56,7 @@
 				T.ChangeTurf(type_map[current_state[i][j]+1])
 
 /datum/mapGenerator/ca/proc/apply_rule(i,j)
-	var/value = 0
+	var/value = ZERO
 	for(var/dx=-1,dx<=1,dx++)
 		for(var/dy=-1,dy<=1,dy++)
 			var/n_x = i+dx
@@ -81,7 +81,7 @@
 		return 1
 	if(value in s_rule)
 		return old_state[i][j]
-	return 0
+	return ZERO
 
 /datum/mapGenerator/ca/caves
 	b_rule = list(5,6,7,8)
@@ -93,4 +93,4 @@
 	b_rule = list(3)
 	s_rule = list(1,2,3,4,5)
 	iterations = 20
-	edge_value = 0
+	edge_value = ZERO

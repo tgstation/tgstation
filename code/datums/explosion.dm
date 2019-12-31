@@ -4,7 +4,7 @@ GLOBAL_LIST_EMPTY(explosions)
 //Against my better judgement, I will return the explosion datum
 //If I see any GC errors for it I will find you
 //and I will gib you
-/proc/explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0, silent = FALSE, smoke = FALSE)
+/proc/explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = ZERO, silent = FALSE, smoke = FALSE)
 	return new /datum/explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
 
 //This datum creates 3 async tasks
@@ -18,7 +18,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	var/started_at
 	var/running = TRUE
 	var/stopped = 0		//This is the number of threads stopped !DOESN'T COUNT THREAD 2!
-	var/static/id_counter = 0
+	var/static/id_counter = ZERO
 
 #define EX_PREPROCESS_EXIT_CHECK \
 	if(!running) {\
@@ -100,7 +100,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	// Calculate far explosion sound range. Only allow the sound effect for heavy/devastating explosions.
 	// 3/7/14 will calculate to 80 + 35
 
-	var/far_dist = 0
+	var/far_dist = ZERO
 	far_dist += heavy_impact_range * 5
 	far_dist += devastation_range * 20
 
@@ -115,20 +115,20 @@ GLOBAL_LIST_EMPTY(explosions)
 			if(M_turf && M_turf.z == z0)
 				var/dist = get_dist(M_turf, epicenter)
 				var/baseshakeamount
-				if(orig_max_distance - dist > 0)
+				if(orig_max_distance - dist > ZERO)
 					baseshakeamount = sqrt((orig_max_distance - dist)*0.1)
 				// If inside the blast radius + world.view - 2
 				if(dist <= round(max_range + world.view - 2, 1))
 					M.playsound_local(epicenter, null, 100, 1, frequency, falloff = 5, S = explosion_sound)
-					if(baseshakeamount > 0)
-						shake_camera(M, 25, CLAMP(baseshakeamount, 0, 10))
+					if(baseshakeamount > ZERO)
+						shake_camera(M, 25, CLAMP(baseshakeamount, ZERO, 10))
 				// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
 				else if(dist <= far_dist)
 					var/far_volume = CLAMP(far_dist, 30, 50) // Volume is based on explosion size and dist
-					far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
+					far_volume += (dist <= far_dist * 0.5 ? 50 : ZERO) // add 50 volume if the mob is pretty close to the explosion
 					M.playsound_local(epicenter, null, far_volume, 1, frequency, falloff = 5, S = far_explosion_sound)
-					if(baseshakeamount > 0)
-						shake_camera(M, 10, CLAMP(baseshakeamount*0.25, 0, 2.5))
+					if(baseshakeamount > ZERO)
+						shake_camera(M, 10, CLAMP(baseshakeamount*0.25, ZERO, 2.5))
 			EX_PREPROCESS_CHECK_TICK
 
 	//postpone processing for a bit
@@ -165,7 +165,7 @@ GLOBAL_LIST_EMPTY(explosions)
 
 	//lists are guaranteed to contain at least 1 turf at this point
 
-	var/iteration = 0
+	var/iteration = ZERO
 	var/affTurfLen = affected_turfs.len
 	var/expBlockLen = cached_exp_block.len
 	for(var/TI in affected_turfs)
@@ -263,13 +263,13 @@ GLOBAL_LIST_EMPTY(explosions)
 			if(exploded_this_tick.len > circumference)	//only do this every revolution
 				for(var/Unexplode in exploded_this_tick)
 					var/turf/UnexplodeT = Unexplode
-					UnexplodeT.explosion_level = 0
+					UnexplodeT.explosion_level = ZERO
 				exploded_this_tick.Cut()
 
 	//unfuck the shit
 	for(var/Unexplode in exploded_this_tick)
 		var/turf/UnexplodeT = Unexplode
-		UnexplodeT.explosion_level = 0
+		UnexplodeT.explosion_level = ZERO
 	exploded_this_tick.Cut()
 
 	var/took = (REALTIMEOFDAY - started_at) / 10
@@ -298,12 +298,12 @@ GLOBAL_LIST_EMPTY(explosions)
 	set waitfor = FALSE
 
 	. = list()
-	var/processed = 0
+	var/processed = ZERO
 	while(running)
 		var/I
 		for(I in (processed + 1) to affected_turfs.len) // we cache the explosion block rating of every turf in the explosion area
 			var/turf/T = affected_turfs[I]
-			var/current_exp_block = T.density ? T.explosion_block : 0
+			var/current_exp_block = T.density ? T.explosion_block : ZERO
 
 			for(var/obj/O in T)
 				var/the_block = O.explosion_block
@@ -334,14 +334,14 @@ GLOBAL_LIST_EMPTY(explosions)
 	if(!epicenter)
 		return
 
-	var/dev = 0
-	var/heavy = 0
-	var/light = 0
+	var/dev = ZERO
+	var/heavy = ZERO
+	var/light = ZERO
 	var/list/choices = list("Small Bomb","Medium Bomb","Big Bomb","Custom Bomb")
 	var/choice = input("Bomb Size?") in choices
 	switch(choice)
 		if(null)
-			return 0
+			return ZERO
 		if("Small Bomb")
 			dev = 1
 			heavy = 2
@@ -398,10 +398,10 @@ GLOBAL_LIST_EMPTY(explosions)
 		A.color = null
 		A.maptext = ""
 
-/proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = TRUE, ignorecap = TRUE, flame_range = 0, silent = FALSE, smoke = TRUE)
+/proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = TRUE, ignorecap = TRUE, flame_range = ZERO, silent = FALSE, smoke = TRUE)
 	if(!power)
 		return
-	var/range = 0
+	var/range = ZERO
 	range = round((2 * power)**GLOB.DYN_EX_SCALE)
 	explosion(epicenter, round(range * 0.25), round(range * 0.5), round(range), flash_range*range, adminlog, ignorecap, flame_range*range, silent, smoke)
 
@@ -411,5 +411,5 @@ GLOBAL_LIST_EMPTY(explosions)
 // 50 explosion power is a (3, 7, 14) explosion.
 // 25 explosion power is a (2, 5, 10) explosion.
 // 10 explosion power is a (1, 3, 6) explosion.
-// 5 explosion power is a (0, 1, 3) explosion.
-// 1 explosion power is a (0, 0, 1) explosion.
+// 5 explosion power is a (ZERO, 1, 3) explosion.
+// 1 explosion power is a (ZERO, ZERO, 1) explosion.

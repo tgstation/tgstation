@@ -2,7 +2,7 @@
 	var/sanity = forced_turf ? 1 : PLACEMENT_TRIES
 	if(SSmapping.level_trait(z,ZTRAIT_ISOLATED_RUINS))
 		return place_on_isolated_level(z)
-	while(sanity > 0)
+	while(sanity > ZERO)
 		sanity--
 		var/width_border = TRANSITIONEDGE + SPACERUIN_MAP_EDGE_PAD + round(width / 2)
 		var/height_border = TRANSITIONEDGE + SPACERUIN_MAP_EDGE_PAD + round(height / 2)
@@ -52,7 +52,7 @@
 	return center
 
 
-/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = /area/space, list/potentialRuins)
+/proc/seedRuins(list/z_levels = null, budget = ZERO, whitelist = /area/space, list/potentialRuins)
 	if(!z_levels || !z_levels.len)
 		WARNING("No Z levels provided - Not generating ruins")
 		return
@@ -78,7 +78,7 @@
 		if(R.unpickable)
 			continue
 		ruins_availible[R] = R.placement_weight
-	while(budget > 0 && (ruins_availible.len || forced_ruins.len))
+	while(budget > ZERO && (ruins_availible.len || forced_ruins.len))
 		var/datum/map_template/ruin/current_pick
 		var/forced = FALSE
 		var/forced_z	//If set we won't pick z level and use this one instead.
@@ -90,7 +90,7 @@
 					var/turf/T = forced_ruins[ruin]
 					forced_z = T.z //In case of chained ruins
 					forced_turf = T
-				else if(forced_ruins[ruin] > 0) //Load into designated z
+				else if(forced_ruins[ruin] > ZERO) //Load into designated z
 					forced_z = forced_ruins[ruin]
 				forced = TRUE
 				break
@@ -99,10 +99,10 @@
 		
 		var/placement_tries = forced_turf ? 1 : PLACEMENT_TRIES //Only try once if we target specific turf
 		var/failed_to_place = TRUE
-		var/target_z = 0
+		var/target_z = ZERO
 		var/turf/placed_turf //Where the ruin ended up if we succeeded
 		outer:
-			while(placement_tries > 0)
+			while(placement_tries > ZERO)
 				placement_tries--
 				target_z = pick(z_levels)
 				if(forced_z)

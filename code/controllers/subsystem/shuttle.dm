@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/emergencyDockTime = 1800	//time taken for emergency shuttle to leave again once it has docked (in deciseconds)
 	var/emergencyEscapeTime = 1200	//time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
 	var/area/emergencyLastCallLoc
-	var/emergencyCallAmount = 0		//how many times the escape shuttle was called
+	var/emergencyCallAmount = ZERO		//how many times the escape shuttle was called
 	var/emergencyNoEscape
 	var/emergencyNoRecall = FALSE
 	var/list/hostileEnvironments = list() //Things blocking escape shuttle from leaving
@@ -133,14 +133,14 @@ SUBSYSTEM_DEF(shuttle)
 	if(!threshold)
 		return
 
-	var/alive = 0
+	var/alive = ZERO
 	for(var/I in GLOB.player_list)
 		var/mob/M = I
 		if(M.stat != DEAD)
 			++alive
 
 	var/total = GLOB.joined_player_list.len
-	if(total <= 0)
+	if(total <= ZERO)
 		return //no players no autoevac
 
 	if(alive / total <= threshold)
@@ -222,7 +222,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(SEC_LEVEL_RED,SEC_LEVEL_DELTA)
 			emergency.request(null, signal_origin, html_decode(emergency_reason), 1) //There is a serious threat we gotta move no time to give them five minutes.
 		else
-			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
+			emergency.request(null, signal_origin, html_decode(emergency_reason), ZERO)
 
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
 
@@ -312,7 +312,7 @@ SUBSYSTEM_DEF(shuttle)
 
 		var/turf/T = get_turf(thing)
 		if(T && is_station_level(T.z))
-			callShuttle = 0
+			callShuttle = ZERO
 			break
 
 	if(callShuttle)
@@ -388,7 +388,7 @@ SUBSYSTEM_DEF(shuttle)
 	else
 		if(M.initiate_docking(getDock(destination)) != DOCKING_SUCCESS)
 			return 2
-	return 0	//dock successful
+	return ZERO	//dock successful
 
 
 /datum/controller/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed)
@@ -403,7 +403,7 @@ SUBSYSTEM_DEF(shuttle)
 	else
 		if(M.initiate_docking(D) != DOCKING_SUCCESS)
 			return 2
-	return 0	//dock successful
+	return ZERO	//dock successful
 
 /datum/controller/subsystem/shuttle/proc/request_transit_dock(obj/docking_port/mobile/M)
 	if(!istype(M))
@@ -461,8 +461,8 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/turf/bottomleft = locate(proposal.bottom_left_coords[1], proposal.bottom_left_coords[2], proposal.bottom_left_coords[3])
 	// Then create a transit docking port in the middle
-	var/coords = M.return_coords(0, 0, dock_dir)
-	/*  0------2
+	var/coords = M.return_coords(ZERO, ZERO, dock_dir)
+	/*  ZERO------2
         |      |
         |      |
         |  x   |
@@ -649,7 +649,7 @@ SUBSYSTEM_DEF(shuttle)
 		preview_template = loading_template
 
 	// get the existing shuttle information, if any
-	var/timer = 0
+	var/timer = ZERO
 	var/mode = SHUTTLE_IDLE
 	var/obj/docking_port/stationary/D
 
@@ -678,7 +678,7 @@ SUBSYSTEM_DEF(shuttle)
 		existing_shuttle.jumpToNullSpace()
 
 	var/list/force_memory = preview_shuttle.movement_force
-	preview_shuttle.movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
+	preview_shuttle.movement_force = list("KNOCKDOWN" = 0, "THROW" = ZERO)
 	preview_shuttle.initiate_docking(D)
 	preview_shuttle.movement_force = force_memory
 
@@ -710,7 +710,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/affected = S.get_affected_turfs(BL, centered=FALSE)
 
-	var/found = 0
+	var/found = ZERO
 	// Search the turfs for docking ports
 	// - We need to find the mobile docking port because that is the heart of
 	//   the shuttle.

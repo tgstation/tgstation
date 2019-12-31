@@ -4,9 +4,9 @@
 	report_type = "meteor"
 	false_report_weight = 1
 	var/meteordelay = 2000
-	var/nometeors = 0
+	var/nometeors = ZERO
 	var/rampupdelta = 5
-	required_players = 0
+	required_players = ZERO
 
 	announce_span = "danger"
 	announce_text = "A major meteor shower is bombarding the station! The crew needs to evacuate or survive the onslaught."
@@ -32,7 +32,7 @@
 
 
 /datum/game_mode/meteor/special_report()
-	var/survivors = 0
+	var/survivors = ZERO
 	var/list/survivor_list = list()
 
 	for(var/mob/living/player in GLOB.player_list)

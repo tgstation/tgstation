@@ -18,7 +18,7 @@
 
 /datum/round_event/ghost_role/revenant/spawn_role()
 	if(!ignore_mobcheck)
-		var/deadMobs = 0
+		var/deadMobs = ZERO
 		for(var/mob/M in GLOB.dead_mob_list)
 			deadMobs++
 		if(deadMobs < REVENANT_SPAWN_THRESHOLD)

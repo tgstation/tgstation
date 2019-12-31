@@ -11,7 +11,7 @@
 	var/max_occupants = 1
 	var/max_drivers = 1
 	var/movedelay = 2
-	var/lastmove = 0
+	var/lastmove = ZERO
 	var/key_type
 	var/obj/item/key/inserted_key
 	var/key_type_exact = TRUE		//can subtypes work
@@ -42,7 +42,7 @@
 			. += "It looks slightly damaged."
 		if(25 to 50)
 			. += "It appears heavily damaged."
-		if(0 to 25)
+		if(ZERO to 25)
 			. += "<span class='warning'>It's falling apart!</span>"
 
 /obj/vehicle/proc/is_key(obj/item/I)
@@ -55,7 +55,7 @@
 	return length(occupants)
 
 /obj/vehicle/proc/return_amount_of_controllers_with_flag(flag)
-	. = 0
+	. = ZERO
 	for(var/i in occupants)
 		if(occupants[i] & flag)
 			.++

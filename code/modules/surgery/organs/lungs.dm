@@ -18,12 +18,12 @@
 	//Breath damage
 
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
-	var/safe_oxygen_max = 0
-	var/safe_nitro_min = 0
-	var/safe_nitro_max = 0
-	var/safe_co2_min = 0
+	var/safe_oxygen_max = ZERO
+	var/safe_nitro_min = ZERO
+	var/safe_nitro_max = ZERO
+	var/safe_co2_min = ZERO
 	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
-	var/safe_toxins_min = 0
+	var/safe_toxins_min = ZERO
 	var/safe_toxins_max = 0.05
 	var/SA_para_min = 1 //Sleeping agent
 	var/SA_sleep_min = 5 //Sleeping agent
@@ -70,7 +70,7 @@
 	if(HAS_TRAIT(H, TRAIT_NOBREATH))
 		return
 
-	if(!breath || (breath.total_moles() == 0))
+	if(!breath || (breath.total_moles() == ZERO))
 		if(H.reagents.has_reagent(crit_stabilizing_reagent, needs_metabolizing = TRUE))
 			return
 		if(H.health >= H.crit_threshold)
@@ -89,7 +89,7 @@
 			H.throw_alert("not_enough_nitro", /obj/screen/alert/not_enough_nitro)
 		return FALSE
 
-	var/gas_breathed = 0
+	var/gas_breathed = ZERO
 
 	var/list/breath_gases = breath.gases
 
@@ -128,7 +128,7 @@
 	//Exhale
 	breath_gases[/datum/gas/oxygen][MOLES] -= gas_breathed
 	breath_gases[/datum/gas/carbon_dioxide][MOLES] += gas_breathed
-	gas_breathed = 0
+	gas_breathed = ZERO
 
 	//-- Nitrogen --//
 
@@ -156,7 +156,7 @@
 	//Exhale
 	breath_gases[/datum/gas/nitrogen][MOLES] -= gas_breathed
 	breath_gases[/datum/gas/carbon_dioxide][MOLES] += gas_breathed
-	gas_breathed = 0
+	gas_breathed = ZERO
 
 	//-- CO2 --//
 
@@ -175,7 +175,7 @@
 				H.emote("cough")
 
 		else
-			H.co2overloadtime = 0
+			H.co2overloadtime = ZERO
 			H.clear_alert("too_much_co2")
 
 	//Too little CO2!
@@ -193,7 +193,7 @@
 	//Exhale
 	breath_gases[/datum/gas/carbon_dioxide][MOLES] -= gas_breathed
 	breath_gases[/datum/gas/oxygen][MOLES] += gas_breathed
-	gas_breathed = 0
+	gas_breathed = ZERO
 
 
 	//-- TOX --//
@@ -223,7 +223,7 @@
 	//Exhale
 	breath_gases[/datum/gas/plasma][MOLES] -= gas_breathed
 	breath_gases[/datum/gas/carbon_dioxide][MOLES] += gas_breathed
-	gas_breathed = 0
+	gas_breathed = ZERO
 
 
 	//-- TRACES --//
@@ -288,7 +288,7 @@
 		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]
 		if (gas_breathed > gas_stimulation_min)
 			var/existing = H.reagents.get_reagent_amount(/datum/reagent/stimulum)
-			H.reagents.add_reagent(/datum/reagent/stimulum,max(0, 1 - existing))
+			H.reagents.add_reagent(/datum/reagent/stimulum,max(ZERO, 1 - existing))
 		breath_gases[/datum/gas/stimulum][MOLES]-=gas_breathed
 
 	// Miasma
@@ -344,14 +344,14 @@
 	return TRUE
 
 
-/obj/item/organ/lungs/proc/handle_too_little_breath(mob/living/carbon/human/H = null, breath_pp = 0, safe_breath_min = 0, true_pp = 0)
-	. = 0
-	if(!H || !safe_breath_min) //the other args are either: Ok being 0 or Specifically handled.
+/obj/item/organ/lungs/proc/handle_too_little_breath(mob/living/carbon/human/H = null, breath_pp = ZERO, safe_breath_min = ZERO, true_pp = ZERO)
+	. = ZERO
+	if(!H || !safe_breath_min) //the other args are either: Ok being ZERO or Specifically handled.
 		return FALSE
 
 	if(prob(20))
 		H.emote("gasp")
-	if(breath_pp > 0)
+	if(breath_pp > ZERO)
 		var/ratio = safe_breath_min/breath_pp
 		H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!
 		H.failed_last_breath = TRUE
@@ -414,13 +414,13 @@
 
 	safe_oxygen_min = 0 //We don't breath this
 	safe_toxins_min = 16 //We breath THIS!
-	safe_toxins_max = 0
+	safe_toxins_max = ZERO
 
 /obj/item/organ/lungs/slime
 	name = "vacuole"
 	desc = "A large organelle designed to store oxygen and other important gasses."
 
-	safe_toxins_max = 0 //We breathe this to gain POWER.
+	safe_toxins_max = ZERO //We breathe this to gain POWER.
 
 /obj/item/organ/lungs/slime/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 	. = ..()

@@ -27,7 +27,7 @@
 	icon_state = "deck_casblack_full"
 	deckstyle = "casblack"
 	card_face = "cas_black"
-	blanks = 0
+	blanks = ZERO
 	decksize = 50
 	card_text_file = "strings/cas_black.txt"
 
@@ -62,7 +62,7 @@
 		var/mob/living/L = user
 		if(!(L.mobility_flags & MOBILITY_PICKUP))
 			return
-	if(cards.len == 0)
+	if(cards.len == ZERO)
 		to_chat(user, "<span class='warning'>There are no more cards to draw!</span>")
 		return
 	var/obj/item/toy/cards/singlecard/cas/H = new/obj/item/toy/cards/singlecard/cas(user.loc)
@@ -103,9 +103,9 @@
 	name = "CAS card"
 	desc = "A CAS card."
 	icon_state = "cas_white"
-	flipped = 0
+	flipped = ZERO
 	var/card_face = "cas_white"
-	var/blank = 0
+	var/blank = ZERO
 	var/buffertext = "A funny bit of text."
 
 /obj/item/toy/cards/singlecard/cas/examine(mob/user)
@@ -155,4 +155,4 @@
 			return
 		name = cardtext
 		buffertext = cardtext
-		blank = 0
+		blank = ZERO

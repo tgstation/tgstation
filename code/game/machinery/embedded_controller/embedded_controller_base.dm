@@ -15,7 +15,7 @@
 	return null
 
 /datum/computer/file/embedded_program/process()
-	return 0
+	return ZERO
 
 /obj/machinery/embedded_controller
 	var/datum/computer/file/embedded_program/program
@@ -36,7 +36,7 @@
 /obj/machinery/embedded_controller/proc/return_text()
 
 /obj/machinery/embedded_controller/proc/post_signal(datum/signal/signal, comm_line)
-	return 0
+	return ZERO
 
 /obj/machinery/embedded_controller/receive_signal(datum/signal/signal)
 	if(istype(signal) && program)
@@ -44,7 +44,7 @@
 
 /obj/machinery/embedded_controller/Topic(href, href_list)
 	if(..())
-		return 0
+		return ZERO
 
 	if(program)
 		program.receive_user_command(href_list["command"])

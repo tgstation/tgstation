@@ -58,8 +58,8 @@
 	. = 1
 
 /datum/reagent/drug/nicotine/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.1*REM, 0)
-	M.adjustOxyLoss(1.1*REM, 0)
+	M.adjustToxLoss(0.1*REM, ZERO)
+	M.adjustOxyLoss(1.1*REM, ZERO)
 	..()
 	. = 1
 
@@ -86,7 +86,7 @@
 
 /datum/reagent/drug/crank/overdose_process(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
-	M.adjustToxLoss(2*REM, 0)
+	M.adjustToxLoss(2*REM, ZERO)
 	M.adjustBruteLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
@@ -96,19 +96,19 @@
 	..()
 
 /datum/reagent/drug/crank/addiction_act_stage2(mob/living/M)
-	M.adjustToxLoss(5*REM, 0)
+	M.adjustToxLoss(5*REM, ZERO)
 	..()
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage3(mob/living/M)
-	M.adjustBruteLoss(5*REM, 0)
+	M.adjustBruteLoss(5*REM, ZERO)
 	..()
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage4(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REM)
-	M.adjustToxLoss(5*REM, 0)
-	M.adjustBruteLoss(5*REM, 0)
+	M.adjustToxLoss(5*REM, ZERO)
+	M.adjustBruteLoss(5*REM, ZERO)
 	..()
 	. = 1
 
@@ -130,13 +130,13 @@
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.25*REM)
-	M.adjustToxLoss(0.25*REM, 0)
+	M.adjustToxLoss(0.25*REM, ZERO)
 	..()
 	. = 1
 
 /datum/reagent/drug/krokodil/addiction_act_stage1(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
-	M.adjustToxLoss(2*REM, 0)
+	M.adjustToxLoss(2*REM, ZERO)
 	..()
 	. = 1
 
@@ -148,7 +148,7 @@
 /datum/reagent/drug/krokodil/addiction_act_stage3(mob/living/M)
 	if(prob(25))
 		to_chat(M, "<span class='danger'>Your skin starts to peel away...</span>")
-	M.adjustBruteLoss(3*REM, 0)
+	M.adjustBruteLoss(3*REM, ZERO)
 	..()
 	. = 1
 
@@ -156,10 +156,10 @@
 	CHECK_DNA_AND_SPECIES(M)
 	if(!istype(M.dna.species, /datum/species/krokodil_addict))
 		to_chat(M, "<span class='userdanger'>Your skin falls off easily!</span>")
-		M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
+		M.adjustBruteLoss(50*REM, ZERO) // holy shit your skin just FELL THE FUCK OFF
 		M.set_species(/datum/species/krokodil_addict)
 	else
-		M.adjustBruteLoss(5*REM, 0)
+		M.adjustBruteLoss(5*REM, ZERO)
 	..()
 	. = 1
 
@@ -190,7 +190,7 @@
 	M.AdjustUnconscious(-40, FALSE)
 	M.AdjustParalyzed(-40, FALSE)
 	M.AdjustImmobilized(-40, FALSE)
-	M.adjustStaminaLoss(-2, 0)
+	M.adjustStaminaLoss(-2, ZERO)
 	M.Jitter(2)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1,4))
 	if(prob(5))
@@ -208,7 +208,7 @@
 		M.visible_message("<span class='danger'>[M]'s hands flip out and flail everywhere!</span>")
 		M.drop_all_held_items()
 	..()
-	M.adjustToxLoss(1, 0)
+	M.adjustToxLoss(1, ZERO)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, pick(0.5, 0.6, 0.7, 0.8, 0.9, 1))
 	. = 1
 
@@ -227,7 +227,7 @@
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage3(mob/living/M)
 	if((M.mobility_flags & MOBILITY_MOVE) && !ismovableatom(M.loc))
-		for(var/i = 0, i < 4, i++)
+		for(var/i = ZERO, i < 4, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(15)
 	M.Dizzy(15)
@@ -237,11 +237,11 @@
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage4(mob/living/carbon/human/M)
 	if((M.mobility_flags & MOBILITY_MOVE) && !ismovableatom(M.loc))
-		for(var/i = 0, i < 8, i++)
+		for(var/i = ZERO, i < 8, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(20)
 	M.Dizzy(20)
-	M.adjustToxLoss(5, 0)
+	M.adjustToxLoss(5, ZERO)
 	if(prob(50))
 		M.emote(pick("twitch","drool","moan"))
 	..()
@@ -278,7 +278,7 @@
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "salted", /datum/mood_event/stimulant_heavy, name)
-	M.adjustStaminaLoss(-5, 0)
+	M.adjustStaminaLoss(-5, ZERO)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 4)
 	M.hallucination += 5
 	if((M.mobility_flags & MOBILITY_MOVE) && !ismovableatom(M.loc))
@@ -301,7 +301,7 @@
 /datum/reagent/drug/bath_salts/addiction_act_stage1(mob/living/M)
 	M.hallucination += 10
 	if((M.mobility_flags & MOBILITY_MOVE) && !ismovableatom(M.loc))
-		for(var/i = 0, i < 8, i++)
+		for(var/i = ZERO, i < 8, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(5)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
@@ -312,7 +312,7 @@
 /datum/reagent/drug/bath_salts/addiction_act_stage2(mob/living/M)
 	M.hallucination += 20
 	if((M.mobility_flags & MOBILITY_MOVE) && !ismovableatom(M.loc))
-		for(var/i = 0, i < 8, i++)
+		for(var/i = ZERO, i < 8, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(10)
 	M.Dizzy(10)
@@ -324,7 +324,7 @@
 /datum/reagent/drug/bath_salts/addiction_act_stage3(mob/living/M)
 	M.hallucination += 30
 	if((M.mobility_flags & MOBILITY_MOVE) && !ismovableatom(M.loc))
-		for(var/i = 0, i < 12, i++)
+		for(var/i = ZERO, i < 12, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(15)
 	M.Dizzy(15)
@@ -336,11 +336,11 @@
 /datum/reagent/drug/bath_salts/addiction_act_stage4(mob/living/carbon/human/M)
 	M.hallucination += 30
 	if((M.mobility_flags & MOBILITY_MOVE) && !ismovableatom(M.loc))
-		for(var/i = 0, i < 16, i++)
+		for(var/i = ZERO, i < 16, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(50)
 	M.Dizzy(50)
-	M.adjustToxLoss(5, 0)
+	M.adjustToxLoss(5, ZERO)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
 	if(prob(50))
 		M.emote(pick("twitch","drool","moan"))
@@ -357,11 +357,11 @@
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
-	M.adjustStaminaLoss(-18, 0)
-	M.adjustToxLoss(0.5, 0)
+	M.adjustStaminaLoss(-18, ZERO)
+	M.adjustToxLoss(0.5, ZERO)
 	if(prob(50))
 		M.losebreath++
-		M.adjustOxyLoss(1, 0)
+		M.adjustOxyLoss(1, ZERO)
 	..()
 	. = 1
 
@@ -384,9 +384,9 @@
 	..()
 
 /datum/reagent/drug/happiness/on_mob_life(mob/living/carbon/M)
-	M.jitteriness = 0
-	M.confused = 0
-	M.disgust = 0
+	M.jitteriness = ZERO
+	M.confused = ZERO
+	M.disgust = ZERO
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
 	..()
 	. = 1
@@ -464,7 +464,7 @@
 		to_chat(M, "<span class='notice'>[pick("Go! Go! GO!", "You feel ready...", "You feel invincible...")]</span>")
 	if(prob(15))
 		M.losebreath++
-		M.adjustToxLoss(2, 0)
+		M.adjustToxLoss(2, ZERO)
 	..()
 	. = 1
 
@@ -479,7 +479,7 @@
 		M.emote(pick("twitch","drool"))
 	if(prob(20))
 		M.losebreath++
-		M.adjustStaminaLoss(4, 0)
+		M.adjustStaminaLoss(4, ZERO)
 	if(prob(15))
-		M.adjustToxLoss(2, 0)
+		M.adjustToxLoss(2, ZERO)
 	..()

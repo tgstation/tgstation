@@ -18,7 +18,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	icon = 'icons/obj/machines/telecomms.dmi'
 	critical_machine = TRUE
 	var/list/links = list() // list of machines this machine is linked to
-	var/traffic = 0 // value increases as traffic increases
+	var/traffic = ZERO // value increases as traffic increases
 	var/netspeed = 5 // how much traffic to lose per tick (50 gigabytes/second * netspeed)
 	var/list/autolinkers = list() // list of text/number values to link with
 	var/id = "NULL" // identification string
@@ -37,7 +37,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 	if(!on)
 		return
-	var/send_count = 0
+	var/send_count = ZERO
 
 	// Apply some lag based on traffic rates
 	var/netlag = round(traffic / 50)
@@ -64,7 +64,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 		else
 			machine.receive_information(signal, src)
 
-	if(send_count > 0 && is_freq_listening(signal))
+	if(send_count > ZERO && is_freq_listening(signal))
 		traffic++
 
 	return send_count
@@ -138,7 +138,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	// Update the icon
 	update_icon()
 
-	if(traffic > 0)
+	if(traffic > ZERO)
 		traffic -= netspeed
 
 /obj/machinery/telecomms/emp_act(severity)

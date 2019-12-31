@@ -31,19 +31,19 @@
 	//Fired processing vars
 	var/fired = FALSE	//Have we been fired yet
 	var/paused = FALSE	//for suspending the projectile midair
-	var/last_projectile_move = 0
-	var/last_process = 0
-	var/time_offset = 0
+	var/last_projectile_move = ZERO
+	var/last_process = ZERO
+	var/time_offset = ZERO
 	var/datum/point/vector/trajectory
 	var/trajectory_ignore_forcemove = FALSE	//instructs forceMove to NOT reset our trajectory to the new location!
 
 	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
-	var/Angle = 0
-	var/original_angle = 0		//Angle at firing
+	var/Angle = ZERO
+	var/original_angle = ZERO		//Angle at firing
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
-	var/spread = 0			//amount (in degrees) of projectile spread
+	var/spread = ZERO			//amount (in degrees) of projectile spread
 	animate_movement = NO_STEPS	//Use SLIDE_STEPS in conjunction with legacy
-	var/ricochets = 0
+	var/ricochets = ZERO
 	var/ricochets_max = 2
 	var/ricochet_chance = 30
 	var/force_hit = FALSE //If the object being hit can pass ths damage on to something else, it should not do it for this bullet.
@@ -72,10 +72,10 @@
 	var/homing = FALSE
 	var/atom/homing_target
 	var/homing_turn_speed = 10		//Angle per tick.
-	var/homing_inaccuracy_min = 0		//in pixels for these. offsets are set once when setting target.
-	var/homing_inaccuracy_max = 0
-	var/homing_offset_x = 0
-	var/homing_offset_y = 0
+	var/homing_inaccuracy_min = ZERO		//in pixels for these. offsets are set once when setting target.
+	var/homing_inaccuracy_max = ZERO
+	var/homing_offset_x = ZERO
+	var/homing_offset_y = ZERO
 
 	var/ignore_source_check = FALSE
 
@@ -84,26 +84,26 @@
 	var/nodamage = FALSE //Determines if the projectile will skip any damage inflictions
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
 	///How much armor this projectile pierces.
-	var/armour_penetration = 0
+	var/armour_penetration = ZERO
 	var/projectile_type = /obj/projectile
-	var/range = 50 //This will de-increment every step. When 0, it will deletze the projectile.
+	var/range = 50 //This will de-increment every step. When ZERO, it will deletze the projectile.
 	var/decayedRange			//stores original range
 	var/reflect_range_decrease = 5			//amount of original range that falls off when reflecting, so it doesn't go forever
 	var/reflectable = NONE // Can it be reflected or not?
 		//Effects
-	var/stun = 0
-	var/knockdown = 0
-	var/paralyze = 0
-	var/immobilize = 0
-	var/unconscious = 0
-	var/irradiate = 0
-	var/stutter = 0
-	var/slur = 0
-	var/eyeblur = 0
-	var/drowsy = 0
-	var/stamina = 0
-	var/jitter = 0
-	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
+	var/stun = ZERO
+	var/knockdown = ZERO
+	var/paralyze = ZERO
+	var/immobilize = ZERO
+	var/unconscious = ZERO
+	var/irradiate = ZERO
+	var/stutter = ZERO
+	var/slur = ZERO
+	var/eyeblur = ZERO
+	var/drowsy = ZERO
+	var/stamina = ZERO
+	var/jitter = ZERO
+	var/dismemberment = ZERO //The higher the number, the greater the bonus to dismembering. ZERO will not dismember at all.
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
 
@@ -116,7 +116,7 @@
 
 /obj/projectile/proc/Range()
 	range--
-	if(range <= 0 && loc)
+	if(range <= ZERO && loc)
 		on_range()
 
 /obj/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
@@ -230,7 +230,7 @@
 		if(A.handle_ricochet(src))
 			on_ricochet(A)
 			ignore_source_check = TRUE
-			decayedRange = max(0, decayedRange - reflect_range_decrease)
+			decayedRange = max(ZERO, decayedRange - reflect_range_decrease)
 			range = decayedRange
 			if(hitscan)
 				store_hitscan_collision(pcache)
@@ -240,7 +240,7 @@
 	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 
 	if(isturf(A) && hitsound_wall)
-		var/volume = CLAMP(vol_by_damage() + 20, 0, 100)
+		var/volume = CLAMP(vol_by_damage() + 20, ZERO, 100)
 		if(suppressed)
 			volume = 5
 		playsound(loc, hitsound_wall, volume, TRUE, -1)
@@ -332,7 +332,7 @@
 	var/turf/ending = return_predicted_turf_after_moves(moves, forced_angle)
 	return getline(current, ending)
 
-/obj/projectile/Process_Spacemove(movement_dir = 0)
+/obj/projectile/Process_Spacemove(movement_dir = ZERO)
 	return TRUE	//Bullets don't drift in space
 
 /obj/projectile/process()
@@ -344,7 +344,7 @@
 		last_projectile_move += world.time - last_process		//Compensates for pausing, so it doesn't become a hitscan projectile when unpaused from charged up ticks.
 		return
 	var/elapsed_time_deciseconds = (world.time - last_projectile_move) + time_offset
-	time_offset = 0
+	time_offset = ZERO
 	var/required_moves = speed > 0? FLOOR(elapsed_time_deciseconds / speed, 1) : MOVES_HITSCAN			//Would be better if a 0 speed made hitscan but everyone hates those so I can't make it a universal system :<
 	if(required_moves == MOVES_HITSCAN)
 		required_moves = SSprojectiles.global_max_tick_moves
@@ -420,7 +420,7 @@
 	if(trajectory && !trajectory_ignore_forcemove && isturf(target))
 		if(hitscan)
 			finalize_hitscan_and_generate_tracers(FALSE)
-		trajectory.initialize_location(target.x, target.y, target.z, 0, 0)
+		trajectory.initialize_location(target.x, target.y, target.z, ZERO, ZERO)
 		if(hitscan)
 			record_hitscan_start(RETURN_PRECISE_POINT(src))
 	if(zc)
@@ -457,7 +457,7 @@
 		if(paused)
 			stoplag(1)
 			continue
-		if(safety-- <= 0)
+		if(safety-- <= ZERO)
 			if(loc)
 				Bump(loc)
 			if(!QDELETED(src))
@@ -552,7 +552,7 @@
 	return TRUE
 
 //Spread is FORCED!
-/obj/projectile/proc/preparePixelProjectile(atom/target, atom/source, params, spread = 0)
+/obj/projectile/proc/preparePixelProjectile(atom/target, atom/source, params, spread = ZERO)
 	var/turf/curloc = get_turf(source)
 	var/turf/targloc = get_turf(target)
 	trajectory_ignore_forcemove = TRUE
@@ -581,9 +581,9 @@
 
 /proc/calculate_projectile_angle_and_pixel_offsets(mob/user, params)
 	var/list/mouse_control = params2list(params)
-	var/p_x = 0
-	var/p_y = 0
-	var/angle = 0
+	var/p_x = ZERO
+	var/p_y = ZERO
+	var/angle = ZERO
 	if(mouse_control["icon-x"])
 		p_x = text2num(mouse_control["icon-x"])
 	if(mouse_control["icon-y"])
@@ -652,7 +652,7 @@
 		var/tempref = REF(src)
 		for(var/datum/point/p in beam_segments)
 			generate_tracer_between_points(p, beam_segments[p], tracer_type, color, duration, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity, tempref)
-	if(muzzle_type && duration > 0)
+	if(muzzle_type && duration > ZERO)
 		var/datum/point/p = beam_segments[1]
 		var/atom/movable/thing = new muzzle_type
 		p.move_atom_to_src(thing)
@@ -662,7 +662,7 @@
 		thing.color = color
 		thing.set_light(muzzle_flash_range, muzzle_flash_intensity, muzzle_flash_color_override? muzzle_flash_color_override : color)
 		QDEL_IN(thing, duration)
-	if(impacting && impact_type && duration > 0)
+	if(impacting && impact_type && duration > ZERO)
 		var/datum/point/p = beam_segments[beam_segments[beam_segments.len]]
 		var/atom/movable/thing = new impact_type
 		p.move_atom_to_src(thing)

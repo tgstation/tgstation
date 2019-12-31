@@ -28,7 +28,7 @@
 #endif
 		if(4)
 			switch(version.major)
-				if(0)
+				if(ZERO)
 					api_datum = /datum/tgs_api/v4
 
 	var/datum/tgs_version/max_api_version = TgsMaximumAPIVersion();

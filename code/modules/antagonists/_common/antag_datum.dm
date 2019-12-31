@@ -114,7 +114,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(owner)]) to replace a jobbanned player.")
-		owner.current.ghostize(0)
+		owner.current.ghostize(ZERO)
 		owner.current.key = C.key
 
 /datum/antagonist/proc/on_removal()
@@ -166,7 +166,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 				objectives_complete = FALSE
 				break
 
-	if(objectives.len == 0 || objectives_complete)
+	if(objectives.len == ZERO || objectives_complete)
 		report += "<span class='greentext big'>The [name] was successful!</span>"
 	else
 		report += "<span class='redtext big'>The [name] has failed!</span>"

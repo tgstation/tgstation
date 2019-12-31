@@ -42,7 +42,7 @@
 	select = !select
 	if(!select)
 		burst_size = 1
-		fire_delay = 0
+		fire_delay = ZERO
 		to_chat(user, "<span class='notice'>You switch to semi-automatic.</span>")
 	else
 		burst_size = initial(burst_size)
@@ -86,7 +86,7 @@
 	mag_type = /obj/item/ammo_box/magazine/wt550m9
 	fire_delay = 2
 	can_suppress = FALSE
-	burst_size = 0
+	burst_size = ZERO
 	actions_types = list()
 	can_bayonet = TRUE
 	knife_x_offset = 25
@@ -150,7 +150,7 @@
 /obj/item/gun/ballistic/automatic/m90/update_icon()
 	..()
 	switch(select)
-		if(0)
+		if(ZERO)
 			add_overlay("[initial(icon_state)]_semi")
 		if(1)
 			add_overlay("[initial(icon_state)]_burst")
@@ -161,7 +161,7 @@
 /obj/item/gun/ballistic/automatic/m90/burst_select()
 	var/mob/living/carbon/human/user = usr
 	switch(select)
-		if(0)
+		if(ZERO)
 			select = 1
 			burst_size = initial(burst_size)
 			fire_delay = initial(fire_delay)
@@ -170,9 +170,9 @@
 			select = 2
 			to_chat(user, "<span class='notice'>You switch to grenades.</span>")
 		if(2)
-			select = 0
+			select = ZERO
 			burst_size = 1
-			fire_delay = 0
+			fire_delay = ZERO
 			to_chat(user, "<span class='notice'>You switch to semi-auto.</span>")
 	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
 	update_icon()
@@ -184,7 +184,7 @@
 	icon_state = "tommygun"
 	item_state = "shotgun"
 	w_class = WEIGHT_CLASS_HUGE
-	slot_flags = 0
+	slot_flags = ZERO
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
 	can_suppress = FALSE
 	burst_size = 4
@@ -196,7 +196,7 @@
 	desc = "A robust assault rifle used by Nanotrasen fighting forces."
 	icon_state = "arg"
 	item_state = "arg"
-	slot_flags = 0
+	slot_flags = ZERO
 	mag_type = /obj/item/ammo_box/magazine/m556
 	can_suppress = FALSE
 	burst_size = 3
@@ -211,7 +211,7 @@
 	icon_state = "l6"
 	item_state = "l6closedmag"
 	w_class = WEIGHT_CLASS_HUGE
-	slot_flags = 0
+	slot_flags = ZERO
 	mag_type = /obj/item/ammo_box/magazine/mm712x82
 	weapon_weight = WEAPON_HEAVY
 	var/cover_open = FALSE
@@ -338,7 +338,7 @@
 	mag_type = /obj/item/ammo_box/magazine/recharge
 	fire_delay = 2
 	can_suppress = FALSE
-	burst_size = 0
+	burst_size = ZERO
 	actions_types = list()
 	fire_sound = 'sound/weapons/laser.ogg'
 	casing_ejector = FALSE

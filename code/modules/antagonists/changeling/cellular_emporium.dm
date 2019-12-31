@@ -37,7 +37,7 @@
 		var/datum/action/changeling/ability = path
 
 		var/dna_cost = initial(ability.dna_cost)
-		if(dna_cost <= 0)
+		if(dna_cost <= ZERO)
 			continue
 
 		var/list/AL = list()

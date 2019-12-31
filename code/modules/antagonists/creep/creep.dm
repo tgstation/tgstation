@@ -116,14 +116,14 @@
 				objectives_complete = FALSE
 				break
 	if(trauma)
-		if(trauma.total_time_creeping > 0)
+		if(trauma.total_time_creeping > ZERO)
 			report += "<span class='greentext'>The [name] spent a total of [DisplayTimeText(trauma.total_time_creeping)] being near [trauma.obsession]!</span>"
 		else
 			report += "<span class='redtext'>The [name] did not go near their obsession the entire round! That's extremely impressive!</span>"
 	else
 		report += "<span class='redtext'>The [name] had no trauma attached to their antagonist ways! Either it bugged out or an admin incorrectly gave this good samaritan antag and it broke! You might as well show yourself!!</span>"
 
-	if(objectives.len == 0 || objectives_complete)
+	if(objectives.len == ZERO || objectives_complete)
 		report += "<span class='greentext big'>The [name] was successful!</span>"
 	else
 		report += "<span class='redtext big'>The [name] has failed!</span>"
@@ -198,9 +198,9 @@
 			continue
 		viable_coworkers += H.mind
 
-	if(viable_coworkers.len > 0)//find someone in the same department
+	if(viable_coworkers.len > ZERO)//find someone in the same department
 		target = pick(viable_coworkers)
-	else if(all_coworkers.len > 0)//find someone who works on the station
+	else if(all_coworkers.len > ZERO)//find someone who works on the station
 		target = pick(all_coworkers)
 	return oldmind
 
@@ -210,7 +210,7 @@
 
 /datum/objective/spendtime/update_explanation_text()
 	if(timer == initial(timer))//just so admins can mess with it
-		timer += pick(-600, 0)
+		timer += pick(-600, ZERO)
 	var/datum/antagonist/obsessed/creeper = owner.has_antag_datum(/datum/antagonist/obsessed)
 	if(target && target.current && creeper)
 		creeper.trauma.attachedobsessedobj = src

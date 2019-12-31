@@ -25,10 +25,10 @@
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 
 	var/sterile = FALSE
-	var/real = TRUE //0 for the toy, 1 for real. Sure I could istype, but fuck that.
+	var/real = TRUE //ZERO for the toy, 1 for real. Sure I could istype, but fuck that.
 	var/strength = 5
 
-	var/attached = 0
+	var/attached = ZERO
 
 /obj/item/clothing/mask/facehugger/lamarr
 	name = "Lamarr"
@@ -44,7 +44,7 @@
 	item_state = "facehugger_impregnated"
 	stat = DEAD
 
-/obj/item/clothing/mask/facehugger/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+/obj/item/clothing/mask/facehugger/take_damage(damage_amount, damage_type = BRUTE, damage_flag = ZERO, sound_effect = 1, attack_dir)
 	..()
 	if(obj_integrity < 90)
 		Die()
@@ -95,14 +95,14 @@
 /obj/item/clothing/mask/facehugger/on_found(mob/finder)
 	if(stat == CONSCIOUS)
 		return HasProximity(finder)
-	return 0
+	return ZERO
 
 /obj/item/clothing/mask/facehugger/HasProximity(atom/movable/AM as mob|obj)
 	if(CanHug(AM) && Adjacent(AM))
 		return Leap(AM)
-	return 0
+	return ZERO
 
-/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = ZERO, datum/callback/callback)
 	if(!..())
 		return
 	if(stat == CONSCIOUS)
@@ -170,7 +170,7 @@
 			if(target.dropItemToGround(W))
 				target.visible_message("<span class='danger'>[src] tears [W] off of [target]'s face!</span>", \
 									"<span class='userdanger'>[src] tears [W] off of your face!</span>")
-		target.equip_to_slot_if_possible(src, ITEM_SLOT_MASK, 0, 1, 1)
+		target.equip_to_slot_if_possible(src, ITEM_SLOT_MASK, ZERO, 1, 1)
 	return TRUE // time for a smoke
 
 /obj/item/clothing/mask/facehugger/proc/Attach(mob/living/M)
@@ -183,7 +183,7 @@
 
 
 	if(!sterile)
-		M.take_bodypart_damage(strength,0) //done here so that humans in helmets take damage
+		M.take_bodypart_damage(strength,ZERO) //done here so that humans in helmets take damage
 		M.Unconscious(MAX_IMPREGNATION_TIME/0.3) //something like 25 ticks = 20 seconds with the default settings
 
 	GoIdle() //so it doesn't jump the people that tear it off
@@ -191,7 +191,7 @@
 	addtimer(CALLBACK(src, .proc/Impregnate, M), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
 
 /obj/item/clothing/mask/facehugger/proc/detach()
-	attached = 0
+	attached = ZERO
 
 /obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target)
 	if(!target || target.stat == DEAD) //was taken off or something
@@ -247,11 +247,11 @@
 
 /proc/CanHug(mob/living/M)
 	if(!istype(M))
-		return 0
+		return ZERO
 	if(M.stat == DEAD)
-		return 0
+		return ZERO
 	if(M.getorgan(/obj/item/organ/alien/hivenode))
-		return 0
+		return ZERO
 
 	if(ismonkey(M))
 		return 1
@@ -260,9 +260,9 @@
 	if(ishuman(C) && !(ITEM_SLOT_MASK in C.dna.species.no_equip))
 		var/mob/living/carbon/human/H = C
 		if(H.is_mouth_covered(head_only = 1))
-			return 0
+			return ZERO
 		return 1
-	return 0
+	return ZERO
 
 #undef MIN_ACTIVE_TIME
 #undef MAX_ACTIVE_TIME

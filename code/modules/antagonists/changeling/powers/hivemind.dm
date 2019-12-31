@@ -4,7 +4,7 @@
 	desc = "We tune our senses to the airwaves to allow us to discreetly communicate and exchange DNA with other changelings."
 	helptext = "We will be able to talk with other changelings with :g. Exchanged DNA do not count towards absorb objectives."
 	needs_button = FALSE
-	dna_cost = 0
+	dna_cost = ZERO
 	chemical_cost = -1
 
 /datum/action/changeling/hivemind_comms/on_purchase(mob/user, is_respec)
@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 		if(!(prof in GLOB.hivemind_bank))
 			names += prof.name
 
-	if(names.len <= 0)
+	if(names.len <= ZERO)
 		to_chat(user, "<span class='warning'>The airwaves already have all of our DNA!</span>")
 		return
 
@@ -99,7 +99,7 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 		if(!(prof in changeling.stored_profiles))
 			names[prof.name] = prof
 
-	if(names.len <= 0)
+	if(names.len <= ZERO)
 		to_chat(user, "<span class='warning'>There's no new DNA to absorb from the air!</span>")
 		return
 

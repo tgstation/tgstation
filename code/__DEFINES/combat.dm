@@ -12,7 +12,7 @@
 #define BRAIN		"brain"
 
 //bitflag damage defines used for suicide_act
-#define BRUTELOSS 	            	(1<<0)
+#define BRUTELOSS 	            	(1<<ZERO)
 #define FIRELOSS 	            	(1<<1)
 #define TOXLOSS 	            	(1<<2)
 #define OXYLOSS 	            	(1<<3)
@@ -33,14 +33,14 @@
 #define EFFECT_JITTER		"jitter"
 
 //Bitflags defining which status effects could be or are inflicted on a mob
-#define CANSTUN			(1<<0)
+#define CANSTUN			(1<<ZERO)
 #define CANKNOCKDOWN	(1<<1)
 #define CANUNCONSCIOUS	(1<<2)
 #define CANPUSH			(1<<3)
 #define GODMODE			(1<<4)
 
 //Health Defines
-#define HEALTH_THRESHOLD_CRIT 0
+#define HEALTH_THRESHOLD_CRIT ZERO
 #define HEALTH_THRESHOLD_FULLCRIT -30
 #define HEALTH_THRESHOLD_DEAD -100
 
@@ -63,7 +63,7 @@
 #define INSTANT_CUFFBREAK 2
 
 //Grab levels
-#define GRAB_PASSIVE				0
+#define GRAB_PASSIVE				ZERO
 #define GRAB_AGGRESSIVE				1
 #define GRAB_NECK					2
 #define GRAB_KILL					3
@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define WEAPON_HEAVY 3
 //Gun trigger guards
 #define TRIGGER_GUARD_ALLOW_ALL -1
-#define TRIGGER_GUARD_NONE 0
+#define TRIGGER_GUARD_NONE ZERO
 #define TRIGGER_GUARD_NORMAL 1
 //Gun bolt types
 ///Gun has a bolt, it stays closed while not cycling. The gun must be racked to have a bullet chambered when a mag is inserted.
@@ -165,23 +165,23 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 //ammo box sprite defines
 ///ammo box will always use provided icon state
-#define AMMO_BOX_ONE_SPRITE 0
+#define AMMO_BOX_ONE_SPRITE ZERO
 ///ammo box will have a different state for each bullet; <icon_state>-<bullets left>
 #define AMMO_BOX_PER_BULLET 1
-///ammo box will have a different state for full and empty; <icon_state>-max_ammo and <icon_state>-0
+///ammo box will have a different state for full and empty; <icon_state>-max_ammo and <icon_state>-ZERO
 #define AMMO_BOX_FULL_EMPTY 2
 
 //Projectile Reflect
-#define REFLECT_NORMAL 				(1<<0)
+#define REFLECT_NORMAL 				(1<<ZERO)
 #define REFLECT_FAKEPROJECTILE		(1<<1)
 
 //Object/Item sharpness
-#define IS_BLUNT			0
+#define IS_BLUNT			ZERO
 #define IS_SHARP			1
 #define IS_SHARP_ACCURATE	2
 
 //His Grace.
-#define HIS_GRACE_SATIATED 0 //He hungers not. If bloodthirst is set to this, His Grace is asleep.
+#define HIS_GRACE_SATIATED ZERO //He hungers not. If bloodthirst is set to this, His Grace is asleep.
 #define HIS_GRACE_PECKISH 20 //Slightly hungry.
 #define HIS_GRACE_HUNGRY 60 //Getting closer. Increases damage up to a minimum of 20.
 #define HIS_GRACE_FAMISHED 100 //Dangerous. Increases damage up to a minimum of 25 and cannot be dropped.

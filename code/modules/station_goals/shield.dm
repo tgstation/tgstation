@@ -95,8 +95,8 @@
 	use_power = FALSE
 	var/mode = "NTPROBEV0.8"
 	var/active = FALSE
-	var/static/gid = 0
-	var/id = 0
+	var/static/gid = ZERO
+	var/id = ZERO
 
 /obj/machinery/satellite/Initialize()
 	. = ..()
@@ -117,7 +117,7 @@
 		animate(src, pixel_y = 2, time = 10, loop = -1)
 		anchored = TRUE
 	else
-		animate(src, pixel_y = 0, time = 10)
+		animate(src, pixel_y = ZERO, time = 10)
 		anchored = FALSE
 	update_icon()
 

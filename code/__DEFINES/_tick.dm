@@ -15,9 +15,9 @@
 /// Returns true if tick_usage is above the limit
 #define TICK_CHECK ( TICK_USAGE > Master.current_ticklimit )
 /// runs stoplag if tick_usage is above the limit
-#define CHECK_TICK ( TICK_CHECK ? stoplag() : 0 )
+#define CHECK_TICK ( TICK_CHECK ? stoplag() : ZERO )
 
 /// Returns true if tick usage is above 95, for high priority usage
 #define TICK_CHECK_HIGH_PRIORITY ( TICK_USAGE > 95 )
 /// runs stoplag if tick_usage is above 95, for high priority usage
-#define CHECK_TICK_HIGH_PRIORITY ( TICK_CHECK_HIGH_PRIORITY? stoplag() : 0 )
+#define CHECK_TICK_HIGH_PRIORITY ( TICK_CHECK_HIGH_PRIORITY? stoplag() : ZERO )

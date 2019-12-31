@@ -20,7 +20,7 @@
 	var/list/history = list()
 	var/record_size = 60
 	var/record_interval = 50
-	var/next_record = 0
+	var/next_record = ZERO
 	var/is_secret_monitor = FALSE
 
 /obj/machinery/computer/monitor/secret //Hides the power monitor (such as ones on ruins & CentCom) from PDA's to prevent metagaming.
@@ -108,7 +108,7 @@
 			if(istype(A))
 				var/cell_charge
 				if(!A.cell)
-					cell_charge = 0
+					cell_charge = ZERO
 				else
 					cell_charge = A.cell.percent()
 				data["areas"] += list(list(

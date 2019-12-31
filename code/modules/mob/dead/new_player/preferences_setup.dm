@@ -49,7 +49,7 @@
 /datum/preferences/proc/update_preview_icon()
 	// Determine what job is marked as 'High' priority, and dress them up as such.
 	var/datum/job/previewJob
-	var/highest_pref = 0
+	var/highest_pref = ZERO
 	for(var/job in job_preferences)
 		if(job_preferences[job] > highest_pref)
 			previewJob = SSjob.GetJob(job)

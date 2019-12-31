@@ -12,7 +12,7 @@
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 	D.vehicle_move_delay = 1.75
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list( 0, 4)))
+	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(ZERO, 4), TEXT_SOUTH = list(ZERO, 4), TEXT_EAST = list(ZERO, 4), TEXT_WEST = list( ZERO, 4)))
 
 /obj/vehicle/ridden/secway/obj_break()
 	START_PROCESSING(SSobj, src)
@@ -24,13 +24,13 @@
 	if(prob(20))
 		return
 	var/datum/effect_system/smoke_spread/smoke = new
-	smoke.set_up(0, src)
+	smoke.set_up(ZERO, src)
 	smoke.start()
 
 /obj/vehicle/ridden/secway/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
 		if(obj_integrity < max_integrity)
-			if(W.use_tool(src, user, 0, volume = 50, amount = 1))
+			if(W.use_tool(src, user, ZERO, volume = 50, amount = 1))
 				user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>", "<span class='notice'>You repair some damage to \the [src].</span>")
 				obj_integrity += min(10, max_integrity-obj_integrity)
 				if(obj_integrity == max_integrity)
@@ -39,7 +39,7 @@
 	return ..()
 
 /obj/vehicle/ridden/secway/obj_destruction()
-	explosion(src, -1, 0, 2, 4, flame_range = 3)
+	explosion(src, -1, ZERO, 2, 4, flame_range = 3)
 	return ..()
 
 /obj/vehicle/ridden/secway/Destroy()

@@ -1,4 +1,4 @@
-#define BM_SWITCHSTATE_NONE	0
+#define BM_SWITCHSTATE_NONE	ZERO
 #define BM_SWITCHSTATE_MODE	1
 #define BM_SWITCHSTATE_DIR	2
 
@@ -77,7 +77,7 @@
 // this creates a nice offset grid for choosing between buildmode options,
 // because going "click click click ah hell" sucks.
 /datum/buildmode/proc/build_options_grid(list/elements, list/buttonslist, buttontype)
-	var/pos_idx = 0
+	var/pos_idx = ZERO
 	for(var/thing in elements)
 		var/x = pos_idx % switch_width
 		var/y = FLOOR(pos_idx / switch_width, 1)

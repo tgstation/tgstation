@@ -20,7 +20,7 @@
 	if(left_click)
 		var/turf/T = get_turf(object)
 		if(stored)
-			DuplicateObject(stored, perfectcopy=1, sameloc=0,newloc=T)
+			DuplicateObject(stored, perfectcopy=1, sameloc=ZERO,newloc=T)
 			log_admin("Build Mode: [key_name(c)] copied [stored] to [AREACOORD(object)]")
 	else if(right_click)
 		if(ismovableatom(object)) // No copying turfs for now.

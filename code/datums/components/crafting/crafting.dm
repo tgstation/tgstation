@@ -86,10 +86,10 @@
 				continue
 
 			needed_amount -= contents[content_item_path]
-			if(needed_amount <= 0)
+			if(needed_amount <= ZERO)
 				break
 
-		if(needed_amount > 0)
+		if(needed_amount > ZERO)
 			return FALSE
 
 		// Store the instances of what we will use for R.check_requirements() for requirement_path
@@ -200,7 +200,7 @@
 					user.put_in_hands(I)
 				if(send_feedback)
 					SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)
-				return 0
+				return ZERO
 			return "."
 		return ", missing tool."
 	return ", missing component."
@@ -244,7 +244,7 @@
 			if(ispath(A, /datum/reagent))
 				var/datum/reagent/RG = new A
 				var/datum/reagent/RGNT
-				while(amt > 0)
+				while(amt > ZERO)
 					var/obj/item/reagent_containers/RC = locate() in surroundings
 					RG = RC.reagents.get_reagent(A)
 					if(RG)
@@ -273,7 +273,7 @@
 			else if(ispath(A, /obj/item/stack))
 				var/obj/item/stack/S
 				var/obj/item/stack/SD
-				while(amt > 0)
+				while(amt > ZERO)
 					S = locate(A) in surroundings
 					if(S.amount >= amt)
 						if(!locate(S.type) in Deletion)
@@ -294,7 +294,7 @@
 						surroundings -= S
 			else
 				var/atom/movable/I
-				while(amt > 0)
+				while(amt > ZERO)
 					I = locate(A) in surroundings
 					Deletion += I
 					surroundings -= I
@@ -318,7 +318,7 @@
 			Deletion -= ST
 			continue
 		else
-			while(partlist[A] > 0)
+			while(partlist[A] > ZERO)
 				var/atom/movable/AM = locate(A) in Deletion
 				. += AM
 				Deletion -= AM

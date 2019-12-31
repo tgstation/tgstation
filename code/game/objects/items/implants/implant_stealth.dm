@@ -17,7 +17,7 @@
 	move_speed_multiplier = 0.5
 
 /obj/structure/closet/cardboard/agent/proc/go_invisible()
-	animate(src, , alpha = 0, time = 20)
+	animate(src, , alpha = ZERO, time = 20)
 
 /obj/structure/closet/cardboard/agent/Initialize()
 	. = ..()
@@ -29,7 +29,7 @@
 	qdel(src)
 
 /obj/structure/closet/cardboard/agent/process()
-	alpha = max(0, alpha - 50)
+	alpha = max(ZERO, alpha - 50)
 
 /obj/structure/closet/cardboard/agent/proc/reveal()
 	alpha = 255

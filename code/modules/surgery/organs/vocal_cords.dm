@@ -10,7 +10,7 @@
 	slot = ORGAN_SLOT_VOICE
 	gender = PLURAL
 	decay_factor = 0	//we don't want decaying vocal cords to somehow matter or appear on scanners since they don't do anything damaged
-	healing_factor = 0
+	healing_factor = ZERO
 	var/list/spans = null
 
 /obj/item/organ/vocal_cords/proc/can_speak_with() //if there is any limitation to speaking with these cords
@@ -60,7 +60,7 @@
 	desc = "They carry the voice of an ancient god."
 	icon_state = "voice_of_god"
 	actions_types = list(/datum/action/item_action/organ_action/colossus)
-	var/next_command = 0
+	var/next_command = ZERO
 	var/cooldown_mod = 1
 	var/base_multiplier = 1
 	spans = list("colossus","yell")
@@ -122,10 +122,10 @@
 //////////////////////////////////////
 
 /proc/voice_of_god(message, mob/living/user, list/span_list, base_multiplier = 1, include_speaker = FALSE, message_admins = TRUE)
-	var/cooldown = 0
+	var/cooldown = ZERO
 
 	if(!user || !user.can_speak() || user.stat)
-		return 0 //no cooldown
+		return ZERO //no cooldown
 
 	var/log_message = uppertext(message)
 	if(!span_list || !span_list.len)
@@ -184,7 +184,7 @@
 			listeners = list(L) //Devil names are unique.
 			power_multiplier *= 5 //if you're a devil and god himself addressed you, you fucked up
 			//Cut out the name so it doesn't trigger commands
-			message = copytext(message, 0, start)+copytext(message, start + length(devilinfo.truename), length(message) + 1)
+			message = copytext(message, ZERO, start)+copytext(message, start + length(devilinfo.truename), length(message) + 1)
 			break
 		else if(dd_hasprefix(message, L.real_name))
 			specific_listeners += L //focus on those with the specified name
@@ -204,7 +204,7 @@
 	if(specific_listeners.len)
 		listeners = specific_listeners
 		power_multiplier *= (1 + (1/specific_listeners.len)) //2x on a single guy, 1.5x on two and so on
-		message = copytext(message, 0, 1)+copytext(message, 1 + length(found_string), length(message) + 1)
+		message = copytext(message, ZERO, 1)+copytext(message, 1 + length(found_string), length(message) + 1)
 
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
 	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown")
@@ -250,7 +250,7 @@
 	var/static/regex/honk_words = regex("ho+nk") //hooooooonk
 	var/static/regex/multispin_words = regex("like a record baby|right round")
 
-	var/i = 0
+	var/i = ZERO
 	//STUN
 	if(findtext(message, stun_words))
 		cooldown = COOLDOWN_STUN
@@ -289,14 +289,14 @@
 	else if((findtext(message, hallucinate_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/mob/living/carbon/C in listeners)
-			new /datum/hallucination/delusion(C, TRUE, null,150 * power_multiplier,0)
+			new /datum/hallucination/delusion(C, TRUE, null,150 * power_multiplier,ZERO)
 
 	//WAKE UP
 	else if((findtext(message, wakeup_words)))
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.SetSleeping(0)
+			L.SetSleeping(ZERO)
 
 	//HEAL
 	else if((findtext(message, heal_words)))
@@ -483,7 +483,7 @@
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.set_resting(FALSE)
-			L.SetAllImmobility(0)
+			L.SetAllImmobility(ZERO)
 
 	//SIT
 	else if((findtext(message, sit_words)))

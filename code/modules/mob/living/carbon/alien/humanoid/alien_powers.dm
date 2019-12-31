@@ -9,7 +9,7 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien
 	name = "Alien Power"
 	panel = "Alien"
-	var/plasma_cost = 0
+	var/plasma_cost = ZERO
 	var/check_turf = FALSE
 	has_action = TRUE
 	base_action = /datum/action/spell_action/alien
@@ -41,7 +41,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/get_panel_text()
 	. = ..()
-	if(plasma_cost > 0)
+	if(plasma_cost > ZERO)
 		return "[plasma_cost]"
 
 /obj/effect/proc_holder/alien/proc/cost_check(check_turf = FALSE, mob/living/carbon/user, silent = FALSE)
@@ -77,7 +77,7 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/plant/fire(mob/living/carbon/user)
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(user))
 		to_chat(user, "<span class='warning'>There's already a weed node here!</span>")
-		return 0
+		return ZERO
 	user.visible_message("<span class='alertalien'>[user] has planted some alien weeds!</span>")
 	new/obj/structure/alien/weeds/node(user.loc)
 	return 1
@@ -94,13 +94,13 @@ Doesn't work on other aliens/AI.*/
 		options += Ms
 	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as null|mob in sortNames(options)
 	if(!M)
-		return 0
-	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
+		return ZERO
+	if(M.anti_magic_check(FALSE, FALSE, TRUE, ZERO))
 		to_chat(user, "<span class='noticealien'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
 		return FALSE
 	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
 	if(msg)
-		if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
+		if(M.anti_magic_check(FALSE, FALSE, TRUE, ZERO))
 			to_chat(user, "<span class='notice'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
 			return
 		log_directed_talk(user, M, msg, LOG_SAY, tag="alien whisper")
@@ -113,13 +113,13 @@ Doesn't work on other aliens/AI.*/
 			var/follow_link_whispee = FOLLOW_LINK(ded, M)
 			to_chat(ded, "[follow_link_user] <span class='name'>[user]</span> <span class='alertalien'>Alien Whisper --> </span> [follow_link_whispee] <span class='name'>[M]</span> <span class='noticealien'>[msg]</span>")
 	else
-		return 0
+		return ZERO
 	return 1
 
 /obj/effect/proc_holder/alien/transfer
 	name = "Transfer Plasma"
 	desc = "Transfer Plasma to another alien."
-	plasma_cost = 0
+	plasma_cost = ZERO
 	action_icon_state = "alien_transfer"
 
 /obj/effect/proc_holder/alien/transfer/fire(mob/living/carbon/user)
@@ -129,7 +129,7 @@ Doesn't work on other aliens/AI.*/
 			aliens_around.Add(A)
 	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null) as mob in sortNames(aliens_around)
 	if(!M)
-		return 0
+		return ZERO
 	var/amount = input("Amount:", "Transfer Plasma to [M]") as num|null
 	if (amount)
 		amount = min(abs(round(amount)), user.getPlasma())
@@ -163,16 +163,16 @@ Doesn't work on other aliens/AI.*/
 			to_chat(user, "<span class='noticealien'>You cannot dissolve this object.</span>")
 
 
-			return 0
+			return ZERO
 	else
 		to_chat(src, "<span class='noticealien'>[target] is too far away.</span>")
-		return 0
+		return ZERO
 
 
 /obj/effect/proc_holder/alien/acid/fire(mob/living/carbon/alien/user)
 	var/O = input("Select what to dissolve:","Dissolve",null) as obj|turf in oview(1,user)
 	if(!O || user.incapacitated())
-		return 0
+		return ZERO
 	else
 		return corrode(O,user)
 
@@ -249,7 +249,7 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/neurotoxin/remove_ranged_ability(msg)
 	if(isalienadult(ranged_ability_user))
 		var/mob/living/carbon/alien/humanoid/A = ranged_ability_user
-		A.drooling = 0
+		A.drooling = ZERO
 		A.update_icons()
 	..()
 
@@ -288,7 +288,7 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/sneak
 	name = "Sneak"
 	desc = "Blend into the shadows to stalk your prey."
-	active = 0
+	active = ZERO
 
 	action_icon_state = "alien_sneak"
 
@@ -300,24 +300,24 @@ Doesn't work on other aliens/AI.*/
 		to_chat(user, "<span class='noticealien'>You blend into the shadows...</span>")
 	else
 		user.alpha = initial(user.alpha)
-		user.sneaking = 0
-		active = 0
+		user.sneaking = ZERO
+		active = ZERO
 		to_chat(user, "<span class='noticealien'>You reveal yourself!</span>")
 
 
 /mob/living/carbon/proc/getPlasma()
 	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 	if(!vessel)
-		return 0
+		return ZERO
 	return vessel.storedPlasma
 
 
 /mob/living/carbon/proc/adjustPlasma(amount)
 	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 	if(!vessel)
-		return 0
-	vessel.storedPlasma = max(vessel.storedPlasma + amount,0)
-	vessel.storedPlasma = min(vessel.storedPlasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
+		return ZERO
+	vessel.storedPlasma = max(vessel.storedPlasma + amount,ZERO)
+	vessel.storedPlasma = min(vessel.storedPlasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of ZERO
 	for(var/X in abilities)
 		var/obj/effect/proc_holder/alien/APH = X
 		if(APH.has_action)
@@ -333,4 +333,4 @@ Doesn't work on other aliens/AI.*/
 		adjustPlasma(-amount)
 		return 1
 
-	return 0
+	return ZERO

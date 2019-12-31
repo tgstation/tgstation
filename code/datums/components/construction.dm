@@ -68,13 +68,13 @@
 	var/list/current_step = steps[index]
 	var/list/target_step
 
-	if(target_index > 0 && target_index <= steps.len)
+	if(target_index > ZERO && target_index <= steps.len)
 		target_step = steps[target_index]
 
 	. = TRUE
 
 	if(I.tool_behaviour)
-		. = I.use_tool(parent, user, 0, volume=50)
+		. = I.use_tool(parent, user, ZERO, volume=50)
 
 	else if(diff == FORWARD)
 		switch(current_step["action"])

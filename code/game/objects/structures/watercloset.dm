@@ -6,15 +6,15 @@
 	density = FALSE
 	anchored = TRUE
 	var/open = FALSE			//if the lid is up
-	var/cistern = 0			//if the cistern bit is open
-	var/w_items = 0			//the combined w_class of all the items in the cistern
+	var/cistern = ZERO			//if the cistern bit is open
+	var/w_items = ZERO			//the combined w_class of all the items in the cistern
 	var/mob/living/swirlie = null	//the mob being given a swirlie
 	var/buildstacktype = /obj/item/stack/sheet/metal //they're metal now, shut up
 	var/buildstackamount = 1
 
 /obj/structure/toilet/Initialize()
 	. = ..()
-	open = round(rand(0, 1))
+	open = round(rand(ZERO, 1))
 	update_icon()
 
 
@@ -40,7 +40,7 @@
 					GM.visible_message("<span class='danger'>[user] starts to give [GM] a swirlie!</span>", "<span class='userdanger'>[user] starts to give you a swirlie...</span>")
 					swirlie = GM
 					var/was_alive = (swirlie.stat != DEAD)
-					if(do_after(user, 30, 0, target = src))
+					if(do_after(user, 30, ZERO, target = src))
 						GM.visible_message("<span class='danger'>[user] gives [GM] a swirlie!</span>", "<span class='userdanger'>[user] gives you a swirlie!</span>", "<span class='hear'>You hear a toilet flushing.</span>")
 						if(iscarbon(GM))
 							var/mob/living/carbon/C = GM
@@ -149,7 +149,7 @@
 	icon_state = "urinal"
 	density = FALSE
 	anchored = TRUE
-	var/exposed = 0 // can you currently put an item inside
+	var/exposed = ZERO // can you currently put an item inside
 	var/obj/item/hiddenitem = null // what's in the urinal
 
 /obj/structure/urinal/Initialize()
@@ -262,7 +262,7 @@
 		to_chat(user, "<span class='warning'>Someone's already washing here!</span>")
 		return
 	var/selected_area = parse_zone(user.zone_selected)
-	var/washing_face = 0
+	var/washing_face = ZERO
 	if(selected_area in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES))
 		washing_face = 1
 	user.visible_message("<span class='notice'>[user] starts washing [user.p_their()] [washing_face ? "face" : "hands"]...</span>", \
@@ -306,7 +306,7 @@
 	if(istype(O, /obj/item/melee/baton))
 		var/obj/item/melee/baton/B = O
 		if(B.cell)
-			if(B.cell.charge > 0 && B.turned_on)
+			if(B.cell.charge > ZERO && B.turned_on)
 				flick("baton_active", src)
 				var/stunforce = B.stunforce
 				user.Paralyze(stunforce)
@@ -348,7 +348,7 @@
 			return 1
 		busy = FALSE
 		SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
-		O.acid_level = 0
+		O.acid_level = ZERO
 		create_reagents(5)
 		reagents.add_reagent(dispensedreagent, 5)
 		reagents.reaction(O, TOUCH)
@@ -414,7 +414,7 @@
 	alpha = 200 //Mappers can also just set this to 255 if they want curtains that can't be seen through
 	layer = SIGN_LAYER
 	anchored = TRUE
-	opacity = 0
+	opacity = ZERO
 	density = FALSE
 	var/open = TRUE
 
@@ -473,7 +473,7 @@
 	new /obj/item/stack/rods (loc, 1)
 	qdel(src)
 
-/obj/structure/curtain/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/curtain/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)

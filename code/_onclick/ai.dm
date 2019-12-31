@@ -1,7 +1,7 @@
 /*
 	AI ClickOn()
 
-	Note currently ai restrained() returns 0 in all cases,
+	Note currently ai restrained() returns ZERO in all cases,
 	therefore restrained code has been removed
 
 	The AI can double click to move the camera (this was already true but is cleaner),
@@ -80,7 +80,7 @@
 		aicamera.captureimage(pixel_turf, usr)
 		return
 	if(waypoint_mode)
-		waypoint_mode = 0
+		waypoint_mode = ZERO
 		set_waypoint(A)
 		return
 

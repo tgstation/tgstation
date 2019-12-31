@@ -7,7 +7,7 @@
 	anchored = TRUE
 	alpha = 30 //initially quite hidden when not "recharging"
 	var/flare_message = "<span class='warning'>the trap flares brightly!</span>"
-	var/last_trigger = 0
+	var/last_trigger = ZERO
 	var/time_between_triggers = 600 //takes a minute to recharge
 	var/charges = INFINITY
 	var/checks_antimagic = TRUE
@@ -54,8 +54,8 @@
 	alpha = 200
 	last_trigger = world.time
 	charges--
-	if(charges <= 0)
-		animate(src, alpha = 0, time = 10)
+	if(charges <= ZERO)
+		animate(src, alpha = ZERO, time = 10)
 		QDEL_IN(src, 10)
 	else
 		animate(src, alpha = initial(alpha), time = time_between_triggers)
@@ -73,7 +73,7 @@
 		if(checks_antimagic && M.anti_magic_check())
 			flare()
 			return
-	if(charges <= 0)
+	if(charges <= ZERO)
 		return
 	flare()
 	if(isliving(AM))
@@ -137,7 +137,7 @@
 	. = ..()
 	radio = new(src)
 	radio.subspace_transmission = TRUE
-	radio.canhear_range = 0
+	radio.canhear_range = ZERO
 	radio.recalculateChannels()
 	spark_system = new
 	spark_system.set_up(4,1,src)

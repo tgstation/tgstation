@@ -59,7 +59,7 @@
 				add_overlay("[O]_r")
 		else
 			var/mutable_appearance/right = mutable_appearance(icon, "[a_right.icon_state]_left")
-			right.transform = matrix(-1, 0, 0, 0, 1, 0)
+			right.transform = matrix(-1, ZERO, ZERO, ZERO, 1, ZERO)
 			for(var/O in a_right.attached_overlays)
 				right.add_overlay("[O]_l")
 			add_overlay(right)

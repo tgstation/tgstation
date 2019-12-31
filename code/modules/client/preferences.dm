@@ -8,7 +8,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/max_save_slots = 3
 
 	//non-preference stuff
-	var/muted = 0
+	var/muted = ZERO
 	var/last_ip
 	var/last_id
 
@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	//Antag preferences
 	var/list/be_special = list()		//Special role selection
-	var/tmp/old_be_special = 0			//Bitflag version of be_special, used to update old savefiles and nothing more
+	var/tmp/old_be_special = ZERO			//Bitflag version of be_special, used to update old savefiles and nothing more
 										//If it's 0, that's good, if it's anything but 0, the owner of this prefs file's antag choices were,
 										//autocorrected this round, not that you'd need to check that.
 
@@ -49,7 +49,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/pda_style = MONO
 	var/pda_color = "#808000"
 
-	var/uses_glasses_colour = 0
+	var/uses_glasses_colour = ZERO
 
 	//character preferences
 	var/slot_randomized					//keeps track of round-to-round randomization of the character slot, prevents overwriting
@@ -87,14 +87,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		// Want randomjob if preferences already filled - Donkie
 	var/joblessrole = BERANDOMJOB  //defaults to 1 for fewer assistants
 
-	// 0 = character settings, 1 = game preferences
-	var/current_tab = 0
+	// ZERO = character settings, 1 = game preferences
+	var/current_tab = ZERO
 
-	var/unlock_content = 0
+	var/unlock_content = ZERO
 
 	var/list/ignoring = list()
 
-	var/clientfps = 0
+	var/clientfps = ZERO
 
 	var/parallax
 
@@ -162,18 +162,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	dat += "<HR>"
 
 	switch(current_tab)
-		if (0) // Character Settings#
+		if (ZERO) // Character Settings#
 			if(path)
 				var/savefile/S = new /savefile(path)
 				if(S)
 					dat += "<center>"
 					var/name
-					var/unspaced_slots = 0
+					var/unspaced_slots = ZERO
 					for(var/i=1, i<=max_save_slots, i++)
 						unspaced_slots++
 						if(unspaced_slots > 4)
 							dat += "<br>"
-							unspaced_slots = 0
+							unspaced_slots = ZERO
 						S.cd = "/character[i]"
 						S["real_name"] >> name
 						if(!name)
@@ -338,7 +338,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<br></td>"
 
 			//Mutant stuff
-			var/mutant_category = 0
+			var/mutant_category = ZERO
 
 			if("tail_lizard" in pref_species.default_features)
 				if(!mutant_category)
@@ -351,7 +351,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
 					dat += "</td>"
-					mutant_category = 0
+					mutant_category = ZERO
 
 			if("snout" in pref_species.default_features)
 				if(!mutant_category)
@@ -364,7 +364,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
 					dat += "</td>"
-					mutant_category = 0
+					mutant_category = ZERO
 
 			if("horns" in pref_species.default_features)
 				if(!mutant_category)
@@ -377,7 +377,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
 					dat += "</td>"
-					mutant_category = 0
+					mutant_category = ZERO
 
 			if("frills" in pref_species.default_features)
 				if(!mutant_category)
@@ -390,7 +390,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
 					dat += "</td>"
-					mutant_category = 0
+					mutant_category = ZERO
 
 			if("spines" in pref_species.default_features)
 				if(!mutant_category)
@@ -403,7 +403,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
 					dat += "</td>"
-					mutant_category = 0
+					mutant_category = ZERO
 
 			if("body_markings" in pref_species.default_features)
 				if(!mutant_category)
@@ -416,7 +416,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
 					dat += "</td>"
-					mutant_category = 0
+					mutant_category = ZERO
 
 			if("legs" in pref_species.default_features)
 				if(!mutant_category)
@@ -429,7 +429,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
 					dat += "</td>"
-					mutant_category = 0
+					mutant_category = ZERO
 
 			if("moth_wings" in pref_species.default_features)
 				if(!mutant_category)
@@ -442,7 +442,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
 					dat += "</td>"
-					mutant_category = 0
+					mutant_category = ZERO
 
 			if("moth_markings" in pref_species.default_features)
 				if(!mutant_category)
@@ -455,7 +455,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
 					dat += "</td>"
-					mutant_category = 0
+					mutant_category = ZERO
 
 			if("tail_human" in pref_species.default_features)
 				if(!mutant_category)
@@ -468,7 +468,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
 					dat += "</td>"
-					mutant_category = 0
+					mutant_category = ZERO
 
 			if("ears" in pref_species.default_features)
 				if(!mutant_category)
@@ -481,7 +481,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
 					dat += "</td>"
-					mutant_category = 0
+					mutant_category = ZERO
 
 			//Adds a thing to select which phobia because I can't be assed to put that in the quirks window
 			if("Phobia" in all_quirks)
@@ -502,11 +502,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					mutant_category++
 					if(mutant_category >= MAX_MUTANT_ROWS)
 						dat += "</td>"
-						mutant_category = 0
+						mutant_category = ZERO
 
 			if(mutant_category)
 				dat += "</td>"
-				mutant_category = 0
+				mutant_category = ZERO
 			dat += "</tr></table>"
 
 
@@ -758,11 +758,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var deedDone = false;
 	document.onkeyup = function(e) {
 		if(deedDone){ return; }
-		var alt = e.altKey ? 1 : 0;
-		var ctrl = e.ctrlKey ? 1 : 0;
-		var shift = e.shiftKey ? 1 : 0;
-		var numpad = (95 < e.keyCode && e.keyCode < 112) ? 1 : 0;
-		var escPressed = e.keyCode == 27 ? 1 : 0;
+		var alt = e.altKey ? 1 : ZERO;
+		var ctrl = e.ctrlKey ? 1 : ZERO;
+		var shift = e.shiftKey ? 1 : ZERO;
+		var numpad = (95 < e.keyCode && e.keyCode < 112) ? 1 : ZERO;
+		var escPressed = e.keyCode == 27 ? 1 : ZERO;
 		var url = 'byond://?_src_=prefs;preference=keybindings_set;keybinding=[kb.name];old_key=[old_key];clear_key='+escPressed+';key='+e.key+';alt='+alt+';ctrl='+ctrl+';shift='+shift+';numpad='+numpad+';key_code='+e.keyCode;
 		window.location=url;
 		deedDone = true;
@@ -788,7 +788,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/width = widthPerColumn
 
 	var/HTML = "<center>"
-	if(SSjob.occupations.len <= 0)
+	if(SSjob.occupations.len <= ZERO)
 		HTML += "The job SSticker is not yet finished creating jobs, please try again later"
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>Done</a></center><br>" // Easier to press up here.
 
@@ -812,10 +812,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if((index < limit) && (lastJob != null))
 					//If the cells were broken up by a job in the splitJob list then it will fill in the rest of the cells with
 					//the last job's selection color. Creating a rather nice effect.
-					for(var/i = 0, i < (limit - index), i += 1)
+					for(var/i = ZERO, i < (limit - index), i += 1)
 						HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"
 				HTML += "</table></td><td width='20%'><table width='100%' cellpadding='1' cellspacing='0'>"
-				index = 0
+				index = ZERO
 
 			HTML += "<tr bgcolor='[job.selection_color]'><td width='60%' align='right'>"
 			var/rank = job.title
@@ -915,7 +915,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return TRUE
 
 /datum/preferences/proc/UpdateJobPreference(mob/user, role, desiredLvl)
-	if(!SSjob || SSjob.occupations.len <= 0)
+	if(!SSjob || SSjob.occupations.len <= ZERO)
 		return
 	var/datum/job/job = SSjob.GetJob(role)
 
@@ -990,10 +990,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					has_quirk = FALSE
 				else
 					quirk_cost *= -1 //invert it back, since we'd be regaining this amount
-			if(quirk_cost > 0)
+			if(quirk_cost > ZERO)
 				quirk_cost = "+[quirk_cost]"
 			var/font_color = "#AAAAFF"
-			if(initial(T.value) != 0)
+			if(initial(T.value) != ZERO)
 				font_color = initial(T.value) > 0 ? "#AAFFAA" : "#FFAAAA"
 			if(quirk_conflict)
 				dat += "<font color='[font_color]'>[quirk_name]</font> - [initial(T.desc)] \
@@ -1013,16 +1013,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	popup.open(FALSE)
 
 /datum/preferences/proc/GetQuirkBalance()
-	var/bal = 0
+	var/bal = ZERO
 	for(var/V in all_quirks)
 		var/datum/quirk/T = SSquirks.quirks[V]
 		bal -= initial(T.value)
 	return bal
 
 /datum/preferences/proc/GetPositiveQuirkCount()
-	. = 0
+	. = ZERO
 	for(var/q in all_quirks)
-		if(SSquirks.quirk_points[q] > 0)
+		if(SSquirks.quirk_points[q] > ZERO)
 			.++
 
 /datum/preferences/Topic(href, href_list, hsrc)			//yeah, gotta do this I guess..
@@ -1093,16 +1093,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				var/value = SSquirks.quirk_points[quirk]
 				var/balance = GetQuirkBalance()
 				if(quirk in all_quirks)
-					if(balance + value < 0)
+					if(balance + value < ZERO)
 						to_chat(user, "<span class='warning'>Refunding this would cause you to go below your balance!</span>")
 						return
 					all_quirks -= quirk
 				else
-					var/is_positive_quirk = SSquirks.quirk_points[quirk] > 0
+					var/is_positive_quirk = SSquirks.quirk_points[quirk] > ZERO
 					if(is_positive_quirk && GetPositiveQuirkCount() >= MAX_QUIRKS)
 						to_chat(user, "<span class='warning'>You can't have more than [MAX_QUIRKS] positive quirks!</span>")
 						return
-					if(balance - value < 0)
+					if(balance - value < ZERO)
 						to_chat(user, "<span class='warning'>You don't have enough balance to gain this quirk!</span>")
 						return
 					all_quirks += quirk
@@ -1458,7 +1458,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(!VM.votable)
 							continue
 						var/friendlyname = "[VM.map_name] "
-						if (VM.voteweight <= 0)
+						if (VM.voteweight <= ZERO)
 							friendlyname += " (disabled)"
 						maplist[friendlyname] = VM.map_name
 					maplist[default] = null

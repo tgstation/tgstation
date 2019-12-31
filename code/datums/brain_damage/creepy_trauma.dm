@@ -12,9 +12,9 @@
 	var/datum/antagonist/obsessed/antagonist
 	var/viewing = FALSE //it's a lot better to store if the owner is watching the obsession than checking it twice between two procs
 
-	var/total_time_creeping = 0 //just for roundend fun
-	var/time_spent_away = 0
-	var/obsession_hug_count = 0
+	var/total_time_creeping = ZERO //just for roundend fun
+	var/time_spent_away = ZERO
+	var/obsession_hug_count = ZERO
 
 /datum/brain_trauma/special/obsessed/on_gain()
 
@@ -49,7 +49,7 @@
 	if(viewing)
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/creeping, obsession.name)
 		total_time_creeping += 20
-		time_spent_away = 0
+		time_spent_away = ZERO
 		if(attachedobsessedobj)//if an objective needs to tick down, we can do that since traumas coexist with the antagonist datum
 			attachedobsessedobj.timer -= 20 //mob subsystem ticks every 2 seconds(?), remove 20 deciseconds from the timer. sure, that makes sense.
 	else
@@ -111,6 +111,6 @@
 	for(var/datum/mind/possible_target in viable_minds)
 		if(possible_target != owner && ishuman(possible_target.current))
 			possible_targets += possible_target.current
-	if(possible_targets.len > 0)
+	if(possible_targets.len > ZERO)
 		chosen_victim = pick(possible_targets)
 	return chosen_victim

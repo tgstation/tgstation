@@ -2,7 +2,7 @@
 	name = "firearms authentication implant"
 	desc = "Lets you shoot your guns."
 	icon_state = "auth"
-	activated = 0
+	activated = ZERO
 
 /obj/item/implant/weapons_auth/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -66,7 +66,7 @@
 
 /obj/item/implant/health
 	name = "health implant"
-	activated = 0
+	activated = ZERO
 	var/healthstring = ""
 
 /obj/item/implant/health/proc/sensehealth()
@@ -102,7 +102,7 @@
 	// "must be in ears to hear" restriction.
 	radio.name = "internal radio"
 	radio.subspace_transmission = subspace_transmission
-	radio.canhear_range = 0
+	radio.canhear_range = ZERO
 	if(radio_key)
 		radio.keyslot = new radio_key
 	radio.recalculateChannels()

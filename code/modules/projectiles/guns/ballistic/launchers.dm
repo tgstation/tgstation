@@ -38,7 +38,7 @@
 	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
 	mag_type = /obj/item/ammo_box/magazine/m75
 	burst_size = 1
-	fire_delay = 0
+	fire_delay = ZERO
 	actions_types = list()
 	casing_ejector = FALSE
 
@@ -53,7 +53,7 @@
 	can_suppress = FALSE
 	pin = /obj/item/firing_pin/implant/pindicate
 	burst_size = 1
-	fire_delay = 0
+	fire_delay = ZERO
 	casing_ejector = FALSE
 	weapon_weight = WEAPON_HEAVY
 	bolt_type = BOLT_TYPE_NO_BOLT
@@ -80,7 +80,7 @@
 		playsound(src, 'sound/vehicles/rocketlaunch.ogg', 80, TRUE, 5)
 		animate(user, pixel_z = 300, time = 30, easing = LINEAR_EASING)
 		sleep(70)
-		animate(user, pixel_z = 0, time = 5, easing = LINEAR_EASING)
+		animate(user, pixel_z = ZERO, time = 5, easing = LINEAR_EASING)
 		sleep(5)
 		user.notransform = FALSE
 		process_fire(user, user, TRUE)

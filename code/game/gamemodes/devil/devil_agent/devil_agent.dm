@@ -4,7 +4,7 @@
 	required_players = 25
 	required_enemies = 3
 	recommended_enemies = 8
-	reroll_friendly = 0
+	reroll_friendly = ZERO
 
 	traitors_possible = 10 //hard limit on traitors if scaling is turned off
 	num_modifier = 4
@@ -19,11 +19,11 @@
 		+	<span class='notice'>Crew</span>: Resist the lure of sin and remain pure!"
 
 /datum/game_mode/devil/devil_agents/post_setup()
-	var/i = 0
+	var/i = ZERO
 	for(var/datum/mind/devil in devils)
 		i++
 		if(i + 1 > devils.len)
-			i = 0
+			i = ZERO
 		devil_target_list[devil] = devils[i + 1]
 	..()
 
@@ -41,4 +41,4 @@
 		outsellobjective.update_explanation_text()
 		D.objectives += outsellobjective
 		return 1
-	return 0
+	return ZERO

@@ -160,7 +160,7 @@
 			if(!M_passmob)
 				M.pass_flags &= ~PASSMOB
 
-			now_pushing = 0
+			now_pushing = ZERO
 
 			if(!move_failed)
 				return TRUE
@@ -319,7 +319,7 @@
 /mob/living/proc/set_pull_offsets(mob/living/M, grab_state = GRAB_PASSIVE)
 	if(M.buckled)
 		return //don't make them change direction or offset them if they're buckled into something.
-	var/offset = 0
+	var/offset = ZERO
 	switch(grab_state)
 		if(GRAB_PASSIVE)
 			offset = GRAB_PIXEL_SHIFT_PASSIVE
@@ -332,26 +332,26 @@
 	M.setDir(get_dir(M, src))
 	switch(M.dir)
 		if(NORTH)
-			animate(M, pixel_x = 0, pixel_y = offset, 3)
+			animate(M, pixel_x = ZERO, pixel_y = offset, 3)
 		if(SOUTH)
-			animate(M, pixel_x = 0, pixel_y = -offset, 3)
+			animate(M, pixel_x = ZERO, pixel_y = -offset, 3)
 		if(EAST)
 			if(M.lying == 270) //update the dragged dude's direction if we've turned
 				M.lying = 90
 				M.update_transform() //force a transformation update, otherwise it'll take a few ticks for update_mobility() to do so
 				M.lying_prev = M.lying
-			animate(M, pixel_x = offset, pixel_y = 0, 3)
+			animate(M, pixel_x = offset, pixel_y = ZERO, 3)
 		if(WEST)
 			if(M.lying == 90)
 				M.lying = 270
 				M.update_transform()
 				M.lying_prev = M.lying
-			animate(M, pixel_x = -offset, pixel_y = 0, 3)
+			animate(M, pixel_x = -offset, pixel_y = ZERO, 3)
 
 /mob/living/proc/reset_pull_offsets(mob/living/M, override)
 	if(!override && M.buckled)
 		return
-	animate(M, pixel_x = 0, pixel_y = 0, 1)
+	animate(M, pixel_x = ZERO, pixel_y = ZERO, 1)
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
@@ -402,7 +402,7 @@
 		return TRUE
 
 /mob/living/canUseStorage()
-	if (get_num_arms() <= 0)
+	if (get_num_arms() <= ZERO)
 		return FALSE
 	return TRUE
 
@@ -497,7 +497,7 @@
 
 /mob/living/update_health_hud()
 	if(hud_used?.healths)
-		var/severity = 0
+		var/severity = ZERO
 		var/healthpercent = (health/maxHealth) * 100
 		switch(healthpercent)
 			if(100 to INFINITY)
@@ -520,7 +520,7 @@
 			else
 				hud_used.healths.icon_state = "health7"
 				severity = 6
-		if(severity > 0)
+		if(severity > ZERO)
 			overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
 		else
 			clear_fullscreen("brute")
@@ -547,13 +547,13 @@
 				spell.updateButtonIcon()
 
 /mob/living/proc/remove_CC(should_update_mobility = TRUE)
-	SetStun(0, FALSE)
-	SetKnockdown(0, FALSE)
-	SetImmobilized(0, FALSE)
-	SetParalyzed(0, FALSE)
-	SetSleeping(0, FALSE)
-	setStaminaLoss(0)
-	SetUnconscious(0, FALSE)
+	SetStun(ZERO, FALSE)
+	SetKnockdown(ZERO, FALSE)
+	SetImmobilized(ZERO, FALSE)
+	SetParalyzed(ZERO, FALSE)
+	SetSleeping(ZERO, FALSE)
+	setStaminaLoss(ZERO)
+	SetUnconscious(ZERO, FALSE)
 	if(should_update_mobility)
 		update_mobility()
 
@@ -569,31 +569,31 @@
 //admin_revive = TRUE is used in other procs, for example mob/living/carbon/fully_heal()
 /mob/living/proc/fully_heal(admin_revive = FALSE)
 	restore_blood()
-	setToxLoss(0, 0) //zero as second argument not automatically call updatehealth().
-	setOxyLoss(0, 0)
-	setCloneLoss(0, 0)
+	setToxLoss(ZERO, ZERO) //zero as second argument not automatically call updatehealth().
+	setOxyLoss(ZERO, ZERO)
+	setCloneLoss(ZERO, ZERO)
 	remove_CC(FALSE)
-	set_disgust(0)
-	losebreath = 0
-	radiation = 0
+	set_disgust(ZERO)
+	losebreath = ZERO
+	radiation = ZERO
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
 	bodytemperature = BODYTEMP_NORMAL
-	set_blindness(0)
-	set_blurriness(0)
-	set_dizziness(0)
+	set_blindness(ZERO)
+	set_blurriness(ZERO)
+	set_dizziness(ZERO)
 	cure_nearsighted()
 	cure_blind()
 	cure_husk()
-	hallucination = 0
+	hallucination = ZERO
 	heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	ExtinguishMob()
-	fire_stacks = 0
-	confused = 0
-	dizziness = 0
-	drowsyness = 0
-	stuttering = 0
-	slurring = 0
-	jitteriness = 0
+	fire_stacks = ZERO
+	confused = ZERO
+	dizziness = ZERO
+	drowsyness = ZERO
+	stuttering = ZERO
+	slurring = ZERO
+	jitteriness = ZERO
 	update_mobility()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
 
@@ -654,7 +654,7 @@
 		if(trail_type)
 			var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
 			if(blood_volume && blood_volume > max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
-				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
+				blood_volume = max(blood_volume - max(1, brute_ratio * 2), ZERO) 					//that depends on our brute damage.
 				var/newdir = get_dir(target_turf, start)
 				if(newdir != direction)
 					newdir = newdir | direction
@@ -684,7 +684,7 @@
 	else
 		return pick("trails_1", "trails_2")
 
-/mob/living/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
+/mob/living/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = ZERO)
 	if(buckled)
 		return
 	if(client && client.move_delay >= world.time + world.tick_lag*2)
@@ -748,7 +748,7 @@
 
 
 /mob/proc/resist_grab(moving_resist)
-	return 1 //returning 0 means we successfully broke free
+	return 1 //returning ZERO means we successfully broke free
 
 /mob/living/resist_grab(moving_resist)
 	. = TRUE
@@ -757,7 +757,7 @@
 		if((resting || HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) && pulledby.grab_state < GRAB_KILL) //If resting, resisting out of a grab is equivalent to 1 grab state higher. wont make the grab state exceed the normal max, however
 			altered_grab_state++
 		var/resist_chance = BASE_GRAB_RESIST_CHANCE // see defines/combat.dm
-		resist_chance = max(resist_chance/altered_grab_state-sqrt((getStaminaLoss()+getBruteLoss()/2)*(3-altered_grab_state)), 0) // https://i.imgur.com/6yAT90T.png for sample output values
+		resist_chance = max(resist_chance/altered_grab_state-sqrt((getStaminaLoss()+getBruteLoss()/2)*(3-altered_grab_state)), ZERO) // https://i.imgur.com/6yAT90T.png for sample output values
 		if(prob(resist_chance))
 			visible_message("<span class='danger'>[src] breaks free of [pulledby]'s grip!</span>", \
 							"<span class='danger'>You break free of [pulledby]'s grip!</span>", null, null, pulledby)
@@ -808,7 +808,7 @@
 /mob/living/float(on)
 	if(throwing)
 		return
-	var/fixed = 0
+	var/fixed = ZERO
 	if(anchored || (buckled && buckled.anchored))
 		fixed = 1
 	if(on && !(movement_type & FLOATING) && !fixed)
@@ -915,10 +915,10 @@
 		loc_temp = heat_turf.temperature
 	return loc_temp
 
-/mob/living/proc/get_standard_pixel_x_offset(lying = 0)
+/mob/living/proc/get_standard_pixel_x_offset(lying = ZERO)
 	return initial(pixel_x)
 
-/mob/living/proc/get_standard_pixel_y_offset(lying = 0)
+/mob/living/proc/get_standard_pixel_y_offset(lying = ZERO)
 	return initial(pixel_y)
 
 /mob/living/cancel_camera()
@@ -938,7 +938,7 @@
 		return FALSE
 	if(user != null && src == user)
 		return FALSE
-	if(invisibility || alpha == 0)//cloaked
+	if(invisibility || alpha == ZERO)//cloaked
 		return FALSE
 	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
 	if(!near_camera(src))
@@ -947,7 +947,7 @@
 
 //used in datum/reagents/reaction() proc
 /mob/living/proc/get_permeability_protection(list/target_zones)
-	return 0
+	return ZERO
 
 /mob/living/proc/harvest(mob/living/user) //used for extra objects etc. in butchering
 	return
@@ -985,7 +985,7 @@
 	return TRUE
 
 /mob/living/proc/return_soul()
-	hellbound = 0
+	hellbound = ZERO
 	if(mind)
 		var/datum/antagonist/devil/devilInfo = mind.soulOwner.has_antag_datum(/datum/antagonist/devil)
 		if(devilInfo)//Not sure how this could be null, but let's just try anyway.
@@ -1006,7 +1006,7 @@
 		return TRUE
 	return FALSE
 
-/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
+/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = ZERO, datum/callback/callback, force)
 	stop_pulling()
 	. = ..()
 
@@ -1060,7 +1060,7 @@
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
-	if(fire_stacks > 0 && !on_fire)
+	if(fire_stacks > ZERO && !on_fire)
 		on_fire = 1
 		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
 						"<span class='userdanger'>You're set on fire!</span>")
@@ -1073,8 +1073,8 @@
 
 /mob/living/proc/ExtinguishMob()
 	if(on_fire)
-		on_fire = 0
-		fire_stacks = 0
+		on_fire = ZERO
+		fire_stacks = ZERO
 		for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
 			qdel(F)
 		clear_alert("fire")
@@ -1084,7 +1084,7 @@
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
 	fire_stacks = CLAMP(fire_stacks + add_fire_stacks, -20, 20)
-	if(on_fire && fire_stacks <= 0)
+	if(on_fire && fire_stacks <= ZERO)
 		ExtinguishMob()
 
 //Share fire evenly between the two mobs
@@ -1167,7 +1167,7 @@
 			lying = pick(90, 270)
 	else
 		mobility_flags |= MOBILITY_STAND
-		lying = 0
+		lying = ZERO
 
 	if(should_be_lying || restrained || incapacitated())
 		mobility_flags &= ~(MOBILITY_UI|MOBILITY_PULL)
@@ -1202,7 +1202,7 @@
 
 	// Movespeed mods based on arms/legs quantity
 	if(!get_leg_ignore())
-		var/limbless_slowdown = 0
+		var/limbless_slowdown = ZERO
 		// These checks for <2 should be swapped out for something else if we ever end up with a species with more than 2
 		if(has_legs < 2)
 			limbless_slowdown += 6 - (has_legs * 3)
@@ -1324,7 +1324,7 @@
 			var/atom/AT = client.eye
 			AT.get_remote_view_fullscreens(src)
 		else
-			clear_fullscreen("remote_view", 0)
+			clear_fullscreen("remote_view", ZERO)
 		update_pipe_vision()
 
 /mob/living/update_mouse_pointer()
@@ -1335,7 +1335,7 @@
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if ("maxHealth")
-			if (!isnum(var_value) || var_value <= 0)
+			if (!isnum(var_value) || var_value <= ZERO)
 				return FALSE
 		if("stat")
 			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life

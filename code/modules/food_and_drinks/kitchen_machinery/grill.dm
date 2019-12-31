@@ -8,9 +8,9 @@
 	density = TRUE
 	layer = BELOW_OBJ_LAYER
 	use_power = NO_POWER_USE
-	var/grill_fuel = 0
+	var/grill_fuel = ZERO
 	var/obj/item/reagent_containers/food/grilled_item
-	var/grill_time = 0
+	var/grill_time = ZERO
 	var/datum/looping_sound/grill/grill_loop
 
 /obj/machinery/grill/Initialize()
@@ -118,7 +118,7 @@
 	return ..()
 
 /obj/machinery/grill/proc/finish_grill()
-	switch(grill_time) //no 0-9 to prevent spam
+	switch(grill_time) //no ZERO-9 to prevent spam
 		if(10 to 15)
 			grilled_item.name = "lightly-grilled [grilled_item.name]"
 			grilled_item.desc = "[grilled_item.desc] It's been lightly grilled."
@@ -134,7 +134,7 @@
 			grilled_item.name = "Powerfully Grilled [grilled_item.name]"
 			grilled_item.desc = "A [grilled_item.name]. Reminds you of your wife, wait, no, it's prettier!"
 			grilled_item.foodtype |= FRIED
-	grill_time = 0
+	grill_time = ZERO
 	grill_loop.stop()
 
 /obj/machinery/grill/unwrenched

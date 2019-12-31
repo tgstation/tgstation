@@ -5,7 +5,7 @@
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "gate_full"
 	flags_1 = ON_BORDER_1
-	appearance_flags = 0
+	appearance_flags = ZERO
 	layer = TABLE_LAYER
 	anchored = TRUE
 	density = TRUE
@@ -54,7 +54,7 @@
 		return QDEL_HINT_LETMELIVE
 
 /obj/structure/necropolis_gate/singularity_pull()
-	return 0
+	return ZERO
 
 /obj/structure/necropolis_gate/CanPass(atom/movable/mover, turf/target)
 	if(get_dir(loc, target) == dir)
@@ -77,7 +77,7 @@
 	anchored = TRUE
 
 /obj/structure/opacity_blocker/singularity_pull()
-	return 0
+	return ZERO
 
 /obj/structure/opacity_blocker/Destroy(force)
 	if(force)
@@ -184,7 +184,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		for(var/mob/M in GLOB.player_list)
 			if(M.z == z)
 				to_chat(M, "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has been released.</span>")
-				M.playsound_local(T, null, 100, FALSE, 0, FALSE, pressure_affected = FALSE, S = legion_sound)
+				M.playsound_local(T, null, 100, FALSE, ZERO, FALSE, pressure_affected = FALSE, S = legion_sound)
 				flash_color(M, flash_color = "#FF0000", flash_time = 50)
 		var/mutable_appearance/release_overlay = mutable_appearance('icons/effects/effects.dmi', "legiondoor")
 		notify_ghosts("Legion has been released in the [get_area(src)]!", source = src, alert_overlay = release_overlay, action = NOTIFY_JUMP, flashwindow = FALSE)
@@ -192,7 +192,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 /obj/effect/temp_visual/necropolis
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "door_closing"
-	appearance_flags = 0
+	appearance_flags = ZERO
 	duration = 6
 	layer = EDGED_TURF_LAYER
 	pixel_x = -32
@@ -207,7 +207,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	desc = "A massive arch over the necropolis gate, set into a massive tower of stone."
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "arch_full"
-	appearance_flags = 0
+	appearance_flags = ZERO
 	layer = TABLE_LAYER
 	anchored = TRUE
 	pixel_x = -64
@@ -224,7 +224,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	add_overlay(top_overlay)
 
 /obj/structure/necropolis_arch/singularity_pull()
-	return 0
+	return ZERO
 
 /obj/structure/necropolis_arch/Destroy(force)
 	if(force)
@@ -292,7 +292,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
 	else
 		playsound(src, 'sound/mecha/mechmove04.ogg', 50, TRUE)
-	animate(src, alpha = 0, pixel_y = pixel_y - 3, time = 5)
+	animate(src, alpha = ZERO, pixel_y = pixel_y - 3, time = 5)
 	fallen = TRUE
 	if(break_that_sucker)
 		QDEL_IN(src, 10)

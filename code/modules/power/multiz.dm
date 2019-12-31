@@ -22,7 +22,7 @@
 			below.above = null
 		return
 	refresh() //Sometimes the powernets get lost, so we need to keep checking.
-	if(powernet && (powernet.avail <= 0))		// is it powered?
+	if(powernet && (powernet.avail <= ZERO))		// is it powered?
 		icon_state = "cablerelay-off"
 	else
 		icon_state = "cablerelay-on"
@@ -32,7 +32,7 @@
 
 ///Allows you to scan the relay with a multitool to see stats.
 /obj/machinery/power/deck_relay/multitool_act(mob/user, obj/item/I)
-	if(powernet && (powernet.avail > 0))		// is it powered?
+	if(powernet && (powernet.avail > ZERO))		// is it powered?
 		to_chat(user, "<span class='danger'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]</span>")
 	if(!powernet || below.powernet != powernet)
 		icon_state = "cablerelay-off"

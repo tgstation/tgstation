@@ -1,8 +1,8 @@
-#define VALUE_MODE_NUM 0
+#define VALUE_MODE_NUM ZERO
 #define VALUE_MODE_TEXT 1
 #define VALUE_MODE_FLAG 2
 
-#define KEY_MODE_TEXT 0
+#define KEY_MODE_TEXT ZERO
 #define KEY_MODE_TYPE 1
 
 /datum/config_entry
@@ -87,7 +87,7 @@
 	return TRUE
 
 /datum/config_entry/number
-	config_entry_value = 0
+	config_entry_value = ZERO
 	abstract_type = /datum/config_entry/number
 	var/integer = TRUE
 	var/max_val = INFINITY
@@ -115,7 +115,7 @@
 /datum/config_entry/flag/ValidateAndSet(str_val)
 	if(!VASProcCallGuard(str_val))
 		return FALSE
-	config_entry_value = text2num(trim(str_val)) != 0
+	config_entry_value = text2num(trim(str_val)) != ZERO
 	return TRUE
 
 /datum/config_entry/number_list

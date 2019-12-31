@@ -280,7 +280,7 @@
 	flags_1 = CONDUCT_1
 	force = 5
 	w_class = WEIGHT_CLASS_SMALL
-	throwforce = 0
+	throwforce = ZERO
 	throw_speed = 3
 	throw_range = 7
 

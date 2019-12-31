@@ -7,7 +7,7 @@
 	icon_dead = "pine_1"
 	icon_gib = "pine_1"
 	gender = NEUTER
-	speak_chance = 0
+	speak_chance = ZERO
 	turns_per_move = 5
 	response_help_continuous = "brushes"
 	response_help_simple = "brush"
@@ -31,9 +31,9 @@
 	emote_taunt = list("growls")
 	taunt_chance = 20
 
-	atmos_requirements = list("min_oxy" = 2, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 2, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
 	unsuitable_atmos_damage = 5
-	minbodytemp = 0
+	minbodytemp = ZERO
 	maxbodytemp = 1200
 
 	deathmessage = "is hacked into pieces!"
@@ -49,7 +49,7 @@
 		var/turf/open/T = src.loc
 		if(T.air && T.air.gases[/datum/gas/carbon_dioxide])
 			var/co2 = T.air.gases[/datum/gas/carbon_dioxide][MOLES]
-			if(co2 > 0)
+			if(co2 > ZERO)
 				if(prob(25))
 					var/amt = min(co2, 9)
 					T.air.gases[/datum/gas/carbon_dioxide][MOLES] -= amt
@@ -78,7 +78,7 @@
 	loot = list(/obj/item/stack/rods)
 	speak_emote = list("polls")
 	faction = list()
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
 	is_tree = FALSE
 	
 /mob/living/simple_animal/hostile/tree/festivus/attack_hand(mob/living/carbon/human/M)

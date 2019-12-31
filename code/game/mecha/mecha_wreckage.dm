@@ -9,7 +9,7 @@
 	icon = 'icons/mecha/mecha.dmi'
 	density = TRUE
 	anchored = FALSE
-	opacity = 0
+	opacity = ZERO
 	var/list/welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/metal, /obj/item/stack/rods)
 	var/salvage_num = 5
 	var/list/crowbar_salvage = list()
@@ -53,10 +53,10 @@
 /obj/structure/mecha_wreckage/welder_act(mob/living/user, obj/item/I)
 	..()
 	. = TRUE
-	if(salvage_num <= 0 || !length(welder_salvage))
+	if(salvage_num <= ZERO || !length(welder_salvage))
 		to_chat(user, "<span class='notice'>You don't see anything that can be cut with [I]!</span>")
 		return
-	if(!I.use_tool(src, user, 0, volume=50))
+	if(!I.use_tool(src, user, ZERO, volume=50))
 		return
 	if(prob(30))
 		to_chat(user, "<span class='notice'>You fail to salvage anything valuable from [src]!</span>")

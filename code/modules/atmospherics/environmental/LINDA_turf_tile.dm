@@ -10,26 +10,26 @@
 	var/atmos_supeconductivity = NONE
 
 	//used to determine whether we should archive
-	var/archived_cycle = 0
-	var/current_cycle = 0
+	var/archived_cycle = ZERO
+	var/current_cycle = ZERO
 
 	//used for mapping and for breathing while in walls (because that's a thing that needs to be accounted for...)
 	//string parsed by /datum/gas/proc/copy_from_turf
 	var/initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	//approximation of MOLES_O2STANDARD and MOLES_N2STANDARD pending byond allowing constant expressions to be embedded in constant strings
-	// If someone will place 0 of some gas there, SHIT WILL BREAK. Do not do that.
+	// If someone will place ZERO of some gas there, SHIT WILL BREAK. Do not do that.
 
 /turf/open
 	//used for spacewind
-	var/pressure_difference = 0
-	var/pressure_direction = 0
+	var/pressure_difference = ZERO
+	var/pressure_direction = ZERO
 
 	var/datum/excited_group/excited_group
 	var/excited = FALSE
 	var/datum/gas_mixture/turf/air
 
 	var/obj/effect/hotspot/active_hotspot
-	var/atmos_cooldown  = 0
+	var/atmos_cooldown  = ZERO
 	var/planetary_atmos = FALSE //air will revert to initial_gas_mix over time
 
 	var/list/atmos_overlay_types //gas IDs of current active gas overlays
@@ -149,10 +149,10 @@
 	var/last_share = our_air.last_share;\
 	if(last_share > MINIMUM_AIR_TO_SUSPEND){\
 		our_excited_group.reset_cooldowns();\
-		cached_atmos_cooldown = 0;\
+		cached_atmos_cooldown = ZERO;\
 	} else if(last_share > MINIMUM_MOLES_DELTA_TO_MOVE) {\
-		our_excited_group.dismantle_cooldown = 0;\
-		cached_atmos_cooldown = 0;\
+		our_excited_group.dismantle_cooldown = ZERO;\
+		cached_atmos_cooldown = ZERO;\
 	}
 
 /turf/proc/process_cell(fire_count)
@@ -213,7 +213,7 @@
 		if(should_share_air)
 			var/difference = our_air.share(enemy_air, adjacent_turfs_length)
 			if(difference)
-				if(difference > 0)
+				if(difference > ZERO)
 					consider_pressure_difference(enemy_tile, difference)
 				else
 					enemy_tile.consider_pressure_difference(src, -difference)
@@ -260,15 +260,15 @@
 			M.experience_pressure_difference(pressure_difference, pressure_direction)
 
 /atom/movable/var/pressure_resistance = 10
-/atom/movable/var/last_high_pressure_movement_air_cycle = 0
+/atom/movable/var/last_high_pressure_movement_air_cycle = ZERO
 
-/atom/movable/proc/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
+/atom/movable/proc/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = ZERO)
 	var/const/PROBABILITY_OFFSET = 25
 	var/const/PROBABILITY_BASE_PRECENT = 75
 	var/max_force = sqrt(pressure_difference)*(MOVE_FORCE_DEFAULT / 5)
-	set waitfor = 0
+	set waitfor = ZERO
 	var/move_prob = 100
-	if (pressure_resistance > 0)
+	if (pressure_resistance > ZERO)
 		move_prob = (pressure_difference/pressure_resistance*PROBABILITY_BASE_PRECENT)-PROBABILITY_OFFSET
 	move_prob += pressure_resistance_prob_delta
 	if (move_prob > PROBABILITY_OFFSET && prob(move_prob) && (move_resist != INFINITY) && (!anchored && (max_force >= (move_resist * MOVE_FORCE_PUSH_RATIO))) || (anchored && (max_force >= (move_resist * MOVE_FORCE_FORCEPUSH_RATIO))))
@@ -279,8 +279,8 @@
 
 /datum/excited_group
 	var/list/turf_list = list()
-	var/breakdown_cooldown = 0
-	var/dismantle_cooldown = 0
+	var/breakdown_cooldown = ZERO
+	var/dismantle_cooldown = ZERO
 
 /datum/excited_group/New()
 	SSair.excited_groups += src
@@ -307,8 +307,8 @@
 		E.reset_cooldowns()
 
 /datum/excited_group/proc/reset_cooldowns()
-	breakdown_cooldown = 0
-	dismantle_cooldown = 0
+	breakdown_cooldown = ZERO
+	dismantle_cooldown = ZERO
 
 //argument is so world start can clear out any turf differences quickly.
 /datum/excited_group/proc/self_breakdown(space_is_all_consuming = FALSE)
@@ -336,10 +336,10 @@
 	for(var/t in turf_list)
 		var/turf/open/T = t
 		T.air.copy_from(A)
-		T.atmos_cooldown = 0
+		T.atmos_cooldown = ZERO
 		T.update_visuals()
 
-	breakdown_cooldown = 0
+	breakdown_cooldown = ZERO
 
 /datum/excited_group/proc/dismantle()
 	for(var/t in turf_list)
@@ -387,7 +387,7 @@
 		T.air.temperature_share(air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
 	else //Solid but neighbor is open
 		temperature_share_open_to_solid(other)
-	SSair.add_to_active(src, 0)
+	SSair.add_to_active(src, ZERO)
 
 /turf/proc/super_conduct()
 	var/conductivity_directions = conductivity_directions()
@@ -444,9 +444,9 @@
 	return ..()
 
 /turf/proc/radiate_to_spess() //Radiate excess tile heat to space
-	if(temperature > T0C) //Considering 0 degC as te break even point for radiation in and out
+	if(temperature > T0C) //Considering ZERO degC as te break even point for radiation in and out
 		var/delta_temperature = (temperature_archived - TCMB) //hardcoded space temperature
-		if((heat_capacity > 0) && (abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER))
+		if((heat_capacity > ZERO) && (abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER))
 
 			var/heat = thermal_conductivity*delta_temperature* \
 				(heat_capacity*HEAT_CAPACITY_VACUUM/(heat_capacity+HEAT_CAPACITY_VACUUM))

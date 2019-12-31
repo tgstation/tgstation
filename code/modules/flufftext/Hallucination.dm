@@ -55,7 +55,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 /datum/hallucination/proc/wake_and_restore()
 	target.set_screwyhud(SCREWYHUD_NONE)
-	target.SetSleeping(0)
+	target.SetSleeping(ZERO)
 
 /datum/hallucination/Destroy()
 	target.investigate_log("was afflicted with a hallucination of type [type] by [natural?"hallucination status":"an external source"]. [feedback_details]", INVESTIGATE_HALLUCINATIONS)
@@ -86,8 +86,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /obj/effect/hallucination/simple
 	var/image_icon = 'icons/mob/alien.dmi'
 	var/image_state = "alienh_pounce"
-	var/px = 0
-	var/py = 0
+	var/px = ZERO
+	var/py = ZERO
 	var/col_mod = null
 	var/image/current_image = null
 	var/image_layer = MOB_LAYER
@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if(target.client)
 			target.client.images |= current_image
 
-/obj/effect/hallucination/simple/update_icon(new_state,new_icon,new_px=0,new_py=0)
+/obj/effect/hallucination/simple/update_icon(new_state,new_icon,new_px=ZERO,new_py=ZERO)
 	image_state = new_state
 	if(new_icon)
 		image_icon = new_icon
@@ -152,8 +152,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/list/turf/flood_turfs = list()
 	var/image_icon = 'icons/effects/atmospherics.dmi'
 	var/image_state = "plasma"
-	var/radius = 0
-	var/next_expand = 0
+	var/radius = ZERO
+	var/next_expand = ZERO
 
 /datum/hallucination/fake_flood/New(mob/living/carbon/C, forced = TRUE)
 	set waitfor = FALSE
@@ -340,7 +340,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	feedback_details += "Type: [battle_type]"
 	switch(battle_type)
 		if("laser")
-			var/hits = 0
+			var/hits = ZERO
 			for(var/i in 1 to rand(5, 10))
 				target.playsound_local(source, 'sound/weapons/laser.ogg', 25, 1)
 				if(prob(50))
@@ -353,7 +353,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 					target.playsound_local(source, get_sfx("bodyfall"), 25, 1)
 					break
 		if("disabler")
-			var/hits = 0
+			var/hits = ZERO
 			for(var/i in 1 to rand(5, 10))
 				target.playsound_local(source, 'sound/weapons/taser2.ogg', 25, 1)
 				if(prob(50))
@@ -374,7 +374,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 				sleep(rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 6))
 			target.playsound_local(source, 'sound/weapons/saberoff.ogg', 15, 1)
 		if("gun")
-			var/hits = 0
+			var/hits = ZERO
 			for(var/i in 1 to rand(3, 6))
 				target.playsound_local(source, "sound/weapons/gunshot.ogg", 25, TRUE)
 				if(prob(60))
@@ -400,7 +400,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 				sleep(rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 4))
 		if("bomb") // Tick Tock
 			for(var/i in 1 to rand(3, 11))
-				target.playsound_local(source, 'sound/items/timer.ogg', 25, 0)
+				target.playsound_local(source, 'sound/items/timer.ogg', 25, ZERO)
 				sleep(15)
 	qdel(src)
 
@@ -604,11 +604,11 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	set waitfor = FALSE
 	..()
 	if(!door_number)
-		door_number = rand(0,4) //if 0 bolts all visible doors
-	var/count = 0
+		door_number = rand(ZERO,4) //if ZERO bolts all visible doors
+	var/count = ZERO
 	feedback_details += "Door amount: [door_number]"
 	for(var/obj/machinery/door/airlock/A in range(7, target))
-		if(count>door_number && door_number>0)
+		if(count>door_number && door_number>ZERO)
 			break
 		if(!A.density)
 			continue
@@ -635,12 +635,12 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	bolt_light = image(airlock.overlays_file, get_turf(airlock), "lights_bolts",layer=airlock.layer+0.1)
 	if(target.client)
 		target.client.images |= bolt_light
-		target.playsound_local(get_turf(airlock), 'sound/machines/boltsdown.ogg',30,0,3)
+		target.playsound_local(get_turf(airlock), 'sound/machines/boltsdown.ogg',30,ZERO,3)
 
 /obj/effect/hallucination/fake_door_lock/proc/unlock()
 	if(target.client)
 		target.client.images.Remove(bolt_light)
-		target.playsound_local(get_turf(airlock), 'sound/machines/boltsup.ogg',30,0,3)
+		target.playsound_local(get_turf(airlock), 'sound/machines/boltsup.ogg',30,ZERO,3)
 	qdel(src)
 
 /obj/effect/hallucination/fake_door_lock/CanPass(atom/movable/mover, turf/_target)
@@ -793,9 +793,9 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if("glass")
 			target.playsound_local(source, pick('sound/effects/glassbr1.ogg','sound/effects/glassbr2.ogg','sound/effects/glassbr3.ogg'), 50, 1)
 		if("alarm")
-			target.playsound_local(source, 'sound/machines/alarm.ogg', 100, 0)
+			target.playsound_local(source, 'sound/machines/alarm.ogg', 100, ZERO)
 		if("beepsky")
-			target.playsound_local(source, 'sound/voice/beepsky/freeze.ogg', 35, 0)
+			target.playsound_local(source, 'sound/voice/beepsky/freeze.ogg', 35, ZERO)
 		if("mech")
 			var/mech_dir = pick(GLOB.cardinals)
 			for(var/i in 1 to rand(4,9))
@@ -1151,13 +1151,13 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			 "i[prob(50)?" fucking":""] hate [pick("blood cult", "clock cult", "revenants", "this round","this","myself","admins","you")]")]\"</span>")
 	sleep(rand(70,90))
 	target.set_screwyhud(SCREWYHUD_NONE)
-	target.SetParalyzed(0)
+	target.SetParalyzed(ZERO)
 	target.silent = FALSE
 	qdel(src)
 
 /datum/hallucination/fire
 	var/active = TRUE
-	var/stage = 0
+	var/stage = ZERO
 	var/image/fire_overlay
 
 /datum/hallucination/fire/New(mob/living/carbon/C, forced = TRUE)
@@ -1171,14 +1171,14 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	target.throw_alert("fire", /obj/screen/alert/fire, override = TRUE)
 	sleep(20)
 	for(var/i in 1 to 3)
-		if(target.fire_stacks <= 0)
+		if(target.fire_stacks <= ZERO)
 			clear_fire()
 			return
 		stage++
 		update_temp()
 		sleep(30)
 	for(var/i in 1 to rand(5, 10))
-		if(target.fire_stacks <= 0)
+		if(target.fire_stacks <= ZERO)
 			clear_fire()
 			return
 		target.adjustStaminaLoss(15)
@@ -1186,7 +1186,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	clear_fire()
 
 /datum/hallucination/fire/proc/update_temp()
-	if(stage <= 0)
+	if(stage <= ZERO)
 		target.clear_alert("temp", clear_override = TRUE)
 	else
 		target.clear_alert("temp", clear_override = TRUE)
@@ -1200,7 +1200,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	if(target.client)
 		target.client.images -= fire_overlay
 	QDEL_NULL(fire_overlay)
-	while(stage > 0)
+	while(stage > ZERO)
 		stage--
 		update_temp()
 		sleep(30)
@@ -1215,7 +1215,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	..()
 	shock_image = image(target, target, dir = target.dir)
 	shock_image.appearance_flags |= KEEP_APART
-	shock_image.color = rgb(0,0,0)
+	shock_image.color = rgb(ZERO,ZERO,ZERO)
 	shock_image.override = TRUE
 	electrocution_skeleton_anim = image('icons/mob/human.dmi', target, icon_state = "electrocuted_base", layer=ABOVE_MOB_LAYER)
 	electrocution_skeleton_anim.appearance_flags |= RESET_COLOR|KEEP_APART

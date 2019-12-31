@@ -9,13 +9,13 @@
 	var/filedesc = "Unknown Program"		// User-friendly name of this program.
 	var/extended_desc = "N/A"				// Short description of this program's function.
 	var/program_icon_state = null			// Program-specific screen icon state
-	var/requires_ntnet = 0					// Set to 1 for program to require nonstop NTNet connection to run. If NTNet connection is lost program crashes.
-	var/requires_ntnet_feature = 0			// Optional, if above is set to 1 checks for specific function of NTNet (currently NTNET_SOFTWAREDOWNLOAD, NTNET_PEERTOPEER, NTNET_SYSTEMCONTROL and NTNET_COMMUNICATION)
+	var/requires_ntnet = ZERO					// Set to 1 for program to require nonstop NTNet connection to run. If NTNet connection is lost program crashes.
+	var/requires_ntnet_feature = ZERO			// Optional, if above is set to 1 checks for specific function of NTNet (currently NTNET_SOFTWAREDOWNLOAD, NTNET_PEERTOPEER, NTNET_SYSTEMCONTROL and NTNET_COMMUNICATION)
 	var/ntnet_status = 1					// NTNet status, updated every tick by computer running this program. Don't use this for checks if NTNet works, computers do that. Use this for calculations, etc.
 	var/usage_flags = PROGRAM_ALL			// Bitflags (PROGRAM_CONSOLE, PROGRAM_LAPTOP, PROGRAM_TABLET combination) or PROGRAM_ALL
 	var/network_destination = null			// Optional string that describes what NTNet server/system this program connects to. Used in default logging.
-	var/available_on_ntnet = 1				// Whether the program can be downloaded from NTNet. Set to 0 to disable.
-	var/available_on_syndinet = 0			// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to 1 to enable.
+	var/available_on_ntnet = 1				// Whether the program can be downloaded from NTNet. Set to ZERO to disable.
+	var/available_on_syndinet = ZERO			// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to 1 to enable.
 	var/tgui_id								// ID of TGUI interface
 	var/ui_style							// ID of custom TGUI style (optional)
 	var/ui_x = 575							// Default size of TGUI window, in pixels
@@ -46,23 +46,23 @@
 	if(computer)
 		computer.update_icon()
 
-// Attempts to create a log in global ntnet datum. Returns 1 on success, 0 on fail.
+// Attempts to create a log in global ntnet datum. Returns 1 on success, ZERO on fail.
 /datum/computer_file/program/proc/generate_network_log(text)
 	if(computer)
 		return computer.add_log(text)
-	return 0
+	return ZERO
 
-/datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = 0, loud = 0, mob/user = null)
+/datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = ZERO, loud = ZERO, mob/user = null)
 	if(!(hardware_flag & usage_flags))
 		if(loud && computer && user)
 			to_chat(user, "<span class='danger'>\The [computer] flashes an \"Hardware Error - Incompatible software\" warning.</span>")
-		return 0
+		return ZERO
 	return 1
 
-/datum/computer_file/program/proc/get_signal(specific_action = 0)
+/datum/computer_file/program/proc/get_signal(specific_action = ZERO)
 	if(computer)
 		return computer.get_ntnet_status(specific_action)
-	return 0
+	return ZERO
 
 // Called by Process() on device that runs us, once every tick.
 /datum/computer_file/program/proc/process_tick()
@@ -71,7 +71,7 @@
 // Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
 // User has to wear their ID for ID Scan to work.
 // Can also be called manually, with optional parameter being access_to_check to scan the user's ID
-/datum/computer_file/program/proc/can_run(mob/user, loud = 0, access_to_check, transfer = 0)
+/datum/computer_file/program/proc/can_run(mob/user, loud = ZERO, access_to_check, transfer = ZERO)
 	// Defaults to required_access
 	if(!access_to_check)
 		if(transfer && transfer_access)
@@ -102,7 +102,7 @@
 		if(!I && !D)
 			if(loud)
 				to_chat(user, "<span class='danger'>\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning.</span>")
-			return 0
+			return ZERO
 
 		if(I)
 			if(access_to_check in I.GetAccess())
@@ -112,7 +112,7 @@
 				return 1
 		if(loud)
 			to_chat(user, "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>")
-	return 0
+	return ZERO
 
 // This attempts to retrieve header data for UIs. If implementing completely new device of different type than existing ones
 // always include the device here in this proc. This proc basically relays the request to whatever is running the program.
@@ -121,7 +121,7 @@
 		return computer.get_header_data()
 	return list()
 
-// This is performed on program startup. May be overridden to add extra logic. Remember to include ..() call. Return 1 on success, 0 on failure.
+// This is performed on program startup. May be overridden to add extra logic. Remember to include ..() call. Return 1 on success, ZERO on failure.
 // When implementing new program based device, use this to run the program.
 /datum/computer_file/program/proc/run_program(mob/living/user)
 	if(can_run(user, 1))
@@ -129,7 +129,7 @@
 			generate_network_log("Connection opened to [network_destination].")
 		program_state = PROGRAM_STATE_ACTIVE
 		return 1
-	return 0
+	return ZERO
 
 // Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
 /datum/computer_file/program/proc/kill_program(forced = FALSE)

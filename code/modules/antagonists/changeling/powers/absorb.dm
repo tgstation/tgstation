@@ -2,8 +2,8 @@
 	name = "Absorb DNA"
 	desc = "Absorb the DNA of our victim. Requires us to strangle them."
 	button_icon_state = "absorb_dna"
-	chemical_cost = 0
-	dna_cost = 0
+	chemical_cost = ZERO
+	dna_cost = ZERO
 	req_human = 1
 
 /datum/action/changeling/absorbDNA/can_sting(mob/living/carbon/user)
@@ -45,7 +45,7 @@
 		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "[i]"))
 		if(!do_mob(user, target, 150))
 			to_chat(user, "<span class='warning'>Our absorption of [target] has been interrupted!</span>")
-			changeling.isabsorbing = 0
+			changeling.isabsorbing = ZERO
 			return
 
 	SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "4"))
@@ -101,7 +101,7 @@
 					break
 
 		if(LAZYLEN(say_log) > LING_ABSORB_RECENT_SPEECH)
-			recent_speech = say_log.Copy(say_log.len-LING_ABSORB_RECENT_SPEECH+1,0) //0 so len-LING_ARS+1 to end of list
+			recent_speech = say_log.Copy(say_log.len-LING_ABSORB_RECENT_SPEECH+1,ZERO) //ZERO so len-LING_ARS+1 to end of list
 		else
 			for(var/spoken_memory in say_log)
 				if(recent_speech.len >= LING_ABSORB_RECENT_SPEECH)
@@ -123,23 +123,23 @@
 			to_chat(user, "<span class='boldnotice'>[target] was one of us. We have absorbed their power.</span>")
 			target_ling.remove_changeling_powers()
 			changeling.geneticpoints += round(target_ling.geneticpoints/2)
-			target_ling.geneticpoints = 0
-			target_ling.canrespec = 0
+			target_ling.geneticpoints = ZERO
+			target_ling.canrespec = ZERO
 			changeling.chem_storage += round(target_ling.chem_storage/2)
 			changeling.chem_charges += min(target_ling.chem_charges, changeling.chem_storage)
-			target_ling.chem_charges = 0
-			target_ling.chem_storage = 0
+			target_ling.chem_charges = ZERO
+			target_ling.chem_storage = ZERO
 			changeling.absorbedcount += (target_ling.absorbedcount)
 			target_ling.stored_profiles.len = 1
-			target_ling.absorbedcount = 0
+			target_ling.absorbedcount = ZERO
 			target_ling.was_absorbed = TRUE
 
 
 	changeling.chem_charges=min(changeling.chem_charges+10, changeling.chem_storage)
 
-	changeling.isabsorbing = 0
+	changeling.isabsorbing = ZERO
 	changeling.canrespec = 1
 
-	target.death(0)
+	target.death(ZERO)
 	target.Drain()
 	return TRUE

@@ -10,12 +10,12 @@ RSF
 	icon_state = "rcd"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	opacity = 0
+	opacity = ZERO
 	density = FALSE
 	anchored = FALSE
 	item_flags = NOBLUDGEON
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
-	var/matter = 0
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = ZERO)
+	var/matter = ZERO
 	var/mode = 1
 	w_class = WEIGHT_CLASS_NORMAL
 
@@ -114,8 +114,8 @@ RSF
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	var/matter = 10
-	var/toxin = 0
-	var/cooldown = 0
+	var/toxin = ZERO
+	var/cooldown = ZERO
 	var/cooldowndelay = 10
 	w_class = WEIGHT_CLASS_NORMAL
 
@@ -132,7 +132,7 @@ RSF
 		to_chat(user, "<span class='warning'>You short out [src]'s reagent safety checker!</span>")
 	else
 		to_chat(user, "<span class='warning'>You reset [src]'s reagent safety checker!</span>")
-		toxin = 0
+		toxin = ZERO
 
 /obj/item/cookiesynth/attack_self(mob/user)
 	var/mob/living/silicon/robot/P = null
@@ -145,7 +145,7 @@ RSF
 		toxin = 1
 		to_chat(user, "<span class='alert'>Cookie Synthesizer hacked.</span>")
 	else
-		toxin = 0
+		toxin = ZERO
 		to_chat(user, "<span class='notice'>Cookie Synthesizer reset.</span>")
 
 /obj/item/cookiesynth/process()

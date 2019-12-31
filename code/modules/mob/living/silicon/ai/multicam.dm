@@ -29,7 +29,7 @@
 	highlighted_background.layer = SPACE_LAYER
 
 /obj/screen/movable/pic_in_pic/ai/add_background()
-	if((width > 0) && (height > 0))
+	if((width > ZERO) && (height > ZERO))
 		var/matrix/M = matrix()
 		M.Scale(width + 0.5, height + 0.5)
 		M.Translate((width-1)/2 * world.icon_size, (height-1)/2 * world.icon_size)

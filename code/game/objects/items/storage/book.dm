@@ -27,7 +27,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	var/obj/item/storage/book/bible/B = locate() in src
 	if(is_holding(B))
 		return B
-	return 0
+	return ZERO
 
 /obj/item/storage/book/bible
 	name = "bible"
@@ -96,7 +96,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		var/obj/item/bodypart/BP = X
 		if(BP.status == BODYPART_ROBOTIC)
 			to_chat(user, "<span class='warning'>[src.deity_name] refuses to heal this metallic taint!</span>")
-			return 0
+			return ZERO
 
 	var/heal_amt = 10
 	var/list/hurt_limbs = H.get_damaged_bodyparts(1, 1, null, BODYPART_ORGANIC)
@@ -124,13 +124,13 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		user.Unconscious(400)
 		return
 
-	var/chaplain = 0
+	var/chaplain = ZERO
 	if(user.mind && (user.mind.isholy))
 		chaplain = 1
 
 	if(!chaplain)
 		to_chat(user, "<span class='danger'>The book sizzles in your hands.</span>")
-		user.take_bodypart_damage(0,10)
+		user.take_bodypart_damage(ZERO,10)
 		return
 
 	if (!heal_mode)
@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			return
 
 		if(ishuman(M) && prob(60) && bless(M, user))
-			smack = 0
+			smack = ZERO
 		else if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(!istype(C.head, /obj/item/clothing/head/helmet))
@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		to_chat(user, "<span class='notice'>You hit the floor with the bible.</span>")
 		if(user.mind && (user.mind.isholy))
 			for(var/obj/effect/rune/R in orange(2,user))
-				R.invisibility = 0
+				R.invisibility = ZERO
 	if(user.mind && (user.mind.isholy))
 		if(A.reagents && A.reagents.has_reagent(/datum/reagent/water)) // blesses all the water in the holder
 			to_chat(user, "<span class='notice'>You bless [A].</span>")
@@ -196,7 +196,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			for(var/obj/item/soulstone/SS in sword.contents)
 				SS.usability = TRUE
 				for(var/mob/living/simple_animal/shade/EX in SS)
-					SSticker.mode.remove_cultist(EX.mind, 1, 0)
+					SSticker.mode.remove_cultist(EX.mind, 1, ZERO)
 					EX.icon_state = "ghost1"
 					EX.name = "Purified [EX.name]"
 				SS.release_shades(user)

@@ -7,7 +7,7 @@
 	level = 1		// underfloor
 	layer = LOW_OBJ_LAYER
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 0
+	idle_power_usage = ZERO
 	var/obj/item/beacon/Beacon
 
 /obj/machinery/bluespace_beacon/Initialize()
@@ -24,7 +24,7 @@
 
 // update the invisibility and icon
 /obj/machinery/bluespace_beacon/hide(intact)
-	invisibility = intact ? INVISIBILITY_MAXIMUM : 0
+	invisibility = intact ? INVISIBILITY_MAXIMUM : ZERO
 	updateicon()
 
 // update the icon_state

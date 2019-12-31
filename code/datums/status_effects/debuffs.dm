@@ -1,7 +1,7 @@
 //Largely negative status effects go here, even if they have small benificial effects
 //STUN EFFECTS
 /datum/status_effect/incapacitating
-	tick_interval = 0
+	tick_interval = ZERO
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	var/needs_update_stat = FALSE
@@ -74,7 +74,7 @@
 			healing -= 0.3
 		else if((locate(/obj/structure/table) in owner.loc))
 			healing -= 0.1
-		for(var/obj/item/bedsheet/bedsheet in range(owner.loc,0))
+		for(var/obj/item/bedsheet/bedsheet in range(owner.loc,ZERO))
 			if(bedsheet.loc != owner.loc) //bedsheets in your backpack/neck don't give you comfort
 				continue
 			healing -= 0.1
@@ -319,7 +319,7 @@
 	tick_interval = 50
 	alert_type = null
 	var/curse_flags = NONE
-	var/effect_last_activation = 0
+	var/effect_last_activation = ZERO
 	var/effect_cooldown = 100
 	var/obj/effect/temp_visual/curse/wasting_effect = new
 
@@ -359,7 +359,7 @@
 		wasting_effect.setDir(owner.dir)
 		wasting_effect.transform = owner.transform //if the owner has been stunned the overlay should inherit that position
 		wasting_effect.alpha = 255
-		animate(wasting_effect, alpha = 0, time = 32)
+		animate(wasting_effect, alpha = ZERO, time = 32)
 		playsound(owner, 'sound/effects/curse5.ogg', 20, TRUE, -1)
 		owner.adjustFireLoss(0.75)
 	if(effect_last_activation <= world.time)
@@ -452,7 +452,7 @@
 /datum/status_effect/trance/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 	REMOVE_TRAIT(owner, TRAIT_MUTE, "trance")
-	owner.dizziness = 0
+	owner.dizziness = ZERO
 	owner.remove_client_colour(/datum/client_colour/monochrome/trance)
 	to_chat(owner, "<span class='warning'>You snap out of your trance!</span>")
 
@@ -598,13 +598,13 @@
 	status_type = STATUS_EFFECT_REPLACE
 	tick_interval = 1
 	alert_type = null
-	var/msg_stage = 0//so you dont get the most intense messages immediately
+	var/msg_stage = ZERO//so you dont get the most intense messages immediately
 
 /datum/status_effect/fake_virus/tick()
 	var/fake_msg = ""
 	var/fake_emote = ""
 	switch(msg_stage)
-		if(0 to 300)
+		if(ZERO to 300)
 			if(prob(1))
 				fake_msg = pick("<span class='warning'>[pick("Your head hurts.", "Your head pounds.")]</span>",
 				"<span class='warning'>[pick("You're having difficulty breathing.", "Your breathing becomes heavy.")]</span>",

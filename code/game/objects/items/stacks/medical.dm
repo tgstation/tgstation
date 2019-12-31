@@ -13,7 +13,7 @@
 	novariants = FALSE
 	item_flags = NOBLUDGEON
 	var/self_delay = 50
-	var/other_delay = 0
+	var/other_delay = ZERO
 	var/repeating = FALSE
 	var/experience_given = 1
 
@@ -40,7 +40,7 @@
 		user?.mind.adjust_experience(/datum/skill/medical, experience_given)
 		log_combat(user, M, "healed", src.name)
 		use(1)
-		if(repeating && amount > 0)
+		if(repeating && amount > ZERO)
 			try_heal(M, user, TRUE)
 
 /obj/item/stack/medical/proc/heal(mob/living/M, mob/user)
@@ -95,7 +95,7 @@
 		M.heal_bodypart_damage((heal_brute/2))
 		return TRUE
 	if(iscarbon(M))
-		return heal_carbon(M, user, heal_brute, 0)
+		return heal_carbon(M, user, heal_brute, ZERO)
 	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
 
 /obj/item/stack/medical/bruise_pack/suicide_act(mob/user)
@@ -171,7 +171,7 @@
 		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.p_them()].</span>")
 		return
 	if(iscarbon(M))
-		return heal_carbon(M, user, 0, heal_burn)
+		return heal_carbon(M, user, ZERO, heal_burn)
 	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
 
 /obj/item/stack/medical/ointment/suicide_act(mob/living/user)
@@ -205,7 +205,7 @@
 		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.p_them()].</span>")
 		return
 	if(iscarbon(M))
-		return heal_carbon(M, user, heal_brute, 0)
+		return heal_carbon(M, user, heal_brute, ZERO)
 	if(isanimal(M))
 		var/mob/living/simple_animal/critter = M
 		if (!(critter.healable))
@@ -253,7 +253,7 @@
 		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.p_them()].</span>")
 		return
 	if(iscarbon(M))
-		return heal_carbon(M, user, 0, heal_burn)
+		return heal_carbon(M, user, ZERO, heal_burn)
 	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
 
 

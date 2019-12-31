@@ -8,20 +8,20 @@
 	ui_header = "power_norm.gif"
 	transfer_access = ACCESS_ENGINE
 	usage_flags = PROGRAM_CONSOLE
-	requires_ntnet = 0
+	requires_ntnet = ZERO
 	network_destination = "power monitoring system"
 	size = 9
 	tgui_id = "ntos_power_monitor"
 	ui_x = 550
 	ui_y = 700
 
-	var/has_alert = 0
+	var/has_alert = ZERO
 	var/obj/structure/cable/attached_wire
 	var/obj/machinery/power/apc/local_apc
 	var/list/history = list()
 	var/record_size = 60
 	var/record_interval = 50
-	var/next_record = 0
+	var/next_record = ZERO
 
 
 /datum/computer_file/program/power_monitor/run_program(mob/living/user)
@@ -92,7 +92,7 @@
 			if(istype(A))
 				data["areas"] += list(list(
 					"name" = A.area.name,
-					"charge" = A.cell ? A.cell.percent() : 0,
+					"charge" = A.cell ? A.cell.percent() : ZERO,
 					"load" = DisplayPower(A.lastused_total),
 					"charging" = A.charging,
 					"eqp" = A.equipment,

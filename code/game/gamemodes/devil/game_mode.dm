@@ -1,6 +1,6 @@
 /datum/game_mode
 	var/list/datum/mind/devils = list()
-	var/devil_ascended = 0 // Number of arch devils on station
+	var/devil_ascended = ZERO // Number of arch devils on station
 
 /datum/game_mode/proc/add_devil_objectives(datum/mind/devil_mind, quantity)
 	var/list/validtypes = list(/datum/objective/devil/soulquantity, /datum/objective/devil/soulquality, /datum/objective/devil/sintouch, /datum/objective/devil/buy_target)

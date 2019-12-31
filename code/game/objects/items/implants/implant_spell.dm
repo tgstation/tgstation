@@ -25,7 +25,7 @@
 		target.AddSpell(spell)
 		return TRUE
 
-/obj/item/implant/spell/removed(mob/target, silent = FALSE, special = 0)
+/obj/item/implant/spell/removed(mob/target, silent = FALSE, special = ZERO)
 	. = ..()
 	if (.)
 		target.RemoveSpell(spell)

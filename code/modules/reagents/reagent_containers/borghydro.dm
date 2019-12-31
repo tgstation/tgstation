@@ -22,9 +22,9 @@ Borg Hypospray
 	possible_transfer_amounts = list()
 	var/mode = 1
 	var/charge_cost = 50
-	var/charge_tick = 0
+	var/charge_tick = ZERO
 	var/recharge_time = 5 //Time it takes for shots to recharge (in seconds)
-	var/bypass_protection = 0 //If the hypospray can go through armor or thick material
+	var/bypass_protection = ZERO //If the hypospray can go through armor or thick material
 
 	var/list/datum/reagents/reagent_list = list()
 	var/list/reagent_ids = list(/datum/reagent/medicine/C2/convermol, /datum/reagent/medicine/C2/libital, /datum/reagent/medicine/C2/multiver, /datum/reagent/medicine/C2/aiuri, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution)
@@ -52,7 +52,7 @@ Borg Hypospray
 	charge_tick++
 	if(charge_tick >= recharge_time)
 		regenerate_reagents()
-		charge_tick = 0
+		charge_tick = ZERO
 
 	//update_icon()
 	return 1

@@ -15,12 +15,12 @@
 	throw_range = 2
 	custom_materials = list(/datum/material/iron=750)
 	var/drain_rate = 2000000	// amount of power to drain per tick
-	var/power_drained = 0 		// has drained this much power
+	var/power_drained = ZERO 		// has drained this much power
 	var/max_power = 6e8		// maximum power that can be drained before exploding
-	var/mode = 0		// 0 = off, 1=clamped (off), 2=operating
+	var/mode = ZERO		// ZERO = off, 1=clamped (off), 2=operating
 	var/admins_warned = FALSE // stop spam, only warn the admins once that we are about to boom
 
-	var/const/DISCONNECTED = 0
+	var/const/DISCONNECTED = ZERO
 	var/const/CLAMPED_OFF = 1
 	var/const/OPERATING = 2
 
@@ -57,7 +57,7 @@
 
 	mode = value
 	update_icon()
-	set_light(0)
+	set_light(ZERO)
 
 /obj/item/powersink/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH)
@@ -141,7 +141,7 @@
 				if(istype(T.master, /obj/machinery/power/apc))
 					var/obj/machinery/power/apc/A = T.master
 					if(A.operating && A.cell)
-						A.cell.charge = max(0, A.cell.charge - 50)
+						A.cell.charge = max(ZERO, A.cell.charge - 50)
 						power_drained += 50
 						if(A.charging == 2) // If the cell was full
 							A.charging = 1 // It's no longer full

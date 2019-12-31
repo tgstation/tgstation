@@ -1,8 +1,8 @@
 GLOBAL_LIST_INIT(rod_recipes, list ( \
 	new/datum/stack_recipe("grille", /obj/structure/grille, 2, time = 10, one_per_turf = TRUE, on_floor = FALSE), \
 	new/datum/stack_recipe("table frame", /obj/structure/table_frame, 2, time = 10, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("scooter frame", /obj/item/scooter_frame, 10, time = 25, one_per_turf = 0), \
-	new/datum/stack_recipe("linen bin", /obj/structure/bedsheetbin/empty, 2, time = 5, one_per_turf = 0), \
+	new/datum/stack_recipe("scooter frame", /obj/item/scooter_frame, 10, time = 25, one_per_turf = ZERO), \
+	new/datum/stack_recipe("linen bin", /obj/structure/bedsheetbin/empty, 2, time = 5, one_per_turf = ZERO), \
 	))
 
 /obj/item/stack/rods
@@ -38,7 +38,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	
 /obj/item/stack/rods/update_icon()
 	var/amount = get_amount()
-	if((amount <= 5) && (amount > 0))
+	if((amount <= 5) && (amount > ZERO))
 		icon_state = "rods-[amount]"
 	else
 		icon_state = "rods"
@@ -49,7 +49,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 			to_chat(user, "<span class='warning'>You need at least two rods to do this!</span>")
 			return
 
-		if(W.use_tool(src, user, 0, volume=40))
+		if(W.use_tool(src, user, ZERO, volume=40))
 			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
 			user.visible_message("<span class='notice'>[user.name] shaped [src] into metal with [W].</span>", \
 						 "<span class='notice'>You shape [src] into metal with [W].</span>", \

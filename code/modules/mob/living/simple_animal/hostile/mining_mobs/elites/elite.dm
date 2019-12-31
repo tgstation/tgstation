@@ -1,4 +1,4 @@
-#define TUMOR_INACTIVE 0
+#define TUMOR_INACTIVE ZERO
 #define TUMOR_ACTIVE 1
 #define TUMOR_PASSIVE 2
 
@@ -15,7 +15,7 @@
 	vision_range = 6
 	aggro_vision_range = 18
 	environment_smash = ENVIRONMENT_SMASH_NONE  //This is to prevent elites smashing up the mining station, we'll make sure they can smash minerals fine below.
-	harm_intent_damage = 0 //Punching elites gets you nowhere
+	harm_intent_damage = ZERO //Punching elites gets you nowhere
 	stat_attack = UNCONSCIOUS
 	layer = LARGE_MOB_LAYER
 	sentience_type = SENTIENCE_BOSS
@@ -71,7 +71,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	background_icon_state = "bg_default"
 	var/mob/living/simple_animal/hostile/asteroid/elite/M
 	var/chosen_message
-	var/chosen_attack_num = 0
+	var/chosen_attack_num = ZERO
 
 /datum/action/innate/elite_attack/Grant(mob/living/L)
 	if(istype(L, /mob/living/simple_animal/hostile/asteroid/elite))
@@ -89,7 +89,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 
 /mob/living/simple_animal/hostile/asteroid/elite/update_health_hud()
 	if(hud_used)
-		var/severity = 0
+		var/severity = ZERO
 		var/healthpercent = (health/maxHealth) * 100
 		switch(healthpercent)
 			if(100 to INFINITY)
@@ -109,7 +109,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 			else
 				severity = 7
 		hud_used.healths.icon_state = "elite_health[severity]"
-		if(severity > 0)
+		if(severity > ZERO)
 			overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
 		else
 			clear_fullscreen("brute")
@@ -130,7 +130,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	density = FALSE
 	var/activity = TUMOR_INACTIVE
 	var/boosted = FALSE
-	var/times_won = 0
+	var/times_won = ZERO
 	var/mob/living/carbon/human/activator = null
 	var/mob/living/simple_animal/hostile/asteroid/elite/mychild = null
 	var/potentialspawns = list(/mob/living/simple_animal/hostile/asteroid/elite/broodmother,
@@ -147,7 +147,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 				visible_message("<span class='boldwarning'>[src] convulses as your arm enters its radius.  Your instincts tell you to step back.</span>")
 				activator = user
 				if(boosted)
-					mychild.playsound_local(get_turf(mychild), 'sound/effects/magic.ogg', 40, 0)
+					mychild.playsound_local(get_turf(mychild), 'sound/effects/magic.ogg', 40, ZERO)
 					to_chat(mychild, "<b>Someone has activated your tumor.  You will be returned to fight shortly, get ready!</b>")
 				addtimer(CALLBACK(src, .proc/return_elite), 30)
 				INVOKE_ASYNC(src, .proc/arena_checks)
@@ -164,7 +164,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 				if(candidates.len)
 					audible_message("<span class='boldwarning'>The stirring sounds increase in volume!</span>")
 					elitemind = pick(candidates)
-					elitemind.playsound_local(get_turf(elitemind), 'sound/effects/magic.ogg', 40, 0)
+					elitemind.playsound_local(get_turf(elitemind), 'sound/effects/magic.ogg', 40, ZERO)
 					to_chat(elitemind, "<b>You have been chosen to play as a Lavaland Elite.\nIn a few seconds, you will be summoned on Lavaland as a monster to fight your activator, in a fight to the death.\nYour attacks can be switched using the buttons on the top left of the HUD, and used by clicking on targets or tiles similar to a gun.\nWhile the opponent might have an upper hand with  powerful mining equipment and tools, you have great power normally limited by AI mobs.\nIf you want to win, you'll have to use your powers in creative ways to ensure the kill.  It's suggested you try using them all as soon as possible.\nShould you win, you'll receive extra information regarding what to do after.  Good luck!</b>")
 					addtimer(CALLBACK(src, .proc/spawn_elite, elitemind), 100)
 				else
@@ -176,7 +176,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	var/selectedspawn = pick(potentialspawns)
 	mychild = new selectedspawn(loc)
 	visible_message("<span class='boldwarning'>[mychild] emerges from [src]!</span>")
-	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
+	playsound(loc,'sound/effects/phasein.ogg', 200, ZERO, 50, TRUE, TRUE)
 	if(boosted)
 		mychild.key = elitemind.key
 		mychild.sentience_act()
@@ -187,7 +187,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /obj/structure/elite_tumor/proc/return_elite()
 	mychild.forceMove(loc)
 	visible_message("<span class='boldwarning'>[mychild] emerges from [src]!</span>")
-	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
+	playsound(loc,'sound/effects/phasein.ogg', 200, ZERO, 50, TRUE, TRUE)
 	mychild.revive(full_heal = TRUE, admin_revive = TRUE)
 	if(boosted)
 		mychild.maxHealth = mychild.maxHealth * 2
@@ -256,14 +256,14 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	if(activator != null && get_dist(src, activator) >= 12)
 		activator.forceMove(loc)
 		visible_message("<span class='boldwarning'>[activator] suddenly reappears above [src]!</span>")
-		playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
+		playsound(loc,'sound/effects/phasein.ogg', 200, ZERO, 50, TRUE, TRUE)
 	if(mychild != null && get_dist(src, mychild) >= 12)
 		mychild.forceMove(loc)
 		visible_message("<span class='boldwarning'>[mychild] suddenly reappears above [src]!</span>")
-		playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
+		playsound(loc,'sound/effects/phasein.ogg', 200, ZERO, 50, TRUE, TRUE)
 
 /obj/structure/elite_tumor/proc/onEliteLoss()
-	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, 0, 50, TRUE, TRUE)
+	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, ZERO, 50, TRUE, TRUE)
 	visible_message("<span class='boldwarning'>[src] begins to convulse violently before beginning to dissipate.</span>")
 	visible_message("<span class='boldwarning'>As [src] closes, something is forced up from down below.</span>")
 	var/obj/structure/closet/crate/necropolis/tendril/lootbox = new /obj/structure/closet/crate/necropolis/tendril(loc)
@@ -290,7 +290,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		mychild.maxHealth = mychild.maxHealth * 0.5
 		mychild.health = mychild.maxHealth
 	if(times_won == 1)
-		mychild.playsound_local(get_turf(mychild), 'sound/effects/magic.ogg', 40, 0)
+		mychild.playsound_local(get_turf(mychild), 'sound/effects/magic.ogg', 40, ZERO)
 		to_chat(mychild, "<span class='boldwarning'>As the life in the activator's eyes fade, the forcefield around you dies out and you feel your power subside.\nDespite this inferno being your home, you feel as if you aren't welcome here anymore.\nWithout any guidance, your purpose is now for you to decide.</span>")
 		to_chat(mychild, "<b>Your max health has been halved, but can now heal by standing on your tumor.  Note, it's your only way to heal.\nBear in mind, if anyone interacts with your tumor, you'll be resummoned here to carry out another fight.  In such a case, you will regain your full max health.\nAlso, be weary of your fellow inhabitants, they likely won't be happy to see you!</b>")
 		to_chat(mychild, "<span class='big bold'>Note that you are a lavaland monster, and thus not allied to the station.  You should not cooperate or act friendly with any station crew unless under extreme circumstances!</span>")
@@ -318,7 +318,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		E.faction = list("neutral")
 		E.revive(full_heal = TRUE, admin_revive = TRUE)
 		user.visible_message("<span class='notice'>[user] stabs [E] with [src], reviving it.</span>")
-		E.playsound_local(get_turf(E), 'sound/effects/magic.ogg', 40, 0)
+		E.playsound_local(get_turf(E), 'sound/effects/magic.ogg', 40, ZERO)
 		to_chat(E, "<span class='userdanger'>You have been revived by [user].  While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk.</span")
 		to_chat(E, "<span class='big bold'>Note that you now share the loyalties of [user].  You are expected not to intentionally sabotage their faction unless commanded to!</span>")
 		E.maxHealth = E.maxHealth * 0.5
@@ -336,7 +336,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	duration = 50
 	smooth = SMOOTH_TRUE
 	layer = BELOW_MOB_LAYER
-	color = rgb(255,0,0)
+	color = rgb(255,ZERO,ZERO)
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	light_color = LIGHT_COLOR_RED
 	var/mob/living/carbon/human/activator = null

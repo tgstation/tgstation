@@ -65,8 +65,8 @@
 	icon_state = "migniter"
 	resistance_flags = FIRE_PROOF
 	var/id = null
-	var/disable = 0
-	var/last_spark = 0
+	var/disable = ZERO
+	var/last_spark = ZERO
 	var/datum/effect_system/spark_spread/spark_system
 
 /obj/machinery/sparker/toxmix

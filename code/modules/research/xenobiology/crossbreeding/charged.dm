@@ -191,7 +191,7 @@ Charged extracts:
 	colour = "gold"
 	effect_desc = "Slowly spawns 10 hostile monsters."
 	var/max_spawn = 10
-	var/spawned = 0
+	var/spawned = ZERO
 
 /obj/item/slimecross/charged/gold/do_effect(mob/user)
 	user.visible_message("<span class='warning'>[src] starts shuddering violently!</span>")

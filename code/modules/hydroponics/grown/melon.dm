@@ -33,7 +33,7 @@
 	filling_color = "#008000"
 	bitesize_mod = 3
 	foodtype = FRUIT
-	juice_results = list(/datum/reagent/consumable/watermelonjuice = 0)
+	juice_results = list(/datum/reagent/consumable/watermelonjuice = ZERO)
 	wine_power = 40
 
 // Holymelon

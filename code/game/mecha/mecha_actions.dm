@@ -1,6 +1,6 @@
 //////////////////////////////////////// Action Buttons ///////////////////////////////////////////////
 
-/obj/mecha/proc/GrantActions(mob/living/user, human_occupant = 0)
+/obj/mecha/proc/GrantActions(mob/living/user, human_occupant = ZERO)
 	if(human_occupant)
 		eject_action.Grant(user, src)
 	if(enclosed)
@@ -11,7 +11,7 @@
 	strafing_action.Grant(user, src)
 
 
-/obj/mecha/proc/RemoveActions(mob/living/user, human_occupant = 0)
+/obj/mecha/proc/RemoveActions(mob/living/user, human_occupant = ZERO)
 	if(human_occupant)
 		eject_action.Remove(user)
 	internals_action.Remove(user)
@@ -72,7 +72,7 @@
 		if(M.selectable)
 			available_equipment += M
 
-	if(available_equipment.len == 0)
+	if(available_equipment.len == ZERO)
 		chassis.occupant_message("<span class='warning'>No equipment available!</span>")
 		return
 	if(!chassis.selected)
@@ -82,7 +82,7 @@
 		button_icon_state = "mech_cycle_equip_on"
 		UpdateButtonIcon()
 		return
-	var/number = 0
+	var/number = ZERO
 	for(var/A in available_equipment)
 		number++
 		if(A == chassis.selected)
@@ -178,7 +178,7 @@
 		chassis.step_energy_drain = max(chassis.overload_step_energy_drain_min,chassis.step_energy_drain*chassis.leg_overload_coeff)
 		chassis.occupant_message("<span class='danger'>You enable leg actuators overload.</span>")
 	else
-		chassis.leg_overload_mode = 0
+		chassis.leg_overload_mode = ZERO
 		chassis.step_in = initial(chassis.step_in)
 		chassis.step_energy_drain = chassis.normal_step_energy_drain
 		chassis.occupant_message("<span class='notice'>You disable leg actuators overload.</span>")
@@ -191,7 +191,7 @@
 /datum/action/innate/mecha/mech_smoke/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
-	if(chassis.smoke_ready && chassis.smoke>0)
+	if(chassis.smoke_ready && chassis.smoke>ZERO)
 		chassis.smoke_system.start()
 		chassis.smoke--
 		chassis.smoke_ready = FALSE

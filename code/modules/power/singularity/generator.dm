@@ -14,17 +14,17 @@
 	buckle_lying = FALSE
 	buckle_requires_restraints = TRUE
 
-	var/energy = 0
+	var/energy = ZERO
 	var/creation_type = /obj/singularity
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_WRENCH)
-		default_unfasten_wrench(user, W, 0)
+		default_unfasten_wrench(user, W, ZERO)
 	else
 		return ..()
 
 /obj/machinery/the_singularitygen/process()
-	if(energy > 0)
+	if(energy > ZERO)
 		if(energy >= 200)
 			var/turf/T = get_turf(src)
 			SSblackbox.record_feedback("tally", "engine_started", 1, type)

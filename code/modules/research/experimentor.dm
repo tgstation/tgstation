@@ -25,10 +25,10 @@
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	circuit = /obj/item/circuitboard/machine/experimentor
-	var/recentlyExperimented = 0
+	var/recentlyExperimented = ZERO
 	var/mob/trackedIan
 	var/mob/trackedRuntime
-	var/badThingCoeff = 0
+	var/badThingCoeff = ZERO
 	var/resetTime = 15
 	var/cloneMode = FALSE
 	var/list/item_reactions = list()
@@ -87,7 +87,7 @@
 
 /obj/machinery/rnd/experimentor/RefreshParts()
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		if(resetTime > 0 && (resetTime - M.rating) >= 1)
+		if(resetTime > ZERO && (resetTime - M.rating) >= 1)
 			resetTime -= M.rating
 	for(var/obj/item/stock_parts/scanning_module/M in component_parts)
 		badThingCoeff += M.rating*2
@@ -237,7 +237,7 @@
 
 /obj/machinery/rnd/experimentor/proc/throwSmoke(turf/where)
 	var/datum/effect_system/smoke_spread/smoke = new
-	smoke.set_up(0, where)
+	smoke.set_up(ZERO, where)
 	smoke.start()
 
 
@@ -314,7 +314,7 @@
 			R.add_reagent(chosenchem , 50)
 			investigate_log("Experimentor has released [chosenchem] smoke.", INVESTIGATE_EXPERIMENTOR)
 			var/datum/effect_system/smoke_spread/chem/smoke = new
-			smoke.set_up(R, 0, src, silent = TRUE)
+			smoke.set_up(R, ZERO, src, silent = TRUE)
 			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 			smoke.start()
 			qdel(R)
@@ -326,7 +326,7 @@
 			R.my_atom = src
 			R.add_reagent(chosenchem , 50)
 			var/datum/effect_system/smoke_spread/chem/smoke = new
-			smoke.set_up(R, 0, src, silent = TRUE)
+			smoke.set_up(R, ZERO, src, silent = TRUE)
 			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 			smoke.start()
 			qdel(R)
@@ -366,7 +366,7 @@
 				FB.fire()
 		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions, melting [exp_on] and releasing a burst of flame!</span>")
-			explosion(loc, -1, 0, 0, 0, 0, flame_range = 2)
+			explosion(loc, -1, ZERO, ZERO, ZERO, ZERO, flame_range = 2)
 			investigate_log("Experimentor started a fire.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
@@ -376,7 +376,7 @@
 			var/datum/gas_mixture/removed = env.remove(transfer_moles)
 			if(removed)
 				var/heat_capacity = removed.heat_capacity()
-				if(heat_capacity == 0 || heat_capacity == null)
+				if(heat_capacity == ZERO || heat_capacity == null)
 					heat_capacity = 1
 				removed.temperature = min((removed.temperature*heat_capacity + 100000)/heat_capacity, 1000)
 			env.merge(removed)
@@ -410,7 +410,7 @@
 			R.add_reagent(/datum/reagent/consumable/frostoil , 50)
 			investigate_log("Experimentor has released frostoil gas.", INVESTIGATE_EXPERIMENTOR)
 			var/datum/effect_system/smoke_spread/chem/smoke = new
-			smoke.set_up(R, 0, src, silent = TRUE)
+			smoke.set_up(R, ZERO, src, silent = TRUE)
 			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 			smoke.start()
 			qdel(R)
@@ -422,7 +422,7 @@
 			var/datum/gas_mixture/removed = env.remove(transfer_moles)
 			if(removed)
 				var/heat_capacity = removed.heat_capacity()
-				if(heat_capacity == 0 || heat_capacity == null)
+				if(heat_capacity == ZERO || heat_capacity == null)
 					heat_capacity = 1
 				removed.temperature = (removed.temperature*heat_capacity - 75000)/heat_capacity
 			env.merge(removed)
@@ -432,7 +432,7 @@
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='warning'>[src] malfunctions, releasing a flurry of chilly air as [exp_on] pops out!</span>")
 			var/datum/effect_system/smoke_spread/smoke = new
-			smoke.set_up(0, loc)
+			smoke.set_up(ZERO, loc)
 			smoke.start()
 			ejectItem()
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -612,20 +612,20 @@
 
 /obj/item/relic/proc/throwSmoke(turf/where)
 	var/datum/effect_system/smoke_spread/smoke = new
-	smoke.set_up(0, get_turf(where))
+	smoke.set_up(ZERO, get_turf(where))
 	smoke.start()
 
 /obj/item/relic/proc/corgicannon(mob/user)
 	playsound(src, "sparks", rand(25,50), TRUE)
 	var/mob/living/simple_animal/pet/dog/corgi/C = new/mob/living/simple_animal/pet/dog/corgi(get_turf(user))
 	C.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, .proc/throwSmoke, C))
-	warn_admins(user, "Corgi Cannon", 0)
+	warn_admins(user, "Corgi Cannon", ZERO)
 
 /obj/item/relic/proc/clean(mob/user)
 	playsound(src, "sparks", rand(25,50), TRUE)
 	var/obj/item/grenade/chem_grenade/cleaner/CL = new/obj/item/grenade/chem_grenade/cleaner(get_turf(user))
 	CL.prime()
-	warn_admins(user, "Smoke", 0)
+	warn_admins(user, "Smoke", ZERO)
 
 /obj/item/relic/proc/flash(mob/user)
 	playsound(src, "sparks", rand(25,50), TRUE)
@@ -662,9 +662,9 @@
 		R.revealed = TRUE
 		dupes |= R
 		R.throw_at(pick(oview(7,get_turf(src))),10,1)
-	counter = 0
+	counter = ZERO
 	QDEL_LIST_IN(dupes, rand(10, 100))
-	warn_admins(user, "Rapid duplicator", 0)
+	warn_admins(user, "Rapid duplicator", ZERO)
 
 /obj/item/relic/proc/explode(mob/user)
 	to_chat(user, "<span class='danger'>[src] begins to heat up!</span>")
@@ -673,7 +673,7 @@
 /obj/item/relic/proc/do_explode(mob/user)
 	if(loc == user)
 		visible_message("<span class='notice'>\The [src]'s top opens, releasing a powerful blast!</span>")
-		explosion(user.loc, 0, rand(1,5), rand(1,5), rand(1,5), rand(1,5), flame_range = 2)
+		explosion(user.loc, ZERO, rand(1,5), rand(1,5), rand(1,5), rand(1,5), flame_range = 2)
 		warn_admins(user, "Explosion")
 		qdel(src) //Comment this line to produce a light grenade (the bomb that keeps on exploding when used)!!
 
@@ -688,7 +688,7 @@
 		throwSmoke(userturf)
 		do_teleport(user, userturf, 8, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 		throwSmoke(get_turf(user))
-		warn_admins(user, "Teleport", 0)
+		warn_admins(user, "Teleport", ZERO)
 
 //Admin Warning proc for relics
 /obj/item/relic/proc/warn_admins(mob/user, RelicType, priority = 1)

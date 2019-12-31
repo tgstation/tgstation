@@ -233,7 +233,7 @@
 				mode_names[M.config_tag] = M.name
 				probabilities[M.config_tag] = M.probability
 				mode_reports[M.report_type] = M.generate_report()
-				if(probabilities[M.config_tag]>0)
+				if(probabilities[M.config_tag]>ZERO)
 					mode_false_report_weight[M.report_type] = M.false_report_weight
 				else
 					//"impossible" modes will still falsly show up occasionally, else they'll stick out like a sore thumb if an admin decides to force a disabled gamemode.
@@ -289,7 +289,7 @@ Example config:
 			continue
 
 		t = trim(t)
-		if(length(t) == 0)
+		if(length(t) == ZERO)
 			continue
 		else if(copytext(t, 1, 2) == "#")
 			continue
@@ -358,7 +358,7 @@ Example config:
 		if(!(M.config_tag in modes))
 			qdel(M)
 			continue
-		if(probabilities[M.config_tag]<=0)
+		if(probabilities[M.config_tag]<=ZERO)
 			qdel(M)
 			continue
 		if(min_pop[M.config_tag])
@@ -369,10 +369,10 @@ Example config:
 			var/final_weight = probabilities[M.config_tag]
 			if(SSpersistence.saved_modes.len == 3 && repeated_mode_adjust.len == 3)
 				var/recent_round = min(SSpersistence.saved_modes.Find(M.config_tag),3)
-				var/adjustment = 0
+				var/adjustment = ZERO
 				while(recent_round)
 					adjustment += repeated_mode_adjust[recent_round]
-					recent_round = SSpersistence.saved_modes.Find(M.config_tag,recent_round+1,0)
+					recent_round = SSpersistence.saved_modes.Find(M.config_tag,recent_round+1,ZERO)
 				final_weight *= ((100-adjustment)/100)
 			runnable_modes[M] = final_weight
 	return runnable_modes
@@ -387,7 +387,7 @@ Example config:
 		if(!(M.config_tag in modes))
 			qdel(M)
 			continue
-		if(probabilities[M.config_tag]<=0)
+		if(probabilities[M.config_tag]<=ZERO)
 			qdel(M)
 			continue
 		if(min_pop[M.config_tag])
@@ -395,7 +395,7 @@ Example config:
 		if(max_pop[M.config_tag])
 			M.maximum_players = max_pop[M.config_tag]
 		if(M.required_players <= crew)
-			if(M.maximum_players >= 0 && M.maximum_players < crew)
+			if(M.maximum_players >= ZERO && M.maximum_players < crew)
 				continue
 			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes
@@ -421,4 +421,4 @@ Example config:
 
 //Message admins when you can.
 /datum/controller/configuration/proc/DelayedMessageAdmins(text)
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/message_admins, text), 0)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/message_admins, text), ZERO)

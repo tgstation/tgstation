@@ -29,8 +29,8 @@
 	"22" = "black", "24" = "black", "26" = "black", "28" = "black", "29" = "black", "31" = "black", "33" = "black", "35" = "black")
 
 	var/chosen_bet_amount = 10
-	var/chosen_bet_type = 0
-	var/last_anti_spam = 0
+	var/chosen_bet_type = ZERO
+	var/last_anti_spam = ZERO
 	var/anti_spam_cooldown = 20
 	var/obj/item/card/id/my_card
 	var/playing = FALSE
@@ -51,7 +51,7 @@
 	prize_theft(0.05)
 	. = ..()
 
-/obj/machinery/roulette/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/roulette/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = ZERO, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	if(stat & MAINT)
 		return
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -73,7 +73,7 @@
 		if(C)
 			data["AccountBalance"] = C.registered_account.account_balance
 		else
-			data["AccountBalance"] = 0
+			data["AccountBalance"] = ZERO
 		data["CanUnbolt"] = (H.get_idcard() == my_card)
 
 	if(!assets)
@@ -166,9 +166,9 @@
 
 	playing = TRUE
 	update_icon()
-	set_light(0)
+	set_light(ZERO)
 
-	var/rolled_number = rand(0, 36)
+	var/rolled_number = rand(ZERO, 36)
 
 	playsound(src, 'sound/machines/roulettewheel.ogg', 50)
 	addtimer(CALLBACK(src, .proc/finish_play, player_id, bet_type, bet_amount, payout, rolled_number), 34) //4 deciseconds more so the animation can play
@@ -229,7 +229,7 @@
 	var/coin_to_drop
 
 	for(var/i in coins_to_dispense) //Find which coin to drop
-		if(coins_to_dispense[i] <= 0) //Less than 1? go to next potential coin.
+		if(coins_to_dispense[i] <= ZERO) //Less than 1? go to next potential coin.
 			continue
 		coin_to_drop = i
 		break
@@ -276,7 +276,7 @@
 		if(ROULETTE_BET_RED)
 			return "red" == numbers["[rolled_number]"] //Check if our number is black in the numbers dict
 		if("0")
-			return "0" == "rolled_number" //Check if our number is 0
+			return "0" == "rolled_number" //Check if our number is ZERO
 
 
 ///Returns TRUE if the owner has enough funds to payout
@@ -315,7 +315,7 @@
 		number1.pixel_x = -shift_amount
 		add_overlay(number1)
 	else
-		shift_amount = 0 //We can stay centered.
+		shift_amount = ZERO //We can stay centered.
 
 	var/mutable_appearance/number2 = mutable_appearance(icon, "[numberright]")
 	number2.pixel_x = shift_amount

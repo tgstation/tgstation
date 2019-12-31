@@ -64,7 +64,7 @@
 
 /obj/item/organ/brain/dullahan
 	decoy_override = TRUE
-	organ_flags = 0
+	organ_flags = ZERO
 
 /obj/item/organ/tongue/dullahan
 	zone = "abstract"
@@ -97,7 +97,7 @@
 	. = ..()
 	var/obj/item/organ/eyes/dullahan/DE = target
 	if(DE.tint)
-		DE.tint = 0
+		DE.tint = ZERO
 	else
 		DE.tint = INFINITY
 

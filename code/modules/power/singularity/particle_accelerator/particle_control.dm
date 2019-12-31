@@ -15,7 +15,7 @@
 	var/assembled = FALSE
 	var/construction_state = PA_CONSTRUCTION_UNSECURED
 	var/active = FALSE
-	var/strength = 0
+	var/strength = ZERO
 	var/powered = FALSE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 
@@ -122,7 +122,7 @@
 
 
 /obj/machinery/particle_accelerator/control_box/proc/remove_strength(s)
-	if(assembled && (strength > 0))
+	if(assembled && (strength > ZERO))
 		strength--
 		strength_change()
 

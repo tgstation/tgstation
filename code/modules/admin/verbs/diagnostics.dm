@@ -10,8 +10,8 @@
 /client/proc/fix_next_move()
 	set category = "Debug"
 	set name = "Unfreeze Everyone"
-	var/largest_move_time = 0
-	var/largest_click_time = 0
+	var/largest_move_time = ZERO
+	var/largest_click_time = ZERO
 	var/mob/largest_move_mob = null
 	var/mob/largest_click_mob = null
 	for(var/mob/M in world)
@@ -28,10 +28,10 @@
 			if(M.next_click > world.time)
 				largest_click_time = M.next_click - world.time
 			else
-				largest_click_time = 0
+				largest_click_time = ZERO
 		log_admin("DEBUG: [key_name(M)]  next_move = [M.next_move]  lastDblClick = [M.next_click]  world.time = [world.time]")
 		M.next_move = 1
-		M.next_click = 0
+		M.next_click = ZERO
 	message_admins("[ADMIN_LOOKUPFLW(largest_move_mob)] had the largest move delay with [largest_move_time] frames / [DisplayTimeText(largest_move_time)]!")
 	message_admins("[ADMIN_LOOKUPFLW(largest_click_mob)] had the largest click delay with [largest_click_time] frames / [DisplayTimeText(largest_click_time)]!")
 	message_admins("world.time = [world.time]")

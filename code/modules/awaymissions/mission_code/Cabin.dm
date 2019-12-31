@@ -70,7 +70,7 @@
 		set_light(8)
 		icon_state = "firepit-active"
 	else
-		set_light(0)
+		set_light(ZERO)
 		icon_state = "firepit"
 
 /obj/structure/firepit/extinguish()
@@ -106,8 +106,8 @@
 	icon_living = "b_rabbit"
 	icon_dead = "b_rabbit_dead"
 	icon_prefix = "b_rabbit"
-	minbodytemp = 0
-	eggsleft = 0
+	minbodytemp = ZERO
+	eggsleft = ZERO
 	egg_type = null
 	speak = list()
 
@@ -123,7 +123,7 @@
 /datum/mapGeneratorModule/snow/checkPlaceAtom(turf/T)
 	if(istype(T, /turf/open/floor/plating/asteroid/snow))
 		return ..(T)
-	return 0
+	return ZERO
 
 /datum/mapGeneratorModule/bottomlayer/snow
 	spawnableTurfs = list(/turf/open/floor/plating/asteroid/snow/atmosphere = 100)

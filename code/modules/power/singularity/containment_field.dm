@@ -40,7 +40,7 @@
 	shock(user)
 	return TRUE
 
-/obj/machinery/field/containment/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/machinery/field/containment/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BURN)
 			playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
@@ -121,7 +121,7 @@
 	else if(issilicon(user))
 		if(prob(20))
 			user.Stun(40)
-		user.take_overall_damage(0, shock_damage)
+		user.take_overall_damage(ZERO, shock_damage)
 		user.visible_message("<span class='danger'>[user.name] was shocked by the [src.name]!</span>", \
 		"<span class='userdanger'>Energy pulse detected, system damaged!</span>", \
 		"<span class='hear'>You hear an electrical crack.</span>")

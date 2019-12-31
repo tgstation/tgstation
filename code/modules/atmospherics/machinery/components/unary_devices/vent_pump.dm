@@ -2,7 +2,7 @@
 #define INT_BOUND	2
 #define NO_BOUND	3
 
-#define SIPHONING	0
+#define SIPHONING	ZERO
 #define RELEASING	1
 
 /obj/machinery/atmospherics/components/unary/vent_pump
@@ -22,7 +22,7 @@
 
 	var/pressure_checks = EXT_BOUND
 	var/external_pressure_bound = ONE_ATMOSPHERE
-	var/internal_pressure_bound = 0
+	var/internal_pressure_bound = ZERO
 	// EXT_BOUND: Do not pass external_pressure_bound
 	// INT_BOUND: Do not pass internal_pressure_bound
 	// NO_BOUND: Do not pass either
@@ -105,8 +105,8 @@
 		if(pressure_checks&INT_BOUND)
 			pressure_delta = min(pressure_delta, (air_contents.return_pressure() - internal_pressure_bound))
 
-		if(pressure_delta > 0)
-			if(air_contents.temperature > 0)
+		if(pressure_delta > ZERO)
+			if(air_contents.temperature > ZERO)
 				var/transfer_moles = pressure_delta*environment.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
 
 				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
@@ -121,7 +121,7 @@
 		if(pressure_checks&INT_BOUND)
 			pressure_delta = min(pressure_delta, (internal_pressure_bound - air_contents.return_pressure()))
 
-		if(pressure_delta > 0 && environment.temperature > 0)
+		if(pressure_delta > ZERO && environment.temperature > ZERO)
 			var/transfer_moles = pressure_delta * air_contents.volume / (environment.temperature * R_IDEAL_GAS_EQUATION)
 
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
@@ -205,20 +205,20 @@
 			investigate_log(" pressure checks were set to [pressure_checks] by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
 
 	if("checks_toggle" in signal.data)
-		pressure_checks = (pressure_checks?0:NO_BOUND)
+		pressure_checks = (pressure_checks?ZERO:NO_BOUND)
 
 	if("direction" in signal.data)
 		pump_direction = text2num(signal.data["direction"])
 
 	if("set_internal_pressure" in signal.data)
 		var/old_pressure = internal_pressure_bound
-		internal_pressure_bound = CLAMP(text2num(signal.data["set_internal_pressure"]),0,ONE_ATMOSPHERE*50)
+		internal_pressure_bound = CLAMP(text2num(signal.data["set_internal_pressure"]),ZERO,ONE_ATMOSPHERE*50)
 		if(old_pressure != internal_pressure_bound)
 			investigate_log(" internal pressure was set to [internal_pressure_bound] by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
 
 	if("set_external_pressure" in signal.data)
 		var/old_pressure = external_pressure_bound
-		external_pressure_bound = CLAMP(text2num(signal.data["set_external_pressure"]),0,ONE_ATMOSPHERE*50)
+		external_pressure_bound = CLAMP(text2num(signal.data["set_external_pressure"]),ZERO,ONE_ATMOSPHERE*50)
 		if(old_pressure != external_pressure_bound)
 			investigate_log(" external pressure was set to [external_pressure_bound] by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
 
@@ -226,13 +226,13 @@
 		external_pressure_bound = ONE_ATMOSPHERE
 
 	if("reset_internal_pressure" in signal.data)
-		internal_pressure_bound = 0
+		internal_pressure_bound = ZERO
 
 	if("adjust_internal_pressure" in signal.data)
-		internal_pressure_bound = CLAMP(internal_pressure_bound + text2num(signal.data["adjust_internal_pressure"]),0,ONE_ATMOSPHERE*50)
+		internal_pressure_bound = CLAMP(internal_pressure_bound + text2num(signal.data["adjust_internal_pressure"]),ZERO,ONE_ATMOSPHERE*50)
 
 	if("adjust_external_pressure" in signal.data)
-		external_pressure_bound = CLAMP(external_pressure_bound + text2num(signal.data["adjust_external_pressure"]),0,ONE_ATMOSPHERE*50)
+		external_pressure_bound = CLAMP(external_pressure_bound + text2num(signal.data["adjust_external_pressure"]),ZERO,ONE_ATMOSPHERE*50)
 
 	if("init" in signal.data)
 		name = signal.data["init"]
@@ -248,7 +248,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/welder_act(mob/living/user, obj/item/I)
 	..()
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=ZERO))
 		return TRUE
 	to_chat(user, "<span class='notice'>You begin welding the vent...</span>")
 	if(I.use_tool(src, user, 20, volume=50))
@@ -328,7 +328,7 @@
 	pump_direction = SIPHONING
 	pressure_checks = INT_BOUND
 	internal_pressure_bound = 4000
-	external_pressure_bound = 0
+	external_pressure_bound = ZERO
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/layer1
 	piping_layer = 1
@@ -406,7 +406,7 @@
 	pump_direction = SIPHONING
 	pressure_checks = INT_BOUND
 	internal_pressure_bound = 2000
-	external_pressure_bound = 0
+	external_pressure_bound = ZERO
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/layer1
 	piping_layer = 1

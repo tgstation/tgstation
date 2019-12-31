@@ -16,7 +16,7 @@
 
 /obj/item/assembly/prox_sensor/Initialize()
 	. = ..()
-	proximity_monitor = new(src, 0)
+	proximity_monitor = new(src, ZERO)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/assembly/prox_sensor/Destroy()
@@ -83,7 +83,7 @@
 	if(!timing)
 		return
 	time--
-	if(time <= 0)
+	if(time <= ZERO)
 		timing = FALSE
 		toggle_scan(TRUE)
 		time = initial(time)
@@ -92,11 +92,11 @@
 	if(!secured)
 		return FALSE
 	scanning = scan
-	proximity_monitor.SetRange(scanning ? sensitivity : 0)
+	proximity_monitor.SetRange(scanning ? sensitivity : ZERO)
 	update_icon()
 
 /obj/item/assembly/prox_sensor/proc/sensitivity_change(value)
-	var/sense = min(max(sensitivity + value, 0), 5)
+	var/sense = min(max(sensitivity + value, ZERO), 5)
 	sensitivity = sense
 	if(scanning && proximity_monitor.SetRange(sense))
 		sense()
@@ -152,7 +152,7 @@
 	if(href_list["tp"])
 		var/tp = text2num(href_list["tp"])
 		time += tp
-		time = min(max(round(time), 0), 600)
+		time = min(max(round(time), ZERO), 600)
 
 	if(href_list["close"])
 		usr << browse(null, "window=prox")

@@ -56,17 +56,17 @@
 		return
 	if(href_list["copy"])
 		if(copy)
-			for(var/i = 0, i < copies, i++)
-				if(toner > 0 && !busy && copy)
+			for(var/i = ZERO, i < copies, i++)
+				if(toner > ZERO && !busy && copy)
 					var/copy_as_paper = 1
 					if(istype(copy, /obj/item/paper/contract/employment))
 						var/obj/item/paper/contract/employment/E = copy
 						var/obj/item/paper/contract/employment/C = new /obj/item/paper/contract/employment (loc, E.target.current)
 						if(C)
-							copy_as_paper = 0
+							copy_as_paper = ZERO
 					if(copy_as_paper)
 						var/obj/item/paper/c = new /obj/item/paper (loc)
-						if(length(copy.info) > 0)	//Only print and add content if the copied doc has words on it
+						if(length(copy.info) > ZERO)	//Only print and add content if the copied doc has words on it
 							if(toner > 10)	//lots of toner, make it dark
 								c.info = "<font color = #101010>"
 							else			//no toner? shitty copies for you!
@@ -91,15 +91,15 @@
 					break
 			updateUsrDialog()
 		else if(photocopy)
-			for(var/i = 0, i < copies, i++)
-				if(toner >= 5 && !busy && photocopy)  //Was set to = 0, but if there was say 3 toner left and this ran, you would get -2 which would be weird for ink
+			for(var/i = ZERO, i < copies, i++)
+				if(toner >= 5 && !busy && photocopy)  //Was set to = ZERO, but if there was say 3 toner left and this ran, you would get -2 which would be weird for ink
 					new /obj/item/photo (loc, photocopy.picture.Copy(greytoggle == "Greyscale"? TRUE : FALSE))
 					busy = TRUE
 					addtimer(CALLBACK(src, .proc/reset_busy), 1.5 SECONDS)
 				else
 					break
 		else if(doccopy)
-			for(var/i = 0, i < copies, i++)
+			for(var/i = ZERO, i < copies, i++)
 				if(toner > 5 && !busy && doccopy)
 					new /obj/item/documents/photocopy(loc, doccopy)
 					toner-= 6 // the sprite shows 6 papers, yes I checked
@@ -109,7 +109,7 @@
 					break
 			updateUsrDialog()
 		else if(ass) //ASS COPY. By Miauw
-			for(var/i = 0, i < copies, i++)
+			for(var/i = ZERO, i < copies, i++)
 				var/icon/temp_img
 				if(ishuman(ass) && (ass.get_item_by_slot(ITEM_SLOT_ICLOTHING) || ass.get_item_by_slot(ITEM_SLOT_OCLOTHING)))
 					to_chat(usr, "<span class='notice'>You feel kind of silly, copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "[ass.p_their()]"] clothes on.</span>" )
@@ -163,7 +163,7 @@
 			return
 		if(toner >= 5 && !busy)
 			var/mob/living/silicon/ai/tempAI = usr
-			if(tempAI.aicamera.stored.len == 0)
+			if(tempAI.aicamera.stored.len == ZERO)
 				to_chat(usr, "<span class='boldannounce'>No images saved</span>")
 				return
 			var/datum/picture/selection = tempAI.aicamera.selectpicture(usr)
@@ -236,7 +236,7 @@
 			to_chat(user, "<span class='warning'>There is already something in [src]!</span>")
 
 	else if(istype(O, /obj/item/toner))
-		if(toner <= 0)
+		if(toner <= ZERO)
 			if(!user.temporarilyRemoveItemFromInventory(O))
 				return
 			qdel(O)
@@ -253,9 +253,9 @@
 
 /obj/machinery/photocopier/obj_break(damage_flag)
 	. = ..()
-	if(. && toner > 0)
+	if(. && toner > ZERO)
 		new /obj/effect/decal/cleanable/oil(get_turf(src))
-		toner = 0
+		toner = ZERO
 
 /obj/machinery/photocopier/MouseDrop_T(mob/target, mob/user)
 	check_ass() //Just to make sure that you can re-drag somebody onto it after they moved off.
@@ -292,16 +292,16 @@
 
 /obj/machinery/photocopier/proc/check_ass() //I'm not sure wether I made this proc because it's good form or because of the name.
 	if(!ass)
-		return 0
+		return ZERO
 	if(ass.loc != src.loc)
 		ass = null
 		updateUsrDialog()
-		return 0
+		return ZERO
 	else if(ishuman(ass))
 		if(!ass.get_item_by_slot(ITEM_SLOT_ICLOTHING) && !ass.get_item_by_slot(ITEM_SLOT_OCLOTHING))
 			return 1
 		else
-			return 0
+			return ZERO
 	else
 		return 1
 
@@ -315,11 +315,11 @@
 			continue
 		if(AM.density)
 			return 1
-	return 0
+	return ZERO
 
 /obj/machinery/photocopier/proc/copier_empty()
 	if(copy || photocopy || check_ass())
-		return 0
+		return ZERO
 	else
 		return 1
 

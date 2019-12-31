@@ -9,7 +9,7 @@
 	response_help_simple = "touch"
 	response_disarm_continuous = "pushes"
 	response_disarm_simple = "push"
-	speed = 0
+	speed = ZERO
 	maxHealth = 250
 	health = 250
 	gender = NEUTER
@@ -23,8 +23,8 @@
 	speak_emote = list("creaks")
 	taunt_chance = 30
 
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
+	minbodytemp = ZERO
 
 	faction = list("mimic")
 	move_to_delay = 9
@@ -36,7 +36,7 @@
 	attack_verb_simple = "bite"
 	speak_emote = list("clatters")
 	stop_automated_movement = 1
-	wander = 0
+	wander = ZERO
 	var/attempt_open = FALSE
 
 // Pickup loot
@@ -99,13 +99,13 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	health = 100
 	maxHealth = 100
 	var/mob/living/creator = null // the creator
-	var/destroy_objects = 0
-	var/knockdown_people = 0
+	var/destroy_objects = ZERO
+	var/knockdown_people = ZERO
 	var/static/mutable_appearance/googly_eyes = mutable_appearance('icons/mob/mob.dmi', "googly_eyes")
 	var/overlay_googly_eyes = TRUE
 	var/idledamage = TRUE
 
-/mob/living/simple_animal/hostile/mimic/copy/Initialize(mapload, obj/copy, mob/living/creator, destroy_original = 0, no_googlies = FALSE)
+/mob/living/simple_animal/hostile/mimic/copy/Initialize(mapload, obj/copy, mob/living/creator, destroy_original = ZERO, no_googlies = FALSE)
 	. = ..()
 	if (no_googlies)
 		overlay_googly_eyes = FALSE
@@ -136,9 +136,9 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 /mob/living/simple_animal/hostile/mimic/copy/proc/CheckObject(obj/O)
 	if((isitem(O) || isstructure(O)) && !is_type_in_list(O, GLOB.protected_objects))
 		return 1
-	return 0
+	return ZERO
 
-/mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/user, destroy_original = 0)
+/mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/user, destroy_original = ZERO)
 	if(destroy_original || CheckObject(O))
 		O.forceMove(src)
 		name = O.name
@@ -189,11 +189,11 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/copy/machine/CanAttack(atom/the_target)
 	if(the_target == creator) // Don't attack our creator AI.
-		return 0
+		return ZERO
 	if(iscyborg(the_target))
 		var/mob/living/silicon/robot/R = the_target
 		if(R.connected_ai == creator) // Only attack robots that aren't synced to our creator AI.
-			return 0
+			return ZERO
 	return ..()
 
 /mob/living/simple_animal/hostile/mimic/copy/ranged
@@ -202,17 +202,17 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	var/obj/item/gun/ballistic/Pewgun
 	var/obj/item/gun/energy/Zapgun
 
-/mob/living/simple_animal/hostile/mimic/copy/ranged/CopyObject(obj/O, mob/living/creator, destroy_original = 0)
+/mob/living/simple_animal/hostile/mimic/copy/ranged/CopyObject(obj/O, mob/living/creator, destroy_original = ZERO)
 	if(..())
 		emote_see = list("aims menacingly")
-		obj_damage = 0
+		obj_damage = ZERO
 		environment_smash = ENVIRONMENT_SMASH_NONE //needed? seems weird for them to do so
 		ranged = 1
 		retreat_distance = 1 //just enough to shoot
 		minimum_distance = 6
 		var/obj/item/gun/G = O
 		melee_damage_upper = G.force
-		melee_damage_lower = G.force - max(0, (G.force / 2))
+		melee_damage_lower = G.force - max(ZERO, (G.force / 2))
 		move_to_delay = 2 * G.w_class + 1
 		projectilesound = G.fire_sound
 		TrueGun = G
@@ -255,16 +255,16 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 			Pewgun.chambered.forceMove(loc) //rip revolver immersions, blame shotgun snowflake procs
 			Pewgun.chambered = null
 			if(Pewgun.magazine && Pewgun.magazine.stored_ammo.len)
-				Pewgun.chambered = Pewgun.magazine.get_round(0)
+				Pewgun.chambered = Pewgun.magazine.get_round(ZERO)
 				Pewgun.chambered.forceMove(Pewgun)
 			Pewgun.update_icon()
 		else if(Pewgun.magazine && Pewgun.magazine.stored_ammo.len) //only true for pumpguns i think
-			Pewgun.chambered = Pewgun.magazine.get_round(0)
+			Pewgun.chambered = Pewgun.magazine.get_round(ZERO)
 			Pewgun.chambered.forceMove(Pewgun)
 			visible_message("<span class='danger'>The <b>[src]</b> cocks itself!</span>")
 	else
-		ranged = 0 //BANZAIIII
-		retreat_distance = 0
+		ranged = ZERO //BANZAIIII
+		retreat_distance = ZERO
 		minimum_distance = 1
 		return
 	icon_state = TrueGun.icon_state

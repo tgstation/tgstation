@@ -13,7 +13,7 @@
 	var/heat_mod = 1    	// % of burn damage taken from heat (stacks with burn_mod)
 	var/cold_mod = 1    	// % of burn damage taken from cold (stacks with burn_mod)
 
-	var/damage_resistance = 0 // %damage reduction from all sources
+	var/damage_resistance = ZERO // %damage reduction from all sources
 
 	var/siemens_coeff = 1 	// resistance to shocks
 

@@ -35,7 +35,7 @@
 	if(zone == BODY_ZONE_R_ARM)
 		transform = null
 	else // Mirroring the icon
-		transform = matrix(-1, 0, 0, 0, 1, 0)
+		transform = matrix(-1, ZERO, ZERO, ZERO, 1, ZERO)
 
 /obj/item/organ/cyberimp/arm/examine(mob/user)
 	. = ..()
@@ -54,7 +54,7 @@
 	to_chat(user, "<span class='notice'>You modify [src] to be installed on the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>")
 	update_icon()
 
-/obj/item/organ/cyberimp/arm/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/arm/Remove(mob/living/carbon/M, special = ZERO)
 	Retract()
 	..()
 
@@ -77,7 +77,7 @@
 
 	if(istype(holder, /obj/item/assembly/flash/armimplant))
 		var/obj/item/assembly/flash/F = holder
-		F.set_light(0)
+		F.set_light(ZERO)
 
 	owner.transferItemToLoc(holder, src, TRUE)
 	holder = null
@@ -192,7 +192,7 @@
 		to_chat(user, "<span class='notice'>You unlock [src]'s integrated knife!</span>")
 		items_list += new /obj/item/kitchen/knife/combat/cyborg(src)
 		return 1
-	return 0
+	return ZERO
 
 /obj/item/organ/cyberimp/arm/esword
 	name = "arm-mounted energy blade"

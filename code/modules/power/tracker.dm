@@ -13,7 +13,7 @@
 	max_integrity = 250
 	integrity_failure = 0.2
 
-	var/id = 0
+	var/id = ZERO
 	var/obj/machinery/power/solar_control/control
 
 /obj/machinery/power/tracker/Initialize(mapload, obj/item/solar_assembly/S)

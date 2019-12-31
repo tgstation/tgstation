@@ -4,7 +4,7 @@
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "none"
 	var/fire_delay = 50
-	var/last_shot = 0
+	var/last_shot = ZERO
 
 /obj/structure/particle_accelerator/particle_emitter/center
 	icon_state = "emitter_center"
@@ -19,18 +19,18 @@
 	reference = "emitter_right"
 
 /obj/structure/particle_accelerator/particle_emitter/proc/set_delay(delay)
-	if(delay >= 0)
+	if(delay >= ZERO)
 		fire_delay = delay
 		return 1
-	return 0
+	return ZERO
 
-/obj/structure/particle_accelerator/particle_emitter/proc/emit_particle(strength = 0)
+/obj/structure/particle_accelerator/particle_emitter/proc/emit_particle(strength = ZERO)
 	if((last_shot + fire_delay) <= world.time)
 		last_shot = world.time
 		var/turf/T = get_turf(src)
 		var/obj/effect/accelerated_particle/P
 		switch(strength)
-			if(0)
+			if(ZERO)
 				P = new/obj/effect/accelerated_particle/weak(T)
 			if(1)
 				P = new/obj/effect/accelerated_particle(T)
@@ -40,4 +40,4 @@
 				P = new/obj/effect/accelerated_particle/powerful(T)
 		P.setDir(dir)
 		return 1
-	return 0
+	return ZERO

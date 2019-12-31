@@ -11,10 +11,10 @@
 	item_state = null
 	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
-	force = 0
-	throwforce = 0
-	throw_range = 0
-	throw_speed = 0
+	force = ZERO
+	throwforce = ZERO
+	throw_range = ZERO
+	throw_speed = ZERO
 	var/charges = 1
 
 /obj/item/melee/touch_attack/Initialize()
@@ -36,7 +36,7 @@
 	user.say(catchphrase, forced = "spell")
 	playsound(get_turf(user), on_use_sound,50,TRUE)
 	charges--
-	if(charges <= 0)
+	if(charges <= ZERO)
 		qdel(src)
 
 /obj/item/melee/touch_attack/Destroy()

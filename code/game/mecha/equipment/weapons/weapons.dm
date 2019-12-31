@@ -5,9 +5,9 @@
 	var/projectile
 	var/fire_sound
 	var/projectiles_per_shot = 1
-	var/variance = 0
-	var/randomspread = 0 //use random spread for machineguns, instead of shotgun scatter
-	var/projectile_delay = 0
+	var/variance = ZERO
+	var/randomspread = ZERO //use random spread for machineguns, instead of shotgun scatter
+	var/projectile_delay = ZERO
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect	//the visual effect appearing when the weapon is fired.
 	var/kickback = TRUE //Will using this weapon in no grav push mecha back.
 
@@ -25,16 +25,16 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/action(atom/target, params)
 	if(!action_checks(target))
-		return 0
+		return ZERO
 
 	var/turf/curloc = get_turf(chassis)
 	var/turf/targloc = get_turf(target)
 	if (!targloc || !istype(targloc) || !curloc)
-		return 0
+		return ZERO
 	if (targloc == curloc)
-		return 0
+		return ZERO
 
-	set_ready_state(0)
+	set_ready_state(ZERO)
 	for(var/i=1 to get_shot_amount())
 		var/obj/projectile/A = new projectile(curloc)
 		A.firer = chassis.occupant
@@ -42,7 +42,7 @@
 		if(!A.suppressed && firing_effect_type)
 			new firing_effect_type(get_turf(src), chassis.dir)
 
-		var/spread = 0
+		var/spread = ZERO
 		if(variance)
 			if(randomspread)
 				spread = round((rand() - 0.5) * variance)
@@ -53,7 +53,7 @@
 		A.fire()
 		playsound(chassis, fire_sound, 50, TRUE)
 
-		sleep(max(0, projectile_delay))
+		sleep(max(ZERO, projectile_delay))
 
 	if(kickback)
 		chassis.newtonian_move(turn(chassis.dir,180))
@@ -70,7 +70,7 @@
 	return min(round(chassis.cell.charge / energy_drain), projectiles_per_shot)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/start_cooldown()
-	set_ready_state(0)
+	set_ready_state(ZERO)
 	chassis.use_power(energy_drain*get_shot_amount())
 	addtimer(CALLBACK(src, .proc/set_ready_state, 1), equip_cooldown)
 
@@ -149,7 +149,7 @@
 		return 1
 	else if(M.equipment.len < M.max_equip && istype(M))
 		return 1
-	return 0
+	return ZERO
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
 	name = "\improper PBT \"Pacifier\" mounted taser"
@@ -174,7 +174,7 @@
 	if(..())
 		if(istype(M))
 			return 1
-	return 0
+	return ZERO
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/action(target, params)
 	if(!action_checks(target))
@@ -190,9 +190,9 @@
 		if(isspaceturf(turf_check) && !turf_check.Adjacent(src)) //in space nobody can hear you honk.
 			continue
 		to_chat(M, "<font color='red' size='7'>HONK</font>")
-		M.SetSleeping(0)
+		M.SetSleeping(ZERO)
 		M.stuttering += 20
-		M.adjustEarDamage(0, 30)
+		M.adjustEarDamage(ZERO, 30)
 		M.Paralyze(60)
 		if(prob(30))
 			M.Stun(200)
@@ -223,9 +223,9 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/action_checks(target)
 	if(!..())
-		return 0
-	if(projectiles <= 0)
-		return 0
+		return ZERO
+	if(projectiles <= ZERO)
+		return ZERO
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/get_equip_info()
@@ -250,7 +250,7 @@
 				projectiles_cache = projectiles_cache - projectiles_to_add
 			else
 				projectiles = projectiles + projectiles_cache
-				projectiles_cache = 0
+				projectiles_cache = ZERO
 
 		send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
 		log_message("Rearmed [src.name].", LOG_MECHA)
@@ -258,7 +258,7 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/needs_rearm()
-	. = !(projectiles > 0)
+	. = !(projectiles > ZERO)
 
 
 
@@ -335,8 +335,8 @@
 	projectile = /obj/projectile/bullet/a84mm_he
 	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
 	projectiles = 8
-	projectiles_cache = 0
-	projectiles_cache_max = 0
+	projectiles_cache = ZERO
+	projectiles_cache_max = ZERO
 	disabledreload = TRUE
 	equip_cooldown = 60
 	harmful = TRUE
@@ -349,8 +349,8 @@
 	projectile = /obj/projectile/bullet/a84mm_br
 	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
 	projectiles = 6
-	projectiles_cache = 0
-	projectiles_cache_max = 0
+	projectiles_cache = ZERO
+	projectiles_cache_max = ZERO
 	disabledreload = TRUE
 	equip_cooldown = 60
 	harmful = TRUE
@@ -402,8 +402,8 @@
 	name = "\improper SOB-3 grenade launcher"
 	desc = "A weapon for combat exosuits. Launches primed clusterbangs. You monster."
 	projectiles = 3
-	projectiles_cache = 0
-	projectiles_cache_max = 0
+	projectiles_cache = ZERO
+	projectiles_cache_max = ZERO
 	disabledreload = TRUE
 	projectile = /obj/item/grenade/clusterbuster
 	equip_cooldown = 90
@@ -424,7 +424,7 @@
 	if(..())
 		if(istype(M))
 			return 1
-	return 0
+	return ZERO
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar
 	name = "mousetrap mortar"
@@ -441,7 +441,7 @@
 	if(..())
 		if(istype(M))
 			return 1
-	return 0
+	return ZERO
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(var/obj/item/assembly/mousetrap/armed/M)
 	M.secured = 1
@@ -466,7 +466,7 @@
 	if(..())
 		if(istype(M))
 			return 1
-	return 0
+	return ZERO
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/action(target)
 	. = ..()

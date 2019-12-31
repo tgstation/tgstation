@@ -2,12 +2,12 @@
 ///books that teach things (intrinsic actions like bar flinging, spells like fireball or smoke, or martial arts)///
 
 /obj/item/book/granter
-	due_date = 0 // Game time in deciseconds
-	unique = 1   // 0  Normal book, 1  Should not be treated as normal book, unable to be copied, unable to be modified
+	due_date = ZERO // Game time in deciseconds
+	unique = 1   // ZERO  Normal book, 1  Should not be treated as normal book, unable to be copied, unable to be modified
 	var/list/remarks = list() //things to read about while learning.
 	var/pages_to_mastery = 3 //Essentially controls how long a mob must keep the book in his hand to actually successfully learn
 	var/reading = FALSE //sanity
-	var/oneuse = TRUE //default this is true, but admins can var this to 0 if we wanna all have a pass around of the rod form book
+	var/oneuse = TRUE //default this is true, but admins can var this to ZERO if we wanna all have a pass around of the rod form book
 	var/used = FALSE //only really matters if oneuse but it might be nice to know if someone's used it for admin investigations perhaps
 
 /obj/item/book/granter/proc/turn_page(mob/user)
@@ -159,7 +159,7 @@
 
 /obj/item/book/granter/spell/fireball/recoil(mob/user)
 	..()
-	explosion(user.loc, 1, 0, 2, 3, FALSE, FALSE, 2)
+	explosion(user.loc, 1, ZERO, 2, 3, FALSE, FALSE, 2)
 	qdel(src)
 
 /obj/item/book/granter/spell/sacredflame
@@ -184,8 +184,8 @@
 	to_chat(user,"<span class='warning'>Your stomach rumbles...</span>")
 	if(user.nutrition)
 		user.set_nutrition(200)
-		if(user.nutrition <= 0)
-			user.set_nutrition(0)
+		if(user.nutrition <= ZERO)
+			user.set_nutrition(ZERO)
 
 /obj/item/book/granter/spell/blind
 	spell = /obj/effect/proc_holder/spell/targeted/trigger/blind

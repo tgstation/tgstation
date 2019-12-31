@@ -4,7 +4,7 @@
 
 #define LIGHT_EMERGENCY_POWER_USE 0.2 //How much power emergency lights will consume per tick
 // status values shared between lighting fixtures and items
-#define LIGHT_OK 0
+#define LIGHT_OK ZERO
 #define LIGHT_EMPTY 1
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
@@ -208,9 +208,9 @@
 	idle_power_usage = 2
 	active_power_usage = 20
 	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
-	var/on = FALSE					// 1 if on, 0 if off
+	var/on = FALSE					// 1 if on, ZERO if off
 	var/on_gs = FALSE
-	var/static_power_used = 0
+	var/static_power_used = ZERO
 	var/brightness = 8			// luminosity when on, also used in power calculation
 	var/bulb_power = 1			// basically the alpha of the emitted light source
 	var/bulb_colour = "#FFFFFF"	// befault colour of the light.
@@ -218,7 +218,7 @@
 	var/flickering = FALSE
 	var/light_type = /obj/item/light/tube		// the type of light item
 	var/fitting = "tube"
-	var/switchcount = 0			// count of number of times switched on/off
+	var/switchcount = ZERO			// count of number of times switched on/off
 								// this is used to calc the probability the light burns out
 
 	var/rigged = FALSE			// true if rigged to explode
@@ -269,7 +269,7 @@
 /obj/machinery/light/built/Initialize()
 	. = ..()
 	status = LIGHT_EMPTY
-	update(0)
+	update(ZERO)
 
 /obj/machinery/light/small/built
 	icon_state = "bulb-empty"
@@ -278,7 +278,7 @@
 /obj/machinery/light/small/built/Initialize()
 	. = ..()
 	status = LIGHT_EMPTY
-	update(0)
+	update(ZERO)
 
 
 
@@ -307,7 +307,7 @@
 			brightness = 4
 			if(prob(5))
 				break_light_tube(1)
-	addtimer(CALLBACK(src, .proc/update, 0), 1)
+	addtimer(CALLBACK(src, .proc/update, ZERO), 1)
 
 /obj/machinery/light/Destroy()
 	var/area/A = get_area(src)
@@ -376,7 +376,7 @@
 		START_PROCESSING(SSmachines, src)
 	else
 		use_power = IDLE_POWER_USE
-		set_light(0)
+		set_light(ZERO)
 	update_icon()
 
 	active_power_usage = (brightness * 10)
@@ -416,7 +416,7 @@
 		status = LIGHT_BURNED
 		icon_state = "[base_state]-burned"
 		on = FALSE
-		set_light(0)
+		set_light(ZERO)
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
@@ -537,7 +537,7 @@
 			if(prob(12))
 				electrocute_mob(user, get_area(src), src, 0.3, TRUE)
 
-/obj/machinery/light/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/machinery/light/take_damage(damage_amount, damage_type = BRUTE, damage_flag = ZERO, sound_effect = 1)
 	. = ..()
 	if(. && !QDELETED(src))
 		if(prob(damage_amount * 5))
@@ -546,7 +546,7 @@
 
 
 
-/obj/machinery/light/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/machinery/light/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BRUTE)
 			switch(status)
@@ -593,20 +593,20 @@
 
 
 /obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
-	set waitfor = 0
+	set waitfor = ZERO
 	if(flickering)
 		return
 	flickering = 1
 	if(on && status == LIGHT_OK)
-		for(var/i = 0; i < amount; i++)
+		for(var/i = ZERO; i < amount; i++)
 			if(status != LIGHT_OK)
 				break
 			on = !on
-			update(0)
+			update(ZERO)
 			sleep(rand(5, 15))
 		on = (status == LIGHT_OK)
-		update(0)
-	flickering = 0
+		update(ZERO)
+	flickering = ZERO
 
 // ai attack - make lights flicker, because why not
 
@@ -632,7 +632,7 @@
 
 	// make it burn hands unless you're wearing heat insulated gloves or have the RESISTHEAT/RESISTHEATHANDS traits
 	if(on)
-		var/prot = 0
+		var/prot = ZERO
 		var/mob/living/carbon/human/H = user
 
 		if(istype(H))
@@ -655,7 +655,7 @@
 		else
 			prot = 1
 
-		if(prot > 0 || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
+		if(prot > ZERO || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
 			to_chat(user, "<span class='notice'>You remove the light [fitting].</span>")
 		else if(istype(user) && user.dna.check_mutation(TK))
 			to_chat(user, "<span class='notice'>You telekinetically remove the light [fitting].</span>")
@@ -663,7 +663,7 @@
 			to_chat(user, "<span class='warning'>You try to remove the light [fitting], but you burn your hand on it!</span>")
 
 			var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-			if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
+			if(affecting && affecting.receive_damage( ZERO, 5 ))		// 5 burn damage
 				H.update_damage_overlays()
 			return				// if burned, don't remove the light
 	else
@@ -679,7 +679,7 @@
 
 	// light item inherits the switchcount, then zero it
 	L.switchcount = switchcount
-	switchcount = 0
+	switchcount = ZERO
 
 	L.update()
 	L.forceMove(loc)
@@ -705,7 +705,7 @@
 
 // break the light and make sparks if was on
 
-/obj/machinery/light/proc/break_light_tube(skip_sound_and_sparks = 0)
+/obj/machinery/light/proc/break_light_tube(skip_sound_and_sparks = ZERO)
 	if(status == LIGHT_EMPTY || status == LIGHT_BROKEN)
 		return
 
@@ -727,31 +727,31 @@
 
 /obj/machinery/light/tesla_act(power, tesla_flags)
 	if(tesla_flags & TESLA_MACHINE_EXPLOSIVE)
-		explosion(src,0,0,0,flame_range = 5, adminlog = 0)
+		explosion(src,ZERO,ZERO,ZERO,flame_range = 5, adminlog = ZERO)
 		qdel(src)
 	else
 		return ..()
 
 // called when area power state changes
 /obj/machinery/light/power_change()
-	SHOULD_CALL_PARENT(0)
+	SHOULD_CALL_PARENT(ZERO)
 	var/area/A = get_area(src)
 	seton(A.lightswitch && A.power_light)
 
 // called when on fire
 
 /obj/machinery/light/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(prob(max(0, exposed_temperature - 673)))   //0% at <400C, 100% at >500C
+	if(prob(max(ZERO, exposed_temperature - 673)))   //ZERO% at <400C, 100% at >500C
 		break_light_tube()
 
 // explode the light
 
 /obj/machinery/light/proc/explode()
-	set waitfor = 0
+	set waitfor = ZERO
 	var/turf/T = get_turf(src.loc)
 	break_light_tube()	// break it first to give a warning
 	sleep(2)
-	explosion(T, 0, 0, 2, 2)
+	explosion(T, ZERO, ZERO, 2, 2)
 	sleep(1)
 	qdel(src)
 
@@ -766,7 +766,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/status = LIGHT_OK		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
-	var/switchcount = 0	// number of times switched
+	var/switchcount = ZERO	// number of times switched
 	custom_materials = list(/datum/material/glass=100)
 	grind_results = list(/datum/reagent/silicon = 5, /datum/reagent/nitrogen = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
 	var/rigged = FALSE		// true if rigged to explode

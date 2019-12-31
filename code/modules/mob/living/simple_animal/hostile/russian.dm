@@ -7,9 +7,9 @@
 	icon_dead = "russianmelee_dead"
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	speak_chance = 0
+	speak_chance = ZERO
 	turns_per_move = 5
-	speed = 0
+	speed = ZERO
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
@@ -21,7 +21,7 @@
 	a_intent = INTENT_HARM
 	loot = list(/obj/effect/mob_spawn/human/corpse/russian,
 				/obj/item/kitchen/knife)
-	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = ZERO)
 	unsuitable_atmos_damage = 15
 	faction = list("russian")
 	status_flags = CANPUSH

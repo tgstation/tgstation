@@ -113,7 +113,7 @@
 		QDEL_IN(holder, 5)
 
 /datum/spacevine_mutation/explosive/on_death(obj/structure/spacevine/holder, mob/hitter, obj/item/I)
-	explosion(holder.loc, 0, 0, severity, 0, 0)
+	explosion(holder.loc, ZERO, ZERO, severity, ZERO, ZERO)
 
 /datum/spacevine_mutation/fire_proof
 	name = "fire proof"
@@ -125,7 +125,7 @@
 
 /datum/spacevine_mutation/fire_proof/on_hit(obj/structure/spacevine/holder, mob/hitter, obj/item/I, expected_damage)
 	if(I && I.damtype == "fire")
-		. = 0
+		. = ZERO
 	else
 		. = expected_damage
 
@@ -157,7 +157,7 @@
 	quality = POSITIVE
 
 /datum/spacevine_mutation/transparency/on_grow(obj/structure/spacevine/holder)
-	holder.set_opacity(0)
+	holder.set_opacity(ZERO)
 	holder.alpha = 125
 
 /datum/spacevine_mutation/oxy_eater
@@ -172,7 +172,7 @@
 		var/datum/gas_mixture/GM = T.air
 		if(!GM.gases[/datum/gas/oxygen])
 			return
-		GM.gases[/datum/gas/oxygen][MOLES] = max(GM.gases[/datum/gas/oxygen][MOLES] - severity * holder.energy, 0)
+		GM.gases[/datum/gas/oxygen][MOLES] = max(GM.gases[/datum/gas/oxygen][MOLES] - severity * holder.energy, ZERO)
 		GM.garbage_collect()
 
 /datum/spacevine_mutation/nitro_eater
@@ -187,7 +187,7 @@
 		var/datum/gas_mixture/GM = T.air
 		if(!GM.gases[/datum/gas/nitrogen])
 			return
-		GM.gases[/datum/gas/nitrogen][MOLES] = max(GM.gases[/datum/gas/nitrogen][MOLES] - severity * holder.energy, 0)
+		GM.gases[/datum/gas/nitrogen][MOLES] = max(GM.gases[/datum/gas/nitrogen][MOLES] - severity * holder.energy, ZERO)
 		GM.garbage_collect()
 
 /datum/spacevine_mutation/carbondioxide_eater
@@ -202,7 +202,7 @@
 		var/datum/gas_mixture/GM = T.air
 		if(!GM.gases[/datum/gas/carbon_dioxide])
 			return
-		GM.gases[/datum/gas/carbon_dioxide][MOLES] = max(GM.gases[/datum/gas/carbon_dioxide][MOLES] - severity * holder.energy, 0)
+		GM.gases[/datum/gas/carbon_dioxide][MOLES] = max(GM.gases[/datum/gas/carbon_dioxide][MOLES] - severity * holder.energy, ZERO)
 		GM.garbage_collect()
 
 /datum/spacevine_mutation/plasma_eater
@@ -217,7 +217,7 @@
 		var/datum/gas_mixture/GM = T.air
 		if(!GM.gases[/datum/gas/plasma])
 			return
-		GM.gases[/datum/gas/plasma][MOLES] = max(GM.gases[/datum/gas/plasma][MOLES] - severity * holder.energy, 0)
+		GM.gases[/datum/gas/plasma][MOLES] = max(GM.gases[/datum/gas/plasma][MOLES] - severity * holder.energy, ZERO)
 		GM.garbage_collect()
 
 /datum/spacevine_mutation/thorns
@@ -283,7 +283,7 @@
 	mouse_opacity = MOUSE_OPACITY_OPAQUE //Clicking anywhere on the turf is good enough
 	pass_flags = PASSTABLE | PASSGRILLE
 	max_integrity = 50
-	var/energy = 0
+	var/energy = ZERO
 	var/datum/spacevine_controller/master = null
 	var/list/mutations = list()
 
@@ -309,13 +309,13 @@
 	if(master)
 		master.VineDestroyed(src)
 	mutations = list()
-	set_opacity(0)
+	set_opacity(ZERO)
 	if(has_buckled_mobs())
 		unbuckle_all_mobs(force=1)
 	return ..()
 
 /obj/structure/spacevine/proc/on_chem_effect(datum/reagent/R)
-	var/override = 0
+	var/override = ZERO
 	for(var/datum/spacevine_mutation/SM in mutations)
 		override += SM.on_chem(src, R)
 	if(!override && istype(R, /datum/reagent/toxin/plantbgone))
@@ -323,7 +323,7 @@
 			qdel(src)
 
 /obj/structure/spacevine/proc/eat(mob/eater)
-	var/override = 0
+	var/override = ZERO
 	for(var/datum/spacevine_mutation/SM in mutations)
 		override += SM.on_eat(src, eater)
 	if(!override)
@@ -340,7 +340,7 @@
 		damage_dealt = SM.on_hit(src, user, I, damage_dealt) //on_hit now takes override damage as arg and returns new value for other mutations to permutate further
 	take_damage(damage_dealt, I.damtype, "melee", 1)
 
-/obj/structure/spacevine/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/spacevine/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
@@ -451,10 +451,10 @@
 		qdel(src) //Sanity check
 		return
 
-	var/length = 0
+	var/length = ZERO
 
 	length = min( spread_cap , max( 1 , vines.len / spread_multiplier ) )
-	var/i = 0
+	var/i = ZERO
 	var/list/obj/structure/spacevine/queue_end = list()
 
 	for(var/obj/structure/spacevine/SV in growth_queue)
@@ -527,7 +527,7 @@
 		qdel(src)
 
 /obj/structure/spacevine/temperature_expose(null, temp, volume)
-	var/override = 0
+	var/override = ZERO
 	for(var/datum/spacevine_mutation/SM in mutations)
 		override += SM.process_temperature(src, temp, volume)
 	if(!override)

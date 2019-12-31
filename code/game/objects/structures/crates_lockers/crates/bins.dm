@@ -15,7 +15,7 @@
 /obj/structure/closet/crate/bin/update_icon()
 	..()
 	cut_overlays()
-	if(contents.len == 0)
+	if(contents.len == ZERO)
 		add_overlay("largebing")
 	else if(contents.len >= storage_capacity)
 		add_overlay("largebinr")

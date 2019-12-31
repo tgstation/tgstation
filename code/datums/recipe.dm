@@ -21,15 +21,15 @@
  *  /proc/select_recipe(list/datum/recipe/avaiable_recipes, obj/obj as obj, exact = 1)
  *    Wonderful function that select suitable recipe for you.
  *    obj is a machine (or magik hat) with prerequisites,
- *    exact = 0 forces algorithm to ignore superfluous stuff.
+ *    exact = ZERO forces algorithm to ignore superfluous stuff.
  *
  *
  *  Functions you do not need to call directly but could:
  *  /datum/recipe/proc/check_reagents(var/datum/reagents/avail_reagents)
- *    //1=precisely,  0=insufficiently, -1=superfluous
+ *    //1=precisely,  ZERO=insufficiently, -1=superfluous
  *
  *  /datum/recipe/proc/check_items(var/obj/container as obj)
- *    //1=precisely, 0=insufficiently, -1=superfluous
+ *    //1=precisely, ZERO=insufficiently, -1=superfluous
  *
  * */
 
@@ -40,7 +40,7 @@
 	var/time = 100 // 1/10 part of second
 
 
-/datum/recipe/proc/check_reagents(datum/reagents/avail_reagents) //1=precisely, 0=insufficiently, -1=superfluous
+/datum/recipe/proc/check_reagents(datum/reagents/avail_reagents) //1=precisely, ZERO=insufficiently, -1=superfluous
 	. = 1
 	for (var/r_r in reagents_list)
 		var/aval_r_amnt = avail_reagents.get_reagent_amount(r_r)
@@ -48,12 +48,12 @@
 			if (aval_r_amnt>reagents_list[r_r])
 				. = -1
 			else
-				return 0
-	if ((reagents_list?(reagents_list.len):(0)) < avail_reagents.reagent_list.len)
+				return ZERO
+	if ((reagents_list?(reagents_list.len):(ZERO)) < avail_reagents.reagent_list.len)
 		return -1
 	return .
 
-/datum/recipe/proc/check_items(obj/container) //1=precisely, 0=insufficiently, -1=superfluous
+/datum/recipe/proc/check_items(obj/container) //1=precisely, ZERO=insufficiently, -1=superfluous
 	if (!items)
 		if (locate(/obj/) in container)
 			return -1
@@ -62,7 +62,7 @@
 	. = 1
 	var/list/checklist = items.Copy()
 	for (var/obj/O in container)
-		var/found = 0
+		var/found = ZERO
 		for (var/type in checklist)
 			if (istype(O,type))
 				checklist-=type
@@ -71,7 +71,7 @@
 		if (!found)
 			. = -1
 	if (checklist.len)
-		return 0
+		return ZERO
 	return .
 
 //general version
@@ -102,17 +102,17 @@
 	for (var/datum/recipe/recipe in avaiable_recipes)
 		if (recipe.check_reagents(obj.reagents)==exact && recipe.check_items(obj)==exact)
 			possible_recipes+=recipe
-	if (possible_recipes.len==0)
+	if (possible_recipes.len==ZERO)
 		return null
 	else if (possible_recipes.len==1)
 		return possible_recipes[1]
 	else //okay, let's select the most complicated recipe
-		var/r_count = 0
-		var/i_count = 0
+		var/r_count = ZERO
+		var/i_count = ZERO
 		. = possible_recipes[1]
 		for (var/datum/recipe/recipe in possible_recipes)
-			var/N_i = (recipe.items)?(recipe.items.len):0
-			var/N_r = (recipe.reagents_list)?(recipe.reagents_list.len):0
+			var/N_i = (recipe.items)?(recipe.items.len):ZERO
+			var/N_r = (recipe.reagents_list)?(recipe.reagents_list.len):ZERO
 			if (N_i > i_count || (N_i== i_count && N_r > r_count ))
 				r_count = N_r
 				i_count = N_i

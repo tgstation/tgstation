@@ -25,7 +25,7 @@
 	add_objective(generic_objective)
 
 /datum/contractor_hub
-	var/contract_rep = 0
+	var/contract_rep = ZERO
 	var/list/hub_items = list()
 	var/list/purchased_items = list()
 	var/static/list/contractor_items = typecacheof(/datum/contractor_item/, TRUE)
@@ -35,8 +35,8 @@
 
 	var/list/assigned_targets = list() // used as a blacklist to make sure we're not assigning targets already assigned
 
-	var/contract_TC_payed_out = 0 // Keeping track for roundend reporting
-	var/contract_TC_to_redeem = 0 // Used internally and roundend reporting - what TC we have available to cashout.
+	var/contract_TC_payed_out = ZERO // Keeping track for roundend reporting
+	var/contract_TC_to_redeem = ZERO // Used internally and roundend reporting - what TC we have available to cashout.
 
 /datum/contractor_hub/proc/create_hub_items()
 	for(var/path in contractor_items)
@@ -59,8 +59,8 @@
 	// We don't want the sum of all the payouts to be under this amount
 	var/lowest_TC_threshold = 30 
 
-	var/total = 0
-	var/lowest_paying_sum = 0
+	var/total = ZERO
+	var/lowest_paying_sum = ZERO
 	var/datum/syndicate_contract/lowest_paying_contract
 
 	// Randomise order, so we don't have contracts always in payout order.
@@ -68,7 +68,7 @@
 
 	// Support contract generation happening multiple times
 	var/start_index = 1
-	if (assigned_contracts.len != 0)
+	if (assigned_contracts.len != ZERO)
 		start_index = assigned_contracts.len + 1
 
 	// Generate contracts, and find the lowest paying.
@@ -97,7 +97,7 @@
 	var/desc // description of item
 	var/item // item path, no item path means the purchase needs it's own handle_purchase()
 	var/item_icon = "fa-broadcast-tower" // fontawesome icon to use inside the hub - https://fontawesome.com/icons/
-	var/limited = -1 // Any number above 0 for how many times it can be bought in a round for a single traitor. -1 is unlimited.
+	var/limited = -1 // Any number above ZERO for how many times it can be bought in a round for a single traitor. -1 is unlimited.
 	var/cost // Cost of the item in contract rep.
 
 /datum/contractor_item/contract_reroll
@@ -105,7 +105,7 @@
 	desc = "Request a reroll of your current contract list. Will generate a new target, payment, and dropoff for the contracts you currently have available."
 	item_icon = "fa-dice"
 	limited = 2
-	cost = 0
+	cost = ZERO
 
 /datum/contractor_item/contract_reroll/handle_purchase(var/datum/contractor_hub/hub)
 	. = ..()
@@ -205,7 +205,7 @@
 	var/obj/structure/closet/supplypod/arrival_pod = new()
 
 	arrival_pod.style = STYLE_SYNDICATE
-	arrival_pod.explosionSize = list(0,0,0,1)
+	arrival_pod.explosionSize = list(ZERO,ZERO,ZERO,1)
 	arrival_pod.bluespace = TRUE
 
 	var/turf/free_location = find_obstruction_free_location(2, user)
@@ -250,7 +250,7 @@
 
 	if (limited >= 1)
 		limited -= 1
-	else if (limited == 0)
+	else if (limited == ZERO)
 		return FALSE
 
 	hub.purchased_items.Add(src)

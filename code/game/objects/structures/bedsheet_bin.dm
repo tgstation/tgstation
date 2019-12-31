@@ -14,7 +14,7 @@ LINEN BINS
 	item_state = "sheetwhite"
 	slot_flags = ITEM_SLOT_NECK
 	layer = MOB_LAYER
-	throwforce = 0
+	throwforce = ZERO
 	throw_speed = 1
 	throw_range = 2
 	w_class = WEIGHT_CLASS_TINY
@@ -36,8 +36,8 @@ LINEN BINS
 	if(layer == initial(layer))
 		layer = ABOVE_MOB_LAYER
 		to_chat(user, "<span class='notice'>You cover yourself with [src].</span>")
-		pixel_x = 0
-		pixel_y = 0
+		pixel_x = ZERO
+		pixel_y = ZERO
 	else
 		layer = initial(layer)
 		to_chat(user, "<span class='notice'>You smooth [src] out beneath you.</span>")
@@ -291,7 +291,7 @@ LINEN BINS
 	var/obj/item/hidden = null
 
 /obj/structure/bedsheetbin/empty
-	amount = 0
+	amount = ZERO
 	icon_state = "linenbin-empty"
 	anchored = FALSE
 
@@ -308,7 +308,7 @@ LINEN BINS
 
 /obj/structure/bedsheetbin/update_icon()
 	switch(amount)
-		if(0)
+		if(ZERO)
 			icon_state = "linenbin-empty"
 		if(1 to 5)
 			icon_state = "linenbin-half"
@@ -317,7 +317,7 @@ LINEN BINS
 
 /obj/structure/bedsheetbin/fire_act(exposed_temperature, exposed_volume)
 	if(amount)
-		amount = 0
+		amount = ZERO
 		update_icon()
 	..()
 
@@ -367,7 +367,7 @@ LINEN BINS
 		amount--
 
 		var/obj/item/bedsheet/B
-		if(sheets.len > 0)
+		if(sheets.len > ZERO)
 			B = sheets[sheets.len]
 			sheets.Remove(B)
 
@@ -391,7 +391,7 @@ LINEN BINS
 		amount--
 
 		var/obj/item/bedsheet/B
-		if(sheets.len > 0)
+		if(sheets.len > ZERO)
 			B = sheets[sheets.len]
 			sheets.Remove(B)
 

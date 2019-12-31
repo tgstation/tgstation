@@ -24,7 +24,7 @@
 	mob_size = MOB_SIZE_SMALL
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_REPTILE
 	gold_core_spawnable = FRIENDLY_SPAWN
-	obj_damage = 0
+	obj_damage = ZERO
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	var/static/list/edibles = typecacheof(list(/mob/living/simple_animal/butterfly, /mob/living/simple_animal/cockroach)) //list of atoms, however turfs won't affect AI, but will affect consumption.
 
@@ -49,6 +49,6 @@
 	desc = "A cute tiny lizard with a tiny space helmet."
 	icon_state = "lizard_space"
 	icon_living = "lizard_space"
-	unsuitable_atmos_damage = 0
+	unsuitable_atmos_damage = ZERO
 	minbodytemp = TCMB
 	maxbodytemp = T0C + 40

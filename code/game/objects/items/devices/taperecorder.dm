@@ -11,13 +11,13 @@
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=60, /datum/material/glass=30)
 	force = 2
-	throwforce = 0
-	var/recording = 0
-	var/playing = 0
-	var/playsleepseconds = 0
+	throwforce = ZERO
+	var/recording = ZERO
+	var/playing = ZERO
+	var/playsleepseconds = ZERO
 	var/obj/item/tape/mytape
 	var/starting_tape_type = /obj/item/tape/random
-	var/open_panel = 0
+	var/open_panel = ZERO
 	var/canprint = 1
 
 
@@ -125,7 +125,7 @@
 			mytape.used_capacity++
 			used++
 			sleep(10)
-		recording = 0
+		recording = ZERO
 		update_icon()
 	else
 		to_chat(usr, "<span class='notice'>The tape is full.</span>")
@@ -139,13 +139,13 @@
 		return
 
 	if(recording)
-		recording = 0
+		recording = ZERO
 		mytape.timestamp += mytape.used_capacity
 		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording stopped."
 		to_chat(usr, "<span class='notice'>Recording stopped.</span>")
 		return
 	else if(playing)
-		playing = 0
+		playing = ZERO
 		var/turf/T = get_turf(src)
 		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>")
 	update_icon()
@@ -172,7 +172,7 @@
 	for(var/i = 1, used < max, sleep(10 * playsleepseconds))
 		if(!mytape)
 			break
-		if(playing == 0)
+		if(playing == ZERO)
 			break
 		if(mytape.storedinfo.len < i)
 			break
@@ -189,7 +189,7 @@
 			playsleepseconds = 1
 		i++
 
-	playing = 0
+	playing = ZERO
 	update_icon()
 
 
@@ -244,12 +244,12 @@
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=20, /datum/material/glass=5)
 	force = 1
-	throwforce = 0
+	throwforce = ZERO
 	var/max_capacity = 600
-	var/used_capacity = 0
+	var/used_capacity = ZERO
 	var/list/storedinfo = list()
 	var/list/timestamp = list()
-	var/ruined = 0
+	var/ruined = ZERO
 
 /obj/item/tape/fire_act(exposed_temperature, exposed_volume)
 	ruin()
@@ -271,7 +271,7 @@
 
 /obj/item/tape/proc/fix()
 	cut_overlay("ribbonoverlay")
-	ruined = 0
+	ruined = ZERO
 
 
 /obj/item/tape/attackby(obj/item/I, mob/user, params)

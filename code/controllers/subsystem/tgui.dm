@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(tgui)
 /datum/controller/subsystem/tgui/stat_entry()
 	..("P:[processing_uis.len]")
 
-/datum/controller/subsystem/tgui/fire(resumed = 0)
+/datum/controller/subsystem/tgui/fire(resumed = ZERO)
 	if (!resumed)
 		src.currentrun = processing_uis.Copy()
 	//cache for sanic speed (lists are references anyways)

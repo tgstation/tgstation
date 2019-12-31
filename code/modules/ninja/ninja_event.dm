@@ -17,7 +17,7 @@ Contents:
 	min_players = 15
 
 /datum/round_event/ghost_role/ninja
-	var/success_spawn = 0
+	var/success_spawn = ZERO
 	role_name = "space ninja"
 	minimum_required = 1
 
@@ -26,7 +26,7 @@ Contents:
 	var/give_objectives = TRUE
 
 /datum/round_event/ghost_role/ninja/setup()
-	helping_station = rand(0,1)
+	helping_station = rand(ZERO,1)
 
 /datum/round_event/ghost_role/ninja/kill()
 	if(!success_spawn && control)

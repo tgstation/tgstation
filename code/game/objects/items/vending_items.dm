@@ -34,7 +34,7 @@
 	var/num = get_part_rating()
 	if (num == INFINITY)
 		. += "It's sealed tight, completely full of supplies."
-	else if (num == 0)
+	else if (num == ZERO)
 		. += "It's empty!"
 	else
 		. += "It can restock [num] item\s."
@@ -42,7 +42,7 @@
 /obj/item/vending_refill/get_part_rating()
 	if (!products || !contraband || !premium)
 		return INFINITY
-	. = 0
+	. = ZERO
 	for(var/key in products)
 		. += products[key]
 	for(var/key in contraband)

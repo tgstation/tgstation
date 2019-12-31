@@ -16,7 +16,7 @@
 	var/list/list_observers = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts
-	weight = 0
+	weight = ZERO
 	required_type = /mob/dead/observer
 	/// Whether the ruleset should call generate_ruleset_body or not.
 	var/makeBody = TRUE
@@ -54,7 +54,7 @@
 			if (M.mind.assigned_role in restricted_roles) // Does their job allow it?
 				trimmed_list.Remove(M)
 				continue
-			if ((exclusive_roles.len > 0) && !(M.mind.assigned_role in exclusive_roles)) // Is the rule exclusive to their job?
+			if ((exclusive_roles.len > ZERO) && !(M.mind.assigned_role in exclusive_roles)) // Is the rule exclusive to their job?
 				trimmed_list.Remove(M)
 				continue
 	return trimmed_list
@@ -66,8 +66,8 @@
 // (see /datum/dynamic_ruleset/midround/autotraitor/ready(var/forced = FALSE) for example)
 /datum/dynamic_ruleset/midround/ready(forced = FALSE)
 	if (!forced)
-		var/job_check = 0
-		if (enemy_roles.len > 0)
+		var/job_check = ZERO
+		if (enemy_roles.len > ZERO)
 			for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
 				if (M.stat == DEAD || !M.client)
 					continue // Dead/disconnected players cannot count as opponents
@@ -84,7 +84,7 @@
 	possible_candidates.Add(dead_players)
 	possible_candidates.Add(list_observers)
 	send_applications(possible_candidates)
-	if(assigned.len > 0)
+	if(assigned.len > ZERO)
 		return TRUE
 	else
 		return FALSE
@@ -99,7 +99,7 @@
 
 	candidates = pollGhostCandidates("The mode is looking for volunteers to become [antag_flag] for [name]", antag_flag, SSticker.mode, antag_flag_override ? antag_flag_override : antag_flag, poll_time = 300)
 
-	if(!candidates || candidates.len <= 0)
+	if(!candidates || candidates.len <= ZERO)
 		message_admins("The ruleset [name] received no applications.")
 		log_game("DYNAMIC: The ruleset [name] received no applications.")
 		mode.executed_rules -= src
@@ -113,7 +113,7 @@
 /// Called by send_applications().
 /datum/dynamic_ruleset/midround/from_ghosts/proc/review_applications()
 	for (var/i = 1, i <= required_candidates, i++)
-		if(candidates.len <= 0)
+		if(candidates.len <= ZERO)
 			if(i == 1)
 				// We have found no candidates so far and we are out of applicants.
 				mode.executed_rules -= src
@@ -174,7 +174,7 @@
 	high_population_requirement = 10
 	flags = TRAITOR_RULESET
 
-/datum/dynamic_ruleset/midround/autotraitor/acceptable(population = 0, threat = 0)
+/datum/dynamic_ruleset/midround/autotraitor/acceptable(population = ZERO, threat = ZERO)
 	var/player_count = mode.current_players[CURRENT_LIVING_PLAYERS].len
 	var/antag_count = mode.current_players[CURRENT_LIVING_ANTAGS].len
 	var/max_traitors = round(player_count / 10) + 1
@@ -192,7 +192,7 @@
 		if(is_centcom_level(player.z))
 			living_players -= player // We don't autotator people in CentCom
 			continue
-		if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
+		if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > ZERO))
 			living_players -= player // We don't autotator people with roles already
 
 /datum/dynamic_ruleset/midround/autotraitor/ready(forced = FALSE)
@@ -221,7 +221,7 @@
 	antag_flag = ROLE_MALF
 	enemy_roles = list("Security Officer", "Warden","Detective","Head of Security", "Captain", "Scientist", "Chemist", "Research Director", "Chief Engineer")
 	exclusive_roles = list("AI")
-	required_enemies = list(4,4,4,4,4,4,2,2,2,0)
+	required_enemies = list(4,4,4,4,4,4,2,2,2,ZERO)
 	required_candidates = 1
 	weight = 3
 	cost = 35
@@ -241,7 +241,7 @@
 		if(is_centcom_level(player.z))
 			candidates -= player
 			continue
-		if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
+		if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > ZERO))
 			candidates -= player
 
 /datum/dynamic_ruleset/midround/malf/execute()
@@ -271,7 +271,7 @@
 	antag_datum = /datum/antagonist/wizard
 	antag_flag = ROLE_WIZARD
 	enemy_roles = list("Security Officer","Detective","Head of Security", "Captain")
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_enemies = list(2,2,1,1,1,1,1,ZERO,ZERO,ZERO)
 	required_candidates = 1
 	weight = 1
 	cost = 20
@@ -282,7 +282,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
 		return FALSE
-	if(GLOB.wizardstart.len == 0)
+	if(GLOB.wizardstart.len == ZERO)
 		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		return FALSE
@@ -303,7 +303,7 @@
 	antag_flag = ROLE_OPERATIVE
 	antag_datum = /datum/antagonist/nukeop
 	enemy_roles = list("AI", "Cyborg", "Security Officer", "Warden","Detective","Head of Security", "Captain")
-	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
+	required_enemies = list(3,3,3,3,3,2,1,1,ZERO,ZERO)
 	required_candidates = 5
 	weight = 5
 	cost = 35
@@ -313,7 +313,7 @@
 	var/datum/team/nuclear/nuke_team
 	flags = HIGHLANDER_RULESET
 
-/datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat=0)
+/datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=ZERO, threat=ZERO)
 	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
 		return FALSE // Unavailable if nuke ops were already sent at roundstart
 	indice_pop = min(operative_cap.len, round(living_players.len/5)+1)
@@ -346,7 +346,7 @@
 	antag_datum = /datum/antagonist/blob
 	antag_flag = ROLE_BLOB
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_enemies = list(2,2,1,1,1,1,1,ZERO,ZERO,ZERO)
 	required_candidates = 1
 	weight = 4
 	cost = 10
@@ -369,7 +369,7 @@
 	antag_datum = /datum/antagonist/xeno
 	antag_flag = ROLE_ALIEN
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_enemies = list(2,2,1,1,1,1,1,ZERO,ZERO,ZERO)
 	required_candidates = 1
 	weight = 3
 	cost = 10
@@ -416,7 +416,7 @@
 	antag_flag = "Nightmare"
 	antag_flag_override = ROLE_ALIEN
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_enemies = list(2,2,1,1,1,1,1,ZERO,ZERO,ZERO)
 	required_candidates = 1
 	weight = 3
 	cost = 10

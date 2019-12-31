@@ -4,7 +4,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "stamp-ok"
 	item_state = "stamp"
-	throwforce = 0
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7

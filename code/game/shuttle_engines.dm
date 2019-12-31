@@ -1,4 +1,4 @@
-#define ENGINE_UNWRENCHED 0
+#define ENGINE_UNWRENCHED ZERO
 #define ENGINE_WRENCHED 1
 #define ENGINE_WELDED 2
 #define ENGINE_WELDTIME 200
@@ -45,7 +45,7 @@
 		if(ENGINE_UNWRENCHED)
 			to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")
 		if(ENGINE_WRENCHED)
-			if(!I.tool_start_check(user, amount=0))
+			if(!I.tool_start_check(user, amount=ZERO))
 				return TRUE
 
 			user.visible_message("<span class='notice'>[user.name] starts to weld the [name] to the floor.</span>", \
@@ -58,7 +58,7 @@
 				alter_engine_power(engine_power)
 
 		if(ENGINE_WELDED)
-			if(!I.tool_start_check(user, amount=0))
+			if(!I.tool_start_check(user, amount=ZERO))
 				return TRUE
 
 			user.visible_message("<span class='notice'>[user.name] starts to cut the [name] free from the floor.</span>", \
@@ -78,7 +78,7 @@
 
 //Propagates the change to the shuttle.
 /obj/structure/shuttle/engine/proc/alter_engine_power(mod)
-	if(mod == 0)
+	if(mod == ZERO)
 		return
 	if(SSshuttle.is_in_shuttle_bounds(src))
 		var/obj/docking_port/mobile/M = SSshuttle.get_containing_shuttle(src)
@@ -89,13 +89,13 @@
 	name = "engine heater"
 	icon_state = "heater"
 	desc = "Directs energy into compressed particles in order to power engines."
-	engine_power = 0 // todo make these into 2x1 parts
+	engine_power = ZERO // todo make these into 2x1 parts
 
 /obj/structure/shuttle/engine/platform
 	name = "engine platform"
 	icon_state = "platform"
 	desc = "A platform for engine components."
-	engine_power = 0
+	engine_power = ZERO
 
 /obj/structure/shuttle/engine/propulsion
 	name = "propulsion engine"
@@ -140,7 +140,7 @@
 	desc = "A very large bluespace engine used to propel very large ships."
 	bound_width = 64
 	bound_height = 64
-	appearance_flags = 0
+	appearance_flags = ZERO
 
 /obj/structure/shuttle/engine/huge
 	name = "engine"
@@ -150,7 +150,7 @@
 	desc = "An extremely large bluespace engine used to propel extremely large ships."
 	bound_width = 96
 	bound_height = 96
-	appearance_flags = 0
+	appearance_flags = ZERO
 
 #undef ENGINE_UNWRENCHED
 #undef ENGINE_WRENCHED

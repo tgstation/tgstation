@@ -24,7 +24,7 @@
 	screens -= category
 
 	if(animated)
-		animate(screen, alpha = 0, time = animated)
+		animate(screen, alpha = ZERO, time = animated)
 		addtimer(CALLBACK(src, .proc/clear_fullscreen_after_animate, screen), animated, TIMER_CLIENT_TIME)
 	else
 		if(client)
@@ -64,14 +64,14 @@
 	plane = FULLSCREEN_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/view = 7
-	var/severity = 0
+	var/severity = ZERO
 	var/show_when_dead = FALSE
 
 /obj/screen/fullscreen/proc/update_for_view(client_view)
 	if (screen_loc == "CENTER-7,CENTER-7" && view != client_view)
 		var/list/actualview = getviewsize(client_view)
 		view = client_view
-		transform = matrix(actualview[1]/FULLSCREEN_OVERLAY_RESOLUTION_X, 0, 0, 0, actualview[2]/FULLSCREEN_OVERLAY_RESOLUTION_Y, 0)
+		transform = matrix(actualview[1]/FULLSCREEN_OVERLAY_RESOLUTION_X, 0, 0, 0, actualview[2]/FULLSCREEN_OVERLAY_RESOLUTION_Y, ZERO)
 
 /obj/screen/fullscreen/proc/should_show_to(mob/mymob)
 	if(!show_when_dead && mymob.stat == DEAD)
@@ -79,7 +79,7 @@
 	return TRUE
 
 /obj/screen/fullscreen/Destroy()
-	severity = 0
+	severity = ZERO
 	. = ..()
 
 /obj/screen/fullscreen/brute
@@ -147,7 +147,7 @@
 /obj/screen/fullscreen/lighting_backdrop
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "flash"
-	transform = matrix(200, 0, 0, 0, 200, 0)
+	transform = matrix(200, ZERO, ZERO, ZERO, 200, ZERO)
 	plane = LIGHTING_PLANE
 	blend_mode = BLEND_OVERLAY
 	show_when_dead = TRUE

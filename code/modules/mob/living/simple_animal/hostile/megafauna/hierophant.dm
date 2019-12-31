@@ -128,7 +128,7 @@ Difficulty: Hard
 	arena_trap(target)
 	ranged_cooldown = world.time + max(5, ranged_cooldown_time - anger_modifier * 0.75) //scale cooldown lower with high anger.
 
-	var/target_slowness = 0
+	var/target_slowness = ZERO
 	var/mob/living/L
 	if(isliving(target))
 		L = target
@@ -336,7 +336,7 @@ Difficulty: Hard
 	for(var/t in RANGE_TURFS(1, source))
 		var/obj/effect/temp_visual/hierophant/blast/B = new(t, src, FALSE)
 		B.damage = 30
-	animate(src, alpha = 0, time = 2, easing = EASE_OUT) //fade out
+	animate(src, alpha = ZERO, time = 2, easing = EASE_OUT) //fade out
 	SLEEP_CHECK_DEATH(1)
 	visible_message("<span class='hierophant_warning'>[src] fades out!</span>")
 	density = FALSE
@@ -365,7 +365,7 @@ Difficulty: Hard
 //expanding square
 /proc/hierophant_burst(mob/caster, turf/original, burst_range, spread_speed = 0.5)
 	playsound(original,'sound/machines/airlockopen.ogg', 200, TRUE)
-	var/last_dist = 0
+	var/last_dist = ZERO
 	for(var/t in spiral_range_turfs(burst_range, original))
 		var/turf/T = t
 		if(!T)
@@ -386,7 +386,7 @@ Difficulty: Hard
 			timeout_time = initial(timeout_time)
 		else
 			timeout_time--
-		if(timeout_time <= 0 && !did_reset)
+		if(timeout_time <= ZERO && !did_reset)
 			did_reset = TRUE
 			visible_message("<span class='hierophant_warning'>\"Vixyvrmrk xs fewi...\"</span>")
 			blink(spawned_beacon)
@@ -398,7 +398,7 @@ Difficulty: Hard
 				visible_message("<span class='hierophant'>\"Vitemvw gsqtpixi. Stivexmsrep ijjmgmirgc gsqtvsqmwih.\"</span>")
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/death()
-	if(health > 0 || stat == DEAD)
+	if(health > ZERO || stat == DEAD)
 		return
 	else
 		stat = DEAD
@@ -484,7 +484,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/calculate_rage() //how angry we are overall
 	did_reset = FALSE //oh hey we're doing SOMETHING, clearly we might need to heal if we recall
-	anger_modifier = CLAMP(((maxHealth - health) / 42),0,50)
+	anger_modifier = CLAMP(((maxHealth - health) / 42),ZERO,50)
 	burst_range = initial(burst_range) + round(anger_modifier * 0.08)
 	beam_range = initial(beam_range) + round(anger_modifier * 0.12)
 
@@ -548,7 +548,7 @@ Difficulty: Hard
 	var/moving_dir //what dir it's moving in
 	var/previous_moving_dir //what dir it was moving in before that
 	var/more_previouser_moving_dir //what dir it was moving in before THAT
-	var/moving = 0 //how many steps to move before recalculating
+	var/moving = ZERO //how many steps to move before recalculating
 	var/standard_moving_before_recalc = 4 //how many times we step before recalculating normally
 	var/tiles_per_step = 1 //how many tiles we move each step
 	var/speed = 3 //how many deciseconds between each step
@@ -582,7 +582,7 @@ Difficulty: Hard
 				previous_moving_dir = moving_dir
 				moving_dir = get_target_dir()
 				var/standard_target_dir = get_cardinal_dir(src, targetturf)
-				if((standard_target_dir != previous_moving_dir && standard_target_dir == more_previouser_moving_dir) || standard_target_dir == 0)
+				if((standard_target_dir != previous_moving_dir && standard_target_dir == more_previouser_moving_dir) || standard_target_dir == ZERO)
 					moving = 1 //we would be repeating, only move a tile before checking
 				else
 					moving = standard_moving_before_recalc
@@ -697,7 +697,7 @@ Difficulty: Hard
 				continue
 			to_chat(M.occupant, "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>")
 		playsound(M,'sound/weapons/sear.ogg', 50, TRUE, -4)
-		M.take_damage(damage, BURN, 0, 0)
+		M.take_damage(damage, BURN, ZERO, ZERO)
 
 /obj/effect/hierophant
 	name = "hierophant beacon"

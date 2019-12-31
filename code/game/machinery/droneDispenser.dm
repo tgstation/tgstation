@@ -20,7 +20,7 @@
 	var/icon_creating = "make"
 
 	var/list/using_materials
-	var/starting_amount = 0
+	var/starting_amount = ZERO
 	var/metal_cost = 1000
 	var/glass_cost = 1000
 	var/power_used = 1000
@@ -33,7 +33,7 @@
 	var/dispense_type = /obj/effect/mob_spawn/drone
 
 	// The maximum number of "idle" drone shells it will make before
-	// ceasing production. Set to 0 for infinite.
+	// ceasing production. Set to ZERO for infinite.
 	var/maximum_idle = 3
 
 	var/work_sound = 'sound/items/rped.ogg'
@@ -93,7 +93,7 @@
 	end_create_message = "dispenses a derelict drone shell."
 	metal_cost = 10000
 	glass_cost = 5000
-	starting_amount = 0
+	starting_amount = ZERO
 	cooldownTime = 600
 
 // An example of a custom drone dispenser.
@@ -107,9 +107,9 @@
 	icon_on = "hivebot_fab"
 	icon_recharging = "hivebot_fab"
 	icon_creating = "hivebot_fab_on"
-	metal_cost = 0
-	glass_cost = 0
-	power_used = 0
+	metal_cost = ZERO
+	glass_cost = ZERO
+	power_used = ZERO
 	cooldownTime = 10 //Only 1 second - hivebots are extremely weak
 	dispense_type = /mob/living/simple_animal/hostile/hivebot
 	begin_create_message = "closes and begins fabricating something within."
@@ -126,10 +126,10 @@
 	icon_on = "toffcenter"
 	icon_recharging = "toffcenter"
 	icon_creating = "offcenter"
-	metal_cost = 0
-	glass_cost = 0
+	metal_cost = ZERO
+	glass_cost = ZERO
 	cooldownTime = 300 //30 seconds
-	maximum_idle = 0 // Swarmers have no restraint
+	maximum_idle = ZERO // Swarmers have no restraint
 	dispense_type = /obj/effect/mob_spawn/swarmer
 	begin_create_message = "hums softly as an interface appears above it, scrolling by at unreadable speed."
 	end_create_message = "materializes a strange shell, which drops to the ground."
@@ -197,7 +197,7 @@
 			update_icon()
 
 /obj/machinery/droneDispenser/proc/count_shells()
-	. = 0
+	. = ZERO
 	for(var/a in loc)
 		if(istype(a, dispense_type))
 			.++

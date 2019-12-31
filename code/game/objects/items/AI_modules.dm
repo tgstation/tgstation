@@ -17,11 +17,11 @@ AI MODULES
 	flags_1 = CONDUCT_1
 	force = 5
 	w_class = WEIGHT_CLASS_SMALL
-	throwforce = 0
+	throwforce = ZERO
 	throw_speed = 3
 	throw_range = 7
 	var/list/laws = list()
-	var/bypass_law_amt_check = 0
+	var/bypass_law_amt_check = ZERO
 	custom_materials = list(/datum/material/gold = 50)
 
 /obj/item/aiModule/examine(var/mob/user as mob)
@@ -48,7 +48,7 @@ AI MODULES
 	var/overflow = FALSE
 	//Handle the lawcap
 	if(law_datum)
-		var/tot_laws = 0
+		var/tot_laws = ZERO
 		for(var/lawlist in list(law_datum.devillaws, law_datum.inherent, law_datum.supplied, law_datum.ion, law_datum.hacked, laws))
 			for(var/mylaw in lawlist)
 				if(mylaw != "")
@@ -164,7 +164,7 @@ AI MODULES
 /obj/item/aiModule/supplied/safeguard/install(datum/ai_laws/law_datum, mob/user)
 	if(!targetName)
 		to_chat(user, "<span class='alert'>No name detected on module, please enter one.</span>")
-		return 0
+		return ZERO
 	..()
 
 /obj/item/aiModule/supplied/safeguard/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
@@ -190,7 +190,7 @@ AI MODULES
 /obj/item/aiModule/zeroth/oneHuman/install(datum/ai_laws/law_datum, mob/user)
 	if(!targetName)
 		to_chat(user, "<span class='alert'>No name detected on module, please enter one.</span>")
-		return 0
+		return ZERO
 	..()
 
 /obj/item/aiModule/zeroth/oneHuman/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
@@ -256,7 +256,7 @@ AI MODULES
 /obj/item/aiModule/supplied/freeform/install(datum/ai_laws/law_datum, mob/user)
 	if(laws[1] == "")
 		to_chat(user, "<span class='alert'>No law detected on module, please create one.</span>")
-		return 0
+		return ZERO
 	..()
 
 
@@ -272,7 +272,7 @@ AI MODULES
 	lawpos = input("Please enter the law you want to delete.", "Law Number", lawpos) as num|null
 	if(lawpos == null)
 		return
-	if(lawpos <= 0)
+	if(lawpos <= ZERO)
 		to_chat(user, "<span class='warning'>Error: The law number of [lawpos] is invalid.</span>")
 		lawpos = 1
 		return
@@ -323,10 +323,10 @@ AI MODULES
 	..()
 	if(law_datum.owner)
 		law_datum.owner.clear_inherent_laws()
-		law_datum.owner.clear_zeroth_law(0)
+		law_datum.owner.clear_zeroth_law(ZERO)
 	else
 		law_datum.clear_inherent_laws()
-		law_datum.clear_zeroth_law(0)
+		law_datum.clear_zeroth_law(ZERO)
 
 
 /******************* Full Core Boards *******************/
@@ -350,10 +350,10 @@ AI MODULES
 /obj/item/aiModule/core/full/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow) //These boards replace inherent laws.
 	if(law_datum.owner)
 		law_datum.owner.clear_inherent_laws()
-		law_datum.owner.clear_zeroth_law(0)
+		law_datum.owner.clear_zeroth_law(ZERO)
 	else
 		law_datum.clear_inherent_laws()
-		law_datum.clear_zeroth_law(0)
+		law_datum.clear_zeroth_law(ZERO)
 	..()
 
 

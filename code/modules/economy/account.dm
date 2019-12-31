@@ -2,13 +2,13 @@
 
 /datum/bank_account
 	var/account_holder = "Rusty Venture"
-	var/account_balance = 0
+	var/account_balance = ZERO
 	var/datum/job/account_job
 	var/list/bank_cards = list()
 	var/add_to_accounts = TRUE
 	var/account_id
 	var/being_dumped = FALSE //pink levels are rising
-	var/withdrawDelay = 0
+	var/withdrawDelay = ZERO
 
 /datum/bank_account/New(newname, job)
 	if(add_to_accounts)
@@ -28,14 +28,14 @@
 
 /datum/bank_account/proc/_adjust_money(amt)
 	account_balance += amt
-	if(account_balance < 0)
-		account_balance = 0
+	if(account_balance < ZERO)
+		account_balance = ZERO
 
 /datum/bank_account/proc/has_money(amt)
 	return account_balance >= amt
 
 /datum/bank_account/proc/adjust_money(amt)
-	if((amt < 0 && has_money(-amt)) || amt > 0)
+	if((amt < ZERO && has_money(-amt)) || amt > ZERO)
 		_adjust_money(amt)
 		return TRUE
 	return FALSE

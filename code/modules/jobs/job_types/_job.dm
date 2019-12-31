@@ -21,13 +21,13 @@
 	var/faction = "None"
 
 	//How many players can be this job
-	var/total_positions = 0
+	var/total_positions = ZERO
 
 	//How many players can spawn in as this job
-	var/spawn_positions = 0
+	var/spawn_positions = ZERO
 
 	//How many players have this job
-	var/current_positions = 0
+	var/current_positions = ZERO
 
 	//Supervisors, who this person answers to directly
 	var/supervisors = ""
@@ -40,11 +40,11 @@
 	var/req_admin_notify
 
 	//If you have the use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
-	var/minimal_player_age = 0
+	var/minimal_player_age = ZERO
 
 	var/outfit = null
 
-	var/exp_requirements = 0
+	var/exp_requirements = ZERO
 
 	var/exp_type = ""
 	var/exp_type_department = ""
@@ -138,22 +138,22 @@
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/C)
-	if(available_in_days(C) == 0)
-		return TRUE	//Available in 0 days = available right now = player is old enough to play.
+	if(available_in_days(C) == ZERO)
+		return TRUE	//Available in ZERO days = available right now = player is old enough to play.
 	return FALSE
 
 
 /datum/job/proc/available_in_days(client/C)
 	if(!C)
-		return 0
+		return ZERO
 	if(!CONFIG_GET(flag/use_age_restriction_for_jobs))
-		return 0
+		return ZERO
 	if(!SSdbcore.Connect())
 		return 0 //Without a database connection we can't get a player's age so we'll assume they're old enough for all jobs
 	if(!isnum(minimal_player_age))
-		return 0
+		return ZERO
 
-	return max(0, minimal_player_age - C.player_age)
+	return max(ZERO, minimal_player_age - C.player_age)
 
 /datum/job/proc/config_check()
 	return TRUE

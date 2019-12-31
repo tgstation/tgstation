@@ -8,7 +8,7 @@
 	var/list/__dirs //The directions to the side of the wave, stored for easy looping
 	var/can_contaminate
 
-/datum/radiation_wave/New(atom/_source, dir, _intensity=0, _range_modifier=RAD_DISTANCE_COEFFICIENT, _can_contaminate=TRUE)
+/datum/radiation_wave/New(atom/_source, dir, _intensity=ZERO, _range_modifier=RAD_DISTANCE_COEFFICIENT, _can_contaminate=TRUE)
 
 	source = "[_source] \[[REF(_source)]\]"
 

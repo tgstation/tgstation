@@ -5,24 +5,24 @@ GLOBAL_PROTECT(exp_to_update)
 // Procs
 /datum/job/proc/required_playtime_remaining(client/C)
 	if(!C)
-		return 0
+		return ZERO
 	if(!CONFIG_GET(flag/use_exp_tracking))
-		return 0
+		return ZERO
 	if(!SSdbcore.Connect())
-		return 0
+		return ZERO
 	if(!exp_requirements || !exp_type)
-		return 0
+		return ZERO
 	if(!job_is_xp_locked(src.title))
-		return 0
+		return ZERO
 	if(CONFIG_GET(flag/use_exp_restrictions_admin_bypass) && check_rights_for(C,R_ADMIN))
-		return 0
+		return ZERO
 	var/isexempt = C.prefs.db_flags & DB_FLAG_EXEMPT
 	if(isexempt)
-		return 0
+		return ZERO
 	var/my_exp = C.calc_exp_type(get_exp_req_type())
 	var/job_requirement = get_exp_req_amount()
 	if(my_exp >= job_requirement)
-		return 0
+		return ZERO
 	else
 		return (job_requirement - my_exp)
 
@@ -48,7 +48,7 @@ GLOBAL_PROTECT(exp_to_update)
 
 /client/proc/calc_exp_type(exptype)
 	var/list/explist = prefs.exp.Copy()
-	var/amount = 0
+	var/amount = ZERO
 	var/list/typelist = GLOB.exp_jobsmap[exptype]
 	if(!typelist)
 		return -1
@@ -73,7 +73,7 @@ GLOBAL_PROTECT(exp_to_update)
 		if(play_records[category])
 			exp_data[category] = text2num(play_records[category])
 		else
-			exp_data[category] = 0
+			exp_data[category] = ZERO
 	for(var/category in GLOB.exp_specialmap)
 		if(category == EXP_TYPE_SPECIAL || category == EXP_TYPE_ANTAG)
 			if(GLOB.exp_specialmap[category])
@@ -81,18 +81,18 @@ GLOBAL_PROTECT(exp_to_update)
 					if(play_records[innercat])
 						exp_data[innercat] = text2num(play_records[innercat])
 					else
-						exp_data[innercat] = 0
+						exp_data[innercat] = ZERO
 		else
 			if(play_records[category])
 				exp_data[category] = text2num(play_records[category])
 			else
-				exp_data[category] = 0
+				exp_data[category] = ZERO
 	if(prefs.db_flags & DB_FLAG_EXEMPT)
 		return_text += "<LI>Exempt (all jobs auto-unlocked)</LI>"
 
 	for(var/dep in exp_data)
-		if(exp_data[dep] > 0)
-			if(exp_data[EXP_TYPE_LIVING] > 0)
+		if(exp_data[dep] > ZERO)
+			if(exp_data[EXP_TYPE_LIVING] > ZERO)
 				var/percentage = num2text(round(exp_data[dep]/exp_data[EXP_TYPE_LIVING]*100))
 				return_text += "<LI>[dep] [get_exp_format(exp_data[dep])] ([percentage]%)</LI>"
 			else
@@ -131,7 +131,7 @@ GLOBAL_PROTECT(exp_to_update)
 /proc/get_exp_format(expnum)
 	if(expnum > 60)
 		return num2text(round(expnum / 60)) + "h"
-	else if(expnum > 0)
+	else if(expnum > ZERO)
 		return num2text(expnum) + "m"
 	else
 		return "0h"
@@ -167,10 +167,10 @@ GLOBAL_PROTECT(exp_to_update)
 
 	for(var/rtype in SSjob.name_occupations)
 		if(!play_records[rtype])
-			play_records[rtype] = 0
+			play_records[rtype] = ZERO
 	for(var/rtype in GLOB.exp_specialmap)
 		if(!play_records[rtype])
-			play_records[rtype] = 0
+			play_records[rtype] = ZERO
 
 	prefs.exp = play_records
 

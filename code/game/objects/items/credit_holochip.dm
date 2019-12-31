@@ -3,10 +3,10 @@
 	desc = "A hard-light chip encoded with an amount of credits. It is a modern replacement for physical money that can be directly converted to virtual currency and viceversa. Keep away from magnets."
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "holochip"
-	throwforce = 0
-	force = 0
+	throwforce = ZERO
+	force = ZERO
 	w_class = WEIGHT_CLASS_TINY
-	var/credits = 0
+	var/credits = ZERO
 
 /obj/item/holochip/Initialize(mapload, amount)
 	. = ..()
@@ -38,7 +38,7 @@
 			rounded_credits = round(rounded_credits * 0.000000001)
 	var/overlay_color = "#914792"
 	switch(rounded_credits)
-		if(0 to 4)
+		if(ZERO to 4)
 			overlay_color = "#8E2E38"
 		if(5 to 9)
 			overlay_color = "#914792"
@@ -62,7 +62,7 @@
 /obj/item/holochip/proc/spend(amount, pay_anyway = FALSE)
 	if(credits >= amount)
 		credits -= amount
-		if(credits == 0)
+		if(credits == ZERO)
 			qdel(src)
 		update_icon()
 		return amount
@@ -70,7 +70,7 @@
 		qdel(src)
 		return credits
 	else
-		return 0
+		return ZERO
 
 /obj/item/holochip/attackby(obj/item/I, mob/user, params)
 	..()
@@ -85,7 +85,7 @@
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	var/split_amount = round(input(user,"How many credits do you want to extract from the holochip?") as null|num)
-	if(split_amount == null || split_amount <= 0 || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(split_amount == null || split_amount <= ZERO || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	else
 		var/new_credits = spend(split_amount, TRUE)

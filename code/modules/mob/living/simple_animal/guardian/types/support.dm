@@ -3,8 +3,8 @@
 	a_intent = INTENT_HARM
 	friendly_verb_continuous = "heals"
 	friendly_verb_simple = "heal"
-	speed = 0
-	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
+	speed = ZERO
+	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = ZERO, OXY = 0.7)
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	playstyle_string = "<span class='holoparasite'>As a <b>support</b> type, you may toggle your basic attacks to a healing mode. In addition, Alt-Clicking on an adjacent object or mob will warp them to your bluespace beacon after a short delay.</span>"
@@ -13,7 +13,7 @@
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Support modules active. Holoparasite swarm online.</span>"
 	toggle_button_type = /obj/screen/guardian/ToggleMode
 	var/obj/structure/receiving_pad/beacon
-	var/beacon_cooldown = 0
+	var/beacon_cooldown = ZERO
 	var/toggle = FALSE
 
 /mob/living/simple_animal/hostile/guardian/healer/Initialize()
@@ -47,8 +47,8 @@
 	if(src.loc == summoner)
 		if(toggle)
 			a_intent = INTENT_HARM
-			speed = 0
-			damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
+			speed = ZERO
+			damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = ZERO, OXY = 0.7)
 			melee_damage_lower = 15
 			melee_damage_upper = 15
 			to_chat(src, "<span class='danger'><B>You switch to combat mode.</span></B>")
@@ -56,9 +56,9 @@
 		else
 			a_intent = INTENT_HELP
 			speed = 1
-			damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-			melee_damage_lower = 0
-			melee_damage_upper = 0
+			damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = ZERO, OXY = 1)
+			melee_damage_lower = ZERO
+			melee_damage_upper = ZERO
 			to_chat(src, "<span class='danger'><B>You switch to healing mode.</span></B>")
 			toggle = TRUE
 	else
@@ -143,5 +143,5 @@
 		L.flash_act()
 	A.visible_message("<span class='danger'>[A] disappears in a flash of light!</span>", \
 	"<span class='userdanger'>Your vision is obscured by a flash of light!</span>")
-	do_teleport(A, beacon, 0, channel = TELEPORT_CHANNEL_BLUESPACE)
+	do_teleport(A, beacon, ZERO, channel = TELEPORT_CHANNEL_BLUESPACE)
 	new /obj/effect/temp_visual/guardian/phase(get_turf(A))

@@ -23,7 +23,7 @@
 			transfer_fingerprints_to(F)
 			qdel(src)
 	else if(I.tool_behaviour == TOOL_WELDER)
-		if(!I.tool_start_check(user, amount=0))
+		if(!I.tool_start_check(user, amount=ZERO))
 			return
 		to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
 		if(I.use_tool(src, user, 50, volume=50))
@@ -43,7 +43,7 @@
 	desc = "A spike for collecting meat from animals."
 	density = TRUE
 	anchored = TRUE
-	buckle_lying = 0
+	buckle_lying = ZERO
 	can_buckle = 1
 	max_integrity = 250
 

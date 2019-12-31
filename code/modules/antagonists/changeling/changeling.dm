@@ -21,24 +21,24 @@
 	var/list/stored_profiles = list() //list of datum/changelingprofile
 	var/datum/changelingprofile/first_prof = null
 	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
-	var/absorbedcount = 0
-	var/trueabsorbs = 0//dna gained using absorb, not dna sting
+	var/absorbedcount = ZERO
+	var/trueabsorbs = ZERO//dna gained using absorb, not dna sting
 	var/chem_charges = 20
 	var/chem_storage = 75
 	var/chem_recharge_rate = 1
-	var/chem_recharge_slowdown = 0
+	var/chem_recharge_slowdown = ZERO
 	var/sting_range = 2
 	var/changelingID = "Changeling"
-	var/geneticdamage = 0
+	var/geneticdamage = ZERO
 	var/was_absorbed = FALSE //if they were absorbed by another ling already.
-	var/isabsorbing = 0
-	var/islinking = 0
+	var/isabsorbing = ZERO
+	var/islinking = ZERO
 	var/geneticpoints = 10
 	var/purchasedpowers = list()
 
 	var/mimicing = ""
 	var/canrespec = FALSE//set to TRUE in absorb.dm
-	var/changeling_speak = 0
+	var/changeling_speak = ZERO
 	var/datum/dna/chosen_dna
 	var/datum/action/changeling/sting/chosen_sting
 	var/datum/cellular_emporium/cellular_emporium
@@ -105,7 +105,7 @@
 	. = ..()
 
 /datum/antagonist/changeling/proc/reset_properties()
-	changeling_speak = 0
+	changeling_speak = ZERO
 	chosen_sting = null
 	geneticpoints = initial(geneticpoints)
 	sting_range = initial(sting_range)
@@ -183,7 +183,7 @@
 		to_chat(owner.current, "<span class='warning'>We have already evolved this ability!</span>")
 		return
 
-	if(thepower.dna_cost < 0)
+	if(thepower.dna_cost < ZERO)
 		to_chat(owner.current, "<span class='warning'>We cannot evolve this ability!</span>")
 		return
 
@@ -206,23 +206,23 @@
 	if(canrespec)
 		to_chat(owner.current, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")
 		reset_powers()
-		canrespec = 0
+		canrespec = ZERO
 		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
 		return 1
 	else
 		to_chat(owner.current, "<span class='warning'>You lack the power to readapt your evolutions!</span>")
-		return 0
+		return ZERO
 
 //Called in life()
 /datum/antagonist/changeling/proc/regenerate()//grants the HuD in life.dm
 	var/mob/living/carbon/the_ling = owner.current
 	if(istype(the_ling))
 		if(the_ling.stat == DEAD)
-			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), (chem_storage*0.5))
+			chem_charges = min(max(ZERO, chem_charges + chem_recharge_rate - chem_recharge_slowdown), (chem_storage*0.5))
 			geneticdamage = max(LING_DEAD_GENETICDAMAGE_HEAL_CAP,geneticdamage-1)
 		else //not dead? no chem/geneticdamage caps.
-			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
-			geneticdamage = max(0, geneticdamage-1)
+			chem_charges = min(max(ZERO, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
+			geneticdamage = max(ZERO, geneticdamage-1)
 
 
 /datum/antagonist/changeling/proc/get_dna(dna_owner)
@@ -275,7 +275,7 @@
 	return 1
 
 
-/datum/antagonist/changeling/proc/create_profile(mob/living/carbon/human/H, protect = 0)
+/datum/antagonist/changeling/proc/create_profile(mob/living/carbon/human/H, protect = ZERO)
 	var/datum/changelingprofile/prof = new
 
 	H.dna.real_name = H.real_name //Set this again, just to be sure that it's properly set.
@@ -317,12 +317,12 @@
 	stored_profiles += prof
 	absorbedcount++
 
-/datum/antagonist/changeling/proc/add_new_profile(mob/living/carbon/human/H, protect = 0)
+/datum/antagonist/changeling/proc/add_new_profile(mob/living/carbon/human/H, protect = ZERO)
 	var/datum/changelingprofile/prof = create_profile(H, protect)
 	add_profile(prof)
 	return prof
 
-/datum/antagonist/changeling/proc/remove_profile(mob/living/carbon/human/H, force = 0)
+/datum/antagonist/changeling/proc/remove_profile(mob/living/carbon/human/H, force = ZERO)
 	for(var/datum/changelingprofile/prof in stored_profiles)
 		if(H.real_name == prof.name)
 			if(prof.protected && !force)
@@ -340,7 +340,7 @@
 	if(removeprofile)
 		stored_profiles -= removeprofile
 		return 1
-	return 0
+	return ZERO
 
 
 /datum/antagonist/changeling/proc/create_initial_profile()
@@ -502,7 +502,7 @@
 /datum/changelingprofile
 	var/name = "a bug"
 
-	var/protected = 0
+	var/protected = ZERO
 
 	var/datum/dna/dna = null
 	var/list/name_list = list() //associative list of slotname = itemname
@@ -547,7 +547,7 @@
 
 	var/changelingwin = 1
 	if(!owner.current)
-		changelingwin = 0
+		changelingwin = ZERO
 
 	parts += printplayer(owner)
 
@@ -562,7 +562,7 @@
 				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</b></span>"
 			else
 				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
-				changelingwin = 0
+				changelingwin = ZERO
 			count++
 
 	if(changelingwin)

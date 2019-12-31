@@ -28,7 +28,7 @@
 		playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE)
 		return 1
 	else
-		return 0
+		return ZERO
 
 //This proc only checks if the painter can be used.
 //Call this if you don't want the painter to be used right after this check, for example
@@ -36,10 +36,10 @@
 /obj/item/airlock_painter/proc/can_use(mob/user)
 	if(!ink)
 		to_chat(user, "<span class='warning'>There is no toner cartridge installed in [src]!</span>")
-		return 0
+		return ZERO
 	else if(ink.charges < 1)
 		to_chat(user, "<span class='warning'>[src] is out of ink!</span>")
-		return 0
+		return ZERO
 	else
 		return 1
 
@@ -179,7 +179,7 @@
 	stored_decal_total = "[stored_decal][yellow_fix][stored_color]"
 	return
 
-/obj/item/airlock_painter/decal/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/item/airlock_painter/decal/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = ZERO, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "decal_painter", name, 500, 400, master_ui, state)

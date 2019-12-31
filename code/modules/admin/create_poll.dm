@@ -7,7 +7,7 @@
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	var/polltype = input("Choose poll type.","Poll Type") as null|anything in list("Single Option","Text Reply","Rating","Multiple Choice", "Instant Runoff Voting")
-	var/choice_amount = 0
+	var/choice_amount = ZERO
 	switch(polltype)
 		if("Single Option")
 			polltype = POLLTYPE_OPTION
@@ -19,7 +19,7 @@
 			polltype = POLLTYPE_MULTI
 			choice_amount = input("How many choices should be allowed?","Select choice amount") as num|null
 			switch(choice_amount)
-				if(0)
+				if(ZERO)
 					to_chat(src, "Multiple choice poll must have at least one choice allowed.")
 					return
 				if(1)
@@ -29,7 +29,7 @@
 		if ("Instant Runoff Voting")
 			polltype = POLLTYPE_IRV
 		else
-			return 0
+			return ZERO
 	var/starttime = SQLtime()
 	var/endtime = input("Set end time for poll as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than starting time for obvious reasons.", "Set end time", SQLtime()) as text|null
 	if(!endtime)
@@ -52,7 +52,7 @@
 		if("Yes")
 			adminonly = 1
 		if("No")
-			adminonly = 0
+			adminonly = ZERO
 		else
 			return
 	var/dontshow
@@ -60,7 +60,7 @@
 		if("Yes")
 			dontshow = 1
 		if("No")
-			dontshow = 0
+			dontshow = ZERO
 		else
 			return
 	var/sql_ckey = sanitizeSQL(ckey)
@@ -76,17 +76,17 @@
 			if(!option)
 				return
 			option = sanitizeSQL(option)
-			var/default_percentage_calc = 0
+			var/default_percentage_calc = ZERO
 			if(polltype != POLLTYPE_IRV)
 				switch(alert("Should this option be included by default when poll result percentages are generated?",,"Yes","No","Cancel"))
 					if("Yes")
 						default_percentage_calc = 1
 					if("No")
-						default_percentage_calc = 0
+						default_percentage_calc = ZERO
 					else
 						return
-			var/minval = 0
-			var/maxval = 0
+			var/minval = ZERO
+			var/maxval = ZERO
 			var/descmin = ""
 			var/descmid = ""
 			var/descmax = ""
@@ -124,9 +124,9 @@
 				if("Add option")
 					add_option = 1
 				if("Finish")
-					add_option = 0
+					add_option = ZERO
 				else
-					return 0
+					return ZERO
 	var/m1 = "[key_name(usr)] has created a new server poll. Poll type: [polltype] - Admin Only: [adminonly ? "Yes" : "No"] - Question: [question]"
 	var/m2 = "[key_name_admin(usr)] has created a new server poll. Poll type: [polltype] - Admin Only: [adminonly ? "Yes" : "No"]<br>Question: [question]"
 	var/datum/DBQuery/query_polladd_question = SSdbcore.NewQuery("INSERT INTO [format_table_name("poll_question")] (polltype, starttime, endtime, question, adminonly, multiplechoiceoptions, createdby_ckey, createdby_ip, dontshow) VALUES ('[polltype]', '[starttime]', '[endtime]', '[question]', '[adminonly]', '[choice_amount]', '[sql_ckey]', INET_ATON('[address]'), '[dontshow]')")
@@ -135,7 +135,7 @@
 		return
 	qdel(query_polladd_question)
 	if(polltype != POLLTYPE_TEXT)
-		var/pollid = 0
+		var/pollid = ZERO
 		var/datum/DBQuery/query_get_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
 		if(!query_get_id.warn_execute())
 			qdel(query_get_id)

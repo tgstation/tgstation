@@ -1,11 +1,11 @@
 /datum/symptom/heal
 	name = "Basic Healing (does nothing)" //warning for adminspawn viruses
 	desc = "You should not be seeing this."
-	stealth = 0
-	resistance = 0
-	stage_speed = 0
-	transmittable = 0
-	level = 0 //not obtainable
+	stealth = ZERO
+	resistance = ZERO
+	stage_speed = ZERO
+	transmittable = ZERO
+	level = ZERO //not obtainable
 	base_message_chance = 20 //here used for the overlays
 	symptom_delay_min = 1
 	symptom_delay_max = 1
@@ -51,7 +51,7 @@
 	desc = "The virus reacts to direct starlight, producing regenerative chemicals. Works best against toxin-based damage."
 	stealth = -1
 	resistance = -2
-	stage_speed = 0
+	stage_speed = ZERO
 	transmittable = 1
 	level = 6
 	passive_message = "<span class='notice'>You miss the feeling of starlight on your skin.</span>"
@@ -102,7 +102,7 @@
 
 /datum/symptom/heal/chem
 	name = "Toxolysis"
-	stealth = 0
+	stealth = ZERO
 	resistance = -2
 	stage_speed = 2
 	transmittable = -2
@@ -163,7 +163,7 @@
 	C.reagents.metabolize(C, can_overdose=TRUE) //this works even without a liver; it's intentional since the virus is metabolizing by itself
 	if(triple_metabolism)
 		C.reagents.metabolize(C, can_overdose=TRUE)
-	C.overeatduration = max(C.overeatduration - 2, 0)
+	C.overeatduration = max(C.overeatduration - 2, ZERO)
 	var/lost_nutrition = 9 - (reduced_hunger * 5)
 	C.adjust_nutrition(-lost_nutrition * HUNGER_FACTOR) //Hunger depletes at 10x the normal speed
 	if(prob(2))
@@ -191,7 +191,7 @@
 
 /datum/symptom/heal/darkness/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
-	var/light_amount = 0
+	var/light_amount = ZERO
 	if(isturf(M.loc)) //else, there's considered to be no light
 		var/turf/T = M.loc
 		light_amount = min(1,T.get_lumcount()) - 0.5
@@ -222,7 +222,7 @@
 /datum/symptom/heal/coma
 	name = "Regenerative Coma"
 	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage."
-	stealth = 0
+	stealth = ZERO
 	resistance = 2
 	stage_speed = -3
 	transmittable = -2
@@ -302,7 +302,7 @@
 		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, null, BODYPART_ORGANIC))
 			M.update_damage_overlays()
 
-	if(active_coma && M.getBruteLoss() + M.getFireLoss() == 0)
+	if(active_coma && M.getBruteLoss() + M.getFireLoss() == ZERO)
 		uncoma(M)
 
 	return 1
@@ -315,9 +315,9 @@
 /datum/symptom/heal/water
 	name = "Tissue Hydration"
 	desc = "The virus uses excess water inside and outside the body to repair damaged tissue cells. More effective when using holy water and against burns."
-	stealth = 0
+	stealth = ZERO
 	resistance = -1
-	stage_speed = 0
+	stage_speed = ZERO
 	transmittable = 1
 	level = 6
 	passive_message = "<span class='notice'>Your skin feels oddly dry...</span>"
@@ -336,10 +336,10 @@
 		absorption_coeff = 0.25
 
 /datum/symptom/heal/water/CanHeal(datum/disease/advance/A)
-	. = 0
+	. = ZERO
 	var/mob/living/M = A.affected_mob
-	if(M.fire_stacks < 0)
-		M.fire_stacks = min(M.fire_stacks + 1 * absorption_coeff, 0)
+	if(M.fire_stacks < ZERO)
+		M.fire_stacks = min(M.fire_stacks + 1 * absorption_coeff, ZERO)
 		. += power
 	if(M.reagents.has_reagent(/datum/reagent/water/holywater, needs_metabolizing = FALSE))
 		M.reagents.remove_reagent(/datum/reagent/water/holywater, 0.5 * absorption_coeff)
@@ -373,7 +373,7 @@
 /datum/symptom/heal/plasma
 	name = "Plasma Fixation"
 	desc = "The virus draws plasma from the atmosphere and from inside the body to heal and stabilize body temperature."
-	stealth = 0
+	stealth = ZERO
 	resistance = 3
 	stage_speed = -2
 	transmittable = -2
@@ -398,7 +398,7 @@
 	var/datum/gas_mixture/environment
 	var/list/gases
 
-	. = 0
+	. = ZERO
 
 	if(M.loc)
 		environment = M.loc.return_air()
@@ -420,7 +420,7 @@
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel less hot.</span>")
 	else if(M.bodytemperature < (BODYTEMP_NORMAL + 1))
-		M.adjust_bodytemperature(20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT,0,BODYTEMP_NORMAL)
+		M.adjust_bodytemperature(20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT,ZERO,BODYTEMP_NORMAL)
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel warmer.</span>")
 
@@ -465,7 +465,7 @@
 /datum/symptom/heal/radiation/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
 	switch(M.radiation)
-		if(0)
+		if(ZERO)
 			return FALSE
 		if(1 to RAD_MOB_SAFE)
 			return 0.25

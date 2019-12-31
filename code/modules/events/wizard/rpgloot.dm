@@ -3,10 +3,10 @@
 	weight = 3
 	typepath = /datum/round_event/wizard/rpgloot
 	max_occurrences = 1
-	earliest_start = 0 MINUTES
+	earliest_start = ZERO MINUTES
 
 /datum/round_event/wizard/rpgloot/start()
-	var/upgrade_scroll_chance = 0
+	var/upgrade_scroll_chance = ZERO
 	for(var/obj/item/I in world)
 		CHECK_TICK
 
@@ -21,7 +21,7 @@
 			if(prob(upgrade_scroll_chance) && S.contents.len < STR.max_items && !S.invisibility)
 				var/obj/item/upgradescroll/scroll = new(get_turf(S))
 				SEND_SIGNAL(S, COMSIG_TRY_STORAGE_INSERT, scroll, null, TRUE, TRUE)
-				upgrade_scroll_chance = max(0,upgrade_scroll_chance-100)
+				upgrade_scroll_chance = max(ZERO,upgrade_scroll_chance-100)
 				if(isturf(scroll.loc))
 					qdel(scroll)
 
@@ -47,7 +47,7 @@
 
 	target.AddComponent(/datum/component/fantasy, upgrade_amount, null, null, can_backfire, TRUE)
 
-	if(--uses <= 0)
+	if(--uses <= ZERO)
 		qdel(src)
 
 /obj/item/upgradescroll/unlimited

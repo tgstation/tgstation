@@ -26,7 +26,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	if(immunelist[parent.type])
-		amount = 0 //Yeah the overlay can still go on it and be cleaned but you arent burning down a diamond wall
+		amount = ZERO //Yeah the overlay can still go on it and be cleaned but you arent burning down a diamond wall
 	else
 		amount = _amount
 		if(resistlist[parent.type])

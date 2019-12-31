@@ -75,7 +75,7 @@
 	return ..()
 
 /mob/living/silicon/robot/shared_ui_interaction(src_object)
-	if(!cell || cell.charge <= 0 || lockcharge) // Disable UIs if the Borg is unpowered or locked.
+	if(!cell || cell.charge <= ZERO || lockcharge) // Disable UIs if the Borg is unpowered or locked.
 		return UI_DISABLED
 	return ..()
 
@@ -108,7 +108,7 @@
 		return UI_CLOSE
 
 	var/dist = get_dist(src_object, src)
-	if(dist <= 1) // Open and interact if 1-0 tiles away.
+	if(dist <= 1) // Open and interact if 1-ZERO tiles away.
 		return UI_INTERACTIVE
 	else if(dist <= 2) // View only if 2-3 tiles away.
 		return UI_UPDATE

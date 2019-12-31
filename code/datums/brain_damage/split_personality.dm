@@ -1,4 +1,4 @@
-#define OWNER 0
+#define OWNER ZERO
 #define STRANGER 1
 
 /datum/brain_trauma/severe/split_personality

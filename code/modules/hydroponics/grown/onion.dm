@@ -51,7 +51,7 @@
 	var/datum/effect_system/smoke_spread/chem/S = new	//Since the onion is destroyed when it's sliced,
 	var/splat_location = get_turf(src)	//we need to set up the smoke beforehand
 	S.attach(splat_location)
-	S.set_up(reagents, 0, splat_location, 0)
+	S.set_up(reagents, ZERO, splat_location, ZERO)
 	if(..())
 		S.start()
 		return TRUE

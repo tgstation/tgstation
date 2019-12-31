@@ -10,8 +10,8 @@ Reproductive extracts:
 	effect = "reproductive"
 	effect_desc = "When fed monkey cubes it produces more extracts. Bio bag compatible as well."
 	var/extract_type = /obj/item/slime_extract/
-	var/cubes_eaten = 0
-	var/last_produce = 0
+	var/cubes_eaten = ZERO
+	var/last_produce = ZERO
 	var/cooldown = 30 // 3 seconds.
 
 /obj/item/slimecross/reproductive/attackby(obj/item/O, mob/user)
@@ -34,9 +34,9 @@ Reproductive extracts:
 		visible_message("<span class='notice'>[src] briefly swells to a massive size, and expels [cores] extract[cores > 1 ? "s":""]!</span>")
 		playsound(src, 'sound/effects/splat.ogg', 40, TRUE)
 		last_produce = world.time
-		for(var/i = 0, i < cores, i++)
+		for(var/i = ZERO, i < cores, i++)
 			new extract_type(get_turf(loc))
-		cubes_eaten = 0
+		cubes_eaten = ZERO
 
 /obj/item/slimecross/reproductive/proc/eat_cube(obj/item/reagent_containers/food/snacks/monkeycube, mob/user)
 		qdel(monkeycube)

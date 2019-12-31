@@ -23,8 +23,8 @@
 	filling_color = "#FF6347"
 	bitesize_mod = 2
 	foodtype = FRUIT
-	grind_results = list(/datum/reagent/consumable/ketchup = 0)
-	juice_results = list(/datum/reagent/consumable/tomatojuice = 0)
+	grind_results = list(/datum/reagent/consumable/ketchup = ZERO)
+	juice_results = list(/datum/reagent/consumable/tomatojuice = ZERO)
 	distill_reagent = /datum/reagent/consumable/enzyme
 
 // Blood Tomato
@@ -47,7 +47,7 @@
 	splat_type = /obj/effect/gibspawner/generic
 	filling_color = "#FF0000"
 	foodtype = FRUIT | GROSS
-	grind_results = list(/datum/reagent/consumable/ketchup = 0, /datum/reagent/blood = 0)
+	grind_results = list(/datum/reagent/consumable/ketchup = ZERO, /datum/reagent/blood = ZERO)
 	distill_reagent = /datum/reagent/consumable/ethanol/bloody_mary
 
 // Blue Tomato
@@ -118,7 +118,7 @@
 	name = "killer-tomato"
 	desc = "I say to-mah-to, you say tom-mae-to... OH GOD IT'S EATING MY LEGS!!"
 	icon_state = "killertomato"
-	var/awakening = 0
+	var/awakening = ZERO
 	filling_color = "#FF0000"
 	distill_reagent = /datum/reagent/consumable/ethanol/demonsblood
 

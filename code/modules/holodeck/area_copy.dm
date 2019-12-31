@@ -55,7 +55,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 	return O
 
 
-/area/proc/copy_contents_to(area/A , platingRequired = 0, nerf_weapons = 0 )
+/area/proc/copy_contents_to(area/A , platingRequired = ZERO, nerf_weapons = ZERO )
 	//Takes: Area. Optional: If it should copy to areas that don't have plating
 	//Returns: Nothing.
 	//Notes: Attempts to move the contents of one area to another area.
@@ -63,7 +63,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 	//		 into the new area will not be moved.
 
 	if(!A || !src)
-		return 0
+		return ZERO
 
 	var/list/turfs_src = get_area_turfs(src.type)
 	var/list/turfs_trg = get_area_turfs(A.type)

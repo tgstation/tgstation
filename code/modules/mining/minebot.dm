@@ -13,8 +13,8 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	faction = list("neutral")
 	a_intent = INTENT_HARM
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
+	minbodytemp = ZERO
 	move_to_delay = 10
 	health = 125
 	maxHealth = 125
@@ -32,11 +32,11 @@
 	wanted_objects = list(/obj/item/stack/ore/diamond, /obj/item/stack/ore/gold, /obj/item/stack/ore/silver,
 						  /obj/item/stack/ore/plasma, /obj/item/stack/ore/uranium, /obj/item/stack/ore/iron,
 						  /obj/item/stack/ore/bananium, /obj/item/stack/ore/titanium)
-	healable = 0
+	healable = ZERO
 	loot = list(/obj/effect/decal/cleanable/robot_debris)
 	del_on_death = TRUE
 	var/mode = MINEDRONE_COLLECT
-	var/light_on = 0
+	var/light_on = ZERO
 	var/obj/item/gun/energy/kinetic_accelerator/minebot/stored_gun
 
 /mob/living/simple_animal/hostile/mining_drone/Initialize()
@@ -66,7 +66,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone/sentience_act()
 	..()
-	check_friendly_fire = 0
+	check_friendly_fire = ZERO
 
 /mob/living/simple_animal/hostile/mining_drone/examine(mob/user)
 	. = ..()
@@ -97,7 +97,7 @@
 		to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
 		return
 
-	if(I.use_tool(src, user, 0, volume=40))
+	if(I.use_tool(src, user, ZERO, volume=40))
 		adjustBruteLoss(-15)
 		to_chat(user, "<span class='info'>You repair some of the armor on [src].</span>")
 
@@ -112,7 +112,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/death()
-	DropOre(0)
+	DropOre(ZERO)
 	if(stored_gun)
 		for(var/obj/item/borg/upgrade/modkit/M in stored_gun.modkits)
 			M.uninstall(stored_gun)
@@ -158,7 +158,7 @@
 /mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
 	mode = MINEDRONE_ATTACK
 	vision_range = 7
-	search_objects = 0
+	search_objects = ZERO
 	wander = FALSE
 	ranged = TRUE
 	retreat_distance = 2
@@ -194,7 +194,7 @@
 		O.forceMove(drop_location())
 
 /mob/living/simple_animal/hostile/mining_drone/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	if(mode != MINEDRONE_ATTACK && amount > 0)
+	if(mode != MINEDRONE_ATTACK && amount > ZERO)
 		SetOffenseBehavior()
 	. = ..()
 
@@ -238,7 +238,7 @@
 	var/mob/living/simple_animal/hostile/mining_drone/user = owner
 
 	if(user.light_on)
-		user.set_light(0)
+		user.set_light(ZERO)
 	else
 		user.set_light(6)
 	user.light_on = !user.light_on

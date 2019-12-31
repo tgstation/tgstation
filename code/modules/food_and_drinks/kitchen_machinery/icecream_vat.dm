@@ -108,7 +108,7 @@
 	if(istype(O, /obj/item/reagent_containers/food/snacks/icecream))
 		var/obj/item/reagent_containers/food/snacks/icecream/I = O
 		if(!I.ice_creamed)
-			if(product_types[dispense_flavour] > 0)
+			if(product_types[dispense_flavour] > ZERO)
 				visible_message("[icon2html(src, viewers(src))] <span class='info'>[user] scoops delicious [flavour_name] ice cream into [I].</span>")
 				product_types[dispense_flavour] -= 1
 				if(beaker && beaker.reagents.total_volume)
@@ -155,7 +155,7 @@
 	for(var/R in get_ingredient_list(make_type))
 		if(reagents.has_reagent(R, recipe_amount))
 			continue
-		amount = 0
+		amount = ZERO
 		break
 	if(amount)
 		for(var/R in get_ingredient_list(make_type))
@@ -216,7 +216,7 @@
 	icon_state = "icecream_cone_waffle" //default for admin-spawned cones, href_list["cone"] should overwrite this all the time
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4)
 	tastes = list("cream" = 2, "waffle" = 1)
-	var/ice_creamed = 0
+	var/ice_creamed = ZERO
 	var/cone_type
 	bitesize = 4
 	foodtype = DAIRY | SUGAR

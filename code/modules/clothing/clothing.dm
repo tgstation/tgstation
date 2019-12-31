@@ -7,10 +7,10 @@
 	///What level of bright light protection item has.
 	var/flash_protect = FLASH_PROTECTION_NONE
 	var/tint = 0				//Sets the item's level of visual impairment tint, normally set to the same as flash_protect
-	var/up = 0					//but separated to allow items to protect but not impair vision, like space helmets
-	var/visor_flags = 0			//flags that are added/removed when an item is adjusted up/down
-	var/visor_flags_inv = 0		//same as visor_flags, but for flags_inv
-	var/visor_flags_cover = 0	//same as above, but for flags_cover
+	var/up = ZERO					//but separated to allow items to protect but not impair vision, like space helmets
+	var/visor_flags = ZERO			//flags that are added/removed when an item is adjusted up/down
+	var/visor_flags_inv = ZERO		//same as visor_flags, but for flags_inv
+	var/visor_flags_cover = ZERO	//same as above, but for flags_cover
 //what to toggle when toggled with weldingvisortoggle()
 	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_DARKNESSVIEW | VISOR_INVISVIEW
 	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
@@ -20,7 +20,7 @@
 	var/alt_toggle_message = null
 	var/active_sound = null
 	var/toggle_cooldown = null
-	var/cooldown = 0
+	var/cooldown = ZERO
 
 	var/clothing_flags = NONE
 
@@ -161,7 +161,7 @@
 			damaged_clothes_icons[index] = damaged_clothes_icon
 		add_overlay(damaged_clothes_icon, 1)
 	else
-		damaged_clothes = 0
+		damaged_clothes = ZERO
 		cut_overlay(damaged_clothes_icons[index], TRUE)
 
 
@@ -193,13 +193,13 @@ BLIND     // can't see anything
 		return
 	if(src.has_sensor == LOCKED_SENSORS)
 		to_chat(usr, "The controls are locked.")
-		return 0
+		return ZERO
 	if(src.has_sensor == BROKEN_SENSORS)
 		to_chat(usr, "The sensors have shorted out!")
-		return 0
+		return ZERO
 	if(src.has_sensor <= NO_SENSORS)
 		to_chat(usr, "This suit does not have any sensors.")
-		return 0
+		return ZERO
 
 	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
 	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
@@ -210,7 +210,7 @@ BLIND     // can't see anything
 
 	if (src.loc == usr)
 		switch(sensor_mode)
-			if(0)
+			if(ZERO)
 				to_chat(usr, "<span class='notice'>You disable your suit's remote sensing equipment.</span>")
 			if(1)
 				to_chat(usr, "<span class='notice'>Your suit will now only report whether you are alive or dead.</span>")
@@ -313,7 +313,7 @@ BLIND     // can't see anything
 	if(user && ismob(user))
 		if(!user.incapacitated())
 			return 1
-	return 0
+	return ZERO
 
 
 /obj/item/clothing/obj_destruction(damage_flag)

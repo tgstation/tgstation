@@ -6,8 +6,8 @@
 	var/turf/previous_turf
 	var/dont_animate_parallax //world.time of when we can state animate()ing parallax again
 	var/last_parallax_shift //world.time of last update
-	var/parallax_throttle = 0 //ds between updates
-	var/parallax_movedir = 0
+	var/parallax_throttle = ZERO //ds between updates
+	var/parallax_movedir = ZERO
 	var/parallax_layers_max = 4
 	var/parallax_animate_timer
 
@@ -37,11 +37,11 @@
 		C.screen -= locate(/obj/screen/plane_master/parallax_white) in C.screen
 		C.screen += PM
 	PM.color = list(
-		0, 0, 0, 0,
-		0, 0, 0, 0,
-		0, 0, 0, 0,
+		ZERO, ZERO, ZERO, ZERO,
+		ZERO, ZERO, ZERO, ZERO,
+		ZERO, ZERO, ZERO, ZERO,
 		1, 1, 1, 1,
-		0, 0, 0, 0
+		ZERO, ZERO, ZERO, ZERO
 		)
 
 
@@ -100,7 +100,7 @@
 		return
 	var/animatedir = new_parallax_movedir
 	if(new_parallax_movedir == FALSE)
-		var/animate_time = 0
+		var/animate_time = ZERO
 		for(var/thing in C.parallax_layers)
 			var/obj/screen/parallax_layer/L = thing
 			L.icon_state = initial(L.icon_state)
@@ -114,13 +114,13 @@
 	var/matrix/newtransform
 	switch(animatedir)
 		if(NORTH)
-			newtransform = matrix(1, 0, 0, 0, 1, 480)
+			newtransform = matrix(1, ZERO, ZERO, ZERO, 1, 480)
 		if(SOUTH)
-			newtransform = matrix(1, 0, 0, 0, 1,-480)
+			newtransform = matrix(1, ZERO, ZERO, ZERO, 1,-480)
 		if(EAST)
-			newtransform = matrix(1, 0, 480, 0, 1, 0)
+			newtransform = matrix(1, ZERO, 480, ZERO, 1, ZERO)
 		if(WEST)
-			newtransform = matrix(1, 0,-480, 0, 1, 0)
+			newtransform = matrix(1, ZERO,-480, ZERO, 1, ZERO)
 
 	var/shortesttimer
 	if(!skip_windups)
@@ -228,7 +228,7 @@
 
 
 		if(!areaobj.parallax_movedir && C.dont_animate_parallax <= world.time && (offset_x || offset_y) && abs(offset_x) <= max(C.parallax_throttle/world.tick_lag+1,1) && abs(offset_y) <= max(C.parallax_throttle/world.tick_lag+1,1) && (round(abs(change_x)) > 1 || round(abs(change_y)) > 1))
-			L.transform = matrix(1, 0, offset_x*L.speed, 0, 1, offset_y*L.speed)
+			L.transform = matrix(1, ZERO, offset_x*L.speed, ZERO, 1, offset_y*L.speed)
 			animate(L, transform=matrix(), time = last_delay)
 
 		L.screen_loc = "CENTER-7:[round(L.offset_x,1)],CENTER-7:[round(L.offset_y,1)]"
@@ -248,8 +248,8 @@
 /obj/screen/parallax_layer
 	icon = 'icons/effects/parallax.dmi'
 	var/speed = 1
-	var/offset_x = 0
-	var/offset_y = 0
+	var/offset_x = ZERO
+	var/offset_y = ZERO
 	var/view_sized
 	var/absolute = FALSE
 	blend_mode = BLEND_ADD
@@ -274,10 +274,10 @@
 	var/list/new_overlays = new
 	for(var/x in -countx to countx)
 		for(var/y in -county to county)
-			if(x == 0 && y == 0)
+			if(x == ZERO && y == ZERO)
 				continue
 			var/mutable_appearance/texture_overlay = mutable_appearance(icon, icon_state)
-			texture_overlay.transform = matrix(1, 0, x*480, 0, 1, y*480)
+			texture_overlay.transform = matrix(1, ZERO, x*480, ZERO, 1, y*480)
 			new_overlays += texture_overlay
 	cut_overlays()
 	add_overlay(new_overlays)
@@ -326,7 +326,7 @@
 /obj/screen/parallax_layer/planet/update_status(mob/M)
 	var/turf/T = get_turf(M)
 	if(is_station_level(T.z))
-		invisibility = 0
+		invisibility = ZERO
 	else
 		invisibility = INVISIBILITY_ABSTRACT
 

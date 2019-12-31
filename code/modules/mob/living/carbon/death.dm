@@ -3,7 +3,7 @@
 		return
 
 	silent = FALSE
-	losebreath = 0
+	losebreath = ZERO
 
 	if(!gibbed)
 		emote("deathgasp")

@@ -24,7 +24,7 @@
 	access = CART_CLOWN
 
 /obj/item/cartridge/virus/clown/send_virus(obj/item/pda/target, mob/living/U)
-	if(charges <= 0)
+	if(charges <= ZERO)
 		to_chat(U, "<span class='notice'>Out of charges.</span>")
 		return
 	if(!isnull(target) && !target.toff)
@@ -40,7 +40,7 @@
 	access = CART_MIME
 
 /obj/item/cartridge/virus/mime/send_virus(obj/item/pda/target, mob/living/U)
-	if(charges <= 0)
+	if(charges <= ZERO)
 		to_chat(U, "<span class='alert'>Out of charges.</span>")
 		return
 	if(!isnull(target) && !target.toff)
@@ -59,12 +59,12 @@
 	charges = 4
 
 /obj/item/cartridge/virus/syndicate/send_virus(obj/item/pda/target, mob/living/U)
-	if(charges <= 0)
+	if(charges <= ZERO)
 		to_chat(U, "<span class='notice'>Out of charges.</span>")
 		return
 	if(!isnull(target) && !target.toff)
 		charges--
-		var/difficulty = 0
+		var/difficulty = ZERO
 		if(target.cartridge)
 			difficulty += BitCount(target.cartridge.access&(CART_MEDICAL | CART_SECURITY | CART_ENGINE | CART_CLOWN | CART_JANITOR | CART_MANIFEST))
 			if(target.cartridge.access & CART_MANIFEST)
@@ -83,10 +83,10 @@
 /obj/item/cartridge/virus/frame
 	name = "\improper F.R.A.M.E. cartridge"
 	icon_state = "cart"
-	var/telecrystals = 0
+	var/telecrystals = ZERO
 
 /obj/item/cartridge/virus/frame/send_virus(obj/item/pda/target, mob/living/U)
-	if(charges <= 0)
+	if(charges <= ZERO)
 		to_chat(U, "<span class='alert'>Out of charges.</span>")
 		return
 	if(!isnull(target) && !target.toff)
@@ -100,7 +100,7 @@
 		else
 			hidden_uplink.hidden_crystals += hidden_uplink.telecrystals //Temporarially hide the PDA's crystals, so you can't steal telecrystals.
 		hidden_uplink.telecrystals = telecrystals
-		telecrystals = 0
+		telecrystals = ZERO
 		hidden_uplink.active = TRUE
 	else
 		to_chat(U, "<span class='alert'>PDA not found.</span>")

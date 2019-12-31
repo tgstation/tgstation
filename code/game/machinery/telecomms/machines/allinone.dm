@@ -9,7 +9,7 @@
 	desc = "A compact machine used for portable subspace telecommunications processing."
 	density = TRUE
 	use_power = NO_POWER_USE
-	idle_power_usage = 0
+	idle_power_usage = ZERO
 	var/intercept = FALSE  // If true, only works on the Syndicate frequency.
 
 /obj/machinery/telecomms/allinone/indestructable
@@ -26,16 +26,16 @@
 		return
 	if(!on || !is_freq_listening(signal))  // has to be on to receive messages
 		return
-	if (!intercept && !(z in signal.levels) && !(0 in signal.levels))  // has to be syndicate or on the right level
+	if (!intercept && !(z in signal.levels) && !(ZERO in signal.levels))  // has to be syndicate or on the right level
 		return
 
 	// Decompress the signal and mark it done
 	if (intercept)
-		signal.levels += 0  // Signal is broadcast to agents anywhere
+		signal.levels += ZERO  // Signal is broadcast to agents anywhere
 
-	signal.data["compression"] = 0
+	signal.data["compression"] = ZERO
 	signal.mark_done()
-	if(signal.data["slow"] > 0)
+	if(signal.data["slow"] > ZERO)
 		sleep(signal.data["slow"]) // simulate the network lag if necessary
 	signal.broadcast()
 

@@ -15,22 +15,22 @@ FLOOR SAFES
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT 
 	var/open = FALSE		//is the safe open?
-	var/tumbler_1_pos	//the tumbler position- from 0 to 72
-	var/tumbler_1_open	//the tumbler position to open at- 0 to 72
+	var/tumbler_1_pos	//the tumbler position- from ZERO to 72
+	var/tumbler_1_open	//the tumbler position to open at- ZERO to 72
 	var/tumbler_2_pos
 	var/tumbler_2_open
-	var/dial = 0		//where is the dial pointing?
-	var/space = 0		//the combined w_class of everything in the safe
+	var/dial = ZERO		//where is the dial pointing?
+	var/space = ZERO		//the combined w_class of everything in the safe
 	var/maxspace = 24	//the maximum combined w_class of stuff in the safe
-	var/explosion_count = 0	//Tough, but breakable
+	var/explosion_count = ZERO	//Tough, but breakable
 
 /obj/structure/safe/Initialize()
 	. = ..()
-	tumbler_1_pos = rand(0, 71)
-	tumbler_1_open = rand(0, 71)
+	tumbler_1_pos = rand(ZERO, 71)
+	tumbler_1_open = rand(ZERO, 71)
 
-	tumbler_2_pos = rand(0, 71)
-	tumbler_2_open = rand(0, 71)
+	tumbler_2_pos = rand(ZERO, 71)
+	tumbler_2_open = rand(ZERO, 71)
 
 
 /obj/structure/safe/Initialize(mapload)
@@ -63,14 +63,14 @@ FLOOR SAFES
 
 /obj/structure/safe/proc/decrement(num)
 	num -= 1
-	if(num < 0)
+	if(num < ZERO)
 		num = 71
 	return num
 
 /obj/structure/safe/proc/increment(num)
 	num += 1
 	if(num > 71)
-		num = 0
+		num = ZERO
 	return num
 
 /obj/structure/safe/update_icon()
@@ -208,4 +208,4 @@ FLOOR SAFES
 
 
 /obj/structure/safe/floor/hide(var/intact)
-	invisibility = intact ? INVISIBILITY_MAXIMUM : 0
+	invisibility = intact ? INVISIBILITY_MAXIMUM : ZERO

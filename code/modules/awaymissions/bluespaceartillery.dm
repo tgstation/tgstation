@@ -52,4 +52,4 @@
 			L+=T
 		var/loc = pick(L)
 		explosion(loc,explosiondev,explosionmed,explosionlight)
-		reload = 0
+		reload = ZERO

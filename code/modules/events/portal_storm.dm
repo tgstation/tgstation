@@ -13,8 +13,8 @@
 /datum/round_event_control/portal_storm_narsie
 	name = "Portal Storm: Constructs"
 	typepath = /datum/round_event/portal_storm/portal_storm_narsie
-	weight = 0
-	max_occurrences = 0
+	weight = ZERO
+	max_occurrences = ZERO
 
 /datum/round_event/portal_storm/portal_storm_narsie
 	boss_types = list(/mob/living/simple_animal/hostile/construct/builder = 6)
@@ -39,11 +39,11 @@
 	storm = mutable_appearance('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
 	storm.color = "#00FF00"
 
-	number_of_bosses = 0
+	number_of_bosses = ZERO
 	for(var/boss in boss_types)
 		number_of_bosses += boss_types[boss]
 
-	number_of_hostiles = 0
+	number_of_hostiles = ZERO
 	for(var/hostile in hostile_types)
 		number_of_hostiles += hostile_types[hostile]
 
@@ -56,7 +56,7 @@
 	next_boss_spawn = startWhen + CEILING(2 * number_of_hostiles / number_of_bosses, 1)
 
 /datum/round_event/portal_storm/announce(fake)
-	set waitfor = 0
+	set waitfor = ZERO
 	sound_to_playing_players('sound/magic/lightning_chargeup.ogg')
 	sleep(80)
 	priority_announce("Massive bluespace anomaly detected en route to [station_name()]. Brace for impact.")
@@ -101,12 +101,12 @@
 
 /datum/round_event/portal_storm/proc/spawn_hostile()
 	if(!hostile_types || !hostile_types.len)
-		return 0
+		return ZERO
 	return ISMULTIPLE(activeFor, 2)
 
 /datum/round_event/portal_storm/proc/spawn_boss()
 	if(!boss_types || !boss_types.len)
-		return 0
+		return ZERO
 
 	if(activeFor == next_boss_spawn)
 		next_boss_spawn += CEILING(number_of_hostiles / number_of_bosses, 1)

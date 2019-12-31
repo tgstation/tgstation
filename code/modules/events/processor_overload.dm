@@ -31,7 +31,7 @@
 		if(prob(10))
 			announce_to_ghosts(P)
 			// Damage the surrounding area to indicate that it popped
-			explosion(get_turf(P), 0, 0, 2)
+			explosion(get_turf(P), ZERO, ZERO, 2)
 			// Only a level 1 explosion actually damages the machine
 			// at all
 			P.ex_act(EXPLODE_DEVASTATE)

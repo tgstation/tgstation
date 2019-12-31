@@ -15,7 +15,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 50)
 	var/maxWeightClass = 20 //The max weight of items that can fit into the cannon
-	var/loadedWeightClass = 0 //The weight of items currently in the cannon
+	var/loadedWeightClass = ZERO //The weight of items currently in the cannon
 	var/obj/item/tank/internals/tank = null //The gas tank that is drawn from to fire things
 	var/gasPerThrow = 3 //How much gas is drawn from a tank's pressure to fire
 	var/list/loadedItems = list() //The items loaded into the cannon that will be fired out
@@ -29,7 +29,7 @@
 	var/list/allowed_typecache		//Leave as null to allow all.
 	var/charge_amount = 1
 	var/charge_ticks = 1
-	var/charge_tick = 0
+	var/charge_tick = ZERO
 	var/charge_type
 	var/selfcharge = FALSE
 	var/fire_sound = 'sound/weapons/sonic_jackhammer.ogg'
@@ -78,7 +78,7 @@
 			if(IT.volume <= 3)
 				to_chat(user, "<span class='warning'>\The [IT] is too small for \the [src].</span>")
 				return
-			updateTank(W, 0, user)
+			updateTank(W, ZERO, user)
 	else if(W.type == type)
 		to_chat(user, "<span class='warning'>You're fairly certain that putting a pneumatic cannon inside another pneumatic cannon would cause a spacetime disruption.</span>")
 	else if(W.tool_behaviour == TOOL_WRENCH)
@@ -143,7 +143,7 @@
 /obj/item/pneumatic_cannon/proc/Fire(mob/living/user, atom/target)
 	if(!istype(user) && !target)
 		return
-	var/discharge = 0
+	var/discharge = ZERO
 	if(!can_trigger_gun(user))
 		return
 	if(!loadedItems || !loadedWeightClass)
@@ -212,8 +212,8 @@
 		return target
 	var/x_o = (target.x - starting.x)
 	var/y_o = (target.y - starting.y)
-	var/new_x = CLAMP((starting.x + (x_o * range_multiplier)), 0, world.maxx)
-	var/new_y = CLAMP((starting.y + (y_o * range_multiplier)), 0, world.maxy)
+	var/new_x = CLAMP((starting.x + (x_o * range_multiplier)), ZERO, world.maxx)
+	var/new_y = CLAMP((starting.y + (y_o * range_multiplier)), ZERO, world.maxy)
 	var/turf/newtarget = locate(new_x, new_y, starting.z)
 	return newtarget
 
@@ -236,7 +236,7 @@
 	maxWeightClass = 10
 	gasPerThrow = 5
 
-/obj/item/pneumatic_cannon/proc/updateTank(obj/item/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
+/obj/item/pneumatic_cannon/proc/updateTank(obj/item/tank/internals/thetank, removing = ZERO, mob/living/carbon/human/user)
 	if(removing)
 		if(!tank)
 			return
@@ -263,7 +263,7 @@
 /obj/item/pneumatic_cannon/proc/fill_with_type(type, amount)
 	if(!ispath(type, /obj) && !ispath(type, /mob))
 		return FALSE
-	var/loaded = 0
+	var/loaded = ZERO
 	for(var/i in 1 to amount)
 		var/obj/item/I = new type
 		if(!load_item(I, null))
@@ -277,7 +277,7 @@
 	desc = "Load cream pie for optimal results."
 	force = 10
 	icon_state = "piecannon"
-	gasPerThrow = 0
+	gasPerThrow = ZERO
 	checktank = FALSE
 	range_multiplier = 3
 	fire_mode = PCANNON_FIFO
@@ -312,7 +312,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
-	gasPerThrow = 0
+	gasPerThrow = ZERO
 	checktank = FALSE
 	range_multiplier = 3
 	throw_amount = 1

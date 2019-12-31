@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(acid)
 	..("P:[processing.len]")
 
 
-/datum/controller/subsystem/acid/fire(resumed = 0)
+/datum/controller/subsystem/acid/fire(resumed = ZERO)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 

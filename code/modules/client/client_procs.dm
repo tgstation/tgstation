@@ -42,7 +42,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		asset_cache_job = round(text2num(href_list["asset_cache_confirm_arrival"]))
 		//because we skip the limiter, we have to make sure this is a valid arrival and not somebody tricking us
 		//	into letting append to a list without limit.
-		if (asset_cache_job > 0 && asset_cache_job <= last_asset_job && !(asset_cache_job in completed_asset_jobs))
+		if (asset_cache_job > ZERO && asset_cache_job <= last_asset_job && !(asset_cache_job in completed_asset_jobs))
 			completed_asset_jobs += asset_cache_job
 			return
 
@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			topiclimiter = new(LIMITER_SIZE)
 		if (minute != topiclimiter[CURRENT_MINUTE])
 			topiclimiter[CURRENT_MINUTE] = minute
-			topiclimiter[MINUTE_COUNT] = 0
+			topiclimiter[MINUTE_COUNT] = ZERO
 		topiclimiter[MINUTE_COUNT] += 1
 		if (topiclimiter[MINUTE_COUNT] > mtl)
 			var/msg = "Your previous action was ignored because you've done too many in a minute."
@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			topiclimiter = new(LIMITER_SIZE)
 		if (second != topiclimiter[CURRENT_SECOND])
 			topiclimiter[CURRENT_SECOND] = second
-			topiclimiter[SECOND_COUNT] = 0
+			topiclimiter[SECOND_COUNT] = ZERO
 		topiclimiter[SECOND_COUNT] += 1
 		if (topiclimiter[SECOND_COUNT] > stl)
 			to_chat(src, "<span class='danger'>Your previous action was ignored because you've done too many in a second</span>")
@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/is_content_unlocked()
 	if(!prefs.unlock_content)
 		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href=\"https://secure.byond.com/membership\">Click Here to find out more</a>.")
-		return 0
+		return ZERO
 	return 1
 /*
  * Call back proc that should be checked in all paths where a client can send messages
@@ -158,13 +158,13 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/cache = total_message_count
 
 	if(total_count_reset <= world.time)
-		total_message_count = 0
+		total_message_count = ZERO
 		total_count_reset = world.time + (5 SECONDS)
 
 	//If they're really going crazy, mute them
 	if(cache >= SPAM_TRIGGER_AUTOMUTE * 2)
-		total_message_count = 0
-		total_count_reset = 0
+		total_message_count = ZERO
+		total_count_reset = ZERO
 		cmd_admin_mute(src, mute_type, 1)
 		return 1
 
@@ -181,24 +181,24 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return 1
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
 			to_chat(src, "<span class='danger'>You are nearing the spam filter limit for identical messages.</span>")
-			return 0
+			return ZERO
 	else
 		last_message = message
-		src.last_message_count = 0
-		return 0
+		src.last_message_count = ZERO
+		return ZERO
 
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
 	if(filelength > UPLOAD_LIMIT)
 		to_chat(src, "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [UPLOAD_LIMIT/1024]KiB.</font>")
-		return 0
+		return ZERO
 	return 1
 
 
 	///////////
 	//CONNECT//
 	///////////
-#if (PRELOAD_RSC == 0)
+#if (PRELOAD_RSC == ZERO)
 GLOBAL_LIST_EMPTY(external_rsc_urls)
 #endif
 
@@ -340,7 +340,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			to_chat(src, "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade")
 		else
 			qdel(src)
-			return 0
+			return ZERO
 	else if (byond_version < cwv)	//We have words for this client.
 		if(CONFIG_GET(flag/client_warn_popup))
 			var/msg = "<b>Your version of byond may be getting out of date:</b><br>"
@@ -360,11 +360,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		if (!CONFIG_GET(flag/allow_webclient))
 			to_chat(src, "Web client is disabled")
 			qdel(src)
-			return 0
+			return ZERO
 		if (CONFIG_GET(flag/webclient_only_byond_members) && !IsByondMember())
 			to_chat(src, "Sorry, but the web client is restricted to byond members only.")
 			qdel(src)
-			return 0
+			return ZERO
 
 	if( (world.address == address || !address) && !GLOB.host )
 		GLOB.host = key
@@ -378,18 +378,18 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	add_verbs_from_config()
 	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
-		player_age = 0
+		player_age = ZERO
 	var/nnpa = CONFIG_GET(number/notify_new_player_age)
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
-		if (nnpa >= 0)
+		if (nnpa >= ZERO)
 			message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
 			if (CONFIG_GET(flag/irc_first_connection_alert))
 				send2tgs_adminless_only("New-user", "[key_name(src)] is connecting for the first time!")
 	else if (isnum(cached_player_age) && cached_player_age < nnpa)
 		message_admins("New user: [key_name_admin(src)] just connected with an age of [cached_player_age] day[(player_age==1?"":"s")]")
-	if(CONFIG_GET(flag/use_account_age_for_jobs) && account_age >= 0)
+	if(CONFIG_GET(flag/use_account_age_for_jobs) && account_age >= ZERO)
 		player_age = account_age
-	if(account_age >= 0 && account_age < nnpa)
+	if(account_age >= ZERO && account_age < nnpa)
 		message_admins("[key_name_admin(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
 		if (CONFIG_GET(flag/irc_first_connection_alert))
 			send2tgs_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
@@ -742,11 +742,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			qdel(query_get_notes)
 			return
 	qdel(query_get_notes)
-	create_message("note", key, system_ckey, message, null, null, 0, 0, null, 0, 0)
+	create_message("note", key, system_ckey, message, null, null, ZERO, ZERO, null, ZERO, ZERO)
 
 
 /client/proc/check_ip_intel()
-	set waitfor = 0 //we sleep when getting the intel, no need to hold up the client connection while we sleep
+	set waitfor = ZERO //we sleep when getting the intel, no need to hold up the client connection while we sleep
 	if (CONFIG_GET(string/ipintel_email))
 		var/datum/ipintel/res = get_ip_intel(address)
 		if (res.intel >= CONFIG_GET(number/ipintel_rating_bad))
@@ -762,7 +762,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		return
 
 	if (object && object == middragatom && L["left"])
-		ab = max(0, 5 SECONDS-(world.time-middragtime)*0.1)
+		ab = max(ZERO, 5 SECONDS-(world.time-middragtime)*0.1)
 
 	var/mcl = CONFIG_GET(number/minute_click_limit)
 	if (!holder && mcl)
@@ -771,7 +771,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			clicklimiter = new(LIMITER_SIZE)
 		if (minute != clicklimiter[CURRENT_MINUTE])
 			clicklimiter[CURRENT_MINUTE] = minute
-			clicklimiter[MINUTE_COUNT] = 0
+			clicklimiter[MINUTE_COUNT] = ZERO
 		clicklimiter[MINUTE_COUNT] += 1+(ab)
 		if (clicklimiter[MINUTE_COUNT] > mcl)
 			var/msg = "Your previous click was ignored because you've done too many in a minute."
@@ -795,7 +795,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			clicklimiter = new(LIMITER_SIZE)
 		if (second != clicklimiter[CURRENT_SECOND])
 			clicklimiter[CURRENT_SECOND] = second
-			clicklimiter[SECOND_COUNT] = 0
+			clicklimiter[SECOND_COUNT] = ZERO
 		clicklimiter[SECOND_COUNT] += 1+(!!ab)
 		if (clicklimiter[SECOND_COUNT] > scl)
 			to_chat(src, "<span class='danger'>Your previous click was ignored because you've done too many in a second</span>")
@@ -830,8 +830,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
-#if (PRELOAD_RSC == 0)
-	var/static/next_external_rsc = 0
+#if (PRELOAD_RSC == ZERO)
+	var/static/next_external_rsc = ZERO
 	if(GLOB.external_rsc_urls && GLOB.external_rsc_urls.len)
 		next_external_rsc = WRAP(next_external_rsc+1, 1, GLOB.external_rsc_urls.len+1)
 		preload_rsc = GLOB.external_rsc_urls[next_external_rsc]
@@ -847,7 +847,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		getFilesSlow(src, SSassets.preload, register_asset = FALSE)
-		#if (PRELOAD_RSC == 0)
+		#if (PRELOAD_RSC == ZERO)
 		for (var/name in GLOB.vox_sounds)
 			var/file = GLOB.vox_sounds[name]
 			Export("##action=load_rsc", file)
@@ -929,7 +929,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		to_chat(src, announcement)
 
 /client/proc/show_character_previews(mutable_appearance/MA)
-	var/pos = 0
+	var/pos = ZERO
 	for(var/D in GLOB.cardinals)
 		pos++
 		var/obj/screen/O = LAZYACCESS(char_render_holders, "[D]")

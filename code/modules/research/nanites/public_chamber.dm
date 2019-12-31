@@ -16,7 +16,7 @@
 	var/breakout_time = 1200
 	var/busy = FALSE
 	var/busy_icon_state
-	var/message_cooldown = 0
+	var/message_cooldown = ZERO
 
 /obj/machinery/public_nanite_chamber/Initialize()
 	. = ..()

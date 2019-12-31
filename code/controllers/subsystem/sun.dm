@@ -3,12 +3,12 @@ SUBSYSTEM_DEF(sun)
 	wait = 1 MINUTES
 	flags = SS_NO_TICK_CHECK
 
-	var/azimuth = 0 ///clockwise, top-down rotation from 0 (north) to 359
+	var/azimuth = ZERO ///clockwise, top-down rotation from ZERO (north) to 359
 	var/azimuth_mod = 1 ///multiplier against base_rotation
 	var/base_rotation = 6 ///base rotation in degrees per fire
 
 /datum/controller/subsystem/sun/Initialize(start_timeofday)
-	azimuth = rand(0, 359)
+	azimuth = rand(ZERO, 359)
 	azimuth_mod = round(rand(50, 200)/100, 0.01) // 50% - 200% of standard rotation
 	if(prob(50))
 		azimuth_mod *= -1
@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(sun)
 	azimuth = round(azimuth, 0.01)
 	if(azimuth >= 360)
 		azimuth -= 360
-	if(azimuth < 0)
+	if(azimuth < ZERO)
 		azimuth += 360
 	complete_movement()
 

@@ -34,10 +34,10 @@
 	var/alarm_on = FALSE
 	var/busy = FALSE
 	var/emped = FALSE  //Number of consecutive EMP's on this camera
-	var/in_use_lights = 0
+	var/in_use_lights = ZERO
 
 	// Upgrades bitflag
-	var/upgrades = 0
+	var/upgrades = ZERO
 	var/datum/component/empprotection/emp_component
 
 	var/internal_light = TRUE //Whether it can light up when an AI views it
@@ -93,7 +93,7 @@
 
 /obj/machinery/camera/Destroy()
 	if(can_use())
-		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
+		toggle_cam(null, ZERO) //kick anyone viewing out and remove from the camera chunks
 	GLOB.cameranet.cameras -= src
 	if(isarea(myarea))
 		LAZYREMOVE(myarea.cameras, src)
@@ -141,7 +141,7 @@
 			network = list()
 			GLOB.cameranet.removeCamera(src)
 			stat |= EMPED
-			set_light(0)
+			set_light(ZERO)
 			emped = emped+1  //Increase the number of consecutive EMP's
 			update_icon()
 			addtimer(CALLBACK(src, .proc/post_emp_reset, emped, network), 90 SECONDS)
@@ -163,7 +163,7 @@
 	update_icon()
 	if(can_use())
 		GLOB.cameranet.addCamera(src)
-	emped = 0 //Resets the consecutive EMP count
+	emped = ZERO //Resets the consecutive EMP count
 	addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
 
 /obj/machinery/camera/ex_act(severity, target)
@@ -173,7 +173,7 @@
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
 	src.view_range = num
-	GLOB.cameranet.updateVisibility(src, 0)
+	GLOB.cameranet.updateVisibility(src, ZERO)
 
 /obj/machinery/camera/proc/shock(mob/living/user)
 	if(!istype(user))
@@ -182,7 +182,7 @@
 
 /obj/machinery/camera/singularity_pull(S, current_size)
 	if (status && current_size >= STAGE_FIVE) // If the singulo is strong enough to pull anchored objects and the camera is still active, turn off the camera as it gets ripped off the wall.
-		toggle_cam(null, 0)
+		toggle_cam(null, ZERO)
 	..()
 
 // Construction/Deconstruction
@@ -248,7 +248,7 @@
 	if(!panel_open)
 		return
 
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=ZERO))
 		return TRUE
 
 	to_chat(user, "<span class='notice'>You start to weld [src]...</span>")
@@ -275,7 +275,7 @@
 
 		else if(istype(I, /obj/item/stack/sheet/mineral/plasma))
 			if(!isEmpProof(TRUE)) //don't reveal it was already upgraded if was done via MALF AI Upgrade Camera Network ability
-				if(I.use_tool(src, user, 0, amount=1))
+				if(I.use_tool(src, user, ZERO, amount=1))
 					upgradeEmpProof(FALSE, TRUE)
 					to_chat(user, "<span class='notice'>You attach [I] into [assembly]'s inner circuits.</span>")
 			else
@@ -348,7 +348,7 @@
 	return ..()
 
 
-/obj/machinery/camera/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/machinery/camera/run_obj_armor(damage_amount, damage_type, damage_flag = ZERO, attack_dir)
 	if(stat & BROKEN)
 		return damage_amount
 	. = ..()
@@ -359,7 +359,7 @@
 	. = ..()
 	if(.)
 		triggerCameraAlarm()
-		toggle_cam(null, 0)
+		toggle_cam(null, ZERO)
 
 /obj/machinery/camera/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -397,7 +397,7 @@
 		else
 			myarea = null
 	else
-		set_light(0)
+		set_light(ZERO)
 		GLOB.cameranet.removeCamera(src)
 		if (isarea(myarea))
 			LAZYREMOVE(myarea.cameras, src)
@@ -453,7 +453,7 @@
 		see = get_hear(view_range, pos)
 	return see
 
-/obj/machinery/camera/proc/Togglelight(on=0)
+/obj/machinery/camera/proc/Togglelight(on=ZERO)
 	for(var/mob/living/silicon/ai/A in GLOB.ai_list)
 		for(var/obj/machinery/camera/cam in A.lit_cameras)
 			if(cam == src)
@@ -461,7 +461,7 @@
 	if(on)
 		set_light(AI_CAMERA_LUMINOSITY)
 	else
-		set_light(0)
+		set_light(ZERO)
 
 /obj/machinery/camera/get_remote_view_fullscreens(mob/user)
 	if(view_range == short_range) //unfocused
@@ -473,6 +473,6 @@
 		user.sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		user.see_in_dark = max(user.see_in_dark, 8)
 	else
-		user.sight = 0
+		user.sight = ZERO
 		user.see_in_dark = 2
 	return 1

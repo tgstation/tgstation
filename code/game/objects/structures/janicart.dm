@@ -11,7 +11,7 @@
 	var/obj/item/mop/mymop = null
 	var/obj/item/reagent_containers/spray/cleaner/myspray = null
 	var/obj/item/lightreplacer/myreplacer = null
-	var/signs = 0
+	var/signs = ZERO
 	var/const/max_signs = 4
 
 
@@ -22,7 +22,7 @@
 /obj/structure/janitorialcart/proc/wet_mop(obj/item/mop, mob/user)
 	if(reagents.total_volume < 1)
 		to_chat(user, "<span class='warning'>[src] is out of water!</span>")
-		return 0
+		return ZERO
 	else
 		var/obj/item/mop/M = mop
 		reagents.trans_to(mop, M.mopcap, transfered_by = user)
@@ -144,7 +144,7 @@
 				signs--
 			else
 				WARNING("Signs ([signs]) didn't match contents")
-				signs = 0
+				signs = ZERO
 
 	update_icon()
 	updateUsrDialog()
@@ -162,5 +162,5 @@
 		add_overlay("cart_replacer")
 	if(signs)
 		add_overlay("cart_sign[signs]")
-	if(reagents.total_volume > 0)
+	if(reagents.total_volume > ZERO)
 		add_overlay("cart_water")

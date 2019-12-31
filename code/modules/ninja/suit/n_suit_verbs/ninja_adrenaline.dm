@@ -2,16 +2,16 @@
 //Movement impairing would indicate drugs and the like.
 /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost()
 
-	if(!ninjacost(0,N_ADRENALINE))
+	if(!ninjacost(ZERO,N_ADRENALINE))
 		var/mob/living/carbon/human/H = affecting
-		H.SetUnconscious(0)
-		H.SetStun(0)
-		H.SetKnockdown(0)
-		H.SetImmobilized(0)
-		H.SetParalyzed(0)
+		H.SetUnconscious(ZERO)
+		H.SetStun(ZERO)
+		H.SetKnockdown(ZERO)
+		H.SetImmobilized(ZERO)
+		H.SetParalyzed(ZERO)
 		H.adjustStaminaLoss(-75)
-		H.stuttering = 0
-		H.lying = 0
+		H.stuttering = ZERO
+		H.lying = ZERO
 		H.update_mobility()
 		H.reagents.add_reagent(/datum/reagent/medicine/stimulants, 5)
 		H.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"), forced = "ninjaboost")

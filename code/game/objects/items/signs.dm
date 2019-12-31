@@ -8,7 +8,7 @@
 	resistance_flags = FLAMMABLE
 
 	var/label = ""
-	var/last_wave = 0
+	var/last_wave = ZERO
 
 /obj/item/picket_sign/cyborg
 	name = "metallic nano-sign"

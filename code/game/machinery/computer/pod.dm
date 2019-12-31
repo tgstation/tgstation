@@ -4,7 +4,7 @@
 	var/obj/machinery/mass_driver/connected = null
 	var/title = "Mass Driver Controls"
 	var/id = 1
-	var/timing = 0
+	var/timing = ZERO
 	var/time = 30
 	var/range = 4
 
@@ -74,12 +74,12 @@
 	if(!..())
 		return
 	if(timing)
-		if(time > 0)
+		if(time > ZERO)
 			time = round(time) - 1
 		else
 			alarm()
-			time = 0
-			timing = 0
+			time = ZERO
+			timing = ZERO
 		updateDialog()
 
 
@@ -100,7 +100,7 @@
 		if(href_list["tp"])
 			var/tp = text2num(href_list["tp"])
 			time += tp
-			time = min(max(round(time), 0), 120)
+			time = min(max(round(time), ZERO), 120)
 		if(href_list["door"])
 			for(var/obj/machinery/door/poddoor/M in range(range, src))
 				if(M.id == id)

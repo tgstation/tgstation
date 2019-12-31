@@ -13,7 +13,7 @@
 	var/on = TRUE
 	var/code = 2
 	var/frequency = FREQ_ELECTROPACK
-	var/shock_cooldown = 0
+	var/shock_cooldown = ZERO
 
 /obj/item/electropack/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] hooks [user.p_them()]self to the electropack and spams the trigger! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -101,10 +101,10 @@
 		return
 
 	if(isliving(loc) && on)
-		if(shock_cooldown != 0)
+		if(shock_cooldown != ZERO)
 			return
 		shock_cooldown = 1
-		addtimer(VARSET_CALLBACK(src, shock_cooldown, 0), 100)
+		addtimer(VARSET_CALLBACK(src, shock_cooldown, ZERO), 100)
 		var/mob/living/L = loc
 		step(L, pick(GLOB.cardinals))
 

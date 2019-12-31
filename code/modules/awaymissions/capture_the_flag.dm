@@ -18,7 +18,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	desc = "A banner with Nanotrasen's logo on it."
 	slowdown = 2
-	throw_speed = 0
+	throw_speed = ZERO
 	throw_range = 1
 	force = 200
 	armour_penetration = 1000
@@ -26,7 +26,7 @@
 	anchored = TRUE
 	item_flags = SLOWS_WHILE_IN_HAND
 	var/team = WHITE_TEAM
-	var/reset_cooldown = 0
+	var/reset_cooldown = ZERO
 	var/anyonecanpickup = TRUE
 	var/obj/effect/ctf/flag_reset/reset
 	var/reset_path = /obj/effect/ctf/flag_reset
@@ -145,11 +145,11 @@
 	var/team = WHITE_TEAM
 	var/team_span = ""
 	//Capture the Flag scoring
-	var/points = 0
+	var/points = ZERO
 	var/points_to_win = 3
 	var/respawn_cooldown = DEFAULT_RESPAWN
 	//Capture Point/King of the Hill scoring
-	var/control_points = 0
+	var/control_points = ZERO
 	var/control_points_to_win = 180
 	var/list/team_members = list()
 	var/list/spawned_mobs = list()
@@ -215,7 +215,7 @@
 		people_who_want_to_play |= user.ckey
 		var/num = people_who_want_to_play.len
 		var/remaining = CTF_REQUIRED_PLAYERS - num
-		if(remaining <= 0)
+		if(remaining <= ZERO)
 			people_who_want_to_play.Cut()
 			toggle_all_ctf()
 		else
@@ -303,8 +303,8 @@
 		control.controlling = null
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		if(CTF.ctf_enabled == TRUE)
-			CTF.points = 0
-			CTF.control_points = 0
+			CTF.points = ZERO
+			CTF.control_points = ZERO
 			CTF.ctf_enabled = FALSE
 			CTF.team_members = list()
 			CTF.arena_reset = FALSE
@@ -392,7 +392,7 @@
 	projectile_type = /obj/projectile/bullet/ctf
 
 /obj/projectile/bullet/ctf
-	damage = 0
+	damage = ZERO
 
 /obj/projectile/bullet/ctf/prehit(atom/target)
 	if(is_ctf_target(target))
@@ -427,7 +427,7 @@
 	projectile_type = /obj/projectile/beam/ctf
 
 /obj/projectile/beam/ctf
-	damage = 0
+	damage = ZERO
 	icon_state = "omnilaser"
 
 /obj/projectile/beam/ctf/prehit(atom/target)
@@ -538,7 +538,7 @@
 	R.set_frequency(FREQ_CTF_RED)
 	R.freqlock = TRUE
 	R.independent = TRUE
-	H.dna.species.stunmod = 0
+	H.dna.species.stunmod = ZERO
 
 /datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
 	..()
@@ -546,7 +546,7 @@
 	R.set_frequency(FREQ_CTF_BLUE)
 	R.freqlock = TRUE
 	R.independent = TRUE
-	H.dna.species.stunmod = 0
+	H.dna.species.stunmod = ZERO
 
 
 
@@ -581,8 +581,8 @@
 /obj/structure/barricade/security/ctf
 	name = "barrier"
 	desc = "A barrier. Provides cover in fire fights."
-	deploy_time = 0
-	deploy_message = 0
+	deploy_time = ZERO
+	deploy_message = ZERO
 
 /obj/structure/barricade/security/ctf/make_debris()
 	new /obj/effect/ctf/dead_barricade(get_turf(src))
@@ -602,7 +602,7 @@
 	icon_state = "at_shield1"
 	layer = ABOVE_MOB_LAYER
 	alpha = 255
-	invisibility = 0
+	invisibility = ZERO
 
 /obj/effect/ctf/ammo/Initialize(mapload)
 	..()

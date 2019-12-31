@@ -201,12 +201,12 @@
 			while(query_get_banned_roles.NextRow())
 				banned_from += query_get_banned_roles.item[1]
 			qdel(query_get_banned_roles)
-		var/break_counter = 0
+		var/break_counter = ZERO
 		output += "<div class='row'><div class='column'><label class='rolegroup command'><input type='checkbox' name='Command' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_dep\")'" : ""]>Command</label><div class='content'>"
 		//all heads are listed twice so have a javascript call to toggle both their checkboxes when one is pressed
 		//for simplicity this also includes the captain even though it doesn't do anything
 		for(var/job in GLOB.command_positions)
-			if(break_counter > 0 && (break_counter % 3 == 0))
+			if(break_counter > ZERO && (break_counter % 3 == ZERO))
 				output += "<br>"
 			output += {"<label class='inputlabel checkbox'>[job]
 						<input type='checkbox' id='[job]_com' name='[job]' class='Command' value='1'[usr.client.prefs.tgui_fancy ? " onClick='toggle_head(this, \"_dep\")'" : ""]>
@@ -229,7 +229,7 @@
 			"}
 			break_counter = 1
 			for(var/job in job_lists[department] - job_lists[department][1]) //skip the first element since it's already been done
-				if(break_counter % 3 == 0)
+				if(break_counter % 3 == ZERO)
 					output += "<br>"
 				output += {"<label class='inputlabel checkbox'>[job]
 							<input type='checkbox' name='[job]' class='[department]' value='1'>
@@ -242,9 +242,9 @@
 										"Abstract" = list("Appearance", "Emote", "Deadchat", "OOC"))
 		for(var/department in headless_job_lists)
 			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_com\")'" : ""]>[department]</label><div class='content'>"
-			break_counter = 0
+			break_counter = ZERO
 			for(var/job in headless_job_lists[department])
-				if(break_counter > 0 && (break_counter % 3 == 0))
+				if(break_counter > ZERO && (break_counter % 3 == ZERO))
 					output += "<br>"
 				output += {"<label class='inputlabel checkbox'>[job]
 							<input type='checkbox' name='[job]' class='[department]' value='1'>
@@ -263,9 +263,9 @@
 									ROLE_TRAITOR, ROLE_WIZARD, ROLE_HIVE)) //ROLE_REV_HEAD is excluded from this because rev jobbans are handled by ROLE_REV
 		for(var/department in long_job_lists)
 			output += "<div class='column'><label class='rolegroup long [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_com\")'" : ""]>[department]</label><div class='content'>"
-			break_counter = 0
+			break_counter = ZERO
 			for(var/job in long_job_lists[department])
-				if(break_counter > 0 && (break_counter % 10 == 0))
+				if(break_counter > ZERO && (break_counter % 10 == ZERO))
 					output += "<br>"
 				output += {"<label class='inputlabel checkbox'>[job]
 							<input type='checkbox' name='[job]' class='[department]' value='1'>
@@ -491,7 +491,7 @@
 	if(applies_to_admins)
 		send2tgs("BAN ALERT","[kn] [msg]")
 	if(player_ckey)
-		create_message("note", player_ckey, admin_ckey, note_reason, null, null, 0, 0, null, 0, severity)
+		create_message("note", player_ckey, admin_ckey, note_reason, null, null, ZERO, ZERO, null, ZERO, severity)
 	var/client/C = GLOB.directory[player_ckey]
 	var/datum/admin_help/AH = admin_ticket_log(player_ckey, msg)
 	var/appeal_url = "No ban appeal url set!"
@@ -515,7 +515,7 @@
 			if(roles_to_ban[1] == "Server" && (!is_admin || (is_admin && applies_to_admins)))
 				qdel(i)
 
-/datum/admins/proc/unban_panel(player_key, admin_key, player_ip, player_cid, page = 0)
+/datum/admins/proc/unban_panel(player_key, admin_key, player_ip, player_cid, page = ZERO)
 	if(!check_rights(R_BAN))
 		return
 	if(!SSdbcore.Connect())
@@ -546,7 +546,7 @@
 		if(player_cid)
 			searchlist += "computerid = '[sanitizeSQL(player_cid)]'"
 		var/search = searchlist.Join(" AND ")
-		var/bancount = 0
+		var/bancount = ZERO
 		var/bansperpage = 10
 		page = text2num(page)
 		var/datum/DBQuery/query_unban_count_bans = SSdbcore.NewQuery("SELECT COUNT(id) FROM [format_table_name("ban")] WHERE [search]")
@@ -560,7 +560,7 @@
 			output += "<b>Page: </b>"
 			var/pagecount = 1
 			var/list/pagelist = list()
-			while(bancount > 0)
+			while(bancount > ZERO)
 				pagelist += "<a href='?_src_=holder;[HrefToken()];unbanpagecount=[pagecount - 1];unbankey=[player_key];unbanadminkey=[admin_key];unbanip=[player_ip];unbancid=[player_cid]'>[pagecount == page ? "<b>\[[pagecount]\]</b>" : "\[[pagecount]\]"]</a>"
 				bancount -= bansperpage
 				pagecount++

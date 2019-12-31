@@ -6,11 +6,11 @@
 	if(status_flags & GODMODE)
 		return
 
-	if(!breath || (breath.total_moles() == 0))
+	if(!breath || (breath.total_moles() == ZERO))
 		//Aliens breathe in vaccuum
-		return 0
+		return ZERO
 
-	var/toxins_used = 0
+	var/toxins_used = ZERO
 	var/tox_detect_threshold = 0.02
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 	var/list/breath_gases = breath.gases
@@ -41,8 +41,8 @@
 /mob/living/carbon/alien/handle_status_effects()
 	..()
 	//natural reduction of movement delay due to stun.
-	if(move_delay_add > 0)
-		move_delay_add = max(0, move_delay_add - rand(1, 2))
+	if(move_delay_add > ZERO)
+		move_delay_add = max(ZERO, move_delay_add - rand(1, 2))
 
 /mob/living/carbon/alien/handle_changeling()
 	return

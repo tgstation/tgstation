@@ -25,12 +25,12 @@
 	var/random_color = TRUE //if the screwdriver uses random coloring
 	var/static/list/screwdriver_colors = list(
 		"blue" = rgb(24, 97, 213),
-		"red" = rgb(255, 0, 0),
+		"red" = rgb(255, ZERO, ZERO),
 		"pink" = rgb(213, 24, 141),
 		"brown" = rgb(160, 82, 18),
 		"green" = rgb(14, 127, 27),
 		"cyan" = rgb(24, 162, 213),
-		"yellow" = rgb(255, 165, 0)
+		"yellow" = rgb(255, 165, ZERO)
 	)
 
 /obj/item/screwdriver/suicide_act(mob/user)
@@ -45,7 +45,7 @@
 		add_atom_colour(screwdriver_colors[our_color], FIXED_COLOUR_PRIORITY)
 		update_icon()
 	if(prob(75))
-		pixel_y = rand(0, 16)
+		pixel_y = rand(ZERO, 16)
 
 /obj/item/screwdriver/update_icon()
 	if(!random_color) //icon override

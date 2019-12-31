@@ -2,7 +2,7 @@
 
 
 /datum/round_event/ghost_role
-	// We expect 0 or more /clients (or things with .key) in this list
+	// We expect ZERO or more /clients (or things with .key) in this list
 	var/list/priority_candidates = list()
 	var/minimum_required = 1
 	var/role_name = "debug rat with cancer" // Q U A L I T Y  M E M E S
@@ -13,7 +13,7 @@
 /datum/round_event/ghost_role/start()
 	try_spawning()
 
-/datum/round_event/ghost_role/proc/try_spawning(sanity = 0, retry = 0)
+/datum/round_event/ghost_role/proc/try_spawning(sanity = ZERO, retry = ZERO)
 	// The event does not run until the spawning has been attempted
 	// to prevent us from getting gc'd halfway through
 	processing = FALSE
@@ -28,7 +28,7 @@
 		var/waittime = 300 * (2^retry)
 		message_admins("The event will not spawn a [role_name] until certain \
 			conditions are met. Waiting [waittime/10]s and then retrying.")
-		addtimer(CALLBACK(src, .proc/try_spawning, 0, ++retry), waittime)
+		addtimer(CALLBACK(src, .proc/try_spawning, ZERO, ++retry), waittime)
 		return
 
 	if(status == MAP_ERROR)

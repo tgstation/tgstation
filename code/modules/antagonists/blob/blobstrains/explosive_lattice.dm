@@ -13,7 +13,7 @@
 
 /datum/blobstrain/reagent/explosive_lattice/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if(damage_flag == "bomb")
-		return 0
+		return ZERO
 	else if(damage_flag != "melee" && damage_flag != "bullet" && damage_flag != "laser")
 		return damage * 1.5
 	return ..()
@@ -32,7 +32,7 @@
 		for(var/mob/living/L in orange(get_turf(M), 1))
 			if(ROLE_BLOB in L.faction) //no friendly fire
 				continue
-			var/aoe_volume = ..(L, TOUCH, initial_volume, 0, L.get_permeability_protection(), O)
+			var/aoe_volume = ..(L, TOUCH, initial_volume, ZERO, L.get_permeability_protection(), O)
 			L.apply_damage(0.4*aoe_volume, BRUTE)
 		if(M)
 			M.apply_damage(0.6*reac_volume, BRUTE)

@@ -1,7 +1,7 @@
 /mob/living/brain
 	var/obj/item/mmi/container = null
-	var/timeofhostdeath = 0
-	var/emp_damage = 0//Handles a type of MMI damage
+	var/timeofhostdeath = ZERO
+	var/emp_damage = ZERO//Handles a type of MMI damage
 	var/datum/dna/stored/stored_dna // dna var for brain. Used to store dna, brain dna is not considered like actual dna, brain.has_dna() returns FALSE.
 	stat = DEAD //we start dead by default
 	see_invisible = SEE_INVISIBLE_LIVING
@@ -52,13 +52,13 @@
 /mob/living/brain/get_ear_protection()//no ears
 	return 2
 
-/mob/living/brain/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/brain/flash_act(intensity = 1, override_blindness_check = ZERO, affect_silicon = ZERO)
 	return // no eyes, no flashing
 
 /mob/living/brain/can_be_revived()
 	. = 1
 	if(!container || health <= HEALTH_THRESHOLD_DEAD)
-		return 0
+		return ZERO
 
 /mob/living/brain/fully_replace_character_name(oldname,newname)
 	..()

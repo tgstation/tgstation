@@ -5,7 +5,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 /mob/dead
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	move_resist = INFINITY
-	throwforce = 0
+	throwforce = ZERO
 
 /mob/dead/Initialize()
 	if(flags_1 & INITIALIZED_1)
@@ -53,7 +53,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		return
 
 	var/time_remaining = SSticker.GetTimeLeft()
-	if(time_remaining > 0)
+	if(time_remaining > ZERO)
 		stat(null, "Time To Start: [round(time_remaining/10)]s")
 	else if(time_remaining == -10)
 		stat(null, "Time To Start: DELAYED")
@@ -73,7 +73,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	var/list/csa = CONFIG_GET(keyed_list/cross_server)
 	var/pick
 	switch(csa.len)
-		if(0)
+		if(ZERO)
 			verbs -= /mob/dead/proc/server_hop
 			to_chat(src, "<span class='notice'>Server Hop has been disabled.</span>")
 		if(1)

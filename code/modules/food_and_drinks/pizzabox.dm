@@ -97,7 +97,7 @@
 			. += M
 
 /obj/item/pizzabox/attack_self(mob/user)
-	if(boxes.len > 0)
+	if(boxes.len > ZERO)
 		return
 	open = !open
 	if(open && !bomb_defused)
@@ -212,10 +212,10 @@
 	..()
 
 /obj/item/pizzabox/process()
-	if(bomb_active && !bomb_defused && (bomb_timer > 0))
+	if(bomb_active && !bomb_defused && (bomb_timer > ZERO))
 		playsound(loc, 'sound/items/timer.ogg', 50, FALSE)
 		bomb_timer--
-	if(bomb_active && !bomb_defused && (bomb_timer <= 0))
+	if(bomb_active && !bomb_defused && (bomb_timer <= ZERO))
 		if(bomb in src)
 			bomb.detonate()
 			unprocess()

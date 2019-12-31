@@ -191,7 +191,7 @@
 
 	else if(istype(W, /obj/item/pipe))
 		var/obj/item/pipe/P = W
-		if (P.pipe_type in list(0, 1, 5))	//simple pipes, simple bends, and simple manifolds.
+		if (P.pipe_type in list(ZERO, 1, 5))	//simple pipes, simple bends, and simple manifolds.
 			if(!user.transferItemToLoc(P, drop_location()))
 				return
 			to_chat(user, "<span class='notice'>You fit the pipe into \the [src].</span>")
@@ -278,7 +278,7 @@
 		if(istype(mover, /obj/projectile))
 			return prob(girderpasschance)
 		else
-			return 0
+			return ZERO
 
 /obj/structure/girder/CanAStarPass(ID, dir, caller)
 	. = !density
@@ -308,7 +308,7 @@
 	name = "reinforced girder"
 	icon_state = "reinforced"
 	state = GIRDER_REINF
-	girderpasschance = 0
+	girderpasschance = ZERO
 	max_integrity = 350
 
 
@@ -330,7 +330,7 @@
 		qdel(src)
 
 	else if(W.tool_behaviour == TOOL_WELDER)
-		if(!W.tool_start_check(user, amount=0))
+		if(!W.tool_start_check(user, amount=ZERO))
 			return
 
 		to_chat(user, "<span class='notice'>You start slicing apart the girder...</span>")
@@ -344,7 +344,7 @@
 		var/obj/item/stack/sheet/runed_metal/R = W
 		if(R.get_amount() < 1)
 			to_chat(user, "<span class='warning'>You need at least one sheet of runed metal to construct a runed wall!</span>")
-			return 0
+			return ZERO
 		user.visible_message("<span class='notice'>[user] begins laying runed metal on [src]...</span>", "<span class='notice'>You begin constructing a runed wall...</span>")
 		if(do_after(user, 50, target = src))
 			if(R.get_amount() < 1)
@@ -398,7 +398,7 @@
 /obj/structure/girder/bronze/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
 	if(W.tool_behaviour == TOOL_WELDER)
-		if(!W.tool_start_check(user, amount = 0))
+		if(!W.tool_start_check(user, amount = ZERO))
 			return
 		to_chat(user, "<span class='notice'>You start slicing apart [src]...</span>")
 		if(W.use_tool(src, user, 40, volume=50))
@@ -411,7 +411,7 @@
 		var/obj/item/stack/tile/bronze/B = W
 		if(B.get_amount() < 2)
 			to_chat(user, "<span class='warning'>You need at least two bronze sheets to build a bronze wall!</span>")
-			return 0
+			return ZERO
 		user.visible_message("<span class='notice'>[user] begins plating [src] with bronze...</span>", "<span class='notice'>You begin constructing a bronze wall...</span>")
 		if(do_after(user, 50, target = src))
 			if(B.get_amount() < 2)

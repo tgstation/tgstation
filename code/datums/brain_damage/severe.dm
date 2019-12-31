@@ -146,7 +146,7 @@
 	scan_desc = "monophobia"
 	gain_text = ""
 	lose_text = "<span class='notice'>You feel like you could be safe on your own.</span>"
-	var/stress = 0
+	var/stress = ZERO
 
 /datum/brain_trauma/severe/monophobia/on_gain()
 	..()
@@ -162,7 +162,7 @@
 		if(stress > 10 && (prob(5)))
 			stress_reaction()
 	else
-		stress = max(stress - 4, 0)
+		stress = max(stress - 4, ZERO)
 
 /datum/brain_trauma/severe/monophobia/proc/check_alone()
 	if(HAS_TRAIT(owner, TRAIT_BLIND))

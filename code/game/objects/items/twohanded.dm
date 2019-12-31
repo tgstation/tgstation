@@ -23,16 +23,16 @@
  * Twohanded
  */
 /obj/item/twohanded
-	var/wielded = 0
-	var/force_unwielded = 0
-	var/force_wielded = 0
+	var/wielded = ZERO
+	var/force_unwielded = ZERO
+	var/force_wielded = ZERO
 	var/wieldsound = null
 	var/unwieldsound = null
 
 /obj/item/twohanded/proc/unwield(mob/living/carbon/user, show_message = TRUE)
 	if(!wielded || !user)
 		return
-	wielded = 0
+	wielded = ZERO
 	if(!isnull(force_unwielded))
 		force = force_unwielded
 	var/sf = findtext(name," (Wielded)")
@@ -129,7 +129,7 @@
 	return ..()
 
 /obj/item/twohanded/offhand/dropped(mob/living/user, show_message = TRUE) //Only utilized by dismemberment since you can't normally switch to the offhand to drop it.
-	SHOULD_CALL_PARENT(0)
+	SHOULD_CALL_PARENT(ZERO)
 	var/obj/I = user.get_active_held_item()
 	if(I && istype(I, /obj/item/twohanded))
 		var/obj/item/twohanded/thw = I
@@ -165,11 +165,11 @@
 /obj/item/twohanded/required/attack_self()
 	return
 
-/obj/item/twohanded/required/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
+/obj/item/twohanded/required/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = ZERO)
 	if(wielded && !slot_flags)
 		if(!disable_warning)
 			to_chat(M, "<span class='warning'>[src] is too cumbersome to carry with anything but your hands!</span>")
-		return 0
+		return ZERO
 	return ..()
 
 /obj/item/twohanded/required/attack_hand(mob/user)//Can't even pick it up without both hands empty
@@ -236,7 +236,7 @@
 
 /obj/item/twohanded/fireaxe/Initialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
+	AddComponent(/datum/component/butchering, 100, 80, ZERO , hitsound) //axes are not known for being precision butchering tools
 
 /obj/item/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
@@ -362,10 +362,10 @@
 	else
 		user.adjustStaminaLoss(25)
 
-/obj/item/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = ZERO, damage = ZERO, attack_type = MELEE_ATTACK)
 	if(wielded)
 		return ..()
-	return 0
+	return ZERO
 
 /obj/item/twohanded/dualsaber/wield(mob/living/carbon/M) //Specific wield () hulk checks due to reflection chance for balance issues and switches hitsounds.
 	if(M.has_dna())
@@ -386,7 +386,7 @@
 	..()
 	hitsound = "swing_hit"
 	STOP_PROCESSING(SSobj, src)
-	set_light(0)
+	set_light(ZERO)
 
 /obj/item/twohanded/dualsaber/process()
 	if(wielded)
@@ -619,12 +619,12 @@
 	armour_penetration = 100
 	force_on = 30
 
-/obj/item/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = ZERO, damage = ZERO, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
 		owner.visible_message("<span class='danger'>Ranged attacks just make [owner] angrier!</span>")
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 		return 1
-	return 0
+	return ZERO
 
 //GREY TIDE
 /obj/item/twohanded/spear/grey_tide
@@ -752,7 +752,7 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 20, 105)
 
-/obj/item/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = ZERO, damage = ZERO, attack_type = MELEE_ATTACK)
 	if(wielded)
 		final_block_chance *= 2
 	if(wielded || attack_type != PROJECTILE_ATTACK)
@@ -764,7 +764,7 @@
 			else
 				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
 				return 1
-	return 0
+	return ZERO
 
 /obj/item/twohanded/vibro_weapon/update_icon()
 	icon_state = "hfrequency[wielded]"
@@ -826,8 +826,8 @@
 	if(!user?.client)
 		return
 	var/client/C = user.client
-	var/_x = 0
-	var/_y = 0
+	var/_x = ZERO
+	var/_y = ZERO
 	switch(user.dir)
 		if(NORTH)
 			_y = zoom_amt
@@ -853,5 +853,5 @@
 		user.regenerate_icons()
 		var/client/C = user.client
 		C.change_view(CONFIG_GET(string/default_view))
-		user.client.pixel_x = 0
-		user.client.pixel_y = 0
+		user.client.pixel_x = ZERO
+		user.client.pixel_y = ZERO

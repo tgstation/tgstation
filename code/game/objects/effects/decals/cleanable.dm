@@ -3,13 +3,13 @@
 	layer = ABOVE_NORMAL_TURF_LAYER
 	var/list/random_icon_states = null
 	var/blood_state = "" //I'm sorry but cleanable/blood code is ass, and so is blood_DNA
-	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
+	var/bloodiness = ZERO //ZERO-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
 	var/mergeable_decal = TRUE //when two of these are on a same tile or do we need to merge them into just one?
-	var/beauty = 0
+	var/beauty = ZERO
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	if (random_icon_states && (icon_state == initial(icon_state)) && length(random_icon_states) > 0)
+	if (random_icon_states && (icon_state == initial(icon_state)) && length(random_icon_states) > ZERO)
 		icon_state = pick(random_icon_states)
 	create_reagents(300)
 	if(loc && isturf(loc))
@@ -26,7 +26,7 @@
 		if(LAZYLEN(diseases_to_add))
 			AddComponent(/datum/component/infective, diseases_to_add)
 
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, beauty), 0)
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, beauty), ZERO)
 
 	var/turf/T = get_turf(src)
 	if(T && is_station_level(T.z))
@@ -89,7 +89,7 @@
 			var/obj/item/clothing/shoes/S = H.shoes
 			if(!S.can_be_bloody)
 				return
-			var/add_blood = 0
+			var/add_blood = ZERO
 			if(bloodiness >= BLOOD_GAIN_PER_STEP)
 				add_blood = BLOOD_GAIN_PER_STEP
 			else
@@ -105,4 +105,4 @@
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
 		return bloodiness
 	else
-		return 0
+		return ZERO

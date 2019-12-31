@@ -14,11 +14,11 @@
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
-	var/scanning = 0
+	var/scanning = ZERO
 	var/list/log = list()
 	var/range = 8
 	var/view_check = TRUE
-	var/forensicPrintCount = 0
+	var/forensicPrintCount = ZERO
 	actions_types = list(/datum/action/item_action/displayDetectiveScanResults)
 
 /datum/action/item_action/displayDetectiveScanResults
@@ -62,7 +62,7 @@
 
 	// Clear the logs
 	log = list()
-	scanning = 0
+	scanning = ZERO
 
 /obj/item/detective_scanner/afterattack(atom/A, mob/user, params)
 	. = ..()
@@ -70,7 +70,7 @@
 	return FALSE
 
 /obj/item/detective_scanner/proc/scan(atom/A, mob/user)
-	set waitfor = 0
+	set waitfor = ZERO
 	if(!scanning)
 		// Can remotely scan objects and mobs.
 		if((get_dist(A, user) > range) || (!(A in view(range, user)) && view_check) || (loc != user))
@@ -121,8 +121,8 @@
 
 		// We gathered everything. Create a fork and slowly display the results to the holder of the scanner.
 
-		var/found_something = 0
-		add_log("<B>[station_time_timestamp()][get_timestamp()] - [target_name]</B>", 0)
+		var/found_something = ZERO
+		add_log("<B>[station_time_timestamp()][get_timestamp()] - [target_name]</B>", ZERO)
 
 		// Fingerprints
 		if(length(fingerprints))
@@ -169,8 +169,8 @@
 			if(holder)
 				to_chat(holder, "<span class='notice'>You finish scanning \the [target_name].</span>")
 
-		add_log("---------------------------------------------------------", 0)
-		scanning = 0
+		add_log("---------------------------------------------------------", ZERO)
+		scanning = ZERO
 		return
 
 /obj/item/detective_scanner/proc/add_log(msg, broadcast = 1)

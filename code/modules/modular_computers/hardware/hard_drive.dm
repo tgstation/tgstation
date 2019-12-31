@@ -7,7 +7,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	device_type = MC_HDD
 	var/max_capacity = 128
-	var/used_capacity = 0
+	var/used_capacity = ZERO
 	var/list/stored_files = list()		// List of stored files on this drive. DO NOT MODIFY DIRECTLY!
 
 /obj/item/computer_hardware/hard_drive/on_remove(obj/item/modular_computer/MC, mob/user)
@@ -28,50 +28,50 @@
 	to_chat(user, "NT-NFS File Table Status: [stored_files.len]/999")
 	to_chat(user, "Storage capacity: [used_capacity]/[max_capacity]GQ")
 
-// Use this proc to add file to the drive. Returns 1 on success and 0 on failure. Contains necessary sanity checks.
+// Use this proc to add file to the drive. Returns 1 on success and ZERO on failure. Contains necessary sanity checks.
 /obj/item/computer_hardware/hard_drive/proc/store_file(var/datum/computer_file/F)
 	if(!F || !istype(F))
-		return 0
+		return ZERO
 
 	if(!can_store_file(F))
-		return 0
+		return ZERO
 
 	if(!check_functionality())
-		return 0
+		return ZERO
 
 	if(!stored_files)
-		return 0
+		return ZERO
 
 	// This file is already stored. Don't store it again.
 	if(F in stored_files)
-		return 0
+		return ZERO
 
 	F.holder = src
 	stored_files.Add(F)
 	recalculate_size()
 	return 1
 
-// Use this proc to remove file from the drive. Returns 1 on success and 0 on failure. Contains necessary sanity checks.
+// Use this proc to remove file from the drive. Returns 1 on success and ZERO on failure. Contains necessary sanity checks.
 /obj/item/computer_hardware/hard_drive/proc/remove_file(var/datum/computer_file/F)
 	if(!F || !istype(F))
-		return 0
+		return ZERO
 
 	if(!stored_files)
-		return 0
+		return ZERO
 
 	if(!check_functionality())
-		return 0
+		return ZERO
 
 	if(F in stored_files)
 		stored_files -= F
 		recalculate_size()
 		return 1
 	else
-		return 0
+		return ZERO
 
 // Loops through all stored files and recalculates used_capacity of this drive
 /obj/item/computer_hardware/hard_drive/proc/recalculate_size()
-	var/total_size = 0
+	var/total_size = ZERO
 	for(var/datum/computer_file/F in stored_files)
 		total_size += F.size
 
@@ -80,22 +80,22 @@
 // Checks whether file can be stored on the hard drive. We can only store unique files, so this checks whether we wouldn't get a duplicity by adding a file.
 /obj/item/computer_hardware/hard_drive/proc/can_store_file(var/datum/computer_file/F)
 	if(!F || !istype(F))
-		return 0
+		return ZERO
 
 	if(F in stored_files)
-		return 0
+		return ZERO
 
 	var/name = F.filename + "." + F.filetype
 	for(var/datum/computer_file/file in stored_files)
 		if((file.filename + "." + file.filetype) == name)
-			return 0
+			return ZERO
 
 	// In the unlikely event someone manages to create that many files.
 	// BYOND is acting weird with numbers above 999 in loops (infinite loop prevention)
 	if(stored_files.len >= 999)
-		return 0
+		return ZERO
 	if((used_capacity + F.size) > max_capacity)
-		return 0
+		return ZERO
 	else
 		return 1
 

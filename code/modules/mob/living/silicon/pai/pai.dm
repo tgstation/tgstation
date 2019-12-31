@@ -39,8 +39,8 @@
 	var/screen				// Which screen our main window displays
 	var/subscreen			// Which specific function of the main screen is being displayed
 
-	var/secHUD = 0			// Toggles whether the Security HUD is active or not
-	var/medHUD = 0			// Toggles whether the Medical  HUD is active or not
+	var/secHUD = ZERO			// Toggles whether the Security HUD is active or not
+	var/medHUD = ZERO			// Toggles whether the Medical  HUD is active or not
 
 	var/datum/data/record/medicalActive1		// Datacore record declarations for record software
 	var/datum/data/record/medicalActive2
@@ -49,7 +49,7 @@
 	var/datum/data/record/securityActive2
 
 	var/obj/machinery/door/hackdoor		// The airlock being hacked
-	var/hackprogress = 0				// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
+	var/hackprogress = ZERO				// Possible values: ZERO - 100, >= 100 means the hack is complete and will be reset upon next check
 
 	var/obj/item/integrated_signaler/signaler // AI's signaller
 
@@ -76,9 +76,9 @@
 	var/emitteroverloadcd = 100
 	var/emittersemicd = FALSE
 
-	var/overload_ventcrawl = 0
-	var/overload_bulletblock = 0	//Why is this a good idea?
-	var/overload_maxhealth = 0
+	var/overload_ventcrawl = ZERO
+	var/overload_bulletblock = ZERO	//Why is this a good idea?
+	var/overload_maxhealth = ZERO
 	var/silent = FALSE
 	var/brightness_power = 5
 
@@ -135,17 +135,17 @@
 
 /mob/living/silicon/pai/proc/process_hack()
 	if(cable && cable.machine && istype(cable.machine, /obj/machinery/door) && cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
-		hackprogress = CLAMP(hackprogress + 4, 0, 100)
+		hackprogress = CLAMP(hackprogress + 4, ZERO, 100)
 	else
 		temp = "Door Jack: Connection to airlock has been lost. Hack aborted."
-		hackprogress = 0
+		hackprogress = ZERO
 		hacking = FALSE
 		hackdoor = null
 		return
-	if(screen == "doorjack" && subscreen == 0) // Update our view, if appropriate
+	if(screen == "doorjack" && subscreen == ZERO) // Update our view, if appropriate
 		paiInterface()
 	if(hackprogress >= 100)
-		hackprogress = 0
+		hackprogress = ZERO
 		var/obj/machinery/door/D = cable.machine
 		D.open()
 		hacking = FALSE
@@ -199,7 +199,7 @@
 
 /datum/action/innate/pai/Trigger()
 	if(!ispAI(owner))
-		return 0
+		return ZERO
 	P = owner
 
 /datum/action/innate/pai/software
@@ -219,7 +219,7 @@
 /datum/action/innate/pai/shell/Trigger()
 	..()
 	if(P.holoform)
-		P.fold_in(0)
+		P.fold_in(ZERO)
 	else
 		P.fold_out()
 
@@ -251,7 +251,7 @@
 	..()
 	P.toggle_integrated_light()
 
-/mob/living/silicon/pai/Process_Spacemove(movement_dir = 0)
+/mob/living/silicon/pai/Process_Spacemove(movement_dir = ZERO)
 	. = ..()
 	if(!.)
 		add_movespeed_modifier(MOVESPEED_ID_PAI_SPACEWALK_SPEEDMOD, TRUE, 100, multiplicative_slowdown = 2)
@@ -274,7 +274,7 @@
 			QDEL_NULL(cable)
 	if(hacking)
 		process_hack()
-	silent = max(silent - 1, 0)
+	silent = max(silent - 1, ZERO)
 
 /mob/living/silicon/pai/updatehealth()
 	if(status_flags & GODMODE)

@@ -53,8 +53,8 @@
 	for(var/gas in filtering.gases & scrubbing)
 		filtered.add_gas(gas)
 		filtered.gases[gas][MOLES] = filtering.gases[gas][MOLES] // Shuffle the "bad" gasses to the filtered mixture.
-		filtering.gases[gas][MOLES] = 0
-	filtering.garbage_collect() // Now that the gasses are set to 0, clean up the mixture.
+		filtering.gases[gas][MOLES] = ZERO
+	filtering.garbage_collect() // Now that the gasses are set to ZERO, clean up the mixture.
 
 	air_contents.merge(filtered) // Store filtered out gasses.
 	mixture.merge(filtering) // Returned the cleaned gas.
@@ -80,8 +80,8 @@
 /obj/machinery/portable_atmospherics/scrubber/ui_data()
 	var/data = list()
 	data["on"] = on
-	data["connected"] = connected_port ? 1 : 0
-	data["pressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
+	data["connected"] = connected_port ? 1 : ZERO
+	data["pressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : ZERO)
 
 	data["id_tag"] = -1 //must be defined in order to reuse code between portable and vent scrubbers
 	data["filter_types"] = list()

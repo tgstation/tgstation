@@ -31,7 +31,7 @@
 			set_light(brightness_on)
 	else
 		icon_state = initial(icon_state)
-		set_light(0)
+		set_light(ZERO)
 
 /obj/item/flashlight/attack_self(mob/user)
 	on = !on
@@ -117,7 +117,7 @@
 						var/obj/item/organ/O = mouth_organs[I]
 						organ_list += (O.gender == "plural" ? O.name : "\an [O.name]")
 
-				var/pill_count = 0
+				var/pill_count = ZERO
 				for(var/datum/action/item_action/hands_free/activate_pill/AP in M.actions)
 					pill_count++
 
@@ -128,13 +128,13 @@
 						if(mirror)
 							switch(user.dir)
 								if(NORTH)
-									can_use_mirror = mirror.pixel_y > 0
+									can_use_mirror = mirror.pixel_y > ZERO
 								if(SOUTH)
-									can_use_mirror = mirror.pixel_y < 0
+									can_use_mirror = mirror.pixel_y < ZERO
 								if(EAST)
-									can_use_mirror = mirror.pixel_x > 0
+									can_use_mirror = mirror.pixel_x > ZERO
 								if(WEST)
-									can_use_mirror = mirror.pixel_x < 0
+									can_use_mirror = mirror.pixel_x < ZERO
 
 					M.visible_message("<span class='notice'>[M] directs [src] to [their] mouth.</span>", \
 					"<span class='notice'>You point [src] into your mouth.</span>")
@@ -168,7 +168,7 @@
 	item_state = ""
 	flags_1 = CONDUCT_1
 	brightness_on = 2
-	var/holo_cooldown = 0
+	var/holo_cooldown = ZERO
 
 /obj/item/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
@@ -255,7 +255,7 @@
 	icon_state = "flare"
 	item_state = "flare"
 	actions_types = list()
-	var/fuel = 0
+	var/fuel = ZERO
 	var/on_damage = 7
 	var/produce_heat = 1500
 	heat = 1000
@@ -268,7 +268,7 @@
 
 /obj/item/flashlight/flare/process()
 	open_flame(heat)
-	fuel = max(fuel - 1, 0)
+	fuel = max(fuel - 1, ZERO)
 	if(!fuel || !on)
 		turn_off()
 		if(!fuel)
@@ -369,7 +369,7 @@
 /obj/item/flashlight/emp
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
-	var/charge_tick = 0
+	var/charge_tick = ZERO
 
 /obj/item/flashlight/emp/New()
 	..()
@@ -383,7 +383,7 @@
 	charge_tick++
 	if(charge_tick < 10)
 		return FALSE
-	charge_tick = 0
+	charge_tick = ZERO
 	emp_cur_charges = min(emp_cur_charges+1, emp_max_charges)
 	return TRUE
 
@@ -397,7 +397,7 @@
 	if(!proximity)
 		return
 
-	if(emp_cur_charges > 0)
+	if(emp_cur_charges > ZERO)
 		emp_cur_charges -= 1
 
 		if(ismob(A))
@@ -430,7 +430,7 @@
 	icon_state = "glowstick"
 	item_state = "glowstick"
 	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
-	var/fuel = 0
+	var/fuel = ZERO
 
 /obj/item/flashlight/glowstick/Initialize()
 	fuel = rand(1600, 2000)
@@ -442,7 +442,7 @@
 	. = ..()
 
 /obj/item/flashlight/glowstick/process()
-	fuel = max(fuel - 1, 0)
+	fuel = max(fuel - 1, ZERO)
 	if(!fuel)
 		turn_off()
 		STOP_PROCESSING(SSobj, src)
@@ -458,7 +458,7 @@
 	if(!fuel)
 		icon_state = "glowstick-empty"
 		cut_overlays()
-		set_light(0)
+		set_light(ZERO)
 	else if(on)
 		var/mutable_appearance/glowstick_overlay = mutable_appearance(icon, "glowstick-glow")
 		glowstick_overlay.color = color
@@ -491,7 +491,7 @@
 		user.visible_message("<span class='suicide'>[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but [user.p_they()] don't have any!</span>")
 		return SHAME
 	user.visible_message("<span class='suicide'>[user] is squirting [src]'s fluids into [user.p_their()] eyes! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	fuel = 0
+	fuel = ZERO
 	return (FIRELOSS)
 
 /obj/item/flashlight/glowstick/red
@@ -532,11 +532,11 @@
 	desc = "Groovy..."
 	icon_state = null
 	light_color = null
-	brightness_on = 0
-	light_range = 0
+	brightness_on = ZERO
+	light_range = ZERO
 	light_power = 10
-	alpha = 0
-	layer = 0
+	alpha = ZERO
+	layer = ZERO
 	on = TRUE
 	anchored = TRUE
 	var/range = null

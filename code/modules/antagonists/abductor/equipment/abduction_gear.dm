@@ -23,7 +23,7 @@
 		/obj/item/restraints/handcuffs
 		)
 	var/mode = VEST_STEALTH
-	var/stealth_active = 0
+	var/stealth_active = ZERO
 	var/combat_cooldown = 10
 	var/datum/icon_snapshot/disguise
 	var/stealth_armor = list("melee" = 15, "bullet" = 15, "laser" = 15, "energy" = 25, "bomb" = 15, "bio" = 15, "rad" = 15, "fire" = 70, "acid" = 70)
@@ -79,7 +79,7 @@
 /obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
 	if(!stealth_active)
 		return
-	stealth_active = 0
+	stealth_active = ZERO
 	if(ishuman(loc))
 		var/mob/living/carbon/human/M = loc
 		new /obj/effect/temp_visual/dir_setting/ninja(get_turf(M), M.dir)
@@ -87,7 +87,7 @@
 		M.cut_overlays()
 		M.regenerate_icons()
 
-/obj/item/clothing/suit/armor/abductor/vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/armor/abductor/vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = ZERO, damage = ZERO, attack_type = MELEE_ATTACK)
 	DeactivateStealth()
 
 /obj/item/clothing/suit/armor/abductor/vest/IsReflect()
@@ -110,12 +110,12 @@
 			return
 		var/mob/living/carbon/human/M = loc
 		M.adjustStaminaLoss(-75)
-		M.SetUnconscious(0)
-		M.SetStun(0)
-		M.SetKnockdown(0)
-		M.SetImmobilized(0)
-		M.SetParalyzed(0)
-		combat_cooldown = 0
+		M.SetUnconscious(ZERO)
+		M.SetStun(ZERO)
+		M.SetKnockdown(ZERO)
+		M.SetImmobilized(ZERO)
+		M.SetParalyzed(ZERO)
+		combat_cooldown = ZERO
 		START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/armor/abductor/vest/process()
@@ -280,9 +280,9 @@
 	for(var/obj/I in all_items)
 		if(istype(I, /obj/item/radio/))
 			var/obj/item/radio/r = I
-			r.listening = 0
+			r.listening = ZERO
 			if(!istype(I, /obj/item/radio/headset))
-				r.broadcasting = 0 //goddamned headset hacks
+				r.broadcasting = ZERO //goddamned headset hacks
 
 /obj/item/abductor/mind_device
 	name = "mental interface device"
@@ -341,7 +341,7 @@
 		if(QDELETED(G))
 			return
 
-		if(C.anti_magic_check(FALSE, FALSE, TRUE, 0))
+		if(C.anti_magic_check(FALSE, FALSE, TRUE, ZERO))
 			to_chat(user, "<span class='warning'>Your target seems to have some sort of tinfoil protection on, blocking the message from being sent!</span>")
 			return
 
@@ -424,7 +424,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/paper/guides/antag/abductor/AltClick()
 	return //otherwise it would fold into a paperplane.
 
-#define BATON_STUN 0
+#define BATON_STUN ZERO
 #define BATON_SLEEP 1
 #define BATON_CUFF 2
 #define BATON_PROBE 3
@@ -539,7 +539,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		L.Sleeping(1200)
 		log_combat(user, L, "put to sleep")
 	else
-		if(L.anti_magic_check(FALSE, FALSE, TRUE, 0))
+		if(L.anti_magic_check(FALSE, FALSE, TRUE, ZERO))
 			to_chat(user, "<span class='warning'>The specimen's tinfoil protection is completely blocking our sleep inducement methods!</span>")
 			L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src], but [L.p_their()] tinfoil protection completely protected [L.p_them()]!</span>", \
 								"<span class='userdanger'>Any sense of drowsiness is quickly diminished as your tinfoil protection deflects the effects!</span>")
@@ -610,7 +610,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	user.visible_message("<span class='danger'>[user]'s [name] breaks in a discharge of energy!</span>", \
 							"<span class='userdanger'>[user]'s [name] breaks in a discharge of energy!</span>")
 	var/datum/effect_system/spark_spread/S = new
-	S.set_up(4,0,user.loc)
+	S.set_up(4,ZERO,user.loc)
 	S.start()
 	. = ..()
 
@@ -843,5 +843,5 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "abductor"
 	item_state = "bl_suit"
 	mob_overlay_icon = 'icons/mob/clothing/under/syndicate.dmi'
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, rad = 0, fire = 0, acid = 0)
-	can_adjust = 0
+	armor = list(melee = ZERO, bullet = ZERO, laser = ZERO, energy = ZERO, bomb = 10, bio = 10, rad = ZERO, fire = ZERO, acid = ZERO)
+	can_adjust = ZERO

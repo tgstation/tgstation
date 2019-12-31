@@ -17,11 +17,11 @@
 	var/turf/open/floor/plating/turf_type = /turf/open/floor/plating/asteroid/airless
 	var/obj/item/stack/ore/mineralType = null
 	var/mineralAmt = 3
-	var/spread = 0 //will the seam spread?
-	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
-	var/last_act = 0
+	var/spread = ZERO //will the seam spread?
+	var/spreadChance = ZERO //the percentual chance of an ore spreading to the neighbouring tiles
+	var/last_act = ZERO
 	var/scan_state = "" //Holder for the image we display when we're pinged by a mining scanner
-	var/defer_change = 0
+	var/defer_change = ZERO
 
 /turf/closed/mineral/Initialize()
 	if (!canSmoothWith)
@@ -70,13 +70,13 @@
 		return attack_hand(user)
 
 /turf/closed/mineral/proc/gets_drilled(user, give_exp = FALSE)
-	if (mineralType && (mineralAmt > 0))
+	if (mineralType && (mineralAmt > ZERO))
 		new mineralType(src, mineralAmt)
 		SSblackbox.record_feedback("tally", "ore_mined", mineralAmt, mineralType)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(give_exp)
-			if (mineralType && (mineralAmt > 0))
+			if (mineralType && (mineralAmt > ZERO))
 				H.mind.adjust_experience(/datum/skill/mining, initial(mineralType.mine_experience) * mineralAmt)
 			else
 				H.mind.adjust_experience(/datum/skill/mining, 4)
@@ -272,7 +272,7 @@
 
 /turf/closed/mineral/diamond
 	mineralType = /obj/item/stack/ore/diamond
-	spreadChance = 0
+	spreadChance = ZERO
 	spread = 1
 	scan_state = "rock_Diamond"
 
@@ -362,16 +362,16 @@
 /turf/closed/mineral/bananium
 	mineralType = /obj/item/stack/ore/bananium
 	mineralAmt = 3
-	spreadChance = 0
-	spread = 0
+	spreadChance = ZERO
+	spread = ZERO
 	scan_state = "rock_Bananium"
 
 
 /turf/closed/mineral/bscrystal
 	mineralType = /obj/item/stack/ore/bluespace_crystal
 	mineralAmt = 1
-	spreadChance = 0
-	spread = 0
+	spreadChance = ZERO
+	spread = ZERO
 	scan_state = "rock_BScrystal"
 
 /turf/closed/mineral/bscrystal/volcanic
@@ -435,8 +435,8 @@
 
 /turf/closed/mineral/gibtonite
 	mineralAmt = 1
-	spreadChance = 0
-	spread = 0
+	spreadChance = ZERO
+	spread = ZERO
 	scan_state = "rock_Gibtonite"
 	var/det_time = 8 //Countdown till explosion, but also rewards the player for how close you were to detonation when you defuse it
 	var/stage = GIBTONITE_UNSTRUCK //How far into the lifecycle of gibtonite we are
@@ -454,7 +454,7 @@
 		defuse()
 	..()
 
-/turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null, triggered_by_explosion = 0)
+/turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null, triggered_by_explosion = ZERO)
 	if(stage == GIBTONITE_UNSTRUCK)
 		activated_overlay = mutable_appearance('icons/turf/smoothrocks.dmi', "rock_Gibtonite_active", ON_EDGED_TURF_LAYER)
 		add_overlay(activated_overlay)
@@ -463,7 +463,7 @@
 		stage = GIBTONITE_ACTIVE
 		visible_message("<span class='danger'>There was gibtonite inside! It's going to explode!</span>")
 
-		var/notify_admins = 0
+		var/notify_admins = ZERO
 		if(z != 5)
 			notify_admins = TRUE
 
@@ -474,15 +474,15 @@
 
 		countdown(notify_admins)
 
-/turf/closed/mineral/gibtonite/proc/countdown(notify_admins = 0)
-	set waitfor = 0
-	while(istype(src, /turf/closed/mineral/gibtonite) && stage == GIBTONITE_ACTIVE && det_time > 0 && mineralAmt >= 1)
+/turf/closed/mineral/gibtonite/proc/countdown(notify_admins = ZERO)
+	set waitfor = ZERO
+	while(istype(src, /turf/closed/mineral/gibtonite) && stage == GIBTONITE_ACTIVE && det_time > ZERO && mineralAmt >= 1)
 		det_time--
 		sleep(5)
 	if(istype(src, /turf/closed/mineral/gibtonite))
-		if(stage == GIBTONITE_ACTIVE && det_time <= 0 && mineralAmt >= 1)
+		if(stage == GIBTONITE_ACTIVE && det_time <= ZERO && mineralAmt >= 1)
 			var/turf/bombturf = get_turf(src)
-			mineralAmt = 0
+			mineralAmt = ZERO
 			stage = GIBTONITE_DETONATE
 			explosion(bombturf,1,3,5, adminlog = notify_admins)
 
@@ -493,23 +493,23 @@
 		add_overlay(activated_overlay)
 		desc = "An inactive gibtonite reserve. The ore can be extracted."
 		stage = GIBTONITE_STABLE
-		if(det_time < 0)
-			det_time = 0
+		if(det_time < ZERO)
+			det_time = ZERO
 		visible_message("<span class='notice'>The chain reaction was stopped! The gibtonite had [det_time] reactions left till the explosion!</span>")
 
-/turf/closed/mineral/gibtonite/gets_drilled(mob/user, triggered_by_explosion = 0)
+/turf/closed/mineral/gibtonite/gets_drilled(mob/user, triggered_by_explosion = ZERO)
 	if(stage == GIBTONITE_UNSTRUCK && mineralAmt >= 1) //Gibtonite deposit is activated
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,TRUE)
 		explosive_reaction(user, triggered_by_explosion)
 		return
 	if(stage == GIBTONITE_ACTIVE && mineralAmt >= 1) //Gibtonite deposit goes kaboom
 		var/turf/bombturf = get_turf(src)
-		mineralAmt = 0
+		mineralAmt = ZERO
 		stage = GIBTONITE_DETONATE
-		explosion(bombturf,1,2,5, adminlog = 0)
+		explosion(bombturf,1,2,5, adminlog = ZERO)
 	if(stage == GIBTONITE_STABLE) //Gibtonite deposit is now benign and extractable. Depending on how close you were to it blowing up before defusing, you get better quality ore.
 		var/obj/item/twohanded/required/gibtonite/G = new (src)
-		if(det_time <= 0)
+		if(det_time <= ZERO)
 			G.quality = 3
 			G.icon_state = "Gibtonite ore 3"
 		if(det_time >= 1 && det_time <= 2)

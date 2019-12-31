@@ -9,7 +9,7 @@
 	resistance_flags = FIRE_PROOF
 	icon_state = "plasmaman_suit"
 	item_state = "plasmaman_suit"
-	var/next_extinguish = 0
+	var/next_extinguish = ZERO
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 10
 
@@ -136,11 +136,11 @@
 	if(on)
 		if(!up)
 			to_chat(user, "<span class='notice'>Your helmet's torch can't pass through your welding visor!</span>")
-			set_light(0)
+			set_light(ZERO)
 		else
 			set_light(brightness_on)
 	else
-		set_light(0)
+		set_light(ZERO)
 
 	for(var/X in actions)
 		var/datum/action/A=X

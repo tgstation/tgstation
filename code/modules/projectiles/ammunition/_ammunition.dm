@@ -5,7 +5,7 @@
 	icon_state = "s-casing"
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	throwforce = 0
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = 500)
 	var/fire_sound = null						//What sound should play when this ammo is fired
@@ -13,10 +13,10 @@
 	var/projectile_type = null					//The bullet type to create when New() is called
 	var/obj/projectile/BB = null 			//The loaded bullet
 	var/pellets = 1								//Pellets for spreadshot
-	var/variance = 0							//Variance for inaccuracy fundamental to the casing
-	var/randomspread = 0						//Randomspread for automatics
-	var/delay = 0								//Delay for energy weapons
-	var/click_cooldown_override = 0				//Override this to make your gun have a faster fire rate, in tenths of a second. 4 is the default gun cooldown.
+	var/variance = ZERO							//Variance for inaccuracy fundamental to the casing
+	var/randomspread = ZERO						//Randomspread for automatics
+	var/delay = ZERO								//Delay for energy weapons
+	var/click_cooldown_override = ZERO				//Override this to make your gun have a faster fire rate, in tenths of a second. 4 is the default gun cooldown.
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect	//the visual effect appearing when the ammo is fired.
 	var/heavy_metal = TRUE
 	var/harmful = TRUE //pacifism check for boolet, set to FALSE if bullet is non-lethal
@@ -55,16 +55,16 @@
 	if(istype(I, /obj/item/ammo_box))
 		var/obj/item/ammo_box/box = I
 		if(isturf(loc))
-			var/boolets = 0
+			var/boolets = ZERO
 			for(var/obj/item/ammo_casing/bullet in loc)
 				if (box.stored_ammo.len >= box.max_ammo)
 					break
 				if (bullet.BB)
-					if (box.give_round(bullet, 0))
+					if (box.give_round(bullet, ZERO))
 						boolets++
 				else
 					continue
-			if (boolets > 0)
+			if (boolets > ZERO)
 				box.update_icon()
 				to_chat(user, "<span class='notice'>You collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s.</span>")
 			else

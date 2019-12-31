@@ -19,13 +19,13 @@
  	///Contains the last message sent by this client - used to protect against copy-paste spamming.
 	var/last_message = ""
 	///contins a number of how many times a message identical to last_message was sent.
-	var/last_message_count = 0
+	var/last_message_count = ZERO
 	///How many messages sent in the last 10 seconds
-	var/total_message_count = 0
+	var/total_message_count = ZERO
 	///Next tick to reset the total message counter
-	var/total_count_reset = 0
+	var/total_count_reset = ZERO
 	///Internal counter for clients sending external (IRC/Discord) relay messages via ahelp to prevent spamming. Set to a number every time an admin reply is sent, decremented for every client send.
-	var/externalreplyamount = 0
+	var/externalreplyamount = ZERO
 
 		/////////
 		//OTHER//
@@ -33,9 +33,9 @@
 	///Player preferences datum for the client
 	var/datum/preferences/prefs = null
 	///last turn of the controlled mob, I think this is only used by mechs?
-	var/last_turn = 0
+	var/last_turn = ZERO
 	///Move delay of controlled mob, related to input handling
-	var/move_delay = 0
+	var/move_delay = ZERO
 	///Current area of the controlled mob
 	var/area = null
 
@@ -84,9 +84,9 @@
 	var/datum/tooltip/tooltips
 
 	///Last ping of the client
-	var/lastping = 0
+	var/lastping = ZERO
 	///Average ping of the client
-	var/avgping = 0
+	var/avgping = ZERO
  	///world.time they connected
 	var/connection_time
  	///world.realtime they connected
@@ -114,11 +114,11 @@
 	var/list/char_render_holders
 
 	///Amount of keydowns in the last keysend checking interval
-	var/client_keysend_amount = 0
+	var/client_keysend_amount = ZERO
 	///World tick time where client_keysend_amount will reset
-	var/next_keysend_reset = 0
+	var/next_keysend_reset = ZERO
 	///World tick time where keysend_tripped will reset back to false
-	var/next_keysend_trip_reset = 0
+	var/next_keysend_trip_reset = ZERO
 	///When set to true, user will be autokicked if they trip the keysends in a second limit again
 	var/keysend_tripped = FALSE
 	///custom movement keys for this client

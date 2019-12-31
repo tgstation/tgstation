@@ -13,27 +13,27 @@
 	var/obj/item/modular_computer/tablet/fabricated_tablet = null
 
 	// Utility vars
-	var/state = 0 							// 0: Select device type, 1: Select loadout, 2: Payment, 3: Thankyou screen
-	var/devtype = 0 						// 0: None(unselected), 1: Laptop, 2: Tablet
-	var/total_price = 0						// Price of currently vended device.
-	var/credits = 0
+	var/state = ZERO 							// ZERO: Select device type, 1: Select loadout, 2: Payment, 3: Thankyou screen
+	var/devtype = ZERO 						// ZERO: None(unselected), 1: Laptop, 2: Tablet
+	var/total_price = ZERO						// Price of currently vended device.
+	var/credits = ZERO
 
 	// Device loadout
 	var/dev_cpu = 1							// 1: Default, 2: Upgraded
 	var/dev_battery = 1						// 1: Default, 2: Upgraded, 3: Advanced
 	var/dev_disk = 1						// 1: Default, 2: Upgraded, 3: Advanced
-	var/dev_netcard = 0						// 0: None, 1: Basic, 2: Long-Range
-	var/dev_apc_recharger = 0				// 0: None, 1: Standard (LAPTOP ONLY)
-	var/dev_printer = 0						// 0: None, 1: Standard
-	var/dev_card = 0						// 0: None, 1: Standard
+	var/dev_netcard = ZERO						// ZERO: None, 1: Basic, 2: Long-Range
+	var/dev_apc_recharger = ZERO				// ZERO: None, 1: Standard (LAPTOP ONLY)
+	var/dev_printer = ZERO						// ZERO: None, 1: Standard
+	var/dev_card = ZERO						// ZERO: None, 1: Standard
 
 	ui_x = 500
 	ui_y = 400
 
 // Removes all traces of old order and allows you to begin configuration from scratch.
 /obj/machinery/lapvend/proc/reset_order()
-	state = 0
-	devtype = 0
+	state = ZERO
+	devtype = ZERO
 	if(fabricated_laptop)
 		qdel(fabricated_laptop)
 		fabricated_laptop = null
@@ -43,14 +43,14 @@
 	dev_cpu = 1
 	dev_battery = 1
 	dev_disk = 1
-	dev_netcard = 0
-	dev_apc_recharger = 0
-	dev_printer = 0
-	dev_card = 0
+	dev_netcard = ZERO
+	dev_apc_recharger = ZERO
+	dev_printer = ZERO
+	dev_card = ZERO
 
 // Recalculates the price and optionally even fabricates the device.
 /obj/machinery/lapvend/proc/fabricate_and_recalc_price(fabricate = FALSE)
-	total_price = 0
+	total_price = ZERO
 	if(devtype == 1) 		// Laptop, generally cheaper to make it accessible for most station roles
 		var/obj/item/computer_hardware/battery/battery_module = null
 		if(fabricate)

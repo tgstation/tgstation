@@ -226,7 +226,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	item_state = "sheet-wood"
 	icon = 'icons/obj/stack_objects.dmi'
 	sheettype = "wood"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = ZERO)
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/wood
 	novariants = TRUE
@@ -256,7 +256,7 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	item_state = "sheet-bamboo"
 	icon = 'icons/obj/stack_objects.dmi'
 	throwforce = 15
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = ZERO)
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/bamboo
 	grind_results = list(/datum/reagent/cellulose = 10)
@@ -303,8 +303,8 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	icon_state = "sheet-cloth"
 	item_state = "sheet-cloth"
 	resistance_flags = FLAMMABLE
-	force = 0
-	throwforce = 0
+	force = ZERO
+	throwforce = ZERO
 	merge_type = /obj/item/stack/sheet/cloth
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound =  'sound/items/handling/cloth_pickup.ogg'
@@ -334,8 +334,8 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	icon_state = "sheet-durathread"
 	item_state = "sheet-cloth"
 	resistance_flags = FLAMMABLE
-	force = 0
-	throwforce = 0
+	force = ZERO
+	throwforce = ZERO
 	merge_type = /obj/item/stack/sheet/durathread
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound =  'sound/items/handling/cloth_pickup.ogg'
@@ -350,8 +350,8 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	singular_name = "raw cotton ball"
 	icon_state = "sheet-cotton"
 	resistance_flags = FLAMMABLE
-	force = 0
-	throwforce = 0
+	force = ZERO
+	throwforce = ZERO
 	merge_type = /obj/item/stack/sheet/cotton
 	var/pull_effort = 30
 	var/loom_result = /obj/item/stack/sheet/cloth
@@ -432,8 +432,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 	icon_state = "sheet-card"
 	item_state = "sheet-card"
 	resistance_flags = FLAMMABLE
-	force = 0
-	throwforce = 0
+	force = ZERO
+	throwforce = ZERO
 	merge_type = /obj/item/stack/sheet/cardboard
 	novariants = TRUE
 	grind_results = list(/datum/reagent/cellulose = 10)
@@ -451,7 +451,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 		if(use(1))
 			playsound(I, 'sound/items/bikehorn.ogg', 50, TRUE, -1)
 			to_chat(user, "<span class='notice'>You stamp the cardboard! It's a clown box! Honk!</span>")
-			if (amount >= 0)
+			if (amount >= ZERO)
 				new/obj/item/storage/box/clown(droploc) //bugfix
 	else
 		. = ..()
@@ -513,15 +513,15 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	new/datum/stack_recipe("wall gear", /obj/structure/girder/bronze, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
 	null,
-	new/datum/stack_recipe("directional bronze window", /obj/structure/window/bronze/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("fulltile bronze window", /obj/structure/window/bronze/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("directional bronze window", /obj/structure/window/bronze/unanchored, time = ZERO, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("fulltile bronze window", /obj/structure/window/bronze/fulltile/unanchored, 2, time = ZERO, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("pinion airlock assembly", /obj/structure/door_assembly/door_assembly_bronze, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("bronze pinion airlock assembly", /obj/structure/door_assembly/door_assembly_bronze/seethru, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("bronze hat", /obj/item/clothing/head/bronze), \
 	new/datum/stack_recipe("bronze suit", /obj/item/clothing/suit/bronze), \
 	new/datum/stack_recipe("bronze boots", /obj/item/clothing/shoes/bronze), \
 	null,
-	new/datum/stack_recipe("bronze chair", /obj/structure/chair/bronze, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("bronze chair", /obj/structure/chair/bronze, 1, time = ZERO, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("Marx Bust", /obj/structure/statue/bronze/marx, 15, one_per_turf = 1, on_floor = 1), \
 ))
 
@@ -549,8 +549,8 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 
 /obj/item/stack/sheet/paperframes/Initialize()
 	. = ..()
-	pixel_x = 0
-	pixel_y = 0
+	pixel_x = ZERO
+	pixel_y = ZERO
 
 /obj/item/stack/tile/bronze/thirty
 	amount = 30

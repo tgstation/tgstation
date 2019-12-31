@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	var/aggressiveness = AGGR_BAD_COP
 	var/overuse_cooldown = FALSE
-	var/recent_uses = 0
+	var/recent_uses = ZERO
 	var/broken_hailer = FALSE
 	var/safety = TRUE
 
@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	item_state = "swat"
 	aggressiveness = AGGR_SHIT_COP
 	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDEEYES | HIDEEARS | HIDEHAIR
-	visor_flags_inv = 0
+	visor_flags_inv = ZERO
 
 /obj/item/clothing/mask/gas/sechailer/swat/spacepol
 	name = "spacepol mask"
@@ -129,7 +129,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	// handle recent uses for overuse
 	recent_uses++
 	if(!overuse_cooldown) // check if we can reset recent uses
-		recent_uses = 0
+		recent_uses = ZERO
 		overuse_cooldown = TRUE
 		addtimer(CALLBACK(src, /obj/item/clothing/mask/gas/sechailer/proc/reset_overuse_cooldown), OVERUSE_COOLDOWN)
 

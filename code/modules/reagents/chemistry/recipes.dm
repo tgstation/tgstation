@@ -7,11 +7,11 @@
 
 	// Both of these variables are mostly going to be used with slime cores - but if you want to, you can use them for other things
 	var/required_container = null // the exact container path required for the reaction to happen
-	var/required_other = 0 // an integer required for the reaction to happen
+	var/required_other = ZERO // an integer required for the reaction to happen
 
 	var/mob_react = TRUE //Determines if a chemical reaction can occur inside a mob
 
-	var/required_temp = 0
+	var/required_temp = ZERO
 	var/is_cold_recipe = 0 // Set to 1 if you want the recipe to only react when it's BELOW the required temp.
 	var/mix_message = "The solution begins to bubble." //The message shown to nearby people upon mixing, if applicable
 	var/mix_sound = 'sound/effects/bubbles.ogg' //The sound played upon mixing, if applicable
@@ -33,7 +33,7 @@
 		else
 			message += " - Last Fingerprint: [(A.fingerprintslast ? A.fingerprintslast : "N/A")]"
 
-		message_admins(message, 0, 1)
+		message_admins(message, ZERO, 1)
 		log_game("[reaction_name] chemical mob spawn reaction occuring at [AREACOORD(T)] carried by [key_name(M)] with last fingerprint [A.fingerprintslast? A.fingerprintslast : "N/A"]")
 
 		playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, TRUE)

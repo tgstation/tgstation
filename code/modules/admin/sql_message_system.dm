@@ -51,7 +51,7 @@
 			if("Yes")
 				secret = 1
 			if("No")
-				secret = 0
+				secret = ZERO
 			else
 				return
 	if(isnull(expiry))
@@ -369,7 +369,7 @@
 		var/list/messagedata = list()
 		var/list/watchdata = list()
 		var/list/notedata = list()
-		var/skipped = 0
+		var/skipped = ZERO
 		while(query_get_messages.NextRow())
 			if(QDELETED(usr))
 				return
@@ -582,7 +582,7 @@
 			timestamp = query_convert_time.item[1]
 		qdel(query_convert_time)
 		if(ckey && notetext && timestamp && admin_ckey && server)
-			create_message("note", ckey, admin_ckey, notetext, timestamp, server, 1, 0, null, 0, 0)
+			create_message("note", ckey, admin_ckey, notetext, timestamp, server, 1, ZERO, null, ZERO, ZERO)
 	notesfile.cd = "/"
 	notesfile.dir.Remove(ckey)
 

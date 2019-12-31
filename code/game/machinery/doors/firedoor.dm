@@ -1,4 +1,4 @@
-#define CONSTRUCTION_COMPLETE 0 //No construction done - functioning as normal
+#define CONSTRUCTION_COMPLETE ZERO //No construction done - functioning as normal
 #define CONSTRUCTION_PANEL_OPEN 1 //Maintenance panel is open, still functioning
 #define CONSTRUCTION_WIRES_EXPOSED 2 //Cover plate is removed, wires are available
 #define CONSTRUCTION_GUTTED 3 //Wires are removed, circuit ready to remove
@@ -124,7 +124,7 @@
 	return
 
 /obj/machinery/door/firedoor/try_to_weld(obj/item/weldingtool/W, mob/user)
-	if(!W.tool_start_check(user, amount=0))
+	if(!W.tool_start_check(user, amount=ZERO))
 		return
 	user.visible_message("<span class='notice'>[user] starts [welded ? "unwelding" : "welding"] [src].</span>", "<span class='notice'>You start welding [src].</span>")
 	if(W.use_tool(src, user, 40, volume=50))
@@ -269,7 +269,7 @@
 	anchored = FALSE
 	density = TRUE
 	var/constructionStep = CONSTRUCTION_NOCIRCUIT
-	var/reinforced = 0
+	var/reinforced = ZERO
 
 /obj/structure/firelock_frame/examine(mob/user)
 	. = ..()

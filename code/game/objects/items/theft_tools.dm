@@ -11,8 +11,8 @@
 	icon_state = "plutonium_core"
 	item_state = "plutoniumcore"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	var/pulse = 0
-	var/cooldown = 0
+	var/pulse = ZERO
+	var/cooldown = ZERO
 	var/pulseicon = "plutonium_core_pulse"
 
 /obj/item/nuke_core/Initialize()

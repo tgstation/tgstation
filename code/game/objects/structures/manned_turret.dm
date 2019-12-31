@@ -12,7 +12,7 @@
 	buckle_lying = FALSE
 	layer = ABOVE_MOB_LAYER
 	var/view_range = 10
-	var/cooldown = 0
+	var/cooldown = ZERO
 	var/projectile_type = /obj/projectile/bullet/manned_turret
 	var/rate_of_fire = 1
 	var/number_of_shots = 40
@@ -35,8 +35,8 @@
 		if(istype(I, /obj/item/gun_control))
 			qdel(I)
 	if(istype(buckled_mob))
-		buckled_mob.pixel_x = 0
-		buckled_mob.pixel_y = 0
+		buckled_mob.pixel_x = ZERO
+		buckled_mob.pixel_y = ZERO
 		if(buckled_mob.client)
 			buckled_mob.client.change_view(CONFIG_GET(string/default_view))
 	anchored = FALSE
@@ -94,7 +94,7 @@
 	switch(dir)
 		if(NORTH)
 			layer = BELOW_MOB_LAYER
-			user.pixel_x = 0
+			user.pixel_x = ZERO
 			user.pixel_y = -14
 		if(NORTHEAST)
 			layer = BELOW_MOB_LAYER
@@ -103,14 +103,14 @@
 		if(EAST)
 			layer = ABOVE_MOB_LAYER
 			user.pixel_x = -14
-			user.pixel_y = 0
+			user.pixel_y = ZERO
 		if(SOUTHEAST)
 			layer = BELOW_MOB_LAYER
 			user.pixel_x = -8
 			user.pixel_y = 4
 		if(SOUTH)
 			layer = ABOVE_MOB_LAYER
-			user.pixel_x = 0
+			user.pixel_x = ZERO
 			user.pixel_y = 14
 		if(SOUTHWEST)
 			layer = BELOW_MOB_LAYER
@@ -119,7 +119,7 @@
 		if(WEST)
 			layer = ABOVE_MOB_LAYER
 			user.pixel_x = 14
-			user.pixel_y = 0
+			user.pixel_y = ZERO
 		if(NORTHWEST)
 			layer = BELOW_MOB_LAYER
 			user.pixel_x = 8

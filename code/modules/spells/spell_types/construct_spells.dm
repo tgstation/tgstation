@@ -40,7 +40,7 @@
 	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
-	range = 0
+	range = ZERO
 	summon_type = list(/turf/open/floor/engine/cult)
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "floorconstruct"
@@ -56,7 +56,7 @@
 	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
-	range = 0
+	range = ZERO
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "lesserconstruct"
 	action_background_icon_state = "bg_cult"
@@ -73,7 +73,7 @@
 	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
-	range = 0
+	range = ZERO
 
 	summon_type = list(/turf/closed/wall/r_wall)
 
@@ -86,7 +86,7 @@
 	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
-	range = 0
+	range = ZERO
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "summonsoulstone"
 	action_background_icon_state = "bg_demon"
@@ -307,7 +307,7 @@
 	damage_type = BRUTE
 	knockdown = 50
 	hitsound = 'sound/weapons/punch3.ogg'
-	trigger_range = 0
+	trigger_range = ZERO
 	check_holy = TRUE
 	ignored_factions = list("cult")
 	range = 15
@@ -320,5 +320,5 @@
 	new /obj/effect/temp_visual/cult/sac(T)
 	for(var/obj/O in range(src,1))
 		if(O.density && !istype(O, /obj/structure/destructible/cult))
-			O.take_damage(90, BRUTE, "melee", 0)
+			O.take_damage(90, BRUTE, "melee", ZERO)
 			new /obj/effect/temp_visual/cult/turf/floor(get_turf(O))

@@ -78,7 +78,7 @@ Chilling extracts:
 /obj/item/slimecross/chilling/metal/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] melts like quicksilver, and surrounds [user] in a wall!</span>")
 	for(var/turf/T in orange(get_turf(user),1))
-		if(get_dist(get_turf(user), T) > 0)
+		if(get_dist(get_turf(user), T) > ZERO)
 			new /obj/effect/forcefield/slimewall(T)
 	..()
 
@@ -108,7 +108,7 @@ Chilling extracts:
 		var/datum/gas_mixture/G = T.air
 		if(istype(G))
 			G.assert_gas(/datum/gas/plasma)
-			G.gases[/datum/gas/plasma][MOLES] = 0
+			G.gases[/datum/gas/plasma][MOLES] = ZERO
 			filtered = TRUE
 			G.garbage_collect()
 			T.air_update_turf()
@@ -158,7 +158,7 @@ Chilling extracts:
 	return
 
 /obj/item/slimecross/chilling/bluespace/do_effect(mob/user)
-	if(allies.len <= 0)
+	if(allies.len <= ZERO)
 		to_chat(user, "<span class='warning'>[src] is not linked to anyone!</span>")
 		return
 	to_chat(user, "<span class='notice'>You feel [src] pulse as it begins charging bluespace energies...</span>")
@@ -287,7 +287,7 @@ Chilling extracts:
 	addtimer(CALLBACK(src, .proc/boom), 50)
 
 /obj/item/slimecross/chilling/oil/proc/boom()
-	explosion(get_turf(src), -1, -1, 10, 0) //Large radius, but mostly light damage, and no flash.
+	explosion(get_turf(src), -1, -1, 10, ZERO) //Large radius, but mostly light damage, and no flash.
 	qdel(src)
 
 /obj/item/slimecross/chilling/black

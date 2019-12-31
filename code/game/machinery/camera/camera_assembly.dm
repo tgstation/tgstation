@@ -154,7 +154,7 @@
 				if(emp_module)
 					to_chat(user, "<span class='warning'>[src] already contains a [emp_module]!</span>")
 					return
-				if(!W.use_tool(src, user, 0, amount=1)) //only use one sheet, otherwise the whole stack will be consumed.
+				if(!W.use_tool(src, user, ZERO, amount=1)) //only use one sheet, otherwise the whole stack will be consumed.
 					return
 				emp_module = new(src)
 				if(malf_xray_firmware_active)

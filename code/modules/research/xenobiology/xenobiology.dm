@@ -5,9 +5,9 @@
 	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey slime extract"
-	force = 0
+	force = ZERO
 	w_class = WEIGHT_CLASS_TINY
-	throwforce = 0
+	throwforce = ZERO
 	throw_speed = 3
 	throw_range = 6
 	grind_results = list()
@@ -47,7 +47,7 @@
 //Effect when activated by a Luminescent. Separated into a minor and major effect. Returns cooldown in deciseconds.
 /obj/item/slime_extract/proc/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	to_chat(user, "<span class='warning'>Nothing happened... This slime extract cannot be activated this way.</span>")
-	return 0
+	return ZERO
 
 //Core-crossing: Feeding adult slimes extracts to obtain a much more powerful, single extract.
 /obj/item/slime_extract/attack(mob/living/simple_animal/slime/M, mob/user)
@@ -97,7 +97,7 @@
 				to_chat(user, "<span class='notice'>You spit out [S].</span>")
 				return 350
 			else
-				return 0
+				return ZERO
 
 /obj/item/slime_extract/gold
 	name = "gold slime extract"
@@ -454,7 +454,7 @@
 /obj/item/slime_extract/adamantine/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			if(species.armor > 0)
+			if(species.armor > ZERO)
 				to_chat(user, "<span class='warning'>Your skin is already hardened!</span>")
 				return
 			to_chat(user, "<span class='notice'>You feel your skin harden and become more resistant.</span>")
@@ -480,9 +480,9 @@
 	effectmod = "warping"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
 	var/teleport_ready = FALSE
-	var/teleport_x = 0
-	var/teleport_y = 0
-	var/teleport_z = 0
+	var/teleport_x = ZERO
+	var/teleport_y = ZERO
+	var/teleport_z = ZERO
 
 /obj/item/slime_extract/bluespace/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -713,7 +713,7 @@
 	desc = "A strange slime-based chemical that, when used, allows the user to transfer their consciousness to a lesser being."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potorange"
-	var/prompted = 0
+	var/prompted = ZERO
 	var/animal_type = SENTIENCE_ORGANIC
 
 /obj/item/slimepotion/transference/afterattack(mob/living/M, mob/user, proximity)
@@ -741,7 +741,7 @@
 
 	prompted = 1
 	if(alert("This will permanently transfer your consciousness to [SM]. Are you sure you want to do this?",,"Yes","No")=="No")
-		prompted = 0
+		prompted = ZERO
 		return
 
 	to_chat(user, "<span class='notice'>You drink the potion then place your hands on [SM]...</span>")
@@ -799,12 +799,12 @@
 	if(M.stat)
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return
-	if(M.mutation_chance == 0)
+	if(M.mutation_chance == ZERO)
 		to_chat(user, "<span class='warning'>The slime already has no chance of mutating!</span>")
 		return
 
 	to_chat(user, "<span class='notice'>You feed the slime the stabilizer. It is now less likely to mutate.</span>")
-	M.mutation_chance = CLAMP(M.mutation_chance-15,0,100)
+	M.mutation_chance = CLAMP(M.mutation_chance-15,ZERO,100)
 	qdel(src)
 
 /obj/item/slimepotion/slime/mutator
@@ -828,7 +828,7 @@
 		return
 
 	to_chat(user, "<span class='notice'>You feed the slime the mutator. It is now more likely to mutate.</span>")
-	M.mutation_chance = CLAMP(M.mutation_chance+12,0,100)
+	M.mutation_chance = CLAMP(M.mutation_chance+12,ZERO,100)
 	M.mutator_used = TRUE
 	qdel(src)
 
@@ -847,10 +847,10 @@
 		return
 	if(isitem(C))
 		var/obj/item/I = C
-		if(I.slowdown <= 0 || I.obj_flags & IMMUTABLE_SLOW)
+		if(I.slowdown <= ZERO || I.obj_flags & IMMUTABLE_SLOW)
 			to_chat(user, "<span class='warning'>The [C] can't be made any faster!</span>")
 			return ..()
-		I.slowdown = 0
+		I.slowdown = ZERO
 
 	if(istype(C, /obj/vehicle))
 		var/obj/vehicle/V = C

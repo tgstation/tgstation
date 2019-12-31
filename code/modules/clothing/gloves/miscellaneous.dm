@@ -30,7 +30,7 @@
 	desc = "These tactical gloves are fireproof and electrically insulated."
 	icon_state = "black"
 	item_state = "blackgloves"
-	siemens_coefficient = 0
+	siemens_coefficient = ZERO
 	permeability_coefficient = 0.05
 	strip_delay = 80
 	cold_protection = HANDS
@@ -53,7 +53,7 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	armor = list("melee" = 15, "bullet" = 25, "laser" = 15, "energy" = 15, "bomb" = 20, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list("melee" = 15, "bullet" = 25, "laser" = 15, "energy" = 15, "bomb" = 20, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = ZERO)
 
 /obj/item/clothing/gloves/rapid
 	name = "Gloves of the North Star"

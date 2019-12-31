@@ -4,7 +4,7 @@
 	icon = 'icons/obj/machines/implantchair.dmi'
 	icon_state = "implantchair"
 	density = TRUE
-	opacity = 0
+	opacity = ZERO
 	ui_x = 375
 	ui_y = 280
 
@@ -38,7 +38,7 @@
 
 /obj/machinery/implantchair/ui_data()
 	var/list/data = list()
-	data["occupied"] = occupant ? 1 : 0
+	data["occupied"] = occupant ? 1 : ZERO
 	data["open"] = state_open
 
 	data["occupant"] = list()
@@ -78,7 +78,7 @@
 		if(!replenishing && auto_replenish)
 			replenishing = TRUE
 			addtimer(CALLBACK(src,.proc/replenish),replenish_cooldown)
-		if(injection_cooldown > 0)
+		if(injection_cooldown > ZERO)
 			ready = FALSE
 			addtimer(CALLBACK(src,.proc/set_ready),injection_cooldown)
 	else
@@ -151,7 +151,7 @@
 /obj/machinery/implantchair/close_machine(mob/living/user)
 	if((isnull(user) || istype(user)) && state_open)
 		..(user)
-		if(auto_inject && ready && ready_implants > 0)
+		if(auto_inject && ready && ready_implants > ZERO)
 			implant(user,null)
 
 /obj/machinery/implantchair/genepurge
@@ -159,12 +159,12 @@
 	desc = "Used to purge a human genome of foreign influences."
 	special = TRUE
 	special_name = "Purge genome"
-	injection_cooldown = 0
+	injection_cooldown = ZERO
 	replenish_cooldown = 300
 
 /obj/machinery/implantchair/genepurge/implant_action(mob/living/carbon/human/H,mob/user)
 	if(!istype(H))
-		return 0
+		return ZERO
 	H.set_species(/datum/species/human, 1)//lizards go home
 	purrbation_remove(H)//remove cats
 	H.dna.remove_all_mutations()//hulks out

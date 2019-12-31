@@ -62,7 +62,7 @@
 	var/old_temperature = air_contents.temperature
 	var/other_old_temperature = partner_air_contents.temperature
 
-	if(combined_heat_capacity > 0)
+	if(combined_heat_capacity > ZERO)
 		var/combined_energy = partner_air_contents.temperature*other_air_heat_capacity + air_heat_capacity*air_contents.temperature
 
 		var/new_temperature = combined_energy/combined_heat_capacity

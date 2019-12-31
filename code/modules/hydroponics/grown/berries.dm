@@ -26,7 +26,7 @@
 	filling_color = "#FF00FF"
 	bitesize_mod = 2
 	foodtype = FRUIT
-	juice_results = list(/datum/reagent/consumable/berryjuice = 0)
+	juice_results = list(/datum/reagent/consumable/berryjuice = ZERO)
 	tastes = list("berry" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/gin
 
@@ -49,7 +49,7 @@
 	icon_state = "poisonberrypile"
 	filling_color = "#C71585"
 	foodtype = FRUIT | TOXIC
-	juice_results = list(/datum/reagent/consumable/poisonberryjuice = 0)
+	juice_results = list(/datum/reagent/consumable/poisonberryjuice = ZERO)
 	tastes = list("poison-berry" = 1)
 	distill_reagent = null
 	wine_power = 35
@@ -135,7 +135,7 @@
 	filling_color = "#FF0000"
 	bitesize_mod = 2
 	foodtype = FRUIT
-	grind_results = list(/datum/reagent/consumable/cherryjelly = 0)
+	grind_results = list(/datum/reagent/consumable/cherryjelly = ZERO)
 	tastes = list("cherry" = 1)
 	wine_power = 30
 
@@ -159,7 +159,7 @@
 	filling_color = "#6495ED"
 	bitesize_mod = 2
 	foodtype = FRUIT
-	grind_results = list(/datum/reagent/consumable/bluecherryjelly = 0)
+	grind_results = list(/datum/reagent/consumable/bluecherryjelly = ZERO)
 	tastes = list("blue cherry" = 1)
 	wine_power = 50
 
@@ -184,7 +184,7 @@
 	filling_color = "#FF0000"
 	bitesize_mod = 2
 	foodtype = FRUIT
-	grind_results = list(/datum/reagent/consumable/cherryjelly = 0)
+	grind_results = list(/datum/reagent/consumable/cherryjelly = ZERO)
 	tastes = list("cherry" = 1)
 	wine_power = 50
 
@@ -218,7 +218,7 @@
 	filling_color = "#FF1493"
 	bitesize_mod = 2
 	foodtype = FRUIT
-	juice_results = list(/datum/reagent/consumable/grapejuice = 0)
+	juice_results = list(/datum/reagent/consumable/grapejuice = ZERO)
 	tastes = list("grape" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/wine
 

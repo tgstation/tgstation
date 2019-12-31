@@ -98,7 +98,7 @@
 	strip_delay = 80
 	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEFACE
-	toggle_cooldown = 0
+	toggle_cooldown = ZERO
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	dog_fashion = null
@@ -197,7 +197,7 @@
 
 /obj/item/clothing/head/helmet/roman/fake
 	desc = "An ancient helmet made of plastic and leather."
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = ZERO)
 
 /obj/item/clothing/head/helmet/roman/legionnaire
 	name = "\improper Roman legionnaire helmet"
@@ -207,7 +207,7 @@
 
 /obj/item/clothing/head/helmet/roman/legionnaire/fake
 	desc = "An ancient helmet made of plastic and leather. Has a red crest on top of it."
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = ZERO)
 
 /obj/item/clothing/head/helmet/gladiator
 	name = "gladiator helmet"
@@ -342,7 +342,7 @@
 				return
 			to_chat(user, "<span class='notice'>You click [S] into place on [src].</span>")
 			if(S.on)
-				set_light(0)
+				set_light(ZERO)
 			attached_light = S
 			update_icon()
 			update_helmlight()
@@ -392,11 +392,11 @@
 		if(attached_light.on)
 			set_light(attached_light.brightness_on)
 		else
-			set_light(0)
+			set_light(ZERO)
 		update_icon()
 
 	else
-		set_light(0)
+		set_light(ZERO)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()

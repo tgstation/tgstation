@@ -6,7 +6,7 @@
 */
 
 GLOBAL_LIST_EMPTY(recentmessages) // global list of recent messages broadcasted : used to circumvent massive radio spam
-GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages list is kept in sync
+GLOBAL_VAR_INIT(message_delay, ZERO) // To make sure restarting the recentmessages list is kept in sync
 
 /obj/machinery/telecomms/broadcaster
 	name = "subspace broadcaster"
@@ -41,7 +41,7 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 		return
 	GLOB.recentmessages.Add(signal_message)
 
-	if(signal.data["slow"] > 0)
+	if(signal.data["slow"] > ZERO)
 		sleep(signal.data["slow"]) // simulate the network lag if necessary
 
 	signal.broadcast()
@@ -60,7 +60,7 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 /obj/machinery/telecomms/broadcaster/Destroy()
 	// In case message_delay is left on 1, otherwise it won't reset the list and people can't say the same thing twice anymore.
 	if(GLOB.message_delay)
-		GLOB.message_delay = 0
+		GLOB.message_delay = ZERO
 	return ..()
 
 

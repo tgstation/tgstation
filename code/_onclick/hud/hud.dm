@@ -122,7 +122,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	SEND_SIGNAL(src, COMSIG_MOB_HUD_CREATED)
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
-/datum/hud/proc/show_hud(version = 0, mob/viewmob)
+/datum/hud/proc/show_hud(version = ZERO, mob/viewmob)
 	if(!ismob(mymob))
 		return FALSE
 	var/mob/screenmob = viewmob || mymob
@@ -133,7 +133,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	screenmob.client.apply_clickcatcher()
 
 	var/display_hud_version = version
-	if(!display_hud_version)	//If 0 or blank, display the next hud version
+	if(!display_hud_version)	//If ZERO or blank, display the next hud version
 		display_hud_version = hud_version + 1
 	if(display_hud_version > HUD_VERSIONS)	//If the requested version number is greater than the available versions, reset back to the first version
 		display_hud_version = 1
@@ -210,14 +210,14 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		PM.backdrop(mymob)
 		mymob.client.screen += PM
 
-/datum/hud/human/show_hud(version = 0,mob/viewmob)
+/datum/hud/human/show_hud(version = ZERO,mob/viewmob)
 	. = ..()
 	if(!.)
 		return
 	var/mob/screenmob = viewmob || mymob
 	hidden_inventory_update(screenmob)
 
-/datum/hud/robot/show_hud(version = 0, mob/viewmob)
+/datum/hud/robot/show_hud(version = ZERO, mob/viewmob)
 	. = ..()
 	if(!.)
 		return

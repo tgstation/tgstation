@@ -15,7 +15,7 @@ SUBSYSTEM_DEF(throwing)
 	..("P:[processing.len]")
 
 
-/datum/controller/subsystem/throwing/fire(resumed = 0)
+/datum/controller/subsystem/throwing/fire(resumed = ZERO)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 
@@ -49,7 +49,7 @@ SUBSYSTEM_DEF(throwing)
 	var/speed
 	var/mob/thrower
 	var/diagonals_first
-	var/dist_travelled = 0
+	var/dist_travelled = ZERO
 	var/start_time
 	var/dist_x
 	var/dist_y
@@ -60,8 +60,8 @@ SUBSYSTEM_DEF(throwing)
 	var/diagonal_error
 	var/datum/callback/callback
 	var/paused = FALSE
-	var/delayed_time = 0
-	var/last_move = 0
+	var/delayed_time = ZERO
+	var/last_move = ZERO
 
 /datum/thrownthing/Destroy()
 	SSthrowing.processing -= thrownthing
@@ -92,7 +92,7 @@ SUBSYSTEM_DEF(throwing)
 
 	//calculate how many tiles to move, making up for any missed ticks.
 	var/tilestomove = CEILING(min(((((world.time+world.tick_lag) - start_time + delayed_time) * speed) - (dist_travelled ? dist_travelled : -1)), speed*MAX_TICKS_TO_MAKE_UP) * (world.tick_lag * SSthrowing.wait), 1)
-	while (tilestomove-- > 0)
+	while (tilestomove-- > ZERO)
 		if ((dist_travelled >= maxrange || AM.loc == target_turf) && AM.has_gravity(AM.loc))
 			finalize()
 			return
@@ -105,7 +105,7 @@ SUBSYSTEM_DEF(throwing)
 		if (!pure_diagonal && !diagonals_first) // not a purely diagonal trajectory and we don't want all diagonal moves to be done first
 			if (diagonal_error >= 0 && max(dist_x,dist_y) - dist_travelled != 1) //we do a step forward unless we're right before the target
 				step = get_step(AM, dx)
-			diagonal_error += (diagonal_error < 0) ? dist_x/2 : -dist_y
+			diagonal_error += (diagonal_error < ZERO) ? dist_x/2 : -dist_y
 
 		if (!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 			finalize()

@@ -1,7 +1,7 @@
 /datum/species/snail
 	name = "Snailperson"
 	id = "snail"
-	offset_features = list(OFFSET_UNIFORM = list(0,0), OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_GLASSES = list(0,4), OFFSET_EARS = list(0,0), OFFSET_SHOES = list(0,0), OFFSET_S_STORE = list(0,0), OFFSET_FACEMASK = list(0,0), OFFSET_HEAD = list(0,0), OFFSET_FACE = list(0,0), OFFSET_BELT = list(0,0), OFFSET_BACK = list(0,0), OFFSET_SUIT = list(0,0), OFFSET_NECK = list(0,0))
+	offset_features = list(OFFSET_UNIFORM = list(ZERO,ZERO), OFFSET_ID = list(ZERO,ZERO), OFFSET_GLOVES = list(ZERO,ZERO), OFFSET_GLASSES = list(ZERO,4), OFFSET_EARS = list(ZERO,ZERO), OFFSET_SHOES = list(ZERO,ZERO), OFFSET_S_STORE = list(ZERO,ZERO), OFFSET_FACEMASK = list(ZERO,ZERO), OFFSET_HEAD = list(ZERO,ZERO), OFFSET_FACE = list(ZERO,ZERO), OFFSET_BELT = list(ZERO,ZERO), OFFSET_BACK = list(ZERO,ZERO), OFFSET_SUIT = list(ZERO,ZERO), OFFSET_NECK = list(ZERO,ZERO))
 	default_color = "336600" //vomit green
 	species_traits = list(MUTCOLORS, NO_UNDERWEAR)
 	inherent_traits = list(TRAIT_ALWAYS_CLEAN, TRAIT_NOSLIPALL)

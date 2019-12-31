@@ -1,7 +1,7 @@
 ///Component specifically for explosion sensetive things, currently only applies to heat based explosions but can later perhaps be used for things that are dangerous to handle carelessly like nitroglycerin.
 /datum/component/explodable
-	var/devastation_range = 0
-	var/heavy_impact_range = 0
+	var/devastation_range = ZERO
+	var/heavy_impact_range = ZERO
 	var/light_impact_range = 2
 	var/flash_range = 3
 	var/equipped_slot //For items, lets us determine where things should be hit.

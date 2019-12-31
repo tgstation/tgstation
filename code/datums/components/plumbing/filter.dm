@@ -42,7 +42,7 @@
 				new_amount = amount - R.volume
 			reagents.trans_id_to(target.parent, R.type, amount)
 			amount = new_amount
-			if(amount <= 0)
+			if(amount <= ZERO)
 				break
 ///We check if the direction and reagent are valid to give. Needed for filters since different outputs have different behaviours
 /datum/component/plumbing/filter/proc/can_give_in_direction(dir, reagent)

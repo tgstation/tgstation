@@ -315,8 +315,8 @@
 
 	result += "<div class='panel redborder'>"
 
-	var/num_revs = 0
-	var/num_survivors = 0
+	var/num_revs = ZERO
+	var/num_survivors = ZERO
 	for(var/mob/living/carbon/survivor in GLOB.alive_mob_list)
 		if(survivor.ckey)
 			num_survivors++

@@ -14,7 +14,7 @@
 		return null
 	return format_text ? format_text(A.name) : A.name
 
-/proc/get_areas_in_range(dist=0, atom/center=usr)
+/proc/get_areas_in_range(dist=ZERO, atom/center=usr)
 	if(!dist)
 		var/turf/T = get_turf(center)
 		return T ? list(T.loc) : list()
@@ -73,7 +73,7 @@
 		if(C == must_be_alone)
 			continue
 		if(our_area == get_area(C))
-			return 0
+			return ZERO
 	return 1
 
 //We used to use linear regression to approximate the answer, but Mloc realized this was actually faster.
@@ -207,23 +207,23 @@
 	while(processing_list.len)
 
 		var/atom/A = processing_list[1]
-		var/passed = 0
+		var/passed = ZERO
 
 		if(ismob(A))
 			var/mob/A_tmp = A
 			passed=1
 
 			if(client_check && !A_tmp.client)
-				passed=0
+				passed=ZERO
 
 			if(sight_check && !isInSight(A_tmp, O))
-				passed=0
+				passed=ZERO
 
 		else if(include_radio && istype(A, /obj/item/radio))
 			passed=1
 
 			if(sight_check && !isInSight(A, O))
-				passed=0
+				passed=ZERO
 
 		if(passed)
 			found_mobs |= A
@@ -247,7 +247,7 @@
 		return
 
 	var/list/processing_list = list()
-	if (R == 0) // if the range is zero, we know exactly where to look for, we can skip view
+	if (R == ZERO) // if the range is zero, we know exactly where to look for, we can skip view
 		processing_list += T.contents // We can shave off one iteration by assuming turfs cannot hear
 	else  // A variation of get_hear inlined here to take advantage of the compiler's fastpath for obj/mob in view
 		var/lum = T.luminosity
@@ -273,7 +273,7 @@
 			. |= get_hearers_in_view(R.canhear_range, R)
 
 
-#define SIGNV(X) ((X<0)?-1:1)
+#define SIGNV(X) ((X<ZERO)?-1:1)
 
 /proc/inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
 	var/turf/T
@@ -286,7 +286,7 @@
 			while(Y1!=Y2)
 				T=locate(X1,Y1,Z)
 				if(T.opacity)
-					return 0
+					return ZERO
 				Y1+=s
 	else
 		var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
@@ -302,7 +302,7 @@
 				X1+=signX //Line exits tile horizontally
 			T=locate(X1,Y1,Z)
 			if(T.opacity)
-				return 0
+				return ZERO
 	return 1
 #undef SIGNV
 
@@ -312,13 +312,13 @@
 	var/turf/Bturf = get_turf(B)
 
 	if(!Aturf || !Bturf)
-		return 0
+		return ZERO
 
 	if(inLineOfSight(Aturf.x,Aturf.y, Bturf.x,Bturf.y,Aturf.z))
 		return 1
 
 	else
-		return 0
+		return ZERO
 
 
 /proc/try_move_adjacent(atom/movable/AM)
@@ -388,9 +388,9 @@
 			viewing += M.client
 	flick_overlay(I, viewing, duration)
 
-/proc/get_active_player_count(alive_check = 0, afk_check = 0, human_check = 0)
+/proc/get_active_player_count(alive_check = ZERO, afk_check = ZERO, human_check = ZERO)
 	// Get active players who are playing in the round
-	var/active_players = 0
+	var/active_players = ZERO
 	for(var/i = 1; i <= GLOB.player_list.len; i++)
 		var/mob/M = GLOB.player_list[i]
 		if(M && M.client)
@@ -410,12 +410,12 @@
 	return active_players
 
 /proc/showCandidatePollWindow(mob/M, poll_time, Question, list/candidates, ignore_category, time_passed, flashwindow = TRUE)
-	set waitfor = 0
+	set waitfor = ZERO
 
 	SEND_SOUND(M, 'sound/misc/notice2.ogg') //Alerting them to their consideration
 	if(flashwindow)
 		window_flash(M.client)
-	switch(ignore_category ? askuser(M,Question,"Please answer in [DisplayTimeText(poll_time)]!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(M,Question,"Please answer in [DisplayTimeText(poll_time)]!","Yes","No", StealFocus=0, Timeout=poll_time))
+	switch(ignore_category ? askuser(M,Question,"Please answer in [DisplayTimeText(poll_time)]!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(M,Question,"Please answer in [DisplayTimeText(poll_time)]!","Yes","No", StealFocus=ZERO, Timeout=poll_time))
 		if(1)
 			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
 			if(time_passed + poll_time <= world.time)
@@ -437,7 +437,7 @@
 		else
 			candidates -= M
 
-/proc/pollGhostCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE)
+/proc/pollGhostCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = ZERO, poll_time = 300, ignore_category = null, flashwindow = TRUE)
 	var/list/candidates = list()
 
 	for(var/mob/dead/observer/G in GLOB.player_list)
@@ -445,7 +445,7 @@
 
 	return pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
 
-/proc/pollCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE, list/group = null)
+/proc/pollCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = ZERO, poll_time = 300, ignore_category = null, flashwindow = TRUE, list/group = null)
 	var/time_passed = world.time
 	if (!Question)
 		Question = "Would you like to be a special role?"
@@ -476,13 +476,13 @@
 
 	return result
 
-/proc/pollCandidatesForMob(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, mob/M, ignore_category = null)
+/proc/pollCandidatesForMob(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = ZERO, poll_time = 300, mob/M, ignore_category = null)
 	var/list/L = pollGhostCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
 	if(!M || QDELETED(M) || !M.loc)
 		return list()
 	return L
 
-/proc/pollCandidatesForMobs(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, list/mobs, ignore_category = null)
+/proc/pollCandidatesForMobs(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = ZERO, poll_time = 300, list/mobs, ignore_category = null)
 	var/list/L = pollGhostCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
 	var/i=1
 	for(var/v in mobs)

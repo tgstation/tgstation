@@ -11,7 +11,7 @@
 	obj_damage = 10
 	melee_damage_lower = 8
 	melee_damage_upper = 12
-	speed = 0
+	speed = ZERO
 	gender = NEUTER
 	mob_biotypes = MOB_ORGANIC
 	response_help_continuous = "pets"
@@ -26,8 +26,8 @@
 	attack_verb_simple = "blink at"
 	attack_sound = 'sound/weapons/pierce.ogg'
 	movement_type = FLYING
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
+	minbodytemp = ZERO
 	maxbodytemp = 1500
 	spacewalk = TRUE
 	gold_core_spawnable = HOSTILE_SPAWN

@@ -1,7 +1,7 @@
 /obj/item/paper/fluff/jobs/cargo/manifest
-	var/order_cost = 0
-	var/order_id = 0
-	var/errors = 0
+	var/order_cost = ZERO
+	var/order_id = ZERO
+	var/errors = ZERO
 
 /obj/item/paper/fluff/jobs/cargo/manifest/New(atom/A, id, cost)
 	..()
@@ -59,7 +59,7 @@
 	return P
 
 /datum/supply_order/proc/generateManifest(obj/structure/closet/crate/C, owner, packname) //generates-the-manifests.
-	var/obj/item/paper/fluff/jobs/cargo/manifest/P = new(C, id, 0)
+	var/obj/item/paper/fluff/jobs/cargo/manifest/P = new(C, id, ZERO)
 
 	var/station_name = (P.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
 
@@ -90,7 +90,7 @@
 			P.errors &= ~MANIFEST_ERROR_ITEM
 		else
 			var/lost = max(round(C.contents.len / 10), 1)
-			while(--lost >= 0)
+			while(--lost >= ZERO)
 				qdel(pick(C.contents))
 
 	P.update_icon()

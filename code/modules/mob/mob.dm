@@ -112,7 +112,7 @@
 	set hidden = 1
 
 	if(!loc)
-		return 0
+		return ZERO
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
@@ -266,7 +266,7 @@
 	var/obj/item/W = get_active_held_item()
 
 	if(istype(W))
-		if(equip_to_slot_if_possible(W, slot,0,0,0))
+		if(equip_to_slot_if_possible(W, slot,ZERO,ZERO,ZERO))
 			return 1
 
 	if(!W)
@@ -275,7 +275,7 @@
 		if(istype(I))
 			I.attack_hand(src)
 
-	return 0
+	return ZERO
 
 /**
   * Try to equip an item to a slot on the mob
@@ -331,11 +331,11 @@
   *
   * puts the item "W" into an appropriate slot in a human's inventory
   *
-  * returns 0 if it cannot, 1 if successful
+  * returns ZERO if it cannot, 1 if successful
   */
 /mob/proc/equip_to_appropriate_slot(obj/item/W)
 	if(!istype(W))
-		return 0
+		return ZERO
 	var/slot_priority = W.slot_equipment_priority
 
 	if(!slot_priority)
@@ -351,10 +351,10 @@
 		)
 
 	for(var/slot in slot_priority)
-		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 1; redraw_mob = 1
+		if(equip_to_slot_if_possible(W, slot, ZERO, 1, 1)) //qdel_on_fail = ZERO; disable_warning = 1; redraw_mob = 1
 			return 1
 
-	return 0
+	return ZERO
 /**
   * Reset the attached clients perspective (viewpoint)
   *
@@ -456,7 +456,7 @@
 
 ///Spin this mob around it's central axis
 /mob/proc/spin(spintime, speed)
-	set waitfor = 0
+	set waitfor = ZERO
 	var/D = dir
 	if((spintime < 1)||(speed < 1)||!spintime||!speed)
 		return
@@ -585,13 +585,13 @@
 	unset_machine()
 
 //suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
-/mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
+/mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = ZERO as num  , number2 = ZERO as num)
 	set name = ".click"
 	set hidden = TRUE
 	set category = null
 	return
 
-/mob/verb/DisDblClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
+/mob/verb/DisDblClick(argu = null as anything, sec = "" as text, number1 = ZERO as num  , number2 = ZERO as num)
 	set name = ".dblclick"
 	set hidden = TRUE
 	set category = null
@@ -676,7 +676,7 @@
 
 ///Is the mob muzzled (default false)
 /mob/proc/is_muzzled()
-	return 0
+	return ZERO
 
 /**
   * Output an update to the stat panel for the client
@@ -862,7 +862,7 @@
 	return
 
 /mob/proc/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //For sec bot threat assessment
-	return 0
+	return ZERO
 
 ///Get the ghost of this mob (from the mind)
 /mob/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
@@ -945,7 +945,7 @@
 	if(isliving(seat))
 		var/mob/living/L = seat
 		if(L.mob_size <= MOB_SIZE_SMALL) //being on top of a small mob doesn't put you very high.
-			return 0
+			return ZERO
 	return 9
 
 ///can the mob be buckled to something by default?
@@ -1010,7 +1010,7 @@
 /mob/proc/fully_replace_character_name(oldname,newname)
 	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 	if(!newname)
-		return 0
+		return ZERO
 
 	log_played_names(ckey,newname)
 
@@ -1055,7 +1055,7 @@
 					ID.registered_account.account_holder = newname
 				if(!search_pda)
 					break
-				search_id = 0
+				search_id = ZERO
 
 		else if( search_pda && istype(A, /obj/item/pda) )
 			var/obj/item/pda/PDA = A
@@ -1064,7 +1064,7 @@
 				PDA.update_label()
 				if(!search_id)
 					break
-				search_pda = 0
+				search_pda = ZERO
 
 /mob/proc/update_stat()
 	return
@@ -1200,7 +1200,7 @@
 /mob/vv_get_var(var_name)
 	switch(var_name)
 		if("logging")
-			return debug_variable(var_name, logging, 0, src, FALSE)
+			return debug_variable(var_name, logging, ZERO, src, FALSE)
 	. = ..()
 
 /mob/vv_auto_rename(new_name)
@@ -1217,11 +1217,11 @@
 
 ///Adjust the nutrition of a mob
 /mob/proc/adjust_nutrition(var/change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
-	nutrition = max(0, nutrition + change)
+	nutrition = max(ZERO, nutrition + change)
 
 ///Force set the mob nutrition
 /mob/proc/set_nutrition(var/change) //Seriously fuck you oldcoders.
-	nutrition = max(0, change)
+	nutrition = max(ZERO, change)
 
 ///Set the movement type of the mob and update it's movespeed
 /mob/setMovetype(newval)

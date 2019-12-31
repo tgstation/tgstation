@@ -25,8 +25,8 @@
 	<span class='danger'>Revolutionaries</span>: Expand your cause and overthrow the heads of staff by execution or otherwise.\n\
 	<span class='notice'>Crew</span>: Prevent the revolutionaries from taking over the station."
 
-	var/finished = 0
-	var/check_counter = 0
+	var/finished = ZERO
+	var/check_counter = ZERO
 	var/max_headrevs = 3
 	var/datum/team/revolution/revolution
 	var/list/datum/mind/headrev_candidates = list()
@@ -44,7 +44,7 @@
 		restricted_jobs += "Assistant"
 
 	for (var/i=1 to max_headrevs)
-		if (antag_candidates.len==0)
+		if (antag_candidates.len==ZERO)
 			break
 		var/datum/mind/lenin = antag_pick(antag_candidates)
 		antag_candidates -= lenin
@@ -68,7 +68,7 @@
 		if(isnewplayer(rev_mind.current))
 			headrev_candidates -= rev_mind
 			var/list/newcandidates = shuffle(antag_candidates)
-			if(newcandidates.len == 0)
+			if(newcandidates.len == ZERO)
 				continue
 			for(var/M in newcandidates)
 				var/datum/mind/lenin = M
@@ -113,7 +113,7 @@
 	if(check_counter >= 5)
 		if(!finished)
 			SSticker.mode.check_win()
-		check_counter = 0
+		check_counter = ZERO
 	return FALSE
 
 //////////////////////////////////////
@@ -134,7 +134,7 @@
 		if(finished)
 			SSshuttle.clearHostileEnvironment(src)
 		return ..()
-	if(finished != 0 && end_when_heads_dead)
+	if(finished != ZERO && end_when_heads_dead)
 		return TRUE
 	else
 		return ..()
@@ -208,7 +208,7 @@
 
 /datum/game_mode/revolution/speedy/process()
 	. = ..()
-	if(check_counter == 0)
+	if(check_counter == ZERO)
 		if (world.time > endtime && !fuckingdone)
 			fuckingdone = TRUE
 			for (var/obj/machinery/nuclearbomb/N in GLOB.nuke_list)

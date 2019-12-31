@@ -26,7 +26,7 @@
 
 //Launching Shuttles to CentCom
 #define NOLAUNCH -1
-#define UNLAUNCHED 0
+#define UNLAUNCHED ZERO
 #define ENDGAME_LAUNCHED 1
 #define EARLY_LAUNCHED 2
 #define ENDGAME_TRANSIT 3
@@ -54,8 +54,8 @@
 #define ENGINE_DEFAULT_MAXSPEED_ENGINES 5
 
 //Docking error flags
-#define DOCKING_SUCCESS				0
-#define DOCKING_BLOCKED				(1<<0)
+#define DOCKING_SUCCESS				ZERO
+#define DOCKING_BLOCKED				(1<<ZERO)
 #define DOCKING_IMMOBILIZED			(1<<1)
 #define DOCKING_AREA_EMPTY			(1<<2)
 #define DOCKING_NULL_DESTINATION	(1<<3)

@@ -222,7 +222,7 @@
 /datum/ai_laws/proc/set_laws_config()
 	var/list/law_ids = CONFIG_GET(keyed_list/random_laws)
 	switch(CONFIG_GET(number/default_laws))
-		if(0)
+		if(ZERO)
 			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
 			add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
 			add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
@@ -265,7 +265,7 @@
 	inherent = templaws.inherent
 
 /datum/ai_laws/proc/get_law_amount(groups)
-	var/law_amount = 0
+	var/law_amount = ZERO
 	if(devillaws && (LAW_DEVIL in groups))
 		law_amount++
 	if(zeroth && (LAW_ZEROTH in groups))
@@ -279,7 +279,7 @@
 	if(supplied.len && (LAW_SUPPLIED in groups))
 		for(var/index = 1, index <= supplied.len, index++)
 			var/law = supplied[index]
-			if(length(law) > 0)
+			if(length(law) > ZERO)
 				law_amount++
 	return law_amount
 
@@ -288,7 +288,7 @@
 
 /datum/ai_laws/proc/set_zeroth_law(law, law_borg = null)
 	zeroth = law
-	if(law_borg) //Making it possible for slaved borgs to see a different law 0 than their AI. --NEO
+	if(law_borg) //Making it possible for slaved borgs to see a different law ZERO than their AI. --NEO
 		zeroth_borg = law_borg
 
 /datum/ai_laws/proc/add_inherent_law(law)
@@ -377,7 +377,7 @@
 			i++
 
 /datum/ai_laws/proc/remove_law(number)
-	if(number <= 0)
+	if(number <= ZERO)
 		return
 	if(inherent.len && number <= inherent.len)
 		. = inherent[number]
@@ -386,7 +386,7 @@
 	var/list/supplied_laws = list()
 	for(var/index = 1, index <= supplied.len, index++)
 		var/law = supplied[index]
-		if(length(law) > 0)
+		if(length(law) > ZERO)
 			supplied_laws += index //storing the law number instead of the law
 	if(supplied_laws.len && number <= (inherent.len+supplied_laws.len))
 		var/law_to_remove = supplied_laws[number-inherent.len]
@@ -430,7 +430,7 @@
 	if(!owner)
 		owner = M
 
-/datum/ai_laws/proc/get_law_list(include_zeroth = 0, show_numbers = 1)
+/datum/ai_laws/proc/get_law_list(include_zeroth = ZERO, show_numbers = 1)
 	var/list/data = list()
 
 	if (include_zeroth && devillaws && devillaws.len)
@@ -441,23 +441,23 @@
 		data += "[show_numbers ? "0:" : ""] <font color='#ff0000'><b>[zeroth]</b></font>"
 
 	for(var/law in hacked)
-		if (length(law) > 0)
+		if (length(law) > ZERO)
 			var/num = ionnum()
 			data += "[show_numbers ? "[num]:" : ""] <font color='#660000'>[law]</font>"
 
 	for(var/law in ion)
-		if (length(law) > 0)
+		if (length(law) > ZERO)
 			var/num = ionnum()
 			data += "[show_numbers ? "[num]:" : ""] <font color='#547DFE'>[law]</font>"
 
 	var/number = 1
 	for(var/law in inherent)
-		if (length(law) > 0)
+		if (length(law) > ZERO)
 			data += "[show_numbers ? "[number]:" : ""] [law]"
 			number++
 
 	for(var/law in supplied)
-		if (length(law) > 0)
+		if (length(law) > ZERO)
 			data += "[show_numbers ? "[number]:" : ""] <font color='#990099'>[law]</font>"
 			number++
 	return data

@@ -9,10 +9,10 @@
 	circuit = /obj/item/circuitboard/machine/biogenerator
 	var/processing = FALSE
 	var/obj/item/reagent_containers/glass/beaker = null
-	var/points = 0
+	var/points = ZERO
 	var/menustat = "menu"
-	var/efficiency = 0
-	var/productivity = 0
+	var/efficiency = ZERO
+	var/productivity = ZERO
 	var/max_items = 40
 	var/datum/techweb/stored_research
 	var/list/show_categories = list("Food", "Botany Chemicals", "Organic Materials")
@@ -40,8 +40,8 @@
 		updateUsrDialog()
 
 /obj/machinery/biogenerator/RefreshParts()
-	var/E = 0
-	var/P = 0
+	var/E = ZERO
+	var/P = ZERO
 	var/max_storage = 40
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		P += B.rating
@@ -108,7 +108,7 @@
 
 	else if(istype(O, /obj/item/storage/bag/plants))
 		var/obj/item/storage/bag/plants/PB = O
-		var/i = 0
+		var/i = ZERO
 		for(var/obj/item/reagent_containers/food/snacks/grown/G in contents)
 			i++
 		if(i >= max_items)
@@ -121,14 +121,14 @@
 					i++
 			if(i<max_items)
 				to_chat(user, "<span class='info'>You empty the plant bag into the biogenerator.</span>")
-			else if(PB.contents.len == 0)
+			else if(PB.contents.len == ZERO)
 				to_chat(user, "<span class='info'>You empty the plant bag into the biogenerator, filling it to its capacity.</span>")
 			else
 				to_chat(user, "<span class='info'>You fill the biogenerator to its capacity.</span>")
 		return TRUE //no afterattack
 
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/grown))
-		var/i = 0
+		var/i = ZERO
 		for(var/obj/item/reagent_containers/food/snacks/grown/G in contents)
 			i++
 		if(i >= max_items)
@@ -212,7 +212,7 @@
 	if(processing)
 		to_chat(usr, "<span class='warning'>The biogenerator is in the process of working.</span>")
 		return
-	var/S = 0
+	var/S = ZERO
 	for(var/obj/item/reagent_containers/food/snacks/grown/I in contents)
 		S += 5
 		if(I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) < 0.1)
@@ -245,7 +245,7 @@
 		return TRUE
 
 /obj/machinery/biogenerator/proc/check_container_volume(list/reagents, multiplier = 1)
-	var/sum_reagents = 0
+	var/sum_reagents = ZERO
 	for(var/R in reagents)
 		sum_reagents += reagents[R]
 	sum_reagents *= multiplier
@@ -271,7 +271,7 @@
 			beaker.reagents.add_reagent(R, D.make_reagents[R]*amount)
 	else
 		var/i = amount
-		while(i > 0)
+		while(i > ZERO)
 			if(!check_container_volume(D.make_reagents))
 				return .
 			if(!check_cost(D.materials))

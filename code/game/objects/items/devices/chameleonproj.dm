@@ -51,7 +51,7 @@
 		return
 	if(target.alpha != 255)
 		return
-	if(target.invisibility != 0)
+	if(target.invisibility != ZERO)
 		return
 	if(iseffect(target))
 		if(!(istype(target, /obj/effect/decal))) //be a footprint
@@ -92,7 +92,7 @@
 		for(var/mob/M in active_dummy)
 			to_chat(M, "<span class='danger'>Your chameleon projector deactivates.</span>")
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
-		spark_system.set_up(5, 0, src)
+		spark_system.set_up(5, ZERO, src)
 		spark_system.attach(src)
 		spark_system.start()
 		eject_all()
@@ -113,7 +113,7 @@
 	name = ""
 	desc = ""
 	density = FALSE
-	var/can_move = 0
+	var/can_move = ZERO
 	var/obj/item/chameleon/master = null
 
 /obj/effect/dummy/chameleon/proc/activate(mob/M, saved_appearance, obj/item/chameleon/C)
@@ -176,5 +176,5 @@
 	return
 
 /obj/effect/dummy/chameleon/Destroy()
-	master.disrupt(0)
+	master.disrupt(ZERO)
 	return ..()

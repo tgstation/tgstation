@@ -84,7 +84,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	var/obj/item/card/id/W = H.wear_id
 	W.access |= dep_access
 
-	var/teleport = 0
+	var/teleport = ZERO
 	if(!CONFIG_GET(flag/sec_start_brig))
 		if(destination || spawn_point)
 			teleport = 1
@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 			T = get_turf(spawn_point)
 			H.Move(T)
 		else
-			var/safety = 0
+			var/safety = ZERO
 			while(safety < 25)
 				T = safepick(get_area_turfs(destination))
 				if(T && !H.Move(T))

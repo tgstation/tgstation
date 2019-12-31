@@ -17,7 +17,7 @@
 	health = 50
 	maxHealth = 50
 	baton_type = /obj/item/toy/sword
-	weapon_force = 0
+	weapon_force = ZERO
 
 /mob/living/simple_animal/bot/secbot/grievous/bullet_act(obj/projectile/P)
 	visible_message("<span class='warning'>[src] deflects [P] with its energy swords!</span>")
@@ -61,7 +61,7 @@
 	switch(mode)
 		if(BOT_IDLE)		// idle
 			update_icon()
-			walk_to(src,0)
+			walk_to(src,ZERO)
 			look_for_perp()	// see if any criminals are in range
 			if(!mode && auto_patrol)	// still idle, and set to patrol
 				mode = BOT_START_PATROL	// switch to patrol mode
@@ -70,7 +70,7 @@
 			playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
 			// general beepsky doesn't give up so easily, jedi scum
 			if(frustration >= 20)
-				walk_to(src,0)
+				walk_to(src,ZERO)
 				back_to_idle()
 				return
 			if(target)		// make sure target exists
@@ -85,7 +85,7 @@
 					if((get_dist(src, target)) >= (olddist))
 						frustration++
 					else
-						frustration = 0
+						frustration = ZERO
 			else
 				back_to_idle()
 
@@ -130,7 +130,7 @@
 
 /mob/living/simple_animal/bot/secbot/grievous/explode()
 
-	walk_to(src,0)
+	walk_to(src,ZERO)
 	visible_message("<span class='boldannounce'>[src] lets out a huge cough as it blows apart!</span>")
 	var/atom/Tsec = drop_location()
 
@@ -144,7 +144,7 @@
 		drop_part(robot_arm, Tsec)
 
 	do_sparks(3, TRUE, src)
-	for(var/IS = 0 to 4)
+	for(var/IS = ZERO to 4)
 		drop_part(baton_type, Tsec)
 	new /obj/effect/decal/cleanable/oil(Tsec)
 	qdel(src)

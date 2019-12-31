@@ -2,7 +2,7 @@
 //All based on clusterMin and clusterMax as guides
 
 //Individual defines
-#define CLUSTER_CHECK_NONE				0  			//No checks are done, cluster as much as possible
+#define CLUSTER_CHECK_NONE				ZERO  			//No checks are done, cluster as much as possible
 #define CLUSTER_CHECK_DIFFERENT_TURFS	(1<<1)  //Don't let turfs of DIFFERENT types cluster
 #define CLUSTER_CHECK_DIFFERENT_ATOMS	(1<<2)  //Don't let atoms of DIFFERENT types cluster
 #define CLUSTER_CHECK_SAME_TURFS		(1<<3)  //Don't let turfs of the SAME type cluster
@@ -35,9 +35,9 @@
 
 //Defines the region the map represents, sets map
 //Returns the map
-/datum/mapGenerator/proc/defineRegion(turf/Start, turf/End, replace = 0)
+/datum/mapGenerator/proc/defineRegion(turf/Start, turf/End, replace = ZERO)
 	if(!checkRegion(Start, End))
-		return 0
+		return ZERO
 
 	if(replace)
 		undefineRegion()
@@ -47,9 +47,9 @@
 
 //Defines the region the map represents, as a CIRCLE!, sets map
 //Returns the map
-/datum/mapGenerator/proc/defineCircularRegion(turf/Start, turf/End, replace = 0)
+/datum/mapGenerator/proc/defineCircularRegion(turf/Start, turf/End, replace = ZERO)
 	if(!checkRegion(Start, End))
-		return 0
+		return ZERO
 
 	var/centerX = max(abs((End.x+Start.x)/2),1)
 	var/centerY = max(abs((End.y+Start.y)/2),1)
@@ -66,8 +66,8 @@
 
 	//Even sphere correction engage
 	var/offByOneOffset = 1
-	if(bigZ % 2 == 0)
-		offByOneOffset = 0
+	if(bigZ % 2 == ZERO)
+		offByOneOffset = ZERO
 
 	for(var/i = lilZ, i <= bigZ+offByOneOffset, i++)
 		var/theRadius = radius
@@ -87,19 +87,19 @@
 
 
 //Checks for and Rejects bad region coordinates
-//Returns 1/0
+//Returns 1/ZERO
 /datum/mapGenerator/proc/checkRegion(turf/Start, turf/End)
 	. = 1
 
 	if(!Start || !End)
-		return 0 //Just bail
+		return ZERO //Just bail
 
 	if(Start.x > world.maxx || End.x > world.maxx)
-		. = 0
+		. = ZERO
 	if(Start.y > world.maxy || End.y > world.maxy)
-		. = 0
+		. = ZERO
 	if(Start.z > world.maxz || End.z > world.maxz)
-		. = 0
+		. = ZERO
 
 
 //Requests the mapGeneratorModule(s) to (re)generate
@@ -185,7 +185,7 @@
 	var/moduleClusters = input("Cluster Flags (Cancel to leave unchanged from defaults)","Map Gen Settings") as null|anything in clusters
 	//null for default
 
-	var/theCluster = 0
+	var/theCluster = ZERO
 	if(moduleClusters != "None")
 		if(!clusters[moduleClusters])
 			to_chat(src, "Invalid Cluster Flags")

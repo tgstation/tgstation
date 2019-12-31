@@ -44,7 +44,7 @@
 
 /obj/projectile/beam/practice
 	name = "practice laser"
-	damage = 0
+	damage = ZERO
 	nodamage = TRUE
 
 /obj/projectile/beam/scatter
@@ -74,7 +74,7 @@
 	damage_type = STAMINA
 	flag = "energy"
 	hitsound = 'sound/weapons/tap.ogg'
-	eyeblur = 0
+	eyeblur = ZERO
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 	tracer_type = /obj/effect/projectile/tracer/disabler
@@ -106,7 +106,7 @@
 
 /obj/projectile/beam/pulse/heavy/on_hit(atom/target, blocked = FALSE)
 	life -= 10
-	if(life > 0)
+	if(life > ZERO)
 		. = BULLET_ACT_FORCE_PIERCE
 	..()
 
@@ -124,7 +124,7 @@
 	name = "laser tag beam"
 	icon_state = "omnilaser"
 	hitsound = null
-	damage = 0
+	damage = ZERO
 	damage_type = STAMINA
 	flag = "laser"
 	var/suit_types = list(/obj/item/clothing/suit/redtag, /obj/item/clothing/suit/bluetag)
@@ -191,7 +191,7 @@
 	name = "shrink ray"
 	icon_state = "blue_laser"
 	hitsound = 'sound/weapons/shrink_hit.ogg'
-	damage = 0
+	damage = ZERO
 	damage_type = STAMINA
 	flag = "energy"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/shrink

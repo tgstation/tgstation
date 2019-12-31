@@ -5,13 +5,13 @@
 	icon_state = "spacecash"
 	amount = 1
 	max_amount = INFINITY
-	throwforce = 0
+	throwforce = ZERO
 	throw_speed = 2
 	throw_range = 2
 	w_class = WEIGHT_CLASS_TINY
 	full_w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
-	var/value = 0
+	var/value = ZERO
 	grind_results = list(/datum/reagent/cellulose = 10)
 
 /obj/item/stack/spacecash/Initialize()

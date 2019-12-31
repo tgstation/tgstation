@@ -18,7 +18,7 @@
 	if(..())
 		if(istype(M))
 			return 1
-	return 0
+	return ZERO
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/attach(obj/mecha/M as obj)
 	..()
@@ -100,8 +100,8 @@
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill
 	name = "\improper KILL CLAMP"
 	desc = "They won't know what clamped them!"
-	energy_drain = 0
-	dam_force = 0
+	energy_drain = ZERO
+	dam_force = ZERO
 	var/real_clamp = FALSE
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/real
@@ -187,7 +187,7 @@
 	desc = "Equipment for engineering exosuits. A rapid-firing high capacity fire extinguisher."
 	icon_state = "mecha_exting"
 	equip_cooldown = 5
-	energy_drain = 0
+	energy_drain = ZERO
 	range = MECHA_MELEE|MECHA_RANGED
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/Initialize()
@@ -205,7 +205,7 @@
 		occupant_message("<span class='notice'>Extinguisher refilled.</span>")
 		playsound(chassis, 'sound/effects/refill.ogg', 50, TRUE, -6)
 	else
-		if(reagents.total_volume > 0)
+		if(reagents.total_volume > ZERO)
 			playsound(chassis, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 			var/direction = get_dir(chassis,target)
 			var/turf/T = get_turf(target)
@@ -213,8 +213,8 @@
 			var/turf/T2 = get_step(T,turn(direction, -90))
 
 			var/list/the_targets = list(T,T1,T2)
-			spawn(0)
-				for(var/a=0, a<5, a++)
+			spawn(ZERO)
+				for(var/a=ZERO, a<5, a++)
 					var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water(get_turf(chassis))
 					if(!W)
 						return
@@ -223,7 +223,7 @@
 					W.reagents = R
 					R.my_atom = W
 					reagents.trans_to(W,1, transfered_by = chassis.occupant)
-					for(var/b=0, b<4, b++)
+					for(var/b=ZERO, b<4, b++)
 						if(!W)
 							return
 						step_towards(W,my_target)
@@ -245,7 +245,7 @@
 	if(..())
 		if(istype(M))
 			return 1
-	return 0
+	return ZERO
 
 
 
@@ -257,7 +257,7 @@
 	energy_drain = 250
 	range = MECHA_MELEE|MECHA_RANGED
 	item_flags = NO_MAT_REDEMPTION
-	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
+	var/mode = ZERO //ZERO - deconstruct, 1 - wall or floor, 2 - airlock.
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Initialize()
 	. = ..()
@@ -278,7 +278,7 @@
 	playsound(chassis, 'sound/machines/click.ogg', 50, TRUE)
 
 	switch(mode)
-		if(0)
+		if(ZERO)
 			if(iswallturf(target))
 				var/turf/closed/wall/W = target
 				occupant_message("<span class='notice'>Deconstructing [W]...</span>")
@@ -334,7 +334,7 @@
 	if(href_list["mode"])
 		mode = text2num(href_list["mode"])
 		switch(mode)
-			if(0)
+			if(ZERO)
 				occupant_message("<span class='notice'>Switched RCD to Deconstruct.</span>")
 				energy_drain = initial(energy_drain)
 			if(1)
@@ -405,7 +405,7 @@
 	N.obj_integrity = M.obj_integrity //This is not a repair tool
 	if (M.name != "\improper APLU MK-I \"Ripley\"")
 		N.name = M.name
-	M.wreckage = 0
+	M.wreckage = ZERO
 	qdel(M)
 	playsound(get_turf(N),'sound/items/ratchet.ogg',50,TRUE)
 	return

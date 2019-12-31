@@ -17,7 +17,7 @@
 	var/list/confirmations = list()
 	var/list/fired = list()
 	var/countdown_length = 10
-	var/countdown_step = 0
+	var/countdown_step = ZERO
 
 /datum/duel/proc/try_begin()
 	//Check if both guns are held and if so begin.
@@ -98,7 +98,7 @@
 
 /datum/duel/proc/countdown_step()
 	countdown_step--
-	if(countdown_step == 0)
+	if(countdown_step == ZERO)
 		state = DUEL_FIRING
 		message_duelists("<span class='userdanger'>Fire!</span>")
 	else
@@ -243,7 +243,7 @@
 //Casing
 
 /obj/item/ammo_casing/energy/duel
-	e_cost = 0
+	e_cost = ZERO
 	projectile_type = /obj/projectile/energy/duel
 	var/setting
 

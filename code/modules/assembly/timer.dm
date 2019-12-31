@@ -22,7 +22,7 @@
 /obj/item/assembly/timer/proc/manual_suicide(mob/living/user)
 	user.visible_message("<span class='suicide'>[user]'s time is up!</span>")
 	user.adjustOxyLoss(200)
-	user.death(0)
+	user.death(ZERO)
 
 /obj/item/assembly/timer/Initialize()
 	. = ..()
@@ -73,7 +73,7 @@
 	if(!timing)
 		return
 	time--
-	if(time <= 0)
+	if(time <= ZERO)
 		timing = FALSE
 		timer_end()
 		time = saved_time

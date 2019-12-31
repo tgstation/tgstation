@@ -62,7 +62,7 @@
 /datum/surgery_step/proc/initiate(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	surgery.step_in_progress = TRUE
 	var/speed_mod = 1
-	var/fail_prob = 0//100 - fail_prob = success_prob
+	var/fail_prob = ZERO//100 - fail_prob = success_prob
 	var/advance = FALSE
 
 	if(preop(user, target, target_zone, tool, surgery) == -1)
@@ -80,7 +80,7 @@
 	var/modded_time = time * speed_mod * user.mind.get_skill_speed_modifier(/datum/skill/medical)
 
 
-	fail_prob = min(max(0, modded_time - (time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)),99)//if modded_time > time * modifier, then fail_prob = modded_time - time*modifier. starts at 0, caps at 99
+	fail_prob = min(max(ZERO, modded_time - (time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)),99)//if modded_time > time * modifier, then fail_prob = modded_time - time*modifier. starts at ZERO, caps at 99
 	modded_time = min(modded_time, time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)//also if that, then cap modded_time at time*modifier
 
 	if(iscyborg(user))//any immunities to surgery slowdown should go in this check.
@@ -125,10 +125,10 @@
 	user?.mind.adjust_experience(/datum/skill/medical, experience_given)
 	return TRUE
 
-/datum/surgery_step/proc/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, var/fail_prob = 0)
+/datum/surgery_step/proc/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, var/fail_prob = ZERO)
 	var/screwedmessage = ""
 	switch(fail_prob)
-		if(0 to 24)
+		if(ZERO to 24)
 			screwedmessage = " You almost had it, though."
 		if(50 to 74)//25 to 49 = no extra text
 			screwedmessage = " This is hard to get right in these conditions..."

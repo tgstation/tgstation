@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(server_maint)
 	init_order = INIT_ORDER_SERVER_MAINT
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
-	var/cleanup_ticker = 0
+	var/cleanup_ticker = ZERO
 
 /datum/controller/subsystem/server_maint/PreInit()
 	world.hub_password = "" //quickly! before the hubbies see us.
@@ -25,7 +25,7 @@ SUBSYSTEM_DEF(server_maint)
 		src.currentrun = GLOB.clients.Copy()
 
 		switch (cleanup_ticker) // do only one of these at a time, once per 5 fires
-			if (0)
+			if (ZERO)
 				if(listclearnulls(GLOB.player_list))
 					log_world("Found a null in player_list!")
 				cleanup_ticker++
@@ -46,7 +46,7 @@ SUBSYSTEM_DEF(server_maint)
 					log_world("Found a null in dead_mob_list!")
 				cleanup_ticker++
 			if (25)
-				cleanup_ticker = 0
+				cleanup_ticker = ZERO
 			else
 				cleanup_ticker++
 

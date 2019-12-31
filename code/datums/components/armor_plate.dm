@@ -1,5 +1,5 @@
 /datum/component/armor_plate
-	var/amount = 0
+	var/amount = ZERO
 	var/maxamount = 3
 	var/upgrade_item = /obj/item/stack/sheet/animalhide/goliath_hide
 	var/datum/armor/added_armor = list("melee" = 10)

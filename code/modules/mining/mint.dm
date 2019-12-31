@@ -107,7 +107,7 @@
 	switch(action)
 		if ("startpress")
 			if (!processing)
-				produced_coins = 0
+				produced_coins = ZERO
 			processing = TRUE
 		if ("stoppress")
 			processing = FALSE

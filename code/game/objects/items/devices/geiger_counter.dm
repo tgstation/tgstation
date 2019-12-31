@@ -24,10 +24,10 @@
 	var/datum/looping_sound/geiger/soundloop
 
 	var/scanning = FALSE
-	var/radiation_count = 0
-	var/current_tick_amount = 0
-	var/last_tick_amount = 0
-	var/fail_to_receive = 0
+	var/radiation_count = ZERO
+	var/current_tick_amount = ZERO
+	var/last_tick_amount = ZERO
+	var/fail_to_receive = ZERO
 	var/current_warning = 1
 
 /obj/item/geiger_counter/Initialize()
@@ -45,7 +45,7 @@
 	update_sound()
 
 	if(!scanning)
-		current_tick_amount = 0
+		current_tick_amount = ZERO
 		return
 
 	radiation_count -= radiation_count/RAD_MEASURE_SMOOTHING
@@ -57,10 +57,10 @@
 
 	else if(!(obj_flags & EMAGGED))
 		grace--
-		if(grace <= 0)
-			radiation_count = 0
+		if(grace <= ZERO)
+			radiation_count = ZERO
 
-	current_tick_amount = 0
+	current_tick_amount = ZERO
 
 /obj/item/geiger_counter/examine(mob/user)
 	. = ..()
@@ -140,11 +140,11 @@
 		else
 			user.visible_message("<span class='notice'>[user] scans [target] with [src].</span>", "<span class='danger'>You project [src]'s stored radiation into [target]!</span>")
 			target.rad_act(radiation_count)
-			radiation_count = 0
+			radiation_count = ZERO
 		return TRUE
 
 /obj/item/geiger_counter/proc/scan(atom/A, mob/user)
-	var/rad_strength = 0
+	var/rad_strength = ZERO
 	for(var/i in get_rad_contents(A)) // Yes it's intentional that you can't detect radioactive things under rad protection. Gives traitors a way to hide their glowing green rocks.
 		var/atom/thing = i
 		if(!thing)
@@ -169,13 +169,13 @@
 	if(I.tool_behaviour == TOOL_SCREWDRIVER && (obj_flags & EMAGGED))
 		if(scanning)
 			to_chat(user, "<span class='warning'>Turn off [src] before you perform this action!</span>")
-			return 0
+			return ZERO
 		user.visible_message("<span class='notice'>[user] unscrews [src]'s maintenance panel and begins fiddling with its innards...</span>", "<span class='notice'>You begin resetting [src]...</span>")
 		if(!I.use_tool(src, user, 40, volume=50))
-			return 0
+			return ZERO
 		user.visible_message("<span class='notice'>[user] refastens [src]'s maintenance panel!</span>", "<span class='notice'>You reset [src] to its factory settings!</span>")
 		obj_flags &= ~EMAGGED
-		radiation_count = 0
+		radiation_count = ZERO
 		update_icon()
 		return 1
 	else
@@ -186,8 +186,8 @@
 		return ..()
 	if(!scanning)
 		to_chat(usr, "<span class='warning'>[src] must be on to reset its radiation level!</span>")
-		return 0
-	radiation_count = 0
+		return ZERO
+	radiation_count = ZERO
 	to_chat(usr, "<span class='notice'>You flush [src]'s radiation counts, resetting it to normal.</span>")
 	update_icon()
 
@@ -196,7 +196,7 @@
 		return
 	if(scanning)
 		to_chat(user, "<span class='warning'>Turn off [src] before you perform this action!</span>")
-		return 0
+		return ZERO
 	to_chat(user, "<span class='warning'>You override [src]'s radiation storing protocols. It will now generate small doses of radiation, and stored rads are now projected into creatures you scan.</span>")
 	obj_flags |= EMAGGED
 

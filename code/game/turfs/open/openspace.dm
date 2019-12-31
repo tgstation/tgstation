@@ -22,14 +22,14 @@
 	update_multiz(TRUE, TRUE)
 
 /turf/open/openspace/Destroy()
-	vis_contents.len = 0
+	vis_contents.len = ZERO
 	return ..()
 
 /turf/open/openspace/update_multiz(prune_on_fail = FALSE, init = FALSE)
 	. = ..()
 	var/turf/T = below()
 	if(!T)
-		vis_contents.len = 0
+		vis_contents.len = ZERO
 		if(prune_on_fail)
 			ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return FALSE

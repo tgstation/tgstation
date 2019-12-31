@@ -71,7 +71,7 @@
 		give.transfer_to(src, amount / valid_suppliers.len, reagent, net)
 ///returns TRUE when they can give the specified amount and reagent. called by process request
 /datum/component/plumbing/proc/can_give(amount, reagent, datum/ductnet/net)
-	if(amount <= 0)
+	if(amount <= ZERO)
 		return
 
 	if(reagent) //only asked for one type of reagent
@@ -79,7 +79,7 @@
 			var/datum/reagent/R = A
 			if(R.type == reagent)
 				return TRUE
-	else if(reagents.total_volume > 0) //take whatever
+	else if(reagents.total_volume > ZERO) //take whatever
 		return TRUE
 ///this is where the reagent is actually transferred and is thus the finish point of our process()
 /datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net)

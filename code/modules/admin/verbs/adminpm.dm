@@ -73,7 +73,7 @@
 		return
 
 	var/client/recipient
-	var/external = 0
+	var/external = ZERO
 	if(istext(whom))
 		if(cmptext(copytext(whom,1,2),"@"))
 			whom = findStealthKey(whom)
@@ -131,7 +131,7 @@
 		return
 
 	//clean the message if it's not sent by a high-rank admin
-	if(!check_rights(R_SERVER|R_DEBUG,0)||external)//no sending html to the poor bots
+	if(!check_rights(R_SERVER|R_DEBUG,ZERO)||external)//no sending html to the poor bots
 		msg = trim(sanitize(copytext(msg,1,MAX_MESSAGE_LEN)))
 		if(!msg)
 			return
@@ -308,14 +308,14 @@
 	return "Message Successful"
 
 /proc/GenTgsStealthKey()
-	var/num = (rand(0,1000))
-	var/i = 0
-	while(i == 0)
+	var/num = (rand(ZERO,1000))
+	var/i = ZERO
+	while(i == ZERO)
 		i = 1
 		for(var/P in GLOB.stealthminID)
 			if(num == GLOB.stealthminID[P])
 				num++
-				i = 0
+				i = ZERO
 	var/stealth = "@[num2text(num)]"
 	GLOB.stealthminID["IRCKEY"] = stealth
 	return	stealth

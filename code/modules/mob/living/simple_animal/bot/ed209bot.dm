@@ -13,7 +13,7 @@
 	window_id = "autoed209"
 	window_name = "Automatic Security Unit v2.6"
 	ranged = TRUE
-	var/lastfired = 0
+	var/lastfired = ZERO
 	var/shot_delay = 15
 	var/shoot_sound = 'sound/weapons/laser.ogg'
 	var/projectile = /obj/projectile/beam/disabler
@@ -41,7 +41,7 @@
 	var/judgement_criteria = judgement_criteria()
 	var/list/targets = list()
 	for(var/mob/living/carbon/C in view(7,src)) //Let's find us a target
-		var/threatlevel = 0
+		var/threatlevel = ZERO
 		if(C.incapacitated())
 			continue
 		threatlevel = C.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
@@ -52,7 +52,7 @@
 		if(dst <= 1 || dst > 7)
 			continue
 		targets += C
-	if(targets.len>0)
+	if(targets.len>ZERO)
 		var/mob/living/carbon/t = pick(targets)
 		if(t.stat != DEAD && !t.handcuffed) //we don't shoot people who are dead, cuffed or lying down.
 			shootAt(t)

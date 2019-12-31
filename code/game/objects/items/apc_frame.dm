@@ -7,7 +7,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/result_path
-	var/inverse = 0 // For inverse dir frames like light fixtures.
+	var/inverse = ZERO // For inverse dir frames like light fixtures.
 	var/pixel_shift //The amount of pixels
 
 /obj/item/wallframe/proc/try_build(turf/on_wall, mob/user)

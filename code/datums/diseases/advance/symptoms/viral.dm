@@ -19,7 +19,7 @@ BONUS
 	stealth = 3
 	resistance = 5
 	stage_speed = -3
-	transmittable = 0
+	transmittable = ZERO
 	level = 3
 
 /*

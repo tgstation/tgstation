@@ -97,14 +97,14 @@
 	for(var/obj/structure/puzzle_element/E in elements_in_order())
 		current_ordering += E.id
 
-	var/swap_tally = 0
+	var/swap_tally = ZERO
 	for(var/i in 1 to current_ordering.len)
 		var/checked_value = current_ordering[i]
 		for(var/j in i to current_ordering.len)
 			if(current_ordering[j] < checked_value)
 				swap_tally++
 	
-	return swap_tally % 2 == 0
+	return swap_tally % 2 == ZERO
 
 //swap two tiles in same row
 /obj/effect/sliding_puzzle/proc/make_solvable()
@@ -132,7 +132,7 @@
 		return 1
 	if(A.x < B.x)
 		return -1
-	return 0
+	return ZERO
 
 /obj/effect/sliding_puzzle/proc/elements_in_order()
 	return sortTim(elements,cmp=/proc/cmp_xy_desc)
@@ -201,13 +201,13 @@
 	icon_state = "puzzle_pillar"
 	anchored = FALSE
 	density = TRUE
-	var/id = 0
+	var/id = ZERO
 	var/obj/effect/sliding_puzzle/source
 	var/icon/puzzle_icon
 
 /obj/structure/puzzle_element/Move(nloc, dir)
 	if(!isturf(nloc) ||  moving_diagonally || get_dist(get_step(src,dir),get_turf(source)) > 1)
-		return 0
+		return ZERO
 	else
 		return ..()
 

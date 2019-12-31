@@ -16,7 +16,7 @@
 	if(!target.reagents)
 		return
 
-	if(reagents.total_volume > 0)
+	if(reagents.total_volume > ZERO)
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			to_chat(user, "<span class='notice'>[target] is full.</span>")
 			return
@@ -25,7 +25,7 @@
 			to_chat(user, "<span class='warning'>You cannot transfer reagents to [target]!</span>")
 			return
 
-		var/trans = 0
+		var/trans = ZERO
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 
 		if(ismob(target))

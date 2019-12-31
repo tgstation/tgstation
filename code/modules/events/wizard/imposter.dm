@@ -3,7 +3,7 @@
 	weight = 1
 	typepath = /datum/round_event/wizard/imposter
 	max_occurrences = 1
-	earliest_start = 0 MINUTES
+	earliest_start = ZERO MINUTES
 
 /datum/round_event/wizard/imposter/start()
 	for(var/datum/mind/M in SSticker.mode.wizards)

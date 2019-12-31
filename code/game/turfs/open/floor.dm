@@ -16,8 +16,8 @@
 	thermal_conductivity = 0.040
 	heat_capacity = 10000
 	intact = 1
-	var/broken = 0
-	var/burnt = 0
+	var/broken = ZERO
+	var/burnt = ZERO
 	var/floor_tile = null //tile that this floor drops
 	var/list/broken_states
 	var/list/burnt_states
@@ -155,7 +155,7 @@
 		return 1
 	if(intact && istype(C, /obj/item/stack/tile))
 		try_replace_tile(C, user, params)
-	return 0
+	return ZERO
 
 /turf/open/floor/crowbar_act(mob/living/user, obj/item/I)
 	if(intact && pry_tile(I, user))
@@ -178,8 +178,8 @@
 
 /turf/open/floor/proc/remove_tile(mob/user, silent = FALSE, make_tile = TRUE)
 	if(broken || burnt)
-		broken = 0
-		burnt = 0
+		broken = ZERO
+		burnt = ZERO
 		if(user && !silent)
 			to_chat(user, "<span class='notice'>You remove the broken plating.</span>")
 	else

@@ -21,7 +21,7 @@
 	desc = "These aromatic tips of the tea plant can be dried to make tea."
 	icon_state = "tea_aspera_leaves"
 	filling_color = "#008000"
-	grind_results = list(/datum/reagent/toxin/teapowder = 0)
+	grind_results = list(/datum/reagent/toxin/teapowder = ZERO)
 	dry_grind = TRUE
 	can_distill = FALSE
 
@@ -41,7 +41,7 @@
 	name = "Tea Astra tips"
 	icon_state = "tea_astra_leaves"
 	filling_color = "#4582B4"
-	grind_results = list(/datum/reagent/toxin/teapowder = 0, /datum/reagent/medicine/salglu_solution = 0)
+	grind_results = list(/datum/reagent/toxin/teapowder = ZERO, /datum/reagent/medicine/salglu_solution = ZERO)
 
 
 // Coffee
@@ -71,7 +71,7 @@
 	filling_color = "#DC143C"
 	bitesize_mod = 2
 	dry_grind = TRUE
-	grind_results = list(/datum/reagent/toxin/coffeepowder = 0)
+	grind_results = list(/datum/reagent/toxin/coffeepowder = ZERO)
 	distill_reagent = /datum/reagent/consumable/ethanol/kahlua
 
 // Coffee Robusta
@@ -91,4 +91,4 @@
 	name = "coffee robusta beans"
 	desc = "Increases robustness by 37 percent!"
 	icon_state = "coffee_robusta"
-	grind_results = list(/datum/reagent/toxin/coffeepowder = 0, /datum/reagent/medicine/morphine = 0)
+	grind_results = list(/datum/reagent/toxin/coffeepowder = ZERO, /datum/reagent/medicine/morphine = ZERO)

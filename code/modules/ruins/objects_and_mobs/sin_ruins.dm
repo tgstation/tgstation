@@ -78,7 +78,7 @@
 	density = TRUE
 	icon_state = "blob"
 	icon = 'icons/mob/blob.dmi'
-	color = rgb(145, 150, 0)
+	color = rgb(145, 150, ZERO)
 
 /obj/effect/gluttony/CanPass(atom/movable/mover, turf/target)//So bullets will fly over and stuff.
 	if(ishuman(mover))

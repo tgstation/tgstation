@@ -16,7 +16,7 @@
 	internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)
 	var/list/cargo = new
 	var/cargo_capacity = 15
-	var/hides = 0
+	var/hides = ZERO
 	enclosed = FALSE //Normal ripley has an open cockpit design
 	enter_delay = 10 //can enter in a quarter of the time of other mechs
 	exit_delay = 10
@@ -115,7 +115,7 @@
 	step_in = 4
 	lights_power = 7
 	wreckage = /obj/structure/mecha_wreckage/ripley/deathripley
-	step_energy_drain = 0
+	step_energy_drain = ZERO
 	enclosed = TRUE
 	enter_delay = 40
 	silicon_icon_state = null
@@ -173,7 +173,7 @@
 
 /obj/mecha/working/ripley/Exit(atom/movable/O)
 	if(O in cargo)
-		return 0
+		return ZERO
 	return ..()
 
 /obj/mecha/working/ripley/Topic(href, href_list)

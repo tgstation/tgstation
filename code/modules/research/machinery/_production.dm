@@ -20,7 +20,7 @@
 
 /obj/machinery/rnd/production/Initialize(mapload)
 	. = ..()
-	create_reagents(0, OPENCONTAINER)
+	create_reagents(ZERO, OPENCONTAINER)
 	matching_designs = list()
 	cached_designs = list()
 	stored_research = new
@@ -62,19 +62,19 @@
 /obj/machinery/rnd/production/proc/calculate_efficiency()
 	efficiency_coeff = 1
 	if(reagents)		//If reagents/materials aren't initialized, don't bother, we'll be doing this again after reagents init anyways.
-		reagents.maximum_volume = 0
+		reagents.maximum_volume = ZERO
 		for(var/obj/item/reagent_containers/glass/G in component_parts)
 			reagents.maximum_volume += G.volume
 			G.reagents.trans_to(src, G.reagents.total_volume)
 	if(materials)
-		var/total_storage = 0
+		var/total_storage = ZERO
 		for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 			total_storage += M.rating * 75000
 		materials.set_local_size(total_storage)
 	var/total_rating = 1.2
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		total_rating = CLAMP(total_rating - (M.rating * 0.1), 0, 1)
-	if(total_rating == 0)
+		total_rating = CLAMP(total_rating - (M.rating * 0.1), ZERO, 1)
+	if(total_rating == ZERO)
 		efficiency_coeff = INFINITY
 	else
 		efficiency_coeff = 1/total_rating
@@ -98,7 +98,7 @@
 
 /obj/machinery/rnd/production/proc/check_mat(datum/design/being_built, var/mat)	// now returns how many times the item can be built with the material
 	if (!materials.mat_container)  // no connected silo
-		return 0
+		return ZERO
 	var/list/all_materials = being_built.reagents_list + being_built.materials
 
 	var/A = materials.mat_container.get_material_amount(mat)
@@ -315,10 +315,10 @@
 	var/datum/component/material_container/mat_container = materials.mat_container
 	if (!mat_container)
 		say("No access to material storage, please contact the quartermaster.")
-		return 0
+		return ZERO
 	if (materials.on_hold())
 		say("Mineral access is on hold, please contact the quartermaster.")
-		return 0
+		return ZERO
 	var/count = mat_container.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
 	var/list/matlist = list()
 	matlist[eject_sheet] = MINERAL_MATERIAL_AMOUNT

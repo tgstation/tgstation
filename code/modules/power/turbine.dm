@@ -37,11 +37,11 @@
 	var/obj/machinery/power/turbine/turbine
 	var/datum/gas_mixture/gas_contained
 	var/turf/inturf
-	var/starter = 0
-	var/rpm = 0
-	var/rpmtarget = 0
+	var/starter = ZERO
+	var/rpm = ZERO
+	var/rpmtarget = ZERO
 	var/capacity = 1e6
-	var/comp_id = 0
+	var/comp_id = ZERO
 	var/efficiency
 
 /obj/machinery/power/compressor/Destroy()
@@ -59,7 +59,7 @@
 	resistance_flags = FIRE_PROOF
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	circuit = /obj/item/circuitboard/machine/power_turbine
-	var/opened = 0
+	var/opened = ZERO
 	var/obj/machinery/power/compressor/compressor
 	var/turf/outturf
 	var/lastgen
@@ -94,7 +94,7 @@
 		turbine.locate_machinery()
 
 /obj/machinery/power/compressor/RefreshParts()
-	var/E = 0
+	var/E = ZERO
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		E += M.rating
 	efficiency = E / 6
@@ -144,7 +144,7 @@
 // RPM function to include compression friction - be advised that too low/high of a compfriction value can make things screwy
 
 	rpm = min(rpm, (COMPFRICTION*efficiency)/2)
-	rpm = max(0, rpm - (rpm*rpm)/(COMPFRICTION*efficiency))
+	rpm = max(ZERO, rpm - (rpm*rpm)/(COMPFRICTION*efficiency))
 
 
 	if(starter && !(stat & NOPOWER))
@@ -153,7 +153,7 @@
 			rpmtarget = 1000
 	else
 		if(rpm<1000)
-			rpmtarget = 0
+			rpmtarget = ZERO
 
 
 
@@ -183,7 +183,7 @@
 	connect_to_network()
 
 /obj/machinery/power/turbine/RefreshParts()
-	var/P = 0
+	var/P = ZERO
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		P += C.rating
 	productivity = P / 6
@@ -222,12 +222,12 @@
 
 	var/newrpm = ((compressor.gas_contained.temperature) * compressor.gas_contained.total_moles())/4
 
-	newrpm = max(0, newrpm)
+	newrpm = max(ZERO, newrpm)
 
 	if(!compressor.starter || newrpm > 1000)
 		compressor.rpmtarget = newrpm
 
-	if(compressor.gas_contained.total_moles()>0)
+	if(compressor.gas_contained.total_moles()>ZERO)
 		var/oamount = min(compressor.gas_contained.total_moles(), (compressor.rpm+100)/35000*compressor.capacity)
 		var/datum/gas_mixture/removed = compressor.gas_contained.remove(oamount)
 		outturf.assume_air(removed)
@@ -312,7 +312,7 @@
 	icon_keyboard = "tech_key"
 	circuit = /obj/item/circuitboard/computer/turbine_computer
 	var/obj/machinery/power/compressor/compressor
-	var/id = 0
+	var/id = ZERO
 
 	ui_x = 300
 	ui_y = 200

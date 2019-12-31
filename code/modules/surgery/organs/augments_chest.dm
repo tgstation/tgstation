@@ -11,7 +11,7 @@
 	icon_state = "chest_implant"
 	implant_color = "#00AA00"
 	var/hunger_threshold = NUTRITION_LEVEL_STARVING
-	var/synthesizing = 0
+	var/synthesizing = ZERO
 	var/poison_amount = 5
 	slot = ORGAN_SLOT_STOMACH_AID
 
@@ -50,9 +50,9 @@
 	icon_state = "chest_implant"
 	implant_color = "#AD0000"
 	slot = ORGAN_SLOT_HEART_AID
-	var/revive_cost = 0
-	var/reviving = 0
-	var/cooldown = 0
+	var/revive_cost = ZERO
+	var/reviving = ZERO
+	var/cooldown = ZERO
 
 /obj/item/organ/cyberimp/chest/reviver/on_life()
 	if(reviving)
@@ -71,7 +71,7 @@
 	if(owner.suiciding)
 		return
 
-	revive_cost = 0
+	revive_cost = ZERO
 	reviving = TRUE
 	to_chat(owner, "<span class='notice'>You feel a faint buzzing as your reviver implant starts patching your wounds...</span>")
 
@@ -128,13 +128,13 @@
 	var/on = FALSE
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
-/obj/item/organ/cyberimp/chest/thrusters/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/chest/thrusters/Insert(mob/living/carbon/M, special = ZERO)
 	. = ..()
 	if(!ion_trail)
 		ion_trail = new
 	ion_trail.set_up(M)
 
-/obj/item/organ/cyberimp/chest/thrusters/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/chest/thrusters/Remove(mob/living/carbon/M, special = ZERO)
 	if(on)
 		toggle(silent = TRUE)
 	..()
@@ -147,7 +147,7 @@
 		if((organ_flags & ORGAN_FAILING))
 			if(!silent)
 				to_chat(owner, "<span class='warning'>Your thrusters set seems to be broken!</span>")
-			return 0
+			return ZERO
 		on = TRUE
 		if(allow_thrust(0.01))
 			ion_trail.start()
@@ -178,11 +178,11 @@
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/allow_thrust(num)
 	if(!on || !owner)
-		return 0
+		return ZERO
 
 	var/turf/T = get_turf(owner)
 	if(!T) // No more runtimes from being stuck in nullspace.
-		return 0
+		return ZERO
 
 	// Priority 1: use air from environment.
 	var/datum/gas_mixture/environment = T.return_air()
@@ -206,4 +206,4 @@
 			T.assume_air(removed)
 
 	toggle(silent = TRUE)
-	return 0
+	return ZERO

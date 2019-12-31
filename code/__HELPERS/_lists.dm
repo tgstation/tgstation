@@ -14,7 +14,7 @@
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
 #define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
-#define LAZYFIND(L, V) L ? L.Find(V) : 0
+#define LAZYFIND(L, V) L ? L.Find(V) : ZERO
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
 #define LAZYLEN(L) length(L)
@@ -54,7 +54,7 @@
 /proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
 	var/total = length(input)
 	switch(total)
-		if (0)
+		if (ZERO)
 			return "[nothing_text]"
 		if (1)
 			return "[input[1]]"
@@ -178,7 +178,7 @@
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
 /proc/clearlist(list/list)
 	if(istype(list))
-		list.len = 0
+		list.len = ZERO
 	return
 
 //Removes any null entries from the list
@@ -194,7 +194,7 @@
  * If skiprep = 1, repeated elements are treated as one.
  * If either of arguments is not a list, returns null
  */
-/proc/difflist(list/first, list/second, skiprep=0)
+/proc/difflist(list/first, list/second, skiprep=ZERO)
 	if(!islist(first) || !islist(second))
 		return
 	var/list/result = new
@@ -211,7 +211,7 @@
  * If skipref = 1, repeated elements are treated as one.
  * If either of arguments is not a list, returns null
  */
-/proc/uniquemergelist(list/first, list/second, skiprep=0)
+/proc/uniquemergelist(list/first, list/second, skiprep=ZERO)
 	if(!islist(first) || !islist(second))
 		return
 	var/list/result = new
@@ -225,9 +225,9 @@
 //1. Adds up the total of weights for each element
 //2. Gets a number between 1 and that total
 //3. For each element in the list, subtracts its weighting from that number
-//4. If that makes the number 0 or less, return that element.
+//4. If that makes the number ZERO or less, return that element.
 /proc/pickweight(list/L)
-	var/total = 0
+	var/total = ZERO
 	var/item
 	for (item in L)
 		if (!L[item])
@@ -237,20 +237,20 @@
 	total = rand(1, total)
 	for (item in L)
 		total -=L [item]
-		if (total <= 0)
+		if (total <= ZERO)
 			return item
 
 	return null
 
 /proc/pickweightAllowZero(list/L) //The original pickweight proc will sometimes pick entries with zero weight.  I'm not sure if changing the original will break anything, so I left it be.
-	var/total = 0
+	var/total = ZERO
 	var/item
 	for (item in L)
 		if (!L[item])
-			L[item] = 0
+			L[item] = ZERO
 		total += L[item]
 
-	total = rand(0, total)
+	total = rand(ZERO, total)
 	for (item in L)
 		total -=L [item]
 		if (total <= 0 && L[item])
@@ -279,7 +279,7 @@
 
 /proc/sorted_insert(list/L, thing, comparator)
 	var/pos = L.len
-	while(pos > 0 && call(comparator)(thing, L[pos]) > 0)
+	while(pos > 0 && call(comparator)(thing, L[pos]) > ZERO)
 		pos--
 	L.Insert(pos+1, thing)
 
@@ -331,7 +331,7 @@
 //same, but returns nothing and acts on list in place (also handles associated values properly)
 /proc/uniqueList_inplace(list/L)
 	var/temp = L.Copy()
-	L.len = 0
+	L.len = ZERO
 	for(var/key in temp)
 		if (isnum(key))
 			L |= key
@@ -340,12 +340,12 @@
 
 //for sorting clients or mobs by ckey
 /proc/sortKey(list/L, order=1)
-	return sortTim(L, order >= 0 ? /proc/cmp_ckey_asc : /proc/cmp_ckey_dsc)
+	return sortTim(L, order >= ZERO ? /proc/cmp_ckey_asc : /proc/cmp_ckey_dsc)
 
 //Specifically for record datums in a list.
 /proc/sortRecord(list/L, field = "name", order = 1)
 	GLOB.cmp_field = field
-	return sortTim(L, order >= 0 ? /proc/cmp_records_asc : /proc/cmp_records_dsc)
+	return sortTim(L, order >= ZERO ? /proc/cmp_records_asc : /proc/cmp_records_dsc)
 
 //any value in a list
 /proc/sortList(list/L, cmp=/proc/cmp_text_asc)
@@ -353,11 +353,11 @@
 
 //uses sortList() but uses the var's name specifically. This should probably be using mergeAtom() instead
 /proc/sortNames(list/L, order=1)
-	return sortTim(L.Copy(), order >= 0 ? /proc/cmp_name_asc : /proc/cmp_name_dsc)
+	return sortTim(L.Copy(), order >= ZERO ? /proc/cmp_name_asc : /proc/cmp_name_dsc)
 
 
 //Converts a bitfield to a list of numbers (or words if a wordlist is provided)
-/proc/bitfield2list(bitfield = 0, list/wordlist)
+/proc/bitfield2list(bitfield = ZERO, list/wordlist)
 	var/list/r = list()
 	if(islist(wordlist))
 		var/max = min(wordlist.len,16)
@@ -377,7 +377,7 @@
 #define KEYBYINDEX(L, index) (((index <= length(L)) && (index > 0)) ? L[index] : null)
 
 /proc/count_by_type(list/L, type)
-	var/i = 0
+	var/i = ZERO
 	for(var/T in L)
 		if(istype(T, type))
 			i++
@@ -418,7 +418,7 @@
 			return	//no need to move
 		fromIndex += len	//we want to shift left instead of right
 
-		for(var/i=0, i<distance, ++i)
+		for(var/i=ZERO, i<distance, ++i)
 			L.Insert(fromIndex, null)
 			L.Swap(fromIndex, toIndex)
 			L.Cut(toIndex, toIndex+1)
@@ -426,7 +426,7 @@
 		if(fromIndex > toIndex)
 			fromIndex += len
 
-		for(var/i=0, i<len, ++i)
+		for(var/i=ZERO, i<len, ++i)
 			L.Insert(toIndex, null)
 			L.Swap(fromIndex, toIndex)
 			L.Cut(fromIndex, fromIndex+1)
@@ -442,7 +442,7 @@
 		else
 			fromIndex += len
 
-		for(var/i=0, i<distance, ++i)
+		for(var/i=ZERO, i<distance, ++i)
 			L.Insert(fromIndex, null)
 			L.Swap(fromIndex, toIndex)
 			L.Cut(toIndex, toIndex+1)
@@ -452,17 +452,17 @@
 			toIndex = fromIndex
 			fromIndex = a
 
-		for(var/i=0, i<len, ++i)
+		for(var/i=ZERO, i<len, ++i)
 			L.Swap(fromIndex++, toIndex++)
 
 //replaces reverseList ~Carnie
-/proc/reverseRange(list/L, start=1, end=0)
+/proc/reverseRange(list/L, start=1, end=ZERO)
 	if(L.len)
 		start = start % L.len
 		end = end % (L.len+1)
-		if(start <= 0)
+		if(start <= ZERO)
 			start += L.len
-		if(end <= 0)
+		if(end <= ZERO)
 			end += L.len + 1
 
 		--end
@@ -553,13 +553,13 @@
 	. = out
 
 /proc/counterlist_sum(list/L)
-	. = 0
+	. = ZERO
 	for(var/key in L)
 		. += L[key]
 
 /proc/counterlist_normalise(list/L)
 	var/avg = counterlist_sum(L)
-	if(avg != 0)
+	if(avg != ZERO)
 		. = counterlist_scale(L, 1 / avg)
 	else
 		. = L

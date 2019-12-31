@@ -11,7 +11,7 @@
 
 /obj/item/computer_hardware/ai_slot/handle_atom_del(atom/A)
 	if(A == stored_card)
-		try_eject(0, null, TRUE)
+		try_eject(ZERO, null, TRUE)
 	. = ..()
 
 /obj/item/computer_hardware/ai_slot/examine(mob/user)
@@ -44,7 +44,7 @@
 	return TRUE
 
 
-/obj/item/computer_hardware/ai_slot/try_eject(slot=0,mob/living/user = null,forced = 0)
+/obj/item/computer_hardware/ai_slot/try_eject(slot=ZERO,mob/living/user = null,forced = ZERO)
 	if(!stored_card)
 		to_chat(user, "<span class='warning'>There is no card in \the [src].</span>")
 		return FALSE

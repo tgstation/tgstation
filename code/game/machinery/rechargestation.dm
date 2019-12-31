@@ -19,8 +19,8 @@
 	update_icon()
 
 /obj/machinery/recharge_station/RefreshParts()
-	recharge_speed = 0
-	repairs = 0
+	recharge_speed = ZERO
+	repairs = ZERO
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_speed += C.rating * 100
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)

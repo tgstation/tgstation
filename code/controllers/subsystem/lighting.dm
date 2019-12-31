@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(lighting)
 			for(var/I in GLOB.sortedAreas)
 				var/area/A = I
 				if (A.dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
-					A.luminosity = 0
+					A.luminosity = ZERO
 
 		create_all_lighting_objects()
 		initialized = TRUE
@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(lighting)
 	if(!init_tick_checks)
 		MC_SPLIT_TICK
 	var/list/queue = sources_queue
-	var/i = 0
+	var/i = ZERO
 	for (i in 1 to length(queue))
 		var/datum/light_source/L = queue[i]
 
@@ -45,7 +45,7 @@ SUBSYSTEM_DEF(lighting)
 			break
 	if (i)
 		queue.Cut(1, i+1)
-		i = 0
+		i = ZERO
 
 	if(!init_tick_checks)
 		MC_SPLIT_TICK
@@ -62,7 +62,7 @@ SUBSYSTEM_DEF(lighting)
 			break
 	if (i)
 		queue.Cut(1, i+1)
-		i = 0
+		i = ZERO
 
 
 	if(!init_tick_checks)

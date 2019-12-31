@@ -2,8 +2,8 @@
 	var/mob/user
 	var/title
 	var/window_id // window_id is used as the window name for browse and onclose
-	var/width = 0
-	var/height = 0
+	var/width = ZERO
+	var/height = ZERO
 	var/atom/ref = null
 	var/window_options = "can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;" // window option is set using window_id
 	var/stylesheets[0]
@@ -15,7 +15,7 @@
 	var/content = ""
 
 
-/datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref = null)
+/datum/browser/New(nuser, nwindow_id, ntitle = ZERO, nwidth = ZERO, nheight = ZERO, atom/nref = null)
 
 	user = nuser
 	window_id = nwindow_id
@@ -149,13 +149,13 @@
 
 /datum/browser/modal/alert/Topic(href,href_list)
 	if (href_list["close"] || !user || !user.client)
-		opentime = 0
+		opentime = ZERO
 		return
 	if (href_list["button"])
 		var/button = text2num(href_list["button"])
 		if (button <= 3 && button >= 1)
 			selectedbutton = button
-	opentime = 0
+	opentime = ZERO
 	close()
 
 //designed as a drop in replacement for alert(); functions the same. (outside of needing User specified)
@@ -185,12 +185,12 @@
 		return A.selectedbutton
 
 /datum/browser/modal
-	var/opentime = 0
+	var/opentime = ZERO
 	var/timeout
-	var/selectedbutton = 0
+	var/selectedbutton = ZERO
 	var/stealfocus
 
-/datum/browser/modal/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref = null, StealFocus = 1, Timeout = 6000)
+/datum/browser/modal/New(nuser, nwindow_id, ntitle = ZERO, nwidth = ZERO, nheight = ZERO, atom/nref = null, StealFocus = 1, Timeout = 6000)
 	..()
 	stealfocus = StealFocus
 	if (!StealFocus)
@@ -200,10 +200,10 @@
 
 /datum/browser/modal/close()
 	.=..()
-	opentime = 0
+	opentime = ZERO
 
 /datum/browser/modal/open(use_onclose)
-	set waitfor = 0
+	set waitfor = ZERO
 	opentime = world.time
 
 	if (stealfocus)
@@ -225,7 +225,7 @@
 		addtimer(CALLBACK(src, .proc/close), timeout)
 
 /datum/browser/modal/proc/wait()
-	while (opentime && selectedbutton <= 0 && (!timeout || opentime+timeout > world.time))
+	while (opentime && selectedbutton <= ZERO && (!timeout || opentime+timeout > world.time))
 		stoplag(1)
 
 /datum/browser/modal/listpicker
@@ -267,7 +267,7 @@
 
 /datum/browser/modal/listpicker/Topic(href,href_list)
 	if (href_list["close"] || !user || !user.client)
-		opentime = 0
+		opentime = ZERO
 		return
 	if (href_list["button"])
 		var/button = text2num(href_list["button"])
@@ -279,7 +279,7 @@
 				continue
 			else
 				valueslist[item] = href_list[item]
-	opentime = 0
+	opentime = ZERO
 	close()
 
 /proc/presentpicker(mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/values, inputtype = "checkbox", width, height, slidecolor)
@@ -302,7 +302,7 @@
 	for (var/i in GLOB.bitfields[bitfield])
 		var/can_edit = 1
 		if(!isnull(allowed_edit_list) && !(allowed_edit_list & GLOB.bitfields[bitfield][i]))
-			can_edit = 0
+			can_edit = ZERO
 		if (current_value & GLOB.bitfields[bitfield][i])
 			pickerlist += list(list("checked" = 1, "value" = GLOB.bitfields[bitfield][i], "name" = i, "allowed_edit" = can_edit))
 		else
@@ -311,7 +311,7 @@
 	if (islist(result))
 		if (result["button"] == 2) // If the user pressed the cancel button
 			return
-		. = 0
+		. = ZERO
 		for (var/flag in result["values"])
 			. |= GLOB.bitfields[bitfield][flag]
 	else
@@ -365,7 +365,7 @@
 
 /datum/browser/modal/preflikepicker/Topic(href,href_list)
 	if (href_list["close"] || !user || !user.client)
-		opentime = 0
+		opentime = ZERO
 		return
 	if (href_list["task"] == "input")
 		var/setting = href_list["setting"]
@@ -403,7 +403,7 @@
 		switch(item)
 			if ("close", "button", "src")
 				continue
-	opentime = 0
+	opentime = ZERO
 	close()
 
 /proc/presentpreflikepicker(mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/settings, width, height, slidecolor)

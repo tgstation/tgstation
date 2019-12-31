@@ -11,7 +11,7 @@
 	force = 0 //You can't hit stuff unless wielded
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	force_unwielded = 0
+	force_unwielded = ZERO
 	force_wielded = 20
 	throwforce = 5
 	throw_speed = 4
@@ -139,7 +139,7 @@
 	if(light_on)
 		set_light(brightness_on)
 	else
-		set_light(0)
+		set_light(ZERO)
 
 /obj/item/twohanded/kinetic_crusher/update_icon()
 	..()
@@ -247,7 +247,7 @@
 	var/missing_health = user.health - user.maxHealth
 	missing_health *= missing_health_ratio //bonus is active at all times, even if you're above 90 health
 	missing_health *= bonus_value //multiply the remaining amount by bonus_value
-	if(missing_health > 0)
+	if(missing_health > ZERO)
 		target.adjustBruteLoss(missing_health) //and do that much damage
 
 //watcher

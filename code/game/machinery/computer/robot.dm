@@ -77,7 +77,7 @@
 			dat += "</div>"
 
 	dat += "<center><h2>Drones</h2></center>"
-	var/drones = 0
+	var/drones = ZERO
 	for(var/mob/living/simple_animal/drone/D in GLOB.drones_list)
 		if(D.hacked)
 			continue

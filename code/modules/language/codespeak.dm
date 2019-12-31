@@ -2,7 +2,7 @@
 	name = "Codespeak"
 	desc = "Syndicate operatives can use a series of codewords to convey complex information, while sounding like random concepts and drinks to anyone listening in."
 	key = "t"
-	default_priority = 0
+	default_priority = ZERO
 	flags = TONGUELESS_SPEECH | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD
 	icon_state = "codespeak"
 

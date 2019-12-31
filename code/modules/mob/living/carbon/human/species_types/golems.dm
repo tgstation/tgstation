@@ -8,7 +8,7 @@
 	mutant_organs = list(/obj/item/organ/adamantine_resonator)
 	speedmod = 2
 	armor = 55
-	siemens_coeff = 0
+	siemens_coeff = ZERO
 	punchdamagelow = 5
 	punchdamagehigh = 14
 	punchstunthreshold = 11 //about 40% chance to stun
@@ -89,7 +89,7 @@
 	//Can burn and takes damage from heat
 	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER) //no RESISTHEAT, NOFIRE
 	info_text = "As a <span class='danger'>Plasma Golem</span>, you burn easily. Be careful, if you get hot enough while burning, you'll blow up!"
-	heatmod = 0 //fine until they blow up
+	heatmod = ZERO //fine until they blow up
 	prefix = "Plasma"
 	special_names = list("Flood","Fire","Bar","Man")
 	var/boom_warning = FALSE
@@ -265,7 +265,7 @@
 /datum/species/golem/alloy/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
 		return
-	H.heal_overall_damage(2,2, 0, BODYPART_ORGANIC)
+	H.heal_overall_damage(2,2, ZERO, BODYPART_ORGANIC)
 	H.adjustToxLoss(-2)
 	H.adjustOxyLoss(-2)
 
@@ -283,14 +283,14 @@
 	info_text = "As a <span class='danger'>Wooden Golem</span>, you have plant-like traits: you take damage from extreme temperatures, can be set on fire, and have lower armor than a normal golem. You regenerate when in the light and wither in the darkness."
 	prefix = "Wooden"
 	special_names = list("Bark", "Willow", "Catalpa", "Woody", "Oak", "Sap", "Twig", "Branch", "Maple", "Birch", "Elm", "Basswood", "Cottonwood", "Larch", "Aspen", "Ash", "Beech", "Buckeye", "Cedar", "Chestnut", "Cypress", "Fir", "Hawthorn", "Hazel", "Hickory", "Ironwood", "Juniper", "Leaf", "Mangrove", "Palm", "Pawpaw", "Pine", "Poplar", "Redwood", "Redbud", "Sassafras", "Spruce", "Sumac", "Trunk", "Walnut", "Yew")
-	human_surname_chance = 0
+	human_surname_chance = ZERO
 	special_name_chance = 100
 	inherent_factions = list("plants", "vines")
 
 /datum/species/golem/wood/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
 		return
-	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
+	var/light_amount = ZERO //how much light there is in the place, affects receiving nutrition and healing
 	if(isturf(H.loc)) //else, there's considered to be no light
 		var/turf/T = H.loc
 		light_amount = min(1,T.get_lumcount()) - 0.5
@@ -298,12 +298,12 @@
 		if(H.nutrition > NUTRITION_LEVEL_ALMOST_FULL)
 			H.set_nutrition(NUTRITION_LEVEL_ALMOST_FULL)
 		if(light_amount > 0.2) //if there's enough light, heal
-			H.heal_overall_damage(1,1,0, BODYPART_ORGANIC)
+			H.heal_overall_damage(1,1,ZERO, BODYPART_ORGANIC)
 			H.adjustToxLoss(-1)
 			H.adjustOxyLoss(-1)
 
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
-		H.take_overall_damage(2,0)
+		H.take_overall_damage(2,ZERO)
 
 /datum/species/golem/wood/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.type == /datum/reagent/toxin/plantbgone)
@@ -319,7 +319,7 @@
 	meat = /obj/item/stack/ore/uranium
 	info_text = "As an <span class='danger'>Uranium Golem</span>, you emit radiation pulses every once in a while. It won't harm fellow golems, but organic lifeforms will be affected."
 
-	var/last_event = 0
+	var/last_event = ZERO
 	var/active = null
 	prefix = "Uranium"
 	special_names = list("Oxide", "Rod", "Meltdown", "235")
@@ -339,7 +339,7 @@
 	id = "sand golem"
 	fixed_mut_color = "ffdc8f"
 	meat = /obj/item/stack/ore/glass //this is sand
-	armor = 0
+	armor = ZERO
 	burnmod = 3 //melts easily
 	brutemod = 0.25
 	info_text = "As a <span class='danger'>Sand Golem</span>, you are immune to physical bullets and take very little brute damage, but are extremely vulnerable to burn damage and energy weapons. You will also turn to sand when dying, preventing any form of recovery."
@@ -370,7 +370,7 @@
 	id = "glass golem"
 	fixed_mut_color = "5a96b4aa" //transparent body
 	meat = /obj/item/shard
-	armor = 0
+	armor = ZERO
 	brutemod = 3 //very fragile
 	burnmod = 0.25
 	info_text = "As a <span class='danger'>Glass Golem</span>, you reflect lasers and energy weapons, and are very resistant to burn damage. However, you are extremely vulnerable to brute damage. On death, you'll shatter beyond any hope of recovery."
@@ -393,8 +393,8 @@
 			H.visible_message("<span class='danger'>The [P.name] gets reflected by [H]'s glass skin!</span>", \
 			"<span class='userdanger'>The [P.name] gets reflected by [H]'s glass skin!</span>")
 			if(P.starting)
-				var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-				var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+				var/new_x = P.starting.x + pick(ZERO, ZERO, ZERO, ZERO, ZERO, -1, 1, -2, 2)
+				var/new_y = P.starting.y + pick(ZERO, ZERO, ZERO, ZERO, ZERO, -1, 1, -2, 2)
 				// redirect the projectile
 				P.firer = H
 				P.preparePixelProjectile(locate(CLAMP(new_x, 1, world.maxx), CLAMP(new_y, 1, world.maxy), H.z), H)
@@ -415,7 +415,7 @@
 
 	var/datum/action/innate/unstable_teleport/unstable_teleport
 	var/teleport_cooldown = 100
-	var/last_teleport = 0
+	var/last_teleport = ZERO
 
 /datum/species/golem/bluespace/proc/reactive_teleport(mob/living/carbon/human/H)
 	H.visible_message("<span class='warning'>[H] teleports!</span>", "<span class='danger'>You destabilize and teleport!</span>")
@@ -430,7 +430,7 @@
 	if(istype(AM, /obj/item))
 		I = AM
 		if(I.thrownby == H) //No throwing stuff at yourself to trigger the teleport
-			return 0
+			return ZERO
 		else
 			reactive_teleport(H)
 
@@ -467,13 +467,13 @@
 	button_icon_state = "jaunt"
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 	var/cooldown = 150
-	var/last_teleport = 0
+	var/last_teleport = ZERO
 
 /datum/action/innate/unstable_teleport/IsAvailable()
 	if(..())
 		if(world.time > last_teleport + cooldown)
 			return 1
-		return 0
+		return ZERO
 
 /datum/action/innate/unstable_teleport/Activate()
 	var/mob/living/carbon/human/H = owner
@@ -484,7 +484,7 @@
 /datum/action/innate/unstable_teleport/proc/teleport(mob/living/carbon/human/H)
 	H.visible_message("<span class='warning'>[H] disappears in a shower of sparks!</span>", "<span class='danger'>You teleport!</span>")
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
-	spark_system.set_up(10, 0, src)
+	spark_system.set_up(10, ZERO, src)
 	spark_system.attach(H)
 	spark_system.start()
 	do_teleport(H, get_turf(H), 12, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
@@ -500,7 +500,7 @@
 	id = "bananium golem"
 	fixed_mut_color = "ff0"
 	say_mod = "honks"
-	punchdamagelow = 0
+	punchdamagelow = ZERO
 	punchdamagehigh = 1
 	punchstunthreshold = 2 //Harmless and can't stun
 	meat = /obj/item/stack/ore/bananium
@@ -510,9 +510,9 @@
 	prefix = "Bananium"
 	special_names = null
 
-	var/last_honk = 0
-	var/honkooldown = 0
-	var/last_banana = 0
+	var/last_honk = ZERO
+	var/honkooldown = ZERO
+	var/last_banana = ZERO
 	var/banana_cooldown = 100
 	var/active = null
 
@@ -555,7 +555,7 @@
 	if(istype(AM, /obj/item))
 		I = AM
 		if(I.thrownby == H) //No throwing stuff at yourself to make bananas
-			return 0
+			return ZERO
 		else
 			new/obj/item/grown/bananapeel/specialpeel(get_turf(H))
 			last_banana = world.time
@@ -603,13 +603,13 @@
 /datum/species/golem/runic/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
 	phase_shift = new
-	phase_shift.charge_counter = 0
+	phase_shift.charge_counter = ZERO
 	C.AddSpell(phase_shift)
 	abyssal_gaze = new
-	abyssal_gaze.charge_counter = 0
+	abyssal_gaze.charge_counter = ZERO
 	C.AddSpell(abyssal_gaze)
 	dominate = new
-	dominate.charge_counter = 0
+	dominate.charge_counter = ZERO
 	C.AddSpell(dominate)
 
 /datum/species/golem/runic/on_species_loss(mob/living/carbon/C)
@@ -771,7 +771,7 @@
 	info_text = "As a <span class='danger'>Bronze Golem</span>, you are very resistant to loud noises, and make loud noises if something hard hits you, however this ability does hurt your hearing."
 	special_step_sounds = list('sound/machines/clockcult/integration_cog_install.ogg', 'sound/magic/clockwork/fellowship_armory.ogg' )
 	mutantears = /obj/item/organ/ears/bronze
-	var/last_gong_time = 0
+	var/last_gong_time = ZERO
 	var/gong_cooldown = 150
 
 /datum/species/golem/bronze/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
@@ -809,21 +809,21 @@
 		if(M == H)
 			H.show_message("<span class='narsiesmall'>You cringe with pain as your body rings around you!</span>", MSG_AUDIBLE)
 			H.playsound_local(H, 'sound/effects/gong.ogg', 100, TRUE)
-			H.soundbang_act(2, 0, 100, 1)
+			H.soundbang_act(2, ZERO, 100, 1)
 			H.jitteriness += 7
-		var/distance = max(0,get_dist(get_turf(H),get_turf(M)))
+		var/distance = max(ZERO,get_dist(get_turf(H),get_turf(M)))
 		switch(distance)
-			if(0 to 1)
+			if(ZERO to 1)
 				M.show_message("<span class='narsiesmall'>GONG!</span>", MSG_AUDIBLE)
 				M.playsound_local(H, 'sound/effects/gong.ogg', 100, TRUE)
-				M.soundbang_act(1, 0, 30, 3)
+				M.soundbang_act(1, ZERO, 30, 3)
 				M.confused += 10
 				M.jitteriness += 4
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "gonged", /datum/mood_event/loud_gong)
 			if(2 to 3)
 				M.show_message("<span class='cult'>GONG!</span>", MSG_AUDIBLE)
 				M.playsound_local(H, 'sound/effects/gong.ogg', 75, TRUE)
-				M.soundbang_act(1, 0, 15, 2)
+				M.soundbang_act(1, ZERO, 15, 2)
 				M.jitteriness += 3
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "gonged", /datum/mood_event/loud_gong)
 			else
@@ -851,7 +851,7 @@
 	punchdamagelow = 4
 	punchstunthreshold = 7
 	punchdamagehigh = 8
-	var/last_creation = 0
+	var/last_creation = ZERO
 	var/brother_creation_cooldown = 300
 
 /datum/species/golem/cardboard/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
@@ -941,12 +941,12 @@
 		if(chem.volume > 10)
 			H.reagents.remove_reagent(chem.type, chem.volume - 10)
 			to_chat(H, "<span class='warning'>The excess milk is dripping off your bones!</span>")
-		H.heal_bodypart_damage(1.5,0, 0)
+		H.heal_bodypart_damage(1.5,ZERO, ZERO)
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
 		return TRUE
 	if(chem.type == /datum/reagent/toxin/bonehurtingjuice)
-		H.adjustStaminaLoss(7.5, 0)
-		H.adjustBruteLoss(0.5, 0)
+		H.adjustStaminaLoss(7.5, ZERO)
+		H.adjustBruteLoss(0.5, ZERO)
 		if(prob(20))
 			switch(rand(1, 3))
 				if(1)
@@ -1034,10 +1034,10 @@
 	. = ..()
 	C.weather_immunities |= "snow"
 	ball = new
-	ball.charge_counter = 0
+	ball.charge_counter = ZERO
 	C.AddSpell(ball)
 	cryo = new
-	cryo.charge_counter = 0
+	cryo.charge_counter = ZERO
 	C.AddSpell(cryo)
 
 /datum/species/golem/snow/on_species_loss(mob/living/carbon/C)
@@ -1070,7 +1070,7 @@
 	changesource_flags = MIRROR_BADMIN
 	random_eligible = FALSE
 
-	var/last_cash = 0
+	var/last_cash = ZERO
 	var/cash_cooldown = 100
 
 /datum/species/golem/capitalist/on_species_gain(mob/living/carbon/C, datum/species/old_species)

@@ -29,7 +29,7 @@
 	var/powerefficiency = 0.1
 	var/amount = 30
 	var/recharge_amount = 10
-	var/recharge_counter = 0
+	var/recharge_counter = ZERO
 	var/mutable_appearance/beaker_overlay
 	var/working_state = "dispenser_working"
 	var/nopower_state = "dispenser_nopower"
@@ -115,7 +115,7 @@
 		var/usedpower = cell.give(recharge_amount)
 		if(usedpower)
 			use_power(250*recharge_amount)
-		recharge_counter = 0
+		recharge_counter = ZERO
 		return
 	recharge_counter++
 
@@ -178,10 +178,10 @@
 	data["amount"] = amount
 	data["energy"] = cell.charge ? cell.charge * powerefficiency : "0" //To prevent NaN in the UI.
 	data["maxEnergy"] = cell.maxcharge * powerefficiency
-	data["isBeakerLoaded"] = beaker ? 1 : 0
+	data["isBeakerLoaded"] = beaker ? 1 : ZERO
 
 	var/beakerContents[0]
-	var/beakerCurrentVolume = 0
+	var/beakerCurrentVolume = ZERO
 	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...

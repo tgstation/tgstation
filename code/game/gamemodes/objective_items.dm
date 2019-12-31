@@ -123,8 +123,8 @@
 
 /datum/objective_item/steal/plasma/check_special_completion(obj/item/tank/T)
 	var/target_amount = text2num(name)
-	var/found_amount = 0
-	found_amount += T.air_contents.gases[/datum/gas/plasma] ? T.air_contents.gases[/datum/gas/plasma][MOLES] : 0
+	var/found_amount = ZERO
+	found_amount += T.air_contents.gases[/datum/gas/plasma] ? T.air_contents.gases[/datum/gas/plasma][MOLES] : ZERO
 	return found_amount>=target_amount
 
 
@@ -137,7 +137,7 @@
 	for(var/mob/living/silicon/ai/A in C)
 		if(isAI(A) && A.stat != DEAD) //See if any AI's are alive inside that card.
 			return 1
-	return 0
+	return ZERO
 
 /datum/objective_item/steal/blueprints
 	name = "the station blueprints."
@@ -162,9 +162,9 @@
 	excludefromjob = list("Research Director","Scientist")
 
 /datum/objective_item/steal/slime/check_special_completion(obj/item/slime_extract/E)
-	if(E.Uses > 0)
+	if(E.Uses > ZERO)
 		return 1
-	return 0
+	return ZERO
 
 //Unique Objectives
 /datum/objective_item/unique/docs_red
@@ -243,7 +243,7 @@
 
 /datum/objective_item/stack/check_special_completion(obj/item/stack/S)
 	var/target_amount = text2num(name)
-	var/found_amount = 0
+	var/found_amount = ZERO
 
 	if(istype(S, targetitem))
 		found_amount = S.amount

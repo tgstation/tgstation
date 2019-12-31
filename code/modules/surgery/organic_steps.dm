@@ -51,10 +51,10 @@
 
 /datum/surgery_step/clamp_bleeders/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	if(locate(/datum/surgery_step/saw) in surgery.steps)
-		target.heal_bodypart_damage(20,0)
+		target.heal_bodypart_damage(20,ZERO)
 	if (ishuman(target))
 		var/mob/living/carbon/human/H = target
-		H.bleed_rate = max( (H.bleed_rate - 3), 0)
+		H.bleed_rate = max( (H.bleed_rate - 3), ZERO)
 	return ..()
 
 //retract skin
@@ -90,10 +90,10 @@
 
 /datum/surgery_step/close/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	if(locate(/datum/surgery_step/saw) in surgery.steps)
-		target.heal_bodypart_damage(45,0)
+		target.heal_bodypart_damage(45,ZERO)
 	if (ishuman(target))
 		var/mob/living/carbon/human/H = target
-		H.bleed_rate = max( (H.bleed_rate - 3), 0)
+		H.bleed_rate = max( (H.bleed_rate - 3), ZERO)
 	return ..()
 
 

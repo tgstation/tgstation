@@ -21,7 +21,7 @@ Class Variables:
    power_channel (num)
       What channel to draw from when drawing power for power mode
       Possible Values:
-         EQUIP:0 -- Equipment Channel
+         EQUIP:ZERO -- Equipment Channel
          LIGHT:2 -- Lighting Channel
          ENVIRON:3 -- Environment Channel
 
@@ -48,7 +48,7 @@ Class Procs:
 
       Return Value:
          return:1 -- if object is powered
-         return:0 -- if object is not powered.
+         return:ZERO -- if object is not powered.
 
       Default definition uses 'use_power', 'power_channel', 'active_power_usage',
       'idle_power_usage', 'powered()', and 'use_power()' implement behavior.
@@ -78,7 +78,7 @@ Class Procs:
       Called by the 'air subsystem' once per atmos tick for each machine that is listed in its 'atmos_machines' list.
 
    is_operational()
-		Returns 0 if the machine is unpowered, broken or undergoing maintenance, something else if not
+		Returns ZERO if the machine is unpowered, broken or undergoing maintenance, something else if not
 
 	Compiled by Aygar
 */
@@ -96,13 +96,13 @@ Class Procs:
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 
-	var/stat = 0
+	var/stat = ZERO
 	var/use_power = IDLE_POWER_USE
-		//0 = dont run the auto
+		//ZERO = dont run the auto
 		//1 = run auto, use idle
 		//2 = run auto, use active
-	var/idle_power_usage = 0
-	var/active_power_usage = 0
+	var/idle_power_usage = ZERO
+	var/active_power_usage = ZERO
 	var/power_channel = EQUIP
 		//EQUIP,ENVIRON or LIGHT
 	var/wire_compatible = FALSE
@@ -227,7 +227,7 @@ Class Procs:
 
 /obj/machinery/proc/auto_use_power()
 	if(!powered(power_channel))
-		return 0
+		return ZERO
 	if(use_power == 1)
 		use_power(idle_power_usage,power_channel)
 	else if(use_power >= 2)
@@ -306,7 +306,7 @@ Class Procs:
 	if(!usr.canUseTopic(src))
 		return 1
 	add_fingerprint(usr)
-	return 0
+	return ZERO
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -351,7 +351,7 @@ Class Procs:
 		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
 		open_machine()
 
-/obj/machinery/proc/default_deconstruction_crowbar(obj/item/I, ignore_panel = 0)
+/obj/machinery/proc/default_deconstruction_crowbar(obj/item/I, ignore_panel = ZERO)
 	. = (panel_open || ignore_panel) && !(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_CROWBAR
 	if(.)
 		I.play_tool_sound(src, 50)
@@ -416,7 +416,7 @@ Class Procs:
 		setDir(turn(dir,-90))
 		to_chat(user, "<span class='notice'>You rotate [src].</span>")
 		return 1
-	return 0
+	return ZERO
 
 /obj/proc/can_be_unfasten_wrench(mob/user, silent) //if we can unwrench this object; returns SUCCESSFUL_UNFASTEN and FAILED_UNFASTEN, which are both TRUE, or CANT_UNFASTEN, which isn't.
 	if(!(isfloorturf(loc) || istype(loc, /turf/open/indestructible)) && !anchored)
@@ -455,7 +455,7 @@ Class Procs:
 		return FALSE
 	if((flags_1 & NODECONSTRUCT_1) && !W.works_from_distance)
 		return FALSE
-	var/shouldplaysound = 0
+	var/shouldplaysound = ZERO
 	if(component_parts)
 		if(panel_open || W.works_from_distance)
 			var/obj/item/circuitboard/machine/CB = locate(/obj/item/circuitboard/machine) in component_parts
@@ -515,7 +515,7 @@ Class Procs:
 				. += "It looks slightly damaged."
 			if(25 to 50)
 				. += "It appears heavily damaged."
-			if(0 to 25)
+			if(ZERO to 25)
 				. += "<span class='warning'>It's falling apart!</span>"
 	if(user.research_scanner && component_parts)
 		. += display_parts(user, TRUE)
@@ -545,7 +545,7 @@ Class Procs:
 	if (AM == occupant)
 		occupant = null
 
-/obj/machinery/proc/adjust_item_drop_location(atom/movable/AM)	// Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
+/obj/machinery/proc/adjust_item_drop_location(atom/movable/AM)	// Adjust item drop location to a 3x3 grid inside the tile, returns slot id from ZERO to 8
 	var/md5 = md5(AM.name)										// Oh, and it's deterministic too. A specific item will always drop from the same slot.
 	for (var/i in 1 to 32)
 		. += hex2num(md5[i])

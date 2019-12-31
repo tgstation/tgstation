@@ -43,7 +43,7 @@
 			set_light(brightness_on)
 		else
 			STOP_PROCESSING(SSobj, src)
-			set_light(0)
+			set_light(ZERO)
 
 /obj/item/melee/transforming/energy/get_temperature()
 	return active * heat
@@ -108,10 +108,10 @@
 	if(. && active && sword_color)
 		icon_state = "sword[sword_color]"
 
-/obj/item/melee/transforming/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/melee/transforming/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = ZERO, damage = ZERO, attack_type = MELEE_ATTACK)
 	if(active)
 		return ..()
-	return 0
+	return ZERO
 
 /obj/item/melee/transforming/energy/sword/cyborg
 	sword_color = "red"
@@ -148,8 +148,8 @@
 		return
 	transform_weapon(user, TRUE)
 
-/obj/item/melee/transforming/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	return 0
+/obj/item/melee/transforming/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = ZERO, damage = ZERO, attack_type = MELEE_ATTACK)
+	return ZERO
 
 /obj/item/melee/transforming/energy/sword/saber
 	var/list/possible_colors = list("red" = LIGHT_COLOR_RED, "blue" = LIGHT_COLOR_LIGHT_CYAN, "green" = LIGHT_COLOR_GREEN, "purple" = LIGHT_COLOR_LAVENDER)
@@ -225,7 +225,7 @@
 /obj/item/melee/transforming/energy/blade/Initialize()
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread()
-	spark_system.set_up(5, 0, src)
+	spark_system.set_up(5, ZERO, src)
 	spark_system.attach(src)
 
 /obj/item/melee/transforming/energy/blade/transform_weapon(mob/living/user, supress_message_text)

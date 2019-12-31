@@ -62,8 +62,8 @@
 
 
 /obj/singularity/academy
-	dissipate = 0
-	move_self = 0
+	dissipate = ZERO
+	move_self = ZERO
 	grav_pull = 1
 
 /obj/singularity/academy/admin_investigate_setup()
@@ -90,10 +90,10 @@
 	anchored = TRUE
 	max_integrity = 200
 	var/mob/living/current_wizard = null
-	var/next_check = 0
+	var/next_check = ZERO
 	var/cooldown = 600
 	var/faction = ROLE_WIZARD
-	var/braindead_check = 0
+	var/braindead_check = ZERO
 
 /obj/structure/academy_wizard_spawner/New()
 	START_PROCESSING(SSobj, src)
@@ -118,7 +118,7 @@
 				if(!braindead_check)
 					braindead_check = 1
 				else
-					braindead_check = 0
+					braindead_check = ZERO
 					give_control()
 		next_check = world.time + cooldown
 
@@ -255,7 +255,7 @@
 		if(8)
 			//Fueltank Explosion
 			T.visible_message("<span class='userdanger'>An explosion bursts into existence around [user]!</span>")
-			explosion(get_turf(user),-1,0,2, flame_range = 2)
+			explosion(get_turf(user),-1,ZERO,2, flame_range = 2)
 		if(9)
 			//Cold
 			var/datum/disease/D = new /datum/disease/cold()
@@ -268,7 +268,7 @@
 			//Cookie
 			T.visible_message("<span class='userdanger'>A cookie appears out of thin air!</span>")
 			var/obj/item/reagent_containers/food/snacks/cookie/C = new(drop_location())
-			do_smoke(0, drop_location())
+			do_smoke(ZERO, drop_location())
 			C.name = "Cookie of Fate"
 		if(12)
 			//Healing
@@ -280,7 +280,7 @@
 			var/turf/Start = get_turf(src)
 			for(var/direction in GLOB.alldirs)
 				var/turf/dirturf = get_step(Start,direction)
-				if(rand(0,1))
+				if(rand(ZERO,1))
 					new /obj/item/stack/spacecash/c1000(dirturf)
 				else
 					var/obj/item/storage/bag/money/M = new(dirturf)
@@ -289,18 +289,18 @@
 		if(14)
 			//Free Gun
 			T.visible_message("<span class='userdanger'>An impressive gun appears!</span>")
-			do_smoke(0, drop_location())
+			do_smoke(ZERO, drop_location())
 			new /obj/item/gun/ballistic/revolver/mateba(drop_location())
 		if(15)
 			//Random One-use spellbook
 			T.visible_message("<span class='userdanger'>A magical looking book drops to the floor!</span>")
-			do_smoke(0, drop_location())
+			do_smoke(ZERO, drop_location())
 			new /obj/item/book/granter/spell/random(drop_location())
 		if(16)
 			//Servant & Servant Summon
 			T.visible_message("<span class='userdanger'>A Dice Servant appears in a cloud of smoke!</span>")
 			var/mob/living/carbon/human/H = new(drop_location())
-			do_smoke(0, drop_location())
+			do_smoke(ZERO, drop_location())
 
 			H.equipOutfit(/datum/outfit/butler)
 			var/datum/mind/servant_mind = new /datum/mind()
@@ -323,12 +323,12 @@
 			//Tator Kit
 			T.visible_message("<span class='userdanger'>A suspicious box appears!</span>")
 			new /obj/item/storage/box/syndicate/bundle_A(drop_location())
-			do_smoke(0, drop_location())
+			do_smoke(ZERO, drop_location())
 		if(18)
 			//Captain ID
 			T.visible_message("<span class='userdanger'>A golden identification card appears!</span>")
 			new /obj/item/card/id/captains_spare(drop_location())
-			do_smoke(0, drop_location())
+			do_smoke(ZERO, drop_location())
 		if(19)
 			//Instrinct Resistance
 			T.visible_message("<span class='userdanger'>[user] looks very robust!</span>")
@@ -352,11 +352,11 @@
 	name = "Summon Servant"
 	desc = "This spell can be used to call your servant, whenever you need it."
 	charge_max = 100
-	clothes_req = 0
+	clothes_req = ZERO
 	invocation = "JE VES"
 	invocation_type = "whisper"
 	range = -1
-	level_max = 0 //cannot be improved
+	level_max = ZERO //cannot be improved
 	cooldown_min = 100
 	include_user = 1
 
@@ -378,7 +378,7 @@
 	desc = "Could lead anywhere."
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
-	color = rgb(0,0,255)
+	color = rgb(ZERO,ZERO,255)
 
 /obj/structure/ladder/unbreakable/rune/update_icon()
 	return

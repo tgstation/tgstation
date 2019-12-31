@@ -12,11 +12,11 @@
 	var/time_coeff = 1
 	var/component_coeff = 1
 	var/datum/techweb/specialized/autounlocking/exofab/stored_research
-	var/sync = 0
+	var/sync = ZERO
 	var/part_set
 	var/datum/design/being_built
 	var/list/queue = list()
-	var/processing_queue = 0
+	var/processing_queue = ZERO
 	var/screen = "main"
 	var/link_on_init = TRUE
 	var/temp
@@ -43,7 +43,7 @@
 	return ..()
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
-	var/T = 0
+	var/T = ZERO
 
 	//maximum stocking amount (default 300000, 600000 at T4)
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
@@ -98,7 +98,7 @@
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/output_part_cost(datum/design/D)
-	var/i = 0
+	var/i = ZERO
 	var/output
 	for(var/c in D.materials)
 		var/datum/material/M = c
@@ -227,7 +227,7 @@
 		output += "<br>Nothing"
 	else
 		output += "<ol>"
-		var/i = 0
+		var/i = ZERO
 		for(var/datum/design/D in queue)
 			i++
 			var/obj/part = D.build_path
@@ -404,16 +404,16 @@
 		return FALSE		
 	processing_queue = 1
 	process_queue()		
-	processing_queue = 0
+	processing_queue = ZERO
 
 /obj/machinery/mecha_part_fabricator/proc/eject_sheets(eject_sheet, eject_amt)
 	var/datum/component/material_container/mat_container = rmat.mat_container
 	if (!mat_container)
 		say("No access to material storage, please contact the quartermaster.")
-		return 0
+		return ZERO
 	if (rmat.on_hold())
 		say("Mineral access is on hold, please contact the quartermaster.")
-		return 0
+		return ZERO
 	var/count = mat_container.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
 	var/list/matlist = list()
 	matlist[eject_sheet] = text2num(eject_amt)

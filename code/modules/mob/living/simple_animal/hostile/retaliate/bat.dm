@@ -11,7 +11,7 @@
 	response_disarm_continuous = "flails at"
 	response_disarm_simple = "flail at"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	speak_chance = 0
+	speak_chance = ZERO
 	maxHealth = 15
 	health = 15
 	spacewalk = TRUE
@@ -25,17 +25,17 @@
 	pass_flags = PASSTABLE
 	faction = list("hostile")
 	attack_sound = 'sound/weapons/bite.ogg'
-	obj_damage = 0
+	obj_damage = ZERO
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	ventcrawler = VENTCRAWLER_ALWAYS
 	mob_size = MOB_SIZE_TINY
 	movement_type = FLYING
 	speak_emote = list("squeaks")
-	var/max_co2 = 0 //to be removed once metastation map no longer use those for Sgt Araneus
-	var/min_oxy = 0
-	var/max_tox = 0
+	var/max_co2 = ZERO //to be removed once metastation map no longer use those for Sgt Araneus
+	var/min_oxy = ZERO
+	var/max_tox = ZERO
 
 
 	//Space bats need no air to fly in.
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
+	minbodytemp = ZERO

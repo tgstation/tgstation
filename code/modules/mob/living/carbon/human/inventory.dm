@@ -190,7 +190,7 @@
 		glasses = null
 		var/obj/item/clothing/glasses/G = I
 		if(G.glass_colour_type)
-			update_glasses_color(G, 0)
+			update_glasses_color(G, ZERO)
 		if(G.tint)
 			update_tint()
 		if(G.vision_correction)
@@ -234,7 +234,7 @@
 	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(I.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
 		update_hair()
 	if(toggle_off && internal && !getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-		update_internals_hud_icon(0)
+		update_internals_hud_icon(ZERO)
 		internal = null
 	if(I.flags_inv & HIDEEYES)
 		update_inv_glasses()
@@ -263,9 +263,9 @@
 	else
 		O = outfit
 		if(!istype(O))
-			return 0
+			return ZERO
 	if(!O)
-		return 0
+		return ZERO
 
 	return O.equip(src, visualsOnly)
 

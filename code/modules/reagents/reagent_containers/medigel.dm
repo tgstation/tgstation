@@ -10,7 +10,7 @@
 	obj_flags = UNIQUE_RENAME
 	reagent_flags = OPENCONTAINER
 	slot_flags = ITEM_SLOT_BELT
-	throwforce = 0
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 7
@@ -20,7 +20,7 @@
 	var/apply_type = PATCH
 	var/apply_method = "spray" //the thick gel is sprayed and then dries into patch like film.
 	var/self_delay = 30
-	var/squirt_mode = 0
+	var/squirt_mode = ZERO
 	var/squirt_amount = 5
 	custom_price = 350
 

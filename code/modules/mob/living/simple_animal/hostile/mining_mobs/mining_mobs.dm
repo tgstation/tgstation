@@ -1,16 +1,16 @@
 //the base mining mob
 /mob/living/simple_animal/hostile/asteroid
 	vision_range = 2
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_WALLS
-	minbodytemp = 0
+	minbodytemp = ZERO
 	maxbodytemp = INFINITY
 	response_harm_continuous = "strikes"
 	response_harm_simple = "strike"
-	status_flags = 0
+	status_flags = ZERO
 	a_intent = INTENT_HARM
 	var/crusher_loot
 	var/throw_message = "bounces off of"

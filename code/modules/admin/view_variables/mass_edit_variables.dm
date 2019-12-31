@@ -3,7 +3,7 @@
 	set name = "Mass Edit Variables"
 	set desc="(target) Edit all instances of a target item's variables"
 
-	var/method = 0	//0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL items)
+	var/method = ZERO	//ZERO means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL items)
 
 	if(!check_rights(R_VAREDIT))
 		return
@@ -14,7 +14,7 @@
 	src.massmodify_variables(A, var_name, method)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Mass Edit Variables") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/massmodify_variables(datum/O, var_name = "", method = 0)
+/client/proc/massmodify_variables(datum/O, var_name = "", method = ZERO)
 	if(!check_rights(R_VAREDIT))
 		return
 	if(!istype(O))
@@ -64,7 +64,7 @@
 
 	if(default == VV_NUM)
 		var/dir_text = ""
-		if(var_value > 0 && var_value < 16)
+		if(var_value > ZERO && var_value < 16)
 			if(var_value & 1)
 				dir_text += "NORTH"
 			if(var_value & 2)
@@ -92,8 +92,8 @@
 
 	var/original_name = "[O]"
 
-	var/rejected = 0
-	var/accepted = 0
+	var/rejected = ZERO
+	var/accepted = ZERO
 
 	switch(class)
 		if(VV_RESTORE_DEFAULT)

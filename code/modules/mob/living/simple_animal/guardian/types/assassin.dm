@@ -5,7 +5,7 @@
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = ZERO, OXY = 1)
 	playstyle_string = "<span class='holoparasite'>As an <b>assassin</b> type you do medium damage and have no damage resistance, but can enter stealth, massively increasing the damage of your next attack and causing it to ignore armor. Stealth is broken when you attack or take damage.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Space Ninja, a lethal, invisible assassin.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Assassin modules loaded. Holoparasite swarm online.</span>"
@@ -19,13 +19,13 @@
 
 /mob/living/simple_animal/hostile/guardian/assassin/Initialize()
 	. = ..()
-	stealthcooldown = 0
+	stealthcooldown = ZERO
 
 /mob/living/simple_animal/hostile/guardian/assassin/Life()
 	. = ..()
 	updatestealthalert()
 	if(loc == summoner && toggle)
-		ToggleMode(0)
+		ToggleMode(ZERO)
 
 /mob/living/simple_animal/hostile/guardian/assassin/Stat()
 	..()
@@ -41,14 +41,14 @@
 
 /mob/living/simple_animal/hostile/guardian/assassin/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(. > 0 && toggle)
+	if(. > ZERO && toggle)
 		ToggleMode(1)
 
 /mob/living/simple_animal/hostile/guardian/assassin/Recall()
 	if(..() && toggle)
-		ToggleMode(0)
+		ToggleMode(ZERO)
 
-/mob/living/simple_animal/hostile/guardian/assassin/ToggleMode(forced = 0)
+/mob/living/simple_animal/hostile/guardian/assassin/ToggleMode(forced = ZERO)
 	if(toggle)
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)
@@ -71,7 +71,7 @@
 		melee_damage_lower = 50
 		melee_damage_upper = 50
 		armour_penetration = 100
-		obj_damage = 0
+		obj_damage = ZERO
 		environment_smash = ENVIRONMENT_SMASH_NONE
 		new /obj/effect/temp_visual/guardian/phase/out(get_turf(src))
 		alpha = 15

@@ -13,7 +13,7 @@
 	mob_biotypes = MOB_ROBOTIC
 	health = 15
 	maxHealth = 15
-	healable = 0
+	healable = ZERO
 	melee_damage_lower = 2
 	melee_damage_upper = 3
 	attack_verb_continuous = "claws"
@@ -23,9 +23,9 @@
 	projectiletype = /obj/projectile/hivebotbullet
 	faction = list("hivebot")
 	check_friendly_fire = 1
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
 	possible_a_intents = list(INTENT_HELP, INTENT_GRAB, INTENT_DISARM, INTENT_HARM)
-	minbodytemp = 0
+	minbodytemp = ZERO
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"

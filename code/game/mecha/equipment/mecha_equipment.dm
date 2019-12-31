@@ -7,15 +7,15 @@
 	icon_state = "mecha_equip"
 	force = 5
 	max_integrity = 300
-	var/equip_cooldown = 0 // cooldown after use
+	var/equip_cooldown = ZERO // cooldown after use
 	var/equip_ready = 1 //whether the equipment is ready for use. (or deactivated/activated for static stuff)
-	var/energy_drain = 0
+	var/energy_drain = ZERO
 	var/obj/mecha/chassis = null
 	///Bitflag. Determines the range of the equipment.
 	var/range = MECHA_MELEE
 	var/salvageable = 1
 	var/detachable = TRUE // Set to FALSE for built-in equipment that cannot be removed
-	var/selectable = 1	// Set to 0 for passive equipment such as mining scanner or armor plates
+	var/selectable = 1	// Set to ZERO for passive equipment such as mining scanner or armor plates
 	var/harmful = FALSE //Controls if equipment can be used to attack by a pacifist.
 	var/destroy_sound = 'sound/mecha/critdestr.ogg'
 
@@ -79,25 +79,25 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/action_checks(atom/target)
 	if(!target)
-		return 0
+		return ZERO
 	if(!chassis)
-		return 0
+		return ZERO
 	if(!equip_ready)
-		return 0
+		return ZERO
 	if(energy_drain && !chassis.has_charge(energy_drain))
-		return 0
+		return ZERO
 	if(chassis.is_currently_ejecting)
-		return 0
+		return ZERO
 	if(chassis.equipment_disabled)
 		to_chat(chassis.occupant, "<span=warn>Error -- Equipment control unit is unresponsive.</span>")
-		return 0
+		return ZERO
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/proc/action(atom/target)
-	return 0
+	return ZERO
 
 /obj/item/mecha_parts/mecha_equipment/proc/start_cooldown()
-	set_ready_state(0)
+	set_ready_state(ZERO)
 	chassis.use_power(energy_drain)
 	addtimer(CALLBACK(src, .proc/set_ready_state, 1), equip_cooldown)
 
@@ -105,12 +105,12 @@
 	if(!chassis)
 		return
 	var/C = chassis.loc
-	set_ready_state(0)
+	set_ready_state(ZERO)
 	chassis.use_power(energy_drain)
 	. = do_after(chassis.occupant, equip_cooldown, target=target)
 	set_ready_state(1)
 	if(!chassis || 	chassis.loc != C || src != chassis.selected || !(get_dir(chassis, target)&chassis.dir))
-		return 0
+		return ZERO
 
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_mecha(atom/target, delay)
 	if(!chassis)
@@ -118,7 +118,7 @@
 	var/C = chassis.loc
 	. = do_after(chassis.occupant, delay, target=target)
 	if(!chassis || 	chassis.loc != C || src != chassis.selected || !(get_dir(chassis, target)&chassis.dir))
-		return 0
+		return ZERO
 
 /obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/mecha/M)
 	if(M.equipment.len<M.max_equip)
@@ -169,8 +169,8 @@
 
 //Used for reloading weapons/tools etc. that use some form of resource
 /obj/item/mecha_parts/mecha_equipment/proc/rearm()
-	return 0
+	return ZERO
 
 
 /obj/item/mecha_parts/mecha_equipment/proc/needs_rearm()
-	return 0
+	return ZERO

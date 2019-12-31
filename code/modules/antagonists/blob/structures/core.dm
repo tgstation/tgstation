@@ -7,9 +7,9 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 75, "acid" = 90)
 	explosion_block = 6
 	point_return = -1
-	health_regen = 0 //we regen in Life() instead of when pulsed
+	health_regen = ZERO //we regen in Life() instead of when pulsed
 
-/obj/structure/blob/core/Initialize(mapload, client/new_overmind = null, placed = 0)
+/obj/structure/blob/core/Initialize(mapload, client/new_overmind = null, placed = ZERO)
 	GLOB.blob_cores += src
 	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src
@@ -47,11 +47,11 @@
 
 /obj/structure/blob/core/ex_act(severity, target)
 	var/damage = 50 - 10 * severity //remember, the core takes half brute damage, so this is 20/15/10 damage based on severity
-	take_damage(damage, BRUTE, "bomb", 0)
+	take_damage(damage, BRUTE, "bomb", ZERO)
 
-/obj/structure/blob/core/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, overmind_reagent_trigger = 1)
+/obj/structure/blob/core/take_damage(damage_amount, damage_type = BRUTE, damage_flag = ZERO, sound_effect = 1, attack_dir, overmind_reagent_trigger = 1)
 	. = ..()
-	if(obj_integrity > 0)
+	if(obj_integrity > ZERO)
 		if(overmind) //we should have an overmind, but...
 			overmind.update_health_hud()
 

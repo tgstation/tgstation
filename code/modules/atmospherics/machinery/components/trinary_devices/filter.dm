@@ -8,7 +8,7 @@
 	can_unwrench = TRUE
 	var/transfer_rate = MAX_TRANSFER_RATE
 	var/filter_type = null
-	var/frequency = 0
+	var/frequency = ZERO
 	var/datum/radio_frequency/radio_connection
 
 	construction_type = /obj/item/pipe/trinary/flippable
@@ -67,7 +67,7 @@
 
 	//Early return
 	var/datum/gas_mixture/air1 = airs[1]
-	if(!air1 || air1.temperature <= 0)
+	if(!air1 || air1.temperature <= ZERO)
 		return
 
 	var/datum/gas_mixture/air2 = airs[2]
@@ -83,7 +83,7 @@
 
 	//Actually transfer the gas
 
-	if(transfer_ratio <= 0)
+	if(transfer_ratio <= ZERO)
 		return
 
 	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
@@ -105,7 +105,7 @@
 		filtered_out.add_gas(filter_type)
 		filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
 
-		removed.gases[filter_type][MOLES] = 0
+		removed.gases[filter_type][MOLES] = ZERO
 		removed.garbage_collect()
 
 		var/datum/gas_mixture/target = (air2.return_pressure() < MAX_OUTPUT_PRESSURE ? air2 : air1) //if there's no room for the filtered gas; just leave it in air1
@@ -161,7 +161,7 @@
 				rate = text2num(rate)
 				. = TRUE
 			if(.)
-				transfer_rate = CLAMP(rate, 0, MAX_TRANSFER_RATE)
+				transfer_rate = CLAMP(rate, ZERO, MAX_TRANSFER_RATE)
 				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("filter")
 			filter_type = null

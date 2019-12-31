@@ -6,7 +6,7 @@
 	anchored = TRUE
 	invisibility = 101
 	var/set_luminosity = 8
-	var/set_cap = 0
+	var/set_cap = ZERO
 
 /obj/effect/light_emitter/Initialize()
 	. = ..()

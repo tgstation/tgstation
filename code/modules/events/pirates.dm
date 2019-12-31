@@ -16,7 +16,7 @@
 /datum/round_event/pirates
 	startWhen = 60 //2 minutes to answer
 	var/datum/comm_message/threat
-	var/payoff = 0
+	var/payoff = ZERO
 	var/payoff_min = 20000
 	var/paid_off = FALSE
 	var/ship_name = "Space Privateers Association"
@@ -80,7 +80,7 @@
 
 	for(var/turf/A in ship.get_affected_turfs(T))
 		for(var/obj/effect/mob_spawn/human/pirate/spawner in A)
-			if(candidates.len > 0)
+			if(candidates.len > ZERO)
 				var/mob/M = candidates[1]
 				spawner.create(M.ckey)
 				candidates -= M
@@ -99,7 +99,7 @@
 	icon_state = "dominator"
 	density = TRUE
 	var/active = FALSE
-	var/credits_stored = 0
+	var/credits_stored = ZERO
 	var/siphon_per_tick = 5
 
 /obj/machinery/shuttle_scrambler/Initialize(mapload)
@@ -152,7 +152,7 @@
 	if(credits_stored)	// Prevents spamming empty holochips
 		new /obj/item/holochip(drop_location(), credits_stored)
 		to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
-		credits_stored = 0
+		credits_stored = ZERO
 	else
 		to_chat(user,"<span class='notice'>There's nothing to withdraw.</span>")
 
@@ -189,7 +189,7 @@
 	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "pirateship_custom"
 	x_offset = 9
-	y_offset = 0
+	y_offset = ZERO
 	see_hidden = FALSE
 
 /obj/docking_port/mobile/pirate
@@ -211,7 +211,7 @@
 	icon_state = "tdoppler"
 	density = TRUE
 	var/cooldown = 300
-	var/next_use = 0
+	var/next_use = ZERO
 
 /obj/machinery/loot_locator/interact(mob/user)
 	if(world.time <= next_use)
@@ -260,7 +260,7 @@
 	var/obj/machinery/piratepad/pad
 	var/warmup_time = 100
 	var/sending = FALSE
-	var/points = 0
+	var/points = ZERO
 	var/datum/export_report/total_report
 	var/sending_timer
 	var/cargo_hold_id
@@ -331,7 +331,7 @@
 		export_item_and_contents(AM, EXPORT_PIRATE | EXPORT_CARGO | EXPORT_CONTRABAND | EXPORT_EMAG, apply_elastic = FALSE, delete_unsold = FALSE, external_report = ex)
 
 	status_report = "Sold:<br>"
-	var/value = 0
+	var/value = ZERO
 	for(var/datum/export/E in ex.total_amount)
 		var/export_text = E.total_printout(ex,notes = FALSE) //Don't want nanotrasen messages, makes no sense here.
 		if(!export_text)
@@ -410,9 +410,9 @@
 /datum/export/pirate/ransom/get_cost(atom/movable/AM)
 	var/mob/living/carbon/human/H = AM
 	if(H.stat != CONSCIOUS || !H.mind || !H.mind.assigned_role) //mint condition only
-		return 0
+		return ZERO
 	else if("pirate" in H.faction) //can't ransom your fellow pirates to CentCom!
-		return 0
+		return ZERO
 	else
 		if(H.mind.assigned_role in GLOB.command_positions)
 			return 3000

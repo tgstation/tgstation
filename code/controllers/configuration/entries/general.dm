@@ -30,12 +30,12 @@
 /datum/config_entry/number/lobby_countdown	// In between round countdown.
 	config_entry_value = 120
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/number/round_end_countdown	// Post round murder death kill countdown
 	config_entry_value = 25
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/flag/hub	// if the game appears on the hub or not
 
@@ -98,12 +98,12 @@
 /datum/config_entry/number/vote_delay	// minimum time between voting sessions (deciseconds, 10 minute default)
 	config_entry_value = 6000
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/number/vote_period  // length of voting period (deciseconds, default 1 minute)
 	config_entry_value = 600
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/flag/default_no_vote	// vote does not default to nochange/norestart
 
@@ -139,7 +139,7 @@
 	..()
 
 /datum/config_entry/number/ticklag/ValidateAndSet(str_val)
-	. = text2num(str_val) > 0 && ..()
+	. = text2num(str_val) > ZERO && ..()
 	if(.)
 		sync_validate = TRUE
 		var/datum/config_entry/number/fps/FPS = config.entries_by_type[/datum/config_entry/number/fps]
@@ -151,7 +151,7 @@
 
 /datum/config_entry/number/tick_limit_mc_init	//SSinitialization throttling
 	config_entry_value = TICK_LIMIT_MC_INIT_DEFAULT
-	min_val = 0 //oranges warned us
+	min_val = ZERO //oranges warned us
 	integer = FALSE
 
 /datum/config_entry/flag/admin_legacy_system	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system
@@ -186,9 +186,9 @@
 /datum/config_entry/flag/use_exp_restrictions_heads
 
 /datum/config_entry/number/use_exp_restrictions_heads_hours
-	config_entry_value = 0
+	config_entry_value = ZERO
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/flag/use_exp_restrictions_heads_department
 
@@ -218,19 +218,19 @@
 
 /datum/config_entry/number/githubrepoid
 	config_entry_value = null
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/flag/guest_ban
 
 /datum/config_entry/number/id_console_jobslot_delay
 	config_entry_value = 30
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/number/inactivity_period	//time in ds until a player is considered inactive
 	config_entry_value = 3000
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/number/inactivity_period/ValidateAndSet(str_val)
 	. = ..()
@@ -240,7 +240,7 @@
 /datum/config_entry/number/afk_period	//time in ds until a player is considered inactive
 	config_entry_value = 3000
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/number/afk_period/ValidateAndSet(str_val)
 	. = ..()
@@ -274,33 +274,33 @@
 
 /datum/config_entry/number/note_fresh_days
 	config_entry_value = null
-	min_val = 0
+	min_val = ZERO
 	integer = FALSE
 
 /datum/config_entry/number/note_stale_days
 	config_entry_value = null
-	min_val = 0
+	min_val = ZERO
 	integer = FALSE
 
 /datum/config_entry/flag/maprotation
 
 /datum/config_entry/number/maprotatechancedelta
 	config_entry_value = 0.75
-	min_val = 0
+	min_val = ZERO
 	max_val = 1
 	integer = FALSE
 
 /datum/config_entry/number/soft_popcap
 	config_entry_value = null
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/number/hard_popcap
 	config_entry_value = null
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/number/extreme_popcap
 	config_entry_value = null
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/string/soft_popcap_message
 	config_entry_value = "Be warned that the server is currently serving a high number of users, consider using alternative game servers."
@@ -322,7 +322,7 @@
 	min_val = -1
 
 /datum/config_entry/number/notify_new_player_account_age	// how long do we notify admins of a new byond account
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/flag/irc_first_connection_alert	// do we notify the irc channel when somebody is connecting for the first time?
 
@@ -336,18 +336,18 @@
 /datum/config_entry/number/ipintel_rating_bad
 	config_entry_value = 1
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 	max_val = 1
 
 /datum/config_entry/number/ipintel_save_good
 	config_entry_value = 12
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/number/ipintel_save_bad
 	config_entry_value = 1
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/string/ipintel_domain
 	config_entry_value = "check.getipintel.net"
@@ -391,28 +391,28 @@
 
 /datum/config_entry/number/client_error_build
 	config_entry_value = null
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/number/minute_topic_limit
 	config_entry_value = null
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/number/second_topic_limit
 	config_entry_value = null
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/number/minute_click_limit
 	config_entry_value = 400
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/number/second_click_limit
 	config_entry_value = 15
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/number/error_cooldown	// The "cooldown" time for each occurrence of a unique error
 	config_entry_value = 600
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/number/error_limit	// How many occurrences before the next will silence them
 	config_entry_value = 50
@@ -467,7 +467,7 @@
 
 /datum/config_entry/number/rounds_until_hard_restart
 	config_entry_value = -1
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/string/default_view
 	config_entry_value = "15x15"

@@ -53,7 +53,7 @@
 	scan_desc = "bluespace attunement"
 	gain_text = "<span class='notice'>You feel the bluespace pulsing around you...</span>"
 	lose_text = "<span class='warning'>The faint pulsing of bluespace fades into silence.</span>"
-	var/next_portal = 0
+	var/next_portal = ZERO
 
 /datum/brain_trauma/special/bluespace_prophet/on_life()
 	if(world.time > next_portal)
@@ -195,7 +195,7 @@
 	gain_text = "<span class='notice'>You feel less real.</span>"
 	lose_text = "<span class='warning'>You feel more substantial again.</span>"
 	var/obj/effect/abstract/sync_holder/veil/veil
-	var/next_crisis = 0
+	var/next_crisis = ZERO
 
 /datum/brain_trauma/special/existential_crisis/on_life()
 	..()
@@ -278,7 +278,7 @@
 	if(get_dist(owner, beepsky) <= 1)
 		owner.playsound_local(owner, 'sound/weapons/egloves.ogg', 50)
 		owner.visible_message("<span class='warning'>[owner]'s body jerks as if it was shocked.</span>", "<span class='userdanger'>You feel the fist of the LAW.</span>")
-		owner.take_bodypart_damage(0,0,rand(40, 70))
+		owner.take_bodypart_damage(ZERO,ZERO,rand(40, 70))
 		QDEL_NULL(beepsky)
 	if(prob(20) && get_dist(owner, beepsky) <= 8)
 		owner.playsound_local(beepsky, 'sound/voice/beepsky/criminal.ogg', 40)

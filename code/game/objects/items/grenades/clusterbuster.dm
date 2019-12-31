@@ -17,9 +17,9 @@
 /obj/item/grenade/clusterbuster/prime()
 	update_mob()
 	var/numspawned = rand(min_spawned,max_spawned)
-	var/again = 0
+	var/again = ZERO
 
-	for(var/more = numspawned,more > 0,more--)
+	for(var/more = numspawned,more > ZERO,more--)
 		if(prob(segment_chance))
 			again++
 			numspawned--
@@ -102,7 +102,7 @@
 		reagents.add_reagent(chem,amount)
 
 /obj/effect/payload_spawner/random_slime/spawn_payload(type, numspawned)
-	for(var/loop = numspawned ,loop > 0, loop--)
+	for(var/loop = numspawned ,loop > ZERO, loop--)
 		var/chosen = pick(subtypesof(/obj/item/slime_extract))
 		var/obj/item/slime_extract/P = new chosen(loc)
 		if(volatile)

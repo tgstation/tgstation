@@ -353,7 +353,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		else if (isnull(delta))
 			// calculate a probable delta value based on the difference
 			delta = 100 * (desired_width - got_width) / split_width
-		else if ((delta > 0 && got_width > desired_width) || (delta < 0 && got_width < desired_width))
+		else if ((delta > ZERO && got_width > desired_width) || (delta < ZERO && got_width < desired_width))
 			// if we overshot, halve the delta and reverse direction
 			delta = -delta/2
 

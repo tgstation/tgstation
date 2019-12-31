@@ -19,7 +19,7 @@ BONUS
 	name = "Disfiguration"
 	desc = "The virus liquefies facial muscles, disfiguring the host."
 	stealth = 2
-	resistance = 0
+	resistance = ZERO
 	stage_speed = 3
 	transmittable = 1
 	level = 5

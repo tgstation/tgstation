@@ -137,7 +137,7 @@ Burning extracts:
 	var/list/turfs = list()
 	for(var/turf/open/T in range(1,get_turf(user)))
 		turfs += T
-	for(var/i = 0, i < amount, i++)
+	for(var/i = ZERO, i < amount, i++)
 		var/path = get_random_food()
 		var/obj/item/O = new path(pick(turfs))
 		O.reagents.add_reagent(/datum/reagent/toxin/slimejelly,5) //Oh god it burns

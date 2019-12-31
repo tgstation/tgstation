@@ -1,11 +1,11 @@
 /mob/living/carbon/Life()
-	set invisibility = 0
+	set invisibility = ZERO
 
 	if(notransform)
 		return
 
 	if(damageoverlaytemp)
-		damageoverlaytemp = 0
+		damageoverlaytemp = ZERO
 		update_damage_hud()
 
 	if(!IS_IN_STASIS(src))
@@ -61,7 +61,7 @@
 		if(H.damage > H.high_threshold)
 			next_breath--
 
-	if((times_fired % next_breath) == 0 || failed_last_breath)
+	if((times_fired % next_breath) == ZERO || failed_last_breath)
 		breathe() //Breathe per 4 ticks if healthy, down to 2 if our lungs or heart are damaged, unless suffocating
 		if(failed_last_breath)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
@@ -70,7 +70,7 @@
 	else
 		if(istype(loc, /obj/))
 			var/obj/location_as_object = loc
-			location_as_object.handle_internal_lifeform(src,0)
+			location_as_object.handle_internal_lifeform(src,ZERO)
 
 //Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe()
@@ -100,19 +100,19 @@
 			emote("gasp")
 		if(istype(loc, /obj/))
 			var/obj/loc_as_obj = loc
-			loc_as_obj.handle_internal_lifeform(src,0)
+			loc_as_obj.handle_internal_lifeform(src,ZERO)
 	else
 		//Breathe from internal
 		breath = get_breath_from_internal(BREATH_VOLUME)
 
-		if(isnull(breath)) //in case of 0 pressure internals
+		if(isnull(breath)) //in case of ZERO pressure internals
 
 			if(isobj(loc)) //Breathe from loc as object
 				var/obj/loc_as_obj = loc
 				breath = loc_as_obj.handle_internal_lifeform(src, BREATH_VOLUME)
 
 			else if(isturf(loc)) //Breathe from loc as turf
-				var/breath_moles = 0
+				var/breath_moles = ZERO
 				if(environment)
 					breath_moles = environment.total_moles()*BREATH_PERCENTAGE
 
@@ -120,7 +120,7 @@
 		else //Breathe from loc as obj again
 			if(istype(loc, /obj/))
 				var/obj/loc_as_obj = loc
-				loc_as_obj.handle_internal_lifeform(src,0)
+				loc_as_obj.handle_internal_lifeform(src,ZERO)
 
 	check_breath(breath)
 
@@ -146,21 +146,21 @@
 		adjustOxyLoss(2)
 
 	//CRIT
-	if(!breath || (breath.total_moles() == 0) || !lungs)
+	if(!breath || (breath.total_moles() == ZERO) || !lungs)
 		if(reagents.has_reagent(/datum/reagent/medicine/epinephrine, needs_metabolizing = TRUE) && lungs)
 			return
 		adjustOxyLoss(1)
 
 		failed_last_breath = 1
 		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
-		return 0
+		return ZERO
 
 	var/safe_oxy_min = 16
 	var/safe_co2_max = 10
 	var/safe_tox_max = 0.05
 	var/SA_para_min = 1
 	var/SA_sleep_min = 5
-	var/oxygen_used = 0
+	var/oxygen_used = ZERO
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 	var/list/breath_gases = breath.gases
@@ -174,7 +174,7 @@
 	if(O2_partialpressure < safe_oxy_min) //Not enough oxygen
 		if(prob(20))
 			emote("gasp")
-		if(O2_partialpressure > 0)
+		if(O2_partialpressure > ZERO)
 			var/ratio = 1 - O2_partialpressure/safe_oxy_min
 			adjustOxyLoss(min(5*ratio, 3))
 			failed_last_breath = 1
@@ -185,7 +185,7 @@
 		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 
 	else //Enough oxygen
-		failed_last_breath = 0
+		failed_last_breath = ZERO
 		if(health >= crit_threshold)
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]
@@ -207,7 +207,7 @@
 			emote("cough")
 
 	else
-		co2overloadtime = 0
+		co2overloadtime = ZERO
 
 	//TOXINS/PLASMA
 	if(Toxins_partialpressure > safe_tox_max)
@@ -305,10 +305,10 @@
 	if(internal)
 		if(internal.loc != src)
 			internal = null
-			update_internals_hud_icon(0)
+			update_internals_hud_icon(ZERO)
 		else if ((!wear_mask || !(wear_mask.clothing_flags & MASKINTERNALS)) && !getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 			internal = null
-			update_internals_hud_icon(0)
+			update_internals_hud_icon(ZERO)
 		else
 			update_internals_hud_icon(1)
 			. = internal.remove_air_volume(volume_needed)
@@ -357,7 +357,7 @@
 		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling)
 			changeling.regenerate()
-			hud_used.lingchemdisplay.invisibility = 0
+			hud_used.lingchemdisplay.invisibility = ZERO
 			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(changeling.chem_charges)]</font></div>"
 		else
 			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
@@ -402,7 +402,7 @@ Note that all higher effects of alcohol poisoning will inherit effects for small
 In addition, severe effects won't always trigger unless the drink is poisonously strong
 All effects don't start immediately, but rather get worse over time; the rate is affected by the imbiber's alcohol tolerance
 
-0: Non-alcoholic
+ZERO: Non-alcoholic
 1-10: Barely classifiable as alcohol - occassional slurring
 11-20: Slight alcohol content - slurring
 21-30: Below average - imbiber begins to look slightly drunk
@@ -438,15 +438,15 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	//Dizziness
 	if(dizziness)
 		var/client/C = client
-		var/pixel_x_diff = 0
-		var/pixel_y_diff = 0
+		var/pixel_x_diff = ZERO
+		var/pixel_y_diff = ZERO
 		var/temp
 		var/saved_dizz = dizziness
 		if(C)
 			var/oldsrc = src
 			var/amplitude = dizziness*(sin(dizziness * world.time) + 1) // This shit is annoying at high strength
 			src = null
-			spawn(0)
+			spawn(ZERO)
 				if(C)
 					temp = amplitude * sin(saved_dizz * world.time)
 					pixel_x_diff += temp
@@ -467,10 +467,10 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 						C.pixel_x -= pixel_x_diff
 						C.pixel_y -= pixel_y_diff
 			src = oldsrc
-		dizziness = max(dizziness - restingpwr, 0)
+		dizziness = max(dizziness - restingpwr, ZERO)
 
 	if(drowsyness)
-		drowsyness = max(drowsyness - restingpwr, 0)
+		drowsyness = max(drowsyness - restingpwr, ZERO)
 		blur_eyes(2)
 		if(prob(5))
 			AdjustSleeping(100)
@@ -478,22 +478,22 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	//Jitteriness
 	if(jitteriness)
 		do_jitter_animation(jitteriness)
-		jitteriness = max(jitteriness - restingpwr, 0)
+		jitteriness = max(jitteriness - restingpwr, ZERO)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "jittery", /datum/mood_event/jittery)
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "jittery")
 
 	if(stuttering)
-		stuttering = max(stuttering-1, 0)
+		stuttering = max(stuttering-1, ZERO)
 
 	if(slurring)
-		slurring = max(slurring-1,0)
+		slurring = max(slurring-1,ZERO)
 
 	if(cultslurring)
-		cultslurring = max(cultslurring-1, 0)
+		cultslurring = max(cultslurring-1, ZERO)
 
 	if(silent)
-		silent = max(silent-1, 0)
+		silent = max(silent-1, ZERO)
 
 	if(druggy)
 		adjust_drugginess(-1)
@@ -502,12 +502,12 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		handle_hallucinations()
 
 	if(drunkenness)
-		drunkenness = max(drunkenness - (drunkenness * 0.04) - 0.01, 0)
+		drunkenness = max(drunkenness - (drunkenness * 0.04) - 0.01, ZERO)
 		if(drunkenness >= 6)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
 			if(prob(25))
 				slurring += 2
-			jitteriness = max(jitteriness - 3, 0)
+			jitteriness = max(jitteriness - 3, ZERO)
 		else
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
 
@@ -518,7 +518,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			if(SSresearch.science_tech)
 				if(drunkenness >= 12.9 && drunkenness <= 13.8)
 					drunkenness = round(drunkenness, 0.01)
-					var/ballmer_percent = 0
+					var/ballmer_percent = ZERO
 					if(drunkenness == 13.35) // why run math if I dont have to
 						ballmer_percent = 1
 					else

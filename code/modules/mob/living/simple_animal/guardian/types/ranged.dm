@@ -12,7 +12,7 @@
 	friendly_verb_simple = "quietly assess"
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	damage_coeff = list(BRUTE = 0.9, BURN = 0.9, TOX = 0.9, CLONE = 0.9, STAMINA = 0, OXY = 0.9)
+	damage_coeff = list(BRUTE = 0.9, BURN = 0.9, TOX = 0.9, CLONE = 0.9, STAMINA = ZERO, OXY = 0.9)
 	projectiletype = /obj/projectile/guardian
 	ranged_cooldown_time = 1 //fast!
 	projectilesound = 'sound/effects/hit_on_shattered_glass.ogg'
@@ -41,10 +41,10 @@
 			to_chat(src, "<span class='danger'><B>You switch to combat mode.</span></B>")
 			toggle = FALSE
 		else
-			ranged = 0
-			melee_damage_lower = 0
-			melee_damage_upper = 0
-			obj_damage = 0
+			ranged = ZERO
+			melee_damage_lower = ZERO
+			melee_damage_upper = ZERO
+			obj_damage = ZERO
 			environment_smash = ENVIRONMENT_SMASH_NONE
 			alpha = 45
 			range = 255

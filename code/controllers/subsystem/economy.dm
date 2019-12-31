@@ -54,7 +54,7 @@ SUBSYSTEM_DEF(economy)
 		new /datum/bank_account/department(A, budget_to_hand_out)
 	return ..()
 
-/datum/controller/subsystem/economy/fire(resumed = 0)
+/datum/controller/subsystem/economy/fire(resumed = ZERO)
 	eng_payout()  // Payout based on nothing. What will replace it? Surplus power, powered APC's, air alarms? Who knows.
 	sci_payout() // Payout based on slimes.
 	secmedsrv_payout() // Payout based on crew safety, health, and mood.
@@ -123,7 +123,7 @@ SUBSYSTEM_DEF(economy)
 		D.adjust_money(min(cash_to_grant, MAX_GRANT_SECMEDSRV))
 
 /datum/controller/subsystem/economy/proc/sci_payout()
-	var/science_bounty = 0
+	var/science_bounty = ZERO
 	for(var/mob/living/simple_animal/slime/S in GLOB.mob_list)
 		if(S.stat == DEAD)
 			continue

@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 				return
 
 			if(iscarbon(src) && ventcrawler < 2)//It must have atleast been 1 to get this far
-				var/failed = 0
+				var/failed = ZERO
 				var/list/items_list = get_equipped_items(include_pockets = TRUE)
 				if(items_list.len)
 					failed = 1
@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 	if(client)
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image
-	pipes_shown.len = 0
+	pipes_shown.len = ZERO
 	setMovetype(movement_type & ~VENTCRAWLING)
 
 

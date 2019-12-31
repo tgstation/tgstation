@@ -283,7 +283,7 @@
 	if(stage != GRENADE_READY)
 		return
 
-	var/total_volume = 0
+	var/total_volume = ZERO
 	for(var/obj/item/reagent_containers/RC in beakers)
 		total_volume += RC.reagents.total_volume
 	if(!total_volume)

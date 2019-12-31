@@ -44,7 +44,7 @@
 	log = FALSE
 
 /datum/world_topic/ping/Run(list/input)
-	. = 0
+	. = ZERO
 	for (var/client/C in GLOB.clients)
 		++.
 
@@ -165,7 +165,7 @@
 			// Key-authed callers may know the truth behind the "secret"
 
 	.["security_level"] = get_security_level()
-	.["round_duration"] = SSticker ? round((world.time-SSticker.round_start_time)/10) : 0
+	.["round_duration"] = SSticker ? round((world.time-SSticker.round_start_time)/10) : ZERO
 	// Amount of world's ticks in seconds, useful for calculating round duration
 	
 	//Time dilation stats.
@@ -175,9 +175,9 @@
 	.["time_dilation_avg_fast"] = SStime_track.time_dilation_avg_fast
 	
 	//pop cap stats
-	.["soft_popcap"] = CONFIG_GET(number/soft_popcap) || 0
-	.["hard_popcap"] = CONFIG_GET(number/hard_popcap) || 0
-	.["extreme_popcap"] = CONFIG_GET(number/extreme_popcap) || 0
+	.["soft_popcap"] = CONFIG_GET(number/soft_popcap) || ZERO
+	.["hard_popcap"] = CONFIG_GET(number/hard_popcap) || ZERO
+	.["extreme_popcap"] = CONFIG_GET(number/extreme_popcap) || ZERO
 	.["popcap"] = max(CONFIG_GET(number/soft_popcap), CONFIG_GET(number/hard_popcap), CONFIG_GET(number/extreme_popcap)) //generalized field for this concept for use across ss13 codebases
 	
 	if(SSshuttle && SSshuttle.emergency)

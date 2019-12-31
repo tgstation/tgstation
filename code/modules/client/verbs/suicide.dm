@@ -1,4 +1,4 @@
-/mob/var/suiciding = 0
+/mob/var/suiciding = ZERO
 
 /mob/proc/set_suicide(suicide_state)
 	suiciding = suicide_state
@@ -49,9 +49,9 @@
 
 				suicide_log()
 
-				var/damage_mod = 0
+				var/damage_mod = ZERO
 				for(var/T in list(BRUTELOSS, FIRELOSS, TOXLOSS, OXYLOSS))
-					damage_mod += (T & damagetype) ? 1 : 0
+					damage_mod += (T & damagetype) ? 1 : ZERO
 				damage_mod = max(1, damage_mod)
 
 				//Do 200 damage divided by the number of damage types applied.
@@ -72,7 +72,7 @@
 
 				//If something went wrong, just do normal oxyloss
 				if(!(damagetype & (BRUTELOSS | FIRELOSS | TOXLOSS | OXYLOSS) ))
-					adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+					adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), ZERO))
 
 				death(FALSE)
 				ghostize(FALSE)	// Disallows reentering body and disassociates mind
@@ -105,7 +105,7 @@
 
 		suicide_log()
 
-		adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+		adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), ZERO))
 		death(FALSE)
 		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
@@ -140,7 +140,7 @@
 
 		suicide_log()
 
-		adjustOxyLoss(max(200- getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+		adjustOxyLoss(max(200- getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), ZERO))
 		death(FALSE)
 		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
@@ -159,7 +159,7 @@
 		suicide_log()
 
 		//put em at -175
-		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), ZERO))
 		death(FALSE)
 		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
@@ -178,7 +178,7 @@
 		suicide_log()
 
 		//put em at -175
-		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), ZERO))
 		death(FALSE)
 		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
@@ -213,7 +213,7 @@
 		suicide_log()
 
 		//put em at -175
-		adjustOxyLoss(max(200 - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+		adjustOxyLoss(max(200 - getFireLoss() - getBruteLoss() - getOxyLoss(), ZERO))
 		death(FALSE)
 		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 

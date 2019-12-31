@@ -66,14 +66,14 @@
 	if(stat & (BROKEN))
 		return
 	var/list/L = alarms[class]
-	var/cleared = 0
+	var/cleared = ZERO
 	for (var/I in L)
 		if (I == A.name)
 			var/list/alarm = L[I]
 			var/list/srcs  = alarm[3]
 			if (origin in srcs)
 				srcs -= origin
-			if (srcs.len == 0)
+			if (srcs.len == ZERO)
 				cleared = 1
 				L -= I
 	return !cleared

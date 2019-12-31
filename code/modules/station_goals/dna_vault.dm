@@ -25,10 +25,10 @@
 	plant_count = rand(round(0.5 * non_standard_plants),round(0.7 * non_standard_plants))
 
 /datum/station_goal/dna_vault/proc/non_standard_plants_count()
-	. = 0
+	. = ZERO
 	for(var/T in subtypesof(/obj/item/seeds)) //put a cache if it's used anywhere else
 		var/obj/item/seeds/S = T
-		if(initial(S.rarity) > 0)
+		if(initial(S.rarity) > ZERO)
 			.++
 
 /datum/station_goal/dna_vault/get_report()
@@ -230,7 +230,7 @@
 /obj/machinery/dna_vault/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/dna_probe))
 		var/obj/item/dna_probe/P = I
-		var/uploaded = 0
+		var/uploaded = ZERO
 		for(var/plant in P.plants)
 			if(!plants[plant])
 				uploaded++
@@ -259,8 +259,8 @@
 			to_chat(H, "<span class='notice'>You feel resistant to airborne toxins.</span>")
 			if(locate(/obj/item/organ/lungs) in H.internal_organs)
 				var/obj/item/organ/lungs/L = H.internal_organs_slot[ORGAN_SLOT_LUNGS]
-				L.tox_breath_dam_min = 0
-				L.tox_breath_dam_max = 0
+				L.tox_breath_dam_min = ZERO
+				L.tox_breath_dam_max = ZERO
 			ADD_TRAIT(H, TRAIT_VIRUSIMMUNE, "dna_vault")
 		if(VAULT_NOBREATH)
 			to_chat(H, "<span class='notice'>Your lungs feel great.</span>")

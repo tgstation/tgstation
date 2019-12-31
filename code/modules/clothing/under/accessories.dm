@@ -4,7 +4,7 @@
 	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "plasma"
 	item_state = ""	//no inhands
-	slot_flags = 0
+	slot_flags = ZERO
 	w_class = WEIGHT_CLASS_SMALL
 	var/above_suit = FALSE
 	var/minimize_when_attached = TRUE // TRUE if shown as a small icon in corner, FALSE if overlayed
@@ -126,7 +126,7 @@
 			var/obj/item/clothing/under/U = M.w_uniform
 			var/delay = 20
 			if(user == M)
-				delay = 0
+				delay = ZERO
 			else
 				user.visible_message("<span class='notice'>[user] is trying to pin [src] on [M]'s chest.</span>", \
 									 "<span class='notice'>You try to pin [src] on [M]'s chest.</span>")
@@ -134,7 +134,7 @@
 			if(!commended && user != M)
 				input = stripped_input(user,"Please input a reason for this commendation, it will be recorded by Nanotrasen.", ,"", 140)
 			if(do_after(user, delay, target = M))
-				if(U.attach_accessory(src, user, 0)) //Attach it, do not notify the user of the attachment
+				if(U.attach_accessory(src, user, ZERO)) //Attach it, do not notify the user of the attachment
 					if(user == M)
 						to_chat(user, "<span class='notice'>You attach [src] to [U].</span>")
 					else

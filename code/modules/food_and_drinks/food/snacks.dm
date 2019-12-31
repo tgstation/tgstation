@@ -38,19 +38,19 @@ All foods are distributed among various categories. Use common sense.
 	obj_flags = UNIQUE_RENAME
 	grind_results = list() //To let them be ground up to transfer their reagents
 	var/bitesize = 2
-	var/bitecount = 0
+	var/bitecount = ZERO
 	var/trash = null
 	var/slice_path    // for sliceable food. path of the item resulting from the slicing
 	var/slices_num
 	var/eatverb
 	var/dried_type = null
-	var/dry = 0
+	var/dry = ZERO
 	var/dunkable = FALSE // for dunkable food, make true
 	var/dunk_amount = 10 // how much reagent is transferred per dunk
 	var/cooked_type = null  //for microwave cooking. path of the resulting item after microwaving
 	var/filling_color = "#FFFFFF" //color to use when added to custom food.
 	var/custom_food_type = null  //for food customizing. path of the custom food to create
-	var/junkiness = 0  //for junk food. used to lower human satiety.
+	var/junkiness = ZERO  //for junk food. used to lower human satiety.
 	var/list/bonus_reagents //the amount of reagents (usually nutriment and vitamin) added to crafted/cooked snacks, on top of the ingredients reagents.
 	var/customfoodfilling = 1 // whether it can be used as filling in custom food
 	var/list/tastes  // for example list("crisps" = 2, "salt" = 1)
@@ -150,13 +150,13 @@ All foods are distributed among various categories. Use common sense.
 				checkLiked(fraction, M)
 				return TRUE
 
-	return 0
+	return ZERO
 
 /obj/item/reagent_containers/food/snacks/examine(mob/user)
 	. = ..()
 	if(!in_container)
 		switch (bitecount)
-			if (0)
+			if (ZERO)
 				return
 			if(1)
 				. += "[src] was bitten by someone!"
@@ -168,22 +168,22 @@ All foods are distributed among various categories. Use common sense.
 /obj/item/reagent_containers/food/snacks/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/storage))
 		..() // -> item/attackby()
-		return 0
+		return ZERO
 	if(istype(W, /obj/item/reagent_containers/food/snacks))
 		var/obj/item/reagent_containers/food/snacks/S = W
 		if(custom_food_type && ispath(custom_food_type))
 			if(S.w_class > WEIGHT_CLASS_SMALL)
 				to_chat(user, "<span class='warning'>[S] is too big for [src]!</span>")
-				return 0
+				return ZERO
 			if(!S.customfoodfilling || istype(W, /obj/item/reagent_containers/food/snacks/customizable) || istype(W, /obj/item/reagent_containers/food/snacks/pizzaslice/custom) || istype(W, /obj/item/reagent_containers/food/snacks/cakeslice/custom))
 				to_chat(user, "<span class='warning'>[src] can't be filled with [S]!</span>")
-				return 0
+				return ZERO
 			if(contents.len >= 20)
 				to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
-				return 0
+				return ZERO
 			var/obj/item/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
 			C.initialize_custom_food(src, S, user)
-			return 0
+			return ZERO
 	var/sharp = W.get_sharpness()
 	if(sharp)
 		if(slice(sharp, W, user))
@@ -215,7 +215,7 @@ All foods are distributed among various categories. Use common sense.
 				reagents.add_reagent(r_id, amount)
 
 /obj/item/reagent_containers/food/snacks/proc/slice(accuracy, obj/item/W, mob/user)
-	if((slices_num <= 0 || !slices_num) || !slice_path) //is the food sliceable?
+	if((slices_num <= ZERO || !slices_num) || !slice_path) //is the food sliceable?
 		return FALSE
 
 	if ( \
@@ -227,7 +227,7 @@ All foods are distributed among various categories. Use common sense.
 		to_chat(user, "<span class='warning'>You cannot slice [src] here! You need a table or at least a tray.</span>")
 		return FALSE
 
-	var/slices_lost = 0
+	var/slices_lost = ZERO
 	if (accuracy >= IS_SHARP_ACCURATE)
 		user.visible_message( \
 			"[user] slices [src].", \
@@ -322,7 +322,7 @@ All foods are distributed among various categories. Use common sense.
 	if(isanimal(M))
 		if(isdog(M))
 			var/mob/living/L = M
-			if(bitecount == 0 || prob(50))
+			if(bitecount == ZERO || prob(50))
 				M.emote("me", 1, "nibbles away at \the [src]")
 			bitecount++
 			L.taste(reagents) // why should carbons get all the fun?
@@ -352,20 +352,20 @@ All foods are distributed among various categories. Use common sense.
 /// All the food items that can store an item inside itself, like bread or cake.
 /obj/item/reagent_containers/food/snacks/store
 	w_class = WEIGHT_CLASS_NORMAL
-	var/stored_item = 0
+	var/stored_item = ZERO
 
 /obj/item/reagent_containers/food/snacks/store/attackby(obj/item/W, mob/user, params)
 	..()
 	if(W.w_class <= WEIGHT_CLASS_SMALL & !istype(W, /obj/item/reagent_containers/food/snacks)) //can't slip snacks inside, they're used for custom foods.
 		if(W.get_sharpness())
-			return 0
+			return ZERO
 		if(stored_item)
-			return 0
+			return ZERO
 		if(!iscarbon(user))
-			return 0
+			return ZERO
 		if(contents.len >= 20)
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
-			return 0
+			return ZERO
 		to_chat(user, "<span class='notice'>You slip [W] inside [src].</span>")
 		user.transferItemToLoc(W, src)
 		add_fingerprint(user)

@@ -12,7 +12,7 @@
 /datum/action/changeling/adrenaline/sting_action(mob/living/user)
 	..()
 	to_chat(user, "<span class='notice'>Energy rushes through us.</span>")
-	user.SetKnockdown(0)
+	user.SetKnockdown(ZERO)
 	user.set_resting(FALSE)
 	user.reagents.add_reagent(/datum/reagent/medicine/changelingadrenaline, 3) //15 seconds
 	user.reagents.add_reagent(/datum/reagent/medicine/changelinghaste, 3) //6 seconds, for a really quick burst of speed

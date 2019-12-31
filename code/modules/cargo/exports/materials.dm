@@ -10,12 +10,12 @@
 
 /datum/export/material/get_amount(obj/O)
 	if(!material_id)
-		return 0
+		return ZERO
 	if(!isitem(O))
-		return 0
+		return ZERO
 	var/obj/item/I = O
 	if(!(getmaterialref(material_id) in I.custom_materials))
-		return 0
+		return ZERO
 
 	var/amount = I.custom_materials[getmaterialref(material_id)]
 
@@ -38,7 +38,7 @@
 
 /datum/export/material/plasma
 	cost = 200
-	k_elasticity = 0
+	k_elasticity = ZERO
 	material_id = /datum/material/plasma
 	message = "cm3 of plasma"
 

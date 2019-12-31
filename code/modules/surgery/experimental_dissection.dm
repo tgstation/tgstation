@@ -38,7 +38,7 @@
 
 /datum/surgery_step/dissection/proc/check_value(mob/living/target, datum/surgery/advanced/experimental_dissection/ED)
 	var/cost = BASE_HUMAN_REWARD
-	var/multi_surgery_adjust = 0
+	var/multi_surgery_adjust = ZERO
 
 	//determine bonus applied
 	if(isalienroyal(target))

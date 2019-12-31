@@ -3,7 +3,7 @@
 	desc = ""
 	robust_searching = 1
 	stat_attack = UNCONSCIOUS
-	status_flags = 0
+	status_flags = ZERO
 	a_intent = INTENT_HARM
 	gender = NEUTER
 	var/list/boss_abilities = list() //list of /datum/action/boss
@@ -55,19 +55,19 @@
 	. = ..()
 	if(.)
 		if(!istype(boss, boss_type))
-			return 0
+			return ZERO
 		if(!boss.atb)
-			return 0
+			return ZERO
 		if(boss.atb.points < boss_cost)
-			return 0
+			return ZERO
 		if(!boss.client)
 			if(needs_target && !boss.target)
-				return 0
+				return ZERO
 		if(boss)
 			if(say_when_triggered)
 				boss.say(say_when_triggered, forced = "boss action")
 			if(!boss.atb.spend(boss_cost))
-				return 0
+				return ZERO
 
 //Example:
 /*
@@ -82,9 +82,9 @@
 	var/list/abilities //a list of /datum/action/boss owned by a boss mob
 	var/point_regen_delay = 5
 	var/points = 50 //1-100, start with 50 so we can use some abilities but not insta-buttfug somebody
-	var/next_point_time = 0
+	var/next_point_time = ZERO
 	var/chance_to_hold_onto_points = 50
-	var/highest_cost = 0
+	var/highest_cost = ZERO
 	var/mob/living/simple_animal/hostile/boss/boss
 
 
@@ -95,7 +95,7 @@
 
 /datum/boss_active_timed_battle/proc/assign_abilities(list/L)
 	if(!L)
-		return 0
+		return ZERO
 	abilities = L
 	for(var/ab in abilities)
 		var/datum/action/boss/AB = ab
@@ -105,9 +105,9 @@
 
 /datum/boss_active_timed_battle/proc/spend(cost)
 	if(cost <= points)
-		points = max(0,points-cost)
+		points = max(ZERO,points-cost)
 		return 1
-	return 0
+	return ZERO
 
 
 /datum/boss_active_timed_battle/proc/refund(cost)

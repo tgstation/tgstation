@@ -113,6 +113,6 @@
 			return  "It looks slightly damaged."
 		if(25 to 50)
 			return  "It appears heavily damaged."
-		if(0 to 25)
+		if(ZERO to 25)
 			if(!broken)
 				return  "<span class='warning'>It's falling apart!</span>"

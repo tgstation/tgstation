@@ -49,7 +49,7 @@ Difficulty: Medium
 	crusher_achievement_type = /datum/award/achievement/boss/blood_miner_crusher
 	score_achievement_type = /datum/award/score/blood_miner_score
 	var/obj/item/melee/transforming/cleaving_saw/miner/miner_saw
-	var/time_until_next_transform = 0
+	var/time_until_next_transform = ZERO
 	var/dashing = FALSE
 	var/dash_cooldown = 15
 	var/guidance = FALSE
@@ -196,12 +196,12 @@ Difficulty: Medium
 	if(world.time < dash_cooldown)
 		return
 	var/list/accessable_turfs = list()
-	var/self_dist_to_target = 0
+	var/self_dist_to_target = ZERO
 	var/turf/own_turf = get_turf(src)
 	if(!QDELETED(dash_target))
 		self_dist_to_target += get_dist(dash_target, own_turf)
 	for(var/turf/open/O in RANGE_TURFS(MINER_DASH_RANGE, own_turf))
-		var/turf_dist_to_target = 0
+		var/turf_dist_to_target = ZERO
 		if(!QDELETED(dash_target))
 			turf_dist_to_target += get_dist(dash_target, O)
 		if(get_dist(src, O) >= MINER_DASH_RANGE && turf_dist_to_target <= self_dist_to_target && !islava(O) && !ischasm(O))
@@ -233,7 +233,7 @@ Difficulty: Medium
 	forceMove(step_back_turf)
 	playsound(own_turf, 'sound/weapons/punchmiss.ogg', 40, TRUE, -1)
 	dashing = TRUE
-	alpha = 0
+	alpha = ZERO
 	animate(src, alpha = 255, time = 5)
 	SLEEP_CHECK_DEATH(2)
 	D.forceMove(step_forward_turf)
@@ -245,7 +245,7 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/transform_weapon()
 	if(time_until_next_transform <= world.time)
-		miner_saw.transform_cooldown = 0
+		miner_saw.transform_cooldown = ZERO
 		miner_saw.transform_weapon(src, TRUE)
 		if(!miner_saw.active)
 			rapid_melee = 5 // 4 deci cooldown before changes, npcpool subsystem wait is 20, 20/4 = 5
@@ -273,9 +273,9 @@ Difficulty: Medium
 
 	animate(src, transform = M, pixel_y = -6, dir = final_dir, time = 2, easing = EASE_IN|EASE_OUT)
 	sleep(5)
-	animate(src, color = list("#A7A19E", "#A7A19E", "#A7A19E", list(0, 0, 0)), time = 10, easing = EASE_IN, flags = ANIMATION_PARALLEL)
+	animate(src, color = list("#A7A19E", "#A7A19E", "#A7A19E", list(ZERO, ZERO, ZERO)), time = 10, easing = EASE_IN, flags = ANIMATION_PARALLEL)
 	sleep(4)
-	animate(src, alpha = 0, time = 6, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
+	animate(src, alpha = ZERO, time = 6, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance
 	guidance = TRUE

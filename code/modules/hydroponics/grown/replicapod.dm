@@ -22,7 +22,7 @@
 	var/list/features = null
 	var/factions = null
 	var/list/quirks = null
-	var/contains_sample = 0
+	var/contains_sample = ZERO
 
 /obj/item/seeds/replicapod/Initialize()
 	. = ..()
@@ -67,7 +67,7 @@
 
 /obj/item/seeds/replicapod/harvest(mob/user) //now that one is fun -- Urist
 	var/obj/machinery/hydroponics/parent = loc
-	var/make_podman = 0
+	var/make_podman = ZERO
 	var/ckey_holder = null
 	var/list/result = list()
 	if(CONFIG_GET(flag/revival_pod_plants))
@@ -125,7 +125,7 @@
 		if(prob(getYield() * 20))
 			seed_count++
 		var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
-		for(var/i=0,i<seed_count,i++)
+		for(var/i=ZERO,i<seed_count,i++)
 			var/obj/item/seeds/replicapod/harvestseeds = src.Copy()
 			result.Add(harvestseeds)
 			harvestseeds.forceMove(output_loc)

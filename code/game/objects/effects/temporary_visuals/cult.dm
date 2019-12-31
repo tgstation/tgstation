@@ -1,7 +1,7 @@
 //temporary visual effects(/obj/effect/temp_visual) used by cult stuff
 /obj/effect/temp_visual/cult
 	icon = 'icons/effects/cult_effects.dmi'
-	randomdir = 0
+	randomdir = ZERO
 	duration = 10
 
 /obj/effect/temp_visual/cult/sparks
@@ -57,7 +57,7 @@
 //visuals for runes being magically created
 /obj/effect/temp_visual/cult/rune_spawn
 	icon_state = "runeouter"
-	alpha = 0
+	alpha = ZERO
 	var/turnedness = 179 //179 turns counterclockwise, 181 turns clockwise
 
 /obj/effect/temp_visual/cult/rune_spawn/Initialize(mapload, set_duration, set_color)

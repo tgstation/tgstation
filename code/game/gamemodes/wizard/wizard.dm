@@ -17,7 +17,7 @@
 	announce_text = "There is a space wizard attacking the station!\n\
 	<span class='danger'>Wizard</span>: Accomplish your objectives and cause mayhem on the station.\n\
 	<span class='notice'>Crew</span>: Eliminate the wizard before they can succeed!"
-	var/finished = 0
+	var/finished = ZERO
 
 /datum/game_mode/wizard/pre_setup()
 	var/datum/mind/wizard = antag_pick(antag_candidates)
@@ -25,7 +25,7 @@
 	wizard.assigned_role = ROLE_WIZARD
 	wizard.special_role = ROLE_WIZARD
 	log_game("[key_name(wizard)] has been selected as a Wizard") //TODO: Move these to base antag datum
-	if(GLOB.wizardstart.len == 0)
+	if(GLOB.wizardstart.len == ZERO)
 		setup_error = "No wizard starting location found"
 		return FALSE
 	for(var/datum/mind/wiz in wizards)

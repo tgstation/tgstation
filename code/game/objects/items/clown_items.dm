@@ -20,7 +20,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	item_flags = NOBLUDGEON
-	throwforce = 0
+	throwforce = ZERO
 	throw_speed = 3
 	throw_range = 7
 	grind_results = list(/datum/reagent/lye = 10)
@@ -39,7 +39,7 @@
 	if(uses != max_uses)
 		var/percentage_left = uses / max_uses
 		switch(percentage_left)
-			if(0 to 0.15)
+			if(ZERO to 0.15)
 				msg = "There's just a tiny bit left of what it used to be, you're not sure it'll last much longer."
 			if(0.15 to 0.30)
 				msg = "It's dissolved quite a bit, but there's still some life to it."
@@ -81,7 +81,7 @@
 
 /obj/item/soap/proc/decreaseUses(mob/user)
 	uses--
-	if(uses <= 0)
+	if(uses <= ZERO)
 		to_chat(user, "<span class='warning'>[src] crumbles into tiny bits!</span>")
 		qdel(src)
 
@@ -138,7 +138,7 @@
 	item_state = "bike_horn"
 	lefthand_file = 'icons/mob/inhands/equipment/horns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/horns_righthand.dmi'
-	throwforce = 0
+	throwforce = ZERO
 	hitsound = null //To prevent tap.ogg playing, as the item lacks of force
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
@@ -178,7 +178,7 @@
 	desc = "Golden? Clearly, it's made with bananium! Honk!"
 	icon_state = "gold_horn"
 	item_state = "gold_horn"
-	var/flip_cooldown = 0
+	var/flip_cooldown = ZERO
 
 /obj/item/bikehorn/golden/attack()
 	if(flip_cooldown < world.time)

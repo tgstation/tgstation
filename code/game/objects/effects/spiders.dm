@@ -9,12 +9,12 @@
 
 
 
-/obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
 		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
 
 
-/obj/structure/spider/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/structure/spider/run_obj_armor(damage_amount, damage_type, damage_flag = ZERO, attack_dir)
 	if(damage_flag == "melee")
 		switch(damage_type)
 			if(BURN)
@@ -25,7 +25,7 @@
 
 /obj/structure/spider/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
-		take_damage(5, BURN, 0, 0)
+		take_damage(5, BURN, ZERO, ZERO)
 
 /obj/structure/spider/stickyweb
 	icon_state = "stickyweb1"
@@ -52,8 +52,8 @@
 	name = "egg cluster"
 	desc = "They seem to pulse slightly with an inner life."
 	icon_state = "eggs"
-	var/amount_grown = 0
-	var/player_spiders = 0
+	var/amount_grown = ZERO
+	var/player_spiders = ZERO
 	var/directive = "" //Message from the mother
 	var/poison_type = /datum/reagent/toxin
 	var/poison_per_bite = 5
@@ -66,10 +66,10 @@
 	. = ..()
 
 /obj/structure/spider/eggcluster/process()
-	amount_grown += rand(0,2)
+	amount_grown += rand(ZERO,2)
 	if(amount_grown >= 100)
 		var/num = rand(3,12)
-		for(var/i=0, i<num, i++)
+		for(var/i=ZERO, i<num, i++)
 			var/obj/structure/spider/spiderling/S = new /obj/structure/spider/spiderling(src.loc)
 			S.faction = faction.Copy()
 			S.directive = directive
@@ -84,11 +84,11 @@
 	anchored = FALSE
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	max_integrity = 3
-	var/amount_grown = 0
+	var/amount_grown = ZERO
 	var/grow_as = null
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
-	var/travelling_in_vent = 0
-	var/player_spiders = 0
+	var/travelling_in_vent = ZERO
+	var/player_spiders = ZERO
 	var/directive = "" //Message from the mother
 	var/list/faction = list("spiders")
 
@@ -127,7 +127,7 @@
 /obj/structure/spider/spiderling/process()
 	if(travelling_in_vent)
 		if(isturf(loc))
-			travelling_in_vent = 0
+			travelling_in_vent = ZERO
 			entry_vent = null
 	else if(entry_vent)
 		if(get_dist(src, entry_vent) <= 1)
@@ -188,7 +188,7 @@
 				walk_to(src, entry_vent, 1)
 				break
 	if(isturf(loc))
-		amount_grown += rand(0,2)
+		amount_grown += rand(ZERO,2)
 		if(amount_grown >= 100)
 			if(!grow_as)
 				if(prob(3))

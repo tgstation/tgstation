@@ -53,7 +53,7 @@
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return FALSE
 	. = list()
-	var/organ_spilled = 0
+	var/organ_spilled = ZERO
 	var/turf/T = get_turf(C)
 	C.add_splatter_floor(T)
 	playsound(get_turf(C), 'sound/misc/splort.ogg', 80, TRUE)
@@ -352,7 +352,7 @@
 
 //Regenerates all limbs. Returns amount of limbs regenerated
 /mob/living/proc/regenerate_limbs(noheal, excluded_limbs)
-	return 0
+	return ZERO
 
 /mob/living/carbon/regenerate_limbs(noheal, list/excluded_limbs)
 	var/list/limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
@@ -367,14 +367,14 @@
 /mob/living/carbon/regenerate_limb(limb_zone, noheal)
 	var/obj/item/bodypart/L
 	if(get_bodypart(limb_zone))
-		return 0
-	L = newBodyPart(limb_zone, 0, 0)
+		return ZERO
+	L = newBodyPart(limb_zone, ZERO, ZERO)
 	if(L)
 		if(!noheal)
-			L.brute_dam = 0
-			L.burn_dam = 0
-			L.brutestate = 0
-			L.burnstate = 0
+			L.brute_dam = ZERO
+			L.burn_dam = ZERO
+			L.brutestate = ZERO
+			L.burnstate = ZERO
 
 		L.attach_limb(src, 1)
 		return 1

@@ -26,7 +26,7 @@
 	filling_color = "#E9967A"
 	bitesize = 100
 	foodtype = VEGETABLES
-	juice_results = list(/datum/reagent/consumable/potato_juice = 0)
+	juice_results = list(/datum/reagent/consumable/potato_juice = ZERO)
 	distill_reagent = /datum/reagent/consumable/ethanol/vodka
 
 /obj/item/reagent_containers/food/snacks/grown/potato/wedges

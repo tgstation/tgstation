@@ -5,7 +5,7 @@
 	var/can_rule = FALSE
 
 /datum/nanite_program/sensor/register_extra_settings()
-	extra_settings[NES_SENT_CODE] = new /datum/nanite_extra_setting/number(0, 1, 9999)
+	extra_settings[NES_SENT_CODE] = new /datum/nanite_extra_setting/number(ZERO, 1, 9999)
 
 /datum/nanite_program/sensor/proc/check_event()
 	return FALSE
@@ -26,7 +26,7 @@
 	name = "Signal Repeater"
 	desc = "When triggered, sends another signal to the nanites, optionally with a delay."
 	can_trigger = TRUE
-	trigger_cost = 0
+	trigger_cost = ZERO
 	trigger_cooldown = 10
 	var/spent = FALSE
 
@@ -42,7 +42,7 @@
 	name = "Relay Signal Repeater"
 	desc = "When triggered, sends another signal to a relay channel, optionally with a delay."
 	can_trigger = TRUE
-	trigger_cost = 0
+	trigger_cost = ZERO
 	trigger_cooldown = 10
 	var/spent = FALSE
 
@@ -188,7 +188,7 @@
 /datum/nanite_program/sensor/damage/register_extra_settings()
 	. = ..()
 	extra_settings[NES_DAMAGE_TYPE] = new /datum/nanite_extra_setting/type(BRUTE, list(BRUTE, BURN, TOX, OXY, CLONE))
-	extra_settings[NES_DAMAGE] = new /datum/nanite_extra_setting/number(50, 0, 500)
+	extra_settings[NES_DAMAGE] = new /datum/nanite_extra_setting/number(50, ZERO, 500)
 	extra_settings[NES_DIRECTION] = new /datum/nanite_extra_setting/boolean(TRUE, "Above", "Below")
 
 /datum/nanite_program/sensor/damage/check_event()
@@ -197,7 +197,7 @@
 	var/datum/nanite_extra_setting/damage = extra_settings[NES_DAMAGE]
 	var/datum/nanite_extra_setting/direction = extra_settings[NES_DIRECTION]
 	var/check_above = (direction == "Above")
-	var/damage_amt = 0
+	var/damage_amt = ZERO
 	switch(type.get_value())
 		if(BRUTE)
 			damage_amt = host_mob.getBruteLoss()
@@ -266,7 +266,7 @@
 	name = "Species Sensor"
 	desc = "When triggered, the nanites scan the host to determine their species and output a signal depending on the conditions set in the settings."
 	can_trigger = TRUE
-	trigger_cost = 0
+	trigger_cost = ZERO
 	trigger_cooldown = 5
 
 	var/list/static/allowed_species = list(

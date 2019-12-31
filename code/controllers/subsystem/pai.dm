@@ -192,4 +192,4 @@ SUBSYSTEM_DEF(pai)
 	var/description
 	var/role
 	var/comments
-	var/ready = 0
+	var/ready = ZERO

@@ -4,12 +4,12 @@ SUBSYSTEM_DEF(dbcore)
 	wait = 1 MINUTES
 	init_order = INIT_ORDER_DBCORE
 	var/const/FAILED_DB_CONNECTION_CUTOFF = 5
-	var/failed_connection_timeout = 0
+	var/failed_connection_timeout = ZERO
 
-	var/schema_mismatch = 0
-	var/db_minor = 0
-	var/db_major = 0
-	var/failed_connections = 0
+	var/schema_mismatch = ZERO
+	var/db_minor = ZERO
+	var/db_major = ZERO
+	var/failed_connections = ZERO
 
 	var/last_error
 	var/list/active_queries = list()
@@ -66,7 +66,7 @@ SUBSYSTEM_DEF(dbcore)
 		return TRUE
 
 	if(failed_connection_timeout <= world.time) //it's been more than 5 seconds since we failed to connect, reset the counter
-		failed_connections = 0
+		failed_connections = ZERO
 
 	if(failed_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect for 5 seconds.
 		failed_connection_timeout = world.time + 50
@@ -150,7 +150,7 @@ SUBSYSTEM_DEF(dbcore)
 	qdel(query_round_end)
 
 /datum/controller/subsystem/dbcore/proc/Disconnect()
-	failed_connections = 0
+	failed_connections = ZERO
 	QDEL_NULL(connectOperation)
 	QDEL_NULL(connection)
 

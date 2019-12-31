@@ -10,10 +10,10 @@
 	pixel_y = -32
 	current_size = STAGE_TWO
 	move_self = 1
-	grav_pull = 0
-	contained = 0
+	grav_pull = ZERO
+	contained = ZERO
 	density = TRUE
-	energy = 0
+	energy = ZERO
 	dissipate = 1
 	dissipate_delay = 5
 	dissipate_strength = 1
@@ -57,8 +57,8 @@
 
 		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, TRUE, extrarange = 30)
 
-		pixel_x = 0
-		pixel_y = 0
+		pixel_x = ZERO
+		pixel_y = ZERO
 
 		tesla_zap(src, 7, TESLA_DEFAULT_POWER, TRUE)
 
@@ -68,7 +68,7 @@
 			var/range = rand(1, CLAMP(orbiting_balls.len, 3, 7))
 			tesla_zap(ball, range, TESLA_MINI_POWER/7*range)
 	else
-		energy = 0 // ensure we dont have miniballs of miniballs
+		energy = ZERO // ensure we dont have miniballs of miniballs
 
 /obj/singularity/energy_ball/examine(mob/user)
 	. = ..()
@@ -79,7 +79,7 @@
 /obj/singularity/energy_ball/proc/move_the_basket_ball(var/move_amount)
 	//we face the last thing we zapped, so this lets us favor that direction a bit
 	var/move_bias = pick(GLOB.alldirs)
-	for(var/i in 0 to move_amount)
+	for(var/i in ZERO to move_amount)
 		var/move_dir = pick(GLOB.alldirs + move_bias) //ensures large-ball teslas don't just sit around
 		if(target && prob(10))
 			move_dir = get_dir(src,target)
@@ -112,7 +112,7 @@
 /obj/singularity/energy_ball/proc/new_mini_ball()
 	if(!loc)
 		return
-	var/obj/singularity/energy_ball/EB = new(loc, 0, TRUE)
+	var/obj/singularity/energy_ball/EB = new(loc, ZERO, TRUE)
 
 	EB.transform *= pick(0.3, 0.4, 0.5, 0.6, 0.7)
 	var/icon/I = icon(icon,icon_state,dir)
@@ -134,7 +134,7 @@
 		var/mob/living/carbon/C = user
 		to_chat(C, "<span class='userdanger'>That was a shockingly dumb idea.</span>")
 		var/obj/item/organ/brain/rip_u = locate(/obj/item/organ/brain) in C.internal_organs
-		C.ghostize(0)
+		C.ghostize(ZERO)
 		qdel(rip_u)
 		C.death()
 
@@ -173,7 +173,7 @@
 	if(power < 1000)
 		return
 
-	var/closest_dist = 0
+	var/closest_dist = ZERO
 	var/closest_atom
 	var/obj/machinery/power/tesla_coil/closest_tesla_coil
 	var/obj/machinery/power/grounding_rod/closest_grounding_rod
@@ -296,7 +296,7 @@
 		closest_grounding_rod.tesla_act(power, tesla_flags, shocked_targets)
 
 	else if(!QDELETED(closest_mob))
-		var/shock_damage = (tesla_flags & TESLA_MOB_DAMAGE)? (min(round(power/600), 90) + rand(-5, 5)) : 0
+		var/shock_damage = (tesla_flags & TESLA_MOB_DAMAGE)? (min(round(power/600), 90) + rand(-5, 5)) : ZERO
 		closest_mob.electrocute_act(shock_damage, source, 1, SHOCK_TESLA | ((tesla_flags & TESLA_MOB_STUN) ? NONE : SHOCK_NOSTUN))
 		if(issilicon(closest_mob))
 			var/mob/living/silicon/S = closest_mob

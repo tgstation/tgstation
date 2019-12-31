@@ -2,7 +2,7 @@
 	name = "Curse of Madness"
 	weight = 1
 	typepath = /datum/round_event/wizard/madness
-	earliest_start = 0 MINUTES
+	earliest_start = ZERO MINUTES
 
 	var/forced_secret
 

@@ -1,5 +1,5 @@
 /proc/seedify(obj/item/O, t_max, obj/machinery/seed_extractor/extractor, mob/living/user)
-	var/t_amount = 0
+	var/t_amount = ZERO
 	var/list/seeds = list()
 	if(t_max == -1)
 		if(extractor)
@@ -36,7 +36,7 @@
 			qdel(O)
 		return 1
 
-	return 0
+	return ZERO
 
 
 /obj/machinery/seed_extractor
@@ -77,7 +77,7 @@
 
 	if(istype(O, /obj/item/storage/bag/plants))
 		var/obj/item/storage/P = O
-		var/loaded = 0
+		var/loaded = ZERO
 		for(var/obj/item/seeds/G in P.contents)
 			if(contents.len >= max_seeds)
 				break
@@ -104,13 +104,13 @@
 
 /datum/seed_pile
 	var/name = ""
-	var/lifespan = 0	//Saved stats
-	var/endurance = 0
-	var/maturation = 0
-	var/production = 0
-	var/yield = 0
-	var/potency = 0
-	var/amount = 0
+	var/lifespan = ZERO	//Saved stats
+	var/endurance = ZERO
+	var/maturation = ZERO
+	var/production = ZERO
+	var/yield = ZERO
+	var/potency = ZERO
+	var/amount = ZERO
 
 /datum/seed_pile/New(name, life, endur, matur, prod, yie, poten, am = 1)
 	src.name = name
@@ -129,7 +129,7 @@
 
 	var/dat = "<b>Stored seeds:</b><br>"
 
-	if (contents.len == 0)
+	if (contents.len == ZERO)
 		dat += "<font color='red'>No seeds</font>"
 	else
 		dat += "<table cellpadding='3' style='text-align:center;'><tr><td>Name</td><td>Lifespan</td><td>Endurance</td><td>Maturation</td><td>Production</td><td>Yield</td><td>Potency</td><td>Stock</td></tr>"
@@ -157,10 +157,10 @@
 
 	for (var/datum/seed_pile/N in piles)//Find the pile we need to reduce...
 		if (href_list["name"] == N.name && href_list["li"] == N.lifespan && href_list["en"] == N.endurance && href_list["ma"] == N.maturation && href_list["pr"] == N.production && href_list["yi"] == N.yield && href_list["pot"] == N.potency)
-			if(N.amount <= 0)
+			if(N.amount <= ZERO)
 				return
-			N.amount = max(N.amount - 1, 0)
-			if (N.amount <= 0)
+			N.amount = max(N.amount - 1, ZERO)
+			if (N.amount <= ZERO)
 				piles -= N
 				qdel(N)
 			break

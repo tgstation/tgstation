@@ -34,7 +34,7 @@
 	var/name				//replaces mob/var/original_name
 	var/ghostname			//replaces name for observers name if set
 	var/mob/living/current
-	var/active = 0
+	var/active = ZERO
 
 	var/memory
 
@@ -51,7 +51,7 @@
 	var/list/antag_datums
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
-	var/damnation_type = 0
+	var/damnation_type = ZERO
 	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
 	var/hasSoul = TRUE // If false, renders the character unable to sell their soul.
 	var/isholy = FALSE //is this person a chaplain or admin role allowed to use bibles
@@ -61,7 +61,7 @@
 	var/unconvertable = FALSE
 	var/late_joiner = FALSE
 
-	var/last_death = 0
+	var/last_death = ZERO
 
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
 
@@ -88,7 +88,7 @@
 		language_holder = new (src)
 	return language_holder
 
-/datum/mind/proc/transfer_to(mob/new_character, force_key_move = 0)
+/datum/mind/proc/transfer_to(mob/new_character, force_key_move = ZERO)
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
 		UnregisterSignal(current, COMSIG_MOB_DEATH)
@@ -127,7 +127,7 @@
 ///Adjust experience of a specific skill
 /datum/mind/proc/adjust_experience(skill, amt, silent = FALSE)
 	var/datum/skill/S = GetSkillRef(skill)
-	skill_experience[S] = max(0, skill_experience[S] + amt) //Prevent going below 0
+	skill_experience[S] = max(0, skill_experience[S] + amt) //Prevent going below ZERO
 	var/old_level = known_skills[S]
 	switch(skill_experience[S])
 		if(SKILL_EXP_LEGENDARY to INFINITY)
@@ -142,7 +142,7 @@
 			known_skills[S] = SKILL_LEVEL_APPRENTICE
 		if(SKILL_EXP_NOVICE to SKILL_EXP_APPRENTICE)
 			known_skills[S] = SKILL_LEVEL_NOVICE
-		if(0 to SKILL_EXP_NOVICE)
+		if(ZERO to SKILL_EXP_NOVICE)
 			known_skills[S] = SKILL_LEVEL_NONE
 	if(isnull(old_level) || known_skills[S] == old_level)
 		return //same level or we just started earning xp towards the first level.
@@ -275,7 +275,7 @@
 
 /datum/mind/proc/remove_cultist()
 	if(src in SSticker.mode.cult)
-		SSticker.mode.remove_cultist(src, 0, 0)
+		SSticker.mode.remove_cultist(src, ZERO, ZERO)
 	special_role = null
 	remove_antag_equip()
 
@@ -348,7 +348,7 @@
 	if (!uplink_loc)
 		if(!silent)
 			to_chat(traitor_mob, "<span class='boldwarning'>Unfortunately, [employer] wasn't able to get you an Uplink.</span>")
-		. = 0
+		. = ZERO
 	else
 		. = uplink_loc
 		var/datum/component/uplink/U = uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
@@ -476,7 +476,7 @@
 					target_antag = X
 			if(!target_antag)
 				switch(antag_datums.len)
-					if(0)
+					if(ZERO)
 						target_antag = add_antag_datum(/datum/antagonist/custom)
 					if(1)
 						target_antag = antag_datums[1]
@@ -556,7 +556,7 @@
 			if("unemag")
 				var/mob/living/silicon/robot/R = current
 				if (istype(R))
-					R.SetEmagged(0)
+					R.SetEmagged(ZERO)
 					message_admins("[key_name_admin(usr)] has unemag'ed [R].")
 					log_admin("[key_name(usr)] has unemag'ed [R].")
 
@@ -564,7 +564,7 @@
 				if(isAI(current))
 					var/mob/living/silicon/ai/ai = current
 					for (var/mob/living/silicon/robot/R in ai.connected_robots)
-						R.SetEmagged(0)
+						R.SetEmagged(ZERO)
 					message_admins("[key_name_admin(usr)] has unemag'ed [ai]'s Cyborgs.")
 					log_admin("[key_name(usr)] has unemag'ed [ai]'s Cyborgs.")
 
@@ -578,7 +578,7 @@
 				memory = null//Remove any memory they may have had.
 				log_admin("[key_name(usr)] removed [current]'s uplink.")
 			if("crystals")
-				if(check_rights(R_FUN, 0))
+				if(check_rights(R_FUN, ZERO))
 					var/datum/component/uplink/U = find_syndicate_uplink()
 					if(U)
 						var/crystals = input("Amount of telecrystals for [key]","Syndicate uplink", U.telecrystals) as null | num

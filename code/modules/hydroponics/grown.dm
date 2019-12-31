@@ -8,7 +8,7 @@
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 	var/plantname = ""
-	var/bitesize_mod = 0
+	var/bitesize_mod = ZERO
 	var/splat_type = /obj/effect/decal/cleanable/food/plant_smudge
 	// If set, bitesize = 1 + round(reagents.total_volume / bitesize_mod)
 	dried_type = -1
@@ -53,7 +53,7 @@
 		if(bitesize_mod)
 			bitesize = 1 + round(reagents.total_volume / bitesize_mod)
 		return 1
-	return 0
+	return ZERO
 
 /obj/item/reagent_containers/food/snacks/grown/examine(user)
 	. = ..()

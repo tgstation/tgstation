@@ -10,7 +10,7 @@
 	health_req = 25
 	instability = 40
 	var/scream_delay = 50
-	var/last_scream = 0
+	var/last_scream = ZERO
 	
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
@@ -40,7 +40,7 @@
 		return COMPONENT_NO_ATTACK_HAND
 
 /datum/mutation/human/hulk/on_life()
-	if(owner.health < 0)
+	if(owner.health < ZERO)
 		on_losing(owner)
 		to_chat(owner, "<span class='danger'>You suddenly feel very weak.</span>")
 

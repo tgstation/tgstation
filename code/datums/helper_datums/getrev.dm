@@ -90,7 +90,7 @@
 	if(CONFIG_GET(flag/show_game_type_odds))
 		var/list/probabilities = CONFIG_GET(keyed_list/probability)
 		if(SSticker.IsRoundInProgress())
-			var/prob_sum = 0
+			var/prob_sum = ZERO
 			var/current_odds_differ = FALSE
 			var/list/probs = list()
 			var/list/modes = config.gamemode_cache
@@ -109,16 +109,16 @@
 			if(current_odds_differ)
 				msg += "<b>Game Mode Odds for current round:</b>"
 				for(var/ctag in probs)
-					if(probabilities[ctag] > 0)
+					if(probabilities[ctag] > ZERO)
 						var/percentage = round(probabilities[ctag] / prob_sum * 100, 0.1)
 						msg += "[ctag] [percentage]%"
 
 		msg += "<b>All Game Mode Odds:</b>"
-		var/sum = 0
+		var/sum = ZERO
 		for(var/ctag in probabilities)
 			sum += probabilities[ctag]
 		for(var/ctag in probabilities)
-			if(probabilities[ctag] > 0)
+			if(probabilities[ctag] > ZERO)
 				var/percentage = round(probabilities[ctag] / sum * 100, 0.1)
 				msg += "[ctag] [percentage]%"
 	to_chat(src, msg.Join("<br>"))

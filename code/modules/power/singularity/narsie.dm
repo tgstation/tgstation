@@ -6,14 +6,14 @@
 	pixel_y = -85
 	density = FALSE
 	current_size = 9 //It moves/eats like a max-size singulo, aside from range. --NEO
-	contained = 0 //Are we going to move around?
-	dissipate = 0 //Do we lose energy over time?
+	contained = ZERO //Are we going to move around?
+	dissipate = ZERO //Do we lose energy over time?
 	move_self = 1 //Do we move on our own?
 	grav_pull = 5 //How many tiles out do we pull?
 	consume_range = 6 //How many tiles out do we eat
 	light_power = 0.7
 	light_range = 15
-	light_color = rgb(255, 0, 0)
+	light_color = rgb(255, ZERO, ZERO)
 	gender = FEMALE
 
 /obj/singularity/narsie/large
@@ -40,8 +40,8 @@
 
 /obj/singularity/narsie/large/cult  // For the new cult ending, guaranteed to end the round within 3 minutes
 	var/list/souls_needed = list()
-	var/soul_goal = 0
-	var/souls = 0
+	var/soul_goal = ZERO
+	var/souls = ZERO
 	var/resolved = FALSE
 
 /obj/singularity/narsie/large/cult/Initialize()
@@ -90,7 +90,7 @@
 /proc/ending_helper()
 	SSticker.force_ending = 1
 
-/proc/cult_ending_helper(var/no_explosion = 0)
+/proc/cult_ending_helper(var/no_explosion = ZERO)
 	if(no_explosion)
 		Cinematic(CINEMATIC_CULT,world,CALLBACK(GLOBAL_PROC,/proc/ending_helper))
 	else
@@ -178,7 +178,7 @@
 
 //Wizard narsie
 /obj/singularity/narsie/wizard
-	grav_pull = 0
+	grav_pull = ZERO
 
 /obj/singularity/narsie/wizard/eat()
 //	if(defer_powernet_rebuild != 2)
@@ -187,14 +187,14 @@
 		if(isturf(X) || ismovableatom(X))
 			consume(X)
 //	if(defer_powernet_rebuild != 2)
-//		defer_powernet_rebuild = 0
+//		defer_powernet_rebuild = ZERO
 	return
 
 
 /obj/singularity/narsie/proc/narsie_spawn_animation()
 	icon = 'icons/obj/narsie_spawn_anim.dmi'
 	setDir(SOUTH)
-	move_self = 0
+	move_self = ZERO
 	flick("narsie_spawn_anim",src)
 	sleep(11)
 	move_self = 1

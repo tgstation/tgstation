@@ -19,9 +19,9 @@
 	/// The window_id for browse() and onclose().
 	var/window_id
 	/// The window width.
-	var/width = 0
+	var/width = ZERO
 	/// The window height
-	var/height = 0
+	var/height = ZERO
 	/// The style to be used for this UI.
 	var/style = "nanotrasen"
 	/// The interface (template) to be used for this UI.
@@ -62,7 +62,7 @@
   *
   * return datum/tgui The requested UI.
  **/
-/datum/tgui/New(mob/user, datum/src_object, ui_key, interface, title, width = 0, height = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state, browser_id = null)
+/datum/tgui/New(mob/user, datum/src_object, ui_key, interface, title, width = ZERO, height = ZERO, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state, browser_id = null)
 	src.user = user
 	src.src_object = src_object
 	src.ui_key = ui_key

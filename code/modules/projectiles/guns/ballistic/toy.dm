@@ -5,11 +5,11 @@
 	item_state = "gun"
 	mag_type = /obj/item/ammo_box/magazine/toy/smg
 	fire_sound = 'sound/items/syringeproj.ogg'
-	force = 0
-	throwforce = 0
+	force = ZERO
+	throwforce = ZERO
 	burst_size = 3
 	can_suppress = TRUE
-	clumsy_check = 0
+	clumsy_check = ZERO
 	item_flags = NONE
 	casing_ejector = FALSE
 
@@ -29,7 +29,7 @@
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol
 	fire_sound = 'sound/items/syringeproj.ogg'
 	burst_size = 1
-	fire_delay = 0
+	fire_delay = ZERO
 	actions_types = list()
 
 /obj/item/gun/ballistic/automatic/toy/pistol/riot
@@ -48,21 +48,21 @@
 /obj/item/gun/ballistic/shotgun/toy
 	name = "foam force shotgun"
 	desc = "A toy shotgun with wood furniture and a four-shell capacity underneath. Ages 8 and up."
-	force = 0
-	throwforce = 0
+	force = ZERO
+	throwforce = ZERO
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/toy
 	fire_sound = 'sound/items/syringeproj.ogg'
 	clumsy_check = FALSE
 	item_flags = NONE
 	casing_ejector = FALSE
 	can_suppress = FALSE
-	pb_knockback = 0
+	pb_knockback = ZERO
 
 /obj/item/gun/ballistic/shotgun/toy/update_icon()
 	. = ..()
 	add_overlay("[icon_state]_toy")
 
-/obj/item/gun/ballistic/shotgun/toy/process_chamber(empty_chamber = 0)
+/obj/item/gun/ballistic/shotgun/toy/process_chamber(empty_chamber = ZERO)
 	..()
 	if(chambered && !chambered.BB)
 		qdel(chambered)

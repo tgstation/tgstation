@@ -66,7 +66,7 @@ GLOBAL_PROTECT(admin_verbs_debug_mapping)
 	icon_state = "yellow"
 
 /obj/effect/debugging/marker/Move()
-	return 0
+	return ZERO
 
 /client/proc/camera_view()
 	set category = "Mapping"
@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 
 	if(!Master)
 		alert(usr,"Master_controller not found.","Sec Camera Report")
-		return 0
+		return ZERO
 
 	var/list/obj/machinery/camera/CL = list()
 
@@ -133,7 +133,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 		var/turf/T = get_step(C1,turn(C1.dir,180))
 		if(!T || !isturf(T) || !T.density )
 			if(!(locate(/obj/structure/grille) in T))
-				var/window_check = 0
+				var/window_check = ZERO
 				for(var/obj/structure/window/W in T)
 					if (W.dir == turn(C1.dir,180) || W.dir in list(5,6,9,10) )
 						window_check = 1
@@ -185,7 +185,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 	set name = "Show roundstart AT markers"
 	set desc = "Places a marker on all active-at-roundstart turfs"
 
-	var/count = 0
+	var/count = ZERO
 	for(var/obj/effect/abstract/marker/at/AT in GLOB.all_abstract_markers)
 		qdel(AT)
 		count++
@@ -235,7 +235,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 	if(!type_path)
 		return
 
-	var/count = 0
+	var/count = ZERO
 
 	var/list/atom/atom_list = list()
 
@@ -266,7 +266,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 	if(!type_path)
 		return
 
-	var/count = 0
+	var/count = ZERO
 
 	for(var/atom/A in world)
 		if(istype(A,type_path))

@@ -49,8 +49,8 @@
 		owner = M
 
 		//button id generation
-		var/counter = 0
-		var/bitfield = 0
+		var/counter = ZERO
+		var/bitfield = ZERO
 		for(var/datum/action/A in M.actions)
 			if(A.name == name && A.button.id)
 				counter += 1
@@ -131,7 +131,7 @@
 			ApplyIcon(button, force)
 
 		if(!IsAvailable())
-			button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
+			button.color = transparent_when_unavailable ? rgb(128,ZERO,ZERO,128) : rgb(128,ZERO,ZERO)
 		else
 			button.color = rgb(255,255,255,255)
 			return 1
@@ -164,7 +164,7 @@
 
 /datum/action/item_action/Trigger()
 	if(!..())
-		return 0
+		return ZERO
 	if(target)
 		var/obj/item/I = target
 		I.ui_action_click(owner, src)
@@ -319,7 +319,7 @@
 	if(istype(target, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = target
 		if(H.teleporting)
-			return 0
+			return ZERO
 	return ..()
 
 /datum/action/item_action/toggle_helmet_flashlight
@@ -388,7 +388,7 @@
 /datum/action/item_action/jetpack_stabilization/IsAvailable()
 	var/obj/item/tank/jetpack/J = target
 	if(!istype(J) || !J.on)
-		return 0
+		return ZERO
 	return ..()
 
 /datum/action/item_action/hands_free
@@ -443,7 +443,7 @@
 /datum/action/item_action/organ_action/IsAvailable()
 	var/obj/item/organ/I = target
 	if(!I.owner)
-		return 0
+		return ZERO
 	return ..()
 
 /datum/action/item_action/organ_action/toggle/New(Target)
@@ -483,7 +483,7 @@
 		owner.put_in_hands(I)
 		I.attack_self(owner)
 	else
-		if (owner.get_num_arms() <= 0)
+		if (owner.get_num_arms() <= ZERO)
 			to_chat(owner, "<span class='warning'>You dont have any usable hands!</span>")
 		else
 			to_chat(owner, "<span class='warning'>Your hands are full!</span>")
@@ -497,7 +497,7 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "deploy_box"
 	///Cooldown between deploys. Uses world.time
-	var/cooldown = 0
+	var/cooldown = ZERO
 	///The type of closet this action spawns.
 	var/boxtype = /obj/structure/closet/cardboard/agent
 
@@ -580,11 +580,11 @@
 //Preset for general and toggled actions
 /datum/action/innate
 	check_flags = NONE
-	var/active = 0
+	var/active = ZERO
 
 /datum/action/innate/Trigger()
 	if(!..())
-		return 0
+		return ZERO
 	if(!active)
 		Activate()
 	else
@@ -602,14 +602,14 @@
 /datum/action/cooldown
 	check_flags = NONE
 	transparent_when_unavailable = FALSE
-	var/cooldown_time = 0
-	var/next_use_time = 0
+	var/cooldown_time = ZERO
+	var/next_use_time = ZERO
 
 /datum/action/cooldown/New()
 	..()
 	button.maptext = ""
 	button.maptext_x = 8
-	button.maptext_y = 0
+	button.maptext_y = ZERO
 	button.maptext_width = 24
 	button.maptext_height = 12
 
@@ -626,8 +626,8 @@
 	if(!owner)
 		button.maptext = ""
 		STOP_PROCESSING(SSfastprocess, src)
-	var/timeleft = max(next_use_time - world.time, 0)
-	if(timeleft == 0)
+	var/timeleft = max(next_use_time - world.time, ZERO)
+	if(timeleft == ZERO)
 		button.maptext = ""
 		UpdateButtonIcon()
 		STOP_PROCESSING(SSfastprocess, src)

@@ -15,7 +15,7 @@
 /obj/structure/statue/Initialize()
 	. = ..()
 	AddComponent(art_type, impressiveness)
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, impressiveness *  75), 0)
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, impressiveness *  75), ZERO)
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
@@ -23,7 +23,7 @@
 		if(default_unfasten_wrench(user, W))
 			return
 		if(W.tool_behaviour == TOOL_WELDER)
-			if(!W.tool_start_check(user, amount=0))
+			if(!W.tool_start_check(user, amount=ZERO))
 				return FALSE
 
 			user.visible_message("<span class='notice'>[user] is slicing apart the [name].</span>", \
@@ -41,7 +41,7 @@
 			var/drop_amt = oreAmount
 			if(!disassembled)
 				drop_amt -= 2
-			if(drop_amt > 0)
+			if(drop_amt > ZERO)
 				new material_drop_type(get_turf(src), drop_amt)
 	qdel(src)
 
@@ -52,7 +52,7 @@
 	max_integrity = 300
 	light_range = 2
 	material_drop_type = /obj/item/stack/sheet/mineral/uranium
-	var/last_event = 0
+	var/last_event = ZERO
 	var/active = null
 	impressiveness = 25 // radiation makes an impression
 
@@ -227,7 +227,7 @@
 	material_drop_type = /obj/item/stack/sheet/mineral/bananium
 	impressiveness = 50
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
-	var/spam_flag = 0
+	var/spam_flag = ZERO
 
 /obj/structure/statue/bananium/clown
 	name = "statue of a clown"

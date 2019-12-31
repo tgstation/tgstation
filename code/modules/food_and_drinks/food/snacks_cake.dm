@@ -12,7 +12,7 @@
 	icon = 'icons/obj/food/piecake.dmi'
 	trash = /obj/item/trash/plate
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
-	customfoodfilling = 0 //to avoid infinite cake-ception
+	customfoodfilling = ZERO //to avoid infinite cake-ception
 	tastes = list("cake" = 1)
 	foodtype = GRAIN | DAIRY
 

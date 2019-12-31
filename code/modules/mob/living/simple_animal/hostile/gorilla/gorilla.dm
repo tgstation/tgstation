@@ -23,7 +23,7 @@
 	speed = 1
 	melee_damage_lower = 15
 	melee_damage_upper = 18
-	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 1.5, CLONE = 0, STAMINA = 0, OXY = 1.5)
+	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 1.5, CLONE = ZERO, STAMINA = ZERO, OXY = 1.5)
 	obj_damage = 20
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attack_verb_continuous = "pummels"
@@ -39,7 +39,7 @@
 	maxbodytemp = 350
 	unique_name = TRUE
 	var/list/gorilla_overlays[GORILLA_TOTAL_LAYERS]
-	var/oogas = 0
+	var/oogas = ZERO
 
 	footstep_type = FOOTSTEP_MOB_BAREFOOT
 
@@ -109,4 +109,4 @@
 	oogas++
 	if(oogas >= rand(2,6))
 		playsound(src, 'sound/creatures/gorilla.ogg', 50)
-		oogas = 0
+		oogas = ZERO

@@ -110,7 +110,7 @@
 	if((num < 0.005 || air_contents.total_moles() < num))
 		turn_off(user)
 		return
-	if(rand(0,250) == 0)
+	if(rand(ZERO,250) == ZERO)
 		to_chat(user, "<span class='notice'>You feel your jetpack's engines cut out.</span>")
 		turn_off(user)
 		return
@@ -168,7 +168,7 @@
 	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals."
 	icon_state = "jetpack-black"
 	item_state =  "jetpack-black"
-	distribute_pressure = 0
+	distribute_pressure = ZERO
 	gas_type = /datum/gas/carbon_dioxide
 
 

@@ -1,7 +1,7 @@
 /datum/proximity_monitor/advanced/gravity
 	name = "modified gravity zone"
 	setup_field_turfs = TRUE
-	var/gravity_value = 0
+	var/gravity_value = ZERO
 	var/list/grav_components = list()
 	field_shape = FIELD_SHAPE_RADIUS_SQUARE
 

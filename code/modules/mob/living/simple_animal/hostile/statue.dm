@@ -19,7 +19,7 @@
 	speed = -1
 	maxHealth = 50000
 	health = 50000
-	healable = 0
+	healable = ZERO
 
 	harm_intent_damage = 10
 	obj_damage = 100
@@ -29,11 +29,11 @@
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
+	minbodytemp = ZERO
 
 	faction = list("statue")
-	move_to_delay = 0 // Very fast
+	move_to_delay = ZERO // Very fast
 
 	animate_movement = NO_STEPS // Do not animate movement, you jump around as you're a scary statue.
 	hud_possible = list(ANTAG_HUD)
@@ -79,7 +79,7 @@
 	if(can_be_seen(NewLoc))
 		if(client)
 			to_chat(src, "<span class='warning'>You cannot move, there are eyes on you!</span>")
-		return 0
+		return ZERO
 	return ..()
 
 /mob/living/simple_animal/hostile/statue/Life()
@@ -140,7 +140,7 @@
 // Cannot talk
 
 /mob/living/simple_animal/hostile/statue/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	return 0
+	return ZERO
 
 // Turn to dust when gibbed
 
@@ -154,7 +154,7 @@
 	if(isliving(the_target))
 		var/mob/living/L = the_target
 		if(!L.client && !L.ckey)
-			return 0
+			return ZERO
 	return ..()
 
 // Don't attack your creator if there is one
@@ -171,7 +171,7 @@
 	desc = "You will trigger a large amount of lights around you to flicker."
 
 	charge_max = 300
-	clothes_req = 0
+	clothes_req = ZERO
 	range = 14
 
 /obj/effect/proc_holder/spell/aoe_turf/flicker_lights/cast(list/targets,mob/user = usr)
@@ -187,7 +187,7 @@
 
 	message = "<span class='notice'>You glare your eyes.</span>"
 	charge_max = 600
-	clothes_req = 0
+	clothes_req = ZERO
 	range = 10
 
 /obj/effect/proc_holder/spell/aoe_turf/blindness/cast(list/targets,mob/user = usr)
@@ -203,7 +203,7 @@
 	desc = "Toggle your nightvision mode."
 
 	charge_max = 10
-	clothes_req = 0
+	clothes_req = ZERO
 
 	message = "<span class='notice'>You toggle your night vision!</span>"
 	range = -1

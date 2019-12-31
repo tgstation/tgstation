@@ -1,6 +1,6 @@
 /mob/living/carbon/human/getarmor(def_zone, type)
-	var/armorval = 0
-	var/organnum = 0
+	var/armorval = ZERO
+	var/organnum = ZERO
 
 	if(def_zone)
 		if(isbodypart(def_zone))
@@ -22,8 +22,8 @@
 
 /mob/living/carbon/human/proc/checkarmor(obj/item/bodypart/def_zone, d_type)
 	if(!d_type)
-		return 0
-	var/protection = 0
+		return ZERO
+	var/protection = ZERO
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
 	for(var/bp in body_parts)
 		if(!bp)
@@ -64,8 +64,8 @@
 					loc.bullet_act(P)
 					return BULLET_ACT_HIT
 				if(P.starting)
-					var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-					var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+					var/new_x = P.starting.x + pick(ZERO, ZERO, ZERO, ZERO, ZERO, -1, 1, -2, 2)
+					var/new_y = P.starting.y + pick(ZERO, ZERO, ZERO, ZERO, ZERO, -1, 1, -2, 2)
 					var/turf/curloc = get_turf(src)
 
 					// redirect the projectile
@@ -94,26 +94,26 @@
 	for(var/obj/item/I in held_items)
 		if(I.IsReflect(def_zone) == 1)
 			return 1
-	return 0
+	return ZERO
 
-/mob/living/carbon/human/proc/check_shields(atom/AM, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
+/mob/living/carbon/human/proc/check_shields(atom/AM, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = ZERO)
 	var/block_chance_modifier = round(damage / -3)
 
 	for(var/obj/item/I in held_items)
 		if(!istype(I, /obj/item/clothing))
-			var/final_block_chance = I.block_chance - (CLAMP((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
+			var/final_block_chance = I.block_chance - (CLAMP((armour_penetration-I.armour_penetration)/2,ZERO,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
 			if(I.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 				return TRUE
 	if(wear_suit)
-		var/final_block_chance = wear_suit.block_chance - (CLAMP((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
+		var/final_block_chance = wear_suit.block_chance - (CLAMP((armour_penetration-wear_suit.armour_penetration)/2,ZERO,100)) + block_chance_modifier
 		if(wear_suit.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return TRUE
 	if(w_uniform)
-		var/final_block_chance = w_uniform.block_chance - (CLAMP((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
+		var/final_block_chance = w_uniform.block_chance - (CLAMP((armour_penetration-w_uniform.armour_penetration)/2,ZERO,100)) + block_chance_modifier
 		if(w_uniform.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return TRUE
 	if(wear_neck)
-		var/final_block_chance = wear_neck.block_chance - (CLAMP((armour_penetration-wear_neck.armour_penetration)/2,0,100)) + block_chance_modifier
+		var/final_block_chance = wear_neck.block_chance - (CLAMP((armour_penetration-wear_neck.armour_penetration)/2,ZERO,100)) + block_chance_modifier
 		if(wear_neck.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return TRUE
   return FALSE
@@ -165,7 +165,7 @@
 
 /mob/living/carbon/human/attacked_by(obj/item/I, mob/living/user)
 	if(!I || !user)
-		return 0
+		return ZERO
 
 	var/obj/item/bodypart/affecting
 	if(user == src)
@@ -211,7 +211,7 @@
 		affecting = get_bodypart(BODY_ZONE_CHEST)
 	if(M.a_intent == INTENT_HELP)
 		..() //shaking
-		return 0
+		return ZERO
 
 	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
 		var/obj/item/I = get_active_held_item()
@@ -242,7 +242,7 @@
 		if(..()) //successful monkey bite, this handles disease contraction.
 			var/damage = rand(1, 3)
 			if(check_shields(M, damage, "the [M.name]"))
-				return 0
+				return ZERO
 			if(stat != DEAD)
 				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, "melee"))
 		return 1
@@ -252,19 +252,19 @@
 		visible_message("<span class='danger'>[M] attempts to touch [src]!</span>", \
 						"<span class='danger'>[M] attempts to touch you!</span>", "<span class='hear'>You hear a swoosh!</span>", null, M)
 		to_chat(M, "<span class='warning'>You attempt to touch [src]!</span>")
-		return 0
+		return ZERO
 
 	if(..())
 		if(M.a_intent == INTENT_HARM)
 			if (w_uniform)
 				w_uniform.add_fingerprint(M)
-			var/damage = prob(90) ? 20 : 0
+			var/damage = prob(90) ? 20 : ZERO
 			if(!damage)
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, TRUE, -1)
 				visible_message("<span class='danger'>[M] lunges at [src]!</span>", \
 								"<span class='userdanger'>[M] lunges at you!</span>", "<span class='hear'>You hear a swoosh!</span>", null, M)
 				to_chat(M, "<span class='danger'>You lunge at [src]!</span>")
-				return 0
+				return ZERO
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 			if(!affecting)
 				affecting = get_bodypart(BODY_ZONE_CHEST)
@@ -300,7 +300,7 @@
 	if(..()) //successful larva bite.
 		var/damage = rand(1, 3)
 		if(check_shields(L, damage, "the [L.name]"))
-			return 0
+			return ZERO
 		if(stat != DEAD)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(L.zone_selected))
@@ -333,7 +333,7 @@
 			damage = rand(10, 35)
 
 		if(check_shields(M, damage, "the [M.name]"))
-			return 0
+			return ZERO
 
 		var/dam_zone = dismembering_strike(M, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 		if(!dam_zone) //Dismemberment successful
@@ -356,7 +356,7 @@
 			step_away(src,M,15)
 		var/obj/item/bodypart/temp = get_bodypart(pick(BODY_ZONE_CHEST, BODY_ZONE_CHEST, BODY_ZONE_CHEST, BODY_ZONE_HEAD))
 		if(temp)
-			var/update = 0
+			var/update = ZERO
 			var/dmg = rand(M.force/2, M.force)
 			switch(M.damtype)
 				if("brute")
@@ -364,10 +364,10 @@
 						Unconscious(20)
 					else if(M.force > 20 && !IsKnockdown()) // lightweight mechas like gygax
 						Knockdown(40)
-					update |= temp.receive_damage(dmg, 0)
+					update |= temp.receive_damage(dmg, ZERO)
 					playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 				if("fire")
-					update |= temp.receive_damage(0, dmg)
+					update |= temp.receive_damage(ZERO, dmg)
 					playsound(src, 'sound/items/welder.ogg', 50, TRUE)
 				if("tox")
 					M.mech_toxin_damage(src)
@@ -392,8 +392,8 @@
 	..()
 	if (!severity || QDELETED(src))
 		return
-	var/brute_loss = 0
-	var/burn_loss = 0
+	var/brute_loss = ZERO
+	var/burn_loss = ZERO
 	var/bomb_armor = getarmor(null, "bomb")
 
 //200 max knockdown for EXPLODE_HEAVY
@@ -464,14 +464,14 @@
 /mob/living/carbon/human/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	//Calculates the siemens coeff based on clothing. Completely ignores the arguments
 	if(flags & SHOCK_TESLA) //I hate this entire block. This gets the siemens_coeff for tesla shocks
-		if(gloves && gloves.siemens_coefficient <= 0)
+		if(gloves && gloves.siemens_coefficient <= ZERO)
 			siemens_coeff -= 0.5
 		if(wear_suit)
 			if(wear_suit.siemens_coefficient == -1)
 				siemens_coeff -= 1
-			else if(wear_suit.siemens_coefficient <= 0)
+			else if(wear_suit.siemens_coefficient <= ZERO)
 				siemens_coeff -= 0.95
-		siemens_coeff = max(siemens_coeff, 0)
+		siemens_coeff = max(siemens_coeff, ZERO)
 	else if(!(flags & SHOCK_NOGLOVES)) //This gets the siemens_coeff for all non tesla shocks
 		if(gloves)
 			siemens_coeff *= gloves.siemens_coefficient
@@ -502,10 +502,10 @@
 				informed = TRUE
 			switch(severity)
 				if(1)
-					L.receive_damage(0,10)
+					L.receive_damage(ZERO,10)
 					Paralyze(200)
 				if(2)
-					L.receive_damage(0,5)
+					L.receive_damage(ZERO,5)
 					Paralyze(100)
 
 /mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit) //todo: update this to utilize check_obscured_slots() //and make sure it's check_obscured_slots(TRUE) to stop aciding through visors etc
@@ -714,20 +714,20 @@
 				status = "no damage"
 
 		else
-			if(brutedamage > 0)
+			if(brutedamage > ZERO)
 				status = LB.light_brute_msg
 			if(brutedamage > (limb_max_damage*0.4))
 				status = LB.medium_brute_msg
 			if(brutedamage > (limb_max_damage*0.8))
 				status = LB.heavy_brute_msg
-			if(brutedamage > 0 && burndamage > 0)
+			if(brutedamage > ZERO && burndamage > ZERO)
 				status += " and "
 
 			if(burndamage > (limb_max_damage*0.8))
 				status += LB.heavy_burn_msg
 			else if(burndamage > (limb_max_damage*0.2))
 				status += LB.medium_burn_msg
-			else if(burndamage > 0)
+			else if(burndamage > ZERO)
 				status += LB.light_burn_msg
 
 			if(status == "")
@@ -785,7 +785,7 @@
 				to_chat(src, "<span class='info'>You could use a bite to eat.</span>")
 			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
 				to_chat(src, "<span class='info'>You feel quite hungry.</span>")
-			if(0 to NUTRITION_LEVEL_STARVING)
+			if(ZERO to NUTRITION_LEVEL_STARVING)
 				to_chat(src, "<span class='danger'>You're starving!</span>")
 
 	//Compiles then shows the list of damaged organs and broken organs
@@ -834,7 +834,7 @@
 	if(roundstart_quirks.len)
 		to_chat(src, "<span class='notice'>You have these quirks: [get_trait_string()].</span>")
 
-/mob/living/carbon/human/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
+/mob/living/carbon/human/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = ZERO, def_zone)
 	if(damage_type != BRUTE && damage_type != BURN)
 		return
 	damage_amount *= 0.5 //0.5 multiplier for balance reason, we don't want clothes to be too easily destroyed
@@ -891,4 +891,4 @@
 			torn_items |= leg_clothes
 
 	for(var/obj/item/I in torn_items)
-		I.take_damage(damage_amount, damage_type, damage_flag, 0)
+		I.take_damage(damage_amount, damage_type, damage_flag, ZERO)

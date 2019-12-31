@@ -12,10 +12,10 @@ Note: Must be placed within 3 tiles of the R&D Console
 	desc = "Learn science by destroying things!"
 	icon_state = "d_analyzer"
 	circuit = /obj/item/circuitboard/machine/destructive_analyzer
-	var/decon_mod = 0
+	var/decon_mod = ZERO
 
 /obj/machinery/rnd/destructive_analyzer/RefreshParts()
-	var/T = 0
+	var/T = ZERO
 	for(var/obj/item/stock_parts/S in component_parts)
 		T += S.rating
 	decon_mod = T
@@ -58,7 +58,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		icon_state = initial(icon_state)
 
 /obj/machinery/rnd/destructive_analyzer/proc/reclaim_materials_from(obj/item/thing)
-	. = 0
+	. = ZERO
 	var/datum/component/material_container/storage = linked_console?.linked_lathe?.materials.mat_container
 	if(storage) //Also sends salvaged materials to a linked protolathe, if any.
 		for(var/material in thing.custom_materials)
@@ -110,9 +110,9 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/list/differences = list()
 		var/list/already_boosted = linked_console.stored_research.boosted_nodes[TN.id]
 		for(var/i in worths)
-			var/used = already_boosted? already_boosted[i] : 0
+			var/used = already_boosted? already_boosted[i] : ZERO
 			var/value = min(worths[i], TN.research_costs[i]) - used
-			if(value > 0)
+			if(value > ZERO)
 				differences[i] = value
 		if(length(worths) && !length(differences))
 			return FALSE

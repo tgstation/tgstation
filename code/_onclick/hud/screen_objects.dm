@@ -175,7 +175,7 @@
 /obj/screen/inventory/hand
 	var/mutable_appearance/handcuff_overlay
 	var/static/mutable_appearance/blocked_overlay = mutable_appearance('icons/mob/screen_gen.dmi', "blocked")
-	var/held_index = 0
+	var/held_index = ZERO
 
 /obj/screen/inventory/hand/update_overlays()
 	. = ..()
@@ -676,7 +676,7 @@
 	holder = C
 
 	if(!visible)
-		alpha = 0
+		alpha = ZERO
 
 	if(!use_previous_title)
 		if(SStitle.icon)
@@ -693,9 +693,9 @@
 	if(QDELETED(src))
 		return
 	if(out)
-		animate(src, alpha = 0, time = 30)
+		animate(src, alpha = ZERO, time = 30)
 	else
-		alpha = 0
+		alpha = ZERO
 		animate(src, alpha = 255, time = 30)
 	if(qdel_after)
 		QDEL_IN(src, 30)

@@ -5,7 +5,7 @@
 
 /mob/proc/throw_alert(category, type, severity, obj/new_master, override = FALSE)
 
-/* Proc to create or update an alert. Returns the alert if the alert is new or updated, 0 if it was thrown already
+/* Proc to create or update an alert. Returns the alert if the alert is new or updated, ZERO if it was thrown already
  category is a text string. Each mob may only have one alert per category; the previous one will be replaced
  path is a type path of the actual alert type to throw
  severity is an optional number that will be placed at the end of the icon_state for this alert
@@ -22,7 +22,7 @@
 	if(alerts[category])
 		thealert = alerts[category]
 		if(thealert.override_alerts)
-			return 0
+			return ZERO
 		if(new_master && new_master != thealert.master)
 			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [thealert.master]")
 
@@ -36,7 +36,7 @@
 				clear_alert(category)
 				return .()
 			else //no need to update
-				return 0
+				return ZERO
 	else
 		thealert = new type()
 		thealert.override_alerts = override
@@ -77,9 +77,9 @@
 /mob/proc/clear_alert(category, clear_override = FALSE)
 	var/obj/screen/alert/alert = alerts[category]
 	if(!alert)
-		return 0
+		return ZERO
 	if(alert.override_alerts && !clear_override)
-		return 0
+		return ZERO
 
 	alerts -= category
 	if(client && hud_used)
@@ -93,8 +93,8 @@
 	name = "Alert"
 	desc = "Something seems to have gone wrong with this alert, so report this bug please"
 	mouse_opacity = MOUSE_OPACITY_ICON
-	var/timeout = 0 //If set to a number, this alert will clear itself after that many deciseconds
-	var/severity = 0
+	var/timeout = ZERO //If set to a number, this alert will clear itself after that many deciseconds
+	var/severity = ZERO
 	var/alerttooltipstyle = ""
 	var/override_alerts = FALSE //If it is overriding other alerts of the same type
 	var/mob/mob_viewer //the mob viewing this alert
@@ -314,7 +314,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "cult_sense"
 	alerttooltipstyle = "cult"
 	var/static/image/narnar
-	var/angle = 0
+	var/angle = ZERO
 	var/mob/living/simple_animal/hostile/construct/Cviewer = null
 
 /obj/screen/alert/bloodsense/Initialize()
@@ -350,8 +350,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		if(sac_objective && !sac_objective.check_completion())
 			if(icon_state == "runed_sense0")
 				return
-			animate(src, transform = null, time = 1, loop = 0)
-			angle = 0
+			animate(src, transform = null, time = 1, loop = ZERO)
+			angle = ZERO
 			cut_overlays()
 			icon_state = "runed_sense0"
 			desc = "Nar'Sie demands that [sac_objective.target] be sacrificed before the summoning ritual can begin."
@@ -363,8 +363,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			desc = "The sacrifice is complete, summon Nar'Sie! The summoning can only take place in [english_list(summon_objective.summon_spots)]!"
 			if(icon_state == "runed_sense1")
 				return
-			animate(src, transform = null, time = 1, loop = 0)
-			angle = 0
+			animate(src, transform = null, time = 1, loop = ZERO)
+			angle = ZERO
 			cut_overlays()
 			icon_state = "runed_sense1"
 			add_overlay(narnar)
@@ -384,7 +384,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/target_dist = get_dist(P, Q)
 	cut_overlays()
 	switch(target_dist)
-		if(0 to 1)
+		if(ZERO to 1)
 			icon_state = "runed_sense2"
 		if(2 to 8)
 			icon_state = "arrow8"
@@ -412,7 +412,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return
 	var/matrix/final = matrix(transform)
 	final.Turn(difference)
-	animate(src, transform = final, time = 5, loop = 0)
+	animate(src, transform = final, time = 5, loop = ZERO)
 
 
 //GUARDIANS
@@ -619,7 +619,7 @@ so as to remain in compliance with the most up-to-date laws."
 
 /obj/screen/alert/Destroy()
 	. = ..()
-	severity = 0
+	severity = ZERO
 	master = null
 	mob_viewer = null
 	screen_loc = ""

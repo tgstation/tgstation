@@ -4,7 +4,7 @@
 	update_icons()
 
 /mob/living/carbon/alien/larva/update_icons()
-	var/state = 0
+	var/state = ZERO
 	if(amount_grown > 80)
 		state = 2
 	else if(amount_grown > 50)

@@ -14,7 +14,7 @@
 	var/list/unlock_ids = list()			//CALCULATED FROM OTHER NODE'S PREREQUISITES. Assoc list id = TRUE.
 	var/list/boost_item_paths = list()		//Associative list, path = list(point type = point_value).
 	var/autounlock_by_boost = TRUE			//boosting this will autounlock this node.
-	var/export_price = 0					//Cargo export price.
+	var/export_price = ZERO					//Cargo export price.
 	var/list/research_costs = list()					//Point cost to research. type = amount
 	var/category = "Misc"				//Category
 

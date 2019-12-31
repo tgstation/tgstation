@@ -27,7 +27,7 @@
 	if(SSticker.current_state < GAME_STATE_SETTING_UP)
 		var/tl = SSticker.GetTimeLeft()
 		var/postfix
-		if(tl > 0)
+		if(tl > ZERO)
 			postfix = "in about [DisplayTimeText(tl)]"
 		else
 			postfix = "soon"

@@ -5,7 +5,7 @@
 	anchored = TRUE
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "uglymine"
-	var/triggered = 0
+	var/triggered = ZERO
 
 /obj/effect/mine/proc/mineEffect(mob/victim)
 	to_chat(victim, "<span class='danger'>*click*</span>")
@@ -33,7 +33,7 @@
 
 /obj/effect/mine/explosive
 	name = "explosive mine"
-	var/range_devastation = 0
+	var/range_devastation = ZERO
 	var/range_heavy = 1
 	var/range_light = 2
 	var/range_flash = 3
@@ -96,7 +96,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "electricity2"
 	density = FALSE
-	var/duration = 0
+	var/duration = ZERO
 
 /obj/effect/mine/pickup/Initialize()
 	. = ..()
@@ -122,8 +122,8 @@
 		return
 	to_chat(victim, "<span class='reallybig redtext'>RIP AND TEAR</span>")
 	var/old_color = victim.client.color
-	var/static/list/red_splash = list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0)
-	var/static/list/pure_red = list(0,0,0,0,0,0,0,0,0,1,0,0)
+	var/static/list/red_splash = list(1,ZERO,ZERO,0.8,0.2,ZERO, 0.8,ZERO,0.2,0.1,ZERO,ZERO)
+	var/static/list/pure_red = list(ZERO,ZERO,ZERO,ZERO,ZERO,ZERO,ZERO,ZERO,ZERO,1,ZERO,ZERO)
 
 	INVOKE_ASYNC(src, .proc/blood_delusion, victim)
 
@@ -149,7 +149,7 @@
 	qdel(src)
 
 /obj/effect/mine/pickup/bloodbath/proc/blood_delusion(mob/living/carbon/victim)
-	new /datum/hallucination/delusion(victim, TRUE, "demon", duration, 0)
+	new /datum/hallucination/delusion(victim, TRUE, "demon", duration, ZERO)
 
 /obj/effect/mine/pickup/healing
 	name = "Blue Orb"

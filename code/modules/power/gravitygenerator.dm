@@ -5,11 +5,11 @@
 
 GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding new gravity generators to the list, and keying it with the z level.
 
-#define POWER_IDLE 0
+#define POWER_IDLE ZERO
 #define POWER_UP 1
 #define POWER_DOWN 2
 
-#define GRAV_NEEDS_SCREWDRIVER 0
+#define GRAV_NEEDS_SCREWDRIVER ZERO
 #define GRAV_NEEDS_WELDING 1
 #define GRAV_NEEDS_PLASTEEL 2
 #define GRAV_NEEDS_WRENCH 3
@@ -26,7 +26,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	move_resist = INFINITY
 	use_power = NO_POWER_USE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	var/sprite_number = 0
+	var/sprite_number = ZERO
 
 /obj/machinery/gravity_generator/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG)
 	return FALSE
@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 /obj/machinery/gravity_generator/main
 	icon_state = "on_8"
-	idle_power_usage = 0
+	idle_power_usage = ZERO
 	active_power_usage = 3000
 	power_channel = ENVIRON
 	sprite_number = 8
@@ -126,7 +126,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	var/charging_state = POWER_IDLE
 	var/charge_count = 100
 	var/current_overlay = null
-	var/broken_state = 0
+	var/broken_state = ZERO
 	var/setting = 1	//Gravity value when on
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
@@ -168,10 +168,10 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		if(!(M.stat & BROKEN))
 			M.set_broken()
 	middle.cut_overlays()
-	charge_count = 0
+	charge_count = ZERO
 	breaker = FALSE
 	set_power()
-	set_state(0)
+	set_state(ZERO)
 	investigate_log("has broken down.", INVESTIGATE_GRAVITY)
 
 /obj/machinery/gravity_generator/main/set_fix()
@@ -197,7 +197,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 				return
 		if(GRAV_NEEDS_WELDING)
 			if(I.tool_behaviour == TOOL_WELDER)
-				if(I.use_tool(src, user, 0, volume=50, amount=1))
+				if(I.use_tool(src, user, ZERO, volume=50, amount=1))
 					to_chat(user, "<span class='notice'>You mend the damaged framework.</span>")
 					broken_state++
 					update_icon()
@@ -305,7 +305,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	if(alert)
 		shake_everyone()
 
-// Charge/Discharge and turn on/off gravity when you reach 0/100 percent.
+// Charge/Discharge and turn on/off gravity when you reach ZERO/100 percent.
 // Also emit radiation and handle the overlays.
 /obj/machinery/gravity_generator/main/process()
 	if(stat & BROKEN)
@@ -313,15 +313,15 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	if(charging_state != POWER_IDLE)
 		if(charging_state == POWER_UP && charge_count >= 100)
 			set_state(1)
-		else if(charging_state == POWER_DOWN && charge_count <= 0)
-			set_state(0)
+		else if(charging_state == POWER_DOWN && charge_count <= ZERO)
+			set_state(ZERO)
 		else
 			if(charging_state == POWER_UP)
 				charge_count += 2
 			else if(charging_state == POWER_DOWN)
 				charge_count -= 2
 
-			if(charge_count % 4 == 0 && prob(75)) // Let them know it is charging/discharging.
+			if(charge_count % 4 == ZERO && prob(75)) // Let them know it is charging/discharging.
 				playsound(src.loc, 'sound/effects/empulse.ogg', 100, TRUE)
 
 			updateDialog()
@@ -330,7 +330,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 			var/overlay_state = null
 			switch(charge_count)
-				if(0 to 20)
+				if(ZERO to 20)
 					overlay_state = null
 				if(21 to 40)
 					overlay_state = "startup"

@@ -9,7 +9,7 @@
 	icon_dead = "base_dead"
 	icon_gib = "carp_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	speak_chance = 0
+	speak_chance = ZERO
 	turns_per_move = 5
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/carpmeat = 2)
 	response_help_continuous = "pets"
@@ -18,7 +18,7 @@
 	response_disarm_simple = "gently push aside"
 	emote_taunt = list("gnashes")
 	taunt_chance = 30
-	speed = 0
+	speed = ZERO
 	maxHealth = 25
 	health = 25
 	spacewalk = TRUE
@@ -33,8 +33,8 @@
 	speak_emote = list("gnashes")
 
 	//Space carp aren't affected by cold.
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
+	minbodytemp = ZERO
 	maxbodytemp = 1500
 	faction = list("carp")
 	movement_type = FLYING
@@ -144,7 +144,7 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 
-	var/regen_cooldown = 0
+	var/regen_cooldown = ZERO
 	var/rideable = FALSE
 
 /mob/living/simple_animal/hostile/carp/megacarp/Initialize()
@@ -169,10 +169,10 @@
 		buckle_lying = FALSE
 		var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 		D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 8), TEXT_SOUTH = list(1, 8), TEXT_EAST = list(-3, 6), TEXT_WEST = list(3, 6)))
-		D.set_vehicle_dir_offsets(SOUTH, pixel_x, 0)
-		D.set_vehicle_dir_offsets(NORTH, pixel_x, 0)
-		D.set_vehicle_dir_offsets(EAST, pixel_x, 0)
-		D.set_vehicle_dir_offsets(WEST, pixel_x, 0)
+		D.set_vehicle_dir_offsets(SOUTH, pixel_x, ZERO)
+		D.set_vehicle_dir_offsets(NORTH, pixel_x, ZERO)
+		D.set_vehicle_dir_offsets(EAST, pixel_x, ZERO)
+		D.set_vehicle_dir_offsets(WEST, pixel_x, ZERO)
 		D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 		D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 		D.set_vehicle_dir_layer(EAST, OBJ_LAYER)

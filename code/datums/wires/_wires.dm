@@ -28,7 +28,7 @@
 	var/list/cut_wires = list() // List of wires that have been cut.
 	var/list/colors = list() // Dictionary of colors to wire.
 	var/list/assemblies = list() // List of attached assemblies.
-	var/randomize = 0 // If every instance of these wires should be random.
+	var/randomize = ZERO // If every instance of these wires should be random.
 					  // Prevents wires from showing up in station blueprints
 
 /datum/wires/New(atom/holder)

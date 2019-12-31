@@ -69,7 +69,7 @@
 
 			//Checks to make sure he's not in space doing it, and that the area got proper power.
 			var/area/a = get_area(src)
-			if(!isarea(a) || a.power_equip == 0)
+			if(!isarea(a) || a.power_equip == ZERO)
 				to_chat(user, "<span class='notice'>[src] blinks red as you try to insert [G].</span>")
 				return 1
 
@@ -119,7 +119,7 @@
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		return PROCESS_KILL
 
-	var/using_power = 0
+	var/using_power = ZERO
 	if(charging)
 		var/obj/item/stock_parts/cell/C = charging.get_cell()
 		if(C)
@@ -153,10 +153,10 @@
 		else if(istype(charging, /obj/item/melee/baton))
 			var/obj/item/melee/baton/B = charging
 			if(B.cell)
-				B.cell.charge = 0
+				B.cell.charge = ZERO
 
 
-/obj/machinery/recharger/update_icon(using_power = 0, scan)	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
+/obj/machinery/recharger/update_icon(using_power = ZERO, scan)	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		icon_state = "rechargeroff"
 		return

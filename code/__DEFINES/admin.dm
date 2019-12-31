@@ -1,12 +1,12 @@
 //A set of constants used to determine which type of mute an admin wishes to apply:
 //Please read and understand the muting/automuting stuff before changing these. MUTE_IC_AUTO etc = (MUTE_IC << 1)
 //Therefore there needs to be a gap between the flags for the automute flags
-#define MUTE_IC			(1<<0)
+#define MUTE_IC			(1<<ZERO)
 #define MUTE_OOC		(1<<1)
 #define MUTE_PRAY		(1<<2)
 #define MUTE_ADMINHELP	(1<<3)
 #define MUTE_DEADCHAT	(1<<4)
-#define MUTE_ALL		(~0)
+#define MUTE_ALL		(~ZERO)
 
 //Some constants for DB_Ban
 #define BANTYPE_PERMA		1
@@ -22,7 +22,7 @@
 #define BANTYPE_ANY_JOB		9
 
 //Admin Permissions
-#define R_BUILD			(1<<0)
+#define R_BUILD			(1<<ZERO)
 #define R_ADMIN			(1<<1)
 #define R_BAN			(1<<2)
 #define R_FUN			(1<<3)

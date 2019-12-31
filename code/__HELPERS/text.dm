@@ -76,14 +76,14 @@
 /proc/reject_bad_text(text, max_length=512)
 	if(length(text) > max_length)
 		return			//message too long
-	var/non_whitespace = 0
+	var/non_whitespace = ZERO
 	for(var/i=1, i<=length(text), i++)
 		switch(text2ascii(text,i))
 			if(62,60,92,47)
 				return			//rejects the text if it contains these bad characters: <, >, \ or /
 			if(127 to 255)
 				return			//rejects weird letters like �
-			if(0 to 31)
+			if(ZERO to 31)
 				return			//more weird stuff
 			if(32)
 				continue		//whitespace
@@ -110,12 +110,12 @@
 		return trim(html_encode(name), max_length)
 
 //Filters out undesirable characters from names
-/proc/reject_bad_name(t_in, allow_numbers=0, max_length=MAX_NAME_LEN)
+/proc/reject_bad_name(t_in, allow_numbers=ZERO, max_length=MAX_NAME_LEN)
 	if(!t_in || length(t_in) > max_length)
 		return //Rejects the input if it is null or if it is longer then the max length allowed
 
-	var/number_of_alphanumeric	= 0
-	var/last_char_group			= 0
+	var/number_of_alphanumeric	= ZERO
+	var/last_char_group			= ZERO
 	var/t_out = ""
 
 	for(var/i=1, i<=length(t_in), i++)
@@ -136,7 +136,7 @@
 				number_of_alphanumeric++
 				last_char_group = 4
 
-			// 0  .. 9
+			// ZERO  .. 9
 			if(48 to 57)			//Numbers
 				if(!last_char_group)
 					continue	//suppress at start of string
@@ -184,7 +184,7 @@
 	return t_out
 
 //html_encode helper proc that returns the smallest non null of two numbers
-//or 0 if they're both null (needed because of findtext returning 0 when a value is not present)
+//or 0 if they're both null (needed because of findtext returning ZERO when a value is not present)
 /proc/non_zero_min(a, b)
 	if(!a)
 		return b
@@ -197,21 +197,21 @@
  */
 
 //Checks the beginning of a string for a specified sub-string
-//Returns the position of the substring or 0 if it was not found
+//Returns the position of the substring or ZERO if it was not found
 /proc/dd_hasprefix(text, prefix)
 	var/start = 1
 	var/end = length(prefix) + 1
 	return findtext(text, prefix, start, end)
 
 //Checks the beginning of a string for a specified sub-string. This proc is case sensitive
-//Returns the position of the substring or 0 if it was not found
+//Returns the position of the substring or ZERO if it was not found
 /proc/dd_hasprefix_case(text, prefix)
 	var/start = 1
 	var/end = length(prefix) + 1
 	return findtextEx(text, prefix, start, end)
 
 //Checks the end of a string for a specified substring.
-//Returns the position of the substring or 0 if it was not found
+//Returns the position of the substring or ZERO if it was not found
 /proc/dd_hassuffix(text, suffix)
 	var/start = length(text) - length(suffix)
 	if(start)
@@ -219,25 +219,25 @@
 	return
 
 //Checks the end of a string for a specified substring. This proc is case sensitive
-//Returns the position of the substring or 0 if it was not found
+//Returns the position of the substring or ZERO if it was not found
 /proc/dd_hassuffix_case(text, suffix)
 	var/start = length(text) - length(suffix)
 	if(start)
 		return findtextEx(text, suffix, start, null)
 
 //Checks if any of a given list of needles is in the haystack
-/proc/text_in_list(haystack, list/needle_list, start=1, end=0)
+/proc/text_in_list(haystack, list/needle_list, start=1, end=ZERO)
 	for(var/needle in needle_list)
 		if(findtext(haystack, needle, start, end))
 			return 1
-	return 0
+	return ZERO
 
 //Like above, but case sensitive
-/proc/text_in_list_case(haystack, list/needle_list, start=1, end=0)
+/proc/text_in_list_case(haystack, list/needle_list, start=1, end=ZERO)
 	for(var/needle in needle_list)
 		if(findtextEx(haystack, needle, start, end))
 			return 1
-	return 0
+	return ZERO
 
 //Adds 'u' number of zeros ahead of the text 't'
 /proc/add_zero(t, u)
@@ -266,7 +266,7 @@
 
 //Returns a string with reserved characters and spaces after the last letter removed
 /proc/trim_right(text)
-	for (var/i = length(text), i > 0, i--)
+	for (var/i = length(text), i > ZERO, i--)
 		if (text2ascii(text, i) > 32)
 			return copytext(text, 1, i + 1)
 
@@ -313,7 +313,7 @@
 //This is used for fingerprints
 	var/newtext = text
 	if(length(text) != length(compare))
-		return 0
+		return ZERO
 	for(var/i = 1, i < length(text), i++)
 		var/a = copytext(text,i,i+1)
 		var/b = copytext(compare,i,i+1)
@@ -325,15 +325,15 @@
 			else if(b == replace) //if B is the replacement char
 				newtext = copytext(newtext,1,i) + a + copytext(newtext, i+1)
 			else //The lists disagree, Uh-oh!
-				return 0
+				return ZERO
 	return newtext
 
 /proc/stringpercent(text,character = "*")
 //This proc returns the number of chars of the string that is the character
 //This is used for detective work to determine fingerprint completion.
 	if(!text || !character)
-		return 0
-	var/count = 0
+		return ZERO
+	var/count = ZERO
 	for(var/i = 1, i <= length(text), i++)
 		var/a = copytext(text,i,i+1)
 		if(a == character)
@@ -342,7 +342,7 @@
 
 /proc/reverse_text(text = "")
 	var/new_text = ""
-	for(var/i = length(text); i > 0; i--)
+	for(var/i = length(text); i > ZERO; i--)
 		new_text += copytext(text, i, i+1)
 	return new_text
 
@@ -389,7 +389,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		from = ""
 	var/null_ascii = istext(null_char) ? text2ascii(null_char,1) : null_char
 
-	var/previous = 0
+	var/previous = ZERO
 	var/start = 1
 	var/end = length(into) + 1
 
@@ -401,12 +401,12 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 				start = i
 				previous = 1
 		else
-			if(previous != 0)
+			if(previous != ZERO)
 				. += copytext(into, start, i)
 				start = i
-				previous = 0
+				previous = ZERO
 
-	if(previous == 0)
+	if(previous == ZERO)
 		. += copytext(from, start, end)
 	else
 		. += copytext(into, start, end)
@@ -414,7 +414,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 //finds the first occurrence of one of the characters from needles argument inside haystack
 //it may appear this can be optimised, but it really can't. findtext() is so much faster than anything you can do in byondcode.
 //stupid byond :(
-/proc/findchar(haystack, needles, start=1, end=0)
+/proc/findchar(haystack, needles, start=1, end=ZERO)
 	var/temp
 	var/len = length(needles)
 	for(var/i=1, i<=len, i++)
@@ -424,7 +424,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	return end
 
 /proc/parsemarkdown_basic_step1(t, limited=FALSE)
-	if(length(t) <= 0)
+	if(length(t) <= ZERO)
 		return
 
 	// This parses markdown with no custom rules
@@ -460,7 +460,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		var/list/tlist = splittext(t, "\n")
 		var/tlistlen = tlist.len
 		var/listlevel = -1
-		var/singlespace = -1 // if 0, double spaces are used before asterisks, if 1, single are
+		var/singlespace = -1 // if ZERO, double spaces are used before asterisks, if 1, single are
 		for(var/i = 1, i <= tlistlen, i++)
 			var/line = tlist[i]
 			var/count_asterisk = length(replacetext(line, regex("\[^\\*\]+", "g"), ""))
@@ -470,12 +470,12 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 				line = replacetext(line, regex("^ *(\\*.*)$", "g"), "$1")
 
 				if(singlespace == -1 && count_w == 2)
-					if(listlevel == 0)
-						singlespace = 0
+					if(listlevel == ZERO)
+						singlespace = ZERO
 					else
 						singlespace = 1
 
-				if(singlespace == 0)
+				if(singlespace == ZERO)
 					count_w = count_w % 2 ? round(count_w / 2 + 0.25) : count_w / 2
 
 				line = replacetext(line, regex("\\*", ""), "<li>")
@@ -486,7 +486,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 					line = "</ul>" + line
 					listlevel--
 
-			else while(listlevel >= 0)
+			else while(listlevel >= ZERO)
 				line = "</ul>" + line
 				listlevel--
 
@@ -497,7 +497,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		for(var/i = 2, i <= tlistlen, i++)
 			t += "\n" + tlist[i]
 
-		while(listlevel >= 0)
+		while(listlevel >= ZERO)
 			t += "</ul>"
 			listlevel--
 
@@ -526,7 +526,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	return t
 
 /proc/parsemarkdown_basic_step2(t)
-	if(length(t) <= 0)
+	if(length(t) <= ZERO)
 		return
 
 	// Restore the single characters used
@@ -555,7 +555,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	return t
 
 /proc/parsemarkdown(t, mob/user=null, limited=FALSE)
-	if(length(t) <= 0)
+	if(length(t) <= ZERO)
 		return
 
 	// Premanage whitespace
@@ -625,7 +625,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 			continue
 		var/punctbuffer = ""
 		var/cutoff = length(buffer)
-		for(var/pos = length(buffer), pos >= 0, pos--)
+		for(var/pos = length(buffer), pos >= ZERO, pos--)
 			var/let = copytext(buffer, pos, (pos + 1) % length(buffer))
 			if(findtext(let,GLOB.is_alphanumeric))
 				break
@@ -635,8 +635,8 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		if(punctbuffer) //We clip down excessive punctuation to get the letter count lower and reduce repeats. It's not perfect but it helps.
 			var/exclaim = FALSE
 			var/question = FALSE
-			var/periods = 0
-			for(var/pos = length(punctbuffer), pos >= 0, pos--)
+			var/periods = ZERO
+			for(var/pos = length(punctbuffer), pos >= ZERO, pos--)
 				var/punct = copytext(punctbuffer, pos, (pos + 1) % length(punctbuffer))
 				if(!exclaim && findtext(punct,"!"))
 					exclaim = TRUE

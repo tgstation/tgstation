@@ -10,7 +10,7 @@
 
 /mob/living/silicon/robot/proc/uneq_module(obj/item/O)
 	if(!O)
-		return 0
+		return ZERO
 	O.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	if(istype(O, /obj/item/borg/sight))
 		var/obj/item/borg/sight/S = O
@@ -121,12 +121,12 @@
 			return TRUE
 	return FALSE
 
-//get_selected_module() - Returns the slot number of the currently selected module.  Returns 0 if no modules are selected.
+//get_selected_module() - Returns the slot number of the currently selected module.  Returns ZERO if no modules are selected.
 /mob/living/silicon/robot/proc/get_selected_module()
 	if(module_active)
 		return held_items.Find(module_active)
 
-	return 0
+	return ZERO
 
 //select_module(module) - Selects the module slot specified by "module"
 /mob/living/silicon/robot/proc/select_module(module) //Module is 1-3
@@ -195,7 +195,7 @@
 		deselect_module(slot_start) //Only deselect if we have a selected slot.
 
 	var/slot_num
-	if(slot_start == 0)
+	if(slot_start == ZERO)
 		slot_num = 1
 		slot_start = 4
 	else

@@ -9,12 +9,12 @@ SUBSYSTEM_DEF(ticker)
 	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME
 
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
-	var/force_ending = 0					//Round was ended by admin intervention
+	var/force_ending = ZERO					//Round was ended by admin intervention
 	// If true, there is no lobby phase, the game starts immediately.
 	var/start_immediately = FALSE
 	var/setup_done = FALSE //All game setup done including mode post setup and
 
-	var/hide_mode = 0
+	var/hide_mode = ZERO
 	var/datum/game_mode/mode = null
 
 	var/login_music							//music played in pregame lobby
@@ -27,8 +27,8 @@ SUBSYSTEM_DEF(ticker)
 	var/admin_delay_notice = ""				//a message to display to anyone who tries to restart the world after a delay
 	var/ready_for_reboot = FALSE			//all roundend preparation done with, all that's left is reboot
 
-	var/triai = 0							//Global holder for Triumvirate
-	var/tipped = 0							//Did we broadcast the tip of the day yet?
+	var/triai = ZERO							//Global holder for Triumvirate
+	var/tipped = ZERO							//Did we broadcast the tip of the day yet?
 	var/selected_tip						// What will be the tip of the day?
 
 	var/timeLeft						//pregame timer
@@ -37,13 +37,13 @@ SUBSYSTEM_DEF(ticker)
 	var/gametime_offset = 432000		//Deciseconds to add to world.time for station time.
 	var/station_time_rate_multiplier = 12		//factor of station time progressal vs real time.
 
-	var/totalPlayers = 0					//used for pregame stats on statpanel
-	var/totalPlayersReady = 0				//used for pregame stats on statpanel
+	var/totalPlayers = ZERO					//used for pregame stats on statpanel
+	var/totalPlayersReady = ZERO				//used for pregame stats on statpanel
 
-	var/queue_delay = 0
+	var/queue_delay = ZERO
 	var/list/queued_players = list()		//used for join queues when the server exceeds the hard population cap
 
-	var/maprotatechecked = 0
+	var/maprotatechecked = ZERO
 
 	var/news_report
 
@@ -51,7 +51,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/roundend_check_paused = FALSE
 
-	var/round_start_time = 0
+	var/round_start_time = ZERO
 	var/list/round_start_events
 	var/list/round_end_events
 	var/mode_result = "undefined"
@@ -134,7 +134,7 @@ SUBSYSTEM_DEF(ticker)
 
 	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 	if(CONFIG_GET(flag/randomize_shift_time))
-		gametime_offset = rand(0, 23) HOURS
+		gametime_offset = rand(ZERO, 23) HOURS
 	else if(CONFIG_GET(flag/shift_time_realtime))
 		gametime_offset = world.timeofday
 	return ..()
@@ -155,19 +155,19 @@ SUBSYSTEM_DEF(ticker)
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
 			if(isnull(timeLeft))
-				timeLeft = max(0,start_at - world.time)
+				timeLeft = max(ZERO,start_at - world.time)
 			totalPlayers = LAZYLEN(GLOB.new_player_list)
-			totalPlayersReady = 0
+			totalPlayersReady = ZERO
 			for(var/i in GLOB.new_player_list)
 				var/mob/dead/new_player/player = i
 				if(player.ready == PLAYER_READY_TO_PLAY)
 					++totalPlayersReady
 
 			if(start_immediately)
-				timeLeft = 0
+				timeLeft = ZERO
 
 			//countdown
-			if(timeLeft < 0)
+			if(timeLeft < ZERO)
 				return
 			timeLeft -= wait
 
@@ -175,7 +175,7 @@ SUBSYSTEM_DEF(ticker)
 				send_tip_of_the_round()
 				tipped = TRUE
 
-			if(timeLeft <= 0)
+			if(timeLeft <= ZERO)
 				current_state = GAME_STATE_SETTING_UP
 				Master.SetRunLevel(RUNLEVEL_SETUP)
 				if(start_immediately)
@@ -222,7 +222,7 @@ SUBSYSTEM_DEF(ticker)
 		if(!mode)
 			if(!runnable_modes.len)
 				to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
-				return 0
+				return ZERO
 			mode = pickweight(runnable_modes)
 			if(!mode)	//too few roundtypes all run too recently
 				mode = pick(runnable_modes)
@@ -234,11 +234,11 @@ SUBSYSTEM_DEF(ticker)
 			qdel(mode)
 			mode = null
 			SSjob.ResetOccupations()
-			return 0
+			return ZERO
 
 	CHECK_TICK
 	//Configure mode and assign player to special mode stuff
-	var/can_continue = 0
+	var/can_continue = ZERO
 	can_continue = src.mode.pre_setup()		//Choose antagonists
 	CHECK_TICK
 	can_continue = can_continue && SSjob.DivideOccupations(mode.required_jobs) 				//Distribute jobs
@@ -250,7 +250,7 @@ SUBSYSTEM_DEF(ticker)
 			QDEL_NULL(mode)
 			to_chat(world, "<B>Error setting up [GLOB.master_mode].</B> Reverting to pre-game lobby.")
 			SSjob.ResetOccupations()
-			return 0
+			return ZERO
 	else
 		message_admins("<span class='notice'>DEBUG: Bypassing prestart checks...</span>")
 
@@ -340,7 +340,7 @@ SUBSYSTEM_DEF(ticker)
 		var/turf/epi = bomb.loc
 		qdel(bomb)
 		if(epi)
-			explosion(epi, 0, 256, 512, 0, TRUE, TRUE, 0, TRUE)
+			explosion(epi, ZERO, 256, 512, ZERO, TRUE, TRUE, ZERO, TRUE)
 
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/i in GLOB.new_player_list)
@@ -367,9 +367,9 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/living/carbon/human/player = N.new_character
 		if(istype(player) && player.mind && player.mind.assigned_role)
 			if(player.mind.assigned_role == "Captain")
-				captainless=0
+				captainless=ZERO
 			if(player.mind.assigned_role != player.mind.special_role)
-				SSjob.EquipRank(N, player.mind.assigned_role, 0)
+				SSjob.EquipRank(N, player.mind.assigned_role, ZERO)
 				if(CONFIG_GET(flag/roundstart_traits) && ishuman(N.new_character))
 					SSquirks.AssignQuirks(N.new_character, N.client, TRUE)
 		CHECK_TICK
@@ -425,8 +425,8 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(NP, "<span class='userdanger'>The alive players limit has been released!<br><a href='?src=[REF(NP)];late_join=override'>[html_encode(">>Join Game<<")]</a></span>")
 			SEND_SOUND(NP, sound('sound/misc/notice1.ogg'))
 			NP.LateChoices()
-		queued_players.len = 0
-		queue_delay = 0
+		queued_players.len = ZERO
+		queue_delay = ZERO
 		return
 
 	queue_delay++
@@ -442,11 +442,11 @@ SUBSYSTEM_DEF(ticker)
 					next_in_line.LateChoices()
 					return
 				queued_players -= next_in_line //Client disconnected, remove he
-			queue_delay = 0 //No vacancy: restart timer
+			queue_delay = ZERO //No vacancy: restart timer
 		if(25 to INFINITY)  //No response from the next in line when a vacancy exists, remove he
 			to_chat(next_in_line, "<span class='danger'>No response received. You have been removed from the line.</span>")
 			queued_players -= next_in_line
-			queue_delay = 0
+			queue_delay = ZERO
 
 /datum/controller/subsystem/ticker/proc/check_maprotate()
 	if (!CONFIG_GET(flag/maprotation))
@@ -558,11 +558,11 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/GetTimeLeft()
 	if(isnull(SSticker.timeLeft))
-		return max(0, start_at - world.time)
+		return max(ZERO, start_at - world.time)
 	return timeLeft
 
 /datum/controller/subsystem/ticker/proc/SetTimeLeft(newtime)
-	if(newtime >= 0 && isnull(timeLeft))	//remember, negative means delayed
+	if(newtime >= ZERO && isnull(timeLeft))	//remember, negative means delayed
 		start_at = world.time + newtime
 	else
 		timeLeft = newtime

@@ -51,7 +51,7 @@
 		return
 	lit = FALSE
 	update_icon()
-	set_light(0)
+	set_light(ZERO)
 	return TRUE
 
 /obj/item/candle/extinguish()

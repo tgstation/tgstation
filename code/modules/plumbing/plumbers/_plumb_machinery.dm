@@ -51,7 +51,7 @@
 	. = ..()
 	if(anchored)
 		to_chat(user, "<span class='warning'>The [name] needs to be unbolted to do that!</span")
-	if(I.tool_start_check(user, amount=0))
+	if(I.tool_start_check(user, amount=ZERO))
 		to_chat(user, "<span class='notice'>You start slicing the [name] apart.</span")
 		if(I.use_tool(src, user, rcd_delay * 2, volume=50))
 			deconstruct(TRUE)

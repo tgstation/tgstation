@@ -15,7 +15,7 @@
 /obj/machinery/porta_turret_cover/Destroy()
 	if(parent_turret)
 		parent_turret.cover = null
-		parent_turret.invisibility = 0
+		parent_turret.invisibility = ZERO
 		parent_turret = null
 	return ..()
 
@@ -45,7 +45,7 @@
 		if(!parent_turret.anchored)
 			parent_turret.setAnchored(TRUE)
 			to_chat(user, "<span class='notice'>You secure the exterior bolts on the turret.</span>")
-			parent_turret.invisibility = 0
+			parent_turret.invisibility = ZERO
 			parent_turret.update_icon()
 		else
 			parent_turret.setAnchored(FALSE)
@@ -83,7 +83,7 @@
 	return parent_turret.attack_hulk(user)
 
 /obj/machinery/porta_turret_cover/can_be_overridden()
-	. = 0
+	. = ZERO
 
 /obj/machinery/porta_turret_cover/emag_act(mob/user)
 	if(!(parent_turret.obj_flags & EMAGGED))

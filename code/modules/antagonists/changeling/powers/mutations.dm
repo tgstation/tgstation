@@ -42,8 +42,8 @@
 		to_chat(user, "<span class='warning'>[held] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!</span>")
 		return
 	..()
-	var/limb_regen = 0
-	if(user.active_hand_index % 2 == 0) //we regen the arm before changing it into the weapon
+	var/limb_regen = ZERO
+	if(user.active_hand_index % 2 == ZERO) //we regen the arm before changing it into the weapon
 		limb_regen = user.regenerate_limb(BODY_ZONE_R_ARM, 1)
 	else
 		limb_regen = user.regenerate_limb(BODY_ZONE_L_ARM, 1)
@@ -74,8 +74,8 @@
 	var/suit_type = /obj/item
 	var/suit_name_simple = "    "
 	var/helmet_name_simple = "     "
-	var/recharge_slowdown = 0
-	var/blood_on_castoff = 0
+	var/recharge_slowdown = ZERO
+	var/blood_on_castoff = ZERO
 
 /datum/action/changeling/suit/try_to_sting(mob/user, mob/target)
 	if(check_suit(user))
@@ -156,9 +156,9 @@
 	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	force = 25
-	throwforce = 0 //Just to be on the safe side
-	throw_range = 0
-	throw_speed = 0
+	throwforce = ZERO //Just to be on the safe side
+	throw_range = ZERO
+	throw_speed = ZERO
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP
@@ -243,12 +243,12 @@
 	slot_flags = NONE
 	ammo_type = /obj/item/ammo_casing/magic/tentacle
 	fire_sound = 'sound/effects/splat.ogg'
-	force = 0
+	force = ZERO
 	max_charges = 1
 	fire_delay = 1
-	throwforce = 0 //Just to be on the safe side
-	throw_range = 0
-	throw_speed = 0
+	throwforce = ZERO //Just to be on the safe side
+	throw_range = ZERO
+	throw_speed = ZERO
 
 /obj/item/gun/magic/tentacle/Initialize(mapload, silent)
 	. = ..()
@@ -265,7 +265,7 @@
 
 /obj/item/gun/magic/tentacle/process_fire()
 	. = ..()
-	if(charges == 0)
+	if(charges == ZERO)
 		qdel(src)
 
 /obj/item/gun/magic/tentacle/suicide_act(mob/user)
@@ -294,7 +294,7 @@
 	name = "tentacle"
 	icon_state = "tentacle_end"
 	pass_flags = PASSTABLE
-	damage = 0
+	damage = ZERO
 	damage_type = BRUTE
 	range = 8
 	hitsound = 'sound/weapons/thudswoosh.ogg'
@@ -437,13 +437,13 @@
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='hear'>You hear organic matter ripping and tearing!</span>")
 
-/obj/item/shield/changeling/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/shield/changeling/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = ZERO, damage = ZERO, attack_type = MELEE_ATTACK)
 	if(remaining_uses < 1)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
 			H.visible_message("<span class='warning'>With a sickening crunch, [H] reforms [H.p_their()] shield into an arm!</span>", "<span class='notice'>We assimilate our shield into our body</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
 		qdel(src)
-		return 0
+		return ZERO
 	else
 		remaining_uses--
 		return ..()
@@ -528,8 +528,8 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list("melee" = 40, "bullet" = 40, "laser" = 40, "energy" = 50, "bomb" = 10, "bio" = 4, "rad" = 0, "fire" = 90, "acid" = 90)
 	flags_inv = HIDEJUMPSUIT
-	cold_protection = 0
-	heat_protection = 0
+	cold_protection = ZERO
+	heat_protection = ZERO
 
 /obj/item/clothing/suit/armor/changeling/Initialize()
 	. = ..()

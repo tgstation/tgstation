@@ -15,7 +15,7 @@
 	var/skip_normal = FALSE
 	var/wipe_atoms = FALSE
 
-	if(istype(clone_area) && total_x == clone_area.width && total_y == clone_area.height && size_x >= 0 && size_y > 0)
+	if(istype(clone_area) && total_x == clone_area.width && total_y == clone_area.height && size_x >= ZERO && size_y > ZERO)
 		var/cloned_center_x = round(clone_area.bottom_left_coords[1] + ((total_x - 1) / 2))
 		var/cloned_center_y = round(clone_area.bottom_left_coords[2] + ((total_y - 1) / 2))
 		for(var/t in turfs)
@@ -54,7 +54,7 @@
 	var/j
 	for(var/i in 1 to atoms.len)
 		var/atom/c = atoms[i]
-		for(j = sorted.len, j > 0, --j)
+		for(j = sorted.len, j > ZERO, --j)
 			var/atom/c2 = sorted[j]
 			if(c2.layer <= c.layer)
 				break

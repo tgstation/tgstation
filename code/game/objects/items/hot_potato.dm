@@ -5,11 +5,11 @@
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "potato"
 	item_flags = NOBLUDGEON
-	force = 0
+	force = ZERO
 	var/icon_off = "potato"
 	var/icon_on = "potato_active"
 	var/detonation_timerid
-	var/activation_time = 0
+	var/activation_time = ZERO
 	var/timer = 600			//deciseconds
 	var/show_timer = FALSE
 	var/reusable = FALSE		//absolute madman
@@ -17,8 +17,8 @@
 	var/forceful_attachment = TRUE
 	var/stimulant = TRUE
 	var/detonate_explosion = TRUE
-	var/detonate_dev_range = 0
-	var/detonate_heavy_range = 0
+	var/detonate_dev_range = ZERO
+	var/detonate_heavy_range = ZERO
 	var/detonate_light_range = 2
 	var/detonate_flash_range = 5
 	var/detonate_fire_range = 5
@@ -71,12 +71,12 @@
 	if(stimulant)
 		if(isliving(loc))
 			var/mob/living/L = loc
-			L.SetStun(0)
-			L.SetKnockdown(0)
-			L.SetSleeping(0)
-			L.SetImmobilized(0)
-			L.SetParalyzed(0)
-			L.SetUnconscious(0)
+			L.SetStun(ZERO)
+			L.SetKnockdown(ZERO)
+			L.SetSleeping(ZERO)
+			L.SetImmobilized(ZERO)
+			L.SetParalyzed(ZERO)
+			L.SetUnconscious(ZERO)
 			L.reagents.add_reagent(/datum/reagent/medicine/muscle_stimulant, CLAMP(5 - L.reagents.get_reagent_amount(/datum/reagent/medicine/muscle_stimulant), 0, 5))	//If you don't have legs or get bola'd, tough luck!
 			colorize(L)
 

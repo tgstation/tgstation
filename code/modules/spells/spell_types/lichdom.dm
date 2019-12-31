@@ -13,7 +13,7 @@
 	invocation = "NECREM IMORTIUM!"
 	invocation_type = "shout"
 	range = -1
-	level_max = 0 //cannot be improved
+	level_max = ZERO //cannot be improved
 	cooldown_min = 10
 	include_user = TRUE
 
@@ -83,11 +83,11 @@
 	color = "#003300"
 	light_color = "#003300"
 	var/lon_range = 3
-	var/resurrections = 0
+	var/resurrections = ZERO
 	var/datum/mind/mind
 	var/respawn_time = 1800
 
-	var/static/active_phylacteries = 0
+	var/static/active_phylacteries = ZERO
 
 /obj/item/phylactery/Initialize(mapload, datum/mind/newmind)
 	. = ..()

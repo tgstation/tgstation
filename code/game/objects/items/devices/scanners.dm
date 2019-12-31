@@ -88,7 +88,7 @@ GENE SCANNER
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=200)
 	var/mode = 1
-	var/scanmode = 0
+	var/scanmode = ZERO
 	var/advanced = FALSE
 	custom_price = 300
 
@@ -102,7 +102,7 @@ GENE SCANNER
 		scanmode = 1
 	else
 		to_chat(user, "<span class='notice'>You switch the health analyzer to check physical health.</span>")
-		scanmode = 0
+		scanmode = ZERO
 
 /obj/item/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
 	flick("[icon_state]-scan", src)	//makes it so that it plays the scan animation upon scanning, including clumsy scanning
@@ -121,7 +121,7 @@ GENE SCANNER
 	user.visible_message("<span class='notice'>[user] analyzes [M]'s vitals.</span>", \
 						"<span class='notice'>You analyze [M]'s vitals.</span>")
 
-	if(scanmode == 0)
+	if(scanmode == ZERO)
 		healthscan(user, M, mode, advanced)
 	else if(scanmode == 1)
 		chemscan(user, M)
@@ -253,7 +253,7 @@ GENE SCANNER
 	if(iscarbon(M) && mode == 1)
 		var/mob/living/carbon/C = M
 		var/list/damaged = C.get_damaged_bodyparts(1,1)
-		if(length(damaged)>0 || oxy_loss>0 || tox_loss>0 || fire_loss>0)
+		if(length(damaged)>ZERO || oxy_loss>ZERO || tox_loss>ZERO || fire_loss>ZERO)
 			var/list/dmgreport = list()
 			dmgreport += "<table style='margin-left:3em'><tr><font face='Verdana'>\
 							<td style='width:7em;'><font color='#0000CC'>Damage:</font></td>\
@@ -438,7 +438,7 @@ GENE SCANNER
 	switch (mode)
 		if(1)
 			to_chat(usr, "The scanner now shows specific limb damage.")
-		if(0)
+		if(ZERO)
 			to_chat(usr, "The scanner no longer shows limb damage.")
 
 /obj/item/healthanalyzer/advanced
@@ -460,7 +460,7 @@ GENE SCANNER
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
-	throwforce = 0
+	throwforce = ZERO
 	throw_speed = 3
 	throw_range = 7
 	tool_behaviour = TOOL_ANALYZER
@@ -468,7 +468,7 @@ GENE SCANNER
 	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 	var/cooldown = FALSE
 	var/cooldown_time = 250
-	var/accuracy // 0 is the best accuracy.
+	var/accuracy // ZERO is the best accuracy.
 
 /obj/item/analyzer/examine(mob/user)
 	. = ..()
@@ -574,7 +574,7 @@ GENE SCANNER
 		else
 			var/next_hit = SSweather.next_hit_by_zlevel["[T.z]"]
 			var/fixed = next_hit ? next_hit - world.time : -1
-			if(fixed < 0)
+			if(fixed < ZERO)
 				to_chat(user, "<span class='warning'>[src]'s barometer function was unable to trace any weather patterns.</span>")
 			else
 				to_chat(user, "<span class='warning'>[src]'s barometer function says a storm will land in approximately [butchertime(fixed)].</span>")
@@ -621,7 +621,7 @@ GENE SCANNER
 		var/temperature = air_contents.temperature
 		var/cached_scan_results = air_contents.analyzer_results
 
-		if(total_moles > 0)
+		if(total_moles > ZERO)
 			to_chat(user, "<span class='notice'>Moles: [round(total_moles, 0.01)] mol</span>")
 			to_chat(user, "<span class='notice'>Volume: [volume] L</span>")
 			to_chat(user, "<span class='notice'>Pressure: [round(pressure,0.01)] kPa</span>")
@@ -656,7 +656,7 @@ GENE SCANNER
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
-	throwforce = 0
+	throwforce = ZERO
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
@@ -807,7 +807,7 @@ GENE SCANNER
 
 		if(sequence)
 			var/display
-			for(var/i in 0 to length(sequence) / DNA_MUTATION_BLOCKS-1)
+			for(var/i in ZERO to length(sequence) / DNA_MUTATION_BLOCKS-1)
 				if(i)
 					display += "-"
 				display += copytext(sequence, 1 + i*DNA_MUTATION_BLOCKS, DNA_MUTATION_BLOCKS*(1+i) + 1)
@@ -839,8 +839,8 @@ GENE SCANNER
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "An wand for scanning someone else for a medical analysis. Insert into a kiosk is make the scanned patient the target of a health scan."
-	force = 0
-	throwforce = 0
+	force = ZERO
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_TINY
 	var/selected_target = null
 

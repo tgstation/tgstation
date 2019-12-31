@@ -31,13 +31,13 @@
 /obj/structure/frame/machine/examine(user)
 	. = ..()
 	if(state == 3 && req_components && req_component_names)
-		var/hasContent = 0
+		var/hasContent = ZERO
 		var/requires = "It requires"
 
 		for(var/i = 1 to req_components.len)
 			var/tname = req_components[i]
 			var/amt = req_components[tname]
-			if(amt == 0)
+			if(amt == ZERO)
 				continue
 			var/use_and = i == req_components.len
 			requires += "[(hasContent ? (use_and ? ", and" : ",") : "")] [amt] [amt == 1 ? req_component_names[tname] : "[req_component_names[tname]]\s"]"
@@ -66,7 +66,7 @@
 			req_component_names[tname] = initial(O.name)
 
 /obj/structure/frame/machine/proc/get_req_components_amt()
-	var/amt = 0
+	var/amt = ZERO
 	for(var/path in req_components)
 		amt += req_components[path]
 	return amt
@@ -156,7 +156,7 @@
 				circuit.forceMove(drop_location())
 				components.Remove(circuit)
 				circuit = null
-				if(components.len == 0)
+				if(components.len == ZERO)
 					to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 				else
 					to_chat(user, "<span class='notice'>You remove the circuit board and other components.</span>")
@@ -178,8 +178,8 @@
 			if(P.tool_behaviour == TOOL_SCREWDRIVER)
 				var/component_check = 1
 				for(var/R in req_components)
-					if(req_components[R] > 0)
-						component_check = 0
+					if(req_components[R] > ZERO)
+						component_check = ZERO
 						break
 				if(component_check)
 					P.play_tool_sound(src)
@@ -212,7 +212,7 @@
 				part_list = sortTim(part_list, /proc/cmp_rped_sort)
 
 				for(var/path in req_components)
-					while(req_components[path] > 0 && (locate(path) in part_list))
+					while(req_components[path] > ZERO && (locate(path) in part_list))
 						var/obj/item/part = (locate(path) in part_list)
 						part_list -= part
 						if(istype(part,/obj/item/stack))
@@ -243,7 +243,7 @@
 
 			if(isitem(P) && get_req_components_amt())
 				for(var/I in req_components)
-					if(istype(P, I) && (req_components[I] > 0))
+					if(istype(P, I) && (req_components[I] > ZERO))
 						if(istype(P, /obj/item/stack))
 							var/obj/item/stack/S = P
 							var/used_amt = min(round(S.get_amount()), req_components[I])
@@ -267,7 +267,7 @@
 						req_components[I]--
 						return 1
 				to_chat(user, "<span class='warning'>You cannot add that to the machine!</span>")
-				return 0
+				return ZERO
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 

@@ -13,18 +13,18 @@
 
 /obj/item/stack/arcadeticket/update_icon()
 	var/amount = get_amount()
-	if((amount >= 12) && (amount > 0))
+	if((amount >= 12) && (amount > ZERO))
 		icon_state = "arcade-ticket_4"
-	else if((amount >= 6) && (amount > 0))
+	else if((amount >= 6) && (amount > ZERO))
 		icon_state = "arcade-ticket_3"
-	else if((amount >= 2) && (amount > 0))
+	else if((amount >= 2) && (amount > ZERO))
 		icon_state = "arcade-ticket_2"
 	else
 		icon_state = "arcade-ticket"
 
 /obj/item/stack/arcadeticket/proc/pay_tickets()
 	amount -= 2
-	if (amount == 0)
+	if (amount == ZERO)
 		qdel(src)
 
 /obj/item/stack/arcadeticket/thirty

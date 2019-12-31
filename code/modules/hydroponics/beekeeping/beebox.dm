@@ -8,7 +8,7 @@
 
 
 /mob/proc/bee_friendly()
-	return 0
+	return ZERO
 
 
 /mob/living/simple_animal/hostile/poison/bees/bee_friendly()
@@ -23,7 +23,7 @@
 		var/obj/item/clothing/CH = head
 		if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)
 			return 1
-	return 0
+	return ZERO
 
 
 /obj/structure/beebox
@@ -37,7 +37,7 @@
 	var/list/bees = list() //bees owned by the box, not those inside it
 	var/list/honeycombs = list()
 	var/list/honey_frames = list()
-	var/bee_resources = 0
+	var/bee_resources = ZERO
 
 
 /obj/structure/beebox/Initialize()
@@ -92,7 +92,7 @@
 	if(queen_bee)
 		if(bee_resources >= BEE_RESOURCE_HONEYCOMB_COST)
 			if(honeycombs.len < get_max_honeycomb())
-				bee_resources = max(bee_resources-BEE_RESOURCE_HONEYCOMB_COST, 0)
+				bee_resources = max(bee_resources-BEE_RESOURCE_HONEYCOMB_COST, ZERO)
 				var/obj/item/reagent_containers/honeycomb/HC = new(src)
 				if(queen_bee.beegent)
 					HC.set_reagent(queen_bee.beegent.type)
@@ -104,7 +104,7 @@
 				freebee = TRUE
 			if((bee_resources >= BEE_RESOURCE_NEW_BEE_COST && prob(BEE_PROB_NEW_BEE)) || freebee)
 				if(!freebee)
-					bee_resources = max(bee_resources - BEE_RESOURCE_NEW_BEE_COST, 0)
+					bee_resources = max(bee_resources - BEE_RESOURCE_NEW_BEE_COST, ZERO)
 				var/mob/living/simple_animal/hostile/poison/bees/B = new(get_turf(src))
 				B.beehome = src
 				B.assign_reagent(queen_bee.beegent)
@@ -112,7 +112,7 @@
 
 
 /obj/structure/beebox/proc/get_max_honeycomb()
-	. = 0
+	. = ZERO
 	for(var/hf in honey_frames)
 		var/obj/item/honey_frame/HF = hf
 		. += HF.honeycomb_capacity
@@ -175,7 +175,7 @@
 
 		if(queen_bee)
 			visible_message("<span class='notice'>[user] sets [qb] down inside the apiary, making it their new home.</span>")
-			var/relocated = 0
+			var/relocated = ZERO
 			for(var/b in bees)
 				var/mob/living/simple_animal/hostile/poison/bees/B = b
 				if(B.reagent_incompatible(queen_bee))
@@ -229,7 +229,7 @@
 					visible_message("<span class='notice'>[user] removes a frame from the apiary.</span>")
 
 					var/amtH = HF.honeycomb_capacity
-					var/fallen = 0
+					var/fallen = ZERO
 					while(honeycombs.len && amtH) //let's pretend you always grab the frame with the most honeycomb on it
 						var/obj/item/reagent_containers/honeycomb/HC = pick_n_take(honeycombs)
 						if(HC)

@@ -46,7 +46,7 @@
 	if(owner.getToxLoss() > 40)
 		replace_blood()
 		return
-	var/tox_amount = 0
+	var/tox_amount = ZERO
 	for(var/datum/reagent/toxin/T in owner.reagents.reagent_list)
 		tox_amount += owner.reagents.get_reagent_amount(T.type)
 	if(tox_amount > 10)
@@ -64,14 +64,14 @@
 
 /obj/item/organ/heart/gland/heal/proc/reject_implant(obj/item/organ/cyberimp/implant)
 	owner.visible_message("<span class='warning'>[owner] vomits up his [implant.name]!</span>", "<span class='userdanger'>You suddenly vomit up your [implant.name]!</span>")
-	owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
+	owner.vomit(ZERO, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
 	implant.Remove(owner)
 	implant.forceMove(owner.drop_location())
 
 /obj/item/organ/heart/gland/heal/proc/replace_liver(obj/item/organ/liver/liver)
 	if(liver)
 		owner.visible_message("<span class='warning'>[owner] vomits up his [liver.name]!</span>", "<span class='userdanger'>You suddenly vomit up your [liver.name]!</span>")
-		owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
+		owner.vomit(ZERO, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
 		liver.Remove(owner)
 		liver.forceMove(owner.drop_location())
 	else
@@ -86,7 +86,7 @@
 /obj/item/organ/heart/gland/heal/proc/replace_lungs(obj/item/organ/lungs/lungs)
 	if(lungs)
 		owner.visible_message("<span class='warning'>[owner] vomits up his [lungs.name]!</span>", "<span class='userdanger'>You suddenly vomit up your [lungs.name]!</span>")
-		owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
+		owner.vomit(ZERO, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
 		lungs.Remove(owner)
 		lungs.forceMove(owner.drop_location())
 	else
@@ -140,7 +140,7 @@
 
 /obj/item/organ/heart/gland/heal/proc/keep_replacing_blood()
 	var/keep_going = FALSE
-	owner.vomit(0, TRUE, FALSE, 3, FALSE, FALSE, FALSE, TRUE)
+	owner.vomit(ZERO, TRUE, FALSE, 3, FALSE, FALSE, FALSE, TRUE)
 	owner.Stun(15)
 	owner.adjustToxLoss(-15, TRUE, TRUE)
 

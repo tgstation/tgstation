@@ -44,7 +44,7 @@
 				L.visible_message("<span class='warning'>[L] is knocked off of [R] by the charge in [R]'s chassis induced by [name]!</span>")	//I know it's bad.
 				L.Paralyze(10)
 				R.unbuckle_mob(L)
-				do_sparks(5, 0, L)
+				do_sparks(5, ZERO, L)
 	..()
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/setup_edge_turf(turf/T)
@@ -52,7 +52,7 @@
 	var/image/I = get_edgeturf_overlay(get_edgeturf_direction(T))
 	var/obj/effect/abstract/proximity_checker/advanced/F = edge_turfs[T]
 	F.appearance = I.appearance
-	F.invisibility = 0
+	F.invisibility = ZERO
 	F.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	F.layer = 5
 

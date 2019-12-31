@@ -7,11 +7,11 @@
 
 	dog_fashion = /datum/dog_fashion/head/cargo_tech
 
-	var/flipped = 0
+	var/flipped = ZERO
 
 /obj/item/clothing/head/soft/dropped()
 	icon_state = "[soft_type]soft"
-	flipped=0
+	flipped=ZERO
 	..()
 
 /obj/item/clothing/head/soft/verb/flipcap()

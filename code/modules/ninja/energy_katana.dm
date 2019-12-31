@@ -24,7 +24,7 @@
 	. = ..()
 	jaunt = new(src)
 	spark_system = new /datum/effect_system/spark_spread()
-	spark_system.set_up(5, 0, src)
+	spark_system.set_up(5, ZERO, src)
 	spark_system.attach(src)
 
 /obj/item/energy_katana/attack_self(mob/user)
@@ -61,12 +61,12 @@
 		if(istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
 			var/obj/item/clothing/suit/space/space_ninja/SN = H.wear_suit
 			if(SN.energyKatana == src)
-				returnToOwner(H, 0, 1)
+				returnToOwner(H, ZERO, 1)
 				return
 
 	..()
 
-/obj/item/energy_katana/proc/returnToOwner(mob/living/carbon/human/user, doSpark = 1, caught = 0)
+/obj/item/energy_katana/proc/returnToOwner(mob/living/carbon/human/user, doSpark = 1, caught = ZERO)
 	if(!istype(user))
 		return
 	forceMove(get_turf(user))
@@ -79,7 +79,7 @@
 
 	if(user.put_in_hands(src))
 		msg = "Your Energy Katana teleports into your hand!"
-	else if(user.equip_to_slot_if_possible(src, ITEM_SLOT_BELT, 0, 1, 1))
+	else if(user.equip_to_slot_if_possible(src, ITEM_SLOT_BELT, ZERO, 1, 1))
 		msg = "Your Energy Katana teleports back to you, sheathing itself as it does so!</span>"
 	else
 		msg = "Your Energy Katana teleports to your location!"

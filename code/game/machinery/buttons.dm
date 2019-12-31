@@ -9,7 +9,7 @@
 	var/obj/item/electronics/airlock/board
 	var/device_type = null
 	var/id = null
-	var/initialized_button = 0
+	var/initialized_button = ZERO
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 70)
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
@@ -18,12 +18,12 @@
 /obj/machinery/button/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
+/obj/machinery/button/Initialize(mapload, ndir = ZERO, built = ZERO)
 	. = ..()
 	if(built)
 		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
+		pixel_x = (dir & 3)? ZERO : (dir == 4 ? -24 : 24)
+		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : ZERO
 		panel_open = TRUE
 		update_icon()
 

@@ -25,8 +25,8 @@
 	var/poweralm = TRUE
 	var/lightswitch = TRUE
 
-	var/totalbeauty = 0 //All beauty in this area combined, only includes indoor area.
-	var/beauty = 0 // Beauty average per open turf in the area
+	var/totalbeauty = ZERO //All beauty in this area combined, only includes indoor area.
+	var/beauty = ZERO // Beauty average per open turf in the area
 	var/beauty_threshold = 150 //If a room is too big it doesn't have beauty.
 
 	var/requires_power = TRUE
@@ -34,24 +34,24 @@
 
 	var/outdoors = FALSE //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
 
-	var/areasize = 0 //Size of the area in open turfs, only calculated for indoors areas.
+	var/areasize = ZERO //Size of the area in open turfs, only calculated for indoors areas.
 
 	/// Bonus mood for being in this area
-	var/mood_bonus = 0
-	/// Mood message for being here, only shows up if mood_bonus != 0
+	var/mood_bonus = ZERO
+	/// Mood message for being here, only shows up if mood_bonus != ZERO
 	var/mood_message = "<span class='nicegreen'>This area is pretty nice!\n</span>"
 
 	var/power_equip = TRUE
 	var/power_light = TRUE
 	var/power_environ = TRUE
-	var/used_equip = 0
-	var/used_light = 0
-	var/used_environ = 0
+	var/used_equip = ZERO
+	var/used_light = ZERO
+	var/used_environ = ZERO
 	var/static_equip
-	var/static_light = 0
+	var/static_light = ZERO
 	var/static_environ
 
-	var/has_gravity = 0
+	var/has_gravity = ZERO
 	///Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
 	var/noteleport = FALSE
 	///Hides area from player Teleport function.
@@ -63,7 +63,7 @@
 
 	var/no_air = null
 
-	var/parallax_movedir = 0
+	var/parallax_movedir = ZERO
 
 	var/list/ambientsounds = GENERIC
 	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
@@ -71,7 +71,7 @@
 	var/list/firedoors
 	var/list/cameras
 	var/list/firealarms
-	var/firedoors_last_closed_on = 0
+	var/firedoors_last_closed_on = ZERO
 	/// Can the Xenobio management console transverse this area by default?
 	var/xenobiology_compatible = FALSE
 	/// typecache to limit the areas that atoms in this area can smooth with, used for shuttles IIRC
@@ -136,7 +136,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	canSmoothWithAreas = typecacheof(canSmoothWithAreas)
 
 	if(requires_power)
-		luminosity = 0
+		luminosity = ZERO
 	else
 		power_light = TRUE
 		power_equip = TRUE
@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 		if(dynamic_lighting == DYNAMIC_LIGHTING_FORCED)
 			dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
-			luminosity = 0
+			luminosity = ZERO
 		else if(dynamic_lighting != DYNAMIC_LIGHTING_IFSTARLIGHT)
 			dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	if(dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
@@ -283,7 +283,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 		src.atmosalm = danger_level
 		return 1
-	return 0
+	return ZERO
 
 /**
   * Try to close all the firedoors in the area
@@ -463,7 +463,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 
 /**
-  * Returns int 1 or 0 if the area has power for the given channel
+  * Returns int 1 or ZERO if the area has power for the given channel
   *
   * evalutes a mixture of variables mappers can set, requires_power, always_unpowered and then
   * per channel power_equip, power_light, power_environ
@@ -473,7 +473,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!requires_power)
 		return 1
 	if(always_unpowered)
-		return 0
+		return ZERO
 	switch(chan)
 		if(EQUIP)
 			return power_equip
@@ -482,13 +482,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(ENVIRON)
 			return power_environ
 
-	return 0
+	return ZERO
 
 /**
-  * Space is not powered ever, so this returns 0
+  * Space is not powered ever, so this returns ZERO
   */
 /area/space/powered(chan) //Nope.avi
-	return 0
+	return ZERO
 
 /**
   * Called when the area power status changes
@@ -504,7 +504,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   * Return the usage of power per channel
   */
 /area/proc/usage(chan)
-	var/used = 0
+	var/used = ZERO
 	switch(chan)
 		if(LIGHT)
 			used += used_light
@@ -545,9 +545,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   * Clears all power used for equipment, light and environment channels
   */
 /area/proc/clear_usage()
-	used_equip = 0
-	used_light = 0
-	used_environ = 0
+	used_equip = ZERO
+	used_light = ZERO
+	used_environ = ZERO
 
 /**
   * Add a power value amount to the stored used_x variables
@@ -583,7 +583,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	// Ambience goes down here -- make sure to list each area separately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 	if(L.client && !L.client.ambience_playing && L.client.prefs.toggles & SOUND_SHIP_AMBIENCE)
 		L.client.ambience_playing = 1
-		SEND_SOUND(L, sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ))
+		SEND_SOUND(L, sound('sound/ambience/shipambience.ogg', repeat = 1, wait = ZERO, volume = 35, channel = CHANNEL_BUZZ))
 
 	if(!(L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))
 		return //General ambience check is below the ship ambience so one can play without the other
@@ -592,17 +592,17 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		var/sound = pick(ambientsounds)
 
 		if(!L.client.played)
-			SEND_SOUND(L, sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE))
+			SEND_SOUND(L, sound(sound, repeat = ZERO, wait = ZERO, volume = 25, channel = CHANNEL_AMBIENCE))
 			L.client.played = TRUE
 			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
 
 ///Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.
 /area/proc/update_beauty()
 	if(!areasize)
-		beauty = 0
+		beauty = ZERO
 		return FALSE
 	if(areasize >= beauty_threshold)
-		beauty = 0
+		beauty = ZERO
 		return FALSE //Too big
 	beauty = totalbeauty / areasize
 
@@ -645,7 +645,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/proc/update_areasize()
 	if(outdoors)
 		return FALSE
-	areasize = 0
+	areasize = ZERO
 	for(var/turf/open/T in contents)
 		areasize++
 

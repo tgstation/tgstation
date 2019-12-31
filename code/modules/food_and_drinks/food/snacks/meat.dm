@@ -237,7 +237,7 @@
 	name = "meatwheat clump"
 	desc = "This doesn't look like meat, but your standards aren't <i>that</i> high to begin with."
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/blood = 5, /datum/reagent/consumable/cooking_oil = 1)
-	filling_color = rgb(150, 0, 0)
+	filling_color = rgb(150, ZERO, ZERO)
 	icon_state = "meatwheat_clump"
 	bitesize = 4
 	tastes = list("meat" = 1, "wheat" = 1)

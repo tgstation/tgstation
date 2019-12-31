@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(blackbox)
 
 	var/list/feedback = list()	//list of datum/feedback_variable
 	var/list/first_death = list() //the first death of this round, assoc. vars keep track of different things
-	var/triggertime = 0
+	var/triggertime = ZERO
 	var/sealed = FALSE	//time to stop tracking stats?
 	var/list/versions = list("antagonists" = 3,
 							"admin_secrets_fun_used" = 2,
@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(blackbox)
 	CheckPlayerCount()
 
 	if(CONFIG_GET(flag/use_exp_tracking))
-		if((triggertime < 0) || (world.time > (triggertime +3000)))	//subsystem fires once at roundstart then once every 10 minutes. a 5 min check skips the first fire. The <0 is midnight rollover check
+		if((triggertime < ZERO) || (world.time > (triggertime +3000)))	//subsystem fires once at roundstart then once every 10 minutes. a 5 min check skips the first fire. The <ZERO is midnight rollover check
 			update_exp(10,FALSE)
 
 /datum/controller/subsystem/blackbox/proc/CheckPlayerCount()
@@ -54,7 +54,7 @@ SUBSYSTEM_DEF(blackbox)
 //no touchie
 /datum/controller/subsystem/blackbox/vv_get_var(var_name)
 	if(var_name == "feedback")
-		return debug_variable(var_name, deepCopyList(feedback), 0, src)
+		return debug_variable(var_name, deepCopyList(feedback), ZERO, src)
 	return ..()
 
 /datum/controller/subsystem/blackbox/vv_edit_var(var_name, var_value)

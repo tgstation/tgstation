@@ -11,7 +11,7 @@
 	severity = DISEASE_SEVERITY_HARMFUL
 	permeability_mod = 0.4
 	stage_prob = 2
-	var/restcure = 0
+	var/restcure = ZERO
 
 /datum/disease/dna_retrovirus/New()
 	..()
@@ -67,9 +67,9 @@
 
 			if (prob(35))
 				if(prob(50))
-					scramble_dna(affected_mob, 1, 0, rand(15,45))
+					scramble_dna(affected_mob, 1, ZERO, rand(15,45))
 				else
-					scramble_dna(affected_mob, 0, 1, rand(15,45))
+					scramble_dna(affected_mob, ZERO, 1, rand(15,45))
 
 		if(4)
 			if(restcure)
@@ -79,6 +79,6 @@
 					return
 			if (prob(60))
 				if(prob(50))
-					scramble_dna(affected_mob, 1, 0, rand(50,75))
+					scramble_dna(affected_mob, 1, ZERO, rand(50,75))
 				else
-					scramble_dna(affected_mob, 0, 1, rand(50,75))
+					scramble_dna(affected_mob, ZERO, 1, rand(50,75))

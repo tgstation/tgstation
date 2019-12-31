@@ -199,7 +199,7 @@
 
 //you don't look quite right, is something the matter?
 /datum/proximity_monitor/advanced/timestop/proc/into_the_negative_zone(atom/A)
-	A.add_atom_colour(list(-1,0,0,0, 0,-1,0,0, 0,0,-1,0, 0,0,0,1, 1,1,1,0), TEMPORARY_COLOUR_PRIORITY)
+	A.add_atom_colour(list(-1,ZERO,ZERO,ZERO, ZERO,-1,ZERO,ZERO, ZERO,ZERO,-1,ZERO, ZERO,ZERO,ZERO,1, 1,1,1,ZERO), TEMPORARY_COLOUR_PRIORITY)
 
 //let's put some colour back into your cheeks
 /datum/proximity_monitor/advanced/timestop/proc/escape_the_negative_zone(atom/A)

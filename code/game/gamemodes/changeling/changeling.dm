@@ -42,8 +42,8 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	else
 		num_changelings = max(1, min(num_players(), changeling_amount))
 
-	if(antag_candidates.len>0)
-		for(var/i = 0, i < num_changelings, i++)
+	if(antag_candidates.len>ZERO)
+		for(var/i = ZERO, i < num_changelings, i++)
 			if(!antag_candidates.len)
 				break
 			var/datum/mind/changeling = antag_pick(antag_candidates)
@@ -120,7 +120,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 			continue
 
 		var/obj/item/C
-		var/equip = 0
+		var/equip = ZERO
 		if(!user.vars[slot])
 			var/thetype = GLOB.slot2type[slot]
 			equip = 1

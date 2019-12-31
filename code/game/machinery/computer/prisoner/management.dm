@@ -4,12 +4,12 @@
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
 	req_access = list(ACCESS_BRIG)
-	var/id = 0
+	var/id = ZERO
 	var/temp = null
-	var/status = 0
+	var/status = ZERO
 	var/timeleft = 60
-	var/stop = 0
-	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
+	var/stop = ZERO
+	var/screen = ZERO // ZERO - No Access Denied, 1 - Access allowed
 	circuit = /obj/item/circuitboard/computer/prisoner
 
 	light_color = LIGHT_COLOR_RED
@@ -19,7 +19,7 @@
 	if(isliving(user))
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 	var/dat = ""
-	if(screen == 0)
+	if(screen == ZERO)
 		dat += "<HR><A href='?src=[REF(src)];lock=1'>{Log In}</A>"
 	else if(screen == 1)
 		dat += "<H3>Prisoner ID Management</H3>"
@@ -97,10 +97,10 @@
 					if("eject")
 						id_eject(usr)
 					if("reset")
-						contained_id.points = 0
+						contained_id.points = ZERO
 					if("setgoal")
 						var/num = round(input(usr, "Choose prisoner's goal:", "Input an Integer", null) as num|null)
-						if(num >= 0)
+						if(num >= ZERO)
 							num = min(num,1000) //Cap the quota to the equivilent of 10 minutes.
 							contained_id.goal = num
 		else if(href_list["inject1"])

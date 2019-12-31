@@ -143,7 +143,7 @@
 	for(var/obj/item/I in get_usable_modules())
 		if(istype(I, /obj/item/assembly/flash))
 			var/obj/item/assembly/flash/F = I
-			F.times_used = 0
+			F.times_used = ZERO
 			F.burnt_out = FALSE
 			F.update_icon()
 		else if(istype(I, /obj/item/melee/baton))
@@ -217,7 +217,7 @@
 		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
 		sleep(7)
 	if(!prev_lockcharge)
-		R.SetLockdown(0)
+		R.SetLockdown(ZERO)
 	R.setDir(SOUTH)
 	R.anchored = FALSE
 	R.notransform = FALSE
@@ -338,7 +338,7 @@
 			T.cell.give(S.e_cost * coeff)
 			T.update_icon()
 		else
-			T.charge_tick = 0
+			T.charge_tick = ZERO
 
 /obj/item/robot_module/peacekeeper
 	name = "Peacekeeper"
@@ -460,7 +460,7 @@
 	emag_modules = list(/obj/item/reagent_containers/borghypo/borgshaker/hacked)
 	moduleselect_icon = "service"
 	special_light_key = "service"
-	hat_offset = 0
+	hat_offset = ZERO
 
 /obj/item/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
@@ -508,7 +508,7 @@
 	emag_modules = list(/obj/item/borg/stun)
 	cyborg_base_icon = "miner"
 	moduleselect_icon = "miner"
-	hat_offset = 0
+	hat_offset = ZERO
 	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes.
 
 /obj/item/robot_module/miner/be_transformed_to(obj/item/robot_module/old_module)
@@ -638,11 +638,11 @@
 /datum/robot_energy_storage/proc/use_charge(amount)
 	if (energy >= amount)
 		energy -= amount
-		if (energy == 0)
+		if (energy == ZERO)
 			return 1
 		return 2
 	else
-		return 0
+		return ZERO
 
 /datum/robot_energy_storage/proc/add_charge(amount)
 	energy = min(energy + amount, max_energy)

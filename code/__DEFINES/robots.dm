@@ -9,7 +9,7 @@
 #define DEFAULT_SCAN_RANGE		7	//default view range for finding targets.
 
 //Mode defines
-#define BOT_IDLE 			0	// idle
+#define BOT_IDLE 			ZERO	// idle
 #define BOT_HUNT 			1	// found target, hunting
 #define BOT_PREP_ARREST 	2	// at target, preparing to arrest
 #define BOT_ARREST			3	// arresting target
@@ -29,7 +29,7 @@
 #define BOT_NO_ROUTE		17	// no destination beacon found (or no route)
 
 //Bot types
-#define SEC_BOT				(1<<0)	// Secutritrons (Beepsky) and ED-209s
+#define SEC_BOT				(1<<ZERO)	// Secutritrons (Beepsky) and ED-209s
 #define MULE_BOT			(1<<1)	// MULEbots
 #define FLOOR_BOT			(1<<2)	// Floorbots
 #define CLEAN_BOT			(1<<3)	// Cleanbots
@@ -45,7 +45,7 @@
 #define		DISCONNECT   5
 
 //Assembly defines
-#define ASSEMBLY_FIRST_STEP 	0
+#define ASSEMBLY_FIRST_STEP 	ZERO
 #define ASSEMBLY_SECOND_STEP 	1
 #define ASSEMBLY_THIRD_STEP     2
 #define ASSEMBLY_FOURTH_STEP    3

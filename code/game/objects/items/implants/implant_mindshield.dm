@@ -1,7 +1,7 @@
 /obj/item/implant/mindshield
 	name = "mindshield implant"
 	desc = "Protects against brainwashing."
-	activated = 0
+	activated = ZERO
 
 /obj/item/implant/mindshield/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -46,7 +46,7 @@
 		return TRUE
 	return FALSE
 
-/obj/item/implant/mindshield/removed(mob/target, silent = FALSE, special = 0)
+/obj/item/implant/mindshield/removed(mob/target, silent = FALSE, special = ZERO)
 	if(..())
 		if(isliving(target))
 			var/mob/living/L = target
@@ -55,7 +55,7 @@
 		if(target.stat != DEAD && !silent)
 			to_chat(target, "<span class='boldnotice'>Your mind suddenly feels terribly vulnerable. You are no longer safe from brainwashing.</span>")
 		return 1
-	return 0
+	return ZERO
 
 /obj/item/implanter/mindshield
 	name = "implanter (mindshield)"

@@ -1,4 +1,4 @@
-#define SEEDLING_STATE_NEUTRAL 0
+#define SEEDLING_STATE_NEUTRAL ZERO
 #define SEEDLING_STATE_WARMUP 1
 #define SEEDLING_STATE_ACTIVE 2
 #define SEEDLING_STATE_RECOVERY 3
@@ -33,7 +33,7 @@
 	var/combatant_state = SEEDLING_STATE_NEUTRAL
 	var/obj/seedling_weakpoint/weak_point
 	var/mob/living/beam_debuff_target
-	var/solar_beam_identifier = 0
+	var/solar_beam_identifier = ZERO
 
 /obj/projectile/seedling
 	name = "solar energy"
@@ -120,7 +120,7 @@
 /mob/living/simple_animal/hostile/jungle/seedling/proc/WarmupAttack()
 	if(combatant_state == SEEDLING_STATE_NEUTRAL)
 		combatant_state = SEEDLING_STATE_WARMUP
-		walk(src,0)
+		walk(src,ZERO)
 		update_icons()
 		var/target_dist = get_dist(src,target)
 		var/living_target_check = isliving(target)
@@ -144,19 +144,19 @@
 		solar_beam_identifier = world.time
 		addtimer(CALLBACK(src, .proc/Beamu, living_target, solar_beam_identifier), 35)
 
-/mob/living/simple_animal/hostile/jungle/seedling/proc/Beamu(mob/living/living_target, beam_id = 0)
+/mob/living/simple_animal/hostile/jungle/seedling/proc/Beamu(mob/living/living_target, beam_id = ZERO)
 	if(combatant_state == SEEDLING_STATE_ACTIVE && living_target && beam_id == solar_beam_identifier)
 		if(living_target.z == z)
 			update_icons()
 			var/obj/effect/temp_visual/solarbeam_killsat/S = new (get_turf(src))
 			var/matrix/starting = matrix()
 			starting.Scale(1,32)
-			starting.Translate(0,520)
+			starting.Translate(ZERO,520)
 			S.transform = starting
 			var/obj/effect/temp_visual/solarbeam_killsat/K = new (get_turf(living_target))
 			var/matrix/final = matrix()
 			final.Scale(1,32)
-			final.Translate(0,512)
+			final.Translate(ZERO,512)
 			K.transform = final
 			living_target.adjustFireLoss(30)
 			living_target.adjust_fire_stacks(0.2)//Just here for the showmanship
@@ -206,7 +206,7 @@
 	if(combatant_state == SEEDLING_STATE_ACTIVE && beam_debuff_target)
 		beam_debuff_target.remove_status_effect(/datum/status_effect/seedling_beam_indicator)
 		beam_debuff_target = null
-		solar_beam_identifier = 0
+		solar_beam_identifier = ZERO
 		AttackRecovery()
 
 /mob/living/simple_animal/hostile/jungle/seedling/update_icons()

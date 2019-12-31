@@ -8,7 +8,7 @@
 #define MOVESPEED_DATA_INDEX_MAX 6
 
 //flags
-#define IGNORE_NOSLOW	(1 << 0)
+#define IGNORE_NOSLOW	(1 << ZERO)
 
 //conflict types
 

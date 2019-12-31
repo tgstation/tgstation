@@ -76,7 +76,7 @@
 			on = FALSE
 		return PROCESS_KILL
 
-	if(cell && cell.charge > 0)
+	if(cell && cell.charge > ZERO)
 		var/turf/L = loc
 		if(!istype(L))
 			if(mode != HEATER_MODE_STANDBY)
@@ -119,8 +119,8 @@
 		return PROCESS_KILL
 
 /obj/machinery/space_heater/RefreshParts()
-	var/laser = 0
-	var/cap = 0
+	var/laser = ZERO
+	var/cap = ZERO
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		laser += M.rating
 	for(var/obj/item/stock_parts/capacitor/M in component_parts)

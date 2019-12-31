@@ -50,7 +50,7 @@
 	P.setAngle(new_angle_s)
 	return TRUE
 
-/turf/closed/wall/proc/dismantle_wall(devastated=0, explode=0)
+/turf/closed/wall/proc/dismantle_wall(devastated=ZERO, explode=ZERO)
 	if(devastated)
 		devastate_wall()
 	else
@@ -87,12 +87,12 @@
 			return
 		if(2)
 			if (prob(50))
-				dismantle_wall(0,1)
+				dismantle_wall(ZERO,1)
 			else
 				dismantle_wall(1,1)
 		if(3)
 			if (prob(hardness))
-				dismantle_wall(0,1)
+				dismantle_wall(ZERO,1)
 	if(!density)
 		..()
 
@@ -182,11 +182,11 @@
 		return FALSE
 
 	if(W.tool_behaviour == TOOL_WELDER)
-		if(!W.tool_start_check(user, amount=0))
+		if(!W.tool_start_check(user, amount=ZERO))
 			return FALSE
 
 		to_chat(user, "<span class='notice'>You begin fixing dents on the wall...</span>")
-		if(W.use_tool(src, user, 0, volume=100))
+		if(W.use_tool(src, user, ZERO, volume=100))
 			if(iswallturf(src) && LAZYLEN(dent_decals))
 				to_chat(user, "<span class='notice'>You fix some dents on the wall.</span>")
 				cut_overlay(dent_decals)
@@ -211,7 +211,7 @@
 
 /turf/closed/wall/proc/try_decon(obj/item/I, mob/user, turf/T)
 	if(I.tool_behaviour == TOOL_WELDER)
-		if(!I.tool_start_check(user, amount=0))
+		if(!I.tool_start_check(user, amount=ZERO))
 			return FALSE
 
 		to_chat(user, "<span class='notice'>You begin slicing through the outer plating...</span>")

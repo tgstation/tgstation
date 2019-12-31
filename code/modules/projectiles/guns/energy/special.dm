@@ -61,7 +61,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
 	cell_type = "/obj/item/stock_parts/cell/potato"
-	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
+	clumsy_check = ZERO //Admin spawn only, might as well let clowns use it.
 	selfcharge = 1
 
 /obj/item/gun/energy/meteorgun/pen
@@ -92,12 +92,12 @@
 	suppressed = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	weapon_weight = WEAPON_LIGHT
-	obj_flags = 0
+	obj_flags = ZERO
 	overheat_time = 20
 	holds_charge = TRUE
 	unique_frequency = TRUE
 	can_flashlight = FALSE
-	max_mod_capacity = 0
+	max_mod_capacity = ZERO
 
 /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
 	name = "candy corn crossbow"
@@ -147,7 +147,7 @@
 		. += "<span class='notice'>[src] is [round(cell.percent())]% charged.</span>"
 
 /obj/item/gun/energy/plasmacutter/attackby(obj/item/I, mob/user)
-	var/charge_multiplier = 0 //2 = Refined stack, 1 = Ore
+	var/charge_multiplier = ZERO //2 = Refined stack, 1 = Ore
 	if(istype(I, /obj/item/stack/sheet/mineral/plasma))
 		charge_multiplier = 2
 	if(istype(I, /obj/item/stack/ore/plasma))
@@ -170,7 +170,7 @@
 		user.flash_act(light_intensity)
 
 // Can we weld? Plasma cutter does not use charge continuously.
-// Amount cannot be defaulted to 1: most of the code specifies 0 in the call.
+// Amount cannot be defaulted to 1: most of the code specifies ZERO in the call.
 /obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount)
 	if(QDELETED(cell))
 		to_chat(user, "<span class='warning'>[src] does not have a cell, and cannot be used!</span>")
@@ -187,18 +187,18 @@
 /obj/item/gun/energy/plasmacutter/use(amount)
 	return (!QDELETED(cell) && cell.use(amount ? amount * charge_weld : charge_weld))
 
-// This only gets called by use_tool(delay > 0)
+// This only gets called by use_tool(delay > ZERO)
 // It's also supposed to not get overridden in the first place.
 /obj/item/gun/energy/plasmacutter/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
 	. = ..() //return tool_use_check(user, amount) && (!extra_checks || extra_checks.Invoke())
 	if(. && user)
-		if (progress_flash_divisor == 0)
+		if (progress_flash_divisor == ZERO)
 			user.flash_act(min(light_intensity,1))
 			progress_flash_divisor = initial(progress_flash_divisor)
 		else
 			progress_flash_divisor--
 
-/obj/item/gun/energy/plasmacutter/use_tool(atom/target, mob/living/user, delay, amount=1, volume=0, datum/callback/extra_checks)
+/obj/item/gun/energy/plasmacutter/use_tool(atom/target, mob/living/user, delay, amount=1, volume=ZERO, datum/callback/extra_checks)
 	if(amount)
 		. = ..()
 	else

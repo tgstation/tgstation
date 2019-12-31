@@ -31,7 +31,7 @@
 
 //Spookoween variables
 /obj/structure/closet
-	var/trapped = 0
+	var/trapped = ZERO
 	var/mob/trapped_mob
 
 /obj/structure/closet/Initialize()
@@ -72,36 +72,36 @@
 	else if(trapped == SPOOKY_SKELETON)
 		visible_message("<span class='userdanger'><font size='5'>BOO!</font></span>")
 		playsound(loc, 'sound/spookoween/girlscream.ogg', 300, TRUE)
-		trapped = 0
+		trapped = ZERO
 		QDEL_IN(trapped_mob, 90)
 
 	else if(trapped == HOWLING_GHOST)
 		visible_message("<span class='userdanger'><font size='5'>[pick("OooOOooooOOOoOoOOooooOOOOO", "BooOOooOooooOOOO", "BOO!", "WoOOoOoooOooo")]</font></span>")
 		playsound(loc, 'sound/spookoween/ghosty_wind.ogg', 300, TRUE)
 		new /mob/living/simple_animal/shade/howling_ghost(loc)
-		trapped = 0
+		trapped = ZERO
 
 	else if(trapped == SCARY_BATS)
 		visible_message("<span class='userdanger'><font size='5'>Protect your hair!</font></span>")
 		playsound(loc, 'sound/spookoween/bats.ogg', 300, TRUE)
 		var/number = rand(1,3)
-		for(var/i=0,i < number,i++)
+		for(var/i=ZERO,i < number,i++)
 			new /mob/living/simple_animal/hostile/retaliate/bat(loc)
-		trapped = 0
+		trapped = ZERO
 
 	else if(trapped == ANGRY_FAITHLESS)
 		visible_message("<span class='userdanger'>The closet bursts open!</span>")
 		visible_message("<span class='userdanger'><font size='5'>THIS BEING RADIATES PURE EVIL! YOU BETTER RUN!!!</font></span>")
 		playsound(loc, 'sound/hallucinations/wail.ogg', 300, TRUE)
 		var/mob/living/simple_animal/hostile/faithless/F = new(loc)
-		trapped = 0
+		trapped = ZERO
 		QDEL_IN(F, 120)
 
 	else if(trapped == INSANE_CLOWN)
 		visible_message("<span class='userdanger'><font size='5'>...</font></span>")
 		playsound(loc, 'sound/spookoween/scary_clown_appear.ogg', 300, TRUE)
 		spawn_atom_to_turf(/mob/living/simple_animal/hostile/clown_insane, loc, 1, FALSE)
-		trapped = 0
+		trapped = ZERO
 
 //don't spawn in crates
 /obj/structure/closet/crate/trigger_spooky_trap()
@@ -127,7 +127,7 @@
 	anchored = TRUE
 	incorporeal_move = 1
 	layer = 4
-	var/timer = 0
+	var/timer = ZERO
 
 /mob/living/simple_animal/shade/howling_ghost/Initialize()
 	. = ..()
@@ -141,7 +141,7 @@
 	timer--
 	if(prob(20))
 		roam()
-	if(timer == 0)
+	if(timer == ZERO)
 		spooky_ghosty()
 		timer = rand(1,15)
 
@@ -169,7 +169,7 @@
 		return
 
 /mob/living/simple_animal/shade/howling_ghost/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	. = 0
+	. = ZERO
 
 /mob/living/simple_animal/shade/howling_ghost/CanPass(atom/movable/mover, turf/target)
 	return 1
@@ -192,7 +192,7 @@
 	maxHealth = 1e6
 	health = 1e6
 	emote_see = list("silently stares")
-	unsuitable_atmos_damage = 0
+	unsuitable_atmos_damage = ZERO
 	var/timer
 
 /mob/living/simple_animal/hostile/clown_insane/Initialize()
@@ -243,7 +243,7 @@
 	return
 
 /mob/living/simple_animal/hostile/clown_insane/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	. = 0
+	. = ZERO
 	if(prob(5))
 		playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, TRUE)
 
@@ -270,11 +270,11 @@
 	desc = "A standard miniature energy crossbow that uses a hard-light projector to transform bolts into candy corn. Happy Halloween!"
 	category = "Holiday"
 	item = /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
-	surplus = 0
+	surplus = ZERO
 
 /datum/uplink_item/device_tools/emag/hack_o_lantern
 	name = "Hack-o'-Lantern"
 	desc = "An emag fitted to support the Halloween season. Candle not included."
 	category = "Holiday"
 	item = /obj/item/card/emag/halloween
-	surplus = 0
+	surplus = ZERO

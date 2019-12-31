@@ -75,7 +75,7 @@
 			user.filters += filter(type="wave", x=X, y=Y, size=rand()*2.5+0.5, offset=rand())
 		for(i=1, i<=7, ++i)
 			f = user.filters[start+i]
-			animate(f, offset=f:offset, time=0, loop=3, flags=ANIMATION_PARALLEL)
+			animate(f, offset=f:offset, time=ZERO, loop=3, flags=ANIMATION_PARALLEL)
 			animate(offset=f:offset-1, time=rand()*20+10)
 		if (do_after(user, 50, target=user) && user.cell.use(activationCost))
 			playsound(src, 'sound/effects/bamf.ogg', 100, TRUE, -6)

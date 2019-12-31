@@ -3,8 +3,8 @@
 	desc = "Sterile and airtight."
 	icon_state = "latexballon"
 	item_state = "lgloves"
-	force = 0
-	throwforce = 0
+	force = ZERO
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 7

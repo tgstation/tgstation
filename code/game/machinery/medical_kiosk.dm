@@ -153,8 +153,8 @@
 	else
 		. += "<span class='notice'>\The [src] has its scanner clipped to the side. Alt-Click to remove.</span>"
 
-/obj/machinery/medical_kiosk/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	var/patient_distance = 0
+/obj/machinery/medical_kiosk/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = ZERO, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	var/patient_distance = ZERO
 	if(!ishuman(user))
 		to_chat(user, "<span class='warning'>[src] is unable to interface with non-humanoids!</span>")
 		if (ui)
@@ -189,7 +189,7 @@
 	var/fire_loss = altPatient.getFireLoss()
 	var/tox_loss = altPatient.getToxLoss()
 	var/oxy_loss = altPatient.getOxyLoss()
-	var/chaos_modifier = 0
+	var/chaos_modifier = ZERO
 
 	var/sickness = "Patient does not show signs of disease."
 	var/sickness_data = "Not Applicable."

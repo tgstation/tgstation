@@ -15,9 +15,9 @@
 	var/locked = FALSE //Can be locked, so it can be given to users with a set code and mode
 	var/mode = REMOTE_MODE_OFF
 	var/list/saved_settings = list()
-	var/last_id = 0
-	var/code = 0
-	var/relay_code = 0
+	var/last_id = ZERO
+	var/code = ZERO
+	var/relay_code = ZERO
 	var/current_program_name = "Program"
 
 /obj/item/nanite_remote/examine(mob/user)
@@ -107,7 +107,7 @@
 				return
 			var/new_code = text2num(params["code"])
 			if(!isnull(new_code))
-				new_code = CLAMP(round(new_code, 1),0,9999)
+				new_code = CLAMP(round(new_code, 1),ZERO,9999)
 				code = new_code
 			. = TRUE
 		if("set_relay_code")
@@ -115,7 +115,7 @@
 				return
 			var/new_code = text2num(params["code"])
 			if(!isnull(new_code))
-				new_code = CLAMP(round(new_code, 1),0,9999)
+				new_code = CLAMP(round(new_code, 1),ZERO,9999)
 				relay_code = new_code
 			. = TRUE
 		if("update_name")

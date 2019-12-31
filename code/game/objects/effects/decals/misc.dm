@@ -5,7 +5,7 @@
 	layer = POINT_LAYER
 	duration = 25
 
-/obj/effect/temp_visual/point/Initialize(mapload, set_invis = 0)
+/obj/effect/temp_visual/point/Initialize(mapload, set_invis = ZERO)
 	. = ..()
 	var/atom/old_loc = loc
 	loc = get_turf(src) // We don't want to actualy trigger anything when it moves

@@ -8,7 +8,7 @@
 	key = "s"
 	flags = NO_STUTTER
 	space_chance = 100
-	sentence_chance = 0
+	sentence_chance = ZERO
 	default_priority = 60
 
 	icon_state = "swarmer"

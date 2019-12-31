@@ -51,7 +51,7 @@
 				affected_mob.vomit(20)
 			if(prob(3))
 				to_chat(affected_mob, "<span class='warning'><i>[pick("Your stomach silently rumbles...", "Your stomach seizes up and falls limp, muscles dead and lifeless.", "You could eat a crayon")]</i></span>")
-				affected_mob.overeatduration = max(affected_mob.overeatduration - 100, 0)
+				affected_mob.overeatduration = max(affected_mob.overeatduration - 100, ZERO)
 				affected_mob.adjust_nutrition(-100)
 			if(prob(15))
 				to_chat(affected_mob, "<span class='danger'>[pick("You feel uncomfortably hot...", "You feel like unzipping your jumpsuit", "You feel like taking off some clothes...")]</span>")

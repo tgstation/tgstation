@@ -7,7 +7,7 @@
 	icon_state = null
 	icon_state_unpowered = null
 	icon_state_menu = null
-	hardware_flag = 0
+	hardware_flag = ZERO
 
 	var/obj/machinery/modular_computer/machinery_computer = null
 
@@ -47,7 +47,7 @@
 // This thing is not meant to be used on it's own, get topic data from our machinery owner.
 //obj/item/modular_computer/processor/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 //	if(!machinery_computer)
-//		return 0
+//		return ZERO
 
 //	return machinery_computer.canUseTopic(user, state)
 

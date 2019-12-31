@@ -18,10 +18,10 @@
 
 /datum/game_mode/traitor/changeling/can_start()
 	if(!..())
-		return 0
+		return ZERO
 	possible_changelings = get_players_for_role(ROLE_CHANGELING)
 	if(possible_changelings.len < required_enemies)
-		return 0
+		return ZERO
 	return 1
 
 /datum/game_mode/traitor/changeling/pre_setup()
@@ -41,8 +41,8 @@
 	else
 		num_changelings = max(1, min(num_players(), changeling_amount/2))
 
-	if(possible_changelings.len>0)
-		for(var/j = 0, j < num_changelings, j++)
+	if(possible_changelings.len>ZERO)
+		for(var/j = ZERO, j < num_changelings, j++)
 			if(!possible_changelings.len)
 				break
 			var/datum/mind/changeling = antag_pick(possible_changelings)

@@ -127,7 +127,7 @@ GLOBAL_DATUM(error_cache, /datum/error_viewer/error_cache)
 
 /datum/error_viewer/error_source
 	var/list/errors = list()
-	var/next_message_at = 0
+	var/next_message_at = ZERO
 
 /datum/error_viewer/error_source/New(exception/e)
 	if (!istype(e))

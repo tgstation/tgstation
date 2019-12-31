@@ -3,8 +3,8 @@
 	desc = "We link our victim's mind into the hivemind for personal interrogation."
 	helptext = "If we find a human mad enough to support our cause, this can be a helpful tool to stay in touch."
 	button_icon_state = "hivemind_link"
-	chemical_cost = 0
-	dna_cost = 0
+	chemical_cost = ZERO
+	dna_cost = ZERO
 	req_human = 1
 
 /datum/action/changeling/linglink/can_sting(mob/living/carbon/user)
@@ -60,8 +60,8 @@
 		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("[name]", "[i]"))
 		if(!do_mob(user, target, 20))
 			to_chat(user, "<span class='warning'>Our link with [target] has ended!</span>")
-			changeling.islinking = 0
-			target.mind.linglink = 0
+			changeling.islinking = ZERO
+			target.mind.linglink = ZERO
 			return
 	
 	to_chat(user, "<span class='notice'>We must keep holding on to [target] to sustain the link. </span>")
@@ -69,7 +69,7 @@
 		target.reagents.add_reagent(/datum/reagent/medicine/salbutamol, 0.5) // So they don't choke to death while you interrogate them
 		do_mob(user, target, 100, TRUE)
 
-	changeling.islinking = 0
-	target.mind.linglink = 0
+	changeling.islinking = ZERO
+	target.mind.linglink = ZERO
 	to_chat(user, "<span class='notice'>You cannot sustain the connection any longer, your victim fades from the hivemind!</span>")
 	to_chat(target, "<span class='userdanger'>The link cannot be sustained any longer, your connection to the hivemind has faded!</span>")

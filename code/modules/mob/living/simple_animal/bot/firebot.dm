@@ -29,11 +29,11 @@
 
 	var/obj/item/extinguisher/internal_ext
 
-	var/last_found = 0
+	var/last_found = ZERO
 
-	var/speech_cooldown = 0
-	var/detected_cooldown = 0
-	var/foam_cooldown = 0
+	var/speech_cooldown = ZERO
+	var/detected_cooldown = ZERO
+	var/foam_cooldown = ZERO
 
 	var/extinguish_people = TRUE
 	var/extinguish_fires = TRUE
@@ -232,12 +232,12 @@
 
 	if(target_fire && (get_dist(src, target_fire) > 2))
 
-		path = get_path_to(src, get_turf(target_fire), /turf/proc/Distance_cardinal, 0, 30, 1, id=access_card)
+		path = get_path_to(src, get_turf(target_fire), /turf/proc/Distance_cardinal, ZERO, 30, 1, id=access_card)
 		mode = BOT_MOVING
 		if(!path.len)
 			soft_reset()
 
-	if(path.len > 0 && target_fire)
+	if(path.len > ZERO && target_fire)
 		if(!bot_move(path[path.len]))
 			old_target_fire = target_fire
 			soft_reset()

@@ -104,7 +104,7 @@
 	set_basalt_light(src)
 
 /turf/open/floor/plating/asteroid/getDug()
-	set_light(0)
+	set_light(ZERO)
 	return ..()
 
 /proc/set_basalt_light(turf/open/floor/B)
@@ -205,7 +205,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	var/turf/closed/mineral/tunnel = src
 	var/next_angle = pick(45, -45)
 
-	for(var/i = 0; i < length; i++)
+	for(var/i = ZERO; i < length; i++)
 		if(!sanity)
 			break
 
@@ -229,7 +229,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
 			if(i > 3 && prob(20))
 				if(istype(tunnel.loc, /area/mine/explored) || (istype(tunnel.loc, /area/lavaland/surface/outdoors) && !istype(tunnel.loc, /area/lavaland/surface/outdoors/unexplored)))
-					sanity = 0
+					sanity = ZERO
 					break
 				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type, null, CHANGETURF_IGNORE_AIR)
 				C.going_backwards = FALSE
@@ -250,7 +250,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	for(var/S in RANGE_TURFS(1, src))
 		var/turf/NT = S
 		if(!NT || isspaceturf(NT) || istype(NT.loc, /area/mine/explored) || (istype(NT.loc, /area/lavaland/surface/outdoors) && !istype(NT.loc, /area/lavaland/surface/outdoors/unexplored)))
-			sanity = 0
+			sanity = ZERO
 			break
 	if(!sanity)
 		return
@@ -332,7 +332,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 /turf/open/floor/plating/asteroid/snow/burn_tile()
 	if(!burnt)
 		visible_message("<span class='danger'>[src] melts away!.</span>")
-		slowdown = 0
+		slowdown = ZERO
 		burnt = TRUE
 		icon_state = "snow_dug"
 		return TRUE
@@ -343,7 +343,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	desc = "Looks colder."
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120"
-	floor_variance = 0
+	floor_variance = ZERO
 	icon_state = "snow-ice"
 	icon_plating = "snow-ice"
 	environment_type = "snow_cavern"

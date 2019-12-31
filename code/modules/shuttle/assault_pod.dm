@@ -27,7 +27,7 @@
 	desc = "Used to select a landing zone for assault pods."
 	var/shuttle_id = "steel_rain"
 	var/dwidth = 3
-	var/dheight = 0
+	var/dheight = ZERO
 	var/width = 7
 	var/height = 7
 	var/lz_dir = 1

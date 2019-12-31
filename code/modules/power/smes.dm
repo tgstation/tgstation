@@ -25,19 +25,19 @@
 	ui_y = 440
 
 	var/capacity = 5e6 // maximum charge
-	var/charge = 0 // actual charge
+	var/charge = ZERO // actual charge
 
 	var/input_attempt = TRUE // TRUE = attempting to charge, FALSE = not attempting to charge
 	var/inputting = TRUE // TRUE = actually inputting, FALSE = not inputting
 	var/input_level = 50000 // amount of power the SMES attempts to charge by
 	var/input_level_max = 200000 // cap on input_level
-	var/input_available = 0 // amount of charge available from input last tick
+	var/input_available = ZERO // amount of charge available from input last tick
 
 	var/output_attempt = TRUE // TRUE = attempting to output, FALSE = not attempting to output
 	var/outputting = TRUE // TRUE = actually outputting, FALSE = not outputting
 	var/output_level = 50000 // amount of power the SMES attempts to output
 	var/output_level_max = 200000 // cap on output_level
-	var/output_used = 0 // amount of power actually outputted. may be less than output_level if the powernet returns excess power
+	var/output_used = ZERO // amount of power actually outputted. may be less than output_level if the powernet returns excess power
 
 	var/obj/machinery/power/terminal/terminal = null
 
@@ -63,8 +63,8 @@
 	update_icon()
 
 /obj/machinery/power/smes/RefreshParts()
-	var/IO = 0
-	var/MC = 0
+	var/IO = ZERO
+	var/MC = ZERO
 	var/C
 	for(var/obj/item/stock_parts/capacitor/CP in component_parts)
 		IO += CP.rating
@@ -225,12 +225,12 @@
 			add_overlay("smes-oc0")
 
 	var/clevel = chargedisplay()
-	if(clevel>0)
+	if(clevel>ZERO)
 		add_overlay("smes-og[clevel]")
 
 
 /obj/machinery/power/smes/proc/chargedisplay()
-	return CLAMP(round(5.5*charge/capacity),0,5)
+	return CLAMP(round(5.5*charge/capacity),ZERO,5)
 
 /obj/machinery/power/smes/process()
 	if(stat & BROKEN)
@@ -258,7 +258,7 @@
 				inputting = FALSE		// stop inputting
 
 		else
-			if(input_attempt && input_available > 0)
+			if(input_attempt && input_available > ZERO)
 				inputting = TRUE
 	else
 		inputting = FALSE
@@ -273,13 +273,13 @@
 			else
 				outputting = FALSE
 
-			if(output_used < 0.0001)		// either from no charge or set to 0
+			if(output_used < 0.0001)		// either from no charge or set to ZERO
 				outputting = FALSE
 				investigate_log("lost power and turned <font color='red'>off</font>", INVESTIGATE_SINGULO)
-		else if(output_attempt && charge > output_level && output_level > 0)
+		else if(output_attempt && charge > output_level && output_level > ZERO)
 			outputting = TRUE
 		else
-			output_used = 0
+			output_used = ZERO
 	else
 		outputting = FALSE
 
@@ -296,7 +296,7 @@
 		return
 
 	if(!outputting)
-		output_used = 0
+		output_used = ZERO
 		return
 
 	var/excess = powernet.netexcess		// this was how much wasn't used on the network last ptick, minus any removed by other SMESes
@@ -370,7 +370,7 @@
 				if(!isnull(target) && !..())
 					. = TRUE
 			else if(target == "min")
-				target = 0
+				target = ZERO
 				. = TRUE
 			else if(target == "max")
 				target = input_level_max
@@ -382,7 +382,7 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				input_level = CLAMP(target, 0, input_level_max)
+				input_level = CLAMP(target, ZERO, input_level_max)
 				log_smes(usr)
 		if("output")
 			var/target = params["target"]
@@ -392,7 +392,7 @@
 				if(!isnull(target) && !..())
 					. = TRUE
 			else if(target == "min")
-				target = 0
+				target = ZERO
 				. = TRUE
 			else if(target == "max")
 				target = output_level_max
@@ -404,7 +404,7 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				output_level = CLAMP(target, 0, output_level_max)
+				output_level = CLAMP(target, ZERO, output_level_max)
 				log_smes(usr)
 
 /obj/machinery/power/smes/proc/log_smes(mob/user)
@@ -415,15 +415,15 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	input_attempt = rand(0,1)
+	input_attempt = rand(ZERO,1)
 	inputting = input_attempt
-	output_attempt = rand(0,1)
+	output_attempt = rand(ZERO,1)
 	outputting = output_attempt
-	output_level = rand(0, output_level_max)
-	input_level = rand(0, input_level_max)
+	output_level = rand(ZERO, output_level_max)
+	input_level = rand(ZERO, input_level_max)
 	charge -= 1e6/severity
-	if (charge < 0)
-		charge = 0
+	if (charge < ZERO)
+		charge = ZERO
 	update_icon()
 	log_smes()
 

@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_BULKY //Quite a hefty load
 	slowdown = 1 //Balancing measure
 	throw_range = 2 //No head bowling
-	px_x = 0
+	px_x = ZERO
 	px_y = -8
 	stam_damage_coeff = 1
 	max_stamina_damage = 100
@@ -250,22 +250,22 @@
 /obj/item/bodypart/head/alien
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "alien_head"
-	px_x = 0
-	px_y = 0
-	dismemberable = 0
+	px_x = ZERO
+	px_y = ZERO
+	dismemberable = ZERO
 	max_damage = 500
 	animal_origin = ALIEN_BODYPART
 
 /obj/item/bodypart/head/devil
-	dismemberable = 0
+	dismemberable = ZERO
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
 
 /obj/item/bodypart/head/larva
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "larva_head"
-	px_x = 0
-	px_y = 0
-	dismemberable = 0
+	px_x = ZERO
+	px_y = ZERO
+	dismemberable = ZERO
 	max_damage = 50
 	animal_origin = LARVA_BODYPART

@@ -48,7 +48,7 @@
 	return LAZYLEN(found_safeties)
 
 /datum/component/chasm/proc/drop_stuff(AM)
-	. = 0
+	. = ZERO
 	if (is_safe())
 		return FALSE
 
@@ -90,7 +90,7 @@
 	//Make sure the item is still there after our sleep
 	if(!AM || QDELETED(AM))
 		return
-	falling_atoms[AM] = (falling_atoms[AM] || 0) + 1
+	falling_atoms[AM] = (falling_atoms[AM] || ZERO) + 1
 	var/turf/T = target_turf
 
 	if(T)
@@ -116,7 +116,7 @@
 		var/oldtransform = AM.transform
 		var/oldcolor = AM.color
 		var/oldalpha = AM.alpha
-		animate(AM, transform = matrix() - matrix(), alpha = 0, color = rgb(0, 0, 0), time = 10)
+		animate(AM, transform = matrix() - matrix(), alpha = ZERO, color = rgb(ZERO, ZERO, ZERO), time = 10)
 		for(var/i in 1 to 5)
 			//Make sure the item is still there after our sleep
 			if(!AM || QDELETED(AM))

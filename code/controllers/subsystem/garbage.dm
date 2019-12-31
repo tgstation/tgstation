@@ -6,16 +6,16 @@ SUBSYSTEM_DEF(garbage)
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 	init_order = INIT_ORDER_GARBAGE
 
-	var/list/collection_timeout = list(0, 2 MINUTES, 10 SECONDS)	// deciseconds to wait before moving something up in the queue to the next level
+	var/list/collection_timeout = list(ZERO, 2 MINUTES, 10 SECONDS)	// deciseconds to wait before moving something up in the queue to the next level
 
 	//Stat tracking
 	var/delslasttick = 0			// number of del()'s we've done this tick
 	var/gcedlasttick = 0			// number of things that gc'ed last tick
-	var/totaldels = 0
-	var/totalgcs = 0
+	var/totaldels = ZERO
+	var/totalgcs = ZERO
 
-	var/highest_del_time = 0
-	var/highest_del_tickusage = 0
+	var/highest_del_time = ZERO
+	var/highest_del_tickusage = ZERO
 
 	var/list/pass_counts
 	var/list/fail_counts
@@ -36,8 +36,8 @@ SUBSYSTEM_DEF(garbage)
 	fail_counts = new(GC_QUEUE_COUNT)
 	for(var/i in 1 to GC_QUEUE_COUNT)
 		queues[i] = list()
-		pass_counts[i] = 0
-		fail_counts[i] = 0
+		pass_counts[i] = ZERO
+		fail_counts[i] = ZERO
 
 /datum/controller/subsystem/garbage/stat_entry(msg)
 	var/list/counts = list()
@@ -103,12 +103,12 @@ SUBSYSTEM_DEF(garbage)
 
 /datum/controller/subsystem/garbage/proc/HandleQueue(level = GC_QUEUE_CHECK)
 	if (level == GC_QUEUE_CHECK)
-		delslasttick = 0
-		gcedlasttick = 0
+		delslasttick = ZERO
+		gcedlasttick = ZERO
 	var/cut_off_time = world.time - collection_timeout[level] //ignore entries newer then this
 	var/list/queue = queues[level]
 	var/static/lastlevel
-	var/static/count = 0
+	var/static/count = ZERO
 	if (count) //runtime last run before we could do this.
 		var/c = count
 		count = 0 //so if we runtime on the Cut, we don't try again.
@@ -172,7 +172,7 @@ SUBSYSTEM_DEF(garbage)
 			return
 	if (count)
 		queue.Cut(1,count+1)
-		count = 0
+		count = ZERO
 
 /datum/controller/subsystem/garbage/proc/Queue(datum/D, level = GC_QUEUE_CHECK)
 	if (isnull(D))
@@ -232,9 +232,9 @@ SUBSYSTEM_DEF(garbage)
 	var/name = ""
 	var/qdels = 0			//Total number of times it's passed thru qdel.
 	var/destroy_time = 0	//Total amount of milliseconds spent processing this type's Destroy()
-	var/failures = 0		//Times it was queued for soft deletion but failed to soft delete.
-	var/hard_deletes = 0 	//Different from failures because it also includes QDEL_HINT_HARDDEL deletions
-	var/hard_delete_time = 0//Total amount of milliseconds spent hard deleting this type.
+	var/failures = ZERO		//Times it was queued for soft deletion but failed to soft delete.
+	var/hard_deletes = ZERO 	//Different from failures because it also includes QDEL_HINT_HARDDEL deletions
+	var/hard_delete_time = ZERO//Total amount of milliseconds spent hard deleting this type.
 	var/no_respect_force = 0//Number of times it's not respected force=TRUE
 	var/no_hint = 0			//Number of times it's not even bother to give a qdel hint
 	var/slept_destroy = 0	//Number of times it's slept in its destroy
@@ -348,7 +348,7 @@ SUBSYSTEM_DEF(garbage)
 				return
 
 	//this keeps the garbage collector from failing to collect objects being searched for in here
-	SSgarbage.can_fire = 0
+	SSgarbage.can_fire = ZERO
 
 	if(usr && usr.client)
 		usr.client.running_find_references = type

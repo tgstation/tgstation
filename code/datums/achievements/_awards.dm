@@ -11,7 +11,7 @@
 	//Bump this up if you're changing outdated table identifier and/or achievement type
 	var/achievement_version = 2
 
-	//Value returned on db connection failure, in case we want to differ 0 and nonexistent later on
+	//Value returned on db connection failure, in case we want to differ ZERO and nonexistent later on
 	var/default_value = FALSE
 
 ///This proc loads the achievement data from the hub.
@@ -37,8 +37,8 @@
 	var/datum/DBQuery/Q = SSdbcore.NewQuery("SELECT value FROM [format_table_name("achievements")] WHERE ckey = '[sanitizeSQL(key)]' AND achievement_key = '[sanitizeSQL(database_id)]'")
 	if(!Q.Execute(async = TRUE))
 		qdel(Q)
-		return 0
-	var/result = 0
+		return ZERO
+	var/result = ZERO
 	if(Q.NextRow())
 		result = text2num(Q.item[1])
 	qdel(Q)
@@ -61,7 +61,7 @@
 	.["achievement_type"] = "'achievement'"
 
 /datum/award/achievement/parse_value(raw_value)
-	return raw_value > 0
+	return raw_value > ZERO
 
 /datum/award/achievement/on_unlock(mob/user)
 	. = ..()
@@ -71,7 +71,7 @@
 /datum/award/score
 	desc = "you did it sooo many times."
 	category = "Scores"
-	default_value = 0
+	default_value = ZERO
 
 	var/track_high_scores = TRUE
 	var/list/high_scores = list()
@@ -98,4 +98,4 @@
 		qdel(Q)
 
 /datum/award/score/parse_value(raw_value)
-	return isnum(raw_value) ? raw_value : 0
+	return isnum(raw_value) ? raw_value : ZERO

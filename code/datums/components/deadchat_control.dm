@@ -68,13 +68,13 @@
 		return
 	var/list/votes = list()
 	for(var/command in inputs)
-		votes["[command]"] = 0
+		votes["[command]"] = ZERO
 	for(var/vote in ckey_to_cooldown)
 		votes[ckey_to_cooldown[vote]]++
 		ckey_to_cooldown.Remove(vote)
 	
 	// Solve which had most votes.
-	var/prev_value = 0
+	var/prev_value = ZERO
 	var/result
 	for(var/vote in votes)
 		if(votes[vote] > prev_value)

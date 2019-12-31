@@ -1,7 +1,7 @@
 //Monkey defines, placed here so they can be read by other things!
 
 //Mode defines
-#define MONKEY_IDLE 			0	// idle
+#define MONKEY_IDLE 			ZERO	// idle
 #define MONKEY_HUNT 			1	// found target, hunting
 #define MONKEY_FLEE 			2	// free from enemies
 #define MONKEY_DISPOSE 			3	// dump body in disposals
@@ -34,4 +34,4 @@
 #define MONKEY_HUNT_FRUSTRATION_LIMIT 		8	// Chase after an enemy before giving up
 #define MONKEY_DISPOSE_FRUSTRATION_LIMIT 	16 	// Dispose of a body before giving up
 
-#define MONKEY_AGGRESSIVE_MVM_PROB			0	// If you mass edit monkies to be aggressive. there is a small chance of in-fighting
+#define MONKEY_AGGRESSIVE_MVM_PROB			ZERO	// If you mass edit monkies to be aggressive. there is a small chance of in-fighting

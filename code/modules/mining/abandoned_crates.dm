@@ -4,7 +4,7 @@
 	name = "abandoned crate"
 	desc = "What could be inside?"
 	icon_state = "securecrate"
-	integrity_failure = 0 //no breaking open the crate
+	integrity_failure = ZERO //no breaking open the crate
 	var/code = null
 	var/lastattempt = null
 	var/attempts = 10
@@ -17,7 +17,7 @@
 	. = ..()
 	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
 	code = ""
-	for(var/i = 0, i < codelen, i++)
+	for(var/i = ZERO, i < codelen, i++)
 		var/dig = pick(digits)
 		code += dig
 		digits -= dig  //there are never matching digits in the answer
@@ -41,7 +41,7 @@
 				locked = FALSE
 				cut_overlays()
 				add_overlay("securecrateg")
-				tamperproof = 0 // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
+				tamperproof = ZERO // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
 				if(!spawned_loot)
 					spawn_loot()
 			else if (input == null || sanitycheck == null || length(input) != codelen)
@@ -50,7 +50,7 @@
 				to_chat(user, "<span class='warning'>A red light flashes.</span>")
 				lastattempt = input
 				attempts--
-				if(attempts == 0)
+				if(attempts == ZERO)
 					boom(user)
 	else
 		return ..()
@@ -71,8 +71,8 @@
 			if(lastattempt != null)
 				var/list/guess = list()
 				var/list/answer = list()
-				var/bulls = 0
-				var/cows = 0
+				var/bulls = ZERO
+				var/cows = ZERO
 				for(var/i=1,i<=length(lastattempt),i++)
 					guess += text2num(copytext(lastattempt,i,i+1))
 				for(var/i=1,i<=length(lastattempt),i++)

@@ -12,8 +12,8 @@
 	else
 		icon_state = "[splatter_type][pick(3, 4, 5)]"
 	. = ..()
-	var/target_pixel_x = 0
-	var/target_pixel_y = 0
+	var/target_pixel_x = ZERO
+	var/target_pixel_y = ZERO
 	switch(set_dir)
 		if(NORTH)
 			target_pixel_y = 16
@@ -38,7 +38,7 @@
 			target_pixel_x = -16
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
-	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
+	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = ZERO, time = duration)
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter
 	splatter_type = "xsplatter"
@@ -48,7 +48,7 @@
 	icon_state = "ion_fade"
 	layer = BELOW_MOB_LAYER
 	duration = 10
-	randomdir = 0
+	randomdir = ZERO
 
 /obj/effect/temp_visual/dir_setting/firing_effect
 	icon = 'icons/effects/effects.dmi'
@@ -117,7 +117,7 @@
 /obj/effect/temp_visual/dir_setting/curse/Initialize(mapload, set_dir)
 	. = ..()
 	if(fades)
-		animate(src, alpha = 0, time = 32)
+		animate(src, alpha = ZERO, time = 32)
 
 /obj/effect/temp_visual/dir_setting/curse/blob
 	icon_state = "curseblob"
@@ -185,7 +185,7 @@
 	duration = 5
 
 /obj/effect/temp_visual/guardian
-	randomdir = 0
+	randomdir = ZERO
 
 /obj/effect/temp_visual/guardian/phase
 	duration = 5
@@ -209,7 +209,7 @@
 
 /obj/effect/temp_visual/decoy/fading/Initialize(mapload, atom/mimiced_atom)
 	. = ..()
-	animate(src, alpha = 0, time = duration)
+	animate(src, alpha = ZERO, time = duration)
 
 /obj/effect/temp_visual/decoy/fading/threesecond
 	duration = 40
@@ -261,7 +261,7 @@
 	name = "emp pulse"
 	icon_state = "emppulse"
 	duration = 8
-	randomdir = 0
+	randomdir = ZERO
 
 /obj/effect/temp_visual/bluespace_fissure
 	name = "bluespace fissure"
@@ -302,7 +302,7 @@
 		add_atom_colour(set_color, FIXED_COLOUR_PRIORITY)
 	. = ..()
 	pixel_x = rand(-12, 12)
-	pixel_y = rand(-9, 0)
+	pixel_y = rand(-9, ZERO)
 
 /obj/effect/temp_visual/kinetic_blast
 	name = "kinetic explosion"
@@ -327,7 +327,7 @@
 	name = "blob"
 	icon_state = "blob_attack"
 	alpha = 140
-	randomdir = 0
+	randomdir = ZERO
 	duration = 6
 
 /obj/effect/temp_visual/desynchronizer
@@ -382,7 +382,7 @@
 	. = ..()
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
-	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = 25)
+	animate(src, pixel_y = pixel_y + 32, alpha = ZERO, time = 25)
 
 /obj/effect/temp_visual/love_heart
 	name = "love heart"
@@ -394,7 +394,7 @@
 	. = ..()
 	pixel_x = rand(-10,10)
 	pixel_y = rand(-10,10)
-	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = duration)
+	animate(src, pixel_y = pixel_y + 32, alpha = ZERO, time = duration)
 
 /obj/effect/temp_visual/love_heart/invisible
 	icon_state = null
@@ -405,7 +405,7 @@
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/onePerson, "heart", I, seer)
 	I.alpha = 255
 	I.appearance_flags = RESET_ALPHA
-	animate(I, alpha = 0, time = duration)
+	animate(I, alpha = ZERO, time = duration)
 
 /obj/effect/temp_visual/bleed
 	name = "bleed"
@@ -445,7 +445,7 @@
 		appearance = teleporting_atom.appearance
 		setDir(teleporting_atom.dir)
 		if(warp_color)
-			color = list(warp_color, warp_color, warp_color, list(0,0,0))
+			color = list(warp_color, warp_color, warp_color, list(ZERO,ZERO,ZERO))
 			set_light(1.4, 1, warp_color)
 		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		var/matrix/skew = transform
@@ -454,11 +454,11 @@
 		if(!outgoing)
 			transform = skew * 2
 			skew = teleporting_atom.transform
-			alpha = 0
+			alpha = ZERO
 			animate(src, alpha = teleporting_atom.alpha, transform = skew, time = duration)
 		else
 			skew *= 2
-			animate(src, alpha = 0, transform = skew, time = duration)
+			animate(src, alpha = ZERO, transform = skew, time = duration)
 	else
 		return INITIALIZE_HINT_QDEL
 
@@ -467,8 +467,8 @@
 	icon_state = ""
 	layer = ABOVE_ALL_MOB_LAYER
 	anchored = TRUE
-	var/status = 0
-	var/delay = 0
+	var/status = ZERO
+	var/delay = ZERO
 
 /obj/effect/constructing_effect/Initialize(mapload, rcd_delay, rcd_status)
 	. = ..()

@@ -68,7 +68,7 @@
 /obj/item/gun/energy/chrono_gun/update_icon()
 	return
 
-/obj/item/gun/energy/chrono_gun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/energy/chrono_gun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = ZERO)
 	if(field)
 		field_disconnect(field)
 	..()
@@ -113,7 +113,7 @@
 			if((currentpos == startpos) && (field in view(CHRONO_BEAM_RANGE, currentpos)) && (user.mobility_flags & MOBILITY_STAND) && (user.stat == CONSCIOUS))
 				return 1
 		field_disconnect(F)
-		return 0
+		return ZERO
 
 /obj/item/gun/energy/chrono_gun/proc/pass_mind(datum/mind/M)
 	if(TED)
@@ -143,7 +143,7 @@
 	name = "eradication beam"
 	projectile_type = /obj/projectile/energy/chrono_beam
 	icon_state = "chronobolt"
-	e_cost = 0
+	e_cost = ZERO
 	var/obj/item/gun/energy/chrono_gun/gun
 
 /obj/item/ammo_casing/energy/chrono_beam/Initialize()
@@ -169,7 +169,7 @@
 	var/obj/item/gun/energy/chrono_gun/gun = null
 	var/tickstokill = 15
 	var/mutable_appearance/mob_underlay
-	var/preloaded = 0
+	var/preloaded = ZERO
 	var/RPpos = null
 
 /obj/structure/chrono_field/Initialize(mapload, mob/living/target, obj/item/gun/energy/chrono_gun/G)
@@ -212,7 +212,7 @@
 			for(var/atom/movable/AM in contents)
 				AM.forceMove(drop_location())
 			qdel(src)
-		else if(tickstokill <= 0)
+		else if(tickstokill <= ZERO)
 			to_chat(captured, "<span class='boldnotice'>As the last essence of your being is erased from time, you are taken back to your most enjoyable memory. You feel happy...</span>")
 			var/mob/dead/observer/ghost = captured.ghostize(1)
 			if(captured.mind)
@@ -248,7 +248,7 @@
 		return BULLET_ACT_HIT
 
 /obj/structure/chrono_field/assume_air()
-	return 0
+	return ZERO
 
 /obj/structure/chrono_field/return_air() //we always have nominal air and temperature
 	var/datum/gas_mixture/GM = new

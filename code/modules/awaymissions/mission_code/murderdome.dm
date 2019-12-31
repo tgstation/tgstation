@@ -18,8 +18,8 @@
 /obj/structure/barricade/security/murderdome
 	name = "respawnable barrier"
 	desc = "A barrier. Provides cover in firefights."
-	deploy_time = 0
-	deploy_message = 0
+	deploy_time = ZERO
+	deploy_message = ZERO
 
 /obj/structure/barricade/security/murderdome/make_debris()
 	new /obj/effect/murderdome/dead_barricade(get_turf(src))

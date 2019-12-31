@@ -1,4 +1,4 @@
-#define IV_TAKING 0
+#define IV_TAKING ZERO
 #define IV_INJECTING 1
 
 /obj/machinery/iv_drip
@@ -51,7 +51,7 @@
 
 			var/percent = round((beaker.reagents.total_volume / beaker.volume) * 100)
 			switch(percent)
-				if(0 to 9)
+				if(ZERO to 9)
 					filling_overlay.icon_state = "reagent0"
 				if(10 to 24)
 					filling_overlay.icon_state = "reagent10"

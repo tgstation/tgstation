@@ -3,7 +3,7 @@
 /datum/quirk
 	var/name = "Test Quirk"
 	var/desc = "This is a test quirk."
-	var/value = 0
+	var/value = ZERO
 	var/human_only = TRUE
 	var/gain_text
 	var/lose_text

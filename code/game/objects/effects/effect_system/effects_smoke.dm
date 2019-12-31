@@ -8,23 +8,23 @@
 	icon_state = "smoke"
 	pixel_x = -32
 	pixel_y = -32
-	opacity = 0
+	opacity = ZERO
 	layer = FLY_LAYER
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	animate_movement = 0
+	animate_movement = ZERO
 	var/amount = 4
 	var/lifetime = 5
 	var/opaque = 1 //whether the smoke can block the view when in enough amount
 
 
 /obj/effect/particle_effect/smoke/proc/fade_out(frames = 16)
-	if(alpha == 0) //Handle already transparent case
+	if(alpha == ZERO) //Handle already transparent case
 		return
-	if(frames == 0)
+	if(frames == ZERO)
 		frames = 1 //We will just assume that by 0 frames, the coder meant "during one frame".
 	var/step = alpha / frames
-	for(var/i = 0, i < frames, i++)
+	for(var/i = ZERO, i < frames, i++)
 		alpha -= step
 		if(alpha < 160)
 			set_opacity(0) //if we were blocking view, we aren't now because we're fading out
@@ -49,27 +49,27 @@
 	lifetime--
 	if(lifetime < 1)
 		kill_smoke()
-		return 0
-	for(var/mob/living/L in range(0,src))
+		return ZERO
+	for(var/mob/living/L in range(ZERO,src))
 		smoke_mob(L)
 	return 1
 
 /obj/effect/particle_effect/smoke/proc/smoke_mob(mob/living/carbon/C)
 	if(!istype(C))
-		return 0
+		return ZERO
 	if(lifetime<1)
-		return 0
+		return ZERO
 	if(C.internal != null || C.has_smoke_protection())
-		return 0
+		return ZERO
 	if(C.smoke_delay)
-		return 0
+		return ZERO
 	C.smoke_delay++
 	addtimer(CALLBACK(src, .proc/remove_smoke_delay, C), 10)
 	return 1
 
 /obj/effect/particle_effect/smoke/proc/remove_smoke_delay(mob/living/carbon/C)
 	if(C)
-		C.smoke_delay = 0
+		C.smoke_delay = ZERO
 
 /obj/effect/particle_effect/smoke/proc/spread_smoke()
 	var/turf/t_loc = get_turf(src)
@@ -88,7 +88,7 @@
 		S.amount = amount-1
 		S.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		S.lifetime = lifetime
-		if(S.amount>0)
+		if(S.amount>ZERO)
 			if(opaque)
 				S.set_opacity(TRUE)
 			newsmokes.Add(S)
@@ -150,11 +150,11 @@
 /obj/effect/particle_effect/smoke/freezing
 	name = "nanofrost smoke"
 	color = "#B2FFFF"
-	opaque = 0
+	opaque = ZERO
 
 /datum/effect_system/smoke_spread/freezing
 	effect_type = /obj/effect/particle_effect/smoke/freezing
-	var/blast = 0
+	var/blast = ZERO
 	var/temperature = 2
 	var/weldvents = TRUE
 	var/distcheck = TRUE
@@ -173,7 +173,7 @@
 			if(G_gases[/datum/gas/plasma])
 				G.assert_gas(/datum/gas/nitrogen)
 				G_gases[/datum/gas/nitrogen][MOLES] += (G_gases[/datum/gas/plasma][MOLES])
-				G_gases[/datum/gas/plasma][MOLES] = 0
+				G_gases[/datum/gas/plasma][MOLES] = ZERO
 				G.garbage_collect()
 		if (weldvents)
 			for(var/obj/machinery/atmospherics/components/unary/U in T)
@@ -186,7 +186,7 @@
 		for(var/obj/item/Item in T)
 			Item.extinguish()
 
-/datum/effect_system/smoke_spread/freezing/set_up(radius = 5, loca, blast_radius = 0)
+/datum/effect_system/smoke_spread/freezing/set_up(radius = 5, loca, blast_radius = ZERO)
 	..()
 	blast = blast_radius
 
@@ -243,12 +243,12 @@
 
 /obj/effect/particle_effect/smoke/chem/smoke_mob(mob/living/carbon/M)
 	if(lifetime<1)
-		return 0
+		return ZERO
 	if(!istype(M))
-		return 0
+		return ZERO
 	var/mob/living/carbon/C = M
 	if(C.internal != null || C.has_smoke_protection())
-		return 0
+		return ZERO
 	var/fraction = 1/initial(lifetime)
 	reagents.copy_to(C, fraction*reagents.total_volume)
 	reagents.reaction(M, INGEST, fraction)
@@ -329,7 +329,7 @@
 /obj/effect/particle_effect/smoke/transparent
 	opaque = FALSE
 
-/proc/do_smoke(range=0, location=null, smoke_type=/obj/effect/particle_effect/smoke)
+/proc/do_smoke(range=ZERO, location=null, smoke_type=/obj/effect/particle_effect/smoke)
 	var/datum/effect_system/smoke_spread/smoke = new
 	smoke.effect_type = smoke_type
 	smoke.set_up(range, location)

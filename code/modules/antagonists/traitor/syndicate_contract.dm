@@ -1,9 +1,9 @@
 /datum/syndicate_contract
-	var/id = 0
+	var/id = ZERO
 	var/status = CONTRACT_STATUS_INACTIVE
 	var/datum/objective/contract/contract = new()
 	var/target_rank
-	var/ransom = 0
+	var/ransom = ZERO
 	var/payout_type = null
 
 	var/list/victim_belongings = list()
@@ -30,7 +30,7 @@
 	else
 		contract.payout_bonus = rand(2,4)
 
-	contract.payout = rand(0, 2)
+	contract.payout = rand(ZERO, 2)
 	contract.generate_dropoff()
 
 	ransom = 100 * rand(18, 45)
@@ -55,7 +55,7 @@
 
 	empty_pod.stay_after_drop = TRUE
 	empty_pod.reversing = TRUE
-	empty_pod.explosionSize = list(0,0,0,1)
+	empty_pod.explosionSize = list(ZERO,ZERO,ZERO,1)
 	empty_pod.leavingSound = 'sound/effects/podwoosh.ogg'
 
 	new /obj/effect/DPtarget(empty_pod_turf, empty_pod)
@@ -185,12 +185,12 @@
 			if (!is_blocked_turf(possible_drop))
 				possible_drop_loc.Add(possible_drop)
 
-	if (possible_drop_loc.len > 0)
+	if (possible_drop_loc.len > ZERO)
 		var/pod_rand_loc = rand(1, possible_drop_loc.len)
 		
 		var/obj/structure/closet/supplypod/return_pod = new()
 		return_pod.bluespace = TRUE
-		return_pod.explosionSize = list(0,0,0,0)
+		return_pod.explosionSize = list(ZERO,ZERO,ZERO,ZERO)
 		return_pod.style = STYLE_SYNDICATE
 
 		do_sparks(8, FALSE, M)

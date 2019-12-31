@@ -27,7 +27,7 @@
 /datum/component/stationloving/proc/relocate()
 	var/targetturf = find_safe_turf()
 	if(!targetturf)
-		if(GLOB.blobstart.len > 0)
+		if(GLOB.blobstart.len > ZERO)
 			targetturf = get_turf(pick(GLOB.blobstart))
 		else
 			CRASH("Unable to find a blobstart landmark")

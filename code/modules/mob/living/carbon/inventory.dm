@@ -16,7 +16,7 @@
 
 /mob/living/carbon/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 1)
 	for(var/slot in slots)
-		if(equip_to_slot_if_possible(I, slots[slot], qdel_on_fail = 0, disable_warning = TRUE))
+		if(equip_to_slot_if_possible(I, slots[slot], qdel_on_fail = ZERO, disable_warning = TRUE))
 			return slot
 	if(qdel_on_fail)
 		qdel(I)
@@ -55,7 +55,7 @@
 			update_inv_back()
 		if(ITEM_SLOT_MASK)
 			wear_mask = I
-			wear_mask_update(I, toggle_off = 0)
+			wear_mask_update(I, toggle_off = ZERO)
 		if(ITEM_SLOT_HEAD)
 			head = I
 			head_update(I)

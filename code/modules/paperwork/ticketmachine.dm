@@ -12,8 +12,8 @@
 	maptext_x = 7
 	maptext_y = 10
 	layer = HIGH_OBJ_LAYER
-	var/ticket_number = 0 //Increment the ticket number whenever the HOP presses his button
-	var/current_number = 0 //What ticket number are we currently serving?
+	var/ticket_number = ZERO //Increment the ticket number whenever the HOP presses his button
+	var/current_number = ZERO //What ticket number are we currently serving?
 	var/max_number = 100 //At this point, you need to refill it.
 	var/cooldown = 50
 	var/ready = TRUE
@@ -33,7 +33,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='warning'>You overload [src]'s bureaucratic logic circuitry to its MAXIMUM setting.</span>")
-	ticket_number = rand(0,max_number)
+	ticket_number = rand(ZERO,max_number)
 	current_number = ticket_number
 	obj_flags |= EMAGGED
 	if(tickets.len)
@@ -118,7 +118,7 @@
 
 /obj/machinery/ticket_machine/update_icon()
 	switch(ticket_number) //Gives you an idea of how many tickets are left
-		if(0 to 49)
+		if(ZERO to 49)
 			icon_state = "ticketmachine_100"
 		if(50 to 99)
 			icon_state = "ticketmachine_50"
@@ -128,7 +128,7 @@
 
 /obj/machinery/ticket_machine/proc/handle_maptext()
 	switch(ticket_number) //This is here to handle maptext offsets so that the numbers align.
-		if(0 to 9)
+		if(ZERO to 9)
 			maptext_x = 13
 		if(10 to 99)
 			maptext_x = 10
@@ -146,8 +146,8 @@
 		if(do_after(user, 30, target = src))
 			to_chat(user, "<span class='notice'>You insert [I] into [src] as it whirs nondescriptly.</span>")
 			qdel(I)
-			ticket_number = 0
-			current_number = 0
+			ticket_number = ZERO
+			current_number = ZERO
 			if(tickets.len)
 				for(var/obj/item/ticket_machine_ticket/ticket in tickets)
 					ticket.audible_message("<span class='notice'>\the [ticket] disperses!</span>")

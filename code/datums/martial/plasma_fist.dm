@@ -165,8 +165,8 @@
 	beam_target = _beam_target
 	if(beam_target)
 		var/datum/beam/beam = Beam(beam_target, "plasmabeam", time= 3 SECONDS, maxdistance=INFINITY, beam_type=/obj/effect/ebeam/plasma_fist)
-		animate(beam.visuals, alpha = 0, time = 3 SECONDS)
-	animate(src, alpha = 0, transform = matrix()*0.5, time = 3 SECONDS)
+		animate(beam.visuals, alpha = ZERO, time = 3 SECONDS)
+	animate(src, alpha = ZERO, transform = matrix()*0.5, time = 3 SECONDS)
 
 /obj/effect/temp_visual/plasma_soul/Destroy()
 	if(!beam_target)

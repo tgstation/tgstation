@@ -1,8 +1,8 @@
 #define SIZE_DOESNT_MATTER 	-1
-#define BABIES_ONLY			0
+#define BABIES_ONLY			ZERO
 #define ADULTS_ONLY			1
 
-#define NO_GROWTH_NEEDED	0
+#define NO_GROWTH_NEEDED	ZERO
 #define GROWTH_NEEDED		1
 
 /datum/action/innate/slime
@@ -17,7 +17,7 @@
 		if(needs_growth == GROWTH_NEEDED)
 			if(S.amount_grown >= SLIME_EVOLUTION_THRESHOLD)
 				return 1
-			return 0
+			return ZERO
 		return 1
 
 /mob/living/simple_animal/slime/verb/Feed()
@@ -25,7 +25,7 @@
 	set desc = "This will let you feed on any valid creature in the surrounding area. This should also be used to halt the feeding process."
 
 	if(stat)
-		return 0
+		return ZERO
 
 	var/list/choices = list()
 	for(var/mob/living/C in view(1,src))
@@ -34,7 +34,7 @@
 
 	var/mob/living/M = input(src,"Who do you wish to feed on?") in null|sortNames(choices)
 	if(!M)
-		return 0
+		return ZERO
 	if(CanFeedon(M))
 		Feedon(M)
 		return 1
@@ -134,7 +134,7 @@
 		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
 			is_adult = 1
 			maxHealth = 200
-			amount_grown = 0
+			amount_grown = ZERO
 			for(var/datum/action/innate/slime/evolve/E in actions)
 				E.Remove(src)
 			regenerate_icons()
@@ -192,7 +192,7 @@
 					step_away(M,src)
 				M.Friends = Friends.Copy()
 				babies += M
-				M.mutation_chance = CLAMP(mutation_chance+(rand(5,-5)),0,100)
+				M.mutation_chance = CLAMP(mutation_chance+(rand(5,-5)),ZERO,100)
 				SSblackbox.record_feedback("tally", "slime_babies_born", 1, M.colour)
 
 				if(original_nanites)

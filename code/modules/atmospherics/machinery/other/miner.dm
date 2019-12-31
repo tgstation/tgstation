@@ -1,5 +1,5 @@
 
-#define GASMINER_POWER_NONE 0
+#define GASMINER_POWER_NONE ZERO
 #define GASMINER_POWER_STATIC 1
 #define GASMINER_POWER_MOLES 2	//Scaled from here on down.
 #define GASMINER_POWER_KPA 3
@@ -19,7 +19,7 @@
 	var/max_ext_kpa = 6500
 	var/overlay_color = "#FFFFFF"
 	var/active = TRUE
-	var/power_draw = 0
+	var/power_draw = ZERO
 	var/power_draw_static = 2000
 	var/power_draw_dynamic_mol_coeff = 5	//DO NOT USE DYNAMIC SETTINGS UNTIL SOMEONE MAKES A USER INTERFACE/CONTROLLER FOR THIS!
 	var/power_draw_dynamic_kpa_coeff = 0.5
@@ -86,7 +86,7 @@
 	var/P = G.return_pressure()
 	switch(power_draw)
 		if(GASMINER_POWER_NONE)
-			active_power_usage = 0
+			active_power_usage = ZERO
 		if(GASMINER_POWER_STATIC)
 			active_power_usage = power_draw_static
 		if(GASMINER_POWER_MOLES)

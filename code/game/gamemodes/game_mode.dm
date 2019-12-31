@@ -16,24 +16,24 @@
 	var/name = "invalid"
 	var/config_tag = null
 	var/votable = 1
-	var/probability = 0
-	var/false_report_weight = 0 //How often will this show up incorrectly in a centcom report?
+	var/probability = ZERO
+	var/false_report_weight = ZERO //How often will this show up incorrectly in a centcom report?
 	var/report_type = "invalid" //gamemodes with the same report type will not show up in the command report together.
-	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
-	var/nuke_off_station = 0 //Used for tracking where the nuke hit
+	var/station_was_nuked = ZERO //see nuclearbomb.dm and malfunction.dm
+	var/nuke_off_station = ZERO //Used for tracking where the nuke hit
 	var/round_ends_with_antag_death = 0 //flags the "one verse the station" antags as such
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
 	var/list/required_jobs = list()		// alternative required job groups eg list(list(cap=1),list(hos=1,sec=2)) translates to one captain OR one hos and two secmans
-	var/required_players = 0
+	var/required_players = ZERO
 	var/maximum_players = -1 // -1 is no maximum, positive numbers limit the selection of a mode on overstaffed stations
-	var/required_enemies = 0
-	var/recommended_enemies = 0
+	var/required_enemies = ZERO
+	var/recommended_enemies = ZERO
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
 	var/mob/living/living_antag_player = null
 	var/datum/game_mode/replacementmode = null
-	var/round_converted = 0 //0: round not converted, 1: round going to convert, 2: round converted
+	var/round_converted = ZERO //ZERO: round not converted, 1: round going to convert, 2: round converted
 	var/reroll_friendly 	//During mode conversion only these are in the running
 	var/continuous_sanity_checked	//Catches some cases where config options could be used to suggest that modes without antagonists should end when all antagonists die
 	var/enemy_minimum_age = 7 //How many days must players have been playing before they can play this antagonist
@@ -58,18 +58,18 @@
 
 ///Checks to see if the game can be setup and ran with the current number of players or whatnot.
 /datum/game_mode/proc/can_start()
-	var/playerC = 0
+	var/playerC = ZERO
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY)
 			playerC++
 	if(!GLOB.Debug2)
-		if(playerC < required_players || (maximum_players >= 0 && playerC > maximum_players))
-			return 0
+		if(playerC < required_players || (maximum_players >= ZERO && playerC > maximum_players))
+			return ZERO
 	antag_candidates = get_players_for_role(antag_flag)
 	if(!GLOB.Debug2)
 		if(antag_candidates.len < required_enemies)
-			return 0
+			return ZERO
 		return 1
 	else
 		message_admins("<span class='notice'>DEBUG: GAME STARTING WITHOUT PLAYER NUMBER CHECKS, THIS WILL PROBABLY BREAK SHIT.</span>")
@@ -107,7 +107,7 @@
 			query_round_game_mode.Execute()
 			qdel(query_round_game_mode)
 	if(report)
-		addtimer(CALLBACK(src, .proc/send_intercept, 0), rand(waittime_l, waittime_h))
+		addtimer(CALLBACK(src, .proc/send_intercept, ZERO), rand(waittime_l, waittime_h))
 	generate_station_goals()
 	gamemode_ready = TRUE
 	return 1
@@ -185,11 +185,11 @@
 	sleep(rand(600,1800))
 	if(!SSticker.IsRoundInProgress())
 		message_admins("Roundtype conversion cancelled, the game appears to have finished!")
-		round_converted = 0
+		round_converted = ZERO
 		return
 	 //somewhere between 1 and 3 minutes from now
 	if(!CONFIG_GET(keyed_list/midround_antag)[SSticker.mode.config_tag])
-		round_converted = 0
+		round_converted = ZERO
 		return 1
 	for(var/mob/living/carbon/human/H in antag_candidates)
 		if(H.client)
@@ -201,7 +201,7 @@
 
 ///Called by the gameSSticker
 /datum/game_mode/process()
-	return 0
+	return ZERO
 
 //For things that do not die easily
 /datum/game_mode/proc/are_special_antags_dead()
@@ -225,24 +225,24 @@
 				if(Player.mind)
 					if(Player.mind.special_role || LAZYLEN(Player.mind.antag_datums))
 						continuous_sanity_checked = 1
-						return 0
+						return ZERO
 			if(!continuous_sanity_checked)
 				message_admins("The roundtype ([config_tag]) has no antagonists, continuous round has been defaulted to on and midround_antag has been defaulted to off.")
 				continuous[config_tag] = TRUE
 				midround_antag[config_tag] = FALSE
 				SSshuttle.clearHostileEnvironment(src)
-				return 0
+				return ZERO
 
 
 		if(living_antag_player && living_antag_player.mind && isliving(living_antag_player) && living_antag_player.stat != DEAD && !isnewplayer(living_antag_player) &&!isbrain(living_antag_player) && (living_antag_player.mind.special_role || LAZYLEN(living_antag_player.mind.antag_datums)))
-			return 0 //A resource saver: once we find someone who has to die for all antags to be dead, we can just keep checking them, cycling over everyone only when we lose our mark.
+			return ZERO //A resource saver: once we find someone who has to die for all antags to be dead, we can just keep checking them, cycling over everyone only when we lose our mark.
 
 		for(var/mob/Player in GLOB.alive_mob_list)
 			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player) && Player.client && (Player.mind.special_role || LAZYLEN(Player.mind.antag_datums))) //Someone's still antagging but is their antagonist datum important enough to skip mulligan?
 				for(var/datum/antagonist/antag_types in Player.mind.antag_datums)
 					if(antag_types.prevent_roundtype_conversion)
 						living_antag_player = Player //they were an important antag, they're our new mark
-						return 0
+						return ZERO
 
 		if(!are_special_antags_dead())
 			return FALSE
@@ -256,23 +256,23 @@
 				if(round_ends_with_antag_death)
 					return 1
 				else
-					midround_antag[config_tag] = 0
-					return 0
+					midround_antag[config_tag] = ZERO
+					return ZERO
 
-	return 0
+	return ZERO
 
 
 /datum/game_mode/proc/check_win() //universal trigger to be called at mob death, nuke explosion, etc. To be called from everywhere.
-	return 0
+	return ZERO
 
 /datum/game_mode/proc/send_intercept()
 	var/intercepttext = "<b><i>Central Command Status Summary</i></b><hr>"
 	intercepttext += "<b>Central Command has intercepted and partially decoded a Syndicate transmission with vital information regarding their movements. The following report outlines the most \
 	likely threats to appear in your sector.</b>"
 	var/list/report_weights = config.mode_false_report_weight.Copy()
-	report_weights[report_type] = 0 //Prevent the current mode from being falsely selected.
+	report_weights[report_type] = ZERO //Prevent the current mode from being falsely selected.
 	var/list/reports = list()
-	var/Count = 0 //To compensate for missing correct report
+	var/Count = ZERO //To compensate for missing correct report
 	if(prob(65)) // 65% chance the actual mode will appear on the list
 		reports += config.mode_reports[report_type]
 		Count++
@@ -322,7 +322,7 @@
 	var/MAX_TICKETS_PER_ROLL = CONFIG_GET(number/max_tickets_per_roll)
 
 
-	var/total_tickets = 0
+	var/total_tickets = ZERO
 
 	MAX_TICKETS_PER_ROLL += DEFAULT_ANTAG_TICKETS
 
@@ -399,7 +399,7 @@
 	drafted = shuffle(drafted) // Will hopefully increase randomness, Donkie
 
 	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
-		if(drafted.len > 0)
+		if(drafted.len > ZERO)
 			applicant = pick(drafted)
 			if(applicant)
 				candidates += applicant
@@ -415,7 +415,7 @@
 
 
 /datum/game_mode/proc/num_players()
-	. = 0
+	. = ZERO
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/P = i
 		if(P.ready == PLAYER_READY_TO_PLAY)
@@ -443,7 +443,7 @@
 			var/datum/job/J = SSjob.GetJob(L.job)
 			if(!J)
 				continue
-			J.current_positions = max(J.current_positions-1, 0)
+			J.current_positions = max(J.current_positions-1, ZERO)
 			reopened_jobs += L.job
 
 	if(CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_report))
@@ -504,9 +504,9 @@
 
 			// people who died or left should not gain any reputation
 			// people who rolled antagonist still lose it
-			if(failed && SSpersistence.antag_rep_change[p_ckey] > 0)
+			if(failed && SSpersistence.antag_rep_change[p_ckey] > ZERO)
 //				WARNING("AR_DEBUG: Zeroed [p_ckey]'s antag_rep_change")
-				SSpersistence.antag_rep_change[p_ckey] = 0
+				SSpersistence.antag_rep_change[p_ckey] = ZERO
 
 			continue //Happy connected client
 		for(var/mob/dead/observer/D in GLOB.dead_mob_list)
@@ -531,25 +531,25 @@
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/game_mode/proc/age_check(client/C)
-	if(get_remaining_days(C) == 0)
-		return 1	//Available in 0 days = available right now = player is old enough to play.
-	return 0
+	if(get_remaining_days(C) == ZERO)
+		return 1	//Available in ZERO days = available right now = player is old enough to play.
+	return ZERO
 
 
 /datum/game_mode/proc/get_remaining_days(client/C)
 	if(!C)
-		return 0
+		return ZERO
 	if(!CONFIG_GET(flag/use_age_restriction_for_jobs))
-		return 0
+		return ZERO
 	if(!isnum(C.player_age))
 		return 0 //This is only a number if the db connection is established, otherwise it is text: "Requires database", meaning these restrictions cannot be enforced
 	if(!isnum(enemy_minimum_age))
-		return 0
+		return ZERO
 
-	return max(0, enemy_minimum_age - C.player_age)
+	return max(ZERO, enemy_minimum_age - C.player_age)
 
 /datum/game_mode/proc/remove_antag_for_borging(datum/mind/newborgie)
-	SSticker.mode.remove_cultist(newborgie, 0, 0)
+	SSticker.mode.remove_cultist(newborgie, ZERO, ZERO)
 	var/datum/antagonist/rev/rev = newborgie.has_antag_datum(/datum/antagonist/rev)
 	if(rev)
 		rev.remove_revolutionary(TRUE)
@@ -561,7 +561,7 @@
 		if(config_tag in initial(G.gamemode_blacklist))
 			continue
 		possible += T
-	var/goal_weights = 0
+	var/goal_weights = ZERO
 	while(possible.len && goal_weights < STATION_GOAL_BUDGET)
 		var/datum/station_goal/picked = pick_n_take(possible)
 		goal_weights += initial(picked.weight)

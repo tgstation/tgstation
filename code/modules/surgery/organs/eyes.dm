@@ -19,9 +19,9 @@
 	high_threshold_cleared = "<span class='info'>Your vision functions passably once more.</span>"
 	low_threshold_cleared = "<span class='info'>Your vision is cleared of any ailment.</span>"
 
-	var/sight_flags = 0
+	var/sight_flags = ZERO
 	var/see_in_dark = 2
-	var/tint = 0
+	var/tint = ZERO
 	var/eye_color = "" //set to a hex code to override a mob's eye color
 	var/eye_icon_state = "eyes"
 	var/old_eye_color = "fff"
@@ -48,7 +48,7 @@
 	if(M.has_dna() && ishuman(M))
 		M.dna.species.handle_body(M) //updates eye icon
 
-/obj/item/organ/eyes/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/eyes/Remove(mob/living/carbon/M, special = ZERO)
 	..()
 	if(ishuman(M) && eye_color)
 		var/mob/living/carbon/human/HMN = M
@@ -56,8 +56,8 @@
 		HMN.regenerate_icons()
 	M.cure_blind(EYE_DAMAGE)
 	M.cure_nearsighted(EYE_DAMAGE)
-	M.set_blindness(0)
-	M.set_blurriness(0)
+	M.set_blindness(ZERO)
+	M.set_blurriness(ZERO)
 	M.update_sight()
 
 
@@ -181,7 +181,7 @@
 	M.become_blind("flashlight_eyes")
 
 
-/obj/item/organ/eyes/robotic/flashlight/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/eyes/robotic/flashlight/Remove(mob/living/carbon/M, special = ZERO)
 	eye.on = FALSE
 	eye.update_brightness(M)
 	eye.forceMove(src)
@@ -250,9 +250,9 @@
 	var/C = input(owner, "Select Color", "Select color", "#ffffff") as color|null
 	if(!C || QDELETED(src) || QDELETED(user) || QDELETED(owner) || owner != user)
 		return
-	var/range = input(user, "Enter range (0 - [max_light_beam_distance])", "Range Select", 0) as null|num
+	var/range = input(user, "Enter range (0 - [max_light_beam_distance])", "Range Select", ZERO) as null|num
 
-	set_distance(CLAMP(range, 0, max_light_beam_distance))
+	set_distance(CLAMP(range, ZERO, max_light_beam_distance))
 	assume_rgb(C)
 
 /obj/item/organ/eyes/robotic/glow/proc/assume_rgb(newcolor)

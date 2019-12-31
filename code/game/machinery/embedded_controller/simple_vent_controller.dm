@@ -8,7 +8,7 @@
 			post_signal(new /datum/signal(list(
 				"tag" = airpump_tag,
 				"sigtype" = "command",
-				"power" = 0
+				"power" = ZERO
 			)))
 
 		if("vent_pump")
@@ -28,7 +28,7 @@
 			)))
 
 /datum/computer/file/embedded_program/simple_vent_controller/process()
-	return 0
+	return ZERO
 
 
 /obj/machinery/embedded_controller/radio/simple_vent_controller

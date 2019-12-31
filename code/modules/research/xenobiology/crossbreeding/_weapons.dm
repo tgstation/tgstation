@@ -90,8 +90,8 @@ Slimecrossing Weapons
 /obj/item/gun/magic/bloodchill/process()
 	charge_tick++
 	if(charge_tick < recharge_rate || charges >= max_charges)
-		return 0
-	charge_tick = 0
+		return ZERO
+	charge_tick = ZERO
 	var/mob/living/M = loc
 	if(istype(M) && M.blood_volume >= 20)
 		charges++
@@ -106,7 +106,7 @@ Slimecrossing Weapons
 /obj/projectile/magic/bloodchill
 	name = "blood ball"
 	icon_state = "pulse0_bl"
-	damage = 0
+	damage = ZERO
 	damage_type = OXY
 	nodamage = TRUE
 	hitsound = 'sound/effects/splat.ogg'

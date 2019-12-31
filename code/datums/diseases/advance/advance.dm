@@ -92,7 +92,7 @@
 	for(var/datum/disease/advance/P in infectee.diseases)
 		advance_diseases += P
 	var/replace_num = advance_diseases.len + 1 - DISEASE_LIMIT //amount of diseases that need to be removed to fit this one
-	if(replace_num > 0)
+	if(replace_num > ZERO)
 		sortTim(advance_diseases, /proc/cmp_advdisease_resistance_asc)
 		for(var/i in 1 to replace_num)
 			var/datum/disease/advance/competition = advance_diseases[i]
@@ -130,10 +130,10 @@
 /datum/disease/advance/IsSame(datum/disease/advance/D)
 
 	if(!(istype(D, /datum/disease/advance)))
-		return 0
+		return ZERO
 
 	if(GetDiseaseID() != D.GetDiseaseID())
-		return 0
+		return ZERO
 	return 1
 
 // Returns the advance disease with a different reference memory.
@@ -173,10 +173,10 @@
 	for(var/datum/symptom/symp in symptoms)
 		if(symp.type == S.type)
 			return 1
-	return 0
+	return ZERO
 
 // Will generate new unique symptoms, use this if there are none. Returns a list of symptoms that were generated.
-/datum/disease/advance/proc/GenerateSymptoms(level_min, level_max, amount_get = 0)
+/datum/disease/advance/proc/GenerateSymptoms(level_min, level_max, amount_get = ZERO)
 
 	var/list/generated = list() // Symptoms we generated.
 
@@ -221,7 +221,7 @@
 
 //Generate disease properties based on the effects. Returns an associated list.
 /datum/disease/advance/proc/GenerateProperties()
-	properties = list("resistance" = 0, "stealth" = 0, "stage_rate" = 0, "transmittable" = 0, "severity" = 0)
+	properties = list("resistance" = 0, "stealth" = 0, "stage_rate" = 0, "transmittable" = 0, "severity" = ZERO)
 
 	for(var/datum/symptom/S in symptoms)
 		properties["resistance"] += S.resistance
@@ -284,7 +284,7 @@
 
 	switch(level_sev)
 
-		if(-INFINITY to 0)
+		if(-INFINITY to ZERO)
 			severity = DISEASE_SEVERITY_POSITIVE
 		if(1)
 			severity = DISEASE_SEVERITY_NONTHREAT
@@ -405,7 +405,7 @@
 	if(diseases.len <= 1)
 		return pick(diseases) // Just return the only entry.
 
-	var/i = 0
+	var/i = ZERO
 	// Mix our diseases until we are left with only one result.
 	while(i < 20 && diseases.len > 1)
 
@@ -451,15 +451,15 @@
 			if(isnull(symptom))
 				return
 			else if(istext(symptom))
-				i = 0
+				i = ZERO
 			else if(ispath(symptom))
 				var/datum/symptom/S = new symptom
 				if(!D.HasSymptom(S))
 					D.AddSymptom(S)
 					i -= 1
-	while(i > 0)
+	while(i > ZERO)
 
-	if(D.symptoms.len > 0)
+	if(D.symptoms.len > ZERO)
 
 		var/new_name = stripped_input(user, "Name your new disease.", "New Name")
 		if(!new_name)

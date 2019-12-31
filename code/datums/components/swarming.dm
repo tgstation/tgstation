@@ -1,6 +1,6 @@
 /datum/component/swarming
-	var/offset_x = 0
-	var/offset_y = 0
+	var/offset_x = ZERO
+	var/offset_y = ZERO
 	var/is_swarming = FALSE
 	var/list/swarm_members = list()
 

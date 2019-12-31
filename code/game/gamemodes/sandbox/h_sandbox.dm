@@ -13,7 +13,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 /datum/hSB
 	var/owner = null
-	var/admin = 0
+	var/admin = ZERO
 
 	var/static/clothinfo = null
 	var/static/reaginfo = null

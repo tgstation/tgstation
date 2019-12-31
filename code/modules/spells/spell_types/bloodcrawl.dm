@@ -1,13 +1,13 @@
 /obj/effect/proc_holder/spell/bloodcrawl
 	name = "Blood Crawl"
 	desc = "Use pools of blood to phase out of existence."
-	charge_max = 0
+	charge_max = ZERO
 	clothes_req = FALSE
 	//If you couldn't cast this while phased, you'd have a problem
 	phase_allowed = TRUE
 	selection_type = "range"
 	range = 1
-	cooldown_min = 0
+	cooldown_min = ZERO
 	overlay = null
 	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	action_icon_state = "bloodcrawl"

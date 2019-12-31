@@ -6,7 +6,7 @@
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 150
-	var/notices = 0
+	var/notices = ZERO
 
 /obj/structure/noticeboard/Initialize(mapload)
 	. = ..()

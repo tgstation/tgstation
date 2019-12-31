@@ -274,7 +274,7 @@
 				visible_message("<span class='notice'>[src]'s door slides open. The glowing yellow lights dim to a gentle green.</span>")
 			else
 				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
-				mob_occupant.radiation = 0
+				mob_occupant.radiation = ZERO
 			playsound(src, 'sound/machines/airlockclose.ogg', 25, TRUE)
 			var/list/things_to_clear = list() //Done this way since using GetAllContents on the SSU itself would include circuitry and such.
 			if(suit)
@@ -460,7 +460,7 @@
 			if(state_open)
 				close_machine()
 			else
-				open_machine(0)
+				open_machine(ZERO)
 				if(occupant)
 					dump_contents() // Dump out contents if someone is in there.
 			. = TRUE

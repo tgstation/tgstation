@@ -7,6 +7,6 @@
 
 /obj/projectile/bullet/neurotoxin/on_hit(atom/target, blocked = FALSE)
 	if(isalien(target))
-		paralyze = 0
+		paralyze = ZERO
 		nodamage = TRUE
 	return ..()

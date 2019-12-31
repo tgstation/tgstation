@@ -30,7 +30,7 @@
 
 			// NTNet is disabled. Enabling can be done without user prompt
 			if(SSnetworks.station_network.setting_disabled)
-				SSnetworks.station_network.setting_disabled = 0
+				SSnetworks.station_network.setting_disabled = ZERO
 				return 1
 
 			// NTNet is enabled and user is about to shut it down. Let's ask them if they really want to do it, as wirelessly connected computers won't connect without NTNet being enabled (which may prevent people from turning it back on)

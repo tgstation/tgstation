@@ -13,13 +13,13 @@
 	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 
 	var/obj/item/card/id/wear_id = null // Fix for station bounced radios -- Skie
-	var/has_fine_manipulation = 0
-	var/move_delay_add = 0 // movement delay to add
+	var/has_fine_manipulation = ZERO
+	var/move_delay_add = ZERO // movement delay to add
 
 	status_flags = CANUNCONSCIOUS|CANPUSH
 
 	var/heat_protection = 0.5
-	var/leaping = 0
+	var/leaping = ZERO
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = 1
 
@@ -59,7 +59,7 @@
 	if(!on_fire) // If you're on fire, ignore local air temperature
 		if(loc_temp > bodytemperature)
 			//Place is hotter than we are
-			var/thermal_protection = heat_protection //This returns a 0 - 1 value, which corresponds to the percentage of heat protection.
+			var/thermal_protection = heat_protection //This returns a ZERO - 1 value, which corresponds to the percentage of heat protection.
 			if(thermal_protection < 1)
 				adjust_bodytemperature((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR))
 		else
@@ -82,7 +82,7 @@
 		clear_alert("alien_fire")
 
 /mob/living/carbon/alien/reagent_check(datum/reagent/R) //can metabolize all reagents
-	return 0
+	return ZERO
 
 /mob/living/carbon/alien/IsAdvancedToolUser()
 	return has_fine_manipulation
@@ -128,7 +128,7 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/alien/canBeHandcuffed()
 	return 1
 
-/mob/living/carbon/alien/get_standard_pixel_y_offset(lying = 0)
+/mob/living/carbon/alien/get_standard_pixel_y_offset(lying = ZERO)
 	return initial(pixel_y)
 
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)

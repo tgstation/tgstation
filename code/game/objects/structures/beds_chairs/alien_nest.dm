@@ -63,7 +63,7 @@
 			"<span class='hear'>You hear squelching...</span>")
 
 /obj/structure/bed/nest/post_buckle_mob(mob/living/M)
-	M.pixel_y = 0
+	M.pixel_y = ZERO
 	M.pixel_x = initial(M.pixel_x) + 2
 	M.layer = BELOW_MOB_LAYER
 	add_overlay(nest_overlay)
@@ -74,7 +74,7 @@
 	M.layer = initial(M.layer)
 	cut_overlay(nest_overlay)
 
-/obj/structure/bed/nest/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/bed/nest/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BRUTE)
 			playsound(loc, 'sound/effects/attackblob.ogg', 100, TRUE)

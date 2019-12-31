@@ -22,8 +22,8 @@ Called whenever a library call is made with verbose information, override and do
 /*
 Create a new database connection, does not perform the actual connect
   connection_type: The BSQL connection_type to use
-  asyncTimeout: The timeout to use for normal operations, 0 for infinite, defaults to BSQL_DEFAULT_TIMEOUT
-  blockingTimeout: The timeout to use for blocking operations, must be less than or equal to asyncTimeout, 0 for infinite, defaults to asyncTimeout
+  asyncTimeout: The timeout to use for normal operations, ZERO for infinite, defaults to BSQL_DEFAULT_TIMEOUT
+  blockingTimeout: The timeout to use for blocking operations, must be less than or equal to asyncTimeout, ZERO for infinite, defaults to asyncTimeout
   threadLimit: The limit of additional threads BSQL will run simultaneously, defaults to BSQL_DEFAULT_THREAD_LIMIT
 */
 /datum/BSQL_Connection/New(connection_type, asyncTimeout, blockingTimeout, threadLimit)

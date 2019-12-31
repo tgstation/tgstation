@@ -29,8 +29,8 @@ GLOBAL_LIST_EMPTY(typelistkeys)
 	var/savings = list()
 	var/saveditems = list()
 	for (var/key in GLOB.typelistkeys)
-		savings[key] = 0
-		saveditems[key] = 0
+		savings[key] = ZERO
+		saveditems[key] = ZERO
 
 	for (var/type in GLOB.typelists)
 		for (var/saving in savings)

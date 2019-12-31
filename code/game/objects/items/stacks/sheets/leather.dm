@@ -235,7 +235,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	..()
 	if(exposed_temperature >= drying_threshold_temperature)
 		wetness--
-		if(wetness == 0)
+		if(wetness == ZERO)
 			new /obj/item/stack/sheet/leather(drop_location(), 1)
 			wetness = initial(wetness)
 			use(1)

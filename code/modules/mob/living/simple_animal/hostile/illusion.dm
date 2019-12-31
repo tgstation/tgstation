@@ -14,11 +14,11 @@
 	attack_verb_simple = "gore"
 	maxHealth = 100
 	health = 100
-	speed = 0
+	speed = ZERO
 	faction = list("illusion")
 	var/life_span = INFINITY //how long until they despawn
 	var/mob/living/parent_mob
-	var/multiply_chance = 0 //if we multiply on hit
+	var/multiply_chance = ZERO //if we multiply on hit
 	del_on_death = 1
 	deathmessage = "vanishes into thin air! It was a fake!"
 
@@ -29,7 +29,7 @@
 		death()
 
 
-/mob/living/simple_animal/hostile/illusion/proc/Copy_Parent(mob/living/original, life = 50, hp = 100, damage = 0, replicate = 0 )
+/mob/living/simple_animal/hostile/illusion/proc/Copy_Parent(mob/living/original, life = 50, hp = 100, damage = ZERO, replicate = ZERO )
 	appearance = original.appearance
 	parent_mob = original
 	setDir(original.dir)
@@ -66,10 +66,10 @@
 /mob/living/simple_animal/hostile/illusion/escape
 	retreat_distance = 10
 	minimum_distance = 10
-	melee_damage_lower = 0
-	melee_damage_upper = 0
+	melee_damage_lower = ZERO
+	melee_damage_upper = ZERO
 	speed = -1
-	obj_damage = 0
+	obj_damage = ZERO
 	environment_smash = ENVIRONMENT_SMASH_NONE
 
 

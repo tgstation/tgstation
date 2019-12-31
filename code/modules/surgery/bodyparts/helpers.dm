@@ -54,7 +54,7 @@
 	return 2
 
 /mob/living/carbon/get_num_arms(check_disabled = TRUE)
-	. = 0
+	. = ZERO
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/affecting = X
 		if(affecting.body_part == ARM_RIGHT)
@@ -67,7 +67,7 @@
 
 //sometimes we want to ignore that we don't have the required amount of arms.
 /mob/proc/get_arm_ignore()
-	return 0
+	return ZERO
 
 /mob/living/carbon/alien/larva/get_arm_ignore()
 	return 1 //so we can still handcuff larvas.
@@ -77,7 +77,7 @@
 	return 2
 
 /mob/living/carbon/get_num_legs(check_disabled = TRUE)
-	. = 0
+	. = ZERO
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/affecting = X
 		if(affecting.body_part == LEG_RIGHT)
@@ -151,7 +151,7 @@
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
 /mob/living/carbon/proc/has_embedded_objects()
-	. = 0
+	. = ZERO
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/L = X
 		for(var/obj/item/I in L.embedded_objects)
@@ -237,7 +237,7 @@
 
 
 /proc/skintone2hex(skin_tone)
-	. = 0
+	. = ZERO
 	switch(skin_tone)
 		if("caucasian1")
 			. = "ffe0d1"

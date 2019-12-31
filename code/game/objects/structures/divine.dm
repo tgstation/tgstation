@@ -28,7 +28,7 @@
 	anchored = TRUE
 	density = TRUE
 	var/time_between_uses = 1800
-	var/last_process = 0
+	var/last_process = ZERO
 
 /obj/structure/healingfountain/attack_hand(mob/living/user)
 	. = ..()

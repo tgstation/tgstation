@@ -10,20 +10,20 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 	var/list/datum/light_source/affecting // Light sources affecting us.
 	var/active                            = FALSE  // TRUE if one of our masters has dynamic lighting.
 
-	var/x     = 0
-	var/y     = 0
-	var/z     = 0
+	var/x     = ZERO
+	var/y     = ZERO
+	var/z     = ZERO
 
-	var/lum_r = 0
-	var/lum_g = 0
-	var/lum_b = 0
+	var/lum_r = ZERO
+	var/lum_g = ZERO
+	var/lum_b = ZERO
 
 	var/needs_update = FALSE
 
 	var/cache_r  = LIGHTING_SOFT_THRESHOLD
 	var/cache_g  = LIGHTING_SOFT_THRESHOLD
 	var/cache_b  = LIGHTING_SOFT_THRESHOLD
-	var/cache_mx = 0
+	var/cache_mx = ZERO
 
 /datum/lighting_corner/New(turf/new_turf, diagonal)
 	. = ..()
@@ -87,7 +87,7 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 // God that was a mess, now to do the rest of the corner code! Hooray!
 /datum/lighting_corner/proc/update_lumcount(delta_r, delta_g, delta_b)
 
-	if ((abs(delta_r)+abs(delta_g)+abs(delta_b)) == 0)
+	if ((abs(delta_r)+abs(delta_g)+abs(delta_b)) == ZERO)
 		return
 
 	lum_r += delta_r
@@ -108,9 +108,9 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 	if (mx > 1)
 		. = 1 / mx
 
-	#if LIGHTING_SOFT_THRESHOLD != 0
+	#if LIGHTING_SOFT_THRESHOLD != ZERO
 	else if (mx < LIGHTING_SOFT_THRESHOLD)
-		. = 0 // 0 means soft lighting.
+		. = ZERO // ZERO means soft lighting.
 
 	cache_r  = round(lum_r * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_THRESHOLD
 	cache_g  = round(lum_g * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_THRESHOLD

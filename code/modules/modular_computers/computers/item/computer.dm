@@ -5,12 +5,12 @@
 	name = "modular microcomputer"
 	desc = "A small portable microcomputer."
 
-	var/enabled = 0											// Whether the computer is turned on.
+	var/enabled = ZERO											// Whether the computer is turned on.
 	var/screen_on = 1										// Whether the computer is active/opened/it's screen is on.
 	var/datum/computer_file/program/active_program = null	// A currently active program running on the computer.
-	var/hardware_flag = 0									// A flag that describes this device type
-	var/last_power_usage = 0
-	var/last_battery_percent = 0							// Used for deciding if battery percentage has chandged
+	var/hardware_flag = ZERO									// A flag that describes this device type
+	var/last_power_usage = ZERO
+	var/last_battery_percent = ZERO							// Used for deciding if battery percentage has chandged
 	var/last_world_time = "00:00"
 	var/list/last_header_icons
 
@@ -26,12 +26,12 @@
 	var/icon_state_unpowered = null							// Icon state when the computer is turned off.
 	var/icon_state_powered = null							// Icon state when the computer is turned on.
 	var/icon_state_menu = "menu"							// Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
-	var/max_hardware_size = 0								// Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
+	var/max_hardware_size = ZERO								// Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
 	var/steel_sheet_cost = 5								// Amount of steel sheets refunded when disassembling an empty frame of this computer.
 
 	integrity_failure = 0.5
 	max_integrity = 100
-	armor = list("melee" = 0, "bullet" = 20, "laser" = 20, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+	armor = list("melee" = 0, "bullet" = 20, "laser" = 20, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = ZERO)
 
 	// Important hardware (must be installed for computer to work)
 
@@ -195,7 +195,7 @@
 /obj/item/modular_computer/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>\The [src] was already emagged.</span>")
-		return 0
+		return ZERO
 	else
 		obj_flags |= EMAGGED
 		to_chat(user, "<span class='notice'>You emag \the [src]. It's screen briefly shows a \"OVERRIDE ACCEPTED: New software downloads available.\" message.</span>")
@@ -264,12 +264,12 @@
 // Process currently calls handle_power(), may be expanded in future if more things are added.
 /obj/item/modular_computer/process()
 	if(!enabled) // The computer is turned off
-		last_power_usage = 0
-		return 0
+		last_power_usage = ZERO
+		return ZERO
 
 	if(obj_integrity <= integrity_failure * max_integrity)
 		shutdown_computer()
-		return 0
+		return ZERO
 
 	if(active_program && active_program.requires_ntnet && !get_ntnet_status(active_program.requires_ntnet_feature))
 		active_program.event_networkfailure(0) // Active program requires NTNet to run but we've just lost connection. Crash.
@@ -323,13 +323,13 @@
 	else
 		data["PC_batteryicon"] = "batt_5.gif"
 		data["PC_batterypercent"] = "N/C"
-		data["PC_showbatteryicon"] = battery_module ? 1 : 0
+		data["PC_showbatteryicon"] = battery_module ? 1 : ZERO
 
-	if(recharger && recharger.enabled && recharger.check_functionality() && recharger.use_power(0))
+	if(recharger && recharger.enabled && recharger.check_functionality() && recharger.use_power(ZERO))
 		data["PC_apclinkicon"] = "charging.gif"
 
 	switch(get_ntnet_status())
-		if(0)
+		if(ZERO)
 			data["PC_ntneticon"] = "sig_none.gif"
 		if(1)
 			data["PC_ntneticon"] = "sig_low.gif"
@@ -365,13 +365,13 @@
 		ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
 	update_icon()
 
-// Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
-/obj/item/modular_computer/proc/get_ntnet_status(specific_action = 0)
+// Returns ZERO for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
+/obj/item/modular_computer/proc/get_ntnet_status(specific_action = ZERO)
 	var/obj/item/computer_hardware/network_card/network_card = all_components[MC_NET]
 	if(network_card)
 		return network_card.get_signal(specific_action)
 	else
-		return 0
+		return ZERO
 
 /obj/item/modular_computer/proc/add_log(text)
 	if(!get_ntnet_status())
@@ -386,7 +386,7 @@
 		idle_threads.Remove(P)
 	if(loud)
 		physical.visible_message("<span class='notice'>\The [src] shuts down.</span>")
-	enabled = 0
+	enabled = ZERO
 	update_icon()
 
 

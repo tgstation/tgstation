@@ -12,18 +12,18 @@
 	operation_req_access = list(ACCESS_CENT_SPECOPS)
 	internals_req_access = list(ACCESS_CENT_SPECOPS)
 	wreckage = /obj/structure/mecha_wreckage/marauder
-	add_req_access = 0
+	add_req_access = ZERO
 	internal_damage_threshold = 25
 	force = 45
 	max_equip = 5
 	bumpsmash = 1
 
-/obj/mecha/combat/marauder/GrantActions(mob/living/user, human_occupant = 0)
+/obj/mecha/combat/marauder/GrantActions(mob/living/user, human_occupant = ZERO)
 	..()
 	smoke_action.Grant(user, src)
 	zoom_action.Grant(user, src)
 
-/obj/mecha/combat/marauder/RemoveActions(mob/living/user, human_occupant = 0)
+/obj/mecha/combat/marauder/RemoveActions(mob/living/user, human_occupant = ZERO)
 	..()
 	smoke_action.Remove(user)
 	zoom_action.Remove(user)

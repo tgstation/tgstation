@@ -14,7 +14,7 @@
 
 /obj/structure/plasticflaps/Initialize()
 	. = ..()
-	alpha = 0
+	alpha = ZERO
 	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, plane, dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
 
 /obj/structure/plasticflaps/examine(mob/user)

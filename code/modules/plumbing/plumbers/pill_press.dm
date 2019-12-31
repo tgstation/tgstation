@@ -55,7 +55,7 @@
 		if(P.icon_state == "pill4") //mirrored from chem masters
 			P.desc = "A tablet or capsule, but not just any, a red one, one taken by the ones not scared of knowledge, freedom, uncertainty and the brutal truths of reality."
 	if(stored_pills.len)
-		var/pill_amount = 0
+		var/pill_amount = ZERO
 		for(var/obj/item/reagent_containers/pill/P in loc)
 			pill_amount++
 			if(pill_amount >= max_floor_pills) //too much so just stop

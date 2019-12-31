@@ -110,7 +110,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/id_type_name = "identification card"
-	var/mining_points = 0 //For redeeming at mining equipment vendors
+	var/mining_points = ZERO //For redeeming at mining equipment vendors
 	var/list/access = list()
 	var/registered_name = null // The name registered_name on the card
 	var/assignment = null
@@ -189,7 +189,7 @@
 	if (!money || !money.len)
 		return FALSE
 
-	var/total = 0
+	var/total = ZERO
 
 	for (var/obj/item/physical_money in money)
 		var/cash_money = physical_money.get_item_credit_value()
@@ -258,7 +258,7 @@
 
 	var/amount_to_remove =  FLOOR(input(user, "How much do you want to withdraw? Current Balance: [registered_account.account_balance]", "Withdraw Funds", 5) as num|null, 1)
 
-	if(!amount_to_remove || amount_to_remove < 0)
+	if(!amount_to_remove || amount_to_remove < ZERO)
 		return
 	if(!alt_click_can_use_id(user))
 		return
@@ -592,8 +592,8 @@ update_label()
 	assignment = "Prisoner"
 	registered_name = "Scum"
 	uses_overlays = FALSE
-	var/goal = 0 //How far from freedom?
-	var/points = 0
+	var/goal = ZERO //How far from freedom?
+	var/points = ZERO
 
 /obj/item/card/id/prisoner/attack_self(mob/user)
 	to_chat(usr, "<span class='notice'>You have accumulated [points] out of the [goal] points you need for freedom.</span>")

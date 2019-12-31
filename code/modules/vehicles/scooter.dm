@@ -8,7 +8,7 @@
 /obj/vehicle/ridden/scooter/Initialize()
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0), TEXT_SOUTH = list(-2), TEXT_EAST = list(0), TEXT_WEST = list( 2)))
+	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(ZERO), TEXT_SOUTH = list(-2), TEXT_EAST = list(ZERO), TEXT_WEST = list( 2)))
 
 
 /obj/vehicle/ridden/scooter/wrench_act(mob/living/user, obj/item/I)
@@ -29,7 +29,7 @@
 	. = ..()
 	for(var/m in buckled_mobs)
 		var/mob/living/buckled_mob = m
-		if(buckled_mob.get_num_legs(FALSE) > 0)
+		if(buckled_mob.get_num_legs(FALSE) > ZERO)
 			buckled_mob.pixel_y = 5
 		else
 			buckled_mob.pixel_y = -4
@@ -47,7 +47,7 @@
 	desc = "An unfinished scooter which can only barely be called a skateboard. It's still rideable, but probably unsafe. Looks like you'll need to add a few rods to make handlebars."
 	icon_state = "skateboard"
 	density = FALSE
-	arms_required = 0
+	arms_required = ZERO
 	fall_off_if_missing_arms = FALSE
 	var/datum/effect_system/spark_spread/sparks
 	///Whether the board is currently grinding
@@ -70,7 +70,7 @@
 	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
 	sparks = new
-	sparks.set_up(1, 0, src)
+	sparks.set_up(1, ZERO, src)
 	sparks.attach(src)
 
 /obj/vehicle/ridden/scooter/skateboard/Destroy()
@@ -189,7 +189,7 @@
 	name = "\improper Board Of Directors"
 	desc = "The engineering complexity of a spaceship concentrated inside of a board. Just as expensive, too."
 	board_item_type = /obj/item/melee/skateboard/hoverboard/admin
-	instability = 0
+	instability = ZERO
 	icon_state = "hoverboard_nt"
 	board_icon = "hoverboard_nt"
 
@@ -264,7 +264,7 @@
 /obj/vehicle/ridden/scooter/wheelys/Initialize()
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 0
+	D.vehicle_move_delay = ZERO
 	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)

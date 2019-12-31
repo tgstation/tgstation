@@ -1,6 +1,6 @@
 /datum/bounty/reagent
 	var/required_volume = 10
-	var/shipped_volume = 0
+	var/shipped_volume = ZERO
 	var/datum/reagent/wanted_reagent
 
 /datum/bounty/reagent/completion_string()
@@ -85,7 +85,7 @@
 	wanted_reagent = new reagent_type
 	name = wanted_reagent.name
 	description = "CentCom is thirsty! Send a shipment of [name] to CentCom to quench the company's thirst."
-	reward += rand(0, 2) * 500
+	reward += rand(ZERO, 2) * 500
 
 /datum/bounty/reagent/complex_drink
 	name = "Complex Drink"
@@ -118,7 +118,7 @@
 	wanted_reagent = new reagent_type
 	name = wanted_reagent.name
 	description = "CentCom is offering a reward for talented mixologists. Ship a container of [name] to claim the prize."
-	reward += rand(0, 4) * 500
+	reward += rand(ZERO, 4) * 500
 
 /datum/bounty/reagent/chemical_simple
 	name = "Simple Chemical"
@@ -156,7 +156,7 @@
 	wanted_reagent = new reagent_type
 	name = wanted_reagent.name
 	description = "CentCom is in desperate need of the chemical [name]. Ship a container of it to be rewarded."
-	reward += rand(0, 4) * 500 //4000 to 6000 credits
+	reward += rand(ZERO, 4) * 500 //4000 to 6000 credits
 
 /datum/bounty/reagent/chemical_complex
 	name = "Rare Chemical"
@@ -187,13 +187,13 @@
 	wanted_reagent = new reagent_type
 	name = wanted_reagent.name
 	description = "CentCom is paying premium for the chemical [name]. Ship a container of it to be rewarded."
-	reward += rand(0, 5) * 750 //6000 to 9750 credits
+	reward += rand(ZERO, 5) * 750 //6000 to 9750 credits
 
 /datum/bounty/pill
 	/// quantity of the pills needed, this value acts as minimum, gets randomized on new()
 	var/required_ammount = 80
 	/// counter for pills sent
-	var/shipped_ammount = 0
+	var/shipped_ammount = ZERO
 	/// reagent requested
 	var/datum/reagent/wanted_reagent
 	/// minimum volume of chemical needed, gets randomized on new()

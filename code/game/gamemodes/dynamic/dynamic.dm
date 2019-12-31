@@ -22,7 +22,7 @@ GLOBAL_VAR_INIT(dynamic_no_stacking, TRUE)
 // A number between -5 and +5.
 // A negative value will give a more peaceful round and
 // a positive value will give a round with higher threat.
-GLOBAL_VAR_INIT(dynamic_curve_centre, 0)
+GLOBAL_VAR_INIT(dynamic_curve_centre, ZERO)
 // A number between 0.5 and 4.
 // Higher value will favour extreme rounds and
 // lower value rounds closer to the average.
@@ -53,9 +53,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	// Threat logging vars
 	/// The "threat cap", threat shouldn't normally go above this and is used in ruleset calculations
-	var/threat_level = 0
+	var/threat_level = ZERO
 	/// Set at the beginning of the round. Spent by the mode to "purchase" rules.
-	var/threat = 0
+	var/threat = ZERO
 	/// Running information about the threat. Can store text or datum entries.
 	var/list/threat_log = list()
 	/// List of roundstart rules used for selecting the rules.
@@ -66,29 +66,29 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/list/midround_rules = list()
 	/** # Pop range per requirement.
 	  * If the value is five the range is:
-	  * 0-4, 5-9, 10-14, 15-19, 20-24, 25-29, 30-34, 35-39, 40-54, 45+
+	  * ZERO-4, 5-9, 10-14, 15-19, 20-24, 25-29, 30-34, 35-39, 40-54, 45+
 	  * If it is six the range is:
-	  * 0-5, 6-11, 12-17, 18-23, 24-29, 30-35, 36-41, 42-47, 48-53, 54+
+	  * ZERO-5, 6-11, 12-17, 18-23, 24-29, 30-35, 36-41, 42-47, 48-53, 54+
 	  * If it is seven the range is:
-	  * 0-6, 7-13, 14-20, 21-27, 28-34, 35-41, 42-48, 49-55, 56-62, 63+
+	  * ZERO-6, 7-13, 14-20, 21-27, 28-34, 35-41, 42-48, 49-55, 56-62, 63+
 	  */
 	var/pop_per_requirement = 6
 	/// The requirement used for checking if a second rule should be selected. Index based on pop_per_requirement.
-	var/list/second_rule_req = list(100, 100, 80, 70, 60, 50, 30, 20, 10, 0)
+	var/list/second_rule_req = list(100, 100, 80, 70, 60, 50, 30, 20, 10, ZERO)
 	/// The probability for a second ruleset with index being every ten threat.
-	var/list/second_rule_prob = list(0,0,60,80,80,80,100,100,100,100)
+	var/list/second_rule_prob = list(ZERO,ZERO,60,80,80,80,100,100,100,100)
 	/// The requirement used for checking if a third rule should be selected. Index based on pop_per_requirement.
 	var/list/third_rule_req = list(100, 100, 100, 90, 80, 70, 60, 50, 40, 30)
 	/// The probability for a third ruleset with index being every ten threat.
-	var/list/third_rule_prob = list(0,0,0,0,60,60,80,90,100,100)
+	var/list/third_rule_prob = list(ZERO,ZERO,ZERO,ZERO,60,60,80,90,100,100)
 	/// Threat requirement for a second ruleset when high pop override is in effect.
 	var/high_pop_second_rule_req = 40
 	/// Threat requirement for a third ruleset when high pop override is in effect.
 	var/high_pop_third_rule_req = 60
 	/// The amount of additional rulesets waiting to be picked.
-	var/extra_rulesets_amount = 0
+	var/extra_rulesets_amount = ZERO
 	/// Number of players who were ready on roundstart.
-	var/roundstart_pop_ready = 0
+	var/roundstart_pop_ready = ZERO
 	/// List of candidates used on roundstart rulesets.
 	var/list/candidates = list()
 	/// Rules that are processed, rule_process is called on the rules in this list.
@@ -98,15 +98,15 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// Associative list of current players, in order: living players, living antagonists, dead players and observers.
 	var/list/list/current_players = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
 	/// When world.time is over this number the mode tries to inject a latejoin ruleset.
-	var/latejoin_injection_cooldown = 0
+	var/latejoin_injection_cooldown = ZERO
 	/// When world.time is over this number the mode tries to inject a midround ruleset.
-	var/midround_injection_cooldown = 0
+	var/midround_injection_cooldown = ZERO
 	/// When TRUE GetInjectionChance returns 100.
 	var/forced_injection = FALSE
 	/// Forced ruleset to be executed for the next latejoin.
 	var/datum/dynamic_ruleset/latejoin/forced_latejoin_rule = null
 	/// When current_players was updated last time.
-	var/pop_last_updated = 0
+	var/pop_last_updated = ZERO
 	/// How many percent of the rounds are more peaceful.
 	var/peaceful_percentage = 50
 	/// If a highlander executed.
@@ -116,7 +116,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// Dynamic configuration, loaded on pre_setup
 	var/list/configuration = null
 	/// Antags rolled by rules so far, to keep track of and discourage scaling past a certain ratio of crew/antags especially on lowpop.
-	var/antags_rolled = 0
+	var/antags_rolled = ZERO
 
 /datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
@@ -133,7 +133,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	dat += "Stacking limit: [GLOB.dynamic_stacking_limit] <a href='?src=\ref[src];[HrefToken()];stacking_limit=1'>\[Adjust\]</A>"
 	dat += "<br/>"
 	dat += "Executed rulesets: "
-	if (executed_rules.len > 0)
+	if (executed_rules.len > ZERO)
 		dat += "<br/>"
 		for (var/datum/dynamic_ruleset/DR in executed_rules)
 			dat += "[DR.ruletype] - <b>[DR.name]</b><br>"
@@ -158,21 +158,21 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else if (href_list["classic_secret"])
 		GLOB.dynamic_classic_secret = !GLOB.dynamic_classic_secret
 	else if (href_list["adjustthreat"])
-		var/threatadd = input("Specify how much threat to add (negative to subtract). This can inflate the threat level.", "Adjust Threat", 0) as null|num
+		var/threatadd = input("Specify how much threat to add (negative to subtract). This can inflate the threat level.", "Adjust Threat", ZERO) as null|num
 		if(!threatadd)
 			return
-		if(threatadd > 0)
+		if(threatadd > ZERO)
 			create_threat(threatadd)
 			threat_log += "[worldtime2text()]: [key_name(usr)] increased threat by [threatadd] threat."
 		else
 			spend_threat(-threatadd)
 			threat_log += "[worldtime2text()]: [key_name(usr)] decreased threat by [-threatadd] threat."
 	else if (href_list["injectlate"])
-		latejoin_injection_cooldown = 0
+		latejoin_injection_cooldown = ZERO
 		forced_injection = TRUE
 		message_admins("[key_name(usr)] forced a latejoin injection.", 1)
 	else if (href_list["injectmid"])
-		midround_injection_cooldown = 0
+		midround_injection_cooldown = ZERO
 		forced_injection = TRUE
 		message_admins("[key_name(usr)] forced a midround injection.", 1)
 	else if (href_list["threatlog"])
@@ -197,7 +197,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /datum/game_mode/dynamic/send_intercept()
 	. = "<b><i>Central Command Status Summary</i></b><hr>"
 	switch(round(threat_level))
-		if(0 to 19)
+		if(ZERO to 19)
 			update_playercounts()
 			if(!current_players[CURRENT_LIVING_ANTAGS].len)
 				. += "<b>Peaceful Waypoint</b></center><BR>"
@@ -283,7 +283,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	log_game("DYNAMIC: Dynamic mode parameters for the round:")
 	log_game("DYNAMIC: Centre is [GLOB.dynamic_curve_centre], Width is [GLOB.dynamic_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
 	log_game("DYNAMIC: Stacking limit is [GLOB.dynamic_stacking_limit], Classic secret is [GLOB.dynamic_classic_secret ? "Enabled" : "Disabled"], High population limit is [GLOB.dynamic_high_pop_limit].")
-	if(GLOB.dynamic_forced_threat_level >= 0)
+	if(GLOB.dynamic_forced_threat_level >= ZERO)
 		threat_level = round(GLOB.dynamic_forced_threat_level, 0.1)
 		threat = threat_level
 	else
@@ -339,14 +339,14 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			roundstart_pop_ready++
 			candidates.Add(player)
 	log_game("DYNAMIC: Listing [roundstart_rules.len] round start rulesets, and [candidates.len] players ready.")
-	if (candidates.len <= 0)
+	if (candidates.len <= ZERO)
 		log_game("DYNAMIC: [candidates.len] candidates.")
 		return TRUE
-	if (roundstart_rules.len <= 0)
+	if (roundstart_rules.len <= ZERO)
 		log_game("DYNAMIC: [roundstart_rules.len] rules.")
 		return TRUE
 
-	if(GLOB.dynamic_forced_roundstart_ruleset.len > 0)
+	if(GLOB.dynamic_forced_roundstart_ruleset.len > ZERO)
 		rigged_roundstart()
 	else
 		roundstart()
@@ -389,13 +389,13 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if (rule.acceptable(roundstart_pop_ready, threat_level) && threat >= rule.cost)	// If we got the population and threat required
 			rule.candidates = candidates.Copy()
 			rule.trim_candidates()
-			if (rule.ready() && rule.candidates.len > 0)
+			if (rule.ready() && rule.candidates.len > ZERO)
 				drafted_rules[rule] = rule.weight
 
 	var/indice_pop = min(10,round(roundstart_pop_ready/pop_per_requirement)+1)
-	extra_rulesets_amount = 0
+	extra_rulesets_amount = ZERO
 	if (GLOB.dynamic_classic_secret)
-		extra_rulesets_amount = 0
+		extra_rulesets_amount = ZERO
 	else
 		if (roundstart_pop_ready > GLOB.dynamic_high_pop_limit)
 			message_admins("High Population Override is in effect! Threat Level will have more impact on which roles will appear, and player population less.")
@@ -405,16 +405,16 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				if (threat_level > high_pop_third_rule_req)
 					extra_rulesets_amount++
 		else
-			var/threat_indice = min(10, max(round(threat_level ? threat_level/10 : 1), 1))	// 0-9 threat = 1, 10-19 threat = 2 ...
+			var/threat_indice = min(10, max(round(threat_level ? threat_level/10 : 1), 1))	// ZERO-9 threat = 1, 10-19 threat = 2 ...
 			if (threat_level >= second_rule_req[indice_pop] && prob(second_rule_prob[threat_indice]))
 				extra_rulesets_amount++
 				if (threat_level >= third_rule_req[indice_pop] && prob(third_rule_prob[threat_indice]))
 					extra_rulesets_amount++
 	log_game("DYNAMIC: Trying to roll [extra_rulesets_amount + 1] roundstart rulesets. Picking from [drafted_rules.len] eligible rulesets.")
 
-	if (drafted_rules.len > 0 && picking_roundstart_rule(drafted_rules))
+	if (drafted_rules.len > ZERO && picking_roundstart_rule(drafted_rules))
 		log_game("DYNAMIC: First ruleset picked successfully. [extra_rulesets_amount] remaining.")
-		while(extra_rulesets_amount > 0 && drafted_rules.len > 0)	// We had enough threat for one or two more rulesets
+		while(extra_rulesets_amount > ZERO && drafted_rules.len > ZERO)	// We had enough threat for one or two more rulesets
 			for (var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
 				if (rule.cost > threat)
 					drafted_rules -= rule
@@ -443,7 +443,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		// Check if a blocking ruleset has been executed.
 		else if(check_blocking(starting_rule.blocking_rules, executed_rules))	// Should already be filtered out, but making sure. Check filtering at end of proc if reported.
 			drafted_rules -= starting_rule
-			if(drafted_rules.len <= 0)
+			if(drafted_rules.len <= ZERO)
 				log_game("DYNAMIC: Picking [starting_rule.name] failed due to blocking_rules and no more rulesets available. Report this.")
 				return FALSE
 			starting_rule = pickweight(drafted_rules)
@@ -452,14 +452,14 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			if(threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 				if(highlander_executed)
 					drafted_rules -= starting_rule
-					if(drafted_rules.len <= 0)
+					if(drafted_rules.len <= ZERO)
 						log_game("DYNAMIC: Picking [starting_rule.name] failed due to no highlander stacking and no more rulesets available. Report this.")
 						return FALSE
 					starting_rule = pickweight(drafted_rules)
 		// With low pop and high threat there might be rulesets that get executed with no valid candidates.
 		else if(!starting_rule.ready())	// Should already be filtered out, but making sure. Check filtering at end of proc if reported.
 			drafted_rules -= starting_rule
-			if(drafted_rules.len <= 0)
+			if(drafted_rules.len <= ZERO)
 				log_game("DYNAMIC: Picking [starting_rule.name] failed because there were not enough candidates and no more rulesets available. Report this.")
 				return FALSE
 			starting_rule = pickweight(drafted_rules)
@@ -518,7 +518,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		// Check if a blocking ruleset has been executed.
 		else if(check_blocking(rule.blocking_rules, executed_rules))
 			drafted_rules -= rule
-			if(drafted_rules.len <= 0)
+			if(drafted_rules.len <= ZERO)
 				return FALSE
 			rule = pickweight(drafted_rules)
 		// Check if the ruleset is highlander and if a highlander ruleset has been executed
@@ -526,7 +526,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			if(threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 				if(highlander_executed)
 					drafted_rules -= rule
-					if(drafted_rules.len <= 0)
+					if(drafted_rules.len <= ZERO)
 						return FALSE
 					rule = pickweight(drafted_rules)
 
@@ -644,7 +644,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					rule.trim_candidates()
 					if (rule.ready())
 						drafted_rules[rule] = rule.get_weight()
-			if (drafted_rules.len > 0)
+			if (drafted_rules.len > ZERO)
 				picking_midround_latejoin_rule(drafted_rules)
 
 /// Updates current_players.
@@ -658,7 +658,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			continue
 		if (M.stat != DEAD)
 			current_players[CURRENT_LIVING_PLAYERS].Add(M)
-			if (M.mind && (M.mind.special_role || M.mind.antag_datums?.len > 0))
+			if (M.mind && (M.mind.special_role || M.mind.antag_datums?.len > ZERO))
 				current_players[CURRENT_LIVING_ANTAGS].Add(M)
 		else
 			if (istype(M,/mob/dead/observer))
@@ -673,7 +673,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(forced_injection)
 		forced_injection = !dry_run
 		return 100
-	var/chance = 0
+	var/chance = ZERO
 	// If the high pop override is in effect, we reduce the impact of population on the antag injection chance
 	var/high_pop_factor = (current_players[CURRENT_LIVING_PLAYERS].len >= GLOB.dynamic_high_pop_limit)
 	var/max_pop_per_antag = max(5,15 - round(threat_level/10) - round(current_players[CURRENT_LIVING_PLAYERS].len/(high_pop_factor ? 10 : 5)))
@@ -691,7 +691,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		chance += 15
 	if (threat < 30)
 		chance -= 15
-	return round(max(0,chance))
+	return round(max(ZERO,chance))
 
 /// Removes type from the list
 /datum/game_mode/dynamic/proc/remove_from_list(list/type_list, type)
@@ -702,7 +702,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /// Checks if a type in blocking_list is in rule_list.
 /datum/game_mode/dynamic/proc/check_blocking(list/blocking_list, list/rule_list)
-	if(blocking_list.len > 0)
+	if(blocking_list.len > ZERO)
 		for(var/blocking in blocking_list)
 			for(var/datum/executed in rule_list)
 				if(blocking == executed.type)
@@ -712,9 +712,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /// Checks if client age is age or older.
 /datum/game_mode/dynamic/proc/check_age(client/C, age)
 	enemy_minimum_age = age
-	if(get_remaining_days(C) == 0)
+	if(get_remaining_days(C) == ZERO)
 		enemy_minimum_age = initial(enemy_minimum_age)
-		return TRUE // Available in 0 days = available right now = player is old enough to play.
+		return TRUE // Available in ZERO days = available right now = player is old enough to play.
 	enemy_minimum_age = initial(enemy_minimum_age)
 	return FALSE
 
@@ -751,7 +751,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				if (rule.ready())
 					drafted_rules[rule] = rule.get_weight()
 
-		if (drafted_rules.len > 0 && picking_midround_latejoin_rule(drafted_rules))
+		if (drafted_rules.len > ZERO && picking_midround_latejoin_rule(drafted_rules))
 			var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
 			latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
 
@@ -767,22 +767,22 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /// Expend threat, can't fall under 0.
 /datum/game_mode/dynamic/proc/spend_threat(cost)
-	threat = max(threat-cost,0)
+	threat = max(threat-cost,ZERO)
 
-/// Turns the value generated by lorentz distribution to threat value between 0 and 100.
+/// Turns the value generated by lorentz distribution to threat value between ZERO and 100.
 /datum/game_mode/dynamic/proc/lorentz_to_threat(x)
 	switch (x)
 		if (-INFINITY to -20)
-			return rand(0, 10)
+			return rand(ZERO, 10)
 		if (-20 to -10)
 			return RULE_OF_THREE(-40, -20, x) + 50
 		if (-10 to -5)
 			return RULE_OF_THREE(-30, -10, x) + 50
 		if (-5 to -2.5)
 			return RULE_OF_THREE(-20, -5, x) + 50
-		if (-2.5 to -0)
+		if (-2.5 to -ZERO)
 			return RULE_OF_THREE(-10, -2.5, x) + 50
-		if (0 to 2.5)
+		if (ZERO to 2.5)
 			return RULE_OF_THREE(10, 2.5, x) + 50
 		if (2.5 to 5)
 			return RULE_OF_THREE(20, 5, x) + 50

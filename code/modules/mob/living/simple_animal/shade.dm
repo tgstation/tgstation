@@ -10,7 +10,7 @@
 	maxHealth = 40
 	health = 40
 	spacewalk = TRUE
-	healable = 0
+	healable = ZERO
 	speak_emote = list("hisses")
 	emote_hear = list("wails.","screeches.")
 	response_help_continuous = "puts their hand through"
@@ -24,9 +24,9 @@
 	melee_damage_upper = 12
 	attack_verb_continuous = "metaphysically strikes"
 	attack_verb_simple = "metaphysically strike"
-	minbodytemp = 0
+	minbodytemp = ZERO
 	maxbodytemp = INFINITY
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
 	stop_automated_movement = 1
 	faction = list("cult")
 	status_flags = CANPUSH
@@ -41,7 +41,7 @@
 
 /mob/living/simple_animal/shade/canSuicide()
 	if(istype(loc, /obj/item/soulstone)) //do not suicide inside the soulstone
-		return 0
+		return ZERO
 	return ..()
 
 /mob/living/simple_animal/shade/attack_animal(mob/living/simple_animal/M)

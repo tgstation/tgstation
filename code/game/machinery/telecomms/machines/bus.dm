@@ -17,7 +17,7 @@
 	idle_power_usage = 50
 	netspeed = 40
 	circuit = /obj/item/circuitboard/machine/telecomms/bus
-	var/change_frequency = 0
+	var/change_frequency = ZERO
 
 /obj/machinery/telecomms/bus/receive_information(datum/signal/subspace/signal, obj/machinery/telecomms/machine_from)
 	if(!istype(signal) || !is_freq_listening(signal))
@@ -37,10 +37,10 @@
 	// Try sending it!
 	var/list/try_send = list(signal.server_type, /obj/machinery/telecomms/hub, /obj/machinery/telecomms/broadcaster)
 
-	var/i = 0
+	var/i = ZERO
 	for(var/send in try_send)
 		if(i)
-			signal.data["slow"] += rand(0, 1) // slow the signal down only slightly
+			signal.data["slow"] += rand(ZERO, 1) // slow the signal down only slightly
 		i++
 		if(relay_information(signal, send))
 			break

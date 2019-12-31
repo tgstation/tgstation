@@ -5,8 +5,8 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 	ventcrawler = VENTCRAWLER_ALWAYS
 	gender = NEUTER
-	var/is_adult = 0
-	var/docile = 0
+	var/is_adult = ZERO
+	var/docile = ZERO
 	faction = list("slime","neutral")
 
 	harm_intent_damage = 5
@@ -23,11 +23,11 @@
 	bubble_icon = "slime"
 	initial_language_holder = /datum/language_holder/slime
 
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
 
 	maxHealth = 150
 	health = 150
-	healable = 0
+	healable = ZERO
 
 	see_in_dark = 8
 
@@ -45,16 +45,16 @@
 	var/cores = 1 // the number of /obj/item/slime_extract's the slime has left inside
 	var/mutation_chance = 30 // Chance of mutating, should be between 25 and 35
 
-	var/powerlevel = 0 // 1-10 controls how much electricity they are generating
-	var/amount_grown = 0 // controls how long the slime has been overfed, if 10, grows or reproduces
+	var/powerlevel = ZERO // 1-10 controls how much electricity they are generating
+	var/amount_grown = ZERO // controls how long the slime has been overfed, if 10, grows or reproduces
 
-	var/number = 0 // Used to understand when someone is talking to it
+	var/number = ZERO // Used to understand when someone is talking to it
 
 	var/mob/living/Target = null // AI variable - tells the slime to hunt this down
 	var/mob/living/Leader = null // AI variable - tells the slime to follow this person
 
 	var/attacked = 0 // Determines if it's been attacked recently. Can be any number, is a cooloff-ish variable
-	var/rabid = 0 // If set to 1, the slime will attack and eat anything it comes in contact with
+	var/rabid = ZERO // If set to 1, the slime will attack and eat anything it comes in contact with
 	var/holding_still = 0 // AI variable, cooloff-ish for how long it's going to stay in one place
 	var/target_patience = 0 // AI variable, cooloff-ish for how long it's going to follow its target
 
@@ -81,7 +81,7 @@
 	///////////CORE-CROSSING CODE
 
 	var/effectmod //What core modification is being used.
-	var/applied = 0 //How many extracts of the modtype have been applied.
+	var/applied = ZERO //How many extracts of the modtype have been applied.
 
 
 /mob/living/simple_animal/slime/Initialize(mapload, new_colour="grey", new_is_adult=FALSE)
@@ -146,7 +146,7 @@
 /mob/living/simple_animal/slime/on_reagent_change()
 	. = ..()
 	remove_movespeed_modifier(MOVESPEED_ID_SLIME_REAGENTMOD, TRUE)
-	var/amount = 0
+	var/amount = ZERO
 	if(reagents.has_reagent(/datum/reagent/medicine/morphine)) // morphine slows slimes down
 		amount = 2
 	if(reagents.has_reagent(/datum/reagent/consumable/frostoil)) // Frostoil also makes them move VEEERRYYYYY slow
@@ -156,19 +156,19 @@
 
 /mob/living/simple_animal/slime/updatehealth()
 	. = ..()
-	var/mod = 0
+	var/mod = ZERO
 	if(!HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))
 		var/health_deficiency = (maxHealth - health)
 		if(health_deficiency >= 45)
 			mod += (health_deficiency / 25)
-		if(health <= 0)
+		if(health <= ZERO)
 			mod += 2
 	add_movespeed_modifier(MOVESPEED_ID_SLIME_HEALTHMOD, TRUE, 100, multiplicative_slowdown = mod, override = TRUE)
 	update_health_hud()
 
 /mob/living/simple_animal/slime/update_health_hud()
 	if(hud_used)
-		var/severity = 0
+		var/severity = ZERO
 		var/healthpercent = (health/maxHealth) * 100
 		switch(healthpercent)
 			if(100 to INFINITY)
@@ -191,14 +191,14 @@
 			else
 				hud_used.healths.icon_state = "slime_health7"
 				severity = 6
-		if(severity > 0)
+		if(severity > ZERO)
 			overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
 		else
 			clear_fullscreen("brute")
 
 /mob/living/simple_animal/slime/adjust_bodytemperature()
 	. = ..()
-	var/mod = 0
+	var/mod = ZERO
 	if(bodytemperature >= 330.23) // 135 F or 57.08 C
 		mod = -1	// slimes become supercharged at high temperatures
 	else if(bodytemperature < 283.222)
@@ -207,7 +207,7 @@
 		add_movespeed_modifier(MOVESPEED_ID_SLIME_TEMPMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = mod)
 
 /mob/living/simple_animal/slime/ObjBump(obj/O)
-	if(!client && powerlevel > 0)
+	if(!client && powerlevel > ZERO)
 		var/probab = 10
 		switch(powerlevel)
 			if(1 to 2)
@@ -230,7 +230,7 @@
 						Atkcool = TRUE
 						addtimer(VARSET_CALLBACK(src, Atkcool, FALSE), 4.5 SECONDS)
 
-/mob/living/simple_animal/slime/Process_Spacemove(movement_dir = 0)
+/mob/living/simple_animal/slime/Process_Spacemove(movement_dir = ZERO)
 	return 2
 
 /mob/living/simple_animal/slime/Stat()
@@ -268,7 +268,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	powerlevel = 0 // oh no, the power!
+	powerlevel = ZERO // oh no, the power!
 
 /mob/living/simple_animal/slime/MouseDrop(atom/movable/A as mob|obj)
 	if(isliving(A) && A != src && usr == src)
@@ -299,7 +299,7 @@
 		if(nutrition >= 100) //steal some nutrition. negval handled in life()
 			adjust_nutrition(-(50 + (40 * M.is_adult)))
 			M.add_nutrition(50 + (40 * M.is_adult))
-		if(health > 0)
+		if(health > ZERO)
 			M.adjustBruteLoss(-10 + (-10 * M.is_adult))
 			M.updatehealth()
 
@@ -381,7 +381,7 @@
 		var/obj/item/stack/sheet/mineral/plasma/S = W
 		S.use(1)
 		return
-	if(W.force > 0)
+	if(W.force > ZERO)
 		attacked += 10
 		if(prob(25))
 			user.do_attack_animation(src)
@@ -389,7 +389,7 @@
 			to_chat(user, "<span class='danger'>[W] passes right through [src]!</span>")
 			return
 		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??
-			Discipline = 0
+			Discipline = ZERO
 	if(W.force >= 3)
 		var/force_effect = 2 * W.force
 		if(is_adult)
@@ -487,7 +487,7 @@
 
 		if(!is_adult)
 			if(Discipline == 1)
-				attacked = 0
+				attacked = ZERO
 
 	if(Target)
 		Target = null
@@ -511,10 +511,10 @@
 	docile = 1
 
 /mob/living/simple_animal/slime/can_unbuckle()
-	return 0
+	return ZERO
 
 /mob/living/simple_animal/slime/can_buckle()
-	return 0
+	return ZERO
 
 /mob/living/simple_animal/slime/get_mob_buckling_height(mob/seat)
 	if(..())

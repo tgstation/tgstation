@@ -36,7 +36,7 @@
 	var/obj/effect/countdown/clonepod/countdown
 
 	var/list/unattached_flesh
-	var/flesh_number = 0
+	var/flesh_number = ZERO
 	var/datum/bank_account/current_insurance
 	fair_market_price = 5 // He nodded, because he knew I was right. Then he swiped his credit card to pay me for arresting him.
 	payment_department = ACCOUNT_MED
@@ -49,7 +49,7 @@
 		radio = new(src)
 		radio.keyslot = new radio_key
 		radio.subspace_transmission = TRUE
-		radio.canhear_range = 0
+		radio.canhear_range = ZERO
 		radio.recalculateChannels()
 
 /obj/machinery/clonepod/Destroy()
@@ -65,8 +65,8 @@
 	. = ..()
 
 /obj/machinery/clonepod/RefreshParts()
-	speed_coeff = 0
-	efficiency = 0
+	speed_coeff = ZERO
+	efficiency = ZERO
 	for(var/obj/item/stock_parts/scanning_module/S in component_parts)
 		efficiency += S.rating
 	for(var/obj/item/stock_parts/manipulator/P in component_parts)
@@ -459,7 +459,7 @@
 		flash_color(mob_occupant, flash_color="#960000", flash_time=100)
 		to_chat(mob_occupant, "<span class='warning'><b>Agony blazes across your consciousness as your body is torn apart.</b><br><i>Is this what dying is like? Yes it is.</i></span>")
 		playsound(src, 'sound/machines/warning-buzzer.ogg', 50)
-		SEND_SOUND(mob_occupant, sound('sound/hallucinations/veryfar_noise.ogg',0,1,50))
+		SEND_SOUND(mob_occupant, sound('sound/hallucinations/veryfar_noise.ogg',ZERO,1,50))
 		log_cloning("[key_name(mob_occupant)] destroyed within [src] at [AREACOORD(src)] due to malfunction.")
 		QDEL_IN(mob_occupant, 40)
 

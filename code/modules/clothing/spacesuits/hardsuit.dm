@@ -14,9 +14,9 @@
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH	| PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-	var/rad_count = 0
-	var/rad_record = 0
-	var/grace_count = 0
+	var/rad_count = ZERO
+	var/rad_record = ZERO
+	var/grace_count = ZERO
 	var/datum/looping_sound/geiger/soundloop
 
 /obj/item/clothing/head/helmet/space/hardsuit/Initialize()
@@ -37,7 +37,7 @@
 	if(on)
 		set_light(brightness_on)
 	else
-		set_light(0)
+		set_light(ZERO)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -76,13 +76,13 @@
 	if(!rad_count)
 		grace_count++
 		if(grace_count == 2)
-			soundloop.last_radiation = 0
+			soundloop.last_radiation = ZERO
 		return
 
-	grace_count = 0
+	grace_count = ZERO
 	rad_record -= rad_record/5
 	rad_record += rad_count/5
-	rad_count = 0
+	rad_count = ZERO
 
 	soundloop.last_radiation = rad_record
 
@@ -99,7 +99,7 @@
 	max_integrity = 300
 	armor = list("melee" = 10, "bullet" = 5, "laser" = 10, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 75, "fire" = 50, "acid" = 75)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/t_scanner, /obj/item/construction/rcd, /obj/item/pipe_dispenser)
-	siemens_coefficient = 0
+	siemens_coefficient = ZERO
 	var/obj/item/clothing/head/helmet/space/hardsuit/helmet
 	actions_types = list(/datum/action/item_action/toggle_helmet)
 	var/helmettype = /obj/item/clothing/head/helmet/space/hardsuit
@@ -302,7 +302,7 @@
 		to_chat(user, "<span class='notice'>You switch your hardsuit to combat mode and can now run at full speed.</span>")
 		name += " (combat)"
 		desc = alt_desc
-		set_light(0)
+		set_light(ZERO)
 		clothing_flags &= ~visor_flags
 		flags_cover &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 		flags_inv &= ~visor_flags_inv
@@ -329,7 +329,7 @@
 		else
 			linkedsuit.name += " (combat)"
 			linkedsuit.desc = linkedsuit.alt_desc
-			linkedsuit.slowdown = 0
+			linkedsuit.slowdown = ZERO
 			linkedsuit.clothing_flags &= ~STOPSPRESSUREDAMAGE
 			linkedsuit.cold_protection &= ~(CHEST | GROIN | LEGS | FEET | ARMS | HANDS)
 
@@ -369,7 +369,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/debug/Initialize()
 	. = ..()
-	soundloop.volume = 0
+	soundloop.volume = ZERO
 
 /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	name = "elite syndicate hardsuit"
@@ -394,8 +394,8 @@
 	icon_state = "hardsuit1-owl"
 	item_state = "s_helmet"
 	hardsuit_type = "owl"
-	visor_flags_inv = 0
-	visor_flags = 0
+	visor_flags_inv = ZERO
+	visor_flags = ZERO
 	on = FALSE
 
 /obj/item/clothing/suit/space/hardsuit/syndi/owl
@@ -648,7 +648,7 @@
 		return
 	if(footstep > 1)
 		playsound(src, 'sound/effects/servostep.ogg', 100, TRUE)
-		footstep = 0
+		footstep = ZERO
 	else
 		footstep++
 
@@ -697,9 +697,9 @@
 	if(!allowed)
 		allowed = GLOB.advanced_hardsuit_allowed
 
-/obj/item/clothing/suit/space/hardsuit/shielded/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/space/hardsuit/shielded/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = ZERO, damage = ZERO, attack_type = MELEE_ATTACK)
 	recharge_cooldown = world.time + recharge_delay
-	if(current_charges > 0)
+	if(current_charges > ZERO)
 		var/datum/effect_system/spark_spread/s = new
 		s.set_up(2, 1, src)
 		s.start()
@@ -707,12 +707,12 @@
 		current_charges--
 		if(recharge_rate)
 			START_PROCESSING(SSobj, src)
-		if(current_charges <= 0)
+		if(current_charges <= ZERO)
 			owner.visible_message("<span class='warning'>[owner]'s shield overloads!</span>")
 			shield_state = "broken"
 			owner.update_inv_wear_suit()
 		return 1
-	return 0
+	return ZERO
 
 
 /obj/item/clothing/suit/space/hardsuit/shielded/Destroy()
@@ -721,7 +721,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/shielded/process()
 	if(world.time > recharge_cooldown && current_charges < max_charges)
-		current_charges = CLAMP((current_charges + recharge_rate), 0, max_charges)
+		current_charges = CLAMP((current_charges + recharge_rate), ZERO, max_charges)
 		playsound(loc, 'sound/magic/charge.ogg', 50, TRUE)
 		if(current_charges == max_charges)
 			playsound(loc, 'sound/machines/ding.ogg', 50, TRUE)
@@ -750,7 +750,7 @@
 	// Adding TRAIT_NODROP is done when the CTF spawner equips people
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf
 	armor = list("melee" = 0, "bullet" = 30, "laser" = 30, "energy" = 40, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 95, "acid" = 95)
-	slowdown = 0
+	slowdown = ZERO
 	max_charges = 5
 
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
@@ -807,7 +807,7 @@
 	armor = list("melee" = 40, "bullet" = 50, "laser" = 30, "energy" = 40, "bomb" = 35, "bio" = 100, "rad" = 50, "fire" = 100, "acid" = 100)
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/transforming/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
-	slowdown = 0
+	slowdown = ZERO
 	shield_state = "shield-red"
 	shield_on = "shield-red"
 

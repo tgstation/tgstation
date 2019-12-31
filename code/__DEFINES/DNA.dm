@@ -86,7 +86,7 @@
 #define DNA_UNIQUE_ENZYMES_LEN		32
 
 //Transformation proc stuff
-#define TR_KEEPITEMS	(1<<0)
+#define TR_KEEPITEMS	(1<<ZERO)
 #define TR_KEEPVIRUS	(1<<1)
 #define TR_KEEPDAMAGE	(1<<2)
 /// hashing names (e.g. monkey(e34f)) (only in monkeyize)
@@ -159,7 +159,7 @@
 #define STANDARD_ORGAN_DECAY		0.00222
 
 //used for the can_chromosome var on mutations
-#define CHROMOSOME_NEVER 0
+#define CHROMOSOME_NEVER ZERO
 #define CHROMOSOME_NONE 1
 #define CHROMOSOME_USED 2
 

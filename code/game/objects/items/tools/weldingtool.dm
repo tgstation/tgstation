@@ -24,14 +24,14 @@
 	resistance_flags = FIRE_PROOF
 
 	custom_materials = list(/datum/material/iron=70, /datum/material/glass=30)
-	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
+	var/welding = ZERO 	//Whether or not the welding tool is off(ZERO), on(1) or currently welding(2)
 	var/status = TRUE 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
 	var/change_icons = 1
-	var/can_off_process = 0
+	var/can_off_process = ZERO
 	var/light_intensity = 2 //how powerful the emitted light is when used.
 	var/progress_flash_divisor = 10
-	var/burned_fuel_for = 0	//when fuel was last removed
+	var/burned_fuel_for = ZERO	//when fuel was last removed
 	heat = 3800
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 1
@@ -63,7 +63,7 @@
 
 /obj/item/weldingtool/process()
 	switch(welding)
-		if(0)
+		if(ZERO)
 			force = 3
 			damtype = "brute"
 			update_icon()
@@ -110,13 +110,13 @@
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
 	if(affecting && affecting.status == BODYPART_ROBOTIC && user.a_intent != INTENT_HARM)
-		if(src.use_tool(H, user, 0, volume=50, amount=1))
+		if(src.use_tool(H, user, ZERO, volume=50, amount=1))
 			if(user == H)
 				user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>",
 					"<span class='notice'>You start fixing some of the dents on [H == user ? "your" : "[H]'s"] [affecting.name].</span>")
 				if(!do_mob(user, H, 50))
 					return
-			item_heal_robotic(H, user, 15, 0)
+			item_heal_robotic(H, user, 15, ZERO)
 	else
 		return ..()
 
@@ -164,7 +164,7 @@
 	update_icon()
 
 // Ah fuck, I can't believe you've done this
-/obj/item/weldingtool/proc/handle_fuel_and_temps(used = 0, mob/living/user)
+/obj/item/weldingtool/proc/handle_fuel_and_temps(used = ZERO, mob/living/user)
 	use(used)
 	var/turf/location = get_turf(user)
 	location.hotspot_expose(700, 50, 1)
@@ -175,12 +175,12 @@
 
 
 // Uses fuel from the welding tool.
-/obj/item/weldingtool/use(used = 0)
+/obj/item/weldingtool/use(used = ZERO)
 	if(!isOn() || !check_fuel())
 		return FALSE
 
 	if(used)
-		burned_fuel_for = 0
+		burned_fuel_for = ZERO
 	if(get_fuel() >= used)
 		reagents.remove_reagent(/datum/reagent/fuel, used)
 		check_fuel()
@@ -191,16 +191,16 @@
 
 //Turns off the welder if there is no more fuel (does this really need to be its own proc?)
 /obj/item/weldingtool/proc/check_fuel(mob/user)
-	if(get_fuel() <= 0 && welding)
-		set_light(0)
+	if(get_fuel() <= ZERO && welding)
+		set_light(ZERO)
 		switched_on(user)
 		update_icon()
 		//mob icon update
 		if(ismob(loc))
 			var/mob/M = loc
-			M.update_inv_hands(0)
+			M.update_inv_hands(ZERO)
 
-		return 0
+		return ZERO
 	return 1
 
 //Switches the welder on
@@ -228,8 +228,8 @@
 
 //Switches the welder off
 /obj/item/weldingtool/proc/switched_off(mob/user)
-	welding = 0
-	set_light(0)
+	welding = ZERO
+	set_light(ZERO)
 
 	force = 3
 	damtype = "brute"
@@ -249,7 +249,7 @@
 	return welding
 
 // When welding is about to start, run a normal tool_use_check, then flash a mob if it succeeds.
-/obj/item/weldingtool/tool_start_check(mob/living/user, amount=0)
+/obj/item/weldingtool/tool_start_check(mob/living/user, amount=ZERO)
 	. = tool_use_check(user, amount)
 	if(. && user && get_dist(get_turf(src), get_turf(user)) <= 1)
 		user.flash_act(light_intensity)
@@ -258,7 +258,7 @@
 /obj/item/weldingtool/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
 	. = ..()
 	if(. && user && get_dist(get_turf(src), get_turf(user)) <= 1)
-		if (progress_flash_divisor == 0)
+		if (progress_flash_divisor == ZERO)
 			user.flash_act(min(light_intensity,1))
 			progress_flash_divisor = initial(progress_flash_divisor)
 		else
@@ -305,7 +305,7 @@
 			to_chat(user, "<span class='warning'>You need one rod to start building a flamethrower!</span>")
 
 /obj/item/weldingtool/ignition_effect(atom/A, mob/user)
-	if(use_tool(A, user, 0, amount=1))
+	if(use_tool(A, user, ZERO, amount=1))
 		return "<span class='notice'>[user] casually lights [A] with [src], what a badass.</span>"
 	else
 		return ""
@@ -340,7 +340,7 @@
 	max_fuel = 10
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=30, /datum/material/glass=10)
-	change_icons = 0
+	change_icons = ZERO
 
 /obj/item/weldingtool/mini/flamethrower_screwdriver()
 	return
@@ -351,8 +351,8 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "welder"
 	toolspeed = 0.1
-	light_intensity = 0
-	change_icons = 0
+	light_intensity = ZERO
+	change_icons = ZERO
 
 /obj/item/weldingtool/abductor/process()
 	if(get_fuel() <= max_fuel)
@@ -374,12 +374,12 @@
 	item_state = "exwelder"
 	max_fuel = 40
 	custom_materials = list(/datum/material/iron=70, /datum/material/glass=120)
-	var/last_gen = 0
-	change_icons = 0
+	var/last_gen = ZERO
+	change_icons = ZERO
 	can_off_process = 1
 	light_intensity = 1
 	toolspeed = 0.5
-	var/nextrefueltick = 0
+	var/nextrefueltick = ZERO
 
 /obj/item/weldingtool/experimental/process()
 	..()

@@ -30,7 +30,7 @@ God bless America.
 	idle_power_usage = 5
 	layer = BELOW_OBJ_LAYER
 	var/obj/item/reagent_containers/food/snacks/deepfryholder/frying	//What's being fried RIGHT NOW?
-	var/cook_time = 0
+	var/cook_time = ZERO
 	var/oil_use = 0.05 //How much cooking oil is used per tick
 	var/fry_speed = 1 //How quickly we fry food
 	var/frying_fried //If the object has been fried; used for messages
@@ -136,7 +136,7 @@ God bless America.
 			if(Adjacent(user) && !issilicon(user))
 				user.put_in_hands(frying)
 			frying = null
-			cook_time = 0
+			cook_time = ZERO
 			frying_fried = FALSE
 			frying_burnt = FALSE
 			fry_loop.stop()

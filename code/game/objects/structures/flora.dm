@@ -14,7 +14,7 @@
 
 /obj/structure/flora/tree/attackby(obj/item/W, mob/user, params)
 	if(log_amount && (!(flags_1 & NODECONSTRUCT_1)))
-		if(W.get_sharpness() && W.force > 0)
+		if(W.get_sharpness() && W.force > ZERO)
 			if(W.hitsound)
 				playsound(get_turf(src), W.hitsound, 100, FALSE, FALSE)
 			user.visible_message("<span class='notice'>[user] begins to cut down [src] with [W].</span>","<span class='notice'>You begin to cut down [src] with [W].</span>", "<span class='hear'>You hear the sound of sawing.</span>")
@@ -105,7 +105,7 @@
 /obj/structure/flora/tree/palm/Initialize()
 	. = ..()
 	icon_state = pick("palm1","palm2")
-	pixel_x = 0
+	pixel_x = ZERO
 
 /obj/structure/festivus
 	name = "festivus pole"
@@ -136,7 +136,7 @@
 	. = ..()
 
 /obj/structure/flora/tree/jungle/small
-	pixel_y = 0
+	pixel_y = ZERO
 	pixel_x = -32
 	icon = 'icons/obj/flora/jungletreesmall.dmi'
 
@@ -316,7 +316,7 @@
 /obj/item/twohanded/required/kirbyplants/Initialize()
 	. = ..()
 	AddComponent(/datum/component/tactical)
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 500), 0)
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 500), ZERO)
 
 /obj/item/twohanded/required/kirbyplants/random
 	icon = 'icons/obj/flora/_flora.dmi'

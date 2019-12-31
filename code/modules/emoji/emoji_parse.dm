@@ -5,7 +5,7 @@
 	var/static/list/emojis = icon_states(icon('icons/emoji.dmi'))
 	var/parsed = ""
 	var/pos = 1
-	var/search = 0
+	var/search = ZERO
 	var/emoji = ""
 	while(1)
 		search = findtext(text, ":", pos)
@@ -37,7 +37,7 @@
 	var/static/list/emojis = icon_states(icon('icons/emoji.dmi'))
 	var/final = "" //only tags are added to this
 	var/pos = 1
-	var/search = 0
+	var/search = ZERO
 	while(1)
 		search = findtext(text, ":", pos)
 		if(search)

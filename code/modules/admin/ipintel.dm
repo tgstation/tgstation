@@ -1,10 +1,10 @@
 /datum/ipintel
 	var/ip
-	var/intel = 0
+	var/intel = ZERO
 	var/cache = FALSE
-	var/cacheminutesago = 0
+	var/cacheminutesago = ZERO
 	var/cachedate = ""
-	var/cacherealtime = 0
+	var/cacherealtime = ZERO
 
 /datum/ipintel/New()
 	cachedate = SQLtime()
@@ -12,7 +12,7 @@
 
 /datum/ipintel/proc/is_valid()
 	. = FALSE
-	if (intel < 0)
+	if (intel < ZERO)
 		return
 	if (intel <= CONFIG_GET(number/ipintel_rating_bad))
 		if (world.realtime < cacherealtime + (CONFIG_GET(number/ipintel_save_good) * 60 * 60 * 10))
@@ -64,7 +64,7 @@
 				return
 			qdel(query_get_ip_intel)
 	res.intel = ip_intel_query(ip)
-	if (updatecache && res.intel >= 0)
+	if (updatecache && res.intel >= ZERO)
 		SSipintel.cache[ip] = res
 		if(SSdbcore.Connect())
 			var/datum/DBQuery/query_add_ip_intel = SSdbcore.NewQuery("INSERT INTO [format_table_name("ipintel")] (ip, intel) VALUES (INET_ATON('[ip]'), [res.intel]) ON DUPLICATE KEY UPDATE intel = VALUES(intel), date = NOW()")
@@ -72,7 +72,7 @@
 			qdel(query_add_ip_intel)
 
 
-/proc/ip_intel_query(ip, retryed=0)
+/proc/ip_intel_query(ip, retryed=ZERO)
 	. = -1 //default
 	if (!ip)
 		return

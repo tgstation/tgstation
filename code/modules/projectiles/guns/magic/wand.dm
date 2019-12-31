@@ -40,7 +40,7 @@
 				to_chat(user, "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].</span>")
 				return
 			else
-				no_den_usage = 0
+				no_den_usage = ZERO
 		zap_self(user)
 	else
 		. = ..()
@@ -114,7 +114,7 @@
 			to_chat(user, "<span class='warning'>You irradiate yourself with pure positive energy! \
 			[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You Die...","Do you want your possessions identified?")]\
 			</span>")
-			user.death(0)
+			user.death(ZERO)
 			return
 	user.revive(full_heal = TRUE, admin_revive = TRUE)
 	to_chat(user, "<span class='notice'>You feel great!</span>")
@@ -180,7 +180,7 @@
 	if(do_teleport(user, destination, channel=TELEPORT_CHANNEL_MAGIC))
 		for(var/t in list(origin, destination))
 			var/datum/effect_system/smoke_spread/smoke = new
-			smoke.set_up(0, t)
+			smoke.set_up(ZERO, t)
 			smoke.start()
 	..()
 
@@ -224,5 +224,5 @@
 
 /obj/item/gun/magic/wand/fireball/zap_self(mob/living/user)
 	..()
-	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
+	explosion(user.loc, -1, ZERO, 2, 3, ZERO, flame_range = 2)
 	charges--

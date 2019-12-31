@@ -73,7 +73,7 @@
 
 /obj/item/storage/box/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/packageWrap))
-		return 0
+		return ZERO
 	return ..()
 
 //Mime spell boxes
@@ -84,7 +84,7 @@
 	foldable = null
 	icon_state = "box"
 	item_state = null
-	alpha = 0
+	alpha = ZERO
 
 /obj/item/storage/box/mime/attack_hand(mob/user)
 	..()
@@ -93,7 +93,7 @@
 
 /obj/item/storage/box/mime/Moved(oldLoc, dir)
 	if (iscarbon(oldLoc))
-		alpha = 0
+		alpha = ZERO
 	..()
 
 //Disk boxes
@@ -872,7 +872,7 @@
 	var/design = NODESIGN
 
 /obj/item/storage/box/papersack/update_icon()
-	if(contents.len == 0)
+	if(contents.len == ZERO)
 		icon_state = "[item_state]"
 	else icon_state = "[item_state]_closed"
 
@@ -889,7 +889,7 @@
 			return
 		var/choice = designs.Find(switchDesign)
 		if(design == designs[choice] || designs[choice] == "Cancel")
-			return 0
+			return ZERO
 		to_chat(usr, "<span class='notice'>You make some modifications to [src] using your pen.</span>")
 		design = designs[choice]
 		icon_state = "paperbag_[design]"
@@ -905,19 +905,19 @@
 				desc = "A paper sack with a heart etched onto the side."
 			if(SMILEY)
 				desc = "A paper sack with a crude smile etched onto the side."
-		return 0
+		return ZERO
 	else if(W.get_sharpness())
 		if(!contents.len)
 			if(item_state == "paperbag_None")
 				user.show_message("<span class='notice'>You cut eyeholes into [src].</span>", MSG_VISUAL)
 				new /obj/item/clothing/head/papersack(user.loc)
 				qdel(src)
-				return 0
+				return ZERO
 			else if(item_state == "paperbag_SmileyFace")
 				user.show_message("<span class='notice'>You cut eyeholes into [src] and modify the design.</span>", MSG_VISUAL)
 				new /obj/item/clothing/head/papersack/smiley(user.loc)
 				qdel(src)
-				return 0
+				return ZERO
 	return ..()
 
 #undef NODESIGN

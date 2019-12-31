@@ -8,13 +8,13 @@
 	density = TRUE
 
 	var/charges = 1
-	var/insisting = 0
+	var/insisting = ZERO
 
 /obj/machinery/wish_granter/attack_hand(mob/living/carbon/user)
 	. = ..()
 	if(.)
 		return
-	if(charges <= 0)
+	if(charges <= ZERO)
 		to_chat(user, "<span class='boldnotice'>The Wish Granter lies silent.</span>")
 		return
 
@@ -34,7 +34,7 @@
 		to_chat(user, "<span class='boldnotice'>Your head pounds for a moment, before your vision clears. You are the avatar of the Wish Granter, and your power is LIMITLESS! And it's all yours. You need to make sure no one can take it from you. No one can know, first.</span>")
 
 		charges--
-		insisting = 0
+		insisting = ZERO
 
 		user.mind.add_antag_datum(/datum/antagonist/wishgranter)
 

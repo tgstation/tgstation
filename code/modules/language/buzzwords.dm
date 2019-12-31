@@ -5,7 +5,7 @@
 	ask_verb = "buzzes"
 	exclaim_verb = "loudly buzzes"
 	key = "z"
-	space_chance = 0
+	space_chance = ZERO
 	syllables = list(
 		"bzz","zzz","z","bz","bzzz","zzzz", "bzzzz", "b", "zz", "zzzzz"
 	)

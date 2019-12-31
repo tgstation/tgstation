@@ -45,7 +45,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 	var/things = get_all_of_type(type, subtypes)
 
-	var/i = 0
+	var/i = ZERO
 	for(var/thing in things)
 		var/datum/D = thing
 		i++
@@ -177,7 +177,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	var/assoc_key
 	if (index == null)
 		return
-	var/assoc = 0
+	var/assoc = ZERO
 	var/prompt = alert(src, "Do you want to edit the key or its assigned value?", "Associated List", "Key", "Assigned Value", "Cancel")
 	if (prompt == "Cancel")
 		return
@@ -208,7 +208,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if(default == VV_NUM)
 		var/dir_text = ""
 		var/tdir = variable
-		if(tdir > 0 && tdir < 16)
+		if(tdir > ZERO && tdir < 16)
 			if(tdir & 1)
 				dir_text += "NORTH"
 			if(tdir & 2)
@@ -287,7 +287,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 			return FALSE
 	return TRUE
 
-/client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
+/client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = ZERO)
 	if(!check_rights(R_VAREDIT))
 		return
 
@@ -330,7 +330,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 	if(default == VV_NUM)
 		var/dir_text = ""
-		if(var_value > 0 && var_value < 16)
+		if(var_value > ZERO && var_value < 16)
 			if(var_value & 1)
 				dir_text += "NORTH"
 			if(var_value & 2)

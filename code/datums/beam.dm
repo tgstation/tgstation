@@ -6,12 +6,12 @@
 	var/icon/base_icon = null
 	var/icon
 	var/icon_state = "" //icon state of the main segments of the beam
-	var/max_distance = 0
+	var/max_distance = ZERO
 	var/sleep_time = 3
-	var/finished = 0
+	var/finished = ZERO
 	var/target_oldloc = null
 	var/origin_oldloc = null
-	var/static_beam = 0
+	var/static_beam = ZERO
 	var/beam_type = /obj/effect/ebeam //must be subtype
 	var/timing_id = null
 	var/recalculating = FALSE
@@ -101,10 +101,10 @@
 	//Translation vector for origin and target
 	var/DX = (32*target.x+target.pixel_x)-(32*origin.x+origin.pixel_x)
 	var/DY = (32*target.y+target.pixel_y)-(32*origin.y+origin.pixel_y)
-	var/N = 0
+	var/N = ZERO
 	var/length = round(sqrt((DX)**2+(DY)**2)) //hypotenuse of the triangle formed by target and origin's displacement
 
-	for(N in 0 to length-1 step 32)//-1 as we want < not <=, but we want the speed of X in Y to Z and step X
+	for(N in ZERO to length-1 step 32)//-1 as we want < not <=, but we want the speed of X in Y to Z and step X
 		if(QDELETED(src) || finished)
 			break
 		var/obj/effect/ebeam/X = new beam_type(origin_oldloc)
@@ -124,23 +124,23 @@
 		//Calculate pixel offsets (If necessary)
 		var/Pixel_x
 		var/Pixel_y
-		if(DX == 0)
-			Pixel_x = 0
+		if(DX == ZERO)
+			Pixel_x = ZERO
 		else
 			Pixel_x = round(sin(Angle)+32*sin(Angle)*(N+16)/32)
-		if(DY == 0)
-			Pixel_y = 0
+		if(DY == ZERO)
+			Pixel_y = ZERO
 		else
 			Pixel_y = round(cos(Angle)+32*cos(Angle)*(N+16)/32)
 
 		//Position the effect so the beam is one continous line
 		var/a
 		if(abs(Pixel_x)>32)
-			a = Pixel_x > 0 ? round(Pixel_x/32) : CEILING(Pixel_x/32, 1)
+			a = Pixel_x > ZERO ? round(Pixel_x/32) : CEILING(Pixel_x/32, 1)
 			X.x += a
 			Pixel_x %= 32
 		if(abs(Pixel_y)>32)
-			a = Pixel_y > 0 ? round(Pixel_y/32) : CEILING(Pixel_y/32, 1)
+			a = Pixel_y > ZERO ? round(Pixel_y/32) : CEILING(Pixel_y/32, 1)
 			X.y += a
 			Pixel_y %= 32
 

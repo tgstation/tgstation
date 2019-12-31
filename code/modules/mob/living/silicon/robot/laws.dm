@@ -11,7 +11,7 @@
 		return
 	..()
 
-/mob/living/silicon/robot/show_laws(everyone = 0)
+/mob/living/silicon/robot/show_laws(everyone = ZERO)
 	laws_sanity_check()
 	var/who
 
@@ -29,7 +29,7 @@
 				to_chat(src, "<b>Laws synced with AI, be sure to note any changes.</b>")
 		else
 			to_chat(src, "<b>No AI selected to sync laws with, disabling lawsync protocol.</b>")
-			lawupdate = 0
+			lawupdate = ZERO
 
 	to_chat(who, "<b>Obey these laws:</b>")
 	laws.show_laws(who)
@@ -51,19 +51,19 @@
 		laws.devillaws.len = master.devillaws.len
 		for (var/index = 1, index <= master.devillaws.len, index++)
 			temp = master.devillaws[index]
-			if (length(temp) > 0)
+			if (length(temp) > ZERO)
 				laws.devillaws[index] = temp
 
 		laws.ion.len = master.ion.len
 		for (var/index = 1, index <= master.ion.len, index++)
 			temp = master.ion[index]
-			if (length(temp) > 0)
+			if (length(temp) > ZERO)
 				laws.ion[index] = temp
 
 		laws.hacked.len = master.hacked.len
 		for (var/index = 1, index <= master.hacked.len, index++)
 			temp = master.hacked[index]
-			if (length(temp) > 0)
+			if (length(temp) > ZERO)
 				laws.hacked[index] = temp
 
 		if(master.zeroth_borg) //If the AI has a defined law zero specifically for its borgs, give it that one, otherwise give it the same one. --NEO
@@ -75,13 +75,13 @@
 		laws.inherent.len = master.inherent.len
 		for (var/index = 1, index <= master.inherent.len, index++)
 			temp = master.inherent[index]
-			if (length(temp) > 0)
+			if (length(temp) > ZERO)
 				laws.inherent[index] = temp
 
 		laws.supplied.len = master.supplied.len
 		for (var/index = 1, index <= master.supplied.len, index++)
 			temp = master.supplied[index]
-			if (length(temp) > 0)
+			if (length(temp) > ZERO)
 				laws.supplied[index] = temp
 
 	picturesync()

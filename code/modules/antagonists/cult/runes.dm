@@ -32,10 +32,10 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 
 	var/scribe_delay = 40 //how long the rune takes to create
 	var/scribe_damage = 0.1 //how much damage you take doing it
-	var/invoke_damage = 0 //how much damage invokers take when invoking it
+	var/invoke_damage = ZERO //how much damage invokers take when invoking it
 	var/construct_invoke = TRUE //if constructs can invoke it
 
-	var/req_keyword = 0 //If the rune requires a keyword - go figure amirite
+	var/req_keyword = ZERO //If the rune requires a keyword - go figure amirite
 	var/keyword //The actual keyword for the rune
 
 /obj/effect/rune/Initialize(mapload, set_keyword)
@@ -96,7 +96,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	alpha = 100 //To help ghosts distinguish hidden runes
 
 /obj/effect/rune/proc/reveal() //for talisman of revealing/hiding
-	invisibility = 0
+	invisibility = ZERO
 	visible_message("<span class='danger'>[src] suddenly appears!</span>")
 	alpha = initial(alpha)
 
@@ -147,15 +147,15 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/proc/do_invoke_glow()
 	set waitfor = FALSE
-	animate(src, transform = matrix()*2, alpha = 0, time = 5, flags = ANIMATION_END_NOW) //fade out
+	animate(src, transform = matrix()*2, alpha = ZERO, time = 5, flags = ANIMATION_END_NOW) //fade out
 	sleep(5)
-	animate(src, transform = matrix(), alpha = 255, time = 0, flags = ANIMATION_END_NOW)
+	animate(src, transform = matrix(), alpha = 255, time = ZERO, flags = ANIMATION_END_NOW)
 
 /obj/effect/rune/proc/fail_invoke()
 	//This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists. By default, it's just a basic fizzle.
 	visible_message("<span class='warning'>The markings pulse with a small flash of red light, then fall dark.</span>")
 	var/oldcolor = color
-	color = rgb(255, 0, 0)
+	color = rgb(255, ZERO, ZERO)
 	animate(src, color = oldcolor, time = 5)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
 
@@ -169,7 +169,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/malformed/Initialize(mapload, set_keyword)
 	. = ..()
 	icon_state = "[rand(1,7)]"
-	color = rgb(rand(0,255), rand(0,255), rand(0,255))
+	color = rgb(rand(ZERO,255), rand(ZERO,255), rand(ZERO,255))
 
 /obj/effect/rune/malformed/invoke(var/list/invokers)
 	..()
@@ -230,12 +230,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 		for(var/M in invokers)
 			to_chat(M, "<span class='warning'>You need at least two invokers to convert [convertee]!</span>")
 		log_game("Offer rune failed - tried conversion with one invoker")
-		return 0
-	if(convertee.anti_magic_check(TRUE, TRUE, FALSE, 0)) //Not chargecost because it can be spammed
+		return ZERO
+	if(convertee.anti_magic_check(TRUE, TRUE, FALSE, ZERO)) //Not chargecost because it can be spammed
 		for(var/M in invokers)
 			to_chat(M, "<span class='warning'>Something is shielding [convertee]'s mind!</span>")
 		log_game("Offer rune failed - convertee had anti-magic")
-		return 0
+		return ZERO
 	var/brutedamage = convertee.getBruteLoss()
 	var/burndamage = convertee.getFireLoss()
 	if(brutedamage || burndamage)
@@ -254,8 +254,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(ishuman(convertee))
 		var/mob/living/carbon/human/H = convertee
 		H.uncuff()
-		H.stuttering = 0
-		H.cultslurring = 0
+		H.stuttering = ZERO
+		H.cultslurring = ZERO
 	return 1
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
@@ -297,7 +297,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(sacrificial.mind && !sacrificial.suiciding)
 		stone.invisibility = INVISIBILITY_MAXIMUM //so it's not picked up during transfer_soul()
 		stone.transfer_soul("FORCE", sacrificial, usr)
-		stone.invisibility = 0
+		stone.invisibility = ZERO
 
 	if(sacrificial)
 		if(iscyborg(sacrificial))
@@ -443,7 +443,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	qdel(inner_portal)
 	qdel(outer_portal)
 	desc = initial(desc)
-	light_range = 0
+	light_range = ZERO
 	update_light()
 
 //Ritual of Dimensional Rending: Calls forth the avatar of Nar'Sie upon the station.
@@ -556,7 +556,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	..()
 	if(mob_to_revive.stat == DEAD)
 		var/diff = LAZYLEN(GLOB.sacrificed) - SOULS_TO_REVIVE - sacrifices_used
-		if(diff < 0)
+		if(diff < ZERO)
 			to_chat(user, "<span class='warning'>Your cult must carry out [abs(diff)] more sacrifice\s before it can revive another cultist!</span>")
 			fail_invoke()
 			return
@@ -570,7 +570,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			var/mob/dead/observer/C = pick(candidates)
 			to_chat(mob_to_revive.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
 			message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(mob_to_revive)]) to replace an AFK player.")
-			mob_to_revive.ghostize(0)
+			mob_to_revive.ghostize(ZERO)
 			mob_to_revive.key = C.key
 		else
 			fail_invoke()
@@ -762,7 +762,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	set_light(6, 1, color)
 	for(var/mob/living/L in viewers(T))
 		if(!iscultist(L) && L.blood_volume)
-			var/atom/I = L.anti_magic_check(chargecost = 0)
+			var/atom/I = L.anti_magic_check(chargecost = ZERO)
 			if(I)
 				if(isitem(I))
 					to_chat(L, "<span class='userdanger'>[I] suddenly burns hotly before returning to normal!</span>")
@@ -790,7 +790,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	set_light(6, 1, color)
 	for(var/mob/living/L in viewers(T))
 		if(!iscultist(L) && L.blood_volume)
-			if(L.anti_magic_check(chargecost = 0))
+			if(L.anti_magic_check(chargecost = ZERO))
 				continue
 			L.take_overall_damage(tick_damage*multiplier, tick_damage*multiplier)
 
@@ -805,7 +805,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = RUNE_COLOR_DARKRED
 	var/mob/living/affecting = null
 	var/ghost_limit = 3
-	var/ghosts = 0
+	var/ghosts = ZERO
 
 /obj/effect/rune/manifest/Initialize()
 	. = ..()
@@ -862,7 +862,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		to_chat(user, "<span class='cultitalic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>")
 		var/obj/structure/emergency_shield/invoker/N = new(T)
 		new_human.key = ghost_to_spawn.key
-		SSticker.mode.add_cultist(new_human.mind, 0)
+		SSticker.mode.add_cultist(new_human.mind, ZERO)
 		to_chat(new_human, "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar'Sie, and you are to serve them at all costs.</b></span>")
 
 		while(!QDELETED(src) && !QDELETED(user) && !QDELETED(new_human) && (user in T))
@@ -916,7 +916,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	no_brain = TRUE
 	. = ..()
 
-/mob/living/carbon/human/cult_ghost/getorganszone(zone, subzones = 0)
+/mob/living/carbon/human/cult_ghost/getorganszone(zone, subzones = ZERO)
 	. = ..()
 	for(var/obj/item/organ/brain/B in .) //they're not that smart, really
 		. -= B
@@ -952,7 +952,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	rune_in_use = TRUE
 	var/turf/T = get_turf(src)
 	new /obj/effect/temp_visual/dir_setting/curse/grasp_portal/fading(T)
-	var/intensity = 0
+	var/intensity = ZERO
 	for(var/mob/living/M in GLOB.player_list)
 		if(iscultist(M))
 			intensity++
@@ -1042,11 +1042,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/apocalypse/proc/image_handler(var/list/images, duration)
 	var/end = world.time + duration
-	set waitfor = 0
+	set waitfor = ZERO
 	while(end>world.time)
 		for(var/image/I in images)
 			I.override = FALSE
-			animate(I, alpha = 0, time = 25, flags = ANIMATION_PARALLEL)
+			animate(I, alpha = ZERO, time = 25, flags = ANIMATION_PARALLEL)
 		sleep(35)
 		for(var/image/I in images)
 			animate(I, alpha = 255, time = 25, flags = ANIMATION_PARALLEL)

@@ -2,7 +2,7 @@
 
 //Not sure why this is necessary...
 /proc/AutoUpdateAI(obj/subject)
-	var/is_in_use = 0
+	var/is_in_use = ZERO
 	if (subject!=null)
 		for(var/A in GLOB.ai_list)
 			var/mob/living/silicon/ai/M = A
@@ -34,11 +34,11 @@
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/current
 	var/list/connected_robots = list()
-	var/aiRestorePowerRoutine = 0
+	var/aiRestorePowerRoutine = ZERO
 	var/requires_power = POWER_REQ_ALL
 	var/can_be_carded = TRUE
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
-	var/viewalerts = 0
+	var/viewalerts = ZERO
 	var/icon/holo_icon//Default is assigned when AI is created.
 	var/obj/mecha/controlled_mech //For controlled_mech a mech, to determine whether to relaymove or use the AI eye.
 	var/radio_enabled = TRUE //Determins if a carded AI can speak with its built in radio or not.
@@ -56,7 +56,7 @@
 
 	var/control_disabled = FALSE	// Set to 1 to stop AI from interacting via Click()
 	var/malfhacking = FALSE		// More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
-	var/malf_cooldown = 0		//Cooldown var for malf modules, stores a worldtime + cooldown
+	var/malf_cooldown = ZERO		//Cooldown var for malf modules, stores a worldtime + cooldown
 
 	var/obj/machinery/power/apc/malfhack
 	var/explosive = FALSE		//does the AI explode when it dies?
@@ -72,21 +72,21 @@
 	var/last_announcement = "" 		// For AI VOX, if enabled
 	var/turf/waypoint //Holds the turf of the currently selected waypoint.
 	var/waypoint_mode = FALSE		//Waypoint mode is for selecting a turf via clicking.
-	var/call_bot_cooldown = 0		//time of next call bot command
+	var/call_bot_cooldown = ZERO		//time of next call bot command
 	var/apc_override = FALSE		//hack for letting the AI use its APC even when visionless
 	var/nuking = FALSE
 	var/obj/machinery/doomsday_device/doomsday_device
 
 	var/mob/camera/aiEye/eyeobj
 	var/sprint = 10
-	var/cooldown = 0
+	var/cooldown = ZERO
 	var/acceleration = 1
 
 	var/obj/structure/AIcore/deactivated/linked_core //For exosuit control
 	var/mob/living/silicon/robot/deployed_shell = null //For shell control
 	var/datum/action/innate/deploy_shell/deploy_action = new
 	var/datum/action/innate/deploy_last_shell/redeploy_action = new
-	var/chnotify = 0
+	var/chnotify = ZERO
 
 	var/multicam_on = FALSE
 	var/obj/screen/movable/pic_in_pic/ai/master_multicam
@@ -139,7 +139,7 @@
 	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"default"))
 
 	spark_system = new /datum/effect_system/spark_spread()
-	spark_system.set_up(5, 0, src)
+	spark_system.set_up(5, ZERO, src)
 	spark_system.attach(src)
 
 	verbs += /mob/living/silicon/ai/proc/show_laws_verb
@@ -196,7 +196,7 @@
 	. = ..()
 
 /mob/living/silicon/ai/IgniteMob()
-	fire_stacks = 0
+	fire_stacks = ZERO
 	. = ..()
 
 /mob/living/silicon/ai/proc/set_core_display_icon(input, client/C)
@@ -243,7 +243,7 @@
 					robot_status = "AI SHELL"
 				else if(R.stat || !R.client)
 					robot_status = "OFFLINE"
-				else if(!R.cell || R.cell.charge <= 0)
+				else if(!R.cell || R.cell.charge <= ZERO)
 					robot_status = "DEPOWERED"
 				//Name, Health, Battery, Module, Area, and Status! Everything an AI wants to know about its borgies!
 				stat(null, text("[R.name] | S.Integrity: [R.health]% | Cell: [R.cell ? "[R.cell.charge]/[R.cell.maxcharge]" : "Empty"] | \
@@ -366,7 +366,7 @@
 	SSshuttle.cancelEvac(src)
 
 /mob/living/silicon/ai/restrained(ignore_grab)
-	. = 0
+	. = ZERO
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	..()
@@ -374,7 +374,7 @@
 		return
 	if (href_list["mach_close"])
 		if (href_list["mach_close"] == "aialerts")
-			viewalerts = 0
+			viewalerts = ZERO
 		var/t1 = text("window=[]", href_list["mach_close"])
 		unset_machine()
 		src << browse(null, t1)
@@ -527,7 +527,7 @@
 	to_chat(src, "<span class='notice'>Sending command to bot...</span>")
 	call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
 	Bot.call_bot(src, waypoint)
-	call_bot_cooldown = 0
+	call_bot_cooldown = ZERO
 
 
 /mob/living/silicon/ai/triggerAlarm(class, area/A, O, obj/alarmsource)
@@ -554,7 +554,7 @@
 		if (C && C.can_use())
 			queueAlarm("--- [class] alarm detected in [A.name]! (<A HREF=?src=[REF(src)];switchcamera=[REF(C)]>[C.c_tag]</A>)", class)
 		else if (CL && CL.len)
-			var/foo = 0
+			var/foo = ZERO
 			var/dat2 = ""
 			for (var/obj/machinery/camera/I in CL)
 				dat2 += text("[]<A HREF=?src=[REF(src)];switchcamera=[REF(I)]>[]</A>", (!foo) ? "" : " | ", I.c_tag)	//I'm not fixing this shit...
@@ -569,18 +569,18 @@
 
 /mob/living/silicon/ai/cancelAlarm(class, area/A, obj/origin)
 	var/list/L = alarms[class]
-	var/cleared = 0
+	var/cleared = ZERO
 	for (var/I in L)
 		if (I == A.name)
 			var/list/alarm = L[I]
 			var/list/srcs  = alarm[3]
 			if (origin in srcs)
 				srcs -= origin
-			if (srcs.len == 0)
+			if (srcs.len == ZERO)
 				cleared = 1
 				L -= I
 	if (cleared)
-		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
+		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, ZERO)
 		if (viewalerts) ai_alerts()
 	return !cleared
 
@@ -748,7 +748,7 @@
 		to_chat(src, "Camera lights deactivated.")
 
 		for (var/obj/machinery/camera/C in lit_cameras)
-			C.set_light(0)
+			C.set_light(ZERO)
 			lit_cameras = list()
 
 		return
@@ -774,7 +774,7 @@
 
 	for (var/obj/machinery/camera/C in remove)
 		lit_cameras -= C //Removed from list before turning off the light so that it doesn't check the AI looking away.
-		C.Togglelight(0)
+		C.Togglelight(ZERO)
 	for (var/obj/machinery/camera/C in add)
 		C.Togglelight(1)
 		lit_cameras |= C
@@ -827,7 +827,7 @@
 		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 
 /mob/living/silicon/ai/can_buckle()
-	return 0
+	return ZERO
 
 /mob/living/silicon/ai/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE, ignore_stasis = FALSE)
 	if(aiRestorePowerRoutine)
@@ -923,7 +923,7 @@
 			var/atom/AT = client.eye
 			AT.get_remote_view_fullscreens(src)
 		else
-			clear_fullscreen("remote_view", 0)
+			clear_fullscreen("remote_view", ZERO)
 
 /mob/living/silicon/ai/revive(full_heal = FALSE, admin_revive = FALSE)
 	. = ..()
@@ -933,7 +933,7 @@
 
 /mob/living/silicon/ai/proc/malfhacked(obj/machinery/power/apc/apc)
 	malfhack = null
-	malfhacking = 0
+	malfhacking = ZERO
 	clear_alert("hackingapc")
 
 	if(!istype(apc) || QDELETED(apc) || apc.stat & BROKEN)

@@ -16,7 +16,7 @@
 	ui_x = 440
 	ui_y = 550
 
-	var/points = 0
+	var/points = ZERO
 	var/ore_pickup_rate = 15
 	var/ore_multiplier = 1
 	var/point_upgrade = 1
@@ -91,7 +91,7 @@
 	if(!mat_container || D.make_reagents.len)
 		return FALSE
 
-	var/build_amount = 0
+	var/build_amount = ZERO
 
 	for(var/mat in D.materials)
 		var/amount = D.materials[mat]
@@ -113,7 +113,7 @@
 	return build_amount
 
 /obj/machinery/mineral/ore_redemption/proc/process_ores(list/ores_to_process)
-	var/current_amount = 0
+	var/current_amount = ZERO
 	for(var/ore in ores_to_process)
 		if(current_amount >= ore_pickup_rate)
 			break
@@ -260,7 +260,7 @@
 			if(points)
 				if(I)
 					I.mining_points += points
-					points = 0
+					points = ZERO
 				else
 					to_chat(usr, "<span class='warning'>No valid ID detected.</span>")
 			else
@@ -285,7 +285,7 @@
 				if(!stored_amount)
 					return
 
-				var/desired = 0
+				var/desired = ZERO
 				if (params["sheets"])
 					desired = text2num(params["sheets"])
 				else
@@ -330,7 +330,7 @@
 			var/obj/item/card/id/I = M.get_idcard(TRUE)
 			if((check_access(I) || allowed(usr)) && alloy)
 				var/smelt_amount = can_smelt_alloy(alloy)
-				var/desired = 0
+				var/desired = ZERO
 				if (params["sheets"])
 					desired = text2num(params["sheets"])
 				else

@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 	var/min_input_reagents = 2
 	var/max_input_reagents = 5
 	var/list/possible_reagents = list()
-	var/min_catalysts = 0
+	var/min_catalysts = ZERO
 	var/max_catalysts = 2
 	var/list/possible_catalysts = list()
 
@@ -79,7 +79,7 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 			remaining_possible_reagents -= reagent_type
 
 		var/in_reagent_count = min(rand(min_input_reagents,max_input_reagents),remaining_possible_reagents.len)
-		if(in_reagent_count <= 0)
+		if(in_reagent_count <= ZERO)
 			return FALSE
 
 		required_reagents = list()
@@ -201,7 +201,7 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 	if(recipe.required_container)
 		var/obj/item/I = recipe.required_container
 		dat += " in [initial(I.name)]"
-	if(recipe.required_temp != 0)
+	if(recipe.required_temp != ZERO)
 		if(recipe.is_cold_recipe)
 			dat += " below [recipe.required_temp] degrees"
 		else

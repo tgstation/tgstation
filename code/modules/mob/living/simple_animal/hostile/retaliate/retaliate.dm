@@ -39,9 +39,9 @@
 	for(var/mob/living/simple_animal/hostile/retaliate/H in around)
 		if(faction_check_mob(H) && !attack_same && !H.attack_same)
 			H.enemies |= enemies
-	return 0
+	return ZERO
 
 /mob/living/simple_animal/hostile/retaliate/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(. > 0 && stat == CONSCIOUS)
+	if(. > ZERO && stat == CONSCIOUS)
 		Retaliate()

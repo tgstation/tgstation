@@ -19,7 +19,7 @@
 		return 1
 	if(min1 != -1 && val <= min1)
 		return 1
-	return 0
+	return ZERO
 
 /datum/tlv/no_checks
 	min2 = -1
@@ -74,13 +74,13 @@
 	ui_x = 440
 	ui_y = 650
 
-	var/danger_level = 0
+	var/danger_level = ZERO
 	var/mode = AALARM_MODE_SCRUBBING
 
 	var/locked = TRUE
-	var/aidisabled = 0
-	var/shorted = 0
-	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
+	var/aidisabled = ZERO
+	var/shorted = ZERO
+	var/buildstage = 2 // 2 = complete, 1 = no wires,  ZERO = circuit gone
 
 	var/frequency = FREQ_ATMOS_CONTROL
 	var/alarm_frequency = FREQ_ATMOS_ALARMS
@@ -200,10 +200,10 @@
 		setDir(ndir)
 
 	if(nbuild)
-		buildstage = 0
+		buildstage = ZERO
 		panel_open = TRUE
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir == 1 ? -24 : 24) : 0
+		pixel_x = (dir & 3)? ZERO : (dir == 4 ? -24 : 24)
+		pixel_y = (dir & 3)? (dir == 1 ? -24 : 24) : ZERO
 
 	if(name == initial(name))
 		name = "[get_area_name(src)] Air Alarm"
@@ -223,7 +223,7 @@
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()
 	switch(buildstage)
-		if(0)
+		if(ZERO)
 			. += "<span class='notice'>It is missing air alarm electronics.</span>"
 		if(1)
 			. += "<span class='notice'>It is missing wiring.</span>"
@@ -248,7 +248,7 @@
 	var/data = list(
 		"locked" = locked,
 		"siliconUser" = user.has_unlimited_silicon_privilege,
-		"emagged" = (obj_flags & EMAGGED ? 1 : 0),
+		"emagged" = (obj_flags & EMAGGED ? 1 : ZERO),
 		"danger_level" = danger_level,
 	)
 
@@ -308,7 +308,7 @@
 					"external"	= info["external"],
 					"internal"	= info["internal"],
 					"extdefault"= (info["external"] == ONE_ATMOSPHERE),
-					"intdefault"= (info["internal"] == 0)
+					"intdefault"= (info["internal"] == ZERO)
 				))
 		data["scrubbers"] = list()
 		for(var/id_tag in A.air_scrub_names)
@@ -326,14 +326,14 @@
 				))
 		data["mode"] = mode
 		data["modes"] = list()
-		data["modes"] += list(list("name" = "Filtering - Scrubs out contaminants", 				"mode" = AALARM_MODE_SCRUBBING,		"selected" = mode == AALARM_MODE_SCRUBBING, 	"danger" = 0))
-		data["modes"] += list(list("name" = "Contaminated - Scrubs out ALL contaminants quickly","mode" = AALARM_MODE_CONTAMINATED,	"selected" = mode == AALARM_MODE_CONTAMINATED,	"danger" = 0))
-		data["modes"] += list(list("name" = "Draught - Siphons out air while replacing",		"mode" = AALARM_MODE_VENTING,		"selected" = mode == AALARM_MODE_VENTING,		"danger" = 0))
+		data["modes"] += list(list("name" = "Filtering - Scrubs out contaminants", 				"mode" = AALARM_MODE_SCRUBBING,		"selected" = mode == AALARM_MODE_SCRUBBING, 	"danger" = ZERO))
+		data["modes"] += list(list("name" = "Contaminated - Scrubs out ALL contaminants quickly","mode" = AALARM_MODE_CONTAMINATED,	"selected" = mode == AALARM_MODE_CONTAMINATED,	"danger" = ZERO))
+		data["modes"] += list(list("name" = "Draught - Siphons out air while replacing",		"mode" = AALARM_MODE_VENTING,		"selected" = mode == AALARM_MODE_VENTING,		"danger" = ZERO))
 		data["modes"] += list(list("name" = "Refill - Triple vent output",						"mode" = AALARM_MODE_REFILL,		"selected" = mode == AALARM_MODE_REFILL,		"danger" = 1))
 		data["modes"] += list(list("name" = "Cycle - Siphons air before replacing", 			"mode" = AALARM_MODE_REPLACEMENT,	"selected" = mode == AALARM_MODE_REPLACEMENT, 	"danger" = 1))
 		data["modes"] += list(list("name" = "Siphon - Siphons air out of the room", 			"mode" = AALARM_MODE_SIPHON,		"selected" = mode == AALARM_MODE_SIPHON, 		"danger" = 1))
 		data["modes"] += list(list("name" = "Panic Siphon - Siphons air out of the room quickly","mode" = AALARM_MODE_PANIC,		"selected" = mode == AALARM_MODE_PANIC, 		"danger" = 1))
-		data["modes"] += list(list("name" = "Off - Shuts off vents and scrubbers", 				"mode" = AALARM_MODE_OFF,			"selected" = mode == AALARM_MODE_OFF, 			"danger" = 0))
+		data["modes"] += list(list("name" = "Off - Shuts off vents and scrubbers", 				"mode" = AALARM_MODE_OFF,			"selected" = mode == AALARM_MODE_OFF, 			"danger" = ZERO))
 		if(obj_flags & EMAGGED)
 			data["modes"] += list(list("name" = "Flood - Shuts off scrubbers and opens vents",	"mode" = AALARM_MODE_FLOOD,			"selected" = mode == AALARM_MODE_FLOOD, 		"danger" = 1))
 
@@ -409,7 +409,7 @@
 				return
 			var/value = input("New [name] for [env]:", name, tlv.vars[name]) as num|null
 			if(!isnull(value) && !..())
-				if(value < 0)
+				if(value < ZERO)
 					tlv.vars[name] = -1
 				else
 					tlv.vars[name] = round(value, 0.01)
@@ -427,8 +427,8 @@
 			. = TRUE
 		if("reset")
 			var/area/A = get_area(src)
-			if(A.atmosalert(0, src))
-				post_alert(0)
+			if(A.atmosalert(ZERO, src))
+				post_alert(ZERO)
 			. = TRUE
 	update_icon()
 
@@ -446,25 +446,25 @@
 
 /obj/machinery/airalarm/proc/shock(mob/user, prb)
 	if((stat & (NOPOWER)))		// unpowered, no shock
-		return 0
+		return ZERO
 	if(!prob(prb))
-		return 0 //you lucked out, no shock for you
+		return ZERO //you lucked out, no shock for you
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
 	if (electrocute_mob(user, get_area(src), src, 1, TRUE))
 		return 1
 	else
-		return 0
+		return ZERO
 
 /obj/machinery/airalarm/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = SSradio.add_object(src, frequency, RADIO_TO_AIRALARM)
 
-/obj/machinery/airalarm/proc/send_signal(target, list/command, atom/user)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
+/obj/machinery/airalarm/proc/send_signal(target, list/command, atom/user)//sends signal 'command' to 'target'. Returns ZERO if no radio connection, 1 otherwise
 	if(!radio_connection)
-		return 0
+		return ZERO
 
 	var/datum/signal/signal = new(command)
 	signal.data["tag"] = target
@@ -504,7 +504,7 @@
 					"power" = 1,
 					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
-					"widenet" = 0
+					"widenet" = ZERO
 				), signal_source)
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
@@ -542,8 +542,8 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"widenet" = 0,
-					"scrubbing" = 0
+					"widenet" = ZERO,
+					"scrubbing" = ZERO
 				), signal_source)
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
@@ -557,7 +557,7 @@
 					"power" = 1,
 					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
-					"widenet" = 0
+					"widenet" = ZERO
 				), signal_source)
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
@@ -571,43 +571,43 @@
 				send_signal(device_id, list(
 					"power" = 1,
 					"widenet" = 1,
-					"scrubbing" = 0
+					"scrubbing" = ZERO
 				), signal_source)
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
-					"power" = 0
+					"power" = ZERO
 				), signal_source)
 		if(AALARM_MODE_SIPHON)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"widenet" = 0,
-					"scrubbing" = 0
+					"widenet" = ZERO,
+					"scrubbing" = ZERO
 				), signal_source)
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
-					"power" = 0
+					"power" = ZERO
 				), signal_source)
 
 		if(AALARM_MODE_OFF)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
-					"power" = 0
+					"power" = ZERO
 				), signal_source)
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
-					"power" = 0
+					"power" = ZERO
 				), signal_source)
 		if(AALARM_MODE_FLOOD)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
-					"power" = 0
+					"power" = ZERO
 				), signal_source)
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 2,
-					"set_internal_pressure" = 0
+					"set_internal_pressure" = ZERO
 				), signal_source)
 
 /obj/machinery/airalarm/update_icon()
@@ -617,7 +617,7 @@
 				icon_state = "alarmx"
 			if(1)
 				icon_state = "alarm_b2"
-			if(0)
+			if(ZERO)
 				icon_state = "alarm_b1"
 		return
 
@@ -627,7 +627,7 @@
 
 	var/area/A = get_area(src)
 	switch(max(danger_level, A.atmosalm))
-		if(0)
+		if(ZERO)
 			icon_state = "alarm0"
 		if(1)
 			icon_state = "alarm2" //yes, alarm2 is yellow alarm
@@ -655,7 +655,7 @@
 	cur_tlv = TLV["temperature"]
 	var/temperature_dangerlevel = cur_tlv.get_danger_level(environment.temperature)
 
-	var/gas_dangerlevel = 0
+	var/gas_dangerlevel = ZERO
 	for(var/gas_id in env_gases)
 		if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
 			continue
@@ -688,7 +688,7 @@
 		alert_signal.data["alert"] = "severe"
 	else if (alert_level==1)
 		alert_signal.data["alert"] = "minor"
-	else if (alert_level==0)
+	else if (alert_level==ZERO)
 		alert_signal.data["alert"] = "clear"
 
 	frequency.post_signal(src, alert_signal, range = -1)
@@ -696,7 +696,7 @@
 /obj/machinery/airalarm/proc/apply_danger_level()
 	var/area/A = get_area(src)
 
-	var/new_area_danger_level = 0
+	var/new_area_danger_level = ZERO
 	for(var/obj/machinery/airalarm/AA in A)
 		if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
 			new_area_danger_level = max(new_area_danger_level,AA.danger_level)
@@ -737,7 +737,7 @@
 						to_chat(user, "<span class='notice'>You remove the air alarm electronics.</span>")
 						new /obj/item/electronics/airalarm( src.loc )
 						playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-						buildstage = 0
+						buildstage = ZERO
 						update_icon()
 				return
 
@@ -753,15 +753,15 @@
 						cable.use(5)
 						to_chat(user, "<span class='notice'>You wire the air alarm.</span>")
 						wires.repair()
-						aidisabled = 0
+						aidisabled = ZERO
 						locked = FALSE
 						mode = 1
-						shorted = 0
-						post_alert(0)
+						shorted = ZERO
+						post_alert(ZERO)
 						buildstage = 2
 						update_icon()
 				return
-		if(0)
+		if(ZERO)
 			if(istype(W, /obj/item/electronics/airalarm))
 				if(user.temporarilyRemoveItemFromInventory(W))
 					to_chat(user, "<span class='notice'>You insert the circuit.</span>")
@@ -790,7 +790,7 @@
 	return ..()
 
 /obj/machinery/airalarm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if((buildstage == 0) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
+	if((buildstage == ZERO) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
 		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)
 	return FALSE
 

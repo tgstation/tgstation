@@ -1,4 +1,4 @@
-/client/var/adminhelptimerid = 0	//a timer id for returning the ahelp verb
+/client/var/adminhelptimerid = ZERO	//a timer id for returning the ahelp verb
 /client/var/datum/admin_help/current_ticket	//the current ticket the (usually) not-admin client is dealing with
 
 //
@@ -89,7 +89,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 //Tickets statpanel
 /datum/admin_help_tickets/proc/stat_entry()
-	var/num_disconnected = 0
+	var/num_disconnected = ZERO
 	stat("Active Tickets:", astatclick.update("[active_tickets.len]"))
 	for(var/I in active_tickets)
 		var/datum/admin_help/AH = I
@@ -158,7 +158,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	var/obj/effect/statclick/ahelp/statclick
 
-	var/static/ticket_counter = 0
+	var/static/ticket_counter = ZERO
 
 //call this on its own to create a ticket, don't manually assign current_ticket
 //msg is the title of the ticket: usually the ahelp text
@@ -198,7 +198,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		//send it to TGS if nobody is on and tell us how many were on
 		var/admin_number_present = send2tgs_adminless_only(initiator_ckey, "Ticket #[id]: [name]")
 		log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
-		if(admin_number_present <= 0)
+		if(admin_number_present <= ZERO)
 			to_chat(C, "<span class='notice'>No active admins are online, your adminhelp was sent through TGS to admins who are available. This may use IRC or Discord.</span>")
 			heard_by_no_admins = TRUE
 
@@ -473,7 +473,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /client/proc/giveadminhelpverb()
 	src.verbs |= /client/verb/adminhelp
 	deltimer(adminhelptimerid)
-	adminhelptimerid = 0
+	adminhelptimerid = ZERO
 
 // Used for methods where input via arg doesn't work
 /client/proc/get_adminhelp()
@@ -545,7 +545,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	. = list("total" = list(), "noflags" = list(), "afk" = list(), "stealth" = list(), "present" = list())
 	for(var/client/X in GLOB.admins)
 		.["total"] += X
-		if(requiredflags != 0 && !check_rights_for(X, requiredflags))
+		if(requiredflags != ZERO && !check_rights_for(X, requiredflags))
 			.["noflags"] += X
 		else if(X.is_afk())
 			.["afk"] += X
@@ -558,7 +558,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/list/adm = get_admin_counts(requiredflags)
 	var/list/activemins = adm["present"]
 	. = activemins.len
-	if(. <= 0)
+	if(. <= ZERO)
 		var/final = ""
 		var/list/afkmins = adm["afk"]
 		var/list/stealthmins = adm["stealth"]
@@ -628,7 +628,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 		for(var/string in indexing)
 			var/list/L = splittext(string, " ")
-			var/surname_found = 0
+			var/surname_found = ZERO
 			//surnames
 			for(var/i=L.len, i>=1, i--)
 				var/word = ckey(L[i])
@@ -644,7 +644,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			//ckeys
 			ckeys[M.ckey] = M
 
-	var/ai_found = 0
+	var/ai_found = ZERO
 	msg = ""
 	var/list/mobs_found = list()
 	for(var/original_word in msglist)
@@ -664,7 +664,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 							mobs_found += found
 							if(!ai_found && isAI(found))
 								ai_found = 1
-							var/is_antag = 0
+							var/is_antag = ZERO
 							if(found.mind && found.mind.special_role)
 								is_antag = 1
 							founds += "Name: [found.name]([found.real_name]) Key: [found.key] Ckey: [found.ckey] [is_antag ? "(Antag)" : null] "

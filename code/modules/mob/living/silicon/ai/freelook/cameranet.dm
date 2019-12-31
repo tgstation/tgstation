@@ -13,7 +13,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	var/list/cameras = list()
 	// The chunks of the map, mapping the areas that the cameras can see.
 	var/list/chunks = list()
-	var/ready = 0
+	var/ready = ZERO
 
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
@@ -74,10 +74,10 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 		var/mob/camera/aiEye/eye = V
 		var/list/visibleChunks = list()
 		if(eye.loc)
-			// 0xf = 15
+			// ZEROxf = 15
 			var/static_range = eye.static_visibility_range
-			var/x1 = max(0, eye.x - static_range) & ~(CHUNK_SIZE - 1)
-			var/y1 = max(0, eye.y - static_range) & ~(CHUNK_SIZE - 1)
+			var/x1 = max(ZERO, eye.x - static_range) & ~(CHUNK_SIZE - 1)
+			var/y1 = max(ZERO, eye.y - static_range) & ~(CHUNK_SIZE - 1)
 			var/x2 = min(world.maxx, eye.x + static_range) & ~(CHUNK_SIZE - 1)
 			var/y2 = min(world.maxy, eye.y + static_range) & ~(CHUNK_SIZE - 1)
 
@@ -122,7 +122,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 // Removes a camera from a chunk.
 
 /datum/cameranet/proc/removeCamera(obj/machinery/camera/c)
-	majorChunkChange(c, 0)
+	majorChunkChange(c, ZERO)
 
 // Add a camera to a chunk.
 
@@ -139,7 +139,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 // Never access this proc directly!!!!
 // This will update the chunk and all the surrounding chunks.
 // It will also add the atom to the cameras list if you set the choice to 1.
-// Setting the choice to 0 will remove the camera from the chunks.
+// Setting the choice to ZERO will remove the camera from the chunks.
 // If you want to update the chunks around an object, without adding/removing a camera, use choice 2.
 
 /datum/cameranet/proc/majorChunkChange(atom/c, choice)
@@ -148,15 +148,15 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 
 	var/turf/T = get_turf(c)
 	if(T)
-		var/x1 = max(0, T.x - (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
-		var/y1 = max(0, T.y - (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
+		var/x1 = max(ZERO, T.x - (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
+		var/y1 = max(ZERO, T.y - (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
 		var/x2 = min(world.maxx, T.x + (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
 		var/y2 = min(world.maxy, T.y + (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
 		for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 			for(var/y = y1; y <= y2; y += CHUNK_SIZE)
 				var/datum/camerachunk/chunk = chunkGenerated(x, y, T.z)
 				if(chunk)
-					if(choice == 0)
+					if(choice == ZERO)
 						// Remove the camera.
 						chunk.cameras -= c
 					else if(choice == 1)
@@ -178,7 +178,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 			chunk.hasChanged(1) // Update now, no matter if it's visible or not.
 		if(chunk.visibleTurfs[position])
 			return 1
-	return 0
+	return ZERO
 
 /datum/cameranet/proc/stat_entry()
 	if(!statclick)

@@ -48,7 +48,7 @@
 	if(prob(15/D.permeability_mod))
 		return
 
-	if(satiety>0 && prob(satiety/10)) // positive satiety makes it harder to contract the disease.
+	if(satiety>ZERO && prob(satiety/10)) // positive satiety makes it harder to contract the disease.
 		return
 
 	//Lefts and rights do not matter for arms and legs, they both run the same checks

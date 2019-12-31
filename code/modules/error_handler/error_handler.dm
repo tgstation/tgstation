@@ -1,5 +1,5 @@
-GLOBAL_VAR_INIT(total_runtimes, GLOB.total_runtimes || 0)
-GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
+GLOBAL_VAR_INIT(total_runtimes, GLOB.total_runtimes || ZERO)
+GLOBAL_VAR_INIT(total_runtimes_skipped, ZERO)
 
 #ifdef USE_CUSTOM_ERROR_HANDLER
 #define ERROR_USEFUL_LEN 2
@@ -40,13 +40,13 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 	var/erroruid = "[E.file][E.line]"
 	var/last_seen = error_last_seen[erroruid]
-	var/cooldown = error_cooldown[erroruid] || 0
+	var/cooldown = error_cooldown[erroruid] || ZERO
 
 	if(last_seen == null)
 		error_last_seen[erroruid] = world.time
 		last_seen = world.time
 
-	if(cooldown < 0)
+	if(cooldown < ZERO)
 		error_cooldown[erroruid]-- //Used to keep track of skip count for this error
 		GLOB.total_runtimes_skipped++
 		return //Error is currently silenced, skip handling it
@@ -72,17 +72,17 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 
 	//Each occurence of a unique error adds to its cooldown time...
-	cooldown = max(0, cooldown - (world.time - last_seen)) + configured_error_cooldown
+	cooldown = max(ZERO, cooldown - (world.time - last_seen)) + configured_error_cooldown
 	// ... which is used to silence an error if it occurs too often, too fast
 	if(cooldown > configured_error_cooldown * configured_error_limit)
 		cooldown = -1
 		silencing = TRUE
-		spawn(0)
+		spawn(ZERO)
 			usr = null
 			sleep(configured_error_silence_time)
 			var/skipcount = abs(error_cooldown[erroruid]) - 1
-			error_cooldown[erroruid] = 0
-			if(skipcount > 0)
+			error_cooldown[erroruid] = ZERO
+			if(skipcount > ZERO)
 				SEND_TEXT(world.log, "\[[time_stamp()]] Skipped [skipcount] runtimes in [E.file],[E.line].")
 				GLOB.error_cache.log_error(E, skip_count = skipcount)
 

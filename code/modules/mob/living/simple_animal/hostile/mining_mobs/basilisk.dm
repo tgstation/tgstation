@@ -39,7 +39,7 @@
 /obj/projectile/temp/basilisk
 	name = "freezing blast"
 	icon_state = "ice_2"
-	damage = 0
+	damage = ZERO
 	damage_type = BURN
 	nodamage = TRUE
 	flag = "energy"
@@ -51,7 +51,7 @@
 	damage = 40
 	damage_type = BRUTE
 	nodamage = FALSE
-	temperature = 0
+	temperature = ZERO
 
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
@@ -76,7 +76,7 @@
 			visible_message("<span class='warning'>[src] begins to fire up!</span>")
 			fully_heal()
 			icon_state = "Basilisk_alert"
-			set_varspeed(0)
+			set_varspeed(ZERO)
 			warmed_up = TRUE
 			projectiletype = /obj/projectile/temp/basilisk/heated
 			addtimer(CALLBACK(src, .proc/cool_down), 3000)

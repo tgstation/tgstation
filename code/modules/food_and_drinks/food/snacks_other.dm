@@ -417,17 +417,17 @@
 	slot_flags = ITEM_SLOT_MASK
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2)	//Honk
 	var/mutable_appearance/head
-	var/headcolor = rgb(0, 0, 0)
+	var/headcolor = rgb(ZERO, ZERO, ZERO)
 	var/succ_dur = 180
 	var/succ_int = 100
-	var/next_succ = 0
+	var/next_succ = ZERO
 	tastes = list("candy" = 1)
 	foodtype = JUNKFOOD | SUGAR
 
 /obj/item/reagent_containers/food/snacks/lollipop/Initialize()
 	. = ..()
 	head = mutable_appearance('icons/obj/lollipop.dmi', "lollipop_head")
-	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
+	change_head_color(rgb(rand(ZERO, 255), rand(ZERO, 255), rand(ZERO, 255)))
 
 	//makes lollipops actually wearable as masks and still edible the old fashioned way.
 /obj/item/reagent_containers/food/snacks/lollipop/proc/handle_reagents()
@@ -472,7 +472,7 @@
 /obj/item/reagent_containers/food/snacks/lollipop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..(hit_atom)
 	throw_speed = 1
-	throwforce = 0
+	throwforce = ZERO
 
 /obj/item/reagent_containers/food/snacks/lollipop/cyborg
 	var/spamchecking = TRUE
@@ -500,7 +500,7 @@
 
 /obj/item/reagent_containers/food/snacks/gumball/Initialize()
 	. = ..()
-	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	color = rgb(rand(ZERO, 255), rand(ZERO, 255), rand(ZERO, 255))
 
 /obj/item/reagent_containers/food/snacks/gumball/cyborg
 	var/spamchecking = TRUE
@@ -631,7 +631,7 @@
 /obj/item/reagent_containers/food/snacks/canned/attack(mob/living/M, mob/user, def_zone)
 	if (!is_drainable())
 		to_chat(user, "<span class='warning'>[src]'s lid hasn't been opened!</span>")
-		return 0
+		return ZERO
 	return ..()
 
 /obj/item/reagent_containers/food/snacks/canned/beans

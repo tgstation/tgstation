@@ -1,14 +1,14 @@
 
 /datum/mapGenerator/lavaland
 	var/start_z
-	var/min_x = 0
-	var/min_y = 0
-	var/max_x = 0
-	var/max_y = 0
+	var/min_x = ZERO
+	var/min_y = ZERO
+	var/max_x = ZERO
+	var/max_y = ZERO
 	modules = list(/datum/mapGeneratorModule/river)
 	buildmode_name = "Pattern: Lava Rivers"
 
-/datum/mapGenerator/lavaland/defineRegion(turf/Start, turf/End, replace = 0)
+/datum/mapGenerator/lavaland/defineRegion(turf/Start, turf/End, replace = ZERO)
 	start_z = Start.z
 	min_x = min(Start.x,End.x)
 	min_y = min(Start.y,End.y)

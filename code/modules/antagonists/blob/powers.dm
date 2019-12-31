@@ -1,7 +1,7 @@
 /mob/camera/blob/proc/can_buy(cost = 15)
 	if(blob_points < cost)
 		to_chat(src, "<span class='warning'>You cannot afford this, you need at least [cost] resources!</span>")
-		return 0
+		return ZERO
 	add_points(-cost)
 	return 1
 
@@ -17,30 +17,30 @@
 					continue
 				if(M.client)
 					to_chat(src, "<span class='warning'>There is someone too close to place your blob core!</span>")
-					return 0
+					return ZERO
 			for(var/mob/living/M in view(13, src))
 				if(ROLE_BLOB in M.faction)
 					continue
 				if(M.client)
 					to_chat(src, "<span class='warning'>Someone could see your blob core from here!</span>")
-					return 0
+					return ZERO
 		var/turf/T = get_turf(src)
 		if(T.density)
 			to_chat(src, "<span class='warning'>This spot is too dense to place a blob core on!</span>")
-			return 0
+			return ZERO
 		for(var/obj/O in T)
 			if(istype(O, /obj/structure/blob))
 				if(istype(O, /obj/structure/blob/normal))
 					qdel(O)
 				else
 					to_chat(src, "<span class='warning'>There is already a blob here!</span>")
-					return 0
+					return ZERO
 			else if(O.density)
 				to_chat(src, "<span class='warning'>This spot is too dense to place a blob core on!</span>")
-				return 0
+				return ZERO
 		if(!pop_override && world.time <= manualplace_min_time && world.time <= autoplace_max_time)
 			to_chat(src, "<span class='warning'>It is too early to place your blob core!</span>")
-			return 0
+			return ZERO
 	else if(placement_override == 1)
 		var/turf/T = pick(GLOB.blobstart)
 		forceMove(T) //got overrided? you're somewhere random, motherfucker
@@ -129,7 +129,7 @@
 		to_chat(src, "<span class='warning'>You secrete a reflective ooze over the shield blob, allowing it to reflect projectiles at the cost of reduced integrity.</span>")
 		S.change_to(/obj/structure/blob/shield/reflective, src)
 	else
-		createSpecial(15, /obj/structure/blob/shield, 0, 0, T)
+		createSpecial(15, /obj/structure/blob/shield, ZERO, ZERO, T)
 
 /mob/camera/blob/verb/create_resource()
 	set category = "Blob"
@@ -141,7 +141,7 @@
 	set category = "Blob"
 	set name = "Create Node Blob (50)"
 	set desc = "Create a node, which will power nearby factory and resource blobs."
-	createSpecial(50, /obj/structure/blob/node, 5, 0)
+	createSpecial(50, /obj/structure/blob/node, 5, ZERO)
 
 /mob/camera/blob/verb/create_factory()
 	set category = "Blob"
@@ -235,7 +235,7 @@
 	if(!B)
 		to_chat(src, "<span class='warning'>There is no blob there!</span>")
 		return
-	if(B.point_return < 0)
+	if(B.point_return < ZERO)
 		to_chat(src, "<span class='warning'>Unable to remove this blob.</span>")
 		return
 	if(max_blob_points < B.point_return + blob_points)

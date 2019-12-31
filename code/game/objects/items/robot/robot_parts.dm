@@ -61,7 +61,7 @@
 			if(src.chest && src.head)
 				SSblackbox.record_feedback("amount", "cyborg_frames_built", 1)
 				return 1
-	return 0
+	return ZERO
 
 /obj/item/robot_suit/wrench_act(mob/living/user, obj/item/I) //Deconstucts empty borg shell. Flashes remain unbroken because they haven't been used yet
 	. = ..()
@@ -277,24 +277,24 @@
 				return
 
 			if(M.laws && M.laws.id != DEFAULT_AI_LAWID)
-				aisync = 0
-				lawsync = 0
+				aisync = ZERO
+				lawsync = ZERO
 				O.laws = M.laws
 				M.laws.associate(O)
 
-			O.invisibility = 0
+			O.invisibility = ZERO
 			//Transfer debug settings to new mob
 			O.custom_name = created_name
 			O.locked = panel_locked
 			if(!aisync)
-				lawsync = 0
+				lawsync = ZERO
 				O.connected_ai = null
 			else
 				O.notify_ai(NEW_BORG)
 				if(forced_ai)
 					O.connected_ai = forced_ai
 			if(!lawsync)
-				O.lawupdate = 0
+				O.lawupdate = ZERO
 				if(M.laws.id == DEFAULT_AI_LAWID)
 					O.make_laws()
 

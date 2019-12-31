@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(events)
 	var/list/running = list()	//list of all existing /datum/round_event
 	var/list/currentrun = list()
 
-	var/scheduled = 0			//The next world.time that a naturally occuring random event can be selected.
+	var/scheduled = ZERO			//The next world.time that a naturally occuring random event can be selected.
 	var/frequency_lower = 1800	//3 minutes lower bound.
 	var/frequency_upper = 6000	//10 minutes upper bound. Basically an event will happen every 3 to 10 minutes.
 
@@ -25,7 +25,7 @@ SUBSYSTEM_DEF(events)
 	return ..()
 
 
-/datum/controller/subsystem/events/fire(resumed = 0)
+/datum/controller/subsystem/events/fire(resumed = ZERO)
 	if(!resumed)
 		checkEvent() //only check these if we aren't resuming a paused fire
 		src.currentrun = running.Copy()
@@ -63,11 +63,11 @@ SUBSYSTEM_DEF(events)
 	var/players_amt = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	// Only alive, non-AFK human players count towards this.
 
-	var/sum_of_weights = 0
+	var/sum_of_weights = ZERO
 	for(var/datum/round_event_control/E in control)
 		if(!E.canSpawnEvent(players_amt, gamemode))
 			continue
-		if(E.weight < 0)						//for round-start events etc.
+		if(E.weight < ZERO)						//for round-start events etc.
 			var/res = TriggerEvent(E)
 			if(res == EVENT_INTERRUPTED)
 				continue	//like it never happened
@@ -88,8 +88,8 @@ SUBSYSTEM_DEF(events)
 
 /datum/controller/subsystem/events/proc/TriggerEvent(datum/round_event_control/E)
 	. = E.preRunEvent()
-	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
-		E.max_occurrences = 0
+	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to ZERO
+		E.max_occurrences = ZERO
 	else if(. == EVENT_READY)
 		E.runEvent(random = TRUE)
 

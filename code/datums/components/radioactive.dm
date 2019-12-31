@@ -12,7 +12,7 @@
 	var/strength
 	var/can_contaminate
 
-/datum/component/radioactive/Initialize(_strength=0, _source, _half_life=RAD_HALF_LIFE, _can_contaminate=TRUE)
+/datum/component/radioactive/Initialize(_strength=ZERO, _source, _half_life=RAD_HALF_LIFE, _can_contaminate=TRUE)
 	strength = _strength
 	source = _source
 	hl3_release_date = _half_life

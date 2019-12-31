@@ -103,7 +103,7 @@
 	var/data = list()
 	data["targetTemp"] = target_temperature
 	data["isActive"] = on
-	data["isBeakerLoaded"] = beaker ? 1 : 0
+	data["isBeakerLoaded"] = beaker ? 1 : ZERO
 
 	data["currentTemp"] = beaker ? beaker.reagents.chem_temp : null
 	data["beakerCurrentVolume"] = beaker ? beaker.reagents.total_volume : null
@@ -136,7 +136,7 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				target_temperature = CLAMP(target, 0, 1000)
+				target_temperature = CLAMP(target, ZERO, 1000)
 		if("eject")
 			on = FALSE
 			replace_beaker(usr)

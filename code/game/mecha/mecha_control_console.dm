@@ -56,12 +56,12 @@
 	icon_state = "motion2"
 	w_class = WEIGHT_CLASS_SMALL
 	var/ai_beacon = FALSE //If this beacon allows for AI control. Exists to avoid using istype() on checking.
-	var/recharging = 0
+	var/recharging = ZERO
 	var/obj/mecha/chassis
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
 	if(!in_mecha())
-		return 0
+		return ZERO
 	var/obj/mecha/M = src.loc
 	var/cell_charge = M.get_charge()
 	var/answer = {"<b>Name:</b> [M.name]<br>
@@ -100,7 +100,7 @@
 /obj/item/mecha_parts/mecha_tracking/proc/in_mecha()
 	if(ismecha(loc))
 		return loc
-	return 0
+	return ZERO
 
 /obj/item/mecha_parts/mecha_tracking/proc/shock()
 	if(recharging)
@@ -112,7 +112,7 @@
 		recharging = 1
 
 /obj/item/mecha_parts/mecha_tracking/proc/recharge()
-	recharging = 0
+	recharging = ZERO
 
 /obj/item/mecha_parts/mecha_tracking/ai_control
 	name = "exosuit AI control beacon"

@@ -23,7 +23,7 @@
 						"<span class='danger'>You avoid [A]'s [atk_verb]!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, A)
 		to_chat(A, "<span class='warning'>Your [atk_verb] misses [D]!</span>")
 		log_combat(A, D, "attempted to hit", atk_verb)
-		return 0
+		return ZERO
 
 
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))

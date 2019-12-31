@@ -121,8 +121,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		signal["entrytag"] = G.gpstag //Name or 'tag' of the GPS
 		signal["coords"] = "[pos.x], [pos.y], [pos.z]"
 		if(pos.z == curr.z) //Distance/Direction calculations for same z-level only
-			signal["dist"] = max(get_dist(curr, pos), 0) //Distance between the src and remote GPS turfs
-			signal["degrees"] = round(Get_Angle(curr, pos)) //0-360 degree directional bearing, for more precision.
+			signal["dist"] = max(get_dist(curr, pos), ZERO) //Distance between the src and remote GPS turfs
+			signal["degrees"] = round(Get_Angle(curr, pos)) //ZERO-360 degree directional bearing, for more precision.
 		signals += list(signal) //Add this signal to the list of signals
 	data["signals"] = signals
 	return data

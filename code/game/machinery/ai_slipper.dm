@@ -9,7 +9,7 @@
 	armor = list("melee" = 50, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
 
 	var/uses = 20
-	var/cooldown = 0
+	var/cooldown = ZERO
 	var/cooldown_time = 100
 	req_access = list(ACCESS_AI_UPLOAD)
 

@@ -423,14 +423,14 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	return txt
 
 /client/proc/createStealthKey()
-	var/num = (rand(0,1000))
-	var/i = 0
-	while(i == 0)
+	var/num = (rand(ZERO,1000))
+	var/i = ZERO
+	while(i == ZERO)
 		i = 1
 		for(var/P in GLOB.stealthminID)
 			if(num == GLOB.stealthminID[P])
 				num++
-				i = 0
+				i = ZERO
 	GLOB.stealthminID["[ckey]"] = "@[num2text(num)]"
 
 /client/proc/stealth()
@@ -460,7 +460,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 			createStealthKey()
 			if(isobserver(mob))
 				mob.invisibility = INVISIBILITY_MAXIMUM //JUST IN CASE
-				mob.alpha = 0 //JUUUUST IN CASE
+				mob.alpha = ZERO //JUUUUST IN CASE
 				mob.name = " "
 				mob.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
@@ -478,7 +478,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 	switch(choice)
 		if(null)
-			return 0
+			return ZERO
 		if("Small Bomb (1, 2, 3, 3)")
 			explosion(epicenter, 1, 2, 3, 3, TRUE, TRUE)
 		if("Medium Bomb (2, 3, 4, 4)")
@@ -682,7 +682,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set category = "Debug"
 	set desc = "(\"Amount of mobs to create\") Populate the world with test mobs."
 
-	if (amount > 0)
+	if (amount > ZERO)
 		var/area/area
 		var/list/candidates
 		var/turf/open/floor/tile
@@ -703,13 +703,13 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 						do
 							tile = pick(candidates)
-						while ((!tile || !istype(tile)) && --k > 0)
+						while ((!tile || !istype(tile)) && --k > ZERO)
 
 						if (tile)
 							var/mob/living/carbon/human/hooman = new(tile)
 							hooman.equipOutfit(pick(subtypesof(/datum/outfit)))
 							testing("Spawned test mob at [COORD(tile)]")
-			while (!area && --j > 0)
+			while (!area && --j > ZERO)
 
 /client/proc/toggle_AI_interact()
 	set name = "Toggle Admin AI Interact"

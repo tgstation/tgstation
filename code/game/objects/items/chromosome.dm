@@ -3,7 +3,7 @@
 	icon = 'icons/obj/chromosomes.dmi'
 	icon_state = ""
 	desc = "A tube holding chromosomic data."
-	force = 0
+	force = ZERO
 	w_class = WEIGHT_CLASS_SMALL
 
 	var/stabilizer_coeff = 1 //lower is better, affects genetic stability

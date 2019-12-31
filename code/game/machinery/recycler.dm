@@ -10,7 +10,7 @@
 	circuit = /obj/item/circuitboard/machine/recycler
 	var/safety_mode = FALSE // Temporarily stops machine if it detects a mob
 	var/icon_name = "grinder-o"
-	var/blood = 0
+	var/blood = ZERO
 	var/eat_dir = WEST
 	var/amount_produced = 50
 	var/crush_damage = 1000
@@ -25,8 +25,8 @@
 	req_one_access = get_all_accesses() + get_all_centcom_access()
 
 /obj/machinery/recycler/RefreshParts()
-	var/amt_made = 0
-	var/mat_mod = 0
+	var/amt_made = ZERO
+	var/mat_mod = ZERO
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		mat_mod = 2 * B.rating
 	mat_mod *= 50000
@@ -102,7 +102,7 @@
 	else
 		to_eat = list(AM0)
 
-	var/items_recycled = 0
+	var/items_recycled = ZERO
 
 	for(var/i in to_eat)
 		var/atom/movable/AM = i
@@ -128,7 +128,7 @@
 	I.forceMove(loc)
 	var/obj/item/grown/log/L = I
 	if(istype(L))
-		var/seed_modifier = 0
+		var/seed_modifier = ZERO
 		if(L.seed)
 			seed_modifier = round(L.seed.potency / 25)
 		new L.plank_type(src.loc, 1 + seed_modifier)

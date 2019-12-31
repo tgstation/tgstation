@@ -1,12 +1,12 @@
 /obj/structure/frame/computer
 	name = "computer frame"
 	icon_state = "0"
-	state = 0
+	state = ZERO
 
 /obj/structure/frame/computer/attackby(obj/item/P, mob/user, params)
 	add_fingerprint(user)
 	switch(state)
-		if(0)
+		if(ZERO)
 			if(P.tool_behaviour == TOOL_WRENCH)
 				to_chat(user, "<span class='notice'>You start wrenching the frame into place...</span>")
 				if(P.use_tool(src, user, 20, volume=50))
@@ -15,7 +15,7 @@
 					state = 1
 				return
 			if(P.tool_behaviour == TOOL_WELDER)
-				if(!P.tool_start_check(user, amount=0))
+				if(!P.tool_start_check(user, amount=ZERO))
 					return
 
 				to_chat(user, "<span class='notice'>You start deconstructing the frame...</span>")
@@ -31,7 +31,7 @@
 				if(P.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You unfasten the frame.</span>")
 					setAnchored(FALSE)
-					state = 0
+					state = ZERO
 				return
 			if(istype(P, /obj/item/circuitboard/computer) && !circuit)
 				if(!user.transferItemToLoc(P, src))

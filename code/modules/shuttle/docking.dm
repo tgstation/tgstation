@@ -38,10 +38,10 @@
 	if(!underlying_old_area)
 		underlying_old_area = new underlying_area_type(null)
 
-	var/rotation = 0
-	if(new_dock.dir != dir) //Even when the dirs are the same rotation is coming out as not 0 for some reason
+	var/rotation = ZERO
+	if(new_dock.dir != dir) //Even when the dirs are the same rotation is coming out as not ZERO for some reason
 		rotation = dir2angle(new_dock.dir)-dir2angle(dir)
-		if ((rotation % 90) != 0)
+		if ((rotation % 90) != ZERO)
 			rotation += (rotation % 90) //diagonal rotations not allowed, round up
 		rotation = SIMPLIFY_DEGREES(rotation)
 

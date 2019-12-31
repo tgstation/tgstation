@@ -17,7 +17,7 @@ BONUS
 /datum/symptom/shedding
 	name = "Alopecia"
 	desc = "The virus causes rapid shedding of head and body hair."
-	stealth = 0
+	stealth = ZERO
 	resistance = 1
 	stage_speed = 2
 	transmittable = 2

@@ -9,7 +9,7 @@
 	throw_speed = 2
 	throw_range = 4
 	flags_1 = CONDUCT_1
-	var/status = FALSE   //0 - not readied //1 - bomb finished with welder
+	var/status = FALSE   //ZERO - not readied //1 - bomb finished with welder
 	var/obj/item/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/tank/bombtank = null //the second part of the bomb is a plasma tank
 
@@ -49,9 +49,9 @@
 	if(status)
 		to_chat(user, "<span class='warning'>[bombtank] already has a pressure hole!</span>")
 		return
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=ZERO))
 		return
-	if(I.use_tool(src, user, 0, volume=40))
+	if(I.use_tool(src, user, ZERO, volume=40))
 		status = TRUE
 		log_bomber(user, "welded a single tank bomb,", src, "| Temp: [bombtank.air_contents.temperature-T0C]")
 		to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
@@ -160,9 +160,9 @@
 		else if(strength >=1)
 			explosion(ground_zero, round(strength,1), round(strength*2,1), round(strength*2,1), round(strength*3,1))
 		else if(strength >=0.5)
-			explosion(ground_zero, 0, 1, 2, 4)
+			explosion(ground_zero, ZERO, 1, 2, 4)
 		else if(strength >=0.2)
-			explosion(ground_zero, -1, 0, 1, 2)
+			explosion(ground_zero, -1, ZERO, 1, 2)
 		else
 			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)
@@ -171,9 +171,9 @@
 		strength = (fuel_moles/20)
 
 		if(strength >=1)
-			explosion(ground_zero, 0, round(strength,1), round(strength*2,1), round(strength*3,1))
+			explosion(ground_zero, ZERO, round(strength,1), round(strength*2,1), round(strength*3,1))
 		else if(strength >=0.5)
-			explosion(ground_zero, -1, 0, 1, 2)
+			explosion(ground_zero, -1, ZERO, 1, 2)
 		else
 			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)
@@ -182,7 +182,7 @@
 		strength = (fuel_moles/25)
 
 		if(strength >=1)
-			explosion(ground_zero, -1, 0, round(strength,1), round(strength*3,1))
+			explosion(ground_zero, -1, ZERO, round(strength,1), round(strength*3,1))
 		else
 			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)

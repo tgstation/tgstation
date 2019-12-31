@@ -58,7 +58,7 @@
 				<td>[c.fine] cr</td>
 				<td>[c.author]</td>
 				<td>[c.time]</td>"}
-				if(owed > 0)
+				if(owed > ZERO)
 					dat += {"<td>[owed] cr</td>
 					<td><A href='?src=[REF(src)];choice=Pay;field=citation_pay;cdataid=[c.dataId]'>\[Pay\]</A></td>"}
 				else

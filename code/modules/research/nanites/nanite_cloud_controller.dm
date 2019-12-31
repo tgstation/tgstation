@@ -9,7 +9,7 @@
 
 	var/obj/item/disk/nanite_program/disk
 	var/list/datum/nanite_cloud_backup/cloud_backups = list()
-	var/current_view = 0 //0 is the main menu, any other number is the page of the backup with that ID
+	var/current_view = ZERO //ZERO is the main menu, any other number is the page of the backup with that ID
 	var/new_backup_id = 1
 
 /obj/machinery/computer/nanite_cloud_controller/Destroy()
@@ -209,7 +209,7 @@
 					return
 				var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 				if(backup)
-					playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
+					playsound(src, 'sound/machines/terminal_prompt.ogg', 50, ZERO)
 					var/datum/component/nanites/nanites = backup.nanites
 					var/datum/nanite_program/P = nanites.programs[text2num(params["program_id"])]
 					var/datum/nanite_rule/rule = rule_template.make_rule(P)
@@ -219,7 +219,7 @@
 		if("remove_rule")
 			var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 			if(backup)
-				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, ZERO)
 				var/datum/component/nanites/nanites = backup.nanites
 				var/datum/nanite_program/P = nanites.programs[text2num(params["program_id"])]
 				var/datum/nanite_rule/rule = P.rules[text2num(params["rule_id"])]
@@ -229,7 +229,7 @@
 			. = TRUE
 
 /datum/nanite_cloud_backup
-	var/cloud_id = 0
+	var/cloud_id = ZERO
 	var/datum/component/nanites/nanites
 	var/obj/machinery/computer/nanite_cloud_controller/storage
 

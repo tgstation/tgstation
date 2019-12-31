@@ -168,7 +168,7 @@
 
 /obj/machinery/sleeper/ui_data()
 	var/list/data = list()
-	data["occupied"] = occupant ? 1 : 0
+	data["occupied"] = occupant ? 1 : ZERO
 	data["open"] = state_open
 
 	data["chems"] = list()

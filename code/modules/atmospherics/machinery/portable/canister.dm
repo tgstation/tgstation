@@ -36,7 +36,7 @@
 	var/restricted = FALSE
 	req_access = list()
 
-	var/update = 0
+	var/update = ZERO
 	var/static/list/label2types = list(
 		"n2" = /obj/machinery/portable_atmospherics/canister/nitrogen,
 		"o2" = /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -160,7 +160,7 @@
 
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
 	if(timing)
-		. = round(max(0, valve_timer - world.time) / 10, 1)
+		. = round(max(ZERO, valve_timer - world.time) / 10, 1)
 	else
 		. = timer_set
 
@@ -202,7 +202,7 @@
 		create_gas()
 	pump = new(src, FALSE)
 	pump.on = TRUE
-	pump.stat = 0
+	pump.stat = ZERO
 	pump.build_network()
 
 /obj/machinery/portable_atmospherics/canister/Destroy()
@@ -224,7 +224,7 @@
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 	air_contents.gases[/datum/gas/nitrogen][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
-#define CANISTER_UPDATE_HOLDING		(1<<0)
+#define CANISTER_UPDATE_HOLDING		(1<<ZERO)
 #define CANISTER_UPDATE_CONNECTED	(1<<1)
 #define CANISTER_UPDATE_EMPTY		(1<<2)
 #define CANISTER_UPDATE_LOW			(1<<3)
@@ -238,7 +238,7 @@
 		return
 
 	var/last_update = update
-	update = 0
+	update = ZERO
 
 	if(holding)
 		update |= CANISTER_UPDATE_HOLDING
@@ -282,7 +282,7 @@
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
-		take_damage(5, BURN, 0)
+		take_damage(5, BURN, ZERO)
 
 
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
@@ -301,7 +301,7 @@
 		return FALSE
 
 	if(stat & BROKEN)
-		if(!I.tool_start_check(user, amount=0))
+		if(!I.tool_start_check(user, amount=ZERO))
 			return TRUE
 		to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
 		if(I.use_tool(src, user, 30, volume=50))
@@ -374,15 +374,15 @@
 
 /obj/machinery/portable_atmospherics/canister/ui_data()
 	var/data = list()
-	data["portConnected"] = connected_port ? 1 : 0
-	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
-	data["releasePressure"] = round(release_pressure ? release_pressure : 0)
+	data["portConnected"] = connected_port ? 1 : ZERO
+	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : ZERO)
+	data["releasePressure"] = round(release_pressure ? release_pressure : ZERO)
 	data["defaultReleasePressure"] = round(CAN_DEFAULT_RELEASE_PRESSURE)
 	data["minReleasePressure"] = round(can_min_release_pressure)
 	data["maxReleasePressure"] = round(can_max_release_pressure)
-	data["valveOpen"] = valve_open ? 1 : 0
+	data["valveOpen"] = valve_open ? 1 : ZERO
 
-	data["isPrototype"] = prototype ? 1 : 0
+	data["isPrototype"] = prototype ? 1 : ZERO
 	if (prototype)
 		data["restricted"] = restricted
 		data["timing"] = timing
@@ -392,7 +392,7 @@
 		data["timer_is_not_min"] = timer_set != minimum_timer_set
 		data["timer_is_not_max"] = timer_set != maximum_timer_set
 
-	data["hasHoldingTank"] = holding ? 1 : 0
+	data["hasHoldingTank"] = holding ? 1 : ZERO
 	if (holding)
 		data["holdingTank"] = list()
 		data["holdingTank"]["name"] = holding.name

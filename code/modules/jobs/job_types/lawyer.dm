@@ -8,7 +8,7 @@
 	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	var/lawyers = 0 //Counts lawyer amount
+	var/lawyers = ZERO //Counts lawyer amount
 
 	outfit = /datum/outfit/job/lawyer
 

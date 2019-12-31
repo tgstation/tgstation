@@ -28,7 +28,7 @@
 	name = "homemade beef jerky"
 	desc = "Homemade beef jerky made from the finest space cows."
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
-	junkiness = 0
+	junkiness = ZERO
 
 /obj/item/reagent_containers/food/snacks/chips
 	name = "chips"
@@ -58,7 +58,7 @@
 	name = "homemade raisins"
 	desc = "Homemade raisins, the best in all of spess."
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
-	junkiness = 0
+	junkiness = ZERO
 	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/snacks/spacetwinkie

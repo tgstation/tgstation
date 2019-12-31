@@ -25,11 +25,11 @@
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
 	health = 30
 	maxHealth = 30
-	unsuitable_atmos_damage = 0
-	wander = 0
-	speed = 0
+	unsuitable_atmos_damage = ZERO
+	wander = ZERO
+	speed = ZERO
 	ventcrawler = VENTCRAWLER_ALWAYS
-	healable = 0
+	healable = ZERO
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
 	sight = (SEE_TURFS | SEE_OBJS)
@@ -42,7 +42,7 @@
 	initial_language_holder = /datum/language_holder/drone
 	mob_size = MOB_SIZE_SMALL
 	has_unlimited_silicon_privilege = 1
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = ZERO, CLONE = ZERO, STAMINA = ZERO, OXY = ZERO)
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
 	faction = list("neutral","silicon","turret")
@@ -227,14 +227,14 @@
 /mob/living/simple_animal/drone/proc/cancelAlarm(class, area/A, obj/origin)
 	if(stat != DEAD)
 		var/list/L = alarms[class]
-		var/cleared = 0
+		var/cleared = ZERO
 		for (var/I in L)
 			if (I == A.name)
 				var/list/alarm = L[I]
 				var/list/srcs  = alarm[2]
 				if (origin in srcs)
 					srcs -= origin
-				if (srcs.len == 0)
+				if (srcs.len == ZERO)
 					cleared = 1
 					L -= I
 		if(cleared)
@@ -243,7 +243,7 @@
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return
 
-/mob/living/simple_animal/drone/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/simple_animal/drone/flash_act(intensity = 1, override_blindness_check = ZERO, affect_silicon = ZERO)
 	if(affect_silicon)
 		return ..()
 

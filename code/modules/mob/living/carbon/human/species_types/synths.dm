@@ -2,7 +2,7 @@
 	name = "Synth" //inherited from the real species, for health scanners and things
 	id = "synth"
 	say_mod = "beep boops" //inherited from a user's real species
-	sexes = 0
+	sexes = ZERO
 	species_traits = list(NOTRANSSTING) //all of these + whatever we inherit from the real species
 	inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOLIMBDISABLE,TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
@@ -42,7 +42,7 @@
 
 /datum/species/synth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.type == /datum/reagent/medicine/C2/instabitaluri)
-		chem.reaction_mob(H, TOUCH, 2 ,0) //heal a little
+		chem.reaction_mob(H, TOUCH, 2 ,ZERO) //heal a little
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
 		return 1
 	else
@@ -88,8 +88,8 @@
 		fake_species = null
 		meat = initial(meat)
 		limbs_id = "synth"
-		use_skintones = 0
-		sexes = 0
+		use_skintones = ZERO
+		sexes = ZERO
 		fixed_mut_color = ""
 		hair_color = ""
 

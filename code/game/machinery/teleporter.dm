@@ -11,7 +11,7 @@
 	idle_power_usage = 10
 	active_power_usage = 2000
 	circuit = /obj/item/circuitboard/machine/teleporter_hub
-	var/accuracy = 0
+	var/accuracy = ZERO
 	var/obj/machinery/teleport/station/power_station
 	var/calibrated //Calibration prevents mutation
 
@@ -26,7 +26,7 @@
 	return ..()
 
 /obj/machinery/teleport/hub/RefreshParts()
-	var/A = 0
+	var/A = ZERO
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		A += M.rating
 	accuracy = A
@@ -55,7 +55,7 @@
 /obj/machinery/teleport/hub/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
 		if(power_station && power_station.engaged)
-			power_station.engaged = 0 //hub with panel open is off, so the station must be informed.
+			power_station.engaged = ZERO //hub with panel open is off, so the station must be informed.
 			update_icon()
 		return
 	if(default_deconstruction_crowbar(W))
@@ -81,8 +81,8 @@
 						human.set_species(/datum/species/fly)
 						log_game("[human] ([key_name(human)]) was turned into a fly person")
 
-					human.apply_effect((rand(120 - accuracy * 40, 180 - accuracy * 60)), EFFECT_IRRADIATE, 0)
-			calibrated = 0
+					human.apply_effect((rand(120 - accuracy * 40, 180 - accuracy * 60)), EFFECT_IRRADIATE, ZERO)
+			calibrated = ZERO
 	return
 
 /obj/machinery/teleport/hub/update_icon_state()
@@ -114,7 +114,7 @@
 	var/obj/machinery/computer/teleporter/teleporter_console
 	var/obj/machinery/teleport/hub/teleporter_hub
 	var/list/linked_stations = list()
-	var/efficiency = 0
+	var/efficiency = ZERO
 
 /obj/machinery/teleport/station/Initialize()
 	. = ..()

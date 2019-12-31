@@ -104,7 +104,7 @@
 		T = get_step(T, dir_to_target)
 	playsound(src,'sound/magic/demon_attack1.ogg', 200, 1)
 	visible_message("<span class='boldwarning'>[src] prepares to charge!</span>")
-	addtimer(CALLBACK(src, .proc/legionnaire_charge_2, dir_to_target, 0), 5)
+	addtimer(CALLBACK(src, .proc/legionnaire_charge_2, dir_to_target, ZERO), 5)
 	
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/legionnaire_charge_2(var/move_dir, var/times_ran)
 	if(times_ran >= 4)
@@ -228,7 +228,7 @@
 	attack_verb_simple = "bite at"
 	attack_sound = 'sound/effects/curse1.ogg'
 	throw_message = "simply misses"
-	speed = 0
+	speed = ZERO
 	move_to_delay = 2
 	del_on_death = 1
 	deathmessage = "crumbles away!"
@@ -271,7 +271,7 @@
 //The visual effect which appears in front of legionnaire when he goes to charge.
 /obj/effect/temp_visual/dragon_swoop/legionnaire
 	duration = 10
-	color = rgb(0,0,0)
+	color = rgb(ZERO,ZERO,ZERO)
 
 /obj/effect/temp_visual/dragon_swoop/legionnaire/Initialize()
 	. = ..()

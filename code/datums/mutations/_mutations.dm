@@ -20,7 +20,7 @@
 	var/time_coeff = 1 //coefficient for timed mutations
 	var/datum/dna/dna
 	var/mob/living/carbon/human/owner
-	var/instability = 0 //instability the holder gets when the mutation is not native
+	var/instability = ZERO //instability the holder gets when the mutation is not native
 	var/blocks = 4 //Amount of those big blocks with gene sequences
 	var/difficulty = 8 //Amount of missing sequences. Sometimes it removes an entire pair for 2 points
 	var/timed = FALSE   //Boolean to easily check if we're going to self destruct
@@ -34,7 +34,7 @@
 	//MUT_OTHER Cannot be interacted with by players through normal means. I.E. wizards mutate
 
 
-	var/can_chromosome = CHROMOSOME_NONE //can we take chromosomes? 0: CHROMOSOME_NEVER never,  1:CHROMOSOME_NONE yeah, 2: CHROMOSOME_USED no, already have one
+	var/can_chromosome = CHROMOSOME_NONE //can we take chromosomes? ZERO: CHROMOSOME_NEVER never,  1:CHROMOSOME_NONE yeah, 2: CHROMOSOME_USED no, already have one
 	var/chromosome_name   //purely cosmetic
 	var/modified = FALSE  //ugly but we really don't want chromosomes and on_acquiring to overlap and apply double the powers
 	var/mutadone_proof = FALSE
@@ -107,7 +107,7 @@
 		if(power)
 			owner.RemoveSpell(power)
 			qdel(src)
-		return 0
+		return ZERO
 	return 1
 
 /mob/living/carbon/proc/update_mutations_overlay()

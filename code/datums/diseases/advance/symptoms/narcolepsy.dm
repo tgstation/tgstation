@@ -18,7 +18,7 @@ Bonus
 	stealth = -1
 	resistance = -2
 	stage_speed = -3
-	transmittable = 0
+	transmittable = ZERO
 	level = 6
 	symptom_delay_min = 30
 	symptom_delay_max = 85

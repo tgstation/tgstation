@@ -100,7 +100,7 @@
 	brainmob.container = null //Reset brainmob mmi var.
 	brainmob.forceMove(brain) //Throw mob into brain.
 	brainmob.stat = DEAD
-	brainmob.emp_damage = 0
+	brainmob.emp_damage = ZERO
 	brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
 	GLOB.alive_mob_list -= brainmob //Get outta here
 	GLOB.dead_mob_list |= brainmob
@@ -172,7 +172,7 @@
 			if(2)
 				brainmob.emp_damage = min(brainmob.emp_damage + rand(10,20), 30)
 			if(3)
-				brainmob.emp_damage = min(brainmob.emp_damage + rand(0,10), 30)
+				brainmob.emp_damage = min(brainmob.emp_damage + rand(ZERO,10), 30)
 		brainmob.emote("alarm")
 
 /obj/item/mmi/Destroy()

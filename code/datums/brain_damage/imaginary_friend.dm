@@ -60,7 +60,7 @@
 	real_name = "imaginary friend"
 	move_on_shuttle = TRUE
 	desc = "A wonderful yet fake friend."
-	see_in_dark = 0
+	see_in_dark = ZERO
 	lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	sight = NONE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
@@ -69,7 +69,7 @@
 	var/icon/human_image
 	var/image/current_image
 	var/hidden = FALSE
-	var/move_delay = 0
+	var/move_delay = ZERO
 	var/mob/living/carbon/owner
 	var/datum/brain_trauma/special/imaginary_friend/trauma
 
@@ -175,7 +175,7 @@
 		var/link = FOLLOW_LINK(M, owner)
 		to_chat(M, "[link] [dead_rendered]")
 
-/mob/camera/imaginary_friend/Move(NewLoc, Dir = 0)
+/mob/camera/imaginary_friend/Move(NewLoc, Dir = ZERO)
 	if(world.time < move_delay)
 		return FALSE
 	if(get_dist(src, owner) > 9)

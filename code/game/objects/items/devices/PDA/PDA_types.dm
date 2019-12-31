@@ -45,7 +45,7 @@
 	fon = FALSE
 
 /obj/item/pda/ai/attack_self(mob/user)
-	if ((honkamt > 0) && (prob(60)))//For clown virus.
+	if ((honkamt > ZERO) && (prob(60)))//For clown virus.
 		honkamt--
 		playsound(loc, 'sound/items/bikehorn.ogg', 30, TRUE)
 	return

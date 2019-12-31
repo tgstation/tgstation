@@ -118,7 +118,7 @@
 	jumpto_ports = list("caravansyndicate1_ambush" = 1, "caravansyndicate1_listeningpost" = 1)
 	view_range = 7
 	x_offset = 2
-	y_offset = 0
+	y_offset = ZERO
 
 /obj/machinery/computer/shuttle/caravan/syndicate2
 	name = "Syndicate Fighter Shuttle Console"
@@ -141,7 +141,7 @@
 	shuttlePortId = "caravansyndicate2_custom"
 	jumpto_ports = list("caravansyndicate2_ambush" = 1, "caravansyndicate1_listeningpost" = 1)
 	view_range = 7
-	x_offset = 0
+	x_offset = ZERO
 	y_offset = 2
 
 /obj/machinery/computer/shuttle/caravan/syndicate3

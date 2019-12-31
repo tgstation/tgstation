@@ -71,7 +71,7 @@
 // called when turf state changes
 // hide the object if turf is intact
 /obj/machinery/navbeacon/hide(intact)
-	invisibility = intact ? INVISIBILITY_MAXIMUM : 0
+	invisibility = intact ? INVISIBILITY_MAXIMUM : ZERO
 	update_icon()
 
 // update the icon_state

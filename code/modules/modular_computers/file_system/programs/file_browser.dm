@@ -4,8 +4,8 @@
 	extended_desc = "This program allows management of files."
 	program_icon_state = "generic"
 	size = 8
-	requires_ntnet = 0
-	available_on_ntnet = 0
+	requires_ntnet = ZERO
+	available_on_ntnet = ZERO
 	undeletable = 1
 	tgui_id = "ntos_file_manager"
 
@@ -122,7 +122,7 @@
 			var/datum/computer_file/F = HDD.find_file_by_name(params["name"])
 			if(!F || !istype(F))
 				return 1
-			var/datum/computer_file/C = F.clone(0)
+			var/datum/computer_file/C = F.clone(ZERO)
 			RHDD.store_file(C)
 		if("PRG_copyfromusb")
 			. = 1
@@ -131,7 +131,7 @@
 			var/datum/computer_file/F = RHDD.find_file_by_name(params["name"])
 			if(!F || !istype(F))
 				return 1
-			var/datum/computer_file/C = F.clone(0)
+			var/datum/computer_file/C = F.clone(ZERO)
 			HDD.store_file(C)
 
 /datum/computer_file/program/filemanager/proc/parse_tags(t)

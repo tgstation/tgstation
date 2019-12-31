@@ -7,10 +7,10 @@
 	icon_state = "separator-AO1"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
 	density = FALSE
-	var/transform_dead = 0
-	var/transform_standing = 0
+	var/transform_dead = ZERO
+	var/transform_standing = ZERO
 	var/cooldown_duration = 600 // 1 minute
-	var/cooldown = 0
+	var/cooldown = ZERO
 	var/cooldown_timer
 	var/robot_cell_charge = 5000
 	var/obj/effect/countdown/transformer/countdown
@@ -60,7 +60,7 @@
 		var/dir = get_dir(src, mover)
 		if(dir == EAST)
 			return ..()
-	return 0
+	return ZERO
 
 /obj/machinery/transformer/process()
 	if(cooldown && (cooldown_timer <= world.time))
@@ -105,5 +105,5 @@
 	playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE)
 	sleep(30)
 	if(R)
-		R.SetLockdown(0)
+		R.SetLockdown(ZERO)
 		R.notify_ai(NEW_BORG)

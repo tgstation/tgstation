@@ -19,24 +19,24 @@
 	var/body_part = null //bitflag used to check which clothes cover this bodypart
 	var/use_digitigrade = NOT_DIGITIGRADE //Used for alternate legs, useless elsewhere
 	var/list/embedded_objects = list()
-	var/held_index = 0 //are we a hand? if so, which one!
+	var/held_index = ZERO //are we a hand? if so, which one!
 	var/is_pseudopart = FALSE //For limbs that don't really exist, eg chainsaws
 
 	var/disabled = BODYPART_NOT_DISABLED //If disabled, limb is as good as missing
 	var/body_damage_coeff = 1 //Multiplier of the limb's damage that gets applied to the mob
 	var/stam_damage_coeff = 0.75
-	var/brutestate = 0
-	var/burnstate = 0
-	var/brute_dam = 0
-	var/burn_dam = 0
-	var/stamina_dam = 0
-	var/max_stamina_damage = 0
-	var/max_damage = 0
+	var/brutestate = ZERO
+	var/burnstate = ZERO
+	var/brute_dam = ZERO
+	var/burn_dam = ZERO
+	var/stamina_dam = ZERO
+	var/max_stamina_damage = ZERO
+	var/max_damage = ZERO
 
-	var/cremation_progress = 0 //Gradually increases while burning when at full damage, destroys the limb when at 100
+	var/cremation_progress = ZERO //Gradually increases while burning when at full damage, destroys the limb when at 100
 
-	var/brute_reduction = 0 //Subtracted to brute damage taken
-	var/burn_reduction = 0	//Subtracted to burn damage taken
+	var/brute_reduction = ZERO //Subtracted to brute damage taken
+	var/burn_reduction = ZERO	//Subtracted to burn damage taken
 
 	//Coloring and proper item icon update
 	var/skin_tone = ""
@@ -46,13 +46,13 @@
 	var/should_draw_greyscale = FALSE
 	var/species_color = ""
 	var/mutation_color = ""
-	var/no_update = 0
+	var/no_update = ZERO
 
 	var/animal_origin = null //for nonhuman bodypart (e.g. monkey)
 	var/dismemberable = 1 //whether it can be dismembered with a weapon.
 
-	var/px_x = 0
-	var/px_y = 0
+	var/px_x = ZERO
+	var/px_y = ZERO
 
 	var/species_flags_list = list()
 	var/dmg_overlay_type //the type of damage overlay (if any) to use when this bodypart is bruised/burned.
@@ -138,15 +138,15 @@
 //Return TRUE to get whatever mob this is in to update health.
 /obj/item/bodypart/proc/on_life(stam_regen)
 	if(stamina_dam > DAMAGE_PRECISION && stam_regen)					//DO NOT update health here, it'll be done in the carbon's life.
-		heal_damage(0, 0, INFINITY, null, FALSE)
+		heal_damage(ZERO, ZERO, INFINITY, null, FALSE)
 		. |= BODYPART_LIFE_UPDATE_HEALTH
 
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, stamina = 0, blocked = 0, updating_health = TRUE, required_status = null)
+/obj/item/bodypart/proc/receive_damage(brute = ZERO, burn = ZERO, stamina = ZERO, blocked = ZERO, updating_health = TRUE, required_status = null)
 	var/hit_percent = (100-blocked)/100
-	if((!brute && !burn && !stamina) || hit_percent <= 0)
+	if((!brute && !burn && !stamina) || hit_percent <= ZERO)
 		return FALSE
 	if(owner && (owner.status_flags & GODMODE))
 		return FALSE	//godmode
@@ -155,11 +155,11 @@
 		return FALSE
 
 	var/dmg_mlt = CONFIG_GET(number/damage_multiplier) * hit_percent
-	brute = round(max(brute * dmg_mlt, 0),DAMAGE_PRECISION)
-	burn = round(max(burn * dmg_mlt, 0),DAMAGE_PRECISION)
-	stamina = round(max(stamina * dmg_mlt, 0),DAMAGE_PRECISION)
-	brute = max(0, brute - brute_reduction)
-	burn = max(0, burn - burn_reduction)
+	brute = round(max(brute * dmg_mlt, ZERO),DAMAGE_PRECISION)
+	burn = round(max(burn * dmg_mlt, ZERO),DAMAGE_PRECISION)
+	stamina = round(max(stamina * dmg_mlt, ZERO),DAMAGE_PRECISION)
+	brute = max(ZERO, brute - brute_reduction)
+	burn = max(ZERO, burn - burn_reduction)
 	//No stamina scaling.. for now..
 
 	if(!brute && !burn && !stamina)
@@ -170,7 +170,7 @@
 			burn *= 2
 
 	var/can_inflict = max_damage - get_damage()
-	if(can_inflict <= 0)
+	if(can_inflict <= ZERO)
 		return FALSE
 
 	var/total_damage = brute + burn
@@ -183,7 +183,7 @@
 	burn_dam += burn
 
 	//We've dealt the physical damages, if there's room lets apply the stamina damage.
-	stamina_dam += round(CLAMP(stamina, 0, max_stamina_damage - stamina_dam), DAMAGE_PRECISION)
+	stamina_dam += round(CLAMP(stamina, ZERO, max_stamina_damage - stamina_dam), DAMAGE_PRECISION)
 
 
 	if(owner && updating_health)
@@ -204,14 +204,14 @@
 	if(required_status && (status != required_status)) //So we can only heal certain kinds of limbs, ie robotic vs organic.
 		return
 
-	brute_dam	= round(max(brute_dam - brute, 0), DAMAGE_PRECISION)
-	burn_dam	= round(max(burn_dam - burn, 0), DAMAGE_PRECISION)
-	stamina_dam = round(max(stamina_dam - stamina, 0), DAMAGE_PRECISION)
+	brute_dam	= round(max(brute_dam - brute, ZERO), DAMAGE_PRECISION)
+	burn_dam	= round(max(burn_dam - burn, ZERO), DAMAGE_PRECISION)
+	stamina_dam = round(max(stamina_dam - stamina, ZERO), DAMAGE_PRECISION)
 	if(owner && updating_health)
 		owner.updatehealth()
 	consider_processing()
 	update_disabled()
-	cremation_progress = min(0, cremation_progress - ((brute_dam + burn_dam)*(100/max_damage)))
+	cremation_progress = min(ZERO, cremation_progress - ((brute_dam + burn_dam)*(100/max_damage)))
 	return update_bodypart_damage_state()
 
 //Returns total damage.
@@ -230,7 +230,7 @@
 		return BODYPART_DISABLED_PARALYSIS
 	if(can_dismember() && !HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
 		. = disabled //inertia, to avoid limbs healing 0.1 damage and being re-enabled
-		if((get_damage(TRUE) >= max_damage) || (HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE) && (get_damage(TRUE) >= (max_damage * 0.6)))) //Easy limb disable disables the limb at 40% health instead of 0%
+		if((get_damage(TRUE) >= max_damage) || (HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE) && (get_damage(TRUE) >= (max_damage * 0.6)))) //Easy limb disable disables the limb at 40% health instead of ZERO%
 			return BODYPART_DISABLED_DAMAGE
 		if(disabled && (get_damage(TRUE) <= (max_damage * 0.5)))
 			return BODYPART_NOT_DISABLED
@@ -247,7 +247,7 @@
 	return TRUE //if there was a change.
 
 //Updates an organ's brute/burn states for use by update_damage_overlays()
-//Returns 1 if we need to update overlays. 0 otherwise.
+//Returns 1 if we need to update overlays. ZERO otherwise.
 /obj/item/bodypart/proc/update_bodypart_damage_state()
 	var/tbrute	= round( (brute_dam/max_damage)*3, 1 )
 	var/tburn	= round( (burn_dam/max_damage)*3, 1 )
@@ -261,10 +261,10 @@
 /obj/item/bodypart/proc/change_bodypart_status(new_limb_status, heal_limb, change_icon_to_default)
 	status = new_limb_status
 	if(heal_limb)
-		burn_dam = 0
-		brute_dam = 0
-		brutestate = 0
-		burnstate = 0
+		burn_dam = ZERO
+		brute_dam = ZERO
+		brutestate = ZERO
+		burnstate = ZERO
 
 	if(change_icon_to_default)
 		if(status == BODYPART_ORGANIC)
@@ -365,7 +365,7 @@
 
 	. = list()
 
-	var/image_dir = 0
+	var/image_dir = ZERO
 	if(dropped)
 		image_dir = SOUTH
 		if(dmg_overlay_type)
@@ -444,8 +444,8 @@
 	max_damage = 200
 	body_zone = BODY_ZONE_CHEST
 	body_part = CHEST
-	px_x = 0
-	px_y = 0
+	px_x = ZERO
+	px_y = ZERO
 	stam_damage_coeff = 1
 	max_stamina_damage = 120
 	var/obj/item/cavity_item
@@ -473,19 +473,19 @@
 /obj/item/bodypart/chest/alien
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "alien_chest"
-	dismemberable = 0
+	dismemberable = ZERO
 	max_damage = 500
 	animal_origin = ALIEN_BODYPART
 
 /obj/item/bodypart/chest/devil
-	dismemberable = 0
+	dismemberable = ZERO
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
 
 /obj/item/bodypart/chest/larva
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "larva_chest"
-	dismemberable = 0
+	dismemberable = ZERO
 	max_damage = 50
 	animal_origin = LARVA_BODYPART
 
@@ -506,7 +506,7 @@
 	body_damage_coeff = 0.75
 	held_index = 1
 	px_x = -6
-	px_y = 0
+	px_y = ZERO
 
 /obj/item/bodypart/l_arm/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_L_ARM))
@@ -544,14 +544,14 @@
 /obj/item/bodypart/l_arm/alien
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "alien_l_arm"
-	px_x = 0
-	px_y = 0
-	dismemberable = 0
+	px_x = ZERO
+	px_y = ZERO
+	dismemberable = ZERO
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
 
 /obj/item/bodypart/l_arm/devil
-	dismemberable = 0
+	dismemberable = ZERO
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
 
@@ -569,7 +569,7 @@
 	body_damage_coeff = 0.75
 	held_index = 2
 	px_x = 6
-	px_y = 0
+	px_y = ZERO
 	max_stamina_damage = 50
 
 /obj/item/bodypart/r_arm/is_disabled()
@@ -608,14 +608,14 @@
 /obj/item/bodypart/r_arm/alien
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "alien_r_arm"
-	px_x = 0
-	px_y = 0
-	dismemberable = 0
+	px_x = ZERO
+	px_y = ZERO
+	dismemberable = ZERO
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
 
 /obj/item/bodypart/r_arm/devil
-	dismemberable = 0
+	dismemberable = ZERO
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
 
@@ -664,14 +664,14 @@
 /obj/item/bodypart/l_leg/alien
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "alien_l_leg"
-	px_x = 0
-	px_y = 0
-	dismemberable = 0
+	px_x = ZERO
+	px_y = ZERO
+	dismemberable = ZERO
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
 
 /obj/item/bodypart/l_leg/devil
-	dismemberable = 0
+	dismemberable = ZERO
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
 
@@ -722,13 +722,13 @@
 /obj/item/bodypart/r_leg/alien
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "alien_r_leg"
-	px_x = 0
-	px_y = 0
-	dismemberable = 0
+	px_x = ZERO
+	px_y = ZERO
+	dismemberable = ZERO
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
 
 /obj/item/bodypart/r_leg/devil
-	dismemberable = 0
+	dismemberable = ZERO
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART

@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
-	var/spawned_animals = 0
+	var/spawned_animals = ZERO
 	while(spawned_animals < animals && candidates.len && potential.len)
 		var/mob/living/simple_animal/SA = popleft(potential)
 		var/mob/dead/observer/SG = pick_n_take(candidates)
@@ -104,7 +104,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 /datum/round_event_control/sentience/all
 	name = "Station-wide Human-level Intelligence"
 	typepath = /datum/round_event/ghost_role/sentience/all
-	weight = 0
+	weight = ZERO
 
 /datum/round_event/ghost_role/sentience/all
 	one = "all"

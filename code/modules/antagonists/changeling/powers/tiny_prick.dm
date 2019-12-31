@@ -22,7 +22,7 @@
 
 	user.hud_used.lingstingdisplay.icon = icon_icon
 	user.hud_used.lingstingdisplay.icon_state = button_icon_state
-	user.hud_used.lingstingdisplay.invisibility = 0
+	user.hud_used.lingstingdisplay.invisibility = ZERO
 
 /datum/action/changeling/sting/proc/unset_sting(mob/user)
 	to_chat(user, "<span class='warning'>We retract our sting, we can't sting anyone for now.</span>")
@@ -92,7 +92,7 @@
 		return
 	if((HAS_TRAIT(target, TRAIT_HUSK)) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
-		return 0
+		return ZERO
 	return 1
 
 /datum/action/changeling/sting/transformation/sting_action(mob/user, mob/target)
@@ -131,7 +131,7 @@
 		var/mob/living/L = target
 		if((HAS_TRAIT(L, TRAIT_HUSK)) || !L.has_dna())
 			to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
-			return 0
+			return ZERO
 	return 1
 
 /datum/action/changeling/sting/false_armblade/sting_action(mob/user, mob/target)
@@ -169,7 +169,7 @@
 	helptext = "Will give you the DNA of your target, allowing you to transform into them."
 	button_icon_state = "sting_extract"
 	chemical_cost = 25
-	dna_cost = 0
+	dna_cost = ZERO
 
 /datum/action/changeling/sting/extract_dna/can_sting(mob/user, mob/target)
 	if(..())

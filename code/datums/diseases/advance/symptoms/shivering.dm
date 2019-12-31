@@ -18,7 +18,7 @@ Bonus
 /datum/symptom/shivering
 	name = "Shivering"
 	desc = "The virus inhibits the body's thermoregulation, cooling the body down."
-	stealth = 0
+	stealth = ZERO
 	resistance = 2
 	stage_speed = 3
 	transmittable = 2
@@ -56,6 +56,6 @@ Bonus
 	var/get_cold = 6 * power
 	var/limit = BODYTEMP_COLD_DAMAGE_LIMIT + 1
 	if(unsafe)
-		limit = 0
+		limit = ZERO
 	M.adjust_bodytemperature(-get_cold * A.stage, limit)
 	return 1

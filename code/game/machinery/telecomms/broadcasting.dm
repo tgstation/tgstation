@@ -42,11 +42,11 @@
 				4 -- AI can't track down this person. Useful for imitation broadcasts where you can't find the actual mob
 
 	@param compression:
-		If 0, the signal is audible
+		If ZERO, the signal is audible
 		If nonzero, the signal may be partially inaudible or just complete gibberish.
 
 	@param level:
-		The list of Z levels that the sending radio is broadcasting to. Having 0 in the list broadcasts on all levels
+		The list of Z levels that the sending radio is broadcasting to. Having ZERO in the list broadcasts on all levels
 
 	@param freq
 		The frequency of the signal
@@ -136,7 +136,7 @@
 	if(!message)
 		return
 	var/compression = data["compression"]
-	if(compression > 0)
+	if(compression > ZERO)
 		message = Gibberish(message, compression >= 30)
 
 	// Assemble the list of radios

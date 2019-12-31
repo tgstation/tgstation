@@ -92,7 +92,7 @@ Bonus
 	name = "Acute respiratory distress syndrome"
 	desc = "The virus causes shrinking of the host's lungs, causing severe asphyxiation. May also lead to heart attacks."
 	stealth = -2
-	resistance = -0
+	resistance = -ZERO
 	stage_speed = -1
 	transmittable = -2
 	level = 7

@@ -1,4 +1,4 @@
-#define ROTATION_ALTCLICK			(1<<0)
+#define ROTATION_ALTCLICK			(1<<ZERO)
 #define ROTATION_WRENCH				(1<<1)
 #define ROTATION_VERBS				(1<<2)
 #define ROTATION_COUNTERCLOCKWISE	(1<<3)

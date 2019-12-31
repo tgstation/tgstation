@@ -12,7 +12,7 @@ Slimecrossing Armor
 	item_state = "slime"
 	body_parts_covered = NONE
 	w_class = WEIGHT_CLASS_SMALL
-	gas_transfer_coefficient = 0
+	gas_transfer_coefficient = ZERO
 	permeability_coefficient = 0.5
 	flags_cover = MASKCOVERSMOUTH
 	resistance_flags = NONE
@@ -103,8 +103,8 @@ Slimecrossing Armor
 	slot_flags = ITEM_SLOT_HEAD
 	body_parts_covered = NONE
 	dynamic_hair_suffix = ""
-	force = 0
-	throwforce = 0
+	force = ZERO
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3

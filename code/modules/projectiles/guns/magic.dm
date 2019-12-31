@@ -11,13 +11,13 @@
 	w_class = WEIGHT_CLASS_HUGE
 	var/checks_antimagic = TRUE
 	var/max_charges = 6
-	var/charges = 0
+	var/charges = ZERO
 	var/recharge_rate = 4
-	var/charge_tick = 0
+	var/charge_tick = ZERO
 	var/can_charge = TRUE
 	var/ammo_type
 	var/no_den_usage
-	clumsy_check = 0
+	clumsy_check = ZERO
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL // Has no trigger at all, uses magic instead
 	pin = /obj/item/firing_pin/magic
 
@@ -29,8 +29,8 @@
 			to_chat(user, "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].</span>")
 			return
 		else
-			no_den_usage = 0
-	if(checks_antimagic && user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE))
+			no_den_usage = ZERO
+	if(checks_antimagic && user.anti_magic_check(TRUE, FALSE, FALSE, ZERO, TRUE))
 		add_fingerprint(user)
 		to_chat(user, "<span class='warning'>Something is interfering with [src].</span>")
 		return
@@ -65,8 +65,8 @@
 /obj/item/gun/magic/process()
 	charge_tick++
 	if(charge_tick < recharge_rate || charges >= max_charges)
-		return 0
-	charge_tick = 0
+		return ZERO
+	charge_tick = ZERO
 	charges++
 	if(charges == 1)
 		recharge_newshot()

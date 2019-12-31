@@ -26,7 +26,7 @@
 	var/vary = FALSE
 	var/max_loops
 	var/direct
-	var/extra_range = 0
+	var/extra_range = ZERO
 	var/falloff
 
 	var/timerid
@@ -91,7 +91,7 @@
 		. = pickweight(.)
 
 /datum/looping_sound/proc/on_start()
-	var/start_wait = 0
+	var/start_wait = ZERO
 	if(start_sound)
 		play(start_sound)
 		start_wait = start_length

@@ -9,7 +9,7 @@
 
 /mob/living/carbon/can_speak_vocal(message)
 	if(silent)
-		return 0
+		return ZERO
 	return ..()
 
 /mob/living/carbon/could_speak_language(datum/language/language)

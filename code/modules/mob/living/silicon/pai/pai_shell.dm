@@ -1,6 +1,6 @@
 
 /mob/living/silicon/pai/proc/fold_out(force = FALSE)
-	if(emitterhealth < 0)
+	if(emitterhealth < ZERO)
 		to_chat(src, "<span class='warning'>Your holochassis emitters are still too unstable! Please wait for automatic repair.</span>")
 		return FALSE
 
@@ -34,7 +34,7 @@
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = src
-	set_light(0)
+	set_light(ZERO)
 	icon_state = "[chassis]"
 	visible_message("<span class='boldnotice'>[src] folds out its holochassis emitter and forms a holoshell around itself!</span>")
 	holoform = TRUE
@@ -62,7 +62,7 @@
 	forceMove(card)
 	mobility_flags = NONE
 	density = FALSE
-	set_light(0)
+	set_light(ZERO)
 	holoform = FALSE
 	set_resting(resting)
 
@@ -94,7 +94,7 @@
 		set_light(brightness_power)
 		to_chat(src, "<span class='notice'>You enable your integrated light.</span>")
 	else
-		set_light(0)
+		set_light(ZERO)
 		to_chat(src, "<span class='notice'>You disable your integrated light.</span>")
 
 /mob/living/silicon/pai/mob_pickup(mob/living/L)

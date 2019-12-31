@@ -21,7 +21,7 @@
 	var/require_all = 1
 
 	var/paintjob = "none"
-	var/glassdoor = 0
+	var/glassdoor = ZERO
 
 	var/doorname = "airlock"
 
@@ -126,7 +126,7 @@
 
 		D.name = doorname
 
-		if(access_used.len == 0)
+		if(access_used.len == ZERO)
 			D.req_access = null
 			D.req_one_access = null
 		else if(require_all)

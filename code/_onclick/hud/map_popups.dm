@@ -20,7 +20,7 @@
 		clear_map(x)
 
 /client/proc/close_popup(var/popup)
-	winshow(src,popup,0)
+	winshow(src,popup,ZERO)
 	handle_popup_close(popup)
 
 /client/verb/handle_popup_close(window_id as text) //when the popup closes in any way (player or proc call) it calls this.

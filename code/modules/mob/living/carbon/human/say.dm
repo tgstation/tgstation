@@ -54,7 +54,7 @@
 
 /mob/living/carbon/human/radio(message, message_mode, list/spans, language)
 	. = ..()
-	if(. != 0)
+	if(. != ZERO)
 		return .
 
 	switch(message_mode)
@@ -73,7 +73,7 @@
 			ears.talk_into(src, message, message_mode, spans, language)
 			return ITALICS | REDUCE_RANGE
 
-	return 0
+	return ZERO
 
 /mob/living/carbon/human/get_alt_name()
 	if(name != GetVoice())
@@ -90,11 +90,11 @@
 
 				if(findtext(trim_left(temp), ":", 6, 7))	//dept radio
 					temp = copytext(trim_left(temp), 8)
-					virgin = 0
+					virgin = ZERO
 
 				if(virgin)
 					temp = copytext(trim_left(temp), 6)	//normal speech
-					virgin = 0
+					virgin = ZERO
 
 				while(findtext(trim_left(temp), ":", 1, 2))	//dept radio again (necessary)
 					temp = copytext(trim_left(temp), 3)

@@ -7,7 +7,7 @@
 	name = "poorly coded poster"
 	desc = "You probably shouldn't be holding this."
 	icon = 'icons/obj/contraband.dmi'
-	force = 0
+	force = ZERO
 	resistance_flags = FLAMMABLE
 	var/poster_type
 	var/obj/structure/sign/poster/poster_structure
@@ -67,7 +67,7 @@
 		name = "poster - [name]"
 		desc = "A large piece of space-resistant printed paper. [desc]"
 	
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 300), 0)
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 300), ZERO)
 
 /obj/structure/sign/poster/proc/randomise(base_type)
 	var/list/poster_types = subtypesof(base_type)
@@ -114,8 +114,8 @@
 	qdel(src)
 
 /obj/structure/sign/poster/proc/roll_and_drop(loc)
-	pixel_x = 0
-	pixel_y = 0
+	pixel_x = ZERO
+	pixel_y = ZERO
 	var/obj/item/poster/P = new(loc, src)
 	forceMove(P)
 	return P
@@ -133,7 +133,7 @@
 			if (copytext(I.icon_state, 1, 3) == "d-")
 				return
 
-	var/stuff_on_wall = 0
+	var/stuff_on_wall = ZERO
 	for(var/obj/O in contents) //Let's see if it already has a poster on it or too much stuff
 		if(istype(O, /obj/structure/sign/poster))
 			to_chat(user, "<span class='warning'>The wall is far too cluttered to place a poster!</span>")

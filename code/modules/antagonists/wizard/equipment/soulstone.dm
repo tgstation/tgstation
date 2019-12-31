@@ -62,7 +62,7 @@
 /obj/item/soulstone/proc/hot_potato(mob/living/user)
 	to_chat(user, "<span class='userdanger'>Holy magics residing in \the [src] burn your hand!</span>")
 	var/obj/item/bodypart/affecting = user.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-	affecting.receive_damage( 0, 10 )	// 10 burn damage
+	affecting.receive_damage( ZERO, 10 )	// 10 burn damage
 	user.emote("scream")
 	user.update_damage_overlays()
 	user.dropItemToGround(src)
@@ -225,28 +225,28 @@
 				switch(construct_class)
 					if("Juggernaut")
 						if(iscultist(user) || iswizard(user))
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, A, user, 0, T.loc)
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, A, user, ZERO, T.loc)
 						else
 							if(purified)
-								makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored/angelic, A, user, 0, T.loc)
+								makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored/angelic, A, user, ZERO, T.loc)
 							else
-								makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored/noncult, A, user, 0, T.loc)
+								makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored/noncult, A, user, ZERO, T.loc)
 					if("Wraith")
 						if(iscultist(user) || iswizard(user))
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user, 0, T.loc)
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user, ZERO, T.loc)
 						else
 							if(purified)
-								makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/angelic, A, user, 0, T.loc)
+								makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/angelic, A, user, ZERO, T.loc)
 							else
-								makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/noncult, A, user, 0, T.loc)
+								makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/noncult, A, user, ZERO, T.loc)
 					if("Artificer")
 						if(iscultist(user) || iswizard(user))
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, A, user, 0, T.loc)
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, A, user, ZERO, T.loc)
 						else
 							if(purified)
-								makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/angelic, A, user, 0, T.loc)
+								makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/angelic, A, user, ZERO, T.loc)
 							else
-								makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/noncult, A, user, 0, T.loc)
+								makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/noncult, A, user, ZERO, T.loc)
 				for(var/datum/mind/B in SSticker.mode.cult)
 					if(B == A.mind)
 						SSticker.mode.remove_cultist(A.mind)
@@ -256,7 +256,7 @@
 				to_chat(user, "<span class='userdanger'>Creation failed!</span>: The soul stone is empty! Go kill someone!")
 
 
-/proc/makeNewConstruct(mob/living/simple_animal/hostile/construct/ctype, mob/target, mob/stoner = null, cultoverride = 0, loc_override = null)
+/proc/makeNewConstruct(mob/living/simple_animal/hostile/construct/ctype, mob/target, mob/stoner = null, cultoverride = ZERO, loc_override = null)
 	if(QDELETED(target))
 		return
 	var/mob/living/simple_animal/hostile/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
@@ -268,7 +268,7 @@
 	newstruct.key = target.key
 	var/obj/screen/alert/bloodsense/BS
 	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && SSticker && SSticker.mode)
-		SSticker.mode.add_cultist(newstruct.mind, 0)
+		SSticker.mode.add_cultist(newstruct.mind, ZERO)
 	if(iscultist(stoner) || cultoverride)
 		to_chat(newstruct, "<b>You are still bound to serve the cult[stoner ? " and [stoner]":""], follow [stoner ? stoner.p_their() : "their"] orders and help [stoner ? stoner.p_them() : "them"] complete [stoner ? stoner.p_their() : "their"] goals at all costs.</b>")
 	else if(stoner)
@@ -280,7 +280,7 @@
 	newstruct.cancel_camera()
 
 
-/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/user, message_user = 0 , mob/shade_controller)
+/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/user, message_user = ZERO , mob/shade_controller)
 	if(!shade_controller)
 		shade_controller = T
 	new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
@@ -299,7 +299,7 @@
 	if(user)
 		S.faction |= "[REF(user)]" //Add the master as a faction, allowing inter-mob cooperation
 	if(user && iscultist(user))
-		SSticker.mode.add_cultist(S.mind, 0)
+		SSticker.mode.add_cultist(S.mind, ZERO)
 	S.cancel_camera()
 	name = "soulstone: Shade of [T.real_name]"
 	if(purified)

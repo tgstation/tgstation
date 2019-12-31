@@ -1,6 +1,6 @@
 
 /obj/effect/gibspawner
-	var/sparks = 0 //whether sparks spread
+	var/sparks = ZERO //whether sparks spread
 	var/virusProb = 20 //the chance for viruses to spread on the gibs
 	var/gib_mob_type  //generate a fake mob to transfer DNA from if we weren't passed a mob.
 	var/sound_to_play = 'sound/effects/blobattack.ogg'
@@ -148,5 +148,5 @@
 /obj/effect/gibspawner/robot/Initialize()
 	if(!gibdirections.len)
 		gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), GLOB.alldirs, GLOB.alldirs)
-	gibamounts[6] = pick(0, 1, 2)
+	gibamounts[6] = pick(ZERO, 1, 2)
 	return ..()

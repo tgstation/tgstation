@@ -2,12 +2,12 @@
 
 //Keeps track of the time for the ID console. Having it as a global variable prevents people from dismantling/reassembling it to
 //increase the slots of many jobs.
-GLOBAL_VAR_INIT(time_last_changed_position, 0)
+GLOBAL_VAR_INIT(time_last_changed_position, ZERO)
 
 #define JOB_ALLOWED 1
 #define JOB_COOLDOWN -2
 #define JOB_MAX_POSITIONS -1 // Trying to reduce the number of slots below that of current holders of that job, or trying to open more slots than allowed
-#define JOB_DENIED 0
+#define JOB_DENIED ZERO
 
 /obj/machinery/computer/card
 	name = "identification console"
@@ -16,9 +16,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	icon_keyboard = "id_key"
 	req_one_access = list(ACCESS_HEADS, ACCESS_CHANGE_IDS)
 	circuit = /obj/item/circuitboard/computer/card
-	var/mode = 0
+	var/mode = ZERO
 	var/printing = null
-	var/target_dept = 0 //Which department this computer has access to. 0=all departments
+	var/target_dept = ZERO //Which department this computer has access to. ZERO=all departments
 
 	//Cooldown for closing positions in seconds
 	//if set to -1: No cooldown... probably a bad idea
@@ -112,7 +112,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		if(!job_blacklisted(job.title))
 			if((job.total_positions <= GLOB.player_list.len * (max_relative_positions / 100)))
 				var/delta = (world.time / 10) - GLOB.time_last_changed_position
-				if((change_position_cooldown < delta) || (opened_positions[job.title] < 0))
+				if((change_position_cooldown < delta) || (opened_positions[job.title] < ZERO))
 					return JOB_ALLOWED
 				return JOB_COOLDOWN
 			return JOB_MAX_POSITIONS
@@ -124,7 +124,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		if(!job_blacklisted(job.title))
 			if(job.total_positions > job.current_positions)
 				var/delta = (world.time / 10) - GLOB.time_last_changed_position
-				if((change_position_cooldown < delta) || (opened_positions[job.title] > 0))
+				if((change_position_cooldown < delta) || (opened_positions[job.title] > ZERO))
 					return JOB_ALLOWED
 				return JOB_COOLDOWN
 			return JOB_MAX_POSITIONS
@@ -233,7 +233,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					dat += "Denied"
 			dat += "</td><td>"
 			switch(job.total_positions)
-				if(0)
+				if(ZERO)
 					dat += "Denied"
 				else
 					if(authenticated == 2)
@@ -428,7 +428,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		if ("logout")
 			region_access = null
 			head_subordinates = null
-			authenticated = 0
+			authenticated = ZERO
 			playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
 
 		if("access")
@@ -504,11 +504,11 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
 					updateUsrDialog()
-					return 0
+					return ZERO
 				if(can_open_job(j) != 1)
 					updateUsrDialog()
-					return 0
-				if(opened_positions[edit_job_target] >= 0)
+					return ZERO
+				if(opened_positions[edit_job_target] >= ZERO)
 					GLOB.time_last_changed_position = world.time / 10
 				j.total_positions++
 				opened_positions[edit_job_target]++
@@ -521,12 +521,12 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
 					updateUsrDialog()
-					return 0
+					return ZERO
 				if(can_close_job(j) != 1)
 					updateUsrDialog()
-					return 0
+					return ZERO
 				//Allow instant closing without cooldown if a position has been opened before
-				if(opened_positions[edit_job_target] <= 0)
+				if(opened_positions[edit_job_target] <= ZERO)
 					GLOB.time_last_changed_position = world.time / 10
 				j.total_positions--
 				opened_positions[edit_job_target]--
@@ -539,7 +539,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/datum/job/j = SSjob.GetJob(priority_target)
 				if(!j)
 					updateUsrDialog()
-					return 0
+					return ZERO
 				var/priority = TRUE
 				if(j in SSjob.prioritized_jobs)
 					SSjob.prioritized_jobs -= j

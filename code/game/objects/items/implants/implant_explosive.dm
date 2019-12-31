@@ -29,13 +29,13 @@
 /obj/item/implant/explosive/activate(cause)
 	. = ..()
 	if(!cause || !imp_in || active)
-		return 0
+		return ZERO
 	if(cause == "action_button" && !popup)
 		popup = TRUE
 		var/response = alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to explode!", "[name] Confirmation", "Yes", "No")
 		popup = FALSE
 		if(response == "No")
-			return 0
+			return ZERO
 	heavy = round(heavy)
 	medium = round(medium)
 	weak = round(weak)
@@ -95,7 +95,7 @@
 /obj/item/implant/explosive/macro/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	for(var/X in target.implants)
 		if(istype(X, type))
-			return 0
+			return ZERO
 
 	for(var/Y in target.implants)
 		if(istype(Y, /obj/item/implant/explosive))

@@ -67,7 +67,7 @@
 
 /obj/structure/filingcabinet/ui_interact(mob/user)
 	. = ..()
-	if(contents.len <= 0)
+	if(contents.len <= ZERO)
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 		return
 
@@ -184,7 +184,7 @@
 GLOBAL_LIST_EMPTY(employmentCabinets)
 
 /obj/structure/filingcabinet/employment
-	var/cooldown = 0
+	var/cooldown = ZERO
 	icon_state = "employmentcabinet"
 	var/virgin = 1
 
@@ -214,7 +214,7 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 	if(!cooldown)
 		if(virgin)
 			fillCurrent()
-			virgin = 0
+			virgin = ZERO
 		cooldown = TRUE
 		// prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
 		addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10 SECONDS)

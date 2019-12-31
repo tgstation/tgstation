@@ -22,8 +22,8 @@
 	name = "cotton bundle"
 	desc = "A fluffy bundle of cotton."
 	icon_state = "cotton"
-	force = 0
-	throwforce = 0
+	force = ZERO
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 2
 	throw_range = 3
@@ -33,7 +33,7 @@
 
 /obj/item/grown/cotton/attack_self(mob/user)
 	user.show_message("<span class='notice'>You pull some [cotton_name] out of the [name]!</span>", MSG_VISUAL)
-	var/seed_modifier = 0
+	var/seed_modifier = ZERO
 	if(seed)
 		seed_modifier = round(seed.potency / 25)
 	var/obj/item/stack/cotton = new cotton_type(user.loc, 1 + seed_modifier)

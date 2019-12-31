@@ -5,13 +5,13 @@
 	icon_state = "experiment-open"
 	density = FALSE
 	state_open = TRUE
-	var/points = 0
-	var/credits = 0
+	var/points = ZERO
+	var/credits = ZERO
 	var/list/history
 	var/list/abductee_minds
 	var/flash = " - || - "
 	var/obj/machinery/abductor/console/console
-	var/message_cooldown = 0
+	var/message_cooldown = ZERO
 	var/breakout_time = 450
 
 /obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
@@ -165,7 +165,7 @@
 	if(!user_abductor)
 		return "<span class='bad'>Authorization failure. Contact mothership immidiately.</span>"
 
-	var/point_reward = 0
+	var/point_reward = ZERO
 	if(H in history)
 		return "<span class='bad'>Specimen already in database.</span>"
 	if(H.stat == DEAD)
@@ -195,7 +195,7 @@
 		for(var/obj/item/organ/heart/gland/G in H.internal_organs)
 			G.Start()
 			point_reward++
-		if(point_reward > 0)
+		if(point_reward > ZERO)
 			open_machine()
 			SendBack(H)
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)

@@ -88,7 +88,7 @@
 			for(var/gasid in air.gases)
 				gasdata.Add(list(list(
 					"name"= air.gases[gasid][GAS_META][META_GAS_NAME],
-					"amount" = 0)))
+					"amount" = ZERO)))
 
 		data["gases"] = gasdata
 	else

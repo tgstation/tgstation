@@ -9,7 +9,7 @@
 	centcom_cancast = FALSE
 	sound = 'sound/effects/magic.ogg'
 	cooldown_min = 300
-	level_max = 0
+	level_max = ZERO
 	action_icon_state = "spacetime"
 
 /obj/effect/proc_holder/spell/spacetime_dist/can_cast(mob/user = usr)
@@ -28,7 +28,7 @@
 	var/length = round(turfs.len * 0.5)
 	for(var/i in 1 to length)
 		turf_steps[pick_n_take(turfs)] = pick_n_take(turfs)
-	if(turfs.len > 0)
+	if(turfs.len > ZERO)
 		var/turf/loner = pick(turfs)
 		var/area/A = get_area(user)
 		turf_steps[loner] = get_turf(pick(A.contents))
@@ -87,9 +87,9 @@
 /obj/effect/cross_action/spacetime_dist/proc/walk_link(atom/movable/AM)
 	if(ismob(AM))
 		var/mob/M = AM
-		if(M.anti_magic_check(chargecost = 0))
+		if(M.anti_magic_check(chargecost = ZERO))
 			return
-	if(linked_dist && walks_left > 0)
+	if(linked_dist && walks_left > ZERO)
 		flick("purplesparkles", src)
 		linked_dist.get_walker(AM)
 		walks_left--

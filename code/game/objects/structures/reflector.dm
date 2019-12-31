@@ -13,7 +13,7 @@
 	var/framebuildstacktype = /obj/item/stack/sheet/metal
 	var/framebuildstackamount = 5
 	var/buildstacktype = /obj/item/stack/sheet/metal
-	var/buildstackamount = 0
+	var/buildstackamount = ZERO
 	var/list/allowed_projectile_typecache = list(/obj/projectile/beam)
 	var/rotation_angle = -1
 
@@ -56,7 +56,7 @@
 	return ..(NORTH)
 
 /obj/structure/reflector/proc/dir_map_to_angle(dir)
-	return 0
+	return ZERO
 
 /obj/structure/reflector/bullet_act(obj/projectile/P)
 	var/pdir = P.dir
@@ -71,7 +71,7 @@
 /obj/structure/reflector/proc/auto_reflect(obj/projectile/P, pdir, turf/ploc, pangle)
 	P.ignore_source_check = TRUE
 	P.range = P.decayedRange
-	P.decayedRange = max(P.decayedRange--, 0)
+	P.decayedRange = max(P.decayedRange--, ZERO)
 	return BULLET_ACT_FORCE_PIERCE
 
 /obj/structure/reflector/attackby(obj/item/W, mob/user, params)
@@ -97,7 +97,7 @@
 			qdel(src)
 	else if(W.tool_behaviour == TOOL_WELDER)
 		if(obj_integrity < max_integrity)
-			if(!W.tool_start_check(user, amount=0))
+			if(!W.tool_start_check(user, amount=ZERO))
 				return
 
 			user.visible_message("<span class='notice'>[user] starts to repair [src].</span>",
@@ -109,7 +109,7 @@
 									"<span class='notice'>You finish repairing [src].</span>")
 
 		else if(!anchored)
-			if(!W.tool_start_check(user, amount=0))
+			if(!W.tool_start_check(user, amount=ZERO))
 				return
 
 			user.visible_message("<span class='notice'>[user] starts to weld [src] to the floor.</span>",
@@ -119,7 +119,7 @@
 				setAnchored(TRUE)
 				to_chat(user, "<span class='notice'>You weld [src] to the floor.</span>")
 		else
-			if(!W.tool_start_check(user, amount=0))
+			if(!W.tool_start_check(user, amount=ZERO))
 				return
 
 			user.visible_message("<span class='notice'>[user] starts to cut [src] free from the floor.</span>",

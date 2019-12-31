@@ -13,7 +13,7 @@
 	resistance_flags = FIRE_PROOF
 	var/lit = FALSE
 
-	var/fuel_added = 0
+	var/fuel_added = ZERO
 	var/flame_expiry_timer
 
 /obj/structure/fireplace/New()
@@ -73,7 +73,7 @@
 	cut_overlays()
 	if(lit)
 		switch(burn_time_remaining())
-			if(0 to 500)
+			if(ZERO to 500)
 				add_overlay("fireplace_fire0")
 			if(500 to 1000)
 				add_overlay("fireplace_fire1")
@@ -87,11 +87,11 @@
 
 /obj/structure/fireplace/proc/adjust_light()
 	if(!lit)
-		set_light(0)
+		set_light(ZERO)
 		return
 
 	switch(burn_time_remaining())
-		if(0 to 500)
+		if(ZERO to 500)
 			set_light(1)
 		if(500 to 1000)
 			set_light(2)
@@ -118,7 +118,7 @@
 /obj/structure/fireplace/extinguish()
 	if(lit)
 		var/fuel = burn_time_remaining()
-		flame_expiry_timer = 0
+		flame_expiry_timer = ZERO
 		put_out()
 		adjust_fuel_timer(fuel)
 	. = ..()
@@ -129,19 +129,19 @@
 		if(burn_time_remaining() < MAXIMUM_BURN_TIMER)
 			flame_expiry_timer = world.time + MAXIMUM_BURN_TIMER
 	else
-		fuel_added = CLAMP(fuel_added + amount, 0, MAXIMUM_BURN_TIMER)
+		fuel_added = CLAMP(fuel_added + amount, ZERO, MAXIMUM_BURN_TIMER)
 
 /obj/structure/fireplace/proc/burn_time_remaining()
 	if(lit)
-		return max(0, flame_expiry_timer - world.time)
+		return max(ZERO, flame_expiry_timer - world.time)
 	else
-		return max(0, fuel_added)
+		return max(ZERO, fuel_added)
 
 /obj/structure/fireplace/proc/ignite()
 	lit = TRUE
 	desc = "A large stone brick fireplace, warm and cozy."
 	flame_expiry_timer = world.time + fuel_added
-	fuel_added = 0
+	fuel_added = ZERO
 	update_icon()
 	adjust_light()
 

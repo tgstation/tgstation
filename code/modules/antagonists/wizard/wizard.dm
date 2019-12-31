@@ -290,7 +290,7 @@
 			parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
 		else
 			parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
-			wizardwin = 0
+			wizardwin = ZERO
 		count++
 
 	if(wizardwin)
@@ -298,7 +298,7 @@
 	else
 		parts += "<span class='redtext'>The wizard has failed!</span>"
 
-	if(owner.spell_list.len>0)
+	if(owner.spell_list.len>ZERO)
 		parts += "<B>[owner.name] used the following spells: </B>"
 		var/list/spell_names = list()
 		for(var/obj/effect/proc_holder/spell/S in owner.spell_list)

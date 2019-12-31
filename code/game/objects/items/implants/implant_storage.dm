@@ -9,7 +9,7 @@
 	. = ..()
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SHOW, imp_in, TRUE)
 
-/obj/item/implant/storage/removed(source, silent = FALSE, special = 0)
+/obj/item/implant/storage/removed(source, silent = FALSE, special = ZERO)
 	if(!special)
 		var/datum/component/storage/lostimplant = GetComponent(/datum/component/storage/concrete/implant)
 		var/mob/living/implantee = source

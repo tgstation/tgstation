@@ -1,5 +1,5 @@
 
-/proc/create_portal_pair(turf/source, turf/destination, _lifespan = 300, accuracy = 0, newtype = /obj/effect/portal, atmos_link_override)
+/proc/create_portal_pair(turf/source, turf/destination, _lifespan = 300, accuracy = ZERO, newtype = /obj/effect/portal, atmos_link_override)
 	if(!istype(source) || !istype(destination))
 		return
 	var/turf/actual_destination = get_teleport_turf(destination, accuracy)
@@ -26,8 +26,8 @@
 	var/turf/open/atmos_source		//Atmos link source
 	var/turf/open/atmos_destination	//Atmos link destination
 	var/allow_anchored = FALSE
-	var/innate_accuracy_penalty = 0
-	var/last_effect = 0
+	var/innate_accuracy_penalty = ZERO
+	var/last_effect = ZERO
 
 /obj/effect/portal/anom
 	name = "wormhole"
@@ -48,7 +48,7 @@
 		user.forceMove(get_turf(src))
 		return TRUE
 
-/obj/effect/portal/Crossed(atom/movable/AM, oldloc, force_stop = 0)
+/obj/effect/portal/Crossed(atom/movable/AM, oldloc, force_stop = ZERO)
 	if(force_stop)
 		return ..()
 	if(isobserver(AM))
@@ -70,13 +70,13 @@
 	if(Adjacent(user))
 		user.forceMove(get_turf(src))
 
-/obj/effect/portal/Initialize(mapload, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
+/obj/effect/portal/Initialize(mapload, _lifespan = ZERO, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
 	. = ..()
 	GLOB.portals += src
 	if(!istype(_linked) && automatic_link)
 		. = INITIALIZE_HINT_QDEL
 		CRASH("Somebody fucked up.")
-	if(_lifespan > 0)
+	if(_lifespan > ZERO)
 		QDEL_IN(src, _lifespan)
 	if(!isnull(atmos_link_override))
 		atmos_link = atmos_link_override
@@ -188,7 +188,7 @@
 	var/id // var edit or set id in map editor
 	hardlinked = FALSE // dont qdel my portal nerd
 
-/obj/effect/portal/permanent/Initialize(mapload, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
+/obj/effect/portal/permanent/Initialize(mapload, _lifespan = ZERO, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
 	. = ..()
 	set_linked()
 

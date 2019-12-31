@@ -90,4 +90,4 @@
 		last_breath = world.time
 
 		var/mob/living/carbon/C = parent
-		C.losebreath = max(0, C.losebreath - 0.4)
+		C.losebreath = max(ZERO, C.losebreath - 0.4)

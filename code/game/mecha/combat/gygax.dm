@@ -58,11 +58,11 @@
 	cell = new /obj/item/stock_parts/cell/hyper(src)
 
 
-/obj/mecha/combat/gygax/GrantActions(mob/living/user, human_occupant = 0)
+/obj/mecha/combat/gygax/GrantActions(mob/living/user, human_occupant = ZERO)
 	..()
 	overload_action.Grant(user, src)
 
 
-/obj/mecha/combat/gygax/RemoveActions(mob/living/user, human_occupant = 0)
+/obj/mecha/combat/gygax/RemoveActions(mob/living/user, human_occupant = ZERO)
 	..()
 	overload_action.Remove(user)

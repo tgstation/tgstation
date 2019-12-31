@@ -68,7 +68,7 @@
 #define TURF_LINK(alice, turfy) "<a href=?src=[REF(alice)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(T)</a>"
 #define FOLLOW_OR_TURF_LINK(alice, bob, turfy) "<a href=?src=[REF(alice)];follow=[REF(bob)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(F)</a>"
 
-#define LINGHIVE_NONE 0
+#define LINGHIVE_NONE ZERO
 #define LINGHIVE_OUTSIDER 1
 #define LINGHIVE_LING 2
 #define LINGHIVE_LINK 3
@@ -83,5 +83,5 @@
 #define CHAT_FILTER_CHECK(T) (config.ic_filter_regex && findtext(T, config.ic_filter_regex))
 
 // Audio/Visual Flags. Used to determine what sense are required to notice a message.
-#define MSG_VISUAL (1<<0)
+#define MSG_VISUAL (1<<ZERO)
 #define MSG_AUDIBLE (1<<1)

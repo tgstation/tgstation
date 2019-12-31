@@ -10,7 +10,7 @@
 
 /turf/open/floor/plasteel/update_icon()
 	if(!..())
-		return 0
+		return ZERO
 	if(!broken && !burnt)
 		icon_state = icon_regular_floor
 

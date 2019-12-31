@@ -20,7 +20,7 @@
 
 		if(L.pulling && isliving(L.pulling))
 			var/mob/living/M =	L.pulling
-			if(M.mob_spell_list.len != 0 || (M.mind && M.mind.spell_list.len != 0))
+			if(M.mob_spell_list.len != ZERO || (M.mind && M.mind.spell_list.len != ZERO))
 				for(var/obj/effect/proc_holder/spell/S in M.mob_spell_list)
 					S.charge_counter = S.charge_max
 				if(M.mind)
@@ -55,11 +55,11 @@
 				var/obj/item/gun/magic/I = item
 				if(prob(80) && !I.can_charge)
 					I.max_charges--
-				if(I.max_charges <= 0)
-					I.max_charges = 0
+				if(I.max_charges <= ZERO)
+					I.max_charges = ZERO
 					burnt_out = TRUE
 				I.charges = I.max_charges
-				if(istype(item, /obj/item/gun/magic/wand) && I.max_charges != 0)
+				if(istype(item, /obj/item/gun/magic/wand) && I.max_charges != ZERO)
 					var/obj/item/gun/magic/W = item
 					W.icon_state = initial(W.icon_state)
 				I.recharge_newshot()
@@ -70,7 +70,7 @@
 				if(!C.self_recharge)
 					if(prob(80))
 						C.maxcharge -= 200
-					if(C.maxcharge <= 1) //Div by 0 protection
+					if(C.maxcharge <= 1) //Div by ZERO protection
 						C.maxcharge = 1
 						burnt_out = TRUE
 				C.charge = C.maxcharge
@@ -84,7 +84,7 @@
 						if(!C.self_recharge)
 							if(prob(80))
 								C.maxcharge -= 200
-							if(C.maxcharge <= 1) //Div by 0 protection
+							if(C.maxcharge <= 1) //Div by ZERO protection
 								C.maxcharge = 1
 								burnt_out = TRUE
 						C.charge = C.maxcharge

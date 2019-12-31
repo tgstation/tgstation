@@ -42,7 +42,7 @@
 
 			R.create_foam(/datum/effect_system/foam_spread,200)
 
-			var/cockroaches = prob(33) ? 3 : 0
+			var/cockroaches = prob(33) ? 3 : ZERO
 			while(cockroaches)
 				new /mob/living/simple_animal/cockroach(get_turf(vent))
 				cockroaches--
@@ -75,12 +75,12 @@
 /datum/round_event_control/vent_clog/beer
 	name = "Foamy beer stationwide"
 	typepath = /datum/round_event/vent_clog/beer
-	max_occurrences = 0
+	max_occurrences = ZERO
 
 /datum/round_event_control/vent_clog/plasma_decon
 	name = "Plasma decontamination"
 	typepath = /datum/round_event/vent_clog/plasma_decon
-	max_occurrences = 0
+	max_occurrences = ZERO
 
 /datum/round_event/vent_clog/beer
 	reagentsAmount = 100

@@ -6,7 +6,7 @@
 	density = TRUE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/giftwrapped = FALSE
-	var/sortTag = 0
+	var/sortTag = ZERO
 	var/obj/item/paper/note
 
 /obj/structure/bigDelivery/interact(mob/user)
@@ -105,8 +105,8 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverypackage3"
 	item_state = "deliverypackage"
-	var/giftwrapped = 0
-	var/sortTag = 0
+	var/giftwrapped = ZERO
+	var/sortTag = ZERO
 	var/obj/item/paper/note
 
 /obj/item/smallDelivery/contents_explosion(severity, target)
@@ -195,7 +195,7 @@
 	desc = "Used to set the destination of properly wrapped packages."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "cargotagger"
-	var/currTag = 0 //Destinations are stored in code\globalvars\lists\flavor_misc.dm
+	var/currTag = ZERO //Destinations are stored in code\globalvars\lists\flavor_misc.dm
 	var/locked_destination = FALSE //if true, users can't open the destination tag window to prevent changing the tagger's current destination
 	w_class = WEIGHT_CLASS_TINY
 	item_state = "electronic"
@@ -224,7 +224,7 @@
 	for (var/i = 1, i <= GLOB.TAGGERLOCATIONS.len, i++)
 		dat += "<td><a href='?src=[REF(src)];nextTag=[i]'>[GLOB.TAGGERLOCATIONS[i]]</a></td>"
 
-		if(i%4==0)
+		if(i%4==ZERO)
 			dat += "</tr><tr>"
 
 	dat += "</tr></table><br>Current Selection: [currTag ? GLOB.TAGGERLOCATIONS[currTag] : "None"]</tt>"

@@ -82,7 +82,7 @@
 	. = ..()
 	if(!proximity)
 		return
-	if(paintleft <= 0)
+	if(paintleft <= ZERO)
 		icon_state = "paint_empty"
 		return
 	if(!isturf(target) || isspaceturf(target))

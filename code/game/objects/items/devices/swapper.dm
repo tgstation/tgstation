@@ -10,7 +10,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
 	var/cooldown = 300
-	var/next_use = 0
+	var/next_use = ZERO
 	var/obj/item/swapper/linked_swapper
 
 /obj/item/swapper/Destroy()

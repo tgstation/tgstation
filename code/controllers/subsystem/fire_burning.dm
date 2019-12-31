@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(fire_burning)
 	..("P:[processing.len]")
 
 
-/datum/controller/subsystem/fire_burning/fire(resumed = 0)
+/datum/controller/subsystem/fire_burning/fire(resumed = ZERO)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 
@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(fire_burning)
 
 		if(O.resistance_flags & ON_FIRE) //in case an object is extinguished while still in currentrun
 			if(!(O.resistance_flags & FIRE_PROOF))
-				O.take_damage(20, BURN, "fire", 0)
+				O.take_damage(20, BURN, "fire", ZERO)
 			else
 				O.extinguish()
 

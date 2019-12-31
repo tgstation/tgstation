@@ -5,7 +5,7 @@
 		return
 
 	if(GLOB.Debug2)
-		GLOB.Debug2 = 0
+		GLOB.Debug2 = ZERO
 		message_admins("[key_name(src)] toggled debugging off.")
 		log_admin("[key_name(src)] toggled debugging off.")
 	else
@@ -98,11 +98,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			available.Add(C)
 	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") in sortNames(available)
 	if(!choice)
-		return 0
+		return ZERO
 	if(!isobserver(choice))
 		var/confirm = input("[choice.key] isn't ghosting right now. Are you sure you want to yank him out of them out of their body and place them in this pAI?", "Spawn pAI Confirmation", "No") in list("Yes", "No")
 		if(confirm != "Yes")
-			return 0
+			return ZERO
 	var/obj/item/paicard/card = new(T)
 	var/mob/living/silicon/pai/pai = new(card)
 
@@ -160,12 +160,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if (!isnull(object) && object!="")
 		matches = filter_fancy_list(matches, object)
 
-	if(matches.len==0)
+	if(matches.len==ZERO)
 		return
 	var/hsbitem = input(usr, "Choose an object to delete.", "Delete:") as null|anything in sortList(matches)
 	if(hsbitem)
 		hsbitem = matches[hsbitem]
-		var/counter = 0
+		var/counter = ZERO
 		for(var/atom/O in world)
 			if(istype(O, hsbitem))
 				counter++
@@ -286,7 +286,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used the Test Atmos Monitor debug command.</span>")
 	log_admin("[key_name(usr)] used the Test Atmos Monitor debug command.")
 
-	var/bad_shit = 0
+	var/bad_shit = ZERO
 	for(var/obj/machinery/computer/atmos_control/tank/console in GLOB.atmos_air_controllers)
 		dat += "<h1>[console] at [AREACOORD(console)]:</h1><br>"
 		if(console.input_tag == console.output_tag)
@@ -301,7 +301,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if(!bad_shit)
 			dat += "<B>STATUS:</B> NORMAL"
 		else
-			bad_shit = 0
+			bad_shit = ZERO
 		dat += "<br>"
 		CHECK_TICK
 
@@ -590,7 +590,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			E.active = 1
 
 	for(var/obj/machinery/field/generator/F in GLOB.machines)
-		if(F.active == 0)
+		if(F.active == ZERO)
 			F.active = 1
 			F.state = 2
 			F.power = 250
@@ -610,11 +610,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				S.icon_state = "singularity_s7"
 				S.pixel_x = -96
 				S.pixel_y = -96
-				S.grav_pull = 0
+				S.grav_pull = ZERO
 				//S.consume_range = 3
-				S.dissipate = 0
+				S.dissipate = ZERO
 				//S.dissipate_delay = 10
-				//S.dissipate_track = 0
+				//S.dissipate_track = ZERO
 				//S.dissipate_strength = 10
 
 	for(var/obj/machinery/power/rad_collector/Rad in GLOB.machines)
@@ -623,7 +623,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				var/obj/item/tank/internals/plasma/Plasma = new/obj/item/tank/internals/plasma(Rad)
 				Plasma.air_contents.assert_gas(/datum/gas/plasma)
 				Plasma.air_contents.gases[/datum/gas/plasma][MOLES] = 70
-				Rad.drainratio = 0
+				Rad.drainratio = ZERO
 				Rad.loaded_tank = Plasma
 				Plasma.forceMove(Rad)
 

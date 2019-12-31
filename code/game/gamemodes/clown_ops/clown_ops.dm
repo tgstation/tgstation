@@ -45,7 +45,7 @@
 	uplink_type = /obj/item/uplink/clownop
 
 /datum/outfit/syndicate/clownop/no_crystals
-	tc = 0
+	tc = ZERO
 
 /datum/outfit/syndicate/clownop/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

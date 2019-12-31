@@ -9,7 +9,7 @@
 	invocation_type = "shout"
 	range = 7
 	cooldown_min = 60 //35 deciseconds reduction per rank
-	max_targets = 0
+	max_targets = ZERO
 	proj_type = /obj/projectile/magic/spell/magic_missile
 	action_icon_state = "magicm"
 	sound = 'sound/magic/magic_missile.ogg'
@@ -19,7 +19,7 @@
 	icon_state = "magicm"
 	range = 20
 	speed = 5
-	trigger_range = 0
+	trigger_range = ZERO
 	linger = TRUE
 	nodamage = FALSE
 	paralyze = 60
@@ -123,9 +123,9 @@
 
 
 	smoke_spread = 1
-	smoke_amt = 0
+	smoke_amt = ZERO
 
-	inner_tele_radius = 0
+	inner_tele_radius = ZERO
 	outer_tele_radius = 6
 
 	action_icon_state = "blink"
@@ -171,7 +171,7 @@
 	clothes_req = TRUE
 	invocation = "TOKI YO TOMARE"
 	invocation_type = "shout"
-	range = 0
+	range = ZERO
 	cooldown_min = 100
 	action_icon_state = "time"
 	var/timestop_range = 2
@@ -204,7 +204,7 @@
 	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
-	range = 0
+	range = ZERO
 
 	summon_type = list(/obj/structure/constructshell)
 
@@ -301,7 +301,7 @@
 
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
 		distfromcaster = get_dist(user, AM)
-		if(distfromcaster == 0)
+		if(distfromcaster == ZERO)
 			if(isliving(AM))
 				var/mob/living/M = AM
 				M.Paralyze(100)
@@ -313,7 +313,7 @@
 				var/mob/living/M = AM
 				M.Paralyze(stun_amt)
 				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
-			AM.safe_throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user, force = repulse_force)//So stuff gets tossed around at the same time.
+			AM.safe_throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, ZERO, distfromcaster))), 3, maxthrow))), 1,user, force = repulse_force)//So stuff gets tossed around at the same time.
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!
 	name = "Tail Sweep"
@@ -345,7 +345,7 @@
 	clothes_req = FALSE
 	invocation = "FI'RAN DADISKO"
 	invocation_type = "shout"
-	max_targets = 0
+	max_targets = ZERO
 	range = 6
 	include_user = TRUE
 	selection_type = "view"

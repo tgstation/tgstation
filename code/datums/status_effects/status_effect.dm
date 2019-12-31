@@ -74,7 +74,7 @@
 	return 1
 
 /datum/status_effect/proc/nextmove_adjust()
-	return 0
+	return ZERO
 
 ////////////////
 // ALERT HOOK //
@@ -140,7 +140,7 @@
 	id = "stacking_base"
 	duration = -1 //removed under specific conditions
 	alert_type = null
-	var/stacks = 0 //how many stacks are accumulated, also is # of stacks that target will have when first applied
+	var/stacks = ZERO //how many stacks are accumulated, also is # of stacks that target will have when first applied
 	var/delay_before_decay //deciseconds until ticks start occuring, which removes stacks (first stack will be removed at this time plus tick_interval)
 	tick_interval = 10 //deciseconds between decays once decay starts
 	var/stack_decay = 1 //how many stacks are lost per tick (decay trigger)
@@ -185,12 +185,12 @@
 		stack_decay_effect()
 
 /datum/status_effect/stacking/proc/add_stacks(stacks_added)
-	if(stacks_added > 0 && !can_gain_stacks())
+	if(stacks_added > ZERO && !can_gain_stacks())
 		return FALSE
 	owner.cut_overlay(status_overlay)
 	owner.underlays -= status_underlay
 	stacks += stacks_added
-	if(stacks > 0)
+	if(stacks > ZERO)
 		if(stacks >= stack_threshold && !threshold_crossed) //threshold_crossed check prevents threshold effect from occuring if changing from above threshold to still above threshold
 			threshold_crossed = TRUE
 			on_threshold_cross()
@@ -199,7 +199,7 @@
 		else if(stacks < stack_threshold && threshold_crossed)
 			threshold_crossed = FALSE //resets threshold effect if we fall below threshold so threshold effect can trigger again
 			on_threshold_drop()
-		if(stacks_added > 0)
+		if(stacks_added > ZERO)
 			tick_interval += delay_before_decay //refreshes time until decay
 		stacks = min(stacks, max_stacks)
 		status_overlay.icon_state = "[overlay_state][stacks]"

@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(mapping)
 
 	// Z-manager stuff
 	var/station_start  // should only be used for maploading-related tasks
-	var/space_levels_so_far = 0
+	var/space_levels_so_far = ZERO
 	var/list/z_list
 	var/datum/space_level/transit
 	var/datum/space_level/empty_space
@@ -128,7 +128,7 @@ SUBSYSTEM_DEF(mapping)
 	clearing_reserved_turfs = FALSE
 
 /datum/controller/subsystem/mapping/proc/safety_clear_transit_dock(obj/docking_port/stationary/transit/T, obj/docking_port/mobile/M, list/returning)
-	M.setTimer(0)
+	M.setTimer(ZERO)
 	var/error = M.initiate_docking(M.destination, M.preferred_direction)
 	if(!error)
 		returning += M
@@ -184,7 +184,7 @@ SUBSYSTEM_DEF(mapping)
 		files = list(files)
 
 	// check that the total z count of all maps matches the list of traits
-	var/total_z = 0
+	var/total_z = ZERO
 	var/list/parsed_maps = list()
 	for (var/file in files)
 		var/full_path = "_maps/[path]/[file]"
@@ -208,7 +208,7 @@ SUBSYSTEM_DEF(mapping)
 
 	// preload the relevant space_level datums
 	var/start_z = world.maxz + 1
-	var/i = 0
+	var/i = ZERO
 	for (var/level in traits)
 		add_new_zlevel("[name][i ? " [i + 1]" : ""]", level)
 		++i
@@ -314,13 +314,13 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		if (!VM)
 			mapvotes.Remove(map)
 			continue
-		if (VM.voteweight <= 0)
+		if (VM.voteweight <= ZERO)
 			mapvotes.Remove(map)
 			continue
-		if (VM.config_min_users > 0 && players < VM.config_min_users)
+		if (VM.config_min_users > ZERO && players < VM.config_min_users)
 			mapvotes.Remove(map)
 			continue
-		if (VM.config_max_users > 0 && players > VM.config_max_users)
+		if (VM.config_max_users > ZERO && players > VM.config_max_users)
 			mapvotes.Remove(map)
 			continue
 

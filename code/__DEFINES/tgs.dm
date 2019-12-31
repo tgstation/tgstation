@@ -52,7 +52,7 @@
 #define TGS_EVENT_REBOOT_MODE_CHANGE -1	//before a reboot mode change, extras parameters are the current and new reboot mode enums
 
 //See the descriptions for these codes here: https://github.com/tgstation/tgstation-server/blob/master/src/Tgstation.Server.Host/Components/EventType.cs
-#define TGS_EVENT_REPO_RESET_ORIGIN 0
+#define TGS_EVENT_REPO_RESET_ORIGIN ZERO
 #define TGS_EVENT_REPO_CHECKOUT 1
 #define TGS_EVENT_REPO_FETCH 2
 #define TGS_EVENT_REPO_MERGE_PULL_REQUEST 3
@@ -69,11 +69,11 @@
 
 //OTHER ENUMS
 
-#define TGS_REBOOT_MODE_NORMAL 0
+#define TGS_REBOOT_MODE_NORMAL ZERO
 #define TGS_REBOOT_MODE_SHUTDOWN 1
 #define TGS_REBOOT_MODE_RESTART 2
 
-#define TGS_SECURITY_TRUSTED 0
+#define TGS_SECURITY_TRUSTED ZERO
 #define TGS_SECURITY_SAFE 1
 #define TGS_SECURITY_ULTRASAFE 2
 

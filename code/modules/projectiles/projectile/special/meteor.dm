@@ -2,7 +2,7 @@
 	name = "meteor"
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "small1"
-	damage = 0
+	damage = ZERO
 	damage_type = BRUTE
 	nodamage = TRUE
 	flag = "bullet"

@@ -5,7 +5,7 @@
 #define CUT_TIME 100
 #define CLIMB_TIME 150
 
-#define NO_HOLE 0 //section is intact
+#define NO_HOLE ZERO //section is intact
 #define MEDIUM_HOLE 1 //medium hole in the section - can climb through
 #define LARGE_HOLE 2 //large hole in the section - can walk through
 #define MAX_HOLE_SIZE LARGE_HOLE

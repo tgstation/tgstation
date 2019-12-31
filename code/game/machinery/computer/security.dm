@@ -11,7 +11,7 @@
 	var/datum/data/record/active2 = null
 	var/temp = null
 	var/printing = null
-	var/can_change_id = 0
+	var/can_change_id = ZERO
 	var/list/Perp
 	var/tempname = null
 	//Sorting Variables
@@ -206,7 +206,7 @@
 							dat += {"<tr><td>[c.crimeName]</td>
 							<td>[c.fine] cr</td><td>[c.author]</td>
 							<td>[c.time]</td>"}
-							if(owed > 0)
+							if(owed > ZERO)
 								dat += "<td>[owed] cr <A href='?src=[REF(src)];choice=Pay;field=citation_pay;cdataid=[c.dataId]'>\[Pay\]</A></td></td>"
 							else
 								dat += "<td>All Paid Off</td>"
@@ -477,7 +477,7 @@ What a mess.*/
 							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/photo/photo = active1.fields["photo_front"]
 								new /obj/item/poster/wanted(loc, photo.picture.picture_image, wanted_name, info, headerText)
-							printing = 0
+							printing = ZERO
 			if("Print Missing")
 				if(!( printing ))
 					var/missing_name = stripped_input(usr, "Please enter an alias for the missing person:", "Print Missing Persons Poster", active1.fields["name"])
@@ -494,7 +494,7 @@ What a mess.*/
 							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/photo/photo = active1.fields["photo_front"]
 								new /obj/item/poster/wanted/missing(loc, photo.picture.picture_image, missing_name, info, headerText)
-							printing = 0
+							printing = ZERO
 
 //RECORD DELETE
 			if("Delete All Records")
@@ -736,7 +736,7 @@ What a mess.*/
 							if (isnull(fine))
 								return
 
-							if(fine < 0)
+							if(fine < ZERO)
 								to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
 								return
 
@@ -906,13 +906,13 @@ What a mess.*/
 			qdel(R)
 			continue
 
-/obj/machinery/computer/secure_data/proc/canUseSecurityRecordsConsole(mob/user, message1 = 0, record1, record2)
+/obj/machinery/computer/secure_data/proc/canUseSecurityRecordsConsole(mob/user, message1 = ZERO, record1, record2)
 	if(user)
 		if(authenticated)
 			if(user.canUseTopic(src, !issilicon(user)))
 				if(!trim(message1))
-					return 0
+					return ZERO
 				if(!record1 || record1 == active1)
 					if(!record2 || record2 == active2)
 						return 1
-	return 0
+	return ZERO

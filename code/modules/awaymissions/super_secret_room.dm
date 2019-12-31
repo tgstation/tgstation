@@ -7,7 +7,7 @@
 	layer = 5
 	resistance_flags = INDESTRUCTIBLE
 	var/speaking = FALSE
-	var/times_spoken_to = 0
+	var/times_spoken_to = ZERO
 	var/list/shenanigans = list()
 
 /obj/structure/speaking_tile/Initialize()
@@ -24,10 +24,10 @@
 	speaking = TRUE
 
 	switch(times_spoken_to)
-		if(0)
+		if(ZERO)
 			SpeakPeace(list("Welcome to the error handling room.","Something's goofed up bad to send you here.","You should probably tell an admin what you were doing, or make a bug report."))
 			for(var/obj/structure/signpost/salvation/S in orange(7))
-				S.invisibility = 0
+				S.invisibility = ZERO
 				var/datum/effect_system/smoke_spread/smoke = new
 				smoke.set_up(1, S.loc)
 				smoke.start()
@@ -50,7 +50,7 @@
 				shenanigans = list("Except the poly file is missing...")
 		if(11 to 14, 16 to 50, 52 to 99, 103 to 107, 109 to 203, 205 to 249, 252 to 665, 667 to 999, 1001 to 5642)
 			SpeakPeace(list(pick(shenanigans),pick(shenanigans),pick(shenanigans)))
-			if(times_spoken_to % 10 == 0)
+			if(times_spoken_to % 10 == ZERO)
 				SpeakPeace(list("That's [times_spoken_to] times you've spoken to me by the way."))
 		if(15)
 			SpeakPeace(list("See? Isn't this fun?","Now you can mash this for hours without getting bored.","Anyway I'll leave you it."))

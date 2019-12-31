@@ -1,4 +1,4 @@
-/proc/empulse(turf/epicenter, heavy_range, light_range, log=0)
+/proc/empulse(turf/epicenter, heavy_range, light_range, log=ZERO)
 	if(!epicenter)
 		return
 
@@ -18,8 +18,8 @@
 	for(var/A in spiral_range(light_range, epicenter))
 		var/atom/T = A
 		var/distance = get_dist(epicenter, T)
-		if(distance < 0)
-			distance = 0
+		if(distance < ZERO)
+			distance = ZERO
 		if(distance < heavy_range)
 			T.emp_act(EMP_HEAVY)
 		else if(distance == heavy_range)

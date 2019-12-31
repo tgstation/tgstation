@@ -5,14 +5,14 @@
 	icon_screen = "comm_logs"
 	desc = "Has full access to all details and record of the telecommunications network it's monitoring."
 
-	var/screen = 0				// the screen number:
+	var/screen = ZERO				// the screen number:
 	var/list/servers = list()	// the servers located by the computer
 	var/obj/machinery/telecomms/server/SelectedServer
 
 	var/network = "NULL"		// the network to probe
 	var/temp = ""				// temporary feedback messages
 
-	var/universal_translate = 0 // set to 1 if it can translate nonhuman speech
+	var/universal_translate = ZERO // set to 1 if it can translate nonhuman speech
 
 	req_access = list(ACCESS_TCOMSAT)
 	circuit = /obj/item/circuitboard/computer/comm_server
@@ -26,7 +26,7 @@
 
 	  // --- Main Menu ---
 
-		if(0)
+		if(ZERO)
 			dat += "<br>[temp]<br>"
 			dat += "<br>Current Network: <a href='?src=[REF(src)];network=1'>[network]</a><br>"
 			if(servers.len)
@@ -55,7 +55,7 @@
 
 			dat += "Stored Logs: <ol>"
 
-			var/i = 0
+			var/i = ZERO
 			for(var/datum/comm_log_entry/C in SelectedServer.log_entries)
 				i++
 
@@ -153,13 +153,13 @@
 
 			if("release")
 				servers = list()
-				screen = 0
+				screen = ZERO
 
 			if("mainmenu")
-				screen = 0
+				screen = ZERO
 
 			if("scan")
-				if(servers.len > 0)
+				if(servers.len > ZERO)
 					temp = "<font color = #D70B00>- FAILED: CANNOT PROBE WHEN BUFFER FULL -</font color>"
 
 				else
@@ -172,7 +172,7 @@
 					else
 						temp = "<font color = #336699>- [servers.len] SERVERS PROBED & BUFFERED -</font color>"
 
-					screen = 0
+					screen = ZERO
 
 	if(href_list["delete"])
 
@@ -203,7 +203,7 @@
 			else
 
 				network = newnet
-				screen = 0
+				screen = ZERO
 				servers = list()
 				temp = "<font color = #336699>- NEW NETWORK TAG SET IN ADDRESS \[[network]\] -</font color>"
 

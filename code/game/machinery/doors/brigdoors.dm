@@ -27,8 +27,8 @@
 	density = FALSE
 	var/id = null // id of linked machinery/lockers
 
-	var/activation_time = 0
-	var/timer_duration = 0
+	var/activation_time = ZERO
+	var/timer_duration = ZERO
 
 	var/timing = FALSE		// boolean, true/1 timer is on, false/0 means it's not timing
 	var/list/obj/machinery/targets = list()
@@ -44,7 +44,7 @@
 	. = ..()
 
 	Radio = new/obj/item/radio(src)
-	Radio.listening = 0
+	Radio.listening = ZERO
 
 /obj/machinery/door_timer/Initialize()
 	. = ..()
@@ -66,8 +66,8 @@
 	update_icon()
 
 
-//Main door timer loop, if it's timing and time is >0 reduce time by 1.
-// if it's less than 0, open door, reset timer
+//Main door timer loop, if it's timing and time is >ZERO reduce time by 1.
+// if it's less than ZERO, open door, reset timer
 // update the door_timer window and the icon
 /obj/machinery/door_timer/process()
 	if(stat & (NOPOWER|BROKEN))
@@ -82,7 +82,7 @@
 // linked door is open/closed (by density) then opens it/closes it.
 /obj/machinery/door_timer/proc/timer_start()
 	if(stat & (NOPOWER|BROKEN))
-		return 0
+		return ZERO
 
 	activation_time = world.time
 	timing = TRUE
@@ -105,7 +105,7 @@
 /obj/machinery/door_timer/proc/timer_end(forced = FALSE)
 
 	if(stat & (NOPOWER|BROKEN))
-		return 0
+		return ZERO
 
 	if(!forced)
 		Radio.set_frequency(FREQ_SECURITY)
@@ -113,7 +113,7 @@
 
 	timing = FALSE
 	activation_time = null
-	set_timer(0)
+	set_timer(ZERO)
 	update_icon()
 
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
@@ -133,12 +133,12 @@
 
 
 /obj/machinery/door_timer/proc/time_left(seconds = FALSE)
-	. = max(0,timer_duration - (activation_time ? world.time - activation_time : 0))
+	. = max(ZERO,timer_duration - (activation_time ? world.time - activation_time : ZERO))
 	if(seconds)
 		. /= 10
 
 /obj/machinery/door_timer/proc/set_timer(value)
-	var/new_time = CLAMP(value,0,MAX_TIMER)
+	var/new_time = CLAMP(value,ZERO,MAX_TIMER)
 	. = new_time == timer_duration //return 1 on no change
 	timer_duration = new_time
 

@@ -3,7 +3,7 @@
 /obj/item/clothing/ears
 	name = "ears"
 	w_class = WEIGHT_CLASS_TINY
-	throwforce = 0
+	throwforce = ZERO
 	slot_flags = ITEM_SLOT_EARS
 	resistance_flags = NONE
 

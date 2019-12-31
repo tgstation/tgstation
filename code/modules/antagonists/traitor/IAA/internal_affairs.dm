@@ -64,7 +64,7 @@
 	if(here.z != there.z)
 		linked_alert.icon_state = "pinonnull"
 		return
-	if(get_dist_euclidian(here,there)<=minimum_range + rand(0, range_fuzz_factor))
+	if(get_dist_euclidian(here,there)<=minimum_range + rand(ZERO, range_fuzz_factor))
 		linked_alert.icon_state = "pinondirect"
 	else
 		linked_alert.setDir(get_dir(here, there))
@@ -136,7 +136,7 @@
 			var/datum/objective/assassinate/internal/objective = objective_
 			if(objective.target==owner)
 				continue
-			else if(targets_stolen.Find(objective.target) == 0)
+			else if(targets_stolen.Find(objective.target) == ZERO)
 				var/datum/objective/assassinate/internal/new_objective = new
 				new_objective.owner = owner
 				new_objective.target = objective.target
@@ -150,7 +150,7 @@
 			var/datum/objective/destroy/internal/new_objective = new
 			if(objective.target==owner)
 				continue
-			else if(targets_stolen.Find(objective.target) == 0)
+			else if(targets_stolen.Find(objective.target) == ZERO)
 				new_objective.owner = owner
 				new_objective.target = objective.target
 				new_objective.update_explanation_text()

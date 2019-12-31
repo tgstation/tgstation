@@ -10,11 +10,11 @@
 
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for xenomorphs
 
-	var/injecting = 0
+	var/injecting = ZERO
 
 	var/volume_rate = 50
 
-	var/frequency = 0
+	var/frequency = ZERO
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
@@ -44,14 +44,14 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/process_atmos()
 	..()
 
-	injecting = 0
+	injecting = ZERO
 
 	if(!on || !is_operational())
 		return
 
 	var/datum/gas_mixture/air_contents = airs[1]
 
-	if(air_contents.temperature > 0)
+	if(air_contents.temperature > ZERO)
 		var/transfer_moles = (air_contents.return_pressure())*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
 
 		var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
@@ -70,7 +70,7 @@
 
 	injecting = 1
 
-	if(air_contents.temperature > 0)
+	if(air_contents.temperature > ZERO)
 		var/transfer_moles = (air_contents.return_pressure())*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
 		var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 		loc.assume_air(removed)
@@ -122,7 +122,7 @@
 	if("set_volume_rate" in signal.data)
 		var/number = text2num(signal.data["set_volume_rate"])
 		var/datum/gas_mixture/air_contents = airs[1]
-		volume_rate = CLAMP(number, 0, air_contents.volume)
+		volume_rate = CLAMP(number, ZERO, air_contents.volume)
 
 	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 
@@ -166,7 +166,7 @@
 				rate = text2num(rate)
 				. = TRUE
 			if(.)
-				volume_rate = CLAMP(rate, 0, MAX_TRANSFER_RATE)
+				volume_rate = CLAMP(rate, ZERO, MAX_TRANSFER_RATE)
 				investigate_log("was set to [volume_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 	broadcast_status()

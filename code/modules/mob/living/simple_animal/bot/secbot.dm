@@ -7,7 +7,7 @@
 	anchored = FALSE
 	health = 25
 	maxHealth = 25
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = ZERO, CLONE = ZERO, STAMINA = ZERO, OXY = ZERO)
 	pass_flags = PASSMOB
 
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
@@ -17,7 +17,7 @@
 	bot_core_type = /obj/machinery/bot_core/secbot
 	window_id = "autosec"
 	window_name = "Automatic Security Unit v1.6"
-	allow_pai = 0
+	allow_pai = ZERO
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 	path_image_color = "#FF0000"
 
@@ -104,7 +104,7 @@
 	target = null
 	oldtarget_name = null
 	anchored = FALSE
-	walk_to(src,0)
+	walk_to(src,ZERO)
 	last_found = world.time
 
 /mob/living/simple_animal/bot/secbot/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)//shocks only make him angry
@@ -302,7 +302,7 @@ Auto Patrol: []"},
 
 		if(BOT_IDLE)		// idle
 
-			walk_to(src,0)
+			walk_to(src,ZERO)
 			look_for_perp()	// see if any criminals are in range
 			if(!mode && auto_patrol)	// still idle, and set to patrol
 				mode = BOT_START_PATROL	// switch to patrol mode
@@ -311,7 +311,7 @@ Auto Patrol: []"},
 
 			// if can't reach perp for long enough, go idle
 			if(frustration >= 8)
-				walk_to(src,0)
+				walk_to(src,ZERO)
 				back_to_idle()
 				return
 
@@ -333,7 +333,7 @@ Auto Patrol: []"},
 					if((get_dist(src, target)) >= (olddist))
 						frustration++
 					else
-						frustration = 0
+						frustration = ZERO
 			else
 				back_to_idle()
 
@@ -360,7 +360,7 @@ Auto Patrol: []"},
 				anchored = FALSE
 				mode = BOT_IDLE
 				last_found = world.time
-				frustration = 0
+				frustration = ZERO
 				return
 
 			if(target.handcuffed) //no target or target cuffed? back to idle.
@@ -393,12 +393,12 @@ Auto Patrol: []"},
 	mode = BOT_IDLE
 	target = null
 	last_found = world.time
-	frustration = 0
+	frustration = ZERO
 	INVOKE_ASYNC(src, .proc/handle_automated_action)
 
 /mob/living/simple_animal/bot/secbot/proc/back_to_hunt()
 	anchored = FALSE
-	frustration = 0
+	frustration = ZERO
 	mode = BOT_HUNT
 	INVOKE_ASYNC(src, .proc/handle_automated_action)
 // look for a criminal in view of the bot
@@ -440,7 +440,7 @@ Auto Patrol: []"},
 
 /mob/living/simple_animal/bot/secbot/explode()
 
-	walk_to(src,0)
+	walk_to(src,ZERO)
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/atom/Tsec = drop_location()
 	if(ranged)
@@ -450,7 +450,7 @@ Auto Patrol: []"},
 		Sa.created_name = name
 		new /obj/item/assembly/prox_sensor(Tsec)
 		var/obj/item/gun/energy/disabler/G = new (Tsec)
-		G.cell.charge = 0
+		G.cell.charge = ZERO
 		G.update_icon()
 		if(prob(50))
 			new /obj/item/bodypart/l_leg/robot(Tsec)

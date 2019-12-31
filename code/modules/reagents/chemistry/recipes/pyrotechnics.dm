@@ -2,7 +2,7 @@
 	name = "Generic explosive"
 	id = "reagent_explosion"
 	var/strengthdiv = 10
-	var/modifier = 0
+	var/modifier = ZERO
 
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
@@ -19,7 +19,7 @@
 		message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
 	log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
 	var/datum/effect_system/reagents_explosion/e = new()
-	e.set_up(modifier + round(created_volume/strengthdiv, 1), T, 0, 0)
+	e.set_up(modifier + round(created_volume/strengthdiv, 1), T, ZERO, ZERO)
 	e.start()
 	holder.clear_reagents()
 
@@ -311,7 +311,7 @@
 	holder.remove_reagent(/datum/reagent/liquid_dark_matter, created_volume*3)
 	var/turf/T = get_turf(holder.my_atom)
 	var/range = CLAMP(sqrt(created_volume*3), 1, 6)
-	goonchem_vortex(T, 0, range)
+	goonchem_vortex(T, ZERO, range)
 
 /datum/chemical_reaction/ldm_vortex
 	name = "LDM Vortex"
@@ -322,7 +322,7 @@
 /datum/chemical_reaction/ldm_vortex/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
 	var/range = CLAMP(sqrt(created_volume/2), 1, 6)
-	goonchem_vortex(T, 0, range)
+	goonchem_vortex(T, ZERO, range)
 
 /datum/chemical_reaction/flash_powder
 	name = "Flash powder"
@@ -383,7 +383,7 @@
 	S.attach(location)
 	playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 	if(S)
-		S.set_up(holder, smoke_radius, location, 0)
+		S.set_up(holder, smoke_radius, location, ZERO)
 		S.start()
 	if(holder && holder.my_atom)
 		holder.clear_reagents()
@@ -402,7 +402,7 @@
 	S.attach(location)
 	playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 	if(S)
-		S.set_up(holder, smoke_radius, location, 0)
+		S.set_up(holder, smoke_radius, location, ZERO)
 		S.start()
 	if(holder && holder.my_atom)
 		holder.clear_reagents()
@@ -420,7 +420,7 @@
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
-		C.soundbang_act(1, 100, rand(0, 5))
+		C.soundbang_act(1, 100, rand(ZERO, 5))
 
 /datum/chemical_reaction/sonic_powder_deafen
 	name = "sonic_powder_deafen"
@@ -432,7 +432,7 @@
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
-		C.soundbang_act(1, 100, rand(0, 5))
+		C.soundbang_act(1, 100, rand(ZERO, 5))
 
 /datum/chemical_reaction/phlogiston
 	name = /datum/reagent/phlogiston
@@ -473,7 +473,7 @@
 	mob_react = FALSE
 
 /datum/chemical_reaction/cryostylane_oxygen/on_reaction(datum/reagents/holder, created_volume)
-	holder.chem_temp = max(holder.chem_temp - 10*created_volume,0)
+	holder.chem_temp = max(holder.chem_temp - 10*created_volume,ZERO)
 
 /datum/chemical_reaction/pyrosium_oxygen
 	name = "ephemeral pyrosium reaction"

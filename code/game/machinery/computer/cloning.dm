@@ -218,7 +218,7 @@
 
 			// Database
 			dat += "<h3>Database Functions</h3>"
-			if (records.len && records.len > 0)
+			if (records.len && records.len > ZERO)
 				dat += "<a href='byond://?src=[REF(src)];menu=2'>View Records ([records.len])</a><br>"
 			else
 				dat += "<span class='linkOff'>View Records (0)</span><br>"

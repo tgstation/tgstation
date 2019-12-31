@@ -8,7 +8,7 @@
 		to_chat(usr, "This can only be used on instances of type /mob/living")
 		return
 
-	explosion(target.loc, 0, 0, 0, 0)
+	explosion(target.loc, ZERO, ZERO, ZERO, ZERO)
 
 	var/turf/open/floor/T = get_turf(target)
 	if(istype(T))

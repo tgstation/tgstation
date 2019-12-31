@@ -44,7 +44,7 @@
 	rogue_types = list(/datum/nanite_program/glitch)
 
 /datum/nanite_program/suffocating/active_effect()
-	host_mob.adjustOxyLoss(3, 0)
+	host_mob.adjustOxyLoss(3, ZERO)
 	if(prob(1))
 		to_chat(host_mob, "<span class='warning'>You feel short of breath.</span>")
 

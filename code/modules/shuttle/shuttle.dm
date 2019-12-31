@@ -15,10 +15,10 @@
 	var/id
 	// this should point -away- from the dockingport door, ie towards the ship
 	dir = NORTH
-	var/width = 0	//size of covered area, perpendicular to dir
-	var/height = 0	//size of covered area, parallel to dir
-	var/dwidth = 0	//position relative to covered area, perpendicular to dir
-	var/dheight = 0	//position relative to covered area, parallel to dir
+	var/width = ZERO	//size of covered area, perpendicular to dir
+	var/height = ZERO	//size of covered area, parallel to dir
+	var/dwidth = ZERO	//position relative to covered area, perpendicular to dir
+	var/dheight = ZERO	//position relative to covered area, parallel to dir
 
 	var/area_type
 	var/hidden = FALSE //are we invisible to shuttle navigation computers?
@@ -44,11 +44,11 @@
 /obj/docking_port/singularity_pull()
 	return
 /obj/docking_port/singularity_act()
-	return 0
+	return ZERO
 /obj/docking_port/shuttleRotate()
 	return //we don't rotate with shuttles via this code.
 
-//returns a list(x0,y0, x1,y1) where points 0 and 1 are bounding corners of the projected rectangle
+//returns a list(x0,y0, x1,y1) where points ZERO and 1 are bounding corners of the projected rectangle
 /obj/docking_port/proc/return_coords(_x, _y, _dir)
 	if(_dir == null)
 		_dir = dir
@@ -59,16 +59,16 @@
 
 	//byond's sin and cos functions are inaccurate. This is faster and perfectly accurate
 	var/cos = 1
-	var/sin = 0
+	var/sin = ZERO
 	switch(_dir)
 		if(WEST)
-			cos = 0
+			cos = ZERO
 			sin = 1
 		if(SOUTH)
 			cos = -1
-			sin = 0
+			sin = ZERO
 		if(EAST)
-			cos = 0
+			cos = ZERO
 			sin = -1
 
 	return list(
@@ -89,23 +89,23 @@
 //this ensures that turfs are copied over in the same order, regardless of any rotation
 /obj/docking_port/proc/return_ordered_turfs(_x, _y, _z, _dir)
 	var/cos = 1
-	var/sin = 0
+	var/sin = ZERO
 	switch(_dir)
 		if(WEST)
-			cos = 0
+			cos = ZERO
 			sin = 1
 		if(SOUTH)
 			cos = -1
-			sin = 0
+			sin = ZERO
 		if(EAST)
-			cos = 0
+			cos = ZERO
 			sin = -1
 
 	. = list()
 
-	for(var/dx in 0 to width-1)
+	for(var/dx in ZERO to width-1)
 		var/compX = dx-dwidth
-		for(var/dy in 0 to height-1)
+		for(var/dy in ZERO to height-1)
 			var/compY = dy-dheight
 			// realX = _x + compX*cos - compY*sin
 			// realY = _y + compY*cos - compX*sin
@@ -251,7 +251,7 @@
 	var/mode = SHUTTLE_IDLE			//current shuttle mode
 	var/callTime = 100				//time spent in transit (deciseconds). Should not be lower then 10 seconds without editing the animation of the hyperspace ripples.
 	var/ignitionTime = 55			// time spent "starting the engines". Also rate limits how often we try to reserve transit space if its ever full of transiting shuttles.
-	var/rechargeTime = 0		// time spent after arrival before being able to begin ignition
+	var/rechargeTime = ZERO		// time spent after arrival before being able to begin ignition
 	var/prearrivalTime = 0		// time spent after transit 'landing' before actually arriving
 
 	// The direction the shuttle prefers to travel in
@@ -266,12 +266,12 @@
 
 	var/launch_status = NOLAUNCH
 
-	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 0)
+	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = ZERO)
 
 	var/list/ripples = list()
 	var/engine_coeff = 1 //current engine coeff
-	var/current_engines = 0 //current engine power
-	var/initial_engines = 0 //initial engine power
+	var/current_engines = ZERO //current engine power
+	var/initial_engines = ZERO //initial engine power
 	var/list/engine_list = list()
 	var/can_move_docking_ports = FALSE //if this shuttle can move docking ports other than the one it is docked at
 	var/list/hidden_turfs = list()
@@ -545,7 +545,7 @@
 	if(mode == SHUTTLE_IGNITING)
 		check_transit_zone()
 
-	if(timeLeft(1) > 0)
+	if(timeLeft(1) > ZERO)
 		return
 	// If we can't dock or we don't have a transit slot, wait for 20 ds,
 	// then try again
@@ -584,7 +584,7 @@
 				return
 
 	mode = SHUTTLE_IDLE
-	timer = 0
+	timer = ZERO
 	destination = null
 
 /obj/docking_port/mobile/proc/check_effects()
@@ -629,7 +629,7 @@
 
 /obj/docking_port/mobile/proc/modTimer(multiple)
 	var/time_remaining = timer - world.time
-	if(time_remaining < 0 || !last_timer_length)
+	if(time_remaining < ZERO || !last_timer_length)
 		return
 	time_remaining *= multiple
 	last_timer_length *= multiple
@@ -639,20 +639,20 @@
 	if(!last_timer_length)
 		return
 	var/time_remaining = timer - world.time
-	if(time_remaining > 0)
+	if(time_remaining > ZERO)
 		var/time_passed = last_timer_length - time_remaining
 		setTimer(time_passed)
 
 //returns timeLeft
 /obj/docking_port/mobile/proc/timeLeft(divisor)
-	if(divisor <= 0)
+	if(divisor <= ZERO)
 		divisor = 10
 
 	var/ds_remaining
 	if(!timer)
 		ds_remaining = callTime * engine_coeff
 	else
-		ds_remaining = max(0, timer - world.time)
+		ds_remaining = max(ZERO, timer - world.time)
 
 	. = round(ds_remaining / divisor, 1)
 
@@ -685,7 +685,7 @@
 	var/timeleft = timeLeft()
 	if(timeleft > 1 HOURS)
 		return "--:--"
-	else if(timeleft > 0)
+	else if(timeleft > ZERO)
 		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 	else
 		return "00:00"
@@ -770,7 +770,7 @@
 				M.playsound_local(distant_source, "sound/effects/[selected_sound]_distance.ogg", 100, falloff = 20)
 			else if(dist_far <= range)
 				var/source
-				if(engine_list.len == 0)
+				if(engine_list.len == ZERO)
 					source = distant_source
 				else
 					var/closest_dist = 10000
@@ -784,17 +784,17 @@
 // Losing all initial engines should get you 2
 // Adding another set of engines at 0.5 time
 /obj/docking_port/mobile/proc/alter_engines(mod)
-	if(mod == 0)
+	if(mod == ZERO)
 		return
 	var/old_coeff = engine_coeff
 	engine_coeff = get_engine_coeff(current_engines,mod)
-	current_engines = max(0,current_engines + mod)
+	current_engines = max(ZERO,current_engines + mod)
 	if(in_flight())
 		var/delta_coeff = engine_coeff / old_coeff
 		modTimer(delta_coeff)
 
 /obj/docking_port/mobile/proc/count_engines()
-	. = 0
+	. = ZERO
 	for(var/thing in shuttle_areas)
 		var/area/shuttle/areaInstance = thing
 		for(var/obj/structure/shuttle/engine/E in areaInstance.contents)
@@ -804,21 +804,21 @@
 
 // Double initial engines to get to 0.5 minimum
 // Lose all initial engines to get to 2
-//For 0 engine shuttles like BYOS 5 engines to get to doublespeed
+//For ZERO engine shuttles like BYOS 5 engines to get to doublespeed
 /obj/docking_port/mobile/proc/get_engine_coeff(current,engine_mod)
-	var/new_value = max(0,current + engine_mod)
+	var/new_value = max(ZERO,current + engine_mod)
 	if(new_value == initial_engines)
 		return 1
 	if(new_value > initial_engines)
 		var/delta = new_value - initial_engines
 		var/change_per_engine = (1 - ENGINE_COEFF_MIN) / ENGINE_DEFAULT_MAXSPEED_ENGINES // 5 by default
-		if(initial_engines > 0)
+		if(initial_engines > ZERO)
 			change_per_engine = (1 - ENGINE_COEFF_MIN) / initial_engines // or however many it had
 		return CLAMP(1 - delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
 	if(new_value < initial_engines)
 		var/delta = initial_engines - new_value
-		var/change_per_engine = 1 //doesn't really matter should not be happening for 0 engine shuttles
-		if(initial_engines > 0)
+		var/change_per_engine = 1 //doesn't really matter should not be happening for ZERO engine shuttles
+		if(initial_engines > ZERO)
 			change_per_engine = (ENGINE_COEFF_MAX -  1) / initial_engines //just linear drop to max delay
 		return CLAMP(1 + delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
 

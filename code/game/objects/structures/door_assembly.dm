@@ -12,9 +12,9 @@
 	var/obj/item/electronics/airlock/electronics = null
 	var/airlock_type = /obj/machinery/door/airlock //the type path of the airlock once completed
 	var/glass_type = /obj/machinery/door/airlock/glass
-	var/glass = 0 // 0 = glass can be installed. 1 = glass is already installed.
+	var/glass = ZERO // ZERO = glass can be installed. 1 = glass is already installed.
 	var/created_name = null
-	var/heat_proof_finished = 0 //whether to heat-proof the finished airlock
+	var/heat_proof_finished = ZERO //whether to heat-proof the finished airlock
 	var/previous_assembly = /obj/structure/door_assembly
 	var/noglass = FALSE //airlocks with no glass version, also cannot be modified with sheets
 	var/material_type = /obj/item/stack/sheet/metal
@@ -59,7 +59,7 @@
 		created_name = t
 
 	else if((W.tool_behaviour == TOOL_WELDER) && (mineral || glass || !anchored ))
-		if(!W.tool_start_check(user, amount=0))
+		if(!W.tool_start_check(user, amount=ZERO))
 			return
 
 		if(mineral)
@@ -77,10 +77,10 @@
 				to_chat(user, "<span class='notice'>You weld the glass panel out.</span>")
 				if(heat_proof_finished)
 					new /obj/item/stack/sheet/rglass(get_turf(src))
-					heat_proof_finished = 0
+					heat_proof_finished = ZERO
 				else
 					new /obj/item/stack/sheet/glass(get_turf(src))
-				glass = 0
+				glass = ZERO
 		else if(!anchored)
 			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \
 								"<span class='notice'>You start to disassemble the airlock assembly...</span>")
@@ -93,7 +93,7 @@
 			var/door_check = 1
 			for(var/obj/machinery/door/D in loc)
 				if(!D.sub_door)
-					door_check = 0
+					door_check = ZERO
 					break
 
 			if(door_check)
@@ -241,7 +241,7 @@
 				//door.req_access = req_access
 				door.electronics = electronics
 				door.heat_proof = heat_proof_finished
-				door.security_level = 0
+				door.security_level = ZERO
 				if(electronics.one_access)
 					door.req_one_access = electronics.accesses
 				else

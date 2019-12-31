@@ -91,7 +91,7 @@
 
 /obj/vehicle/sealed/Destroy()
 	DumpMobs()
-	explosion(loc, 0, 1, 2, 3, 0)
+	explosion(loc, ZERO, 1, 2, 3, ZERO)
 	return ..()
 
 /obj/vehicle/sealed/proc/DumpMobs(randomstep = TRUE)

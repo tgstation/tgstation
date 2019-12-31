@@ -38,7 +38,7 @@
 	equip_cooldown = 20
 	var/mob/living/carbon/patient = null
 	var/inject_amount = 10
-	salvageable = 0
+	salvageable = ZERO
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/Destroy()
 	for(var/atom/movable/AM in src)
@@ -46,7 +46,7 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/Exit(atom/movable/O)
-	return 0
+	return ZERO
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/action(mob/living/carbon/target)
 	if(!action_checks(target))
@@ -153,7 +153,7 @@
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/get_patient_dam()
 	var/t1
 	switch(patient.stat)
-		if(0)
+		if(ZERO)
 			t1 = "Conscious"
 		if(1)
 			t1 = "Unconscious"
@@ -175,7 +175,7 @@
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/get_patient_reagents()
 	if(patient.reagents)
 		for(var/datum/reagent/R in patient.reagents.reagent_list)
-			if(R.volume > 0)
+			if(R.volume > ZERO)
 				. += "[R]: [round(R.volume,0.01)]<br />"
 	return . || "None"
 
@@ -184,14 +184,14 @@
 	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG = locate(/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun) in chassis
 	if(SG && SG.reagents && islist(SG.reagents.reagent_list))
 		for(var/datum/reagent/R in SG.reagents.reagent_list)
-			if(R.volume > 0)
+			if(R.volume > ZERO)
 				output += "<a href=\"?src=[REF(src)];inject=[REF(R)]\">Inject [R.name]</a><br />"
 	return output
 
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/inject_reagent(datum/reagent/R,obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG)
 	if(!R || !patient || !SG || !(SG in chassis.equipment))
-		return 0
+		return ZERO
 	var/to_inject = min(R.volume, inject_amount)
 	if(to_inject && patient.reagents.get_reagent_amount(R.type) + to_inject <= inject_amount*2)
 		occupant_message("<span class='notice'>Injecting [patient] with [to_inject] units of [R.name].</span>")
@@ -225,7 +225,7 @@
 	var/mob/living/carbon/M = patient
 	if(!M)
 		return
-	if(M.health > 0)
+	if(M.health > ZERO)
 		M.adjustOxyLoss(-1)
 	M.AdjustStun(-80)
 	M.AdjustKnockdown(-80)
@@ -255,7 +255,7 @@
 	var/max_volume = 75 //max reagent volume
 	var/synth_speed = 5 //[num] reagent units per cycle
 	energy_drain = 10
-	var/mode = 0 //0 - fire syringe, 1 - analyze reagents.
+	var/mode = ZERO //ZERO - fire syringe, 1 - analyze reagents.
 	range = MECHA_MELEE|MECHA_RANGED
 	equip_cooldown = 10
 
@@ -278,7 +278,7 @@
 	if(..())
 		if(istype(M))
 			return 1
-	return 0
+	return ZERO
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/get_equip_info()
 	var/output = ..()
@@ -300,7 +300,7 @@
 	if(!syringes.len)
 		occupant_message("<span class=\"alert\">No syringes loaded.</span>")
 		return
-	if(reagents.total_volume<=0)
+	if(reagents.total_volume<=ZERO)
 		occupant_message("<span class=\"alert\">No available reagents to load syringe with.</span>")
 		return
 	var/turf/trg = get_turf(target)
@@ -313,9 +313,9 @@
 	playsound(chassis, 'sound/items/syringeproj.ogg', 50, TRUE)
 	log_message("Launched [mechsyringe] from [src], targeting [target].", LOG_MECHA)
 	var/mob/originaloccupant = chassis.occupant
-	spawn(0)
+	spawn(ZERO)
 		src = null //if src is deleted, still process the syringe
-		for(var/i=0, i<6, i++)
+		for(var/i=ZERO, i<6, i++)
 			if(!mechsyringe)
 				break
 			if(step_towards(mechsyringe,trg))
@@ -358,8 +358,8 @@
 		update_equip_info()
 		return
 	if (href_list["select_reagents"])
-		processed_reagents.len = 0
-		var/m = 0
+		processed_reagents.len = ZERO
+		var/m = ZERO
 		var/message
 		for(var/i=1 to known_reagents.len)
 			if(m>=synth_speed)
@@ -441,7 +441,7 @@
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/get_current_reagents()
 	var/output
 	for(var/datum/reagent/R in reagents.reagent_list)
-		if(R.volume > 0)
+		if(R.volume > ZERO)
 			output += "[R]: [round(R.volume,0.001)] - <a href=\"?src=[REF(src)];purge_reagent=[R]\">Purge Reagent</a><br />"
 	if(output)
 		output += "Total: [round(reagents.total_volume,0.001)]/[reagents.maximum_volume] - <a href=\"?src=[REF(src)];purge_all=1\">Purge All</a>"
@@ -451,15 +451,15 @@
 	if(syringes.len<max_syringes)
 		if(get_dist(src,S) >= 2)
 			occupant_message("<span class='warning'>The syringe is too far away!</span>")
-			return 0
+			return ZERO
 		for(var/obj/structure/D in S.loc)//Basic level check for structures in the way (Like grilles and windows)
 			if(!(D.CanPass(S,src.loc)))
 				occupant_message("<span class='warning'>Unable to load syringe!</span>")
-				return 0
+				return ZERO
 		for(var/obj/machinery/door/D in S.loc)//Checks for doors
 			if(!(D.CanPass(S,src.loc)))
 				occupant_message("<span class='warning'>Unable to load syringe!</span>")
-				return 0
+				return ZERO
 		S.reagents.trans_to(src, S.reagents.total_volume, transfered_by = chassis.occupant)
 		S.forceMove(src)
 		syringes += S
@@ -467,15 +467,15 @@
 		update_equip_info()
 		return 1
 	occupant_message("<span class='warning'>[src]'s syringe chamber is full!</span>")
-	return 0
+	return ZERO
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/analyze_reagents(atom/A)
 	if(get_dist(src,A) >= 4)
 		occupant_message("<span class='notice'>The object is too far away!</span>")
-		return 0
+		return ZERO
 	if(!A.reagents || ismob(A))
 		occupant_message("<span class='warning'>No reagent info gained from [A].</span>")
-		return 0
+		return ZERO
 	occupant_message("<span class='notice'>Analyzing reagents...</span>")
 	for(var/datum/reagent/R in A.reagents.reagent_list)
 		if(R.can_synth && add_known_reagent(R.type,R.name))
@@ -489,7 +489,7 @@
 		known_reagents += r_id
 		known_reagents[r_id] = r_name
 		return 1
-	return 0
+	return ZERO
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/update_equip_info()
 	if(..())
@@ -525,7 +525,7 @@
 	icon_state = "mecha_medigun"
 	energy_drain = 10
 	range = MECHA_MELEE|MECHA_RANGED
-	equip_cooldown = 0
+	equip_cooldown = ZERO
 	var/obj/item/gun/medbeam/mech/medigun
 	custom_materials = list(/datum/material/iron = 15000, /datum/material/glass = 8000, /datum/material/plasma = 3000, /datum/material/gold = 8000, /datum/material/diamond = 2000)
 	material_flags = MATERIAL_NO_EFFECTS

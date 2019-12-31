@@ -54,7 +54,7 @@
 
 		dat += "<br>Linked Network Entities: <ol>"
 
-		var/i = 0
+		var/i = ZERO
 		for(var/obj/machinery/telecomms/T in links)
 			i++
 			if(T.hide && !hide)
@@ -64,7 +64,7 @@
 
 		dat += "<br>Filtering Frequencies: "
 
-		i = 0
+		i = ZERO
 		if(length(freq_listening))
 			for(var/x in freq_listening)
 				i++
@@ -154,7 +154,7 @@
 					change_frequency = newfreq
 					temp = "<font color = #666633>-% New frequency to change to assigned: \"[newfreq] GHz\" %-</font>"
 			else
-				change_frequency = 0
+				change_frequency = ZERO
 				temp = "<font color = #666633>-% Frequency changing deactivated %-</font>"
 
 

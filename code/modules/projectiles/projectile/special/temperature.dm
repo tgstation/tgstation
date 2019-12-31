@@ -1,13 +1,13 @@
 /obj/projectile/temp
 	name = "freeze beam"
 	icon_state = "ice_2"
-	damage = 0
+	damage = ZERO
 	damage_type = BURN
 	nodamage = FALSE
 	flag = "energy"
 	var/temperature = 100
 
-/obj/projectile/temp/on_hit(atom/target, blocked = 0)
+/obj/projectile/temp/on_hit(atom/target, blocked = ZERO)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/L = target

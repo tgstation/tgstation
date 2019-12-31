@@ -18,7 +18,7 @@
 	var/escape_chance = 0 //chance per "fiddle" to get the trap off your head
 	var/struggling = FALSE
 
-	var/time_since_last_beep = 0
+	var/time_since_last_beep = ZERO
 	var/datum/looping_sound/reverse_bear_trap/soundloop
 	var/datum/looping_sound/reverse_bear_trap_beep/soundloop2
 
@@ -53,7 +53,7 @@
 				struggling = TRUE
 				var/fear_string
 				switch(time_left)
-					if(0 to 5)
+					if(ZERO to 5)
 						fear_string = "agonizingly"
 					if(5 to 20)
 						fear_string = "desperately"

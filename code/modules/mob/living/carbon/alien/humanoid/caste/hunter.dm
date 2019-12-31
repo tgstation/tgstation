@@ -50,7 +50,7 @@
 		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/leap_end))
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_end()
-	leaping = 0
+	leaping = ZERO
 	weather_immunities -= "lava"
 	update_icons()
 
@@ -76,7 +76,7 @@
 			else
 				Paralyze(40, 1, 1)
 
-			toggle_leap(0)
+			toggle_leap(ZERO)
 		else if(hit_atom.density && !hit_atom.CanPass(src))
 			visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='alertalien'>[src] smashes into [hit_atom]!</span>")
 			Paralyze(40, 1, 1)

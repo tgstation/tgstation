@@ -49,7 +49,7 @@
 				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
 			else if(isobj(target))
 				var/obj/O = target
-				O.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
+				O.take_damage(15, BRUTE, ZERO, FALSE, get_dir(chassis, target))
 				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
 			else
 				set_ready_state(TRUE)
@@ -96,7 +96,7 @@
 	if(..())
 		if(istype(M, /obj/mecha/working) || istype(M, /obj/mecha/combat))
 			return 1
-	return 0
+	return ZERO
 
 /obj/item/mecha_parts/mecha_equipment/drill/attach(obj/mecha/M)
 	..()
@@ -150,9 +150,9 @@
 	name = "exosuit mining scanner"
 	desc = "Equipment for engineering and combat exosuits. It will automatically check surrounding rock for useful minerals."
 	icon_state = "mecha_analyzer"
-	selectable = 0
+	selectable = ZERO
 	equip_cooldown = 15
-	var/scanning_time = 0
+	var/scanning_time = ZERO
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/Initialize()
 	. = ..()

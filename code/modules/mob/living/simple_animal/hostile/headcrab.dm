@@ -17,12 +17,12 @@
 	faction = list("creature")
 	robust_searching = 1
 	stat_attack = DEAD
-	obj_damage = 0
+	obj_damage = ZERO
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	speak_emote = list("squeaks")
 	ventcrawler = VENTCRAWLER_ALWAYS
 	var/datum/mind/origin
-	var/egg_lain = 0
+	var/egg_lain = ZERO
 
 /mob/living/simple_animal/hostile/headcrab/proc/Infect(mob/living/carbon/victim)
 	var/obj/item/organ/body_egg/changeling_egg/egg = new(victim)

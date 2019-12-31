@@ -6,7 +6,7 @@
 	weight = 2
 	typepath = /datum/round_event/wizard/shuffleloc
 	max_occurrences = 5
-	earliest_start = 0 MINUTES
+	earliest_start = ZERO MINUTES
 
 /datum/round_event/wizard/shuffleloc/start()
 	var/list/moblocs = list()
@@ -32,7 +32,7 @@
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		var/datum/effect_system/smoke_spread/smoke = new
-		smoke.set_up(0, H.loc)
+		smoke.set_up(ZERO, H.loc)
 		smoke.start()
 
 //---//
@@ -42,7 +42,7 @@
 	weight = 4
 	typepath = /datum/round_event/wizard/shufflenames
 	max_occurrences = 5
-	earliest_start = 0 MINUTES
+	earliest_start = ZERO MINUTES
 
 /datum/round_event/wizard/shufflenames/start()
 	var/list/mobnames = list()
@@ -66,7 +66,7 @@
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		var/datum/effect_system/smoke_spread/smoke = new
-		smoke.set_up(0, H.loc)
+		smoke.set_up(ZERO, H.loc)
 		smoke.start()
 
 //---//
@@ -76,7 +76,7 @@
 	weight = 1
 	typepath = /datum/round_event/wizard/shuffleminds
 	max_occurrences = 3
-	earliest_start = 0 MINUTES
+	earliest_start = ZERO MINUTES
 
 /datum/round_event/wizard/shuffleminds/start()
 	var/list/mobs	 = list()
@@ -100,5 +100,5 @@
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		var/datum/effect_system/smoke_spread/smoke = new
-		smoke.set_up(0, H.loc)
+		smoke.set_up(ZERO, H.loc)
 		smoke.start()

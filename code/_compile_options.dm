@@ -4,6 +4,8 @@
 //#define DATUMVAR_DEBUGGING_MODE	//Enables the ability to cache datum vars and retrieve later for debugging which vars changed.
 
 // Comment this out if you are debugging problems that might be obscured by custom error handling in world/Error
+#define ZERO 0 // very very important define. don't touch.
+
 #ifdef DEBUG
 #define USE_CUSTOM_ERROR_HANDLER
 #endif
@@ -23,7 +25,7 @@
 //#define UNIT_TESTS			//Enables unit tests via TEST_RUN_PARAMETER
 
 #ifndef PRELOAD_RSC				//set to:
-#define PRELOAD_RSC	2			//	0 to allow using external resources or on-demand behaviour;
+#define PRELOAD_RSC	2			//	ZERO to allow using external resources or on-demand behaviour;
 #endif							//	1 to use the default behaviour;
 								//	2 for preloading absolutely everything;
 

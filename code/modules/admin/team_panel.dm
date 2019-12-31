@@ -127,7 +127,7 @@
 
 //After a bit of consideration i block team deletion if there's any members left until unified objective handling is in.
 /datum/team/proc/admin_delete(mob/user)
-	if(members.len > 0)
+	if(members.len > ZERO)
 		to_chat(user,"Team has members left, remove them first and make sure you know what you're doing.")
 		return
 	qdel(src)

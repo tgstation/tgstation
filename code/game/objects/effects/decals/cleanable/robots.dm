@@ -13,18 +13,18 @@
 	beauty = -50
 
 /obj/effect/decal/cleanable/robot_debris/proc/streak(list/directions)
-	set waitfor = 0
+	set waitfor = ZERO
 	var/direction = pick(directions)
-	for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
+	for (var/i = ZERO, i < pick(1, 200; 2, 150; 3, 50), i++)
 		sleep(2)
-		if (i > 0)
+		if (i > ZERO)
 			if (prob(40))
 				new /obj/effect/decal/cleanable/oil/streak(src.loc)
 			else if (prob(10))
 				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 				s.set_up(3, 1, src)
 				s.start()
-		if (!step_to(src, get_step(src, direction), 0))
+		if (!step_to(src, get_step(src, direction), ZERO))
 			break
 
 /obj/effect/decal/cleanable/robot_debris/ex_act()

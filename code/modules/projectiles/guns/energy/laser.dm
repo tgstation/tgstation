@@ -13,7 +13,7 @@
 	name = "practice laser gun"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
-	clumsy_check = 0
+	clumsy_check = ZERO
 	item_flags = NONE
 
 /obj/item/gun/energy/laser/retro
@@ -66,7 +66,7 @@
 	icon_state = "cshotgun"
 	item_state = "shotgun"
 	desc = "A combat shotgun gutted and refitted with an internal laser system. Can switch between taser and scattered disabler shots."
-	shaded_charge = 0
+	shaded_charge = ZERO
 	pin = /obj/item/firing_pin/implant/mindshield
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter/disabler, /obj/item/ammo_casing/energy/electrode)
 

@@ -25,7 +25,7 @@
 	trash = /obj/item/grown/corncob
 	bitesize_mod = 2
 	foodtype = VEGETABLES
-	juice_results = list(/datum/reagent/consumable/corn_starch = 0)
+	juice_results = list(/datum/reagent/consumable/corn_starch = ZERO)
 	tastes = list("corn" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/whiskey
 
@@ -35,7 +35,7 @@
 	icon_state = "corncob"
 	item_state = "corncob"
 	w_class = WEIGHT_CLASS_TINY
-	throwforce = 0
+	throwforce = ZERO
 	throw_speed = 3
 	throw_range = 7
 	grind_results = list(/datum/reagent/cellulose = 10) //really partially hemicellulose
@@ -66,7 +66,7 @@
 	icon_state = "snapcorn"
 	item_state = "corncob"
 	w_class = WEIGHT_CLASS_TINY
-	throwforce = 0
+	throwforce = ZERO
 	throw_speed = 3
 	throw_range = 7
 	var/snap_pops = 1

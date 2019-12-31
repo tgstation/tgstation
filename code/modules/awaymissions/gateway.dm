@@ -7,7 +7,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	icon_state = "off"
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	var/active = 0
+	var/active = ZERO
 	var/checkparts = TRUE
 	var/list/obj/effect/landmark/randomspawns = list()
 	var/calibrated = TRUE
@@ -25,9 +25,9 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 
 /obj/machinery/gateway/proc/toggleoff()
 	for(var/obj/machinery/gateway/G in linked)
-		G.active = 0
+		G.active = ZERO
 		G.update_icon()
-	active = 0
+	active = ZERO
 	update_icon()
 
 /obj/machinery/gateway/proc/detect()
@@ -96,7 +96,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	use_power = IDLE_POWER_USE
 
 	//warping vars
-	var/wait = 0				//this just grabs world.time at world start
+	var/wait = ZERO				//this just grabs world.time at world start
 	var/obj/machinery/gateway/centeraway/awaygate = null
 	can_link = TRUE
 

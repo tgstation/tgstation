@@ -7,19 +7,19 @@ field_generator power level display
    named 'Field_Gen +p[num]' where 'num' ranges from 1 to 'num_power_levels'
 
    The power level is displayed using overlays. The current displayed power level is stored in 'powerlevel'.
-   The overlay in use and the powerlevel variable must be kept in sync.  A powerlevel equal to 0 means that
+   The overlay in use and the powerlevel variable must be kept in sync.  A powerlevel equal to ZERO means that
    no power level overlay is currently in the overlays list.
    -Aygar
 */
 
 #define field_generator_max_power 250
 
-#define FG_OFFLINE 0
+#define FG_OFFLINE ZERO
 #define FG_CHARGING 1
 #define FG_ONLINE 2
 
 //field generator construction defines
-#define FG_UNSECURED 0
+#define FG_UNSECURED ZERO
 #define FG_SECURED 1
 #define FG_WELDED 2
 
@@ -36,14 +36,14 @@ field_generator power level display
 	//100% immune to lasers and energy projectiles since it absorbs their energy.
 	armor = list("melee" = 25, "bullet" = 10, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 	var/const/num_power_levels = 6	// Total number of power level icon has
-	var/power_level = 0
+	var/power_level = ZERO
 	var/active = FG_OFFLINE
 	var/power = 20  // Current amount of power
 	var/state = FG_UNSECURED
-	var/warming_up = 0
+	var/warming_up = ZERO
 	var/list/obj/machinery/field/containment/fields
 	var/list/obj/machinery/field/generator/connected_gens
-	var/clean_up = 0
+	var/clean_up = ZERO
 
 /obj/machinery/field/generator/update_icon()
 	cut_overlays()
@@ -122,7 +122,7 @@ field_generator power level display
 			to_chat(user, "<span class='warning'>[src] needs to be wrenched to the floor!</span>")
 
 		if(FG_SECURED)
-			if(!I.tool_start_check(user, amount=0))
+			if(!I.tool_start_check(user, amount=ZERO))
 				return TRUE
 			user.visible_message("<span class='notice'>[user] starts to weld [src] to the floor.</span>", \
 				"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
@@ -132,7 +132,7 @@ field_generator power level display
 				to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
 
 		if(FG_WELDED)
-			if(!I.tool_start_check(user, amount=0))
+			if(!I.tool_start_check(user, amount=ZERO))
 				return TRUE
 			user.visible_message("<span class='notice'>[user] starts to cut [src] free from the floor.</span>", \
 				"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
@@ -156,7 +156,7 @@ field_generator power level display
 
 /obj/machinery/field/generator/blob_act(obj/structure/blob/B)
 	if(active)
-		return 0
+		return ZERO
 	else
 		..()
 
@@ -186,11 +186,11 @@ field_generator power level display
 	addtimer(CALLBACK(src, .proc/cool_down), 50)
 
 /obj/machinery/field/generator/proc/cool_down()
-	if(active || warming_up <= 0)
+	if(active || warming_up <= ZERO)
 		return
 	warming_up--
 	update_icon()
-	if(warming_up > 0)
+	if(warming_up > ZERO)
 		addtimer(CALLBACK(src, .proc/cool_down), 50)
 
 /obj/machinery/field/generator/proc/turn_on()
@@ -219,14 +219,14 @@ field_generator power level display
 		visible_message("<span class='danger'>The [name] shuts down!</span>", "<span class='hear'>You hear something shutting down.</span>")
 		turn_off()
 		investigate_log("ran out of power and <font color='red'>deactivated</font>", INVESTIGATE_SINGULO)
-		power = 0
+		power = ZERO
 		check_power_level()
-		return 0
+		return ZERO
 
 //This could likely be better, it tends to start loopin if you have a complex generator loop setup.  Still works well enough to run the engine fields will likely recode the field gens and fields sometime -Mport
-/obj/machinery/field/generator/proc/draw_power(draw = 0, failsafe = FALSE, obj/machinery/field/generator/G = null, obj/machinery/field/generator/last = null)
+/obj/machinery/field/generator/proc/draw_power(draw = ZERO, failsafe = FALSE, obj/machinery/field/generator/G = null, obj/machinery/field/generator/last = null)
 	if((G && (G == src)) || (failsafe >= 8))//Loopin, set fail
-		return 0
+		return ZERO
 	else
 		failsafe++
 
@@ -236,7 +236,7 @@ field_generator power level display
 
 	else//Need more power
 		draw -= power
-		power = 0
+		power = ZERO
 		for(var/CG in connected_gens)
 			var/obj/machinery/field/generator/FG = CG
 			if(FG == last)//We just asked you
@@ -245,12 +245,12 @@ field_generator power level display
 				if(FG.draw_power(draw,failsafe,G,src))//Can you take the load
 					return 1
 				else
-					return 0
+					return ZERO
 			else//We are askin another for power
 				if(FG.draw_power(draw,failsafe,src,src))
 					return 1
 				else
-					return 0
+					return ZERO
 
 
 /obj/machinery/field/generator/proc/start_fields()
@@ -269,22 +269,22 @@ field_generator power level display
 /obj/machinery/field/generator/proc/setup_field(NSEW)
 	var/turf/T = loc
 	if(!istype(T))
-		return 0
+		return ZERO
 
 	var/obj/machinery/field/generator/G = null
-	var/steps = 0
+	var/steps = ZERO
 	if(!NSEW)//Make sure its ran right
-		return 0
-	for(var/dist in 0 to 7) // checks out to 8 tiles away for another generator
+		return ZERO
+	for(var/dist in ZERO to 7) // checks out to 8 tiles away for another generator
 		T = get_step(T, NSEW)
 		if(T.density)//We cant shoot a field though this
-			return 0
+			return ZERO
 
 		G = locate(/obj/machinery/field/generator) in T
 		if(G)
 			steps -= 1
 			if(!G.active)
-				return 0
+				return ZERO
 			break
 
 		for(var/TC in T.contents)
@@ -292,15 +292,15 @@ field_generator power level display
 			if(ismob(A))
 				continue
 			if(A.density)
-				return 0
+				return ZERO
 
 		steps++
 
 	if(!G)
-		return 0
+		return ZERO
 
 	T = loc
-	for(var/dist in 0 to steps) // creates each field tile
+	for(var/dist in ZERO to steps) // creates each field tile
 		var/field_dir = get_dir(T,get_step(G.loc, NSEW))
 		T = get_step(T, NSEW)
 		if(!locate(/obj/machinery/field/containment) in T)
@@ -331,7 +331,7 @@ field_generator power level display
 		if(!FG.clean_up)//Makes the other gens clean up as well
 			FG.cleanup()
 		connected_gens -= FG
-	clean_up = 0
+	clean_up = ZERO
 	update_icon()
 
 	//This is here to help fight the "hurr durr, release singulo cos nobody will notice before the

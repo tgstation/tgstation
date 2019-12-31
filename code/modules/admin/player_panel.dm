@@ -29,7 +29,7 @@
 
 						var maintable_data = document.getElementById('maintable_data');
 						var ltr = maintable_data.getElementsByTagName("tr");
-						for ( var i = 0; i < ltr.length; ++i )
+						for ( var i = ZERO; i < ltr.length; ++i )
 						{
 							try{
 								var tr = ltr\[i\];
@@ -49,7 +49,7 @@
 						}
 					}
 
-					var count = 0;
+					var count = ZERO;
 					var index = -1;
 					var debug = document.getElementById("debug");
 
@@ -81,7 +81,7 @@
 					body += "<a href='?_src_=holder;[HrefToken()];subtlemessage="+ref+"'>SM</a> - "
 					body += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow="+ref+"'>FLW</a> - "
 					body += "<a href='?_src_=holder;[HrefToken()];individuallog="+ref+"'>LOGS</a><br>"
-					if(antagonist > 0)
+					if(antagonist > ZERO)
 						body += "<font size='2'><a href='?_src_=holder;[HrefToken()];check_antagonist=1'><font color='red'><b>Antagonist</b></font></a></font>";
 
 					body += "</td></tr></table>";
@@ -97,14 +97,14 @@
 
 						var id = span.getAttribute("id");
 
-						if(!id || !(id.indexOf("item")==0))
+						if(!id || !(id.indexOf("item")==ZERO))
 							continue;
 
 						var pass = 1;
 
 						for(var j = 0; j < locked_tabs.length; j++){
 							if(locked_tabs\[j\]==id){
-								pass = 0;
+								pass = ZERO;
 								break;
 							}
 						}
@@ -133,7 +133,7 @@
 					var pass = 1;
 					for(var j = 0; j < locked_tabs.length; j++){
 						if(locked_tabs\[j\]==id){
-							pass = 0;
+							pass = ZERO;
 							break;
 						}
 					}
@@ -150,8 +150,8 @@
 
 				function removeFromLocked(id,link_id,notice_span_id){
 					//document.write("a");
-					var index = 0;
-					var pass = 0;
+					var index = ZERO;
+					var pass = ZERO;
 					for(var j = 0; j < locked_tabs.length; j++){
 						if(locked_tabs\[j\]==id){
 							pass = 1;
@@ -212,7 +212,7 @@
 		if(M.ckey)
 
 			var/color = "#e6e6e6"
-			if(i%2 == 0)
+			if(i%2 == ZERO)
 				color = "#f2f2f2"
 			var/is_antagonist = is_special_character(M)
 

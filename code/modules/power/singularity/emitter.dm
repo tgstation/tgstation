@@ -1,5 +1,5 @@
 //emitter construction defines
-#define EMITTER_UNWRENCHED 0
+#define EMITTER_UNWRENCHED ZERO
 #define EMITTER_WRENCHED 1
 #define EMITTER_WELDED 2
 
@@ -25,8 +25,8 @@
 	var/fire_delay = 100
 	var/maximum_fire_delay = 100
 	var/minimum_fire_delay = 20
-	var/last_shot = 0
-	var/shot_number = 0
+	var/last_shot = ZERO
+	var/shot_number = ZERO
 	var/state = EMITTER_UNWRENCHED
 	var/locked = FALSE
 	var/allow_switch_interact = TRUE
@@ -37,11 +37,11 @@
 
 	var/obj/item/gun/energy/gun
 	var/list/gun_properties
-	var/mode = 0
+	var/mode = ZERO
 
 	// The following 3 vars are mostly for the prototype
 	var/manual = FALSE
-	var/charge = 0
+	var/charge = ZERO
 	var/last_projectile_params
 
 
@@ -137,7 +137,7 @@
 			else
 				active = TRUE
 				to_chat(user, "<span class='notice'>You turn on [src].</span>")
-				shot_number = 0
+				shot_number = ZERO
 				fire_delay = maximum_fire_delay
 
 			message_admins("Emitter turned [active ? "ON" : "OFF"] by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
@@ -223,7 +223,7 @@
 			shot_number ++
 		else
 			fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
-			shot_number = 0
+			shot_number = ZERO
 	return P
 
 /obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user, silent)
@@ -262,7 +262,7 @@
 		if(EMITTER_UNWRENCHED)
 			to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")
 		if(EMITTER_WRENCHED)
-			if(!I.tool_start_check(user, amount=0))
+			if(!I.tool_start_check(user, amount=ZERO))
 				return TRUE
 			user.visible_message("<span class='notice'>[user.name] starts to weld the [name] to the floor.</span>", \
 				"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
@@ -273,7 +273,7 @@
 				connect_to_network()
 				update_cable_icons_on_turf(get_turf(src))
 		if(EMITTER_WELDED)
-			if(!I.tool_start_check(user, amount=0))
+			if(!I.tool_start_check(user, amount=ZERO))
 				return TRUE
 			user.visible_message("<span class='notice'>[user.name] starts to cut the [name] free from the floor.</span>", \
 				"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
@@ -375,15 +375,15 @@
 
 //BUCKLE HOOKS
 
-/obj/machinery/power/emitter/prototype/unbuckle_mob(mob/living/buckled_mob,force = 0)
+/obj/machinery/power/emitter/prototype/unbuckle_mob(mob/living/buckled_mob,force = ZERO)
 	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
 	manual = FALSE
 	for(var/obj/item/I in buckled_mob.held_items)
 		if(istype(I, /obj/item/turret_control))
 			qdel(I)
 	if(istype(buckled_mob))
-		buckled_mob.pixel_x = 0
-		buckled_mob.pixel_y = 0
+		buckled_mob.pixel_x = ZERO
+		buckled_mob.pixel_y = ZERO
 		if(buckled_mob.client)
 			buckled_mob.client.change_view(CONFIG_GET(string/default_view))
 	auto.Remove(buckled_mob)
@@ -458,7 +458,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT | NOBLUDGEON
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	var/delay = 0
+	var/delay = ZERO
 
 /obj/item/turret_control/Initialize()
 	. = ..()
@@ -472,7 +472,7 @@
 	switch(E.dir)
 		if(NORTH)
 			E.layer = 3.9
-			user.pixel_x = 0
+			user.pixel_x = ZERO
 			user.pixel_y = -14
 		if(NORTHEAST)
 			E.layer = 3.9
@@ -481,14 +481,14 @@
 		if(EAST)
 			E.layer = 4.1
 			user.pixel_x = -14
-			user.pixel_y = 0
+			user.pixel_y = ZERO
 		if(SOUTHEAST)
 			E.layer = 3.9
 			user.pixel_x = -8
 			user.pixel_y = 12
 		if(SOUTH)
 			E.layer = 4.1
-			user.pixel_x = 0
+			user.pixel_x = ZERO
 			user.pixel_y = 14
 		if(SOUTHWEST)
 			E.layer = 3.9
@@ -497,7 +497,7 @@
 		if(WEST)
 			E.layer = 4.1
 			user.pixel_x = 14
-			user.pixel_y = 0
+			user.pixel_y = ZERO
 		if(NORTHWEST)
 			E.layer = 3.9
 			user.pixel_x = 8

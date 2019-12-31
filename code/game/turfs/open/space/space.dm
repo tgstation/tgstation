@@ -2,7 +2,7 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = "0"
 	name = "\proper space"
-	intact = 0
+	intact = ZERO
 
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
@@ -79,7 +79,7 @@
 				continue
 			set_light(2)
 			return
-		set_light(0)
+		set_light(ZERO)
 
 /turf/open/space/attack_paw(mob/user)
 	return attack_hand(user)
@@ -139,7 +139,7 @@
 		var/tx = destination_x
 		var/ty = destination_y
 		var/turf/DT = locate(tx, ty, destination_z)
-		var/itercount = 0
+		var/itercount = ZERO
 		while(DT.density || istype(DT.loc,/area/shuttle)) // Extend towards the center of the map, trying to look for a better place to arrive
 			if (itercount++ >= 100)
 				log_game("SPACE Z-TRANSIT ERROR: Could not find a safe place to land [A] within 100 iterations.")
@@ -177,7 +177,7 @@
 /turf/open/space/can_have_cabling()
 	if(locate(/obj/structure/lattice/catwalk, src))
 		return 1
-	return 0
+	return ZERO
 
 /turf/open/space/is_transition_turf()
 	if(destination_x || destination_y || destination_z)
@@ -185,7 +185,7 @@
 
 
 /turf/open/space/acid_act(acidpwr, acid_volume)
-	return 0
+	return ZERO
 
 /turf/open/space/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/space.dmi'

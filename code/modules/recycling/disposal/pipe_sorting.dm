@@ -24,7 +24,7 @@
 // Mail sorting junction, uses package tags to sort objects.
 /obj/structure/disposalpipe/sorting/mail
 	flip_type = /obj/structure/disposalpipe/sorting/mail/flip
-	var/sortType = 0
+	var/sortType = ZERO
 	// sortType is to be set in map editor.
 	// Supports both singular numbers and strings of numbers similar to access level strings.
 	// Look at the list called TAGGERLOCATIONS in /_globalvars/lists/flavor_misc.dm

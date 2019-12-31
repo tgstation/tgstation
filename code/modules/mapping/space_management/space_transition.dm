@@ -59,7 +59,7 @@
 /datum/controller/subsystem/mapping/proc/setup_map_transitions() //listamania
 	var/list/SLS = list()
 	var/list/cached_z_list = z_list
-	var/conf_set_len = 0
+	var/conf_set_len = ZERO
 	for(var/A in cached_z_list)
 		var/datum/space_level/D = A
 		if (D.linkage == CROSSLINKED)

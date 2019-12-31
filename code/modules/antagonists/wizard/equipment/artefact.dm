@@ -20,10 +20,10 @@
 	var/spawn_amt = 1
 	var/activate_descriptor = "reality"
 	var/rend_desc = "You should run now."
-	var/spawn_fast = 0 //if 1, ignores checking for mobs on loc before spawning
+	var/spawn_fast = ZERO //if 1, ignores checking for mobs on loc before spawning
 
 /obj/item/veilrender/attack_self(mob/user)
-	if(charges > 0)
+	if(charges > ZERO)
 		new /obj/effect/rend(get_turf(user), spawn_type, spawn_amt, rend_desc, spawn_fast)
 		charges--
 		user.visible_message("<span class='boldannounce'>[src] hums with power as [user] deals a blow to [activate_descriptor] itself!</span>")
@@ -39,7 +39,7 @@
 	anchored = TRUE
 	var/spawn_path = /mob/living/simple_animal/cow //defaulty cows to prevent unintentional narsies
 	var/spawn_amt_left = 20
-	var/spawn_fast = 0
+	var/spawn_fast = ZERO
 
 /obj/effect/rend/New(loc, spawn_type, spawn_amt, desc, spawn_fast)
 	src.spawn_path = spawn_type
@@ -55,7 +55,7 @@
 			return
 	new spawn_path(loc)
 	spawn_amt_left--
-	if(spawn_amt_left <= 0)
+	if(spawn_amt_left <= ZERO)
 		qdel(src)
 
 /obj/effect/rend/attackby(obj/item/I, mob/user, params)
@@ -107,8 +107,8 @@
 	icon_state = "reality"
 	pixel_x = -96
 	pixel_y = -96
-	dissipate = 0
-	move_self = 0
+	dissipate = ZERO
+	move_self = ZERO
 	consume_range = 3
 	grav_pull = 4
 	current_size = STAGE_FOUR
@@ -126,7 +126,7 @@
 		if(insaneinthemembrane.sanity < 15)
 			return //they've already seen it and are about to die, or are just too insane to care
 		to_chat(C, "<span class='userdanger'>OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!</span>")
-		insaneinthemembrane.sanity = 0
+		insaneinthemembrane.sanity = ZERO
 		for(var/lore in typesof(/datum/brain_trauma/severe))
 			C.gain_trauma(lore)
 		addtimer(CALLBACK(src, /obj/singularity/wizard.proc/deranged, C), 100)
@@ -134,7 +134,7 @@
 /obj/singularity/wizard/proc/deranged(mob/living/carbon/C)
 	if(!C || C.stat == DEAD)
 		return
-	C.vomit(0, TRUE, TRUE, 3, TRUE)
+	C.vomit(ZERO, TRUE, TRUE, 3, TRUE)
 	C.spew_organ(3, 2)
 	C.death()
 
@@ -202,7 +202,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	var/list/spooky_scaries = list()
-	var/unlimited = 0
+	var/unlimited = ZERO
 
 /obj/item/necromantic_stone/unlimited
 	unlimited = 1
@@ -232,7 +232,7 @@
 		to_chat(user, "<span class='warning'>This artifact can only affect three undead at a time!</span>")
 		return
 
-	M.set_species(/datum/species/skeleton, icon_update=0)
+	M.set_species(/datum/species/skeleton, icon_update=ZERO)
 	M.revive(full_heal = TRUE, admin_revive = TRUE)
 	spooky_scaries |= M
 	to_chat(M, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
@@ -283,7 +283,7 @@
 	var/list/mob/living/carbon/human/possible = list()
 	var/obj/item/voodoo_link = null
 	var/cooldown_time = 30 //3s
-	var/cooldown = 0
+	var/cooldown = ZERO
 	max_integrity = 10
 	resistance_flags = FLAMMABLE
 
@@ -300,7 +300,7 @@
 		else if(istype(I, /obj/item/bikehorn))
 			to_chat(target, "<span class='userdanger'>HONK</span>")
 			SEND_SOUND(target, 'sound/items/airhorn.ogg')
-			target.adjustEarDamage(0,3)
+			target.adjustEarDamage(ZERO,3)
 			GiveHint(target)
 		cooldown = world.time +cooldown_time
 		return
@@ -368,7 +368,7 @@
 		if(prints[md5(H.dna.uni_identity)])
 			possible |= H
 
-/obj/item/voodoo/proc/GiveHint(mob/victim,force=0)
+/obj/item/voodoo/proc/GiveHint(mob/victim,force=ZERO)
 	if(prob(50) || force)
 		var/way = dir2text(get_dir(victim,get_turf(src)))
 		to_chat(victim, "<span class='notice'>You feel a dark presence from [way].</span>")
@@ -402,7 +402,7 @@
 	desc = "One toot on this whistle will send you to a far away land!"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "whistle"
-	var/on_cooldown = 0 //0: usable, 1: in use, 2: on cooldown
+	var/on_cooldown = ZERO //ZERO: usable, 1: in use, 2: on cooldown
 	var/mob/living/carbon/last_user
 
 /obj/item/warpwhistle/proc/interrupted(mob/living/carbon/user)
@@ -434,7 +434,7 @@
 	if(interrupted(user))
 		end_effect(user)
 		return
-	var/breakout = 0
+	var/breakout = ZERO
 	while(breakout < 50)
 		var/turf/potential_T = find_safe_turf()
 		if(T.z != potential_T.z || abs(get_dist_euclidian(potential_T,T)) > 50 - breakout)
@@ -449,7 +449,7 @@
 	if(interrupted(user))
 		return
 	on_cooldown = 2
-	addtimer(VARSET_CALLBACK(src, on_cooldown, 0), 4 SECONDS)
+	addtimer(VARSET_CALLBACK(src, on_cooldown, ZERO), 4 SECONDS)
 
 /obj/item/warpwhistle/Destroy()
 	if(on_cooldown == 1 && last_user) //Flute got dunked somewhere in the teleport
@@ -462,7 +462,7 @@
 	name = "tornado"
 	desc = "This thing sucks!"
 	layer = FLY_LAYER
-	randomdir = 0
+	randomdir = ZERO
 	duration = 40
 	pixel_x = 500
 

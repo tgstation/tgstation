@@ -11,7 +11,7 @@
 		T.AddComponent(/datum/component/thermite, reac_volume)
 
 /datum/reagent/thermite/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(1, 0)
+	M.adjustFireLoss(1, ZERO)
 	..()
 	return TRUE
 
@@ -39,7 +39,7 @@
 /datum/reagent/clf3/on_mob_life(mob/living/carbon/M)
 	M.adjust_fire_stacks(2)
 	var/burndmg = max(0.3*M.fire_stacks, 0.3)
-	M.adjustFireLoss(burndmg, 0)
+	M.adjustFireLoss(burndmg, ZERO)
 	..()
 	return TRUE
 
@@ -105,7 +105,7 @@
 /datum/reagent/gunpowder/on_ex_act()
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/reagents_explosion/e = new()
-	e.set_up(1 + round(volume/6, 1), location, 0, 0, message = 0)
+	e.set_up(1 + round(volume/6, 1), location, ZERO, ZERO, message = ZERO)
 	e.start()
 	holder.clear_reagents()
 
@@ -155,14 +155,14 @@
 /datum/reagent/phlogiston/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	M.adjust_fire_stacks(1)
 	var/burndmg = max(0.3*M.fire_stacks, 0.3)
-	M.adjustFireLoss(burndmg, 0)
+	M.adjustFireLoss(burndmg, ZERO)
 	M.IgniteMob()
 	..()
 
 /datum/reagent/phlogiston/on_mob_life(mob/living/carbon/M)
 	M.adjust_fire_stacks(1)
 	var/burndmg = max(0.3*M.fire_stacks, 0.3)
-	M.adjustFireLoss(burndmg, 0)
+	M.adjustFireLoss(burndmg, ZERO)
 	..()
 	return TRUE
 
@@ -225,12 +225,12 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "charged metal"
 	self_consuming = TRUE
-	var/shock_timer = 0
+	var/shock_timer = ZERO
 
 /datum/reagent/teslium/on_mob_life(mob/living/carbon/M)
 	shock_timer++
 	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
-		shock_timer = 0
+		shock_timer = ZERO
 		M.electrocute_act(rand(5,20), "Teslium in their body", 1, SHOCK_NOGLOVES) //SHOCK_NOGLOVES because it's caused from INSIDE of you
 		playsound(M, "sparks", 50, TRUE)
 	..()
@@ -256,13 +256,13 @@
 
 /datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/carbon/M)
 	if(isjellyperson(M))
-		shock_timer = 0 //immune to shocks
+		shock_timer = ZERO //immune to shocks
 		M.AdjustAllImmobility(-40, FALSE)
-		M.adjustStaminaLoss(-2, 0)
+		M.adjustStaminaLoss(-2, ZERO)
 		if(isluminescent(M))
 			var/mob/living/carbon/human/H = M
 			var/datum/species/jelly/luminescent/L = H.dna.species
-			L.extract_cooldown = max(0, L.extract_cooldown - 20)
+			L.extract_cooldown = max(ZERO, L.extract_cooldown - 20)
 	..()
 
 /datum/reagent/firefighting_foam

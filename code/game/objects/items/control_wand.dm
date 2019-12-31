@@ -60,7 +60,7 @@
 	name = "omni door remote"
 	desc = "This control wand can access any door on the station."
 	icon_state = "gangtool-yellow"
-	region_access = 0
+	region_access = ZERO
 
 /obj/item/door_remote/captain
 	name = "command door remote"

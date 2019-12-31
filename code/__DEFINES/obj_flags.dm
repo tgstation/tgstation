@@ -1,7 +1,7 @@
 // Flags for the obj_flags var on /obj
 
 
-#define EMAGGED					(1<<0)
+#define EMAGGED					(1<<ZERO)
 #define IN_USE					(1<<1) // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
 #define CAN_BE_HIT				(1<<2) //can this be bludgeoned by items?
 #define BEING_SHOCKED			(1<<3) // Whether this thing is currently (already) being shocked by a tesla
@@ -16,7 +16,7 @@
 
 // Flags for the item_flags var on /obj/item
 
-#define BEING_REMOVED			(1<<0)
+#define BEING_REMOVED			(1<<ZERO)
 #define IN_INVENTORY			(1<<1) //is this item equipped into an inventory slot or hand of a mob? used for tooltips
 #define FORCE_STRING_OVERRIDE	(1<<2) // used for tooltips
 #define NEEDS_PERMIT			(1<<3) //Used by security bots to determine if this item is safe for public use.
@@ -31,7 +31,7 @@
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
-#define LAVAPROTECT (1<<0)
+#define LAVAPROTECT (1<<ZERO)
 #define STOPSPRESSUREDAMAGE		(1<<1)	//SUIT and HEAD items which stop pressure damage. To stop you taking all pressure damage you must have both a suit and head item with this flag.
 #define BLOCK_GAS_SMOKE_EFFECT	(1<<2)	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY!
 #define MASKINTERNALS				    (1<<3)		// mask allows internals

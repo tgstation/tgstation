@@ -14,7 +14,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
 	circuit = /obj/item/circuitboard/machine/telecomms/processor
-	var/process_mode = 1 // 1 = Uncompress Signals, 0 = Compress Signals
+	var/process_mode = 1 // 1 = Uncompress Signals, ZERO = Compress Signals
 
 /obj/machinery/telecomms/processor/receive_information(datum/signal/subspace/signal, obj/machinery/telecomms/machine_from)
 	if(!is_freq_listening(signal))
@@ -23,7 +23,7 @@
 	if (!process_mode)
 		signal.data["compression"] = 100 // even more compressed signal
 	else if (signal.data["compression"])
-		signal.data["compression"] = 0 // uncompress subspace signal
+		signal.data["compression"] = ZERO // uncompress subspace signal
 
 	if(istype(machine_from, /obj/machinery/telecomms/bus))
 		relay_direct_information(signal, machine_from) // send the signal back to the machine

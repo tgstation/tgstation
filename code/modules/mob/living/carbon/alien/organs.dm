@@ -13,13 +13,13 @@
 	QDEL_LIST(alien_powers)
 	return ..()
 
-/obj/item/organ/alien/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/alien/Insert(mob/living/carbon/M, special = ZERO)
 	..()
 	for(var/obj/effect/proc_holder/alien/P in alien_powers)
 		M.AddAbility(P)
 
 
-/obj/item/organ/alien/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/alien/Remove(mob/living/carbon/M, special = ZERO)
 	for(var/obj/effect/proc_holder/alien/P in alien_powers)
 		M.RemoveAbility(P)
 	..()
@@ -91,13 +91,13 @@
 	else
 		owner.adjustPlasma(plasma_rate * 0.1)
 
-/obj/item/organ/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/alien/plasmavessel/Insert(mob/living/carbon/M, special = ZERO)
 	..()
 	if(isalien(M))
 		var/mob/living/carbon/alien/A = M
 		A.updatePlasmaDisplay()
 
-/obj/item/organ/alien/plasmavessel/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/alien/plasmavessel/Remove(mob/living/carbon/M, special = ZERO)
 	..()
 	if(isalien(M))
 		var/mob/living/carbon/alien/A = M
@@ -111,15 +111,15 @@
 	zone = BODY_ZONE_HEAD
 	slot = "hivenode"
 	w_class = WEIGHT_CLASS_TINY
-	var/recent_queen_death = 0 //Indicates if the queen died recently, aliens are heavily weakened while this is active.
+	var/recent_queen_death = ZERO //Indicates if the queen died recently, aliens are heavily weakened while this is active.
 	alien_powers = list(/obj/effect/proc_holder/alien/whisper)
 
-/obj/item/organ/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/alien/hivenode/Insert(mob/living/carbon/M, special = ZERO)
 	..()
 	M.faction |= ROLE_ALIEN
 	ADD_TRAIT(M, TRAIT_XENO_IMMUNE, "xeno immune")
 
-/obj/item/organ/alien/hivenode/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/alien/hivenode/Remove(mob/living/carbon/M, special = ZERO)
 	M.faction -= ROLE_ALIEN
 	REMOVE_TRAIT(M, TRAIT_XENO_IMMUNE, "xeno immune")
 	..()
@@ -151,7 +151,7 @@
 /obj/item/organ/alien/hivenode/proc/clear_queen_death()
 	if(QDELETED(src)) //In case the node is deleted
 		return
-	recent_queen_death = 0
+	recent_queen_death = ZERO
 	if(!owner) //In case the xeno is butchered or subjected to surgery after death.
 		return
 	to_chat(owner, "<span class='noticealien'>The pain of the queen's death is easing. You begin to hear the hivemind again.</span>")

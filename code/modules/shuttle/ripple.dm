@@ -9,7 +9,7 @@
 	density = FALSE
 	layer = RIPPLE_LAYER
 	mouse_opacity = MOUSE_OPACITY_ICON
-	alpha = 0
+	alpha = ZERO
 
 /obj/effect/abstract/ripple/Initialize(mapload, time_left)
 	. = ..()

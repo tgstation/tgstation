@@ -136,7 +136,7 @@
 	desc = "Things are about to get spooky!"
 	icon_state = "trumpet"
 	item_state = "trombone"
-	force = 0
+	force = ZERO
 	instrumentId = "trombone"
 	attack_verb = list("played","jazzed","trumpeted","mourned","dooted","spooked")
 
@@ -161,7 +161,7 @@
 	icon_state = "saxophone"
 	item_state = "saxophone"
 	instrumentId = "saxophone"
-	force = 0
+	force = ZERO
 	attack_verb = list("played","jazzed","saxxed","mourned","dooted","spooked")
 
 /obj/item/instrument/saxophone/spectral/Initialize()
@@ -185,7 +185,7 @@
 	instrumentId = "trombone"
 	icon_state = "trombone"
 	item_state = "trombone"
-	force = 0
+	force = ZERO
 	attack_verb = list("played","jazzed","tromboned","mourned","dooted","spooked")
 
 /obj/item/instrument/trombone/spectral/Initialize()
@@ -239,7 +239,7 @@
 	instrumentId = "bikehorn"
 	instrumentExt = "ogg"
 	w_class = WEIGHT_CLASS_TINY
-	force = 0
+	force = ZERO
 	throw_speed = 3
 	throw_range = 15
 	hitsound = 'sound/items/bikehorn.ogg'

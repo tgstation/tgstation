@@ -101,7 +101,7 @@
 		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 		return
 	if(C)
-		var/camera_fail = 0
+		var/camera_fail = ZERO
 		if(!C.can_use() || user.machine != src || user.eye_blind || user.incapacitated())
 			camera_fail = 1
 		else if(iscyborg(user) || long_ranged)
@@ -113,7 +113,7 @@
 
 		if(camera_fail)
 			user.unset_machine()
-			return 0
+			return ZERO
 
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 		if(isAI(user))
@@ -207,7 +207,7 @@
 	network = list("thunder")
 	density = FALSE
 	circuit = null
-	light_power = 0
+	light_power = ZERO
 
 /obj/machinery/computer/security/telescreen/update_icon_state()
 	icon_state = initial(icon_state)

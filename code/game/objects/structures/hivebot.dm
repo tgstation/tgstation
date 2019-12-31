@@ -20,7 +20,7 @@
 /obj/structure/hivebot_beacon/proc/warpbots()
 	icon_state = "def_radar"
 	visible_message("<span class='danger'>[src] turns on!</span>")
-	while(bot_amt > 0)
+	while(bot_amt > ZERO)
 		bot_amt--
 		switch(bot_type)
 			if("norm")

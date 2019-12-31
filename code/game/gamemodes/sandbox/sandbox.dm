@@ -2,7 +2,7 @@
 	name = "sandbox"
 	config_tag = "sandbox"
 	report_type = "sandbox"
-	required_players = 0
+	required_players = ZERO
 
 	announce_span = "info"
 	announce_text = "Build your own station... or just shoot each other!"

@@ -4,7 +4,7 @@
 	..()
 	switch(M.a_intent)
 		if("help")
-			if (health > 0)
+			if (health > ZERO)
 				visible_message("<span class='notice'>[M] [response_help_continuous] [src].</span>", \
 								"<span class='notice'>[M] [response_help_continuous] you.</span>", null, null, M)
 				to_chat(M, "<span class='notice'>You [response_help_simple] [src].</span>")
@@ -44,7 +44,7 @@
 			attack_threshold_check(damage)
 			return 1
 	if (M.a_intent == INTENT_HELP)
-		if (health > 0)
+		if (health > ZERO)
 			visible_message("<span class='notice'>[M.name] [response_help_continuous] [src].</span>", \
 							"<span class='notice'>[M.name] [response_help_continuous] you.</span>", null, COMBAT_MESSAGE_RANGE, M)
 			to_chat(M, "<span class='notice'>You [response_help_simple] [src].</span>")
@@ -98,11 +98,11 @@
 /mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE, armorcheck = "melee")
 	var/temp_damage = damage
 	if(!damage_coeff[damagetype])
-		temp_damage = 0
+		temp_damage = ZERO
 	else
 		temp_damage *= damage_coeff[damagetype]
 
-	if(temp_damage >= 0 && temp_damage <= force_threshold)
+	if(temp_damage >= ZERO && temp_damage <= force_threshold)
 		visible_message("<span class='warning'>[src] looks unharmed!</span>")
 		return FALSE
 	else

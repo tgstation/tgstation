@@ -6,7 +6,7 @@
 	icon_state = "shotguncase"
 	anchored = FALSE
 	density = TRUE
-	opacity = 0
+	opacity = ZERO
 	var/case_type = ""
 	var/gun_category = /obj/item/gun
 	var/open = TRUE

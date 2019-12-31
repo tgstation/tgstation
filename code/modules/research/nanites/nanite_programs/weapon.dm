@@ -10,7 +10,7 @@
 /datum/nanite_program/flesh_eating/active_effect()
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		C.take_bodypart_damage(1, 0, 0)
+		C.take_bodypart_damage(1, ZERO, ZERO)
 	else
 		host_mob.adjustBruteLoss(1, TRUE)
 	if(prob(3))
@@ -33,7 +33,7 @@
 /datum/nanite_program/memory_leak
 	name = "Memory Leak"
 	desc = "This program invades the memory space used by other programs, causing frequent corruptions and errors."
-	use_rate = 0
+	use_rate = ZERO
 	rogue_types = list(/datum/nanite_program/toxic)
 
 /datum/nanite_program/memory_leak/active_effect()
@@ -67,7 +67,7 @@
 /datum/nanite_program/meltdown/enable_passive_effect()
 	. = ..()
 	to_chat(host_mob, "<span class='userdanger'>Your blood is burning!</span>")
-	nanites.safety_threshold = 0
+	nanites.safety_threshold = ZERO
 
 /datum/nanite_program/meltdown/disable_passive_effect()
 	. = ..()

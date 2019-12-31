@@ -82,12 +82,12 @@
 	return TRUE
 
 
-/obj/item/computer_hardware/card_slot/try_eject(slot=0, mob/living/user = null, forced = 0)
+/obj/item/computer_hardware/card_slot/try_eject(slot=ZERO, mob/living/user = null, forced = ZERO)
 	if(!stored_card && !stored_card2)
 		to_chat(user, "<span class='warning'>There are no cards in \the [src].</span>")
 		return FALSE
 
-	var/ejected = 0
+	var/ejected = ZERO
 	if(stored_card && (!slot || slot == 1))
 		if(user)
 			user.put_in_hands(stored_card)
@@ -107,7 +107,7 @@
 	if(ejected)
 		if(holder)
 			if(holder.active_program)
-				holder.active_program.event_idremoved(0, slot)
+				holder.active_program.event_idremoved(ZERO, slot)
 
 			for(var/I in holder.idle_threads)
 				var/datum/computer_file/program/P = I
@@ -125,7 +125,7 @@
 		return
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		to_chat(user, "<span class='notice'>You press down on the manual eject button with \the [I].</span>")
-		try_eject(0,user)
+		try_eject(ZERO,user)
 		return
 
 /obj/item/computer_hardware/card_slot/examine(mob/user)

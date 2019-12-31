@@ -1,5 +1,5 @@
 //general stuff
-/proc/sanitize_integer(number, min=0, max=1, default=0)
+/proc/sanitize_integer(number, min=ZERO, max=1, default=ZERO)
 	if(isnum(number))
 		number = round(number)
 		if(min <= number && number <= max)
@@ -44,7 +44,7 @@
 				return default
 	return default
 
-/proc/sanitize_hexcolor(color, desired_format=3, include_crunch=0, default)
+/proc/sanitize_hexcolor(color, desired_format=3, include_crunch=ZERO, default)
 	var/crunch = include_crunch ? "#" : ""
 	if(!istext(color))
 		color = ""
@@ -58,7 +58,7 @@
 		var/ascii = text2ascii(color,i)
 		switch(ascii)
 			if(48 to 57)
-				. += ascii2text(ascii)		//numbers 0 to 9
+				. += ascii2text(ascii)		//numbers ZERO to 9
 			if(97 to 102)
 				. += ascii2text(ascii)		//letters a to f
 			if(65 to 70)

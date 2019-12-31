@@ -26,7 +26,7 @@
 	filling_color = "#F0E68C"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
-	grind_results = list(/datum/reagent/consumable/soymilk = 0)
+	grind_results = list(/datum/reagent/consumable/soymilk = ZERO)
 	tastes = list("soy" = 1)
 	wine_power = 20
 

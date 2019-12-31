@@ -21,7 +21,7 @@
 	. = ..()
 	pump = new(src, FALSE)
 	pump.on = TRUE
-	pump.stat = 0
+	pump.stat = ZERO
 	pump.build_network()
 
 /obj/machinery/portable_atmospherics/pump/Destroy()
@@ -68,7 +68,7 @@
 			on = !on
 		if(prob(100 / severity))
 			direction = PUMP_OUT
-		pump.target_pressure = rand(0, 100 * ONE_ATMOSPHERE)
+		pump.target_pressure = rand(ZERO, 100 * ONE_ATMOSPHERE)
 		update_icon()
 
 /obj/machinery/portable_atmospherics/pump/replace_tank(mob/living/user, close_valve)
@@ -94,8 +94,8 @@
 	data["on"] = on
 	data["direction"] = direction == PUMP_IN ? TRUE : FALSE
 	data["connected"] = connected_port ? TRUE : FALSE
-	data["pressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
-	data["target_pressure"] = round(pump.target_pressure ? pump.target_pressure : 0)
+	data["pressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : ZERO)
+	data["target_pressure"] = round(pump.target_pressure ? pump.target_pressure : ZERO)
 	data["default_pressure"] = round(PUMP_DEFAULT_PRESSURE)
 	data["min_pressure"] = round(PUMP_MIN_PRESSURE)
 	data["max_pressure"] = round(PUMP_MAX_PRESSURE)

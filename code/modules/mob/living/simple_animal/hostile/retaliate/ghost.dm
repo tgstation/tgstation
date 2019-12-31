@@ -5,13 +5,13 @@
 	icon_state = "ghost"
 	icon_living = "ghost"
 	mob_biotypes = MOB_SPIRIT
-	speak_chance = 0
+	speak_chance = ZERO
 	turns_per_move = 5
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
 	a_intent = INTENT_HARM
-	healable = 0
-	speed = 0
+	healable = ZERO
+	speed = ZERO
 	maxHealth = 40
 	health = 40
 	harm_intent_damage = 10
@@ -25,8 +25,8 @@
 	speak_emote = list("weeps")
 	deathmessage = "wails, disintegrating into a pile of ectoplasm!"
 	loot = list(/obj/item/ectoplasm)
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
+	minbodytemp = ZERO
 	maxbodytemp = 1500
 	movement_type = FLYING
 	pressure_resistance = 300
@@ -44,8 +44,8 @@
 	give_hair()
 	set_light(1, 2) // same glowing as visible player ghosts
 	if(random)
-		switch(rand(0,1))
-			if(0)
+		switch(rand(ZERO,1))
+			if(ZERO)
 				name = "ghost of [pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
 			if(1)
 				name = "ghost of [pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"

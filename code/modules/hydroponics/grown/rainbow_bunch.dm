@@ -24,8 +24,8 @@
 	desc = "A beautiful flower capable of being used for most dyeing processes."
 	icon_state = "rainbow_flower"
 	slot_flags = ITEM_SLOT_HEAD
-	force = 0
-	throwforce = 0
+	force = ZERO
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 2
 	throw_range = 3

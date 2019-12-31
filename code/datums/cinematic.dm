@@ -238,7 +238,7 @@
 
 /datum/cinematic/nuke_far
 	id = CINEMATIC_NUKE_FAR
-	cleanup_time = 0
+	cleanup_time = ZERO
 
 /datum/cinematic/nuke_far/content()
 	cinematic_sound(sound('sound/effects/explosion_distant.ogg'))

@@ -126,6 +126,6 @@
 /mob/living/simple_animal/drone/proc/getItemPixelShiftY()
 	switch(visualAppearence)
 		if(MAINTDRONE)
-			. = 0
+			. = ZERO
 		if(REPAIRDRONE,SCOUTDRONE,CLOCKDRONE)
 			. = -6

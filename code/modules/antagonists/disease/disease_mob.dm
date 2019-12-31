@@ -21,7 +21,7 @@ the new instance inside the host to be updated to the template's stats.
 	initial_language_holder = /datum/language_holder/universal
 
 	var/freemove = TRUE
-	var/freemove_end = 0
+	var/freemove_end = ZERO
 	var/const/freemove_time = 1200
 	var/freemove_end_timerid
 
@@ -35,13 +35,13 @@ the new instance inside the host to be updated to the template's stats.
 	var/list/hosts //this list is associative, affected_mob -> disease_instance
 	var/datum/disease/advance/sentient_disease/disease_template
 
-	var/total_points = 0
-	var/points = 0
+	var/total_points = ZERO
+	var/points = ZERO
 
-	var/last_move_tick = 0
+	var/last_move_tick = ZERO
 	var/move_delay = 1
 
-	var/next_adaptation_time = 0
+	var/next_adaptation_time = ZERO
 	var/adaptation_cooldown = 600
 
 	var/list/purchased_abilities
@@ -92,7 +92,7 @@ the new instance inside the host to be updated to the template's stats.
 			stat("Adaptation Points: [points]/[total_points]")
 			stat("Hosts: [disease_instances.len]")
 			var/adapt_ready = next_adaptation_time - world.time
-			if(adapt_ready > 0)
+			if(adapt_ready > ZERO)
 				stat("Adaptation Ready: [round(adapt_ready/10, 0.1)]s")
 
 
@@ -107,7 +107,7 @@ the new instance inside the host to be updated to the template's stats.
 /mob/camera/disease/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	return
 
-/mob/camera/disease/Move(NewLoc, Dir = 0)
+/mob/camera/disease/Move(NewLoc, Dir = ZERO)
 	if(freemove)
 		forceMove(NewLoc)
 	else

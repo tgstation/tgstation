@@ -102,7 +102,7 @@
 
 
 /mob/living/carbon/proc/throw_mode_off()
-	in_throw_mode = 0
+	in_throw_mode = ZERO
 	if(client && hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_off"
 
@@ -160,7 +160,7 @@
 	. = (handcuffed || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))
 
 /mob/living/carbon/proc/canBeHandcuffed()
-	return 0
+	return ZERO
 
 
 /mob/living/carbon/show_inv(mob/user)
@@ -217,7 +217,7 @@
 			if(do_mob(usr, src, POCKET_STRIP_DELAY))
 				if(internal)
 					internal = null
-					update_internals_hud_icon(0)
+					update_internals_hud_icon(ZERO)
 				else if(ITEM && istype(ITEM, /obj/item/tank))
 					if((wear_mask && (wear_mask.clothing_flags & MASKINTERNALS)) || getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 						internal = ITEM
@@ -249,7 +249,7 @@
 			buckle_cd = O.breakouttime
 		visible_message("<span class='warning'>[src] attempts to unbuckle [p_them()]self!</span>", \
 					"<span class='notice'>You attempt to unbuckle yourself... (This will take around [round(buckle_cd/600,1)] minute\s, and you need to stay still.)</span>")
-		if(do_after(src, buckle_cd, 0, target = src))
+		if(do_after(src, buckle_cd, ZERO, target = src))
 			if(!buckled)
 				return
 			buckled.user_unbuckle_mob(src,src)
@@ -266,7 +266,7 @@
 	visible_message("<span class='danger'>[src] rolls on the floor, trying to put [p_them()]self out!</span>", \
 		"<span class='notice'>You stop, drop, and roll!</span>")
 	sleep(30)
-	if(fire_stacks <= 0)
+	if(fire_stacks <= ZERO)
 		visible_message("<span class='danger'>[src] has successfully extinguished [p_them()]self!</span>", \
 			"<span class='notice'>You extinguish yourself.</span>")
 		ExtinguishMob()
@@ -274,7 +274,7 @@
 
 /mob/living/carbon/resist_restraints()
 	var/obj/item/I = null
-	var/type = 0
+	var/type = ZERO
 	if(handcuffed)
 		I = handcuffed
 		type = 1
@@ -291,7 +291,7 @@
 		cuff_resist(I)
 
 
-/mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 600, cuff_break = 0)
+/mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 600, cuff_break = ZERO)
 	if(I.item_flags & BEING_REMOVED)
 		to_chat(src, "<span class='warning'>You're already attempting to remove [I]!</span>")
 		return
@@ -300,7 +300,7 @@
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
 		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)</span>")
-		if(do_after(src, breakouttime, 0, target = src))
+		if(do_after(src, breakouttime, ZERO, target = src))
 			clear_cuffs(I, cuff_break)
 		else
 			to_chat(src, "<span class='warning'>You fail to remove [I]!</span>")
@@ -309,7 +309,7 @@
 		breakouttime = 50
 		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
 		to_chat(src, "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>")
-		if(do_after(src, breakouttime, 0, target = src))
+		if(do_after(src, breakouttime, ZERO, target = src))
 			clear_cuffs(I, cuff_break)
 		else
 			to_chat(src, "<span class='warning'>You fail to break [I]!</span>")
@@ -333,7 +333,7 @@
 			if (W)
 				W.layer = initial(W.layer)
 				W.plane = initial(W.plane)
-		changeNext_move(0)
+		changeNext_move(ZERO)
 	if (legcuffed)
 		var/obj/item/W = legcuffed
 		legcuffed = null
@@ -346,7 +346,7 @@
 			if (W)
 				W.layer = initial(W.layer)
 				W.plane = initial(W.plane)
-		changeNext_move(0)
+		changeNext_move(ZERO)
 	update_equipment_speed_mods() // In case cuffs ever change speed
 
 /mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)
@@ -378,7 +378,7 @@
 			update_inv_legcuffed()
 			return TRUE
 
-/mob/living/carbon/get_standard_pixel_y_offset(lying = 0)
+/mob/living/carbon/get_standard_pixel_y_offset(lying = ZERO)
 	if(lying)
 		return -6
 	else
@@ -390,12 +390,12 @@
 
 	dropItemToGround(I)
 
-	var/modifier = 0
+	var/modifier = ZERO
 	if(HAS_TRAIT(src, TRAIT_CLUMSY))
 		modifier -= 40 //Clumsy people are more likely to hit themselves -Honk!
 
 	switch(rand(1,100)+modifier) //91-100=Nothing special happens
-		if(-INFINITY to 0) //attack yourself
+		if(-INFINITY to ZERO) //attack yourself
 			I.attack(src,src)
 		if(1 to 30) //throw it at yourself
 			I.throw_impact(src)
@@ -425,7 +425,7 @@
 
 /mob/living/carbon/attack_ui(slot)
 	if(!has_hand_for_held_index(active_hand_index))
-		return 0
+		return ZERO
 	return ..()
 
 /mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE, harm = TRUE, force = FALSE)
@@ -445,7 +445,7 @@
 			visible_message("<span class='danger'>[src] throws up all over [p_them()]self!</span>", \
 							"<span class='userdanger'>You throw up all over yourself!</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "vomit", /datum/mood_event/vomitself)
-		distance = 0
+		distance = ZERO
 	else
 		if(message)
 			visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
@@ -460,7 +460,7 @@
 	if(!blood)
 		adjust_nutrition(-lost_nutrition)
 		adjustToxLoss(-3)
-	for(var/i=0 to distance)
+	for(var/i=ZERO to distance)
 		if(blood)
 			if(T)
 				add_splatter_floor(T)
@@ -505,9 +505,9 @@
 /mob/living/carbon/updatehealth()
 	if(status_flags & GODMODE)
 		return
-	var/total_burn	= 0
-	var/total_brute	= 0
-	var/total_stamina = 0
+	var/total_burn	= ZERO
+	var/total_brute	= ZERO
+	var/total_stamina = ZERO
 	for(var/X in bodyparts)	//hardcoded to streamline things a bit
 		var/obj/item/bodypart/BP = X
 		total_brute	+= (BP.brute_dam * BP.body_damage_coeff)
@@ -598,10 +598,10 @@
 		overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
 	else
 		cure_blind(EYES_COVERED)
-		clear_fullscreen("tint", 0)
+		clear_fullscreen("tint", ZERO)
 
 /mob/living/carbon/proc/get_total_tint()
-	. = 0
+	. = ZERO
 	if(isclothing(head))
 		. += head.tint
 	if(isclothing(wear_mask))
@@ -620,7 +620,7 @@
 		for(var/zone in target_zones)
 			if(I.body_parts_covered & zone)
 				tally["[zone]"] = max(1 - I.permeability_coefficient, target_zones["[zone]"])
-	var/protection = 0
+	var/protection = ZERO
 	for(var/key in tally)
 		protection += tally[key]
 	protection *= INVERSE(target_zones.len)
@@ -633,7 +633,7 @@
 		return
 
 	if(health <= crit_threshold)
-		var/severity = 0
+		var/severity = ZERO
 		switch(health)
 			if(-20 to -10)
 				severity = 1
@@ -680,7 +680,7 @@
 
 	//Oxygen damage overlay
 	if(oxyloss)
-		var/severity = 0
+		var/severity = ZERO
 		switch(oxyloss)
 			if(10 to 20)
 				severity = 1
@@ -703,7 +703,7 @@
 	//Fire and Brute damage overlay (BSSR)
 	var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
 	if(hurtdamage)
-		var/severity = 0
+		var/severity = ZERO
 		switch(hurtdamage)
 			if(5 to 15)
 				severity = 1
@@ -739,14 +739,14 @@
 				hud_used.healths.icon_state = "health3"
 			else if(shown_health_amount > maxHealth*0.2)
 				hud_used.healths.icon_state = "health4"
-			else if(shown_health_amount > 0)
+			else if(shown_health_amount > ZERO)
 				hud_used.healths.icon_state = "health5"
 			else
 				hud_used.healths.icon_state = "health6"
 		else
 			hud_used.healths.icon_state = "health7"
 
-/mob/living/carbon/proc/update_internals_hud_icon(internal_state = 0)
+/mob/living/carbon/proc/update_internals_hud_icon(internal_state = ZERO)
 	if(hud_used && hud_used.internals)
 		hud_used.internals.icon_state = "internal[internal_state]"
 
@@ -799,7 +799,7 @@
 			reagents.remove_addiction(addi)
 	for(var/O in internal_organs)
 		var/obj/item/organ/organ = O
-		organ.setOrganDamage(0)
+		organ.setOrganDamage(ZERO)
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
 		B.brain_death = FALSE
@@ -826,12 +826,12 @@
 /mob/living/carbon/can_be_revived()
 	. = ..()
 	if(!getorgan(/obj/item/organ/brain) && (!mind || !mind.has_antag_datum(/datum/antagonist/changeling)))
-		return 0
+		return ZERO
 
 /mob/living/carbon/harvest(mob/living/user)
 	if(QDELETED(src))
 		return
-	var/organs_amt = 0
+	var/organs_amt = ZERO
 	for(var/X in internal_organs)
 		var/obj/item/organ/O = X
 		if(prob(50))
@@ -844,7 +844,7 @@
 /mob/living/carbon/ExtinguishMob()
 	for(var/X in get_equipped_items())
 		var/obj/item/I = X
-		I.acid_level = 0 //washes off the acid on our clothes
+		I.acid_level = ZERO //washes off the acid on our clothes
 		I.extinguish() //extinguishes our clothes
 	..()
 
@@ -859,7 +859,7 @@
 
 /mob/living/carbon/proc/create_bodyparts()
 	var/l_arm_index_next = -1
-	var/r_arm_index_next = 0
+	var/r_arm_index_next = ZERO
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/O = new X()
 		O.owner = src

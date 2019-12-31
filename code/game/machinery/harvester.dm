@@ -21,7 +21,7 @@
 		name = "auto-autopsy"
 
 /obj/machinery/harvester/RefreshParts()
-	interval = 0
+	interval = ZERO
 	var/max_time = 40
 	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
 		max_time -= L.rating

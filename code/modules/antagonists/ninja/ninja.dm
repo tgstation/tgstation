@@ -37,7 +37,7 @@
 		if(M.current && M.current.stat != DEAD)
 			if(ishuman(M.current))
 				if(M.special_role)
-					possible_targets[M] = 0						//bad-guy
+					possible_targets[M] = ZERO						//bad-guy
 				else if(M.assigned_role in GLOB.command_positions)
 					possible_targets[M] = 1						//good-guy
 

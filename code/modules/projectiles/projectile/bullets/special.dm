@@ -2,7 +2,7 @@
 
 /obj/projectile/bullet/honker
 	name = "banana"
-	damage = 0
+	damage = ZERO
 	movement_type = FLYING | UNSTOPPABLE
 	nodamage = TRUE
 	hitsound = 'sound/items/bikehorn.ogg'
@@ -18,7 +18,7 @@
 	. = ..()
 	var/mob/M = target
 	if(istype(M))
-		M.slip(100, M.loc, GALOSHES_DONT_HELP|SLIDE, 0, FALSE)
+		M.slip(100, M.loc, GALOSHES_DONT_HELP|SLIDE, ZERO, FALSE)
 
 // Mime
 

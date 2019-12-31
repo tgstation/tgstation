@@ -10,7 +10,7 @@
 		addtimer(CALLBACK(src, .proc/resume_bleeding), amount)
 
 /mob/living/carbon/human/proc/resume_bleeding()
-	bleedsuppress = 0
+	bleedsuppress = ZERO
 	if(stat != DEAD && bleed_rate)
 		to_chat(src, "<span class='warning'>The blood soaks through your bandage.</span>")
 
@@ -27,16 +27,16 @@
 /mob/living/carbon/human/handle_blood()
 
 	if(NOBLOOD in dna.species.species_traits)
-		bleed_rate = 0
+		bleed_rate = ZERO
 		return
 
 	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
 
 		//Blood regeneration if there is some space
 		if(blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NOHUNGER))
-			var/nutrition_ratio = 0
+			var/nutrition_ratio = ZERO
 			switch(nutrition)
-				if(0 to NUTRITION_LEVEL_STARVING)
+				if(ZERO to NUTRITION_LEVEL_STARVING)
 					nutrition_ratio = 0.2
 				if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
 					nutrition_ratio = 0.4
@@ -79,7 +79,7 @@
 				if(!HAS_TRAIT(src, TRAIT_NODEATH))
 					death()
 
-		var/temp_bleed = 0
+		var/temp_bleed = ZERO
 		//Bleeding out
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
@@ -100,7 +100,7 @@
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/proc/bleed(amt)
 	if(blood_volume)
-		blood_volume = max(blood_volume - amt, 0)
+		blood_volume = max(blood_volume - amt, ZERO)
 		if(isturf(src.loc)) //Blood loss still happens in locker, floor stays clean
 			if(amt >= 10)
 				add_splatter_floor(src.loc)
@@ -119,7 +119,7 @@
 
 /mob/living/carbon/human/restore_blood()
 	blood_volume = BLOOD_VOLUME_NORMAL
-	bleed_rate = 0
+	bleed_rate = ZERO
 
 /****************************************************
 				BLOOD TRANSFERS
@@ -128,16 +128,16 @@
 //Gets blood from mob to a container or other mob, preserving all data in it.
 /mob/living/proc/transfer_blood_to(atom/movable/AM, amount, forced)
 	if(!blood_volume || !AM.reagents)
-		return 0
+		return ZERO
 	if(blood_volume < BLOOD_VOLUME_BAD && !forced)
-		return 0
+		return ZERO
 
 	if(blood_volume < amount)
 		amount = blood_volume
 
 	var/blood_id = get_blood_id()
 	if(!blood_id)
-		return 0
+		return ZERO
 
 	blood_volume -= amount
 
@@ -178,7 +178,7 @@
 			var/datum/disease/D = thing
 			blood_data["viruses"] += D.Copy()
 
-		blood_data["blood_DNA"] = copytext(dna.unique_enzymes,1,0)
+		blood_data["blood_DNA"] = copytext(dna.unique_enzymes,1,ZERO)
 		if(disease_resistances && disease_resistances.len)
 			blood_data["resistances"] = disease_resistances.Copy()
 		var/list/temp_chem = list()
@@ -196,7 +196,7 @@
 
 		if(!suiciding)
 			blood_data["cloneable"] = 1
-		blood_data["blood_type"] = copytext(dna.blood_type,1,0)
+		blood_data["blood_type"] = copytext(dna.blood_type,1,ZERO)
 		blood_data["gender"] = gender
 		blood_data["real_name"] = real_name
 		blood_data["features"] = dna.features

@@ -6,7 +6,7 @@
 /datum/surgery/lipoplasty/can_start(mob/user, mob/living/carbon/target)
 	if(HAS_TRAIT(target, TRAIT_FAT))
 		return 1
-	return 0
+	return ZERO
 
 
 //cut fat
@@ -42,7 +42,7 @@
 	display_results(user, target, "<span class='notice'>You extract [target]'s fat.</span>",
 			"<span class='notice'>[user] extracts [target]'s fat!</span>",
 			"<span class='notice'>[user] extracts [target]'s fat!</span>")
-	target.overeatduration = 0 //patient is unfatted
+	target.overeatduration = ZERO //patient is unfatted
 	var/removednutriment = target.nutrition
 	target.set_nutrition(NUTRITION_LEVEL_WELL_FED)
 	removednutriment -= 450 //whatever was removed goes into the meat

@@ -1,11 +1,11 @@
 
 /datum/datacore
 	var/medical[] = list()
-	var/medicalPrintCount = 0
+	var/medicalPrintCount = ZERO
 	var/general[] = list()
 	var/security[] = list()
-	var/securityPrintCount = 0
-	var/securityCrimeCounter = 0
+	var/securityPrintCount = ZERO
+	var/securityCrimeCounter = ZERO
 	//This list tracks characters spawned in the world and cannot be modified in-game. Currently referenced by respawn_character().
 	var/locked[] = list()
 
@@ -33,18 +33,18 @@
 	var/crimeDetails = ""
 	var/author = ""
 	var/time = ""
-	var/fine = 0
-	var/paid = 0
-	var/dataId = 0
+	var/fine = ZERO
+	var/paid = ZERO
+	var/dataId = ZERO
 
-/datum/datacore/proc/createCrimeEntry(cname = "", cdetails = "", author = "", time = "", fine = 0)
+/datum/datacore/proc/createCrimeEntry(cname = "", cdetails = "", author = "", time = "", fine = ZERO)
 	var/datum/data/crime/c = new /datum/data/crime
 	c.crimeName = cname
 	c.crimeDetails = cdetails
 	c.author = author
 	c.time = time
 	c.fine = fine
-	c.paid = 0
+	c.paid = ZERO
 	c.dataId = ++securityCrimeCounter
 	return c
 
@@ -142,12 +142,12 @@
 	<table class="manifest" width='350px'>
 	<tr class='head'><th>Name</th><th>Rank</th></tr>
 	"}
-	var/even = 0
+	var/even = ZERO
 	// sort mobs
 	for(var/datum/data/record/t in GLOB.data_core.general)
 		var/name = t.fields["name"]
 		var/rank = t.fields["rank"]
-		var/department = 0
+		var/department = ZERO
 		if(rank in GLOB.command_positions)
 			heads[name] = rank
 			department = 1
@@ -174,49 +174,49 @@
 			department = 1
 		if(!department && !(name in heads))
 			misc[name] = rank
-	if(heads.len > 0)
+	if(heads.len > ZERO)
 		dat += "<tr><th colspan=3>Heads</th></tr>"
 		for(var/name in heads)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[heads[name]]</td></tr>"
 			even = !even
-	if(sec.len > 0)
+	if(sec.len > ZERO)
 		dat += "<tr><th colspan=3>Security</th></tr>"
 		for(var/name in sec)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sec[name]]</td></tr>"
 			even = !even
-	if(eng.len > 0)
+	if(eng.len > ZERO)
 		dat += "<tr><th colspan=3>Engineering</th></tr>"
 		for(var/name in eng)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[eng[name]]</td></tr>"
 			even = !even
-	if(med.len > 0)
+	if(med.len > ZERO)
 		dat += "<tr><th colspan=3>Medical</th></tr>"
 		for(var/name in med)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[med[name]]</td></tr>"
 			even = !even
-	if(sci.len > 0)
+	if(sci.len > ZERO)
 		dat += "<tr><th colspan=3>Science</th></tr>"
 		for(var/name in sci)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sci[name]]</td></tr>"
 			even = !even
-	if(sup.len > 0)
+	if(sup.len > ZERO)
 		dat += "<tr><th colspan=3>Supply</th></tr>"
 		for(var/name in sup)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sup[name]]</td></tr>"
 			even = !even
-	if(civ.len > 0)
+	if(civ.len > ZERO)
 		dat += "<tr><th colspan=3>Civilian</th></tr>"
 		for(var/name in civ)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[civ[name]]</td></tr>"
 			even = !even
 	// in case somebody is insane and added them to the manifest, why not
-	if(bot.len > 0)
+	if(bot.len > ZERO)
 		dat += "<tr><th colspan=3>Silicon</th></tr>"
 		for(var/name in bot)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[bot[name]]</td></tr>"
 			even = !even
 	// misc guys
-	if(misc.len > 0)
+	if(misc.len > ZERO)
 		dat += "<tr><th colspan=3>Miscellaneous</th></tr>"
 		for(var/name in misc)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[misc[name]]</td></tr>"

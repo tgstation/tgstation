@@ -89,7 +89,7 @@
 	INVOKE_ASYNC(src, .proc/do_track, target, U)
 
 /mob/living/silicon/ai/proc/do_track(mob/living/target, mob/living/silicon/ai/U)
-	var/cameraticks = 0
+	var/cameraticks = ZERO
 
 	while(U.cameraFollow == target)
 		if(U.cameraFollow == null)
@@ -103,15 +103,15 @@
 			if(cameraticks > 9)
 				U.cameraFollow = null
 				to_chat(U, "<span class='warning'>Unable to reacquire, cancelling track...</span>")
-				tracking = 0
+				tracking = ZERO
 				return
 			else
 				sleep(10)
 				continue
 
 		else
-			cameraticks = 0
-			U.tracking = 0
+			cameraticks = ZERO
+			U.tracking = ZERO
 
 		if(U.eyeobj)
 			U.eyeobj.setLoc(get_turf(target))
@@ -145,10 +145,10 @@
 	var/obj/machinery/camera/a
 	var/obj/machinery/camera/b
 
-	for (var/i = L.len, i > 0, i--)
+	for (var/i = L.len, i > ZERO, i--)
 		for (var/j = 1 to i - 1)
 			a = L[j]
 			b = L[j + 1]
-			if (sorttext(a.c_tag, b.c_tag) < 0)
+			if (sorttext(a.c_tag, b.c_tag) < ZERO)
 				L.Swap(j, j + 1)
 	return L

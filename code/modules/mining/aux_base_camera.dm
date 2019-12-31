@@ -39,9 +39,9 @@
 	var/datum/action/innate/aux_base/airlock_type/airlock_mode_action = new //Action for setting the airlock type
 	var/datum/action/innate/aux_base/window_type/window_action = new //Action for setting the window type
 	var/datum/action/innate/aux_base/place_fan/fan_action = new //Action for spawning fans
-	var/fans_remaining = 0 //Number of fans in stock.
+	var/fans_remaining = ZERO //Number of fans in stock.
 	var/datum/action/innate/aux_base/install_turret/turret_action = new //Action for spawning turrets
-	var/turret_stock = 0 //Turrets in stock
+	var/turret_stock = ZERO //Turrets in stock
 	var/obj/machinery/computer/auxillary_base/found_aux_console //Tracker for the Aux base console, so the eye can always find it.
 
 	icon_screen = "mining"
@@ -121,7 +121,7 @@
 		turret_action.Grant(user)
 		actions += turret_action
 
-	eyeobj.invisibility = 0 //When the eye is in use, make it visible to players so they know when someone is building.
+	eyeobj.invisibility = ZERO //When the eye is in use, make it visible to players so they know when someone is building.
 
 /obj/machinery/computer/camera_advanced/base_construction/remove_eye_control(mob/living/user)
 	..()

@@ -8,7 +8,7 @@
 	var/shuttleId
 	var/possible_destinations = ""
 	var/admin_controlled
-	var/no_destination_swap = 0
+	var/no_destination_swap = ZERO
 
 /obj/machinery/computer/shuttle/ui_interact(mob/user)
 	. = ..()
@@ -62,7 +62,7 @@
 			message_admins("[usr] just attempted to href dock exploit on [src] with target location \"[href_list["move"]]\"")
 			return
 		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
-			if(0)
+			if(ZERO)
 				say("Shuttle departing. Please stand away from the doors.")
 				log_shuttle("[key_name(usr)] has sent shuttle \"[M]\" towards \"[href_list["move"]]\", using [src].")
 			if(1)

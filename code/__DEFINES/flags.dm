@@ -1,8 +1,8 @@
 /*
 	These defines are specific to the atom/flags_1 bitmask
 */
-#define ALL (~0) //For convenience.
-#define NONE 0
+#define ALL (~ZERO) //For convenience.
+#define NONE ZERO
 
 //for convenience
 #define ENABLE_BITFIELD(variable, flag) (variable |= (flag))
@@ -17,7 +17,7 @@
 GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768))
 
 // for /datum/var/datum_flags
-#define DF_USE_TAG		(1<<0)
+#define DF_USE_TAG		(1<<ZERO)
 #define DF_VAR_EDITED	(1<<1)
 #define DF_ISPROCESSING (1<<2)
 
@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PREVENT_CONTENTS_EXPLOSION_1 (1<<16)
 
 //turf-only flags
-#define NOJAUNT_1					(1<<0)
+#define NOJAUNT_1					(1<<ZERO)
 #define UNUSED_RESERVATION_TURF_1	(1<<1)
 /// If a turf can be made dirty at roundstart. This is also used in areas.
 #define CAN_BE_DIRTY_1				(1<<2)
@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 	the atom/checkpass() proc uses them (tables will call movable atom checkpass(PASSTABLE) for example)
 */
 //flags for pass_flags
-#define PASSTABLE		(1<<0)
+#define PASSTABLE		(1<<ZERO)
 #define PASSGLASS		(1<<1)
 #define PASSGRILLE		(1<<2)
 #define PASSBLOB		(1<<3)
@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define LETPASSTHROW	(1<<6)
 
 //Movement Types
-#define GROUND			(1<<0)
+#define GROUND			(1<<ZERO)
 #define FLYING			(1<<1)
 #define VENTCRAWLING	(1<<2)
 #define FLOATING		(1<<3)
@@ -81,7 +81,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define UNSTOPPABLE		(1<<4)
 
 //Fire and Acid stuff, for resistance_flags
-#define LAVA_PROOF		(1<<0)
+#define LAVA_PROOF		(1<<ZERO)
 /// 100% immune to fire damage (but not necessarily to lava or heat)
 #define FIRE_PROOF		(1<<1)
 #define FLAMMABLE		(1<<2)
@@ -96,7 +96,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FREEZE_PROOF	(1<<7)
 
 //tesla_zap
-#define TESLA_MACHINE_EXPLOSIVE		(1<<0)
+#define TESLA_MACHINE_EXPLOSIVE		(1<<ZERO)
 #define TESLA_ALLOW_DUPLICATES		(1<<1)
 #define TESLA_OBJ_DAMAGE			(1<<2)
 #define TESLA_MOB_DAMAGE			(1<<3)
@@ -106,13 +106,13 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define TESLA_FUSION_FLAGS TESLA_OBJ_DAMAGE | TESLA_MOB_DAMAGE | TESLA_MOB_STUN
 
 //EMP protection
-#define EMP_PROTECT_SELF (1<<0)
+#define EMP_PROTECT_SELF (1<<ZERO)
 #define EMP_PROTECT_CONTENTS (1<<1)
 #define EMP_PROTECT_WIRES (1<<2)
 
 //Mob mobility var flags
 /// can move
-#define MOBILITY_MOVE			(1<<0)
+#define MOBILITY_MOVE			(1<<ZERO)
 /// can, and is, standing up
 #define MOBILITY_STAND			(1<<1)
 /// can pickup items
@@ -130,9 +130,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define MOBILITY_FLAGS_INTERACTION (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_UI | MOBILITY_STORAGE)
 
 // radiation
-#define RAD_PROTECT_CONTENTS (1<<0)
+#define RAD_PROTECT_CONTENTS (1<<ZERO)
 #define RAD_NO_CONTAMINATE (1<<1)
 
 //alternate appearance flags
-#define AA_TARGET_SEE_APPEARANCE (1<<0)
+#define AA_TARGET_SEE_APPEARANCE (1<<ZERO)
 #define AA_MATCH_TARGET_OVERLAYS (1<<1)

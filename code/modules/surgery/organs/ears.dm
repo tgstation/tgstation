@@ -14,16 +14,16 @@
 	now_fixed = "<span class='info'>Noise slowly begins filling your ears once more.</span>"
 	low_threshold_cleared = "<span class='info'>The ringing in your ears has died down.</span>"
 
-	// `deaf` measures "ticks" of deafness. While > 0, the person is unable
+	// `deaf` measures "ticks" of deafness. While > ZERO, the person is unable
 	// to hear anything.
-	var/deaf = 0
+	var/deaf = ZERO
 
 	// `damage` in this case measures long term damage to the ears, if too high,
 	// the person will not have either `deaf` or `ear_damage` decrease
 	// without external aid (earmuffs, drugs)
 
 	//Resistance against loud noises
-	var/bang_protect = 0
+	var/bang_protect = ZERO
 	// Multiplier for both long term and short term ear damage
 	var/damage_multiplier = 1
 
@@ -38,17 +38,17 @@
 	if(HAS_TRAIT(C, TRAIT_DEAF))
 		deaf = max(deaf, 1)
 	else if(!(organ_flags & ORGAN_FAILING)) // if this organ is failing, do not clear deaf stacks.
-		deaf = max(deaf - 1, 0)
+		deaf = max(deaf - 1, ZERO)
 		if(prob(damage / 20) && (damage > low_threshold))
-			adjustEarDamage(0, 4)
+			adjustEarDamage(ZERO, 4)
 			SEND_SOUND(C, sound('sound/weapons/flash_ring.ogg'))
 			to_chat(C, "<span class='warning'>The ringing in your ears grows louder, blocking out any external noises for a moment.</span>")
-	else if((organ_flags & ORGAN_FAILING) && (deaf == 0))
+	else if((organ_flags & ORGAN_FAILING) && (deaf == ZERO))
 		deaf = 1	//stop being not deaf you deaf idiot
 
 /obj/item/organ/ears/proc/restoreEars()
-	deaf = 0
-	damage = 0
+	deaf = ZERO
+	damage = ZERO
 	organ_flags &= ~ORGAN_FAILING
 
 	var/mob/living/carbon/C = owner
@@ -57,14 +57,14 @@
 		deaf = 1
 
 /obj/item/organ/ears/proc/adjustEarDamage(ddmg, ddeaf)
-	damage = max(damage + (ddmg*damage_multiplier), 0)
-	deaf = max(deaf + (ddeaf*damage_multiplier), 0)
+	damage = max(damage + (ddmg*damage_multiplier), ZERO)
+	deaf = max(deaf + (ddeaf*damage_multiplier), ZERO)
 
 /obj/item/organ/ears/proc/minimumDeafTicks(value)
 	deaf = max(deaf, value)
 
 /obj/item/organ/ears/invincible
-	damage_multiplier = 0
+	damage_multiplier = ZERO
 
 
 /mob/proc/restoreEars()
@@ -95,7 +95,7 @@
 	icon_state = "kitty"
 	damage_multiplier = 2
 
-/obj/item/organ/ears/cat/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
+/obj/item/organ/ears/cat/Insert(mob/living/carbon/human/H, special = ZERO, drop_if_replaced = TRUE)
 	..()
 	if(istype(H))
 		color = H.hair_color
@@ -103,7 +103,7 @@
 		H.dna.features["ears"] = "Cat"
 		H.update_body()
 
-/obj/item/organ/ears/cat/Remove(mob/living/carbon/human/H,  special = 0)
+/obj/item/organ/ears/cat/Remove(mob/living/carbon/human/H,  special = ZERO)
 	..()
 	if(istype(H))
 		color = H.hair_color
@@ -116,13 +116,13 @@
 	desc = "The source of a penguin's happy feet."
 	var/datum/component/waddle
 
-/obj/item/organ/ears/penguin/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
+/obj/item/organ/ears/penguin/Insert(mob/living/carbon/human/H, special = ZERO, drop_if_replaced = TRUE)
 	. = ..()
 	if(istype(H))
 		to_chat(H, "<span class='notice'>You suddenly feel like you've lost your balance.</span>")
 		waddle = H.AddComponent(/datum/component/waddling)
 
-/obj/item/organ/ears/penguin/Remove(mob/living/carbon/human/H,  special = 0)
+/obj/item/organ/ears/penguin/Remove(mob/living/carbon/human/H,  special = ZERO)
 	. = ..()
 	if(istype(H))
 		to_chat(H, "<span class='notice'>Your sense of balance comes back to you.</span>")

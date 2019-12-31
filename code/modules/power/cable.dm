@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
-	var/linked_dirs = 0 //bitflag
+	var/linked_dirs = ZERO //bitflag
 	var/node = FALSE //used for sprites display
 	var/cable_layer = CABLE_LAYER_2
 	var/datum/powernet/powernet
@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/proc/connect_wire(clear_before_updating = FALSE)
 	var/under_thing = NONE
 	if(clear_before_updating)
-		linked_dirs = 0
+		linked_dirs = ZERO
 	var/obj/machinery/power/search_parent
 	for(var/obj/machinery/power/P in loc)
 		if(istype(P, /obj/machinery/power/terminal))
@@ -118,7 +118,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 //If underfloor, hide the cable
 /obj/structure/cable/hide(i)
 	if(level == 1 && isturf(loc))
-		invisibility = i ? INVISIBILITY_MAXIMUM : 0
+		invisibility = i ? INVISIBILITY_MAXIMUM : ZERO
 	update_icon()
 
 /obj/structure/cable/update_icon()
@@ -157,7 +157,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		return
 
 	else if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(powernet && (powernet.avail > 0))		// is it powered?
+		if(powernet && (powernet.avail > ZERO))		// is it powered?
 			to_chat(user, "<span class='danger'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]</span>")
 		else
 			to_chat(user, "<span class='danger'>The cable is not powered.</span>")
@@ -206,15 +206,15 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 /obj/structure/cable/proc/surplus()
 	if(powernet)
-		return CLAMP(powernet.avail-powernet.load, 0, powernet.avail)
+		return CLAMP(powernet.avail-powernet.load, ZERO, powernet.avail)
 	else
-		return 0
+		return ZERO
 
 /obj/structure/cable/proc/avail(amount)
 	if(powernet)
 		return amount ? powernet.avail >= amount : powernet.avail
 	else
-		return 0
+		return ZERO
 
 /obj/structure/cable/proc/add_delayedload(amount)
 	if(powernet)
@@ -222,15 +222,15 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 /obj/structure/cable/proc/delayed_surplus()
 	if(powernet)
-		return CLAMP(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
+		return CLAMP(powernet.newavail - powernet.delayedload, ZERO, powernet.newavail)
 	else
-		return 0
+		return ZERO
 
 /obj/structure/cable/proc/newavail()
 	if(powernet)
 		return powernet.newavail
 	else
-		return 0
+		return ZERO
 
 /////////////////////////////////////////////////
 // Cable laying helpers
@@ -239,7 +239,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 // merge with the powernets of power objects in the given direction
 /obj/structure/cable/proc/mergeConnectedNetworks(direction)
 
-	var/inverse_dir = (!direction)? 0 : turn(direction, 180) //flip the direction, to match with the source position on its turf
+	var/inverse_dir = (!direction)? ZERO : turn(direction, 180) //flip the direction, to match with the source position on its turf
 
 	var/turf/TB  = get_step(src, direction)
 
@@ -394,7 +394,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	color = "yellow"
 	var/cable_color = "yellow"
 	desc = "A coil of insulated power cable."
-	throwforce = 0
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
@@ -470,7 +470,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 			user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the wires in [H == user ? "your" : "[H]'s"] [affecting.name].</span>")
 			if(!do_mob(user, H, 50))
 				return
-		if(item_heal_robotic(H, user, 0, 15))
+		if(item_heal_robotic(H, user, ZERO, 15))
 			use(1)
 		return
 	else

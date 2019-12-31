@@ -8,7 +8,7 @@
 #define STAT_LOG_ENTRY(entrylist, entryname) \
 	var/list/STAT_ENTRY = entrylist[entryname] || (entrylist[entryname] = new /list(STAT_ENTRY_LENGTH));\
 	STAT_ENTRY[STAT_ENTRY_TIME] += STAT_TIME;\
-	var/STAT_INCR_AMOUNT = min(1, 2**round((STAT_ENTRY[STAT_ENTRY_COUNT] || 0)/SHORT_REAL_LIMIT));\
+	var/STAT_INCR_AMOUNT = min(1, 2**round((STAT_ENTRY[STAT_ENTRY_COUNT] || ZERO)/SHORT_REAL_LIMIT));\
 	if (STAT_INCR_AMOUNT == 1 || prob(100/STAT_INCR_AMOUNT)) {\
 		STAT_ENTRY[STAT_ENTRY_COUNT] += STAT_INCR_AMOUNT;\
 	};\

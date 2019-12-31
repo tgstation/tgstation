@@ -6,7 +6,7 @@
 	icon_living = "goose"
 	icon_dead = "goose_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	speak_chance = 0
+	speak_chance = ZERO
 	turns_per_move = 5
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
 	response_help_continuous = "pets"
@@ -17,7 +17,7 @@
 	response_harm_simple = "kick"
 	emote_taunt = list("hisses")
 	taunt_chance = 30
-	speed = 0
+	speed = ZERO
 	maxHealth = 25
 	health = 25
 	harm_intent_damage = 5
@@ -34,7 +34,7 @@
 	var/icon_vomit_start = "vomit_start"
 	var/icon_vomit = "vomit"
 	var/icon_vomit_end = "vomit_end"
-	var/message_cooldown = 0
+	var/message_cooldown = ZERO
 	var/list/nummies = list()
 	var/choking = FALSE
 
@@ -93,7 +93,7 @@
 	random_retaliate = FALSE
 	var/vomiting = FALSE
 	var/vomitCoefficient = 1
-	var/vomitTimeBonus = 0
+	var/vomitTimeBonus = ZERO
 	var/datum/action/cooldown/vomit/goosevomit
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/Initialize()
@@ -230,7 +230,7 @@
 	if(prob(vomitCoefficient * 0.2))
 		vomit_prestart(vomitTimeBonus + 25)
 		vomitCoefficient = 1
-		vomitTimeBonus = 0
+		vomitTimeBonus = ZERO
 
 /// A proc to make it easier for admins to make the goose playable by deadchat.
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/deadchat_plays_goose()
@@ -258,5 +258,5 @@
 	if(!vomit.vomiting)
 		vomit.vomit_prestart(vomit.vomitTimeBonus + 25)
 		vomit.vomitCoefficient = 1
-		vomit.vomitTimeBonus = 0
+		vomit.vomitTimeBonus = ZERO
 	return TRUE

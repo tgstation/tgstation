@@ -70,14 +70,14 @@
 		return
 
 	if(href_list["regimeset"])
-		power_station.engaged = 0
+		power_station.engaged = ZERO
 		power_station.teleporter_hub.update_icon()
-		power_station.teleporter_hub.calibrated = 0
+		power_station.teleporter_hub.calibrated = ZERO
 		reset_regime()
 	if(href_list["settarget"])
-		power_station.engaged = 0
+		power_station.engaged = ZERO
 		power_station.teleporter_hub.update_icon()
-		power_station.teleporter_hub.calibrated = 0
+		power_station.teleporter_hub.calibrated = ZERO
 		set_target(usr)
 	if(href_list["calibrate"])
 		if(!target)
@@ -91,7 +91,7 @@
 		calibrating = 1
 		power_station.update_icon()
 		spawn(50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
-			calibrating = 0
+			calibrating = ZERO
 			if(check_hub_connection())
 				power_station.teleporter_hub.calibrated = 1
 				say("Calibration complete.")

@@ -44,7 +44,7 @@
 		set_light(lit_luminosity)
 	else
 		STOP_PROCESSING(SSobj, src)
-		set_light(0)
+		set_light(ZERO)
 
 /obj/structure/life_candle/update_icon()
 	if(linked_minds.len)

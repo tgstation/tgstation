@@ -87,7 +87,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	else if(message_type == "ARRIVALS_BROKEN")
 		message = "The arrivals shuttle has been damaged. Docking for repairs..."
 
-	if(channels.len == 0)
+	if(channels.len == ZERO)
 		radio.talk_into(src, message, null)
 	else
 		for(var/channel in channels)

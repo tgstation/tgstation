@@ -13,7 +13,7 @@
 	var/active = FALSE
 	var/power_gen = 5000
 	var/power_output = 1
-	var/consumption = 0
+	var/consumption = ZERO
 	var/base_icon = "portgen0"
 	var/datum/looping_sound/generator/soundloop
 
@@ -82,13 +82,13 @@
 /obj/machinery/power/port_gen/pacman
 	name = "\improper P.A.C.M.A.N.-type portable generator"
 	circuit = /obj/item/circuitboard/machine/pacman
-	var/sheets = 0
+	var/sheets = ZERO
 	var/max_sheets = 100
 	var/sheet_name = ""
 	var/sheet_path = /obj/item/stack/sheet/mineral/plasma
-	var/sheet_left = 0 // How much is left of the sheet
+	var/sheet_left = ZERO // How much is left of the sheet
 	var/time_per_sheet = 260
-	var/current_heat = 0
+	var/current_heat = ZERO
 
 /obj/machinery/power/port_gen/pacman/Initialize()
 	. = ..()
@@ -106,8 +106,8 @@
 	return ..()
 
 /obj/machinery/power/port_gen/pacman/RefreshParts()
-	var/temp_rating = 0
-	var/consumption_coeff = 0
+	var/temp_rating = ZERO
+	var/consumption_coeff = ZERO
 	for(var/obj/item/stock_parts/SP in component_parts)
 		if(istype(SP, /obj/item/stock_parts/matter_bin))
 			max_sheets = SP.rating * SP.rating * 50
@@ -134,7 +134,7 @@
 /obj/machinery/power/port_gen/pacman/DropFuel()
 	if(sheets)
 		new sheet_path(drop_location(), sheets)
-		sheets = 0
+		sheets = ZERO
 
 /obj/machinery/power/port_gen/pacman/UseFuel()
 	var/needed_sheets = 1 / (time_per_sheet * consumption / power_output)
@@ -143,13 +143,13 @@
 	sheet_left -= temp
 	sheets -= round(needed_sheets)
 	needed_sheets -= round(needed_sheets)
-	if (sheet_left <= 0 && sheets > 0)
+	if (sheet_left <= ZERO && sheets > ZERO)
 		sheet_left = 1 - needed_sheets
 		sheets--
 
 	var/lower_limit = 56 + power_output * 10
 	var/upper_limit = 76 + power_output * 10
-	var/bias = 0
+	var/bias = ZERO
 	if (power_output > 4)
 		upper_limit = 400
 		bias = power_output - consumption * (4 - consumption)
@@ -167,8 +167,8 @@
 		qdel(src)
 
 /obj/machinery/power/port_gen/pacman/handleInactive()
-	current_heat = max(current_heat - 2, 0)
-	if(current_heat == 0)
+	current_heat = max(current_heat - 2, ZERO)
+	if(current_heat == ZERO)
 		STOP_PROCESSING(SSmachines, src)
 
 /obj/machinery/power/port_gen/pacman/proc/overheat()
@@ -238,11 +238,11 @@
 	data["stack_percent"] = round(sheet_left * 100, 0.1)
 
 	data["anchored"] = anchored
-	data["connected"] = (powernet == null ? 0 : 1)
+	data["connected"] = (powernet == null ? ZERO : 1)
 	data["ready_to_boot"] = anchored && HasFuel()
 	data["power_generated"] = DisplayPower(power_gen)
 	data["power_output"] = DisplayPower(power_gen * power_output)
-	data["power_available"] = (powernet == null ? 0 : DisplayPower(avail()))
+	data["power_available"] = (powernet == null ? ZERO : DisplayPower(avail()))
 	data["current_heat"] = current_heat
 	. =  data
 

@@ -13,8 +13,8 @@
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
 	var/datum/powernet/powernet = null
 	use_power = NO_POWER_USE
-	idle_power_usage = 0
-	active_power_usage = 0
+	idle_power_usage = ZERO
+	active_power_usage = ZERO
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()
@@ -47,15 +47,15 @@
 
 /obj/machinery/power/proc/surplus()
 	if(powernet)
-		return CLAMP(powernet.avail-powernet.load, 0, powernet.avail)
+		return CLAMP(powernet.avail-powernet.load, ZERO, powernet.avail)
 	else
-		return 0
+		return ZERO
 
 /obj/machinery/power/proc/avail(amount)
 	if(powernet)
 		return amount ? powernet.avail >= amount : powernet.avail
 	else
-		return 0
+		return ZERO
 
 /obj/machinery/power/proc/add_delayedload(amount)
 	if(powernet)
@@ -63,15 +63,15 @@
 
 /obj/machinery/power/proc/delayed_surplus()
 	if(powernet)
-		return CLAMP(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
+		return CLAMP(powernet.newavail - powernet.delayedload, ZERO, powernet.newavail)
 	else
-		return 0
+		return ZERO
 
 /obj/machinery/power/proc/newavail()
 	if(powernet)
 		return powernet.newavail
 	else
-		return 0
+		return ZERO
 
 /obj/machinery/power/proc/disconnect_terminal() // machines without a terminal will just return, no harm no fowl.
 	return
@@ -283,16 +283,16 @@
 //No animations will be performed by this proc.
 /proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
 	if(!istype(M) || ismecha(M.loc))
-		return 0	//feckin mechs are dumb
+		return ZERO	//feckin mechs are dumb
 	if(dist_check)
 		if(!in_range(source,M))
-			return 0
+			return ZERO
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves
-			if(G.siemens_coefficient == 0)
-				return 0		//to avoid spamming with insulated glvoes on
+			if(G.siemens_coefficient == ZERO)
+				return ZERO		//to avoid spamming with insulated glvoes on
 
 	var/area/source_area
 	if(istype(power_source, /area))
@@ -315,19 +315,19 @@
 		if (apc.terminal)
 			PN = apc.terminal.powernet
 	else if (!power_source)
-		return 0
+		return ZERO
 	else
 		log_admin("ERROR: /proc/electrocute_mob([M], [power_source], [source]): wrong power_source")
-		return 0
+		return ZERO
 	if (!cell && !PN)
-		return 0
-	var/PN_damage = 0
-	var/cell_damage = 0
+		return ZERO
+	var/PN_damage = ZERO
+	var/cell_damage = ZERO
 	if (PN)
 		PN_damage = PN.get_electrocute_damage()
 	if (cell)
 		cell_damage = cell.get_electrocute_damage()
-	var/shock_damage = 0
+	var/shock_damage = ZERO
 	if (PN_damage>=cell_damage)
 		power_source = PN
 		shock_damage = PN_damage
@@ -343,7 +343,7 @@
 		source_area.use_power(drained_energy/GLOB.CELLRATE)
 	else if (istype(power_source, /datum/powernet))
 		var/drained_power = drained_energy/GLOB.CELLRATE //convert from "joules" to "watts"
-		PN.delayedload += (min(drained_power, max(PN.newavail - PN.delayedload, 0)))
+		PN.delayedload += (min(drained_power, max(PN.newavail - PN.delayedload, ZERO)))
 	else if (istype(power_source, /obj/item/stock_parts/cell))
 		cell.use(drained_energy)
 	return drained_energy

@@ -33,7 +33,7 @@
 
 /obj/screen/credit
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	alpha = 0
+	alpha = ZERO
 	screen_loc = "12,1"
 	layer = SPLASHSCREEN_LAYER
 	var/client/parent
@@ -49,7 +49,7 @@
 	maptext_y = (world.icon_size / 2) - 4
 	maptext_width = world.icon_size * 3
 	var/matrix/M = matrix(transform)
-	M.Translate(0, CREDIT_ANIMATE_HEIGHT)
+	M.Translate(ZERO, CREDIT_ANIMATE_HEIGHT)
 	animate(src, transform = M, time = CREDIT_ROLL_SPEED)
 	target = M
 	animate(src, alpha = 255, time = CREDIT_EASE_DURATION, flags = ANIMATION_PARALLEL)
@@ -66,4 +66,4 @@
 	return ..()
 
 /obj/screen/credit/proc/FadeOut()
-	animate(src, alpha = 0, transform = target, time = CREDIT_EASE_DURATION)
+	animate(src, alpha = ZERO, transform = target, time = CREDIT_EASE_DURATION)

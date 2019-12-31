@@ -35,7 +35,7 @@
 			if(IT.volume <= 3)
 				to_chat(user, "<span class='warning'>\The [IT] is too small for \the [src].</span>")
 				return
-			updateTank(W, 0, user)
+			updateTank(W, ZERO, user)
 	else if(W.tool_behaviour == TOOL_WRENCH)
 		switch(fisto_setting)
 			if(1)
@@ -50,7 +50,7 @@
 		if(tank)
 			updateTank(tank, 1, user)
 
-/obj/item/melee/powerfist/proc/updateTank(obj/item/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
+/obj/item/melee/powerfist/proc/updateTank(obj/item/tank/internals/thetank, removing = ZERO, mob/living/carbon/human/user)
 	if(removing)
 		if(!tank)
 			to_chat(user, "<span class='notice'>\The [src] currently has no tank attached to it.</span>")

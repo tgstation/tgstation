@@ -1,8 +1,8 @@
-#define COLLECT_ONE 0
+#define COLLECT_ONE ZERO
 #define COLLECT_EVERYTHING 1
 #define COLLECT_SAME 2
 
-#define DROP_NOTHING 0
+#define DROP_NOTHING ZERO
 #define DROP_AT_PARENT 1
 #define DROP_AT_LOCATION 2
 
@@ -716,7 +716,7 @@
 
 /datum/component/storage/proc/remaining_space_items()
 	var/atom/real_location = real_location()
-	return max(0, max_items - real_location.contents.len)
+	return max(ZERO, max_items - real_location.contents.len)
 
 /datum/component/storage/proc/signal_fill_type(datum/source, type, amount = 20, force = FALSE)
 	var/atom/real_location = real_location()

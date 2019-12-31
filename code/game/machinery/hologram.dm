@@ -39,11 +39,11 @@ Possible to do for anyone motivated enough:
 	idle_power_usage = 5
 	active_power_usage = 100
 	max_integrity = 300
-	armor = list("melee" = 50, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
+	armor = list("melee" = 50, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = ZERO)
 	circuit = /obj/item/circuitboard/machine/holopad
 	var/list/masters //List of living mobs that use the holopad
 	var/list/holorays //Holoray-mob link.
-	var/last_request = 0 //to prevent request spam. ~Carn
+	var/last_request = ZERO //to prevent request spam. ~Carn
 	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
 	var/temp = ""
 	var/list/holo_calls	//array of /datum/holocalls
@@ -52,7 +52,7 @@ Possible to do for anyone motivated enough:
 	var/replay_mode = FALSE //currently replaying a recording
 	var/loop_mode = FALSE //currently looping a recording
 	var/record_mode = FALSE //currently recording
-	var/record_start = 0  	//recording start time
+	var/record_start = ZERO  	//recording start time
 	var/record_user			//user that inititiated the recording
 	var/obj/effect/overlay/holo_pad_hologram/replay_holo	//replay hologram
 	var/static/force_answer_call = FALSE	//Calls will be automatically answered after a couple rings, here for debugging
@@ -451,12 +451,12 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/holopad/proc/SetLightsAndPower()
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
-	use_power = total_users > 0 ? ACTIVE_POWER_USE : IDLE_POWER_USE
+	use_power = total_users > ZERO ? ACTIVE_POWER_USE : IDLE_POWER_USE
 	active_power_usage = HOLOPAD_PASSIVE_POWER_USAGE + (HOLOGRAM_POWER_USAGE * total_users)
 	if(total_users || replay_mode)
 		set_light(2)
 	else
-		set_light(0)
+		set_light(ZERO)
 	update_icon()
 
 /obj/machinery/holopad/update_icon_state()
@@ -547,15 +547,15 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	var/distx = holo.x - ray.x
 	var/newangle
 	if(!disty)
-		if(distx >= 0)
+		if(distx >= ZERO)
 			newangle = 90
 		else
 			newangle = 270
 	else
 		newangle = arctan(distx/disty)
-		if(disty < 0)
+		if(disty < ZERO)
 			newangle += 180
-		else if(distx < 0)
+		else if(distx < ZERO)
 			newangle += 360
 	var/matrix/M = matrix()
 	if (get_dist(get_turf(holo),new_turf) <= 1)
@@ -624,7 +624,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	else if(language != disk.record.language)
 		disk.record.entries += list(list(HOLORECORD_LANGUAGE,language))
 
-	var/current_delay = 0
+	var/current_delay = ZERO
 	for(var/E in disk.record.entries)
 		var/list/entry = E
 		if(entry[1] != HOLORECORD_DELAY)
@@ -697,7 +697,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		HC.Disconnect(HC.calling_holopad)
 	return ..()
 
-/obj/effect/overlay/holo_pad_hologram/Process_Spacemove(movement_dir = 0)
+/obj/effect/overlay/holo_pad_hologram/Process_Spacemove(movement_dir = ZERO)
 	return TRUE
 
 /obj/effect/overlay/holo_pad_hologram/examine(mob/user)

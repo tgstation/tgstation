@@ -3,11 +3,11 @@
 	weight = 3
 	typepath = /datum/round_event/wizard/ghost
 	max_occurrences = 1
-	earliest_start = 0 MINUTES
+	earliest_start = ZERO MINUTES
 
 /datum/round_event/wizard/ghost/start()
 	var/msg = "<span class='warning'>You suddenly feel extremely obvious...</span>"
-	set_observer_default_invisibility(0, msg)
+	set_observer_default_invisibility(ZERO, msg)
 
 
 //--//
@@ -17,7 +17,7 @@
 	weight = 2
 	typepath = /datum/round_event/wizard/possession
 	max_occurrences = 5
-	earliest_start = 0 MINUTES
+	earliest_start = ZERO MINUTES
 
 /datum/round_event/wizard/possession/start()
 	for(var/mob/dead/observer/G in GLOB.player_list)

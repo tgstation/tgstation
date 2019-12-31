@@ -12,7 +12,7 @@
 	explanation_text = "Purchase, and retain control over at least [target_amount] souls."
 
 /datum/objective/devil/soulquantity/check_completion()
-	var/count = 0
+	var/count = ZERO
 	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(/datum/antagonist/devil)
 	var/list/souls = devilDatum.soulsOwned
 	for(var/S in souls) //Just a sanity check.
@@ -50,7 +50,7 @@
 	explanation_text = "Have mortals sign at least [target_amount] contracts [contractName]"
 
 /datum/objective/devil/soulquality/check_completion()
-	var/count = 0
+	var/count = ZERO
 	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(/datum/antagonist/devil)
 	var/list/souls = devilDatum.soulsOwned
 	for(var/S in souls)
@@ -96,14 +96,14 @@
 	explanation_text = "Purchase and retain control over more souls than [opponent.truename], known to mortals as [target.name], the [target.assigned_role]."
 
 /datum/objective/devil/outsell/check_completion()
-	var/selfcount = 0
+	var/selfcount = ZERO
 	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(/datum/antagonist/devil)
 	var/list/souls = devilDatum.soulsOwned
 	for(var/S in souls)
 		var/datum/mind/L = S
 		if(L.soulOwner == owner)
 			selfcount++
-	var/targetcount = 0
+	var/targetcount = ZERO
 	devilDatum = target.has_antag_datum(/datum/antagonist/devil)
 	souls = devilDatum.soulsOwned
 	for(var/S in souls)

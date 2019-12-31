@@ -19,14 +19,14 @@
 		if (VM == config.defaultmap)
 			mapname += " (Default)"
 
-		if (VM.config_min_users > 0 || VM.config_max_users > 0)
+		if (VM.config_min_users > ZERO || VM.config_max_users > ZERO)
 			mapname += " \["
-			if (VM.config_min_users > 0)
+			if (VM.config_min_users > ZERO)
 				mapname += "[VM.config_min_users]"
 			else
 				mapname += "0"
 			mapname += "-"
-			if (VM.config_max_users > 0)
+			if (VM.config_max_users > ZERO)
 				mapname += "[VM.config_max_users]"
 			else
 				mapname += "inf"

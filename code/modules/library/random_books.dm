@@ -34,7 +34,7 @@
 /obj/structure/bookcase/random/Initialize(mapload)
 	. = ..()
 	if(book_count && isnum(book_count))
-		book_count += pick(-1,-1,0,1,1)
+		book_count += pick(-1,-1,ZERO,1,1)
 		. = INITIALIZE_HINT_LATELOAD
 
 /obj/structure/bookcase/random/LateInitialize()
@@ -86,6 +86,6 @@
 
 /obj/structure/bookcase/random/reference/Initialize(mapload)
 	. = ..()
-	while(book_count > 0 && prob(ref_book_prob))
+	while(book_count > ZERO && prob(ref_book_prob))
 		book_count--
 		new /obj/item/book/manual/random(src)

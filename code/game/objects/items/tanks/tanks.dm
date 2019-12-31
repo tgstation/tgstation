@@ -30,7 +30,7 @@
 	if(H.internal == src)
 		to_chat(H, "<span class='notice'>You close [src] valve.</span>")
 		H.internal = null
-		H.update_internals_hud_icon(0)
+		H.update_internals_hud_icon(ZERO)
 	else
 		if(!H.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 			if(!H.wear_mask)
@@ -150,8 +150,8 @@
 
 /obj/item/tank/ui_data(mob/user)
 	var/list/data = list()
-	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
-	data["releasePressure"] = round(distribute_pressure ? distribute_pressure : 0)
+	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : ZERO)
+	data["releasePressure"] = round(distribute_pressure ? distribute_pressure : ZERO)
 	data["defaultReleasePressure"] = round(TANK_DEFAULT_RELEASE_PRESSURE)
 	data["minReleasePressure"] = round(TANK_MIN_RELEASE_PRESSURE)
 	data["maxReleasePressure"] = round(TANK_MAX_RELEASE_PRESSURE)
@@ -212,7 +212,7 @@
 		return null
 
 	var/tank_pressure = air_contents.return_pressure()
-	var/actual_distribute_pressure = CLAMP(tank_pressure, 0, distribute_pressure)
+	var/actual_distribute_pressure = CLAMP(tank_pressure, ZERO, distribute_pressure)
 
 	var/moles_needed = actual_distribute_pressure*volume_to_return/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
@@ -227,7 +227,7 @@
 	//Handle exploding, leaking, and rupturing of the tank
 
 	if(!air_contents)
-		return 0
+		return ZERO
 
 	var/pressure = air_contents.return_pressure()
 	var/temperature = air_contents.return_temperature()
@@ -249,7 +249,7 @@
 			qdel(src)
 
 	else if(pressure > TANK_RUPTURE_PRESSURE || temperature > TANK_MELT_TEMPERATURE)
-		if(integrity <= 0)
+		if(integrity <= ZERO)
 			var/turf/T = get_turf(src)
 			if(!T)
 				return
@@ -260,7 +260,7 @@
 			integrity--
 
 	else if(pressure > TANK_LEAK_PRESSURE)
-		if(integrity <= 0)
+		if(integrity <= ZERO)
 			var/turf/T = get_turf(src)
 			if(!T)
 				return

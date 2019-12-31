@@ -23,14 +23,14 @@
 		if (P.mind.assigned_role in restricted_roles) // Does their job allow for it?
 			candidates.Remove(P)
 			continue
-		if ((exclusive_roles.len > 0) && !(P.mind.assigned_role in exclusive_roles)) // Is the rule exclusive to their job?
+		if ((exclusive_roles.len > ZERO) && !(P.mind.assigned_role in exclusive_roles)) // Is the rule exclusive to their job?
 			candidates.Remove(P)
 			continue
 
-/datum/dynamic_ruleset/latejoin/ready(forced = 0)
+/datum/dynamic_ruleset/latejoin/ready(forced = ZERO)
 	if (!forced)
-		var/job_check = 0
-		if (enemy_roles.len > 0)
+		var/job_check = ZERO
+		if (enemy_roles.len > ZERO)
 			for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
 				if (M.stat == DEAD)
 					continue // Dead players cannot count as opponents
@@ -83,7 +83,7 @@
 	antag_flag_override = ROLE_REV
 	restricted_roles = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")
 	enemy_roles = list("AI", "Cyborg", "Security Officer","Detective","Head of Security", "Captain", "Warden")
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_enemies = list(2,2,1,1,1,1,1,ZERO,ZERO,ZERO)
 	required_candidates = 1
 	weight = 2
 	delay = 1 MINUTES	// Prevents rule start while head is offstation.
@@ -100,7 +100,7 @@
 		required_heads_of_staff = 1
 	if(!..())
 		return FALSE
-	var/head_check = 0
+	var/head_check = ZERO
 	for(var/mob/player in mode.current_players[CURRENT_LIVING_PLAYERS])
 		if (player.mind.assigned_role in GLOB.command_positions)
 			head_check++

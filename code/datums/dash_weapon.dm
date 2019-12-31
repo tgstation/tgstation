@@ -20,7 +20,7 @@
 	holder = user
 
 /datum/action/innate/dash/IsAvailable()
-	if(current_charges > 0)
+	if(current_charges > ZERO)
 		return TRUE
 	else
 		return FALSE
@@ -43,7 +43,7 @@
 		addtimer(CALLBACK(src, .proc/charge), charge_rate)
 
 /datum/action/innate/dash/proc/charge()
-	current_charges = CLAMP(current_charges + 1, 0, max_charges)
+	current_charges = CLAMP(current_charges + 1, ZERO, max_charges)
 	holder.update_action_buttons_icon()
 	if(recharge_sound)
 		playsound(dashing_item, recharge_sound, 50, TRUE)

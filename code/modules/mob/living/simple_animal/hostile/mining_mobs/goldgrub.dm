@@ -17,8 +17,8 @@
 	maxHealth = 45
 	health = 45
 	harm_intent_damage = 5
-	melee_damage_lower = 0
-	melee_damage_upper = 0
+	melee_damage_lower = ZERO
+	melee_damage_upper = ZERO
 	attack_verb_continuous = "barrels into"
 	attack_verb_simple = "barrel into"
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -97,7 +97,7 @@
 	if (!istype(T, /turf/open/floor/plating/asteroid) || !do_after(G, 30, target = T))
 		to_chat(G, "<span class='warning'>You can only burrow in and out of mining turfs and must stay still!</span>")
 		return
-	if (get_dist(G, T) != 0)
+	if (get_dist(G, T) != ZERO)
 		to_chat(G, "<span class='warning'>Action cancelled, as you moved while reappearing.</span>")
 		return
 	if(G.is_burrowed)

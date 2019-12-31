@@ -65,14 +65,14 @@
 					A.emergency = FALSE
 					A.update_icon()
 		if(WIRE_AI) // Pulse to disable WIRE_AI control for 10 ticks (follows same rules as cutting).
-			if(A.aiControlDisabled == 0)
+			if(A.aiControlDisabled == ZERO)
 				A.aiControlDisabled = 1
 			else if(A.aiControlDisabled == -1)
 				A.aiControlDisabled = 2
 			sleep(10)
 			if(A)
 				if(A.aiControlDisabled == 1)
-					A.aiControlDisabled = 0
+					A.aiControlDisabled = ZERO
 				else if(A.aiControlDisabled == 2)
 					A.aiControlDisabled = -1
 		if(WIRE_SHOCK) // Pulse to shock the door for 10 ticks.
@@ -110,12 +110,12 @@
 				A.bolt()
 		if(WIRE_AI) // Cut to disable WIRE_AI control, mend to re-enable.
 			if(mend)
-				if(A.aiControlDisabled == 1) // 0 = normal, 1 = locked out, 2 = overridden by WIRE_AI, -1 = previously overridden by WIRE_AI
-					A.aiControlDisabled = 0
+				if(A.aiControlDisabled == 1) // ZERO = normal, 1 = locked out, 2 = overridden by WIRE_AI, -1 = previously overridden by WIRE_AI
+					A.aiControlDisabled = ZERO
 				else if(A.aiControlDisabled == 2)
 					A.aiControlDisabled = -1
 			else
-				if(A.aiControlDisabled == 0)
+				if(A.aiControlDisabled == ZERO)
 					A.aiControlDisabled = 1
 				else if(A.aiControlDisabled == -1)
 					A.aiControlDisabled = 2

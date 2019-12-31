@@ -25,7 +25,7 @@
 
 /turf/open/floor/mineral/update_icon()
 	if(!..())
-		return 0
+		return ZERO
 	if(!broken && !burnt)
 		if( !(icon_state in icons) )
 			icon_state = initial(icon_state)
@@ -136,7 +136,7 @@
 	icon_state = "bananium"
 	floor_tile = /obj/item/stack/tile/mineral/bananium
 	icons = list("bananium","bananium_dam")
-	var/spam_flag = 0
+	var/spam_flag = ZERO
 
 /turf/open/floor/mineral/bananium/Entered(mob/living/L)
 	.=..()
@@ -188,7 +188,7 @@
 	icon_state = "uranium"
 	floor_tile = /obj/item/stack/tile/mineral/uranium
 	icons = list("uranium","uranium_dam")
-	var/last_event = 0
+	var/last_event = ZERO
 	var/active = null
 
 /turf/open/floor/mineral/uranium/Entered(mob/AM)
@@ -220,7 +220,7 @@
 			for(var/turf/open/floor/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
-			active = 0
+			active = ZERO
 			return
 
 // ALIEN ALLOY

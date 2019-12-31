@@ -493,7 +493,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 
 */
-/obj/item/proc/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null)
+/obj/item/proc/build_worn_icon(default_layer = ZERO, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null)
 
 	var/t_state
 	if(override_state)
@@ -565,7 +565,7 @@ generate/load female uniform sprites matching all previously decided variables
 		if(4) //even = right hands
 			return list("x" = 0, "y" = 16)
 		else //No offsets or Unwritten number of hands
-			return list("x" = 0, "y" = 0)//Handle held offsets
+			return list("x" = 0, "y" = ZERO)//Handle held offsets
 
 //produces a key based on the human's limbs
 /mob/living/carbon/human/generate_icon_render_key()

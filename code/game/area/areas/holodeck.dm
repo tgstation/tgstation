@@ -2,11 +2,11 @@
 	name = "Holodeck"
 	icon_state = "Holodeck"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-	flags_1 = 0
+	flags_1 = ZERO
 	hidden = TRUE
 
 	var/obj/machinery/computer/holodeck/linked
-	var/restricted = 0 // if true, program goes on emag list
+	var/restricted = ZERO // if true, program goes on emag list
 
 /*
 	Power tracking: Use the holodeck computer's power grid
@@ -17,16 +17,16 @@
 	if(!requires_power)
 		return 1
 	if(always_unpowered)
-		return 0
+		return ZERO
 	if(!linked)
-		return 0
+		return ZERO
 	var/area/A = get_area(linked)
 	ASSERT(!istype(A, /area/holodeck))
 	return A.powered(chan)
 
 /area/holodeck/usage(var/chan)
 	if(!linked)
-		return 0
+		return ZERO
 	var/area/A = get_area(linked)
 	ASSERT(!istype(A, /area/holodeck))
 	return A.usage(chan)
@@ -40,7 +40,7 @@
 
 /area/holodeck/use_power(amount, chan)
 	if(!linked)
-		return 0
+		return ZERO
 	var/area/A = get_area(linked)
 	ASSERT(!istype(A, /area/holodeck))
 	return A.use_power(amount,chan)

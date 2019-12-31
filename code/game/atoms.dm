@@ -26,7 +26,7 @@
 	var/list/hud_possible
 
 	///Value used to increment ex_act() if reactionary_explosions is on
-	var/explosion_block = 0
+	var/explosion_block = ZERO
 
 	/**
 	  * used to store the different colors on an atom
@@ -51,7 +51,7 @@
 	///Proximity monitor associated with this atom
 	var/datum/proximity_monitor/proximity_monitor
 	///Cooldown tick timer for buckle messages
-	var/buckle_message_cooldown = 0
+	var/buckle_message_cooldown = ZERO
 	///Last fingerprints to touch this atom
 	var/fingerprintslast
 
@@ -420,7 +420,7 @@
   */
 /atom/proc/bullet_act(obj/projectile/P, def_zone)
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone)
-	. = P.on_hit(src, 0, def_zone)
+	. = P.on_hit(src, ZERO, def_zone)
 
 ///Return true if we're inside the passed in atom
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
@@ -476,7 +476,7 @@
 					for(var/datum/reagent/R in reagents.reagent_list)
 						. += "[R.volume] units of [R.name]"
 				else //Otherwise, just show the total volume
-					var/total_volume = 0
+					var/total_volume = ZERO
 					for(var/datum/reagent/R in reagents.reagent_list)
 						total_volume += R.volume
 					. += "[total_volume] units of various reagents"
@@ -606,7 +606,7 @@
 
 ///to add a mob's dna info into an object's blood_dna list.
 /atom/proc/transfer_mob_blood_dna(mob/living/L)
-	// Returns 0 if we have that blood already
+	// Returns ZERO if we have that blood already
 	var/new_blood_dna = L.get_blood_dna_list()
 	if(!new_blood_dna)
 		return FALSE
@@ -1223,7 +1223,7 @@
 		T = get_turf(src)
 
 	if(!T)
-		return 0
+		return ZERO
 
 	var/list/forced_gravity = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, T, forced_gravity)
@@ -1236,7 +1236,7 @@
 		return max_grav
 
 	if(isspaceturf(T)) // Turf never has gravity
-		return 0
+		return ZERO
 
 	var/area/A = get_area(T)
 	if(A.has_gravity) // Areas which always has gravity
@@ -1244,7 +1244,7 @@
 	else
 		// There's a gravity generator on our z level
 		if(GLOB.gravity_generators["[T.z]"])
-			var/max_grav = 0
+			var/max_grav = ZERO
 			for(var/obj/machinery/gravity_generator/main/G in GLOB.gravity_generators["[T.z]"])
 				max_grav = max(G.setting,max_grav)
 			return max_grav

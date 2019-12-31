@@ -59,7 +59,7 @@
 		return b
 
 ///puts a round into the magazine
-/obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/R, replace_spent = 0)
+/obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/R, replace_spent = ZERO)
 	// Boxes don't have a caliber type, magazines do. Not sure if it's intended or not, but if we fail to find a caliber, then we fall back to ammo_type.
 	if(!R || (caliber && R.caliber != caliber) || (!caliber && R.type != ammo_type))
 		return FALSE
@@ -85,8 +85,8 @@
 /obj/item/ammo_box/proc/can_load(mob/user)
 	return TRUE
 
-/obj/item/ammo_box/attackby(obj/item/A, mob/user, params, silent = FALSE, replace_spent = 0)
-	var/num_loaded = 0
+/obj/item/ammo_box/attackby(obj/item/A, mob/user, params, silent = FALSE, replace_spent = ZERO)
+	var/num_loaded = ZERO
 	if(!can_load(user))
 		return
 	if(istype(A, /obj/item/ammo_box))
@@ -138,7 +138,7 @@
 
 ///Count of number of bullets in the magazine
 /obj/item/ammo_box/magazine/proc/ammo_count(countempties = TRUE)
-	var/boolets = 0
+	var/boolets = ZERO
 	for(var/obj/item/ammo_casing/bullet in stored_ammo)
 		if(bullet && (bullet.BB || countempties))
 			boolets++

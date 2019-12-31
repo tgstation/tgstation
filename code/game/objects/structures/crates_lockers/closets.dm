@@ -16,7 +16,7 @@
 	var/welded = FALSE
 	var/locked = FALSE
 	var/large = TRUE
-	var/wall_mounted = 0 //never solid (You can always pass over it)
+	var/wall_mounted = ZERO //never solid (You can always pass over it)
 	var/breakout_time = 1200
 	var/message_cooldown
 	var/can_weld_shut = TRUE
@@ -41,7 +41,7 @@
 
 /obj/structure/closet/Initialize(mapload)
 	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
-		addtimer(CALLBACK(src, .proc/take_contents), 0)
+		addtimer(CALLBACK(src, .proc/take_contents), ZERO)
 	. = ..()
 	update_icon()
 	PopulateContents()
@@ -168,7 +168,7 @@
 				return FALSE
 			if(L.mob_size > max_mob_size)
 				return FALSE
-			var/mobs_stored = 0
+			var/mobs_stored = ZERO
 			for(var/mob/living/M in contents)
 				if(++mobs_stored >= mob_storage_capacity)
 					return FALSE
@@ -227,7 +227,7 @@
 	if(opened)
 		if(istype(W, cutting_tool))
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=0))
+				if(!W.tool_start_check(user, amount=ZERO))
 					return
 
 				to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
@@ -247,7 +247,7 @@
 		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return
 	else if(W.tool_behaviour == TOOL_WELDER && can_weld_shut)
-		if(!W.tool_start_check(user, amount=0))
+		if(!W.tool_start_check(user, amount=ZERO))
 			return
 
 		to_chat(user, "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>")
@@ -294,7 +294,7 @@
 	if(!isturf(O.loc))
 		return
 
-	var/actuallyismob = 0
+	var/actuallyismob = ZERO
 	if(isliving(O))
 		actuallyismob = 1
 	else if(!isitem(O))
@@ -333,7 +333,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!(user.mobility_flags & MOBILITY_STAND) && get_dist(src, user) > 0)
+	if(!(user.mobility_flags & MOBILITY_STAND) && get_dist(src, user) > ZERO)
 		return
 
 	if(!toggle(user))
@@ -369,7 +369,7 @@
 /obj/structure/closet/Exit(atom/movable/AM)
 	open()
 	if(AM.loc == src)
-		return 0
+		return ZERO
 	return 1
 
 /obj/structure/closet/container_resist(mob/living/user)

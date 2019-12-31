@@ -15,7 +15,7 @@
 	var/mutable_appearance/plastic_overlay
 	var/directional = FALSE
 	var/aim_dir = NORTH
-	var/boom_sizes = list(0, 0, 3)
+	var/boom_sizes = list(ZERO, ZERO, 3)
 	var/full_damage_on_mobs = FALSE
 
 /obj/item/grenade/c4/Initialize()
@@ -100,7 +100,7 @@
 			var/obj/item/I = AM
 			I.throw_speed = max(1, (I.throw_speed - 3))
 			I.throw_range = max(1, (I.throw_range - 3))
-			I.embedding = I.embedding.setRating(embed_chance = 0)
+			I.embedding = I.embedding.setRating(embed_chance = ZERO)
 		else if(istype(AM, /mob/living))
 			plastic_overlay.layer = FLOAT_LAYER
 
@@ -143,7 +143,7 @@
 	log_game("[key_name(user)] suicided with [src] at [AREACOORD(user)]")
 	user.visible_message("<span class='suicide'>[user] activates [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
 	shout_syndicate_crap(user)
-	explosion(user,0,2,0) //Cheap explosion imitation because putting prime() here causes runtimes
+	explosion(user,ZERO,2,ZERO) //Cheap explosion imitation because putting prime() here causes runtimes
 	user.gib(1, 1)
 	qdel(src)
 
@@ -157,4 +157,4 @@
 	icon_state = "plasticx40"
 	item_state = "plasticx4"
 	directional = TRUE
-	boom_sizes = list(0, 2, 5)
+	boom_sizes = list(ZERO, 2, 5)

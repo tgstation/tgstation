@@ -48,7 +48,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		to_chat(parent, "<span class='userdanger'>Empty keybindings, setting default to [hotkeys ? "Hotkey" : "Classic"] mode</span>")
 
 	if(current_version < 30)
-		if(clientfps == 0)
+		if(clientfps == ZERO)
 			clientfps = 60
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
@@ -60,17 +60,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		features["ethcolor"] = "9c3030"
 	if(current_version < 22)
 		job_preferences = list() //It loaded null from nonexistant savefile field.
-		var/job_civilian_high = 0
-		var/job_civilian_med = 0
-		var/job_civilian_low = 0
+		var/job_civilian_high = ZERO
+		var/job_civilian_med = ZERO
+		var/job_civilian_low = ZERO
 
-		var/job_medsci_high = 0
-		var/job_medsci_med = 0
-		var/job_medsci_low = 0
+		var/job_medsci_high = ZERO
+		var/job_medsci_med = ZERO
+		var/job_medsci_low = ZERO
 
-		var/job_engsec_high = 0
-		var/job_engsec_med = 0
-		var/job_engsec_low = 0
+		var/job_engsec_high = ZERO
+		var/job_engsec_med = ZERO
+		var/job_engsec_low = ZERO
 
 		S["job_civilian_high"]	>> job_civilian_high
 		S["job_civilian_med"]	>> job_civilian_med
@@ -194,7 +194,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["key_bindings"]		>> key_bindings
 
 	//try to fix any outdated data if necessary
-	if(needs_update >= 0)
+	if(needs_update >= ZERO)
 		update_preferences(needs_update, S)		//needs_update = savefile_version if we need an update (positive integer)
 
 	//Sanitize
@@ -202,18 +202,18 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ooccolor		= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, GLOB.available_ui_styles, GLOB.available_ui_styles[1])
-	hotkeys			= sanitize_integer(hotkeys, 0, 1, initial(hotkeys))
-	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
-	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
-	buttons_locked	= sanitize_integer(buttons_locked, 0, 1, initial(buttons_locked))
-	windowflashing	= sanitize_integer(windowflashing, 0, 1, initial(windowflashing))
+	hotkeys			= sanitize_integer(hotkeys, ZERO, 1, initial(hotkeys))
+	tgui_fancy		= sanitize_integer(tgui_fancy, ZERO, 1, initial(tgui_fancy))
+	tgui_lock		= sanitize_integer(tgui_lock, ZERO, 1, initial(tgui_lock))
+	buttons_locked	= sanitize_integer(buttons_locked, ZERO, 1, initial(buttons_locked))
+	windowflashing	= sanitize_integer(windowflashing, ZERO, 1, initial(windowflashing))
 	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
-	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
-	clientfps		= sanitize_integer(clientfps, 0, 1000, 0)
+	toggles			= sanitize_integer(toggles, ZERO, 65535, initial(toggles))
+	clientfps		= sanitize_integer(clientfps, ZERO, 1000, ZERO)
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, null)
-	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
-	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
-	widescreenpref  = sanitize_integer(widescreenpref, 0, 1, initial(widescreenpref))
+	ambientocclusion	= sanitize_integer(ambientocclusion, ZERO, 1, initial(ambientocclusion))
+	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, ZERO, 1, initial(auto_fit_viewport))
+	widescreenpref  = sanitize_integer(widescreenpref, ZERO, 1, initial(widescreenpref))
 	ghost_form		= sanitize_inlist(ghost_form, GLOB.ghost_forms, initial(ghost_form))
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, GLOB.ghost_orbits, initial(ghost_orbit))
 	ghost_accs		= sanitize_inlist(ghost_accs, GLOB.ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
@@ -361,7 +361,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["all_quirks"]			>> all_quirks
 
 	//try to fix any outdated data if necessary
-	if(needs_update >= 0)
+	if(needs_update >= ZERO)
 		update_character(needs_update, S)		//needs_update == savefile_version if we need an update (positive integer)
 
 	//Sanitize
@@ -403,15 +403,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	socks			= sanitize_inlist(socks, GLOB.socks_list)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
-	hair_color			= sanitize_hexcolor(hair_color, 3, 0)
-	facial_hair_color			= sanitize_hexcolor(facial_hair_color, 3, 0)
-	underwear_color			= sanitize_hexcolor(underwear_color, 3, 0)
-	eye_color		= sanitize_hexcolor(eye_color, 3, 0)
+	hair_color			= sanitize_hexcolor(hair_color, 3, ZERO)
+	facial_hair_color			= sanitize_hexcolor(facial_hair_color, 3, ZERO)
+	underwear_color			= sanitize_hexcolor(underwear_color, 3, ZERO)
+	eye_color		= sanitize_hexcolor(eye_color, 3, ZERO)
 	skin_tone		= sanitize_inlist(skin_tone, GLOB.skin_tones)
 	backpack			= sanitize_inlist(backpack, GLOB.backpacklist, initial(backpack))
 	jumpsuit_style	= sanitize_inlist(jumpsuit_style, GLOB.jumpsuitlist, initial(jumpsuit_style))
 	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
-	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 3, 0)
+	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 3, ZERO)
 	features["ethcolor"]	= copytext(features["ethcolor"],1,7)
 	features["tail_lizard"]	= sanitize_inlist(features["tail_lizard"], GLOB.tails_list_lizard)
 	features["tail_human"] 	= sanitize_inlist(features["tail_human"], GLOB.tails_list_human, "None")

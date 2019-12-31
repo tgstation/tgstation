@@ -41,7 +41,7 @@
 		else if(istype(A, /obj/structure/blob))
 			var/obj/structure/blob/B = A
 			B.take_damage(energy*0.6)
-			movement_range = 0
+			movement_range = ZERO
 
 /obj/effect/accelerated_particle/Crossed(atom/A)
 	if(isliving(A))
@@ -61,7 +61,7 @@
 	if(!step(src,dir))
 		forceMove(get_step(src,dir))
 	movement_range--
-	if(movement_range == 0)
+	if(movement_range == ZERO)
 		qdel(src)
 	else
 		sleep(speed)

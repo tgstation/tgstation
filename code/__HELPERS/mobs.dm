@@ -156,7 +156,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 /proc/age2agedescription(age)
 	switch(age)
-		if(0 to 1)
+		if(ZERO to 1)
 			return "infant"
 		if(1 to 3)
 			return "toddler"
@@ -177,13 +177,13 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			return "unknown"
 
-/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null)
+/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = ZERO, progress = 1, datum/callback/extra_checks = null)
 	if(!user || !target)
-		return 0
+		return ZERO
 	var/user_loc = user.loc
 
-	var/drifting = 0
-	if(!user.Process_Spacemove(0) && user.inertia_dir)
+	var/drifting = ZERO
+	if(!user.Process_Spacemove(ZERO) && user.inertia_dir)
 		drifting = 1
 
 	var/target_loc = target.loc
@@ -201,17 +201,17 @@ GLOBAL_LIST_EMPTY(species_list)
 		if (progress)
 			progbar.update(world.time - starttime)
 		if(QDELETED(user) || QDELETED(target))
-			. = 0
+			. = ZERO
 			break
 		if(uninterruptible)
 			continue
 
 		if(drifting && !user.inertia_dir)
-			drifting = 0
+			drifting = ZERO
 			user_loc = user.loc
 
 		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_held_item() != holding || user.incapacitated() || (extra_checks && !extra_checks.Invoke()))
-			. = 0
+			. = ZERO
 			break
 	if (progress)
 		qdel(progbar)
@@ -233,15 +233,15 @@ GLOBAL_LIST_EMPTY(species_list)
 
 /proc/do_after(mob/user, var/delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null)
 	if(!user)
-		return 0
+		return ZERO
 	var/atom/Tloc = null
 	if(target && !isturf(target))
 		Tloc = target.loc
 
 	var/atom/Uloc = user.loc
 
-	var/drifting = 0
-	if(!user.Process_Spacemove(0) && user.inertia_dir)
+	var/drifting = ZERO
+	if(!user.Process_Spacemove(ZERO) && user.inertia_dir)
 		drifting = 1
 
 	var/holding = user.get_active_held_item()
@@ -265,22 +265,22 @@ GLOBAL_LIST_EMPTY(species_list)
 			progbar.update(world.time - starttime)
 
 		if(drifting && !user.inertia_dir)
-			drifting = 0
+			drifting = ZERO
 			Uloc = user.loc
 
 		if(QDELETED(user) || user.stat || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
-			. = 0
+			. = ZERO
 			break
 
 		if(isliving(user))
 			var/mob/living/L = user
 			if(L.IsStun() || L.IsParalyzed())
-				. = 0
+				. = ZERO
 				break
 
 		if(!QDELETED(Tloc) && (QDELETED(target) || Tloc != target.loc))
 			if((Uloc != Tloc || Tloc != user) && !drifting)
-				. = 0
+				. = ZERO
 				break
 
 		if(needhand)
@@ -288,10 +288,10 @@ GLOBAL_LIST_EMPTY(species_list)
 			//i.e the hand is used to pull some item/tool out of the construction
 			if(!holdingnull)
 				if(!holding)
-					. = 0
+					. = ZERO
 					break
 			if(user.get_active_held_item() != holding)
-				. = 0
+				. = ZERO
 				break
 	if (progress)
 		qdel(progbar)
@@ -300,15 +300,15 @@ GLOBAL_LIST_EMPTY(species_list)
 	. = 1
 	return
 
-/proc/do_after_mob(mob/user, list/targets, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks, required_mobility_flags = MOBILITY_STAND)
+/proc/do_after_mob(mob/user, list/targets, time = 30, uninterruptible = ZERO, progress = 1, datum/callback/extra_checks, required_mobility_flags = MOBILITY_STAND)
 	if(!user || !targets)
-		return 0
+		return ZERO
 	if(!islist(targets))
 		targets = list(targets)
 	var/user_loc = user.loc
 
-	var/drifting = 0
-	if(!user.Process_Spacemove(0) && user.inertia_dir)
+	var/drifting = ZERO
+	if(!user.Process_Spacemove(ZERO) && user.inertia_dir)
 		drifting = 1
 
 	var/list/originalloc = list()
@@ -332,22 +332,22 @@ GLOBAL_LIST_EMPTY(species_list)
 			if(progress)
 				progbar.update(world.time - starttime)
 			if(QDELETED(user) || !targets)
-				. = 0
+				. = ZERO
 				break
 			if(uninterruptible)
 				continue
 
 			if(drifting && !user.inertia_dir)
-				drifting = 0
+				drifting = ZERO
 				user_loc = user.loc
 
 			if(L && !CHECK_MULTIPLE_BITFIELDS(L.mobility_flags, required_mobility_flags))
-				. = 0
+				. = ZERO
 				break
 
 			for(var/atom/target in targets)
 				if((!drifting && user_loc != user.loc) || QDELETED(target) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || (extra_checks && !extra_checks.Invoke()))
-					. = 0
+					. = ZERO
 					break mainloop
 	if(progbar)
 		qdel(progbar)
@@ -376,7 +376,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 /proc/spawn_and_random_walk(spawn_type, target, amount, walk_chance=100, max_walk=3, always_max_walk=FALSE, admin_spawn=FALSE)
 	var/turf/T = get_turf(target)
-	var/step_count = 0
+	var/step_count = ZERO
 	if(!T)
 		CRASH("attempt to spawn atom type: [spawn_type] in nullspace")
 
@@ -468,7 +468,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/static/list/mob_spawn_meancritters = list() // list of possible hostile mobs
 	var/static/list/mob_spawn_nicecritters = list() // and possible friendly mobs
 
-	if(mob_spawn_meancritters.len <= 0 || mob_spawn_nicecritters.len <= 0)
+	if(mob_spawn_meancritters.len <= ZERO || mob_spawn_nicecritters.len <= ZERO)
 		for(var/T in typesof(/mob/living/simple_animal))
 			var/mob/living/simple_animal/SA = T
 			switch(initial(SA.gold_core_spawnable))

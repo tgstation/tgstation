@@ -5,7 +5,7 @@
 	desc = "A thin spire of slightly swaying tendrils."
 	max_integrity = 60
 	point_return = 15
-	var/resource_delay = 0
+	var/resource_delay = ZERO
 
 /obj/structure/blob/resource/scannerreport()
 	return "Gradually supplies the blob with resources, increasing the rate of expansion."

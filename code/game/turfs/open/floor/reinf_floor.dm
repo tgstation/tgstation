@@ -25,7 +25,7 @@
 /turf/open/floor/engine/burn_tile()
 	return //unburnable
 
-/turf/open/floor/engine/make_plating(force = 0)
+/turf/open/floor/engine/make_plating(force = ZERO)
 	if(force)
 		..()
 	return //unplateable

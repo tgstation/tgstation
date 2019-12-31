@@ -113,14 +113,14 @@
 	description = "..."
 	suffix = "lavaland_surface_sloth.dmm"
 	// Generates nothing but atmos runtimes and salt
-	cost = 0
+	cost = ZERO
 
 /datum/map_template/ruin/lavaland/ratvar
 	name = "Dead God"
 	id = "ratvar"
 	description = "Ratvar's final resting place."
 	suffix = "lavaland_surface_dead_ratvar.dmm"
-	cost = 0
+	cost = ZERO
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/hierophant
@@ -136,7 +136,7 @@
 	id = "blooddrunk"
 	description = "A strange arrangement of stone tiles and an insane, beastly miner contemplating them."
 	suffix = "lavaland_surface_blooddrunk1.dmm"
-	cost = 0
+	cost = ZERO
 	allow_duplicates = FALSE //will only spawn one variant of the ruin
 
 /datum/map_template/ruin/lavaland/blood_drunk_miner/guidance

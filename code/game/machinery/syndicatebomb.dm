@@ -59,7 +59,7 @@
 	if(!isnull(next_beep) && (next_beep <= world.time))
 		var/volume
 		switch(seconds_remaining())
-			if(0 to 5)
+			if(ZERO to 5)
 				volume = 50
 			if(5 to 10)
 				volume = 40
@@ -104,7 +104,7 @@
 
 /obj/machinery/syndicatebomb/proc/seconds_remaining()
 	if(active)
-		. = max(0, round((detonation_timer - world.time) / 10))
+		. = max(ZERO, round((detonation_timer - world.time) / 10))
 	else
 		. = timer_set
 
@@ -291,8 +291,8 @@
 /obj/item/bombcore/training
 	name = "dummy payload"
 	desc = "A Nanotrasen replica of a syndicate payload. It's not intended to explode but to announce that it WOULD have exploded, then rewire itself to allow for more training."
-	var/defusals = 0
-	var/attempts = 0
+	var/defusals = ZERO
+	var/attempts = ZERO
 
 /obj/item/bombcore/training/proc/reset()
 	var/obj/machinery/syndicatebomb/holder = loc
@@ -376,12 +376,12 @@
 	var/max_beakers = 1 // Read on about grenade casing properties below
 	var/spread_range = 5
 	var/temp_boost = 50
-	var/time_release = 0
+	var/time_release = ZERO
 
 /obj/item/bombcore/chemical/detonate()
 
-	if(time_release > 0)
-		var/total_volume = 0
+	if(time_release > ZERO)
+		var/total_volume = ZERO
 		for(var/obj/item/reagent_containers/RC in beakers)
 			total_volume += RC.reagents.total_volume
 
@@ -431,7 +431,7 @@
 	qdel(src)
 
 /obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_CROWBAR && beakers.len > 0)
+	if(I.tool_behaviour == TOOL_CROWBAR && beakers.len > ZERO)
 		I.play_tool_sound(src)
 		for (var/obj/item/B in beakers)
 			B.forceMove(drop_location())
@@ -502,9 +502,9 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	var/timer = 0
-	var/detonated =	0
-	var/existent =	0
+	var/timer = ZERO
+	var/detonated =	ZERO
+	var/existent =	ZERO
 
 /obj/item/syndicatedetonator/attack_self(mob/user)
 	if(timer < world.time)
@@ -518,8 +518,8 @@
 		if(detonated)
 			detonated--
 			log_bomber(user, "remotely detonated [detonated ? "syndicate bombs" : "a syndicate bomb"] using a", src)
-		detonated =	0
-		existent =	0
+		detonated =	ZERO
+		existent =	ZERO
 		timer = world.time + BUTTON_COOLDOWN
 
 

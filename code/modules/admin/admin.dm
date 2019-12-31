@@ -43,7 +43,7 @@
 		body += "<br><br><b>Show related accounts by:</b> "
 		body += "\[ <a href='?_src_=holder;[HrefToken()];showrelatedacc=cid;client=[REF(M.client)]'>CID</a> | "
 		body += "<a href='?_src_=holder;[HrefToken()];showrelatedacc=ip;client=[REF(M.client)]'>IP</a> \]"
-		var/rep = 0
+		var/rep = ZERO
 		rep += SSpersistence.antag_rep[M.ckey]
 		body += "<br><br>Antagonist reputation: [rep]"
 		body += "<br><a href='?_src_=holder;[HrefToken()];modantagrep=add;mob=[REF(M)]'>\[increase\]</a> "
@@ -205,7 +205,7 @@
 	dat = text("<HEAD><TITLE>Admin Newscaster</TITLE></HEAD><H3>Admin Newscaster Unit</H3>")
 
 	switch(admincaster_screen)
-		if(0)
+		if(ZERO)
 			dat += "Welcome to the admin newscaster.<BR> Here you can add, edit and censor every newspiece on the network."
 			dat += "<BR>Feed channels and stories entered through here will be uneditable and handled as official news by the rest of the units."
 			dat += "<BR>Note that this panel allows full freedom over the news network, there are no constrictions except the few basic ones. Don't break things!</FONT>"
@@ -215,7 +215,7 @@
 			dat+= "<BR><A href='?src=[REF(src)];[HrefToken()];ac_view=1'>View Feed Channels</A>"
 			dat+= "<BR><A href='?src=[REF(src)];[HrefToken()];ac_create_feed_story=1'>Submit new Feed story</A>"
 			dat+= "<BR><BR><A href='?src=[REF(usr)];[HrefToken()];mach_close=newscaster_main'>Exit</A>"
-			var/wanted_already = 0
+			var/wanted_already = ZERO
 			if(GLOB.news_network.wanted_issue.active)
 				wanted_already = 1
 			dat+="<HR><B>Feed Security functions:</B><BR>"
@@ -264,7 +264,7 @@
 			dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed Channel to Network.</B></FONT><HR><BR>"
 			if(src.admincaster_feed_channel.channel_name =="" || src.admincaster_feed_channel.channel_name == "\[REDACTED\]")
 				dat+="<FONT COLOR='maroon'>Invalid channel name.</FONT><BR>"
-			var/check = 0
+			var/check = ZERO
 			for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 				if(FC.channel_name == src.admincaster_feed_channel.channel_name)
 					check = 1
@@ -281,7 +281,7 @@
 				if( isemptylist(src.admincaster_feed_channel.messages) )
 					dat+="<I>No feed messages found in channel...</I><BR>"
 				else
-					var/i = 0
+					var/i = ZERO
 					for(var/datum/newscaster/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
 						i++
 						dat+="-[MESSAGE.returnBody(-1)] <BR>"
@@ -347,7 +347,7 @@
 			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[11]'>Back</A>"
 		if(14)
 			dat+="<B>Wanted Issue Handler:</B>"
-			var/wanted_already = 0
+			var/wanted_already = ZERO
 			var/end_param = 1
 			if(GLOB.news_network.wanted_issue.active)
 				wanted_already = 1
@@ -400,7 +400,7 @@
 
 
 /datum/admins/proc/Game()
-	if(!check_rights(0))
+	if(!check_rights(ZERO))
 		return
 
 	var/dat = {"
@@ -412,7 +412,7 @@
 	if(GLOB.master_mode == "dynamic")
 		if(SSticker.current_state <= GAME_STATE_PREGAME)
 			dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart=1'>(Force Roundstart Rulesets)</A><br>"
-			if (GLOB.dynamic_forced_roundstart_ruleset.len > 0)
+			if (GLOB.dynamic_forced_roundstart_ruleset.len > ZERO)
 				for(var/datum/dynamic_ruleset/roundstart/rule in GLOB.dynamic_forced_roundstart_ruleset)
 					dat += {"<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_remove=\ref[rule]'>-> [rule.name] <-</A><br>"}
 				dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_clear=1'>(Clear Rulesets)</A><br>"
@@ -508,12 +508,12 @@
 	set category = "Special Verbs"
 	set name = "Announce"
 	set desc="Announce your desires to the world"
-	if(!check_rights(0))
+	if(!check_rights(ZERO))
 		return
 
 	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
 	if(message)
-		if(!check_rights(R_SERVER,0))
+		if(!check_rights(R_SERVER,ZERO))
 			message = adminscrub(message,500)
 		to_chat(world, "<span class='adminnotice'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b></span>\n \t [message]")
 		log_admin("Announce: [key_name(usr)] : [message]")
@@ -523,7 +523,7 @@
 	set category = "Special Verbs"
 	set name = "Set Admin Notice"
 	set desc ="Set an announcement that appears to everyone who joins the server. Only lasts this round"
-	if(!check_rights(0))
+	if(!check_rights(ZERO))
 		return
 
 	var/new_admin_notice = input(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",GLOB.admin_notice) as message|null
@@ -645,7 +645,7 @@
 		newtime = newtime*10
 		SSticker.SetTimeLeft(newtime)
 		SSticker.start_immediately = FALSE
-		if(newtime < 0)
+		if(newtime < ZERO)
 			to_chat(world, "<b>The game start has been delayed.</b>")
 			log_admin("[key_name(usr)] delayed the round start.")
 		else
@@ -783,7 +783,7 @@
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Guests", "[!new_guest_ban ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/output_ai_laws()
-	var/ai_number = 0
+	var/ai_number = ZERO
 	for(var/i in GLOB.silicon_mobs)
 		var/mob/living/silicon/S = i
 		ai_number++
@@ -805,7 +805,7 @@
 		to_chat(usr, "<b>No AIs located</b>" )
 
 /datum/admins/proc/output_all_devil_info()
-	var/devil_number = 0
+	var/devil_number = ZERO
 	for(var/datum/mind/D in SSticker.mode.devils)
 		devil_number++
 		var/datum/antagonist/devil/devil = D.has_antag_datum(/datum/antagonist/devil)
@@ -825,7 +825,7 @@
 		return
 	var/datum/browser/browser = new(usr, "jobmanagement", "Manage Free Slots", 520)
 	var/list/dat = list()
-	var/count = 0
+	var/count = ZERO
 
 	if(!SSjob.initialized)
 		alert(usr, "You cannot manage jobs before the job subsystem is initialized!")
@@ -843,7 +843,7 @@
 
 		dat += "</td>"
 		dat += "<td>"
-		if(job.total_positions >= 0)
+		if(job.total_positions >= ZERO)
 			dat += "<A href='?src=[REF(src)];[HrefToken()];customjobslot=[job.title]'>Custom</A> | "
 			dat += "<A href='?src=[REF(src)];[HrefToken()];addjobslot=[job.title]'>Add 1</A> | "
 			if(job.total_positions > job.current_positions)
@@ -914,7 +914,7 @@
 //Kicks all the clients currently in the lobby. The second parameter (kick_only_afk) determins if an is_afk() check is ran, or if all clients are kicked
 //defaults to kicking everyone (afk + non afk clients in the lobby)
 //returns a list of ckeys of the kicked clients
-/proc/kick_clients_in_lobby(message, kick_only_afk = 0)
+/proc/kick_clients_in_lobby(message, kick_only_afk = ZERO)
 	var/list/kicked_client_names = list()
 	for(var/client/C in GLOB.clients)
 		if(isnewplayer(C.mob))
@@ -931,7 +931,7 @@
 /datum/admins/proc/cmd_ghost_drag(mob/dead/observer/frommob, mob/tomob)
 
 	//this is the exact two check rights checks required to edit a ckey with vv.
-	if (!check_rights(R_VAREDIT,0) || !check_rights(R_SPAWN|R_DEBUG,0))
+	if (!check_rights(R_VAREDIT,ZERO) || !check_rights(R_SPAWN|R_DEBUG,ZERO))
 		return FALSE
 
 	if (!frommob.ckey)

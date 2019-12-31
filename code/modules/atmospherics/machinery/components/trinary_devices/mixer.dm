@@ -81,29 +81,29 @@
 	//Calculate necessary moles to transfer using PV=nRT
 	var/general_transfer = (target_pressure - output_starting_pressure) * air3.volume / R_IDEAL_GAS_EQUATION
 
-	var/transfer_moles1 = air1.temperature ? node1_concentration * general_transfer / air1.temperature : 0
-	var/transfer_moles2 = air2.temperature ? node2_concentration * general_transfer / air2.temperature : 0
+	var/transfer_moles1 = air1.temperature ? node1_concentration * general_transfer / air1.temperature : ZERO
+	var/transfer_moles2 = air2.temperature ? node2_concentration * general_transfer / air2.temperature : ZERO
 
 	var/air1_moles = air1.total_moles()
 	var/air2_moles = air2.total_moles()
 
 	if(!node2_concentration)
-		if(air1.temperature <= 0)
+		if(air1.temperature <= ZERO)
 			return
 		transfer_moles1 = min(transfer_moles1, air1_moles)
-		transfer_moles2 = 0
+		transfer_moles2 = ZERO
 	else if(!node1_concentration)
-		if(air2.temperature <= 0)
+		if(air2.temperature <= ZERO)
 			return
 		transfer_moles2 = min(transfer_moles2, air2_moles)
-		transfer_moles1 = 0
+		transfer_moles1 = ZERO
 	else
-		if(air1.temperature <= 0 || air2.temperature <= 0)
+		if(air1.temperature <= ZERO || air2.temperature <= ZERO)
 			return
-		if((transfer_moles2 <= 0) || (transfer_moles1 <= 0))
+		if((transfer_moles2 <= ZERO) || (transfer_moles1 <= ZERO))
 			return
 		if((air1_moles < transfer_moles1) || (air2_moles < transfer_moles2))
-			var/ratio = 0
+			var/ratio = ZERO
 			ratio = min(air1_moles / transfer_moles1, air2_moles / transfer_moles2)
 			transfer_moles1 *= ratio
 			transfer_moles2 *= ratio
@@ -162,7 +162,7 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				target_pressure = CLAMP(pressure, 0, MAX_OUTPUT_PRESSURE)
+				target_pressure = CLAMP(pressure, ZERO, MAX_OUTPUT_PRESSURE)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("node1")
 			var/value = text2num(params["concentration"])

@@ -30,7 +30,7 @@
     )
 	)
 
-	var/list/prefreturn = presentpreflikepicker(usr,"Customize mob", "Customize mob", Button1="Ok", width = 450, StealFocus = 1,Timeout = 0, settings=settings)
+	var/list/prefreturn = presentpreflikepicker(usr,"Customize mob", "Customize mob", Button1="Ok", width = 450, StealFocus = 1,Timeout = ZERO, settings=settings)
 	if (prefreturn["button"] == 1)
 		settings = prefreturn["settings"]
 		var/mainsettings = settings["mainsettings"]
@@ -56,7 +56,7 @@
 		if (mainsettings["maxhealth"]["value"])
 			if (!isnum(mainsettings["maxhealth"]["value"]))
 				mainsettings["maxhealth"]["value"] = text2num(mainsettings["maxhealth"]["value"])
-			if (mainsettings["maxhealth"]["value"] > 0)
+			if (mainsettings["maxhealth"]["value"] > ZERO)
 				basemob.maxHealth = basemob.maxHealth =  mainsettings["maxhealth"]["value"]
 
 		if (mainsettings["name"]["value"])

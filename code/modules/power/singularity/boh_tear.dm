@@ -8,8 +8,8 @@
 	icon_state = "boh_tear"
 	pixel_x = -32
 	pixel_y = -32
-	dissipate = 0
-	move_self = 0
+	dissipate = ZERO
+	move_self = ZERO
 	consume_range = 1
 	grav_pull = 25
 	current_size = STAGE_SIX

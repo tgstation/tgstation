@@ -6,7 +6,7 @@
 /client/proc/browse_files(root="data/logs/", max_iterations=10, list/valid_extensions=list("txt","log","htm", "html"))
 	var/path = root
 
-	for(var/i=0, i<max_iterations, i++)
+	for(var/i=ZERO, i<max_iterations, i++)
 		var/list/choices = flist(path)
 		if(path != root)
 			choices.Insert(1,"/")
@@ -43,14 +43,14 @@
 	PLEASE USE RESPONSIBLY, Some log files can reach sizes of 4MB!	*/
 /client/proc/file_spam_check()
 	var/time_to_wait = GLOB.fileaccess_timer - world.time
-	if(time_to_wait > 0)
+	if(time_to_wait > ZERO)
 		to_chat(src, "<font color='red'>Error: file_spam_check(): Spam. Please wait [DisplayTimeText(time_to_wait)].</font>")
 		return 1
 	var/delay = FTPDELAY
 	if(holder)
 		delay *= ADMIN_FTPDELAY_MODIFIER
 	GLOB.fileaccess_timer = world.time + delay
-	return 0
+	return ZERO
 #undef FTPDELAY
 #undef ADMIN_FTPDELAY_MODIFIER
 

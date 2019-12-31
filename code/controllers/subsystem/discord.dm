@@ -35,14 +35,14 @@ SUBSYSTEM_DEF(discord)
 	var/list/people_to_notify = list() // People to notify on roundstart
 	var/list/account_link_cache = list() // List that holds accounts to link, used in conjunction with TGS
 	var/notify_file = file("data/notify.json")
-	var/enabled = 0 // Is TGS enabled (If not we wont fire because otherwise this is useless)
+	var/enabled = ZERO // Is TGS enabled (If not we wont fire because otherwise this is useless)
 
 /datum/controller/subsystem/discord/Initialize(start_timeofday)
 	// Check for if we are using TGS, otherwise return and disabless firing
 	if(world.TgsAvailable())
 		enabled = 1 // Allows other procs to use this (Account linking, etc)
 	else
-		can_fire = 0 // We dont want excess firing
+		can_fire = ZERO // We dont want excess firing
 		return ..() // Cancel 
 
 	try

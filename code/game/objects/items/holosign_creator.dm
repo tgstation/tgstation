@@ -6,15 +6,15 @@
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	force = 0
+	force = ZERO
 	w_class = WEIGHT_CLASS_SMALL
-	throwforce = 0
+	throwforce = ZERO
 	throw_speed = 3
 	throw_range = 7
 	item_flags = NOBLUDGEON
 	var/list/signs = list()
 	var/max_signs = 10
-	var/creation_time = 0 //time to create a holosign in deciseconds.
+	var/creation_time = ZERO //time to create a holosign in deciseconds.
 	var/holosign_type = /obj/structure/holosign/wetsign
 	var/holocreator_busy = FALSE //to prevent placing multiple holo barriers at once
 
@@ -87,7 +87,7 @@
 	desc = "A holographic projector that creates holographic barriers that prevent changes in atmosphere conditions."
 	icon_state = "signmaker_atmos"
 	holosign_type = /obj/structure/holosign/barrier/atmos
-	creation_time = 0
+	creation_time = ZERO
 	max_signs = 3
 
 /obj/item/holosign_creator/medical
@@ -104,7 +104,7 @@
 	creation_time = 15
 	max_signs = 9
 	holosign_type = /obj/structure/holosign/barrier/cyborg
-	var/shock = 0
+	var/shock = ZERO
 
 /obj/item/holosign_creator/cyborg/attack_self(mob/user)
 	if(iscyborg(user))
@@ -117,7 +117,7 @@
 			if(signs.len)
 				for(var/H in signs)
 					qdel(H)
-			shock = 0
+			shock = ZERO
 			return
 		else if(R.emagged&&!shock)
 			to_chat(user, "<span class='warning'>You clear all active holograms, and overload your energy projector!</span>")

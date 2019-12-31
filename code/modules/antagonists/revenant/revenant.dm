@@ -25,7 +25,7 @@
 	healable = FALSE
 	spacewalk = TRUE
 	sight = SEE_SELF
-	throwforce = 0
+	throwforce = ZERO
 
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
@@ -35,15 +35,15 @@
 	response_disarm_simple = "swing through"
 	response_harm_continuous = "punches through"
 	response_harm_simple = "punch through"
-	unsuitable_atmos_damage = 0
+	unsuitable_atmos_damage = ZERO
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0) //I don't know how you'd apply those, but revenants no-sell them anyway.
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
+	minbodytemp = ZERO
 	maxbodytemp = INFINITY
-	harm_intent_damage = 0
+	harm_intent_damage = ZERO
 	friendly_verb_continuous = "touches"
 	friendly_verb_simple = "touch"
-	status_flags = 0
+	status_flags = ZERO
 	wander = FALSE
 	density = FALSE
 	movement_type = FLYING
@@ -59,16 +59,16 @@
 	var/essence_regen_cap = 75 //The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.
 	var/essence_regenerating = TRUE //If the revenant regenerates essence or not
 	var/essence_regen_amount = 5 //How much essence regenerates
-	var/essence_accumulated = 0 //How much essence the revenant has stolen
-	var/essence_excess = 0 //How much stolen essence avilable for unlocks
+	var/essence_accumulated = ZERO //How much essence the revenant has stolen
+	var/essence_excess = ZERO //How much stolen essence avilable for unlocks
 	var/revealed = FALSE //If the revenant can take damage from normal sources.
-	var/unreveal_time = 0 //How long the revenant is revealed for, is about 2 seconds times this var.
-	var/unstun_time = 0 //How long the revenant is stunned for, is about 2 seconds times this var.
+	var/unreveal_time = ZERO //How long the revenant is revealed for, is about 2 seconds times this var.
+	var/unstun_time = ZERO //How long the revenant is stunned for, is about 2 seconds times this var.
 	var/inhibited = FALSE //If the revenant's abilities are blocked by a chaplain's power.
 	var/essence_drained = 0 //How much essence the revenant will drain from the corpse it's feasting on.
 	var/draining = FALSE //If the revenant is draining someone.
 	var/list/drained_mobs = list() //Cannot harvest the same mob twice
-	var/perfectsouls = 0 //How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
+	var/perfectsouls = ZERO //How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
 	var/generated_objectives_and_spells = FALSE
 
 /mob/living/simple_animal/revenant/Initialize(mapload)
@@ -112,16 +112,16 @@
 /mob/living/simple_animal/revenant/Life()
 	if(stasis)
 		return
-	if(revealed && essence <= 0)
+	if(revealed && essence <= ZERO)
 		death()
 	if(unreveal_time && world.time >= unreveal_time)
-		unreveal_time = 0
+		unreveal_time = ZERO
 		revealed = FALSE
 		incorporeal_move = INCORPOREAL_MOVE_JAUNT
 		invisibility = INVISIBILITY_REVENANT
 		to_chat(src, "<span class='revenboldnotice'>You are once more concealed.</span>")
 	if(unstun_time && world.time >= unstun_time)
-		unstun_time = 0
+		unstun_time = ZERO
 		notransform = FALSE
 		to_chat(src, "<span class='revenboldnotice'>You can move again!</span>")
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
@@ -206,7 +206,7 @@
 	if(!forced && !revealed)
 		return FALSE
 	. = amount
-	essence = max(0, essence-amount)
+	essence = max(ZERO, essence-amount)
 	if(updating_health)
 		update_health_hud()
 	if(!essence)
@@ -220,16 +220,16 @@
 
 /mob/living/simple_animal/revenant/death()
 	if(!revealed || stasis) //Revenants cannot die if they aren't revealed //or are already dead
-		return 0
+		return ZERO
 	stasis = TRUE
 	to_chat(src, "<span class='revendanger'>NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]...</span>")
 	notransform = TRUE
 	revealed = TRUE
-	invisibility = 0
+	invisibility = ZERO
 	playsound(src, 'sound/effects/screech.ogg', 100, TRUE)
 	visible_message("<span class='warning'>[src] lets out a waning screech as violet mist swirls around its dissolving body!</span>")
 	icon_state = "revenant_draining"
-	for(var/i = alpha, i > 0, i -= 10)
+	for(var/i = alpha, i > ZERO, i -= 10)
 		stoplag()
 		alpha = i
 	visible_message("<span class='danger'>[src]'s body breaks apart into a fine pile of blue dust.</span>")
@@ -247,10 +247,10 @@
 /mob/living/simple_animal/revenant/proc/reveal(time)
 	if(!src)
 		return
-	if(time <= 0)
+	if(time <= ZERO)
 		return
 	revealed = TRUE
-	invisibility = 0
+	invisibility = ZERO
 	incorporeal_move = FALSE
 	if(!unreveal_time)
 		to_chat(src, "<span class='revendanger'>You have been revealed!</span>")
@@ -263,7 +263,7 @@
 /mob/living/simple_animal/revenant/proc/stun(time)
 	if(!src)
 		return
-	if(time <= 0)
+	if(time <= ZERO)
 		return
 	notransform = TRUE
 	if(!unstun_time)
@@ -315,16 +315,16 @@
 /mob/living/simple_animal/revenant/proc/change_essence_amount(essence_amt, silent = FALSE, source = null)
 	if(!src)
 		return
-	if(essence + essence_amt < 0)
+	if(essence + essence_amt < ZERO)
 		return
-	essence = max(0, essence+essence_amt)
+	essence = max(ZERO, essence+essence_amt)
 	update_health_hud()
-	if(essence_amt > 0)
-		essence_accumulated = max(0, essence_accumulated+essence_amt)
-		essence_excess = max(0, essence_excess+essence_amt)
+	if(essence_amt > ZERO)
+		essence_accumulated = max(ZERO, essence_accumulated+essence_amt)
+		essence_excess = max(ZERO, essence_excess+essence_amt)
 	update_action_buttons_icon()
 	if(!silent)
-		if(essence_amt > 0)
+		if(essence_amt > ZERO)
 			to_chat(src, "<span class='revennotice'>Gained [essence_amt]E[source ? " from [source]":""].</span>")
 		else
 			to_chat(src, "<span class='revenminor'>Lost [essence_amt]E[source ? " from [source]":""].</span>")
@@ -332,9 +332,9 @@
 
 /mob/living/simple_animal/revenant/proc/death_reset()
 	revealed = FALSE
-	unreveal_time = 0
-	notransform = 0
-	unstun_time = 0
+	unreveal_time = ZERO
+	notransform = ZERO
+	unstun_time = ZERO
 	inhibited = FALSE
 	draining = FALSE
 	incorporeal_move = INCORPOREAL_MOVE_JAUNT

@@ -22,7 +22,7 @@
 						if(istype(L))
 							vv_update_display(target, "real_name", L.real_name || "No real name")
 			if(href_list[VV_HK_BASIC_CHANGE])
-				modify_variables(target, target_var, 0)
+				modify_variables(target, target_var, ZERO)
 			if(href_list[VV_HK_BASIC_MASSEDIT])
 				cmd_mass_modify_object_variables(target, target_var)
 	if(check_rights(R_ADMIN, FALSE))

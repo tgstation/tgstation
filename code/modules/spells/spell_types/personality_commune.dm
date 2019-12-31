@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/personality_commune
 	name = "Personality Commune"
 	desc = "Sends thoughts to your alternate consciousness."
-	charge_max = 0
+	charge_max = ZERO
 	clothes_req = FALSE
 	range = -1
 	include_user = TRUE

@@ -78,7 +78,7 @@
 	name = "Energy Bola"
 	icon_state = "e_snare"
 	nodamage = TRUE
-	paralyze = 0
+	paralyze = ZERO
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
 

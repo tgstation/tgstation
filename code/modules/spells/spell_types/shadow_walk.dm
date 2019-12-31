@@ -1,14 +1,14 @@
 /obj/effect/proc_holder/spell/targeted/shadowwalk
 	name = "Shadow Walk"
 	desc = "Grants unlimited movement in darkness."
-	charge_max = 0
+	charge_max = ZERO
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
 	phase_allowed = TRUE
 	selection_type = "range"
 	range = -1
 	include_user = TRUE
-	cooldown_min = 0
+	cooldown_min = ZERO
 	overlay = null
 	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	action_icon_state = "ninja_cloak"
@@ -26,8 +26,8 @@
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, TRUE, -1)
 			visible_message("<span class='boldwarning'>[user] melts into the shadows!</span>")
-			user.SetAllImmobility(0)
-			user.setStaminaLoss(0, 0)
+			user.SetAllImmobility(ZERO)
+			user.setStaminaLoss(ZERO, ZERO)
 			var/obj/effect/dummy/phased_mob/shadow/S2 = new(get_turf(user.loc))
 			user.forceMove(S2)
 			S2.jaunter = user
@@ -59,7 +59,7 @@
 	if(light_amount > 0.2) // jaunt ends
 		end_jaunt(TRUE)
 	else if (light_amount < 0.2 && (!QDELETED(jaunter))) //heal in the dark
-		jaunter.heal_overall_damage(1,1, 0, BODYPART_ORGANIC)
+		jaunter.heal_overall_damage(1,1, ZERO, BODYPART_ORGANIC)
 
 /obj/effect/dummy/phased_mob/shadow/proc/end_jaunt(forced = FALSE)
 	if(jaunter)

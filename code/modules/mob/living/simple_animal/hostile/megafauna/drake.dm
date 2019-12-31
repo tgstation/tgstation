@@ -57,7 +57,7 @@ Difficulty: Medium
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/ashdrake = 10)
 	var/swooping = NONE
-	var/player_cooldown = 0
+	var/player_cooldown = ZERO
 	gps_name = "Fiery Signal"
 	achievement_type = /datum/award/achievement/boss/drake_kill
 	crusher_achievement_type = /datum/award/achievement/boss/drake_crusher
@@ -103,7 +103,7 @@ Difficulty: Medium
 	if(swooping)
 		return
 
-	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
+	anger_modifier = CLAMP(((maxHealth - health)/50),ZERO,20)
 	ranged_cooldown = world.time + ranged_cooldown_time
 
 	if(client)
@@ -144,7 +144,7 @@ Difficulty: Medium
 	if(!target)
 		return
 	target.visible_message("<span class='boldwarning'>Lava starts to pool up around you!</span>")
-	while(amount > 0)
+	while(amount > ZERO)
 		if(QDELETED(target))
 			break
 		var/turf/T = pick(RANGE_TURFS(1, target))
@@ -157,7 +157,7 @@ Difficulty: Medium
 		return swoop_attack(lava_arena = TRUE, swoop_cooldown = 60)
 	INVOKE_ASYNC(src, .proc/lava_pools, amount)
 	swoop_attack(FALSE, target, 1000) // longer cooldown until it gets reset below
-	SLEEP_CHECK_DEATH(0)
+	SLEEP_CHECK_DEATH(ZERO)
 	fire_cone()
 	if(health < maxHealth*0.5)
 		SLEEP_CHECK_DEATH(10)
@@ -167,7 +167,7 @@ Difficulty: Medium
 	SetRecoveryTime(40)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/mass_fire(spiral_count = 12, range = 15, times = 3)
-	SLEEP_CHECK_DEATH(0)
+	SLEEP_CHECK_DEATH(ZERO)
 	for(var/i = 1 to times)
 		SetRecoveryTime(50)
 		playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
@@ -199,9 +199,9 @@ Difficulty: Medium
 	SLEEP_CHECK_DEATH(10) // give them a bit of time to realize what attack is actually happening
 
 	var/list/turfs = RANGE_TURFS(2, center)
-	while(amount > 0)
+	while(amount > ZERO)
 		var/list/empty = indestructible_turfs.Copy() // can't place safe turfs on turfs that weren't changed to be open
-		var/any_attack = 0
+		var/any_attack = ZERO
 		for(var/turf/T in turfs)
 			for(var/mob/living/L in T.contents)
 				if(L.client)
@@ -213,7 +213,7 @@ Difficulty: Medium
 		if(!any_attack)
 			for(var/obj/effect/temp_visual/drakewall/D in drakewalls)
 				qdel(D)
-			return 0 // nothing to attack in the arena time for enraged attack if we still have a target
+			return ZERO // nothing to attack in the arena time for enraged attack if we still have a target
 		for(var/turf/T in turfs)
 			if(!(T in empty))
 				new /obj/effect/temp_visual/lava_warning(T)
@@ -224,11 +224,11 @@ Difficulty: Medium
 	return 1 // attack finished completely
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/arena_escape_enrage() // you ran somehow / teleported away from my arena attack now i'm mad fucker
-	SLEEP_CHECK_DEATH(0)
+	SLEEP_CHECK_DEATH(ZERO)
 	SetRecoveryTime(80)
 	visible_message("<span class='boldwarning'>[src] starts to glow vibrantly as its wounds close up!</span>")
 	adjustBruteLoss(-250) // yeah you're gonna pay for that, don't run nerd
-	add_atom_colour(rgb(255, 255, 0), TEMPORARY_COLOUR_PRIORITY)
+	add_atom_colour(rgb(255, 255, ZERO), TEMPORARY_COLOUR_PRIORITY)
 	move_to_delay = move_to_delay / 2
 	light_range = 10
 	SLEEP_CHECK_DEATH(10) // run.
@@ -239,14 +239,14 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_cone(atom/at = target, meteors = TRUE)
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
-	SLEEP_CHECK_DEATH(0)
+	SLEEP_CHECK_DEATH(ZERO)
 	if(prob(50) && meteors)
 		INVOKE_ASYNC(src, .proc/fire_rain)
 	var/range = 15
 	var/list/turfs = list()
 	turfs = line_target(-40, range, at)
 	INVOKE_ASYNC(src, .proc/fire_line, turfs)
-	turfs = line_target(0, range, at)
+	turfs = line_target(ZERO, range, at)
 	INVOKE_ASYNC(src, .proc/fire_line, turfs)
 	turfs = line_target(40, range, at)
 	INVOKE_ASYNC(src, .proc/fire_line, turfs)
@@ -264,7 +264,7 @@ Difficulty: Medium
 	return (getline(src, T) - get_turf(src))
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_line(var/list/turfs)
-	SLEEP_CHECK_DEATH(0)
+	SLEEP_CHECK_DEATH(ZERO)
 	dragon_fire_line(src, turfs)
 
 //fire line keeps going even if dragon is deleted
@@ -324,7 +324,7 @@ Difficulty: Medium
 			qdel(F)
 			if(stat == DEAD)
 				swooping &= ~SWOOP_DAMAGEABLE
-				animate(src, alpha = 255, transform = oldtransform, time = 0, flags = ANIMATION_END_NOW) //reset immediately
+				animate(src, alpha = 255, transform = oldtransform, time = ZERO, flags = ANIMATION_END_NOW) //reset immediately
 			return
 	animate(src, alpha = 100, transform = matrix()*0.7, time = 7)
 	swooping |= SWOOP_INVULNERABLE
@@ -458,7 +458,7 @@ Difficulty: Medium
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	anchored = TRUE
-	opacity = 0
+	opacity = ZERO
 	density = TRUE
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	duration = 82
@@ -514,9 +514,9 @@ Difficulty: Medium
 /obj/effect/temp_visual/dragon_flight/end/flight(negative)
 	if(negative)
 		pixel_x = -DRAKE_SWOOP_HEIGHT
-		animate(src, pixel_x = -16, pixel_z = 0, time = 5)
+		animate(src, pixel_x = -16, pixel_z = ZERO, time = 5)
 	else
-		animate(src, pixel_x = -16, pixel_z = 0, time = 5)
+		animate(src, pixel_x = -16, pixel_z = ZERO, time = 5)
 
 obj/effect/temp_visual/fireball
 	icon = 'icons/obj/wizard.dmi'
@@ -530,7 +530,7 @@ obj/effect/temp_visual/fireball
 
 /obj/effect/temp_visual/fireball/Initialize()
 	. = ..()
-	animate(src, pixel_z = 0, time = duration)
+	animate(src, pixel_z = ZERO, time = duration)
 
 /obj/effect/temp_visual/target
 	icon = 'icons/mob/actions/actions_items.dmi'
@@ -576,7 +576,7 @@ obj/effect/temp_visual/fireball
 	melee_damage_upper = 30
 	melee_damage_lower = 30
 	mouse_opacity = MOUSE_OPACITY_ICON
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = ZERO, OXY = 1)
 	loot = list()
 	crusher_loot = list()
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
@@ -608,7 +608,7 @@ obj/effect/temp_visual/fireball
 	obj_damage = 80
 	melee_damage_upper = 35
 	melee_damage_lower = 35
-	speed = 0
+	speed = ZERO
 	mouse_opacity = MOUSE_OPACITY_ICON
 	loot = list()
 	crusher_loot = list()
@@ -631,10 +631,10 @@ obj/effect/temp_visual/fireball
 
 /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/proc/fire_stream(var/atom/at = target)
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
-	SLEEP_CHECK_DEATH(0)
+	SLEEP_CHECK_DEATH(ZERO)
 	var/range = 20
 	var/list/turfs = list()
-	turfs = line_target(0, range, at)
+	turfs = line_target(ZERO, range, at)
 	INVOKE_ASYNC(src, .proc/fire_line, turfs)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/OpenFire()

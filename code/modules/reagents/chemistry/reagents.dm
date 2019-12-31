@@ -27,16 +27,16 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/datum/reagents/holder = null
 	var/reagent_state = LIQUID
 	var/list/data
-	var/current_cycle = 0
-	var/volume = 0									//pretend this is moles
-	var/color = "#000000" // rgb: 0, 0, 0
+	var/current_cycle = ZERO
+	var/volume = ZERO									//pretend this is moles
+	var/color = "#000000" // rgb: ZERO, ZERO, ZERO
 	var/can_synth = TRUE // can this reagent be synthesized? (for example: odysseus syringe gun)
 	var/metabolization_rate = REAGENTS_METABOLISM //how fast the reagent is metabolized by the mob
-	var/overrides_metab = 0
-	var/overdose_threshold = 0
-	var/addiction_threshold = 0
-	var/addiction_stage = 0
-	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
+	var/overrides_metab = ZERO
+	var/overdose_threshold = ZERO
+	var/addiction_threshold = ZERO
+	var/addiction_stage = ZERO
+	var/overdosed = ZERO // You fucked up and this is now triggering its overdose effects, purge that shit quick.
 	var/self_consuming = FALSE
 	var/reagent_weight = 1 //affects how far it travels when sprayed
 	var/metabolizing = FALSE
@@ -46,12 +46,12 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	. = ..()
 	holder = null
 
-/datum/reagent/proc/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+/datum/reagent/proc/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = ZERO)
 	if(!istype(M))
-		return 0
+		return ZERO
 	if(method == VAPOR) //smoke, foam, spray
 		if(M.reagents)
-			var/modifier = CLAMP((1 - touch_protection), 0, 1)
+			var/modifier = CLAMP((1 - touch_protection), ZERO, 1)
 			var/amount = round(reac_volume*modifier, 0.1)
 			if(amount >= 0.5)
 				M.reagents.add_reagent(type, amount)

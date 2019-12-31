@@ -181,7 +181,7 @@
 		var/transfer_choice = alert("Transfer your soul to [src]? (Warning, your old body will die!)",,"Yes","No")
 		if(transfer_choice != "Yes")
 			return
-		if(QDELETED(src) || uses <= 0)
+		if(QDELETED(src) || uses <= ZERO)
 			return
 		log_game("[key_name(H)] golem-swapped into [src]")
 		H.visible_message("<span class='notice'>A faint light leaves [H], moving to [src] and animating it!</span>","<span class='notice'>You leave your old body behind, and transfer into [src]!</span>")

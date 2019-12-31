@@ -26,7 +26,7 @@
 	layer = ABOVE_MOB_LAYER
 	var/blade_status = GUILLOTINE_BLADE_RAISED
 	var/blade_sharpness = GUILLOTINE_BLADE_MAX_SHARP // How sharp the blade is
-	var/kill_count = 0
+	var/kill_count = ZERO
 	var/current_action = 0 // What's currently happening to the guillotine
 
 /obj/structure/guillotine/Initialize()
@@ -89,12 +89,12 @@
 					current_action = GUILLOTINE_ACTION_INUSE
 
 					if (do_after(user, GUILLOTINE_ACTIVATE_DELAY, target = src) && blade_status == GUILLOTINE_BLADE_RAISED)
-						current_action = 0
+						current_action = ZERO
 						blade_status = GUILLOTINE_BLADE_MOVING
 						icon_state = "guillotine_drop"
 						addtimer(CALLBACK(src, .proc/drop_blade, user), GUILLOTINE_ANIMATION_LENGTH - 2) // Minus two so we play the sound and decap faster
 					else
-						current_action = 0
+						current_action = ZERO
 				else
 					var/mob/living/carbon/human/H = buckled_mobs[1]
 
@@ -144,7 +144,7 @@
 
 			// The crowd is pleased
 			// The delay is to making large crowds have a longer laster applause
-			var/delay_offset = 0
+			var/delay_offset = ZERO
 			for(var/mob/M in viewers(src, 7))
 				var/mob/living/carbon/human/C = M
 				if (ishuman(M))
@@ -253,12 +253,12 @@
 	current_action = GUILLOTINE_ACTION_WRENCH
 
 	if (do_after(user, GUILLOTINE_WRENCH_DELAY, target = src))
-		current_action = 0
-		default_unfasten_wrench(user, I, 0)
+		current_action = ZERO
+		default_unfasten_wrench(user, I, ZERO)
 		setDir(SOUTH)
 		return TRUE
 	else
-		current_action = 0
+		current_action = ZERO
 
 #undef GUILLOTINE_BLADE_MAX_SHARP
 #undef GUILLOTINE_DECAP_MIN_SHARP

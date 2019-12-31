@@ -1,6 +1,6 @@
 
 /mob/living/brain/Life()
-	set invisibility = 0
+	set invisibility = ZERO
 	if (notransform)
 		return
 	if(!loc)
@@ -25,9 +25,9 @@
 /mob/living/brain/proc/handle_emp_damage()
 	if(emp_damage)
 		if(stat == DEAD)
-			emp_damage = 0
+			emp_damage = ZERO
 		else
-			emp_damage = max(emp_damage-1, 0)
+			emp_damage = max(emp_damage-1, ZERO)
 
 /mob/living/brain/handle_status_effects()
 	return

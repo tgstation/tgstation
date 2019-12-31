@@ -17,7 +17,7 @@
 				if("Cannibalize")
 					if(D.health < D.maxHealth)
 						D.visible_message("<span class='notice'>[D] begins to cannibalize parts from [src].</span>", "<span class='notice'>You begin to cannibalize parts from [src]...</span>")
-						if(do_after(D, 60, 0, target = src))
+						if(do_after(D, 60, ZERO, target = src))
 							D.visible_message("<span class='notice'>[D] repairs itself using [src]'s remains!</span>", "<span class='notice'>You repair yourself using [src]'s remains.</span>")
 							D.adjustBruteLoss(-src.maxHealth)
 							new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
@@ -101,14 +101,14 @@
 		..()
 
 /mob/living/simple_animal/drone/getarmor(def_zone, type)
-	var/armorval = 0
+	var/armorval = ZERO
 
 	if(head)
 		armorval = head.armor.getRating(type)
 	return (armorval * get_armor_effectiveness()) //armor is reduced for tiny fragile drones
 
 /mob/living/simple_animal/drone/proc/get_armor_effectiveness()
-	return 0 //multiplier for whatever head armor you wear as a drone
+	return ZERO //multiplier for whatever head armor you wear as a drone
 
 /mob/living/simple_animal/drone/proc/update_drone_hack(hack)
 	if(!mind)

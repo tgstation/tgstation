@@ -5,7 +5,7 @@
 
 
 
-/turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
+/turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = ZERO)
 	return
 
 
@@ -15,13 +15,13 @@
 		return
 
 	. = air_gases[/datum/gas/oxygen]
-	var/oxy = . ? .[MOLES] : 0
+	var/oxy = . ? .[MOLES] : ZERO
 	if (oxy < 0.5)
 		return
 	. = air_gases[/datum/gas/plasma]
-	var/tox = . ? .[MOLES] : 0
+	var/tox = . ? .[MOLES] : ZERO
 	. = air_gases[/datum/gas/tritium]
-	var/trit = . ? .[MOLES] : 0
+	var/trit = . ? .[MOLES] : ZERO
 	if(active_hotspot)
 		if(soh)
 			if(tox > 0.5 || trit > 0.5)
@@ -37,7 +37,7 @@
 
 		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
 			//remove just_spawned protection if no longer processing this cell
-		SSair.add_to_active(src, 0)
+		SSair.add_to_active(src, ZERO)
 
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile
 /obj/effect/hotspot
@@ -54,7 +54,7 @@
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 	var/just_spawned = TRUE
 	var/bypassing = FALSE
-	var/visual_update_tick = 0
+	var/visual_update_tick = ZERO
 
 /obj/effect/hotspot/Initialize(mapload, starting_volume, starting_temperature)
 	. = ..()
@@ -81,7 +81,7 @@
 		temperature = location.air.temperature
 	else
 		var/datum/gas_mixture/affected = location.air.remove_ratio(volume/location.air.volume)
-		if(affected) //in case volume is 0
+		if(affected) //in case volume is ZERO
 			affected.temperature = temperature
 			affected.react(src)
 			temperature = affected.temperature
@@ -149,7 +149,7 @@
 	heat_g /= 255
 	heat_b /= 255
 
-	color = list(LERP(0.3, 1, 1-greyscale_fire) * heat_r,0.3 * heat_g * greyscale_fire,0.3 * heat_b * greyscale_fire, 0.59 * heat_r * greyscale_fire,LERP(0.59, 1, 1-greyscale_fire) * heat_g,0.59 * heat_b * greyscale_fire, 0.11 * heat_r * greyscale_fire,0.11 * heat_g * greyscale_fire,LERP(0.11, 1, 1-greyscale_fire) * heat_b, 0,0,0)
+	color = list(LERP(0.3, 1, 1-greyscale_fire) * heat_r,0.3 * heat_g * greyscale_fire,0.3 * heat_b * greyscale_fire, 0.59 * heat_r * greyscale_fire,LERP(0.59, 1, 1-greyscale_fire) * heat_g,0.59 * heat_b * greyscale_fire, 0.11 * heat_r * greyscale_fire,0.11 * heat_g * greyscale_fire,LERP(0.11, 1, 1-greyscale_fire) * heat_b, ZERO,ZERO,ZERO)
 	alpha = heat_a
 
 #define INSUFFICIENT(path) (!location.air.gases[path] || location.air.gases[path][MOLES] < 0.5)
@@ -198,7 +198,7 @@
 		else
 			icon_state = "1"
 
-	if((visual_update_tick++ % 7) == 0)
+	if((visual_update_tick++ % 7) == ZERO)
 		update_color()
 
 	if(temperature > location.max_fire_temperature_sustained)
@@ -209,7 +209,7 @@
 	return TRUE
 
 /obj/effect/hotspot/Destroy()
-	set_light(0)
+	set_light(ZERO)
 	SSair.hotspots -= src
 	var/turf/open/T = loc
 	if(istype(T) && T.active_hotspot == src)
@@ -230,7 +230,7 @@
 				T.Melt()
 			else
 				T.to_be_destroyed = FALSE
-				T.max_fire_temperature_sustained = 0
+				T.max_fire_temperature_sustained = ZERO
 
 /obj/effect/hotspot/Crossed(atom/movable/AM, oldLoc)
 	..()

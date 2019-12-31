@@ -15,7 +15,7 @@
 	var/time_per_syringe = 250
 	var/syringes_left = 4
 	var/max_syringes = 4
-	var/last_synth = 0
+	var/last_synth = ZERO
 
 /obj/item/gun/chem/Initialize()
 	. = ..()

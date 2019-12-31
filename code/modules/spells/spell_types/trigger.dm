@@ -23,8 +23,8 @@
 	playMagSound()
 	for(var/mob/living/target in targets)
 		for(var/obj/effect/proc_holder/spell/spell in contents)
-			spell.perform(list(target),0)
+			spell.perform(list(target),ZERO)
 		for(var/obj/effect/proc_holder/spell/spell in linked_spells)
-			spell.perform(list(target),0)
+			spell.perform(list(target),ZERO)
 
 	return

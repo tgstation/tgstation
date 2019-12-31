@@ -52,7 +52,7 @@
 
 /obj/projectile/bullet/shotgun_frag12/on_hit(atom/target, blocked = FALSE)
 	..()
-	explosion(target, -1, 0, 1)
+	explosion(target, -1, ZERO, 1)
 	return BULLET_ACT_HIT
 
 /obj/projectile/bullet/pellet
@@ -75,11 +75,11 @@
 
 /obj/projectile/bullet/pellet/Range()
 	..()
-	if(damage > 0)
+	if(damage > ZERO)
 		damage -= tile_dropoff
-	if(stamina > 0)
+	if(stamina > ZERO)
 		stamina -= tile_dropoff_s
-	if(damage < 0 && stamina < 0)
+	if(damage < ZERO && stamina < ZERO)
 		qdel(src)
 
 /obj/projectile/bullet/pellet/shotgun_improvised

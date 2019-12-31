@@ -16,7 +16,7 @@
 	see_in_dark = 5
 	speak_chance = 1
 	turns_per_move = 10
-	var/turns_since_scan = 0
+	var/turns_since_scan = ZERO
 	var/obj/movement_target
 
 	footstep_type = FOOTSTEP_MOB_CLAW
@@ -28,13 +28,13 @@
 	if(!stat && !resting && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
-			turns_since_scan = 0
+			turns_since_scan = ZERO
 			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
 				movement_target = null
-				stop_automated_movement = 0
+				stop_automated_movement = ZERO
 			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
 				movement_target = null
-				stop_automated_movement = 0
+				stop_automated_movement = ZERO
 				for(var/obj/item/reagent_containers/food/snacks/S in oview(src,3))
 					if(isturf(S.loc) || ishuman(S.loc))
 						movement_target = S
@@ -148,7 +148,7 @@
 
 /mob/living/simple_animal/pet/dog/corgi/exoticcorgi/Initialize()
 		. = ..()
-		var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+		var/newcolor = rgb(rand(ZERO, 255), rand(ZERO, 255), rand(ZERO, 255))
 		add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/pet/dog/corgi/death(gibbed)
@@ -170,7 +170,7 @@
 	onclose(user, "mob[REF(src)]")
 
 /mob/living/simple_animal/pet/dog/corgi/getarmor(def_zone, type)
-	var/armorval = 0
+	var/armorval = ZERO
 
 	if(def_zone)
 		if(def_zone == BODY_ZONE_HEAD)
@@ -335,7 +335,7 @@
 
 	if(user && !user.temporarilyRemoveItemFromInventory(item_to_add))
 		to_chat(user, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>")
-		return 0
+		return ZERO
 
 	var/valid = FALSE
 	if(ispath(item_to_add.dog_fashion, /datum/dog_fashion/head))
@@ -344,7 +344,7 @@
 	//Various hats and items (worn on his head) change Ian's behaviour. His attributes are reset when a hat is removed.
 
 	if(valid)
-		if(health <= 0)
+		if(health <= ZERO)
 			to_chat(user, "<span class='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on [p_them()].</span>")
 		else if(user)
 			user.visible_message("<span class='notice'>[user] puts [item_to_add] on [real_name]'s head. [src] looks at [user] and barks once.</span>",
@@ -373,7 +373,7 @@
 	emote_hear = list("barks!", "woofs!", "yaps.","pants.")
 	emote_see = list("shakes its head.", "chases its tail.","shivers.")
 	desc = initial(desc)
-	set_light(0)
+	set_light(ZERO)
 
 	if(inventory_head && inventory_head.dog_fashion)
 		var/datum/dog_fashion/DF = new inventory_head.dog_fashion(src)
@@ -397,7 +397,7 @@
 	response_harm_simple = "kick"
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
-	var/age = 0
+	var/age = ZERO
 	var/record_age = 1
 	var/memory_saved = FALSE
 	var/saved_head //path
@@ -407,7 +407,7 @@
 	//parent call must happen first to ensure IAN
 	//is not in nullspace when child puppies spawn
 	Read_Memory()
-	if(age == 0)
+	if(age == ZERO)
 		var/turf/target = get_turf(loc)
 		if(target)
 			var/mob/living/simple_animal/pet/dog/corgi/puppy/P = new /mob/living/simple_animal/pet/dog/corgi/puppy(target)
@@ -451,7 +451,7 @@
 		record_age = json["record_age"]
 		saved_head = json["saved_head"]
 	if(isnull(age))
-		age = 0
+		age = ZERO
 	if(isnull(record_age))
 		record_age = 1
 	if(saved_head)
@@ -471,7 +471,7 @@
 		else
 			file_data["saved_head"] = null
 	else
-		file_data["age"] = 0
+		file_data["age"] = ZERO
 		file_data["record_age"] = record_age
 		file_data["saved_head"] = null
 	fdel(json_file)
@@ -533,7 +533,7 @@
 		if(!DF.obj_color)
 			DF.obj_color = inventory_head.color
 
-		if(health <= 0)
+		if(health <= ZERO)
 			head_icon = DF.get_overlay(dir = EAST)
 			head_icon.pixel_y = -8
 			head_icon.transform = turn(head_icon.transform, 180)
@@ -553,7 +553,7 @@
 		if(!DF.obj_color)
 			DF.obj_color = inventory_back.color
 
-		if(health <= 0)
+		if(health <= ZERO)
 			back_icon = DF.get_overlay(dir = EAST)
 			back_icon.pixel_y = -11
 			back_icon.transform = turn(back_icon.transform, 180)
@@ -593,11 +593,11 @@
 	icon_living = "void_puppy"
 	icon_dead = "void_puppy_dead"
 	nofur = TRUE
-	unsuitable_atmos_damage = 0
+	unsuitable_atmos_damage = ZERO
 	minbodytemp = TCMB
 	maxbodytemp = T0C + 40
 
-/mob/living/simple_animal/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0)
+/mob/living/simple_animal/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = ZERO)
 	return 1	//Void puppies can navigate space.
 
 
@@ -618,7 +618,7 @@
 	response_disarm_simple = "bop"
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
-	var/puppies = 0
+	var/puppies = ZERO
 
 //Lisa already has a cute bow!
 /mob/living/simple_animal/pet/dog/corgi/Lisa/Topic(href, href_list)
@@ -642,7 +642,7 @@
 
 /mob/living/simple_animal/pet/dog/proc/wuv(change, mob/M)
 	if(change)
-		if(change > 0)
+		if(change > ZERO)
 			if(M && stat != DEAD) // Added check to see if this mob (the dog) is dead to fix issue 2454
 				new /obj/effect/temp_visual/heart(loc)
 				emote("me", 1, "yaps happily!")

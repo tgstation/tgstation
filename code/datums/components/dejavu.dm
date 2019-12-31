@@ -12,13 +12,13 @@
 	var/rewind_interval
 
 	/// The starting value of clone loss at the beginning of the effect
-	var/clone_loss = 0
+	var/clone_loss = ZERO
 	/// The starting value of toxin loss at the beginning of the effect
-	var/tox_loss = 0
+	var/tox_loss = ZERO
 	/// The starting value of oxygen loss at the beginning of the effect
-	var/oxy_loss = 0
+	var/oxy_loss = ZERO
 	/// The starting value of brain loss at the beginning of the effect
-	var/brain_loss = 0
+	var/brain_loss = ZERO
 	/// The starting value of brute loss at the beginning of the effect
 	/// This only applies to simple animals
 	var/brute_loss

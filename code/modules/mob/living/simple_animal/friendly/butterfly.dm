@@ -31,7 +31,7 @@
 
 /mob/living/simple_animal/butterfly/Initialize()
 	. = ..()
-	var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	var/newcolor = rgb(rand(ZERO, 255), rand(ZERO, 255), rand(ZERO, 255))
 	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/butterfly/bee_friendly()

@@ -1,7 +1,7 @@
 
 
 /mob/living/carbon/alien/larva/Life()
-	set invisibility = 0
+	set invisibility = ZERO
 	if (notransform)
 		return
 	if(..() && !IS_IN_STASIS(src)) //not dead and not in stasis

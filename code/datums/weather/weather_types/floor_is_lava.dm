@@ -12,7 +12,7 @@
 	weather_overlay = "lava"
 
 	end_message = "<span class='danger'>The ground cools and returns to its usual form.</span>"
-	end_duration = 0
+	end_duration = ZERO
 
 	area_type = /area
 	protected_areas = list(/area/space)

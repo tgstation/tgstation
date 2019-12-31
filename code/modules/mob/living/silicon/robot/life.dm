@@ -1,5 +1,5 @@
 /mob/living/silicon/robot/Life()
-	set invisibility = 0
+	set invisibility = ZERO
 	if (src.notransform)
 		return
 
@@ -12,7 +12,7 @@
 	if(stat != DEAD)
 		if(low_power_mode)
 			if(cell && cell.charge)
-				low_power_mode = 0
+				low_power_mode = ZERO
 				update_headlamp()
 		else if(stat == CONSCIOUS)
 			use_power()
@@ -77,9 +77,9 @@
 	. = ..()
 	if(.) //if the mob isn't on fire anymore
 		return
-	if(fire_stacks > 0)
+	if(fire_stacks > ZERO)
 		fire_stacks--
-		fire_stacks = max(0, fire_stacks)
+		fire_stacks = max(ZERO, fire_stacks)
 	else
 		ExtinguishMob()
 		return TRUE

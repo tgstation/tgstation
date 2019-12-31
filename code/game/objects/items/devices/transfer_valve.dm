@@ -148,7 +148,7 @@
 	if(tank_two)
 		var/mutable_appearance/J = mutable_appearance(icon, icon_state = "[tank_two.icon_state]")
 		var/matrix/T = matrix()
-		T.Translate(-13, 0)
+		T.Translate(-13, ZERO)
 		J.transform = T
 		underlays = list(J)
 	else

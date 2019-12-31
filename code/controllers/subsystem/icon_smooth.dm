@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(icon_smooth)
 			smooth_queue = deferred
 			deferred = cached
 		else
-			can_fire = 0
+			can_fire = ZERO
 
 /datum/controller/subsystem/icon_smooth/Initialize()
 	smooth_zlevel(1,TRUE)

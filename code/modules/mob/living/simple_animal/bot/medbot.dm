@@ -32,15 +32,15 @@
 	var/mob/living/carbon/patient = null
 	var/mob/living/carbon/oldpatient = null
 	var/oldloc = null
-	var/last_found = 0
+	var/last_found = ZERO
 	var/last_newpatient_speak = 0 //Don't spam the "HEY I'M COMING" messages
 	var/heal_amount = 2.5 //How much healing do we do at a time?
 	var/heal_threshold = 10 //Start healing when they have this much damage in a category
 	var/declare_crit = 1 //If active, the bot will transmit a critical patient alert to MedHUD users.
-	var/declare_cooldown = 0 //Prevents spam of critical patient alerts.
-	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
+	var/declare_cooldown = ZERO //Prevents spam of critical patient alerts.
+	var/stationary_mode = ZERO //If enabled, the Medibot will not move automatically.
 	//Setting which reagents to use to treat what by default. By id.
-	var/shut_up = 0 //self explanatory :)
+	var/shut_up = ZERO //self explanatory :)
 	var/datum/techweb/linked_techweb
 
 /mob/living/simple_animal/bot/medbot/mysterious
@@ -53,8 +53,8 @@
 	name = "\improper Old Medibot"
 	desc = "Looks like it hasn't been modified since the late 2080s."
 	skin = "bezerk"
-	heal_threshold = 0
-	declare_crit = 0
+	heal_threshold = ZERO
+	declare_crit = ZERO
 	heal_amount = 5
 
 /mob/living/simple_animal/bot/medbot/update_icon()
@@ -95,7 +95,7 @@
 	oldpatient = null
 	oldloc = null
 	last_found = world.time
-	declare_cooldown = 0
+	declare_cooldown = ZERO
 	update_icon()
 
 /mob/living/simple_animal/bot/medbot/proc/soft_reset() //Allows the medibot to still actively perform its medical duties without being completely halted as a hard reset does.
@@ -185,7 +185,7 @@
 /mob/living/simple_animal/bot/medbot/emag_act(mob/user)
 	..()
 	if(emagged == 2)
-		declare_crit = 0
+		declare_crit = ZERO
 		if(user)
 			to_chat(user, "<span class='notice'>You short out [src]'s reagent synthesis circuits.</span>")
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
@@ -244,7 +244,7 @@
 		if(mode != BOT_HEALING)
 			mode = BOT_HEALING
 			update_icon()
-			frustration = 0
+			frustration = ZERO
 			medicate_patient(patient)
 		return
 
@@ -258,15 +258,15 @@
 		soft_reset()
 		return
 
-	if(patient && path.len == 0 && (get_dist(src,patient) > 1))
-		path = get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, 0, 30,id=access_card)
+	if(patient && path.len == ZERO && (get_dist(src,patient) > 1))
+		path = get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, ZERO, 30,id=access_card)
 		mode = BOT_MOVING
 		if(!path.len) //try to get closer if you can't reach the patient directly
-			path = get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, 0, 30,1,id=access_card)
+			path = get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, ZERO, 30,1,id=access_card)
 			if(!path.len) //Do not chase a patient we cannot reach.
 				soft_reset()
 
-	if(path.len > 0 && patient)
+	if(path.len > ZERO && patient)
 		if(!bot_move(path[path.len]))
 			oldpatient = patient
 			soft_reset()
@@ -312,7 +312,7 @@
 			if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)
 				return FALSE // Skip over them if they have no exposed flesh.
 
-	if(declare_crit && C.health <= 0) //Critical condition! Call for help!
+	if(declare_crit && C.health <= ZERO) //Critical condition! Call for help!
 		declare(C)
 
 	//They're injured enough for it!

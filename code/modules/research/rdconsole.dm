@@ -609,9 +609,9 @@ Nothing else in the console has ID requirements.
 				var/list/differences = list()
 				var/list/already_boosted = stored_research.boosted_nodes[N.id]
 				for(var/i in worth)
-					var/already_boosted_amount = already_boosted? stored_research.boosted_nodes[N.id][i] : 0
+					var/already_boosted_amount = already_boosted? stored_research.boosted_nodes[N.id][i] : ZERO
 					var/amt = min(worth[i], N.research_costs[i]) - already_boosted_amount
-					if(amt > 0)
+					if(amt > ZERO)
 						differences[i] = amt
 				if (length(differences))
 					l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>"
@@ -652,7 +652,7 @@ Nothing else in the console has ID requirements.
 	var/list/l = list()
 	if(ui_mode != RDCONSOLE_UI_MODE_LIST)
 		var/list/columns = list()
-		var/max_tier = 0
+		var/max_tier = ZERO
 		for (var/node_ in stored_research.tiers)
 			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_)
 			var/tier = stored_research.tiers[node.id]
@@ -662,7 +662,7 @@ Nothing else in the console has ID requirements.
 
 		l += "<table><tr><th align='left'>Researched</th><th align='left'>Available</th><th align='left'>Future</th></tr><tr>[RDSCREEN_NOBREAK]"
 		if(max_tier)
-			for(var/tier in 0 to max_tier)
+			for(var/tier in ZERO to max_tier)
 				l += "<td valign='top'>[RDSCREEN_NOBREAK]"
 				l += columns["[tier]"]
 				l += "</td>[RDSCREEN_NOBREAK]"

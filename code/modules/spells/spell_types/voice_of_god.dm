@@ -2,7 +2,7 @@
 	name = "Voice of God"
 	desc = "Speak with an incredibly compelling voice, forcing listeners to obey your commands."
 	charge_max = 1200 //variable
-	cooldown_min = 0
+	cooldown_min = ZERO
 	level_max = 1
 	clothes_req = FALSE
 	antimagic_allowed = TRUE

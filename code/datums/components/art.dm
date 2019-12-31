@@ -1,5 +1,5 @@
 /datum/component/art
-	var/impressiveness = 0
+	var/impressiveness = ZERO
 
 /datum/component/art/Initialize(impress)
 	impressiveness = impress
@@ -16,7 +16,7 @@
 	M.visible_message("<span class='notice'>[M] stops and looks intently at [parent].</span>", \
 						 "<span class='notice'>You stop to take in [parent].</span>")
 	switch(impress)
-		if (0 to BAD_ART)
+		if (ZERO to BAD_ART)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
 		if (BAD_ART to GOOD_ART)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artok", /datum/mood_event/artok)

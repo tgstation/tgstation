@@ -24,7 +24,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	var/list/cache = list() // List of all assets sent to this client by the asset cache.
 	var/list/completed_asset_jobs = list() // List of all completed jobs, awaiting acknowledgement.
 	var/list/sending = list()
-	var/last_asset_job = 0 // Last job done.
+	var/last_asset_job = ZERO // Last job done.
 
 //This proc sends the asset to the client, but only if it needs it.
 //This proc blocks(sleeps) unless verify is set to false
@@ -36,13 +36,13 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 				client = M.client
 
 			else
-				return 0
+				return ZERO
 
 		else
-			return 0
+			return ZERO
 
 	if(client.cache.Find(asset_name) || client.sending.Find(asset_name))
-		return 0
+		return ZERO
 
 	log_asset("Sending asset [asset_name] to client [client]")
 	client << browse_rsc(SSassets.cache[asset_name], asset_name)
@@ -59,7 +59,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	</script>
 	"}, "window=asset_cache_browser")
 
-	var/t = 0
+	var/t = ZERO
 	var/timeout_time = (ASSET_CACHE_SEND_TIMEOUT * client.sending.len) + ASSET_CACHE_SEND_TIMEOUT
 	while(client && !client.completed_asset_jobs.Find(job) && t < timeout_time) // Reception is handled in Topic()
 		stoplag(1) // Lock up the caller until this is received.
@@ -81,14 +81,14 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 				client = M.client
 
 			else
-				return 0
+				return ZERO
 
 		else
-			return 0
+			return ZERO
 
 	var/list/unreceived = asset_list - (client.cache + client.sending)
 	if(!unreceived || !unreceived.len)
-		return 0
+		return ZERO
 	if (unreceived.len >= ASSET_CACHE_TELL_CLIENT_AMOUNT)
 		to_chat(client, "Sending Resources...")
 	for(var/asset in unreceived)
@@ -109,7 +109,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	</script>
 	"}, "window=asset_cache_browser")
 
-	var/t = 0
+	var/t = ZERO
 	var/timeout_time = ASSET_CACHE_SEND_TIMEOUT * client.sending.len
 	while(client && !client.completed_asset_jobs.Find(job) && t < timeout_time) // Reception is handled in Topic()
 		stoplag(1) // Lock up the caller until this is received.
@@ -138,7 +138,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 			concurrent_tracker++
 			send_asset(client, file, verify=FALSE)
 
-		stoplag(0) //queuing calls like this too quickly can cause issues in some client versions
+		stoplag(ZERO) //queuing calls like this too quickly can cause issues in some client versions
 
 //This proc "registers" an asset, it adds it to the cache for further use, you cannot touch it from this point on or you'll fuck things up.
 //if it's an icon or something be careful, you'll have to copy it before further use.
@@ -301,7 +301,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		sprites[sprite_name] = list(size_id, position)
 	else
 		sizes[size_id] = size = list(1, I, null)
-		sprites[sprite_name] = list(size_id, 0)
+		sprites[sprite_name] = list(size_id, ZERO)
 
 /datum/asset/spritesheet/proc/InsertAll(prefix, icon/I, list/directions)
 	if (length(prefix))

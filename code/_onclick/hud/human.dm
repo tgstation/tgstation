@@ -42,11 +42,11 @@
 	icon_state = "Devil-6"
 	screen_loc = ui_devilsouldisplay
 
-/obj/screen/devil/soul_counter/proc/update_counter(souls = 0)
-	invisibility = 0
+/obj/screen/devil/soul_counter/proc/update_counter(souls = ZERO)
+	invisibility = ZERO
 	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#FF0000'>[souls]</font></div>"
 	switch(souls)
-		if(0,null)
+		if(ZERO,null)
 			icon_state = "Devil-1"
 		if(1,2)
 			icon_state = "Devil-2"

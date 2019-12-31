@@ -7,12 +7,12 @@
 	item_state = "hypo"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	throwforce = 0
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 	var/loaded = 1
-	var/malfunctioning = 0
+	var/malfunctioning = ZERO
 	var/revive_type = SENTIENCE_ORGANIC //So you can't revive boss monsters or robots with it
 
 /obj/item/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
@@ -37,8 +37,8 @@
 						H.attack_same = 1
 						log_game("[key_name(user)] has revived hostile mob [key_name(target)] with a malfunctioning lazarus injector")
 					else
-						H.attack_same = 0
-				loaded = 0
+						H.attack_same = ZERO
+				loaded = ZERO
 				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
 				SSblackbox.record_feedback("tally", "lazarus_injector", 1, M.type)
 				playsound(src,'sound/effects/refill.ogg',50,TRUE)

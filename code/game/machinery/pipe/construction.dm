@@ -180,11 +180,11 @@ Buildable meters
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		for(var/i=1 to 20)
-			C.vomit(0, TRUE, FALSE, 4, FALSE)
+			C.vomit(ZERO, TRUE, FALSE, 4, FALSE)
 			if(prob(20))
 				C.spew_organ()
 			sleep(5)
-		C.blood_volume = 0
+		C.blood_volume = ZERO
 	return(OXYLOSS|BRUTELOSS)
 
 /obj/item/pipe_meter

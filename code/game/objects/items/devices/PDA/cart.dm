@@ -1,5 +1,5 @@
 
-#define CART_SECURITY			(1<<0)
+#define CART_SECURITY			(1<<ZERO)
 #define CART_ENGINE				(1<<1)
 #define CART_ATMOS				(1<<2)
 #define CART_MEDICAL			(1<<3)
@@ -28,11 +28,11 @@
 
 	var/obj/item/integrated_signaler/radio = null
 
-	var/access = 0 //Bit flags for cartridge access
+	var/access = ZERO //Bit flags for cartridge access
 
 	var/remote_door_id = ""
 
-	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT
+	var/bot_access_flags = ZERO //Bit flags. Selection: SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT
 	var/spam_enabled = 0 //Enables "Send to All" Option
 
 	var/obj/item/pda/host_pda = null
@@ -257,7 +257,7 @@ Code:
 			menu = "<h4>[PDAIMG(power)] Power Monitors - Please select one</h4><BR>"
 			powmonitor = null
 			powermonitors = list()
-			var/powercount = 0
+			var/powercount = ZERO
 
 
 
@@ -278,7 +278,7 @@ Code:
 			else
 
 				menu += "<FONT SIZE=-1>"
-				var/count = 0
+				var/count = ZERO
 				for(var/obj/machinery/computer/monitor/pMon in powermonitors)
 					count++
 					menu += "<a href='byond://?src=[REF(src)];choice=Power Select;target=[count]'>[pMon] - [get_area_name(pMon, TRUE)] </a><BR>"
@@ -301,7 +301,7 @@ Code:
 
 				menu += "<FONT SIZE=-1>"
 
-				if(L.len > 0)
+				if(L.len > ZERO)
 					menu += "Area                           Eqp./Lgt./Env.  Load   Cell<HR>"
 
 					var/list/S = list(" Off","AOff","  On", " AOn")
@@ -460,14 +460,14 @@ Code:
 			if (GLOB.ore_silo_default)
 				var/list/logs = GLOB.silo_access_logs[REF(GLOB.ore_silo_default)]
 				var/len = LAZYLEN(logs)
-				var/i = 0
+				var/i = ZERO
 				for(var/M in logs)
 					if (++i > 30)
 						menu += "(... older logs not shown ...)"
 						break
 					var/datum/ore_silo_log/entry = M
 					menu += "[len - i]. [entry.formatted]<br><br>"
-				if(i == 0)
+				if(i == ZERO)
 					menu += "Nothing!"
 			else
 				menu += "<b>No ore silo detected!</b>"
@@ -736,7 +736,7 @@ Code:
 		menu += "<BR><A href='byond://?src=[REF(src)];op=botlist'>[PDAIMG(refresh)]Scan for active bots</A><BR><BR>"
 		var/turf/current_turf = get_turf(src)
 		var/zlevel = current_turf.z
-		var/botcount = 0
+		var/botcount = ZERO
 		for(var/B in GLOB.bots_list) //Git da botz
 			var/mob/living/simple_animal/bot/Bot = B
 			if(!Bot.on || Bot.z != zlevel || Bot.remote_disabled || !(bot_access_flags & Bot.bot_type)) //Only non-emagged bots on the same Z-level are detected!

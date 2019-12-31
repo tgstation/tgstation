@@ -26,11 +26,11 @@
 		qdel(shield)
 	. = ..()
 
-/obj/mecha/combat/durand/GrantActions(mob/living/user, human_occupant = 0)
+/obj/mecha/combat/durand/GrantActions(mob/living/user, human_occupant = ZERO)
 	..()
 	defense_action.Grant(user, src)
 
-/obj/mecha/combat/durand/RemoveActions(mob/living/user, human_occupant = 0)
+/obj/mecha/combat/durand/RemoveActions(mob/living/user, human_occupant = ZERO)
 	..()
 	defense_action.Remove(user)
 
@@ -91,7 +91,7 @@ Expects a turf. Returns true if the attack should be blocked, false if not.*/
 				. = TRUE
 	return
 
-obj/mecha/combat/durand/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, armor_penetration = 0)
+obj/mecha/combat/durand/attack_generic(mob/user, damage_amount = ZERO, damage_type = BRUTE, damage_flag = ZERO, sound_effect = 1, armor_penetration = ZERO)
 	if(defense_check(user.loc))
 		log_message("Attack absorbed by defense field. Attacker - [user].", LOG_MECHA, color="orange")
 		shield.attack_generic(user, damage_amount, damage_type, damage_flag, sound_effect, armor_penetration)
@@ -174,7 +174,7 @@ the shield is disabled by means other than the action button (like running out o
 	chassis.defense_action.UpdateButtonIcon()
 
 	if(chassis.defense_mode)
-		invisibility = 0
+		invisibility = ZERO
 		flick("shield_raise", src)
 		playsound(src, 'sound/mecha/mech_shield_raise.ogg', 50, FALSE)
 		set_light(l_range = MINIMUM_USEFUL_LIGHT_RANGE	, l_power = 5, l_color = "#00FFFF")
@@ -184,7 +184,7 @@ the shield is disabled by means other than the action button (like running out o
 		flick("shield_drop", src)
 		playsound(src, 'sound/mecha/mech_shield_drop.ogg', 50, FALSE)
 		sleep(5)
-		set_light(0)
+		set_light(ZERO)
 		icon_state = "shield_null"
 		invisibility = INVISIBILITY_MAXIMUM //no showing on right-click
 	switching = FALSE
@@ -198,7 +198,7 @@ the shield is disabled by means other than the action button (like running out o
 	. = ..()
 	flick("shield_impact", src)
 	if(!chassis.use_power((max_integrity - obj_integrity) * 100))
-		chassis.cell?.charge = 0
+		chassis.cell?.charge = ZERO
 		chassis.defense_action.Activate(forced_state = TRUE)
 	obj_integrity = 10000
 

@@ -31,7 +31,7 @@
 
 	data["timer_str"] = SSshuttle.emergency.getTimerStr()
 	data["engines_started"] = ENGINES_STARTED
-	data["authorizations_remaining"] = max((auth_need - authorized.len), 0)
+	data["authorizations_remaining"] = max((auth_need - authorized.len), ZERO)
 	var/list/A = list()
 	for(var/i in authorized)
 		var/obj/item/card/id/ID = i
@@ -45,7 +45,7 @@
 	data["authorizations"] = A
 
 	data["enabled"] = (IS_DOCKED && !ENGINES_STARTED)
-	data["emagged"] = obj_flags & EMAGGED ? 1 : 0
+	data["emagged"] = obj_flags & EMAGGED ? 1 : ZERO
 	return data
 
 /obj/machinery/computer/emergency_shuttle/ui_act(action, params, datum/tgui/ui)
@@ -88,7 +88,7 @@
 	if((old_len != authorized.len) && !ENGINES_STARTED)
 		var/alert = (authorized.len > old_len)
 		var/repeal = (authorized.len < old_len)
-		var/remaining = max(0, auth_need - authorized.len)
+		var/remaining = max(ZERO, auth_need - authorized.len)
 		if(authorized.len && remaining)
 			minor_announce("[remaining] authorizations needed until shuttle is launched early", null, alert)
 		if(repeal)
@@ -184,7 +184,7 @@
 	height = 11
 	dir = EAST
 	port_direction = WEST
-	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
+	var/sound_played = ZERO //If the launch sound has been sent to all players on the shuttle itself
 
 /obj/docking_port/mobile/emergency/canDock(obj/docking_port/stationary/S)
 	return SHUTTLE_CAN_DOCK //If the emergency shuttle can't move, the whole game breaks, so it will force itself to land even if it has to crush a few departments in the process
@@ -304,11 +304,11 @@
 
 	switch(mode)
 		if(SHUTTLE_RECALL)
-			if(time_left <= 0)
+			if(time_left <= ZERO)
 				mode = SHUTTLE_IDLE
-				timer = 0
+				timer = ZERO
 		if(SHUTTLE_CALL)
-			if(time_left <= 0)
+			if(time_left <= ZERO)
 				//move emergency shuttle to station
 				if(initiate_docking(SSshuttle.getDock("emergency_home")) != DOCKING_SUCCESS)
 					setTimer(20)
@@ -352,7 +352,7 @@
 					areas += E
 				hyperspace_sound(HYPERSPACE_WARMUP, areas)
 
-			if(time_left <= 0 && !SSshuttle.emergencyNoEscape)
+			if(time_left <= ZERO && !SSshuttle.emergencyNoEscape)
 				//move each escape pod (or applicable spaceship) to its corresponding transit dock
 				for(var/A in SSshuttle.mobile)
 					var/obj/docking_port/mobile/M = A
@@ -393,7 +393,7 @@
 							if(istype(M, /obj/docking_port/mobile/pod))
 								M.parallax_slowdown()
 
-			if(time_left <= 0)
+			if(time_left <= ZERO)
 				//move each escape pod to its corresponding escape dock
 				for(var/A in SSshuttle.mobile)
 					var/obj/docking_port/mobile/M = A
@@ -410,7 +410,7 @@
 
 				dock_id(destination_dock)
 				mode = SHUTTLE_ENDGAME
-				timer = 0
+				timer = ZERO
 
 /obj/docking_port/mobile/emergency/transit_failure()
 	..()

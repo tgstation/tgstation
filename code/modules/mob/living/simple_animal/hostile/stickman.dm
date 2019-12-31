@@ -7,29 +7,29 @@
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_HUMANOID
 	gender = MALE
-	speak_chance = 0
+	speak_chance = ZERO
 	turns_per_move = 5
-	speed = 0
+	speed = ZERO
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
-	obj_damage = 0
+	obj_damage = ZERO
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	a_intent = INTENT_HARM
-	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = ZERO)
 	unsuitable_atmos_damage = 15
 	faction = list("hostile","stickman")
 	check_friendly_fire = 1
 	status_flags = CANPUSH
 	var/datum/action/boss/wizard_summon_minions/changesummons = /datum/action/boss/wizard_summon_minions
-	var/summoned_by_wizard = 0
+	var/summoned_by_wizard = ZERO
 
 /mob/living/simple_animal/hostile/stickman/ranged
 	ranged = 1

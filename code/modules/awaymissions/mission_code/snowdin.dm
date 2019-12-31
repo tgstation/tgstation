@@ -175,7 +175,7 @@
 	user.visible_message("<span class='notice'>[user] scoops some plasma from the [src] with \the [C].</span>", "<span class='notice'>You scoop out some plasma from the [src] using \the [C].</span>")
 
 /turf/open/lava/plasma/burn_stuff(AM)
-	. = 0
+	. = ZERO
 
 	if(is_safe())
 		return FALSE
@@ -465,7 +465,7 @@
 
 /obj/effect/spawner/lootdrop/snowdin
 	name = "why are you using this dummy"
-	lootdoubles = 0
+	lootdoubles = ZERO
 	lootcount = 1
 	loot = list(/obj/item/bikehorn = 100)
 

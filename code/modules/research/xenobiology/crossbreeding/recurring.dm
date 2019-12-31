@@ -10,7 +10,7 @@ Recurring extracts:
 	icon_state = "recurring"
 	var/extract_type
 	var/obj/item/slime_extract/extract
-	var/cooldown = 0
+	var/cooldown = ZERO
 	var/max_cooldown = 5 //In sets of 2 seconds.
 
 /obj/item/slimecross/recurring/Initialize()
@@ -27,12 +27,12 @@ Recurring extracts:
 	START_PROCESSING(SSobj,src)
 
 /obj/item/slimecross/recurring/process()
-	if(cooldown > 0)
+	if(cooldown > ZERO)
 		cooldown--
-	else if(extract.Uses < 10 && extract.Uses > 0)
+	else if(extract.Uses < 10 && extract.Uses > ZERO)
 		extract.Uses++
 		cooldown = max_cooldown
-	else if(extract.Uses <= 0)
+	else if(extract.Uses <= ZERO)
 		extract.visible_message("<span class='warning'>The light inside [extract] flickers and dies out.</span>")
 		extract.desc = "A tiny, inert core, bleeding dark, cerulean-colored goo."
 		extract.icon_state = "prismatic"

@@ -22,7 +22,7 @@
 	filling_color = "#FFA500"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
-	juice_results = list(/datum/reagent/consumable/carrotjuice = 0)
+	juice_results = list(/datum/reagent/consumable/carrotjuice = ZERO)
 	wine_power = 30
 
 /obj/item/reagent_containers/food/snacks/grown/carrot/attackby(obj/item/I, mob/user, params)
@@ -54,7 +54,7 @@
 	icon_state = "parsnip"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
-	juice_results = list(/datum/reagent/consumable/parsnipjuice = 0)
+	juice_results = list(/datum/reagent/consumable/parsnipjuice = ZERO)
 	wine_power = 35
 
 

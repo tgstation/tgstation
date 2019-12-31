@@ -6,7 +6,7 @@
 
 	if(type == "Priority")
 		announcement += "<h1 class='alert'>Priority Announcement</h1>"
-		if (title && length(title) > 0)
+		if (title && length(title) > ZERO)
 			announcement += "<br><h2 class='alert'>[html_encode(title)]</h2>"
 	else if(type == "Captain")
 		announcement += "<h1 class='alert'>Captain Announces</h1>"
@@ -17,7 +17,7 @@
 			announcement += "<h1 class='alert'>[command_name()] Update</h1>"
 		else
 			announcement += "<h1 class='alert'>[sender_override]</h1>"
-		if (title && length(title) > 0)
+		if (title && length(title) > ZERO)
 			announcement += "<br><h2 class='alert'>[html_encode(title)]</h2>"
 
 		if(!sender_override)

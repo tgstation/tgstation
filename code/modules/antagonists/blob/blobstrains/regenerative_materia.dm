@@ -29,5 +29,5 @@
 /datum/reagent/blob/regenerative_materia/on_mob_end_metabolize(mob/living/M)
 	if(iscarbon(M))
 		var/mob/living/carbon/N = M
-		N.hal_screwyhud = 0
+		N.hal_screwyhud = ZERO
 	..()

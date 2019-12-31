@@ -6,18 +6,18 @@
 	var/set_obj_flags // ONLY FOR MAPPING: Sets flags from a string list, handled in Initialize. Usage: set_obj_flags = "EMAGGED;!CAN_BE_HIT" to set EMAGGED and clear CAN_BE_HIT.
 
 	var/damtype = BRUTE
-	var/force = 0
+	var/force = ZERO
 
 	var/datum/armor/armor
 	var/obj_integrity	//defaults to max_integrity
 	var/max_integrity = 500
-	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the obj breaks. 0.5 being 50%
+	var/integrity_failure = ZERO //ZERO if we have no special broken behavior, otherwise is a percentage of at what point the obj breaks. 0.5 being 50%
 	///Damage under this value will be completely ignored
-	var/damage_deflection = 0
+	var/damage_deflection = ZERO
 
 	var/resistance_flags = NONE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
 
-	var/acid_level = 0 //how much acid is on that obj
+	var/acid_level = ZERO //how much acid is on that obj
 
 	var/persistence_replacement //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
 	var/current_skin //Has the item been reskinned?
@@ -83,7 +83,7 @@
 	SEND_SIGNAL(src, COMSIG_OBJ_SETANCHORED, anchorvalue)
 	anchored = anchorvalue
 
-/obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
+/obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = ZERO, datum/callback/callback, force)
 	..()
 	if(obj_flags & FROZEN)
 		visible_message("<span class='danger'>[src] shatters into a million pieces!</span>")
@@ -114,7 +114,7 @@
 	//		datum/air_group to tell lifeform to process using that breath return
 	//DEFAULT: Take air from turf to give to have mob process
 
-	if(breath_request>0)
+	if(breath_request>ZERO)
 		var/datum/gas_mixture/environment = return_air()
 		var/breath_percentage = BREATH_VOLUME / environment.return_volume()
 		return remove_air(environment.total_moles() * breath_percentage)
@@ -265,7 +265,7 @@
 			var/O_type = type
 			switch(action_type)
 				if("Strict type")
-					var/i = 0
+					var/i = ZERO
 					for(var/obj/Obj in world)
 						if(Obj.type == O_type)
 							i++
@@ -277,7 +277,7 @@
 					log_admin("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ")
 					message_admins("<span class='notice'>[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) </span>")
 				if("Type and subtypes")
-					var/i = 0
+					var/i = ZERO
 					for(var/obj/Obj in world)
 						if(istype(Obj,O_type))
 							i++

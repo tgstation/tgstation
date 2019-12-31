@@ -10,11 +10,11 @@
 	maxHealth = 25
 	health = 25
 
-	var/amount_grown = 0
+	var/amount_grown = ZERO
 	var/max_grown = 100
 	var/time_of_birth
 
-	rotate_on_lying = 0
+	rotate_on_lying = ZERO
 	bodyparts = list(/obj/item/bodypart/chest/larva, /obj/item/bodypart/head/larva)
 
 
@@ -36,7 +36,7 @@
 		stat(null, "Progress: [amount_grown]/[max_grown]")
 
 /mob/living/carbon/alien/larva/adjustPlasma(amount)
-	if(stat != DEAD && amount > 0)
+	if(stat != DEAD && amount > ZERO)
 		amount_grown = min(amount_grown + 1, max_grown)
 	..(amount)
 
@@ -45,7 +45,7 @@
 	return
 
 /mob/living/carbon/alien/larva/restrained(ignore_grab)
-	. = 0
+	. = ZERO
 
 // new damage icon system
 // now constructs damage icon for each organ from mask * damage field

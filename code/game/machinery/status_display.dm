@@ -7,7 +7,7 @@
 #define FONT_STYLE "Small Fonts"
 #define SCROLL_SPEED 2
 
-#define SD_BLANK 0  // 0 = Blank
+#define SD_BLANK ZERO  // ZERO = Blank
 #define SD_EMERGENCY 1  // 1 = Emergency Shuttle timer
 #define SD_MESSAGE 2  // 2 = Arbitrary message(s)
 #define SD_PICTURE 3  // 3 = alert picture
@@ -31,7 +31,7 @@
 
 	var/message1 = ""	// message line 1
 	var/message2 = ""	// message line 2
-	var/index1			// display index for scrolling messages or 0 if non-scrolling
+	var/index1			// display index for scrolling messages or ZERO if non-scrolling
 	var/index2
 
 /// Immediately blank the display.
@@ -62,14 +62,14 @@
 		message1 = m1
 	else
 		message1 = ""
-		index1 = 0
+		index1 = ZERO
 
 	if(m2)
 		index2 = (length(m2) > CHARS_PER_LINE)
 		message2 = m2
 	else
 		message2 = ""
-		index2 = 0
+		index2 = ZERO
 
 // Timed process - performs default marquee action if so needed.
 /obj/machinery/status_display/process()

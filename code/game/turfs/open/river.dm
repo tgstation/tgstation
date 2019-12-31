@@ -6,7 +6,7 @@
 
 /proc/spawn_rivers(target_z, nodes = 4, turf_type = /turf/open/lava/smooth/lava_land_surface, whitelist_area = /area/lavaland/surface/outdoors/unexplored, min_x = RANDOM_LOWER_X, min_y = RANDOM_LOWER_Y, max_x = RANDOM_UPPER_X, max_y = RANDOM_UPPER_Y, new_baseturfs)
 	var/list/river_nodes = list()
-	var/num_spawned = 0
+	var/num_spawned = ZERO
 	var/list/possible_locs = block(locate(min_x, min_y, target_z), locate(max_x, max_y, target_z))
 	while(num_spawned < nodes && possible_locs.len)
 		var/turf/T = pick(possible_locs)
@@ -28,13 +28,13 @@
 		var/turf/target_turf = get_turf(pick(river_nodes - W))
 		if(!target_turf)
 			break
-		var/detouring = 0
+		var/detouring = ZERO
 		var/cur_dir = get_dir(cur_turf, target_turf)
 		while(cur_turf != target_turf)
 
 			if(detouring) //randomly snake around a bit
 				if(prob(20))
-					detouring = 0
+					detouring = ZERO
 					cur_dir = get_dir(cur_turf, target_turf)
 			else if(prob(20))
 				detouring = 1
@@ -48,7 +48,7 @@
 			cur_turf = get_step(cur_turf, cur_dir)
 			var/area/new_area = get_area(cur_turf)
 			if(!istype(new_area, whitelist_area) || (cur_turf.flags_1 & NO_LAVA_GEN_1)) //Rivers will skip ruins
-				detouring = 0
+				detouring = ZERO
 				cur_dir = get_dir(cur_turf, target_turf)
 				cur_turf = get_step(cur_turf, cur_dir)
 				continue
@@ -62,12 +62,12 @@
 
 /obj/effect/landmark/river_waypoint
 	name = "river waypoint"
-	var/connected = 0
+	var/connected = ZERO
 	invisibility = INVISIBILITY_ABSTRACT
 
 
 /turf/proc/Spread(probability = 30, prob_loss = 25, whitelisted_area)
-	if(probability <= 0)
+	if(probability <= ZERO)
 		return
 	var/list/cardinal_turfs = list()
 	var/list/diagonal_turfs = list()

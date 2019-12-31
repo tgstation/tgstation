@@ -95,7 +95,7 @@
 	clothes_req = FALSE
 	selection_type = "range"
 	range = -1
-	cooldown_min = 0
+	cooldown_min = ZERO
 	overlay = null
 	include_user = TRUE
 	action_icon_state = "jaunt"
@@ -170,7 +170,7 @@
 	clothes_req = FALSE
 	selection_type = "range"
 	range = 2
-	cooldown_min = 0
+	cooldown_min = ZERO
 	overlay = null
 	include_user = FALSE
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
@@ -227,7 +227,7 @@
 
 	if(!smoke)
 		smoke = new()
-	smoke.set_up(0, get_turf(user))
+	smoke.set_up(ZERO, get_turf(user))
 	smoke.start()
 
 	if(dancefloor_exists)
@@ -248,7 +248,7 @@
 			var/turf/T = t
 			dancefloor_turfs[i] = T
 			dancefloor_turfs_types[i] = T.type
-			T.ChangeTurf((i % 2 == 0) ? /turf/open/floor/light/colour_cycle/dancefloor_a : /turf/open/floor/light/colour_cycle/dancefloor_b, flags = CHANGETURF_INHERIT_AIR)
+			T.ChangeTurf((i % 2 == ZERO) ? /turf/open/floor/light/colour_cycle/dancefloor_a : /turf/open/floor/light/colour_cycle/dancefloor_b, flags = CHANGETURF_INHERIT_AIR)
 			i++
 
 /datum/effect_system/smoke_spread/transparent/dancefloor_devil

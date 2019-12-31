@@ -1,4 +1,4 @@
-#define WIRE_RECEIVE		(1<<0)
+#define WIRE_RECEIVE		(1<<ZERO)
 #define WIRE_PULSE			(1<<1)
 #define WIRE_PULSE_SPECIAL	(1<<2)
 #define WIRE_RADIO_RECEIVE	(1<<3)
@@ -70,9 +70,9 @@
 		connected.pulse_assembly(src)
 		return TRUE
 	if(holder && (wire_type & WIRE_PULSE))
-		holder.process_activation(src, 1, 0)
+		holder.process_activation(src, 1, ZERO)
 	if(holder && (wire_type & WIRE_PULSE_SPECIAL))
-		holder.process_activation(src, 0, 1)
+		holder.process_activation(src, ZERO, 1)
 	return TRUE
 
 

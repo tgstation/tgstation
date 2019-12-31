@@ -22,7 +22,7 @@
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attack_sound = 'sound/magic/demon_attack1.ogg'
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
 	minbodytemp = 250 //Weak to cold
 	maxbodytemp = INFINITY
 	faction = list("hell")
@@ -30,7 +30,7 @@
 	attack_verb_simple = "wildly tear into"
 	maxHealth = 200
 	health = 200
-	healable = 0
+	healable = ZERO
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	obj_damage = 40
 	melee_damage_lower = 10
@@ -40,7 +40,7 @@
 	del_on_death = TRUE
 	deathmessage = "screams in agony as it sublimates into a sulfurous smoke."
 	deathsound = 'sound/magic/demon_dies.ogg'
-	var/boost = 0
+	var/boost = ZERO
 	bloodcrawl = BLOODCRAWL_EAT
 	var/list/consumed_mobs = list()
 	var/playstyle_string = "<span class='big bold'>You are an imp,</span><B> a mischievous creature from hell. You are the lowest rank on the hellish totem pole \
@@ -50,7 +50,7 @@
 /mob/living/simple_animal/imp/Initialize()
 	. = ..()
 	set_varspeed(1)
-	addtimer(CALLBACK(src, /mob/living/simple_animal/proc/set_varspeed, 0), 30)
+	addtimer(CALLBACK(src, /mob/living/simple_animal/proc/set_varspeed, ZERO), 30)
 
 /datum/antagonist/imp
 	name = "Imp"

@@ -153,7 +153,7 @@
 	else
 		..()
 
-/obj/item/twohanded/required/cult_bastard/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/twohanded/required/cult_bastard/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = ZERO, damage = ZERO, attack_type = MELEE_ATTACK)
 	if(prob(final_block_chance))
 		if(attack_type == PROJECTILE_ATTACK)
 			owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
@@ -208,7 +208,7 @@
 	desc = "You draw on the power of the sword's ancient runes, spinning it wildly around you as you become immune to most attacks."
 	background_icon_state = "bg_demon"
 	button_icon_state = "sintouch"
-	var/cooldown = 0
+	var/cooldown = ZERO
 	var/mob/living/carbon/human/holder
 	var/obj/item/twohanded/required/cult_bastard/sword
 
@@ -333,7 +333,7 @@
 	icon_state = "cult_helmet"
 	item_state = "cult_helmet"
 	armor = list("melee" = 70, "bullet" = 50, "laser" = 30,"energy" = 40, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 40, "acid" = 75)
-	brightness_on = 0
+	brightness_on = ZERO
 	actions_types = list()
 
 /obj/item/clothing/suit/space/hardsuit/cult
@@ -350,7 +350,7 @@
 	name = "eldritch whetstone"
 	desc = "A block, empowered by dark magic. Sharp weapons will be enhanced when used on the stone."
 	icon_state = "cult_sharpener"
-	used = 0
+	used = ZERO
 	increment = 5
 	max = 40
 	prefix = "darkened"
@@ -383,7 +383,7 @@
 		user.Dizzy(30)
 		user.Paralyze(100)
 
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = ZERO, damage = ZERO, attack_type = MELEE_ATTACK)
 	if(current_charges)
 		owner.visible_message("<span class='danger'>\The [attack_text] is deflected in a burst of blood-red sparks!</span>")
 		current_charges--
@@ -392,7 +392,7 @@
 			owner.visible_message("<span class='danger'>The runed shield around [owner] suddenly disappears!</span>")
 			owner.update_inv_wear_suit()
 		return 1
-	return 0
+	return ZERO
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands)
 	. = list()
@@ -403,14 +403,14 @@
 	name = "flagellant's robes"
 	desc = "Blood-soaked robes infused with dark magic; allows the user to move at inhuman speeds, but at the cost of increased damage."
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
-	armor = list("melee" = -45, "bullet" = -45, "laser" = -45,"energy" = -55, "bomb" = -45, "bio" = -45, "rad" = -45, "fire" = 0, "acid" = 0)
+	armor = list("melee" = -45, "bullet" = -45, "laser" = -45,"energy" = -55, "bomb" = -45, "bio" = -45, "rad" = -45, "fire" = 0, "acid" = ZERO)
 	slowdown = -0.6
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
 
 /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
 	name = "flagellant's hood"
 	desc = "Blood-soaked hood infused with dark magic."
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = ZERO)
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
 	..()
@@ -450,7 +450,7 @@
 	desc = "You peer within this smokey orb and glimpse terrible fates befalling the escape shuttle."
 	icon = 'icons/obj/cult.dmi'
 	icon_state ="shuttlecurse"
-	var/static/curselimit = 0
+	var/static/curselimit = ZERO
 
 /obj/item/shuttle_curse/attack_self(mob/living/user)
 	if(!iscultist(user))
@@ -479,7 +479,7 @@
 				set_coefficient = 0.5
 		var/surplus = timer - (SSshuttle.emergencyCallTime * set_coefficient)
 		SSshuttle.emergency.setTimer(timer)
-		if(surplus > 0)
+		if(surplus > ZERO)
 			SSshuttle.block_recall(surplus)
 		to_chat(user, "<span class='danger'>You shatter the orb! A dark essence spirals into the air, then disappears.</span>")
 		playsound(user.loc, 'sound/effects/glassbr1.ogg', 50, TRUE)
@@ -532,11 +532,11 @@
 
 	var/mob/living/carbon/C = user
 	var/turf/mobloc = get_turf(C)
-	var/turf/destination = get_teleport_loc(mobloc,C,9,1,3,1,0,1)
+	var/turf/destination = get_teleport_loc(mobloc,C,9,1,3,1,ZERO,1)
 
 	if(destination)
 		uses--
-		if(uses <= 0)
+		if(uses <= ZERO)
 			icon_state ="shifter_drained"
 		playsound(mobloc, "sparks", 50, TRUE)
 		new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, C.dir)
@@ -600,7 +600,7 @@
 		cultist_to_receive.put_in_hands(A)
 		charges--
 		to_chat(user, "\The [src] now has [charges] charge\s.")
-		if(charges == 0)
+		if(charges == ZERO)
 			qdel(src)
 
 	else
@@ -614,7 +614,7 @@
 	icon_state = "bloodspear0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
-	slot_flags = 0
+	slot_flags = ZERO
 	force = 17
 	force_wielded = 24
 	throwforce = 40
@@ -666,7 +666,7 @@
 			playsound(T, 'sound/effects/glassbr3.ogg', 100)
 	qdel(src)
 
-/obj/item/twohanded/cult_spear/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/twohanded/cult_spear/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = ZERO, damage = ZERO, attack_type = MELEE_ATTACK)
 	if(wielded)
 		final_block_chance *= 2
 	if(prob(final_block_chance))
@@ -686,7 +686,7 @@
 	background_icon_state = "bg_demon"
 	button_icon_state = "bloodspear"
 	var/obj/item/twohanded/cult_spear/spear
-	var/cooldown = 0
+	var/cooldown = ZERO
 
 /datum/action/innate/cult/spear/Grant(mob/user, obj/blood_spear)
 	. = ..()
@@ -760,9 +760,9 @@
 	item_state = "disintegrate"
 	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
-	throwforce = 0
-	throw_range = 0
-	throw_speed = 0
+	throwforce = ZERO
+	throw_range = ZERO
+	throw_speed = ZERO
 	var/charging = FALSE
 	var/firing = FALSE
 	var/angle
@@ -880,7 +880,7 @@
 	hitsound = 'sound/weapons/smash.ogg'
 	var/illusions = 2
 
-/obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = ZERO, damage = ZERO, attack_type = MELEE_ATTACK)
 	if(iscultist(owner))
 		if(istype(hitby, /obj/projectile))
 			var/obj/projectile/P = hitby
@@ -898,7 +898,7 @@
 		. = ..()
 		if(.)
 			playsound(src, 'sound/weapons/parry.ogg', 100, TRUE)
-			if(illusions > 0)
+			if(illusions > ZERO)
 				illusions--
 				addtimer(CALLBACK(src, /obj/item/shield/mirror.proc/readd), 450)
 				if(prob(60))

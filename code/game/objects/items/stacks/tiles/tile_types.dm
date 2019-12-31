@@ -32,7 +32,7 @@
 			to_chat(user, "<span class='warning'>You can not reform this!</span>")
 			return
 
-		if(W.use_tool(src, user, 0, volume=40))
+		if(W.use_tool(src, user, ZERO, volume=40))
 			if(mineralType == "plasma")
 				atmos_spawn_air("plasma=5;TEMP=1000")
 				user.visible_message("<span class='warning'>[user.name] sets the plasma tiles on fire!</span>", \

@@ -1,6 +1,6 @@
 /turf/open/floor/holofloor
 	icon_state = "floor"
-	thermal_conductivity = 0
+	thermal_conductivity = ZERO
 	flags_1 = NONE
 
 /turf/open/floor/holofloor/attackby(obj/item/I, mob/living/user)

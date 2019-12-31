@@ -23,11 +23,11 @@
 	GLOB.zombie_infection_list -= src
 	. = ..()
 
-/obj/item/organ/zombie_infection/Insert(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/zombie_infection/Insert(var/mob/living/carbon/M, special = ZERO)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/organ/zombie_infection/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/zombie_infection/Remove(mob/living/carbon/M, special = ZERO)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 	if(iszombie(M) && old_species)
@@ -80,8 +80,8 @@
 	var/stand_up = (owner.stat == DEAD) || (owner.stat == UNCONSCIOUS)
 
 	//Fully heal the zombie's damage the first time they rise
-	owner.setToxLoss(0, 0)
-	owner.setOxyLoss(0, 0)
+	owner.setToxLoss(ZERO, ZERO)
+	owner.setOxyLoss(ZERO, ZERO)
 	owner.heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE)
 
 	if(!owner.revive(full_heal = FALSE, admin_revive = FALSE))

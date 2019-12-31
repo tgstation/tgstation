@@ -20,8 +20,8 @@
 	circuit = /obj/item/circuitboard/machine/rad_collector
 	rad_insulation = RAD_EXTREME_INSULATION
 	var/obj/item/tank/internals/plasma/loaded_tank = null
-	var/stored_energy = 0
-	var/active = 0
+	var/stored_energy = ZERO
+	var/active = ZERO
 	var/locked = FALSE
 	var/drainratio = 1
 	var/powerproduction_drain = 0.001
@@ -29,7 +29,7 @@
 	var/bitcoinproduction_drain = 0.15
 	var/bitcoinmining = FALSE
 	///research points stored
-	var/stored_research = 0
+	var/stored_research = ZERO
 
 /obj/machinery/power/rad_collector/anchored
 	anchored = TRUE
@@ -90,7 +90,7 @@
 			var/fuel
 			if(loaded_tank)
 				fuel = loaded_tank.air_contents.gases[/datum/gas/plasma]
-			fuel = fuel ? fuel[MOLES] : 0
+			fuel = fuel ? fuel[MOLES] : ZERO
 			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [key_name(user)]. [loaded_tank?"Fuel: [round(fuel/0.29)]%":"<font color='red'>It is empty</font>"].", INVESTIGATE_SINGULO)
 			return
 		else
@@ -142,7 +142,7 @@
 /obj/machinery/power/rad_collector/analyzer_act(mob/living/user, obj/item/I)
 	if(stored_research >= 1)
 		new /obj/item/research_notes(user.loc, stored_research, "engineering")
-		stored_research = 0
+		stored_research = ZERO
 		return TRUE
 	return ..()
 

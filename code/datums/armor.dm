@@ -1,6 +1,6 @@
 #define ARMORID "armor-[melee]-[bullet]-[laser]-[energy]-[bomb]-[bio]-[rad]-[fire]-[acid]-[magic]"
 
-/proc/getArmor(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0, magic = 0)
+/proc/getArmor(melee = ZERO, bullet = ZERO, laser = ZERO, energy = ZERO, bomb = ZERO, bio = ZERO, rad = ZERO, fire = ZERO, acid = ZERO, magic = ZERO)
   . = locate(ARMORID)
   if (!.)
     . = new /datum/armor(melee, bullet, laser, energy, bomb, bio, rad, fire, acid, magic)
@@ -18,7 +18,7 @@
   var/acid
   var/magic
 
-/datum/armor/New(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0, magic = 0)
+/datum/armor/New(melee = ZERO, bullet = ZERO, laser = ZERO, energy = ZERO, bomb = ZERO, bio = ZERO, rad = ZERO, fire = ZERO, acid = ZERO, magic = ZERO)
   src.melee = melee
   src.bullet = bullet
   src.laser = laser
@@ -31,10 +31,10 @@
   src.magic = magic
   tag = ARMORID
 
-/datum/armor/proc/modifyRating(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0, magic = 0)
+/datum/armor/proc/modifyRating(melee = ZERO, bullet = ZERO, laser = ZERO, energy = ZERO, bomb = ZERO, bio = ZERO, rad = ZERO, fire = ZERO, acid = ZERO, magic = ZERO)
   return getArmor(src.melee+melee, src.bullet+bullet, src.laser+laser, src.energy+energy, src.bomb+bomb, src.bio+bio, src.rad+rad, src.fire+fire, src.acid+acid, src.magic+magic)
 
-/datum/armor/proc/modifyAllRatings(modifier = 0)
+/datum/armor/proc/modifyAllRatings(modifier = ZERO)
   return getArmor(melee+modifier, bullet+modifier, laser+modifier, energy+modifier, bomb+modifier, bio+modifier, rad+modifier, fire+modifier, acid+modifier, magic+modifier)
 
 /datum/armor/proc/setRating(melee, bullet, laser, energy, bomb, bio, rad, fire, acid, magic)

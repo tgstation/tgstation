@@ -17,7 +17,7 @@
 
 /obj/structure/holosign/Initialize()
 	. = ..()
-	alpha = 0
+	alpha = ZERO
 	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, plane, dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
 
 /obj/structure/holosign/Destroy()
@@ -34,7 +34,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	take_damage(5 , BRUTE, "melee", 1)
 
-/obj/structure/holosign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/holosign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BRUTE)
 			playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
@@ -124,7 +124,7 @@
 	icon_state = "holo_medical"
 	alpha = 125 //lazy :)
 	var/force_allaccess = FALSE
-	var/buzzcd = 0
+	var/buzzcd = ZERO
 
 /obj/structure/holosign/barrier/medical/examine(mob/user)
 	. = ..()
@@ -158,7 +158,7 @@
 	name = "Charged Energy Field"
 	desc = "A powerful energy field that blocks movement. Energy arcs off it."
 	max_integrity = 20
-	var/shockcd = 0
+	var/shockcd = ZERO
 
 /obj/structure/holosign/barrier/cyborg/hacked/bullet_act(obj/projectile/P)
 	take_damage(P.damage, BRUTE, "melee", 1)	//Yeah no this doesn't get projectile resistance.

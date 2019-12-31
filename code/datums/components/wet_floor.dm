@@ -10,7 +10,7 @@
 	var/static/mutable_appearance/generic_turf_overlay = mutable_appearance('icons/effects/water.dmi', "wet_static")
 	var/current_overlay
 	var/permanent = FALSE
-	var/last_process = 0
+	var/last_process = ZERO
 
 /datum/component/wet_floor/InheritComponent(datum/newcomp, orig, argslist)
 	if(!newcomp)	//We are getting passed the arguments of a would-be new component, but not a new component
@@ -104,14 +104,14 @@
 		check()
 
 /datum/component/wet_floor/proc/max_time_left()
-	. = 0
+	. = ZERO
 	for(var/i in time_left_list)
 		. = max(., time_left_list[i])
 
 /datum/component/wet_floor/process()
 	var/turf/open/T = parent
 	var/diff = world.time - last_process
-	var/decrease = 0
+	var/decrease = ZERO
 	var/t = T.GetTemperature()
 	switch(t)
 		if(-INFINITY to T0C)
@@ -120,7 +120,7 @@
 			decrease = ((T.air.temperature - T0C) / SSwet_floors.temperature_coeff) * (diff / SSwet_floors.time_ratio)
 		if(T0C + 100 to INFINITY)
 			decrease = INFINITY
-	decrease = max(0, decrease)
+	decrease = max(ZERO, decrease)
 	if((is_wet() & TURF_WET_ICE) && t > T0C)		//Ice melts into water!
 		for(var/obj/O in T.contents)
 			if(O.obj_flags & FROZEN)
@@ -132,12 +132,12 @@
 	last_process = world.time
 
 /datum/component/wet_floor/proc/update_strength()
-	highest_strength = 0			//Not bitflag.
+	highest_strength = ZERO			//Not bitflag.
 	for(var/i in time_left_list)
 		highest_strength = max(highest_strength, text2num(i))
 
 /datum/component/wet_floor/proc/is_wet()
-	. = 0
+	. = ZERO
 	for(var/i in time_left_list)
 		. |= text2num(i)
 
@@ -158,9 +158,9 @@
 
 	//NB it's possible we get deleted after this, due to inherit
 
-/datum/component/wet_floor/proc/add_wet(type, duration_minimum = 0, duration_add = 0, duration_maximum = MAXIMUM_WET_TIME, _permanent = FALSE)
+/datum/component/wet_floor/proc/add_wet(type, duration_minimum = ZERO, duration_add = ZERO, duration_maximum = MAXIMUM_WET_TIME, _permanent = FALSE)
 	var/static/list/allowed_types = list(TURF_WET_WATER, TURF_WET_LUBE, TURF_WET_ICE, TURF_WET_PERMAFROST, TURF_WET_SUPERLUBE)
-	if(duration_minimum <= 0 || !type)
+	if(duration_minimum <= ZERO || !type)
 		return FALSE
 	if(type in allowed_types)
 		return _do_add_wet(type, duration_minimum, duration_add, duration_maximum)
@@ -175,7 +175,7 @@
 		STOP_PROCESSING(SSwet_floors, src)
 
 /datum/component/wet_floor/proc/_do_add_wet(type, duration_minimum, duration_add, duration_maximum)
-	var/time = 0
+	var/time = ZERO
 	if(LAZYACCESS(time_left_list, "[type]"))
 		time = CLAMP(LAZYACCESS(time_left_list, "[type]") + duration_add, duration_minimum, duration_maximum)
 	else
@@ -196,7 +196,7 @@
 /datum/component/wet_floor/proc/check(force_update = FALSE)
 	var/changed = FALSE
 	for(var/i in time_left_list)
-		if(time_left_list[i] <= 0)
+		if(time_left_list[i] <= ZERO)
 			time_left_list -= i
 			changed = TRUE
 	if(changed || force_update)

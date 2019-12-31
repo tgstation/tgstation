@@ -27,7 +27,7 @@
 		command_name_types[stc] = command_name
 
 		if(!warnings_only)
-			.[command_name] = list(SERVICE_JSON_PARAM_HELPTEXT = initial(stc.help_text), SERVICE_JSON_PARAM_ADMINONLY = initial(stc.admin_only), SERVICE_JSON_PARAM_REQUIREDPARAMETERS = 0)
+			.[command_name] = list(SERVICE_JSON_PARAM_HELPTEXT = initial(stc.help_text), SERVICE_JSON_PARAM_ADMINONLY = initial(stc.admin_only), SERVICE_JSON_PARAM_REQUIREDPARAMETERS = ZERO)
 
 /datum/tgs_api/v3210/proc/HandleServiceCustomCommand(command, sender, params)
 	if(!cached_custom_tgs_chat_commands)

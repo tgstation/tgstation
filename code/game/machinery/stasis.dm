@@ -14,7 +14,7 @@
 	payment_department = ACCOUNT_MED
 	var/stasis_enabled = TRUE
 	var/last_stasis_sound = FALSE
-	var/stasis_can_toggle = 0
+	var/stasis_can_toggle = ZERO
 	var/mattress_state = "stasis_on"
 	var/obj/effect/overlay/vis/mattress_on
 	var/obj/machinery/computer/operating/op_computer
@@ -68,10 +68,10 @@
 
 	if(mattress_state)
 		if(!mattress_on || !managed_vis_overlays)
-			mattress_on = SSvis_overlays.add_vis_overlay(src, icon, mattress_state, layer, plane, dir, alpha = 0, unique = TRUE)
+			mattress_on = SSvis_overlays.add_vis_overlay(src, icon, mattress_state, layer, plane, dir, alpha = ZERO, unique = TRUE)
 
 		if(mattress_on.alpha ? !_running : _running) //check the inverse of _running compared to truthy alpha, to see if they differ
-			var/new_alpha = _running ? 255 : 0
+			var/new_alpha = _running ? 255 : ZERO
 			var/easing_direction = _running ? EASE_OUT : EASE_IN
 			animate(mattress_on, alpha = new_alpha, time = 50, easing = CUBIC_EASING|easing_direction)
 

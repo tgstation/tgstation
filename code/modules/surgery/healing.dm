@@ -27,9 +27,9 @@
 	repeatable = TRUE
 	time = 25
 	experience_given = 2
-	var/brutehealing = 0
-	var/burnhealing = 0
-	var/missinghpbonus = 0 //heals an extra point of damager per X missing damage of type (burn damage for burn healing, brute for brute). Smaller Number = More Healing!
+	var/brutehealing = ZERO
+	var/burnhealing = ZERO
+	var/missinghpbonus = ZERO //heals an extra point of damager per X missing damage of type (burn damage for burn healing, brute for brute). Smaller Number = More Healing!
 
 /datum/surgery_step/heal/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/woundtype
@@ -37,7 +37,7 @@
 		woundtype = "wounds"
 	else if(brutehealing)
 		woundtype = "bruises"
-	else //why are you trying to 0,0...?
+	else //why are you trying to ZERO,0...?
 		woundtype = "burns"
 	if(istype(surgery,/datum/surgery/healing))
 		var/datum/surgery/healing/the_surgery = surgery

@@ -273,7 +273,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		new /obj/item/toy/balloon(clusterspot)
 		var/balloons_left_to_give = 3 //the amount of balloons around the cluster
 		var/list/dirs_to_balloon = GLOB.cardinals.Copy()
-		while(balloons_left_to_give > 0)
+		while(balloons_left_to_give > ZERO)
 			balloons_left_to_give--
 			var/chosen_dir = pick_n_take(dirs_to_balloon)
 			var/turf/balloonstep = get_step(clusterspot, chosen_dir)

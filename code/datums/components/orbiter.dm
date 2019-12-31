@@ -74,7 +74,7 @@
 		orbiter.transform = M
 
 	var/matrix/shift = matrix(orbiter.transform)
-	shift.Translate(0, radius)
+	shift.Translate(ZERO, radius)
 	orbiter.transform = shift
 
 	orbiter.SpinAnimation(rotation_speed, -1, clockwise, rotation_segments, parallel = FALSE)
@@ -95,7 +95,7 @@
 		return
 	UnregisterSignal(orbiter, COMSIG_MOVABLE_MOVED)
 	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_STOP, orbiter)
-	orbiter.SpinAnimation(0, 0)
+	orbiter.SpinAnimation(ZERO, ZERO)
 	orbiters -= orbiter
 	orbiter.stop_orbit(src)
 	orbiter.orbiting = null

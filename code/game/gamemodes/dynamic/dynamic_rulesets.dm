@@ -13,7 +13,7 @@
 	var/persistent = FALSE
 	/// If set to TRUE, dynamic mode will be able to draft this ruleset again later on. (doesn't apply for roundstart rules)
 	var/repeatable = FALSE
-	/// If set higher than 0 decreases weight by itself causing the ruleset to appear less often the more it is repeated.
+	/// If set higher than ZERO decreases weight by itself causing the ruleset to appear less often the more it is repeated.
 	var/repeatable_weight_decrease = 2
 	/// List of players that are being drafted for this rule
 	var/list/mob/candidates = list()
@@ -33,26 +33,26 @@
 	var/list/exclusive_roles = list()
 	/// If set, there needs to be a certain amount of players doing those roles (among the players who won't be drafted) for the rule to be drafted IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
 	var/list/enemy_roles = list()
-	/// If enemy_roles was set, this is the amount of enemy job workers needed per threat_level range (0-10,10-20,etc) IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
-	var/required_enemies = list(1,1,0,0,0,0,0,0,0,0)
+	/// If enemy_roles was set, this is the amount of enemy job workers needed per threat_level range (ZERO-10,10-20,etc) IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
+	var/required_enemies = list(1,1,ZERO,ZERO,ZERO,ZERO,ZERO,ZERO,ZERO,ZERO)
 	/// The rule needs this many candidates (post-trimming) to be executed (example: Cult needs 4 players at round start)
-	var/required_candidates = 0
+	var/required_candidates = ZERO
 	/// 1 -> 9, probability for this rule to be picked against other rules
 	var/weight = 5
 	/// Threat cost for this rule, this is decreased from the mode's threat when the rule is executed.
-	var/cost = 0
+	var/cost = ZERO
 	/// Cost per level the rule scales up.
-	var/scaling_cost = 0
+	var/scaling_cost = ZERO
 	/// How many times a rule has scaled up upon getting picked.
-	var/scaled_times = 0
+	var/scaled_times = ZERO
 	/// Used for the roundend report
-	var/total_cost = 0
+	var/total_cost = ZERO
 	/// A flag that determines how the ruleset is handled
 	/// HIGHLANDER_RULESET are rulesets can end the round.
 	/// TRAITOR_RULESET and MINOR_RULESET can't end the round and have no difference right now.
-	var/flags = 0
+	var/flags = ZERO
 	/// Pop range per requirement. If zero defaults to mode's pop_per_requirement.
-	var/pop_per_requirement = 0
+	var/pop_per_requirement = ZERO
 	/// Requirements are the threat level requirements per pop range.
 	/// With the default values, The rule will never get drafted below 10 threat level (aka: "peaceful extended"), and it requires a higher threat level at lower pops.
 	var/list/requirements = list(40,30,20,10,10,10,10,10,10,10)
@@ -65,19 +65,19 @@
 	/// If a ruleset type which is in this list has been executed, then the ruleset will not be executed.
 	var/list/blocking_rules = list()
 	/// The minimum amount of players required for the rule to be considered.
-	var/minimum_players = 0
+	var/minimum_players = ZERO
 	/// The maximum amount of players required for the rule to be considered.
 	/// Anything below zero or exactly zero is ignored.
-	var/maximum_players = 0
+	var/maximum_players = ZERO
 	/// Calculated during acceptable(), used in scaling and team sizes.
-	var/indice_pop = 0
+	var/indice_pop = ZERO
 	/// Population scaling. Used by team antags and scaling for solo antags.
 	var/list/antag_cap = list()
 	/// Base probability used in scaling. The higher it is, the more likely to scale. Kept as a var to allow for config editing._SendSignal(sigtype, list/arguments)
 	var/base_prob = 60
 	/// Delay for when execute will get called from the time of post_setup (roundstart) or process (midround/latejoin).
 	/// Make sure your ruleset works with execute being called during the game when using this, and that the clean_up proc reverts it properly in case of faliure.
-	var/delay = 0
+	var/delay = ZERO
 
 
 /datum/dynamic_ruleset/New()
@@ -101,16 +101,16 @@
 
 /// By default, a rule is acceptable if it satisfies the threat level/population requirements.
 /// If your rule has extra checks, such as counting security officers, do that in ready() instead
-/datum/dynamic_ruleset/proc/acceptable(population = 0, threat_level = 0)
+/datum/dynamic_ruleset/proc/acceptable(population = ZERO, threat_level = ZERO)
 	if(minimum_players > population)
 		return FALSE
-	if(maximum_players > 0 && population > maximum_players)
+	if(maximum_players > ZERO && population > maximum_players)
 		return FALSE
 	if (population >= GLOB.dynamic_high_pop_limit)
 		indice_pop = 10
 		return (threat_level >= high_population_requirement)
 	else
-		pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
+		pop_per_requirement = pop_per_requirement > ZERO ? pop_per_requirement : mode.pop_per_requirement
 		if(antag_cap.len && requirements.len != antag_cap.len)
 			message_admins("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
 			log_game("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
@@ -118,7 +118,7 @@
 		return (threat_level >= requirements[indice_pop])
 
 /// Called when a suitable rule is picked during roundstart(). Will some times attempt to scale a rule up when there is threat remaining. Returns the amount of scaled steps.
-/datum/dynamic_ruleset/proc/scale_up(extra_rulesets = 0, remaining_threat_level = 0)
+/datum/dynamic_ruleset/proc/scale_up(extra_rulesets = ZERO, remaining_threat_level = ZERO)
 	remaining_threat_level -= cost
 	if(scaling_cost && scaling_cost <= remaining_threat_level) // Only attempts to scale the modes with a scaling cost explicitly set.
 		var/new_prob
@@ -157,7 +157,7 @@
 /// Here you can perform any additional checks you want. (such as checking the map etc)
 /// Remember that on roundstart no one knows what their job is at this point.
 /// IMPORTANT: If ready() returns TRUE, that means pre_execute() or execute() should never fail!
-/datum/dynamic_ruleset/proc/ready(forced = 0)
+/datum/dynamic_ruleset/proc/ready(forced = ZERO)
 	if (required_candidates > candidates.len)
 		return FALSE
 	return TRUE
@@ -169,10 +169,10 @@
 	mode.threat_log += "[worldtime2text()]: [ruletype] [name] refunded [cost + (scaled_times * scaling_cost)]. Failed to execute."
 
 /// Gets weight of the ruleset
-/// Note that this decreases weight if repeatable is TRUE and repeatable_weight_decrease is higher than 0
+/// Note that this decreases weight if repeatable is TRUE and repeatable_weight_decrease is higher than ZERO
 /// Note: If you don't want repeatable rulesets to decrease their weight use the weight variable directly
 /datum/dynamic_ruleset/proc/get_weight()
-	if(repeatable && weight > 1 && repeatable_weight_decrease > 0)
+	if(repeatable && weight > 1 && repeatable_weight_decrease > ZERO)
 		for(var/datum/dynamic_ruleset/DR in mode.executed_rules)
 			if(istype(DR, type))
 				weight = max(weight-repeatable_weight_decrease,1)

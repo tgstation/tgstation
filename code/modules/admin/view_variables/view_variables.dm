@@ -82,7 +82,7 @@
 			var/value
 			if(IS_NORMAL_LIST(L) && IS_VALID_ASSOC_KEY(key))
 				value = L[key]
-			variable_html += debug_variable(i, value, 0, L)
+			variable_html += debug_variable(i, value, ZERO, L)
 	else
 		names = sortList(names)
 		for(var/V in names)
@@ -123,7 +123,7 @@
 				for(var i=0; i<ca.length; i++) {
 					var c = ca\[i];
 					while (c.charAt(0)==' ') c = c.substring(1,c.length);
-					if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+					if (c.indexOf(name)==ZERO) return c.substring(name.length,c.length);
 				}
 				return "";
 			}
@@ -190,14 +190,14 @@
 				if (value !== "") {
 					location.href = value;
 				}
-				list.selectedIndex = 0;
+				list.selectedIndex = ZERO;
 				document.getElementById('filter').focus();
 			}
 
 			// byjax
 			function replace_span(what) {
 				var idx = what.indexOf(':');
-				document.getElementById(what.substr(0, idx)).innerHTML = what.substr(idx + 1);
+				document.getElementById(what.substr(ZERO, idx)).innerHTML = what.substr(idx + 1);
 			}
 		</script>
 		<div align='center'>

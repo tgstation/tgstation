@@ -30,10 +30,10 @@
 	var/obj/item/clothing/head/helmet/space/chronos/helmet
 	var/obj/effect/chronos_cam/camera
 	var/datum/action/innate/chrono_teleport/teleport_now = new
-	var/activating = 0
-	var/activated = 0
+	var/activating = ZERO
+	var/activated = ZERO
 	var/cooldowntime = 50 //deciseconds
-	var/teleporting = 0
+	var/teleporting = ZERO
 	var/phase_timer_id
 
 /obj/item/clothing/suit/space/chronos/Initialize()
@@ -85,18 +85,18 @@
 		user = src.loc
 	if(phase_timer_id)
 		deltimer(phase_timer_id)
-		phase_timer_id = 0
+		phase_timer_id = ZERO
 	if(istype(user))
 		if(to_turf)
 			user.forceMove(to_turf)
-		user.SetStun(0)
+		user.SetStun(ZERO)
 		user.next_move = 1
 		user.alpha = 255
 		user.update_atom_colour()
 		user.animate_movement = FORWARD_STEPS
-		user.notransform = 0
+		user.notransform = ZERO
 		user.anchored = FALSE
-		teleporting = 0
+		teleporting = ZERO
 		for(var/obj/item/I in user.held_items)
 			REMOVE_TRAIT(I, TRAIT_NODROP, CHRONOSUIT_TRAIT)
 		if(camera)
@@ -145,7 +145,7 @@
 
 /obj/item/clothing/suit/space/chronos/proc/phase_2(mob/living/carbon/human/user, turf/to_turf, phase_in_ds)
 	if(teleporting && activated && user)
-		animate(user, color = list(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 1,1,1,0), time = 2)
+		animate(user, color = list(ZERO,ZERO,ZERO,ZERO, ZERO,ZERO,ZERO,ZERO, ZERO,ZERO,ZERO,ZERO, ZERO,ZERO,ZERO,1, 1,1,1,ZERO), time = 2)
 		phase_timer_id = addtimer(CALLBACK(src, .proc/phase_3, user, to_turf, phase_in_ds), 2, TIMER_STOPPABLE)
 	else
 		finish_chronowalk(user, to_turf)
@@ -206,17 +206,17 @@
 				to_chat(user, "<span style='color: #ff0000;'><b>FATAL: </b>Unable to locate /dev/helm. <b>Aborting...</b></span>")
 			teleport_now.Grant(user)
 		cooldown = world.time + cooldowntime
-		activating = 0
+		activating = ZERO
 
-/obj/item/clothing/suit/space/chronos/proc/deactivate(force = 0, silent = FALSE)
+/obj/item/clothing/suit/space/chronos/proc/deactivate(force = ZERO, silent = FALSE)
 	if(activated && (!teleporting || force))
 		activating = 1
 		var/mob/living/carbon/human/user = src.loc
 		var/hard_landing = teleporting && force
 		REMOVE_TRAIT(src, TRAIT_NODROP, CHRONOSUIT_TRAIT)
 		cooldown = world.time + cooldowntime * 1.5
-		activated = 0
-		activating = 0
+		activated = ZERO
+		activating = ZERO
 		finish_chronowalk()
 		if(user && ishuman(user))
 			teleport_now.Remove(user)
@@ -245,10 +245,10 @@
 	density = FALSE
 	anchored = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
-	opacity = 0
+	opacity = ZERO
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/mob/holder
-	var/phase_time = 0
+	var/phase_time = ZERO
 	var/phase_time_length = 3
 	var/obj/screen/chronos_target/target_ui
 	var/obj/item/clothing/suit/space/chronos/chronosuit
@@ -313,7 +313,7 @@
 /obj/screen/chronos_target
 	name = "target display"
 	screen_loc = "CENTER,CENTER"
-	color = list(1,0,0,0, 0,1,0,0.8, 0,0,1,0.933, 0,0,0,0, 0,0,0,0)
+	color = list(1,ZERO,ZERO,ZERO, ZERO,1,ZERO,0.8, ZERO,ZERO,1,0.933, ZERO,ZERO,ZERO,ZERO, ZERO,ZERO,ZERO,ZERO)
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE
 
 /obj/screen/chronos_target/Initialize(mapload, mob/living/carbon/human/user)

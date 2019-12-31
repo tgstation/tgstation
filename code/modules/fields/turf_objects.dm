@@ -4,7 +4,7 @@
 	desc = "Why can you see energy fields?!"
 	icon = null
 	icon_state = null
-	alpha = 0
+	alpha = ZERO
 	invisibility = INVISIBILITY_ABSTRACT
 	flags_1 = ON_BORDER_1
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

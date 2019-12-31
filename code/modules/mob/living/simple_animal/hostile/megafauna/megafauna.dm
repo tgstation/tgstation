@@ -16,9 +16,9 @@
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
 	stat_attack = DEAD
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	minbodytemp = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
+	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = ZERO, OXY = 1)
+	minbodytemp = ZERO
 	maxbodytemp = INFINITY
 	vision_range = 5
 	aggro_vision_range = 18
@@ -33,10 +33,10 @@
 	var/achievement_type
 	var/crusher_achievement_type
 	var/score_achievement_type
-	var/elimination = 0
-	var/anger_modifier = 0
+	var/elimination = ZERO
+	var/anger_modifier = ZERO
 	var/gps_name = null
-	var/recovery_time = 0
+	var/recovery_time = ZERO
 	var/true_spawn = TRUE // if this is a megafauna that should grant achievements, or have a gps signal
 	var/nest_range = 10
 	var/chosen_attack = 1 // chosen attack num
@@ -67,7 +67,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed, list/force_grant)
-	if(health > 0)
+	if(health > ZERO)
 		return
 	else
 		var/datum/status_effect/crusher_damage/C = has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
@@ -88,13 +88,13 @@
 	loot = crusher_loot
 
 /mob/living/simple_animal/hostile/megafauna/gib()
-	if(health > 0)
+	if(health > ZERO)
 		return
 	else
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/dust(just_ash, drop_items, force)
-	if(!force && health > 0)
+	if(!force && health > ZERO)
 		return
 	else
 		..()
@@ -160,7 +160,7 @@
 	button_icon_state = ""
 	var/mob/living/simple_animal/hostile/megafauna/M
 	var/chosen_message
-	var/chosen_attack_num = 0
+	var/chosen_attack_num = ZERO
 
 /datum/action/innate/megafauna_attack/Grant(mob/living/L)
 	if(istype(L, /mob/living/simple_animal/hostile/megafauna))

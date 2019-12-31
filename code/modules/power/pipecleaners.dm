@@ -26,7 +26,7 @@ GLOBAL_LIST_INIT(pipe_cleaner_colors, list(
 
   9   1   5
 	\ | /
-  8 - 0 - 4
+  8 - ZERO - 4
 	/ | \
   10  2   6
 
@@ -44,7 +44,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
-	var/d1 = 0   // pipe_cleaner direction 1 (see above)
+	var/d1 = ZERO   // pipe_cleaner direction 1 (see above)
 	var/d2 = 1   // pipe_cleaner direction 2 (see above)
 	var/obj/item/stack/pipe_cleaner_coil/stored
 
@@ -190,7 +190,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	amount = MAXCOIL
 	merge_type = /obj/item/stack/pipe_cleaner_coil // This is here to let its children merge between themselves
 	var/pipe_cleaner_color = "red"
-	throwforce = 0
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
@@ -297,7 +297,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		dirn = dirnew
 
 	for(var/obj/structure/pipe_cleaner/LC in T)
-		if(LC.d2 == dirn && LC.d1 == 0)
+		if(LC.d2 == dirn && LC.d1 == ZERO)
 			to_chat(user, "<span class='warning'>There's already a pipe leaner at that position!</span>")
 			return
 
@@ -358,7 +358,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 			var/obj/structure/pipe_cleaner/NC = get_new_pipe_cleaner(U)
 
-			NC.d1 = 0
+			NC.d1 = ZERO
 			NC.d2 = fdirn
 			NC.add_fingerprint(user)
 			NC.update_icon()
@@ -368,7 +368,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			return
 
 	// exisiting pipe_cleaner doesn't point at our position or we have a supplied direction, so see if it's a stub
-	else if(C.d1 == 0)
+	else if(C.d1 == ZERO)
 							// if so, make it a full pipe_cleaner pointing from it's old direction to our dirn
 		var/nd1 = C.d2	// these will be the new directions
 		var/nd2 = dirn

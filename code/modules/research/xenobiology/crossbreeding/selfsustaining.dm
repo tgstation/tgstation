@@ -18,7 +18,7 @@ Self-sustaining extracts:
 /obj/item/slimecross/selfsustaining/Initialize()
 	..()
 	visible_message("<span class='warning'>The [src] shudders, and splits into four smaller extracts.</span>")
-	for(var/i = 0, i < 4, i++)
+	for(var/i = ZERO, i < 4, i++)
 		var/obj/item/autoslime/A = new /obj/item/autoslime(src.loc)
 		var/obj/item/slime_extract/X = new extract_type(A)
 		A.extract = X

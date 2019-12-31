@@ -10,7 +10,7 @@
 	icon_screen = "comm_monitor"
 	desc = "Monitors the details of the telecommunications network it's synced with."
 
-	var/screen = 0				// the screen number:
+	var/screen = ZERO				// the screen number:
 	var/list/machinelist = list()	// the machines located by the computer
 	var/obj/machinery/telecomms/SelectedMachine
 
@@ -28,7 +28,7 @@
 
 	  // --- Main Menu ---
 
-		if(0)
+		if(ZERO)
 			dat += "<br>[temp]<br><br>"
 			dat += "<br>Current Network: <a href='?src=[REF(src)];network=1'>[network]</a><br>"
 			if(machinelist.len)
@@ -83,13 +83,13 @@
 
 			if("release")
 				machinelist = list()
-				screen = 0
+				screen = ZERO
 
 			if("mainmenu")
-				screen = 0
+				screen = ZERO
 
 			if("probe")
-				if(machinelist.len > 0)
+				if(machinelist.len > ZERO)
 					temp = "<font color = #D70B00>- FAILED: CANNOT PROBE WHEN BUFFER FULL -</font color>"
 
 				else
@@ -102,7 +102,7 @@
 					else
 						temp = "<font color = #336699>- [machinelist.len] ENTITIES LOCATED & BUFFERED -</font color>"
 
-					screen = 0
+					screen = ZERO
 
 
 	if(href_list["network"])
@@ -114,7 +114,7 @@
 
 			else
 				network = newnet
-				screen = 0
+				screen = ZERO
 				machinelist = list()
 				temp = "<font color = #336699>- NEW NETWORK TAG SET IN ADDRESS \[[network]\] -</font color>"
 

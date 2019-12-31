@@ -1,20 +1,20 @@
 /datum/station_state
-	var/floor = 0
-	var/wall = 0
-	var/r_wall = 0
-	var/window = 0
-	var/door = 0
-	var/grille = 0
-	var/mach = 0
+	var/floor = ZERO
+	var/wall = ZERO
+	var/r_wall = ZERO
+	var/window = ZERO
+	var/door = ZERO
+	var/grille = ZERO
+	var/mach = ZERO
 
 /datum/station_state/proc/count()
-	floor = 0
-	wall = 0
-	r_wall = 0
-	window = 0
-	door = 0
-	grille = 0
-	mach = 0
+	floor = ZERO
+	wall = ZERO
+	r_wall = ZERO
+	window = ZERO
+	door = ZERO
+	grille = ZERO
+	mach = ZERO
 	for(var/Z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 		for(var/turf/T in block(locate(1,1,Z), locate(world.maxx,world.maxy,Z)))
 			// don't count shuttles since they may have just left
@@ -60,8 +60,8 @@
 
 /datum/station_state/proc/score(datum/station_state/result)
 	if(!result)
-		return 0
-	var/output = 0
+		return ZERO
+	var/output = ZERO
 	output += (result.floor / max(floor,1))
 	output += (result.r_wall/ max(r_wall,1))
 	output += (result.wall / max(wall,1))

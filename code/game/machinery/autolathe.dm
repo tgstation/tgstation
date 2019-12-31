@@ -17,7 +17,7 @@
 	var/list/L = list()
 	var/list/LL = list()
 	var/hacked = FALSE
-	var/disabled = 0
+	var/disabled = ZERO
 	var/shocked = FALSE
 	var/hack_wire
 	var/disable_wire
@@ -63,7 +63,7 @@
 	/datum/material/plastic,
 	/datum/material/adamantine,
 	/datum/material/mythril
-	), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
+	), ZERO, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
 	wires = new /datum/wires/autolathe(src)
@@ -177,7 +177,7 @@
 			/////////////////
 
 			var/coeff = (is_stack ? 1 : prod_coeff) //stacks are unaffected by production coefficient
-			var/total_amount = 0
+			var/total_amount = ZERO
 
 			for(var/MAT in being_built.materials)
 				total_amount += being_built.materials[MAT]
@@ -195,7 +195,7 @@
 				if(istext(used_material)) //This means its a category
 					var/list/list_to_show = list()
 					for(var/i in SSmaterials.materials_by_category[used_material])
-						if(materials.materials[i] > 0)
+						if(materials.materials[i] > ZERO)
 							list_to_show += i
 
 					used_material = input("Choose [used_material]", "Custom Material") as null|anything in sortList(list_to_show, /proc/cmp_typepaths_asc)
@@ -258,7 +258,7 @@
 	updateDialog()
 
 /obj/machinery/autolathe/RefreshParts()
-	var/T = 0
+	var/T = ZERO
 	for(var/obj/item/stock_parts/matter_bin/MB in component_parts)
 		T += MB.rating*75000
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
@@ -266,7 +266,7 @@
 	T=1.2
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		T -= M.rating*0.2
-	prod_coeff = min(1,max(0,T)) // Coeff going 1 -> 0,8 -> 0,6 -> 0,4
+	prod_coeff = min(1,max(ZERO,T)) // Coeff going 1 -> ZERO,8 -> ZERO,6 -> ZERO,4
 
 /obj/machinery/autolathe/examine(mob/user)
 	. += ..()
@@ -324,7 +324,7 @@
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=10'>x10</a>"
 			if (max_multiplier>25 && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=25'>x25</a>"
-			if(max_multiplier > 0 && !disabled)
+			if(max_multiplier > ZERO && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=[max_multiplier]'>x[max_multiplier]</a>"
 		else
 			if(!disabled && can_build(D, 5))
@@ -358,7 +358,7 @@
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=10'>x10</a>"
 			if (max_multiplier>25 && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=25'>x25</a>"
-			if(max_multiplier > 0 && !disabled)
+			if(max_multiplier > ZERO && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=[max_multiplier]'>x[max_multiplier]</a>"
 
 		dat += "[get_design_cost(D)]<br>"
@@ -372,7 +372,7 @@
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = mat_id
 		var/mineral_amount = materials.materials[mat_id]
-		if(mineral_amount > 0)
+		if(mineral_amount > ZERO)
 			dat += "<b>[M.name] amount:</b> [mineral_amount] cm<sup>3</sup><br>"
 	return dat
 

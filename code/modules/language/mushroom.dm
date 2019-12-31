@@ -6,6 +6,6 @@
 	exclaim_verb = "poofs loudly"
 	whisper_verb = "puffs quietly"
 	key = "y"
-	sentence_chance = 0
+	sentence_chance = ZERO
 	default_priority = 80
 	syllables = list("poof", "pff", "pFfF", "piff", "puff", "pooof", "pfffff", "piffpiff", "puffpuff", "poofpoof", "pifpafpofpuf")

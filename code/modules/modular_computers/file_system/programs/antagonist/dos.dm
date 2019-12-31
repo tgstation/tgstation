@@ -5,7 +5,7 @@
 	extended_desc = "This advanced script can perform denial of service attacks against NTNet quantum relays. The system administrator will probably notice this. Multiple devices can run this program together against same relay for increased effect"
 	size = 20
 	requires_ntnet = 1
-	available_on_ntnet = 0
+	available_on_ntnet = ZERO
 	available_on_syndinet = 1
 	tgui_id = "ntos_net_dos"
 	ui_style = "syndicate"
@@ -13,12 +13,12 @@
 	ui_y = 250
 
 	var/obj/machinery/ntnet_relay/target = null
-	var/dos_speed = 0
+	var/dos_speed = ZERO
 	var/error = ""
-	var/executed = 0
+	var/executed = ZERO
 
 /datum/computer_file/program/ntnet_dos/process_tick()
-	dos_speed = 0
+	dos_speed = ZERO
 	switch(ntnet_status)
 		if(1)
 			dos_speed = NTNETSPEED_LOWSIGNAL * 10
@@ -37,7 +37,7 @@
 	if(target)
 		target.dos_sources.Remove(src)
 	target = null
-	executed = 0
+	executed = ZERO
 
 	..()
 
@@ -54,7 +54,7 @@
 			if(target)
 				target.dos_sources.Remove(src)
 				target = null
-			executed = 0
+			executed = ZERO
 			error = ""
 			return 1
 		if("PRG_execute")
@@ -81,7 +81,7 @@
 		data["target"] = 1
 		data["speed"] = dos_speed
 
-		// This is mostly visual, generate some strings of 1s and 0s
+		// This is mostly visual, generate some strings of 1s and ZEROs
 		// Probability of 1 is equal of completion percentage of DoS attack on this relay.
 		// Combined with UI updates this adds quite nice effect to the UI
 		var/percentage = target.dos_overload * 100 / target.dos_capacity

@@ -58,7 +58,7 @@ Difficulty: Hard
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
 	var/charging = FALSE
-	var/enrage_till = 0
+	var/enrage_till = ZERO
 	var/enrage_time = 70
 	var/revving_charge = FALSE
 	gps_name = "Bloody Signal"
@@ -106,7 +106,7 @@ Difficulty: Hard
 	if(charging)
 		return
 
-	anger_modifier = CLAMP(((maxHealth - health)/60),0,20)
+	anger_modifier = CLAMP(((maxHealth - health)/60),ZERO,20)
 	enrage_time = initial(enrage_time) * CLAMP(anger_modifier / 20, 0.5, 1)
 	ranged_cooldown = world.time + 50
 
@@ -152,7 +152,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/surround_with_hallucinations()
 	for(var/i = 1 to 5)
-		INVOKE_ASYNC(src, .proc/hallucination_charge_around, 2, 8, 2, 0, 4)
+		INVOKE_ASYNC(src, .proc/hallucination_charge_around, 2, 8, 2, ZERO, 4)
 		if(ismob(target))
 			charge(delay = 6)
 		else
@@ -173,7 +173,7 @@ Difficulty: Hard
 	charging = TRUE
 	revving_charge = TRUE
 	DestroySurroundings()
-	walk(src, 0)
+	walk(src, ZERO)
 	setDir(dir)
 	var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(loc,src)
 	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
@@ -182,7 +182,7 @@ Difficulty: Hard
 	var/movespeed = 0.7
 	walk_towards(src, T, movespeed)
 	SLEEP_CHECK_DEATH(get_dist(src, T) * movespeed)
-	walk(src, 0) // cancel the movement
+	walk(src, ZERO) // cancel the movement
 	try_bloodattack()
 	charging = FALSE
 
@@ -190,7 +190,7 @@ Difficulty: Hard
 	var/list/targets = ListTargets()
 	. = list()
 	for(var/mob/living/L in targets)
-		var/list/bloodpool = get_pools(get_turf(L), 0)
+		var/list/bloodpool = get_pools(get_turf(L), ZERO)
 		if(bloodpool.len && (!faction_check_mob(L) || L.stat == DEAD))
 			. += L
 
@@ -214,7 +214,7 @@ Difficulty: Hard
 			bloodsmack(target_two_turf, handedness)
 
 	if(target_one)
-		var/list/pools = get_pools(get_turf(target_one), 0)
+		var/list/pools = get_pools(get_turf(target_one), ZERO)
 		if(pools.len)
 			target_one_turf = get_turf(target_one)
 			if(target_one_turf)
@@ -224,7 +224,7 @@ Difficulty: Hard
 					bloodsmack(target_one_turf, !handedness)
 
 	if(!target_two && target_one)
-		var/list/poolstwo = get_pools(get_turf(target_one), 0)
+		var/list/poolstwo = get_pools(get_turf(target_one), ZERO)
 		if(poolstwo.len)
 			target_one_turf = get_turf(target_one)
 			if(target_one_turf)
@@ -350,12 +350,12 @@ Difficulty: Hard
 			. += nearby
 
 /obj/effect/decal/cleanable/blood/bubblegum
-	bloodiness = 0
+	bloodiness = ZERO
 
 /obj/effect/decal/cleanable/blood/bubblegum/can_bloodcrawl_in()
 	return TRUE
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/hallucination_charge_around(times = 4, delay = 6, chargepast = 0, useoriginal = 1, radius)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/hallucination_charge_around(times = 4, delay = 6, chargepast = ZERO, useoriginal = 1, radius)
 	var/startingangle = rand(1, 360)
 	if(!target)
 		return
@@ -383,7 +383,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(. > 0 && prob(25))
+	if(. > ZERO && prob(25))
 		var/obj/effect/decal/cleanable/blood/gibs/bubblegum/B = new /obj/effect/decal/cleanable/blood/gibs/bubblegum(loc)
 		if(prob(40))
 			step(B, pick(GLOB.cardinals))

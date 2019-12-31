@@ -67,7 +67,7 @@
 //returns a list of adjacent turfs that can share air with this one.
 //alldir includes adjacent diagonal tiles that can share
 //	air with both of the related adjacent cardinal tiles
-/turf/proc/GetAtmosAdjacentTurfs(alldir = 0)
+/turf/proc/GetAtmosAdjacentTurfs(alldir = ZERO)
 	var/adjacent_turfs
 	if (atmos_adjacent_turfs)
 		adjacent_turfs = atmos_adjacent_turfs.Copy()
@@ -80,7 +80,7 @@
 	var/turf/curloc = src
 
 	for (var/direction in GLOB.diagonals_multiz)
-		var/matchingDirections = 0
+		var/matchingDirections = ZERO
 		var/turf/S = get_step_multiz(curloc, direction)
 		if(!S)
 			continue
@@ -99,13 +99,13 @@
 
 	return adjacent_turfs
 
-/atom/proc/air_update_turf(command = 0)
+/atom/proc/air_update_turf(command = ZERO)
 	if(!isturf(loc) && command)
 		return
 	var/turf/T = get_turf(loc)
 	T.air_update_turf(command)
 
-/turf/air_update_turf(command = 0)
+/turf/air_update_turf(command = ZERO)
 	if(command)
 		ImmediateCalculateAdjacentTurfs()
 	SSair.add_to_active(src,command)
@@ -130,4 +130,4 @@
 
 	air.merge(G)
 	archive()
-	SSair.add_to_active(src, 0)
+	SSair.add_to_active(src, ZERO)

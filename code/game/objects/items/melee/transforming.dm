@@ -2,7 +2,7 @@
 	sharpness = IS_SHARP
 	var/active = FALSE
 	var/force_on = 30 //force when active
-	var/faction_bonus_force = 0 //Bonus force dealt against certain factions
+	var/faction_bonus_force = ZERO //Bonus force dealt against certain factions
 	var/throwforce_on = 20
 	var/icon_state_on = "axe1"
 	var/hitsound_on = 'sound/weapons/blade1.ogg'
@@ -23,7 +23,7 @@
 		if(attack_verb_off.len)
 			attack_verb = attack_verb_off
 	if(sharpness)
-		AddComponent(/datum/component/butchering, 50, 100, 0, hitsound)
+		AddComponent(/datum/component/butchering, 50, 100, ZERO, hitsound)
 
 /obj/item/melee/transforming/attack_self(mob/living/carbon/user)
 	if(transform_weapon(user))

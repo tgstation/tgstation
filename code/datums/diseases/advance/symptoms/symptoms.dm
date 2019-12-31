@@ -5,14 +5,14 @@
 	var/name = ""
 	var/desc = "If you see this something went very wrong." //Basic symptom description
 	var/threshold_descs = list() //Descriptions of threshold effects
-	var/stealth = 0
-	var/resistance = 0
-	var/stage_speed = 0
-	var/transmittable = 0
+	var/stealth = ZERO
+	var/resistance = ZERO
+	var/stage_speed = ZERO
+	var/transmittable = ZERO
 	// The type level of the symptom. Higher is harder to generate.
-	var/level = 0
+	var/level = ZERO
 	// The severity level of the symptom. Higher is more dangerous.
-	var/severity = 0
+	var/severity = ZERO
 	// The hash tag for our diseases, we will add it up with our other symptoms to get a unique id! ID MUST BE UNIQUE!!!
 	var/id = ""
 	//Base chance of sending warning messages, so it can be modified
@@ -20,7 +20,7 @@
 	//If the early warnings are suppressed or not
 	var/suppress_warning = FALSE
 	//Ticks between each activation
-	var/next_activation = 0
+	var/next_activation = ZERO
 	var/symptom_delay_min = 1
 	var/symptom_delay_max = 1
 	//Can be used to multiply virus effects

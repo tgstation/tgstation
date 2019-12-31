@@ -7,7 +7,7 @@
 	var/spawn_sound
 	var/list/faction
 
-	var/last_spawned_time = 0
+	var/last_spawned_time = ZERO
 	var/list/spawned_mobs = list()
 
 /datum/component/summoning/Initialize(mob_types, spawn_chance=100, max_mobs=3, spawn_delay=100, spawn_text="appears out of nowhere", spawn_sound='sound/magic/summon_magic.ogg', faction)
@@ -46,11 +46,11 @@
 
 /datum/component/summoning/proc/do_spawn_mob(atom/spawn_location, summoner)
 	if(spawned_mobs.len >= max_mobs)
-		return 0
+		return ZERO
 	if(last_spawned_time > world.time)
-		return 0
+		return ZERO
 	if(!prob(spawn_chance))
-		return 0
+		return ZERO
 	last_spawned_time = world.time + spawn_delay
 	var/chosen_mob_type = pick(mob_types)
 	var/mob/living/simple_animal/L = new chosen_mob_type(spawn_location)

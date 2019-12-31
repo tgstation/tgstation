@@ -53,13 +53,13 @@
 	return 1
 
 /obj/item/storage/can_be_package_wrapped()
-	return 0
+	return ZERO
 
 /obj/item/storage/box/can_be_package_wrapped()
 	return 1
 
 /obj/item/smallDelivery/can_be_package_wrapped()
-	return 0
+	return ZERO
 
 /obj/item/stack/packageWrap/afterattack(obj/target, mob/user, proximity)
 	. = ..()
@@ -126,7 +126,7 @@
 	desc = "A tube... of cardboard."
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "c_tube"
-	throwforce = 0
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 5

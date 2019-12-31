@@ -30,7 +30,7 @@
 	target.ExtinguishMob()
 	target.forceMove(holder)
 	target.reset_perspective(holder)
-	target.notransform=0 //mob is safely inside holder now, no need for protection.
+	target.notransform=ZERO //mob is safely inside holder now, no need for protection.
 	jaunt_steam(mobloc)
 
 	sleep(jaunt_duration)
@@ -59,7 +59,7 @@
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_steam(mobloc)
 	var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()
-	steam.set_up(10, 0, mobloc)
+	steam.set_up(10, ZERO, mobloc)
 	steam.start()
 
 /obj/effect/dummy/phased_mob/spell_jaunt
@@ -67,7 +67,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
 	var/reappearing = FALSE
-	var/movedelay = 0
+	var/movedelay = ZERO
 	var/movespeed = 2
 	density = FALSE
 	anchored = TRUE

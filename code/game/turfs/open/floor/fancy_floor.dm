@@ -46,8 +46,8 @@
 
 /turf/open/floor/wood/remove_tile(mob/user, silent = FALSE, make_tile = TRUE)
 	if(broken || burnt)
-		broken = 0
-		burnt = 0
+		broken = ZERO
+		burnt = ZERO
 		if(user && !silent)
 			to_chat(user, "<span class='notice'>You remove the broken planks.</span>")
 	else
@@ -135,7 +135,7 @@
 	icon_state = "basalt"
 	ore_type = /obj/item/stack/ore/glass/basalt
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
-	slowdown = 0
+	slowdown = ZERO
 
 /turf/open/floor/grass/snow/basalt/Initialize()
 	. = ..()
@@ -156,7 +156,7 @@
 	floor_tile = /obj/item/stack/tile/basalt
 	ore_type = /obj/item/stack/ore/glass/basalt
 	turfverb = "dig up"
-	slowdown = 0
+	slowdown = ZERO
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
@@ -196,7 +196,7 @@
 
 /turf/open/floor/carpet/update_icon()
 	if(!..())
-		return 0
+		return ZERO
 	if(!broken && !burnt)
 		if(smooth)
 			queue_smooth(src)

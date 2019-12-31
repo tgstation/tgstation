@@ -70,7 +70,7 @@ obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 		can_bayonet = FALSE
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
-	. = 0
+	. = ZERO
 	if(chambered && chambered.BB)
 		process_fire(user, user, FALSE)
 		. = 1
@@ -99,7 +99,7 @@ obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 
 /obj/item/gun/ballistic/rifle/boltaction/enchanted/dropped()
 	. = ..()
-	guns_left = 0
+	guns_left = ZERO
 
 /obj/item/gun/ballistic/rifle/boltaction/enchanted/proc/discard_gun(mob/living/user)
 	user.throw_item(pick(oview(7,get_turf(user))))
@@ -110,7 +110,7 @@ obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 /obj/item/gun/ballistic/rifle/boltaction/enchanted/attack_self()
 	return
 
-/obj/item/gun/ballistic/rifle/boltaction/enchanted/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/ballistic/rifle/boltaction/enchanted/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = ZERO)
 	. = ..()
 	if(!.)
 		return

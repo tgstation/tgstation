@@ -12,10 +12,10 @@
 	var/plasmatanks = TANK_DISPENSER_CAPACITY
 
 /obj/structure/tank_dispenser/oxygen
-	plasmatanks = 0
+	plasmatanks = ZERO
 
 /obj/structure/tank_dispenser/plasma
-	oxygentanks = 0
+	oxygentanks = ZERO
 
 /obj/structure/tank_dispenser/Initialize()
 	. = ..()

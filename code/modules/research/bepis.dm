@@ -17,7 +17,7 @@
 	circuit = /obj/item/circuitboard/machine/bepis
 
 	var/banking_amount = 100
-	var/banked_cash = 0					//stored player cash
+	var/banked_cash = ZERO					//stored player cash
 	var/datum/bank_account/account		//payer's account.
 	var/account_name					//name of the payer's account.
 	var/error_cause = null
@@ -28,8 +28,8 @@
 	//Stock part variables
 	var/power_saver = 1
 	var/inaccuracy_percentage = 1.5
-	var/positive_cash_offset = 0
-	var/negative_cash_offset = 0
+	var/positive_cash_offset = ZERO
+	var/negative_cash_offset = ZERO
 	var/static/list/item_list = list()
 
 /obj/machinery/rnd/bepis/attackby(obj/item/O, mob/user, params)
@@ -60,10 +60,10 @@
 	return ..()
 
 /obj/machinery/rnd/bepis/RefreshParts()
-	var/C = 0
-	var/M = 0
-	var/L = 0
-	var/S = 0
+	var/C = ZERO
+	var/M = ZERO
+	var/L = ZERO
+	var/S = ZERO
 	for(var/obj/item/stock_parts/capacitor/Cap in component_parts)
 		C += ((Cap.rating - 1) * 0.1)
 	power_saver = 1 - C
@@ -78,9 +78,9 @@
 	inaccuracy_percentage = (1.5 - S)
 
 /obj/machinery/rnd/bepis/proc/depositcash()
-	var/deposit_value = 0
+	var/deposit_value = ZERO
 	deposit_value = banking_amount
-	if(deposit_value == 0)
+	if(deposit_value == ZERO)
 		update_icon_state()
 		say("Attempting to deposit 0 credits. Aborting.")
 		return
@@ -99,7 +99,7 @@
 	return
 
 /obj/machinery/rnd/bepis/proc/withdrawcash()
-	var/withdraw_value = 0
+	var/withdraw_value = ZERO
 	withdraw_value = banking_amount
 	if(withdraw_value > banked_cash)
 		say("Cannot withdraw more than stored funds. Aborting.")
@@ -112,9 +112,9 @@
 
 /obj/machinery/rnd/bepis/proc/calcsuccess()
 	var/turf/dropturf = get_turf(pick(view(1,src)))
-	var/gauss_major = 0
-	var/gauss_minor = 0
-	var/gauss_real = 0
+	var/gauss_major = ZERO
+	var/gauss_minor = ZERO
+	var/gauss_real = ZERO
 	if(!dropturf) //Check to verify the turf exists and the reward isn't lost somehow.
 		dropturf = drop_location()
 	gauss_major = (gaussian(major_threshold, std) - negative_cash_offset)	//This is the randomized profit value that this experiment has to surpass to unlock a tech.
@@ -123,11 +123,11 @@
 	say("Real: [gauss_real]. Minor: [gauss_minor]. Major: [gauss_major].")
 	flick("chamber_flash",src)
 	update_icon_state()
-	banked_cash = 0
-	if((gauss_real >= gauss_major) && (SSresearch.techweb_nodes_experimental.len > 0)) //Major Success.
+	banked_cash = ZERO
+	if((gauss_real >= gauss_major) && (SSresearch.techweb_nodes_experimental.len > ZERO)) //Major Success.
 		say("Experiment concluded with major success. New technology node discovered on technology disc.")
 		new /obj/item/disk/tech_disk/major(dropturf,1)
-		if(SSresearch.techweb_nodes_experimental.len == 0)
+		if(SSresearch.techweb_nodes_experimental.len == ZERO)
 			say("Expended all available experimental technology nodes. Resorting to minor rewards.")
 		return
 	if(gauss_real >= gauss_minor) //Minor Success.
@@ -153,20 +153,20 @@
 	if(panel_open == TRUE)
 		icon_state = "chamber_open"
 		return
-	if((use_power == ACTIVE_POWER_USE) && (banked_cash > 0) && (is_operational()))
+	if((use_power == ACTIVE_POWER_USE) && (banked_cash > ZERO) && (is_operational()))
 		icon_state = "chamber_active_loaded"
 		return
-	if (((use_power == IDLE_POWER_USE) && (banked_cash > 0)) || (banked_cash > 0) && (!is_operational()))
+	if (((use_power == IDLE_POWER_USE) && (banked_cash > ZERO)) || (banked_cash > ZERO) && (!is_operational()))
 		icon_state = "chamber_loaded"
 		return
 	if(use_power == ACTIVE_POWER_USE && is_operational())
 		icon_state = "chamber_active"
 		return
-	if(((use_power == IDLE_POWER_USE) && (banked_cash == 0)) || (!is_operational()))
+	if(((use_power == IDLE_POWER_USE) && (banked_cash == ZERO)) || (!is_operational()))
 		icon_state = "chamber"
 		return
 
-/obj/machinery/rnd/bepis/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/rnd/bepis/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = ZERO, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "bepis", name, 500, 480, master_ui, state)
@@ -206,7 +206,7 @@
 		if("begin_experiment")
 			if(use_power == IDLE_POWER_USE)
 				return
-			if(banked_cash == 0)
+			if(banked_cash == ZERO)
 				say("Please deposit funds to begin testing.")
 				return
 			calcsuccess()

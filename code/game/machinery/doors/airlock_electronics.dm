@@ -4,8 +4,8 @@
 	custom_price = 50
 
 	var/list/accesses = list()
-	var/one_access = 0
-	var/unres_sides = 0 //unrestricted sides, or sides of the airlock that will open regardless of access
+	var/one_access = ZERO
+	var/unres_sides = ZERO //unrestricted sides, or sides of the airlock that will open regardless of access
 
 /obj/item/electronics/airlock/examine(mob/user)
 	. = ..()
@@ -46,7 +46,7 @@
 	switch(action)
 		if("clear_all")
 			accesses = list()
-			one_access = 0
+			one_access = ZERO
 			. = TRUE
 		if("grant_all")
 			accesses = get_all_accesses()

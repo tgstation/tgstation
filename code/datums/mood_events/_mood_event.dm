@@ -1,7 +1,7 @@
 /datum/mood_event
 	var/description ///For descriptions, use the span classes bold nicegreen, nicegreen, none, warning and boldwarning in order from great to horrible.
-	var/mood_change = 0
-	var/timeout = 0
+	var/mood_change = ZERO
+	var/timeout = ZERO
 	var/hidden = FALSE//Not shown on examine
 	var/category //string of what category this mood was added in as
 	var/special_screen_obj //if it isn't null, it will replace or add onto the mood icon with this (same file). see happiness drug for example

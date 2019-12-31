@@ -75,7 +75,7 @@
 
 GLOBAL_VAR(AdminProcCaller)
 GLOBAL_PROTECT(AdminProcCaller)
-GLOBAL_VAR_INIT(AdminProcCallCount, 0)
+GLOBAL_VAR_INIT(AdminProcCallCount, ZERO)
 GLOBAL_PROTECT(AdminProcCallCount)
 GLOBAL_VAR(LastAdminCalledTargetRef)
 GLOBAL_PROTECT(LastAdminCalledTargetRef)
@@ -113,7 +113,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	GLOB.AdminProcCaller = ckey	//if this runtimes, too bad for you
 	++GLOB.AdminProcCallCount
 	. = world.WrapAdminProcCall(target, procname, arguments)
-	if(--GLOB.AdminProcCallCount == 0)
+	if(--GLOB.AdminProcCallCount == ZERO)
 		GLOB.AdminProcCaller = null
 
 //adv proc call this, ya nerds
@@ -135,7 +135,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 /client/proc/callproc_datum(datum/A as null|area|mob|obj|turf)
 	set category = "Debug"
 	set name = "Atom ProcCall"
-	set waitfor = 0
+	set waitfor = ZERO
 
 	if(!check_rights(R_DEBUG))
 		return
@@ -165,7 +165,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 		to_chat(usr, .)
 
 /client/proc/get_callproc_args()
-	var/argnum = input("Number of arguments","Number:",0) as num|null
+	var/argnum = input("Number of arguments","Number:",ZERO) as num|null
 	if(isnull(argnum))
 		return
 

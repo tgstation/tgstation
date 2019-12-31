@@ -141,7 +141,7 @@
 
 /datum/action/innate/cult/master/IsAvailable()
 	if(!owner.mind || !owner.mind.has_antag_datum(/datum/antagonist/cult/master) || GLOB.cult_narsie)
-		return 0
+		return ZERO
 	return ..()
 
 /datum/action/innate/cult/master/finalreck
@@ -214,7 +214,7 @@
 	desc = "Marks a target for the cult."
 	button_icon_state = "cult_mark"
 	var/obj/effect/proc_holder/cultmark/CM
-	var/cooldown = 0
+	var/cooldown = ZERO
 	var/base_cooldown = 1200
 
 /datum/action/innate/cult/master/cultmark/New(Target)
@@ -279,7 +279,7 @@
 		for(var/datum/mind/B in SSticker.mode.cult)
 			if(B.current && B.current.stat != DEAD && B.current.client)
 				to_chat(B.current, "<span class='cultlarge'><b>[ranged_ability_user] has marked [C.cult_team.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b></span>")
-				SEND_SOUND(B.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
+				SEND_SOUND(B.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),ZERO,1,75))
 				B.current.client.images += C.cult_team.blood_target_image
 		attached_action.owner.update_action_buttons_icon()
 		remove_ranged_ability("<span class='cult'>The marking rite is complete! It will last for 90 seconds.</span>")
@@ -312,7 +312,7 @@
 	desc = "Marks whatever you are orbitting - for the entire cult to track."
 	button_icon_state = "cult_mark"
 	var/tracking = FALSE
-	var/cooldown = 0
+	var/cooldown = ZERO
 	var/base_cooldown = 600
 
 /datum/action/innate/cult/ghostmark/IsAvailable()
@@ -355,12 +355,12 @@
 	C.cult_team.blood_target_image.appearance_flags = RESET_COLOR
 	C.cult_team.blood_target_image.pixel_x = -target.pixel_x
 	C.cult_team.blood_target_image.pixel_y = -target.pixel_y
-	SEND_SOUND(owner, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
+	SEND_SOUND(owner, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),ZERO,1,75))
 	owner.client.images += C.cult_team.blood_target_image
 	for(var/datum/mind/B in SSticker.mode.cult)
 		if(B.current && B.current.stat != DEAD && B.current.client)
 			to_chat(B.current, "<span class='cultlarge'><b>[owner] has marked [C.cult_team.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b></span>")
-			SEND_SOUND(B.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
+			SEND_SOUND(B.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),ZERO,1,75))
 			B.current.client.images += C.cult_team.blood_target_image
 	to_chat(owner,"<span class='cultbold'>You have marked the [target] for the cult! It will last for [DisplayTimeText(base_cooldown)].</span>")
 	name = "Clear the Blood Mark"
@@ -381,7 +381,7 @@
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "arcane_barrage"
 	var/obj/effect/proc_holder/pulse/PM
-	var/cooldown = 0
+	var/cooldown = ZERO
 	var/base_cooldown = 150
 	var/throwing = FALSE
 	var/mob/living/throwee

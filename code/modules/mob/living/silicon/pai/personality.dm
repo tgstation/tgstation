@@ -4,7 +4,7 @@
 		description
 		role
 		comments
-		ready = 0
+		ready = ZERO
 */
 
 /datum/paiCandidate/proc/savefile_path(mob/user)
@@ -12,7 +12,7 @@
 
 /datum/paiCandidate/proc/savefile_save(mob/user)
 	if(IsGuestKey(user.key))
-		return 0
+		return ZERO
 
 	var/savefile/F = new /savefile(src.savefile_path(user))
 
@@ -29,16 +29,16 @@
 // loads the savefile corresponding to the mob's ckey
 // if silent=true, report incompatible savefiles
 // returns 1 if loaded (or file was incompatible)
-// returns 0 if savefile did not exist
+// returns ZERO if savefile did not exist
 
 /datum/paiCandidate/proc/savefile_load(mob/user, silent = TRUE)
 	if (IsGuestKey(user.key))
-		return 0
+		return ZERO
 
 	var/path = savefile_path(user)
 
 	if (!fexists(path))
-		return 0
+		return ZERO
 
 	var/savefile/F = new /savefile(path)
 
@@ -52,7 +52,7 @@
 		fdel(path)
 		if (!silent)
 			alert(user, "Your savefile was incompatible with this version and was deleted.")
-		return 0
+		return ZERO
 
 	F["name"] >> src.name
 	F["description"] >> src.description

@@ -1,5 +1,5 @@
 
-#define BUGMODE_LIST	0
+#define BUGMODE_LIST	ZERO
 #define BUGMODE_MONITOR	1
 #define BUGMODE_TRACK	2
 
@@ -18,11 +18,11 @@
 
 	var/obj/machinery/camera/current = null
 
-	var/last_net_update = 0
+	var/last_net_update = ZERO
 	var/list/bugged_cameras = list()
 
 	var/track_mode = BUGMODE_LIST
-	var/last_tracked = 0
+	var/last_tracked = ZERO
 	var/refresh_interval = 50
 
 	var/tracked_name = null
@@ -62,14 +62,14 @@
 /obj/item/camera_bug/check_eye(mob/user)
 	if ( loc != user || user.incapacitated() || user.eye_blind || !current )
 		user.unset_machine()
-		return 0
+		return ZERO
 	var/turf/T_user = get_turf(user.loc)
 	var/turf/T_current = get_turf(current)
 	if(T_user.z != T_current.z || !current.can_use())
 		to_chat(user, "<span class='danger'>[src] has lost the signal.</span>")
 		current = null
 		user.unset_machine()
-		return 0
+		return ZERO
 	return 1
 /obj/item/camera_bug/on_unset_machine(mob/user)
 	user.reset_perspective(null)
@@ -184,7 +184,7 @@
 				else
 					dat += " (Laying down)"
 			dat += " <a href='?[REF(src)];track=[REF(M)]'>\[Track\]</a><br>"
-		if(length(dat) == 0)
+		if(length(dat) == ZERO)
 			dat += "No motion detected."
 		return dat
 	else

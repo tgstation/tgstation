@@ -464,7 +464,7 @@
 // Medical Records
 /mob/living/silicon/pai/proc/softwareMedicalRecord()
 	switch(subscreen)
-		if(0)
+		if(ZERO)
 			. += "<h3>Medical Records</h3><HR>"
 			if(GLOB.data_core.general)
 				for(var/datum/data/record/R in sortRecord(GLOB.data_core.general))
@@ -486,7 +486,7 @@
 /mob/living/silicon/pai/proc/softwareSecurityRecord()
 	. = ""
 	switch(subscreen)
-		if(0)
+		if(ZERO)
 			. += "<h3>Security Records</h3><HR>"
 			if(GLOB.data_core.general)
 				for(var/datum/data/record/R in sortRecord(GLOB.data_core.general))

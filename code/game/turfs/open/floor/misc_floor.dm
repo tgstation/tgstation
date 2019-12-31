@@ -38,7 +38,7 @@
 		set_light(1.4, 0.5)
 	else
 		icon_state = "[icon_normal]off"
-		set_light(0)
+		set_light(ZERO)
 
 /turf/open/floor/circuit/off
 	icon_state = "bcircuitoff"

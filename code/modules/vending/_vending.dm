@@ -27,9 +27,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	///Typepath of the product that is created when this record "sells"
 	var/product_path = null
 	///How many of this product we currently have
-	var/amount = 0
+	var/amount = ZERO
 	///How many we can store at maximum
-	var/max_amount = 0
+	var/max_amount = ZERO
 	///Does the item have a custom price override
 	var/custom_price
 	///Does the item have a custom premium price override
@@ -66,7 +66,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/tilted = FALSE
 	var/tiltable = TRUE
 	var/squish_damage = 75
-	var/forcecrit = 0
+	var/forcecrit = ZERO
 	var/num_shards = 7
 	var/list/pinned_mobs = list()
 
@@ -105,9 +105,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	///Message sent post vend (Thank you for shopping!)
 	var/vend_reply
 	///Last world tick we sent a vent reply
-	var/last_reply = 0
+	var/last_reply = ZERO
 	///Last world tick we sent a slogan message out
-	var/last_slogan = 0
+	var/last_slogan = ZERO
 	///How many ticks until we can send another
 	var/slogan_delay = 6000
 	///Icon when vending an item to the user
@@ -117,13 +117,13 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	///World ticks the machine is electified for
 	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED
 	///When this is TRUE, we fire items at customers! We're broken!
-	var/shoot_inventory = 0
+	var/shoot_inventory = ZERO
 	///How likely this is to happen (prob 100)
 	var/shoot_inventory_chance = 2
 	//Stop spouting those godawful pitches!
-	var/shut_up = 0
+	var/shut_up = ZERO
 	///can we access the hidden inventory?
-	var/extended_inventory = 0
+	var/extended_inventory = ZERO
 	///Are we checking the users ID
 	var/scan_id = 1
 	///Coins that we accept?
@@ -155,7 +155,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/obj/item/vending_refill/refill_canister = null
 
 	/// how many items have been inserted in a vendor
-	var/loaded_items = 0
+	var/loaded_items = ZERO
 
 /obj/item/circuitboard
     ///determines if the circuit board originated from a vendor off station or not.
@@ -186,7 +186,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	// So not all machines speak at the exact same time.
 	// The first time this machine says something will be at slogantime + this random value,
 	// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
-	last_slogan = world.time + rand(0, slogan_delay)
+	last_slogan = world.time + rand(ZERO, slogan_delay)
 	power_change()
 
 	if(onstation_override) //overrides the checks if true.
@@ -245,13 +245,13 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	if(!.)
 		return
 
-	var/dump_amount = 0
+	var/dump_amount = ZERO
 	var/found_anything = TRUE
 	while (found_anything)
 		found_anything = FALSE
 		for(var/record in shuffle(product_records))
 			var/datum/data/vending_product/R = record
-			if(R.amount <= 0) //Try to use a record that actually has something to dump.
+			if(R.amount <= ZERO) //Try to use a record that actually has something to dump.
 				continue
 			var/dump_path = R.product_path
 			if(!dump_path)
@@ -282,7 +282,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
 		if(isnull(amount))
-			amount = 0
+			amount = ZERO
 
 		var/atom/temp = typepath
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
@@ -310,7 +310,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		canister.contraband = contraband.Copy()
 	if (!canister.premium)
 		canister.premium = premium.Copy()
-	. = 0
+	. = ZERO
 	. += refill_inventory(canister.products, product_records)
 	. += refill_inventory(canister.contraband, hidden_records)
 	. += refill_inventory(canister.premium, coin_records)
@@ -322,7 +322,7 @@ GLOBAL_LIST_EMPTY(vending_products)
   * * recordlist - existing record datums
   */
 /obj/machinery/vending/proc/refill_inventory(list/productlist, list/recordlist)
-	. = 0
+	. = ZERO
 	for(var/R in recordlist)
 		var/datum/data/vending_product/record = R
 		var/diff = min(record.max_amount - record.amount, productlist[record.product_path])
@@ -395,7 +395,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		else
 			//if the panel is open we attempt to refill the machine
 			var/obj/item/vending_refill/canister = I
-			if(canister.get_part_rating() == 0)
+			if(canister.get_part_rating() == ZERO)
 				to_chat(user, "<span class='warning'>[canister] is empty!</span>")
 			else
 				// instantiate canister if needed
@@ -412,8 +412,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 		if(istype(I, /obj/item/storage/bag)) //trays USUALLY
 			var/obj/item/storage/T = I
-			var/loaded = 0
-			var/denied_items = 0
+			var/loaded = ZERO
+			var/denied_items = ZERO
 			for(var/obj/item/the_item in T.contents)
 				if(contents.len >= MAX_VENDING_INPUT_AMOUNT) // no more than 30 item can fit inside, legacy from snack vending although not sure why it exists
 					to_chat(user, "<span class='warning'>[src]'s compartment is full.</span>")
@@ -450,7 +450,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 		for(var/datum/data/vending_product/R in shuffle(product_records))
 
-			if(R.amount <= 0) //Try to use a record that actually has something to dump.
+			if(R.amount <= ZERO) //Try to use a record that actually has something to dump.
 				continue
 			var/dump_path = R.product_path
 			if(!dump_path)
@@ -478,7 +478,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			var/mob/living/carbon/C = L
 
 			if(istype(C))
-				var/crit_rebate = 0 // lessen the normal damage we deal for some of the crits
+				var/crit_rebate = ZERO // lessen the normal damage we deal for some of the crits
 
 				if(crit_case != 5) // the head asplode case has its own description
 					C.visible_message("<span class='danger'>[C] is crushed by [src]!</span>", \
@@ -504,7 +504,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 							"<span class='userdanger'>You are pinned down by [src]!</span>")
 					if(3) // glass candy
 						crit_rebate = 50
-						for(var/i = 0, i < num_shards, i++)
+						for(var/i = ZERO, i < num_shards, i++)
 							var/obj/item/shard/shard = new /obj/item/shard(get_turf(C))
 							shard.embedding = shard.embedding.setRating(embed_chance = 100, embedded_ignore_throwspeed_threshold = TRUE, embedded_impact_pain_multiplier=1,embedded_pain_chance=5)
 							C.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
@@ -523,7 +523,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 							qdel(O)
 							new /obj/effect/gibspawner/human/bodypartless(get_turf(C))
 
-				C.apply_damage(max(0, squish_damage - crit_rebate), forced=TRUE, spread_damage=TRUE)
+				C.apply_damage(max(ZERO, squish_damage - crit_rebate), forced=TRUE, spread_damage=TRUE)
 				C.AddElement(/datum/element/squish, 18 SECONDS)
 			else
 				L.visible_message("<span class='danger'>[L] is crushed by [src]!</span>", \
@@ -557,7 +557,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	layer = initial(layer)
 
 	var/matrix/M = matrix()
-	M.Turn(0)
+	M.Turn(ZERO)
 	transform = M
 
 /obj/machinery/vending/proc/loadingAttempt(obj/item/I, mob/user)
@@ -610,7 +610,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(!component_parts || !refill_canister)
 		return FALSE
 
-	var/moved = 0
+	var/moved = ZERO
 	if(panel_open || W.works_from_distance)
 		if(W.works_from_distance)
 			display_parts(user)
@@ -748,7 +748,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				vend_ready = TRUE
 				message_admins("Vending machine exploit attempted by [ADMIN_LOOKUPFLW(usr)]!")
 				return
-			if (R.amount <= 0)
+			if (R.amount <= ZERO)
 				say("Sold out of [R.name].")
 				flick(icon_deny,src)
 				vend_ready = TRUE
@@ -769,7 +769,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 					return
 				var/datum/bank_account/account = C.registered_account
 				if(account.account_job && account.account_job.paycheck_department == payment_department)
-					price_to_use = 0
+					price_to_use = ZERO
 				if(coin_records.Find(R) || hidden_records.Find(R))
 					price_to_use = R.custom_premium_price ? R.custom_premium_price : extra_price
 				if(price_to_use && !account.adjust_money(-price_to_use))
@@ -803,7 +803,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		seconds_electrified--
 
 	//Pitch to the people!  Really sell it!
-	if(last_slogan + slogan_delay <= world.time && slogan_list.len > 0 && !shut_up && prob(5))
+	if(last_slogan + slogan_delay <= world.time && slogan_list.len > ZERO && !shut_up && prob(5))
 		var/slogan = pick(slogan_list)
 		speak(slogan)
 		last_slogan = world.time
@@ -835,17 +835,17 @@ GLOBAL_LIST_EMPTY(vending_products)
 /**
   * Throw an item from our internal inventory out in front of us
   *
-  * This is called when we are hacked, it selects a random product from the records that has an amount > 0
+  * This is called when we are hacked, it selects a random product from the records that has an amount > ZERO
   * This item is then created and tossed out in front of us with a visible message
   */
 /obj/machinery/vending/proc/throw_item()
 	var/obj/throw_item = null
 	var/mob/living/target = locate() in view(7,src)
 	if(!target)
-		return 0
+		return ZERO
 
 	for(var/datum/data/vending_product/R in shuffle(product_records))
-		if(R.amount <= 0) //Try to use a record that actually has something to dump.
+		if(R.amount <= ZERO) //Try to use a record that actually has something to dump.
 			continue
 		var/dump_path = R.product_path
 		if(!dump_path)
@@ -855,7 +855,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		throw_item = new dump_path(loc)
 		break
 	if(!throw_item)
-		return 0
+		return ZERO
 
 	pre_throw(throw_item)
 
@@ -946,9 +946,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 	.["access"] = compartmentLoadAccessCheck(user)
 	.["vending_machine_input"] = list()
 	for (var/O in vending_machine_input)
-		if(vending_machine_input[O] > 0)
+		if(vending_machine_input[O] > ZERO)
 			var/base64
-			var/price = 0
+			var/price = ZERO
 			for(var/obj/T in contents)
 				if(T.name == O)
 					price = T.custom_price
@@ -999,7 +999,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 						break
 				if(S)
 					if(compartmentLoadAccessCheck(usr))
-						vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
+						vending_machine_input[N] = max(vending_machine_input[N] - 1, ZERO)
 						S.forceMove(drop_location())
 						loaded_items--
 						use_power(5)
@@ -1011,7 +1011,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 						var/datum/bank_account/owner = private_a
 						if(owner)
 							owner.adjust_money(S.custom_price)
-						vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
+						vending_machine_input[N] = max(vending_machine_input[N] - 1, ZERO)
 						S.forceMove(drop_location())
 						loaded_items--
 						use_power(5)
@@ -1042,7 +1042,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			name = stripped_input(user,"Set name","Name", name, 20)
 			desc = stripped_input(user,"Set description","Description", desc, 60)
 			slogan_list += stripped_input(user,"Set slogan","Slogan","Epic", 60)
-			last_slogan = world.time + rand(0, slogan_delay)
+			last_slogan = world.time + rand(ZERO, slogan_delay)
 			return
 
 		if(canLoadItem(I))
@@ -1065,7 +1065,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(T)
 		for(var/obj/item/I in contents)
 			I.forceMove(T)
-		explosion(T, -1, 0, 3)
+		explosion(T, -1, ZERO, 3)
 	return ..()
 
 /obj/machinery/vending/custom/unbreakable

@@ -33,7 +33,7 @@ Bonus
 	symptom_delay_min = 25
 	symptom_delay_max = 80
 	var/vomit_blood = FALSE
-	var/proj_vomit = 0
+	var/proj_vomit = ZERO
 	threshold_descs = list(
 		"Resistance 7" =  "Host will vomit blood, causing internal damage.",
 		"Transmission 7" =  "Host will projectile vomit, increasing vomiting range.",

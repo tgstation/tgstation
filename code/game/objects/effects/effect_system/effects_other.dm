@@ -85,11 +85,11 @@
 
 /datum/effect_system/reagents_explosion
 	var/amount 						// TNT equivalent
-	var/flashing = 0			// does explosion creates flash effect?
-	var/flashing_factor = 0		// factor of how powerful the flash effect relatively to the explosion
+	var/flashing = ZERO			// does explosion creates flash effect?
+	var/flashing_factor = ZERO		// factor of how powerful the flash effect relatively to the explosion
 	var/explosion_message = 1				//whether we show a message to mobs.
 
-/datum/effect_system/reagents_explosion/set_up(amt, loca, flash = 0, flash_fact = 0, message = 1)
+/datum/effect_system/reagents_explosion/set_up(amt, loca, flash = ZERO, flash_fact = ZERO, message = 1)
 	amount = amt
 	explosion_message = message
 	if(isturf(loca))

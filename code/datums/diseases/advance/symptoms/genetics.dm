@@ -20,7 +20,7 @@ Bonus
 	desc = "The virus bonds with the DNA of the host, activating random dormant mutations within their DNA. When the virus is cured, the host's genetic alterations are undone."
 	stealth = -2
 	resistance = -3
-	stage_speed = 0
+	stage_speed = ZERO
 	transmittable = -3
 	level = 6
 	severity = 4

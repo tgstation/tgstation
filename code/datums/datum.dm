@@ -42,7 +42,7 @@
 
 #ifdef TESTING
 	var/running_find_references
-	var/last_find_references = 0
+	var/last_find_references = ZERO
 #endif
 
 #ifdef DATUMVAR_DEBUGGING_MODE

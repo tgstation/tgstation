@@ -12,7 +12,7 @@
 	attack_verb = list("beaten")
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
-	var/cooldown_check = 0
+	var/cooldown_check = ZERO
 
 	var/cooldown = (2.5 SECONDS)
 	var/stunforce = (5 SECONDS)
@@ -235,7 +235,7 @@
 	hitcost = 2000
 	throw_hit_chance = 10
 	slot_flags = ITEM_SLOT_BACK
-	var/obj/item/assembly/igniter/sparkler = 0
+	var/obj/item/assembly/igniter/sparkler = ZERO
 
 /obj/item/melee/baton/cattleprod/Initialize()
 	. = ..()

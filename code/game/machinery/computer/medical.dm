@@ -145,7 +145,7 @@
 				if(5)
 					dat += "<CENTER><B>Virus Database</B></CENTER>"
 					for(var/Dt in typesof(/datum/disease/))
-						var/datum/disease/Dis = new Dt(0)
+						var/datum/disease/Dis = new Dt(ZERO)
 						if(istype(Dis, /datum/disease/advance))
 							continue // TODO (tm): Add advance diseases to the virus database which no one uses.
 						if(!Dis.desc)
@@ -243,7 +243,7 @@
 
 			else if(href_list["vir"])
 				var/type = href_list["vir"]
-				var/datum/disease/Dis = new type(0)
+				var/datum/disease/Dis = new type(ZERO)
 				var/AfS = ""
 				for(var/mob/M in Dis.viable_mobtypes)
 					AfS += " [initial(M.name)];"
@@ -568,7 +568,7 @@
 					if(!record1 || record1 == active1)
 						if(!record2 || record2 == active2)
 							return 1
-	return 0
+	return ZERO
 
 /obj/machinery/computer/med_data/laptop
 	name = "medical laptop"

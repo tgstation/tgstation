@@ -135,7 +135,7 @@
 /datum/ntnet/proc/log_data_transfer(datum/netdata/data)
 	logs += "[station_time_timestamp()] - [data.generate_netlog()]"
 	if(logs.len > setting_maxlogcount)
-		logs = logs.Copy(logs.len - setting_maxlogcount, 0)
+		logs = logs.Copy(logs.len - setting_maxlogcount, ZERO)
 	return
 
 // Simplified logging: Adds a log. log_string is mandatory parameter, source is optional.
@@ -150,11 +150,11 @@
 
 	// We have too many logs, remove the oldest entries until we get into the limit
 	if(logs.len > setting_maxlogcount)
-		logs = logs.Copy(logs.len-setting_maxlogcount,0)
+		logs = logs.Copy(logs.len-setting_maxlogcount,ZERO)
 
 
 // Checks whether NTNet operates. If parameter is passed checks whether specific function is enabled.
-/datum/ntnet/proc/check_function(specific_action = 0)
+/datum/ntnet/proc/check_function(specific_action = ZERO)
 	if(!relays || !relays.len) // No relays found. NTNet is down
 		return FALSE
 

@@ -5,16 +5,16 @@
 	light_range = 2
 	desc = "A thick wall of writhing tendrils."
 	density = FALSE //this being false causes two bugs, being able to attack blob tiles behind other blobs and being unable to move on blob tiles in no gravity, but turning it to 1 causes the blob mobs to be unable to path through blobs, which is probably worse.
-	opacity = 0
+	opacity = ZERO
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
 	CanAtmosPass = ATMOS_PASS_PROC
-	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
+	var/point_return = ZERO //How many points the blob gets back when it removes a blob of that type. If less than ZERO, blob cannot be removed.
 	max_integrity = 30
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 	var/health_regen = 2 //how much health this blob regens when pulsed
-	var/pulse_timestamp = 0 //we got pulsed when?
-	var/heal_timestamp = 0 //we got healed when?
+	var/pulse_timestamp = ZERO //we got pulsed when?
+	var/heal_timestamp = ZERO //we got healed when?
 	var/brute_resist = 0.5 //multiplies brute damage by this
 	var/fire_resist = 1 //multiplies burn damage by this
 	var/atmosblock = FALSE //if the blob blocks atmos and heat spread
@@ -53,7 +53,7 @@
 /obj/structure/blob/Adjacent(var/atom/neighbour)
 	. = ..()
 	if(.)
-		var/result = 0
+		var/result = ZERO
 		var/direction = get_dir(src, neighbour)
 		var/list/dirs = list("[NORTHWEST]" = list(NORTH, WEST), "[NORTHEAST]" = list(NORTH, EAST), "[SOUTHEAST]" = list(SOUTH, EAST), "[SOUTHWEST]" = list(SOUTH, WEST))
 		for(var/A in dirs)
@@ -70,13 +70,13 @@
 /obj/structure/blob/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSBLOB))
 		return 1
-	return 0
+	return ZERO
 
 /obj/structure/blob/CanAtmosPass(turf/T)
 	return !atmosblock
 
 /obj/structure/blob/CanAStarPass(ID, dir, caller)
-	. = 0
+	. = ZERO
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
 		. = . || (mover.pass_flags & PASSBLOB)
@@ -129,7 +129,7 @@
 		update_icon()
 		pulse_timestamp = world.time + 10
 		return 1 //we did it, we were pulsed!
-	return 0 //oh no we failed
+	return ZERO //oh no we failed
 
 /obj/structure/blob/proc/ConsumeTile()
 	for(var/atom/A in loc)
@@ -162,7 +162,7 @@
 			else
 				T = null
 	if(!T)
-		return 0
+		return ZERO
 	var/make_blob = TRUE //can we make a blob?
 
 	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && prob(80))
@@ -201,7 +201,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	if(severity > 0)
+	if(severity > ZERO)
 		if(overmind)
 			overmind.blobstrain.emp_reaction(src, severity)
 		if(prob(100 - severity * 30))
@@ -259,7 +259,7 @@
 		return
 	..()
 
-/obj/structure/blob/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/blob/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
@@ -269,7 +269,7 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/blob/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/structure/blob/run_obj_armor(damage_amount, damage_type, damage_flag = ZERO, attack_dir)
 	switch(damage_type)
 		if(BRUTE)
 			damage_amount *= brute_resist
@@ -277,8 +277,8 @@
 			damage_amount *= fire_resist
 		if(CLONE)
 		else
-			return 0
-	var/armor_protection = 0
+			return ZERO
+	var/armor_protection = ZERO
 	if(damage_flag)
 		armor_protection = armor.getRating(damage_flag)
 	damage_amount = round(damage_amount * (100 - armor_protection)*0.01, 0.1)
@@ -286,9 +286,9 @@
 		damage_amount = overmind.blobstrain.damage_reaction(src, damage_amount, damage_type, damage_flag)
 	return damage_amount
 
-/obj/structure/blob/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+/obj/structure/blob/take_damage(damage_amount, damage_type = BRUTE, damage_flag = ZERO, sound_effect = 1, attack_dir)
 	. = ..()
-	if(. && obj_integrity > 0)
+	if(. && obj_integrity > ZERO)
 		update_icon()
 
 /obj/structure/blob/obj_destruction(damage_flag)
@@ -333,7 +333,7 @@
 /obj/structure/blob/normal
 	name = "normal blob"
 	icon_state = "blob"
-	light_range = 0
+	light_range = ZERO
 	obj_integrity = 21 //doesn't start at full health
 	max_integrity = 25
 	health_regen = 1

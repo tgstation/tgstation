@@ -19,7 +19,7 @@
 		if(mine_range)
 			mine_range--
 			range++
-		if(range > 0)
+		if(range > ZERO)
 			return BULLET_ACT_FORCE_PIERCE
 
 /obj/projectile/plasma/adv

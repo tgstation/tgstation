@@ -91,19 +91,19 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	if(cost > init_cost)
 		cost = init_cost
 
-// Checks the cost. 0 cost items are skipped in export.
+// Checks the cost. ZERO cost items are skipped in export.
 /datum/export/proc/get_cost(obj/O, allowed_categories = NONE, apply_elastic = TRUE)
 	var/amount = get_amount(O)
 	if(apply_elastic)
-		if(k_elasticity!=0)
+		if(k_elasticity!=ZERO)
 			return round((cost/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * amount)))	//anti-derivative of the marginal cost function
 		else
-			return round(cost * amount)	//alternative form derived from L'Hopital to avoid division by 0
+			return round(cost * amount)	//alternative form derived from L'Hopital to avoid division by ZERO
 	else
 		return round(init_cost * amount)
 
 // Checks the amount of exportable in object. Credits in the bill, sheets in the stack, etc.
-// Usually acts as a multiplier for a cost, so item that has 0 amount will be skipped in export.
+// Usually acts as a multiplier for a cost, so item that has ZERO amount will be skipped in export.
 /datum/export/proc/get_amount(obj/O)
 	return 1
 
@@ -128,7 +128,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/the_cost = get_cost(O, allowed_categories , apply_elastic)
 	var/amount = get_amount(O)
 
-	if(amount <=0 || the_cost <=0)
+	if(amount <=ZERO || the_cost <=ZERO)
 		return FALSE
 	
 	report.total_value[src] += the_cost
@@ -155,7 +155,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/total_amount = ex.total_amount[src]
 
 	var/msg = "[total_value] credits: Received [total_amount] "
-	if(total_value > 0)
+	if(total_value > ZERO)
 		msg = "+" + msg
 
 	if(unit_name)

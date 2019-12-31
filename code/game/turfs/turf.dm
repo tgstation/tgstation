@@ -12,8 +12,8 @@
 	var/list/baseturfs = /turf/baseturf_bottom
 
 	var/temperature = T20C
-	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
-	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
+	var/to_be_destroyed = ZERO //Used for fire, if a melting temperature was reached, it will be destroyed
+	var/max_fire_temperature_sustained = ZERO //The max temperature of the fire which it was subjected to
 
 	var/blocks_air = FALSE
 
@@ -21,8 +21,8 @@
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
-	var/explosion_level = 0	//for preventing explosion dodging
-	var/explosion_id = 0
+	var/explosion_level = ZERO	//for preventing explosion dodging
+	var/explosion_id = ZERO
 
 	var/requires_activation	//add to air processing after initialize?
 	var/changing_turf = FALSE
@@ -319,7 +319,7 @@
 		created_baseturf_lists[current_target] = current_target
 		return current_target
 	var/list/new_baseturfs = list(current_target)
-	for(var/i=0;current_target != next_target;i++)
+	for(var/i=ZERO;current_target != next_target;i++)
 		if(i > 100)
 			// A baseturfs list over 100 members long is silly
 			// Because of how this is all structured it will only runtime/message once per type
@@ -343,7 +343,7 @@
 /turf/open/space/levelupdate()
 	for(var/obj/O in src)
 		if(O.level == 1 && (O.flags_1 & INITIALIZED_1))
-			O.hide(0)
+			O.hide(ZERO)
 
 // Removes all signs of lattice on the pos of the turf -Donkieyo
 /turf/proc/RemoveLattice()
@@ -544,7 +544,7 @@
 	for(var/datum/reagent/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
 		if(istype(R, /datum/reagent/consumable))
 			var/datum/reagent/consumable/nutri_check = R
-			if(nutri_check.nutriment_factor >0)
+			if(nutri_check.nutriment_factor >ZERO)
 				M.reagents.remove_reagent(R.type, min(R.volume, 10))
 
 //Whatever happens after high temperature fire dies out or thermite reaction works.

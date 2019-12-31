@@ -1,6 +1,6 @@
 /datum/bounty/item
 	var/required_count = 1
-	var/shipped_count = 0
+	var/shipped_count = ZERO
 	var/list/wanted_types  // Types accepted for the bounty.
 	var/include_subtypes = TRUE     // Set to FALSE to make the datum apply only to a strict type.
 	var/list/exclude_types // Types excluded.

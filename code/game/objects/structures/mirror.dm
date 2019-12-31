@@ -74,19 +74,19 @@
 	if(!broken)
 		return TRUE
 
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=ZERO))
 		return TRUE
 
 	to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
 	if(I.use_tool(src, user, 10, volume=50))
 		to_chat(user, "<span class='notice'>You repair [src].</span>")
-		broken = 0
+		broken = ZERO
 		icon_state = initial(icon_state)
 		desc = initial(desc)
 
 	return TRUE
 
-/obj/structure/mirror/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/mirror/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BRUTE)
 			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
@@ -158,7 +158,7 @@
 				return
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
-			H.set_species(newrace, icon_update=0)
+			H.set_species(newrace, icon_update=ZERO)
 
 			if(H.dna.species.use_skintones)
 				var/new_s_tone = input(user, "Choose your skin tone:", "Race change")  as null|anything in GLOB.skin_tones

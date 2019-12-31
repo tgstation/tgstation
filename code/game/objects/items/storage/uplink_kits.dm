@@ -153,26 +153,26 @@
 			new /obj/item/grenade/spawnergrenade/spesscarp(src)
 
 		if("mad_scientist")
-			new /obj/item/clothing/suit/toggle/labcoat/mad(src) // 0 tc
-			new /obj/item/clothing/shoes/jackboots(src) // 0 tc
-			new /obj/item/megaphone(src) // 0 tc
+			new /obj/item/clothing/suit/toggle/labcoat/mad(src) // ZERO tc
+			new /obj/item/clothing/shoes/jackboots(src) // ZERO tc
+			new /obj/item/megaphone(src) // ZERO tc
 			new /obj/item/grenade/clusterbuster/random(src) // 10 tc?
 			new /obj/item/grenade/clusterbuster/random(src) // 10 tc?
 			new /obj/item/grenade/chem_grenade/bioterrorfoam(src) // 5 tc
-			new /obj/item/assembly/signaler(src) // 0 tc
-			new /obj/item/assembly/signaler(src) // 0 tc
-			new /obj/item/assembly/signaler(src) // 0 tc
-			new /obj/item/assembly/signaler(src) // 0 tc
+			new /obj/item/assembly/signaler(src) // ZERO tc
+			new /obj/item/assembly/signaler(src) // ZERO tc
+			new /obj/item/assembly/signaler(src) // ZERO tc
+			new /obj/item/assembly/signaler(src) // ZERO tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/pen/edagger(src)
 			new /obj/item/gun/energy/wormhole_projector(src)
 			new /obj/item/gun/energy/decloner/unrestricted(src)
 
 		if("bee")
-			new /obj/item/paper/fluff/bee_objectives(src) // 0 tc (motivation)
-			new /obj/item/clothing/suit/hooded/bee_costume(src) // 0 tc
-			new /obj/item/clothing/mask/rat/bee(src) // 0 tc
-			new /obj/item/storage/belt/fannypack/yellow(src) // 0 tc
+			new /obj/item/paper/fluff/bee_objectives(src) // ZERO tc (motivation)
+			new /obj/item/clothing/suit/hooded/bee_costume(src) // ZERO tc
+			new /obj/item/clothing/mask/rat/bee(src) // ZERO tc
+			new /obj/item/storage/belt/fannypack/yellow(src) // ZERO tc
 			new /obj/item/grenade/spawnergrenade/buzzkill(src)
 			new /obj/item/grenade/spawnergrenade/buzzkill(src)
 			new /obj/item/reagent_containers/glass/bottle/beesease(src) // 10 tc?

@@ -16,12 +16,12 @@
 	var/datum/computer_file/downloaded_file = null		// File which is being downloaded
 	var/list/connected_clients = list()					// List of connected clients.
 	var/datum/computer_file/program/nttransfer/remote	// Client var, specifies who are we downloading from.
-	var/download_completion = 0							// Download progress in GQ
-	var/download_netspeed = 0							// Our connectivity speed in GQ/s
-	var/actual_netspeed = 0								// Displayed in the UI, this is the actual transfer speed.
+	var/download_completion = ZERO							// Download progress in GQ
+	var/download_netspeed = ZERO							// Our connectivity speed in GQ/s
+	var/actual_netspeed = ZERO								// Displayed in the UI, this is the actual transfer speed.
 	var/unique_token 									// UID of this program
-	var/upload_menu = 0									// Whether we show the program list and upload menu
-	var/static/nttransfer_uid = 0
+	var/upload_menu = ZERO									// Whether we show the program list and upload menu
+	var/static/nttransfer_uid = ZERO
 
 /datum/computer_file/program/nttransfer/New()
 	unique_token = nttransfer_uid++
@@ -54,7 +54,7 @@
 	..(forced)
 
 /datum/computer_file/program/nttransfer/proc/update_netspeed()
-	download_netspeed = 0
+	download_netspeed = ZERO
 	switch(ntnet_status)
 		if(1)
 			download_netspeed = NTNETSPEED_LOWSIGNAL
@@ -81,7 +81,7 @@
 		remote.connected_clients.Remove(src)
 	downloaded_file = null
 	remote = null
-	download_completion = 0
+	download_completion = ZERO
 
 /datum/computer_file/program/nttransfer/ui_act(action, params)
 	if(..())
@@ -104,7 +104,7 @@
 			return 1
 		if("PRG_reset")
 			error = ""
-			upload_menu = 0
+			upload_menu = ZERO
 			finalize_download()
 			if(src in SSnetworks.station_network.fileservers)
 				SSnetworks.station_network.fileservers.Remove(src)
@@ -157,7 +157,7 @@
 		data["uploading"] = 1
 		data["upload_uid"] = unique_token
 		data["upload_clients"] = connected_clients.len
-		data["upload_haspassword"] = server_password ? 1 : 0
+		data["upload_haspassword"] = server_password ? 1 : ZERO
 		data["upload_filename"] = "[provided_file.filename].[provided_file.filetype]"
 	else if (upload_menu)
 		var/list/all_files[0]
@@ -176,7 +176,7 @@
 			"uid" = P.unique_token,
 			"filename" = "[P.provided_file.filename].[P.provided_file.filetype]",
 			"size" = P.provided_file.size,
-			"haspassword" = P.server_password ? 1 : 0
+			"haspassword" = P.server_password ? 1 : ZERO
 			)))
 		data["servers"] = all_servers
 

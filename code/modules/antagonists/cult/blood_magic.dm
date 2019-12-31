@@ -67,7 +67,7 @@
 	if(QDELETED(src) || owner.incapacitated() || !BS || (rune && !(locate(/obj/effect/rune/empower) in range(1, owner))) || (spells.len >= limit))
 		return
 	to_chat(owner,"<span class='warning'>You begin to carve unnatural symbols into your flesh!</span>")
-	SEND_SOUND(owner, sound('sound/weapons/slice.ogg',0,1,10))
+	SEND_SOUND(owner, sound('sound/weapons/slice.ogg',ZERO,1,10))
 	if(!channeling)
 		channeling = TRUE
 	else
@@ -94,7 +94,7 @@
 	var/datum/action/innate/cult/blood_magic/all_magic
 	var/base_desc //To allow for updating tooltips
 	var/invocation
-	var/health_cost = 0
+	var/health_cost = ZERO
 
 /datum/action/innate/cult/blood_spell/Grant(mob/living/owner, datum/action/innate/cult/blood_magic/BM)
 	if(health_cost)
@@ -164,7 +164,7 @@
 	empulse(owner, 2, 5)
 	owner.whisper(invocation, language = /datum/language/common)
 	charges--
-	if(charges<=0)
+	if(charges<=ZERO)
 		qdel(src)
 
 /datum/action/innate/cult/blood_spell/shackles
@@ -199,11 +199,11 @@
 		else
 			owner.visible_message("<span class='warning'>A ritual dagger appears at [owner]'s feet!</span>", \
 				 "<span class='cultitalic'>A ritual dagger materializes at your feet.</span>")
-		SEND_SOUND(owner, sound('sound/effects/magic.ogg',0,1,25))
+		SEND_SOUND(owner, sound('sound/effects/magic.ogg',ZERO,1,25))
 		charges--
 		desc = base_desc
 		desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
-		if(charges<=0)
+		if(charges<=ZERO)
 			qdel(src)
 	else if(choice == "Combat Equipment")
 		..()
@@ -261,7 +261,7 @@
 			return
 		var/mob/living/carbon/human/H = target
 		H.hallucination = max(H.hallucination, 120)
-		SEND_SOUND(ranged_ability_user, sound('sound/effects/ghost.ogg',0,1,50))
+		SEND_SOUND(ranged_ability_user, sound('sound/effects/ghost.ogg',ZERO,1,50))
 		var/image/C = image('icons/effects/cult_effects.dmi',H,"bloodsparkles", ABOVE_MOB_LAYER)
 		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", C, NONE)
 		addtimer(CALLBACK(H,/atom/.proc/remove_alt_appearance,"cult_apoc",TRUE), 2400, TIMER_OVERRIDE|TIMER_UNIQUE)
@@ -270,7 +270,7 @@
 		attached_action.desc = attached_action.base_desc
 		attached_action.desc += "<br><b><u>Has [attached_action.charges] use\s remaining</u></b>."
 		attached_action.UpdateButtonIcon()
-		if(attached_action.charges <= 0)
+		if(attached_action.charges <= ZERO)
 			remove_ranged_ability("<span class='cult'>You have exhausted the spell's power!</span>")
 			qdel(src)
 
@@ -287,14 +287,14 @@
 		owner.visible_message("<span class='warning'>Thin grey dust falls from [owner]'s hand!</span>", \
 			"<span class='cultitalic'>You invoke the veiling spell, hiding nearby runes.</span>")
 		charges--
-		SEND_SOUND(owner, sound('sound/magic/smoke.ogg',0,1,25))
+		SEND_SOUND(owner, sound('sound/magic/smoke.ogg',ZERO,1,25))
 		owner.whisper(invocation, language = /datum/language/common)
 		for(var/obj/effect/rune/R in range(5,owner))
 			R.conceal()
 		for(var/obj/structure/destructible/cult/S in range(5,owner))
 			S.conceal()
 		for(var/turf/open/floor/engine/cult/T  in range(5,owner))
-			T.realappearance.alpha = 0
+			T.realappearance.alpha = ZERO
 		for(var/obj/machinery/door/airlock/cult/AL in range(5, owner))
 			AL.conceal()
 		revealing = TRUE
@@ -305,7 +305,7 @@
 			 "<span class='cultitalic'>You invoke the counterspell, revealing nearby runes.</span>")
 		charges--
 		owner.whisper(invocation, language = /datum/language/common)
-		SEND_SOUND(owner, sound('sound/magic/enter_blood.ogg',0,1,25))
+		SEND_SOUND(owner, sound('sound/magic/enter_blood.ogg',ZERO,1,25))
 		for(var/obj/effect/rune/R in range(7,owner)) //More range in case you weren't standing in exactly the same spot
 			R.reveal()
 		for(var/obj/structure/destructible/cult/S in range(6,owner))
@@ -317,7 +317,7 @@
 		revealing = FALSE
 		name = "Conceal Runes"
 		button_icon_state = "gone"
-	if(charges<= 0)
+	if(charges<= ZERO)
 		qdel(src)
 	desc = base_desc
 	desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
@@ -344,12 +344,12 @@
 	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
 
 	w_class = WEIGHT_CLASS_HUGE
-	throwforce = 0
-	throw_range = 0
-	throw_speed = 0
+	throwforce = ZERO
+	throw_range = ZERO
+	throw_speed = ZERO
 	var/invocation
 	var/uses = 1
-	var/health_cost = 0 //The amount of health taken from the user when invoking the spell
+	var/health_cost = ZERO //The amount of health taken from the user when invoking the spell
 	var/datum/action/innate/cult/blood_spell/source
 
 /obj/item/melee/blood_magic/New(loc, spell)
@@ -360,7 +360,7 @@
 
 /obj/item/melee/blood_magic/Destroy()
 	if(!QDELETED(source))
-		if(uses <= 0)
+		if(uses <= ZERO)
 			source.hand_magic = null
 			qdel(source)
 			source = null
@@ -377,7 +377,7 @@
 
 /obj/item/melee/blood_magic/attack(mob/living/M, mob/living/carbon/user)
 	if(!iscarbon(user) || !iscultist(user))
-		uses = 0
+		uses = ZERO
 		qdel(src)
 		return
 	log_combat(user, M, "used a cult spell on", source.name, "")
@@ -393,7 +393,7 @@
 			user.apply_damage(health_cost, BRUTE, BODY_ZONE_L_ARM)
 		else
 			user.apply_damage(health_cost, BRUTE, BODY_ZONE_R_ARM)
-	if(uses <= 0)
+	if(uses <= ZERO)
 		qdel(src)
 	else if(source)
 		source.desc = source.base_desc
@@ -575,7 +575,7 @@
 				uses--
 				to_chat(user, "<span class='warning'>A dark cloud emanates from your hand and swirls around the metal, twisting it into a construct shell!</span>")
 				new /obj/structure/constructshell(T)
-				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+				SEND_SOUND(user, sound('sound/effects/magic.ogg',ZERO,1,25))
 			else
 				to_chat(user, "<span class='warning'>You need [METAL_TO_CONSTRUCT_SHELL_CONVERSION] metal to produce a construct shell!</span>")
 				return
@@ -586,7 +586,7 @@
 				uses --
 				new /obj/item/stack/sheet/runed_metal(T,quantity)
 				to_chat(user, "<span class='warning'>A dark cloud emanates from you hand and swirls around the plasteel, transforming it into runed metal!</span>")
-				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+				SEND_SOUND(user, sound('sound/effects/magic.ogg',ZERO,1,25))
 		else if(istype(target,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/candidate = target
 			if(candidate.mmi)
@@ -604,12 +604,12 @@
 					user.visible_message("<span class='danger'>The dark cloud receedes from what was formerly [candidate], revealing a\n [construct_class]!</span>")
 					switch(construct_class)
 						if("Juggernaut")
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, candidate, user, 0, T)
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, candidate, user, ZERO, T)
 						if("Wraith")
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, candidate, user, 0, T)
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, candidate, user, ZERO, T)
 						if("Artificer")
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, candidate, user, 0, T)
-					SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, candidate, user, ZERO, T)
+					SEND_SOUND(user, sound('sound/effects/magic.ogg',ZERO,1,25))
 					uses--
 					candidate.mmi = null
 					qdel(candidate)
@@ -622,7 +622,7 @@
 				uses--
 				to_chat(user, "<span class='warning'>A dark cloud emanates from you hand and swirls around [candidate] - twisting it into a construct shell!</span>")
 				new /obj/structure/constructshell(T)
-				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+				SEND_SOUND(user, sound('sound/effects/magic.ogg',ZERO,1,25))
 				qdel(candidate)
 		else if(istype(target,/obj/machinery/door/airlock))
 			channeling = TRUE
@@ -635,7 +635,7 @@
 				target.narsie_act()
 				uses--
 				user.visible_message("<span class='warning'>Black ribbons suddenly emanate from [user]'s hand and cling to the airlock - twisting and corrupting it!</span>")
-				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+				SEND_SOUND(user, sound('sound/effects/magic.ogg',ZERO,1,25))
 				channeling = FALSE
 			else
 				channeling = FALSE
@@ -691,14 +691,14 @@
 					if(uses*2 < restore_blood)
 						H.blood_volume += uses*2
 						to_chat(user,"<span class='danger'>You use the last of your blood rites to restore what blood you could!</span>")
-						uses = 0
+						uses = ZERO
 						return ..()
 					else
 						H.blood_volume = BLOOD_VOLUME_SAFE
 						uses -= round(restore_blood/2)
 						to_chat(user,"<span class='warning'>Your blood rites have restored [H == user ? "your" : "[H.p_their()]"] blood to safe levels!</span>")
 				var/overall_damage = H.getBruteLoss() + H.getFireLoss() + H.getToxLoss() + H.getOxyLoss()
-				if(overall_damage == 0)
+				if(overall_damage == ZERO)
 					to_chat(user,"<span class='cult'>That cultist doesn't require healing!</span>")
 				else
 					var/ratio = uses/overall_damage
@@ -712,12 +712,12 @@
 						H.visible_message("<span class='warning'>[H] is fully healed by [H==user ? "[H.p_their()]":"[H]'s"]'s blood magic!</span>")
 					else
 						H.visible_message("<span class='warning'>[H] is partially healed by [H==user ? "[H.p_their()]":"[H]'s"] blood magic.</span>")
-						uses = 0
+						uses = ZERO
 					ratio *= -1
-					H.adjustOxyLoss((overall_damage*ratio) * (H.getOxyLoss() / overall_damage), 0)
-					H.adjustToxLoss((overall_damage*ratio) * (H.getToxLoss() / overall_damage), 0)
-					H.adjustFireLoss((overall_damage*ratio) * (H.getFireLoss() / overall_damage), 0)
-					H.adjustBruteLoss((overall_damage*ratio) * (H.getBruteLoss() / overall_damage), 0)
+					H.adjustOxyLoss((overall_damage*ratio) * (H.getOxyLoss() / overall_damage), ZERO)
+					H.adjustToxLoss((overall_damage*ratio) * (H.getToxLoss() / overall_damage), ZERO)
+					H.adjustFireLoss((overall_damage*ratio) * (H.getFireLoss() / overall_damage), ZERO)
+					H.adjustBruteLoss((overall_damage*ratio) * (H.getBruteLoss() / overall_damage), ZERO)
 					H.updatehealth()
 					playsound(get_turf(H), 'sound/magic/staff_healing.ogg', 25)
 					new /obj/effect/temp_visual/cult/sparks(get_turf(H))
@@ -751,7 +751,7 @@
 				else
 					M.adjustHealth(-uses)
 					M.visible_message("<span class='warning'>[M] is partially healed by [user]'s blood magic!</span>")
-					uses = 0
+					uses = ZERO
 				playsound(get_turf(M), 'sound/magic/staff_healing.ogg', 25)
 				user.Beam(M,icon_state="sendbeam",time=10)
 		if(istype(target, /obj/effect/decal/cleanable/blood))
@@ -759,7 +759,7 @@
 		..()
 
 /obj/item/melee/blood_magic/manipulator/proc/blood_draw(atom/target, mob/living/carbon/human/user)
-	var/temp = 0
+	var/temp = ZERO
 	var/turf/T = get_turf(target)
 	if(T)
 		for(var/obj/effect/decal/cleanable/blood/B in view(T, 2))
@@ -775,7 +775,7 @@
 		var/obj/item/clothing/shoes/shoecheck = user.shoes
 		if(shoecheck && shoecheck.bloody_shoes[/datum/reagent/blood])
 			temp += shoecheck.bloody_shoes[/datum/reagent/blood]/20
-			shoecheck.bloody_shoes[/datum/reagent/blood] = 0
+			shoecheck.bloody_shoes[/datum/reagent/blood] = ZERO
 		if(temp)
 			user.Beam(T,icon_state="drainbeam",time=15)
 			new /obj/effect/temp_visual/cult/sparks(get_turf(user))

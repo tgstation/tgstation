@@ -17,8 +17,8 @@
 /datum/round_event/shuttle_loan
 	announceWhen = 1
 	endWhen = 500
-	var/dispatched = 0
-	var/dispatch_type = 0
+	var/dispatched = ZERO
+	var/dispatch_type = ZERO
 	var/bonus_points = 10000
 	var/thanks_msg = "The cargo shuttle should return in five minutes. Have some supply points for your trouble."
 
@@ -37,13 +37,13 @@
 		if(DEPARTMENT_RESUPPLY)
 			priority_announce("Cargo: Seems we've ordered doubles of our department resupply packages this month. Can we send them to you?","CentCom Supply Department")
 			thanks_msg = "The cargo shuttle should return in 5 minutes."
-			bonus_points = 0
+			bonus_points = ZERO
 		if(ANTIDOTE_NEEDED)
 			priority_announce("Cargo: Your station has been chosen for an epidemiological research project. Send us your cargo shuttle to receive your research samples.", "CentCom Research Initiatives")
 		if(PIZZA_DELIVERY)
 			priority_announce("Cargo: It looks like a neighbouring station accidentally delivered their pizza to you instead.", "CentCom Spacepizza Division")
 			thanks_msg = "The cargo shuttle should return in 5 minutes."
-			bonus_points = 0
+			bonus_points = ZERO
 		if(ITS_HIP_TO)
 			priority_announce("Cargo: One of our freighters carrying a bee shipment has been attacked by eco-terrorists. Can you clean up the mess for us?", "CentCom Janitorial Division")
 			bonus_points = 20000 //Toxin bees can be unbeelievably lethal
@@ -154,7 +154,7 @@
 			if(ANTIDOTE_NEEDED)
 				var/obj/effect/mob_spawn/human/corpse/assistant/infected_assistant = pick(/obj/effect/mob_spawn/human/corpse/assistant/beesease_infection, /obj/effect/mob_spawn/human/corpse/assistant/brainrot_infection, /obj/effect/mob_spawn/human/corpse/assistant/spanishflu_infection)
 				var/turf/T
-				for(var/i=0, i<10, i++)
+				for(var/i=ZERO, i<10, i++)
 					if(prob(15))
 						shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle)
 					else if(prob(15))
@@ -226,7 +226,7 @@
 				else
 					shuttle_spawns.Add(/obj/item/paper/fluff/cargo/bomb/allyourbase)
 
-		var/false_positive = 0
+		var/false_positive = ZERO
 		while(shuttle_spawns.len && empty_shuttle_turfs.len)
 			var/turf/T = pick_n_take(empty_shuttle_turfs)
 			if(T.contents.len && false_positive < 5)

@@ -5,7 +5,7 @@
 	anchored = TRUE
 	w_class = WEIGHT_CLASS_BULKY
 	canhear_range = 2
-	var/number = 0
+	var/number = ZERO
 	var/anyai = 1
 	var/mob/living/silicon/ai/ai = list()
 	var/last_tick //used to delay the powercheck
@@ -77,7 +77,7 @@
 		return FALSE
 	if(wires.is_cut(WIRE_RX))
 		return FALSE
-	if(!(0 in level))
+	if(!(ZERO in level))
 		var/turf/position = get_turf(src)
 		if(isnull(position) || !(position.z in level))
 			return FALSE
@@ -99,7 +99,7 @@
 	..()
 
 /obj/item/radio/intercom/process()
-	if(((world.timeofday - last_tick) > 30) || ((world.timeofday - last_tick) < 0))
+	if(((world.timeofday - last_tick) > 30) || ((world.timeofday - last_tick) < ZERO))
 		last_tick = world.timeofday
 
 		var/area/A = get_area(src)

@@ -22,20 +22,20 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	hud_type = /datum/hud/blob_overmind
 	var/obj/structure/blob/core/blob_core = null // The blob overmind's core
-	var/blob_points = 0
+	var/blob_points = ZERO
 	var/max_blob_points = 100
-	var/last_attack = 0
+	var/last_attack = ZERO
 	var/datum/blobstrain/blobstrain
 	var/list/blob_mobs = list()
 	var/list/resource_blobs = list()
 	var/free_strain_rerolls = 1 //one free strain reroll
-	var/last_reroll_time = 0 //time since we last rerolled, used to give free rerolls
+	var/last_reroll_time = ZERO //time since we last rerolled, used to give free rerolls
 	var/nodes_required = 1 //if the blob needs nodes to place resource and factory blobs
-	var/placed = 0
+	var/placed = ZERO
 	var/manualplace_min_time = 600 //in deciseconds //a minute, to get bearings
 	var/autoplace_max_time = 3600 //six minutes, as long as should be needed
 	var/list/blobs_legit = list()
-	var/max_count = 0 //The biggest it got before death
+	var/max_count = ZERO //The biggest it got before death
 	var/blobwincount = 400
 	var/victory_in_progress = FALSE
 	var/rerolling = FALSE
@@ -99,7 +99,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			if(manualplace_min_time && world.time >= manualplace_min_time)
 				to_chat(src, "<b><span class='big'><font color=\"#EE4000\">You may now place your blob core.</font></span></b>")
 				to_chat(src, "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [DisplayTimeText(autoplace_max_time - world.time)].</font></span>")
-				manualplace_min_time = 0
+				manualplace_min_time = ZERO
 			if(autoplace_max_time && world.time >= autoplace_max_time)
 				place_blob_core(1)
 		else
@@ -152,8 +152,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			A.icon = 'icons/mob/blob.dmi'
 			A.icon_state = "blob_shield"
 			A.layer = BELOW_MOB_LAYER
-			A.invisibility = 0
-			A.blend_mode = 0
+			A.invisibility = ZERO
+			A.blend_mode = ZERO
 	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
 	if(B)
 		var/datum/objective/blob_takeover/main_objective = locate() in B.objectives
@@ -186,7 +186,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	to_chat(src, "<span class='notice'>You are the overmind!</span>")
 	blob_help()
 	update_health_hud()
-	add_points(0)
+	add_points(ZERO)
 
 /mob/camera/blob/examine(mob/user)
 	. = ..()
@@ -201,7 +201,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				B.hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(blob_core.obj_integrity)]</font></div>"
 
 /mob/camera/blob/proc/add_points(points)
-	blob_points = CLAMP(blob_points + points, 0, max_blob_points)
+	blob_points = CLAMP(blob_points + points, ZERO, max_blob_points)
 	hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(blob_points)]</font></div>"
 
 /mob/camera/blob/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
@@ -256,17 +256,17 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				stat(null, "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]")
 			stat(null, "Time Before Automatic Placement: [max(round((autoplace_max_time - world.time)*0.1, 0.1), 0)]")
 
-/mob/camera/blob/Move(NewLoc, Dir = 0)
+/mob/camera/blob/Move(NewLoc, Dir = ZERO)
 	if(placed)
 		var/obj/structure/blob/B = locate() in range("3x3", NewLoc)
 		if(B)
 			forceMove(NewLoc)
 		else
-			return 0
+			return ZERO
 	else
 		var/area/A = get_area(NewLoc)
 		if(isspaceturf(NewLoc) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or space tiles
-			return 0
+			return ZERO
 		forceMove(NewLoc)
 		return 1
 

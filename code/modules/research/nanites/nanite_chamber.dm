@@ -18,14 +18,14 @@
 	var/busy = FALSE
 	var/busy_icon_state
 	var/busy_message
-	var/message_cooldown = 0
+	var/message_cooldown = ZERO
 
 /obj/machinery/nanite_chamber/Initialize()
 	. = ..()
 	occupant_typecache = GLOB.typecache_living
 
 /obj/machinery/nanite_chamber/RefreshParts()
-	scan_level = 0
+	scan_level = ZERO
 	for(var/obj/item/stock_parts/scanning_module/P in component_parts)
 		scan_level += P.rating
 

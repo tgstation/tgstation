@@ -26,5 +26,5 @@
 
 /obj/structure/mopbucket/update_icon()
 	cut_overlays()
-	if(reagents.total_volume > 0)
+	if(reagents.total_volume > ZERO)
 		add_overlay("mopbucket_water")

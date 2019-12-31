@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(spacedrift)
 	..("P:[processing.len]")
 
 
-/datum/controller/subsystem/spacedrift/fire(resumed = 0)
+/datum/controller/subsystem/spacedrift/fire(resumed = ZERO)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 
@@ -33,8 +33,8 @@ SUBSYSTEM_DEF(spacedrift)
 				return
 			continue
 
-		if (!AM.loc || AM.loc != AM.inertia_last_loc || AM.Process_Spacemove(0))
-			AM.inertia_dir = 0
+		if (!AM.loc || AM.loc != AM.inertia_last_loc || AM.Process_Spacemove(ZERO))
+			AM.inertia_dir = ZERO
 
 		if (!AM.inertia_dir)
 			AM.inertia_last_loc = null
@@ -50,7 +50,7 @@ SUBSYSTEM_DEF(spacedrift)
 		AM.inertia_moving = FALSE
 		AM.inertia_next_move = world.time + AM.inertia_move_delay
 		if (AM.loc == old_loc)
-			AM.inertia_dir = 0
+			AM.inertia_dir = ZERO
 
 		AM.setDir(old_dir)
 		AM.inertia_last_loc = AM.loc

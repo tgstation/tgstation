@@ -150,7 +150,7 @@
 		addtimer(CALLBACK(src, .proc/shoot_projectile, target_turf, angle_to_target, FALSE), 14)
 	
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/herald_circleshot()
-	var/static/list/directional_shot_angles = list(0, 45, 90, 135, 180, 225, 270, 315)
+	var/static/list/directional_shot_angles = list(ZERO, 45, 90, 135, 180, 225, 270, 315)
 	for(var/i in directional_shot_angles)
 		shoot_projectile(get_turf(src), i, FALSE)
 		
@@ -216,13 +216,13 @@
 	damage = 15
 	armour_penetration = 60
 	speed = 2
-	eyeblur = 0
+	eyeblur = ZERO
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 	
 /obj/projectile/herald/teleshot
 	name ="golden bolt"
-	damage = 0
+	damage = ZERO
 	color = rgb(255,255,102)
 
 /obj/projectile/herald/on_hit(atom/target, blocked = FALSE)
@@ -252,7 +252,7 @@
 	hit_reaction_chance = 10
 	
 /obj/item/clothing/neck/cloak/herald_cloak/proc/reactionshot(mob/living/carbon/owner)
-	var/static/list/directional_shot_angles = list(0, 45, 90, 135, 180, 225, 270, 315)
+	var/static/list/directional_shot_angles = list(ZERO, 45, 90, 135, 180, 225, 270, 315)
 	for(var/i in directional_shot_angles)
 		shoot_projectile(get_turf(owner), i, owner)
 	
@@ -264,11 +264,11 @@
 	H.firer = owner
 	H.fire(set_angle)
 	
-/obj/item/clothing/neck/cloak/herald_cloak/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/neck/cloak/herald_cloak/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = ZERO, damage = ZERO, attack_type = MELEE_ATTACK)
 	. = ..()
 	if(rand(1,100) > hit_reaction_chance)
 		return
 	owner.visible_message("<span class='danger'>[owner]'s [src] emits a loud noise as [owner] is struck!</span>")
-	var/static/list/directional_shot_angles = list(0, 45, 90, 135, 180, 225, 270, 315)
+	var/static/list/directional_shot_angles = list(ZERO, 45, 90, 135, 180, 225, 270, 315)
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 	addtimer(CALLBACK(src, .proc/reactionshot, owner), 10)

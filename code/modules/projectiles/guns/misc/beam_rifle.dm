@@ -1,5 +1,5 @@
 
-#define ZOOM_LOCK_AUTOZOOM_FREEMOVE 0
+#define ZOOM_LOCK_AUTOZOOM_FREEMOVE ZERO
 #define ZOOM_LOCK_AUTOZOOM_ANGLELOCK 1
 #define ZOOM_LOCK_CENTER_VIEW 2
 #define ZOOM_LOCK_OFF 3
@@ -38,17 +38,17 @@
 	var/aiming_time_increase_user_movement = 3
 	var/scoped_slow = 1
 	var/aiming_time_increase_angle_multiplier = 0.3
-	var/last_process = 0
+	var/last_process = ZERO
 
-	var/lastangle = 0
-	var/aiming_lastangle = 0
+	var/lastangle = ZERO
+	var/aiming_lastangle = ZERO
 	var/mob/current_user = null
 	var/list/obj/effect/projectile/tracer/current_tracers
 
 	var/structure_piercing = 2				//Amount * 2. For some reason structures aren't respecting this unless you have it doubled. Probably with the objects in question's Bump() code instead of this but I'll deal with this later.
 	var/structure_bleed_coeff = 0.7
-	var/wall_pierce_amount = 0
-	var/wall_devastate = 0
+	var/wall_pierce_amount = ZERO
+	var/wall_devastate = ZERO
 	var/aoe_structure_range = 1
 	var/aoe_structure_damage = 50
 	var/aoe_fire_range = 2
@@ -57,28 +57,28 @@
 	var/aoe_mob_damage = 30
 	var/impact_structure_damage = 60
 	var/projectile_damage = 30
-	var/projectile_stun = 0
+	var/projectile_stun = ZERO
 	var/projectile_setting_pierce = TRUE
 	var/delay = 25
-	var/lastfire = 0
+	var/lastfire = ZERO
 
 	//ZOOMING
-	var/zoom_current_view_increase = 0
+	var/zoom_current_view_increase = ZERO
 	var/zoom_target_view_increase = 10
 	var/zooming = FALSE
 	var/zoom_lock = ZOOM_LOCK_OFF
 	var/zooming_angle
-	var/current_zoom_x = 0
-	var/current_zoom_y = 0
+	var/current_zoom_x = ZERO
+	var/current_zoom_y = ZERO
 
 	var/datum/action/item_action/zoom_lock_action/zoom_lock_action
 	var/mob/listeningTo
 
 /obj/item/gun/energy/beam_rifle/debug
-	delay = 0
+	delay = ZERO
 	cell_type = /obj/item/stock_parts/cell/infinite
-	aiming_time = 0
-	recoil = 0
+	aiming_time = ZERO
+	recoil = ZERO
 	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/beam_rifle/equipped(mob/user)
@@ -97,7 +97,7 @@
 	if(istype(actiontype, zoom_lock_action))
 		zoom_lock++
 		if(zoom_lock > 3)
-			zoom_lock = 0
+			zoom_lock = ZERO
 		switch(zoom_lock)
 			if(ZOOM_LOCK_AUTOZOOM_FREEMOVE)
 				to_chat(user, "<span class='boldnotice'>You switch [src]'s zooming processor to free directional.</span>")
@@ -139,12 +139,12 @@
 		user = current_user
 	if(!user || !user.client)
 		return FALSE
-	animate(user.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
-	zoom_current_view_increase = 0
+	animate(user.client, pixel_x = ZERO, pixel_y = ZERO, ZERO, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
+	zoom_current_view_increase = ZERO
 	user.client.change_view(CONFIG_GET(string/default_view))
-	zooming_angle = 0
-	current_zoom_x = 0
-	current_zoom_y = 0
+	zooming_angle = ZERO
+	current_zoom_x = ZERO
+	current_zoom_y = ZERO
 
 /obj/item/gun/energy/beam_rifle/attack_self(mob/user)
 	projectile_setting_pierce = !projectile_setting_pierce
@@ -191,16 +191,16 @@
 	P.do_pierce = projectile_setting_pierce
 	if(aiming_time)
 		var/percent = ((100/aiming_time)*aiming_time_left)
-		P.color = rgb(255 * percent,255 * ((100 - percent) / 100),0)
+		P.color = rgb(255 * percent,255 * ((100 - percent) / 100),ZERO)
 	else
-		P.color = rgb(0, 255, 0)
+		P.color = rgb(ZERO, 255, ZERO)
 	var/turf/curloc = get_turf(src)
 	var/turf/targloc = get_turf(current_user.client.mouseObject)
 	if(!istype(targloc))
 		if(!istype(curloc))
 			return
 		targloc = get_turf_in_angle(lastangle, curloc, 10)
-	P.preparePixelProjectile(targloc, current_user, current_user.client.mouseParams, 0)
+	P.preparePixelProjectile(targloc, current_user, current_user.client.mouseParams, ZERO)
 	P.fire(lastangle)
 
 /obj/item/gun/energy/beam_rifle/process()
@@ -209,7 +209,7 @@
 		return
 	check_user()
 	handle_zooming()
-	aiming_time_left = max(0, aiming_time_left - (world.time - last_process))
+	aiming_time_left = max(ZERO, aiming_time_left - (world.time - last_process))
 	aiming_beam(TRUE)
 	last_process = world.time
 
@@ -316,13 +316,13 @@
 		AC.sync_stats()
 
 /obj/item/gun/energy/beam_rifle/proc/delay_penalty(amount)
-	aiming_time_left = CLAMP(aiming_time_left + amount, 0, aiming_time)
+	aiming_time_left = CLAMP(aiming_time_left + amount, ZERO, aiming_time)
 
 /obj/item/ammo_casing/energy/beam_rifle
 	name = "particle acceleration lens"
 	desc = "Don't look into barrel!"
-	var/wall_pierce_amount = 0
-	var/wall_devastate = 0
+	var/wall_pierce_amount = ZERO
+	var/wall_devastate = ZERO
 	var/aoe_structure_range = 1
 	var/aoe_structure_damage = 30
 	var/aoe_fire_range = 2
@@ -331,7 +331,7 @@
 	var/aoe_mob_damage = 20
 	var/impact_structure_damage = 50
 	var/projectile_damage = 40
-	var/projectile_stun = 0
+	var/projectile_stun = ZERO
 	var/structure_piercing = 2
 	var/structure_bleed_coeff = 0.7
 	var/do_pierce = TRUE
@@ -367,11 +367,11 @@
 	HS_BB.stun = projectile_stun
 	HS_BB.impact_structure_damage = impact_structure_damage
 	HS_BB.aoe_mob_damage = aoe_mob_damage
-	HS_BB.aoe_mob_range = CLAMP(aoe_mob_range, 0, 15)				//Badmin safety lock
+	HS_BB.aoe_mob_range = CLAMP(aoe_mob_range, ZERO, 15)				//Badmin safety lock
 	HS_BB.aoe_fire_chance = aoe_fire_chance
 	HS_BB.aoe_fire_range = aoe_fire_range
 	HS_BB.aoe_structure_damage = aoe_structure_damage
-	HS_BB.aoe_structure_range = CLAMP(aoe_structure_range, 0, 15)	//Badmin safety lock
+	HS_BB.aoe_structure_range = CLAMP(aoe_structure_range, ZERO, 15)	//Badmin safety lock
 	HS_BB.wall_devastate = wall_devastate
 	HS_BB.wall_pierce_amount = wall_pierce_amount
 	HS_BB.structure_pierce_amount = structure_piercing
@@ -408,27 +408,27 @@
 	name = "particle beam"
 	icon = null
 	hitsound = 'sound/effects/explosion3.ogg'
-	damage = 0				//Handled manually.
+	damage = ZERO				//Handled manually.
 	damage_type = BURN
 	flag = "energy"
 	range = 150
 	jitter = 10
 	var/obj/item/gun/energy/beam_rifle/gun
-	var/structure_pierce_amount = 0				//All set to 0 so the gun can manually set them during firing.
-	var/structure_bleed_coeff = 0
-	var/structure_pierce = 0
+	var/structure_pierce_amount = ZERO				//All set to ZERO so the gun can manually set them during firing.
+	var/structure_bleed_coeff = ZERO
+	var/structure_pierce = ZERO
 	var/do_pierce = TRUE
-	var/wall_pierce_amount = 0
-	var/wall_pierce = 0
-	var/wall_devastate = 0
-	var/aoe_structure_range = 0
-	var/aoe_structure_damage = 0
-	var/aoe_fire_range = 0
-	var/aoe_fire_chance = 0
-	var/aoe_mob_range = 0
-	var/aoe_mob_damage = 0
-	var/impact_structure_damage = 0
-	var/impact_direct_damage = 0
+	var/wall_pierce_amount = ZERO
+	var/wall_pierce = ZERO
+	var/wall_devastate = ZERO
+	var/aoe_structure_range = ZERO
+	var/aoe_structure_damage = ZERO
+	var/aoe_fire_range = ZERO
+	var/aoe_fire_chance = ZERO
+	var/aoe_mob_range = ZERO
+	var/aoe_mob_damage = ZERO
+	var/impact_structure_damage = ZERO
+	var/impact_direct_damage = ZERO
 	var/turf/cached
 	var/list/pierced = list()
 
@@ -532,7 +532,7 @@
 	if(highlander && istype(gun))
 		QDEL_LIST(gun.current_tracers)
 		for(var/datum/point/p in beam_segments)
-			gun.current_tracers += generate_tracer_between_points(p, beam_segments[p], tracer_type, color, 0, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity)
+			gun.current_tracers += generate_tracer_between_points(p, beam_segments[p], tracer_type, color, ZERO, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity)
 	else
 		for(var/datum/point/p in beam_segments)
 			generate_tracer_between_points(p, beam_segments[p], tracer_type, color, duration, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity)
@@ -547,10 +547,10 @@
 	hitsound = null
 	hitsound_wall = null
 	nodamage = TRUE
-	damage = 0
+	damage = ZERO
 	constant_tracer = TRUE
-	hitscan_light_range = 0
-	hitscan_light_intensity = 0
+	hitscan_light_range = ZERO
+	hitscan_light_intensity = ZERO
 	hitscan_light_color_override = "#99ff99"
 	reflectable = REFLECT_FAKEPROJECTILE
 

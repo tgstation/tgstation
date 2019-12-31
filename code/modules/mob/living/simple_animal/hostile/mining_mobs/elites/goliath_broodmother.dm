@@ -46,7 +46,7 @@
 								/datum/action/innate/elite_attack/rage,
 								/datum/action/innate/elite_attack/call_children)
 
-	var/rand_tent = 0
+	var/rand_tent = ZERO
 	var/list/mob/living/simple_animal/hostile/asteroid/elite/broodmother_child/children_list = list()
 
 /datum/action/innate/elite_attack/tentacle_patch
@@ -136,7 +136,7 @@
 	playsound(src,'sound/spookoween/insane_low_laugh.ogg', 200, 1)
 	visible_message("<span class='warning'>[src] starts picking up speed!</span>")
 	color = "#FF0000"
-	set_varspeed(0)
+	set_varspeed(ZERO)
 	move_to_delay = 3
 	addtimer(CALLBACK(src, .proc/reset_rage), 65)
 
@@ -198,7 +198,7 @@
 	if(mother != null)
 		mother.children_list -= src
 	visible_message("<span class='warning'>[src] explodes!</span>")
-	explosion(get_turf(loc),0,0,0,flame_range = 3, adminlog = FALSE)
+	explosion(get_turf(loc),ZERO,ZERO,ZERO,flame_range = 3, adminlog = FALSE)
 	gib()
 
 //Tentacles have less stun time compared to regular variant, to balance being able to use them much more often.  Also, 10 more damage.

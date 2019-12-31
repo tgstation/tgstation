@@ -14,8 +14,8 @@
 	var/last_message = null				// Used to generate the toolbar icon
 	var/username
 	var/datum/ntnet_conversation/channel = null
-	var/operator_mode = 0		// Channel operator mode
-	var/netadmin_mode = 0		// Administrator mode (invisible to other users + bypasses passwords)
+	var/operator_mode = ZERO		// Channel operator mode
+	var/netadmin_mode = ZERO		// Administrator mode (invisible to other users + bypasses passwords)
 
 /datum/computer_file/program/chatclient/New()
 	username = "DefaultUser[rand(100, 999)]"
@@ -79,7 +79,7 @@
 		if("PRG_toggleadmin")
 			. = 1
 			if(netadmin_mode)
-				netadmin_mode = 0
+				netadmin_mode = ZERO
 				if(channel)
 					channel.remove_client(src) // We shouldn't be in channel's user list, but just in case...
 					channel = null
@@ -206,7 +206,7 @@
 				"name" = cl.username
 			)))
 		data["clients"] = clients
-		operator_mode = (channel.operator == src) ? 1 : 0
+		operator_mode = (channel.operator == src) ? 1 : ZERO
 		data["is_operator"] = operator_mode || netadmin_mode
 
 	else // Channel selection screen

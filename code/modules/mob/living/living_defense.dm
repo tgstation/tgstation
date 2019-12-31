@@ -3,8 +3,8 @@
 	var/armor = getarmor(def_zone, attack_flag)
 
 	//the if "armor" check is because this is used for everything on /living, including humans
-	if(armor > 0 && armour_penetration)
-		armor = max(0, armor - armour_penetration)
+	if(armor > ZERO && armour_penetration)
+		armor = max(ZERO, armor - armour_penetration)
 		if(penetrated_text)
 			to_chat(src, "<span class='userdanger'>[penetrated_text]</span>")
 		else
@@ -14,7 +14,7 @@
 			to_chat(src, "<span class='notice'>[absorb_text]</span>")
 		else
 			to_chat(src, "<span class='notice'>Your armor absorbs the blow!</span>")
-	else if(armor > 0)
+	else if(armor > ZERO)
 		if(soften_text)
 			to_chat(src, "<span class='warning'>[soften_text]</span>")
 		else
@@ -23,17 +23,17 @@
 
 
 /mob/living/proc/getarmor(def_zone, type)
-	return 0
+	return ZERO
 
 //this returns the mob's protection against eye damage (number between -1 and 2) from bright lights
 /mob/living/proc/get_eye_protection()
-	return 0
+	return ZERO
 
-//this returns the mob's protection against ear damage (0:no protection; 1: some ear protection; 2: has no ears)
+//this returns the mob's protection against ear damage (ZERO:no protection; 1: some ear protection; 2: has no ears)
 /mob/living/proc/get_ear_protection()
-	return 0
+	return ZERO
 
-/mob/living/proc/is_mouth_covered(head_only = 0, mask_only = 0)
+/mob/living/proc/is_mouth_covered(head_only = ZERO, mask_only = ZERO)
 	return FALSE
 
 /mob/living/proc/is_eyes_covered(check_glasses = 1, check_head = 1, check_mask = 1)
@@ -54,7 +54,7 @@
 	return on_hit_state ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
 
 /mob/living/proc/check_projectile_dismemberment(obj/projectile/P, def_zone)
-	return 0
+	return ZERO
 
 /obj/item/proc/get_volume_by_throwforce_and_or_w_class()
 		if(throwforce && w_class)
@@ -62,7 +62,7 @@
 		else if(w_class)
 				return CLAMP(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
 		else
-				return 0
+				return ZERO
 
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(istype(AM, /obj/item))
@@ -100,7 +100,7 @@
 				take_overall_damage(rand(M.force/2, M.force))
 				playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 			if(BURN)
-				take_overall_damage(0, rand(M.force/2, M.force))
+				take_overall_damage(ZERO, rand(M.force/2, M.force))
 				playsound(src, 'sound/items/welder.ogg', 50, TRUE)
 			if(TOX)
 				M.mech_toxin_damage(src)
@@ -151,7 +151,7 @@
 
 		if(user.grab_state) //only the first upgrade is instantaneous
 			var/old_grab_state = user.grab_state
-			var/grab_upgrade_time = instant ? 0 : 30
+			var/grab_upgrade_time = instant ? ZERO : 30
 			visible_message("<span class='danger'>[user] starts to tighten [user.p_their()] grip on [src]!</span>", \
 							"<span class='userdanger'>[user] starts to tighten [user.p_their()] grip on you!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, user)
 			to_chat(user, "<span class='danger'>You start to tighten your grip on [src]!</span>")
@@ -161,12 +161,12 @@
 				if(GRAB_NECK)
 					log_combat(user, src, "attempted to strangle", addition="kill grab")
 			if(!do_mob(user, src, grab_upgrade_time))
-				return 0
+				return ZERO
 			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state)
-				return 0
+				return ZERO
 			if(user.a_intent != INTENT_GRAB)
 				to_chat(user, "<span class='warning'>You must be on grab intent to upgrade your grab further!</span>")
-				return 0
+				return ZERO
 		user.setGrabState(user.grab_state + 1)
 		switch(user.grab_state)
 			if(GRAB_AGGRESSIVE)
@@ -227,7 +227,7 @@
 
 /mob/living/attack_animal(mob/living/simple_animal/M)
 	M.face_atom(src)
-	if(M.melee_damage_upper == 0)
+	if(M.melee_damage_upper == ZERO)
 		visible_message("<span class='notice'>\The [M] [M.friendly_verb_continuous] [src]!</span>", \
 						"<span class='notice'>\The [M] [M.friendly_verb_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, M)
 		to_chat(M, "<span class='notice'>You [M.friendly_verb_simple] [src]!</span>")
@@ -399,7 +399,7 @@
 	return TRUE
 
 //called when the mob receives a bright flash
-/mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
+/mob/living/proc/flash_act(intensity = 1, override_blindness_check = ZERO, affect_silicon = ZERO, visual = ZERO, type = /obj/screen/fullscreen/flash)
 	if(HAS_TRAIT(src, TRAIT_NOFLASH))
 		return FALSE
 	if(get_eye_protection() < intensity && (override_blindness_check || !(HAS_TRAIT(src, TRAIT_BLIND))))
@@ -410,10 +410,10 @@
 
 //called when the mob receives a loud bang
 /mob/living/proc/soundbang_act()
-	return 0
+	return ZERO
 
 //to damage the clothes worn by a mob
-/mob/living/proc/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
+/mob/living/proc/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = ZERO, def_zone)
 	return
 
 

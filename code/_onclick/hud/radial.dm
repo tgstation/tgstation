@@ -65,11 +65,11 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	var/image/menu_holder
 	var/finished = FALSE
 	var/datum/callback/custom_check_callback
-	var/next_check = 0
+	var/next_check = ZERO
 	var/check_delay = DEFAULT_CHECK_DELAY
 
 	var/radius = 32
-	var/starting_angle = 0
+	var/starting_angle = ZERO
 	var/ending_angle = 360
 	var/zone = 360
 	var/min_angle = 45 //Defaults are setup for this value, if you want to make the menu more dense these will need changes.
@@ -78,7 +78,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	var/current_page = 1
 
 	var/hudfix_method = TRUE //TRUE to change anchor to user, FALSE to shift by py_shift
-	var/py_shift = 0
+	var/py_shift = ZERO
 	var/entry_animation = TRUE
 
 //If we swap to vis_contens inventory these will need a redo
@@ -104,7 +104,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			starting_angle = 90
 			ending_angle = 315
 		if(EAST)
-			starting_angle = 0
+			starting_angle = ZERO
 			ending_angle = 225
 		if(WEST)
 			starting_angle = 180
@@ -154,7 +154,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	var/angle_per_element = round(zone / page_choices.len)
 	for(var/i in 1 to elements.len)
 		var/obj/screen/radial/E = elements[i]
-		var/angle = WRAP(starting_angle + (i - 1) * angle_per_element,0,360)
+		var/angle = WRAP(starting_angle + (i - 1) * angle_per_element,ZERO,360)
 		if(i > page_choices.len)
 			HideElement(E)
 		else
@@ -162,7 +162,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 /datum/radial_menu/proc/HideElement(obj/screen/radial/slice/E)
 	E.cut_overlays()
-	E.alpha = 0
+	E.alpha = ZERO
 	E.name = "None"
 	E.maptext = null
 	E.mouse_opacity = MOUSE_OPACITY_TRANSPARENT

@@ -15,8 +15,8 @@
 	faction = list("nether")
 	speak_emote = list("screams")
 	gold_core_spawnable = HOSTILE_SPAWN
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
+	minbodytemp = ZERO
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/phaser = TRUE
 	var/datum/action/innate/creature/teleport/teleport
@@ -66,7 +66,7 @@
 	if (N.can_be_seen(T) || !do_after(N, 60, target = T))
 		to_chat(N, "<span class='warning'>You can't phase in or out while being observed and you must stay still!</span>")
 		return
-	if (get_dist(N, T) != 0 || N.can_be_seen(T))
+	if (get_dist(N, T) != ZERO || N.can_be_seen(T))
 		to_chat(N, "<span class='warning'>Action cancelled, as you moved while reappearing or someone is now viewing your location.</span>")
 		return
 	if(N.is_phased)

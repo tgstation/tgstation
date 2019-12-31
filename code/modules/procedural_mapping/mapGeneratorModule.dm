@@ -28,9 +28,9 @@
 //Place a spawnable atom or turf on this turf
 /datum/mapGeneratorModule/proc/place(turf/T)
 	if(!T)
-		return 0
+		return ZERO
 
-	var/clustering = 0
+	var/clustering = ZERO
 	var/skipLoopIteration = FALSE
 
 	//Turfs don't care whether atoms can be placed here
@@ -107,15 +107,15 @@
 /datum/mapGeneratorModule/proc/checkPlaceAtom(turf/T)
 	. = 1
 	if(!T)
-		return 0
+		return ZERO
 	if(T.density)
-		. = 0
+		. = ZERO
 	for(var/atom/A in T)
 		if(A.density)
-			. = 0
+			. = ZERO
 			break
 	if(!allowAtomsOnSpace && (isspaceturf(T)))
-		. = 0
+		. = ZERO
 
 
 ///////////////////////////////////////////////////////////

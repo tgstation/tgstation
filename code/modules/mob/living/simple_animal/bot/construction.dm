@@ -94,7 +94,7 @@
 
 		if(ASSEMBLY_FOURTH_STEP)
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(W.use_tool(src, user, 0, volume=40))
+				if(W.use_tool(src, user, ZERO, volume=40))
 					name = "shielded frame assembly"
 					to_chat(user, "<span class='notice'>You weld the vest to [src].</span>")
 					build_step++
@@ -292,7 +292,7 @@
 	item_state = "helmet"
 	created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
 	var/swordamt = 0 //If you're converting it into a grievousbot, how many swords have you attached
-	var/toyswordamt = 0 //honk
+	var/toyswordamt = ZERO //honk
 
 /obj/item/bot_assembly/secbot/attackby(obj/item/I, mob/user, params)
 	..()
@@ -300,7 +300,7 @@
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
 			if(I.tool_behaviour == TOOL_WELDER)
-				if(I.use_tool(src, user, 0, volume=40))
+				if(I.use_tool(src, user, ZERO, volume=40))
 					add_overlay("hs_hole")
 					to_chat(user, "<span class='notice'>You weld a hole in [src]!</span>")
 					build_step++
@@ -322,7 +322,7 @@
 				build_step++
 
 			else if(I.tool_behaviour == TOOL_WELDER) //deconstruct
-				if(I.use_tool(src, user, 0, volume=40))
+				if(I.use_tool(src, user, ZERO, volume=40))
 					cut_overlay("hs_hole")
 					to_chat(user, "<span class='notice'>You weld the hole in [src] shut!</span>")
 					build_step--
@@ -360,7 +360,7 @@
 				build_step ++
 				return
 			if(istype(I, /obj/item/toy/sword))
-				if(toyswordamt < 3 && swordamt <= 0)
+				if(toyswordamt < 3 && swordamt <= ZERO)
 					if(!user.temporarilyRemoveItemFromInventory(I))
 						return
 					created_name = "General Beepsky"
@@ -385,8 +385,8 @@
 				robot_arm = null
 				to_chat(user, "<span class='notice'>You remove [dropped_arm] from [src].</span>")
 				build_step--
-				if(toyswordamt > 0 || toyswordamt)
-					toyswordamt = 0
+				if(toyswordamt > ZERO || toyswordamt)
+					toyswordamt = ZERO
 					icon_state = initial(icon_state)
 					to_chat(user, "<span class='notice'>The superglue binding [src]'s toy swords to its chassis snaps!</span>")
 					for(var/IS in 1 to toyswordamt)
@@ -414,7 +414,7 @@
 					qdel(src)
 			else if(I.tool_behaviour == TOOL_SCREWDRIVER) //deconstruct
 				build_step--
-				swordamt = 0
+				swordamt = ZERO
 				icon_state = initial(icon_state)
 				to_chat(user, "<span class='notice'>You unbolt [src]'s energy swords.</span>")
 				for(var/IS in 1 to swordamt)

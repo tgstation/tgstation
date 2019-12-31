@@ -3,7 +3,7 @@
 	desc = "Used with intelliCards containing nonfunctional AIs to restore them to working order."
 	req_access = list(ACCESS_CAPTAIN, ACCESS_ROBOTICS, ACCESS_HEADS)
 	var/mob/living/silicon/ai/occupier = null
-	var/active = 0
+	var/active = ZERO
 	circuit = /obj/item/circuitboard/computer/aifixer
 	icon_keyboard = "tech_key"
 	icon_screen = "ai-fixer"
@@ -33,26 +33,26 @@
 
 		for (var/index = 1, index <= src.occupier.laws.hacked.len, index++)
 			var/law = src.occupier.laws.hacked[index]
-			if (length(law) > 0)
+			if (length(law) > ZERO)
 				var/num = ionnum()
 				laws += "<b>[num]:</b> [law]<BR>"
 
 		for (var/index = 1, index <= src.occupier.laws.ion.len, index++)
 			var/law = src.occupier.laws.ion[index]
-			if (length(law) > 0)
+			if (length(law) > ZERO)
 				var/num = ionnum()
 				laws += "<b>[num]:</b> [law]<BR>"
 
 		var/number = 1
 		for (var/index = 1, index <= src.occupier.laws.inherent.len, index++)
 			var/law = src.occupier.laws.inherent[index]
-			if (length(law) > 0)
+			if (length(law) > ZERO)
 				laws += "<b>[number]:</b> [law]<BR>"
 				number++
 
 		for (var/index = 1, index <= src.occupier.laws.supplied.len, index++)
 			var/law = src.occupier.laws.supplied[index]
-			if (length(law) > 0)
+			if (length(law) > ZERO)
 				laws += "<b>[number]:</b> [law]<BR>"
 				number++
 
@@ -75,12 +75,12 @@
 
 /obj/machinery/computer/aifixer/proc/Fix()
 	use_power(1000)
-	occupier.adjustOxyLoss(-5, 0)
-	occupier.adjustFireLoss(-5, 0)
-	occupier.adjustToxLoss(-5, 0)
-	occupier.adjustBruteLoss(-5, 0)
+	occupier.adjustOxyLoss(-5, ZERO)
+	occupier.adjustFireLoss(-5, ZERO)
+	occupier.adjustToxLoss(-5, ZERO)
+	occupier.adjustBruteLoss(-5, ZERO)
 	occupier.updatehealth()
-	if(occupier.health >= 0 && occupier.stat == DEAD)
+	if(occupier.health >= ZERO && occupier.stat == DEAD)
 		occupier.revive(full_heal = FALSE, admin_revive = FALSE)
 		if(!occupier.radio_enabled)
 			occupier.radio_enabled = TRUE
@@ -118,7 +118,7 @@
 		. += "ai-fixer-on"
 	if (occupier)
 		switch (occupier.stat)
-			if (0)
+			if (ZERO)
 				. += "ai-fixer-full"
 			if (2)
 				. += "ai-fixer-404"

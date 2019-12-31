@@ -1,10 +1,10 @@
-#define TURRET_STUN 0
+#define TURRET_STUN ZERO
 #define TURRET_LETHAL 1
 
 #define POPUP_ANIM_TIME 5
 #define POPDOWN_ANIM_TIME 5 //Be sure to change the icon animation at the same time or it'll look bad
 
-#define TURRET_FLAG_SHOOT_ALL_REACT		(1<<0)	// The turret gets pissed off and shoots at people nearby (unless they have sec access!)
+#define TURRET_FLAG_SHOOT_ALL_REACT		(1<<ZERO)	// The turret gets pissed off and shoots at people nearby (unless they have sec access!)
 #define TURRET_FLAG_AUTH_WEAPONS		(1<<1)	// Checks if it can shoot people that have a weapon they aren't authorized to have
 #define TURRET_FLAG_SHOOT_CRIMINALS		(1<<2)	// Checks if it can shoot people that are wanted
 #define TURRET_FLAG_SHOOT_ALL 			(1<<3)  // The turret gets pissed off and shoots at people nearby (unless they have sec access!)
@@ -32,7 +32,7 @@
 	var/atom/base = null //for turrets inside other objects
 
 	var/raised = 0			//if the turret cover is "open" and the turret is raised
-	var/raising= 0			//if the turret is currently opening or closing its cover
+	var/raising= ZERO			//if the turret is currently opening or closing its cover
 
 	max_integrity = 160		//the turret's health
 	integrity_failure = 0.5
@@ -43,7 +43,7 @@
 
 	var/installation = /obj/item/gun/energy/e_gun/turret		//the type of weapon installed by default
 	var/obj/item/gun/stored_gun = null
-	var/gun_charge = 0		//the charge of the gun when retrieved from wreckage
+	var/gun_charge = ZERO		//the charge of the gun when retrieved from wreckage
 
 	var/mode = TURRET_STUN
 
@@ -53,12 +53,12 @@
 	var/lethal_projectile_sound
 
 	var/reqpower = 500		//power needed per shot
-	var/always_up = 0		//Will stay active
+	var/always_up = ZERO		//Will stay active
 	var/has_cover = 1		//Hides the cover
 
 	var/obj/machinery/porta_turret_cover/cover = null	//the cover that is covering this turret
 
-	var/last_fired = 0		//world.time the turret last fired
+	var/last_fired = ZERO		//world.time the turret last fired
 	var/shot_delay = 15		//ticks until next shot (1.5 ?)
 
 
@@ -86,7 +86,7 @@
 	update_icon()
 	//Sets up a spark system
 	spark_system = new /datum/effect_system/spark_spread
-	spark_system.set_up(5, 0, src)
+	spark_system.set_up(5, ZERO, src)
 	spark_system.attach(src)
 
 	setup()
@@ -264,7 +264,7 @@
 			setAnchored(FALSE)
 			to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
 			power_change()
-			invisibility = 0
+			invisibility = ZERO
 			qdel(cover) //deletes the cover, and the turret instance itself becomes its own cover.
 
 	else if(I.GetID())
@@ -316,9 +316,9 @@
 
 		addtimer(VARSET_CALLBACK(src, on, TRUE), rand(60,600))
 
-/obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, damage_flag = ZERO, sound_effect = 1)
 	. = ..()
-	if(. && obj_integrity > 0) //damage received
+	if(. && obj_integrity > ZERO) //damage received
 		if(prob(30))
 			spark_system.start()
 		if(on && !(turret_flags & TURRET_FLAG_SHOOT_ALL_REACT) && !(obj_flags & EMAGGED))
@@ -335,7 +335,7 @@
 	. = ..()
 	if(.)
 		power_change()
-		invisibility = 0
+		invisibility = ZERO
 		spark_system.start()	//creates some sparks because they look cool
 		qdel(cover)	//deletes the cover - no need on keeping it there!
 
@@ -420,7 +420,7 @@
 		popDown() // no valid targets, close the cover
 
 /obj/machinery/porta_turret/proc/tryToShootAt(list/atom/movable/targets)
-	while(targets.len > 0)
+	while(targets.len > ZERO)
 		var/atom/movable/M = pick(targets)
 		targets -= M
 		if(target(M))
@@ -434,12 +434,12 @@
 		return
 	if(stat & BROKEN)
 		return
-	invisibility = 0
+	invisibility = ZERO
 	raising = 1
 	if(cover)
 		flick("popup", cover)
 	sleep(POPUP_ANIM_TIME)
-	raising = 0
+	raising = ZERO
 	if(cover)
 		cover.icon_state = "openTurretCover"
 	raised = 1
@@ -455,15 +455,15 @@
 	if(cover)
 		flick("popdown", cover)
 	sleep(POPDOWN_ANIM_TIME)
-	raising = 0
+	raising = ZERO
 	if(cover)
 		cover.icon_state = "turretCover"
-	raised = 0
+	raised = ZERO
 	invisibility = 2
 	update_icon()
 
 /obj/machinery/porta_turret/proc/assess_perp(mob/living/carbon/human/perp)
-	var/threatcount = 0	//the integer returned
+	var/threatcount = ZERO	//the integer returned
 
 	if(obj_flags & EMAGGED)
 		return 10	//if emagged, always return 10.
@@ -476,8 +476,8 @@
 	if(turret_flags & TURRET_FLAG_AUTH_WEAPONS)	//check for weapon authorization
 		if(isnull(perp.wear_id) || istype(perp.wear_id.GetID(), /obj/item/card/id/syndicate))
 
-			if(allowed(perp)) //if the perp has security access, return 0
-				return 0
+			if(allowed(perp)) //if the perp has security access, return ZERO
+				return ZERO
 			if(perp.is_holding_item_of_type(/obj/item/gun) ||  perp.is_holding_item_of_type(/obj/item/melee/baton))
 				threatcount += 4
 
@@ -493,9 +493,9 @@
 	if((turret_flags & TURRET_FLAG_SHOOT_UNSHIELDED) && (!HAS_TRAIT(perp, TRAIT_MINDSHIELD)))
 		threatcount += 4
 
-	// If we aren't shooting heads then return a threatcount of 0
+	// If we aren't shooting heads then return a threatcount of ZERO
 	if (!(turret_flags & TURRET_FLAG_SHOOT_HEADS) && (perp.get_assignment() in GLOB.command_positions))
-		return 0
+		return ZERO
 	
 	return threatcount
 
@@ -535,7 +535,7 @@
 				T = closer
 		else
 			var/target_dir = get_dir(T,target)
-			for(var/d in list(0,-45,45))
+			for(var/d in list(ZERO,-45,45))
 				var/turf/closer = get_step(T,turn(target_dir,d))
 				if(istype(closer) && !is_blocked_turf(closer) && T.Adjacent(closer))
 					T = closer
@@ -641,7 +641,7 @@
 	installation = null
 	always_up = 1
 	use_power = NO_POWER_USE
-	has_cover = 0
+	has_cover = ZERO
 	scan_range = 9
 	req_access = list(ACCESS_SYNDICATE)
 	mode = TURRET_LETHAL
@@ -729,7 +729,7 @@
 	faction = list("neutral","silicon","turret") //Minebots, medibots, etc that should not be shot.
 
 /obj/machinery/porta_turret/aux_base/assess_perp(mob/living/carbon/human/perp)
-	return 0 //Never shoot humanoids. You are on your own if Ashwalkers or the like attack!
+	return ZERO //Never shoot humanoids. You are on your own if Ashwalkers or the like attack!
 
 /obj/machinery/porta_turret/aux_base/setup()
 	return
@@ -747,7 +747,7 @@
 	max_integrity = 260
 	always_up = 1
 	use_power = NO_POWER_USE
-	has_cover = 0
+	has_cover = ZERO
 	scan_range = 9
 	stun_projectile = /obj/projectile/beam/laser
 	lethal_projectile = /obj/projectile/beam/laser
@@ -763,7 +763,7 @@
 	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/porta_turret/centcom_shuttle/assess_perp(mob/living/carbon/human/perp)
-	return 0
+	return ZERO
 
 /obj/machinery/porta_turret/centcom_shuttle/setup()
 	return
@@ -788,22 +788,22 @@
 	icon_state = "control_standby"
 	density = FALSE
 	var/enabled = 1
-	var/lethal = 0
+	var/lethal = ZERO
 	var/locked = TRUE
 	var/control_area = null //can be area name, path or nothing.
-	var/ailock = 0 // AI cannot use this
+	var/ailock = ZERO // AI cannot use this
 	var/shoot_cyborgs = FALSE
 	req_access = list(ACCESS_AI_UPLOAD)
 	var/list/obj/machinery/porta_turret/turrets = list()
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/machinery/turretid/Initialize(mapload, ndir = 0, built = 0)
+/obj/machinery/turretid/Initialize(mapload, ndir = ZERO, built = ZERO)
 	. = ..()
 	if(built)
 		setDir(ndir)
 		locked = FALSE
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
+		pixel_x = (dir & 3)? ZERO : (dir == 4 ? -24 : 24)
+		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : ZERO
 	power_change() //Checks power and initial settings
 
 /obj/machinery/turretid/Destroy()
@@ -849,7 +849,7 @@
 	if (issilicon(user))
 		return attack_hand(user)
 
-	if ( get_dist(src, user) == 0 )		// trying to unlock the interface
+	if ( get_dist(src, user) == ZERO )		// trying to unlock the interface
 		if (allowed(usr))
 			if(obj_flags & EMAGGED)
 				to_chat(user, "<span class='warning'>The turret control is unresponsive!</span>")
@@ -884,7 +884,7 @@
 
 /obj/machinery/turretid/ui_interact(mob/user)
 	. = ..()
-	if ( get_dist(src, user) > 0 )
+	if ( get_dist(src, user) > ZERO )
 		if ( !(issilicon(user) || IsAdminGhost(user)) )
 			to_chat(user, "<span class='warning'>You are too far away!</span>")
 			user.unset_machine()
@@ -1021,9 +1021,9 @@
 	var/team_color
 
 /obj/machinery/porta_turret/lasertag/assess_perp(mob/living/carbon/human/perp)
-	. = 0
+	. = ZERO
 	if(team_color == "blue")	//Lasertag turrets target the opposing team, how great is that? -Sieve
-		. = 0		//But does not target anyone else
+		. = ZERO		//But does not target anyone else
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/redtag))
 			. += 4
 		if(perp.is_holding_item_of_type(/obj/item/gun/energy/laser/redtag))
@@ -1032,7 +1032,7 @@
 			. += 2
 
 	if(team_color == "red")
-		. = 0
+		. = ZERO
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/bluetag))
 			. += 4
 		if(perp.is_holding_item_of_type(/obj/item/gun/energy/laser/bluetag))

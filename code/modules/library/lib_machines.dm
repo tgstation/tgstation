@@ -21,7 +21,7 @@
 	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/libraryconsole
 	desc = "Checked out books MUST be returned on time."
-	var/screenstate = 0
+	var/screenstate = ZERO
 	var/title
 	var/category = "Any"
 	var/author
@@ -31,7 +31,7 @@
 	. = ..()
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
-		if(0)
+		if(ZERO)
 			dat += "<h2>Search Settings</h2><br>"
 			dat += "<A href='?src=[REF(src)];settitle=1'>Filter by Title: [title]</A><BR>"
 			dat += "<A href='?src=[REF(src)];setcategory=1'>Filter by Category: [category]</A><BR>"
@@ -105,7 +105,7 @@
 		screenstate = 1
 
 	if(href_list["back"])
-		screenstate = 0
+		screenstate = ZERO
 
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
@@ -165,12 +165,12 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 /obj/machinery/computer/libraryconsole/bookmanagement
 	name = "book inventory management console"
 	desc = "Librarian's command station."
-	screenstate = 0 // 0 - Main Menu, 1 - Inventory, 2 - Checked Out, 3 - Check Out a Book
+	screenstate = ZERO // ZERO - Main Menu, 1 - Inventory, 2 - Checked Out, 3 - Check Out a Book
 	verb_say = "beeps"
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
 	pass_flags = PASSTABLE
-	var/arcanecheckout = 0
+	var/arcanecheckout = ZERO
 	var/buffer_book
 	var/buffer_mob
 	var/upload_category = "Fiction"
@@ -180,7 +180,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 	var/list/libcomp_menu
 	var/page = 1	//current page of the external archives
-	var/cooldown = 0
+	var/cooldown = ZERO
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/build_library_menu()
 	if(libcomp_menu)
@@ -208,7 +208,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	. = ..()
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
-		if(0)
+		if(ZERO)
 			// Main Menu
 			dat += "<A href='?src=[REF(src)];switchscreen=1'>1. View General Inventory</A><BR>"
 			dat += "<A href='?src=[REF(src)];switchscreen=2'>2. View Checked Out Inventory</A><BR>"
@@ -221,7 +221,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 				dat += "<A href='?src=[REF(src)];switchscreen=8'>8. Access the Forbidden Lore Vault</A><BR>"
 			if(src.arcanecheckout)
 				print_forbidden_lore(user)
-				src.arcanecheckout = 0
+				src.arcanecheckout = ZERO
 		if(1)
 			// Inventory
 			dat += "<H3>Inventory</H3><BR>"
@@ -237,7 +237,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 				timetaken = round(timetaken)
 				var/timedue = b.duedate - world.time
 				timedue /= 600
-				if(timedue <= 0)
+				if(timedue <= ZERO)
 					timedue = "<font color=red><b>(OVERDUE)</b> [timedue]</font>"
 				else
 					timedue = round(timedue)
@@ -349,7 +349,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	if(href_list["switchscreen"])
 		switch(href_list["switchscreen"])
 			if("0")
-				screenstate = 0
+				screenstate = ZERO
 			if("1")
 				screenstate = 1
 			if("2")
@@ -369,7 +369,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	if(href_list["arccheckout"])
 		if(obj_flags & EMAGGED)
 			src.arcanecheckout = 1
-		src.screenstate = 0
+		src.screenstate = ZERO
 	if(href_list["increasetime"])
 		checkoutperiod += 1
 	if(href_list["decreasetime"])
@@ -430,7 +430,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	if(href_list["newspost"])
 		if(!GLOB.news_network)
 			alert("No news network found on station. Aborting.")
-		var/channelexists = 0
+		var/channelexists = ZERO
 		for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 			if(FC.channel_name == "Nanotrasen Book Club")
 				channelexists = 1

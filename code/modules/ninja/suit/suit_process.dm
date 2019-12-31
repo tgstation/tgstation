@@ -5,7 +5,7 @@
 		if(!affecting)
 			terminate()//Kills the suit and attached objects.
 
-		else if(cell.charge > 0)
+		else if(cell.charge > ZERO)
 			if(s_coold)
 				s_coold--//Checks for ability s_cooldown first.
 
@@ -14,7 +14,7 @@
 				cell.charge -= s_acost
 
 		else
-			cell.charge = 0
+			cell.charge = ZERO
 			cancel_stealth()
 
 		sleep(10)//Checks every second.

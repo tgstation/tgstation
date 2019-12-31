@@ -44,7 +44,7 @@
 	if(host_mob.bodytemperature > BODYTEMP_NORMAL)
 		host_mob.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	else if(host_mob.bodytemperature < (BODYTEMP_NORMAL + 1))
-		host_mob.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+		host_mob.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, ZERO, BODYTEMP_NORMAL)
 
 /datum/nanite_program/purging
 	name = "Blood Purification"
@@ -75,7 +75,7 @@
 		var/mob/living/carbon/C = host_mob
 		if(length(C.get_traumas()))
 			problems = TRUE
-	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
+	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > ZERO)
 		problems = TRUE
 	return problems ? ..() : FALSE
 
@@ -197,7 +197,7 @@
 		var/mob/living/carbon/C = host_mob
 		if(length(C.get_traumas()))
 			problems = TRUE
-	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
+	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > ZERO)
 		problems = TRUE
 	return problems ? ..() : FALSE
 

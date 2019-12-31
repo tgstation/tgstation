@@ -47,8 +47,8 @@
 				A.apply_mode(usr)
 		if(WIRE_ALARM) // Clear alarms.
 			var/area/AA = get_area(A)
-			if(AA.atmosalert(0, holder))
-				A.post_alert(0)
+			if(AA.atmosalert(ZERO, holder))
+				A.post_alert(ZERO)
 			A.update_icon()
 
 /datum/wires/airalarm/on_cut(wire, mend)

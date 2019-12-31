@@ -5,7 +5,7 @@
 
 /obj/projectile/bullet/gyro/on_hit(atom/target, blocked = FALSE)
 	..()
-	explosion(target, -1, 0, 2)
+	explosion(target, -1, ZERO, 2)
 	return BULLET_ACT_HIT
 
 /obj/projectile/bullet/a84mm
@@ -19,7 +19,7 @@
 
 /obj/projectile/bullet/a84mm/on_hit(atom/target, blocked = FALSE)
 	..()
-	explosion(target, -1, 1, 3, 1, 0, flame_range = 4)
+	explosion(target, -1, 1, 3, 1, ZERO, flame_range = 4)
 
 	if(ismecha(target))
 		var/obj/mecha/M = target
@@ -36,12 +36,12 @@
 	damage = 30
 	ricochets_max = 0 //it's a MISSILE
 
-/obj/projectile/bullet/a84mm_he/on_hit(atom/target, blocked=0)
+/obj/projectile/bullet/a84mm_he/on_hit(atom/target, blocked=ZERO)
 	..()
 	if(!isliving(target)) //if the target isn't alive, so is a wall or something
-		explosion(target, 0, 1, 2, 4)
+		explosion(target, ZERO, 1, 2, 4)
 	else
-		explosion(target, 0, 0, 2, 4)
+		explosion(target, ZERO, ZERO, 2, 4)
 	return BULLET_ACT_HIT
 
 /obj/projectile/bullet/a84mm_br
@@ -65,11 +65,11 @@
 	w_class = WEIGHT_CLASS_TINY
 
 
-/obj/projectile/bullet/a84mm_br/on_hit(atom/target, blocked=0)
+/obj/projectile/bullet/a84mm_br/on_hit(atom/target, blocked=ZERO)
 	..()
 	for(var/i in sturdy)
 		if(istype(target, i))
-			explosion(target, 0, 1, 1, 2)
+			explosion(target, ZERO, 1, 1, 2)
 			return BULLET_ACT_HIT
 	//if(istype(target, /turf/closed) || ismecha(target))
 	new /obj/item/broken_missile(get_turf(src), 1)

@@ -51,8 +51,8 @@ new /datum/disease_ability/symptom/powerful/youth
 
 /datum/disease_ability
 	var/name
-	var/cost = 0
-	var/required_total_points = 0
+	var/cost = ZERO
+	var/required_total_points = ZERO
 	var/start_with = FALSE
 	var/short_desc = ""
 	var/long_desc = ""
@@ -66,10 +66,10 @@ new /datum/disease_ability/symptom/powerful/youth
 /datum/disease_ability/New()
 	..()
 	if(symptoms)
-		var/stealth = 0
-		var/resistance = 0
-		var/stage_speed = 0
-		var/transmittable = 0
+		var/stealth = ZERO
+		var/resistance = ZERO
+		var/stage_speed = ZERO
+		var/transmittable = ZERO
 		for(var/T in symptoms)
 			var/datum/symptom/S = T
 			stealth += initial(S.stealth)
@@ -158,8 +158,8 @@ new /datum/disease_ability/symptom/powerful/youth
 /datum/disease_ability/action/cough
 	name = "Voluntary Coughing"
 	actions = list(/datum/action/cooldown/disease_cough)
-	cost = 0
-	required_total_points = 0
+	cost = ZERO
+	required_total_points = ZERO
 	start_with = TRUE
 	short_desc = "Force the host you are following to cough, spreading your infection to those nearby."
 	long_desc = "Force the host you are following to cough with extra force, spreading your infection to those within two meters of your host even if your transmissibility is low.<br>Cooldown: 10 seconds"

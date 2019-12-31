@@ -35,7 +35,7 @@
 				var/east_vs_west = pick(4,8)
 				if(Process_Spacemove(east_vs_west))
 					Move(get_step(src,east_vs_west), east_vs_west)
-					turns_since_move = 0
+					turns_since_move = ZERO
 	regenerate_icons()
 
 //COFFEE! SQUEEEEEEEEE!

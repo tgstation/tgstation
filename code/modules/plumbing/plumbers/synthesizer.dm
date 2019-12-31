@@ -13,7 +13,7 @@
 	///The maximum we can produce for every process
 	buffer = 5
 	///I track them here because I have no idea how I'd make tgui loop like that
-	var/static/list/possible_amounts = list(0,1,2,3,4,5)
+	var/static/list/possible_amounts = list(ZERO,1,2,3,4,5)
 	///The reagent we are producing. We are a typepath, but are also typecast because there's several occations where we need to use initial.
 	var/datum/reagent/reagent_id = null
 	///reagent overlay. its the colored pipe thingies. we track this because overlays.Cut() is bad

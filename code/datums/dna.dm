@@ -36,13 +36,13 @@
 
 	return ..()
 
-/datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = 0)
+/datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = ZERO)
 	if(!istype(destination))
 		return
 	destination.dna.unique_enzymes = unique_enzymes
 	destination.dna.uni_identity = uni_identity
 	destination.dna.blood_type = blood_type
-	destination.set_species(species.type, icon_update=0)
+	destination.set_species(species.type, icon_update=ZERO)
 	destination.dna.features = features.Copy()
 	destination.dna.real_name = real_name
 	destination.dna.temporary_mutations = temporary_mutations.Copy()
@@ -59,7 +59,7 @@
 	new_dna.real_name = real_name
 	new_dna.mutations = mutations.Copy()
 
-//See mutation.dm for what 'class' does. 'time' is time till it removes itself in decimals. 0 for no timer
+//See mutation.dm for what 'class' does. 'time' is time till it removes itself in decimals. ZERO for no timer
 /datum/dna/proc/add_mutation(mutation, class = MUT_OTHER, time)
 	var/mutation_type = mutation
 	if(istype(mutation, /datum/mutation/human))
@@ -209,7 +209,7 @@
 //Use remove_mutation instead
 /datum/dna/proc/force_lose(datum/mutation/human/HM)
 	if(holder && (HM in mutations))
-		set_se(0, HM)
+		set_se(ZERO, HM)
 		. = HM.on_losing(holder)
 		update_instability(FALSE)
 		return
@@ -218,7 +218,7 @@
 	if(uni_identity == D.uni_identity && mutation_index == D.mutation_index && real_name == D.real_name)
 		if(species.type == D.species.type && features == D.features && blood_type == D.blood_type)
 			return 1
-	return 0
+	return ZERO
 
 /datum/dna/proc/update_instability(alert=TRUE)
 	stability = 100
@@ -239,9 +239,9 @@
 					message = "<span class='warning'>It feels like your skin is moving.</span>"
 				if(1 to 19)
 					message = "<span class='warning'>You can feel your cells burning.</span>"
-				if(-INFINITY to 0)
+				if(-INFINITY to ZERO)
 					message = "<span class='boldwarning'>You can feel your DNA exploding, we need to do something fast!</span>"
-		if(stability <= 0)
+		if(stability <= ZERO)
 			holder.apply_status_effect(STATUS_EFFECT_DNA_MELT)
 		if(message)
 			to_chat(holder, message)
@@ -335,7 +335,7 @@
 	if(mrace)
 		var/datum/species/newrace = new mrace.type
 		newrace.copy_properties_from(mrace)
-		set_species(newrace, icon_update=0)
+		set_species(newrace, icon_update=ZERO)
 
 	if(newreal_name)
 		dna.real_name = newreal_name
@@ -346,7 +346,7 @@
 
 	if(ui)
 		dna.uni_identity = ui
-		updateappearance(icon_update=0)
+		updateappearance(icon_update=ZERO)
 
 	if(LAZYLEN(mutation_index))
 		dna.mutation_index = mutation_index.Copy()
@@ -371,7 +371,7 @@
 		dna.species = new rando_race()
 
 //proc used to update the mob's appearance after its dna UI has been changed
-/mob/living/carbon/proc/updateappearance(icon_update=1, mutcolor_update=0, mutations_overlay_update=0)
+/mob/living/carbon/proc/updateappearance(icon_update=1, mutcolor_update=ZERO, mutations_overlay_update=ZERO)
 	if(!has_dna())
 		return
 
@@ -383,7 +383,7 @@
 		else
 			gender = PLURAL
 
-/mob/living/carbon/human/updateappearance(icon_update=1, mutcolor_update=0, mutations_overlay_update=0)
+/mob/living/carbon/human/updateappearance(icon_update=1, mutcolor_update=ZERO, mutations_overlay_update=ZERO)
 	..()
 	var/structure = dna.uni_identity
 	hair_color = sanitize_hexcolor(getblock(structure, DNA_HAIR_COLOR_BLOCK))
@@ -430,7 +430,7 @@
 
 /datum/dna/proc/check_block_string(mutation)
 	if((LAZYLEN(mutation_index) > DNA_MUTATION_BLOCKS) || !(mutation in mutation_index))
-		return 0
+		return ZERO
 	return is_gene_active(mutation)
 
 /datum/dna/proc/is_gene_active(mutation)
@@ -472,7 +472,7 @@
 
 /proc/setblock(istring, blocknumber, replacement, blocksize=DNA_BLOCK_SIZE)
 	if(!istring || !blocknumber || !replacement || !blocksize)
-		return 0
+		return ZERO
 	return getleftblocks(istring, blocknumber, blocksize) + replacement + getrightblocks(istring, blocknumber, blocksize)
 
 /datum/dna/proc/mutation_in_sequence(mutation)
@@ -538,7 +538,7 @@
 
 /proc/scramble_dna(mob/living/carbon/M, ui=FALSE, se=FALSE, probability)
 	if(!M.has_dna())
-		return 0
+		return ZERO
 	if(se)
 		for(var/i=1, i<=DNA_MUTATION_BLOCKS, i++)
 			if(prob(probability))
@@ -551,7 +551,7 @@
 		M.updateappearance(mutations_overlay_update=1)
 	return 1
 
-//value in range 1 to values. values must be greater than 0
+//value in range 1 to values. values must be greater than ZERO
 //all arguments assumed to be positive integers
 /proc/construct_block(value, values, blocksize=DNA_BLOCK_SIZE)
 	var/width = round((16**blocksize)/values)
@@ -573,14 +573,14 @@
 /mob/living/carbon/human/proc/something_horrible(ignore_stability)
 	if(!has_dna()) //shouldn't ever happen anyway so it's just in really weird cases
 		return
-	if(!ignore_stability && (dna.stability > 0))
+	if(!ignore_stability && (dna.stability > ZERO))
 		return
 	var/instability = -dna.stability
 	dna.remove_all_mutations()
 	dna.stability = 100
-	if(prob(max(70-instability,0)))
-		switch(rand(0,10)) //not complete and utter death
-			if(0)
+	if(prob(max(70-instability,ZERO)))
+		switch(rand(ZERO,10)) //not complete and utter death
+			if(ZERO)
 				monkeyize()
 			if(1)
 				gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
@@ -617,8 +617,8 @@
 				ForceContractDisease(new/datum/disease/gastrolosis())
 				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>")
 	else
-		switch(rand(0,5))
-			if(0)
+		switch(rand(ZERO,5))
+			if(ZERO)
 				gib()
 			if(1)
 				dust()

@@ -84,7 +84,7 @@
 	name = "gravitational anomaly"
 	icon_state = "shield2"
 	density = FALSE
-	var/boing = 0
+	var/boing = ZERO
 
 /obj/effect/anomaly/grav/anomalyEffect()
 	..()
@@ -92,12 +92,12 @@
 	for(var/obj/O in orange(4, src))
 		if(!O.anchored)
 			step_towards(O,src)
-	for(var/mob/living/M in range(0, src))
+	for(var/mob/living/M in range(ZERO, src))
 		gravShock(M)
 	for(var/mob/living/M in orange(4, src))
 		if(!M.mob_negates_gravity())
 			step_towards(M,src)
-	for(var/obj/O in range(0,src))
+	for(var/obj/O in range(ZERO,src))
 		if(!O.anchored)
 			var/mob/living/target = locate() in view(4,src)
 			if(target && !target.stat)
@@ -117,7 +117,7 @@
 		A.Paralyze(40)
 		var/atom/target = get_edge_target_turf(A, get_dir(src, get_step_away(A, src)))
 		A.throw_at(target, 5, 1)
-		boing = 0
+		boing = ZERO
 
 /obj/effect/anomaly/grav/high
 	var/grav_field
@@ -127,7 +127,7 @@
 	setup_grav_field()
 
 /obj/effect/anomaly/grav/high/proc/setup_grav_field()
-	grav_field = make_field(/datum/proximity_monitor/advanced/gravity, list("current_range" = 7, "host" = src, "gravity_value" = rand(0,3)))
+	grav_field = make_field(/datum/proximity_monitor/advanced/gravity, list("current_range" = 7, "host" = src, "gravity_value" = rand(ZERO,3)))
 
 /obj/effect/anomaly/grav/high/Destroy()
 	QDEL_NULL(grav_field)
@@ -146,7 +146,7 @@
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()
 	canshock = TRUE
-	for(var/mob/living/M in range(0, src))
+	for(var/mob/living/M in range(ZERO, src))
 		mobShock(M)
 
 /obj/effect/anomaly/flux/Crossed(mob/living/M)
@@ -196,7 +196,7 @@
 		for(var/obj/item/beacon/W in GLOB.teleportbeacons)
 			possible += W
 
-		if(possible.len > 0)
+		if(possible.len > ZERO)
 			chosen = pick(possible)
 
 		if(chosen)
@@ -248,7 +248,7 @@
 /obj/effect/anomaly/pyro
 	name = "pyroclastic anomaly"
 	icon_state = "mustard"
-	var/ticks = 0
+	var/ticks = ZERO
 
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()
@@ -256,7 +256,7 @@
 	if(ticks < 5)
 		return
 	else
-		ticks = 0
+		ticks = ZERO
 	var/turf/open/T = get_turf(src)
 	if(istype(T))
 		T.atmos_spawn_air("o2=5;plasma=5;TEMP=1000")
@@ -293,7 +293,7 @@
 		qdel(src)
 		return
 
-	grav(rand(0,3), rand(2,3), 50, 25)
+	grav(rand(ZERO,3), rand(2,3), 50, 25)
 
 	//Throwing stuff around!
 	for(var/obj/O in range(2,src))

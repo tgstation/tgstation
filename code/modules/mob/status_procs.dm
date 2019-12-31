@@ -5,7 +5,7 @@
 
 ///Set the jitter of a mob
 /mob/proc/Jitter(amount)
-	jitteriness = max(jitteriness,amount,0)
+	jitteriness = max(jitteriness,amount,ZERO)
 
 /**
   * Set the dizzyness of a mob to a passed in amount
@@ -13,11 +13,11 @@
   * Except if dizziness is already higher in which case it does nothing
   */
 /mob/proc/Dizzy(amount)
-	dizziness = max(dizziness,amount,0)
+	dizziness = max(dizziness,amount,ZERO)
 
 ///FOrce set the dizzyness of a mob
 /mob/proc/set_dizziness(amount)
-	dizziness = max(amount, 0)
+	dizziness = max(amount, ZERO)
 
 ///Blind a mobs eyes by amount
 /mob/proc/blind_eyes(amount)
@@ -30,7 +30,7 @@
   */
 /mob/proc/adjust_blindness(amount)
 	var/old_eye_blind = eye_blind
-	eye_blind = max(0, eye_blind + amount)
+	eye_blind = max(ZERO, eye_blind + amount)
 	if(!old_eye_blind || !eye_blind && !HAS_TRAIT(src, TRAIT_BLIND))
 		update_blindness()
 /**
@@ -38,7 +38,7 @@
   */
 /mob/proc/set_blindness(amount)
 	var/old_eye_blind = eye_blind
-	eye_blind = max(amount, 0)
+	eye_blind = max(amount, ZERO)
 	if(!old_eye_blind || !eye_blind && !HAS_TRAIT(src, TRAIT_BLIND))
 		update_blindness()
 
@@ -58,7 +58,7 @@
   * Make the mobs vision blurry
   */
 /mob/proc/blur_eyes(amount)
-	if(amount>0)
+	if(amount>ZERO)
 		eye_blurry = max(amount, eye_blurry)
 	update_eye_blur()
 
@@ -66,12 +66,12 @@
   * Adjust the current blurriness of the mobs vision by amount
   */
 /mob/proc/adjust_blurriness(amount)
-	eye_blurry = max(eye_blurry+amount, 0)
+	eye_blurry = max(eye_blurry+amount, ZERO)
 	update_eye_blur()
 
 ///Set the mobs blurriness of vision to an amount
 /mob/proc/set_blurriness(amount)
-	eye_blurry = max(amount, 0)
+	eye_blurry = max(amount, ZERO)
 	update_eye_blur()
 
 ///Apply the blurry overlays to a mobs clients screen
@@ -100,6 +100,6 @@
 	return
 
 ///Adjust the body temperature of a mob, with min/max settings
-/mob/proc/adjust_bodytemperature(amount,min_temp=0,max_temp=INFINITY)
+/mob/proc/adjust_bodytemperature(amount,min_temp=ZERO,max_temp=INFINITY)
 	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
 		bodytemperature = CLAMP(bodytemperature + amount,min_temp,max_temp)

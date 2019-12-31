@@ -6,13 +6,13 @@
 	icon_dead = "faithless_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	gender = MALE
-	speak_chance = 0
+	speak_chance = ZERO
 	turns_per_move = 5
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
 	emote_taunt = list("wails")
 	taunt_chance = 25
-	speed = 0
+	speed = ZERO
 	maxHealth = 80
 	health = 80
 	spacewalk = TRUE
@@ -28,8 +28,8 @@
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	speak_emote = list("growls")
 
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
+	minbodytemp = ZERO
 
 	faction = list("faithless")
 	gold_core_spawnable = HOSTILE_SPAWN

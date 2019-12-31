@@ -750,7 +750,7 @@
 	var/ingredients_listed = ""
 	var/pancakeCount = contents.len
 	switch(pancakeCount)
-		if(0)
+		if(ZERO)
 			desc = initial(desc)
 		if(1 to 2)
 			desc = "A stack of fluffy pancakes."

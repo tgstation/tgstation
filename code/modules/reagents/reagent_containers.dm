@@ -17,7 +17,7 @@
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
-	if(isnum(vol) && vol > 0)
+	if(isnum(vol) && vol > ZERO)
 		volume = vol
 	create_reagents(volume, reagent_flags)
 	if(spawned_disease)
@@ -33,7 +33,7 @@
 
 /obj/item/reagent_containers/attack_self(mob/user)
 	if(possible_transfer_amounts.len)
-		var/i=0
+		var/i=ZERO
 		for(var/A in possible_transfer_amounts)
 			i++
 			if(A == amount_per_transfer_from_this)
@@ -50,7 +50,7 @@
 
 /obj/item/reagent_containers/proc/canconsume(mob/eater, mob/user)
 	if(!iscarbon(eater))
-		return 0
+		return ZERO
 	var/mob/living/carbon/C = eater
 	var/covered = ""
 	if(C.is_mouth_covered(head_only = 1))
@@ -60,7 +60,7 @@
 	if(covered)
 		var/who = (isnull(user) || eater == user) ? "your" : "[eater.p_their()]"
 		to_chat(user, "<span class='warning'>You have to remove [who] [covered] first!</span>")
-		return 0
+		return ZERO
 	return 1
 
 /obj/item/reagent_containers/ex_act()

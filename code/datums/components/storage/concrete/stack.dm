@@ -6,7 +6,7 @@
 	max_combined_w_class = WEIGHT_CLASS_NORMAL * 14
 
 /datum/component/storage/concrete/stack/proc/total_stack_amount()
-	. = 0
+	. = ZERO
 	var/atom/real_location = real_location()
 	for(var/i in real_location)
 		var/obj/item/stack/S = i
@@ -15,7 +15,7 @@
 		. += S.amount
 
 /datum/component/storage/concrete/stack/proc/remaining_space()
-	return max(0, max_combined_stack_amount - total_stack_amount())
+	return max(ZERO, max_combined_stack_amount - total_stack_amount())
 
 //emptying procs do not need modification as stacks automatically merge.
 

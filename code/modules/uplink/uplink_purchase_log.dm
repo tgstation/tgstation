@@ -3,7 +3,7 @@ GLOBAL_LIST(uplink_purchase_logs_by_key)	//assoc key = /datum/uplink_purchase_lo
 /datum/uplink_purchase_log
 	var/owner
 	var/list/purchase_log				//assoc path-of-item = /datum/uplink_purchase_entry
-	var/total_spent = 0
+	var/total_spent = ZERO
 
 /datum/uplink_purchase_log/New(_owner, datum/component/uplink/_parent)
 	owner = _owner
@@ -67,7 +67,7 @@ GLOBAL_LIST(uplink_purchase_logs_by_key)	//assoc key = /datum/uplink_purchase_lo
 	return "[uplink_item.type]|[uplink_item.name]|[uplink_item.cost]|[spent_cost]"
 
 /datum/uplink_purchase_entry
-	var/amount_purchased = 0
+	var/amount_purchased = ZERO
 	var/path
 	var/icon_b64
 	var/desc

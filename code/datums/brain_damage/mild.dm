@@ -16,7 +16,7 @@
 	..()
 
 /datum/brain_trauma/mild/hallucinations/on_lose()
-	owner.hallucination = 0
+	owner.hallucination = ZERO
 	..()
 
 /datum/brain_trauma/mild/stuttering
@@ -31,7 +31,7 @@
 	..()
 
 /datum/brain_trauma/mild/stuttering/on_lose()
-	owner.stuttering = 0
+	owner.stuttering = ZERO
 	..()
 
 /datum/brain_trauma/mild/dumbness
@@ -56,7 +56,7 @@
 
 /datum/brain_trauma/mild/dumbness/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)
-	owner.derpspeech = 0
+	owner.derpspeech = ZERO
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "dumb")
 	..()
 

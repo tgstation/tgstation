@@ -5,7 +5,7 @@
 	icon_state = "shield-old"
 	density = TRUE
 	move_resist = INFINITY
-	opacity = 0
+	opacity = ZERO
 	anchored = TRUE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	max_integrity = 200 //The shield can only take so much beating (prevents perma-prisons)
@@ -29,16 +29,16 @@
 		if(1)
 			qdel(src)
 		if(2)
-			take_damage(50, BRUTE, "energy", 0)
+			take_damage(50, BRUTE, "energy", ZERO)
 
-/obj/structure/emergency_shield/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/emergency_shield/play_attack_sound(damage, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BURN)
 			playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
 		if(BRUTE)
 			playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
 
-/obj/structure/emergency_shield/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+/obj/structure/emergency_shield/take_damage(damage, damage_type = BRUTE, damage_flag = ZERO, sound_effect = 1, attack_dir)
 	. = ..()
 	if(.) //damage was dealt
 		new /obj/effect/temp_visual/impact_effect/ion(loc)
@@ -70,7 +70,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shieldoff"
 	density = TRUE
-	opacity = 0
+	opacity = ZERO
 	anchored = FALSE
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	req_access = list(ACCESS_ENGINE)
@@ -115,7 +115,7 @@
 
 /obj/machinery/shieldgen/deconstruct(disassembled = TRUE)
 	obj_break()
-	locked = pick(0,1)
+	locked = pick(ZERO,1)
 
 /obj/machinery/shieldgen/interact(mob/user)
 	. = ..()
@@ -225,7 +225,7 @@
 	active_power_usage = 50
 	max_integrity = 300
 	var/active = FALSE
-	var/power = 0
+	var/power = ZERO
 	var/maximum_stored_power = 500
 	var/locked = TRUE
 	var/shield_range = 8
@@ -258,7 +258,7 @@
 	if(active)
 		icon_state = "shield_wall_gen_on"
 		if(active == ACTIVE_SETUPFIELDS)
-			var/fields = 0
+			var/fields = ZERO
 			for(var/d in GLOB.cardinals)
 				if(setup_field(d))
 					fields++
@@ -287,7 +287,7 @@
 
 	var/turf/T = loc
 	var/obj/machinery/power/shieldwallgen/G
-	var/steps = 0
+	var/steps = ZERO
 	var/opposite_direction = turn(direction, 180)
 
 	for(var/i in 1 to shield_range) //checks out to 8 tiles away for another generator
@@ -336,7 +336,7 @@
 
 /obj/machinery/power/shieldwallgen/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
-	. |= default_unfasten_wrench(user, I, 0)
+	. |= default_unfasten_wrench(user, I, ZERO)
 	var/turf/T = get_turf(src)
 	update_cable_icons_on_turf(T)
 	if(. == SUCCESSFUL_UNFASTEN && anchored)
@@ -431,7 +431,7 @@
 
 		drain_power(10)
 
-/obj/machinery/shieldwall/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/machinery/shieldwall/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BURN)
 			playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
@@ -439,7 +439,7 @@
 			playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
 
 //the shield wall is immune to damage but it drains the stored power of the generators.
-/obj/machinery/shieldwall/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+/obj/machinery/shieldwall/take_damage(damage_amount, damage_type = BRUTE, damage_flag = ZERO, sound_effect = 1, attack_dir)
 	. = ..()
 	if(damage_type == BRUTE || damage_type == BURN)
 		drain_power(damage_amount)

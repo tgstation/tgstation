@@ -17,14 +17,14 @@
 	var/freq = FREQ_MAGNETS		// radio frequency
 	var/electricity_level = 1 // intensity of the magnetic pull
 	var/magnetic_field = 1 // the range of magnetic attraction
-	var/code = 0 // frequency code, they should be different unless you have a group of magnets working together or something
+	var/code = ZERO // frequency code, they should be different unless you have a group of magnets working together or something
 	var/turf/center // the center of magnetic attraction
 	var/on = FALSE
 	var/magneting = FALSE
 
-	// x, y modifiers to the center turf; (0, 0) is centered on the magnet, whereas (1, -1) is one tile right, one tile down
-	var/center_x = 0
-	var/center_y = 0
+	// x, y modifiers to the center turf; (ZERO, ZERO) is centered on the magnet, whereas (1, -1) is one tile right, one tile down
+	var/center_x = ZERO
+	var/center_y = ZERO
 	var/max_dist = 20 // absolute value of center_x,y cannot exceed this integer
 
 /obj/machinery/magnetic_module/Initialize()
@@ -45,7 +45,7 @@
 
 // update the invisibility and icon
 /obj/machinery/magnetic_module/hide(intact)
-	invisibility = intact ? INVISIBILITY_MAXIMUM : 0
+	invisibility = intact ? INVISIBILITY_MAXIMUM : ZERO
 	update_icon()
 
 // update the icon_state
@@ -89,7 +89,7 @@
 					electricity_level = 12
 			if("sub-elec")
 				electricity_level--
-				if(electricity_level <= 0)
+				if(electricity_level <= ZERO)
 					electricity_level = 1
 			if("add-mag")
 				magnetic_field++
@@ -97,7 +97,7 @@
 					magnetic_field = 4
 			if("sub-mag")
 				magnetic_field--
-				if(magnetic_field <= 0)
+				if(magnetic_field <= ZERO)
 					magnetic_field = 1
 
 			if("set-x")
@@ -116,8 +116,8 @@
 			if("W") // WEST
 				center_x--
 			if("C") // CENTER
-				center_x = 0
-				center_y = 0
+				center_x = ZERO
+				center_y = ZERO
 			if("R") // RANDOM
 				center_x = rand(-max_dist, max_dist)
 				center_y = rand(-max_dist, max_dist)
@@ -138,9 +138,9 @@
 		on = FALSE
 
 	// Sanity checks:
-	if(electricity_level <= 0)
+	if(electricity_level <= ZERO)
 		electricity_level = 1
-	if(magnetic_field <= 0)
+	if(magnetic_field <= ZERO)
 		magnetic_field = 1
 
 
@@ -197,7 +197,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 45
 	var/frequency = FREQ_MAGNETS
-	var/code = 0
+	var/code = ZERO
 	var/list/magnets = list()
 	var/title = "Magnetic Control Console"
 	var/autolink = 0 // if set to 1, can't probe for other magnets!
@@ -207,8 +207,8 @@
 	var/speed = 1 // lowest = 1, highest = 10
 	var/list/rpath = list() // real path of the magnet, used in iterator
 
-	var/moving = 0 // 1 if scheduled to loop
-	var/looping = 0 // 1 if looping
+	var/moving = ZERO // 1 if scheduled to loop
+	var/looping = ZERO // 1 if looping
 
 	var/datum/radio_frequency/radio_connection
 
@@ -231,7 +231,7 @@
 	return ..()
 
 /obj/machinery/magnetic_controller/process()
-	if(magnets.len == 0 && autolink)
+	if(magnets.len == ZERO && autolink)
 		for(var/obj/machinery/magnetic_module/M in GLOB.machines)
 			if(M.freq == frequency && M.code == code)
 				magnets.Add(M)
@@ -249,7 +249,7 @@
 	if(magnets.len >= 1)
 
 		dat += "Magnets confirmed: <br>"
-		var/i = 0
+		var/i = ZERO
 		for(var/obj/machinery/magnetic_module/M in magnets)
 			i++
 			dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;< \[[i]\] (<a href='?src=[REF(src)];radio-op=togglepower'>[M.on ? "On":"Off"]</a>) | Electricity level: <a href='?src=[REF(src)];radio-op=minuselec'>-</a> [M.electricity_level] <a href='?src=[REF(src)];radio-op=pluselec'>+</a>; Magnetic field: <a href='?src=[REF(src)];radio-op=minusmag'>-</a> [M.magnetic_field] <a href='?src=[REF(src)];radio-op=plusmag'>+</a><br>"
@@ -302,12 +302,12 @@
 					speed = 10
 			if("minusspeed")
 				speed --
-				if(speed <= 0)
+				if(speed <= ZERO)
 					speed = 1
 			if("setpath")
 				var/newpath = copytext(sanitize(input(usr, "Please define a new path!",,path) as text|null),1,MAX_MESSAGE_LEN)
 				if(newpath && newpath != "")
-					moving = 0 // stop moving
+					moving = ZERO // stop moving
 					path = newpath
 					pathpos = 1 // reset position
 					filter_path() // renders rpath
@@ -359,7 +359,7 @@
 		else
 			sleep(12-speed)
 
-	looping = 0
+	looping = ZERO
 
 
 /obj/machinery/magnetic_controller/proc/filter_path()

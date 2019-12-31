@@ -15,12 +15,12 @@
 	var/range = 15
 	var/teleporting = FALSE //if it's in the process of teleporting
 	var/power_efficiency = 1
-	var/x_offset = 0
-	var/y_offset = 0
+	var/x_offset = ZERO
+	var/y_offset = ZERO
 	var/indicator_icon = "launchpad_target"
 
 /obj/machinery/launchpad/RefreshParts()
-	var/E = 0
+	var/E = ZERO
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		E += M.rating
 	range = initial(range)
@@ -37,7 +37,7 @@
 	MA.icon = 'icons/effects/effects.dmi'
 	MA.icon_state = "launchpad_target"
 	MA.layer = ABOVE_OPEN_TURF_LAYER
-	MA.plane = 0
+	MA.plane = ZERO
 	holder.appearance = MA
 
 	update_indicator()
@@ -207,8 +207,8 @@
 	icon_teleport = "blpad-beam"
 	anchored = FALSE
 	use_power = FALSE
-	idle_power_usage = 0
-	active_power_usage = 0
+	idle_power_usage = ZERO
+	active_power_usage = ZERO
 	teleport_speed = 20
 	range = 8
 	stationary = FALSE
@@ -415,8 +415,8 @@
 
 		if("reset")
 			if(!pad.teleporting)
-				pad.y_offset = 0
-				pad.x_offset = 0
+				pad.y_offset = ZERO
+				pad.x_offset = ZERO
 				pad.update_indicator()
 			. = TRUE
 

@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 ///////////////////////////////
 
 /proc/spawn_meteors(number = 10, list/meteortypes)
-	for(var/i = 0; i < number; i++)
+	for(var/i = ZERO; i < number; i++)
 		spawn_meteor(meteortypes)
 
 /proc/spawn_meteor(list/meteortypes)
@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		pickedstart = spaceDebrisStartLoc(startSide, startZ)
 		pickedgoal = spaceDebrisFinishLoc(startSide, startZ)
 		max_i--
-		if(max_i<=0)
+		if(max_i<=ZERO)
 			return
 	var/Me = pickweight(meteortypes)
 	var/obj/effect/meteor/M = new Me(pickedstart, pickedgoal)
@@ -92,10 +92,10 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	var/hitpwr = 2 //Level of ex_act to be called on hit.
 	var/dest
 	pass_flags = PASSTABLE
-	var/heavy = 0
+	var/heavy = ZERO
 	var/meteorsound = 'sound/effects/meteorimpact.ogg'
 	var/z_original
-	var/threat = 0 // used for determining which meteors are most interesting
+	var/threat = ZERO // used for determining which meteors are most interesting
 	var/lifetime = DEFAULT_METEOR_LIFETIME
 	var/timerid = null
 	var/list/meteordrop = list(/obj/item/stack/ore/iron)
@@ -120,7 +120,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		deltimer(timerid)
 	GLOB.meteor_list -= src
 	SSaugury.unregister_doom(src)
-	walk(src,0) //this cancels the walk_towards() proc
+	walk(src,ZERO) //this cancels the walk_towards() proc
 	. = ..()
 
 /obj/effect/meteor/Initialize(mapload, target)
@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 //or randomly when ramming turfs
 /obj/effect/meteor/proc/get_hit()
 	hits--
-	if(hits <= 0)
+	if(hits <= ZERO)
 		make_debris()
 		meteor_effect()
 		qdel(src)
@@ -177,7 +177,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		. = ..()
 
 /obj/effect/meteor/proc/make_debris()
-	for(var/throws = dropamt, throws > 0, throws--)
+	for(var/throws = dropamt, throws > ZERO, throws--)
 		var/thing_to_spawn = pick(meteordrop)
 		new thing_to_spawn(get_turf(src))
 
@@ -224,7 +224,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/medium/meteor_effect()
 	..()
-	explosion(src.loc, 0, 1, 2, 3, 0)
+	explosion(src.loc, ZERO, 1, 2, 3, ZERO)
 
 //Large-sized
 /obj/effect/meteor/big
@@ -237,7 +237,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/big/meteor_effect()
 	..()
-	explosion(src.loc, 1, 2, 3, 4, 0)
+	explosion(src.loc, 1, 2, 3, 4, ZERO)
 
 //Flaming meteor
 /obj/effect/meteor/flaming
@@ -251,7 +251,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/flaming/meteor_effect()
 	..()
-	explosion(src.loc, 1, 2, 3, 4, 0, 0, 5)
+	explosion(src.loc, 1, 2, 3, 4, ZERO, ZERO, 5)
 
 //Radiation meteor
 /obj/effect/meteor/irradiated
@@ -264,7 +264,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/irradiated/meteor_effect()
 	..()
-	explosion(src.loc, 0, 0, 4, 3, 0)
+	explosion(src.loc, ZERO, ZERO, 4, 3, ZERO)
 	new /obj/effect/decal/cleanable/greenglow(get_turf(src))
 	radiation_pulse(src, 500)
 
@@ -338,7 +338,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/tunguska/meteor_effect()
 	..()
-	explosion(src.loc, 5, 10, 15, 20, 0)
+	explosion(src.loc, 5, 10, 15, 20, ZERO)
 
 /obj/effect/meteor/tunguska/Bump()
 	..()

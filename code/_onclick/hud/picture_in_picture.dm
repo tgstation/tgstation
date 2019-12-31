@@ -3,8 +3,8 @@
 	screen_loc = "CENTER"
 	plane = FLOOR_PLANE
 	var/atom/center
-	var/width = 0
-	var/height = 0
+	var/width = ZERO
+	var/height = ZERO
 	var/list/shown_to = list()
 	var/list/viewing_turfs = list()
 	var/obj/screen/component_button/button_x
@@ -50,7 +50,7 @@
 		move_tab.icon_state = "move"
 		move_tab.plane = HUD_PLANE
 	var/matrix/M = matrix()
-	M.Translate(0, (height + 0.25) * world.icon_size)
+	M.Translate(ZERO, (height + 0.25) * world.icon_size)
 	move_tab.transform = M
 	add_overlay(move_tab)
 
@@ -94,7 +94,7 @@
 	vis_contents += button_shrink
 
 /obj/screen/movable/pic_in_pic/proc/add_background()
-	if((width > 0) && (height > 0))
+	if((width > ZERO) && (height > ZERO))
 		var/matrix/M = matrix()
 		M.Scale(width + 0.5, height + 0.5)
 		M.Translate((width-1)/2 * world.icon_size, (height-1)/2 * world.icon_size)
@@ -102,8 +102,8 @@
 		add_overlay(standard_background)
 
 /obj/screen/movable/pic_in_pic/proc/set_view_size(width, height, do_refresh = TRUE)
-	width = CLAMP(width, 0, max_dimensions)
-	height = CLAMP(height, 0, max_dimensions)
+	width = CLAMP(width, ZERO, max_dimensions)
+	height = CLAMP(height, ZERO, max_dimensions)
 	src.width = width
 	src.height = height
 

@@ -31,7 +31,7 @@
 	var/mouseLocation = null
 	var/mouseObject = null
 	var/mouseControlObject = null
-	var/middragtime = 0
+	var/middragtime = ZERO
 	var/atom/middragatom
 
 /client/MouseDown(object, location, control, params)
@@ -91,7 +91,7 @@
 	. = 1
 
 /obj/screen/IsAutoclickable()
-	. = 0
+	. = ZERO
 
 /obj/screen/click_catcher/IsAutoclickable()
 	. = 1
@@ -103,7 +103,7 @@
 			middragtime = world.time
 			middragatom = src_object
 		else
-			middragtime = 0
+			middragtime = ZERO
 			middragatom = null
 	mouseParams = params
 	mouseLocation = over_location
@@ -121,6 +121,6 @@
 
 /client/MouseDrop(src_object, over_object, src_location, over_location, src_control, over_control, params)
 	if (middragatom == src_object)
-		middragtime = 0
+		middragtime = ZERO
 		middragatom = null
 	..()

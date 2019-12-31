@@ -9,8 +9,8 @@
 	flags = NO_STUTTER
 	syllables = list(".", "|")
 	// ...|..||.||||.|.||.|.|.|||.|||
-	space_chance = 0
-	sentence_chance = 0
+	space_chance = ZERO
+	sentence_chance = ZERO
 	default_priority = 20
 
 	icon_state = "drone"

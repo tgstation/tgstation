@@ -4,7 +4,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "docs_generic"
 	item_state = "paper"
-	throwforce = 0
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_TINY
 	throw_range = 1
 	throw_speed = 1
@@ -34,7 +34,7 @@
 
 /obj/item/documents/photocopy
 	desc = "A copy of some top-secret documents. Nobody will notice they aren't the originals... right?"
-	var/forgedseal = 0
+	var/forgedseal = ZERO
 	var/copy_type = null
 
 /obj/item/documents/photocopy/New(loc, obj/item/documents/copy=null)

@@ -45,7 +45,7 @@
 	if(!stat)
 		if (visible_contents)
 			switch(contents.len)
-				if(0)
+				if(ZERO)
 					icon_state = "[initial(icon_state)]"
 				if(1 to 25)
 					icon_state = "[initial(icon_state)]1"
@@ -99,7 +99,7 @@
 
 		if(istype(O, /obj/item/storage/bag))
 			var/obj/item/storage/P = O
-			var/loaded = 0
+			var/loaded = ZERO
 			for(var/obj/G in P.contents)
 				if(contents.len >= max_n_of_items)
 					break
@@ -115,7 +115,7 @@
 				else
 					user.visible_message("<span class='notice'>[user] loads \the [src] with \the [O].</span>", \
 										 "<span class='notice'>You load \the [src] with \the [O].</span>")
-				if(O.contents.len > 0)
+				if(O.contents.len > ZERO)
 					to_chat(user, "<span class='warning'>Some items are refused.</span>")
 				if (visible_contents)
 					update_icon()
@@ -195,7 +195,7 @@
 		return
 	switch(action)
 		if("Release")
-			var/desired = 0
+			var/desired = ZERO
 
 			if(!allow_ai_retrieve && isAI(usr))
 				to_chat(usr, "<span class='warning'>[src] does not seem to be configured to respect your authority!</span>")
@@ -219,7 +219,7 @@
 				return TRUE
 
 			for(var/obj/item/O in src)
-				if(desired <= 0)
+				if(desired <= ZERO)
 					break
 				if(O.name == params["name"])
 					dispense(O, usr)
@@ -399,7 +399,7 @@
 	name = "smart organ storage"
 	desc = "A refrigerated storage unit for organ storage."
 	max_n_of_items = 20	//vastly lower to prevent processing too long
-	var/repair_rate = 0
+	var/repair_rate = ZERO
 
 /obj/machinery/smartfridge/organ/accept_check(obj/item/O)
 	if(isorgan(O) || isbodypart(O))
@@ -417,7 +417,7 @@
 /obj/machinery/smartfridge/organ/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_n_of_items = 20 * B.rating
-		repair_rate = max(0, STANDARD_ORGAN_HEALING * (B.rating - 1))
+		repair_rate = max(ZERO, STANDARD_ORGAN_HEALING * (B.rating - 1))
 
 /obj/machinery/smartfridge/organ/process()
 	for(var/organ in contents)

@@ -10,7 +10,7 @@
 
 /obj/machinery/abductor/gland_dispenser/proc/random_color()
 	//TODO : replace with presets or spectrum
-	return rgb(rand(0,255),rand(0,255),rand(0,255))
+	return rgb(rand(ZERO,255),rand(ZERO,255),rand(ZERO,255))
 
 /obj/machinery/abductor/gland_dispenser/Initialize()
 	. = ..()
@@ -38,12 +38,12 @@
 		margin: 5px;
 		border-width: 1px;
 		border-style: solid;
-		border-color: rgba(0,0,0,.2);
+		border-color: rgba(ZERO,ZERO,ZERO,.2);
 		text-align: center;
 		}
 	</style>"}
 	var/dat = ""
-	var/item_count = 0
+	var/item_count = ZERO
 	for(var/i=1,i<=gland_colors.len,i++)
 		item_count++
 		var/g_color = gland_colors[i]
@@ -51,7 +51,7 @@
 		dat += "<a class='box gland' style='background-color:[g_color]' href='?src=[REF(src)];dispense=[i]'>[amount]</a>"
 		if(item_count == 4) // Four boxes per line
 			dat +="</br></br>"
-			item_count = 0
+			item_count = ZERO
 	var/datum/browser/popup = new(user, "glands", "Gland Dispenser", 200, 200)
 	popup.add_head_content(box_css)
 	popup.set_content(dat)
@@ -78,7 +78,7 @@
 	updateUsrDialog()
 
 /obj/machinery/abductor/gland_dispenser/proc/Dispense(count)
-	if(amounts[count]>0)
+	if(amounts[count]>ZERO)
 		amounts[count]--
 		var/T = gland_types[count]
 		new T(get_turf(src))

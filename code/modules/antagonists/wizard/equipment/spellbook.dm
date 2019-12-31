@@ -20,7 +20,7 @@
 	return TRUE
 
 /datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user,obj/item/spellbook/book) // Specific circumstances
-	if(book.uses<cost || limit == 0)
+	if(book.uses<cost || limit == ZERO)
 		return FALSE
 	for(var/spell in user.mind.spell_list)
 		if(is_type_in_typecache(spell, no_coexistance_typecache))
@@ -82,7 +82,7 @@
 		return -1
 	if(!S)
 		S = new spell_type()
-	var/spell_levels = 0
+	var/spell_levels = ZERO
 	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
 		if(initial(S.name) == initial(aspell.name))
 			spell_levels = aspell.spell_level
@@ -287,7 +287,7 @@
 	dat += "<b>[name]</b>"
 	dat += " Cost:[cost]<br>"
 	dat += "<i>[desc]</i><br>"
-	if(surplus>=0)
+	if(surplus>=ZERO)
 		dat += "[surplus] left.<br>"
 	return dat
 
@@ -457,7 +457,7 @@
 /datum/spellbook_entry/summon/GetInfo()
 	var/dat =""
 	dat += "<b>[name]</b>"
-	if(cost>0)
+	if(cost>ZERO)
 		dat += " Cost:[cost]<br>"
 	else
 		dat += " No Cost<br>"
@@ -469,7 +469,7 @@
 /datum/spellbook_entry/summon/ghosts
 	name = "Summon Ghosts"
 	desc = "Spook the crew out by making them see dead people. Be warned, ghosts are capricious and occasionally vindicative, and some will use their incredibly minor abilities to frustrate you."
-	cost = 0
+	cost = ZERO
 
 /datum/spellbook_entry/summon/ghosts/IsAvailible()
 	if(!SSticker.mode)
@@ -526,7 +526,7 @@
 /datum/spellbook_entry/summon/events
 	name = "Summon Events"
 	desc = "Give Murphy's law a little push and replace all events with special wizard ones that will confound and confuse everyone. Multiple castings increase the rate of these events."
-	var/times = 0
+	var/times = ZERO
 
 /datum/spellbook_entry/summon/events/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
@@ -545,7 +545,7 @@
 
 /datum/spellbook_entry/summon/events/GetInfo()
 	. = ..()
-	if(times>0)
+	if(times>ZERO)
 		. += "You cast it [times] times.<br>"
 	return .
 
@@ -750,7 +750,7 @@
 			E = entries[text2num(href_list["refund"])]
 			if(E && E.refundable)
 				var/result = E.Refund(H,src)
-				if(result > 0)
+				if(result > ZERO)
 					if(!isnull(E.limit))
 						E.limit += result
 					uses += result

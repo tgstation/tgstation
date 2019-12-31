@@ -30,7 +30,7 @@
 	update = air.react(src)
 
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
-	var/volume = 0
+	var/volume = ZERO
 	if(istype(base, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/E = base
 		volume = E.volume
@@ -54,10 +54,10 @@
 
 							if(item.parent)
 								var/static/pipenetwarnings = 10
-								if(pipenetwarnings > 0)
+								if(pipenetwarnings > ZERO)
 									log_mapping("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) around [AREACOORD(item)].")
 									pipenetwarnings--
-									if(pipenetwarnings == 0)
+									if(pipenetwarnings == ZERO)
 										log_mapping("build_pipeline(): further messages about pipenets will be suppressed")
 							members += item
 							possible_expansions += item
@@ -160,7 +160,7 @@
 
 		if(modeled_location.blocks_air)
 
-			if((modeled_location.heat_capacity>0) && (partial_heat_capacity>0))
+			if((modeled_location.heat_capacity>ZERO) && (partial_heat_capacity>ZERO))
 				var/delta_temperature = air.temperature - target_temperature
 
 				var/heat = thermal_conductivity*delta_temperature* \
@@ -170,16 +170,16 @@
 				modeled_location.TakeTemperature(heat/target_heat_capacity)
 
 		else
-			var/delta_temperature = 0
-			var/sharer_heat_capacity = 0
+			var/delta_temperature = ZERO
+			var/sharer_heat_capacity = ZERO
 
 			delta_temperature = (air.temperature - target_temperature)
 			sharer_heat_capacity = target_heat_capacity
 
-			var/self_temperature_delta = 0
-			var/sharer_temperature_delta = 0
+			var/self_temperature_delta = ZERO
+			var/sharer_temperature_delta = ZERO
 
-			if((sharer_heat_capacity>0) && (partial_heat_capacity>0))
+			if((sharer_heat_capacity>ZERO) && (partial_heat_capacity>ZERO))
 				var/heat = thermal_conductivity*delta_temperature* \
 					(partial_heat_capacity*sharer_heat_capacity/(partial_heat_capacity+sharer_heat_capacity))
 
@@ -193,7 +193,7 @@
 
 
 	else
-		if((target.heat_capacity>0) && (partial_heat_capacity>0))
+		if((target.heat_capacity>ZERO) && (partial_heat_capacity>ZERO))
 			var/delta_temperature = air.temperature - target.temperature
 
 			var/heat = thermal_conductivity*delta_temperature* \
@@ -230,9 +230,9 @@
 				if(C.connected_device)
 					GL += C.connected_device.air_contents
 
-	var/total_thermal_energy = 0
-	var/total_heat_capacity = 0
-	var/datum/gas_mixture/total_gas_mixture = new(0)
+	var/total_thermal_energy = ZERO
+	var/total_heat_capacity = ZERO
+	var/datum/gas_mixture/total_gas_mixture = new(ZERO)
 
 	var/list/total_gases = total_gas_mixture.gases
 
@@ -252,9 +252,9 @@
 
 		total_thermal_energy += THERMAL_ENERGY(G)
 
-	total_gas_mixture.temperature = total_heat_capacity ? total_thermal_energy/total_heat_capacity : 0
+	total_gas_mixture.temperature = total_heat_capacity ? total_thermal_energy/total_heat_capacity : ZERO
 
-	if(total_gas_mixture.volume > 0)
+	if(total_gas_mixture.volume > ZERO)
 		//Update individual gas_mixtures by volume ratio
 		for(var/i in GL)
 			var/datum/gas_mixture/G = i

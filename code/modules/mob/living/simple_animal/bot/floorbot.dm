@@ -23,7 +23,7 @@
 	var/targetdirection
 	var/replacetiles = FALSE
 	var/placetiles = FALSE
-	var/specialtiles = 0
+	var/specialtiles = ZERO
 	var/maxtiles = 100
 	var/obj/item/stack/tile/tiletype
 	var/fixfloors = TRUE
@@ -121,7 +121,7 @@
 		var/loaded = min(maxtiles-specialtiles, tiles.amount)
 		tiles.use(loaded)
 		specialtiles += loaded
-		if(loaded > 0)
+		if(loaded > ZERO)
 			to_chat(user, "<span class='notice'>You load [loaded] tiles into the floorbot. It now contains [specialtiles] tiles.</span>")
 		else
 			to_chat(user, "<span class='warning'>You need at least one floor tile to put into [src]!</span>")
@@ -170,7 +170,7 @@
 
 /mob/living/simple_animal/bot/floorbot/proc/empty_tiles()
 	new tiletype(drop_location(), specialtiles)
-	specialtiles = 0
+	specialtiles = ZERO
 	tiletype = null
 
 /mob/living/simple_animal/bot/floorbot/handle_automated_action()
@@ -205,7 +205,7 @@
 			process_type = FIX_TILE
 			target = scan(/turf/open/floor)
 
-		if(!target && replacetiles && specialtiles > 0) //Replace a floor tile with custom tile
+		if(!target && replacetiles && specialtiles > ZERO) //Replace a floor tile with custom tile
 			process_type = REPLACE_TILE //The target must be a tile. The floor must already have a floortile.
 			target = scan(/turf/open/floor)
 
@@ -242,12 +242,12 @@
 				addtimer(CALLBACK(src, .proc/go_idle), 0.5 SECONDS)
 			path = list()
 			return
-		if(path.len == 0)
+		if(path.len == ZERO)
 			if(!isturf(target))
 				var/turf/TL = get_turf(target)
-				path = get_path_to(src, TL, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = FALSE)
+				path = get_path_to(src, TL, /turf/proc/Distance_cardinal, ZERO, 30, id=access_card,simulated_only = FALSE)
 			else
-				path = get_path_to(src, target, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = FALSE)
+				path = get_path_to(src, target, /turf/proc/Distance_cardinal, ZERO, 30, id=access_card,simulated_only = FALSE)
 
 			if(!bot_move(target))
 				add_to_ignore(target)
@@ -354,7 +354,7 @@
 				F.burnt = FALSE
 				F.PlaceOnTop(initial(tiletype.turf_type), flags = CHANGETURF_INHERIT_AIR)
 				specialtiles -= 1
-				if(specialtiles == 0)
+				if(specialtiles == ZERO)
 					speak("Requesting refill of custom floortiles to continue replacing.")
 	mode = BOT_IDLE
 	update_icon()

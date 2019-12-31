@@ -4,7 +4,7 @@
 	typepath = /datum/round_event/spooky
 	weight = -1							//forces it to be called, regardless of weight
 	max_occurrences = 1
-	earliest_start = 0 MINUTES
+	earliest_start = ZERO MINUTES
 
 /datum/round_event/spooky/start()
 	..()
@@ -46,7 +46,7 @@
 
 /obj/item/storage/spooky/Initialize()
 	. = ..()
-	for(var/distrobuteinbag in 0 to 5)
+	for(var/distrobuteinbag in ZERO to 5)
 		var/type = pick(/obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull,
 		/obj/item/reagent_containers/food/snacks/sugarcookie/spookycoffin,
 		/obj/item/reagent_containers/food/snacks/candy_corn,

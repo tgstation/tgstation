@@ -51,7 +51,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	anchored = TRUE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	var/mob/living/wizard
-	var/z_original = 0
+	var/z_original = ZERO
 	var/destination
 	var/notify = TRUE
 	var/atom/special_target
@@ -95,11 +95,11 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	//We hit what we wanted to hit, time to go
 	special_target = null
 	destination = get_edge_target_turf(src, dir)
-	walk(src,0)
+	walk(src,ZERO)
 	walk_towards(src, destination, 1)
 
 /obj/effect/immovablerod/ex_act(severity, target)
-	return 0
+	return ZERO
 
 /obj/effect/immovablerod/singularity_act()
 	return

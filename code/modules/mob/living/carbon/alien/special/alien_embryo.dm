@@ -4,7 +4,7 @@
 	name = "alien embryo"
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "larva0_dead"
-	var/stage = 0
+	var/stage = ZERO
 	var/bursting = FALSE
 
 /obj/item/organ/body_egg/alien_embryo/on_find(mob/living/finder)
@@ -14,7 +14,7 @@
 	else
 		to_chat(finder, "<span class='notice'>It's grown quite large, and writhes slightly as you look at it.</span>")
 		if(prob(10))
-			AttemptGrow(0)
+			AttemptGrow(ZERO)
 
 /obj/item/organ/body_egg/alien_embryo/prepare_eat()
 	var/obj/S = ..()
@@ -58,7 +58,7 @@
 	if(stage == 5 && prob(50))
 		for(var/datum/surgery/S in owner.surgeries)
 			if(S.location == BODY_ZONE_CHEST && istype(S.get_surgery_step(), /datum/surgery_step/manipulate_organs))
-				AttemptGrow(0)
+				AttemptGrow(ZERO)
 				return
 		AttemptGrow()
 
@@ -100,8 +100,8 @@
 
 	if(new_xeno)
 		new_xeno.mobility_flags = MOBILITY_FLAGS_DEFAULT
-		new_xeno.notransform = 0
-		new_xeno.invisibility = 0
+		new_xeno.notransform = ZERO
+		new_xeno.invisibility = ZERO
 
 	if(gib_on_success)
 		new_xeno.visible_message("<span class='danger'>[new_xeno] bursts out of [owner] in a shower of gore!</span>", "<span class='userdanger'>You exit [owner], your previous host.</span>", "<span class='hear'>You hear organic matter ripping and tearing!</span>")

@@ -41,13 +41,13 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas
 	var/id = ""
-	var/specific_heat = 0
+	var/specific_heat = ZERO
 	var/name = ""
 	var/gas_overlay = "" //icon_state in icons/effects/atmospherics.dmi
 	var/moles_visible = null
 	var/dangerous = FALSE //currently used by canisters
-	var/fusion_power = 0 //How much the gas accelerates a fusion reaction
-	var/rarity = 0 // relative rarity compared to other gases, used when setting up the reactions list.
+	var/fusion_power = ZERO //How much the gas accelerates a fusion reaction
+	var/rarity = ZERO // relative rarity compared to other gases, used when setting up the reactions list.
 
 /datum/gas/oxygen
 	id = "o2"

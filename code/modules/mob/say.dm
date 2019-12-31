@@ -90,7 +90,7 @@
 
 ///Check if the mob has a hivemind channel
 /mob/proc/hivecheck()
-	return 0
+	return ZERO
 
 ///Check if the mob has a ling hivemind
 /mob/proc/lingcheck()

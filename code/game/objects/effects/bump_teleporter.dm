@@ -7,7 +7,7 @@
 	invisibility = INVISIBILITY_ABSTRACT 		//nope, can't see this
 	anchored = TRUE
 	density = TRUE
-	opacity = 0
+	opacity = ZERO
 
 	var/static/list/AllTeleporters
 

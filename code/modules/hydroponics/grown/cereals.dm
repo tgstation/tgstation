@@ -22,7 +22,7 @@
 	filling_color = "#F0E68C"
 	bitesize_mod = 2
 	foodtype = GRAIN
-	grind_results = list(/datum/reagent/consumable/flour = 0)
+	grind_results = list(/datum/reagent/consumable/flour = ZERO)
 	tastes = list("wheat" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/beer
 
@@ -45,7 +45,7 @@
 	filling_color = "#556B2F"
 	bitesize_mod = 2
 	foodtype = GRAIN
-	grind_results = list(/datum/reagent/consumable/flour = 0)
+	grind_results = list(/datum/reagent/consumable/flour = ZERO)
 	tastes = list("oat" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/ale
 
@@ -69,7 +69,7 @@
 	filling_color = "#FAFAD2"
 	bitesize_mod = 2
 	foodtype = GRAIN
-	grind_results = list(/datum/reagent/consumable/rice = 0)
+	grind_results = list(/datum/reagent/consumable/rice = ZERO)
 	tastes = list("rice" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/sake
 
@@ -88,11 +88,11 @@
 	desc = "Some blood-drenched wheat stalks. You can crush them into what passes for meat if you squint hard enough."
 	icon_state = "meatwheat"
 	gender = PLURAL
-	filling_color = rgb(150, 0, 0)
+	filling_color = rgb(150, ZERO, ZERO)
 	bitesize_mod = 2
 	seed = /obj/item/seeds/wheat/meat
 	foodtype = MEAT | GRAIN
-	grind_results = list(/datum/reagent/consumable/flour = 0, /datum/reagent/blood = 0)
+	grind_results = list(/datum/reagent/consumable/flour = ZERO, /datum/reagent/blood = ZERO)
 	tastes = list("meatwheat" = 1)
 	can_distill = FALSE
 

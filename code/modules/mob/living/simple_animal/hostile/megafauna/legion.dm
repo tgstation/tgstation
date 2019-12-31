@@ -47,7 +47,7 @@
 	vision_range = 13
 	wander = FALSE
 	elimination = TRUE
-	appearance_flags = 0
+	appearance_flags = ZERO
 	mouse_opacity = MOUSE_OPACITY_ICON
 	attack_action_types = list(/datum/action/innate/megafauna_attack/create_skull,
 							   /datum/action/innate/megafauna_attack/charge_target,
@@ -93,7 +93,7 @@
 		return
 
 	switch(rand(4)) //Larger skulls use more attacks.
-		if(0 to 2)
+		if(ZERO to 2)
 			create_legion_skull()
 		if(3)
 			charge_target()
@@ -116,9 +116,9 @@
 	visible_message("<span class='warning'><b>[src] charges!</b></span>")
 	SpinAnimation(speed = 20, loops = 3, parallel = FALSE)
 	ranged = FALSE
-	retreat_distance = 0
-	minimum_distance = 0
-	set_varspeed(0)
+	retreat_distance = ZERO
+	minimum_distance = ZERO
+	set_varspeed(ZERO)
 	charging = TRUE
 	addtimer(CALLBACK(src, .proc/reset_charge), 60)
 	var/mob/living/L = target
@@ -181,10 +181,10 @@
 	set_varspeed(2)
 	charging = FALSE
 
-///Special snowflake death() here. Can only die if size is 1 or lower and HP is 0 or below.
+///Special snowflake death() here. Can only die if size is 1 or lower and HP is ZERO or below.
 /mob/living/simple_animal/hostile/megafauna/legion/death()
 	//Make sure we didn't get cheesed
-	if(health > 0)
+	if(health > ZERO)
 		return
 	if(Split())
 		return
@@ -222,10 +222,10 @@
 			maxHealth = 350
 		if(1)
 			icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
-			pixel_x = 0
-			pixel_y = 0
+			pixel_x = ZERO
+			pixel_y = ZERO
 			maxHealth = 200
-	adjustHealth(0) //Make the health HUD look correct.
+	adjustHealth(ZERO) //Make the health HUD look correct.
 	visible_message("<span class='boldannounce'>This is getting out of hands. Now there are three of them!</span>")
 	for(var/i in 1 to 2) //Create three skulls in total
 		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(loc)
@@ -257,7 +257,7 @@
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	var/storm_type = /datum/weather/ash_storm
-	var/storm_nextuse = 0
+	var/storm_nextuse = ZERO
 	var/staff_cooldown = 20 SECONDS // The minimum time between uses.
 	var/storm_telegraph_duration = 10 SECONDS
 	var/storm_duration = 10 SECONDS
@@ -320,7 +320,7 @@
 	anchored = TRUE
 	density = TRUE
 	layer = ABOVE_OBJ_LAYER
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 100,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 100,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = ZERO)
 	///What kind of projectile the actual damaging part should be.
 	var/projectile_type = /obj/projectile/beam/legion
 	///Time until the tracer gets shot
@@ -353,8 +353,8 @@
 		return
 	//Now we generate the tracer.
 	var/angle = Get_Angle(T1, T)
-	var/datum/point/vector/V = new(T1.x, T1.y, T1.z, 0, 0, angle)
-	generate_tracer_between_points(V, V.return_vector_after_increments(6), /obj/effect/projectile/tracer/legion/tracer, 0, shot_delay, 0, 0, 0, null)
+	var/datum/point/vector/V = new(T1.x, T1.y, T1.z, ZERO, ZERO, angle)
+	generate_tracer_between_points(V, V.return_vector_after_increments(6), /obj/effect/projectile/tracer/legion/tracer, ZERO, shot_delay, ZERO, ZERO, ZERO, null)
 	playsound(src, 'sound/machines/airlockopen.ogg', 100, TRUE)
 	addtimer(CALLBACK(src, .proc/fire_beam, angle), shot_delay)
 
@@ -372,7 +372,7 @@
 	hitsound = 'sound/magic/magic_missile.ogg'
 	damage = 19
 	range = 6
-	eyeblur = 0
+	eyeblur = ZERO
 	light_color = LIGHT_COLOR_RED
 	impact_effect_type = /obj/effect/temp_visual/kinetic_blast
 	tracer_type = /obj/effect/projectile/tracer/legion

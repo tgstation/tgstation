@@ -6,14 +6,14 @@
 	var/weight = 10					//The weight this event has in the random-selection process.
 									//Higher weights are more likely to be picked.
 									//10 is the default weight. 20 is twice more likely; 5 is half as likely as this default.
-									//0 here does NOT disable the event, it just makes it extremely unlikely
+									//ZERO here does NOT disable the event, it just makes it extremely unlikely
 
 	var/earliest_start = 20 MINUTES	//The earliest world.time that an event can start (round-duration in deciseconds) default: 20 mins
-	var/min_players = 0				//The minimum amount of alive, non-AFK human players on server required to start the event.
+	var/min_players = ZERO				//The minimum amount of alive, non-AFK human players on server required to start the event.
 
-	var/occurrences = 0				//How many times this event has occured
+	var/occurrences = ZERO				//How many times this event has occured
 	var/max_occurrences = 20		//The maximum number of times this event can occur (naturally), it can still be forced.
-									//By setting this to 0 you can effectively disable an event.
+									//By setting this to ZERO you can effectively disable an event.
 
 	var/holidayID = ""				//string which should be in the SSeventss.holidays list if you wish this event to be holiday-specific
 									//anything with a (non-null) holidayID which does not match holiday, cannot run.
@@ -105,13 +105,13 @@
 	var/processing = TRUE
 	var/datum/round_event_control/control
 
-	var/startWhen		= 0	//When in the lifetime to call start().
+	var/startWhen		= ZERO	//When in the lifetime to call start().
 	var/announceWhen	= 0	//When in the lifetime to call announce(). If you don't want it to announce use announceChance, below.
-	var/announceChance	= 100 // Probability of announcing, used in prob(), 0 to 100, default 100. Used in ion storms currently.
-	var/endWhen			= 0	//When in the lifetime the event should end.
+	var/announceChance	= 100 // Probability of announcing, used in prob(), ZERO to 100, default 100. Used in ion storms currently.
+	var/endWhen			= ZERO	//When in the lifetime the event should end.
 
 	var/activeFor		= 0	//How long the event has existed. You don't need to change this.
-	var/current_players	= 0 //Amount of of alive, non-AFK human players on server at the time of event start
+	var/current_players	= ZERO //Amount of of alive, non-AFK human players on server at the time of event start
 	var/fakeable = TRUE		//Can be faked by fake news event.
 
 //Called first before processing.

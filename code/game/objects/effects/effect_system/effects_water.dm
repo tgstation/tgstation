@@ -14,9 +14,9 @@
 /obj/effect/particle_effect/water/Move(turf/newloc)
 	if (--src.life < 1)
 		qdel(src)
-		return 0
+		return ZERO
 	if(newloc.density)
-		return 0
+		return ZERO
 	.=..()
 
 /obj/effect/particle_effect/water/Bump(atom/A)
@@ -35,7 +35,7 @@
 
 /* Example:
  var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread() -- creates new system
-steam.set_up(5, 0, mob.loc) -- sets up variables
+steam.set_up(5, ZERO, mob.loc) -- sets up variables
 OPTIONAL: steam.attach(mob)
 steam.start() -- spawns the effect
 */

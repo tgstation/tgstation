@@ -26,10 +26,10 @@
 
 
 /obj/item/toy
-	throwforce = 0
+	throwforce = ZERO
 	throw_speed = 3
 	throw_range = 7
-	force = 0
+	force = ZERO
 
 
 /*
@@ -56,7 +56,7 @@
 		return
 	if (istype(A, /obj/structure/reagent_dispensers))
 		var/obj/structure/reagent_dispensers/RD = A
-		if(RD.reagents.total_volume <= 0)
+		if(RD.reagents.total_volume <= ZERO)
 			to_chat(user, "<span class='warning'>[RD] is empty.</span>")
 		else if(reagents.total_volume >= 10)
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
@@ -69,7 +69,7 @@
 /obj/item/toy/waterballoon/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/glass))
 		if(I.reagents)
-			if(I.reagents.total_volume <= 0)
+			if(I.reagents.total_volume <= ZERO)
 				to_chat(user, "<span class='warning'>[I] is empty.</span>")
 			else if(reagents.total_volume >= 10)
 				to_chat(user, "<span class='warning'>[src] is full.</span>")
@@ -120,10 +120,10 @@
 	lefthand_file = 'icons/mob/inhands/balloons_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/balloons_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	throwforce = 0
+	throwforce = ZERO
 	throw_speed = 3
 	throw_range = 7
-	force = 0
+	force = ZERO
 	var/random_color = TRUE
 
 /obj/item/toy/balloon/Initialize(mapload)
@@ -202,13 +202,13 @@
 		if (src.bullets >= 7)
 			to_chat(user, "<span class='warning'>It's already fully loaded!</span>")
 			return 1
-		if (A.amount_left <= 0)
+		if (A.amount_left <= ZERO)
 			to_chat(user, "<span class='warning'>There are no more caps!</span>")
 			return 1
 		if (A.amount_left < (7 - src.bullets))
 			src.bullets += A.amount_left
 			to_chat(user, text("<span class='notice'>You reload [] cap\s.</span>", A.amount_left))
-			A.amount_left = 0
+			A.amount_left = ZERO
 		else
 			to_chat(user, text("<span class='notice'>You reload [] cap\s.</span>", 7 - src.bullets))
 			A.amount_left -= 7 - src.bullets
@@ -263,7 +263,7 @@
 	item_state = "sword0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	var/active = 0
+	var/active = ZERO
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("attacked", "struck", "hit")
 	var/hacked = FALSE
@@ -363,10 +363,10 @@
 		var/matrix/M2 = matrix()
 		var/matrix/M3 = matrix()
 		var/matrix/M4 = matrix()
-		M1.Translate(-1, 0)
-		M2.Translate(0, 1)
-		M3.Translate(1, 0)
-		M4.Translate(0, -1)
+		M1.Translate(-1, ZERO)
+		M2.Translate(ZERO, 1)
+		M3.Translate(1, ZERO)
+		M4.Translate(ZERO, -1)
 		transforms = list(M1, M2, M3, M4)
 	animate(src, transform=transforms[1], time=0.2, loop=-1)
 	animate(transform=transforms[2], time=0.1)
@@ -384,19 +384,19 @@
 /obj/item/twohanded/dualsaber/toy
 	name = "double-bladed toy sword"
 	desc = "A cheap, plastic replica of TWO energy swords.  Double the fun!"
-	force = 0
-	throwforce = 0
+	force = ZERO
+	throwforce = ZERO
 	throw_speed = 3
 	throw_range = 5
-	force_unwielded = 0
-	force_wielded = 0
+	force_unwielded = ZERO
+	force_wielded = ZERO
 	attack_verb = list("attacked", "struck", "hit")
 
-/obj/item/twohanded/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	return 0
+/obj/item/twohanded/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = ZERO, damage = ZERO, attack_type = MELEE_ATTACK)
+	return ZERO
 
 /obj/item/twohanded/dualsaber/toy/IsReflect()//Stops Toy Dualsabers from reflecting energy projectiles
-	return 0
+	return ZERO
 
 /obj/item/toy/katana
 	name = "replica katana"
@@ -448,7 +448,7 @@
 		var/mob/living/carbon/M = H
 		if(issilicon(H) || M.m_intent == MOVE_INTENT_RUN)
 			to_chat(M, "<span class='danger'>You step on the snap pop!</span>")
-			pop_burst(2, 0)
+			pop_burst(2, ZERO)
 
 /obj/item/toy/snappop/phoenix
 	name = "phoenix snap pop"
@@ -473,9 +473,9 @@
 /obj/item/toy/prize
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "ripleytoy"
-	var/timer = 0
+	var/timer = ZERO
 	var/cooldown = 30
-	var/quiet = 0
+	var/quiet = ZERO
 	w_class = WEIGHT_CLASS_SMALL
 
 //all credit to skasi for toy mech fun ideas
@@ -673,8 +673,8 @@
 	var/parentdeck = null
 	var/deckstyle = "nanotrasen"
 	var/card_hitsound = null
-	var/card_force = 0
-	var/card_throwforce = 0
+	var/card_force = ZERO
+	var/card_throwforce = ZERO
 	var/card_throw_speed = 3
 	var/card_throw_range = 7
 	var/list/card_attack_verb = list("attacked")
@@ -695,7 +695,7 @@
 	deckstyle = "nanotrasen"
 	icon_state = "deck_nanotrasen_full"
 	w_class = WEIGHT_CLASS_SMALL
-	var/cooldown = 0
+	var/cooldown = ZERO
 	var/obj/machinery/computer/holodeck/holo = null // Holodeck cards should not be infinite
 	var/list/cards = list()
 
@@ -724,7 +724,7 @@
 		if(!(L.mobility_flags & MOBILITY_PICKUP))
 			return
 	var/choice = null
-	if(cards.len == 0)
+	if(cards.len == ZERO)
 		to_chat(user, "<span class='warning'>There are no more cards to draw!</span>")
 		return
 	var/obj/item/toy/cards/singlecard/H = new/obj/item/toy/cards/singlecard(user.loc)
@@ -746,9 +746,9 @@
 		icon_state = "deck_[deckstyle]_full"
 	else if(cards.len > 10)
 		icon_state = "deck_[deckstyle]_half"
-	else if(cards.len > 0)
+	else if(cards.len > ZERO)
 		icon_state = "deck_[deckstyle]_low"
-	else if(cards.len == 0)
+	else if(cards.len == ZERO)
 		icon_state = "deck_[deckstyle]_empty"
 
 /obj/item/toy/cards/deck/attack_self(mob/user)
@@ -909,7 +909,7 @@
 	icon_state = "singlecard_down_nanotrasen"
 	w_class = WEIGHT_CLASS_TINY
 	var/cardname = null
-	var/flipped = 0
+	var/flipped = ZERO
 	pixel_x = -5
 
 
@@ -939,7 +939,7 @@
 			src.name = "What Card"
 		src.pixel_x = 5
 	else if(flipped)
-		src.flipped = 0
+		src.flipped = ZERO
 		src.icon_state = "singlecard_down_[deckstyle]"
 		src.name = "card"
 		src.pixel_x = -5
@@ -1029,7 +1029,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "nuketoyidle"
 	w_class = WEIGHT_CLASS_SMALL
-	var/cooldown = 0
+	var/cooldown = ZERO
 
 /obj/item/toy/nuke/attack_self(mob/user)
 	if (obj_flags & EMAGGED && cooldown < world.time)
@@ -1039,7 +1039,7 @@
 		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
 		sleep(140)
 		user.visible_message("<span class='alert'>[src] violently explodes!</span>")
-		explosion(src, 0, 0, 1, 0)
+		explosion(src, ZERO, ZERO, 1, ZERO)
 		qdel(src)
 	else if (cooldown < world.time)
 		cooldown = world.time + 600 //1 minute
@@ -1101,7 +1101,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bigred"
 	w_class = WEIGHT_CLASS_SMALL
-	var/cooldown = 0
+	var/cooldown = ZERO
 
 /obj/item/toy/redbutton/attack_self(mob/user)
 	if (cooldown < world.time)
@@ -1158,7 +1158,7 @@
 	icon_state = "dread_ipad"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	var/cooldown = 0
+	var/cooldown = ZERO
 
 /obj/item/toy/clockwork_watch/attack_self(mob/user)
 	if (cooldown < world.time)
@@ -1196,7 +1196,7 @@
 	name = "xenomorph action figure"
 	desc = "MEGA presents the new Xenos Isolated action figure! Comes complete with realistic sounds! Pull back string to use."
 	w_class = WEIGHT_CLASS_SMALL
-	var/cooldown = 0
+	var/cooldown = ZERO
 
 /obj/item/toy/toy_xeno/attack_self(mob/user)
 	if(cooldown <= world.time)
@@ -1221,7 +1221,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "toy_mouse"
 	w_class = WEIGHT_CLASS_SMALL
-	var/cooldown = 0
+	var/cooldown = ZERO
 	resistance_flags = FLAMMABLE
 
 
@@ -1234,7 +1234,7 @@
 	desc = null
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "nuketoy"
-	var/cooldown = 0
+	var/cooldown = ZERO
 	var/toysay = "What the fuck did you do?"
 	var/toysound = 'sound/machines/click.ogg'
 	w_class = WEIGHT_CLASS_SMALL

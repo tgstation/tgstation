@@ -10,13 +10,13 @@
 	var/obj/item/l_store = null
 	var/caste = ""
 	var/alt_icon = 'icons/mob/alienleap.dmi' //used to switch between the two alien icon files.
-	var/leap_on_click = 0
-	var/pounce_cooldown = 0
+	var/leap_on_click = ZERO
+	var/pounce_cooldown = ZERO
 	var/pounce_cooldown_time = 30
-	var/custom_pixel_x_offset = 0 //for admin fuckery.
-	var/custom_pixel_y_offset = 0
-	var/sneaking = 0 //For sneaky-sneaky mode and appropriate slowdown
-	var/drooling = 0 //For Neruotoxic spit overlays
+	var/custom_pixel_x_offset = ZERO //for admin fuckery.
+	var/custom_pixel_y_offset = ZERO
+	var/sneaking = ZERO //For sneaky-sneaky mode and appropriate slowdown
+	var/drooling = ZERO //For Neruotoxic spit overlays
 	deathsound = 'sound/voice/hiss6.ogg'
 	bodyparts = list(/obj/item/bodypart/chest/alien, /obj/item/bodypart/head/alien, /obj/item/bodypart/l_arm/alien,
 					 /obj/item/bodypart/r_arm/alien, /obj/item/bodypart/r_leg/alien, /obj/item/bodypart/l_leg/alien)
@@ -74,9 +74,9 @@
 		visible_message("<span class='danger'>[src] breaks free of [pulledby]'s grip!</span>", \
 						"<span class='danger'>You break free of [pulledby]'s grip!</span>")
 	pulledby.stop_pulling()
-	. = 0
+	. = ZERO
 
-/mob/living/carbon/alien/humanoid/get_standard_pixel_y_offset(lying = 0)
+/mob/living/carbon/alien/humanoid/get_standard_pixel_y_offset(lying = ZERO)
 	if(leaping)
 		return -32
 	else if(custom_pixel_y_offset)
@@ -84,7 +84,7 @@
 	else
 		return initial(pixel_y)
 
-/mob/living/carbon/alien/humanoid/get_standard_pixel_x_offset(lying = 0)
+/mob/living/carbon/alien/humanoid/get_standard_pixel_x_offset(lying = ZERO)
 	if(leaping)
 		return -32
 	else if(custom_pixel_x_offset)
@@ -111,6 +111,6 @@
 
 
 /mob/living/carbon/alien/humanoid/check_breath(datum/gas_mixture/breath)
-	if(breath && breath.total_moles() > 0 && !sneaking)
+	if(breath && breath.total_moles() > ZERO && !sneaking)
 		playsound(get_turf(src), pick('sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg'), 50, FALSE, -5)
 	..()

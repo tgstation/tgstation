@@ -94,9 +94,9 @@
 					to_chat(pai, "<span class='rose'>oblivion... </span>")
 					qdel(pai)
 		if(href_list["fix_speech"])
-			pai.stuttering = 0
-			pai.slurring = 0
-			pai.derpspeech = 0
+			pai.stuttering = ZERO
+			pai.slurring = ZERO
+			pai.derpspeech = ZERO
 		if(href_list["toggle_transmit"] || href_list["toggle_receive"])
 			var/transmitting = href_list["toggle_transmit"] //it can't be both so if we know it's not transmitting it must be receiving.
 			var/transmit_holder = (transmitting ? WIRE_TX : WIRE_RX)
@@ -111,7 +111,7 @@
 		if(href_list["setlaws"])
 			var/newlaws = copytext(sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1]) as message|null),1,MAX_MESSAGE_LEN)
 			if(newlaws && pai)
-				pai.add_supplied_law(0,newlaws)
+				pai.add_supplied_law(ZERO,newlaws)
 		if(href_list["toggle_holo"])
 			if(pai.canholo)
 				to_chat(pai, "<span class='userdanger'>Your owner has disabled your holomatrix projectors!</span>")

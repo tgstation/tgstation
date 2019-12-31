@@ -1,4 +1,4 @@
-#define MEAT 		(1<<0)
+#define MEAT 		(1<<ZERO)
 #define VEGETABLES 	(1<<1)
 #define RAW 		(1<<2)
 #define JUNKFOOD 	(1<<3)

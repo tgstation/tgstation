@@ -5,13 +5,13 @@
 	var/lootcount = 1		//how many items will be spawned
 	var/lootdoubles = TRUE	//if the same item can be spawned twice
 	var/list/loot			//a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
-	var/fan_out_items = FALSE //Whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3.. This overrides pixel_x/y on the spawner itself
+	var/fan_out_items = FALSE //Whether the items should be distributed to offsets ZERO,1,-1,2,-2,3,-3.. This overrides pixel_x/y on the spawner itself
 
 /obj/effect/spawner/lootdrop/Initialize(mapload)
 	..()
 	if(loot && loot.len)
 		var/turf/T = get_turf(src)
-		var/loot_spawned = 0
+		var/loot_spawned = ZERO
 		while((lootcount-loot_spawned) && loot.len)
 			var/lootspawn = pickweight(loot)
 			while(islist(lootspawn))
@@ -22,9 +22,9 @@
 			if(lootspawn)
 				var/atom/movable/spawned_loot = new lootspawn(T)
 				if (!fan_out_items)
-					if (pixel_x != 0)
+					if (pixel_x != ZERO)
 						spawned_loot.pixel_x = pixel_x
-					if (pixel_y != 0)
+					if (pixel_y != ZERO)
 						spawned_loot.pixel_y = pixel_y
 				else
 					if (loot_spawned)

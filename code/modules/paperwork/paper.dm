@@ -11,11 +11,11 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	item_state = "paper"
-	throwforce = 0
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_TINY
 	throw_range = 1
 	throw_speed = 1
-	pressure_resistance = 0
+	pressure_resistance = ZERO
 	slot_flags = ITEM_SLOT_HEAD
 	body_parts_covered = HEAD
 	resistance_flags = FLAMMABLE
@@ -31,12 +31,12 @@
 	var/info		//What's actually written on the paper.
 	var/info_links	//A different version of the paper which includes html links at fields and EOF
 	var/stamps		//The (text for the) stamps on the paper.
-	var/fields = 0	//Amount of user created fields
+	var/fields = ZERO	//Amount of user created fields
 	var/list/stamped
-	var/rigged = 0
-	var/spam_flag = 0
+	var/rigged = ZERO
+	var/spam_flag = ZERO
 	var/contact_poison // Reagent ID to transfer on contact
-	var/contact_poison_volume = 0
+	var/contact_poison_volume = ZERO
 
 
 /obj/item/paper/pickup(user)
@@ -134,18 +134,18 @@
 		onclose(usr, "[name]")
 
 
-/obj/item/paper/proc/addtofield(id, text, links = 0)
-	var/locid = 0
+/obj/item/paper/proc/addtofield(id, text, links = ZERO)
+	var/locid = ZERO
 	var/laststart = 1
 	var/textindex = 1
 	while(locid < 15)	//hey whoever decided a while(1) was a good idea here, i hate you
-		var/istart = 0
+		var/istart = ZERO
 		if(links)
 			istart = findtext(info_links, "<span class=\"paper_field\">", laststart)
 		else
 			istart = findtext(info, "<span class=\"paper_field\">", laststart)
 
-		if(istart == 0)
+		if(istart == ZERO)
 			return	//No field found with matching id
 
 		laststart = istart+1
@@ -188,7 +188,7 @@
 	update_icon_state()
 
 
-/obj/item/paper/proc/parsepencode(t, obj/item/pen/P, mob/user, iscrayon = 0)
+/obj/item/paper/proc/parsepencode(t, obj/item/pen/P, mob/user, iscrayon = ZERO)
 	if(length(t) < 1)		//No input means nothing needs to be parsed
 		return
 
@@ -204,7 +204,7 @@
 	var/laststart = 1
 	while(fields < 15)
 		var/i = findtext(t, "<span class=\"paper_field\">", laststart)
-		if(i == 0)
+		if(i == ZERO)
 			break
 		laststart = i+1
 		fields++
@@ -212,11 +212,11 @@
 	return t
 
 /obj/item/paper/proc/reload_fields() // Useful if you made the paper programicly and want to include fields. Also runs updateinfolinks() for you.
-	fields = 0
+	fields = ZERO
 	var/laststart = 1
 	while(fields < 15)
 		var/i = findtext(info, "<span class=\"paper_field\">", laststart)
-		if(i == 0)
+		if(i == ZERO)
 			break
 		laststart = i+1
 		fields++
@@ -261,7 +261,7 @@
 		if(!t || !usr.canUseTopic(src, BE_CLOSE, literate))
 			return
 		var/obj/item/i = usr.get_active_held_item()	//Check to see if he still got that darn pen, also check if he's using a crayon or pen.
-		var/iscrayon = 0
+		var/iscrayon = ZERO
 		if(!istype(i, /obj/item/pen))
 			if(!istype(i, /obj/item/toy/crayon))
 				return

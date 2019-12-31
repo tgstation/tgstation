@@ -2,7 +2,7 @@
 	..()
 	//Mind updates
 	sync_mind()
-	mind.show_memory(src, 0)
+	mind.show_memory(src, ZERO)
 
 	//Round specific stuff
 	if(SSticker.mode)

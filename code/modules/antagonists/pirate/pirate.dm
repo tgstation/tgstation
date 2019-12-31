@@ -69,7 +69,7 @@
 	if(!cargo_hold || !cargo_hold.total_report)
 		return "Nothing"
 	cargo_hold.total_report.total_value = sortTim(cargo_hold.total_report.total_value, cmp = /proc/cmp_numeric_dsc, associative = TRUE)
-	var/count = 0
+	var/count = ZERO
 	var/list/loot_texts = list()
 	for(var/datum/export/E in cargo_hold.total_report.total_value)
 		if(++count > 5)
@@ -78,7 +78,7 @@
 	return loot_texts.Join(", ")
 
 /datum/objective/loot/proc/get_loot_value()
-	return cargo_hold ? cargo_hold.points : 0
+	return cargo_hold ? cargo_hold.points : ZERO
 
 /datum/objective/loot/check_completion()
 	return ..() || get_loot_value() >= target_value

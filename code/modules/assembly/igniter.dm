@@ -16,7 +16,7 @@
 /obj/item/assembly/igniter/Initialize()
 	. = ..()
 	sparks = new
-	sparks.set_up(2, 0, src)
+	sparks.set_up(2, ZERO, src)
 	sparks.attach(src)
 
 /obj/item/assembly/igniter/Destroy()

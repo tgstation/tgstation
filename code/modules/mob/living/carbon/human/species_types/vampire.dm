@@ -28,7 +28,7 @@
 	. = ..()
 	to_chat(C, "[info_text]")
 	C.skin_tone = "albino"
-	C.update_body(0)
+	C.update_body(ZERO)
 	if(isnull(batform))
 		batform = new
 		C.AddSpell(batform)
@@ -42,7 +42,7 @@
 /datum/species/vampire/spec_life(mob/living/carbon/human/C)
 	. = ..()
 	if(istype(C.loc, /obj/structure/closet/crate/coffin))
-		C.heal_overall_damage(4,4,0, BODYPART_ORGANIC)
+		C.heal_overall_damage(4,4,ZERO, BODYPART_ORGANIC)
 		C.adjustToxLoss(-4)
 		C.adjustOxyLoss(-4)
 		C.adjustCloneLoss(-4)
@@ -64,13 +64,13 @@
 /datum/species/vampire/check_species_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(weapon, /obj/item/nullrod/whip))
 		return 1 //Whips deal 2x damage to vampires. Vampire killer.
-	return 0
+	return ZERO
 
 /obj/item/organ/tongue/vampire
 	name = "vampire tongue"
 	actions_types = list(/datum/action/item_action/organ_action/vampire)
 	color = "#1C1C1C"
-	var/drain_cooldown = 0
+	var/drain_cooldown = ZERO
 
 #define VAMP_DRAIN_AMOUNT 50
 
@@ -98,7 +98,7 @@
 				to_chat(H, "<span class='warning'>[victim] doesn't have blood!</span>")
 				return
 			V.drain_cooldown = world.time + 30
-			if(victim.anti_magic_check(FALSE, TRUE, FALSE, 0))
+			if(victim.anti_magic_check(FALSE, TRUE, FALSE, ZERO))
 				to_chat(victim, "<span class='warning'>[H] tries to bite you, but stops before touching you!</span>")
 				to_chat(H, "<span class='warning'>[victim] is blessed! You stop just in time to avoid catching fire.</span>")
 				return
@@ -113,8 +113,8 @@
 			to_chat(victim, "<span class='danger'>[H] is draining your blood!</span>")
 			to_chat(H, "<span class='notice'>You drain some blood!</span>")
 			playsound(H, 'sound/items/drink.ogg', 30, TRUE, -2)
-			victim.blood_volume = CLAMP(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
-			H.blood_volume = CLAMP(H.blood_volume + drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
+			victim.blood_volume = CLAMP(victim.blood_volume - drained_blood, ZERO, BLOOD_VOLUME_MAXIMUM)
+			H.blood_volume = CLAMP(H.blood_volume + drained_blood, ZERO, BLOOD_VOLUME_MAXIMUM)
 			if(!victim.blood_volume)
 				to_chat(H, "<span class='notice'>You finish off [victim]'s blood supply.</span>")
 

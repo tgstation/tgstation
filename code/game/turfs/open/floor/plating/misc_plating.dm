@@ -194,7 +194,7 @@
 
 /turf/open/floor/plating/ice/Initialize()
 	. = ..()
-	MakeSlippery(TURF_WET_PERMAFROST, INFINITY, 0, INFINITY, TRUE)
+	MakeSlippery(TURF_WET_PERMAFROST, INFINITY, ZERO, INFINITY, TRUE)
 
 /turf/open/floor/plating/ice/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return

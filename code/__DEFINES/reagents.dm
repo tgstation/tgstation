@@ -2,7 +2,7 @@
 #define LIQUID			2
 #define GAS				3
 
-#define INJECTABLE		(1<<0)	// Makes it possible to add reagents through droppers and syringes.
+#define INJECTABLE		(1<<ZERO)	// Makes it possible to add reagents through droppers and syringes.
 #define DRAWABLE		(1<<1)	// Makes it possible to remove reagents through syringes.
 
 #define REFILLABLE		(1<<2)	// Makes it possible to add reagents through any reagent container.

@@ -12,9 +12,9 @@
 	var/datum/comm_message/aicurrmsg
 	var/state = STATE_DEFAULT
 	var/aistate = STATE_DEFAULT
-	var/message_cooldown = 0
-	var/ai_message_cooldown = 0
-	var/tmp_alertlevel = 0
+	var/message_cooldown = ZERO
+	var/ai_message_cooldown = ZERO
+	var/tmp_alertlevel = ZERO
 	var/const/STATE_DEFAULT = 1
 	var/const/STATE_CALLSHUTTLE = 2
 	var/const/STATE_CANCELSHUTTLE = 3
@@ -83,7 +83,7 @@
 						for(var/mob/living/silicon/ai/AI in active_ais())
 							SEND_SOUND(AI, sound('sound/machines/terminal_alert.ogg', volume = 10)) //Very quiet for balance reasons
 		if("logout")
-			authenticated = 0
+			authenticated = ZERO
 			playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
 
 		if("swipeidseclevel")
@@ -110,11 +110,11 @@
 						log_game("[key_name(usr)] has changed the security level to [security_level] with [src] at [AREACOORD(usr)].")
 						message_admins("[ADMIN_LOOKUPFLW(usr)] has changed the security level to [security_level] with [src] at [AREACOORD(usr)].")
 						deadchat_broadcast(" has changed the security level to [security_level] with [src] at <span class='name'>[get_area_name(usr, TRUE)]</span>.", "<span class='name'>[usr.real_name]</span>", usr)
-					tmp_alertlevel = 0
+					tmp_alertlevel = ZERO
 				else
 					to_chat(usr, "<span class='warning'>You are not authorized to do this!</span>")
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
-					tmp_alertlevel = 0
+					tmp_alertlevel = ZERO
 				state = STATE_DEFAULT
 			else
 				to_chat(usr, "<span class='warning'>You need to swipe your ID!</span>")
@@ -195,7 +195,7 @@
 				SSshuttle.cancelEvac(usr)
 			state = STATE_DEFAULT
 		if("messagelist")
-			currmsg = 0
+			currmsg = ZERO
 			state = STATE_MESSAGELIST
 		if("viewmessage")
 			state = STATE_VIEWMESSAGE
@@ -234,7 +234,7 @@
 		if("securitylevel")
 			tmp_alertlevel = text2num( href_list["newalertlevel"] )
 			if(!tmp_alertlevel)
-				tmp_alertlevel = 0
+				tmp_alertlevel = ZERO
 			state = STATE_CONFIRM_LEVEL
 		if("changeseclevel")
 			state = STATE_ALERT_LEVEL
@@ -373,7 +373,7 @@
 		if("ai-securitylevel")
 			tmp_alertlevel = text2num( href_list["newalertlevel"] )
 			if(!tmp_alertlevel)
-				tmp_alertlevel = 0
+				tmp_alertlevel = ZERO
 			var/old_level = GLOB.security_level
 			if(!tmp_alertlevel)
 				tmp_alertlevel = SEC_LEVEL_GREEN
@@ -388,7 +388,7 @@
 				log_game("[key_name(usr)] has changed the security level to [security_level] from [src] at [AREACOORD(usr)].")
 				message_admins("[ADMIN_LOOKUPFLW(usr)] has changed the security level to [security_level] from [src] at [AREACOORD(usr)].")
 				deadchat_broadcast(" has changed the security level to [security_level] from [src] at [get_area_name(usr, TRUE)].</span>", "<span class='name'>[usr.real_name]</span>", usr)
-			tmp_alertlevel = 0
+			tmp_alertlevel = ZERO
 			aistate = STATE_DEFAULT
 		if("ai-changeseclevel")
 			aistate = STATE_ALERT_LEVEL
@@ -588,7 +588,7 @@
 					</script>"}
 	return dat
 
-/obj/machinery/computer/communications/proc/get_call_shuttle_form(ai_interface = 0)
+/obj/machinery/computer/communications/proc/get_call_shuttle_form(ai_interface = ZERO)
 	var/form_id = "callshuttle"
 	var/dat = get_javascript_header(form_id)
 	dat += "<form name='callshuttle' id='[form_id]' action='?src=[REF(src)]' method='get' style='display: inline'>"
@@ -726,7 +726,7 @@
 
 /obj/machinery/computer/communications/proc/overrideCooldown()
 	var/obj/item/circuitboard/computer/communications/CM = circuit
-	CM.lastTimeUsed = 0
+	CM.lastTimeUsed = ZERO
 
 /obj/machinery/computer/communications/proc/add_message(datum/comm_message/new_message)
 	messages += new_message

@@ -158,7 +158,7 @@
 	// I miss python sorting, then I wouldn't have to muck about with
 	// all this
 	var/most_popular_answer
-	var/most_amount = 0
+	var/most_amount = ZERO
 	// yes, if there is a tie, there is an arbitary decision
 	// but we never said the spirit world was fair
 	for(var/A in tallied_votes)
@@ -168,7 +168,7 @@
 
 	return most_popular_answer
 
-/obj/item/toy/eightball/haunted/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=0, datum/tgui/master_ui=null, datum/ui_state/state = GLOB.observer_state)
+/obj/item/toy/eightball/haunted/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=ZERO, datum/tgui/master_ui=null, datum/ui_state/state = GLOB.observer_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -186,7 +186,7 @@
 	for(var/pa in possible_answers)
 		var/list/L = list()
 		L["answer"] = pa
-		var/amount = 0
+		var/amount = ZERO
 		if(pa in tallied_votes)
 			amount = tallied_votes[pa]
 		L["amount"] = amount

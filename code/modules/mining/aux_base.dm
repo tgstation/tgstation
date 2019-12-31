@@ -1,6 +1,6 @@
 ///Mining Base////
 
-#define ZONE_SET	0
+#define ZONE_SET	ZERO
 #define BAD_ZLEVEL	1
 #define BAD_AREA	2
 #define BAD_COORDS	3
@@ -8,7 +8,7 @@
 
 /area/shuttle/auxillary_base
 	name = "Auxillary Base"
-	luminosity = 0 //Lighting gets lost when it lands anyway
+	luminosity = ZERO //Lighting gets lost when it lands anyway
 
 
 /obj/machinery/computer/auxillary_base
@@ -51,7 +51,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		Unit | Condition | Status | Direction | Distance<br>"
 		for(var/PDT in turrets)
 			var/obj/machinery/porta_turret/aux_base/T = PDT
-			var/integrity = max((T.obj_integrity-T.integrity_failure * T.max_integrity)/(T.max_integrity-T.integrity_failure * max_integrity)*100, 0)
+			var/integrity = max((T.obj_integrity-T.integrity_failure * T.max_integrity)/(T.max_integrity-T.integrity_failure * max_integrity)*100, ZERO)
 			var/status
 			if(T.stat & BROKEN)
 				status = "<span class='bad'>ERROR</span>"
@@ -270,7 +270,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	icon_state = "miningbeacon"
 	var/obj/docking_port/stationary/Mport //Linked docking port for the mining shuttle
 	pressure_resistance = 200 //So it does not get blown into lava.
-	var/anti_spam_cd = 0 //The linking process might be a bit intensive, so this here to prevent over use.
+	var/anti_spam_cd = ZERO //The linking process might be a bit intensive, so this here to prevent over use.
 	var/console_range = 15 //Wifi range of the beacon to find the aux base console
 
 /obj/structure/mining_shuttle_beacon/attack_hand(mob/user)
@@ -366,7 +366,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	log_shuttle("[key_name(usr)] has registered the mining shuttle beacon at [COORD(landing_spot)].")
 
 /obj/structure/mining_shuttle_beacon/proc/clear_cooldown()
-	anti_spam_cd = 0
+	anti_spam_cd = ZERO
 
 /obj/structure/mining_shuttle_beacon/attack_robot(mob/user)
 	return attack_hand(user) //So borgies can help

@@ -19,11 +19,11 @@
 			var/datum/job/current = job
 			if(current.title == "AI") // AI currently doesnt support latejoining past one total.
 				continue
-			current.total_positions = 0
+			current.total_positions = ZERO
 	else	// Adds/removes a random amount of job slots from all jobs.
 		for(var/job in jobs)
 			var/datum/job/current = job
 			if(current.title == "AI") // AI currently doesnt support latejoining past one total.
 				continue
 			var/ran = rand(-2,4)
-			current.total_positions = max(current.total_positions + ran, 0)
+			current.total_positions = max(current.total_positions + ran, ZERO)

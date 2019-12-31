@@ -18,7 +18,7 @@
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
 	desc = "Looks like it's been here a while.  Eew."
-	bloodiness = 0
+	bloodiness = ZERO
 	icon_state = "floor1-old"
 
 /obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
@@ -84,11 +84,11 @@
 	var/list/diseases = list()
 	SEND_SIGNAL(src, COMSIG_GIBS_STREAK, directions, diseases)
 	var/direction = pick(directions)
-	for(var/i in 0 to pick(0, 200; 1, 150; 2, 50))
+	for(var/i in ZERO to pick(ZERO, 200; 1, 150; 2, 50))
 		sleep(2)
-		if(i > 0)
+		if(i > ZERO)
 			new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
-		if(!step_to(src, get_step(src, direction), 0))
+		if(!step_to(src, get_step(src, direction), ZERO))
 			break
 
 /obj/effect/decal/cleanable/blood/gibs/up
@@ -118,7 +118,7 @@
 /obj/effect/decal/cleanable/blood/gibs/old
 	name = "old rotting gibs"
 	desc = "Space Jesus, why didn't anyone clean this up? They smell terrible."
-	bloodiness = 0
+	bloodiness = ZERO
 	already_rotting = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/old/Initialize(mapload, list/datum/disease/diseases)
@@ -132,7 +132,7 @@
 	desc = "It's red."
 	icon_state = "drip5" //using drip5 since the others tend to blend in with pipes & wires.
 	random_icon_states = list("drip1","drip2","drip3","drip4","drip5")
-	bloodiness = 0
+	bloodiness = ZERO
 	var/drips = 1
 
 /obj/effect/decal/cleanable/blood/drip/can_bloodcrawl_in()
@@ -147,8 +147,8 @@
 	icon_state = "blood1"
 	random_icon_states = null
 	blood_state = BLOOD_STATE_HUMAN //the icon state to load images from
-	var/entered_dirs = 0
-	var/exited_dirs = 0
+	var/entered_dirs = ZERO
+	var/exited_dirs = ZERO
 	var/list/shoe_types = list()
 
 /obj/effect/decal/cleanable/blood/footprints/Initialize(mapload)
@@ -166,8 +166,8 @@
 	var/ang_change = dir2angle(newdir) - dir2angle(dir)
 	var/old_entered_dirs = entered_dirs
 	var/old_exited_dirs = exited_dirs
-	entered_dirs = 0
-	exited_dirs = 0
+	entered_dirs = ZERO
+	exited_dirs = ZERO
 
 	for(var/Ddir in GLOB.cardinals)
 		if(old_entered_dirs & Ddir)
@@ -184,7 +184,7 @@
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.bloody_shoes[blood_state])
-			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
+			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, ZERO)
 			shoe_types |= S.type
 			if (!(entered_dirs & H.dir))
 				entered_dirs |= H.dir
@@ -196,7 +196,7 @@
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.bloody_shoes[blood_state])
-			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
+			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, ZERO)
 			shoe_types  |= S.type
 			if (!(exited_dirs & H.dir))
 				exited_dirs |= H.dir
@@ -237,4 +237,4 @@
 /obj/effect/decal/cleanable/blood/footprints/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
 		return 1
-	return 0
+	return ZERO

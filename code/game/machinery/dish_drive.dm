@@ -23,7 +23,7 @@
 		/obj/item/trash/tray,
 		/obj/item/shard,
 		/obj/item/broken_bottle)
-	var/time_since_dishes = 0
+	var/time_since_dishes = ZERO
 	var/suction_enabled = TRUE
 	var/transmit_enabled = TRUE
 
@@ -66,15 +66,15 @@
 	idle_power_usage = initial(idle_power_usage)
 	active_power_usage = initial(active_power_usage)
 	use_power = initial(use_power)
-	var/total_rating = 0
+	var/total_rating = ZERO
 	for(var/obj/item/stock_parts/S in component_parts)
 		total_rating += S.rating
 	if(total_rating >= 9)
-		active_power_usage = 0
+		active_power_usage = ZERO
 		use_power = NO_POWER_USE
 	else
-		idle_power_usage = max(0, idle_power_usage - total_rating)
-		active_power_usage = max(0, active_power_usage - total_rating)
+		idle_power_usage = max(ZERO, idle_power_usage - total_rating)
+		active_power_usage = max(ZERO, active_power_usage - total_rating)
 	var/obj/item/circuitboard/machine/dish_drive/board = locate() in component_parts
 	if(board)
 		suction_enabled = board.suction
@@ -114,7 +114,7 @@
 			visible_message("<span class='warning'>[src] buzzes. There are no disposal bins in range!</span>")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 		return
-	var/disposed = 0
+	var/disposed = ZERO
 	for(var/obj/item/I in contents)
 		if(is_type_in_list(I, disposable_items))
 			I.forceMove(bin)

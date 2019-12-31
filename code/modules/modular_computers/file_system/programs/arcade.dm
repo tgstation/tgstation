@@ -16,14 +16,14 @@
 	var/boss_mp = 15
 	var/player_hp = 30
 	var/player_mp = 10
-	var/ticket_count = 0
+	var/ticket_count = ZERO
 	var/heads_up = "Nanotrasen says, winners make us money."//Shows the active display text for the app
 	var/boss_name = "Cuban Pete's Minion"
 	var/boss_id = 1
 
 /datum/computer_file/program/arcade/proc/game_check(mob/user)
 	sleep(5)
-	if(boss_hp <= 0)
+	if(boss_hp <= ZERO)
 		heads_up = "You have crushed [boss_name]! Rejoice!"
 		playsound(computer.loc, 'sound/arcade/win.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 		game_active = FALSE
@@ -33,7 +33,7 @@
 		ticket_count += 1
 		sleep(10)
 		return
-	else if(player_hp <= 0 || player_mp <= 0)
+	else if(player_hp <= ZERO || player_mp <= ZERO)
 		heads_up = "You have been defeated... how will the station survive?"
 		playsound(computer.loc, 'sound/arcade/lose.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 		game_active = FALSE
@@ -45,9 +45,9 @@
 	return
 
 /datum/computer_file/program/arcade/proc/enemy_check(mob/user)
-	var/boss_attackamt = 0 //Spam protection from boss attacks as well.
-	var/boss_mpamt = 0
-	var/bossheal = 0
+	var/boss_attackamt = ZERO //Spam protection from boss attacks as well.
+	var/boss_mpamt = ZERO
+	var/bossheal = ZERO
 	if(pause_state == TRUE)
 		boss_attackamt = rand(3,6)
 		boss_mpamt = rand (2,4)
@@ -99,7 +99,7 @@
 
 	switch(action)
 		if("Attack")
-			var/attackamt = 0 //Spam prevention.
+			var/attackamt = ZERO //Spam prevention.
 			if(pause_state == FALSE)
 				attackamt = rand(2,6)
 			pause_state = TRUE
@@ -111,8 +111,8 @@
 			enemy_check()
 			return TRUE
 		if("Heal")
-			var/healamt = 0 //More Spam Prevention.
-			var/healcost = 0
+			var/healamt = ZERO //More Spam Prevention.
+			var/healcost = ZERO
 			if(pause_state == FALSE)
 				healamt = rand(6,8)
 				healcost = rand(1,3)
@@ -126,7 +126,7 @@
 			enemy_check()
 			return TRUE
 		if("Recharge_Power")
-			var/rechargeamt = 0 //As above.
+			var/rechargeamt = ZERO //As above.
 			if(pause_state == FALSE)
 				rechargeamt = rand(4,7)
 			pause_state = TRUE
@@ -141,7 +141,7 @@
 			if(!printer)
 				to_chat(usr, "<span class='notice'>Hardware error: A printer is required to redeem tickets.</span>")
 				return
-			if(printer.stored_paper <= 0)
+			if(printer.stored_paper <= ZERO)
 				to_chat(usr, "<span class='notice'>Hardware error: Printer is out of paper.</span>")
 				return
 			else

@@ -48,7 +48,7 @@
 
 /datum/SDQL_parser
 	var/query_type
-	var/error = 0
+	var/error = ZERO
 
 	var/list/query
 	var/list/tree

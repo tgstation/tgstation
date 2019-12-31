@@ -22,7 +22,7 @@
 	response_disarm_simple = "gently push aside"
 	maxHealth = 60
 	health = 60
-	speed = 0
+	speed = ZERO
 	spacewalk = TRUE
 	
 	obj_damage = 60
@@ -35,8 +35,8 @@
 	friendly_verb_simple = "bear hug"
 
 	//Space bears aren't affected by cold.
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
+	minbodytemp = ZERO
 	maxbodytemp = 1500
 	
 	faction = list("russian")
@@ -130,7 +130,7 @@ mob/living/simple_animal/hostile/bear/butter //The mighty companion to Cak. Seve
 	obj_damage = 11
 	melee_damage_lower = 1
 	melee_damage_upper = 1
-	armour_penetration = 0
+	armour_penetration = ZERO
 	response_harm_continuous = "takes a bite out of"
 	response_harm_simple = "take a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'

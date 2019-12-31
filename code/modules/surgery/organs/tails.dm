@@ -8,7 +8,7 @@
 	slot = ORGAN_SLOT_TAIL
 	var/tail_type = "None"
 
-/obj/item/organ/tail/Remove(mob/living/carbon/human/H,  special = 0)
+/obj/item/organ/tail/Remove(mob/living/carbon/human/H,  special = ZERO)
 	..()
 	if(H && H.dna && H.dna.species)
 		H.dna.species.stop_wagging_tail(H)
@@ -18,7 +18,7 @@
 	desc = "A severed cat tail. Who's wagging now?"
 	tail_type = "Cat"
 
-/obj/item/organ/tail/cat/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
+/obj/item/organ/tail/cat/Insert(mob/living/carbon/human/H, special = ZERO, drop_if_replaced = TRUE)
 	..()
 	if(istype(H))
 		if(!("tail_human" in H.dna.species.mutant_bodyparts))
@@ -26,7 +26,7 @@
 			H.dna.features["tail_human"] = tail_type
 			H.update_body()
 
-/obj/item/organ/tail/cat/Remove(mob/living/carbon/human/H,  special = 0)
+/obj/item/organ/tail/cat/Remove(mob/living/carbon/human/H,  special = ZERO)
 	..()
 	if(istype(H))
 		H.dna.features["tail_human"] = "None"
@@ -41,7 +41,7 @@
 	tail_type = "Smooth"
 	var/spines = "None"
 
-/obj/item/organ/tail/lizard/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
+/obj/item/organ/tail/lizard/Insert(mob/living/carbon/human/H, special = ZERO, drop_if_replaced = TRUE)
 	..()
 	if(istype(H))
 		// Checks here are necessary so it wouldn't overwrite the tail of a lizard it spawned in
@@ -54,7 +54,7 @@
 			H.dna.species.mutant_bodyparts |= "spines"
 		H.update_body()
 
-/obj/item/organ/tail/lizard/Remove(mob/living/carbon/human/H,  special = 0)
+/obj/item/organ/tail/lizard/Remove(mob/living/carbon/human/H,  special = ZERO)
 	..()
 	if(istype(H))
 		H.dna.species.mutant_bodyparts -= "tail_lizard"

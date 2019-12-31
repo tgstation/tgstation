@@ -14,7 +14,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_OPEN //Intentionally no allow_silicon flag
 	pipe_flags = PIPING_CARDINAL_AUTONORMALIZE
 
-	var/frequency = 0
+	var/frequency = ZERO
 	var/id = null
 
 	var/valve_type = "m" //lets us have a nice, clean, OOP update_icon_nopipes()

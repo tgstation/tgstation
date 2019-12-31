@@ -22,16 +22,16 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
-	var/maxcapacity = 0 //Safety check for batteries
-	var/drain = 0 //Drain amount from batteries
+	var/maxcapacity = ZERO //Safety check for batteries
+	var/drain = ZERO //Drain amount from batteries
 
-	. = 0
+	. = ZERO
 
 	if(cell && cell.charge)
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
-		spark_system.set_up(5, 0, loc)
+		spark_system.set_up(5, ZERO, loc)
 
-		while(G.candrain && cell.charge> 0 && !maxcapacity)
+		while(G.candrain && cell.charge> ZERO && !maxcapacity)
 			drain = rand(G.mindrain, G.maxdrain)
 
 			if(cell.charge < drain)
@@ -66,16 +66,16 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
-	var/maxcapacity = 0 //Safety check for batteries
-	var/drain = 0 //Drain amount from batteries
+	var/maxcapacity = ZERO //Safety check for batteries
+	var/drain = ZERO //Drain amount from batteries
 
-	. = 0
+	. = ZERO
 
 	if(charge)
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
-		spark_system.set_up(5, 0, loc)
+		spark_system.set_up(5, ZERO, loc)
 
-		while(G.candrain && charge > 0 && !maxcapacity)
+		while(G.candrain && charge > ZERO && !maxcapacity)
 			drain = rand(G.mindrain, G.maxdrain)
 
 			if(charge < drain)
@@ -101,7 +101,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
-	. = 0
+	. = ZERO
 
 	if(charge)
 		if(G.candrain && do_after(H,30, target = src))
@@ -110,7 +110,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 				S.cell.charge = S.cell.maxcharge
 			else
 				S.cell.give(charge)
-			charge = 0
+			charge = ZERO
 			corrupt()
 			update_icon()
 
@@ -159,15 +159,15 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
-	var/maxcapacity = 0 //Safety check
-	var/drain = 0 //Drain amount
+	var/maxcapacity = ZERO //Safety check
+	var/drain = ZERO //Drain amount
 
-	. = 0
+	. = ZERO
 
 	var/datum/powernet/PN = powernet
 	while(G.candrain && !maxcapacity && src)
 		drain = (round((rand(G.mindrain, G.maxdrain))/2))
-		var/drained = 0
+		var/drained = ZERO
 		if(PN && do_after(H,10, target = src))
 			drained = min(drain, delayed_surplus())
 			add_delayedload(drained)
@@ -175,8 +175,8 @@ They *could* go in their appropriate files, but this is supposed to be modular
 				for(var/obj/machinery/power/terminal/T in PN.nodes)
 					if(istype(T.master, /obj/machinery/power/apc))
 						var/obj/machinery/power/apc/AP = T.master
-						if(AP.operating && AP.cell && AP.cell.charge > 0)
-							AP.cell.charge = max(0, AP.cell.charge - 5)
+						if(AP.operating && AP.cell && AP.cell.charge > ZERO)
+							AP.cell.charge = max(ZERO, AP.cell.charge - 5)
 							drained += 5
 		else
 			break
@@ -195,13 +195,13 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
-	var/maxcapacity = 0 //Safety check
-	var/drain = 0 //Drain amount
-	. = 0
+	var/maxcapacity = ZERO //Safety check
+	var/drain = ZERO //Drain amount
+	. = ZERO
 
 	occupant_message("<span class='danger'>Warning: Unauthorized access through sub-route 4, block H, detected.</span>")
 	if(get_charge())
-		while(G.candrain && cell.charge > 0 && !maxcapacity)
+		while(G.candrain && cell.charge > ZERO && !maxcapacity)
 			drain = rand(G.mindrain,G.maxdrain)
 			if(cell.charge < drain)
 				drain = cell.charge
@@ -222,14 +222,14 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
-	var/maxcapacity = 0 //Safety check
-	var/drain = 0 //Drain amount
-	. = 0
+	var/maxcapacity = ZERO //Safety check
+	var/drain = ZERO //Drain amount
+	. = ZERO
 
 	to_chat(src, "<span class='danger'>Warning: Unauthorized access through sub-route 12, block C, detected.</span>")
 
 	if(cell && cell.charge)
-		while(G.candrain && cell.charge > 0 && !maxcapacity)
+		while(G.candrain && cell.charge > ZERO && !maxcapacity)
 			drain = rand(G.mindrain,G.maxdrain)
 			if(cell.charge < drain)
 				drain = cell.charge
@@ -258,7 +258,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 		. = DRAIN_MOB_SHOCK
 		//Got that electric touch
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
-		spark_system.set_up(5, 0, loc)
+		spark_system.set_up(5, ZERO, loc)
 		playsound(src, "sparks", 50, TRUE)
 		visible_message("<span class='danger'>[H] electrocutes [src] with [H.p_their()] touch!</span>", "<span class='userdanger'>[H] electrocutes you with [H.p_their()] touch!</span>")
 		electrocute_act(25, H)

@@ -12,7 +12,7 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	minimum_distance = 3
 	retreat_distance = 3
-	obj_damage = 0
+	obj_damage = ZERO
 	melee_damage_lower = 10
 	melee_damage_upper = 20
 	health = 1000
@@ -37,7 +37,7 @@
 	boss_type = /mob/living/simple_animal/hostile/boss/paper_wizard
 	needs_target = FALSE
 	say_when_triggered = "Rise, my creations! Jump off your pages and into this realm!"
-	var/static/summoned_minions = 0
+	var/static/summoned_minions = ZERO
 
 /datum/action/boss/wizard_summon_minions/Trigger()
 	if(summoned_minions <= 6 && ..())
@@ -85,7 +85,7 @@
 			wiz.say("My craft defines me, you could even say it IS me!")
 			wiz.forceMove(get_step(target,pick_n_take(directions)))
 			wiz.minimum_distance = 1 //so he doesn't run away and ruin everything
-			wiz.retreat_distance = 0
+			wiz.retreat_distance = ZERO
 		else
 			boss.atb.refund(boss_cost)
 
@@ -97,15 +97,15 @@
 	boss_abilities = list()
 	melee_damage_lower = 1
 	melee_damage_upper = 5
-	minimum_distance = 0
-	retreat_distance = 0
-	ranged = 0
+	minimum_distance = ZERO
+	retreat_distance = ZERO
+	ranged = ZERO
 	loot = list()
 	var/mob/living/simple_animal/hostile/boss/paper_wizard/original
 
 //Hit a fake? eat pain!
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	if(amount > 0) //damage
+	if(amount > ZERO) //damage
 		if(original)
 			original.minimum_distance = 3
 			original.retreat_distance = 3
@@ -123,7 +123,7 @@
 //Hit the real guy? copies go bai-bai
 /mob/living/simple_animal/hostile/boss/paper_wizard/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(. > 0)//damage
+	if(. > ZERO)//damage
 		minimum_distance = 3
 		retreat_distance = 3
 		for(var/copy in copies)

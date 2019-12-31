@@ -9,6 +9,6 @@
 #define getmaterialref(A) (SSmaterials.materials[A] || A)
 
 /// Flag for atoms, this flag ensures it isn't re-colored by materials. Useful for snowflake icons such as default toolboxes.
-#define MATERIAL_COLOR (1<<0)
+#define MATERIAL_COLOR (1<<ZERO)
 #define MATERIAL_ADD_PREFIX (1<<1)
 #define MATERIAL_NO_EFFECTS (1<<2)

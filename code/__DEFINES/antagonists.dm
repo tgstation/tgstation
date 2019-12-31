@@ -1,4 +1,4 @@
-#define NUKE_RESULT_FLUKE 0
+#define NUKE_RESULT_FLUKE ZERO
 #define NUKE_RESULT_NUKE_WIN 1
 #define NUKE_RESULT_CREW_WIN 2
 #define NUKE_RESULT_CREW_WIN_SYNDIES_DEAD 3
@@ -9,7 +9,7 @@
 #define NUKE_RESULT_WRONG_STATION_DEAD 8
 
 //fugitive end results
-#define FUGITIVE_RESULT_BADASS_HUNTER 0
+#define FUGITIVE_RESULT_BADASS_HUNTER ZERO
 #define FUGITIVE_RESULT_POSTMORTEM_HUNTER 1
 #define FUGITIVE_RESULT_MAJOR_HUNTER 2
 #define FUGITIVE_RESULT_HUNTER_VICTORY 3
@@ -50,7 +50,7 @@
 
 //Shuttle hijacking
 /// Does not stop hijacking but itself won't hijack
-#define HIJACK_NEUTRAL 0
+#define HIJACK_NEUTRAL ZERO
 /// Needs to be present for shuttle to be hijacked
 #define HIJACK_HIJACKER 1
 /// Prevents hijacking same way as non-antags

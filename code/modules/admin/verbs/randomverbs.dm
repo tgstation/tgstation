@@ -109,18 +109,18 @@
 
 		if(operation == "set")
 			log_text = "Set to [num2text(msg)]"
-			SSpersistence.antag_rep[C.ckey] = max(0, min(msg, ANTAG_REP_MAXIMUM))
+			SSpersistence.antag_rep[C.ckey] = max(ZERO, min(msg, ANTAG_REP_MAXIMUM))
 		else if(operation == "add")
 			log_text = "Added [num2text(msg)]"
 			SSpersistence.antag_rep[C.ckey] = min(SSpersistence.antag_rep[C.ckey]+msg, ANTAG_REP_MAXIMUM)
 		else if(operation == "subtract")
 			log_text = "Subtracted [num2text(msg)]"
-			SSpersistence.antag_rep[C.ckey] = max(SSpersistence.antag_rep[C.ckey]-msg, 0)
+			SSpersistence.antag_rep[C.ckey] = max(SSpersistence.antag_rep[C.ckey]-msg, ZERO)
 		else
 			to_chat(src, "Invalid operation for antag rep modification: [operation] by user [key_name(usr)]")
 			return
 
-		if(SSpersistence.antag_rep[C.ckey] <= 0)
+		if(SSpersistence.antag_rep[C.ckey] <= ZERO)
 			SSpersistence.antag_rep -= C.ckey
 
 	log_admin("[key_name(usr)]: Modified [key_name(C)]'s antagonist reputation [log_text]")
@@ -205,7 +205,7 @@
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Godmode", "[M.status_flags & GODMODE ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/proc/cmd_admin_mute(whom, mute_type, automute = 0)
+/proc/cmd_admin_mute(whom, mute_type, automute = ZERO)
 	if(!whom)
 		return
 
@@ -300,7 +300,7 @@
 		else
 			to_chat(usr, "<span class='danger'>Error: create_xeno(): no suitable candidates.</span>")
 	if(!istext(ckey))
-		return 0
+		return ZERO
 
 	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Praetorian","Hunter","Sentinel","Drone","Larva")
 	var/obj/effect/landmark/spawn_here = GLOB.xeno_spawn.len ? pick(GLOB.xeno_spawn) : null
@@ -319,7 +319,7 @@
 		if("Larva")
 			new_xeno = new /mob/living/carbon/alien/larva(spawn_here)
 		else
-			return 0
+			return ZERO
 	if(!spawn_here)
 		SSjob.SendToLateJoin(new_xeno, FALSE)
 
@@ -517,7 +517,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("Admin [key_name_admin(usr)] has added a new AI law - [input]")
 
 	var/show_log = alert(src, "Show ion message?", "Message", "Yes", "No")
-	var/announce_ion_laws = (show_log == "Yes" ? 100 : 0)
+	var/announce_ion_laws = (show_log == "Yes" ? 100 : ZERO)
 
 	var/datum/round_event/ion_storm/add_law_only/ion = new()
 	ion.announceChance = announce_ion_laws
@@ -749,7 +749,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/admin_cancel_shuttle()
 	set category = "Admin"
 	set name = "Cancel Shuttle"
-	if(!check_rights(0))
+	if(!check_rights(ZERO))
 		return
 	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes")
 		return
@@ -831,7 +831,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/toggle_nuke(obj/machinery/nuclearbomb/N in GLOB.nuke_list)
 	set name = "Toggle Nuke"
 	set category = "Fun"
-	set popup_menu = 0
+	set popup_menu = ZERO
 	if(!check_rights(R_DEBUG))
 		return
 
@@ -1088,7 +1088,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			var/target_path = input(usr,"Enter typepath of an atom you'd like to send with the pod (type \"empty\" to send an empty pod):" ,"Typepath","/obj/item/reagent_containers/food/snacks/grown/harebell") as null|text
 			var/obj/structure/closet/supplypod/centcompod/pod = new()
 			pod.damage = 40
-			pod.explosionSize = list(0,0,0,2)
+			pod.explosionSize = list(ZERO,ZERO,ZERO,2)
 			pod.effectStun = TRUE
 			if (isnull(target_path)) //The user pressed "Cancel"
 				return
@@ -1106,11 +1106,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			if(!holder)
 				return
 			plaunch.specificTarget = target
-			plaunch.launchChoice = 0
+			plaunch.launchChoice = ZERO
 			plaunch.damageChoice = 1
 			plaunch.explosionChoice = 1
 			plaunch.temp_pod.damage = 40//bring the mother fuckin ruckus
-			plaunch.temp_pod.explosionSize = list(0,0,0,2)
+			plaunch.temp_pod.explosionSize = list(ZERO,ZERO,ZERO,2)
 			plaunch.temp_pod.effectStun = TRUE
 			plaunch.ui_interact(usr)
 			return //We return here because punish_log() is handled by the centcom_podlauncher datum

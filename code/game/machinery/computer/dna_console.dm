@@ -52,9 +52,9 @@
 	///the max instability of the advanced injector.
 	var/max_injector_instability = 50
 
-	var/injectorready = 0	//world timer cooldown var
-	var/jokerready = 0
-	var/scrambleready = 0
+	var/injectorready = ZERO	//world timer cooldown var
+	var/jokerready = ZERO
+	var/scrambleready = ZERO
 	var/current_screen = "mainmenu"
 	var/current_mutation   //what block are we inspecting? only used when screen = "info"
 	var/current_storage   //what storage block are we looking at?
@@ -187,7 +187,7 @@
 		stddev = RADIATION_ACCURACY_MULTIPLIER/radduration
 	var/chance_to_hit
 	switch(stddev)	//hardcoded values from a z-table for a normal distribution
-		if(0 to 0.25)
+		if(ZERO to 0.25)
 			chance_to_hit = ">95 %"
 		if(0.25 to 0.5)
 			chance_to_hit = "68-95 %"
@@ -251,9 +251,9 @@
 				var/len = length(viable_occupant.dna.uni_identity)
 				for(var/i=1, i<=len, i++)
 					temp_html += "<a class='dnaBlock' href='?src=[REF(src)];task=pulseui;num=[i];'>[copytext(viable_occupant.dna.uni_identity,i,i+1)]</a>"
-					if ((i % max_line_len) == 0)
+					if ((i % max_line_len) == ZERO)
 						temp_html += "</div><div class='clearBoth'>"
-					if((i % DNA_BLOCK_SIZE) == 0 && i < len)
+					if((i % DNA_BLOCK_SIZE) == ZERO && i < len)
 						temp_html += "<div class='dnaBlockNumber'>[(i / DNA_BLOCK_SIZE) + 1]</div>"
 			else
 				temp_html += "---------"
@@ -711,7 +711,7 @@
 							hex = scramble(hex, radstrength, radduration)
 							last_change += "->[hex]"
 
-							viable_occupant.dna.uni_identity = copytext(viable_occupant.dna.uni_identity, 1, num) + hex + copytext(viable_occupant.dna.uni_identity, num+1, 0)
+							viable_occupant.dna.uni_identity = copytext(viable_occupant.dna.uni_identity, 1, num) + hex + copytext(viable_occupant.dna.uni_identity, num+1, ZERO)
 							viable_occupant.updateappearance(mutations_overlay_update=1)
 				else
 					current_screen = "mainmenu"
@@ -935,17 +935,17 @@
 
 /obj/machinery/computer/scan_consolenew/proc/scramble(input,rs,rd) //hexadecimal genetics. dont confuse with scramble button
 	var/length = length(input)
-	var/ran = gaussian(0, rs*RADIATION_STRENGTH_MULTIPLIER)
-	if(ran == 0)
-		ran = pick(-1,1)	//hacky, statistically should almost never happen. 0-chance makes people mad though
-	else if(ran < 0)
+	var/ran = gaussian(ZERO, rs*RADIATION_STRENGTH_MULTIPLIER)
+	if(ran == ZERO)
+		ran = pick(-1,1)	//hacky, statistically should almost never happen. ZERO-chance makes people mad though
+	else if(ran < ZERO)
 		ran = round(ran)	//negative, so floor it
 	else
 		ran = -round(-ran)	//positive, so ceiling it
-	return num2hex(WRAP(hex2num(input)+ran, 0, 16**length), length)
+	return num2hex(WRAP(hex2num(input)+ran, ZERO, 16**length), length)
 
 /obj/machinery/computer/scan_consolenew/proc/randomize_radiation_accuracy(position, radduration, number_of_blocks)
-	var/val = round(gaussian(0, RADIATION_ACCURACY_MULTIPLIER/radduration) + position, 1)
+	var/val = round(gaussian(ZERO, RADIATION_ACCURACY_MULTIPLIER/radduration) + position, 1)
 	return WRAP(val, 1, number_of_blocks+1)
 
 /obj/machinery/computer/scan_consolenew/proc/get_viable_occupant()

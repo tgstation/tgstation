@@ -12,7 +12,7 @@
 	force = 5
 	flags_1 = HEAR_1
 	var/ruin_mecha = FALSE //if the mecha starts on a ruin, don't automatically give it a tracking beacon to prevent metagaming.
-	var/can_move = 0 //time of next allowed movement
+	var/can_move = ZERO //time of next allowed movement
 	var/mob/living/carbon/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
 	var/dir_in = 2//What direction will the mech face when entered/powered on? Defaults to South.
@@ -24,14 +24,14 @@
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 1.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 0.5)
-	var/equipment_disabled = 0 //disabled due to EMP
+	var/equipment_disabled = ZERO //disabled due to EMP
 	var/obj/item/stock_parts/cell/cell ///Keeps track of the mech's cell
 	var/obj/item/stock_parts/scanning_module/scanmod ///Keeps track of the mech's scanning module
 	var/obj/item/stock_parts/capacitor/capacitor ///Keeps track of the mech's capacitor
 	var/construction_state = MECHA_LOCKED
-	var/last_message = 0
+	var/last_message = ZERO
 	var/add_req_access = 1
-	var/maint_access = 0
+	var/maint_access = ZERO
 	var/dna_lock //dna-locking the mech
 	var/list/proc_res = list() //stores proc owners, like proc_res["functionname"] = owner reference
 	var/datum/effect_system/spark_spread/spark_system = new
@@ -40,9 +40,9 @@
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
 	var/completely_disabled = FALSE //stops the mech from doing anything
 
-	var/bumpsmash = 0 //Whether or not the mech destroys walls by running into it.
+	var/bumpsmash = ZERO //Whether or not the mech destroys walls by running into it.
 	//inner atmos
-	var/use_internal_tank = 0
+	var/use_internal_tank = ZERO
 	var/internal_tank_valve = ONE_ATMOSPHERE
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
 	var/datum/gas_mixture/cabin_air
@@ -53,7 +53,7 @@
 
 	var/max_temperature = 25000
 	var/internal_damage_threshold = 50 //health percentage below which internal damage is possible
-	var/internal_damage = 0 //contains bitflags
+	var/internal_damage = ZERO //contains bitflags
 
 	var/list/operation_req_access = list()//required access level for mecha operation
 	var/list/internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE)//REQUIRED ACCESS LEVEL TO OPEN CELL COMPARTMENT
@@ -109,10 +109,10 @@
 	var/phase_state = "" //icon_state when phasing
 	var/strafe = FALSE //If we are strafing
 
-	var/nextsmash = 0
+	var/nextsmash = ZERO
 	var/smashcooldown = 3	//deciseconds
 
-	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
+	var/occupant_sight_flags = ZERO //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
 	var/mouse_pointer
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
@@ -126,7 +126,7 @@
 	add_cabin()
 	if (enclosed)
 		add_airtank()
-	spark_system.set_up(2, 0, src)
+	spark_system.set_up(2, ZERO, src)
 	spark_system.attach(src)
 	smoke_system.set_up(3, src)
 	smoke_system.attach(src)
@@ -198,7 +198,7 @@
 	return ..()
 
 /obj/mecha/proc/restore_equipment()
-	equipment_disabled = 0
+	equipment_disabled = ZERO
 	if(occupant)
 		SEND_SOUND(occupant, sound('sound/items/timer.ogg', volume=50))
 		to_chat(occupant, "<span=notice>Equipment control unit has been rebooted successfully.</span>")
@@ -213,7 +213,7 @@
 
 /obj/mecha/proc/update_part_values() ///Updates the values given by scanning module and capacitor tier, called when a part is removed or inserted.
 	if(scanmod)
-		normal_step_energy_drain = 20 - (5 * scanmod.rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to 0 on best
+		normal_step_energy_drain = 20 - (5 * scanmod.rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to ZERO on best
 		step_energy_drain = normal_step_energy_drain
 	else
 		normal_step_energy_drain = 500
@@ -221,7 +221,7 @@
 	if(capacitor)
 		armor = armor.modifyRating(energy = (capacitor.rating * 5)) //Each level of capacitor protects the mech against emp by 5%
 	else //because we can still be hit without a cap, even if we can't move
-		armor = armor.setRating(energy = 0)
+		armor = armor.setRating(energy = ZERO)
 
 
 ////////////////////////
@@ -277,11 +277,11 @@
 
 /obj/mecha/proc/can_use(mob/user)
 	if(user != occupant)
-		return 0
+		return ZERO
 	if(user && ismob(user))
 		if(!user.incapacitated())
 			return 1
-	return 0
+	return ZERO
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -330,15 +330,15 @@
 				var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
 				if(int_tank_air.return_pressure() > internal_tank.maximum_pressure && !(internal_damage & MECHA_INT_TANK_BREACH))
 					setInternalDamage(MECHA_INT_TANK_BREACH)
-				if(int_tank_air && int_tank_air.return_volume() > 0) //heat the air_contents
+				if(int_tank_air && int_tank_air.return_volume() > ZERO) //heat the air_contents
 					int_tank_air.temperature = min(6000+T0C, int_tank_air.temperature+rand(10,15))
-			if(cabin_air && cabin_air.return_volume()>0)
+			if(cabin_air && cabin_air.return_volume()>ZERO)
 				cabin_air.temperature = min(6000+T0C, cabin_air.return_temperature()+rand(10,15))
 				if(cabin_air.return_temperature() > max_temperature/2)
-					take_damage(4/round(max_temperature/cabin_air.return_temperature(),0.1), BURN, 0, 0)
+					take_damage(4/round(max_temperature/cabin_air.return_temperature(),0.1), BURN, ZERO, ZERO)
 
 		if(internal_damage & MECHA_INT_TEMP_CONTROL)
-			internal_temp_regulation = 0
+			internal_temp_regulation = ZERO
 
 		if(internal_damage & MECHA_INT_TANK_BREACH) //remove some air from internal tank
 			if(internal_tank)
@@ -357,7 +357,7 @@
 				cell.maxcharge -= min(20,cell.maxcharge)
 
 	if(internal_temp_regulation)
-		if(cabin_air && cabin_air.return_volume() > 0)
+		if(cabin_air && cabin_air.return_volume() > ZERO)
 			var/delta = cabin_air.temperature - T20C
 			cabin_air.temperature -= max(-10, min(10, round(delta/4,0.1)))
 
@@ -367,18 +367,18 @@
 		var/release_pressure = internal_tank_valve
 		var/cabin_pressure = cabin_air.return_pressure()
 		var/pressure_delta = min(release_pressure - cabin_pressure, (tank_air.return_pressure() - cabin_pressure)/2)
-		var/transfer_moles = 0
-		if(pressure_delta > 0) //cabin pressure lower than release pressure
-			if(tank_air.return_temperature() > 0)
+		var/transfer_moles = ZERO
+		if(pressure_delta > ZERO) //cabin pressure lower than release pressure
+			if(tank_air.return_temperature() > ZERO)
 				transfer_moles = pressure_delta*cabin_air.return_volume()/(cabin_air.return_temperature() * R_IDEAL_GAS_EQUATION)
 				var/datum/gas_mixture/removed = tank_air.remove(transfer_moles)
 				cabin_air.merge(removed)
-		else if(pressure_delta < 0) //cabin pressure higher than release pressure
+		else if(pressure_delta < ZERO) //cabin pressure higher than release pressure
 			var/datum/gas_mixture/t_air = return_air()
 			pressure_delta = cabin_pressure - release_pressure
 			if(t_air)
 				pressure_delta = min(cabin_pressure - t_air.return_pressure(), pressure_delta)
-			if(pressure_delta > 0) //if location pressure is lower than cabin pressure
+			if(pressure_delta > ZERO) //if location pressure is lower than cabin pressure
 				transfer_moles = pressure_delta*cabin_air.return_volume()/(cabin_air.return_temperature() * R_IDEAL_GAS_EQUATION)
 				var/datum/gas_mixture/removed = cabin_air.remove(transfer_moles)
 				if(t_air)
@@ -539,7 +539,7 @@
 		occupant_message("<span class='warning'>Air port connection has been severed!</span>")
 		log_message("Lost connection to gas port.", LOG_MECHA)
 
-/obj/mecha/Process_Spacemove(var/movement_dir = 0)
+/obj/mecha/Process_Spacemove(var/movement_dir = ZERO)
 	. = ..()
 	if(.)
 		return TRUE
@@ -567,12 +567,12 @@
 	if(user != occupant) //While not "realistic", this piece is player friendly.
 		user.forceMove(get_turf(src))
 		to_chat(user, "<span class='notice'>You climb out from [src].</span>")
-		return 0
+		return ZERO
 	if(internal_tank?.connected_port)
 		if(world.time - last_message > 20)
 			occupant_message("<span class='warning'>Unable to move while connected to the air system port!</span>")
 			last_message = world.time
-		return 0
+		return ZERO
 	if(construction_state)
 		if(world.time - last_message > 20)
 			occupant_message("<span class='danger'>Maintenance protocols in effect.</span>")
@@ -582,28 +582,28 @@
 
 /obj/mecha/proc/domove(direction)
 	if(can_move >= world.time)
-		return 0
+		return ZERO
 	if(!Process_Spacemove(direction))
-		return 0
+		return ZERO
 	if(!has_charge(step_energy_drain))
-		return 0
+		return ZERO
 	if(zoom_mode)
 		if(world.time - last_message > 20)
 			occupant_message("<span class='warning'>Unable to move while in zoom mode!</span>")
 			last_message = world.time
-		return 0
+		return ZERO
 	if(!cell)
 		if(world.time - last_message > 20)
 			occupant_message("<span class='warning'>Missing power cell.</span>")
 			last_message = world.time
-		return 0
+		return ZERO
 	if(!scanmod || !capacitor)
 		if(world.time - last_message > 20)
 			occupant_message("<span class='warning'>Missing [scanmod? "capacitor" : "scanning module"].</span>")
 			last_message = world.time
-		return 0
+		return ZERO
 
-	var/move_result = 0
+	var/move_result = ZERO
 	var/oldloc = loc
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		move_result = mechsteprand()
@@ -615,7 +615,7 @@
 		use_power(step_energy_drain)
 		can_move = world.time + step_in
 		return 1
-	return 0
+	return ZERO
 
 /obj/mecha/proc/mechturn(direction)
 	setDir(direction)
@@ -644,7 +644,7 @@
 	if(phasing && get_charge() >= phasing_energy_drain && !throwing)
 		if(!can_move)
 			return
-		can_move = 0
+		can_move = ZERO
 		if(phase_state)
 			flick(phase_state, src)
 		forceMove(get_step(src,dir))
@@ -697,7 +697,7 @@
 /obj/mecha/proc/setInternalDamage(int_dam_flag)
 	internal_damage |= int_dam_flag
 	log_message("Internal damage of type [int_dam_flag].", LOG_MECHA)
-	SEND_SOUND(occupant, sound('sound/machines/warning-buzzer.ogg',wait=0))
+	SEND_SOUND(occupant, sound('sound/machines/warning-buzzer.ogg',wait=ZERO))
 	diag_hud_set_mechstat()
 	return
 
@@ -734,7 +734,7 @@
 		if(occupant)
 			to_chat(user, "<span class='warning'>This exosuit has a pilot and cannot be controlled.</span>")
 			return
-		var/can_control_mech = 0
+		var/can_control_mech = ZERO
 		for(var/obj/item/mecha_parts/mecha_tracking/ai_control/A in trackers)
 			can_control_mech = 1
 			to_chat(user, "<span class='notice'>[icon2html(src, user)] Status of [name]:</span>\n[A.get_mecha_info()]")
@@ -815,8 +815,8 @@
 	AI.cancel_camera()
 	AI.controlled_mech = src
 	AI.remote_control = src
-	AI.mobility_flags = ALL //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
-	AI.can_shunt = 0 //ONE AI ENTERS. NO AI LEAVES.
+	AI.mobility_flags = ALL //Much easier than adding AI checks! Be sure to set this back to ZERO if you decide to allow an AI to leave a mech somehow.
+	AI.can_shunt = ZERO //ONE AI ENTERS. NO AI LEAVES.
 	to_chat(AI, AI.can_dominate_mechs ? "<span class='announce'>Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" :\
 		"<span class='notice'>You have been uploaded to a mech's onboard computer.</span>")
 	to_chat(AI, "<span class='reallybig boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>")
@@ -912,7 +912,7 @@
 	visible_message("<span class='notice'>[user] starts to climb into [name].</span>")
 
 	if(do_after(user, enter_delay, target = src))
-		if(obj_integrity <= 0)
+		if(obj_integrity <= ZERO)
 			to_chat(user, "<span class='warning'>You cannot get in the [name], it has been destroyed!</span>")
 		else if(occupant)
 			to_chat(user, "<span class='danger'>[occupant] was faster! Try better next time, loser.</span>")
@@ -942,7 +942,7 @@
 			SEND_SOUND(occupant, sound('sound/mecha/nominal.ogg',volume=50))
 		return 1
 	else
-		return 0
+		return ZERO
 
 /obj/mecha/proc/mmi_move_inside(obj/item/mmi/mmi_as_oc, mob/user)
 	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
@@ -1003,7 +1003,7 @@
 /obj/mecha/container_resist(mob/living/user)
 	is_currently_ejecting = TRUE
 	to_chat(occupant, "<span class='notice'>You begin the ejection procedure. Equipment is disabled during this process. Hold still to finish ejecting.</span>")
-	if(do_after(occupant, has_gravity() ? exit_delay : 0 , target = src))
+	if(do_after(occupant, has_gravity() ? exit_delay : ZERO , target = src))
 		to_chat(occupant, "<span class='notice'>You exit the mech.</span>")
 		go_out()
 	else
@@ -1083,7 +1083,7 @@
 	if(L && L.client)
 		L.update_mouse_pointer()
 		L.client.change_view(CONFIG_GET(string/default_view))
-		zoom_mode = 0
+		zoom_mode = ZERO
 
 /////////////////////////
 ////// Access stuff /////
@@ -1127,18 +1127,18 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		if(relay_charge)
 			return relay_charge
 	if(cell)
-		return max(0, cell.charge)
+		return max(ZERO, cell.charge)
 
 /obj/mecha/proc/use_power(amount)
 	if(get_charge() && cell.use(amount))
 		return 1
-	return 0
+	return ZERO
 
 /obj/mecha/proc/give_power(amount)
 	if(!isnull(get_charge()))
 		cell.give(amount)
 		return 1
-	return 0
+	return ZERO
 
 /obj/mecha/update_remote_sight(mob/living/user)
 	if(occupant_sight_flags)
@@ -1157,7 +1157,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 	var/ammo_needed
 	var/found_gun
 	for(var/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/gun in equipment)
-		ammo_needed = 0
+		ammo_needed = ZERO
 
 		if(istype(gun, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic) && gun.ammo_type == A.ammo_type)
 			found_gun = TRUE
@@ -1185,7 +1185,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 						gun.projectiles_cache = gun.projectiles_cache + A.rounds
 					playsound(get_turf(user),A.load_audio,50,TRUE)
 					to_chat(user, "<span class='notice'>You add [A.rounds] [A.round_term][A.rounds > 1?"s":""] to the [gun.name]</span>")
-					A.rounds = 0
+					A.rounds = ZERO
 					A.update_name()
 					return TRUE
 	if(!fail_chat_override)

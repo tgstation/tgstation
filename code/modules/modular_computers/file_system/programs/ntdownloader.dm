@@ -8,48 +8,48 @@
 	size = 4
 	requires_ntnet = 1
 	requires_ntnet_feature = NTNET_SOFTWAREDOWNLOAD
-	available_on_ntnet = 0
+	available_on_ntnet = ZERO
 	ui_header = "downloader_finished.gif"
 	tgui_id = "ntos_net_downloader"
 	ui_x = 480
 	ui_y = 735
 
 	var/datum/computer_file/program/downloaded_file = null
-	var/hacked_download = 0
-	var/download_completion = 0 //GQ of downloaded data.
-	var/download_netspeed = 0
+	var/hacked_download = ZERO
+	var/download_completion = ZERO //GQ of downloaded data.
+	var/download_netspeed = ZERO
 	var/downloaderror = ""
 	var/obj/item/modular_computer/my_computer = null
 
 /datum/computer_file/program/ntnetdownload/proc/begin_file_download(filename)
 	if(downloaded_file)
-		return 0
+		return ZERO
 
 	var/datum/computer_file/program/PRG = SSnetworks.station_network.find_ntnet_file_by_name(filename)
 
 	if(!PRG || !istype(PRG))
-		return 0
+		return ZERO
 
 	// Attempting to download antag only program, but without having emagged computer. No.
 	if(PRG.available_on_syndinet && !(computer.obj_flags & EMAGGED))
-		return 0
+		return ZERO
 
 	var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
 
 	if(!computer || !hard_drive || !hard_drive.can_store_file(PRG))
-		return 0
+		return ZERO
 
 	ui_header = "downloader_running.gif"
 
 	if(PRG in SSnetworks.station_network.available_station_software)
 		generate_network_log("Began downloading file [PRG.filename].[PRG.filetype] from NTNet Software Repository.")
-		hacked_download = 0
+		hacked_download = ZERO
 	else if(PRG in SSnetworks.station_network.available_antag_software)
 		generate_network_log("Began downloading file **ENCRYPTED**.[PRG.filetype] from unspecified server.")
 		hacked_download = 1
 	else
 		generate_network_log("Began downloading file [PRG.filename].[PRG.filetype] from unspecified server.")
-		hacked_download = 0
+		hacked_download = ZERO
 
 	downloaded_file = PRG.clone()
 
@@ -58,7 +58,7 @@
 		return
 	generate_network_log("Aborted download of file [hacked_download ? "**ENCRYPTED**" : "[downloaded_file.filename].[downloaded_file.filetype]"].")
 	downloaded_file = null
-	download_completion = 0
+	download_completion = ZERO
 	ui_header = "downloader_finished.gif"
 
 /datum/computer_file/program/ntnetdownload/proc/complete_file_download()
@@ -70,7 +70,7 @@
 		// The download failed
 		downloaderror = "I/O ERROR - Unable to save file. Check whether you have enough free space on your hard drive and whether your hard drive is properly connected. If the issue persists contact your system administrator for assistance."
 	downloaded_file = null
-	download_completion = 0
+	download_completion = ZERO
 	ui_header = "downloader_finished.gif"
 
 /datum/computer_file/program/ntnetdownload/process_tick()
@@ -79,7 +79,7 @@
 	if(download_completion >= downloaded_file.size)
 		complete_file_download()
 	// Download speed according to connectivity state. NTNet server is assumed to be on unlimited speed so we're limited by our local connectivity
-	download_netspeed = 0
+	download_netspeed = ZERO
 	// Speed defines are found in misc.dm
 	switch(ntnet_status)
 		if(1)
@@ -100,12 +100,12 @@
 			return 1
 		if("PRG_reseterror")
 			if(downloaderror)
-				download_completion = 0
-				download_netspeed = 0
+				download_completion = ZERO
+				download_netspeed = ZERO
 				downloaded_file = null
 				downloaderror = ""
 			return 1
-	return 0
+	return ZERO
 
 /datum/computer_file/program/ntnetdownload/ui_data(mob/user)
 	my_computer = computer
@@ -165,7 +165,7 @@
 /datum/computer_file/program/ntnetdownload/proc/check_compatibility(datum/computer_file/program/P)
 	var/hardflag = computer.hardware_flag
 
-	if(P && P.is_supported_by_hardware(hardflag,0))
+	if(P && P.is_supported_by_hardware(hardflag,ZERO))
 		return "Compatible"
 	return "Incompatible!"
 

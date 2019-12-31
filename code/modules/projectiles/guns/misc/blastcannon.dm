@@ -13,12 +13,12 @@
 
 	var/hugbox = TRUE
 	var/max_power = INFINITY
-	var/reaction_volume_mod = 0
+	var/reaction_volume_mod = ZERO
 	var/reaction_cycles = 3				//How many times gases react() before calculation. Very finnicky value, do not mess with without good reason.
 	var/prereaction = TRUE
 
 	var/bombcheck = TRUE
-	var/debug_power = 0
+	var/debug_power = ZERO
 
 	var/obj/item/transfer_valve/bomb
 
@@ -72,20 +72,20 @@
 //returns the third value of a bomb blast
 /obj/item/gun/blastcannon/proc/calculate_bomb()
 	if(!istype(bomb) || !istype(bomb.tank_one) || !istype(bomb.tank_two))
-		return 0
-	var/datum/gas_mixture/temp = new(max(reaction_volume_mod, 0))
+		return ZERO
+	var/datum/gas_mixture/temp = new(max(reaction_volume_mod, ZERO))
 	bomb.merge_gases(temp)
 	if(prereaction)
 		temp.react(src)
 		var/prereaction_pressure = temp.return_pressure()
 		if(prereaction_pressure < TANK_FRAGMENT_PRESSURE)
-			return 0
+			return ZERO
 	for(var/i in 1 to reaction_cycles)
 		temp.react(src)
 	var/pressure = temp.return_pressure()
 	qdel(temp)
 	if(pressure < TANK_FRAGMENT_PRESSURE)
-		return 0
+		return ZERO
 	return ((pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE)
 
 /obj/item/gun/blastcannon/afterattack(atom/target, mob/user, flag, params)
@@ -106,18 +106,18 @@
 	log_game("Blast wave fired from [AREACOORD(starting)] at [AREACOORD(targturf)] ([target.name]) by [key_name(user)] with power [heavy]/[medium]/[light].")
 	var/obj/projectile/blastwave/BW = new(loc, heavy, medium, light)
 	BW.hugbox = hugbox
-	BW.preparePixelProjectile(target, get_turf(src), params, 0)
+	BW.preparePixelProjectile(target, get_turf(src), params, ZERO)
 	BW.fire()
 
 /obj/projectile/blastwave
 	name = "blast wave"
 	icon_state = "blastwave"
-	damage = 0
+	damage = ZERO
 	nodamage = FALSE
 	movement_type = FLYING | UNSTOPPABLE
-	var/heavyr = 0
-	var/mediumr = 0
-	var/lightr = 0
+	var/heavyr = ZERO
+	var/mediumr = ZERO
+	var/lightr = ZERO
 	var/hugbox = TRUE
 	range = 150
 
@@ -130,7 +130,7 @@
 /obj/projectile/blastwave/Range()
 	..()
 	var/amount_destruction = EXPLODE_NONE
-	var/wallbreak_chance = 0
+	var/wallbreak_chance = ZERO
 	if(heavyr)
 		amount_destruction = EXPLODE_DEVASTATE
 		wallbreak_chance = 99
@@ -152,9 +152,9 @@
 	else
 		qdel(src)
 
-	heavyr = max(heavyr - 1, 0)
-	mediumr = max(mediumr - 1, 0)
-	lightr = max(lightr - 1, 0)
+	heavyr = max(heavyr - 1, ZERO)
+	mediumr = max(mediumr - 1, ZERO)
+	lightr = max(lightr - 1, ZERO)
 
 /obj/projectile/blastwave/ex_act()
 	return

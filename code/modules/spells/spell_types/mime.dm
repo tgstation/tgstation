@@ -10,7 +10,7 @@
 	charge_max = 300
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
-	range = 0
+	range = ZERO
 	cast_sound = null
 	human_req = TRUE
 
@@ -40,7 +40,7 @@
 	charge_max = 300
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
-	range = 0
+	range = ZERO
 	cast_sound = null
 	human_req = TRUE
 
@@ -78,7 +78,7 @@
 	charge_max = 300
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
-	range = 0
+	range = ZERO
 	cast_sound = null
 	human_req = TRUE
 

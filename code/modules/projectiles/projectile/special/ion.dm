@@ -1,7 +1,7 @@
 /obj/projectile/ion
 	name = "ion bolt"
 	icon_state = "ion"
-	damage = 0
+	damage = ZERO
 	damage_type = BURN
 	nodamage = TRUE
 	flag = "energy"
@@ -14,4 +14,4 @@
 	return BULLET_ACT_HIT
 
 /obj/projectile/ion/weak
-	emp_radius = 0
+	emp_radius = ZERO

@@ -100,7 +100,7 @@
 
 
 /turf/open/lava/proc/burn_stuff(AM)
-	. = 0
+	. = ZERO
 
 	if(is_safe())
 		return FALSE

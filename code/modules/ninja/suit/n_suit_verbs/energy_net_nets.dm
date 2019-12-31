@@ -10,13 +10,13 @@ It is possible to destroy the net by the occupant or someone else.
 	icon_state = "energynet"
 
 	density = TRUE//Can't pass through.
-	opacity = 0//Can see through.
+	opacity = ZERO//Can see through.
 	mouse_opacity = MOUSE_OPACITY_ICON//So you can hit it with stuff.
 	anchored = TRUE//Can't drag/grab the net.
 	layer = ABOVE_ALL_MOB_LAYER
 	max_integrity = 25 //How much health it has.
 	can_buckle = 1
-	buckle_lying = 0
+	buckle_lying = ZERO
 	buckle_prevents_pull = TRUE
 	var/mob/living/carbon/affecting//Who it is currently affecting, if anyone.
 	var/mob/living/carbon/master//Who shot web. Will let this person know if the net was successful or failed.
@@ -24,7 +24,7 @@ It is possible to destroy the net by the occupant or someone else.
 	var/success = FALSE
 
 
-/obj/structure/energy_net/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/energy_net/play_attack_sound(damage, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BRUTE)
 			playsound(src, 'sound/weapons/slash.ogg', 80, TRUE)
@@ -44,7 +44,7 @@ It is possible to destroy the net by the occupant or someone else.
 		qdel(src)//Get rid of the net.
 		return
 
-	if(check>0)
+	if(check>ZERO)
 		check--
 		return
 

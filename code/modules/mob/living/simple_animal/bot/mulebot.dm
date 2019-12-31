@@ -4,7 +4,7 @@
 // Navigates via floor navbeacons
 // Remote Controlled from QM's PDA
 
-#define SIGH 0
+#define SIGH ZERO
 #define ANNOYED 1
 #define DELIGHT 2
 
@@ -17,9 +17,9 @@
 	animate_movement = FORWARD_STEPS
 	health = 50
 	maxHealth = 50
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = ZERO, CLONE = ZERO, STAMINA = ZERO, OXY = ZERO)
 	a_intent = INTENT_HARM //No swapping
-	buckle_lying = 0
+	buckle_lying = ZERO
 	mob_size = MOB_SIZE_LARGE
 
 	radio_key = /obj/item/encryptionkey/headset_cargo
@@ -37,7 +37,7 @@
 	var/atom/movable/load = null
 	var/mob/living/passenger = null
 	var/turf/target				// this is turf to navigate to (location of beacon)
-	var/loaddir = 0				// this the direction to unload onto/load from
+	var/loaddir = ZERO				// this the direction to unload onto/load from
 	var/home_destination = "" 	// tag of home beacon
 
 	var/reached_target = 1 	//true if already reached the target
@@ -47,7 +47,7 @@
 	var/report_delivery = 1 // true if bot will announce an arrival to a location.
 
 	var/obj/item/stock_parts/cell/cell
-	var/bloodiness = 0
+	var/bloodiness = ZERO
 
 /mob/living/simple_animal/bot/mulebot/Initialize(mapload)
 	. = ..()
@@ -60,7 +60,7 @@
 	prev_access = access_card.access
 	cell = new /obj/item/stock_parts/cell/upgraded(src, 2000)
 
-	var/static/mulebot_count = 0
+	var/static/mulebot_count = ZERO
 	mulebot_count += 1
 	set_id(suffix || id || "#[mulebot_count]")
 	suffix = null
@@ -70,7 +70,7 @@
 	AddComponent(/datum/component/ntnet_interface)
 
 /mob/living/simple_animal/bot/mulebot/Destroy()
-	unload(0)
+	unload(ZERO)
 	qdel(wires)
 	wires = null
 	return ..()
@@ -84,7 +84,7 @@
 
 /mob/living/simple_animal/bot/mulebot/bot_reset()
 	..()
-	reached_target = 0
+	reached_target = ZERO
 
 /mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
@@ -107,7 +107,7 @@
 		return attack_hand(user)
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1 + I.force * 2))
-			unload(0)
+			unload(ZERO)
 			user.visible_message("<span class='danger'>[user] knocks [load] off [src] with \the [I]!</span>",
 									"<span class='danger'>You knock [load] off [src] with \the [I]!</span>")
 		else
@@ -141,7 +141,7 @@
 	return
 
 /mob/living/simple_animal/bot/mulebot/ex_act(severity)
-	unload(0)
+	unload(ZERO)
 	switch(severity)
 		if(1)
 			qdel(src)
@@ -156,7 +156,7 @@
 	. = ..()
 	if(.)
 		if(prob(50) && !isnull(load))
-			unload(0)
+			unload(ZERO)
 		if(prob(25))
 			visible_message("<span class='danger'>Something shorts out inside [src]!</span>")
 			wires.cut_random()
@@ -252,7 +252,7 @@
 				if(loc == target)
 					unload(loaddir)
 				else
-					unload(0)
+					unload(ZERO)
 		if("autoret")
 			auto_return = !auto_return
 		if("autopick")
@@ -314,7 +314,7 @@
 
 // returns true if the bot has power
 /mob/living/simple_animal/bot/mulebot/proc/has_power()
-	return !open && cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
+	return !open && cell && cell.charge > ZERO && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
 
 /mob/living/simple_animal/bot/mulebot/proc/buzz(type)
 	switch(type)
@@ -439,10 +439,10 @@
 		on = FALSE
 		return
 	if(on)
-		var/speed = (wires.is_cut(WIRE_MOTOR1) ? 0 : 1) + (wires.is_cut(WIRE_MOTOR2) ? 0 : 2)
-		var/num_steps = 0
+		var/speed = (wires.is_cut(WIRE_MOTOR1) ? ZERO : 1) + (wires.is_cut(WIRE_MOTOR2) ? ZERO : 2)
+		var/num_steps = ZERO
 		switch(speed)
-			if(0)
+			if(ZERO)
 				// do nothing
 			if(1)
 				num_steps = 10
@@ -472,9 +472,9 @@
 				at_target()
 				return
 
-			else if(path.len > 0 && target) // valid path
+			else if(path.len > ZERO && target) // valid path
 				var/turf/next = path[1]
-				reached_target = 0
+				reached_target = ZERO
 				if(next == loc)
 					path -= next
 					return
@@ -500,7 +500,7 @@
 					if(cell)
 						cell.use(1)
 					if(moved && oldloc!=loc)	// successful move
-						blockcount = 0
+						blockcount = ZERO
 						path -= loc
 
 						if(destination == home_destination)
@@ -519,7 +519,7 @@
 							// find new path excluding blocked turf
 							buzz(SIGH)
 							mode = BOT_WAIT_FOR_NAV
-							blockcount = 0
+							blockcount = ZERO
 							addtimer(CALLBACK(src, .proc/process_blocked, next), 2 SECONDS)
 							return
 						return
@@ -537,15 +537,15 @@
 
 /mob/living/simple_animal/bot/mulebot/proc/process_blocked(turf/next)
 	calc_path(avoid=next)
-	if(path.len > 0)
+	if(path.len > ZERO)
 		buzz(DELIGHT)
 	mode = BOT_BLOCKED
 
 /mob/living/simple_animal/bot/mulebot/proc/process_nav()
 	calc_path()
 
-	if(path.len > 0)
-		blockcount = 0
+	if(path.len > ZERO)
+		blockcount = ZERO
 		mode = BOT_BLOCKED
 		buzz(DELIGHT)
 
@@ -557,7 +557,7 @@
 // calculates a path to the current destination
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/mulebot/calc_path(turf/avoid = null)
-	path = get_path_to(src, target, /turf/proc/Distance_cardinal, 0, 250, id=access_card, exclude=avoid)
+	path = get_path_to(src, target, /turf/proc/Distance_cardinal, ZERO, 250, id=access_card, exclude=avoid)
 
 // sets the current destination
 // signals all beacons matching the delivery code
@@ -677,7 +677,7 @@
 	if(user.incapacitated())
 		return
 	if(load == user)
-		unload(0)
+		unload(ZERO)
 
 
 //Update navigation data. Called when commanded to deliver, return home, or a route update is needed...
@@ -694,7 +694,7 @@
 			if(direction)
 				loaddir = text2num(direction)
 			else
-				loaddir = 0
+				loaddir = ZERO
 			update_icon()
 			if(destination) // No need to calculate a path if you do not have a destination set!
 				calc_path()
@@ -828,7 +828,7 @@
 	ghost_rider = FALSE
 	cut_overlays()
 	QDEL_NULL(ghost_overlay)
-	unload(0)
+	unload(ZERO)
 	update_icon()
 
 #undef SIGH

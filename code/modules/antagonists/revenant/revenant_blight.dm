@@ -12,7 +12,7 @@
 	disease_flags = CURABLE
 	permeability_mod = 1
 	severity = DISEASE_SEVERITY_HARMFUL
-	var/stagedamage = 0 //Highest stage reached.
+	var/stagedamage = ZERO //Highest stage reached.
 	var/finalstage = 0 //Because we're spawning off the cure in the final stage, we need to check if we've done the final stage's effects.
 
 /datum/disease/revblight/cure()

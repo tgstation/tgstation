@@ -42,7 +42,7 @@
 	return ..()
 
 /obj/machinery/chem_master/RefreshParts()
-	reagents.maximum_volume = 0
+	reagents.maximum_volume = ZERO
 	for(var/obj/item/reagent_containers/glass/beaker/B in component_parts)
 		reagents.maximum_volume += B.reagents.maximum_volume
 
@@ -156,7 +156,7 @@
 
 /obj/machinery/chem_master/ui_data(mob/user)
 	var/list/data = list()
-	data["isBeakerLoaded"] = beaker ? 1 : 0
+	data["isBeakerLoaded"] = beaker ? 1 : ZERO
 	data["beakerCurrentVolume"] = beaker ? beaker.reagents.total_volume : null
 	data["beakerMaxVolume"] = beaker ? beaker.volume : null
 	data["mode"] = mode
@@ -164,7 +164,7 @@
 	data["screen"] = screen
 	data["analyzeVars"] = analyzeVars
 	data["chosenPillStyle"] = chosenPillStyle
-	data["isPillBottleLoaded"] = bottle ? 1 : 0
+	data["isPillBottleLoaded"] = bottle ? 1 : ZERO
 	if(bottle)
 		var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
 		data["pillBottleCurrentAmount"] = bottle.contents.len
@@ -213,7 +213,7 @@
 			amount = text2num(input(
 				"Enter the amount you want to transfer:",
 				name, ""))
-		if (amount == null || amount <= 0)
+		if (amount == null || amount <= ZERO)
 			return FALSE
 		if (to_container == "buffer")
 			beaker.reagents.trans_id_to(src, reagent, amount)
@@ -236,7 +236,7 @@
 		return TRUE
 
 	if(action == "create")
-		if(reagents.total_volume == 0)
+		if(reagents.total_volume == ZERO)
 			return FALSE
 		var/item_type = params["type"]
 		// Get amount of items
@@ -245,8 +245,8 @@
 			amount = text2num(input(usr,
 				"Max 10. Buffer content will be split evenly.",
 				"How many to make?", 1))
-		amount = CLAMP(round(amount), 0, 10)
-		if (amount <= 0)
+		amount = CLAMP(round(amount), ZERO, 10)
+		if (amount <= ZERO)
 			return FALSE
 		// Get units per item
 		var/vol_each = text2num(params["volume"])
@@ -271,8 +271,8 @@
 				"Maximum [vol_each_max] units per item.",
 				"How many units to fill?",
 				vol_each_max))
-		vol_each = CLAMP(vol_each, 0, vol_each_max)
-		if(vol_each <= 0)
+		vol_each = CLAMP(vol_each, ZERO, vol_each_max)
+		if(vol_each <= ZERO)
 			return FALSE
 		// Get item name
 		var/name = params["name"]
@@ -298,7 +298,7 @@
 					/datum/component/storage)
 				if(STRB)
 					drop_threshold = STRB.max_items - bottle.contents.len
-			for(var/i = 0; i < amount; i++)
+			for(var/i = ZERO; i < amount; i++)
 				if(i < drop_threshold)
 					P = new/obj/item/reagent_containers/pill(target_loc)
 				else
@@ -315,7 +315,7 @@
 			return TRUE
 		if(item_type == "patch")
 			var/obj/item/reagent_containers/pill/patch/P
-			for(var/i = 0; i < amount; i++)
+			for(var/i = ZERO; i < amount; i++)
 				P = new/obj/item/reagent_containers/pill/patch(drop_location())
 				P.name = trim("[name] patch")
 				adjust_item_drop_location(P)
@@ -323,7 +323,7 @@
 			return TRUE
 		if(item_type == "bottle")
 			var/obj/item/reagent_containers/glass/bottle/P
-			for(var/i = 0; i < amount; i++)
+			for(var/i = ZERO; i < amount; i++)
 				P = new/obj/item/reagent_containers/glass/bottle(drop_location())
 				P.name = trim("[name] bottle")
 				adjust_item_drop_location(P)
@@ -331,7 +331,7 @@
 			return TRUE
 		if(item_type == "condimentPack")
 			var/obj/item/reagent_containers/food/condiment/pack/P
-			for(var/i = 0; i < amount; i++)
+			for(var/i = ZERO; i < amount; i++)
 				P = new/obj/item/reagent_containers/food/condiment/pack(drop_location())
 				P.originalname = name
 				P.name = trim("[name] pack")
@@ -340,7 +340,7 @@
 			return TRUE
 		if(item_type == "condimentBottle")
 			var/obj/item/reagent_containers/food/condiment/P
-			for(var/i = 0; i < amount; i++)
+			for(var/i = ZERO; i < amount; i++)
 				P = new/obj/item/reagent_containers/food/condiment(drop_location())
 				P.originalname = name
 				P.name = trim("[name] bottle")
@@ -375,13 +375,13 @@
 	if(isnum(num))
 		if(num > 200)
 			num = 200
-		else if(num < 0)
-			num = 0
+		else if(num < ZERO)
+			num = ZERO
 		else
 			num = round(num)
 		return num
 	else
-		return 0
+		return ZERO
 
 
 /obj/machinery/chem_master/adjust_item_drop_location(atom/movable/AM) // Special version for chemmasters and condimasters

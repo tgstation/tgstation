@@ -5,7 +5,7 @@
 	// Humans cursed to stay in the darkness, lest their life forces drain. They regain health in shadow and die in light.
 	name = "???"
 	id = "shadow"
-	sexes = 0
+	sexes = ZERO
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	species_traits = list(NOBLOOD,NOEYESPRITES)
 	inherent_traits = list(TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_NOBREATH)
@@ -21,9 +21,9 @@
 		var/light_amount = T.get_lumcount()
 
 		if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD) //if there's enough light, start dying
-			H.take_overall_damage(1,1, 0, BODYPART_ORGANIC)
+			H.take_overall_damage(1,1, ZERO, BODYPART_ORGANIC)
 		else if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
-			H.heal_overall_damage(1,1, 0, BODYPART_ORGANIC)
+			H.heal_overall_damage(1,1, ZERO, BODYPART_ORGANIC)
 
 /datum/species/shadow/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
@@ -72,7 +72,7 @@
 	icon_state = "brain-x-d"
 	var/obj/effect/proc_holder/spell/targeted/shadowwalk/shadowwalk
 
-/obj/item/organ/brain/nightmare/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/brain/nightmare/Insert(mob/living/carbon/M, special = ZERO)
 	..()
 	if(M.dna.species.id != "nightmare")
 		M.set_species(/datum/species/shadow/nightmare)
@@ -82,7 +82,7 @@
 	shadowwalk = SW
 
 
-/obj/item/organ/brain/nightmare/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/brain/nightmare/Remove(mob/living/carbon/M, special = ZERO)
 	if(shadowwalk)
 		M.RemoveSpell(shadowwalk)
 	..()
@@ -94,9 +94,9 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "demon_heart-on"
 	color = "#1C1C1C"
-	var/respawn_progress = 0
+	var/respawn_progress = ZERO
 	var/obj/item/light_eater/blade
-	decay_factor = 0
+	decay_factor = ZERO
 
 
 /obj/item/organ/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
@@ -112,21 +112,21 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 
-/obj/item/organ/heart/nightmare/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/heart/nightmare/Insert(mob/living/carbon/M, special = ZERO)
 	..()
 	if(special != HEART_SPECIAL_SHADOWIFY)
 		blade = new/obj/item/light_eater
 		M.put_in_hands(blade)
 
-/obj/item/organ/heart/nightmare/Remove(mob/living/carbon/M, special = 0)
-	respawn_progress = 0
+/obj/item/organ/heart/nightmare/Remove(mob/living/carbon/M, special = ZERO)
+	respawn_progress = ZERO
 	if(blade && special != HEART_SPECIAL_SHADOWIFY)
 		M.visible_message("<span class='warning'>\The [blade] disintegrates!</span>")
 		QDEL_NULL(blade)
 	..()
 
 /obj/item/organ/heart/nightmare/Stop()
-	return 0
+	return ZERO
 
 /obj/item/organ/heart/nightmare/update_icon()
 	return //always beating visually
@@ -151,7 +151,7 @@
 			SEND_SOUND(owner, sound('sound/effects/ghost.ogg'))
 		owner.visible_message("<span class='warning'>[owner] staggers to [owner.p_their()] feet!</span>")
 		playsound(owner, 'sound/hallucinations/far_noise.ogg', 50, TRUE)
-		respawn_progress = 0
+		respawn_progress = ZERO
 
 //Weapon
 
@@ -203,9 +203,9 @@
 /obj/item/light_eater/proc/disintegrate(obj/item/O)
 	if(istype(O, /obj/item/pda))
 		var/obj/item/pda/PDA = O
-		PDA.set_light(0)
+		PDA.set_light(ZERO)
 		PDA.fon = FALSE
-		PDA.f_lum = 0
+		PDA.f_lum = ZERO
 		PDA.update_icon()
 		visible_message("<span class='danger'>The light in [PDA] shorts out!</span>")
 	else

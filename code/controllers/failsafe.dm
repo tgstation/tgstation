@@ -10,16 +10,16 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 	name = "Failsafe"
 
 	// The length of time to check on the MC (in deciseconds).
-	// Set to 0 to disable.
+	// Set to ZERO to disable.
 	var/processing_interval = 20
 	// The alert level. For every failed poke, we drop a DEFCON level. Once we hit DEFCON 1, restart the MC.
 	var/defcon = 5
 	//the world.time of the last check, so the mc can restart US if we hang.
 	//	(Real friends look out for *eachother*)
-	var/lasttick = 0
+	var/lasttick = ZERO
 
 	// Track the MC iteration to make sure its still on track.
-	var/master_iteration = 0
+	var/master_iteration = ZERO
 	var/running = TRUE
 
 /datum/controller/failsafe/New()
@@ -31,7 +31,7 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 	Initialize()
 
 /datum/controller/failsafe/Initialize()
-	set waitfor = 0
+	set waitfor = ZERO
 	Failsafe.Loop()
 	if(!QDELETED(src))
 		qdel(src) //when Loop() returns, we delete ourselves and let the mc recreate us
@@ -48,7 +48,7 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 			// Replace the missing Master! This should never, ever happen.
 			new /datum/controller/master()
 		// Only poke it if overrides are not in effect.
-		if(processing_interval > 0)
+		if(processing_interval > ZERO)
 			if(Master.processing && Master.iteration)
 				// Check if processing is done yet.
 				if(Master.iteration == master_iteration)
@@ -66,20 +66,20 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 							to_chat(GLOB.admins, "<span class='boldannounce'>Warning: DEFCON [defcon_pretty()]. The Master Controller has still not fired within the last [(5-defcon) * processing_interval] ticks. Killing and restarting...</span>")
 							--defcon
 							var/rtn = Recreate_MC()
-							if(rtn > 0)
+							if(rtn > ZERO)
 								defcon = 4
-								master_iteration = 0
+								master_iteration = ZERO
 								to_chat(GLOB.admins, "<span class='adminnotice'>MC restarted successfully</span>")
-							else if(rtn < 0)
+							else if(rtn < ZERO)
 								log_game("FailSafe: Could not restart MC, runtime encountered. Entering defcon 0")
 								to_chat(GLOB.admins, "<span class='boldannounce'>ERROR: DEFCON [defcon_pretty()]. Could not restart MC, runtime encountered. I will silently keep retrying.</span>")
-							//if the return number was 0, it just means the mc was restarted too recently, and it just needs some time before we try again
-							//no need to handle that specially when defcon 0 can handle it
-						if(0) //DEFCON 0! (mc failed to restart)
+							//if the return number was ZERO, it just means the mc was restarted too recently, and it just needs some time before we try again
+							//no need to handle that specially when defcon ZERO can handle it
+						if(ZERO) //DEFCON ZERO! (mc failed to restart)
 							var/rtn = Recreate_MC()
-							if(rtn > 0)
+							if(rtn > ZERO)
 								defcon = 4
-								master_iteration = 0
+								master_iteration = ZERO
 								to_chat(GLOB.admins, "<span class='adminnotice'>MC restarted successfully</span>")
 				else
 					defcon = min(defcon + 1,5)

@@ -6,11 +6,11 @@
 	item_state = "flight"
 	var/label = null
 	var/labels_left = 30
-	var/mode = 0
+	var/mode = ZERO
 
 /obj/item/hand_labeler/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is pointing [src] at [user.p_them()]self. [user.p_theyre(TRUE)] going to label [user.p_them()]self as a suicide!</span>")
-	labels_left = max(labels_left - 1, 0)
+	labels_left = max(labels_left - 1, ZERO)
 
 	var/old_real_name = user.real_name
 	user.real_name += " (suicide)"

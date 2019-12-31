@@ -10,8 +10,8 @@
 	density = TRUE
 	anchored = FALSE
 	use_power = NO_POWER_USE
-	var/food_stored = 0
-	var/glasses = 0
+	var/food_stored = ZERO
+	var/glasses = ZERO
 	var/portion = 10
 	var/selected_drink
 	var/list/stored_food = list()
@@ -36,19 +36,19 @@
 	for(var/datum/reagent/R in reagents.reagent_list)
 		dat += "[R.name]: [R.volume] "
 		dat += "<a href='?src=[REF(src)];disposeI=[R.type]'>Purge</a>"
-		if (glasses > 0)
+		if (glasses > ZERO)
 			dat += "<a href='?src=[REF(src)];pour=[R.type]'>Pour in a glass</a>"
 		dat += "<a href='?src=[REF(src)];mix=[R.type]'>Add to the mixer</a><br>"
 	dat += "</div><br><b>MIXER CONTENTS</b><br><div class='statusDisplay'>"
 	for(var/datum/reagent/R in mixer.reagents.reagent_list)
 		dat += "[R.name]: [R.volume] "
 		dat += "<a href='?src=[REF(src)];transfer=[R.type]'>Transfer back</a>"
-		if (glasses > 0)
+		if (glasses > ZERO)
 			dat += "<a href='?src=[REF(src)];m_pour=[R.type]'>Pour in a glass</a>"
 		dat += "<br>"
 	dat += "</div><br><b>STORED FOOD</b><br><div class='statusDisplay'>"
 	for(var/V in stored_food)
-		if(stored_food[V] > 0)
+		if(stored_food[V] > ZERO)
 			dat += "<b>[V]: [stored_food[V]]</b> <a href='?src=[REF(src)];dispense=[V]'>Dispense</a><br>"
 	dat += "</div><br><a href='?src=[REF(src)];refresh=1'>Refresh</a> <a href='?src=[REF(src)];close=1'>Close</a>"
 
@@ -61,7 +61,7 @@
 
 /obj/machinery/food_cart/attackby(obj/item/O, mob/user, params)
 	if(O.tool_behaviour == TOOL_WRENCH)
-		default_unfasten_wrench(user, O, 0)
+		default_unfasten_wrench(user, O, ZERO)
 		return TRUE
 	if(istype(O, /obj/item/reagent_containers/food/drinks/drinkingglass))
 		var/obj/item/reagent_containers/food/drinks/drinkingglass/DG = O
@@ -112,8 +112,8 @@
 		reagents.del_reagent(href_list["disposeI"])
 
 	if(href_list["dispense"])
-		if(stored_food[href_list["dispense"]]-- <= 0)
-			stored_food[href_list["dispense"]] = 0
+		if(stored_food[href_list["dispense"]]-- <= ZERO)
+			stored_food[href_list["dispense"]] = ZERO
 		else
 			for(var/obj/O in contents)
 				if(sanitize(O.name) == href_list["dispense"])
@@ -122,15 +122,15 @@
 				log_combat(usr, src, "dispensed [O] from", null, "with [stored_food[href_list["dispense"]]] remaining")
 
 	if(href_list["portion"])
-		portion = CLAMP(input("How much drink do you want to dispense per glass?") as num|null, 0, 50)
+		portion = CLAMP(input("How much drink do you want to dispense per glass?") as num|null, ZERO, 50)
 
 		if (isnull(portion))
 			return
 
 	if(href_list["pour"] || href_list["m_pour"])
-		if(glasses-- <= 0)
+		if(glasses-- <= ZERO)
 			to_chat(usr, "<span class='warning'>There are no glasses left!</span>")
-			glasses = 0
+			glasses = ZERO
 		else
 			var/obj/item/reagent_containers/food/drinks/drinkingglass/DG = new(loc)
 			if(href_list["pour"])
@@ -139,11 +139,11 @@
 				mixer.reagents.trans_id_to(DG, href_list["m_pour"], portion)
 
 	if(href_list["mix"])
-		if(reagents.trans_id_to(mixer, href_list["mix"], portion) == 0)
+		if(reagents.trans_id_to(mixer, href_list["mix"], portion) == ZERO)
 			to_chat(usr, "<span class='warning'>[mixer] is full!</span>")
 
 	if(href_list["transfer"])
-		if(mixer.reagents.trans_id_to(src, href_list["transfer"], portion) == 0)
+		if(mixer.reagents.trans_id_to(src, href_list["transfer"], portion) == ZERO)
 			to_chat(usr, "<span class='warning'>[src] is full!</span>")
 
 	updateDialog()

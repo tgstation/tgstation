@@ -30,7 +30,7 @@
   * if the arguments to addtimer are the same as an existing timer, it doesn't create a new timer,
   * and returns the id of the existing timer
   */
-#define TIMER_UNIQUE			(1<<0)
+#define TIMER_UNIQUE			(1<<ZERO)
 
 ///For unique timers: Replace the old timer rather then not start this one
 #define TIMER_OVERRIDE			(1<<1)
@@ -63,7 +63,7 @@
 //! ## Initialization subsystem
 
 ///New should not call Initialize
-#define INITIALIZATION_INSSATOMS 0
+#define INITIALIZATION_INSSATOMS ZERO
 ///New should call Initialize(TRUE)
 #define INITIALIZATION_INNEW_MAPLOAD 2
 ///New should call Initialize(FALSE)
@@ -72,7 +72,7 @@
 //! ### Initialization hints
 
 ///Nothing happens
-#define INITIALIZE_HINT_NORMAL 0
+#define INITIALIZE_HINT_NORMAL ZERO
 /**
   * call LateInitialize at the end of all atom Initalization
   *
@@ -121,7 +121,7 @@
 #define INIT_ORDER_MACHINES			20
 #define INIT_ORDER_SKILLS			15
 #define INIT_ORDER_TIMER			1
-#define INIT_ORDER_DEFAULT			0
+#define INIT_ORDER_DEFAULT			ZERO
 #define INIT_ORDER_AIR				-1
 #define INIT_ORDER_ASSETS			-4
 #define INIT_ORDER_ICON_SMOOTHING	-5
@@ -169,7 +169,7 @@
 
 // SS runlevels
 
-#define RUNLEVEL_INIT 0
+#define RUNLEVEL_INIT ZERO
 #define RUNLEVEL_LOBBY 1
 #define RUNLEVEL_SETUP 2
 #define RUNLEVEL_GAME 4

@@ -29,7 +29,7 @@
 	pb_knockback = 2
 
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
-	. = 0
+	. = ZERO
 	if(chambered && chambered.BB)
 		process_fire(user, user, FALSE)
 		. = 1
@@ -130,7 +130,7 @@
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	can_suppress = FALSE
 	burst_size = 1
-	fire_delay = 0
+	fire_delay = ZERO
 	pin = /obj/item/firing_pin/implant/pindicate
 	fire_sound = 'sound/weapons/gun/shotgun/shot_alt.ogg'
 	actions_types = list()
@@ -162,7 +162,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual
 	sawn_desc = "Omar's coming!"
 	obj_flags = UNIQUE_RENAME
-	rack_sound_volume = 0
+	rack_sound_volume = ZERO
 	unique_reskin = list("Default" = "dshotgun",
 						"Dark Red Finish" = "dshotgun_d",
 						"Ash" = "dshotgun_f",
@@ -222,7 +222,7 @@
 	. = ..()
 	if(. && slung) //sawing off the gun removes the sling
 		new /obj/item/stack/cable_coil(get_turf(src), 10)
-		slung = 0
+		slung = ZERO
 		update_icon()
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawn

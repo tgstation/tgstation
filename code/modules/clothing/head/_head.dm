@@ -5,7 +5,7 @@
 	item_state = "that"
 	body_parts_covered = HEAD
 	slot_flags = ITEM_SLOT_HEAD
-	var/blockTracking = 0 //For AI tracking
+	var/blockTracking = ZERO //For AI tracking
 	var/can_toggle = null
 	dynamic_hair_suffix = "+generic"
 
@@ -45,7 +45,7 @@
 			///if the hat manages to knock something off
 			if(H.dropItemToGround(WH))
 				H.visible_message("<span class='warning'>[src] knocks [WH] off [H]'s head!</span>", "<span class='warning'>[WH] is suddenly knocked off your head by [src]!</span>")
-		if(H.equip_to_slot_if_possible(src, ITEM_SLOT_HEAD, 0, 1, 1))
+		if(H.equip_to_slot_if_possible(src, ITEM_SLOT_HEAD, ZERO, 1, 1))
 			H.visible_message("<span class='notice'>[src] lands neatly on [H]'s head!</span>", "<span class='notice'>[src] lands perfectly onto your head!</span>")
 		return
 	if(iscyborg(hit_atom))

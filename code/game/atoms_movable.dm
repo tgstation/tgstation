@@ -1,7 +1,7 @@
 /atom/movable
 	layer = OBJ_LAYER
 	var/last_move = null
-	var/last_move_time = 0
+	var/last_move_time = ZERO
 	var/anchored = FALSE
 	var/move_resist = MOVE_RESIST_DEFAULT
 	var/move_force = MOVE_FORCE_DEFAULT
@@ -18,13 +18,13 @@
 	var/verb_whisper = "whispers"
 	var/verb_yell = "yells"
 	var/speech_span
-	var/inertia_dir = 0
+	var/inertia_dir = ZERO
 	var/atom/inertia_last_loc
-	var/inertia_moving = 0
-	var/inertia_next_move = 0
+	var/inertia_moving = ZERO
+	var/inertia_next_move = ZERO
 	var/inertia_move_delay = 5
-	var/pass_flags = 0
-	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
+	var/pass_flags = ZERO
+	var/moving_diagonally = ZERO //ZERO: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
 	var/atom/movable/moving_from_pull		//attempt to resume grab after moving instead of before.
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/list/acted_explosions	//for explosion dodging
@@ -33,8 +33,8 @@
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
 	var/atom/movable/pulling
-	var/grab_state = 0
-	var/throwforce = 0
+	var/grab_state = ZERO
+	var/throwforce = ZERO
 	var/datum/component/orbiter/orbiting
 	var/can_be_z_moved = TRUE
 
@@ -88,7 +88,7 @@
 	var/static/list/careful_edits = list("bound_x", "bound_y", "bound_width", "bound_height")
 	if(var_name in banned_edits)
 		return FALSE	//PLEASE no.
-	if((var_name in careful_edits) && (var_value % world.icon_size) != 0)
+	if((var_name in careful_edits) && (var_value % world.icon_size) != ZERO)
 		return FALSE
 	switch(var_name)
 		if("x")
@@ -127,7 +127,7 @@
 
 	// If we're pulling something then drop what we're currently pulling and pull this instead.
 	if(pulling)
-		if(state == 0)
+		if(state == ZERO)
 			stop_pulling()
 			return FALSE
 		// Are we trying to pull something we are already pulling? Then enter grab cycle and end.
@@ -160,7 +160,7 @@
 		pulling.pulledby = null
 		var/mob/living/ex_pulled = pulling
 		pulling = null
-		setGrabState(0)
+		setGrabState(ZERO)
 		if(isliving(ex_pulled))
 			var/mob/living/L = ex_pulled
 			L.update_mobility()// mob gets up if it was lyng down in a chokehold
@@ -221,7 +221,7 @@
 // Here's where we rewrite how byond handles movement except slightly different
 // To be removed on step_ conversion
 // All this work to prevent a second bump
-/atom/movable/Move(atom/newloc, direct=0, glide_size_override = 0)
+/atom/movable/Move(atom/newloc, direct=ZERO, glide_size_override = ZERO)
 	. = FALSE
 	if(!newloc || newloc == loc)
 		return
@@ -267,7 +267,7 @@
 
 ////////////////////////////////////////
 
-/atom/movable/Move(atom/newloc, direct, glide_size_override = 0)
+/atom/movable/Move(atom/newloc, direct, glide_size_override = ZERO)
 	var/atom/movable/pullee = pulling
 	var/turf/T = loc
 	if(!moving_from_pull)
@@ -334,11 +334,11 @@
 				else if (!inertia_moving)
 					inertia_next_move = world.time + inertia_move_delay
 					newtonian_move(direct)
-			moving_diagonally = 0
+			moving_diagonally = ZERO
 			return
 
 	if(!loc || (loc == oldloc && oldloc != newloc))
-		last_move = 0
+		last_move = ZERO
 		return
 
 	if(.)
@@ -454,7 +454,7 @@
 		var/area/destarea = get_area(destination)
 
 		loc = destination
-		moving_diagonally = 0
+		moving_diagonally = ZERO
 
 		if(!same_loc)
 			if(oldloc)
@@ -503,10 +503,10 @@
 
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below
-//Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
+//Return ZERO to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
 //Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
-//movement_dir == 0 when stopping or any dir when trying to move
-/atom/movable/proc/Process_Spacemove(movement_dir = 0)
+//movement_dir == ZERO when stopping or any dir when trying to move
+/atom/movable/proc/Process_Spacemove(movement_dir = ZERO)
 	if(has_gravity(src))
 		return 1
 
@@ -522,13 +522,13 @@
 	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
 		return 1
 
-	return 0
+	return ZERO
 
 
 /atom/movable/proc/newtonian_move(direction) //Only moves the object if it's under no gravity
-	if(!loc || Process_Spacemove(0))
-		inertia_dir = 0
-		return 0
+	if(!loc || Process_Spacemove(ZERO))
+		inertia_dir = ZERO
+		return ZERO
 
 	inertia_dir = direction
 	if(!direction)
@@ -538,7 +538,7 @@
 	return 1
 
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	set waitfor = 0
+	set waitfor = ZERO
 	SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
 	return hit_atom.hitby(src, throwingdatum=throwingdatum)
 
@@ -554,7 +554,7 @@
 
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG) //If this returns FALSE then callback will not be called.
 	. = FALSE
-	if (!target || speed <= 0)
+	if (!target || speed <= ZERO)
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_THROW, args) & COMPONENT_CANCEL_THROW)
@@ -576,7 +576,7 @@
 		else if (get_dir(target, thrower) & last_move)
 			user_momentum = -user_momentum //we are moving away from the target, lets slowdown the throw accordingly
 		else
-			user_momentum = 0
+			user_momentum = ZERO
 
 
 		if (user_momentum)
@@ -584,7 +584,7 @@
 			range *= (user_momentum / speed) + 1
 			//then lets add it to speed
 			speed += user_momentum
-			if (speed <= 0)
+			if (speed <= ZERO)
 				return//no throw speed, the user was moving too fast.
 
 	. = TRUE // No failure conditions past this point.
@@ -708,8 +708,8 @@
 
 	if(A == src)
 		return //don't do an animation if attacking self
-	var/pixel_x_diff = 0
-	var/pixel_y_diff = 0
+	var/pixel_x_diff = ZERO
+	var/pixel_y_diff = ZERO
 
 	var/direction = get_dir(src, A)
 	if(direction & NORTH)
@@ -759,7 +759,7 @@
 	flick_overlay(I, GLOB.clients, 5) // 5 ticks/half a second
 
 	// And animate the attack!
-	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
+	animate(I, alpha = 175, pixel_x = ZERO, pixel_y = ZERO, pixel_z = ZERO, time = 3)
 
 /atom/movable/vv_get_dropdown()
 	. = ..()
@@ -909,8 +909,8 @@
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	var/turf/T = get_turf(src)
 	var/direction
-	var/to_x = 0
-	var/to_y = 0
+	var/to_x = ZERO
+	var/to_y = ZERO
 
 	if(!QDELETED(T) && !QDELETED(target))
 		direction = get_dir(T, target)
@@ -929,4 +929,4 @@
 	M.Turn(pick(-30, 30))
 	animate(I, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 3, transform = M, easing = CUBIC_EASING)
 	sleep(1)
-	animate(I, alpha = 0, transform = matrix(), time = 1)
+	animate(I, alpha = ZERO, transform = matrix(), time = 1)

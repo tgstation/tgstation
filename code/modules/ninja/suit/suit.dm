@@ -38,8 +38,8 @@ Contents:
 	var/obj/item/clothing/gloves/space_ninja/n_gloves
 
 		//Main function variables.
-	var/s_initialized = 0//Suit starts off.
-	var/s_coold = 0//If the suit is on cooldown. Can be used to attach different cooldowns to abilities. Ticks down every second based on suit ntick().
+	var/s_initialized = ZERO//Suit starts off.
+	var/s_coold = ZERO//If the suit is on cooldown. Can be used to attach different cooldowns to abilities. Ticks down every second based on suit ntick().
 	var/s_cost = 5//Base energy cost each ntick.
 	var/s_acost = 25//Additional cost for additional powers active.
 	var/s_delay = 40//How fast the suit does certain things, lower is faster. Can be overridden in specific procs. Also determines adverse probability.
@@ -64,7 +64,7 @@ Contents:
 
 	//Spark Init
 	spark_system = new
-	spark_system.set_up(5, 0, src)
+	spark_system.set_up(5, ZERO, src)
 	spark_system.attach(src)
 
 	//Research Init
@@ -112,7 +112,7 @@ Contents:
 		return FALSE
 	affecting = H
 	ADD_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-	slowdown = 0
+	slowdown = ZERO
 	n_hood = H.head
 	ADD_TRAIT(n_hood, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	n_shoes = H.shoes

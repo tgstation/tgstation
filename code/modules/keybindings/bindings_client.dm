@@ -12,7 +12,7 @@
 		keysend_tripped = FALSE
 
 	if(next_keysend_reset <= world.time)
-		client_keysend_amount = 0
+		client_keysend_amount = ZERO
 		next_keysend_reset = world.time + (1 SECONDS)
 
 	//The "tripped" system is to confirm that flooding is still happening after one spike
@@ -41,7 +41,7 @@
 		winset(src, null, "input.focus=true ; input.text=[url_encode(_key)]")
 		return
 
-	//offset by 1 because the buffer address is 0 indexed because the math was simpler
+	//offset by 1 because the buffer address is ZERO indexed because the math was simpler
 	keys_held[current_key_address + 1] = _key
 	//the time a key was pressed isn't actually used anywhere (as of 2019-9-10) but this allows easier access usage/checking
 	keys_held[_key] = world.time
@@ -61,7 +61,7 @@
 			full_key = "[AltMod][CtrlMod][ShiftMod]"
 		else
 			full_key = "[AltMod][CtrlMod][ShiftMod][_key]"
-	var/keycount = 0
+	var/keycount = ZERO
 	for(var/kb_name in prefs.key_bindings[full_key])
 		keycount++
 		var/datum/keybinding/kb = GLOB.keybindings_by_name[kb_name]

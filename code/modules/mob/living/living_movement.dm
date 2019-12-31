@@ -26,7 +26,7 @@
 	return ..()
 
 /mob/living/proc/update_move_intent_slowdown()
-	var/mod = 0
+	var/mod = ZERO
 	if(m_intent == MOVE_INTENT_WALK)
 		mod = CONFIG_GET(number/movedelay/walk_delay)
 	else

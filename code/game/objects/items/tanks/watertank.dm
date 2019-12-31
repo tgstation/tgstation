@@ -115,7 +115,7 @@
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
 	item_flags = NOBLUDGEON | ABSTRACT  // don't put in storage
-	slot_flags = 0
+	slot_flags = ZERO
 
 	var/obj/item/watertank/tank
 
@@ -175,7 +175,7 @@
 
 //ATMOS FIRE FIGHTING BACKPACK
 
-#define EXTINGUISHER 0
+#define EXTINGUISHER ZERO
 #define RESIN_LAUNCHER 1
 #define RESIN_FOAM 2
 
@@ -185,7 +185,7 @@
 	item_state = "waterbackpackatmos"
 	icon_state = "waterbackpackatmos"
 	volume = 200
-	slowdown = 0
+	slowdown = ZERO
 
 /obj/item/watertank/atmos/Initialize()
 	. = ..()
@@ -199,7 +199,7 @@
 	icon_state = "waterbackpackatmos"
 	if(istype(noz, /obj/item/extinguisher/mini/nozzle))
 		var/obj/item/extinguisher/mini/nozzle/N = noz
-		N.nozzle_mode = 0
+		N.nozzle_mode = ZERO
 
 /obj/item/extinguisher/mini/nozzle
 	name = "extinguisher nozzle"
@@ -209,7 +209,7 @@
 	item_state = "nozzleatmos"
 	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
-	safety = 0
+	safety = ZERO
 	max_water = 200
 	power = 8
 	force = 10
@@ -218,9 +218,9 @@
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT  // don't put in storage
 	var/obj/item/watertank/tank
-	var/nozzle_mode = 0
-	var/metal_synthesis_cooldown = 0
-	var/resin_cooldown = 0
+	var/nozzle_mode = ZERO
+	var/metal_synthesis_cooldown = ZERO
+	var/resin_cooldown = ZERO
 
 /obj/item/extinguisher/mini/nozzle/Initialize()
 	. = ..()
@@ -279,7 +279,7 @@
 		var/obj/effect/resin_container/A = new (get_turf(src))
 		log_game("[key_name(user)] used Resin Launcher at [AREACOORD(user)].")
 		playsound(src,'sound/items/syringeproj.ogg',40,TRUE)
-		for(var/a=0, a<5, a++)
+		for(var/a=ZERO, a<5, a++)
 			step_towards(A, target)
 			sleep(2)
 		A.Smoke()
@@ -294,7 +294,7 @@
 				return
 		if(metal_synthesis_cooldown < 5)
 			var/obj/effect/particle_effect/foam/metal/resin/F = new (get_turf(target))
-			F.amount = 0
+			F.amount = ZERO
 			metal_synthesis_cooldown++
 			addtimer(CALLBACK(src, .proc/reduce_metal_synth_cooldown), 10 SECONDS)
 		else
@@ -344,7 +344,7 @@
 	reagent_flags = OPENCONTAINER
 	spillable = FALSE
 	possible_transfer_amounts = list(5,10,15)
-	fill_icon_thresholds = list(0, 15, 60)
+	fill_icon_thresholds = list(ZERO, 15, 60)
 	fill_icon_state = "backpack"
 
 /obj/item/reagent_containers/chemtank/ui_action_click()
@@ -375,7 +375,7 @@
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
-			if(0 to 15)
+			if(ZERO to 15)
 				filling.icon_state = "backpackmob-10"
 			if(16 to 60)
 				filling.icon_state = "backpackmob50"
@@ -410,7 +410,7 @@
 		return
 
 	var/used_amount = injection_amount/usage_ratio
-	reagents.reaction(user, INJECT,injection_amount,0)
+	reagents.reaction(user, INJECT,injection_amount,ZERO)
 	reagents.trans_to(user,used_amount,multiplier=usage_ratio)
 	update_icon()
 	user.update_inv_back() //for overlays update
@@ -423,7 +423,7 @@
 	item_state = "waterbackpackop"
 	w_class = WEIGHT_CLASS_NORMAL
 	volume = 2000
-	slowdown = 0
+	slowdown = ZERO
 
 /obj/item/watertank/op/Initialize()
 	. = ..()

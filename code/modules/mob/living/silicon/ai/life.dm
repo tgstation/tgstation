@@ -1,4 +1,4 @@
-#define POWER_RESTORATION_OFF 0
+#define POWER_RESTORATION_OFF ZERO
 #define POWER_RESTORATION_START 1
 #define POWER_RESTORATION_SEARCH_APC 2
 #define POWER_RESTORATION_APC_FOUND 3
@@ -86,7 +86,7 @@
 		sight = sight&~SEE_TURFS
 		sight = sight&~SEE_MOBS
 		sight = sight&~SEE_OBJS
-		see_in_dark = 0
+		see_in_dark = ZERO
 
 	if(see_override)
 		see_invisible = see_override
@@ -151,7 +151,7 @@
 				sleep(2)
 				apc_override = 1
 				theAPC.ui_interact(src, state = GLOB.conscious_state)
-				apc_override = 0
+				apc_override = ZERO
 				aiRestorePowerRoutine = POWER_RESTORATION_APC_FOUND
 		sleep(50)
 		theAPC = null
@@ -163,7 +163,7 @@
 		else
 			to_chat(src, "<span class='notice'>Alert cancelled. Power has been restored without our assistance.</span>")
 		aiRestorePowerRoutine = POWER_RESTORATION_OFF
-		set_blindness(0)
+		set_blindness(ZERO)
 		update_sight()
 
 /mob/living/silicon/ai/proc/ai_lose_power()

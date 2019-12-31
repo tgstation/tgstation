@@ -37,8 +37,8 @@
 	icon_state = "hugmodule"
 	desc = "For when a someone really needs a hug."
 	var/mode = 0 //0 = Hugs 1 = "Hug" 2 = Shock 3 = CRUSH
-	var/ccooldown = 0
-	var/scooldown = 0
+	var/ccooldown = ZERO
+	var/scooldown = ZERO
 	var/shockallowed = FALSE//Can it be a stunarm when emagged. Only PK borgs get this by default.
 	var/boop = FALSE
 
@@ -49,13 +49,13 @@
 			if(mode < 3)
 				mode++
 			else
-				mode = 0
+				mode = ZERO
 		else if(mode < 1)
 			mode++
 		else
-			mode = 0
+			mode = ZERO
 	switch(mode)
-		if(0)
+		if(ZERO)
 			to_chat(user, "Power reset. Hugs!")
 		if(1)
 			to_chat(user, "Power increased!")
@@ -68,8 +68,8 @@
 	if(M == user)
 		return
 	switch(mode)
-		if(0)
-			if(M.health >= 0)
+		if(ZERO)
+			if(M.health >= ZERO)
 				if(user.zone_selected == BODY_ZONE_HEAD)
 					user.visible_message("<span class='notice'>[user] playfully boops [M] on the head!</span>", \
 									"<span class='notice'>You playfully boop [M] on the head!</span>")
@@ -89,7 +89,7 @@
 							"<span class='notice'>You pet [M]!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		if(1)
-			if(M.health >= 0)
+			if(M.health >= ZERO)
 				if(ishuman(M))
 					if(!(M.mobility_flags & MOBILITY_STAND))
 						user.visible_message("<span class='notice'>[user] shakes [M] trying to get [M.p_them()] up!</span>", \
@@ -109,7 +109,7 @@
 				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE, -1)
 		if(2)
 			if(scooldown < world.time)
-				if(M.health >= 0)
+				if(M.health >= ZERO)
 					if(ishuman(M)||ismonkey(M))
 						M.electrocute_act(5, "[user]", flags = SHOCK_NOGLOVES)
 						user.visible_message("<span class='userdanger'>[user] electrocutes [M] with [user.p_their()] touch!</span>", \
@@ -128,7 +128,7 @@
 					scooldown = world.time + 20
 		if(3)
 			if(ccooldown < world.time)
-				if(M.health >= 0)
+				if(M.health >= ZERO)
 					if(ishuman(M))
 						user.visible_message("<span class='userdanger'>[user] crushes [M] in [user.p_their()] grip!</span>", \
 							"<span class='danger'>You crush [M] in your grip!</span>")
@@ -181,7 +181,7 @@
 				return
 
 			to_chat(user, "<span class='notice'>You connect to [M]'s power line...</span>")
-			while(do_after(user, 15, target = M, progress = 0))
+			while(do_after(user, 15, target = M, progress = ZERO))
 				if(!user || !user.cell || mode != "draw")
 					return
 
@@ -215,7 +215,7 @@
 
 			to_chat(user, "<span class='notice'>You connect to [target]'s power port...</span>")
 
-			while(do_after(user, 15, target = target, progress = 0))
+			while(do_after(user, 15, target = target, progress = ZERO))
 				if(!user || !user.cell || mode != "draw")
 					return
 
@@ -253,7 +253,7 @@
 
 		to_chat(user, "<span class='notice'>You connect to [target]'s power port...</span>")
 
-		while(do_after(user, 15, target = target, progress = 0))
+		while(do_after(user, 15, target = target, progress = ZERO))
 			if(!user || !user.cell || mode != "charge")
 				return
 
@@ -277,7 +277,7 @@
 	desc = "Releases a harmless blast that confuses most organics. For when the harm is JUST TOO MUCH."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "megaphone"
-	var/cooldown = 0
+	var/cooldown = ZERO
 
 /obj/item/harmalarm/emag_act(mob/user)
 	obj_flags ^= EMAGGED
@@ -321,7 +321,7 @@
 	if(safety == FALSE)
 		user.audible_message("<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>")
 		for(var/mob/living/carbon/C in get_hearers_in_view(9, user))
-			var/bang_effect = C.soundbang_act(2, 0, 0, 5)
+			var/bang_effect = C.soundbang_act(2, ZERO, ZERO, 5)
 			switch(bang_effect)
 				if(1)
 					C.confused += 5
@@ -351,13 +351,13 @@
 	var/charging = FALSE
 	var/mode = DISPENSE_LOLLIPOP_MODE
 
-	var/firedelay = 0
+	var/firedelay = ZERO
 	var/hitspeed = 2
-	var/hitdamage = 0
+	var/hitdamage = ZERO
 	var/emaggedhitdamage = 3
 
 /obj/item/borg/lollipop/clown
-	emaggedhitdamage = 0
+	emaggedhitdamage = ZERO
 
 /obj/item/borg/lollipop/equipped()
 	. = ..()
@@ -380,7 +380,7 @@
 	check_amount()
 
 /obj/item/borg/lollipop/proc/dispense(atom/A, mob/user)
-	if(candy <= 0)
+	if(candy <= ZERO)
 		to_chat(user, "<span class='warning'>No treats left in storage!</span>")
 		return FALSE
 	var/turf/T = get_turf(A)
@@ -418,7 +418,7 @@
 	return TRUE
 
 /obj/item/borg/lollipop/proc/shootL(atom/target, mob/living/user, params)
-	if(candy <= 0)
+	if(candy <= ZERO)
 		to_chat(user, "<span class='warning'>Not enough lollipops left!</span>")
 		return FALSE
 	candy--
@@ -428,12 +428,12 @@
 		A.BB.nodamage = FALSE
 	A.BB.speed = 0.5
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-	A.fire_casing(target, user, params, 0, 0, null, 0, src)
+	A.fire_casing(target, user, params, ZERO, ZERO, null, ZERO, src)
 	user.visible_message("<span class='warning'>[user] blasts a flying lollipop at [target]!</span>")
 	check_amount()
 
 /obj/item/borg/lollipop/proc/shootG(atom/target, mob/living/user, params)	//Most certainly a good idea.
-	if(candy <= 0)
+	if(candy <= ZERO)
 		to_chat(user, "<span class='warning'>Not enough gumballs left!</span>")
 		return FALSE
 	candy--
@@ -442,9 +442,9 @@
 	if(hitdamage)
 		A.BB.nodamage = FALSE
 	A.BB.speed = 0.5
-	A.BB.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	A.BB.color = rgb(rand(ZERO, 255), rand(ZERO, 255), rand(ZERO, 255))
 	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, TRUE)
-	A.fire_casing(target, user, params, 0, 0, null, 0, src)
+	A.fire_casing(target, user, params, ZERO, ZERO, null, ZERO, src)
 	user.visible_message("<span class='warning'>[user] shoots a high-velocity gumball at [target]!</span>")
 	check_amount()
 
@@ -522,7 +522,7 @@
 	desc = "Oh noes! A fast-moving lollipop!"
 	icon_state = "lollipop_1"
 	ammo_type = /obj/item/reagent_containers/food/snacks/lollipop/cyborg
-	var/color2 = rgb(0, 0, 0)
+	var/color2 = rgb(ZERO, ZERO, ZERO)
 	nodamage = TRUE
 
 /obj/projectile/bullet/reusable/lollipop/Initialize()
@@ -563,7 +563,7 @@
 	var/image/projectile_effect
 	var/field_radius = 3
 	var/active = FALSE
-	var/cycle_delay = 0
+	var/cycle_delay = ZERO
 
 /obj/item/borg/projectile_dampen/debug
 	maxenergy = 50000
@@ -650,15 +650,15 @@
 		dampening_field.HandleMove()
 
 /obj/item/borg/projectile_dampen/proc/process_usage()
-	var/usage = 0
+	var/usage = ZERO
 	for(var/I in tracked)
 		var/obj/projectile/P = I
 		if(!P.stun && P.nodamage)	//No damage
 			continue
 		usage += projectile_tick_speed_ecost
 		usage += (tracked[I] * projectile_damage_tick_ecost_coefficient)
-	energy = CLAMP(energy - usage, 0, maxenergy)
-	if(energy <= 0)
+	energy = CLAMP(energy - usage, ZERO, maxenergy)
+	if(energy <= ZERO)
 		deactivate_field()
 		visible_message("<span class='warning'>[src] blinks \"ENERGY DEPLETED\".</span>")
 
@@ -667,7 +667,7 @@
 		if(iscyborg(host.loc))
 			host = host.loc
 		else
-			energy = CLAMP(energy + energy_recharge, 0, maxenergy)
+			energy = CLAMP(energy + energy_recharge, ZERO, maxenergy)
 			return
 	if(host.cell && (host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
 		host.cell.use(energy_recharge*energy_recharge_cyborg_drain_coefficient)
@@ -857,8 +857,8 @@
 	cut_overlays()
 	if(stored)
 		COMPILE_OVERLAYS(stored)
-		stored.pixel_x = 0
-		stored.pixel_y = 0
+		stored.pixel_x = ZERO
+		stored.pixel_y = ZERO
 		var/image/img = image("icon"=stored, "layer"=FLOAT_LAYER)
 		var/image/arm = image("icon"="borg_beaker_apparatus_arm", "layer"=FLOAT_LAYER)
 		if(istype(stored, /obj/item/reagent_containers/glass/beaker))
@@ -916,7 +916,7 @@
 	if(stored)
 		COMPILE_OVERLAYS(stored)
 		stored.pixel_x = -3
-		stored.pixel_y = 0
+		stored.pixel_y = ZERO
 		var/image/arm
 		if(istype(stored, /obj/item/circuitboard))
 			arm = image("icon"="borg_hardware_apparatus_arm1", "layer"=FLOAT_LAYER)

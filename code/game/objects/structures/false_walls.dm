@@ -102,7 +102,7 @@
 			to_chat(user, "<span class='warning'>You can't reach, close it first!</span>")
 
 	else if(W.tool_behaviour == TOOL_WELDER)
-		if(W.use_tool(src, user, 0, volume=50))
+		if(W.use_tool(src, user, ZERO, volume=50))
 			dismantle(user, TRUE)
 	else
 		return ..()
@@ -164,7 +164,7 @@
 	mineral = /obj/item/stack/sheet/mineral/uranium
 	walltype = /turf/closed/wall/mineral/uranium
 	var/active = null
-	var/last_event = 0
+	var/last_event = ZERO
 	canSmoothWith = list(/obj/structure/falsewall/uranium, /turf/closed/wall/mineral/uranium)
 
 /obj/structure/falsewall/uranium/attackby(obj/item/W, mob/user, params)

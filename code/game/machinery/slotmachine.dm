@@ -24,14 +24,14 @@
 	idle_power_usage = 50
 	circuit = /obj/item/circuitboard/computer/slot_machine
 	var/money = 3000 //How much money it has CONSUMED
-	var/plays = 0
-	var/working = 0
-	var/balance = 0 //How much money is in the machine, ready to be CONSUMED.
-	var/jackpots = 0
+	var/plays = ZERO
+	var/working = ZERO
+	var/balance = ZERO //How much money is in the machine, ready to be CONSUMED.
+	var/jackpots = ZERO
 	var/paymode = HOLOCHIP //toggles between HOLOCHIP/COIN, defined above
 	var/cointype = /obj/item/coin/iron //default cointype
 	var/list/coinvalues = list()
-	var/list/reels = list(list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0)
+	var/list/reels = list(list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = ZERO)
 	var/list/symbols = list(SEVEN = 1, "<font color='orange'>&</font>" = 2, "<font color='yellow'>@</font>" = 2, "<font color='green'>$</font>" = 2, "<font color='blue'>?</font>" = 2, "<font color='grey'>#</font>" = 2, "<font color='white'>!</font>" = 2, "<font color='fuchsia'>%</font>" = 2) //if people are winning too much, multiply every number in this list by 2 and see if they are still winning too much.
 
 	light_color = LIGHT_COLOR_BROWN
@@ -44,10 +44,10 @@
 	toggle_reel_spin(1) //The reels won't spin unless we activate them
 
 	var/list/reel = reels[1]
-	for(var/i = 0, i < reel.len, i++) //Populate the reels.
+	for(var/i = ZERO, i < reel.len, i++) //Populate the reels.
 		randomize_reels()
 
-	toggle_reel_spin(0)
+	toggle_reel_spin(ZERO)
 
 	for(cointype in typesof(/obj/item/coin))
 		var/obj/item/coin/C = cointype
@@ -87,7 +87,7 @@
 					return
 				C.throw_at(user, 3, 10)
 				if(prob(10))
-					balance = max(balance - SPIN_PRICE, 0)
+					balance = max(balance - SPIN_PRICE, ZERO)
 				to_chat(user, "<span class='warning'>[src] spits your coin back out!</span>")
 
 			else
@@ -109,7 +109,7 @@
 		else
 			to_chat(user, "<span class='warning'>This machine is only accepting coins!</span>")
 	else if(I.tool_behaviour == TOOL_MULTITOOL)
-		if(balance > 0)
+		if(balance > ZERO)
 			visible_message("<b>[src]</b> says, 'ERROR! Please empty the machine balance before altering paymode'") //Prevents converting coins into holocredits and vice versa
 		else
 			if(paymode == HOLOCHIP)
@@ -126,7 +126,7 @@
 		return
 	obj_flags |= EMAGGED
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
-	spark_system.set_up(4, 0, src.loc)
+	spark_system.set_up(4, ZERO, src.loc)
 	spark_system.start()
 	playsound(src, "sparks", 50, TRUE)
 
@@ -154,7 +154,7 @@
 		<BR>
 		[reeltext]
 		<BR>"}
-		if(balance > 0)
+		if(balance > ZERO)
 			dat+="<font size='1'><A href='?src=[REF(src)];refund=1'>Refund balance</A><BR>"
 
 	var/datum/browser/popup = new(user, "slotmachine", "Slot Machine")
@@ -171,9 +171,9 @@
 		spin(usr)
 
 	else if(href_list["refund"])
-		if(balance > 0)
+		if(balance > ZERO)
 			give_payout(balance)
-			balance = 0
+			balance = ZERO
 
 /obj/machinery/computer/slot_machine/emp_act(severity)
 	. = ..()
@@ -184,8 +184,8 @@
 	if(prob(1)) // :^)
 		obj_flags |= EMAGGED
 	var/severity_ascending = 4 - severity
-	money = max(rand(money - (200 * severity_ascending), money + (200 * severity_ascending)), 0)
-	balance = max(rand(balance - (50 * severity_ascending), balance + (50 * severity_ascending)), 0)
+	money = max(rand(money - (200 * severity_ascending), money + (200 * severity_ascending)), ZERO)
+	balance = max(rand(balance - (50 * severity_ascending), balance + (50 * severity_ascending)), ZERO)
 	money -= max(0, give_payout(min(rand(-50, 100 * severity_ascending)), money)) //This starts at -50 because it shouldn't always dispense coins yo
 	spin()
 
@@ -219,7 +219,7 @@
 	updateDialog()
 
 /obj/machinery/computer/slot_machine/proc/finish_spinning(spin_loop, mob/user, the_name)
-	toggle_reel_spin(0, REEL_DEACTIVATE_DELAY)
+	toggle_reel_spin(ZERO, REEL_DEACTIVATE_DELAY)
 	working = FALSE
 	deltimer(spin_loop)
 	give_prizes(the_name, user)
@@ -233,13 +233,13 @@
 		to_chat(user, "<span class='warning'>The slot machine is broken!</span>")
 	if(working)
 		to_chat(user, "<span class='warning'>You need to wait until the machine stops spinning before you can play again!</span>")
-		return 0
+		return ZERO
 	if(balance < SPIN_PRICE)
 		to_chat(user, "<span class='warning'>Insufficient money to play!</span>")
-		return 0
+		return ZERO
 	return 1
 
-/obj/machinery/computer/slot_machine/proc/toggle_reel_spin(value, delay = 0) //value is 1 or 0 aka on or off
+/obj/machinery/computer/slot_machine/proc/toggle_reel_spin(value, delay = ZERO) //value is 1 or ZERO aka on or off
 	for(var/list/reel in reels)
 		reels[reel] = value
 		sleep(delay)
@@ -260,11 +260,11 @@
 		priority_announce("Congratulations to [user ? user.real_name : usrname] for winning the jackpot at the slot machine in [get_area(src)]!")
 		jackpots += 1
 		balance += money - give_payout(JACKPOT)
-		money = 0
+		money = ZERO
 		if(paymode == HOLOCHIP)
 			new /obj/item/holochip(loc,JACKPOT)
 		else
-			for(var/i = 0, i < 5, i++)
+			for(var/i = ZERO, i < 5, i++)
 				cointype = pick(subtypesof(/obj/item/coin))
 				var/obj/item/coin/C = new cointype(loc)
 				random_step(C, 2, 50)
@@ -307,7 +307,7 @@
 /obj/machinery/computer/slot_machine/proc/give_money(amount)
 	var/amount_to_give = money >= amount ? amount : money
 	var/surplus = amount_to_give - give_payout(amount_to_give)
-	money = max(0, money - amount)
+	money = max(ZERO, money - amount)
 	balance += surplus
 
 /obj/machinery/computer/slot_machine/proc/give_payout(amount)
@@ -317,7 +317,7 @@
 		cointype = obj_flags & EMAGGED ? /obj/item/coin/iron : /obj/item/coin/silver
 
 	if(!(obj_flags & EMAGGED))
-		amount = dispense(amount, cointype, null, 0)
+		amount = dispense(amount, cointype, null, ZERO)
 
 	else
 		var/mob/living/target = locate() in range(2, src)
@@ -326,7 +326,7 @@
 
 	return amount
 
-/obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/coin/silver, mob/living/target, throwit = 0)
+/obj/machinery/computer/slot_machine/proc/dispense(amount = ZERO, cointype = /obj/item/coin/silver, mob/living/target, throwit = ZERO)
 	if(paymode == HOLOCHIP)
 		var/obj/item/holochip/H = new /obj/item/holochip(loc,amount)
 

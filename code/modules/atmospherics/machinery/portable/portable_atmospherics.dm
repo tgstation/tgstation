@@ -10,7 +10,7 @@
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
 	var/obj/item/tank/holding
 
-	var/volume = 0
+	var/volume = ZERO
 
 	var/maximum_pressure = 90 * ONE_ATMOSPHERE
 
@@ -87,8 +87,8 @@
 	anchored = FALSE
 	connected_port.connected_device = null
 	connected_port = null
-	pixel_x = 0
-	pixel_y = 0
+	pixel_x = ZERO
+	pixel_y = ZERO
 	update_icon()
 	return TRUE
 
@@ -159,7 +159,7 @@
 
 /obj/machinery/portable_atmospherics/attacked_by(obj/item/I, mob/user)
 	if(I.force < 10 && !(stat & BROKEN))
-		take_damage(0)
+		take_damage(ZERO)
 	else
 		investigate_log("was smacked with \a [I] by [key_name(user)].", INVESTIGATE_ATMOS)
 		add_fingerprint(user)

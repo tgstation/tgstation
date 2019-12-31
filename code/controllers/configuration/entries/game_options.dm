@@ -40,7 +40,7 @@
 	integer = FALSE
 
 /datum/config_entry/number/minimal_access_threshold	//If the number of players is larger than this threshold, minimal access will be turned on.
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/flag/jobs_have_minimal_access	//determines whether jobs use minimal access or expanded access.
 
@@ -95,11 +95,11 @@
 
 /datum/config_entry/number/traitor_objectives_amount
 	config_entry_value = 2
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/number/brother_objectives_amount
 	config_entry_value = 2
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/flag/reactionary_explosions	//If we use reactionary explosions, explosions that react to walls and doors
 
@@ -116,33 +116,33 @@
 /datum/config_entry/number/antag_rep_maximum
 	config_entry_value = 200
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/number/default_antag_tickets
 	config_entry_value = 100
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/number/max_tickets_per_roll
 	config_entry_value = 100
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 
-/datum/config_entry/number/midround_antag_time_check	// How late (in minutes you want the midround antag system to stay on, setting this to 0 will disable the system)
+/datum/config_entry/number/midround_antag_time_check	// How late (in minutes you want the midround antag system to stay on, setting this to ZERO will disable the system)
 	config_entry_value = 60
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/number/midround_antag_life_check	// A ratio of how many people need to be alive in order for the round not to immediately end in midround antagonist
 	config_entry_value = 0.7
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 	max_val = 1
 
 /datum/config_entry/number/shuttle_refuel_delay
 	config_entry_value = 12000
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/flag/show_game_type_odds	//if set this allows players to see the odds of each roundtype on the get revision screen
 
@@ -275,7 +275,7 @@
 /datum/config_entry/number/gateway_delay	//How long the gateway takes before it activates. Default is half an hour. Only matters if roundstart_away is enabled.
 	config_entry_value = 18000
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/flag/ghost_interaction
 
@@ -287,13 +287,13 @@
 /datum/config_entry/flag/sandbox_autoclose	// close the sandbox panel after spawning an item, potentially reducing griff
 
 /datum/config_entry/number/default_laws //Controls what laws the AI spawns with.
-	config_entry_value = 0
-	min_val = 0
+	config_entry_value = ZERO
+	min_val = ZERO
 	max_val = 3
 
 /datum/config_entry/number/silicon_max_law_amount
 	config_entry_value = 12
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/keyed_list/random_laws
 	key_mode = KEY_MODE_TEXT
@@ -320,28 +320,28 @@
 /datum/config_entry/number/lavaland_budget
 	config_entry_value = 60
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/number/space_budget
 	config_entry_value = 16
 	integer = FALSE
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/flag/allow_random_events	// Enables random events mid-round when set
 
 /datum/config_entry/number/events_min_time_mul	// Multipliers for random events minimal starting time and minimal players amounts
 	config_entry_value = 1
-	min_val = 0
+	min_val = ZERO
 	integer = FALSE
 
 /datum/config_entry/number/events_min_players_mul
 	config_entry_value = 1
-	min_val = 0
+	min_val = ZERO
 	integer = FALSE
 
 /datum/config_entry/number/mice_roundstart
 	config_entry_value = 10
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/number/bombcap
 	config_entry_value = 14
@@ -357,7 +357,7 @@
 		GLOB.MAX_EX_FLAME_RANGE = config_entry_value
 
 /datum/config_entry/number/emergency_shuttle_autocall_threshold
-	min_val = 0
+	min_val = ZERO
 	max_val = 1
 	integer = FALSE
 
@@ -377,6 +377,6 @@
 
 /datum/config_entry/number/monkeycap
 	config_entry_value = 64
-	min_val = 0
+	min_val = ZERO
 
 /datum/config_entry/flag/dynamic_config_enabled

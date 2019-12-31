@@ -30,7 +30,7 @@
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
-	var/turns_since_scan = 0
+	var/turns_since_scan = ZERO
 	var/mob/living/simple_animal/mouse/movement_target
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "cat"
@@ -58,7 +58,7 @@
 	icon_state = "spacecat"
 	icon_living = "spacecat"
 	icon_dead = "spacecat_dead"
-	unsuitable_atmos_damage = 0
+	unsuitable_atmos_damage = ZERO
 	minbodytemp = TCMB
 	maxbodytemp = T0C + 40
 
@@ -95,7 +95,7 @@
 	unique_pet = TRUE
 	var/list/family = list()//var restored from savefile, has count of each child type
 	var/list/children = list()//Actual mob instances of children
-	var/cats_deployed = 0
+	var/cats_deployed = ZERO
 	var/memory_saved = FALSE
 
 /mob/living/simple_animal/pet/cat/Runtime/Initialize()
@@ -158,7 +158,7 @@
 /mob/living/simple_animal/pet/cat/Runtime/proc/Deploy_The_Cats()
 	cats_deployed = 1
 	for(var/cat_type in family)
-		if(family[cat_type] > 0)
+		if(family[cat_type] > ZERO)
 			for(var/i in 1 to min(family[cat_type],100)) //Limits to about 500 cats, you wouldn't think this would be needed (BUT IT IS)
 				new cat_type(loc)
 
@@ -197,7 +197,7 @@
 					emote("me", 1, "splats \the [M]!")
 					M.splat()
 					movement_target = null
-					stop_automated_movement = 0
+					stop_automated_movement = ZERO
 					break
 			for(var/obj/item/toy/cattoy/T in view(1,src))
 				if (T.cooldown < (world.time - 400))
@@ -211,21 +211,21 @@
 	if(!stat && !resting && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
-			walk_to(src,0)
-			turns_since_scan = 0
+			walk_to(src,ZERO)
+			turns_since_scan = ZERO
 			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
 				movement_target = null
-				stop_automated_movement = 0
+				stop_automated_movement = ZERO
 			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
 				movement_target = null
-				stop_automated_movement = 0
+				stop_automated_movement = ZERO
 				for(var/mob/living/simple_animal/mouse/snack in oview(src,3))
 					if(isturf(snack.loc) && !snack.stat)
 						movement_target = snack
 						break
 			if(movement_target)
 				stop_automated_movement = 1
-				walk_to(src,movement_target,0,3)
+				walk_to(src,movement_target,ZERO,3)
 
 /mob/living/simple_animal/pet/cat/attack_hand(mob/living/carbon/human/M)
 	. = ..()
@@ -237,7 +237,7 @@
 
 /mob/living/simple_animal/pet/cat/proc/wuv(change, mob/M)
 	if(change)
-		if(change > 0)
+		if(change > ZERO)
 			if(M && stat != DEAD)
 				new /obj/effect/temp_visual/heart(loc)
 				emote("me", 1, "purrs!")

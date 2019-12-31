@@ -19,7 +19,7 @@
 				damagesplit += 1
 		for(var/obj/structure/blob/C in orange(1, B))
 			if(!istype(C, /obj/structure/blob/core) && !istype(C, /obj/structure/blob/node) && C.overmind && C.overmind.blobstrain.type == B.overmind.blobstrain.type) //only hurt blobs that have the same overmind chemical and aren't cores or nodes
-				C.take_damage(damage/damagesplit, CLONE, 0, 0)
+				C.take_damage(damage/damagesplit, CLONE, ZERO, ZERO)
 		return damage / damagesplit
 	else
 		return damage * 1.25

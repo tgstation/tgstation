@@ -1,6 +1,6 @@
 /datum/disease
 	//Flags
-	var/visibility_flags = 0
+	var/visibility_flags = ZERO
 	var/disease_flags = CURABLE|CAN_CARRY|CAN_RESIST
 	var/spread_flags = DISEASE_SPREAD_AIRBORNE | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN
 
@@ -14,7 +14,7 @@
 
 	//Stages
 	var/stage = 1
-	var/max_stages = 0
+	var/max_stages = ZERO
 	var/stage_prob = 4
 
 	//Other
@@ -96,14 +96,14 @@
 		return FALSE
 
 //Airborne spreading
-/datum/disease/proc/spread(force_spread = 0)
+/datum/disease/proc/spread(force_spread = ZERO)
 	if(!affected_mob)
 		return
 
 	if(!(spread_flags & DISEASE_SPREAD_AIRBORNE) && !force_spread)
 		return
 
-	if(affected_mob.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
+	if(affected_mob.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) || (affected_mob.satiety > ZERO && prob(affected_mob.satiety/10)))
 		return
 
 	var/spread_range = 2

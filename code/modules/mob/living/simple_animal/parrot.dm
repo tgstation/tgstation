@@ -15,7 +15,7 @@
 
 //Only a maximum of one action and one intent should be active at any given time.
 //Actions
-#define PARROT_PERCH	(1<<0)	//Sitting/sleeping, not moving
+#define PARROT_PERCH	(1<<ZERO)	//Sitting/sleeping, not moving
 #define PARROT_SWOOP	(1<<1)	//Moving towards or away from a target
 #define PARROT_WANDER	(1<<2)	//Moving without a specific target in mind
 
@@ -74,7 +74,7 @@
 
 	var/parrot_speed = 5 //"Delay in world ticks between movement." according to byond. Yeah, that's BS but it does directly affect movement. Higher number = slower.
 	var/parrot_lastmove = null //Updates/Stores position of the parrot while it's moving
-	var/parrot_stuck = 0	//If parrot_lastmove hasnt changed, this will increment until it reaches parrot_stuck_threshold
+	var/parrot_stuck = ZERO	//If parrot_lastmove hasnt changed, this will increment until it reaches parrot_stuck_threshold
 	var/parrot_stuck_threshold = 10 //if this == parrot_stuck, it'll force the parrot back to wandering
 
 	var/list/speech_buffer = list()
@@ -132,7 +132,7 @@
 	if(held_item)
 		held_item.forceMove(drop_location())
 		held_item = null
-	walk(src,0)
+	walk(src,ZERO)
 
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
@@ -160,7 +160,7 @@
 
 /mob/living/simple_animal/parrot/radio(message, message_mode, list/spans, language) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
 	. = ..()
-	if(. != 0)
+	if(. != ZERO)
 		return .
 
 	switch(message_mode)
@@ -179,7 +179,7 @@
 			ears.talk_into(src, message, message_mode, spans, language)
 			return ITALICS | REDUCE_RANGE
 
-	return 0
+	return ZERO
 
 /*
  * Inventory
@@ -289,7 +289,7 @@
 			parrot_state |= PARROT_ATTACK
 		else
 			parrot_state |= PARROT_FLEE		//Otherwise, fly like a bat out of hell!
-			drop_held_item(0)
+			drop_held_item(ZERO)
 	if(stat != DEAD && M.a_intent == INTENT_HELP)
 		handle_automated_speech(1) //assured speak/emote
 	return
@@ -310,7 +310,7 @@
 	if(parrot_state == PARROT_PERCH)
 		parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
-	if(M.melee_damage_upper > 0 && !stat)
+	if(M.melee_damage_upper > ZERO && !stat)
 		parrot_interest = M
 		parrot_state = PARROT_SWOOP | PARROT_ATTACK //Attack other animals regardless
 		icon_state = icon_living
@@ -329,7 +329,7 @@
 			else
 				parrot_state |= PARROT_FLEE
 			icon_state = icon_living
-			drop_held_item(0)
+			drop_held_item(ZERO)
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/cracker)) //Poly wants a cracker.
 		qdel(O)
 		if(health < maxHealth)
@@ -351,7 +351,7 @@
 		parrot_state = PARROT_WANDER | PARROT_FLEE //Been shot and survived! RUN LIKE HELL!
 		//parrot_been_shot += 5
 		icon_state = icon_living
-		drop_held_item(0)
+		drop_held_item(ZERO)
 
 /*
  * AI - Not really intelligent, but I'm calling it AI anyway.
@@ -418,7 +418,7 @@
 					for(var/possible_phrase in speak)
 
 						//50/50 chance to not use the radio at all
-						var/useradio = 0
+						var/useradio = ZERO
 						if(prob(50))
 							useradio = 1
 
@@ -447,7 +447,7 @@
 //-----WANDERING - This is basically a 'I dont know what to do yet' state
 	else if(parrot_state == PARROT_WANDER)
 		//Stop movement, we'll set it later
-		walk(src, 0)
+		walk(src, ZERO)
 		parrot_interest = null
 
 		//Wander around aimlessly. This will help keep the loops from searches down
@@ -485,7 +485,7 @@
 				return
 //-----STEALING
 	else if(parrot_state == (PARROT_SWOOP | PARROT_STEAL))
-		walk(src,0)
+		walk(src,ZERO)
 		if(!parrot_interest || held_item)
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
 			return
@@ -517,7 +517,7 @@
 
 //-----RETURNING TO PERCH
 	else if(parrot_state == (PARROT_SWOOP | PARROT_RETURN))
-		walk(src, 0)
+		walk(src, ZERO)
 		if(!parrot_perch || !isturf(parrot_perch.loc)) //Make sure the perch exists and somehow isnt inside of something else.
 			parrot_perch = null
 			parrot_state = PARROT_WANDER
@@ -538,7 +538,7 @@
 
 //-----FLEEING
 	else if(parrot_state == (PARROT_SWOOP | PARROT_FLEE))
-		walk(src,0)
+		walk(src,ZERO)
 		if(!parrot_interest || !isliving(parrot_interest)) //Sanity
 			parrot_state = PARROT_WANDER
 
@@ -558,7 +558,7 @@
 			return
 
 		var/mob/living/L = parrot_interest
-		if(melee_damage_upper == 0)
+		if(melee_damage_upper == ZERO)
 			melee_damage_upper = parrot_damage_upper
 			a_intent = INTENT_HARM
 
@@ -590,7 +590,7 @@
 		return
 //-----STATE MISHAP
 	else //This should not happen. If it does lets reset everything and try again
-		walk(src,0)
+		walk(src,ZERO)
 		parrot_interest = null
 		parrot_perch = null
 		drop_held_item()
@@ -607,14 +607,14 @@
 		if(parrot_lastmove == src.loc)
 			if(parrot_stuck_threshold >= ++parrot_stuck) //If it has been stuck for a while, go back to wander.
 				parrot_state = PARROT_WANDER
-				parrot_stuck = 0
+				parrot_stuck = ZERO
 				parrot_lastmove = null
 				return 1
 		else
 			parrot_lastmove = null
 	else
 		parrot_lastmove = src.loc
-	return 0
+	return ZERO
 
 /mob/living/simple_animal/parrot/proc/search_for_item()
 	var/item
@@ -700,7 +700,7 @@
 			return held_item
 
 	to_chat(src, "<span class='warning'>There is nothing of interest to take!</span>")
-	return 0
+	return ZERO
 
 /mob/living/simple_animal/parrot/proc/steal_from_mob()
 	set name = "Steal from mob"
@@ -729,7 +729,7 @@
 			return held_item
 
 	to_chat(src, "<span class='warning'>There is nothing of interest to take!</span>")
-	return 0
+	return ZERO
 
 /mob/living/simple_animal/parrot/verb/drop_held_item_player()
 	set name = "Drop held item"
@@ -754,7 +754,7 @@
 	if(!held_item)
 		if(src == usr) //So that other mobs wont make this message appear when they're bludgeoning you.
 			to_chat(src, "<span class='warning'>You have nothing to drop!</span>")
-		return 0
+		return ZERO
 
 
 //parrots will eat crackers instead of dropping them
@@ -857,7 +857,7 @@
 		return
 
 	if(a_intent != INTENT_HELP)
-		melee_damage_upper = 0
+		melee_damage_upper = ZERO
 		a_intent = INTENT_HELP
 	else
 		melee_damage_upper = parrot_damage_upper
@@ -875,9 +875,9 @@
 	gold_core_spawnable = NO_SPAWN
 	speak_chance = 3
 	var/memory_saved = FALSE
-	var/rounds_survived = 0
-	var/longest_survival = 0
-	var/longest_deathstreak = 0
+	var/rounds_survived = ZERO
+	var/longest_survival = ZERO
+	var/longest_deathstreak = ZERO
 
 /mob/living/simple_animal/parrot/Poly/Initialize()
 	ears = new /obj/item/radio/headset/headset_eng(src)
@@ -892,7 +892,7 @@
 		speak += pick("What are you waiting for!", "Violence breeds violence!", "Blood! Blood!", "Strike me down if you dare!")
 		desc += " The squawks of [-rounds_survived] dead parrots ring out in your ears..."
 		add_atom_colour("#BB7777", FIXED_COLOUR_PRIORITY)
-	else if(rounds_survived > 0)
+	else if(rounds_survived > ZERO)
 		speak += pick("...again?", "No, It was over!", "Let me out!", "It never ends!")
 		desc += " Over [rounds_survived] shifts without a \"terrible\" \"accident\"!"
 	else
@@ -943,7 +943,7 @@
 	if(islist(speech_buffer))
 		file_data["phrases"] = speech_buffer
 	if(dead)
-		file_data["roundssurvived"] = min(rounds_survived - 1, 0)
+		file_data["roundssurvived"] = min(rounds_survived - 1, ZERO)
 		file_data["longestsurvival"] = longest_survival
 		if(rounds_survived - 1 < longest_deathstreak)
 			file_data["longestdeathstreak"] = rounds_survived - 1
@@ -982,7 +982,7 @@
 		if(!ishuman(parrot_interest))
 			parrot_interest = null
 		else if(parrot_state == (PARROT_SWOOP | PARROT_ATTACK) && Adjacent(parrot_interest))
-			walk_to(src, parrot_interest, 0, parrot_speed)
+			walk_to(src, parrot_interest, ZERO, parrot_speed)
 			Possess(parrot_interest)
 	..()
 

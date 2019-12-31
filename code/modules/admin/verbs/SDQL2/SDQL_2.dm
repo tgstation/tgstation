@@ -165,7 +165,7 @@
 */
 
 
-#define SDQL2_STATE_ERROR 0
+#define SDQL2_STATE_ERROR ZERO
 #define SDQL2_STATE_IDLE 1
 #define SDQL2_STATE_PRESEARCH 2
 #define SDQL2_STATE_SEARCHING 3
@@ -176,7 +176,7 @@
 #define SDQL2_VALID_OPTION_TYPES list("proccall", "select", "priority", "autogc" , "sequential")
 #define SDQL2_VALID_OPTION_VALUES list("async", "blocking", "force_nulls", "skip_nulls", "high", "normal", "keep_alive" , "true")
 
-#define SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS			(1<<0)
+#define SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS			(1<<ZERO)
 #define SDQL2_OPTION_BLOCKING_CALLS						(1<<1)
 #define SDQL2_OPTION_HIGH_PRIORITY						(1<<2)		//High priority SDQL query, allow using almost all of the tick.
 #define SDQL2_OPTION_DO_NOT_AUTOGC						(1<<3)
@@ -257,8 +257,8 @@
 			query.ARun()
 
 	var/finished = FALSE
-	var/objs_all = 0
-	var/objs_eligible = 0
+	var/objs_all = ZERO
+	var/objs_eligible = ZERO
 	var/selectors_used = FALSE
 	var/list/combined_refs = list()
 	do
@@ -314,7 +314,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	var/superuser = FALSE		//Run things like proccalls without using admin protections
 	var/allow_admin_interact = TRUE		//Allow admins to do things to this excluding varedit these two vars
 	var/static/id_assign = 1
-	var/id = 0
+	var/id = ZERO
 
 	var/qdel_on_finish = FALSE
 
@@ -499,9 +499,9 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 			set_option(name, value)
 	select_refs = list()
 	select_text = null
-	obj_count_all = 0
-	obj_count_eligible = 0
-	obj_count_finished = 0
+	obj_count_all = ZERO
+	obj_count_eligible = ZERO
+	obj_count_finished = ZERO
 	start_time = REALTIMEOFDAY
 
 	state = SDQL2_STATE_PRESEARCH
@@ -530,7 +530,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 			SDQL query took [DisplayTimeText(end_time - start_time)] to complete.</span>")
 			if(length(select_text))
 				var/text = islist(select_text)? select_text.Join() : select_text
-				var/static/result_offset = 0
+				var/static/result_offset = ZERO
 				showmob << browse(text, "window=SDQL-result-[result_offset++]")
 	show_next_to_key = null
 	if(qdel_on_finish)
@@ -775,7 +775,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 /datum/SDQL2_query/proc/SDQL_internal_vv(d, list/set_list)
 	for(var/list/sets in set_list)
 		var/datum/temp = d
-		var/i = 0
+		var/i = ZERO
 		for(var/v in sets)
 			if(++i == sets.len)
 				if(superuser)
@@ -803,7 +803,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	return SDQL_function_blocking(object, procname, arguments, source)
 
 /datum/SDQL2_query/proc/SDQL_expression(datum/object, list/expression, start = 1)
-	var/result = 0
+	var/result = ZERO
 	var/val
 
 	for(var/i = start, i <= expression.len, i++)
@@ -944,7 +944,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	var/list/query_tree = list()
 	var/pos = 1
 	var/querys_pos = 1
-	var/do_parse = 0
+	var/do_parse = ZERO
 
 	for(var/val in query_list)
 		if(val == ";")
@@ -957,7 +957,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 			parser.query = query_tree
 			var/list/parsed_tree
 			parsed_tree = parser.parse()
-			if(parsed_tree.len > 0)
+			if(parsed_tree.len > ZERO)
 				querys.len = querys_pos
 				querys[querys_pos] = parsed_tree
 				querys_pos++
@@ -965,7 +965,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 				to_chat(usr, "<span class='danger'>Parsing error on [querys_pos]\th query. Nothing was executed.</span>")
 				return list()
 			query_tree = list()
-			do_parse = 0
+			do_parse = ZERO
 		else
 			query_tree += val
 		pos++
@@ -973,10 +973,10 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	qdel(parser)
 	return querys
 
-/proc/SDQL_testout(list/query_tree, indent = 0)
+/proc/SDQL_testout(list/query_tree, indent = ZERO)
 	var/static/whitespace = "&nbsp;&nbsp;&nbsp; "
 	var/spaces = ""
-	for(var/s = 0, s < indent, s++)
+	for(var/s = ZERO, s < indent, s++)
 		spaces += whitespace
 
 	for(var/item in query_tree)

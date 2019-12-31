@@ -10,7 +10,7 @@
 	attack_verb_simple = "shock"
 	melee_damage_type = BURN
 	attack_sound = 'sound/machines/defib_zap.ogg'
-	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
+	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = ZERO, OXY = 0.7)
 	range = 7
 	playstyle_string = "<span class='holoparasite'>As a <b>lightning</b> type, you will apply lightning chains to targets on attack and have a lightning chain to your summoner. Lightning chains will shock anyone near them.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Tesla, a shocking, lethal source of power.</span>"
@@ -18,7 +18,7 @@
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's a lightning carp! Everyone else goes zap zap.</span>"
 	var/datum/beam/summonerchain
 	var/list/enemychains = list()
-	var/successfulshocks = 0
+	var/successfulshocks = ZERO
 
 /mob/living/simple_animal/hostile/guardian/beam/AttackingTarget()
 	. = ..()
@@ -45,7 +45,7 @@
 			summonerchain = Beam(summoner, "lightning[rand(1,12)]", time=INFINITY, maxdistance=INFINITY, beam_type=/obj/effect/ebeam/chain)
 		while(loc != summoner)
 			if(successfulshocks > 5)
-				successfulshocks = 0
+				successfulshocks = ZERO
 			if(shockallchains())
 				successfulshocks++
 			SLEEP_CHECK_DEATH(3)
@@ -65,7 +65,7 @@
 				enemychains -= chain
 
 /mob/living/simple_animal/hostile/guardian/beam/proc/shockallchains()
-	. = 0
+	. = ZERO
 	cleardeletedchains()
 	if(summoner)
 		if(!summonerchain)
@@ -85,7 +85,7 @@
 		enemychains = list()
 
 /mob/living/simple_animal/hostile/guardian/beam/proc/chainshock(datum/beam/B)
-	. = 0
+	. = ZERO
 	var/list/turfs = list()
 	for(var/E in B.elements)
 		var/obj/effect/ebeam/chainpart = E
@@ -102,7 +102,7 @@
 				if(hasmatchingsummoner(L)) //if the summoner matches don't hurt them
 					continue
 				if(successfulshocks > 4)
-					L.electrocute_act(0)
+					L.electrocute_act(ZERO)
 					L.visible_message(
 						"<span class='danger'>[L] was shocked by the lightning chain!</span>", \
 						"<span class='userdanger'>You are shocked by the lightning chain!</span>", \

@@ -40,7 +40,7 @@
 	weight = (length(goodSuffixes) + length(badSuffixes)) * 10
 
 /datum/fantasy_affix/cosmetic_suffixes/apply(datum/component/fantasy/comp, newName)
-	if(comp.quality > 0 || (comp.quality == 0 && prob(50)))
+	if(comp.quality > ZERO || (comp.quality == ZERO && prob(50)))
 		return "[newName] of [pick(goodSuffixes)]"
 	else
 		return "[newName] of [pick(badSuffixes)]"

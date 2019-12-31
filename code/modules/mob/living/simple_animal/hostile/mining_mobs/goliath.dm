@@ -19,7 +19,7 @@
 	speed = 3
 	maxHealth = 300
 	health = 300
-	harm_intent_damage = 0
+	harm_intent_damage = ZERO
 	obj_damage = 100
 	melee_damage_lower = 25
 	melee_damage_upper = 25
@@ -32,7 +32,7 @@
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
-	var/pre_attack = 0
+	var/pre_attack = ZERO
 	var/pre_attack_icon = "Goliath_preattack"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide)
 
@@ -69,7 +69,7 @@
 		new /obj/effect/temp_visual/goliath_tentacle/original(tturf, src)
 		ranged_cooldown = world.time + ranged_cooldown_time
 		icon_state = icon_aggro
-		pre_attack = 0
+		pre_attack = ZERO
 
 /mob/living/simple_animal/hostile/asteroid/goliath/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	ranged_cooldown -= 10

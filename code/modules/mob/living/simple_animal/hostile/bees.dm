@@ -1,6 +1,6 @@
 
 #define BEE_IDLE_ROAMING		70 //The value of idle at which a bee in a beebox will try to wander
-#define BEE_IDLE_GOHOME			0  //The value of idle at which a bee will try to go home
+#define BEE_IDLE_GOHOME			ZERO  //The value of idle at which a bee will try to go home
 #define BEE_PROB_GOHOME			35 //Probability to go home when idle is below BEE_IDLE_GOHOME
 #define BEE_PROB_GOROAM			5 //Probability to go roaming when idle is above BEE_IDLE_ROAMING
 #define BEE_TRAY_RECENT_VISIT	200	//How long in deciseconds until a tray can be visited by a bee again
@@ -19,7 +19,7 @@
 	gender = FEMALE
 	speak_emote = list("buzzes")
 	emote_hear = list("buzzes")
-	turns_per_move = 0
+	turns_per_move = ZERO
 	melee_damage_lower = 1
 	melee_damage_upper = 1
 	attack_verb_continuous = "stings"
@@ -34,8 +34,8 @@
 	health = 10
 	spacewalk = TRUE
 	faction = list("hostile")
-	move_to_delay = 0
-	obj_damage = 0
+	move_to_delay = ZERO
+	obj_damage = ZERO
 	ventcrawler = VENTCRAWLER_ALWAYS
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
@@ -48,13 +48,13 @@
 	search_objects = 1 //have to find those plant trays!
 
 	//Spaceborn beings don't get hurt by space
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
+	minbodytemp = ZERO
 	del_on_death = 1
 
 	var/datum/reagent/beegent = null //hehe, beegent
 	var/obj/structure/beebox/beehome = null
-	var/idle = 0
+	var/idle = ZERO
 	var/isqueen = FALSE
 	var/icon_base = "bee"
 	var/static/beehometypecache = typecacheof(/obj/structure/beebox)
@@ -206,7 +206,7 @@
 				toggle_ai(AI_ON)
 				forceMove(beehome.drop_location())
 		else
-			idle = max(0, --idle)
+			idle = max(ZERO, --idle)
 			if(idle <= BEE_IDLE_GOHOME && prob(BEE_PROB_GOHOME))
 				if(!FindTarget())
 					wanted_objects |= beehometypecache //so we don't attack beeboxes when not going home

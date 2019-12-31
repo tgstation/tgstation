@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 ))
 
 /mob/living/proc/Ellipsis(original_msg, chance = 50, keep_words)
-	if(chance <= 0)
+	if(chance <= ZERO)
 		return "..."
 	if(chance >= 100)
 		return original_msg
@@ -211,7 +211,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	//No screams in space, unless you're next to someone.
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/environment = T.return_air()
-	var/pressure = (environment)? environment.return_pressure() : 0
+	var/pressure = (environment)? environment.return_pressure() : ZERO
 	if(pressure < SOUND_MINIMUM_PRESSURE)
 		message_range = 1
 
@@ -248,7 +248,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, message_mode)
 	var/static/list/eavesdropping_modes = list(MODE_WHISPER = TRUE, MODE_WHISPER_CRIT = TRUE)
-	var/eavesdrop_range = 0
+	var/eavesdrop_range = ZERO
 	if(eavesdropping_modes[message_mode])
 		eavesdrop_range = EAVESDROP_EXTRA_RANGE
 	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
@@ -302,21 +302,21 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "<span class='danger'>You cannot speak in IC (muted).</span>")
-			return 0
+			return ZERO
 		if(!(ignore_spam || forced) && client.handle_spam_prevention(message,MUTE_IC))
-			return 0
+			return ZERO
 
 	return 1
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
 	if(HAS_TRAIT(src, TRAIT_MUTE))
-		return 0
+		return ZERO
 
 	if(is_muzzled())
-		return 0
+		return ZERO
 
 	if(!IsVocal())
-		return 0
+		return ZERO
 
 	return 1
 
@@ -385,9 +385,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_BINARY)
-			return ITALICS | REDUCE_RANGE //Does not return 0 since this is only reached by humans, not borgs or AIs.
+			return ITALICS | REDUCE_RANGE //Does not return ZERO since this is only reached by humans, not borgs or AIs.
 
-	return 0
+	return ZERO
 
 /mob/living/say_mod(input, message_mode)
 	if(message_mode == MODE_WHISPER)

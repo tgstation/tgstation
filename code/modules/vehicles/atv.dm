@@ -13,7 +13,7 @@
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 	D.vehicle_move_delay = 1.5
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list( 0, 4)))
+	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(ZERO, 4), TEXT_SOUTH = list(ZERO, 4), TEXT_EAST = list(ZERO, 4), TEXT_WEST = list( ZERO, 4)))
 	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
@@ -48,7 +48,7 @@
 		turret.forceMove(get_turf(src))
 		switch(dir)
 			if(NORTH)
-				turret.pixel_x = 0
+				turret.pixel_x = ZERO
 				turret.pixel_y = 4
 				turret.layer = ABOVE_MOB_LAYER
 			if(EAST)
@@ -56,7 +56,7 @@
 				turret.pixel_y = 4
 				turret.layer = OBJ_LAYER
 			if(SOUTH)
-				turret.pixel_x = 0
+				turret.pixel_x = ZERO
 				turret.pixel_y = 4
 				turret.layer = OBJ_LAYER
 			if(WEST)
@@ -67,7 +67,7 @@
 /obj/vehicle/ridden/atv/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
 		if(obj_integrity < max_integrity)
-			if(W.use_tool(src, user, 0, volume=50, amount=1))
+			if(W.use_tool(src, user, ZERO, volume=50, amount=1))
 				user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>", "<span class='notice'>You repair some damage to \the [src].</span>")
 				obj_integrity += min(10, max_integrity-obj_integrity)
 				if(obj_integrity == max_integrity)
@@ -85,7 +85,7 @@
 	if(prob(20))
 		return
 	var/datum/effect_system/smoke_spread/smoke = new
-	smoke.set_up(0, src)
+	smoke.set_up(ZERO, src)
 	smoke.start()
 
 /obj/vehicle/ridden/atv/bullet_act(obj/projectile/P)
@@ -96,7 +96,7 @@
 	return ..()
 
 /obj/vehicle/ridden/atv/obj_destruction()
-	explosion(src, -1, 0, 2, 4, flame_range = 3)
+	explosion(src, -1, ZERO, 2, 4, flame_range = 3)
 	return ..()
 
 /obj/vehicle/ridden/atv/Destroy()

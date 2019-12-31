@@ -34,9 +34,9 @@ Notes:
 /datum/tooltip
 	var/client/owner
 	var/control = "mainwindow.tooltip"
-	var/showing = 0
-	var/queueHide = 0
-	var/init = 0
+	var/showing = ZERO
+	var/queueHide = ZERO
+	var/init = ZERO
 
 
 /datum/tooltip/New(client/C)
@@ -51,7 +51,7 @@ Notes:
 
 /datum/tooltip/proc/show(atom/movable/thing, params = null, title = null, content = null, theme = "default", special = "none")
 	if (!thing || !params || (!title && !content) || !owner || !isnum(world.icon_size))
-		return 0
+		return ZERO
 	if (!init)
 		//Initialize some vars
 		init = 1
@@ -79,7 +79,7 @@ Notes:
 	owner << output(list2params(list(params, view_size[1] , view_size[2], "[title][content]", theme, special)), "[control]:tooltip.update")
 
 	//If a hide() was hit while we were showing, run hide() again to avoid stuck tooltips
-	showing = 0
+	showing = ZERO
 	if (queueHide)
 		hide()
 

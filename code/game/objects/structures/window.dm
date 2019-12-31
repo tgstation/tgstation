@@ -5,7 +5,7 @@
 	density = TRUE
 	layer = ABOVE_OBJ_LAYER //Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
-	anchored = TRUE //initially is 0 for tile smoothing
+	anchored = TRUE //initially is ZERO for tile smoothing
 	flags_1 = ON_BORDER_1
 	max_integrity = 25
 	can_be_unanchored = TRUE
@@ -118,7 +118,7 @@
 	if(istype(O) && (O.pass_flags & PASSGLASS))
 		return 1
 	if(get_dir(O.loc, target) == dir)
-		return 0
+		return ZERO
 	return 1
 
 /obj/structure/window/attack_tk(mob/user)
@@ -127,7 +127,7 @@
 	add_fingerprint(user)
 	playsound(src, 'sound/effects/Glassknock.ogg', 50, TRUE)
 
-/obj/structure/window/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+/obj/structure/window/attack_hulk(mob/living/carbon/human/user, does_attack_animation = ZERO)
 	if(!can_be_reached(user))
 		return
 	. = ..()
@@ -147,7 +147,7 @@
 /obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/window/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)	//used by attack_alien, attack_animal, and attack_slime
+/obj/structure/window/attack_generic(mob/user, damage_amount = ZERO, damage_type = BRUTE, damage_flag = ZERO, sound_effect = 1)	//used by attack_alien, attack_animal, and attack_slime
 	if(!can_be_reached(user))
 		return
 	..()
@@ -160,7 +160,7 @@
 
 	if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP)
 		if(obj_integrity < max_integrity)
-			if(!I.tool_start_check(user, amount=0))
+			if(!I.tool_start_check(user, amount=ZERO))
 				return
 
 			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
@@ -223,15 +223,15 @@
 		if(get_dir(user,src) & dir)
 			for(var/obj/O in loc)
 				if(!O.CanPass(user, user.loc, 1))
-					return 0
+					return ZERO
 	return 1
 
-/obj/structure/window/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/structure/window/take_damage(damage_amount, damage_type = BRUTE, damage_flag = ZERO, sound_effect = 1)
 	. = ..()
 	if(.) //received damage
 		update_nearby_icons()
 
-/obj/structure/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
@@ -324,7 +324,7 @@
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 
 	if(exposed_temperature > (T0C + heat_resistance))
-		take_damage(round(exposed_volume / 100), BURN, 0, 0)
+		take_damage(round(exposed_volume / 100), BURN, ZERO, ZERO)
 	..()
 
 /obj/structure/window/get_dumping_location(obj/item/storage/source,mob/user)
@@ -334,12 +334,12 @@
 	if(!density)
 		return 1
 	if((dir == FULLTILE_WINDOW_DIR) || (dir == to_dir))
-		return 0
+		return ZERO
 
 	return 1
 
 /obj/structure/window/GetExplosionBlock()
-	return reinf && fulltile ? real_explosion_block : 0
+	return reinf && fulltile ? real_explosion_block : ZERO
 
 /obj/structure/window/spawner/east
 	dir = EAST
@@ -728,7 +728,7 @@
 	decon_speed = 10
 	CanAtmosPass = ATMOS_PASS_YES
 	resistance_flags = FLAMMABLE
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = ZERO)
 	breaksound = 'sound/items/poster_ripped.ogg'
 	hitsound = 'sound/weapons/slashmiss.ogg'
 	var/static/mutable_appearance/torn = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER - 0.1)
@@ -758,7 +758,7 @@
 		user.visible_message("<span class='notice'>[user] knocks on [src].</span>")
 		playsound(src, "pageturn", 50, TRUE)
 	else
-		take_damage(4,BRUTE,"melee", 0)
+		take_damage(4,BRUTE,"melee", ZERO)
 		playsound(src, hitsound, 50, TRUE)
 		if(!QDELETED(src))
 			user.visible_message("<span class='danger'>[user] tears a hole in [src].</span>")

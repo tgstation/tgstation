@@ -8,8 +8,8 @@
 	var/locked = FALSE
 	var/obj/item/card/id/my_card
 	var/obj/item/assembly/signaler/signaler //attached signaler, let people attach signalers that get activated if the user's transaction limit is achieved.
-	var/signaler_threshold = 0 //signaler threshold amount
-	var/amount_deposited = 0 //keep track of the amount deposited over time so you can pay multiple times to reach the signaler threshold
+	var/signaler_threshold = ZERO //signaler threshold amount
+	var/amount_deposited = ZERO //keep track of the amount deposited over time so you can pay multiple times to reach the signaler threshold
 	var/force_fee = 0 //replaces the "pay whatever" functionality with a set amount when non-zero.
 
 /obj/machinery/paystand/attackby(obj/item/W, mob/user, params)
@@ -22,7 +22,7 @@
 				name = rename_msg
 				return
 			else if(user.a_intent == INTENT_GRAB)
-				var/force_fee_input = input(user,"Set the fee!","Set a fee!",0) as num|null
+				var/force_fee_input = input(user,"Set the fee!","Set a fee!",ZERO) as num|null
 				if(isnull(force_fee_input) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
 				force_fee = force_fee_input
@@ -44,7 +44,7 @@
 			return
 		var/obj/item/card/id/vbucks = W
 		if(vbucks.registered_account)
-			var/momsdebitcard = 0
+			var/momsdebitcard = ZERO
 			if(!force_fee)
 				momsdebitcard = input(user, "How much would you like to deposit?", "Money Deposit") as null|num
 			else
@@ -122,7 +122,7 @@
 	amount_deposited = amount_deposited + price
 	if(signaler && amount_deposited >= signaler_threshold)
 		signaler.activate()
-		amount_deposited = 0
+		amount_deposited = ZERO
 
 /obj/machinery/paystand/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
 	if(locked)

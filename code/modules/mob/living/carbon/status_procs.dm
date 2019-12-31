@@ -19,7 +19,7 @@
 		adjustStaminaLoss(30, FALSE)
 
 /mob/living/carbon/adjust_drugginess(amount)
-	druggy = max(druggy+amount, 0)
+	druggy = max(druggy+amount, ZERO)
 	if(druggy)
 		overlay_fullscreen("high", /obj/screen/fullscreen/high)
 		throw_alert("high", /obj/screen/alert/high)
@@ -30,7 +30,7 @@
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "high")
 
 /mob/living/carbon/set_drugginess(amount)
-	druggy = max(amount, 0)
+	druggy = max(amount, ZERO)
 	if(druggy)
 		overlay_fullscreen("high", /obj/screen/fullscreen/high)
 		throw_alert("high", /obj/screen/alert/high)
@@ -39,10 +39,10 @@
 		clear_alert("high")
 
 /mob/living/carbon/adjust_disgust(amount)
-	disgust = CLAMP(disgust+amount, 0, DISGUST_LEVEL_MAXEDOUT)
+	disgust = CLAMP(disgust+amount, ZERO, DISGUST_LEVEL_MAXEDOUT)
 
 /mob/living/carbon/set_disgust(amount)
-	disgust = CLAMP(amount, 0, DISGUST_LEVEL_MAXEDOUT)
+	disgust = CLAMP(amount, ZERO, DISGUST_LEVEL_MAXEDOUT)
 
 
 ////////////////////////////////////////TRAUMAS/////////////////////////////////////////

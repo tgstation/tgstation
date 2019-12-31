@@ -4,7 +4,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "toyhammer"
 	slot_flags = ITEM_SLOT_BELT
-	throwforce = 0
+	throwforce = ZERO
 	force = 1
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
@@ -86,7 +86,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
 	light_range = 3
 	attack_verb = list("brutalized", "eviscerated", "disemboweled", "hacked", "carved", "cleaved") //ONLY THE MOST VISCERAL ATTACK VERBS
-	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
+	var/notches = ZERO //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
 	var/obj/item/disk/nuclear/nuke_disk //OUR STORED NUKE DISK
 
 /obj/item/claymore/highlander/Initialize()
@@ -280,7 +280,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 2
 	throwforce = 20 //20 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = 28 damage on hit due to guaranteed embedding
 	throw_speed = 4
-	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 100, "embedded_fall_chance" = 0)
+	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 100, "embedded_fall_chance" = ZERO)
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = IS_SHARP
 	custom_materials = list(/datum/material/iron=500, /datum/material/glass=500)
@@ -293,7 +293,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "magspear"
 	throwforce = 25 //kills regular carps in one hit
 	force = 10
-	throw_range = 0 //throwing these invalidates the speargun
+	throw_range = ZERO //throwing these invalidates the speargun
 	attack_verb = list("stabbed", "ripped", "gored", "impaled")
 	embedding = list("embedded_pain_multiplier" = 8, "embed_chance" = 100, "embedded_fall_chance" = 0, "embedded_impact_pain_multiplier" = 15) //55 damage+embed on hit
 
@@ -313,7 +313,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	hitsound = 'sound/weapons/genhit.ogg'
 	attack_verb = list("stubbed", "poked")
 	resistance_flags = FIRE_PROOF
-	var/extended = 0
+	var/extended = ZERO
 
 /obj/item/switchblade/attack_self(mob/user)
 	extended = !extended
@@ -435,9 +435,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	force = 24
-	throwforce = 0
-	throw_range = 0
-	throw_speed = 0
+	throwforce = ZERO
+	throw_range = ZERO
+	throw_speed = ZERO
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
@@ -475,7 +475,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/statuebust/Initialize()
 	. = ..()
 	AddComponent(/datum/component/art, impressiveness)
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 1000), 0)
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 1000), ZERO)
 
 /obj/item/statuebust/hippocratic
 	name = "hippocrates bust"
@@ -555,8 +555,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 12
 	attack_verb = list("beat", "smacked")
 	w_class = WEIGHT_CLASS_HUGE
-	var/homerun_ready = 0
-	var/homerun_able = 0
+	var/homerun_ready = ZERO
+	var/homerun_able = ZERO
 
 /obj/item/melee/baseball_bat/homerun
 	name = "home run bat"
@@ -586,7 +586,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		target.throw_at(throw_target, rand(8,10), 14, user)
 		target.ex_act(EXPLODE_HEAVY)
 		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
-		homerun_ready = 0
+		homerun_ready = ZERO
 		return
 	else if(!target.anchored)
 		target.throw_at(throw_target, rand(1,2), 7, user)
@@ -650,8 +650,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "circled hand"
 	desc = "If somebody looks at this while it's below your waist, you get to bop them."
 	icon_state = "madeyoulook"
-	force = 0
-	throwforce = 0
+	force = ZERO
+	throwforce = ZERO
 	item_flags = DROPDEL | ABSTRACT
 	attack_verb = list("bopped")
 
@@ -660,8 +660,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "This is how real men fight."
 	icon_state = "latexballon"
 	item_state = "nothing"
-	force = 0
-	throwforce = 0
+	force = ZERO
+	throwforce = ZERO
 	item_flags = DROPDEL | ABSTRACT
 	attack_verb = list("slapped")
 	hitsound = 'sound/effects/snap.ogg'
@@ -690,7 +690,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	item_state = "extendohand"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	force = 0
+	force = ZERO
 	throwforce = 5
 	reach = 2
 	var/min_reach = 2

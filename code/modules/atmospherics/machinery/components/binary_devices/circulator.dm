@@ -1,6 +1,6 @@
 //node2, air2, network2 correspond to input
 //node1, air1, network1 correspond to output
-#define CIRCULATOR_HOT 0
+#define CIRCULATOR_HOT ZERO
 #define CIRCULATOR_COLD 1
 
 /obj/machinery/atmospherics/components/binary/circulator
@@ -10,13 +10,13 @@
 
 	var/active = FALSE
 
-	var/last_pressure_delta = 0
+	var/last_pressure_delta = ZERO
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 
 	density = TRUE
 
 
-	var/flipped = 0
+	var/flipped = ZERO
 	var/mode = CIRCULATOR_HOT
 	var/obj/machinery/power/generator/generator
 
@@ -47,11 +47,11 @@
 
 	if(output_starting_pressure >= input_starting_pressure-10)
 		//Need at least 10 KPa difference to overcome friction in the mechanism
-		last_pressure_delta = 0
+		last_pressure_delta = ZERO
 		return null
 
 	//Calculate necessary moles to transfer using PV = nRT
-	if(air2.temperature>0)
+	if(air2.temperature>ZERO)
 		var/pressure_delta = (input_starting_pressure - output_starting_pressure)/2
 
 		var/transfer_moles = pressure_delta*air1.volume/(air2.temperature * R_IDEAL_GAS_EQUATION)
@@ -66,7 +66,7 @@
 		return removed
 
 	else
-		last_pressure_delta = 0
+		last_pressure_delta = ZERO
 
 /obj/machinery/atmospherics/components/binary/circulator/process_atmos()
 	..()
@@ -75,7 +75,7 @@
 /obj/machinery/atmospherics/components/binary/circulator/update_icon()
 	if(!is_operational())
 		icon_state = "circ-p-[flipped]"
-	else if(last_pressure_delta > 0)
+	else if(last_pressure_delta > ZERO)
 		if(last_pressure_delta > ONE_ATMOSPHERE)
 			icon_state = "circ-run-[flipped]"
 		else
@@ -170,8 +170,8 @@
 
 /obj/machinery/atmospherics/components/binary/circulator/setPipingLayer(new_layer)
 	..()
-	pixel_x = 0
-	pixel_y = 0
+	pixel_x = ZERO
+	pixel_y = ZERO
 
 /obj/machinery/atmospherics/components/binary/circulator/verb/circulator_flip()
 	set name = "Flip"

@@ -53,7 +53,7 @@
 
 
 //Security levels
-#define SEC_LEVEL_GREEN	0
+#define SEC_LEVEL_GREEN	ZERO
 #define SEC_LEVEL_BLUE	1
 #define SEC_LEVEL_RED	2
 #define SEC_LEVEL_DELTA	3
@@ -83,7 +83,7 @@
 #define STAGE_SIX 11 //From supermatter shard
 
 //SSticker.current_state values
-#define GAME_STATE_STARTUP		0
+#define GAME_STATE_STARTUP		ZERO
 #define GAME_STATE_PREGAME		1
 #define GAME_STATE_SETTING_UP	2
 #define GAME_STATE_PLAYING		3
@@ -136,7 +136,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 
 //suit sensors: sensor_mode defines
 
-#define SENSOR_OFF 0
+#define SENSOR_OFF ZERO
 #define SENSOR_LIVING 1
 #define SENSOR_VITALS 2
 #define SENSOR_COORDS 3
@@ -144,13 +144,13 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 //suit sensors: has_sensor defines
 
 #define BROKEN_SENSORS -1
-#define NO_SENSORS 0
+#define NO_SENSORS ZERO
 #define HAS_SENSORS 1
 #define LOCKED_SENSORS 2
 
 //Wet floor type flags. Stronger ones should be higher in number.
-#define TURF_DRY			(0)
-#define TURF_WET_WATER		(1<<0)
+#define TURF_DRY			(ZERO)
+#define TURF_WET_WATER		(1<<ZERO)
 #define TURF_WET_PERMAFROST	(1<<1)
 #define TURF_WET_ICE 		(1<<2)
 #define TURF_WET_LUBE		(1<<3)
@@ -174,10 +174,10 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
 //Gets the turf this atom inhabits
-#define get_turf(A) (get_step(A, 0))
+#define get_turf(A) (get_step(A, ZERO))
 
 //Same as above except gets the area instead
-#define get_area(A) (isarea(A) ? A : get_step(A, 0)?.loc)
+#define get_area(A) (isarea(A) ? A : get_step(A, ZERO)?.loc)
 
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE		"circle"
@@ -332,7 +332,7 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define FIELD_EDGE 2
 
 //gibtonite state defines
-#define GIBTONITE_UNSTRUCK 0
+#define GIBTONITE_UNSTRUCK ZERO
 #define GIBTONITE_ACTIVE 1
 #define GIBTONITE_STABLE 2
 #define GIBTONITE_DETONATE 3
@@ -343,10 +343,10 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 //for determining which type of heartbeat sound is playing
 #define BEAT_FAST 1
 #define BEAT_SLOW 2
-#define BEAT_NONE 0
+#define BEAT_NONE ZERO
 
 //https://secure.byond.com/docs/ref/info.html#/atom/var/mouse_opacity
-#define MOUSE_OPACITY_TRANSPARENT 0
+#define MOUSE_OPACITY_TRANSPARENT ZERO
 #define MOUSE_OPACITY_ICON 1
 #define MOUSE_OPACITY_OPAQUE 2
 
@@ -370,11 +370,11 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 
 #define MAX_PROC_DEPTH 195 // 200 proc calls deep and shit breaks, this is a bit lower to give some safety room
 
-#define SYRINGE_DRAW 0
+#define SYRINGE_DRAW ZERO
 #define SYRINGE_INJECT 1
 
 //gold slime core spawning
-#define NO_SPAWN 0
+#define NO_SPAWN ZERO
 #define HOSTILE_SPAWN 1
 #define FRIENDLY_SPAWN 2
 
@@ -433,7 +433,7 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define STANDARD_GRAVITY 1 //Anything above this is high gravity, anything below no grav
 #define GRAVITY_DAMAGE_TRESHOLD 3 //Starting with this value gravity will start to damage mobs
 
-#define CAMERA_NO_GHOSTS 0
+#define CAMERA_NO_GHOSTS ZERO
 #define CAMERA_SEE_GHOSTS_BASIC 1
 #define CAMERA_SEE_GHOSTS_ORBIT 2
 
@@ -468,6 +468,6 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define GREAT_ART 50
 
 // possible bitflag return values of intercept_zImpact(atom/movable/AM, levels = 1) calls
-#define FALL_INTERCEPTED		(1<<0) //Stops the movable from falling further and crashing on the ground
+#define FALL_INTERCEPTED		(1<<ZERO) //Stops the movable from falling further and crashing on the ground
 #define FALL_NO_MESSAGE			(1<<1) //Used to suppress the "[A] falls through [old_turf]" messages where it'd make little sense at all, like going downstairs.
 #define FALL_STOP_INTERCEPTING	(1<<2) //Used in situations where halting the whole "intercept" loop would be better, like supermatter dusting (and thus deleting) the atom.

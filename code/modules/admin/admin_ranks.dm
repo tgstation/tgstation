@@ -7,9 +7,9 @@ GLOBAL_PROTECT(protected_ranks)
 /datum/admin_rank
 	var/name = "NoRank"
 	var/rights = R_DEFAULT
-	var/exclude_rights = 0
-	var/include_rights = 0
-	var/can_edit_rights = 0
+	var/exclude_rights = ZERO
+	var/include_rights = ZERO
+	var/can_edit_rights = ZERO
 
 /datum/admin_rank/New(init_name, init_rights, init_exclude_rights, init_edit_rights)
 	if(IsAdminAdvancedProcCall())
@@ -17,7 +17,7 @@ GLOBAL_PROTECT(protected_ranks)
 		message_admins("[key_name_admin(usr)][msg]")
 		log_admin("[key_name(usr)][msg]")
 		if (name == "NoRank") //only del if this is a true creation (and not just a New() proc call), other wise trialmins/coders could abuse this to deadmin other admins
-			QDEL_IN(src, 0)
+			QDEL_IN(src, ZERO)
 			CRASH("Admin proc call creation of admin datum")
 		return
 	name = init_name
@@ -52,7 +52,7 @@ GLOBAL_PROTECT(protected_ranks)
 		log_admin("[key_name(usr)][msg]")
 		return
 	var/list/keywords = splittext(group, " ")
-	var/flag = 0
+	var/flag = ZERO
 	for(var/k in keywords)
 		switch(k)
 			if("BUILD")

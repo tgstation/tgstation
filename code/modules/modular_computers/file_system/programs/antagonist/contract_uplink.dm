@@ -4,8 +4,8 @@
 	program_icon_state = "assign"
 	extended_desc = "A standard, Syndicate issued system for handling important contracts while on the field."
 	size = 10
-	requires_ntnet = 0
-	available_on_ntnet = 0
+	requires_ntnet = ZERO
+	available_on_ntnet = ZERO
 	unsendable = 1
 	undeletable = 1
 	tgui_id = "synd_contract"
@@ -45,7 +45,7 @@
 			if (traitor_data)
 				// Only play greet sound, and handle contractor hub when assigning for the first time.
 				if (!traitor_data.contractor_hub)
-					user.playsound_local(user, 'sound/effects/contractstartup.ogg', 100, 0)
+					user.playsound_local(user, 'sound/effects/contractstartup.ogg', 100, ZERO)
 					traitor_data.contractor_hub = new
 					traitor_data.contractor_hub.create_hub_items()
 
@@ -94,7 +94,7 @@
 						to_chat(user, "<span class='notice'>Your payment materializes onto the floor.</span>")
 
 				hard_drive.traitor_data.contractor_hub.contract_TC_payed_out += hard_drive.traitor_data.contractor_hub.contract_TC_to_redeem
-				hard_drive.traitor_data.contractor_hub.contract_TC_to_redeem = 0
+				hard_drive.traitor_data.contractor_hub.contract_TC_to_redeem = ZERO
 				return 1
 			else
 				user.playsound_local(user, 'sound/machines/uplinkerror.ogg', 50)

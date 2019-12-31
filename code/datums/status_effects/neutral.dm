@@ -15,7 +15,7 @@
 	duration = -1
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
-	var/total_damage = 0
+	var/total_damage = ZERO
 
 /datum/status_effect/syphon_mark
 	id = "syphon_mark"

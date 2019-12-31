@@ -114,11 +114,11 @@
 //Can receive transmissions from a nanite communication remote for customized messages
 /datum/nanite_program/comm
 	can_trigger = TRUE
-	var/comm_code = 0
+	var/comm_code = ZERO
 	var/comm_message = ""
 
 /datum/nanite_program/comm/register_extra_settings()
-	extra_settings[NES_COMM_CODE] = new /datum/nanite_extra_setting/number(0, 0, 9999)
+	extra_settings[NES_COMM_CODE] = new /datum/nanite_extra_setting/number(ZERO, ZERO, 9999)
 
 /datum/nanite_program/comm/proc/receive_comm_signal(signal_comm_code, comm_message, comm_source)
 	if(!activated || !comm_code)

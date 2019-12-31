@@ -38,8 +38,8 @@
 	jumpto_ports = list("whiteship_pod_home" = 1)
 	view_range = 7
 	x_offset = -2
-	y_offset = 0
-	designate_time = 0
+	y_offset = ZERO
+	designate_time = ZERO
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship/Initialize()
 	. = ..()

@@ -56,7 +56,7 @@
 	return (TOXLOSS)
 
 /obj/item/storage/bag/trash/update_icon()
-	if(contents.len == 0)
+	if(contents.len == ZERO)
 		icon_state = "[initial(icon_state)]"
 	else if(contents.len < 12)
 		icon_state = "[initial(icon_state)]1"

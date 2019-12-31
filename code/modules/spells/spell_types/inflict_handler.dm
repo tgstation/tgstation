@@ -2,21 +2,21 @@
 	name = "Inflict Handler"
 	desc = "This spell blinds and/or destroys/damages/heals and/or knockdowns/stuns the target."
 
-	var/amt_paralyze = 0
-	var/amt_unconscious = 0
-	var/amt_stun = 0
+	var/amt_paralyze = ZERO
+	var/amt_unconscious = ZERO
+	var/amt_stun = ZERO
 
 	var/inflict_status
 	var/list/status_params = list()
 
 	//set to negatives for healing
-	var/amt_dam_fire = 0
-	var/amt_dam_brute = 0
-	var/amt_dam_oxy = 0
-	var/amt_dam_tox = 0
+	var/amt_dam_fire = ZERO
+	var/amt_dam_brute = ZERO
+	var/amt_dam_oxy = ZERO
+	var/amt_dam_tox = ZERO
 
-	var/amt_eye_blind = 0
-	var/amt_eye_blurry = 0
+	var/amt_eye_blind = ZERO
+	var/amt_eye_blurry = ZERO
 
 	var/destroys = "none" //can be "none", "gib" or "disintegrate"
 

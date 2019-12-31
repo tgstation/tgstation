@@ -1,7 +1,7 @@
 /obj/structure/sign
 	icon = 'icons/obj/decals.dmi'
 	anchored = TRUE
-	opacity = 0
+	opacity = ZERO
 	density = FALSE
 	layer = SIGN_LAYER
 	max_integrity = 100
@@ -14,7 +14,7 @@
 	desc = "How can signs be real if our eyes aren't real? Use a pen to change the decal."
 	icon_state = "backing"
 
-/obj/structure/sign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/sign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
@@ -127,7 +127,7 @@
 		S.setDir(dir)
 		qdel(src)
 
-/obj/item/sign_backing/Move(atom/new_loc, direct = 0)
+/obj/item/sign_backing/Move(atom/new_loc, direct = ZERO)
 	// pulling, throwing, or conveying a sign backing does not rotate it
 	var/old_dir = dir
 	. = ..()

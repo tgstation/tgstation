@@ -287,9 +287,9 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	var/list/data = ..()
 	data["tank"] = TRUE
 	data["inputting"] = input_info ? input_info["power"] : FALSE
-	data["inputRate"] = input_info ? input_info["volume_rate"] : 0
+	data["inputRate"] = input_info ? input_info["volume_rate"] : ZERO
 	data["outputting"] = output_info ? output_info["power"] : FALSE
-	data["outputPressure"] = output_info ? output_info["internal"] : 0
+	data["outputPressure"] = output_info ? output_info["internal"] : ZERO
 
 	return data
 
@@ -307,7 +307,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		if("rate")
 			var/target = text2num(params["rate"])
 			if(!isnull(target))
-				target = CLAMP(target, 0, MAX_TRANSFER_RATE)
+				target = CLAMP(target, ZERO, MAX_TRANSFER_RATE)
 				signal.data += list("tag" = input_tag, "set_volume_rate" = target)
 				. = TRUE
 		if("output")
@@ -316,7 +316,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		if("pressure")
 			var/target = text2num(params["pressure"])
 			if(!isnull(target))
-				target = CLAMP(target, 0, 4500)
+				target = CLAMP(target, ZERO, 4500)
 				signal.data += list("tag" = output_tag, "set_internal_pressure" = target)
 				. = TRUE
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)

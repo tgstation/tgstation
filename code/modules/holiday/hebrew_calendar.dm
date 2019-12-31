@@ -17,7 +17,7 @@ by John Walker 2015, released under public domain
 
 /datum/hebrew_calendar/proc/hebrew_leap(year)
 	switch (year % 19)
-		if (0, 3, 6, 8, 11, 14, 17)
+		if (ZERO, 3, 6, 8, 11, 14, 17)
 			return TRUE
 		else
 			return FALSE
@@ -77,7 +77,7 @@ by John Walker 2015, released under public domain
 	else if (present - last == 382)
 		return 1
 	else
-		return 0
+		return ZERO
 
 /datum/hebrew_calendar/proc/hebrew_year_days(year)
 	return hebrew_to_jd(year + 1, 7, 1) - hebrew_to_jd(year, 7, 1)

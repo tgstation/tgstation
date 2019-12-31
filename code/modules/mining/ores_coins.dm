@@ -14,7 +14,7 @@
 	item_state = "ore"
 	full_w_class = WEIGHT_CLASS_BULKY
 	singular_name = "ore chunk"
-	var/points = 0 //How many points this ore gets you from the ore redemption machine
+	var/points = ZERO //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
 	var/mine_experience = 5 //How much experience do you get for mining this ore?
 	novariants = TRUE // Ore stacks handle their icon updates themselves to keep the illusion that there's more going
@@ -23,15 +23,15 @@
 
 /obj/item/stack/ore/update_icon()
 	var/difference = min(ORESTACK_OVERLAYS_MAX, amount) - (LAZYLEN(stack_overlays)+1)
-	if(difference == 0)
+	if(difference == ZERO)
 		return
-	else if(difference < 0 && LAZYLEN(stack_overlays))			//amount < stack_overlays, remove excess.
+	else if(difference < ZERO && LAZYLEN(stack_overlays))			//amount < stack_overlays, remove excess.
 		cut_overlays()
-		if (LAZYLEN(stack_overlays)-difference <= 0)
+		if (LAZYLEN(stack_overlays)-difference <= ZERO)
 			stack_overlays = null;
 		else
 			stack_overlays.len += difference
-	else if(difference > 0)			//amount > stack_overlays, add some.
+	else if(difference > ZERO)			//amount > stack_overlays, add some.
 		cut_overlays()
 		for(var/i in 1 to difference)
 			var/mutable_appearance/newore = mutable_appearance(icon, icon_state)
@@ -46,7 +46,7 @@
 	if(!refined_type)
 		return TRUE
 
-	if(I.use_tool(src, user, 0, volume=50, amount=15))
+	if(I.use_tool(src, user, ZERO, volume=50, amount=15))
 		new refined_type(drop_location())
 		use(1)
 
@@ -57,7 +57,7 @@
 	if(isnull(refined_type))
 		return
 	else
-		var/probability = (rand(0,100))/100
+		var/probability = (rand(ZERO,100))/100
 		var/burn_value = probability*amount
 		var/amountrefined = round(burn_value, 1)
 		if(amountrefined < 1)
@@ -96,7 +96,7 @@
 	custom_materials = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
 	w_class = WEIGHT_CLASS_TINY
-	mine_experience = 0 //its sand
+	mine_experience = ZERO //its sand
 
 GLOBAL_LIST_INIT(sand_recipes, list(\
 		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50),\
@@ -130,7 +130,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "volcanic_sand"
 	item_state = "volcanic_sand"
 	singular_name = "volcanic ash pile"
-	mine_experience = 0
+	mine_experience = ZERO
 
 /obj/item/stack/ore/plasma
 	name = "plasma ore"
@@ -211,7 +211,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "Gibtonite ore"
 	item_state = "Gibtonite ore"
 	w_class = WEIGHT_CLASS_BULKY
-	throw_range = 0
+	throw_range = ZERO
 	var/primed = FALSE
 	var/det_time = 100
 	var/quality = GIBTONITE_QUALITY_LOW //How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better
@@ -264,7 +264,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/twohanded/required/gibtonite/ex_act()
 	GibtoniteReaction(null, 1)
 
-/obj/item/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
+/obj/item/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = ZERO)
 	if(!primed)
 		primed = TRUE
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,TRUE)
@@ -295,13 +295,13 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			if(GIBTONITE_QUALITY_MEDIUM)
 				explosion(src,1,2,5,adminlog = notify_admins)
 			if(GIBTONITE_QUALITY_LOW)
-				explosion(src,0,1,3,adminlog = notify_admins)
+				explosion(src,ZERO,1,3,adminlog = notify_admins)
 		qdel(src)
 
 /obj/item/stack/ore/Initialize()
 	. = ..()
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
+	pixel_x = rand(ZERO,16)-8
+	pixel_y = rand(ZERO,8)-8
 
 /obj/item/stack/ore/ex_act(severity, target)
 	if (!severity || severity >= 2)
@@ -326,7 +326,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
-	var/cooldown = 0
+	var/cooldown = ZERO
 	var/value
 	var/coinflip
 	item_flags = NO_MAT_REDEMPTION //You know, it's kind of a problem that money is worth more extrinsicly than intrinsically in this universe.
@@ -335,12 +335,12 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	. = ..()
 	coinflip = pick(sideslist)
 	icon_state = "coin_[coinflip]"
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
+	pixel_x = rand(ZERO,16)-8
+	pixel_y = rand(ZERO,8)-8
 
 /obj/item/coin/set_custom_materials(var/list/materials, multiplier = 1)
 	. = ..()
-	value = 0
+	value = ZERO
 	for(var/i in custom_materials)
 		var/datum/material/M = i
 		value += M.value_per_unit * custom_materials[M]
@@ -361,7 +361,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	if (index==2)//tails
 		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] promptly falls over, dead!</span>")
 		user.adjustOxyLoss(200)
-		user.death(0)
+		user.death(ZERO)
 		user.set_suicide(TRUE)
 		user.suicide_log()
 	else

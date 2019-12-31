@@ -19,9 +19,9 @@
 	path_image_color = "#993299"
 
 	var/blood = 1
-	var/trash = 0
-	var/pests = 0
-	var/drawn = 0
+	var/trash = ZERO
+	var/pests = ZERO
+	var/drawn = ZERO
 
 	var/list/target_types
 	var/obj/effect/decal/cleanable/target
@@ -34,7 +34,7 @@
 	var/next_dest_loc
 
 	var/obj/item/weapon
-	var/weapon_orig_force = 0
+	var/weapon_orig_force = ZERO
 	var/chosen_name
 
 	var/list/stolen_valor
@@ -263,9 +263,9 @@
 				shuffle = TRUE	//Shuffle the list the next time we scan so we dont both go the same way.
 			path = list()
 
-		if(!path || path.len == 0) //No path, need a new one
+		if(!path || path.len == ZERO) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
-			path = get_path_to(src, target.loc, /turf/proc/Distance_cardinal, 0, 30, id=access_card)
+			path = get_path_to(src, target.loc, /turf/proc/Distance_cardinal, ZERO, 30, id=access_card)
 			if(!bot_move(target))
 				add_to_ignore(target)
 				target = null

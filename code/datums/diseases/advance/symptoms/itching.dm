@@ -20,7 +20,7 @@ BONUS
 
 	name = "Itching"
 	desc = "The virus irritates the skin, causing itching."
-	stealth = 0
+	stealth = ZERO
 	resistance = 3
 	stage_speed = 3
 	transmittable = 1

@@ -46,7 +46,7 @@
 //Quick-use helper
 /proc/soullink(typepath, ...)
 	var/datum/soullink/S = new typepath()
-	if(S.parseArgs(arglist(args.Copy(2, 0))))
+	if(S.parseArgs(arglist(args.Copy(2, ZERO))))
 		return S
 
 

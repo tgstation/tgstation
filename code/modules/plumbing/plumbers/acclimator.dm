@@ -91,10 +91,10 @@
 	switch(action)
 		if("set_target_temperature")
 			var/target = text2num(params["temperature"])
-			target_temperature = CLAMP(target, 0, 1000)
+			target_temperature = CLAMP(target, ZERO, 1000)
 		if("set_allowed_temperature_difference")
 			var/target = text2num(params["temperature"])
-			allowed_temperature_difference = CLAMP(target, 0, 1000)
+			allowed_temperature_difference = CLAMP(target, ZERO, 1000)
 		if("toggle_power")
 			enabled = !enabled
 		if("change_volume")

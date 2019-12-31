@@ -2,7 +2,7 @@
 	var/mob_types = list(/mob/living/simple_animal/hostile/carp)
 	var/spawn_time = 300 //30 seconds default
 	var/list/spawned_mobs = list()
-	var/spawn_delay = 0
+	var/spawn_delay = ZERO
 	var/max_mobs = 5
 	var/spawn_text = "emerges from"
 	var/list/faction = list("mining")
@@ -38,9 +38,9 @@
 /datum/component/spawner/proc/try_spawn_mob()
 	var/atom/P = parent
 	if(spawned_mobs.len >= max_mobs)
-		return 0
+		return ZERO
 	if(spawn_delay > world.time)
-		return 0
+		return ZERO
 	spawn_delay = world.time + spawn_time
 	var/chosen_mob_type = pick(mob_types)
 	var/mob/living/simple_animal/L = new chosen_mob_type(P.loc)

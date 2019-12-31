@@ -65,10 +65,10 @@
 			remove_use()
 
 /obj/item/soapstone/proc/can_use()
-	return remaining_uses == -1 || remaining_uses >= 0
+	return remaining_uses == -1 || remaining_uses >= ZERO
 
 /obj/item/soapstone/proc/remove_use()
-	if(remaining_uses <= 0)
+	if(remaining_uses <= ZERO)
 		return
 	remaining_uses--
 	check_name()
@@ -97,7 +97,7 @@
 	remaining_uses = -1
 
 /obj/item/soapstone/empty
-	remaining_uses = 0
+	remaining_uses = ZERO
 
 /proc/good_chisel_message_location(turf/T)
 	if(!T)

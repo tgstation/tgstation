@@ -22,7 +22,7 @@
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		return
 
-	var/hair_hidden = 0
+	var/hair_hidden = ZERO
 
 	if(head)
 		var/obj/item/I = head

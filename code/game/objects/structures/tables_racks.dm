@@ -186,7 +186,7 @@
 		return ..()
 
 
-/obj/structure/table/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
+/obj/structure/table/deconstruct(disassembled = TRUE, wrench_disassembly = ZERO)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/turf/T = get_turf(src)
 		if(buildstack)
@@ -267,7 +267,7 @@
 	L.Paralyze(100)
 	qdel(src)
 
-/obj/structure/table/glass/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
+/obj/structure/table/glass/deconstruct(disassembled = TRUE, wrench_disassembly = ZERO)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
 			..()
@@ -399,7 +399,7 @@
 	desc = "A reinforced version of the four legged table."
 	icon = 'icons/obj/smooth_structures/reinforced_table.dmi'
 	icon_state = "r_table"
-	deconstruction_ready = 0
+	deconstruction_ready = ZERO
 	buildstack = /obj/item/stack/sheet/plasteel
 	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table)
 	max_integrity = 200
@@ -414,14 +414,14 @@
 
 /obj/structure/table/reinforced/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HELP)
-		if(!W.tool_start_check(user, amount=0))
+		if(!W.tool_start_check(user, amount=ZERO))
 			return
 
 		if(deconstruction_ready)
 			to_chat(user, "<span class='notice'>You start strengthening the reinforced table...</span>")
 			if (W.use_tool(src, user, 50, volume=50))
 				to_chat(user, "<span class='notice'>You strengthen the table.</span>")
-				deconstruction_ready = 0
+				deconstruction_ready = ZERO
 		else
 			to_chat(user, "<span class='notice'>You start weakening the reinforced table...</span>")
 			if (W.use_tool(src, user, 50, volume=50))
@@ -503,12 +503,12 @@
 	. += "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>"
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target)
-	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
+	if(src.density == ZERO) //Because broken racks -Agouri |TODO: SPRITE!|
 		return 1
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
 		return 1
 	else
-		return 0
+		return ZERO
 
 /obj/structure/rack/CanAStarPass(ID, dir, caller)
 	. = !density
@@ -549,7 +549,7 @@
 	user.visible_message("<span class='danger'>[user] kicks [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
 	take_damage(rand(4,8), BRUTE, "melee", 1)
 
-/obj/structure/rack/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/rack/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)

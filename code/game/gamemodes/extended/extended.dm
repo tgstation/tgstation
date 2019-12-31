@@ -3,7 +3,7 @@
 	config_tag = "secret_extended"
 	report_type = "extended"
 	false_report_weight = 5
-	required_players = 0
+	required_players = ZERO
 
 	announce_span = "notice"
 	announce_text = "Just have fun and enjoy the game!"
@@ -17,7 +17,7 @@
 /datum/game_mode/extended/announced
 	name = "extended"
 	config_tag = "extended"
-	false_report_weight = 0
+	false_report_weight = ZERO
 
 /datum/game_mode/extended/announced/generate_station_goals()
 	for(var/T in subtypesof(/datum/station_goal))
@@ -25,5 +25,5 @@
 		station_goals += G
 		G.on_report()
 
-/datum/game_mode/extended/announced/send_intercept(report = 0)
+/datum/game_mode/extended/announced/send_intercept(report = ZERO)
 	priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", 'sound/ai/commandreport.ogg')

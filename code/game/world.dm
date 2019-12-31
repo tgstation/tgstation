@@ -72,7 +72,7 @@ GLOBAL_VAR(restart_counter)
 	//trigger things to run the whole process
 	Master.sleep_offline_after_initializations = FALSE
 	SSticker.start_immediately = TRUE
-	CONFIG_SET(number/round_end_countdown, 0)
+	CONFIG_SET(number/round_end_countdown, ZERO)
 	var/datum/callback/cb
 #ifdef UNIT_TESTS
 	cb = CALLBACK(GLOBAL_PROC, /proc/RunUnitTests)
@@ -82,7 +82,7 @@ GLOBAL_VAR(restart_counter)
 	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/addtimer, cb, 10 SECONDS))
 
 /world/proc/SetupExternalRSC()
-#if (PRELOAD_RSC == 0)
+#if (PRELOAD_RSC == ZERO)
 	GLOB.external_rsc_urls = world.file2list("[global.config.directory]/external_rsc_urls.txt","\n")
 	var/i=1
 	while(i<=GLOB.external_rsc_urls.len)
@@ -202,7 +202,7 @@ GLOBAL_VAR(restart_counter)
 	set waitfor = FALSE
 	var/list/fail_reasons
 	if(GLOB)
-		if(GLOB.total_runtimes != 0)
+		if(GLOB.total_runtimes != ZERO)
 			fail_reasons = list("Total runtimes: [GLOB.total_runtimes]")
 #ifdef UNIT_TESTS
 		if(GLOB.failed_any_test)
@@ -219,7 +219,7 @@ GLOBAL_VAR(restart_counter)
 	sleep(0)	//yes, 0, this'll let Reboot finish and prevent byond memes
 	qdel(src)	//shut it down
 
-/world/Reboot(reason = 0, fast_track = FALSE)
+/world/Reboot(reason = ZERO, fast_track = FALSE)
 	if (reason || fast_track) //special reboot, do none of the normal stuff
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
@@ -242,7 +242,7 @@ GLOBAL_VAR(restart_counter)
 		switch(ruhr)
 			if(-1)
 				do_hard_reboot = FALSE
-			if(0)
+			if(ZERO)
 				do_hard_reboot = TRUE
 			else
 				if(GLOB.restart_counter >= ruhr)
@@ -299,7 +299,7 @@ GLOBAL_VAR(restart_counter)
 
 	if (players > 1)
 		features += "[players][popcaptext] players"
-	else if (players > 0)
+	else if (players > ZERO)
 		features += "[players][popcaptext] player"
 
 	game_state = (CONFIG_GET(number/extreme_popcap) && players >= CONFIG_GET(number/extreme_popcap)) //tells the hub if we are full
@@ -328,7 +328,7 @@ GLOBAL_VAR(restart_counter)
 
 
 /world/proc/change_fps(new_value = 20)
-	if(new_value <= 0)
+	if(new_value <= ZERO)
 		CRASH("change_fps() called with [new_value] new_value.")
 	if(fps == new_value)
 		return //No change required.
@@ -338,7 +338,7 @@ GLOBAL_VAR(restart_counter)
 
 
 /world/proc/change_tick_lag(new_value = 0.5)
-	if(new_value <= 0)
+	if(new_value <= ZERO)
 		CRASH("change_tick_lag() called with [new_value] new_value.")
 	if(tick_lag == new_value)
 		return //No change required.

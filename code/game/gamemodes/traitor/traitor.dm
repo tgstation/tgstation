@@ -13,11 +13,11 @@
 	false_report_weight = 20 //Reports of traitors are pretty common.
 	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	required_players = 0
+	required_players = ZERO
 	required_enemies = 1
 	recommended_enemies = 4
 	reroll_friendly = 1
-	enemy_minimum_age = 0
+	enemy_minimum_age = ZERO
 
 	announce_span = "danger"
 	announce_text = "There are Syndicate agents on the station!\n\
@@ -26,7 +26,7 @@
 
 	var/list/datum/mind/pre_traitors = list()
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
-	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
+	var/num_modifier = ZERO // Used for gamemodes, that are a child of traitor, that need more than the usual.
 	var/antag_datum = /datum/antagonist/traitor //what type of antag to create
 	var/traitors_required = TRUE //Will allow no traitors
 
@@ -47,7 +47,7 @@
 	else
 		num_traitors = max(1, min(num_players(), traitors_possible))
 
-	for(var/j = 0, j < num_traitors, j++)
+	for(var/j = ZERO, j < num_traitors, j++)
 		if (!antag_candidates.len)
 			break
 		var/datum/mind/traitor = antag_pick(antag_candidates)
@@ -57,7 +57,7 @@
 		log_game("[key_name(traitor)] has been selected as a [traitor_name]")
 		antag_candidates.Remove(traitor)
 
-	var/enough_tators = !traitors_required || pre_traitors.len > 0
+	var/enough_tators = !traitors_required || pre_traitors.len > ZERO
 
 	if(!enough_tators)
 		setup_error = "Not enough traitor candidates"

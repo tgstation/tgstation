@@ -8,7 +8,7 @@
 	var/obj/machinery/atmospherics/components/binary/circulator/cold_circ
 	var/obj/machinery/atmospherics/components/binary/circulator/hot_circ
 
-	var/lastgen = 0
+	var/lastgen = ZERO
 	var/lastgenlev = -1
 	var/lastcirc = "00"
 
@@ -38,7 +38,7 @@
 		cut_overlays()
 
 		var/L = min(round(lastgenlev/100000),11)
-		if(L != 0)
+		if(L != ZERO)
 			add_overlay(image('icons/obj/power.dmi', "teg-op[L]"))
 
 		if(hot_circ && cold_circ)
@@ -64,7 +64,7 @@
 			var/delta_temperature = hot_air.temperature - cold_air.temperature
 
 
-			if(delta_temperature > 0 && cold_air_heat_capacity > 0 && hot_air_heat_capacity > 0)
+			if(delta_temperature > ZERO && cold_air_heat_capacity > ZERO && hot_air_heat_capacity > ZERO)
 				var/efficiency = 0.65
 
 				var/energy_transfer = delta_temperature*hot_air_heat_capacity*cold_air_heat_capacity/(hot_air_heat_capacity+cold_air_heat_capacity)

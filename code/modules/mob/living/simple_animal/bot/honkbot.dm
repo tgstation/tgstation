@@ -7,7 +7,7 @@
 	anchored = FALSE
 	health = 25
 	maxHealth = 25
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = ZERO, CLONE = ZERO, STAMINA = ZERO, OXY = ZERO)
 	pass_flags = PASSMOB
 
 	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
@@ -68,7 +68,7 @@
 	target = null
 	oldtarget_name = null
 	anchored = FALSE
-	walk_to(src,0)
+	walk_to(src,ZERO)
 	last_found = world.time
 	spam_flag = FALSE
 
@@ -190,10 +190,10 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	if(!spam_flag)
 		playsound(src, 'sound/items/AirHorn.ogg', 100, TRUE, -1) //HEEEEEEEEEEEENK!!
 		sensor_blink()
-	if(spam_flag == 0)
+	if(spam_flag == ZERO)
 		if(ishuman(C))
 			C.stuttering = 20
-			C.adjustEarDamage(0, 5) //far less damage than the H.O.N.K.
+			C.adjustEarDamage(ZERO, 5) //far less damage than the H.O.N.K.
 			C.Jitter(50)
 			C.Paralyze(60)
 			var/mob/living/carbon/human/H = C
@@ -226,7 +226,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 		if(BOT_IDLE)		// idle
 
-			walk_to(src,0)
+			walk_to(src,ZERO)
 			look_for_perp()
 			if(!mode && auto_patrol)
 				mode = BOT_START_PATROL
@@ -235,7 +235,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 			// if can't reach perp for long enough, go idle
 			if(frustration >= 5) //gives up easier than beepsky
-				walk_to(src,0)
+				walk_to(src,ZERO)
 				back_to_idle()
 				return
 
@@ -246,7 +246,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 						honk_attack(target)
 					else
 						if(threatlevel >= 6)
-							set waitfor = 0
+							set waitfor = ZERO
 							stun_attack(target)
 							anchored = FALSE
 							target_lastloc = target.loc
@@ -258,7 +258,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 					if((get_dist(src, target)) >= (olddist))
 						frustration++
 					else
-						frustration = 0
+						frustration = ZERO
 			else
 				back_to_idle()
 
@@ -278,12 +278,12 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	mode = BOT_IDLE
 	target = null
 	last_found = world.time
-	frustration = 0
+	frustration = ZERO
 	INVOKE_ASYNC(src, .proc/handle_automated_action) //responds quickly
 
 /mob/living/simple_animal/bot/honkbot/proc/back_to_hunt()
 	anchored = FALSE
-	frustration = 0
+	frustration = ZERO
 	mode = BOT_HUNT
 	INVOKE_ASYNC(src, .proc/handle_automated_action) // responds quickly
 
@@ -322,7 +322,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 /mob/living/simple_animal/bot/honkbot/explode()
 
-	walk_to(src,0)
+	walk_to(src,ZERO)
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/atom/Tsec = drop_location()
 	//doesn't drop cardboard nor its assembly, since its a very frail material.

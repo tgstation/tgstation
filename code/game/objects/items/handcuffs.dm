@@ -30,7 +30,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	throwforce = 0
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
@@ -76,7 +76,7 @@
 		else
 			to_chat(user, "<span class='warning'>[C] doesn't have two hands...</span>")
 
-/obj/item/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, dispense = 0)
+/obj/item/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, dispense = ZERO)
 	if(target.handcuffed)
 		return
 
@@ -211,7 +211,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	flags_1 = CONDUCT_1
-	throwforce = 0
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_NORMAL
 	slowdown = 7
 	breakouttime = 30 SECONDS
@@ -222,7 +222,7 @@
 	throw_range = 1
 	icon_state = "beartrap"
 	desc = "A trap used to catch bears and other legged creatures."
-	var/armed = 0
+	var/armed = ZERO
 	var/trap_damage = 20
 
 /obj/item/restraints/legcuffs/beartrap/Initialize()
@@ -290,7 +290,7 @@
 	name = "energy snare"
 	armed = 1
 	icon_state = "e_snare"
-	trap_damage = 0
+	trap_damage = ZERO
 	breakouttime = 30
 	item_flags = DROPDEL
 	flags_1 = NONE
@@ -317,9 +317,9 @@
 	icon_state = "bola"
 	breakouttime = 35//easy to apply, easy to break out of
 	gender = NEUTER
-	var/knockdown = 0
+	var/knockdown = ZERO
 
-/obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+/obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = ZERO, datum/callback/callback)
 	if(!..())
 		return
 	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, TRUE)
@@ -374,7 +374,7 @@
 	desc = "Hey, if you have to be hugged in the legs by anything, it might as well be this little guy."
 	icon_state = "gonbola"
 	breakouttime = 300
-	slowdown = 0
+	slowdown = ZERO
 	var/datum/status_effect/gonbolaPacify/effectReference
 
 /obj/item/restraints/legcuffs/bola/gonbola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

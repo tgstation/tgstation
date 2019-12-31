@@ -5,5 +5,5 @@
 	new /obj/effect/temp_visual/dust_animation(loc, "dust-m")
 
 /mob/living/carbon/monkey/death(gibbed)
-	walk(src,0) // Stops dead monkeys from fleeing their attacker or climbing out from inside His Grace
+	walk(src,ZERO) // Stops dead monkeys from fleeing their attacker or climbing out from inside His Grace
 	. = ..()

@@ -35,7 +35,7 @@ Key procs
 //ANY ADD/REMOVE DONE IN UPDATE_MOVESPEED MUST HAVE THE UPDATE ARGUMENT SET AS FALSE!
 
 ///Add a move speed modifier to a mob
-/mob/proc/add_movespeed_modifier(id, update=TRUE, priority=0, flags=NONE, override=FALSE, multiplicative_slowdown=0, movetypes=ALL, blacklisted_movetypes=NONE, conflict=FALSE)
+/mob/proc/add_movespeed_modifier(id, update=TRUE, priority=ZERO, flags=NONE, override=FALSE, multiplicative_slowdown=ZERO, movetypes=ALL, blacklisted_movetypes=NONE, conflict=FALSE)
 	var/list/temp = list(priority, flags, multiplicative_slowdown, movetypes, blacklisted_movetypes, conflict) //build the modification list
 	var/resort = TRUE
 	if(LAZYACCESS(movespeed_modification, id))
@@ -83,7 +83,7 @@ Key procs
 ///Get the global config movespeed of a mob by type
 /mob/proc/get_config_multiplicative_speed()
 	if(!islist(GLOB.mob_config_movespeed_type_lookup) || !GLOB.mob_config_movespeed_type_lookup[type])
-		return 0
+		return ZERO
 	else
 		return GLOB.mob_config_movespeed_type_lookup[type]
 
@@ -91,7 +91,7 @@ Key procs
 /mob/proc/update_movespeed(resort = TRUE)
 	if(resort)
 		sort_movespeed_modlist()
-	. = 0
+	. = ZERO
 	var/list/conflict_tracker = list()
 	for(var/id in get_movespeed_modifiers())
 		var/list/data = movespeed_modification[id]
@@ -128,7 +128,7 @@ Key procs
 
 ///Calculate the total slowdown of all movespeed modifiers
 /mob/proc/total_multiplicative_slowdown()
-	. = 0
+	. = ZERO
 	for(var/id in get_movespeed_modifiers())
 		var/list/data = movespeed_modification[id]
 		. += data[MOVESPEED_DATA_INDEX_MULTIPLICATIVE_SLOWDOWN]

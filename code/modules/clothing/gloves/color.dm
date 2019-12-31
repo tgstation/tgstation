@@ -6,7 +6,7 @@
 	name = "insulated gloves"
 	icon_state = "yellow"
 	item_state = "ygloves"
-	siemens_coefficient = 0
+	siemens_coefficient = ZERO
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
 	custom_price = 1200
@@ -23,7 +23,7 @@
 
 /obj/item/clothing/gloves/color/fyellow/Initialize()
 	. = ..()
-	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
+	siemens_coefficient = pick(ZERO,0.5,0.5,0.5,0.5,0.75,1.5)
 
 /obj/item/clothing/gloves/color/fyellow/old
 	desc = "Old and worn out insulated gloves, hopefully they still work."
@@ -31,7 +31,7 @@
 
 /obj/item/clothing/gloves/color/fyellow/old/Initialize()
 	. = ..()
-	siemens_coefficient = pick(0,0,0,0.5,0.5,0.5,0.75)
+	siemens_coefficient = pick(ZERO,ZERO,ZERO,0.5,0.5,0.5,0.75)
 
 /obj/item/clothing/gloves/color/black
 	desc = "These gloves are fire-resistant."
@@ -70,7 +70,7 @@
 /obj/item/clothing/gloves/color/red/insulated
 	name = "insulated gloves"
 	desc = "These gloves provide protection against electric shock."
-	siemens_coefficient = 0
+	siemens_coefficient = ZERO
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
 
@@ -121,7 +121,7 @@
 	name = "captain's gloves"
 	icon_state = "captain"
 	item_state = "egloves"
-	siemens_coefficient = 0
+	siemens_coefficient = ZERO
 	permeability_coefficient = 0.05
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT

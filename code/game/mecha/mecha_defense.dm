@@ -1,16 +1,16 @@
 /obj/mecha/proc/get_armour_facing(relative_dir)
 	switch(relative_dir)
-		if(0) // BACKSTAB!
+		if(ZERO) // BACKSTAB!
 			return facing_modifiers[MECHA_BACK_ARMOUR]
 		if(45, 90, 270, 315)
 			return facing_modifiers[MECHA_SIDE_ARMOUR]
 		if(225, 180, 135)
 			return facing_modifiers[MECHA_FRONT_ARMOUR]
-	return 1 //always return non-0
+	return 1 //always return non-ZERO
 
-/obj/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+/obj/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = ZERO, sound_effect = 1, attack_dir)
 	. = ..()
-	if(. && obj_integrity > 0)
+	if(. && obj_integrity > ZERO)
 		spark_system.start()
 		switch(damage_flag)
 			if("fire")
@@ -23,10 +23,10 @@
 			occupant_message("<span class='userdanger'>Taking damage!</span>")
 		log_message("Took [damage_amount] points of damage. Damage type: [damage_type]", LOG_MECHA)
 
-/obj/mecha/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/mecha/run_obj_armor(damage_amount, damage_type, damage_flag = ZERO, attack_dir)
 	. = ..()
 	if(!damage_amount)
-		return 0
+		return ZERO
 	var/booster_deflection_modifier = 1
 	var/booster_damage_modifier = 1
 	if(damage_flag == "bullet" || damage_flag == "laser" || damage_flag == "energy")
@@ -49,7 +49,7 @@
 	if(prob(deflect_chance * booster_deflection_modifier))
 		visible_message("<span class='danger'>[src]'s armour deflects the attack!</span>")
 		log_message("Armor saved.", LOG_MECHA)
-		return 0
+		return ZERO
 	if(.)
 		. *= booster_damage_modifier
 
@@ -69,17 +69,17 @@
 /obj/mecha/attack_alien(mob/living/user)
 	log_message("Attack by alien. Attacker - [user].", LOG_MECHA, color="red")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, TRUE)
-	attack_generic(user, 15, BRUTE, "melee", 0)
+	attack_generic(user, 15, BRUTE, "melee", ZERO)
 
 /obj/mecha/attack_animal(mob/living/simple_animal/user)
 	log_message("Attack by simple animal. Attacker - [user].", LOG_MECHA, color="red")
 	if(!user.melee_damage_upper && !user.obj_damage)
 		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
-		return 0
+		return ZERO
 	else
 		var/play_soundeffect = 1
 		if(user.environment_smash)
-			play_soundeffect = 0
+			play_soundeffect = ZERO
 			playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 		var/animal_damage = rand(user.melee_damage_lower,user.melee_damage_upper)
 		if(user.obj_damage)
@@ -101,7 +101,7 @@
 
 /obj/mecha/blob_act(obj/structure/blob/B)
 	log_message("Attack by blob. Attacker - [B].", LOG_MECHA, color="red")
-	take_damage(30, BRUTE, "melee", 0, get_dir(src, B))
+	take_damage(30, BRUTE, "melee", ZERO, get_dir(src, B))
 
 /obj/mecha/attack_tk()
 	return
@@ -161,7 +161,7 @@
 /obj/mecha/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature>max_temperature)
 		log_message("Exposed to dangerous temperature.", LOG_MECHA, color="red")
-		take_damage(5, BURN, 0, 1)
+		take_damage(5, BURN, ZERO, 1)
 
 /obj/mecha/attackby(obj/item/W as obj, mob/user as mob, params)
 
@@ -287,13 +287,13 @@
 		return
 	. = TRUE
 	if(internal_damage & MECHA_INT_TANK_BREACH)
-		if(!W.use_tool(src, user, 0, volume=50, amount=1))
+		if(!W.use_tool(src, user, ZERO, volume=50, amount=1))
 			return
 		clearInternalDamage(MECHA_INT_TANK_BREACH)
 		to_chat(user, "<span class='notice'>You repair the damaged gas tank.</span>")
 		return
 	if(obj_integrity < max_integrity)
-		if(!W.use_tool(src, user, 0, volume=50, amount=1))
+		if(!W.use_tool(src, user, ZERO, volume=50, amount=1))
 			return
 		user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>", "<span class='notice'>You repair some damage to [src].</span>")
 		obj_integrity += min(10, max_integrity-obj_integrity)
@@ -313,7 +313,7 @@
 
 /obj/mecha/mech_melee_attack(obj/mecha/M)
 	if(!has_charge(melee_energy_drain))
-		return 0
+		return ZERO
 	use_power(melee_energy_drain)
 	if(M.damtype == BRUTE || M.damtype == BURN)
 		log_combat(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
@@ -367,7 +367,7 @@
 		if(cell)
 			WR.crowbar_salvage += cell
 			cell.forceMove(WR)
-			cell.charge = rand(0, cell.charge)
+			cell.charge = rand(ZERO, cell.charge)
 			cell = null
 		if(internal_tank)
 			WR.crowbar_salvage += internal_tank

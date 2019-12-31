@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(ping)
 	..("P:[GLOB.clients.len]")
 
 
-/datum/controller/subsystem/ping/fire(resumed = 0)
+/datum/controller/subsystem/ping/fire(resumed = ZERO)
 	if (!resumed)
 		src.currentrun = GLOB.clients.Copy()
 

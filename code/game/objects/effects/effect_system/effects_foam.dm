@@ -8,14 +8,14 @@
 /obj/effect/particle_effect/foam
 	name = "foam"
 	icon_state = "foam"
-	opacity = 0
+	opacity = ZERO
 	anchored = TRUE
 	density = FALSE
 	layer = EDGED_TURF_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/amount = 3
 	animate_movement = NO_STEPS
-	var/metal = 0
+	var/metal = ZERO
 	var/lifetime = 40
 	var/reagent_divisor = 7
 	var/static/list/blacklisted_turfs = typecacheof(list(
@@ -27,9 +27,9 @@
 /obj/effect/particle_effect/foam/firefighting
 	name = "firefighting foam"
 	lifetime = 20 //doesn't last as long as normal foam
-	amount = 0 //no spread
+	amount = ZERO //no spread
 	slippery_foam = FALSE
-	var/absorbed_plasma = 0
+	var/absorbed_plasma = ZERO
 
 /obj/effect/particle_effect/foam/firefighting/process()
 	..()
@@ -137,7 +137,7 @@
 		return
 
 	var/fraction = 1/initial(reagent_divisor)
-	for(var/obj/O in range(0,src))
+	for(var/obj/O in range(ZERO,src))
 		if(O.type == src.type)
 			continue
 		if(isturf(O.loc))
@@ -146,8 +146,8 @@
 				continue
 		if(lifetime % reagent_divisor)
 			reagents.reaction(O, VAPOR, fraction)
-	var/hit = 0
-	for(var/mob/living/L in range(0,src))
+	var/hit = ZERO
+	for(var/mob/living/L in range(ZERO,src))
 		hit += foam_mob(L)
 	if(hit)
 		lifetime++ //this is so the decrease from mobs hit and the natural decrease don't cumulate.
@@ -155,15 +155,15 @@
 	if(lifetime % reagent_divisor)
 		reagents.reaction(T, VAPOR, fraction)
 
-	if(--amount < 0)
+	if(--amount < ZERO)
 		return
 	spread_foam()
 
 /obj/effect/particle_effect/foam/proc/foam_mob(mob/living/L)
 	if(lifetime<1)
-		return 0
+		return ZERO
 	if(!istype(L))
-		return 0
+		return ZERO
 	var/fraction = 1/initial(reagent_divisor)
 	if(lifetime % reagent_divisor)
 		reagents.reaction(L, VAPOR, fraction)
@@ -190,7 +190,7 @@
 
 
 /obj/effect/particle_effect/foam/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(prob(max(0, exposed_temperature - 475))) //foam dissolves when heated
+	if(prob(max(ZERO, exposed_temperature - 475))) //foam dissolves when heated
 		kill_foam()
 
 
@@ -204,7 +204,7 @@
 	var/amount = 10		// the size of the foam spread.
 	var/obj/chemholder
 	effect_type = /obj/effect/particle_effect/foam
-	var/metal = 0
+	var/metal = ZERO
 
 
 /datum/effect_system/foam_spread/metal
@@ -230,7 +230,7 @@
 	chemholder = null
 	return ..()
 
-/datum/effect_system/foam_spread/set_up(amt=5, loca, datum/reagents/carry = null, metaltype = 0)
+/datum/effect_system/foam_spread/set_up(amt=5, loca, datum/reagents/carry = null, metaltype = ZERO)
 	if(isturf(loca))
 		location = loca
 	else
@@ -238,7 +238,7 @@
 
 	amount = round(sqrt(amt / 2), 1)
 	carry.copy_to(chemholder, carry.total_volume)
-	if(metaltype != 0)
+	if(metaltype != ZERO)
 		metal = metaltype
 
 /datum/effect_system/foam_spread/start()
@@ -278,7 +278,7 @@
 /obj/structure/foamedmetal/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/foamedmetal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/foamedmetal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	playsound(src.loc, 'sound/weapons/tap.ogg', 100, TRUE)
 
 /obj/structure/foamedmetal/attack_hand(mob/user)
@@ -320,7 +320,7 @@
 			for(var/I in G_gases)
 				if(I == /datum/gas/oxygen || I == /datum/gas/nitrogen)
 					continue
-				G_gases[I][MOLES] = 0
+				G_gases[I][MOLES] = ZERO
 			G.garbage_collect()
 			O.air_update_turf()
 		for(var/obj/machinery/atmospherics/components/unary/U in O)

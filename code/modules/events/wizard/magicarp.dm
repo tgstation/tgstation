@@ -3,7 +3,7 @@
 	weight = 1
 	typepath = /datum/round_event/wizard/magicarp
 	max_occurrences = 1
-	earliest_start = 0 MINUTES
+	earliest_start = ZERO MINUTES
 
 /datum/round_event/wizard/magicarp
 	announceWhen	= 3
@@ -31,7 +31,7 @@
 	icon_gib = "magicarp_gib"
 	ranged = 1
 	retreat_distance = 2
-	minimum_distance = 0 //Between shots they can and will close in to nash
+	minimum_distance = ZERO //Between shots they can and will close in to nash
 	projectiletype = /obj/projectile/magic
 	projectilesound = 'sound/weapons/emitter.ogg'
 	maxHealth = 50

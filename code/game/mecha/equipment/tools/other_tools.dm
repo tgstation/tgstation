@@ -47,7 +47,7 @@
 			var/clear = 1
 			for(var/obj/O in T)
 				if(O.density)
-					clear = 0
+					clear = ZERO
 					break
 			if(clear)
 				L+=T
@@ -129,7 +129,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/proc/do_scatter(atom/movable/A, atom/movable/target)
 	var/iter = 5-get_dist(A,target)
-	for(var/i in 0 to iter)
+	for(var/i in ZERO to iter)
 		step_away(A,target)
 		sleep(2)
 
@@ -155,10 +155,10 @@
 	icon_state = "mecha_abooster_ccw"
 	equip_cooldown = 10
 	energy_drain = 50
-	range = 0
+	range = ZERO
 	var/deflect_coeff = 1.15
 	var/damage_coeff = 0.8
-	selectable = 0
+	selectable = ZERO
 
 /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/proc/attack_react()
 	if(action_checks(src))
@@ -173,10 +173,10 @@
 	icon_state = "mecha_abooster_proj"
 	equip_cooldown = 10
 	energy_drain = 50
-	range = 0
+	range = ZERO
 	var/deflect_coeff = 1.15
 	var/damage_coeff = 0.8
-	selectable = 0
+	selectable = ZERO
 
 /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/proc/projectile_react()
 	if(action_checks(src))
@@ -192,11 +192,11 @@
 	desc = "An automated repair droid for exosuits. Scans for damage and repairs it. Can fix almost all types of external or internal damage."
 	icon_state = "repair_droid"
 	energy_drain = 50
-	range = 0
+	range = ZERO
 	var/health_boost = 1
 	var/icon/droid_overlay
 	var/list/repairable_damage = list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH)
-	selectable = 0
+	selectable = ZERO
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -228,7 +228,7 @@
 			START_PROCESSING(SSobj, src)
 			droid_overlay = new(src.icon, icon_state = "repair_droid_a")
 			log_message("Activated.", LOG_MECHA)
-			set_ready_state(0)
+			set_ready_state(ZERO)
 		else
 			STOP_PROCESSING(SSobj, src)
 			droid_overlay = new(src.icon, icon_state = "repair_droid")
@@ -244,7 +244,7 @@
 		set_ready_state(1)
 		return
 	var/h_boost = health_boost
-	var/repaired = 0
+	var/repaired = ZERO
 	if(chassis.internal_damage & MECHA_INT_SHORT_CIRCUIT)
 		h_boost *= -2
 	else if(chassis.internal_damage && prob(15))
@@ -253,7 +253,7 @@
 				chassis.clearInternalDamage(int_dam_flag)
 				repaired = 1
 				break
-	if(h_boost<0 || chassis.obj_integrity < chassis.max_integrity)
+	if(h_boost<ZERO || chassis.obj_integrity < chassis.max_integrity)
 		chassis.obj_integrity += min(h_boost, chassis.max_integrity-chassis.obj_integrity)
 		repaired = 1
 	if(repaired)
@@ -276,11 +276,11 @@
 	name = "exosuit energy relay"
 	desc = "An exosuit module that wirelessly drains energy from any available power channel in area. The performance index is quite low."
 	icon_state = "tesla"
-	energy_drain = 0
-	range = 0
+	energy_drain = ZERO
+	range = ZERO
 	var/coeff = 100
 	var/list/use_channels = list(EQUIP,ENVIRON,LIGHT)
-	selectable = 0
+	selectable = ZERO
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -314,7 +314,7 @@
 	if(href_list["toggle_relay"])
 		if(equip_ready) //inactive
 			START_PROCESSING(SSobj, src)
-			set_ready_state(0)
+			set_ready_state(ZERO)
 			log_message("Activated.", LOG_MECHA)
 		else
 			STOP_PROCESSING(SSobj, src)
@@ -378,7 +378,7 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/generator/proc/generator_init()
-	fuel = new /obj/item/stack/sheet/mineral/plasma(src, 0)
+	fuel = new /obj/item/stack/sheet/mineral/plasma(src, ZERO)
 
 /obj/item/mecha_parts/mecha_equipment/generator/detach()
 	STOP_PROCESSING(SSobj, src)
@@ -388,7 +388,7 @@
 	..()
 	if(href_list["toggle"])
 		if(equip_ready) //inactive
-			set_ready_state(0)
+			set_ready_state(ZERO)
 			START_PROCESSING(SSobj, src)
 			log_message("Activated.", LOG_MECHA)
 		else
@@ -408,8 +408,8 @@
 			send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
 
 /obj/item/mecha_parts/mecha_equipment/generator/proc/load_fuel(var/obj/item/stack/sheet/P)
-	if(P.type == fuel.type && P.amount > 0)
-		var/to_load = max(max_fuel - fuel.amount*fuel.mats_per_stack,0)
+	if(P.type == fuel.type && P.amount > ZERO)
+		var/to_load = max(max_fuel - fuel.amount*fuel.mats_per_stack,ZERO)
 		if(to_load)
 			var/units = min(max(round(to_load / P.mats_per_stack),1),P.amount)
 			fuel.amount += units
@@ -418,7 +418,7 @@
 			return units
 		else
 			occupant_message("<span class='notice'>Unit is full.</span>")
-			return 0
+			return ZERO
 	else
 		occupant_message("<span class='warning'>[fuel] traces in target minimal! [P] cannot be used as fuel.</span>")
 		return
@@ -431,7 +431,7 @@
 		STOP_PROCESSING(SSobj, src)
 		set_ready_state(1)
 		return
-	if(fuel.amount<=0)
+	if(fuel.amount<=ZERO)
 		STOP_PROCESSING(SSobj, src)
 		log_message("Deactivated - no fuel.", LOG_MECHA)
 		set_ready_state(1)
@@ -463,7 +463,7 @@
 	var/rad_per_cycle = 30
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/generator_init()
-	fuel = new /obj/item/stack/sheet/mineral/uranium(src, 0)
+	fuel = new /obj/item/stack/sheet/mineral/uranium(src, ZERO)
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/process()
 	if(..())
@@ -507,7 +507,7 @@
 	if(href_list["mode"])
 		var/mode = text2num(href_list["mode"])
 		switch(mode)
-			if(0)
+			if(ZERO)
 				enable()
 			if(1)
 				disable()

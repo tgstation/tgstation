@@ -17,7 +17,7 @@
 	var/power_loss = 2
 	var/input_power_multiplier = 1
 	var/zap_cooldown = 100
-	var/last_zap = 0
+	var/last_zap = ZERO
 
 	var/datum/techweb/linked_techweb
 
@@ -33,7 +33,7 @@
 	return anchored
 
 /obj/machinery/power/tesla_coil/RefreshParts()
-	var/power_multiplier = 0
+	var/power_multiplier = ZERO
 	zap_cooldown = 100
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		power_multiplier += C.rating

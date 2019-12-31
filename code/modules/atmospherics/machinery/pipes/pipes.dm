@@ -1,7 +1,7 @@
 /obj/machinery/atmospherics/pipe
 	damage_deflection = 12
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
-	var/volume = 0
+	var/volume = ZERO
 
 	level = 1
 
@@ -40,7 +40,7 @@
 
 /obj/machinery/atmospherics/pipe/hide(i)
 	if(level == 1 && isturf(loc))
-		invisibility = i ? INVISIBILITY_MAXIMUM : 0
+		invisibility = i ? INVISIBILITY_MAXIMUM : ZERO
 	update_icon()
 
 /obj/machinery/atmospherics/pipe/proc/releaseAirToTurf()

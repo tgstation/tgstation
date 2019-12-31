@@ -20,7 +20,7 @@
 #define STORAGE_VIEW_DEPTH	2
 
 //ITEM INVENTORY SLOT BITMASKS
-#define ITEM_SLOT_OCLOTHING		(1<<0)
+#define ITEM_SLOT_OCLOTHING		(1<<ZERO)
 #define ITEM_SLOT_ICLOTHING		(1<<1)
 #define ITEM_SLOT_GLOVES		(1<<2)
 #define ITEM_SLOT_EYES			(1<<3)
@@ -48,7 +48,7 @@
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
 //Make sure to update check_obscured_slots() if you add more.
-#define HIDEGLOVES		(1<<0)
+#define HIDEGLOVES		(1<<ZERO)
 #define HIDESUITSTORAGE	(1<<1)
 #define HIDEJUMPSUIT	(1<<2)	//these first four are only used in exterior suits
 #define HIDESHOES		(1<<3)
@@ -61,7 +61,7 @@
 #define HIDENECK		(1<<10)
 
 //bitflags for clothing coverage - also used for limbs
-#define HEAD		(1<<0)
+#define HEAD		(1<<ZERO)
 #define CHEST		(1<<1)
 #define GROIN		(1<<2)
 #define LEG_LEFT	(1<<3)
@@ -77,32 +77,32 @@
 #define HAND_RIGHT	(1<<10)
 #define HANDS		(HAND_LEFT | HAND_RIGHT)
 #define NECK		(1<<11)
-#define FULL_BODY	(~0)
+#define FULL_BODY	(~ZERO)
 
 //defines for the index of hands
 #define LEFT_HANDS 1
 #define RIGHT_HANDS 2
 
 //flags for female outfits: How much the game can safely "take off" the uniform without it looking weird
-#define NO_FEMALE_UNIFORM			0
+#define NO_FEMALE_UNIFORM			ZERO
 #define FEMALE_UNIFORM_FULL			1
 #define FEMALE_UNIFORM_TOP			2
 
 //flags for alternate styles: These are hard sprited so don't set this if you didn't put the effort in
-#define NORMAL_STYLE		0
+#define NORMAL_STYLE		ZERO
 #define ALT_STYLE			1
 #define DIGITIGRADE_STYLE 	2
 
 //flags for outfits that have mutantrace variants (try not to use this): Currently only needed if you're trying to add tight fitting bootyshorts
-#define NO_MUTANTRACE_VARIATION		0
+#define NO_MUTANTRACE_VARIATION		ZERO
 #define MUTANTRACE_VARIATION		1
 
-#define NOT_DIGITIGRADE				0
+#define NOT_DIGITIGRADE				ZERO
 #define FULL_DIGITIGRADE			1
 #define SQUISHED_DIGITIGRADE		2
 
 //flags for covering body parts
-#define GLASSESCOVERSEYES	(1<<0)
+#define GLASSESCOVERSEYES	(1<<ZERO)
 #define MASKCOVERSEYES		(1<<1)		// get rid of some of the other retardation in these flags
 #define HEADCOVERSEYES		(1<<2)		// feel free to realloc these numbers for other purposes
 #define MASKCOVERSMOUTH		(1<<3)		// on other items, these are just for mask/head

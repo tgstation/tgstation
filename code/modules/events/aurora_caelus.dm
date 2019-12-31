@@ -15,7 +15,7 @@
 	startWhen = 9
 	endWhen = 50
 	var/list/aurora_colors = list("#A2FF80", "#A2FF8B", "#A2FF96", "#A2FFA5", "#A2FFB6", "#A2FFC7", "#A2FFDE", "#A2FFEE")
-	var/aurora_progress = 0 //this cycles from 1 to 8, slowly changing colors from gentle green to gentle blue
+	var/aurora_progress = ZERO //this cycles from 1 to 8, slowly changing colors from gentle green to gentle blue
 
 /datum/round_event/aurora_caelus/announce()
 	priority_announce("[station_name()]: A harmless cloud of ions is approaching your station, and will exhaust their energy battering the hull. Nanotrasen has approved a short break for all employees to relax and observe this very rare event. During this time, starlight will be bright but gentle, shifting between quiet green and blue colors. Any staff who would like to view these lights for themselves may proceed to the area nearest to them with viewing ports to open space. We hope you enjoy the lights.",
@@ -34,7 +34,7 @@
 				S.set_light(S.light_range * 3, S.light_power * 0.5)
 
 /datum/round_event/aurora_caelus/tick()
-	if(activeFor % 5 == 0)
+	if(activeFor % 5 == ZERO)
 		aurora_progress++
 		var/aurora_color = aurora_colors[aurora_progress]
 		for(var/area in GLOB.sortedAreas)

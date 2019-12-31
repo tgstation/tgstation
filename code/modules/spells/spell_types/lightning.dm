@@ -32,9 +32,9 @@
 		if(ready && cast_check(skipcharge=1))
 			choose_targets()
 		else
-			revert_cast(user, 0)
+			revert_cast(user, ZERO)
 	else
-		revert_cast(user, 0)
+		revert_cast(user, ZERO)
 
 /obj/effect/proc_holder/spell/targeted/tesla/proc/Reset(mob/user = usr)
 	ready = FALSE
@@ -49,7 +49,7 @@
 /obj/effect/proc_holder/spell/targeted/tesla/cast(list/targets, mob/user = usr)
 	ready = FALSE
 	var/mob/living/carbon/target = targets[1]
-	Snd=sound(null, repeat = 0, wait = 1, channel = Snd.channel) //byond, why you suck?
+	Snd=sound(null, repeat = ZERO, wait = 1, channel = Snd.channel) //byond, why you suck?
 	playsound(get_turf(user),Snd,50,FALSE)// Sorry MrPerson, but the other ways just didn't do it the way i needed to work, this is the only way.
 	if(get_dist(user,target)>range)
 		to_chat(user, "<span class='warning'>[target.p_theyre(TRUE)] too far away!</span>")

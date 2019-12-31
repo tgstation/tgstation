@@ -24,7 +24,7 @@
 	filling_color = "#FF4500"
 	bitesize = 100 // Always eat the apple in one bite
 	foodtype = FRUIT
-	juice_results = list(/datum/reagent/consumable/applejuice = 0)
+	juice_results = list(/datum/reagent/consumable/applejuice = ZERO)
 	tastes = list("apple" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/hcider
 

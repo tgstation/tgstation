@@ -148,14 +148,14 @@
 	limb.original_owner = "limb grower"	 //prevents updating the icon, so a lizard arm on a human stays a lizard arm etc.
 
 /obj/machinery/limbgrower/RefreshParts()
-	reagents.maximum_volume = 0
+	reagents.maximum_volume = ZERO
 	for(var/obj/item/reagent_containers/glass/G in component_parts)
 		reagents.maximum_volume += G.volume
 		G.reagents.trans_to(src, G.reagents.total_volume)
 	var/T=1.2
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		T -= M.rating*0.2
-	prod_coeff = min(1,max(0,T)) // Coeff going 1 -> 0,8 -> 0,6 -> 0,4
+	prod_coeff = min(1,max(ZERO,T)) // Coeff going 1 -> ZERO,8 -> ZERO,6 -> ZERO,4
 
 /obj/machinery/limbgrower/examine(mob/user)
 	. = ..()

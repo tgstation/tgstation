@@ -41,7 +41,7 @@ GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "[global.con
 			continue
 
 		t = trim(t)
-		if (length(t) == 0)
+		if (length(t) == ZERO)
 			continue
 		else if (copytext(t, 1, 2) == "#")
 			continue

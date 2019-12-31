@@ -5,7 +5,7 @@
 
 #define LINKED_SERVER_NONRESPONSIVE  (!linkedServer || (linkedServer.stat & (NOPOWER|BROKEN)))
 
-#define MSG_MON_SCREEN_MAIN 		0
+#define MSG_MON_SCREEN_MAIN 		ZERO
 #define MSG_MON_SCREEN_LOGS 		1
 #define MSG_MON_SCREEN_HACKED 		2
 #define MSG_MON_SCREEN_CUSTOM_MSG 	3
@@ -27,7 +27,7 @@
 	var/defaultmsg = "<span class='notice'>Welcome. Please select an option.</span>"
 	var/rebootmsg = "<span class='warning'>%$&(£: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!</span>"
 	//Computer properties
-	var/screen = MSG_MON_SCREEN_MAIN 		// 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
+	var/screen = MSG_MON_SCREEN_MAIN 		// ZERO = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
 	var/hacking = FALSE		// Is it being hacked into by the AI/Cyborg
 	var/message = "<span class='notice'>System bootup complete. Please select an option.</span>"	// The message that shows on the main menu.
 	var/auth = FALSE // Are they authenticated?
@@ -53,7 +53,7 @@
 	if(!isnull(linkedServer))
 		obj_flags |= EMAGGED
 		screen = MSG_MON_SCREEN_HACKED
-		spark_system.set_up(5, 0, src)
+		spark_system.set_up(5, ZERO, src)
 		spark_system.start()
 		var/obj/item/paper/monitorkey/MK = new(loc, linkedServer)
 		// Will help make emagging the console not so easy to get away with.
@@ -108,7 +108,7 @@
 		//Main menu
 		if(MSG_MON_SCREEN_MAIN)
 			//&#09; = TAB
-			var/i = 0
+			var/i = ZERO
 			dat += "<dd><A href='?src=[REF(src)];find=1'>&#09;[++i]. Link To A Server</a></dd>"
 			if(auth)
 				if(LINKED_SERVER_NONRESPONSIVE)
@@ -138,7 +138,7 @@
 
 		//Message Logs
 		if(MSG_MON_SCREEN_LOGS)
-			var/index = 0
+			var/index = ZERO
 			dat += "<center><A href='?src=[REF(src)];back=1'>Back</a> - <A href='?src=[REF(src)];refresh=1'>Refresh</a></center><hr>"
 			dat += "<table border='1' width='100%'><tr><th width = '5%'>X</th><th width='15%'>Sender</th><th width='15%'>Recipient</th><th width='300px' word-wrap: break-word>Message</th></tr>"
 			for(var/datum/data_pda_msg/pda in linkedServer.pda_msgs)
@@ -213,7 +213,7 @@
 		//Request Console Logs
 		if(MSG_MON_SCREEN_REQUEST_LOGS)
 
-			var/index = 0
+			var/index = ZERO
 			/* 	data_rc_msg
 				X												 - 5%
 				var/rec_dpt = "Unspecified" //name of the person - 15%
@@ -295,7 +295,7 @@
 			if(message_servers.len > 1)
 				linkedServer = input(usr, "Please select a server.", "Select a server.", null) as null|anything in message_servers
 				message = "<span class='alert'>NOTICE: Server selected.</span>"
-			else if(message_servers.len > 0)
+			else if(message_servers.len > ZERO)
 				linkedServer = message_servers[1]
 				message =  "<span class='notice'>NOTICE: Only Single Server Detected - Server selected.</span>"
 			else
@@ -395,7 +395,7 @@
 					if("Recepient")
 						//Get out list of viable PDAs
 						var/list/obj/item/pda/sendPDAs = get_viewable_pdas()
-						if(GLOB.PDAs && GLOB.PDAs.len > 0)
+						if(GLOB.PDAs && GLOB.PDAs.len > ZERO)
 							customrecepient = input(usr, "Select a PDA from the list.") as null|anything in sendPDAs
 						else
 							customrecepient = null

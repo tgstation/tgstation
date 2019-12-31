@@ -14,8 +14,8 @@
 /datum/proc/vv_get_var(var_name)
 	switch(var_name)
 		if ("vars")
-			return debug_variable(var_name, list(), 0, src)
-	return debug_variable(var_name, vars[var_name], 0, src)
+			return debug_variable(var_name, list(), ZERO, src)
+	return debug_variable(var_name, vars[var_name], ZERO, src)
 
 /datum/proc/can_vv_mark()
 	return TRUE

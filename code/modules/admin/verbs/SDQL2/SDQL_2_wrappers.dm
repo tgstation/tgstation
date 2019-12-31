@@ -27,7 +27,7 @@
 /proc/_ckeyEx(Key)
 	return ckeyEx(Key)
 
-/proc/_copytext(T, Start = 1, End = 0)
+/proc/_copytext(T, Start = 1, End = ZERO)
 	return copytext(T, Start, End)
 
 /proc/_cos(X)
@@ -114,7 +114,7 @@
 /proc/_prob(P)
 	return prob(P)
 
-/proc/_rand(L = 0, H = 1)
+/proc/_rand(L = ZERO, H = 1)
 	return rand(L, H)
 
 /proc/_range(Dist, Center = usr)
@@ -129,10 +129,10 @@
 /proc/_REGEX_QUOTE_REPLACEMENT(text)
 	return REGEX_QUOTE_REPLACEMENT(text)
 
-/proc/_replacetext(Haystack, Needle, Replacement, Start = 1,End = 0)
+/proc/_replacetext(Haystack, Needle, Replacement, Start = 1,End = ZERO)
 	return replacetext(Haystack, Needle, Replacement, Start, End)
 
-/proc/_replacetextEx(Haystack, Needle, Replacement, Start = 1,End = 0)
+/proc/_replacetextEx(Haystack, Needle, Replacement, Start = 1,End = ZERO)
 	return replacetextEx(Haystack, Needle, Replacement, Start, End)
 
 /proc/_rgb(R, G, B)
@@ -155,19 +155,19 @@
 		return
 	L += args.Copy(2)
 
-/proc/_list_copy(list/L, Start = 1, End = 0)
+/proc/_list_copy(list/L, Start = 1, End = ZERO)
 	return L.Copy(Start, End)
 
-/proc/_list_cut(list/L, Start = 1, End = 0)
+/proc/_list_cut(list/L, Start = 1, End = ZERO)
 	L.Cut(Start, End)
 
-/proc/_list_find(list/L, Elem, Start = 1, End = 0)
+/proc/_list_find(list/L, Elem, Start = 1, End = ZERO)
 	return L.Find(Elem, Start, End)
 
 /proc/_list_insert(list/L, Index, Item)
 	return L.Insert(Index, Item)
 
-/proc/_list_join(list/L, Glue, Start = 0, End = 1)
+/proc/_list_join(list/L, Glue, Start = ZERO, End = 1)
 	return L.Join(Glue, Start, End)
 
 /proc/_list_remove(list/L, ...)

@@ -37,7 +37,7 @@
 	var/atom/movable/throwee = target
 	if(throwee.anchored && !throw_anchored)
 		return
-	if(throw_distance < 0)
+	if(throw_distance < ZERO)
 		throw_dir = turn(throw_dir, 180)
 		throw_distance *= -1
 	var/atom/throw_target = get_edge_target_turf(throwee, throw_dir)

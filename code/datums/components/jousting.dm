@@ -2,11 +2,11 @@
 	var/current_direction = NONE
 	var/max_tile_charge = 5
 	var/min_tile_charge = 2				//tiles before this code gets into effect.
-	var/current_tile_charge = 0
+	var/current_tile_charge = ZERO
 	var/movement_reset_tolerance = 2			//deciseconds
-	var/unmounted_damage_boost_per_tile = 0
-	var/unmounted_knockdown_chance_per_tile = 0
-	var/unmounted_knockdown_time = 0
+	var/unmounted_damage_boost_per_tile = ZERO
+	var/unmounted_knockdown_chance_per_tile = ZERO
+	var/unmounted_knockdown_time = ZERO
 	var/mounted_damage_boost_per_tile = 2
 	var/mounted_knockdown_chance_per_tile = 20
 	var/mounted_knockdown_time = 20
@@ -30,7 +30,7 @@
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	current_holder = null
 	current_direction = NONE
-	current_tile_charge = 0
+	current_tile_charge = ZERO
 
 /datum/component/jousting/proc/on_attack(datum/source, mob/living/target, mob/user)
 	if(user != current_holder)
@@ -49,7 +49,7 @@
 		var/msg
 		if(damage)
 			msg += "[user] [sharp? "impales" : "slams into"] [target] [sharp? "on" : "with"] their [parent]"
-			target.apply_damage(damage, BRUTE, user.zone_selected, 0)
+			target.apply_damage(damage, BRUTE, user.zone_selected, ZERO)
 		if(prob(knockdown_chance))
 			msg += " and knocks [target] [target_buckled? "off of [target.buckled]" : "down"]"
 			if(target_buckled)
@@ -62,7 +62,7 @@
 	if(!current_holder || (requires_mount && ((requires_mob_riding && !ismob(current_holder.buckled)) || (!current_holder.buckled))))
 		return
 	if(dir != current_direction)
-		current_tile_charge = 0
+		current_tile_charge = ZERO
 		current_direction = dir
 	if(current_tile_charge < max_tile_charge)
 		current_tile_charge++
@@ -71,4 +71,4 @@
 	current_timerid = addtimer(CALLBACK(src, .proc/reset_charge), movement_reset_tolerance, TIMER_STOPPABLE)
 
 /datum/component/jousting/proc/reset_charge()
-	current_tile_charge = 0
+	current_tile_charge = ZERO

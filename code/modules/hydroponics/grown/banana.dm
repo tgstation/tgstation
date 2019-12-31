@@ -24,7 +24,7 @@
 	filling_color = "#FFFF00"
 	bitesize = 5
 	foodtype = FRUIT
-	juice_results = list(/datum/reagent/consumable/banana = 0)
+	juice_results = list(/datum/reagent/consumable/banana = ZERO)
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
 
 /obj/item/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)
@@ -50,7 +50,7 @@
 	icon_state = "banana_peel"
 	item_state = "banana_peel"
 	w_class = WEIGHT_CLASS_TINY
-	throwforce = 0
+	throwforce = ZERO
 	throw_speed = 3
 	throw_range = 7
 

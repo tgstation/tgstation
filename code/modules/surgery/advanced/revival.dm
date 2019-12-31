@@ -11,7 +11,7 @@
 
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_HEAD)
-	requires_bodypart_type = 0
+	requires_bodypart_type = ZERO
 
 /datum/surgery/advanced/revival/can_start(mob/user, mob/living/carbon/target)
 	if(!..())
@@ -62,7 +62,7 @@
 		"<span class='notice'>[user] send a powerful shock to [target]'s brain with [tool]...</span>",
 		"<span class='notice'>[user] send a powerful shock to [target]'s brain with [tool]...</span>")
 	playsound(get_turf(target), 'sound/magic/lightningbolt.ogg', 50, TRUE)
-	target.adjustOxyLoss(-50, 0)
+	target.adjustOxyLoss(-50, ZERO)
 	target.updatehealth()
 	if(target.revive(full_heal = FALSE, admin_revive = FALSE))
 		target.visible_message("<span class='notice'>...[target] wakes up, alive and aware!</span>")

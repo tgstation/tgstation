@@ -4,7 +4,7 @@
 	item_state = "emp"
 	
 	var/range = 7
-	var/forced_value = 0
+	var/forced_value = ZERO
 	var/duration = 300
 
 /obj/item/grenade/antigravity/prime()

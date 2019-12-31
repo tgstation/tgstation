@@ -9,15 +9,15 @@
 	var/tempo = 5			// delay between notes
 
 	var/playing = 0			// if we're playing
-	var/help = 0			// if help is open
+	var/help = ZERO			// if help is open
 	var/edit = 1			// if we're in editing mode
-	var/repeat = 0			// number of times remaining to repeat
+	var/repeat = ZERO			// number of times remaining to repeat
 	var/max_repeats = 10	// maximum times we can repeat
 
 	var/instrumentDir = "piano"		// the folder with the sounds
 	var/instrumentExt = "ogg"		// the file extension
 	var/obj/instrumentObj = null	// the associated obj playing the sound
-	var/last_hearcheck = 0
+	var/last_hearcheck = ZERO
 	var/list/hearing_mobs
 
 /datum/song/New(dir, obj, ext = "ogg")
@@ -92,7 +92,7 @@
 		return TRUE
 
 /datum/song/proc/playsong(mob/user)
-	while(repeat >= 0)
+	while(repeat >= ZERO)
 		var/cur_oct[7]
 		var/cur_acc[7]
 		for(var/i = 1 to 7)
@@ -121,9 +121,9 @@
 								cur_acc[cur_note] = "#" // so shift is never required
 						else
 							cur_oct[cur_note] = text2num(ni)
-					if(user.dizziness > 0 && prob(user.dizziness / 2))
+					if(user.dizziness > ZERO && prob(user.dizziness / 2))
 						cur_note = CLAMP(cur_note + rand(round(-user.dizziness / 10), round(user.dizziness / 10)), 1, 7)
-					if(user.dizziness > 0 && prob(user.dizziness / 5))
+					if(user.dizziness > ZERO && prob(user.dizziness / 5))
 						if(prob(30))
 							cur_acc[cur_note] = "#"
 						else if(prob(42))
@@ -138,13 +138,13 @@
 		repeat--
 	hearing_mobs = null
 	playing = FALSE
-	repeat = 0
+	repeat = ZERO
 	updateDialog(user)
 
 /datum/song/proc/interact(mob/user)
 	var/dat = ""
 
-	if(lines.len > 0)
+	if(lines.len > ZERO)
 		dat += "<H3>Playback</H3>"
 		if(!playing)
 			dat += "<A href='?src=[REF(src)];play=1'>Play</A> <SPAN CLASS='linkOn'>Stop</SPAN><BR><BR>"
@@ -165,7 +165,7 @@
 		dat += " <A href='?src=[REF(src)];import=1'>Import a Song</A><BR><BR>"
 		var/bpm = round(600 / tempo)
 		dat += "Tempo: <A href='?src=[REF(src)];tempo=[world.tick_lag]'>-</A> [bpm] BPM <A href='?src=[REF(src)];tempo=-[world.tick_lag]'>+</A><BR><BR>"
-		var/linecount = 0
+		var/linecount = ZERO
 		for(var/line in lines)
 			linecount += 1
 			dat += "Line [linecount]: <A href='?src=[REF(src)];modifyline=[linecount]'>Edit</A> <A href='?src=[REF(src)];deleteline=[linecount]'>X</A> [line]<BR>"
@@ -258,8 +258,8 @@
 		if(playing)
 			return //So that people cant keep adding to repeat. If the do it intentionally, it could result in the server crashing.
 		repeat += round(text2num(href_list["repeat"]))
-		if(repeat < 0)
-			repeat = 0
+		if(repeat < ZERO)
+			repeat = ZERO
 		if(repeat > max_repeats)
 			repeat = max_repeats
 

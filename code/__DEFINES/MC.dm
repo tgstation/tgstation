@@ -1,4 +1,4 @@
-#define MC_TICK_CHECK ( ( TICK_USAGE > Master.current_ticklimit || src.state != SS_RUNNING ) ? pause() : 0 )
+#define MC_TICK_CHECK ( ( TICK_USAGE > Master.current_ticklimit || src.state != SS_RUNNING ) ? pause() : ZERO )
 
 #define MC_SPLIT_TICK_INIT(phase_count) var/original_tick_limit = Master.current_ticklimit; var/split_tick_phases = ##phase_count
 #define MC_SPLIT_TICK \
@@ -28,7 +28,7 @@
 #define SS_NO_INIT 1
 
 /** subsystem does not fire. */
-/// (like can_fire = 0, but keeps it from getting added to the processing subsystems list)
+/// (like can_fire = ZERO, but keeps it from getting added to the processing subsystems list)
 /// (Requires a MC restart to change)
 #define SS_NO_FIRE 2
 
@@ -56,7 +56,7 @@
 #define SS_POST_FIRE_TIMING 64
 
 //! SUBSYSTEM STATES
-#define SS_IDLE 0		/// aint doing shit.
+#define SS_IDLE ZERO		/// aint doing shit.
 #define SS_QUEUED 1		/// queued to run
 #define SS_RUNNING 2	/// actively running
 #define SS_PAUSED 3		/// paused by mc_tick_check

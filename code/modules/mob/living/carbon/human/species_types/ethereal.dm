@@ -46,7 +46,7 @@
 
 /datum/species/ethereal/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	.=..()
-	C.set_light(0)
+	C.set_light(ZERO)
 	UnregisterSignal(C, COMSIG_ATOM_EMAG_ACT)
 	UnregisterSignal(C, COMSIG_ATOM_EMP_ACT)
 
@@ -61,13 +61,13 @@
 /datum/species/ethereal/spec_updatehealth(mob/living/carbon/human/H)
 	.=..()
 	if(H.stat != DEAD && !EMPeffect)
-		var/healthpercent = max(H.health, 0) / 100
+		var/healthpercent = max(H.health, ZERO) / 100
 		if(!emageffect)
 			current_color = rgb(r2 + ((r1-r2)*healthpercent), g2 + ((g1-g2)*healthpercent), b2 + ((b1-b2)*healthpercent))
 		H.set_light(1 + (2 * healthpercent), 1 + (1 * healthpercent), current_color)
 		fixed_mut_color = copytext(current_color, 2)
 	else
-		H.set_light(0)
+		H.set_light(ZERO)
 		fixed_mut_color = rgb(128,128,128)
 	H.update_body()
 

@@ -13,15 +13,15 @@
 /obj/machinery/atmospherics
 	anchored = TRUE
 	move_resist = INFINITY				//Moving a connected machine without actually doing the normal (dis)connection things will probably cause a LOT of issues.
-	idle_power_usage = 0
-	active_power_usage = 0
+	idle_power_usage = ZERO
+	active_power_usage = ZERO
 	power_channel = ENVIRON
 	layer = GAS_PIPE_HIDDEN_LAYER //under wires
 	resistance_flags = FIRE_PROOF
 	max_integrity = 200
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
-	var/can_unwrench = 0
-	var/initialize_directions = 0
+	var/can_unwrench = ZERO
+	var/initialize_directions = ZERO
 	var/pipe_color
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	var/pipe_flags = NONE
@@ -31,7 +31,7 @@
 
 	var/image/pipe_vision_img = null
 
-	var/device_type = 0
+	var/device_type = ZERO
 	var/list/obj/machinery/atmospherics/nodes
 
 	var/construction_type
@@ -228,7 +228,7 @@
 
 	user.visible_message("<span class='danger'>[user] is sent flying by pressure!</span>","<span class='userdanger'>The pressure sends you flying!</span>")
 
-	// if get_dir(src, user) is not 0, target is the edge_target_turf on that dir
+	// if get_dir(src, user) is not ZERO, target is the edge_target_turf on that dir
 	// otherwise, edge_target_turf uses a random cardinal direction
 	// range is pressures / 250
 	// speed is pressures / 1250

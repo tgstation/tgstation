@@ -30,7 +30,7 @@
 
 /obj/structure/flora/ash/proc/harvest(user)
 	if(harvested)
-		return 0
+		return ZERO
 
 	var/rand_harvested = rand(harvest_amount_low, harvest_amount_high)
 	if(rand_harvested)

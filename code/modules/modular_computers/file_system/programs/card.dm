@@ -4,21 +4,21 @@
 	program_icon_state = "id"
 	extended_desc = "Program for programming employee ID cards to access parts of the station."
 	transfer_access = ACCESS_HEADS
-	requires_ntnet = 0
+	requires_ntnet = ZERO
 	size = 8
 	tgui_id = "ntos_card"
 	ui_x = 600
 	ui_y = 700
 
 	var/mod_mode = 1
-	var/is_centcom = 0
-	var/show_assignments = 0
-	var/minor = 0
-	var/authenticated = 0
+	var/is_centcom = ZERO
+	var/show_assignments = ZERO
+	var/minor = ZERO
+	var/authenticated = ZERO
 	var/list/reg_ids = list()
 	var/list/region_access = null
 	var/list/head_subordinates = null
-	var/target_dept = 0 //Which department this computer has access to. 0=all departments
+	var/target_dept = ZERO //Which department this computer has access to. ZERO=all departments
 	var/change_position_cooldown = 30
 	//Jobs you cannot open new positions for
 	var/list/blacklisted = list(
@@ -41,15 +41,15 @@
 
 /datum/computer_file/program/card_mod/New()
 	..()
-	addtimer(CALLBACK(src, .proc/SetConfigCooldown), 0)
+	addtimer(CALLBACK(src, .proc/SetConfigCooldown), ZERO)
 
 /datum/computer_file/program/card_mod/proc/SetConfigCooldown()
 	change_position_cooldown = CONFIG_GET(number/id_console_jobslot_delay)
 
 /datum/computer_file/program/card_mod/event_idremoved(background, slot)
 	if(!slot || slot == 2)// slot being false means both are removed
-		minor = 0
-		authenticated = 0
+		minor = ZERO
+		authenticated = ZERO
 		head_subordinates = null
 		region_access = null
 
@@ -64,11 +64,11 @@
 		if(!job_blacklisted(job.title))
 			if((job.total_positions <= GLOB.player_list.len * (max_relative_positions / 100)))
 				var/delta = (world.time / 10) - GLOB.time_last_changed_position
-				if((change_position_cooldown < delta) || (opened_positions[job.title] < 0))
+				if((change_position_cooldown < delta) || (opened_positions[job.title] < ZERO))
 					return 1
 				return -2
-			return 0
-	return 0
+			return ZERO
+	return ZERO
 
 //Logic check for if you can close the job
 /datum/computer_file/program/card_mod/proc/can_close_job(datum/job/job)
@@ -76,11 +76,11 @@
 		if(!job_blacklisted(job.title))
 			if(job.total_positions > job.current_positions)
 				var/delta = (world.time / 10) - GLOB.time_last_changed_position
-				if((change_position_cooldown < delta) || (opened_positions[job.title] > 0))
+				if((change_position_cooldown < delta) || (opened_positions[job.title] > ZERO))
 					return 1
 				return -2
-			return 0
-	return 0
+			return ZERO
+	return ZERO
 
 /datum/computer_file/program/card_mod/proc/format_jobs(list/jobs)
 	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
@@ -124,12 +124,12 @@
 			if(params["target"] == "mod")
 				mod_mode = 1
 			else if (params["target"] == "manifest")
-				mod_mode = 0
+				mod_mode = ZERO
 			else if (params["target"] == "manage")
 				mod_mode = 2
 		if("PRG_togglea")
 			if(show_assignments)
-				show_assignments = 0
+				show_assignments = ZERO
 			else
 				show_assignments = 1
 		if("PRG_print")
@@ -184,8 +184,8 @@
 								GLOB.data_core.manifest_modify(id_card.registered_name, id_card.assignment)
 							head_subordinates = null
 							region_access = null
-							authenticated = 0
-							minor = 0
+							authenticated = ZERO
+							minor = ZERO
 							card_slot.try_eject(2, user)
 						else
 							var/obj/item/I = usr.get_active_held_item()
@@ -253,10 +253,10 @@
 			var/edit_job_target = params["target"]
 			var/datum/job/j = SSjob.GetJob(edit_job_target)
 			if(!j)
-				return 0
+				return ZERO
 			if(can_open_job(j) != 1)
-				return 0
-			if(opened_positions[edit_job_target] >= 0)
+				return ZERO
+			if(opened_positions[edit_job_target] >= ZERO)
 				GLOB.time_last_changed_position = world.time / 10
 			j.total_positions++
 			opened_positions[edit_job_target]++
@@ -264,11 +264,11 @@
 			var/edit_job_target = params["target"]
 			var/datum/job/j = SSjob.GetJob(edit_job_target)
 			if(!j)
-				return 0
+				return ZERO
 			if(can_close_job(j) != 1)
-				return 0
+				return ZERO
 			//Allow instant closing without cooldown if a position has been opened before
-			if(opened_positions[edit_job_target] <= 0)
+			if(opened_positions[edit_job_target] <= ZERO)
 				GLOB.time_last_changed_position = world.time / 10
 			j.total_positions--
 			opened_positions[edit_job_target]--
@@ -303,7 +303,7 @@
 
 	data["mmode"] = mod_mode
 
-	var/authed = 0
+	var/authed = ZERO
 	if(computer)
 		if(card_slot)
 			var/obj/item/card/id/auth_card = card_slot.stored_card2
@@ -319,14 +319,14 @@
 				continue
 
 			var/list/status_open = build_manage(job,1)
-			var/list/status_close = build_manage(job,0)
+			var/list/status_close = build_manage(job,ZERO)
 
 			pos.Add(list(list(
 				"title" = job.title,
 				"current" = job.current_positions,
 				"total" = job.total_positions,
-				"status_open" = (authed && !minor) ? status_open["enable"]: 0,
-				"status_close" = (authed && !minor) ? status_close["enable"] : 0,
+				"status_open" = (authed && !minor) ? status_open["enable"]: ZERO,
+				"status_close" = (authed && !minor) ? status_close["enable"] : ZERO,
 				"desc_open" = status_open["desc"],
 				"desc_close" = status_close["desc"])))
 		data["slots"] = pos
@@ -351,8 +351,8 @@
 		if(!card_slot && mod_mode == 1)
 			mod_mode = 0 //We can't modify IDs when there is no card reader
 	else
-		data["have_id_slot"] = 0
-		data["have_printer"] = 0
+		data["have_id_slot"] = ZERO
+		data["have_printer"] = ZERO
 
 	data["centcom_access"] = is_centcom
 
@@ -387,7 +387,7 @@
 					all_centcom_access.Add(list(list(
 						"desc" = replacetext(get_centcom_access_desc(access), "&nbsp", " "),
 						"ref" = access,
-						"allowed" = (access in id_card.access) ? 1 : 0)))
+						"allowed" = (access in id_card.access) ? 1 : ZERO)))
 				data["all_centcom_access"] = all_centcom_access
 			else
 				var/list/regions = list()
@@ -402,7 +402,7 @@
 								accesses.Add(list(list(
 								"desc" = replacetext(get_access_desc(access), "&nbsp", " "),
 								"ref" = access,
-								"allowed" = (access in id_card.access) ? 1 : 0)))
+								"allowed" = (access in id_card.access) ? 1 : ZERO)))
 
 					regions.Add(list(list(
 						"name" = get_region_accesses_name(i),
@@ -411,7 +411,7 @@
 						"accesses" = accesses)))
 				data["regions"] = regions
 
-	data["minor"] = target_dept || minor ? 1 : 0
+	data["minor"] = target_dept || minor ? 1 : ZERO
 
 
 	return data
@@ -419,12 +419,12 @@
 
 /datum/computer_file/program/card_mod/proc/build_manage(datum/job,open = FALSE)
 	var/out = "Denied"
-	var/can_change= 0
+	var/can_change= ZERO
 	if(open)
 		can_change = can_open_job(job)
 	else
 		can_change = can_close_job(job)
-	var/enable = 0
+	var/enable = ZERO
 	if(can_change == 1)
 		out = "[open ? "Open Position" : "Close Position"]"
 		enable = 1
@@ -447,7 +447,7 @@
 			if(auth_card)
 				region_access = list()
 				if(ACCESS_CHANGE_IDS in auth_card.GetAccess())
-					minor = 0
+					minor = ZERO
 					authenticated = 1
 					return 1
 				else

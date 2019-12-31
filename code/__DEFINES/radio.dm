@@ -89,7 +89,7 @@
 #define MAX_FREE_FREQ 1599 // -------------------------------------------------
 
 // Transmission types.
-#define TRANSMISSION_WIRE 0  // some sort of wired connection, not used
+#define TRANSMISSION_WIRE ZERO  // some sort of wired connection, not used
 #define TRANSMISSION_RADIO 1  // electromagnetic radiation (default)
 #define TRANSMISSION_SUBSPACE 2  // subspace transmission (headsets only)
 #define TRANSMISSION_SUPERSPACE 3  // reaches independent (CentCom) radios only
@@ -105,11 +105,11 @@
 #define DEFAULT_SIGNALER_CODE 30
 
 //Requests Console
-#define REQ_NO_NEW_MESSAGE 				0
+#define REQ_NO_NEW_MESSAGE 				ZERO
 #define REQ_NORMAL_MESSAGE_PRIORITY 	1
 #define REQ_HIGH_MESSAGE_PRIORITY 		2
 #define REQ_EXTREME_MESSAGE_PRIORITY 	3
 
-#define REQ_DEP_TYPE_ASSISTANCE 	(1<<0)
+#define REQ_DEP_TYPE_ASSISTANCE 	(1<<ZERO)
 #define REQ_DEP_TYPE_SUPPLIES 		(1<<1)
 #define REQ_DEP_TYPE_INFORMATION 	(1<<2)

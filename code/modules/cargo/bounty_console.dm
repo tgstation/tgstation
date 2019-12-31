@@ -8,7 +8,7 @@
 	icon_screen = "bounty"
 	circuit = /obj/item/circuitboard/computer/bounty
 	light_color = "#E2853D"//orange
-	var/printer_ready = 0 //cooldown var
+	var/printer_ready = ZERO //cooldown var
 
 /obj/machinery/computer/bounty/Initialize()
 	. = ..()

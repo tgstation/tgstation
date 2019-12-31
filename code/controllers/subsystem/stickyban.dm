@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(stickyban)
 	var/list/cache = list()
 	var/list/dbcache = list()
 	var/list/confirmed_exempt = list()
-	var/dbcacheexpire = 0
+	var/dbcacheexpire = ZERO
 
 
 /datum/controller/subsystem/stickyban/Initialize(timeofday)
@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(stickyban)
 				if (!import_raw_stickyban_to_db(ckey, ban))
 					log_world("Could not import stickyban on [oldban] into the database. Ignoring")
 					continue
-				dbcacheexpire = 0
+				dbcacheexpire = ZERO
 				bannedkeys += ckey
 			world.SetConfig("ban", oldban, null)
 

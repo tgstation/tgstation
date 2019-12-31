@@ -3,7 +3,7 @@
 		return
 
 	var/mixcolor
-	var/vol_counter = 0
+	var/vol_counter = ZERO
 	var/vol_temp
 
 	for(var/datum/reagent/R in reagent_list)

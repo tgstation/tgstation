@@ -31,7 +31,7 @@
 	var/obj/screen/thruster_button = null
 	var/obj/screen/hands = null
 
-	var/shown_robot_modules = 0	//Used to determine whether they have the module menu shown or not
+	var/shown_robot_modules = ZERO	//Used to determine whether they have the module menu shown or not
 	var/obj/screen/robot_modules_background
 
 //3 Modules can be activated at any one time.
@@ -44,12 +44,12 @@
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high ///If this is a path, this gets created as an object in Initialize.
 
-	var/opened = 0
+	var/opened = ZERO
 	var/emagged = FALSE
-	var/emag_cooldown = 0
-	var/wiresexposed = 0
+	var/emag_cooldown = ZERO
+	var/wiresexposed = ZERO
 
-	var/ident = 0
+	var/ident = ZERO
 	var/locked = TRUE
 	var/list/req_access = list(ACCESS_ROBOTICS)
 
@@ -60,21 +60,21 @@
 	var/ionpulse_on = FALSE // Jetpack-like effect.
 	var/datum/effect_system/trail_follow/ion/ion_trail // Ionpulse effect.
 
-	var/low_power_mode = 0 //whether the robot has no charge left.
+	var/low_power_mode = ZERO //whether the robot has no charge left.
 	var/datum/effect_system/spark_spread/spark_system // So they can initialize sparks whenever/N
 
 	var/lawupdate = 1 //Cyborgs will sync their laws with their AI by default
-	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
+	var/scrambledcodes = ZERO // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
 	var/lockcharge //Boolean of whether the borg is locked down or not
 
-	var/toner = 0
+	var/toner = ZERO
 	var/tonermax = 40
 
 	var/lamp_max = 10 //Maximum brightness of a borg lamp. Set as a var for easy adjusting.
-	var/lamp_intensity = 0 //Luminosity of the headlamp. 0 is off. Higher settings than the minimum require power.
-	var/lamp_cooldown = 0 //Flag for if the lamp is on cooldown after being forcibly disabled.
+	var/lamp_intensity = ZERO //Luminosity of the headlamp. ZERO is off. Higher settings than the minimum require power.
+	var/lamp_cooldown = ZERO //Flag for if the lamp is on cooldown after being forcibly disabled.
 
-	var/sight_mode = 0
+	var/sight_mode = ZERO
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD)
 
 	var/list/upgrades = list()
@@ -92,7 +92,7 @@
 
 /mob/living/silicon/robot/Initialize(mapload)
 	spark_system = new /datum/effect_system/spark_spread()
-	spark_system.set_up(5, 0, src)
+	spark_system.set_up(5, ZERO, src)
 	spark_system.attach(src)
 
 	wires = new /datum/wires/robot(src)
@@ -121,7 +121,7 @@
 		builtInCamera.network = list("ss13")
 		builtInCamera.internal_light = FALSE
 		if(wires.is_cut(WIRE_CAMERA))
-			builtInCamera.status = 0
+			builtInCamera.status = ZERO
 	module = new /obj/item/robot_module(src)
 	module.rebuild_modules()
 	update_icons()
@@ -306,7 +306,7 @@
 			stat("Master AI:", connected_ai.name)
 
 /mob/living/silicon/robot/restrained(ignore_grab)
-	. = 0
+	. = ZERO
 
 /mob/living/silicon/robot/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)
@@ -335,18 +335,18 @@
 
 /mob/living/silicon/robot/cancelAlarm(class, area/A, obj/origin)
 	var/list/L = alarms[class]
-	var/cleared = 0
+	var/cleared = ZERO
 	for (var/I in L)
 		if (I == A.name)
 			var/list/alarm = L[I]
 			var/list/srcs  = alarm[3]
 			if (origin in srcs)
 				srcs -= origin
-			if (srcs.len == 0)
+			if (srcs.len == ZERO)
 				cleared = 1
 				L -= I
 	if (cleared)
-		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
+		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, ZERO)
 	return !cleared
 
 /mob/living/silicon/robot/can_interact_with(atom/A)
@@ -380,7 +380,7 @@
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/stack/cable_coil/coil = W
-		if (getFireLoss() > 0 || getToxLoss() > 0)
+		if (getFireLoss() > ZERO || getToxLoss() > ZERO)
 			if(src == user)
 				to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
 				if(!do_after(user, 50, target = src))
@@ -398,7 +398,7 @@
 	else if(W.tool_behaviour == TOOL_CROWBAR)	// crowbar means open or close the cover
 		if(opened)
 			to_chat(user, "<span class='notice'>You close the cover.</span>")
-			opened = 0
+			opened = ZERO
 			update_icons()
 		else
 			if(locked)
@@ -535,7 +535,7 @@
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				to_chat(user, "<span class='warning'>[W] seems to be stuck to your hand. You'll have to find a different light.</span>")
 				return
-			lamp_cooldown = 0
+			lamp_cooldown = ZERO
 			qdel(W)
 			to_chat(user, "<span class='notice'>You replace the headlamp bulbs.</span>")
 	else
@@ -568,7 +568,7 @@
 		//they can only hold things :(
 		if(isitem(george.get_active_held_item()))
 			return check_access(george.get_active_held_item())
-	return 0
+	return ZERO
 
 /mob/living/silicon/robot/proc/check_access(obj/item/card/id/I)
 	if(!istype(req_access, /list)) //something's very wrong
@@ -582,10 +582,10 @@
 		I = I.GetID()
 
 	if(!I || !I.access) //not ID or no access
-		return 0
+		return ZERO
 	for(var/req in req_access)
 		if(!(req in I.access)) //doesn't have this access
-			return 0
+			return ZERO
 	return 1
 
 /mob/living/silicon/robot/regenerate_icons()
@@ -623,7 +623,7 @@
 			qdel(mmi)
 		explosion(src.loc,1,2,4,flame_range = 2)
 	else
-		explosion(src.loc,-1,0,2)
+		explosion(src.loc,-1,ZERO,2)
 	gib()
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
@@ -701,12 +701,12 @@
 	to_chat(src, "<span class='notice'>[lamp_intensity ? "Headlamp power set to Level [lamp_intensity/2]" : "Headlamp disabled"].</span>")
 	update_headlamp()
 
-/mob/living/silicon/robot/proc/update_headlamp(turn_off = 0, cooldown = 100)
-	set_light(0)
+/mob/living/silicon/robot/proc/update_headlamp(turn_off = ZERO, cooldown = 100)
+	set_light(ZERO)
 
 	if(lamp_intensity && (turn_off || stat || low_power_mode))
 		to_chat(src, "<span class='danger'>Your headlamp has been deactivated.</span>")
-		lamp_intensity = 0
+		lamp_intensity = ZERO
 		lamp_cooldown = world.time + cooldown
 	else
 		set_light(lamp_intensity)
@@ -727,7 +727,7 @@
 		robot_suit.r_leg = null
 		new /obj/item/stack/cable_coil(T, robot_suit.chest.wired)
 		robot_suit.chest.forceMove(T)
-		robot_suit.chest.wired = 0
+		robot_suit.chest.wired = ZERO
 		robot_suit.chest = null
 		robot_suit.l_arm.forceMove(T)
 		robot_suit.l_arm = null
@@ -752,7 +752,7 @@
 		new /obj/item/bodypart/r_arm/robot(T)
 		new /obj/item/bodypart/head/robot(T)
 		var/b
-		for(b=0, b!=2, b++)
+		for(b=ZERO, b!=2, b++)
 			var/obj/item/assembly/flash/handheld/F = new /obj/item/assembly/flash/handheld(T)
 			F.burn_out()
 	if (cell) //Sanity check.
@@ -882,7 +882,7 @@
 			playsound(loc, 'sound/machines/warning-buzzer.ogg', 50, TRUE, TRUE)
 			audible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module 3 OFFLINE.\"</span>")
 			to_chat(src, "<span class='userdanger'>SYSTEM ERROR: Module 3 OFFLINE.</span>")
-		if(health < 0)
+		if(health < ZERO)
 			if(uneq_module(held_items[2]))
 				audible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module 2 OFFLINE.\"</span>")
 				to_chat(src, "<span class='userdanger'>SYSTEM ERROR: Module 2 OFFLINE.</span>")
@@ -963,7 +963,7 @@
 /mob/living/silicon/robot/revive(full_heal = FALSE, admin_revive = FALSE)
 	if(..()) //successfully ressuscitated from death
 		if(!QDELETED(builtInCamera) && !wires.is_cut(WIRE_CAMERA))
-			builtInCamera.toggle_cam(src,0)
+			builtInCamera.toggle_cam(src,ZERO)
 		update_headlamp()
 		if(admin_revive)
 			locked = TRUE
@@ -1157,7 +1157,7 @@
 	if(!do_after(src, 5, target = M))
 		return
 	if(iscarbon(M) && !M.incapacitated() && !riding_datum.equip_buckle_inhands(M, 1))
-		if(M.get_num_arms() <= 0)
+		if(M.get_num_arms() <= ZERO)
 			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_they()] don't have any usable arms!</span>")
 		else
 			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")

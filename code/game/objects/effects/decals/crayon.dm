@@ -7,7 +7,7 @@
 	plane = GAME_PLANE //makes the graffiti visible over a wall.
 	mergeable_decal = FALSE
 	var/do_icon_rotate = TRUE
-	var/rotation = 0
+	var/rotation = ZERO
 	var/paint_colour = "#FFFFFF"
 
 /obj/effect/decal/cleanable/crayon/Initialize(mapload, main, type, e_name, graf_rot, alt_icon = null)

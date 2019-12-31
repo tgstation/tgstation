@@ -45,7 +45,7 @@
 	id = "power_regen"
 	duration = 100
 	alert_type = /obj/screen/alert/status_effect/power_regen
-	var/power_to_give = 0 //how much power is gained each tick
+	var/power_to_give = ZERO //how much power is gained each tick
 
 /datum/status_effect/cyborg_power_regen/on_creation(mob/living/new_owner, new_power_per_tick)
 	. = ..()
@@ -70,7 +70,7 @@
 	duration = -1
 	tick_interval = 4
 	alert_type = /obj/screen/alert/status_effect/his_grace
-	var/bloodlust = 0
+	var/bloodlust = ZERO
 
 /obj/screen/alert/status_effect/his_grace
 	name = "His Grace"
@@ -92,8 +92,8 @@
 	return ..()
 
 /datum/status_effect/his_grace/tick()
-	bloodlust = 0
-	var/graces = 0
+	bloodlust = ZERO
+	var/graces = ZERO
 	for(var/obj/item/his_grace/HG in owner.held_items)
 		if(HG.bloodthirst > bloodlust)
 			bloodlust = HG.bloodthirst
@@ -167,15 +167,15 @@
 /datum/status_effect/blooddrunk
 	id = "blooddrunk"
 	duration = 10
-	tick_interval = 0
+	tick_interval = ZERO
 	alert_type = /obj/screen/alert/status_effect/blooddrunk
-	var/last_health = 0
-	var/last_bruteloss = 0
-	var/last_fireloss = 0
-	var/last_toxloss = 0
-	var/last_oxyloss = 0
-	var/last_cloneloss = 0
-	var/last_staminaloss = 0
+	var/last_health = ZERO
+	var/last_bruteloss = ZERO
+	var/last_fireloss = ZERO
+	var/last_toxloss = ZERO
+	var/last_oxyloss = ZERO
+	var/last_cloneloss = ZERO
+	var/last_staminaloss = ZERO
 
 /obj/screen/alert/status_effect/blooddrunk
 	name = "Blood-Drunk"
@@ -366,7 +366,7 @@
 	examine_text = "<span class='notice'>They seem to have an aura of healing and helpfulness about them.</span>"
 	alert_type = null
 	var/hand
-	var/deathTick = 0
+	var/deathTick = ZERO
 
 /datum/status_effect/hippocraticOath/on_apply()
 	//Makes the user passive, it's in their oath not to harm!
@@ -404,7 +404,7 @@
 				newRod.activated()
 				if(!itemUser.has_hand_for_held_index(hand))
 					//If user does not have the corresponding hand anymore, give them one and return the rod to their hand
-					if(((hand % 2) == 0))
+					if(((hand % 2) == ZERO))
 						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_R_ARM, FALSE, FALSE)
 						L.attach_limb(itemUser)
 						itemUser.put_in_hand(newRod, hand, forced = TRUE)
@@ -455,9 +455,9 @@
 
 /datum/status_effect/good_music/tick()
 	if(owner.can_hear())
-		owner.dizziness = max(0, owner.dizziness - 2)
-		owner.jitteriness = max(0, owner.jitteriness - 2)
-		owner.confused = max(0, owner.confused - 1)
+		owner.dizziness = max(ZERO, owner.dizziness - 2)
+		owner.jitteriness = max(ZERO, owner.jitteriness - 2)
+		owner.confused = max(ZERO, owner.confused - 1)
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
 
 /obj/screen/alert/status_effect/regenerative_core

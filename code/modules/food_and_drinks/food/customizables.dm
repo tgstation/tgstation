@@ -92,7 +92,7 @@
 	if(ingredients.len == 1)
 		filling_color = S.filling_color
 	else
-		var/list/rgbcolor = list(0,0,0,0)
+		var/list/rgbcolor = list(ZERO,ZERO,ZERO,ZERO)
 		var/customcolor = GetColors(filling_color)
 		var/ingcolor =  GetColors(S.filling_color)
 		rgbcolor[1] = (customcolor[1]+ingcolor[1])/2
@@ -236,7 +236,7 @@
 	ingredients_placement = INGREDIENTS_STACK
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "breadslice"
-	var/finished = 0
+	var/finished = ZERO
 	foodtype = GRAIN
 
 /obj/item/reagent_containers/food/snacks/customizable/sandwich/initialize_custom_food(obj/item/reagent_containers/BASE, obj/item/I, mob/user)

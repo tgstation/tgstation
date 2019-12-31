@@ -132,7 +132,7 @@
 			var/datum/reagent/R = pick(reagents.reagent_list)
 			reagents.remove_reagent(R.type, 1)
 			F.forkload = R
-			if(reagents.total_volume <= 0)
+			if(reagents.total_volume <= ZERO)
 				qdel(src)
 		return
 	..()

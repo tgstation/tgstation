@@ -3,7 +3,7 @@
 	weight = 4
 	typepath = /datum/round_event/wizard/greentext
 	max_occurrences = 1
-	earliest_start = 0 MINUTES
+	earliest_start = ZERO MINUTES
 
 /datum/round_event/wizard/greentext/start()
 
@@ -12,7 +12,7 @@
 		if(!ishuman(M))
 			holder_canadates -= M
 	if(!holder_canadates) //Very unlikely, but just in case
-		return 0
+		return ZERO
 
 	var/mob/living/carbon/human/H = pick(holder_canadates)
 	new /obj/item/greentext(H.loc)
@@ -41,7 +41,7 @@
 /obj/item/greentext/equipped(mob/living/user as mob)
 	to_chat(user, "<font color='green'>So long as you leave this place with greentext in hand you know will be happy...</font>")
 	var/list/other_objectives = user.mind.get_all_objectives()
-	if(user.mind && other_objectives.len > 0)
+	if(user.mind && other_objectives.len > ZERO)
 		to_chat(user, "<span class='warning'>... so long as you still perform your other objectives that is!</span>")
 	new_holder = user
 	if(!last_holder)

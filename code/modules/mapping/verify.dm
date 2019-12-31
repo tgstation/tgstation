@@ -7,7 +7,7 @@
 	var/loadable = TRUE
 	var/crashed = TRUE
 
-	var/static/tag_number = 0
+	var/static/tag_number = ZERO
 
 /datum/map_report/New(datum/parsed_map/map)
 	original_path = map.original_path || "Untitled"
@@ -71,15 +71,15 @@
 		var/model = modelCache[key]
 		var/list/members = model[1]
 
-		var/turfs = 0
-		var/areas = 0
+		var/turfs = ZERO
+		var/areas = ZERO
 		for(var/i in 1 to members.len)
 			var/atom/path = members[i]
 
 			turfs += ispath(path, /turf)
 			areas += ispath(path, /area)
 
-		if(turfs == 0)
+		if(turfs == ZERO)
 			report.loadable = FALSE
 			LAZYADD(report.bad_keys[key], "no turf")
 		else if(turfs > 1)

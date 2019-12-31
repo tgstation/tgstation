@@ -30,7 +30,7 @@
 
 /datum/looping_sound/geiger/stop()
 	. = ..()
-	last_radiation = 0
+	last_radiation = ZERO
 
 #undef RAD_GEIGER_LOW
 #undef RAD_GEIGER_MEDIUM

@@ -27,19 +27,19 @@
 	var/suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
 	var/suppressed_volume = 60
 	var/can_unsuppress = TRUE
-	var/recoil = 0						//boom boom shake the room
+	var/recoil = ZERO						//boom boom shake the room
 	var/clumsy_check = TRUE
 	var/obj/item/ammo_casing/chambered = null
 	trigger_guard = TRIGGER_GUARD_NORMAL	//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
 	var/sawn_desc = null				//description change if weapon is sawn-off
 	var/sawn_off = FALSE
 	var/burst_size = 1					//how large a burst is
-	var/fire_delay = 0					//rate of fire for burst firing and semi auto
-	var/firing_burst = 0				//Prevent the weapon from firing again while already firing
-	var/semicd = 0						//cooldown handler
+	var/fire_delay = ZERO					//rate of fire for burst firing and semi auto
+	var/firing_burst = ZERO				//Prevent the weapon from firing again while already firing
+	var/semicd = ZERO						//cooldown handler
 	var/weapon_weight = WEAPON_LIGHT
 	var/dual_wield_spread = 24			//additional spread when dual wielding
-	var/spread = 0						//Spread induced by the gun itself.
+	var/spread = ZERO						//Spread induced by the gun itself.
 	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
 
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
@@ -56,23 +56,23 @@
 	var/can_bayonet = FALSE //if a bayonet can be added or removed if it already has one.
 	var/obj/item/kitchen/knife/bayonet
 	var/mutable_appearance/knife_overlay
-	var/knife_x_offset = 0
-	var/knife_y_offset = 0
+	var/knife_x_offset = ZERO
+	var/knife_y_offset = ZERO
 
-	var/ammo_x_offset = 0 //used for positioning ammo count overlay on sprite
-	var/ammo_y_offset = 0
-	var/flight_x_offset = 0
-	var/flight_y_offset = 0
+	var/ammo_x_offset = ZERO //used for positioning ammo count overlay on sprite
+	var/ammo_y_offset = ZERO
+	var/flight_x_offset = ZERO
+	var/flight_y_offset = ZERO
 
 	//Zooming
 	var/zoomable = FALSE //whether the gun generates a Zoom action on creation
 	var/zoomed = FALSE //Zoom toggle
 	var/zoom_amt = 3 //Distance in TURFs to move the user's screen forward (the "zoom" effect)
-	var/zoom_out_amt = 0
+	var/zoom_out_amt = ZERO
 	var/datum/action/toggle_scope_zoom/azoom
 
-	var/automatic = 0 //can gun use it, 0 is no, anything above 0 is the delay between clicks in ds
-	var/pb_knockback = 0
+	var/automatic = ZERO //can gun use it, ZERO is no, anything above ZERO is the delay between clicks in ds
+	var/pb_knockback = ZERO
 
 /obj/item/gun/Initialize()
 	. = ..()
@@ -156,7 +156,7 @@
 	playsound(src, dry_fire_sound, 30, TRUE)
 
 
-/obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
+/obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = ZERO, atom/pbtarget = null, message = 1)
 	if(recoil)
 		shake_camera(user, recoil + 1, recoil)
 
@@ -170,7 +170,7 @@
 								"<span class='danger'>You fire [src] point blank at [pbtarget]!</span>", \
 								"<span class='hear'>You hear a gunshot!</span>", COMBAT_MESSAGE_RANGE, pbtarget)
 				to_chat(pbtarget, "<span class='userdanger'>[user] fires [src] point blank at you!</span>")
-				if(pb_knockback > 0 && ismob(pbtarget))
+				if(pb_knockback > ZERO && ismob(pbtarget))
 					var/mob/PBT = pbtarget
 					var/atom/throw_target = get_edge_target_turf(PBT, user.dir)
 					PBT.throw_at(throw_target, pb_knockback, 2)
@@ -227,8 +227,8 @@
 		to_chat(user, "<span class='warning'>You need two hands to fire \the [src]!</span>")
 		return
 	//DUAL (or more!) WIELDING
-	var/bonus_spread = 0
-	var/loop_counter = 0
+	var/bonus_spread = ZERO
+	var/loop_counter = ZERO
 	if(ishuman(user) && user.a_intent == INTENT_HARM)
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/gun/G in H.held_items)
@@ -270,7 +270,7 @@
 /obj/item/gun/proc/recharge_newshot()
 	return
 
-/obj/item/gun/proc/process_burst(mob/living/user, atom/target, message = TRUE, params=null, zone_override = "", sprd = 0, randomized_gun_spread = 0, randomized_bonus_spread = 0, rand_spr = 0, iteration = 0)
+/obj/item/gun/proc/process_burst(mob/living/user, atom/target, message = TRUE, params=null, zone_override = "", sprd = ZERO, randomized_gun_spread = ZERO, randomized_bonus_spread = ZERO, rand_spr = ZERO, iteration = ZERO)
 	if(!user || !firing_burst)
 		firing_burst = FALSE
 		return FALSE
@@ -296,7 +296,7 @@
 			if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
 				shoot_live_shot(user, 1, target, message)
 			else
-				shoot_live_shot(user, 0, target, message)
+				shoot_live_shot(user, ZERO, target, message)
 			if (iteration >= burst_size)
 				firing_burst = FALSE
 	else
@@ -307,7 +307,7 @@
 	update_icon()
 	return TRUE
 
-/obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = ZERO)
 	if(user)
 		SEND_SIGNAL(user, COMSIG_MOB_FIRED_GUN, user, target, params, zone_override)
 
@@ -316,14 +316,14 @@
 	if(semicd)
 		return
 
-	var/sprd = 0
-	var/randomized_gun_spread = 0
+	var/sprd = ZERO
+	var/randomized_gun_spread = ZERO
 	var/rand_spr = rand()
 	if(spread)
-		randomized_gun_spread =	rand(0,spread)
+		randomized_gun_spread =	rand(ZERO,spread)
 	if(HAS_TRAIT(user, TRAIT_POOR_AIM)) //nice shootin' tex
 		bonus_spread += 25
-	var/randomized_bonus_spread = rand(0, bonus_spread)
+	var/randomized_bonus_spread = rand(ZERO, bonus_spread)
 
 	if(burst_size > 1)
 		firing_burst = TRUE
@@ -344,7 +344,7 @@
 				if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
 					shoot_live_shot(user, 1, target, message)
 				else
-					shoot_live_shot(user, 0, target, message)
+					shoot_live_shot(user, ZERO, target, message)
 		else
 			shoot_with_empty_chamber(user)
 			return
@@ -393,7 +393,7 @@
 				return
 			to_chat(user, "<span class='notice'>You click [S] into place on [src].</span>")
 			if(S.on)
-				set_light(0)
+				set_light(ZERO)
 			gun_light = S
 			update_gunlight()
 			alight = new(src)
@@ -492,7 +492,7 @@
 		if(gun_light.on)
 			set_light(gun_light.brightness_on)
 		else
-			set_light(0)
+			set_light(ZERO)
 		cut_overlays(flashlight_overlay, TRUE)
 		var/state = "[gunlight_state][gun_light.on? "_on":""]"	//Generic state.
 		if(gun_light.icon_state in icon_states('icons/obj/guns/flashlights.dmi'))	//Snowflake state?
@@ -503,7 +503,7 @@
 		add_overlay(flashlight_overlay, TRUE)
 		add_overlay(knife_overlay, TRUE)
 	else
-		set_light(0)
+		set_light(ZERO)
 		cut_overlays(flashlight_overlay, TRUE)
 		flashlight_overlay = null
 	update_icon(TRUE)
@@ -600,8 +600,8 @@
 		zoomed = forced_zoom
 
 	if(zoomed)
-		var/_x = 0
-		var/_y = 0
+		var/_x = ZERO
+		var/_y = ZERO
 		switch(user.dir)
 			if(NORTH)
 				_y = zoom_amt
@@ -617,8 +617,8 @@
 		user.client.pixel_y = world.icon_size*_y
 	else
 		user.client.change_view(CONFIG_GET(string/default_view))
-		user.client.pixel_x = 0
-		user.client.pixel_y = 0
+		user.client.pixel_x = ZERO
+		user.client.pixel_y = ZERO
 	return zoomed
 
 //Proc, so that gun accessories/scopes/etc. can easily add zooming.

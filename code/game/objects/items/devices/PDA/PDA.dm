@@ -3,7 +3,7 @@
 
 GLOBAL_LIST_EMPTY(PDAs)
 
-#define PDA_SCANNER_NONE		0
+#define PDA_SCANNER_NONE		ZERO
 #define PDA_SCANNER_MEDICAL		1
 #define PDA_SCANNER_FORENSICS	2 //unused
 #define PDA_SCANNER_REAGENT		3
@@ -29,9 +29,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	//Main variables
 	var/owner = null // String name of owner
-	var/default_cartridge = 0 // Access level defined by cartridge
+	var/default_cartridge = ZERO // Access level defined by cartridge
 	var/obj/item/cartridge/cartridge = null //current cartridge
-	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
+	var/mode = ZERO //Controls what menu the PDA will display. ZERO is hub; the rest are either built in or based on cartridge.
 	var/icon_alert = "pda-r" //Icon to be overlayed for message alerts. Taken from the pda icon file.
 	var/font_index = 0 //This int tells DM which font is currently selected and lets DM know when the last font has been selected so that it can cycle back to the first font when "toggle font" is pressed again.
 	var/font_mode = "font-family:monospace;" //The currently selected font.
@@ -41,7 +41,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	#define FONT_SHARE "font-family:\"Share Tech Mono\", monospace;letter-spacing:0px;"
 	#define FONT_ORBITRON "font-family:\"Orbitron\", monospace;letter-spacing:0px; font-size:15px"
 	#define FONT_VT "font-family:\"VT323\", monospace;letter-spacing:1px;"
-	#define MODE_MONO 0
+	#define MODE_MONO ZERO
 	#define MODE_SHARE 1
 	#define MODE_ORBITRON 2
 	#define MODE_VT 3
@@ -57,8 +57,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/last_everyone //No text for everyone spamming
 	var/last_noise //Also no honk spamming that's bad too
 	var/ttone = "beep" //The ringtone!
-	var/honkamt = 0 //How many honks left when infected with honk.exe
-	var/mimeamt = 0 //How many silence left when infected with mime.exe
+	var/honkamt = ZERO //How many honks left when infected with honk.exe
+	var/mimeamt = ZERO //How many silence left when infected with mime.exe
 	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function
 	var/notehtml = ""
 	var/notescanned = FALSE // True if what is in the notekeeper was from a paper.
@@ -77,7 +77,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
-	var/overlays_x_offset = 0	//x offset to use for certain overlays
+	var/overlays_x_offset = ZERO	//x offset to use for certain overlays
 
 	var/underline_flag = TRUE //flag for underline
 
@@ -216,12 +216,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	dat += "<a href='byond://?src=[REF(src)];choice=Refresh'>[PDAIMG(refresh)]Refresh</a>"
 
-	if ((!isnull(cartridge)) && (mode == 0))
+	if ((!isnull(cartridge)) && (mode == ZERO))
 		dat += " | <a href='byond://?src=[REF(src)];choice=Eject'>[PDAIMG(eject)]Eject [cartridge]</a>"
 	if (mode)
 		dat += " | <a href='byond://?src=[REF(src)];choice=Return'>[PDAIMG(menu)]Return</a>"
 
-	if (mode == 0)
+	if (mode == ZERO)
 		dat += "<div align=\"center\">"
 		dat += "<br><a href='byond://?src=[REF(src)];choice=Toggle_Font'>Toggle Font</a>"
 		dat += " | <a href='byond://?src=[REF(src)];choice=Change_Color'>Change Color</a>"
@@ -236,7 +236,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		dat += "<a href='byond://?src=[REF(src)];choice=Refresh'>[PDAIMG(refresh)]Retry</a>"
 	else
 		switch (mode)
-			if (0)
+			if (ZERO)
 				dat += "<h2>PERSONAL DATA ASSISTANT v.1.2</h2>"
 				dat += "Owner: [owner], [ownjob]<br>"
 				dat += text("ID: <a href='?src=[REF(src)];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]")
@@ -340,7 +340,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += "<h4>[PDAIMG(menu)] Detected PDAs</h4>"
 
 				dat += "<ul>"
-				var/count = 0
+				var/count = ZERO
 
 				if (!toff)
 					for (var/obj/item/pda/P in get_viewable_pdas(sort_by_job))
@@ -352,7 +352,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 						dat += "</li>"
 						count++
 				dat += "</ul>"
-				if (count == 0)
+				if (count == ZERO)
 					dat += "None detected.<br>"
 				else if(cartridge && cartridge.spam_enabled)
 					dat += "<a href='byond://?src=[REF(src)];choice=MessageAll'>Send To All</a>"
@@ -384,7 +384,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					if (total_moles)
 						for(var/id in env_gases)
 							var/gas_level = env_gases[id][MOLES]/total_moles
-							if(gas_level > 0)
+							if(gas_level > ZERO)
 								dat += "[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_level*100, 0.01)]%<br>"
 
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
@@ -439,11 +439,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 			if("Return")//Return
 				if(mode<=9)
-					mode = 0
+					mode = ZERO
 				else
 					mode = round(mode/10)
 					if(mode==4 || mode == 5)//Fix for cartridges. Redirects to hub.
-						mode = 0
+						mode = ZERO
 			if ("Authenticate")//Checks for ID
 				id_check(U)
 			if("UpdateInfo")
@@ -457,7 +457,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 //MENU FUNCTIONS===================================
 
 			if("0")//Hub
-				mode = 0
+				mode = ZERO
 			if("1")//Notes
 				mode = 1
 			if("2")//Messenger
@@ -467,7 +467,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("3")//Atmos scan
 				mode = 3
 			if("4")//Redirects to hub
-				mode = 0
+				mode = ZERO
 
 
 //MAIN FUNCTIONS===================================
@@ -582,7 +582,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 //LINK FUNCTIONS===================================
 
 			else//Cartridge menu linking
-				mode = max(text2num(href_list["choice"]), 0)
+				mode = max(text2num(href_list["choice"]), ZERO)
 
 	else//If not in range, can't interact or not using the pda.
 		U.unset_machine()
@@ -594,7 +594,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if (mode == 2 || mode == 21)//To clear message overlays.
 		update_icon()
 
-	if ((honkamt > 0) && (prob(60)))//For clown virus.
+	if ((honkamt > ZERO) && (prob(60)))//For clown virus.
 		honkamt--
 		playsound(src, 'sound/items/bikehorn.ogg', 30, TRUE)
 
@@ -799,7 +799,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return
 	if(fon)
 		fon = FALSE
-		set_light(0)
+		set_light(ZERO)
 	else if(f_lum)
 		fon = TRUE
 		set_light(f_lum)
@@ -944,7 +944,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	switch(scanmode)
 		if(PDA_SCANNER_REAGENT)
 			if(!isnull(A.reagents))
-				if(A.reagents.reagent_list.len > 0)
+				if(A.reagents.reagent_list.len > ZERO)
 					var/reagents_length = A.reagents.reagent_list.len
 					to_chat(user, "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.</span>")
 					for (var/re in A.reagents.reagent_list)
@@ -1025,7 +1025,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return //won't work if dead
 	var/mob/living/silicon/S = usr
 	if(istype(S) && !isnull(S.aiPDA))
-		//0
+		//ZERO
 		S.aiPDA.silent = !S.aiPDA.silent
 		to_chat(usr, "<span class='notice'>PDA ringer toggled [(S.aiPDA.silent ? "Off" : "On")]!</span>")
 	else

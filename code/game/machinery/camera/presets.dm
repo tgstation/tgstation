@@ -47,7 +47,7 @@
 // AUTONAME
 
 /obj/machinery/camera/autoname
-	var/number = 0 //camera number in area
+	var/number = ZERO //camera number in area
 
 //This camera type automatically sets it's name to whatever the area that it's in is called.
 /obj/machinery/camera/autoname/Initialize()

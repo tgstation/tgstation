@@ -25,7 +25,7 @@
 				U.transferItemToLoc(CELL, src)
 				CELL.charge = min(CELL.charge+cell.charge, CELL.maxcharge)
 				var/obj/item/stock_parts/cell/old_cell = cell
-				old_cell.charge = 0
+				old_cell.charge = ZERO
 				U.put_in_hands(old_cell)
 				old_cell.add_fingerprint(U)
 				old_cell.corrupt()
@@ -38,7 +38,7 @@
 
 	else if(istype(I, /obj/item/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
 		var/obj/item/disk/tech_disk/TD = I
-		var/has_research = 0
+		var/has_research = ZERO
 		if(has_research)//If it has something on it.
 			to_chat(U, "<span class='notice'>Research information detected, processing...</span>")
 			if(do_after(U,s_delay, target = src))

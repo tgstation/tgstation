@@ -5,14 +5,14 @@
 	antag_flag = ROLE_DEVIL
 	false_report_weight = 1
 	protected_jobs = list("Lawyer", "Curator", "Chaplain", "Head of Security", "Captain", "AI")
-	required_players = 0
+	required_players = ZERO
 	required_enemies = 1
 	recommended_enemies = 4
 	reroll_friendly = 1
-	enemy_minimum_age = 0
+	enemy_minimum_age = ZERO
 
 	var/traitors_possible = 4 //hard limit on devils if scaling is turned off
-	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
+	var/num_modifier = ZERO // Used for gamemodes, that are a child of traitor, that need more than the usual.
 	var/objective_count = 2
 	var/minimum_devils = 1
 
@@ -34,7 +34,7 @@
 	else
 		num_devils = max(minimum_devils, min(num_players(), traitors_possible))
 
-	for(var/j = 0, j < num_devils, j++)
+	for(var/j = ZERO, j < num_devils, j++)
 		if (!antag_candidates.len)
 			break
 		var/datum/mind/devil = antag_pick(antag_candidates)

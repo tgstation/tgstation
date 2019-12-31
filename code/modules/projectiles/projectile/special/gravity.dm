@@ -3,7 +3,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
 	hitsound = 'sound/weapons/wave.ogg'
-	damage = 0
+	damage = ZERO
 	damage_type = BRUTE
 	nodamage = TRUE
 	color = "#33CCFF"
@@ -38,7 +38,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
 	hitsound = 'sound/weapons/wave.ogg'
-	damage = 0
+	damage = ZERO
 	damage_type = BRUTE
 	nodamage = TRUE
 	color = "#FF6600"
@@ -72,7 +72,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
 	hitsound = 'sound/weapons/wave.ogg'
-	damage = 0
+	damage = ZERO
 	damage_type = BRUTE
 	nodamage = TRUE
 	color = "#101010"

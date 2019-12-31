@@ -147,7 +147,7 @@ All the important duct code:
 	if(duct)
 		duct.remove_duct(src)
 	lose_neighbours()
-	reset_connects(0)
+	reset_connects(ZERO)
 	update_icon()
 	if(ispath(drop_on_wrench) && !QDELING(src))
 		new drop_on_wrench(drop_location())
@@ -181,7 +181,7 @@ All the important duct code:
 /obj/machinery/duct/proc/generate_connects()
 	if(lock_connects)
 		return
-	connects = 0
+	connects = ZERO
 	for(var/A in neighbours)
 		connects |= neighbours[A]
 	update_icon()
@@ -208,7 +208,7 @@ All the important duct code:
 ///remove our connects
 /obj/machinery/duct/proc/reset_connects()
 	if(!lock_connects)
-		connects = 0
+		connects = ZERO
 ///get a list of the ducts we can connect to if we are dumb
 /obj/machinery/duct/proc/get_adjacent_ducts()
 	var/list/adjacents = list()
@@ -241,7 +241,7 @@ All the important duct code:
 		if(SECOND_DUCT_LAYER)
 			offset = -5
 		if(THIRD_DUCT_LAYER)
-			offset = 0
+			offset = ZERO
 		if(FOURTH_DUCT_LAYER)
 			offset = 5
 		if(FIFTH_DUCT_LAYER)

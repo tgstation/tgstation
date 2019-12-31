@@ -22,7 +22,7 @@
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"
 	density = FALSE
-	opacity = 0
+	opacity = ZERO
 
 /obj/machinery/door/poddoor/ert
 	name = "hardened blast door"
@@ -63,7 +63,7 @@
 
 /obj/machinery/door/poddoor/Bumped(atom/movable/AM)
 	if(density)
-		return 0
+		return ZERO
 	else
 		return ..()
 

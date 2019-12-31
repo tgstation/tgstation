@@ -41,5 +41,5 @@
 	if(attacker.a_intent != INTENT_HARM)
 		return
 
-	var/extra_damage = max(0, source.force * damage_multiplier)
+	var/extra_damage = max(ZERO, source.force * damage_multiplier)
 	target.apply_damage(extra_damage, source.damtype, attacker.zone_selected)

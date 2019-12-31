@@ -7,12 +7,12 @@
 	w_class = WEIGHT_CLASS_NORMAL
 
 	var/mob/living/current_target
-	var/last_check = 0
+	var/last_check = ZERO
 	var/check_delay = 10 //Check los as often as possible, max resolution is SSobj tick though
 	var/max_range = 8
-	var/active = 0
+	var/active = ZERO
 	var/datum/beam/current_beam = null
-	var/mounted = 0 //Denotes if this is a handheld or mounted version
+	var/mounted = ZERO //Denotes if this is a handheld or mounted version
 
 	weapon_weight = WEAPON_MEDIUM
 
@@ -37,11 +37,11 @@
 	if(active)
 		qdel(current_beam)
 		current_beam = null
-		active = 0
+		active = ZERO
 		on_beam_release(current_target)
 	current_target = null
 
-/obj/item/gun/medbeam/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/medbeam/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = ZERO)
 	if(isliving(user))
 		add_fingerprint(user)
 
@@ -87,7 +87,7 @@
 	if(mounted)
 		user_turf = get_turf(user)
 	else if(!istype(user_turf))
-		return 0
+		return ZERO
 	var/obj/dummy = new(user_turf)
 	dummy.pass_flags |= PASSTABLE|PASSGLASS|PASSGRILLE //Grille/Glass so it can be used through common windows
 	for(var/turf/turf in getline(user_turf,target))
@@ -95,16 +95,16 @@
 			continue //Mechs are dense and thus fail the check
 		if(turf.density)
 			qdel(dummy)
-			return 0
+			return ZERO
 		for(var/atom/movable/AM in turf)
 			if(!AM.CanPass(dummy,turf,1))
 				qdel(dummy)
-				return 0
+				return ZERO
 		for(var/obj/effect/ebeam/medical/B in turf)// Don't cross the str-beams!
 			if(B.owner.origin != current_beam.origin)
-				explosion(B.loc,0,3,5,8)
+				explosion(B.loc,ZERO,3,5,8)
 				qdel(dummy)
-				return 0
+				return ZERO
 	qdel(dummy)
 	return 1
 

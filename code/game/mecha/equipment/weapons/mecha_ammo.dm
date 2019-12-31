@@ -6,7 +6,7 @@
 	icon_state = "empty"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	var/rounds = 0
+	var/rounds = ZERO
 	var/round_term = "round"
 	var/direct_load //For weapons where we re-load the weapon itself rather than adding to the ammo storage.
 	var/load_audio = "sound/weapons/gun_magazine_insert_empty_1.ogg"

@@ -33,7 +33,7 @@
 	weight = (length(goodPrefixes) + length(badPrefixes)) * 10
 
 /datum/fantasy_affix/cosmetic_prefixes/apply(datum/component/fantasy/comp, newName)
-	if(comp.quality > 0 || (comp.quality == 0 && prob(50)))
+	if(comp.quality > ZERO || (comp.quality == ZERO && prob(50)))
 		return "[pick(goodPrefixes)] [newName]"
 	else
 		return "[pick(badPrefixes)] [newName]"

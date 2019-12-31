@@ -1,6 +1,6 @@
 /datum/export/large/crate
 	cost = 500
-	k_elasticity = 0
+	k_elasticity = ZERO
 	unit_name = "crate"
 	export_types = list(/obj/structure/closet/crate)
 	exclude_types = list(/obj/structure/closet/crate/large, /obj/structure/closet/crate/wooden)
@@ -32,7 +32,7 @@
 	export_types = list(/obj/structure/closet/crate/coffin)
 
 /datum/export/large/reagent_dispenser
-	cost = 100 // +0-400 depending on amount of reagents left
+	cost = 100 // +ZERO-400 depending on amount of reagents left
 	var/contents_cost = 400
 
 /datum/export/large/reagent_dispenser/get_cost(obj/O)

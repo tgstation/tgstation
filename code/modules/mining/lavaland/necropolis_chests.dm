@@ -451,7 +451,7 @@
 	projectile_type = /obj/projectile/hook/bounty
 
 /obj/projectile/hook/bounty
-	damage = 0
+	damage = ZERO
 	paralyze = 20
 
 //Immortality Talisman
@@ -462,7 +462,7 @@
 	icon_state = "talisman"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	actions_types = list(/datum/action/item_action/immortality)
-	var/cooldown = 0
+	var/cooldown = ZERO
 
 /obj/item/immortality_talisman/Initialize()
 	. = ..()
@@ -687,7 +687,7 @@
 
 /obj/item/melee/transforming/cleaving_saw/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is [active ? "closing [src] on [user.p_their()] neck" : "opening [src] into [user.p_their()] chest"]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	transform_cooldown = 0
+	transform_cooldown = ZERO
 	transform_weapon(user, TRUE)
 	return BRUTELOSS
 
@@ -727,7 +727,7 @@
 /obj/item/melee/transforming/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))
 		if(!active)
-			faction_bonus_force = 0
+			faction_bonus_force = ZERO
 		..()
 		if(!active)
 			faction_bonus_force = initial(faction_bonus_force)
@@ -735,7 +735,7 @@
 		var/turf/user_turf = get_turf(user)
 		var/dir_to_target = get_dir(user_turf, get_turf(target))
 		swiping = TRUE
-		var/static/list/cleaving_saw_cleave_angles = list(0, -45, 45) //so that the animation animates towards the target clicked and not towards a side target
+		var/static/list/cleaving_saw_cleave_angles = list(ZERO, -45, 45) //so that the animation animates towards the target clicked and not towards a side target
 		for(var/i in cleaving_saw_cleave_angles)
 			var/turf/T = get_step(user_turf, turn(dir_to_target, i))
 			for(var/mob/living/L in T)
@@ -782,7 +782,7 @@
 	throwforce = 1
 	hitsound = 'sound/effects/ghost2.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "rended")
-	var/summon_cooldown = 0
+	var/summon_cooldown = ZERO
 	var/list/mob/dead/observer/spirits
 
 /obj/item/melee/ghost_sword/Initialize()
@@ -822,7 +822,7 @@
 	ghost_check()
 
 /obj/item/melee/ghost_sword/proc/ghost_check()
-	var/ghost_counter = 0
+	var/ghost_counter = ZERO
 	var/turf/T = get_turf(src)
 	var/list/contents = T.GetAllContents()
 	var/mob/dead/observer/current_spirits = list()
@@ -835,7 +835,7 @@
 			continue
 		var/mob/dead/observer/G = i
 		ghost_counter++
-		G.invisibility = 0
+		G.invisibility = ZERO
 		current_spirits |= G
 
 	for(var/mob/dead/observer/G in spirits - current_spirits)
@@ -846,16 +846,16 @@
 	return ghost_counter
 
 /obj/item/melee/ghost_sword/attack(mob/living/target, mob/living/carbon/human/user)
-	force = 0
+	force = ZERO
 	var/ghost_counter = ghost_check()
 
-	force = CLAMP((ghost_counter * 4), 0, 75)
+	force = CLAMP((ghost_counter * 4), ZERO, 75)
 	user.visible_message("<span class='danger'>[user] strikes with the force of [ghost_counter] vengeful spirits!</span>")
 	..()
 
-/obj/item/melee/ghost_sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/melee/ghost_sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = ZERO, damage = ZERO, attack_type = MELEE_ATTACK)
 	var/ghost_counter = ghost_check()
-	final_block_chance += CLAMP((ghost_counter * 5), 0, 75)
+	final_block_chance += CLAMP((ghost_counter * 5), ZERO, 75)
 	owner.visible_message("<span class='danger'>[owner] is protected by a ring of [ghost_counter] ghosts!</span>")
 	return ..()
 
@@ -903,7 +903,7 @@
 	desc = "What do dragons have to do with Space Station 13?"
 	stage_prob = 20
 	severity = DISEASE_SEVERITY_BIOHAZARD
-	visibility_flags = 0
+	visibility_flags = ZERO
 	stage1	= list("Your bones ache.")
 	stage2	= list("Your skin feels scaly.")
 	stage3	= list("<span class='danger'>You have an overwhelming urge to terrorize some peasants.</span>", "<span class='danger'>Your teeth feel sharper.</span>")
@@ -935,7 +935,7 @@
 	var/create_cooldown = 100
 	var/create_delay = 30
 	var/reset_cooldown = 50
-	var/timer = 0
+	var/timer = ZERO
 	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
 
 /obj/item/lava_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -953,7 +953,7 @@
 			return
 		if(!istype(T, turf_type))
 			var/obj/effect/temp_visual/lavastaff/L = new /obj/effect/temp_visual/lavastaff(T)
-			L.alpha = 0
+			L.alpha = ZERO
 			animate(L, alpha = 255, time = create_delay)
 			user.visible_message("<span class='danger'>[user] points [src] at [T]!</span>")
 			timer = world.time + create_delay + 1
@@ -1103,9 +1103,9 @@
 	actions_types = list(/datum/action/item_action/vortex_recall, /datum/action/item_action/toggle_unfriendly_fire)
 	var/cooldown_time = 20 //how long the cooldown between non-melee ranged attacks is
 	var/chaser_cooldown = 81 //how long the cooldown between firing chasers at mobs is
-	var/chaser_timer = 0 //what our current chaser cooldown is
+	var/chaser_timer = ZERO //what our current chaser cooldown is
 	var/chaser_speed = 0.8 //how fast our chasers are
-	var/timer = 0 //what our current cooldown is
+	var/timer = ZERO //what our current cooldown is
 	var/blast_range = 13 //how long the cardinal blast's walls are
 	var/obj/effect/hierophant/beacon //the associated beacon we teleport to
 	var/teleporting = FALSE //if we ARE teleporting
@@ -1126,7 +1126,7 @@
 			user.dropItemToGround(I)
 	for(var/turf/T in RANGE_TURFS(1, user))
 		var/obj/effect/temp_visual/hierophant/blast/B = new(T, user, TRUE)
-		B.damage = 0
+		B.damage = ZERO
 	user.dropItemToGround(src) //Drop us last, so it goes on top of their stuff
 	qdel(user)
 
@@ -1295,7 +1295,7 @@
 	var/turf/turf_to_teleport_to = get_step(target, get_dir(source, M)) //get position relative to caster
 	if(!turf_to_teleport_to || is_blocked_turf(turf_to_teleport_to, TRUE))
 		return
-	animate(M, alpha = 0, time = 2, easing = EASE_OUT) //fade out
+	animate(M, alpha = ZERO, time = 2, easing = EASE_OUT) //fade out
 	sleep(1)
 	if(!M)
 		return

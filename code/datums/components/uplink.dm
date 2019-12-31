@@ -20,7 +20,7 @@
 	var/datum/game_mode/gamemode
 	var/datum/uplink_purchase_log/purchase_log
 	var/list/uplink_items
-	var/hidden_crystals = 0
+	var/hidden_crystals = ZERO
 	var/unlock_note
 	var/unlock_code
 	var/failsafe_code
@@ -149,7 +149,7 @@
 			"items" = (category == selected_cat ? list() : null))
 		for(var/item in uplink_items[category])
 			var/datum/uplink_item/I = uplink_items[category][item]
-			if(I.limited_stock == 0)
+			if(I.limited_stock == ZERO)
 				continue
 			if(I.restricted_roles.len)
 				var/is_inaccessible = TRUE
@@ -196,7 +196,7 @@
 			active = FALSE
 			locked = TRUE
 			telecrystals += hidden_crystals
-			hidden_crystals = 0
+			hidden_crystals = ZERO
 			SStgui.close_uis(src)
 		if("select")
 			selected_cat = params["category"]
@@ -210,13 +210,13 @@
 	if (!user || user.incapacitated())
 		return
 
-	if(telecrystals < U.cost || U.limited_stock == 0)
+	if(telecrystals < U.cost || U.limited_stock == ZERO)
 		return
 	telecrystals -= U.cost
 
 	U.purchase(user, src)
 
-	if(U.limited_stock > 0)
+	if(U.limited_stock > ZERO)
 		U.limited_stock -= 1
 
 	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(U.name)]", "[U.cost]"))
@@ -254,7 +254,7 @@
 	interact(null, user)
 	to_chat(user, "<span class='hear'>The PDA softly beeps.</span>")
 	user << browse(null, "window=pda")
-	master.mode = 0
+	master.mode = ZERO
 	return COMPONENT_STOP_RINGTONE_CHANGE
 
 /datum/component/uplink/proc/check_detonate()
@@ -284,7 +284,7 @@
 	if(compare_list(previous_attempts, unlock_code))
 		locked = FALSE
 		previous_attempts.Cut()
-		master.degrees = 0
+		master.degrees = ZERO
 		interact(null, user)
 		to_chat(user, "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>")
 

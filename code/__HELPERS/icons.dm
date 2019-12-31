@@ -61,16 +61,16 @@ RGB isn't the only way to represent color. Sometimes it's more useful to work wi
     and no value at all is black.
 
 Just as BYOND uses "#rrggbb" to represent RGB values, a similar format is used for HSV: "#hhhssvv". The hue is three
-hex digits because it ranges from 0 to 0x5FF.
+hex digits because it ranges from ZERO to ZEROx5FF.
 
-    * 0 to 0xFF - red to yellow
-    * 0x100 to 0x1FF - yellow to green
-    * 0x200 to 0x2FF - green to cyan
-    * 0x300 to 0x3FF - cyan to blue
-    * 0x400 to 0x4FF - blue to magenta
-    * 0x500 to 0x5FF - magenta to red
+    * ZERO to ZEROxFF - red to yellow
+    * ZEROx100 to ZEROx1FF - yellow to green
+    * ZEROx200 to ZEROx2FF - green to cyan
+    * ZEROx300 to ZEROx3FF - cyan to blue
+    * ZEROx400 to ZEROx4FF - blue to magenta
+    * ZEROx500 to ZEROx5FF - magenta to red
 
-Knowing this, you can figure out that red is "#000ffff" in HSV format, which is hue 0 (red), saturation 255 (as colorful as possible),
+Knowing this, you can figure out that red is "#000ffff" in HSV format, which is hue ZERO (red), saturation 255 (as colorful as possible),
 value 255 (as bright as possible). Green is "#200ffff" and blue is "#400ffff".
 
 More than one HSV color can match the same RGB color.
@@ -91,22 +91,22 @@ RGBtoHSV(rgb)
 HSVtoRGB(hsv)
     Takes an HSV or HSVA string like "#080aaff" and converts it into an RGB or RGBA color such as "#ff55aa".
 BlendRGB(rgb1, rgb2, amount)
-    Blends between two RGB or RGBA colors using regular RGB blending. If amount is 0, the first color is the result;
-    if 1, the second color is the result. 0.5 produces an average of the two. Values outside the 0 to 1 range are allowed as well.
+    Blends between two RGB or RGBA colors using regular RGB blending. If amount is ZERO, the first color is the result;
+    if 1, the second color is the result. 0.5 produces an average of the two. Values outside the ZERO to 1 range are allowed as well.
     The returned value is an RGB or RGBA color.
 BlendHSV(hsv1, hsv2, amount)
     Blends between two HSV or HSVA colors using HSV blending, which tends to produce nicer results than regular RGB
-    blending because the brightness of the color is left intact. If amount is 0, the first color is the result; if 1,
-    the second color is the result. 0.5 produces an average of the two. Values outside the 0 to 1 range are allowed as well.
+    blending because the brightness of the color is left intact. If amount is ZERO, the first color is the result; if 1,
+    the second color is the result. 0.5 produces an average of the two. Values outside the ZERO to 1 range are allowed as well.
     The returned value is an HSV or HSVA color.
 BlendRGBasHSV(rgb1, rgb2, amount)
     Like BlendHSV(), but the colors used and the return value are RGB or RGBA colors. The blending is done in HSV form.
 HueToAngle(hue)
-    Converts a hue to an angle range of 0 to 360. Angle 0 is red, 120 is green, and 240 is blue.
+    Converts a hue to an angle range of ZERO to 360. Angle ZERO is red, 120 is green, and 240 is blue.
 AngleToHue(hue)
     Converts an angle to a hue in the valid range.
 RotateHue(hsv, angle)
-    Takes an HSV or HSVA value and rotates the hue forward through red, green, and blue by an angle from 0 to 360.
+    Takes an HSV or HSVA value and rotates the hue forward through red, green, and blue by an angle from ZERO to 360.
     (Rotating red by 60° produces yellow.) The result is another HSV or HSVA color with the same saturation and value
     as the original, but a different hue.
 GrayScale(rgb)
@@ -186,16 +186,16 @@ mob
 
 		Stress_Test()
 			set name = "5. Stress Test"
-			for(var/i = 0 to 1000)
+			for(var/i = ZERO to 1000)
 				// The third parameter forces it to generate a new one, even if it's already cached
-				getFlatIcon(src,0,2)
+				getFlatIcon(src,ZERO,2)
 				if(prob(5))
 					Add_Overlay()
 			Browse_Icon()
 
 		Cache_Test()
 			set name = "6. Cache Test"
-			for(var/i = 0 to 1000)
+			for(var/i = ZERO to 1000)
 				getFlatIcon(src)
 			Browse_Icon()
 
@@ -218,11 +218,11 @@ world
 
 	// Multiply all alpha values by this float
 /icon/proc/ChangeOpacity(opacity = 1)
-	MapColors(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,opacity, 0,0,0,0)
+	MapColors(1,ZERO,ZERO,ZERO, ZERO,1,ZERO,ZERO, ZERO,ZERO,1,ZERO, ZERO,ZERO,ZERO,opacity, ZERO,ZERO,ZERO,ZERO)
 
 // Convert to grayscale
 /icon/proc/GrayScale()
-	MapColors(0.3,0.3,0.3, 0.59,0.59,0.59, 0.11,0.11,0.11, 0,0,0)
+	MapColors(0.3,0.3,0.3, 0.59,0.59,0.59, 0.11,0.11,0.11, ZERO,ZERO,ZERO)
 
 /icon/proc/ColorTone(tone)
 	GrayScale()
@@ -233,12 +233,12 @@ world
 	var/icon/upper = (255-gray) ? new(src) : null
 
 	if(gray)
-		MapColors(255/gray,0,0, 0,255/gray,0, 0,0,255/gray, 0,0,0)
+		MapColors(255/gray,ZERO,ZERO, ZERO,255/gray,ZERO, ZERO,ZERO,255/gray, ZERO,ZERO,ZERO)
 		Blend(tone, ICON_MULTIPLY)
-	else SetIntensity(0)
+	else SetIntensity(ZERO)
 	if(255-gray)
 		upper.Blend(rgb(gray,gray,gray), ICON_SUBTRACT)
-		upper.MapColors((255-TONE[1])/(255-gray),0,0,0, 0,(255-TONE[2])/(255-gray),0,0, 0,0,(255-TONE[3])/(255-gray),0, 0,0,0,0, 0,0,0,1)
+		upper.MapColors((255-TONE[1])/(255-gray),0,0,0, 0,(255-TONE[2])/(255-gray),0,0, 0,0,(255-TONE[3])/(255-gray),ZERO, ZERO,ZERO,ZERO,ZERO, ZERO,ZERO,ZERO,1)
 		Blend(upper, ICON_ADD)
 
 // Take the minimum color of two icons; combine transparency as if blending with ICON_ADD
@@ -267,13 +267,13 @@ world
 // make this icon fully opaque--transparent pixels become black
 /icon/proc/Opaque(background = "#000000")
 	SwapColor(null, background)
-	MapColors(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,0, 0,0,0,1)
+	MapColors(1,ZERO,ZERO,ZERO, ZERO,1,ZERO,ZERO, ZERO,ZERO,1,ZERO, ZERO,ZERO,ZERO,ZERO, ZERO,ZERO,ZERO,1)
 
 // Change a grayscale icon into a white icon where the original color becomes the alpha
 // I.e., black -> transparent, gray -> translucent white, white -> solid white
 /icon/proc/BecomeAlphaMask()
 	SwapColor(null, "#000000ff")	// don't let transparent become gray
-	MapColors(0,0,0,0.3, 0,0,0,0.59, 0,0,0,0.11, 0,0,0,0, 1,1,1,0)
+	MapColors(ZERO,ZERO,ZERO,0.3, ZERO,ZERO,ZERO,0.59, ZERO,ZERO,ZERO,0.11, ZERO,ZERO,ZERO,ZERO, 1,1,1,ZERO)
 
 /icon/proc/UseAlphaMask(mask)
 	Opaque()
@@ -288,21 +288,21 @@ world
 /*
 	HSV format is represented as "#hhhssvv" or "#hhhssvvaa"
 
-	Hue ranges from 0 to 0x5ff (1535)
+	Hue ranges from ZERO to ZEROx5ff (1535)
 
-		0x000 = red
-		0x100 = yellow
-		0x200 = green
-		0x300 = cyan
-		0x400 = blue
-		0x500 = magenta
+		ZEROx000 = red
+		ZEROx100 = yellow
+		ZEROx200 = green
+		ZEROx300 = cyan
+		ZEROx400 = blue
+		ZEROx500 = magenta
 
-	Saturation is from 0 to 0xff (255)
+	Saturation is from ZERO to ZEROxff (255)
 
 		More saturation = more color
 		Less saturation = more gray
 
-	Value ranges from 0 to 0xff (255)
+	Value ranges from ZERO to ZEROxff (255)
 
 		Higher value means brighter color
  */
@@ -314,8 +314,8 @@ world
 	// interpret the HSV or HSVA value
 	var/i=1,start=1
 	if(text2ascii(rgb) == 35) ++start // skip opening #
-	var/ch,which=0,r=0,g=0,b=0,alpha=0,usealpha
-	var/digits=0
+	var/ch,which=ZERO,r=ZERO,g=ZERO,b=ZERO,alpha=ZERO,usealpha
+	var/digits=ZERO
 	for(i=start, i<=length(rgb), ++i)
 		ch = text2ascii(rgb, i)
 		if(ch < 48 || (ch > 57 && ch < 65) || (ch > 70 && ch < 97) || ch > 102)
@@ -329,7 +329,7 @@ world
 		return
 	if(digits == 4 || digits == 8)
 		usealpha = 1
-	for(i=start, digits>0, ++i)
+	for(i=start, digits>ZERO, ++i)
 		ch = text2ascii(rgb, i)
 		if(ch >= 48 && ch <= 57)
 			ch -= 48
@@ -341,7 +341,7 @@ world
 			break
 		--digits
 		switch(which)
-			if(0)
+			if(ZERO)
 				r = (r << 4) | ch
 				if(single)
 					r |= r << 4
@@ -379,8 +379,8 @@ world
 	var/i=1,start=1
 	if(text2ascii(hsv) == 35)
 		++start // skip opening #
-	var/ch,which=0,hue=0,sat=0,val=0,alpha=0,usealpha
-	var/digits=0
+	var/ch,which=ZERO,hue=ZERO,sat=ZERO,val=ZERO,alpha=ZERO,usealpha
+	var/digits=ZERO
 	for(i=start, i<=length(hsv), ++i)
 		ch = text2ascii(hsv, i)
 		if(ch < 48 || (ch > 57 && ch < 65) || (ch > 70 && ch < 97) || ch > 102)
@@ -394,7 +394,7 @@ world
 		++which
 	if(digits <= 2)
 		++which
-	for(i=start, digits>0, ++i)
+	for(i=start, digits>ZERO, ++i)
 		ch = text2ascii(hsv, i)
 		if(ch >= 48 && ch <= 57)
 			ch -= 48
@@ -406,7 +406,7 @@ world
 			break
 		--digits
 		switch(which)
-			if(0)
+			if(ZERO)
 				hue = (hue << 4) | ch
 				if(digits == (usealpha ? 6 : 4))
 					++which
@@ -416,7 +416,7 @@ world
 					++which
 			if(2)
 				val = (val << 4) | ch
-				if(digits == (usealpha ? 2 : 0))
+				if(digits == (usealpha ? 2 : ZERO))
 					++which
 			if(3)
 				alpha = (alpha << 4) | ch
@@ -438,8 +438,8 @@ world
 
 	// Compress hue into easier-to-manage range
 	hue -= hue >> 8
-	if(hue >= 0x5fa)
-		hue -= 0x5fa
+	if(hue >= ZEROx5fa)
+		hue -= ZEROx5fa
 
 	var/hi,mid,lo,r,g,b
 	hi = val
@@ -470,8 +470,8 @@ world
 	var/lo = min(r,g,b)
 
 	var/val = hi
-	var/sat = hi ? round((hi-lo) * 255 / hi, 1) : 0
-	var/hue = 0
+	var/sat = hi ? round((hi-lo) * 255 / hi, 1) : ZERO
+	var/hue = ZERO
 
 	if(sat)
 		var/dir
@@ -490,20 +490,20 @@ world
 	return hsv(hue, sat, val, (RGB.len>3 ? RGB[4] : null))
 
 /proc/hsv(hue, sat, val, alpha)
-	if(hue < 0 || hue >= 1536)
+	if(hue < ZERO || hue >= 1536)
 		hue %= 1536
-	if(hue < 0)
+	if(hue < ZERO)
 		hue += 1536
-	if((hue & 0xFF) == 0xFF)
+	if((hue & ZEROxFF) == ZEROxFF)
 		++hue
 		if(hue >= 1536)
-			hue = 0
-	if(sat < 0)
-		sat = 0
+			hue = ZERO
+	if(sat < ZERO)
+		sat = ZERO
 	if(sat > 255)
 		sat = 255
-	if(val < 0)
-		val = 0
+	if(val < ZERO)
+		val = ZERO
 	if(val > 255)
 		val = 255
 	. = "#"
@@ -515,8 +515,8 @@ world
 	. += TO_HEX_DIGIT(val >> 4)
 	. += TO_HEX_DIGIT(val)
 	if(!isnull(alpha))
-		if(alpha < 0)
-			alpha = 0
+		if(alpha < ZERO)
+			alpha = ZERO
 		if(alpha > 255)
 			alpha = 255
 		. += TO_HEX_DIGIT(alpha >> 4)
@@ -525,11 +525,11 @@ world
 /*
 	Smooth blend between HSV colors
 
-	amount=0 is the first color
+	amount=ZERO is the first color
 	amount=1 is the second color
 	amount=0.5 is directly between the two colors
 
-	amount<0 or amount>1 are allowed
+	amount<ZERO or amount>1 are allowed
  */
 /proc/BlendHSV(hsv1, hsv2, amount)
 	var/list/HSV1 = ReadHSV(hsv1)
@@ -547,9 +547,9 @@ world
 		HSV1[1] %= 1536
 	if(HSV2[1] > 1536)
 		HSV2[1] %= 1536
-	if(HSV1[1] < 0)
+	if(HSV1[1] < ZERO)
 		HSV1[1] += 1536
-	if(HSV2[1] < 0)
+	if(HSV2[1] < ZERO)
 		HSV2[1] += 1536
 	if(!HSV1[3]) {HSV1[1] = 0; HSV1[2] = 0}
 	if(!HSV2[3]) {HSV2[1] = 0; HSV2[2] = 0}
@@ -581,9 +581,9 @@ world
 	var/alpha = usealpha ? round(HSV1[4] + (HSV2[4] - HSV1[4]) * amount, 1) : null
 
 	// normalize hue
-	if(hue < 0 || hue >= 1530)
+	if(hue < ZERO || hue >= 1530)
 		hue %= 1530
-	if(hue < 0)
+	if(hue < ZERO)
 		hue += 1530
 	// decompress hue
 	hue += round(hue / 255)
@@ -593,11 +593,11 @@ world
 /*
 	Smooth blend between RGB colors
 
-	amount=0 is the first color
+	amount=ZERO is the first color
 	amount=1 is the second color
 	amount=0.5 is directly between the two colors
 
-	amount<0 or amount>1 are allowed
+	amount<ZERO or amount>1 are allowed
  */
 /proc/BlendRGB(rgb1, rgb2, amount)
 	var/list/RGB1 = ReadRGB(rgb1)
@@ -622,9 +622,9 @@ world
 
 /proc/HueToAngle(hue)
 	// normalize hsv in case anything is screwy
-	if(hue < 0 || hue >= 1536)
+	if(hue < ZERO || hue >= 1536)
 		hue %= 1536
-	if(hue < 0)
+	if(hue < ZERO)
 		hue += 1536
 	// Compress hue into easier-to-manage range
 	hue -= hue >> 8
@@ -632,7 +632,7 @@ world
 
 /proc/AngleToHue(angle)
 	// normalize hsv in case anything is screwy
-	if(angle < 0 || angle >= 360)
+	if(angle < ZERO || angle >= 360)
 		angle -= 360 * round(angle / 360)
 	var/hue = angle * (1530/360)
 	// Decompress hue
@@ -647,20 +647,20 @@ world
 	// normalize hsv in case anything is screwy
 	if(HSV[1] >= 1536)
 		HSV[1] %= 1536
-	if(HSV[1] < 0)
+	if(HSV[1] < ZERO)
 		HSV[1] += 1536
 
 	// Compress hue into easier-to-manage range
 	HSV[1] -= HSV[1] >> 8
 
-	if(angle < 0 || angle >= 360)
+	if(angle < ZERO || angle >= 360)
 		angle -= 360 * round(angle / 360)
 	HSV[1] = round(HSV[1] + angle * (1530/360), 1)
 
 	// normalize hue
 	if(HSV[1] < 0 || HSV[1] >= 1530)
 		HSV[1] %= 1530
-	if(HSV[1] < 0)
+	if(HSV[1] < ZERO)
 		HSV[1] += 1530
 	// decompress hue
 	HSV[1] += round(HSV[1] / 255)
@@ -729,7 +729,7 @@ world
 				SELF_ICON.Blend(A.color,ICON_MULTIPLY)} \
 		} \
 		##SETVAR=SELF_ICON;\
-		} while (0)
+		} while (ZERO)
 	#define INDEX_X_LOW 1
 	#define INDEX_X_HIGH 2
 	#define INDEX_Y_LOW 3
@@ -744,7 +744,7 @@ world
 	#define addY1 add_size[INDEX_Y_LOW]
 	#define addY2 add_size[INDEX_Y_HIGH]
 
-	if(!A || A.alpha <= 0)
+	if(!A || A.alpha <= ZERO)
 		return BLANK
 
 	var/noIcon = FALSE
@@ -812,7 +812,7 @@ world
 			layers[copy] = A.layer
 
 		// Loop through the underlays, then overlays, sorting them into the layers list
-		for(var/process_set in 0 to 1)
+		for(var/process_set in ZERO to 1)
 			var/list/process = process_set? A.overlays : A.underlays
 			for(var/i in 1 to process.len)
 				var/image/current = process[i]
@@ -821,7 +821,7 @@ world
 				if(current.plane != FLOAT_PLANE && current.plane != A.plane)
 					continue
 				var/current_layer = current.layer
-				if(current_layer < 0)
+				if(current_layer < ZERO)
 					if(current_layer <= -1000)
 						return flat
 					current_layer = process_set + A.layer + current_layer / 1000
@@ -844,7 +844,7 @@ world
 
 		for(var/V in layers)
 			var/image/I = V
-			if(I.alpha == 0)
+			if(I.alpha == ZERO)
 				continue
 
 			if(I == copy) // 'I' is an /image based on the object being flattened.
@@ -887,7 +887,7 @@ world
 		if(no_anim)
 			//Clean up repeated frames
 			var/icon/cleaned = new /icon()
-			cleaned.Insert(flat, "", SOUTH, 1, 0)
+			cleaned.Insert(flat, "", SOUTH, 1, ZERO)
 			. = cleaned
 		else
 			. = icon(flat, "", SOUTH)
@@ -974,7 +974,7 @@ world
 
 //Dwarf fortress style icons based on letters (defaults to the first letter of the Atom's name)
 //By vg's ComicIronic
-/proc/getLetterImage(atom/A, letter= "", uppercase = 0)
+/proc/getLetterImage(atom/A, letter= "", uppercase = ZERO)
 	if(!A)
 		return
 
@@ -1013,7 +1013,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	var/image/final_image = image(icon, icon_state=icon_state, loc = A)
 
 	if(ispath(SA, /mob/living/simple_animal/butterfly))
-		final_image.color = rgb(rand(0,255), rand(0,255), rand(0,255))
+		final_image.color = rgb(rand(ZERO,255), rand(ZERO,255), rand(ZERO,255))
 
 	// For debugging
 	final_image.text = initial(SA.name)
@@ -1023,15 +1023,15 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 //Returns the same icon specifed in the argument, but with the pixel drawn
 /proc/DrawPixel(icon/I,colour,drawX,drawY)
 	if(!I)
-		return 0
+		return ZERO
 
 	var/Iwidth = I.Width()
 	var/Iheight = I.Height()
 
-	if(drawX > Iwidth || drawX <= 0)
-		return 0
-	if(drawY > Iheight || drawY <= 0)
-		return 0
+	if(drawX > Iwidth || drawX <= ZERO)
+		return ZERO
+	if(drawY > Iheight || drawY <= ZERO)
+		return ZERO
 
 	I.DrawBox(colour,drawX, drawY)
 	return I
@@ -1044,7 +1044,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	if(J) //Only set the icon if it succeeded, the icon without the pixel is 1000x better than a black square.
 		icon = J
 		return J
-	return 0
+	return ZERO
 
 //For creating consistent icons for human looking simple animals
 /proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs, dummy_key, showDirs = GLOB.cardinals, outfit_override = null)
@@ -1079,7 +1079,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 /image/proc/setDir(newdir)
 	dir = newdir
 
-GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0,0,0)))
+GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(ZERO,ZERO,ZERO)))
 
 /obj/proc/make_frozen_visual()
 	// Used to make the frozen item visuals for Freon.

@@ -61,7 +61,7 @@
 		if (get_step(T,direction) in mother.map)
 			continue
 		return 1
-	return 0
+	return ZERO
 
 /datum/mapGenerator/repressurize
 	modules = list(/datum/mapGeneratorModule/bottomLayer/repressurize)

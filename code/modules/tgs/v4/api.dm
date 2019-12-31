@@ -161,7 +161,7 @@
 			return
 		if(TGS4_TOPIC_CHANGE_PORT)
 			var/new_port = text2num(params[TGS4_PARAMETER_DATA])
-			if (!(new_port > 0))
+			if (!(new_port > ZERO))
 				return "Invalid port: [new_port]"
 
 			//the topic still completes, miraculously
@@ -192,7 +192,7 @@
 	//we need some port open at this point to facilitate return communication
 	if(!world.port)
 		requesting_new_port = TRUE
-		if(!world.OpenPort(0)) //open any port
+		if(!world.OpenPort(ZERO)) //open any port
 			TGS_ERROR_LOG("Unable to open random port to retrieve new port![TGS4_PORT_CRITFAIL_MESSAGE]")
 			del(world)
 
@@ -205,7 +205,7 @@
 			del(world)
 
 		var/new_port = new_port_json[TGS4_PARAMETER_DATA]
-		if(!isnum(new_port) || new_port <= 0)
+		if(!isnum(new_port) || new_port <= ZERO)
 			TGS_ERROR_LOG("Malformed new port json ([json_encode(new_port_json)])![TGS4_PORT_CRITFAIL_MESSAGE]")
 			del(world)
 
@@ -222,7 +222,7 @@
 	fdel(server_commands_json_path)
 	text2file(json, server_commands_json_path)
 
-	for(var/I = 0; I < EXPORT_TIMEOUT_DS && !last_interop_response; ++I)
+	for(var/I = ZERO; I < EXPORT_TIMEOUT_DS && !last_interop_response; ++I)
 		sleep(1)
 
 	if(!last_interop_response)
@@ -243,7 +243,7 @@
 	if(!isnum(port))
 		return	//this is valid, server may just want use to reboot
 
-	if(port == 0)
+	if(port == ZERO)
 		//to byond 0 means any port and "none" means close vOv
 		port = "none"
 

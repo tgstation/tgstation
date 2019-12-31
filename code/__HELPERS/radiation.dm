@@ -35,7 +35,7 @@
 			continue
 		thing.rad_act(intensity)
 
-	var/static/last_huge_pulse = 0
+	var/static/last_huge_pulse = ZERO
 	if(intensity > 3000 && world.time > last_huge_pulse + 200)
 		last_huge_pulse = world.time
 		log = TRUE

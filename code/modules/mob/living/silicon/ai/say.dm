@@ -78,7 +78,7 @@
 	<LI>Use Ctrl+F to see if a word exists in the list.</LI></UL><HR>
 	"}
 
-	var/index = 0
+	var/index = ZERO
 	for(var/word in GLOB.vox_sounds)
 		index++
 		dat += "<A href='?src=[REF(src)];say_word=[word]'>[capitalize(word)]</A>"
@@ -91,7 +91,7 @@
 
 
 /mob/living/silicon/ai/proc/announcement()
-	var/static/announcing_vox = 0 // Stores the time of the last announcement
+	var/static/announcing_vox = ZERO // Stores the time of the last announcement
 	if(announcing_vox > world.time)
 		to_chat(src, "<span class='notice'>Please wait [DisplayTimeText(announcing_vox - world.time)].</span>")
 		return
@@ -157,7 +157,7 @@
 		else
 			SEND_SOUND(only_listener, voice)
 		return 1
-	return 0
+	return ZERO
 
 #undef VOX_DELAY
 #endif

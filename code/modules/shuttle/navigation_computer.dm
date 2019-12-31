@@ -12,11 +12,11 @@
 	var/obj/docking_port/mobile/shuttle_port //the mobile docking port of the connected shuttle
 	var/list/locked_traits = list(ZTRAIT_RESERVED, ZTRAIT_CENTCOM, ZTRAIT_AWAY) //traits forbided for custom docking
 	var/view_range = 7
-	var/x_offset = 0
-	var/y_offset = 0
+	var/x_offset = ZERO
+	var/y_offset = ZERO
 	var/list/whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava)
 	var/see_hidden = FALSE
-	var/designate_time = 0
+	var/designate_time = ZERO
 	var/turf/designating_target_loc
 	var/jammed = FALSE
 
@@ -79,7 +79,7 @@
 			var/y_off = T.y - origin.y
 			I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z) //we have to set this after creating the image because it might be null, and images created in nullspace are immutable.
 			I.layer = ABOVE_NORMAL_TURF_LAYER
-			I.plane = 0
+			I.plane = ZERO
 			I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			the_eye.placement_images[I] = list(x_off, y_off)
 
@@ -164,8 +164,8 @@
 		var/image/newI = image('icons/effects/alphacolors.dmi', the_eye.loc, "blue")
 		newI.loc = I.loc //It is highly unlikely that any landing spot including a null tile will get this far, but better safe than sorry.
 		newI.layer = ABOVE_OPEN_TURF_LAYER
-		newI.plane = 0
-		newI.mouse_opacity = 0
+		newI.plane = ZERO
+		newI.mouse_opacity = ZERO
 		the_eye.placed_images += newI
 
 	if(current_user.client)

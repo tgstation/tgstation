@@ -9,7 +9,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	layer = BELOW_OPEN_DOOR_LAYER
-	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
+	var/operating = ZERO	// 1 if running forward, -1 if backwards, ZERO if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
 	var/forwards		// this is the default (forward) direction, set by the map dir
 	var/backwards		// hopefully self-explanatory
@@ -134,7 +134,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	use_power(6)
 	//get the first 30 items in contents
 	affecting = list()
-	var/i = 0
+	var/i = ZERO
 	for(var/item in loc.contents)
 		if(item == src)
 			continue
@@ -198,11 +198,11 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 	var/obj/machinery/conveyor/C = locate() in get_step(src, dir)
 	if(C)
-		C.set_operable(dir, id, 0)
+		C.set_operable(dir, id, ZERO)
 
 	C = locate() in get_step(src, turn(dir,180))
 	if(C)
-		C.set_operable(turn(dir,180), id, 0)
+		C.set_operable(turn(dir,180), id, ZERO)
 
 
 //set the operable var if ID matches, propagating in the given direction
@@ -233,7 +233,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	icon_state = "switch-off"
 	speed_process = TRUE
 
-	var/position = 0			// 0 off, -1 reverse, 1 forward
+	var/position = ZERO			// ZERO off, -1 reverse, 1 forward
 	var/last_pos = -1			// last direction setting
 	var/operated = 1			// true if just operated
 	var/oneway = FALSE			// if the switch only operates the conveyor belts in a single direction.
@@ -264,12 +264,12 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 // update the icon depending on the position
 
 /obj/machinery/conveyor_switch/update_icon()
-	if(position<0)
+	if(position<ZERO)
 		if(invert_icon)
 			icon_state = "switch-fwd"
 		else
 			icon_state = "switch-rev"
-	else if(position>0)
+	else if(position>ZERO)
 		if(invert_icon)
 			icon_state = "switch-rev"
 		else
@@ -284,7 +284,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor_switch/process()
 	if(!operated)
 		return
-	operated = 0
+	operated = ZERO
 
 	for(var/obj/machinery/conveyor/C in GLOB.conveyors_by_id[id])
 		C.operating = position
@@ -295,19 +295,19 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/interact(mob/user)
 	add_fingerprint(user)
-	if(position == 0)
+	if(position == ZERO)
 		if(oneway)   //is it a oneway switch
 			position = oneway
 		else
-			if(last_pos < 0)
+			if(last_pos < ZERO)
 				position = 1
-				last_pos = 0
+				last_pos = ZERO
 			else
 				position = -1
-				last_pos = 0
+				last_pos = ZERO
 	else
 		last_pos = position
-		position = 0
+		position = ZERO
 
 	operated = 1
 	update_icon()
@@ -358,7 +358,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))
 		return
-	var/found = 0
+	var/found = ZERO
 	for(var/obj/machinery/conveyor/C in view())
 		if(C.id == src.id)
 			found = 1

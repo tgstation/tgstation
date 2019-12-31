@@ -13,8 +13,8 @@
 	ui_y = 300
 
 	var/datum/ntnet/NTNet = null // This is mostly for backwards reference and to allow varedit modifications from ingame.
-	var/enabled = 1				// Set to 0 if the relay was turned off
-	var/dos_failure = 0			// Set to 1 if the relay failed due to (D)DoS attack
+	var/enabled = 1				// Set to ZERO if the relay was turned off
+	var/dos_failure = ZERO			// Set to 1 if the relay failed due to (D)DoS attack
 	var/list/dos_sources = list()	// Backwards reference for qdel() stuff
 	var/uid
 	var/static/gl_uid = 1
@@ -50,16 +50,16 @@
 	update_icon()
 
 	if(dos_overload)
-		dos_overload = max(0, dos_overload - dos_dissipate)
+		dos_overload = max(ZERO, dos_overload - dos_dissipate)
 
 	// If DoS traffic exceeded capacity, crash.
 	if((dos_overload > dos_capacity) && !dos_failure)
 		dos_failure = 1
 		update_icon()
 		SSnetworks.station_network.add_log("Quantum relay switched from normal operation mode to overload recovery mode.")
-	// If the DoS buffer reaches 0 again, restart.
-	if((dos_overload == 0) && dos_failure)
-		dos_failure = 0
+	// If the DoS buffer reaches ZERO again, restart.
+	if((dos_overload == ZERO) && dos_failure)
+		dos_failure = ZERO
 		update_icon()
 		SSnetworks.station_network.add_log("Quantum relay switched from overload recovery mode to normal operation mode.")
 	..()
@@ -87,8 +87,8 @@
 		return
 	switch(action)
 		if("restart")
-			dos_overload = 0
-			dos_failure = 0
+			dos_overload = ZERO
+			dos_failure = ZERO
 			update_icon()
 			SSnetworks.station_network.add_log("Quantum relay manually restarted from overload recovery mode to normal operation mode.")
 		if("toggle")

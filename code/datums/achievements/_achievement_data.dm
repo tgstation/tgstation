@@ -84,7 +84,7 @@
 	if(istype(A, /datum/award/achievement))
 		data[achievement_type] = FALSE
 	else if(istype(A, /datum/award/score))
-		data[achievement_type] = 0
+		data[achievement_type] = ZERO
 
 /datum/achievement_data/ui_base_html(html)
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)

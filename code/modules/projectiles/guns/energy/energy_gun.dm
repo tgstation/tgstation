@@ -100,15 +100,15 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
 	selfcharge = 1
 	var/reactor_overloaded
-	var/fail_tick = 0
-	var/fail_chance = 0
+	var/fail_tick = ZERO
+	var/fail_chance = ZERO
 
 /obj/item/gun/energy/e_gun/nuclear/process()
-	if(fail_tick > 0)
+	if(fail_tick > ZERO)
 		fail_tick--
 	..()
 
-/obj/item/gun/energy/e_gun/nuclear/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
+/obj/item/gun/energy/e_gun/nuclear/shoot_live_shot(mob/living/user, pointblank = ZERO, atom/pbtarget = null, message = 1)
 	failcheck()
 	update_icon()
 	..()
@@ -117,7 +117,7 @@
 	if(prob(fail_chance) && isliving(loc))
 		var/mob/living/M = loc
 		switch(fail_tick)
-			if(0 to 200)
+			if(ZERO to 200)
 				fail_tick += (2*(fail_chance))
 				M.rad_act(40)
 				to_chat(M, "<span class='userdanger'>Your [name] feels warmer.</span>")
@@ -139,7 +139,7 @@
 		add_overlay("[icon_state]_fail_3")
 	else
 		switch(fail_tick)
-			if(0)
+			if(ZERO)
 				add_overlay("[icon_state]_fail_0")
 			if(1 to 150)
 				add_overlay("[icon_state]_fail_1")

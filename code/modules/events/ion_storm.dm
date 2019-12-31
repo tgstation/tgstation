@@ -15,11 +15,11 @@
 	announceChance = 33
 
 /datum/round_event/ion_storm/add_law_only // special subtype that adds a law only
-	replaceLawsetChance = 0
-	removeRandomLawChance = 0
-	removeDontImproveChance = 0
-	shuffleLawsChance = 0
-	botEmagChance = 0
+	replaceLawsetChance = ZERO
+	removeRandomLawChance = ZERO
+	removeDontImproveChance = ZERO
+	shuffleLawsChance = ZERO
+	botEmagChance = ZERO
 
 /datum/round_event/ion_storm/announce(fake)
 	if(prob(announceChance) || fake)
@@ -30,7 +30,7 @@
 	//AI laws
 	for(var/mob/living/silicon/ai/M in GLOB.alive_mob_list)
 		M.laws_sanity_check()
-		if(M.stat != DEAD && M.see_in_dark != 0)
+		if(M.stat != DEAD && M.see_in_dark != ZERO)
 			if(prob(replaceLawsetChance))
 				M.laws.pick_weighted_lawset()
 

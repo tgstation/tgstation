@@ -52,7 +52,7 @@
 /obj/item/grown/log/attackby(obj/item/W, mob/user, params)
 	if(W.get_sharpness())
 		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", MSG_VISUAL)
-		var/seed_modifier = 0
+		var/seed_modifier = ZERO
 		if(seed)
 			seed_modifier = round(seed.potency / 25)
 		var/obj/item/stack/plank = new plank_type(user.loc, 1 + seed_modifier)
@@ -151,8 +151,8 @@
 	light_color = LIGHT_COLOR_FIRE
 	density = FALSE
 	anchored = TRUE
-	buckle_lying = 0
-	var/burning = 0
+	buckle_lying = ZERO
+	var/burning = ZERO
 	var/burn_icon = "bonfire_on_fire" //for a softer more burning embers icon, use "bonfire_warm"
 	var/grill = FALSE
 	var/fire_stack_strength = 5
@@ -288,8 +288,8 @@
 /obj/structure/bonfire/extinguish()
 	if(burning)
 		icon_state = "bonfire"
-		burning = 0
-		set_light(0)
+		burning = ZERO
+		set_light(ZERO)
 		STOP_PROCESSING(SSobj, src)
 
 /obj/structure/bonfire/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)

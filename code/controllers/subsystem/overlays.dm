@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(overlays)
 
 /datum/controller/subsystem/overlays/fire(resumed = FALSE, mc_check = TRUE)
 	var/list/queue = src.queue
-	var/static/count = 0
+	var/static/count = ZERO
 	if (count)
 		var/c = count
 		count = 0 //so if we runtime on the Cut, we don't try again.
@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(overlays)
 
 	if (count)
 		queue.Cut(1,count+1)
-		count = 0
+		count = ZERO
 
 /proc/iconstate2appearance(icon, iconstate)
 	var/static/image/stringbro = new()

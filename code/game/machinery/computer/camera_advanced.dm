@@ -166,12 +166,12 @@
 	name = "Inactive Camera Eye"
 	ai_detector_visible = FALSE
 	var/sprint = 10
-	var/cooldown = 0
+	var/cooldown = ZERO
 	var/acceleration = 1
 	var/mob/living/eye_user = null
 	var/obj/machinery/origin
-	var/eye_initialized = 0
-	var/visible_icon = 0
+	var/eye_initialized = ZERO
+	var/visible_icon = ZERO
 	var/image/user_image = null
 
 /mob/camera/aiEye/remote/update_remote_sight(mob/living/user)
@@ -215,7 +215,7 @@
 	if(cooldown && cooldown < world.timeofday) // 3 seconds
 		sprint = initial
 
-	for(var/i = 0; i < max(sprint, initial); i += 20)
+	for(var/i = ZERO; i < max(sprint, initial); i += 20)
 		var/turf/step = get_turf(get_step(src, direct))
 		if(step)
 			setLoc(step)

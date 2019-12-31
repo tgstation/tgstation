@@ -9,7 +9,7 @@
 	var/list/spores = list()
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
 	var/max_spores = 3
-	var/spore_delay = 0
+	var/spore_delay = ZERO
 	var/spore_cooldown = 80 //8 seconds between spores and after spore death
 
 

@@ -23,7 +23,7 @@
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 	var/hopping = FALSE
-	var/hop_cooldown = 0 //Strictly for player controlled leapers
+	var/hop_cooldown = ZERO //Strictly for player controlled leapers
 	var/projectile_ready = FALSE //Stopping AI leapers from firing whenever they want, and only doing it after a hop has finished instead
 
 	footstep_type = FOOTSTEP_MOB_HEAVY
@@ -32,7 +32,7 @@
 	name = "leaper bubble"
 	icon_state = "leaper"
 	paralyze = 50
-	damage = 0
+	damage = ZERO
 	range = 7
 	hitsound = 'sound/effects/snap.ogg'
 	nondirectional_sprite = TRUE
@@ -107,13 +107,13 @@
 	name = "Leaper venom"
 	description = "A toxin spat out by leapers that, while harmless in small doses, quickly creates a toxic reaction if too much is in the body."
 	color = "#801E28" // rgb: 128, 30, 40
-	toxpwr = 0
+	toxpwr = ZERO
 	taste_description = "french cuisine"
 	taste_mult = 1.3
 
 /datum/reagent/toxin/leaper_venom/on_mob_life(mob/living/carbon/M)
 	if(volume >= 10)
-		M.adjustToxLoss(5, 0)
+		M.adjustToxLoss(5, ZERO)
 	..()
 
 /obj/effect/temp_visual/leaper_crush
@@ -171,7 +171,7 @@
 
 /mob/living/simple_animal/hostile/jungle/leaper/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(prob(33) && !ckey)
-		ranged_cooldown = 0 //Keeps em on their toes instead of a constant rotation
+		ranged_cooldown = ZERO //Keeps em on their toes instead of a constant rotation
 	..()
 
 /mob/living/simple_animal/hostile/jungle/leaper/OpenFire()

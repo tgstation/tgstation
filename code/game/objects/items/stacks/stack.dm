@@ -24,7 +24,7 @@
 	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
 	var/full_w_class = WEIGHT_CLASS_NORMAL //The weight class the stack should have at amount > 2/3rds max_amount
 	var/novariants = TRUE //Determines whether the item should update it's sprites based on amount.
-	var/mats_per_stack = 0
+	var/mats_per_stack = ZERO
 	///Datum material type that this stack is made of
 	var/material_type
 	//NOTE: When adding grind_results, the amounts should be for an INDIVIDUAL ITEM - these amounts will be multiplied by the stack size in on_grind()
@@ -133,7 +133,7 @@
 	. = ..()
 	if (!recipes)
 		return
-	if (!src || get_amount() <= 0)
+	if (!src || get_amount() <= ZERO)
 		user << browse(null, "window=stack")
 	user.set_machine(src) //for correct work of onclose
 	var/list/recipe_list = recipes
@@ -158,7 +158,7 @@
 			var/max_multiplier = round(get_amount() / R.req_amount)
 			var/title
 			var/can_build = 1
-			can_build = can_build && (max_multiplier>0)
+			can_build = can_build && (max_multiplier>ZERO)
 
 			if (R.res_amount>1)
 				title+= "[R.res_amount]x [R.title]\s"
@@ -201,7 +201,7 @@
 			recipes_list = srl.recipes
 		var/datum/stack_recipe/R = recipes_list[text2num(href_list["make"])]
 		var/multiplier = text2num(href_list["multiplier"])
-		if (!multiplier ||(multiplier <= 0)) //href protection
+		if (!multiplier ||(multiplier <= ZERO)) //href protection
 			return
 		if(!building_checks(R, multiplier))
 			return
@@ -305,7 +305,7 @@
 					return FALSE
 	return TRUE
 
-/obj/item/stack/use(used, transfer = FALSE, check = TRUE) // return 0 = borked; return 1 = had enough
+/obj/item/stack/use(used, transfer = FALSE, check = TRUE) // return ZERO = borked; return 1 = had enough
 	if(check && zero_amount())
 		return FALSE
 	if (is_cyborg)
@@ -341,7 +341,7 @@
 	if(amount < 1)
 		qdel(src)
 		return 1
-	return 0
+	return ZERO
 
 /obj/item/stack/proc/add(amount)
 	if (is_cyborg)
@@ -405,7 +405,7 @@
 		var/stackmaterial = round(input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max])") as null|num)
 		max = get_amount()
 		stackmaterial = min(max, stackmaterial)
-		if(stackmaterial == null || stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		if(stackmaterial == null || stackmaterial <= ZERO || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 			return
 		else
 			change_stack(user, stackmaterial)
@@ -452,14 +452,14 @@
 	var/req_amount = 1
 	var/res_amount = 1
 	var/max_res_amount = 1
-	var/time = 0
+	var/time = ZERO
 	var/one_per_turf = FALSE
 	var/on_floor = FALSE
 	var/window_checks = FALSE
 	var/placement_checks = FALSE
 	var/applies_mats = FALSE
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE, applies_mats = FALSE)
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,time = ZERO, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE, applies_mats = FALSE)
 
 
 	src.title = title

@@ -47,7 +47,7 @@
 	if(zones.Find(zone))
 		return 1
 	else
-		return 0
+		return ZERO
 /**
   * Convert random parts of a passed in message to stars
   *
@@ -60,7 +60,7 @@
 	n = html_encode(n)
 	if (pr == null)
 		pr = 25
-	if (pr <= 0)
+	if (pr <= ZERO)
 		return null
 	else
 		if (pr >= 100)
@@ -210,7 +210,7 @@
 		if(prob(chance))
 			if(replace_characters)
 				letter = ""
-			for(var/j in 1 to rand(0, 2))
+			for(var/j in 1 to rand(ZERO, 2))
 				letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
 		. += letter
 
@@ -257,8 +257,8 @@
 	var/max = strength*world.icon_size
 	var/min = -(strength*world.icon_size)
 
-	for(var/i in 0 to duration-1)
-		if (i == 0)
+	for(var/i in ZERO to duration-1)
+		if (i == ZERO)
 			animate(C, pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
 		else
 			animate(pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
@@ -273,7 +273,7 @@
 		var/mob/M = i
 		if(M.real_name == msg)
 			return M
-	return 0
+	return ZERO
 
 ///Find the first name of a mob from the real name with regex
 /mob/proc/first_name()
@@ -344,7 +344,7 @@
 	if(!istype(M))
 		return FALSE
 	if(issilicon(M))
-		if(iscyborg(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
+		if(iscyborg(M)) //For cyborgs, returns 1 if the cyborg has a law ZERO and special_role. Returns ZERO if the borg is merely slaved to an AI traitor.
 			return FALSE
 		else if(isAI(M))
 			var/mob/living/silicon/ai/A = M
@@ -446,9 +446,9 @@
 		if(brute_heal > burn_heal)
 			dam = 1
 		else
-			dam = 0
-		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
-			if(affecting.heal_damage(brute_heal, burn_heal, 0, BODYPART_ROBOTIC))
+			dam = ZERO
+		if((brute_heal > ZERO && affecting.brute_dam > ZERO) || (burn_heal > ZERO && affecting.burn_dam > ZERO))
+			if(affecting.heal_damage(brute_heal, burn_heal, ZERO, BODYPART_ROBOTIC))
 				H.update_damage_overlays()
 			user.visible_message("<span class='notice'>[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].</span>", \
 			"<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H == user ? "your" : "[H]'s"] [affecting.name].</span>")
@@ -495,7 +495,7 @@
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(M, "Your mob has been taken over by a ghost!")
 		message_admins("[key_name_admin(C)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
-		M.ghostize(0)
+		M.ghostize(ZERO)
 		M.key = C.key
 		return TRUE
 	else
@@ -508,7 +508,7 @@
 	if(M.movement_type & FLYING)
 		return 1
 	else
-		return 0
+		return ZERO
 
 ///Clicks a random nearby mob with the source from this mob
 /mob/proc/click_random_mob()

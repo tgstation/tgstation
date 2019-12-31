@@ -16,9 +16,9 @@ GLOBAL_PROTECT(href_token)
 
 	var/datum/marked_datum
 
-	var/spamcooldown = 0
+	var/spamcooldown = ZERO
 
-	var/admincaster_screen = 0	//TODO: remove all these 5 variables, they are completly unacceptable
+	var/admincaster_screen = ZERO	//TODO: remove all these 5 variables, they are completly unacceptable
 	var/datum/newscaster/feed_message/admincaster_feed_message = new /datum/newscaster/feed_message
 	var/datum/newscaster/wanted_message/admincaster_wanted_message = new /datum/newscaster/wanted_message
 	var/datum/newscaster/feed_channel/admincaster_feed_channel = new /datum/newscaster/feed_channel
@@ -34,14 +34,14 @@ GLOBAL_PROTECT(href_token)
 		message_admins("[key_name_admin(usr)][msg]")
 		log_admin("[key_name(usr)][msg]")
 		if (!target) //only del if this is a true creation (and not just a New() proc call), other wise trialmins/coders could abuse this to deadmin other admins
-			QDEL_IN(src, 0)
+			QDEL_IN(src, ZERO)
 			CRASH("Admin proc call creation of admin datum")
 		return
 	if(!ckey)
-		QDEL_IN(src, 0)
+		QDEL_IN(src, ZERO)
 		CRASH("Admin datum created without a ckey")
 	if(!istype(R))
-		QDEL_IN(src, 0)
+		QDEL_IN(src, ZERO)
 		CRASH("Admin datum created without a rank")
 	target = ckey
 	name = "[ckey]'s admin datum ([R])"
@@ -128,7 +128,7 @@ GLOBAL_PROTECT(href_token)
 
 /datum/admins/proc/check_for_rights(rights_required)
 	if(rights_required && !(rights_required & rank.rights))
-		return 0
+		return ZERO
 	return 1
 
 
@@ -142,14 +142,14 @@ GLOBAL_PROTECT(href_token)
 	if(rank.rights != other.rank.rights)
 		if( (rank.rights & other.rank.rights) == other.rank.rights )
 			return 1 //we have all the rights they have and more
-	return 0
+	return ZERO
 
 /datum/admins/vv_edit_var(var_name, var_value)
 	return FALSE //nice try trialmin
 
 /*
 checks if usr is an admin with at least ONE of the flags in rights_required. (Note, they don't need all the flags)
-if rights_required == 0, then it simply checks if they are an admin.
+if rights_required == ZERO, then it simply checks if they are an admin.
 if it doesn't return 1 and show_msg=1 it will prints a message explaining why the check has failed
 generally it would be used like so:
 
@@ -168,7 +168,7 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 		else
 			if(show_msg)
 				to_chat(usr, "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(rights_required," ")].</font>")
-	return 0
+	return ZERO
 
 //probably a bit iffy - will hopefully figure out a better solution
 /proc/check_if_greater_rights_than(client/other)
@@ -177,13 +177,13 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 			if(!other || !other.holder)
 				return 1
 			return usr.client.holder.check_if_greater_rights_than_holder(other.holder)
-	return 0
+	return ZERO
 
 //This proc checks whether subject has at least ONE of the rights specified in rights_required.
 /proc/check_rights_for(client/subject, rights_required)
 	if(subject && subject.holder)
 		return subject.holder.check_for_rights(rights_required)
-	return 0
+	return ZERO
 
 /proc/GenerateToken()
 	. = ""

@@ -5,8 +5,8 @@
 // Extra heat affects the temperature of the mixture, and may cause it to react in different ways.
 
 
-/proc/chem_splash(turf/epicenter, affected_range = 3, list/datum/reagents/reactants = list(), extra_heat = 0, threatscale = 1, adminlog = 1)
-	if(!isturf(epicenter) || !reactants.len || threatscale <= 0)
+/proc/chem_splash(turf/epicenter, affected_range = 3, list/datum/reagents/reactants = list(), extra_heat = ZERO, threatscale = 1, adminlog = 1)
+	if(!isturf(epicenter) || !reactants.len || threatscale <= ZERO)
 		return
 	var/has_reagents
 	var/total_reagents
@@ -20,7 +20,7 @@
 
 	var/datum/reagents/splash_holder = new/datum/reagents(total_reagents*threatscale)
 	splash_holder.my_atom = epicenter // For some reason this is setting my_atom to null, and causing runtime errors.
-	var/total_temp = 0
+	var/total_temp = ZERO
 
 	for(var/datum/reagents/R in reactants)
 		R.trans_to(splash_holder, R.total_volume, threatscale, 1, 1)
@@ -28,9 +28,9 @@
 	splash_holder.chem_temp = (total_temp/reactants.len) + extra_heat // Average temperature of reagents + extra heat.
 	splash_holder.handle_reactions() // React them now.
 
-	if(splash_holder.total_volume && affected_range >= 0)	//The possible reactions didnt use up all reagents, so we spread it around.
+	if(splash_holder.total_volume && affected_range >= ZERO)	//The possible reactions didnt use up all reagents, so we spread it around.
 		var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()
-		steam.set_up(10, 0, epicenter)
+		steam.set_up(10, ZERO, epicenter)
 		steam.attach(epicenter)
 		steam.start()
 

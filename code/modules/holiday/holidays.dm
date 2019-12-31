@@ -2,14 +2,14 @@
 	var/name = "Bugsgiving"
 
 	var/begin_day = 1
-	var/begin_month = 0
-	var/end_day = 0 // Default of 0 means the holiday lasts a single day
-	var/end_month = 0
+	var/begin_month = ZERO
+	var/end_day = ZERO // Default of ZERO means the holiday lasts a single day
+	var/end_month = ZERO
 	var/begin_week = FALSE //If set to a number, then this holiday will begin on certain week
 	var/begin_weekday = FALSE //If set to a weekday, then this will trigger the holiday on the above week
 	var/always_celebrate = FALSE // for christmas neverending, or testing.
-	var/current_year = 0
-	var/year_offset = 0
+	var/current_year = ZERO
+	var/year_offset = ZERO
 	var/obj/item/drone_hat //If this is defined, drones without a default hat will spawn with this one during the holiday; check drones_as_items.dm to see this used
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
@@ -23,7 +23,7 @@
 // Returns special prefixes for the station name on certain days. You wind up with names like "Christmas Object Epsilon". See new_station_name()
 /datum/holiday/proc/getStationPrefix()
 	//get the first word of the Holiday and use that
-	var/i = findtext(name," ",1,0)
+	var/i = findtext(name," ",1,ZERO)
 	return copytext(name,1,i)
 
 // Return 1 if this holidy should be celebrated today
@@ -326,7 +326,7 @@
 		else
 			if(dd == 13)
 				return 1
-	return 0
+	return ZERO
 
 /datum/holiday/programmers/getStationPrefix()
 	return pick("span>","DEBUG: ","null","/list","EVENT PREFIX NOT FOUND") //Portability
@@ -478,7 +478,7 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 */
 
 /datum/holiday/ramadan/shouldCelebrate(dd, mm, yy, ww, ddd)
-	if (round(((world.realtime - 285984000) / 864000) % 354.373435326843) == 0)
+	if (round(((world.realtime - 285984000) / 864000) % 354.373435326843) == ZERO)
 		return TRUE
 	return FALSE
 
@@ -489,7 +489,7 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 	name = "End of Ramadan"
 
 /datum/holiday/ramadan/end/shouldCelebrate(dd, mm, yy, ww, ddd)
-	if (round(((world.realtime - 312768000) / 864000) % 354.373435326843) == 0)
+	if (round(((world.realtime - 312768000) / 864000) % 354.373435326843) == ZERO)
 		return TRUE
 	return FALSE
 
@@ -583,7 +583,7 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 			end_month++
 
 		begin_day -= days_early
-		if(begin_day <= 0)
+		if(begin_day <= ZERO)
 			if(begin_month == APRIL)
 				begin_day += 31
 				begin_month-- //begins in march, ends in april

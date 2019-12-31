@@ -6,7 +6,7 @@
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 4
 	delivery_icon = "deliverybox"
-	integrity_failure = 0 //Makes the crate break when integrity reaches 0, instead of opening and becoming an invisible sprite.
+	integrity_failure = ZERO //Makes the crate break when integrity reaches ZERO, instead of opening and becoming an invisible sprite.
 	open_sound = 'sound/machines/wooden_closet_open.ogg'
 	close_sound = 'sound/machines/wooden_closet_close.ogg'
 	open_sound_volume = 25
@@ -38,7 +38,7 @@
 		qdel(src)
 
 	else
-		if(user.a_intent == INTENT_HARM)	//Only return  ..() if intent is harm, otherwise return 0 or just end it.
+		if(user.a_intent == INTENT_HARM)	//Only return  ..() if intent is harm, otherwise return ZERO or just end it.
 			return ..()						//Stops it from opening and turning invisible when items are used on it.
 
 		else

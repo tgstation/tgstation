@@ -3,9 +3,9 @@
 	if(L && L.len >= 2)
 		fromIndex = fromIndex % L.len
 		toIndex = toIndex % (L.len+1)
-		if(fromIndex <= 0)
+		if(fromIndex <= ZERO)
 			fromIndex += L.len
-		if(toIndex <= 0)
+		if(toIndex <= ZERO)
 			toIndex += L.len + 1
 
 		var/datum/sortInstance/SI = GLOB.sortInstance

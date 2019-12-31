@@ -11,13 +11,13 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	var/charge = 0	// note %age conveted to actual charge in New
+	var/charge = ZERO	// note %age conveted to actual charge in New
 	var/maxcharge = 1000
 	custom_materials = list(/datum/material/iron=700, /datum/material/glass=50)
 	grind_results = list(/datum/reagent/lithium = 15, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 	var/rigged = FALSE	// true if rigged to explode
 	var/chargerate = 100 //how much power is given every tick in a recharger
-	var/self_recharge = 0 //does it self recharge, over time, or not?
+	var/self_recharge = ZERO //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
 	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it.
 
@@ -70,11 +70,11 @@
 
 // use power from a cell
 /obj/item/stock_parts/cell/use(amount)
-	if(rigged && amount > 0)
+	if(rigged && amount > ZERO)
 		explode()
-		return 0
+		return ZERO
 	if(charge < amount)
-		return 0
+		return ZERO
 	charge = (charge - amount)
 	if(!istype(loc, /obj/machinery/power/apc))
 		SSblackbox.record_feedback("tally", "cell_used", 1, type)
@@ -82,9 +82,9 @@
 
 // recharge the cell
 /obj/item/stock_parts/cell/proc/give(amount)
-	if(rigged && amount > 0)
+	if(rigged && amount > ZERO)
 		explode()
-		return 0
+		return ZERO
 	if(maxcharge < amount)
 		amount = maxcharge
 	var/power_used = min(maxcharge-charge,amount)
@@ -109,17 +109,17 @@
 
 /obj/item/stock_parts/cell/proc/explode()
 	var/turf/T = get_turf(src.loc)
-	if (charge==0)
+	if (charge==ZERO)
 		return
 	var/devastation_range = -1 //round(charge/11000)
 	var/heavy_impact_range = round(sqrt(charge)/60)
 	var/light_impact_range = round(sqrt(charge)/30)
 	var/flash_range = light_impact_range
-	if (light_impact_range==0)
+	if (light_impact_range==ZERO)
 		rigged = FALSE
 		corrupt()
 		return
-	//explosion(T, 0, 1, 2, 2)
+	//explosion(T, ZERO, 1, 2, 2)
 	explosion(T, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 	qdel(src)
 
@@ -134,8 +134,8 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	charge -= 1000 / severity
-	if (charge < 0)
-		charge = 0
+	if (charge < ZERO)
+		charge = ZERO
 
 /obj/item/stock_parts/cell/ex_act(severity, target)
 	..()
@@ -156,7 +156,7 @@
 	if(charge >= 1000)
 		return CLAMP(20 + round(charge/25000), 20, 195) + rand(-5,5)
 	else
-		return 0
+		return ZERO
 
 /obj/item/stock_parts/cell/get_part_rating()
 	return rating * maxcharge
@@ -164,7 +164,7 @@
 /* Cell variants*/
 /obj/item/stock_parts/cell/empty/Initialize()
 	. = ..()
-	charge = 0
+	charge = ZERO
 
 /obj/item/stock_parts/cell/crap
 	name = "\improper Nanotrasen brand rechargeable AA battery"
@@ -174,7 +174,7 @@
 
 /obj/item/stock_parts/cell/crap/empty/Initialize()
 	. = ..()
-	charge = 0
+	charge = ZERO
 	update_icon()
 
 /obj/item/stock_parts/cell/upgraded
@@ -196,7 +196,7 @@
 
 /obj/item/stock_parts/cell/secborg/empty/Initialize()
 	. = ..()
-	charge = 0
+	charge = ZERO
 	update_icon()
 
 /obj/item/stock_parts/cell/pulse //200 pulse shots
@@ -228,7 +228,7 @@
 
 /obj/item/stock_parts/cell/high/empty/Initialize()
 	. = ..()
-	charge = 0
+	charge = ZERO
 	update_icon()
 
 /obj/item/stock_parts/cell/super
@@ -240,7 +240,7 @@
 
 /obj/item/stock_parts/cell/super/empty/Initialize()
 	. = ..()
-	charge = 0
+	charge = ZERO
 	update_icon()
 
 /obj/item/stock_parts/cell/hyper
@@ -252,7 +252,7 @@
 
 /obj/item/stock_parts/cell/hyper/empty/Initialize()
 	. = ..()
-	charge = 0
+	charge = ZERO
 	update_icon()
 
 /obj/item/stock_parts/cell/bluespace
@@ -265,7 +265,7 @@
 
 /obj/item/stock_parts/cell/bluespace/empty/Initialize()
 	. = ..()
-	charge = 0
+	charge = ZERO
 	update_icon()
 
 /obj/item/stock_parts/cell/infinite
@@ -321,7 +321,7 @@
 
 /obj/item/stock_parts/cell/emproof/empty/Initialize()
 	. = ..()
-	charge = 0
+	charge = ZERO
 	update_icon()
 
 /obj/item/stock_parts/cell/emproof/empty/ComponentInitialize()
@@ -344,7 +344,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	charge = CLAMP((charge-(10000/severity)),0,maxcharge)
+	charge = CLAMP((charge-(10000/severity)),ZERO,maxcharge)
 
 /obj/item/stock_parts/cell/emergency_light
 	name = "miniature power cell"
@@ -357,4 +357,4 @@
 	. = ..()
 	var/area/A = get_area(src)
 	if(!A.lightswitch || !A.light_power)
-		charge = 0 //For naturally depowered areas, we start with no power
+		charge = ZERO //For naturally depowered areas, we start with no power

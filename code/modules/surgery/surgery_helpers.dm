@@ -97,7 +97,7 @@
 		if(close_tool && close_tool.tool_behaviour == required_tool_type || iscyborg(user))
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				H.bleed_rate = max( (H.bleed_rate - 3), 0)
+				H.bleed_rate = max( (H.bleed_rate - 3), ZERO)
 			M.surgeries -= S
 			user.visible_message("<span class='notice'>[user] closes [M]'s [parse_zone(selected_zone)] with [close_tool] and removes [I].</span>", \
 				"<span class='notice'>You close [M]'s [parse_zone(selected_zone)] with [close_tool] and remove [I].</span>")
@@ -120,9 +120,9 @@
 
 
 /proc/get_location_accessible(mob/M, location)
-	var/covered_locations = 0	//based on body_parts_covered
-	var/face_covered = 0	//based on flags_inv
-	var/eyesmouth_covered = 0	//based on flags_cover
+	var/covered_locations = ZERO	//based on body_parts_covered
+	var/face_covered = ZERO	//based on flags_inv
+	var/eyesmouth_covered = ZERO	//based on flags_cover
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		for(var/obj/item/clothing/I in list(C.back, C.wear_mask, C.head))
@@ -139,43 +139,43 @@
 	switch(location)
 		if(BODY_ZONE_HEAD)
 			if(covered_locations & HEAD)
-				return 0
+				return ZERO
 		if(BODY_ZONE_PRECISE_EYES)
 			if(covered_locations & HEAD || face_covered & HIDEEYES || eyesmouth_covered & GLASSESCOVERSEYES)
-				return 0
+				return ZERO
 		if(BODY_ZONE_PRECISE_MOUTH)
 			if(covered_locations & HEAD || face_covered & HIDEFACE || eyesmouth_covered & MASKCOVERSMOUTH || eyesmouth_covered & HEADCOVERSMOUTH)
-				return 0
+				return ZERO
 		if(BODY_ZONE_CHEST)
 			if(covered_locations & CHEST)
-				return 0
+				return ZERO
 		if(BODY_ZONE_PRECISE_GROIN)
 			if(covered_locations & GROIN)
-				return 0
+				return ZERO
 		if(BODY_ZONE_L_ARM)
 			if(covered_locations & ARM_LEFT)
-				return 0
+				return ZERO
 		if(BODY_ZONE_R_ARM)
 			if(covered_locations & ARM_RIGHT)
-				return 0
+				return ZERO
 		if(BODY_ZONE_L_LEG)
 			if(covered_locations & LEG_LEFT)
-				return 0
+				return ZERO
 		if(BODY_ZONE_R_LEG)
 			if(covered_locations & LEG_RIGHT)
-				return 0
+				return ZERO
 		if(BODY_ZONE_PRECISE_L_HAND)
 			if(covered_locations & HAND_LEFT)
-				return 0
+				return ZERO
 		if(BODY_ZONE_PRECISE_R_HAND)
 			if(covered_locations & HAND_RIGHT)
-				return 0
+				return ZERO
 		if(BODY_ZONE_PRECISE_L_FOOT)
 			if(covered_locations & FOOT_LEFT)
-				return 0
+				return ZERO
 		if(BODY_ZONE_PRECISE_R_FOOT)
 			if(covered_locations & FOOT_RIGHT)
-				return 0
+				return ZERO
 
 	return 1
 

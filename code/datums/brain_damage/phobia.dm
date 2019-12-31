@@ -5,8 +5,8 @@
 	gain_text = "<span class='warning'>You start finding default values very unnerving...</span>"
 	lose_text = "<span class='notice'>You no longer feel afraid of default values.</span>"
 	var/phobia_type
-	var/next_check = 0
-	var/next_scare = 0
+	var/next_check = ZERO
+	var/next_scare = ZERO
 	var/list/trigger_words
 	//instead of cycling every atom, only cycle the relevant types
 	var/list/trigger_mobs

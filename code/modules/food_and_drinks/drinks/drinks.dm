@@ -118,7 +118,7 @@
 	B.icon_state = icon_state
 	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
 	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
-	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
+	I.SwapColor(rgb(255, ZERO, 220, 255), rgb(ZERO, ZERO, ZERO, ZERO))
 	B.icon = I
 	B.name = "broken [name]"
 	if(prob(33))
@@ -268,7 +268,7 @@
 	custom_materials = list(/datum/material/plastic=1000)
 	volume = 50
 	amount_per_transfer_from_this = 10
-	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
+	fill_icon_thresholds = list(ZERO, 10, 25, 50, 75, 80, 90)
 	isGlass = FALSE
 	// The 2 bottles have separate cap overlay icons because if the bottle falls over while bottle flipping the cap stays fucked on the moved overlay
 	var/cap_icon_state = "bottle_cap_small"
@@ -305,7 +305,7 @@
 		cap_on = FALSE
 		spillable = TRUE
 		cut_overlay(cap_overlay, TRUE)
-		animate(src, transform = null, time = 2, loop = 0)
+		animate(src, transform = null, time = 2, loop = ZERO)
 		if(fumbled)
 			to_chat(user, "<span class='warning'>You fumble with [src]'s cap! The cap falls onto the ground and simply vanishes. Where the hell did it go?</span>")
 			cap_lost = TRUE
@@ -354,11 +354,11 @@
 			if(throwingdatum.thrower)
 				SEND_SIGNAL(throwingdatum.thrower, COMSIG_ADD_MOOD_EVENT, "bottle_flip", /datum/mood_event/bottle_flip)
 		else // landed on it's side
-			animate(src, transform = matrix(prob(50)? 90 : -90, MATRIX_ROTATE), time = 3, loop = 0)
+			animate(src, transform = matrix(prob(50)? 90 : -90, MATRIX_ROTATE), time = 3, loop = ZERO)
 
 /obj/item/reagent_containers/food/drinks/waterbottle/pickup(mob/user)
 	. = ..()
-	animate(src, transform = null, time = 1, loop = 0)
+	animate(src, transform = null, time = 1, loop = ZERO)
 
 /obj/item/reagent_containers/food/drinks/waterbottle/empty
 	list_reagents = list()
@@ -441,11 +441,11 @@
 	B.icon_state = icon_state
 	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
 	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
-	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
+	I.SwapColor(rgb(255, ZERO, 220, 255), rgb(ZERO, ZERO, ZERO, ZERO))
 	B.icon = I
 	B.name = "broken [name]"
-	B.force = 0
-	B.throwforce = 0
+	B.force = ZERO
+	B.throwforce = ZERO
 	B.desc = "A carton with the bottom half burst open. Might give you a papercut."
 	transfer_fingerprints_to(B)
 	qdel(src)

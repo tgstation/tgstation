@@ -165,7 +165,7 @@
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
+	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(ZERO, 8), TEXT_SOUTH = list(ZERO, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
 	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
@@ -230,7 +230,7 @@
 	health = 3
 	maxHealth = 3
 	ventcrawler = VENTCRAWLER_ALWAYS
-	var/amount_grown = 0
+	var/amount_grown = ZERO
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
@@ -240,7 +240,7 @@
 /mob/living/simple_animal/chick/Initialize()
 	. = ..()
 	pixel_x = rand(-6, 6)
-	pixel_y = rand(0, 10)
+	pixel_y = rand(ZERO, 10)
 
 /mob/living/simple_animal/chick/Life()
 	. =..()
@@ -254,7 +254,7 @@
 
 /mob/living/simple_animal/chick/holo/Life()
 	..()
-	amount_grown = 0
+	amount_grown = ZERO
 
 /mob/living/simple_animal/chicken
 	name = "\improper chicken"
@@ -285,7 +285,7 @@
 	health = 15
 	maxHealth = 15
 	ventcrawler = VENTCRAWLER_ALWAYS
-	var/eggsleft = 0
+	var/eggsleft = ZERO
 	var/eggsFertile = TRUE
 	var/body_color
 	var/icon_prefix = "chicken"
@@ -295,7 +295,7 @@
 	var/list/layMessage = EGG_LAYING_MESSAGES
 	var/list/validColors = list("brown","black","white")
 	gold_core_spawnable = FRIENDLY_SPAWN
-	var/static/chicken_count = 0
+	var/static/chicken_count = ZERO
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
@@ -307,7 +307,7 @@
 	icon_living = "[icon_prefix]_[body_color]"
 	icon_dead = "[icon_prefix]_[body_color]_dead"
 	pixel_x = rand(-6, 6)
-	pixel_y = rand(0, 10)
+	pixel_y = rand(ZERO, 10)
 	++chicken_count
 
 /mob/living/simple_animal/chicken/Destroy()
@@ -330,7 +330,7 @@
 	. =..()
 	if(!.)
 		return
-	if((!stat && prob(3) && eggsleft > 0) && egg_type)
+	if((!stat && prob(3) && eggsleft > ZERO) && egg_type)
 		visible_message("<span class='alertalien'>[src] [pick(layMessage)]</span>")
 		eggsleft--
 		var/obj/item/E = new egg_type(get_turf(src))
@@ -340,7 +340,7 @@
 			if(chicken_count < MAX_CHICKENS && prob(25))
 				START_PROCESSING(SSobj, E)
 
-/obj/item/reagent_containers/food/snacks/egg/var/amount_grown = 0
+/obj/item/reagent_containers/food/snacks/egg/var/amount_grown = ZERO
 /obj/item/reagent_containers/food/snacks/egg/process()
 	if(isturf(loc))
 		amount_grown += rand(1,2)

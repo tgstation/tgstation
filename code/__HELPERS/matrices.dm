@@ -39,18 +39,18 @@
 
 //Dumps the matrix data in a matrix-grid format
 /*
-  a d 0
-  b e 0
+  a d ZERO
+  b e ZERO
   c f 1
 */
 /matrix/proc/togrid()
 	. = list()
 	. += a
 	. += d
-	. += 0
+	. += ZERO
 	. += b
 	. += e
-	. += 0
+	. += ZERO
 	. += c
 	. += f
 	. += 1
@@ -74,7 +74,7 @@
 
 //As Rotation is defined as a scale+skew, these procs will break any existing rotation
 //Unless the result is multiplied against the current matrix
-/matrix/proc/set_skew(x = 0, y = 0)
+/matrix/proc/set_skew(x = ZERO, y = ZERO)
 	b = x
 	d = y
 
@@ -84,68 +84,68 @@
 /////////////////////
 
 /* Documenting a couple of potentially useful color matrices here to inspire ideas
-// Greyscale - indentical to saturation @ 0
-list(LUMA_R,LUMA_R,LUMA_R,0, LUMA_G,LUMA_G,LUMA_G,0, LUMA_B,LUMA_B,LUMA_B,0, 0,0,0,1, 0,0,0,0)
+// Greyscale - indentical to saturation @ ZERO
+list(LUMA_R,LUMA_R,LUMA_R,ZERO, LUMA_G,LUMA_G,LUMA_G,ZERO, LUMA_B,LUMA_B,LUMA_B,ZERO, ZERO,ZERO,ZERO,1, ZERO,ZERO,ZERO,ZERO)
 
 // Color inversion
-list(-1,0,0,0, 0,-1,0,0, 0,0,-1,0, 0,0,0,1, 1,1,1,0)
+list(-1,ZERO,ZERO,ZERO, ZERO,-1,ZERO,ZERO, ZERO,ZERO,-1,ZERO, ZERO,ZERO,ZERO,1, 1,1,1,ZERO)
 
 // Sepiatone
-list(0.393,0.349,0.272,0, 0.769,0.686,0.534,0, 0.189,0.168,0.131,0, 0,0,0,1, 0,0,0,0)
+list(0.393,0.349,0.272,ZERO, 0.769,0.686,0.534,ZERO, 0.189,0.168,0.131,ZERO, ZERO,ZERO,ZERO,1, ZERO,ZERO,ZERO,ZERO)
 */
 
 //Does nothing
 /proc/color_matrix_identity()
-	return list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
+	return list(1,ZERO,ZERO,ZERO, ZERO,1,ZERO,ZERO, ZERO,ZERO,1,ZERO, ZERO,ZERO,ZERO,1, ZERO,ZERO,ZERO,ZERO)
 
 //Adds/subtracts overall lightness
-//0 is identity, 1 makes everything white, -1 makes everything black
+//ZERO is identity, 1 makes everything white, -1 makes everything black
 /proc/color_matrix_lightness(power)
-	return list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, power,power,power,0)
+	return list(1,ZERO,ZERO,ZERO, ZERO,1,ZERO,ZERO, ZERO,ZERO,1,ZERO, ZERO,ZERO,ZERO,1, power,power,power,ZERO)
 
 //Changes distance hues have from grey while maintaining the overall lightness. Greys are unaffected.
-//1 is identity, 0 is greyscale, >1 oversaturates colors
+//1 is identity, ZERO is greyscale, >1 oversaturates colors
 /proc/color_matrix_saturation(value)
 	var/inv = 1 - value
 	var/R = round(LUMA_R * inv, 0.001)
 	var/G = round(LUMA_G * inv, 0.001)
 	var/B = round(LUMA_B * inv, 0.001)
 
-	return list(R + value,R,R,0, G,G + value,G,0, B,B,B + value,0, 0,0,0,1, 0,0,0,0)
+	return list(R + value,R,R,ZERO, G,G + value,G,ZERO, B,B,B + value,ZERO, ZERO,ZERO,ZERO,1, ZERO,ZERO,ZERO,ZERO)
 
 //Changes distance colors have from rgb(127,127,127) grey
-//1 is identity. 0 makes everything grey >1 blows out colors and greys
+//1 is identity. ZERO makes everything grey >1 blows out colors and greys
 /proc/color_matrix_contrast(value)
 	var/add = (1 - value) / 2
-	return list(value,0,0,0, 0,value,0,0, 0,0,value,0, 0,0,0,1, add,add,add,0)
+	return list(value,ZERO,ZERO,ZERO, ZERO,value,ZERO,ZERO, ZERO,ZERO,value,ZERO, ZERO,ZERO,ZERO,1, add,add,add,ZERO)
 
 //Moves all colors angle degrees around the color wheel while maintaining intensity of the color and not affecting greys
-//0 is identity, 120 moves reds to greens, 240 moves reds to blues
+//ZERO is identity, 120 moves reds to greens, 240 moves reds to blues
 /proc/color_matrix_rotate_hue(angle)
 	var/sin = sin(angle)
 	var/cos = cos(angle)
 	var/cos_inv_third = 0.333*(1-cos)
 	var/sqrt3_sin = sqrt(3)*sin
 	return list(
-round(cos+cos_inv_third, 0.001), round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), 0,
-round(cos_inv_third-sqrt3_sin, 0.001), round(cos+cos_inv_third, 0.001), round(cos_inv_third+sqrt3_sin, 0.001), 0,
-round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), round(cos+cos_inv_third, 0.001), 0,
-0,0,0,1,
-0,0,0,0)
+round(cos+cos_inv_third, 0.001), round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ZERO,
+round(cos_inv_third-sqrt3_sin, 0.001), round(cos+cos_inv_third, 0.001), round(cos_inv_third+sqrt3_sin, 0.001), ZERO,
+round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), round(cos+cos_inv_third, 0.001), ZERO,
+ZERO,ZERO,ZERO,1,
+ZERO,ZERO,ZERO,ZERO)
 
 //These next three rotate values about one axis only
 //x is the red axis, y is the green axis, z is the blue axis.
 /proc/color_matrix_rotate_x(angle)
 	var/sinval = round(sin(angle), 0.001); var/cosval = round(cos(angle), 0.001)
-	return list(1,0,0,0, 0,cosval,sinval,0, 0,-sinval,cosval,0, 0,0,0,1, 0,0,0,0)
+	return list(1,ZERO,ZERO,ZERO, ZERO,cosval,sinval,ZERO, ZERO,-sinval,cosval,ZERO, ZERO,ZERO,ZERO,1, ZERO,ZERO,ZERO,ZERO)
 
 /proc/color_matrix_rotate_y(angle)
 	var/sinval = round(sin(angle), 0.001); var/cosval = round(cos(angle), 0.001)
-	return list(cosval,0,-sinval,0, 0,1,0,0, sinval,0,cosval,0, 0,0,0,1, 0,0,0,0)
+	return list(cosval,ZERO,-sinval,ZERO, ZERO,1,ZERO,ZERO, sinval,ZERO,cosval,ZERO, ZERO,ZERO,ZERO,1, ZERO,ZERO,ZERO,ZERO)
 
 /proc/color_matrix_rotate_z(angle)
 	var/sinval = round(sin(angle), 0.001); var/cosval = round(cos(angle), 0.001)
-	return list(cosval,sinval,0,0, -sinval,cosval,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
+	return list(cosval,sinval,ZERO,ZERO, -sinval,cosval,ZERO,ZERO, ZERO,ZERO,1,ZERO, ZERO,ZERO,ZERO,1, ZERO,ZERO,ZERO,ZERO)
 
 
 //Returns a matrix addition of A with B
@@ -170,9 +170,9 @@ round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ro
 	output.len = 20
 	var/x = 1
 	var/y = 1
-	var/offset = 0
+	var/offset = ZERO
 	for(y in 1 to 5)
 		offset = (y-1)*4
 		for(x in 1 to 4)
-			output[offset+x] = round(A[offset+1]*B[x] + A[offset+2]*B[x+4] + A[offset+3]*B[x+8] + A[offset+4]*B[x+12]+(y==5?B[x+16]:0), 0.001)
+			output[offset+x] = round(A[offset+1]*B[x] + A[offset+2]*B[x+4] + A[offset+3]*B[x+8] + A[offset+4]*B[x+12]+(y==5?B[x+16]:ZERO), 0.001)
 	return output

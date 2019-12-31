@@ -16,7 +16,7 @@
 	speech_span = SPAN_ROBOT
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
-	var/last_lawchange_announce = 0
+	var/last_lawchange_announce = ZERO
 	var/list/alarms_to_show = list()
 	var/list/alarms_to_clear = list()
 	var/designation = ""
@@ -26,20 +26,20 @@
 
 	var/obj/item/radio/borg/radio = null  ///If this is a path, this gets created as an object in Initialize.
 
-	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
-	var/list/alarm_types_clear = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
+	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = ZERO)
+	var/list/alarm_types_clear = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = ZERO)
 
 	var/lawcheck[1]
 	var/ioncheck[1]
 	var/hackedcheck[1]
 	var/devillawcheck[5]
 
-	var/sensors_on = 0
+	var/sensors_on = ZERO
 	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
 	var/d_hud = DATA_HUD_DIAGNOSTIC_BASIC //Determines the diag hud to use
 
-	var/law_change_counter = 0
+	var/law_change_counter = ZERO
 	var/obj/machinery/camera/builtInCamera = null
 	var/updating = FALSE //portable camera camerachunk update
 
@@ -82,7 +82,7 @@
 	return
 
 /mob/living/silicon/proc/queueAlarm(message, type, incoming = 1)
-	var/in_cooldown = (alarms_to_show.len > 0 || alarms_to_clear.len > 0)
+	var/in_cooldown = (alarms_to_show.len > ZERO || alarms_to_clear.len > ZERO)
 	if(incoming)
 		alarms_to_show += message
 		alarm_types_show[type] += 1
@@ -150,9 +150,9 @@
 			alarms_to_show = list()
 			alarms_to_clear = list()
 			for(var/key in alarm_types_show)
-				alarm_types_show[key] = 0
+				alarm_types_show[key] = ZERO
 			for(var/key in alarm_types_clear)
-				alarm_types_clear[key] = 0
+				alarm_types_clear[key] = ZERO
 
 /mob/living/silicon/can_inject(mob/user, error_msg)
 	if(error_msg)
@@ -216,7 +216,7 @@
 	return
 
 
-/mob/living/silicon/proc/statelaws(force = 0)
+/mob/living/silicon/proc/statelaws(force = ZERO)
 
 	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
 	say("[radiomod] Current Active Laws:")
@@ -240,7 +240,7 @@
 	for (var/index = 1, index <= laws.hacked.len, index++)
 		var/law = laws.hacked[index]
 		var/num = ionnum()
-		if (length(law) > 0)
+		if (length(law) > ZERO)
 			if (force || hackedcheck[index] == "Yes")
 				say("[radiomod] [num]. [law]")
 				sleep(10)
@@ -248,7 +248,7 @@
 	for (var/index = 1, index <= laws.ion.len, index++)
 		var/law = laws.ion[index]
 		var/num = ionnum()
-		if (length(law) > 0)
+		if (length(law) > ZERO)
 			if (force || ioncheck[index] == "Yes")
 				say("[radiomod] [num]. [law]")
 				sleep(10)
@@ -256,7 +256,7 @@
 	for (var/index = 1, index <= laws.inherent.len, index++)
 		var/law = laws.inherent[index]
 
-		if (length(law) > 0)
+		if (length(law) > ZERO)
 			if (force || lawcheck[index+1] == "Yes")
 				say("[radiomod] [number]. [law]")
 				number++
@@ -265,7 +265,7 @@
 	for (var/index = 1, index <= laws.supplied.len, index++)
 		var/law = laws.supplied[index]
 
-		if (length(law) > 0)
+		if (length(law) > ZERO)
 			if(lawcheck.len >= number+1)
 				if (force || lawcheck[number+1] == "Yes")
 					say("[radiomod] [number]. [law]")
@@ -290,7 +290,7 @@
 
 	for (var/index = 1, index <= laws.hacked.len, index++)
 		var/law = laws.hacked[index]
-		if (length(law) > 0)
+		if (length(law) > ZERO)
 			if (!hackedcheck[index])
 				hackedcheck[index] = "No"
 			list += {"<A href='byond://?src=[REF(src)];lawh=[index]'>[hackedcheck[index]] [ionnum()]:</A> <font color='#660000'>[law]</font><BR>"}
@@ -299,7 +299,7 @@
 	for (var/index = 1, index <= laws.ion.len, index++)
 		var/law = laws.ion[index]
 
-		if (length(law) > 0)
+		if (length(law) > ZERO)
 			if (!ioncheck[index])
 				ioncheck[index] = "Yes"
 			list += {"<A href='byond://?src=[REF(src)];lawi=[index]'>[ioncheck[index]] [ionnum()]:</A> <font color='#547DFE'>[law]</font><BR>"}
@@ -309,7 +309,7 @@
 	for (var/index = 1, index <= laws.inherent.len, index++)
 		var/law = laws.inherent[index]
 
-		if (length(law) > 0)
+		if (length(law) > ZERO)
 			lawcheck.len += 1
 
 			if (!lawcheck[number+1])
@@ -319,7 +319,7 @@
 
 	for (var/index = 1, index <= laws.supplied.len, index++)
 		var/law = laws.supplied[index]
-		if (length(law) > 0)
+		if (length(law) > ZERO)
 			lawcheck.len += 1
 			if (!lawcheck[number+1])
 				lawcheck[number+1] = "Yes"
@@ -358,12 +358,12 @@
 	to_chat(src, "<span class='notice'>Automatic announcements [Autochan == "None" ? "will not use the radio." : "set to [Autochan]."]</span>")
 
 /mob/living/silicon/put_in_hand_check() // This check is for borgs being able to receive items, not put them in others' hands.
-	return 0
+	return ZERO
 
 // The src mob is trying to place an item on someone
 // But the src mob is a silicon!!  Disable.
 /mob/living/silicon/stripPanelEquip(obj/item/what, mob/who, slot)
-	return 0
+	return ZERO
 
 
 /mob/living/silicon/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt silicon units
@@ -402,7 +402,7 @@
 
 /mob/living/silicon/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
-	var/changed = 0
+	var/changed = ZERO
 	if(resize != RESIZE_DEFAULT_SIZE)
 		changed++
 		ntransform.Scale(resize)

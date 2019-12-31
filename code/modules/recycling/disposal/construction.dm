@@ -62,7 +62,7 @@
 // hide called by levelupdate if turf intact status changes
 // change visibility status and force update of icon
 /obj/structure/disposalconstruct/hide(var/intact)
-	invisibility = (intact && level==1) ? INVISIBILITY_MAXIMUM: 0	// hide if floor is intact
+	invisibility = (intact && level==1) ? INVISIBILITY_MAXIMUM: ZERO	// hide if floor is intact
 	update_icon()
 
 /obj/structure/disposalconstruct/proc/get_disposal_dir()
@@ -158,7 +158,7 @@
 /obj/structure/disposalconstruct/welder_act(mob/living/user, obj/item/I)
 	..()
 	if(anchored)
-		if(!I.tool_start_check(user, amount=0))
+		if(!I.tool_start_check(user, amount=ZERO))
 			return TRUE
 
 		to_chat(user, "<span class='notice'>You start welding the [pipename] in place...</span>")

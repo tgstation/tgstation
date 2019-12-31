@@ -7,7 +7,7 @@
 
 /obj/machinery/abductor
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	var/team_number = 0
+	var/team_number = ZERO
 
 //Console
 
@@ -187,7 +187,7 @@
 			c.console = src
 
 /obj/machinery/abductor/console/proc/AddSnapshot(mob/living/carbon/human/target)
-	if(target.anti_magic_check(FALSE, FALSE, TRUE, 0))
+	if(target.anti_magic_check(FALSE, FALSE, TRUE, ZERO))
 		say("Subject wearing specialized protective tinfoil gear, unable to get a proper scan!")
 		return
 	var/datum/icon_snapshot/entry = new

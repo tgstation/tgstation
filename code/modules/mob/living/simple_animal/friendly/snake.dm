@@ -1,12 +1,12 @@
 /mob/living/simple_animal/hostile/retaliate/poison
-    var/poison_per_bite = 0
+    var/poison_per_bite = ZERO
     var/poison_type = /datum/reagent/toxin
 
 /mob/living/simple_animal/hostile/retaliate/poison/AttackingTarget()
     . = ..()
     if(. && isliving(target))
         var/mob/living/L = target
-        if(L.reagents && !poison_per_bite == 0)
+        if(L.reagents && !poison_per_bite == ZERO)
             L.reagents.add_reagent(poison_type, poison_per_bite)
         return .
 
@@ -36,7 +36,7 @@
         mob_size = MOB_SIZE_SMALL
         mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_REPTILE
         gold_core_spawnable = FRIENDLY_SPAWN
-        obj_damage = 0
+        obj_damage = ZERO
         environment_smash = ENVIRONMENT_SMASH_NONE
 
 
@@ -52,7 +52,7 @@
 			living_mobs += HM
 
 	// if no tasty mice to chase, lets chase any living mob enemies in our vision range
-	if(length(mice) == 0)
+	if(length(mice) == ZERO)
 		//Filter living mobs (in range mobs) by those we consider enemies (retaliate behaviour)
 		return  living_mobs & enemies
 	return mice

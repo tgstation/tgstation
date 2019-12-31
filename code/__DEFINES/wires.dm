@@ -1,5 +1,5 @@
 //retvals for attempt_wires_interaction
-#define WIRE_INTERACTION_FAIL 0
+#define WIRE_INTERACTION_FAIL ZERO
 #define WIRE_INTERACTION_SUCCESSFUL 1
 #define WIRE_INTERACTION_BLOCK 2			//don't do anything else rather than open wires and whatever else.
 

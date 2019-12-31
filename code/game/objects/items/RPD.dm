@@ -3,7 +3,7 @@ CONTAINS:
 RPD
 */
 
-#define ATMOS_CATEGORY 0
+#define ATMOS_CATEGORY ZERO
 #define DISPOSALS_CATEGORY 1
 #define TRANSIT_CATEGORY 2
 
@@ -120,7 +120,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	var/list/rows = list()
 	var/list/row = list("previews" = list())
-	var/i = 0
+	var/i = ZERO
 	for(var/dir in dirs)
 		var/numdir = text2num(dir)
 		var/flipped = ((dirtype == PIPE_TRIN_M) || (dirtype == PIPE_UNARY_FLIPPABLE)) && (numdir in GLOB.diagonals)
@@ -128,7 +128,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		if(i++ || dirtype == PIPE_ONEDIR)
 			rows += list(row)
 			row = list("previews" = list())
-			i = 0
+			i = ZERO
 
 	return rows
 
@@ -189,7 +189,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	var/datum/effect_system/spark_spread/spark_system
-	var/working = 0
+	var/working = ZERO
 	var/p_dir = NORTH
 	var/p_flipped = FALSE
 	var/paint_color = "grey"
@@ -210,7 +210,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/Initialize()
 	. = ..()
 	spark_system = new
-	spark_system.set_up(5, 0, src)
+	spark_system.set_up(5, ZERO, src)
 	spark_system.attach(src)
 	if(!first_atmos)
 		first_atmos = GLOB.atmos_pipe_recipes[GLOB.atmos_pipe_recipes[1]][1]

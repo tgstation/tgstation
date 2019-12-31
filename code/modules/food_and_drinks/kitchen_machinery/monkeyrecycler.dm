@@ -11,7 +11,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	idle_power_usage = 5
 	active_power_usage = 50
 	circuit = /obj/item/circuitboard/machine/monkey_recycler
-	var/stored_matter = 0
+	var/stored_matter = ZERO
 	var/cube_production = 0.2
 	var/list/connected = list()			//Keeps track of connected xenobio consoles, for deletion in /Destroy()
 
@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	return ..()
 
 /obj/machinery/monkey_recycler/RefreshParts()	//Ranges from 0.2 to 0.8 per monkey recycled
-	cube_production = 0
+	cube_production = ZERO
 	for(var/obj/item/stock_parts/manipulator/B in component_parts)
 		cube_production += B.rating * 0.1
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)

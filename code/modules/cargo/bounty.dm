@@ -154,7 +154,7 @@ GLOBAL_LIST_EMPTY(bounties_list)
 
 	/********************************Dynamic Gens********************************/
 
-	for(var/i in 0 to 1)
+	for(var/i in ZERO to 1)
 		if(prob(50))
 			pick = pick(subtypesof(/datum/bounty/item/slime))
 		else
@@ -176,7 +176,7 @@ GLOBAL_LIST_EMPTY(bounties_list)
 		try_add_bounty(new low_priority_bounty)
 
 /proc/completed_bounty_count()
-	var/count = 0
+	var/count = ZERO
 	for(var/i in GLOB.bounties_list)
 		var/datum/bounty/B = i
 		if(B.claimed)

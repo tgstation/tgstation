@@ -8,7 +8,7 @@
 	req_access = list(ACCESS_BAR)
 	var/active = FALSE
 	var/list/rangers = list()
-	var/stop = 0
+	var/stop = ZERO
 	var/list/songs = list()
 	var/datum/track/selection = null
 
@@ -32,8 +32,8 @@
 /datum/track
 	var/song_name = "generic"
 	var/song_path = null
-	var/song_length = 0
-	var/song_beat = 0
+	var/song_length = ZERO
+	var/song_beat = ZERO
 
 /datum/track/New(name, path, length, beat)
 	song_name = name
@@ -126,7 +126,7 @@
 				START_PROCESSING(SSobj, src)
 				updateUsrDialog()
 			else if(active)
-				stop = 0
+				stop = ZERO
 				updateUsrDialog()
 		if("select")
 			if(active)
@@ -227,7 +227,7 @@
 		if(QDELETED(src) || !active)
 			return
 		var/obj/effect/overlay/sparkles/S = new /obj/effect/overlay/sparkles(src)
-		S.alpha = 0
+		S.alpha = ZERO
 		sparkles += S
 		switch(i)
 			if(1 to 8)
@@ -251,7 +251,7 @@
 			if(glow.light_color == LIGHT_COLOR_RED)
 				glow.light_color = LIGHT_COLOR_BLUE
 				glow.light_power = glow.light_power * 1.48
-				glow.light_range = 0
+				glow.light_range = ZERO
 				glow.update_light()
 				continue
 			if(glow.light_color == LIGHT_COLOR_BLUE)
@@ -263,7 +263,7 @@
 			if(glow.light_color == LIGHT_COLOR_GREEN)
 				glow.light_color = LIGHT_COLOR_ORANGE
 				glow.light_power = glow.light_power * 0.5
-				glow.light_range = 0
+				glow.light_range = ZERO
 				glow.update_light()
 				continue
 			if(glow.light_color == LIGHT_COLOR_ORANGE)
@@ -275,7 +275,7 @@
 			if(glow.light_color == LIGHT_COLOR_PURPLE)
 				glow.light_color = LIGHT_COLOR_BLUEGREEN
 				glow.light_power = glow.light_power * 0.44
-				glow.light_range = 0
+				glow.light_range = ZERO
 				glow.update_light()
 				continue
 			if(glow.light_color == LIGHT_COLOR_BLUEGREEN)
@@ -285,7 +285,7 @@
 				continue
 			if(glow.light_color == LIGHT_COLOR_YELLOW)
 				glow.light_color = LIGHT_COLOR_CYAN
-				glow.light_range = 0
+				glow.light_range = ZERO
 				glow.update_light()
 				continue
 			if(glow.light_color == LIGHT_COLOR_CYAN)
@@ -302,8 +302,8 @@
 
 /obj/machinery/jukebox/disco/proc/dance(var/mob/living/M) //Show your moves
 	set waitfor = FALSE
-	switch(rand(0,9))
-		if(0 to 1)
+	switch(rand(ZERO,9))
+		if(ZERO to 1)
 			dance2(M)
 		if(2 to 3)
 			dance3(M)
@@ -313,7 +313,7 @@
 			dance5(M)
 
 /obj/machinery/jukebox/disco/proc/dance2(mob/living/M)
-	for(var/i in 0 to 9)
+	for(var/i in ZERO to 9)
 		dance_rotate(M, CALLBACK(M, /mob.proc/dance_flip))
 		sleep(20)
 
@@ -329,49 +329,49 @@
 		switch(i)
 			if (1 to 15)
 				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(0,1)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
+				initial_matrix.Translate(ZERO,1)
+				animate(M, transform = initial_matrix, time = 1, loop = ZERO)
 			if (16 to 30)
 				initial_matrix = matrix(M.transform)
 				initial_matrix.Translate(1,-1)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
+				animate(M, transform = initial_matrix, time = 1, loop = ZERO)
 			if (31 to 45)
 				initial_matrix = matrix(M.transform)
 				initial_matrix.Translate(-1,-1)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
+				animate(M, transform = initial_matrix, time = 1, loop = ZERO)
 			if (46 to 60)
 				initial_matrix = matrix(M.transform)
 				initial_matrix.Translate(-1,1)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
+				animate(M, transform = initial_matrix, time = 1, loop = ZERO)
 			if (61 to 75)
 				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(1,0)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
+				initial_matrix.Translate(1,ZERO)
+				animate(M, transform = initial_matrix, time = 1, loop = ZERO)
 		M.setDir(turn(M.dir, 90))
 		switch (M.dir)
 			if (NORTH)
 				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(0,3)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
+				initial_matrix.Translate(ZERO,3)
+				animate(M, transform = initial_matrix, time = 1, loop = ZERO)
 			if (SOUTH)
 				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(0,-3)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
+				initial_matrix.Translate(ZERO,-3)
+				animate(M, transform = initial_matrix, time = 1, loop = ZERO)
 			if (EAST)
 				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(3,0)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
+				initial_matrix.Translate(3,ZERO)
+				animate(M, transform = initial_matrix, time = 1, loop = ZERO)
 			if (WEST)
 				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(-3,0)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
+				initial_matrix.Translate(-3,ZERO)
+				animate(M, transform = initial_matrix, time = 1, loop = ZERO)
 		sleep(1)
 	M.lying_fix()
 
 
 /obj/machinery/jukebox/disco/proc/dance4(var/mob/living/M)
 	var/speed = rand(1,3)
-	set waitfor = 0
+	set waitfor = ZERO
 	var/time = 30
 	while(time)
 		sleep(speed)
@@ -382,43 +382,43 @@
 		 time--
 
 /obj/machinery/jukebox/disco/proc/dance5(var/mob/living/M)
-	animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
+	animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = ZERO)
 	var/matrix/initial_matrix = matrix(M.transform)
 	for (var/i in 1 to 60)
 		if (!M)
 			return
 		if (i<31)
 			initial_matrix = matrix(M.transform)
-			initial_matrix.Translate(0,1)
-			animate(M, transform = initial_matrix, time = 1, loop = 0)
+			initial_matrix.Translate(ZERO,1)
+			animate(M, transform = initial_matrix, time = 1, loop = ZERO)
 		if (i>30)
 			initial_matrix = matrix(M.transform)
-			initial_matrix.Translate(0,-1)
-			animate(M, transform = initial_matrix, time = 1, loop = 0)
+			initial_matrix.Translate(ZERO,-1)
+			animate(M, transform = initial_matrix, time = 1, loop = ZERO)
 		M.setDir(turn(M.dir, 90))
 		switch (M.dir)
 			if (NORTH)
 				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(0,3)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
+				initial_matrix.Translate(ZERO,3)
+				animate(M, transform = initial_matrix, time = 1, loop = ZERO)
 			if (SOUTH)
 				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(0,-3)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
+				initial_matrix.Translate(ZERO,-3)
+				animate(M, transform = initial_matrix, time = 1, loop = ZERO)
 			if (EAST)
 				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(3,0)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
+				initial_matrix.Translate(3,ZERO)
+				animate(M, transform = initial_matrix, time = 1, loop = ZERO)
 			if (WEST)
 				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(-3,0)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
+				initial_matrix.Translate(-3,ZERO)
+				animate(M, transform = initial_matrix, time = 1, loop = ZERO)
 		sleep(1)
 	M.lying_fix()
 
 /mob/living/proc/lying_fix()
-	animate(src, transform = null, time = 1, loop = 0)
-	lying_prev = 0
+	animate(src, transform = null, time = 1, loop = ZERO)
+	lying_prev = ZERO
 
 /obj/machinery/jukebox/proc/dance_over()
 	for(var/mob/living/L in rangers)

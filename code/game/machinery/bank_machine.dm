@@ -6,17 +6,17 @@
 	ui_x = 320
 	ui_y = 165
 	var/siphoning = FALSE
-	var/next_warning = 0
+	var/next_warning = ZERO
 	var/obj/item/radio/radio
 	var/radio_channel = RADIO_CHANNEL_COMMON
 	var/minimum_time_between_warnings = 400
-	var/syphoning_credits = 0
+	var/syphoning_credits = ZERO
 
 /obj/machinery/computer/bank_machine/Initialize()
 	. = ..()
 	radio = new(src)
 	radio.subspace_transmission = TRUE
-	radio.canhear_range = 0
+	radio.canhear_range = ZERO
 	radio.recalculateChannels()
 
 /obj/machinery/computer/bank_machine/Destroy()
@@ -24,7 +24,7 @@
 	. = ..()
 
 /obj/machinery/computer/bank_machine/attackby(obj/item/I, mob/user)
-	var/value = 0
+	var/value = ZERO
 	if(istype(I, /obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/C = I
 		value = C.value * C.amount
@@ -75,7 +75,7 @@
 	if(D)
 		data["current_balance"] = D.account_balance
 	else
-		data["current_balance"] = 0
+		data["current_balance"] = ZERO
 	data["siphoning"] = siphoning
 	data["station_name"] = station_name()
 
@@ -98,4 +98,4 @@
 /obj/machinery/computer/bank_machine/proc/end_syphon()
 	siphoning = FALSE
 	new /obj/item/holochip(drop_location(), syphoning_credits) //get the loot
-	syphoning_credits = 0
+	syphoning_credits = ZERO

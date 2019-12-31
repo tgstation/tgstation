@@ -18,7 +18,7 @@
 #define INVESTIGATE_PRESENTS		"presents"
 
 // Logging types for log_message()
-#define LOG_ATTACK			(1 << 0)
+#define LOG_ATTACK			(1 << ZERO)
 #define LOG_SAY				(1 << 1)
 #define LOG_WHISPER			(1 << 2)
 #define LOG_EMOTE			(1 << 3)

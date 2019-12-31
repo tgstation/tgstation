@@ -1,5 +1,5 @@
 /datum/admins/proc/Secrets()
-	if(!check_rights(0))
+	if(!check_rights(ZERO))
 		return
 
 	var/list/dat = list("<B>The first rule of adminbuse is: you don't talk about the adminbuse.</B><HR>")
@@ -12,7 +12,7 @@
 			<BR>
 			"}
 
-	if(check_rights(R_ADMIN,0))
+	if(check_rights(R_ADMIN,ZERO))
 		dat += {"
 			<B>Admin Secrets</B><BR>
 			<BR>
@@ -40,7 +40,7 @@
 			<BR>
 			"}
 
-	if(check_rights(R_FUN,0))
+	if(check_rights(R_FUN,ZERO))
 		dat += {"
 			<B>Fun Secrets</B><BR>
 			<BR>
@@ -75,7 +75,7 @@
 
 	dat += "<BR>"
 
-	if(check_rights(R_DEBUG,0))
+	if(check_rights(R_DEBUG,ZERO))
 		dat += {"
 			<B>Security Level Elevated</B><BR>
 			<BR>
@@ -94,7 +94,7 @@
 
 /datum/admins/proc/Secrets_topic(item,href_list)
 	var/datum/round_event/E
-	var/ok = 0
+	var/ok = ZERO
 	switch(item)
 		if("admin_log")
 			var/dat = "<B>Admin Log<HR></B>"
@@ -140,7 +140,7 @@
 				message_admins("[key_name_admin(usr)] has cured all diseases.")
 				for(var/thing in SSdisease.active_diseases)
 					var/datum/disease/D = thing
-					D.cure(0)
+					D.cure(ZERO)
 		if("set_name")
 			if(!check_rights(R_ADMIN))
 				return
@@ -487,7 +487,7 @@
 			if(!check_rights(R_FUN))
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Guns"))
-			var/survivor_probability = 0
+			var/survivor_probability = ZERO
 			switch(alert("Do you want this to create survivors antagonists?",,"No Antags","Some Antags","All Antags!"))
 				if("Some Antags")
 					survivor_probability = 25
@@ -500,7 +500,7 @@
 			if(!check_rights(R_FUN))
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Magic"))
-			var/survivor_probability = 0
+			var/survivor_probability = ZERO
 			switch(alert("Do you want this to create survivors antagonists?",,"No Antags","Some Antags","All Antags!"))
 				if("Some Antags")
 					survivor_probability = 25
@@ -636,7 +636,7 @@
 			)
 
 			message_admins("[key_name(usr)] is creating a custom portal storm...")
-			var/list/prefreturn = presentpreflikepicker(usr,"Customize Portal Storm", "Customize Portal Storm", Button1="Ok", width = 600, StealFocus = 1,Timeout = 0, settings=settings)
+			var/list/prefreturn = presentpreflikepicker(usr,"Customize Portal Storm", "Customize Portal Storm", Button1="Ok", width = 600, StealFocus = 1,Timeout = ZERO, settings=settings)
 
 			if (prefreturn["button"] == 1)
 				var/list/prefs = settings["mainsettings"]
@@ -686,7 +686,7 @@
 
 	if(E)
 		E.processing = FALSE
-		if(E.announceWhen>0)
+		if(E.announceWhen>ZERO)
 			switch(alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No", "Cancel"))
 				if("Yes")
 					E.announceChance = 100
@@ -694,7 +694,7 @@
 					E.kill()
 					return
 				if("No")
-					E.announceChance = 0
+					E.announceChance = ZERO
 		E.processing = TRUE
 	if (usr)
 		log_admin("[key_name(usr)] used secret [item]")
@@ -702,7 +702,7 @@
 			to_chat(world, text("<B>A secret has been activated by []!</B>", usr.key))
 
 /proc/portalAnnounce(announcement, playlightning)
-	set waitfor = 0
+	set waitfor = ZERO
 	if (playlightning)
 		sound_to_playing_players('sound/magic/lightning_chargeup.ogg')
 		sleep(80)

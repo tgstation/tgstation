@@ -40,7 +40,7 @@ SUBSYSTEM_DEF(vis_overlays)
 			overlay = _create_new_vis_overlay(icon, iconstate, layer, plane, dir, alpha, add_appearance_flags)
 			vis_overlay_cache[.] = overlay
 		else
-			overlay.unused = 0
+			overlay.unused = ZERO
 	else
 		overlay = _create_new_vis_overlay(icon, iconstate, layer, plane, dir, alpha, add_appearance_flags)
 		overlay.cache_expiration = -1

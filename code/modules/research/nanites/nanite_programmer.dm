@@ -85,13 +85,13 @@
 			var/target_code = params["target_code"]
 			switch(target_code)
 				if("activation")
-					program.activation_code = CLAMP(round(new_code, 1),0,9999)
+					program.activation_code = CLAMP(round(new_code, 1),ZERO,9999)
 				if("deactivation")
-					program.deactivation_code = CLAMP(round(new_code, 1),0,9999)
+					program.deactivation_code = CLAMP(round(new_code, 1),ZERO,9999)
 				if("kill")
-					program.kill_code = CLAMP(round(new_code, 1),0,9999)
+					program.kill_code = CLAMP(round(new_code, 1),ZERO,9999)
 				if("trigger")
-					program.trigger_code = CLAMP(round(new_code, 1),0,9999)
+					program.trigger_code = CLAMP(round(new_code, 1),ZERO,9999)
 			. = TRUE
 		if("set_extra_setting")
 			program.set_extra_setting(params["target_setting"], params["value"])
@@ -101,7 +101,7 @@
 			var/timer = text2num(params["delay"])
 			if(!isnull(timer))
 				playsound(src, "terminal_type", 25, FALSE)
-				timer = CLAMP(round(timer, 1), 0, 3600)
+				timer = CLAMP(round(timer, 1), ZERO, 3600)
 				timer *= 10 //convert to deciseconds
 				program.timer_restart = timer
 			. = TRUE
@@ -109,7 +109,7 @@
 			var/timer = text2num(params["delay"])
 			if(!isnull(timer))
 				playsound(src, "terminal_type", 25, FALSE)
-				timer = CLAMP(round(timer, 1), 0, 3600)
+				timer = CLAMP(round(timer, 1), ZERO, 3600)
 				timer *= 10 //convert to deciseconds
 				program.timer_shutdown = timer
 			. = TRUE
@@ -117,7 +117,7 @@
 			var/timer = text2num(params["delay"])
 			if(!isnull(timer))
 				playsound(src, "terminal_type", 25, FALSE)
-				timer = CLAMP(round(timer, 1), 0, 3600)
+				timer = CLAMP(round(timer, 1), ZERO, 3600)
 				timer *= 10 //convert to deciseconds
 				program.timer_trigger = timer
 			. = TRUE
@@ -125,7 +125,7 @@
 			var/timer = text2num(params["delay"])
 			if(!isnull(timer))
 				playsound(src, "terminal_type", 25, FALSE)
-				timer = CLAMP(round(timer, 1), 0, 3600)
+				timer = CLAMP(round(timer, 1), ZERO, 3600)
 				timer *= 10 //convert to deciseconds
 				program.timer_trigger_delay = timer
 			. = TRUE

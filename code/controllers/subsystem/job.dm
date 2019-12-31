@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(job)
 	var/list/datum/job/name_occupations = list()	//Dict of all jobs, keys are titles
 	var/list/type_occupations = list()	//Dict of all jobs, keys are types
 	var/list/unassigned = list()		//Players who need jobs
-	var/initial_players_to_assign = 0 	//used for checking against population caps
+	var/initial_players_to_assign = ZERO 	//used for checking against population caps
 
 	var/list/prioritized_jobs = list()
 	var/list/latejoin_trackers = list()	//Don't read this list, use GetLateJoinTurfs() instead
@@ -45,7 +45,7 @@ SUBSYSTEM_DEF(job)
 	var/list/all_jobs = subtypesof(/datum/job)
 	if(!all_jobs.len)
 		to_chat(world, "<span class='boldannounce'>Error setting up jobs, no job datums found</span>")
-		return 0
+		return ZERO
 
 	for(var/J in all_jobs)
 		var/datum/job/job = new J()
@@ -167,7 +167,7 @@ SUBSYSTEM_DEF(job)
 		if((player) && (player.mind))
 			player.mind.assigned_role = null
 			player.mind.special_role = null
-			SSpersistence.antag_rep_change[player.ckey] = 0
+			SSpersistence.antag_rep_change[player.ckey] = ZERO
 	SetupOccupations()
 	unassigned = list()
 	return
@@ -190,7 +190,7 @@ SUBSYSTEM_DEF(job)
 			var/mob/dead/new_player/candidate = pick(candidates)
 			if(AssignRole(candidate, command_position))
 				return 1
-	return 0
+	return ZERO
 
 
 //This proc is called at the start of the level loop of DivideOccupations() and will cause head jobs to be checked before any other jobs of the same level
@@ -209,11 +209,11 @@ SUBSYSTEM_DEF(job)
 		AssignRole(candidate, command_position)
 
 /datum/controller/subsystem/job/proc/FillAIPosition()
-	var/ai_selected = 0
+	var/ai_selected = ZERO
 	var/datum/job/job = GetJob("AI")
 	if(!job)
-		return 0
-	for(var/i = job.total_positions, i > 0, i--)
+		return ZERO
+	for(var/i = job.total_positions, i > ZERO, i--)
 		for(var/level in level_order)
 			var/list/candidates = list()
 			candidates = FindOccupationCandidates(job, level)
@@ -224,7 +224,7 @@ SUBSYSTEM_DEF(job)
 					break
 	if(ai_selected)
 		return 1
-	return 0
+	return ZERO
 
 
 /** Proc DivideOccupations
@@ -251,7 +251,7 @@ SUBSYSTEM_DEF(job)
 	initial_players_to_assign = unassigned.len
 
 	JobDebug("DO, Len: [unassigned.len]")
-	if(unassigned.len == 0)
+	if(unassigned.len == ZERO)
 		return validate_required_jobs(required_jobs)
 
 	//Scale number of open security officer slots to population
@@ -497,8 +497,8 @@ SUBSYSTEM_DEF(job)
 		CRASH("setup_officer_positions(): Security officer job is missing")
 
 	var/ssc = CONFIG_GET(number/security_scaling_coeff)
-	if(ssc > 0)
-		if(J.spawn_positions > 0)
+	if(ssc > ZERO)
+		if(J.spawn_positions > ZERO)
 			var/officer_positions = min(12, max(J.spawn_positions, round(unassigned.len / ssc))) //Scale between configured minimum and 12 officers
 			JobDebug("Setting open security officer positions to [officer_positions]")
 			J.total_positions = officer_positions
@@ -506,9 +506,9 @@ SUBSYSTEM_DEF(job)
 
 	//Spawn some extra eqipment lockers if we have more than 5 officers
 	var/equip_needed = J.total_positions
-	if(equip_needed < 0) // -1: infinite available slots
+	if(equip_needed < ZERO) // -1: infinite available slots
 		equip_needed = 12
-	for(var/i=equip_needed-5, i>0, i--)
+	for(var/i=equip_needed-5, i>ZERO, i--)
 		if(GLOB.secequipment.len)
 			var/spawnloc = GLOB.secequipment[1]
 			new /obj/structure/closet/secure_closet/security/sec(spawnloc)
@@ -527,12 +527,12 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job in occupations)
-		var/high = 0 //high
-		var/medium = 0 //medium
-		var/low = 0 //low
-		var/never = 0 //never
-		var/banned = 0 //banned
-		var/young = 0 //account too young
+		var/high = ZERO //high
+		var/medium = ZERO //medium
+		var/low = ZERO //low
+		var/never = ZERO //never
+		var/banned = ZERO //banned
+		var/young = ZERO //account too young
 		for(var/i in GLOB.new_player_list)
 			var/mob/dead/new_player/player = i
 			if(!(player.ready == PLAYER_READY_TO_PLAY && player.mind && !player.mind.assigned_role))
@@ -569,7 +569,7 @@ SUBSYSTEM_DEF(job)
 		var/relevent_cap = max(hpc, epc)
 		if((initial_players_to_assign - unassigned.len) >= relevent_cap)
 			return 1
-	return 0
+	return ZERO
 
 /datum/controller/subsystem/job/proc/RejectPlayer(mob/dead/new_player/player)
 	if(player.mind && player.mind.special_role)

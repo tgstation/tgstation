@@ -8,10 +8,10 @@ Consuming extracts:
 	desc = "It hungers... for <i>more</i>." //My slimecross has finally decided to eat... my buffet!
 	icon_state = "consuming"
 	effect = "consuming"
-	var/nutriment_eaten = 0
+	var/nutriment_eaten = ZERO
 	var/nutriment_required = 10
 	var/cooldown = 600 //1 minute.
-	var/last_produced = 0
+	var/last_produced = ZERO
 	var/cookies = 5 //Number of cookies to spawn
 	var/cookietype = /obj/item/slime_cookie
 
@@ -29,7 +29,7 @@ Consuming extracts:
 		else
 			to_chat(user, "<span class='warning'>[src] burbles unhappily at the offering.</span>")
 		if(nutriment_eaten >= nutriment_required)
-			nutriment_eaten = 0
+			nutriment_eaten = ZERO
 			user.visible_message("<span class='notice'>[src] swells up and produces a small pile of cookies!</span>")
 			playsound(src, 'sound/effects/splat.ogg', 40, TRUE)
 			last_produced = world.time
@@ -50,9 +50,9 @@ Consuming extracts:
 	var/taste = "error"
 	var/nutrition = 5
 	icon_state = "base"
-	force = 0
+	force = ZERO
 	w_class = WEIGHT_CLASS_TINY
-	throwforce = 0
+	throwforce = ZERO
 	throw_speed = 3
 	throw_range = 6
 

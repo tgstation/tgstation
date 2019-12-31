@@ -1,7 +1,7 @@
 /datum/component/butchering
 	var/speed = 80 //time in deciseconds taken to butcher something
 	var/effectiveness = 100 //percentage effectiveness; numbers above 100 yield extra drops
-	var/bonus_modifier = 0 //percentage increase to bonus item chance
+	var/bonus_modifier = ZERO //percentage increase to bonus item chance
 	var/butcher_sound = 'sound/weapons/slice.ogg' //sound played when butchering
 	var/butchering_enabled = TRUE
 	var/can_be_blunt = FALSE
@@ -65,13 +65,13 @@
 					"<span class='userdanger'>[user] slits your throat...</span>")
 		log_combat(user, H, "finishes slicing the throat of")
 		H.apply_damage(source.force, BRUTE, BODY_ZONE_HEAD)
-		H.bleed_rate = CLAMP(H.bleed_rate + 20, 0, 30)
+		H.bleed_rate = CLAMP(H.bleed_rate + 20, ZERO, 30)
 		H.apply_status_effect(/datum/status_effect/neck_slice)
 
 /datum/component/butchering/proc/Butcher(mob/living/butcher, mob/living/meat)
 	var/turf/T = meat.drop_location()
 	var/final_effectiveness = effectiveness - meat.butcher_difficulty
-	var/bonus_chance = max(0, (final_effectiveness - 100) + bonus_modifier) //so 125 total effectiveness = 25% extra chance
+	var/bonus_chance = max(ZERO, (final_effectiveness - 100) + bonus_modifier) //so 125 total effectiveness = 25% extra chance
 	for(var/V in meat.butcher_results)
 		var/obj/bones = V
 		var/amount = meat.butcher_results[bones]

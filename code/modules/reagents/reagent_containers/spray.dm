@@ -9,11 +9,11 @@
 	item_flags = NOBLUDGEON
 	reagent_flags = OPENCONTAINER
 	slot_flags = ITEM_SLOT_BELT
-	throwforce = 0
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 7
-	var/stream_mode = 0 //whether we use the more focused mode
+	var/stream_mode = ZERO //whether we use the more focused mode
 	var/current_range = 3 //the range of tiles the sprayer will reach.
 	var/spray_range = 3 //the range of tiles the sprayer will reach when in spray mode.
 	var/stream_range = 1 //the range of tiles the sprayer will reach when in stream mode.
@@ -76,7 +76,7 @@
 /obj/item/reagent_containers/spray/proc/do_spray(atom/A, wait_step, obj/effect/decal/chempuff/D, range, puff_reagent_left, mob/user)
 	set waitfor = FALSE
 	var/range_left = range
-	for(var/i=0, i<range, i++)
+	for(var/i=ZERO, i<range, i++)
 		range_left--
 		step_towards(D,A)
 		sleep(wait_step)
@@ -84,7 +84,7 @@
 		for(var/atom/T in get_turf(D))
 			if(T == D || T.invisibility) //we ignore the puff itself and stuff below the floor
 				continue
-			if(puff_reagent_left <= 0)
+			if(puff_reagent_left <= ZERO)
 				break
 
 			if(stream_mode)
@@ -104,11 +104,11 @@
 				if(ismob(T))
 					puff_reagent_left -= 1
 
-		if(puff_reagent_left > 0 && (!stream_mode || !range_left))
+		if(puff_reagent_left > ZERO && (!stream_mode || !range_left))
 			D.reagents.reaction(get_turf(D), VAPOR)
 			puff_reagent_left -= 1
 
-		if(puff_reagent_left <= 0) // we used all the puff so we delete it.
+		if(puff_reagent_left <= ZERO) // we used all the puff so we delete it.
 			qdel(D)
 			return
 	qdel(D)
@@ -150,12 +150,12 @@
 		total_reagent_weight = total_reagent_weight + R.reagent_weight
 		amount_of_reagents++
 
-	if(total_reagent_weight && amount_of_reagents) //don't bother if the container is empty - DIV/0
+	if(total_reagent_weight && amount_of_reagents) //don't bother if the container is empty - DIV/ZERO
 		var/average_reagent_weight = total_reagent_weight / amount_of_reagents
 		spray_range = CLAMP(round((initial(spray_range) / average_reagent_weight) - ((amount_of_reagents - 1) * 1)), 3, 5) //spray distance between 3 and 5 tiles rounded down; extra reagents lose a tile
 	else
 		spray_range = initial(spray_range)
-	if(stream_mode == 0)
+	if(stream_mode == ZERO)
 		current_range = spray_range
 
 //space cleaner
@@ -246,7 +246,7 @@
 	list_reagents = list(/datum/reagent/water = 100)
 	var/generate_amount = 5
 	var/generate_type = /datum/reagent/water
-	var/last_generate = 0
+	var/last_generate = ZERO
 	var/generate_delay = 10	//deciseconds
 	can_fill_from_container = FALSE
 
@@ -289,7 +289,7 @@
 	item_state = "chemsprayer"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	throwforce = 0
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_NORMAL
 	stream_mode = 1
 	current_range = 7
@@ -333,7 +333,7 @@
 	amount_per_transfer_from_this = 5
 	var/generate_amount = 50
 	var/generate_type = /datum/reagent/space_cleaner
-	var/last_generate = 0
+	var/last_generate = ZERO
 	var/generate_delay = 10	//deciseconds
 
 /obj/item/reagent_containers/spray/chemsprayer/janitor/Initialize()

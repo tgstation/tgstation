@@ -175,7 +175,7 @@
 	icon_state = "petcollar"
 	var/tagname = null
 
-/obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
+/obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = ZERO)
 	if(ishuman(M))
 		return FALSE
 	return ..()
@@ -211,7 +211,7 @@
 	if(!proximity)
 		return
 	var/datum/export_report/ex = export_item_and_contents(I, allowed_categories = (ALL), dry_run=TRUE)
-	var/price = 0
+	var/price = ZERO
 	for(var/x in ex.total_amount)
 		price += ex.total_value[x]
 

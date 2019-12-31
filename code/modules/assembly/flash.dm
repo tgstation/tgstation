@@ -6,7 +6,7 @@
 	item_state = "flashtool"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	throwforce = 0
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = 300, /datum/material/glass = 300)
 	light_color = LIGHT_COLOR_WHITE
@@ -14,10 +14,10 @@
 	var/flashing_overlay = "flash-f"
 	var/times_used = 0 //Number of times it's been used.
 	var/burnt_out = FALSE     //Is the flash burnt out?
-	var/burnout_resistance = 0
-	var/last_used = 0 //last world.time it was used.
-	var/cooldown = 0
-	var/last_trigger = 0 //Last time it was successfully triggered.
+	var/burnout_resistance = ZERO
+	var/last_used = ZERO //last world.time it was used.
+	var/cooldown = ZERO
+	var/last_trigger = ZERO //Last time it was successfully triggered.
 
 /obj/item/assembly/flash/suicide_act(mob/living/user)
 	if(burnt_out)
@@ -45,7 +45,7 @@
 
 /obj/item/assembly/flash/proc/clown_check(mob/living/carbon/human/user)
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-		flash_carbon(user, user, 15, 0)
+		flash_carbon(user, user, 15, ZERO)
 		return FALSE
 	return TRUE
 
@@ -65,7 +65,7 @@
 	for(var/seconds = deciseconds_passed / 10, seconds >= interval, seconds -= interval) //get 1 charge every interval
 		times_used--
 	last_used = world.time
-	times_used = max(0, times_used) //sanity
+	times_used = max(ZERO, times_used) //sanity
 	if(max(0, prob(times_used * 3) - burnout_resistance)) //The more often it's used in a short span of time the more likely it will burn out
 		burn_out()
 		return FALSE
@@ -157,7 +157,7 @@
 
 	user.visible_message("<span class='warning'>[user] fails to blind [M] with the flash!</span>", "<span class='warning'>You fail to blind [M] with the flash!</span>")
 
-/obj/item/assembly/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
+/obj/item/assembly/flash/attack_self(mob/living/carbon/user, flag = ZERO, emp = ZERO)
 	if(holder)
 		return FALSE
 	if(!AOE_flash(FALSE, 3, 5, FALSE, user))
@@ -224,7 +224,7 @@
 	name = "photon projector"
 	desc = "A high-powered photon projector implant normally used for lighting purposes, but also doubles as a flashbulb weapon. Self-repair protocols fix the flashbulb if it ever burns out."
 	var/flashcd = 20
-	var/overheat = 0
+	var/overheat = ZERO
 	var/obj/item/organ/cyberimp/arm/flash/I = null
 
 /obj/item/assembly/flash/armimplant/burn_out()

@@ -1,4 +1,4 @@
-#define SIPHONING	0
+#define SIPHONING	ZERO
 #define SCRUBBING	1
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber
@@ -15,11 +15,11 @@
 	layer = GAS_SCRUBBER_LAYER
 
 	var/id_tag = null
-	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
+	var/scrubbing = SCRUBBING //ZERO = siphoning, 1 = scrubbing
 
 	var/filter_types = list(/datum/gas/carbon_dioxide)
 	var/volume_rate = 200
-	var/widenet = 0 //is this scrubber acting on the 3x3 area around it.
+	var/widenet = ZERO //is this scrubber acting on the 3x3 area around it.
 	var/list/turf/adjacent_turfs = list()
 
 	var/frequency = FREQ_ATMOS_CONTROL
@@ -177,7 +177,7 @@
 			for(var/gas in filter_types & removed_gases)
 				filtered_out.add_gas(gas)
 				filtered_gases[gas][MOLES] = removed_gases[gas][MOLES]
-				removed_gases[gas][MOLES] = 0
+				removed_gases[gas][MOLES] = ZERO
 
 			removed.garbage_collect()
 
@@ -216,7 +216,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
 	if(!is_operational() || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
-		return 0
+		return ZERO
 
 	var/atom/signal_sender = signal.data["user"]
 
@@ -264,7 +264,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/welder_act(mob/living/user, obj/item/I)
 	..()
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=ZERO))
 		return TRUE
 	to_chat(user, "<span class='notice'>Now welding the scrubber.</span>")
 	if(I.use_tool(src, user, 20, volume=50))

@@ -146,7 +146,7 @@
 	desc = "An extremely sturdy metal ladder."
 	resistance_flags = INDESTRUCTIBLE
 	var/id
-	var/height = 0  // higher numbers are considered physically higher
+	var/height = ZERO  // higher numbers are considered physically higher
 
 /obj/structure/ladder/unbreakable/Initialize()
 	GLOB.ladders += src

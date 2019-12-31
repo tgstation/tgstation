@@ -10,7 +10,7 @@
 	persistent = TRUE
 	antag_flag = ROLE_TRAITOR
 	antag_datum = /datum/antagonist/traitor/
-	minimum_required_age = 0
+	minimum_required_age = ZERO
 	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("Cyborg")
 	required_candidates = 1
@@ -33,7 +33,7 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/traitor/rule_process()
-	if (autotraitor_cooldown > 0)
+	if (autotraitor_cooldown > ZERO)
 		autotraitor_cooldown--
 	else
 		autotraitor_cooldown = 450 // 15 minutes
@@ -162,15 +162,15 @@
 	high_population_requirement = 10
 	var/list/roundstart_wizards = list()
 
-/datum/dynamic_ruleset/roundstart/wizard/acceptable(population=0, threat=0)
-	if(GLOB.wizardstart.len == 0)
+/datum/dynamic_ruleset/roundstart/wizard/acceptable(population=ZERO, threat=ZERO)
+	if(GLOB.wizardstart.len == ZERO)
 		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		return FALSE
 	return ..()
 
 /datum/dynamic_ruleset/roundstart/wizard/pre_execute()
-	if(GLOB.wizardstart.len == 0)
+	if(GLOB.wizardstart.len == ZERO)
 		return FALSE
 	mode.antags_rolled += 1
 	var/mob/M = pick_n_take(candidates)
@@ -216,7 +216,7 @@
 	var/cultists = antag_cap[indice_pop]
 	mode.antags_rolled += cultists
 	for(var/cultists_number = 1 to cultists)
-		if(candidates.len <= 0)
+		if(candidates.len <= ZERO)
 			break
 		var/mob/M = pick_n_take(candidates)
 		assigned += M.mind
@@ -276,7 +276,7 @@
 	var/operatives = antag_cap[indice_pop]
 	mode.antags_rolled += operatives
 	for(var/operatives_number = 1 to operatives)
-		if(candidates.len <= 0)
+		if(candidates.len <= ZERO)
 			break
 		var/mob/M = pick_n_take(candidates)
 		assigned += M.mind
@@ -361,7 +361,7 @@
 	var/max_candidates = antag_cap[indice_pop]
 	mode.antags_rolled += max_candidates
 	for(var/i = 1 to max_candidates)
-		if(candidates.len <= 0)
+		if(candidates.len <= ZERO)
 			break
 		var/mob/M = pick_n_take(candidates)
 		assigned += M.mind
@@ -465,9 +465,9 @@
 	antag_flag = null
 	antag_datum = null
 	restricted_roles = list()
-	required_candidates = 0
+	required_candidates = ZERO
 	weight = 3
-	cost = 0
+	cost = ZERO
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	high_population_requirement = 101
 
@@ -516,7 +516,7 @@
 	restricted_roles = list("Lawyer", "Curator", "Chaplain", "Head of Security", "Captain", "AI")
 	required_candidates = 1
 	weight = 3
-	cost = 0
+	cost = ZERO
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	high_population_requirement = 101
 	antag_cap = list(1,1,1,2,2,2,3,3,3,4)
@@ -525,7 +525,7 @@
 	var/num_devils = antag_cap[indice_pop]
 	mode.antags_rolled += num_devils
 
-	for(var/j = 0, j < num_devils, j++)
+	for(var/j = ZERO, j < num_devils, j++)
 		if (!candidates.len)
 			break
 		var/mob/devil = pick_n_take(candidates)
@@ -570,19 +570,19 @@
 	restricted_roles = list("Cyborg", "AI")
 	required_candidates = 1
 	weight = 3
-	cost = 0
+	cost = ZERO
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	high_population_requirement = 101
 	var/players_per_carrier = 30
 	var/monkeys_to_win = 1
-	var/escaped_monkeys = 0
+	var/escaped_monkeys = ZERO
 	var/datum/team/monkey/monkey_team
 
 /datum/dynamic_ruleset/roundstart/monkey/pre_execute()
 	var/carriers_to_make = max(round(mode.roundstart_pop_ready / players_per_carrier, 1), 1)
 	mode.antags_rolled += carriers_to_make
 
-	for(var/j = 0, j < carriers_to_make, j++)
+	for(var/j = ZERO, j < carriers_to_make, j++)
 		if (!candidates.len)
 			break
 		var/mob/carrier = pick_n_take(candidates)
@@ -628,13 +628,13 @@
 /datum/dynamic_ruleset/roundstart/meteor
 	name = "Meteor"
 	persistent = TRUE
-	required_candidates = 0
+	required_candidates = ZERO
 	weight = 3
-	cost = 0
+	cost = ZERO
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	high_population_requirement = 101
 	var/meteordelay = 2000
-	var/nometeors = 0
+	var/nometeors = ZERO
 	var/rampupdelta = 5
 
 /datum/dynamic_ruleset/roundstart/meteor/rule_process()

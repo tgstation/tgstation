@@ -10,8 +10,8 @@
 	parent_atom.transform = parent_atom.transform.Scale(0.5,0.5)
 	olddens = parent_atom.density
 	oldopac = parent_atom.opacity
-	parent_atom.density = 0
-	parent_atom.opacity = 0
+	parent_atom.density = ZERO
+	parent_atom.opacity = ZERO
 	if(isliving(parent_atom))
 		var/mob/living/L = parent_atom
 		L.add_movespeed_modifier(MOVESPEED_ID_SHRINK_RAY, update=TRUE, priority=100, multiplicative_slowdown=4, movetypes=GROUND)

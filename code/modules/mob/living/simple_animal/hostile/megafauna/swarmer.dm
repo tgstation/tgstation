@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 //Total of all subtype caps
 /proc/GetTotalAISwarmerCap()
 	var/static/list/swarmerTypes = subtypesof(/mob/living/simple_animal/hostile/swarmer/ai)
-	. = 0
+	. = ZERO
 	LAZYINITLIST(GLOB.AISwarmersByType)
 	for(var/t in swarmerTypes)
 		. += GLOB.AISwarmerCapsByType[t]
@@ -59,9 +59,9 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	layer = BELOW_MOB_LAYER
 	AIStatus = AI_OFF
 	del_on_death = TRUE
-	var/swarmer_spawn_cooldown = 0
+	var/swarmer_spawn_cooldown = ZERO
 	var/swarmer_spawn_cooldown_amt = 150 //Deciseconds between the swarmers we spawn
-	var/call_help_cooldown = 0
+	var/call_help_cooldown = ZERO
 	var/call_help_cooldown_amt = 150 //Deciseconds between calling swarmers to help us when attacked
 	var/static/list/swarmer_caps
 
@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(. > 0 && world.time > call_help_cooldown)
+	if(. > ZERO && world.time > call_help_cooldown)
 		call_help_cooldown = world.time + call_help_cooldown_amt
 		summon_backup(25) //long range, only called max once per 15 seconds, so it's not deathlag
 
@@ -145,7 +145,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 		return ..()
 
 
-/mob/living/simple_animal/hostile/swarmer/ai/proc/StartAction(deci = 0)
+/mob/living/simple_animal/hostile/swarmer/ai/proc/StartAction(deci = ZERO)
 	stop_automated_movement = TRUE
 	AIStatus = AI_OFF
 	addtimer(CALLBACK(src, .proc/EndAction), deci)

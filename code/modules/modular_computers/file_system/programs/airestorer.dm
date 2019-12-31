@@ -4,7 +4,7 @@
 	program_icon_state = "generic"
 	extended_desc = "This program is capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
 	size = 12
-	requires_ntnet = 0
+	requires_ntnet = ZERO
 	usage_flags = PROGRAM_CONSOLE
 	transfer_access = ACCESS_HEADS
 	available_on_ntnet = 1
@@ -50,7 +50,7 @@
 			if(computer.all_components[MC_AI])
 				var/obj/item/computer_hardware/ai_slot/ai_slot = computer.all_components[MC_AI]
 				if(ai_slot && ai_slot.stored_card)
-					ai_slot.try_eject(0,usr)
+					ai_slot.try_eject(ZERO,usr)
 					return TRUE
 
 /datum/computer_file/program/aidiag/process_tick()
@@ -74,12 +74,12 @@
 		restoring = FALSE
 		return
 	ai_slot.locked =TRUE
-	A.adjustOxyLoss(-5, 0)
-	A.adjustFireLoss(-5, 0)
-	A.adjustToxLoss(-5, 0)
-	A.adjustBruteLoss(-5, 0)
+	A.adjustOxyLoss(-5, ZERO)
+	A.adjustFireLoss(-5, ZERO)
+	A.adjustToxLoss(-5, ZERO)
+	A.adjustBruteLoss(-5, ZERO)
 	A.updatehealth()
-	if(A.health >= 0 && A.stat == DEAD)
+	if(A.health >= ZERO && A.stat == DEAD)
 		A.revive(full_heal = FALSE, admin_revive = FALSE)
 	// Finished restoring
 	if(A.health >= 100)

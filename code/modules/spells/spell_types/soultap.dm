@@ -11,7 +11,7 @@
 	charge_max = 10
 	invocation = "AT ANY COST!"
 	invocation_type = "shout"
-	level_max = 0
+	level_max = ZERO
 	cooldown_min = 10
 
 	action_icon = 'icons/mob/actions/actions_spells.dmi'
@@ -24,7 +24,7 @@
 	to_chat(user, "<span class='danger'>Your body feels drained and there is a burning pain in your chest.</span>")
 	user.maxHealth -= HEALTH_LOST_PER_SOUL_TAP
 	user.health = min(user.health, user.maxHealth)
-	if(user.maxHealth <= 0)
+	if(user.maxHealth <= ZERO)
 		to_chat(user, "<span class='userdanger'>Your weakened soul is completely consumed by the tap!</span>")
 		user.mind.hasSoul = FALSE
 	for(var/obj/effect/proc_holder/spell/spell in user.mind.spell_list)

@@ -96,7 +96,7 @@
 				to_chat(user, "<span class='warning'>The core must be empty to deconstruct it!</span>")
 				return
 
-			if(!P.tool_start_check(user, amount=0))
+			if(!P.tool_start_check(user, amount=ZERO))
 				return
 
 			to_chat(user, "<span class='notice'>You start to deconstruct the frame...</span>")

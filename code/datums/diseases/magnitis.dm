@@ -37,14 +37,14 @@
 					if(!M.anchored && (M.flags_1 & CONDUCT_1))
 						var/i
 						var/iter = rand(1,2)
-						for(i=0,i<iter,i++)
+						for(i=ZERO,i<iter,i++)
 							step_towards(M,affected_mob)
 				for(var/mob/living/silicon/S in orange(4,affected_mob))
 					if(isAI(S))
 						continue
 					var/i
 					var/iter = rand(1,2)
-					for(i=0,i<iter,i++)
+					for(i=ZERO,i<iter,i++)
 						step_towards(S,affected_mob)
 		if(4)
 			if(prob(2))
@@ -56,13 +56,13 @@
 					if(!M.anchored && (M.flags_1 & CONDUCT_1))
 						var/i
 						var/iter = rand(1,3)
-						for(i=0,i<iter,i++)
+						for(i=ZERO,i<iter,i++)
 							step_towards(M,affected_mob)
 				for(var/mob/living/silicon/S in orange(6,affected_mob))
 					if(isAI(S))
 						continue
 					var/i
 					var/iter = rand(1,3)
-					for(i=0,i<iter,i++)
+					for(i=ZERO,i<iter,i++)
 						step_towards(S,affected_mob)
 	return

@@ -18,7 +18,7 @@ Bonus
 /datum/symptom/fever
 	name = "Fever"
 	desc = "The virus causes a febrile response from the host, raising its body temperature."
-	stealth = 0
+	stealth = ZERO
 	resistance = 3
 	stage_speed = 3
 	transmittable = 2
@@ -56,7 +56,7 @@ Bonus
 /datum/symptom/fever/proc/Heat(mob/living/M, datum/disease/advance/A)
 	var/get_heat = 6 * power
 	if(!unsafe)
-		M.adjust_bodytemperature(get_heat * A.stage, 0, BODYTEMP_HEAT_DAMAGE_LIMIT - 1)
+		M.adjust_bodytemperature(get_heat * A.stage, ZERO, BODYTEMP_HEAT_DAMAGE_LIMIT - 1)
 	else
 		M.adjust_bodytemperature(get_heat * A.stage)
 	return 1

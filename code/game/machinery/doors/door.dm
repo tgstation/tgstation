@@ -35,7 +35,7 @@
 	var/real_explosion_block	//ignore this, just use explosion_block
 	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
 	var/poddoor = FALSE
-	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
+	var/unres_sides = ZERO //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
 	var/safety_mode = FALSE ///Whether or not the airlock can be opened with bare hands while unpowered
 
 /obj/machinery/door/examine(mob/user)
@@ -221,13 +221,13 @@
 		return TRUE
 	return ..()
 
-/obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+/obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = ZERO, sound_effect = 1, attack_dir)
 	. = ..()
-	if(. && obj_integrity > 0)
+	if(. && obj_integrity > ZERO)
 		if(damage_amount >= 10 && prob(30))
 			spark_system.start()
 
-/obj/machinery/door/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/machinery/door/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BRUTE)
 			if(glass)
@@ -284,14 +284,14 @@
 		return
 	operating = TRUE
 	do_animate("opening")
-	set_opacity(0)
+	set_opacity(ZERO)
 	sleep(5)
 	density = FALSE
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	sleep(5)
 	layer = initial(layer)
 	update_icon()
-	set_opacity(0)
+	set_opacity(ZERO)
 	operating = FALSE
 	air_update_turf(1)
 	update_freelook_sight()
@@ -374,12 +374,12 @@
 
 /obj/machinery/door/proc/update_freelook_sight()
 	if(!glass && GLOB.cameranet)
-		GLOB.cameranet.updateVisibility(src, 0)
+		GLOB.cameranet.updateVisibility(src, ZERO)
 
 /obj/machinery/door/BlockSuperconductivity() // All non-glass airlocks block heat, this is intended.
 	if(opacity || heat_proof)
 		return 1
-	return 0
+	return ZERO
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
@@ -403,7 +403,7 @@
 
 /obj/machinery/door/ex_act(severity, target)
 	//if it blows up a wall it should blow up a door
-	..(severity ? max(1, severity - 1) : 0, target)
+	..(severity ? max(1, severity - 1) : ZERO, target)
 
 /obj/machinery/door/GetExplosionBlock()
-	return density ? real_explosion_block : 0
+	return density ? real_explosion_block : ZERO

@@ -1,9 +1,9 @@
 #define MAX_RANGE_FIND 32
 
 /mob/living/carbon/monkey
-	var/aggressive=0 // set to 1 using VV for an angry monkey
-	var/frustration=0
-	var/pickupTimer=0
+	var/aggressive=ZERO // set to 1 using VV for an angry monkey
+	var/frustration=ZERO
+	var/pickupTimer=ZERO
 	var/list/enemies = list()
 	var/mob/living/target
 	var/obj/item/pickupTarget
@@ -11,13 +11,13 @@
 	var/list/myPath = list()
 	var/list/blacklistItems = list()
 	var/maxStepsTick = 6
-	var/best_force = 0
+	var/best_force = ZERO
 	var/martial_art = new/datum/martial_art
 	var/resisting = FALSE
 	var/pickpocketing = FALSE
 	var/disposing_body = FALSE
 	var/obj/machinery/disposal/bodyDisposal = null
-	var/next_battle_screech = 0
+	var/next_battle_screech = ZERO
 	var/battle_screech_cooldown = 50
 
 /mob/living/carbon/monkey/proc/IsStandingStill()
@@ -27,32 +27,32 @@
 // taken from /mob/living/carbon/human/interactive/
 /mob/living/carbon/monkey/proc/walk2derpless(target)
 	if(!target || IsStandingStill())
-		return 0
+		return ZERO
 
-	if(myPath.len <= 0)
+	if(myPath.len <= ZERO)
 		myPath = get_path_to(src, get_turf(target), /turf/proc/Distance, MAX_RANGE_FIND + 1, 250,1)
 
 	if(myPath)
-		if(myPath.len > 0)
-			for(var/i = 0; i < maxStepsTick; ++i)
+		if(myPath.len > ZERO)
+			for(var/i = ZERO; i < maxStepsTick; ++i)
 				if(!IsDeadOrIncap())
 					if(myPath.len >= 1)
-						walk_to(src,myPath[1],0,5)
+						walk_to(src,myPath[1],ZERO,5)
 						myPath -= myPath[1]
 			return 1
 
 	// failed to path correctly so just try to head straight for a bit
-	walk_to(src,get_turf(target),0,5)
+	walk_to(src,get_turf(target),ZERO,5)
 	sleep(1)
-	walk_to(src,0)
+	walk_to(src,ZERO)
 
-	return 0
+	return ZERO
 
 // taken from /mob/living/carbon/human/interactive/
 /mob/living/carbon/monkey/proc/IsDeadOrIncap(checkDead = TRUE)
 	if(!(mobility_flags & MOBILITY_FLAGS_INTERACTION))
 		return 1
-	if(health <= 0 && checkDead)
+	if(health <= ZERO && checkDead)
 		return 1
 	if(IsUnconscious())
 		return 1
@@ -60,7 +60,7 @@
 		return 1
 	if(stat)
 		return 1
-	return 0
+	return ZERO
 
 /mob/living/carbon/monkey/proc/battle_screech()
 	if(next_battle_screech < world.time)
@@ -138,7 +138,7 @@
 			if(pickupTimer >= 4)
 				blacklistItems[pickupTarget] ++
 				pickupTarget = null
-				pickupTimer = 0
+				pickupTimer = ZERO
 			else
 				INVOKE_ASYNC(src, .proc/walk2derpless, pickupTarget.loc)
 				if(Adjacent(pickupTarget) || Adjacent(pickupTarget.loc)) // next to target
@@ -146,7 +146,7 @@
 					if(isturf(pickupTarget.loc)) // on floor
 						equip_item(pickupTarget)
 						pickupTarget = null
-						pickupTimer = 0
+						pickupTimer = ZERO
 					else if(ismob(pickupTarget.loc)) // in someones hand
 						var/mob/M = pickupTarget.loc
 						if(!pickpocketing)
@@ -194,7 +194,7 @@
 			if(!pickupTarget && prob(MONKEY_WEAPON_PROB))
 				var/obj/item/W = locate(/obj/item/) in oview(2,src)
 				if(!locate(/obj/item) in held_items)
-					best_force = 0
+					best_force = ZERO
 				if(W && !blacklistItems[W] && W.force > best_force)
 					pickupTarget = W
 
@@ -244,7 +244,7 @@
 					if((get_dist(src, target)) >= (olddist))
 						frustration++
 					else
-						frustration = 0
+						frustration = ZERO
 			else
 				back_to_idle()
 
@@ -283,7 +283,7 @@
 					if((get_dist(src, target)) >= (olddist))
 						frustration++
 					else
-						frustration = 0
+						frustration = ZERO
 
 			else if(!disposing_body)
 				INVOKE_ASYNC(src, .proc/walk2derpless, bodyDisposal.loc)
@@ -297,7 +297,7 @@
 					if((get_dist(src, bodyDisposal)) >= (olddist))
 						frustration++
 					else
-						frustration = 0
+						frustration = ZERO
 
 			return TRUE
 
@@ -315,7 +315,7 @@
 					M.visible_message("<span class='danger'>[src] tried to snatch [pickupTarget] from [M], but failed!</span>", "<span class='userdanger'>[src] tried to grab [pickupTarget]!</span>")
 	pickpocketing = FALSE
 	pickupTarget = null
-	pickupTimer = 0
+	pickupTimer = ZERO
 
 /mob/living/carbon/monkey/proc/stuff_mob_in()
 	if(bodyDisposal && target && Adjacent(bodyDisposal))
@@ -331,8 +331,8 @@
 	mode = MONKEY_IDLE
 	target = null
 	a_intent = INTENT_HELP
-	frustration = 0
-	walk_to(src,0)
+	frustration = ZERO
+	walk_to(src,ZERO)
 
 // attack using a held weapon otherwise bite the enemy, then if we are angry there is a chance we might calm down a little
 /mob/living/carbon/monkey/proc/monkey_attack(mob/living/L)
@@ -358,7 +358,7 @@
 		enemies[L] --
 
 	// if we are not angry at our target, go back to idle
-	if(enemies[L] <= 0)
+	if(enemies[L] <= ZERO)
 		enemies.Remove(L)
 		if( target == L )
 			back_to_idle()

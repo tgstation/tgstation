@@ -171,16 +171,16 @@
 	dat += "<a href='?_src_=holder;[HrefToken()];rebootworld=1'>Reboot World</a><br>"
 	dat += "<a href='?_src_=holder;[HrefToken()];check_teams=1'>Check Teams</a>"
 	var/connected_players = GLOB.clients.len
-	var/lobby_players = 0
-	var/observers = 0
-	var/observers_connected = 0
-	var/living_players = 0
-	var/living_players_connected = 0
-	var/living_players_antagonist = 0
-	var/brains = 0
-	var/other_players = 0
-	var/living_skipped = 0
-	var/drones = 0
+	var/lobby_players = ZERO
+	var/observers = ZERO
+	var/observers_connected = ZERO
+	var/living_players = ZERO
+	var/living_players_connected = ZERO
+	var/living_players_antagonist = ZERO
+	var/brains = ZERO
+	var/other_players = ZERO
+	var/living_skipped = ZERO
+	var/drones = ZERO
 	for(var/mob/M in GLOB.mob_list)
 		if(M.ckey)
 			if(isnewplayer(M))

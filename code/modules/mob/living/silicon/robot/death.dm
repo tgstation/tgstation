@@ -22,7 +22,7 @@
 	locked = FALSE //unlock cover
 
 	if(!QDELETED(builtInCamera) && builtInCamera.status)
-		builtInCamera.toggle_cam(src,0)
+		builtInCamera.toggle_cam(src,ZERO)
 	update_headlamp(1) //So borg lights are disabled when killed.
 
 	uneq_all() // particularly to ensure sight modes are cleared

@@ -75,7 +75,7 @@
 
 /mob/living/silicon/pai/proc/take_holo_damage(amount)
 	emitterhealth = CLAMP((emitterhealth - amount), -50, emittermaxhealth)
-	if(emitterhealth < 0)
+	if(emitterhealth < ZERO)
 		fold_in(force = TRUE)
 	to_chat(src, "<span class='userdanger'>The impact degrades your holochassis!</span>")
 	return amount

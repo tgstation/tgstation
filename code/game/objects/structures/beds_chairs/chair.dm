@@ -5,7 +5,7 @@
 	icon_state = "chair"
 	anchored = TRUE
 	can_buckle = 1
-	buckle_lying = 0 //you sit in a chair, not lay
+	buckle_lying = ZERO //you sit in a chair, not lay
 	resistance_flags = NONE
 	max_integrity = 250
 	integrity_failure = 0.1
@@ -24,7 +24,7 @@
 /obj/structure/chair/Initialize()
 	. = ..()
 	if(!anchored)	//why would you put these on the shuttle?
-		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
+		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), ZERO)
 
 /obj/structure/chair/ComponentInitialize()
 	. = ..()
@@ -184,19 +184,19 @@
 	update_armrest()
 
 /obj/structure/chair/comfy/brown
-	color = rgb(255,113,0)
+	color = rgb(255,113,ZERO)
 
 /obj/structure/chair/comfy/beige
 	color = rgb(255,253,195)
 
 /obj/structure/chair/comfy/teal
-	color = rgb(0,255,255)
+	color = rgb(ZERO,255,255)
 
 /obj/structure/chair/comfy/black
 	color = rgb(167,164,153)
 
 /obj/structure/chair/comfy/lime
-	color = rgb(255,251,0)
+	color = rgb(255,251,ZERO)
 
 /obj/structure/chair/comfy/shuttle
 	name = "shuttle seat"
@@ -227,7 +227,7 @@
 	name = "stool"
 	desc = "Apply butt."
 	icon_state = "stool"
-	can_buckle = 0
+	can_buckle = ZERO
 	buildstackamount = 1
 	item_chair = /obj/item/chair/stool
 
@@ -321,11 +321,11 @@
 
 
 
-/obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = ZERO, damage = ZERO, attack_type = MELEE_ATTACK)
 	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))
 		owner.visible_message("<span class='danger'>[owner] fends off [attack_text] with [src]!</span>")
 		return 1
-	return 0
+	return ZERO
 
 /obj/item/chair/afterattack(atom/target, mob/living/carbon/user, proximity)
 	. = ..()
@@ -391,7 +391,7 @@
 	buildstacktype = /obj/item/stack/tile/bronze
 	buildstackamount = 1
 	item_chair = null
-	var/turns = 0
+	var/turns = ZERO
 
 /obj/structure/chair/bronze/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -410,7 +410,7 @@
 		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
 
 /obj/structure/chair/bronze/AltClick(mob/living/user)
-	turns = 0
+	turns = ZERO
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	if(!(datum_flags & DF_ISPROCESSING))
@@ -430,7 +430,7 @@
 	buildstacktype = null
 	item_chair = null
 	flags_1 = NODECONSTRUCT_1
-	alpha = 0
+	alpha = ZERO
 
 /obj/structure/chair/mime/post_buckle_mob(mob/living/M)
 	M.pixel_y += 5
@@ -462,7 +462,7 @@
 /obj/structure/chair/plastic/proc/snap_check(mob/living/carbon/Mob)
 	if (Mob.nutrition >= NUTRITION_LEVEL_FAT)
 		to_chat(Mob, "<span class='warning'>The chair begins to pop and crack, you're too heavy!</span>")
-		if(do_after(Mob, 60, 1, Mob, 0))
+		if(do_after(Mob, 60, 1, Mob, ZERO))
 			Mob.visible_message("<span class='notice'>The plastic chair snaps under [Mob]'s weight!</span>")
 			qdel(src)
 

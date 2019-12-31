@@ -9,7 +9,7 @@ Industrial extracts:
 	icon_state = "industrial_still"
 	var/plasmarequired = 2 //Units of plasma required to be consumed to produce item.
 	var/itempath = /obj/item //The item produced by the extract.
-	var/plasmaabsorbed = 0 //Units of plasma aborbed by the extract already. Absorbs at a rate of 2u/obj tick.
+	var/plasmaabsorbed = ZERO //Units of plasma aborbed by the extract already. Absorbs at a rate of 2u/obj tick.
 	var/itemamount = 1 //How many items to spawn
 
 /obj/item/slimecross/industrial/examine(mob/user)
@@ -42,7 +42,7 @@ Industrial extracts:
 	if(plasmaabsorbed >= plasmarequired)
 		playsound(src, 'sound/effects/attackblob.ogg', 50, TRUE)
 		plasmaabsorbed -= plasmarequired
-		for(var/i = 0, i < itemamount, i++)
+		for(var/i = ZERO, i < itemamount, i++)
 			do_after_spawn(new itempath(get_turf(src)))
 	else if(IsWorking)
 		playsound(src, 'sound/effects/bubbles.ogg', 5, TRUE)
@@ -90,7 +90,7 @@ Industrial extracts:
 /obj/item/slimecross/industrial/yellow/do_after_spawn(obj/item/spawned)
 	var/obj/item/stock_parts/cell/high/C = spawned
 	if(istype(C))
-		C.charge = rand(0,C.maxcharge/2)
+		C.charge = rand(ZERO,C.maxcharge/2)
 
 /obj/item/slimecross/industrial/darkpurple
 	colour = "dark purple"

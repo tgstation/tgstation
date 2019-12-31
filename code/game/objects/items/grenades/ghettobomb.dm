@@ -13,9 +13,9 @@
 	throw_range = 7
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	active = 0
+	active = ZERO
 	det_time = 50
-	display_timer = 0
+	display_timer = ZERO
 	var/range = 3
 	var/list/times
 
@@ -36,7 +36,7 @@
 	var/obj/item/reagent_containers/food/drinks/soda_cans/can = locate() in contents
 	if(can)
 		can.pixel_x = 0 //Reset the sprite's position to make it consistent with the rest of the IED
-		can.pixel_y = 0
+		can.pixel_y = ZERO
 		var/mutable_appearance/can_underlay = new(can)
 		can_underlay.layer = FLOAT_LAYER
 		can_underlay.plane = FLOAT_PLANE

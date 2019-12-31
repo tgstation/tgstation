@@ -14,7 +14,7 @@
 	overdose_threshold = 35
 	reagent_state = SOLID
 	var/helbent = FALSE
-	var/beginning_combo = 0
+	var/beginning_combo = ZERO
 	var/reaping = FALSE
 
 /datum/reagent/medicine/C2/helbital/on_mob_metabolize(mob/living/carbon/M)
@@ -96,8 +96,8 @@
 	description = "Used to treat burns. Makes you move slower while it is in your system. Applies stomach damage when it leaves your system."
 	reagent_state = LIQUID
 	color = "#6171FF"
-	var/resetting_probability = 0
-	var/spammer = 0
+	var/resetting_probability = ZERO
+	var/spammer = ZERO
 
 /datum/reagent/medicine/C2/lenturi/on_mob_life(mob/living/carbon/M)
 		M.adjustFireLoss(-3 * REM)
@@ -116,8 +116,8 @@
 	description = "Used to treat burns. Does minor eye damage."
 	reagent_state = LIQUID
 	color = "#8C93FF"
-	var/resetting_probability = 0
-	var/message_cd = 0
+	var/resetting_probability = ZERO
+	var/message_cd = ZERO
 
 /datum/reagent/medicine/C2/aiuri/on_mob_life(mob/living/carbon/M)
 	M.adjustFireLoss(-2*REM)
@@ -140,8 +140,8 @@
 	var/oxycalc = 2.5*REM*current_cycle
 	if(!overdosed)
 		oxycalc = min(oxycalc,M.getOxyLoss()+0.5) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.1*current_cycle. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
-	M.adjustOxyLoss(-oxycalc, 0)
-	M.adjustToxLoss(oxycalc/CONVERMOL_RATIO, 0)
+	M.adjustOxyLoss(-oxycalc, ZERO)
+	M.adjustToxLoss(oxycalc/CONVERMOL_RATIO, ZERO)
 	if(prob(current_cycle) && M.losebreath)
 		M.losebreath--
 	..()
@@ -158,7 +158,7 @@
 	name = "Tirimol"
 	description = "An oxygen deprivation medication that causes fatigue. Prolonged exposure causes the patient to fall asleep once the medicine metabolizes."
 	color = "#FF6464"
-	var/drowsycd = 0
+	var/drowsycd = ZERO
 
 /datum/reagent/medicine/C2/tirimol/on_mob_life(mob/living/carbon/human/M)
 	M.adjustOxyLoss(-3)
@@ -191,17 +191,17 @@
 /datum/reagent/medicine/C2/seiver/on_mob_life(mob/living/carbon/human/M)
 	var/chemtemp = min(M.reagents?.chem_temp, 1000)
 	chemtemp = chemtemp ? chemtemp : 273 //why do you have null sweaty
-	var/healypoints = 0 //5 healypoints = 1 heart damage; 5 rads = 1 tox damage healed for the purpose of healypoints
+	var/healypoints = ZERO //5 healypoints = 1 heart damage; 5 rads = 1 tox damage healed for the purpose of healypoints
 
 	//you're hot
 	var/toxcalc = min(round((chemtemp-1000)/175+5,0.1),5) //max 5 tox healing a tick
-	if(toxcalc > 0)
+	if(toxcalc > ZERO)
 		M.adjustToxLoss(toxcalc*-1)
 		healypoints += toxcalc
 
 	//and you're cold
-	var/radcalc = round((T0C-chemtemp)/6,0.1) //max ~45 rad loss unless you've hit below 0K. if so, wow.
-	if(radcalc > 0)
+	var/radcalc = round((T0C-chemtemp)/6,0.1) //max ~45 rad loss unless you've hit below ZEROK. if so, wow.
+	if(radcalc > ZERO)
 		//no cost percent healing if you are SUPER cold (on top of cost healing)
 		if(chemtemp < radbonustemp*0.1) //if you're super chilly, it takes off 25% of your current rads
 			M.radiation = round(M.radiation * 0.75)
@@ -222,7 +222,7 @@
 	description = "A chem-purger that becomes more effective the more unique medicines present. Slightly heals toxicity but causes lung damage (mitigatable by unique medicines)."
 
 /datum/reagent/medicine/C2/multiver/on_mob_life(mob/living/carbon/human/M)
-	var/medibonus = 0 //it will always have itself which makes it REALLY start @ 1
+	var/medibonus = ZERO //it will always have itself which makes it REALLY start @ 1
 	for(var/r in M.reagents.reagent_list)
 		var/datum/reagent/the_reagent = r
 		if(istype(the_reagent, /datum/reagent/medicine))
@@ -258,7 +258,7 @@
 		return
 	var/mob/living/carbon/C = A
 	if(trans_volume >= 0.6) //prevents cheesing with ultralow doses.
-		C.adjustToxLoss(-1.5 * min(2, trans_volume) * REM, 0)	  //This is to promote iv pole use for that chemotherapy feel.
+		C.adjustToxLoss(-1.5 * min(2, trans_volume) * REM, ZERO)	  //This is to promote iv pole use for that chemotherapy feel.
 	var/obj/item/organ/liver/L = C.internal_organs_slot[ORGAN_SLOT_LIVER]
 	if((L.organ_flags & ORGAN_FAILING) || !L)
 		return
@@ -269,7 +269,7 @@
 
 /datum/reagent/medicine/C2/syriniver/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.8)
-	M.adjustToxLoss(-1*REM, 0)
+	M.adjustToxLoss(-1*REM, ZERO)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(issyrinormusc(R))
 			continue
@@ -296,7 +296,7 @@
 
 /datum/reagent/medicine/C2/musiver/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1)
-	M.adjustToxLoss(-1*REM, 0)
+	M.adjustToxLoss(-1*REM, ZERO)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(issyrinormusc(R))
 			continue
@@ -333,7 +333,7 @@
 	if(iscarbon(M))
 		var/mob/living/carbon/Carbies = M
 		if (Carbies.stat == DEAD)
-			show_message = 0
+			show_message = ZERO
 		if(method in list(PATCH, TOUCH))
 			var/harmies = min(Carbies.getBruteLoss(),Carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
 			var/burnies = min(Carbies.getFireLoss(),Carbies.adjustFireLoss(-1.25 * reac_volume)*-1)

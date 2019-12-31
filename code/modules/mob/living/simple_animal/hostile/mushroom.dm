@@ -4,7 +4,7 @@
 	icon_state = "mushroom_color"
 	icon_living = "mushroom_color"
 	icon_dead = "mushroom_dead"
-	speak_chance = 0
+	speak_chance = ZERO
 	turns_per_move = 1
 	maxHealth = 10
 	health = 10
@@ -16,7 +16,7 @@
 	response_harm_continuous = "whacks"
 	response_harm_simple = "whack"
 	harm_intent_damage = 5
-	obj_damage = 0
+	obj_damage = ZERO
 	melee_damage_lower = 1
 	melee_damage_upper = 1
 	attack_same = 2
@@ -34,8 +34,8 @@
 	speak_emote = list("squeaks")
 	deathmessage = "fainted."
 	var/cap_color = "#ffffff"
-	var/powerlevel = 0 //Tracks our general strength level gained from eating other shrooms
-	var/bruised = 0 //If someone tries to cheat the system by attacking a shroom to lower its health, punish them so that it wont award levels to shrooms that eat it
+	var/powerlevel = ZERO //Tracks our general strength level gained from eating other shrooms
+	var/bruised = ZERO //If someone tries to cheat the system by attacking a shroom to lower its health, punish them so that it wont award levels to shrooms that eat it
 	var/recovery_cooldown = 0 //So you can't repeatedly revive it during a fight
 	var/faint_ticker = 0 //If we hit three, another mushroom's gonna eat us
 	var/static/mutable_appearance/cap_living //Where we store our cap icons so we dont generate them constantly to update our icon
@@ -61,7 +61,7 @@
 	cap_living = cap_living || mutable_appearance(icon, "mushroom_cap")
 	cap_dead = cap_dead || mutable_appearance(icon, "mushroom_cap_dead")
 
-	cap_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	cap_color = rgb(rand(ZERO, 255), rand(ZERO, 255), rand(ZERO, 255))
 	UpdateMushroomCap()
 	health = maxHealth
 	. = ..()
@@ -126,21 +126,21 @@
 	cut_overlays()
 	cap_living.color = cap_color
 	cap_dead.color = cap_color
-	if(health == 0)
+	if(health == ZERO)
 		add_overlay(cap_dead)
 	else
 		add_overlay(cap_living)
 
 /mob/living/simple_animal/hostile/mushroom/proc/Recover()
 	visible_message("<span class='notice'>[src] slowly begins to recover.</span>")
-	faint_ticker = 0
+	faint_ticker = ZERO
 	revive(full_heal = TRUE, admin_revive = FALSE)
 	UpdateMushroomCap()
 	recovery_cooldown = 1
 	addtimer(CALLBACK(src, .proc/recovery_recharge), 300)
 
 /mob/living/simple_animal/hostile/mushroom/proc/recovery_recharge()
-	recovery_cooldown = 0
+	recovery_cooldown = ZERO
 
 /mob/living/simple_animal/hostile/mushroom/proc/LevelUp(level_gain)
 	if(powerlevel <= 9)
@@ -188,7 +188,7 @@
 
 /mob/living/simple_animal/hostile/mushroom/harvest()
 	var/counter
-	for(counter=0, counter<=powerlevel, counter++)
+	for(counter=ZERO, counter<=powerlevel, counter++)
 		var/obj/item/reagent_containers/food/snacks/hugemushroomslice/S = new /obj/item/reagent_containers/food/snacks/hugemushroomslice(src.loc)
 		S.reagents.add_reagent(/datum/reagent/drug/mushroomhallucinogen, powerlevel)
 		S.reagents.add_reagent(/datum/reagent/medicine/omnizine, powerlevel)

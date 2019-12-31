@@ -2,7 +2,7 @@
 	if(..())
 		update_inv_hands()
 		return 1
-	return 0
+	return ZERO
 
 /mob/living/carbon/true_devil/update_inv_hands()
 	//TODO LORDPIDEY:  Figure out how to make the hands line up properly.  the l/r_hand_overlay should use the down sprite when facing down, left, or right, and the up sprite when facing up.

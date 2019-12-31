@@ -19,7 +19,7 @@
 		adjustBruteLoss(60)
 		updatehealth()
 		return 1
-	return 0
+	return ZERO
 
 /mob/living/silicon/ai/emp_act(severity)
 	. = ..()
@@ -51,5 +51,5 @@
 	. = ..(Proj)
 	updatehealth()
 
-/mob/living/silicon/ai/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/silicon/ai/flash_act(intensity = 1, override_blindness_check = ZERO, affect_silicon = ZERO)
 	return // no eyes, no flashing

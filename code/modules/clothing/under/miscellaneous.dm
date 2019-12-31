@@ -92,7 +92,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	can_adjust = FALSE
 	strip_delay = 80
-	var/next_extinguish = 0
+	var/next_extinguish = ZERO
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 5
 
@@ -114,7 +114,7 @@
 			H.visible_message("<span class='warning'>[H]'s suit automatically extinguishes [H.p_them()]!</span>","<span class='warning'>Your suit automatically extinguishes you.</span>")
 			H.ExtinguishMob()
 			new /obj/effect/particle_effect/water(get_turf(H))
-	return 0
+	return ZERO
 
 /obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
 	..()

@@ -19,10 +19,10 @@
 	var/icon_state_on = "freezer_1"
 	var/icon_state_open = "freezer-o"
 
-	var/min_temperature = 0
-	var/max_temperature = 0
+	var/min_temperature = ZERO
+	var/max_temperature = ZERO
 	var/target_temperature = T20C
-	var/heat_capacity = 0
+	var/heat_capacity = ZERO
 	var/interactive = TRUE // So mapmakers can disable interaction.
 
 /obj/machinery/atmospherics/components/unary/thermomachine/Initialize()
@@ -75,7 +75,7 @@
 	var/combined_heat_capacity = heat_capacity + air_heat_capacity
 	var/old_temperature = air_contents.temperature
 
-	if(combined_heat_capacity > 0)
+	if(combined_heat_capacity > ZERO)
 		var/combined_energy = heat_capacity * target_temperature + air_heat_capacity * air_contents.temperature
 		air_contents.temperature = combined_energy/combined_heat_capacity
 

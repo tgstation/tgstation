@@ -33,7 +33,7 @@ effective or pretty fucking useless.
 	var/max_uses = 2
 
 
-/obj/item/batterer/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
+/obj/item/batterer/attack_self(mob/living/carbon/user, flag = ZERO, emp = ZERO)
 	if(!user) 	return
 	if(times_used >= max_uses)
 		to_chat(user, "<span class='danger'>The mind batterer has been burnt out!</span>")
@@ -73,7 +73,7 @@ effective or pretty fucking useless.
 	var/irradiate = 1
 	var/intensity = 10 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds
-	var/used = 0 // is it cooling down?
+	var/used = ZERO // is it cooling down?
 	var/stealth = FALSE
 
 /obj/item/healthanalyzer/rad_laser/attack(mob/living/M, mob/living/user)
@@ -98,7 +98,7 @@ effective or pretty fucking useless.
 
 /obj/item/healthanalyzer/rad_laser/proc/handle_cooldown(cooldown)
 	spawn(cooldown)
-		used = 0
+		used = ZERO
 		icon_state = "health"
 
 /obj/item/healthanalyzer/rad_laser/attack_self(mob/user)
@@ -155,7 +155,7 @@ effective or pretty fucking useless.
 	else if(href_list["mode"])
 		scanmode += 1
 		if(scanmode > 2)
-			scanmode = 0
+			scanmode = ZERO
 
 	else if(href_list["radint"])
 		var/amount = text2num(href_list["radint"])
@@ -165,7 +165,7 @@ effective or pretty fucking useless.
 	else if(href_list["radwav"])
 		var/amount = text2num(href_list["radwav"])
 		amount += wavelength
-		wavelength = max(0,(min(120,amount)))
+		wavelength = max(ZERO,(min(120,amount)))
 
 	attack_self(usr)
 	add_fingerprint(usr)
@@ -184,7 +184,7 @@ effective or pretty fucking useless.
 	var/charge = 300
 	var/max_charge = 300
 	var/on = FALSE
-	var/old_alpha = 0
+	var/old_alpha = ZERO
 	actions_types = list(/datum/action/item_action/toggle)
 
 /obj/item/shadowcloak/ui_action_click(mob/user)
@@ -229,10 +229,10 @@ effective or pretty fucking useless.
 	if(on)
 		var/lumcount = T.get_lumcount()
 		if(lumcount > 0.3)
-			charge = max(0,charge - 25)//Quick decrease in light
+			charge = max(ZERO,charge - 25)//Quick decrease in light
 		else
 			charge = min(max_charge,charge + 50) //Charge in the dark
-		animate(user,alpha = CLAMP(255 - charge,0,255),time = 10)
+		animate(user,alpha = CLAMP(255 - charge,ZERO,255),time = 10)
 
 
 /obj/item/jammer

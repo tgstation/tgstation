@@ -41,7 +41,7 @@
 /obj/item/organ/cyberimp/brain/anti_drop
 	name = "anti-drop implant"
 	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping. Twitch ear to toggle."
-	var/active = 0
+	var/active = ZERO
 	var/list/stored_items = list()
 	implant_color = "#DE7E00"
 	slot = ORGAN_SLOT_BRAIN_ANTIDROP
@@ -56,7 +56,7 @@
 		var/list/L = owner.get_empty_held_indexes()
 		if(LAZYLEN(L) == owner.held_items.len)
 			to_chat(owner, "<span class='notice'>You are not holding any items, your hands relax...</span>")
-			active = 0
+			active = ZERO
 			stored_items = list()
 		else
 			for(var/obj/item/I in stored_items)
@@ -89,7 +89,7 @@
 	stored_items = list()
 
 
-/obj/item/organ/cyberimp/brain/anti_drop/Remove(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/brain/anti_drop/Remove(var/mob/living/carbon/M, special = ZERO)
 	if(active)
 		ui_action_click()
 	..()
@@ -118,15 +118,15 @@
 	RegisterSignal(owner, signalCache, .proc/on_signal)
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/on_signal(datum/source, amount)
-	if(!(organ_flags & ORGAN_FAILING) && amount > 0)
+	if(!(organ_flags & ORGAN_FAILING) && amount > ZERO)
 		addtimer(CALLBACK(src, .proc/clear_stuns), stun_cap_amount, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/clear_stuns()
 	if(owner || !(organ_flags & ORGAN_FAILING))
-		owner.SetStun(0)
-		owner.SetKnockdown(0)
-		owner.SetImmobilized(0)
-		owner.SetParalyzed(0)
+		owner.SetStun(ZERO)
+		owner.SetKnockdown(ZERO)
+		owner.SetImmobilized(ZERO)
+		owner.SetParalyzed(ZERO)
 
 /obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
 	. = ..()

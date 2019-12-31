@@ -17,7 +17,7 @@
 	var/list/obj/machinery/computer/rdconsole/consoles_accessing = list()
 	var/id = "generic"
 	var/list/research_logs = list()								//IC logs.
-	var/largest_bomb_value = 0
+	var/largest_bomb_value = ZERO
 	var/organization = "Third-Party"							//Organization name, used for display.
 	var/list/last_bitcoins = list()								//Current per-second production, used for display only.
 	var/list/discovered_mutations = list()                           //Mutations discovered by genetics, this way they are shared and cant be destroyed by destroying a single console
@@ -92,7 +92,7 @@
 
 /datum/techweb/proc/add_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] > 0)
+		if(SSresearch.point_types[i] && pointlist[i] > ZERO)
 			research_points[i] += pointlist[i]
 
 /datum/techweb/proc/add_points_all(amount)
@@ -103,7 +103,7 @@
 
 /datum/techweb/proc/remove_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] > 0)
+		if(SSresearch.point_types[i] && pointlist[i] > ZERO)
 			research_points[i] = max(0, research_points[i] - pointlist[i])
 
 /datum/techweb/proc/remove_points_all(amount)
@@ -114,7 +114,7 @@
 
 /datum/techweb/proc/modify_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] != 0)
+		if(SSresearch.point_types[i] && pointlist[i] != ZERO)
 			research_points[i] = max(0, research_points[i] + pointlist[i])
 
 /datum/techweb/proc/modify_points_all(amount)
@@ -156,7 +156,7 @@
 	return researched_nodes - hidden_nodes
 
 /datum/techweb/proc/add_point_type(type, amount)
-	if(!SSresearch.point_types[type] || (amount <= 0))
+	if(!SSresearch.point_types[type] || (amount <= ZERO))
 		return FALSE
 	research_points[type] += amount
 	return TRUE
@@ -168,7 +168,7 @@
 	return TRUE
 
 /datum/techweb/proc/remove_point_type(type, amount)
-	if(!SSresearch.point_types[type] || (amount <= 0))
+	if(!SSresearch.point_types[type] || (amount <= ZERO))
 		return FALSE
 	research_points[type] = max(0, research_points[type] - amount)
 	return TRUE
@@ -265,8 +265,8 @@
 		var/list/next = list()
 		for (var/node_ in current)
 			var/datum/techweb_node/node = node_
-			var/tier = 0
-			if (!researched_nodes[node.id])  // researched is tier 0
+			var/tier = ZERO
+			if (!researched_nodes[node.id])  // researched is tier ZERO
 				for (var/id in node.prereq_ids)
 					var/prereq_tier = tiers[id]
 					tier = max(tier, prereq_tier + 1)

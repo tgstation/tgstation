@@ -10,13 +10,13 @@
 	var/list/punctuation = list(",",":",";",".","?","!","\'","-")
 	var/regex/R = regex("(\[\\l\\d]*)(\[^\\l\\d\\s])?", "g")
 	var/list/letter_count = list()
-	while(R.Find(message) != 0)
+	while(R.Find(message) != ZERO)
 		if(R.group[1])
 			letter_count += length(R.group[1])
 		if(R.group[2])
 			letter_count += R.group[2]
 
-	spawn(0)
+	spawn(ZERO)
 		for(var/item in letter_count)
 			if (item in punctuation)
 				// simulate pausing in talking
@@ -29,7 +29,7 @@
 
 			if(isnum(item))
 				var/length = min(item, 10)
-				if (length == 0)
+				if (length == ZERO)
 					// "verbalise" long spaces
 					sleep(1)
 				chatter_speak_word(A.loc, phomeme, length)
@@ -38,7 +38,7 @@
 	var/path = "sound/chatter/[phomeme]_[length].ogg"
 
 	playsound(loc, path,
-		vol = 40, vary = 0, extrarange = 3, falloff = FALSE)
+		vol = 40, vary = ZERO, extrarange = 3, falloff = FALSE)
 
 	sleep((length + 1) * chatter_get_sleep_multiplier(phomeme))
 

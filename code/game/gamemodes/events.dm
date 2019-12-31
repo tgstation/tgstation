@@ -3,8 +3,8 @@
 	for(var/obj/machinery/power/smes/S in GLOB.machines)
 		if(istype(get_area(S), /area/ai_monitored/turret_protected) || !is_station_level(S.z))
 			continue
-		S.charge = 0
-		S.output_level = 0
+		S.charge = ZERO
+		S.output_level = ZERO
 		S.output_attempt = FALSE
 		S.update_icon()
 		S.power_change()
@@ -26,7 +26,7 @@
 			if(GLOB.typecache_powerfailure_safe_areas[A.type])
 				continue
 
-			C.cell.charge = 0
+			C.cell.charge = ZERO
 
 /proc/power_restore()
 
@@ -34,7 +34,7 @@
 	for(var/obj/machinery/power/apc/C in GLOB.machines)
 		if(C.cell && is_station_level(C.z))
 			C.cell.charge = C.cell.maxcharge
-			C.failure_timer = 0
+			C.failure_timer = ZERO
 	for(var/obj/machinery/power/smes/S in GLOB.machines)
 		if(!is_station_level(S.z))
 			continue

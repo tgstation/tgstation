@@ -40,7 +40,7 @@
 
 
 /mob/living/simple_animal/mouse/proc/splat()
-	src.health = 0
+	src.health = ZERO
 	src.icon_dead = "mouse_[body_color]_splat"
 	death()
 

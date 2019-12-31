@@ -108,7 +108,7 @@
 		if(100 to 200)
 			. += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>"
 
-	var/appears_dead = 0
+	var/appears_dead = ZERO
 	if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		appears_dead = 1
 		if(suiciding)
@@ -148,8 +148,8 @@
 		msg += "<B>[capitalize(t_his)] [BP.name] is [damage_text]!</B>\n"
 
 	//stores missing limbs
-	var/l_limbs_missing = 0
-	var/r_limbs_missing = 0
+	var/l_limbs_missing = ZERO
+	var/r_limbs_missing = ZERO
 	for(var/t in missing)
 		if(t==BODY_ZONE_HEAD)
 			msg += "<span class='deadsay'><B>[t_His] [parse_zone(t)] is missing!</B><span class='warning'>\n"
@@ -161,9 +161,9 @@
 
 		msg += "<B>[capitalize(t_his)] [parse_zone(t)] is missing!</B>\n"
 
-	if(l_limbs_missing >= 2 && r_limbs_missing == 0)
+	if(l_limbs_missing >= 2 && r_limbs_missing == ZERO)
 		msg += "[t_He] look[p_s()] all right now.\n"
-	else if(l_limbs_missing == 0 && r_limbs_missing >= 2)
+	else if(l_limbs_missing == ZERO && r_limbs_missing >= 2)
 		msg += "[t_He] really keeps to the left.\n"
 	else if(l_limbs_missing >= 2 && r_limbs_missing >= 2)
 		msg += "[t_He] [p_do()]n't seem all there.\n"
@@ -196,9 +196,9 @@
 				msg += "<b>[t_He] [t_has] severe cellular damage!</b>\n"
 
 
-	if(fire_stacks > 0)
+	if(fire_stacks > ZERO)
 		msg += "[t_He] [t_is] covered in something flammable.\n"
-	if(fire_stacks < 0)
+	if(fire_stacks < ZERO)
 		msg += "[t_He] look[p_s()] a little soaked.\n"
 
 

@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(minor_mapping)
 	var/mob/living/simple_animal/mouse/M
 	var/turf/proposed_turf
 
-	while((num_mice > 0) && exposed_wires.len)
+	while((num_mice > ZERO) && exposed_wires.len)
 		proposed_turf = pick_n_take(exposed_wires)
 		if(!M)
 			M = new(proposed_turf)
@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(minor_mapping)
 /datum/controller/subsystem/minor_mapping/proc/place_satchels(amount=10)
 	var/list/turfs = find_satchel_suitable_turfs()
 
-	while(turfs.len && amount > 0)
+	while(turfs.len && amount > ZERO)
 		var/turf/T = pick_n_take(turfs)
 		var/obj/item/storage/backpack/satchel/flat/S = new(T)
 		S.hide(intact=TRUE)

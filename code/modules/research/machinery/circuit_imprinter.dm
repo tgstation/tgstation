@@ -25,7 +25,7 @@
 
 /obj/machinery/rnd/production/circuit_imprinter/calculate_efficiency()
 	. = ..()
-	var/total_rating = 0
+	var/total_rating = ZERO
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		total_rating += M.rating * 2			//There is only one.
 	total_rating = max(1, total_rating)

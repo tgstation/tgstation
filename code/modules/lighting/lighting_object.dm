@@ -25,7 +25,7 @@
 	if (myturf.lighting_object)
 		qdel(myturf.lighting_object, force = TRUE)
 	myturf.lighting_object = src
-	myturf.luminosity = 0
+	myturf.luminosity = ZERO
 
 	for(var/turf/open/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		S.update_starlight()
@@ -100,7 +100,7 @@
 	var/ag = ca.cache_g
 	var/ab = ca.cache_b
 
-	#if LIGHTING_SOFT_THRESHOLD != 0
+	#if LIGHTING_SOFT_THRESHOLD != ZERO
 	var/set_luminosity = max > LIGHTING_SOFT_THRESHOLD
 	#else
 	// Because of floating points™?, it won't even be a flat 0.
@@ -130,7 +130,7 @@
 // Variety of overrides so the overlays don't get affected by weird things.
 
 /atom/movable/lighting_object/ex_act(severity)
-	return 0
+	return ZERO
 
 /atom/movable/lighting_object/singularity_act()
 	return

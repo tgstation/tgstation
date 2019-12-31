@@ -32,7 +32,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "silver"
 	id = "silver"
 	desc = "Silver"
-	color = list(255/255, 284/255, 302/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
+	color = list(255/255, 284/255, 302/255,ZERO, ZERO,ZERO,ZERO,ZERO, ZERO,ZERO,ZERO,ZERO, ZERO,ZERO,ZERO,1, ZERO,ZERO,ZERO,ZERO)
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	value_per_unit = 0.025
@@ -43,7 +43,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "gold"
 	id = "gold"
 	desc = "Gold"
-	color = list(340/255, 240/255, 50/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //gold is shiny, but not as bright as bananium
+	color = list(340/255, 240/255, 50/255,ZERO, ZERO,ZERO,ZERO,ZERO, ZERO,ZERO,ZERO,ZERO, ZERO,ZERO,ZERO,1, ZERO,ZERO,ZERO,ZERO) //gold is shiny, but not as bright as bananium
 	strength_modifier = 1.2
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/gold
@@ -56,7 +56,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "diamond"
 	id = "diamond"
 	desc = "Highly pressurized carbon"
-	color = list(48/255, 272/255, 301/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
+	color = list(48/255, 272/255, 301/255,ZERO, ZERO,ZERO,ZERO,ZERO, ZERO,ZERO,ZERO,ZERO, ZERO,ZERO,ZERO,1, ZERO,ZERO,ZERO,ZERO)
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	alpha = 132
@@ -78,7 +78,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/uranium/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	source.AddComponent(/datum/component/radioactive, amount / 20, source, 0) //half-life of 0 because we keep on going.
+	source.AddComponent(/datum/component/radioactive, amount / 20, source, ZERO) //half-life of ZERO because we keep on going.
 
 /datum/material/uranium/on_removed(atom/source, material_flags)
 	. = ..()
@@ -89,7 +89,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "plasma"
 	id = "plasma"
 	desc = "Isn't plasma a state of matter? Oh whatever."
-	color = list(298/255, 46/255, 352/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
+	color = list(298/255, 46/255, 352/255,ZERO, ZERO,ZERO,ZERO,ZERO, ZERO,ZERO,ZERO,ZERO, ZERO,ZERO,ZERO,1, ZERO,ZERO,ZERO,ZERO)
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	value_per_unit = 0.1
@@ -100,7 +100,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	. = ..()
 	if(ismovableatom(source))
 		source.AddElement(/datum/element/firestacker, 1)
-		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, amount / 1250)
+		source.AddComponent(/datum/component/explodable, ZERO, ZERO, amount / 2500, amount / 1250)
 
 /datum/material/plasma/on_removed(atom/source, material_flags)
 	. = ..()
@@ -112,7 +112,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "bluespace crystal"
 	id = "bluespace_crystal"
 	desc = "Crystals with bluespace properties"
-	color = list(119/255, 217/255, 396/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
+	color = list(119/255, 217/255, 396/255,ZERO, ZERO,ZERO,ZERO,ZERO, ZERO,ZERO,ZERO,ZERO, ZERO,ZERO,ZERO,1, ZERO,ZERO,ZERO,ZERO)
 	alpha = 200
 	categories = list(MAT_CATEGORY_ORE = TRUE)
 	beauty_modifier = 0.5
@@ -124,12 +124,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "bananium"
 	id = "bananium"
 	desc = "Material with hilarious properties"
-	color = list(460/255, 464/255, 0, 0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //obnoxiously bright yellow
+	color = list(460/255, 464/255, ZERO, ZERO, ZERO,ZERO,ZERO,ZERO, ZERO,ZERO,ZERO,ZERO, ZERO,ZERO,ZERO,1, ZERO,ZERO,ZERO,ZERO) //obnoxiously bright yellow
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	value_per_unit = 0.5
 	beauty_modifier = 0.5
-	armor_modifiers = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 10, "acid" = 0) //Clowns cant be blown away.
+	armor_modifiers = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 10, "acid" = ZERO) //Clowns cant be blown away.
 
 /datum/material/bananium/on_applied(atom/source, amount, material_flags)
 	. = ..()

@@ -2,7 +2,7 @@
 	name = "Plasmaman"
 	id = "plasmaman"
 	say_mod = "rattles"
-	sexes = 0
+	sexes = ZERO
 	meat = /obj/item/stack/sheet/mineral/plasma
 	species_traits = list(NOBLOOD,NOTRANSSTING)
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_NOHUNGER,TRAIT_ALWAYS_CLEAN)
@@ -36,7 +36,7 @@
 			if(environment.total_moles())
 				if(environment.gases[/datum/gas/oxygen] && (environment.gases[/datum/gas/oxygen][MOLES]) >= 1) //Same threshhold that extinguishes fire
 					H.adjust_fire_stacks(0.5)
-					if(!H.on_fire && H.fire_stacks > 0)
+					if(!H.on_fire && H.fire_stacks > ZERO)
 						H.visible_message("<span class='danger'>[H]'s body reacts with the atmosphere and bursts into flames!</span>","<span class='userdanger'>Your body reacts with the atmosphere and bursts into flame!</span>")
 					H.IgniteMob()
 					internal_fire = TRUE
@@ -128,7 +128,7 @@
 	H.equipOutfit(O, visualsOnly)
 	H.internal = H.get_item_for_held_index(2)
 	H.update_internals_hud_icon(1)
-	return 0
+	return ZERO
 
 /datum/species/plasmaman/random_name(gender,unique,lastname)
 	if(unique)
@@ -147,12 +147,12 @@
 		if(chem.volume > 10)
 			H.reagents.remove_reagent(chem.type, chem.volume - 10)
 			to_chat(H, "<span class='warning'>The excess milk is dripping off your bones!</span>")
-		H.heal_bodypart_damage(1.5,0, 0)
+		H.heal_bodypart_damage(1.5,ZERO, ZERO)
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
 		return TRUE
 	if(chem.type == /datum/reagent/toxin/bonehurtingjuice)
-		H.adjustStaminaLoss(7.5, 0)
-		H.adjustBruteLoss(0.5, 0)
+		H.adjustStaminaLoss(7.5, ZERO)
+		H.adjustBruteLoss(0.5, ZERO)
 		if(prob(20))
 			switch(rand(1, 3))
 				if(1)

@@ -67,7 +67,7 @@
 						POT.icon_state = "[OT.postdig_icon]"
 
 			if(OT.slowdown) //Things like snow slow you down until you dig them.
-				OT.slowdown = 0
+				OT.slowdown = ZERO
 	dug = TRUE
 	if(callback)
 		callback.Invoke()

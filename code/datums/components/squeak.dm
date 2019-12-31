@@ -6,11 +6,11 @@
 	var/volume = 30
 
 	// This is so shoes don't squeak every step
-	var/steps = 0
+	var/steps = ZERO
 	var/step_delay = 1
 
 	// This is to stop squeak spam from inhand usage
-	var/last_use = 0
+	var/last_use = ZERO
 	var/use_delay = 20
 
 /datum/component/squeak/Initialize(custom_sounds, volume_override, chance_override, step_delay_override, use_delay_override)
@@ -50,7 +50,7 @@
 /datum/component/squeak/proc/step_squeak()
 	if(steps > step_delay)
 		play_squeak()
-		steps = 0
+		steps = ZERO
 	else
 		steps++
 

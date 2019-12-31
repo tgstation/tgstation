@@ -4,7 +4,7 @@
 	desc = "Summons a rune"
 	background_icon_state = "bg_demon"
 	var/obj/effect/rune/rune_type
-	var/cooldown = 0
+	var/cooldown = ZERO
 	var/base_cooldown = 1800
 	var/scribe_time = 60
 	var/damage_interrupt = TRUE
@@ -77,7 +77,7 @@
 				qdel(R3)
 			if(R4)
 				qdel(R4)
-			cooldown = 0
+			cooldown = ZERO
 			owner.update_action_buttons_icon()
 
 //teleport rune

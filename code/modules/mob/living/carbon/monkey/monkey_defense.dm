@@ -1,5 +1,5 @@
 /mob/living/carbon/monkey/help_shake_act(mob/living/carbon/M)
-	if(health < 0 && ishuman(M))
+	if(health < ZERO && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.do_cpr(src)
 	else
@@ -47,7 +47,7 @@
 				var/damage = rand(5, 10)
 				if(prob(40))
 					damage = rand(10, 15)
-					if(AmountUnconscious() < 100 && health > 0)
+					if(AmountUnconscious() < 100 && health > ZERO)
 						Unconscious(rand(200, 300))
 						visible_message("<span class='danger'>[M] knocks [name] out!</span>", \
 										"<span class='userdanger'>[M] knocks you out!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", 5, M)
@@ -82,7 +82,7 @@
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent.
 		if (M.a_intent == INTENT_HARM)
-			if ((prob(95) && health > 0))
+			if ((prob(95) && health > ZERO))
 				playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 				var/damage = rand(15, 30)
 				if (damage >= 25)
@@ -193,7 +193,7 @@
 				Unconscious(200)
 
 		if(EXPLODE_LIGHT)
-			take_overall_damage(30, 0)
+			take_overall_damage(30, ZERO)
 			damage_clothes(50, BRUTE, "bomb")
 			adjustEarDamage(15,60)
 			if (prob(50))

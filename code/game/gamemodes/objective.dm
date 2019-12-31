@@ -7,9 +7,9 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
 	var/team_explanation_text			//For when there are multiple owners.
 	var/datum/mind/target = null		//If they are focused on a particular person.
-	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
-	var/completed = 0					//currently only used for custom objectives.
-	var/martyr_compatible = 0			//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
+	var/target_amount = ZERO				//If they are focused on a particular number. Steal objectives have their own counter.
+	var/completed = ZERO					//currently only used for custom objectives.
+	var/martyr_compatible = ZERO			//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
 
 /datum/objective/New(var/text)
 	if(text)
@@ -122,7 +122,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 				possible_targets -= PT
 		if(!possible_targets.len)
 			possible_targets = all_possible_targets
-	if(possible_targets.len > 0)
+	if(possible_targets.len > ZERO)
 		target = pick(possible_targets)
 	update_explanation_text()
 	return target
@@ -191,7 +191,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	admin_simple_target_pick(admin)
 
 /datum/objective/assassinate/internal
-	var/stolen = 0 		//Have we already eliminated this target?
+	var/stolen = ZERO 		//Have we already eliminated this target?
 
 /datum/objective/assassinate/internal/update_explanation_text()
 	..()
@@ -245,7 +245,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/debrain
 	name = "debrain"
-	var/target_role_type=0
+	var/target_role_type=ZERO
 
 /datum/objective/debrain/find_target_by_role(role, role_type=FALSE,invert=FALSE)
 	if(!invert)
@@ -353,10 +353,10 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/robot_army
 	name = "robot army"
 	explanation_text = "Have at least eight active cyborgs synced to you."
-	martyr_compatible = 0
+	martyr_compatible = ZERO
 
 /datum/objective/robot_army/check_completion()
-	var/counter = 0
+	var/counter = ZERO
 	var/list/datum/mind/owners = get_owners()
 	for(var/datum/mind/M in owners)
 		if(!M.current || !isAI(M.current))
@@ -469,7 +469,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 	name = "steal"
 	var/datum/objective_item/targetinfo = null //Save the chosen item datum so we can access it later.
 	var/obj/item/steal_target = null //Needed for custom objectives (they're just items, not datums).
-	martyr_compatible = 0
+	martyr_compatible = ZERO
 
 /datum/objective/steal/get_target()
 	return steal_target
@@ -564,7 +564,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/steal/exchange
 	name = "exchange"
-	martyr_compatible = 0
+	martyr_compatible = ZERO
 
 /datum/objective/steal/exchange/admin_edit(mob/admin)
 	return
@@ -646,7 +646,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	explanation_text = "Capture [target_amount] lifeform\s with an energy net. Live, rare specimens are worth more."
 
 /datum/objective/capture/check_completion()//Basically runs through all the mobs in the area to determine how much they are worth.
-	var/captured_amount = 0
+	var/captured_amount = ZERO
 	var/area/centcom/holding/A = GLOB.areas_by_type[/area/centcom/holding]
 	for(var/mob/living/carbon/human/M in A)//Humans.
 		if(M.stat == DEAD)//Dead folks are worth less.
@@ -732,7 +732,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/absorb/check_completion()
 	var/list/datum/mind/owners = get_owners()
-	var/absorbedcount = 0
+	var/absorbedcount = ZERO
 	for(var/datum/mind/M in owners)
 		if(!M)
 			continue
@@ -748,7 +748,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/absorb_most/check_completion()
 	var/list/datum/mind/owners = get_owners()
-	var/absorbedcount = 0
+	var/absorbedcount = ZERO
 	for(var/datum/mind/M in owners)
 		if(!M)
 			continue
@@ -832,7 +832,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/steal_five_of_type/check_completion()
 	var/list/datum/mind/owners = get_owners()
-	var/stolen_count = 0
+	var/stolen_count = ZERO
 	for(var/datum/mind/M in owners)
 		if(!isliving(M.current))
 			continue
@@ -858,7 +858,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/steal_five_of_type/summon_magic/check_completion()
 	var/list/datum/mind/owners = get_owners()
-	var/stolen_count = 0
+	var/stolen_count = ZERO
 	for(var/datum/mind/M in owners)
 		if(!isliving(M.current))
 			continue
@@ -886,7 +886,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 ////////////////////////////////
 
 /datum/objective/changeling_team_objective //Abstract type
-	martyr_compatible = 0	//Suicide is not teamwork!
+	martyr_compatible = ZERO	//Suicide is not teamwork!
 	explanation_text = "Changeling Friendship!"
 	var/min_lings = 3 //Minimum amount of lings for this team objective to be possible
 	var/escape_objective_compatible = FALSE
@@ -1025,7 +1025,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 				return FALSE //A Non-ling living target got to centcom, fail
 
 	//Check each staff member has been replaced, by cross referencing changeling minds, changeling current dna, the staff minds and their original DNA names
-	var/success = 0
+	var/success = ZERO
 	changelings:
 		for(var/datum/mind/changeling in get_antag_minds(/datum/antagonist/changeling,TRUE))
 			if(success >= department_minds.len) //We did it, stop here!
@@ -1078,8 +1078,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		GLOB.admin_objective_list[initial(X.name)] = T
 
 /datum/objective/contract
-	var/payout = 0
-	var/payout_bonus = 0
+	var/payout = ZERO
+	var/payout_bonus = ZERO
 	var/area/dropoff = null
 
 // Generate a random valid area on the station that the dropoff will happen.

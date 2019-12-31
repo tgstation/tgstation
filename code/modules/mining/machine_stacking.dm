@@ -30,7 +30,7 @@
 
 	for(var/O in machine.stack_list)
 		s = machine.stack_list[O]
-		if(s.amount > 0)
+		if(s.amount > ZERO)
 			dat += text("[capitalize(s.name)]: [s.amount] <A href='?src=[REF(src)];release=[s.type]'>Release</A><br>")
 
 	dat += text("<br>Stacking: [machine.stack_amt]<br><br>")
@@ -55,7 +55,7 @@
 			return //someone tried to spawn materials by spoofing hrefs
 		var/obj/item/stack/sheet/inp = machine.stack_list[text2path(href_list["release"])]
 		var/obj/item/stack/sheet/out = new inp.type(null, inp.amount)
-		inp.amount = 0
+		inp.amount = ZERO
 		machine.unload_mineral(out)
 
 	src.updateUsrDialog()
@@ -108,7 +108,7 @@
 	var/key = inp.merge_type
 	var/obj/item/stack/sheet/storage = stack_list[key]
 	if(!storage) //It's the first of this sheet added
-		stack_list[key] = storage = new inp.type(src, 0)
+		stack_list[key] = storage = new inp.type(src, ZERO)
 	storage.amount += inp.amount //Stack the sheets
 	qdel(inp)
 

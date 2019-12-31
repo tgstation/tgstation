@@ -9,8 +9,8 @@
 	idle_power_usage = 2
 	active_power_usage = 4
 	max_integrity = 150
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 40, "acid" = 0)
-	var/frequency = 0
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 40, "acid" = ZERO)
+	var/frequency = ZERO
 	var/atom/target
 	var/id_tag
 	var/target_layer = PIPING_LAYER_DEFAULT
@@ -57,18 +57,18 @@
 /obj/machinery/meter/process_atmos()
 	if(!(target?.flags_1 & INITIALIZED_1))
 		icon_state = "meterX"
-		return 0
+		return ZERO
 
 	if(stat & (BROKEN|NOPOWER))
 		icon_state = "meter0"
-		return 0
+		return ZERO
 
 	use_power(5)
 
 	var/datum/gas_mixture/environment = target.return_air()
 	if(!environment)
 		icon_state = "meterX"
-		return 0
+		return ZERO
 
 	var/env_pressure = environment.return_pressure()
 	if(env_pressure <= 0.15*ONE_ATMOSPHERE)

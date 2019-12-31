@@ -155,7 +155,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	dir = EAST
 	var/beeper = TRUE
 	var/beep_cooldown = 50
-	var/next_beep = 0
+	var/next_beep = ZERO
 
 /obj/structure/bodycontainer/morgue/Initialize()
 	. = ..()
@@ -181,7 +181,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 			icon_state = "morgue1"
 		else
 			icon_state = "morgue2" // Dead, brainded mob.
-			var/list/compiled = recursive_mob_check(src, 0, 0) // Search for mobs in all contents.
+			var/list/compiled = recursive_mob_check(src, ZERO, ZERO) // Search for mobs in all contents.
 			if(!length(compiled)) // No mobs?
 				icon_state = "morgue3"
 				return
@@ -384,7 +384,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return 1
 	else
-		return 0
+		return ZERO
 
 /obj/structure/tray/m_tray/CanAStarPass(ID, dir, caller)
 	. = !density

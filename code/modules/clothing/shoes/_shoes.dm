@@ -3,7 +3,7 @@
 	icon = 'icons/obj/clothing/shoes.dmi'
 	desc = "Comfortable-looking shoes."
 	gender = PLURAL //Carn: for grammarically correct text-parsing
-	var/chained = 0
+	var/chained = ZERO
 
 	body_parts_covered = FEET
 	slot_flags = ITEM_SLOT_FEET
@@ -12,8 +12,8 @@
 	slowdown = SHOES_SLOWDOWN
 	strip_delay = 1 SECONDS
 	var/blood_state = BLOOD_STATE_NOT_BLOODY
-	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
-	var/offset = 0
+	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = ZERO,BLOOD_STATE_XENO = ZERO, BLOOD_STATE_OIL = ZERO, BLOOD_STATE_NOT_BLOODY = ZERO)
+	var/offset = ZERO
 	var/equipped_before_drop = FALSE
 	var/can_be_bloody = TRUE
 
@@ -34,7 +34,7 @@
 		return BRUTELOSS
 	else//didnt realize this suicide act existed (was in miscellaneous.dm) and didnt want to remove it, so made it a 50/50 chance. Why not!
 		user.visible_message("<span class='suicide'>[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?</span>")
-		for(var/i = 0, i < 3, i++)
+		for(var/i = ZERO, i < 3, i++)
 			sleep(3)
 			playsound(user, 'sound/weapons/genhit2.ogg', 50, TRUE)
 		return(BRUTELOSS)
@@ -80,7 +80,7 @@
 /obj/item/clothing/shoes/proc/clean_blood(datum/source, strength)
 	if(strength < CLEAN_STRENGTH_BLOOD)
 		return
-	bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
+	bloody_shoes = list(BLOOD_STATE_HUMAN = ZERO,BLOOD_STATE_XENO = ZERO, BLOOD_STATE_OIL = ZERO, BLOOD_STATE_NOT_BLOODY = ZERO)
 	blood_state = BLOOD_STATE_NOT_BLOODY
 	if(ismob(loc))
 		var/mob/M = loc

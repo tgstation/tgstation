@@ -16,11 +16,11 @@
 	status_flags = CANPUSH
 	pass_flags = PASSTABLE
 	ventcrawler = VENTCRAWLER_ALWAYS
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
+	minbodytemp = ZERO
 	maxHealth = 150
 	health = 150
-	healable = 0
+	healable = ZERO
 	obj_damage = 50
 	melee_damage_lower = 20
 	melee_damage_upper = 20
@@ -34,10 +34,10 @@
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
 
 	var/morphed = FALSE
-	var/melee_damage_disguised = 0
+	var/melee_damage_disguised = ZERO
 	var/eat_while_disguised = FALSE
 	var/atom/movable/form = null
-	var/morph_time = 0
+	var/morph_time = ZERO
 	var/static/list/blacklist_typecache = typecacheof(list(
 	/obj/screen,
 	/obj/singularity,
@@ -116,7 +116,7 @@
 	//Morphed is weaker
 	melee_damage_lower = melee_damage_disguised
 	melee_damage_upper = melee_damage_disguised
-	set_varspeed(0)
+	set_varspeed(ZERO)
 
 	morph_time = world.time + MORPH_COOLDOWN
 	med_hud_set_health()
@@ -214,7 +214,7 @@
 /datum/round_event_control/morph
 	name = "Spawn Morph"
 	typepath = /datum/round_event/ghost_role/morph
-	weight = 0 //Admin only
+	weight = ZERO //Admin only
 	max_occurrences = 1
 
 /datum/round_event/ghost_role/morph

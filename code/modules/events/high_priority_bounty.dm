@@ -10,7 +10,7 @@
 
 /datum/round_event/high_priority_bounty/start()
 	var/datum/bounty/B
-	for(var/attempts = 0; attempts < 50; ++attempts)
+	for(var/attempts = ZERO; attempts < 50; ++attempts)
 		B = random_bounty()
 		if(!B)
 			continue

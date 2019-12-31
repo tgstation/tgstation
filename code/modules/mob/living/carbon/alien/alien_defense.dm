@@ -34,7 +34,7 @@ In all, this is a lot like the monkey code. /N
 			grabbedby(M)
 
 		else
-			if(health > 0)
+			if(health > ZERO)
 				M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
 				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
@@ -53,7 +53,7 @@ In all, this is a lot like the monkey code. /N
 
 /mob/living/carbon/alien/attack_hand(mob/living/carbon/human/M)
 	if(..())	//to allow surgery to return properly.
-		return 0
+		return ZERO
 
 	switch(M.a_intent)
 		if("help")
@@ -66,7 +66,7 @@ In all, this is a lot like the monkey code. /N
 		if("disarm")
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			return 1
-	return 0
+	return ZERO
 
 
 /mob/living/carbon/alien/attack_paw(mob/living/carbon/monkey/M)
@@ -119,13 +119,13 @@ In all, this is a lot like the monkey code. /N
 			adjustEarDamage(30,120)
 
 		if(EXPLODE_LIGHT)
-			take_overall_damage(30,0)
+			take_overall_damage(30,ZERO)
 			if(prob(50))
 				Unconscious(20)
 			adjustEarDamage(15,60)
 
 /mob/living/carbon/alien/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)
-	return 0
+	return ZERO
 
 /mob/living/carbon/alien/acid_act(acidpwr, acid_volume)
-	return 0//aliens are immune to acid.
+	return ZERO//aliens are immune to acid.

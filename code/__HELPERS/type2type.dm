@@ -14,13 +14,13 @@
 //breaks when hittin invalid characters thereafter
 // If safe=TRUE, returns null on incorrect input strings instead of CRASHing
 /proc/hex2num(hex, safe=FALSE)
-	. = 0
+	. = ZERO
 	var/place = 1
 	for(var/i in length(hex) to 1 step -1)
 		var/num = text2ascii(hex, i)
 		switch(num)
 			if(48 to 57)
-				num -= 48	//0-9
+				num -= 48	//ZERO-9
 			if(97 to 102)
 				num -= 87	//a-f
 			if(65 to 70)
@@ -38,18 +38,18 @@
 
 //Returns the hex value of a decimal number
 //len == length of returned string
-//if len < 0 then the returned string will be as long as it needs to be to contain the data
+//if len < ZERO then the returned string will be as long as it needs to be to contain the data
 //Only supports positive numbers
-//if an invalid number is provided, it assumes num==0
+//if an invalid number is provided, it assumes num==ZERO
 //Note, unlike previous versions, this one works from low to high <-- that way
 /proc/num2hex(num, len=2)
 	if(!isnum(num))
-		num = 0
+		num = ZERO
 	num = round(abs(num))
 	. = ""
-	var/i=0
+	var/i=ZERO
 	while(1)
-		if(len<=0)
+		if(len<=ZERO)
 			if(!num)
 				break
 		else
@@ -123,7 +123,7 @@
 /proc/angle2dir(degree)
 	degree = SIMPLIFY_DEGREES(degree)
 	switch(degree)
-		if(0 to 22.5) //north requires two angle ranges
+		if(ZERO to 22.5) //north requires two angle ranges
 			return NORTH
 		if(22.5 to 67.5) //each range covers 45 degrees
 			return NORTHEAST
@@ -145,7 +145,7 @@
 /proc/angle2dir_cardinal(degree)
 	degree = SIMPLIFY_DEGREES(degree)
 	switch(round(degree, 0.1))
-		if(315.5 to 360, 0 to 45.5)
+		if(315.5 to 360, ZERO to 45.5)
 			return NORTH
 		if(45.6 to 135.5)
 			return EAST
@@ -158,7 +158,7 @@
 /proc/dir2angle(D)
 	switch(D)
 		if(NORTH)
-			return 0
+			return ZERO
 		if(SOUTH)
 			return 180
 		if(EAST)
@@ -236,9 +236,9 @@
 	var/min = min(red,green,blue)
 	var/range = max-min
 
-	var/hue=0;var/saturation=0;var/lightness=0;
+	var/hue=ZERO;var/saturation=ZERO;var/lightness=ZERO;
 	lightness = (max + min)/2
-	if(range != 0)
+	if(range != ZERO)
 		if(lightness < 0.5)
 			saturation = range/(max+min)
 		else
@@ -254,7 +254,7 @@
 			hue = dred - dblue + (1/3)
 		else
 			hue = dgreen - dred + (2/3)
-		if(hue < 0)
+		if(hue < ZERO)
 			hue++
 		else if(hue > 1)
 			hue--
@@ -263,7 +263,7 @@
 
 /proc/hsl2rgb(hue, saturation, lightness)
 	var/red;var/green;var/blue;
-	if(saturation == 0)
+	if(saturation == ZERO)
 		red = lightness * 255
 		green = red
 		blue = red
@@ -282,7 +282,7 @@
 	return list(red, green, blue)
 
 /proc/hue2rgb(a, b, hue)
-	if(hue < 0)
+	if(hue < ZERO)
 		hue++
 	else if(hue > 1)
 		hue--
@@ -300,7 +300,7 @@
 	var/list/covered_parts = list()
 
 	if(!bpc)
-		return 0
+		return ZERO
 
 	if(bpc & FULL_BODY)
 		covered_parts |= list(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM,BODY_ZONE_HEAD,BODY_ZONE_CHEST,BODY_ZONE_L_LEG,BODY_ZONE_R_LEG)
@@ -380,15 +380,15 @@
 	if(temp <= 66)
 		. = 255
 	else
-		. = max(0, min(255, 329.698727446 * (temp - 60) ** -0.1332047592))
+		. = max(ZERO, min(255, 329.698727446 * (temp - 60) ** -0.1332047592))
 
 
 /proc/heat2colour_g(temp)
 	temp /= 100
 	if(temp <= 66)
-		. = max(0, min(255, 99.4708025861 * log(temp) - 161.1195681661))
+		. = max(ZERO, min(255, 99.4708025861 * log(temp) - 161.1195681661))
 	else
-		. = max(0, min(255, 288.1221685293 * ((temp - 60) ** -0.075148492)))
+		. = max(ZERO, min(255, 288.1221685293 * ((temp - 60) ** -0.075148492)))
 
 
 /proc/heat2colour_b(temp)
@@ -397,9 +397,9 @@
 		. = 255
 	else
 		if(temp <= 16)
-			. = 0
+			. = ZERO
 		else
-			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
+			. = max(ZERO, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
 
 
 /proc/color2hex(color)	//web colors
@@ -486,10 +486,10 @@
 //assumes format #RRGGBB #rrggbb
 /proc/color_hex2num(A)
 	if(!A)
-		return 0
+		return ZERO
 	var/R = hex2num(copytext(A,2,4))
 	var/G = hex2num(copytext(A,4,6))
-	var/B = hex2num(copytext(A,6,0))
+	var/B = hex2num(copytext(A,6,ZERO))
 	return R+G+B
 
 //word of warning: using a matrix like this as a color value will simplify it back to a string after being set
@@ -505,7 +505,7 @@
 		a = hex2num(copytext(string, 8, 10))/255
 	if(!isnum(r) || !isnum(g) || !isnum(b) || !isnum(a))
 		return color_matrix_identity()
-	return list(r,0,0,0, 0,g,0,0, 0,0,b,0, 0,0,0,a, 0,0,0,0)
+	return list(r,ZERO,ZERO,ZERO, ZERO,g,ZERO,ZERO, ZERO,ZERO,b,ZERO, ZERO,ZERO,ZERO,a, ZERO,ZERO,ZERO,ZERO)
 
 //will drop all values not on the diagonal
 /proc/color_matrix2color_hex(list/the_matrix)

@@ -18,7 +18,7 @@
 	return ..()
 
 /datum/status_effect/rainbow_protection/tick()
-	owner.color = rgb(rand(0,255),rand(0,255),rand(0,255))
+	owner.color = rgb(rand(ZERO,255),rand(ZERO,255),rand(ZERO,255))
 	return ..()
 
 /datum/status_effect/rainbow_protection/on_remove()
@@ -168,10 +168,10 @@
 	alert_type = /obj/screen/alert/status_effect/clone_decay
 
 /datum/status_effect/slime_clone_decay/tick()
-	owner.adjustToxLoss(1, 0)
-	owner.adjustOxyLoss(1, 0)
-	owner.adjustBruteLoss(1, 0)
-	owner.adjustFireLoss(1, 0)
+	owner.adjustToxLoss(1, ZERO)
+	owner.adjustOxyLoss(1, ZERO)
+	owner.adjustBruteLoss(1, ZERO)
+	owner.adjustFireLoss(1, ZERO)
 	owner.color = "#007BA7"
 
 /obj/screen/alert/status_effect/bloodchill
@@ -224,7 +224,7 @@
 	alert_type = null
 
 datum/status_effect/rebreathing/tick()
-	owner.adjustOxyLoss(-6, 0) //Just a bit more than normal breathing.
+	owner.adjustOxyLoss(-6, ZERO) //Just a bit more than normal breathing.
 
 ///////////////////////////////////////////////////////
 //////////////////CONSUMING EXTRACTS///////////////////
@@ -289,7 +289,7 @@ datum/status_effect/rebreathing/tick()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		original_coeff = H.physiology.siemens_coeff
-		H.physiology.siemens_coeff = 0
+		H.physiology.siemens_coeff = ZERO
 	return ..()
 
 /datum/status_effect/sparkcookie/on_remove()
@@ -481,13 +481,13 @@ datum/status_effect/rebreathing/tick()
 
 /datum/status_effect/stabilized/purple/tick()
 	var/is_healing = FALSE
-	if(owner.getBruteLoss() > 0)
+	if(owner.getBruteLoss() > ZERO)
 		owner.adjustBruteLoss(-0.2)
 		is_healing = TRUE
-	if(owner.getFireLoss() > 0)
+	if(owner.getFireLoss() > ZERO)
 		owner.adjustFireLoss(-0.2)
 		is_healing = TRUE
-	if(owner.getToxLoss() > 0)
+	if(owner.getToxLoss() > ZERO)
 		owner.adjustToxLoss(-0.2, forced = TRUE) //Slimepeople should also get healed.
 		is_healing = TRUE
 	if(is_healing)
@@ -515,7 +515,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	var/max_cooldown = 30
 
 /datum/status_effect/stabilized/metal/tick()
-	if(cooldown > 0)
+	if(cooldown > ZERO)
 		cooldown--
 	else
 		cooldown = max_cooldown
@@ -524,7 +524,7 @@ datum/status_effect/stabilized/blue/on_remove()
 			if(S.amount < S.max_amount)
 				sheets += S
 
-		if(sheets.len > 0)
+		if(sheets.len > ZERO)
 			var/obj/item/stack/sheet/S = pick(sheets)
 			S.amount++
 			to_chat(owner, "<span class='notice'>[linked_extract] adds a layer of slime to [S], which metamorphosizes into another sheet of material!</span>")
@@ -539,7 +539,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	examine_text = "<span class='warning'>Nearby electronics seem just a little more charged wherever SUBJECTPRONOUN goes.</span>"
 
 /datum/status_effect/stabilized/yellow/tick()
-	if(cooldown > 0)
+	if(cooldown > ZERO)
 		cooldown--
 		return ..()
 	cooldown = max_cooldown
@@ -593,14 +593,14 @@ datum/status_effect/stabilized/blue/on_remove()
 	colour = "dark blue"
 
 /datum/status_effect/stabilized/darkblue/tick()
-	if(owner.fire_stacks > 0 && prob(80))
+	if(owner.fire_stacks > ZERO && prob(80))
 		owner.fire_stacks--
-		if(owner.fire_stacks <= 0)
+		if(owner.fire_stacks <= ZERO)
 			to_chat(owner, "<span class='notice'>[linked_extract] coats you in a watery goo, extinguishing the flames.</span>")
 	var/obj/O = owner.get_active_held_item()
 	if(O)
 		O.extinguish() //All shamelessly copied from water's reaction_obj, since I didn't seem to be able to get it here for some reason.
-		O.acid_level = 0
+		O.acid_level = ZERO
 	// Monkey cube
 	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
 		to_chat(owner, "<span class='warning'>[linked_extract] kept your hands wet! It makes [O] expand!</span>")
@@ -665,7 +665,7 @@ datum/status_effect/stabilized/blue/on_remove()
 		owner.visible_message("<span class='warning'>[linked_extract] notices the sudden change in [owner]'s physical health, and activates!</span>")
 		do_sparks(5,FALSE,owner)
 		var/F = find_safe_turf(zlevels = owner.z, extended_safety_checks = TRUE)
-		var/range = 0
+		var/range = ZERO
 		if(!F)
 			F = get_turf(owner)
 			range = 50
@@ -679,7 +679,7 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/sepia
 	id = "stabilizedsepia"
 	colour = "sepia"
-	var/mod = 0
+	var/mod = ZERO
 
 /datum/status_effect/stabilized/sepia/tick()
 	if(prob(50) && mod > -1)
@@ -687,8 +687,8 @@ datum/status_effect/stabilized/blue/on_remove()
 		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, override = TRUE, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 	else if(mod < 1)
 		mod++
-		// yeah a value of 0 does nothing but replacing the trait in place is cheaper than removing and adding repeatedly
-		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, override = TRUE, update=TRUE, priority=100, multiplicative_slowdown=0, blacklisted_movetypes=(FLYING|FLOATING))
+		// yeah a value of ZERO does nothing but replacing the trait in place is cheaper than removing and adding repeatedly
+		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, override = TRUE, update=TRUE, priority=100, multiplicative_slowdown=ZERO, blacklisted_movetypes=(FLYING|FLOATING))
 	return ..()
 
 /datum/status_effect/stabilized/sepia/on_remove()
@@ -740,7 +740,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	return ..()
 
 /datum/status_effect/stabilized/pyrite/tick()
-	owner.color = rgb(rand(0,255),rand(0,255),rand(0,255))
+	owner.color = rgb(rand(ZERO,255),rand(ZERO,255),rand(ZERO,255))
 	return ..()
 
 /datum/status_effect/stabilized/pyrite/on_remove()
@@ -797,11 +797,11 @@ datum/status_effect/stabilized/blue/on_remove()
 	id = "pinkdamagetracker"
 	duration = -1
 	alert_type = null
-	var/damage = 0
+	var/damage = ZERO
 	var/lasthealth
 
 /datum/status_effect/pinkdamagetracker/tick()
-	if((lasthealth - owner.health) > 0)
+	if((lasthealth - owner.health) > ZERO)
 		damage += (lasthealth - owner.health)
 	lasthealth = owner.health
 
@@ -827,8 +827,8 @@ datum/status_effect/stabilized/blue/on_remove()
 			M.remove_status_effect(/datum/status_effect/pinkdamagetracker)
 			mobs -= M
 		var/datum/status_effect/pinkdamagetracker/C = M.has_status_effect(/datum/status_effect/pinkdamagetracker)
-		if(istype(C) && C.damage > 0)
-			C.damage = 0
+		if(istype(C) && C.damage > ZERO)
+			C.damage = ZERO
 			owner.apply_status_effect(/datum/status_effect/brokenpeace)
 	var/HasFaction = FALSE
 	for(var/i in owner.faction)
@@ -878,13 +878,13 @@ datum/status_effect/stabilized/blue/on_remove()
 			messagedelivered = TRUE
 		examine_text = "<span class='warning'>SUBJECTPRONOUN is draining health from [owner.pulling]!</span>"
 		var/list/healing_types = list()
-		if(owner.getBruteLoss() > 0)
+		if(owner.getBruteLoss() > ZERO)
 			healing_types += BRUTE
-		if(owner.getFireLoss() > 0)
+		if(owner.getFireLoss() > ZERO)
 			healing_types += BURN
-		if(owner.getToxLoss() > 0)
+		if(owner.getToxLoss() > ZERO)
 			healing_types += TOX
-		if(owner.getCloneLoss() > 0)
+		if(owner.getCloneLoss() > ZERO)
 			healing_types += CLONE
 
 		owner.apply_damage_type(-heal_amount, damagetype=pick(healing_types))
@@ -905,7 +905,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/lightpink/tick()
 	for(var/mob/living/carbon/human/H in range(1, get_turf(owner)))
-		if(H != owner && H.stat != DEAD && H.health <= 0 && !H.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
+		if(H != owner && H.stat != DEAD && H.health <= ZERO && !H.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
 			to_chat(owner, "[linked_extract] pulses in sync with [H]'s heartbeat, trying to keep [H.p_them()] alive.")
 			H.reagents.add_reagent(/datum/reagent/medicine/epinephrine,5)
 	return ..()
@@ -959,7 +959,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	colour = "rainbow"
 
 /datum/status_effect/stabilized/rainbow/tick()
-	if(owner.health <= 0)
+	if(owner.health <= ZERO)
 		var/obj/item/slimecross/stabilized/rainbow/X = linked_extract
 		if(istype(X))
 			if(X.regencore)

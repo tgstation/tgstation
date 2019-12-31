@@ -9,7 +9,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	var/inspiration_available = TRUE //If this banner can be used to inspire crew
-	var/morale_time = 0
+	var/morale_time = ZERO
 	var/morale_cooldown = 600 //How many deciseconds between uses
 	var/list/job_loyalties //Mobs with any of these assigned roles will be inspired
 	var/list/role_loyalties //Mobs with any of these special roles will be inspired
@@ -121,7 +121,7 @@
 
 /obj/item/banner/medical/special_inspiration(mob/living/carbon/human/H)
 	H.adjustToxLoss(-15)
-	H.setOxyLoss(0)
+	H.setOxyLoss(ZERO)
 	H.reagents.add_reagent(/datum/reagent/medicine/inaprovaline, 5)
 
 /obj/item/banner/science
@@ -183,7 +183,7 @@
 	inspiration_available = FALSE
 
 /obj/item/banner/engineering/special_inspiration(mob/living/carbon/human/H)
-	H.radiation = 0
+	H.radiation = ZERO
 
 /datum/crafting_recipe/engineering_banner
 	name = "Engitopia Banner"
@@ -281,7 +281,7 @@
 	name = "Prophet's Hat"
 	desc = "A religious-looking hat."
 	mob_overlay_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
-	flags_1 = 0
+	flags_1 = ZERO
 	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 70, "bio" = 50, "rad" = 50, "fire" = 60, "acid" = 60) //religion protects you from disease and radiation, honk.
 	worn_x_dimension = 64
 	worn_y_dimension = 64
@@ -300,7 +300,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	var/conversion_color = "#ffffff"
-	var/staffcooldown = 0
+	var/staffcooldown = ZERO
 	var/staffwait = 30
 
 
@@ -325,7 +325,7 @@
 	name = "Plate Gauntlets"
 	icon_state = "crusader"
 	desc = "They're like gloves, but made of metal."
-	siemens_coefficient = 0
+	siemens_coefficient = ZERO
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS

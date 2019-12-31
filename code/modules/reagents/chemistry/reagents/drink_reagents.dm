@@ -15,7 +15,7 @@
 
 /datum/reagent/consumable/orangejuice/on_mob_life(mob/living/carbon/M)
 	if(M.getOxyLoss() && prob(30))
-		M.adjustOxyLoss(-1, 0)
+		M.adjustOxyLoss(-1, ZERO)
 		. = 1
 	..()
 
@@ -30,7 +30,7 @@
 
 /datum/reagent/consumable/tomatojuice/on_mob_life(mob/living/carbon/M)
 	if(M.getFireLoss() && prob(20))
-		M.heal_bodypart_damage(0,1, 0)
+		M.heal_bodypart_damage(ZERO,1, ZERO)
 		. = 1
 	..()
 
@@ -45,14 +45,14 @@
 
 /datum/reagent/consumable/limejuice/on_mob_life(mob/living/carbon/M)
 	if(M.getToxLoss() && prob(20))
-		M.adjustToxLoss(-1*REM, 0)
+		M.adjustToxLoss(-1*REM, ZERO)
 		. = 1
 	..()
 
 /datum/reagent/consumable/carrotjuice
 	name = "Carrot Juice"
 	description = "It is just like a carrot but without crunching."
-	color = "#973800" // rgb: 151, 56, 0
+	color = "#973800" // rgb: 151, 56, ZERO
 	taste_description = "carrots"
 	glass_icon_state = "carrotjuice"
 	glass_name = "glass of  carrot juice"
@@ -95,7 +95,7 @@
 	glass_desc = "Berry juice. Or maybe it's poison. Who cares?"
 
 /datum/reagent/consumable/poisonberryjuice/on_mob_life(mob/living/carbon/M)
-	M.adjustToxLoss(1, 0)
+	M.adjustToxLoss(1, ZERO)
 	. = 1
 	..()
 
@@ -111,7 +111,7 @@
 /datum/reagent/consumable/lemonjuice
 	name = "Lemon Juice"
 	description = "This juice is VERY sour."
-	color = "#863333" // rgb: 175, 175, 0
+	color = "#863333" // rgb: 175, 175, ZERO
 	taste_description = "sourness"
 	glass_icon_state  = "lemonglass"
 	glass_name = "glass of lemon juice"
@@ -120,7 +120,7 @@
 /datum/reagent/consumable/banana
 	name = "Banana Juice"
 	description = "The raw essence of a banana. HONK"
-	color = "#863333" // rgb: 175, 175, 0
+	color = "#863333" // rgb: 175, 175, ZERO
 	taste_description = "banana"
 	glass_icon_state = "banana"
 	glass_name = "glass of banana juice"
@@ -128,7 +128,7 @@
 
 /datum/reagent/consumable/banana/on_mob_life(mob/living/carbon/M)
 	if((ishuman(M) && M.job == "Clown") || ismonkey(M))
-		M.heal_bodypart_damage(1,1, 0)
+		M.heal_bodypart_damage(1,1, ZERO)
 		. = 1
 	..()
 
@@ -144,7 +144,7 @@
 /datum/reagent/consumable/nothing/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M) && M.job == "Mime")
 		M.silent = max(M.silent, MIMEDRINK_SILENCE_DURATION)
-		M.heal_bodypart_damage(1,1, 0)
+		M.heal_bodypart_damage(1,1, ZERO)
 		. = 1
 	..()
 
@@ -178,7 +178,7 @@
 	name = "Potato Juice"
 	description = "Juice of the potato. Bleh."
 	nutriment_factor = 2 * REAGENTS_METABOLISM
-	color = "#302000" // rgb: 48, 32, 0
+	color = "#302000" // rgb: 48, 32, ZERO
 	taste_description = "irish sadness"
 	glass_icon_state = "glass_brown"
 	glass_name = "glass of potato juice"
@@ -201,7 +201,7 @@
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/M)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_bodypart_damage(1,0, 0)
+		M.heal_bodypart_damage(1,ZERO, ZERO)
 		. = 1
 	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 2)
@@ -218,7 +218,7 @@
 
 /datum/reagent/consumable/soymilk/on_mob_life(mob/living/carbon/M)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_bodypart_damage(1,0, 0)
+		M.heal_bodypart_damage(1,ZERO, ZERO)
 		. = 1
 	..()
 
@@ -233,15 +233,15 @@
 
 /datum/reagent/consumable/cream/on_mob_life(mob/living/carbon/M)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_bodypart_damage(1,0, 0)
+		M.heal_bodypart_damage(1,ZERO, ZERO)
 		. = 1
 	..()
 
 /datum/reagent/consumable/coffee
 	name = "Coffee"
 	description = "Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant."
-	color = "#482000" // rgb: 72, 32, 0
-	nutriment_factor = 0
+	color = "#482000" // rgb: 72, 32, ZERO
+	nutriment_factor = ZERO
 	overdose_threshold = 80
 	taste_description = "bitterness"
 	glass_icon_state = "glass_brown"
@@ -253,11 +253,11 @@
 	..()
 
 /datum/reagent/consumable/coffee/on_mob_life(mob/living/carbon/M)
-	M.dizziness = max(0,M.dizziness-5)
-	M.drowsyness = max(0,M.drowsyness-3)
+	M.dizziness = max(ZERO,M.dizziness-5)
+	M.drowsyness = max(ZERO,M.drowsyness-3)
 	M.AdjustSleeping(-40, FALSE)
 	//310.15 is the normal bodytemp.
-	M.adjust_bodytemperature(25 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	M.adjust_bodytemperature(25 * TEMPERATURE_DAMAGE_COEFFICIENT, ZERO, BODYTEMP_NORMAL)
 	if(holder.has_reagent(/datum/reagent/consumable/frostoil))
 		holder.remove_reagent(/datum/reagent/consumable/frostoil, 5)
 	..()
@@ -266,21 +266,21 @@
 /datum/reagent/consumable/tea
 	name = "Tea"
 	description = "Tasty black tea, it has antioxidants, it's good for you!"
-	color = "#101000" // rgb: 16, 16, 0
-	nutriment_factor = 0
+	color = "#101000" // rgb: 16, 16, ZERO
+	nutriment_factor = ZERO
 	taste_description = "tart black tea"
 	glass_icon_state = "teaglass"
 	glass_name = "glass of tea"
 	glass_desc = "Drinking it from here would not seem right."
 
 /datum/reagent/consumable/tea/on_mob_life(mob/living/carbon/M)
-	M.dizziness = max(0,M.dizziness-2)
-	M.drowsyness = max(0,M.drowsyness-1)
-	M.jitteriness = max(0,M.jitteriness-3)
+	M.dizziness = max(ZERO,M.dizziness-2)
+	M.drowsyness = max(ZERO,M.drowsyness-1)
+	M.jitteriness = max(ZERO,M.jitteriness-3)
 	M.AdjustSleeping(-20, FALSE)
 	if(M.getToxLoss() && prob(20))
-		M.adjustToxLoss(-1, 0)
-	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+		M.adjustToxLoss(-1, ZERO)
+	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, ZERO, BODYTEMP_NORMAL)
 	..()
 	. = 1
 
@@ -315,15 +315,15 @@
 	name = "Iced Coffee"
 	description = "Coffee and ice, refreshing and cool."
 	color = "#102838" // rgb: 16, 40, 56
-	nutriment_factor = 0
+	nutriment_factor = ZERO
 	taste_description = "bitter coldness"
 	glass_icon_state = "icedcoffeeglass"
 	glass_name = "iced coffee"
 	glass_desc = "A drink to perk you up and refresh you!"
 
 /datum/reagent/consumable/icecoffee/on_mob_life(mob/living/carbon/M)
-	M.dizziness = max(0,M.dizziness-5)
-	M.drowsyness = max(0,M.drowsyness-3)
+	M.dizziness = max(ZERO,M.dizziness-5)
+	M.drowsyness = max(ZERO,M.drowsyness-3)
 	M.AdjustSleeping(-40, FALSE)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	M.Jitter(5)
@@ -334,18 +334,18 @@
 	name = "Iced Tea"
 	description = "No relation to a certain rap artist/actor."
 	color = "#104038" // rgb: 16, 64, 56
-	nutriment_factor = 0
+	nutriment_factor = ZERO
 	taste_description = "sweet tea"
 	glass_icon_state = "icedteaglass"
 	glass_name = "iced tea"
 	glass_desc = "All natural, antioxidant-rich flavour sensation."
 
 /datum/reagent/consumable/icetea/on_mob_life(mob/living/carbon/M)
-	M.dizziness = max(0,M.dizziness-2)
-	M.drowsyness = max(0,M.drowsyness-1)
+	M.dizziness = max(ZERO,M.dizziness-2)
+	M.drowsyness = max(ZERO,M.drowsyness-1)
 	M.AdjustSleeping(-40, FALSE)
 	if(M.getToxLoss() && prob(20))
-		M.adjustToxLoss(-1, 0)
+		M.adjustToxLoss(-1, ZERO)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
 	. = 1
@@ -353,21 +353,21 @@
 /datum/reagent/consumable/space_cola
 	name = "Cola"
 	description = "A refreshing beverage."
-	color = "#100800" // rgb: 16, 8, 0
+	color = "#100800" // rgb: 16, 8, ZERO
 	taste_description = "cola"
 	glass_icon_state  = "glass_brown"
 	glass_name = "glass of Space Cola"
 	glass_desc = "A glass of refreshing Space Cola."
 
 /datum/reagent/consumable/space_cola/on_mob_life(mob/living/carbon/M)
-	M.drowsyness = max(0,M.drowsyness-5)
+	M.drowsyness = max(ZERO,M.drowsyness-5)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
 
 /datum/reagent/consumable/nuka_cola
 	name = "Nuka Cola"
 	description = "Cola, cola never changes."
-	color = "#100800" // rgb: 16, 8, 0
+	color = "#100800" // rgb: 16, 8, ZERO
 	quality = DRINK_VERYGOOD
 	taste_description = "the future"
 	glass_icon_state = "nuka_colaglass"
@@ -386,7 +386,7 @@
 	M.Jitter(20)
 	M.set_drugginess(30)
 	M.dizziness +=1.5
-	M.drowsyness = 0
+	M.drowsyness = ZERO
 	M.AdjustSleeping(-40, FALSE)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
@@ -395,7 +395,7 @@
 /datum/reagent/consumable/grey_bull
 	name = "Grey Bull"
 	description = "Grey Bull, it gives you gloves!"
-	color = "#EEFF00" // rgb: 238, 255, 0
+	color = "#EEFF00" // rgb: 238, 255, ZERO
 	quality = DRINK_VERYGOOD
 	taste_description = "carbonated oil"
 	glass_icon_state = "grey_bull_glass"
@@ -413,7 +413,7 @@
 /datum/reagent/consumable/grey_bull/on_mob_life(mob/living/carbon/M)
 	M.Jitter(20)
 	M.dizziness +=1
-	M.drowsyness = 0
+	M.drowsyness = ZERO
 	M.AdjustSleeping(-40, FALSE)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
@@ -421,14 +421,14 @@
 /datum/reagent/consumable/spacemountainwind
 	name = "SM Wind"
 	description = "Blows right through you like a space wind."
-	color = "#102000" // rgb: 16, 32, 0
+	color = "#102000" // rgb: 16, 32, ZERO
 	taste_description = "sweet citrus soda"
 	glass_icon_state = "Space_mountain_wind_glass"
 	glass_name = "glass of Space Mountain Wind"
 	glass_desc = "Space Mountain Wind. As you know, there are no mountains in space, only wind."
 
 /datum/reagent/consumable/spacemountainwind/on_mob_life(mob/living/carbon/M)
-	M.drowsyness = max(0,M.drowsyness-7)
+	M.drowsyness = max(ZERO,M.drowsyness-7)
 	M.AdjustSleeping(-20, FALSE)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	M.Jitter(5)
@@ -438,21 +438,21 @@
 /datum/reagent/consumable/dr_gibb
 	name = "Dr. Gibb"
 	description = "A delicious blend of 42 different flavours."
-	color = "#102000" // rgb: 16, 32, 0
+	color = "#102000" // rgb: 16, 32, ZERO
 	taste_description = "cherry soda" // FALSE ADVERTISING
 	glass_icon_state = "dr_gibb_glass"
 	glass_name = "glass of Dr. Gibb"
 	glass_desc = "Dr. Gibb. Not as dangerous as the glass_name might imply."
 
 /datum/reagent/consumable/dr_gibb/on_mob_life(mob/living/carbon/M)
-	M.drowsyness = max(0,M.drowsyness-6)
+	M.drowsyness = max(ZERO,M.drowsyness-6)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
 
 /datum/reagent/consumable/space_up
 	name = "Space-Up"
 	description = "Tastes like a hull breach in your mouth."
-	color = "#00FF00" // rgb: 0, 255, 0
+	color = "#00FF00" // rgb: ZERO, 255, ZERO
 	taste_description = "cherry soda"
 	glass_icon_state = "space-up_glass"
 	glass_name = "glass of Space-Up"
@@ -466,7 +466,7 @@
 /datum/reagent/consumable/lemon_lime
 	name = "Lemon Lime"
 	description = "A tangy substance made of 0.5% natural citrus!"
-	color = "#8CFF00" // rgb: 135, 255, 0
+	color = "#8CFF00" // rgb: 135, 255, ZERO
 	taste_description = "tangy lime and lemon soda"
 	glass_icon_state = "glass_yellow"
 	glass_name = "glass of lemon-lime"
@@ -493,7 +493,7 @@
 /datum/reagent/consumable/shamblers
 	name = "Shambler's Juice"
 	description = "~Shake me up some of that Shambler's Juice!~"
-	color = "#f00060" // rgb: 94, 0, 38
+	color = "#f00060" // rgb: 94, ZERO, 38
 	taste_description = "carbonated metallic soda"
 	glass_icon_state = "glass_red"
 	glass_name = "glass of Shambler's juice"
@@ -512,23 +512,23 @@
 	glass_desc = "Soda water. Why not make a scotch and soda?"
 
 /datum/reagent/consumable/sodawater/on_mob_life(mob/living/carbon/M)
-	M.dizziness = max(0,M.dizziness-5)
-	M.drowsyness = max(0,M.drowsyness-3)
+	M.dizziness = max(ZERO,M.dizziness-5)
+	M.drowsyness = max(ZERO,M.drowsyness-3)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
 
 /datum/reagent/consumable/tonic
 	name = "Tonic Water"
 	description = "It tastes strange but at least the quinine keeps the Space Malaria at bay."
-	color = "#0064C8" // rgb: 0, 100, 200
+	color = "#0064C8" // rgb: ZERO, 100, 200
 	taste_description = "tart and fresh"
 	glass_icon_state = "glass_clear"
 	glass_name = "glass of tonic water"
 	glass_desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
 
 /datum/reagent/consumable/tonic/on_mob_life(mob/living/carbon/M)
-	M.dizziness = max(0,M.dizziness-5)
-	M.drowsyness = max(0,M.drowsyness-3)
+	M.dizziness = max(ZERO,M.dizziness-5)
+	M.drowsyness = max(ZERO,M.drowsyness-3)
 	M.AdjustSleeping(-40, FALSE)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
@@ -547,7 +547,7 @@
 /datum/reagent/consumable/monkey_energy/on_mob_life(mob/living/carbon/M)
 	M.Jitter(20)
 	M.dizziness +=1
-	M.drowsyness = 0
+	M.drowsyness = ZERO
 	M.AdjustSleeping(-40, FALSE)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
@@ -584,7 +584,7 @@
 /datum/reagent/consumable/soy_latte
 	name = "Soy Latte"
 	description = "A nice and tasty beverage while you are reading your hippie books."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	quality = DRINK_NICE
 	taste_description = "creamy coffee"
 	glass_icon_state = "soy_latte"
@@ -592,20 +592,20 @@
 	glass_desc = "A nice and refreshing beverage while you're reading."
 
 /datum/reagent/consumable/soy_latte/on_mob_life(mob/living/carbon/M)
-	M.dizziness = max(0,M.dizziness-5)
-	M.drowsyness = max(0,M.drowsyness-3)
-	M.SetSleeping(0, FALSE)
-	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	M.dizziness = max(ZERO,M.dizziness-5)
+	M.drowsyness = max(ZERO,M.drowsyness-3)
+	M.SetSleeping(ZERO, FALSE)
+	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, ZERO, BODYTEMP_NORMAL)
 	M.Jitter(5)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_bodypart_damage(1,0, 0)
+		M.heal_bodypart_damage(1,ZERO, ZERO)
 	..()
 	. = 1
 
 /datum/reagent/consumable/cafe_latte
 	name = "Cafe Latte"
 	description = "A nice, strong and tasty beverage while you are reading."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	quality = DRINK_NICE
 	taste_description = "bitter cream"
 	glass_icon_state = "cafe_latte"
@@ -613,13 +613,13 @@
 	glass_desc = "A nice, strong and refreshing beverage while you're reading."
 
 /datum/reagent/consumable/cafe_latte/on_mob_life(mob/living/carbon/M)
-	M.dizziness = max(0,M.dizziness-5)
-	M.drowsyness = max(0,M.drowsyness-3)
-	M.SetSleeping(0, FALSE)
-	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	M.dizziness = max(ZERO,M.dizziness-5)
+	M.drowsyness = max(ZERO,M.drowsyness-3)
+	M.SetSleeping(ZERO, FALSE)
+	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, ZERO, BODYTEMP_NORMAL)
 	M.Jitter(5)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_bodypart_damage(1,0, 0)
+		M.heal_bodypart_damage(1,ZERO, ZERO)
 	..()
 	. = 1
 
@@ -634,11 +634,11 @@
 	glass_desc = "The space doctor's favorite. Guaranteed to restore bodily injury; side effects include cravings and hunger."
 
 /datum/reagent/consumable/doctor_delight/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-0.5, 0)
-	M.adjustFireLoss(-0.5, 0)
-	M.adjustToxLoss(-0.5, 0)
-	M.adjustOxyLoss(-0.5, 0)
-	if(M.nutrition && (M.nutrition - 2 > 0))
+	M.adjustBruteLoss(-0.5, ZERO)
+	M.adjustFireLoss(-0.5, ZERO)
+	M.adjustToxLoss(-0.5, ZERO)
+	M.adjustOxyLoss(-0.5, ZERO)
+	if(M.nutrition && (M.nutrition - 2 > ZERO))
 		if(!(M.mind && M.mind.assigned_role == "Medical Doctor")) //Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
 			M.adjust_nutrition(-2)
 	..()
@@ -762,12 +762,12 @@
 	glass_desc = "A favorite winter drink to warm you up."
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M)
-	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, ZERO, BODYTEMP_NORMAL)
 	..()
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_bodypart_damage(1,0, 0)
+		M.heal_bodypart_damage(1,ZERO, ZERO)
 		. = 1
 	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 2)

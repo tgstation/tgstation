@@ -11,7 +11,7 @@
 	scan_desc = "light hypersensitivity"
 	gain_text = "<span class='warning'>You feel a craving for darkness.</span>"
 	lose_text = "<span class='notice'>Light no longer bothers you.</span>"
-	var/next_damage_warning = 0
+	var/next_damage_warning = ZERO
 
 /datum/brain_trauma/magic/lumiphobia/on_life()
 	..()
@@ -22,7 +22,7 @@
 			if(world.time > next_damage_warning)
 				to_chat(owner, "<span class='warning'><b>The light burns you!</b></span>")
 				next_damage_warning = world.time + 100 //Avoid spamming
-			owner.take_overall_damage(0,3)
+			owner.take_overall_damage(ZERO,3)
 
 /datum/brain_trauma/magic/poltergeist
 	name = "Poltergeist"
@@ -100,7 +100,7 @@
 	if(get_dist(owner, stalker) <= 8)
 		if(!close_stalker)
 			var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
-			owner.playsound_local(owner, slowbeat, 40, 0, channel = CHANNEL_HEARTBEAT)
+			owner.playsound_local(owner, slowbeat, 40, ZERO, channel = CHANNEL_HEARTBEAT)
 			close_stalker = TRUE
 	else
 		if(close_stalker)

@@ -13,7 +13,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FLAMMABLE
 	max_integrity = 40
-	var/active = 0
+	var/active = ZERO
 	var/det_time = 50
 	var/display_timer = 1
 	var/clumsy_check = GRENADE_CLUMSY_FUMBLE
@@ -49,7 +49,7 @@
 /obj/item/grenade/examine(mob/user)
 	. = ..()
 	if(display_timer)
-		if(det_time > 0)
+		if(det_time > ZERO)
 			. += "The timer is set to [DisplayTimeText(det_time)]."
 		else
 			. += "\The [src] is set for instant detonation."
@@ -103,23 +103,23 @@
 	if(time != null)
 		if(time < 3)
 			time = 3
-		det_time = round(CLAMP(time * 10, 0, 50))
+		det_time = round(CLAMP(time * 10, ZERO, 50))
 	else
 		var/previous_time = det_time
 		switch(det_time)
-			if (0)
+			if (ZERO)
 				det_time = 30
 			if (30)
 				det_time = 50
 			if (50)
-				det_time = 0
+				det_time = ZERO
 		if(det_time == previous_time)
 			det_time = 50
 
 /obj/item/grenade/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/item/grenade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/grenade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = ZERO, damage = ZERO, attack_type = MELEE_ATTACK)
 	var/obj/projectile/P = hitby
 	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
 		owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What a shot!</span>")

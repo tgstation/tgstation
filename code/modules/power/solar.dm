@@ -8,15 +8,15 @@
 	icon_state = "sp_base"
 	density = TRUE
 	use_power = NO_POWER_USE
-	idle_power_usage = 0
-	active_power_usage = 0
+	idle_power_usage = ZERO
+	active_power_usage = ZERO
 	max_integrity = 150
 	integrity_failure = 0.33
 
 	var/id
 	var/obscured = FALSE
 	var/sunfrac = 0 //[0-1] measure of obscuration -- multipllier against power generation
-	var/azimuth_current = 0 //[0-360) degrees, which direction are we facing?
+	var/azimuth_current = 0 //[ZERO-360) degrees, which direction are we facing?
 	var/azimuth_target = 0 //same but what way we're going to face next time we turn
 	var/obj/machinery/power/solar_control/control
 	var/needs_to_turn = TRUE //do we need to turn next tick?
@@ -77,7 +77,7 @@
 		deconstruct(TRUE)
 	return TRUE
 
-/obj/machinery/power/solar/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/machinery/power/solar/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BRUTE)
 			if(stat & BROKEN)
@@ -159,9 +159,9 @@
 ///calculates the fraction of the sunlight that the panel receives
 /obj/machinery/power/solar/proc/update_solar_exposure()
 	needs_to_update_solar_exposure = FALSE
-	sunfrac = 0
+	sunfrac = ZERO
 	if(obscured)
-		return 0
+		return ZERO
 
 	var/sun_azimuth = SSsun.azimuth
 	if(azimuth_current == sun_azimuth) //just a quick optimization for the most frequent case
@@ -169,7 +169,7 @@
 	else
 		//dot product of sun and panel -- Lambert's Cosine Law
 		. = cos(azimuth_current - sun_azimuth)
-		. = CLAMP(round(., 0.01), 0, 1)
+		. = CLAMP(round(., 0.01), ZERO, 1)
 	sunfrac = .
 
 /obj/machinery/power/solar/process()
@@ -181,7 +181,7 @@
 		update_turn()
 	if(needs_to_update_solar_exposure)
 		update_solar_exposure()
-	if(sunfrac <= 0)
+	if(sunfrac <= ZERO)
 		return
 
 	var/sgen = SOLAR_GEN_RATE * sunfrac
@@ -211,7 +211,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY // Pretty big!
 	anchored = FALSE
-	var/tracker = 0
+	var/tracker = ZERO
 	var/glass_type = null
 
 // Give back the glass type we were supplied with
@@ -268,7 +268,7 @@
 	else
 		if(W.tool_behaviour == TOOL_CROWBAR)
 			new /obj/item/electronics/tracker(src.loc)
-			tracker = 0
+			tracker = ZERO
 			user.visible_message("<span class='notice'>[user] takes out the electronics from the solar assembly.</span>", "<span class='notice'>You take out the electronics from the solar assembly.</span>")
 			return 1
 	return ..()
@@ -289,10 +289,10 @@
 	integrity_failure = 0.5
 	var/icon_screen = "solar"
 	var/icon_keyboard = "power_key"
-	var/id = 0
-	var/gen = 0
-	var/lastgen = 0
-	var/azimuth_target = 0
+	var/id = ZERO
+	var/gen = ZERO
+	var/lastgen = ZERO
+	var/azimuth_target = ZERO
 	var/azimuth_rate = 1 ///degree change per minute
 
 	var/track = SOLAR_TRACK_OFF ///SOLAR_TRACK_OFF, SOLAR_TRACK_TIMED, SOLAR_TRACK_AUTO
@@ -425,7 +425,7 @@
 	else
 		return ..()
 
-/obj/machinery/power/solar_control/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/machinery/power/solar_control/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BRUTE)
 			if(stat & BROKEN)
@@ -442,7 +442,7 @@
 
 /obj/machinery/power/solar_control/process()
 	lastgen = gen
-	gen = 0
+	gen = ZERO
 
 	if(connected_tracker && (!powernet || connected_tracker.powernet != powernet))
 		connected_tracker.unset_control()
@@ -458,7 +458,7 @@
 	azimuth = CLAMP(round(azimuth, 0.01), -360, 719.99)
 	if(azimuth >= 360)
 		azimuth -= 360
-	if(azimuth < 0)
+	if(azimuth < ZERO)
 		azimuth += 360
 	azimuth_target = azimuth
 

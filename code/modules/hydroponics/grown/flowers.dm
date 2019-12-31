@@ -156,9 +156,9 @@
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	damtype = "fire"
-	force = 0
+	force = ZERO
 	slot_flags = ITEM_SLOT_HEAD
-	throwforce = 0
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
@@ -205,7 +205,7 @@
 	icon_dead = "sunflower-dead"
 	product = /obj/item/grown/novaflower
 	mutatelist = list()
-	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.25, /datum/reagent/consumable/capsaicin = 0.3, /datum/reagent/consumable/nutriment = 0)
+	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.25, /datum/reagent/consumable/capsaicin = 0.3, /datum/reagent/consumable/nutriment = ZERO)
 	rarity = 20
 
 /obj/item/grown/novaflower
@@ -216,14 +216,14 @@
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	damtype = "fire"
-	force = 0
+	force = ZERO
 	slot_flags = ITEM_SLOT_HEAD
-	throwforce = 0
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
 	attack_verb = list("roasted", "scorched", "burned")
-	grind_results = list(/datum/reagent/consumable/capsaicin = 0, /datum/reagent/consumable/condensedcapsaicin = 0)
+	grind_results = list(/datum/reagent/consumable/capsaicin = ZERO, /datum/reagent/consumable/condensedcapsaicin = ZERO)
 
 /obj/item/grown/novaflower/add_juice()
 	..()
@@ -243,7 +243,7 @@
 	. = ..()
 	if(!proximity)
 		return
-	if(force > 0)
+	if(force > ZERO)
 		force -= rand(1, (force / 3) + 1)
 	else
 		to_chat(usr, "<span class='warning'>All the petals have fallen off the [name] from violent whacking!</span>")

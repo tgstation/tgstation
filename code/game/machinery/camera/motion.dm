@@ -1,7 +1,7 @@
 /obj/machinery/camera
 
 	var/list/datum/weakref/localMotionTargets = list()
-	var/detectTime = 0
+	var/detectTime = ZERO
 	var/area/ai_monitored/area_motion = null
 	var/alarm_delay = 30 // Don't forget, there's another 3 seconds in queueAlarm()
 
@@ -12,7 +12,7 @@
 		return
 	if(stat & EMPED)
 		return
-	if (detectTime > 0)
+	if (detectTime > ZERO)
 		var/elapsed = world.time - detectTime
 		if (elapsed > alarm_delay)
 			triggerAlarm()
@@ -31,7 +31,7 @@
 /obj/machinery/camera/proc/newTarget(mob/target)
 	if(isAI(target))
 		return FALSE
-	if (detectTime == 0)
+	if (detectTime == ZERO)
 		detectTime = world.time // start the clock
 	var/list/targets = getTargetList()
 	targets |= WEAKREF(target)
@@ -48,7 +48,7 @@
 /obj/machinery/camera/proc/lostTargetRef(datum/weakref/R)
 	var/list/targets = getTargetList()
 	targets -= R
-	if (targets.len == 0)
+	if (targets.len == ZERO)
 		cancelAlarm()
 
 /obj/machinery/camera/proc/cancelAlarm()
@@ -57,7 +57,7 @@
 			var/mob/living/silicon/aiPlayer = i
 			if (status)
 				aiPlayer.cancelAlarm("Motion", get_area(src), src)
-	detectTime = 0
+	detectTime = ZERO
 	return TRUE
 
 /obj/machinery/camera/proc/triggerAlarm()
@@ -107,6 +107,6 @@
 	if (localMotionTargets.len)
 		detectTime = world.time + 30 SECONDS
 	else if (world.time > detectTime)
-		detectTime = 0
+		detectTime = ZERO
 		for(var/obj/machinery/computer/security/telescreen/entertainment/TV in GLOB.machines)
 			TV.notify(FALSE)

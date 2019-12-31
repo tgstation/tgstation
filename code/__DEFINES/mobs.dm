@@ -3,7 +3,7 @@
 //Misc mob defines
 
 //Ready states at roundstart for mob/dead/new_player
-#define PLAYER_NOT_READY 0
+#define PLAYER_NOT_READY ZERO
 #define PLAYER_READY_TO_PLAY 1
 #define PLAYER_READY_TO_OBSERVE 2
 
@@ -23,14 +23,14 @@
 #define BLOOD_VOLUME_SURVIVE		122
 
 //Sizes of mobs, used by mob/living/var/mob_size
-#define MOB_SIZE_TINY 0
+#define MOB_SIZE_TINY ZERO
 #define MOB_SIZE_SMALL 1
 #define MOB_SIZE_HUMAN 2
 #define MOB_SIZE_LARGE 3
 #define MOB_SIZE_HUGE 4 // Use this for things you don't want bluespace body-bagged
 
 //Ventcrawling defines
-#define VENTCRAWLER_NONE   0
+#define VENTCRAWLER_NONE   ZERO
 #define VENTCRAWLER_NUDE   1
 #define VENTCRAWLER_ALWAYS 2
 
@@ -39,7 +39,7 @@
 #define BLOODCRAWL_EAT 2
 
 //Mob bio-types flags
-#define MOB_ORGANIC 	1 << 0
+#define MOB_ORGANIC 	1 << ZERO
 #define MOB_MINERAL		1 << 1
 #define MOB_ROBOTIC 	1 << 2
 #define MOB_UNDEAD		1 << 3
@@ -57,7 +57,7 @@
 #define BODYPART_ORGANIC   1
 #define BODYPART_ROBOTIC   2
 
-#define BODYPART_NOT_DISABLED 0
+#define BODYPART_NOT_DISABLED ZERO
 #define BODYPART_DISABLED_DAMAGE 1
 #define BODYPART_DISABLED_PARALYSIS 2
 
@@ -125,7 +125,7 @@
 #define BIOWARE_LIGAMENTS "ligaments"
 
 //Health hud screws for carbon mobs
-#define SCREWYHUD_NONE 0
+#define SCREWYHUD_NONE ZERO
 #define SCREWYHUD_CRIT 1
 #define SCREWYHUD_DEAD 2
 #define SCREWYHUD_HEALTHY 3
@@ -142,7 +142,7 @@
 #define MOOD_LEVEL_HAPPY3 10
 #define MOOD_LEVEL_HAPPY2 6
 #define MOOD_LEVEL_HAPPY1 2
-#define MOOD_LEVEL_NEUTRAL 0
+#define MOOD_LEVEL_NEUTRAL ZERO
 #define MOOD_LEVEL_SAD1 -3
 #define MOOD_LEVEL_SAD2 -7
 #define MOOD_LEVEL_SAD3 -15
@@ -155,7 +155,7 @@
 #define SANITY_DISTURBED 75
 #define SANITY_UNSTABLE 50
 #define SANITY_CRAZY 25
-#define SANITY_INSANE 0
+#define SANITY_INSANE ZERO
 
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
@@ -178,7 +178,7 @@
 #define NUTRITION_LEVEL_ALMOST_FULL 535
 
 //Charge levels for Ethereals
-#define ETHEREAL_CHARGE_NONE 0
+#define ETHEREAL_CHARGE_NONE ZERO
 #define ETHEREAL_CHARGE_LOWPOWER 20
 #define ETHEREAL_CHARGE_NORMAL 50
 #define ETHEREAL_CHARGE_ALMOSTFULL 75
@@ -216,12 +216,12 @@
 #define AI_Z_OFF	4
 
 //determines if a mob can smash through it
-#define ENVIRONMENT_SMASH_NONE			0
-#define ENVIRONMENT_SMASH_STRUCTURES	(1<<0) 	//crates, lockers, ect
+#define ENVIRONMENT_SMASH_NONE			ZERO
+#define ENVIRONMENT_SMASH_STRUCTURES	(1<<ZERO) 	//crates, lockers, ect
 #define ENVIRONMENT_SMASH_WALLS			(1<<1)  //walls
 #define ENVIRONMENT_SMASH_RWALLS		(1<<2)	//rwalls
 
-#define NO_SLIP_WHEN_WALKING	(1<<0)
+#define NO_SLIP_WHEN_WALKING	(1<<ZERO)
 #define SLIDE					(1<<1)
 #define GALOSHES_DONT_HELP		(1<<2)
 #define SLIDE_ICE				(1<<3)
@@ -232,7 +232,7 @@
 ///Flags used by the flags parameter of electrocute act.
 
 ///Makes it so that the shock doesn't take gloves into account.
-#define SHOCK_NOGLOVES (1 << 0)
+#define SHOCK_NOGLOVES (1 << ZERO)
 ///Used when the shock is from a tesla bolt.
 #define SHOCK_TESLA (1 << 1)
 ///Used when an illusion shocks something. Makes the shock deal stamina damage and not trigger certain secondary effects.
@@ -245,7 +245,7 @@
 #define INCORPOREAL_MOVE_JAUNT 3 // is blocked by holy water/salt
 
 //Secbot and ED209 judgement criteria bitflag values
-#define JUDGE_EMAGGED		(1<<0)
+#define JUDGE_EMAGGED		(1<<ZERO)
 #define JUDGE_IDCHECK		(1<<1)
 #define JUDGE_WEAPONCHECK	(1<<2)
 #define JUDGE_RECORDCHECK	(1<<3)
@@ -278,7 +278,7 @@
 #define AGE_MAX				85	//oldest a character can be
 #define WIZARD_AGE_MIN		30	//youngest a wizard can be
 #define APPRENTICE_AGE_MIN	29	//youngest an apprentice can be
-#define SHOES_SLOWDOWN		0	//How much shoes slow you down by default. Negative values speed you up
+#define SHOES_SLOWDOWN		ZERO	//How much shoes slow you down by default. Negative values speed you up
 #define POCKET_STRIP_DELAY			40	//time taken (in deciseconds) to search somebody's pockets
 #define DOOR_CRUSH_DAMAGE	15	//the amount of damage that airlocks deal when they crush you
 
@@ -289,7 +289,7 @@
 
 // Eye protection
 #define FLASH_PROTECTION_SENSITIVE -1
-#define FLASH_PROTECTION_NONE 0
+#define FLASH_PROTECTION_NONE ZERO
 #define FLASH_PROTECTION_FLASH 1
 #define FLASH_PROTECTION_WELDER 2
 
@@ -302,7 +302,7 @@
 #define AI_VOX // Comment out if you don't want VOX to be enabled and have players download the voice sounds.
 
 // /obj/item/bodypart on_mob_life() retval flag
-#define BODYPART_LIFE_UPDATE_HEALTH (1<<0)
+#define BODYPART_LIFE_UPDATE_HEALTH (1<<ZERO)
 
 #define MAX_REVIVE_FIRE_DAMAGE 180
 #define MAX_REVIVE_BRUTE_DAMAGE 180
@@ -318,7 +318,7 @@
 
 //Flags that control what things can spawn species (whitelist)
 //Badmin magic mirror
-#define MIRROR_BADMIN (1<<0)
+#define MIRROR_BADMIN (1<<ZERO)
 //Standard magic mirror (wizard)
 #define MIRROR_MAGIC  (1<<1)
 //Pride ruin mirror

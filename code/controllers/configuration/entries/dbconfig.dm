@@ -7,7 +7,7 @@
 
 /datum/config_entry/number/port
 	config_entry_value = 3306
-	min_val = 0
+	min_val = ZERO
 	max_val = 65535
 	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
 
@@ -36,12 +36,12 @@
 
 /datum/config_entry/number/async_query_timeout
 	config_entry_value = 10
-	min_val = 0
+	min_val = ZERO
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/number/blocking_query_timeout
 	config_entry_value = 5
-	min_val = 0
+	min_val = ZERO
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/number/bsql_thread_limit

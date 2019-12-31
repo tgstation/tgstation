@@ -21,7 +21,7 @@ Bonus
 	desc = "The virus aggressively attacks body cells, necrotizing tissues and organs."
 	stealth = -3
 	resistance = -4
-	stage_speed = 0
+	stage_speed = ZERO
 	transmittable = -3
 	level = 6
 	severity = 5

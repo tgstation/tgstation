@@ -20,7 +20,7 @@
 	icon_state = "fork"
 	force = 5
 	w_class = WEIGHT_CLASS_TINY
-	throwforce = 0
+	throwforce = ZERO
 	throw_speed = 3
 	throw_range = 5
 	custom_materials = list(/datum/material/iron=80)
@@ -60,9 +60,9 @@
 	name = "plastic fork"
 	desc = "Really takes you back to highschool lunch."
 	icon_state = "plastic_fork"
-	force = 0
+	force = ZERO
 	w_class = WEIGHT_CLASS_TINY
-	throwforce = 0
+	throwforce = ZERO
 	custom_materials = list(/datum/material/plastic=80)
 	custom_price = 50
 	var/break_chance = 25
@@ -115,9 +115,9 @@
 	icon_state = "plastic_knife"
 	item_state = "knife"
 	desc = "A very safe, barely sharp knife made of plastic. Good for cutting food and not much else."
-	force = 0
+	force = ZERO
 	w_class = WEIGHT_CLASS_TINY
-	throwforce = 0
+	throwforce = ZERO
 	throw_range = 5
 	custom_materials = list(/datum/material/plastic = 100)
 	attack_verb = list("prodded", "whiffed","scratched", "poked")
@@ -201,7 +201,7 @@
 	throwforce = 12//fuck git
 	custom_materials = null
 	attack_verb = list("shanked", "shivved")
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = ZERO)
 
 /obj/item/kitchen/knife/carrotshiv/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] forcefully drives \the [src] into [user.p_their()] eye! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -228,9 +228,9 @@
 	name = "plastic spoon"
 	desc = "Just be careful your food doesn't melt the spoon first."
 	icon_state = "plastic_spoon"
-	force = 0
+	force = ZERO
 	w_class = WEIGHT_CLASS_TINY
-	throwforce = 0
+	throwforce = ZERO
 	custom_materials = list(/datum/material/plastic=120)
 	custom_price = 50
 	var/break_chance = 25

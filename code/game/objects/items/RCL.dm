@@ -165,7 +165,7 @@
 /obj/item/twohanded/rcl/proc/layCable(mob/user)
 	if(!isturf(user.loc))
 		return
-	if(is_empty(user, 0))
+	if(is_empty(user, ZERO))
 		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 		return
 
@@ -210,13 +210,13 @@
 			continue
 		if(C.pipe_cleaner_color != GLOB.pipe_cleaner_colors[colors[current_color_index]])
 			continue
-		if(C.d1 == 0)
+		if(C.d1 == ZERO)
 			return C
 	return
 
 
 /obj/item/twohanded/rcl/proc/wiringGuiGenerateChoices(mob/user)
-	var/fromdir = 0
+	var/fromdir = ZERO
 	var/obj/structure/pipe_cleaner/linkingCable = findLinkingCable(user)
 	if(linkingCable)
 		fromdir = linkingCable.d2
@@ -257,7 +257,7 @@
 
 	if(!isturf(user.loc))
 		return
-	if(is_empty(user, 0))
+	if(is_empty(user, ZERO))
 		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 		return
 

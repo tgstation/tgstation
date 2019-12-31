@@ -11,7 +11,7 @@
 
 /datum/parsed_map
 	var/original_path
-	var/key_len = 0
+	var/key_len = ZERO
 	var/list/grid_models = list()
 	var/list/gridSets = list()
 
@@ -29,7 +29,7 @@
 	var/static/regex/trimRegex = new(@'^[\s\n]+|[\s\n]+$', "g")
 
 	#ifdef TESTING
-	var/turfsSkipped = 0
+	var/turfsSkipped = ZERO
 	#endif
 
 /// Shortcut function to parse a map and apply it to the world.
@@ -100,7 +100,7 @@
 			var/list/gridLines = splittext(dmmRegex.group[6], "\n")
 			gridSet.gridLines = gridLines
 
-			var/leadingBlanks = 0
+			var/leadingBlanks = ZERO
 			while(leadingBlanks < gridLines.len && gridLines[++leadingBlanks] == "")
 			if(leadingBlanks > 1)
 				gridLines.Cut(1, leadingBlanks) // Remove all leading blank lines.
@@ -233,7 +233,7 @@
 		var/old_position = 1
 		var/dpos
 
-		while(dpos != 0)
+		while(dpos != ZERO)
 			//finding next member (e.g /turf/unsimulated/wall{icon_state = "rock"} or /area/mine/explored)
 			dpos = find_next_delimiter_position(model, old_position, ",", "{", "}") //find next delimiter (comma here) that's not within {...}
 
@@ -282,8 +282,8 @@
 			&& !(.[SPACE_KEY]) \
 			&& members.len == 2 \
 			&& members_attributes.len == 2 \
-			&& length(members_attributes[1]) == 0 \
-			&& length(members_attributes[2]) == 0 \
+			&& length(members_attributes[1]) == ZERO \
+			&& length(members_attributes[2]) == ZERO \
 			&& (world.area in members) \
 			&& (world.turf in members))
 
@@ -382,7 +382,7 @@
 
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)
-/datum/parsed_map/proc/trim_text(what as text,trim_quotes=0)
+/datum/parsed_map/proc/trim_text(what as text,trim_quotes=ZERO)
 	if(trim_quotes)
 		return trimQuotesRegex.Replace(what, "")
 	else
@@ -390,16 +390,16 @@
 
 
 //find the position of the next delimiter,skipping whatever is comprised between opening_escape and closing_escape
-//returns 0 if reached the last delimiter
+//returns ZERO if reached the last delimiter
 /datum/parsed_map/proc/find_next_delimiter_position(text as text,initial_position as num, delimiter=",",opening_escape="\"",closing_escape="\"")
 	var/position = initial_position
-	var/next_delimiter = findtext(text,delimiter,position,0)
-	var/next_opening = findtext(text,opening_escape,position,0)
+	var/next_delimiter = findtext(text,delimiter,position,ZERO)
+	var/next_opening = findtext(text,opening_escape,position,ZERO)
 
-	while((next_opening != 0) && (next_opening < next_delimiter))
-		position = findtext(text,closing_escape,next_opening + 1,0)+1
-		next_delimiter = findtext(text,delimiter,position,0)
-		next_opening = findtext(text,opening_escape,position,0)
+	while((next_opening != ZERO) && (next_opening < next_delimiter))
+		position = findtext(text,closing_escape,next_opening + 1,ZERO)+1
+		next_delimiter = findtext(text,delimiter,position,ZERO)
+		next_opening = findtext(text,opening_escape,position,ZERO)
 
 	return next_delimiter
 
@@ -414,7 +414,7 @@
 	var/position
 	var/old_position = 1
 
-	while(position != 0)
+	while(position != ZERO)
 		// find next delimiter that is not within  "..."
 		position = find_next_delimiter_position(text,old_position,delimiter)
 
@@ -443,7 +443,7 @@
 
 	// string
 	if(findtext(text,"\"",1,2))
-		return copytext(text,2,findtext(text,"\"",3,0))
+		return copytext(text,2,findtext(text,"\"",3,ZERO))
 
 	// list
 	if(copytext(text,1,6) == "list(")

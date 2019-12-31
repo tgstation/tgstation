@@ -22,7 +22,7 @@
 	var/list/carriers = list()
 
 	var/monkeys_to_win = 1
-	var/escaped_monkeys = 0
+	var/escaped_monkeys = ZERO
 
 	var/players_per_carrier = 30
 
@@ -33,7 +33,7 @@
 /datum/game_mode/monkey/pre_setup()
 	carriers_to_make = max(round(num_players()/players_per_carrier, 1), 1)
 
-	for(var/j = 0, j < carriers_to_make, j++)
+	for(var/j = ZERO, j < carriers_to_make, j++)
 		if (!antag_candidates.len)
 			break
 		var/datum/mind/carrier = pick(antag_candidates)

@@ -22,7 +22,7 @@
 	name = "Syndicate Mecha Pilot"
 	desc = "Death to Nanotrasen. This variant comes in MECHA DEATH flavour."
 	wanted_objects = list()
-	search_objects = 0
+	search_objects = ZERO
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 
 	var/spawn_mecha_type = /obj/mecha/combat/marauder/mauler/loaded
@@ -70,12 +70,12 @@
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/enter_mecha(obj/mecha/M)
 	if(!M)
-		return 0
+		return ZERO
 	target = null //Target was our mecha, so null it out
 	M.aimob_enter_mech(src)
 	targets_from = M
 	allow_movement_on_non_turfs = TRUE //duh
-	var/do_ranged = 0
+	var/do_ranged = ZERO
 	for(var/equip in mecha.equipment)
 		var/obj/item/mecha_parts/mecha_equipment/ME = equip
 		if(ME.range & MECHA_RANGED)
@@ -86,16 +86,16 @@
 		ranged = 1
 	else
 		minimum_distance = 1
-		ranged = 0
+		ranged = ZERO
 	wanted_objects = list()
-	search_objects = 0
+	search_objects = ZERO
 	if(mecha && mecha.lights_action) //an AI mecha is an EVIL EVIL thing, so let's not hide them in the dark
 		mecha.lights_action.Activate()
 
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/exit_mecha(obj/mecha/M)
 	if(!M)
-		return 0
+		return ZERO
 
 	mecha.aimob_exit_mech(src)
 	allow_movement_on_non_turfs = FALSE
@@ -110,21 +110,21 @@
 			search_aggressiveness = 3 //We can see a mech? RUN FOR IT, IGNORE MOBS!
 			break
 	search_objects = search_aggressiveness
-	ranged = 0
+	ranged = ZERO
 	minimum_distance = 1
 
-	walk(M,0)//end any lingering movement loops, to prevent the haunted mecha bug
+	walk(M,ZERO)//end any lingering movement loops, to prevent the haunted mecha bug
 
 //Checks if a mecha is valid for theft
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/is_valid_mecha(obj/mecha/M)
 	if(!M)
-		return 0
+		return ZERO
 	if(M.occupant)
-		return 0
+		return ZERO
 	if(!M.has_charge(required_mecha_charge))
-		return 0
+		return ZERO
 	if(M.obj_integrity < M.max_integrity*0.5)
-		return 0
+		return ZERO
 	return 1
 
 
@@ -205,7 +205,7 @@
 				if(is_valid_mecha(C))
 					target = C //Let's nab it!
 					minimum_distance = 1
-					ranged = 0
+					ranged = ZERO
 					break
 		if(mecha)
 			var/list/L = PossibleThreats()
@@ -230,7 +230,7 @@
 			if(mecha.obj_integrity < mecha.max_integrity*0.25)
 				if(prob(defense_mode_chance))
 					if(mecha.defense_action && mecha.defense_action.owner && !mecha.defense_mode)
-						mecha.leg_overload_mode = 0
+						mecha.leg_overload_mode = ZERO
 						mecha.defense_action.Activate(TRUE)
 						addtimer(CALLBACK(mecha.defense_action, /datum/action/innate/mecha/mech_defense_mode.proc/Activate, FALSE), 100) //10 seconds of defense, then toggle off
 
@@ -241,7 +241,7 @@
 						addtimer(CALLBACK(mecha.overload_action, /datum/action/innate/mecha/mech_defense_mode.proc/Activate, FALSE), 100) //10 seconds of speeeeed, then toggle off
 
 					retreat_distance = 50
-					addtimer(VARSET_CALLBACK(src, retreat_distance, 0), 10 SECONDS)
+					addtimer(VARSET_CALLBACK(src, retreat_distance, ZERO), 10 SECONDS)
 
 
 
@@ -263,25 +263,25 @@
 		var/obj/mecha/M = the_target
 		if(mecha)
 			if(M == mecha || !CanAttack(M.occupant))
-				return 0
+				return ZERO
 		else //we're not in a mecha, so we check if we can steal it instead.
 			if(is_valid_mecha(M))
 				return 1
 			else if (M.occupant && CanAttack(M.occupant))
 				return 1
 			else
-				return 0
+				return ZERO
 
 	. = ..()
 
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/EscapeConfinement()
 	if(mecha && loc == mecha)
-		return 0
+		return ZERO
 	..()
 
 
-/mob/living/simple_animal/hostile/syndicate/mecha_pilot/Move(NewLoc,Dir=0,step_x=0,step_y=0)
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/Move(NewLoc,Dir=ZERO,step_x=ZERO,step_y=ZERO)
 	if(mecha && loc == mecha)
 		return mecha.relaymove(src, Dir)
 	return ..()

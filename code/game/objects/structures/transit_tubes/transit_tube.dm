@@ -11,7 +11,7 @@
 	var/tube_construction = /obj/structure/c_transit_tube
 	var/list/tube_dirs //list of directions this tube section can connect to.
 	var/exit_delay = 1
-	var/enter_delay = 0
+	var/enter_delay = ZERO
 	var/const/time_to_unwrench = 2 SECONDS
 
 /obj/structure/transit_tube/CanPass(atom/movable/mover, turf/target)
@@ -86,9 +86,9 @@
 
 
 // Searches for an exit direction within 45 degrees of the
-//  specified dir. Returns that direction, or 0 if none match.
+//  specified dir. Returns that direction, or ZERO if none match.
 /obj/structure/transit_tube/proc/get_exit(in_dir)
-	var/near_dir = 0
+	var/near_dir = ZERO
 	var/in_dir_cw = turn(in_dir, -45)
 	var/in_dir_ccw = turn(in_dir, 45)
 

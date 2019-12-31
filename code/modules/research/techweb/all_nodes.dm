@@ -1072,7 +1072,7 @@
 	var/list/datum/techweb_node/processing = list()
 	for(var/i in subtypesof(/datum/techweb_node))
 		processing += new i
-	. = 0
+	. = ZERO
 	for(var/i in processing)
 		var/datum/techweb_node/TN = i
 		. += TN.export_price

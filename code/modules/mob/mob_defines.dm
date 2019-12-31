@@ -19,7 +19,7 @@
 
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
-	var/static/next_mob_id = 0
+	var/static/next_mob_id = ZERO
 
 	/// List of movement speed modifiers applying to this mob
 	var/list/movespeed_modification				//Lazy list, see mob_movespeed.dm
@@ -61,9 +61,9 @@
 	var/notransform = null	//Carbon
 
 	/// Is the mob blind
-	var/eye_blind = 0		//Carbon
+	var/eye_blind = ZERO		//Carbon
 	/// Does the mob have blurry sight
-	var/eye_blurry = 0		//Carbon
+	var/eye_blurry = ZERO		//Carbon
 	/// What is the mobs real name (name is overridden for disguises etc)
 	var/real_name = null
 
@@ -82,18 +82,18 @@
 	/// Default body temperature
 	var/bodytemperature = BODYTEMP_NORMAL	//310.15K / 98.6F
 	/// Drowsyness level of the mob
-	var/drowsyness = 0//Carbon
+	var/drowsyness = ZERO//Carbon
 	/// Dizziness level of the mob
-	var/dizziness = 0//Carbon
+	var/dizziness = ZERO//Carbon
 	/// Jitteryness level of the mob
-	var/jitteriness = 0//Carbon
+	var/jitteriness = ZERO//Carbon
 	/// Hunger level of the mob
 	var/nutrition = NUTRITION_LEVEL_START_MIN // randomised in Initialize
 	/// Satiation level of the mob
-	var/satiety = 0//Carbon
+	var/satiety = ZERO//Carbon
 
 	/// How many ticks this mob has been over reating
-	var/overeatduration = 0		// How long this guy is overeating //Carbon
+	var/overeatduration = ZERO		// How long this guy is overeating //Carbon
 
 	/// The current intent of the mob
 	var/a_intent = INTENT_HELP//Living
@@ -136,7 +136,7 @@
 	var/research_scanner = FALSE
 
 	/// Is the mob throw intent on
-	var/in_throw_mode = 0
+	var/in_throw_mode = ZERO
 
 	/// What job does this mob have
 	var/job = null//Living
@@ -163,7 +163,7 @@
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH
 
 	/// Can they interact with station electronics
-	var/has_unlimited_silicon_privilege = 0
+	var/has_unlimited_silicon_privilege = ZERO
 
 	///Used by admins to possess objects. All mobs should have this var
 	var/obj/control_object
@@ -193,7 +193,7 @@
 	///The z level this mob is currently registered in
 	var/registered_z = null
 
-	var/memory_throttle_time = 0
+	var/memory_throttle_time = ZERO
 
 	var/list/alerts = list() // contains /obj/screen/alert only // On /mob so clientless mobs will throw alerts properly
 	var/list/screens = list()
@@ -202,7 +202,7 @@
 
 	var/datum/hSB/sandbox = null
 
-	var/bloody_hands = 0
+	var/bloody_hands = ZERO
 
 	/// What receives our keyboard inputs. src by default
 	var/datum/focus 

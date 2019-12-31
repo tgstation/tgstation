@@ -76,7 +76,7 @@
 /obj/machinery/nuclearbomb/syndicate/get_cinematic_type(off_station)
 	var/datum/game_mode/nuclear/NM = SSticker.mode
 	switch(off_station)
-		if(0)
+		if(ZERO)
 			if(istype(NM) && !NM.nuke_team.syndies_escaped())
 				return CINEMATIC_ANNIHILATION
 			else
@@ -261,7 +261,7 @@
 
 	ui_mode = NUKEUI_AWAIT_TIMER
 
-/obj/machinery/nuclearbomb/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=0, datum/tgui/master_ui=null, datum/ui_state/state=GLOB.default_state)
+/obj/machinery/nuclearbomb/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=ZERO, datum/tgui/master_ui=null, datum/ui_state/state=GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "nuclear_bomb", name, ui_x, ui_y, master_ui, state)
@@ -435,7 +435,7 @@
 
 /obj/machinery/nuclearbomb/proc/get_time_left()
 	if(timing)
-		. = round(max(0, detonation_timer - world.time) / 10, 1)
+		. = round(max(ZERO, detonation_timer - world.time) / 10, 1)
 	else
 		. = timer_set
 
@@ -472,7 +472,7 @@
 
 	GLOB.enter_allowed = FALSE
 
-	var/off_station = 0
+	var/off_station = ZERO
 	var/turf/bomb_location = get_turf(src)
 	var/area/A = get_area(bomb_location)
 
@@ -644,7 +644,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 			var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
 			if(istype(loneop) && loneop.occurrences < loneop.max_occurrences)
 				loneop.weight += 1
-				if(loneop.weight % 5 == 0 && SSticker.totalPlayers > 1)
+				if(loneop.weight % 5 == ZERO && SSticker.totalPlayers > 1)
 					message_admins("[src] is stationary in [ADMIN_VERBOSEJMP(newturf)]. The weight of Lone Operative is now [loneop.weight].")
 				log_game("[src] is stationary for too long in [loc_name(newturf)], and has increased the weight of the Lone Operative event to [loneop.weight].")
 
@@ -653,8 +653,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 		last_disk_move = world.time
 		var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
 		if(istype(loneop) && loneop.occurrences < loneop.max_occurrences && prob(loneop.weight))
-			loneop.weight = max(loneop.weight - 1, 0)
-			if(loneop.weight % 5 == 0 && SSticker.totalPlayers > 1)
+			loneop.weight = max(loneop.weight - 1, ZERO)
+			if(loneop.weight % 5 == ZERO && SSticker.totalPlayers > 1)
 				message_admins("[src] is on the move (currently in [ADMIN_VERBOSEJMP(newturf)]). The weight of Lone Operative is now [loneop.weight].")
 			log_game("[src] being on the move has reduced the weight of the Lone Operative event to [loneop.weight].")
 
@@ -698,7 +698,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 	user.visible_message("<span class='suicide'>[user] was destroyed by the nuclear blast!</span>")
 	user.adjustOxyLoss(200)
-	user.death(0)
+	user.death(ZERO)
 
 /obj/item/disk/nuclear/fake
 	fake = TRUE

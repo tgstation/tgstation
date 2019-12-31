@@ -1,9 +1,9 @@
 /datum/map_template
 	var/name = "Default Template Name"
-	var/width = 0
-	var/height = 0
+	var/width = ZERO
+	var/height = ZERO
 	var/mappath = null
-	var/loaded = 0 // Times loaded this round
+	var/loaded = ZERO // Times loaded this round
 	var/datum/parsed_map/cached_map
 	var/keep_cached_map = FALSE
 

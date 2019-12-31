@@ -7,8 +7,8 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cyborg_upgrade"
 	var/locked = FALSE
-	var/installed = 0
-	var/require_module = 0
+	var/installed = ZERO
+	var/require_module = ZERO
 	var/list/module_type = null
 	// if true, is not stored in the robot to be ejected
 	// if module is reset
@@ -55,7 +55,7 @@
 	one_use = TRUE
 
 /obj/item/borg/upgrade/restart/action(mob/living/silicon/robot/R, user = usr)
-	if(R.health < 0)
+	if(R.health < ZERO)
 		to_chat(user, "<span class='warning'>You have to repair the cyborg before using this module!</span>")
 		return FALSE
 
@@ -272,7 +272,7 @@
 	require_module = 1
 	var/repair_amount = -1
 	var/repair_tick = 1
-	var/msg_cooldown = 0
+	var/msg_cooldown = ZERO
 	var/on = FALSE
 	var/powercost = 10
 	var/datum/action/toggle_action
@@ -343,7 +343,7 @@
 			return
 
 		if(cyborg.health < cyborg.maxHealth)
-			if(cyborg.health < 0)
+			if(cyborg.health < ZERO)
 				repair_amount = -2.5
 				powercost = 30
 			else
@@ -355,11 +355,11 @@
 			cyborg.cell.use(powercost)
 		else
 			cyborg.cell.use(5)
-		repair_tick = 0
+		repair_tick = ZERO
 
 		if((world.time - 2000) > msg_cooldown )
 			var/msgmode = "standby"
-			if(cyborg.health < 0)
+			if(cyborg.health < ZERO)
 				msgmode = "critical"
 			else if(cyborg.health < cyborg.maxHealth)
 				msgmode = "normal"
@@ -516,7 +516,7 @@
 			playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
 			sleep(12)
 		if(!prev_lockcharge)
-			R.SetLockdown(0)
+			R.SetLockdown(ZERO)
 		R.anchored = FALSE
 		R.notransform = FALSE
 		R.resize = 2

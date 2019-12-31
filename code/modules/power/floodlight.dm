@@ -46,7 +46,7 @@
 	integrity_failure = 0.8
 	idle_power_usage = 100
 	active_power_usage = 1000
-	var/list/light_setting_list = list(0, 5, 10, 15)
+	var/list/light_setting_list = list(ZERO, 5, 10, 15)
 	var/light_power_coefficient = 300
 	var/setting = 1
 	light_power = 1.75
@@ -115,5 +115,5 @@
 	new /obj/item/light/tube/broken(loc)
 	qdel(src)
 
-/obj/machinery/power/floodlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/machinery/power/floodlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	playsound(src, 'sound/effects/glasshit.ogg', 75, TRUE)

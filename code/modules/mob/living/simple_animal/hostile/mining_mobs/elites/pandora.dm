@@ -112,7 +112,7 @@
 	singular_shot_line(sing_shot_length, dir_to_target, T)
 	
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/singular_shot_line(var/procsleft, var/angleused, var/turf/T)
-	if(procsleft <= 0)
+	if(procsleft <= ZERO)
 		return
 	new /obj/effect/temp_visual/hierophant/blast/pandora(T, src)
 	T = get_step(T, angleused)
@@ -142,7 +142,7 @@
 		new /obj/effect/temp_visual/hierophant/blast/pandora(t, src)
 	for(var/t in RANGE_TURFS(1, source))
 		new /obj/effect/temp_visual/hierophant/blast/pandora(t, src)
-	animate(src, alpha = 0, time = 2, easing = EASE_OUT) //fade out
+	animate(src, alpha = ZERO, time = 2, easing = EASE_OUT) //fade out
 	visible_message("<span class='hierophant_warning'>[src] fades out!</span>")
 	density = FALSE
 	addtimer(CALLBACK(src, .proc/pandora_teleport_3, T), 2)
@@ -158,7 +158,7 @@
 	var/turf/T = get_turf(target)
 	new /obj/effect/temp_visual/hierophant/blast/pandora(T, src)
 	var/max_size = 2
-	addtimer(CALLBACK(src, .proc/aoe_squares_2, T, 0, max_size), 2)
+	addtimer(CALLBACK(src, .proc/aoe_squares_2, T, ZERO, max_size), 2)
 	
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/aoe_squares_2(var/turf/T, var/ring, var/max_size)
 	if(ring > max_size)

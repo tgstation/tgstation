@@ -60,7 +60,7 @@
 
 		to_chat(body, "<span class='warning'>Your mob has been taken over by a ghost!</span>")
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(body)])")
-		body.ghostize(0)
+		body.ghostize(ZERO)
 		body.key = C.key
 		new /obj/effect/temp_visual/gravpush(get_turf(body))
 
@@ -107,7 +107,7 @@
 
 /obj/effect/forcefield/arena_shuttle
 	name = "portal"
-	timeleft = 0
+	timeleft = ZERO
 	var/list/warp_points
 
 /obj/effect/forcefield/arena_shuttle/Initialize()
@@ -125,7 +125,7 @@
 		qdel(L.pulling)
 		var/turf/LA = get_turf(pick(warp_points))
 		L.forceMove(LA)
-		L.hallucination = 0
+		L.hallucination = ZERO
 		to_chat(L, "<span class='reallybig redtext'>The battle is won. Your bloodlust subsides.</span>")
 		for(var/obj/item/twohanded/required/chainsaw/doomslayer/chainsaw in L)
 			qdel(chainsaw)
@@ -143,7 +143,7 @@
 
 /obj/effect/forcefield/arena_shuttle_entrance
 	name = "portal"
-	timeleft = 0
+	timeleft = ZERO
 	var/list/warp_points = list()
 
 /obj/effect/forcefield/arena_shuttle_entrance/Bumped(atom/movable/AM)

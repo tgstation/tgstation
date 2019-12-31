@@ -13,7 +13,7 @@
 	maxHealth = 350
 	ventcrawler = VENTCRAWLER_NONE
 	density = TRUE
-	pass_flags =  0
+	pass_flags =  ZERO
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = CANPUSH
 	spacewalk = TRUE
@@ -105,13 +105,13 @@
 /mob/living/carbon/true_devil/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
 	return 666
 
-/mob/living/carbon/true_devil/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
+/mob/living/carbon/true_devil/flash_act(intensity = 1, override_blindness_check = ZERO, affect_silicon = ZERO, visual = ZERO)
 	if(mind && has_bane(BANE_LIGHT))
 		mind.disrupt_spells(-500)
 		return ..() //flashes don't stop devils UNLESS it's their bane.
 
 /mob/living/carbon/true_devil/soundbang_act()
-	return 0
+	return ZERO
 
 /mob/living/carbon/true_devil/get_ear_protection()
 	return 2
@@ -138,7 +138,7 @@
 
 /mob/living/carbon/true_devil/singularity_act()
 	if(ascended)
-		return 0
+		return ZERO
 	return ..()
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE

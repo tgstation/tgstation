@@ -55,7 +55,7 @@
 
 /obj/item/ammo_casing/energy/instakill
 	projectile_type = /obj/projectile/beam/instakill
-	e_cost = 0
+	e_cost = ZERO
 	select_name = "DESTROY"
 
 /obj/item/ammo_casing/energy/instakill/blue

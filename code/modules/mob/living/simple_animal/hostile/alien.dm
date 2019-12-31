@@ -7,7 +7,7 @@
 	icon_dead = "alienh_dead"
 	icon_gib = "syndicate_gib"
 	gender = FEMALE
-	speed = 0
+	speed = ZERO
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 4,
 							/obj/item/stack/sheet/animalhide/xeno = 1)
 	maxHealth = 125
@@ -22,11 +22,11 @@
 	bubble_icon = "alien"
 	a_intent = INTENT_HARM
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
 	unsuitable_atmos_damage = 15
 	faction = list(ROLE_ALIEN)
 	status_flags = CANPUSH
-	minbodytemp = 0
+	minbodytemp = ZERO
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	unique_name = 1
@@ -46,14 +46,14 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	var/plant_cooldown = 30
-	var/plants_off = 0
+	var/plants_off = ZERO
 
 /mob/living/simple_animal/hostile/alien/drone/handle_automated_action()
 	if(!..()) //AIStatus is off
 		return
 	plant_cooldown--
 	if(AIStatus == AI_IDLE)
-		if(!plants_off && prob(10) && plant_cooldown<=0)
+		if(!plants_off && prob(10) && plant_cooldown<=ZERO)
 			plant_cooldown = initial(plant_cooldown)
 			SpreadPlants()
 
@@ -90,10 +90,10 @@
 							/obj/item/stack/sheet/animalhide/xeno = 1)
 	projectiletype = /obj/projectile/neurotox
 	projectilesound = 'sound/weapons/pierce.ogg'
-	status_flags = 0
-	unique_name = 0
+	status_flags = ZERO
+	unique_name = ZERO
 	var/sterile = 1
-	var/plants_off = 0
+	var/plants_off = ZERO
 	var/egg_cooldown = 30
 	var/plant_cooldown = 30
 
@@ -103,10 +103,10 @@
 	egg_cooldown--
 	plant_cooldown--
 	if(AIStatus == AI_IDLE)
-		if(!plants_off && prob(10) && plant_cooldown<=0)
+		if(!plants_off && prob(10) && plant_cooldown<=ZERO)
 			plant_cooldown = initial(plant_cooldown)
 			SpreadPlants()
-		if(!sterile && prob(10) && egg_cooldown<=0)
+		if(!sterile && prob(10) && egg_cooldown<=ZERO)
 			egg_cooldown = initial(egg_cooldown)
 			LayEggs()
 
@@ -155,12 +155,12 @@
 
 /mob/living/simple_animal/hostile/alien/maid
 	name = "lusty xenomorph maid"
-	melee_damage_lower = 0
-	melee_damage_upper = 0
+	melee_damage_lower = ZERO
+	melee_damage_upper = ZERO
 	a_intent = INTENT_HELP
 	friendly_verb_continuous = "caresses"
 	friendly_verb_simple = "caress"
-	obj_damage = 0
+	obj_damage = ZERO
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	gold_core_spawnable = HOSTILE_SPAWN
 	icon_state = "maid"

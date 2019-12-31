@@ -35,8 +35,8 @@
 			minimum_distance = 9
 			alpha = 125
 			return
-	retreat_distance = 0
-	minimum_distance = 0
+	retreat_distance = ZERO
+	minimum_distance = ZERO
 	alpha = 255
 
 
@@ -51,7 +51,7 @@
 /obj/projectile/mega_arachnid
 	name = "flesh snare"
 	nodamage = TRUE
-	damage = 0
+	damage = ZERO
 	icon_state = "tentacle_end"
 
 /obj/projectile/mega_arachnid/on_hit(atom/target, blocked = FALSE)

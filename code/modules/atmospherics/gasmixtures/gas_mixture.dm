@@ -17,16 +17,16 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 		.[id] = cached_gas
 
-		cached_gas[MOLES] = 0
-		cached_gas[ARCHIVE] = 0
+		cached_gas[MOLES] = ZERO
+		cached_gas[ARCHIVE] = ZERO
 		cached_gas[GAS_META] = GLOB.meta_gas_info[id]
 
 /datum/gas_mixture
 	var/list/gases
-	var/temperature = 0 //kelvins
-	var/tmp/temperature_archived = 0
+	var/temperature = ZERO //kelvins
+	var/tmp/temperature_archived = ZERO
 	var/volume = CELL_VOLUME //liters
-	var/last_share = 0
+	var/last_share = ZERO
 	var/list/reaction_results
 	var/list/analyzer_results //used for analyzer feedback - not initialized until its used
 	var/gc_share = FALSE // Whether to call garbage_collect() on the sharer during shares, used for immutable mixtures
@@ -70,21 +70,21 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/garbage_collect(list/tocheck)
 	var/list/cached_gases = gases
 	for(var/id in (tocheck || cached_gases))
-		if(QUANTIZE(cached_gases[id][MOLES]) <= 0 && QUANTIZE(cached_gases[id][ARCHIVE]) <= 0)
+		if(QUANTIZE(cached_gases[id][MOLES]) <= 0 && QUANTIZE(cached_gases[id][ARCHIVE]) <= ZERO)
 			cached_gases -= id
 
 	//PV = nRT
 
 /datum/gas_mixture/proc/heat_capacity(data = MOLES) //joules per kelvin
 	var/list/cached_gases = gases
-	. = 0
+	. = ZERO
 	for(var/id in cached_gases)
 		var/gas_data = cached_gases[id]
 		. += gas_data[data] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
 
 /datum/gas_mixture/turf/heat_capacity(data = MOLES) // Same as above except vacuums return HEAT_CAPACITY_VACUUM
 	var/list/cached_gases = gases
-	. = 0
+	. = ZERO
 	for(var/id in cached_gases)
 		var/gas_data = cached_gases[id]
 		. += gas_data[data] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
@@ -96,18 +96,18 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	TOTAL_MOLES(cached_gases, .)
 
 /datum/gas_mixture/proc/return_pressure() //kilopascals
-	if(volume > 0) // to prevent division by zero
+	if(volume > ZERO) // to prevent division by zero
 		var/cached_gases = gases
 		TOTAL_MOLES(cached_gases, .)
 		. *= R_IDEAL_GAS_EQUATION * temperature / volume
 		return
-	return 0
+	return ZERO
 
 /datum/gas_mixture/proc/return_temperature() //kelvins
 	return temperature
 
 /datum/gas_mixture/proc/return_volume() //liters
-	return max(0, volume)
+	return max(ZERO, volume)
 
 /datum/gas_mixture/proc/thermal_energy() //joules
 	return THERMAL_ENERGY(src) //see code/__DEFINES/atmospherics.dm; use the define in performance critical areas
@@ -118,7 +118,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
 	//Merges all air from giver into self. Deletes giver.
-	//Returns: 1 if we are mutable, 0 otherwise
+	//Returns: 1 if we are mutable, ZERO otherwise
 
 /datum/gas_mixture/proc/remove(amount)
 	//Proportionally removes amount of gas from the gas_mixture
@@ -134,15 +134,15 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /datum/gas_mixture/proc/copy_from(datum/gas_mixture/sample)
 	//Copies variables from sample
-	//Returns: 1 if we are mutable, 0 otherwise
+	//Returns: 1 if we are mutable, ZERO otherwise
 
 /datum/gas_mixture/proc/copy_from_turf(turf/model)
 	//Copies all gas info from the turf into the gas list along with temperature
-	//Returns: 1 if we are mutable, 0 otherwise
+	//Returns: 1 if we are mutable, ZERO otherwise
 
 /datum/gas_mixture/proc/parse_gas_string(gas_string)
 	//Copies variables from a particularly formatted string.
-	//Returns: 1 if we are mutable, 0 otherwise
+	//Returns: 1 if we are mutable, ZERO otherwise
 
 /datum/gas_mixture/proc/share(datum/gas_mixture/sharer)
 	//Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length
@@ -158,7 +158,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /datum/gas_mixture/proc/react(turf/open/dump_location)
 	//Performs various reactions such as combustion or fusion (LOL)
-	//Returns: 1 if any reaction took place; 0 otherwise
+	//Returns: 1 if any reaction took place; ZERO otherwise
 
 /datum/gas_mixture/archive()
 	var/list/cached_gases = gases
@@ -171,7 +171,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /datum/gas_mixture/merge(datum/gas_mixture/giver)
 	if(!giver)
-		return 0
+		return ZERO
 
 	//heat transfer
 	if(abs(temperature - giver.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
@@ -195,7 +195,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/cached_gases = gases
 	TOTAL_MOLES(cached_gases, sum)
 	amount = min(amount, sum) //Can not take more air than tile has!
-	if(amount <= 0)
+	if(amount <= ZERO)
 		return null
 	var/datum/gas_mixture/removed = new type
 	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
@@ -210,7 +210,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	return removed
 
 /datum/gas_mixture/remove_ratio(ratio)
-	if(ratio <= 0)
+	if(ratio <= ZERO)
 		return null
 	ratio = min(ratio, 1)
 
@@ -290,17 +290,17 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/temperature_delta = temperature_archived - sharer.temperature_archived
 	var/abs_temperature_delta = abs(temperature_delta)
 
-	var/old_self_heat_capacity = 0
-	var/old_sharer_heat_capacity = 0
+	var/old_self_heat_capacity = ZERO
+	var/old_sharer_heat_capacity = ZERO
 	if(abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		old_self_heat_capacity = heat_capacity()
 		old_sharer_heat_capacity = sharer.heat_capacity()
 
-	var/heat_capacity_self_to_sharer = 0 //heat capacity of the moles transferred from us to the sharer
-	var/heat_capacity_sharer_to_self = 0 //heat capacity of the moles transferred from the sharer to us
+	var/heat_capacity_self_to_sharer = ZERO //heat capacity of the moles transferred from us to the sharer
+	var/heat_capacity_sharer_to_self = ZERO //heat capacity of the moles transferred from the sharer to us
 
-	var/moved_moles = 0
-	var/abs_moved_moles = 0
+	var/moved_moles = ZERO
+	var/abs_moved_moles = ZERO
 
 	//GAS TRANSFER
 	for(var/id in sharer_gases - cached_gases) // create gases not in our cache
@@ -315,7 +315,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 		if(delta && abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 			var/gas_heat_capacity = delta * gas[GAS_META][META_GAS_SPECIFIC_HEAT]
-			if(delta > 0)
+			if(delta > ZERO)
 				heat_capacity_self_to_sharer += gas_heat_capacity
 			else
 				heat_capacity_sharer_to_self -= gas_heat_capacity //subtract here instead of adding the absolute value because we know that delta is negative.
@@ -344,7 +344,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.1) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
-	if(length(cached_gases ^ sharer_gases)) //if all gases were present in both mixtures, we know that no gases are 0
+	if(length(cached_gases ^ sharer_gases)) //if all gases were present in both mixtures, we know that no gases are ZERO
 		garbage_collect(cached_gases - sharer_gases) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
 		sharer.garbage_collect(sharer_gases - cached_gases) //the reverse is equally true
 	if (initial(sharer.gc_share))
@@ -384,9 +384,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	for(var/id in cached_gases | sample_gases) // compare gases from either mixture
 		var/gas_moles = cached_gases[id]
-		gas_moles = gas_moles ? gas_moles[MOLES] : 0
+		gas_moles = gas_moles ? gas_moles[MOLES] : ZERO
 		var/sample_moles = sample_gases[id]
-		sample_moles = sample_moles ? sample_moles[MOLES] : 0
+		sample_moles = sample_moles ? sample_moles[MOLES] : ZERO
 		var/delta = abs(gas_moles - sample_moles)
 		if(delta > MINIMUM_MOLES_DELTA_TO_MOVE && \
 			delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)

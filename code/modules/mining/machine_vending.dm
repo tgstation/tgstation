@@ -64,7 +64,7 @@
 /datum/data/mining_equipment
 	var/equipment_name = "generic"
 	var/equipment_path = null
-	var/cost = 0
+	var/cost = ZERO
 
 /datum/data/mining_equipment/New(name, path, cost)
 	src.equipment_name = name
@@ -211,7 +211,7 @@
 			var/obj/item/card/id/C = I
 			C.mining_points += points
 			to_chat(user, "<span class='info'>You transfer [points] points to [C].</span>")
-			points = 0
+			points = ZERO
 		else
 			to_chat(user, "<span class='alert'>There's no points left on [src].</span>")
 	..()

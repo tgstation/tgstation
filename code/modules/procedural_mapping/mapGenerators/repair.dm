@@ -72,11 +72,11 @@
 
 /datum/mapGenerator/repair/reload_station_map
 	modules = list(/datum/mapGeneratorModule/bottomLayer/massdelete/no_delete_mobs)
-	var/x_low = 0
-	var/x_high = 0
-	var/y_low = 0
-	var/y_high = 0
-	var/z = 0
+	var/x_low = ZERO
+	var/x_high = ZERO
+	var/y_low = ZERO
+	var/y_high = ZERO
+	var/z = ZERO
 	var/cleanload = FALSE
 	var/datum/mapGeneratorModule/reload_station_map/loader
 	buildmode_name = "Repair: Reload Block \[DO NOT USE\]"

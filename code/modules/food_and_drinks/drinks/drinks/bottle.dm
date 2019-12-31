@@ -8,7 +8,7 @@
 	name = "glass bottle"
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
 	icon_state = "glassbottle"
-	fill_icon_thresholds = list(0, 10, 20, 30, 40, 50, 60, 70, 80, 90)
+	fill_icon_thresholds = list(ZERO, 10, 20, 30, 40, 50, 60, 70, 80, 90)
 	custom_price = 65
 	amount_per_transfer_from_this = 10
 	volume = 100
@@ -43,7 +43,7 @@
 
 	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
 	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
-	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
+	I.SwapColor(rgb(255, ZERO, 220, 255), rgb(ZERO, ZERO, ZERO, ZERO))
 	B.icon = I
 
 	if(isGlass)
@@ -52,8 +52,8 @@
 			target.Bumped(S)
 		playsound(src, "shatter", 70, TRUE)
 	else
-		B.force = 0
-		B.throwforce = 0
+		B.force = ZERO
+		B.throwforce = ZERO
 		B.desc = "A carton with the bottom half burst open. Might give you a papercut."
 	B.name = "broken [name]"
 	transfer_fingerprints_to(B)
@@ -76,7 +76,7 @@
 	var/obj/item/bodypart/affecting = user.zone_selected //Find what the player is aiming at
 
 	var/armor_block = 0 //Get the target's armor values for normal attack damage.
-	var/armor_duration = 0 //The more force the bottle has, the longer the duration.
+	var/armor_duration = ZERO //The more force the bottle has, the longer the duration.
 
 	//Calculating duration and calculating damage.
 	if(ishuman(target))
@@ -89,7 +89,7 @@
 		if(istype(H.head, /obj/item/clothing/head) && affecting == BODY_ZONE_HEAD)
 			headarmor = H.head.armor.melee
 		else
-			headarmor = 0
+			headarmor = ZERO
 
 		//Calculate the knockdown duration for the target.
 		armor_duration = (duration - headarmor) + force
@@ -470,7 +470,7 @@
 	list_reagents = list()
 	var/list/accelerants = list(	/datum/reagent/consumable/ethanol, /datum/reagent/fuel, /datum/reagent/clf3, /datum/reagent/phlogiston,
 							/datum/reagent/napalm, /datum/reagent/hellwater, /datum/reagent/toxin/plasma, /datum/reagent/toxin/spore_burning)
-	var/active = 0
+	var/active = ZERO
 
 /obj/item/reagent_containers/food/drinks/bottle/molotov/CheckParts(list/parts_list)
 	..()
@@ -484,7 +484,7 @@
 	return
 
 /obj/item/reagent_containers/food/drinks/bottle/molotov/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	var/firestarter = 0
+	var/firestarter = ZERO
 	for(var/datum/reagent/R in reagents.reagent_list)
 		for(var/A in accelerants)
 			if(istype(R,A))
@@ -524,4 +524,4 @@
 			return
 		to_chat(user, "<span class='info'>You snuff out the flame on [src].</span>")
 		cut_overlay(GLOB.fire_overlay)
-		active = 0
+		active = ZERO

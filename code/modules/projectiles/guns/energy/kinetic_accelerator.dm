@@ -54,7 +54,7 @@
 		..()
 
 /obj/item/gun/energy/kinetic_accelerator/proc/get_remaining_mod_capacity()
-	var/current_capacity_used = 0
+	var/current_capacity_used = ZERO
 	for(var/A in get_modkits())
 		var/obj/item/borg/upgrade/modkit/M = A
 		current_capacity_used += M.cost
@@ -87,7 +87,7 @@
 	if(!holds_charge)
 		empty()
 
-/obj/item/gun/energy/kinetic_accelerator/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
+/obj/item/gun/energy/kinetic_accelerator/shoot_live_shot(mob/living/user, pointblank = ZERO, atom/pbtarget = null, message = 1)
 	. = ..()
 	attempt_reload()
 
@@ -123,7 +123,7 @@
 		recharge_time = overheat_time
 	overheat = TRUE
 
-	var/carried = 0
+	var/carried = ZERO
 	if(!unique_frequency)
 		for(var/obj/item/gun/energy/kinetic_accelerator/K in loc.GetAllContents())
 			if(!K.unique_frequency)
@@ -265,7 +265,7 @@
 		to_chat(user, "<span class='notice'>The modkit you're trying to install is not rated for minebot use.</span>")
 		return FALSE
 	if(denied_type)
-		var/number_of_denied = 0
+		var/number_of_denied = ZERO
 		for(var/A in KA.get_modkits())
 			var/obj/item/borg/upgrade/modkit/M = A
 			if(istype(M, denied_type))
@@ -351,14 +351,14 @@
 	icon = 'icons/obj/module.dmi'
 	denied_type = /obj/item/borg/upgrade/modkit/cooldown/minebot
 	modifier = 10
-	cost = 0
+	cost = ZERO
 	minebot_upgrade = TRUE
 	minebot_exclusive = TRUE
 
 
 //AoE blasts
 /obj/item/borg/upgrade/modkit/aoe
-	modifier = 0
+	modifier = ZERO
 	var/turf_aoe = FALSE
 	var/stats_stolen = FALSE
 
@@ -369,7 +369,7 @@
 			if(AOE.stats_stolen || AOE == src)
 				continue
 			modifier += AOE.modifier //take its modifiers
-			AOE.modifier = 0
+			AOE.modifier = ZERO
 			turf_aoe += AOE.turf_aoe
 			AOE.turf_aoe = FALSE
 			AOE.stats_stolen = TRUE
@@ -419,7 +419,7 @@
 /obj/item/borg/upgrade/modkit/minebot_passthrough
 	name = "minebot passthrough"
 	desc = "Causes kinetic accelerator shots to pass through minebots."
-	cost = 0
+	cost = ZERO
 
 //Tendril-unique modules
 /obj/item/borg/upgrade/modkit/cooldown/repeater
@@ -547,7 +547,7 @@
 /obj/item/borg/upgrade/modkit/chassis_mod
 	name = "super chassis"
 	desc = "Makes your KA yellow. All the fun of having a more powerful KA without actually having a more powerful KA."
-	cost = 0
+	cost = ZERO
 	denied_type = /obj/item/borg/upgrade/modkit/chassis_mod
 	var/chassis_icon = "kineticgun_u"
 	var/chassis_name = "super-kinetic accelerator"
@@ -572,7 +572,7 @@
 /obj/item/borg/upgrade/modkit/tracer
 	name = "white tracer bolts"
 	desc = "Causes kinetic accelerator bolts to have a white tracer trail and explosion."
-	cost = 0
+	cost = ZERO
 	denied_type = /obj/item/borg/upgrade/modkit/tracer
 	var/bolt_color = "#FFFFFF"
 

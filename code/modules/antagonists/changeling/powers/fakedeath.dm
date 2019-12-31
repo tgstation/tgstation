@@ -3,7 +3,7 @@
 	desc = "We fall into a stasis, allowing us to regenerate and trick our enemies. Costs 15 chemicals."
 	button_icon_state = "fake_death"
 	chemical_cost = 15
-	dna_cost = 0
+	dna_cost = ZERO
 	req_dna = 1
 	req_stat = DEAD
 	ignores_fakedeath = TRUE
@@ -45,7 +45,7 @@
 			"<span class='hear'>You hear organic matter ripping \
 			and tearing!</span>")
 		user.emote("scream")
-		user.regenerate_limbs(0, list(BODY_ZONE_HEAD))
+		user.regenerate_limbs(ZERO, list(BODY_ZONE_HEAD))
 	user.regenerate_organs()
 
 /datum/action/changeling/fakedeath/proc/ready_to_regenerate(mob/user)
@@ -57,7 +57,7 @@
 			desc = "We arise once more."
 			button_icon_state = "revive"
 			UpdateButtonIcon()
-			chemical_cost = 0
+			chemical_cost = ZERO
 			revive_ready = TRUE
 
 /datum/action/changeling/fakedeath/can_sting(mob/living/user)

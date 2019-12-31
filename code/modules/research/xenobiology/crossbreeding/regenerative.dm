@@ -94,12 +94,12 @@ Regenerative extracts:
 	effect_desc = "Fully heals the target and gives them purple clothing if they are naked."
 
 /obj/item/slimecross/regenerative/darkpurple/core_effect(mob/living/target, mob/user)
-	var/equipped = 0
+	var/equipped = ZERO
 	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/purple(null), ITEM_SLOT_FEET)
 	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(null), ITEM_SLOT_ICLOTHING)
 	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/purple(null), ITEM_SLOT_GLOVES)
 	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/head/soft/purple(null), ITEM_SLOT_HEAD)
-	if(equipped > 0)
+	if(equipped > ZERO)
 		target.visible_message("<span class='notice'>The milky goo congeals into clothing!</span>")
 
 /obj/item/slimecross/regenerative/darkblue
@@ -179,7 +179,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/pyrite/core_effect(mob/living/target, mob/user)
 	target.visible_message("<span class='warning'>The milky goo coating [target] leaves [target.p_them()] a different color!</span>")
-	target.add_atom_colour(rgb(rand(0,255),rand(0,255),rand(0,255)),WASHABLE_COLOUR_PRIORITY)
+	target.add_atom_colour(rgb(rand(ZERO,255),rand(ZERO,255),rand(ZERO,255)),WASHABLE_COLOUR_PRIORITY)
 
 /obj/item/slimecross/regenerative/red
 	colour = "red"

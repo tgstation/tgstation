@@ -3,7 +3,7 @@
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/fix_eyes, /datum/surgery_step/close)
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_PRECISE_EYES)
-	requires_bodypart_type = 0
+	requires_bodypart_type = ZERO
 
 //fix eyes
 /datum/surgery_step/fix_eyes
@@ -30,10 +30,10 @@
 		"<span class='notice'>[user] successfully fixes [target]'s eyes!</span>",
 		"<span class='notice'>[user] completes the surgery on [target]'s eyes.</span>")
 	target.cure_blind(list(EYE_DAMAGE))
-	target.set_blindness(0)
+	target.set_blindness(ZERO)
 	target.cure_nearsighted(list(EYE_DAMAGE))
 	target.blur_eyes(35)	//this will fix itself slowly.
-	E.setOrganDamage(0)
+	E.setOrganDamage(ZERO)
 	return ..(default_display_results = FALSE)
 
 /datum/surgery_step/fix_eyes/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

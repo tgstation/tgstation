@@ -6,7 +6,7 @@
 	density = TRUE
 	anchored = FALSE
 	var/virgin = TRUE //applies especially to admins
-	var/next_use = 0
+	var/next_use = ZERO
 	var/planchette = "A"
 	var/lastuser = null
 
@@ -46,7 +46,7 @@
 
 /obj/structure/spirit_board/proc/spirit_board_checks(mob/M)
 	//cooldown
-	var/bonus = 0
+	var/bonus = ZERO
 	if(M.ckey == lastuser)
 		bonus = 10 //Give some other people a chance, hog.
 
@@ -54,7 +54,7 @@
 		return FALSE //No feedback here, hiding the cooldown a little makes it harder to tell who's really picking letters.
 
 	//lighting check
-	var/light_amount = 0
+	var/light_amount = ZERO
 	var/turf/T = get_turf(src)
 	light_amount = T.get_lumcount()
 
@@ -64,7 +64,7 @@
 		return FALSE
 
 	//mobs in range check
-	var/users_in_range = 0
+	var/users_in_range = ZERO
 	for(var/mob/living/L in orange(1,src))
 		if(L.ckey && L.client)
 			if((world.time - L.client.inactivity) < (world.time - 300) || L.stat != CONSCIOUS || L.restrained())//no playing with braindeads or corpses or handcuffed dudes.

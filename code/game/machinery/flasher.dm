@@ -26,12 +26,12 @@
 	base_state = "pflash"
 	density = TRUE
 
-/obj/machinery/flasher/Initialize(mapload, ndir = 0, built = 0)
+/obj/machinery/flasher/Initialize(mapload, ndir = ZERO, built = ZERO)
 	. = ..() // ..() is EXTREMELY IMPORTANT, never forget to add it
 	if(built)
 		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -28 : 28)
-		pixel_y = (dir & 3)? (dir ==1 ? -28 : 28) : 0
+		pixel_x = (dir & 3)? ZERO : (dir == 4 ? -28 : 28)
+		pixel_y = (dir & 3)? (dir ==1 ? -28 : 28) : ZERO
 	else
 		bulb = new(src)
 
@@ -156,7 +156,7 @@
 
 /obj/machinery/flasher/portable/Initialize()
 	. = ..()
-	proximity_monitor = new(src, 0)
+	proximity_monitor = new(src, ZERO)
 
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM)
 	if (last_flash && world.time < last_flash + 150)
@@ -182,7 +182,7 @@
 			cut_overlays()
 			setAnchored(FALSE)
 			power_change()
-			proximity_monitor.SetRange(0)
+			proximity_monitor.SetRange(ZERO)
 
 	else
 		return ..()

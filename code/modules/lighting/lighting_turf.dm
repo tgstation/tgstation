@@ -57,11 +57,11 @@
 			C.active = TRUE
 
 // Used to get a scaled lumcount.
-/turf/proc/get_lumcount(minlum = 0, maxlum = 1)
+/turf/proc/get_lumcount(minlum = ZERO, maxlum = 1)
 	if (!lighting_object)
 		return 1
 
-	var/totallums = 0
+	var/totallums = ZERO
 	var/thing
 	var/datum/lighting_corner/L
 	for (thing in corners)

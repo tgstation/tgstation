@@ -4,21 +4,21 @@
 	var/mob/living/carbon/owner = null
 	var/status = ORGAN_ORGANIC
 	w_class = WEIGHT_CLASS_SMALL
-	throwforce = 0
+	throwforce = ZERO
 	var/zone = BODY_ZONE_CHEST
 	var/slot
 	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
-	var/organ_flags = 0
+	var/organ_flags = ZERO
 	var/maxHealth = STANDARD_ORGAN_THRESHOLD
-	var/damage = 0		//total damage this organ has sustained
+	var/damage = ZERO		//total damage this organ has sustained
 	///Healing factor and decay factor function on % of maxhealth, and do not work by applying a static number per tick
-	var/healing_factor 	= 0										//fraction of maxhealth healed per on_life(), set to 0 for generic organs
-	var/decay_factor 	= 0										//same as above but when without a living owner, set to 0 for generic organs
+	var/healing_factor 	= ZERO										//fraction of maxhealth healed per on_life(), set to ZERO for generic organs
+	var/decay_factor 	= ZERO										//same as above but when without a living owner, set to ZERO for generic organs
 	var/high_threshold	= STANDARD_ORGAN_THRESHOLD * 0.45		//when severe organ damage occurs
 	var/low_threshold	= STANDARD_ORGAN_THRESHOLD * 0.1		//when minor organ damage occurs
 
 	///Organ variables for determining what we alert the owner with when they pass/clear the damage thresholds
-	var/prev_damage = 0
+	var/prev_damage = ZERO
 	var/low_threshold_passed
 	var/high_threshold_passed
 	var/now_failing
@@ -26,7 +26,7 @@
 	var/high_threshold_cleared
 	var/low_threshold_cleared
 
-/obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+/obj/item/organ/proc/Insert(mob/living/carbon/M, special = ZERO, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
 		return
 
@@ -84,7 +84,7 @@
 	///Damage decrements by a percent of its maxhealth
 	var/healing_amount = -(maxHealth * healing_factor)
 	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
-	healing_amount -= owner.satiety > 0 ? 4 * healing_factor * owner.satiety / MAX_SATIETY : 0
+	healing_amount -= owner.satiety > ZERO ? 4 * healing_factor * owner.satiety / MAX_SATIETY : ZERO
 	applyOrganDamage(healing_amount)
 
 /obj/item/organ/examine(mob/user)
@@ -150,7 +150,7 @@
 		return
 	if(maximum < damage)
 		return
-	damage = CLAMP(damage + d, 0, maximum)
+	damage = CLAMP(damage + d, ZERO, maximum)
 	var/mess = check_damage_thresholds(owner)
 	prev_damage = damage
 	if(mess && owner)
@@ -170,7 +170,7 @@
 	if(damage == prev_damage)
 		return
 	var/delta = damage - prev_damage
-	if(delta > 0)
+	if(delta > ZERO)
 		if(damage >= maxHealth)
 			organ_flags |= ORGAN_FAILING
 			return now_failing
@@ -191,7 +191,7 @@
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
 
 /mob/living/proc/regenerate_organs()
-	return 0
+	return ZERO
 
 /mob/living/carbon/regenerate_organs()
 	if(dna?.species)

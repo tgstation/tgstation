@@ -32,7 +32,7 @@
 		return
 	var/mob/living/silicon/pai/pAI = usr
 	if(pAI.holoform)
-		pAI.fold_in(0)
+		pAI.fold_in(ZERO)
 	else
 		pAI.fold_out()
 
@@ -90,7 +90,7 @@
 		pAI.hostscan.attack(pAI.card.loc, pAI)
 	else
 		to_chat(src, "<span class='warning'>You are not being carried by anyone!</span>")
-		return 0
+		return ZERO
 
 /obj/screen/pai/crew_manifest
 	name = "Crew Manifest"

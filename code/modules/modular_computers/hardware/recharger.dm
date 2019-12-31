@@ -4,10 +4,10 @@
 	var/charge_rate = 100
 	device_type = MC_CHARGE
 
-/obj/item/computer_hardware/recharger/proc/use_power(amount, charging=0)
+/obj/item/computer_hardware/recharger/proc/use_power(amount, charging=ZERO)
 	if(charging)
 		return 1
-	return 0
+	return ZERO
 
 /obj/item/computer_hardware/recharger/process()
 	..()
@@ -29,7 +29,7 @@
 	icon_state = "charger_APC"
 	w_class = WEIGHT_CLASS_SMALL // Can't be installed into tablets/PDAs
 
-/obj/item/computer_hardware/recharger/APC/use_power(amount, charging=0)
+/obj/item/computer_hardware/recharger/APC/use_power(amount, charging=ZERO)
 	if(ismachinery(holder.physical))
 		var/obj/machinery/M = holder.physical
 		if(M.powered())
@@ -39,12 +39,12 @@
 	else
 		var/area/A = get_area(src)
 		if(!istype(A))
-			return 0
+			return ZERO
 
 		if(A.powered(EQUIP))
 			A.use_power(amount, EQUIP)
 			return 1
-	return 0
+	return ZERO
 
 /obj/item/computer_hardware/recharger/wired
 	name = "wired power connector"
@@ -56,18 +56,18 @@
 	if(ismachinery(M.physical) && M.physical.anchored)
 		return ..()
 	to_chat(user, "<span class='warning'>\The [src] is incompatible with portable computers!</span>")
-	return 0
+	return ZERO
 
-/obj/item/computer_hardware/recharger/wired/use_power(amount, charging=0)
+/obj/item/computer_hardware/recharger/wired/use_power(amount, charging=ZERO)
 	if(ismachinery(holder.physical) && holder.physical.anchored)
 		var/obj/machinery/M = holder.physical
 		var/turf/T = M.loc
 		if(!T || !istype(T))
-			return 0
+			return ZERO
 
 		var/obj/structure/cable/C = T.get_cable_node()
 		if(!C || !C.powernet)
-			return 0
+			return ZERO
 
 		var/power_in_net = C.powernet.avail-C.powernet.load
 
@@ -75,7 +75,7 @@
 			C.powernet.load += amount
 			return 1
 
-	return 0
+	return ZERO
 
 
 
@@ -87,5 +87,5 @@
 	w_class = WEIGHT_CLASS_TINY
 	charge_rate = 100000
 
-/obj/item/computer_hardware/recharger/lambda/use_power(amount, charging=0)
+/obj/item/computer_hardware/recharger/lambda/use_power(amount, charging=ZERO)
 	return 1

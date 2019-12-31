@@ -20,12 +20,12 @@
 	overlay = mutable_appearance(icon, overlay_state, ABOVE_MOB_LAYER)
 	add_overlay(overlay)
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, -8), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(-10, 5), TEXT_WEST = list( 10, 5)))
-	D.vehicle_move_delay = 0
+	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(ZERO, -8), TEXT_SOUTH = list(ZERO, 4), TEXT_EAST = list(-10, 5), TEXT_WEST = list( 10, 5)))
+	D.vehicle_move_delay = ZERO
 	D.set_vehicle_dir_offsets(NORTH, -16, -16)
 	D.set_vehicle_dir_offsets(SOUTH, -16, -16)
-	D.set_vehicle_dir_offsets(EAST, -18, 0)
-	D.set_vehicle_dir_offsets(WEST, -18, 0)
+	D.set_vehicle_dir_offsets(EAST, -18, ZERO)
+	D.set_vehicle_dir_offsets(WEST, -18, ZERO)
 
 /obj/vehicle/ridden/space/speedbike/Move(newloc,move_dir)
 	if(has_buckled_mobs())
@@ -54,7 +54,7 @@
 	. = ..()
 	add_overlay(overlay)
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 0
+	D.vehicle_move_delay = ZERO
 	D.set_riding_offsets(1, list(TEXT_NORTH = list(-10, -4), TEXT_SOUTH = list(16, 3), TEXT_EAST = list(-4, 30), TEXT_WEST = list(4, -3)))
 	D.set_riding_offsets(2, list(TEXT_NORTH = list(19, -5, 4), TEXT_SOUTH = list(-13, 3, 4), TEXT_EAST = list(-4, -3, 4.1), TEXT_WEST = list(4, 28, 3.9)))
 	D.set_riding_offsets(3, list(TEXT_NORTH = list(-10, -18, 4.2), TEXT_SOUTH = list(16, 25, 3.9), TEXT_EAST = list(-22, 30), TEXT_WEST = list(22, -3, 4.1)))

@@ -11,7 +11,7 @@
 	ui_x = 315
 	ui_y = 500
 
-	var/has_alert = 0
+	var/has_alert = ZERO
 	var/alarms = list("Fire" = list(), "Atmosphere" = list(), "Power" = list())
 
 /datum/computer_file/program/alarm_monitor/process_tick()
@@ -71,7 +71,7 @@
 
 /datum/computer_file/program/alarm_monitor/proc/cancelAlarm(class, area/A, obj/origin)
 	var/list/L = alarms[class]
-	var/cleared = 0
+	var/cleared = ZERO
 	var/arealevelalarm = FALSE // set to TRUE for alarms that set/clear whole areas
 	if (class=="Fire")
 		arealevelalarm = TRUE
@@ -82,7 +82,7 @@
 				var/list/srcs  = alarm[3]
 				if (origin in srcs)
 					srcs -= origin
-				if (srcs.len == 0)
+				if (srcs.len == ZERO)
 					cleared = 1
 					L -= I
 			else

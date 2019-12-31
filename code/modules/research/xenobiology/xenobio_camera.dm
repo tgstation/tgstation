@@ -34,7 +34,7 @@
 	var/list/stored_slimes
 	var/obj/item/slimepotion/slime/current_potion
 	var/max_slimes = 5
-	var/monkeys = 0
+	var/monkeys = ZERO
 
 	icon_screen = "slime_comp"
 	icon_keyboard = "rd_key"

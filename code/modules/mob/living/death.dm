@@ -58,13 +58,13 @@
 	if(mind && mind.name && mind.active && !istype(T.loc, /area/ctf))
 		deadchat_broadcast(" has died at <b>[get_area_name(T)]</b>.", "<b>[mind.name]</b>", follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
 	if(mind)
-		mind.store_memory("Time of death: [tod]", 0)
+		mind.store_memory("Time of death: [tod]", ZERO)
 	GLOB.alive_mob_list -= src
 	if(!gibbed && !was_dead_before)
 		GLOB.dead_mob_list += src
-	set_drugginess(0)
-	set_disgust(0)
-	SetSleeping(0, 0)
+	set_drugginess(ZERO)
+	set_disgust(ZERO)
+	SetSleeping(ZERO, ZERO)
 	reset_perspective(null)
 	reload_fullscreen()
 	update_action_buttons_icon()

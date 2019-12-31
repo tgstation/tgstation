@@ -39,7 +39,7 @@
 		. = AddComponent(/datum/component/forensics, null, null, null, fibertext)
 
 /atom/proc/add_fibers(mob/living/carbon/human/M)
-	var/old = 0
+	var/old = ZERO
 	if(M.gloves && istype(M.gloves, /obj/item/clothing))
 		var/obj/item/clothing/gloves/G = M.gloves
 		old = length(G.return_blood_DNA())

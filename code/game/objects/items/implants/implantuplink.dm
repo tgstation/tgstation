@@ -5,7 +5,7 @@
 	icon_state = "radio"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	var/starting_tc = 0
+	var/starting_tc = ZERO
 
 /obj/item/implant/uplink/Initialize(mapload, _owner)
 	. = ..()

@@ -25,11 +25,11 @@
 	var/cy = T.y
 	var/cz = T.z
 	if(mouse_control["screen-loc"])
-		var/x = 0
-		var/y = 0
-		var/z = 0
-		var/p_x = 0
-		var/p_y = 0
+		var/x = ZERO
+		var/y = ZERO
+		var/z = ZERO
+		var/p_x = ZERO
+		var/p_y = ZERO
 		//Split screen-loc up into X+Pixel_X and Y+Pixel_Y
 		var/list/screen_loc_params = splittext(mouse_control["screen-loc"], ",")
 		//Split X+Pixel_X up into list(X, Pixel_X)

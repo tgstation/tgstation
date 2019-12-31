@@ -11,7 +11,7 @@
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/obj/structure/disposalpipe/trunk/trunk // the attached pipe trunk
 	var/obj/structure/disposalconstruct/stored
-	var/start_eject = 0
+	var/start_eject = ZERO
 	var/eject_range = 2
 
 /obj/structure/disposaloutlet/Initialize(mapload, obj/structure/disposalconstruct/make_from)
@@ -68,7 +68,7 @@
 
 /obj/structure/disposaloutlet/welder_act(mob/living/user, obj/item/I)
 	..()
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=ZERO))
 		return TRUE
 
 	playsound(src, 'sound/items/welder2.ogg', 100, TRUE)

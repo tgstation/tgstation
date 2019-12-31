@@ -103,7 +103,7 @@
 			. = ((p*T.x+T.y) % 15) + 1
 
 /proc/get_transit_angle(turf/T)
-	. = 0
+	. = ZERO
 	switch(T.dir)
 		if(NORTH)
 			. = 180

@@ -4,7 +4,7 @@
 	caliber = "357"
 	max_ammo = 7
 
-/obj/item/ammo_box/magazine/internal/cylinder/get_round(keep = 0)
+/obj/item/ammo_box/magazine/internal/cylinder/get_round(keep = ZERO)
 	rotate()
 
 	var/b = stored_ammo[1]
@@ -16,10 +16,10 @@
 /obj/item/ammo_box/magazine/internal/cylinder/proc/rotate()
 	var/b = stored_ammo[1]
 	stored_ammo.Cut(1,2)
-	stored_ammo.Insert(0, b)
+	stored_ammo.Insert(ZERO, b)
 
 /obj/item/ammo_box/magazine/internal/cylinder/proc/spin()
-	for(var/i in 1 to rand(0, max_ammo*2))
+	for(var/i in 1 to rand(ZERO, max_ammo*2))
 		rotate()
 
 /obj/item/ammo_box/magazine/internal/cylinder/ammo_list(drop_list = FALSE)
@@ -32,7 +32,7 @@
 				stored_ammo[i] = null
 	return L
 
-/obj/item/ammo_box/magazine/internal/cylinder/give_round(obj/item/ammo_casing/R, replace_spent = 0)
+/obj/item/ammo_box/magazine/internal/cylinder/give_round(obj/item/ammo_casing/R, replace_spent = ZERO)
 	if(!R || (caliber && R.caliber != caliber) || (!caliber && R.type != ammo_type))
 		return FALSE
 

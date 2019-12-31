@@ -10,7 +10,7 @@
 	var/cfg_fps = CONFIG_GET(number/fps)
 	var/new_fps = round(input("Sets game frames-per-second. Can potentially break the game (default: [cfg_fps])","FPS", world.fps) as num|null)
 
-	if(new_fps <= 0)
+	if(new_fps <= ZERO)
 		to_chat(src, "<span class='danger'>Error: set_server_fps(): Invalid world.fps value. No changes made.</span>")
 		return
 	if(new_fps > cfg_fps * 1.5)
@@ -18,8 +18,8 @@
 			return
 
 	var/msg = "[key_name(src)] has modified world.fps to [new_fps]"
-	log_admin(msg, 0)
-	message_admins(msg, 0)
+	log_admin(msg, ZERO)
+	message_admins(msg, ZERO)
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Set Server FPS", "[new_fps]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	CONFIG_SET(number/fps, new_fps)

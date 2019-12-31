@@ -17,12 +17,12 @@
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/full_pressure = FALSE
 	var/pressure_charging = TRUE
-	var/flush = 0	// true if flush handle is pulled
+	var/flush = ZERO	// true if flush handle is pulled
 	var/obj/structure/disposalpipe/trunk/trunk = null // the attached pipe trunk
-	var/flushing = 0	// true if flushing in progress
+	var/flushing = ZERO	// true if flushing in progress
 	var/flush_every_ticks = 30 //Every 30 ticks it will look whether it is ready to flush
-	var/flush_count = 0 //this var adds 1 once per tick. When it reaches flush_every_ticks it resets and tries to flush.
-	var/last_sound = 0
+	var/flush_count = ZERO //this var adds 1 once per tick. When it reaches flush_every_ticks it resets and tries to flush.
+	var/last_sound = ZERO
 	var/obj/structure/disposalconstruct/stored
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
@@ -86,7 +86,7 @@
 			to_chat(user, "<span class='notice'>You [panel_open ? "remove":"attach"] the screws around the power connection.</span>")
 			return
 		else if(I.tool_behaviour == TOOL_WELDER && panel_open)
-			if(!I.tool_start_check(user, amount=0))
+			if(!I.tool_start_check(user, amount=ZERO))
 				return
 
 			to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
@@ -175,7 +175,7 @@
 	var/turf/T = get_turf(src)
 	for(var/atom/movable/AM in src)
 		AM.forceMove(T)
-		AM.pipe_eject(0)
+		AM.pipe_eject(ZERO)
 	update_icon()
 
 // update the icon & overlays to reflect mode & status
@@ -222,7 +222,7 @@
 		target = get_offset_target_turf(loc, rand(5)-rand(5), rand(5)-rand(5))
 
 		AM.forceMove(T)
-		AM.pipe_eject(0)
+		AM.pipe_eject(ZERO)
 		AM.throw_at(target, 5, 1)
 
 	H.vent_gas(loc)
@@ -365,7 +365,7 @@
 		return
 
 	//check for items in disposal - occupied light
-	if(contents.len > 0)
+	if(contents.len > ZERO)
 		add_overlay("dispover-full")
 
 	//charging and ready light
@@ -389,7 +389,7 @@
 		if(contents.len)
 			if(full_pressure)
 				do_flush()
-		flush_count = 0
+		flush_count = ZERO
 
 	updateDialog()
 
@@ -412,7 +412,7 @@
 	var/datum/gas_mixture/env = L.return_air()
 	var/pressure_delta = (SEND_PRESSURE*1.01) - air_contents.return_pressure()
 
-	if(env.temperature > 0)
+	if(env.temperature > ZERO)
 		var/transfer_moles = 0.1 * pressure_delta*air_contents.volume/(env.temperature * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas

@@ -4,7 +4,7 @@
 	icon_state = "control"
 	attachable = TRUE
 	var/id = null
-	var/can_change_id = 0
+	var/can_change_id = ZERO
 	var/cooldown = FALSE //Door cooldowns
 	var/sync_doors = TRUE
 

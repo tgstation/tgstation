@@ -10,7 +10,7 @@
 	required_players = 25
 	required_enemies = 5
 	recommended_enemies = 8
-	reroll_friendly = 0
+	reroll_friendly = ZERO
 	traitor_name = "Nanotrasen Internal Affairs Agent"
 	antag_flag = ROLE_INTERNAL_AFFAIRS
 
@@ -25,11 +25,11 @@
 
 
 /datum/game_mode/traitor/internal_affairs/post_setup()
-	var/i = 0
+	var/i = ZERO
 	for(var/datum/mind/traitor in pre_traitors)
 		i++
 		if(i + 1 > pre_traitors.len)
-			i = 0
+			i = ZERO
 		target_list[traitor] = pre_traitors[i+1]
 	..()
 
@@ -46,11 +46,11 @@
 		target_list = list()
 
 		// Basically setting the target_list for who is killing who
-		var/i = 0
+		var/i = ZERO
 		for(var/datum/mind/traitor in late_joining_list)
 			i++
 			if(i + 1 > late_joining_list.len)
-				i = 0
+				i = ZERO
 			target_list[traitor] = late_joining_list[i + 1]
 			traitor.special_role = traitor_name
 

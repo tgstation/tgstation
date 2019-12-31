@@ -6,8 +6,8 @@
 
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
-	var/hardware_flag = 0								// A flag that describes this device type
-	var/last_power_usage = 0							// Power usage during last tick
+	var/hardware_flag = ZERO								// A flag that describes this device type
+	var/last_power_usage = ZERO							// Power usage during last tick
 
 	// Modular computers can run on various devices. Each DEVICE (Laptop, Console, Tablet,..)
 	// must have it's own DMI file. Icon states must be called exactly the same in all files, but may look differently
@@ -19,9 +19,9 @@
 	var/icon_state_powered = null						// Icon state when the computer is turned on.
 	var/screen_icon_state_menu = "menu"					// Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
 	var/screen_icon_screensaver = "standby"				// Icon state overlay when the computer is powered, but not 'switched on'.
-	var/max_hardware_size = 0							// Maximal hardware size. Currently, tablets have 1, laptops 2 and consoles 3. Limits what hardware types can be installed.
+	var/max_hardware_size = ZERO							// Maximal hardware size. Currently, tablets have 1, laptops 2 and consoles 3. Limits what hardware types can be installed.
 	var/steel_sheet_cost = 10							// Amount of steel sheets refunded when disassembling an empty frame of this computer.
-	var/light_strength = 0								// Light luminosity when turned on
+	var/light_strength = ZERO								// Light luminosity when turned on
 	var/base_active_power_usage = 100					// Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
 	var/base_idle_power_usage = 10						// Power usage when the computer is idle and screen is off (currently only applies to laptops)
 
@@ -59,7 +59,7 @@
 			add_overlay(screen_icon_screensaver)
 		else
 			icon_state = icon_state_unpowered
-		set_light(0)
+		set_light(ZERO)
 	else
 		set_light(light_strength)
 		if(cpu.active_program)
@@ -115,12 +115,12 @@
 		cpu.process()
 
 // Used in following function to reduce copypaste
-/obj/machinery/modular_computer/proc/power_failure(malfunction = 0)
+/obj/machinery/modular_computer/proc/power_failure(malfunction = ZERO)
 	var/obj/item/computer_hardware/battery/battery_module = cpu.all_components[MC_CELL]
 	if(cpu && cpu.enabled) // Shut down the computer
 		visible_message("<span class='danger'>\The [src]'s screen flickers [battery_module ? "\"BATTERY [malfunction ? "MALFUNCTION" : "CRITICAL"]\"" : "\"EXTERNAL POWER LOSS\""] warning as it shuts down unexpectedly.</span>")
 		if(cpu)
-			cpu.shutdown_computer(0)
+			cpu.shutdown_computer(ZERO)
 	stat |= NOPOWER
 	update_icon()
 

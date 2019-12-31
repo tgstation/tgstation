@@ -68,9 +68,9 @@
 	if(!LAZYLEN(current_fields))
 		shield_integrity = min(shield_integrity + 4, max_shield_integrity)
 	else
-		shield_integrity = max(shield_integrity - LAZYLEN(current_fields), 0) //fields degrade slowly over time
+		shield_integrity = max(shield_integrity - LAZYLEN(current_fields), ZERO) //fields degrade slowly over time
 	for(var/obj/structure/projected_forcefield/F in current_fields)
-		if(shield_integrity <= 0 || get_dist(F,src) > field_distance_limit)
+		if(shield_integrity <= ZERO || get_dist(F,src) > field_distance_limit)
 			qdel(F)
 
 /obj/structure/projected_forcefield
@@ -103,10 +103,10 @@
 		return 1
 	return !density
 
-/obj/structure/projected_forcefield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/projected_forcefield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
 
-/obj/structure/projected_forcefield/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+/obj/structure/projected_forcefield/take_damage(damage_amount, damage_type = BRUTE, damage_flag = ZERO, sound_effect = 1, attack_dir)
 	if(sound_effect)
 		play_attack_sound(damage_amount, damage_type, damage_flag)
-	generator.shield_integrity = max(generator.shield_integrity - damage_amount, 0)
+	generator.shield_integrity = max(generator.shield_integrity - damage_amount, ZERO)

@@ -12,7 +12,7 @@
 	var/apply_type = INGEST
 	var/apply_method = "swallow"
 	var/rename_with_volume = FALSE
-	var/self_delay = 0 //pills are instant, this is because patches inheret their aplication from pills
+	var/self_delay = ZERO //pills are instant, this is because patches inheret their aplication from pills
 	var/dissolvable = TRUE
 
 /obj/item/reagent_containers/pill/Initialize()

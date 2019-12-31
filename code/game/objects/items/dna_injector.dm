@@ -14,7 +14,7 @@
 	var/list/add_mutations = list()
 	var/list/remove_mutations = list()
 
-	var/used = 0
+	var/used = ZERO
 
 /obj/item/dnainjector/attack_paw(mob/user)
 	return attack_hand(user)

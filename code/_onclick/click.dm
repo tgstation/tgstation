@@ -5,10 +5,10 @@
 
 // 1 decisecond click delay (above and beyond mob/next_move)
 //This is mainly modified by click code, to modify click delays elsewhere, use next_move and changeNext_move()
-/mob/var/next_click	= 0
+/mob/var/next_click	= ZERO
 
 // THESE DO NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
-/mob/var/next_move_adjust = 0 //Amount to adjust action/click delays by, + or -
+/mob/var/next_move_adjust = ZERO //Amount to adjust action/click delays by, + or -
 /mob/var/next_move_modifier = 1 //Value to multiply action/click delays by
 
 
@@ -154,7 +154,7 @@
 			UnarmedAttack(A,1)
 	else
 		if(W)
-			W.afterattack(A,src,0,params)
+			W.afterattack(A,src,ZERO,params)
 		else
 			RangedAttack(A,params)
 
@@ -185,7 +185,7 @@
 
 	var/list/closed = list()
 	var/list/checking = list(ultimate_target)
-	while (checking.len && depth > 0)
+	while (checking.len && depth > ZERO)
 		var/list/next = list()
 		--depth
 
@@ -225,7 +225,7 @@
 	if(!here || !there)
 		return
 	switch(reach)
-		if(0)
+		if(ZERO)
 			return FALSE
 		if(1)
 			return FALSE //here.Adjacent(there)
@@ -252,7 +252,7 @@
 	Translates into attack_hand, etc.
 
 	Note: proximity_flag here is used to distinguish between normal usage (flag=1),
-	and usage when clicking on things telekinetically (flag=0).  This proc will
+	and usage when clicking on things telekinetically (flag=ZERO).  This proc will
 	not be called at ranged except with telekinesis.
 
 	proximity_flag is not currently passed to attack_hand, and is instead used
@@ -396,12 +396,12 @@
 		return
 
 	if(abs(dx) < abs(dy))
-		if(dy > 0)
+		if(dy > ZERO)
 			setDir(NORTH)
 		else
 			setDir(SOUTH)
 	else
-		if(dx > 0)
+		if(dx > ZERO)
 			setDir(EAST)
 		else
 			setDir(WEST)
@@ -459,8 +459,8 @@
 /mob/dead/observer/MouseWheelOn(atom/A, delta_x, delta_y, params)
 	var/list/modifier = params2list(params)
 	if(modifier["shift"])
-		var/view = 0
-		if(delta_y > 0)
+		var/view = ZERO
+		if(delta_y > ZERO)
 			view = -1
 		else
 			view = 1

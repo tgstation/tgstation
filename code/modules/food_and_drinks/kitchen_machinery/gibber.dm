@@ -12,7 +12,7 @@
 	var/operating = FALSE //Is it on?
 	var/dirty = FALSE // Does it need cleaning?
 	var/gibtime = 40 // Time from starting until meat appears
-	var/meat_produced = 0
+	var/meat_produced = ZERO
 	var/ignore_clothing = FALSE
 
 
@@ -22,7 +22,7 @@
 
 /obj/machinery/gibber/RefreshParts()
 	gibtime = 40
-	meat_produced = 0
+	meat_produced = ZERO
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		meat_produced += B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)

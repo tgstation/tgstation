@@ -80,7 +80,7 @@
 	///length between individual racks
 	var/rack_delay = 5
 	///time of the most recent rack, used for cooldown purposes
-	var/recent_rack = 0
+	var/recent_rack = ZERO
 	///Whether the gun can be tacloaded by slapping a fresh magazine directly on it
 	var/tac_reloads = TRUE //Snowflake mechanic no more.
 	///Whether the gun can be sawn off by sawing tools
@@ -121,7 +121,7 @@
 				add_overlay("[icon_state]_mag_empty")
 		else
 			add_overlay("[icon_state]_mag")
-			var/capacity_number = 0
+			var/capacity_number = ZERO
 			switch(get_ammo() / magazine.max_ammo)
 				if(0.2 to 0.39)
 					capacity_number = 20
@@ -282,7 +282,7 @@
 			return
 	return FALSE
 
-/obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = ZERO)
 	if (sawn_off)
 		bonus_spread += SAWN_OFF_ACC_PENALTY
 	. = ..()
@@ -346,7 +346,7 @@
 			return
 	if(bolt_type == BOLT_TYPE_NO_BOLT)
 		chambered = null
-		var/num_unloaded = 0
+		var/num_unloaded = ZERO
 		for(var/obj/item/ammo_casing/CB in get_ammo_list(FALSE, TRUE))
 			CB.forceMove(drop_location())
 			CB.bounce_away(FALSE, NONE)
@@ -384,7 +384,7 @@
 
 ///Gets the number of bullets in the gun
 /obj/item/gun/ballistic/proc/get_ammo(countchambered = TRUE)
-	var/boolets = 0 //mature var names for mature people
+	var/boolets = ZERO //mature var names for mature people
 	if (chambered && countchambered)
 		boolets++
 	if (magazine)

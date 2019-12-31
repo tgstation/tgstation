@@ -40,6 +40,6 @@
 		if(5)
 			to_chat(affected_mob, "<span class='danger'>Your body is unable to contain the Rhumba Beat...</span>")
 			if(prob(50))
-				explosion(get_turf(affected_mob), -1, 0, 2, 3, 0, 2) // This is equivalent to a lvl 1 fireball
+				explosion(get_turf(affected_mob), -1, ZERO, 2, 3, ZERO, 2) // This is equivalent to a lvl 1 fireball
 		else
 			return

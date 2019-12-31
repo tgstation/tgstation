@@ -45,7 +45,7 @@
 
 		if(!first_heard[speaker] || (first_heard[speaker] + max_delay < world.time))
 			first_heard[speaker] = world.time
-			count[speaker] = 0
+			count[speaker] = ZERO
 		count[speaker] += occurences
 		if(count[speaker] >= min_count)
 			first_heard -= speaker

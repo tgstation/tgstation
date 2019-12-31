@@ -46,7 +46,7 @@ GLOBAL_LIST(labor_sheet_values)
 	var/list/data = list()
 	var/can_go_home = FALSE
 
-	data["emagged"] = (obj_flags & EMAGGED) ? 1 : 0
+	data["emagged"] = (obj_flags & EMAGGED) ? 1 : ZERO
 	if(obj_flags & EMAGGED)
 		can_go_home = TRUE
 
@@ -61,7 +61,7 @@ GLOBAL_LIST(labor_sheet_values)
 			data["status_info"] = "You are [(P.goal - P.points)] points away."
 	else
 		data["status_info"] = "No Prisoner ID detected."
-		data["id_points"] = 0
+		data["id_points"] = ZERO
 
 	if(stacking_machine)
 		data["unclaimed_points"] = stacking_machine.points
@@ -81,7 +81,7 @@ GLOBAL_LIST(labor_sheet_values)
 			if(istype(I, /obj/item/card/id/prisoner))
 				var/obj/item/card/id/prisoner/P = I
 				P.points += stacking_machine.points
-				stacking_machine.points = 0
+				stacking_machine.points = ZERO
 				to_chat(usr, "<span class='notice'>Points transferred.</span>")
 				. = TRUE
 			else
@@ -120,7 +120,7 @@ GLOBAL_LIST(labor_sheet_values)
 
 /obj/machinery/mineral/stacking_machine/laborstacker
 	force_connect = TRUE
-	var/points = 0 //The unclaimed value of ore stacked.
+	var/points = ZERO //The unclaimed value of ore stacked.
 	damage_deflection = 21
 /obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/inp)
 	points += inp.point_value * inp.amount

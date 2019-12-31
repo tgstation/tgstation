@@ -50,7 +50,7 @@
 	var/obj/structure/disposalholder/H = locate() in src
 	if(H)
 		H.active = FALSE
-		expel(H, get_turf(src), 0)
+		expel(H, get_turf(src), ZERO)
 	QDEL_NULL(stored)
 	return ..()
 
@@ -89,7 +89,7 @@
 // hide called by levelupdate if turf intact status changes
 // change visibility status and force update of icon
 /obj/structure/disposalpipe/hide(var/intact)
-	invisibility = intact ? INVISIBILITY_MAXIMUM: 0	// hide if floor is intact
+	invisibility = intact ? INVISIBILITY_MAXIMUM: ZERO	// hide if floor is intact
 
 // expel the held objects into a turf
 // called when there is a break in the pipe
@@ -139,7 +139,7 @@
 	if(!can_be_deconstructed(user))
 		return TRUE
 
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=ZERO))
 		return TRUE
 
 	to_chat(user, "<span class='notice'>You start slicing [src]...</span>")

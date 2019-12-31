@@ -15,15 +15,15 @@
 	desc = "Has a valve and pump attached to it. There are two ports."
 
 	level = 1
-	var/frequency = 0
+	var/frequency = ZERO
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
-	var/pump_direction = 1 //0 = siphoning, 1 = releasing
+	var/pump_direction = 1 //ZERO = siphoning, 1 = releasing
 
 	var/external_pressure_bound = ONE_ATMOSPHERE
-	var/input_pressure_min = 0
-	var/output_pressure_max = 0
+	var/input_pressure_min = ZERO
+	var/output_pressure_max = ZERO
 
 	var/pressure_checks = EXT_BOUND
 
@@ -65,8 +65,8 @@
 		if(pressure_checks&INPUT_MIN)
 			pressure_delta = min(pressure_delta, (air1.return_pressure() - input_pressure_min))
 
-		if(pressure_delta > 0)
-			if(air1.temperature > 0)
+		if(pressure_delta > ZERO)
+			if(air1.temperature > ZERO)
 				var/transfer_moles = pressure_delta*environment.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
 
 				var/datum/gas_mixture/removed = air1.remove(transfer_moles)
@@ -88,8 +88,8 @@
 		if(pressure_checks&INPUT_MIN)
 			pressure_delta = min(pressure_delta, (output_pressure_max - air2.return_pressure()))
 
-		if(pressure_delta > 0)
-			if(environment.temperature > 0)
+		if(pressure_delta > ZERO)
+			if(environment.temperature > ZERO)
 				var/transfer_moles = pressure_delta*air2.volume/(environment.temperature * R_IDEAL_GAS_EQUATION)
 
 				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
@@ -152,20 +152,20 @@
 
 	if("purge" in signal.data)
 		pressure_checks &= ~1
-		pump_direction = 0
+		pump_direction = ZERO
 
 	if("stabilize" in signal.data)
 		pressure_checks |= 1
 		pump_direction = 1
 
 	if("set_input_pressure" in signal.data)
-		input_pressure_min = CLAMP(text2num(signal.data["set_input_pressure"]),0,ONE_ATMOSPHERE*50)
+		input_pressure_min = CLAMP(text2num(signal.data["set_input_pressure"]),ZERO,ONE_ATMOSPHERE*50)
 
 	if("set_output_pressure" in signal.data)
-		output_pressure_max = CLAMP(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
+		output_pressure_max = CLAMP(text2num(signal.data["set_output_pressure"]),ZERO,ONE_ATMOSPHERE*50)
 
 	if("set_external_pressure" in signal.data)
-		external_pressure_bound = CLAMP(text2num(signal.data["set_external_pressure"]),0,ONE_ATMOSPHERE*50)
+		external_pressure_bound = CLAMP(text2num(signal.data["set_external_pressure"]),ZERO,ONE_ATMOSPHERE*50)
 
 	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 

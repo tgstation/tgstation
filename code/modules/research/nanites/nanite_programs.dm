@@ -5,12 +5,12 @@
 	var/datum/component/nanites/nanites
 	var/mob/living/host_mob
 
-	var/use_rate = 0 			//Amount of nanites used while active
+	var/use_rate = ZERO 			//Amount of nanites used while active
 	var/unique = TRUE			//If there can be more than one copy in the same nanites
 	var/can_trigger = FALSE		//If the nanites have a trigger function (used for the programming UI)
-	var/trigger_cost = 0		//Amount of nanites required to trigger
+	var/trigger_cost = ZERO		//Amount of nanites required to trigger
 	var/trigger_cooldown = 50	//Deciseconds required between each trigger activation
-	var/next_trigger = 0		//World time required for the next trigger activation
+	var/next_trigger = ZERO		//World time required for the next trigger activation
 
 	var/program_flags = NONE
 	var/passive_enabled = FALSE //If the nanites have an on/off-style effect, it's tracked by this var
@@ -29,16 +29,16 @@
 	//The following vars are customizable
 	var/activated = TRUE 			//If FALSE, the program won't process, disables passive effects, can't trigger and doesn't consume nanites
 
-	var/timer_restart = 0 			//When deactivated, the program will wait X deciseconds before self-reactivating. Also works if the program begins deactivated.
-	var/timer_shutdown = 0 			//When activated, the program will wait X deciseconds before self-deactivating. Also works if the program begins activated.
+	var/timer_restart = ZERO 			//When deactivated, the program will wait X deciseconds before self-reactivating. Also works if the program begins deactivated.
+	var/timer_shutdown = ZERO 			//When activated, the program will wait X deciseconds before self-deactivating. Also works if the program begins activated.
 	var/timer_trigger = 0			//[Trigger only] While active, the program will attempt to trigger once every x deciseconds.
 	var/timer_trigger_delay = 0				//[Trigger only] While active, the program will delay trigger signals by X deciseconds.
 
 	//Indicates the next world.time tick where these timers will act
-	var/timer_restart_next = 0
-	var/timer_shutdown_next = 0
-	var/timer_trigger_next = 0
-	var/timer_trigger_delay_next = 0
+	var/timer_restart_next = ZERO
+	var/timer_shutdown_next = ZERO
+	var/timer_trigger_next = ZERO
+	var/timer_trigger_delay_next = ZERO
 
 	//Signal codes, these handle remote input to the nanites. If set to 0 they'll ignore signals.
 	var/activation_code 	= 0 	//Code that activates the program [1-9999]
@@ -164,12 +164,12 @@
 	if(!activated)
 		if(timer_restart_next && world.time > timer_restart_next)
 			activate()
-			timer_restart_next = 0
+			timer_restart_next = ZERO
 		return
 
 	if(timer_shutdown_next && world.time > timer_shutdown_next)
 		deactivate()
-		timer_shutdown_next = 0
+		timer_shutdown_next = ZERO
 
 	if(timer_trigger && world.time > timer_trigger_next)
 		trigger()
@@ -177,7 +177,7 @@
 
 	if(timer_trigger_delay_next && world.time > timer_trigger_delay_next)
 		trigger(delayed = TRUE)
-		timer_trigger_delay_next = 0
+		timer_trigger_delay_next = ZERO
 
 	if(check_conditions() && consume_nanites(use_rate))
 		if(!passive_enabled)
@@ -260,10 +260,10 @@
 			qdel(src) //kill switch
 			return
 		if(2) //deprogram codes
-			activation_code = 0
-			deactivation_code = 0
-			kill_code = 0
-			trigger_code = 0
+			activation_code = ZERO
+			deactivation_code = ZERO
+			kill_code = ZERO
+			trigger_code = ZERO
 		if(3)
 			toggle() //enable/disable
 		if(4)

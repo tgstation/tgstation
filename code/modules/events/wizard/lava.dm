@@ -3,10 +3,10 @@
 	weight = 2
 	typepath = /datum/round_event/wizard/lava
 	max_occurrences = 3
-	earliest_start = 0 MINUTES
+	earliest_start = ZERO MINUTES
 
 /datum/round_event/wizard/lava
-	endWhen = 0
+	endWhen = ZERO
 	var/started = FALSE
 
 /datum/round_event/wizard/lava/start()

@@ -78,7 +78,7 @@
 
 		if(COVER)
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=0))
+				if(!W.tool_start_check(user, amount=ZERO))
 					return
 				to_chat(user, "<span class='notice'>You begin slicing through the metal cover...</span>")
 				if(W.use_tool(src, user, 60, volume=100))
@@ -111,7 +111,7 @@
 				return 1
 
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=0))
+				if(!W.tool_start_check(user, amount=ZERO))
 					return
 				to_chat(user, "<span class='notice'>You begin welding the metal cover back to the frame...</span>")
 				if(W.use_tool(src, user, 60, volume=100))
@@ -145,7 +145,7 @@
 
 		if(SUPPORT_RODS)
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=0))
+				if(!W.tool_start_check(user, amount=ZERO))
 					return
 				to_chat(user, "<span class='notice'>You begin slicing through the support rods...</span>")
 				if(W.use_tool(src, user, 100, volume=100))
@@ -178,7 +178,7 @@
 				return 1
 
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=0))
+				if(!W.tool_start_check(user, amount=ZERO))
 					return
 				to_chat(user, "<span class='notice'>You begin welding the support rods back together...</span>")
 				if(W.use_tool(src, user, 100, volume=100))
@@ -188,7 +188,7 @@
 					update_icon()
 					to_chat(user, "<span class='notice'>You weld the support rods back together.</span>")
 				return 1
-	return 0
+	return ZERO
 
 /turf/closed/wall/r_wall/update_icon()
 	. = ..()

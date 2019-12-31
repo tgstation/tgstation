@@ -95,7 +95,7 @@
 			ai.master_multicam.refresh_view()
 
 /mob/camera/aiEye/Move()
-	return 0
+	return ZERO
 
 /mob/camera/aiEye/proc/GetViewerClient()
 	if(ai)
@@ -136,7 +136,7 @@
 	if(user.cooldown && user.cooldown < world.timeofday) // 3 seconds
 		user.sprint = initial
 
-	for(var/i = 0; i < max(user.sprint, initial); i += 20)
+	for(var/i = ZERO; i < max(user.sprint, initial); i += 20)
 		var/turf/step = get_turf(get_step(user.eyeobj, direct))
 		if(step)
 			user.eyeobj.setLoc(step)

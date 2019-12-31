@@ -32,7 +32,7 @@
 //
 // The explosion cannot insta-kill anyone with 30% or more health.
 
-#define LIGHT_OK 0
+#define LIGHT_OK ZERO
 #define LIGHT_EMPTY 1
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
@@ -62,7 +62,7 @@
 	var/charge = 1
 
 	// Eating used bulbs gives us bulb shards
-	var/bulb_shards = 0
+	var/bulb_shards = ZERO
 	// when we get this many shards, we get a free bulb.
 	var/shards_required = 4
 
@@ -97,7 +97,7 @@
 
 	if(istype(W, /obj/item/light))
 		var/obj/item/light/L = W
-		if(L.status == 0) // LIGHT OKAY
+		if(L.status == ZERO) // LIGHT OKAY
 			if(uses < max_uses)
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
@@ -165,15 +165,15 @@
 
 // Negative numbers will subtract
 /obj/item/lightreplacer/proc/AddUses(amount = 1)
-	uses = CLAMP(uses + amount, 0, max_uses)
+	uses = CLAMP(uses + amount, ZERO, max_uses)
 
 /obj/item/lightreplacer/proc/AddShards(amount = 1, user)
 	bulb_shards += amount
 	var/new_bulbs = round(bulb_shards / shards_required)
-	if(new_bulbs > 0)
+	if(new_bulbs > ZERO)
 		AddUses(new_bulbs)
 	bulb_shards = bulb_shards % shards_required
-	if(new_bulbs != 0)
+	if(new_bulbs != ZERO)
 		to_chat(user, "<span class='notice'>\The [src] has fabricated a new bulb from the broken glass it has stored. It now has [uses] uses.</span>")
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
 	return new_bulbs
@@ -201,7 +201,7 @@
 
 			target.status = L2.status
 			target.switchcount = L2.switchcount
-			target.rigged = (obj_flags & EMAGGED ? 1 : 0)
+			target.rigged = (obj_flags & EMAGGED ? 1 : ZERO)
 			target.brightness = L2.brightness
 			target.on = target.has_power()
 			target.update()
@@ -229,10 +229,10 @@
 
 /obj/item/lightreplacer/proc/CanUse(mob/living/user)
 	src.add_fingerprint(user)
-	if(uses > 0)
+	if(uses > ZERO)
 		return 1
 	else
-		return 0
+		return ZERO
 
 /obj/item/lightreplacer/afterattack(atom/T, mob/U, proximity)
 	. = ..()

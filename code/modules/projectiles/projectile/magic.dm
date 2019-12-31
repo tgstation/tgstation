@@ -1,7 +1,7 @@
 /obj/projectile/magic
 	name = "bolt of nothing"
 	icon_state = "energy"
-	damage = 0
+	damage = ZERO
 	damage_type = OXY
 	nodamage = TRUE
 	armour_penetration = 100
@@ -29,14 +29,14 @@
 				else if(L.stat != DEAD)
 					to_chat(L, "<span class='notice'>You feel great!</span>")
 			else
-				L.death(0)
+				L.death(ZERO)
 		else
-			M.death(0)
+			M.death(ZERO)
 
 /obj/projectile/magic/resurrection
 	name = "bolt of resurrection"
 	icon_state = "ion"
-	damage = 0
+	damage = ZERO
 	damage_type = OXY
 	nodamage = TRUE
 
@@ -47,7 +47,7 @@
 			target.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
 		if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
-			target.death(0)
+			target.death(ZERO)
 		else
 			if(target.hellbound && target.stat == DEAD)
 				return BULLET_ACT_BLOCK
@@ -60,10 +60,10 @@
 /obj/projectile/magic/teleport
 	name = "bolt of teleportation"
 	icon_state = "bluespace"
-	damage = 0
+	damage = ZERO
 	damage_type = OXY
 	nodamage = TRUE
-	var/inner_tele_radius = 0
+	var/inner_tele_radius = ZERO
 	var/outer_tele_radius = 6
 
 /obj/projectile/magic/teleport/on_hit(mob/target)
@@ -73,7 +73,7 @@
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] fizzles on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
-	var/teleammount = 0
+	var/teleammount = ZERO
 	var/teleloc = target
 	if(!isturf(target))
 		teleloc = target.loc
@@ -82,13 +82,13 @@
 			if(do_teleport(stuff, stuff, 10, channel = TELEPORT_CHANNEL_MAGIC))
 				teleammount++
 				var/datum/effect_system/smoke_spread/smoke = new
-				smoke.set_up(max(round(4 - teleammount),0), stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
+				smoke.set_up(max(round(4 - teleammount),ZERO), stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
 				smoke.start()
 
 /obj/projectile/magic/safety
 	name = "bolt of safety"
 	icon_state = "bluespace"
-	damage = 0
+	damage = ZERO
 	damage_type = OXY
 	nodamage = TRUE
 
@@ -108,13 +108,13 @@
 	if(do_teleport(target, destination_turf, channel=TELEPORT_CHANNEL_MAGIC))
 		for(var/t in list(origin_turf, destination_turf))
 			var/datum/effect_system/smoke_spread/smoke = new
-			smoke.set_up(0, t)
+			smoke.set_up(ZERO, t)
 			smoke.start()
 
 /obj/projectile/magic/door
 	name = "bolt of door creation"
 	icon_state = "energy"
-	damage = 0
+	damage = ZERO
 	damage_type = OXY
 	nodamage = TRUE
 	var/list/door_types = list(/obj/structure/mineral_door/wood, /obj/structure/mineral_door/iron, /obj/structure/mineral_door/silver, /obj/structure/mineral_door/gold, /obj/structure/mineral_door/uranium, /obj/structure/mineral_door/sandstone, /obj/structure/mineral_door/transparent/plasma, /obj/structure/mineral_door/transparent/diamond)
@@ -143,7 +143,7 @@
 /obj/projectile/magic/change
 	name = "bolt of change"
 	icon_state = "ice_1"
-	damage = 0
+	damage = ZERO
 	damage_type = BURN
 	nodamage = TRUE
 
@@ -196,14 +196,14 @@
 			new_mob = new robot(M.loc)
 			if(issilicon(new_mob))
 				new_mob.gender = M.gender
-				new_mob.invisibility = 0
+				new_mob.invisibility = ZERO
 				new_mob.job = "Cyborg"
 				var/mob/living/silicon/robot/Robot = new_mob
 				Robot.lawupdate = FALSE
 				Robot.connected_ai = null
 				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
-				Robot.clear_inherent_laws(0)
-				Robot.clear_zeroth_law(0)
+				Robot.clear_inherent_laws(ZERO)
+				Robot.clear_zeroth_law(ZERO)
 
 		if("slime")
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
@@ -266,7 +266,7 @@
 					new_mob.set_species(pick(chooseable_races))
 
 			var/datum/preferences/A = new()	//Randomize appearance for the human
-			A.copy_to(new_mob, icon_updates=0)
+			A.copy_to(new_mob, icon_updates=ZERO)
 
 			var/mob/living/carbon/human/H = new_mob
 			H.update_body()
@@ -301,7 +301,7 @@
 /obj/projectile/magic/animate
 	name = "bolt of animation"
 	icon_state = "red_1"
-	damage = 0
+	damage = ZERO
 	damage_type = BURN
 	nodamage = TRUE
 
@@ -367,7 +367,7 @@
 	damage = 20
 	damage_type = BURN
 	nodamage = FALSE
-	armour_penetration = 0
+	armour_penetration = ZERO
 	flag = "magic"
 	hitsound = 'sound/weapons/barragespellhit.ogg'
 
@@ -449,7 +449,7 @@
 		unmagify()
 
 /obj/structure/closet/decay/proc/decay()
-	animate(src, alpha = 0, time = 30)
+	animate(src, alpha = ZERO, time = 30)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 30)
 
 /obj/structure/closet/decay/open(mob/living/user)
@@ -547,7 +547,7 @@
 		to_chat(L, "<span class='danger'>Your body feels drained and there is a burning pain in your chest.</span>")
 		L.maxHealth -= 20
 		L.health = min(L.health, L.maxHealth)
-		if(L.maxHealth <= 0)
+		if(L.maxHealth <= ZERO)
 			to_chat(L, "<span class='userdanger'>Your weakened soul is completely consumed by the [src]!</span>")
 			L.mind.hasSoul = FALSE
 		for(var/obj/effect/proc_holder/spell/spell in L.mind.spell_list)
@@ -592,7 +592,7 @@
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(M, "<span class='boldnotice'>You have been noticed by a ghost and it has possessed you!</span>")
 		var/oldkey = M.key
-		M.ghostize(0)
+		M.ghostize(ZERO)
 		M.key = C.key
 		trauma.friend.key = oldkey
 		trauma.friend.reset_perspective(null)
@@ -605,7 +605,7 @@
 /obj/projectile/magic/aoe
 	name = "Area Bolt"
 	desc = "What the fuck does this do?!"
-	damage = 0
+	damage = ZERO
 	var/proxdet = TRUE
 
 /obj/projectile/magic/aoe/Range()
@@ -659,7 +659,7 @@
 	nodamage = FALSE
 
 	//explosion values
-	var/exp_heavy = 0
+	var/exp_heavy = ZERO
 	var/exp_light = 2
 	var/exp_flash = 3
 	var/exp_fire = 2
@@ -671,9 +671,9 @@
 		if(M.anti_magic_check())
 			visible_message("<span class='warning'>[src] vanishes into smoke on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
-		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
+		M.take_overall_damage(ZERO,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
 	var/turf/T = get_turf(target)
-	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire)
+	explosion(T, -1, exp_heavy, exp_light, exp_flash, ZERO, flame_range = exp_fire)
 
 /obj/projectile/magic/aoe/fireball/infernal
 	name = "infernal fireball"
@@ -689,7 +689,7 @@
 		if(M.anti_magic_check())
 			return BULLET_ACT_BLOCK
 	var/turf/T = get_turf(target)
-	for(var/i=0, i<50, i+=10)
+	for(var/i=ZERO, i<50, i+=10)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, T, -1, exp_heavy, exp_light, exp_flash, FALSE, FALSE, exp_fire), i)
 
 //still magic related, but a different path
@@ -697,7 +697,7 @@
 /obj/projectile/temp/chill
 	name = "bolt of chills"
 	icon_state = "ice_2"
-	damage = 0
+	damage = ZERO
 	damage_type = BURN
 	nodamage = FALSE
 	armour_penetration = 100

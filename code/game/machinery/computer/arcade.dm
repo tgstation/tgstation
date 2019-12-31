@@ -100,19 +100,19 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		return
 
 	var/empprize = null
-	var/num_of_prizes = 0
+	var/num_of_prizes = ZERO
 	switch(severity)
 		if(1)
 			num_of_prizes = rand(1,4)
 		if(2)
-			num_of_prizes = rand(0,2)
-	for(var/i = num_of_prizes; i > 0; i--)
+			num_of_prizes = rand(ZERO,2)
+	for(var/i = num_of_prizes; i > ZERO; i--)
 		if(override)
 			empprize = pickweight(prize_override)
 		else
 			empprize = pickweight(GLOB.arcade_prize_pool)
 		new empprize(loc)
-	explosion(loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
+	explosion(loc, -1, ZERO, 1+num_of_prizes, flame_range = 1+num_of_prizes)
 
 /obj/machinery/computer/arcade/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/stack/arcadeticket))
@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/enemy_mp = 20
 	var/gameover = FALSE
 	var/blocked = FALSE //Player cannot attack/heal while set
-	var/turtle = 0
+	var/turtle = ZERO
 	var/list/weapons = list()
 
 /obj/machinery/computer/arcade/battle/Reset()
@@ -204,7 +204,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			temp = "You attack with a [weapon] for [attackamt] damage!"
 			playsound(loc, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 			updateUsrDialog()
-			if(turtle > 0)
+			if(turtle > ZERO)
 				turtle--
 
 			sleep(10)
@@ -233,7 +233,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			temp = "You regain [chargeamt] points."
 			playsound(loc, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 			player_mp += chargeamt
-			if(turtle > 0)
+			if(turtle > ZERO)
 				turtle--
 
 			updateUsrDialog()
@@ -251,7 +251,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		enemy_hp = 45
 		enemy_mp = 20
 		gameover = FALSE
-		turtle = 0
+		turtle = ZERO
 
 		if(obj_flags & EMAGGED)
 			Reset()
@@ -262,7 +262,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	return
 
 /obj/machinery/computer/arcade/battle/proc/arcade_action(mob/user)
-	if ((enemy_mp <= 0) || (enemy_hp <= 0))
+	if ((enemy_mp <= ZERO) || (enemy_hp <= ZERO))
 		if(!gameover)
 			gameover = TRUE
 			temp = "[enemy_name] has fallen! Rejoice!"
@@ -293,7 +293,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		player_mp -= stealamt
 		updateUsrDialog()
 
-		if (player_mp <= 0)
+		if (player_mp <= ZERO)
 			gameover = TRUE
 			sleep(10)
 			temp = "You have been drained! GAME OVER"
@@ -314,7 +314,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		playsound(loc, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 		player_hp -= attackamt
 
-	if ((player_mp <= 0) || (player_hp <= 0))
+	if ((player_mp <= ZERO) || (player_hp <= ZERO))
 		gameover = TRUE
 		temp = "You have been crushed! GAME OVER"
 		playsound(loc, 'sound/arcade/lose.ogg', 50, TRUE, extrarange = -3, falloff = 10)
@@ -386,9 +386,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	icon_state = "arcade"
 	circuit = /obj/item/circuitboard/computer/arcade/orion_trail
 	var/busy = FALSE //prevent clickspam that allowed people to ~speedrun~ the game.
-	var/engine = 0
-	var/hull = 0
-	var/electronics = 0
+	var/engine = ZERO
+	var/hull = ZERO
+	var/electronics = ZERO
 	var/food = 80
 	var/fuel = 60
 	var/turns = 4
@@ -408,22 +408,22 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 						   )
 	var/list/stops = list()
 	var/list/stopblurbs = list()
-	var/lings_aboard = 0
-	var/spaceport_raided = 0
-	var/spaceport_freebie = 0
+	var/lings_aboard = ZERO
+	var/spaceport_raided = ZERO
+	var/spaceport_freebie = ZERO
 	var/last_spaceport_action = ""
 	var/gameStatus = ORION_STATUS_START
-	var/canContinueEvent = 0
+	var/canContinueEvent = ZERO
 
 	var/obj/item/radio/Radio
 	var/list/gamers = list()
-	var/killed_crew = 0
+	var/killed_crew = ZERO
 
 
 /obj/machinery/computer/arcade/orion_trail/Initialize()
 	. = ..()
 	Radio = new /obj/item/radio(src)
-	Radio.listening = 0
+	Radio.listening = ZERO
 
 /obj/machinery/computer/arcade/orion_trail/Destroy()
 	QDEL_NULL(Radio)
@@ -469,12 +469,12 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	turns = 1
 	event = null
 	gameStatus = ORION_STATUS_NORMAL
-	lings_aboard = 0
-	killed_crew = 0
+	lings_aboard = ZERO
+	killed_crew = ZERO
 
 	//spaceport junk
-	spaceport_raided = 0
-	spaceport_freebie = 0
+	spaceport_raided = ZERO
+	spaceport_freebie = ZERO
 	last_spaceport_action = ""
 
 /obj/machinery/computer/arcade/orion_trail/proc/report_player(mob/gamer)
@@ -488,7 +488,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		return
 
 	if(!(gamer in gamers))
-		gamers[gamer] = 0
+		gamers[gamer] = ZERO
 
 	gamers[gamer]++ // How many times the player has 'prestiged' (massacred their crew)
 
@@ -512,7 +512,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 /obj/machinery/computer/arcade/orion_trail/ui_interact(mob/user)
 	. = ..()
-	if(fuel <= 0 || food <=0 || settlers.len == 0)
+	if(fuel <= ZERO || food <=ZERO || settlers.len == ZERO)
 		gameStatus = ORION_STATUS_GAMEOVER
 		event = null
 	var/dat = ""
@@ -522,12 +522,12 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(!settlers.len)
 			dat += "<br>Your entire crew died, and your ship joins the fleet of ghost-ships littering the galaxy."
 		else
-			if(food <= 0)
+			if(food <= ZERO)
 				dat += "<br>You ran out of food and starved."
 				if(obj_flags & EMAGGED)
-					user.set_nutrition(0) //yeah you pretty hongry
+					user.set_nutrition(ZERO) //yeah you pretty hongry
 					to_chat(user, "<span class='userdanger'>Your body instantly contracts to that of one who has not eaten in months. Agonizing cramps seize you as you fall to the floor.</span>")
-			if(fuel <= 0)
+			if(fuel <= ZERO)
 				dat += "<br>You ran out of fuel, and drift, slowly, into a star."
 				if(obj_flags & EMAGGED)
 					var/mob/living/M = user
@@ -692,15 +692,15 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			event = null
 	else if(href_list["useengine"]) //use parts
 		if(event == ORION_TRAIL_BREAKDOWN)
-			engine = max(0, --engine)
+			engine = max(ZERO, --engine)
 			event = null
 	else if(href_list["useelec"]) //use parts
 		if(event == ORION_TRAIL_MALFUNCTION)
-			electronics = max(0, --electronics)
+			electronics = max(ZERO, --electronics)
 			event = null
 	else if(href_list["usehull"]) //use parts
 		if(event == ORION_TRAIL_COLLISION)
-			hull = max(0, --hull)
+			hull = max(ZERO, --hull)
 			event = null
 	else if(href_list["wait"]) //wait 3 days
 		if(event == ORION_TRAIL_BREAKDOWN || event == ORION_TRAIL_MALFUNCTION || event == ORION_TRAIL_COLLISION)
@@ -744,10 +744,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			playsound(loc,'sound/weapons/gun/pistol/shot.ogg', 100, TRUE)
 			killed_crew++
 
-			if(settlers.len == 0 || alive == 0)
+			if(settlers.len == ZERO || alive == ZERO)
 				say("The last crewmember [sheriff], shot themselves, GAME OVER!")
 				if(obj_flags & EMAGGED)
-					usr.death(0)
+					usr.death(ZERO)
 					obj_flags &= EMAGGED
 				gameStatus = ORION_STATUS_GAMEOVER
 				event = null
@@ -757,7 +757,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			else if(obj_flags & EMAGGED)
 				if(usr.name == sheriff)
 					say("The crew of the ship chose to kill [usr.name]!")
-					usr.death(0)
+					usr.death(ZERO)
 
 			if(event == ORION_TRAIL_LING) //only ends the ORION_TRAIL_LING event, since you can do this action in multiple places
 				event = null
@@ -789,8 +789,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(gameStatus == ORION_STATUS_MARKET)
 			event = null
 			gameStatus = ORION_STATUS_NORMAL
-			spaceport_raided = 0
-			spaceport_freebie = 0
+			spaceport_raided = ZERO
+			spaceport_freebie = ZERO
 			last_spaceport_action = ""
 
 	else if(href_list["raid_spaceport"])
@@ -799,8 +799,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				var/success = min(15 * alive,100) //default crew (4) have a 60% chance
 				spaceport_raided = 1
 
-				var/FU = 0
-				var/FO = 0
+				var/FU = ZERO
+				var/FO = ZERO
 				if(prob(success))
 					FU = rand(5,15)
 					FO = rand(5,15)
@@ -868,7 +868,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 /obj/machinery/computer/arcade/orion_trail/proc/event()
 	eventdat = "<center><h1>[event]</h1></center>"
-	canContinueEvent = 0
+	canContinueEvent = ZERO
 	switch(event)
 		if(ORION_TRAIL_RAIDERS)
 			eventdat += "Raiders have come aboard your ship!"
@@ -900,7 +900,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 		if(ORION_TRAIL_SEARCH)
 			switch(rand(100))
-				if(0 to 15)
+				if(ZERO to 15)
 					var/rescued = add_crewmember()
 					var/oldfood = rand(1,7)
 					var/oldfuel = rand(4,10)
@@ -1024,19 +1024,19 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 						eventdat += "<br><br><b>You valiantly fight off the changeling[ling2 ? "s":""]!</b>"
 						if(ling2)
 							food += 30
-							lings_aboard = max(0,lings_aboard-2)
+							lings_aboard = max(ZERO,lings_aboard-2)
 						else
 							food += 15
-							lings_aboard = max(0,--lings_aboard)
+							lings_aboard = max(ZERO,--lings_aboard)
 						eventdat += "<br><i>Well, it's perfectly good food...</i>\
 						<br>You cut the changeling[ling2 ? "s" : ""] into meat, gaining <b>[ling2 ? "30" : "15"]</b> Food!"
 				else
 					eventdat += "<br><br>[pick("Sensing unfavorable odds", "After a failed attack", "Suddenly breaking nerve")], \
 					the changeling[ling2 ? "s":""] vanish[ling2 ? "" : "es"] into space through the airlocks! You're safe... for now."
 					if(ling2)
-						lings_aboard = max(0,lings_aboard-2)
+						lings_aboard = max(ZERO,lings_aboard-2)
 					else
-						lings_aboard = max(0,--lings_aboard)
+						lings_aboard = max(ZERO,--lings_aboard)
 
 			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
 			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
@@ -1068,7 +1068,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 					spaceport_freebie++
 					var/FU = 10
 					var/FO = 10
-					var/freecrew = 0
+					var/freecrew = ZERO
 					if(prob(30))
 						FU = 25
 						FO = 25
@@ -1166,7 +1166,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	if(removed)
 		if(lings_aboard && prob(40*lings_aboard)) //if there are 2 lings you're twice as likely to get one, obviously
-			lings_aboard = max(0,--lings_aboard)
+			lings_aboard = max(ZERO,--lings_aboard)
 		settlers -= removed
 		alive--
 	return removed
@@ -1207,7 +1207,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "ship"
 	w_class = WEIGHT_CLASS_SMALL
-	var/active = 0 //if the ship is on
+	var/active = ZERO //if the ship is on
 
 /obj/item/orion_ship/examine(mob/user)
 	. = ..()

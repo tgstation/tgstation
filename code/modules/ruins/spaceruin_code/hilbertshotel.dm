@@ -84,8 +84,8 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
         var/datum/turf_reservation/roomReservation = SSmapping.RequestBlockReservation(hotelRoomTemp.width, hotelRoomTemp.height)
         hotelRoomTempEmpty.load(locate(roomReservation.bottom_left_coords[1], roomReservation.bottom_left_coords[2], roomReservation.bottom_left_coords[3]))
         var/turfNumber = 1
-        for(var/i=0, i<hotelRoomTemp.width, i++)
-            for(var/j=0, j<hotelRoomTemp.height, j++)
+        for(var/i=ZERO, i<hotelRoomTemp.width, i++)
+            for(var/j=ZERO, j<hotelRoomTemp.height, j++)
                 for(var/atom/movable/A in storedRooms["[roomNumber]"][turfNumber])
                     if(istype(A.loc, /obj/item/abstracthotelstorage))//Don't want to recall something thats been moved
                         A.forceMove(locate(roomReservation.bottom_left_coords[1] + i, roomReservation.bottom_left_coords[2] + j, roomReservation.bottom_left_coords[3]))
@@ -134,8 +134,8 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     if(activeRooms.len)
         for(var/x in activeRooms)
             var/datum/turf_reservation/room = activeRooms[x]
-            for(var/i=0, i<hotelRoomTemp.width, i++)
-                for(var/j=0, j<hotelRoomTemp.height, j++)
+            for(var/i=ZERO, i<hotelRoomTemp.width, i++)
+                for(var/j=ZERO, j<hotelRoomTemp.height, j++)
                     for(var/atom/movable/A in locate(room.bottom_left_coords[1] + i, room.bottom_left_coords[2] + j, room.bottom_left_coords[3]))
                         if(ismob(A))
                             var/mob/M = A
@@ -301,7 +301,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     . = ..()
     to_chat(owner, "<span class='warning'>You move away from the peephole.</span>")
     owner.reset_perspective()
-    owner.clear_fullscreen("remote_view", 0)
+    owner.clear_fullscreen("remote_view", ZERO)
     qdel(src)
 
 /area/hilbertshotel
@@ -314,7 +314,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     unique = FALSE
     dynamic_lighting = DYNAMIC_LIGHTING_FORCED
     ambientsounds = list('sound/ambience/servicebell.ogg')
-    var/roomnumber = 0
+    var/roomnumber = ZERO
     var/obj/item/hilbertshotel/parentSphere
     var/datum/turf_reservation/reservation
     var/turf/storageTurf
@@ -334,7 +334,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
         return
     var/turf/targetturf = find_safe_turf()
     if(!targetturf)
-        if(GLOB.blobstart.len > 0)
+        if(GLOB.blobstart.len > ZERO)
             targetturf = get_turf(pick(GLOB.blobstart))
         else
             CRASH("Unable to find a blobstart landmark")
@@ -368,8 +368,8 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     storageObj.roomNumber = roomnumber
     storageObj.parentSphere = parentSphere
     storageObj.name = "Room [roomnumber] Storage"
-    for(var/i=0, i<parentSphere.hotelRoomTemp.width, i++)
-        for(var/j=0, j<parentSphere.hotelRoomTemp.height, j++)
+    for(var/i=ZERO, i<parentSphere.hotelRoomTemp.width, i++)
+        for(var/j=ZERO, j<parentSphere.hotelRoomTemp.height, j++)
             var/list/turfContents = list()
             for(var/atom/movable/A in locate(reservation.bottom_left_coords[1] + i, reservation.bottom_left_coords[2] + j, reservation.bottom_left_coords[3]))
                 if(ismob(A) && !isliving(A))

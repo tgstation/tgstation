@@ -93,7 +93,7 @@
 	var/martyr_compatibility = 1 //You can't succeed in stealing if you're dead.
 	for(var/datum/objective/O in objectives)
 		if(!O.martyr_compatible)
-			martyr_compatibility = 0
+			martyr_compatibility = ZERO
 			break
 
 	if(martyr_compatibility && martyr_chance)
@@ -110,7 +110,7 @@
 			return
 
 /datum/antagonist/traitor/proc/forge_ai_objectives()
-	var/objective_count = 0
+	var/objective_count = ZERO
 
 	if(prob(30))
 		objective_count += forge_single_objective()
@@ -307,7 +307,7 @@
 
 	result += printplayer(owner)
 
-	var/TC_uses = 0
+	var/TC_uses = ZERO
 	var/uplink_true = FALSE
 	var/purchases = ""
 	LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
@@ -330,7 +330,7 @@
 
 	if(uplink_true)
 		var/uplink_text = "(used [TC_uses] TC) [purchases]"
-		if(TC_uses==0 && traitorwin)
+		if(TC_uses==ZERO && traitorwin)
 			var/static/icon/badass = icon('icons/badass.dmi', "badass")
 			uplink_text += "<BIG>[icon2html(badass, world)]</BIG>"
 		result += uplink_text
@@ -353,9 +353,9 @@
 /// Proc detailing contract kit buys/completed contracts/additional info
 /datum/antagonist/traitor/proc/contractor_round_end()
 	var result = ""
-	var total_spent_rep = 0
+	var total_spent_rep = ZERO
 
-	var/completed_contracts = 0
+	var/completed_contracts = ZERO
 	var/tc_total = contractor_hub.contract_TC_payed_out + contractor_hub.contract_TC_to_redeem
 	for (var/datum/syndicate_contract/contract in contractor_hub.assigned_contracts)
 		if (contract.status == CONTRACT_STATUS_COMPLETE)
@@ -379,7 +379,7 @@
 		result += "<br>(used [total_spent_rep] Rep) "
 		result += contractor_item_icons
 	result += "<br>"
-	if (completed_contracts > 0)
+	if (completed_contracts > ZERO)
 		var/pluralCheck = "contract"
 		if (completed_contracts > 1)
 			pluralCheck = "contracts"

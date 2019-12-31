@@ -11,8 +11,8 @@
 	custom_materials = list(/datum/material/iron=250, /datum/material/glass=500)
 	var/max_duration = 3000
 	var/duration = 300
-	var/last_use = 0
-	var/next_use = 0
+	var/last_use = ZERO
+	var/next_use = ZERO
 	var/obj/effect/abstract/sync_holder/sync_holder
 	var/resync_timer
 
@@ -76,7 +76,7 @@
 	desc = "A pocket in spacetime, keeping the user a fraction of a second in the future."
 	icon = null
 	icon_state = null
-	alpha = 0
+	alpha = ZERO
 	invisibility = INVISIBILITY_ABSTRACT
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE

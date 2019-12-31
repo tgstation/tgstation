@@ -13,7 +13,7 @@
 	var/icon_keyboard = "generic_key"
 	var/icon_screen = "generic"
 	var/time_to_screwdrive = 20
-	var/authenticated = 0
+	var/authenticated = ZERO
 
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
@@ -29,7 +29,7 @@
 
 /obj/machinery/computer/process()
 	if(stat & (NOPOWER|BROKEN))
-		return 0
+		return ZERO
 	return 1
 
 /obj/machinery/computer/update_overlays()
@@ -52,7 +52,7 @@
 /obj/machinery/computer/power_change()
 	. = ..()
 	if(stat & NOPOWER)
-		set_light(0)
+		set_light(ZERO)
 	else
 		set_light(brightness_on)
 
@@ -65,7 +65,7 @@
 			deconstruct(TRUE, user)
 	return TRUE
 
-/obj/machinery/computer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/machinery/computer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BRUTE)
 			if(stat & BROKEN)
@@ -81,7 +81,7 @@
 	. = ..()
 	if(.)
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
-		set_light(0)
+		set_light(ZERO)
 
 /obj/machinery/computer/emp_act(severity)
 	. = ..()

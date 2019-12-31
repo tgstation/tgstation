@@ -132,7 +132,7 @@
 	if(R && R.type == reagent_id)
 		name = R.name
 
-/datum/plant_gene/reagent/New(reag_id = null, reag_rate = 0)
+/datum/plant_gene/reagent/New(reag_id = null, reag_rate = ZERO)
 	..()
 	if(reag_id && reag_rate)
 		set_reagent(reag_id)
@@ -263,7 +263,7 @@
 
 /datum/plant_gene/trait/cell_charge/on_consume(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	if(!G.reagents.total_volume)
-		var/batteries_recharged = 0
+		var/batteries_recharged = ZERO
 		for(var/obj/item/stock_parts/cell/C in target.GetAllContents())
 			var/newcharge = min(G.seed.potency*0.01*C.maxcharge, C.maxcharge)
 			if(C.charge < newcharge)
@@ -420,7 +420,7 @@
 /datum/plant_gene/trait/stinging/on_throw_impact(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
 	if(isliving(target) && G.reagents && G.reagents.total_volume)
 		var/mob/living/L = target
-		if(L.reagents && L.can_inject(null, 0))
+		if(L.reagents && L.can_inject(null, ZERO))
 			var/injecting_amount = max(1, G.seed.potency*0.2) // Minimum of 1, max of 20
 			var/fraction = min(injecting_amount/G.reagents.total_volume, 1)
 			G.reagents.reaction(L, INJECT, fraction)
@@ -435,7 +435,7 @@
 	var/splat_location = get_turf(target)
 	var/smoke_amount = round(sqrt(G.seed.potency * 0.1), 1)
 	S.attach(splat_location)
-	S.set_up(G.reagents, smoke_amount, splat_location, 0)
+	S.set_up(G.reagents, smoke_amount, splat_location, ZERO)
 	S.start()
 	G.reagents.clear_reagents()
 
@@ -459,18 +459,18 @@
 		var/obj/machinery/hydroponics/HY = locate() in get_step(H, step_dir)
 		if(HY && prob(15))
 			if(HY.myseed) // check if there is something in the tray.
-				if(HY.myseed.type == H.myseed.type && HY.dead != 0)
+				if(HY.myseed.type == H.myseed.type && HY.dead != ZERO)
 					continue //It should not destroy its owm kind.
 				qdel(HY.myseed)
 				HY.myseed = null
 			HY.myseed = H.myseed.Copy()
-			HY.age = 0
-			HY.dead = 0
+			HY.age = ZERO
+			HY.dead = ZERO
 			HY.plant_health = HY.myseed.endurance
 			HY.lastcycle = world.time
-			HY.harvest = 0
-			HY.weedlevel = 0 // Reset
-			HY.pestlevel = 0 // Reset
+			HY.harvest = ZERO
+			HY.weedlevel = ZERO // Reset
+			HY.pestlevel = ZERO // Reset
 			HY.update_icon()
 			HY.visible_message("<span class='warning'>The [H.myseed.plantname] spreads!</span>")
 

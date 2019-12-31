@@ -22,7 +22,7 @@
 	var/landingDelay = 30 //How long the pod takes to land after launching
 	var/openingDelay = 30 //How long the pod takes to open after landing
 	var/departureDelay = 30 //How long the pod takes to leave after opening. If bluespace = TRUE, it deletes. If reversing = TRUE, it flies back to centcom.
-	var/damage = 0 //Damage that occurs to any mob under the pod when it lands.
+	var/damage = ZERO //Damage that occurs to any mob under the pod when it lands.
 	var/effectStun = FALSE //If true, stuns anyone under the pod when it launches until it lands, forcing them to get hit by the pod. Devilish!
 	var/effectLimb = FALSE //If true, pops off a limb (if applicable) from anyone caught under the pod when it lands
 	var/effectOrgans = FALSE //If true, yeets out every limb and organ from anyone caught under the pod when it lands
@@ -41,14 +41,14 @@
 	var/leavingSound //Admin sound to play when the pod leaves
 	var/soundVolume = 80 //Volume to play sounds at. Ignores the cap
 	var/bay //Used specifically for the centcom_podlauncher datum. Holds the current bay the user is launching objects from. Bays are specific rooms on the centcom map.
-	var/list/explosionSize = list(0,0,2,3)
+	var/list/explosionSize = list(ZERO,ZERO,2,3)
 	var/stay_after_drop = FALSE
 	var/specialised = TRUE // It's not a general use pod for cargo/admin use
 
 /obj/structure/closet/supplypod/bluespacepod
 	style = STYLE_BLUESPACE
 	bluespace = TRUE
-	explosionSize = list(0,0,1,2)
+	explosionSize = list(ZERO,ZERO,1,2)
 	landingDelay = 15 //Slightly quicker than the supplypod
 
 /obj/structure/closet/supplypod/extractionpod
@@ -57,13 +57,13 @@
 	specialised = TRUE
 	style = STYLE_SYNDICATE
 	bluespace = TRUE
-	explosionSize = list(0,0,1,2)
+	explosionSize = list(ZERO,ZERO,1,2)
 	landingDelay = 25 //Longer than others
 
 /obj/structure/closet/supplypod/centcompod
 	style = STYLE_CENTCOM
 	bluespace = TRUE
-	explosionSize = list(0,0,0,0)
+	explosionSize = list(ZERO,ZERO,ZERO,ZERO)
 	landingDelay = 20 //Very speedy!
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -274,7 +274,7 @@
 /obj/effect/DPfall/Initialize(dropLocation, obj/structure/closet/supplypod/pod)
 	if (pod.style == STYLE_SEETHROUGH)
 		pixel_x = -16
-		pixel_y = 0
+		pixel_y = ZERO
 		for (var/atom/movable/O in pod.contents)
 			var/icon/I = getFlatIcon(O) //im so sorry
 			add_overlay(I)
@@ -320,7 +320,7 @@
 		pod.fallingSoundLength = 3 //The default falling sound is a little long, so if the landing time is shorter than the default falling sound, use a special, shorter default falling sound
 		pod.fallingSound =  'sound/weapons/mortar_whistle.ogg'
 	var/soundStartTime = pod.landingDelay - pod.fallingSoundLength + pod.fallDuration
-	if (soundStartTime < 0)
+	if (soundStartTime < ZERO)
 		soundStartTime = 1
 	if (!pod.effectQuiet)
 		addtimer(CALLBACK(src, .proc/playFallingSound), soundStartTime)
@@ -332,7 +332,7 @@
 /obj/effect/DPtarget/proc/beginLaunch(effectCircle) //Begin the animation for the pod falling. The effectCircle param determines whether the pod gets to come in from any descent angle
 	fallingPod = new /obj/effect/DPfall(drop_location(), pod)
 	var/matrix/M = matrix(fallingPod.transform) //Create a new matrix that we can rotate
-	var/angle = effectCircle ? rand(0,360) : rand(70,110) //The angle that we can come in from
+	var/angle = effectCircle ? rand(ZERO,360) : rand(70,110) //The angle that we can come in from
 	fallingPod.pixel_x = cos(angle)*400 //Use some ADVANCED MATHEMATICS to set the animated pod's position to somewhere on the edge of a circle with the center being the target
 	fallingPod.pixel_z = sin(angle)*400
 	var/rotation = Get_Pixel_Angle(fallingPod.pixel_z, fallingPod.pixel_x) //CUSTOM HOMEBREWED proc that is just arctan with extra steps
@@ -341,7 +341,7 @@
 	M = matrix(pod.transform) //Make another matrix based on the pod
 	M.Turn(rotation) //Turn the matrix
 	pod.transform = M //Turn the actual pod (Won't be visible until endLaunch() proc tho)
-	animate(fallingPod, pixel_z = 0, pixel_x = -16, time = pod.fallDuration, , easing = LINEAR_EASING) //Make the pod fall! At an angle!
+	animate(fallingPod, pixel_z = ZERO, pixel_x = -16, time = pod.fallDuration, , easing = LINEAR_EASING) //Make the pod fall! At an angle!
 	addtimer(CALLBACK(src, .proc/endLaunch), pod.fallDuration, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
 /obj/effect/DPtarget/proc/endLaunch()

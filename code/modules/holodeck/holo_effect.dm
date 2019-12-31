@@ -41,8 +41,8 @@
 		return
 	if(active)
 		D.card_hitsound = null
-		D.card_force = 0
-		D.card_throwforce = 0
+		D.card_force = ZERO
+		D.card_throwforce = ZERO
 		D.card_throw_speed = 3
 		D.card_throw_range = 7
 		D.card_attack_verb = list("attacked")

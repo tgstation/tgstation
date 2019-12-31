@@ -9,11 +9,11 @@
 	var/obj/item/modular_computer/holder = null
 	// Computer that holds this hardware, if any.
 
-	var/power_usage = 0 			// If the hardware uses extra power, change this.
+	var/power_usage = ZERO 			// If the hardware uses extra power, change this.
 	var/enabled = 1					// If the hardware is turned off set this to 0.
-	var/critical = 0				// Prevent disabling for important component, like the CPU.
+	var/critical = ZERO				// Prevent disabling for important component, like the CPU.
 	var/can_install = 1				// Prevents direct installation of removable media.
-	var/damage = 0					// Current damage level
+	var/damage = ZERO					// Current damage level
 	var/max_damage = 100			// Maximal damage level.
 	var/damage_malfunction = 20		// "Malfunction" threshold. When damage exceeds this value the hardware piece will semi-randomly fail and do !!FUN!! things
 	var/damage_failure = 50			// "Failure" threshold. When damage exceeds this value the hardware piece will not work at all.
@@ -99,5 +99,5 @@
 	return FALSE
 
 // Called when someone tries to eject something from it - card from card reader, etc.
-/obj/item/computer_hardware/proc/try_eject(slot=0, mob/living/user = null, forced = 0)
+/obj/item/computer_hardware/proc/try_eject(slot=ZERO, mob/living/user = null, forced = ZERO)
 	return FALSE

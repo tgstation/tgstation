@@ -10,7 +10,7 @@
 	name = "Ethanol"
 	description = "A well-known alcohol with a variety of applications."
 	color = "#404030" // rgb: 64, 64, 48
-	nutriment_factor = 0
+	nutriment_factor = ZERO
 	taste_description = "alcohol"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	var/boozepwr = 65 //Higher numbers equal higher hardness, higher hardness equals more intense alcohol poisoning
@@ -21,7 +21,7 @@ Note that all higher effects of alcohol poisoning will inherit effects for small
 In addition, severe effects won't always trigger unless the drink is poisonously strong
 All effects don't start immediately, but rather get worse over time; the rate is affected by the imbiber's alcohol tolerance
 
-0: Non-alcoholic
+ZERO: Non-alcoholic
 1-10: Barely classifiable as alcohol - occassional slurring
 11-20: Slight alcohol content - slurring
 21-30: Below average - imbiber begins to look slightly drunk
@@ -35,17 +35,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 */
 
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/C)
-	if(C.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER || boozepwr < 0)
+	if(C.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER || boozepwr < ZERO)
 		var/booze_power = boozepwr
 		if(HAS_TRAIT(C, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
 			booze_power *= 0.7
 		if(HAS_TRAIT(C, TRAIT_LIGHT_DRINKER))
 			booze_power *= 2
-		C.drunkenness = max((C.drunkenness + (sqrt(volume) * booze_power * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
-		if(boozepwr > 0)
+		C.drunkenness = max((C.drunkenness + (sqrt(volume) * booze_power * ALCOHOL_RATE)), ZERO) //Volume, power, and server alcohol rate effect how quickly one gets drunk
+		if(boozepwr > ZERO)
 			var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 			if (istype(L))
-				L.applyOrganDamage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * L.alcohol_tolerance, 0))/150))
+				L.applyOrganDamage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * L.alcohol_tolerance, ZERO))/150))
 	return ..()
 
 /datum/reagent/consumable/ethanol/reaction_obj(obj/O, reac_volume)
@@ -81,7 +81,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
 	description = "An alcoholic beverage brewed since ancient times on Old Earth. Still popular today."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	boozepwr = 25
 	taste_description = "piss water"
@@ -116,7 +116,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/kahlua
 	name = "Kahlua"
 	description = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936!"
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 45
 	glass_icon_state = "kahluaglass"
 	glass_name = "glass of RR coffee liquor"
@@ -124,8 +124,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "shotglasscream"
 
 /datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/carbon/M)
-	M.dizziness = max(0,M.dizziness-5)
-	M.drowsyness = max(0,M.drowsyness-3)
+	M.dizziness = max(ZERO,M.dizziness-5)
+	M.drowsyness = max(ZERO,M.drowsyness-3)
 	M.AdjustSleeping(-40, FALSE)
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.Jitter(5)
@@ -135,7 +135,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/whiskey
 	name = "Whiskey"
 	description = "A superb and well-aged single-malt whiskey. Damn."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 75
 	taste_description = "molasses"
 	glass_icon_state = "whiskeyglass"
@@ -146,7 +146,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/whiskey/kong
 	name = "Kong"
 	description = "Makes You Go Ape!&#174;"
-	color = "#332100" // rgb: 51, 33, 0
+	color = "#332100" // rgb: 51, 33, ZERO
 	addiction_threshold = 15
 	taste_description = "the grip of a giant ape"
 	glass_name = "glass of Kong"
@@ -182,7 +182,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/whiskey/candycorn
 	name = "candy corn liquor"
 	description = "Like they drank in 2D speakeasies."
-	color = "#ccb800" // rgb: 204, 184, 0
+	color = "#ccb800" // rgb: 204, 184, ZERO
 	taste_description = "pancake syrup"
 	glass_name = "glass of candy corn liquor"
 	glass_desc = "Good for your Imagination."
@@ -196,7 +196,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/thirteenloko
 	name = "Thirteen Loko"
 	description = "A potent mixture of caffeine and alcohol."
-	color = "#102000" // rgb: 16, 32, 0
+	color = "#102000" // rgb: 16, 32, ZERO
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	boozepwr = 80
 	quality = DRINK_GOOD
@@ -208,7 +208,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "This is a glass of Thirteen Loko, it appears to be of the highest quality. The drink, not the glass."
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/M)
-	M.drowsyness = max(0,M.drowsyness-7)
+	M.drowsyness = max(ZERO,M.drowsyness-7)
 	M.AdjustSleeping(-40)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
@@ -254,12 +254,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		var/datum/disease/D = new /datum/disease/heart_failure
 		M.ForceContractDisease(D)
 		to_chat(M, "<span class='userdanger'>You're pretty sure you just felt your heart stop for a second there..</span>")
-		M.playsound_local(M, 'sound/effects/singlebeat.ogg', 100, 0)
+		M.playsound_local(M, 'sound/effects/singlebeat.ogg', 100, ZERO)
 
 /datum/reagent/consumable/ethanol/vodka
 	name = "Vodka"
 	description = "Number one drink AND fueling choice for Russians worldwide."
-	color = "#0064C8" // rgb: 0, 100, 200
+	color = "#0064C8" // rgb: ZERO, 100, 200
 	boozepwr = 65
 	taste_description = "grain alcohol"
 	glass_icon_state = "ginvodkaglass"
@@ -268,7 +268,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "shotglassclear"
 
 /datum/reagent/consumable/ethanol/vodka/on_mob_life(mob/living/carbon/M)
-	M.radiation = max(M.radiation-2,0)
+	M.radiation = max(M.radiation-2,ZERO)
 	return ..()
 
 /datum/reagent/consumable/ethanol/bilk
@@ -306,7 +306,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/gin
 	name = "Gin"
 	description = "It's gin. In space. I say, good sir."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 45
 	taste_description = "an alcoholic christmas tree"
 	glass_icon_state = "ginvodkaglass"
@@ -316,7 +316,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/rum
 	name = "Rum"
 	description = "Yohoho and all that."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 60
 	taste_description = "spiked butterscotch"
 	glass_icon_state = "rumglass"
@@ -389,7 +389,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/absinthe
 	name = "Absinthe"
 	description = "A powerful alcoholic drink. Rumored to cause hallucinations but does not."
-	color = rgb(10, 206, 0)
+	color = rgb(10, 206, ZERO)
 	boozepwr = 80 //Very strong even by default
 	taste_description = "death and licorice"
 	glass_icon_state = "absinthe"
@@ -405,7 +405,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/hooch
 	name = "Hooch"
 	description = "Either someone's failure at cocktail making or attempt in alcohol production. In any case, do you really want to drink that?"
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 100
 	taste_description = "pure resignation"
 	glass_icon_state = "glass_brown2"
@@ -421,7 +421,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/ale
 	name = "Ale"
 	description = "A dark alcoholic beverage made with malted barley and yeast."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 65
 	taste_description = "hearty barley ale"
 	glass_icon_state = "aleglass"
@@ -455,7 +455,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/gintonic
 	name = "Gin and Tonic"
 	description = "An all time classic, mild cocktail."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 25
 	quality = DRINK_NICE
 	taste_description = "mild and tart"
@@ -477,7 +477,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/cuba_libre
 	name = "Cuba Libre"
 	description = "Viva la Revolucion! Viva Cuba Libre!"
-	color = "#3E1B00" // rgb: 62, 27, 0
+	color = "#3E1B00" // rgb: 62, 27, ZERO
 	boozepwr = 50
 	quality = DRINK_GOOD
 	taste_description = "a refreshing marriage of citrus and rum"
@@ -487,17 +487,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/cuba_libre/on_mob_life(mob/living/carbon/M)
 	if(M.mind && M.mind.has_antag_datum(/datum/antagonist/rev)) //Cuba Libre, the traditional drink of revolutions! Heals revolutionaries.
-		M.adjustBruteLoss(-1, 0)
-		M.adjustFireLoss(-1, 0)
-		M.adjustToxLoss(-1, 0)
-		M.adjustOxyLoss(-5, 0)
+		M.adjustBruteLoss(-1, ZERO)
+		M.adjustFireLoss(-1, ZERO)
+		M.adjustToxLoss(-1, ZERO)
+		M.adjustOxyLoss(-5, ZERO)
 		. = 1
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/whiskey_cola
 	name = "Whiskey Cola"
 	description = "Whiskey, mixed with cola. Surprisingly refreshing."
-	color = "#3E1B00" // rgb: 62, 27, 0
+	color = "#3E1B00" // rgb: 62, 27, ZERO
 	boozepwr = 70
 	quality = DRINK_NICE
 	taste_description = "cola"
@@ -509,7 +509,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/martini
 	name = "Classic Martini"
 	description = "Vermouth with Gin. Not quite how 007 enjoyed it, but still delicious."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 60
 	quality = DRINK_NICE
 	taste_description = "dry class"
@@ -520,7 +520,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/vodkamartini
 	name = "Vodka Martini"
 	description = "Vodka with Gin. Not quite how 007 enjoyed it, but still delicious."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 65
 	quality = DRINK_NICE
 	taste_description = "shaken, not stirred"
@@ -552,7 +552,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/M)
 	if(M.mind && M.mind.assigned_role in list("Station Engineer", "Atmospheric Technician", "Chief Engineer")) //Engineers lose radiation poisoning at a massive rate.
-		M.radiation = max(M.radiation - 25, 0)
+		M.radiation = max(M.radiation - 25, ZERO)
 	return ..()
 
 /datum/reagent/consumable/ethanol/booger
@@ -568,7 +568,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/bloody_mary
 	name = "Bloody Mary"
 	description = "A strange yet pleasurable mixture made of vodka, tomato and lime juice. Or at least you THINK the red stuff is tomato juice."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 55
 	quality = DRINK_GOOD
 	taste_description = "tomatoes with a hint of lime"
@@ -584,7 +584,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/brave_bull
 	name = "Brave Bull"
 	description = "It's just as effective as Dutch-Courage!"
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 60
 	quality = DRINK_NICE
 	taste_description = "alcoholic bravery"
@@ -635,7 +635,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/toxins_special
 	name = "Toxins Special"
 	description = "This thing is ON FIRE! CALL THE DAMN SHUTTLE!"
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 25
 	quality = DRINK_VERYGOOD
 	taste_description = "spicy toxins"
@@ -645,13 +645,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "toxinsspecialglass"
 
 /datum/reagent/consumable/ethanol/toxins_special/on_mob_life(var/mob/living/M)
-	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL + 20) //310.15 is the normal bodytemp.
+	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, ZERO, BODYTEMP_NORMAL + 20) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/beepsky_smash
 	name = "Beepsky Smash"
 	description = "Drink this and prepare for the LAW."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 60 //THE FIST OF THE LAW IS STRONG AND HARD
 	quality = DRINK_GOOD
 	metabolization_rate = 0.5
@@ -673,7 +673,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/carbon/M)
 	M.Jitter(2)
 	if(HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		M.adjustStaminaLoss(-10, 0)
+		M.adjustStaminaLoss(-10, ZERO)
 		if(prob(20))
 			new /datum/hallucination/items_other(M)
 		if(prob(10))
@@ -693,7 +693,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/irish_cream
 	name = "Irish Cream"
 	description = "Whiskey-imbued cream, what else would you expect from the Irish?"
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 50
 	quality = DRINK_NICE
 	taste_description = "creamy alcohol"
@@ -704,7 +704,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/manly_dorf
 	name = "The Manly Dorf"
 	description = "Beer and Ale, brought together in a delicious mix. Intended for true men only."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 100 //For the manly only
 	quality = DRINK_NICE
 	taste_description = "hair on your chest and your chin"
@@ -730,7 +730,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/longislandicedtea
 	name = "Long Island Iced Tea"
 	description = "The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 35
 	quality = DRINK_VERYGOOD
 	taste_description = "a mixture of cola and alcohol"
@@ -752,7 +752,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/b52
 	name = "B-52"
 	description = "Coffee, Irish Cream, and cognac. You will get bombed."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 85
 	quality = DRINK_GOOD
 	taste_description = "angry and irish"
@@ -767,7 +767,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/irishcoffee
 	name = "Irish Coffee"
 	description = "Coffee, and alcohol. More fun than a Mimosa to drink in the morning."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 35
 	quality = DRINK_NICE
 	taste_description = "giving up on the day"
@@ -789,7 +789,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/black_russian
 	name = "Black Russian"
 	description = "For the lactose-intolerant. Still as classy as a White Russian."
-	color = "#360000" // rgb: 54, 0, 0
+	color = "#360000" // rgb: 54, ZERO, ZERO
 	boozepwr = 70
 	quality = DRINK_NICE
 	taste_description = "bitterness"
@@ -801,7 +801,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/manhattan
 	name = "Manhattan"
 	description = "The Detective's undercover drink of choice. He never could stomach gin..."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 30
 	quality = DRINK_NICE
 	taste_description = "mild dryness"
@@ -813,7 +813,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/manhattan_proj
 	name = "Manhattan Project"
 	description = "A scientist's drink of choice, for pondering ways to blow up the station."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 45
 	quality = DRINK_VERYGOOD
 	taste_description = "death, the destroyer of worlds"
@@ -829,7 +829,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/whiskeysoda
 	name = "Whiskey Soda"
 	description = "For the more refined griffon."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 70
 	quality = DRINK_NICE
 	taste_description = "soda"
@@ -840,7 +840,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/antifreeze
 	name = "Anti-freeze"
 	description = "The ultimate refreshment. Not what it sounds like."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 35
 	quality = DRINK_NICE
 	taste_description = "Jack Frost's piss"
@@ -849,13 +849,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "The ultimate refreshment."
 
 /datum/reagent/consumable/ethanol/antifreeze/on_mob_life(mob/living/carbon/M)
-	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL + 20) //310.15 is the normal bodytemp.
+	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, ZERO, BODYTEMP_NORMAL + 20) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/barefoot
 	name = "Barefoot"
 	description = "Barefoot and pregnant."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 45
 	quality = DRINK_VERYGOOD
 	taste_description = "creamy berries"
@@ -867,7 +867,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(ishuman(M)) //Barefoot causes the imbiber to quickly regenerate brute trauma if they're not wearing shoes.
 		var/mob/living/carbon/human/H = M
 		if(!H.shoes)
-			H.adjustBruteLoss(-3, 0)
+			H.adjustBruteLoss(-3, ZERO)
 			. = 1
 	return ..() || .
 
@@ -885,7 +885,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/demonsblood //Prevents the imbiber from being dragged into a pool of blood by a slaughter demon.
 	name = "Demon's Blood"
 	description = "AHHHH!!!!"
-	color = "#820000" // rgb: 130, 0, 0
+	color = "#820000" // rgb: 130, ZERO, ZERO
 	boozepwr = 75
 	quality = DRINK_VERYGOOD
 	taste_description = "sweet tasting iron"
@@ -907,7 +907,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/vodkatonic
 	name = "Vodka and Tonic"
 	description = "For when a gin and tonic isn't Russian enough."
-	color = "#0064C8" // rgb: 0, 100, 200
+	color = "#0064C8" // rgb: ZERO, 100, 200
 	boozepwr = 70
 	quality = DRINK_NICE
 	taste_description = "tart bitterness"
@@ -919,7 +919,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/ginfizz
 	name = "Gin Fizz"
 	description = "Refreshingly lemony, deliciously dry."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 45
 	quality = DRINK_GOOD
 	taste_description = "dry, tart lemons"
@@ -953,7 +953,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/sbiten
 	name = "Sbiten"
 	description = "A spicy Vodka! Might be a little hot for the little guys!"
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 70
 	quality = DRINK_GOOD
 	taste_description = "hot and spice"
@@ -962,13 +962,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A spicy mix of Vodka and Spice. Very hot."
 
 /datum/reagent/consumable/ethanol/sbiten/on_mob_life(mob/living/carbon/M)
-	M.adjust_bodytemperature(50 * TEMPERATURE_DAMAGE_COEFFICIENT, 0 ,BODYTEMP_HEAT_DAMAGE_LIMIT) //310.15 is the normal bodytemp.
+	M.adjust_bodytemperature(50 * TEMPERATURE_DAMAGE_COEFFICIENT, ZERO ,BODYTEMP_HEAT_DAMAGE_LIMIT) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/red_mead
 	name = "Red Mead"
 	description = "The true Viking drink! Even though it has a strange red color."
-	color = "#C73C00" // rgb: 199, 60, 0
+	color = "#C73C00" // rgb: 199, 60, ZERO
 	boozepwr = 31 //Red drinks are stronger
 	quality = DRINK_GOOD
 	taste_description = "sweet and salty alcohol"
@@ -979,7 +979,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/mead
 	name = "Mead"
 	description = "A Viking drink, though a cheap one."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	boozepwr = 30
 	quality = DRINK_NICE
@@ -991,7 +991,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/iced_beer
 	name = "Iced Beer"
 	description = "A beer which is so cold the air around it freezes."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 15
 	taste_description = "refreshingly cold"
 	glass_icon_state = "iced_beerglass"
@@ -1005,7 +1005,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/grog
 	name = "Grog"
 	description = "Watered down rum, Nanotrasen approves!"
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 1 //Basically nothing
 	taste_description = "a poor excuse for alcohol"
 	glass_icon_state = "grogglass"
@@ -1016,7 +1016,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/aloe
 	name = "Aloe"
 	description = "So very, very, very good."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 35
 	quality = DRINK_VERYGOOD
 	taste_description = "sweet 'n creamy"
@@ -1027,7 +1027,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/andalusia
 	name = "Andalusia"
 	description = "A nice, strangely named drink."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 40
 	quality = DRINK_GOOD
 	taste_description = "lemons"
@@ -1038,7 +1038,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/alliescocktail
 	name = "Allies Cocktail"
 	description = "A drink made from your allies. Not as sweet as those made from your enemies."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 45
 	quality = DRINK_NICE
 	taste_description = "bitter yet free"
@@ -1049,7 +1049,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/acid_spit
 	name = "Acid Spit"
 	description = "A drink for the daring, can be deadly if incorrectly prepared!"
-	color = "#365000" // rgb: 54, 80, 0
+	color = "#365000" // rgb: 54, 80, ZERO
 	boozepwr = 70
 	quality = DRINK_VERYGOOD
 	taste_description = "stomach acid"
@@ -1060,7 +1060,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/amasec
 	name = "Amasec"
 	description = "Official drink of the Nanotrasen Gun-Club!"
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 35
 	quality = DRINK_GOOD
 	taste_description = "dark and metallic"
@@ -1084,7 +1084,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		var/datum/antagonist/changeling/changeling = M.mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling)
 			changeling.chem_charges += metabolization_rate
-			changeling.chem_charges = CLAMP(changeling.chem_charges, 0, changeling.chem_storage)
+			changeling.chem_charges = CLAMP(changeling.chem_charges, ZERO, changeling.chem_storage)
 	return ..()
 
 /datum/reagent/consumable/ethanol/irishcarbomb
@@ -1159,7 +1159,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	name = "Silencer"
 	description = "A drink from Mime Heaven."
 	nutriment_factor = 1 * REAGENTS_METABOLISM
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#664300" // rgb: 102, 67, ZERO
 	boozepwr = 59 //Proof that clowns are better than mimes right here
 	quality = DRINK_GOOD
 	taste_description = "a pencil eraser"
@@ -1177,7 +1177,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/drunkenblumpkin
 	name = "Drunken Blumpkin"
 	description = "A weird mix of whiskey and blumpkin juice."
-	color = "#1EA0FF" // rgb: 102, 67, 0
+	color = "#1EA0FF" // rgb: 102, 67, ZERO
 	boozepwr = 50
 	quality = DRINK_VERYGOOD
 	taste_description = "molasses and a mouthful of pool water"
@@ -1231,7 +1231,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/hearty_punch
 	name = "Hearty Punch"
 	description = "Brave bull/syndicate bomb/absinthe mixture resulting in an energizing beverage. Mild alcohol content."
-	color = rgb(140, 0, 0)
+	color = rgb(140, ZERO, ZERO)
 	boozepwr = 90
 	quality = DRINK_VERYGOOD
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
@@ -1241,12 +1241,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Aromatic beverage served piping hot. According to folk tales it can almost wake the dead."
 
 /datum/reagent/consumable/ethanol/hearty_punch/on_mob_life(mob/living/carbon/M)
-	if(M.health <= 0)
-		M.adjustBruteLoss(-3, 0)
-		M.adjustFireLoss(-3, 0)
-		M.adjustCloneLoss(-5, 0)
-		M.adjustOxyLoss(-4, 0)
-		M.adjustToxLoss(-3, 0)
+	if(M.health <= ZERO)
+		M.adjustBruteLoss(-3, ZERO)
+		M.adjustFireLoss(-3, ZERO)
+		M.adjustCloneLoss(-5, ZERO)
+		M.adjustOxyLoss(-4, ZERO)
+		M.adjustToxLoss(-3, ZERO)
 		. = 1
 	return ..() || .
 
@@ -1265,8 +1265,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/atomicbomb
 	name = "Atomic Bomb"
 	description = "Nuclear proliferation never tasted so good."
-	color = "#666300" // rgb: 102, 99, 0
-	boozepwr = 0 //custom drunk effect
+	color = "#666300" // rgb: 102, 99, ZERO
+	boozepwr = ZERO //custom drunk effect
 	quality = DRINK_FANTASTIC
 	taste_description = "da bomb"
 	glass_icon_state = "atomicbombglass"
@@ -1276,7 +1276,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/atomicbomb/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(50)
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
-		M.confused = max(M.confused+2,0)
+		M.confused = max(M.confused+2,ZERO)
 		M.Dizzy(10)
 	if (!M.slurring)
 		M.slurring = 1
@@ -1287,15 +1287,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			. = 1
 		if(201 to INFINITY)
 			M.AdjustSleeping(40, FALSE)
-			M.adjustToxLoss(2, 0)
+			M.adjustToxLoss(2, ZERO)
 			. = 1
 	..()
 
 /datum/reagent/consumable/ethanol/gargle_blaster
 	name = "Pan-Galactic Gargle Blaster"
 	description = "Whoah, this stuff looks volatile!"
-	color = "#664300" // rgb: 102, 67, 0
-	boozepwr = 0 //custom drunk effect
+	color = "#664300" // rgb: 102, 67, ZERO
+	boozepwr = ZERO //custom drunk effect
 	quality = DRINK_GOOD
 	taste_description = "your brains smashed out by a lemon wrapped around a gold brick"
 	glass_icon_state = "gargleblasterglass"
@@ -1311,11 +1311,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			M.slurring += 3
 		if(45 to 55)
 			if(prob(50))
-				M.confused = max(M.confused+3,0)
+				M.confused = max(M.confused+3,ZERO)
 		if(55 to 200)
 			M.set_drugginess(55)
 		if(200 to INFINITY)
-			M.adjustToxLoss(2, 0)
+			M.adjustToxLoss(2, ZERO)
 			. = 1
 	..()
 
@@ -1368,9 +1368,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/hippies_delight
 	name = "Hippie's Delight"
 	description = "You just don't get it maaaan."
-	color = "#664300" // rgb: 102, 67, 0
-	nutriment_factor = 0
-	boozepwr = 0 //custom drunk effect
+	color = "#664300" // rgb: 102, 67, ZERO
+	nutriment_factor = ZERO
+	boozepwr = ZERO //custom drunk effect
 	quality = DRINK_FANTASTIC
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	taste_description = "giving peace a chance"
@@ -1406,7 +1406,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			if(prob(40))
 				M.emote(pick("twitch","giggle"))
 			if(prob(30))
-				M.adjustToxLoss(2, 0)
+				M.adjustToxLoss(2, ZERO)
 				. = 1
 	..()
 
@@ -1484,7 +1484,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	//Securidrink in line with the Screwdriver for engineers or Nothing for mimes
 	if(HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.heal_bodypart_damage(1, 1)
-		M.adjustBruteLoss(-2,0)
+		M.adjustBruteLoss(-2,ZERO)
 		. = 1
 	return ..()
 
@@ -1503,10 +1503,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	//Securidrink in line with the Screwdriver for engineers or Nothing for mimes but STRONG..
 	if(HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.heal_bodypart_damage(2,2,2)
-		M.adjustBruteLoss(-5,0)
-		M.adjustOxyLoss(-5,0)
-		M.adjustFireLoss(-5,0)
-		M.adjustToxLoss(-5,0)
+		M.adjustBruteLoss(-5,ZERO)
+		M.adjustOxyLoss(-5,ZERO)
+		M.adjustFireLoss(-5,ZERO)
+		M.adjustToxLoss(-5,ZERO)
 		. = 1
 	return ..()
 
@@ -1547,7 +1547,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_metabolize(mob/living/L)
 	var/heal_points = 10
-	if(L.health <= 0)
+	if(L.health <= ZERO)
 		heal_points = 20 //heal more if we're in softcrit
 	for(var/i in 1 to min(volume, heal_points)) //only heals 1 point of damage per unit on add, for balance reasons
 		L.adjustBruteLoss(-1)
@@ -1560,7 +1560,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		L.visible_message("<span class='danger'>[L] lurches to [L.p_their()] feet!</span>", "<span class='boldnotice'>Up and at 'em, kid.</span>")
 
 /datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_life(mob/living/L)
-	if(L.health > 0)
+	if(L.health > ZERO)
 		L.adjustBruteLoss(-1)
 		L.adjustFireLoss(-1)
 		L.adjustToxLoss(-0.5)
@@ -1651,7 +1651,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/peppermint_patty/on_mob_life(mob/living/carbon/M)
 	M.apply_status_effect(/datum/status_effect/throat_soothed)
-	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, ZERO, BODYTEMP_NORMAL)
 	..()
 
 /datum/reagent/consumable/ethanol/alexander
@@ -1754,9 +1754,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/fernet/on_mob_life(mob/living/carbon/M)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
-		M.adjustToxLoss(1*REM, 0)
+		M.adjustToxLoss(1*REM, ZERO)
 	M.adjust_nutrition(-5)
-	M.overeatduration = 0
+	M.overeatduration = ZERO
 	return ..()
 
 /datum/reagent/consumable/ethanol/fernet_cola
@@ -1772,9 +1772,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/fernet_cola/on_mob_life(mob/living/carbon/M)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
-		M.adjustToxLoss(0.5*REM, 0)
+		M.adjustToxLoss(0.5*REM, ZERO)
 	M.adjust_nutrition(- 3)
-	M.overeatduration = 0
+	M.overeatduration = ZERO
 	return ..()
 
 /datum/reagent/consumable/ethanol/fanciulli
@@ -1791,11 +1791,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/fanciulli/on_mob_life(mob/living/carbon/M)
 	M.adjust_nutrition(-5)
-	M.overeatduration = 0
+	M.overeatduration = ZERO
 	return ..()
 
 /datum/reagent/consumable/ethanol/fanciulli/on_mob_metabolize(mob/living/M)
-	if(M.health > 0)
+	if(M.health > ZERO)
 		M.adjustStaminaLoss(20)
 		. = TRUE
 	..()
@@ -1818,7 +1818,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return ..()
 
 /datum/reagent/consumable/ethanol/branca_menta/on_mob_metabolize(mob/living/M)
-	if(M.health > 0)
+	if(M.health > ZERO)
 		M.adjustStaminaLoss(35)
 		. = TRUE
 	..()
@@ -1883,7 +1883,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	generate_data_info(data)
 
 /datum/reagent/consumable/ethanol/fruit_wine/proc/generate_data_info(list/data)
-	var/minimum_percent = 0.15 //Percentages measured between 0 and 1.
+	var/minimum_percent = 0.15 //Percentages measured between ZERO and 1.
 	var/list/primary_tastes = list()
 	var/list/secondary_tastes = list()
 	glass_name = "glass of [name]"
@@ -1920,7 +1920,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			alcohol_description = "rich"
 		if(20 to 40)
 			alcohol_description = "mild"
-		if(0 to 20)
+		if(ZERO to 20)
 			alcohol_description = "sweet"
 		else
 			alcohol_description = "watery" //How the hell did you get negative boozepwr?
@@ -1973,8 +1973,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	//A healing drink similar to Quadruple Sec, Ling Stings, and Screwdrivers for the Wizznerds; the check is consistent with the changeling sting
 	if(M?.mind?.has_antag_datum(/datum/antagonist/wizard))
 		M.heal_bodypart_damage(1,1,1)
-		M.adjustOxyLoss(-1,0)
-		M.adjustToxLoss(-1,0)
+		M.adjustOxyLoss(-1,ZERO)
+		M.adjustToxLoss(-1,ZERO)
 	return ..()
 
 /datum/reagent/consumable/ethanol/bug_spray
@@ -1991,7 +1991,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/bug_spray/on_mob_life(mob/living/carbon/M)
 //Bugs should not drink Bug spray.
 	if(ismoth(M) || isflyperson(M))
-		M.adjustToxLoss(1,0)
+		M.adjustToxLoss(1,ZERO)
 	return ..()
 /datum/reagent/consumable/ethanol/bug_spray/on_mob_metabolize(mob/living/carbon/M)
 
@@ -2066,7 +2066,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 				if(N.age > 969) //Best not let people get older than this or i might incur G-ds wrath
 					M.visible_message("<span class='notice'>[M] becomes older than any man should be.. and crumbles into dust!</span>")
-					M.dust(0,1,0)
+					M.dust(ZERO,1,ZERO)
 
 	return ..()
 
@@ -2105,9 +2105,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/trappist/on_mob_life(mob/living/carbon/M)
 	if(M.mind.isholy)
-		M.adjustFireLoss(-2.5, 0)
-		M.jitteriness = max(0, M.jitteriness-1)
-		M.stuttering = max(0, M.stuttering-1)
+		M.adjustFireLoss(-2.5, ZERO)
+		M.jitteriness = max(ZERO, M.jitteriness-1)
+		M.stuttering = max(ZERO, M.stuttering-1)
 	return ..()
 
 /datum/reagent/consumable/ethanol/blazaam
@@ -2119,7 +2119,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "blazaamglass"
 	glass_name = "Blazaam"
 	glass_desc = "The glass seems to be sliding between realities. Doubles as a Berenstain remover."
-	var/stored_teleports = 0
+	var/stored_teleports = ZERO
 
 /datum/reagent/consumable/ethanol/blazaam/on_mob_life(mob/living/carbon/M)
 	if(M.drunkenness > 40)

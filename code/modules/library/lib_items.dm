@@ -17,11 +17,11 @@
 	desc = "A great place for storing knowledge."
 	anchored = FALSE
 	density = TRUE
-	opacity = 0
+	opacity = ZERO
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
-	var/state = 0
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = ZERO)
+	var/state = ZERO
 	var/list/allowed_books = list(/obj/item/book, /obj/item/spellbook, /obj/item/storage/book) //Things allowed in the bookcase
 
 /obj/structure/bookcase/examine(mob/user)
@@ -31,7 +31,7 @@
 	else
 		. += "<span class='notice'>It's secured in place with <b>bolts</b>.</span>"
 	switch(state)
-		if(0)
+		if(ZERO)
 			. += "<span class='notice'>There's a <b>small crack</b> visible on the back panel.</span>"
 		if(1)
 			. += "<span class='notice'>There's space inside for a <i>wooden</i> shelf.</span>"
@@ -52,7 +52,7 @@
 
 /obj/structure/bookcase/attackby(obj/item/I, mob/user, params)
 	switch(state)
-		if(0)
+		if(ZERO)
 			if(I.tool_behaviour == TOOL_WRENCH)
 				if(I.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
@@ -75,7 +75,7 @@
 				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You unwrench the frame.</span>")
 				anchored = FALSE
-				state = 0
+				state = ZERO
 
 		if(2)
 			var/datum/component/storage/STR = I.GetComponent(/datum/component/storage)
@@ -193,9 +193,9 @@
 	drop_sound = 'sound/items/handling/book_drop.ogg'
 	pickup_sound =  'sound/items/handling/book_pickup.ogg'
 	var/dat				//Actual page content
-	var/due_date = 0	//Game time in 1/10th seconds
+	var/due_date = ZERO	//Game time in 1/10th seconds
 	var/author			//Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
-	var/unique = 0		//0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
+	var/unique = ZERO		//ZERO - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 	var/title			//The real name of the book.
 	var/window_size = null // Specific window size for the book, i.e: "1920x1080", Size x Width
 
@@ -268,7 +268,7 @@
 			to_chat(user, "<span class='alert'>[I]'s screen flashes: 'No associated computer found!'</span>")
 		else
 			switch(scanner.mode)
-				if(0)
+				if(ZERO)
 					scanner.book = src
 					to_chat(user, "<span class='notice'>[I]'s screen flashes: 'Book stored in buffer.'</span>")
 				if(1)
@@ -326,16 +326,16 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/obj/machinery/computer/libraryconsole/bookmanagement/computer	//Associated computer - Modes 1 to 3 use this
 	var/obj/item/book/book			//Currently scanned book
-	var/mode = 0							//0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
+	var/mode = ZERO							//ZERO - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
 
 /obj/item/barcodescanner/attack_self(mob/user)
 	mode += 1
 	if(mode > 3)
-		mode = 0
+		mode = ZERO
 	to_chat(user, "[src] Status Display:")
 	var/modedesc
 	switch(mode)
-		if(0)
+		if(ZERO)
 			modedesc = "Scan book to local buffer."
 		if(1)
 			modedesc = "Scan book to local buffer and set associated computer buffer to match."

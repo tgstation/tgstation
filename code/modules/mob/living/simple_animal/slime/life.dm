@@ -1,14 +1,14 @@
 
 /mob/living/simple_animal/slime
-	var/AIproc = 0 // determines if the AI loop is activated
-	var/Atkcool = 0 // attack cooldown
-	var/Tempstun = 0 // temporary temperature stuns
+	var/AIproc = ZERO // determines if the AI loop is activated
+	var/Atkcool = ZERO // attack cooldown
+	var/Tempstun = ZERO // temporary temperature stuns
 	var/Discipline = 0 // if a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
-	var/SStun = 0 // stun variable
+	var/SStun = ZERO // stun variable
 
 
 /mob/living/simple_animal/slime/Life()
-	set invisibility = 0
+	set invisibility = ZERO
 	if (notransform)
 		return
 	if(..())
@@ -26,7 +26,7 @@
 
 // Unlike most of the simple animals, slimes support UNCONSCIOUS
 /mob/living/simple_animal/slime/update_stat()
-	if(stat == UNCONSCIOUS && health > 0)
+	if(stat == UNCONSCIOUS && health > ZERO)
 		return
 	..()
 
@@ -35,7 +35,7 @@
 	if(AIproc || stat || client)
 		return
 
-	var/hungry = 0
+	var/hungry = ZERO
 	if (nutrition < get_starve_nutrition())
 		hungry = 2
 	else if (nutrition < get_grow_nutrition() && prob(25) || nutrition < get_hunger_nutrition())
@@ -52,13 +52,13 @@
 
 		if(Target.health <= -70 || Target.stat == DEAD)
 			Target = null
-			AIproc = 0
+			AIproc = ZERO
 			break
 
 		if(Target)
 			if(locate(/mob/living/simple_animal/slime) in Target.buckled_mobs)
 				Target = null
-				AIproc = 0
+				AIproc = ZERO
 				break
 			if(!AIproc)
 				break
@@ -96,16 +96,16 @@
 					step_to(src, Target)
 			else
 				Target = null
-				AIproc = 0
+				AIproc = ZERO
 				break
 
 		var/sleeptime = cached_multiplicative_slowdown
-		if(sleeptime <= 0)
+		if(sleeptime <= ZERO)
 			sleeptime = 1
 
 		sleep(sleeptime + 2) // this is about as fast as a player slime can go
 
-	AIproc = 0
+	AIproc = ZERO
 
 /mob/living/simple_animal/slime/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
@@ -128,10 +128,10 @@
 				adjustBruteLoss(round(sqrt(bodytemperature)) * 2)
 
 	else
-		Tempstun = 0
+		Tempstun = ZERO
 
 	if(stat != DEAD)
-		var/bz_percentage =0
+		var/bz_percentage =ZERO
 		if(environment.gases[/datum/gas/bz])
 			bz_percentage = environment.gases[/datum/gas/bz][MOLES] / environment.total_moles()
 		var/stasis = (bz_percentage >= 0.05 && bodytemperature < (T0C + 100)) || force_stasis
@@ -139,8 +139,8 @@
 		if(stat == CONSCIOUS && stasis)
 			to_chat(src, "<span class='danger'>Nerve gas in the air has put you in stasis!</span>")
 			stat = UNCONSCIOUS
-			powerlevel = 0
-			rabid = 0
+			powerlevel = ZERO
+			rabid = ZERO
 			update_mobility()
 			regenerate_icons()
 		else if(stat == UNCONSCIOUS && !stasis)
@@ -220,16 +220,16 @@
 	else if(isanimal(M))
 		var/mob/living/simple_animal/SA = M
 
-		var/totaldamage = 0 //total damage done to this unfortunate animal
+		var/totaldamage = ZERO //total damage done to this unfortunate animal
 		totaldamage += SA.adjustCloneLoss(rand(2,4))
 		totaldamage += SA.adjustToxLoss(rand(1,2))
 
-		if(totaldamage <= 0) //if we did no(or negative!) damage to it, stop
-			Feedstop(0, 0)
+		if(totaldamage <= ZERO) //if we did no(or negative!) damage to it, stop
+			Feedstop(ZERO, ZERO)
 			return
 
 	else
-		Feedstop(0, 0)
+		Feedstop(ZERO, ZERO)
 		return
 
 	add_nutrition((rand(7, 15) * CONFIG_GET(number/damage_multiplier)))
@@ -246,10 +246,10 @@
 	if(prob(15))
 		adjust_nutrition(-(1 + is_adult))
 
-	if(nutrition <= 0)
-		set_nutrition(0)
+	if(nutrition <= ZERO)
+		set_nutrition(ZERO)
 		if(prob(75))
-			adjustBruteLoss(rand(0,5))
+			adjustBruteLoss(rand(ZERO,5))
 
 	else if (nutrition >= get_grow_nutrition() && amount_grown < SLIME_EVOLUTION_THRESHOLD)
 		adjust_nutrition(-20)
@@ -262,7 +262,7 @@
 		else
 			Evolve()
 
-/mob/living/simple_animal/slime/proc/add_nutrition(nutrition_to_add = 0)
+/mob/living/simple_animal/slime/proc/add_nutrition(nutrition_to_add = ZERO)
 	set_nutrition(min((nutrition + nutrition_to_add), get_max_nutrition()))
 	if(nutrition >= get_grow_nutrition())
 		if(powerlevel<10)
@@ -285,14 +285,14 @@
 	if(attacked > 50)
 		attacked = 50
 
-	if(attacked > 0)
+	if(attacked > ZERO)
 		attacked--
 
-	if(Discipline > 0)
+	if(Discipline > ZERO)
 
 		if(Discipline >= 5 && rabid)
 			if(prob(60))
-				rabid = 0
+				rabid = ZERO
 
 		if(prob(10))
 			Discipline--
@@ -306,14 +306,14 @@
 
 		if(Target)
 			--target_patience
-			if (target_patience <= 0 || SStun > world.time || Discipline || attacked || docile) // Tired of chasing or something draws out attention
-				target_patience = 0
+			if (target_patience <= ZERO || SStun > world.time || Discipline || attacked || docile) // Tired of chasing or something draws out attention
+				target_patience = ZERO
 				Target = null
 
 		if(AIproc && SStun > world.time)
 			return
 
-		var/hungry = 0 // determines if the slime is hungry
+		var/hungry = ZERO // determines if the slime is hungry
 
 		if (nutrition < get_starve_nutrition())
 			hungry = 2
@@ -321,7 +321,7 @@
 			hungry = 1
 
 		if(hungry == 2 && !client) // if a slime is starving, it starts losing its friends
-			if(Friends.len > 0 && prob(1))
+			if(Friends.len > ZERO && prob(1))
 				var/mob/nofriend = pick(Friends)
 				--Friends[nofriend]
 
@@ -355,7 +355,7 @@
 
 					targets += L // Possible target found!
 
-				if(targets.len > 0)
+				if(targets.len > ZERO)
 					if(attacked || rabid || hungry == 2)
 						Target = targets[1] // I am attacked and am fighting back or so hungry I don't even care
 					else
@@ -377,19 +377,19 @@
 		if(!Target) // If we have no target, we are wandering or following orders
 			if (Leader)
 				if(holding_still)
-					holding_still = max(holding_still - 1, 0)
+					holding_still = max(holding_still - 1, ZERO)
 				else if((mobility_flags & MOBILITY_MOVE) && isturf(loc))
 					step_to(src, Leader)
 
 			else if(hungry)
 				if (holding_still)
-					holding_still = max(holding_still - hungry, 0)
+					holding_still = max(holding_still - hungry, ZERO)
 				else if((mobility_flags & MOBILITY_MOVE) && isturf(loc) && prob(50))
 					step(src, pick(GLOB.cardinals))
 
 			else
 				if(holding_still)
-					holding_still = max(holding_still - 1, 0)
+					holding_still = max(holding_still - 1, ZERO)
 				else if (docile && pulledby)
 					holding_still = 10
 				else if((mobility_flags & MOBILITY_MOVE) && isturf(loc) && prob(33))
@@ -429,7 +429,7 @@
 /mob/living/simple_animal/slime/proc/handle_speech()
 	//Speech understanding starts here
 	var/to_say
-	if (speech_buffer.len > 0)
+	if (speech_buffer.len > ZERO)
 		var/who = speech_buffer[1] // Who said it?
 		var/phrase = speech_buffer[2] // What did they say?
 		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slimes"))) // Talking to us
@@ -525,8 +525,8 @@
 		emote(pick("bounce","sway","light","vibrate","jiggle"))
 	else
 		var/t = 10
-		var/slimes_near = 0
-		var/dead_slimes = 0
+		var/slimes_near = ZERO
+		var/dead_slimes = ZERO
 		var/friends_near = list()
 		for (var/mob/living/L in view(7,src))
 			if(isslime(L) && L != src)
@@ -624,11 +624,11 @@
 
 /mob/living/simple_animal/slime/proc/will_hunt(hunger = -1) // Check for being stopped from feeding and chasing
 	if (docile)
-		return 0
+		return ZERO
 	if (hunger == 2 || rabid || attacked)
 		return 1
 	if (Leader)
-		return 0
+		return ZERO
 	if (holding_still)
-		return 0
+		return ZERO
 	return 1

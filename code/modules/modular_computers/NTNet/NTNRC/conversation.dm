@@ -5,7 +5,7 @@
 	var/list/messages = list()
 	var/list/clients = list()
 	var/password
-	var/static/ntnrc_uid = 0
+	var/static/ntnrc_uid = ZERO
 
 /datum/ntnet_conversation/New()
 	id = ntnrc_uid++
@@ -30,7 +30,7 @@
 /datum/ntnet_conversation/proc/trim_message_list()
 	if(messages.len <= 50)
 		return
-	messages = messages.Copy(messages.len-50 ,0)
+	messages = messages.Copy(messages.len-50 ,ZERO)
 
 /datum/ntnet_conversation/proc/add_client(datum/computer_file/program/chatclient/C)
 	if(!istype(C))

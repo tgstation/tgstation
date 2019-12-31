@@ -41,7 +41,7 @@
 	if(!showpipe)
 		return //no need to update the pipes if they aren't showing
 
-	var/connected = 0 //Direction bitset
+	var/connected = ZERO //Direction bitset
 
 	for(var/i in 1 to device_type) //adds intact pieces
 		if(nodes[i])
@@ -115,7 +115,7 @@
 		//Remove the gas from airs and assume it
 		var/datum/gas_mixture/environment = T.return_air()
 		var/lost = null
-		var/times_lost = 0
+		var/times_lost = ZERO
 		for(var/i in 1 to device_type)
 			var/datum/gas_mixture/air = airs[i]
 			lost += pressures*environment.volume/(air.temperature * R_IDEAL_GAS_EQUATION)

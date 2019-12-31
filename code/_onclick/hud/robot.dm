@@ -238,7 +238,7 @@
 		for(var/atom/movable/A in R.module.get_inactive_modules())
 			//Module is not currently active
 			screenmob.client.screen += A
-			if(x < 0)
+			if(x < ZERO)
 				A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
 			else
 				A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
@@ -257,7 +257,7 @@
 		for(var/atom/A in R.module.get_inactive_modules())
 			//Module is not currently active
 			screenmob.client.screen -= A
-		R.shown_robot_modules = 0
+		R.shown_robot_modules = ZERO
 		screenmob.client.screen -= R.robot_modules_background
 
 /datum/hud/robot/persistent_inventory_update(mob/viewer)

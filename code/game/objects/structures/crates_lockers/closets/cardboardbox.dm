@@ -6,8 +6,8 @@
 	mob_storage_capacity = 1
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
-	integrity_failure = 0
-	can_weld_shut = 0
+	integrity_failure = ZERO
+	can_weld_shut = ZERO
 	cutting_tool = /obj/item/wirecutters
 	material_drop = /obj/item/stack/sheet/cardboard
 	delivery_icon = "deliverybox"
@@ -18,7 +18,7 @@
 	close_sound_volume = 35
 	var/move_speed_multiplier = 1
 	var/move_delay = FALSE
-	var/egged = 0
+	var/egged = ZERO
 
 /obj/structure/closet/cardboard/relaymove(mob/living/user, direction)
 	if(!istype(user) || opened || move_delay || user.incapacitated() || !isturf(loc) || !has_gravity(loc))
@@ -36,7 +36,7 @@
 
 /obj/structure/closet/cardboard/open()
 	if(opened || !can_open())
-		return 0
+		return ZERO
 	var/list/alerted = null
 	if(egged < world.time)
 		var/mob/living/Snake = null
@@ -58,7 +58,7 @@
 /mob/living/proc/do_alert_animation(atom/A)
 	var/image/I = image('icons/obj/closet.dmi', A, "cardboard_special", A.layer+1)
 	flick_overlay_view(I, A, 8)
-	I.alpha = 0
+	I.alpha = ZERO
 	animate(I, pixel_z = 32, alpha = 255, time = 5, easing = ELASTIC_EASING)
 
 

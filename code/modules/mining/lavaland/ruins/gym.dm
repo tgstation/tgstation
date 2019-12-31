@@ -48,7 +48,7 @@
 
 		playsound(user, 'sound/machines/click.ogg', 60, TRUE)
 		obj_flags &= ~IN_USE
-		user.pixel_y = 0
+		user.pixel_y = ZERO
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "exercise", /datum/mood_event/exercise)
 		icon_state = initial(icon_state)
@@ -61,7 +61,7 @@
 	icon_state_inuse = "fitnesslifter2"
 
 /obj/structure/weightmachine/stacklifter/AnimateMachine(mob/living/user)
-	var/lifts = 0
+	var/lifts = ZERO
 	while (lifts++ < 6)
 		if (user.loc != src.loc)
 			break
@@ -80,12 +80,12 @@
 /obj/structure/weightmachine/weightlifter/AnimateMachine(mob/living/user)
 	var/mutable_appearance/swole_overlay = mutable_appearance(icon, "fitnessweight-w", WALL_OBJ_LAYER)
 	add_overlay(swole_overlay)
-	var/reps = 0
+	var/reps = ZERO
 	user.pixel_y = 5
 	while (reps++ < 6)
 		if (user.loc != src.loc)
 			break
-		for (var/innerReps = max(reps, 1), innerReps > 0, innerReps--)
+		for (var/innerReps = max(reps, 1), innerReps > ZERO, innerReps--)
 			sleep(3)
 			animate(user, pixel_y = (user.pixel_y == 3) ? 5 : 3, time = 3)
 		playsound(user, 'goon/sound/effects/spring.ogg', 60, TRUE)

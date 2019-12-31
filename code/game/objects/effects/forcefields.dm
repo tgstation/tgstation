@@ -3,10 +3,10 @@
 	name = "FORCEWALL"
 	icon_state = "m_shield"
 	anchored = TRUE
-	opacity = 0
+	opacity = ZERO
 	density = TRUE
 	CanAtmosPass = ATMOS_PASS_DENSITY
-	var/timeleft = 300 //Set to 0 for permanent forcefields (ugh)
+	var/timeleft = 300 //Set to ZERO for permanent forcefields (ugh)
 
 /obj/effect/forcefield/Initialize()
 	. = ..()
@@ -30,7 +30,7 @@
 	icon_state = "nothing"
 	name = "invisible wall"
 	desc = "You have a bad feeling about this."
-	alpha = 0
+	alpha = ZERO
 
 /obj/effect/forcefield/mime/advanced
 	name = "invisible blockade"

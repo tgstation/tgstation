@@ -17,7 +17,7 @@
 	RegisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/on_attack_hand)
 
 /datum/mutation/human/chameleon/on_life()
-	owner.alpha = max(0, owner.alpha - 25)
+	owner.alpha = max(ZERO, owner.alpha - 25)
 
 /datum/mutation/human/chameleon/proc/on_move()
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY

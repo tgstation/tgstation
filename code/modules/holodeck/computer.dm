@@ -44,7 +44,7 @@
 	var/damaged = FALSE
 	var/list/spawned = list()
 	var/list/effects = list()
-	var/current_cd = 0
+	var/current_cd = ZERO
 
 /obj/machinery/computer/holodeck/Initialize(mapload)
 	..()
@@ -155,7 +155,7 @@
 	if(!(obj_flags & EMAGGED))
 		for(var/item in spawned)
 			if(!(get_turf(item) in linked))
-				derez(item, 0)
+				derez(item, ZERO)
 	for(var/e in effects)
 		var/obj/effect/holodeck_effect/HE = e
 		HE.tick()

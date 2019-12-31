@@ -51,7 +51,7 @@
 					var/obj/item/clothing/shoes/magboots/M = H.shoes
 					if(M.magpulse)
 						continue
-				H.apply_effect(20, EFFECT_PARALYZE, 0)
+				H.apply_effect(20, EFFECT_PARALYZE, ZERO)
 				step_towards(H,pull)
 				step_towards(H,pull)
 				step_towards(H,pull)
@@ -63,10 +63,10 @@
 		return
 	if(wielded)
 		if(charged == 5)
-			charged = 0
+			charged = ZERO
 			if(istype(A, /mob/living/))
 				var/mob/living/Z = A
-				Z.take_bodypart_damage(20,0)
+				Z.take_bodypart_damage(20,ZERO)
 			playsound(user, 'sound/weapons/marauder.ogg', 50, TRUE)
 			var/turf/target = get_turf(A)
 			vortex(target,user)

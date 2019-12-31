@@ -52,7 +52,7 @@
 		showpiece.forceMove(loc)
 		showpiece = null
 
-/obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BRUTE)
 			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
@@ -143,7 +143,7 @@
 		to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
 		if(do_after(user, 20, target = src))
 			G.use(2)
-			broken = 0
+			broken = ZERO
 			obj_integrity = max_integrity
 			update_icon()
 	else
@@ -247,7 +247,7 @@
 	var/is_locked = TRUE
 
 	alert = TRUE
-	integrity_failure = 0
+	integrity_failure = ZERO
 	openable = FALSE
 
 /obj/structure/displaycase/trophy/Initialize()

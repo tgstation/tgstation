@@ -9,7 +9,7 @@
 	armour_penetration = 50
 	var/breakthings = TRUE
 
-/obj/projectile/bullet/p50/on_hit(atom/target, blocked = 0)
+/obj/projectile/bullet/p50/on_hit(atom/target, blocked = ZERO)
 	if(isobj(target) && (blocked != 100) && breakthings)
 		var/obj/O = target
 		O.take_damage(80, BRUTE, "bullet", FALSE)
@@ -17,10 +17,10 @@
 
 /obj/projectile/bullet/p50/soporific
 	name =".50 soporific bullet"
-	armour_penetration = 0
-	damage = 0
-	dismemberment = 0
-	paralyze = 0
+	armour_penetration = ZERO
+	damage = ZERO
+	dismemberment = ZERO
+	paralyze = ZERO
 	breakthings = FALSE
 
 /obj/projectile/bullet/p50/soporific/on_hit(atom/target, blocked = FALSE)
@@ -34,8 +34,8 @@
 	icon_state = "gauss"
 	damage = 60
 	movement_type = FLYING | UNSTOPPABLE
-	dismemberment = 0 //It goes through you cleanly.
-	paralyze = 0
+	dismemberment = ZERO //It goes through you cleanly.
+	paralyze = ZERO
 	breakthings = FALSE
 
 /obj/projectile/bullet/p50/penetrator/shuttle //Nukeop Shuttle Variety

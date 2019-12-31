@@ -12,8 +12,8 @@
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
 	var/obj/item/gun/ballistic/minigun/gun
-	var/armed = 0 //whether the gun is attached, 0 is attached, 1 is the gun is wielded.
-	var/overheat = 0
+	var/armed = ZERO //whether the gun is attached, ZERO is attached, 1 is the gun is wielded.
+	var/overheat = ZERO
 	var/overheat_max = 40
 	var/heat_diffusion = 1
 
@@ -27,7 +27,7 @@
 	return ..()
 
 /obj/item/minigunpack/process()
-	overheat = max(0, overheat - heat_diffusion)
+	overheat = max(ZERO, overheat - heat_diffusion)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/minigunpack/attack_hand(var/mob/living/carbon/user)
@@ -36,7 +36,7 @@
 			if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
 				armed = 1
 				if(!user.put_in_hands(gun))
-					armed = 0
+					armed = ZERO
 					to_chat(user, "<span class='warning'>You need a free hand to hold the gun!</span>")
 					return
 				update_icon()
@@ -84,7 +84,7 @@
 	if(!gun)
 		gun = new(src)
 	gun.forceMove(src)
-	armed = 0
+	armed = ZERO
 	if(user)
 		to_chat(user, "<span class='notice'>You attach the [gun.name] to the [name].</span>")
 	else
@@ -105,7 +105,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	custom_materials = null
 	burst_size = 3
-	automatic = 0
+	automatic = ZERO
 	fire_delay = 1
 	weapon_weight = WEAPON_HEAVY
 	fire_sound = 'sound/weapons/laser.ogg'
@@ -127,13 +127,13 @@
 	return
 
 /obj/item/gun/ballistic/minigun/dropped(mob/user)
-	SHOULD_CALL_PARENT(0)
+	SHOULD_CALL_PARENT(ZERO)
 	if(ammo_pack)
 		ammo_pack.attach_gun(user)
 	else
 		qdel(src)
 
-/obj/item/gun/ballistic/minigun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/ballistic/minigun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = ZERO)
 	if(ammo_pack)
 		if(ammo_pack.overheat < ammo_pack.overheat_max)
 			ammo_pack.overheat += burst_size

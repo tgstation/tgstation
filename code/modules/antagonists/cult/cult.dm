@@ -88,7 +88,7 @@
 	var/where = mob.equip_in_one_of_slots(T, slots)
 	if(!where)
 		to_chat(mob, "<span class='userdanger'>Unfortunately, you weren't able to get a [item_name]. This is very bad and you should adminhelp immediately (press F1).</span>")
-		return 0
+		return ZERO
 	else
 		to_chat(mob, "<span class='danger'>You have a [item_name] in your [where].</span>")
 		if(where == "backpack")
@@ -251,8 +251,8 @@
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)
 		return
-	var/alive = 0
-	var/cultplayers = 0
+	var/alive = ZERO
+	var/cultplayers = ZERO
 	for(var/I in GLOB.player_list)
 		var/mob/M = I
 		if(M.stat != DEAD)
@@ -305,7 +305,7 @@
 		if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && !is_convertable_to_cult(player) && player.stat != DEAD)
 			target_candidates += player.mind
 
-	if(target_candidates.len == 0)
+	if(target_candidates.len == ZERO)
 		message_admins("Cult Sacrifice: Could not find unconvertible target, checking for convertible target.")
 		for(var/mob/living/carbon/human/player in GLOB.player_list)
 			if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && player.stat != DEAD)
@@ -355,7 +355,7 @@
 
 /datum/objective/eldergod/New()
 	..()
-	var/sanity = 0
+	var/sanity = ZERO
 	while(summon_spots.len < SUMMON_POSSIBILITIES && sanity < 100)
 		var/area/summon = pick(GLOB.sortedAreas - summon_spots)
 		if(summon && is_station_level(summon.z) && summon.valid_territory)

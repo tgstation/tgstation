@@ -6,7 +6,7 @@
 	floor_tile = /obj/item/stack/tile/light
 	broken_states = list("light_broken")
 	var/on = TRUE
-	var/state = 0//0 = fine, 1 = flickering, 2 = breaking, 3 = broken
+	var/state = ZERO//ZERO = fine, 1 = flickering, 2 = breaking, 3 = broken
 	var/list/coloredlights = list("g", "r", "y", "b", "p", "w", "s","o","g")
 	var/currentcolor = 1
 	var/can_modify_colour = TRUE
@@ -23,14 +23,14 @@
 
 /turf/open/floor/light/break_tile()
 	..()
-	light_range = 0
+	light_range = ZERO
 	update_light()
 
 /turf/open/floor/light/update_icon()
 	..()
 	if(on)
 		switch(state)
-			if(0)
+			if(ZERO)
 				icon_state = "light_on-[coloredlights[currentcolor]]"
 				set_light(1)
 			if(1)
@@ -42,14 +42,14 @@
 				set_light(1)
 			if(3)
 				icon_state = "light_off"
-				set_light(0)
+				set_light(ZERO)
 	else
-		set_light(0)
+		set_light(ZERO)
 		icon_state = "light_off"
 
 
 /turf/open/floor/light/ChangeTurf(path, new_baseturf, flags)
-	set_light(0)
+	set_light(ZERO)
 	return ..()
 
 /turf/open/floor/light/attack_hand(mob/user)
@@ -77,7 +77,7 @@
 	if(istype(C, /obj/item/light/bulb)) //only for light tiles
 		if(state && user.temporarilyRemoveItemFromInventory(C))
 			qdel(C)
-			state = 0 //fixing it by bashing it with a light bulb, fun eh?
+			state = ZERO //fixing it by bashing it with a light bulb, fun eh?
 			update_icon()
 			to_chat(user, "<span class='notice'>You replace the light bulb.</span>")
 		else

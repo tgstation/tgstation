@@ -12,7 +12,7 @@
 	resistance_flags = ACID_PROOF
 	reagent_flags = OPENCONTAINER
 	slot_flags = ITEM_SLOT_BELT
-	var/ignore_flags = 0
+	var/ignore_flags = ZERO
 	var/infinite = FALSE
 
 /obj/item/reagent_containers/hypospray/attack_paw(mob/user)
@@ -43,7 +43,7 @@
 		reagents.reaction(M, INJECT, fraction)
 
 		if(M.reagents)
-			var/trans = 0
+			var/trans = ZERO
 			if(!infinite)
 				trans = reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user)
 			else
@@ -79,7 +79,7 @@
 	list_reagents = list(/datum/reagent/medicine/adminordrazine/quantum_heal = 80, /datum/reagent/medicine/synaptizine = 20)
 
 /obj/item/reagent_containers/hypospray/combat/nanites/update_icon()
-	if(reagents.total_volume > 0)
+	if(reagents.total_volume > ZERO)
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]0"
@@ -118,7 +118,7 @@
 /obj/item/reagent_containers/hypospray/medipen/inject(mob/living/M, mob/user)
 	. = ..()
 	if(.)
-		reagents.maximum_volume = 0 //Makes them useless afterwards
+		reagents.maximum_volume = ZERO //Makes them useless afterwards
 		reagents.flags = NONE
 		update_icon()
 
@@ -127,7 +127,7 @@
 		inject(user, user)
 
 /obj/item/reagent_containers/hypospray/medipen/update_icon()
-	if(reagents.total_volume > 0)
+	if(reagents.total_volume > ZERO)
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]0"
@@ -208,7 +208,7 @@
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/update_icon()
 	if(reagents.total_volume > 30)
 		icon_state = initial(icon_state)
-	else if (reagents.total_volume > 0)
+	else if (reagents.total_volume > ZERO)
 		icon_state = "[initial(icon_state)]1"
 	else
 		icon_state = "[initial(icon_state)]0"
@@ -242,7 +242,7 @@
 	icon_state = "gorillapen"
 	item_state = "gorillapen"
 	volume = 5
-	ignore_flags = 0
+	ignore_flags = ZERO
 	reagent_flags = NONE
 	list_reagents = list(/datum/reagent/magillitis = 5)
 

@@ -51,12 +51,12 @@
 				H.confused += 2
 			if(prob(10) && !H.stat)
 				to_chat(H, "<span class='warning'>You feel kind of iffy...</span>")
-			H.jitteriness = max(H.jitteriness - 3, 0)
+			H.jitteriness = max(H.jitteriness - 3, ZERO)
 		if(H.disgust >= DISGUST_LEVEL_VERYGROSS)
 			if(prob(pukeprob)) //iT hAndLeS mOrE ThaN PukInG
 				H.confused += 2.5
 				H.stuttering += 1
-				H.vomit(10, 0, 1, 0, 1, 0)
+				H.vomit(10, ZERO, 1, ZERO, 1, ZERO)
 			H.Dizzy(5)
 		if(H.disgust >= DISGUST_LEVEL_DISGUSTED)
 			if(prob(25))
@@ -64,7 +64,7 @@
 
 		H.adjust_disgust(-0.5 * disgust_metabolism)
 	switch(H.disgust)
-		if(0 to DISGUST_LEVEL_GROSS)
+		if(ZERO to DISGUST_LEVEL_GROSS)
 			H.clear_alert("disgust")
 			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "disgust")
 		if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
@@ -77,7 +77,7 @@
 			H.throw_alert("disgust", /obj/screen/alert/disgusted)
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgusted)
 
-/obj/item/organ/stomach/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/stomach/Remove(mob/living/carbon/M, special = ZERO)
 	var/mob/living/carbon/human/H = owner
 	if(istype(H))
 		H.clear_alert("disgust")
@@ -104,12 +104,12 @@
 	..()
 	adjust_charge(-ETHEREAL_CHARGE_FACTOR)
 
-/obj/item/organ/stomach/ethereal/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/stomach/ethereal/Insert(mob/living/carbon/M, special = ZERO)
 	..()
 	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
 	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_electrocute)
 
-/obj/item/organ/stomach/ethereal/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/stomach/ethereal/Remove(mob/living/carbon/M, special = ZERO)
 	UnregisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
 	UnregisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT)
 	..()

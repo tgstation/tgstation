@@ -64,7 +64,7 @@
 	if(candidates.len)
 		var/numTraitors = min(candidates.len, 3)
 
-		for(var/i = 0, i<numTraitors, i++)
+		for(var/i = ZERO, i<numTraitors, i++)
 			H = pick(candidates)
 			H.mind.make_Traitor()
 			candidates.Remove(H)
@@ -72,7 +72,7 @@
 		return 1
 
 
-	return 0
+	return ZERO
 
 
 /datum/admins/proc/makeChangelings()
@@ -96,14 +96,14 @@
 	if(candidates.len)
 		var/numChangelings = min(candidates.len, 3)
 
-		for(var/i = 0, i<numChangelings, i++)
+		for(var/i = ZERO, i<numChangelings, i++)
 			H = pick(candidates)
 			H.mind.make_Changeling()
 			candidates.Remove(H)
 
 		return 1
 
-	return 0
+	return ZERO
 
 /datum/admins/proc/makeRevs()
 
@@ -126,13 +126,13 @@
 	if(candidates.len)
 		var/numRevs = min(candidates.len, 3)
 
-		for(var/i = 0, i<numRevs, i++)
+		for(var/i = ZERO, i<numRevs, i++)
 			H = pick(candidates)
 			H.mind.make_Rev()
 			candidates.Remove(H)
 		return 1
 
-	return 0
+	return ZERO
 
 /datum/admins/proc/makeWizard()
 
@@ -165,14 +165,14 @@
 	if(candidates.len)
 		var/numCultists = min(candidates.len, 4)
 
-		for(var/i = 0, i<numCultists, i++)
+		for(var/i = ZERO, i<numCultists, i++)
 			H = pick(candidates)
 			H.mind.make_Cultist()
 			candidates.Remove(H)
 
 		return 1
 
-	return 0
+	return ZERO
 
 
 
@@ -184,9 +184,9 @@
 
 	if(candidates.len)
 		var/numagents = 5
-		var/agentcount = 0
+		var/agentcount = ZERO
 
-		for(var/i = 0, i<numagents,i++)
+		for(var/i = ZERO, i<numagents,i++)
 			shuffle_inplace(candidates) //More shuffles means more randoms
 			for(var/mob/j in candidates)
 				if(!j || !j.client)
@@ -200,7 +200,7 @@
 				break
 		//Making sure we have atleast 3 Nuke agents, because less than that is kinda bad
 		if(agentcount < 3)
-			return 0
+			return ZERO
 
 		//Let's find the spawn locations
 		var/leader_chosen = FALSE
@@ -215,7 +215,7 @@
 				new_character.mind.add_antag_datum(/datum/antagonist/nukeop,nuke_team)
 		return 1
 	else
-		return 0
+		return ZERO
 
 
 
@@ -321,7 +321,7 @@
 		)
 	)
 
-	var/list/prefreturn = presentpreflikepicker(usr,"Customize ERT", "Customize ERT", Button1="Ok", width = 600, StealFocus = 1,Timeout = 0, settings=settings)
+	var/list/prefreturn = presentpreflikepicker(usr,"Customize ERT", "Customize ERT", Button1="Ok", width = 600, StealFocus = 1,Timeout = ZERO, settings=settings)
 
 	if (isnull(prefreturn))
 		return FALSE
@@ -345,7 +345,7 @@
 		var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for [ertemplate.polldesc] ?", "deathsquad", null)
 		var/teamSpawned = FALSE
 
-		if(candidates.len > 0)
+		if(candidates.len > ZERO)
 			//Pick the (un)lucky players
 			var/numagents = min(ertemplate.teamsize,candidates.len)
 
@@ -363,7 +363,7 @@
 			ert_team.mission = missionobj
 
 			var/list/spawnpoints = GLOB.emergencyresponseteamspawn
-			var/index = 0
+			var/index = ZERO
 			while(numagents && candidates.len)
 				var/spawnloc = spawnpoints[index+1]
 				//loop through spawnpoints one at a time

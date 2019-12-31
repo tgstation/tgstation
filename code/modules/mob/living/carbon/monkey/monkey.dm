@@ -71,7 +71,7 @@
 
 /mob/living/carbon/monkey/updatehealth()
 	. = ..()
-	var/slow = 0
+	var/slow = ZERO
 	if(!HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))
 		var/health_deficiency = (maxHealth - health)
 		if(health_deficiency >= 45)
@@ -80,7 +80,7 @@
 
 /mob/living/carbon/monkey/adjust_bodytemperature(amount)
 	. = ..()
-	var/slow = 0
+	var/slow = ZERO
 	if (bodytemperature < 283.222)
 		slow += ((283.222 - bodytemperature) / 10) * 1.75
 	add_movespeed_modifier(MOVESPEED_ID_MONKEY_TEMPERATURE_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = slow)
@@ -126,7 +126,7 @@
 	if(judgement_criteria & JUDGE_EMAGGED)
 		return 10 //Everyone is a criminal!
 
-	var/threatcount = 0
+	var/threatcount = ZERO
 
 	//Securitrons can't identify monkeys
 	if( !(judgement_criteria & JUDGE_IGNOREMONKEYS) && (judgement_criteria & JUDGE_IDCHECK) )
@@ -160,7 +160,7 @@
 
 /mob/living/carbon/monkey/IsVocal()
 	if(!getorganslot(ORGAN_SLOT_LUNGS))
-		return 0
+		return ZERO
 	return 1
 
 /mob/living/carbon/monkey/angry

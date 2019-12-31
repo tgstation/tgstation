@@ -10,11 +10,11 @@
 	anchored = FALSE
 	density = TRUE
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
-	stat = 0
+	stat = ZERO
 	verb_say = "states"
-	var/cooldown = 0
+	var/cooldown = ZERO
 
-	var/active = 0
+	var/active = ZERO
 	var/icontype = "beacon"
 
 
@@ -37,7 +37,7 @@
 		if(singulo.target == src)
 			singulo.target = null
 	icon_state = "[icontype]0"
-	active = 0
+	active = ZERO
 	if(user)
 		to_chat(user, "<span class='notice'>You deactivate the beacon.</span>")
 

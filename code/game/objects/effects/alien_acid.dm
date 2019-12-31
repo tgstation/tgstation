@@ -4,7 +4,7 @@
 	desc = "Burbling corrosive stuff."
 	icon_state = "acid"
 	density = FALSE
-	opacity = 0
+	opacity = ZERO
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = ABOVE_NORMAL_TURF_LAYER
@@ -35,7 +35,7 @@
 	. = 1
 	if(!target)
 		qdel(src)
-		return 0
+		return ZERO
 
 	if(prob(5))
 		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
@@ -45,12 +45,12 @@
 			if(O.acid_level < acid_level*0.3)
 				var/acid_used = min(acid_level*0.05, 20)
 				O.acid_act(10, acid_used)
-				acid_level = max(0, acid_level - acid_used*10)
+				acid_level = max(ZERO, acid_level - acid_used*10)
 
-	acid_level = max(acid_level - (5 + 2*round(sqrt(acid_level))), 0)
-	if(acid_level <= 0)
+	acid_level = max(acid_level - (5 + 2*round(sqrt(acid_level))), ZERO)
+	if(acid_level <= ZERO)
 		qdel(src)
-		return 0
+		return ZERO
 
 /obj/effect/acid/Crossed(AM as mob|obj)
 	if(isliving(AM))
@@ -60,7 +60,7 @@
 		if(L.m_intent != MOVE_INTENT_WALK && prob(40))
 			var/acid_used = min(acid_level*0.05, 20)
 			if(L.acid_act(10, acid_used, "feet"))
-				acid_level = max(0, acid_level - acid_used*10)
+				acid_level = max(ZERO, acid_level - acid_used*10)
 				playsound(L, 'sound/weapons/sear.ogg', 50, TRUE)
 				to_chat(L, "<span class='userdanger'>[src] burns you!</span>")
 
@@ -75,7 +75,7 @@
 		if(prob(45))
 			playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
 		target_strength--
-		if(target_strength <= 0)
+		if(target_strength <= ZERO)
 			target.visible_message("<span class='warning'>[target] collapses under its own weight into a puddle of goop and undigested debris!</span>")
 			target.acid_melt()
 			qdel(src)

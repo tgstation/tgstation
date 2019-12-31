@@ -47,7 +47,7 @@
 		if(locked)
 			to_chat(usr, "<span class='warning'>Action button \"[name]\" is locked, unlock it first.</span>")
 			return TRUE
-		moved = 0
+		moved = ZERO
 		usr.update_action_buttons() //redraw buttons that are no longer considered "moved"
 		return TRUE
 	if(modifiers["ctrl"])
@@ -68,7 +68,7 @@
 	desc = "Shift-click any button to reset its position, and Control-click it to lock it in place. Alt-click this button to reset all buttons to their default positions."
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "bg_default"
-	var/hidden = 0
+	var/hidden = ZERO
 	var/hide_icon = 'icons/mob/actions.dmi'
 	var/hide_state = "hide"
 	var/show_state = "show"
@@ -193,7 +193,7 @@
 	if(hud_used.hud_shown != HUD_STYLE_STANDARD)
 		return
 
-	var/button_number = 0
+	var/button_number = ZERO
 
 	if(hud_used.action_buttons_hidden)
 		for(var/datum/action/A in actions)

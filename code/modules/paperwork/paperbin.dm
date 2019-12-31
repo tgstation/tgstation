@@ -6,7 +6,7 @@
 	item_state = "sheet-metal"
 	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
-	throwforce = 0
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 7
@@ -36,7 +36,7 @@
 
 /obj/item/paper_bin/fire_act(exposed_temperature, exposed_volume)
 	if(total_paper)
-		total_paper = 0
+		total_paper = ZERO
 		update_icon()
 	..()
 
@@ -78,7 +78,7 @@
 		update_icon()
 		// If there's any custom paper on the stack, use that instead of creating a new paper.
 		var/obj/item/paper/P
-		if(papers.len > 0)
+		if(papers.len > ZERO)
 			P = papers[papers.len]
 			papers.Remove(P)
 		else
@@ -159,10 +159,10 @@
 	if(W.get_sharpness())
 		to_chat(user, "<span class='notice'>You snip \the [src], spilling paper everywhere.</span>")
 		var/turf/T = get_turf(src.loc)
-		while(total_paper > 0)
+		while(total_paper > ZERO)
 			total_paper--
 			var/obj/item/paper/P
-			if(papers.len > 0)
+			if(papers.len > ZERO)
 				P = papers[papers.len]
 				papers -= P
 			else

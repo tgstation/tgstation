@@ -31,7 +31,7 @@
 
 /mob/living/silicon/radio(message, message_mode, list/spans, language)
 	. = ..()
-	if(. != 0)
+	if(. != ZERO)
 		return .
 
 	if(message_mode == "robot")
@@ -44,7 +44,7 @@
 			radio.talk_into(src, message, message_mode, spans, language)
 			return ITALICS | REDUCE_RANGE
 
-	return 0
+	return ZERO
 
 /mob/living/silicon/get_message_mode(message)
 	. = ..()

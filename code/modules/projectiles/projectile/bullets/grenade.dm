@@ -8,5 +8,5 @@
 
 /obj/projectile/bullet/a40mm/on_hit(atom/target, blocked = FALSE)
 	..()
-	explosion(target, -1, 0, 2, 1, 0, flame_range = 3)
+	explosion(target, -1, ZERO, 2, 1, ZERO, flame_range = 3)
 	return BULLET_ACT_HIT

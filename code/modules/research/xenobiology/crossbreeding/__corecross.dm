@@ -32,9 +32,9 @@ To add a crossbreed:
 	var/colour = "null"
 	var/effect = "null"
 	var/effect_desc = "null"
-	force = 0
+	force = ZERO
 	w_class = WEIGHT_CLASS_TINY
-	throwforce = 0
+	throwforce = ZERO
 	throw_speed = 3
 	throw_range = 6
 

@@ -51,7 +51,7 @@
 	modify()
 
 /datum/component/fantasy/proc/randomQuality()
-	var/quality = pick(1;15, 2;14, 2;13, 2;12, 3;11, 3;10, 3;9, 4;8, 4;7, 4;6, 5;5, 5;4, 5;3, 6;2, 6;1, 6;0)
+	var/quality = pick(1;15, 2;14, 2;13, 2;12, 3;11, 3;10, 3;9, 4;8, 4;7, 4;6, 5;5, 5;4, 5;3, 6;2, 6;1, 6;ZERO)
 	if(prob(50))
 		quality = -quality
 	return quality
@@ -69,9 +69,9 @@
 		affixes = list()
 
 	var/alignment
-	if(quality >= 0)
+	if(quality >= ZERO)
 		alignment |= AFFIX_GOOD
-	if(quality <= 0)
+	if(quality <= ZERO)
 		alignment |= AFFIX_EVIL
 
 	var/usedSlots = NONE
@@ -89,8 +89,8 @@
 /datum/component/fantasy/proc/modify()
 	var/obj/item/master = parent
 
-	master.force = max(0, master.force + quality)
-	master.throwforce = max(0, master.throwforce + quality)
+	master.force = max(ZERO, master.force + quality)
+	master.throwforce = max(ZERO, master.throwforce + quality)
 	master.armor = master.armor?.modifyAllRatings(quality)
 
 	var/newName = originalName
@@ -98,7 +98,7 @@
 		var/datum/fantasy_affix/affix = i
 		newName = affix.apply(src, newName)
 
-	if(quality != 0)
+	if(quality != ZERO)
 		newName = "[newName] [quality > 0 ? "+" : ""][quality]"
 
 	if(canFail && prob((quality - 9)*10))
@@ -120,8 +120,8 @@
 	for(var/i in appliedComponents)
 		qdel(i)
 
-	master.force = max(0, master.force - quality)
-	master.throwforce = max(0, master.throwforce - quality)
+	master.force = max(ZERO, master.force - quality)
+	master.throwforce = max(ZERO, master.throwforce - quality)
 	master.armor = master.armor?.modifyAllRatings(-quality)
 
 	master.name = originalName
@@ -130,7 +130,7 @@
 	var/turf/location = get_turf(parent)
 	var/span
 	var/effect_description
-	if(quality >= 0)
+	if(quality >= ZERO)
 		span = "<span class='notice'>"
 		effect_description = "<span class='heavy_brass'>shimmering golden glow</span>"
 	else

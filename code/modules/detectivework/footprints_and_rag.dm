@@ -1,6 +1,6 @@
 
 /obj/item/clothing/gloves
-	var/transfer_blood = 0
+	var/transfer_blood = ZERO
 
 
 /obj/item/reagent_containers/glass/rag

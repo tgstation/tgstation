@@ -51,5 +51,5 @@
 /datum/bounty/more_bounties/claim()
 	if(can_claim())
 		claimed = TRUE
-		for(var/i = 0; i < reward; ++i)
+		for(var/i = ZERO; i < reward; ++i)
 			try_add_bounty(random_bounty())

@@ -97,9 +97,9 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 	var/b_sign = num2sign(initial(B.value) * -1)
 
 	// Neutral traits go last.
-	if(a_sign == 0)
+	if(a_sign == ZERO)
 		a_sign = 2
-	if(b_sign == 0)
+	if(b_sign == ZERO)
 		b_sign = 2
 
 	var/a_name = initial(A.name)

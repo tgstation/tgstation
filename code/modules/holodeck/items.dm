@@ -20,11 +20,11 @@
 	force = 3.0
 	throw_speed = 2
 	throw_range = 5
-	throwforce = 0
+	throwforce = ZERO
 	w_class = WEIGHT_CLASS_SMALL
 	hitsound = "swing_hit"
 	armour_penetration = 50
-	var/active = 0
+	var/active = ZERO
 	var/saber_color
 
 /obj/item/holo/esword/green/Initialize()
@@ -35,10 +35,10 @@
 	. = ..()
 	saber_color = "red"
 
-/obj/item/holo/esword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/holo/esword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = ZERO, damage = ZERO, attack_type = MELEE_ATTACK)
 	if(active)
 		return ..()
-	return 0
+	return ZERO
 
 /obj/item/holo/esword/attack(target as mob, mob/user as mob)
 	..()
@@ -147,7 +147,7 @@
 	desc = "This device is used to declare ready. If all devices in an area are ready, the event will begin!"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"
-	var/ready = 0
+	var/ready = ZERO
 	var/area/currentarea = null
 	var/eventstarted = FALSE
 
@@ -187,8 +187,8 @@
 
 	update_icon()
 
-	var/numbuttons = 0
-	var/numready = 0
+	var/numbuttons = ZERO
+	var/numready = ZERO
 	for(var/obj/machinery/readybutton/button in currentarea)
 		numbuttons++
 		if (button.ready)

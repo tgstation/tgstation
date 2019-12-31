@@ -12,7 +12,7 @@
 	taste_description = "generic food"
 	taste_mult = 4
 	var/nutriment_factor = 1 * REAGENTS_METABOLISM
-	var/quality = 0	//affects mood, typically higher for mixed drinks with more complex recipes
+	var/quality = ZERO	//affects mood, typically higher for mixed drinks with more complex recipes
 
 /datum/reagent/consumable/on_mob_life(mob/living/carbon/M)
 	current_cycle++
@@ -46,11 +46,11 @@
 	color = "#664330" // rgb: 102, 67, 48
 
 	var/brute_heal = 1
-	var/burn_heal = 0
+	var/burn_heal = ZERO
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M)
 	if(prob(50))
-		M.heal_bodypart_damage(brute_heal,burn_heal, 0)
+		M.heal_bodypart_damage(brute_heal,burn_heal, ZERO)
 		. = 1
 	..()
 
@@ -118,7 +118,7 @@
 			F.fry(volume)
 			F.reagents.add_reagent(/datum/reagent/consumable/cooking_oil, reac_volume)
 
-/datum/reagent/consumable/cooking_oil/reaction_mob(mob/living/M, method = TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+/datum/reagent/consumable/cooking_oil/reaction_mob(mob/living/M, method = TOUCH, reac_volume, show_message = 1, touch_protection = ZERO)
 	if(!istype(M))
 		return
 	var/boiling = FALSE
@@ -184,7 +184,7 @@
 	name = "Soysauce"
 	description = "A salty sauce made from the soy plant."
 	nutriment_factor = 2 * REAGENTS_METABOLISM
-	color = "#792300" // rgb: 121, 35, 0
+	color = "#792300" // rgb: 121, 35, ZERO
 	taste_description = "umami"
 
 /datum/reagent/consumable/ketchup
@@ -203,7 +203,7 @@
 	taste_mult = 1.5
 
 /datum/reagent/consumable/capsaicin/on_mob_life(mob/living/carbon/M)
-	var/heating = 0
+	var/heating = ZERO
 	switch(current_cycle)
 		if(1 to 15)
 			heating = 5 * TEMPERATURE_DAMAGE_COEFFICIENT
@@ -233,7 +233,7 @@
 	taste_description = "mint"
 
 /datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/M)
-	var/cooling = 0
+	var/cooling = ZERO
 	switch(current_cycle)
 		if(1 to 15)
 			cooling = -10 * TEMPERATURE_DAMAGE_COEFFICIENT
@@ -345,13 +345,13 @@
 	description = "A fatty, bitter paste made from coco beans."
 	reagent_state = SOLID
 	nutriment_factor = 5 * REAGENTS_METABOLISM
-	color = "#302000" // rgb: 48, 32, 0
+	color = "#302000" // rgb: 48, 32, ZERO
 	taste_description = "bitterness"
 
 /datum/reagent/drug/mushroomhallucinogen
 	name = "Mushroom Hallucinogen"
 	description = "A strong hallucinogenic drug derived from certain species of mushroom."
-	color = "#E700E7" // rgb: 231, 0, 231
+	color = "#E700E7" // rgb: 231, ZERO, 231
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	taste_description = "mushroom"
 
@@ -395,19 +395,19 @@
 		var/mob/living/carbon/human/H = M
 		if(H.job == "Cook")
 			if(prob(20)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
-				H.heal_bodypart_damage(1,1, 0)
+				H.heal_bodypart_damage(1,1, ZERO)
 				. = 1
 	..()
 
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"
 	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
-	color = "#FF00FF" // rgb: 255, 0, 255
+	color = "#FF00FF" // rgb: 255, ZERO, 255
 	taste_description = "childhood whimsy"
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/carbon/M)
 	if(M.mind && HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		M.heal_bodypart_damage(1,1, 0)
+		M.heal_bodypart_damage(1,1, ZERO)
 		. = 1
 	..()
 
@@ -415,7 +415,7 @@
 	name = "Corn Oil"
 	description = "An oil derived from various types of corn."
 	nutriment_factor = 20 * REAGENTS_METABOLISM
-	color = "#302000" // rgb: 48, 32, 0
+	color = "#302000" // rgb: 48, 32, ZERO
 	taste_description = "slime"
 
 /datum/reagent/consumable/cornoil/reaction_turf(turf/open/T, reac_volume)
@@ -425,7 +425,7 @@
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot)
 		var/datum/gas_mixture/lowertemp = T.remove_air(T.air.total_moles())
-		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
+		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,ZERO)
 		lowertemp.react(src)
 		T.assume_air(lowertemp)
 		qdel(hotspot)
@@ -440,25 +440,25 @@
 	name = "Dry Ramen"
 	description = "Space age food, since August 25, 1958. Contains dried noodles, vegetables, and chemicals that boil in contact with water."
 	reagent_state = SOLID
-	color = "#302000" // rgb: 48, 32, 0
+	color = "#302000" // rgb: 48, 32, ZERO
 	taste_description = "dry and cheap noodles"
 
 /datum/reagent/consumable/hot_ramen
 	name = "Hot Ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	nutriment_factor = 5 * REAGENTS_METABOLISM
-	color = "#302000" // rgb: 48, 32, 0
+	color = "#302000" // rgb: 48, 32, ZERO
 	taste_description = "wet and cheap noodles"
 
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/carbon/M)
-	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, ZERO, BODYTEMP_NORMAL)
 	..()
 
 /datum/reagent/consumable/hell_ramen
 	name = "Hell Ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	nutriment_factor = 5 * REAGENTS_METABOLISM
-	color = "#302000" // rgb: 48, 32, 0
+	color = "#302000" // rgb: 48, 32, ZERO
 	taste_description = "wet and cheap noodles on fire"
 
 /datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/carbon/M)
@@ -469,7 +469,7 @@
 	name = "Flour"
 	description = "This is what you rub all over yourself to pretend to be a ghost."
 	reagent_state = SOLID
-	color = "#FFFFFF" // rgb: 0, 0, 0
+	color = "#FFFFFF" // rgb: ZERO, ZERO, ZERO
 	taste_description = "chalky wheat"
 
 /datum/reagent/consumable/flour/reaction_turf(turf/T, reac_volume)
@@ -496,7 +496,7 @@
 	description = "tiny nutritious grains"
 	reagent_state = SOLID
 	nutriment_factor = 3 * REAGENTS_METABOLISM
-	color = "#FFFFFF" // rgb: 0, 0, 0
+	color = "#FFFFFF" // rgb: ZERO, ZERO, ZERO
 	taste_description = "rice"
 
 /datum/reagent/consumable/vanilla
@@ -542,10 +542,10 @@
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M)
 	M.reagents.add_reagent(/datum/reagent/consumable/sugar,3)
 	if(prob(55))
-		M.adjustBruteLoss(-1*REM, 0)
-		M.adjustFireLoss(-1*REM, 0)
-		M.adjustOxyLoss(-1*REM, 0)
-		M.adjustToxLoss(-1*REM, 0)
+		M.adjustBruteLoss(-1*REM, ZERO)
+		M.adjustFireLoss(-1*REM, ZERO)
+		M.adjustOxyLoss(-1*REM, ZERO)
+		M.adjustToxLoss(-1*REM, ZERO)
 	..()
 
 /datum/reagent/consumable/honey/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -622,13 +622,13 @@
 
 /datum/reagent/consumable/entpoly/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 10)
-		M.Unconscious(40, 0)
+		M.Unconscious(40, ZERO)
 		. = 1
 	if(prob(20))
 		M.losebreath += 4
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM, 150)
-		M.adjustToxLoss(3*REM,0)
-		M.adjustStaminaLoss(10*REM,0)
+		M.adjustToxLoss(3*REM,ZERO)
+		M.adjustStaminaLoss(10*REM,ZERO)
 		M.blur_eyes(5)
 		. = TRUE
 	..()
@@ -654,8 +654,8 @@
 
 /datum/reagent/consumable/vitfro/on_mob_life(mob/living/carbon/M)
 	if(prob(80))
-		M.adjustBruteLoss(-1*REM, 0)
-		M.adjustFireLoss(-1*REM, 0)
+		M.adjustBruteLoss(-1*REM, ZERO)
+		M.adjustFireLoss(-1*REM, ZERO)
 		. = TRUE
 	..()
 
@@ -690,7 +690,7 @@
 /datum/reagent/consumable/astrotame
 	name = "Astrotame"
 	description = "A space age artifical sweetener."
-	nutriment_factor = 0
+	nutriment_factor = ZERO
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255, 255, 255

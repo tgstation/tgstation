@@ -18,7 +18,7 @@
 
 // /datum/element flags
 /// Causes the detach proc to be called when the host object is being deleted
-#define ELEMENT_DETACH		(1 << 0)
+#define ELEMENT_DETACH		(1 << ZERO)
 /**
   * Only elements created with the same arguments given after `id_arg_index` share an element instance
   * The arguments are the same when the text and number values are the same and all other values have the same ref
@@ -27,7 +27,7 @@
 
 // How multiple components of the exact same type are handled in the same datum
 /// old component is deleted (default)
-#define COMPONENT_DUPE_HIGHLANDER		0
+#define COMPONENT_DUPE_HIGHLANDER		ZERO
 /// duplicates allowed
 #define COMPONENT_DUPE_ALLOWED			1
 /// new component is deleted
@@ -247,7 +247,7 @@
 #define COMSIG_MOB_CLIENT_LOGIN "comsig_mob_client_login"		//sent when a mob/login() finishes: (client)
 #define COMSIG_BORG_SAFE_DECONSTRUCT "borg_safe_decon"			//sent from borg mobs to itself, for tools to catch an upcoming destroy() due to safe decon (rather than detonation)
 
-//ALL OF THESE DO NOT TAKE INTO ACCOUNT WHETHER AMOUNT IS 0 OR LOWER AND ARE SENT REGARDLESS!
+//ALL OF THESE DO NOT TAKE INTO ACCOUNT WHETHER AMOUNT IS ZERO OR LOWER AND ARE SENT REGARDLESS!
 #define COMSIG_LIVING_STATUS_STUN "living_stun"					//from base of mob/living/Stun() (amount, update, ignore)
 #define COMSIG_LIVING_STATUS_KNOCKDOWN "living_knockdown"		//from base of mob/living/Knockdown() (amount, update, ignore)
 #define COMSIG_LIVING_STATUS_PARALYZE "living_paralyze"			//from base of mob/living/Paralyze() (amount, update, ignore)
@@ -378,7 +378,7 @@
 #define COMSIG_NANITE_SET_VOLUME "nanite_set_volume"			//(amount) Sets current nanite volume to the given amount
 #define COMSIG_NANITE_ADJUST_VOLUME "nanite_adjust"				//(amount) Adjusts nanite volume by the given amount
 #define COMSIG_NANITE_SET_MAX_VOLUME "nanite_set_max_volume"	//(amount) Sets maximum nanite volume to the given amount
-#define COMSIG_NANITE_SET_CLOUD "nanite_set_cloud"				//(amount(0-100)) Sets cloud ID to the given amount
+#define COMSIG_NANITE_SET_CLOUD "nanite_set_cloud"				//(amount(ZERO-100)) Sets cloud ID to the given amount
 #define COMSIG_NANITE_SET_CLOUD_SYNC "nanite_set_cloud_sync"	//(method) Modify cloud sync status. Method can be toggle, enable or disable
 #define COMSIG_NANITE_SET_SAFETY "nanite_set_safety"			//(amount) Sets safety threshold to the given amount
 #define COMSIG_NANITE_SET_REGEN "nanite_set_regen"				//(amount) Sets regeneration rate to the given amount

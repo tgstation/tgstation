@@ -6,7 +6,7 @@
 	flags_1 = CONDUCT_1
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
 	turf_type = /turf/open/floor/light
-	var/state = 0
+	var/state = ZERO
 
 /obj/item/stack/tile/light/Initialize(mapload, new_amount, merge = TRUE)
 	. = ..()
@@ -17,14 +17,14 @@
 	else if(prob(10))
 		state = 1 //flickering occasionally
 	else
-		state = 0 //fine
+		state = ZERO //fine
 
 /obj/item/stack/tile/light/attackby(obj/item/O, mob/user, params)
 	if(O.tool_behaviour == TOOL_CROWBAR)
 		new/obj/item/stack/sheet/metal(user.loc)
 		amount--
 		new/obj/item/stack/light_w(user.loc)
-		if(amount <= 0)
+		if(amount <= ZERO)
 			qdel(src)
 	else
 		return ..()

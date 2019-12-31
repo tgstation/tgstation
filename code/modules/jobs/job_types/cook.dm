@@ -8,7 +8,7 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
-	var/cooks = 0 //Counts cooks amount
+	var/cooks = ZERO //Counts cooks amount
 
 	outfit = /datum/outfit/job/cook
 
@@ -35,7 +35,7 @@
 	..()
 	var/datum/job/cook/J = SSjob.GetJobType(jobtype)
 	if(J) // Fix for runtime caused by invalid job being passed
-		if(J.cooks>0)//Cooks
+		if(J.cooks>ZERO)//Cooks
 			suit = /obj/item/clothing/suit/apron/chef
 			head = /obj/item/clothing/head/soft/mime
 		if(!visualsOnly)

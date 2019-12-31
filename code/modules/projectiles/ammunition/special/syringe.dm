@@ -33,7 +33,7 @@
 		return
 	if(istype(loc, /obj/item/gun/chem))
 		var/obj/item/gun/chem/CG = loc
-		if(CG.syringes_left <= 0)
+		if(CG.syringes_left <= ZERO)
 			return
 		CG.reagents.trans_to(BB, 15, transfered_by = user)
 		BB.name = "chemical dart"

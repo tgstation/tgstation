@@ -10,23 +10,23 @@
 	move_resist = INFINITY
 	layer = MASSIVE_OBJ_LAYER
 	light_range = 6
-	appearance_flags = 0
+	appearance_flags = ZERO
 	var/current_size = 1
 	var/allowed_size = 1
 	var/contained = 1 //Are we going to move around?
 	var/energy = 100 //How strong are we?
 	var/dissipate = 1 //Do we lose energy over time?
 	var/dissipate_delay = 10
-	var/dissipate_track = 0
+	var/dissipate_track = ZERO
 	var/dissipate_strength = 1 //How much energy do we lose?
 	var/move_self = 1 //Do we move on our own?
 	var/grav_pull = 4 //How many tiles out do we pull?
-	var/consume_range = 0 //How many tiles out do we eat
+	var/consume_range = ZERO //How many tiles out do we eat
 	var/event_chance = 10 //Prob for event each tick
 	var/target = null //its target. moves towards the target if it has one
-	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
+	var/last_failed_movement = ZERO//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
-	var/consumedSupermatter = 0 //If the singularity has eaten a supermatter shard and can go to stage six
+	var/consumedSupermatter = ZERO //If the singularity has eaten a supermatter shard and can go to stage six
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 
@@ -54,11 +54,11 @@
 
 /obj/singularity/Move(atom/newloc, direct)
 	if(current_size >= STAGE_FIVE || check_turfs_in(direct))
-		last_failed_movement = 0//Reset this because we moved
+		last_failed_movement = ZERO//Reset this because we moved
 		return ..()
 	else
 		last_failed_movement = direct
-		return 0
+		return ZERO
 
 /obj/singularity/attack_hand(mob/user)
 	consume(user)
@@ -78,7 +78,7 @@
 	return 1
 
 /obj/singularity/Process_Spacemove() //The singularity stops drifting for no man!
-	return 0
+	return ZERO
 
 /obj/singularity/blob_act(obj/structure/blob/B)
 	return
@@ -157,12 +157,12 @@
 		return
 	if(dissipate_track >= dissipate_delay)
 		src.energy -= dissipate_strength
-		dissipate_track = 0
+		dissipate_track = ZERO
 	else
 		dissipate_track++
 
 
-/obj/singularity/proc/expand(force_size = 0)
+/obj/singularity/proc/expand(force_size = ZERO)
 	var/temp_allowed_size = src.allowed_size
 	if(force_size)
 		temp_allowed_size = force_size
@@ -173,12 +173,12 @@
 			current_size = STAGE_ONE
 			icon = 'icons/obj/singularity.dmi'
 			icon_state = "singularity_s1"
-			pixel_x = 0
-			pixel_y = 0
+			pixel_x = ZERO
+			pixel_y = ZERO
 			grav_pull = 4
-			consume_range = 0
+			consume_range = ZERO
 			dissipate_delay = 10
-			dissipate_track = 0
+			dissipate_track = ZERO
 			dissipate_strength = 1
 		if(STAGE_TWO)
 			if(check_cardinals_range(1, TRUE))
@@ -190,7 +190,7 @@
 				grav_pull = 6
 				consume_range = 1
 				dissipate_delay = 5
-				dissipate_track = 0
+				dissipate_track = ZERO
 				dissipate_strength = 5
 		if(STAGE_THREE)
 			if(check_cardinals_range(2, TRUE))
@@ -202,7 +202,7 @@
 				grav_pull = 8
 				consume_range = 2
 				dissipate_delay = 4
-				dissipate_track = 0
+				dissipate_track = ZERO
 				dissipate_strength = 20
 		if(STAGE_FOUR)
 			if(check_cardinals_range(3, TRUE))
@@ -214,7 +214,7 @@
 				grav_pull = 10
 				consume_range = 3
 				dissipate_delay = 10
-				dissipate_track = 0
+				dissipate_track = ZERO
 				dissipate_strength = 10
 		if(STAGE_FIVE)//this one also lacks a check for gens because it eats everything
 			current_size = STAGE_FIVE
@@ -224,7 +224,7 @@
 			pixel_y = -128
 			grav_pull = 10
 			consume_range = 4
-			dissipate = 0 //It cant go smaller due to e loss
+			dissipate = ZERO //It cant go smaller due to e loss
 		if(STAGE_SIX) //This only happens if a stage 5 singulo consumes a supermatter shard.
 			current_size = STAGE_SIX
 			icon = 'icons/effects/352x352.dmi'
@@ -233,21 +233,21 @@
 			pixel_y = -160
 			grav_pull = 15
 			consume_range = 5
-			dissipate = 0
+			dissipate = ZERO
 	if(current_size == allowed_size)
 		investigate_log("<font color='red'>grew to size [current_size]</font>", INVESTIGATE_SINGULO)
 		return 1
 	else if(current_size < (--temp_allowed_size))
 		expand(temp_allowed_size)
 	else
-		return 0
+		return ZERO
 
 
 /obj/singularity/proc/check_energy()
-	if(energy <= 0)
+	if(energy <= ZERO)
 		investigate_log("collapsed.", INVESTIGATE_SINGULO)
 		qdel(src)
-		return 0
+		return ZERO
 	switch(energy)//Some of these numbers might need to be changed up later -Mport
 		if(1 to 199)
 			allowed_size = STAGE_ONE
@@ -298,9 +298,9 @@
 	return
 
 
-/obj/singularity/proc/move(force_move = 0)
+/obj/singularity/proc/move(force_move = ZERO)
 	if(!move_self)
-		return 0
+		return ZERO
 
 	var/movement_dir = pick(GLOB.alldirs - last_failed_movement)
 
@@ -323,10 +323,10 @@
 					return TRUE
 	. = !.
 
-/obj/singularity/proc/check_turfs_in(direction = 0, step = 0)
+/obj/singularity/proc/check_turfs_in(direction = ZERO, step = ZERO)
 	if(!direction)
-		return 0
-	var/steps = 0
+		return ZERO
+	var/steps = ZERO
 	if(!step)
 		switch(current_size)
 			if(STAGE_ONE)
@@ -346,10 +346,10 @@
 	for(var/i = 1 to steps)
 		T = get_step(T,direction)
 	if(!isturf(T))
-		return 0
+		return ZERO
 	turfs.Add(T)
-	var/dir2 = 0
-	var/dir3 = 0
+	var/dir2 = ZERO
+	var/dir3 = ZERO
 	switch(direction)
 		if(NORTH||SOUTH)
 			dir2 = 4
@@ -361,34 +361,34 @@
 	for(var/j = 1 to steps-1)
 		T2 = get_step(T2,dir2)
 		if(!isturf(T2))
-			return 0
+			return ZERO
 		turfs.Add(T2)
 	for(var/k = 1 to steps-1)
 		T = get_step(T,dir3)
 		if(!isturf(T))
-			return 0
+			return ZERO
 		turfs.Add(T)
 	for(var/turf/T3 in turfs)
 		if(isnull(T3))
 			continue
 		if(!can_move(T3))
-			return 0
+			return ZERO
 	return 1
 
 
 /obj/singularity/proc/can_move(turf/T)
 	if(!T)
-		return 0
+		return ZERO
 	if((locate(/obj/machinery/field/containment) in T)||(locate(/obj/machinery/shieldwall) in T))
-		return 0
+		return ZERO
 	else if(locate(/obj/machinery/field/generator) in T)
 		var/obj/machinery/field/generator/G = locate(/obj/machinery/field/generator) in T
 		if(G && G.active)
-			return 0
+			return ZERO
 	else if(locate(/obj/machinery/power/shieldwallgen) in T)
 		var/obj/machinery/power/shieldwallgen/S = locate(/obj/machinery/power/shieldwallgen) in T
 		if(S && S.active)
-			return 0
+			return ZERO
 	return 1
 
 
@@ -401,10 +401,10 @@
 			mezzer()
 		if(3,4) //Sets all nearby mobs on fire
 			if(current_size < STAGE_SIX)
-				return 0
+				return ZERO
 			combust_mobs()
 		else
-			return 0
+			return ZERO
 	return 1
 
 

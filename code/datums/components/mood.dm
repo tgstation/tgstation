@@ -9,7 +9,7 @@
 	var/sanity_level = 2 //To track what stage of sanity they're on
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/list/datum/mood_event/mood_events = list()
-	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
+	var/insanity_effect = ZERO //is the owner being punished for low mood? If so, how much?
 	var/obj/screen/mood/screen_obj
 
 /datum/component/mood/Initialize()
@@ -90,8 +90,8 @@
 
 ///Called after moodevent/s have been added/removed.
 /datum/component/mood/proc/update_mood()
-	mood = 0
-	shown_mood = 0
+	mood = ZERO
+	shown_mood = ZERO
 	for(var/i in mood_events)
 		var/datum/mood_event/event = mood_events[i]
 		mood += event.mood_change
@@ -130,7 +130,7 @@
 	screen_obj.color = initial(screen_obj.color)
 	//lets see if we have any special icons to show instead of the normal mood levels
 	var/list/conflicting_moodies = list()
-	var/highest_absolute_mood = 0
+	var/highest_absolute_mood = ZERO
 	for(var/i in mood_events) //adds overlays and sees which special icons need to vie for which one gets the icon_state
 		var/datum/mood_event/event = mood_events[i]
 		if(!event.special_screen_obj)
@@ -195,7 +195,7 @@
 	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.5
 	// If the new amount would move towards the acceptable range faster then use it instead
 	if(amount < minimum)
-		amount += CLAMP(minimum - sanity, 0, 0.7)
+		amount += CLAMP(minimum - sanity, ZERO, 0.7)
 	else
 		if(!override && HAS_TRAIT(parent, TRAIT_UNSTABLE))
 			maximum = sanity
@@ -215,19 +215,19 @@
 			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=0.5, movetypes=(~FLYING))
 			sanity_level = 5
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
-			setInsanityEffect(0)
+			setInsanityEffect(ZERO)
 			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=0.25, movetypes=(~FLYING))
 			sanity_level = 4
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
-			setInsanityEffect(0)
+			setInsanityEffect(ZERO)
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE)
 			sanity_level = 3
 		if(SANITY_NEUTRAL+1 to SANITY_GREAT+1) //shitty hack but +1 to prevent it from responding to super small differences
-			setInsanityEffect(0)
+			setInsanityEffect(ZERO)
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE)
 			sanity_level = 2
 		if(SANITY_GREAT+1 to INFINITY)
-			setInsanityEffect(0)
+			setInsanityEffect(ZERO)
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE)
 			sanity_level = 1
 	update_mood_icon()
@@ -267,7 +267,7 @@
 		category = REF(category)
 	var/datum/mood_event/event = mood_events[category]
 	if(!event)
-		return 0
+		return ZERO
 
 	mood_events -= category
 	qdel(event)
@@ -326,7 +326,7 @@
 			clear_event(null, "nutrition")
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
 			add_event(null, "nutrition", /datum/mood_event/hungry)
-		if(0 to NUTRITION_LEVEL_STARVING)
+		if(ZERO to NUTRITION_LEVEL_STARVING)
 			add_event(null, "nutrition", /datum/mood_event/starving)
 
 /datum/component/mood/proc/HandleCharge(mob/living/carbon/human/H)

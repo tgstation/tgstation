@@ -1,5 +1,5 @@
 /datum/component/riding
-	var/last_vehicle_move = 0 //used for move delays
+	var/last_vehicle_move = ZERO //used for move delays
 	var/last_move_diagonal = FALSE
 	var/vehicle_move_delay = 2 //tick delay between movements, lower = faster, higher = slower
 	var/keytype
@@ -88,7 +88,7 @@
 /datum/component/riding/proc/handle_vehicle_offsets()
 	var/atom/movable/AM = parent
 	var/AM_dir = "[AM.dir]"
-	var/passindex = 0
+	var/passindex = ZERO
 	if(AM.has_buckled_mobs())
 		for(var/m in AM.buckled_mobs)
 			passindex++
@@ -106,7 +106,7 @@
 						if(diroffsets.len == 3)
 							buckled_mob.layer = diroffsets[3]
 						break dir_loop
-	var/list/static/default_vehicle_pixel_offsets = list(TEXT_NORTH = list(0, 0), TEXT_SOUTH = list(0, 0), TEXT_EAST = list(0, 0), TEXT_WEST = list(0, 0))
+	var/list/static/default_vehicle_pixel_offsets = list(TEXT_NORTH = list(ZERO, ZERO), TEXT_SOUTH = list(ZERO, ZERO), TEXT_EAST = list(ZERO, ZERO), TEXT_WEST = list(ZERO, ZERO))
 	var/px = default_vehicle_pixel_offsets[AM_dir]
 	var/py = default_vehicle_pixel_offsets[AM_dir]
 	if(directional_vehicle_offsets[AM_dir])
@@ -124,7 +124,7 @@
 
 //Override this to set your vehicle's various pixel offsets
 /datum/component/riding/proc/get_offsets(pass_index) // list(dir = x, y, layer)
-	. = list(TEXT_NORTH = list(0, 0), TEXT_SOUTH = list(0, 0), TEXT_EAST = list(0, 0), TEXT_WEST = list(0, 0))
+	. = list(TEXT_NORTH = list(ZERO, ZERO), TEXT_SOUTH = list(ZERO, ZERO), TEXT_EAST = list(ZERO, ZERO), TEXT_WEST = list(ZERO, ZERO))
 	if(riding_offsets["[pass_index]"])
 		. = riding_offsets["[pass_index]"]
 	else if(riding_offsets["[RIDING_OFFSET_ALL]"])
@@ -148,8 +148,8 @@
 //BUCKLE HOOKS
 /datum/component/riding/proc/restore_position(mob/living/buckled_mob)
 	if(buckled_mob)
-		buckled_mob.pixel_x = 0
-		buckled_mob.pixel_y = 0
+		buckled_mob.pixel_x = ZERO
+		buckled_mob.pixel_y = ZERO
 		if(buckled_mob.client)
 			buckled_mob.client.change_view(CONFIG_GET(string/default_view))
 
@@ -194,7 +194,7 @@
 		to_chat(user, "<span class='warning'>You'll need the keys in one of your hands to [drive_verb] [AM].</span>")
 
 /datum/component/riding/proc/Unbuckle(atom/movable/M)
-	addtimer(CALLBACK(parent, /atom/movable/.proc/unbuckle_mob, M), 0, TIMER_UNIQUE)
+	addtimer(CALLBACK(parent, /atom/movable/.proc/unbuckle_mob, M), ZERO, TIMER_UNIQUE)
 
 /datum/component/riding/proc/Process_Spacemove(direction)
 	var/atom/movable/AM = parent
@@ -252,9 +252,9 @@
 /datum/component/riding/human/get_offsets(pass_index)
 	var/mob/living/carbon/human/H = parent
 	if(H.buckle_lying)
-		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(0, 6), TEXT_WEST = list(0, 6))
+		return list(TEXT_NORTH = list(ZERO, 6), TEXT_SOUTH = list(ZERO, 6), TEXT_EAST = list(ZERO, 6), TEXT_WEST = list(ZERO, 6))
 	else
-		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list( 6, 4))
+		return list(TEXT_NORTH = list(ZERO, 6), TEXT_SOUTH = list(ZERO, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list( 6, 4))
 
 
 /datum/component/riding/human/force_dismount(mob/living/user)
@@ -297,7 +297,7 @@
 		AM.layer = MOB_LAYER
 
 /datum/component/riding/cyborg/get_offsets(pass_index) // list(dir = x, y, layer)
-	return list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(-6, 3), TEXT_WEST = list( 6, 3))
+	return list(TEXT_NORTH = list(ZERO, 4), TEXT_SOUTH = list(ZERO, 4), TEXT_EAST = list(-6, 3), TEXT_WEST = list( 6, 3))
 
 /datum/component/riding/cyborg/handle_vehicle_offsets()
 	var/atom/movable/AM = parent
@@ -314,8 +314,8 @@
 
 /datum/component/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1, riding_target_override = null)
 	var/atom/movable/AM = parent
-	var/amount_equipped = 0
-	for(var/amount_needed = amount_required, amount_needed > 0, amount_needed--)
+	var/amount_equipped = ZERO
+	for(var/amount_needed = amount_required, amount_needed > ZERO, amount_needed--)
 		var/obj/item/riding_offhand/inhand = new /obj/item/riding_offhand(user)
 		if(!riding_target_override)
 			inhand.rider = user

@@ -23,7 +23,7 @@
 			if(!(C && C.overmind && C.overmind.blobstrain.type == B.overmind.blobstrain.type) && prob(80))
 				new /obj/effect/hotspot(T)
 	if(damage_flag == "fire")
-		return 0
+		return ZERO
 	return ..()
 
 /datum/reagent/blob/blazing_oil

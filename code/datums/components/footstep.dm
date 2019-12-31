@@ -1,7 +1,7 @@
 ///Footstep component. Plays footsteps at parents location when it is appropriate.
 /datum/component/footstep
 	///How many steps the parent has taken since the last time a footstep was played.
-	var/steps = 0
+	var/steps = ZERO
 	///volume determines the extra volume of the footstep. This is multiplied by the base volume, should there be one.
 	var/volume
 	///e_range stands for extra range - aka how far the sound can be heard. This is added to the base value and ignored if there isn't a base value.
@@ -56,7 +56,7 @@
 	steps++
 
 	if(steps >= 6)
-		steps = 0
+		steps = ZERO
 
 	if(steps % 2)
 		return

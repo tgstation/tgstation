@@ -282,7 +282,7 @@
 	synchronizer_coeff = 1
 	energy_coeff = 1
 	power_coeff = 1
-	var/warpchance = 0
+	var/warpchance = ZERO
 
 /datum/mutation/human/badblink/on_life()
 	if(prob(warpchance))
@@ -296,7 +296,7 @@
 		var/warpdistance = rand(10,15) * GET_MUTATION_POWER(src)
 		do_teleport(owner, get_turf(owner), warpdistance, channel = TELEPORT_CHANNEL_FREE)
 		owner.adjust_disgust(GET_MUTATION_SYNCHRONIZER(src) * (warpchance * warpdistance))
-		warpchance = 0
+		warpchance = ZERO
 		owner.visible_message("<span class='danger'>[owner] appears out of nowhere!</span>")
 	else
 		warpchance += 0.25 * GET_MUTATION_ENERGY(src)
@@ -308,7 +308,7 @@
 	text_gain_indication = "<span class='userdanger'>A horrible burning sensation envelops you as your flesh turns to acid!</span>"
 	text_lose_indication = "<span class'notice'>A feeling of relief fills you as your flesh goes back to normal.</span>"
 	difficulty = 18//high so it's hard to unlock and use on others
-	var/msgcooldown = 0
+	var/msgcooldown = ZERO
 
 /datum/mutation/human/acidflesh/on_life()
 	if(prob(25))
@@ -366,7 +366,7 @@
 	text_gain_indication = "<span class='warning'>Your right foot feels... left.</span>"
 	text_lose_indication = "<span class'notice'>Your right foot feels alright.</span>"
 	difficulty = 16
-	var/stun_cooldown = 0
+	var/stun_cooldown = ZERO
 
 /datum/mutation/human/extrastun/on_life()
 	if(world.time > stun_cooldown)

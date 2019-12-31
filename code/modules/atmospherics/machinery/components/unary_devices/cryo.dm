@@ -25,7 +25,7 @@
 	var/conduction_coefficient = 0.3
 
 	var/obj/item/reagent_containers/glass/beaker = null
-	var/reagent_transfer = 0
+	var/reagent_transfer = ZERO
 
 	var/obj/item/radio/radio
 	var/radio_key = /obj/item/encryptionkey/headset_med
@@ -47,7 +47,7 @@
 	radio = new(src)
 	radio.keyslot = new radio_key
 	radio.subspace_transmission = TRUE
-	radio.canhear_range = 0
+	radio.canhear_range = ZERO
 	radio.recalculateChannels()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Exited(atom/movable/AM, atom/newloc)
@@ -202,13 +202,13 @@
 			mob_occupant.Sleeping((mob_occupant.bodytemperature * sleep_factor) * 2000)
 			mob_occupant.Unconscious((mob_occupant.bodytemperature * unconscious_factor) * 2000)
 		if(beaker)
-			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
+			if(reagent_transfer == ZERO) // Magically transfer reagents. Because cryo magic.
 				beaker.reagents.trans_to(occupant, 1, efficiency * 0.25) // Transfer reagents.
 				beaker.reagents.reaction(occupant, VAPOR)
 				air1.gases[/datum/gas/oxygen][MOLES] -= max(0,air1.gases[/datum/gas/oxygen][MOLES] - 2 / efficiency) //Let's use gas for this
 				air1.garbage_collect()
 			if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
-				reagent_transfer = 0
+				reagent_transfer = ZERO
 
 	return 1
 
@@ -227,7 +227,7 @@
 
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
-		var/cold_protection = 0
+		var/cold_protection = ZERO
 		var/temperature_delta = air1.temperature - mob_occupant.bodytemperature // The only semi-realistic thing here: share temperature between the cell and the occupant.
 
 		if(ishuman(occupant))

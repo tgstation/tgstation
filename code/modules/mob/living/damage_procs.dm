@@ -6,13 +6,13 @@
 	b:damage_type - What type of damage to take, brute, burn
 	c:def_zone - Where to take the damage if its brute or burn
 	Returns
-	standard 0 if fail
+	standard ZERO if fail
 */
-/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE)
+/mob/living/proc/apply_damage(damage = ZERO,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE)
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-blocked)/100
-	if(!damage || (!forced && hit_percent <= 0))
-		return 0
+	if(!damage || (!forced && hit_percent <= ZERO))
+		return ZERO
 	var/damage_amount =  forced ? damage : damage * hit_percent
 	switch(damagetype)
 		if(BRUTE)
@@ -29,7 +29,7 @@
 			adjustStaminaLoss(damage_amount, forced = forced)
 	return 1
 
-/mob/living/proc/apply_damage_type(damage = 0, damagetype = BRUTE) //like apply damage except it always uses the damage procs
+/mob/living/proc/apply_damage_type(damage = ZERO, damagetype = BRUTE) //like apply damage except it always uses the damage procs
 	switch(damagetype)
 		if(BRUTE)
 			return adjustBruteLoss(damage)
@@ -60,9 +60,9 @@
 			return getStaminaLoss()
 
 
-/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0, brain = 0)
+/mob/living/proc/apply_damages(brute = ZERO, burn = ZERO, tox = ZERO, oxy = ZERO, clone = ZERO, def_zone = null, blocked = FALSE, stamina = ZERO, brain = ZERO)
 	if(blocked >= 100)
-		return 0
+		return ZERO
 	if(brute)
 		apply_damage(brute, BRUTE, def_zone, blocked)
 	if(burn)
@@ -81,10 +81,10 @@
 
 
 
-/mob/living/proc/apply_effect(effect = 0,effecttype = EFFECT_STUN, blocked = FALSE)
+/mob/living/proc/apply_effect(effect = ZERO,effecttype = EFFECT_STUN, blocked = FALSE)
 	var/hit_percent = (100-blocked)/100
-	if(!effect || (hit_percent <= 0))
-		return 0
+	if(!effect || (hit_percent <= ZERO))
+		return ZERO
 	switch(effecttype)
 		if(EFFECT_STUN)
 			Stun(effect * hit_percent)
@@ -97,7 +97,7 @@
 		if(EFFECT_UNCONSCIOUS)
 			Unconscious(effect * hit_percent)
 		if(EFFECT_IRRADIATE)
-			radiation += max(effect * hit_percent, 0)
+			radiation += max(effect * hit_percent, ZERO)
 		if(EFFECT_SLUR)
 			slurring = max(slurring,(effect * hit_percent))
 		if(EFFECT_STUTTER)
@@ -113,7 +113,7 @@
 	return 1
 
 
-/mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = FALSE, stamina = 0, jitter = 0, paralyze = 0, immobilize = 0)
+/mob/living/proc/apply_effects(stun = ZERO, knockdown = ZERO, unconscious = ZERO, irradiate = ZERO, slur = ZERO, stutter = ZERO, eyeblur = ZERO, drowsy = ZERO, blocked = FALSE, stamina = ZERO, jitter = ZERO, paralyze = ZERO, immobilize = ZERO)
 	if(blocked >= 100)
 		return BULLET_ACT_BLOCK
 	if(stun)
@@ -149,7 +149,7 @@
 /mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	bruteloss = CLAMP((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
+	bruteloss = CLAMP((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), ZERO, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -160,14 +160,14 @@
 /mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	oxyloss = CLAMP((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
+	oxyloss = CLAMP((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), ZERO, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
 
 /mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(status_flags & GODMODE)
-		return 0
+		return ZERO
 	oxyloss = amount
 	if(updating_health)
 		updatehealth()
@@ -179,7 +179,7 @@
 /mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	toxloss = CLAMP((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
+	toxloss = CLAMP((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), ZERO, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -198,7 +198,7 @@
 /mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	fireloss = CLAMP((fireloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
+	fireloss = CLAMP((fireloss + (amount * CONFIG_GET(number/damage_multiplier))), ZERO, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -209,7 +209,7 @@
 /mob/living/proc/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && ( (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NOCLONELOSS)) )
 		return FALSE
-	cloneloss = CLAMP((cloneloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
+	cloneloss = CLAMP((cloneloss + (amount * CONFIG_GET(number/damage_multiplier))), ZERO, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -241,7 +241,7 @@
 	return
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/heal_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status)
+/mob/living/proc/heal_bodypart_damage(brute = ZERO, burn = ZERO, stamina = ZERO, updating_health = TRUE, required_status)
 	adjustBruteLoss(-brute, FALSE) //zero as argument for no instant health update
 	adjustFireLoss(-burn, FALSE)
 	adjustStaminaLoss(-stamina, FALSE)
@@ -250,7 +250,7 @@
 		update_stamina()
 
 // damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/take_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status, check_armor = FALSE)
+/mob/living/proc/take_bodypart_damage(brute = ZERO, burn = ZERO, stamina = ZERO, updating_health = TRUE, required_status, check_armor = FALSE)
 	adjustBruteLoss(brute, FALSE) //zero as argument for no instant health update
 	adjustFireLoss(burn, FALSE)
 	adjustStaminaLoss(stamina, FALSE)
@@ -259,7 +259,7 @@
 		update_stamina()
 
 // heal MANY bodyparts, in random order
-/mob/living/proc/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_status, updating_health = TRUE)
+/mob/living/proc/heal_overall_damage(brute = ZERO, burn = ZERO, stamina = ZERO, required_status, updating_health = TRUE)
 	adjustBruteLoss(-brute, FALSE) //zero as argument for no instant health update
 	adjustFireLoss(-burn, FALSE)
 	adjustStaminaLoss(-stamina, FALSE)
@@ -268,7 +268,7 @@
 		update_stamina()
 
 // damage MANY bodyparts, in random order
-/mob/living/proc/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status = null)
+/mob/living/proc/take_overall_damage(brute = ZERO, burn = ZERO, stamina = ZERO, updating_health = TRUE, required_status = null)
 	adjustBruteLoss(brute, FALSE) //zero as argument for no instant health update
 	adjustFireLoss(burn, FALSE)
 	adjustStaminaLoss(stamina, FALSE)

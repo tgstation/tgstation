@@ -56,7 +56,7 @@
 		owner.visible_message("<span class='danger'>[owner] assumes the Lung Punch stance!</span>", "<b><i>Your next attack will be a Lung Punch.</i></b>")
 		H.mind.martial_art.streak = "quick_choke"//internal name for lung punch
 
-/datum/martial_art/krav_maga/teach(mob/living/carbon/human/H,make_temporary=0)
+/datum/martial_art/krav_maga/teach(mob/living/carbon/human/H,make_temporary=ZERO)
 	if(..())
 		to_chat(H, "<span class='userdanger'>You know the arts of [name]!</span>")
 		to_chat(H, "<span class='danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
@@ -84,11 +84,11 @@
 			streak = ""
 			quick_choke(A,D)
 			return 1
-	return 0
+	return ZERO
 
 /datum/martial_art/krav_maga/proc/leg_sweep(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(D.stat || D.IsParalyzed())
-		return 0
+		return ZERO
 	D.visible_message("<span class='warning'>[A] leg sweeps [D]!</span>", \
 					"<span class='userdanger'>Your legs are sweeped by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
 	to_chat(A, "<span class='danger'>You leg sweep [D]!</span>")
@@ -104,7 +104,7 @@
 	to_chat(A, "<span class='danger'>You pound [D] on the chest!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
 	if(D.losebreath <= 10)
-		D.losebreath = CLAMP(D.losebreath + 5, 0, 10)
+		D.losebreath = CLAMP(D.losebreath + 5, ZERO, 10)
 	D.adjustOxyLoss(10)
 	log_combat(A, D, "quickchoked")
 	return 1
@@ -116,7 +116,7 @@
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
 	D.apply_damage(5, A.dna.species.attack_type)
 	if(D.silent <= 10)
-		D.silent = CLAMP(D.silent + 10, 0, 10)
+		D.silent = CLAMP(D.silent + 10, ZERO, 10)
 	log_combat(A, D, "neck chopped")
 	return 1
 
@@ -206,7 +206,7 @@
 	desc = "These tactical gloves are fireproof and electrically insulated, and through the use of nanochip technology will teach you the martial art of krav maga."
 	icon_state = "black"
 	item_state = "blackgloves"
-	siemens_coefficient = 0
+	siemens_coefficient = ZERO
 	permeability_coefficient = 0.05
 	strip_delay = 80
 	cold_protection = HANDS

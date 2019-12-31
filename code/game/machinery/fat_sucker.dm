@@ -34,7 +34,7 @@
 
 /obj/machinery/fat_sucker/RefreshParts()
 	..()
-	var/rating = 0
+	var/rating = ZERO
 	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
 		rating += L.rating
 	bite_size = initial(bite_size) + rating * 5
@@ -143,7 +143,7 @@
 	C.adjust_nutrition(-bite_size)
 	nutrients += bite_size
 
-	if(next_fact <= 0)
+	if(next_fact <= ZERO)
 		next_fact = initial(next_fact)
 		say(pick(fat_facts))
 		playsound(loc, 'sound/machines/chime.ogg', 30, FALSE)
@@ -169,7 +169,7 @@
 /obj/machinery/fat_sucker/proc/stop()
 	processing = FALSE
 	soundloop.stop()
-	set_light(0, 0)
+	set_light(ZERO, ZERO)
 
 /obj/machinery/fat_sucker/proc/make_meat()
 	if(occupant && iscarbon(occupant))
@@ -183,7 +183,7 @@
 			while(nutrients >= nutrient_to_meat / 3)
 				nutrients -= nutrient_to_meat / 3
 				new /obj/item/reagent_containers/food/snacks/meat/rawcutlet/plain (drop_location())
-			nutrients = 0
+			nutrients = ZERO
 
 /obj/machinery/fat_sucker/screwdriver_act(mob/living/user, obj/item/I)
 	. = TRUE
@@ -208,6 +208,6 @@
 	if(obj_flags & EMAGGED)
 		return
 	start_at = 100
-	stop_at = 0
+	stop_at = ZERO
 	to_chat(user, "<span class='notice'>You remove the access restrictions and lower the automatic ejection threshold!</span>")
 	obj_flags |= EMAGGED

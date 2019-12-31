@@ -67,10 +67,10 @@
 	use_power = NO_POWER_USE
 
 	var/chargesa = 1
-	var/insistinga = 0
+	var/insistinga = ZERO
 
 /obj/machinery/wish_granter_dark/interact(mob/living/carbon/human/user)
-	if(chargesa <= 0)
+	if(chargesa <= ZERO)
 		to_chat(user, "The Wish Granter lies silent.")
 		return
 
@@ -87,7 +87,7 @@
 
 	else
 		chargesa--
-		insistinga = 0
+		insistinga = ZERO
 		var/wish = input("You want...","Wish") as null|anything in sortList(list("Power","Wealth","Immortality","Peace"))
 		switch(wish)
 			if("Power")
@@ -124,7 +124,7 @@
 	anchored = TRUE
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blobpod"
-	var/triggered = 0
+	var/triggered = ZERO
 
 /obj/effect/meatgrinder/Crossed(atom/movable/AM)
 	Bumped(AM)
@@ -145,7 +145,7 @@
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
-		explosion(M, 1, 0, 0, 0)
+		explosion(M, 1, ZERO, ZERO, ZERO)
 		qdel(src)
 
 /////For the Wishgranter///////////

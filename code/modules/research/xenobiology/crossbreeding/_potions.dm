@@ -184,7 +184,7 @@ Slimecrossing Potions
 	if(M.stat != DEAD)
 		to_chat(user, "<span class='warning'>The slime is still alive!</span>")
 		return
-	if(M.maxHealth <= 0)
+	if(M.maxHealth <= ZERO)
 		to_chat(user, "<span class='warning'>The slime is too unstable to return!</span>")
 	M.revive(full_heal = TRUE, admin_revive = FALSE)
 	M.stat = CONSCIOUS
@@ -208,10 +208,10 @@ Slimecrossing Potions
 	if(M.stat)
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return
-	if(M.mutation_chance == 0)
+	if(M.mutation_chance == ZERO)
 		to_chat(user, "<span class='warning'>The slime already has no chance of mutating!</span>")
 		return
 
 	to_chat(user, "<span class='notice'>You feed the slime the omnistabilizer. It will not mutate this cycle!</span>")
-	M.mutation_chance = 0
+	M.mutation_chance = ZERO
 	qdel(src)

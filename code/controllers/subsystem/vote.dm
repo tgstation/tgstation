@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(vote)
 
 	var/initiator = null
 	var/started_time = null
-	var/time_remaining = 0
+	var/time_remaining = ZERO
 	var/mode = null
 	var/question = null
 	var/list/choices = list()
@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(vote)
 	if(mode)
 		time_remaining = round((started_time + CONFIG_GET(number/vote_period) - world.time)/10)
 
-		if(time_remaining < 0)
+		if(time_remaining < ZERO)
 			result()
 			for(var/client/C in voting)
 				C << browse(null, "window=vote;can_close=0")
@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(vote)
 
 /datum/controller/subsystem/vote/proc/reset()
 	initiator = null
-	time_remaining = 0
+	time_remaining = ZERO
 	mode = null
 	question = null
 	choices.Cut()
@@ -46,8 +46,8 @@ SUBSYSTEM_DEF(vote)
 
 /datum/controller/subsystem/vote/proc/get_result()
 	//get the highest number of votes
-	var/greatest_votes = 0
-	var/total_votes = 0
+	var/greatest_votes = ZERO
+	var/total_votes = ZERO
 	for(var/option in choices)
 		var/votes = choices[option]
 		total_votes += votes
@@ -61,7 +61,7 @@ SUBSYSTEM_DEF(vote)
 			var/client/C = non_voters[non_voter_ckey]
 			if (!C || C.is_afk())
 				non_voters -= non_voter_ckey
-		if(non_voters.len > 0)
+		if(non_voters.len > ZERO)
 			if(mode == "restart")
 				choices["Continue Playing"] += non_voters.len
 				if(choices["Continue Playing"] >= greatest_votes)
@@ -93,7 +93,7 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/proc/announce_result()
 	var/list/winners = get_result()
 	var/text
-	if(winners.len > 0)
+	if(winners.len > ZERO)
 		if(question)
 			text += "<b>[question]</b>"
 		else
@@ -101,7 +101,7 @@ SUBSYSTEM_DEF(vote)
 		for(var/i=1,i<=choices.len,i++)
 			var/votes = choices[choices[i]]
 			if(!votes)
-				votes = 0
+				votes = ZERO
 			text += "\n<b>[choices[i]]:</b> [votes]"
 		if(mode != "custom")
 			if(winners.len > 1)
@@ -192,7 +192,7 @@ SUBSYSTEM_DEF(vote)
 					return FALSE
 				for(var/map in config.maplist)
 					var/datum/map_config/VM = config.maplist[map]
-					var/run = 0
+					var/run = ZERO
 					if(VM.map_name == SSmapping.config.map_name)
 						run++
 					for(var/name in SSpersistence.saved_maps)
@@ -253,7 +253,7 @@ SUBSYSTEM_DEF(vote)
 		for(var/i=1,i<=choices.len,i++)
 			var/votes = choices[choices[i]]
 			if(!votes)
-				votes = 0
+				votes = ZERO
 			. += "<li><a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([votes] votes)</li>"
 		. += "</ul><hr>"
 		if(admin)

@@ -17,9 +17,9 @@
 	var/icon_opened = "secure0"
 	var/code = ""
 	var/l_code = null
-	var/l_set = 0
-	var/l_setshort = 0
-	var/l_hacking = 0
+	var/l_set = ZERO
+	var/l_setshort = ZERO
+	var/l_hacking = ZERO
 	var/open = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
 	desc = "This shouldn't exist. If it does, create an issue report."
@@ -49,10 +49,10 @@
 				l_hacking = 1
 				if (W.use_tool(src, user, 400))
 					to_chat(user, "<span class='danger'>Internal memory reset - lock has been disengaged.</span>")
-					l_set = 0
-					l_hacking = 0
+					l_set = ZERO
+					l_hacking = ZERO
 				else
-					l_hacking = 0
+					l_hacking = ZERO
 			else
 				to_chat(user, "<span class='warning'>You must <b>unscrew</b> the service panel before you can pulse the wiring!</span>")
 			return
@@ -68,7 +68,7 @@
 	user.set_machine(src)
 	var/dat = text("<TT><B>[]</B><BR>\n\nLock Status: []",src, (locked ? "LOCKED" : "UNLOCKED"))
 	var/message = "Code"
-	if ((l_set == 0) && (!l_setshort))
+	if ((l_set == ZERO) && (!l_setshort))
 		dat += text("<p>\n<b>5-DIGIT PASSCODE NOT SET.<br>ENTER NEW PASSCODE.</b>")
 	if (l_setshort)
 		dat += text("<p>\n<font color=red><b>ALERT: MEMORY SYSTEM ERROR - 6040 201</b></font>")
@@ -147,7 +147,7 @@
 /obj/item/storage/secure/briefcase/syndie/PopulateContents()
 	..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	for(var/i = 0, i < STR.max_items - 2, i++)
+	for(var/i = ZERO, i < STR.max_items - 2, i++)
 		new /obj/item/stack/spacecash/c1000(src)
 
 

@@ -26,7 +26,7 @@
 /datum/game_mode/nuclear/pre_setup()
 	var/n_agents = min(round(num_players() / 10), antag_candidates.len, agents_possible)
 	if(n_agents >= required_enemies)
-		for(var/i = 0, i < n_agents, ++i)
+		for(var/i = ZERO, i < n_agents, ++i)
 			var/datum/mind/new_op = pick_n_take(antag_candidates)
 			pre_nukeops += new_op
 			new_op.assigned_role = "Nuclear Operative"
@@ -55,7 +55,7 @@
 	nukes_left--
 
 /datum/game_mode/nuclear/check_win()
-	if (nukes_left == 0)
+	if (nukes_left == ZERO)
 		return TRUE
 	return ..()
 
@@ -138,7 +138,7 @@
 
 /datum/outfit/syndicate/no_crystals
 	name = "Syndicate Operative - Reinforcement"
-	tc = 0
+	tc = ZERO
 
 /datum/outfit/syndicate/post_equip(mob/living/carbon/human/H)
 	var/obj/item/radio/R = H.ears
@@ -147,7 +147,7 @@
 	if(command_radio)
 		R.command = TRUE
 
-	if(ispath(uplink_type, /obj/item/uplink/nuclear) || tc) // /obj/item/uplink/nuclear understands 0 tc
+	if(ispath(uplink_type, /obj/item/uplink/nuclear) || tc) // /obj/item/uplink/nuclear understands ZERO tc
 		var/obj/item/U = new uplink_type(H, H.key, tc)
 		H.equip_to_slot_or_del(U, ITEM_SLOT_BACKPACK)
 

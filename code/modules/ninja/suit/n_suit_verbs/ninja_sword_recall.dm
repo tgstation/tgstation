@@ -2,7 +2,7 @@
 /obj/item/clothing/suit/space/space_ninja/proc/ninja_sword_recall()
 	var/mob/living/carbon/human/H = affecting
 
-	var/cost = 0
+	var/cost = ZERO
 	var/inview = 1
 
 	if(!energyKatana)
@@ -16,7 +16,7 @@
 
 	if(!(energyKatana in view(H)))
 		cost = distance //Actual cost is cost x 10, so 5 turfs is 50 cost.
-		inview = 0
+		inview = ZERO
 
 	if(!ninjacost(cost))
 		if(iscarbon(energyKatana.loc))

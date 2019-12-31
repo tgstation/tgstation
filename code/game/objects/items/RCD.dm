@@ -12,12 +12,12 @@ RLD
 /obj/item/construction
 	name = "not for ingame use"
 	desc = "A device used to rapidly build and deconstruct. Reload with metal, plasteel, glass or compressed matter cartridges."
-	opacity = 0
+	opacity = ZERO
 	density = FALSE
 	anchored = FALSE
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
-	force = 0
+	force = ZERO
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 5
@@ -27,7 +27,7 @@ RLD
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	var/datum/effect_system/spark_spread/spark_system
-	var/matter = 0
+	var/matter = ZERO
 	var/max_matter = 100
 	var/sheetmultiplier	= 4 //Controls the amount of matter added for each glass/metal sheet, triple for plasteel
 	var/plasteelmultiplier = 3 //Plasteel is worth 3 times more than glass or metal
@@ -43,7 +43,7 @@ RLD
 /obj/item/construction/Initialize(mapload)
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread
-	spark_system.set_up(5, 0, src)
+	spark_system.set_up(5, ZERO, src)
 	spark_system.attach(src)
 	if(upgrade & RCD_UPGRADE_SILO_LINK)
 		silo_mats = AddComponent(/datum/component/remote_materials, "RCD", mapload, FALSE)
@@ -64,15 +64,15 @@ RLD
 /obj/item/construction/attackby(obj/item/W, mob/user, params)
 	if(iscyborg(user))
 		return
-	var/loaded = 0
+	var/loaded = ZERO
 	if(istype(W, /obj/item/rcd_ammo))
 		var/obj/item/rcd_ammo/R = W
 		var/load = min(R.ammoamt, max_matter - matter)
-		if(load <= 0)
+		if(load <= ZERO)
 			to_chat(user, "<span class='warning'>[src] can't hold any more matter-units!</span>")
 			return
 		R.ammoamt -= load
-		if(R.ammoamt <= 0)
+		if(R.ammoamt <= ZERO)
 			qdel(R)
 		matter += load
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
@@ -105,7 +105,7 @@ RLD
 
 /obj/item/construction/proc/loadwithsheets(obj/item/stack/sheet/S, value, mob/user)
 	var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD
-	if(maxsheets > 0)
+	if(maxsheets > ZERO)
 		var/amount_to_use = min(S.amount, maxsheets)
 		S.use(amount_to_use)
 		matter += value*amount_to_use
@@ -113,7 +113,7 @@ RLD
 		to_chat(user, "<span class='notice'>You insert [amount_to_use] [S.name] sheets into [src]. </span>")
 		return 1
 	to_chat(user, "<span class='warning'>You can't insert any more [S.name] sheets into [src]!</span>")
-	return 0
+	return ZERO
 
 /obj/item/construction/proc/activate()
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -200,7 +200,7 @@ RLD
 	var/window_type = /obj/structure/window/fulltile
 	var/advanced_airlock_setting = 1 //Set to 1 if you want more paintjobs available
 	var/list/conf_access = null
-	var/use_one_access = 0 //If the airlock should require ALL or only ONE of the listed accesses.
+	var/use_one_access = ZERO //If the airlock should require ALL or only ONE of the listed accesses.
 	var/delay_mod = 1
 	var/canRturf = FALSE //Variable for R walls to deconstruct them
 
@@ -576,7 +576,7 @@ RLD
 	addtimer(CALLBACK(src, .proc/detonate_pulse_explode), 50)
 
 /obj/item/construction/rcd/proc/detonate_pulse_explode()
-	explosion(src, 0, 0, 3, 1, flame_range = 1)
+	explosion(src, ZERO, ZERO, 3, 1, flame_range = 1)
 	qdel(src)
 
 /obj/item/construction/rcd/update_icon()
@@ -599,12 +599,12 @@ RLD
 
 /obj/item/construction/rcd/borg/useResource(amount, mob/user)
 	if(!iscyborg(user))
-		return 0
+		return ZERO
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
 		if(user)
 			to_chat(user, no_ammo_message)
-		return 0
+		return ZERO
 	. = borgy.cell.use(amount * energyfactor) //borgs get 1.3x the use of their RCDs
 	if(!. && user)
 		to_chat(user, no_ammo_message)
@@ -612,12 +612,12 @@ RLD
 
 /obj/item/construction/rcd/borg/checkResource(amount, mob/user)
 	if(!iscyborg(user))
-		return 0
+		return ZERO
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
 		if(user)
 			to_chat(user, no_ammo_message)
-		return 0
+		return ZERO
 	. = borgy.cell.charge >= (amount * energyfactor)
 	if(!. && user)
 		to_chat(user, no_ammo_message)
@@ -764,7 +764,7 @@ RLD
 					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 					if(do_after(user, decondelay, target = A))
 						if(!useResource(deconcost, user))
-							return 0
+							return ZERO
 						activate()
 						qdel(A)
 						return TRUE
@@ -825,9 +825,9 @@ RLD
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, TRUE)
 					if(do_after(user, floordelay, target = A))
 						if(!istype(F))
-							return 0
+							return ZERO
 						if(!useResource(floorcost, user))
-							return 0
+							return ZERO
 						activate()
 						var/destination = get_turf(A)
 						var/obj/machinery/light/floor/FL = new /obj/machinery/light/floor(destination)

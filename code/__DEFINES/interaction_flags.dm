@@ -1,5 +1,5 @@
 /// whether can_interact() checks for anchored. only works on movables.
-#define INTERACT_ATOM_REQUIRES_ANCHORED 			(1<<0)
+#define INTERACT_ATOM_REQUIRES_ANCHORED 			(1<<ZERO)
 /// calls try_interact() on attack_hand() and returns that.
 #define INTERACT_ATOM_ATTACK_HAND 					(1<<1)
 /// automatically calls and returns ui_interact() on interact().
@@ -18,10 +18,10 @@
 #define INTERACT_ATOM_NO_FINGERPRINT_INTERACT 		(1<<8)
 
 /// attempt pickup on attack_hand for items
-#define INTERACT_ITEM_ATTACK_HAND_PICKUP (1<<0)
+#define INTERACT_ITEM_ATTACK_HAND_PICKUP (1<<ZERO)
 
 /// can_interact() while open
-#define INTERACT_MACHINE_OPEN 				(1<<0)
+#define INTERACT_MACHINE_OPEN 				(1<<ZERO)
 /// can_interact() while offline
 #define INTERACT_MACHINE_OFFLINE 			(1<<1)
 /// try to interact with wires if open

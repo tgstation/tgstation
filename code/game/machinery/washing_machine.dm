@@ -118,7 +118,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	density = TRUE
 	state_open = TRUE
 	var/busy = FALSE
-	var/bloody_mess = 0
+	var/bloody_mess = ZERO
 	var/obj/item/color_source
 	var/max_wash_capacity = 5
 
@@ -155,7 +155,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(anchored)
 		if(prob(5))
 			var/matrix/M = new
-			M.Translate(rand(-1, 1), rand(0, 1))
+			M.Translate(rand(-1, 1), rand(ZERO, 1))
 			animate(src, transform=M, time=1)
 			animate(transform=matrix(), time=1)
 	else
@@ -241,7 +241,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 /obj/item/clothing/shoes/sneakers/machine_wash(obj/machinery/washing_machine/WM)
 	if(chained)
-		chained = 0
+		chained = ZERO
 		slowdown = SHOES_SLOWDOWN
 		new /obj/item/restraints/handcuffs(loc)
 	..()
@@ -260,7 +260,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	else if(bloody_mess)
 		icon_state = "wm_[state_open]_blood"
 	else
-		var/full = contents.len ? 1 : 0
+		var/full = contents.len ? 1 : ZERO
 		icon_state = "wm_[state_open]_[full]"
 
 /obj/machinery/washing_machine/update_overlays()
@@ -330,5 +330,5 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 /obj/machinery/washing_machine/open_machine(drop = 1)
 	..()
-	density = TRUE //because machinery/open_machine() sets it to 0
+	density = TRUE //because machinery/open_machine() sets it to ZERO
 	color_source = null

@@ -93,8 +93,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	var/final_countdown = FALSE
 
-	var/damage = 0
-	var/damage_archived = 0
+	var/damage = ZERO
+	var/damage_archived = ZERO
 	var/safe_alert = "Crystalline hyperstructure returning to safe operating parameters."
 	var/warning_point = 50
 	var/warning_alert = "Danger! Crystal hyperstructure integrity faltering!"
@@ -108,31 +108,31 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/explosion_power = 35
 	var/temp_factor = 30
 
-	var/lastwarning = 0                // Time in 1/10th of seconds since the last sent warning
-	var/power = 0
+	var/lastwarning = ZERO                // Time in 1/10th of seconds since the last sent warning
+	var/power = ZERO
 
-	var/n2comp = 0                    // raw composition of each gas in the chamber, ranges from 0 to 1
+	var/n2comp = ZERO                    // raw composition of each gas in the chamber, ranges from ZERO to 1
 
-	var/plasmacomp = 0
-	var/o2comp = 0
-	var/co2comp = 0
-	var/pluoxiumcomp = 0
-	var/tritiumcomp = 0
-	var/bzcomp = 0
-	var/n2ocomp = 0
+	var/plasmacomp = ZERO
+	var/o2comp = ZERO
+	var/co2comp = ZERO
+	var/pluoxiumcomp = ZERO
+	var/tritiumcomp = ZERO
+	var/bzcomp = ZERO
+	var/n2ocomp = ZERO
 
-	var/pluoxiumbonus = 0
+	var/pluoxiumbonus = ZERO
 
-	var/combined_gas = 0
-	var/gasmix_power_ratio = 0
+	var/combined_gas = ZERO
+	var/gasmix_power_ratio = ZERO
 	var/dynamic_heat_modifier = 1
 	var/dynamic_heat_resistance = 1
 	var/powerloss_inhibitor = 1
-	var/powerloss_dynamic_scaling= 0
-	var/power_transmission_bonus = 0
-	var/mole_heat_penalty = 0
+	var/powerloss_dynamic_scaling= ZERO
+	var/power_transmission_bonus = ZERO
+	var/mole_heat_penalty = ZERO
 
-	var/matter_power = 0
+	var/matter_power = ZERO
 
 	//Temporary values so that we can optimize this
 	//How much the bullets damage should be multiplied by when it is added to the internal variables
@@ -163,7 +163,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/moveable = FALSE
 
 	/// cooldown tracker for accent sounds,
-	var/last_accent_sound = 0
+	var/last_accent_sound = ZERO
 
 /obj/machinery/power/supermatter_crystal/Initialize()
 	. = ..()
@@ -174,7 +174,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	GLOB.poi_list |= src
 	radio = new(src)
 	radio.keyslot = new radio_key
-	radio.listening = 0
+	radio.listening = ZERO
 	radio.recalculateChannels()
 	investigate_log("has been created.", INVESTIGATE_SUPERMATTER)
 	if(is_main_engine)
@@ -245,7 +245,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/proc/get_integrity()
 	var/integrity = damage / explosion_point
 	integrity = round(100 - integrity * 100, 0.01)
-	integrity = integrity < 0 ? 0 : integrity
+	integrity = integrity < ZERO ? ZERO : integrity
 	return integrity
 
 /obj/machinery/power/supermatter_crystal/proc/countdown()
@@ -260,13 +260,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	var/speaking = "[emergency_alert] The supermatter has reached critical integrity failure. Emergency causality destabilization field has been activated."
 	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
-	for(var/i in SUPERMATTER_COUNTDOWN_TIME to 0 step -10)
+	for(var/i in SUPERMATTER_COUNTDOWN_TIME to ZERO step -10)
 		if(damage < explosion_point) // Cutting it a bit close there engineers
 			radio.talk_into(src, "[safe_alert] Failsafe has been disengaged.", common_channel)
 			cut_overlay(causality_field, TRUE)
 			final_countdown = FALSE
 			return
-		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
+		else if((i % 50) != ZERO && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
 			sleep(10)
 			continue
 		else if(i > 50)
@@ -371,17 +371,17 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//((((some value between 0.5 and 1 * temp - ((273.15 + 40) * some values between 1 and 6)) * some number between 0.25 and knock your socks off / 150) * 0.25
 			//Heat and mols account for each other, a lot of hot mols are more damaging then a few
 			//Mols start to have a positive effect on damage after 350
-			damage = max(damage + (max(CLAMP(removed.total_moles() / 200, 0.5, 1) * removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD)*dynamic_heat_resistance), 0) * mole_heat_penalty / 150 ) * DAMAGE_INCREASE_MULTIPLIER, 0)
+			damage = max(damage + (max(CLAMP(removed.total_moles() / 200, 0.5, 1) * removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD)*dynamic_heat_resistance), ZERO) * mole_heat_penalty / 150 ) * DAMAGE_INCREASE_MULTIPLIER, ZERO)
 			//Power only starts affecting damage when it is above 5000
-			damage = max(damage + (max(power - POWER_PENALTY_THRESHOLD, 0)/500) * DAMAGE_INCREASE_MULTIPLIER, 0)
+			damage = max(damage + (max(power - POWER_PENALTY_THRESHOLD, ZERO)/500) * DAMAGE_INCREASE_MULTIPLIER, ZERO)
 			//Molar count only starts affecting damage when it is above 1800
-			damage = max(damage + (max(combined_gas - MOLE_PENALTY_THRESHOLD, 0)/80) * DAMAGE_INCREASE_MULTIPLIER, 0)
+			damage = max(damage + (max(combined_gas - MOLE_PENALTY_THRESHOLD, ZERO)/80) * DAMAGE_INCREASE_MULTIPLIER, ZERO)
 
 			//There might be a way to integrate healing and hurting via heat
 			//healing damage
 			if(combined_gas < MOLE_PENALTY_THRESHOLD)
 				//Only heals damage when the temp is below 313.15, heals up to 2 damage
-				damage = max(damage + (min(removed.temperature - (T0C + HEAT_PENALTY_THRESHOLD), 0) / 150 ), 0)
+				damage = max(damage + (min(removed.temperature - (T0C + HEAT_PENALTY_THRESHOLD), ZERO) / 150 ), ZERO)
 
 			//caps damage rate
 
@@ -392,51 +392,51 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		removed.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/nitrogen, /datum/gas/pluoxium, /datum/gas/tritium, /datum/gas/bz)
 		//calculating gas related values
 		//Wanna know a secret? See that max() to zero? it's used for error checking. If we get a mol count in the negative, we'll get a divide by zero error
-		combined_gas = max(removed.total_moles(), 0)
+		combined_gas = max(removed.total_moles(), ZERO)
 
 		//This is more error prevention, according to all known laws of atmos, gas_mix.remove() should never make negative mol values.
 		//But this is tg
 
 		//Lets get the proportions of the gasses in the mix
-		//They range between 0 and 1
-		plasmacomp = max(removed.gases[/datum/gas/plasma][MOLES]/combined_gas, 0)
-		o2comp = max(removed.gases[/datum/gas/oxygen][MOLES]/combined_gas, 0)
-		co2comp = max(removed.gases[/datum/gas/carbon_dioxide][MOLES]/combined_gas, 0)
-		pluoxiumcomp = max(removed.gases[/datum/gas/pluoxium][MOLES]/combined_gas, 0)
-		tritiumcomp = max(removed.gases[/datum/gas/tritium][MOLES]/combined_gas, 0)
-		bzcomp = max(removed.gases[/datum/gas/bz][MOLES]/combined_gas, 0)
+		//They range between ZERO and 1
+		plasmacomp = max(removed.gases[/datum/gas/plasma][MOLES]/combined_gas, ZERO)
+		o2comp = max(removed.gases[/datum/gas/oxygen][MOLES]/combined_gas, ZERO)
+		co2comp = max(removed.gases[/datum/gas/carbon_dioxide][MOLES]/combined_gas, ZERO)
+		pluoxiumcomp = max(removed.gases[/datum/gas/pluoxium][MOLES]/combined_gas, ZERO)
+		tritiumcomp = max(removed.gases[/datum/gas/tritium][MOLES]/combined_gas, ZERO)
+		bzcomp = max(removed.gases[/datum/gas/bz][MOLES]/combined_gas, ZERO)
 
-		n2ocomp = max(removed.gases[/datum/gas/nitrous_oxide][MOLES]/combined_gas, 0)
-		n2comp = max(removed.gases[/datum/gas/nitrogen][MOLES]/combined_gas, 0)
+		n2ocomp = max(removed.gases[/datum/gas/nitrous_oxide][MOLES]/combined_gas, ZERO)
+		n2comp = max(removed.gases[/datum/gas/nitrogen][MOLES]/combined_gas, ZERO)
 
 		//We're concerned about pluoxium being too easy to abuse at low percents, so we make sure there's a substantial amount.
 		if(pluoxiumcomp >= 0.15)
 			pluoxiumbonus = 1    //makes pluoxium only work at 15%+
 		else
-			pluoxiumbonus = 0
+			pluoxiumbonus = ZERO
 
 		//No less then zero, and no greater then one, we use this to do explosions and heat to power transfer
-		gasmix_power_ratio = min(max(plasmacomp + o2comp + co2comp + tritiumcomp + bzcomp - pluoxiumcomp - n2comp, 0), 1)
+		gasmix_power_ratio = min(max(plasmacomp + o2comp + co2comp + tritiumcomp + bzcomp - pluoxiumcomp - n2comp, ZERO), 1)
 		//Minimum value of 1.5, maximum value of 15
 		dynamic_heat_modifier = max((plasmacomp * PLASMA_HEAT_PENALTY) + (o2comp * OXYGEN_HEAT_PENALTY) + (co2comp * CO2_HEAT_PENALTY) + (tritiumcomp * TRITIUM_HEAT_PENALTY) + ((pluoxiumcomp * PLUOXIUM_HEAT_PENALTY) * pluoxiumbonus) + (n2comp * NITROGEN_HEAT_PENALTY) + (bzcomp * BZ_HEAT_PENALTY), 0.5)
 		//Value between 6 and 1
 		dynamic_heat_resistance = max((n2ocomp * N2O_HEAT_RESISTANCE) + ((pluoxiumcomp * PLUOXIUM_HEAT_RESISTANCE) * pluoxiumbonus), 1)
-		//Value between 4 and 0, bz has a dampening effect
-		power_transmission_bonus = max((plasmacomp * PLASMA_TRANSMIT_MODIFIER) + (o2comp * OXYGEN_TRANSMIT_MODIFIER) + (bzcomp * BZ_TRANSMIT_MODIFIER), 0)
+		//Value between 4 and ZERO, bz has a dampening effect
+		power_transmission_bonus = max((plasmacomp * PLASMA_TRANSMIT_MODIFIER) + (o2comp * OXYGEN_TRANSMIT_MODIFIER) + (bzcomp * BZ_TRANSMIT_MODIFIER), ZERO)
 
 		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
 		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
 
 		//Ramps up or down in increments of 0.02 up to the proportion of co2
 		//Given infinite time, powerloss_dynamic_scaling = co2comp
-		//Some value between 0 and 1
+		//Some value between ZERO and 1
 		if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && co2comp > POWERLOSS_INHIBITION_GAS_THRESHOLD) //If there are more then 20 mols, or more then 20% co2
-			powerloss_dynamic_scaling = CLAMP(powerloss_dynamic_scaling + CLAMP(co2comp - powerloss_dynamic_scaling, -0.02, 0.02), 0, 1)
+			powerloss_dynamic_scaling = CLAMP(powerloss_dynamic_scaling + CLAMP(co2comp - powerloss_dynamic_scaling, -0.02, 0.02), ZERO, 1)
 		else
-			powerloss_dynamic_scaling = CLAMP(powerloss_dynamic_scaling - 0.05,0, 1)
-		//Ranges from 0 to 1(1-(value between 0 and 1 * ranges from 1 to 1.5(mol / 500)))
+			powerloss_dynamic_scaling = CLAMP(powerloss_dynamic_scaling - 0.05,ZERO, 1)
+		//Ranges from ZERO to 1(1-(value between ZERO and 1 * ranges from 1 to 1.5(mol / 500)))
 		//We take the mol count, and scale it to be our inhibitor
-		powerloss_inhibitor = CLAMP(1-(powerloss_dynamic_scaling * CLAMP(combined_gas/POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD,1 ,1.5)),0 ,1)
+		powerloss_inhibitor = CLAMP(1-(powerloss_dynamic_scaling * CLAMP(combined_gas/POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD,1 ,1.5)),ZERO ,1)
 
 		//Releases stored power into the general pool
 		//We get this by consuming shit or being scalpeled
@@ -444,9 +444,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//We base our removed power off one 10th of the matter_power.
 			var/removed_matter = max(matter_power/MATTER_POWER_CONVERSION, 40)
 			//Adds at least 40 power
-			power = max(power + removed_matter, 0)
+			power = max(power + removed_matter, ZERO)
 			//Removes at least 40 matter power
-			matter_power = max(matter_power - removed_matter, 0)
+			matter_power = max(matter_power - removed_matter, ZERO)
 
 		var/temp_factor = 50
 		if(gasmix_power_ratio > 0.8)
@@ -458,11 +458,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			icon_state = base_icon_state
 
 		//Reiterating the above, if there is more pluox and n2 then anything else, we receive no power increase from heat
-		power = max((removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0)
+		power = max((removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, ZERO)
 
 		if(prob(50))
 			//PLUOXIUM_RADIOACTIVITY_MODIFIER = -2
-			//1 + tritRad + pluoxRad * either 0 or one * (between 0 and 4, bz lessens / (10 - bzrads))
+			//1 + tritRad + pluoxRad * either ZERO or one * (between ZERO and 4, bz lessens / (10 - bzrads))
 			//Should never be negative, bz dampens the effect of pluoxium
 			radiation_pulse(src, power * (1 + (tritiumcomp * TRITIUM_RADIOACTIVITY_MODIFIER) + ((pluoxiumcomp * PLUOXIUM_RADIOACTIVITY_MODIFIER) * pluoxiumbonus) * (power_transmission_bonus/(10-(bzcomp * BZ_RADIOACTIVITY_MODIFIER))))) // Rad Modifiers BZ(500%), Tritium(300%), and Pluoxium(-200%)
 		if(bzcomp >= 0.4 && prob(30 * bzcomp))
@@ -481,13 +481,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//Power * 0.55 * (some value between 1.5 and 15) / 5
 		removed.temperature += ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_MODIFIER)
 		//We can only emit so much heat, that being 37500
-		removed.temperature = max(0, min(removed.temperature, 2500 * dynamic_heat_modifier))
+		removed.temperature = max(ZERO, min(removed.temperature, 2500 * dynamic_heat_modifier))
 
 		//Calculate how much gas to release
 		//Varies based on power and gas content
-		removed.gases[/datum/gas/plasma][MOLES] += max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0)
+		removed.gases[/datum/gas/plasma][MOLES] += max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, ZERO)
 		//Varies based on power, gas content, and heat
-		removed.gases[/datum/gas/oxygen][MOLES] += max(((device_energy + removed.temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
+		removed.gases[/datum/gas/oxygen][MOLES] += max(((device_energy + removed.temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, ZERO)
 
 		if(produces_gas)
 			env.merge(removed)
@@ -498,7 +498,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 			var/D = sqrt(1 / max(1, get_dist(l, src)))
 			l.hallucination += power * config_hallucination_power * D
-			l.hallucination = CLAMP(0, 200, l.hallucination)
+			l.hallucination = CLAMP(ZERO, 200, l.hallucination)
 
 	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
 		var/rads = (power / 10) * sqrt( 1 / max(get_dist(l, src),1) )
@@ -824,7 +824,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			H.visible_message("<span class='danger'>[H] is suddenly knocked down, as if [H.p_their()] [(H.get_num_legs() == 1) ? "leg had" : "legs have"] been pulled out from underneath [H.p_them()]!</span>",\
 				"<span class='userdanger'>A sudden gravitational pulse knocks you down!</span>",\
 				"<span class='hear'>You hear a thud.</span>")
-			H.apply_effect(40, EFFECT_PARALYZE, 0)
+			H.apply_effect(40, EFFECT_PARALYZE, ZERO)
 		else //you're not human so you get sucked in
 			step_towards(P,center)
 			step_towards(P,center)

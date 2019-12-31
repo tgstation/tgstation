@@ -128,7 +128,7 @@
 	explanation_text = "Ensure that infected monkeys escape on the emergency shuttle!"
 	martyr_compatible = TRUE
 	var/monkeys_to_win = 1
-	var/escaped_monkeys = 0
+	var/escaped_monkeys = ZERO
 
 /datum/objective/monkey/check_completion()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()

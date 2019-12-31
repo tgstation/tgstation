@@ -14,7 +14,7 @@
 				_L[trait] = list(source); \
 			} \
 		} \
-	} while (0)
+	} while (ZERO)
 #define REMOVE_TRAIT(target, trait, sources) \
 	do { \
 		var/list/_L = target.status_traits; \
@@ -37,7 +37,7 @@
 				target.status_traits = null \
 			}; \
 		} \
-	} while (0)
+	} while (ZERO)
 #define REMOVE_TRAITS_NOT_IN(target, sources) \
 	do { \
 		var/list/_L = target.status_traits; \
@@ -52,7 +52,7 @@
 					target.status_traits = null\
 				};\
 		}\
-	} while (0)
+	} while (ZERO)
 #define HAS_TRAIT(target, trait) (target.status_traits ? (target.status_traits[trait] ? TRUE : FALSE) : FALSE)
 #define HAS_TRAIT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (source in target.status_traits[trait]) : FALSE) : FALSE)
 

@@ -57,18 +57,18 @@
 /obj/item/melee/transforming/energy/sword/bananium
 	name = "bananium sword"
 	desc = "An elegant weapon, for a more civilized age."
-	force = 0
-	throwforce = 0
-	force_on = 0
-	throwforce_on = 0
+	force = ZERO
+	throwforce = ZERO
+	force_on = ZERO
+	throwforce_on = ZERO
 	hitsound = null
 	attack_verb_on = list("slipped")
 	clumsy_check = FALSE
 	sharpness = IS_BLUNT
 	sword_color = "yellow"
-	heat = 0
+	heat = ZERO
 	light_color = "#ffff00"
-	var/next_trombone_allowed = 0
+	var/next_trombone_allowed = ZERO
 
 /obj/item/melee/transforming/energy/sword/bananium/ComponentInitialize()
 	. = ..()
@@ -118,13 +118,13 @@
 	name = "bananium energy shield"
 	desc = "A shield that stops most melee attacks, protects user from almost all energy projectiles, and can be thrown to slip opponents."
 	throw_speed = 1
-	clumsy_check = 0
+	clumsy_check = ZERO
 	base_icon_state = "bananaeshield"
-	force = 0
-	throwforce = 0
+	force = ZERO
+	throwforce = ZERO
 	throw_range = 5
-	on_force = 0
-	on_throwforce = 0
+	on_force = ZERO
+	on_throwforce = ZERO
 	on_throw_speed = 1
 
 /obj/item/shield/energy/bananium/ComponentInitialize()
@@ -138,7 +138,7 @@
 	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 	slipper.signal_enabled = active
 
-/obj/item/shield/energy/bananium/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
+/obj/item/shield/energy/bananium/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = ZERO, datum/callback/callback, force)
 	if(active)
 		if(iscarbon(thrower))
 			var/mob/living/carbon/C = thrower
@@ -195,7 +195,7 @@
 /obj/item/grown/bananapeel/bombanana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is deliberately slipping on the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/misc/slip.ogg', 50, TRUE, -1)
-	bomb.preprime(user, 0, FALSE)
+	bomb.preprime(user, ZERO, FALSE)
 	return (BRUTELOSS)
 
 //TEARSTACHE GRENADE

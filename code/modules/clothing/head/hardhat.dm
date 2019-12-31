@@ -7,7 +7,7 @@
 	var/on = FALSE
 	var/hat_type = "yellow" //Determines used sprites: hardhat[on]_[hat_type] and hardhat[on]_[hat_type]2 (lying down sprite)
 	armor = list("melee" = 15, "bullet" = 5, "laser" = 20, "energy" = 10, "bomb" = 20, "bio" = 10, "rad" = 20, "fire" = 100, "acid" = 50)
-	flags_inv = 0
+	flags_inv = ZERO
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	clothing_flags = SNUG_FIT
 	resistance_flags = FIRE_PROOF
@@ -41,7 +41,7 @@
 	set_light(brightness_on)
 
 /obj/item/clothing/head/hardhat/proc/turn_off(mob/user)
-	set_light(0)
+	set_light(ZERO)
 
 /obj/item/clothing/head/hardhat/orange
 	icon_state = "hardhat0_orange"

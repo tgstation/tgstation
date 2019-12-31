@@ -3,7 +3,7 @@
 	anchored = TRUE
 	icon = 'icons/obj/cult.dmi'
 	light_power = 2
-	var/cooldowntime = 0
+	var/cooldowntime = ZERO
 	break_sound = 'sound/hallucinations/veryfar_noise.ogg'
 	debris = list(/obj/item/stack/sheet/runed_metal = 1)
 
@@ -12,14 +12,14 @@
 	visible_message("<span class='danger'>[src] fades away.</span>")
 	invisibility = INVISIBILITY_OBSERVER
 	alpha = 100 //To help ghosts distinguish hidden runes
-	light_range = 0
-	light_power = 0
+	light_range = ZERO
+	light_power = ZERO
 	update_light()
 	STOP_PROCESSING(SSfastprocess, src)
 
 /obj/structure/destructible/cult/proc/reveal() //for spells that reveal cult presence
 	density = initial(density)
-	invisibility = 0
+	invisibility = ZERO
 	visible_message("<span class='danger'>[src] suddenly appears!</span>")
 	alpha = initial(alpha)
 	light_range = initial(light_range)
@@ -150,9 +150,9 @@
 	break_sound = 'sound/effects/glassbr2.ogg'
 	break_message = "<span class='warning'>The blood-red crystal falls to the floor and shatters!</span>"
 	var/heal_delay = 25
-	var/last_heal = 0
+	var/last_heal = ZERO
 	var/corrupt_delay = 50
-	var/last_corrupt = 0
+	var/last_corrupt = ZERO
 
 /obj/structure/destructible/cult/pylon/New()
 	START_PROCESSING(SSfastprocess, src)
@@ -172,8 +172,8 @@
 				if(L.health != L.maxHealth)
 					new /obj/effect/temp_visual/heal(get_turf(src), "#960000")
 					if(ishuman(L))
-						L.adjustBruteLoss(-1, 0)
-						L.adjustFireLoss(-1, 0)
+						L.adjustBruteLoss(-1, ZERO)
+						L.adjustFireLoss(-1, ZERO)
 						L.updatehealth()
 					if(isshade(L) || isconstruct(L))
 						var/mob/living/simple_animal/M = L

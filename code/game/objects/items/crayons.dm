@@ -98,7 +98,7 @@
 		create_reagents(charges_left * volume_multiplier)
 	reagents.clear_reagents()
 
-	var/total_weight = 0
+	var/total_weight = ZERO
 	for(var/key in reagent_contents)
 		total_weight += reagent_contents[key]
 
@@ -115,7 +115,7 @@
 		refill()
 	else
 		if(check_empty(user, amount, requires_full))
-			return 0
+			return ZERO
 		else
 			. = min(charges_left, amount)
 			charges_left -= .
@@ -265,7 +265,7 @@
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		cost = 5
 	if(istype(target, /obj/item/canvas))
-		cost = 0
+		cost = ZERO
 	if(ishuman(user))
 		if (istagger)
 			cost *= 0.5
@@ -297,7 +297,7 @@
 		if(RANDOM_ORIENTED)
 			drawing = pick(oriented)
 		if(RANDOM_NUMBER)
-			drawing = ascii2text(rand(48, 57)) // 0-9
+			drawing = ascii2text(rand(48, 57)) // ZERO-9
 		if(RANDOM_ANY)
 			drawing = pick(all_drawables)
 
@@ -328,7 +328,7 @@
 			if(WEST)
 				graf_rot = 270
 			else
-				graf_rot = 0
+				graf_rot = ZERO
 
 	var/list/click_params = params2list(params)
 	var/clickx
@@ -503,7 +503,7 @@
 	dye_color = DYE_RAINBOW
 
 /obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity, params)
-	paint_color = rgb(rand(0,255), rand(0,255), rand(0,255))
+	paint_color = rgb(rand(ZERO,255), rand(ZERO,255), rand(ZERO,255))
 	. = ..()
 
 /*

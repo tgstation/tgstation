@@ -9,14 +9,14 @@
 
 /mob/living/carbon/human/slip(knockdown_amount, obj/O, lube, paralyze, forcedrop)
 	if(HAS_TRAIT(src, TRAIT_NOSLIPALL))
-		return 0
+		return ZERO
 	if (!(lube&GALOSHES_DONT_HELP))
 		if(HAS_TRAIT(src, TRAIT_NOSLIPWATER))
-			return 0
+			return ZERO
 		if(shoes && istype(shoes, /obj/item/clothing))
 			var/obj/item/clothing/CS = shoes
 			if (CS.clothing_flags & NOSLIP)
-				return 0
+				return ZERO
 	return ..()
 
 /mob/living/carbon/human/experience_pressure_difference()
@@ -24,7 +24,7 @@
 	if(shoes && istype(shoes, /obj/item/clothing))
 		var/obj/item/clothing/S = shoes
 		if (S.clothing_flags & NOSLIP)
-			return 0
+			return ZERO
 	return ..()
 
 /mob/living/carbon/human/mob_has_gravity()
@@ -65,7 +65,7 @@
 				//End bloody footprints
 				S.step_action()
 
-/mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
+/mob/living/carbon/human/Process_Spacemove(movement_dir = ZERO) //Temporary laziness thing. Will change to handles by species reee.
 	if(dna.species.space_move(src))
 		return TRUE
 	return ..()

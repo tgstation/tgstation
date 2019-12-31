@@ -116,7 +116,7 @@
 
 /obj/item/scalpel/Initialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 80 * toolspeed, 100, 0)
+	AddComponent(/datum/component/butchering, 80 * toolspeed, 100, ZERO)
 
 /obj/item/scalpel/augment
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
@@ -197,8 +197,8 @@
 	icon_state = "evidence"
 	var/xx = I.pixel_x
 	var/yy = I.pixel_y
-	I.pixel_x = 0
-	I.pixel_y = 0
+	I.pixel_x = ZERO
+	I.pixel_y = ZERO
 	var/image/img = image("icon"=I, "layer"=FLOAT_LAYER)
 	img.plane = FLOAT_PLANE
 	I.pixel_x = xx

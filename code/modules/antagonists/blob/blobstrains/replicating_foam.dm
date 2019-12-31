@@ -13,8 +13,8 @@
 /datum/blobstrain/reagent/replicating_foam/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if(damage_type == BRUTE)
 		damage = damage * 2
-	else if(damage_type == BURN && damage > 0 && B.obj_integrity - damage > 0 && prob(60))
-		var/obj/structure/blob/newB = B.expand(null, null, 0)
+	else if(damage_type == BURN && damage > ZERO && B.obj_integrity - damage > ZERO && prob(60))
+		var/obj/structure/blob/newB = B.expand(null, null, ZERO)
 		if(newB)
 			newB.obj_integrity = B.obj_integrity - damage
 			newB.update_icon()
@@ -23,7 +23,7 @@
 
 /datum/blobstrain/reagent/replicating_foam/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O)
 	if(prob(30))
-		newB.expand(null, null, 0) //do it again!
+		newB.expand(null, null, ZERO) //do it again!
 
 /datum/reagent/blob/replicating_foam
 	name = "Replicating Foam"

@@ -8,15 +8,15 @@
 	resistance_flags = ACID_PROOF
 	var/base_state = "left"
 	max_integrity = 150 //If you change this, consider changing ../door/window/brigdoor/ max_integrity at the bottom of this .dm file
-	integrity_failure = 0
+	integrity_failure = ZERO
 	armor = list("melee" = 20, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 70, "acid" = 100)
 	visible = FALSE
 	flags_1 = ON_BORDER_1
-	opacity = 0
+	opacity = ZERO
 	CanAtmosPass = ATMOS_PASS_PROC
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	var/obj/item/electronics/airlock/electronics = null
-	var/reinf = 0
+	var/reinf = ZERO
 	var/shards = 2
 	var/rods = 2
 	var/cable = 1
@@ -44,7 +44,7 @@
 /obj/machinery/door/window/Destroy()
 	density = FALSE
 	QDEL_LIST(debris)
-	if(obj_integrity == 0)
+	if(obj_integrity == ZERO)
 		playsound(src, "shatter", 70, TRUE)
 	electronics = null
 	return ..()
@@ -135,13 +135,13 @@
 
 /obj/machinery/door/window/open(forced=FALSE)
 	if (operating) //doors can still open when emag-disabled
-		return 0
+		return ZERO
 	if(!forced)
 		if(!hasPower())
-			return 0
+			return ZERO
 	if(forced < 2)
 		if(obj_flags & EMAGGED)
-			return 0
+			return ZERO
 	if(!operating) //in case of emag
 		operating = TRUE
 	do_animate("opening")
@@ -158,13 +158,13 @@
 
 /obj/machinery/door/window/close(forced=FALSE)
 	if (operating)
-		return 0
+		return ZERO
 	if(!forced)
 		if(!hasPower())
-			return 0
+			return ZERO
 	if(forced < 2)
 		if(obj_flags & EMAGGED)
-			return 0
+			return ZERO
 	operating = TRUE
 	do_animate("closing")
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
@@ -178,7 +178,7 @@
 	operating = FALSE
 	return 1
 
-/obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BRUTE)
 			playsound(src, 'sound/effects/glasshit.ogg', 90, TRUE)
@@ -199,7 +199,7 @@
 
 /obj/machinery/door/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + (reinf ? 1600 : 800))
-		take_damage(round(exposed_volume / 200), BURN, 0, 0)
+		take_damage(round(exposed_volume / 200), BURN, ZERO, ZERO)
 	..()
 
 /obj/machinery/door/window/emag_act(mob/user)

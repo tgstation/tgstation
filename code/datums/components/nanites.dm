@@ -6,16 +6,16 @@
 	var/max_nanites = 500		//maximum amount of nanites in the system
 	var/regen_rate = 0.5		//nanites generated per second
 	var/safety_threshold = 50	//how low nanites will get before they stop processing/triggering
-	var/cloud_id = 0 			//0 if not connected to the cloud, 1-100 to set a determined cloud backup to draw from
+	var/cloud_id = ZERO 			//ZERO if not connected to the cloud, 1-100 to set a determined cloud backup to draw from
 	var/cloud_active = TRUE		//if false, won't sync to the cloud
-	var/next_sync = 0
+	var/next_sync = ZERO
 	var/list/datum/nanite_program/programs = list()
 	var/max_programs = NANITE_PROGRAM_LIMIT
 
 	var/stealth = FALSE //if TRUE, does not appear on HUDs and health scans
 	var/diagnostics = TRUE //if TRUE, displays program list when scanned by nanite scanners
 
-/datum/component/nanites/Initialize(amount = 100, cloud = 0)
+/datum/component/nanites/Initialize(amount = 100, cloud = ZERO)
 	if(!isliving(parent) && !istype(parent, /datum/nanite_cloud_backup))
 		return COMPONENT_INCOMPATIBLE
 
@@ -169,11 +169,11 @@
 	if(!force && safety_threshold && (nanite_volume - amount < safety_threshold))
 		return FALSE
 	adjust_nanites(null, -amount)
-	return (nanite_volume > 0)
+	return (nanite_volume > ZERO)
 
 /datum/component/nanites/proc/adjust_nanites(datum/source, amount)
-	nanite_volume = CLAMP(nanite_volume + amount, 0, max_nanites)
-	if(nanite_volume <= 0) //oops we ran out
+	nanite_volume = CLAMP(nanite_volume + amount, ZERO, max_nanites)
+	if(nanite_volume <= ZERO) //oops we ran out
 		qdel(src)
 
 /datum/component/nanites/proc/set_nanite_bar(remove = FALSE)
@@ -191,7 +191,7 @@
 	nanite_volume *= (rand(0.60, 0.90))		//Lose 10-40% of nanites
 	adjust_nanites(null, -(rand(5, 50)))		//Lose 5-50 flat nanite volume
 	if(prob(40/severity))
-		cloud_id = 0
+		cloud_id = ZERO
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_emp(severity)
@@ -241,13 +241,13 @@
 	return FALSE
 
 /datum/component/nanites/proc/set_volume(datum/source, amount)
-	nanite_volume = CLAMP(amount, 0, max_nanites)
+	nanite_volume = CLAMP(amount, ZERO, max_nanites)
 
 /datum/component/nanites/proc/set_max_volume(datum/source, amount)
 	max_nanites = max(1, max_nanites)
 
 /datum/component/nanites/proc/set_cloud(datum/source, amount)
-	cloud_id = CLAMP(amount, 0, 100)
+	cloud_id = CLAMP(amount, ZERO, 100)
 
 /datum/component/nanites/proc/set_cloud_sync(datum/source, method)
 	switch(method)
@@ -259,7 +259,7 @@
 			cloud_active = TRUE
 
 /datum/component/nanites/proc/set_safety(datum/source, amount)
-	safety_threshold = CLAMP(amount, 0, max_nanites)
+	safety_threshold = CLAMP(amount, ZERO, max_nanites)
 
 /datum/component/nanites/proc/set_regen(datum/source, amount)
 	regen_rate = amount

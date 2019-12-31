@@ -4,7 +4,7 @@
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	blend_mode = BLEND_OVERLAY
 	var/show_alpha = 255
-	var/hide_alpha = 0
+	var/hide_alpha = ZERO
 
 /obj/screen/plane_master/proc/Show(override)
 	alpha = override || show_alpha

@@ -13,7 +13,7 @@
 	response_harm_simple = "punch"
 	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
-	speed = 0
+	speed = ZERO
 	spacewalk = TRUE
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
@@ -21,11 +21,11 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	see_in_dark = 7
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = ZERO, CLONE = ZERO, STAMINA = ZERO, OXY = ZERO)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
+	minbodytemp = ZERO
 	maxbodytemp = INFINITY
-	healable = 0
+	healable = ZERO
 	faction = list("cult")
 	movement_type = FLYING
 	pressure_resistance = 100
@@ -109,7 +109,7 @@
 	return
 
 /mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
-	return 0
+	return ZERO
 
 /mob/living/simple_animal/hostile/construct/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
@@ -127,7 +127,7 @@
 	health = 150
 	response_harm_continuous = "harmlessly punches"
 	response_harm_simple = "harmlessly punch"
-	harm_intent_damage = 0
+	harm_intent_damage = ZERO
 	obj_damage = 90
 	melee_damage_lower = 25
 	melee_damage_upper = 25
@@ -136,7 +136,7 @@
 	speed = 2.5
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attack_sound = 'sound/weapons/punch3.ogg'
-	status_flags = 0
+	status_flags = ZERO
 	mob_size = MOB_SIZE_LARGE
 	force_threshold = 10
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/forcewall/cult,
@@ -159,8 +159,8 @@
 
 			// Find a turf near or on the original location to bounce to
 			if(P.starting)
-				var/new_x = P.starting.x + pick(0, 0, -1, 1, -2, 2, -2, 2, -2, 2, -3, 3, -3, 3)
-				var/new_y = P.starting.y + pick(0, 0, -1, 1, -2, 2, -2, 2, -2, 2, -3, 3, -3, 3)
+				var/new_x = P.starting.x + pick(ZERO, ZERO, -1, 1, -2, 2, -2, 2, -2, 2, -3, 3, -3, 3)
+				var/new_y = P.starting.y + pick(ZERO, ZERO, -1, 1, -2, 2, -2, 2, -2, 2, -3, 3, -3, 3)
 				var/turf/curloc = get_turf(src)
 
 				// redirect the projectile
@@ -220,7 +220,7 @@
 
 	if(. && isnum(prev_stat))
 		var/mob/living/L = target
-		var/refund = 0
+		var/refund = ZERO
 		if(QDELETED(L) || (L.stat == DEAD && prev_stat != DEAD)) //they're dead, you killed them
 			refund += kill_refund
 		else if(L.InCritical() && prev_stat == CONSCIOUS) //you knocked them into critical
@@ -283,13 +283,13 @@
 		if(C.health < C.maxHealth) //is it hurt? let's go heal it if it is
 			return 1
 		else
-			return 0
+			return ZERO
 	else
-		return 0
+		return ZERO
 
 /mob/living/simple_animal/hostile/construct/builder/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
-		return 0
+		return ZERO
 	if(Found(the_target) || ..()) //If we Found it or Can_Attack it normally, we Can_Attack it as long as it wasn't invisible
 		return 1 //as a note this shouldn't be added to base hostile mobs because it'll mess up retaliate hostile mobs
 
@@ -299,7 +299,7 @@
 		var/mob/living/L = target
 		if(isconstruct(L) && L.health >= L.maxHealth) //is this target an unhurt construct? stop trying to heal it
 			LoseTarget()
-			return 0
+			return ZERO
 		if(L.health <= melee_damage_lower+melee_damage_upper) //ey bucko you're hurt as fuck let's go hit you
 			retreat_distance = null
 			minimum_distance = 1
@@ -376,7 +376,7 @@
 		if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 			return ..()		//ATTACK!
 		var/list/parts = list()
-		var/undismembermerable_limbs = 0
+		var/undismembermerable_limbs = ZERO
 		for(var/X in C.bodyparts)
 			var/obj/item/bodypart/BP = X
 			if(BP.body_part != HEAD && BP.body_part != CHEST)

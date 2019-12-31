@@ -10,8 +10,8 @@
 	faction = list(ROLE_BLOB)
 	bubble_icon = "blob"
 	speak_emote = null //so we use verb_yell/verb_say/etc
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = ZERO)
+	minbodytemp = ZERO
 	maxbodytemp = 360
 	unique_name = 1
 	a_intent = INTENT_HARM
@@ -51,7 +51,7 @@
 		return 1
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/Process_Spacemove(movement_dir = 0)
+/mob/living/simple_animal/hostile/blob/Process_Spacemove(movement_dir = ZERO)
 	for(var/obj/structure/blob/B in range(1, src))
 		return 1
 	return ..()
@@ -93,7 +93,7 @@
 	deathmessage = "explodes into a cloud of gas!"
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
 	var/mob/living/carbon/human/oldguy
-	var/is_zombie = 0
+	var/is_zombie = ZERO
 	gold_core_spawnable = HOSTILE_SPAWN
 
 /mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, obj/structure/blob/factory/linked_node)
@@ -125,7 +125,7 @@
 	melee_damage_lower += 8
 	melee_damage_upper += 11
 	movement_type = GROUND
-	death_cloud_size = 0
+	death_cloud_size = ZERO
 	icon = H.icon
 	icon_state = "zombie"
 	H.hairstyle = null
@@ -187,7 +187,7 @@
 	maxHealth = 15
 	melee_damage_lower = 1
 	melee_damage_upper = 2
-	death_cloud_size = 0
+	death_cloud_size = ZERO
 
 /////////////////
 // BLOBBERNAUT //
@@ -201,7 +201,7 @@
 	icon_dead = "blobbernaut_dead"
 	health = 200
 	maxHealth = 200
-	damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, CLONE = 1, STAMINA = ZERO, OXY = 1)
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	obj_damage = 60
@@ -232,7 +232,7 @@
 		var/list/blobs_in_area = range(2, src)
 		if(independent)
 			return // strong independent blobbernaut that don't need no blob
-		var/damagesources = 0
+		var/damagesources = ZERO
 		if(!(locate(/obj/structure/blob) in blobs_in_area))
 			damagesources++
 		if(!factory)

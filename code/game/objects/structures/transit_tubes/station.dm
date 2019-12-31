@@ -14,7 +14,7 @@
 	var/open_status = STATION_TUBE_CLOSED
 	var/pod_moving = FALSE
 	var/cooldown_delay = 50
-	var/launch_cooldown = 0
+	var/launch_cooldown = ZERO
 	var/reverse_launch = FALSE
 	var/base_icon = "station0"
 	var/boarding_dir //from which direction you can board the tube

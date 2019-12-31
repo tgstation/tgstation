@@ -19,7 +19,7 @@
 
 /obj/machinery/nuclearbomb/syndicate/bananium/get_cinematic_type(off_station)
 	switch(off_station)
-		if(0)
+		if(ZERO)
 			return CINEMATIC_NUKE_CLOWNOP
 		if(1)
 			return CINEMATIC_NUKE_MISS

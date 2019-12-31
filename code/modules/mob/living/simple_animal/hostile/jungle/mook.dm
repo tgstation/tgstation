@@ -1,4 +1,4 @@
-#define MOOK_ATTACK_NEUTRAL 0
+#define MOOK_ATTACK_NEUTRAL ZERO
 #define MOOK_ATTACK_WARMUP 1
 #define MOOK_ATTACK_ACTIVE 2
 #define MOOK_ATTACK_RECOVERY 3
@@ -68,12 +68,12 @@
 /mob/living/simple_animal/hostile/jungle/mook/proc/WarmupAttack(forced_slash_combo = FALSE)
 	if(attack_state == MOOK_ATTACK_NEUTRAL && target)
 		attack_state = MOOK_ATTACK_WARMUP
-		walk(src,0)
+		walk(src,ZERO)
 		update_icons()
 		if(prob(50) && get_dist(src,target) <= 3 || forced_slash_combo)
 			addtimer(CALLBACK(src, .proc/SlashCombo), ATTACK_INTERMISSION_TIME)
 			return
-		addtimer(CALLBACK(src, .proc/LeapAttack), ATTACK_INTERMISSION_TIME + rand(0,3))
+		addtimer(CALLBACK(src, .proc/LeapAttack), ATTACK_INTERMISSION_TIME + rand(ZERO,3))
 		return
 	attack_state = MOOK_ATTACK_RECOVERY
 	ResetNeutral()

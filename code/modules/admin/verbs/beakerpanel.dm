@@ -84,8 +84,8 @@
 
 					ul {
 					  list-style-type: none; /* Remove bullets */
-					  padding: 0; /* Remove padding */
-					  margin: 0; /* Remove margins */
+					  padding: ZERO; /* Remove padding */
+					  margin: ZERO; /* Remove margins */
 					}
 
 					ul li {
@@ -95,7 +95,7 @@
 						text-decoration: none;
 						background: #40628a;
 						border: 1px solid #161616;
-						margin: 0 2px 0 0;
+						margin: ZERO 2px ZERO ZERO;
 						cursor:default;
 					}
 

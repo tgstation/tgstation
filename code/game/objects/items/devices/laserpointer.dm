@@ -14,7 +14,7 @@
 	var/energy = 10
 	var/max_energy = 10
 	var/effectchance = 30
-	var/recharging = 0
+	var/recharging = ZERO
 	var/recharge_locked = FALSE
 	var/obj/item/stock_parts/micro_laser/diode //used for upgrading!
 
@@ -99,7 +99,7 @@
 			if(prob(33))
 				severity = 2
 			else if(prob(50))
-				severity = 0
+				severity = ZERO
 
 			//chance to actually hit the eyes depends on internal component
 			if(prob(effectchance * diode.rating) && C.flash_act(severity))
@@ -179,7 +179,7 @@
 		if(!recharging)
 			recharging = 1
 			START_PROCESSING(SSobj, src)
-		if(energy <= 0)
+		if(energy <= ZERO)
 			to_chat(user, "<span class='warning'>[src]'s battery is overused, it needs time to recharge!</span>")
 			recharge_locked = TRUE
 
@@ -191,6 +191,6 @@
 		energy += 1
 		if(energy >= max_energy)
 			energy = max_energy
-			recharging = 0
+			recharging = ZERO
 			recharge_locked = FALSE
 			..()

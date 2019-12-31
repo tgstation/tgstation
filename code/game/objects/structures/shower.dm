@@ -137,7 +137,7 @@
 			wash_obj(I)
 
 		if(M.back && wash_obj(M.back))
-			M.update_inv_back(0)
+			M.update_inv_back(ZERO)
 
 		var/list/obscured = M.check_obscured_slots()
 
@@ -193,7 +193,7 @@
 	if(strength <= RAD_BACKGROUND_RADIATION)
 		qdel(healthy_green_glow)
 		return
-	healthy_green_glow.strength -= max(0, (healthy_green_glow.strength - (RAD_BACKGROUND_RADIATION * 2)) * 0.2)
+	healthy_green_glow.strength -= max(ZERO, (healthy_green_glow.strength - (RAD_BACKGROUND_RADIATION * 2)) * 0.2)
 
 /obj/machinery/shower/process()
 	if(on)
@@ -216,7 +216,7 @@
 		to_chat(L, "<span class='warning'>[src] is freezing!</span>")
 	else if(current_temperature == SHOWER_BOILING)
 		if(iscarbon(L))
-			C.adjust_bodytemperature(35, 0, 500)
+			C.adjust_bodytemperature(35, ZERO, 500)
 		L.adjustFireLoss(5)
 		to_chat(L, "<span class='danger'>[src] is searing!</span>")
 

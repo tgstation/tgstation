@@ -2,7 +2,7 @@
 #define TRUE_THRESHOLD 7
 #define ARCH_THRESHOLD 12
 
-#define BASIC_DEVIL 0
+#define BASIC_DEVIL ZERO
 #define BLOOD_LIZARD 1
 #define TRUE_DEVIL 2
 #define ARCH_DEVIL 3
@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	var/banish
 	var/truename
 	var/list/datum/mind/soulsOwned = new
-	var/reviveNumber = 0
+	var/reviveNumber = ZERO
 	var/form = BASIC_DEVIL
 	var/static/list/devil_spells = typecacheof(list(
 		/obj/effect/proc_holder/spell/aimed/fireball/hellish,
@@ -184,7 +184,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	to_chat(owner.current, "<span class='warning'>You feel satiated as you received a new soul.</span>")
 	update_hud()
 	switch(SOULVALUE)
-		if(0)
+		if(ZERO)
 			to_chat(owner.current, "<span class='warning'>Your hellish powers have been restored.</span>")
 			give_appropriate_spells()
 		if(BLOOD_THRESHOLD)
@@ -208,7 +208,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		regress_blood_lizard()
 	if(form == BLOOD_LIZARD && SOULVALUE < BLOOD_THRESHOLD)
 		regress_humanoid()
-	if(SOULVALUE < 0)
+	if(SOULVALUE < ZERO)
 		give_appropriate_spells()
 		to_chat(owner.current, "<span class='warning'>As punishment for your failures, all of your powers except contract creation have been revoked.</span>")
 
@@ -337,7 +337,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		give_true_spells()
 	else if(SOULVALUE >= BLOOD_THRESHOLD)
 		give_blood_spells()
-	else if(SOULVALUE >= 0)
+	else if(SOULVALUE >= ZERO)
 		give_base_spells()
 
 /datum/antagonist/devil/proc/give_base_spells()
@@ -360,11 +360,11 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/sintouch/ascended(null))
 
 /datum/antagonist/devil/proc/beginResurrectionCheck(mob/living/body)
-	if(SOULVALUE>0)
+	if(SOULVALUE>ZERO)
 		to_chat(owner.current, "<span class='userdanger'>Your body has been damaged to the point that you may no longer use it. At the cost of some of your power, you will return to life soon. Remain in your body.</span>")
 		sleep(DEVILRESURRECTTIME)
 		if (!body ||  body.stat == DEAD)
-			if(SOULVALUE>0)
+			if(SOULVALUE>ZERO)
 				if(check_banishment(body))
 					to_chat(owner.current, "<span class='userdanger'>Unfortunately, the mortals have finished a ritual that prevents your resurrection.</span>")
 					return -1
@@ -385,43 +385,43 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 			if(iscarbon(body))
 				var/mob/living/carbon/H = body
 				return H.reagents.has_reagent(/datum/reagent/water/holywater)
-			return 0
+			return ZERO
 		if(BANISH_COFFIN)
 			return (body && istype(body.loc, /obj/structure/closet/crate/coffin))
 		if(BANISH_FORMALDYHIDE)
 			if(iscarbon(body))
 				var/mob/living/carbon/H = body
 				return H.reagents.has_reagent(/datum/reagent/toxin/formaldehyde)
-			return 0
+			return ZERO
 		if(BANISH_RUNES)
 			if(body)
-				for(var/obj/effect/decal/cleanable/crayon/R in range(0,body))
+				for(var/obj/effect/decal/cleanable/crayon/R in range(ZERO,body))
 					if (R.name == "rune")
 						return 1
-			return 0
+			return ZERO
 		if(BANISH_CANDLES)
 			if(body)
-				var/count = 0
+				var/count = ZERO
 				for(var/obj/item/candle/C in range(1,body))
 					count += C.lit
 				if(count>=4)
 					return 1
-			return 0
+			return ZERO
 		if(BANISH_DESTRUCTION)
 			if(body)
-				return 0
+				return ZERO
 			return 1
 		if(BANISH_FUNERAL_GARB)
 			if(ishuman(body))
 				var/mob/living/carbon/human/H = body
 				if(H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/misc/burial))
 					return 1
-				return 0
+				return ZERO
 			else
-				for(var/obj/item/clothing/under/misc/burial/B in range(0,body))
+				for(var/obj/item/clothing/under/misc/burial/B in range(ZERO,body))
 					if(B.loc == get_turf(B)) //Make sure it's not in someone's inventory or something.
 						return 1
-				return 0
+				return ZERO
 
 /datum/antagonist/devil/proc/hellish_resurrection(mob/living/body)
 	message_admins("[key_name_admin(owner)] (true name is: [truename]) is resurrecting using hellish energy.</a>")
@@ -443,7 +443,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	check_regression()
 
 /datum/antagonist/devil/proc/create_new_body()
-	if(GLOB.blobstart.len > 0)
+	if(GLOB.blobstart.len > ZERO)
 		var/turf/targetturf = get_turf(pick(GLOB.blobstart))
 		var/mob/currentMob = owner.current
 		if(!currentMob)

@@ -20,7 +20,7 @@
 #define TCMB					2.7
 /// -48.15degC
 #define TCRYO					225
-/// 0degC
+/// ZEROdegC
 #define T0C						273.15
 /// 20degC
 #define T20C					293.15
@@ -69,7 +69,7 @@
 #define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION	(T20C+200)
 
 //HEAT TRANSFER COEFFICIENTS
-//Must be between 0 and 1. Values closer to 1 equalize temperature faster
+//Must be between ZERO and 1. Values closer to 1 equalize temperature faster
 //Should not exceed 0.4 else strange heat flow occur
 #define WALL_HEAT_TRANSFER_COEFFICIENT		0.0
 #define OPEN_HEAT_TRANSFER_COEFFICIENT		0.4
@@ -100,7 +100,7 @@
 
 //REACTIONS
 //return values for reactions (bitflags)
-#define NO_REACTION		0
+#define NO_REACTION		ZERO
 #define REACTING		1
 #define STOP_REACTIONS 	2
 
@@ -211,12 +211,12 @@
 /// +1 for each SCALE kPa aboe threshold
 #define TANK_FRAGMENT_SCALE	    			(6.*ONE_ATMOSPHERE)
 #define TANK_MAX_RELEASE_PRESSURE 			(ONE_ATMOSPHERE*3)
-#define TANK_MIN_RELEASE_PRESSURE 			0
+#define TANK_MIN_RELEASE_PRESSURE 			ZERO
 #define TANK_DEFAULT_RELEASE_PRESSURE 		16
 
 //CANATMOSPASS
 #define ATMOS_PASS_YES 1
-#define ATMOS_PASS_NO 0
+#define ATMOS_PASS_NO ZERO
 /// ask CanAtmosPass()
 #define ATMOS_PASS_PROC -1
 /// just check density
@@ -339,7 +339,7 @@
 #define PIPING_LAYER_LCHANGE 0.05
 
 /// intended to connect with all layers, check for all instead of just one.
-#define PIPING_ALL_LAYER				(1<<0)
+#define PIPING_ALL_LAYER				(1<<ZERO)
 /// can only be built if nothing else with this flag is on the tile already.
 #define PIPING_ONE_PER_TURF				(1<<1)
 /// can only exist at PIPING_LAYER_DEFAULT
@@ -369,12 +369,12 @@
 
 //prefer this to gas_mixture/total_moles in performance critical areas
 #define TOTAL_MOLES(cached_gases, out_var)\
-	out_var = 0;\
+	out_var = ZERO;\
 	for(var/total_moles_id in cached_gases){\
 		out_var += cached_gases[total_moles_id][MOLES];\
 	}
 #ifdef TESTING
-GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
+GLOBAL_LIST_INIT(atmos_adjacent_savings, list(ZERO,ZERO))
 #define CALCULATE_ADJACENT_TURFS(T) if (SSadjacent_air.queue[T]) { GLOB.atmos_adjacent_savings[1] += 1 } else { GLOB.atmos_adjacent_savings[2] += 1; SSadjacent_air.queue[T] = 1 }
 #else
 #define CALCULATE_ADJACENT_TURFS(T) SSadjacent_air.queue[T] = 1
@@ -382,17 +382,17 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 
 GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
 		"amethyst" = rgb(130,43,255), //supplymain
-		"blue" = rgb(0,0,255),
+		"blue" = rgb(ZERO,ZERO,255),
 		"brown" = rgb(178,100,56),
-		"cyan" = rgb(0,255,249),
+		"cyan" = rgb(ZERO,255,249),
 		"dark" = rgb(69,69,69),
-		"green" = rgb(30,255,0),
+		"green" = rgb(30,255,ZERO),
 		"grey" = rgb(255,255,255),
 		"orange" = rgb(255,129,25),
-		"purple" = rgb(128,0,182),
-		"red" = rgb(255,0,0),
-		"violet" = rgb(64,0,128),
-		"yellow" = rgb(255,198,0)
+		"purple" = rgb(128,ZERO,182),
+		"red" = rgb(255,ZERO,ZERO),
+		"violet" = rgb(64,ZERO,128),
+		"yellow" = rgb(255,198,ZERO)
 )))
 
 #define MIASMA_CORPSE_MOLES 0.02

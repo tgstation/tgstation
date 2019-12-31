@@ -24,13 +24,13 @@
 	var/client/holder //client of whoever is using this datum
 	var/area/bay //What bay we're using to launch shit from.
 	var/launchClone = FALSE //If true, then we don't actually launch the thing in the bay. Instead we call duplicateObject() and send the result
-	var/launchChoice = 1 //Determines if we launch all at once (0) , in order (1), or at random(2)
-	var/explosionChoice = 0 //Determines if there is no explosion (0), custom explosion (1), or just do a maxcap (2)
-	var/damageChoice = 0 //Determines if we do no damage (0), custom amnt of damage (1), or gib + 5000dmg (2)
+	var/launchChoice = 1 //Determines if we launch all at once (ZERO) , in order (1), or at random(2)
+	var/explosionChoice = ZERO //Determines if there is no explosion (ZERO), custom explosion (1), or just do a maxcap (2)
+	var/damageChoice = ZERO //Determines if we do no damage (ZERO), custom amnt of damage (1), or gib + 5000dmg (2)
 	var/launcherActivated = FALSE //check if we've entered "launch mode" (when we click a pod is launched). Used for updating mouse cursor
 	var/effectBurst = FALSE //Effect that launches 5 at once in a 3x3 area centered on the target
 	var/effectAnnounce = TRUE
-	var/numTurfs = 0 //Counts the number of turfs with things we can launch in the chosen bay (in the centcom map)
+	var/numTurfs = ZERO //Counts the number of turfs with things we can launch in the chosen bay (in the centcom map)
 	var/launchCounter = 1 //Used with the "Ordered" launch mode (launchChoice = 1) to see what item is launched
 	var/atom/specificTarget //Do we want to target a specific mob instead of where we click? Also used for smiting
 	var/list/orderedArea = list() //Contains an ordered list of turfs in an area (filled in the createOrderedArea() proc), read top-left to bottom-right. Used for the "ordered" launch mode (launchChoice = 1)
@@ -60,14 +60,14 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 
 /datum/centcom_podlauncher/ui_data(mob/user) //Sends info about the pod to the UI.
 	var/list/data = list() //*****NOTE*****: Many of these comments are similarly described in supplypod.dm. If you change them here, please consider doing so in the supplypod code as well!
-	var/B = (istype(bay, /area/centcom/supplypod/loading/one)) ? 1 : (istype(bay, /area/centcom/supplypod/loading/two)) ? 2 : (istype(bay, /area/centcom/supplypod/loading/three)) ? 3 : (istype(bay, /area/centcom/supplypod/loading/four)) ? 4 : (istype(bay, /area/centcom/supplypod/loading/ert)) ? 5 : 0 //top ten THICCEST FUCKING TERNARY CONDITIONALS OF 2036
+	var/B = (istype(bay, /area/centcom/supplypod/loading/one)) ? 1 : (istype(bay, /area/centcom/supplypod/loading/two)) ? 2 : (istype(bay, /area/centcom/supplypod/loading/three)) ? 3 : (istype(bay, /area/centcom/supplypod/loading/four)) ? 4 : (istype(bay, /area/centcom/supplypod/loading/ert)) ? 5 : ZERO //top ten THICCEST FUCKING TERNARY CONDITIONALS OF 2036
 	data["bay"] = bay //Holds the current bay the user is launching objects from. Bays are specific rooms on the centcom map.
 	data["bayNumber"] = B //Holds the bay as a number. Useful for comparisons in centcom_podlauncher.ract
 	data["oldArea"] = (oldTurf ? get_area(oldTurf) : null) //Holds the name of the area that the user was in before using the teleportCentcom action
 	data["launchClone"] = launchClone //Do we launch the actual items in the bay or just launch clones of them?
-	data["launchChoice"] = launchChoice //Launch turfs all at once (0), ordered (1), or randomly(1)
-	data["explosionChoice"] = explosionChoice //An explosion that occurs when landing. Can be no explosion (0), custom explosion (1), or maxcap (2)
-	data["damageChoice"] = damageChoice //Damage that occurs to any mob under the pod when it lands. Can be no damage (0), custom damage (1), or gib+5000dmg (2)
+	data["launchChoice"] = launchChoice //Launch turfs all at once (ZERO), ordered (1), or randomly(1)
+	data["explosionChoice"] = explosionChoice //An explosion that occurs when landing. Can be no explosion (ZERO), custom explosion (1), or maxcap (2)
+	data["damageChoice"] = damageChoice //Damage that occurs to any mob under the pod when it lands. Can be no damage (ZERO), custom damage (1), or gib+5000dmg (2)
 	data["fallDuration"] = temp_pod.fallDuration //How long the pod's falling animation lasts
 	data["landingDelay"] = temp_pod.landingDelay //How long the pod takes to land after launching
 	data["openingDelay"] = temp_pod.openingDelay //How long the pod takes to open after landing
@@ -151,7 +151,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			. = TRUE
 		if("launchOrdered") //Launch turfs (from the orderedArea list) one at a time in order, from the supplypod bay at centcom
 			if (launchChoice == 1) //launchChoice 1 represents ordered. If we push "ordered" and it already is, then we go to default value
-				launchChoice = 0
+				launchChoice = ZERO
 				updateSelector() //Move the selector effect to the next object that will be launched. See variable declarations for more info on the selector effect.
 				return
 			launchChoice = 1
@@ -159,7 +159,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			. = TRUE
 		if("launchRandom") //Pick random turfs from the supplypod bay at centcom to launch
 			if (launchChoice == 2)
-				launchChoice = 0
+				launchChoice = ZERO
 				updateSelector()
 				return
 			launchChoice = 2
@@ -169,47 +169,47 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 		////////////////////////////POD EFFECTS//////////////////
 		if("explosionCustom") //Creates an explosion when the pod lands
 			if (explosionChoice == 1) //If already a custom explosion, set to default (no explosion)
-				explosionChoice = 0
-				temp_pod.explosionSize = list(0,0,0,0)
+				explosionChoice = ZERO
+				temp_pod.explosionSize = list(ZERO,ZERO,ZERO,ZERO)
 				return
 			var/list/expNames = list("Devastation", "Heavy Damage", "Light Damage", "Flame") //Explosions have a range of different types of damage
 			var/list/boomInput = list()
 			for (var/i=1 to expNames.len) //Gather input from the user for the value of each type of damage
-				boomInput.Add(input("[expNames[i]] Range", "Enter the [expNames[i]] range of the explosion. WARNING: This ignores the bomb cap!", 0) as null|num)
+				boomInput.Add(input("[expNames[i]] Range", "Enter the [expNames[i]] range of the explosion. WARNING: This ignores the bomb cap!", ZERO) as null|num)
 				if (isnull(boomInput[i]))
 					return
 				if (!isnum(boomInput[i])) //If the user doesn't input a number, set that specific explosion value to zero
 					alert(usr, "That wasnt a number! Value set to default (zero) instead.")
-					boomInput = 0
+					boomInput = ZERO
 			explosionChoice = 1
 			temp_pod.explosionSize = boomInput
 			. = TRUE
 		if("explosionBus") //Creates a maxcap when the pod lands
 			if (explosionChoice == 2) //If already a maccap, set to default (no explosion)
-				explosionChoice = 0
-				temp_pod.explosionSize = list(0,0,0,0)
+				explosionChoice = ZERO
+				temp_pod.explosionSize = list(ZERO,ZERO,ZERO,ZERO)
 				return
 			explosionChoice = 2
 			temp_pod.explosionSize = list(GLOB.MAX_EX_DEVESTATION_RANGE, GLOB.MAX_EX_HEAVY_RANGE, GLOB.MAX_EX_LIGHT_RANGE,GLOB.MAX_EX_FLAME_RANGE) //Set explosion to max cap of server
 			. = TRUE
 		if("damageCustom") //Deals damage to whoevers under the pod when it lands
 			if (damageChoice == 1) //If already doing custom damage, set back to default (no damage)
-				damageChoice = 0
-				temp_pod.damage = 0
+				damageChoice = ZERO
+				temp_pod.damage = ZERO
 				return
-			var/damageInput = input("How much damage to deal", "Enter the amount of brute damage dealt by getting hit", 0) as null|num
+			var/damageInput = input("How much damage to deal", "Enter the amount of brute damage dealt by getting hit", ZERO) as null|num
 			if (isnull(damageInput))
 				return
 			if (!isnum(damageInput)) //Sanitize the input for damage to deal.s
 				alert(usr, "That wasnt a number! Value set to default (zero) instead.")
-				damageInput = 0
+				damageInput = ZERO
 			damageChoice = 1
 			temp_pod.damage = damageInput
 			. = TRUE
 		if("damageGib") //Gibs whoever is under the pod when it lands. Also deals 5000 damage, just to be sure.
 			if (damageChoice == 2) //If already gibbing, set back to default (no damage)
-				damageChoice = 0
-				temp_pod.damage = 0
+				damageChoice = ZERO
+				temp_pod.damage = ZERO
 				temp_pod.effectGib = FALSE
 				return
 			damageChoice = 2
@@ -519,7 +519,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	return orderedArea //Return the filled list
 
 /datum/centcom_podlauncher/proc/preLaunch() //Creates a list of acceptable items,
-	numTurfs = 0 //Counts the number of turfs that can be launched (remember, supplypods either launch all at once or one turf-worth of items at a time)
+	numTurfs = ZERO //Counts the number of turfs that can be launched (remember, supplypods either launch all at once or one turf-worth of items at a time)
 	acceptableTurfs = list()
 	for (var/turf/T in orderedArea) //Go through the orderedArea list
 		if (typecache_filter_list_reverse(T.contents, ignored_atoms).len != 0) //if there is something in this turf that isnt in the blacklist, we consider this turf "acceptable" and add it to the acceptableTurfs list
@@ -529,7 +529,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	launchList = list() //Anything in launchList will go into the supplypod when it is launched
 	if (!isemptylist(acceptableTurfs) && !temp_pod.reversing && !temp_pod.effectMissile) //We dont fill the supplypod if acceptableTurfs is empty, if the pod is going in reverse (effectReverse=true), or if the pod is acitng like a missile (effectMissile=true)
 		switch(launchChoice)
-			if(0) //If we are launching all the turfs at once
+			if(ZERO) //If we are launching all the turfs at once
 				for (var/turf/T in acceptableTurfs)
 					launchList |= typecache_filter_list_reverse(T.contents, ignored_atoms) //We filter any blacklisted atoms and add the rest to the launchList
 			if(1) //If we are launching one at a time
@@ -594,7 +594,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	var/damageString = temp_pod.damage == 0 ? "" : " Dmg=[temp_pod.damage]"
 	var/explosionString = ""
 	var/explosion_sum = temp_pod.explosionSize[1] + temp_pod.explosionSize[2] + temp_pod.explosionSize[3] + temp_pod.explosionSize[4]
-	if (explosion_sum != 0)
+	if (explosion_sum != ZERO)
 		explosionString = " Boom=|"
 		for (var/X in temp_pod.explosionSize)
 			explosionString += "[X]|"

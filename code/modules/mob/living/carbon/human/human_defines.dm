@@ -47,8 +47,8 @@
 
 	var/special_voice = "" // For changing our voice. Used by a symptom.
 
-	var/bleed_rate = 0 //how much are we bleeding
-	var/bleedsuppress = 0 //for stopping bloodloss, eventually this will be limb-based like bleeding
+	var/bleed_rate = ZERO //how much are we bleeding
+	var/bleedsuppress = ZERO //for stopping bloodloss, eventually this will be limb-based like bleeding
 
 	var/name_override //For temporary visible name changes
 
@@ -57,6 +57,6 @@
 	var/list/datum/bioware = list()
 
 	var/static/list/can_ride_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/simple_animal/slime, /mob/living/simple_animal/parrot))
-	var/lastpuke = 0
+	var/lastpuke = ZERO
 	var/last_fire_update
 	var/account_id

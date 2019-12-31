@@ -8,13 +8,13 @@
 	//Code for point mining here.
 	var/working = TRUE			//temperature should break it.
 	var/research_disabled = FALSE
-	var/server_id = 0
+	var/server_id = ZERO
 	var/base_mining_income = 2
-	var/current_temp = 0
+	var/current_temp = ZERO
 	var/heat_gen = 100
 	var/heating_power = 40000
 	var/delay = 5
-	var/temp_tolerance_low = 0
+	var/temp_tolerance_low = ZERO
 	var/temp_tolerance_high = T20C
 	var/temp_penalty_coefficient = 0.5	//1 = -1 points per degree above high tolerance. 0.5 = -0.5 points per degree above high tolerance.
 	req_access = list(ACCESS_RD) //ONLY THE R&D CAN CHANGE SERVER SETTINGS.
@@ -33,7 +33,7 @@
 	return ..()
 
 /obj/machinery/rnd/server/RefreshParts()
-	var/tot_rating = 0
+	var/tot_rating = ZERO
 	for(var/obj/item/stock_parts/SP in src)
 		tot_rating += SP.rating
 	heat_gen /= max(1, tot_rating)
@@ -77,15 +77,15 @@
 
 /obj/machinery/rnd/server/proc/mine()
 	. = base_mining_income
-	var/penalty = max((get_env_temp() - temp_tolerance_high), 0) * temp_penalty_coefficient
+	var/penalty = max((get_env_temp() - temp_tolerance_high), ZERO) * temp_penalty_coefficient
 	current_temp = get_env_temp()
-	. = max(. - penalty, 0)
+	. = max(. - penalty, ZERO)
 
 /obj/machinery/rnd/server/proc/get_env_temp()
 	var/turf/L = loc
 	if(isturf(L))
 		return L.temperature
-	return 0
+	return ZERO
 
 /obj/machinery/rnd/server/proc/produce_heat(heat_amt)
 	if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
@@ -101,7 +101,7 @@
 				if(removed)
 
 					var/heat_capacity = removed.heat_capacity()
-					if(heat_capacity == 0 || heat_capacity == null)
+					if(heat_capacity == ZERO || heat_capacity == null)
 						heat_capacity = 1
 					removed.temperature = min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000)
 
@@ -115,7 +115,7 @@
 		switch(S.server_id)
 			if(-1)
 				continue
-			if(0)
+			if(ZERO)
 				no_id_servers += S
 			else
 				server_ids += S.server_id
@@ -136,12 +136,12 @@
 	desc = "Used to manage access to research and manufacturing databases."
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
-	var/screen = 0
+	var/screen = ZERO
 	var/obj/machinery/rnd/server/temp_server
 	var/list/servers = list()
 	var/list/consoles = list()
 	req_access = list(ACCESS_RD)
-	var/badmin = 0
+	var/badmin = ZERO
 	circuit = /obj/item/circuitboard/computer/rdservercontrol
 
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
@@ -175,7 +175,7 @@
 	if(stored_research.research_logs.len)
 		dat += "<table BORDER=\"1\">"
 		dat += "<tr><td><b>Entry</b></td><td><b>Research Name</b></td><td><b>Cost</b></td><td><b>Researcher Name</b></td><td><b>Console Location</b></td></tr>"
-		for(var/i=stored_research.research_logs.len, i>0, i--)
+		for(var/i=stored_research.research_logs.len, i>ZERO, i--)
 			dat += "<tr><td>[i]</td>"
 			for(var/j in stored_research.research_logs[i])
 				dat += "<td>[j]</td>"

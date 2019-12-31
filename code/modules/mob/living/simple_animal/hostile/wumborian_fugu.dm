@@ -15,14 +15,14 @@
 	friendly_verb_simple = "float near"
 	speak_emote = list("puffs")
 	vision_range = 5
-	speed = 0
+	speed = ZERO
 	maxHealth = 50
 	health = 50
 	pixel_x = -16
 	harm_intent_damage = 5
-	obj_damage = 0
-	melee_damage_lower = 0
-	melee_damage_upper = 0
+	obj_damage = ZERO
+	melee_damage_lower = ZERO
+	melee_damage_upper = ZERO
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -31,8 +31,8 @@
 	mob_size = MOB_SIZE_SMALL
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	gold_core_spawnable = HOSTILE_SPAWN
-	var/wumbo = 0
-	var/inflate_cooldown = 0
+	var/wumbo = ZERO
+	var/inflate_cooldown = ZERO
 	var/datum/action/innate/fugu/expand/E
 	loot = list(/obj/item/fugu_gland{layer = ABOVE_MOB_LAYER})
 
@@ -47,7 +47,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/fugu/Life()
 	if(!wumbo)
-		inflate_cooldown = max((inflate_cooldown - 1), 0)
+		inflate_cooldown = max((inflate_cooldown - 1), ZERO)
 	if(target && AIStatus == AI_ON)
 		E.Activate()
 	..()
@@ -85,7 +85,7 @@
 	F.obj_damage = 60
 	F.melee_damage_lower = 15
 	F.melee_damage_upper = 20
-	F.harm_intent_damage = 0
+	F.harm_intent_damage = ZERO
 	F.throw_message = "is absorbed by the girth of the"
 	F.retreat_distance = null
 	F.minimum_distance = 1
@@ -97,12 +97,12 @@
 
 /mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate()
 	if(wumbo)
-		walk(src, 0)
-		wumbo = 0
+		walk(src, ZERO)
+		wumbo = ZERO
 		icon_state = "Fugu0"
-		obj_damage = 0
-		melee_damage_lower = 0
-		melee_damage_upper = 0
+		obj_damage = ZERO
+		melee_damage_lower = ZERO
+		melee_damage_upper = ZERO
 		harm_intent_damage = 5
 		throw_message = "is avoided by the"
 		retreat_distance = 9
@@ -111,7 +111,7 @@
 		inflate_cooldown = 4
 		environment_smash = ENVIRONMENT_SMASH_NONE
 		mob_size = MOB_SIZE_SMALL
-		speed = 0
+		speed = ZERO
 
 /mob/living/simple_animal/hostile/asteroid/fugu/death(gibbed)
 	Deflate()

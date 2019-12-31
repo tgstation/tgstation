@@ -71,7 +71,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 				var/obj/item/storage/backpack/B = user.back
 				SEND_SIGNAL(B, COMSIG_TRY_STORAGE_INSERT, src, user, FALSE, FALSE)
 			uses_left--
-			if(uses_left <= 0)
+			if(uses_left <= ZERO)
 				user.transferItemToLoc(src, A, TRUE)
 			var/mutable_appearance/balloon
 			var/mutable_appearance/balloon2
@@ -79,7 +79,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			if(isliving(A))
 				var/mob/living/M = A
 				M.Paralyze(320) // Keep them from moving during the duration of the extraction
-				M.buckled = 0 // Unbuckle them to prevent anchoring problems
+				M.buckled = ZERO // Unbuckle them to prevent anchoring problems
 			else
 				A.anchored = TRUE
 				A.density = FALSE
@@ -111,9 +111,9 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			animate(holder_obj, pixel_z = 1000, time = 30)
 			if(ishuman(A))
 				var/mob/living/carbon/human/L = A
-				L.SetUnconscious(0)
-				L.drowsyness = 0
-				L.SetSleeping(0)
+				L.SetUnconscious(ZERO)
+				L.drowsyness = ZERO
+				L.SetSleeping(ZERO)
 			sleep(30)
 			var/list/flooring_near_beacon = list()
 			for(var/turf/open/floor in orange(1, beacon))
@@ -134,11 +134,11 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			holder_obj.cut_overlay(balloon3)
 			A.anchored = FALSE // An item has to be unanchored to be extracted in the first place.
 			A.density = initial(A.density)
-			animate(holder_obj, pixel_z = 0, time = 5)
+			animate(holder_obj, pixel_z = ZERO, time = 5)
 			sleep(5)
 			A.forceMove(holder_obj.loc)
 			qdel(holder_obj)
-			if(uses_left <= 0)
+			if(uses_left <= ZERO)
 				qdel(src)
 
 
@@ -186,7 +186,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			var/mob/living/L = A
 			if(L.stat != DEAD)
 				return 1
-	return 0
+	return ZERO
 
 /obj/effect/extraction_holder/singularity_pull()
 	return

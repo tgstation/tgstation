@@ -1,12 +1,12 @@
 /datum/symptom/nano_boost
 	name = "Nano-symbiosis"
 	desc = "The virus reacts to nanites in the host's bloodstream by enhancing their replication cycle."
-	stealth = 0
+	stealth = ZERO
 	resistance = 2
 	stage_speed = 2
 	transmittable = -1
 	level = 7
-	severity = 0
+	severity = ZERO
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	var/reverse_boost = FALSE
@@ -35,12 +35,12 @@
 /datum/symptom/nano_destroy
 	name = "Silicolysis"
 	desc = "The virus reacts to nanites in the host's bloodstream by attacking and consuming them."
-	stealth = 0
+	stealth = ZERO
 	resistance = 4
 	stage_speed = -1
 	transmittable = 1
 	level = 7
-	severity = 0
+	severity = ZERO
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	var/reverse_boost = FALSE

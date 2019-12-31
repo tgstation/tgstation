@@ -11,6 +11,6 @@
 				UNSETEMPTY(target.observers)
 			observetarget = null
 	..()
-	spawn(0)
+	spawn(ZERO)
 		if(src && !key)	//we've transferred to another mob. This ghost should be deleted.
 			qdel(src)

@@ -26,13 +26,13 @@
 	power_channel = ENVIRON
 	resistance_flags = FIRE_PROOF
 
-	light_power = 0
+	light_power = ZERO
 	light_range = 7
 	light_color = "#ff3232"
 
 	var/detecting = 1
-	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
-	var/last_alarm = 0
+	var/buildstage = 2 // 2 = complete, 1 = no wires, ZERO = circuit gone
+	var/last_alarm = ZERO
 	var/area/myarea = null
 
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
@@ -40,10 +40,10 @@
 	if(dir)
 		src.setDir(dir)
 	if(building)
-		buildstage = 0
+		buildstage = ZERO
 		panel_open = TRUE
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
+		pixel_x = (dir & 3)? ZERO : (dir == 4 ? -24 : 24)
+		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : ZERO
 	update_icon()
 	myarea = get_area(src)
 	LAZYADD(myarea.firealarms, src)
@@ -163,7 +163,7 @@
 
 		if(W.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP)
 			if(obj_integrity < max_integrity)
-				if(!W.tool_start_check(user, amount=0))
+				if(!W.tool_start_check(user, amount=ZERO))
 					return
 
 				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
@@ -222,10 +222,10 @@
 							else
 								to_chat(user, "<span class='notice'>You pry out the circuit.</span>")
 								new /obj/item/electronics/firealarm(user.loc)
-							buildstage = 0
+							buildstage = ZERO
 							update_icon()
 					return
-			if(0)
+			if(ZERO)
 				if(istype(W, /obj/item/electronics/firealarm))
 					to_chat(user, "<span class='notice'>You insert the circuit.</span>")
 					qdel(W)
@@ -255,7 +255,7 @@
 	return ..()
 
 /obj/machinery/firealarm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if((buildstage == 0) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
+	if((buildstage == ZERO) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
 		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)
 	return FALSE
 
@@ -269,10 +269,10 @@
 			return TRUE
 	return FALSE
 
-/obj/machinery/firealarm/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+/obj/machinery/firealarm/take_damage(damage_amount, damage_type = BRUTE, damage_flag = ZERO, sound_effect = 1, attack_dir)
 	. = ..()
 	if(.) //damage received
-		if(obj_integrity > 0 && !(stat & BROKEN) && buildstage != 0)
+		if(obj_integrity > ZERO && !(stat & BROKEN) && buildstage != ZERO)
 			if(prob(33))
 				alarm()
 
@@ -304,7 +304,7 @@
 	if(fire)
 		set_light(l_power = 0.8)
 	else
-		set_light(l_power = 0)
+		set_light(l_power = ZERO)
 
 /*
  * Return of Party button

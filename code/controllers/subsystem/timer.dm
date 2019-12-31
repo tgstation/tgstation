@@ -13,10 +13,10 @@ SUBSYSTEM_DEF(timer)
 	var/list/datum/timedevent/second_queue = list() //awe, yes, you've had first queue, but what about second queue?
 	var/list/hashes = list()
 
-	var/head_offset = 0 //world.time of the first entry in the the bucket.
+	var/head_offset = ZERO //world.time of the first entry in the the bucket.
 	var/practical_offset = 1 //index of the first non-empty item in the bucket.
-	var/bucket_resolution = 0 //world.tick_lag the bucket was designed for
-	var/bucket_count = 0 //how many timers are in the buckets
+	var/bucket_resolution = ZERO //world.tick_lag the bucket was designed for
+	var/bucket_count = ZERO //how many timers are in the buckets
 
 	var/list/bucket_list = list() //list of buckets, each bucket holds every timer that has to run that byond tick.
 
@@ -24,8 +24,8 @@ SUBSYSTEM_DEF(timer)
 
 	var/list/clienttime_timers = list() //special snowflake timers that run on fancy pansy "client time"
 
-	var/last_invoke_tick = 0
-	var/static/last_invoke_warning = 0
+	var/last_invoke_tick = ZERO
+	var/static/last_invoke_warning = ZERO
 	var/static/bucket_auto_reset = TRUE
 
 /datum/controller/subsystem/timer/PreInit()
@@ -50,7 +50,7 @@ SUBSYSTEM_DEF(timer)
 		message_admins(msg)
 		WARNING(msg)
 		if(bucket_auto_reset)
-			bucket_resolution = 0
+			bucket_resolution = ZERO
 
 		log_world("Timer bucket reset. world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
 		for (var/i in 1 to length(bucket_list))
@@ -71,7 +71,7 @@ SUBSYSTEM_DEF(timer)
 		for(var/I in second_queue)
 			log_world(get_timer_debug_string(I))
 
-	var/next_clienttime_timer_index = 0
+	var/next_clienttime_timer_index = ZERO
 	var/len = length(clienttime_timers)
 
 	for (next_clienttime_timer_index in 1 to len)
@@ -92,7 +92,7 @@ SUBSYSTEM_DEF(timer)
 		callBack.InvokeAsync()
 
 		if(ctime_timer.flags & TIMER_LOOP)
-			ctime_timer.spent = 0
+			ctime_timer.spent = ZERO
 			ctime_timer.timeToRun = REALTIMEOFDAY + ctime_timer.wait
 			BINARY_INSERT(ctime_timer, clienttime_timers, datum/timedevent, timeToRun)
 		else
@@ -149,7 +149,7 @@ SUBSYSTEM_DEF(timer)
 		bucket_list[practical_offset++] = null
 
 		//we freed up a bucket, lets see if anything in second_queue needs to be shifted to that bucket.
-		var/i = 0
+		var/i = ZERO
 		var/L = length(second_queue)
 		for (i in 1 to L)
 			timer = second_queue[i]
@@ -212,7 +212,7 @@ SUBSYSTEM_DEF(timer)
 			qdel(qtimer)
 		else
 			bucket_count++
-			qtimer.spent = 0
+			qtimer.spent = ZERO
 			qtimer.bucketEject()
 			if(qtimer.flags & TIMER_CLIENT_TIME)
 				qtimer.timeToRun = REALTIMEOFDAY + qtimer.wait
@@ -220,7 +220,7 @@ SUBSYSTEM_DEF(timer)
 				qtimer.timeToRun = world.time + qtimer.wait
 			qtimer.bucketJoin()
 
-	spent.len = 0
+	spent.len = ZERO
 
 //formated this way to be runtime resistant
 /datum/controller/subsystem/timer/proc/get_timer_debug_string(datum/timedevent/TE)
@@ -246,11 +246,11 @@ SUBSYSTEM_DEF(timer)
 			bucket_node = bucket_node.next
 		while(bucket_node && bucket_node != bucket_head)
 
-	bucket_list.len = 0
+	bucket_list.len = ZERO
 	bucket_list.len = BUCKET_LEN
 
 	practical_offset = 1
-	bucket_count = 0
+	bucket_count = ZERO
 	head_offset = world.time
 	bucket_resolution = world.tick_lag
 
@@ -317,7 +317,7 @@ SUBSYSTEM_DEF(timer)
 	var/wait
 	var/hash
 	var/list/flags
-	var/spent = 0 //time we ran the timer.
+	var/spent = ZERO //time we ran the timer.
 	var/name //for easy debugging.
 	//cicular doublely linked list
 	var/datum/timedevent/next
@@ -394,7 +394,7 @@ SUBSYSTEM_DEF(timer)
 	var/list/bucket_list = SStimer.bucket_list
 	var/list/second_queue = SStimer.second_queue
 	var/datum/timedevent/buckethead
-	if(bucketpos > 0)
+	if(bucketpos > ZERO)
 		buckethead = bucket_list[bucketpos]
 	if(buckethead == src)
 		bucket_list[bucketpos] = next
@@ -463,11 +463,11 @@ SUBSYSTEM_DEF(timer)
   * * wait deciseconds to run the timer for
   * * flags flags for this timer, see: code\__DEFINES\subsystems.dm
   */
-/proc/addtimer(datum/callback/callback, wait = 0, flags = 0)
+/proc/addtimer(datum/callback/callback, wait = ZERO, flags = ZERO)
 	if (!callback)
 		CRASH("addtimer called without a callback")
 
-	if (wait < 0)
+	if (wait < ZERO)
 		stack_trace("addtimer called with a negative wait. Converting to [world.tick_lag]")
 
 	if (callback.object != GLOBAL_PROC && QDELETED(callback.object) && !QDESTROYING(callback.object))

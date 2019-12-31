@@ -42,16 +42,16 @@
 
 	for(var/obj/item/stock_parts/micro_laser/ML in component_parts)
 		var/wratemod = ML.rating * 2.5
-		min_wrate = FLOOR(10-wratemod,1) // 7,5,2,0	Clamps at 0 and 10	You want this low
-		min_wchance = 67-(ML.rating*16) // 48,35,19,3 	Clamps at 0 and 67	You want this low
+		min_wrate = FLOOR(10-wratemod,1) // 7,5,2,ZERO	Clamps at ZERO and 10	You want this low
+		min_wchance = 67-(ML.rating*16) // 48,35,19,3 	Clamps at ZERO and 67	You want this low
 	for(var/obj/item/circuitboard/machine/plantgenes/vaultcheck in component_parts)
 		if(istype(vaultcheck, /obj/item/circuitboard/machine/plantgenes/vault)) // TRAIT_DUMB BOTANY TUTS
 			max_potency = 100
 			max_yield = 10
 			min_production = 1
 			max_endurance = 100
-			min_wchance = 0
-			min_wrate = 0
+			min_wchance = ZERO
+			min_wrate = ZERO
 
 /obj/machinery/plantgenes/update_icon()
 	..()

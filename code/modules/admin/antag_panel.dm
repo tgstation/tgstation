@@ -42,7 +42,7 @@ GLOBAL_VAR(antag_prototypes)
 
 /datum/antagonist/proc/antag_panel_objectives()
 	var/result = "<i><b>Objectives</b></i>:<br>"
-	if (objectives.len == 0)
+	if (objectives.len == ZERO)
 		result += "EMPTY<br>"
 	else
 		var/obj_count = 1
@@ -194,7 +194,7 @@ GLOBAL_VAR(antag_prototypes)
 		var/datum/component/uplink/U = find_syndicate_uplink()
 		if(U)
 			uplink_info += "<a href='?src=[REF(src)];common=takeuplink'>take</a>"
-			if (check_rights(R_FUN, 0))
+			if (check_rights(R_FUN, ZERO))
 				uplink_info += ", <a href='?src=[REF(src)];common=crystals'>[U.telecrystals]</a> TC"
 			else
 				uplink_info += ", [U.telecrystals] TC"

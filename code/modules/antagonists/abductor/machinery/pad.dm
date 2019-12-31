@@ -52,5 +52,5 @@
 /obj/effect/temp_visual/teleport_abductor/Initialize()
 	. = ..()
 	var/datum/effect_system/spark_spread/S = new
-	S.set_up(10,0,loc)
+	S.set_up(10,ZERO,loc)
 	S.start()

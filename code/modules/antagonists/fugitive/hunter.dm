@@ -86,7 +86,7 @@
 	. = list(fugitives_counted, fugitives_dead, fugitives_captured) //okay, check out how cool this is.
 
 /datum/team/fugitive_hunters/proc/all_hunters_dead()
-	var/dead_boys = 0
+	var/dead_boys = ZERO
 	for(var/I in members)
 		var/datum/mind/hunter_mind = I
 		if(!(ishuman(hunter_mind.current) || (hunter_mind.current.stat == DEAD)))

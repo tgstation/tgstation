@@ -80,7 +80,7 @@
 
 			var/Text = href_list["adjustDamage"]
 
-			var/amount =  input("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0) as num|null
+			var/amount =  input("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",ZERO) as num|null
 
 			if (isnull(amount))
 				return
@@ -116,7 +116,7 @@
 					to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]")
 					return
 
-			if(amount != 0)
+			if(amount != ZERO)
 				var/log_msg = "[key_name(usr)] dealt [amount] amount of [Text] damage to [key_name(L)]"
 				message_admins("[key_name(usr)] dealt [amount] amount of [Text] damage to [ADMIN_LOOKUPFLW(L)]")
 				log_admin(log_msg)

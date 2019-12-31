@@ -21,9 +21,9 @@
 	var/antagonist_type
 	var/objectives = null
 	var/uses = 1			//how many times can we spawn from it. set to -1 for infinite.
-	var/brute_damage = 0
-	var/oxy_damage = 0
-	var/burn_damage = 0
+	var/brute_damage = ZERO
+	var/oxy_damage = ZERO
+	var/burn_damage = ZERO
 	var/datum/disease/disease = null //Do they start with a pre-spawned disease?
 	var/mob_color //Change the mob's color
 	var/assignedrole
@@ -118,7 +118,7 @@
 			M.mind.assigned_role = assignedrole
 		special(M)
 		MM.name = M.real_name
-	if(uses > 0)
+	if(uses > ZERO)
 		uses--
 	if(!permanent && !uses)
 		qdel(src)

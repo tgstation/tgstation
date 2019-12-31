@@ -108,7 +108,7 @@
 			return 1
 		var/obj/structure/reagent_dispensers/W = target //will it work?
 		var/transferred = W.reagents.trans_to(src, max_water, transfered_by = user)
-		if(transferred > 0)
+		if(transferred > ZERO)
 			to_chat(user, "<span class='notice'>\The [src] has been refilled by [transferred] units.</span>")
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, TRUE, -6)
 			for(var/datum/reagent/water/R in reagents.reagent_list)
@@ -118,7 +118,7 @@
 		safety = safety_save
 		return 1
 	else
-		return 0
+		return ZERO
 
 /obj/item/extinguisher/afterattack(atom/target, mob/user , flag)
 	. = ..()
@@ -164,7 +164,7 @@
 			the_targets.Add(T3,T4)
 
 		var/list/water_particles=list()
-		for(var/a=0, a<5, a++)
+		for(var/a=ZERO, a<5, a++)
 			var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water(get_turf(src))
 			var/my_target = pick(the_targets)
 			water_particles[W] = my_target
@@ -180,9 +180,9 @@
 		addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_particles, water_particles), 2)
 
 //Particle movement loop
-/obj/item/extinguisher/proc/move_particles(list/particles, repetition=0)
+/obj/item/extinguisher/proc/move_particles(list/particles, repetition=ZERO)
 	//Check if there's anything in here first
-	if(!particles || particles.len == 0)
+	if(!particles || particles.len == ZERO)
 		return
 	// Second loop: Get all the water particles and make them move to their target
 	for(var/obj/effect/particle_effect/water/W in particles)
@@ -202,12 +202,12 @@
 		addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_particles, particles, repetition), 2)
 
 //Chair movement loop
-/obj/item/extinguisher/proc/move_chair(obj/B, movementdirection, repetition=0)
+/obj/item/extinguisher/proc/move_chair(obj/B, movementdirection, repetition=ZERO)
 	step(B, movementdirection)
 
 	var/timer_seconds
 	switch(repetition)
-		if(0 to 2)
+		if(ZERO to 2)
 			timer_seconds = 1
 		if(3 to 4)
 			timer_seconds = 2

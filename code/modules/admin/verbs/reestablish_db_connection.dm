@@ -6,7 +6,7 @@
 		return
 
 	if (SSdbcore.IsConnected())
-		if (!check_rights(R_DEBUG,0))
+		if (!check_rights(R_DEBUG,ZERO))
 			alert("The database is already connected! (Only those with +debug can force a reconnection)", "The database is already connected!")
 			return
 
@@ -23,7 +23,7 @@
 	message_admins("[key_name_admin(usr)] is attempting to re-establish the DB Connection")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Reestablished Database Connection") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-	SSdbcore.failed_connections = 0
+	SSdbcore.failed_connections = ZERO
 	if(!SSdbcore.Connect())
 		message_admins("Database connection failed: " + SSdbcore.ErrorMsg())
 	else

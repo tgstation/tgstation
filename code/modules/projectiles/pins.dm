@@ -8,9 +8,9 @@
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("poked")
 	var/fail_message = "<span class='warning'>INVALID USER.</span>"
-	var/selfdestruct = 0 // Explode when user check is failed.
-	var/force_replace = 0 // Can forcefully replace other pins.
-	var/pin_removeable = 0 // Can be replaced by any pin.
+	var/selfdestruct = ZERO // Explode when user check is failed.
+	var/force_replace = ZERO // Can forcefully replace other pins.
+	var/pin_removeable = ZERO // Can be replaced by any pin.
 	var/obj/item/gun/gun
 
 /obj/item/firing_pin/New(newloc)
@@ -63,7 +63,7 @@
 		if(user)
 			user.show_message("<span class='danger'>SELF-DESTRUCTING...</span><br>", MSG_VISUAL)
 			to_chat(user, "<span class='userdanger'>[gun] explodes!</span>")
-		explosion(get_turf(gun), -1, 0, 2, 3)
+		explosion(get_turf(gun), -1, ZERO, 2, 3)
 		if(gun)
 			qdel(gun)
 

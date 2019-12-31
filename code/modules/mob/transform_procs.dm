@@ -46,7 +46,7 @@
 
 	//handle DNA and other attributes
 	dna.transfer_identity(O)
-	O.updateappearance(icon_update=0)
+	O.updateappearance(icon_update=ZERO)
 
 	if(tr_flags & TR_KEEPSE)
 		O.dna.mutation_index = dna.mutation_index
@@ -68,11 +68,11 @@
 
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
-		O.setToxLoss(getToxLoss(), 0)
-		O.adjustBruteLoss(getBruteLoss(), 0)
-		O.setOxyLoss(getOxyLoss(), 0)
-		O.setCloneLoss(getCloneLoss(), 0)
-		O.adjustFireLoss(getFireLoss(), 0)
+		O.setToxLoss(getToxLoss(), ZERO)
+		O.adjustBruteLoss(getBruteLoss(), ZERO)
+		O.setOxyLoss(getOxyLoss(), ZERO)
+		O.setCloneLoss(getCloneLoss(), ZERO)
+		O.adjustFireLoss(getFireLoss(), ZERO)
 		O.setOrganLoss(ORGAN_SLOT_BRAIN, getOrganLoss(ORGAN_SLOT_BRAIN))
 		O.updatehealth()
 		O.radiation = radiation
@@ -225,7 +225,7 @@
 
 	if(tr_flags & TR_KEEPSE)
 		O.dna.mutation_index = dna.mutation_index
-		O.dna.set_se(0, GET_INITIALIZED_MUTATION(RACEMUT))
+		O.dna.set_se(ZERO, GET_INITIALIZED_MUTATION(RACEMUT))
 		O.domutcheck()
 
 	if(suiciding)
@@ -244,11 +244,11 @@
 
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
-		O.setToxLoss(getToxLoss(), 0)
-		O.adjustBruteLoss(getBruteLoss(), 0)
-		O.setOxyLoss(getOxyLoss(), 0)
-		O.setCloneLoss(getCloneLoss(), 0)
-		O.adjustFireLoss(getFireLoss(), 0)
+		O.setToxLoss(getToxLoss(), ZERO)
+		O.adjustBruteLoss(getBruteLoss(), ZERO)
+		O.setOxyLoss(getOxyLoss(), ZERO)
+		O.setCloneLoss(getCloneLoss(), ZERO)
+		O.adjustFireLoss(getFireLoss(), ZERO)
 		O.adjustOrganLoss(ORGAN_SLOT_BRAIN, getOrganLoss(ORGAN_SLOT_BRAIN))
 		O.updatehealth()
 		O.radiation = radiation
@@ -386,7 +386,7 @@
 
 	qdel(src)
 
-/mob/living/carbon/human/proc/Robotize(delete_items = 0, transfer_after = TRUE)
+/mob/living/carbon/human/proc/Robotize(delete_items = ZERO, transfer_after = TRUE)
 	if (notransform)
 		return
 	notransform = TRUE
@@ -406,7 +406,7 @@
 	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot(loc)
 
 	R.gender = gender
-	R.invisibility = 0
+	R.invisibility = ZERO
 
 	if(client)
 		R.updatename(client)
@@ -611,10 +611,10 @@
 
 //Bad mobs! - Remember to add a comment explaining what's wrong with the mob
 	if(!MP)
-		return 0	//Sanity, this should never happen.
+		return ZERO	//Sanity, this should never happen.
 
 	if(ispath(MP, /mob/living/simple_animal/hostile/construct))
-		return 0 //Verbs do not appear for players.
+		return ZERO //Verbs do not appear for players.
 
 //Good mobs!
 	if(ispath(MP, /mob/living/simple_animal/pet/cat))
@@ -639,4 +639,4 @@
 		return 1 //Parrots are no longer unfinished! -Nodrak
 
 	//Not in here? Must be untested!
-	return 0
+	return ZERO

@@ -11,14 +11,14 @@
 	wreckage = /obj/structure/mecha_wreckage/reticence
 	operation_req_access = list(ACCESS_THEATRE)
 	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_THEATRE)
-	add_req_access = 0
+	add_req_access = ZERO
 	internal_damage_threshold = 25
 	max_equip = 2
 	step_energy_drain = 3
 	color = "#87878715"
 	stepsound = null
 	turnsound = null
-	opacity = 0
+	opacity = ZERO
 
 /obj/mecha/combat/reticence/loaded/Initialize()
 	. = ..()

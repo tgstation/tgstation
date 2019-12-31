@@ -34,23 +34,23 @@
 
 
 	if(A.stage >= 3)
-		M.dizziness = max(0, M.dizziness - 2)
-		M.drowsyness = max(0, M.drowsyness - 2)
-		M.slurring = max(0, M.slurring - 2)
-		M.confused = max(0, M.confused - 2)
+		M.dizziness = max(ZERO, M.dizziness - 2)
+		M.drowsyness = max(ZERO, M.drowsyness - 2)
+		M.slurring = max(ZERO, M.slurring - 2)
+		M.confused = max(ZERO, M.confused - 2)
 		if(purge_alcohol)
 			M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				H.drunkenness = max(H.drunkenness - 5, 0)
+				H.drunkenness = max(H.drunkenness - 5, ZERO)
 
 	if(A.stage >= 4)
-		M.drowsyness = max(0, M.drowsyness - 2)
+		M.drowsyness = max(ZERO, M.drowsyness - 2)
 		if(M.reagents.has_reagent(/datum/reagent/toxin/mindbreaker))
 			M.reagents.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
 		if(M.reagents.has_reagent(/datum/reagent/toxin/histamine))
 			M.reagents.remove_reagent(/datum/reagent/toxin/histamine, 5)
-		M.hallucination = max(0, M.hallucination - 10)
+		M.hallucination = max(ZERO, M.hallucination - 10)
 
 	if(A.stage >= 5)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3)
@@ -67,7 +67,7 @@
 /datum/symptom/sensory_restoration
 	name = "Sensory Restoration"
 	desc = "The virus stimulates the production and replacement of sensory tissues, causing the host to regenerate eyes and ears when damaged."
-	stealth = 0
+	stealth = ZERO
 	resistance = 1
 	stage_speed = -2
 	transmittable = 2
@@ -100,9 +100,9 @@
 					M.blur_eyes(10)
 
 				else if(M.eye_blind || M.eye_blurry)
-					M.set_blindness(0)
-					M.set_blurriness(0)
-				else if(eyes.damage > 0)
+					M.set_blindness(ZERO)
+					M.set_blurriness(ZERO)
+				else if(eyes.damage > ZERO)
 					eyes.applyOrganDamage(-1)
 		else
 			if(prob(base_message_chance))

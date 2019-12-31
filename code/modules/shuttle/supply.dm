@@ -42,7 +42,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	width = 12
 	dwidth = 5
 	height = 7
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = ZERO)
 
 
 	//Export categories for this run, this is set by console sending the shuttle.
@@ -96,8 +96,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				continue
 			empty_turfs += T
 
-	var/value = 0
-	var/purchases = 0
+	var/value = ZERO
+	var/purchases = ZERO
 	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 		if(!empty_turfs.len)
 			break

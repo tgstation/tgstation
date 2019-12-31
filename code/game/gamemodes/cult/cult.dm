@@ -48,10 +48,10 @@
 	<span class='cult'>Cultists</span>: Carry out Nar'Sie's will.\n\
 	<span class='notice'>Crew</span>: Prevent the cult from expanding and drive it out."
 
-	var/finished = 0
+	var/finished = ZERO
 
 	var/acolytes_needed = 10 //for the survive objective
-	var/acolytes_survived = 0
+	var/acolytes_survived = ZERO
 
 	var/list/cultists_to_cult = list() //the cultists we'll convert
 
@@ -95,7 +95,7 @@
 	main_cult = new
 
 	for(var/datum/mind/cult_mind in cultists_to_cult)
-		add_cultist(cult_mind, 0, equip=TRUE, cult_team = main_cult)
+		add_cultist(cult_mind, ZERO, equip=TRUE, cult_team = main_cult)
 		GLOB.pre_setup_antags -= cult_mind
 
 	main_cult.setup_objectives() //Wait until all cultists are assigned to make sure none will be chosen as sacrifice.
@@ -139,13 +139,13 @@
 		SSticker.news_report = CULT_FAILURE
 
 /datum/game_mode/cult/proc/check_survive()
-	var/acolytes_survived = 0
+	var/acolytes_survived = ZERO
 	for(var/datum/mind/cult_mind in cult)
 		if (cult_mind.current && cult_mind.current.stat != DEAD)
 			if(cult_mind.current.onCentCom() || cult_mind.current.onSyndieBase())
 				acolytes_survived++
 	if(acolytes_survived>=acolytes_needed)
-		return 0
+		return ZERO
 	else
 		return 1
 

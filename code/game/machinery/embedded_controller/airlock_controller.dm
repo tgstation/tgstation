@@ -1,7 +1,7 @@
 //States for airlock_control
 #define AIRLOCK_STATE_INOPEN		-2
 #define AIRLOCK_STATE_PRESSURIZE	-1
-#define AIRLOCK_STATE_CLOSED		0
+#define AIRLOCK_STATE_CLOSED		ZERO
 #define AIRLOCK_STATE_DEPRESSURIZE	1
 #define AIRLOCK_STATE_OUTOPEN		2
 
@@ -60,7 +60,7 @@
 /datum/computer/file/embedded_program/airlock_controller/process()
 	var/process_again = 1
 	while(process_again)
-		process_again = 0
+		process_again = ZERO
 		switch(state)
 			if(AIRLOCK_STATE_INOPEN) // state -2
 				if(target_state > state)
@@ -76,7 +76,7 @@
 					if(memory["pump_status"] != "off")
 						post_signal(new /datum/signal(list(
 							"tag" = airpump_tag,
-							"power" = 0,
+							"power" = ZERO,
 							"sigtype" = "command"
 						)))
 
@@ -129,7 +129,7 @@
 					if(memory["pump_status"] != "off")
 						post_signal(new /datum/signal(list(
 							"tag" = airpump_tag,
-							"power" = 0,
+							"power" = ZERO,
 							"sigtype" = "command"
 						)))
 
@@ -182,7 +182,7 @@
 					if(memory["pump_status"] != "off")
 						post_signal(new /datum/signal(list(
 							"tag" = airpump_tag,
-							"power" = 0,
+							"power" = ZERO,
 							"sigtype" = "command"
 						)))
 
@@ -268,7 +268,7 @@
 /obj/machinery/embedded_controller/radio/airlock_controller/return_text()
 	var/state_options = null
 
-	var/state = 0
+	var/state = ZERO
 	var/sensor_pressure = "----"
 	var/exterior_status = "----"
 	var/interior_status = "----"

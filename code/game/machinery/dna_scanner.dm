@@ -17,9 +17,9 @@
 	var/breakout_time = 1200
 
 /obj/machinery/dna_scannernew/RefreshParts()
-	scan_level = 0
-	damage_coeff = 0
-	precision_coeff = 0
+	scan_level = ZERO
+	damage_coeff = ZERO
+	precision_coeff = ZERO
 	for(var/obj/item/stock_parts/scanning_module/P in component_parts)
 		scan_level += P.rating
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)

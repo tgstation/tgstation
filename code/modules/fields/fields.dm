@@ -4,7 +4,7 @@
 //If there's any way to make this less CPU intensive than I've managed, gimme a call or do it yourself! - kevinz000
 
 //Field shapes
-#define FIELD_NO_SHAPE 0		//Does not update turfs automatically
+#define FIELD_NO_SHAPE ZERO		//Does not update turfs automatically
 #define FIELD_SHAPE_RADIUS_SQUARE 1	//Uses current_range and square_depth_up/down
 #define FIELD_SHAPE_CUSTOM_SQUARE 2	//Uses square_height and square_width and square_depth_up/down
 
@@ -23,10 +23,10 @@
 	var/name = "\improper Energy Field"
 	//Field setup specifications
 	var/field_shape = FIELD_NO_SHAPE
-	var/square_height = 0
-	var/square_width = 0
-	var/square_depth_up = 0
-	var/square_depth_down = 0
+	var/square_height = ZERO
+	var/square_width = ZERO
+	var/square_depth_up = ZERO
+	var/square_depth_down = ZERO
 	//Processing
 	var/process_inner_turfs = FALSE	//Don't do this unless it's absolutely necessary
 	var/process_edge_turfs = FALSE	//Don't do this either unless it's absolutely necessary, you can just track what things are inside manually or on the initial setup.
@@ -58,7 +58,7 @@
 	var/pass = TRUE
 	if(field_shape == FIELD_NO_SHAPE)	//If you're going to make a manually updated field you shouldn't be using automatic checks so don't.
 		pass = FALSE
-	if(current_range < 0 || square_height < 0 || square_width < 0 || square_depth_up < 0 || square_depth_down < 0)
+	if(current_range < ZERO || square_height < ZERO || square_width < ZERO || square_depth_up < ZERO || square_depth_down < ZERO)
 		pass = FALSE
 	if(!istype(host))
 		pass = FALSE

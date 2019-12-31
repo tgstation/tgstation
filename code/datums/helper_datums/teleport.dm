@@ -1,6 +1,6 @@
 // teleatom: atom to teleport
 // destination: destination to teleport to
-// precision: teleport precision (0 is most precise, the default)
+// precision: teleport precision (ZERO is most precise, the default)
 // effectin: effect to show right before teleportation
 // effectout: effect to show right after teleportation
 // asoundin: soundfile to play before teleportation
@@ -22,9 +22,9 @@
 		return FALSE
 
 	// argument handling
-	// if the precision is not specified, default to 0, but apply BoH penalties
+	// if the precision is not specified, default to ZERO, but apply BoH penalties
 	if (isnull(precision))
-		precision = 0
+		precision = ZERO
 
 	switch(channel)
 		if(TELEPORT_CHANNEL_BLUESPACE)
@@ -150,7 +150,7 @@
 		// DING! You have passed the gauntlet, and are "probably" safe.
 		return F
 
-/proc/get_teleport_turfs(turf/center, precision = 0)
+/proc/get_teleport_turfs(turf/center, precision = ZERO)
 	if(!precision)
 		return list(center)
 	var/list/posturfs = list()
@@ -162,5 +162,5 @@
 			posturfs.Add(T)
 	return posturfs
 
-/proc/get_teleport_turf(turf/center, precision = 0)
+/proc/get_teleport_turf(turf/center, precision = ZERO)
 	return safepick(get_teleport_turfs(center, precision))

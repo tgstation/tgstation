@@ -4,9 +4,9 @@
 	icon_state = null
 	hitsound = ""
 	suppressed = TRUE
-	ricochets_max = 0
-	ricochet_chance = 0
-	damage = 0
+	ricochets_max = ZERO
+	ricochet_chance = ZERO
+	damage = ZERO
 	nodamage = TRUE
 	projectile_type = /obj/projectile/hallucination
 	log_override = TRUE
@@ -61,7 +61,7 @@
 		spawn_hit(M, FALSE)
 
 /obj/projectile/hallucination/proc/spawn_blood(mob/M, set_dir)
-	set waitfor = 0
+	set waitfor = ZERO
 	if(!hal_target.client)
 		return
 
@@ -72,8 +72,8 @@
 		splatter_icon_state = "splatter[pick(3, 4, 5)]"
 
 	var/image/blood = image('icons/effects/blood.dmi', M, splatter_icon_state, ABOVE_MOB_LAYER)
-	var/target_pixel_x = 0
-	var/target_pixel_y = 0
+	var/target_pixel_x = ZERO
+	var/target_pixel_y = ZERO
 	switch(set_dir)
 		if(NORTH)
 			target_pixel_y = 16
@@ -99,7 +99,7 @@
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
 	hal_target.client.images += blood
-	animate(blood, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = 5)
+	animate(blood, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = ZERO, time = 5)
 	addtimer(CALLBACK(src, .proc/cleanup_blood), 5)
 
 /obj/projectile/hallucination/proc/cleanup_blood(image/blood)
@@ -107,7 +107,7 @@
 	qdel(blood)
 
 /obj/projectile/hallucination/proc/spawn_hit(atom/A, is_wall)
-	set waitfor = 0
+	set waitfor = ZERO
 	if(!hal_target.client)
 		return
 

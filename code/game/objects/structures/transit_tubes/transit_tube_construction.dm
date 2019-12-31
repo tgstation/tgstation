@@ -10,14 +10,14 @@
 	layer = LOW_ITEM_LAYER //same as the built tube
 	anchored = FALSE
 	var/const/time_to_unwrench = 2 SECONDS
-	var/flipped = 0
+	var/flipped = ZERO
 	var/build_type = /obj/structure/transit_tube
 	var/flipped_build_type
 	var/base_icon
 
 /obj/structure/c_transit_tube/proc/can_wrench_in_loc(mob/user)
 	var/turf/source_turf = get_turf(loc)
-	var/existing_tubes = 0
+	var/existing_tubes = ZERO
 	for(var/obj/structure/transit_tube/tube in source_turf)
 		existing_tubes +=1
 		if(existing_tubes >= 2)

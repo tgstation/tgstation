@@ -46,7 +46,7 @@
 						R.notify_ai(TRUE)
 		if(WIRE_CAMERA) // Pulse to disable the camera.
 			if(!QDELETED(R.builtInCamera) && !R.scrambledcodes)
-				R.builtInCamera.toggle_cam(usr, 0)
+				R.builtInCamera.toggle_cam(usr, ZERO)
 				R.visible_message("<span class='notice'>[R]'s camera lens focuses loudly.</span>", "<span class='notice'>Your camera lens focuses loudly.</span>")
 		if(WIRE_LAWSYNC) // Forces a law update if possible.
 			if(R.lawupdate)
@@ -77,7 +77,7 @@
 		if (WIRE_CAMERA) // Disable the camera.
 			if(!QDELETED(R.builtInCamera) && !R.scrambledcodes)
 				R.builtInCamera.status = mend
-				R.builtInCamera.toggle_cam(usr, 0)
+				R.builtInCamera.toggle_cam(usr, ZERO)
 				R.visible_message("<span class='notice'>[R]'s camera lens focuses loudly.</span>", "<span class='notice'>Your camera lens focuses loudly.</span>")
 		if(WIRE_LOCKDOWN) // Simple lockdown.
 			R.SetLockdown(!mend)

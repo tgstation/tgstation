@@ -3,9 +3,9 @@
 
 /datum/progressbar
 	var/goal = 1
-	var/last_progress = 0
+	var/last_progress = ZERO
 	var/image/bar
-	var/shown = 0
+	var/shown = ZERO
 	var/mob/user
 	var/client/client
 	var/listindex
@@ -28,8 +28,8 @@
 	var/list/bars = user.progressbars[bar.loc]
 	bars.Add(src)
 	listindex = bars.len
-	bar.pixel_y = 0
-	bar.alpha = 0
+	bar.pixel_y = ZERO
+	bar.alpha = ZERO
 	animate(bar, pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 
 /datum/progressbar/proc/update(progress)
@@ -42,7 +42,7 @@
 		if (user.client)
 			user.client.images += bar
 
-	progress = CLAMP(progress, 0, goal)
+	progress = CLAMP(progress, ZERO, goal)
 	last_progress = progress
 	bar.icon_state = "prog_bar_[round(((progress / goal) * 100), 5)]"
 	if (!shown)
@@ -68,7 +68,7 @@
 	if(!bars.len)
 		LAZYREMOVE(user.progressbars, bar.loc)
 
-	animate(bar, alpha = 0, time = PROGRESSBAR_ANIMATION_TIME)
+	animate(bar, alpha = ZERO, time = PROGRESSBAR_ANIMATION_TIME)
 	addtimer(CALLBACK(src, .proc/remove_from_client), PROGRESSBAR_ANIMATION_TIME, TIMER_CLIENT_TIME)
 	QDEL_IN(bar, PROGRESSBAR_ANIMATION_TIME * 2) //for garbage collection safety
 	. = ..()

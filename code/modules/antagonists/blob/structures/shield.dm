@@ -17,7 +17,7 @@
 	return "N/A"
 
 /obj/structure/blob/shield/core
-	point_return = 0
+	point_return = ZERO
 
 /obj/structure/blob/shield/update_icon()
 	..()

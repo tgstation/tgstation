@@ -14,7 +14,7 @@
 /datum/admins/Topic(href, href_list)
 	..()
 
-	if(usr.client != src.owner || !check_rights(0))
+	if(usr.client != src.owner || !check_rights(ZERO))
 		message_admins("[usr.key] has attempted to override the admin panel!")
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
@@ -162,7 +162,7 @@
 		if(E)
 			E.admin_setup(usr)
 			var/datum/round_event/event = E.runEvent()
-			if(event.announceWhen>0)
+			if(event.announceWhen>ZERO)
 				event.processing = FALSE
 				var/prompt = alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No", "Cancel")
 				switch(prompt)
@@ -172,14 +172,14 @@
 						event.kill()
 						return
 					if("No")
-						event.announceChance = 0
+						event.announceChance = ZERO
 				event.processing = TRUE
 			message_admins("[key_name_admin(usr)] has triggered an event. ([E.name])")
 			log_admin("[key_name(usr)] has triggered an event. ([E.name])")
 		return
 
 	else if(href_list["editrightsbrowser"])
-		edit_admin_permissions(0)
+		edit_admin_permissions(ZERO)
 
 	else if(href_list["editrightsbrowserlog"])
 		edit_admin_permissions(1, href_list["editrightstarget"], href_list["editrightsoperation"], href_list["editrightspage"])
@@ -301,7 +301,7 @@
 		if(!SSticker.mode.round_ends_with_antag_death)
 			SSticker.mode.round_ends_with_antag_death = 1
 		else
-			SSticker.mode.round_ends_with_antag_death = 0
+			SSticker.mode.round_ends_with_antag_death = ZERO
 
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the midround antagonist system to [SSticker.mode.round_ends_with_antag_death ? "end the round" : "continue as extended"] upon failure.</span>")
 		check_antagonists()
@@ -439,7 +439,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 		var/target_key = href_list["addmessage"]
-		create_message("message", target_key, secret = 0)
+		create_message("message", target_key, secret = ZERO)
 
 	else if(href_list["addnote"])
 		if(!check_rights(R_ADMIN))
@@ -456,12 +456,12 @@
 	else if(href_list["addmemo"])
 		if(!check_rights(R_ADMIN))
 			return
-		create_message("memo", secret = 0, browse = 1)
+		create_message("memo", secret = ZERO, browse = 1)
 
 	else if(href_list["addmessageempty"])
 		if(!check_rights(R_ADMIN))
 			return
-		create_message("message", secret = 0)
+		create_message("message", secret = ZERO)
 
 	else if(href_list["addnoteempty"])
 		if(!check_rights(R_ADMIN))
@@ -734,7 +734,7 @@
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
 		var/new_min = input(usr,"Change the minimum delay of latejoin injection in minutes.", "Change latejoin injection delay minimum", null) as num
-		if(new_min <= 0)
+		if(new_min <= ZERO)
 			return alert(usr, "The minimum can't be zero or lower.", null, null, null, null)
 		if((new_min MINUTES) > GLOB.dynamic_latejoin_delay_max)
 			return alert(usr, "The minimum must be lower than the maximum.", null, null, null, null)
@@ -752,7 +752,7 @@
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
 		var/new_max = input(usr,"Change the maximum delay of latejoin injection in minutes.", "Change latejoin injection delay maximum", null) as num
-		if(new_max <= 0)
+		if(new_max <= ZERO)
 			return alert(usr, "The maximum can't be zero or lower.", null, null, null, null)
 		if((new_max MINUTES) < GLOB.dynamic_latejoin_delay_min)
 			return alert(usr, "The maximum must be higher than the minimum.", null, null, null, null)
@@ -770,7 +770,7 @@
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
 		var/new_min = input(usr,"Change the minimum delay of midround injection in minutes.", "Change midround injection delay minimum", null) as num
-		if(new_min <= 0)
+		if(new_min <= ZERO)
 			return alert(usr, "The minimum can't be zero or lower.", null, null, null, null)
 		if((new_min MINUTES) > GLOB.dynamic_midround_delay_max)
 			return alert(usr, "The minimum must be lower than the maximum.", null, null, null, null)
@@ -788,7 +788,7 @@
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
 		var/new_max = input(usr,"Change the maximum delay of midround injection in minutes.", "Change midround injection delay maximum", null) as num
-		if(new_max <= 0)
+		if(new_max <= ZERO)
 			return alert(usr, "The maximum can't be zero or lower.", null, null, null, null)
 		if((new_max MINUTES) > GLOB.dynamic_midround_delay_max)
 			return alert(usr, "The maximum must be higher than the minimum.", null, null, null, null)
@@ -857,7 +857,7 @@
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
 
 		var/new_value = input(usr, "Enter the high-pop override threshold for dynamic mode.", "High pop override") as num
-		if (new_value < 0)
+		if (new_value < ZERO)
 			return alert(usr, "Only positive values allowed!", null, null, null, null)
 		GLOB.dynamic_high_pop_limit = new_value
 
@@ -1354,7 +1354,7 @@
 		var/Remove = href_list["removejobslot"]
 
 		for(var/datum/job/job in SSjob.occupations)
-			if(job.title == Remove && job.total_positions - job.current_positions > 0)
+			if(job.title == Remove && job.total_positions - job.current_positions > ZERO)
 				job.total_positions -= 1
 				break
 
@@ -1620,9 +1620,9 @@
 
 		var/list/offset = splittext(href_list["offset"],",")
 		var/number = CLAMP(text2num(href_list["object_count"]), 1, ADMIN_SPAWN_CAP)
-		var/X = offset.len > 0 ? text2num(offset[1]) : 0
-		var/Y = offset.len > 1 ? text2num(offset[2]) : 0
-		var/Z = offset.len > 2 ? text2num(offset[3]) : 0
+		var/X = offset.len > 0 ? text2num(offset[1]) : ZERO
+		var/Y = offset.len > 1 ? text2num(offset[2]) : ZERO
+		var/Z = offset.len > 2 ? text2num(offset[3]) : ZERO
 		var/obj_dir = text2num(href_list["object_dir"])
 		if(obj_dir && !(obj_dir in list(1,2,4,8,5,6,9,10)))
 			obj_dir = null
@@ -1645,7 +1645,7 @@
 			if("onfloor", "frompod")
 				switch(href_list["offset_type"])
 					if ("absolute")
-						target = locate(0 + X,0 + Y,0 + Z)
+						target = locate(ZERO + X,ZERO + Y,ZERO + Z)
 					if ("relative")
 						target = locate(loc.x + X,loc.y + Y,loc.z + Z)
 			if("inmarked")
@@ -1665,7 +1665,7 @@
 				pod = new()
 
 			for (var/path in paths)
-				for (var/i = 0; i < number; i++)
+				for (var/i = ZERO; i < number; i++)
 					if(path in typesof(/turf))
 						var/turf/O = target
 						var/turf/N = O.ChangeTurf(path)
@@ -1740,7 +1740,7 @@
 	else if(href_list["ac_submit_new_channel"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/check = 0
+		var/check = ZERO
 		for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 			if(FC.channel_name == src.admincaster_feed_channel.channel_name)
 				check = 1
@@ -1816,7 +1816,7 @@
 	else if(href_list["ac_menu_wanted"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/already_wanted = 0
+		var/already_wanted = ZERO
 		if(GLOB.news_network.wanted_issue.active)
 			already_wanted = 1
 
@@ -1915,7 +1915,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 		src.admincaster_screen = text2num(href_list["ac_setScreen"])
-		if (src.admincaster_screen == 0)
+		if (src.admincaster_screen == ZERO)
 			if(src.admincaster_feed_channel)
 				src.admincaster_feed_channel = new /datum/newscaster/feed_channel
 			if(src.admincaster_feed_message)

@@ -6,26 +6,26 @@
 	var/wait = 20			//time to wait (in deciseconds) between each call to fire(). Must be a positive integer.
 	var/priority = FIRE_PRIORITY_DEFAULT	//When mutiple subsystems need to run in the same tick, higher priority subsystems will run first and be given a higher share of the tick before MC_TICK_CHECK triggers a sleep
 
-	var/flags = 0			//see MC.dm in __DEFINES Most flags must be set on world start to take full effect. (You can also restart the mc to force them to process again)
+	var/flags = ZERO			//see MC.dm in __DEFINES Most flags must be set on world start to take full effect. (You can also restart the mc to force them to process again)
 
 	var/initialized = FALSE	//set to TRUE after it has been initialized, will obviously never be set if the subsystem doesn't initialize
 
-	//set to 0 to prevent fire() calls, mostly for admin use or subsystems that may be resumed later
+	//set to ZERO to prevent fire() calls, mostly for admin use or subsystems that may be resumed later
 	//	use the SS_NO_FIRE flag instead for systems that never fire to keep it from even being added to the list
 	var/can_fire = TRUE
 
 	// Bookkeeping variables; probably shouldn't mess with these.
-	var/last_fire = 0		//last world.time we called fire()
-	var/next_fire = 0		//scheduled world.time for next fire()
-	var/cost = 0			//average time to execute
-	var/tick_usage = 0		//average tick usage
-	var/tick_overrun = 0	//average tick overrun
+	var/last_fire = ZERO		//last world.time we called fire()
+	var/next_fire = ZERO		//scheduled world.time for next fire()
+	var/cost = ZERO			//average time to execute
+	var/tick_usage = ZERO		//average tick usage
+	var/tick_overrun = ZERO	//average tick overrun
 	var/state = SS_IDLE		//tracks the current state of the ss, running, paused, etc.
-	var/paused_ticks = 0	//ticks this ss is taking to run right now.
+	var/paused_ticks = ZERO	//ticks this ss is taking to run right now.
 	var/paused_tick_usage	//total tick_usage of all of our runs while pausing this run
 	var/ticks = 1			//how many ticks does this ss take to run on avg.
-	var/times_fired = 0		//number of times we have called fire()
-	var/queued_time = 0		//time we entered the queue, (for timing and priority reasons)
+	var/times_fired = ZERO		//number of times we have called fire()
+	var/queued_time = ZERO		//time we entered the queue, (for timing and priority reasons)
 	var/queued_priority 	//we keep a running total to make the math easier, if priority changes mid-fire that would break our running total, so we store it here
 	//linked list stuff for the queue
 	var/datum/controller/subsystem/queue_next
@@ -45,8 +45,8 @@
 	return
 
 //This is used so the mc knows when the subsystem sleeps. do not override.
-/datum/controller/subsystem/proc/ignite(resumed = 0)
-	set waitfor = 0
+/datum/controller/subsystem/proc/ignite(resumed = ZERO)
+	set waitfor = ZERO
 	. = SS_SLEEPING
 	fire(resumed)
 	. = state
@@ -61,13 +61,13 @@
 //previously, this would have been named 'process()' but that name is used everywhere for different things!
 //fire() seems more suitable. This is the procedure that gets called every 'wait' deciseconds.
 //Sleeping in here prevents future fires until returned.
-/datum/controller/subsystem/proc/fire(resumed = 0)
+/datum/controller/subsystem/proc/fire(resumed = ZERO)
 	flags |= SS_NO_FIRE
 	CRASH("Subsystem [src]([type]) does not fire() but did not set the SS_NO_FIRE flag. Please add the SS_NO_FIRE flag to any subsystem that doesn't fire so it doesn't get added to the processing list and waste cpu.")
 
 /datum/controller/subsystem/Destroy()
 	dequeue()
-	can_fire = 0
+	can_fire = ZERO
 	flags |= SS_NO_FIRE
 	Master.subsystems -= src
 	return ..()
@@ -142,7 +142,7 @@
 		Master.queue_tail = queue_prev
 	if (src == Master.queue_head)
 		Master.queue_head = queue_next
-	queued_time = 0
+	queued_time = ZERO
 	if (state == SS_QUEUED)
 		state = SS_IDLE
 
@@ -213,6 +213,6 @@
 			if (var_value)
 				next_fire = world.time + wait
 		if ("queued_priority") //editing this breaks things.
-			return 0
+			return ZERO
 	. = ..()
 

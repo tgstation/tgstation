@@ -1,5 +1,5 @@
 /datum/component/beauty
-	var/beauty = 0
+	var/beauty = ZERO
 
 /datum/component/beauty/Initialize(beautyamount)
 	if(!ismovableatom(parent))

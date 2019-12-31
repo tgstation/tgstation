@@ -31,7 +31,7 @@
 
 /obj/effect/immovablerod/wizard
 	var/max_distance = 13
-	var/damage_bonus = 0
+	var/damage_bonus = ZERO
 	var/turf/start_turf
 	notify = FALSE
 

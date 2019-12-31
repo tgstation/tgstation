@@ -13,7 +13,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	var/message = "The blob strikes you" //message sent to any mob hit by the blob
 	var/message_living = null //extension to first mob sent to only living mobs i.e. silicons have no skin to be burnt
 	var/core_regen = 2
-	var/resource_delay = 0
+	var/resource_delay = ZERO
 	var/point_rate = 2
 	var/mob/camera/blob/overmind
 
@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	return
 
 /datum/blobstrain/proc/tesla_reaction(obj/structure/blob/B, power, coefficient = 1) //when the blob is hit by a tesla bolt, do this
-	return 1 //return 0 to ignore damage
+	return 1 //return ZERO to ignore damage
 
 /datum/blobstrain/proc/extinguish_reaction(obj/structure/blob/B, coefficient = 1) //when the blob is hit with water, do this
 	return

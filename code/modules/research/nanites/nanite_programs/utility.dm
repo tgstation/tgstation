@@ -4,11 +4,11 @@
 	desc = "The nanites constantly send encrypted signals attempting to forcefully copy their own programming into other nanite clusters, also overriding or disabling their cloud sync."
 	use_rate = 0.5
 	rogue_types = list(/datum/nanite_program/toxic)
-	var/pulse_cooldown = 0
+	var/pulse_cooldown = ZERO
 
 /datum/nanite_program/viral/register_extra_settings()
 	extra_settings[NES_PROGRAM_OVERWRITE] = new /datum/nanite_extra_setting/type("Add To", list("Overwrite", "Add To", "Ignore"))
-	extra_settings[NES_CLOUD_OVERWRITE] = new /datum/nanite_extra_setting/number(0, 0, 100)
+	extra_settings[NES_CLOUD_OVERWRITE] = new /datum/nanite_extra_setting/number(ZERO, ZERO, 100)
 
 /datum/nanite_program/viral/active_effect()
 	if(world.time < pulse_cooldown)
@@ -231,7 +231,7 @@
 			resulting in an extremely infective strain of nanites."
 	use_rate = 1.50
 	rogue_types = list(/datum/nanite_program/aggressive_replication, /datum/nanite_program/necrotic)
-	var/spread_cooldown = 0
+	var/spread_cooldown = ZERO
 
 /datum/nanite_program/spreading/active_effect()
 	if(spread_cooldown < world.time)
@@ -282,7 +282,7 @@
 	name = "Mitosis"
 	desc = "The nanites gain the ability to self-replicate, using bluespace to power the process. Becomes more effective the more nanites are already in the host.\
 			The replication has also a chance to corrupt the nanite programming due to copy faults - cloud sync is highly recommended."
-	use_rate = 0
+	use_rate = ZERO
 	rogue_types = list(/datum/nanite_program/toxic)
 
 /datum/nanite_program/mitosis/active_effect()

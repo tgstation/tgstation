@@ -53,10 +53,10 @@
 /obj/mecha/proc/get_stats_part()
 	var/integrity = obj_integrity/max_integrity*100
 	var/cell_charge = get_charge()
-	var/datum/gas_mixture/int_tank_air = 0
-	var/tank_pressure = 0
-	var/tank_temperature = 0
-	var/cabin_pressure = 0
+	var/datum/gas_mixture/int_tank_air = ZERO
+	var/tank_pressure = ZERO
+	var/tank_temperature = ZERO
+	var/cabin_pressure = ZERO
 	if (internal_tank)
 		int_tank_air = internal_tank.return_air()
 		tank_pressure = internal_tank ? round(int_tank_air.return_pressure(),0.01) : "None"
@@ -292,7 +292,7 @@
 
 		//Here ID access stuff goes to die.
 		if(href_list["finish_req_access"])
-			add_req_access = 0
+			add_req_access = ZERO
 			usr << browse(null,"window=exosuit_add_access")
 			return
 

@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		to_chat(caller, "<span class='warning'><b>[caller.ranged_ability.name]</b> has been disabled.</span>")
 		caller.ranged_ability.remove_ranged_ability()
 		return TRUE //TRUE for failed, FALSE for passed.
-	if(ranged_clickcd_override >= 0)
+	if(ranged_clickcd_override >= ZERO)
 		ranged_ability_user.next_click = world.time + ranged_clickcd_override
 	else
 		ranged_ability_user.next_click = world.time + CLICK_CD_CLICK_ABILITY
@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	anchored = TRUE // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
 	pass_flags = PASSTABLE
 	density = FALSE
-	opacity = 0
+	opacity = ZERO
 
 	var/school = "evocation" //not relevant at now, but may be important later if there are changes to how spells work. the ones I used for now will probably be changed... maybe spell presets? lacking flexibility but with some other benefit?
 
@@ -124,20 +124,20 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/range = 7 //the range of the spell; outer radius for aoe spells
 	var/message = "" //whatever it says to the guy affected by it
 	var/selection_type = "view" //can be "range" or "view"
-	var/spell_level = 0 //if a spell can be taken multiple times, this raises
+	var/spell_level = ZERO //if a spell can be taken multiple times, this raises
 	var/level_max = 4 //The max possible level_max is 4
-	var/cooldown_min = 0 //This defines what spell quickened four times has as a cooldown. Make sure to set this for every spell
+	var/cooldown_min = ZERO //This defines what spell quickened four times has as a cooldown. Make sure to set this for every spell
 	var/player_lock = TRUE //If it can be used by simple mobs
 
-	var/overlay = 0
+	var/overlay = ZERO
 	var/overlay_icon = 'icons/obj/wizard.dmi'
 	var/overlay_icon_state = "spell"
-	var/overlay_lifespan = 0
+	var/overlay_lifespan = ZERO
 
-	var/sparks_spread = 0
-	var/sparks_amt = 0 //cropped at 10
-	var/smoke_spread = 0 //1 - harmless, 2 - harmful
-	var/smoke_amt = 0 //cropped at 10
+	var/sparks_spread = ZERO
+	var/sparks_amt = ZERO //cropped at 10
+	var/smoke_spread = ZERO //1 - harmless, 2 - harmful
+	var/smoke_amt = ZERO //cropped at 10
 
 	var/centcom_cancast = TRUE //Whether or not the spell should be allowed on z2
 
@@ -146,7 +146,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	action_background_icon_state = "bg_spell"
 	base_action = /datum/action/spell_action/spell
 
-/obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+/obj/effect/proc_holder/spell/proc/cast_check(skipcharge = ZERO,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 	if(player_lock)
 		if(!user.mind || !(src in user.mind.spell_list) && !(src in user.mob_spell_list))
 			to_chat(user, "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>")
@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		return FALSE
 
 	if(!antimagic_allowed)
-		var/antimagic = user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE)
+		var/antimagic = user.anti_magic_check(TRUE, FALSE, FALSE, ZERO, TRUE)
 		if(antimagic)
 			if(isitem(antimagic))
 				to_chat(user, "<span class='notice'>[antimagic] is interfering with your magic.</span>")
@@ -399,10 +399,10 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			target.vars[type] += amount //I bear no responsibility for the runtimes that'll happen if you try to adjust non-numeric or even non-existent vars
 
 /obj/effect/proc_holder/spell/targeted //can mean aoe for mobs (limited/unlimited number) or one target mob
-	var/max_targets = 1 //leave 0 for unlimited targets in range, 1 for one selectable target in range, more for limited number of casts (can all target one guy, depends on target_ignore_prev) in range
+	var/max_targets = 1 //leave ZERO for unlimited targets in range, 1 for one selectable target in range, more for limited number of casts (can all target one guy, depends on target_ignore_prev) in range
 	var/target_ignore_prev = 1 //only important if max_targets > 1, affects if the spell can be cast multiple times at one person from one cast
-	var/include_user = 0 //if it includes usr in the target list
-	var/random_target = 0 // chooses random viable target instead of asking the caster
+	var/include_user = ZERO //if it includes usr in the target list
+	var/random_target = ZERO // chooses random viable target instead of asking the caster
 	var/random_target_priority = TARGET_CLOSEST // if random_target is enabled how it will pick the target
 
 
@@ -413,13 +413,13 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/list/targets = list()
 
 	switch(max_targets)
-		if(0) //unlimited
+		if(ZERO) //unlimited
 			for(var/mob/living/target in view_or_range(range, user, selection_type))
 				if(!can_target(target))
 					continue
 				targets += target
 		if(1) //single target can be picked
-			if(range < 0)
+			if(range < ZERO)
 				targets += user
 			else
 				var/possible_targets = list()
@@ -496,7 +496,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/spell/proc/can_be_cast_by(mob/caster)
 	if((human_req || clothes_req) && !ishuman(caster))
-		return 0
+		return ZERO
 	return 1
 
 /obj/effect/proc_holder/spell/targeted/proc/los_check(mob/A,mob/B)
@@ -507,7 +507,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		for(var/atom/movable/AM in turf)
 			if(!AM.CanPass(dummy,turf,1))
 				qdel(dummy)
-				return 0
+				return ZERO
 	qdel(dummy)
 	return 1
 
@@ -521,7 +521,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(user.stat && !stat_allowed)
 		return FALSE
 
-	if(!antimagic_allowed && user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE))
+	if(!antimagic_allowed && user.anti_magic_check(TRUE, FALSE, FALSE, ZERO, TRUE))
 		return FALSE
 
 	if(!ishuman(user))

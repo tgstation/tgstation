@@ -12,8 +12,8 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("mopped", "bashed", "bludgeoned", "whacked")
 	resistance_flags = FLAMMABLE
-	var/mopping = 0
-	var/mopcount = 0
+	var/mopping = ZERO
+	var/mopcount = ZERO
 	var/mopcap = 15
 	var/mopspeed = 15
 	force_string = "robust... against germs"

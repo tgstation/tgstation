@@ -10,7 +10,7 @@
 */
 
 /datum/component/material_container
-	var/total_amount = 0
+	var/total_amount = ZERO
 	var/max_amount
 	var/sheet_type
 	var/list/materials //Map of key = material ref | Value = amount
@@ -23,9 +23,9 @@
 	var/datum/callback/after_insert
 
 /// Sets up the proper signals and fills the list of materials with the appropriate references.
-/datum/component/material_container/Initialize(list/mat_list, max_amt = 0, _show_on_examine = FALSE, list/allowed_types, datum/callback/_precondition, datum/callback/_after_insert, _disable_attackby)
+/datum/component/material_container/Initialize(list/mat_list, max_amt = ZERO, _show_on_examine = FALSE, list/allowed_types, datum/callback/_precondition, datum/callback/_after_insert, _disable_attackby)
 	materials = list()
-	max_amount = max(0, max_amt)
+	max_amount = max(ZERO, max_amt)
 	show_on_examine = _show_on_examine
 	disable_attackby = _disable_attackby
 
@@ -43,7 +43,7 @@
 
 	for(var/mat in mat_list) //Make the assoc list ref | amount
 		var/datum/material/M = getmaterialref(mat) || mat
-		materials[M] = 0
+		materials[M] = ZERO
 
 /datum/component/material_container/proc/OnExamine(datum/source, mob/user)
 	if(show_on_examine)
@@ -87,7 +87,7 @@
 		var/atom/current_parent = parent
 		var/obj/item/stack/S = I
 		requested_amount = input(user, "How much do you want to insert?", "Inserting [S.singular_name]s") as num|null
-		if(isnull(requested_amount) || (requested_amount <= 0))
+		if(isnull(requested_amount) || (requested_amount <= ZERO))
 			return
 		if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || user.physical_can_use_topic(current_parent) < UI_INTERACTIVE || user.get_active_held_item() != active_held)
 			return
@@ -119,7 +119,7 @@
 
 /datum/component/material_container/proc/insert_item_materials(obj/item/I, multiplier = 1)
 	var/primary_mat
-	var/max_mat_value = 0
+	var/max_mat_value = ZERO
 	for(var/MAT in materials)
 		materials[MAT] += I.custom_materials[MAT] * multiplier
 		total_amount += I.custom_materials[MAT] * multiplier
@@ -131,7 +131,7 @@
 /datum/component/material_container/proc/insert_amount_mat(amt, var/datum/material/mat) 
 	if(!istype(mat))
 		mat = getmaterialref(mat)
-	if(amt > 0 && has_space(amt))
+	if(amt > ZERO && has_space(amt))
 		var/total_amount_saved = total_amount
 		if(mat)
 			materials[mat] += amt
@@ -158,9 +158,9 @@
 /datum/component/material_container/proc/transer_amt_to(var/datum/component/material_container/T, amt, var/datum/material/mat) 
 	if(!istype(mat))
 		mat = getmaterialref(mat)
-	if((amt==0)||(!T)||(!mat))
+	if((amt==ZERO)||(!T)||(!mat))
 		return FALSE
-	if(amt<0)
+	if(amt<ZERO)
 		return T.transer_amt_to(src, -amt, mat)
 	var/tr = min(amt, materials[mat],T.can_insert_amount_mat(amt, mat))
 	if(tr)
@@ -209,15 +209,15 @@
 /// For spawning mineral sheets at a specific location. Used by machines to output sheets.
 /datum/component/material_container/proc/retrieve_sheets(sheet_amt, var/datum/material/M, target = null) 
 	if(!M.sheet_type)
-		return 0 //Add greyscale sheet handling here later
-	if(sheet_amt <= 0)
-		return 0
+		return ZERO //Add greyscale sheet handling here later
+	if(sheet_amt <= ZERO)
+		return ZERO
 
 	if(!target)
 		target = get_turf(parent)
 	if(materials[M] < (sheet_amt * MINERAL_MATERIAL_AMOUNT))
 		sheet_amt = round(materials[M] / MINERAL_MATERIAL_AMOUNT)
-	var/count = 0
+	var/count = ZERO
 	while(sheet_amt > MAX_STACK_SIZE)
 		new M.sheet_type(target, MAX_STACK_SIZE)
 		count += MAX_STACK_SIZE
@@ -232,14 +232,14 @@
 
 /// Proc to get all the materials and dump them as sheets
 /datum/component/material_container/proc/retrieve_all(target = null) 
-	var/result = 0
+	var/result = ZERO
 	for(var/MAT in materials)
 		var/amount = materials[MAT]
 		result += retrieve_sheets(amount2sheet(amount), MAT, target)
 	return result
 
 /// Proc that returns TRUE if the container has space
-/datum/component/material_container/proc/has_space(amt = 0)
+/datum/component/material_container/proc/has_space(amt = ZERO)
 	return (total_amount + amt) <= max_amount
 
 /// Checks if its possible to afford a certain amount of materials. Takes a dictionary of materials.
@@ -299,7 +299,7 @@
 
 /// Turns an amount of sheets into the amount of material amount it should output
 /datum/component/material_container/proc/sheet2amount(sheet_amt)
-	if(sheet_amt > 0)
+	if(sheet_amt > ZERO)
 		return sheet_amt * MINERAL_MATERIAL_AMOUNT
 	return FALSE
 
@@ -308,7 +308,7 @@
 /datum/component/material_container/proc/get_item_material_amount(obj/item/I)
 	if(!istype(I) || !I.custom_materials)
 		return FALSE
-	var/material_amount = 0
+	var/material_amount = ZERO
 	for(var/MAT in materials)
 		material_amount += I.custom_materials[MAT]
 	return material_amount

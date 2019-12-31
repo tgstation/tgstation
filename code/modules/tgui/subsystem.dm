@@ -69,7 +69,7 @@
 	if(isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
 		return 0 // Couldn't find any UIs for this object.
 
-	var/update_count = 0
+	var/update_count = ZERO
 	for(var/ui_key in open_uis[src_object_key])
 		for(var/datum/tgui/ui in open_uis[src_object_key][ui_key])
 			if(ui && ui.src_object && ui.user && ui.src_object.ui_host(ui.user)) // Check the UI is valid.
@@ -91,7 +91,7 @@
 	if(isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
 		return 0 // Couldn't find any UIs for this object.
 
-	var/close_count = 0
+	var/close_count = ZERO
 	for(var/ui_key in open_uis[src_object_key])
 		for(var/datum/tgui/ui in open_uis[src_object_key][ui_key])
 			if(ui && ui.src_object && ui.user && ui.src_object.ui_host(ui.user)) // Check the UI is valid.
@@ -107,7 +107,7 @@
   * return int The number of UIs closed.
  **/
 /datum/controller/subsystem/tgui/proc/close_all_uis()
-	var/close_count = 0
+	var/close_count = ZERO
 	for(var/src_object_key in open_uis)
 		for(var/ui_key in open_uis[src_object_key])
 			for(var/datum/tgui/ui in open_uis[src_object_key][ui_key])
@@ -128,10 +128,10 @@
   * return int The number of UIs updated.
  **/
 /datum/controller/subsystem/tgui/proc/update_user_uis(mob/user, datum/src_object = null, ui_key = null)
-	if(isnull(user.open_uis) || !istype(user.open_uis, /list) || open_uis.len == 0)
+	if(isnull(user.open_uis) || !istype(user.open_uis, /list) || open_uis.len == ZERO)
 		return 0 // Couldn't find any UIs for this user.
 
-	var/update_count = 0
+	var/update_count = ZERO
 	for(var/datum/tgui/ui in user.open_uis)
 		if((isnull(src_object) || !isnull(src_object) && ui.src_object == src_object) && (isnull(ui_key) || !isnull(ui_key) && ui.ui_key == ui_key))
 			ui.process(force = 1) // Update the UI.
@@ -150,10 +150,10 @@
   * return int The number of UIs closed.
  **/
 /datum/controller/subsystem/tgui/proc/close_user_uis(mob/user, datum/src_object = null, ui_key = null)
-	if(isnull(user.open_uis) || !istype(user.open_uis, /list) || open_uis.len == 0)
+	if(isnull(user.open_uis) || !istype(user.open_uis, /list) || open_uis.len == ZERO)
 		return 0 // Couldn't find any UIs for this user.
 
-	var/close_count = 0
+	var/close_count = ZERO
 	for(var/datum/tgui/ui in user.open_uis)
 		if((isnull(src_object) || !isnull(src_object) && ui.src_object == src_object) && (isnull(ui_key) || !isnull(ui_key) && ui.ui_key == ui_key))
 			ui.close() // Close the UI.
@@ -233,8 +233,8 @@
   * return bool If the UIs were transferred.
  **/
 /datum/controller/subsystem/tgui/proc/on_transfer(mob/source, mob/target)
-	if(!source || isnull(source.open_uis) || !istype(source.open_uis, /list) || open_uis.len == 0)
-		return 0 // The old mob had no open UIs.
+	if(!source || isnull(source.open_uis) || !istype(source.open_uis, /list) || open_uis.len == ZERO)
+		return ZERO // The old mob had no open UIs.
 
 	if(isnull(target.open_uis) || !istype(target.open_uis, /list))
 		target.open_uis = list() // Create a list for the new mob if needed.

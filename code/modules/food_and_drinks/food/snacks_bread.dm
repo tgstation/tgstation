@@ -14,7 +14,7 @@
 	filling_color = "#FFA500"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	slot_flags = ITEM_SLOT_HEAD
-	customfoodfilling = 0 //to avoid infinite bread-ception
+	customfoodfilling = ZERO //to avoid infinite bread-ception
 	foodtype = GRAIN
 	dunkable = TRUE
 
@@ -240,7 +240,7 @@
 
 /obj/item/reagent_containers/food/snacks/deepfryholder/proc/fry(cook_time = 30)
 	switch(cook_time)
-		if(0 to 15)
+		if(ZERO to 15)
 			add_atom_colour(rgb(166,103,54), FIXED_COLOUR_PRIORITY)
 			name = "lightly-fried [name]"
 			desc = "[desc] It's been lightly fried in a deep fryer."

@@ -1,6 +1,6 @@
 /datum/component/sizzle
 	var/mutable_appearance/sizzling
-	var/sizzlealpha = 0
+	var/sizzlealpha = ZERO
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
 /datum/component/sizzle/Initialize()

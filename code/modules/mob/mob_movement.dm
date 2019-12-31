@@ -74,8 +74,8 @@
 	if(world.time < move_delay) //do not move anything ahead of this check please
 		return FALSE
 	else
-		next_move_dir_add = 0
-		next_move_dir_sub = 0
+		next_move_dir_add = ZERO
+		next_move_dir_sub = ZERO
 	var/old_move_delay = move_delay
 	move_delay = world.time + world.tick_lag //this is here because Move() can now be called mutiple times per tick
 	if(!mob || !mob.loc)
@@ -128,7 +128,7 @@
 		move_delay = world.time
 
 	if(L.confused)
-		var/newdir = 0
+		var/newdir = ZERO
 		if(L.confused > 40)
 			newdir = pick(GLOB.alldirs)
 		else if(prob(L.confused * 1.5))
@@ -229,7 +229,7 @@
 					for(var/turf/T in getline(mobloc, L.loc))
 						new /obj/effect/temp_visual/dir_setting/ninja/shadow(T, L.dir)
 						limit--
-						if(limit<=0)
+						if(limit<=ZERO)
 							break
 			else
 				new /obj/effect/temp_visual/dir_setting/ninja/shadow(mobloc, L.dir)
@@ -268,7 +268,7 @@
   * 
   * You can move in space if you have a spacewalk ability
   */
-/mob/Process_Spacemove(movement_dir = 0)
+/mob/Process_Spacemove(movement_dir = ZERO)
 	if(spacewalk || ..())
 		return TRUE
 	var/atom/movable/backup = get_spacemove_backup()
@@ -328,7 +328,7 @@
 
 /// Update the gravity status of this mob
 /mob/proc/update_gravity(has_gravity, override=FALSE)
-	var/speed_change = max(0, has_gravity - STANDARD_GRAVITY)
+	var/speed_change = max(ZERO, has_gravity - STANDARD_GRAVITY)
 	if(!speed_change)
 		remove_movespeed_modifier(MOVESPEED_ID_MOB_GRAVITY, update=TRUE)
 	else

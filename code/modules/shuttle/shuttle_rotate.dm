@@ -17,9 +17,9 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 
 	//rotate the pixel offsets too.
 	if((pixel_x || pixel_y) && (params & ROTATE_OFFSET))
-		if(rotation < 0)
+		if(rotation < ZERO)
 			rotation += 360
-		for(var/turntimes=rotation/90;turntimes>0;turntimes--)
+		for(var/turntimes=rotation/90;turntimes>ZERO;turntimes--)
 			var/oldPX = pixel_x
 			var/oldPY = pixel_y
 			pixel_x = oldPY
@@ -49,7 +49,7 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 //Fixes dpdir on shuttle rotation
 /obj/structure/disposalpipe/shuttleRotate(rotation, params)
 	. = ..()
-	var/new_dpdir = 0
+	var/new_dpdir = ZERO
 	for(var/D in GLOB.cardinals)
 		if(dpdir & D)
 			new_dpdir = new_dpdir | angle2dir(rotation+dir2angle(D))

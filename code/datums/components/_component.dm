@@ -213,7 +213,7 @@
 					if(!length(lookup))
 						target.comp_lookup = null
 						break
-			if(0)
+			if(ZERO)
 				lookup -= sig
 				if(!length(lookup))
 					target.comp_lookup = null

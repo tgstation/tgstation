@@ -7,7 +7,7 @@
 	anchored = TRUE
 	flags_1 = CONDUCT_1
 	pressure_resistance = 5*ONE_ATMOSPHERE
-	armor = list("melee" = 50, "bullet" = 70, "laser" = 70, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+	armor = list("melee" = 50, "bullet" = 70, "laser" = 70, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = ZERO)
 	max_integrity = 50
 	integrity_failure = 0.4
 	var/rods_type = /obj/item/stack/rods
@@ -21,7 +21,7 @@
 	update_cable_icons_on_turf(get_turf(src))
 	return ..()
 
-/obj/structure/grille/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+/obj/structure/grille/take_damage(damage_amount, damage_type = BRUTE, damage_flag = ZERO, sound_effect = 1, attack_dir)
 	. = ..()
 	update_icon()
 
@@ -190,7 +190,7 @@
 				WD.setDir(dir_to_set)
 				WD.ini_dir = dir_to_set
 				WD.setAnchored(FALSE)
-				WD.state = 0
+				WD.state = ZERO
 				ST.use(2)
 				to_chat(user, "<span class='notice'>You place [WD] on [src].</span>")
 			return
@@ -199,7 +199,7 @@
 	else if(istype(W, /obj/item/shard) || !shock(user, 70))
 		return ..()
 
-/obj/structure/grille/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/grille/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = ZERO)
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
@@ -228,7 +228,7 @@
 
 
 // shock user with probability prb (if all connections & power are working)
-// returns 1 if shocked, 0 otherwise
+// returns 1 if shocked, ZERO otherwise
 
 /obj/structure/grille/proc/shock(mob/user, prb)
 	if(!anchored || broken)		// anchored/broken grilles are never connected
@@ -252,7 +252,7 @@
 /obj/structure/grille/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(!broken)
 		if(exposed_temperature > T0C + 1500)
-			take_damage(1, BURN, 0, 0)
+			take_damage(1, BURN, ZERO, ZERO)
 	..()
 
 /obj/structure/grille/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)

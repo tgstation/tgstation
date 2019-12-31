@@ -26,10 +26,10 @@
 	icon_state = "roro core 2"
 	item_flags = NOBLUDGEON
 	slot = ORGAN_SLOT_REGENERATIVE_CORE
-	force = 0
+	force = ZERO
 	actions_types = list(/datum/action/item_action/organ_action/use)
-	var/inert = 0
-	var/preserved = 0
+	var/inert = ZERO
+	var/preserved = ZERO
 
 /obj/item/organ/regenerative_core/Initialize()
 	. = ..()
@@ -39,7 +39,7 @@
 	if(!preserved)
 		go_inert()
 
-/obj/item/organ/regenerative_core/proc/preserved(implanted = 0)
+/obj/item/organ/regenerative_core/proc/preserved(implanted = ZERO)
 	inert = FALSE
 	preserved = TRUE
 	update_icon()
@@ -98,13 +98,13 @@
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		applyto(user, user)
 
-/obj/item/organ/regenerative_core/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+/obj/item/organ/regenerative_core/Insert(mob/living/carbon/M, special = ZERO, drop_if_replaced = TRUE)
 	. = ..()
 	if(!preserved && !inert)
 		preserved(TRUE)
 		owner.visible_message("<span class='notice'>[src] stabilizes as it's inserted.</span>")
 
-/obj/item/organ/regenerative_core/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/regenerative_core/Remove(mob/living/carbon/M, special = ZERO)
 	if(!inert && !special)
 		owner.visible_message("<span class='notice'>[src] rapidly decays as it's removed.</span>")
 		go_inert()
@@ -135,6 +135,6 @@
 	..()
 	desc = "[src] has become inert. It has decayed, and is completely useless."
 
-/obj/item/organ/regenerative_core/legion/preserved(implanted = 0)
+/obj/item/organ/regenerative_core/legion/preserved(implanted = ZERO)
 	..()
 	desc = "[src] has been stabilized. It is preserved, allowing you to use it to heal completely without danger of decay."

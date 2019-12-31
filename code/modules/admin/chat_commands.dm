@@ -4,7 +4,7 @@
 	name = "status"
 	help_text = "Gets the admincount, playercount, gamemode, and true game mode of the server"
 	admin_only = TRUE
-	var/last_tgs_status = 0
+	var/last_tgs_status = ZERO
 
 /datum/tgs_chat_command/tgsstatus/Run(datum/tgs_chat_user/sender, params)
 	var/rtod = REALTIMEOFDAY
@@ -20,7 +20,7 @@
 /datum/tgs_chat_command/tgscheck
 	name = "check"
 	help_text = "Gets the playercount, gamemode, and address of the server"
-	var/last_tgs_check = 0
+	var/last_tgs_check = ZERO
 
 /datum/tgs_chat_command/tgscheck/Run(datum/tgs_chat_user/sender, params)
 	var/rtod = REALTIMEOFDAY

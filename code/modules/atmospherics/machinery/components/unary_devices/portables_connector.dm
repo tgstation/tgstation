@@ -7,7 +7,7 @@
 	can_unwrench = TRUE
 
 	use_power = NO_POWER_USE
-	level = 0
+	level = ZERO
 	layer = GAS_FILTER_LAYER
 
 	pipe_flags = PIPING_ONE_PER_TURF
@@ -18,7 +18,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/New()
 	..()
 	var/datum/gas_mixture/air_contents = airs[1]
-	air_contents.volume = 0
+	air_contents.volume = ZERO
 
 /obj/machinery/atmospherics/components/unary/portables_connector/Destroy()
 	if(connected_device)

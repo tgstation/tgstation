@@ -34,7 +34,7 @@
 	 )
 	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
 	var/icon_empty = ""
-	fill_icon_thresholds = list(0, 10, 25, 50, 75, 100)
+	fill_icon_thresholds = list(ZERO, 10, 25, 50, 75, 100)
 
 /obj/item/reagent_containers/food/condiment/Initialize()
 	. = ..()
@@ -45,7 +45,7 @@
 /obj/item/reagent_containers/food/condiment/update_icon()
 	cut_overlays()
 
-	if(reagents.reagent_list.len > 0 && possible_states.len)
+	if(reagents.reagent_list.len > ZERO && possible_states.len)
 		var/main_reagent = reagents.get_master_reagent_id()
 		if(main_reagent in possible_states)
 			icon_state = possible_states[main_reagent]["icon_state"]
@@ -72,10 +72,10 @@
 
 	if(!reagents || !reagents.total_volume)
 		to_chat(user, "<span class='warning'>None of [src] left, oh no!</span>")
-		return 0
+		return ZERO
 
 	if(!canconsume(M, user))
-		return 0
+		return ZERO
 
 	if(M == user)
 		user.visible_message("<span class='notice'>[user] swallows some of the contents of \the [src].</span>", \
@@ -278,7 +278,7 @@
 			qdel(src)
 
 /obj/item/reagent_containers/food/condiment/pack/on_reagent_change(changetype)
-	if(reagents.reagent_list.len > 0)
+	if(reagents.reagent_list.len > ZERO)
 		var/main_reagent = reagents.get_master_reagent_id()
 		if(main_reagent in possible_states)
 			var/list/temp_list = possible_states[main_reagent]

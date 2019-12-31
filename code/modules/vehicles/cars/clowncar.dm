@@ -12,7 +12,7 @@
 	key_type_exact = FALSE
 	var/droppingoil = FALSE
 	var/RTDcooldown = 150
-	var/lastRTDtime = 0
+	var/lastRTDtime = ZERO
 	var/thankscount
 	var/cannonmode = FALSE
 	var/cannonbusy = FALSE
@@ -51,7 +51,7 @@
 	. = ..()
 	UnregisterSignal(M, COMSIG_MOB_CLICKON)
 
-/obj/vehicle/sealed/car/clowncar/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+/obj/vehicle/sealed/car/clowncar/take_damage(damage_amount, damage_type = BRUTE, damage_flag = ZERO, sound_effect = 1, attack_dir)
 	. = ..()
 	if(prob(33))
 		visible_message("<span class='danger'>[src] spews out a ton of space lube!</span>")

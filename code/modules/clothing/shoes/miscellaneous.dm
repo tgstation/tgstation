@@ -220,7 +220,7 @@
 	var/jumpdistance = 5 //-1 from to see the actual distance, e.g 4 goes over 3 tiles
 	var/jumpspeed = 3
 	var/recharging_rate = 60 //default 6 seconds between each dash
-	var/recharging_time = 0 //time until next dash
+	var/recharging_time = ZERO //time until next dash
 
 /obj/item/clothing/shoes/bhop/ui_action_click(mob/user, action)
 	if(!isliving(user))
@@ -306,24 +306,24 @@
 	icon_state = "kindleKicks"
 	item_state = "kindleKicks"
 	actions_types = list(/datum/action/item_action/kindleKicks)
-	var/lightCycle = 0
+	var/lightCycle = ZERO
 	var/active = FALSE
 
 /obj/item/clothing/shoes/kindleKicks/ui_action_click(mob/user, action)
 	if(active)
 		return
 	active = TRUE
-	set_light(2, 3, rgb(rand(0,255),rand(0,255),rand(0,255)))
+	set_light(2, 3, rgb(rand(ZERO,255),rand(ZERO,255),rand(ZERO,255)))
 	addtimer(CALLBACK(src, .proc/lightUp), 5)
 
 /obj/item/clothing/shoes/kindleKicks/proc/lightUp(mob/user)
 	if(lightCycle < 15)
-		set_light(2, 3, rgb(rand(0,255),rand(0,255),rand(0,255)))
+		set_light(2, 3, rgb(rand(ZERO,255),rand(ZERO,255),rand(ZERO,255)))
 		lightCycle += 1
 		addtimer(CALLBACK(src, .proc/lightUp), 5)
 	else
-		set_light(0)
-		lightCycle = 0
+		set_light(ZERO)
+		lightCycle = ZERO
 		active = FALSE
 
 /obj/item/clothing/shoes/russian
@@ -399,7 +399,7 @@
 	name = "lizard skin boots"
 	desc = "You can hear a faint hissing from inside the boots; you hope it is just a mournful ghost."
 	icon_state = "lizardboots_green"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 0) //lizards like to stay warm
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = ZERO) //lizards like to stay warm
 
 /obj/item/clothing/shoes/cowboy/lizard/masterwork
 	name = "\improper Hugs-The-Feet lizard skin boots"

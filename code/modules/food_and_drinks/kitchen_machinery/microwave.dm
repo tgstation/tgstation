@@ -16,11 +16,11 @@
 	light_power = 3
 	var/wire_disabled = FALSE // is its internal wire cut?
 	var/operating = FALSE
-	var/dirty = 0 // 0 to 100 // Does it need cleaning?
+	var/dirty = ZERO // ZERO to 100 // Does it need cleaning?
 	var/dirty_anim_playing = FALSE
-	var/broken = 0 // 0, 1 or 2 // How broken is it???
+	var/broken = ZERO // ZERO, 1 or 2 // How broken is it???
 	var/max_n_of_items = 10
-	var/efficiency = 0
+	var/efficiency = ZERO
 	var/datum/looping_sound/microwave/soundloop
 	var/list/ingredients = list() // may only contain /atom/movables
 
@@ -45,7 +45,7 @@
 	. = ..()
 
 /obj/machinery/microwave/RefreshParts()
-	efficiency = 0
+	efficiency = ZERO
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		efficiency += M.rating
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
@@ -116,7 +116,7 @@
 		wires.interact(user)
 		return TRUE
 
-	if(broken > 0)
+	if(broken > ZERO)
 		if(broken == 2 && O.tool_behaviour == TOOL_WIRECUTTER) // If it's broken and they're using a screwdriver
 			user.visible_message("<span class='notice'>[user] starts to fix part of \the [src].</span>", "<span class='notice'>You start to fix part of \the [src]...</span>")
 			if(O.use_tool(src, user, 20))
@@ -126,7 +126,7 @@
 			user.visible_message("<span class='notice'>[user] starts to fix part of \the [src].</span>", "<span class='notice'>You start to fix part of \the [src]...</span>")
 			if(O.use_tool(src, user, 20))
 				user.visible_message("<span class='notice'>[user] fixes \the [src].</span>", "<span class='notice'>You fix \the [src].</span>")
-				broken = 0
+				broken = ZERO
 				update_icon()
 				return FALSE //to use some fuel
 		else
@@ -140,7 +140,7 @@
 			clean_spray.reagents.remove_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this,1)
 			playsound(loc, 'sound/effects/spray3.ogg', 50, TRUE, -6)
 			user.visible_message("<span class='notice'>[user] has cleaned \the [src].</span>", "<span class='notice'>You clean \the [src].</span>")
-			dirty = 0
+			dirty = ZERO
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>You need more space cleaner!</span>")
@@ -151,7 +151,7 @@
 		user.visible_message("<span class='notice'>[user] starts to clean \the [src].</span>", "<span class='notice'>You start to clean \the [src]...</span>")
 		if(do_after(user, P.cleanspeed, target = src))
 			user.visible_message("<span class='notice'>[user] has cleaned \the [src].</span>", "<span class='notice'>You clean \the [src].</span>")
-			dirty = 0
+			dirty = ZERO
 			update_icon()
 		return TRUE
 
@@ -161,7 +161,7 @@
 
 	if(istype(O, /obj/item/storage/bag/tray))
 		var/obj/item/storage/T = O
-		var/loaded = 0
+		var/loaded = ZERO
 		for(var/obj/item/reagent_containers/food/snacks/S in T.contents)
 			if(ingredients.len >= max_n_of_items)
 				to_chat(user, "<span class='warning'>\The [src] is full, you can't put anything in!</span>")
@@ -232,7 +232,7 @@
 /obj/machinery/microwave/proc/cook()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if(operating || broken > 0 || panel_open || !anchored || dirty == 100)
+	if(operating || broken > ZERO || panel_open || !anchored || dirty == 100)
 		return
 
 	if(wire_disabled)
@@ -266,7 +266,7 @@
 	s.set_up(2, 1, src)
 	s.start()
 
-#define MICROWAVE_NORMAL 0
+#define MICROWAVE_NORMAL ZERO
 #define MICROWAVE_MUCK 1
 #define MICROWAVE_PRE 2
 
@@ -306,7 +306,7 @@
 /obj/machinery/microwave/proc/loop_finish()
 	operating = FALSE
 
-	var/metal = 0
+	var/metal = ZERO
 	for(var/obj/item/O in ingredients)
 		O.microwave_act(src)
 		if(O.custom_materials && length(O.custom_materials))
@@ -317,7 +317,7 @@
 		spark()
 		broken = 2
 		if(prob(max(metal / 2, 33)))
-			explosion(loc, 0, 1, 2)
+			explosion(loc, ZERO, 1, 2)
 	else
 		dropContents(ingredients)
 		ingredients.Cut()
@@ -348,7 +348,7 @@
 	after_finish_loop()
 
 /obj/machinery/microwave/proc/after_finish_loop()
-	set_light(0)
+	set_light(ZERO)
 	soundloop.stop()
 	update_icon()
 

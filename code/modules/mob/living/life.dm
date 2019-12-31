@@ -1,6 +1,6 @@
 /mob/living/proc/Life(seconds, times_fired)
 	set waitfor = FALSE
-	set invisibility = 0
+	set invisibility = ZERO
 
 	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
 		float(on = TRUE)
@@ -88,10 +88,10 @@
 
 /mob/living/proc/handle_fire()
 	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
-		fire_stacks = min(0, fire_stacks + 1)//So we dry ourselves back to default, nonflammable.
+		fire_stacks = min(ZERO, fire_stacks + 1)//So we dry ourselves back to default, nonflammable.
 	if(!on_fire)
 		return TRUE //the mob is no longer on fire, no need to do the rest.
-	if(fire_stacks > 0)
+	if(fire_stacks > ZERO)
 		adjust_fire_stacks(-0.1) //the fire is slowly consumed
 	else
 		ExtinguishMob()
@@ -106,7 +106,7 @@
 //this updates all special effects: knockdown, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
 	if(confused)
-		confused = max(0, confused - 1)
+		confused = max(ZERO, confused - 1)
 
 /mob/living/proc/handle_traits()
 	//Eyes
@@ -131,13 +131,13 @@
 
 /mob/living/proc/gravity_animate()
 	if(!get_filter("gravity"))
-		add_filter("gravity",1,list("type"="motion_blur", "x"=0, "y"=0))
+		add_filter("gravity",1,list("type"="motion_blur", "x"=0, "y"=ZERO))
 	INVOKE_ASYNC(src, .proc/gravity_pulse_animation)
 
 /mob/living/proc/gravity_pulse_animation()
 	animate(get_filter("gravity"), y = 1, time = 10)
 	sleep(10)
-	animate(get_filter("gravity"), y = 0, time = 10)
+	animate(get_filter("gravity"), y = ZERO, time = 10)
 
 /mob/living/proc/handle_high_gravity(gravity)
 	if(gravity >= GRAVITY_DAMAGE_TRESHOLD) //Aka gravity values of 3 or more

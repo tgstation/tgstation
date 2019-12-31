@@ -27,13 +27,13 @@
 	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/proc/streak(list/directions)
-	set waitfor = 0
+	set waitfor = ZERO
 	var/direction = pick(directions)
-	for(var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
+	for(var/i = ZERO, i < pick(1, 200; 2, 150; 3, 50), i++)
 		sleep(2)
-		if(i > 0)
+		if(i > ZERO)
 			new /obj/effect/decal/cleanable/xenoblood/xsplatter(loc)
-		if(!step_to(src, get_step(src, direction), 0))
+		if(!step_to(src, get_step(src, direction), ZERO))
 			break
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/ex_act()

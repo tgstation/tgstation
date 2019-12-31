@@ -5,7 +5,7 @@
 	layer = ABOVE_MOB_LAYER
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	appearance_flags = 0
+	appearance_flags = ZERO
 
 /obj/effect/projectile/singularity_pull()
 	return
@@ -36,7 +36,7 @@
 		apply_vars(angle_override, p_x, p_y, color_override, scaling)
 	return ..()
 
-/obj/effect/projectile/proc/apply_vars(angle_override, p_x = 0, p_y = 0, color_override, scaling = 1, new_loc, increment = 0)
+/obj/effect/projectile/proc/apply_vars(angle_override, p_x = ZERO, p_y = ZERO, color_override, scaling = 1, new_loc, increment = ZERO)
 	var/mutable_appearance/look = new(src)
 	look.pixel_x = p_x
 	look.pixel_y = p_y
