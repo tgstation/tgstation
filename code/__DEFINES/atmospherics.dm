@@ -20,7 +20,7 @@
 #define TCMB					2.7
 /// -48.15degC
 #define TCRYO					225
-/// ZEROdegC
+/// 0degC
 #define T0C						273.15
 /// 20degC
 #define T20C					293.15
