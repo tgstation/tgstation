@@ -3353,6 +3353,17 @@
 	dir = 5
 	},
 /area/crew_quarters/kitchen)
+"ahZ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 5
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/iannewyear,
+/turf/open/floor/carpet,
+/area/crew_quarters/heads/hop)
 "aib" = (
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
@@ -49829,16 +49840,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"woM" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 5
-	},
-/obj/structure/cable,
-/turf/open/floor/carpet,
-/area/crew_quarters/heads/hop)
 "woV" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -96070,7 +96071,7 @@ aiO
 oBZ
 buN
 xyd
-woM
+ahZ
 bCs
 aiO
 buh

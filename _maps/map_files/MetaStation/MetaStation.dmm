@@ -1017,6 +1017,12 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"acw" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/iannewyear,
+/turf/open/floor/carpet,
+/area/crew_quarters/heads/hop)
 "acx" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -32164,11 +32170,6 @@
 	pixel_y = 5
 	},
 /obj/effect/mapping_helpers/ianbirthday,
-/turf/open/floor/carpet,
-/area/crew_quarters/heads/hop)
-"bsN" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "bsO" = (
@@ -100817,7 +100818,7 @@ bkz
 bmp
 bon
 bqC
-bsN
+acw
 buo
 bwj
 bol

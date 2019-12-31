@@ -1003,6 +1003,7 @@
 #include "code\game\objects\items\grenades\chem_grenade.dm"
 #include "code\game\objects\items\grenades\clusterbuster.dm"
 #include "code\game\objects\items\grenades\emgrenade.dm"
+#include "code\game\objects\items\grenades\festive.dm"
 #include "code\game\objects\items\grenades\flashbang.dm"
 #include "code\game\objects\items\grenades\ghettobomb.dm"
 #include "code\game\objects\items\grenades\grenade.dm"
