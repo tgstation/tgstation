@@ -37,7 +37,7 @@
 	var/poddoor = FALSE
 	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
 	var/safety_mode = FALSE ///Whether or not the airlock can be opened with bare hands while unpowered
-	var/no_crush = FALSE /// Whether or not the door can crush mobs when safe is FALSE.
+	var/can_crush = TRUE /// Whether or not the door can crush mobs.
 
 /obj/machinery/door/examine(mob/user)
 	. = ..()
@@ -328,7 +328,7 @@
 	update_freelook_sight()
 	if(safe)
 		CheckForMobs()
-	else if(!no_crush)
+	else if(can_crush)
 		crush()
 	return 1
 
