@@ -181,6 +181,7 @@
 	var/obj/vehicle/ridden/bicycle/closest_million_dollar_baby
 	var/obj/machinery/power/tesla_coil/closest_tesla_coil
 	var/obj/machinery/power/grounding_rod/closest_grounding_rod
+	var/obj/vehicle/ridden/bicycle/closest_rideable
 	var/mob/living/closest_mob
 	var/obj/machinery/closest_machine
 	var/obj/structure/closest_structure
@@ -247,6 +248,17 @@
 		else if(closest_grounding_rod)
 			continue
 
+		else if(istype(A,/obj/vehicle/ridden))
+			var/dist = get_dist(source, A)
+			var/obj/vehicle/ridden/R = A
+			if(dist <= zap_range && (dist < closest_dist || !closest_rideable) && R.can_buckle && !(R.obj_flags & BEING_SHOCKED))
+				closest_rideable = R
+				closest_atom = A
+				closest_dist = dist
+
+		else if(closest_rideable)
+			continue
+
 		else if(isliving(A))
 			var/dist = get_dist(source, A)
 			var/mob/living/L = A
@@ -308,6 +320,9 @@
 
 	else if(!QDELETED(closest_grounding_rod))
 		closest_grounding_rod.zap_act(power, zap_flags, shocked_targets)
+
+	else if(!QDELETED(closest_rideable))
+		closest_rideable.zap_act(power, zap_flags, shocked_targets)
 
 	else if(!QDELETED(closest_mob))
 		var/shock_damage = (zap_flags & ZAP_MOB_DAMAGE)? (min(round(power/600), 90) + rand(-5, 5)) : 0
