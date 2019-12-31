@@ -130,7 +130,11 @@
 /area/ruin/unpowered/xenonest)
 "aB" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/queen/large,
+/mob/living/simple_animal/hostile/alien/queen/large{
+	desc = "A gigantic alien who is in charge of the hive and all of its loyal servants.";
+	name = "alien queen";
+	pixel_x = -16;
+	plants_off = 1,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/xenonest)
 "aC" = (
