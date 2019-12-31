@@ -58555,6 +58555,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"bJY" = (
+/obj/effect/mapping_helpers/iannewyear,
+/turf/open/floor/wood,
+/area/crew_quarters/heads/hop)
 "bKa" = (
 /obj/structure/dresser,
 /obj/machinery/button/door{
@@ -60955,9 +60959,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/starboard)
-"bNB" = (
-/turf/open/floor/wood,
-/area/crew_quarters/heads/hop)
 "bNC" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/caution/stand_clear,
@@ -122590,7 +122591,7 @@ adJ
 bnP
 atj
 avV
-bNB
+bJY
 bOx
 atr
 bVw
