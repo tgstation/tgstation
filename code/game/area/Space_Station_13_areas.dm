@@ -427,6 +427,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Library Lounge"
 	icon_state = "library"
 
+/area/library/private
+	name = "Library Private Study"
+	icon_state = "library"
+
+/area/library/upper
+	name = "Library Upper Floor"
+	icon_state = "library"
+
+/area/library/printer
+	name = "Library Printer Room"
+	icon_state = "library"
+
 /area/library/abandoned
 	name = "Abandoned Library"
 	icon_state = "library"
@@ -839,6 +851,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Quartermaster's Office"
 	icon_state = "quart"
 
+/area/quartermaster/qm/perch
+	name = "Quartermaster's Perch"
+	icon_state = "quartperch"
+
 /area/quartermaster/miningdock
 	name = "Mining Dock"
 	icon_state = "mining"
@@ -854,6 +870,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/hydroponics
 	name = "Hydroponics"
+	icon_state = "hydro"
+
+/area/hydroponics/upper
+	name = "Upper Hydroponics"
 	icon_state = "hydro"
 
 /area/hydroponics/garden
