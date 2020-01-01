@@ -4,7 +4,7 @@
 	possible_locs = list(BODY_ZONE_CHEST)
 
 /datum/surgery/lipoplasty/can_start(mob/user, mob/living/carbon/target)
-	if(HAS_TRAIT(target, TRAIT_FAT))
+	if(HAS_TRAIT(target, TRAIT_FAT) && target.nutrition >= NUTRITION_LEVEL_WELL_FED)
 		return 1
 	return 0
 
