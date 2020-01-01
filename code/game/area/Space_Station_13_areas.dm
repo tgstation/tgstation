@@ -903,7 +903,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/science/genetics
 	name = "Genetics Lab"
-	icon_state = "genetics"
+	icon_state = "geneticssci"
 
 /area/science/misc_lab
 	name = "Testing Lab"
