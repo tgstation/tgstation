@@ -326,11 +326,14 @@
 	operating = FALSE
 	air_update_turf(1)
 	update_freelook_sight()
-	if(safe)
+
+	if(!can_crush)
+		return TRUE
+	else if(safe)
 		CheckForMobs()
-	else if(can_crush)
+	else
 		crush()
-	return 1
+	return TRUE
 
 /obj/machinery/door/proc/CheckForMobs()
 	if(locate(/mob/living) in get_turf(src))
