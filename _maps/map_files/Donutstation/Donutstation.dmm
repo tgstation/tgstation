@@ -1059,11 +1059,13 @@
 "acI" = (
 /obj/machinery/computer/nanite_cloud_controller,
 /obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
 "acJ" = (
 /obj/machinery/nanite_programmer,
 /obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
 "acK" = (
@@ -1225,9 +1227,9 @@
 /area/science/lab)
 "add" = (
 /obj/machinery/computer/nanite_cloud_controller,
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
 "ade" = (
@@ -1315,6 +1317,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
 "adp" = (
@@ -16054,6 +16057,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "aSK" = (
@@ -37465,7 +37469,6 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bUu" = (
@@ -45684,6 +45687,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
+"nmx" = (
+/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+	desc = "A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. You like the feel of it in your hand.";
+	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 23);
+	name = "Kepler's special reserve"
+	},
+/turf/open/space/basic,
+/area/space)
 "nnE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -50664,6 +50675,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
+"xBU" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/turf/open/floor/plasteel/grimy,
+/area/ai_monitored/turret_protected/aisat/foyer)
 "xCz" = (
 /obj/machinery/requests_console{
 	department = "Chemistry";
@@ -86133,7 +86150,7 @@ aaa
 aal
 afA
 afR
-kxE
+xBU
 bLH
 bNp
 aNw
@@ -90495,7 +90512,7 @@ aaa
 aaa
 aaa
 abE
-aaa
+nmx
 aaa
 aaa
 aaa
