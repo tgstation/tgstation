@@ -232,15 +232,17 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/r_val
 	var/b_val
 	var/g_val
-	var/color_format = length_char(input_color)
+	var/color_format = length(input_color)
+	if(color_format != length_char(input_color))
+		return 0
 	if(color_format == 3)
-		r_val = hex2num(copytext_char(input_color, 1, 2))*16
-		g_val = hex2num(copytext_char(input_color, 2, 3))*16
-		b_val = hex2num(copytext_char(input_color, 3))*16
+		r_val = hex2num(copytext(input_color, 1, 2)) * 16
+		g_val = hex2num(copytext(input_color, 2, 3)) * 16
+		b_val = hex2num(copytext(input_color, 3, 4)) * 16
 	else if(color_format == 6)
-		r_val = hex2num(copytext_char(input_color, 1, 3))
-		g_val = hex2num(copytext_char(input_color, 3, 5))
-		b_val = hex2num(copytext_char(input_color, 5))
+		r_val = hex2num(copytext(input_color, 1, 3))
+		g_val = hex2num(copytext(input_color, 3, 5))
+		b_val = hex2num(copytext(input_color, 5, 7))
 	else
 		return 0 //If the color format is not 3 or 6, you're using an unexpected way to represent a color.
 
@@ -254,7 +256,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	if(b_val > 255)
 		b_val = 255
 
-	return num2hex(r_val, 2) + num2hex(g_val, 2) + num2hex(b_val, 2)
+	return copytext(rgb(r_val, g_val, b_val), 2)
 
 /*
 Transfer_mind is there to check if mob is being deleted/not going to have a body.

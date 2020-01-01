@@ -59,6 +59,7 @@
 /proc/stars(phrase, probability = 25)
 	if(probability <= 0)
 		return phrase
+	phrase = html_decode(phrase)
 	var/leng = length(phrase)
 	. = ""
 	var/char = ""
@@ -68,11 +69,13 @@
 			. += char
 		else
 			. += "*"
+	return sanitize(.)
 
 /**
   * Makes you speak like you're drunk
   */
 /proc/slur(phrase)
+	phrase = html_decode(phrase)
 	var/leng = length(phrase)
 	. = ""
 	var/newletter = ""
@@ -104,9 +107,11 @@
 			if(20)
 				newletter += "[newletter][newletter]"
 		. += "[newletter]"
+	return sanitize(.)
 
 /// Makes you talk like you got cult stunned, which is slurring but with some dark messages
 /proc/cultslur(phrase) // Inflicted on victims of a stun talisman
+	phrase = html_decode(phrase)
 	var/leng = length(phrase)
 	. = ""
 	var/newletter = ""
@@ -145,9 +150,11 @@
 			if(5)
 				newletter = "glor"
 		. += newletter
+	return sanitize(.)
 
 ///Adds stuttering to the message passed in
 /proc/stutter(phrase)
+	phrase = html_decode(phrase)
 	var/leng = length(phrase)
 	. = ""
 	var/newletter = ""
@@ -164,6 +171,7 @@
 			else
 				newletter = "[newletter]-[newletter]"
 		. += newletter
+	return sanitize(.)
 
 ///Convert a message to derpy speak
 /proc/derpspeech(message, stuttering)
@@ -189,6 +197,7 @@
   * text is the inputted message, replace_characters will cause original letters to be replaced and chance are the odds that a character gets modified.
   */
 /proc/Gibberish(text, replace_characters = FALSE, chance = 50)
+	text = html_decode(text) 
 	. = ""
 	var/rawchar = ""
 	var/letter = ""
@@ -201,6 +210,7 @@
 			for(var/j in 1 to rand(0, 2))
 				letter += pick("#", "@", "*", "&", "%", "$", "/", "<", ">", ";", "*", "*", "*", "*", "*", "*", "*")
 		. += letter
+	return sanitize(.)
 
 
 /**
@@ -213,6 +223,7 @@
   * It's fairly easy to fix if dealing with single letters but not so much with compounds of letters./N
   */
 /proc/ninjaspeak(phrase) //NINJACODE
+	phrase = html_decode(phrase)
 	var/leng = length(phrase)
 	. = ""
 	var/stutterphrase = ""
@@ -240,7 +251,7 @@
 
 		. += stutterphrase
 		stutterphrase = ""
-
+	return sanitize(.)
 
 ///Shake the camera of the person viewing the mob SO REAL!
 /proc/shake_camera(mob/M, duration, strength=1)
