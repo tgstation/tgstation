@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Orion trail will no longer give you a radio for winning. Arcades have vending sound."
