@@ -283,7 +283,7 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 	sheettype = "tranquillite"
 	custom_materials = list(/datum/material/tranquillite=MINERAL_MATERIAL_AMOUNT)
 	novariants = TRUE
-	grind_results = list(/datum/reagent/consumable/banana = 20)
+	grind_results = list(/datum/reagent/consumable/nothing = 20)
 	point_value = 50
 	merge_type = /obj/item/stack/sheet/mineral/tranquillite
 	material_type = /datum/material/tranquillite
