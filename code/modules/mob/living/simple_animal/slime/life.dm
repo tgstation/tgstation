@@ -108,14 +108,22 @@
 	AIproc = 0
 
 /mob/living/simple_animal/slime/handle_environment(datum/gas_mixture/environment)
-	if(!environment)
-		return
-
+	// Get the current air temperature
 	var/loc_temp = get_temperature(environment)
+	// This divisor controls how fast body temperature changes
+	// lowering this number changes body temp faster
+	var/divisor = 10
 
-	adjust_bodytemperature(adjust_body_temperature(bodytemperature, loc_temp, 1))
+	// If the difference is great then reduce the divisor to stabilize faster
+	if(abs(loc_temp - bodytemperature) > 50)
+		divisor = 5
 
-	//Account for massive pressure differences
+	// Update the body temperature
+	if(loc_temp < bodytemperature) // It is cold here
+		if(!on_fire) // Do not reduce body temp when on fire
+			adjust_bodytemperature((loc_temp - bodytemperature) / divisor)
+	else // This is a hot place
+		adjust_bodytemperature((loc_temp - bodytemperature) / divisor)
 
 	if(bodytemperature < (T0C + 5)) // start calculating temperature damage etc
 		if(bodytemperature <= (T0C - 40)) // stun temperature
@@ -126,7 +134,6 @@
 				adjustBruteLoss(200)
 			else
 				adjustBruteLoss(round(sqrt(bodytemperature)) * 2)
-
 	else
 		Tempstun = 0
 
@@ -151,25 +158,7 @@
 
 	updatehealth()
 
-
 	return //TODO: DEFERRED
-
-/mob/living/simple_animal/slime/proc/adjust_body_temperature(current, loc_temp, boost)
-	var/temperature = current
-	var/difference = abs(current-loc_temp)	//get difference
-	var/increments// = difference/10			//find how many increments apart they are
-	if(difference > 50)
-		increments = difference/5
-	else
-		increments = difference/10
-	var/change = increments*boost	// Get the amount to change by (x per increment)
-	var/temp_change
-	if(current < loc_temp)
-		temperature = min(loc_temp, temperature+change)
-	else if(current > loc_temp)
-		temperature = max(loc_temp, temperature-change)
-	temp_change = (temperature - current)
-	return temp_change
 
 /mob/living/simple_animal/slime/handle_status_effects()
 	..()

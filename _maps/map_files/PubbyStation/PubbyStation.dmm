@@ -339,6 +339,27 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/science/explab)
+"aaR" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/sleeper)
+"aaS" = (
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
+"aaT" = (
+/obj/effect/mapping_helpers/iannewyear,
+/turf/open/floor/wood,
+/area/crew_quarters/heads/hop)
 "abf" = (
 /obj/structure/bed,
 /turf/open/floor/plating,
@@ -24338,6 +24359,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/machinery/light{
+	dir = 1;
+	light_color = "#d1dfff"
+	},
 /turf/open/floor/engine,
 /area/science/explab)
 "bkB" = (
@@ -24853,27 +24878,21 @@
 /area/science/server)
 "blP" = (
 /obj/effect/landmark/event_spawn,
-/obj/item/beacon,
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/engine,
-/area/science/explab)
-"blQ" = (
 /obj/machinery/rnd/experimentor,
 /turf/open/floor/engine,
 /area/science/explab)
 "blR" = (
 /obj/effect/landmark/blobstart,
 /obj/effect/landmark/xeno_spawn,
+/obj/item/beacon,
 /turf/open/floor/engine,
 /area/science/explab)
 "blS" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/book/manual/wiki/experimentor,
+/obj/machinery/rnd/bepis,
 /turf/open/floor/engine,
 /area/science/explab)
 "blX" = (
@@ -26928,7 +26947,7 @@
 /obj/machinery/computer/crew,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"bri" = (
+"brh" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -27873,6 +27892,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/item/book/manual/wiki/experimentor,
 /turf/open/floor/plasteel/white,
 /area/science/explab)
 "bti" = (
@@ -29219,19 +29239,6 @@
 "bwH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/sleeper)
-"bwI" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
@@ -30666,6 +30673,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bzT" = (
@@ -85098,7 +85106,7 @@ bzR
 bBb
 bDr
 bEx
-bkh
+aaS
 bGX
 bIe
 bjc
@@ -85348,7 +85356,7 @@ biY
 bsD
 buc
 kQy
-bwI
+aaR
 byo
 bzS
 eFj
@@ -87143,7 +87151,7 @@ boH
 boH
 boH
 bsG
-bri
+brh
 gfo
 cqm
 bvl
@@ -87400,7 +87408,7 @@ bmw
 bkh
 boH
 bpR
-bri
+brh
 jWH
 nYu
 oSa
@@ -91729,7 +91737,7 @@ aaa
 aaa
 aAH
 aBD
-aCS
+aaT
 aDV
 aEO
 aAH
@@ -97675,7 +97683,7 @@ aEj
 aTx
 bjw
 bkz
-blQ
+bky
 bmW
 bnW
 bpe

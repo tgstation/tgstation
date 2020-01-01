@@ -8,6 +8,7 @@
 	miss_sound = 'sound/weapons/etherealmiss.ogg'
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ethereal
 	mutantstomach = /obj/item/organ/stomach/ethereal
+	mutanttongue = /obj/item/organ/tongue/ethereal
 	exotic_blood = /datum/reagent/consumable/liquidelectricity //Liquid Electricity. fuck you think of something better gamer
 	siemens_coeff = 0.5 //They thrive on energy
 	brutemod = 1.25 //They're weak to punches
@@ -15,9 +16,16 @@
 	damage_overlay_type = "" //We are too cool for regular damage overlays
 	species_traits = list(DYNCOLORS, AGENDER, NO_UNDERWEAR)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
+	species_language_holder = /datum/language_holder/ethereal
 	inherent_traits = list(TRAIT_NOHUNGER)
 	sexes = FALSE //no fetish content allowed
 	toxic_food = NONE
+	// Body temperature for ethereals is much higher
+	// they can handle hotter environments
+	// but they are hurt at cold temps faster as it is harder to move with out the heat energy
+	bodytemp_normal = (BODYTEMP_NORMAL + 50)
+	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_SPREAD // about 150C
+	bodytemp_cold_damage_limit = (T20C - 10) // about 10c
 	var/current_color
 	var/EMPeffect = FALSE
 	var/emageffect = FALSE
@@ -28,7 +36,6 @@
 	var/static/g2 = 164
 	var/static/b2 = 149
 	//this is shit but how do i fix it? no clue.
-
 
 /datum/species/ethereal/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	.=..()

@@ -1,0 +1,6 @@
+author: "StonebayKyle"
+delete-after: True
+changes: 
+  - tweak: "Plumbing-surgery connection on Meta is now not considered maintenance."
+  - tweak: "Viro-medbay connection on Delta is now not considered maintenance."
+  - rscdel: "Nanotrasen has removed expensive maintenance-exclusive radiation shields in specific areas on two of their research stations."

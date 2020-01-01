@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - tweak: "Hacking a firing pin out of a gun is no longer done via a crafting menu - you can now do it by simply holding the gun in your hand and clicking it with a welder/screwdriver/wirecutters."

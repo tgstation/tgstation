@@ -21,6 +21,18 @@
 	liked_food = VEGETABLES
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	outfit_important_for_life = /datum/outfit/plasmaman
+	species_language_holder = /datum/language_holder/skeleton
+
+	// Body temperature for Plasmen is much lower
+	// they can handle colder environments
+	// but they are hurt at hot temps faster as it is harder to hold their form
+	// and they will regain temperature more slowly in some situations
+	bodytemp_normal = (BODYTEMP_NORMAL - 40)
+	bodytemp_autorecovery_min = 2
+	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT - 20) // about 40C
+	// In the event they loss the cold resit trait
+	// This also has an effect on how fast they stabilize body temp
+	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 50) // about -50c
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
@@ -93,6 +105,9 @@
 
 		if("Medical Doctor")
 			O = new /datum/outfit/plasmaman/medical
+
+		if("Paramedic")
+			O = new /datum/outfit/plasmaman/paramedic
 
 		if("Chemist")
 			O = new /datum/outfit/plasmaman/chemist
@@ -171,4 +186,4 @@
 					H.emote("sigh")
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
 		return TRUE
-		
+
