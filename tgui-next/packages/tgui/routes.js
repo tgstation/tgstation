@@ -42,6 +42,7 @@ import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
 import { Holodeck } from './interfaces/Holodeck';
 import { ImplantChair } from './interfaces/ImplantChair';
 import { KeycardAuth } from './interfaces/KeycardAuth';
+import { LaborClaimConsole } from './interfaces/LaborClaimConsole';
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
@@ -84,6 +85,7 @@ import { ThermoMachine } from './interfaces/ThermoMachine';
 import { TurbineComputer } from './interfaces/TurbineComputer';
 import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
+import { Vending } from './interfaces/Vending';
 import { Wires } from './interfaces/Wires';
 
 const ROUTES = {
@@ -265,6 +267,10 @@ const ROUTES = {
   },
   keycard_auth: {
     component: () => KeycardAuth,
+    scrollable: false,
+  },
+  labor_claim_console: {
+    component: () => LaborClaimConsole,
     scrollable: false,
   },
   language_menu: {
@@ -450,6 +456,10 @@ const ROUTES = {
   vault_controller: {
     component: () => VaultController,
     scrollable: false,
+  },
+  vending: {
+    component: () => Vending,
+    scrollable: true,
   },
   wires: {
     component: () => Wires,

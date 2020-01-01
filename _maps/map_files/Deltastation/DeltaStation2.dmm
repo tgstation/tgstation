@@ -59,6 +59,11 @@
 /obj/item/clothing/head/chefhat,
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
+"aai" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/iannewyear,
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/heads/hop)
 "aao" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -82258,6 +82263,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "cWx" = (
@@ -114926,6 +114932,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
+"mbO" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel,
+/area/medical/medbay/central)
 "mkm" = (
 /obj/machinery/atmospherics/components/binary/valve,
 /obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
@@ -152871,7 +152891,7 @@ cge
 ehb
 cjB
 ckX
-bZb
+aai
 coa
 cpE
 caM
@@ -162406,7 +162426,7 @@ cQU
 cQT
 cSE
 cZG
-cQU
+mbO
 cQT
 cQU
 cNA
