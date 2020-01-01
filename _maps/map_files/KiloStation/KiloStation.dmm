@@ -38318,10 +38318,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/mob/living/simple_animal/bot/cleanbot{
-	name = "Scrubs, MD";
-	on = 0
-	},
+/mob/living/simple_animal/bot/cleanbot/medbay,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "beR" = (
@@ -59865,6 +59862,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"bJY" = (
+/obj/effect/mapping_helpers/iannewyear,
+/turf/open/floor/wood,
+/area/crew_quarters/heads/hop)
 "bKa" = (
 /obj/structure/dresser,
 /obj/machinery/button/door{
@@ -62323,9 +62324,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/starboard)
-"bNB" = (
-/turf/open/floor/wood,
-/area/crew_quarters/heads/hop)
 "bNC" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/caution/stand_clear,
@@ -124517,7 +124515,7 @@ adJ
 bnP
 atj
 avV
-bNB
+bJY
 bOx
 atr
 bVw

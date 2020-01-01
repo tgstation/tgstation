@@ -15,6 +15,11 @@
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | ERT_SPAWN
+	// zombies have no body heat unless the environment gives it to them
+	// they will take damage when things catch fire, or when it is to cold to move
+	bodytemp_normal = T0C
+	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
+	bodytemp_cold_damage_limit = MINIMUM_TEMPERATURE_TO_MOVE
 
 /datum/species/zombie/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
@@ -33,9 +38,13 @@
 	var/regen_cooldown = 0
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
+// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
+// Return the the amount of change in temperature
+/datum/species/zombie/natural_bodytemperature_stabilization(mob/living/carbon/human/H)
+	return 0 // No natural temperature change, only enviromental
+
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE
-
 
 /datum/species/zombie/infectious/spec_stun(mob/living/carbon/human/H,amount)
 	. = min(20, amount)
@@ -79,7 +88,6 @@
 	if(!infection)
 		infection = new()
 		infection.Insert(C)
-
 
 // Your skin falls off
 /datum/species/krokodil_addict

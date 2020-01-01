@@ -1,5 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - spellcheck: "Changed $1 to 1 cr"
-  - spellcheck: "Payday messages use the blue 'notice' span instead of asterisks"

@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - bugfix: "Fixed being able to instantly delete carded AIs by crafting an intelliTater."

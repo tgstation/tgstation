@@ -740,13 +740,13 @@
 	color = "#C8C8C8"
 	taste_mult = 6
 	taste_description = "smoke"
-	overdose_threshold = 25
+	overdose_threshold = 15
 
-/datum/reagent/consumable/char/overdose_process(mob/living/carbon/M)
-	if(prob(10))
-		M.say(pick("I hate my wife.", "I just want to grill for God's sake.", "I wish I could just go on my lawnmower and cut the grass.", "Yep, Quake. That was a good game...", "Yeah, my PDA has wi-fi. A wife I hate."), forced = /datum/reagent/consumable/char)
+/datum/reagent/consumable/char/overdose_process(mob/living/M)
+	if(prob(25))
+		M.say(pick_list_replacements(BOOMER_FILE, "boomer"), forced = /datum/reagent/consumable/char)
 	..()
-
+	return
 
 /datum/reagent/consumable/bbqsauce
 	name = "BBQ Sauce"

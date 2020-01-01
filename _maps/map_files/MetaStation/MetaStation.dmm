@@ -1017,6 +1017,12 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"acw" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/iannewyear,
+/turf/open/floor/carpet,
+/area/crew_quarters/heads/hop)
 "acx" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -32166,11 +32172,6 @@
 /obj/effect/mapping_helpers/ianbirthday,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
-"bsN" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/structure/cable,
-/turf/open/floor/carpet,
-/area/crew_quarters/heads/hop)
 "bsO" = (
 /obj/structure/cable,
 /obj/machinery/photocopier,
@@ -43811,11 +43812,6 @@
 /obj/machinery/camera/autoname,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
-"bUP" = (
-/obj/machinery/power/smes,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/solars/port/aft)
 "bUQ" = (
 /obj/item/cigbutt,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -44258,7 +44254,6 @@
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
 "bVQ" = (
-/obj/structure/cable,
 /obj/machinery/light/small{
 	brightness = 3;
 	dir = 8
@@ -44995,6 +44990,10 @@
 "bXu" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
+/obj/machinery/power/terminal{
+	icon_state = "term";
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "bXv" = (
@@ -45002,6 +45001,7 @@
 	pixel_x = 32
 	},
 /obj/structure/cable,
+/obj/machinery/power/smes,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -48840,10 +48840,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/mob/living/simple_animal/bot/cleanbot{
-	name = "Scrubs, MD";
-	on = 0
-	},
+/mob/living/simple_animal/bot/cleanbot/medbay,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "cfO" = (
@@ -58945,7 +58942,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/maintenance/port/aft)
+/area/medical/chemistry)
 "cBs" = (
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -73011,7 +73008,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/maintenance/port/aft)
+/area/medical/chemistry)
 "fMA" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -73686,7 +73683,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/maintenance/port/aft)
+/area/medical/chemistry)
 "jnW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -74100,7 +74097,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/maintenance/port/aft)
+/area/medical/chemistry)
 "lci" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/tile/yellow,
@@ -74282,7 +74279,7 @@
 	},
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel/dark,
-/area/maintenance/port/aft)
+/area/medical/chemistry)
 "lWY" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Telecomms Server Room"
@@ -74627,9 +74624,6 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "ntG" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -74926,7 +74920,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/dark,
-/area/maintenance/port/aft)
+/area/medical/chemistry)
 "owR" = (
 /turf/closed/wall,
 /area/engine/storage_shared)
@@ -75054,10 +75048,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
-"oPU" = (
-/obj/structure/sign/warning/biohazard,
-/turf/closed/wall,
-/area/maintenance/port/aft)
 "oRL" = (
 /obj/docking_port/stationary{
 	dir = 2;
@@ -75081,7 +75071,7 @@
 	},
 /obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel/dark,
-/area/maintenance/port/aft)
+/area/medical/chemistry)
 "oVO" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -75689,7 +75679,7 @@
 	req_access_txt = null
 	},
 /turf/open/floor/plasteel/dark,
-/area/maintenance/port/aft)
+/area/medical/chemistry)
 "roZ" = (
 /obj/machinery/computer/secure_data{
 	dir = 4
@@ -76909,7 +76899,7 @@
 	},
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel/dark,
-/area/maintenance/port/aft)
+/area/medical/chemistry)
 "wBp" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -91603,7 +91593,7 @@ cga
 nPC
 uqB
 bTp
-bUP
+vhx
 ntG
 bXv
 bYC
@@ -94673,7 +94663,7 @@ cdd
 dux
 cfC
 fWc
-oPU
+snr
 ovU
 jkQ
 fJl
@@ -94930,7 +94920,7 @@ cde
 dux
 dux
 cdc
-dux
+cga
 oSw
 jkQ
 lVu
@@ -100813,7 +100803,7 @@ bkz
 bmp
 bon
 bqC
-bsN
+acw
 buo
 bwj
 bol
