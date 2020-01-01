@@ -131,7 +131,7 @@ There is no point for a testament, but maybe a confession is appropriate. I've n
 	back = /obj/item/storage/backpack
 	belt = /obj/item/storage/belt/utility/chief/full
 	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
-	internals_slot = SLOT_R_STORE
+	internals_slot = ITEM_SLOT_DEX_STORAGE//SLOT_R_STORE
 	id = /obj/item/card/id/syndicate/anyone
 	implants = list(/obj/item/implant/weapons_auth)
 	backpack_contents = list(/obj/item/storage/box/survival/syndie=1,\

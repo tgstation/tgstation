@@ -321,7 +321,7 @@
 				adjust_item_drop_location(P)
 				reagents.trans_to(P,vol_each, transfered_by = usr)
 			. = TRUE
-      
+
 		//SalChems medipen patch, allows for medipens to be crafted in the chem_master, but only designated ones on the list//FULP
 		if("createMedipen")	//FULP
 			var/approved_reagent_list = list("Bicaridine", "Kelotane", "Anti-Toxin", "Tricordrazine", "Epinephrine", "Salbutamol", "Salicyclic Acid", "Pentetic Acid", "Oxandrolone", "Atropine") //FULP
@@ -329,8 +329,8 @@
 			if(reagents.total_volume == 0)	//FULP
 				return	//FULP
 			var/amount_full = 0	//FULP
-			var/amount = 0	//FULP
-			if(reagents.get_master_reagent_name() in approved_reagent_list)	//FULP	
+			amount = 0	//FULP
+			if(reagents.get_master_reagent_name() in approved_reagent_list)	//FULP
 				var/firstReagent = reagents.get_master_reagent_id()	//FULP
 				if(text2num(many))	//FULP
 					amount_full = round((reagents.get_reagent_amount(reagents.get_master_reagent_id())) / 10)	//FULP
@@ -341,7 +341,7 @@
 				else	//FULP
 					amount_full = 1	//FULP
 					amount = 1	//FULP
-				var/name = stripped_input(usr, "Name:","Name your stabby-stick!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)	//FULP
+				name = stripped_input(usr, "Name:","Name your stabby-stick!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)	//FULP
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))	//FULP
 					return	//FULP
 				var/obj/item/reagent_containers/hypospray/medipen/P	//FULP
@@ -376,19 +376,19 @@
 				to_chat(usr, "<span class='notice'> This reagent {[reagents.get_master_reagent_name()]} is not Federation-Approved. </span>")	//FULP
 				return	//FULP
 			. = TRUE	//FULP
-			
-		if("createBottle")
-			var/many = params["many"]
+
+		if("createBottle") // FULP  >>>>
+			//var/many = params["many"]
 			if(reagents.total_volume == 0)
 				return
 
 			if(condi)
-				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
+				name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 				var/obj/item/reagent_containers/food/condiment/P = new(drop_location())
 				reagents.trans_to(P, vol_each, transfered_by = usr)
-			return TRUE
+			return TRUE // FULP <<<<
 		if(item_type == "bottle")
 			var/obj/item/reagent_containers/glass/bottle/P
 			for(var/i = 0; i < amount; i++)
