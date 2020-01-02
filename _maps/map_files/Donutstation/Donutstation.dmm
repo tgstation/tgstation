@@ -1829,7 +1829,7 @@
 	pixel_y = 25
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 9
+	dir = 4
 	},
 /turf/open/floor/plasteel/chapel{
 	dir = 1
@@ -29259,8 +29259,9 @@
 /area/quartermaster/qm)
 "bzB" = (
 /obj/machinery/vending/wardrobe/chap_wardrobe,
-/obj/structure/disposalpipe/segment,
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "bzC" = (
@@ -29398,12 +29399,6 @@
 	dir = 4
 	},
 /area/chapel/main)
-"bzP" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/chapel/office)
 "bzQ" = (
 /obj/structure/chair/stool,
 /obj/effect/landmark/start/virologist,
@@ -29515,17 +29510,12 @@
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
-"bAc" = (
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/turf/closed/wall,
-/area/chapel/office)
 "bAd" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Chapel Office";
 	req_access_txt = "22"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "bAe" = (
@@ -38032,6 +38022,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 5
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "bWu" = (
@@ -38041,6 +38034,9 @@
 	pixel_y = -30
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -40799,6 +40795,14 @@
 	},
 /turf/open/floor/plating,
 /area/security/prison)
+"cxu" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/chapel{
+	dir = 4
+	},
+/area/chapel/office)
 "cxK" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
@@ -41667,6 +41671,9 @@
 /area/maintenance/aft)
 "eqR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
 /turf/open/floor/plasteel/chapel{
 	dir = 4
 	},
@@ -44470,6 +44477,14 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"kdV" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/chapel{
+	dir = 1
+	},
+/area/chapel/office)
 "kfP" = (
 /obj/effect/landmark/carpspawn,
 /obj/structure/lattice,
@@ -45272,13 +45287,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
-"mvm" = (
-/obj/machinery/holopad,
-/obj/structure/chair/pew{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/chapel/main)
 "mvv" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -45357,6 +45365,15 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"mEw" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/plasteel/dark,
+/area/chapel/office)
 "mFt" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -45687,14 +45704,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
-"nmx" = (
-/obj/item/reagent_containers/food/drinks/bottle/whiskey{
-	desc = "A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. You like the feel of it in your hand.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 23);
-	name = "Kepler's special reserve"
-	},
-/turf/open/space/basic,
-/area/space)
 "nnE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -45924,6 +45933,9 @@
 "nJq" = (
 /obj/machinery/camera{
 	c_tag = "Civilian - Chapel Main 2"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/plasteel/chapel{
 	dir = 1
@@ -47093,6 +47105,11 @@
 /obj/item/paicard,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"pXq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/holopad,
+/turf/open/floor/carpet,
+/area/chapel/main)
 "pXP" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -47292,6 +47309,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/storage/tools)
+"qxm" = (
+/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+	desc = "A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. You like the feel of it in your hand.";
+	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 31);
+	name = "Kepler's special reserve"
+	},
+/turf/open/space/basic,
+/area/space)
 "qxz" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/item/twohanded/required/kirbyplants/random,
@@ -48554,12 +48579,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
-"tjL" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/turf/closed/wall,
-/area/chapel/main)
 "tlY" = (
 /obj/machinery/status_display/evac,
 /turf/closed/wall/r_wall,
@@ -48751,6 +48770,12 @@
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
+"tCw" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/turf/open/floor/plasteel/grimy,
+/area/ai_monitored/turret_protected/aisat/foyer)
 "tDO" = (
 /obj/machinery/door/airlock/external{
 	name = "Port External Shuttle Dock"
@@ -50613,6 +50638,9 @@
 /obj/item/radio/intercom{
 	pixel_y = 25
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plasteel/chapel{
 	dir = 4
 	},
@@ -50675,12 +50703,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
-"xBU" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/turf/open/floor/plasteel/grimy,
-/area/ai_monitored/turret_protected/aisat/foyer)
 "xCz" = (
 /obj/machinery/requests_console{
 	department = "Chemistry";
@@ -86150,7 +86172,7 @@ aaa
 aal
 afA
 afR
-xBU
+tCw
 bLH
 bNp
 aNw
@@ -90512,7 +90534,7 @@ aaa
 aaa
 aaa
 abE
-nmx
+qxm
 aaa
 aaa
 aaa
@@ -91681,7 +91703,7 @@ aTk
 bXp
 aCU
 aPL
-tjL
+bzq
 aey
 bAT
 bAT
@@ -91938,8 +91960,8 @@ agh
 agh
 agh
 agh
-bzP
-gVN
+agh
+cxu
 bAT
 bAT
 bAT
@@ -92195,8 +92217,8 @@ byW
 bzd
 bzd
 bzB
-bAc
-ijk
+agh
+kdV
 bAT
 bAT
 bAT
@@ -92965,11 +92987,11 @@ agh
 akY
 agZ
 bzn
-bWM
+mEw
 bAd
 eqR
 bAX
-bAX
+pXq
 bAX
 bSO
 bEC
@@ -93226,7 +93248,7 @@ bWM
 vLU
 ijk
 adn
-mvm
+iLi
 rhN
 bBH
 bzq
