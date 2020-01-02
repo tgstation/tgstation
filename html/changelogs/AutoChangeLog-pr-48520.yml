@@ -1,0 +1,4 @@
+author: "swindly"
+delete-after: True
+changes: 
+  - bugfix: "Fixed being able to craft with blacklisted items"

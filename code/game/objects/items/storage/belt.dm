@@ -175,6 +175,16 @@
 		/obj/item/plunger
 		))
 
+/obj/item/storage/belt/medical/paramedic/PopulateContents()
+	new /obj/item/sensor_device(src)
+	new /obj/item/flashlight/pen(src)
+	new /obj/item/stack/medical/gauze/twelve(src)
+	new /obj/item/reagent_containers/syringe(src)
+	new /obj/item/reagent_containers/glass/bottle/epinephrine(src)
+	new /obj/item/reagent_containers/glass/bottle/calomel(src)
+	new /obj/item/reagent_containers/glass/bottle/formaldehyde(src)
+	update_icon()
+
 /obj/item/storage/belt/security
 	name = "security belt"
 	desc = "Can hold security gear like handcuffs and flashes."
