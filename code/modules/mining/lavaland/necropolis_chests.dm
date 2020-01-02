@@ -411,11 +411,10 @@
 	icon_state = "hook"
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	pass_flags = PASSTABLE
-	damage = 25
-	armour_penetration = 100
+	damage = 20
+	armour_penetration = 60
 	damage_type = BRUTE
 	hitsound = 'sound/effects/splat.ogg'
-	paralyze = 30
 	var/chain
 
 /obj/projectile/hook/fire(setAngle)
@@ -451,8 +450,8 @@
 	projectile_type = /obj/projectile/hook/bounty
 
 /obj/projectile/hook/bounty
-	damage = 0
-	paralyze = 20
+	damage_type = STAMINA
+	damage = 40
 
 //Immortality Talisman
 /obj/item/immortality_talisman
@@ -1034,8 +1033,6 @@
 	var/list/da_list = list()
 	for(var/I in GLOB.alive_mob_list & GLOB.player_list)
 		var/mob/living/L = I
-		if(is_centcom_level(L.z))
-			continue
 		da_list[L.real_name] = L
 
 	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in sortList(da_list)
