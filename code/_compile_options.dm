@@ -51,7 +51,7 @@
 #define findtext_char(args...) findtext(args)
 #define findtextEx_char(args...) findtextEx(args)
 #define findlasttext_char(args...) findlasttext(args)
-#define findlasttextEx_char(cargs...) findlasttextEx(args)
+#define findlasttextEx_char(args...) findlasttextEx(args)
 #define replacetext_char(args...) replacetext(args)
 #define replacetextEx_char(args...) replacetextEx(args)
 // /regex procs
