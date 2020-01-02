@@ -67,6 +67,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 	last_node = null
 	info = null
 	planner = null
+	agent = null
 	given_pathfind_access = null
 	return ..()
 
