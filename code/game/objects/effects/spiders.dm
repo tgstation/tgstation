@@ -144,6 +144,11 @@
 								"<span class='hear'>You hear something scampering through the ventilation ducts.</span>")
 
 			spawn(rand(20,60))
+				if(!exit_vent || exit_vent.welded)
+					forceMove(entry_vent)
+					entry_vent = null
+					return
+
 				forceMove(exit_vent)
 				var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
 				spawn(travel_time)

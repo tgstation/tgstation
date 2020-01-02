@@ -3812,10 +3812,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/solar_control)
-"PQ" = (
-/obj/machinery/power/apc,
-/turf/template_noop,
-/area/template_noop)
 "PR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/visible,
 /turf/open/floor/plasteel/airless,
@@ -12723,7 +12719,7 @@ aa
 aa
 aa
 aa
-PQ
+aa
 aa
 aa
 aa

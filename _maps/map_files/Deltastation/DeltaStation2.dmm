@@ -59,6 +59,11 @@
 /obj/item/clothing/head/chefhat,
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
+"aai" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/iannewyear,
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/heads/hop)
 "aao" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -82258,6 +82263,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "cWx" = (
@@ -90752,9 +90758,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
-"dlT" = (
-/turf/closed/wall,
-/area/maintenance/department/medical)
 "dlU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -103867,7 +103870,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
-/area/maintenance/department/medical)
+/area/medical/medbay/central)
 "dLk" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -103880,7 +103883,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
-/area/maintenance/department/medical)
+/area/medical/medbay/central)
 "dLl" = (
 /obj/item/twohanded/required/kirbyplants/random,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
@@ -103888,7 +103891,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/maintenance/department/medical)
+/area/medical/medbay/central)
 "dLm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -104687,7 +104690,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
-/area/maintenance/department/medical)
+/area/medical/medbay/central)
 "dMQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -104701,7 +104704,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/maintenance/department/medical)
+/area/medical/medbay/central)
 "dMR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -104713,7 +104716,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
-/area/maintenance/department/medical)
+/area/medical/medbay/central)
 "dMS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -105225,7 +105228,7 @@
 /obj/machinery/power/apc/auto_name/west,
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
-/area/maintenance/department/medical)
+/area/medical/medbay/central)
 "dNV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -105234,7 +105237,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/maintenance/department/medical)
+/area/medical/medbay/central)
 "dNW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/green,
@@ -105242,7 +105245,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/maintenance/department/medical)
+/area/medical/medbay/central)
 "dNX" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -105694,14 +105697,14 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/maintenance/department/medical)
+/area/medical/medbay/central)
 "dOJ" = (
 /obj/machinery/light/small,
 /obj/machinery/iv_drip,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/plasteel/white,
-/area/maintenance/department/medical)
+/area/medical/medbay/central)
 "dOK" = (
 /obj/item/stack/cable_coil,
 /obj/structure/lattice/catwalk,
@@ -105990,11 +105993,11 @@
 /area/hallway/primary/aft)
 "dPm" = (
 /turf/closed/wall/r_wall,
-/area/maintenance/department/medical)
+/area/medical/medbay/central)
 "dPn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
-/area/maintenance/department/medical)
+/area/medical/medbay/central)
 "dPo" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line,
@@ -106029,7 +106032,7 @@
 /obj/structure/sign/warning/biohazard,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
-/area/maintenance/department/medical)
+/area/medical/medbay/central)
 "dPq" = (
 /turf/closed/wall/r_wall,
 /area/medical/virology)
@@ -114748,12 +114751,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
-"jdT" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/maintenance/department/medical)
 "jeu" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -114764,19 +114761,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
-"jfR" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/machinery/power/apc,
-/obj/machinery/power/apc,
-/turf/open/floor/plasteel/white/corner{
-	dir = 1
-	},
-/area/hallway/secondary/entry)
 "jjN" = (
 /obj/structure/table/reinforced,
 /obj/machinery/camera{
@@ -115309,6 +115293,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
+"mbO" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel,
+/area/medical/medbay/central)
 "mkm" = (
 /obj/machinery/atmospherics/components/binary/valve,
 /obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
@@ -116732,7 +116730,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
-/area/maintenance/department/medical)
+/area/medical/medbay/central)
 "vJu" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Nanite Lab Maintenance";
@@ -151348,7 +151346,7 @@ aaa
 aaO
 aaO
 aaO
-jfR
+ajw
 ajV
 aky
 alm
@@ -153219,7 +153217,7 @@ cge
 ehb
 cjB
 ckX
-bZb
+aai
 coa
 cpE
 caM
@@ -162754,7 +162752,7 @@ cQU
 cQT
 cSE
 cZG
-cQU
+mbO
 cQT
 cQU
 cNA
@@ -162779,10 +162777,10 @@ dtK
 dtK
 dtK
 dtK
-jdT
+dhs
 dMO
-dlT
-dlT
+cPy
+cPy
 dPm
 dPq
 dPq
@@ -163807,10 +163805,10 @@ mYs
 dEb
 dEb
 cPy
-jdT
+dhs
 dMS
-dlT
-dlT
+cPy
+cPy
 dPm
 dPq
 dQX

@@ -5166,6 +5166,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
+"akV" = (
+/obj/effect/mapping_helpers/iannewyear,
+/turf/open/floor/carpet,
+/area/crew_quarters/heads/hop)
 "akW" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/security/glass{
@@ -26528,9 +26532,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"bqz" = (
-/turf/open/floor/carpet,
-/area/crew_quarters/heads/hop)
 "bqA" = (
 /obj/machinery/computer/card{
 	dir = 1
@@ -51254,6 +51255,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/explab)
+"pSN" = (
+/obj/machinery/rnd/bepis,
+/turf/open/floor/engine,
+/area/science/explab)
 "pUr" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/wood,
@@ -51335,6 +51340,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/nanite)
+"qor" = (
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "qrU" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -52587,6 +52596,10 @@
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"xMT" = (
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel/white,
+/area/medical/sleeper)
 "xUg" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light{
@@ -79023,7 +79036,7 @@ bkX
 bmo
 bnO
 bpb
-bqz
+akV
 bqq
 brS
 bsY
@@ -88789,7 +88802,7 @@ blj
 bmK
 bog
 bog
-bhh
+qor
 bsx
 bsr
 bvh
@@ -89828,7 +89841,7 @@ bAs
 bvj
 bCL
 bxO
-bDR
+xMT
 bDR
 bIk
 bJC
@@ -101645,7 +101658,7 @@ bvO
 gHj
 kGS
 bzO
-bzO
+bAR
 bzO
 bqe
 fGF
@@ -101902,7 +101915,7 @@ bvO
 nbv
 bqe
 bzO
-bAR
+bzO
 bzO
 bqe
 uUy
@@ -102416,7 +102429,7 @@ xeP
 kxC
 kGS
 bzO
-bzO
+pSN
 bzO
 bqe
 btp

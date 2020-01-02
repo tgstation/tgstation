@@ -600,7 +600,8 @@
 		else if(loc == user)
 			cooldown = TRUE
 			call(src,realProc)(user)
-			addtimer(CALLBACK(src, .proc/cd), cooldownMax)
+			if(!QDELETED(src))
+				addtimer(CALLBACK(src, .proc/cd), cooldownMax)
 	else
 		to_chat(user, "<span class='notice'>You aren't quite sure what this is. Maybe R&D knows what to do with it?</span>")
 

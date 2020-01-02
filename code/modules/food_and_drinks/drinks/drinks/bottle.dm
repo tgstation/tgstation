@@ -5,6 +5,11 @@
 //Bottles now knockdown and break when smashed on people's heads. - Giacom
 
 /obj/item/reagent_containers/food/drinks/bottle
+	name = "glass bottle"
+	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
+	icon_state = "glassbottle"
+	fill_icon_thresholds = list(0, 10, 20, 30, 40, 50, 60, 70, 80, 90)
+	custom_price = 65
 	amount_per_transfer_from_this = 10
 	volume = 100
 	force = 15 //Smashing bottles over someone's head hurts.
@@ -16,6 +21,16 @@
 	isGlass = TRUE
 	foodtype = ALCOHOL
 
+/obj/item/reagent_containers/food/drinks/bottle/update_icon()
+	..()
+	add_overlay("[initial(icon_state)]shine")
+
+/obj/item/reagent_containers/food/drinks/bottle/small
+	name = "small glass bottle"
+	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
+	icon_state = "glassbottlesmall"
+	volume = 50
+	custom_price = 55
 
 /obj/item/reagent_containers/food/drinks/bottle/smash(mob/living/target, mob/thrower, ranged = FALSE)
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
@@ -147,6 +162,16 @@
 	desc = "A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES."
 	icon_state = "whiskeybottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/kong
+	name = "Kong"
+	desc = "Makes You Go Ape!&#174;"
+	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey/kong = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/candycornliquor
+	name = "candy corn liquor"
+	desc = "Like they drank in 2D speakeasies."
+	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey/candycorn = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/vodka
 	name = "Tunguska triple distilled"
@@ -436,24 +461,6 @@
 	desc = "It is said that the ancient Applalacians used these stoneware jugs to capture lightning in a bottle."
 	icon_state = "moonshinebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/moonshine = 100)
-
-/obj/item/reagent_containers/food/drinks/bottle/blank //Don't let players print these from a lathe, bottles should be obtained in mass from the bar only.
-	name = "glass bottle"
-	desc = "This blank bottle is unyieldingly anonymous, offering no clues to it's contents."
-	icon_state = "glassbottle"
-	fill_icon_thresholds = list(0, 10, 20, 30, 40, 50, 60, 70, 80, 90)
-	custom_price = 65
-
-/obj/item/reagent_containers/food/drinks/bottle/blank/update_icon()
-	..()
-	add_overlay("[initial(icon_state)]shine")
-
-/obj/item/reagent_containers/food/drinks/bottle/blank/small
-	name = "small glass bottle"
-	desc = "This small bottle is unyieldingly anonymous, offering no clues to it's contents."
-	icon_state = "glassbottlesmall"
-	volume = 50
-	custom_price = 55
 
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/reagent_containers/food/drinks/bottle/molotov
