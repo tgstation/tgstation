@@ -62,6 +62,12 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 
 /datum/goap_agent/Destroy()
 	STOP_PROCESSING(SSgoap, src)
+	current_loc = null
+	dest = null
+	last_node = null
+	info = null
+	planner = null
+	given_pathfind_access = null
 	return ..()
 
 /datum/goap_agent/proc/able_to_run()
@@ -149,8 +155,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 					else
 						path = get_path_to(agent, curr_action.target, /turf/proc/Distance_cardinal, 0, 200, adjacent = proc_to_use, id=given_pathfind_access, mintargetdist = dense_garbage)
 					if(!path || !path.len) // still can't path
-						tries++
-						if(tries >= MAX_TRIES)
+						if(++tries >= MAX_TRIES)
 							if(!curr_action.PathingFailed(curr_action.target, current_loc))
 								brain_state = STATE_IDLE
 								idle_state()
@@ -172,12 +177,10 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 			MoveTo(curr_action)
 			curr_action.PerformWhileMoving(agent)
 	if(current_loc == get_turf(agent))
-		tries++
-		if(tries >= MAX_TRIES)
+		if(++tries >= MAX_TRIES)
 			if(!curr_action.PathingFailed(get_turf(curr_action.target), current_loc))
 				brain_state = STATE_IDLE
 			tries = 0
-			return
 	else
 		tries = 0
 		brain_state = STATE_IDLE

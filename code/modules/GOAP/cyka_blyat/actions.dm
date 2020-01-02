@@ -13,9 +13,9 @@
 /datum/goap_action/russian/attack/New()
 	..()
 	preconditions = list()
-	preconditions["enemyDead"] = FALSE
+	preconditions["EnemyDead"] = FALSE
 	effects = list()
-	effects["enemyDead"] = TRUE
+	effects["EnemyDead"] = TRUE
 
 /datum/goap_action/russian/attack/AdvancedPreconditions(atom/agent, list/worldstate)
 	var/list/viewl = view(10, agent)
@@ -49,10 +49,10 @@
 /datum/goap_action/russian/attack_ranged/New()
 	..()
 	preconditions = list()
-	preconditions["enemyDead"] = FALSE
-	preconditions["hasAmmo"] = TRUE
+	preconditions["EnemyDead"] = FALSE
+	preconditions["HasAmmo"] = TRUE
 	effects = list()
-	effects["enemyDead"] = TRUE
+	effects["EnemyDead"] = TRUE
 
 /datum/goap_action/russian/attack_ranged/AdvancedPreconditions(mob/living/simple_animal/hostile/russian/ranged/RU, list/worldstate)
 	if(!RU.ammo_left)
@@ -85,9 +85,9 @@
 /datum/goap_action/russian/grenade_out_take_cover/New()
 	..()
 	preconditions = list()
-	preconditions["enemyDead"] = FALSE
+	preconditions["EnemyDead"] = FALSE
 	effects = list()
-	effects["enemyDead"] = TRUE
+	effects["EnemyDead"] = TRUE
 
 /datum/goap_action/russian/grenade_out_take_cover/AdvancedPreconditions(mob/living/simple_animal/hostile/russian/ranged/A, list/worldstate)
 	if(A.grenade_to_throw == null || A.grenades_left < 1)
@@ -124,9 +124,9 @@
 /datum/goap_action/russian/reload/New()
 	..()
 	preconditions = list()
-	preconditions["hasAmmo"] = FALSE
+	preconditions["HasAmmo"] = FALSE
 	effects = list()
-	effects["hasAmmo"] = TRUE
+	effects["HasAmmo"] = TRUE
 
 /datum/goap_action/russian/reload/AdvancedPreconditions(mob/living/simple_animal/hostile/russian/ranged/A, list/worldstate)
 	if(A.reloads_left)
@@ -156,9 +156,9 @@
 /datum/goap_action/russian/medic/New()
 	..()
 	preconditions = list()
-	preconditions["allyHealed"] = FALSE
+	preconditions["AllyHealed"] = FALSE
 	effects = list()
-	effects["allyHealed"] = TRUE
+	effects["AllyHealed"] = TRUE
 
 /datum/goap_action/russian/medic/AdvancedPreconditions(atom/agent, list/worldstate)
 	var/list/viewl = view(10, agent)
@@ -198,9 +198,9 @@
 /datum/goap_action/russian/resupply/New()
 	..()
 	preconditions = list()
-	preconditions["allyRearmed"] = FALSE
+	preconditions["AllyRearmed"] = FALSE
 	effects = list()
-	effects["allyRearmed"] = TRUE
+	effects["AllyRearmed"] = TRUE
 
 /datum/goap_action/russian/resupply/AdvancedPreconditions(atom/agent, list/worldstate)
 	var/list/viewl = view(10, agent)
@@ -243,9 +243,9 @@
 /datum/goap_action/russian/dodge/New()
 	..()
 	preconditions = list()
-	preconditions["dodgeEnemy"] = FALSE
+	preconditions["DodgeEnemy"] = FALSE
 	effects = list()
-	effects["dodgeEnemy"] = TRUE
+	effects["DodgeEnemy"] = TRUE
 
 /datum/goap_action/russian/dodge/AdvancedPreconditions(atom/agent, list/worldstate)
 	var/list/viewl = view(10, agent)
@@ -288,9 +288,9 @@
 /datum/goap_action/russian/throw_knives/New()
 	..()
 	preconditions = list()
-	preconditions["enemyDead"] = FALSE
+	preconditions["EnemyDead"] = FALSE
 	effects = list()
-	effects["enemyDead"] = TRUE
+	effects["EnemyDead"] = TRUE
 
 /datum/goap_action/russian/throw_knives/AdvancedPreconditions(atom/agent, list/worldstate)
 	var/list/viewl = view(10, agent)
@@ -319,9 +319,9 @@
 /datum/goap_action/russian/melee/New()
 	..()
 	preconditions = list()
-	preconditions["enemyDead"] = FALSE
+	preconditions["EnemyDead"] = FALSE
 	effects = list()
-	effects["enemyDead"] = TRUE
+	effects["EnemyDead"] = TRUE
 
 /datum/goap_action/russian/melee/AdvancedPreconditions(atom/agent, list/worldstate)
 	var/list/viewl = view(10, agent)

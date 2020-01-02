@@ -17,6 +17,10 @@
 	var/list/path_to_use
 
 
+/datum/goap_action/Destroy()
+	Reset()
+	return ..()
+
 //Reset any state variables between uses
 //Just because you chopped down a tree 500 ticks ago doesn't
 //Mean you're still in_range now!

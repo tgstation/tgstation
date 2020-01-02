@@ -6,12 +6,12 @@
 /datum/goap_action/monkey/throwitem/New()
 	..()
 	preconditions = list()
-	preconditions["grabbedWeapon"] = TRUE
-	preconditions["hasItem"] = TRUE
-	preconditions["hasHumanItem"] = TRUE
+	preconditions["GrabbedWeapon"] = TRUE
+	preconditions["HasItem"] = TRUE
+	preconditions["HasHumanItem"] = TRUE
 	preconditions["GUN"] = FALSE // don't throw your gun!!
 	effects = list()
-	effects["replaceItem"] = TRUE
+	effects["ReplaceItem"] = TRUE
 
 /datum/goap_action/monkey/throwitem/AdvancedPreconditions(mob/living/carbon/monkey/C, list/worldstate)
 	var/obj/item/X = locate() in C.held_items
@@ -52,9 +52,9 @@
 /datum/goap_action/monkey/GetItem/New()
 	..()
 	preconditions = list()
-	preconditions["hasItem"] = FALSE
+	preconditions["HasItem"] = FALSE
 	effects = list()
-	effects["hasItem"] = TRUE
+	effects["HasItem"] = TRUE
 
 /datum/goap_action/monkey/GetItem/AdvancedPreconditions(mob/living/carbon/monkey/C, list/worldstate)
 	if(C.IsDeadOrIncap() || C.restrained())
@@ -99,10 +99,10 @@
 /datum/goap_action/monkey/pickpocket/New()
 	..()
 	preconditions = list()
-	preconditions["hasHumanItem"] = FALSE
+	preconditions["HasHumanItem"] = FALSE
 	preconditions["enemyAttack"] = FALSE
 	effects = list()
-	effects["hasHumanItem"] = TRUE
+	effects["HasHumanItem"] = TRUE
 
 /datum/goap_action/monkey/pickpocket/AdvancedPreconditions(mob/living/carbon/monkey/C, list/worldstate)
 	if(C.IsDeadOrIncap() || C.restrained())
@@ -139,11 +139,11 @@
 /datum/goap_action/monkey/disarm/New()
 	. = ..()
 	preconditions = list()
-	preconditions["attackEnemy"] = FALSE
-	preconditions["grabbedWeapon"] = FALSE
-	preconditions["disarmAvailable"] = TRUE
+	preconditions["AttackEnemy"] = FALSE
+	preconditions["GrabbedWeapon"] = FALSE
+	preconditions["DisarmAvailable"] = TRUE
 	effects = list()
-	effects["attackEnemy"] = TRUE
+	effects["AttackEnemy"] = TRUE
 
 /datum/goap_action/monkey/disarm/AdvancedPreconditions(mob/living/carbon/monkey/C, list/worldstate)
 	if(!length(C.enemies))
@@ -181,9 +181,9 @@
 /datum/goap_action/monkey/harm/New()
 	..()
 	preconditions = list()
-	preconditions["attackEnemy"] = FALSE
+	preconditions["AttackEnemy"] = FALSE
 	effects = list()
-	effects["attackEnemy"] = TRUE
+	effects["AttackEnemy"] = TRUE
 
 /datum/goap_action/monkey/harm/AdvancedPreconditions(mob/living/carbon/monkey/C, list/worldstate)
 	if(!length(C.enemies))
@@ -223,10 +223,10 @@
 /datum/goap_action/monkey/shoot/New()
 	. = ..()
 	preconditions = list()
-	preconditions["attackEnemy"] = FALSE
+	preconditions["AttackEnemy"] = FALSE
 	preconditions["GUN"] = TRUE
 	effects = list()
-	effects["attackEnemy"] = TRUE
+	effects["AttackEnemy"] = TRUE
 
 /datum/goap_action/monkey/shoot/AdvancedPreconditions(mob/living/carbon/monkey/C, list/worldstate)
 	var/obj/item/gun/G = locate() in C.held_items
@@ -263,9 +263,9 @@
 /datum/goap_action/monkey/grab/New()
 	..()
 	preconditions = list()
-	preconditions["enemyGrabbed"] = FALSE
+	preconditions["EnemyGrabbed"] = FALSE
 	effects = list()
-	effects["enemyGrabbed"] = TRUE
+	effects["EnemyGrabbed"] = TRUE
 
 /datum/goap_action/monkey/grab/AdvancedPreconditions(mob/living/carbon/monkey/C, list/worldstate)
 	var/list/around = view(MONKEY_ENEMY_VISION, C)
@@ -296,10 +296,10 @@
 /datum/goap_action/monkey/disposal/New()
 	..()
 	preconditions = list()
-	preconditions["enemyGrabbed"] = TRUE
-	preconditions["disposeEnemy"] = FALSE
+	preconditions["EnemyGrabbed"] = TRUE
+	preconditions["DisposeEnemy"] = FALSE
 	effects = list()
-	effects["disposeEnemy"] = TRUE
+	effects["DisposeEnemy"] = TRUE
 
 /datum/goap_action/monkey/disposal/AdvancedPreconditions(mob/living/carbon/monkey/C, list/worldstate)
 	var/obj/machinery/disposal/D = locate() in view(MONKEY_ENEMY_VISION, C)
