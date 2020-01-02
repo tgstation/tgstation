@@ -104,6 +104,10 @@
 	return data;
 
 /obj/machinery/mineral/mint/ui_act(action, params, datum/tgui/ui)
+
+	if(..())
+		return
+
 	switch(action)
 		if ("startpress")
 			if (!processing)
