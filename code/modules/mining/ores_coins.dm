@@ -317,7 +317,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin
 	icon = 'icons/obj/economy.dmi'
 	name = "coin"
-	icon_state = "coin" //This is changed on initialization, the icon state is used to define which coin type to use.
+	icon_state = "greyscale" //If this coin has a unique sprite, this is changed on initialization and icon state is used to define which coin type to use. If there isn't a unique sprite, it uses material color.
 	flags_1 = CONDUCT_1
 	force = 1
 	throwforce = 2
@@ -329,15 +329,16 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/cooldown = 0
 	var/value
 	var/coinflip
-	var/coin_icon //tried using icon_state and modifying it in initialization, but this caused a runtime
 	item_flags = NO_MAT_REDEMPTION //You know, it's kind of a problem that money is worth more extrinsicly than intrinsically in this universe.
 
 /obj/item/coin/Initialize()
-	. = ..()
+	if(icon_state == "greyscale")
+		material_flags |= MATERIAL_COLOR
 	coinflip = pick(sideslist)
 	icon_state = "coin_[initial(icon_state)]_[coinflip]"
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
+	. = ..()
 
 /obj/item/coin/set_custom_materials(var/list/materials, multiplier = 1)
 	. = ..()
@@ -422,8 +423,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "gold"
 	custom_materials = list(/datum/material/gold = 400)
 
-/obj/item/coin/silver
-	icon_state = "silver"
+/obj/item/coin/silver //no unique icon because the uncolored greyscale coin is the old silver coin icon
 	custom_materials = list(/datum/material/silver = 400)
 
 /obj/item/coin/diamond
@@ -438,8 +438,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "uranium"
 	custom_materials = list(/datum/material/uranium = 400)
 
-/obj/item/coin/titanium
-	icon_state = "adamantine" //Close enough. These icons are ported from Paradise station, and they don't have titanium.
+/obj/item/coin/titanium //Doesn't have a unique sprite to use.
 	custom_materials = list(/datum/material/titanium = 400)
 
 /obj/item/coin/bananium
@@ -447,7 +446,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	custom_materials = list(/datum/material/bananium = 400)
 
 /obj/item/coin/adamantine
-	icon_state = "adamantine" //Who makes adamantium coins, anyway? They'll never notice it's the same as titanium. Never.
+	icon_state = "adamantine"
 	custom_materials = list(/datum/material/adamantine = 400)
 
 /obj/item/coin/mythril
@@ -461,13 +460,14 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	custom_materials = list(/datum/material/runite = 400)
 
 /obj/item/coin/twoheaded
+	icon_state = "iron"
 	desc = "Hey, this coin's the same on both sides!"
 	sideslist = list("heads")
 
 /obj/item/coin/antagtoken
 	name = "antag token"
 	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
-	icon_state = "coin_antag_valid"
+	icon_state = "antag"
 	custom_materials = list(/datum/material/plastic = 400)
 	sideslist = list("valid", "salad")
 	material_flags = NONE
