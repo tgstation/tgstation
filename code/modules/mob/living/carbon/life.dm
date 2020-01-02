@@ -567,91 +567,18 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		if(drunkenness >= 101)
 			adjustToxLoss(2) //Let's be honest you shouldn't be alive by now
 
-// Base carbon environment handler
-/mob/living/carbon/handle_environment(datum/gas_mixture/environment)
-	// Get the curent temperature of the area
-	var/areatemp = get_temperature(environment)
-
-	// Have the body regulate it's own temperature
-	var/natural = 0
-	if(stat != DEAD)
-		natural = natural_bodytemperature_stabilization()
-
-	// Get the mobs thermal protection and environmental change
-	var/thermal_protection = 1
-	var/environment_change = 0
-	var/natural_change = 0
-	if(areatemp > bodytemperature) // It is hot here
-		// Get the thermal protection of the mob,
-		// This returns a 0 - 1 value which corresponds to the percentage of protection
-		thermal_protection -= get_heat_protection(areatemp)
-		// How much the environment heats the mob
-		// with thermal protection
-		environment_change = min(thermal_protection * (areatemp - bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX)
-		if(bodytemperature < BODYTEMP_NORMAL)
-			// Our bodytemp is below normal we are cold, insulation helps us retain body heat
-			// and will reduce the heat we lose to the environment
-			natural_change = (thermal_protection + 1) * natural
-		else
-			// Our bodytemp is above normal and sweating, insulation hinders out ability to reduce heat
-			// but will reduce the amount of heat we get from the environment
-			natural_change = (1 / (thermal_protection + 1)) * natural
-	else // It is cold here
-		// Get the thermal protection of the mob, this returns a 0 - 1 value
-		// which corresponds to the percentage of protection
-		thermal_protection -= get_cold_protection(areatemp)
-		if(!on_fire) // If on fire ignore ignore local temperature in cold areas
-			// How much the environment cools the mob
-			// with thermal protection
-			environment_change = max(thermal_protection * (areatemp - bodytemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
-			if(bodytemperature < BODYTEMP_NORMAL)
-				// Our bodytemp is below normal, insulation helps us retain body heat
-				// and will reduce the heat we lose to the environment
-				natural_change = (thermal_protection + 1) * natural
-			else
-				// Our bodytemp is above normal and sweating, insulation hinders out ability to reduce heat
-				// but will reduce the amount of heat we get from the environment
-				natural_change = (1 / (thermal_protection + 1)) * natural
-
-	// Apply the temperature changes
-	adjust_bodytemperature(natural_change + environment_change)
-
-// Used to stabilize the normal body temperature on living mobs
+//used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
-	// Get the difference between our current body temp and what is a normal body temp
 	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature
-
 	switch(bodytemperature)
-
-		// When below the cold damage limit body temp raises faster
-		if(-INFINITY to BODYTEMP_COLD_DAMAGE_LIMIT)
-			return max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), \
-				BODYTEMP_AUTORECOVERY_MINIMUM)
-
-		// When above the cold damage limit the body temp raises slower
+		if(-INFINITY to BODYTEMP_COLD_DAMAGE_LIMIT) //Cold damage limit is 50 below the default, the temperature where you start to feel effects.
+			return max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
 		if(BODYTEMP_COLD_DAMAGE_LIMIT to BODYTEMP_NORMAL)
-			return max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
-				min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM / 4))
-
-		// When below the heat damage limit the body temp lowers slower
-		if(BODYTEMP_NORMAL to BODYTEMP_HEAT_DAMAGE_LIMIT)
-			return min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
-				max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM / 4))
-
-		// When above the heat damage limit bring the body temp down faster
-		// We're dealing with negative numbers
+			return max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM/4))
+		if(BODYTEMP_NORMAL to BODYTEMP_HEAT_DAMAGE_LIMIT) // Heat damage limit is 50 above the default, the temperature where you start to feel effects.
+			return min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM/4))
 		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
-			return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)
-
-// Temperature is the temperature you're being exposed to.
-// This returns a 0 - 1 value which corresponds to the percentage of protection
-/mob/living/carbon/proc/get_heat_protection(temperature)
-	return heat_protection
-
-// Temperature is the temperature you're being exposed to.
-// This returns a 0 - 1 value which corresponds to the percentage of protection
-/mob/living/carbon/proc/get_cold_protection(temperature)
-	return cold_protection
+			return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
 
 /////////
 //LIVER//
