@@ -16,7 +16,7 @@
 
 	var/disgust = 0
 
-	//inventory slots
+//inventory slots
 	var/obj/item/back = null
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/clothing/neck/wear_neck = null
@@ -28,7 +28,7 @@
 	var/obj/item/clothing/glasses/glasses = null //only used by humans.
 	var/obj/item/clothing/ears = null //only used by humans.
 
-	var/datum/dna/dna = null // Carbon
+	var/datum/dna/dna = null//Carbon
 	var/datum/mind/last_mind = null //last mind to control this mob, for blood-based cloning
 
 	var/failed_last_breath = 0 //This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
@@ -64,9 +64,3 @@
 	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects
 	var/stam_regen_start_time = 0 //used to halt stamina regen temporarily
 	var/stam_paralyzed = FALSE //knocks you down
-
-	// Protection from the elements
-	// This is insulation against increasing or decreasing body temperature
-	// 0 - 1 value which corresponds to the percentage of protection
-	var/heat_protection = 0 // No heat protection
-	var/cold_protection = 0 // No cold protection

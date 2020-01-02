@@ -1,4 +1,0 @@
-author: "iain0"
-delete-after: True
-changes: 
-  - bugfix: "MetaStation Port Aft Solar Control SMES input isolated from main power line, like all other solar control rooms."
