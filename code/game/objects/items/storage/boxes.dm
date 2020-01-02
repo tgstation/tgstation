@@ -1202,7 +1202,6 @@
 		)
 	generate_items_inside(items_inside,src)
 
-<<<<<<< HEAD
 /obj/item/storage/box/plastic
 	name = "plastic box"
 	desc = "It's a solid, plastic shell box."
@@ -1210,7 +1209,8 @@
 	foldable = null
 	illustration = "writing"
 	custom_materials = list(/datum/material/plastic = 1000) //You lose most if recycled.
-=======
+
+
 /obj/item/storage/box/fireworks
 	name = "box of fireworks"
 	desc = "Contains an assortment of fireworks."
@@ -1249,4 +1249,3 @@
 /obj/item/storage/box/sparklers/PopulateContents()
 	for(var/i in 1 to 7)
 		new/obj/item/sparkler(src)
->>>>>>> upstream/master

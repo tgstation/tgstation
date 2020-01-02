@@ -8,7 +8,6 @@
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	custom_materials = list(/datum/material/plastic = 1200)
 	max_integrity = 500
-//	var/content_overlays = FALSE //If this is true, the can holder will display the cans it contains.
 
 /obj/item/storage/cans/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins popping open a final cold one with the boys! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -42,7 +41,7 @@
 
 /obj/item/storage/cans/sixsoda/PopulateContents()
 	for(var/i in 1 to 6)
-		new/obj/item/reagent_containers/food/drinks/soda_cans/cola(src)
+		new /obj/item/reagent_containers/food/drinks/soda_cans/cola(src)
 
 /obj/item/storage/cans/sixbeer
 	name = "beer bottle ring"
@@ -50,4 +49,4 @@
 
 /obj/item/storage/cans/sixbeer/PopulateContents()
 	for(var/i in 1 to 6)
-		new/obj/item/reagent_containers/food/drinks/beer(src)
+		new /obj/item/reagent_containers/food/drinks/beer(src)
