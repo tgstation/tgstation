@@ -317,7 +317,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin
 	icon = 'icons/obj/economy.dmi'
 	name = "coin"
-	icon_state = "greyscale" //If this coin has a unique sprite, this is changed on initialization and icon state is used to define which coin type to use. If there isn't a unique sprite, it uses material color.
+	icon_state = "coin" //If this coin has a unique sprite, this is changed on initialization.
 	flags_1 = CONDUCT_1
 	force = 1
 	throwforce = 2
@@ -329,13 +329,14 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/cooldown = 0
 	var/value
 	var/coinflip
+	var/coin_icon = "greyscale" //This is used to define which coin type to use. If this isn't supplied, it uses material color.
 	item_flags = NO_MAT_REDEMPTION //You know, it's kind of a problem that money is worth more extrinsicly than intrinsically in this universe.
 
 /obj/item/coin/Initialize()
-	if(icon_state == "greyscale")
+	if(coin_icon == "greyscale")
 		material_flags |= MATERIAL_COLOR
 	coinflip = pick(sideslist)
-	icon_state = "coin_[initial(icon_state)]_[coinflip]"
+	icon_state = "coin_[coin_icon]_[coinflip]"
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 	. = ..()
@@ -407,9 +408,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			to_chat(user, "<span class='warning'>The coin won't flip very well with something attached!</span>" )
 			return FALSE//do not flip the coin
 		cooldown = world.time + 15
-		flick("coin_[initial(icon_state)]_[coinflip]_flip", src)
+		flick("coin_[coin_icon]_[coinflip]_flip", src)
 		coinflip = pick(sideslist)
-		icon_state = "coin_[initial(icon_state)]_[coinflip]"
+		icon_state = "coin_[coin_icon]_[coinflip]"
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, TRUE)
 		var/oldloc = loc
 		sleep(15)
@@ -420,37 +421,37 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	return TRUE//did the coin flip? useful for suicide_act
 
 /obj/item/coin/gold
-	icon_state = "gold"
+	coin_icon = "gold"
 	custom_materials = list(/datum/material/gold = 400)
 
 /obj/item/coin/silver //no unique icon because the uncolored greyscale coin is the old silver coin icon
 	custom_materials = list(/datum/material/silver = 400)
 
 /obj/item/coin/diamond
-	icon_state = "diamond"
+	coin_icon = "diamond"
 	custom_materials = list(/datum/material/diamond = 400)
 
 /obj/item/coin/plasma
-	icon_state = "plasma"
+	coin_icon = "plasma"
 	custom_materials = list(/datum/material/plasma = 400)
 
 /obj/item/coin/uranium
-	icon_state = "uranium"
+	coin_icon = "uranium"
 	custom_materials = list(/datum/material/uranium = 400)
 
 /obj/item/coin/titanium //Doesn't have a unique sprite to use.
 	custom_materials = list(/datum/material/titanium = 400)
 
 /obj/item/coin/bananium
-	icon_state = "bananium"
+	coin_icon = "bananium"
 	custom_materials = list(/datum/material/bananium = 400)
 
 /obj/item/coin/adamantine
-	icon_state = "adamantine"
+	coin_icon = "adamantine"
 	custom_materials = list(/datum/material/adamantine = 400)
 
 /obj/item/coin/mythril
-	icon_state = "mythril"
+	coin_icon = "mythril"
 	custom_materials = list(/datum/material/mythril = 400)
 
 /obj/item/coin/plastic
@@ -460,19 +461,19 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	custom_materials = list(/datum/material/runite = 400)
 
 /obj/item/coin/twoheaded
-	icon_state = "iron"
+	coin_icon = "iron"
 	desc = "Hey, this coin's the same on both sides!"
 	sideslist = list("heads")
 
 /obj/item/coin/antagtoken
 	name = "antag token"
 	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
-	icon_state = "antag"
+	coin_icon = "antag"
 	custom_materials = list(/datum/material/plastic = 400)
 	sideslist = list("valid", "salad")
 	material_flags = NONE
 
 /obj/item/coin/iron
-	icon_state = "iron"
+	coin_icon = "iron"
 
 #undef ORESTACK_OVERLAYS_MAX
