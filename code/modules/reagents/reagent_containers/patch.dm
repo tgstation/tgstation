@@ -30,13 +30,13 @@
 /obj/item/reagent_containers/pill/patch/libital
 	name = "libital patch (brute)"
 	desc = "A pain reliever. Does minor liver damage. Diluted with Granibitaluri."
-	list_reagents = list(/datum/reagent/medicine/C2/libital = 4, /datum/reagent/medicine/granibitaluri = 6) //20 iterations
+	list_reagents = list(/datum/reagent/medicine/C2/libital = 2, /datum/reagent/medicine/granibitaluri = 8) //10 iterations
 	icon_state = "bandaid_brute"
 
 /obj/item/reagent_containers/pill/patch/aiuri
 	name = "aiuri patch (burn)"
 	desc = "Helps with burn injuries. Does minor eye damage. Diluted with Granibitaluri."
-	list_reagents = list(/datum/reagent/medicine/C2/aiuri = 4, /datum/reagent/medicine/granibitaluri = 6)
+	list_reagents = list(/datum/reagent/medicine/C2/aiuri = 1, /datum/reagent/medicine/granibitaluri = 9)
 	icon_state = "bandaid_burn"
 
 /obj/item/reagent_containers/pill/patch/instabitaluri
