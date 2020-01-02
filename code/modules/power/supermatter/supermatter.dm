@@ -884,7 +884,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				target_atom = A
 
 	if(target_atom)
-		zapstart.Beam(target_atom, icon_state="lightning[rand(1,12)]", time=5)
+		zapstart.Beam(target_atom, icon_state="sm_arc", time=5)
 		var/zapdir = get_dir(zapstart, target_atom)
 		if(zapdir)
 			. = zapdir
