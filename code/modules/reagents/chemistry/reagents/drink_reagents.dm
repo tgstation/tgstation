@@ -538,6 +538,7 @@
 	name = "Monkey Energy"
 	description = "The only drink that will make you unleash the ape."
 	color = "#f39b03" // rgb: 243, 155, 3
+	overdose_threshold = 60
 	taste_description = "barbecue and nostalgia"
 	glass_icon_state = "monkey_energy_glass"
 	glass_name = "glass of Monkey Energy"
@@ -559,6 +560,12 @@
 /datum/reagent/consumable/monkey_energy/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(type)
 	..()
+
+/datum/reagent/consumable/monkey_energy/overdose_process(mob/living/M)
+	if(prob(15))
+		M.say(pick_list_replacements(BOOMER_FILE, "boomer"), forced = /datum/reagent/consumable/monkey_energy)
+	..()
+	return
 
 /datum/reagent/consumable/ice
 	name = "Ice"
@@ -718,10 +725,10 @@
 /datum/reagent/consumable/triple_citrus
 	name = "Triple Citrus"
 	description = "A solution."
-	color = "#C8A5DC"
+	color = "#EEFF00"
 	quality = DRINK_NICE
 	taste_description = "extreme bitterness"
-	glass_icon_state = "triplecitrus" //needs own sprite mine are trash
+	glass_icon_state = "triplecitrus" //needs own sprite mine are trash //your sprite is great tho
 	glass_name = "glass of triple citrus"
 	glass_desc = "A mixture of citrus juices. Tangy, yet smooth."
 
@@ -743,6 +750,28 @@
 	color = "#7D4E29"
 	quality = DRINK_NICE
 	taste_description = "chocolate milk"
+
+/datum/reagent/consumable/hot_coco
+	name = "Hot Coco"
+	description = "Made with love! And coco beans."
+	nutriment_factor = 3 * REAGENTS_METABOLISM
+	color = "#403010" // rgb: 64, 48, 16
+	taste_description = "creamy chocolate"
+	glass_icon_state  = "chocolateglass"
+	glass_name = "glass of hot coco"
+	glass_desc = "A favorite winter drink to warm you up."
+
+/datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M)
+	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	..()
+
+/datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M)
+	if(M.getBruteLoss() && prob(20))
+		M.heal_bodypart_damage(1,0, 0)
+		. = 1
+	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
+		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 2)
+	..()
 
 /datum/reagent/consumable/menthol
 	name = "Menthol"

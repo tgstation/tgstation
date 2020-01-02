@@ -1,4 +1,0 @@
-author: "Rohesie"
-delete-after: True
-changes: 
-  - bugfix: "Fixes ID console duping issues. Includes some ID containers, such as PDAs, tablets and wallets, into the swapping behavior when an ID card is being removed and the item is being held."

@@ -34,7 +34,7 @@
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	content_overlays = TRUE
-	custom_price = 50
+	custom_premium_price = 300
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound =  'sound/items/handling/toolbelt_pickup.ogg'
 
@@ -42,6 +42,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = 21
 	STR.set_holdable(list(
 		/obj/item/crowbar,
 		/obj/item/screwdriver,
@@ -122,6 +123,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.max_combined_w_class = 21
 	STR.set_holdable(list(
 		/obj/item/healthanalyzer,
 		/obj/item/dnainjector,
@@ -169,10 +171,19 @@
 		/obj/item/implanter,
 		/obj/item/pinpointer/crew,
 		/obj/item/holosign_creator/medical,
-		/obj/item/pipe_dispenser/plumbing,
 		/obj/item/construction/plumbing,
 		/obj/item/plunger
 		))
+
+/obj/item/storage/belt/medical/paramedic/PopulateContents()
+	new /obj/item/sensor_device(src)
+	new /obj/item/flashlight/pen(src)
+	new /obj/item/stack/medical/gauze/twelve(src)
+	new /obj/item/reagent_containers/syringe(src)
+	new /obj/item/reagent_containers/glass/bottle/epinephrine(src)
+	new /obj/item/reagent_containers/glass/bottle/calomel(src)
+	new /obj/item/reagent_containers/glass/bottle/formaldehyde(src)
+	update_icon()
 
 /obj/item/storage/belt/security
 	name = "security belt"
@@ -220,7 +231,7 @@
 	icon_state = "securitywebbing"
 	item_state = "securitywebbing"
 	content_overlays = FALSE
-	custom_premium_price = 800
+	custom_premium_price = 900
 
 /obj/item/storage/belt/security/webbing/ComponentInitialize()
 	. = ..()
@@ -511,7 +522,7 @@
 		/obj/item/flashlight,
 		/obj/item/reagent_containers/spray,
 		/obj/item/soap,
-		/obj/item/holosign_creator/janibarrier,
+		/obj/item/holosign_creator,
 		/obj/item/forcefield_projector,
 		/obj/item/key/janitor,
 		/obj/item/clothing/gloves,
@@ -524,7 +535,7 @@
 	new /obj/item/lightreplacer(src)
 	new /obj/item/reagent_containers/spray/cleaner(src)
 	new /obj/item/soap/nanotrasen(src)
-	new /obj/item/holosign_creator/janibarrier(src)
+	new /obj/item/holosign_creator(src)
 	new /obj/item/melee/flyswatter(src)
 
 /obj/item/storage/belt/bandolier
@@ -573,7 +584,7 @@
 	icon_state = "fannypack_leather"
 	item_state = "fannypack_leather"
 	dying_key = DYE_REGISTRY_FANNYPACK
-	custom_price = 15
+	custom_price = 100
 
 /obj/item/storage/belt/fannypack/ComponentInitialize()
 	. = ..()

@@ -1,8 +1,5 @@
 /**
  * Removes excess whitespace and indentation from the string.
- *
- * This function is not called directly in runtime, but instead is called
- * by the macro, which is defined below, and it runs at compile time.
  */
 export const multiline = str => {
   if (Array.isArray(str)) {
@@ -67,8 +64,8 @@ export const toTitleCase = str => {
   // Handle string
   const WORDS_UPPER = ['Id', 'Tv'];
   const WORDS_LOWER = [
-    'A', 'An', 'And', 'As', 'At', 'But', 'By', 'For', 'For', 'From', 'In', 'Into',
-    'Near', 'Nor', 'Of', 'On', 'Onto', 'Or', 'The', 'To', 'With',
+    'A', 'An', 'And', 'As', 'At', 'But', 'By', 'For', 'For', 'From', 'In',
+    'Into', 'Near', 'Nor', 'Of', 'On', 'Onto', 'Or', 'The', 'To', 'With',
   ];
   let currentStr = str.replace(/([^\W_]+[^\s-]*) */g, str => {
     return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();

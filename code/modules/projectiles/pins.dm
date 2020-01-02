@@ -23,10 +23,14 @@
 	if(proximity_flag)
 		if(istype(target, /obj/item/gun))
 			var/obj/item/gun/G = target
-			if(G.pin && (force_replace || G.pin.pin_removeable))
-				G.pin.forceMove(get_turf(G))
-				G.pin.gun_remove(user)
-				to_chat(user, "<span class='notice'>You remove [G]'s old pin.</span>")
+			var/obj/item/firing_pin/old_pin = G.pin
+			if(old_pin && (force_replace || old_pin.pin_removeable))
+				to_chat(user, "<span class='notice'>You remove [old_pin] from [G].</span>")
+				if(Adjacent(user))
+					user.put_in_hands(old_pin)
+				else
+					old_pin.forceMove(G.drop_location())
+				old_pin.gun_remove(user)
 
 			if(!G.pin)
 				if(!user.temporarilyRemoveItemFromInventory(src))

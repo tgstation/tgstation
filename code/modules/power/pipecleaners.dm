@@ -179,7 +179,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/pipe_cleaner_coil
 	name = "pipe cleaner coil"
 	desc = "A coil of pipe cleaners. Good for arts and crafts, not to build with."
-	custom_price = 15
+	custom_price = 25
 	gender = NEUTER //That's a pipe_cleaner coil sounds better than that's some pipe_cleaner coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "pipecleaner"

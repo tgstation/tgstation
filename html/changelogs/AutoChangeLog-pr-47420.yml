@@ -1,5 +1,0 @@
-author: "bandit"
-delete-after: True
-changes: 
-  - rscadd: "30 new emoji have been added. Mime buff, mime now OP."
-  - tweak: "The mime's PDA now lists all emoji pictures in the PDA in alphabetical order without having to click."

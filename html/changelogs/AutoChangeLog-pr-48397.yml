@@ -1,0 +1,8 @@
+author: "TheVekter"
+delete-after: True
+changes: 
+  - tweak: "Geneticists are now purely under the purview of the Science department. They will report directly to the Research Director."
+  - tweak: "Moved the Genetics lab to the Science wing, replacing the Experimentor and associated lab. This is a change on Metastation, Boxstation, Pubbystation, Deltastation, and Kilostation."
+  - tweak: "Geneticist access updated to grant access to the Science wing."
+  - tweak: "Changed the Geneticist's outfit item sprites and bags to match their correct color."
+  - rscdel: "Removed the Experimentor from all labs as part of a full R&D rework."

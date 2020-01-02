@@ -4,3 +4,4 @@ ambidet2.ogg is Night on the Docks, Piano by Kevin Macleod. It has been licensed
 	It has been cropped for use ingame, and also fades in.
 aurora_caelus.ogg is Music for Manatees, by Kevin Macleod. It has been licensed under CC-BY 3.0 license.
 	It has been cropped for use ingame, and also fades out.
+title0.ogg is Endless Space by Solus. It has been licensed under CC-BY 3.0 license. Source file downloaded from https://www.newgrounds.com/audio/listen/74946

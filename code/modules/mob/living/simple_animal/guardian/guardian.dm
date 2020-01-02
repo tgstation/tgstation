@@ -204,7 +204,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	..()
 	if(summoner)
 		to_chat(summoner, "<span class='danger'><B>Your [name] died somehow!</span></B>")
-		summoner.death()
+		summoner.dust()
 
 /mob/living/simple_animal/hostile/guardian/update_health_hud()
 	if(summoner && hud_used && hud_used.healths)

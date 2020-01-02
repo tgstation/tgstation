@@ -259,7 +259,7 @@ a.popt {text-decoration: none;}
 .highlight {background: yellow;}
 
 h1, h2, h3, h4, h5, h6	{color: #a4bad6;font-family: Georgia, Verdana, sans-serif;}
-h1.alert, h2.alert		{color: #a4bad6;}
+h1.alert, h2.alert	{color: #a4bad6;}
 
 em						{font-style: normal;	font-weight: bold;}
 
@@ -294,7 +294,6 @@ em						{font-style: normal;	font-weight: bold;}
 .yell					{					font-weight: bold;}
 
 .alert					{color: #d82020;}
-h1.alert, h2.alert		{color: #000000;}
 
 .emote					{					font-style: italic;}
 
@@ -368,7 +367,7 @@ h1.alert, h2.alert		{color: #000000;}
 .redtext				{color: #c51e1e;	font-size: 185%;}
 .clown					{color: #ff70c1;	font-size: 160%;	font-family: "Comic Sans MS", cursive, sans-serif;	font-weight: bold;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif;	font-style: italic;}
-.hypnophrase			{color: #202020;	font-weight: bold;	animation: hypnocolor 1500ms infinite;}
+.hypnophrase			{color: #202020;	font-weight: bold;	animation: hypnocolor 1500ms infinite; animation-direction: alternate;}
 @keyframes hypnocolor {
 	0%		{color: #202020;}
 	25%		{color: #4b02ac;}

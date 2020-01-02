@@ -28,7 +28,9 @@ Bonus
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	var/regenerate_blood = FALSE
-	threshold_desc = "<b>Resistance 8:</b> Additionally regenerates lost blood.<br>"
+	threshold_descs = list(
+		"Resistance 8" = "Additionally regenerates lost blood."
+	)
 
 /datum/symptom/oxygen/Start(datum/disease/advance/A)
 	if(!..())

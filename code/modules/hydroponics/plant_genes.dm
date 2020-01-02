@@ -18,7 +18,9 @@
 	return !istype(S, /obj/item/seeds/sample) // Samples can't accept new genes
 
 /datum/plant_gene/proc/Copy()
-	return new type
+	var/datum/plant_gene/G = new type
+	G.mutability_flags = mutability_flags
+	return G
 
 /datum/plant_gene/proc/apply_vars(obj/item/seeds/S) // currently used for fire resist, can prob. be further refactored
 	return

@@ -261,6 +261,12 @@ SUBSYSTEM_DEF(mapping)
 		INIT_ANNOUNCE(msg)
 #undef INIT_ANNOUNCE
 
+	// Custom maps are removed after station loading so the map files does not persist for no reason.
+	if(config.map_path == "custom")
+		fdel("_maps/custom/[config.map_file]")
+		// And as the file is now removed set the next map to default.
+		next_map_config = load_map_config(default_to_box = TRUE)
+
 GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/generate_station_area_list()
@@ -279,9 +285,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/maprotate()
 	if(map_voted)
-		map_voted = FALSE
 		return
-	
+
 	var/players = GLOB.clients.len
 	var/list/mapvotes = list()
 	//count votes

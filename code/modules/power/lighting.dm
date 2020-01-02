@@ -293,18 +293,21 @@
 
 	if(start_with_cell && !no_emergency)
 		cell = new/obj/item/stock_parts/cell/emergency_light(src)
-	spawn(2)
-		switch(fitting)
-			if("tube")
-				brightness = 8
-				if(prob(2))
-					break_light_tube(1)
-			if("bulb")
-				brightness = 4
-				if(prob(5))
-					break_light_tube(1)
-		spawn(1)
-			update(0)
+	
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/light/LateInitialize()
+	. = ..()
+	switch(fitting)
+		if("tube")
+			brightness = 8
+			if(prob(2))
+				break_light_tube(1)
+		if("bulb")
+			brightness = 4
+			if(prob(5))
+				break_light_tube(1)
+	addtimer(CALLBACK(src, .proc/update, 0), 1)
 
 /obj/machinery/light/Destroy()
 	var/area/A = get_area(src)

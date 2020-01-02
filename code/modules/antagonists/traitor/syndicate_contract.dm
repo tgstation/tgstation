@@ -2,6 +2,7 @@
 	var/id = 0
 	var/status = CONTRACT_STATUS_INACTIVE
 	var/datum/objective/contract/contract = new()
+	var/target_rank
 	var/ransom = 0
 	var/payout_type = null
 
@@ -15,6 +16,12 @@
 
 /datum/syndicate_contract/proc/generate(blacklist)
 	contract.find_target(null, blacklist)
+	
+	var/datum/data/record/record = find_record("name", contract.target.name, GLOB.data_core.general)
+	if (record)
+		target_rank = record.fields["rank"]
+	else 
+		target_rank = "Unknown"
 
 	if (payout_type == CONTRACT_PAYOUT_LARGE)
 		contract.payout_bonus = rand(9,13)
@@ -132,7 +139,7 @@
 					C.registered_account.adjust_money(ransom * 0.35)
 
 					C.registered_account.bank_card_talk("We've processed the ransom, agent. Here's your cut - your balance is now \
-					$[C.registered_account.account_balance].", TRUE)
+					[C.registered_account.account_balance] cr.", TRUE)
 
 // They're off to holding - handle the return timer and give some text about what's going on.
 /datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)

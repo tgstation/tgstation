@@ -34,6 +34,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		var/datum/component/remote_materials/mats = C
 		mats.disconnect_from(src)
 
+	connected = null
+
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all()
 

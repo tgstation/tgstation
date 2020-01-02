@@ -1,26 +1,29 @@
 
 /datum/crafting_recipe
 	var/name = "" //in-game display name
-	var/reqs[] = list() //type paths of items consumed associated with how many are needed
-	var/blacklist[] = list() //type paths of items explicitly not allowed as an ingredient
+	var/list/reqs = list() //type paths of items consumed associated with how many are needed
+	var/list/blacklist = list() //type paths of items explicitly not allowed as an ingredient
 	var/result //type path of item resulting from this craft
-	var/tools[] = list() //type paths of items needed but not consumed
+	var/list/tools = list() //type paths of items needed but not consumed
 	var/time = 30 //time in deciseconds
-	var/parts[] = list() //type paths of items that will be placed in the result
-	var/chem_catalysts[] = list() //like tools but for reagents
+	var/list/parts = list() //type paths of items that will be placed in the result
+	var/list/chem_catalysts = list() //like tools but for reagents
 	var/category = CAT_NONE //where it shows up in the crafting UI
 	var/subcategory = CAT_NONE
 	var/always_availible = TRUE //Set to FALSE if it needs to be learned first.
 
-/datum/crafting_recipe/pin_removal
-	name = "Pin Removal"
-	result = /obj/item/gun
-	reqs = list(/obj/item/gun = 1)
-	parts = list(/obj/item/gun = 1)
-	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	time = 50
-	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+/datum/crafting_recipe/New()
+	if(!(result in reqs))
+		blacklist += result
+
+/**
+  * Run custom pre-craft checks for this recipe
+  *
+  * user: The /mob that initiated the crafting
+  * collected_requirements: A list of lists of /obj/item instances that satisfy reqs. Top level list is keyed by requirement path.
+  */
+/datum/crafting_recipe/proc/check_requirements(mob/user, list/collected_requirements)
+	return TRUE
 
 /datum/crafting_recipe/IED
 	name = "IED"
@@ -39,7 +42,7 @@
 	result = /obj/item/twohanded/spear/explosive
 	reqs = list(/obj/item/twohanded/spear = 1,
 				/obj/item/grenade = 1)
-	blacklist = list(/obj/item/twohanded/spear/explosive, /obj/item/twohanded/spear/bonespear)
+	blacklist = list(/obj/item/twohanded/spear/bonespear)
 	parts = list(/obj/item/twohanded/spear = 1,
 				/obj/item/grenade = 1)
 	time = 15
@@ -526,6 +529,14 @@
 				 /obj/item/stack/sheet/animalhide/goliath_hide = 1)
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/skilt
+	name = "Sinew Kilt"
+	result = /obj/item/clothing/accessory/skilt
+	time = 20
+	reqs = list(/obj/item/stack/sheet/bone = 1,
+				 /obj/item/stack/sheet/sinew = 2)
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/bracers
 	name = "Bone Bracers"
 	result = /obj/item/clothing/gloves/bracer
@@ -601,6 +612,8 @@
 	name = "Bonfire"
 	time = 60
 	reqs = list(/obj/item/grown/log = 5)
+	parts = list(/obj/item/grown/log = 5)
+	blacklist = list(/obj/item/grown/log/steel)
 	result = /obj/structure/bonfire
 	category = CAT_PRIMAL
 
@@ -638,13 +651,6 @@
 			/obj/item/twohanded/spear/bonespear = 1)
 	result = /obj/structure/headpike/bone
 	category = CAT_PRIMAL
-
-/datum/crafting_recipe/smallcarton
-	name = "Small Carton"
-	result = /obj/item/reagent_containers/food/drinks/sillycup/smallcarton
-	time = 10
-	reqs = list(/obj/item/stack/sheet/cardboard = 1)
-	category = CAT_MISC
 
 /datum/crafting_recipe/pressureplate
 	name = "Pressure Plate"
@@ -705,6 +711,14 @@
 					/obj/item/reagent_containers/food/snacks/grown/potato = 1,
 					/obj/item/stack/cable_coil = 5)
 	category = CAT_MISC
+
+/datum/crafting_recipe/aitater/check_requirements(mob/user, list/collected_requirements)
+	var/obj/item/aicard/aicard = collected_requirements[/obj/item/aicard][1]
+	if(!aicard.AI)
+		return TRUE
+
+	to_chat(user, "<span class='boldwarning'>You can't craft an intelliTater with an AI in the card!</span>")
+	return FALSE
 
 /datum/crafting_recipe/aispook
 	name = "intelliLantern"

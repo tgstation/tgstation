@@ -70,9 +70,10 @@
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
 	rarity = 30
 
-/obj/item/seeds/poppy/lily/trumpet/Initialize()
-	..()
-	unset_mutability(/datum/plant_gene/reagent/polypyr, PLANT_GENE_EXTRACTABLE)
+/obj/item/seeds/poppy/lily/trumpet/Initialize(mapload,nogenes)
+	. = ..()
+	if(!nogenes)
+		unset_mutability(/datum/plant_gene/reagent/polypyr, PLANT_GENE_EXTRACTABLE)
 
 /obj/item/reagent_containers/food/snacks/grown/trumpet
 	seed = /obj/item/seeds/poppy/lily/trumpet

@@ -17,7 +17,7 @@
 
 	return TRUE
 
-/datum/surgery_step/incise/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/incise/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	if ishuman(target)
 		var/mob/living/carbon/human/H = target
 		if (!(NOBLOOD in H.dna.species.species_traits))
@@ -25,7 +25,7 @@
 				"<span class='notice'>Blood pools around the incision in [H]'s [parse_zone(target_zone)].</span>",
 				"")
 			H.bleed_rate += 3
-	return TRUE
+	return ..(default_display_results = FALSE)
 
 /datum/surgery_step/incise/nobleed //silly friendly!
 
@@ -34,7 +34,8 @@
 		"<span class='notice'>[user] begins to <i>carefully</i> make an incision in [target]'s [parse_zone(target_zone)].</span>",
 		"<span class='notice'>[user] begins to <i>carefully</i> make an incision in [target]'s [parse_zone(target_zone)].</span>")
 
-/datum/surgery_step/incise/nobleed/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/incise/nobleed/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+	user?.mind.adjust_experience(/datum/skill/medical, experience_given)
 	return TRUE
 
 //clamp bleeders
@@ -48,7 +49,7 @@
 		"<span class='notice'>[user] begins to clamp bleeders in [target]'s [parse_zone(target_zone)].</span>",
 		"<span class='notice'>[user] begins to clamp bleeders in [target]'s [parse_zone(target_zone)].</span>")
 
-/datum/surgery_step/clamp_bleeders/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/clamp_bleeders/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	if(locate(/datum/surgery_step/saw) in surgery.steps)
 		target.heal_bodypart_damage(20,0)
 	if (ishuman(target))
@@ -87,7 +88,7 @@
 
 	return TRUE
 
-/datum/surgery_step/close/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/close/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	if(locate(/datum/surgery_step/saw) in surgery.steps)
 		target.heal_bodypart_damage(45,0)
 	if (ishuman(target))
@@ -109,12 +110,12 @@
 		"<span class='notice'>[user] begins to saw through the bone in [target]'s [parse_zone(target_zone)].</span>",
 		"<span class='notice'>[user] begins to saw through the bone in [target]'s [parse_zone(target_zone)].</span>")
 
-/datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	target.apply_damage(50, BRUTE, "[target_zone]")
 	display_results(user, target, "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open.</span>",
 		"<span class='notice'>[user] saws [target]'s [parse_zone(target_zone)] open!</span>",
 		"<span class='notice'>[user] saws [target]'s [parse_zone(target_zone)] open!</span>")
-	return 1
+	return ..(default_display_results = FALSE)
 
 //drill bone
 /datum/surgery_step/drill
@@ -127,8 +128,8 @@
 		"<span class='notice'>[user] begins to drill into the bone in [target]'s [parse_zone(target_zone)].</span>",
 		"<span class='notice'>[user] begins to drill into the bone in [target]'s [parse_zone(target_zone)].</span>")
 
-/datum/surgery_step/drill/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/drill/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	display_results(user, target, "<span class='notice'>You drill into [target]'s [parse_zone(target_zone)].</span>",
 		"<span class='notice'>[user] drills into [target]'s [parse_zone(target_zone)]!</span>",
 		"<span class='notice'>[user] drills into [target]'s [parse_zone(target_zone)]!</span>")
-	return 1
+	return ..(default_display_results = FALSE)

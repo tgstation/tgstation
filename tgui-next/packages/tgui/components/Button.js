@@ -1,17 +1,13 @@
 import { classes, pureComponentHooks } from 'common/react';
 import { tridentVersion } from '../byond';
+import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from '../hotkeys';
 import { createLogger } from '../logging';
+import { refocusLayout } from '../refocus';
 import { Box } from './Box';
 import { Icon } from './Icon';
 import { Tooltip } from './Tooltip';
-import { refocusLayout } from '../refocus';
 
 const logger = createLogger('Button');
-
-export const BUTTON_ACTIVATION_KEYCODES = [
-  13, // Enter
-  32, // Space
-];
 
 export const Button = props => {
   const {
@@ -23,6 +19,7 @@ export const Button = props => {
     selected,
     tooltip,
     tooltipPosition,
+    ellipsis,
     content,
     children,
     onclick,
@@ -32,13 +29,14 @@ export const Button = props => {
   const hasContent = !!(content || children);
   // A warning about the lowercase onclick
   if (onclick) {
-    logger.warn("Lowercase 'onclick' is not supported on Button and "
-      + "lowercase prop names are discouraged in general. "
-      + "Please use a camelCase 'onClick' instead and read: "
-      + "https://infernojs.org/docs/guides/event-handling");
+    logger.warn(
+      `Lowercase 'onclick' is not supported on Button and lowercase`
+      + ` prop names are discouraged in general. Please use a camelCase`
+      + `'onClick' instead and read: `
+      + `https://infernojs.org/docs/guides/event-handling`);
   }
-  // NOTE: Lowercase "onclick" and unselectable are used internally for
-  // compatibility with IE8. Do not change it!
+  // IE8: Use a lowercase "onclick" because synthetic events are fucked.
+  // IE8: Use an "unselectable" prop because "user-select" doesn't work.
   return (
     <Box as="span"
       className={classes([
@@ -47,31 +45,36 @@ export const Button = props => {
         disabled && 'Button--disabled',
         selected && 'Button--selected',
         hasContent && 'Button--hasContent',
+        ellipsis && 'Button--ellipsis',
         (color && typeof color === 'string')
           ? 'Button--color--' + color
-          : 'Button--color--normal',
+          : 'Button--color--default',
         className,
       ])}
       tabIndex={!disabled && '0'}
       unselectable={tridentVersion <= 4}
       onclick={e => {
-        if (disabled || !onClick) {
-          return;
-        }
         refocusLayout();
-        onClick(e);
+        if (!disabled && onClick) {
+          onClick(e);
+        }
       }}
-      onKeyPress={e => {
+      onKeyDown={e => {
         const keyCode = window.event ? e.which : e.keyCode;
-        if (!BUTTON_ACTIVATION_KEYCODES.includes(keyCode)) {
+        // Simulate a click when pressing space or enter.
+        if (keyCode === KEY_SPACE || keyCode === KEY_ENTER) {
+          e.preventDefault();
+          if (!disabled && onClick) {
+            onClick(e);
+          }
           return;
         }
-        if (disabled || !onClick) {
+        // Refocus layout on pressing escape.
+        if (keyCode === KEY_ESCAPE) {
+          e.preventDefault();
+          refocusLayout();
           return;
         }
-        e.preventDefault();
-        refocusLayout();
-        onClick(e);
       }}
       {...rest}>
       {icon && (
@@ -89,3 +92,16 @@ export const Button = props => {
 };
 
 Button.defaultHooks = pureComponentHooks;
+
+export const ButtonCheckbox = props => {
+  const { checked, ...rest } = props;
+  return (
+    <Button
+      color="transparent"
+      icon={checked ? 'check-square-o' : 'square-o'}
+      selected={checked}
+      {...rest} />
+  );
+};
+
+Button.Checkbox = ButtonCheckbox;

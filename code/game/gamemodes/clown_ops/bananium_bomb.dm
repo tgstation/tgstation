@@ -4,23 +4,18 @@
 	icon = 'icons/obj/machines/nuke.dmi'
 	icon_state = "bananiumbomb_base"
 
-/obj/machinery/nuclearbomb/syndicate/bananium/update_icon()
-	if(deconstruction_state == NUKESTATE_INTACT)
-		switch(get_nuke_state())
-			if(NUKE_OFF_LOCKED, NUKE_OFF_UNLOCKED)
-				icon_state = "bananiumbomb_base"
-				update_icon_interior()
-				update_icon_lights()
-			if(NUKE_ON_TIMING)
-				cut_overlays()
-				icon_state = "bananiumbomb_timing"
-			if(NUKE_ON_EXPLODING)
-				cut_overlays()
-				icon_state = "bananiumbomb_exploding"
-	else
+/obj/machinery/nuclearbomb/syndicate/bananium/update_icon_state()
+	if(deconstruction_state != NUKESTATE_INTACT)
 		icon_state = "bananiumbomb_base"
-		update_icon_interior()
-		update_icon_lights()
+		return
+	
+	switch(get_nuke_state())
+		if(NUKE_OFF_LOCKED, NUKE_OFF_UNLOCKED)
+			icon_state = "bananiumbomb_base"
+		if(NUKE_ON_TIMING)
+			icon_state = "bananiumbomb_timing"
+		if(NUKE_ON_EXPLODING)
+			icon_state = "bananiumbomb_exploding"
 
 /obj/machinery/nuclearbomb/syndicate/bananium/get_cinematic_type(off_station)
 	switch(off_station)
@@ -44,17 +39,17 @@
 		if(!H.w_uniform || H.dropItemToGround(H.w_uniform))
 			C = new /obj/item/clothing/under/rank/civilian/clown(H)
 			ADD_TRAIT(C, TRAIT_NODROP, CLOWN_NUKE_TRAIT)
-			H.equip_to_slot_or_del(C, SLOT_W_UNIFORM)
+			H.equip_to_slot_or_del(C, ITEM_SLOT_ICLOTHING)
 
 		if(!H.shoes || H.dropItemToGround(H.shoes))
 			C = new /obj/item/clothing/shoes/clown_shoes(H)
 			ADD_TRAIT(C, TRAIT_NODROP, CLOWN_NUKE_TRAIT)
-			H.equip_to_slot_or_del(C, SLOT_SHOES)
+			H.equip_to_slot_or_del(C, ITEM_SLOT_FEET)
 
 		if(!H.wear_mask || H.dropItemToGround(H.wear_mask))
 			C = new /obj/item/clothing/mask/gas/clown_hat(H)
 			ADD_TRAIT(C, TRAIT_NODROP, CLOWN_NUKE_TRAIT)
-			H.equip_to_slot_or_del(C, SLOT_WEAR_MASK)
+			H.equip_to_slot_or_del(C, ITEM_SLOT_MASK)
 
 		H.dna.add_mutation(CLOWNMUT)
 		H.gain_trauma(/datum/brain_trauma/mild/phobia/clowns, TRAUMA_RESILIENCE_LOBOTOMY) //MWA HA HA

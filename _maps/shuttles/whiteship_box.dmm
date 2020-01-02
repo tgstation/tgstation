@@ -336,12 +336,12 @@
 	locked = 0;
 	name = "fridge"
 	},
-/obj/item/reagent_containers/glass/waterbottle{
+/obj/item/reagent_containers/food/drinks/waterbottle{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/glass/waterbottle,
-/obj/item/reagent_containers/glass/waterbottle{
+/obj/item/reagent_containers/food/drinks/waterbottle,
+/obj/item/reagent_containers/food/drinks/waterbottle{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -529,25 +529,25 @@
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
-/obj/item/reagent_containers/glass/waterbottle/large{
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/glass/waterbottle/large{
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/glass/waterbottle/large{
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
 	pixel_x = -2
 	},
-/obj/item/reagent_containers/glass/waterbottle/large{
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
 	pixel_x = 5
 	},
-/obj/item/reagent_containers/glass/waterbottle/large{
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
 	pixel_x = 1;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/glass/waterbottle/large{
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
 	pixel_x = 8;
 	pixel_y = -3
 	},

@@ -95,7 +95,7 @@
 	name = "Lenturi"
 	description = "Used to treat burns. Makes you move slower while it is in your system. Applies stomach damage when it leaves your system."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#6171FF"
 	var/resetting_probability = 0
 	var/spammer = 0
 
@@ -115,7 +115,7 @@
 	name = "Aiuri"
 	description = "Used to treat burns. Does minor eye damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#8C93FF"
 	var/resetting_probability = 0
 	var/message_cd = 0
 
@@ -343,6 +343,26 @@
 			SEND_SIGNAL(Carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	..()
 	return TRUE
+
+/******ORGAN HEALING******/
+/*Suffix: -rite*/
+/datum/reagent/medicine/C2/penthrite
+	name = "Penthrite"
+	description = "An explosive compound used to stabilize heart conditions. May interfere with stomach acid!"
+	color = "#F5F5F5"
+	self_consuming = TRUE
+
+/datum/reagent/medicine/C2/penthrite/on_mob_add(mob/living/M)
+	. = ..()
+	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
+
+/datum/reagent/medicine/C2/penthrite/on_mob_metabolize(mob/living/M)
+	. = ..()
+	M.adjustOrganLoss(ORGAN_SLOT_STOMACH,0.5 * REM)
+
+/datum/reagent/medicine/C2/penthrite/on_mob_end_metabolize(mob/living/M)
+	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
+	. = ..()
 
 /******NICHE******/
 //todo

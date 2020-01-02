@@ -1,4 +1,0 @@
-author: "Couls"
-delete-after: True
-changes: 
-  - bugfix: "people now face west properly when they crawl west"

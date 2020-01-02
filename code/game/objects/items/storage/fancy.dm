@@ -136,6 +136,7 @@
 	icon_type = "cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
 	var/candy = FALSE //for cigarette overlay
+	custom_price = 75
 
 /obj/item/storage/fancy/cigarettes/ComponentInitialize()
 	. = ..()
@@ -194,7 +195,7 @@
 		if(M == user && contents.len > 0 && !user.wear_mask)
 			var/obj/item/clothing/mask/cigarette/W = cig
 			SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, M)
-			M.equip_to_slot_if_possible(W, SLOT_WEAR_MASK)
+			M.equip_to_slot_if_possible(W, ITEM_SLOT_MASK)
 			contents -= W
 			to_chat(user, "<span class='notice'>You take \a [W] out of the pack.</span>")
 		else
@@ -289,6 +290,7 @@
 	icon_state = "cig_paper_pack"
 	icon_type = "rolling paper"
 	spawn_type = /obj/item/rollingpaper
+	custom_price = 25
 
 /obj/item/storage/fancy/rollingpapers/ComponentInitialize()
 	. = ..()

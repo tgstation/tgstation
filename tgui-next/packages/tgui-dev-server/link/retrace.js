@@ -14,7 +14,7 @@ export const loadSourceMaps = async bundleDir => {
   // Destroy and garbage collect consumers
   while (sourceMaps.length !== 0) {
     const { consumer } = sourceMaps.shift();
-    consumer.destroy(consumer);
+    consumer.destroy();
   }
   // Load new sourcemaps
   const paths = await resolveGlob(bundleDir, '*.map');
@@ -63,6 +63,9 @@ export const retrace = stack => {
     .map(frame => {
       // Stringify the frame
       const { file, methodName, lineNumber } = frame;
+      if (!file) {
+        return `  at ${methodName}`;
+      }
       const compactPath = file
         .replace(/^webpack:\/\/\/?/, './')
         .replace(/.*node_modules\//, '');

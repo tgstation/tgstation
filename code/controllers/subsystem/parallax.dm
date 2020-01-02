@@ -10,7 +10,8 @@ SUBSYSTEM_DEF(parallax)
 	var/random_layer
 	var/random_parallax_color
 
-/datum/controller/subsystem/parallax/Initialize(timeofday)
+//These are cached per client so needs to be done asap so people joining at roundstart do not miss these.
+/datum/controller/subsystem/parallax/PreInit()
 	. = ..()
 	if(prob(70))	//70% chance to pick a special extra layer
 		random_layer = pick(/obj/screen/parallax_layer/random/space_gas, /obj/screen/parallax_layer/random/asteroids)

@@ -7,7 +7,7 @@
 
 /obj/machinery/computer/upload/Initialize()
 	. = ..()
-	AddComponent(/datum/component/gps, "Encrypted Upload Signal")
+	AddComponent(/datum/component/gps, "Encrypted Upload")
 
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/aiModule))
