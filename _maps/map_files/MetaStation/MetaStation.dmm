@@ -802,6 +802,9 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "abV" = (
@@ -988,6 +991,9 @@
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/landmark/start/geneticist,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "acs" = (
@@ -19840,6 +19846,14 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"aSy" = (
+/obj/machinery/dna_scannernew,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/plasteel/dark,
+/area/science/genetics)
 "aSA" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -49716,7 +49730,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "chy" = (
@@ -49734,10 +49747,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/gloves/color/latex,
@@ -49776,10 +49785,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/item/folder/white{
 	pixel_x = 4;
 	pixel_y = -3
@@ -50385,20 +50390,14 @@
 /obj/machinery/computer/scan_consolenew{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "ciX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -51023,21 +51022,20 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "ckt" = (
 /obj/machinery/dna_scannernew,
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "cku" = (
 /obj/structure/closet,
@@ -51742,6 +51740,9 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "clT" = (
@@ -51753,18 +51754,12 @@
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "clV" = (
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
+/obj/machinery/vending/wardrobe/gene_wardrobe,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/machinery/vending/wardrobe/gene_wardrobe,
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "clW" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -52088,19 +52083,15 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple,
 /obj/structure/disposalpipe/segment,
 /obj/structure/closet/radiation,
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "cmS" = (
 /obj/machinery/holopad,
@@ -52776,18 +52767,14 @@
 /area/science/research)
 "cok" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/tile/purple{
+/obj/structure/closet/emcloset,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/purple{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/structure/closet/emcloset,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "com" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -52811,6 +52798,9 @@
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/landmark/start/geneticist,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "cor" = (
@@ -53379,6 +53369,9 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "cpz" = (
@@ -53388,6 +53381,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
@@ -53419,6 +53415,9 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "cpE" = (
@@ -53431,6 +53430,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
@@ -54141,6 +54143,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "cqU" = (
@@ -54148,6 +54151,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "cqW" = (
@@ -54165,6 +54169,7 @@
 /obj/structure/mirror{
 	pixel_x = 28
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "cqX" = (
@@ -54595,21 +54600,15 @@
 /turf/open/floor/plasteel,
 /area/science/storage)
 "crU" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 1
 	},
 /obj/structure/bed/roller,
 /mob/living/carbon/monkey,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "crV" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/structure/bed/roller,
 /obj/machinery/door/window/westleft{
 	dir = 1;
@@ -54617,12 +54616,9 @@
 	pixel_y = 2;
 	req_access_txt = "9"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "crW" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/structure/bed/roller,
 /mob/living/carbon/monkey,
 /obj/machinery/door/window/westleft{
@@ -54633,7 +54629,7 @@
 	pixel_y = 2;
 	req_access_txt = "9"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "crZ" = (
 /obj/structure/table,
@@ -55785,10 +55781,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "cus" = (
@@ -55806,10 +55798,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/item/storage/box/monkeycubes,
 /obj/machinery/airalarm{
 	pixel_y = 25
@@ -55836,10 +55824,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/item/radio/headset/headset_medsci,
 /obj/item/radio/headset/headset_medsci,
 /turf/open/floor/plasteel/dark,
@@ -55867,29 +55851,22 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "cuz" = (
 /obj/machinery/computer/scan_consolenew{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "cuA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -56212,6 +56189,9 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "cvy" = (
@@ -56219,23 +56199,19 @@
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "cvz" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -26
 	},
-/obj/effect/turf_decal/tile/purple,
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/bin,
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "cvA" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -75543,6 +75519,9 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/geneticist,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "sUG" = (
@@ -112348,9 +112327,9 @@ diB
 cgq
 cux
 ciW
-ckt
+aSy
 clV
-ckt
+aSy
 ciW
 cpE
 cqW

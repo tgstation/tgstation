@@ -25668,7 +25668,6 @@
 /obj/structure/flora/grass/jungle,
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/ywflowers,
-/mob/living/simple_animal/pet/gondola,
 /turf/open/floor/grass,
 /area/medical/genetics)
 "bos" = (
@@ -27472,7 +27471,7 @@
 "bsq" = (
 /obj/structure/flora/grass/jungle/b,
 /obj/structure/flora/ausbushes/ppflowers,
-/mob/living/simple_animal/pet/gondola,
+/mob/living/simple_animal/pet/dog/corgi/puppy,
 /turf/open/floor/grass,
 /area/medical/genetics)
 "bsr" = (
@@ -29124,7 +29123,7 @@
 	},
 /area/maintenance/department/engine)
 "bwu" = (
-/mob/living/simple_animal/pet/gondola,
+/mob/living/simple_animal/pet/dog/corgi,
 /turf/open/floor/grass,
 /area/medical/genetics)
 "bwv" = (
@@ -29143,17 +29142,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white,
-/area/medical/genetics)
-"bww" = (
-/obj/structure/bed,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/item/bedsheet/medical,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "bwx" = (
@@ -30581,6 +30569,7 @@
 	name = "Monkey Pen";
 	req_one_access_txt = "9"
 	},
+/mob/living/simple_animal/pet/dog/corgi/puppy,
 /turf/open/floor/grass,
 /area/medical/genetics)
 "bzG" = (
@@ -33450,9 +33439,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/turf/open/floor/grass,
-/area/science/genetics)
-"bFz" = (
 /turf/open/floor/grass,
 /area/science/genetics)
 "bFB" = (
@@ -81483,11 +81469,11 @@ bos
 bpw
 bqU
 btS
-btS
-btS
+bwu
 bwu
 btS
-bwu
+btS
+btS
 bAO
 bnv
 bDk

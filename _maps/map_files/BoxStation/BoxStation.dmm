@@ -26400,6 +26400,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "bqf" = (
@@ -26870,6 +26873,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -27854,6 +27860,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "but" = (
@@ -27868,19 +27875,9 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics/cloning)
 "buu" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
 /obj/machinery/vending/wardrobe/gene_wardrobe,
-/turf/open/floor/plasteel/white,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "bux" = (
 /obj/structure/disposalpipe/segment{
@@ -29997,17 +29994,7 @@
 	pixel_y = 5
 	},
 /obj/item/pen,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "bzP" = (
 /obj/machinery/computer/cargo{
@@ -30409,17 +30396,7 @@
 "bAR" = (
 /obj/structure/table/glass,
 /obj/item/storage/box/rxglasses,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "bAS" = (
 /obj/machinery/camera{
@@ -49167,6 +49144,9 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "ddf" = (
@@ -49407,18 +49387,8 @@
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
 /obj/machinery/light,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "eIE" = (
 /obj/effect/turf_decal/delivery,
@@ -49521,6 +49491,7 @@
 	name = "Genetics Requests Console";
 	pixel_y = 30
 	},
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "fqV" = (
@@ -49692,6 +49663,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -50067,21 +50041,14 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "jyF" = (
 /obj/machinery/dna_scannernew,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "jAD" = (
 /obj/structure/grille,
@@ -50332,17 +50299,7 @@
 	pixel_x = -3
 	},
 /obj/item/folder/white,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "kKK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -50547,17 +50504,7 @@
 /obj/machinery/computer/scan_consolenew{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "lHR" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -50769,6 +50716,9 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/geneticist,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "nro" = (
@@ -50943,6 +50893,9 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/geneticist,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "nXT" = (
@@ -50987,20 +50940,10 @@
 /obj/machinery/computer/scan_consolenew{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "orS" = (
 /obj/effect/turf_decal/delivery,
@@ -51382,6 +51325,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "pSN" = (
@@ -51395,6 +51341,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "pUr" = (
@@ -51498,17 +51445,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "qsH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -51617,6 +51554,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"rAv" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel/white,
+/area/science/genetics)
 "rFI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
@@ -51874,18 +51819,7 @@
 /obj/structure/table/glass,
 /obj/item/storage/box/monkeycubes,
 /obj/item/storage/box/monkeycubes,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "tbd" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -52465,6 +52399,9 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "vPE" = (
@@ -52614,6 +52551,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "wLh" = (
@@ -52682,6 +52622,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "xfD" = (
@@ -52692,15 +52635,11 @@
 	pixel_x = 24
 	},
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/purple,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/structure/closet/emcloset,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "xfL" = (
 /obj/structure/table/glass,
@@ -52744,6 +52683,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "xmh" = (
@@ -52818,17 +52760,7 @@
 /area/security/prison)
 "xXe" = (
 /obj/structure/closet/radiation,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "xYA" = (
 /obj/structure/disposalpipe/segment{
@@ -102124,7 +102056,7 @@ psy
 bsH
 bsL
 bsL
-ink
+rAv
 eFD
 bon
 bEC
