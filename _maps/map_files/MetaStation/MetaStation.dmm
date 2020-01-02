@@ -45005,7 +45005,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -75893,6 +75892,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"uPK" = (
+/obj/machinery/rnd/bepis,
+/turf/open/floor/plasteel/white,
+/area/science/misc_lab/range)
 "uRM" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -114129,7 +114132,7 @@ krD
 krD
 krD
 krD
-krD
+uPK
 ocT
 aaf
 aaa
