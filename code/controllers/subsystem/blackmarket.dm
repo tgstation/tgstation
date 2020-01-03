@@ -65,11 +65,7 @@ SUBSYSTEM_DEF(blackmarket)
 
 				var/obj/machinery/ltsrbt/pad = pick(telepads)
 
-				// See this? this is terrible and it is all because visible_message does not show the message to the holder.
-				if(ishuman(purchase.uplink.loc))
-					to_chat(purchase.uplink.loc, "<span class='notice'>[purchase.uplink] flashes a message noting that the order is being processed by [pad].</span>")
-				else
-					purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] flashes a message noting that the order is being processed by [pad].</span>")
+				to_chat(recursive_loc_check(purchase.uplink.loc, /mob), "<span class='notice'>[purchase.uplink] flashes a message noting that the order is being processed by [pad].</span>")
 
 				queued_purchases -= purchase
 				pad.add_to_queue(purchase)
@@ -80,11 +76,7 @@ SUBSYSTEM_DEF(blackmarket)
 				if (!targetturf)
 					continue
 
-				// See comment for the same snipet above
-				if(ishuman(purchase.uplink.loc))
-					to_chat(purchase.uplink.loc, "<span class='notice'>[purchase.uplink] flashes a message noting that the order is being teleported to [get_area(targetturf)] in 60 seconds.</span>")
-				else
-					purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] flashes a message noting that the order is being teleported to [get_area(targetturf)] in 60 seconds.</span>")
+				to_chat(recursive_loc_check(purchase.uplink.loc, /mob), "<span class='notice'>[purchase.uplink] flashes a message noting that the order is being teleported to [get_area(targetturf)] in 60 seconds.</span>")
 
 				// do_teleport does not want to teleport items from nullspace, so it just forceMoves and does sparks.
 				addtimer(CALLBACK(src, /datum/controller/subsystem/blackmarket/proc/fake_teleport, purchase.entry.spawn_item(), targetturf), 60 SECONDS)
@@ -93,16 +85,12 @@ SUBSYSTEM_DEF(blackmarket)
 			// Get the current location of the uplink if it exists, then throws the item from space at the station from a random direction.
 			if(SHIPPING_METHOD_LAUNCH)
 				var/startSide = pick(GLOB.cardinals)
-				var/pickedloc = spaceDebrisStartLoc(startSide, purchase.uplink.z)
+				var/pickedloc = spaceDebrisStartLoc(startSide, (get_turf(purchase.uplink)).z)
 
 				var/atom/movable/item = purchase.entry.spawn_item(pickedloc)
 				item.throw_at(purchase.uplink, 3, 3, spin = FALSE)
 
-				// See comment for the same snipet above
-				if(ishuman(purchase.uplink.loc))
-					to_chat(purchase.uplink.loc, "<span class='notice'>[purchase.uplink] flashes a message noting the order is being launched at the station from [dir2text(startSide)].</span>")
-				else
-					purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] flashes a message noting the order is being launched at the station from [dir2text(startSide)].</span>")
+				to_chat(recursive_loc_check(purchase.uplink.loc, /mob), "<span class='notice'>[purchase.uplink] flashes a message noting the order is being launched at the station from [dir2text(startSide)].</span>")
 
 				queued_purchases -= purchase
 				qdel(purchase)
