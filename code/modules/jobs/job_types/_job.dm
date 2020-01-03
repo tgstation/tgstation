@@ -142,11 +142,6 @@
 		return TRUE	//Available in 0 days = available right now = player is old enough to play.
 	return FALSE
 
-/datum/job/proc/give_wayfinder(client/C)
-	if(C.player_age < 7)
-		return TRUE
-	return FALSE
-
 /datum/job/proc/available_in_days(client/C)
 	if(!C)
 		return 0

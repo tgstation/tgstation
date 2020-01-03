@@ -473,7 +473,7 @@ SUBSYSTEM_DEF(job)
 	if(ishuman(living_mob))
 		var/mob/living/carbon/human/wageslave = living_mob
 		living_mob.add_memory("Your account ID is [wageslave.account_id].")
-		if(job.give_wayfinder(M.client) && !living_mob.has_quirk(/datum/quirk/needswayfinder))
+		if(living_mob.client.player_age < 7 && !living_mob.has_quirk(/datum/quirk/needswayfinder))
 			living_mob.add_quirk(/datum/quirk/needswayfinder, TRUE)
 	if(job && living_mob)
 		job.after_spawn(living_mob, M, joined_late) // note: this happens before the mob has a key! M will always have a client, H might not.
