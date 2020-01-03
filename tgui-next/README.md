@@ -610,6 +610,9 @@ dragging the input.
 - `stepPixelSize: number` (default: 1) - Screen distance mouse needs
 to travel to adjust value by one `step`.
 - `width: string|number` - Width of the element, in `Box` units or pixels.
+- `height: string|numer` - Height of the element, in `Box` units or pixels.
+- `lineHeight: string|number` - lineHeight of the element, in `Box` units or pixels.
+- `fontSize: string|number` - fontSize of the element, in `Box` units or pixels.
 - `format: value => value` - Format value using this function before
 displaying it.
 - `suppressFlicker: number` - A number in milliseconds, for which the input
