@@ -82,7 +82,7 @@
 		var/needed_amount = R.reqs[requirement_path]
 		for(var/content_item_path in contents)
 			// Right path and not blacklisted
-			if(!ispath(content_item_path, requirement_path) || R.blacklist.Find(requirement_path))
+			if(!ispath(content_item_path, requirement_path) || R.blacklist.Find(content_item_path))
 				continue
 
 			needed_amount -= contents[content_item_path]
