@@ -3,11 +3,8 @@ SUBSYSTEM_DEF(blackmarket)
 	flags		 = SS_BACKGROUND
 	init_order	 = INIT_ORDER_DEFAULT
 
-	/// Type of supplypod used for SHIPPING_METHOD_DROPPOD.
-	var/supplypod_type = /obj/structure/closet/supplypod
 	/// Descriptions for each shipping methods.
 	var/shipping_method_descriptions = list(
-		SHIPPING_METHOD_DROPPOD="Launches a supply pod in the general area of the uplink.",
 		SHIPPING_METHOD_LAUNCH="Launches the item at the station from space, cheap but you might not recieve your item at all.",
 		SHIPPING_METHOD_LTSRBT="Long-To-Short-Range-Bluespace-Transceiver, a machine that recieves items outside the station and then teleports them to the location of the uplink.",
 		SHIPPING_METHOD_TELEPORT="Teleports the item in a random area in the station, you get 60 seconds to get there first though."
@@ -91,43 +88,6 @@ SUBSYSTEM_DEF(blackmarket)
 
 				// do_teleport does not want to teleport items from nullspace, so it just forceMoves and does sparks.
 				addtimer(CALLBACK(src, /datum/controller/subsystem/blackmarket/proc/fake_teleport, purchase.entry.spawn_item(), targetturf), 60 SECONDS)
-				queued_purchases -= purchase
-				qdel(purchase)
-			// Get the current area of the uplink and drop the item there. Not in use currently (3/1/2020)
-			if(SHIPPING_METHOD_DROPPOD)
-				// This is mostly just copied from express cargo console but that should be fine.
-				var/area/A = get_area(purchase.uplink)
-				var/LZ
-				if(A.valid_territory)
-					var/list/empty_turfs
-					for(var/turf/open/floor/T in A.contents)
-						if(is_blocked_turf(T))
-							continue
-						LAZYADD(empty_turfs, T)
-						if(MC_TICK_CHECK)
-							break
-					if(empty_turfs && empty_turfs.len)
-						LZ = pick(empty_turfs)
-				// Bad area most likely, just drop it on the uplink. Sure this makes it just go to space and buy but w/e.
-				else
-					LZ = get_turf(purchase.uplink)
-
-				if(LZ)
-					new /obj/effect/DPtarget(LZ, supplypod_type, purchase.entry.spawn_item())
-
-
-					// See comment for the same snipet above
-					if(ishuman(purchase.uplink.loc))
-						to_chat(purchase.uplink.loc, "<span class='notice'>[purchase.uplink] flashes a message noting that the order is being dropped to [get_area(LZ)].</span>")
-					else
-						purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] flashes a message noting that the order is being dropped to [get_area(LZ)].</span>")
-
-					queued_purchases -= purchase
-					qdel(purchase)
-
-					continue
-
-				// Guessing the uplink got sent to the void realm.
 				queued_purchases -= purchase
 				qdel(purchase)
 			// Get the current location of the uplink if it exists, then throws the item from space at the station from a random direction.
