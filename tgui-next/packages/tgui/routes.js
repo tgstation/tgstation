@@ -49,6 +49,7 @@ import { Intellicard } from './interfaces/Intellicard';
 import { KeycardAuth } from './interfaces/KeycardAuth';
 import { LaborClaimConsole } from './interfaces/LaborClaimConsole';
 import { LanguageMenu } from './interfaces/LanguageMenu';
+import { LaunchpadConsole, LaunchpadRemote } from './interfaces/Launchpad';
 import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
@@ -309,6 +310,15 @@ const ROUTES = {
   language_menu: {
     component: () => LanguageMenu,
     scrollable: true,
+  },
+  launchpad_console: {
+    component: () => LaunchpadConsole,
+    scrollable: true,
+  },
+  launchpad_remote: {
+    component: () => LaunchpadRemote,
+    scrollable: false,
+    theme: 'syndicate',
   },
   mech_bay_power_console: {
     component: () => MechBayPowerConsole,
