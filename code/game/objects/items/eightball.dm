@@ -117,7 +117,6 @@
 			"Signs point to yes"
 		),
 		"maybe" = list(
-			"Signs point to yes",
 			"Reply hazy try again",
 			"Ask again later",
 			"Better not tell you now",
