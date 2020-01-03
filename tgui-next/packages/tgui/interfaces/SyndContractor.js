@@ -276,6 +276,7 @@ export const SyndPane = props => {
             buttons={(
               <Button
                 content="Call Extraction"
+                disabled={!data.ongoing_contract || data.extraction_enroute}
                 onClick={() => act('PRG_call_extraction')} />
             )}>
             {contracts.map(contract => {
@@ -331,6 +332,7 @@ export const SyndPane = props => {
           <Section>
             {contractor_hub_items.map(item => {
               const repInfo = item.cost ? (item.cost + ' Rep') : 'FREE';
+              const limited = (item.limited !== -1);
               return (
                 <Section
                   key={item.name}
@@ -338,7 +340,7 @@ export const SyndPane = props => {
                   level={2}
                   buttons={(
                     <Fragment>
-                      {item.limited !== -1 && (
+                      {limited && (
                         <Box
                           inline
                           bold
@@ -348,7 +350,8 @@ export const SyndPane = props => {
                       )}
                       <Button
                         content="Purchase"
-                        disabled={data.redeemable_tc < item.cost}
+                        disabled={data.redeemable_tc < item.cost
+                          || (limited && item.limited <= 0)}
                         onClick={() => act('buy_hub', {
                           item: item.name,
                           cost: item.cost,

@@ -138,6 +138,11 @@
 			if (traitor_data.contractor_hub.current_contract.status == CONTRACT_STATUS_EXTRACTING)
 				data["extraction_enroute"] = TRUE
 				screen_to_be = "extracted"
+			else
+				data["extraction_enroute"] = FALSE
+		else
+			data["ongoing_contract"] = FALSE
+			data["extraction_enroute"] = FALSE
 
 		data["logged_in"] = TRUE
 		data["station_name"] = GLOB.station_name
