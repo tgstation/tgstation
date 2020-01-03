@@ -37,3 +37,20 @@
 
 /obj/item/clothing/suit/space/hardsuit
 	var/toggle_helmet_sound = 'sound/mecha/mechmove03.ogg'
+
+//*************************************************************************
+//** FULPSTATION IMPROVED RECORD SECURITY PR -Surrealistik Oct 2019 BEGINS
+//**-----------------------------------------------------------------------
+//** -Adds security levels to the security record computer.
+//** -Adds arrest logging for security bots.
+//*************************************************************************
+
+/mob/living/simple_animal/bot/secbot
+	var/list/arrest_cooldown = list() //If you're in the list, we don't log the arrest
+
+//*************************************************************************
+//** FULPSTATION IMPROVED RECORD SECURITY PR -Surrealistik Oct 2019 ENDS
+//**-----------------------------------------------------------------------
+//** -Adds security levels to the security record computer.
+//** -Adds arrest logging for security bots.
+//*************************************************************************
