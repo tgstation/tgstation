@@ -65,6 +65,9 @@ Run one of the following:
   hot module replacement and logging facilities in all running instances
   of tgui. In short, this means that you will instantly see changes in the
   game as you code it. Very useful, highly recommended.
+  In order to use, you should start the game server first, connect to it so dreamseeker is
+  open, then start the dev server. You'll know if it's hooked correctly if data gets dumped
+  to the log when tgui windows are opened.
 - `bin/tgui --dev --reload` - reload byond cache once.
 - `bin/tgui --dev --debug` - run server with debug logging enabled.
 - `bin/tgui --dev --no-hot` - disable hot module replacement (helps when
@@ -357,7 +360,7 @@ Props:
   - `over: boolean` - dropdown renders over instead of below
   - `color: string` - color of dropdown button
   - `onClick: (e) => void` - Called when dropdown button is clicked
-  - `onSet: (e, value) => void` - Called when a value is picked from the list, `value` is the value that was picked
+  - `onSelected: (value) => void` - Called when a value is picked from the list, `value` is the value that was picked
 
 ### `Flex`
 

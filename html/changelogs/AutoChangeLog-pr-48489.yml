@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - rscadd: "Maint loot table has been adjusted, may now contain some special stuff. Get hunting!"

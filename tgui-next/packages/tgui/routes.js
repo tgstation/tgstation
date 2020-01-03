@@ -36,24 +36,32 @@ import { Cryo } from './interfaces/Cryo';
 import { DecalPainter } from './interfaces/DecalPainter';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { DnaVault } from './interfaces/DnaVault';
+import { EightBallVote } from './interfaces/EightBallVote';
+import { EmergencyShuttleConsole } from './interfaces/EmergencyShuttleConsole';
 import { EngravedMessage } from './interfaces/EngravedMessage';
 import { Gps } from './interfaces/Gps';
 import { GravityGenerator } from './interfaces/GravityGenerator';
+import { GulagTeleporterConsole } from './interfaces/GulagTeleporterConsole';
 import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
 import { Holodeck } from './interfaces/Holodeck';
 import { ImplantChair } from './interfaces/ImplantChair';
+import { Intellicard } from './interfaces/Intellicard';
 import { KeycardAuth } from './interfaces/KeycardAuth';
 import { LaborClaimConsole } from './interfaces/LaborClaimConsole';
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
+import { Mule } from './interfaces/Mule';
 import { NaniteChamberControl } from './interfaces/NaniteChamberControl';
 import { NaniteCloudControl } from './interfaces/NaniteCloudControl';
 import { NaniteProgramHub } from './interfaces/NaniteProgramHub';
 import { NaniteProgrammer } from './interfaces/NaniteProgrammer';
 import { NaniteRemote } from './interfaces/NaniteRemote';
+import { NotificationPreferences } from './interfaces/NotificationPreferences';
+import { NtnetRelay } from './interfaces/NtnetRelay';
 import { NtosArcade } from './interfaces/NtosArcade';
+import { NtosConfiguration } from './interfaces/NtosConfiguration';
 import { NtosMain } from './interfaces/NtosMain';
 import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
 import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
@@ -72,6 +80,8 @@ import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { SatelliteControl } from './interfaces/SatelliteControl';
 import { ScannerGate } from './interfaces/ScannerGate';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
+import { Sleeper } from './interfaces/Sleeper';
+import { SlimeBodySwapper } from './interfaces/SlimeBodySwapper';
 import { SmartVend } from './interfaces/SmartVend';
 import { Smes } from './interfaces/Smes';
 import { SmokeMachine } from './interfaces/SmokeMachine';
@@ -88,6 +98,7 @@ import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
 import { Vending } from './interfaces/Vending';
 import { Wires } from './interfaces/Wires';
+import { SyndContractor } from './interfaces/SyndContractor';
 
 const ROUTES = {
   achievements: {
@@ -247,6 +258,14 @@ const ROUTES = {
     component: () => DnaVault,
     scrollable: false,
   },
+  eightball: {
+    component: () => EightBallVote,
+    scrollable: false,
+  },
+  emergency_shuttle_console: {
+    component: () => EmergencyShuttleConsole,
+    scrollable: false,
+  },
   engraved_message: {
     component: () => EngravedMessage,
     scrollable: false,
@@ -257,6 +276,10 @@ const ROUTES = {
   },
   gravity_generator: {
     component: () => GravityGenerator,
+    scrollable: false,
+  },
+  gulag_console: {
+    component: () => GulagTeleporterConsole,
     scrollable: false,
   },
   gulag_item_reclaimer: {
@@ -270,6 +293,10 @@ const ROUTES = {
   implantchair: {
     component: () => ImplantChair,
     scrollable: false,
+  },
+  intellicard: {
+    component: () => Intellicard,
+    scrollable: true,
   },
   keycard_auth: {
     component: () => KeycardAuth,
@@ -295,6 +322,10 @@ const ROUTES = {
     component: () => Mint,
     scrollable: false,
   },
+  mulebot: {
+    component: () => Mule,
+    scrollable: false,
+  },
   nanite_chamber_control: {
     component: () => NaniteChamberControl,
     scrollable: true,
@@ -315,6 +346,26 @@ const ROUTES = {
     component: () => NaniteRemote,
     scrollable: true,
   },
+  notificationpanel: {
+    component: () => NotificationPreferences,
+    scrollable: true,
+  },
+  ntnet_relay: {
+    component: () => NtnetRelay,
+    scrollable: false,
+  },
+  ntos_arcade: {
+    component: () => NtosArcade,
+    wrapper: () => NtosWrapper,
+    scrollable: false,
+    theme: 'ntos',
+  },
+  ntos_configuration: {
+    component: () => NtosConfiguration,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
   ntos_main: {
     component: () => NtosMain,
     wrapper: () => NtosWrapper,
@@ -327,14 +378,14 @@ const ROUTES = {
     scrollable: true,
     theme: 'ntos',
   },
-  ntos_arcade: {
-    component: () => NtosArcade,
-    wrapper: () => NtosWrapper,
-    scrollable: false,
-    theme: 'ntos',
-  },
   ntos_power_monitor: {
     component: () => PowerMonitor,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_station_alert: {
+    component: () => StationAlertConsole,
     wrapper: () => NtosWrapper,
     scrollable: true,
     theme: 'ntos',
@@ -406,6 +457,14 @@ const ROUTES = {
     component: () => ShuttleManipulator,
     scrollable: true,
   },
+  sleeper: {
+    component: () => Sleeper,
+    scrollable: false,
+  },
+  slime_swap_body: {
+    component: () => SlimeBodySwapper,
+    scrollable: true,
+  },
   smartvend: {
     component: () => SmartVend,
     scrollable: true,
@@ -437,6 +496,12 @@ const ROUTES = {
   suit_storage_unit: {
     component: () => SuitStorageUnit,
     scrollable: false,
+  },
+  synd_contract: {
+    component: () => SyndContractor,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'syndicate',
   },
   tanks: {
     component: () => Tank,

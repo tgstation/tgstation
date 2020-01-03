@@ -8,6 +8,7 @@
 	name = "remove embedded objects"
 	time = 32
 	accept_hand = 1
+	experience_given = 5
 	var/obj/item/bodypart/L = null
 
 
@@ -22,7 +23,7 @@
 		user.visible_message("<span class='notice'>[user] looks for [target]'s [parse_zone(user.zone_selected)].</span>", "<span class='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
 
 
-/datum/surgery_step/remove_object/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+/datum/surgery_step/remove_object/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(L)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
@@ -45,4 +46,4 @@
 	else
 		to_chat(user, "<span class='warning'>You can't find [target]'s [parse_zone(user.zone_selected)], let alone any objects embedded in it!</span>")
 
-	return ..(default_display_results = FALSE)
+	return ..()

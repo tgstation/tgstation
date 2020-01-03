@@ -1,0 +1,4 @@
+author: "Thebleh"
+delete-after: True
+changes: 
+  - bugfix: "Public Nanite Chamber cloud IDs can be changed again."
