@@ -417,6 +417,7 @@
 	damage_type = BRUTE
 	hitsound = 'sound/effects/splat.ogg'
 	var/chain
+	var/knockdown_time_carbon = (0.5 SECONDS)
 
 /obj/projectile/hook/fire(setAngle)
 	if(firer)
