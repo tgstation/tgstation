@@ -130,13 +130,18 @@
 /area/ruin/powered/beach)
 "bR" = (
 /obj/item/melee/skateboard/hoverboard,
+/mob/living/simple_animal/chicken{
+	name = "Chicken Joe"
+	},
 /turf/open/floor/plating/beach/coastline_t,
 /area/ruin/powered/beach)
 "bV" = (
 /turf/open/floor/plating/beach/water,
 /area/ruin/powered/beach)
 "cg" = (
-/obj/structure/girder,
+/obj/structure/girder{
+	damage_deflection = 22
+	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -445,6 +450,13 @@
 /obj/machinery/reagentgrinder,
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
+"uP" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/pill/zoom,
+/obj/item/reagent_containers/pill/zoom,
+/obj/item/reagent_containers/pill/zoom,
+/turf/open/floor/wood,
+/area/ruin/powered/beach)
 "uR" = (
 /obj/effect/turf_decal/sand,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -498,6 +510,11 @@
 /obj/machinery/door/airlock/sandstone{
 	name = "Resort Bathroom"
 	},
+/turf/open/floor/wood,
+/area/ruin/powered/beach)
+"yY" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/pill/morphine,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "zd" = (
@@ -706,6 +723,10 @@
 /obj/item/cultivator,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/powered/beach)
+"JG" = (
+/obj/machinery/grill,
+/turf/open/floor/wood,
+/area/ruin/powered/beach)
 "JL" = (
 /obj/structure/flora/ausbushes/stalkybush,
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -738,6 +759,13 @@
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plasteel,
 /area/ruin/powered/beach)
+"MI" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/pill/lsd,
+/obj/item/reagent_containers/pill/lsd,
+/obj/item/reagent_containers/pill/lsd,
+/turf/open/floor/wood,
+/area/ruin/powered/beach)
 "MK" = (
 /obj/item/storage/backpack/duffelbag,
 /obj/item/storage/backpack/duffelbag,
@@ -753,7 +781,9 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "NU" = (
-/obj/structure/girder,
+/obj/structure/girder{
+	damage_deflection = 22
+	},
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "Ol" = (
@@ -772,6 +802,11 @@
 /area/ruin/powered/beach)
 "Pr" = (
 /turf/open/floor/plating,
+/area/ruin/powered/beach)
+"Pz" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/pill/happy,
+/turf/open/floor/wood,
 /area/ruin/powered/beach)
 "PL" = (
 /obj/machinery/light,
@@ -903,6 +938,13 @@
 /obj/structure/punching_bag,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
+"XO" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/pill/morphine,
+/obj/item/reagent_containers/pill/morphine,
+/obj/item/reagent_containers/pill/morphine,
+/turf/open/floor/wood,
+/area/ruin/powered/beach)
 "Yd" = (
 /obj/machinery/chem_master/condimaster{
 	name = "CondiMaster Neo";
@@ -923,6 +965,11 @@
 /obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
 /obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
 /obj/machinery/light,
+/obj/item/disk/plantgene,
+/obj/item/disk/plantgene,
+/obj/item/disk/plantgene,
+/obj/item/disk/plantgene,
+/obj/item/disk/plantgene,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/powered/beach)
 "Zu" = (
@@ -1041,7 +1088,7 @@ aA
 aA
 aA
 aA
-NU
+Pr
 aT
 Pr
 Pr
@@ -1089,9 +1136,9 @@ bN
 aA
 aA
 Zu
+Pz
 Ga
-Ga
-Ga
+Pz
 aA
 aA
 iw
@@ -1300,7 +1347,7 @@ aP
 aP
 aP
 uz
-Ga
+yY
 ub
 bD
 aP
@@ -1368,7 +1415,7 @@ aC
 aC
 aC
 aC
-Ga
+uP
 aD
 aD
 yB
@@ -1398,9 +1445,9 @@ aC
 RC
 aP
 tW
+JG
 aC
-aC
-Ga
+MI
 aD
 aD
 yE
@@ -1432,7 +1479,7 @@ Lk
 aC
 aC
 aC
-Ga
+XO
 aD
 aD
 GZ
