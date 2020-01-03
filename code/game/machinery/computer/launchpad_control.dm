@@ -100,17 +100,16 @@
 		if("set_pos")
 			var/new_x = text2num(params["x"])
 			var/new_y = text2num(params["y"])
-			if(!isnull(new_x))
-				current_pad.set_x(new_x)
-			if(!isnull(new_y))
-				current_pad.set_y(new_y)
+			current_pad.set_offset(new_x, new_y)
+			. = TRUE
 		if("move_pos")
 			var/plus_x = text2num(params["x"])
 			var/plus_y = text2num(params["y"])
-			if(plus_x)
-				current_pad.set_x(current_pad.x_offset + plus_x)
-			if(plus_y)
-				current_pad.set_y(current_pad.y_offset + plus_y)
+			current_pad.set_offset(
+				x = current_pad.x_offset + plus_x,
+				y = current_pad.y_offset + plus_y
+			)
+			. = TRUE
 		if("rename")
 			. = TRUE
 			var/new_name = params["name"]

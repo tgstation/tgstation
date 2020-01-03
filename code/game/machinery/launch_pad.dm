@@ -98,15 +98,14 @@
 	else
 		holder.icon_state = null
 
-/obj/machinery/launchpad/proc/set_x(x)
+/obj/machinery/launchpad/proc/set_offset(x, y)
 	if(teleporting)
 		return
-	x_offset = CLAMP(x, -range, range)
-
-/obj/machinery/launchpad/proc/set_y(y)
-	if(teleporting)
-		return
-	y_offset = CLAMP(y, -range, range)
+	if(!isnull(x))
+		x_offset = CLAMP(x, -range, range)
+	if(!isnull(y))
+		y_offset = CLAMP(y, -range, range)
+	update_indicator()
 
 /obj/machinery/launchpad/proc/doteleport(mob/user, sending)
 	if(teleporting)
@@ -361,18 +360,15 @@
 		if("set_pos")
 			var/new_x = text2num(params["x"])
 			var/new_y = text2num(params["y"])
-			if(!isnull(new_x))
-				pad.set_x(new_x)
-			if(!isnull(new_y))
-				pad.set_y(new_y)
+			pad.set_offset(new_x, new_y)
 			. = TRUE
 		if("move_pos")
 			var/plus_x = text2num(params["x"])
 			var/plus_y = text2num(params["y"])
-			if(plus_x)
-				pad.set_x(pad.x_offset + plus_x)
-			if(plus_y)
-				pad.set_y(pad.y_offset + plus_y)
+			pad.set_offset(
+				x = pad.x_offset + plus_x,
+				y = pad.y_offset + plus_y
+			)
 			. = TRUE
 		if("rename")
 			. = TRUE
