@@ -18,10 +18,10 @@
 	else
 		if(zero_amount())
 			return
-		if(loc != user)
-			return
 		chosen_circuit = input("What type of circuit would you like to remove?", "Choose a Circuit Type", chosen_circuit) in list("airlock","firelock","fire alarm","air alarm","APC","cancel")
 		if(zero_amount())
+			return
+		if(loc != user)
 			return
 		switch(chosen_circuit)
 			if("cancel")
