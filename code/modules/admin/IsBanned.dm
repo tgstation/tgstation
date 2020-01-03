@@ -5,21 +5,20 @@
 #define STICKYBAN_MAX_MATCHES 15
 #define STICKYBAN_MAX_EXISTING_USER_MATCHES 3 //ie, users who were connected before the ban triggered
 #define STICKYBAN_MAX_ADMIN_MATCHES 1
-
+GLOBAL_LIST_EMPTY(ban_check_gate)
 /world/IsBanned(key, address, computer_id, type, real_bans_only=FALSE)
-	var/static/key_cache = list()
 	if(!real_bans_only)
-		if(key_cache[key])
+		if(GLOB.ban_check_gate[key])
 			return list("reason"="concurrent connection attempts", "desc"="You are attempting to connect too fast. Try again.")
-		key_cache[key] = 1
+		GLOB.ban_check_gate[key] = 1
 
 	debug_world_log("isbanned(): '[args.Join("', '")]'")
 	if (!key || (!real_bans_only && (!address || !computer_id)))
 		if(real_bans_only)
-			key_cache[key] = 0
+			GLOB.ban_check_gate[key] = 0
 			return FALSE
 		log_access("Failed Login (invalid data): [key] [address]-[computer_id]")
-		key_cache[key] = 0
+		GLOB.ban_check_gate[key] = 0
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided invalid or blank information to the server on connection (byond username, IP, and Computer ID.) Provided information for reference: Username:'[key]' IP:'[address]' Computer ID:'[computer_id]'. (If you continue to get this error, please restart byond or contact byond support.)")
 
 	var/admin = FALSE
@@ -46,18 +45,18 @@
 					addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass the whitelist</span>")
 			else
 				log_access("Failed Login: [key] - Not on whitelist")
-				key_cache[key] = 0
+				GLOB.ban_check_gate[key] = 0
 				return list("reason"="whitelist", "desc" = "\nReason: You are not on the white list for this server")
 
 	//Guest Checking
 	if(!real_bans_only && !C && IsGuestKey(key))
 		if (CONFIG_GET(flag/guest_ban))
 			log_access("Failed Login: [key] - Guests not allowed")
-			key_cache[key] = 0
+			GLOB.ban_check_gate[key] = 0
 			return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
 		if (CONFIG_GET(flag/panic_bunker) && SSdbcore.Connect())
 			log_access("Failed Login: [key] - Guests not allowed during panic bunker")
-			key_cache[key] = 0
+			GLOB.ban_check_gate[key] = 0
 			return list("reason"="guest", "desc"="\nReason: Sorry but the server is currently not accepting connections from never before seen players or guests. If you have played on this server with a byond account before, please log in to the byond account you have played from.")
 
 	//Population Cap Checking
@@ -67,7 +66,7 @@
 		if(popcap_value >= extreme_popcap && !GLOB.joined_player_list.Find(ckey))
 			if(!CONFIG_GET(flag/byond_member_bypass_popcap) || !world.IsSubscribed(ckey, "BYOND"))
 				log_access("Failed Login: [key] - Population cap reached")
-				key_cache[key] = 0
+				GLOB.ban_check_gate[key] = 0
 				return list("reason"="popcap", "desc"= "\nReason: [CONFIG_GET(string/extreme_popcap_message)]")
 
 	if(CONFIG_GET(flag/sql_enabled))
@@ -100,11 +99,11 @@
 				This ban (BanID #[i["id"]]) was applied by [i["admin_key"]] on [i["bantime"]] during round ID [i["round_id"]].
 				[expires]"}
 				log_access("Failed Login: [key] [computer_id] [address] - Banned (#[i["id"]])")
-				key_cache[key] = 0
+				GLOB.ban_check_gate[key] = 0
 				return list("reason"="Banned","desc"="[desc]")
 	if (admin)
 		if (GLOB.directory[ckey])
-			key_cache[key] = 0
+			GLOB.ban_check_gate[key] = 0
 			return
 
 		//oh boy, so basically, because of a bug in byond, sometimes stickyban matches don't trigger here, so we can't exempt admins.
@@ -115,12 +114,16 @@
 				GLOB.stickybanadmintexts[banned_ckey] = world.GetConfig("ban", banned_ckey)
 				world.SetConfig("ban", banned_ckey, null)
 		if (!SSstickyban.initialized)
-			key_cache[key] = 0
+			GLOB.ban_check_gate[key] = 0
 			return
 		GLOB.stickybanadminexemptions[ckey] = world.time
+		//This needs to go before the sleep, since we know we will be bailing out of this proc at this point
+		//and we dont' want this to be a 1 if the server maint subsystem fires on the next tick, as it will
+		//otherwise log an entry where it shouldnt
+		GLOB.ban_check_gate[key] = 0
 		stoplag() // sleep a byond tick
 		GLOB.stickbanadminexemptiontimerid = addtimer(CALLBACK(GLOBAL_PROC, /proc/restore_stickybans), 5 SECONDS, TIMER_STOPPABLE|TIMER_UNIQUE|TIMER_OVERRIDE)
-		key_cache[key] = 0
+
 		return
 
 	var/list/ban = ..()	//default pager ban stuff
@@ -129,7 +132,7 @@
 		if (!admin)
 			. = ban
 		if (real_bans_only)
-			key_cache[key] = 0
+			GLOB.ban_check_gate[key] = 0
 			return
 		var/bannedckey = "ERROR"
 		if (ban["ckey"])
@@ -166,7 +169,7 @@
 				newmatches_admin[ckey] = ckey
 
 			if (cachedban["reverting"] || cachedban["timeout"])
-				key_cache[key] = 0
+				GLOB.ban_check_gate[key] = 0
 				return null
 
 			newmatches[ckey] = ckey
@@ -204,7 +207,7 @@
 						cachedban -= "reverting"
 						SSstickyban.cache[bannedckey] = cachedban
 						world.SetConfig("ban", bannedckey, list2stickyban(cachedban))
-				key_cache[key] = 0
+				GLOB.ban_check_gate[key] = 0
 				return null
 
 		if (ban["fromdb"])
@@ -224,7 +227,7 @@
 			if (message)
 				message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass a matching host/sticky ban on [bannedckey]</span>")
 				addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching host/sticky ban on [bannedckey]</span>")
-			key_cache[key] = 0
+			GLOB.ban_check_gate[key] = 0
 			return null
 
 		if (C) //user is already connected!.
@@ -233,7 +236,7 @@
 		var/desc = "\nReason:(StickyBan) You, or another user of this computer or connection ([bannedckey]) is banned from playing here. The ban reason is:\n[ban["message"]]\nThis ban was applied by [ban["admin"]]\nThis is a BanEvasion Detection System ban, if you think this ban is a mistake, please wait EXACTLY 6 seconds, then try again before filing an appeal.\n"
 		. = list("reason" = "Stickyban", "desc" = desc)
 		log_access("Failed Login: [key] [computer_id] [address] - StickyBanned [ban["message"]] Target Username: [bannedckey] Placed by [ban["admin"]]")
-	key_cache[key] = 0
+	GLOB.ban_check_gate[key] = 0
 	return .
 
 /proc/restore_stickybans()

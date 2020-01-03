@@ -1,4 +1,5 @@
 #define PING_BUFFER_TIME 25
+#define KEY_BAN_CACHE_MAX_LENGTH 2048
 
 SUBSYSTEM_DEF(server_maint)
 	name = "Server Tasks"
@@ -8,6 +9,7 @@ SUBSYSTEM_DEF(server_maint)
 	init_order = INIT_ORDER_SERVER_MAINT
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
+	var/list/currentkeys
 	var/cleanup_ticker = 0
 
 /datum/controller/subsystem/server_maint/PreInit()
@@ -23,6 +25,15 @@ SUBSYSTEM_DEF(server_maint)
 		if(listclearnulls(GLOB.clients))
 			log_world("Found a null in clients list!")
 		src.currentrun = GLOB.clients.Copy()
+
+		if(length(GLOB.ban_check_gate) > KEY_BAN_CACHE_MAX_LENGTH)
+			//Purge it as the actual entries do not matter outside of gating the entry to IsBanned
+			//This is just to avoid this list getting huge if someone finds a way to generate large
+			//numbers of ckeys
+			GLOB.ban_check_gate = list()
+			log_admin_private("The IsBanned gate cache was cleared")
+
+		src.currentkeys = GLOB.ban_check_gate
 
 		switch (cleanup_ticker) // do only one of these at a time, once per 5 fires
 			if (0)
@@ -74,6 +85,16 @@ SUBSYSTEM_DEF(server_maint)
 		if (MC_TICK_CHECK) //one day, when ss13 has 1000 people per server, you guys are gonna be glad I added this tick check
 			return
 
+	var/list/currentkeys = src.currentkeys
+	for(var/key in currentkeys)
+		if (GLOB.ban_check_gate[key] == 1)
+			log_admin_private("[key] found in IsBanned gate cache during server maint cleanup tick, check for runtimes during IsBanned")
+			GLOB.ban_check_gate[key] = 0
+		//Yield if we're going over time, we can do this because IsBanned itself has minimal to no sleeps, so the status of an entry
+		//in the ban check gate each time we resume, should always be 0, when you inevitably prove this wrong, it was all mso's fault
+		if (MC_TICK_CHECK)
+			return
+
 /datum/controller/subsystem/server_maint/Shutdown()
 	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", TRUE) //second parameter ensures only afk clients are kicked
 	var/server = CONFIG_GET(string/server)
@@ -91,3 +112,4 @@ SUBSYSTEM_DEF(server_maint)
 		SSblackbox.record_feedback("text", "server_tools", 1, tgsversion.raw_parameter)
 
 #undef PING_BUFFER_TIME
+#undef KEY_BAN_CACHE_MAX_LENGTH
