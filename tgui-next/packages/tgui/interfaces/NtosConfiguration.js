@@ -42,7 +42,7 @@ export const NtosConfiguration = props => {
                 }}>
                 {battery.charge} / {battery.max}
               </ProgressBar>
-            ) : 'Not Availible'}
+            ) : 'Not Available'}
           </LabeledList.Item>
         </LabeledList>
       </Section>
