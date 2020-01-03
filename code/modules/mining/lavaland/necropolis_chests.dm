@@ -417,7 +417,7 @@
 	damage_type = BRUTE
 	hitsound = 'sound/effects/splat.ogg'
 	var/chain
-	var/knockdown_time_carbon = (0.5 SECONDS)
+	var/knockdown_time = (0.5 SECONDS)
 
 /obj/projectile/hook/fire(setAngle)
 	if(firer)
@@ -433,6 +433,10 @@
 			return
 		A.visible_message("<span class='danger'>[A] is snagged by [firer]'s hook!</span>")
 		new /datum/forced_movement(A, get_turf(firer), 5, TRUE)
+		if (isliving(target))
+			var/mob/living/fresh_meat = target
+			fresh_meat.Knockdown(knockdown_time)
+			return
 		//TODO: keep the chain beamed to A
 		//TODO: needs a callback to delete the chain
 
