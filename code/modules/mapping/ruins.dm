@@ -15,12 +15,12 @@
 				valid = FALSE
 			else
 				for(var/type in allowed_areas)
+					valid = FALSE // set to false before we check
 					if(istype(new_area, type)) // it's at least one of our types so it's whitelisted
 						valid = TRUE
 						break
-					valid = FALSE // so if the list isn't empty but it wasn't an area we checked then it's false
-				if(!valid)
-					break
+			if(!valid)
+				break
 
 		if(!valid)
 			continue

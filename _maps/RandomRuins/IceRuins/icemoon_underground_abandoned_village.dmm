@@ -226,7 +226,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/icemoon/underground/explored)
 "tN" = (
-/turf/closed/mineral/random/snow,
+/turf/closed/mineral/random/snow/no_caves,
 /area/icemoon/underground/explored)
 "tX" = (
 /obj/structure/table/wood,

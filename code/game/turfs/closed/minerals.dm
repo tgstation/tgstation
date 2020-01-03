@@ -204,7 +204,6 @@
 		/turf/closed/mineral/silver/ice = 50, /turf/closed/mineral/plasma/ice = 50, /turf/closed/mineral/bscrystal/ice = 20)
 
 
-
 /turf/closed/mineral/random/low_chance
 	icon_state = "rock_lowchance"
 	mineralChance = 6
@@ -245,6 +244,12 @@
 		/turf/closed/mineral/uranium/ice = 5, /turf/closed/mineral/diamond/ice = 1, /turf/closed/mineral/gold/ice = 10, /turf/closed/mineral/titanium/ice = 11,
 		/turf/closed/mineral/silver/ice = 12, /turf/closed/mineral/plasma/ice = 20, /turf/closed/mineral/iron/ice = 40,
 		/turf/closed/mineral/gibtonite/ice = 4, /turf/open/floor/plating/asteroid/airless/cave/snow = 1, /turf/closed/mineral/bscrystal/ice = 1)
+
+/turf/closed/mineral/random/snow/no_caves
+	mineralSpawnChanceList = list(
+		/turf/closed/mineral/uranium/ice = 5, /turf/closed/mineral/diamond/ice = 1, /turf/closed/mineral/gold/ice = 10, /turf/closed/mineral/titanium/ice = 11,
+		/turf/closed/mineral/silver/ice = 12, /turf/closed/mineral/plasma/ice = 20, /turf/closed/mineral/iron/ice = 40,
+		/turf/closed/mineral/gibtonite/ice = 4, /turf/closed/mineral/bscrystal/ice = 1)
 
 /turf/closed/mineral/random/labormineral
 	mineralSpawnChanceList = list(
