@@ -85,7 +85,8 @@ SUBSYSTEM_DEF(blackmarket)
 			// Get the current location of the uplink if it exists, then throws the item from space at the station from a random direction.
 			if(SHIPPING_METHOD_LAUNCH)
 				var/startSide = pick(GLOB.cardinals)
-				var/pickedloc = spaceDebrisStartLoc(startSide, (get_turf(purchase.uplink)).z)
+				var/turf/T = get_turf(purchase.uplink)
+				var/pickedloc = spaceDebrisStartLoc(startSide, T.z)
 
 				var/atom/movable/item = purchase.entry.spawn_item(pickedloc)
 				item.throw_at(purchase.uplink, 3, 3, spin = FALSE)
