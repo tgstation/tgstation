@@ -212,10 +212,10 @@
 
 	if(check_above)
 		if(damage_amt >= damage.get_value())
-				reached_threshold = TRUE
+			reached_threshold = TRUE
 	else
 		if(damage_amt < damage.get_value())
-				reached_threshold = TRUE
+			reached_threshold = TRUE
 
 	if(reached_threshold)
 		if(!spent)
