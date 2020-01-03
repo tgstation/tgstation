@@ -1,0 +1,6 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - rscadd: "tgui-next magic eight ball"
+  - tweak: "haunted eight ball is now shook for 30 seconds, which gives it a 30 second ghost vote time instead of 15"
+  - bugfix: "Haunted eight ball actually clears its vote list after counting votes, so it functions after over two years."
