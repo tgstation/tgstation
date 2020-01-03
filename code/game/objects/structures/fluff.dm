@@ -267,7 +267,7 @@
 	icon = 'icons/obj/smooth_structures/hedge.dmi'
 	icon_state = "hedge"
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/fluff/hedge)
+	canSmoothWith = list(/obj/structure/fluff/hedge, /obj/structure/fluff/hedge/opaque)
 	density = TRUE
 	anchored = TRUE
 	deconstructible = FALSE
