@@ -261,6 +261,11 @@
 "hZ" = (
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/beach)
+"if" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/pill/morphine,
+/turf/open/floor/wood,
+/area/ruin/powered/beach)
 "iw" = (
 /turf/closed/mineral/random/volcanic,
 /area/lavaland/surface/outdoors/explored)
@@ -325,6 +330,11 @@
 /obj/machinery/processor,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
+"mW" = (
+/obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/ruin/powered/beach)
 "nl" = (
 /obj/structure/flora/junglebush,
 /turf/open/floor/plating/beach/sand,
@@ -332,6 +342,13 @@
 "nO" = (
 /obj/structure/sign/poster/contraband/have_a_puff,
 /turf/closed/wall/mineral/sandstone,
+/area/ruin/powered/beach)
+"nZ" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/pill/morphine,
+/obj/item/reagent_containers/pill/morphine,
+/obj/item/reagent_containers/pill/morphine,
+/turf/open/floor/wood,
 /area/ruin/powered/beach)
 "og" = (
 /turf/open/floor/plating/beach/coastline_b{
@@ -450,13 +467,6 @@
 /obj/machinery/reagentgrinder,
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
-"uP" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/pill/zoom,
-/obj/item/reagent_containers/pill/zoom,
-/obj/item/reagent_containers/pill/zoom,
-/turf/open/floor/wood,
-/area/ruin/powered/beach)
 "uR" = (
 /obj/effect/turf_decal/sand,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -512,11 +522,6 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
-"yY" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/pill/morphine,
-/turf/open/floor/wood,
-/area/ruin/powered/beach)
 "zd" = (
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plating/beach/sand,
@@ -544,6 +549,10 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
+"AI" = (
+/obj/machinery/grill,
+/turf/open/floor/wood,
+/area/ruin/powered/beach)
 "BG" = (
 /obj/structure/fluff/railing{
 	dir = 8
@@ -558,6 +567,11 @@
 	dir = 8
 	},
 /turf/open/floor/sepia,
+/area/ruin/powered/beach)
+"BZ" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/pill/happy,
+/turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Ca" = (
 /obj/structure/table,
@@ -723,10 +737,6 @@
 /obj/item/cultivator,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/powered/beach)
-"JG" = (
-/obj/machinery/grill,
-/turf/open/floor/wood,
-/area/ruin/powered/beach)
 "JL" = (
 /obj/structure/flora/ausbushes/stalkybush,
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -759,13 +769,6 @@
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plasteel,
 /area/ruin/powered/beach)
-"MI" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/pill/lsd,
-/obj/item/reagent_containers/pill/lsd,
-/obj/item/reagent_containers/pill/lsd,
-/turf/open/floor/wood,
-/area/ruin/powered/beach)
 "MK" = (
 /obj/item/storage/backpack/duffelbag,
 /obj/item/storage/backpack/duffelbag,
@@ -786,6 +789,10 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
+"NZ" = (
+/obj/item/melee/skateboard,
+/turf/open/floor/pod/light,
+/area/ruin/powered/beach)
 "Ol" = (
 /obj/machinery/light{
 	dir = 4
@@ -803,9 +810,11 @@
 "Pr" = (
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
-"Pz" = (
+"PH" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/pill/happy,
+/obj/item/reagent_containers/pill/lsd,
+/obj/item/reagent_containers/pill/lsd,
+/obj/item/reagent_containers/pill/lsd,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "PL" = (
@@ -825,6 +834,13 @@
 /area/ruin/powered/beach)
 "PS" = (
 /turf/open/floor/pod/dark,
+/area/ruin/powered/beach)
+"PY" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/pill/zoom,
+/obj/item/reagent_containers/pill/zoom,
+/obj/item/reagent_containers/pill/zoom,
+/turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Qz" = (
 /obj/machinery/light{
@@ -937,13 +953,6 @@
 "Xt" = (
 /obj/structure/punching_bag,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/beach)
-"XO" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/pill/morphine,
-/obj/item/reagent_containers/pill/morphine,
-/obj/item/reagent_containers/pill/morphine,
-/turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Yd" = (
 /obj/machinery/chem_master/condimaster{
@@ -1094,7 +1103,7 @@ Pr
 Pr
 Pr
 Vu
-bb
+mW
 aD
 aD
 cS
@@ -1126,7 +1135,7 @@ Pr
 eg
 Pr
 Pr
-bb
+mW
 aD
 aD
 aD
@@ -1136,9 +1145,9 @@ bN
 aA
 aA
 Zu
-Pz
+BZ
 Ga
-Pz
+BZ
 aA
 aA
 iw
@@ -1347,7 +1356,7 @@ aP
 aP
 aP
 uz
-yY
+if
 ub
 bD
 aP
@@ -1415,7 +1424,7 @@ aC
 aC
 aC
 aC
-uP
+PY
 aD
 aD
 yB
@@ -1445,9 +1454,9 @@ aC
 RC
 aP
 tW
-JG
+AI
 aC
-MI
+PH
 aD
 aD
 yE
@@ -1479,7 +1488,7 @@ Lk
 aC
 aC
 aC
-XO
+nZ
 aD
 aD
 GZ
@@ -1680,8 +1689,8 @@ zd
 pp
 pp
 pp
-pp
-pp
+NZ
+NZ
 Wr
 aA
 iw
