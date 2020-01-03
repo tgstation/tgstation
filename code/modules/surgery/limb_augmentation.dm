@@ -8,6 +8,7 @@
 	name = "replace limb"
 	implements = list(/obj/item/bodypart = 100, /obj/item/organ_storage = 100)
 	time = 32
+	experience_given = 10
 	var/obj/item/bodypart/L = null // L because "limb"
 
 
@@ -41,7 +42,7 @@
 
 //SURGERY STEP SUCCESSES
 
-/datum/surgery_step/replace_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/bodypart/tool, datum/surgery/surgery)
+/datum/surgery_step/replace_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/bodypart/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(L)
 		if(istype(tool, /obj/item/organ_storage))
 			tool.icon_state = initial(tool.icon_state)
@@ -56,4 +57,4 @@
 		log_combat(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
 	else
 		to_chat(user, "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>")
-	return ..(default_display_results = FALSE)
+	return ..()

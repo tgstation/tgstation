@@ -22,12 +22,12 @@
 		"<span class='notice'>[user] starts rerouting [target]'s nerves.</span>",
 		"<span class='notice'>[user] starts manipulating [target]'s nervous system.</span>")
 
-/datum/surgery_step/ground_nerves/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+/datum/surgery_step/ground_nerves/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	display_results(user, target, "<span class='notice'>You successfully reroute [target]'s nervous system!</span>",
 		"<span class='notice'>[user] successfully reroutes [target]'s nervous system!</span>",
 		"<span class='notice'>[user] finishes manipulating [target]'s nervous system.</span>")
 	new /datum/bioware/grounded_nerves(target)
-	return ..(default_display_results = FALSE)
+	return ..()
 
 /datum/bioware/grounded_nerves
 	name = "Grounded Nerves"
