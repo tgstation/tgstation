@@ -66,8 +66,8 @@
 	..()
 
 /mob/living/simple_animal/mouse/handle_automated_action()
+	var/turf/open/floor/F = get_turf(src)
 	if(prob(chew_probability))
-		var/turf/open/floor/F = get_turf(src)
 		if(istype(F) && !F.intact)
 			var/obj/structure/cable/C = locate() in F
 			if(C && prob(15))
@@ -79,6 +79,10 @@
 				else
 					C.deconstruct()
 					visible_message("<span class='warning'>[src] chews through the [C].</span>")
+	for(var/obj/item/reagent_containers/food/snacks/cheesewedge/cheese in range(1, src))
+		if(prob(10))
+			new /mob/living/simple_animal/mouse(loc)
+			qdel(cheese)
 
 /*
  * Mouse types
