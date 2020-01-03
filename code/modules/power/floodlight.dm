@@ -1,4 +1,9 @@
 
+#define FLOODLIGHT_OFF 1
+#define FLOODLIGHT_LOW 2
+#define FLOODLIGHT_MED 3
+#define FLOODLIGHT_HIGH 4
+
 /obj/structure/floodlight_frame
 	name = "floodlight frame"
 	desc = "A bare metal frame looking vaguely like a floodlight. Requires wiring."
@@ -9,7 +14,7 @@
 	var/state = FLOODLIGHT_NEEDS_WIRES
 
 /obj/structure/floodlight_frame/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/stack/cable_coil) && (state == FLOODLIGHT_NEEDS_WIRES))
+	if(istype(O, /obj/item/stack/cable_coil) && state == FLOODLIGHT_NEEDS_WIRES)
 		var/obj/item/stack/S = O
 		if(S.use(5))
 			to_chat(user, "<span class='notice'>You wire [src].</span>")
@@ -21,7 +26,7 @@
 		else
 			to_chat(user, "You need 5 cables to wire [src].")
 			return
-	if(O.tool_behaviour == TOOL_SCREWDRIVER && (state == FLOODLIGHT_NEEDS_SECURING))
+	if(O.tool_behaviour == TOOL_SCREWDRIVER && state == FLOODLIGHT_NEEDS_SECURING)
 		to_chat(user, "<span class='notice'>You fasten the wiring and electronics in [src].</span>")
 		name = "secured [name]"
 		desc = "A bare metal frame that looks like a floodlight. Requires a light tube to complete."
@@ -37,6 +42,14 @@
 			qdel(O)
 			return
 		else //A minute of silence for all the accidentally broken light tubes.
+			return
+	if(istype(O, /obj/item/lightreplacer))
+		var/obj/item/lightreplacer/L = O
+		if(state == FLOODLIGHT_NEEDS_LIGHTS && L.CanUse(user))
+			L.Use(user)
+			to_chat(user, "<span class='notice'>You put lights in [src].</span>")
+			new /obj/machinery/power/floodlight(loc)
+			qdel(src)
 			return
 	..()
 
@@ -54,31 +67,35 @@
 	light_power = 1.75
 	var/list/light_setting_list = list(0, 5, 10, 15)
 	var/light_power_coefficient = 200
-	var/setting = 1
+	var/setting = FLOODLIGHT_OFF
 
 /obj/machinery/power/floodlight/process()
-	if(setting > 1)
+	var/turf/T = get_turf(src)
+	var/obj/structure/cable/C = locate() in T
+	if(!C && powernet)
+		disconnect_from_network()
+	if(setting > FLOODLIGHT_OFF) //If on
 		if(avail(active_power_usage))
 			add_load(active_power_usage)
 		else
-			change_setting(1)
-	else
+			change_setting(FLOODLIGHT_OFF)
+	else if(avail(idle_power_usage))
 		add_load(idle_power_usage)
 
-/obj/machinery/power/floodlight/proc/change_setting(val, mob/user)
-	if((val < 1) || (val > light_setting_list.len))
+/obj/machinery/power/floodlight/proc/change_setting(newval, mob/user)
+	if((newval < FLOODLIGHT_OFF) || (newval > light_setting_list.len))
 		return
-	active_power_usage = light_setting_list[val]
-	if(!avail(active_power_usage))
-		return change_setting(val - 1)
-	setting = val
-	set_light(light_setting_list[val], light_power)
+	setting = newval
+	active_power_usage = light_setting_list[setting] * light_power_coefficient
+	if(!avail(active_power_usage) && setting > FLOODLIGHT_OFF)
+		return change_setting(setting - 1)
+	set_light(light_setting_list[setting], light_power)
 	var/setting_text = ""
-	if(val > 1)
+	if(setting > FLOODLIGHT_OFF)
 		icon_state = "[initial(icon_state)]_on"
 	else
 		icon_state = initial(icon_state)
-	switch(val)
+	switch(setting)
 		if(1)
 			setting_text = "OFF"
 		if(2)
