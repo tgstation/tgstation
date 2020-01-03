@@ -50,6 +50,7 @@
 		return
 
 	var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
+	money -= amount_to_remove
 	holochip.name = "washed " + holochip.name
 	user.put_in_hands(holochip)
 	to_chat(user, "<span class='notice'>You withdraw [amount_to_remove] credits into a holochip.</span>")
