@@ -93,7 +93,7 @@ SUBSYSTEM_DEF(blackmarket)
 				addtimer(CALLBACK(src, /datum/controller/subsystem/blackmarket/proc/fake_teleport, purchase.entry.spawn_item(), targetturf), 60 SECONDS)
 				queued_purchases -= purchase
 				qdel(purchase)
-			// Get the current area of the uplink if it exists, drop the item there.
+			// Get the current area of the uplink and drop the item there. Not in use currently (3/1/2020)
 			if(SHIPPING_METHOD_DROPPOD)
 				// This is mostly just copied from express cargo console but that should be fine.
 				var/area/A = get_area(purchase.uplink)

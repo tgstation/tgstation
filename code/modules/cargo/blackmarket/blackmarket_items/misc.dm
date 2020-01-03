@@ -41,8 +41,8 @@
 	desc = "An Exotic Variety of seed that can contain anything from glow to acid."
 	item = /obj/item/seeds/random
 
-	price_min = 40
-	price_max = 80
+	price_min = 320
+	price_max = 360
 	stock_min = 2
 	stock_max = 5
 	availability_prob = 50

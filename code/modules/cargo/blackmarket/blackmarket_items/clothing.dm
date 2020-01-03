@@ -45,8 +45,8 @@
 	var/obj/item/storage/box/B = ..()
 	B.name = "Spacesuit Box"
 	B.desc = "It has a NT logo on it."
-	B.contents += new /obj/item/clothing/suit/space
-	B.contents += new /obj/item/clothing/head/helmet/space
+	new /obj/item/clothing/suit/space(B)
+	new /obj/item/clothing/head/helmet/space(B)
 	return B
 
 /datum/blackmarket_item/clothing/chameleon_hat

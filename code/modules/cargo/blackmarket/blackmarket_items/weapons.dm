@@ -6,8 +6,8 @@
 	desc = "Get the janitor back at his own game with this affordable prank kit."
 	item = /obj/item/restraints/legcuffs/beartrap
 
-	price_min = 200
-	price_max = 400
+	price_min = 300
+	price_max = 550
 	stock_max = 3
 	availability_prob = 40
 

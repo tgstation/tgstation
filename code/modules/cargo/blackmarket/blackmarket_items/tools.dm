@@ -48,34 +48,28 @@
 	stock = 1
 
 	price_min = 400
-	price_max = 4000
+	price_max = 960
 	availability_prob = 30
 
 /datum/blackmarket_item/tool/riot_shield
 	name = "Riot Shield"
 	desc = "Protect yourself from an unexpected Riot at your local Police department!"
 	item = /obj/item/shield/riot
-	
-	price_min = 200
-	price_max = 300
+
+	price_min = 450
+	price_max = 650
 	stock_max = 2
 	availability_prob = 50
 
 /datum/blackmarket_item/tool/thermite_bottle
 	name = "Thermite Bottle"
 	desc = "30u of Thermite to assist in creating a quick access point or get away!"
-	item = /obj/item/reagent_containers/glass/bottle
+	item = /obj/item/reagent_containers/glass/bottle/thermite
 
 	price_min = 500
 	price_max = 1500
 	stock_max = 3
 	availability_prob = 30
-
-/datum/blackmarket_item/tool/thermite_bottle/spawn_item(loc)
-	var/obj/item/reagent_containers/glass/bottle/B = ..()
-	B.reagents.add_reagent(/datum/reagent/thermite, 30)
-	B.name = "Thermite Bottle"
-	return B
 
 /datum/blackmarket_item/tool/science_goggles
 	name = "Science Goggles"

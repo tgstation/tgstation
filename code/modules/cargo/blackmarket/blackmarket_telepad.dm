@@ -100,16 +100,13 @@
 	else if(transmitting)
 		var/datum/blackmarket_purchase/P = transmitting
 		if(!P.item)
-			transmitting = null
-			qdel(P)
+			QDEL_NULL(transmitting)
 		if(!P.item in T.contents)
-			transmitting = null
-			qdel(P)
+			QDEL_NULL(transmitting)
 			return
 		do_teleport(P.item, get_turf(P.uplink))
 		use_power(power_usage_per_teleport / power_efficiency)
-		transmitting = null
-		qdel(P)
+		QDEL_NULL(transmitting)
 
 		recharge_cooldown = recharge_time
 		return
