@@ -97,6 +97,7 @@ import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
 import { Vending } from './interfaces/Vending';
 import { Wires } from './interfaces/Wires';
+import { SyndContractor } from './interfaces/SyndContractor';
 
 const ROUTES = {
   achievements: {
@@ -489,6 +490,12 @@ const ROUTES = {
   suit_storage_unit: {
     component: () => SuitStorageUnit,
     scrollable: false,
+  },
+  synd_contract: {
+    component: () => SyndContractor,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'syndicate',
   },
   tanks: {
     component: () => Tank,
