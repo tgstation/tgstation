@@ -19,14 +19,19 @@
 	"rpg_adjective_valentines": [
 		"Amorous",
 		"Aphrodisiac",
+		"Carnal",
 		"Forever Alone",
 		"Infatuated",
 		"Jilted",
+		"Lascivious",
+		"Lewd",
 		"Lovelorn",
 		"Moonstruck",
 		"Recently Dumped",
+		"Salacious",
 		"Sexy",
-		"Smitten"
+		"Smitten",
+		"Steamy"
 	],
 
 	"rpg_adjective_halloween": [
@@ -100,7 +105,8 @@
 		"ERP",
 		"Romance",
 		"Seduce",
-		"Smooch"
+		"Smooch",
+		"Titillate"
 	],
 
 	"rpg_action_halloween": [
@@ -239,6 +245,8 @@
 		"bouquet of deathnettles",
 		"candy-heart shotgun",
 		"cupid's arrow",
+		"declaration of anguished feelings",
+		"razor-sharp breakup letter",
 		"slippery rose petals",
 		"still-beating heart",
 		"thorny roses",
