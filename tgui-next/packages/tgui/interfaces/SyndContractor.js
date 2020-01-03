@@ -224,7 +224,7 @@ export const StatusPane = props => {
       )}
       buttons={(
         <Box bold mr={1}>
-          {data.redeemable_tc} Rep
+          {data.contract_rep} Rep
         </Box>
       )}>
       <Grid>
@@ -235,7 +235,7 @@ export const StatusPane = props => {
               buttons={(
                 <Button
                   content="Claim"
-                  disabled={data.redeemable_tc >= 0}
+                  disabled={data.redeemable_tc <= 0}
                   onClick={() => act('PRG_redeem_TC')} />
               )}>
               {data.redeemable_tc}
@@ -280,6 +280,9 @@ export const SyndPane = props => {
             )}>
             {contracts.map(contract => {
               const active = (contract.status > 1);
+              if (contract.status >= 5) {
+                return;
+              }
               return (
                 <Section
                   key={contract.target}
@@ -304,7 +307,6 @@ export const SyndPane = props => {
                           })} />
                     </Fragment>
                   )}>
-                  {contract.status === 6 && <Dimmer />}
                   <Grid>
                     <Grid.Column>
                       {contract.message}
