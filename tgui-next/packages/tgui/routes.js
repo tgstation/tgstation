@@ -35,6 +35,7 @@ import { Cryo } from './interfaces/Cryo';
 import { DecalPainter } from './interfaces/DecalPainter';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { DnaVault } from './interfaces/DnaVault';
+import { EightBallVote } from './interfaces/EightBallVote';
 import { EngravedMessage } from './interfaces/EngravedMessage';
 import { Gps } from './interfaces/Gps';
 import { GravityGenerator } from './interfaces/GravityGenerator';
@@ -241,6 +242,10 @@ const ROUTES = {
   },
   dna_vault: {
     component: () => DnaVault,
+    scrollable: false,
+  },
+  eightball: {
+    component: () => EightBallVote,
     scrollable: false,
   },
   engraved_message: {
