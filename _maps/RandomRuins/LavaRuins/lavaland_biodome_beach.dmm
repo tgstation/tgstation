@@ -142,8 +142,11 @@
 	},
 /area/ruin/powered/beach)
 "ci" = (
-/obj/machinery/light{
-	dir = 8
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	dir = 4;
+	name = "old sink";
+	pixel_x = -12
 	},
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
@@ -340,10 +343,6 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/ruin/powered/beach)
-"ph" = (
-/obj/effect/turf_decal/sand,
-/turf/open/floor/sepia,
 /area/ruin/powered/beach)
 "pp" = (
 /turf/open/floor/pod/light,
@@ -923,6 +922,7 @@
 /obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
 /obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
 /obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
+/obj/machinery/light,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/powered/beach)
 "Zu" = (
