@@ -1060,6 +1060,7 @@
 #include "code\game\objects\items\storage\firstaid.dm"
 #include "code\game\objects\items\storage\lockbox.dm"
 #include "code\game\objects\items\storage\secure.dm"
+#include "code\game\objects\items\storage\sixpack.dm"
 #include "code\game\objects\items\storage\storage.dm"
 #include "code\game\objects\items\storage\toolbox.dm"
 #include "code\game\objects\items\storage\uplink_kits.dm"
