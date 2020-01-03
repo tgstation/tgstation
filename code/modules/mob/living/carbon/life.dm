@@ -623,27 +623,24 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	// Get the difference between our current body temp and what is a normal body temp
 	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature
 
-	switch(bodytemperature)
+	// We are very cold, increate body temperature
+	if(bodytemperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
+		return max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), \
+			BODYTEMP_AUTORECOVERY_MINIMUM)
 
-		// When below the cold damage limit body temp raises faster
-		if(-INFINITY to BODYTEMP_COLD_DAMAGE_LIMIT)
-			return max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), \
-				BODYTEMP_AUTORECOVERY_MINIMUM)
+	// we are cold, reduce the minimum increment and do not jump over the difference
+	if(bodytemperature > BODYTEMP_COLD_DAMAGE_LIMIT && bodytemperature < BODYTEMP_NORMAL)
+		return max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
+			min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM / 4))
 
-		// When above the cold damage limit the body temp raises slower
-		if(BODYTEMP_COLD_DAMAGE_LIMIT to BODYTEMP_NORMAL)
-			return max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
-				min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM / 4))
+	// We are hot, reduce the minimum increment and do not jump below the difference
+	if(bodytemperature > BODYTEMP_NORMAL && bodytemperature <= BODYTEMP_HEAT_DAMAGE_LIMIT)
+		return min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
+			max(body_temperature_difference, -(BODYTEMP_AUTORECOVERY_MINIMUM / 4)))
 
-		// When below the heat damage limit the body temp lowers slower
-		if(BODYTEMP_NORMAL to BODYTEMP_HEAT_DAMAGE_LIMIT)
-			return min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
-				max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM / 4))
-
-		// When above the heat damage limit bring the body temp down faster
-		// We're dealing with negative numbers
-		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
-			return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)
+	// We are very hot, reduce the body temperature
+	if(bodytemperature >= BODYTEMP_HEAT_DAMAGE_LIMIT)
+		return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)
 
 // Temperature is the temperature you're being exposed to.
 // This returns a 0 - 1 value which corresponds to the percentage of protection

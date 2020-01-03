@@ -1796,30 +1796,29 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 // Used to stabilize the normal body temperature on living mobs
 // returns the amount of change to body temperature
 /datum/species/proc/natural_bodytemperature_stabilization(mob/living/carbon/human/H)
+	// Get current body temperature
+	var/body_temp = H.bodytemperature
 	// Get the difference between our current body temp and what is a normal body temp
-	var/body_temperature_difference = bodytemp_normal - H.bodytemperature
+	var/body_temperature_difference = bodytemp_normal - body_temp
 
-	switch(H.bodytemperature)
+	// We are very cold, increate body temperature
+	if(body_temp <= bodytemp_cold_damage_limit)
+		return max((body_temperature_difference * H.metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), \
+			bodytemp_autorecovery_min)
 
-		// When below the cold damage limit body temp raises faster
-		if(-INFINITY to bodytemp_cold_damage_limit)
-			return max((body_temperature_difference * H.metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), \
-				bodytemp_autorecovery_min)
+	// we are cold, reduce the minimum increment and do not jump over the difference
+	if(body_temp > bodytemp_cold_damage_limit && body_temp < bodytemp_normal)
+		return max(body_temperature_difference * H.metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
+			min(body_temperature_difference, bodytemp_autorecovery_min / 4))
 
-		// When above the cold damage limit the body temp raises slower
-		if(bodytemp_cold_damage_limit to bodytemp_normal)
-			return max(body_temperature_difference * H.metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
-				min(body_temperature_difference, bodytemp_autorecovery_min / 4))
+	// We are hot, reduce the minimum increment and do not jump below the difference
+	if(body_temp > bodytemp_normal && body_temp <= bodytemp_heat_damage_limit)
+		return min(body_temperature_difference * H.metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
+			max(body_temperature_difference, -(bodytemp_autorecovery_min / 4)))
 
-		// When below the heat damage limit the body temp lowers slower
-		if(bodytemp_normal to bodytemp_heat_damage_limit)
-			return min(body_temperature_difference * H.metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
-				max(body_temperature_difference, -bodytemp_autorecovery_min / 4))
-
-		// When above the heat damage limit bring the body temp down faster
-		// We're dealing with negative numbers
-		if(bodytemp_heat_damage_limit to INFINITY)
-			return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -bodytemp_autorecovery_min)
+	// We are very hot, reduce the body temperature
+	if(body_temp >= bodytemp_heat_damage_limit)
+		return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -bodytemp_autorecovery_min)
 
 
 //////////
