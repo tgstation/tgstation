@@ -715,6 +715,7 @@
 	. = ..()
 	var/new_cost = input("Set a new cost for using this medical kiosk.","New cost", custom_cost) as num|null
 	if(!new_cost || (loc != user))
+		to_chat(user, "<span class='warning'>You must hold the circuitboard to change its cost!</span>")
 		return
 	custom_cost = CLAMP(round(new_cost, 1), 10, 1000)
 	to_chat(user, "<span class='notice'>The cost is now set to [custom_cost].</span>")
@@ -884,6 +885,7 @@
 	. = ..()
 	var/new_cloud = input("Set the public nanite chamber's Cloud ID (1-100).", "Cloud ID", cloud_id) as num|null
 	if(!new_cloud || (loc != user))
+		to_chat(user, "<span class='warning'>You must hold the circuitboard to change its Cloud ID!</span>")
 		return
 	cloud_id = CLAMP(round(new_cloud, 1), 1, 100)
 
