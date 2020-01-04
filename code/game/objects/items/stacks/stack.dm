@@ -350,7 +350,7 @@
 		src.amount += amount
 	if(custom_materials && custom_materials.len)
 		for(var/i in custom_materials)
-			custom_materials[i] = mats_per_stack * amount
+			custom_materials[i] = mats_per_stack * src.amount
 		set_custom_materials() //Refresh
 	update_icon()
 	update_weight()
