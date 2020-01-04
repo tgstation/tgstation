@@ -86,11 +86,11 @@
 	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = "uranium"
 
-/turf/closed/indestructible/riveted/silver
-	name = "silver wall"
-	desc = "A wall with gorgeous silver plating."
-	icon = 'icons/turf/walls/silver_wall.dmi'
-	icon_state = "silver"
+/turf/closed/indestructible/riveted/plastinum
+	name = "plastinum wall"
+	desc = "A luxurious wall made out of a plasma-platinum alloy. Effectively impervious to conventional methods of destruction."
+	icon = 'icons/turf/walls/plastinum_wall.dmi'
+	icon_state = "shuttle"
 
 /turf/closed/indestructible/abductor
 	icon_state = "alien1"

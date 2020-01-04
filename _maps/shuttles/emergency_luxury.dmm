@@ -44,7 +44,7 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/luxury)
 "ag" = (
-/turf/closed/indestructible/riveted/silver,
+/turf/closed/indestructible/riveted/plastinum,
 /area/shuttle/escape/luxury)
 "ah" = (
 /obj/effect/turf_decal/delivery,
@@ -56,7 +56,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape/luxury)
 "ai" = (
-/turf/closed/indestructible/riveted/silver,
+/turf/closed/indestructible/riveted/plastinum,
 /area/shuttle/escape)
 "aj" = (
 /obj/effect/turf_decal/delivery,
