@@ -1,0 +1,4 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - bugfix: "Nuke console updates when you click arm, making the ui slightly more responsive."
