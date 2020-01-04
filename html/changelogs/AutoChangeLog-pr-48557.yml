@@ -1,0 +1,4 @@
+author: "JMoldy"
+delete-after: True
+changes: 
+  - bugfix: "Fixed wand recharge to prevent recharge counter increasing when full"
