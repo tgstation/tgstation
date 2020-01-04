@@ -54,6 +54,11 @@
 //** -Adds security levels to the security record computer.
 //** -Adds arrest logging for security bots.
 //*************************************************************************
+
+
+//******************************************************
+//SEC BODY CAMS by Surrealistik Oct 2019 BEGINS
+//******************************************************
 /obj/item/clothing/under/rank/security
 	var/obj/machinery/camera/builtInCamera = null
 	var/registrant
