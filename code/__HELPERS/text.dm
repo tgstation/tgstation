@@ -59,7 +59,7 @@
 
 //Runs byond's sanitization proc along-side sanitize_simple
 /proc/sanitize(t, list/repl_chars = null)
-	return html_encode(strip_html_simple(sanitize_simple(t, repl_chars))) //html encode isn't good enough, `strip_html_simple` will be a fallback if it fails to convert to `&lt;`
+	return html_encode(html_encode(sanitize_simple(t, repl_chars))) //html encode isn't good enough, `strip_html_simple` will be a fallback if it fails to convert to `&lt;`
 
 //Runs sanitize and strip_html_simple
 //I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' after sanitize() calls byond's html_encode()
