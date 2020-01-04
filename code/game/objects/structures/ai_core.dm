@@ -185,24 +185,31 @@
 
 				if(istype(P, /obj/item/mmi) && !brain)
 					var/obj/item/mmi/M = P
-					if(!M.brainmob)
+					var/mob/living/brain/BM = M.brainmob
+
+					if(!BM)
 						to_chat(user, "<span class='warning'>Sticking an empty [M.name] into the frame would sort of defeat the purpose!</span>")
 						return
-					if(M.brainmob.stat == DEAD)
-						to_chat(user, "<span class='warning'>Sticking a dead [M.name] into the frame would sort of defeat the purpose!</span>")
+
+					if(!BM.key || !BM.mind)
+						to_chat(user, "<span class='warning'>This [M.name] is mindless!</span>")
 						return
 
-					if(!M.brainmob.client)
+					if(!BM.client) //braindead
 						to_chat(user, "<span class='warning'>Sticking an inactive [M.name] into the frame would sort of defeat the purpose.</span>")
 						return
 
-					if(!CONFIG_GET(flag/allow_ai) || (is_banned_from(M.brainmob.ckey, "AI") && !QDELETED(src) && !QDELETED(user) && !QDELETED(M) && !QDELETED(user) && Adjacent(user)))
-						if(!QDELETED(M))
-							to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
+					if(BM.stat == DEAD || BM.suiciding || (M.brain && (M.brain.brain_death || M.brain.suicided)))
+						to_chat(user, "<span class='warning'>Sticking a dead [M.name] into the frame would sort of defeat the purpose!</span>")
 						return
 
-					if(!M.brainmob.mind)
-						to_chat(user, "<span class='warning'>This [M.name] is mindless!</span>")
+					if(M.brain?.organ_flags & ORGAN_FAILING)
+						to_chat(user, "<span class='warning'>The MMI indicates that the brain is damaged!</span>")
+						return
+
+					if(!CONFIG_GET(flag/allow_ai) || (is_banned_from(BM.ckey, "AI") && !QDELETED(src) && !QDELETED(user) && !QDELETED(M) && !QDELETED(user) && Adjacent(user)))
+						if(!QDELETED(M))
+							to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
 						return
 
 					if(!user.transferItemToLoc(M,src))
@@ -234,14 +241,15 @@
 					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 					if(brain)
-						SSticker.mode.remove_antag_for_borging(brain.brainmob.mind)
+						var/mob/living/brain/BM = brain.brainmob
+						SSticker.mode.remove_antag_for_borging(BM.mind)
 
 						var/mob/living/silicon/ai/A = null
 
 						if (brain.overrides_aicore_laws)
-							A = new /mob/living/silicon/ai(loc, brain.laws, brain.brainmob)
+							A = new /mob/living/silicon/ai(loc, brain.laws, BM)
 						else
-							A = new /mob/living/silicon/ai(loc, laws, brain.brainmob)
+							A = new /mob/living/silicon/ai(loc, laws, BM)
 
 						if(brain.force_replace_ai_name)
 							A.fully_replace_character_name(A.name, brain.replacement_ai_name())

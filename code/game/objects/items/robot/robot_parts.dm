@@ -243,11 +243,12 @@
 			if(!isturf(loc))
 				to_chat(user, "<span class='warning'>You can't put [M] in, the frame has to be standing on the ground to be perfectly precise!</span>")
 				return
-			if(!M.brainmob)
+
+			var/mob/living/brain/BM = M.brainmob
+			if(!BM)
 				to_chat(user, "<span class='warning'>Sticking an empty [M.name] into the frame would sort of defeat the purpose!</span>")
 				return
 
-			var/mob/living/brain/BM = M.brainmob
 			if(!BM.key || !BM.mind)
 				to_chat(user, "<span class='warning'>The MMI indicates that their mind is completely unresponsive; there's no point!</span>")
 				return
