@@ -131,9 +131,11 @@
 		if(ETHEREAL_CHARGE_FULL to ETHEREAL_CHARGE_OVERLOAD)
 			H.throw_alert("ethereal_overcharge", /obj/screen/alert/ethereal_overcharge, 1)
 			apply_damage(0.2, TOX, null, null, H)
+			brutemod = 1.5
 		if(ETHEREAL_CHARGE_OVERLOAD to ETHEREAL_CHARGE_DANGEROUS)
 			H.throw_alert("ethereal_overcharge", /obj/screen/alert/ethereal_overcharge, 2)
 			apply_damage(0.65, TOX, null, null, H)
+			brutemod = 1.75
 			if(prob(10)) //10% each tick for ethereals to explosively release excess energy if it reaches dangerous levels
 				discharge_process(H)
 		else
