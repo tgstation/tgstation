@@ -354,6 +354,15 @@
 	light_color = "#2cb2e8"
 	light_range = 3
 
+/obj/item/twohanded/required/kirbyplants/fullysynthetic
+	name = "plastic potted plant"
+	desc = "A fake, cheap looking, plastic tree. Perfect for people who kill every plant they touch."
+	icon_state = "plant-26"
+	custom_materials = (list(/datum/material/plastic = 8000))
+
+/obj/item/twohanded/required/kirbyplants/fullysynthetic/Initialize()
+	. = ..()
+	icon_state = "plant-[rand(26, 29)]"
 
 //a rock is flora according to where the icon file is
 //and now these defines
@@ -438,3 +447,4 @@
 /obj/structure/flora/rock/pile/largejungle/Initialize()
 	. = ..()
 	icon_state = "[initial(icon_state)][rand(1,3)]"
+

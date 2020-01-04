@@ -1,0 +1,4 @@
+author: "TheChosenEvilOne"
+delete-after: True
+changes: 
+  - tweak: "Border firelocks no longer crush mobs."
