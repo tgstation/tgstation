@@ -945,17 +945,14 @@
 		return 0
 
 /obj/mecha/proc/mmi_move_inside(obj/item/mmi/M, mob/user)
-	var/mob/living/brain/BM = M.brainmob
-	if(!BM || !BM.client)
-		to_chat(user, "<span class='warning'>Consciousness matrix not detected!</span>")
+	if(!M.brain_check())
 		return FALSE
-	else if(BM.stat)
-		to_chat(user, "<span class='warning'>Beta-rhythm below acceptable level!</span>")
-		return FALSE
-	else if(occupant)
+
+	var/mob/living/brain/B = M.brainmob
+	if(occupant)
 		to_chat(user, "<span class='warning'>Occupant detected!</span>")
 		return FALSE
-	else if(dna_lock && (!BM.stored_dna || (dna_lock != BM.stored_dna.unique_enzymes)))
+	if(dna_lock && (!B.stored_dna || (dna_lock != B.stored_dna.unique_enzymes)))
 		to_chat(user, "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>")
 		return FALSE
 
@@ -971,35 +968,32 @@
 	return FALSE
 
 /obj/mecha/proc/mmi_moved_inside(obj/item/mmi/M, mob/user)
-	var/mob/living/brain/BM = M.brainmob
 	if(!(Adjacent(M) && Adjacent(user)))
 		return FALSE
-	if(!BM || !BM.client)
-		to_chat(user, "<span class='notice'>Consciousness matrix not detected!</span>")
+	if(!M.brain_check())
 		return FALSE
-	else if(BM.stat)
-		to_chat(user, "<span class='warning'>Beta-rhythm below acceptable level!</span>")
-		return FALSE
+
+	var/mob/living/brain/B = M.brainmob
 	if(!user.transferItemToLoc(M, src))
 		to_chat(user, "<span class='warning'>\the [M] is stuck to your hand, you cannot put it in \the [src]!</span>")
 		return FALSE
 
 	M.mecha = src
-	occupant = BM
+	occupant = B
 	silicon_pilot = TRUE
-	BM.forceMove(src) //should allow relaymove
-	BM.reset_perspective(src)
-	BM.remote_control = src
-	BM.update_mobility()
-	BM.update_mouse_pointer()
+	B.forceMove(src) //should allow relaymove
+	B.reset_perspective(src)
+	B.remote_control = src
+	B.update_mobility()
+	B.update_mouse_pointer()
 	icon_state = initial(icon_state)
 	update_icon()
 	setDir(dir_in)
 	log_message("[M] moved in as pilot.", LOG_MECHA)
 	if(!internal_damage)
 		SEND_SOUND(occupant, sound('sound/mecha/nominal.ogg',volume=50))
-	GrantActions(BM)
-	log_game("[key_name(user)] has put the MMI/posibrain of [key_name(BM)] into [src] at [AREACOORD(src)]")
+	GrantActions(B)
+	log_game("[key_name(user)] has put the MMI/posibrain of [key_name(B)] into [src] at [AREACOORD(src)]")
 	return TRUE
 
 /obj/mecha/container_resist(mob/living/user)

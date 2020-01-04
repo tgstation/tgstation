@@ -185,29 +185,11 @@
 
 				if(istype(P, /obj/item/mmi) && !brain)
 					var/obj/item/mmi/M = P
-					var/mob/living/brain/BM = M.brainmob
-
-					if(!BM)
-						to_chat(user, "<span class='warning'>Sticking an empty [M.name] into the frame would sort of defeat the purpose!</span>")
+					if(!M.brain_check())
 						return
 
-					if(!BM.key || !BM.mind)
-						to_chat(user, "<span class='warning'>This [M.name] is mindless!</span>")
-						return
-
-					if(!BM.client) //braindead
-						to_chat(user, "<span class='warning'>Sticking an inactive [M.name] into the frame would sort of defeat the purpose.</span>")
-						return
-
-					if(BM.stat == DEAD || BM.suiciding || (M.brain && (M.brain.brain_death || M.brain.suicided)))
-						to_chat(user, "<span class='warning'>Sticking a dead [M.name] into the frame would sort of defeat the purpose!</span>")
-						return
-
-					if(M.brain?.organ_flags & ORGAN_FAILING)
-						to_chat(user, "<span class='warning'>The MMI indicates that the brain is damaged!</span>")
-						return
-
-					if(!CONFIG_GET(flag/allow_ai) || (is_banned_from(BM.ckey, "AI") && !QDELETED(src) && !QDELETED(user) && !QDELETED(M) && !QDELETED(user) && Adjacent(user)))
+					var/mob/living/brain/B = M.brainmob
+					if(!CONFIG_GET(flag/allow_ai) || (is_banned_from(B.ckey, "AI") && !QDELETED(src) && !QDELETED(user) && !QDELETED(M) && !QDELETED(user) && Adjacent(user)))
 						if(!QDELETED(M))
 							to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
 						return
@@ -241,15 +223,15 @@
 					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 					if(brain)
-						var/mob/living/brain/BM = brain.brainmob
-						SSticker.mode.remove_antag_for_borging(BM.mind)
+						var/mob/living/brain/B = brain.brainmob
+						SSticker.mode.remove_antag_for_borging(B.mind)
 
 						var/mob/living/silicon/ai/A = null
 
 						if (brain.overrides_aicore_laws)
-							A = new /mob/living/silicon/ai(loc, brain.laws, BM)
+							A = new /mob/living/silicon/ai(loc, brain.laws, B)
 						else
-							A = new /mob/living/silicon/ai(loc, laws, BM)
+							A = new /mob/living/silicon/ai(loc, laws, B)
 
 						if(brain.force_replace_ai_name)
 							A.fully_replace_character_name(A.name, brain.replacement_ai_name())
