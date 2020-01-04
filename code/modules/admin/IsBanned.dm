@@ -16,7 +16,11 @@
 
 	var/admin = FALSE
 	var/ckey = ckey(key)
-
+	
+	var/client/C = GLOB.directory[ckey]
+	if (ckey == C.ckey && computer_id == C.computer_id && address == C.address)
+		return //don't recheck connected clients.
+		
 	//IsBanned can get re-called on a user in certain situations, this prevents that leading to repeated messages to admins.
 	var/static/list/checkedckeys = list()
 	//magic voodo to check for a key in a list while also adding that key to the list without having to do two associated lookups
