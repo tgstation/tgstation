@@ -207,7 +207,7 @@
 	return cloneloss
 
 /mob/living/proc/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && ( (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NOCLONELOSS)) )
 		return FALSE
 	cloneloss = CLAMP((cloneloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
@@ -215,7 +215,7 @@
 	return amount
 
 /mob/living/proc/setCloneLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && ( (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NOCLONELOSS)) )
 		return FALSE
 	cloneloss = amount
 	if(updating_health)
@@ -241,10 +241,9 @@
 	return
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.
+/// needs to return amount healed in order to calculate things like tend wounds xp gain
 /mob/living/proc/heal_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status)
-	adjustBruteLoss(-brute, FALSE) //zero as argument for no instant health update
-	adjustFireLoss(-burn, FALSE)
-	adjustStaminaLoss(-stamina, FALSE)
+	. = (adjustBruteLoss(-brute, FALSE) + adjustFireLoss(-burn, FALSE) + adjustStaminaLoss(-stamina, FALSE)) //zero as argument for no instant health update
 	if(updating_health)
 		updatehealth()
 		update_stamina()

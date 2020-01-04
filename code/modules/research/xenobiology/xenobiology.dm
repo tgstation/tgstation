@@ -528,7 +528,8 @@
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
-			var/chosen = pick(subtypesof(/obj/item/toy/crayon/spraycan) - /obj/item/toy/crayon/spraycan/borg)
+			var/blacklisted_cans = list(/obj/item/toy/crayon/spraycan/borg, /obj/item/toy/crayon/spraycan/infinite)
+			var/chosen = pick(subtypesof(/obj/item/toy/crayon/spraycan) - blacklisted_cans)
 			var/obj/item/O = new chosen(null)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
@@ -685,7 +686,7 @@
 		if(SM.flags_1 & HOLOGRAM_1) //Check to see if it's a holodeck creature
 			to_chat(SM, "<span class='userdanger'>You also become depressingly aware that you are not a real creature, but instead a holoform. Your existence is limited to the parameters of the holodeck.</span>")
 		to_chat(user, "<span class='notice'>[SM] accepts [src] and suddenly becomes attentive and aware. It worked!</span>")
-		SM.copy_known_languages_from(user, FALSE)
+		SM.copy_languages(user)
 		after_success(user, SM)
 		qdel(src)
 	else
@@ -985,7 +986,7 @@
 	item_state = "tile-bluespace"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
-	materials = list(/datum/material/iron=500)
+	custom_materials = list(/datum/material/iron=500)
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
@@ -1002,7 +1003,7 @@
 	item_state = "tile-sepia"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
-	materials = list(/datum/material/iron=500)
+	custom_materials = list(/datum/material/iron=500)
 	throwforce = 10
 	throw_speed = 0.1
 	throw_range = 28

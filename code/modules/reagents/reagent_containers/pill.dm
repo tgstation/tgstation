@@ -116,7 +116,7 @@
 	name = "multiver pill"
 	desc = "Neutralizes many common toxins and scales with unique medicine in the system. Diluted with granibitaluri."
 	icon_state = "pill17"
-	list_reagents = list(/datum/reagent/medicine/C2/multiver = 2, /datum/reagent/medicine/granibitaluri = 8)
+	list_reagents = list(/datum/reagent/medicine/C2/multiver = 5, /datum/reagent/medicine/granibitaluri = 5)
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/epinephrine
@@ -140,7 +140,7 @@
 	list_reagents = list(/datum/reagent/medicine/mutadone = 50)
 	rename_with_volume = TRUE
 
-/obj/item/reagent_containers/pill/salicyclic
+/obj/item/reagent_containers/pill/salicylic
 	name = "salicylic acid pill"
 	desc = "Used to dull pain."
 	icon_state = "pill9"
@@ -242,20 +242,20 @@
 /obj/item/reagent_containers/pill/potassiodide
 	name = "potassium iodide pill"
 	desc = "Used to reduce low radiation damage very effectively."
-	icon_state = "pill9"
+	icon_state = "pill11"
 	list_reagents = list(/datum/reagent/medicine/potass_iodide = 15)
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/trophazole
 	name = "trophazole pill"
 	desc = "Used to treat brute damage of minor and moderate severity.The carving in the pill says 'Eat before ingesting'."
-	icon_state = "pill9"
+	icon_state = "pill12"
 	list_reagents = list(/datum/reagent/medicine/trophazole = 15)
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/iron
 	name = "iron pill"
 	desc = "Used to reduce bloodloss slowly."
-	icon_state = "pill9"
+	icon_state = "pill8"
 	list_reagents = list(/datum/reagent/iron = 30)
 	rename_with_volume = TRUE

@@ -164,7 +164,7 @@
 
 	user.visible_message("<span class='notice'>[user] starts to weld apart [src]!</span>", "<span class='notice'>You start welding apart [src].</span>")
 	if(!I.use_tool(src, user, 60, 5, 50))
-		to_chat(user, "<span class='warning'>You failed to weld apart [src]!/span>")
+		to_chat(user, "<span class='warning'>You failed to weld apart [src]!</span>")
 		return
 
 	user.visible_message("<span class='notice'>[user] welded [src] into pieces!</span>", "<span class='notice'>You welded apart [src]!</span>")
@@ -178,7 +178,7 @@
 
 	user.visible_message("<span class='notice'>[user] starts to pry apart [src]!</span>", "<span class='notice'>You start prying apart [src].</span>")
 	if(!I.use_tool(src, user, 60, volume = 50))
-		to_chat(user, "<span class='warning'>You failed to pry apart [src]!/span>")
+		to_chat(user, "<span class='warning'>You failed to pry apart [src]!</span>")
 		return
 
 	user.visible_message("<span class='notice'>[user] pried [src] into pieces!</span>", "<span class='notice'>You pried apart [src]!</span>")

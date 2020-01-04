@@ -6,7 +6,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
 	max_integrity = 250
-	integrity_failure = 100
+	integrity_failure = 0.4
 	light_color = LIGHT_COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
 	damage_deflection = 10
@@ -47,7 +47,7 @@
 		return FALSE
 	return ..()
 
-/obj/machinery/flasher/update_icon()
+/obj/machinery/flasher/update_icon_state()
 	if (powered())
 		if(bulb.burnt_out)
 			icon_state = "[base_state]1-p"

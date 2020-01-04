@@ -28,7 +28,6 @@
 	maxHealth = 150
 	health = 150
 	healable = 0
-	gender = NEUTER
 
 	see_in_dark = 8
 
@@ -67,8 +66,6 @@
 	var/mutator_used = FALSE //So you can't shove a dozen mutators into a single slime
 	var/force_stasis = FALSE
 
-	do_footstep = TRUE
-
 	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) slime \\(\\d+\\)")
 	///////////TIME FOR SUBSPECIES
 
@@ -105,11 +102,16 @@
 	set_colour(new_colour)
 	. = ..()
 	set_nutrition(700)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 7.5)
 
 /mob/living/simple_animal/slime/Destroy()
 	for (var/A in actions)
 		var/datum/action/AC = A
 		AC.Remove(src)
+	Target = null
+	Leader = null
+	Friends.Cut()
+	speech_buffer.Cut()
 	return ..()
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)

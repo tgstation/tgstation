@@ -204,7 +204,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	..()
 	if(summoner)
 		to_chat(summoner, "<span class='danger'><B>Your [name] died somehow!</span></B>")
-		summoner.death()
+		summoner.dust()
 
 /mob/living/simple_animal/hostile/guardian/update_health_hud()
 	if(summoner && hud_used && hud_used.healths)
@@ -415,7 +415,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		if(P.reset)
 			guardians -= P //clear out guardians that are already reset
 	if(guardians.len)
-		var/mob/living/simple_animal/hostile/guardian/G = input(src, "Pick the guardian you wish to reset", "Guardian Reset") as null|anything in guardians
+		var/mob/living/simple_animal/hostile/guardian/G = input(src, "Pick the guardian you wish to reset", "Guardian Reset") as null|anything in sortNames(guardians)
 		if(G)
 			to_chat(src, "<span class='holoparasite'>You attempt to reset <font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font>'s personality...</span>")
 			var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as [src.real_name]'s [G.real_name]?", ROLE_PAI, null, FALSE, 100)
@@ -502,12 +502,12 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		used = FALSE
 
 
-/obj/item/guardiancreator/proc/spawn_guardian(var/mob/living/user, var/key)
+/obj/item/guardiancreator/proc/spawn_guardian(mob/living/user, key)
 	var/guardiantype = "Standard"
 	if(random)
 		guardiantype = pick(possible_guardians)
 	else
-		guardiantype = input(user, "Pick the type of [mob_name]", "[mob_name] Creation") as null|anything in possible_guardians
+		guardiantype = input(user, "Pick the type of [mob_name]", "[mob_name] Creation") as null|anything in sortList(possible_guardians)
 		if(!guardiantype)
 			to_chat(user, "[failure_message]" )
 			used = FALSE

@@ -120,7 +120,7 @@
 		D.grabbedby(A, 1)
 		if(old_grab_state == GRAB_PASSIVE)
 			D.drop_all_held_items()
-			A.grab_state = GRAB_AGGRESSIVE //Instant agressive grab if on grab intent
+			A.setGrabState(GRAB_AGGRESSIVE) //Instant agressive grab if on grab intent
 			log_combat(A, D, "grabbed", addition="aggressively")
 			D.visible_message("<span class='warning'>[A] violently grabs [D]!</span>", \
 							"<span class='userdanger'>You're violently grabbed by [A]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, A)
@@ -209,9 +209,8 @@
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	block_chance = 50
 
-/obj/item/twohanded/bostaff/update_icon()
+/obj/item/twohanded/bostaff/update_icon_state()
 	icon_state = "bostaff[wielded]"
-	return
 
 /obj/item/twohanded/bostaff/attack(mob/target, mob/living/user)
 	add_fingerprint(user)

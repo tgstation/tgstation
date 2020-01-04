@@ -121,7 +121,10 @@ Class Procs:
 	var/market_verb = "Customer"
 	var/payment_department = ACCOUNT_ENG
 
-	var/ui_x	//For storing and overriding ui dimensions
+	// For storing and overriding ui id and dimensions
+	var/tgui_id // ID of TGUI interface
+	var/ui_style // ID of custom TGUI style (optional)
+	var/ui_x // Default size of TGUI window, in pixels
 	var/ui_y
 
 /obj/machinery/Initialize()
@@ -375,7 +378,7 @@ Class Procs:
 	M.icon_state = "box_1"
 
 /obj/machinery/obj_break(damage_flag)
-	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_CALL_PARENT(1)
 	. = ..()
 	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		stat |= BROKEN

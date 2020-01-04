@@ -29,19 +29,19 @@
 		return
 
 	if(istype(I, /obj/item/evidencebag))
-		to_chat(user, "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>")
+		to_chat(user, "<span class='warning'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>")
 		return 1 //now this is podracing
 
 	if(loc in I.GetAllContents()) // fixes tg #39452, evidence bags could store their own location, causing I to be stored in the bag while being present inworld still, and able to be teleported when removed.
-		to_chat(user, "<span class='notice'>You find putting [I] in [src] while it's still inside it quite difficult.</span>")
+		to_chat(user, "<span class='warning'>You find putting [I] in [src] while it's still inside it quite difficult!</span>")
 		return
 
 	if(I.w_class > WEIGHT_CLASS_NORMAL)
-		to_chat(user, "<span class='notice'>[I] won't fit in [src].</span>")
+		to_chat(user, "<span class='warning'>[I] won't fit in [src]!</span>")
 		return
 
 	if(contents.len)
-		to_chat(user, "<span class='notice'>[src] already has something inside it.</span>")
+		to_chat(user, "<span class='warning'>[src] already has something inside it!</span>")
 		return
 
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
@@ -80,7 +80,7 @@
 		desc = "An empty evidence bag."
 
 	else
-		to_chat(user, "[src] is empty.")
+		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 		icon_state = "evidenceobj"
 	return
 

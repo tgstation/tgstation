@@ -16,6 +16,7 @@
 
 	var/port_x_offset
 	var/port_y_offset
+	var/extra_desc = ""
 
 /datum/map_template/shuttle/proc/prerequisites_met()
 	return TRUE
@@ -108,6 +109,7 @@
 /datum/map_template/shuttle/cargo
 	port_id = "cargo"
 	name = "Base Shuttle Template (Cargo)"
+	can_be_bought = FALSE
 
 /datum/map_template/shuttle/ferry
 	port_id = "ferry"
@@ -126,10 +128,6 @@
 
 /datum/map_template/shuttle/mining_common
 	port_id = "mining_common"
-	can_be_bought = FALSE
-
-/datum/map_template/shuttle/cargo
-	port_id = "cargo"
 	can_be_bought = FALSE
 
 /datum/map_template/shuttle/arrival
@@ -229,6 +227,7 @@
 	suffix = "luxury"
 	name = "Luxury Shuttle"
 	description = "A luxurious golden shuttle complete with an indoor swimming pool. Each crewmember wishing to board must bring 500 credits, payable in cash and mineral coin."
+	extra_desc = "This shuttle costs 500 credits to board."
 	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
 	credit_cost = 10000
 
@@ -430,6 +429,10 @@
 	suffix = "cere"
 	name = "NT Construction Vessel"
 
+/datum/map_template/shuttle/whiteship/kilo
+	suffix = "kilo"
+	name = "NT Mining Shuttle"
+
 /datum/map_template/shuttle/whiteship/donut
 	suffix = "donut"
 	name = "NT Long-Distance Bluespace Jumper"
@@ -441,10 +444,6 @@
 /datum/map_template/shuttle/whiteship/pod
 	suffix = "whiteship_pod"
 	name = "Salvage Pod"
-
-/datum/map_template/shuttle/cargo/box
-	suffix = "box"
-	name = "supply shuttle (Box)"
 
 /datum/map_template/shuttle/cargo/kilo
 	suffix = "kilo"
@@ -542,6 +541,10 @@
 /datum/map_template/shuttle/mining_common/meta
 	suffix = "meta"
 	name = "lavaland shuttle (Meta)"
+
+/datum/map_template/shuttle/mining_common/kilo
+	suffix = "kilo"
+	name = "lavaland shuttle (Kilo)"
 
 /datum/map_template/shuttle/arrival/delta
 	suffix = "delta"

@@ -11,7 +11,7 @@
 	density = TRUE
 
 	max_integrity = 250
-	integrity_failure = 80
+	integrity_failure = 0.33
 
 	// These allow for different icons when creating custom dispensers
 	var/icon_off = "off"
@@ -202,7 +202,7 @@
 		if(istype(a, dispense_type))
 			.++
 
-/obj/machinery/droneDispenser/update_icon()
+/obj/machinery/droneDispenser/update_icon_state()
 	if(stat & (BROKEN|NOPOWER))
 		icon_state = icon_off
 	else if(mode == DRONE_RECHARGING)

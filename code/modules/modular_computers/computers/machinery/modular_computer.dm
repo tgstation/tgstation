@@ -67,7 +67,7 @@
 		else
 			add_overlay(screen_icon_state_menu)
 
-	if(cpu && cpu.obj_integrity <= cpu.integrity_failure)
+	if(cpu && cpu.obj_integrity <= cpu.integrity_failure * cpu.max_integrity)
 		add_overlay("bsod")
 		add_overlay("broken")
 

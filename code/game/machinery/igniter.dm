@@ -47,7 +47,7 @@
 	. = ..()
 	icon_state = "igniter[on]"
 
-/obj/machinery/igniter/update_icon()
+/obj/machinery/igniter/update_icon_state()
 	if(stat & NOPOWER)
 		icon_state = "igniter0"
 	else
@@ -82,7 +82,7 @@
 	QDEL_NULL(spark_system)
 	return ..()
 
-/obj/machinery/sparker/update_icon()
+/obj/machinery/sparker/update_icon_state()
 	if(disable)
 		icon_state = "[initial(icon_state)]-d"
 	else if(powered())

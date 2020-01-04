@@ -5,6 +5,7 @@
  *		Air
  *		Plasma
  *		Emergency Oxygen
+ *		Generic
  */
 
 /*
@@ -165,3 +166,17 @@
 /obj/item/tank/internals/emergency_oxygen/double/empty/populate_gas()
 	return
 
+// *
+// * GENERIC
+// *
+
+/obj/item/tank/internals/generic
+	name = "gas tank"
+	desc = "A generic tank used for storing and transporting gasses. Can be used for internals."
+	icon_state = "generic"
+	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+	force = 10
+	dog_fashion = /datum/dog_fashion/back
+
+/obj/item/tank/internals/generic/populate_gas()
+	return

@@ -45,7 +45,7 @@
 			if(HAS_TRAIT(I, TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))
 				return ..()
 			else if(!grill_fuel)
-				to_chat(user, "<span class='notice'>There is not enough fuel.</span>")
+				to_chat(user, "<span class='warning'>There is not enough fuel!</span>")
 				return
 			else if(!grilled_item && user.transferItemToLoc(I, src))
 				grilled_item = I
@@ -95,8 +95,9 @@
 	. = ..()
 
 /obj/machinery/grill/wrench_act(mob/living/user, obj/item/I)
-	default_unfasten_wrench(user, I)
 	. = ..()
+	if(default_unfasten_wrench(user, I) != CANT_UNFASTEN)
+		return TRUE
 
 /obj/machinery/grill/deconstruct(disassembled = TRUE)
 	finish_grill()

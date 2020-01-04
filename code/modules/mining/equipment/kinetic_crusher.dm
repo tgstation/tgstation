@@ -16,7 +16,7 @@
 	throwforce = 5
 	throw_speed = 4
 	armour_penetration = 10
-	materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
+	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("smashed", "crushed", "cleaved", "chopped", "pulped")
 	sharpness = IS_SHARP
@@ -63,7 +63,7 @@
 
 /obj/item/twohanded/kinetic_crusher/attack(mob/living/target, mob/living/carbon/user)
 	if(!wielded)
-		to_chat(user, "<span class='warning'>[src] is too heavy to use with one hand. You fumble and drop everything.")
+		to_chat(user, "<span class='warning'>[src] is too heavy to use with one hand! You fumble and drop everything.</span>")
 		user.drop_all_held_items()
 		return
 	var/datum/status_effect/crusher_damage/C = target.has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)

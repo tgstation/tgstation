@@ -9,7 +9,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
-	materials = list(/datum/material/iron=30, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
 
 // *************************************
 // Hydroponics Tools
@@ -57,7 +57,7 @@
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(/datum/material/iron=50)
+	custom_materials = list(/datum/material/iron=50)
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
@@ -71,7 +71,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("slashed", "sliced", "bashed", "clawed")
 	hitsound = null
-	materials = null
+	custom_materials = null
 	flags_1 = NONE
 	resistance_flags = FLAMMABLE
 
@@ -97,7 +97,7 @@
 	throwforce = 15
 	throw_speed = 3
 	throw_range = 4
-	materials = list(/datum/material/iron = 15000)
+	custom_materials = list(/datum/material/iron = 15000)
 	attack_verb = list("chopped", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
@@ -114,7 +114,7 @@
 /obj/item/hatchet/wooden
 	desc = "A crude axe blade upon a short wooden handle."
 	icon_state = "woodhatchet"
-	materials = null
+	custom_materials = null
 	flags_1 = NONE
 
 /obj/item/scythe

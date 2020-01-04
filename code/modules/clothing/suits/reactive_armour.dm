@@ -18,7 +18,7 @@
 		var/armour_path = anomaly_armour_types[A.anomaly_type]
 		if(!armour_path)
 			armour_path = /obj/item/clothing/suit/armor/reactive/stealth //Lets not cheat the player if an anomaly type doesnt have its own armour coded
-		to_chat(user, "You insert [A] into the chest plate, and the armour gently hums to life.")
+		to_chat(user, "<span class='notice'>You insert [A] into the chest plate, and the armour gently hums to life.</span>")
 		new armour_path(get_turf(src))
 		qdel(src)
 		qdel(A)
@@ -162,7 +162,7 @@
 
 /obj/item/clothing/suit/armor/reactive/tesla/equipped(mob/user, slot)
 	..()
-	if(slot_flags & slotdefine2slotbit(slot)) //Was equipped to a valid slot for this item?
+	if(slot_flags & slot) //Was equipped to a valid slot for this item?
 		user.flags_1 |= TESLA_IGNORE_1
 
 /obj/item/clothing/suit/armor/reactive/tesla/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)

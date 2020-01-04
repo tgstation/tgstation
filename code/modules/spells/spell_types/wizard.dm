@@ -136,7 +136,6 @@
 	name = "quickstep"
 
 	charge_max = 100
-	clothes_req = FALSE
 	clothes_req = TRUE
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
@@ -260,7 +259,9 @@
 /obj/effect/proc_holder/spell/targeted/genetic/blind
 	mutations = list(BLINDMUT)
 	duration = 300
+	charge_max = 400 // needs to be higher than the duration or it'll be permanent
 	sound = 'sound/magic/blind.ogg'
+
 /obj/effect/proc_holder/spell/aoe_turf/repulse
 	name = "Repulse"
 	desc = "This spell throws everything around the user away."
@@ -279,7 +280,7 @@
 
 	action_icon_state = "repulse"
 
-/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr, var/stun_amt = 40)
+/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr, stun_amt = 40)
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster

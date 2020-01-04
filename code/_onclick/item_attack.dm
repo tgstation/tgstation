@@ -15,6 +15,7 @@
 	if(target.attackby(src,user, params))
 		return
 	if(QDELETED(src) || QDELETED(target))
+		attack_qdeleted(target, user, TRUE, params)
 		return
 	afterattack(target, user, TRUE, params)
 
@@ -63,6 +64,9 @@
 
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
+
+	if(force && M == user && user.client)
+		user.client.give_award(/datum/award/achievement/misc/selfouch, user)
 
 	user.do_attack_animation(M)
 	M.attacked_by(src, user)
@@ -117,6 +121,10 @@
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
 
+// Called if the target gets deleted by our attack
+/obj/item/proc/attack_qdeleted(atom/target, mob/user, proximity_flag, click_parameters)
+	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_QDELETED, target, user, proximity_flag, click_parameters)
+	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK_QDELETED, target, user, proximity_flag, click_parameters)
 
 /obj/item/proc/get_clamped_volume()
 	if(w_class)
@@ -139,6 +147,8 @@
 	if(user in viewers(src, null))
 		attack_message = "[user] [message_verb] [src][message_hit_area] with [I]!"
 		attack_message_local = "[user] [message_verb] you[message_hit_area] with [I]!"
+	if(user == src)
+		attack_message_local = "You [message_verb] yourself[message_hit_area] with [I]"
 	visible_message("<span class='danger'>[attack_message]</span>",\
 		"<span class='userdanger'>[attack_message_local]</span>", null, COMBAT_MESSAGE_RANGE)
 	return 1

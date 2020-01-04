@@ -93,10 +93,9 @@
 				S.set_opacity(TRUE)
 			newsmokes.Add(S)
 
-	if(newsmokes.len)
-		spawn(1) //the smoke spreads rapidly but not instantly
-			for(var/obj/effect/particle_effect/smoke/SM in newsmokes)
-				SM.spread_smoke()
+	//the smoke spreads rapidly but not instantly
+	for(var/obj/effect/particle_effect/smoke/SM in newsmokes)
+		addtimer(CALLBACK(SM, /obj/effect/particle_effect/smoke.proc/spread_smoke), 1)
 
 
 /datum/effect_system/smoke_spread
@@ -294,10 +293,12 @@
 			var/more = ""
 			if(M)
 				more = "[ADMIN_LOOKUPFLW(M)] "
-			message_admins("Smoke: ([ADMIN_VERBOSEJMP(location)])[contained]. Key: [more ? more : carry.my_atom.fingerprintslast].")
+			if(!istype(carry.my_atom, /obj/machinery/plumbing))
+				message_admins("Smoke: ([ADMIN_VERBOSEJMP(location)])[contained]. Key: [more ? more : carry.my_atom.fingerprintslast].")
 			log_game("A chemical smoke reaction has taken place in ([where])[contained]. Last touched by [carry.my_atom.fingerprintslast].")
 		else
-			message_admins("Smoke: ([ADMIN_VERBOSEJMP(location)])[contained]. No associated key.")
+			if(!istype(carry.my_atom, /obj/machinery/plumbing))
+				message_admins("Smoke: ([ADMIN_VERBOSEJMP(location)])[contained]. No associated key.")
 			log_game("A chemical smoke reaction has taken place in ([where])[contained]. No associated key.")
 
 

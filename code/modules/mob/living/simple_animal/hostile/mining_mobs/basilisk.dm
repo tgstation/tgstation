@@ -26,15 +26,15 @@
 	melee_damage_upper = 12
 	attack_verb_continuous = "bites into"
 	attack_verb_simple = "bite into"
-	a_intent = INTENT_HARM
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	vision_range = 2
 	aggro_vision_range = 9
 	turns_per_move = 5
 	gold_core_spawnable = HOSTILE_SPAWN
 	loot = list(/obj/item/stack/ore/diamond{layer = ABOVE_MOB_LAYER},
 				/obj/item/stack/ore/diamond{layer = ABOVE_MOB_LAYER})
+	var/lava_drinker = TRUE
+	var/warmed_up = FALSE
 
 /obj/projectile/temp/basilisk
 	name = "freezing blast"
@@ -44,6 +44,15 @@
 	nodamage = TRUE
 	flag = "energy"
 	temperature = 50
+	
+/obj/projectile/temp/basilisk/heated
+	name = "energy blast"
+	icon_state= "chronobolt"
+	damage = 40
+	damage_type = BRUTE
+	nodamage = FALSE
+	temperature = 0
+
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	if(..()) //we have a target
@@ -58,6 +67,27 @@
 			adjustBruteLoss(140)
 		if(3)
 			adjustBruteLoss(110)
+			
+/mob/living/simple_animal/hostile/asteroid/basilisk/AttackingTarget()
+	. = ..()
+	if(lava_drinker && !warmed_up && istype(target, /turf/open/lava))
+		visible_message("<span class='warning'>[src] begins to drink from [target]...</span>")
+		if(do_after(src, 70, target = target))
+			visible_message("<span class='warning'>[src] begins to fire up!</span>")
+			fully_heal()
+			icon_state = "Basilisk_alert"
+			set_varspeed(0)
+			warmed_up = TRUE
+			projectiletype = /obj/projectile/temp/basilisk/heated
+			addtimer(CALLBACK(src, .proc/cool_down), 3000)
+			
+mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
+	visible_message("<span class='warning'>[src] appears to be cooling down...</span>")
+	if(stat != DEAD)
+		icon_state = "Basilisk"
+	set_varspeed(3)
+	warmed_up = FALSE
+	projectiletype = /obj/projectile/temp/basilisk
 
 //Watcher
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
@@ -81,8 +111,10 @@
 	movement_type = FLYING
 	robust_searching = 1
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
+	gold_core_spawnable = NO_SPAWN
 	loot = list()
 	butcher_results = list(/obj/item/stack/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
+	lava_drinker = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize()
 	. = ..()

@@ -61,6 +61,16 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 
+/obj/item/clothing/head/hardhat/red/upgraded
+	name = "workplace-ready firefighter helmet"
+	desc = "By applying state of the art lighting technology to a fire helmet, and using photo-chemical hardening methods, this hardhat will protect you from robust workplace hazards."
+	icon_state = "hardhat0_purple"
+	item_state = "hardhat0_purple"
+	brightness_on = 5
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/plastic = 3000, /datum/material/silver = 500)
+	hat_type = "purple"
+
 /obj/item/clothing/head/hardhat/white
 	icon_state = "hardhat0_white"
 	item_state = "hardhat0_white"
@@ -92,7 +102,7 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 
-/obj/item/clothing/head/hardhat/weldhat 
+/obj/item/clothing/head/hardhat/weldhat
 	name = "welding hard hat"
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight AND welding shield! The bulb seems a little smaller though."
 	brightness_on = 3 //Needs a little bit of tradeoff
@@ -132,7 +142,7 @@
 /obj/item/clothing/head/hardhat/weldhat/update_icon()
 	cut_overlays()
 	if(!up)
-		add_overlay("weldvisor") 
+		add_overlay("weldvisor")
 	..()
 
 /obj/item/clothing/head/hardhat/weldhat/orange
@@ -140,7 +150,7 @@
 	item_state = "hardhat0_orange"
 	hat_type = "orange"
 
-/obj/item/clothing/head/hardhat/weldhat/white 
+/obj/item/clothing/head/hardhat/weldhat/white
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight AND welding shield!" //This bulb is not smaller
 	icon_state = "hardhat0_white"
 	item_state = "hardhat0_white"
@@ -155,4 +165,4 @@
 /obj/item/clothing/head/hardhat/weldhat/dblue
 	icon_state = "hardhat0_dblue"
 	item_state = "hardhat0_dblue"
-	hat_type = "dblue" 
+	hat_type = "dblue"

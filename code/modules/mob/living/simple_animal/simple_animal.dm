@@ -132,12 +132,18 @@
 	var/shouldwakeup = FALSE
 
 	///Domestication.
-	var/tame = 0
+	var/tame = FALSE
+	///What the mob eats, typically used for taming or animal husbandry.
+	var/list/food_type
+	///Starting success chance for taming.
+	var/tame_chance
+	///Added success chance after every failed tame attempt.
+	var/bonus_tame_chance
 
 	///I don't want to confuse this with client registered_z.
 	var/my_z
-
-	var/do_footstep = FALSE
+	///What kind of footstep this mob should have. Null if it shouldn't have any.
+	var/footstep_type
 
 /mob/living/simple_animal/Initialize()
 	. = ..()
@@ -167,14 +173,29 @@
 
 	return ..()
 
+/mob/living/simple_animal/attackby(obj/item/O, mob/user, params)
+	if(!is_type_in_list(O, food_type))
+		..()
+		return
+	else
+		user.visible_message("<span class='notice'>[user] hand-feeds [O] to [src].</span>", "<span class='notice'>You hand-feed [O] to [src].</span>")
+		qdel(O)
+		if(tame)
+			return
+		if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
+			tame = TRUE
+			tamed()
+		else
+			tame_chance += bonus_tame_chance
+
+///Extra effects to add when the mob is tamed, such as adding a riding component
+/mob/living/simple_animal/proc/tamed()
+	return
+
 /mob/living/simple_animal/examine(mob/user)
 	. = ..()
 	if(stat == DEAD)
 		. += "<span class='deadsay'>Upon closer examination, [p_they()] appear[p_s()] to be dead.</span>"
-
-/mob/living/simple_animal/initialize_footstep()
-	if(do_footstep)
-		..()
 
 /mob/living/simple_animal/updatehealth()
 	..()
@@ -189,7 +210,8 @@
 		else
 			stat = CONSCIOUS
 	med_hud_set_status()
-
+	if(footstep_type)
+		AddComponent(/datum/component/footstep, footstep_type)
 
 /mob/living/simple_animal/handle_status_effects()
 	..()
@@ -313,10 +335,15 @@
 		adjustHealth(unsuitable_atmos_damage)
 
 /mob/living/simple_animal/gib()
-	if(butcher_results)
+	if(butcher_results || guaranteed_butcher_results)
+		var/list/butcher = list()
+		if(butcher_results)
+			butcher += butcher_results
+		if(guaranteed_butcher_results)
+			butcher += guaranteed_butcher_results
 		var/atom/Tsec = drop_location()
-		for(var/path in butcher_results)
-			for(var/i in 1 to butcher_results[path])
+		for(var/path in butcher)
+			for(var/i in 1 to butcher[path])
 				new path(Tsec)
 	..()
 
@@ -331,8 +358,8 @@
 
 /mob/living/simple_animal/emote(act, m_type=1, message = null, intentional = FALSE)
 	if(stat)
-		return
-	. = ..()
+		return FALSE
+	return ..()
 
 /mob/living/simple_animal/proc/set_varspeed(var_value)
 	speed = var_value
@@ -405,21 +432,21 @@
 /mob/living/simple_animal/ExtinguishMob()
 	return
 
-/mob/living/simple_animal/revive(full_heal = 0, admin_revive = 0)
+/mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE)
 	if(..()) //successfully ressuscitated from death
 		icon = initial(icon)
 		icon_state = icon_living
 		density = initial(density)
 		mobility_flags = MOBILITY_FLAGS_DEFAULT
 		update_mobility()
-		. = 1
+		. = TRUE
 		setMovetype(initial(movement_type))
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
 		return
 	next_scan_time = world.time + 400
-	var/alone = 1
+	var/alone = TRUE
 	var/mob/living/simple_animal/partner
 	var/children = 0
 	for(var/mob/M in view(7, src))
@@ -442,14 +469,14 @@
 		if(target)
 			return new childspawn(target)
 
-/mob/living/simple_animal/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
+/mob/living/simple_animal/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 	if(incapacitated())
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
 	if(be_close && !in_range(M, src))
 		to_chat(src, "<span class='warning'>You are too far away!</span>")
 		return FALSE
-	if(!(no_dextery || dextrous))
+	if(!(no_dexterity || dextrous))
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
 	return TRUE
@@ -599,6 +626,8 @@
 		return ..()
 
 /mob/living/simple_animal/relaymove(mob/user, direction)
+	if (stat == DEAD)
+		return
 	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
 	if(tame && riding_datum)
 		riding_datum.handle_ride(user, direction)

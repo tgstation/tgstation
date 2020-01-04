@@ -15,8 +15,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/effect/mob_spawn,
 		/obj/effect/hierophant,
 		/obj/structure/receiving_pad,
-		/obj/effect/clockwork/spatial_gateway,
-		/obj/structure/destructible/clockwork/powered/clockwork_obelisk,
 		/obj/item/warp_cube,
 		/obj/machinery/rnd/production, //print tracking beacons, send shuttle
 		/obj/machinery/autolathe, //same
@@ -27,7 +25,11 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/machinery/syndicatebomb,
 		/obj/item/hilbertshotel,
 		/obj/item/swapper,
-		/obj/docking_port
+		/obj/docking_port,
+		/obj/machinery/launchpad,
+		/obj/machinery/disposal,
+		/obj/structure/disposalpipe,
+		/obj/item/hilbertshotel
 	)))
 
 /obj/docking_port/mobile/supply

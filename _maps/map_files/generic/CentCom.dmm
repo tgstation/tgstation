@@ -4696,7 +4696,7 @@
 /area/abductor_ship)
 "lG" = (
 /obj/structure/table/abductor,
-/obj/item/storage/box/alienhandcuffs,
+/obj/machinery/recharger,
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "lH" = (
@@ -8165,7 +8165,7 @@
 "sa" = (
 /obj/structure/table/wood,
 /obj/item/lighter,
-/obj/item/wirecutters/power,
+/obj/item/crowbar/power,
 /turf/open/floor/plasteel/dark,
 /area/centcom/supplypod)
 "sb" = (
@@ -17614,6 +17614,11 @@
 	},
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
+"RQ" = (
+/obj/structure/closet/abductor,
+/obj/item/storage/box/alienhandcuffs,
+/turf/open/floor/plating/abductor,
+/area/abductor_ship)
 "RS" = (
 /obj/machinery/light{
 	dir = 8
@@ -20355,7 +20360,7 @@ aa
 aa
 ks
 kP
-lj
+RQ
 lG
 lj
 mw
@@ -20382,7 +20387,7 @@ aa
 aa
 ks
 kP
-lj
+RQ
 lG
 lj
 mw
@@ -20412,7 +20417,7 @@ aa
 aa
 ks
 kP
-lj
+RQ
 lG
 lj
 mw
@@ -20439,7 +20444,7 @@ aa
 aa
 ks
 kP
-lj
+RQ
 lG
 lj
 mw

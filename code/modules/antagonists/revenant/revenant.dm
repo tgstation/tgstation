@@ -81,7 +81,7 @@
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
 	random_revenant_name()
 
-/mob/living/simple_animal/revenant/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
+/mob/living/simple_animal/revenant/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 	return FALSE
 
 /mob/living/simple_animal/revenant/proc/random_revenant_name()
@@ -154,7 +154,7 @@
 /mob/living/simple_animal/revenant/med_hud_set_status()
 	return //we use no hud
 
-/mob/living/simple_animal/revenant/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/simple_animal/revenant/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(!message)
 		return
 	src.log_talk(message, LOG_SAY)
@@ -181,9 +181,6 @@
 
 /mob/living/simple_animal/revenant/narsie_act()
 	return //most humans will now be either bones or harvesters, but we're still un-alive.
-
-/mob/living/simple_animal/revenant/ratvar_act()
-	return //clocks get out reee
 
 /mob/living/simple_animal/revenant/bullet_act()
 	if(!revealed || stasis)

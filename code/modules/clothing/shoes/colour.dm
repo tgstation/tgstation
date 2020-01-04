@@ -5,7 +5,7 @@
 	name = "black shoes"
 	icon_state = "black"
 	desc = "A pair of black shoes."
-	custom_price = 20
+	custom_price = 50
 
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
@@ -32,10 +32,6 @@
 /obj/item/clothing/shoes/sneakers/purple
 	name = "purple shoes"
 	icon_state = "purple"
-
-/obj/item/clothing/shoes/sneakers/brown
-	name = "brown shoes"
-	icon_state = "brown"
 
 /obj/item/clothing/shoes/sneakers/red
 	name = "red shoes"

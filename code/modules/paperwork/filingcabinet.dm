@@ -35,7 +35,7 @@
 	. = ..()
 	if(mapload)
 		for(var/obj/item/I in loc)
-			if(istype(I, /obj/item/paper) || istype(I, /obj/item/folder) || istype(I, /obj/item/photo))
+			if(I.w_class < WEIGHT_CLASS_NORMAL) //there probably shouldn't be anything placed ontop of filing cabinets in a map that isn't meant to go in them
 				I.forceMove(src)
 
 /obj/structure/filingcabinet/deconstruct(disassembled = TRUE)
@@ -46,7 +46,7 @@
 	qdel(src)
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/paper) || istype(P, /obj/item/folder) || istype(P, /obj/item/photo) || istype(P, /obj/item/documents))
+	if(P.w_class < WEIGHT_CLASS_NORMAL)
 		if(!user.transferItemToLoc(P, src))
 			return
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
@@ -215,9 +215,9 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 		if(virgin)
 			fillCurrent()
 			virgin = 0
-		cooldown = 1
-		sleep(100) // prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
-		cooldown = 0
+		cooldown = TRUE
+		// prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
+		addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10 SECONDS)
 	else
 		to_chat(user, "<span class='warning'>[src] is jammed, give it a few seconds.</span>")
 	..()

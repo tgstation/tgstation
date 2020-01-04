@@ -7,7 +7,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
-	///icon state name for inhanf overlays
+	///icon state name for inhand overlays
 	var/item_state = null
 	///Icon file for left hand inhand overlays
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -77,7 +77,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
 	var/breakouttime = 0
-	var/list/materials //materials in this object, and the amount
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
@@ -125,18 +124,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
 
+	var/canMouseDown = FALSE
+
 
 /obj/item/Initialize()
-
-	materials =	typelist("materials", materials)
-
-	if(materials) //Otherwise, use the instances already provided.
-		var/list/temp_list = list()
-		for(var/i in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
-			var/amount = materials[i]
-			var/datum/material/M = getmaterialref(i)
-			temp_list[M] = amount
-		materials = temp_list
 
 	if (attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
@@ -257,9 +248,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	// Extractable materials. Only shows the names, not the amounts.
 	research_msg += ".<br><font color='purple'>Extractable materials:</font> "
-	if (materials.len)
+	if (length(custom_materials))
 		sep = ""
-		for(var/mat in materials)
+		for(var/mat in custom_materials)
 			research_msg += sep
 			research_msg += CallMaterialName(mat)
 			sep = ", "
@@ -400,7 +391,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return ITALICS | REDUCE_RANGE
 
 /obj/item/proc/dropped(mob/user, silent = FALSE)
-	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_CALL_PARENT(1)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
@@ -410,11 +401,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
 	if(!silent)
 		playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE)
-
+	user?.update_equipment_speed_mods()
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
-	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_CALL_PARENT(1)
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
 	item_flags |= IN_INVENTORY
 
@@ -428,7 +419,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // for items that can be placed in multiple slots
 // Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
 /obj/item/proc/equipped(mob/user, slot, initial = FALSE)
-	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_CALL_PARENT(1)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	for(var/X in actions)
 		var/datum/action/A = X
@@ -436,14 +427,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			A.Grant(user)
 	item_flags |= IN_INVENTORY
 	if(!initial)
-		if(equip_sound &&(slot_flags & slotdefine2slotbit(slot)))
+		if(equip_sound && (slot_flags & slot))
 			playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
-		else if(slot == SLOT_HANDS)
+		else if(slot == ITEM_SLOT_HANDS)
 			playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE)
+	user.update_equipment_speed_mods()
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user)
-	if(slot == SLOT_IN_BACKPACK || slot == SLOT_LEGCUFFED) //these aren't true slots, so avoid granting actions there
+	if(slot == ITEM_SLOT_BACKPACK || slot == ITEM_SLOT_LEGCUFFED) //these aren't true slots, so avoid granting actions there
 		return FALSE
 	return TRUE
 
@@ -579,7 +571,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 					playsound(hit_atom, 'sound/weapons/genhit.ogg',volume, TRUE, -1)
 			else
 				playsound(hit_atom, 'sound/weapons/throwtap.ogg', 1, volume, -1)
-			
+
 		else
 			playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE)
 		return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
@@ -663,7 +655,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(ismob(location))
 		var/mob/M = location
 		var/success = FALSE
-		if(src == M.get_item_by_slot(SLOT_WEAR_MASK))
+		if(src == M.get_item_by_slot(ITEM_SLOT_MASK))
 			success = TRUE
 		if(success)
 			location = get_turf(M)
@@ -769,7 +761,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(!delay && !tool_start_check(user, amount))
 		return
 
-	delay *= toolspeed
+	var/skill_modifier = 1
+
+	if(tool_behaviour == TOOL_MINING && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		skill_modifier = H.mind.get_skill_speed_modifier(/datum/skill/mining)
+
+	delay *= toolspeed * skill_modifier
 
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)
@@ -848,7 +846,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			dropped(M, FALSE)
 	return ..()
 
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	return ..()

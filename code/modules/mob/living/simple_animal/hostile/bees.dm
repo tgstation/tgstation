@@ -36,6 +36,7 @@
 	faction = list("hostile")
 	move_to_delay = 0
 	obj_damage = 0
+	ventcrawler = VENTCRAWLER_ALWAYS
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
@@ -43,7 +44,7 @@
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	movement_type = FLYING
-	gold_core_spawnable = HOSTILE_SPAWN
+	gold_core_spawnable = FRIENDLY_SPAWN
 	search_objects = 1 //have to find those plant trays!
 
 	//Spaceborn beings don't get hurt by space
@@ -86,6 +87,16 @@
 	if(!beehome)
 		. += "<span class='warning'>This bee is homeless!</span>"
 
+/mob/living/simple_animal/hostile/poison/bees/ListTargets() // Bee processing is expessive, so we override them finding targets here.
+	if(!search_objects) //In case we want to have purely hostile bees
+		return ..()
+	else
+		. = list() // The following code is only very slightly slower than just returning oview(vision_range, targets_from), but it saves us much more work down the line
+		var/list/searched_for = oview(vision_range, targets_from)
+		for(var/obj/A in searched_for)
+			. += A
+		for(var/mob/A in searched_for)
+			. += A
 
 /mob/living/simple_animal/hostile/poison/bees/proc/generate_bee_visuals()
 	cut_overlays()

@@ -53,8 +53,7 @@
 
 /obj/item/defibrillator/update_icon()
 	update_power()
-	update_overlays()
-	update_charge()
+	return ..()
 
 /obj/item/defibrillator/proc/update_power()
 	if(!QDELETED(cell))
@@ -65,23 +64,21 @@
 	else
 		powered = FALSE
 
-/obj/item/defibrillator/proc/update_overlays()
-	cut_overlays()
-	if(!on)
-		add_overlay("[initial(icon_state)]-paddles")
-	if(powered)
-		add_overlay("[initial(icon_state)]-powered")
-	if(!cell)
-		add_overlay("[initial(icon_state)]-nocell")
-	if(!safety)
-		add_overlay("[initial(icon_state)]-emagged")
+/obj/item/defibrillator/update_overlays()
+	. = ..()
 
-/obj/item/defibrillator/proc/update_charge()
-	if(powered) //so it doesn't show charge if it's unpowered
+	if(!on)
+		. += "[initial(icon_state)]-paddles"
+	if(powered)
+		. += "[initial(icon_state)]-powered"
 		if(!QDELETED(cell))
 			var/ratio = cell.charge / cell.maxcharge
 			ratio = CEILING(ratio*4, 1) * 25
-			add_overlay("[initial(icon_state)]-charge[ratio]")
+			. += "[initial(icon_state)]-charge[ratio]"
+	if(!cell)
+		. += "[initial(icon_state)]-nocell"
+	if(!safety)
+		. += "[initial(icon_state)]-emagged"
 
 /obj/item/defibrillator/CheckParts(list/parts_list)
 	..()
@@ -95,13 +92,13 @@
 /obj/item/defibrillator/attack_hand(mob/user)
 	if(loc == user)
 		if(slot_flags == ITEM_SLOT_BACK)
-			if(user.get_item_by_slot(SLOT_BACK) == src)
+			if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
 				ui_action_click()
 			else
 				to_chat(user, "<span class='warning'>Put the defibrillator on your back first!</span>")
 
 		else if(slot_flags == ITEM_SLOT_BELT)
-			if(user.get_item_by_slot(SLOT_BELT) == src)
+			if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
 				ui_action_click()
 			else
 				to_chat(user, "<span class='warning'>Strap the defibrillator's belt on first!</span>")
@@ -125,7 +122,7 @@
 	else if(istype(W, /obj/item/stock_parts/cell))
 		var/obj/item/stock_parts/cell/C = W
 		if(cell)
-			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
+			to_chat(user, "<span class='warning'>[src] already has a cell!</span>")
 		else
 			if(C.maxcharge < paddles.revivecost)
 				to_chat(user, "<span class='notice'>[src] requires a higher capacity cell.</span>")
@@ -196,7 +193,7 @@
 
 /obj/item/defibrillator/equipped(mob/user, slot)
 	..()
-	if((slot_flags == ITEM_SLOT_BACK && slot != SLOT_BACK) || (slot_flags == ITEM_SLOT_BELT && slot != SLOT_BELT))
+	if((slot_flags == ITEM_SLOT_BACK && slot != ITEM_SLOT_BACK) || (slot_flags == ITEM_SLOT_BELT && slot != ITEM_SLOT_BELT))
 		remove_paddles(user)
 		update_icon()
 
@@ -283,6 +280,13 @@
 		toggle_paddles()
 		update_icon()
 		return
+
+/obj/item/defibrillator/compact/combat/loaded/nanotrasen
+	name = "elite nanotrasen defibrillator"
+	desc = "A belt-equipped state-of-the-art defibrillator. Can revive through spacesuits, has an experimental self-recharging battery, and can be utilized in combat via applying the paddles in a disarming or agressive manner."
+	icon_state = "defibnt" //needs defib inhand sprites
+	item_state = "defibnt"
+	paddle_type = /obj/item/twohanded/shockpaddles/syndicate/nanotrasen
 
 //paddles
 
@@ -486,12 +490,14 @@
 	busy = TRUE
 	M.visible_message("<span class='danger'>[user] has touched [M] with [src]!</span>", \
 			"<span class='userdanger'>[user] has touched [M] with [src]!</span>")
-	M.adjustStaminaLoss(50)
-	M.Paralyze(100)
-	M.updatehealth() //forces health update before next life tick //isn't this done by adjustStaminaLoss anyway?
+	M.adjustStaminaLoss(60)
+	M.Knockdown(75)
+	M.Jitter(50)
+	M.apply_status_effect(STATUS_EFFECT_CONVULSING)
 	playsound(src,  'sound/machines/defib_zap.ogg', 50, TRUE, -1)
-	M.emote("gasp")
-	log_combat(user, M, "stunned", src)
+	if(HAS_TRAIT(M,MOB_ORGANIC))
+		M.emote("gasp")
+	log_combat(user, M, "zapped", src)
 	if(req_defib)
 		defib.deductcharge(revivecost)
 		cooldown = TRUE
@@ -511,7 +517,7 @@
 		"<span class='warning'>You overcharge the paddles and begin to place them onto [H]'s chest...</span>")
 	busy = TRUE
 	update_icon()
-	if(do_after(user, 30, target = H))
+	if(do_after(user, 15, target = H))
 		user.visible_message("<span class='notice'>[user] places [src] on [H]'s chest.</span>",
 			"<span class='warning'>You place [src] on [H]'s chest and begin to charge them.</span>")
 		var/turf/T = get_turf(defib)
@@ -520,7 +526,7 @@
 			T.audible_message("<span class='warning'>\The [defib] lets out an urgent beep and lets out a steadily rising hum...</span>")
 		else
 			user.audible_message("<span class='warning'>[src] let out an urgent beep.</span>")
-		if(do_after(user, 30, target = H)) //Takes longer due to overcharging
+		if(do_after(user, 15, target = H)) //Takes longer due to overcharging
 			if(!H)
 				busy = FALSE
 				update_icon()
@@ -589,7 +595,7 @@
 				if (H.suiciding)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
 				else if (H.hellbound)
-					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's soul appears to be on another plane of existence.  Further attempts futile.</span>"
+					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's soul appears to be on another plane of existence. Further attempts futile.</span>"
 				else if (tplus > tlimit)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Body has decayed for too long. Further attempts futile.</span>"
 				else if (!heart)
@@ -630,7 +636,7 @@
 					user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful.</span>")
 					playsound(src, 'sound/machines/defib_success.ogg', 50, FALSE)
 					H.set_heartattack(FALSE)
-					H.revive()
+					H.revive(full_heal = FALSE, admin_revive = FALSE)
 					H.emote("gasp")
 					H.Jitter(100)
 					SEND_SIGNAL(H, COMSIG_LIVING_MINOR_SHOCK)
@@ -681,12 +687,19 @@
 
 /obj/item/twohanded/shockpaddles/syndicate
 	name = "syndicate defibrillator paddles"
-	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and to deliver powerful or disabling shocks offensively."
+	desc = "A pair of paddles used to revive deceased operatives. They possess both the ability to penetrate armor and to deliver powerful or disabling shocks offensively."
 	combat = TRUE
 	icon = 'icons/obj/defib.dmi'
 	icon_state = "syndiepaddles0"
 	item_state = "syndiepaddles0"
 	base_icon_state = "syndiepaddles"
+
+/obj/item/twohanded/shockpaddles/syndicate/nanotrasen
+	name = "elite nanotrasen defibrillator paddles"
+	desc = "A pair of paddles used to revive deceased ERT members. They possess both the ability to penetrate armor and to deliver powerful or disabling shocks offensively."
+	icon_state = "ntpaddles0"
+	item_state = "ntpaddles0"
+	base_icon_state = "ntpaddles"
 
 /obj/item/twohanded/shockpaddles/syndicate/cyborg
 	req_defib = FALSE

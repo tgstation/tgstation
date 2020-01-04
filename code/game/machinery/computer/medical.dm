@@ -564,7 +564,7 @@
 	if(user)
 		if(message)
 			if(authenticated)
-				if(user.canUseTopic(src, BE_CLOSE))
+				if(user.canUseTopic(src, !issilicon(user)))
 					if(!record1 || record1 == active1)
 						if(!record2 || record2 == active2)
 							return 1
@@ -576,5 +576,4 @@
 	icon_state = "laptop"
 	icon_screen = "medlaptop"
 	icon_keyboard = "laptop_key"
-	clockwork = TRUE //it'd look weird
 	pass_flags = PASSTABLE

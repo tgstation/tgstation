@@ -88,12 +88,12 @@
 	return (OXYLOSS)
 
 /obj/item/storage/backpack/santabag/proc/regenerate_presents()
-	addtimer(CALLBACK(src, .proc/regenerate_presents), rand(30 SECONDS, 60 SECONDS))
+	addtimer(CALLBACK(src, .proc/regenerate_presents), 30 SECONDS)
 
 	var/mob/M = get(loc, /mob)
 	if(!istype(M))
 		return
-	if(HAS_TRAIT(M, TRAIT_CANNOT_OPEN_PRESENTS))
+	if(M.mind && HAS_TRAIT(M.mind, TRAIT_CANNOT_OPEN_PRESENTS))
 		var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 		var/turf/floor = get_turf(src)
 		var/obj/item/I = new /obj/item/a_gift/anything(floor)
@@ -541,15 +541,6 @@
 	new /obj/item/ammo_box/magazine/m12g(src)
 	new /obj/item/ammo_box/magazine/m12g(src)
 	new /obj/item/clothing/glasses/thermal/syndi(src)
-
-/obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
-	desc = "A large duffel bag containing a tactical medkit, a Donksoft machine gun, a big jumbo box of riot darts, and a knock-off pair of magboots."
-
-/obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle/PopulateContents()
-	new /obj/item/clothing/shoes/magboots/syndie(src)
-	new /obj/item/storage/firstaid/tactical(src)
-	new /obj/item/gun/ballistic/automatic/l6_saw/toy(src)
-	new /obj/item/ammo_box/foambox/riot(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
 	desc = "A large duffel bag containing a medical equipment, a Donksoft LMG, a big jumbo box of riot darts, and a knock-off pair of magboots."

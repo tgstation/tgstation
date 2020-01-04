@@ -2,7 +2,6 @@
 "aa" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
 	dir = 8;
-	jumpto_ports = list("huntership_home" = 1);
 	view_range = 7;
 	x_offset = 6
 	},
@@ -65,7 +64,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "aj" = (
-/obj/structure/closet/crate,
+/obj/structure/closet/crate/eva,
 /obj/effect/turf_decal/box,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)

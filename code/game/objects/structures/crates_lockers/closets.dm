@@ -6,7 +6,7 @@
 	density = TRUE
 	drag_slowdown = 1.5		// Same as a prone mob
 	max_integrity = 200
-	integrity_failure = 50
+	integrity_failure = 0.25
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60)
 
 	var/icon_door = null
@@ -434,15 +434,16 @@
 							"<span class='notice'>You [locked ? null : "un"]lock [src].</span>")
 			update_icon()
 		else if(!silent)
-			to_chat(user, "<span class='notice'>Access Denied</span>")
+			to_chat(user, "<span class='alert'>Access Denied.</span>")
 	else if(secure && broken)
 		to_chat(user, "<span class='warning'>\The [src] is broken!</span>")
 
 /obj/structure/closet/emag_act(mob/user)
 	if(secure && !broken)
-		user.visible_message("<span class='warning'>Sparks fly from [src]!</span>",
-						"<span class='warning'>You scramble [src]'s lock, breaking it open!</span>",
-						"<span class='hear'>You hear a faint electrical spark.</span>")
+		if(user)
+			user.visible_message("<span class='warning'>Sparks fly from [src]!</span>",
+							"<span class='warning'>You scramble [src]'s lock, breaking it open!</span>",
+							"<span class='hear'>You hear a faint electrical spark.</span>")
 		playsound(src, "sparks", 50, TRUE)
 		broken = TRUE
 		locked = FALSE

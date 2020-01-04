@@ -1,7 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes: 
-  - rscadd: "Atmos techs now have their unique gas masks"
-  - rscadd: "captain does too"
-  - bugfix: "captain hardsuit finally fireproof if worn with captain gas mask"
-  - tweak: "removes useless spare analyzer from atmos locker"

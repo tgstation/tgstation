@@ -91,7 +91,6 @@
 
 	trauma = _trauma
 	owner = trauma.owner
-	copy_known_languages_from(owner, TRUE)
 
 	setup_friend()
 
@@ -136,13 +135,13 @@
 		client.images.Remove(human_image)
 	return ..()
 
-/mob/camera/imaginary_friend/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/camera/imaginary_friend/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if (!message)
 		return
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "You cannot send IC messages (muted).")
+			to_chat(src, "<span class='boldwarning'>You cannot send IC messages (muted).</span>")
 			return
 		if (!(ignore_spam || forced) && src.client.handle_spam_prevention(message,MUTE_IC))
 			return

@@ -208,7 +208,7 @@
 	var/mob/living/carbon/human/active_owner
 
 /obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot)
-	return slot == SLOT_NECK
+	return slot == ITEM_SLOT_NECK
 
 /obj/item/clothing/neck/necklace/memento_mori/dropped(mob/user)
 	..()
@@ -250,10 +250,7 @@
 	if(!MM.active_owner)
 		if(ishuman(owner))
 			MM.memento(owner)
-	else
-		to_chat(owner, "<span class='warning'>You try to free your lifeforce from the pendant...</span>")
-		if(do_after(owner, 40, target = owner))
-			MM.mori()
+			Remove(MM.active_owner) //Remove the action button, since there's no real use in having it now.
 
 //Wisp Lantern
 /obj/item/wisp_lantern
@@ -337,7 +334,7 @@
 
 /obj/item/warp_cube/attack_self(mob/user)
 	if(!linked)
-		to_chat(user, "[src] fizzles uselessly.")
+		to_chat(user, "<span class='warning'>[src] fizzles uselessly.</span>")
 		return
 	if(teleporting)
 		return
@@ -579,8 +576,8 @@
 /obj/item/book_of_babel/attack_self(mob/user)
 	if(!user.can_read(src))
 		return FALSE
-	to_chat(user, "You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops.")
-	user.grant_all_languages(omnitongue=TRUE)
+	to_chat(user, "<span class='notice'>You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops.</span>")
+	user.grant_all_languages()
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
 
@@ -640,7 +637,7 @@
 	to_chat(user, "<span class='notice'>You unfold the ladder. It extends much farther than you were expecting.</span>")
 	var/last_ladder = null
 	for(var/i in 1 to world.maxz)
-		if(is_centcom_level(i) || is_reserved_level(i) || is_reebe(i) || is_away_level(i))
+		if(is_centcom_level(i) || is_reserved_level(i) || is_away_level(i))
 			continue
 		var/turf/T2 = locate(ladder_x, ladder_y, i)
 		last_ladder = new /obj/structure/ladder/unbreakable/jacob(T2, null, last_ladder)
@@ -1037,9 +1034,11 @@
 	var/list/da_list = list()
 	for(var/I in GLOB.alive_mob_list & GLOB.player_list)
 		var/mob/living/L = I
+		if(is_centcom_level(L.z))
+			continue
 		da_list[L.real_name] = L
 
-	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in da_list
+	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in sortList(da_list)
 
 	choice = da_list[choice]
 
@@ -1047,11 +1046,11 @@
 		used = FALSE
 		return
 	if(!(isliving(choice)))
-		to_chat(user, "[choice] is already dead!")
+		to_chat(user, "<span class='warning'>[choice] is already dead!</span>")
 		used = FALSE
 		return
 	if(choice == user)
-		to_chat(user, "You feel like writing your own name into a cursed death warrant would be unwise.")
+		to_chat(user, "<span class='warning'>You feel like writing your own name into a cursed death warrant would be unwise.</span>")
 		used = FALSE
 		return
 
