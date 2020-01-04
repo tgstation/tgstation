@@ -329,7 +329,8 @@
 
 	if(!can_crush)
 		return TRUE
-	else if(safe)
+
+	if(safe)
 		CheckForMobs()
 	else
 		crush()
