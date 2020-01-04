@@ -69,7 +69,7 @@
 	pixel_y = 16
 	},
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{

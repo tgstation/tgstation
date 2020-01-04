@@ -9247,7 +9247,7 @@
 	pixel_x = -26
 	},
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/effect/turf_decal/bot,
@@ -10483,7 +10483,7 @@
 /area/maintenance/port/fore)
 "aza" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/item/reagent_containers/glass/bucket,
@@ -12698,7 +12698,7 @@
 /area/space/nearstation)
 "aDx" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -12718,7 +12718,7 @@
 /area/hydroponics/garden/abandoned)
 "aDA" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/sign/departments/botany{
@@ -30816,7 +30816,7 @@
 /area/maintenance/port/fore)
 "bjp" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/machinery/airalarm{
@@ -37624,7 +37624,7 @@
 /area/storage/tech)
 "bvz" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/effect/turf_decal/bot,
@@ -37662,7 +37662,7 @@
 /area/hydroponics)
 "bvD" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/machinery/requests_console{
@@ -55718,7 +55718,7 @@
 /area/crew_quarters/heads/captain/private)
 "bZp" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -72780,7 +72780,7 @@
 	pixel_x = -26
 	},
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -73563,7 +73563,7 @@
 	pixel_x = -26
 	},
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -81384,7 +81384,7 @@
 	pixel_x = 26
 	},
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -84686,7 +84686,7 @@
 /area/science/research)
 "daN" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -85016,7 +85016,7 @@
 	pixel_x = 26
 	},
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -86501,7 +86501,7 @@
 /area/science/research)
 "deb" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -89226,7 +89226,7 @@
 /area/maintenance/starboard/aft)
 "diR" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -96294,7 +96294,7 @@
 	pixel_x = -26
 	},
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -99551,7 +99551,7 @@
 /area/medical/medbay/central)
 "dEc" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -105051,7 +105051,7 @@
 /area/science/storage)
 "dOq" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/structure/mirror{
@@ -106023,7 +106023,7 @@
 /area/hallway/primary/aft)
 "dQe" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/machinery/shower{
@@ -106407,7 +106407,7 @@
 /area/hallway/primary/aft)
 "dQU" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/structure/mirror{
@@ -109678,7 +109678,7 @@
 /area/medical/virology)
 "dYe" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/structure/extinguisher_cabinet{
@@ -110265,7 +110265,7 @@
 /area/medical/virology)
 "dZC" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
