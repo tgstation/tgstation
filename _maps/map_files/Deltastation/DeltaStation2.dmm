@@ -572,6 +572,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
+"acE" = (
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/medical/psychiatrist)
 "acF" = (
 /obj/docking_port/stationary{
 	dir = 2;
@@ -95171,9 +95175,6 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/medical/psychiatrist)
-"dvk" = (
-/turf/closed/wall/r_wall,
-/area/medical/psychiatrist)
 "dvl" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/wood,
@@ -95197,6 +95198,7 @@
 	pixel_y = 26;
 	req_access_txt = "71"
 	},
+/obj/item/paper_bin,
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "dvo" = (
@@ -95920,16 +95922,6 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
-"dwI" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/wood,
-/area/medical/psychiatrist)
 "dwJ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -95967,23 +95959,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/medical/psychiatrist)
-"dwN" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/medical/glass{
-	name = "Psychiatric Evaluation";
-	req_access_txt = "71"
-	},
-/turf/open/floor/plasteel/freezer,
-/area/medical/psychiatrist)
-"dwO" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/medical/psychiatrist)
 "dwP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -95998,12 +95973,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/table/wood,
 /turf/open/floor/carpet/blue,
-/area/medical/psychiatrist)
-"dwS" = (
-/turf/open/floor/carpet/blue,
-/area/medical/psychiatrist)
-"dwT" = (
-/turf/open/floor/wood,
 /area/medical/psychiatrist)
 "dwV" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -96671,6 +96640,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/structure/cable,
 /turf/open/floor/carpet/blue,
 /area/medical/psychiatrist)
 "dys" = (
@@ -96680,6 +96650,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/carpet/blue,
 /area/medical/psychiatrist)
 "dyv" = (
@@ -97390,9 +97361,6 @@
 /obj/structure/sink/puddle,
 /turf/open/floor/grass,
 /area/medical/psychiatrist)
-"dzS" = (
-/turf/closed/wall/r_wall,
-/area/medical/psychiatrist)
 "dzV" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -97856,26 +97824,16 @@
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/grass,
 /area/medical/psychiatrist)
-"dAV" = (
-/turf/closed/wall/r_wall,
-/area/medical/psychiatrist)
-"dAW" = (
-/obj/item/bedsheet,
-/obj/structure/bed,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = 31
-	},
-/turf/open/floor/plasteel/freezer,
-/area/medical/psychiatrist)
-"dAX" = (
-/turf/closed/wall/r_wall,
-/area/medical/psychiatrist)
-"dAY" = (
-/obj/structure/bookcase/random,
-/turf/open/floor/wood,
-/area/medical/psychiatrist)
 "dBa" = (
 /obj/structure/table/wood,
+/obj/item/folder/white,
+/obj/item/folder/white,
+/obj/item/folder/white,
+/obj/machinery/power/apc{
+	name = "Psychiatrist Office APC";
+	pixel_y = -26
+	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "dBb" = (
@@ -114165,6 +114123,7 @@
 	id = "psychoffice";
 	name = "Psychiatrist Office Shutters"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/medical/psychiatrist)
 "iQh" = (
@@ -114800,6 +114759,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
+"mth" = (
+/obj/structure/cable,
+/turf/open/floor/carpet/blue,
+/area/medical/psychiatrist)
 "mxm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/circuit/green,
@@ -156376,7 +156339,7 @@ dqU
 dso
 inw
 dvd
-dwI
+dwH
 dvc
 dzN
 dAQ
@@ -156633,7 +156596,7 @@ dqV
 dsp
 inw
 dve
-dwI
+dwH
 dyi
 dzO
 dAR
@@ -157403,8 +157366,8 @@ dpl
 dqY
 dss
 dtD
-dAW
-dwN
+dvh
+dwL
 dyl
 dzR
 dAU
@@ -157660,11 +157623,11 @@ dlV
 dlV
 dlV
 dtC
-dAX
-dwO
+dvi
+dwM
 dym
-dAX
-dAX
+dvi
+dvi
 dCB
 tGU
 dEV
@@ -157918,10 +157881,10 @@ dqZ
 dst
 dtC
 dvj
-dwN
+dwL
 dyn
 gfI
-dAW
+dvh
 dCB
 dDN
 dEW
@@ -158174,11 +158137,11 @@ dpn
 dra
 dsu
 dtC
-dAX
-dwO
+dvi
+dwM
 dyo
-dAX
-dAX
+dvi
+dvi
 dCB
 tGU
 dEW
@@ -158431,11 +158394,11 @@ dpo
 drb
 dsv
 tHN
-dAY
+dvl
 dwP
 dyp
 dzV
-dAY
+dvl
 dCB
 tGU
 dEW
@@ -158689,7 +158652,7 @@ drc
 dsw
 dtC
 dvm
-dwS
+dwQ
 dyq
 nEC
 fTg
@@ -158948,7 +158911,7 @@ dtE
 dvn
 dwR
 dyr
-dwS
+mth
 dBa
 dCB
 dDQ
@@ -159203,7 +159166,7 @@ dre
 dsy
 dtF
 dvo
-dwS
+dwQ
 dys
 dzY
 dBb
@@ -159459,9 +159422,9 @@ dpr
 drf
 dsz
 dtC
-dwT
-dwT
-dwT
+dvp
+dvp
+acE
 laM
 dBc
 dCC
