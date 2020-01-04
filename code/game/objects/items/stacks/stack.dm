@@ -350,7 +350,7 @@
 		src.amount += amount
 	if(custom_materials && custom_materials.len)
 		for(var/i in custom_materials)
-			custom_materials[getmaterialref(i)] = MINERAL_MATERIAL_AMOUNT * src.amount
+			custom_materials[i] = mats_per_stack * amount
 		set_custom_materials() //Refresh
 	update_icon()
 	update_weight()
