@@ -49,8 +49,10 @@
 	if(!merge_type)
 		merge_type = type
 	if(custom_materials && custom_materials.len)
-		mats_per_unit = custom_materials.Copy()
-		for(var/i in mats_per_unit)
+		mats_per_unit = list()
+		var/in_process_mat_list = custom_materials.Copy()
+		for(var/i in custom_materials)
+			mats_per_unit[getmaterialref(i)] = in_process_mat_list[i]
 			custom_materials[i] *= amount
 	. = ..()
 	if(merge)
