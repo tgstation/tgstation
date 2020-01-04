@@ -90,9 +90,6 @@
 		return FALSE
 	return TRUE
 
-/datum/action/proc/Process()
-	return
-
 /datum/action/proc/IsAvailable()
 	if(!owner)
 		return FALSE
@@ -192,6 +189,13 @@
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
+
+/datum/action/item_action/toggle_light/Trigger()
+	if(istype(target, /obj/item/pda))
+		var/obj/item/pda/P = target
+		P.toggle_light(owner)
+		return
+	..()
 
 /datum/action/item_action/toggle_hood
 	name = "Toggle Hood"

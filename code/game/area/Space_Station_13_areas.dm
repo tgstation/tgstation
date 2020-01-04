@@ -677,9 +677,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Chemistry"
 	icon_state = "chem"
 
-/area/medical/apothecary
-	name = "Apothecary"
-	icon_state = "apothecary"
+/area/medical/pharmacy
+	name = "Pharmacy"
+	icon_state = "pharmacy"
 
 /area/medical/surgery
 	name = "Surgery"
@@ -900,6 +900,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Toxins Mixing Chamber"
 	icon_state = "toxmix"
 	valid_territory = FALSE
+
+/area/science/genetics
+	name = "Genetics Lab"
+	icon_state = "geneticssci"
 
 /area/science/misc_lab
 	name = "Testing Lab"

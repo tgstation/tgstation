@@ -1048,7 +1048,6 @@
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name	//update the camera name too
 	diag_hud_set_aishell()
-	notify_ai(AI_SHELL)
 
 /mob/living/silicon/robot/proc/revert_shell()
 	if(!shell)
@@ -1172,6 +1171,15 @@
 			riding_datum.unequip_buckle_inhands(user)
 			riding_datum.restore_position(user)
 	. = ..(user)
+
+/mob/living/silicon/robot/resist()
+	. = ..()
+	if(!has_buckled_mobs())
+		return
+	for(var/i in buckled_mobs)
+		var/mob/unbuckle_me_now = i
+		unbuckle_mob(unbuckle_me_now, FALSE)
+
 
 /mob/living/silicon/robot/proc/TryConnectToAI()
 	connected_ai = select_active_ai_with_fewest_borgs()

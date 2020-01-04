@@ -259,7 +259,8 @@
 
 /obj/machinery/camera/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	S.DisIntegrate(src)
-	toggle_cam(S, 0)
+	if(!QDELETED(S)) //If it got blown up no need to turn it off.
+		toggle_cam(S, 0)
 	return TRUE
 
 /obj/machinery/particle_accelerator/control_box/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)

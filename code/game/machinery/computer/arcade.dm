@@ -81,18 +81,14 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		user.client.give_award(/datum/award/achievement/misc/pulse, user)
 		return
 
-	if(!contents.len)
-		var/prizeselect
-		if(prize_override)
-			prizeselect = pickweight(prize_override)
-		else
-			prizeselect = pickweight(GLOB.arcade_prize_pool)
-		new prizeselect(src)
-
-	var/atom/movable/the_prize = pick(contents)
+	var/prizeselect
+	if(prize_override)
+		prizeselect = pickweight(prize_override)
+	else
+		prizeselect = pickweight(GLOB.arcade_prize_pool)
+	var/atom/movable/the_prize = new prizeselect(get_turf(src))
+	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 	visible_message("<span class='notice'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
-
-	the_prize.forceMove(get_turf(src))
 
 /obj/machinery/computer/arcade/emp_act(severity)
 	. = ..()

@@ -1503,6 +1503,7 @@
 "adJ" = (
 /obj/structure/table,
 /obj/item/book/manual/wiki/experimentor,
+/obj/item/relic,
 /turf/open/floor/plasteel/white/corner{
 	dir = 8
 	},
@@ -3344,6 +3345,25 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"ahY" = (
+/obj/structure/table,
+/obj/effect/spawner/lootdrop/donkpockets,
+/obj/item/storage/box/donkpockets,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
+/area/crew_quarters/kitchen)
+"ahZ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 5
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/iannewyear,
+/turf/open/floor/carpet,
+/area/crew_quarters/heads/hop)
 "aib" = (
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
@@ -5244,17 +5264,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
-"aol" = (
-/obj/structure/table,
-/obj/item/storage/box/donkpockets,
-/obj/item/storage/box/donkpockets{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 5
-	},
-/area/crew_quarters/kitchen)
 "aom" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 10
@@ -13058,7 +13067,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/eastleft{
 	name = "Chemistry Desk";
-	req_access_txt = "33"
+	req_access_txt = "69"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
@@ -18003,7 +18012,7 @@
 	},
 /obj/machinery/door/window/southleft{
 	name = "Chemistry Desk";
-	req_access_txt = "33"
+	req_access_txt = "69"
 	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
@@ -18016,7 +18025,7 @@
 	},
 /obj/machinery/door/window/southright{
 	name = "Chemistry Desk";
-	req_access_txt = "33"
+	req_access_txt = "69"
 	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
@@ -20468,7 +20477,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bef" = (
-/obj/machinery/rnd/experimentor,
 /obj/effect/landmark/blobstart,
 /turf/open/floor/engine,
 /area/science/explab)
@@ -20818,7 +20826,7 @@
 "beT" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Chemistry Lab";
-	req_access_txt = "5; 33"
+	req_access_txt = "5; 69"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -36363,6 +36371,7 @@
 /obj/item/circuitboard/computer/arcade/battle,
 /obj/item/circuitboard/machine/microwave,
 /obj/item/book/manual/wiki/research_and_development,
+/obj/item/relic,
 /turf/open/floor/plating,
 /area/science/research)
 "bRC" = (
@@ -40871,6 +40880,10 @@
 /obj/structure/table/wood,
 /turf/open/floor/plating,
 /area/library/abandoned)
+"coN" = (
+/obj/machinery/rnd/experimentor,
+/turf/open/floor/engine,
+/area/science/explab)
 "cpK" = (
 /obj/machinery/door/airlock/public/glass,
 /obj/effect/turf_decal/delivery,
@@ -46786,6 +46799,17 @@
 "pBI" = (
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
+"pEE" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "pGM" = (
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
@@ -48899,6 +48923,10 @@
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
+"uuf" = (
+/obj/machinery/rnd/bepis,
+/turf/open/floor/engine,
+/area/science/explab)
 "uva" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light{
@@ -49123,6 +49151,10 @@
 /obj/effect/turf_decal/stripes/end,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"uTl" = (
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "uTy" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 9
@@ -49804,16 +49836,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"woM" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 5
-	},
-/obj/structure/cable,
-/turf/open/floor/carpet,
-/area/crew_quarters/heads/hop)
 "woV" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -74699,7 +74721,7 @@ gst
 cbi
 cIZ
 acp
-acw
+uuf
 acw
 adk
 adG
@@ -75470,7 +75492,7 @@ mjC
 tVl
 ljF
 acp
-acw
+coN
 acw
 adk
 adJ
@@ -75498,7 +75520,7 @@ bKk
 aHZ
 aFT
 piu
-aGt
+uTl
 beC
 aHF
 xQy
@@ -77813,7 +77835,7 @@ aEw
 aEw
 rvt
 hrY
-hrY
+pEE
 dMi
 aJy
 eBV
@@ -83746,7 +83768,7 @@ amG
 bbL
 anL
 anL
-aol
+ahY
 apt
 aqb
 bcL
@@ -96045,7 +96067,7 @@ aiO
 oBZ
 buN
 xyd
-woM
+ahZ
 bCs
 aiO
 buh

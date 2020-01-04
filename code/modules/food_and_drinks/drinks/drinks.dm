@@ -211,7 +211,7 @@
 /obj/item/reagent_containers/food/drinks/ice
 	name = "ice cup"
 	desc = "Careful, cold ice, do not chew."
-	custom_price = 5
+	custom_price = 15
 	icon_state = "coffee"
 	list_reagents = list(/datum/reagent/consumable/ice = 30)
 	spillable = TRUE
@@ -246,7 +246,7 @@
 	list_reagents = list(/datum/reagent/consumable/hot_coco = 15, /datum/reagent/consumable/sugar = 5)
 	foodtype = SUGAR
 	resistance_flags = FREEZE_PROOF
-	custom_price = 42
+	custom_price = 120
 
 
 /obj/item/reagent_containers/food/drinks/dry_ramen
@@ -256,7 +256,7 @@
 	list_reagents = list(/datum/reagent/consumable/dry_ramen = 15, /datum/reagent/consumable/sodiumchloride = 3)
 	foodtype = GRAIN
 	isGlass = FALSE
-	custom_price = 38
+	custom_price = 95
 
 /obj/item/reagent_containers/food/drinks/waterbottle
 	name = "bottle of water"
@@ -276,6 +276,7 @@
 	var/cap_lost = FALSE
 	var/mutable_appearance/cap_overlay
 	var/flip_chance = 10
+	custom_price = 30
 
 /obj/item/reagent_containers/food/drinks/waterbottle/Initialize()
 	. = ..()
@@ -350,7 +351,8 @@
 	if(cap_on && reagents.total_volume)
 		if(prob(flip_chance)) // landed upright
 			src.visible_message("<span class='notice'>[src] lands upright!</span>")
-			SEND_SIGNAL(throwingdatum.thrower, COMSIG_ADD_MOOD_EVENT, "bottle_flip", /datum/mood_event/bottle_flip)
+			if(throwingdatum.thrower)
+				SEND_SIGNAL(throwingdatum.thrower, COMSIG_ADD_MOOD_EVENT, "bottle_flip", /datum/mood_event/bottle_flip)
 		else // landed on it's side
 			animate(src, transform = matrix(prob(50)? 90 : -90, MATRIX_ROTATE), time = 3, loop = 0)
 
@@ -395,6 +397,7 @@
 	icon_state = "beer"
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 30)
 	foodtype = GRAIN | ALCOHOL
+	custom_price = 60
 
 /obj/item/reagent_containers/food/drinks/beer/light
 	name = "Carp Lite"
@@ -408,6 +411,7 @@
 	item_state = "beer"
 	list_reagents = list(/datum/reagent/consumable/ethanol/ale = 30)
 	foodtype = GRAIN | ALCOHOL
+	custom_price = 60
 
 /obj/item/reagent_containers/food/drinks/sillycup
 	name = "paper cup"
@@ -523,7 +527,7 @@
 /obj/item/reagent_containers/food/drinks/flask
 	name = "flask"
 	desc = "Every good spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
-	custom_price = 30
+	custom_price = 200
 	icon_state = "flask"
 	custom_materials = list(/datum/material/iron=250)
 	volume = 60
@@ -558,7 +562,7 @@
 	reagent_flags = NONE
 	spillable = FALSE
 	isGlass = FALSE
-	custom_price = 10
+	custom_price = 45
 
 /obj/item/reagent_containers/food/drinks/soda_cans/suicide_act(mob/living/carbon/human/H)
 	if(!reagents.total_volume)
@@ -645,6 +649,13 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime/Initialize()
 	. = ..()
 	name = "lemon-lime soda"
+
+/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry
+	name = "Sol Dry"
+	desc = "Maybe this will help your tummy feel better. Maybe not."
+	icon_state = "ginger_ale"
+	list_reagents = list(/datum/reagent/consumable/sol_dry = 30)
+	foodtype = SUGAR
 
 /obj/item/reagent_containers/food/drinks/soda_cans/space_up
 	name = "Space-Up!"

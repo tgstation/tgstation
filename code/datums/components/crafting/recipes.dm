@@ -16,15 +16,14 @@
 	if(!(result in reqs))
 		blacklist += result
 
-/datum/crafting_recipe/pin_removal
-	name = "Pin Removal"
-	result = /obj/item/gun
-	reqs = list(/obj/item/gun = 1)
-	parts = list(/obj/item/gun = 1)
-	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	time = 50
-	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+/**
+  * Run custom pre-craft checks for this recipe
+  *
+  * user: The /mob that initiated the crafting
+  * collected_requirements: A list of lists of /obj/item instances that satisfy reqs. Top level list is keyed by requirement path.
+  */
+/datum/crafting_recipe/proc/check_requirements(mob/user, list/collected_requirements)
+	return TRUE
 
 /datum/crafting_recipe/IED
 	name = "IED"
@@ -613,6 +612,8 @@
 	name = "Bonfire"
 	time = 60
 	reqs = list(/obj/item/grown/log = 5)
+	parts = list(/obj/item/grown/log = 5)
+	blacklist = list(/obj/item/grown/log/steel)
 	result = /obj/structure/bonfire
 	category = CAT_PRIMAL
 
@@ -710,6 +711,14 @@
 					/obj/item/reagent_containers/food/snacks/grown/potato = 1,
 					/obj/item/stack/cable_coil = 5)
 	category = CAT_MISC
+
+/datum/crafting_recipe/aitater/check_requirements(mob/user, list/collected_requirements)
+	var/obj/item/aicard/aicard = collected_requirements[/obj/item/aicard][1]
+	if(!aicard.AI)
+		return TRUE
+
+	to_chat(user, "<span class='boldwarning'>You can't craft an intelliTater with an AI in the card!</span>")
+	return FALSE
 
 /datum/crafting_recipe/aispook
 	name = "intelliLantern"

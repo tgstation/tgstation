@@ -1,0 +1,4 @@
+author: "Arkatos (original by kevinz000)"
+delete-after: True
+changes: 
+  - bugfix: "Megafauna mobs are no longer deaf."

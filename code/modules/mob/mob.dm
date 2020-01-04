@@ -696,7 +696,10 @@
 			stat(null, "Next Map: [cached.map_name]")
 		stat(null, "Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]")
 		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
-		stat(null, "Round Time: [worldtime2text()]")
+		if (SSticker.round_start_time)
+			stat(null, "Round Time: [gameTimestamp("hh:mm:ss", (world.time - SSticker.round_start_time))]")
+		else
+			stat(null, "Lobby Time: [gameTimestamp("hh:mm:ss", 0)]")
 		stat(null, "Station Time: [station_time_timestamp()]")
 		stat(null, "Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
 		if(SSshuttle.emergency)
@@ -1137,6 +1140,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_PLAYER_PANEL, "Show player panel")
 	VV_DROPDOWN_OPTION(VV_HK_BUILDMODE, "Toggle Buildmode")
 	VV_DROPDOWN_OPTION(VV_HK_DIRECT_CONTROL, "Assume Direct Control")
+	VV_DROPDOWN_OPTION(VV_HK_GIVE_DIRECT_CONTROL, "Give Direct Control")
 	VV_DROPDOWN_OPTION(VV_HK_OFFER_GHOSTS, "Offer Control to Ghosts")
 
 /mob/vv_do_topic(list/href_list)
@@ -1181,6 +1185,10 @@
 		if(!check_rights(NONE))
 			return
 		usr.client.cmd_assume_direct_control(src)
+	if(href_list[VV_HK_GIVE_DIRECT_CONTROL])
+		if(!check_rights(NONE))
+			return
+		usr.client.cmd_give_direct_control(src)
 	if(href_list[VV_HK_OFFER_GHOSTS])
 		if(!check_rights(NONE))
 			return
