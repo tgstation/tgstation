@@ -30,8 +30,8 @@
 			deconstruct(TRUE)
 		return
 
-	var/obj/item/stack/material = I
-	if (istype(I, /obj/item/stack))
+	var/obj/item/stack/sheet/material = I
+	if (istype(material))
 		if(material?.tableVariant)
 			if(material.get_amount() < 1)
 				to_chat(user, "<span class='warning'>You need one [material.name] sheet to do this!</span>")
