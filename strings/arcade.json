@@ -26,6 +26,7 @@
 		"Lascivious",
 		"Lewd",
 		"Lovelorn",
+		"Lusty",
 		"Moonstruck",
 		"Recently Dumped",
 		"Salacious",
@@ -164,11 +165,13 @@
 		"Comdom",
 		"Ex-Boyfriend",
 		"Ex-Girlfriend",
+		"Husbando",
 		"Maneater",
 		"Spess Casanova",
 		"Spess Don Juan",
 		"St. Valentine",
-		"Waifu"
+		"Waifu",
+		"Xenomorph Maid"
 	],
 
 	"rpg_enemy_halloween": [
