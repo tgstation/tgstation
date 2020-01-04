@@ -266,7 +266,7 @@
 	pixel_z = 2
 	},
 /obj/structure/sink/greyscale{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /turf/open/floor/mineral/titanium/white,
