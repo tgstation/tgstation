@@ -347,6 +347,5 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	throwforce = 11
 	icon_state = "plasmalarge"
 	custom_materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT)
-	mats_per_stack = MINERAL_MATERIAL_AMOUNT*1.5
 	icon_prefix = "plasma"
 	weld_material = /obj/item/stack/sheet/plasmaglass
