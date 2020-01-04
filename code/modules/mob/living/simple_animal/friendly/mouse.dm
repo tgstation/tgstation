@@ -81,7 +81,14 @@
 					visible_message("<span class='warning'>[src] chews through the [C].</span>")
 	for(var/obj/item/reagent_containers/food/snacks/cheesewedge/cheese in range(1, src))
 		if(prob(10))
-			new /mob/living/simple_animal/mouse(loc)
+			var/cap = CONFIG_GET(number/ratcap)
+			if(LAZYLEN(SSmobs.cheeserats) > cap)
+				visible_message("<span class='warning'>[src] carefully eats the cheese, hiding from the [cap] mice on the station!</span>")
+				qdel(cheese)
+				return INITIALIZE_HINT_QDEL
+			SSmobs.cheeserats += src
+			new /mob/living/simple_animal/mouse/bred(loc)
+			visible_message("<span class='notice'>[src] nibbles through the [cheese], attracting another mouse!</span>")
 			qdel(cheese)
 
 /*
@@ -99,6 +106,12 @@
 /mob/living/simple_animal/mouse/brown
 	body_color = "brown"
 	icon_state = "mouse_brown"
+
+/mob/living/simple_animal/mouse/bred
+
+/mob/living/simple_animal/mouse/bred/Destroy()
+	SSmobs.cheeserats -= src
+	return ..()
 
 //TOM IS ALIVE! SQUEEEEEEEE~K :)
 /mob/living/simple_animal/mouse/brown/Tom
