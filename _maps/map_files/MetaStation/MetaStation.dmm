@@ -26462,10 +26462,6 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/customs)
 "bgB" = (
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -22
-	},
 /obj/structure/rack,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -54583,7 +54579,6 @@
 /area/science/genetics)
 "crW" = (
 /obj/structure/bed/roller,
-/mob/living/carbon/monkey,
 /obj/machinery/door/window/westleft{
 	base_state = "right";
 	dir = 1;
@@ -54592,6 +54587,7 @@
 	pixel_y = 2;
 	req_access_txt = "9"
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "crZ" = (
