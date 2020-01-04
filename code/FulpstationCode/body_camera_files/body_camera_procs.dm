@@ -10,12 +10,12 @@
 
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, .proc/auto_register_bodycam)
 
-	addtimer(CALLBACK(src, /obj/item/clothing/under/rank/security.proc/auto_register_bodycam, null, SLOT_W_UNIFORM), SEC_BODY_CAM_REG_DELAY)
+	addtimer(CALLBACK(src, /obj/item/clothing/under/rank/security.proc/auto_register_bodycam, null, ITEM_SLOT_ICLOTHING), SEC_BODY_CAM_REG_DELAY)
 
 /obj/item/clothing/under/rank/security/proc/auto_register_bodycam(mob/user, slot)
 	if(!builtInCamera)
 		return
-	if(slot != SLOT_W_UNIFORM)
+	if(slot != ITEM_SLOT_ICLOTHING)
 		return
 	if(!user)
 		if(ismob(loc))
