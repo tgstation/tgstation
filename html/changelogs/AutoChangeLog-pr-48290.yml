@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - admin: "New mob VV option: Give direct control. Lets you pick a player to put in control of the mob."

@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - admin: "Soft resets on live servers will now ask for additional confirmation."

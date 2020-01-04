@@ -1,0 +1,7 @@
+author: "OnlineGirlfriend"
+delete-after: True
+changes: 
+  - rscadd: "Sol Dry"
+  - rscadd: "Moscow Mule"
+  - balance: "Drinking Sol Dry slightly reduces disgust"
+  - imageadd: "Sprites for Sol Dry, Moscow Mule"

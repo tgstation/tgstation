@@ -397,6 +397,8 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define REDPILL_FILE "redpill.json"
 #define ARCADE_FILE "arcade.json"
 #define BOOMER_FILE "boomer.json"
+#define LOCATIONS_FILE "locations.json"
+#define WANTED_FILE "wanted_message.json"
 
 //Fullscreen overlay resolution in tiles.
 #define FULLSCREEN_OVERLAY_RESOLUTION_X 15

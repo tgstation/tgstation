@@ -1,4 +1,0 @@
-author: "AnturK"
-delete-after: True
-changes: 
-  - bugfix: "Fixed byond build detection issues with adjacent major versions"

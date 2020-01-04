@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - tweak: "Map vote now only allows one map vote/rotation per round. Maps that have been played twice in the last three rounds including current are not available for voting."

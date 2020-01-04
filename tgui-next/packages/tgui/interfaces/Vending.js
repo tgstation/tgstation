@@ -26,27 +26,30 @@ export const Vending = props => {
   }
   return (
     <Fragment>
-      <Section title="User">
-        {data.user && (
-          <Box>
+      {data.onstation && (
+        <Section title="User">
+          {data.user && (
+            <Box>
             Welcome, <b>{data.user.name}</b>,
-            {' '}
-            <b>{data.user.job || "Unemployed"}</b>!
-            <br />
+              {' '}
+              <b>{data.user.job || "Unemployed"}</b>!
+              <br />
             Your balance is <b>{data.user.cash} credits</b>.
-          </Box>
-        ) || (
-          <Box color="light-gray">
+            </Box>
+          ) || (
+            <Box color="light-gray">
             No registered ID card!<br />
             Please contact your local HoP!
-          </Box>
-        )}
-      </Section>
+            </Box>
+          )}
+        </Section>
+      )}
       <Section title="Products" >
         <Table>
           {inventory.map((product => {
             const free = (
-              product.price === 0
+              !data.onstation
+              || product.price === 0
               || (
                 !product.premium
                 && data.department

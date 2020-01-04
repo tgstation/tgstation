@@ -162,6 +162,8 @@ const Catalog = props => {
                 content={(data.self_paid
                   ? Math.round(pack.cost * 1.1)
                   : pack.cost) + ' credits'}
+                tooltip={pack.desc}
+                tooltipPosition="left"
                 onClick={() => act(ref, 'add', {
                   id: pack.id,
                 })} />
