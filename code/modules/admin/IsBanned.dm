@@ -29,8 +29,6 @@
 	if(GLOB.admin_datums[ckey] || GLOB.deadmins[ckey])
 		admin = TRUE
 
-	var/client/C = GLOB.directory[ckey]
-
 
 	//Whitelist
 	if(!real_bans_only && !C && CONFIG_GET(flag/usewhitelist))
