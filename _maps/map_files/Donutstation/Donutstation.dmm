@@ -2597,6 +2597,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel,
 /area/hydroponics/garden)
 "ago" = (
@@ -2677,12 +2678,6 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"agw" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "agx" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -4062,6 +4057,7 @@
 	id = "brigexternalblastentry";
 	name = "External Security Entry Blast Door"
 	},
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "akl" = (
@@ -4305,6 +4301,7 @@
 	name = "Bar Storage";
 	req_access_txt = "25"
 	},
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "akT" = (
@@ -4799,6 +4796,9 @@
 	req_one_access_txt = "35;28"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/navbeacon/wayfinding{
+	name = "Kitchen"
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "amG" = (
@@ -6587,6 +6587,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
 "asa" = (
@@ -6849,6 +6850,7 @@
 	name = "Morgue";
 	req_one_access_txt = "6;22"
 	},
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "asM" = (
@@ -7575,6 +7577,7 @@
 	name = "EVA Storage";
 	req_access_txt = "18"
 	},
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/eva)
 "auP" = (
@@ -8945,6 +8948,7 @@
 	name = "Atmospherics Lockdown"
 	},
 /obj/machinery/atmospherics/pipe/simple/purple/hidden/layer1,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "ayu" = (
@@ -16426,6 +16430,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "aTU" = (
@@ -16829,6 +16834,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
 "aUK" = (
@@ -17267,6 +17273,7 @@
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 8
 	},
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/lobby)
 "aVW" = (
@@ -24990,6 +24997,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel,
 /area/janitor)
 "bph" = (
@@ -26282,6 +26290,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bsu" = (
@@ -26882,6 +26891,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "btJ" = (
@@ -28562,6 +28572,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/wood,
 /area/library)
 "bxy" = (
@@ -29357,6 +29368,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Dormitories"
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "bzG" = (
@@ -31763,6 +31777,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bFi" = (
@@ -33159,6 +33174,7 @@
 	name = "bridge blast door"
 	},
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bIp" = (
@@ -33965,6 +33981,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hop)
 "bKQ" = (
@@ -41292,6 +41309,7 @@
 	name = "Vault";
 	req_access_txt = "53"
 	},
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/nuke_storage)
 "dkl" = (
@@ -42389,6 +42407,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"fuq" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Hydroponics";
+	req_one_access_txt = "35;28"
+	},
+/obj/machinery/navbeacon/wayfinding,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "fvY" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -43999,6 +44025,13 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_room)
+"jkC" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Chapel"
+	},
+/obj/machinery/navbeacon/wayfinding,
+/turf/open/floor/plasteel,
+/area/chapel/main)
 "jlL" = (
 /obj/item/reagent_containers/spray/plantbgone{
 	pixel_y = 3
@@ -45218,6 +45251,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/purple/hidden/layer1,
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "mpx" = (
@@ -45247,6 +45281,18 @@
 /obj/item/storage/book/bible,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
+"msx" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	safety_mode = 1
+	},
+/obj/machinery/navbeacon/wayfinding{
+	location = "Escape Shuttle"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "mtv" = (
 /obj/machinery/power/apc{
 	areastring = "/area/maintenance/starboard";
@@ -45571,6 +45617,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel,
 /area/storage/tools)
 "nft" = (
@@ -47280,6 +47327,9 @@
 	name = "Unisex Showers"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Locker Room"
+	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/fitness/locker_room)
 "qJe" = (
@@ -48686,6 +48736,14 @@
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
+"tZL" = (
+/obj/machinery/door/airlock/command{
+	name = "Gateway Access";
+	req_access_txt = "62"
+	},
+/obj/machinery/navbeacon/wayfinding,
+/turf/open/floor/plasteel,
+/area/gateway)
 "uaa" = (
 /obj/machinery/door/poddoor{
 	id = "Ferry_Bridge"
@@ -49403,6 +49461,15 @@
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
+"vqJ" = (
+/obj/machinery/door/airlock/external{
+	safety_mode = 1
+	},
+/obj/machinery/navbeacon/wayfinding{
+	location = "Arrival Shuttle"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "vqS" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -50250,6 +50317,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/computer)
+"wVU" = (
+/obj/machinery/pinpointer_dispenser,
+/turf/closed/wall,
+/area/security/checkpoint)
 "wXV" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/components/binary/pump/on{
@@ -77504,7 +77575,7 @@ atz
 avi
 aac
 avi
-aac
+msx
 avi
 abs
 azb
@@ -80388,7 +80459,7 @@ aHw
 aDL
 hvP
 bBJ
-agw
+qYP
 qYP
 qYP
 qYP
@@ -82987,7 +83058,7 @@ aox
 aox
 aox
 aoJ
-aQA
+fuq
 aAd
 ceE
 ceG
@@ -85488,7 +85559,7 @@ abm
 aaa
 aaa
 abm
-aao
+vqJ
 abm
 aaa
 aaa
@@ -85754,7 +85825,7 @@ acc
 acc
 acc
 acc
-acc
+wVU
 aty
 bwq
 aMl
@@ -86537,7 +86608,7 @@ aAn
 ans
 arK
 awV
-aeu
+tZL
 lNw
 bok
 dYh
@@ -89871,7 +89942,7 @@ bAR
 bBd
 bAk
 bAx
-kCr
+jkC
 vXI
 arA
 arA

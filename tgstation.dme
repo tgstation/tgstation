@@ -952,6 +952,7 @@
 #include "code\game\objects\items\trash.dm"
 #include "code\game\objects\items\twohanded.dm"
 #include "code\game\objects\items\vending_items.dm"
+#include "code\game\objects\items\wayfinding.dm"
 #include "code\game\objects\items\weaponry.dm"
 #include "code\game\objects\items\circuitboards\circuitboard.dm"
 #include "code\game\objects\items\circuitboards\computer_circuitboards.dm"
