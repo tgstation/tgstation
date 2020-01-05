@@ -22,12 +22,12 @@
 		"<span class='notice'>[user] starts wrapping muscles around [target]'s circulatory system.</span>",
 		"<span class='notice'>[user] starts manipulating [target]'s circulatory system.</span>")
 
-/datum/surgery_step/muscled_veins/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+/datum/surgery_step/muscled_veins/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	display_results(user, target, "<span class='notice'>You reshape [target]'s circulatory system, adding a muscled membrane!</span>",
 		"<span class='notice'>[user] reshapes [target]'s circulatory system, adding a muscled membrane!</span>",
 		"<span class='notice'>[user] finishes manipulating [target]'s circulatory system.</span>")
 	new /datum/bioware/muscled_veins(target)
-	return ..(default_display_results = FALSE)
+	return ..()
 
 /datum/bioware/muscled_veins
 	name = "Threaded Veins"

@@ -29,7 +29,7 @@
 		"<span class='notice'>[user] begins to fix [target]'s brain.</span>",
 		"<span class='notice'>[user] begins to perform surgery on [target]'s brain.</span>")
 
-/datum/surgery_step/fix_brain/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+/datum/surgery_step/fix_brain/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	display_results(user, target, "<span class='notice'>You succeed in fixing [target]'s brain.</span>",
 		"<span class='notice'>[user] successfully fixes [target]'s brain!</span>",
 		"<span class='notice'>[user] completes the surgery on [target]'s brain.</span>")
@@ -38,7 +38,7 @@
 	target.setOrganLoss(ORGAN_SLOT_BRAIN, target.getOrganLoss(ORGAN_SLOT_BRAIN) - 60)	//we set damage in this case in order to clear the "failing" flag
 	var/cured_num = target.cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
 	experience_given = 2*cured_num
-	return ..(default_display_results = FALSE)
+	return ..()
 
 /datum/surgery_step/fix_brain/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(target.getorganslot(ORGAN_SLOT_BRAIN))

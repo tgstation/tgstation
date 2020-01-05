@@ -23,12 +23,12 @@
 		"<span class='notice'>[user] starts reinforce [target]'s ligaments.</span>",
 		"<span class='notice'>[user] starts manipulating [target]'s ligaments.</span>")
 
-/datum/surgery_step/reinforce_ligaments/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+/datum/surgery_step/reinforce_ligaments/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	display_results(user, target, "<span class='notice'>You reinforce [target]'s ligaments!</span>",
 		"<span class='notice'>[user] reinforces [target]'s ligaments!</span>",
 		"<span class='notice'>[user] finishes manipulating [target]'s ligaments.</span>")
 	new /datum/bioware/reinforced_ligaments(target)
-	return ..(default_display_results = FALSE)
+	return ..()
 
 /datum/bioware/reinforced_ligaments
 	name = "Reinforced Ligaments"

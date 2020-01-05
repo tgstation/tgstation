@@ -68,6 +68,7 @@ const styleMapperByPropName = {
   lineHeight: mapUnitPropTo('line-height'),
   opacity: mapRawPropTo('opacity'),
   textAlign: mapRawPropTo('text-align'),
+  verticalAlign: mapRawPropTo('vertical-align'),
   // Boolean props
   inline: mapBooleanPropTo('display', 'inline-block'),
   bold: mapBooleanPropTo('font-weight', 'bold'),
