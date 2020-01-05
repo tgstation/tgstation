@@ -477,6 +477,7 @@
 	M.adjust_bodytemperature(-8 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
 
+
 /datum/reagent/consumable/pwr_game
 	name = "Pwr Game"
 	description = "The only drink with the PWR that true gamers crave."
@@ -820,6 +821,19 @@
 
 /datum/reagent/consumable/cream_soda/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	..()
+
+/datum/reagent/consumable/sol_dry
+	name = "Sol Dry"
+	description = "A soothing, mellow drink made from ginger."
+	color = "#f7d26a"
+	quality = DRINK_NICE
+	taste_description = "sweet ginger spice"
+	glass_name = "Sol Dry"
+	glass_desc = "A soothing, mellow drink made from ginger."
+
+/datum/reagent/consumable/sol_dry/on_mob_life(mob/living/carbon/M)
+	M.adjust_disgust(-5)
 	..()
 
 /datum/reagent/consumable/red_queen
