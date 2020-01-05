@@ -94,8 +94,8 @@
 		return TRUE
 	return ..()
 
-/obj/item/reagent_containers/glass/maunamug/update_icon_state()
-	cut_overlays()
+/obj/item/reagent_containers/glass/maunamug/update_icon()
+	..()
 	if(open)
 		if(cell)
 			icon_state = "maunamug_bat"
