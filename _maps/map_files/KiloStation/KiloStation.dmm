@@ -6107,7 +6107,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet,
 /turf/open/floor/plasteel/freezer,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "ajZ" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -6304,16 +6304,8 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hos)
 "akq" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "genetics maintenance";
-	req_access_txt = "5; 9; 68"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel/dark,
-/area/medical/genetics/cloning)
+/turf/closed/wall/r_wall/rust,
+/area/medical/psychiatrist)
 "akr" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -8137,7 +8129,7 @@
 "and" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/wood,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "ane" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -9939,7 +9931,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/blue,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "apX" = (
 /turf/closed/wall/rust,
 /area/maintenance/central)
@@ -10144,7 +10136,7 @@
 /area/maintenance/fore)
 "aqo" = (
 /turf/open/floor/carpet/blue,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "aqp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
@@ -10462,7 +10454,7 @@
 "aqP" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/wood,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "aqQ" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -11374,13 +11366,8 @@
 /turf/open/floor/plasteel/dark,
 /area/security/warden)
 "asi" = (
-/obj/machinery/electric,
-/obj/machinery/vending/wallmed{
-	pixel_x = 26
-	},
-/obj/effect/decal/cleanable/blood,
-/turf/open/floor/wood,
-/area/medical/genetics/cloning)
+/turf/closed/wall/r_wall,
+/area/medical/morgue)
 "asj" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /obj/structure/cable,
@@ -11516,7 +11503,7 @@
 /obj/effect/landmark/start/psychiatrist,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/blue,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "ast" = (
 /obj/structure/chair/pew/left{
 	dir = 8
@@ -12394,7 +12381,7 @@
 	dir = 4
 	},
 /turf/closed/wall/r_wall/rust,
-/area/maintenance/port/fore)
+/area/medical/psychiatrist)
 "atM" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Psychiatric Evaluation";
@@ -12402,13 +12389,13 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/freezer,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "atN" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "atO" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -12436,18 +12423,18 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/freezer,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "atR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /turf/closed/wall/r_wall,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "atS" = (
 /obj/structure/table/wood,
 /turf/open/floor/carpet/blue,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "atT" = (
 /turf/closed/wall/r_wall,
 /area/bridge)
@@ -12867,7 +12854,7 @@
 /area/maintenance/starboard)
 "auA" = (
 /turf/open/floor/wood,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "auB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -13442,7 +13429,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/wood,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "avy" = (
 /obj/structure/table/wood,
 /obj/item/clipboard,
@@ -13472,7 +13459,7 @@
 /obj/structure/chair/office,
 /obj/effect/landmark/start/psychiatrist,
 /turf/open/floor/wood,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "avC" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Psychiatrist Backroom";
@@ -13480,7 +13467,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/wood,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "avD" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -13542,7 +13529,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet/blue,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "avH" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/delivery,
@@ -13573,7 +13560,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/blue,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "avJ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/light/small{
@@ -13611,7 +13598,7 @@
 /obj/structure/chair/office,
 /obj/structure/cable,
 /turf/open/floor/carpet/blue,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "avM" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
@@ -14489,7 +14476,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "awZ" = (
 /turf/closed/wall/rust,
 /area/security/checkpoint/engineering)
@@ -15827,7 +15814,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "azg" = (
 /obj/structure/table,
 /obj/item/hand_labeler,
@@ -17149,7 +17136,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet/blue,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "aBj" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -19518,7 +19505,7 @@
 /area/maintenance/port/fore)
 "aFb" = (
 /turf/open/floor/wood,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "aFc" = (
 /turf/open/floor/engine/co2{
 	initial_gas_mix = "co2=1000;TEMP=293.15"
@@ -23327,7 +23314,7 @@
 "aKV" = (
 /obj/structure/closet/secure_closet/psychiatrist,
 /turf/open/floor/wood,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "aKW" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/holopad,
@@ -24028,7 +24015,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1,
 /obj/structure/table/wood,
 /turf/open/floor/carpet/blue,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "aMe" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -24976,8 +24963,8 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aNt" = (
-/turf/closed/wall/r_wall/rust,
-/area/medical/genetics/cloning)
+/turf/closed/wall,
+/area/medical/psychiatrist)
 "aNu" = (
 /turf/closed/wall,
 /area/medical/morgue)
@@ -25148,14 +25135,11 @@
 /turf/closed/wall,
 /area/medical/genetics/cloning)
 "aNM" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "psychoffice";
-	name = "Psychiatrist Office Shutters"
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/medical/genetics/cloning)
+/turf/closed/wall/r_wall,
+/area/medical/psychiatrist)
+"aNN" = (
+/turf/closed/wall/r_wall/rust,
+/area/medical/morgue)
 "aNO" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -25175,7 +25159,7 @@
 "aNS" = (
 /obj/structure/filingcabinet,
 /turf/open/floor/wood,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "aNT" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
@@ -25219,7 +25203,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "aNW" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -25274,18 +25258,21 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/medical/chemistry)
+"aOa" = (
+/turf/closed/wall/r_wall/rust,
+/area/medical/psychiatrist)
 "aOb" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
 /turf/open/floor/plasteel/freezer,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "aOc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
 /obj/structure/table/wood,
 /turf/open/floor/wood,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "aOd" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -25396,13 +25383,16 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/hallway/secondary/command)
+"aOl" = (
+/turf/closed/wall/r_wall,
+/area/medical/psychiatrist)
 "aOm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "aOn" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
@@ -25462,7 +25452,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "aOr" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -25567,7 +25557,7 @@
 	},
 /obj/item/paper_bin,
 /turf/open/floor/carpet/blue,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "aOy" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "bar maintenance";
@@ -25651,7 +25641,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "aOD" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/effect/turf_decal/box/corners{
@@ -25669,7 +25659,7 @@
 "aOE" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "aOF" = (
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/turf_decal/caution/stand_clear,
@@ -26041,6 +26031,9 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/medical/genetics/cloning)
+"aPe" = (
+/turf/closed/wall/r_wall,
+/area/medical/psychiatrist)
 "aPf" = (
 /turf/closed/wall/rust,
 /area/medical/virology)
@@ -26243,7 +26236,7 @@
 /obj/item/folder/white,
 /obj/item/folder/white,
 /turf/open/floor/carpet/blue,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "aPv" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -30431,13 +30424,18 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/virology)
 "aVj" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/grunge{
+	name = "Morgue";
+	req_access_txt = "9"
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
-/turf/closed/wall/rust,
+/turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "aVk" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -31115,7 +31113,7 @@
 	},
 /obj/structure/bed,
 /turf/open/floor/carpet/blue,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "aWg" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 8
@@ -31205,7 +31203,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet,
 /turf/open/floor/plasteel/freezer,
-/area/medical/genetics/cloning)
+/area/medical/psychiatrist)
 "aWn" = (
 /obj/structure/chair/sofa/right{
 	color = "#c45c57";
@@ -93471,6 +93469,15 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/prison)
+"cQL" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "psychoffice";
+	name = "Psychiatrist Office Shutters"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/medical/psychiatrist)
 "cQP" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Long-Term Cell 2";
@@ -93667,11 +93674,33 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"cYB" = (
+/obj/machinery/electric,
+/obj/machinery/vending/wallmed{
+	pixel_x = 26
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/wood,
+/area/medical/psychiatrist)
 "fhz" = (
 /obj/structure/cable,
 /obj/machinery/holopad/secure,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
+"lqZ" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "genetics maintenance";
+	req_access_txt = "5; 9; 68"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/medical/psychiatrist)
+"ncX" = (
+/turf/closed/wall/rust,
+/area/medical/psychiatrist)
 
 (1,1,1) = {"
 aaa
@@ -111514,11 +111543,11 @@ cxf
 cxw
 aar
 apY
-aNH
-aNt
+aPe
+aOa
 atL
-akq
-aNL
+lqZ
+aNt
 aPA
 azU
 aAE
@@ -111771,7 +111800,7 @@ cxf
 cxw
 cxN
 apZ
-aNH
+aPe
 aWm
 atQ
 aFb
@@ -112028,8 +112057,8 @@ cwp
 cxx
 cxG
 aqa
-aNt
-aNt
+aOa
+aOa
 atN
 aOC
 aOm
@@ -112285,7 +112314,7 @@ cwp
 cwq
 cwy
 aqb
-aNH
+aPe
 aWm
 atQ
 aOE
@@ -112542,8 +112571,8 @@ cwq
 cwp
 anP
 aqe
-aNH
-aNt
+aPe
+aOa
 atR
 avx
 aOc
@@ -112799,11 +112828,11 @@ bgN
 cwp
 anQ
 ail
-aNt
+aOa
 aWm
 atQ
 avB
-asi
+cYB
 aPA
 abl
 agH
@@ -113055,13 +113084,13 @@ ajI
 alb
 cwq
 anR
-aNP
-aNH
-aNH
-aNH
+ncX
+aPe
+aPe
+aPe
 avC
-aNH
-aNt
+aPe
+aOa
 aNR
 aOj
 aOp
@@ -113312,13 +113341,13 @@ cvv
 cvJ
 amh
 anV
-aNP
+ncX
 aqP
 apW
 aBi
 avG
 aNS
-aNM
+cQL
 aOe
 aJW
 aOh
@@ -113569,13 +113598,13 @@ cvk
 czM
 cwy
 anW
-aNL
+aNt
 aqP
 aqo
 aMd
 avI
 aFb
-aNM
+cQL
 aOd
 aNT
 aPh
@@ -113826,7 +113855,7 @@ arT
 cxA
 czL
 anX
-aNL
+aNt
 aqP
 ass
 atS
@@ -114083,13 +114112,13 @@ cvI
 cxB
 cwp
 ajv
-aNL
-aNP
+aNt
+ncX
 aOx
 aPu
 aWf
 aNV
-aNM
+cQL
 aFr
 aNY
 aOv
@@ -114341,12 +114370,12 @@ cwp
 cwq
 aoi
 aiM
-aNC
-aNC
-aNu
+asi
+aNN
+asi
 aVj
-aNu
-aNP
+asi
+aNH
 aVH
 aNO
 aCI
