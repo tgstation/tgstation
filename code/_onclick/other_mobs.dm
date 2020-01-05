@@ -97,6 +97,7 @@
 	A.attack_animal(src)
 
 /atom/proc/attack_animal(mob/user)
+	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ANIMAL, user)
 	return
 
 /mob/living/RestrainedClickOn(atom/A)
