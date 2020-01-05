@@ -107,8 +107,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		if(PIPE_TRIN_M)
 			dirs = list("[NORTH]" = "North East South", "[SOUTHWEST]" = "North West South",
 						"[NORTHEAST]" = "South East North", "[SOUTH]" = "South West North",
-						"[WEST]" = "West North East", "[NORTHWEST]" = "East North West",
-						"[SOUTHEAST]" = "West South East", "[EAST]" = "East South West",)
+						"[WEST]" = "West North East", "[SOUTHEAST]" = "West South East",
+						"[NORTHWEST]" = "East North West", "[EAST]" = "East South West",)
 		if(PIPE_UNARY)
 			dirs = list("[NORTH]" = "North", "[SOUTH]" = "South", "[WEST]" = "West", "[EAST]" = "East")
 		if(PIPE_ONEDIR)
