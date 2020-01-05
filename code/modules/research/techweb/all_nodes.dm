@@ -1067,6 +1067,17 @@
 	hidden = TRUE
 	experimental = TRUE
 
+/datum/techweb_node/Mauna_Mug
+	id = "mauna_mug"
+	display_name = "Mauna Mug"
+	description = "A bored scientist was thinking to himself for very long...and then realized his coffee got cold! He made this invention to solve this extreme problem."
+	prereq_ids = list("base")
+	design_ids = list("mauna_mug")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 2500
+	hidden = TRUE
+	experimental = TRUE
+
 //Helpers for debugging/balancing the techweb in its entirety!
 /proc/total_techweb_exports()
 	var/list/datum/techweb_node/processing = list()
