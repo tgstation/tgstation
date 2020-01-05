@@ -192,13 +192,7 @@ SUBSYSTEM_DEF(vote)
 					return FALSE
 				for(var/map in config.maplist)
 					var/datum/map_config/VM = config.maplist[map]
-					var/run = 0
-					if(VM.map_name == SSmapping.config.map_name)
-						run++
-					for(var/name in SSpersistence.saved_maps)
-						if(VM.map_name == name)
-							run++
-					if(run >= 2 || !VM.votable)	//If run twice in the last three (including current) as of time of writing, disable map for voting.
+					if(!VM.votable || (VM.map_name in SSpersistence.blocked_maps))
 						continue
 					choices.Add(VM.map_name)
 			if("custom")
