@@ -378,6 +378,7 @@
 #include "code\datums\components\decal.dm"
 #include "code\datums\components\dejavu.dm"
 #include "code\datums\components\earprotection.dm"
+#include "code\datums\components\edible.dm"
 #include "code\datums\components\edit_complainer.dm"
 #include "code\datums\components\empprotection.dm"
 #include "code\datums\components\explodable.dm"

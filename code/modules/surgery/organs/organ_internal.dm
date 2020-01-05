@@ -26,6 +26,15 @@
 	var/high_threshold_cleared
 	var/low_threshold_cleared
 
+	///When you take a bite you cant jam it in for surgery anymore.
+	var/useable = TRUE
+	var/list/food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+
+/obj/item/organ/Initialize()
+	. = ..()
+	if(CanEat())
+		AddComponent(/datum/component/edible, food_reagents, null, RAW | MEAT | GROSS, null, null, null, null, null, CALLBACK(src, .proc/OnEatFrom))
+
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
 		return
@@ -98,24 +107,6 @@
 	if(damage > high_threshold)
 		. += "<span class='warning'>[src] is starting to look discolored.</span>"
 
-
-/obj/item/organ/proc/prepare_eat()
-	var/obj/item/reagent_containers/food/snacks/organ/S = new
-	S.name = name
-	S.desc = desc
-	S.icon = icon
-	S.icon_state = icon_state
-	S.w_class = w_class
-
-	return S
-
-/obj/item/reagent_containers/food/snacks/organ
-	name = "appendix"
-	icon_state = "appendix"
-	icon = 'icons/obj/surgery.dmi'
-	list_reagents = list(/datum/reagent/consumable/nutriment = 5)
-	foodtype = RAW | MEAT | GROSS
-
 /obj/item/organ/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
@@ -129,17 +120,12 @@
 		STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/organ/attack(mob/living/carbon/M, mob/user)
-	if(M == user && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(status == ORGAN_ORGANIC)
-			var/obj/item/reagent_containers/food/snacks/S = prepare_eat(H)
-			if(S)
-				qdel(src)
-				if(H.put_in_active_hand(S))
-					S.attack(H, H)
-	else
-		..()
+/obj/item/organ/proc/CanEat()
+	if(status == ORGAN_ORGANIC)
+		return TRUE
+
+/obj/item/organ/proc/OnEatFrom(eater, feeder)
+	useable = FALSE //You can't use it anymore after eating it you spaztic
 
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
