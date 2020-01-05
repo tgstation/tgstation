@@ -137,7 +137,7 @@
 
 /datum/quirk/needswayfinder
 	name = "Navigationally Challenged"
-	desc = "Due to a lack of familiarity with certain station layouts, you will start with a wayfinding pinpointer where available."
+	desc = "Lacking familiarity with certain stations, you start with a wayfinding pinpointer where available."
 	value = 0
 	medical_record_text = "Patient demonstrates a keen ability to get lost."
 

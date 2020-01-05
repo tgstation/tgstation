@@ -89539,10 +89539,10 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/mob/living/carbon/monkey,
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "djC" = (
@@ -89560,11 +89560,11 @@
 	name = "'Monkey Pen";
 	req_access_txt = "9"
 	},
-/mob/living/carbon/monkey,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "djD" = (
@@ -89579,11 +89579,11 @@
 	name = "Monkey Pen";
 	req_access_txt = "9"
 	},
-/mob/living/carbon/monkey,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "djE" = (
@@ -89594,10 +89594,10 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/mob/living/carbon/monkey,
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "djF" = (
@@ -115390,18 +115390,6 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
-"oJM" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/machinery/pinpointer_dispenser,
-/turf/open/floor/plasteel/white/corner{
-	dir = 1
-	},
-/area/hallway/secondary/entry)
 "oMw" = (
 /obj/docking_port/stationary/public_mining_dock{
 	dir = 4
@@ -116494,6 +116482,11 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"vVy" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/pinpointer_dispenser,
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "wav" = (
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port"
@@ -155718,8 +155711,8 @@ aaa
 aaa
 aaa
 aaa
-aaO
-oJM
+vVy
+ajw
 akg
 akL
 aaO

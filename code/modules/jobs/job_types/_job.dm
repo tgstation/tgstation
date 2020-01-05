@@ -142,6 +142,7 @@
 		return TRUE	//Available in 0 days = available right now = player is old enough to play.
 	return FALSE
 
+
 /datum/job/proc/available_in_days(client/C)
 	if(!C)
 		return 0

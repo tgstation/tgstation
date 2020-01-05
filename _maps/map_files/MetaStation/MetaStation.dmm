@@ -54606,7 +54606,6 @@
 /area/science/genetics)
 "crW" = (
 /obj/structure/bed/roller,
-/mob/living/carbon/monkey,
 /obj/machinery/door/window/westleft{
 	base_state = "right";
 	dir = 1;
@@ -54615,6 +54614,7 @@
 	pixel_y = 2;
 	req_access_txt = "9"
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "crZ" = (
@@ -73011,22 +73011,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"iGQ" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/machinery/pinpointer_dispenser,
-/turf/open/floor/plasteel,
-/area/hallway/primary/port)
-"iHl" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/vending/tool,
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
-/area/engine/storage_shared)
 "iKA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -75623,6 +75607,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"ttW" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/pinpointer_dispenser,
+/turf/open/floor/plating,
+/area/quartermaster/sorting)
 "twp" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -94050,8 +94039,8 @@ beV
 bgH
 biE
 bkh
-dmH
-iGQ
+ttW
+bnW
 bqn
 bsy
 bub

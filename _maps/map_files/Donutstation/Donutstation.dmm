@@ -46587,10 +46587,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"pfp" = (
-/obj/machinery/pinpointer_dispenser,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
 "pfT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -50321,6 +50317,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/computer)
+"wVU" = (
+/obj/machinery/pinpointer_dispenser,
+/turf/closed/wall,
+/area/security/checkpoint)
 "wXV" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/components/binary/pump/on{
@@ -85825,8 +85825,8 @@ acc
 acc
 acc
 acc
-acc
-pfp
+wVU
+aty
 bwq
 aMl
 aty

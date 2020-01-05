@@ -16679,9 +16679,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/pinpointer_dispenser{
-	pixel_y = 32
-	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aQJ" = (
@@ -49555,6 +49552,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"fxH" = (
+/obj/effect/spawner/structure/window,
+/obj/machinery/pinpointer_dispenser,
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "fBs" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table/wood,
@@ -65848,7 +65850,7 @@ aKj
 aLw
 aLw
 aLw
-aLw
+fxH
 aQI
 aNh
 czK

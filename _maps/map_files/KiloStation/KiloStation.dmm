@@ -25213,14 +25213,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/genetics/cloning)
-"aNJ" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/closet/secure_closet/personal/patient,
-/turf/open/floor/plasteel/dark,
-/area/medical/genetics/cloning)
 "aNK" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -31890,8 +31882,8 @@
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "aXb" = (
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/science/genetics)
 "aXc" = (
@@ -36739,7 +36731,6 @@
 	},
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/box/corners,
-/mob/living/carbon/monkey,
 /obj/structure/sink/puddle,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
@@ -36747,6 +36738,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/science/genetics)
 "bdT" = (
@@ -68639,7 +68631,6 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/pinpointer_dispenser,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bYO" = (
@@ -93938,6 +93929,11 @@
 /obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel/dark,
 /area/science/research)
+"xIs" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/pinpointer_dispenser,
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 
 (1,1,1) = {"
 aaa
@@ -113579,7 +113575,7 @@ cvJ
 amh
 anV
 aNH
-aNJ
+and
 apW
 aBi
 avG
@@ -113836,7 +113832,7 @@ czM
 cwy
 anW
 aNt
-aNJ
+and
 aqo
 aMd
 avI
@@ -133940,7 +133936,7 @@ bYe
 bTs
 bSQ
 bXB
-bPe
+xIs
 bYN
 bWX
 bXc

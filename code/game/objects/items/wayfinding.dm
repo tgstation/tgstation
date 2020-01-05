@@ -5,20 +5,21 @@
 	desc = "Having trouble finding your way? This machine dispenses pinpointers that point to common locations."
 	density = FALSE
 	layer = HIGH_OBJ_LAYER
-	pixel_y = 32
 	var/list/obj/item/pinpointer/wayfinding/pinpointers = list()
+	var/spawn_cooldown = 1200 //deciseconds per person to spawn another pinpointer
 
 /obj/machinery/pinpointer_dispenser/attack_hand(mob/living/carbon/user)
-	if(user.name in pinpointers)
-		to_chat(user, "<span class='warning'>There's already a pinpointer registered to [user.name]!</span>")
+	if(world.time < pinpointers[user.real_name])
+		var/secsleft = (pinpointers[user.real_name] - world.time) / 10
+		to_chat(user, "<span class='warning'>You need to wait [secsleft/60 > 1 ? "[round(secsleft/60)] minute\s" : "[round(secsleft)] second\s"].</span>")
 		return
 
 	to_chat(user, "<span class='notice'>You take a pinpointer from [src].</span>")
 
 	var/obj/item/pinpointer/wayfinding/P = new /obj/item/pinpointer/wayfinding(get_turf(src))
 	user.put_in_hands(P)
-	P.owner = user.name
-	pinpointers[user.name] = P
+	P.owner = user.real_name
+	pinpointers[user.real_name] = world.time + spawn_cooldown
 
 /obj/item/pinpointer/wayfinding //For new players or new stations to help players find their way around
 	name = "wayfinding pinpointer"
@@ -30,14 +31,11 @@
 /obj/item/pinpointer/wayfinding/attack_self(mob/living/user)
 	if(active)
 		toggle_on()
-		user.visible_message("<span class='notice'>[user] deactivates [user.p_their()] pinpointer.</span>", "<span class='notice'>You deactivate your pinpointer.</span>")
+		to_chat(user, "<span class='notice'>You deactivate your pinpointer.</span>")
 		return
 
 	if (!owner)
-		owner = user.name
-	else if(owner != user.name)
-		to_chat(user, "<span class='notice'>The pinpointer doesn't respond. It seems to only recognise its owner.</span>")
-		return
+		owner = user.real_name
 
 	if(beacons.len)
 		beacons.Cut()
@@ -45,7 +43,7 @@
 		beacons[B.codes["wayfinding"]] = B
 
 	if(!beacons.len)
-		user.visible_message("<span class='notice'>[user]'s pinpointer fails to detect a signal.</span>", "<span class='notice'>Your pinpointer fails to detect a signal.</span>")
+		to_chat(user, "<span class='notice'>Your pinpointer fails to detect a signal.</span>")
 		return
 
 	var/A = input(user, "", "Pinpoint") in sortNames(beacons)
@@ -54,7 +52,7 @@
 
 	target = beacons[A]
 	toggle_on()
-	user.visible_message("<span class='notice'>[user] activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You activate your pinpointer.</span>")
+	to_chat(user, "<span class='notice'>You activate your pinpointer.</span>")
 
 /obj/item/pinpointer/wayfinding/examine(mob/user)
 	. = ..()
