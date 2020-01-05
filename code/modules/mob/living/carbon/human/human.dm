@@ -1053,6 +1053,12 @@
 		return FALSE
 	return ..()
 
+/mob/living/carbon/human/fuck()
+	if(prob(25))
+		something_horrible(TRUE)
+	else
+		..()
+
 /mob/living/carbon/human/species
 	var/race = null
 

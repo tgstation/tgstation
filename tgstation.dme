@@ -2844,6 +2844,7 @@
 #include "code\modules\surgery\surgery_step.dm"
 #include "code\modules\surgery\tools.dm"
 #include "code\modules\surgery\advanced\brainwashing.dm"
+#include "code\modules\surgery\advanced\extreme.dm"
 #include "code\modules\surgery\advanced\lobotomy.dm"
 #include "code\modules\surgery\advanced\necrotic_revival.dm"
 #include "code\modules\surgery\advanced\pacification.dm"
