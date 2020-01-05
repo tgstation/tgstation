@@ -879,7 +879,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	if(!arctargets.len)
 		for(var/mob/living/Z in oview(zapstart, range))
-			if(!(Z in targets_copy) && !(Z.flags_1 & IS_SHOCKED_1) || Z.stat != DEAD && prob(20))//let's not hit all the engineers with every beam and/or segment of the arc
+			if(!(Z in targets_copy) && !(Z.flags_1 & IS_SHOCKED_1) && Z.stat != DEAD && prob(20))//let's not hit all the engineers with every beam and/or segment of the arc
 				arctargets += Z
 
 	if(!arctargets.len)
@@ -932,7 +932,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		var/pressure = T.return_air().return_pressure()
 		//We get our range with the strength of the zap and the pressure, the lower the former and the higher the latter the better
 		var/new_range = CLAMP(zap_str / pressure * 10, 2, 7)
-		if(prob(15))
+		if(prob(5))
 			zap_str = zap_str - (zap_str/10)
 			supermatter_zap(target, new_range, zap_str, targets_copy)
 			supermatter_zap(target, new_range, zap_str, targets_copy)

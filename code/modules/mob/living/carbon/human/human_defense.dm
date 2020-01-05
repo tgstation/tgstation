@@ -477,7 +477,6 @@
 			siemens_coeff *= gloves.siemens_coefficient
 	siemens_coeff *= physiology.siemens_coeff
 	siemens_coeff *= dna.species.siemens_coeff
-	to_chat(src, "<span class='notice'>Boomer [siemens_coeff] [shock_damage]</span>")
 	. = ..()
 	//Don't go further if the shock was blocked/too weak.
 	if(!.)
