@@ -139,6 +139,8 @@ Behavior that's still missing from this component that original food items had t
 		fullness += C.nutriment_factor * C.volume / C.metabolization_rate
 
 	if(eater == feeder)//If you're eating it yourself.
+		if(!do_mob(feeder, eater, eat_time)) //Gotta pass the minimal eat time
+			return
 		var/eatverb = pick(eatverbs)
 		if(junkiness && eater.satiety < -150 && eater.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(eater, TRAIT_VORACIOUS))
 			to_chat(eater, "<span class='warning'>You don't feel like eating any more junk food at the moment!</span>")
