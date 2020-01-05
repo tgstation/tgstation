@@ -5324,6 +5324,10 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/purple/hidden/layer1,
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Engineering";
+	name = "navigation beacon (Engineering)"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aor" = (
@@ -10181,6 +10185,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
+/obj/machinery/navbeacon/wayfinding{
+	location = "Gateway";
+	name = "navigation beacon (Gateway)"
+	},
 /turf/open/floor/plasteel,
 /area/gateway)
 "aBC" = (
@@ -10495,6 +10503,10 @@
 	pixel_y = 32
 	},
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Telecomms Minisat Access";
+	name = "navigation beacon (Telecomms Minisat Access)"
+	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aCL" = (
@@ -12834,6 +12846,10 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Research";
+	name = "navigation beacon (Research)"
+	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "aJh" = (
@@ -20207,6 +20223,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer3,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Chemfactory";
+	name = "navigation beacon (Chemfactory)"
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bdy" = (
@@ -25205,6 +25225,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Turbine Incinerator";
+	name = "navigation beacon (Turbine Incinerator)"
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bpP" = (
@@ -25858,6 +25882,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/purple/hidden/layer1,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Atmospherics";
+	name = "navigation beacon (Atmospherics)"
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bry" = (
@@ -31039,6 +31067,10 @@
 "bDI" = (
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/machinery/navbeacon/wayfinding{
+	location = "Escape Pod 4";
+	name = "navigation beacon (Escape Pod 4)"
 	},
 /turf/open/floor/plating,
 /area/security/processing)
@@ -40705,12 +40737,28 @@
 	},
 /turf/open/floor/plating,
 /area/security/prison)
+"ciO" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Bar & Kitchen";
+	name = "navigation beacon (Bar & Kitchen)"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
 "ckS" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
 /obj/structure/table,
 /obj/item/storage/box/cups,
+/obj/machinery/pinpointer_dispenser{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "cla" = (
@@ -40824,6 +40872,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
+"cxR" = (
+/obj/machinery/navbeacon/wayfinding{
+	location = "Chapel";
+	name = "navigation beacon (Chapel)"
+	},
+/turf/open/floor/plasteel/chapel,
+/area/chapel/main)
 "czs" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
@@ -40864,6 +40919,15 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
+"cBN" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Tool Storage";
+	name = "navigation beacon (Tool Storage)"
+	},
+/turf/open/floor/plasteel,
+/area/storage/tools)
 "cBU" = (
 /obj/machinery/computer/security/telescreen/ce{
 	dir = 1;
@@ -41546,6 +41610,13 @@
 "dZW" = (
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
+"eaI" = (
+/obj/machinery/navbeacon/wayfinding{
+	location = "Custodial Closet";
+	name = "navigation beacon (Custodial Closet)"
+	},
+/turf/open/floor/plasteel,
+/area/janitor)
 "edu" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -42016,6 +42087,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_room/external)
+"eWj" = (
+/obj/machinery/navbeacon/wayfinding{
+	location = "Medical";
+	name = "navigation beacon (Medical)"
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/lobby)
 "eWm" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
@@ -42761,6 +42839,19 @@
 /obj/effect/turf_decal/stripes/end,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"gte" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/navbeacon/wayfinding{
+	location = "Dorms";
+	name = "navigation beacon (Dorms)"
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/fitness/recreation)
 "gwx" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -42839,6 +42930,14 @@
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
+"gIE" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Head of Personnel's Office";
+	name = "navigation beacon (Head of Personnel's Office)"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/heads/hop)
 "gIO" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -43198,6 +43297,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
+"hyt" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/navbeacon/wayfinding{
+	location = "AI Minisat Access";
+	name = "navigation beacon (AI Minisat Access)"
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "hyG" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall,
@@ -43398,6 +43506,20 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_room)
+"hTo" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Vault";
+	name = "navigation beacon (Vault)"
+	},
+/turf/open/floor/circuit,
+/area/ai_monitored/nuke_storage)
 "hTF" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/effect/turf_decal/stripes/line{
@@ -43430,6 +43552,10 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"hWD" = (
+/obj/machinery/pinpointer_dispenser,
+/turf/closed/wall,
+/area/security/checkpoint)
 "hWJ" = (
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12"
@@ -43486,6 +43612,13 @@
 	icon_state = "wood-broken3"
 	},
 /area/maintenance/starboard)
+"hZd" = (
+/obj/machinery/navbeacon/wayfinding{
+	location = "Aux Docking Port";
+	name = "navigation beacon (Aux Docking Port)"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "hZC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 9
@@ -44036,6 +44169,10 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
 	dir = 8
+	},
+/obj/machinery/navbeacon/wayfinding{
+	location = "Cargo";
+	name = "navigation beacon (Cargo)"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -44783,6 +44920,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/chief)
+"kVp" = (
+/obj/machinery/navbeacon/wayfinding{
+	location = "Escape Pod 1";
+	name = "navigation beacon (Escape Pod 1)"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "kVx" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/tile/green,
@@ -45191,6 +45335,17 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
+"mlR" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/machinery/navbeacon/wayfinding{
+	location = "Hydroponics";
+	name = "navigation beacon (Hydroponics)"
+	},
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "mmi" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -46043,6 +46198,13 @@
 /obj/item/analyzer,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
+"nQK" = (
+/obj/machinery/navbeacon/wayfinding{
+	location = "Escape Pod 2";
+	name = "navigation beacon (Escape Pod 2)"
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "nRb" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
 	dir = 1
@@ -46805,6 +46967,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
+"psv" = (
+/obj/machinery/navbeacon/wayfinding{
+	location = "Escape Pod 3";
+	name = "navigation beacon (Escape Pod 3)"
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "psF" = (
 /obj/structure/closet/radiation,
 /obj/machinery/power/apc{
@@ -47668,6 +47837,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"rfz" = (
+/obj/machinery/navbeacon/wayfinding{
+	location = "Disposals Recycling Center";
+	name = "navigation beacon (Disposals Recycling Center)"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "rfC" = (
 /obj/structure/lattice,
 /obj/machinery/camera/motion{
@@ -48514,6 +48690,13 @@
 /obj/machinery/vending/hydronutrients,
 /turf/open/floor/grass,
 /area/hydroponics/garden)
+"tbh" = (
+/obj/machinery/navbeacon/wayfinding{
+	location = "Security";
+	name = "navigation beacon (Security)"
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "tci" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
@@ -50096,6 +50279,14 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"wqf" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Arrivals and Escape Bay";
+	name = "navigation beacon (Arrivals and Escape Bay)"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
 "wrD" = (
 /obj/structure/table,
 /obj/item/aiModule/reset,
@@ -50284,6 +50475,10 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding{
+	location = "AI Upload";
+	name = "navigation beacon (AI Upload)"
+	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "wFi" = (
@@ -50364,6 +50559,22 @@
 	},
 /turf/open/floor/plasteel,
 /area/gateway)
+"wKK" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/navbeacon/wayfinding{
+	location = "Library";
+	name = "navigation beacon (Library)"
+	},
+/turf/open/floor/wood,
+/area/library)
 "wLN" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/effect/turf_decal/stripes/line{
@@ -50534,6 +50745,13 @@
 	},
 /turf/open/space/basic,
 /area/maintenance/disposal/incinerator)
+"wYa" = (
+/obj/machinery/navbeacon/wayfinding{
+	location = "Bridge";
+	name = "navigation beacon (Bridge)"
+	},
+/turf/open/floor/carpet,
+/area/bridge)
 "wZv" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -50768,6 +50986,14 @@
 	},
 /obj/item/radio/intercom{
 	pixel_x = -30
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/courtroom)
+"xFl" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Courtroom";
+	name = "navigation beacon (Courtroom)"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
@@ -73247,7 +73473,7 @@ aaa
 aaa
 avq
 aLv
-bTU
+kVp
 hlS
 bTU
 hSh
@@ -75620,7 +75846,7 @@ rtu
 rck
 uSO
 kDS
-aBx
+hZd
 tDO
 fjh
 aaa
@@ -79700,7 +79926,7 @@ aGo
 aVX
 aUQ
 aUQ
-aGu
+eWj
 aUQ
 aGu
 aXU
@@ -81487,7 +81713,7 @@ amq
 aLs
 aLs
 aLs
-bvu
+wKK
 aLs
 aLs
 aLs
@@ -82229,7 +82455,7 @@ cRz
 bgA
 acf
 aap
-aas
+gte
 aBp
 asb
 acf
@@ -82288,7 +82514,7 @@ bGU
 bGU
 bGU
 aXf
-caQ
+ciO
 bZT
 baK
 caQ
@@ -82989,7 +83215,7 @@ awe
 bvQ
 awe
 bvK
-bvQ
+wqf
 awe
 awe
 awe
@@ -83306,7 +83532,7 @@ ale
 aot
 bur
 aox
-aox
+mlR
 aox
 aoJ
 aQA
@@ -86076,7 +86302,7 @@ acc
 acc
 acc
 acc
-acc
+hWD
 aty
 bwq
 aMl
@@ -86179,7 +86405,7 @@ axK
 uUM
 aYN
 aIz
-aYN
+hyt
 aYN
 aIz
 htF
@@ -89263,7 +89489,7 @@ bPb
 bpL
 bXv
 cbt
-bXv
+nQK
 cbu
 bDd
 aaa
@@ -89486,7 +89712,7 @@ bpe
 aMQ
 bGw
 aMU
-aMU
+eaI
 bpl
 bAa
 aYK
@@ -90449,7 +90675,7 @@ bAs
 bAl
 bAy
 bBx
-bAy
+cxR
 kCr
 goV
 bUZ
@@ -91572,7 +91798,7 @@ ccJ
 boc
 wMX
 bCT
-ccJ
+rfz
 bDg
 bDz
 bDz
@@ -92314,7 +92540,7 @@ aOt
 aPd
 aPe
 aPe
-aPe
+xFl
 aZe
 aZk
 aZk
@@ -92547,7 +92773,7 @@ anX
 bcj
 bcl
 bct
-bcn
+hTo
 bct
 bcl
 bOe
@@ -93563,7 +93789,7 @@ bdD
 wUL
 bBo
 aSg
-cad
+cBN
 cad
 mUu
 fZi
@@ -95360,7 +95586,7 @@ aKB
 aiO
 buR
 ajx
-ajx
+gIE
 ajx
 aFF
 aiO
@@ -95630,7 +95856,7 @@ bKX
 adY
 aED
 akr
-akt
+tbh
 aqB
 aBz
 aqA
@@ -97417,7 +97643,7 @@ ahz
 aiW
 aiW
 ahx
-aiW
+wYa
 aiW
 aiW
 bKo
@@ -99195,7 +99421,7 @@ aaa
 aaa
 asj
 aRQ
-aup
+psv
 hGR
 asj
 aaa
