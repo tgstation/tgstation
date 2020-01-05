@@ -274,9 +274,9 @@ em						{font-style: normal;	font-weight: bold;}
 
 .say					{}
 .deadsay				{color: #e2c1ff}
-.binarysay				{color: #20c20e;	background-color: #000000;	display: block;}
-.binarysay a			{color: #00ff00;}
-.binarysay a:active, .binarysay a:visited {color: #88ff88;}
+.binarysay				{color: #200ec2;	background-color: #e6e6e6;	display: block;}
+.binarysay a			{color: #0000ee;}
+.binarysay a:active, .binarysay a:visited {color: #551a8b;}
 .radio					{color: #1ecc43;}
 .sciradio				{color: #c68cfa;}
 .comradio				{color: #5177ff;}
