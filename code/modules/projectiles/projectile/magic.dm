@@ -644,7 +644,9 @@
 			visible_message("<span class='warning'>[src] fizzles on contact with [target]!</span>")
 			qdel(src)
 			return BULLET_ACT_BLOCK
-	tesla_zap(src, zap_range, zap_power, zap_flags)
+	var/list/shocked_targets = list()
+	LAZYSET(shocked_targets, caster, TRUE)
+	tesla_zap(src, zap_range, zap_power, zap_flags, shocked_targets)
 	qdel(src)
 
 /obj/projectile/magic/aoe/lightning/Destroy()

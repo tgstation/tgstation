@@ -262,7 +262,7 @@
 		else if(isliving(A))
 			var/dist = get_dist(source, A)
 			var/mob/living/L = A
-			if(dist <= zap_range && (dist < closest_dist || !closest_mob) && L.stat != DEAD && !(L.flags_1 & TESLA_IGNORE_1))
+			if(dist <= zap_range && (dist < closest_dist || !closest_mob) && L.stat != DEAD && !(L.flags_1 & IS_SHOCKED_1))
 				closest_mob = L
 				closest_atom = A
 				closest_dist = dist
@@ -325,6 +325,8 @@
 		closest_rideable.zap_act(power, zap_flags, shocked_targets)
 
 	else if(!QDELETED(closest_mob))
+		closest_mob.set_shocked()
+		addtimer(CALLBACK(closest_mob, /mob/living/proc/reset_shocked), 10)
 		var/shock_damage = (zap_flags & ZAP_MOB_DAMAGE)? (min(round(power/600), 90) + rand(-5, 5)) : 0
 		closest_mob.electrocute_act(shock_damage, source, 1, SHOCK_TESLA | ((zap_flags & ZAP_MOB_STUN) ? NONE : SHOCK_NOSTUN))
 		if(issilicon(closest_mob))

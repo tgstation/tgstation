@@ -879,7 +879,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	if(!arctargets.len)
 		for(var/mob/living/Z in oview(zapstart, range))
-			if(!(Z in targets_copy) && !(Z.flags_1 & TESLA_IGNORE_1) || Z.stat != DEAD && prob(20))//let's not hit all the engineers with every beam and/or segment of the arc
+			if(!(Z in targets_copy) && !(Z.flags_1 & IS_SHOCKED_1) || Z.stat != DEAD && prob(20))//let's not hit all the engineers with every beam and/or segment of the arc
 				arctargets += Z
 
 	if(!arctargets.len)
@@ -917,6 +917,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		else if(isliving(target))//If we got a fleshbag on our hands
 			var/mob/living/mob = target
+			mob.set_shocked()
+			addtimer(CALLBACK(mob, /mob/living/proc/reset_shocked), 10)
 			mob.electrocute_act(rand(5,10), "Supermatter Discharge Bolt", 1, SHOCK_NOSTUN)
 			zap_str /= 1.5 //Meatsacks are conductive, makes working in pairs more destructive
 
