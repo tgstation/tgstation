@@ -132,6 +132,7 @@ Behavior that's still missing from this component that original food items had t
 	if(!owner.reagents.total_volume)//Shouldn't be needed but it checks to see if it has anything left in it.
 		to_chat(feeder, "<span class='warning'>None of [parent] left, oh no!</span>")
 		qdel(parent)
+		return FALSE
 	if(!CanConsume(eater, feeder))
 		return FALSE
 	var/fullness = eater.nutrition + 10 //The theoretical fullness of the person eating if they were to eat this
