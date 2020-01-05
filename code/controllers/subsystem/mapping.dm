@@ -343,6 +343,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /datum/controller/subsystem/mapping/proc/mapvote()
 	if(map_voted || SSmapping.next_map_config) //If voted or set by other means.
 		return
+	if(SSvote.mode) //Theres already a vote running, default to rotation.
+		maprotate()
 	SSvote.initiate_vote("map", "automatic map rotation")
 
 /datum/controller/subsystem/mapping/proc/changemap(var/datum/map_config/VM)
