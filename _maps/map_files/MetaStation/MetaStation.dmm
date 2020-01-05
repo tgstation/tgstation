@@ -26471,10 +26471,6 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/customs)
 "bgB" = (
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -22
-	},
 /obj/structure/rack,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
