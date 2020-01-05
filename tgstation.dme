@@ -663,6 +663,7 @@
 #include "code\FulpstationCode\halloween_costumes\witch.dm"
 #include "code\FulpstationCode\halloween_costumes\zero_suit.dm"
 #include "code\FulpstationCode\halloween_costumes\zombie_rider.dm"
+#include "code\FulpstationCode\improved_record_security\fulp_improved_record_security.dm"
 #include "code\game\alternate_appearance.dm"
 #include "code\game\atoms.dm"
 #include "code\game\atoms_movable.dm"
