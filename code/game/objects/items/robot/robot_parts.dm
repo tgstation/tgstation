@@ -240,12 +240,10 @@
 			if(!chest.cell)
 				to_chat(user, "<span class='warning'>The endoskeleton still needs a power cell!</span>")
 				return
-
 			if(!isturf(loc))
 				to_chat(user, "<span class='warning'>You can't put [M] in, the frame has to be standing on the ground to be perfectly precise!</span>")
 				return
-
-			if(!M.brain_check())
+			if(!M.brain_check(user))
 				return
 
 			var/mob/living/brain/B = M.brainmob
@@ -253,14 +251,12 @@
 				if(!QDELETED(M))
 					to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
 				return
-
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/nocell(get_turf(loc))
 			if(!O)
 				return
-
 			if(M.laws && M.laws.id != DEFAULT_AI_LAWID)
 				aisync = 0
 				lawsync = 0
@@ -339,7 +335,6 @@
 			if(!lawsync)
 				O.lawupdate = FALSE
 				O.make_laws()
-
 
 			O.cell = chest.cell
 			chest.cell.forceMove(O)

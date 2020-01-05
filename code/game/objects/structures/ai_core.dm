@@ -185,7 +185,7 @@
 
 				if(istype(P, /obj/item/mmi) && !brain)
 					var/obj/item/mmi/M = P
-					if(!M.brain_check())
+					if(!M.brain_check(user))
 						return
 
 					var/mob/living/brain/B = M.brainmob
@@ -193,7 +193,6 @@
 						if(!QDELETED(M))
 							to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
 						return
-
 					if(!user.transferItemToLoc(M,src))
 						return
 

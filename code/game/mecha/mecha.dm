@@ -945,7 +945,7 @@
 		return 0
 
 /obj/mecha/proc/mmi_move_inside(obj/item/mmi/M, mob/user)
-	if(!M.brain_check())
+	if(!M.brain_check(user))
 		return FALSE
 
 	var/mob/living/brain/B = M.brainmob
@@ -970,7 +970,7 @@
 /obj/mecha/proc/mmi_moved_inside(obj/item/mmi/M, mob/user)
 	if(!(Adjacent(M) && Adjacent(user)))
 		return FALSE
-	if(!M.brain_check())
+	if(!M.brain_check(user))
 		return FALSE
 
 	var/mob/living/brain/B = M.brainmob

@@ -203,11 +203,11 @@
 	if(brainmob)
 		var/mob/living/brain/B = brainmob
 		if(!B.key || !B.mind || B.stat == DEAD)
-			. += "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>"
+			. += "<span class='warning'>\The [src] indicates that the brain is completely unresponsive.</span>"
 		else if(!B.client)
-			. += "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>"
+			. += "<span class='warning'>\The [src] indicates that the brain is currently inactive; it might change.</span>"
 		else
-			. += "<span class='notice'>The MMI indicates the brain is active.</span>"
+			. += "<span class='notice'>\The [src] indicates that the brain is active.</span>"
 
 /obj/item/mmi/relaymove(mob/user)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move
@@ -215,23 +215,28 @@
 /obj/item/mmi/proc/brain_check(mob/user)
 	var/mob/living/brain/B = brainmob
 	if(!B)
-		visible_message("<span class='warning'>The MMI indicates that there is no brain!</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] indicates that there is no brain present!</span>")
 		return FALSE
-
 	if(!B.key || !B.mind)
-		visible_message("<span class='warning'>The MMI indicates that their mind is completely unresponsive!</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] indicates that their mind is completely unresponsive!</span>")
 		return FALSE
-
 	if(!B.client)
-		visible_message("<span class='warning'>The MMI indicates that their mind is currently inactive.</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] indicates that their mind is currently inactive.</span>")
 		return FALSE
-
-	if(B.stat == DEAD || B.suiciding || (brain && (brain.brain_death || brain.suicided)))
-		visible_message("<span class='warning'>The MMI indicates that the brain is dead!</span>")
+	if(B.suiciding || brain?.suicided)
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] indicates that their mind has no will to live!</span>")
 		return FALSE
-
+	if(B.stat == DEAD || brain?.brain_death)
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] indicates that the brain is dead!</span>")
+		return FALSE
 	if(brain?.organ_flags & ORGAN_FAILING)
-		visible_message("<span class='warning'>The MMI indicates that the brain is damaged!</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] indicates that the brain is damaged!</span>")
 		return FALSE
 	return TRUE
 
