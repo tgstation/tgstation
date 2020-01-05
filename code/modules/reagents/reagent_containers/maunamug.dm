@@ -39,10 +39,10 @@
 		playsound(src, 'sound/machines/chime.ogg', 50)
 
 /obj/item/reagent_containers/glass/maunamug/Destroy()
-	. = ..()
 	if(cell)
-		qdel(cell)
+		QDEL_NULL(cell)
 	STOP_PROCESSING(SSobj, src)
+	. = ..()
 
 
 /obj/item/reagent_containers/glass/maunamug/attack_self(mob/user)
@@ -62,6 +62,7 @@
 	update_icon()
 
 /obj/item/reagent_containers/glass/maunamug/screwdriver_act(mob/living/user, obj/item/I)
+	. = ..()
 	open = !open
 	to_chat(user, "<span class='notice'>You screw the battery case on [src] [open ? "open" : "closed"] .</span>")
 	update_icon()
