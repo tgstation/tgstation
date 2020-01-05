@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "The Polycircuit Stack item no longer leaps through space and time until a circuit is removed."

@@ -1,6 +1,0 @@
-author: "Cobby Touches Medical Again"
-delete-after: True
-changes: 
-  - balance: "Ups a variety of surgeries to give more XP"
-  - bugfix: "Surgeries not giving XP"
-  - bugfix: "Failing surgeries causing the rest of the surgery (specifically TW) to act up."

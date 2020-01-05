@@ -1,4 +1,0 @@
-author: "Thebleh"
-delete-after: True
-changes: 
-  - bugfix: "Tank Dispensers, Ore Boxes and Coin Presses are no longer usable by ghosts"

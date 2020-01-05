@@ -16,9 +16,9 @@
 /datum/element/waddling/proc/LivingWaddle(mob/living/target)
 	if(target.incapacitated() || !(target.mobility_flags & MOBILITY_STAND))
 		return
-	Waddle()
+	Waddle(target)
 
 /datum/element/waddling/proc/Waddle(atom/movable/target)
 	animate(target, pixel_z = 4, time = 0)
-	animate(target, pixel_z = 0, transform = turn(matrix(), pick(-12, 0, 12)), time=2)
-	animate(target, pixel_z = 0, transform = matrix(), time = 0)
+	animate(pixel_z = 0, transform = turn(matrix(), pick(-12, 0, 12)), time=2)
+	animate(pixel_z = 0, transform = matrix(), time = 0)
