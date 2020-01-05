@@ -69,7 +69,7 @@
 		return
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		var/ui_width = 300
+		var/ui_width = 280
 		var/ui_height = 134
 		ui = new(user, src, ui_key, "signaler", name, ui_width, ui_height, master_ui, state)
 		ui.open()
