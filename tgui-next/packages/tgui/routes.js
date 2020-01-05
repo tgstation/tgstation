@@ -9,6 +9,7 @@ import { AtmosFilter } from './interfaces/AtmosFilter';
 import { AtmosMixer } from './interfaces/AtmosMixer';
 import { AtmosPump } from './interfaces/AtmosPump';
 import { BankMachine } from './interfaces/BankMachine';
+import { BlackmarketUplink } from './interfaces/BlackmarketUplink';
 import { BluespaceArtillery } from './interfaces/BluespaceArtillery';
 import { Bepis } from './interfaces/Bepis';
 import { BorgPanel } from './interfaces/BorgPanel';
@@ -148,6 +149,11 @@ const ROUTES = {
   bank_machine: {
     component: () => BankMachine,
     scrollable: false,
+  },
+  blackmarket_uplink: {
+    component: () => BlackmarketUplink,
+    scrollable: true,
+    theme: 'hackerman',
   },
   borgopanel: {
     component: () => BorgPanel,
