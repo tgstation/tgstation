@@ -1069,7 +1069,7 @@
 
 /datum/techweb_node/aus_security
 	id = "aus_security"
-	display_name = "Austrailian Security Protocols"
+	display_name = "Australian Security Protocols"
 	description = "It is said that security in the Australicus sector is tight, so we took some pointers from their equipment. Thankfully, our sector lacks any signs of these, 'dropbears'."
 	prereq_ids = list("base")
 	design_ids = list("pin_explorer", "stun_boomerang")

@@ -252,7 +252,7 @@
 
 /obj/item/melee/baton/boomerang
 	name = "OZtek Boomerang"
-	desc = "A device invented in 2486 for the great Space Emu War by the confederacy of Neo-Australia, these high-tech boomerangs also work exceptionally well at stunning crewmembers. Just be careful to catch it when thrown!"
+	desc = "A device invented in 2486 for the great Space Emu War by the confederacy of Australicus, these high-tech boomerangs also work exceptionally well at stunning crewmembers. Just be careful to catch it when thrown!"
 	throw_speed = 1
 	icon_state = "boomerang"
 	item_state = "boomerang"
