@@ -120,10 +120,10 @@ Behavior that's still missing from this component that original food items had t
 				examine_list += "[parent] was bitten multiple times!"
 
 /datum/component/edible/proc/UseFromHand(obj/item/source, mob/living/M, mob/living/user)
-	TryToEat(M, user)
+	return TryToEat(M, user)
 
 /datum/component/edible/proc/TryToEatTurf(datum/source, mob/user)
-	TryToEat(user, user)
+	return TryToEat(user, user)
 
 ///All the checks for the act of eating itself and
 /datum/component/edible/proc/TryToEat(mob/living/eater, mob/living/feeder)
@@ -253,6 +253,7 @@ Behavior that's still missing from this component that original food items had t
 	if(bitecount == 0 || prob(50))
 		L.emote("me", 1, "nibbles away at \the [parent]")
 	bitecount++
+	. = COMPONENT_ITEM_NO_ATTACK
 	L.taste(owner.reagents) // why should carbons get all the fun?
 	if(bitecount >= 5)
 		var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where \the [parent] was")
