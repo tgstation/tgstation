@@ -156,13 +156,13 @@
 	var/give_hud = TRUE
 
 /datum/antagonist/rev/head/on_removal()
-	. = ..()
 	if(give_hud)
 		var/mob/living/carbon/C = owner.current
 		var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/S = C.getorganslot(ORGAN_SLOT_EYES)
 		if(S)
 			S.Remove(C)
 			C.update_sight()
+	. = ..()
 
 /datum/antagonist/rev/head/antag_listing_name()
 	return ..() + "(Leader)"
