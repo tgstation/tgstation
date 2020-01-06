@@ -185,3 +185,6 @@
 		open = !open
 		update_icon()
 		return
+
+/obj/structure/fireaxecabinet/AltClick(mob/user)
+	toggle_open()
