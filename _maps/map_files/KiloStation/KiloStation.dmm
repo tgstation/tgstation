@@ -54321,7 +54321,6 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bDA" = (
-/obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -93910,7 +93909,6 @@
 /area/hallway/secondary/exit/departure_lounge)
 "pSI" = (
 /obj/effect/mapping_helpers/airlock/unres{
-	icon_state = "airlock_unres_helper";
 	dir = 8
 	},
 /obj/machinery/door/airlock/medical/glass{
