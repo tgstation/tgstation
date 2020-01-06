@@ -173,11 +173,7 @@
 		locked = !locked
 		update_icon()
 
-/obj/structure/fireaxecabinet/verb/toggle_open()
-	set name = "Open/Close"
-	set category = "Object"
-	set src in oview(1)
-
+/obj/structure/fireaxecabinet/proc/toggle_open()
 	if(locked)
 		to_chat(usr, "<span class='warning'>The [name] won't budge!</span>")
 		return
