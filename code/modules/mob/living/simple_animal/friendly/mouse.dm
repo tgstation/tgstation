@@ -83,9 +83,9 @@
 		if(prob(10))
 			var/cap = CONFIG_GET(number/ratcap)
 			if(LAZYLEN(SSmobs.cheeserats) > cap)
-				visible_message("<span class='warning'>[src] carefully eats the cheese, hiding from the [cap] mice on the station!</span>")
+				visible_message("<span class='warning'>[src] carefully eats the cheese, hiding it from the [cap] mice on the station!</span>")
 				qdel(cheese)
-				return INITIALIZE_HINT_QDEL
+				return
 			SSmobs.cheeserats += src
 			new /mob/living/simple_animal/mouse/bred(loc)
 			visible_message("<span class='notice'>[src] nibbles through the [cheese], attracting another mouse!</span>")
@@ -109,7 +109,7 @@
 
 /mob/living/simple_animal/mouse/bred
 
-/mob/living/simple_animal/mouse/bred/Destroy()
+/mob/living/simple_animal/mouse/Destroy()
 	SSmobs.cheeserats -= src
 	return ..()
 

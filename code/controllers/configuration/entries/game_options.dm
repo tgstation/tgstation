@@ -380,7 +380,7 @@
 	min_val = 0
 
 /datum/config_entry/number/ratcap
-	config_entry_value = 64
+	config_entry_value = 32
 	min_val = 0
 
 /datum/config_entry/flag/dynamic_config_enabled
