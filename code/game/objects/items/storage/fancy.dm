@@ -327,9 +327,10 @@
 	if(fancy_open)
 		icon_state = "[initial(icon_state)]_open"
 
-		var/cigar_position = 1 //generate sprites for cigars in the box
+		var/cigar_position = 0 //to keep track of the pixel_x offset of each new overlay.
 		for(var/obj/item/clothing/mask/cigarette/cigar/smokes in contents)
-			var/mutable_appearance/cigar_overlay = mutable_appearance(icon, "[smokes.icon_off]_[cigar_position]")
+			var/mutable_appearance/cigar_overlay = mutable_appearance(icon, "[smokes.icon_off]")
+			cigar_overlay.pixel_x = 3 * cigar_position
 			add_overlay(cigar_overlay)
 			cigar_position++
 
