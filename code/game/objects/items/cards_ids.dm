@@ -41,13 +41,13 @@
 	.=..()
 	update_icon()
 
-/obj/item/card/data/update_icon()
-	cut_overlays()
+/obj/item/card/data/update_overlays()
+	. = ..()
 	if(detail_color == COLOR_FLOORTILE_GRAY)
 		return
 	var/mutable_appearance/detail_overlay = mutable_appearance('icons/obj/card.dmi', "[icon_state]-color")
 	detail_overlay.color = detail_color
-	add_overlay(detail_overlay)
+	. += detail_overlay
 
 /obj/item/card/data/full_color
 	desc = "A plastic magstripe card for simple and speedy data storage and transfer. This one has the entire card colored."
@@ -124,6 +124,7 @@
 	. = ..()
 	if(mapload && access_txt)
 		access = text2access(access_txt)
+	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, .proc/update_in_wallet)
 
 /obj/item/card/id/Destroy()
 	if (registered_account)
@@ -297,26 +298,23 @@
 /obj/item/card/id/RemoveID()
 	return src
 
-/obj/item/card/id/update_icon(blank=FALSE)
-	cut_overlays()
-	cached_flat_icon = null
+/obj/item/card/id/update_overlays()
+	. = ..()
 	if(!uses_overlays)
 		return
+	cached_flat_icon = null
 	var/job = assignment ? ckey(GetJobName()) : null
-	var/list/add_overlays = list()
-	if(!blank)
-		add_overlays += mutable_appearance(icon, "assigned")
+	if(registered_name && registered_name != "Captain")
+		. += mutable_appearance(icon, "assigned")
 	if(job)
-		add_overlays += mutable_appearance(icon, "id[job]")
-	add_overlay(add_overlays)
-	update_in_wallet(add_overlays)
+		. += mutable_appearance(icon, "id[job]")
 
-/obj/item/card/id/proc/update_in_wallet(overlays)
+/obj/item/card/id/proc/update_in_wallet()
 	if(istype(loc, /obj/item/storage/wallet))
 		var/obj/item/storage/wallet/powergaming = loc
 		if(powergaming.front_id == src)
 			powergaming.update_label()
-			powergaming.update_icon(overlays)
+			powergaming.update_icon()
 
 /obj/item/card/id/proc/get_cached_flat_icon()
 	if(!cached_flat_icon)
@@ -338,7 +336,7 @@ update_label()
 /obj/item/card/id/proc/update_label()
 	var/blank = !registered_name
 	name = "[blank ? id_type_name : "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
-	update_icon(blank)
+	update_icon()
 
 /obj/item/card/id/silver
 	name = "silver identification card"
@@ -495,7 +493,7 @@ update_label()
 /obj/item/card/id/captains_spare/update_label() //so it doesn't change to Captain's ID card (Captain) on a sneeze
 	if(registered_name == "Captain")
 		name = "[id_type_name][(!assignment || assignment == "Captain") ? "" : " ([assignment])"]"
-		update_icon(TRUE)
+		update_icon()
 	else
 		..()
 

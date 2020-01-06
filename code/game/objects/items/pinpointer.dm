@@ -58,29 +58,29 @@
 /obj/item/pinpointer/proc/scan_for_target()
 	return
 
-/obj/item/pinpointer/update_icon()
-	cut_overlays()
+/obj/item/pinpointer/update_overlays()
+	. = ..()
 	if(!active)
 		return
 	if(!target)
-		add_overlay("pinon[alert ? "alert" : ""]null[icon_suffix]")
+		. += "pinon[alert ? "alert" : ""]null[icon_suffix]"
 		return
 	var/turf/here = get_turf(src)
 	var/turf/there = get_turf(target)
 	if(here.z != there.z)
-		add_overlay("pinon[alert ? "alert" : ""]null[icon_suffix]")
+		. += "pinon[alert ? "alert" : ""]null[icon_suffix]"
 		return
 	if(get_dist_euclidian(here,there) <= minimum_range)
-		add_overlay("pinon[alert ? "alert" : ""]direct[icon_suffix]")
+		. += "pinon[alert ? "alert" : ""]direct[icon_suffix]"
 	else
 		setDir(get_dir(here, there))
 		switch(get_dist(here, there))
 			if(1 to 8)
-				add_overlay("pinon[alert ? "alert" : "close"][icon_suffix]")
+				. += "pinon[alert ? "alert" : "close"][icon_suffix]"
 			if(9 to 16)
-				add_overlay("pinon[alert ? "alert" : "medium"][icon_suffix]")
+				. += "pinon[alert ? "alert" : "medium"][icon_suffix]"
 			if(16 to INFINITY)
-				add_overlay("pinon[alert ? "alert" : "far"][icon_suffix]")
+				. += "pinon[alert ? "alert" : "far"][icon_suffix]"
 
 /obj/item/pinpointer/crew // A replacement for the old crew monitoring consoles
 	name = "crew pinpointer"

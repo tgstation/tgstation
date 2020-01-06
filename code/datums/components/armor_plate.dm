@@ -12,6 +12,7 @@
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/applyplate)
 	RegisterSignal(parent, COMSIG_PARENT_PREQDELETED, .proc/dropplates)
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_overlays)
 
 	if(_maxamount)
 		maxamount = _maxamount
@@ -76,3 +77,13 @@
 	if(ismecha(parent)) //items didn't drop the plates before and it causes erroneous behavior for the time being with collapsible helmets
 		for(var/i in 1 to amount)
 			new upgrade_item(get_turf(parent))
+
+/datum/component/armor_plate/proc/apply_overlays(datum/source, list/overlays)
+	if(amount && istype(parent, /obj/mecha/working/ripley))
+		var/obj/mecha/mech = parent
+		var/overlay_string = "ripley-g"
+		if(amount >= 3)
+			overlay_string += "-full"
+		if(!mech.occupant)
+			overlay_string += "-open"
+		overlays += overlay_string
