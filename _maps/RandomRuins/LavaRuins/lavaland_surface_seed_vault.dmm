@@ -365,7 +365,6 @@
 "aY" = (
 /obj/effect/decal/cleanable/food/plant_smudge,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
-	icon_state = "vent_map_on-2";
 	dir = 1
 	},
 /turf/open/floor/vault,
@@ -647,7 +646,6 @@
 /area/ruin/powered/seedvault)
 "oR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "pipe11-2";
 	dir = 10
 	},
 /turf/open/floor/plasteel/freezer,
@@ -676,7 +674,6 @@
 "Eu" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "pipe11-2";
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
@@ -688,14 +685,12 @@
 /area/ruin/powered/seedvault)
 "PH" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "pipe11-2";
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "Uz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
-	icon_state = "vent_map_on-2";
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
