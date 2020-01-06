@@ -24,7 +24,7 @@
 
 /datum/species/dullahan/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
-	DISABLE_BITFIELD(H.flags_1, HEAR_1)
+	H.flags_1 &= ~HEAR_1
 	var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
 		head.drop_limb()
@@ -37,7 +37,7 @@
 			D?.Trigger()
 
 /datum/species/dullahan/on_species_loss(mob/living/carbon/human/H)
-	ENABLE_BITFIELD(H.flags_1, HEAR_1)
+	H.flags_1 |= HEAR_1
 	H.reset_perspective(H)
 	if(myhead)
 		var/obj/item/dullahan_relay/DR = myhead
