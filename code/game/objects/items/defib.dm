@@ -365,7 +365,6 @@
 	if (!loc || !istype(loc, /obj/item/defibrillator)) //To avoid weird issues from admin spawns
 		return INITIALIZE_HINT_QDEL
 	defib = loc
-	forceMove(defib)
 	busy = FALSE
 	update_icon()
 
