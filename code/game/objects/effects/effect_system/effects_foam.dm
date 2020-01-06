@@ -172,7 +172,7 @@
 
 /obj/effect/particle_effect/foam/proc/spread_foam()
 	var/turf/t_loc = get_turf(src)
-	for(var/turf/T in t_loc.GetAtmosAdjacentTurfs())
+	for(var/turf/T in t_loc.reachableAdjacentTurfs())
 		var/obj/effect/particle_effect/foam/foundfoam = locate() in T //Don't spread foam where there's already foam!
 		if(foundfoam)
 			continue
@@ -238,7 +238,7 @@
 
 	amount = round(sqrt(amt / 2), 1)
 	carry.copy_to(chemholder, carry.total_volume)
-	if(metaltype != 0)
+	if(metaltype)
 		metal = metaltype
 
 /datum/effect_system/foam_spread/start()

@@ -70531,15 +70531,6 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/storage/eva)
 "cBj" = (
-/obj/structure/closet/crate/rcd{
-	pixel_y = 4
-	},
-/obj/machinery/door/window/northleft{
-	dir = 4;
-	name = "RCD Storage";
-	pixel_x = 1;
-	req_access_txt = "19"
-	},
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -70555,6 +70546,21 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = 8
+	},
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_y = 4
+	},
+/obj/structure/table/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/eva)
 "cBk" = (

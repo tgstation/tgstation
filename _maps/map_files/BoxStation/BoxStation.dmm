@@ -9905,9 +9905,23 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ayK" = (
-/obj/structure/closet/crate/rcd,
 /obj/machinery/camera/motion{
 	c_tag = "EVA Motion Sensor"
+	},
+/obj/structure/rack,
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = 8
+	},
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/eva)
