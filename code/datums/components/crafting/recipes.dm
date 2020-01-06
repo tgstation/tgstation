@@ -16,15 +16,14 @@
 	if(!(result in reqs))
 		blacklist += result
 
-/datum/crafting_recipe/pin_removal
-	name = "Pin Removal"
-	result = /obj/item/gun
-	reqs = list(/obj/item/gun = 1)
-	parts = list(/obj/item/gun = 1)
-	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	time = 50
-	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+/**
+  * Run custom pre-craft checks for this recipe
+  *
+  * user: The /mob that initiated the crafting
+  * collected_requirements: A list of lists of /obj/item instances that satisfy reqs. Top level list is keyed by requirement path.
+  */
+/datum/crafting_recipe/proc/check_requirements(mob/user, list/collected_requirements)
+	return TRUE
 
 /datum/crafting_recipe/IED
 	name = "IED"
@@ -59,6 +58,10 @@
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/strobeshield/New()
+	..()
+	blacklist |= subtypesof(/obj/item/shield/riot/)
 
 /datum/crafting_recipe/molotov
 	name = "Molotov"
@@ -114,7 +117,7 @@
 	name = "Tail Club"
 	result = /obj/item/tailclub
 	reqs = list(/obj/item/organ/tail/lizard = 1,
-	            /obj/item/stack/sheet/metal = 1)
+				/obj/item/stack/sheet/metal = 1)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -123,7 +126,7 @@
 	name = "Liz O' Nine Tails"
 	result = /obj/item/melee/chainofcommand/tailwhip
 	reqs = list(/obj/item/organ/tail/lizard = 1,
-	            /obj/item/stack/cable_coil = 1)
+				/obj/item/stack/cable_coil = 1)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -132,7 +135,7 @@
 	name = "Cat O' Nine Tails"
 	result = /obj/item/melee/chainofcommand/tailwhip/kitty
 	reqs = list(/obj/item/organ/tail/cat = 1,
-	            /obj/item/stack/cable_coil = 1)
+				/obj/item/stack/cable_coil = 1)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -519,7 +522,7 @@
 	result = /obj/item/clothing/accessory/talisman
 	time = 20
 	reqs = list(/obj/item/stack/sheet/bone = 2,
-				 /obj/item/stack/sheet/sinew = 1)
+				/obj/item/stack/sheet/sinew = 1)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/bonecodpiece
@@ -527,7 +530,7 @@
 	result = /obj/item/clothing/accessory/skullcodpiece
 	time = 20
 	reqs = list(/obj/item/stack/sheet/bone = 2,
-				 /obj/item/stack/sheet/animalhide/goliath_hide = 1)
+				/obj/item/stack/sheet/animalhide/goliath_hide = 1)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/skilt
@@ -535,7 +538,7 @@
 	result = /obj/item/clothing/accessory/skilt
 	time = 20
 	reqs = list(/obj/item/stack/sheet/bone = 1,
-				 /obj/item/stack/sheet/sinew = 2)
+				/obj/item/stack/sheet/sinew = 2)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/bracers
@@ -543,7 +546,7 @@
 	result = /obj/item/clothing/gloves/bracer
 	time = 20
 	reqs = list(/obj/item/stack/sheet/bone = 2,
-				 /obj/item/stack/sheet/sinew = 1)
+				/obj/item/stack/sheet/sinew = 1)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/skullhelm
@@ -598,7 +601,7 @@
 	result = /obj/item/twohanded/spear/bonespear
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 4,
-				 /obj/item/stack/sheet/sinew = 1)
+				/obj/item/stack/sheet/sinew = 1)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/boneaxe
@@ -606,13 +609,15 @@
 	result = /obj/item/twohanded/fireaxe/boneaxe
 	time = 50
 	reqs = list(/obj/item/stack/sheet/bone = 6,
-				 /obj/item/stack/sheet/sinew = 3)
+				/obj/item/stack/sheet/sinew = 3)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/bonfire
 	name = "Bonfire"
 	time = 60
 	reqs = list(/obj/item/grown/log = 5)
+	parts = list(/obj/item/grown/log = 5)
+	blacklist = list(/obj/item/grown/log/steel)
 	result = /obj/structure/bonfire
 	category = CAT_PRIMAL
 
@@ -656,9 +661,9 @@
 	result = /obj/item/pressure_plate
 	time = 5
 	reqs = list(/obj/item/stack/sheet/metal = 1,
-				  /obj/item/stack/tile/plasteel = 1,
-				  /obj/item/stack/cable_coil = 2,
-				  /obj/item/assembly/igniter = 1)
+				/obj/item/stack/tile/plasteel = 1,
+				/obj/item/stack/cable_coil = 2,
+				/obj/item/assembly/igniter = 1)
 	category = CAT_MISC
 
 
@@ -696,8 +701,8 @@
 	result = /obj/structure/guillotine
 	time = 150 // Building a functioning guillotine takes time
 	reqs = list(/obj/item/stack/sheet/plasteel = 3,
-		        /obj/item/stack/sheet/mineral/wood = 20,
-		        /obj/item/stack/cable_coil = 10)
+				/obj/item/stack/sheet/mineral/wood = 20,
+				/obj/item/stack/cable_coil = 10)
 	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
 	category = CAT_MISC
 
@@ -710,6 +715,14 @@
 					/obj/item/reagent_containers/food/snacks/grown/potato = 1,
 					/obj/item/stack/cable_coil = 5)
 	category = CAT_MISC
+
+/datum/crafting_recipe/aitater/check_requirements(mob/user, list/collected_requirements)
+	var/obj/item/aicard/aicard = collected_requirements[/obj/item/aicard][1]
+	if(!aicard.AI)
+		return TRUE
+
+	to_chat(user, "<span class='boldwarning'>You can't craft an intelliTater with an AI in the card!</span>")
+	return FALSE
 
 /datum/crafting_recipe/aispook
 	name = "intelliLantern"

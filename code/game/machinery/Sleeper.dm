@@ -12,8 +12,8 @@
 	density = FALSE
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
-	ui_x = 375
-	ui_y = 550
+	ui_x = 250
+	ui_y = 465
 
 	var/efficiency = 1
 	var/min_health = -25

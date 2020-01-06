@@ -1,0 +1,11 @@
+author: "MMMiracles (Donutstation)"
+delete-after: True
+changes: 
+  - rscadd: "Added a plumbing section below Medical"
+  - rscadd: "Several waypoint markers have been adding around key locations to help alleviate trouble when exploring the map."
+  - rscdel: "To make room for plumbing, the lower section of Medical's maintenance was stripped to an extent."
+  - tweak: "Original chemistry has been rebranded to the Pharmacy with access levels adjusted"
+  - tweak: "Chapel now has pews instead of stools for proper communion"
+  - tweak: "Genetics is slightly more science-y colored."
+  - bugfix: "Fixes a few spots that was missing disposal/piping in the main loop"
+  - bugfix: "Surgery B now has a camera"

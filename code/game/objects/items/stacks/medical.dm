@@ -58,10 +58,10 @@
 		user.visible_message("<span class='green'>[user] applies \the [src] on [C]'s [affecting.name].</span>", "<span class='green'>You apply \the [src] on [C]'s [affecting.name].</span>")
 		var/brute2heal = brute
 		var/burn2heal = burn
-		if(user?.mind?.get_skill_speed_modifier(/datum/skill/medical))
-			var/skillmods = user.mind.get_skill_speed_modifier(/datum/skill/medical)
-			brute2heal *= (2-skillmods)
-			burn2heal *= (2-skillmods)
+		var/skill_mod = user?.mind?.get_skill_modifier(/datum/skill/medical, SKILL_SPEED_MODIFIER)
+		if(skill_mod)
+			brute2heal *= (2-skill_mod)
+			burn2heal *= (2-skill_mod)
 		if(affecting.heal_damage(brute2heal, burn2heal))
 			C.update_damage_overlays()
 		return TRUE
@@ -113,6 +113,9 @@
 	max_amount = 12
 	grind_results = list(/datum/reagent/cellulose = 2)
 	custom_price = 100
+
+/obj/item/stack/medical/gauze/twelve
+	amount = 12
 
 /obj/item/stack/medical/gauze/heal(mob/living/M, mob/user)
 	if(ishuman(M))

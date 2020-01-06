@@ -285,13 +285,9 @@
 			else
 				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
 
-
 	//Clear all moods if no miasma at all
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
-
-
-
 
 	breath.garbage_collect()
 
@@ -302,7 +298,8 @@
 
 //Fourth and final link in a breath chain
 /mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)
-	return
+	// The air you breathe out should match your body temperature
+	breath.temperature = bodytemperature
 
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	if(internal)
@@ -336,7 +333,8 @@
 	if(stat != DEAD)
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
-			O.on_life()
+			if(O.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
+				O.on_life()
 	else
 		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1)) // No organ decay if the body contains formaldehyde.
 			return

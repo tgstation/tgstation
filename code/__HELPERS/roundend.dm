@@ -59,10 +59,12 @@
 				else
 					category = "others"
 					mob_data["typepath"] = M.type
-		//Ghosts don't care about minds, we want to retain ckey data etc
+		//Ghosts don't care about minds, but we want to retain ckey data etc
 		if(isobserver(M))
 			count_only = FALSE
 			escape_status = "ghosts"
+			if(!M.mind)
+				mob_data["ckey"] = M.key
 			category = null //ghosts are one list deep
 		//All other mindless stuff just gets counts by name
 		if(count_only)

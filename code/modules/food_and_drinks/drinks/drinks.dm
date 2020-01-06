@@ -351,7 +351,8 @@
 	if(cap_on && reagents.total_volume)
 		if(prob(flip_chance)) // landed upright
 			src.visible_message("<span class='notice'>[src] lands upright!</span>")
-			SEND_SIGNAL(throwingdatum.thrower, COMSIG_ADD_MOOD_EVENT, "bottle_flip", /datum/mood_event/bottle_flip)
+			if(throwingdatum.thrower)
+				SEND_SIGNAL(throwingdatum.thrower, COMSIG_ADD_MOOD_EVENT, "bottle_flip", /datum/mood_event/bottle_flip)
 		else // landed on it's side
 			animate(src, transform = matrix(prob(50)? 90 : -90, MATRIX_ROTATE), time = 3, loop = 0)
 
@@ -648,6 +649,13 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime/Initialize()
 	. = ..()
 	name = "lemon-lime soda"
+
+/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry
+	name = "Sol Dry"
+	desc = "Maybe this will help your tummy feel better. Maybe not."
+	icon_state = "ginger_ale"
+	list_reagents = list(/datum/reagent/consumable/sol_dry = 30)
+	foodtype = SUGAR
 
 /obj/item/reagent_containers/food/drinks/soda_cans/space_up
 	name = "Space-Up!"

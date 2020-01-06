@@ -7,7 +7,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 /mob/living/silicon/robot/attack_robot(mob/user)
 	. = ..()
-	if(user == src && buckled_mobs.len && user.a_intent == INTENT_HELP)
+	if(user == src && has_buckled_mobs() && user.a_intent == INTENT_HELP)
 		for(var/i in buckled_mobs)
 			var/mob/buckmob = i
 			unbuckle_mob(buckmob)

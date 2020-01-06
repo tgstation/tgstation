@@ -34,6 +34,8 @@
 #define COMPONENT_DUPE_UNIQUE			2
 /// old component is given the initialization args of the new
 #define COMPONENT_DUPE_UNIQUE_PASSARGS	4
+/// each component of the same type is consulted as to whether the duplicate should be allowed
+#define COMPONENT_DUPE_SELECTIVE		5
 
 // All signals. Format:
 // When the signal is called: (signal arguments)
@@ -196,7 +198,6 @@
 	#define HEARING_SPANS 6
 	#define HEARING_MESSAGE_MODE 7 */
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"			//called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
-#define COMSIG_MOVABLE_UPDATE_GLIDE_SIZE "movable_glide_size"	//Called when the movable's glide size is updated: (new_glide_size)
 
 // /mob signals
 #define COMSIG_MOB_DEATH "mob_death"							//from base of mob/death(): (gibbed)

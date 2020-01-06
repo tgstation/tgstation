@@ -233,8 +233,8 @@
 	var/current_dir
 	if(isliving(AM))
 		current_dir = AM.dir
-	if(AM.Move(get_step(AM.loc, t), t, glide_size))
-		Move(get_step(loc, t), t)
+	if(step(AM, t))
+		step(src, t)
 	if(current_dir)
 		AM.setDir(current_dir)
 	now_pushing = FALSE
@@ -606,7 +606,7 @@
 /mob/living/proc/update_damage_overlays()
 	return
 
-/mob/living/Move(atom/newloc, direct, glide_size_override)
+/mob/living/Move(atom/newloc, direct)
 	if(lying)
 		if(direct & EAST)
 			lying = 90
@@ -616,8 +616,7 @@
 		lying_prev = lying
 	if (buckled && buckled.loc != newloc) //not updating position
 		if (!buckled.anchored)
-			buckled.glide_size = glide_size //This should be being set by the override in the move below but it's not and I'm fucking suffering
-			return buckled.Move(newloc, direct, glide_size_override)
+			return buckled.Move(newloc, direct)
 		else
 			return FALSE
 
@@ -845,7 +844,7 @@
 		who.show_inv(src)
 	else
 		src << browse(null,"window=mob[REF(who)]")
-	
+
 	who.update_equipment_speed_mods() // Updates speed in case stripped speed affecting item
 
 // The src mob is trying to place an item on someone
@@ -1038,7 +1037,7 @@
 	var/blocked = getarmor(null, "rad")
 
 	if(amount > RAD_BURN_THRESHOLD)
-		apply_damage(log(amount)*2, BURN, null, blocked)
+		apply_damage(RAD_BURN_CURVE(amount), BURN, null, blocked)
 
 	apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), EFFECT_IRRADIATE, blocked)
 
@@ -1374,7 +1373,7 @@
 	. = ..()
 	var/refid = REF(src)
 	. += {"
-		<br><font size='1'>[VV_HREF_TARGETREF_1V(refid, VV_HK_BASIC_EDIT, "[ckey || "no ckey"]", NAMEOF(src, ckey))] / [VV_HREF_TARGETREF_1V(refid, VV_HK_BASIC_EDIT, "[real_name || "no real name"]", NAMEOF(src, real_name))]</font>
+		<br><font size='1'>[VV_HREF_TARGETREF(refid, VV_HK_GIVE_DIRECT_CONTROL, "[ckey || "no ckey"]")] / [VV_HREF_TARGETREF_1V(refid, VV_HK_BASIC_EDIT, "[real_name || "no real name"]", NAMEOF(src, real_name))]</font>
 		<br><font size='1'>
 			BRUTE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brute' id='brute'>[getBruteLoss()]</a>
 			FIRE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=fire' id='fire'>[getFireLoss()]</a>

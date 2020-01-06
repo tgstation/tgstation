@@ -64,31 +64,50 @@
 
 
 
-
-/datum/component/personal_crafting/proc/check_contents(datum/crafting_recipe/R, list/contents)
+/**
+  * Check that the contents of the recipe meet the requirements.
+  *
+  * user: The /mob that initated the crafting.
+  * R: The /datum/crafting_recipe being attempted.
+  * contents: List of items to search for R's reqs.
+  */
+/datum/component/personal_crafting/proc/check_contents(mob/user, datum/crafting_recipe/R, list/contents)
+	var/list/item_instances = contents["instances"]
 	contents = contents["other"]
-	main_loop:
-		for(var/A in R.reqs)
-			var/needed_amount = R.reqs[A]
-			for(var/B in contents)
-				if(ispath(B, A))
-					if (R.blacklist.Find(B))
-						continue
-					if(contents[B] >= R.reqs[A])
-						continue main_loop
-					else
-						needed_amount -= contents[B]
-						if(needed_amount <= 0)
-							continue main_loop
-						else
-							continue
-			return FALSE
-	for(var/A in R.chem_catalysts)
-		if(contents[A] < R.chem_catalysts[A])
-			return FALSE
-	return TRUE
 
-/datum/component/personal_crafting/proc/get_environment(mob/user)
+	var/list/requirements_list = list()
+
+	// Process all requirements
+	for(var/requirement_path in R.reqs)
+		// Check we have the appropriate amount available in the contents list
+		var/needed_amount = R.reqs[requirement_path]
+		for(var/content_item_path in contents)
+			// Right path and not blacklisted
+			if(!ispath(content_item_path, requirement_path) || R.blacklist.Find(content_item_path))
+				continue
+
+			needed_amount -= contents[content_item_path]
+			if(needed_amount <= 0)
+				break
+
+		if(needed_amount > 0)
+			return FALSE
+
+		// Store the instances of what we will use for R.check_requirements() for requirement_path
+		var/list/instances_list = list()
+		for(var/instance_path in item_instances)
+			if(ispath(instance_path, requirement_path))
+				instances_list += item_instances[instance_path]
+
+		requirements_list[requirement_path] = instances_list
+
+	for(var/requirement_path in R.chem_catalysts)
+		if(contents[requirement_path] < R.chem_catalysts[requirement_path])
+			return FALSE
+
+	return R.check_requirements(user, requirements_list)
+
+/datum/component/personal_crafting/proc/get_environment(mob/user, list/blacklist = null)
 	. = list()
 	for(var/obj/item/I in user.held_items)
 		. += I
@@ -105,14 +124,23 @@
 				. += AM
 	for(var/slot in list(ITEM_SLOT_RPOCKET, ITEM_SLOT_LPOCKET))
 		. += user.get_item_by_slot(slot)
+	if(blacklist)
+		for(var/obj/B in .)
+			if(blacklist.Find(B.type))
+				. -= B
 
 /datum/component/personal_crafting/proc/get_surroundings(mob/user)
 	. = list()
 	.["tool_behaviour"] = list()
 	.["other"] = list()
+	.["instances"] = list()
 	for(var/obj/item/I in get_environment(user))
 		if(I.flags_1 & HOLOGRAM_1)
 			continue
+		if(.["instances"][I.type])
+			.["instances"][I.type] += I
+		else
+			.["instances"][I.type] = list(I)
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
 			.["other"][I.type] += S.amount
@@ -161,11 +189,11 @@
 /datum/component/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R)
 	var/list/contents = get_surroundings(user)
 	var/send_feedback = 1
-	if(check_contents(R, contents))
+	if(check_contents(user, R, contents))
 		if(check_tools(user, R, contents))
 			if(do_after(user, R.time, target = user))
 				contents = get_surroundings(user)
-				if(!check_contents(R, contents))
+				if(!check_contents(user, R, contents))
 					return ", missing component."
 				if(!check_tools(user, R, contents))
 					return ", missing tool."
@@ -215,7 +243,7 @@
 	main_loop:
 		for(var/A in R.reqs)
 			amt = R.reqs[A]
-			surroundings = get_environment(user)
+			surroundings = get_environment(user, R.blacklist)
 			surroundings -= Deletion
 			if(ispath(A, /datum/reagent))
 				var/datum/reagent/RG = new A
@@ -340,7 +368,7 @@
 		if((R.category != cur_category) || (R.subcategory != cur_subcategory))
 			continue
 
-		craftability["[REF(R)]"] = check_contents(R, surroundings)
+		craftability["[REF(R)]"] = check_contents(user, R, surroundings)
 
 	data["craftability"] = craftability
 	return data

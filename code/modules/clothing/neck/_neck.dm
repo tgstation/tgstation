@@ -258,3 +258,16 @@
 			user.visible_message("<span class='notice'>You untie [oldName] back into a [newBand.name].</span>", "<span class='notice'>[user] unties [oldName] back into a [newBand.name].</span>")
 		else
 			to_chat(user, "<span class='warning'>You must be holding [src] in order to untie it!</span>")
+
+/obj/item/clothing/neck/beads
+	name = "plastic bead necklace"
+	desc = "A cheap, plastic bead necklace. Show team spirit! Collect them! Throw them away! The posibilites are endless!"
+	icon = 'icons/obj/clothing/neck.dmi'
+	icon_state = "beads"
+	color = "#ffffff"
+	custom_price = 10
+	custom_materials = (list(/datum/material/plastic = 500))
+
+/obj/item/clothing/neck/beads/Initialize()
+	. = ..()
+	color = color = pick("#ff0077","#d400ff","#2600ff","#00ccff","#00ff2a","#e5ff00","#ffae00","#ff0000", "#ffffff")

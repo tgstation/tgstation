@@ -424,19 +424,53 @@
 		new /obj/item/reagent_containers/food/drinks/sillycup( src )
 
 /obj/item/storage/box/donkpockets
+    var/donktype = /obj/item/reagent_containers/food/snacks/donkpocket
+
+/obj/item/storage/box/donkpockets/PopulateContents()
+    for(var/i in 1 to 6)
+        new donktype(src)
+
+/obj/item/storage/box/donkpockets
 	name = "box of donk-pockets"
 	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
 	icon_state = "donkpocketbox"
 	illustration=null
+	donktype = /obj/item/reagent_containers/food/snacks/donkpocket
 
 /obj/item/storage/box/donkpockets/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/donkpocket))
 
-/obj/item/storage/box/donkpockets/PopulateContents()
-	for(var/i in 1 to 6)
-		new /obj/item/reagent_containers/food/snacks/donkpocket(src)
+/obj/item/storage/box/donkpockets/donkpocketspicy
+	name = "box of spicy-flavoured donk-pockets"
+	icon_state = "donkpocketboxspicy"
+	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/spicy
+
+/obj/item/storage/box/donkpockets/donkpocketteriyaki
+	name = "box of teriyaki-flavoured donk-pockets"
+	icon_state = "donkpocketboxteriyaki"
+	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/teriyaki
+
+/obj/item/storage/box/donkpockets/donkpocketpizza
+	name = "box of pizza-flavoured donk-pockets"
+	icon_state = "donkpocketboxpizza"
+	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/pizza
+
+/obj/item/storage/box/donkpockets/donkpocketgondola
+	name = "box of gondola-flavoured donk-pockets"
+	icon_state = "donkpocketboxgondola"
+	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/gondola
+
+/obj/item/storage/box/donkpockets/donkpocketberry
+	name = "box of berry-flavoured donk-pockets"
+	icon_state = "donkpocketboxberry"
+	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/berry
+
+/obj/item/storage/box/donkpockets/donkpockethonk
+	name = "box of banana-flavoured donk-pockets"
+	icon_state = "donkpocketboxbanana"
+	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/honk
 
 /obj/item/storage/box/monkeycubes
 	name = "monkey cube box"
@@ -1167,3 +1201,51 @@
 		/obj/item/storage/box/material=1
 		)
 	generate_items_inside(items_inside,src)
+
+/obj/item/storage/box/plastic
+	name = "plastic box"
+	desc = "It's a solid, plastic shell box."
+	icon_state = "plasticbox"
+	foldable = null
+	illustration = "writing"
+	custom_materials = list(/datum/material/plastic = 1000) //You lose most if recycled.
+
+
+/obj/item/storage/box/fireworks
+	name = "box of fireworks"
+	desc = "Contains an assortment of fireworks."
+	illustration = "flashbang"
+
+/obj/item/storage/box/fireworks/PopulateContents()
+	for(var/i in 1 to 3)
+		new/obj/item/sparkler(src)
+		new/obj/item/grenade/firecracker(src)
+	new /obj/item/toy/snappop(src)
+
+/obj/item/storage/box/fireworks/dangerous
+
+/obj/item/storage/box/fireworks/dangerous/PopulateContents()
+	for(var/i in 1 to 3)
+		new/obj/item/sparkler(src)
+		new/obj/item/grenade/firecracker(src)
+	if(prob(20))
+		new /obj/item/grenade/syndieminibomb/concussion/frag(src)
+	else
+		new /obj/item/toy/snappop(src)
+
+/obj/item/storage/box/firecrackers
+	name = "box of firecrackers"
+	desc = "A box filled with illegal firecracker. You wonder who still makes these."
+	icon_state = "syndiebox"
+
+/obj/item/storage/box/firecrackers/PopulateContents()
+	for(var/i in 1 to 7)
+		new/obj/item/grenade/firecracker(src)
+
+/obj/item/storage/box/sparklers
+	name = "box of sparklers"
+	desc = "A box of NT brand sparklers, burns hot even in the cold of space-winter."
+
+/obj/item/storage/box/sparklers/PopulateContents()
+	for(var/i in 1 to 7)
+		new/obj/item/sparkler(src)

@@ -441,6 +441,9 @@ GLOBAL_LIST_EMPTY(species_list)
 			if(DEADCHAT_ARRIVALRATTLE)
 				if(toggles & DISABLE_ARRIVALRATTLE)
 					continue
+			if(DEADCHAT_LAWCHANGE)
+				if(!(chat_toggles & CHAT_GHOSTLAWS))
+					continue
 
 		if(isobserver(M))
 			var/rendered_message = message

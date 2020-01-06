@@ -1048,7 +1048,6 @@
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name	//update the camera name too
 	diag_hud_set_aishell()
-	notify_ai(AI_SHELL)
 
 /mob/living/silicon/robot/proc/revert_shell()
 	if(!shell)
@@ -1175,7 +1174,7 @@
 
 /mob/living/silicon/robot/resist()
 	. = ..()
-	if(!buckled_mobs.len)
+	if(!has_buckled_mobs())
 		return
 	for(var/i in buckled_mobs)
 		var/mob/unbuckle_me_now = i
