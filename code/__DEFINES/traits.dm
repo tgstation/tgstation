@@ -163,6 +163,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
 
 //quirk traits
+#define TRAIT_CLOWNPHOBIA		"clownphobia"
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
 #define TRAIT_AGEUSIA			"ageusia"
 #define TRAIT_HEAVY_SLEEPER		"heavy_sleeper"

@@ -225,6 +225,20 @@
 	lose_text = "<span class='notice'>You feel awake again.</span>"
 	medical_record_text = "Patient has abnormal sleep study results and is difficult to wake up."
 
+/datum/quirk/clownphobia
+	name = "Clownphobia"
+	desc = "You fear clowns with your life"
+	value = -1
+	mob_trait = TRAIT_CLOWNPHOBIA
+	gain_text = "<span class='danger'>Clowns starts to get you on your nerves.</span>"
+	lose_text = "<span claass='notice'>Clowns no longer get on your nerves.</span>"
+	medical_record_text = "Patient has developed a phobia towards clowns."
+
+/datum/quirk/clownphobia/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.gain_trauma(/datum/brain_trauma/mild/phobia, TRUE, "clowns")
+
+
 /datum/quirk/hypersensitive
 	name = "Hypersensitive"
 	desc = "For better or worse, everything seems to affect your mood more than it should."
