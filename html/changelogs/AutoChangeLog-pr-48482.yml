@@ -1,0 +1,6 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - balance: "EVA RCD replaced with four smart metal foam grenades."
+  - tweak: "Foam now spreads properly on space tiles."
+  - balance: "Engineering vendor RCD's are now premium at 1700 cr with 2 stock. Reminder that these can be printed in the engineering lathe with the relevant tech."

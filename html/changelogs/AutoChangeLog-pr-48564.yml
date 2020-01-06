@@ -1,0 +1,6 @@
+author: "WarlockD"
+delete-after: True
+changes: 
+  - bugfix: "Fixed nanite damage sensor and rule for sesnsor
+<!--
+-->"

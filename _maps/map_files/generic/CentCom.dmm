@@ -5620,7 +5620,7 @@
 /area/centcom/ferry)
 "nC" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -7671,7 +7671,7 @@
 	pixel_x = 28
 	},
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/freezer,
@@ -14697,7 +14697,7 @@
 /area/centcom/ferry)
 "Hb" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/structure/mirror{
@@ -14751,7 +14751,7 @@
 /area/tdome/tdomeobserve)
 "Hh" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -14774,7 +14774,7 @@
 /area/centcom/holding)
 "Hn" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/structure/mirror{
@@ -14905,7 +14905,7 @@
 /area/tdome/tdomeobserve)
 "Hx" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -14915,7 +14915,7 @@
 /area/tdome/tdomeobserve)
 "HA" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/structure/mirror{
@@ -14946,7 +14946,7 @@
 /area/tdome/tdomeobserve)
 "HC" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/effect/turf_decal/tile/red{
@@ -14963,7 +14963,7 @@
 /area/tdome/tdomeobserve)
 "HD" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -14974,7 +14974,7 @@
 /area/tdome/tdomeobserve)
 "HF" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -14996,7 +14996,7 @@
 /area/centcom/holding)
 "HI" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/structure/mirror{
@@ -15120,7 +15120,7 @@
 /area/centcom/holding)
 "HR" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -17217,7 +17217,7 @@
 /area/centcom/control)
 "Op" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},

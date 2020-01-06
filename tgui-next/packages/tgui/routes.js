@@ -9,6 +9,7 @@ import { AtmosFilter } from './interfaces/AtmosFilter';
 import { AtmosMixer } from './interfaces/AtmosMixer';
 import { AtmosPump } from './interfaces/AtmosPump';
 import { BankMachine } from './interfaces/BankMachine';
+import { BlackmarketUplink } from './interfaces/BlackmarketUplink';
 import { BluespaceArtillery } from './interfaces/BluespaceArtillery';
 import { Bepis } from './interfaces/Bepis';
 import { BorgPanel } from './interfaces/BorgPanel';
@@ -35,23 +36,30 @@ import { Cryo } from './interfaces/Cryo';
 import { DecalPainter } from './interfaces/DecalPainter';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { DnaVault } from './interfaces/DnaVault';
+import { EightBallVote } from './interfaces/EightBallVote';
+import { EmergencyShuttleConsole } from './interfaces/EmergencyShuttleConsole';
 import { EngravedMessage } from './interfaces/EngravedMessage';
 import { Gps } from './interfaces/Gps';
 import { GravityGenerator } from './interfaces/GravityGenerator';
+import { GulagTeleporterConsole } from './interfaces/GulagTeleporterConsole';
 import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
 import { Holodeck } from './interfaces/Holodeck';
 import { ImplantChair } from './interfaces/ImplantChair';
+import { Intellicard } from './interfaces/Intellicard';
 import { KeycardAuth } from './interfaces/KeycardAuth';
 import { LaborClaimConsole } from './interfaces/LaborClaimConsole';
 import { LanguageMenu } from './interfaces/LanguageMenu';
+import { LaunchpadConsole, LaunchpadRemote } from './interfaces/Launchpad';
 import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
+import { Mule } from './interfaces/Mule';
 import { NaniteChamberControl } from './interfaces/NaniteChamberControl';
 import { NaniteCloudControl } from './interfaces/NaniteCloudControl';
 import { NaniteProgramHub } from './interfaces/NaniteProgramHub';
 import { NaniteProgrammer } from './interfaces/NaniteProgrammer';
 import { NaniteRemote } from './interfaces/NaniteRemote';
+import { NotificationPreferences } from './interfaces/NotificationPreferences';
 import { NtnetRelay } from './interfaces/NtnetRelay';
 import { NtosArcade } from './interfaces/NtosArcade';
 import { NtosConfiguration } from './interfaces/NtosConfiguration';
@@ -73,6 +81,8 @@ import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { SatelliteControl } from './interfaces/SatelliteControl';
 import { ScannerGate } from './interfaces/ScannerGate';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
+import { Sleeper } from './interfaces/Sleeper';
+import { SlimeBodySwapper } from './interfaces/SlimeBodySwapper';
 import { SmartVend } from './interfaces/SmartVend';
 import { Smes } from './interfaces/Smes';
 import { SmokeMachine } from './interfaces/SmokeMachine';
@@ -89,6 +99,7 @@ import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
 import { Vending } from './interfaces/Vending';
 import { Wires } from './interfaces/Wires';
+import { SyndContractor } from './interfaces/SyndContractor';
 
 const ROUTES = {
   achievements: {
@@ -138,6 +149,11 @@ const ROUTES = {
   bank_machine: {
     component: () => BankMachine,
     scrollable: false,
+  },
+  blackmarket_uplink: {
+    component: () => BlackmarketUplink,
+    scrollable: true,
+    theme: 'hackerman',
   },
   borgopanel: {
     component: () => BorgPanel,
@@ -243,6 +259,14 @@ const ROUTES = {
     component: () => DnaVault,
     scrollable: false,
   },
+  eightball: {
+    component: () => EightBallVote,
+    scrollable: false,
+  },
+  emergency_shuttle_console: {
+    component: () => EmergencyShuttleConsole,
+    scrollable: false,
+  },
   engraved_message: {
     component: () => EngravedMessage,
     scrollable: false,
@@ -253,6 +277,10 @@ const ROUTES = {
   },
   gravity_generator: {
     component: () => GravityGenerator,
+    scrollable: false,
+  },
+  gulag_console: {
+    component: () => GulagTeleporterConsole,
     scrollable: false,
   },
   gulag_item_reclaimer: {
@@ -267,6 +295,10 @@ const ROUTES = {
     component: () => ImplantChair,
     scrollable: false,
   },
+  intellicard: {
+    component: () => Intellicard,
+    scrollable: true,
+  },
   keycard_auth: {
     component: () => KeycardAuth,
     scrollable: false,
@@ -279,6 +311,15 @@ const ROUTES = {
     component: () => LanguageMenu,
     scrollable: true,
   },
+  launchpad_console: {
+    component: () => LaunchpadConsole,
+    scrollable: true,
+  },
+  launchpad_remote: {
+    component: () => LaunchpadRemote,
+    scrollable: false,
+    theme: 'syndicate',
+  },
   mech_bay_power_console: {
     component: () => MechBayPowerConsole,
     scrollable: false,
@@ -289,6 +330,10 @@ const ROUTES = {
   },
   mint: {
     component: () => Mint,
+    scrollable: false,
+  },
+  mulebot: {
+    component: () => Mule,
     scrollable: false,
   },
   nanite_chamber_control: {
@@ -309,6 +354,10 @@ const ROUTES = {
   },
   nanite_remote: {
     component: () => NaniteRemote,
+    scrollable: true,
+  },
+  notificationpanel: {
+    component: () => NotificationPreferences,
     scrollable: true,
   },
   ntnet_relay: {
@@ -418,6 +467,14 @@ const ROUTES = {
     component: () => ShuttleManipulator,
     scrollable: true,
   },
+  sleeper: {
+    component: () => Sleeper,
+    scrollable: false,
+  },
+  slime_swap_body: {
+    component: () => SlimeBodySwapper,
+    scrollable: true,
+  },
   smartvend: {
     component: () => SmartVend,
     scrollable: true,
@@ -449,6 +506,12 @@ const ROUTES = {
   suit_storage_unit: {
     component: () => SuitStorageUnit,
     scrollable: false,
+  },
+  synd_contract: {
+    component: () => SyndContractor,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'syndicate',
   },
   tanks: {
     component: () => Tank,
