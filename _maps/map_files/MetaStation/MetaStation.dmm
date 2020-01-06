@@ -47625,7 +47625,6 @@
 /obj/structure/girder,
 /obj/structure/grille,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cde" = (
