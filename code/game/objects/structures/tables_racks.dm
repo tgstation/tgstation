@@ -227,9 +227,9 @@
 /obj/structure/table/rolling/AfterPutItemOnTable(obj/item/I, mob/living/user)
 	. = ..()
 	attached_items += I
-	RegisterSignal(I, COMSIG_ITEM_PICKUP, .proc/RemoveItemFromTable) //Listen for the pickup event, unregister on pick-up so we aren't moved
+	RegisterSignal(I, COMSIG_MOVABLE_MOVED, .proc/RemoveItemFromTable) //Listen for the pickup event, unregister on pick-up so we aren't moved
 
-/obj/structure/table/rolling/proc/RemoveItemFromTable(datum/source, mob/user)
+/obj/structure/table/rolling/proc/RemoveItemFromTable()
 	attached_items -= source
 	UnregisterSignal(source, COMSIG_ITEM_PICKUP)
 
