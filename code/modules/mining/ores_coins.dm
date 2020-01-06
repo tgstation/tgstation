@@ -18,7 +18,6 @@
 	var/refined_type = null //What this ore defaults to being refined into
 	var/mine_experience = 5 //How much experience do you get for mining this ore?
 	novariants = TRUE // Ore stacks handle their icon updates themselves to keep the illusion that there's more going
-	mats_per_stack = MINERAL_MATERIAL_AMOUNT
 	var/list/stack_overlays
 
 /obj/item/stack/ore/update_icon()

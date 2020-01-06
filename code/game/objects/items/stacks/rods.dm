@@ -18,7 +18,6 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=1000)
-	mats_per_stack = 1000
 	max_amount = 50
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	hitsound = 'sound/weapons/gun/general/grenade_launch.ogg'
@@ -35,7 +34,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 /obj/item/stack/rods/get_main_recipes()
 	. = ..()
 	. += GLOB.rod_recipes
-	
+
 /obj/item/stack/rods/update_icon()
 	var/amount = get_amount()
 	if((amount <= 5) && (amount > 0))
