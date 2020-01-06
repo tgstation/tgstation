@@ -428,9 +428,9 @@ Difficulty: Hard
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/CanPass(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination))
 		return TRUE
-	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Goto(target, delay, minimum_distance)
 	if(!charging)
@@ -527,9 +527,9 @@ Difficulty: Hard
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/CanPass(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum)) // hallucinations should not be stopping bubblegum or eachother
 		return TRUE
-	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Life()
 	return

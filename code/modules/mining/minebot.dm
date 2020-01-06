@@ -133,6 +133,7 @@
 		return
 
 /mob/living/simple_animal/hostile/mining_drone/CanPass(atom/movable/O)
+	. = ..()
 	if(istype(O, /obj/projectile/kinetic))
 		var/obj/projectile/kinetic/K = O
 		if(K.kinetic_gun)
@@ -142,7 +143,6 @@
 					return TRUE
 	if(istype(O, /obj/projectile/destabilizer))
 		return TRUE
-	return ..()
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
 	mode = MINEDRONE_COLLECT

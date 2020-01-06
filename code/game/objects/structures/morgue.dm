@@ -379,12 +379,11 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	icon_state = "morguet"
 
 /obj/structure/tray/m_tray/CanPass(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
-		return 1
+		return TRUE
 	if(locate(/obj/structure/table) in get_turf(mover))
-		return 1
-	else
-		return 0
+		return TRUE
 
 /obj/structure/tray/m_tray/CanAStarPass(ID, dir, caller)
 	. = !density

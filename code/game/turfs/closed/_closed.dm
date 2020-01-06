@@ -14,9 +14,9 @@
 	return FALSE
 
 /turf/closed/CanPass(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSCLOSEDTURF))
 		return TRUE
-	return ..()
 
 /turf/closed/indestructible
 	name = "wall"

@@ -452,10 +452,9 @@
 			gen_secondary.add_load(drain_amount * 0.5)
 
 /obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return prob(20)
 	else
 		if(istype(mover, /obj/projectile))
 			return prob(10)
-		else
-			return !density

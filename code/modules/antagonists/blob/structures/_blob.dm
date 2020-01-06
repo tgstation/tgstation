@@ -68,9 +68,9 @@
 	return atmosblock
 
 /obj/structure/blob/CanPass(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSBLOB))
-		return 1
-	return 0
+		return TRUE
 
 /obj/structure/blob/CanAtmosPass(turf/T)
 	return !atmosblock

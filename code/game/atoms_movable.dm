@@ -649,9 +649,9 @@
 	return FALSE
 
 /atom/movable/CanPass(atom/movable/mover, turf/target)
+	. = ..()
 	if(mover in buckled_mobs)
-		return 1
-	return ..()
+		return TRUE
 
 // called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /atom/movable/proc/on_exit_storage(datum/component/storage/concrete/S)

@@ -98,10 +98,11 @@
 	return
 
 /obj/machinery/door/window/CanPass(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
-		return !density
+		return
 	if(istype(mover, /obj/structure/window))
 		var/obj/structure/window/W = mover
 		if(!valid_window_location(loc, W.ini_dir))
@@ -113,7 +114,7 @@
 	else if(istype(mover, /obj/machinery/door/window) && !valid_window_location(loc, mover.dir))
 		return FALSE
 	else
-		return 1
+		return TRUE
 
 /obj/machinery/door/window/CanAtmosPass(turf/T)
 	if(get_dir(loc, T) == dir)

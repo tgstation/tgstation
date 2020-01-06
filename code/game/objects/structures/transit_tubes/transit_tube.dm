@@ -15,9 +15,9 @@
 	var/const/time_to_unwrench = 2 SECONDS
 
 /obj/structure/transit_tube/CanPass(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return TRUE
-	return !density
 
 /obj/structure/transit_tube/New(loc, newdirection)
 	..(loc)

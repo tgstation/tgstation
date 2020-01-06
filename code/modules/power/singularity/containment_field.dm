@@ -107,9 +107,9 @@
 
 
 /obj/machinery/field/CanPass(atom/movable/mover, turf/target)
+	. = ..()
 	if(hasShocked || isliving(mover) || ismachinery(mover) || isstructure(mover) || ismecha(mover))
 		return FALSE
-	return ..()
 
 /obj/machinery/field/proc/shock(mob/living/user)
 	var/shock_damage = min(rand(30,40),rand(30,40))
