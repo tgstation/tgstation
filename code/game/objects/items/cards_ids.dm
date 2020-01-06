@@ -405,8 +405,8 @@ update_label()
 			if (isnull(input_text))
 				return
 
-			var/t = copytext(sanitize(input_text), 1, 26)
-			if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/dead/new_player/prefrences.dm
+			var/target_name = copytext(sanitize(input_text), 1, 26)
+			if(!target_name || target_name == "Unknown" || target_name == "floor" || target_name == "wall" || target_name == "r-wall") //Same as mob/dead/new_player/preferences.dm
 				if (ishuman(user))
 					var/mob/living/carbon/human/human_agent = user
 
@@ -421,16 +421,17 @@ update_label()
 					alert ("Invalid name.")
 					return
 			else
-				registered_name = t
+				registered_name = target_name
 
-			var/u = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", assignment ? assignment : "Assistant") as text | null),1,MAX_MESSAGE_LEN)
-			if(!u)
+			var/target_occupation = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", assignment ? assignment : "Assistant") as text | null),1,MAX_MESSAGE_LEN)
+			if(!target_occupation)
 				registered_name = ""
 				return
-			assignment = u
+			assignment = target_occupation
 			update_label()
 			forged = TRUE
 			to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
+			log_game("[key_name(user)] has forged [src] with name \"[registered_name]\" and occupation \"[assignment]\".")
 
 
 			// First time use automatically sets the account id to the user.
@@ -451,6 +452,7 @@ update_label()
 			update_label()
 			forged = FALSE
 			to_chat(user, "<span class='notice'>You successfully reset the ID card.</span>")
+			log_game("[key_name(user)] has reset [src] to default name \"[registered_name]\" and occupation \"[assignment]\".")
 			return
 		else if (popup_input == "Change Account ID")
 			set_new_account(user)
