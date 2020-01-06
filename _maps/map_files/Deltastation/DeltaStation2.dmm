@@ -542,9 +542,6 @@
 	dir = 9
 	},
 /obj/structure/cable,
-/obj/machinery/power/terminal{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
 "acu" = (
@@ -570,6 +567,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
 "acF" = (
@@ -97708,9 +97708,6 @@
 	dir = 9
 	},
 /obj/structure/cable,
-/obj/machinery/power/terminal{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
 "dAm" = (
@@ -97733,6 +97730,9 @@
 	dir = 5
 	},
 /obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
 "dAo" = (
