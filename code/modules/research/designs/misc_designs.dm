@@ -97,6 +97,26 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_CARGO
 
+/datum/design/steampunk_suit
+	name = "Rusty Diving Suit"
+	desc = "A bit rusty, but still pretty durable."
+	id = "steampunk_suit"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 8000)
+	build_path = /obj/item/clothing/suit/armor/steampunk
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/steampunk_helmet
+	name = "Rusty Diving Helmet"
+	desc = "A bit rusty, but still pretty durable."
+	id = "steampunk_helmet"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 3000)
+	build_path = /obj/item/clothing/head/helmet/steampunk
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SECURITY
+
 /datum/design/portaseeder
 	name = "Portable Seed Extractor"
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
@@ -275,7 +295,7 @@
 	build_path = /obj/item/tank/internals/plasma/empty
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
-	
+
 /datum/design/id
 	name = "Identification Card"
 	desc = "A card used to provide ID and determine access across the station."
@@ -284,7 +304,7 @@
 	materials = list(/datum/material/iron=200, /datum/material/glass = 100)
 	build_path = /obj/item/card/id
 	category = list("Electronics")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE	
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////

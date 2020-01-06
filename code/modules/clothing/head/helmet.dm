@@ -275,6 +275,15 @@
 	armor = list("melee" = 35, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 10, "bio" = 10, "rad" = 10, "fire" = 40, "acid" = 40)
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR//Can change color and add prefix
 
+/obj/item/clothing/head/helmet/steampunk
+	name = "rusty diving helmet"
+	desc = "Seems to have gone underwater quite a lot. Could probably take quite the beating."
+	icon_state = "steampunk"
+	item_state = "steampunk"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	armor = list("melee" = 40, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 20, "bio" = 10, "rad" = 10, "fire" = 40, "acid" = 40)
+
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
 	desc = "An intimidating tribal helmet, it doesn't look very comfortable."

@@ -277,3 +277,13 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	armor = list("melee" = 25, "bullet" = 20, "laser" = 20, "energy" = 30, "bomb" = 20, "bio" = 50, "rad" = 20, "fire" = -10, "acid" = 50)
+
+/obj/item/clothing/suit/armor/steampunk
+	name = "rusty diving suit"
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	w_class = WEIGHT_CLASS_BULKY
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	icon_state = "steampunk"
+	item_state = "steampunk"
+	desc = "Seems to have gone underwater quite a lot. Could probably take quite the beating."
+	armor = list("melee" = 40, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 20, "bio" = 10, "rad" = 10, "fire" = 40, "acid" = 40)

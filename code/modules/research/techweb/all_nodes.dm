@@ -1067,6 +1067,17 @@
 	hidden = TRUE
 	experimental = TRUE
 
+/datum/techweb_node/steampunk
+	id = "steampunk"
+	display_name = "Granddad's old diving gear"
+	description = "Papa always told me you needed the best equipment to go diving. Too bad diving isn't really a thing in outer-space."
+	prereq_ids = list("base")
+	design_ids = list("steampunk_suit", "steampunk_helmet")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 2500
+	hidden = TRUE
+	experimental = TRUE
+
 //Helpers for debugging/balancing the techweb in its entirety!
 /proc/total_techweb_exports()
 	var/list/datum/techweb_node/processing = list()
