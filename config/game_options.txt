@@ -564,7 +564,7 @@ ROUNDSTART_TRAITS
 MONKEYCAP 64
 
 ## A cap on how many mice can be bred via cheese wedges
-RATCAP 32
+RATCAP 64
 
 ## Enable the capitalist agenda on your server.
 ECONOMY
