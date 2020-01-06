@@ -431,8 +431,7 @@ update_label()
 			update_label()
 			forged = TRUE
 			to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
-			log_game("[key_name(user)] has forged [src] with name \"[registered_name]\" and occupation \"[assignment]\".")
-
+			log_game("[key_name(user)] has forged \the [initial(name)] with name \"[registered_name]\" and occupation \"[assignment]\".")
 
 			// First time use automatically sets the account id to the user.
 			if (first_use && !registered_account)
@@ -449,10 +448,10 @@ update_label()
 		else if (popup_input == "Forge/Reset" && forged)
 			registered_name = initial(registered_name)
 			assignment = initial(assignment)
+			log_game("[key_name(user)] has reset \the [initial(name)] named \"[src]\" to default.")
 			update_label()
 			forged = FALSE
 			to_chat(user, "<span class='notice'>You successfully reset the ID card.</span>")
-			log_game("[key_name(user)] has reset [src] to default name \"[registered_name]\" and occupation \"[assignment]\".")
 			return
 		else if (popup_input == "Change Account ID")
 			set_new_account(user)
