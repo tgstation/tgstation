@@ -2174,7 +2174,7 @@
 /area/security/prison)
 "agO" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -12203,7 +12203,7 @@
 /area/hallway/primary/central)
 "aEZ" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -14432,7 +14432,7 @@
 /area/crew_quarters/cafeteria)
 "aLE" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -14522,9 +14522,23 @@
 /turf/open/floor/plasteel,
 /area/storage/eva)
 "aLU" = (
-/obj/structure/closet/crate/rcd,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = 8
+	},
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/storage/eva)
@@ -19353,7 +19367,7 @@
 /area/janitor)
 "aXQ" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -19911,7 +19925,7 @@
 /area/hydroponics)
 "aYQ" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel,
@@ -21711,7 +21725,7 @@
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/mop,
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/machinery/light_switch{
@@ -24240,7 +24254,7 @@
 "bkm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/effect/turf_decal/tile/green{
@@ -27921,7 +27935,7 @@
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/white,
@@ -29353,7 +29367,7 @@
 	dir = 8
 	},
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -29700,7 +29714,7 @@
 /area/science/explab)
 "bxL" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/dark,
@@ -30217,7 +30231,7 @@
 /area/science/explab)
 "byQ" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -30609,7 +30623,7 @@
 /area/medical/genetics)
 "bzL" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -32783,7 +32797,7 @@
 /area/medical/virology)
 "bEs" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -33550,7 +33564,7 @@
 /area/medical/medbay/central)
 "bFP" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -34643,7 +34657,7 @@
 	pixel_x = 28
 	},
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/effect/turf_decal/tile/green{
@@ -44149,7 +44163,7 @@
 /area/chapel/main/monastery)
 "chu" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -44260,7 +44274,7 @@
 /area/chapel/main/monastery)
 "chU" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel,
@@ -51141,7 +51155,7 @@
 /area/maintenance/department/science)
 "hTl" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 12
 	},
 /obj/structure/mirror{
@@ -51687,7 +51701,7 @@
 /area/space/nearstation)
 "jhD" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -54077,7 +54091,7 @@
 	dir = 4
 	},
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel,
@@ -54593,7 +54607,7 @@
 /area/engine/engineering)
 "pMG" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -56373,7 +56387,7 @@
 /area/engine/engineering)
 "tXn" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/effect/turf_decal/stripes/corner{
