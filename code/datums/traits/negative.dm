@@ -236,7 +236,12 @@
 
 /datum/quirk/clownphobia/add()
 	var/mob/living/carbon/human/H = quirk_holder
-	H.gain_trauma(/datum/brain_trauma/mild/phobia, TRUE, "clowns")
+	H.gain_trauma(/datum/brain_trauma/mild/phobia, TRUE, "clowns", TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/clownphobia/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H)
+		H.cure_trauma_type(/datum/brain_trauma/mild/phobia, "clowns", TRAUMA_RESILIENCE_ABSOLUTE)
 
 
 /datum/quirk/hypersensitive
