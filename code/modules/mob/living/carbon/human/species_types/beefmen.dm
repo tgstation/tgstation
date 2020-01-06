@@ -88,7 +88,6 @@
 
 	// Speak Russian
 	C.grant_language(/datum/language/russian) // Don't remove on loss. You simply know it.
-	C.selected_default_language = /datum/language/russian
 
 	// Be Spooked but Educated
 	//C.gain_trauma(pick(startTraumas))
