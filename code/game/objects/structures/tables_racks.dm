@@ -167,6 +167,9 @@
 	if(istype(I, /obj/item/storage/bag/tray))
 		var/obj/item/storage/bag/tray/T = I
 		if(T.contents.len > 0) // If the tray isn't empty
+			for(var/x in T.contents)
+				var/obj/item/item = x
+				AfterPutItemOnTable(item, user)
 			SEND_SIGNAL(I, COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())
 			user.visible_message("<span class='notice'>[user] empties [I] on [src].</span>")
 			return
@@ -181,10 +184,13 @@
 			//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
 			I.pixel_x = CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
 			I.pixel_y = CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
-			return 1
+			AfterPutItemOnTable(I, user)
+			return TRUE
 	else
 		return ..()
 
+/obj/structure/table/proc/AfterPutItemOnTable(obj/item/I, mob/living/user)
+	return
 
 /obj/structure/table/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -208,6 +214,35 @@
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	buildstack = null //No buildstack, so generate from mat datums
 
+///Table on wheels
+/obj/structure/table/rolling
+	name = "Rolling table"
+	anchored = FALSE
+	smooth = SMOOTH_FALSE
+	canSmoothWith = list()
+	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
+	icon_state = "rollingtable"
+	var/list/attached_items = list()
+
+/obj/structure/table/rolling/AfterPutItemOnTable(obj/item/I, mob/living/user)
+	. = ..()
+	attached_items += I
+	RegisterSignal(I, COMSIG_ITEM_PICKUP, .proc/RemoveItemFromTable) //Listen for the pickup event, unregister on pick-up so we aren't moved
+
+/obj/structure/table/rolling/proc/RemoveItemFromTable(datum/source, mob/user)
+	attached_items -= source
+	UnregisterSignal(source, COMSIG_ITEM_PICKUP)
+
+/obj/structure/table/rolling/Move(atom/newloc, direct, glide_size_override)
+	var/turf/T = get_turf(src)
+	if(!..())
+		return FALSE
+	for(var/mob/M in T.contents)//Kidnap everyone on top
+		M.forceMove(newloc, direct)
+	for(var/x in attached_items)
+		var/atom/movable/AM = x
+		AM.Move(newloc, direct)
+	return TRUE
 
 /*
  * Glass tables
