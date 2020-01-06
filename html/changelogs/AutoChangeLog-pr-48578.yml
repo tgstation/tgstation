@@ -1,0 +1,4 @@
+author: "Vondiech"
+delete-after: True
+changes: 
+  - tweak: "The armory now no longer has 2 air alarms"
