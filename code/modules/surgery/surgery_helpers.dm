@@ -104,8 +104,7 @@
 			if(!close_tool)
 				to_chat(user, "<span class='warning'>You need to equip a cautery in an inactive slot to stop [M]'s surgery!</span>")
 				return
-
-		if((!close_tool || close_tool.tool_behaviour != required_tool_type) && !iscyborg(user)) // don't check tool type on cyborgs
+		else if(!close_tool || close_tool.tool_behaviour != required_tool_type)
 			to_chat(user, "<span class='warning'>You need to hold a [is_robotic ? "screwdriver" : "cautery"] in your inactive hand to stop [M]'s surgery!</span>")
 			return
 
