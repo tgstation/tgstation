@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "PubbyStation mapping fixes. Replaced emp-proof cams in engine room with normal ones, fixed a scrubber, some doubled cables."
