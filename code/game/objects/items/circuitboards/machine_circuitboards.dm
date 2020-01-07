@@ -748,6 +748,10 @@
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stack/sheet/glass = 2)
 
+/obj/item/circuitboard/machine/sleeper/party
+	name = "Party Pod (Machine Board)"
+	build_path = /obj/machinery/sleeper/party
+
 /obj/item/circuitboard/machine/smoke_machine
 	name = "Smoke Machine (Machine Board)"
 	icon_state = "medical"

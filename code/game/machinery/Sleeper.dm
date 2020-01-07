@@ -279,3 +279,23 @@
 
 /obj/machinery/sleeper/old
 	icon_state = "oldpod"
+
+/obj/machinery/sleeper/party
+	name = "party pod"
+	desc = "Sleepers were made illegal in the year 2559, as a result of finding doses of lead acetate in every chemical dosage. This is one of the left-overs, that's been retrofitted to a 'party pod'."
+	icon_state = "partypod"
+	circuit = /obj/item/circuitboard/machine/sleeper/party
+	ui_x = 260
+
+	controls_inside = TRUE
+	possible_chems = list(
+		list(/datum/reagent/consumable/ethanol/beer, /datum/reagent/consumable/laughter),
+		list(/datum/reagent/spraytan),
+		list(/datum/reagent/colorful_reagent),
+		list(/datum/reagent/drug/space_drugs)
+	)//Exclusively uses non-lethal, "fun" chems. At an obvious downside.
+	enter_message = "<span class='notice'><b>Your surrounded by some funky music inside the chamber. You go deaf as you feel waves of krunk vibe within you.</b></span>"
+
+/obj/machinery/sleeper/party/inject_chem(chem, mob/user)
+	. = ..()
+	occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, 4) //You're injecting chemicals into yourself from a recalled, decrepit medical machine. What did you expect?

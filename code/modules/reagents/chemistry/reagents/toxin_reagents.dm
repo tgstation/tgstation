@@ -903,3 +903,12 @@
 		to_chat(M, "<span class='notice'>[tox_message]</span>")
 	. = 1
 	..()
+
+/datum/reagent/toxin/leadacetate
+	name = "Lead Acetate"
+	description = "Used hundreds of years ago as a sweetener, before realizing it was made with poisonious lead."
+	reagent_state = SOLID
+	color = "#2b2b2b" // rgb: 127, 132, 0
+	toxpwr = 0.5
+	taste_mult = 1.3
+	taste_description = "sugary sweetness"
