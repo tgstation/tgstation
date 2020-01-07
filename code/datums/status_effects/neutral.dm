@@ -68,7 +68,7 @@
 
 /datum/status_effect/in_love/tick()
 	if(date)
-		new /obj/effect/temp_visual/love_heart/invisible(get_turf(date), owner)
+		new /obj/effect/temp_visual/love_heart/invisible(date.drop_location(), owner)
 
 /datum/status_effect/throat_soothed
 	id = "throat_soothed"
