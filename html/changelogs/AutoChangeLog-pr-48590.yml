@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Borg shells, mechs and AI cores will now only accept MMI brains in a pristine condition, which means they are active, healthy and are not a product of a suicide."
