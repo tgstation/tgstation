@@ -270,12 +270,10 @@
 					else
 						emote("me", 2, pick(emote_hear))
 
-
-/mob/living/simple_animal/proc/environment_is_safe(datum/gas_mixture/environment, check_temp = FALSE)
+/mob/living/simple_animal/proc/environment_air_is_safe()
 	. = TRUE
 
 	if(pulledby && pulledby.grab_state >= GRAB_KILL && atmos_requirements["min_oxy"])
-		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 		. = FALSE //getting choked
 
 	if(isturf(loc) && isopenturf(loc))
@@ -292,47 +290,30 @@
 			ST.air.garbage_collect()
 
 			if(atmos_requirements["min_oxy"] && oxy < atmos_requirements["min_oxy"])
-				throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 				. = FALSE
 			else if(atmos_requirements["max_oxy"] && oxy > atmos_requirements["max_oxy"])
-				throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy)
 				. = FALSE
 			else if(atmos_requirements["min_tox"] && tox < atmos_requirements["min_tox"])
-				throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
 				. = FALSE
 			else if(atmos_requirements["max_tox"] && tox > atmos_requirements["max_tox"])
-				throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 				. = FALSE
 			else if(atmos_requirements["min_n2"] && n2 < atmos_requirements["min_n2"])
-				throw_alert("not_enough_nitro", /obj/screen/alert/not_enough_nitro)
 				. = FALSE
 			else if(atmos_requirements["max_n2"] && n2 > atmos_requirements["max_n2"])
-				throw_alert("too_much_nitro", /obj/screen/alert/too_much_nitro)
 				. = FALSE
 			else if(atmos_requirements["min_co2"] && co2 < atmos_requirements["min_co2"])
-				throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 				. = FALSE
 			else if(atmos_requirements["max_co2"] && co2 > atmos_requirements["max_co2"])
-				throw_alert("too_much_co2", /obj/screen/alert/too_much_co2)
 				. = FALSE
 		else
-			if(atmos_requirements["min_oxy"])
-				throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
-				. = FALSE
-			else if(atmos_requirements["min_tox"])
-				throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
-				. = FALSE
-			else if(atmos_requirements["min_n2"])
-				throw_alert("not_enough_nitro", /obj/screen/alert/not_enough_nitro)
-				. = FALSE
-			else if(atmos_requirements["min_co2"])
-				throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
+			if(atmos_requirements["min_oxy"] || atmos_requirements["min_tox"] || atmos_requirements["min_n2"] || atmos_requirements["min_co2"])
 				. = FALSE
 
-	if(check_temp)
-		var/areatemp = get_temperature(environment)
-		if((areatemp < minbodytemp) || (areatemp > maxbodytemp))
-			. = FALSE
+/mob/living/simple_animal/proc/environment_temperature_is_safe(datum/gas_mixture/environment)
+	. = TRUE
+	var/areatemp = get_temperature(environment)
+	if((areatemp < minbodytemp) || (areatemp > maxbodytemp))
+		. = FALSE
 
 /mob/living/simple_animal/handle_environment(datum/gas_mixture/environment)
 	var/atom/A = loc
@@ -343,15 +324,15 @@
 			diff = diff / 5
 			adjust_bodytemperature(diff)
 
-	if(!environment_is_safe(environment))
+	if(!environment_air_is_safe())
 		adjustHealth(unsuitable_atmos_damage)
+		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+	else
+		clear_alert("not_enough_oxy")
 
 	handle_temperature_damage()
 
 /mob/living/simple_animal/proc/handle_temperature_damage()
-	if(!unsuitable_atmos_damage)
-		return
-
 	if(bodytemperature < minbodytemp)
 		adjustHealth(unsuitable_atmos_damage)
 		switch(unsuitable_atmos_damage)

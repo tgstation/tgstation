@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(minor_mapping)
 			M = new(proposed_turf)
 		else
 			M.forceMove(proposed_turf)
-		if(M.environment_is_safe())
+		if(M.environment_air_is_safe())
 			num_mice -= 1
 			M = null
 
