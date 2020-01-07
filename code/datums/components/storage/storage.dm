@@ -180,10 +180,11 @@
 		next += slave.parent
 
 /datum/component/storage/proc/on_move()
-	var/atom/A = parent
-	for(var/mob/living/L in can_see_contents())
-		if(!L.CanReach(A))
-			hide_from(L)
+	//var/atom/A = parent
+	//for(var/mob/living/L in can_see_contents())
+	//	if(!L.CanReach(A))
+	//		hide_from(L)
+	close_all()
 
 /datum/component/storage/proc/attack_self(datum/source, mob/M)
 	if(locked)
