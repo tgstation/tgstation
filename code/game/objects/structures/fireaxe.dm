@@ -184,3 +184,7 @@
 
 /obj/structure/fireaxecabinet/AltClick(mob/user)
 	toggle_open()
+
+/obj/structure/fireaxecabinet/attack_hand()
+	toggle_open()
+
