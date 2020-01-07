@@ -2,7 +2,7 @@
 	. = ..()
 	update_turf_movespeed(loc)
 
-/mob/living/CanPass(atom/movable/mover, turf/target)
+/mob/living/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if((mover.pass_flags & PASSMOB))
 		return TRUE

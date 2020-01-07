@@ -164,7 +164,7 @@
 	. = ..()
 	StartBurning()
 
-/obj/structure/bonfire/CanPass(atom/movable/mover, turf/target)
+/obj/structure/bonfire/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
 		return TRUE

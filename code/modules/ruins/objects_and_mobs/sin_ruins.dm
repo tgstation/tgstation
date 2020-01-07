@@ -80,7 +80,7 @@
 	icon = 'icons/mob/blob.dmi'
 	color = rgb(145, 150, 0)
 
-/obj/effect/gluttony/CanPass(atom/movable/mover, turf/target)//So bullets will fly over and stuff.
+/obj/effect/gluttony/CanAllowThrough(atom/movable/mover, turf/target)//So bullets will fly over and stuff.
 	. = ..()
 	if(ishuman(mover))
 		var/mob/living/carbon/human/H = mover

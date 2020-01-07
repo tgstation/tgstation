@@ -53,7 +53,7 @@
 			AM.forceMove(drop_location())
 			do_transform(AM)
 
-/obj/machinery/transformer/CanPass(atom/movable/mover, turf/target)
+/obj/machinery/transformer/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	// Allows items to go through,
 	// to stop them from blocking the conveyor belt.

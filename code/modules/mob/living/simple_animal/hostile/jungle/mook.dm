@@ -33,7 +33,7 @@
 
 	footstep_type = FOOTSTEP_MOB_BAREFOOT
 
-/mob/living/simple_animal/hostile/jungle/mook/CanPass(atom/movable/O)
+/mob/living/simple_animal/hostile/jungle/mook/CanAllowThrough(atom/movable/O)
 	. = ..()
 	if(istype(O, /mob/living/simple_animal/hostile/jungle/mook))
 		var/mob/living/simple_animal/hostile/jungle/mook/M = O

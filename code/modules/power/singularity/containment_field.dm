@@ -106,7 +106,7 @@
 		return
 
 
-/obj/machinery/field/CanPass(atom/movable/mover, turf/target)
+/obj/machinery/field/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(hasShocked || isliving(mover) || ismachinery(mover) || isstructure(mover) || ismecha(mover))
 		return FALSE

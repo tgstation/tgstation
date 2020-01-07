@@ -98,7 +98,7 @@
 	generator = null
 	return ..()
 
-/obj/structure/projected_forcefield/CanPass(atom/movable/mover, turf/target)
+/obj/structure/projected_forcefield/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return TRUE

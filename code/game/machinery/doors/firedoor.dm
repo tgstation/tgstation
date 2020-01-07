@@ -225,7 +225,7 @@
 	opacity = TRUE
 	density = TRUE
 
-/obj/machinery/door/firedoor/border_only/CanPass(atom/movable/mover, turf/target)
+/obj/machinery/door/firedoor/border_only/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return TRUE

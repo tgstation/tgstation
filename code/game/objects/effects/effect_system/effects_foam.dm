@@ -330,7 +330,7 @@
 		for(var/obj/item/Item in O)
 			Item.extinguish()
 
-/obj/structure/foamedmetal/resin/CanPass(atom/movable/mover, turf/target)
+/obj/structure/foamedmetal/resin/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return TRUE

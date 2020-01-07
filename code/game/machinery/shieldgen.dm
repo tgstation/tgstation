@@ -451,7 +451,7 @@
 		if(gen_secondary) //using power may cause us to be destroyed
 			gen_secondary.add_load(drain_amount * 0.5)
 
-/obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target)
+/obj/machinery/shieldwall/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return prob(20)

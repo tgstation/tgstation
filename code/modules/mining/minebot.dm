@@ -132,7 +132,7 @@
 				to_chat(M, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
 		return
 
-/mob/living/simple_animal/hostile/mining_drone/CanPass(atom/movable/O)
+/mob/living/simple_animal/hostile/mining_drone/CanAllowThrough(atom/movable/O)
 	. = ..()
 	if(istype(O, /obj/projectile/kinetic))
 		var/obj/projectile/kinetic/K = O

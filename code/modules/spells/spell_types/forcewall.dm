@@ -30,7 +30,7 @@
 	. = ..()
 	wizard = summoner
 
-/obj/effect/forcefield/wizard/CanPass(atom/movable/mover, turf/target)
+/obj/effect/forcefield/wizard/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(mover == wizard)
 		return TRUE

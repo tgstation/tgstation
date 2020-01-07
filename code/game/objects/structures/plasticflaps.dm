@@ -69,7 +69,7 @@
 		return CanAStarPass(ID, to_dir, M.pulling)
 	return TRUE //diseases, stings, etc can pass
 
-/obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
+/obj/structure/plasticflaps/CanAllowThrough(atom/movable/A, turf/T)
 	. = ..()
 
 	if(istype(A) && (A.pass_flags & PASSGLASS))

@@ -50,7 +50,7 @@
 /obj/structure/windoor_assembly/update_icon()
 	icon_state = "[facing]_[secure ? "secure_" : ""]windoor_assembly[state]"
 
-/obj/structure/windoor_assembly/CanPass(atom/movable/mover, turf/target)
+/obj/structure/windoor_assembly/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return TRUE

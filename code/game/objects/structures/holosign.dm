@@ -56,7 +56,7 @@
 	max_integrity = 20
 	var/allow_walk = TRUE //can we pass through it on walk intent
 
-/obj/structure/holosign/barrier/CanPass(atom/movable/mover, turf/target)
+/obj/structure/holosign/barrier/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(.)
 		return
@@ -75,7 +75,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "holosign"
 
-/obj/structure/holosign/barrier/wetsign/CanPass(atom/movable/mover, turf/target)
+/obj/structure/holosign/barrier/wetsign/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(iscarbon(mover))
 		var/mob/living/carbon/C = mover
@@ -131,7 +131,7 @@
 	. = ..()
 	. += "<span class='notice'>The biometric scanners are <b>[force_allaccess ? "off" : "on"]</b>.</span>"
 
-/obj/structure/holosign/barrier/medical/CanPass(atom/movable/mover, turf/target)
+/obj/structure/holosign/barrier/medical/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(force_allaccess)
 		return TRUE
