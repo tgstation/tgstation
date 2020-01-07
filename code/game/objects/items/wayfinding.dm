@@ -6,7 +6,7 @@
 	density = FALSE
 	layer = HIGH_OBJ_LAYER
 	var/list/obj/item/pinpointer/wayfinding/pinpointers = list()
-	var/spawn_cooldown = 1200 //deciseconds per person to spawn another pinpointer
+	var/spawn_cooldown = 6000 //deciseconds per person to spawn another pinpointer
 
 /obj/machinery/pinpointer_dispenser/attack_hand(mob/living/carbon/user)
 	if(world.time < pinpointers[user.real_name])
