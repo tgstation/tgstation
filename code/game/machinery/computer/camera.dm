@@ -70,6 +70,7 @@
 		user.unset_machine()
 		return
 
+	check_bodycamera_unlock(user) ///Fulpstation Sec Bodycamera PR - Surrealistik Oct 2019; allows access to the body camera network with Sec access.
 	var/list/camera_list = get_available_cameras()
 	if(!(user in watchers))
 		for(var/Num in camera_list)
@@ -85,6 +86,7 @@
 	use_camera_console(user)
 
 /obj/machinery/computer/security/proc/use_camera_console(mob/user)
+	check_bodycamera_unlock(user) ///Fulpstation Sec Bodycamera PR - Surrealistik Oct 2019; allows access to the body camera network with Sec access.
 	var/list/camera_list = get_available_cameras()
 	var/t = input(user, "Which camera should you change to?") as null|anything in camera_list
 	if(user.machine != src) //while we were choosing we got disconnected from our computer or are using another machine.
