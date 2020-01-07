@@ -15,3 +15,12 @@
 	cost = 60
 	cant_discount = TRUE
 	illegal_tech = FALSE
+
+/datum/uplink_item/role_restricted/susp_bowler
+	name = "Suspicious Bowler"
+	desc = "A strange, deep black bowler with an extremely sharp, weighted brim. The material used to make the brim of the bowler allows for it to pierce armor, often embeding within the designated target."
+	item = /obj/item/clothing/head/susp_bowler
+	cost = 5
+	cant_discount = FALSE
+	illegal_tech = TRUE
+	restricted_roles = list("Bartender")

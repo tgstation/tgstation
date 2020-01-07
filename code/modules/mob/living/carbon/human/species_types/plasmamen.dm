@@ -21,6 +21,7 @@
 	liked_food = VEGETABLES
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	outfit_important_for_life = /datum/outfit/plasmaman
+	species_language_holder = /datum/language_holder/skeleton
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
@@ -93,6 +94,9 @@
 
 		if("Medical Doctor")
 			O = new /datum/outfit/plasmaman/medical
+
+		if("Paramedic")
+			O = new /datum/outfit/plasmaman/paramedic
 
 		if("Chemist")
 			O = new /datum/outfit/plasmaman/chemist
@@ -174,4 +178,4 @@
 					H.emote("sigh")
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
 		return TRUE
-		
+

@@ -178,17 +178,38 @@
 	reload()
 
 /obj/machinery/bsa/full/proc/fire(mob/user, turf/bullseye)
+	reload()
+
 	var/turf/point = get_front_turf()
-	for(var/turf/T in getline(get_step(point,dir),get_target_turf()))
-		T.ex_act(EXPLODE_DEVASTATE)
-	point.Beam(get_target_turf(),icon_state="bsa_beam",time=50,maxdistance = world.maxx) //ZZZAP
+	var/turf/target = get_target_turf()
+	var/atom/movable/blocker
+	for(var/T in getline(get_step(point, dir), target))
+		var/turf/tile = T
+		if(SEND_SIGNAL(tile, COMSIG_ATOM_BSA_BEAM) & COMSIG_ATOM_BLOCKS_BSA_BEAM)
+			blocker = tile
+		else
+			for(var/AM in tile)
+				var/atom/movable/stuff = AM
+				if(SEND_SIGNAL(stuff, COMSIG_ATOM_BSA_BEAM) & COMSIG_ATOM_BLOCKS_BSA_BEAM)
+					blocker = stuff
+					break
+		if(blocker)
+			target = tile
+			break
+		else
+			tile.ex_act(EXPLODE_DEVASTATE) //also fucks everything else on the turf
+
+	point.Beam(target, icon_state = "bsa_beam", time = 50, maxdistance = world.maxx) //ZZZAP
 	new /obj/effect/temp_visual/bsa_splash(point, dir)
 
-	message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)].")
-	log_game("[key_name(user)] has launched an artillery strike targeting [AREACOORD(bullseye)].")
-	explosion(bullseye,ex_power,ex_power*2,ex_power*4)
+	if(!blocker)
+		message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)].")
+		log_game("[key_name(user)] has launched an artillery strike targeting [AREACOORD(bullseye)].")
+		explosion(bullseye, ex_power, ex_power*2, ex_power*4)
+	else
+		message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)] but it was blocked by [blocker] at [ADMIN_VERBOSEJMP(target)].")
+		log_game("[key_name(user)] has launched an artillery strike targeting [AREACOORD(bullseye)] but it was blocked by [blocker] at [AREACOORD(target)].")
 
-	reload()
 
 /obj/machinery/bsa/full/proc/reload()
 	ready = FALSE
@@ -279,8 +300,9 @@
 /obj/machinery/computer/bsa_control/proc/get_impact_turf()
 	if(istype(target, /area))
 		return pick(get_area_turfs(target))
-	else if(istype(target, /obj/item/gps))
-		return get_turf(target)
+	else if(istype(target, /datum/component/gps))
+		var/datum/component/gps/G = target
+		return get_turf(G.parent)
 
 /obj/machinery/computer/bsa_control/proc/fire(mob/user)
 	if(cannon.stat)

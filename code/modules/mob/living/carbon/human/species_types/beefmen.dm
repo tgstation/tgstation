@@ -88,7 +88,6 @@
 
 	// Speak Russian
 	C.grant_language(/datum/language/russian) // Don't remove on loss. You simply know it.
-	C.selected_default_language = /datum/language/russian
 
 	// Be Spooked but Educated
 	//C.gain_trauma(pick(startTraumas))
@@ -211,7 +210,7 @@
 		else
 			newSash = new /obj/item/clothing/under/bodysash/civilian()
 
-	H.equip_to_slot_or_del(newSash, SLOT_W_UNIFORM) // equip_to_slot_or_del
+	H.equip_to_slot_or_del(newSash, ITEM_SLOT_OCLOTHING) // equip_to_slot_or_del
 
 	return ..()
 

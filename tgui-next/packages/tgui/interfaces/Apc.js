@@ -1,12 +1,10 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
-import { Button, LabeledList, NoticeBox, ProgressBar, Section, Box } from '../components';
+import { useBackend } from '../backend';
+import { Box, Button, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 export const Apc = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const locked = data.locked && !data.siliconUser;
   const powerStatusMap = {
     2: {
@@ -47,8 +45,10 @@ export const Apc = props => {
       action: 'occupy',
     },
   };
-  const externalPowerStatus = powerStatusMap[data.externalPower] || powerStatusMap[0];
-  const chargingStatus = powerStatusMap[data.chargingStatus] || powerStatusMap[0];
+  const externalPowerStatus = powerStatusMap[data.externalPower]
+    || powerStatusMap[0];
+  const chargingStatus = powerStatusMap[data.chargingStatus]
+    || powerStatusMap[0];
   const channelArray = data.powerChannels || [];
   const malfStatus = malfMap[data.malfStatus] || malfMap[0];
   const adjustedCellChange = data.powerCellStatus / 100;
@@ -66,7 +66,7 @@ export const Apc = props => {
         <Button
           icon="sync"
           content="Reboot Now"
-          onClick={() => act(ref, 'reboot')} />
+          onClick={() => act('reboot')} />
       </NoticeBox>
     );
   }
@@ -76,7 +76,7 @@ export const Apc = props => {
       <InterfaceLockNoticeBox
         siliconUser={data.siliconUser}
         locked={data.locked}
-        onLockStatusChange={() => act(ref, 'lock')} />
+        onLockStatusChange={() => act('lock')} />
       <Section title="Power Status">
         <LabeledList>
           <LabeledList.Item
@@ -88,7 +88,7 @@ export const Apc = props => {
                 content={data.isOperating ? 'On' : 'Off'}
                 selected={data.isOperating && !locked}
                 disabled={locked}
-                onClick={() => act(ref, 'breaker')} />
+                onClick={() => act('breaker')} />
             )}>
             [ {externalPowerStatus.externalPowerText} ]
           </LabeledList.Item>
@@ -105,7 +105,7 @@ export const Apc = props => {
                 icon={data.chargeMode ? 'sync' : 'close'}
                 content={data.chargeMode ? 'Auto' : 'Off'}
                 disabled={locked}
-                onClick={() => act(ref, 'charge')} />
+                onClick={() => act('charge')} />
             )}>
             [ {chargingStatus.chargingText} ]
           </LabeledList.Item>
@@ -132,19 +132,19 @@ export const Apc = props => {
                         channel.status === 1 || channel.status === 3
                       )}
                       disabled={locked}
-                      onClick={() => act(ref, 'channel', topicParams.auto)} />
+                      onClick={() => act('channel', topicParams.auto)} />
                     <Button
                       icon="power-off"
                       content="On"
                       selected={!locked && channel.status === 2}
                       disabled={locked}
-                      onClick={() => act(ref, 'channel', topicParams.on)} />
+                      onClick={() => act('channel', topicParams.on)} />
                     <Button
                       icon="times"
                       content="Off"
                       selected={!locked && channel.status === 0}
                       disabled={locked}
-                      onClick={() => act(ref, 'channel', topicParams.off)} />
+                      onClick={() => act('channel', topicParams.off)} />
                   </Fragment>
                 )}>
                 {channel.powerLoad}
@@ -165,12 +165,12 @@ export const Apc = props => {
                 icon={malfStatus.icon}
                 content={malfStatus.content}
                 color="bad"
-                onClick={() => act(ref, malfStatus.action)} />
+                onClick={() => act(malfStatus.action)} />
             )}
             <Button
               icon="lightbulb-o"
               content="Overload"
-              onClick={() => act(ref, 'overload')} />
+              onClick={() => act('overload')} />
           </Fragment>
         )}>
         <LabeledList.Item
@@ -180,7 +180,7 @@ export const Apc = props => {
               icon={data.coverLocked ? 'lock' : 'unlock'}
               content={data.coverLocked ? 'Engaged' : 'Disengaged'}
               disabled={locked}
-              onClick={() => act(ref, 'cover')} />
+              onClick={() => act('cover')} />
           )} />
         <LabeledList.Item
           label="Emergency Lighting"
@@ -189,7 +189,7 @@ export const Apc = props => {
               icon="lightbulb-o"
               content={data.emergencyLights ? 'Enabled' : 'Disabled'}
               disabled={locked}
-              onClick={() => act(ref, 'emergency_lighting')} />
+              onClick={() => act('emergency_lighting')} />
           )} />
         <LabeledList.Item
           label="Night Shift Lighting"
@@ -198,7 +198,7 @@ export const Apc = props => {
               icon="lightbulb-o"
               content={data.nightshiftLights ? 'Enabled' : 'Disabled'}
               disabled={locked}
-              onClick={() => act(ref, 'toggle_nightshift')} />
+              onClick={() => act('toggle_nightshift')} />
           )} />
       </Section>
     </Fragment>

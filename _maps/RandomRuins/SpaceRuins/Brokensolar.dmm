@@ -1,0 +1,41 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/template_noop,/area/space/nearstation)
+"c" = (/obj/structure/lattice/catwalk,/turf/template_noop,/area/space/nearstation)
+"d" = (/obj/structure/lattice,/turf/template_noop,/area/space/nearstation)
+"e" = (/obj/item/stack/rods{amount = 60},/turf/template_noop,/area/template_noop)
+"f" = (/obj/structure/fluff/broken_flooring{dir = 4; icon_state = "pile"},/turf/template_noop,/area/template_noop)
+"g" = (/obj/machinery/power/solar,/turf/open/floor/plasteel/airless/solarpanel,/area/space/nearstation)
+"h" = (/obj/structure/fluff/broken_flooring{dir = 4; icon_state = "singular"},/turf/template_noop,/area/template_noop)
+"i" = (/obj/machinery/power/solar_control,/turf/open/floor/plating/airless,/area/space/nearstation)
+"j" = (/obj/structure/lattice/catwalk,/obj/structure/cable,/turf/open/space,/area/space/nearstation)
+"k" = (/obj/structure/lattice/catwalk,/turf/open/space,/area/space/nearstation)
+"l" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating/airless,/area/space/nearstation)
+"m" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/space/nearstation)
+"n" = (/turf/open/floor/plating/airless,/area/space/nearstation)
+"o" = (/obj/structure/cable,/turf/open/floor/plating/airless,/area/space/nearstation)
+"p" = (/obj/structure/fluff/broken_flooring{icon_state = "plating"},/turf/template_noop,/area/space/nearstation)
+"q" = (/obj/machinery/door/airlock/external{name = "Solar Maintenance"; req_access_txt = "10; 13"},/obj/effect/mapping_helpers/airlock/abandoned,/turf/open/floor/plating/airless,/area/space/nearstation)
+"r" = (/obj/structure/fluff/broken_flooring{dir = 4; icon_state = "plating"},/turf/template_noop,/area/space/nearstation)
+"s" = (/obj/structure/rack,/obj/item/clothing/mask/gas,/obj/structure/sign/warning/vacuum/external{pixel_y = 32},/obj/item/clothing/gloves/color/yellow,/turf/open/floor/plating/airless,/area/space/nearstation)
+"t" = (/turf/closed/wall/r_wall,/area/space/nearstation)
+"w" = (/obj/structure/chair/stool{pixel_y = 8},/turf/open/floor/plating/airless,/area/space/nearstation)
+"x" = (/obj/structure/sign/warning/electricshock,/turf/closed/wall/r_wall,/area/space/nearstation)
+"y" = (/obj/structure/girder/reinforced,/turf/open/floor/plating/airless,/area/space/nearstation)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaa
+aaaabcaaaaaaaaa
+aaaadcaeaaaaaaa
+alaadcaaaaaaaaa
+alaaacaaaadaaaa
+aaafaammgdgddda
+aaaaaaajkjjjjaa
+aaanolkagdgggea
+aaapqljaadadaaa
+amrapsaaaaaaaaa
+atiraataaaaaaaa
+atwnaxyaahaaaaa
+aaanaaaaaaaaaaa
+aaaoaaaaaaaaaaa
+aaaaaaaaaaaaaaa
+"}

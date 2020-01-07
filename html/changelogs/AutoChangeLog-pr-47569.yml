@@ -1,6 +1,0 @@
-author: "Couls"
-delete-after: True
-changes: 
-  - rscadd: "new button that truly toggles move intent"
-  - bugfix: "hotkeys using Alt, Shift and Ctrl now work correctly"
-  - bugfix: "pressing h will allow you to stop pulling now"

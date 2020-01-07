@@ -118,8 +118,13 @@ export class NumberInput extends Component {
       else if (this.inputRef) {
         const input = this.inputRef.current;
         input.value = internalValue;
-        input.focus();
-        input.select();
+        // IE8: Dies when trying to focus a hidden element
+        // (Error: Object does not support this action)
+        try {
+          input.focus();
+          input.select();
+        }
+        catch {}
       }
     };
   }
@@ -139,7 +144,10 @@ export class NumberInput extends Component {
       unit,
       minValue,
       maxValue,
+      height,
       width,
+      lineHeight,
+      fontSize,
       format,
       onChange,
       onDrag,
@@ -148,6 +156,7 @@ export class NumberInput extends Component {
     if (dragging || suppressingFlicker) {
       displayValue = intermediateValue;
     }
+    // IE8: Use an "unselectable" prop because "user-select" doesn't work.
     const renderContentElement = value => (
       <div
         className="NumberInput__content"
@@ -172,6 +181,9 @@ export class NumberInput extends Component {
           className,
         ])}
         minWidth={width}
+        minHeight={height}
+        lineHeight={lineHeight}
+        fontSize={fontSize}
         onMouseDown={this.handleDragStart}>
         <div className="NumberInput__barContainer">
           <div
@@ -188,6 +200,9 @@ export class NumberInput extends Component {
           className="NumberInput__input"
           style={{
             display: !editing ? 'none' : undefined,
+            height: height,
+            'line-height': lineHeight,
+            'font-size': fontSize,
           }}
           onBlur={e => {
             if (!editing) {

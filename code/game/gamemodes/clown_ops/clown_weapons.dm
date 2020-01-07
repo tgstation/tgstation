@@ -213,7 +213,7 @@
 		if(!istype(M.wear_mask, /obj/item/clothing/mask/gas/clown_hat) && !istype(M.wear_mask, /obj/item/clothing/mask/gas/mime) )
 			if(!M.wear_mask || M.dropItemToGround(M.wear_mask))
 				var/obj/item/clothing/mask/fakemoustache/sticky/the_stash = new /obj/item/clothing/mask/fakemoustache/sticky()
-				M.equip_to_slot_or_del(the_stash, SLOT_WEAR_MASK, TRUE, TRUE, TRUE, TRUE)
+				M.equip_to_slot_or_del(the_stash, ITEM_SLOT_MASK, TRUE, TRUE, TRUE, TRUE)
 
 /obj/item/clothing/mask/fakemoustache/sticky
 	var/unstick_time = 600
@@ -271,16 +271,7 @@
 	operation_req_access = list(ACCESS_SYNDICATE)
 	internals_req_access = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/honker/dark
-	max_equip = 3
-
-/obj/mecha/combat/honker/dark/GrantActions(mob/living/user, human_occupant = 0)
-	..()
-	thrusters_action.Grant(user, src)
-
-
-/obj/mecha/combat/honker/dark/RemoveActions(mob/living/user, human_occupant = 0)
-	..()
-	thrusters_action.Remove(user)
+	max_equip = 4
 
 /obj/mecha/combat/honker/dark/add_cell(obj/item/stock_parts/cell/C)
 	if(C)
@@ -291,7 +282,9 @@
 
 /obj/mecha/combat/honker/dark/loaded/Initialize()
 	. = ..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/honker()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/thrusters/ion(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/honker()
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/bombanana()//Needed more offensive weapons.
 	ME.attach(src)

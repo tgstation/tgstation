@@ -1,6 +1,7 @@
-import { classes, pureComponentHooks, isFalsy } from 'common/react';
+import { classes, isFalsy, pureComponentHooks } from 'common/react';
 import { createVNode } from 'inferno';
 import { ChildFlags, VNodeFlags } from 'inferno-vnode-flags';
+import { CSS_COLORS } from '../constants';
 
 const UNIT_PX = 6;
 
@@ -16,9 +17,10 @@ export const unit = value => {
   }
 };
 
-const isColorCode = str => typeof str === 'string' && (
-  str.startsWith('#') || str.startsWith('rgb')
-);
+const isColorCode = str => !isColorClass(str);
+
+const isColorClass = str => typeof str === 'string'
+  && CSS_COLORS.includes(str);
 
 const mapRawPropTo = attrName => (style, value) => {
   if (!isFalsy(value)) {
@@ -62,13 +64,16 @@ const styleMapperByPropName = {
   minHeight: mapUnitPropTo('min-height'),
   maxHeight: mapUnitPropTo('max-height'),
   fontSize: mapUnitPropTo('font-size'),
+  fontFamily: mapRawPropTo('font-family'),
   lineHeight: mapUnitPropTo('line-height'),
   opacity: mapRawPropTo('opacity'),
   textAlign: mapRawPropTo('text-align'),
+  verticalAlign: mapRawPropTo('vertical-align'),
   // Boolean props
   inline: mapBooleanPropTo('display', 'inline-block'),
   bold: mapBooleanPropTo('font-weight', 'bold'),
   italic: mapBooleanPropTo('font-style', 'italic'),
+  nowrap: mapBooleanPropTo('white-space', 'nowrap'),
   // Margins
   m: mapDirectionalUnitPropTo('margin', ['top', 'bottom', 'left', 'right']),
   mx: mapDirectionalUnitPropTo('margin', ['left', 'right']),
@@ -81,6 +86,16 @@ const styleMapperByPropName = {
   color: mapColorPropTo('color'),
   textColor: mapColorPropTo('color'),
   backgroundColor: mapColorPropTo('background-color'),
+  // Utility props
+  fillPositionedParent: (style, value) => {
+    if (value) {
+      style['position'] = 'absolute';
+      style['top'] = 0;
+      style['bottom'] = 0;
+      style['left'] = 0;
+      style['right'] = 0;
+    }
+  },
 };
 
 export const computeBoxProps = props => {
@@ -122,6 +137,7 @@ export const Box = props => {
     ...rest
   } = props;
   const color = props.textColor || props.color;
+  const backgroundColor = props.backgroundColor;
   // Render props
   if (typeof children === 'function') {
     return children(computeBoxProps(props));
@@ -133,7 +149,8 @@ export const Box = props => {
     as,
     classes([
       className,
-      color && !isColorCode(color) && 'color-' + color,
+      isColorClass(color) && 'color-' + color,
+      isColorClass(backgroundColor) && 'color-bg-' + backgroundColor,
     ]),
     content || children,
     ChildFlags.UnknownChildren,
@@ -141,3 +158,22 @@ export const Box = props => {
 };
 
 Box.defaultHooks = pureComponentHooks;
+
+/**
+ * A hack to force certain things (like tables) to position correctly
+ * inside bugged things, like Flex in Internet Explorer.
+ */
+const ForcedBox = props => {
+  const { children, ...rest } = props;
+  return (
+    <Box position="relative" {...rest}>
+      <Box fillPositionedParent>
+        {children}
+      </Box>
+    </Box>
+  );
+};
+
+ForcedBox.defaultHooks = pureComponentHooks;
+
+Box.Forced = ForcedBox;

@@ -187,10 +187,10 @@
 	results = list(/datum/reagent/medicine/regen_jelly = 2)
 	required_reagents = list(/datum/reagent/medicine/omnizine = 1, /datum/reagent/toxin/slimejelly = 1)
 
-/datum/chemical_reaction/corazone
-	name = "Corazone"
-	id = /datum/reagent/medicine/corazone
-	results = list(/datum/reagent/medicine/corazone = 3)
+/datum/chemical_reaction/higadrite
+	name = "Higadrite"
+	id = /datum/reagent/medicine/higadrite
+	results = list(/datum/reagent/medicine/higadrite = 3)
 	required_reagents = list(/datum/reagent/phenol = 2, /datum/reagent/lithium = 1)
 
 /datum/chemical_reaction/morphine
@@ -230,9 +230,9 @@
 /datum/chemical_reaction/granibitaluri
 	name = "Granibitaluri"
 	id = /datum/reagent/medicine/granibitaluri
-	results = list(/datum/reagent/medicine/granibitaluri = 1)
-	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/space_cleaner/sterilizine = 1) //haha guys totally not some sort of saline reference!
-	required_temp = 373
+	results = list(/datum/reagent/medicine/granibitaluri = 3)
+	required_reagents = list(/datum/reagent/acetone = 1, /datum/reagent/phenol = 1, /datum/reagent/nitrogen = 1)
+	required_catalysts = list(/datum/reagent/iron = 5)
 
 /datum/chemical_reaction/medsuture
 	name = "Medicated Suture"
@@ -244,4 +244,6 @@
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/medical/suture/medicated(location)
 	return
+
+
 

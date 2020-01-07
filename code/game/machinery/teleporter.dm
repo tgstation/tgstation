@@ -85,7 +85,7 @@
 			calibrated = 0
 	return
 
-/obj/machinery/teleport/hub/update_icon()
+/obj/machinery/teleport/hub/update_icon_state()
 	if(panel_open)
 		icon_state = "tele-o"
 	else if(is_ready())
@@ -215,7 +215,7 @@
 	if(teleporter_hub)
 		teleporter_hub.update_icon()
 
-/obj/machinery/teleport/station/update_icon()
+/obj/machinery/teleport/station/update_icon_state()
 	if(panel_open)
 		icon_state = "controller-o"
 	else if(stat & (BROKEN|NOPOWER))

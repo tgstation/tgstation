@@ -204,10 +204,10 @@
 						for(var/datum/data/crime/c in active2.fields["citation"])
 							var/owed = c.fine - c.paid
 							dat += {"<tr><td>[c.crimeName]</td>
-							<td>$[c.fine]</td><td>[c.author]</td>
+							<td>[c.fine] cr</td><td>[c.author]</td>
 							<td>[c.time]</td>"}
 							if(owed > 0)
-								dat += "<td>$[owed] <A href='?src=[REF(src)];choice=Pay;field=citation_pay;cdataid=[c.dataId]'>\[Pay\]</A></td></td>"
+								dat += "<td>[owed] cr <A href='?src=[REF(src)];choice=Pay;field=citation_pay;cdataid=[c.dataId]'>\[Pay\]</A></td></td>"
 							else
 								dat += "<td>All Paid Off</td>"
 							dat += {"<td>
@@ -499,9 +499,10 @@ What a mess.*/
 //RECORD DELETE
 			if("Delete All Records")
 				temp = ""
-				temp += "Are you sure you wish to delete all Security records?<br>"
+				temp = delete_allrecords_feedback() //FULPSTATION IMPROVED RECORD SECURITY PR -Surrealistik Oct 2019
+				/*temp += "Are you sure you wish to delete all Security records?<br>"
 				temp += "<a href='?src=[REF(src)];choice=Purge All Records'>Yes</a><br>"
-				temp += "<a href='?src=[REF(src)];choice=Clear Screen'>No</a>"
+				temp += "<a href='?src=[REF(src)];choice=Clear Screen'>No</a>*/
 
 			if("Purge All Records")
 				investigate_log("[key_name(usr)] has purged all the security records.", INVESTIGATE_RECORDS)
@@ -524,15 +525,17 @@ What a mess.*/
 
 			if("Delete Record (ALL)")
 				if(active1)
-					temp = "<h5>Are you sure you wish to delete the record (ALL)?</h5>"
+					delete_record_feedback("ALL") //FULPSTATION IMPROVED RECORD SECURITY PR -Surrealistik Oct 2019
+					/*temp = "<h5>Are you sure you wish to delete the record (ALL)?</h5>"
 					temp += "<a href='?src=[REF(src)];choice=Delete Record (ALL) Execute'>Yes</a><br>"
-					temp += "<a href='?src=[REF(src)];choice=Clear Screen'>No</a>"
+					temp += "<a href='?src=[REF(src)];choice=Clear Screen'>No</a>"*/
 
 			if("Delete Record (Security)")
 				if(active2)
-					temp = "<h5>Are you sure you wish to delete the record (Security Portion Only)?</h5>"
+					delete_record_feedback() //FULPSTATION IMPROVED RECORD SECURITY PR -Surrealistik Oct 2019
+					/*temp = "<h5>Are you sure you wish to delete the record (Security Portion Only)?</h5>"
 					temp += "<a href='?src=[REF(src)];choice=Delete Record (Security) Execute'>Yes</a><br>"
-					temp += "<a href='?src=[REF(src)];choice=Clear Screen'>No</a>"
+					temp += "<a href='?src=[REF(src)];choice=Clear Screen'>No</a>"*/
 
 			if("Delete Entry")
 				if((istype(active2, /datum/data/record) && active2.fields[text("com_[]", href_list["del_c"])]))
@@ -608,6 +611,10 @@ What a mess.*/
 				switch(href_list["field"])
 					if("name")
 						if(istype(active1, /datum/data/record) || istype(active2, /datum/data/record))
+							if(!check_input_clearance(usr)) //FULPSTATION IMPROVED RECORD SECURITY PR -Surrealistik Oct 2019
+								alert(usr, "[SEC_RECORD_BAD_CLEARANCE]")
+								return
+
 							var/t1 = copytext(sanitize(input("Please input name:", "Secure. records", active1.fields["name"], null)  as text),1,MAX_MESSAGE_LEN)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
@@ -617,6 +624,10 @@ What a mess.*/
 								active2.fields["name"] = t1
 					if("id")
 						if(istype(active2, /datum/data/record) || istype(active1, /datum/data/record))
+							if(!check_input_clearance(usr)) //FULPSTATION IMPROVED RECORD SECURITY PR -Surrealistik Oct 2019
+								alert(usr, "[SEC_RECORD_BAD_CLEARANCE]")
+								return
+
 							var/t1 = stripped_input(usr, "Please input id:", "Secure. records", active1.fields["id"], null)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
@@ -626,12 +637,20 @@ What a mess.*/
 								active2.fields["id"] = t1
 					if("fingerprint")
 						if(istype(active1, /datum/data/record))
+							if(!check_input_clearance(usr)) //FULPSTATION IMPROVED RECORD SECURITY PR -Surrealistik Oct 2019
+								alert(usr, "[SEC_RECORD_BAD_CLEARANCE]")
+								return
+
 							var/t1 = stripped_input(usr, "Please input fingerprint hash:", "Secure. records", active1.fields["fingerprint"], null)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["fingerprint"] = t1
 					if("gender")
 						if(istype(active1, /datum/data/record))
+							if(!check_input_clearance(usr)) //FULPSTATION IMPROVED RECORD SECURITY PR -Surrealistik Oct 2019
+								alert(usr, "[SEC_RECORD_BAD_CLEARANCE]")
+								return
+
 							if(active1.fields["gender"] == "Male")
 								active1.fields["gender"] = "Female"
 							else if(active1.fields["gender"] == "Female")
@@ -640,6 +659,10 @@ What a mess.*/
 								active1.fields["gender"] = "Male"
 					if("age")
 						if(istype(active1, /datum/data/record))
+							if(!check_input_clearance(usr)) //FULPSTATION IMPROVED RECORD SECURITY PR -Surrealistik Oct 2019
+								alert(usr, "[SEC_RECORD_BAD_CLEARANCE]")
+								return
+
 							var/t1 = input("Please input age:", "Secure. records", active1.fields["age"], null) as num|null
 
 							if (!t1)
@@ -650,6 +673,10 @@ What a mess.*/
 							active1.fields["age"] = t1
 					if("species")
 						if(istype(active1, /datum/data/record))
+							if(!check_input_clearance(usr)) //FULPSTATION IMPROVED RECORD SECURITY PR -Surrealistik Oct 2019
+								alert(usr, "[SEC_RECORD_BAD_CLEARANCE]")
+								return
+
 							var/t1 = input("Select a species", "Species Selection") as null|anything in GLOB.roundstart_races
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return

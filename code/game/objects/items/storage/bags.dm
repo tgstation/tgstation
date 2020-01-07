@@ -100,7 +100,7 @@
 	desc = "This little bugger can be used to store and transport ores."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "satchel"
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKET
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_NORMAL
 	component_type = /datum/component/storage/concrete/stack
 	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
@@ -238,7 +238,10 @@
 	. = ..()
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
-	STR.set_holdable(list(/obj/item/stack/sheet),
+	STR.set_holdable(list(
+			/obj/item/stack/sheet,
+			/obj/item/stack/tile/bronze
+			),
 		list(
 			/obj/item/stack/sheet/mineral/sandstone,
 			/obj/item/stack/sheet/mineral/wood
@@ -365,7 +368,7 @@
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/reagent_containers/glass/bottle,
-		/obj/item/reagent_containers/glass/waterbottle,
+		/obj/item/reagent_containers/food/drinks/waterbottle,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/dropper,

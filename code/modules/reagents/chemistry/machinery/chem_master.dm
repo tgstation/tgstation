@@ -271,7 +271,7 @@
 				"Maximum [vol_each_max] units per item.",
 				"How many units to fill?",
 				vol_each_max))
-		vol_each = CLAMP(round(vol_each), 0, vol_each_max)
+		vol_each = CLAMP(vol_each, 0, vol_each_max)
 		if(vol_each <= 0)
 			return FALSE
 		// Get item name
@@ -319,8 +319,76 @@
 				P = new/obj/item/reagent_containers/pill/patch(drop_location())
 				P.name = trim("[name] patch")
 				adjust_item_drop_location(P)
+				reagents.trans_to(P,vol_each, transfered_by = usr)
+			. = TRUE
+
+		//SalChems medipen patch, allows for medipens to be crafted in the chem_master, but only designated ones on the list//FULP
+		if("createMedipen")	//FULP
+			var/approved_reagent_list = list("Bicaridine", "Kelotane", "Anti-Toxin", "Tricordrazine", "Epinephrine", "Salbutamol", "Salicyclic Acid", "Pentetic Acid", "Oxandrolone", "Atropine") //FULP
+			var/many = params["many"]	//FULP
+			if(reagents.total_volume == 0)	//FULP
+				return	//FULP
+			var/amount_full = 0	//FULP
+			amount = 0	//FULP
+			if(reagents.get_master_reagent_name() in approved_reagent_list)	//FULP
+				var/firstReagent = reagents.get_master_reagent_id()	//FULP
+				if(text2num(many))	//FULP
+					amount_full = round((reagents.get_reagent_amount(reagents.get_master_reagent_id())) / 10)	//FULP
+					amount = CLAMP(round(input(usr, "Medipens only contain 10u", "How many medipens?", amount) as num|null), 0, 10)	//FULP
+					if(amount > amount_full)	//FULP
+						to_chat(usr, "<span class='notice'>You have selected an amount larger than the possible maximum of [amount_full], creating [amount_full] instead...")	//FULP
+						amount = amount_full	//FULP
+				else	//FULP
+					amount_full = 1	//FULP
+					amount = 1	//FULP
+				name = stripped_input(usr, "Name:","Name your stabby-stick!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)	//FULP
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))	//FULP
+					return	//FULP
+				var/obj/item/reagent_containers/hypospray/medipen/P	//FULP
+				for(var/i = 0; i < amount; i++)	//FULP
+					if(reagents.get_master_reagent_name() == "Bicaridine")	//FULP
+						P = new/obj/item/reagent_containers/hypospray/medipen/bicaridine(drop_location())	//FULP
+					else if(reagents.get_master_reagent_name() == "Kelotane")	//FULP
+						P = new/obj/item/reagent_containers/hypospray/medipen/kelotane(drop_location())	//FULP
+					else if(reagents.get_master_reagent_name() == "Anti-Toxin")	//FULP
+						P = new/obj/item/reagent_containers/hypospray/medipen/antitoxin(drop_location())	//FULP
+					else if(reagents.get_master_reagent_name() == "Tricordrazine")	//FULP
+						P = new/obj/item/reagent_containers/hypospray/medipen/tricordrazine(drop_location())	//FULP
+					else if(reagents.get_master_reagent_name() == "Epinephrine")//Runs the same as the else	//FULP
+						P = new/obj/item/reagent_containers/hypospray/medipen(drop_location())	//FULP
+					else if(reagents.get_master_reagent_name() == "Salbutamol")	//FULP
+						P = new/obj/item/reagent_containers/hypospray/medipen/salbutamol(drop_location())	//FULP
+					else if(reagents.get_master_reagent_name() == "Salicyclic Acid")	//FULP
+						P = new/obj/item/reagent_containers/hypospray/medipen/salacid(drop_location())	//FULP
+					else if(reagents.get_master_reagent_name() == "Pentetic Acid")	//FULP
+						P = new/obj/item/reagent_containers/hypospray/medipen/penacid(drop_location())	//FULP
+					else if(reagents.get_master_reagent_name() == "Oxandrolone")	//FULP
+						P = new/obj/item/reagent_containers/hypospray/medipen/oxandrolone(drop_location())	//FULP
+					else if(reagents.get_master_reagent_name() == "Atropine")	//FULP
+						P = new/obj/item/reagent_containers/hypospray/medipen/atropine(drop_location())	//FULP
+					else	//FULP
+						P = new/obj/item/reagent_containers/hypospray/medipen(drop_location())	//FULP
+					P.name = trim("[name] medipen")	//FULP
+					adjust_item_drop_location(P)	//FULP
+					reagents.trans_to(P, 10, transfered_by = usr)	//FULP
+					reagents.remove_reagent(firstReagent, 10)	//FULP
+			else	//FULP
+				to_chat(usr, "<span class='notice'> This reagent {[reagents.get_master_reagent_name()]} is not Federation-Approved. </span>")	//FULP
+				return	//FULP
+			. = TRUE	//FULP
+
+		if("createBottle") // FULP  >>>>
+			//var/many = params["many"]
+			if(reagents.total_volume == 0)
+				return
+
+			if(condi)
+				name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+					return
+				var/obj/item/reagent_containers/food/condiment/P = new(drop_location())
 				reagents.trans_to(P, vol_each, transfered_by = usr)
-			return TRUE
+			return TRUE // FULP <<<<
 		if(item_type == "bottle")
 			var/obj/item/reagent_containers/glass/bottle/P
 			for(var/i = 0; i < amount; i++)

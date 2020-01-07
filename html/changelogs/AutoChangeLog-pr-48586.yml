@@ -1,0 +1,4 @@
+author: "floyd"
+delete-after: True
+changes: 
+  - bugfix: "Everything made from glass in the game has a little more tegridy and doesnt break from a single punch"

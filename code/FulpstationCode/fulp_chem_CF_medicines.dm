@@ -1,4 +1,4 @@
-////Fulp T5 Trekkie Chems and Comebacks Rework
+////Fulp SalChems (T5 Trekkie Chems and Comebacks Rework)
 //@Author: Saliferous
 
 //**BRUTE**
@@ -58,14 +58,11 @@
 	required_temp = 400
 	mix_message = "The solution burns into a black, chalky substance.... oh it's just charcoal."
 
-/*
 /datum/chemical_reaction/synthflesh
 	name = "Synthflesh"
 	id = /datum/reagent/medicine/CF/synthflesh
 	results = list(/datum/reagent/medicine/CF/synthflesh = 3)
-	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/libital = 1)
-*/
-
+	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/medicine/CF/styptic = 1, /datum/reagent/medicine/CF/silver_sulfadiazine = 1)
 
 /datum/chemical_reaction/styptic
 	name = "Styptic Powder"

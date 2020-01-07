@@ -1,7 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes: 
-  - code_imp: "Colorful reagent and quantum barber thing also have random colors on init.
-spriteadd: Adds unused syndie pill sprite, can't be selected in chemmaster but it's there if you need it for stuffs."
-  - balance: "Regenerative Jelly dyes your hair purple when it enters your bloodstream.
-spriteadd: Also tweaked some existing reagent colors around, like uranium going from silver to dark green."

@@ -143,6 +143,56 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "The silky, smokey whiskey goodness inside the glass makes the drink look very classy."
 	shot_glass_icon_state = "shotglassbrown"
 
+/datum/reagent/consumable/ethanol/whiskey/kong
+	name = "Kong"
+	description = "Makes You Go Ape!&#174;"
+	color = "#332100" // rgb: 51, 33, 0
+	addiction_threshold = 15
+	taste_description = "the grip of a giant ape"
+	glass_name = "glass of Kong"
+	glass_desc = "Makes You Go Ape!&#174;"
+
+/datum/reagent/consumable/ethanol/whiskey/kong/addiction_act_stage1(mob/living/M)
+	if(prob(5))
+		to_chat(M, "<span class='notice'>You've made so many mistakes.</span>")
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "depression_minimal", /datum/mood_event/depression_minimal)
+	..()
+
+/datum/reagent/consumable/ethanol/whiskey/kong/addiction_act_stage2(mob/living/M)
+	if(prob(5))
+		to_chat(M, "<span class='notice'>No matter what you do, people will always get hurt.</span>")
+	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "depression_minimal", /datum/mood_event/depression_minimal)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "depression_mild", /datum/mood_event/depression_mild)
+	..()
+
+/datum/reagent/consumable/ethanol/whiskey/kong/addiction_act_stage3(mob/living/M)
+	if(prob(5))
+		to_chat(M, "<span class='notice'>You've lost so many people.</span>")
+	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "depression_mild", /datum/mood_event/depression_mild)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "depression_moderate", /datum/mood_event/depression_moderate)
+	..()
+
+/datum/reagent/consumable/ethanol/whiskey/kong/addiction_act_stage4(mob/living/M)
+	if(prob(5))
+		to_chat(M, "<span class='notice'>Just lie down and die.</span>")
+	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "depression_moderate", /datum/mood_event/depression_moderate)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "depression_severe", /datum/mood_event/depression_severe)
+	..()
+
+/datum/reagent/consumable/ethanol/whiskey/candycorn
+	name = "candy corn liquor"
+	description = "Like they drank in 2D speakeasies."
+	color = "#ccb800" // rgb: 204, 184, 0
+	taste_description = "pancake syrup"
+	glass_name = "glass of candy corn liquor"
+	glass_desc = "Good for your Imagination."
+	var/hal_amt = 4
+
+/datum/reagent/consumable/ethanol/whiskey/candycorn/on_mob_life(mob/living/carbon/M)
+	if(prob(10))
+		M.hallucination += hal_amt //conscious dreamers can be treasurers to their own currency
+	..()
+
 /datum/reagent/consumable/ethanol/thirteenloko
 	name = "Thirteen Loko"
 	description = "A potent mixture of caffeine and alcohol."
@@ -692,7 +742,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/moonshine
 	name = "Moonshine"
 	description = "You've really hit rock bottom now... your liver packed its bags and left last night."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha) (like water)
 	boozepwr = 95
 	taste_description = "bitterness"
 	glass_icon_state = "glass_clear"
@@ -1692,6 +1742,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "mojito"
 	glass_name = "Mojito"
 	glass_desc = "A drink that looks as refreshing as it tastes."
+
+/datum/reagent/consumable/ethanol/moscow_mule
+	name = "Moscow Mule"
+	description = "A chilly drink that reminds you of the Derelict."
+	color = "#EEF1AA"
+	boozepwr = 30
+	quality = DRINK_GOOD
+	taste_description = "refreshing spiciness"
+	glass_icon_state = "moscow_mule"
+	glass_name = "Moscow Mule"
+	glass_desc = "A chilly drink that reminds you of the Derelict."
 
 /datum/reagent/consumable/ethanol/fernet
 	name = "Fernet"
