@@ -86,7 +86,7 @@
 				visible_message("<span class='warning'>[src] carefully eats the cheese, hiding it from the [cap] mice on the station!</span>")
 				qdel(cheese)
 				return
-			var/mob/living/newmouse = new /mob/living/simple_animal/mouse(loc, TRUE, src)
+			var/mob/living/newmouse = new /mob/living/simple_animal/mouse(loc)
 			SSmobs.cheeserats += newmouse
 			visible_message("<span class='notice'>[src] nibbles through the [cheese], attracting another mouse!</span>")
 			qdel(cheese)
