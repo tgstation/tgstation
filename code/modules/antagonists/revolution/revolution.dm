@@ -155,6 +155,14 @@
 	var/give_flash = FALSE
 	var/give_hud = TRUE
 
+/datum/antagonist/rev/head/on_removal()
+	if(give_hud)
+		var/mob/living/carbon/C = owner.current
+		var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/S = C.getorganslot(ORGAN_SLOT_HUD)
+		if(S)
+			S.Remove(C)
+	return ..()
+
 /datum/antagonist/rev/head/antag_listing_name()
 	return ..() + "(Leader)"
 
@@ -227,27 +235,27 @@
 		. = ..()
 
 /datum/antagonist/rev/head/equip_rev()
-	var/mob/living/carbon/H = owner.current
-	if(!ishuman(H) && !ismonkey(H))
+	var/mob/living/carbon/C = owner.current
+	if(!ishuman(C) && !ismonkey(C))
 		return
 
 	if(give_flash)
-		var/obj/item/assembly/flash/T = new(H)
+		var/obj/item/assembly/flash/T = new(C)
 		var/list/slots = list (
 			"backpack" = ITEM_SLOT_BACKPACK,
 			"left pocket" = ITEM_SLOT_LPOCKET,
 			"right pocket" = ITEM_SLOT_RPOCKET
 		)
-		var/where = H.equip_in_one_of_slots(T, slots)
+		var/where = C.equip_in_one_of_slots(T, slots)
 		if (!where)
-			to_chat(H, "The Syndicate were unfortunately unable to get you a flash.")
+			to_chat(C, "The Syndicate were unfortunately unable to get you a flash.")
 		else
-			to_chat(H, "The flash in your [where] will help you to persuade the crew to join your cause.")
+			to_chat(C, "The flash in your [where] will help you to persuade the crew to join your cause.")
 
 	if(give_hud)
-		var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/S = new(H)
-		S.Insert(H, special = FALSE, drop_if_replaced = FALSE)
-		to_chat(H, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
+		var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/S = new()
+		S.Insert(C)
+		to_chat(C, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
 
 /datum/team/revolution
 	name = "Revolution"
