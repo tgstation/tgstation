@@ -230,3 +230,140 @@
 
 	var/obj/item/bodypart/BP = pick(parts)
 	BP.dismember()
+
+/datum/mutation/human/tongue_spike
+	name = "Tongue Spike"
+	desc = "Allows a creature to voluntary shoot their tongue out...?"
+	quality = POSITIVE
+	text_gain_indication = "<span class='notice'>Your feel like you can throw your voice.</span>"
+	instability = 15
+	power = /obj/effect/proc_holder/spell/self/tongue_spike
+
+	energy_coeff = 1
+	synchronizer_coeff = 1
+
+/obj/effect/proc_holder/spell/self/tongue_spike
+	name = "Launch spike"
+	desc = "Shoot your tongue out in the direction you're facing, embedding it for a fairly large amount of damage."
+	clothes_req = FALSE
+	human_req = FALSE
+	charge_max = 100
+	action_icon = 'icons/mob/actions/actions_genetic.dmi'
+	action_icon_state = "spike"
+	var/spike_path = /obj/item/hardened_spike
+
+/obj/effect/proc_holder/spell/self/tongue_spike/cast(mob/user = usr)
+	if(!iscarbon(user))
+		return
+
+	var/mob/living/carbon/C = user
+	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
+		return
+	var/obj/item/organ/tongue/tongue
+	for(var/org in C.internal_organs)
+		if(istype(org, /obj/item/organ/tongue))
+			tongue = org
+			break
+
+	if(!tongue)
+		to_chat(C, "<span class='notice'>You don't have a tongue to shoot!</span>")
+		return
+	
+	tongue.Remove(C, special = TRUE)
+	var/obj/item/hardened_spike/spike = new spike_path(get_turf(C), C)
+	tongue.forceMove(spike)
+	spike.throw_at(get_edge_target_turf(C,C.dir), 14, 4, C)
+
+/obj/item/hardened_spike
+	name = "biomass spike"
+	desc = "Hardened biomass, shaped into a spike. Very pointy!"
+	icon_state = "tonguespike"
+	force = 2
+	throwforce = 15 //15 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = i didnt do the math
+	throw_speed = 4
+	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 100, "embedded_fall_chance" = 0, "embedded_ignore_throwspeed_threshold" = TRUE)
+	w_class = WEIGHT_CLASS_SMALL
+	sharpness = IS_SHARP
+	custom_materials = list(/datum/material/biomass = 500)
+	var/mob/living/carbon/human/fired_by
+
+/obj/item/hardened_spike/Initialize(mapload, firedby)
+	. = ..()
+	fired_by = firedby
+	addtimer(CALLBACK(src, .proc/checkembedded), 5 SECONDS)
+
+/obj/item/hardened_spike/proc/checkembedded()
+	if(!istype(loc, /obj/item/bodypart))
+		unembedded()
+
+/obj/item/hardened_spike/unembedded()
+	var/turf/T = get_turf(src)
+	visible_message("<span class='warning'>[src] cracks and twists, changing shape!</span>")
+	for(var/i in contents)
+		var/obj/o = i
+		o.forceMove(T)
+	qdel(src)
+
+/datum/mutation/human/tongue_spike/chem
+	desc = "Allows a creature to voluntary shoot their tongue out as biomass, allowing a long range transfer of chemicals."
+	quality = POSITIVE
+	text_gain_indication = "<span class='notice'>Your feel like you can really connect with people by throwing your voice.</span>"
+	instability = 15
+	power = /obj/effect/proc_holder/spell/self/tongue_spike/chem
+
+	energy_coeff = 1
+	synchronizer_coeff = 1
+
+/obj/effect/proc_holder/spell/self/tongue_spike/chem
+	name = "Launch chem spike"
+	desc = "Shoot your tongue out in the direction you're facing, embedding it for a very small amount of damage. While the other person has the spike embedded, you can transfer your chemicals to them."
+	action_icon_state = "spikechem"
+	spike_path = /obj/item/hardened_spike/chem
+
+/obj/item/hardened_spike/chem
+	name = "chem spike"
+	desc = "Hardened biomass, shaped into... something."
+	icon_state = "tonguespikechem"
+	throwforce = 2 //2 + 2 (WEIGHT_CLASS_SMALL) * 0 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = i didnt do the math again but very low or smthin
+	embedding = list("embedded_pain_multiplier" = 0, "embed_chance" = 100, "embedded_fall_chance" = 0, "embedded_pain_chance" = 0, "embedded_ignore_throwspeed_threshold" = TRUE) //never hurts once it's in you
+	var/datum/action/innate/send_chems/chems
+
+/obj/item/hardened_spike/chem/embedded(mob/living/carbon/human/embedded_mob)
+	chems = new
+	chems.transfered = embedded_mob
+	spike.spike = src
+	to_chat(fired_by, "<span class='notice'>Link established! Use the \"Transfer Chemicals\" ability to send your chemicals to the linked target!")
+	chems.Grant(fired_by)
+
+/obj/item/hardened_spike/chem/unembedded()
+	to_chat(fired_by, "<span class='warning'>Link lost!")
+	..()
+
+/datum/action/innate/send_chems
+	icon_icon = 'icons/mob/actions/actions_genetic.dmi'
+	background_icon_state = "bg_spell"
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "spikechemswap"
+	name = "Transfer Chemicals"
+	desc = "Purge all of the chemicals into you, sending it to the person who has the chemical spike embedded into you."
+	var/obj/item/hardened_spike/chem/spike
+	var/mob/living/carbon/human/transfered
+
+/datum/action/innate/send_chems/Activate()
+	if(!ishuman(transfered) || !ishuman(owner))
+		return
+	var/mob/living/carbon/human/transferer = owner
+
+	to_chat(transfered, "<span class='warning'>You feel a tiny prick!</span>")
+	transferer.reagents.trans_to(transfered, transferer.reagents.total_volume, 1, 1, 0, transfered_by = transferer)
+
+	var/obj/item/bodypart/L = spike.loc
+
+	L.embedded_objects -= spike
+	//this is where it would deal damage, if it transfers chems it removes itself so no damage
+	spike.forceMove(get_turf(L))
+	spike.unembedded()
+	usr.visible_message("<span class='notice'>[spike] falls out of [transfered]!</span>")
+	if(!has_embedded_objects())
+		clear_alert("embeddedobject")
+		SEND_SIGNAL(usr, COMSIG_CLEAR_MOOD_EVENT, "embedded")
