@@ -228,7 +228,7 @@
 
 /datum/reagent/consumable/frostoil
 	name = "Frost Oil"
-	description = "A special oil that noticably chills the body. Extracted from Icepeppers and slimes."
+	description = "A special oil that noticeably chills the body. Extracted from chilly peppers and slimes."
 	color = "#8BA6E9" // rgb: 139, 166, 233
 	taste_description = "mint"
 
@@ -299,7 +299,7 @@
 	if(method == INGEST)
 		if(!holder.has_reagent(/datum/reagent/consumable/milk))
 			if(prob(15))
-				to_chat(M, "<span class='danger'>[pick("Your head pounds.", "Your mouth feels like its on fire.", "You feel dizzy.")]</span>")
+				to_chat(M, "<span class='danger'>[pick("Your head pounds.", "Your mouth feels like it's on fire.", "You feel dizzy.")]</span>")
 			if(prob(10))
 				victim.blur_eyes(1)
 			if(prob(10))
@@ -718,7 +718,7 @@
 	name = "Peptides"
 	color = "#BBD4D9"
 	taste_description = "mint frosting"
-	description = "These restorative peptides not only speed up wound healing, but are nutrious as well!"
+	description = "These restorative peptides not only speed up wound healing, but are nutritious as well!"
 	nutriment_factor = 10 * REAGENTS_METABOLISM // 33% less than nutriment to reduce weight gain
 	brute_heal = 3
 	burn_heal = 1
@@ -750,7 +750,7 @@
 
 /datum/reagent/consumable/bbqsauce
 	name = "BBQ Sauce"
-	description = "Sweet, Smokey, Savory, and gets everywhere. Perfect for Grilling."
+	description = "Sweet, smoky, savory, and gets everywhere. Perfect for grilling."
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#78280A" // rgb: 120 40, 10
 	taste_mult = 2.5 //sugar's 1.5, capsacin's 1.5, so a good middle ground.
