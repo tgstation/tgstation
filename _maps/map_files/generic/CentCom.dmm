@@ -7883,11 +7883,12 @@
 "rB" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/fueltank,
+/obj/item/weldingtool/experimental,
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/fueltank,
-/obj/item/weldingtool/experimental,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "rC" = (

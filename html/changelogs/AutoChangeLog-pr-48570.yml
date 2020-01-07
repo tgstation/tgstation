@@ -1,6 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Floodlights can no longer be run in wireless power mode."
-  - bugfix: "Floodlights now accept light tubes from light replacers."
-  - bugfix: "Floodlights now only requires a single wrenching after construction to connect."
