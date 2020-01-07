@@ -113,9 +113,10 @@ There is no point for a testament, but maybe a confession is appropriate. I've n
 	roundstart = FALSE
 	death = FALSE
 	random = TRUE
+	mob_name = "Syndicate engineer"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
-	flavour_text = "<span class='big bold'>Welcome, syndicate engineer,</span><b> You have been charged by your superiors to repair a derelict station and ensure it can support human life. You're pretty sure nobody will disturb you here, yet you can't shake the feeling this job will be like no other <b>Your superiors are watching you closely, <font size=4>DO NOT</font> leave the station lest you disappoint your employer.!</b>"
+	flavour_text = "<span class='big bold'>Welcome, syndicate engineer,</span><b> You have been charged by your superiors to repair a derelict station and ensure it can support human life. You're pretty sure nobody will disturb you here, yet you can't shake the feeling this job will be like no other <b>Your superiors are watching you closely, <font size=4>DO NOT</font> leave the station lest you disappoint your employer!</b>"
 	outfit = /datum/outfit/syndicate_engineer
 	assignedrole = "Syndicate Engineer"
 
