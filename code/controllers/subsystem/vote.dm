@@ -74,14 +74,16 @@ SUBSYSTEM_DEF(vote)
 			else if(mode == "map")
 				for (var/non_voter_ckey in non_voters)
 					var/client/C = non_voters[non_voter_ckey]
-					if(C.prefs.preferred_map && choices[C.prefs.preferred_map]) //No votes if the map isnt in the vote.
-						var/preferred_map = C.prefs.preferred_map
-						choices[preferred_map] += 1
-						greatest_votes = max(greatest_votes, choices[preferred_map])
-					else if(config.defaultmap && choices[config.defaultmap]) //No votes if the map isnt in the vote.
-						var/default_map = config.defaultmap.map_name
-						choices[default_map] += 1
-						greatest_votes = max(greatest_votes, choices[default_map])
+					if(C.prefs.preferred_map)
+						if(choices[C.prefs.preferred_map]) //No votes if the map isnt in the vote.
+							var/preferred_map = C.prefs.preferred_map
+							choices[preferred_map] += 1
+							greatest_votes = max(greatest_votes, choices[preferred_map])
+					else if(config.defaultmap)
+						if(choices[config.defaultmap]) //No votes if the map isnt in the vote.
+							var/default_map = config.defaultmap.map_name
+							choices[default_map] += 1
+							greatest_votes = max(greatest_votes, choices[default_map])
 	//get all options with that many votes and return them in a list
 	. = list()
 	if(greatest_votes)
@@ -163,6 +165,9 @@ SUBSYSTEM_DEF(vote)
 	return FALSE
 
 /datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
+	if(!Master.current_runlevel) //Server is still intializing.
+		to_chat(usr, "<span class='warning'>Cannot start vote, server is not done initializing.</span>")
+		return FALSE
 	var/admin = FALSE
 	var/ckey = ckey(initiator_key)
 	if(GLOB.admin_datums[ckey])
@@ -192,13 +197,7 @@ SUBSYSTEM_DEF(vote)
 					return FALSE
 				for(var/map in config.maplist)
 					var/datum/map_config/VM = config.maplist[map]
-					var/run = 0
-					if(VM.map_name == SSmapping.config.map_name)
-						run++
-					for(var/name in SSpersistence.saved_maps)
-						if(VM.map_name == name)
-							run++
-					if(run >= 2 || !VM.votable)	//If run twice in the last three (including current) as of time of writing, disable map for voting.
+					if(!VM.votable || (VM.map_name in SSpersistence.blocked_maps))
 						continue
 					choices.Add(VM.map_name)
 			if("custom")
