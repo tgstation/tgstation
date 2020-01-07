@@ -284,8 +284,10 @@
 	name = "party pod"
 	desc = "Sleepers were made illegal in the year 2559, as a result of finding doses of lead acetate in every chemical dosage. This is one of the left-overs, that's been retrofitted to a 'party pod'."
 	icon_state = "partypod"
+	idle_power_usage = 3000
 	circuit = /obj/item/circuitboard/machine/sleeper/party
 	ui_x = 260
+	ui_y = 375
 
 	controls_inside = TRUE
 	possible_chems = list(
