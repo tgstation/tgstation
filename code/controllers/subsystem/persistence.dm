@@ -128,7 +128,7 @@ SUBSYSTEM_DEF(persistence)
 		for(var/name in SSpersistence.saved_maps)
 			if(VM.map_name == name)
 				run++
-		if(run >= 2) //If run twice in the last five (including current) rounds as of time of writing, disable map for voting and rotation.
+		if(run >= 2) //If run twice in the last KEEP_ROUNDS_MAP + 1 (including current) rounds, disable map for voting and rotation.
 			blocked_maps += VM.map_name
 
 /datum/controller/subsystem/persistence/proc/LoadAntagReputation()
