@@ -95,16 +95,47 @@
 // except it actually ASKS THE DEAD (wooooo)
 
 /obj/item/toy/eightball/haunted
-	shake_time = 150
-	cooldown_time = 1800
+	shake_time = 30 SECONDS
+	cooldown_time = 3 MINUTES
 	flags_1 = HEAR_1
 	var/last_message
 	var/selected_message
-	var/list/votes
+	//these kind of store the same thing but one is easier to work with.
+	var/list/votes = list()
+	var/list/voted = list()
+	var/static/list/haunted_answers = list(
+		"yes" = list(
+			"It is certain",
+			"It is decidedly so",
+			"Without a doubt",
+			"Yes definitely",
+			"You may rely on it",
+			"As I see it, yes",
+			"Most likely",
+			"Outlook good",
+			"Yes",
+			"Signs point to yes"
+		),
+		"maybe" = list(
+			"Reply hazy try again",
+			"Ask again later",
+			"Better not tell you now",
+			"Cannot predict now",
+			"Concentrate and ask again"
+		),
+		"no" = list(
+			"Don't count on it",
+			"My reply is no",
+			"My sources say no",
+			"Outlook not so good",
+			"Very doubtful"
+		)
+	)
 
 /obj/item/toy/eightball/haunted/Initialize(mapload)
 	. = ..()
-	votes = list()
+	for (var/answer in haunted_answers)
+		votes[answer] = 0
 	GLOB.poi_list |= src
 
 /obj/item/toy/eightball/haunted/Destroy()
@@ -137,38 +168,31 @@
 		if(isobserver(usr))
 			interact(usr)
 
-/obj/item/toy/eightball/haunted/proc/get_vote_tallies()
-	var/list/answers = list()
-	for(var/ckey in votes)
-		var/selected = votes[ckey]
-		if(selected in answers)
-			answers[selected]++
-		else
-			answers[selected] = 1
-
-	return answers
-
-
 /obj/item/toy/eightball/haunted/get_answer()
-	if(!votes.len)
-		return pick(possible_answers)
+	var/top_amount = 0
+	var/top_vote
 
-	var/list/tallied_votes = get_vote_tallies()
+	for(var/vote in votes)
+		var/amount_of_votes = length(votes[vote])
+		if(amount_of_votes > top_amount)
+			top_vote = vote
+			top_amount = amount_of_votes
+		//If one option actually has votes and there's a tie, pick between them 50/50
+		else if(top_amount && amount_of_votes == top_amount && prob(50))
+			top_vote = vote
+			top_amount = amount_of_votes
 
-	// I miss python sorting, then I wouldn't have to muck about with
-	// all this
-	var/most_popular_answer
-	var/most_amount = 0
-	// yes, if there is a tie, there is an arbitary decision
-	// but we never said the spirit world was fair
-	for(var/A in tallied_votes)
-		var/amount = tallied_votes[A]
-		if(amount > most_amount)
-			most_popular_answer = A
+	if(isnull(top_vote))
+		top_vote = pick(votes)
 
-	return most_popular_answer
+	for(var/vote in votes)
+		votes[vote] = 0
 
-/obj/item/toy/eightball/haunted/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=0, datum/tgui/master_ui=null, datum/ui_state/state = GLOB.observer_state)
+	voted.Cut()
+
+	return top_vote
+
+/obj/item/toy/eightball/haunted/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=0, datum/tgui/master_ui=null, datum/ui_state/state = GLOB.always_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -179,21 +203,13 @@
 	var/list/data = list()
 	data["shaking"] = shaking
 	data["question"] = selected_message
-	var/list/tallied_votes = get_vote_tallies()
 
 	data["answers"] = list()
-
-	for(var/pa in possible_answers)
+	for(var/pa in haunted_answers)
 		var/list/L = list()
 		L["answer"] = pa
-		var/amount = 0
-		if(pa in tallied_votes)
-			amount = tallied_votes[pa]
-		L["amount"] = amount
-		var/selected = FALSE
-		if(votes[user.ckey] == pa)
-			selected = TRUE
-		L["selected"] = selected
+		L["amount"] = votes[pa]
+		L["selected"] = voted[user.ckey]
 
 		data["answers"] += list(L)
 	return data
@@ -206,8 +222,11 @@
 	switch(action)
 		if("vote")
 			var/selected_answer = params["answer"]
-			if(!(selected_answer in possible_answers))
+			if(!(selected_answer in haunted_answers))
+				return
+			if(user.ckey in voted)
 				return
 			else
-				votes[user.ckey] = selected_answer
+				votes[selected_answer] += 1
+				voted[user.ckey] = selected_answer
 				. = TRUE

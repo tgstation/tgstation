@@ -8,7 +8,10 @@ import { AtmosControlConsole } from './interfaces/AtmosControlConsole';
 import { AtmosFilter } from './interfaces/AtmosFilter';
 import { AtmosMixer } from './interfaces/AtmosMixer';
 import { AtmosPump } from './interfaces/AtmosPump';
+import { BankMachine } from './interfaces/BankMachine';
+import { BlackmarketUplink } from './interfaces/BlackmarketUplink';
 import { BluespaceArtillery } from './interfaces/BluespaceArtillery';
+import { Bepis } from './interfaces/Bepis';
 import { BorgPanel } from './interfaces/BorgPanel';
 import { BrigTimer } from './interfaces/BrigTimer';
 import { Canister } from './interfaces/Canister';
@@ -22,6 +25,7 @@ import { ChemFilter } from './interfaces/ChemFilter';
 import { ChemHeater } from './interfaces/ChemHeater';
 import { ChemMaster } from './interfaces/ChemMaster';
 import { ChemPress } from './interfaces/ChemPress';
+import { ChemReactionChamber } from './interfaces/ChemReactionChamber';
 import { ChemSplitter } from './interfaces/ChemSplitter';
 import { ChemSynthesizer } from './interfaces/ChemSynthesizer';
 import { CodexGigas } from './interfaces/CodexGigas';
@@ -29,31 +33,62 @@ import { ComputerFabricator } from './interfaces/ComputerFabricator';
 import { Crayon } from './interfaces/Crayon';
 import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
+import { DecalPainter } from './interfaces/DecalPainter';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { DnaVault } from './interfaces/DnaVault';
+import { EightBallVote } from './interfaces/EightBallVote';
+import { EmergencyShuttleConsole } from './interfaces/EmergencyShuttleConsole';
 import { EngravedMessage } from './interfaces/EngravedMessage';
 import { Gps } from './interfaces/Gps';
+import { GravityGenerator } from './interfaces/GravityGenerator';
+import { GulagTeleporterConsole } from './interfaces/GulagTeleporterConsole';
+import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
 import { Holodeck } from './interfaces/Holodeck';
+import { ImplantChair } from './interfaces/ImplantChair';
+import { Intellicard } from './interfaces/Intellicard';
+import { KeycardAuth } from './interfaces/KeycardAuth';
+import { LaborClaimConsole } from './interfaces/LaborClaimConsole';
 import { LanguageMenu } from './interfaces/LanguageMenu';
+import { LaunchpadConsole, LaunchpadRemote } from './interfaces/Launchpad';
+import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
+import { Mule } from './interfaces/Mule';
+import { NaniteChamberControl } from './interfaces/NaniteChamberControl';
+import { NaniteCloudControl } from './interfaces/NaniteCloudControl';
+import { NaniteProgramHub } from './interfaces/NaniteProgramHub';
+import { NaniteProgrammer } from './interfaces/NaniteProgrammer';
+import { NaniteRemote } from './interfaces/NaniteRemote';
+import { NotificationPreferences } from './interfaces/NotificationPreferences';
+import { NtnetRelay } from './interfaces/NtnetRelay';
+import { NtosArcade } from './interfaces/NtosArcade';
+import { NtosConfiguration } from './interfaces/NtosConfiguration';
 import { NtosMain } from './interfaces/NtosMain';
 import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
 import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
 import { NtosWrapper } from './interfaces/NtosWrapper';
+import { NuclearBomb } from './interfaces/NuclearBomb';
 import { OperatingComputer } from './interfaces/OperatingComputer';
+import { OreBox } from './interfaces/OreBox';
 import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
+import { Pandemic } from './interfaces/Pandemic';
 import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { PortableGenerator } from './interfaces/PortableGenerator';
+import { PortablePump, PortableScrubber } from './interfaces/PortableAtmos';
 import { PowerMonitor } from './interfaces/PowerMonitor';
 import { Radio } from './interfaces/Radio';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
+import { SatelliteControl } from './interfaces/SatelliteControl';
+import { ScannerGate } from './interfaces/ScannerGate';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
+import { Sleeper } from './interfaces/Sleeper';
+import { SlimeBodySwapper } from './interfaces/SlimeBodySwapper';
 import { SmartVend } from './interfaces/SmartVend';
 import { Smes } from './interfaces/Smes';
-import { SpawnersMenu } from './interfaces/SpawnersMenu';
+import { SmokeMachine } from './interfaces/SmokeMachine';
 import { SolarControl } from './interfaces/SolarControl';
 import { SpaceHeater } from './interfaces/SpaceHeater';
+import { SpawnersMenu } from './interfaces/SpawnersMenu';
 import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
 import { Tank } from './interfaces/Tank';
@@ -62,7 +97,9 @@ import { ThermoMachine } from './interfaces/ThermoMachine';
 import { TurbineComputer } from './interfaces/TurbineComputer';
 import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
+import { Vending } from './interfaces/Vending';
 import { Wires } from './interfaces/Wires';
+import { SyndContractor } from './interfaces/SyndContractor';
 
 const ROUTES = {
   achievements: {
@@ -104,6 +141,19 @@ const ROUTES = {
   atmos_pump: {
     component: () => AtmosPump,
     scrollable: false,
+  },
+  bepis: {
+    component: () => Bepis,
+    scrollable: false,
+  },
+  bank_machine: {
+    component: () => BankMachine,
+    scrollable: false,
+  },
+  blackmarket_uplink: {
+    component: () => BlackmarketUplink,
+    scrollable: true,
+    theme: 'hackerman',
   },
   borgopanel: {
     component: () => BorgPanel,
@@ -161,6 +211,10 @@ const ROUTES = {
     component: () => ChemPress,
     scrollable: false,
   },
+  reaction_chamber: {
+    component: () => ChemReactionChamber,
+    scrollable: true,
+  },
   chem_splitter: {
     component: () => ChemSplitter,
     scrollable: false,
@@ -193,12 +247,24 @@ const ROUTES = {
     component: () => Cryo,
     scrollable: false,
   },
+  decal_painter: {
+    component: () => DecalPainter,
+    scrollable: false,
+  },
   disposal_unit: {
     component: () => DisposalUnit,
     scrollable: false,
   },
   dna_vault: {
     component: () => DnaVault,
+    scrollable: false,
+  },
+  eightball: {
+    component: () => EightBallVote,
+    scrollable: false,
+  },
+  emergency_shuttle_console: {
+    component: () => EmergencyShuttleConsole,
     scrollable: false,
   },
   engraved_message: {
@@ -209,13 +275,54 @@ const ROUTES = {
     component: () => Gps,
     scrollable: true,
   },
+  gravity_generator: {
+    component: () => GravityGenerator,
+    scrollable: false,
+  },
+  gulag_console: {
+    component: () => GulagTeleporterConsole,
+    scrollable: false,
+  },
+  gulag_item_reclaimer: {
+    component: () => GulagItemReclaimer,
+    scrollable: true,
+  },
   holodeck: {
     component: () => Holodeck,
     scrollable: true,
   },
+  implantchair: {
+    component: () => ImplantChair,
+    scrollable: false,
+  },
+  intellicard: {
+    component: () => Intellicard,
+    scrollable: true,
+  },
+  keycard_auth: {
+    component: () => KeycardAuth,
+    scrollable: false,
+  },
+  labor_claim_console: {
+    component: () => LaborClaimConsole,
+    scrollable: false,
+  },
   language_menu: {
     component: () => LanguageMenu,
     scrollable: true,
+  },
+  launchpad_console: {
+    component: () => LaunchpadConsole,
+    scrollable: true,
+  },
+  launchpad_remote: {
+    component: () => LaunchpadRemote,
+    scrollable: false,
+    theme: 'syndicate',
+  },
+  mech_bay_power_console: {
+    component: () => MechBayPowerConsole,
+    scrollable: false,
   },
   medical_kiosk: {
     component: () => MedicalKiosk,
@@ -224,6 +331,50 @@ const ROUTES = {
   mint: {
     component: () => Mint,
     scrollable: false,
+  },
+  mulebot: {
+    component: () => Mule,
+    scrollable: false,
+  },
+  nanite_chamber_control: {
+    component: () => NaniteChamberControl,
+    scrollable: true,
+  },
+  nanite_cloud_control: {
+    component: () => NaniteCloudControl,
+    scrollable: true,
+  },
+  nanite_program_hub: {
+    component: () => NaniteProgramHub,
+    scrollable: true,
+  },
+  nanite_programmer: {
+    component: () => NaniteProgrammer,
+    scrollable: true,
+  },
+  nanite_remote: {
+    component: () => NaniteRemote,
+    scrollable: true,
+  },
+  notificationpanel: {
+    component: () => NotificationPreferences,
+    scrollable: true,
+  },
+  ntnet_relay: {
+    component: () => NtnetRelay,
+    scrollable: false,
+  },
+  ntos_arcade: {
+    component: () => NtosArcade,
+    wrapper: () => NtosWrapper,
+    scrollable: false,
+    theme: 'ntos',
+  },
+  ntos_configuration: {
+    component: () => NtosConfiguration,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
   },
   ntos_main: {
     component: () => NtosMain,
@@ -243,18 +394,37 @@ const ROUTES = {
     scrollable: true,
     theme: 'ntos',
   },
+  ntos_station_alert: {
+    component: () => StationAlertConsole,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
   ntos_supermatter_monitor: {
     component: () => NtosSupermatterMonitor,
     wrapper: () => NtosWrapper,
     scrollable: true,
     theme: 'ntos',
   },
+  nuclear_bomb: {
+    component: () => NuclearBomb,
+    scrollable: false,
+    theme: 'retro',
+  },
   ore_redemption_machine: {
     component: () => OreRedemptionMachine,
     scrollable: true,
   },
+  ore_box: {
+    component: () => OreBox,
+    scrollable: true,
+  },
   operating_computer: {
     component: () => OperatingComputer,
+    scrollable: true,
+  },
+  pandemic: {
+    component: () => Pandemic,
     scrollable: true,
   },
   personal_crafting: {
@@ -263,6 +433,14 @@ const ROUTES = {
   },
   portable_generator: {
     component: () => PortableGenerator,
+    scrollable: false,
+  },
+  portable_pump: {
+    component: () => PortablePump,
+    scrollable: false,
+  },
+  portable_scrubber: {
+    component: () => PortableScrubber,
     scrollable: false,
   },
   power_monitor: {
@@ -277,8 +455,24 @@ const ROUTES = {
     component: () => RapidPipeDispenser,
     scrollable: true,
   },
+  sat_control: {
+    component: () => SatelliteControl,
+    scrollable: false,
+  },
+  scanner_gate: {
+    component: () => ScannerGate,
+    scrollable: true,
+  },
   shuttle_manipulator: {
     component: () => ShuttleManipulator,
+    scrollable: true,
+  },
+  sleeper: {
+    component: () => Sleeper,
+    scrollable: false,
+  },
+  slime_swap_body: {
+    component: () => SlimeBodySwapper,
     scrollable: true,
   },
   smartvend: {
@@ -287,6 +481,10 @@ const ROUTES = {
   },
   smes: {
     component: () => Smes,
+    scrollable: false,
+  },
+  smoke_machine: {
+    component: () => SmokeMachine,
     scrollable: false,
   },
   solar_control: {
@@ -308,6 +506,12 @@ const ROUTES = {
   suit_storage_unit: {
     component: () => SuitStorageUnit,
     scrollable: false,
+  },
+  synd_contract: {
+    component: () => SyndContractor,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'syndicate',
   },
   tanks: {
     component: () => Tank,
@@ -333,6 +537,10 @@ const ROUTES = {
   vault_controller: {
     component: () => VaultController,
     scrollable: false,
+  },
+  vending: {
+    component: () => Vending,
+    scrollable: true,
   },
   wires: {
     component: () => Wires,

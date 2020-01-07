@@ -40,6 +40,10 @@
 	input = /obj/item/reagent_containers/food/snacks/grown/corn
 	output = /obj/item/reagent_containers/food/snacks/tortilla
 
+/datum/food_processor_process/tortilla
+	input = /obj/item/reagent_containers/food/snacks/tortilla
+	output = /obj/item/reagent_containers/food/snacks/cornchips
+
 /datum/food_processor_process/parsnip
 	input = /obj/item/reagent_containers/food/snacks/grown/parsnip
 	output = /obj/item/reagent_containers/food/snacks/roastparsnip

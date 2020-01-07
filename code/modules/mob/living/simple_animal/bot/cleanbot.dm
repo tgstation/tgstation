@@ -35,6 +35,7 @@
 
 	var/obj/item/weapon
 	var/weapon_orig_force = 0
+	var/chosen_name
 
 	var/list/stolen_valor
 
@@ -49,6 +50,8 @@
 	var/list/prefixes
 	var/list/suffixes
 
+	var/ascended = FALSE // if we have all the top titles, grant achievements to living mobs that gaze upon our cleanbot god
+
 
 /mob/living/simple_animal/bot/cleanbot/proc/deputize(obj/item/W, mob/user)
 	if(in_range(src, user))
@@ -56,12 +59,14 @@
 		user.transferItemToLoc(W, src)
 		weapon = W
 		weapon_orig_force = weapon.force
-		weapon.force = weapon.force / 2
-		icon_state = "cleanbot[on]"
+		if(!emagged)
+			weapon.force = weapon.force / 2
 		add_overlay(image(icon=weapon.lefthand_file,icon_state=weapon.item_state))
 
 /mob/living/simple_animal/bot/cleanbot/proc/update_titles()
 	var/working_title = ""
+
+	ascended = TRUE
 
 	for(var/pref in prefixes)
 		for(var/title in pref)
@@ -70,14 +75,18 @@
 				if(title in officers)
 					commissioned = TRUE
 				break
+			else
+				ascended = FALSE // we didn't have the first entry in the list if we got here, so we're not achievement worthy yet
 
-	working_title += initial(name)
+	working_title += chosen_name
 
 	for(var/suf in suffixes)
 		for(var/title in suf)
 			if(title in stolen_valor)
 				working_title += " " + suf[title]
 				break
+			else
+				ascended = FALSE
 
 	name = working_title
 
@@ -86,8 +95,13 @@
 	if(weapon)
 		. += " <span class='warning'>Is that \a [weapon] taped to it...?</span>"
 
+		if(ascended && user.stat == CONSCIOUS && user.client)
+			user.client.give_award(/datum/award/achievement/misc/cleanboss, user)
+
 /mob/living/simple_animal/bot/cleanbot/Initialize()
 	. = ..()
+
+	chosen_name = name
 	get_targets()
 	icon_state = "cleanbot[on]"
 
@@ -118,6 +132,8 @@
 
 /mob/living/simple_animal/bot/cleanbot/bot_reset()
 	..()
+	if(weapon && emagged == 2)
+		weapon.force = weapon_orig_force
 	ignore_list = list() //Allows the bot to clean targets it previously ignored due to being unreachable.
 	target = null
 	oldloc = null
@@ -136,13 +152,12 @@
 		if(!istype(C))
 			return
 
-		weapon.attack(C, src)
-		C.Knockdown(20)
-
 		if(!(C.job in stolen_valor))
 			stolen_valor += C.job
 		update_titles()
-		return
+
+		weapon.attack(C, src)
+		C.Knockdown(20)
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/card/id)||istype(W, /obj/item/pda))
@@ -157,15 +172,18 @@
 			else
 				to_chat(user, "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>")
 	else if(istype(W, /obj/item/kitchen/knife) && user.a_intent != INTENT_HARM)
-		to_chat(user, "<span class='notice'>You start attaching the [W] to \the [src]...</span>")
-		if(do_after(user, 40, target = src))
+		to_chat(user, "<span class='notice'>You start attaching \the [W] to \the [src]...</span>")
+		if(do_after(user, 25, target = src))
 			deputize(W, user)
 	else
 		return ..()
 
 /mob/living/simple_animal/bot/cleanbot/emag_act(mob/user)
 	..()
+
 	if(emagged == 2)
+		if(weapon)
+			weapon.force = weapon_orig_force
 		if(user)
 			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
 
@@ -363,6 +381,11 @@
 	do_sparks(3, TRUE, src)
 	..()
 
+/mob/living/simple_animal/bot/cleanbot/medbay
+	name = "Scrubs, MD"
+	bot_core_type = /obj/machinery/bot_core/cleanbot/medbay
+	on = FALSE
+
 /obj/machinery/bot_core/cleanbot
 	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS)
 
@@ -397,3 +420,6 @@ Maintenance panel panel is [open ? "opened" : "closed"]"})
 				drawn = !drawn
 		get_targets()
 		update_controls()
+
+/obj/machinery/bot_core/cleanbot/medbay
+	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS, ACCESS_MEDICAL)

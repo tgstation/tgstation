@@ -11,7 +11,7 @@
 	var/throw_range = 7
 	var/mob/pulledby = null
 	var/initial_language_holder = /datum/language_holder
-	var/datum/language_holder/language_holder
+	var/datum/language_holder/language_holder	// Mindless mobs and objects need language too, some times. Mind holder takes prescedence.
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -138,6 +138,9 @@
 				AMob.grabbedby(src)
 			return TRUE
 		stop_pulling()
+
+	SEND_SIGNAL(src, COMSIG_ATOM_START_PULL, AM, state, force)
+
 	if(AM.pulledby)
 		log_combat(AM, AM.pulledby, "pulled from", src)
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
@@ -253,7 +256,7 @@
 			continue
 		var/atom/movable/thing = i
 		thing.Crossed(src)
-//
+
 ////////////////////////////////////////
 
 /atom/movable/Move(atom/newloc, direct)
@@ -768,88 +771,94 @@
 		animate(src, pixel_y = initial(pixel_y), time = 10)
 		setMovetype(movement_type & ~FLOATING)
 
-/* Language procs */
-/atom/movable/proc/get_language_holder(shadow=TRUE)
-	if(language_holder)
-		return language_holder
-	else
+
+/* 	Language procs
+*	Unless you are doing something very specific, these are the ones you want to use.
+*/
+
+/// Gets or creates the relevant language holder. For mindless atoms, gets the local one. For atom with mind, gets the mind one.
+/atom/movable/proc/get_language_holder(get_minds = TRUE)
+	if(!language_holder)
 		language_holder = new initial_language_holder(src)
-		return language_holder
+	return language_holder
 
-/atom/movable/proc/grant_language(datum/language/dt, body = FALSE)
-	var/datum/language_holder/H = get_language_holder(!body)
-	H.grant_language(dt, body)
+/// Grants the supplied language and sets omnitongue true.
+/atom/movable/proc/grant_language(language, understood = TRUE, spoken = TRUE, source = LANGUAGE_ATOM)
+	var/datum/language_holder/LH = get_language_holder()
+	return LH.grant_language(language, understood, spoken, source)
 
-/atom/movable/proc/grant_all_languages(omnitongue=FALSE)
-	var/datum/language_holder/H = get_language_holder()
-	H.grant_all_languages(omnitongue)
+/// Grants every language.
+/atom/movable/proc/grant_all_languages(understood = TRUE, spoken = TRUE, grant_omnitongue = TRUE, source = LANGUAGE_MIND)
+	var/datum/language_holder/LH = get_language_holder()
+	return LH.grant_all_languages(understood, spoken, grant_omnitongue, source)
 
+/// Removes a single language.
+/atom/movable/proc/remove_language(language, understood = TRUE, spoken = TRUE, source = LANGUAGE_ALL)
+	var/datum/language_holder/LH = get_language_holder()
+	return LH.remove_language(language, understood, spoken, source)
+
+/// Removes every language and sets omnitongue false.
+/atom/movable/proc/remove_all_languages(source = LANGUAGE_ALL, remove_omnitongue = FALSE)
+	var/datum/language_holder/LH = get_language_holder()
+	return LH.remove_all_languages(source, remove_omnitongue)
+
+/// Adds a language to the blocked language list. Use this over remove_language in cases where you will give languages back later.
+/atom/movable/proc/add_blocked_language(language, source = LANGUAGE_ATOM)
+	var/datum/language_holder/LH = get_language_holder()
+	return LH.add_blocked_language(language, source)
+
+/// Removes a language from the blocked language list.
+/atom/movable/proc/remove_blocked_language(language, source = LANGUAGE_ATOM)
+	var/datum/language_holder/LH = get_language_holder()
+	return LH.remove_blocked_language(language, source)
+
+/// Checks if atom has the language. If spoken is true, only checks if atom can speak the language.
+/atom/movable/proc/has_language(language, spoken = FALSE)
+	var/datum/language_holder/LH = get_language_holder()
+	return LH.has_language(language, spoken)
+
+/// Checks if atom can speak the language.
+/atom/movable/proc/can_speak_language(language)
+	var/datum/language_holder/LH = get_language_holder()
+	return LH.can_speak_language(language)
+
+/// Returns the result of tongue specific limitations on spoken languages.
+/atom/movable/proc/could_speak_language(language)
+	return TRUE
+
+/// Returns selected language, if it can be spoken, or finds, sets and returns a new selected language if possible.
+/atom/movable/proc/get_selected_language()
+	var/datum/language_holder/LH = get_language_holder()
+	return LH.get_selected_language()
+
+/// Gets a random understood language, useful for hallucinations and such.
 /atom/movable/proc/get_random_understood_language()
-	var/datum/language_holder/H = get_language_holder()
-	. = H.get_random_understood_language()
+	var/datum/language_holder/LH = get_language_holder()
+	return LH.get_random_understood_language()
 
-/atom/movable/proc/remove_language(datum/language/dt, body = FALSE)
-	var/datum/language_holder/H = get_language_holder(!body)
-	H.remove_language(dt, body)
+/// Gets a random spoken language, useful for forced speech and such.
+/atom/movable/proc/get_random_spoken_language()
+	var/datum/language_holder/LH = get_language_holder()
+	return LH.get_random_spoken_language()
 
-/atom/movable/proc/remove_all_languages()
-	var/datum/language_holder/H = get_language_holder()
-	H.remove_all_languages()
+/// Copies all languages into the supplied atom/language holder. Source should be overridden when you
+/// do not want the language overwritten by later atom updates or want to avoid blocked languages.
+/atom/movable/proc/copy_languages(from_holder, source_override)
+	if(isatom(from_holder))
+		var/atom/movable/thing = from_holder
+		from_holder = thing.get_language_holder()
+	var/datum/language_holder/LH = get_language_holder()
+	return LH.copy_languages(from_holder, source_override)
 
-/atom/movable/proc/has_language(datum/language/dt)
-	var/datum/language_holder/H = get_language_holder()
-	. = H.has_language(dt)
-
-/atom/movable/proc/copy_known_languages_from(thing, replace=FALSE)
-	var/datum/language_holder/H = get_language_holder()
-	. = H.copy_known_languages_from(thing, replace)
-
-// Whether an AM can speak in a language or not, independent of whether
-// it KNOWS the language
-/atom/movable/proc/could_speak_in_language(datum/language/dt)
-	. = TRUE
-
-/atom/movable/proc/can_speak_in_language(datum/language/dt)
-	var/datum/language_holder/H = get_language_holder()
-
-	if(!H.has_language(dt))
-		return FALSE
-	else if(H.omnitongue)
-		return TRUE
-	else if(could_speak_in_language(dt) && (!H.only_speaks_language || H.only_speaks_language == dt))
-		return TRUE
-	else
-		return FALSE
-
-/atom/movable/proc/get_default_language()
-	// if no language is specified, and we want to say() something, which
-	// language do we use?
-	var/datum/language_holder/H = get_language_holder()
-
-	if(H.selected_default_language)
-		if(can_speak_in_language(H.selected_default_language))
-			return H.selected_default_language
-		else
-			H.selected_default_language = null
-
-
-	var/datum/language/chosen_langtype
-	var/highest_priority
-
-	for(var/lt in H.languages)
-		var/datum/language/langtype = lt
-		if(!can_speak_in_language(langtype))
-			continue
-
-		var/pri = initial(langtype.default_priority)
-		if(!highest_priority || (pri > highest_priority))
-			chosen_langtype = langtype
-			highest_priority = pri
-
-	H.selected_default_language = .
-	. = chosen_langtype
+/// Empties out the atom specific languages and updates them according to the current atoms language holder.
+/// As a side effect, it also creates missing language holders in the process.
+/atom/movable/proc/update_atom_languages()
+	var/datum/language_holder/LH = get_language_holder()
+	return LH.update_atom_languages(src)
 
 /* End language procs */
+
+
 /atom/movable/proc/ConveyorMove(movedir)
 	set waitfor = FALSE
 	if(!anchored && has_gravity())

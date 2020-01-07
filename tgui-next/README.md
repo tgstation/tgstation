@@ -65,6 +65,9 @@ Run one of the following:
   hot module replacement and logging facilities in all running instances
   of tgui. In short, this means that you will instantly see changes in the
   game as you code it. Very useful, highly recommended.
+  In order to use, you should start the game server first, connect to it so dreamseeker is
+  open, then start the dev server. You'll know if it's hooked correctly if data gets dumped
+  to the log when tgui windows are opened.
 - `bin/tgui --dev --reload` - reload byond cache once.
 - `bin/tgui --dev --debug` - run server with debug logging enabled.
 - `bin/tgui --dev --no-hot` - disable hot module replacement (helps when
@@ -312,6 +315,17 @@ Props:
 - See inherited props: [Button](#button)
 - `checked: boolean` - Boolean value, which marks the checkbox as checked.
 
+### `Collapsible`
+
+Displays contents when open, acts as a fluid button when closed. Click to toggle, closed by default.
+
+Props:
+  - See inherited props: [Box](#box)
+  - `children: any` - What is collapsed when closed
+  - `title: string` - Text to display on the button for collapsing
+  - `color: string` - Color of the button; see [Button](#button)
+  - `buttons: any` - Buttons or other content to render inline with the button
+
 ### `ColorBox`
 
 Displays a 1-character wide colored square. Can be used as a status indicator,
@@ -332,6 +346,21 @@ Dims surrounding area to emphasize content placed inside.
 Props:
 
 - See inherited props: [Box](#box)
+
+### `Dropdown`
+
+A simple dropdown box component. Lets the user select from a list of options and displays selected entry.
+
+Props:
+
+  - See inherited props: [Box](#box)
+  - `options: string[]` - An array of strings which will be displayed in the dropdown when open
+  - `selected: string` - Currently selected entry
+  - `width: number` - Width of dropdown button and resulting menu
+  - `over: boolean` - dropdown renders over instead of below
+  - `color: string` - color of dropdown button
+  - `onClick: (e) => void` - Called when dropdown button is clicked
+  - `onSelected: (value) => void` - Called when a value is picked from the list, `value` is the value that was picked
 
 ### `Flex`
 
@@ -488,6 +517,7 @@ Props:
 
 - See inherited props: [Box](#box)
 - `value: string` - Value of an input.
+- `placeholder: string` - Text placed into Input box when value is otherwise nothing. Clears automatically when focused.
 - `fluid: boolean` - Fill all available horizontal space.
 - `onChange: (e, value) => void` - An event, which fires when you commit
 the text by either unfocusing the input box, or by pressing the Enter key.
@@ -580,6 +610,9 @@ dragging the input.
 - `stepPixelSize: number` (default: 1) - Screen distance mouse needs
 to travel to adjust value by one `step`.
 - `width: string|number` - Width of the element, in `Box` units or pixels.
+- `height: string|numer` - Height of the element, in `Box` units or pixels.
+- `lineHeight: string|number` - lineHeight of the element, in `Box` units or pixels.
+- `fontSize: string|number` - fontSize of the element, in `Box` units or pixels.
 - `format: value => value` - Format value using this function before
 displaying it.
 - `suppressFlicker: number` - A number in milliseconds, for which the input

@@ -16,6 +16,8 @@
 	var/timing_id = null
 	var/recalculating = FALSE
 
+	var/obj/effect/ebeam/visuals //what we add to the ebeam's visual contents. never gets deleted on redrawing.
+
 /datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam,beam_sleep_time=3)
 	origin = beam_origin
 	origin_oldloc =	get_turf(origin)
@@ -33,6 +35,9 @@
 		addtimer(CALLBACK(src,.proc/End), time)
 
 /datum/beam/proc/Start()
+	visuals = new beam_type()
+	visuals.icon = icon
+	visuals.icon_state = icon_state
 	Draw()
 	recalculate_in(sleep_time)
 
@@ -83,6 +88,7 @@
 
 /datum/beam/Destroy()
 	Reset()
+	qdel(visuals)
 	target = null
 	origin = null
 	return ..()
@@ -105,14 +111,14 @@
 		X.owner = src
 		elements += X
 
-		//Assign icon, for main segments it's base_icon, for the end, it's icon+icon_state
-		//cropped by a transparent box of length-N pixel size
-		if(N+32>length)
-			var/icon/II = new(icon, icon_state)
-			II.DrawBox(null,1,(length-N),32,32)
+		//Assign our single visual ebeam to each ebeam's vis_contents
+		//ends are cropped by a transparent box icon of length-N pixel size laid over the visuals obj
+		if(N+32>length) //went past the target, needs to be cut short
+			var/icon/II = new(icon, icon_state) //the way to keep this the same as the vis_contents is unreasonable right now, maybe in the far future.
+			II.DrawBox(null,1,(length-N),32,32)//anyway we cut the icon on the ebeam to end at the target instead of overshooting
 			X.icon = II
 		else
-			X.icon = base_icon
+			X.vis_contents += visuals
 		X.transform = rot_matrix
 
 		//Calculate pixel offsets (If necessary)

@@ -1,15 +1,13 @@
 import { map } from 'common/collections';
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Box, Button, Dimmer, Icon, LabeledList, Section, Tabs } from '../components';
 
 const CraftingList = props => {
   const {
-    state,
     craftables = [],
   } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const {
     craftability = {},
     display_compact,
@@ -31,11 +29,11 @@ const CraftingList = props => {
               icon="cog"
               content="Craft"
               disabled={!craftability[craftable.ref]}
-              tooltip={(craftable.tool_text && (
+              tooltip={craftable.tool_text && (
                 'Tools needed: ' + craftable.tool_text
-              ))}
+              )}
               tooltipPosition="left"
-              onClick={() => act(ref, 'make', {
+              onClick={() => act('make', {
                 recipe: craftable.ref,
               })} />
           )}>
@@ -54,7 +52,7 @@ const CraftingList = props => {
             icon="cog"
             content="Craft"
             disabled={!craftability[craftable.ref]}
-            onClick={() => act(ref, 'make', {
+            onClick={() => act('make', {
               recipe: craftable.ref,
             })} />
         )}>
@@ -82,8 +80,7 @@ const CraftingList = props => {
 
 export const PersonalCrafting = props => {
   const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const {
     busy,
     display_craftable_only,
@@ -125,12 +122,12 @@ export const PersonalCrafting = props => {
               icon={display_compact ? "check-square-o" : "square-o"}
               content="Compact"
               selected={display_compact}
-              onClick={() => act(ref, 'toggle_compact')} />
+              onClick={() => act('toggle_compact')} />
             <Button
               icon={display_craftable_only ? "check-square-o" : "square-o"}
               content="Craftable Only"
               selected={display_craftable_only}
-              onClick={() => act(ref, 'toggle_recipes')} />
+              onClick={() => act('toggle_recipes')} />
           </Fragment>
         )}>
         <Tabs>
@@ -138,9 +135,10 @@ export const PersonalCrafting = props => {
             <Tabs.Tab
               key={recipe.category}
               label={recipe.category}
-              onClick={() => act(ref, 'set_category', {
+              onClick={() => act('set_category', {
                 category: recipe.category,
-                subcategory: recipe.firstSubcatName, // Backend expects "0" or "" to indicate no subcategory
+                // Backend expects "0" or "" to indicate no subcategory
+                subcategory: recipe.firstSubcatName,
               })}>
               {() => !recipe.hasSubcats && (
                 <CraftingList
@@ -155,7 +153,7 @@ export const PersonalCrafting = props => {
                     return (
                       <Tabs.Tab
                         label={name}
-                        onClick={() => act(ref, 'set_category', {
+                        onClick={() => act('set_category', {
                           subcategory: name,
                         })}>
                         {() => (

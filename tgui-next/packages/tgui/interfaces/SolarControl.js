@@ -1,17 +1,17 @@
 import { toFixed } from 'common/math';
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Box, Button, Grid, LabeledList, NumberInput, ProgressBar, Section } from '../components';
 
 export const SolarControl = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const {
     generated,
-    angle,
+    generated_ratio,
+    azimuth_current,
+    azimuth_rate,
+    max_rotation_rate,
     tracking_state,
-    tracking_rate,
     connected_panels,
     connected_tracker,
   } = data;
@@ -23,7 +23,7 @@ export const SolarControl = props => {
           <Button
             icon="sync"
             content="Scan for new hardware"
-            onClick={() => act(ref, 'refresh')} />
+            onClick={() => act('refresh')} />
         )}>
         <Grid>
           <Grid.Column>
@@ -45,13 +45,13 @@ export const SolarControl = props => {
               <LabeledList.Item label="Power output">
                 <ProgressBar
                   ranges={{
-                    good: [60000, Infinity],
-                    average: [30000, 60000],
-                    bad: [-Infinity, 30000],
+                    good: [0.66, Infinity],
+                    average: [0.33, 0.66],
+                    bad: [-Infinity, 0.33],
                   }}
                   minValue={0}
-                  maxValue={90000}
-                  value={generated}
+                  maxValue={1}
+                  value={generated_ratio}
                   content={generated + ' W'} />
               </LabeledList.Item>
             </LabeledList>
@@ -65,20 +65,20 @@ export const SolarControl = props => {
               icon="times"
               content="Off"
               selected={tracking_state === 0}
-              onClick={() => act(ref, 'tracking', { mode: 0 })} />
+              onClick={() => act('tracking', { mode: 0 })} />
             <Button
               icon="clock-o"
               content="Timed"
               selected={tracking_state === 1}
-              onClick={() => act(ref, 'tracking', { mode: 1 })} />
+              onClick={() => act('tracking', { mode: 1 })} />
             <Button
               icon="sync"
               content="Auto"
               selected={tracking_state === 2}
               disabled={!connected_tracker}
-              onClick={() => act(ref, 'tracking', { mode: 2 })} />
+              onClick={() => act('tracking', { mode: 2 })} />
           </LabeledList.Item>
-          <LabeledList.Item label="Angle">
+          <LabeledList.Item label="Azimuth">
             {(tracking_state === 0 || tracking_state === 1) && (
               <NumberInput
                 width="52px"
@@ -87,28 +87,27 @@ export const SolarControl = props => {
                 stepPixelSize={2}
                 minValue={-360}
                 maxValue={+720}
-                value={angle}
-                format={angle => Math.round(360 + angle) % 360}
-                onDrag={(e, value) => act(ref, 'angle', { value })} />
+                value={azimuth_current}
+                onDrag={(e, value) => act('azimuth', { value })} />
             )}
             {tracking_state === 1 && (
               <NumberInput
                 width="80px"
-                unit="°/h"
-                step={5}
-                stepPixelSize={2}
-                minValue={-7200}
-                maxValue={7200}
-                value={tracking_rate}
+                unit="°/m"
+                step={0.01}
+                stepPixelSize={1}
+                minValue={-max_rotation_rate-0.01}
+                maxValue={max_rotation_rate+0.01}
+                value={azimuth_rate}
                 format={rate => {
                   const sign = Math.sign(rate) > 0 ? '+' : '-';
-                  return sign + toFixed(Math.abs(rate));
+                  return sign + Math.abs(rate);
                 }}
-                onDrag={(e, value) => act(ref, 'rate', { value })} />
+                onDrag={(e, value) => act('azimuth_rate', { value })} />
             )}
             {tracking_state === 2 && (
               <Box inline color="label" mt="3px">
-                {angle + ' °'} (auto)
+                {azimuth_current + ' °'} (auto)
               </Box>
             )}
           </LabeledList.Item>

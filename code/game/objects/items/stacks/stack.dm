@@ -24,7 +24,7 @@
 	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
 	var/full_w_class = WEIGHT_CLASS_NORMAL //The weight class the stack should have at amount > 2/3rds max_amount
 	var/novariants = TRUE //Determines whether the item should update it's sprites based on amount.
-	var/mats_per_stack = 0
+	var/list/mats_per_unit //list that tells you how much is in a single unit.
 	///Datum material type that this stack is made of
 	var/material_type
 	//NOTE: When adding grind_results, the amounts should be for an INDIVIDUAL ITEM - these amounts will be multiplied by the stack size in on_grind()
@@ -49,8 +49,11 @@
 	if(!merge_type)
 		merge_type = type
 	if(custom_materials && custom_materials.len)
+		mats_per_unit = list()
+		var/in_process_mat_list = custom_materials.Copy()
 		for(var/i in custom_materials)
-			custom_materials[getmaterialref(i)] = mats_per_stack * amount
+			mats_per_unit[getmaterialref(i)] = in_process_mat_list[i]
+			custom_materials[i] *= amount
 	. = ..()
 	if(merge)
 		for(var/obj/item/stack/S in loc)
@@ -315,8 +318,8 @@
 	amount -= used
 	if(check)
 		zero_amount()
-	for(var/i in custom_materials)
-		custom_materials[i] = amount * mats_per_stack
+	for(var/i in mats_per_unit)
+		custom_materials[i] = amount * mats_per_unit[i]
 	update_icon()
 	update_weight()
 	return TRUE
@@ -348,9 +351,9 @@
 		source.add_charge(amount * cost)
 	else
 		src.amount += amount
-	if(custom_materials && custom_materials.len)
-		for(var/i in custom_materials)
-			custom_materials[getmaterialref(i)] = MINERAL_MATERIAL_AMOUNT * src.amount
+	if(mats_per_unit && mats_per_unit.len)
+		for(var/i in mats_per_unit)
+			custom_materials[i] = mats_per_unit[i] * src.amount
 		set_custom_materials() //Refresh
 	update_icon()
 	update_weight()

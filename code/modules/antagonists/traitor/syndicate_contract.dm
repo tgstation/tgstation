@@ -4,7 +4,8 @@
 	var/datum/objective/contract/contract = new()
 	var/target_rank
 	var/ransom = 0
-	var/payout_type = null
+	var/payout_type
+	var/wanted_message
 
 	var/list/victim_belongings = list()
 
@@ -16,11 +17,11 @@
 
 /datum/syndicate_contract/proc/generate(blacklist)
 	contract.find_target(null, blacklist)
-	
+
 	var/datum/data/record/record = find_record("name", contract.target.name, GLOB.data_core.general)
 	if (record)
 		target_rank = record.fields["rank"]
-	else 
+	else
 		target_rank = "Unknown"
 
 	if (payout_type == CONTRACT_PAYOUT_LARGE)
@@ -34,6 +35,12 @@
 	contract.generate_dropoff()
 
 	ransom = 100 * rand(18, 45)
+
+	var/base = pick_list(WANTED_FILE, "basemessage")
+	var/verb_string = pick_list(WANTED_FILE, "verb")
+	var/noun = pick_list_weighted(WANTED_FILE, "noun")
+	var/location = pick_list_weighted(WANTED_FILE, "location")
+	wanted_message = "[base] [verb_string] [noun] [location]."
 
 /datum/syndicate_contract/proc/handle_extraction(var/mob/living/user)
 	if (contract.target && contract.dropoff_check(user, contract.target.current))
@@ -50,7 +57,7 @@
 // Launch the pod to collect our victim.
 /datum/syndicate_contract/proc/launch_extraction_pod(turf/empty_pod_turf)
 	var/obj/structure/closet/supplypod/extractionpod/empty_pod = new()
-	
+
 	RegisterSignal(empty_pod, COMSIG_ATOM_ENTERED, .proc/enter_check)
 
 	empty_pod.stay_after_drop = TRUE
@@ -65,23 +72,24 @@
 		if (isliving(sent_mob))
 			var/mob/living/M = sent_mob
 			var/datum/antagonist/traitor/traitor_data = contract.owner.has_antag_datum(/datum/antagonist/traitor)
-			
+
 			if (M == contract.target.current)
 				traitor_data.contractor_hub.contract_TC_to_redeem += contract.payout
+				traitor_data.contractor_hub.contracts_completed += 1
 
 				if (M.stat != DEAD)
 					traitor_data.contractor_hub.contract_TC_to_redeem += contract.payout_bonus
 
 				status = CONTRACT_STATUS_COMPLETE
 
-				if (traitor_data.contractor_hub.current_contract == src) 
+				if (traitor_data.contractor_hub.current_contract == src)
 					traitor_data.contractor_hub.current_contract = null
-				
+
 				traitor_data.contractor_hub.contract_rep += 2
 			else
 				status = CONTRACT_STATUS_ABORTED // Sending a target that wasn't even yours is as good as just aborting it
-				
-				if (traitor_data.contractor_hub.current_contract == src) 
+
+				if (traitor_data.contractor_hub.current_contract == src)
 					traitor_data.contractor_hub.current_contract = null
 
 			if (iscarbon(M))
@@ -92,11 +100,11 @@
 							continue //So all they're left with are shoes and uniform.
 						if(W == H.shoes)
 							continue
-				
+
 
 					M.transferItemToLoc(W)
 					victim_belongings.Add(W)
-				
+
 			var/obj/structure/closet/supplypod/extractionpod/pod = source
 
 			// Handle the pod returning
@@ -104,14 +112,14 @@
 
 			if (ishuman(M))
 				var/mob/living/carbon/human/target = M
-				
+
 				// After we remove items, at least give them what they need to live.
 				target.dna.species.give_important_for_life(target)
 
 			// After pod is sent we start the victim narrative/heal.
 			handleVictimExperience(M)
 
-			// This is slightly delayed because of the sleep calls above to handle the narrative. 
+			// This is slightly delayed because of the sleep calls above to handle the narrative.
 			// We don't want to tell the station instantly.
 			var/points_to_check
 			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
@@ -119,7 +127,7 @@
 				points_to_check = D.account_balance
 			if(points_to_check >= ransom)
 				D.adjust_money(-ransom)
-			else 
+			else
 				D.adjust_money(-points_to_check)
 
 			priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. \
@@ -139,7 +147,7 @@
 					C.registered_account.adjust_money(ransom * 0.35)
 
 					C.registered_account.bank_card_talk("We've processed the ransom, agent. Here's your cut - your balance is now \
-					$[C.registered_account.account_balance].", TRUE)
+					[C.registered_account.account_balance] cr.", TRUE)
 
 // They're off to holding - handle the return timer and give some text about what's going on.
 /datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)
@@ -187,7 +195,7 @@
 
 	if (possible_drop_loc.len > 0)
 		var/pod_rand_loc = rand(1, possible_drop_loc.len)
-		
+
 		var/obj/structure/closet/supplypod/return_pod = new()
 		return_pod.bluespace = TRUE
 		return_pod.explosionSize = list(0,0,0,0)
@@ -207,7 +215,7 @@
 
 		for(var/obj/item/W in victim_belongings)
 			W.forceMove(return_pod)
-		
+
 		M.forceMove(return_pod)
 
 		M.flash_act()

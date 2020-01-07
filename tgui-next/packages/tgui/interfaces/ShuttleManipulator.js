@@ -1,12 +1,10 @@
 import { map } from 'common/collections';
 import { Fragment } from 'inferno';
-import { act } from '../byond';
-import { Button, LabeledList, Section, Tabs } from '../components';
+import { useBackend } from '../backend';
+import { Button, LabeledList, Section, Table, Tabs } from '../components';
 
 export const ShuttleManipulator = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const shuttles = data.shuttles || [];
   const templateObject = data.templates || {};
   const selected = data.selected || {};
@@ -18,34 +16,37 @@ export const ShuttleManipulator = props => {
         label="Status">
         {() => (
           <Section>
-            <table>
+            <Table>
               {shuttles.map(shuttle => (
-                <tr key={shuttle.id}>
-                  <td>
+                <Table.Row key={shuttle.id}>
+                  <Table.Cell>
                     <Button
                       content="JMP"
                       key={shuttle.id}
-                      onClick={() => act(ref, 'jump_to', {type: "mobile", id: shuttle.id})}
-                    />
-                  </td>
-                  <td>
+                      onClick={() => act('jump_to', {
+                        type: 'mobile',
+                        id: shuttle.id,
+                      })} />
+                  </Table.Cell>
+                  <Table.Cell>
                     <Button
                       content="Fly"
                       key={shuttle.id}
                       disabled={!shuttle.can_fly}
-                      onClick={() => act(ref, 'fly', {id: shuttle.id})}
-                    />
-                  </td>
-                  <td>
+                      onClick={() => act('fly', {
+                        id: shuttle.id,
+                      })} />
+                  </Table.Cell>
+                  <Table.Cell>
                     {shuttle.name}
-                  </td>
-                  <td>
+                  </Table.Cell>
+                  <Table.Cell>
                     {shuttle.id}
-                  </td>
-                  <td>
+                  </Table.Cell>
+                  <Table.Cell>
                     {shuttle.status}
-                  </td>
-                  <td>
+                  </Table.Cell>
+                  <Table.Cell>
                     {shuttle.mode}
                     {!!shuttle.timer && (
                       <Fragment>
@@ -54,21 +55,21 @@ export const ShuttleManipulator = props => {
                           content="Fast Travel"
                           key={shuttle.id}
                           disabled={!shuttle.can_fast_travel}
-                          onClick={() => act(ref, 'fast_travel', {id: shuttle.id})}
-                        />
+                          onClick={() => act('fast_travel', {
+                            id: shuttle.id,
+                          })} />
                       </Fragment>
                     )}
-                  </td>
-                </tr>
+                  </Table.Cell>
+                </Table.Row>
               ))}
-            </table>
+            </Table>
           </Section>
         )}
       </Tabs.Tab>
       <Tabs.Tab
         key="templates"
-        label="Templates"
-      >
+        label="Templates">
         {() => (
           <Section>
             <Tabs>
@@ -77,11 +78,13 @@ export const ShuttleManipulator = props => {
                 return (
                   <Tabs.Tab
                     key={templateId}
-                    label={template.port_id}
-                  >
+                    label={template.port_id}>
                     {templates.map(actualTemplate => {
-                      const isSelected = (actualTemplate.shuttle_id === selected.shuttle_id);
-                      return ( // Whoever made the structure being sent is an asshole
+                      const isSelected = (
+                        actualTemplate.shuttle_id === selected.shuttle_id
+                      );
+                      // Whoever made the structure being sent is an asshole
+                      return (
                         <Section
                           title={actualTemplate.name}
                           level={2}
@@ -90,9 +93,13 @@ export const ShuttleManipulator = props => {
                             <Button
                               content={isSelected ? 'Selected' : 'Select'}
                               selected={isSelected}
-                              onClick={() => act(ref, 'select_template', {shuttle_id: actualTemplate.shuttle_id})} />
+                              onClick={() => act('select_template', {
+                                shuttle_id: actualTemplate.shuttle_id,
+                              })} />
                           )}>
-                          {(!!actualTemplate.description || !!actualTemplate.admin_notes) && (
+                          {(!!actualTemplate.description
+                            || !!actualTemplate.admin_notes
+                          ) && (
                             <LabeledList>
                               {!!actualTemplate.description && (
                                 <LabeledList.Item label="Description">
@@ -118,8 +125,7 @@ export const ShuttleManipulator = props => {
       </Tabs.Tab>
       <Tabs.Tab
         key="modification"
-        label="Modification"
-      >
+        label="Modification">
         <Section>
           {selected ? (
             <Fragment>
@@ -151,8 +157,10 @@ export const ShuttleManipulator = props => {
                       buttons={(
                         <Button
                           content="Jump To"
-                          onClick={() => act(ref, 'jump_to', {type: "mobile", id: existingShuttle.id})}
-                        />
+                          onClick={() => act('jump_to', {
+                            type: 'mobile',
+                            id: existingShuttle.id,
+                          })} />
                       )}>
                       {existingShuttle.status}
                       {!!existingShuttle.timer && (
@@ -173,14 +181,18 @@ export const ShuttleManipulator = props => {
                 title="Status">
                 <Button
                   content="Preview"
-                  onClick={() => act(ref, 'preview', {shuttle_id: selected.shuttle_id})} />
+                  onClick={() => act('preview', {
+                    shuttle_id: selected.shuttle_id,
+                  })} />
                 <Button
                   content="Load"
                   color="bad"
-                  onClick={() => act(ref, 'load', {shuttle_id: selected.shuttle_id})} />
+                  onClick={() => act('load', {
+                    shuttle_id: selected.shuttle_id,
+                  })} />
               </Section>
             </Fragment>
-          ) : "No shuttle selected"}
+          ) : 'No shuttle selected'}
         </Section>
       </Tabs.Tab>
     </Tabs>

@@ -316,6 +316,7 @@
 	checktank = FALSE
 	range_multiplier = 3
 	throw_amount = 1
+	pressureSetting = 2
 	maxWeightClass = 2 //a single magspear
 	spin_item = FALSE
 	var/static/list/magspear_typecache = typecacheof(/obj/item/throwing_star/magspear)

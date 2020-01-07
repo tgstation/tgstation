@@ -122,7 +122,10 @@
 	baseturfs = /turf/open/lava/smooth/lava_land_surface
 
 
-
+/turf/open/floor/plating/asteroid/lowpressure
+	initial_gas_mix = OPENTURF_LOW_PRESSURE
+	baseturfs = /turf/open/floor/plating/asteroid/lowpressure
+	turf_type = /turf/open/floor/plating/asteroid/lowpressure
 
 /turf/open/floor/plating/asteroid/airless
 	initial_gas_mix = AIRLESS_ATMOS

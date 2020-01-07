@@ -72,15 +72,23 @@
 /datum/computer_file/program/alarm_monitor/proc/cancelAlarm(class, area/A, obj/origin)
 	var/list/L = alarms[class]
 	var/cleared = 0
+	var/arealevelalarm = FALSE // set to TRUE for alarms that set/clear whole areas
+	if (class=="Fire")
+		arealevelalarm = TRUE
 	for (var/I in L)
 		if (I == A.name)
-			var/list/alarm = L[I]
-			var/list/srcs  = alarm[3]
-			if (origin in srcs)
-				srcs -= origin
-			if (srcs.len == 0)
+			if (!arealevelalarm) // the traditional behaviour
+				var/list/alarm = L[I]
+				var/list/srcs  = alarm[3]
+				if (origin in srcs)
+					srcs -= origin
+				if (srcs.len == 0)
+					cleared = 1
+					L -= I
+			else
+				L -= I // wipe the instances entirely
 				cleared = 1
-				L -= I
+
 
 	update_alarm_display()
 	return !cleared

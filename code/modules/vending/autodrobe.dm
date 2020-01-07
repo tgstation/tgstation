@@ -136,15 +136,16 @@
 				   /obj/item/shield/riot/roman/fake = 1,
 				   /obj/item/clothing/suit/chaplainsuit/clownpriest = 1,
 				   /obj/item/clothing/head/clownmitre = 1,
-				   /obj/item/skub = 1)
+				   /obj/item/skub = 1,
+				   /obj/item/clothing/suit/hooded/mysticrobe = 1)
 	refill_canister = /obj/item/vending_refill/autodrobe
+	default_price = 180
+	extra_price = 360
+	payment_department = ACCOUNT_SRV
 
 /obj/machinery/vending/autodrobe/canLoadItem(obj/item/I,mob/user)
 	return (I.type in products)
 
-	default_price = 50
-	extra_price = 75
-	payment_department = ACCOUNT_SRV
 /obj/machinery/vending/autodrobe/all_access
 	desc = "A vending machine for costumes. This model appears to have no access restrictions."
 	req_access = null
