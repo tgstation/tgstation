@@ -93,6 +93,16 @@
 /datum/holiday/valentines/getStationPrefix()
 	return pick("Love","Amore","Single","Smootch","Hug")
 
+/// Garbage DAYYYYY
+/// Huh?.... NOOOO
+/// *GUNSHOT*
+/// AHHHGHHHHHHH
+/datum/holiday/garbageday
+	name = GARBAGEDAY
+	begin_day = 17
+	end_day = 17
+	begin_month = JUNE
+
 /datum/holiday/birthday
 	name = "Birthday of Space Station 13"
 	begin_day = 16
@@ -592,9 +602,50 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 	return pick("Fluffy","Bunny","Easter","Egg")
 
 /datum/holiday/ianbirthday
-	name = "Ian's Birthday"
-	begin_day = 15
-	begin_month = MARCH
+	name = "Ian's Birthday" //github.com/tgstation/tgstation/commit/de7e4f0de0d568cd6e1f0d7bcc3fd34700598acb
+	begin_month = SEPTEMBER
+	begin_day = 9
+	end_day = 10
 
 /datum/holiday/ianbirthday/greet()
 	return "Happy birthday, Ian!"
+
+/datum/holiday/ianbirthday/getStationPrefix()
+	return pick("Ian", "Corgi", "Erro")
+
+/datum/holiday/hotdogday //I have plans for this.
+	name = "National Hot Dog Day"
+	begin_day = 17
+	begin_month = JULY
+
+/datum/holiday/hotdogday/greet()
+	return "Happy National Hot Dog Day!"
+
+/datum/holiday/hebrew
+	name = "Jewish Bugsgiving"
+
+/datum/holiday/hebrew/shouldCelebrate(dd, mm, yy, ww, ddd)
+	var/datum/hebrew_calendar/cal = new /datum/hebrew_calendar()
+	return ..(cal.dd, cal.mm, cal.yy, ww, ddd)
+
+/datum/holiday/hebrew/hanukkah
+	name = "Hanukkah"
+	begin_day = 25
+	begin_month = 9
+	end_day = 2
+	end_month = 10
+
+/datum/holiday/hebrew/hanukkah/greet()
+	return "Happy [pick("Hanukkah", "Chanukah")]!"
+
+/datum/holiday/hebrew/hanukkah/getStationPrefix()
+	return pick("Dreidel", "Menorah", "Latkes", "Gelt")
+
+/datum/holiday/hebrew/passover
+	name = "Passover"
+	begin_day = 15
+	begin_month = 1
+	end_day = 22
+
+/datum/holiday/hebrew/passover/getStationPrefix()
+	return pick("Matzah", "Moses", "Red Sea")

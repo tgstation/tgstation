@@ -454,7 +454,7 @@
 
 /obj/item/reagent_containers/food/snacks/lollipop/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_WEAR_MASK)
+	if(slot == ITEM_SLOT_MASK)
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj, src)
@@ -617,7 +617,7 @@
 	volume = 30
 
 /obj/item/reagent_containers/food/snacks/canned/proc/open_can(mob/user)
-	to_chat(user, "You pull back the tab of \the [src].")
+	to_chat(user, "<span class='notice'>You pull back the tab of \the [src].</span>")
 	playsound(user.loc, 'sound/items/foodcanopen.ogg', 50)
 	ENABLE_BITFIELD(reagents.flags, OPENCONTAINER)
 	spillable = TRUE
@@ -671,3 +671,15 @@
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("cream cheese" = 4, "crab" = 3, "crispiness" = 2)
 	foodtype = MEAT | DAIRY | GRAIN
+
+/obj/item/reagent_containers/food/snacks/cornchips
+	name = "boritos corn chips"
+	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce."
+	icon_state = "boritos"
+	trash = /obj/item/trash/boritos
+	bitesize = 2
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/sodiumchloride = 3)
+	junkiness = 20
+	filling_color = "#ECA735"
+	tastes = list("fried corn" = 1)
+	foodtype = JUNKFOOD | FRIED

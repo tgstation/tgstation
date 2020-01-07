@@ -34,6 +34,7 @@ Possible to do for anyone motivated enough:
 	layer = LOW_OBJ_LAYER
 	plane = FLOOR_PLANE
 	flags_1 = HEAR_1
+	req_access = list(ACCESS_KEYCARD_AUTH) //Used to allow for forced connecting to other (not secure) holopads. Anyone can make a call, though.
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
@@ -60,6 +61,18 @@ Possible to do for anyone motivated enough:
 	var/ringing = FALSE
 	var/offset = FALSE
 	var/on_network = TRUE
+	var/secure = FALSE //for pads in secure areas; do not allow forced connecting
+
+/obj/machinery/holopad/secure
+	name = "secure holopad"
+	desc = "It's a floor-mounted device for projecting holographic images. This one will refuse to auto-connect incoming calls."
+	secure = TRUE
+
+obj/machinery/holopad/secure/Initialize()
+	. = ..()
+	var/obj/item/circuitboard/machine/holopad/board = circuit
+	board.secure = TRUE
+	board.build_path = /obj/machinery/holopad/secure
 
 /obj/machinery/holopad/tutorial
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -160,11 +173,11 @@ Possible to do for anyone motivated enough:
 
 	if(istype(P,/obj/item/disk/holodisk))
 		if(disk)
-			to_chat(user,"<span class='notice'>There's already a disk inside [src]</span>")
+			to_chat(user,"<span class='warning'>There's already a disk inside [src]!</span>")
 			return
 		if (!user.transferItemToLoc(P,src))
 			return
-		to_chat(user,"<span class='notice'>You insert [P] into [src]</span>")
+		to_chat(user,"<span class='notice'>You insert [P] into [src].</span>")
 		disk = P
 		updateDialog()
 		return
@@ -187,7 +200,10 @@ Possible to do for anyone motivated enough:
 	else
 		if(on_network)
 			dat += "<a href='?src=[REF(src)];AIrequest=1'>Request an AI's presence</a><br>"
-			dat += "<a href='?src=[REF(src)];Holocall=1'>Call another holopad</a><br>"
+			if(allowed(user))
+				dat += "<a href='?src=[REF(src)];Holoconnect=1'>Connect to another holopad</a><br>"
+			else
+				dat += "<a href='?src=[REF(src)];Holocall=1'>Call another holopad</a><br>"
 		if(disk)
 			if(disk.record)
 				//Replay
@@ -255,9 +271,12 @@ Possible to do for anyone motivated enough:
 			temp = "A request for AI presence was already sent recently.<BR>"
 			temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
 
-	else if(href_list["Holocall"])
+	else if(href_list["Holocall"] || href_list["Holoconnect"])
 		if(outgoing_call)
 			return
+		var/head_call = FALSE
+		if(href_list["Holoconnect"])
+			head_call = TRUE
 
 		temp = "You must stand on the holopad to make a call!<br>"
 		temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
@@ -269,14 +288,14 @@ Possible to do for anyone motivated enough:
 					LAZYADD(callnames[A], I)
 			callnames -= get_area(src)
 
-			var/result = input(usr, "Choose an area to call", "Holocall") as null|anything in callnames
+			var/result = input(usr, "Choose an area to call", "Holocall") as null|anything in sortNames(callnames)
 			if(QDELETED(usr) || !result || outgoing_call)
 				return
 
 			if(usr.loc == loc)
 				temp = "Dialing...<br>"
 				temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
-				new /datum/holocall(usr, src, callnames[result])
+				new /datum/holocall(usr, src, callnames[result], head_call)
 
 	else if(href_list["connectcall"])
 		var/datum/holocall/call_to_connect = locate(href_list["connectcall"]) in holo_calls
@@ -363,6 +382,9 @@ Possible to do for anyone motivated enough:
 			if(force_answer_call && world.time > (HC.call_start_time + (HOLOPAD_MAX_DIAL_TIME / 2)))
 				HC.Answer(src)
 				break
+			if(HC.head_call && !secure)
+				HC.Answer(src)
+				break
 			if(outgoing_call)
 				HC.Disconnect(src)//can't answer calls while calling
 			else
@@ -393,7 +415,6 @@ Possible to do for anyone motivated enough:
 			Hologram.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
 			Hologram.Impersonation = user
 
-		Hologram.copy_known_languages_from(user,replace = TRUE)
 		Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 		Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 		Hologram.setAnchored(TRUE)//So space wind cannot drag it.
@@ -438,7 +459,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		set_light(0)
 	update_icon()
 
-/obj/machinery/holopad/update_icon()
+/obj/machinery/holopad/update_icon_state()
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
 	if(ringing)
 		icon_state = "holopad_ringing"
@@ -550,9 +571,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	Hologram.alpha = 170
 	Hologram.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
 	Hologram.dir = SOUTH //for now
-	Hologram.grant_all_languages(omnitongue=TRUE)
 	var/datum/language_holder/holder = Hologram.get_language_holder()
-	holder.selected_default_language = record.language
+	holder.selected_language = record.language
 	Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 	Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	Hologram.setAnchored(TRUE)//So space wind cannot drag it.
@@ -644,7 +664,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			return
 		if(HOLORECORD_LANGUAGE)
 			var/datum/language_holder/holder = replay_holo.get_language_holder()
-			holder.selected_default_language = entry[2]
+			holder.selected_language = entry[2]
 		if(HOLORECORD_PRESET)
 			var/preset_type = entry[2]
 			var/datum/preset_holoimage/H = new preset_type
@@ -667,6 +687,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	updateDialog()
 
 /obj/effect/overlay/holo_pad_hologram
+	initial_language_holder = /datum/language_holder/universal
 	var/mob/living/Impersonation
 	var/datum/holocall/HC
 

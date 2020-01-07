@@ -32,7 +32,6 @@
 		new /obj/item/reagent_containers/food/snacks/chocolatebar(location)
 	return
 
-
 /datum/chemical_reaction/chocolate_bar2
 	name = "Chocolate Bar"
 	id = "chocolate_bar"
@@ -44,24 +43,6 @@
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/reagent_containers/food/snacks/chocolatebar(location)
 	return
-
-/datum/chemical_reaction/hot_coco
-	name = "Hot Coco"
-	id = /datum/reagent/consumable/hot_coco
-	results = list(/datum/reagent/consumable/hot_coco = 5)
-	required_reagents = list(/datum/reagent/water = 5, /datum/reagent/consumable/coco = 1)
-
-/datum/chemical_reaction/coffee
-	name = "Coffee"
-	id = /datum/reagent/consumable/coffee
-	results = list(/datum/reagent/consumable/coffee = 5)
-	required_reagents = list(/datum/reagent/toxin/coffeepowder = 1, /datum/reagent/water = 5)
-
-/datum/chemical_reaction/tea
-	name = "Tea"
-	id = /datum/reagent/consumable/tea
-	results = list(/datum/reagent/consumable/tea = 5)
-	required_reagents = list(/datum/reagent/toxin/teapowder = 1, /datum/reagent/water = 5)
 
 /datum/chemical_reaction/soysauce
 	name = "Soy Sauce"
@@ -184,3 +165,9 @@
 	results = list(/datum/reagent/consumable/nutriment/peptides = 0.5)
 	required_reagents = list(/datum/reagent/consumable/nutriment/ = 0.5)
 	required_catalysts = list(/datum/reagent/medicine/metafactor = 0.5)
+
+/datum/chemical_reaction/bbqsauce
+	name = "BBQ Sauce"
+	id = /datum/reagent/consumable/bbqsauce
+	results = list(/datum/reagent/consumable/bbqsauce = 5)
+	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/tomatojuice = 1, /datum/reagent/medicine/salglu_solution = 3, /datum/reagent/consumable/blackpepper = 1)

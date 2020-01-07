@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 /obj/item/stack/rods/get_main_recipes()
 	. = ..()
 	. += GLOB.rod_recipes
-	
+
 /obj/item/stack/rods/update_icon()
 	var/amount = get_amount()
 	if((amount <= 5) && (amount > 0))

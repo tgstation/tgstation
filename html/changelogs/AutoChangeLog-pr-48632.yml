@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - rscadd: "Ghost rolls failing to spawn due to too few candidates now report this to deadchat."

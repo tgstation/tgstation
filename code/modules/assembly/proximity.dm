@@ -10,6 +10,9 @@
 	var/time = 10
 	var/sensitivity = 1
 	var/hearing_range = 3
+	drop_sound = 'sound/items/handling/component_drop.ogg'
+	pickup_sound =  'sound/items/handling/component_pickup.ogg'
+
 
 /obj/item/assembly/prox_sensor/Initialize()
 	. = ..()

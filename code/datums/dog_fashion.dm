@@ -51,7 +51,7 @@
 
 /datum/dog_fashion/head/chef
 	name = "Sous chef REAL_NAME"
-	desc = "Your food will be taste-tested.  All of it."
+	desc = "Your food will be taste-tested. All of it."
 
 
 /datum/dog_fashion/head/captain
@@ -114,7 +114,7 @@
 
 /datum/dog_fashion/head/blue_wizard
 	name = "Grandwizard REAL_NAME"
-	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "EI  NATH!")
+	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "EI NATH!")
 
 /datum/dog_fashion/head/red_wizard
 	name = "Pyromancer REAL_NAME"
@@ -174,3 +174,8 @@
 /datum/dog_fashion/back/deathsquad
 	name = "Trooper REAL_NAME"
 	desc = "That's not red paint. That's real corgi blood."
+
+/datum/dog_fashion/head/festive
+	name = "Festive REAL_NAME"
+	desc = "Ready to party!"
+	obj_icon_state = "festive"

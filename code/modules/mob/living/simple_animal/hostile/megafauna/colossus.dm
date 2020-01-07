@@ -45,8 +45,9 @@ Difficulty: Very Hard
 	pixel_x = -32
 	del_on_death = TRUE
 	gps_name = "Angelic Signal"
-	medal_type = BOSS_MEDAL_COLOSSUS
-	score_type = COLOSSUS_SCORE
+	achievement_type = /datum/award/achievement/boss/colussus_kill
+	crusher_achievement_type = /datum/award/achievement/boss/colussus_crusher
+	score_achievement_type = /datum/award/score/colussus_score
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/colossus/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
 	deathmessage = "disintegrates, leaving a glowing core in its wake."
@@ -588,7 +589,7 @@ Difficulty: Very Hard
 					H.set_species(/datum/species/shadow, 1)
 					H.regenerate_limbs()
 					H.regenerate_organs()
-					H.revive(1,0)
+					H.revive(full_heal = TRUE, admin_revive = FALSE)
 					ADD_TRAIT(H, TRAIT_BADDNA, MAGIC_TRAIT) //Free revives, but significantly limits your options for reviving except via the crystal
 					H.grab_ghost(force = TRUE)
 
@@ -641,9 +642,11 @@ Difficulty: Very Hard
 	speak_emote = list("oscillates")
 	maxHealth = 2
 	health = 2
-	harm_intent_damage = 1
-	friendly_verb_continuous = "mends"
-	friendly_verb_simple = "mend"
+	harm_intent_damage = 5
+	melee_damage_lower = 5
+	melee_damage_upper = 5
+	friendly_verb_continuous = "taps"
+	friendly_verb_simple = "tap"
 	density = FALSE
 	movement_type = FLYING
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
@@ -666,7 +669,6 @@ Difficulty: Very Hard
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	AIStatus = AI_OFF
 	stop_automated_movement = TRUE
-	var/heal_power = 5
 
 /mob/living/simple_animal/hostile/lightgeist/Initialize()
 	. = ..()
@@ -676,14 +678,14 @@ Difficulty: Very Hard
 	medsensor.add_hud_to(src)
 
 /mob/living/simple_animal/hostile/lightgeist/AttackingTarget()
-	. = ..()
 	if(isliving(target) && target != src)
 		var/mob/living/L = target
 		if(L.stat != DEAD)
-			L.heal_overall_damage(heal_power, heal_power)
+			L.heal_overall_damage(melee_damage_upper, melee_damage_upper)
 			new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
+			visible_message("<span class='notice'>[src] mends the wounds of [target].</span>","<span class='notice'>You mend the wounds of [target].</span>")
 
-/mob/living/simple_animal/hostile/lightgeist/ghostize()
+/mob/living/simple_animal/hostile/lightgeist/ghost()
 	. = ..()
 	if(.)
 		death()

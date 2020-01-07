@@ -247,7 +247,7 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 	. = ..()
 	. += GLOB.silver_recipes
 
-/* 
+/*
  * Clown
  */
 /obj/item/stack/sheet/mineral/bananium
@@ -272,8 +272,8 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 	. = ..()
 	. += GLOB.bananium_recipes
 
-/* 
- * Titanium 
+/*
+ * Titanium
  */
 /obj/item/stack/sheet/mineral/titanium
 	name = "titanium"
@@ -319,6 +319,7 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	custom_materials = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT, /datum/material/plasma=MINERAL_MATERIAL_AMOUNT)
 	point_value = 45
 	merge_type = /obj/item/stack/sheet/mineral/plastitanium
+	material_flags = MATERIAL_NO_EFFECTS
 
 GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	new/datum/stack_recipe("plastitanium tile", /obj/item/stack/tile/mineral/plastitanium, 1, 4, 20), \
@@ -332,7 +333,7 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 /*
  * Snow
  */
- 
+
 /obj/item/stack/sheet/mineral/snow
 	name = "snow"
 	icon_state = "sheet-snow"

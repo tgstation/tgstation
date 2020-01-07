@@ -57,7 +57,7 @@
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
 	if(!allowed(user))
-		to_chat(user, "<span class='warning'>Error - Unauthorized User</span>")
+		to_chat(user, "<span class='alert'>Error - Unauthorized User.</span>")
 		playsound(src, 'sound/misc/compiler-failure.ogg', 50, TRUE)
 		return
 	..()
@@ -147,7 +147,16 @@
 	gas_type = /datum/gas/miasma
 	filled = 1
 
+/obj/machinery/portable_atmospherics/canister/fusion_test
+	name = "fusion test canister"
+	desc = "Don't be a badmin."
 
+/obj/machinery/portable_atmospherics/canister/fusion_test/create_gas()
+	air_contents.add_gases(/datum/gas/carbon_dioxide, /datum/gas/plasma, /datum/gas/tritium)
+	air_contents.gases[/datum/gas/carbon_dioxide][MOLES] = 500
+	air_contents.gases[/datum/gas/plasma][MOLES] = 500
+	air_contents.gases[/datum/gas/tritium][MOLES] = 350
+	air_contents.temperature = 15000
 
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
 	if(timing)
@@ -209,6 +218,7 @@
 		air_contents.gases[gas_type][MOLES] = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 		if(starter_temp)
 			air_contents.temperature = starter_temp
+
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
 	air_contents.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
@@ -394,7 +404,7 @@
 		return
 	switch(action)
 		if("relabel")
-			var/label = input("New canister label:", name) as null|anything in label2types
+			var/label = input("New canister label:", name) as null|anything in sortList(label2types)
 			if(label && !..())
 				var/newtype = label2types[label]
 				if(newtype)

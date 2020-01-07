@@ -99,8 +99,7 @@
 	if(!has_cover)
 		INVOKE_ASYNC(src, .proc/popUp)
 
-/obj/machinery/porta_turret/update_icon()
-	cut_overlays()
+/obj/machinery/porta_turret/update_icon_state()
 	if(!anchored)
 		icon_state = "turretCover"
 		return
@@ -118,7 +117,6 @@
 				icon_state = "[base_icon_state]_off"
 		else
 			icon_state = "[base_icon_state]_unpowered"
-
 
 /obj/machinery/porta_turret/proc/setup(obj/item/gun/turret_gun)
 	if(stored_gun)
@@ -197,7 +195,7 @@
 		if(anchored)	//you can't turn a turret on/off if it's not anchored/secured
 			on = !on	//toggle on/off
 		else
-			to_chat(usr, "<span class='notice'>It has to be secured first!</span>")
+			to_chat(usr, "<span class='warning'>It has to be secured first!</span>")
 		interact(usr)
 		return
 
@@ -275,7 +273,7 @@
 			locked = !locked
 			to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
 		else
-			to_chat(user, "<span class='notice'>Access denied.</span>")
+			to_chat(user, "<span class='alert'>Access denied.</span>")
 	else if(I.tool_behaviour == TOOL_MULTITOOL && !locked)
 		if(!multitool_check_buffer(user, I))
 			return
@@ -289,13 +287,14 @@
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
-	visible_message("<span class='hear'>[src] hums oddly...</span>")
+	audible_message("<span class='hear'>[src] hums oddly...</span>")
 	obj_flags |= EMAGGED
 	controllock = TRUE
 	on = FALSE //turns off the turret temporarily
 	update_icon()
-	sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
-	on = TRUE //turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
+	//6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
+	addtimer(VARSET_CALLBACK(src, on, TRUE), 6 SECONDS)
+	//turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
 
 
 /obj/machinery/porta_turret/emp_act(severity)
@@ -572,7 +571,7 @@
 		popDown()
 	src.mode = mode
 	power_change()
-	
+
 
 /datum/action/turret_toggle
 	name = "Toggle Mode"
@@ -827,7 +826,7 @@
 	for(var/obj/machinery/porta_turret/T in control_area)
 		turrets |= T
 		T.cp = src
-		
+
 /obj/machinery/turretid/examine(mob/user)
 	. += ..()
 	if(issilicon(user) && (!stat & BROKEN))
@@ -844,7 +843,7 @@
 		var/obj/item/multitool/M = I
 		if(M.buffer && istype(M.buffer, /obj/machinery/porta_turret))
 			turrets |= M.buffer
-			to_chat(user, "You link \the [M.buffer] with \the [src]")
+			to_chat(user, "<span class='notice'>You link \the [M.buffer] with \the [src].</span>")
 			return
 
 	if (issilicon(user))
@@ -853,7 +852,7 @@
 	if ( get_dist(src, user) == 0 )		// trying to unlock the interface
 		if (allowed(usr))
 			if(obj_flags & EMAGGED)
-				to_chat(user, "<span class='notice'>The turret control is unresponsive.</span>")
+				to_chat(user, "<span class='warning'>The turret control is unresponsive!</span>")
 				return
 
 			locked = !locked
@@ -866,12 +865,12 @@
 				if (user.machine==src)
 					attack_hand(user)
 		else
-			to_chat(user, "<span class='warning'>Access denied.</span>")
+			to_chat(user, "<span class='alert'>Access denied.</span>")
 
 /obj/machinery/turretid/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")
+	to_chat(user, "<span class='notice'>You short out the turret controls' access analysis module.</span>")
 	obj_flags |= EMAGGED
 	locked = FALSE
 	if(user && user.machine == src)
@@ -881,7 +880,7 @@
 	if(!ailock || IsAdminGhost(user))
 		return attack_hand(user)
 	else
-		to_chat(user, "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>")
+		to_chat(user, "<span class='warning'>There seems to be a firewall preventing you from accessing this device!</span>")
 
 /obj/machinery/turretid/ui_interact(mob/user)
 	. = ..()
@@ -912,7 +911,7 @@
 		return
 	if (locked)
 		if(!(issilicon(usr) || IsAdminGhost(usr)))
-			to_chat(usr, "Control panel is locked!")
+			to_chat(usr, "<span class='warning'>Control panel is locked!</span>")
 			return
 	if (href_list["toggleOn"])
 		toggle_on(usr)
@@ -943,8 +942,7 @@
 		aTurret.setState(enabled, lethal, shoot_cyborgs)
 	update_icon()
 
-/obj/machinery/turretid/update_icon()
-	..()
+/obj/machinery/turretid/update_icon_state()
 	if(stat & NOPOWER)
 		icon_state = "control_off"
 	else if (enabled)

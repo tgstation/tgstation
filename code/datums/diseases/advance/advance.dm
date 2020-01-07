@@ -48,13 +48,13 @@
 										/datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/C2/multiver
 									),
 									list(	//level 5
-										/datum/reagent/oil, /datum/reagent/medicine/synaptizine, /datum/reagent/medicine/mannitol, /datum/reagent/drug/space_drugs, /datum/reagent/cryptobiolin
+										/datum/reagent/fuel/oil, /datum/reagent/medicine/synaptizine, /datum/reagent/medicine/mannitol, /datum/reagent/drug/space_drugs, /datum/reagent/cryptobiolin
 									),
 									list(	// level 6
 										/datum/reagent/phenol, /datum/reagent/medicine/inacusiate, /datum/reagent/medicine/oculine, /datum/reagent/medicine/antihol
 									),
 									list(	// level 7
-										/datum/reagent/medicine/leporazine, /datum/reagent/toxin/mindbreaker, /datum/reagent/medicine/corazone
+										/datum/reagent/medicine/leporazine, /datum/reagent/toxin/mindbreaker, /datum/reagent/medicine/higadrite
 									),
 									list(	// level 8
 										/datum/reagent/pax, /datum/reagent/drug/happiness, /datum/reagent/medicine/ephedrine
@@ -106,7 +106,7 @@
 // Randomly pick a symptom to activate.
 /datum/disease/advance/stage_act()
 	..()
-	if(carrier)
+	if(carrier || QDELETED(src)) // Could be cured in parent call.
 		return
 
 	if(symptoms && symptoms.len)
@@ -447,7 +447,7 @@
 	symptoms += SSdisease.list_symptoms.Copy()
 	do
 		if(user)
-			var/symptom = input(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom") in symptoms
+			var/symptom = input(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom") in sortList(symptoms, /proc/cmp_typepaths_asc)
 			if(isnull(symptom))
 				return
 			else if(istext(symptom))
@@ -455,7 +455,7 @@
 			else if(ispath(symptom))
 				var/datum/symptom/S = new symptom
 				if(!D.HasSymptom(S))
-					D.symptoms += S
+					D.AddSymptom(S)
 					i -= 1
 	while(i > 0)
 
@@ -467,18 +467,34 @@
 		D.AssignName(new_name)
 		D.Refresh()
 
-		for(var/mob/living/carbon/human/H in shuffle(GLOB.alive_mob_list))
-			if(!is_station_level(H.z))
-				continue
-			if(!H.HasDisease(D))
-				H.ForceContractDisease(D)
-				break
+		var/list/targets = list("Random")
+		targets += sortNames(GLOB.human_list)
+		var/target = input(user, "Pick a viable human target for the disease.", "Disease Target") as null|anything in targets
 
-		var/list/name_symptoms = list()
-		for(var/datum/symptom/S in D.symptoms)
-			name_symptoms += S.name
-		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.admin_details()]")
-		log_virus("[key_name(user)] has triggered a custom virus outbreak of [D.admin_details()]!")
+		var/mob/living/carbon/human/H
+		if(!target)
+			return
+		if(target == "Random")
+			for(var/human in shuffle(GLOB.human_list))
+				H = human
+				var/found = FALSE
+				if(!is_station_level(H.z))
+					continue
+				if(!H.HasDisease(D))
+					found = H.ForceContractDisease(D)
+					break
+				if(!found)
+					to_chat(user, "Could not find a valid target for the disease.")
+		else
+			H = target
+			if(istype(H) && D.infectable_biotypes & H.mob_biotypes)
+				H.ForceContractDisease(D)
+			else
+				to_chat(user, "Target could not be infected. Check mob biotype compatibility or resistances.")
+				return
+
+		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.admin_details()] in [ADMIN_LOOKUPFLW(H)]")
+		log_virus("[key_name(user)] has triggered a custom virus outbreak of [D.admin_details()] in [H]!")
 
 
 /datum/disease/advance/proc/totalStageSpeed()

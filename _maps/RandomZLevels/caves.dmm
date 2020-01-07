@@ -351,7 +351,7 @@
 /area/awaymission/caves/BMP_asteroid/level_four)
 "ba" = (
 /obj/structure/destructible/cult/talisman,
-/obj/item/book/granter/martial/plasma_fist,
+/obj/item/book/granter/martial/plasma_fist/nobomb,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14"
 	},

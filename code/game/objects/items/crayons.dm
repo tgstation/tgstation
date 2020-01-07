@@ -238,7 +238,7 @@
 				if (!isnull(chosen_colour))
 					paint_color = chosen_colour
 					. = TRUE
-				else 
+				else
 					. = FALSE
 		if("enter_text")
 			var/txt = stripped_input(usr,"Choose what to write.",
@@ -303,9 +303,10 @@
 
 
 	var/temp = "rune"
-	if(is_alpha(drawing))
+	var/ascii = (length(drawing) == 1)
+	if(ascii && is_alpha(drawing))
 		temp = "letter"
-	else if(is_digit(drawing))
+	else if(ascii && is_digit(drawing))
 		temp = "number"
 	else if(drawing in punctuation)
 		temp = "punctuation mark"
@@ -393,7 +394,7 @@
 		SStgui.update_uis(src)
 
 	if(post_noise)
-		audible_message("<span class='notice'>You hear spraying.</span>")
+		audible_message("<span class='hear'>You hear spraying.</span>")
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 
 	var/fraction = min(1, . / reagents.maximum_volume)
@@ -416,7 +417,7 @@
 			if(covered)
 				to_chat(C, "<span class='warning'>You have to remove your [covered] first!</span>")
 				return
-		to_chat(user, "You take a bite of the [src.name]. Delicious!")
+		to_chat(user, "<span class='notice'>You take a bite of the [src.name]. Delicious!</span>")
 		var/eaten = use_charges(user, 5, FALSE)
 		if(check_empty(user)) //Prevents divsion by zero
 			return
@@ -542,13 +543,13 @@
 		var/obj/item/toy/crayon/C = W
 		switch(C.crayon_color)
 			if("mime")
-				to_chat(usr, "This crayon is too sad to be contained in this box.")
+				to_chat(usr, "<span class='warning'>This crayon is too sad to be contained in this box!</span>")
 				return
 			if("rainbow")
-				to_chat(usr, "This crayon is too powerful to be contained in this box.")
+				to_chat(usr, "<span class='warning'>This crayon is too powerful to be contained in this box!</span>")
 				return
 		if(istype(W, /obj/item/toy/crayon/spraycan))
-			to_chat(user, "Spraycans are not crayons.")
+			to_chat(user, "<span class='warning'>Spraycans are not crayons!</span>")
 			return
 	return ..()
 
@@ -669,7 +670,7 @@
 			if(color_hex2num(paint_color) < 350 && !istype(target, /obj/structure/window) && !istype(target, /obj/effect/decal/cleanable/crayon)) //Colors too dark are rejected
 				to_chat(usr, "<span class='warning'>A color that dark on an object like this? Surely not...</span>")
 				return FALSE
-				
+
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 
 			if(istype(target, /obj/structure/window))

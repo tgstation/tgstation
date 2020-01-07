@@ -206,8 +206,11 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	new /obj/effect/temp_visual/monkeyify/humanify(loc)
 	sleep(22)
+
 	var/mob/living/carbon/human/O = new( loc )
 	for(var/obj/item/C in O.loc)
+		if(C.anchored)
+			continue
 		O.equip_to_appropriate_slot(C)
 
 	dna.transfer_identity(O)
@@ -455,6 +458,7 @@
 
 	new_xeno.a_intent = INTENT_HARM
 	new_xeno.key = key
+	update_atom_languages()
 
 	to_chat(new_xeno, "<B>You are now an alien.</B>")
 	. = new_xeno
@@ -549,7 +553,7 @@
 /mob/living/carbon/human/Animalize()
 
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
-	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
+	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in sortList(mobtypes, /proc/cmp_typepaths_asc)
 
 	if(!safe_animal(mobpath))
 		to_chat(usr, "<span class='danger'>Sorry but this mob type is currently unavailable.</span>")
@@ -576,14 +580,14 @@
 	new_mob.a_intent = INTENT_HARM
 
 
-	to_chat(new_mob, "You suddenly feel more... animalistic.")
+	to_chat(new_mob, "<span class='boldnotice'>You suddenly feel more... animalistic.</span>")
 	. = new_mob
 	qdel(src)
 
 /mob/proc/Animalize()
 
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
-	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
+	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in sortList(mobtypes, /proc/cmp_typepaths_asc)
 
 	if(!safe_animal(mobpath))
 		to_chat(usr, "<span class='danger'>Sorry but this mob type is currently unavailable.</span>")
@@ -593,7 +597,7 @@
 
 	new_mob.key = key
 	new_mob.a_intent = INTENT_HARM
-	to_chat(new_mob, "You feel more... animalistic")
+	to_chat(new_mob, "<span class='boldnotice'>You feel more... animalistic.</span>")
 
 	. = new_mob
 	qdel(src)

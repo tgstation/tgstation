@@ -42,7 +42,7 @@
 	attack_sound = 'sound/weapons/blade1.ogg'
 	var/obj/effect/light_emitter/red_energy_sword/sord
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_SHOE
 
 /mob/living/simple_animal/hostile/pirate/melee/space
 	name = "Space Pirate Swashbuckler"

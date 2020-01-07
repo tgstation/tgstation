@@ -15,7 +15,7 @@
 	name = "Spray Tan"
 	id = /datum/reagent/spraytan
 	results = list(/datum/reagent/spraytan = 2)
-	required_reagents = list(/datum/reagent/consumable/orangejuice = 1, /datum/reagent/oil = 1)
+	required_reagents = list(/datum/reagent/consumable/orangejuice = 1, /datum/reagent/fuel/oil = 1)
 
 /datum/chemical_reaction/spraytan2
 	name = "Spray Tan"
@@ -447,7 +447,7 @@
 	name = /datum/reagent/acetone
 	id = /datum/reagent/acetone
 	results = list(/datum/reagent/acetone = 3)
-	required_reagents = list(/datum/reagent/oil = 1, /datum/reagent/fuel = 1, /datum/reagent/oxygen = 1)
+	required_reagents = list(/datum/reagent/fuel/oil = 1, /datum/reagent/fuel = 1, /datum/reagent/oxygen = 1)
 
 /datum/chemical_reaction/carpet
 	name = /datum/reagent/carpet
@@ -455,23 +455,81 @@
 	results = list(/datum/reagent/carpet = 2)
 	required_reagents = list(/datum/reagent/drug/space_drugs = 1, /datum/reagent/blood = 1)
 
+/datum/chemical_reaction/carpet/black
+	name = /datum/reagent/carpet/black
+	id = /datum/reagent/carpet/black
+	results = list(/datum/reagent/carpet/black = 2)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/fuel/oil = 1)
+
+/datum/chemical_reaction/carpet/blue
+	name = /datum/reagent/carpet/blue
+	id = /datum/reagent/carpet/blue
+	results = list(/datum/reagent/carpet/blue = 2)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/cryostylane = 1)
+
+/datum/chemical_reaction/carpet/cyan
+	name = /datum/reagent/carpet/cyan
+	id = /datum/reagent/carpet/cyan
+	results = list(/datum/reagent/carpet/cyan = 2)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/toxin/cyanide = 1)
+	//cyan = cyanide get it huehueuhuehuehheuhe
+
+/datum/chemical_reaction/carpet/green
+	name = /datum/reagent/carpet/green
+	id = /datum/reagent/carpet/green
+	results = list(/datum/reagent/carpet/green = 2)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/consumable/ethanol/beer/green = 1)
+	//make green beer by grinding up green crayons and mixing with beer
+
+/datum/chemical_reaction/carpet/orange
+	name = /datum/reagent/carpet/orange
+	id = /datum/reagent/carpet/orange
+	results = list(/datum/reagent/carpet/orange = 2)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/consumable/orangejuice = 1)
+
+/datum/chemical_reaction/carpet/purple
+	name = /datum/reagent/carpet/purple
+	id = /datum/reagent/carpet/purple
+	results = list(/datum/reagent/carpet/purple = 2)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/medicine/regen_jelly = 1)
+	//slimes only party
+
+/datum/chemical_reaction/carpet/red
+	name = /datum/reagent/carpet/red
+	id = /datum/reagent/carpet/red
+	results = list(/datum/reagent/carpet/red = 2)
+	required_reagents = list(/datum/reagent/carpet/ = 1, /datum/reagent/liquidgibs = 1)
+
+/datum/chemical_reaction/carpet/royalblack
+	name = /datum/reagent/carpet/royal/black
+	id = /datum/reagent/carpet/royal/black
+	results = list(/datum/reagent/carpet/royal/black = 2)
+	required_reagents = list(/datum/reagent/carpet/black = 1, /datum/reagent/royal_bee_jelly = 1)
+
+/datum/chemical_reaction/carpet/royalblue
+	name = /datum/reagent/carpet/royal/blue
+	id = /datum/reagent/carpet/royal/blue
+	results = list(/datum/reagent/carpet/royal/blue = 2)
+	required_reagents = list(/datum/reagent/carpet/blue = 1, /datum/reagent/royal_bee_jelly = 1)
+
+
 /datum/chemical_reaction/oil
 	name = "Oil"
-	id = /datum/reagent/oil
-	results = list(/datum/reagent/oil = 3)
+	id = /datum/reagent/fuel/oil
+	results = list(/datum/reagent/fuel/oil = 3)
 	required_reagents = list(/datum/reagent/fuel = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
 
 /datum/chemical_reaction/phenol
 	name = /datum/reagent/phenol
 	id = /datum/reagent/phenol
 	results = list(/datum/reagent/phenol = 3)
-	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/chlorine = 1, /datum/reagent/oil = 1)
+	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/chlorine = 1, /datum/reagent/fuel/oil = 1)
 
 /datum/chemical_reaction/ash
 	name = "Ash"
 	id = /datum/reagent/ash
 	results = list(/datum/reagent/ash = 1)
-	required_reagents = list(/datum/reagent/oil = 1)
+	required_reagents = list(/datum/reagent/fuel/oil = 1)
 	required_temp = 480
 
 /datum/chemical_reaction/colorful_reagent
@@ -570,6 +628,13 @@
 	results = list(/datum/reagent/concentrated_barbers_aid = 2)
 	required_reagents = list(/datum/reagent/barbers_aid = 1, /datum/reagent/toxin/mutagen = 1)
 
+/datum/chemical_reaction/baldium
+	name = /datum/reagent/baldium
+	id = /datum/reagent/baldium
+	results = list(/datum/reagent/baldium = 1)
+	required_reagents = list(/datum/reagent/uranium/radium = 1, /datum/reagent/toxin/acid = 1, /datum/reagent/lye = 1)
+	required_temp = 395
+
 /datum/chemical_reaction/saltpetre
 	name = /datum/reagent/saltpetre
 	id = /datum/reagent/saltpetre
@@ -603,7 +668,7 @@
 /datum/chemical_reaction/plastic_polymers
 	name = "plastic polymers"
 	id = /datum/reagent/plastic_polymers
-	required_reagents = list(/datum/reagent/oil = 5, /datum/reagent/toxin/acid = 2, /datum/reagent/ash = 3)
+	required_reagents = list(/datum/reagent/fuel/oil = 5, /datum/reagent/toxin/acid = 2, /datum/reagent/ash = 3)
 	required_temp = 374 //lazily consistent with soap & other crafted objects generically created with heat.
 
 /datum/chemical_reaction/plastic_polymers/on_reaction(datum/reagents/holder, created_volume)
@@ -629,7 +694,7 @@
 	name = "artificial slime jelly"
 	id = /datum/reagent/toxin/slimejelly
 	results = list(/datum/reagent/toxin/slimejelly = 5)
-	required_reagents = list(/datum/reagent/oil = 3, /datum/reagent/uranium/radium = 2, /datum/reagent/consumable/tinlux =1)
+	required_reagents = list(/datum/reagent/fuel/oil = 3, /datum/reagent/uranium/radium = 2, /datum/reagent/consumable/tinlux =1)
 	required_container = /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom
 	mix_message = "The mushroom's insides bubble and pop and it becomes very limp."
 
@@ -642,3 +707,36 @@
 /datum/chemical_reaction/slime_extractification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	new /obj/item/slime_extract/grey(location)
+
+/datum/chemical_reaction/cellulose_carbonization
+	name = "Cellulose_Carbonization"
+	id = /datum/reagent/carbon
+	results = list(/datum/reagent/carbon = 1)
+	required_reagents = list(/datum/reagent/cellulose = 1)
+	required_temp = 512
+
+/datum/chemical_reaction/hydrogen_peroxide
+	name = "Hydrogen peroxide"
+	id = /datum/reagent/hydrogen_peroxide
+	results = list(/datum/reagent/hydrogen_peroxide = 3)
+	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/oxygen = 1, /datum/reagent/chlorine = 1)
+
+/datum/chemical_reaction/acetone_oxide
+	name = "Acetone peroxide"
+	id = /datum/reagent/acetone_oxide
+	results = list(/datum/reagent/acetone_oxide = 2)
+	required_reagents = list(/datum/reagent/acetone = 2, /datum/reagent/oxygen = 1, /datum/reagent/hydrogen_peroxide = 1)
+
+/datum/chemical_reaction/pentaerythritol
+	name = "Pentaerythritol"
+	id = /datum/reagent/pentaerythritol
+	results = list(/datum/reagent/pentaerythritol = 2)
+	required_reagents = list(/datum/reagent/acetaldehyde = 1, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/water = 1 )
+
+/datum/chemical_reaction/acetaldehyde
+	name = "Acetaldehyde"
+	id = /datum/reagent/acetaldehyde
+	results = list(/datum/reagent/acetaldehyde = 3)
+	required_reagents = list(/datum/reagent/acetone = 1, /datum/reagent/toxin/formaldehyde = 1, /datum/reagent/water = 1)
+	required_temp = 450
+

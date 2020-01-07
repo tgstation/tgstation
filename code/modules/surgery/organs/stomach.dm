@@ -1,7 +1,7 @@
 /obj/item/organ/stomach
 	name = "stomach"
 	icon_state = "stomach"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_SMALL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_STOMACH
 	attack_verb = list("gored", "squished", "slapped", "digested")

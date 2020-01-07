@@ -1,6 +1,6 @@
 /**
-  * # area 
-  * 
+  * # area
+  *
   * A grouping of tiles into a logical space, mostly used by map editors
   */
 /area
@@ -17,9 +17,7 @@
 	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
 
 	var/valid_territory = TRUE // If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
-	var/blob_allowed = TRUE // Does it count for blobs score? By default, all areas count.
-	var/clockwork_warp_allowed = TRUE // Can servants warp into this area from Reebe?
-	var/clockwork_warp_fail = "The structure there is too dense for warping to pierce. (This is normal in high-security areas.)"
+	var/blob_allowed = TRUE // If blobs can spawn there and if it counts towards their score.
 
 	var/fire = null
 	var/atmos = TRUE
@@ -55,7 +53,7 @@
 
 	var/has_gravity = 0
 	///Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
-	var/noteleport = FALSE			
+	var/noteleport = FALSE
 	///Hides area from player Teleport function.
 	var/hidden = FALSE
 	///Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
@@ -67,10 +65,8 @@
 
 	var/parallax_movedir = 0
 
-	var/global/global_uid = 0
-	var/uid
 	var/list/ambientsounds = GENERIC
-	flags_1 = CAN_BE_DIRTY_1
+	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
 
 	var/list/firedoors
 	var/list/cameras
@@ -111,7 +107,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if (picked && is_station_level(picked.z))
 			GLOB.teleportlocs[AR.name] = AR
 
-	sortTim(GLOB.teleportlocs, /proc/cmp_text_dsc)
+	sortTim(GLOB.teleportlocs, /proc/cmp_text_asc)
 
 /**
   * Called when an area loads
@@ -136,7 +132,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/Initialize()
 	icon_state = ""
 	layer = AREA_LAYER
-	uid = ++global_uid
 	map_name = name // Save the initial (the name set in the map) name of the area.
 	canSmoothWithAreas = typecacheof(canSmoothWithAreas)
 
@@ -177,7 +172,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   * Register this area as belonging to a z level
   *
   * Ensures the item is added to the SSmapping.areas_in_z list for this z
-  * 
+  *
   * It also goes through every item in this areas contents and sets the area level z to it
   * breaking the exat first time it does this, this seems crazy but what would I know, maybe
   * areas don't have a valid z themself or something
@@ -202,7 +197,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /**
   * Destroy an area and clean it up
-  * 
+  *
   * Removes the area from GLOB.areas_by_type and also stops it processing on SSobj
   *
   * This is despite the fact that no code appears to put it on SSobj, but
@@ -315,7 +310,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   * Generate an firealarm alert for this area
   *
   * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
-  * 
+  *
   * Also starts the area processing on SSobj
   */
 /area/proc/firealert(obj/source)
@@ -349,7 +344,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   *
   * resets the alert sent to all ai players, alert consoles, drones and alarm monitor programs
   * in the world
-  * 
+  *
   * Also cycles the icons of all firealarms and deregisters the area from processing on SSOBJ
   */
 /area/proc/firereset(obj/source)
@@ -445,12 +440,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		L.update()
 
 /**
-  * Update the icon of the area
+  * Update the icon state of the area
   *
   * Im not sure what the heck this does, somethign to do with weather being able to set icon
   * states on areas?? where the heck would that even display?
   */
-/area/proc/update_icon()
+/area/update_icon_state()
 	var/weather_icon
 	for(var/V in SSweather.processing)
 		var/datum/weather/W = V
@@ -463,13 +458,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /**
   * Update the icon of the area (overridden to always be null for space
   */
-/area/space/update_icon()
+/area/space/update_icon_state()
 	icon_state = null
 
 
 /**
   * Returns int 1 or 0 if the area has power for the given channel
-  * 
+  *
   * evalutes a mixture of variables mappers can set, requires_power, always_unpowered and then
   * per channel power_equip, power_light, power_environ
   */
@@ -569,7 +564,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /**
   * Call back when an atom enters an area
-  * 
+  *
   * Sends signals COMSIG_AREA_ENTERED and COMSIG_ENTER_AREA (to the atom)
   *
   * If the area has ambience, then it plays some ambience music to the ambience channel
@@ -627,51 +622,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /client/proc/ResetAmbiencePlayed()
 	played = FALSE
 
-/**
-  * Returns true if this atom has gravity for the passed in turf
-  *
-  * Sends signals COMSIG_ATOM_HAS_GRAVITY and COMSIG_TURF_HAS_GRAVITY, both can force gravity with
-  * the forced gravity var
-  *
-  * Gravity situations:
-  * * No gravity if you're not in a turf
-  * * No gravity if this atom is in is a space turf
-  * * Gravity if the area it's in always has gravity
-  * * Gravity if there's a gravity generator on the z level
-  * * Gravity if the Z level has an SSMappingTrait for ZTRAIT_GRAVITY
-  * * otherwise no gravity
-  */
-/atom/proc/has_gravity(turf/T)
-	if(!T || !isturf(T))
-		T = get_turf(src)
-
-	if(!T)
-		return 0
-
-	var/list/forced_gravity = list()
-	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, T, forced_gravity)
-	if(!forced_gravity.len)
-		SEND_SIGNAL(T, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
-	if(forced_gravity.len)
-		var/max_grav
-		for(var/i in forced_gravity)
-			max_grav = max(max_grav, i)
-		return max_grav
-
-	if(isspaceturf(T)) // Turf never has gravity
-		return 0
-
-	var/area/A = get_area(T)
-	if(A.has_gravity) // Areas which always has gravity
-		return A.has_gravity
-	else
-		// There's a gravity generator on our z level
-		if(GLOB.gravity_generators["[T.z]"])
-			var/max_grav = 0
-			for(var/obj/machinery/gravity_generator/main/G in GLOB.gravity_generators["[T.z]"])
-				max_grav = max(G.setting,max_grav)
-			return max_grav
-	return SSmapping.level_trait(T.z, ZTRAIT_GRAVITY)
 /**
   * Setup an area (with the given name)
   *

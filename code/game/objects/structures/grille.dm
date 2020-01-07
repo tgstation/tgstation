@@ -72,13 +72,6 @@
 			return TRUE
 	return FALSE
 
-/obj/structure/grille/ratvar_act()
-	if(broken)
-		new /obj/structure/grille/ratvar/broken(src.loc)
-	else
-		new /obj/structure/grille/ratvar(src.loc)
-	qdel(src)
-
 /obj/structure/grille/Bumped(atom/movable/AM)
 	if(!ismob(AM))
 		return
@@ -89,7 +82,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(!shock(user, 70))
+	if(!shock(user, 70) && !QDELETED(src)) //Last hit still shocks but shouldn't deal damage to the grille
 		take_damage(rand(5,10), BRUTE, "melee", 1)
 
 /obj/structure/grille/attack_paw(mob/user)
@@ -286,40 +279,4 @@
 	rods_amount = 1
 	rods_broken = FALSE
 	grille_type = /obj/structure/grille
-	broken_type = null
-
-
-/obj/structure/grille/ratvar
-	icon_state = "ratvargrille"
-	name = "cog grille"
-	desc = "A strangely-shaped grille."
-	broken_type = /obj/structure/grille/ratvar/broken
-
-/obj/structure/grille/ratvar/Initialize()
-	. = ..()
-	if(broken)
-		new /obj/effect/temp_visual/ratvar/grille/broken(get_turf(src))
-	else
-		new /obj/effect/temp_visual/ratvar/grille(get_turf(src))
-		new /obj/effect/temp_visual/ratvar/beam/grille(get_turf(src))
-
-/obj/structure/grille/ratvar/narsie_act()
-	take_damage(rand(1, 3), BRUTE)
-	if(src)
-		var/previouscolor = color
-		color = "#960000"
-		animate(src, color = previouscolor, time = 8)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
-
-/obj/structure/grille/ratvar/ratvar_act()
-	return
-
-/obj/structure/grille/ratvar/broken
-	icon_state = "brokenratvargrille"
-	density = FALSE
-	obj_integrity = 20
-	broken = TRUE
-	rods_amount = 1
-	rods_broken = FALSE
-	grille_type = /obj/structure/grille/ratvar
 	broken_type = null

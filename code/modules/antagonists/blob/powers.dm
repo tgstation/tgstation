@@ -354,7 +354,7 @@
 		var/datum/blobstrain/bs = pick((GLOB.valid_blobstrains))
 		choices[initial(bs.name)] = bs
 
-	var/choice = input(usr, "Please choose a new strain","Strain") as anything in choices
+	var/choice = input(usr, "Please choose a new strain","Strain") as anything in sortList(choices, /proc/cmp_typepaths_asc)
 	if (choice && choices[choice] && !QDELETED(src))
 		var/datum/blobstrain/bs = choices[choice]
 		set_strain(bs)

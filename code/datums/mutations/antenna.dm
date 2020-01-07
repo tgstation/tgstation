@@ -92,9 +92,8 @@
 			if(iscarbon(M))
 				var/mob/living/carbon/human/H = M
 				to_chat(user, "<span class='boldnotice'>You find that their intent is to [H.a_intent]...</span>")
-				var/datum/dna/the_dna = H.has_dna()
-				if(the_dna)
-					to_chat(user, "<span class='boldnotice'>You uncover that [H.p_their()] true identity is [the_dna.real_name].</span>")
+				if(H.mind)
+					to_chat(user, "<span class='boldnotice'>You uncover that [H.p_their()] true identity is [H.mind.name].</span>")
 		else
 			to_chat(user, "<span class='warning'>You can't find a mind to read inside of [M]!</span>")
 

@@ -34,7 +34,9 @@
 	deathsound = 'sound/voice/hiss6.ogg'
 	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
 
-	do_footstep = TRUE
+/mob/living/simple_animal/hostile/alien/Initialize()
+	. = ..()
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW)
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
@@ -172,7 +174,7 @@
 /mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
 	if(ismovableatom(target))
 		if(istype(target, /obj/effect/decal/cleanable))
-			visible_message("<span class='notice'>[src] cleans up \the [target].")
+			visible_message("<span class='notice'>[src] cleans up \the [target].</span>")
 			qdel(target)
 			return TRUE
 		var/atom/movable/M = target

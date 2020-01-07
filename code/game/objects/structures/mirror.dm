@@ -106,6 +106,7 @@
 			var/datum/species/S = speciestype
 			if(initial(S.changesource_flags) & MIRROR_MAGIC)
 				choosable_races += initial(S.id)
+		choosable_races = sortList(choosable_races)
 	..()
 
 /obj/structure/mirror/magic/lesser/New()
@@ -135,7 +136,7 @@
 
 	switch(choice)
 		if("name")
-			var/newname = copytext(sanitize_name(input(H, "Who are we again?", "Name change", H.name) as null|text),1,MAX_NAME_LEN)
+			var/newname = copytext(sanitize_name(reject_bad_text(input(H, "Who are we again?", "Name change", H.name) as null|text)),1,MAX_NAME_LEN)
 
 			if(!newname)
 				return

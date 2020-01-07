@@ -70,6 +70,14 @@
 /datum/component/riding/proc/force_dismount(mob/living/M)
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(M)
+	if(isanimal(AM) || iscyborg(AM))
+		var/turf/target = get_edge_target_turf(AM, AM.dir)
+		var/turf/targetm = get_step(get_turf(AM), AM.dir)
+		M.Move(targetm)
+		M.visible_message("<span class='warning'>[M] is thrown clear of [AM]!</span>", \
+		"<span class='warning'>You're thrown clear of [AM]!</span>")
+		M.throw_at(target, 14, 5, AM)
+		M.Knockdown(3 SECONDS)
 
 /datum/component/riding/proc/handle_vehicle_offsets()
 	var/atom/movable/AM = parent
@@ -298,17 +306,6 @@
 			else
 				..()
 
-/datum/component/riding/cyborg/force_dismount(mob/living/M)
-	var/atom/movable/AM = parent
-	AM.unbuckle_mob(M)
-	var/turf/target = get_edge_target_turf(AM, AM.dir)
-	var/turf/targetm = get_step(get_turf(AM), AM.dir)
-	M.Move(targetm)
-	M.visible_message("<span class='warning'>[M] is thrown clear of [AM]!</span>", \
-					"<span class='warning'>You're thrown clear of [AM]!</span>")
-	M.throw_at(target, 14, 5, AM)
-	M.Paralyze(60)
-
 /datum/component/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1, riding_target_override = null)
 	var/atom/movable/AM = parent
 	var/amount_equipped = 0
@@ -334,7 +331,6 @@
 	for(var/obj/item/riding_offhand/O in user.contents)
 		if(O.parent != AM)
 			CRASH("RIDING OFFHAND ON WRONG MOB")
-			continue
 		if(O.selfdeleting)
 			continue
 		else
@@ -368,3 +364,4 @@
 		if(rider in AM.buckled_mobs)
 			AM.unbuckle_mob(rider)
 	. = ..()
+	

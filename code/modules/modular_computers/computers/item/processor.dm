@@ -23,7 +23,6 @@
 
 	if(!comp || !istype(comp, /obj/machinery/modular_computer))
 		CRASH("Inapropriate type passed to obj/item/modular_computer/processor/New()! Aborting.")
-		return
 	// Obtain reference to machinery computer
 	all_components = list()
 	idle_threads = list()
@@ -46,7 +45,7 @@
 		return machinery_computer.update_icon()
 
 // This thing is not meant to be used on it's own, get topic data from our machinery owner.
-//obj/item/modular_computer/processor/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
+//obj/item/modular_computer/processor/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 //	if(!machinery_computer)
 //		return 0
 

@@ -17,17 +17,12 @@
 	//eg: "Bloody screen" > "goggles colour" as the former is much more important
 
 
-/mob
-	var/list/client_colours = list()
-
-
-
 /*
 	Adds an instance of colour_type to the mob's client_colours list
 	colour_type - a typepath (subtyped from /datum/client_colour)
 */
 /mob/proc/add_client_colour(colour_type)
-	if(!ispath(colour_type, /datum/client_colour))
+	if(!ispath(colour_type, /datum/client_colour) || QDELING(src))
 		return
 
 	var/datum/client_colour/CC = new colour_type()

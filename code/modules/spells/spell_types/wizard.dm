@@ -259,7 +259,9 @@
 /obj/effect/proc_holder/spell/targeted/genetic/blind
 	mutations = list(BLINDMUT)
 	duration = 300
+	charge_max = 400 // needs to be higher than the duration or it'll be permanent
 	sound = 'sound/magic/blind.ogg'
+
 /obj/effect/proc_holder/spell/aoe_turf/repulse
 	name = "Repulse"
 	desc = "This spell throws everything around the user away."

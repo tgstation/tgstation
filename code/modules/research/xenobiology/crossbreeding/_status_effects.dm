@@ -462,7 +462,7 @@ datum/status_effect/rebreathing/tick()
 /datum/status_effect/stabilized/grey/tick()
 	for(var/mob/living/simple_animal/slime/S in range(1, get_turf(owner)))
 		if(!(owner in S.Friends))
-			to_chat(owner, "<span class='notice'>[linked_extract] pulses gently as it communicates with [S]</span>")
+			to_chat(owner, "<span class='notice'>[linked_extract] pulses gently as it communicates with [S].</span>")
 			S.Friends[owner] = 1
 	return ..()
 
@@ -929,9 +929,10 @@ datum/status_effect/stabilized/blue/on_remove()
 		familiar = new linked.mob_type(get_turf(owner.loc))
 		familiar.name = linked.mob_name
 		familiar.del_on_death = TRUE
-		familiar.copy_known_languages_from(owner, FALSE)
+		familiar.copy_languages(owner, LANGUAGE_MASTER)
 		if(linked.saved_mind)
 			linked.saved_mind.transfer_to(familiar)
+			familiar.update_atom_languages()
 			familiar.ckey = linked.saved_mind.key
 	else
 		if(familiar.mind)

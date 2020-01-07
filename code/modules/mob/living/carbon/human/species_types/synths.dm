@@ -14,6 +14,7 @@
 	var/list/initial_species_traits //for getting these values back for assume_disguise()
 	var/list/initial_inherent_traits
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
+	species_language_holder = /datum/language_holder/synthetic
 
 /datum/species/synth/New()
 	initial_species_traits = species_traits.Copy()
@@ -125,8 +126,6 @@
 	if (isliving(source)) // yeah it's gonna be living but just to be clean
 		var/mob/living/L = source
 		if(fake_species && L.health > disguise_fail_health)
-			switch (fake_species.type)
+			switch(fake_species.type)
 				if (/datum/species/golem/bananium)
 					speech_args[SPEECH_SPANS] |= SPAN_CLOWN
-				if (/datum/species/golem/clockwork)
-					speech_args[SPEECH_SPANS] |= SPAN_ROBOT

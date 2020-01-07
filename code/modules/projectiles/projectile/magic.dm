@@ -18,7 +18,20 @@
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
-		M.death(0)
+		if(isliving(M))
+			var/mob/living/L = M
+			if(L.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
+				if(L.hellbound && L.stat == DEAD)
+					return BULLET_ACT_BLOCK
+				if(L.revive(full_heal = TRUE, admin_revive = TRUE))
+					L.grab_ghost(force = TRUE) // even suicides
+					to_chat(L, "<span class='notice'>You rise with a start, you're undead!!!</span>")
+				else if(L.stat != DEAD)
+					to_chat(L, "<span class='notice'>You feel great!</span>")
+			else
+				L.death(0)
+		else
+			M.death(0)
 
 /obj/projectile/magic/resurrection
 	name = "bolt of resurrection"
@@ -30,20 +43,19 @@
 /obj/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
 	if(isliving(target))
-		if(target.hellbound)
-			return BULLET_ACT_BLOCK
 		if(target.anti_magic_check())
 			target.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
-		if(iscarbon(target))
-			var/mob/living/carbon/C = target
-			C.regenerate_limbs()
-			C.regenerate_organs()
-		if(target.revive(full_heal = 1))
-			target.grab_ghost(force = TRUE) // even suicides
-			to_chat(target, "<span class='notice'>You rise with a start, you're alive!!!</span>")
-		else if(target.stat != DEAD)
-			to_chat(target, "<span class='notice'>You feel great!</span>")
+		if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
+			target.death(0)
+		else
+			if(target.hellbound && target.stat == DEAD)
+				return BULLET_ACT_BLOCK
+			if(target.revive(full_heal = TRUE, admin_revive = TRUE))
+				target.grab_ghost(force = TRUE) // even suicides
+				to_chat(target, "<span class='notice'>You rise with a start, you're alive!!!</span>")
+			else if(target.stat != DEAD)
+				to_chat(target, "<span class='notice'>You feel great!</span>")
 
 /obj/projectile/magic/teleport
 	name = "bolt of teleportation"
@@ -264,7 +276,6 @@
 
 	if(!new_mob)
 		return
-	new_mob.grant_language(/datum/language/common)
 
 	// Some forms can still wear some items
 	for(var/obj/item/W in contents)
@@ -579,7 +590,7 @@
 		return
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		to_chat(M, "You have been noticed by a ghost, and it has possessed you!")
+		to_chat(M, "<span class='boldnotice'>You have been noticed by a ghost and it has possessed you!</span>")
 		var/oldkey = M.key
 		M.ghostize(0)
 		M.key = C.key

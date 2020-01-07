@@ -79,7 +79,7 @@
 		return
 	if(!ishuman(M))//If target is not a human.
 		return ..()
-	if(!M.mind.hasSoul || isdevil(M))
+	if((M.mind && !M.mind.hasSoul) || is_devil(M))
 		to_chat(user, "<span class='warning'>This... thing has no soul! It's filled with evil!</span>")
 		return
 	if(iscultist(M))
@@ -108,8 +108,6 @@
 
 /obj/item/soulstone/proc/release_shades(mob/user)
 	for(var/mob/living/simple_animal/shade/A in src)
-		A.status_flags &= ~GODMODE
-		A.mobility_flags = MOBILITY_FLAGS_DEFAULT
 		A.forceMove(get_turf(user))
 		A.cancel_camera()
 		if(purified)
@@ -205,10 +203,7 @@
 			if(contents.len)
 				to_chat(user, "<span class='userdanger'>Capture failed!</span>: The soulstone is full! Free an existing soul to make room.")
 			else
-				T.forceMove(src) //put shade in stone
-				T.status_flags |= GODMODE
-				T.mobility_flags = NONE
-				T.health = T.maxHealth
+				T.AddComponent(/datum/component/soulstoned, src)
 				if(purified)
 					icon_state = "purified_soulstone2"
 					if(iscultist(T))
@@ -254,8 +249,7 @@
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/noncult, A, user, 0, T.loc)
 				for(var/datum/mind/B in SSticker.mode.cult)
 					if(B == A.mind)
-						SSticker.mode.cult -= A.mind
-						SSticker.mode.update_cult_icons_removed(A.mind)
+						SSticker.mode.remove_cultist(A.mind)
 				qdel(T)
 				qdel(src)
 			else
@@ -294,12 +288,14 @@
 	T.invisibility = INVISIBILITY_ABSTRACT
 	T.dust_animation()
 	var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade(src)
-	S.status_flags |= GODMODE //So they won't die inside the stone somehow
-	S.mobility_flags = NONE //Can't move out of the soul stone
+	S.AddComponent(/datum/component/soulstoned, src)
 	S.name = "Shade of [T.real_name]"
 	S.real_name = "Shade of [T.real_name]"
 	S.key = shade_controller.key
-	S.language_holder = user.language_holder.copy(S)
+	S.copy_languages(T, LANGUAGE_MIND)//Copies the old mobs languages into the new mob holder.
+	S.copy_languages(user, LANGUAGE_MASTER)
+	S.update_atom_languages()
+	grant_all_languages(FALSE, FALSE, TRUE)	//Grants omnitongue
 	if(user)
 		S.faction |= "[REF(user)]" //Add the master as a faction, allowing inter-mob cooperation
 	if(user && iscultist(user))

@@ -120,7 +120,7 @@
 	if(!istype(user))
 		return
 	if(contents.len)
-		var/obj/item/book/choice = input(user, "Which book would you like to remove from the shelf?") as null|obj in contents
+		var/obj/item/book/choice = input(user, "Which book would you like to remove from the shelf?") as null|obj in sortNames(contents.Copy())
 		if(choice)
 			if(!(user.mobility_flags & MOBILITY_USE) || user.stat || user.restrained() || !in_range(loc, user))
 				return
@@ -233,10 +233,10 @@
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if (length(newtitle) > 20)
-					to_chat(user, "That title won't fit on the cover!")
+					to_chat(user, "<span class='warning'>That title won't fit on the cover!</span>")
 					return
 				if(!newtitle)
-					to_chat(user, "That title is invalid.")
+					to_chat(user, "<span class='warning'>That title is invalid.</span>")
 					return
 				else
 					name = newtitle
@@ -246,7 +246,7 @@
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if(!content)
-					to_chat(user, "The content is invalid.")
+					to_chat(user, "<span class='warning'>The content is invalid.</span>")
 					return
 				else
 					dat += content
@@ -255,7 +255,7 @@
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if(!newauthor)
-					to_chat(user, "The name is invalid.")
+					to_chat(user, "<span class='warning'>The name is invalid.</span>")
 					return
 				else
 					author = newauthor
@@ -265,32 +265,32 @@
 	else if(istype(I, /obj/item/barcodescanner))
 		var/obj/item/barcodescanner/scanner = I
 		if(!scanner.computer)
-			to_chat(user, "[I]'s screen flashes: 'No associated computer found!'")
+			to_chat(user, "<span class='alert'>[I]'s screen flashes: 'No associated computer found!'</span>")
 		else
 			switch(scanner.mode)
 				if(0)
 					scanner.book = src
-					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer.'")
+					to_chat(user, "<span class='notice'>[I]'s screen flashes: 'Book stored in buffer.'</span>")
 				if(1)
 					scanner.book = src
 					scanner.computer.buffer_book = name
-					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Book title stored in associated computer buffer.'")
+					to_chat(user, "<span class='notice'>[I]'s screen flashes: 'Book stored in buffer. Book title stored in associated computer buffer.'</span>")
 				if(2)
 					scanner.book = src
 					for(var/datum/borrowbook/b in scanner.computer.checkouts)
 						if(b.bookname == name)
 							scanner.computer.checkouts.Remove(b)
-							to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Book has been checked in.'")
+							to_chat(user, "<span class='notice'>[I]'s screen flashes: 'Book stored in buffer. Book has been checked in.'</span>")
 							return
-					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'")
+					to_chat(user, "<span class='notice'>[I]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'</span>")
 				if(3)
 					scanner.book = src
 					for(var/obj/item/book in scanner.computer.inventory)
 						if(book == src)
-							to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Title already present in inventory, aborting to avoid duplicate entry.'")
+							to_chat(user, "<span class='alert'>[I]'s screen flashes: 'Book stored in buffer. Title already present in inventory, aborting to avoid duplicate entry.'</span>")
 							return
 					scanner.computer.inventory.Add(src)
-					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'")
+					to_chat(user, "<span class='notice'>[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'</span>")
 
 	else if(istype(I, /obj/item/kitchen/knife) || I.tool_behaviour == TOOL_WIRECUTTER)
 		to_chat(user, "<span class='notice'>You begin to carve out [title]...</span>")

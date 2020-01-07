@@ -23,7 +23,13 @@
 
 /datum/brain_trauma/severe/split_personality/proc/make_backseats()
 	stranger_backseat = new(owner, src)
+	var/obj/effect/proc_holder/spell/targeted/personality_commune/stranger_spell = new(src)
+	stranger_backseat.AddSpell(stranger_spell)
+
 	owner_backseat = new(owner, src)
+	var/obj/effect/proc_holder/spell/targeted/personality_commune/owner_spell = new(src)
+	owner_backseat.AddSpell(owner_spell)
+
 
 /datum/brain_trauma/severe/split_personality/proc/get_ghost()
 	set waitfor = FALSE
@@ -53,7 +59,7 @@
 	..()
 
 /datum/brain_trauma/severe/split_personality/proc/switch_personalities()
-	if(QDELETED(owner) || owner.stat == DEAD || QDELETED(stranger_backseat) || QDELETED(owner_backseat))
+	if(QDELETED(owner) || QDELETED(stranger_backseat) || QDELETED(owner_backseat))
 		return
 
 	var/mob/living/split_personality/current_backseat
@@ -147,7 +153,7 @@
 	return FALSE
 
 /mob/living/split_personality/emote(act, m_type = null, message = null, intentional = FALSE)
-	return
+	return FALSE
 
 ///////////////BRAINWASHING////////////////////
 

@@ -34,7 +34,7 @@
 	faction = list("faithless")
 	gold_core_spawnable = HOSTILE_SPAWN
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_SHOE
 
 /mob/living/simple_animal/hostile/faithless/AttackingTarget()
 	. = ..()

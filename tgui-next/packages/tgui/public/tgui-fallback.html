@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+
+<!-- Styles -->
+<link rel="stylesheet" type="text/css" href="tgui.css">
+
+<!-- This is processed in byond, so interfaces can override the
+  html head if needed, for custom sheets of style etc. -->
+<!--customheadhtml-->
+<script id="data" type="application/json" data-ref="[ref]">{}</script>
+
+</head>
+<body class="">
+
+<!-- Old TGUI container -->
+<div id="container" class="container">
+  <div class="notice">
+    <span>Loading...</span><br>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script type="text/javascript">
+// Explicitly state to the script this is a fallback html document
+window.tguiFallback = true;
+// Retrieve and save ref to a global variable
+// Since this is a fallback html, we get the ref from the querystring
+var ref = location.search.replace('?ref=', '');
+document.getElementById('data').setAttribute('data-ref', ref);
+// Early global error handling
+window.onerror = function (msg, url, line, col, error) {
+  // Proper stacktrace
+  var stack = error && error.stack;
+  // Ghetto stacktrace
+  if (!stack) {
+    stack = msg + '\n   at ' + url + ':' + line;
+    if (col) {
+      stack += ':' + col;
+    }
+  }
+  // Append user agent info
+  stack += '\n\nUser Agent: ' + navigator.userAgent;
+  // Print error to the page
+  document.write(stack);
+  // Send to the backend
+  location.href = 'byond://?src=' + ref
+    + '&action=tgui:log&fatal=1'
+    + '&log=' + encodeURIComponent(stack);
+  // Short-circuit further updates
+  window.update = window.initialize = function () {};
+  // Prevent default action
+  return true;
+};
+</script>
+<script defer src='tgui.js'></script>
+
+<noscript>
+  <div class="notice">
+    <div>Javascript is required in order to use this interface.</div>
+    <div>Please enable Javascript and restart the game.</div>
+  </div>
+</noscript>
+
+</body>
+</html>

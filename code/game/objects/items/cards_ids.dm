@@ -49,11 +49,6 @@
 	detail_overlay.color = detail_color
 	add_overlay(detail_overlay)
 
-/obj/item/proc/GetCard()
-
-/obj/item/card/data/GetCard()
-	return src
-
 /obj/item/card/data/full_color
 	desc = "A plastic magstripe card for simple and speedy data storage and transfer. This one has the entire card colored."
 	icon_state = "data_2"
@@ -187,7 +182,7 @@
 	else
 		to_chat(user, "<span class='notice'>You insert [I] into [src], adding [cash_money] credits to the linked account.</span>")
 
-	to_chat(user, "<span class='notice'>The linked account now reports a balance of $[registered_account.account_balance].</span>")
+	to_chat(user, "<span class='notice'>The linked account now reports a balance of [registered_account.account_balance] cr.</span>")
 	qdel(I)
 
 /obj/item/card/id/proc/mass_insert_money(list/money, mob/user)
@@ -281,11 +276,11 @@
 	if(mining_points)
 		. += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
 	if(registered_account)
-		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of $[registered_account.account_balance]."
+		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
 		if(registered_account.account_job)
 			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			if(D)
-				. += "The [D.account_holder] reports a balance of $[D.account_balance]."
+				. += "The [D.account_holder] reports a balance of [D.account_balance] cr."
 		. += "<span class='info'>Alt-Click the ID to pull money from the linked account in the form of holochips.</span>"
 		. += "<span class='info'>You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.</span>"
 		if(registered_account.account_holder == user.real_name)
@@ -297,6 +292,9 @@
 	return access
 
 /obj/item/card/id/GetID()
+	return src
+
+/obj/item/card/id/RemoveID()
 	return src
 
 /obj/item/card/id/update_icon(blank=FALSE)
@@ -571,6 +569,18 @@ update_label()
 	access = get_all_accesses()
 	. = ..()
 
+/obj/item/card/id/debug
+	name = "\improper Debug ID"
+	desc = "A debug ID card. Has ALL the all access, you really shouldn't have this."
+	icon_state = "ert_janitor"
+	assignment = "Jannie"
+	uses_overlays = FALSE
+
+/obj/item/card/id/debug/Initialize()
+	access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
+	registered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	. = ..()
+
 /obj/item/card/id/prisoner
 	name = "prisoner ID card"
 	id_type_name = "prisoner ID card"
@@ -699,37 +709,7 @@ update_label()
 /obj/item/card/id/departmental_budget/update_label()
 	return
 
-/obj/item/card/id/departmental_budget/civ
-	department_ID = ACCOUNT_CIV
-	department_name = ACCOUNT_CIV_NAME
-	icon_state = "civ_budget"
-
-/obj/item/card/id/departmental_budget/eng
-	department_ID = ACCOUNT_ENG
-	department_name = ACCOUNT_ENG_NAME
-	icon_state = "eng_budget"
-
-/obj/item/card/id/departmental_budget/sci
-	department_ID = ACCOUNT_SCI
-	department_name = ACCOUNT_SCI_NAME
-	icon_state = "sci_budget"
-
-/obj/item/card/id/departmental_budget/med
-	department_ID = ACCOUNT_MED
-	department_name = ACCOUNT_MED_NAME
-	icon_state = "med_budget"
-
-/obj/item/card/id/departmental_budget/srv
-	department_ID = ACCOUNT_SRV
-	department_name = ACCOUNT_SRV_NAME
-	icon_state = "srv_budget"
-
 /obj/item/card/id/departmental_budget/car
 	department_ID = ACCOUNT_CAR
 	department_name = ACCOUNT_CAR_NAME
 	icon_state = "car_budget" //saving up for a new tesla
-
-/obj/item/card/id/departmental_budget/sec
-	department_ID = ACCOUNT_SEC
-	department_name = ACCOUNT_SEC_NAME
-	icon_state = "sec_budget"
