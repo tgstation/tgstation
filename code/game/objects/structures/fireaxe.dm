@@ -116,13 +116,7 @@
 			src.add_fingerprint(user)
 			update_icon()
 			return
-	if(locked)
-		to_chat(user, "<span class='warning'>The [name] won't budge!</span>")
-		return
-	else
-		open = !open
-		update_icon()
-		return
+	toggle_open()
 
 /obj/structure/fireaxecabinet/attack_paw(mob/living/user)
 	return attack_hand(user)
@@ -183,8 +177,5 @@
 		return
 
 /obj/structure/fireaxecabinet/AltClick(mob/user)
-	toggle_open()
-
-/obj/structure/fireaxecabinet/attack_hand()
 	toggle_open()
 
