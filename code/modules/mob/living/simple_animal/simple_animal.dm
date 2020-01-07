@@ -326,7 +326,8 @@
 
 	if(!environment_air_is_safe())
 		adjustHealth(unsuitable_atmos_damage)
-		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+		if(unsuitable_atmos_damage > 0)
+			throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 	else
 		clear_alert("not_enough_oxy")
 
