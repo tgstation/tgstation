@@ -82,14 +82,15 @@
 	for(var/obj/item/reagent_containers/food/snacks/cheesewedge/cheese in range(1, src))
 		if(prob(10))
 			var/cap = CONFIG_GET(number/ratcap)
-			if(LAZYLEN(SSmobs.cheeserats) > cap)
+			if(LAZYLEN(SSmobs.cheeserats) >= cap)
 				visible_message("<span class='warning'>[src] carefully eats the cheese, hiding it from the [cap] mice on the station!</span>")
 				qdel(cheese)
 				return
-			SSmobs.cheeserats += src
-			new /mob/living/simple_animal/mouse/bred(loc)
+			var/mob/living/newmouse = new /mob/living/simple_animal/mouse(loc, TRUE, src)
+			SSmobs.cheeserats += newmouse
 			visible_message("<span class='notice'>[src] nibbles through the [cheese], attracting another mouse!</span>")
 			qdel(cheese)
+			return
 
 /*
  * Mouse types
@@ -106,8 +107,6 @@
 /mob/living/simple_animal/mouse/brown
 	body_color = "brown"
 	icon_state = "mouse_brown"
-
-/mob/living/simple_animal/mouse/bred
 
 /mob/living/simple_animal/mouse/Destroy()
 	SSmobs.cheeserats -= src
