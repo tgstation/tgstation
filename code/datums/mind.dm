@@ -153,10 +153,10 @@
 	else
 		to_chat(current, "<span class='warning'>I feel like I've become worse at [S.name]!</span>")
 
-///Gets the skill's singleton and returns the result of its get_skill_speed_modifier
-/datum/mind/proc/get_skill_speed_modifier(skill)
+///Gets the skill's singleton and returns the result of its get_skill_modifier
+/datum/mind/proc/get_skill_modifier(skill, modifier)
 	var/datum/skill/S = GetSkillRef(skill)
-	return S.get_skill_speed_modifier(known_skills[S] || SKILL_LEVEL_NONE)
+	return S.get_skill_modifier(modifier, known_skills[S] || SKILL_LEVEL_NONE)
 
 /datum/mind/proc/get_skill_level(skill)
 	var/datum/skill/S = GetSkillRef(skill)
