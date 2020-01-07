@@ -282,7 +282,7 @@
 
 /obj/machinery/sleeper/party
 	name = "party pod"
-	desc = "Most sleepers were made illegal in the year 2559, after a study found they were the cause of thousands of lead acetate poisonings. This is one of the leftover machines, that's been rebranded into a 'party pod'."
+	desc = "Most sleepers were made illegal in the year 2559, after a study found they were the cause of thousands of lead acetate poisonings. This is one of the leftover machines, that's been rebranded as a 'party pod'."
 	icon_state = "partypod"
 	idle_power_usage = 3000
 	circuit = /obj/item/circuitboard/machine/sleeper/party
