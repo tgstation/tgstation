@@ -1,0 +1,5 @@
+author: "Anonmare"
+delete-after: True
+changes: 
+  - rscadd: "Adds champagne to the service borg shaker"
+  - bugfix: "Returns two reagents back to the service borg shaker"
