@@ -31,7 +31,7 @@
 			eat_dir = WEST
 			return TRUE
 
-/obj/machinery/plumbing/grinder_chemical/CanPass(atom/movable/AM)
+/obj/machinery/plumbing/grinder_chemical/CanAllowThrough(atom/movable/AM)
 	. = ..()
 	if(!anchored)
 		return
