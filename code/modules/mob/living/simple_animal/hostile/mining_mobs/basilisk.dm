@@ -129,7 +129,6 @@ mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
 		var/distance = 0
 		distance = get_dist(src.loc,diamonds.loc)
 		if(distance <= 1)
-			src.visible_message("<span class='notice'>[src] glares at [diamonds], and devours it in the blink of an eye! ...At least, you think.</span>")
 			qdel(diamonds)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize()
