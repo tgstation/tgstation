@@ -281,7 +281,7 @@
 		/obj/item/clothing/suit/toggle/labcoat/science = 3,
 		/obj/item/clothing/shoes/sneakers/white = 3,
 		/obj/item/radio/headset/headset_sci = 2,
-		/obj/item/clothing/mask/gas = 3)
+		/obj/item/clothing/mask/gas/alt = 3)
 	generate_items_inside(items_inside,src)
 	return
 

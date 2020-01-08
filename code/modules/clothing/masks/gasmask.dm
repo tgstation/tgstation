@@ -11,6 +11,37 @@
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 
+/obj/item/clothing/mask/gas/alt
+	name = "gas mask"
+	desc = "A face-covering mask that can be connected to an air supply. Not good for concealing your identity or for blocking gas flow."
+	icon_state = "gas_alt2"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0)
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags_inv = HIDEEARS|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_NORMAL
+	item_state = "gas_alt2"
+
+/obj/item/clothing/mask/gas/alt2
+	name = "gas mask"
+	desc = "A face-covering mask that can be connected to an air supply. Not to be used for hiding eyes or blocking gas flow."
+	icon_state = "gas_alt3"
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags_inv = HIDEEARS|HIDEFACE|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_NORMAL
+	gas_transfer_coefficient = 0.005 //not that this will ever be used but there you go
+	permeability_coefficient = 0.005
+	item_state = "gas_alt3"
+
+/obj/item/clothing/mask/gas/alt3
+	name = "gas mask"
+	desc = "A face-covering mask that cannot be connected to an air supply. Any claims that these are rebranded russian old stock masks are false."
+	icon_state = "gas_alt4"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 10, "fire" = 5, "acid" = 5)
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_NORMAL
+	item_state = "gas_alt4"
+
 /obj/item/clothing/mask/gas/atmos
 	name = "atmospheric gas mask"
 	desc = "Improved gas mask utilized by atmospheric technicians. Still not very good at blocking gas flow, but it's flameproof!"

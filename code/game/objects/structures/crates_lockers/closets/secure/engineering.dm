@@ -66,10 +66,15 @@
 	new /obj/item/storage/toolbox/mechanical(src)
 	new /obj/item/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/holosign_creator/engineering(src)
-	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/storage/box/emptysandbags(src)
 	new /obj/item/storage/bag/construction(src)
+
+	var/newmask = pick(	/obj/item/clothing/mask/gas,
+						/obj/item/clothing/mask/gas/alt,
+						/obj/item/clothing/mask/gas/alt2,
+						/obj/item/clothing/mask/gas/alt3)
+	new newmask(src)
 
 
 /obj/structure/closet/secure_closet/atmospherics

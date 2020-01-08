@@ -15,7 +15,6 @@
 	new /obj/item/clothing/gloves/fingerless(src)
 	new /obj/item/megaphone/cargo(src)
 	new /obj/item/tank/internals/emergency_oxygen(src)
-	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/head/soft(src)
 	new /obj/item/export_scanner(src)
 	new /obj/item/door_remote/quartermaster(src)
@@ -23,3 +22,9 @@
 	new /obj/item/storage/photo_album/QM(src)
 	new /obj/item/circuitboard/machine/ore_silo(src)
 	new /obj/item/card/id/departmental_budget/car(src)
+
+	var/newmask = pick(	/obj/item/clothing/mask/gas,
+						/obj/item/clothing/mask/gas/alt,
+						/obj/item/clothing/mask/gas/alt2,
+						/obj/item/clothing/mask/gas/alt3)
+	new newmask(src)

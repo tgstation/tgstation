@@ -593,6 +593,7 @@
 					/obj/item/clothing/under/syndicate/rus_army,
 					/obj/item/clothing/under/costume/soviet,
 					/obj/item/clothing/mask/russian_balaclava,
+					/obj/item/clothing/mask/gas/alt3,
 					/obj/item/clothing/head/helmet/rus_ushanka,
 					/obj/item/clothing/suit/armor/vest/russian_coat,
 					/obj/item/gun/ballistic/rifle/boltaction,
