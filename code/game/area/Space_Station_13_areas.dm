@@ -701,10 +701,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Genetics Lab"
 	icon_state = "genetics"
 
-/area/medical/genetics/cloning
-	name = "Cloning Lab"
-	icon_state = "cloning"
-
 /area/medical/sleeper
 	name = "Medbay Treatment Center"
 	icon_state = "exam_room"

@@ -63569,10 +63569,6 @@
 /obj/structure/bookcase/random/reference,
 /turf/open/floor/wood,
 /area/library)
-"cnP" = (
-/obj/structure/bookcase/manuals/medical,
-/turf/open/floor/wood,
-/area/library)
 "cnQ" = (
 /obj/structure/bookcase/manuals/engineering,
 /turf/open/floor/wood,
@@ -148569,7 +148565,7 @@ chS
 cjt
 ckR
 cms
-cnP
+cqN
 cpu
 cqP
 cmt
