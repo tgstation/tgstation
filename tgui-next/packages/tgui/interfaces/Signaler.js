@@ -14,7 +14,7 @@ export const Signaler = props => {
   return (
     <Section>
       <Grid>
-        <Grid.Column size={1.4}>
+        <Grid.Column size={1.4} color="label">
           Frequency:
         </Grid.Column>
         <Grid.Column>
@@ -43,7 +43,7 @@ export const Signaler = props => {
         </Grid.Column>
       </Grid>
       <Grid mt={0.6}>
-        <Grid.Column size={1.4}>
+        <Grid.Column size={1.4} color="label">
           Code:
         </Grid.Column>
         <Grid.Column>
