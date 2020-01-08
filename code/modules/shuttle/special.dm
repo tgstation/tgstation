@@ -346,7 +346,7 @@
 		for(var/obj/I in counted_money)
 			qdel(I)
 		if(!check_times[AM] || check_times[AM] < world.time) //Let's not spam the message
-			to_chat(AM, "<span class='notice'>[payees[AM]] credits received. You need [threshold-payees[AM]] more.</span>")
+			to_chat(AM, "<span class='notice'>[payees[AM]] cr received. You need [threshold-payees[AM]] cr more.</span>")
 			check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
 		alarm_beep()
 		return ..()

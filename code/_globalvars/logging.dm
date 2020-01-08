@@ -40,6 +40,8 @@ GLOBAL_VAR(world_paper_log)
 GLOBAL_PROTECT(world_paper_log)
 GLOBAL_VAR(tgui_log)
 GLOBAL_PROTECT(tgui_log)
+GLOBAL_VAR(world_shuttle_log)
+GLOBAL_PROTECT(world_shuttle_log)
 
 GLOBAL_LIST_EMPTY(bombers)
 GLOBAL_PROTECT(bombers)

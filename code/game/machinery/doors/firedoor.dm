@@ -216,6 +216,7 @@
 
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
+	can_crush = FALSE
 	flags_1 = ON_BORDER_1
 	CanAtmosPass = ATMOS_PASS_PROC
 

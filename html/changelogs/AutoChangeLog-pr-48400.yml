@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - rscadd: "Added directional subtypes for stairs (like /obj/structure/stairs/north)"
-  - bugfix: "Added missing directional sprites for stairs"

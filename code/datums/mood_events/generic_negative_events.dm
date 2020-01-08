@@ -47,9 +47,24 @@
 	mood_change = -2
 	timeout = 4 MINUTES
 
-/datum/mood_event/depression
+/datum/mood_event/depression_minimal
+	description = "<span class='warning'>I feel a bit down.</span>\n"
+	mood_change = -10
+	timeout = 2 MINUTES
+
+/datum/mood_event/depression_mild
 	description = "<span class='warning'>I feel sad for no particular reason.</span>\n"
 	mood_change = -12
+	timeout = 2 MINUTES
+
+/datum/mood_event/depression_moderate
+	description = "<span class='warning'>I feel miserable.</span>\n"
+	mood_change = -14
+	timeout = 2 MINUTES
+
+/datum/mood_event/depression_severe
+	description = "<span class='warning'>I've lost all hope.</span>\n"
+	mood_change = -16
 	timeout = 2 MINUTES
 
 /datum/mood_event/shameful_suicide //suicide_acts that return SHAME, like sord

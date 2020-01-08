@@ -151,8 +151,8 @@
 /obj/item/clothing/under/rank/medical/purple : /obj/item/clothing/under/rank/medical/doctor/purple
 /obj/item/clothing/under/rank/medical/skirt : /obj/item/clothing/under/rank/medical/doctor/skirt
 /obj/item/clothing/under/rank/nursesuit : /obj/item/clothing/under/rank/medical/doctor/nurse
-/obj/item/clothing/under/rank/geneticist : /obj/item/clothing/under/rank/medical/geneticist
-/obj/item/clothing/under/rank/geneticist/skirt : /obj/item/clothing/under/rank/medical/geneticist/skirt
+/obj/item/clothing/under/rank/geneticist : /obj/item/clothing/under/rank/rnd/geneticist
+/obj/item/clothing/under/rank/geneticist/skirt : /obj/item/clothing/under/rank/rnd/geneticist/skirt
 /obj/item/clothing/under/rank/virologist : /obj/item/clothing/under/rank/medical/virologist
 /obj/item/clothing/under/rank/virologist/skirt : /obj/item/clothing/under/rank/medical/virologist/skirt
 /obj/item/clothing/under/rank/chemist : /obj/item/clothing/under/rank/medical/chemist

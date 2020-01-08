@@ -73,26 +73,32 @@
 	cost *= ED.value_multiplier
 	return (cost-multi_surgery_adjust)
 
-/datum/surgery_step/dissection/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, display_results = TRUE)
+/datum/surgery_step/dissection/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/points_earned = check_value(target, surgery)
 	user.visible_message("<span class='notice'>[user] dissects [target], discovering [points_earned] point\s of data!</span>", "<span class='notice'>You dissect [target], finding [points_earned] point\s worth of discoveries, you also write a few notes.</span>")
 
 	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = points_earned*PUBLIC_TECHWEB_GAIN))
-	new /obj/item/research_notes(user.loc, points_earned*PRIVATE_TECHWEB_GAIN, "biology")
+	var/obj/item/research_notes/the_dossier =new /obj/item/research_notes(user.loc, points_earned*PRIVATE_TECHWEB_GAIN, "biology")
+	if(!user.put_in_hands(the_dossier) && istype(user.get_inactive_held_item(), /obj/item/research_notes))
+		var/obj/item/research_notes/hand_dossier = user.get_inactive_held_item()
+		hand_dossier.merge(the_dossier)
 
 	var/obj/item/bodypart/L = target.get_bodypart(BODY_ZONE_CHEST)
 	target.apply_damage(80, BRUTE, L)
 	ADD_TRAIT(target, TRAIT_DISSECTED, "[surgery.name]")
 	repeatable = FALSE
-	experience_given = 1+(points_earned/BASE_HUMAN_REWARD)
-	return ..(default_display_results = FALSE)
+	experience_given = 1+(points_earned/(BASE_HUMAN_REWARD/10))//if BHR = 500, 10 XP on base surgery
+	return ..()
 
 /datum/surgery_step/dissection/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/points_earned = round(check_value(target, surgery) * 0.01)
 	user.visible_message("<span class='notice'>[user] dissects [target]!</span>", EXPDIS_FAIL_MSG)
 
 	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = points_earned*PUBLIC_TECHWEB_GAIN))
-	new /obj/item/research_notes(user.loc, points_earned*PRIVATE_TECHWEB_GAIN, "biology")
+	var/obj/item/research_notes/the_dossier =new /obj/item/research_notes(user.loc, points_earned*PRIVATE_TECHWEB_GAIN, "biology")
+	if(!user.put_in_hands(the_dossier) && istype(user.get_inactive_held_item(), /obj/item/research_notes))
+		var/obj/item/research_notes/hand_dossier = user.get_inactive_held_item()
+		hand_dossier.merge(the_dossier)
 
 	var/obj/item/bodypart/L = target.get_bodypart(BODY_ZONE_CHEST)
 	target.apply_damage(80, BRUTE, L)

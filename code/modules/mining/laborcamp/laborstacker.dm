@@ -8,8 +8,8 @@ GLOBAL_LIST(labor_sheet_values)
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
 	density = FALSE
-	ui_x = 450
-	ui_y = 475
+	ui_x = 315
+	ui_y = 430
 
 	var/obj/machinery/mineral/stacking_machine/laborstacker/stacking_machine = null
 	var/machinedir = SOUTH
@@ -50,7 +50,6 @@ GLOBAL_LIST(labor_sheet_values)
 	if(obj_flags & EMAGGED)
 		can_go_home = TRUE
 
-	data["status_info"] = "No Prisoner ID detected."
 	var/obj/item/card/id/I = user.get_idcard(TRUE)
 	if(istype(I, /obj/item/card/id/prisoner))
 		var/obj/item/card/id/prisoner/P = I
@@ -60,6 +59,9 @@ GLOBAL_LIST(labor_sheet_values)
 			data["status_info"] = "Goal met!"
 		else
 			data["status_info"] = "You are [(P.goal - P.points)] points away."
+	else
+		data["status_info"] = "No Prisoner ID detected."
+		data["id_points"] = 0
 
 	if(stacking_machine)
 		data["unclaimed_points"] = stacking_machine.points
@@ -81,6 +83,7 @@ GLOBAL_LIST(labor_sheet_values)
 				P.points += stacking_machine.points
 				stacking_machine.points = 0
 				to_chat(usr, "<span class='notice'>Points transferred.</span>")
+				. = TRUE
 			else
 				to_chat(usr, "<span class='alert'>No valid id for point transfer detected.</span>")
 		if("move_shuttle")
@@ -99,6 +102,7 @@ GLOBAL_LIST(labor_sheet_values)
 							Radio.set_frequency(FREQ_SECURITY)
 							Radio.talk_into(src, "A prisoner has returned to the station. Minerals and Prisoner ID card ready for retrieval.", FREQ_SECURITY)
 						to_chat(usr, "<span class='notice'>Shuttle received message and will be sent shortly.</span>")
+						. = TRUE
 
 /obj/machinery/mineral/labor_claim_console/proc/locate_stacking_machine()
 	stacking_machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
