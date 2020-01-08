@@ -5,22 +5,24 @@
 	var/modifier = 0
 
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, created_volume)
-	var/turf/T = get_turf(holder.my_atom)
-	var/inside_msg
-	if(ismob(holder.my_atom))
-		var/mob/M = holder.my_atom
-		inside_msg = " inside [ADMIN_LOOKUPFLW(M)]"
-	var/lastkey = holder.my_atom.fingerprintslast
-	var/touch_msg = "N/A"
-	if(lastkey)
-		var/mob/toucher = get_mob_by_key(lastkey)
-		touch_msg = "[ADMIN_LOOKUPFLW(toucher)]"
-	if(!istype(holder.my_atom, /obj/machinery/plumbing)) //excludes standard plumbing equipment from spamming admins with this shit
-		message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
-	log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
-	var/datum/effect_system/reagents_explosion/e = new()
-	e.set_up(modifier + round(created_volume/strengthdiv, 1), T, 0, 0)
-	e.start()
+	var/power = modifier + round(created_volume/strengthdiv, 1)
+	if(power > 0)
+		var/turf/T = get_turf(holder.my_atom)
+		var/inside_msg
+		if(ismob(holder.my_atom))
+			var/mob/M = holder.my_atom
+			inside_msg = " inside [ADMIN_LOOKUPFLW(M)]"
+		var/lastkey = holder.my_atom.fingerprintslast
+		var/touch_msg = "N/A"
+		if(lastkey)
+			var/mob/toucher = get_mob_by_key(lastkey)
+			touch_msg = "[ADMIN_LOOKUPFLW(toucher)]"
+		if(!istype(holder.my_atom, /obj/machinery/plumbing)) //excludes standard plumbing equipment from spamming admins with this shit
+			message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
+		log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
+		var/datum/effect_system/reagents_explosion/e = new()
+		e.set_up(power , T, 0, 0)
+		e.start()
 	holder.clear_reagents()
 
 

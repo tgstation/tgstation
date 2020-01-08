@@ -9,7 +9,7 @@
 
 /datum/surgery_step/sever_limb
 	name = "sever limb"
-	implements = list(TOOL_SCALPEL = 100, TOOL_SAW = 100, /obj/item/melee/arm_blade = 80, /obj/item/twohanded/fireaxe = 50, /obj/item/hatchet = 40, /obj/item/kitchen/knife/butcher = 25)
+	implements = list(/obj/item/shears = 300, TOOL_SCALPEL = 100, TOOL_SAW = 100, /obj/item/melee/arm_blade = 80, /obj/item/twohanded/fireaxe = 50, /obj/item/hatchet = 40, /obj/item/kitchen/knife/butcher = 25)
 	time = 64
 	experience_given = 5
 
@@ -18,7 +18,7 @@
 		"<span class='notice'>[user] begins to sever [target]'s [parse_zone(target_zone)]!</span>",
 		"<span class='notice'>[user] begins to sever [target]'s [parse_zone(target_zone)]!</span>")
 
-/datum/surgery_step/sever_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+/datum/surgery_step/sever_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/mob/living/carbon/human/L = target
 	display_results(user, target, "<span class='notice'>You sever [L]'s [parse_zone(target_zone)].</span>",
 		"<span class='notice'>[user] severs [L]'s [parse_zone(target_zone)]!</span>",
@@ -28,4 +28,4 @@
 		target_limb.drop_limb()
 	if(user.mind)
 		user.mind.adjust_experience(/datum/skill/medical, experience_given)
-	return ..(default_display_results = FALSE)
+	return ..()

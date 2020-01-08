@@ -879,7 +879,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	if(!arctargets.len)
 		for(var/mob/living/Z in oview(zapstart, range))
-			if(!(Z in targets_copy) && !(Z.flags_1 & TESLA_IGNORE_1) && !(Z.flags_1 & SHOCKED_1) && Z.stat != DEAD && prob(20))//let's not hit all the engineers with every beam and/or segment of the arc
+			if(!(Z in targets_copy) && !(HAS_TRAIT(Z, TRAIT_TESLA_SHOCKIMMUNE)) && !(Z.flags_1 & SHOCKED_1) && Z.stat != DEAD && prob(20))//let's not hit all the engineers with every beam and/or segment of the arc
 				arctargets += Z
 
 	if(!arctargets.len)

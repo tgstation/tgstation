@@ -29,7 +29,7 @@
 	wires = new /datum/wires/tesla_coil(src)
 	linked_techweb = SSresearch.science_tech
 
-/obj/machinery/power/testla_coil/should_have_node()
+/obj/machinery/power/tesla_coil/should_have_node()
 	return anchored
 
 /obj/machinery/power/tesla_coil/RefreshParts()
