@@ -912,3 +912,11 @@
 	toxpwr = 0.5
 	taste_mult = 1.3
 	taste_description = "sugary sweetness"
+
+/datum/reagent/toxin/leadacetate/on_mob_life(mob/living/carbon/M)
+	M.adjustOrganLoss(ORGAN_SLOT_EARS,1)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN,1)
+	if(prob(1))
+		to_chat(M, "<span class='notice'>Ah, what was that? You thought you heard something...</span>")
+		M.confused += 5
+	return ..()
