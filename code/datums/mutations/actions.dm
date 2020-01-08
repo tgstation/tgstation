@@ -268,7 +268,7 @@
 	if(!tongue)
 		to_chat(C, "<span class='notice'>You don't have a tongue to shoot!</span>")
 		return
-	
+
 	tongue.Remove(C, special = TRUE)
 	var/obj/item/hardened_spike/spike = new spike_path(get_turf(C), C)
 	tongue.forceMove(spike)
@@ -331,7 +331,7 @@
 /obj/item/hardened_spike/chem/embedded(mob/living/carbon/human/embedded_mob)
 	chems = new
 	chems.transfered = embedded_mob
-	spike.spike = src
+	chems.spikey = src
 	to_chat(fired_by, "<span class='notice'>Link established! Use the \"Transfer Chemicals\" ability to send your chemicals to the linked target!")
 	chems.Grant(fired_by)
 
@@ -346,7 +346,7 @@
 	button_icon_state = "spikechemswap"
 	name = "Transfer Chemicals"
 	desc = "Purge all of the chemicals into you, sending it to the person who has the chemical spike embedded into you."
-	var/obj/item/hardened_spike/chem/spike
+	var/obj/item/hardened_spike/chem/spikey
 	var/mob/living/carbon/human/transfered
 
 /datum/action/innate/send_chems/Activate()
@@ -357,13 +357,13 @@
 	to_chat(transfered, "<span class='warning'>You feel a tiny prick!</span>")
 	transferer.reagents.trans_to(transfered, transferer.reagents.total_volume, 1, 1, 0, transfered_by = transferer)
 
-	var/obj/item/bodypart/L = spike.loc
+	var/obj/item/bodypaspikert/L = spikey.loc
 
-	L.embedded_objects -= spike
+	L.embedded_objects -= spikey
 	//this is where it would deal damage, if it transfers chems it removes itself so no damage
-	spike.forceMove(get_turf(L))
-	spike.unembedded()
-	usr.visible_message("<span class='notice'>[spike] falls out of [transfered]!</span>")
-	if(!has_embedded_objects())
-		clear_alert("embeddedobject")
-		SEND_SIGNAL(usr, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+	spikey.forceMove(get_turf(L))
+	spikey.unembedded()
+	usr.visible_message("<span class='notice'>[spikey] falls out of [transfered]!</span>")
+	if(!L.has_embedded_objects())
+		L.clear_alert("embeddedobject")
+		L.SEND_SIGNAL(usr, COMSIG_CLEAR_MOOD_EVENT, "embedded")
