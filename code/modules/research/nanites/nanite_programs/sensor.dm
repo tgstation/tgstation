@@ -210,11 +210,12 @@
 		if(CLONE)
 			damage_amt = host_mob.getCloneLoss()
 
-	if(damage_amt >= damage.get_value())
-		if(check_above)
+	if(check_above)
+		if(damage_amt >= damage.get_value())
 			reached_threshold = TRUE
-	else if(!check_above)
-		reached_threshold = TRUE
+	else
+		if(damage_amt < damage.get_value())
+			reached_threshold = TRUE
 
 	if(reached_threshold)
 		if(!spent)
@@ -228,7 +229,9 @@
 /datum/nanite_program/sensor/damage/make_rule(datum/nanite_program/target)
 	var/datum/nanite_rule/damage/rule = new(target)
 	var/datum/nanite_extra_setting/direction = extra_settings[NES_DIRECTION]
-	rule.above = direction.get_value()
+	var/datum/nanite_extra_setting/damage_type = extra_settings[NES_DAMAGE_TYPE]
+	var/datum/nanite_extra_setting/damage = extra_settings[NES_DAMAGE]
+	rule.above  = (direction == "Above")
 	rule.threshold = damage
 	rule.damage_type = damage_type
 	return rule

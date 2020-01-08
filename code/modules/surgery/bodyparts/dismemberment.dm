@@ -21,15 +21,18 @@
 	C.emote("scream")
 	SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "dismembered", /datum/mood_event/dismembered)
 	drop_limb()
+	
 	C.update_equipment_speed_mods() // Update in case speed affecting item unequipped by dismemberment
-
-	if(dam_type == BURN)
-		burn()
-		return 1
-	add_mob_blood(C)
 	var/turf/location = C.loc
 	if(istype(location))
 		C.add_splatter_floor(location)
+	
+	if(QDELETED(src)) //Could have dropped into lava/explosion/chasm/whatever
+		return TRUE
+	if(dam_type == BURN)
+		burn()
+		return TRUE
+	add_mob_blood(C)
 	var/direction = pick(GLOB.cardinals)
 	var/t_range = rand(2,max(throw_range/2, 2))
 	var/turf/target_turf = get_turf(src)
@@ -41,7 +44,7 @@
 		if(new_turf.density)
 			break
 	throw_at(target_turf, throw_range, throw_speed)
-	return 1
+	return TRUE
 
 
 /obj/item/bodypart/chest/dismember()

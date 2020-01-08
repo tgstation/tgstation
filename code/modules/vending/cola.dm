@@ -12,6 +12,7 @@
 					/obj/item/reagent_containers/food/drinks/soda_cans/space_up = 10,
 					/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game = 10,
 					/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime = 10,
+					/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 10,
 					/obj/item/reagent_containers/food/drinks/waterbottle = 10)
 	contraband = list(/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko = 6,
 		              /obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 6)
@@ -82,6 +83,7 @@
 					/obj/item/reagent_containers/food/drinks/soda_cans/space_up = 10,
 					/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game = 10,
 					/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime = 10,
+					/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 10,
 					/obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 10)
 	product_slogans = "~Shake me up some of that Shambler's Juice!~"
 	product_ads = "Refreshing!;Jyrbv dv lg jfdv fw kyrk Jyrdscvi'j Alztv!;Over 1 trillion souls drank!;Thirsty? Nyp efk uizeb kyv uribevjj?;Kyv Jyrdscvi uizebj kyv ezxyk!;Drink up!;Krjkp."

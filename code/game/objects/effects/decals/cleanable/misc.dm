@@ -224,3 +224,10 @@
 	icon = 'icons/effects/confetti_and_decor.dmi'
 	icon_state = "confetti"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT //the confetti itself might be annoying enough
+
+/obj/effect/decal/cleanable/plastic
+	name = "plastic shreds"
+	desc = "Bits of torn, broken, worthless plastic."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "shards"
+	color = "#c6f4ff"

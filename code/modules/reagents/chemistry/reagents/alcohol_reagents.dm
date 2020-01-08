@@ -1513,7 +1513,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/grasshopper
 	name = "Grasshopper"
 	description = "A fresh and sweet dessert shooter. Difficult to look manly while drinking this."
-	color = "00ff00"
+	color = "#00ff00"
 	boozepwr = 25
 	quality = DRINK_GOOD
 	taste_description = "chocolate and mint dancing around your mouth"
@@ -1524,7 +1524,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/stinger
 	name = "Stinger"
 	description = "A snappy way to end the day."
-	color = "ccff99"
+	color = "#ccff99"
 	boozepwr = 25
 	quality = DRINK_NICE
 	taste_description = "a slap on the face in the best possible way"
@@ -1742,6 +1742,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "mojito"
 	glass_name = "Mojito"
 	glass_desc = "A drink that looks as refreshing as it tastes."
+
+/datum/reagent/consumable/ethanol/moscow_mule
+	name = "Moscow Mule"
+	description = "A chilly drink that reminds you of the Derelict."
+	color = "#EEF1AA"
+	boozepwr = 30
+	quality = DRINK_GOOD
+	taste_description = "refreshing spiciness"
+	glass_icon_state = "moscow_mule"
+	glass_name = "Moscow Mule"
+	glass_desc = "A chilly drink that reminds you of the Derelict."
 
 /datum/reagent/consumable/ethanol/fernet
 	name = "Fernet"
