@@ -175,3 +175,6 @@
 
 /turf/open/lava/smooth/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/lava/smooth/drake
+	slowdown = 2

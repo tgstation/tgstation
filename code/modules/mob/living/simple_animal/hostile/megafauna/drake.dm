@@ -447,7 +447,7 @@ Difficulty: Medium
 
 	// changes turf to lava temporarily
 	if(!istype(T, /turf/closed) && !istype(T, /turf/open/lava))
-		var/lava_turf = /turf/open/lava/smooth
+		var/lava_turf = /turf/open/lava/smooth/drake
 		var/reset_turf = T.type
 		T.ChangeTurf(lava_turf, flags = CHANGETURF_INHERIT_AIR)
 		addtimer(CALLBACK(T, /turf.proc/ChangeTurf, reset_turf, null, CHANGETURF_INHERIT_AIR), reset_time, TIMER_OVERRIDE|TIMER_UNIQUE)
