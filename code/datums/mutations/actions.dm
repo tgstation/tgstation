@@ -363,7 +363,7 @@
 	//this is where it would deal damage, if it transfers chems it removes itself so no damage
 	spikey.forceMove(get_turf(L))
 	spikey.unembedded()
-	usr.visible_message("<span class='notice'>[spikey] falls out of [transfered]!</span>")
-	if(!L.has_embedded_objects())
-		L.clear_alert("embeddedobject")
-		L.SEND_SIGNAL(usr, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+	transfered.visible_message("<span class='notice'>[spikey] falls out of [transfered]!</span>")
+	if(!transfered.has_embedded_objects())
+		transfered.clear_alert("embeddedobject")
+		transfered.SEND_SIGNAL(usr, COMSIG_CLEAR_MOOD_EVENT, "embedded")
