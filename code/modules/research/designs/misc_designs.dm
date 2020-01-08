@@ -288,7 +288,7 @@
 
 /datum/design/eng_gloves
 	name = "Tinkers Gloves"
-	desc = "Overdesigned engineering gloves that have automated construction subrutines dialed in, allowing for faster construction while worn."
+	desc = "Overdesigned engineering gloves that have automated construction subroutines dialed in, allowing for faster construction while worn."
 	id = "eng_gloves"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)

@@ -44,7 +44,7 @@
 	nodamage = TRUE
 	flag = "energy"
 	temperature = 50
-	
+
 /obj/projectile/temp/basilisk/heated
 	name = "energy blast"
 	icon_state= "chronobolt"
@@ -67,7 +67,7 @@
 			adjustBruteLoss(140)
 		if(3)
 			adjustBruteLoss(110)
-			
+
 /mob/living/simple_animal/hostile/asteroid/basilisk/AttackingTarget()
 	. = ..()
 	if(lava_drinker && !warmed_up && istype(target, /turf/open/lava))
@@ -80,7 +80,7 @@
 			warmed_up = TRUE
 			projectiletype = /obj/projectile/temp/basilisk/heated
 			addtimer(CALLBACK(src, .proc/cool_down), 3000)
-			
+
 mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
 	visible_message("<span class='warning'>[src] appears to be cooling down...</span>")
 	if(stat != DEAD)
@@ -115,6 +115,22 @@ mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
 	loot = list()
 	butcher_results = list(/obj/item/stack/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
 	lava_drinker = FALSE
+	search_objects = 1
+	wanted_objects = list(/obj/item/pen/survival)
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Life()
+	. = ..()
+	if(CONSCIOUS)
+		consume_bait()
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/proc/consume_bait()
+	var/obj/item/pen/survival/diamonds = locate(/obj/item/pen/survival) in oview(src, 9)
+	if(diamonds)
+		var/distance = 0
+		distance = get_dist(src.loc,diamonds.loc)
+		if(distance <= 1)
+			src.visible_message("<span class='notice'>[src] glares at [diamonds], and devours it in the blink of an eye! ...At least, you think.</span>")
+			qdel(diamonds)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize()
 	. = ..()
