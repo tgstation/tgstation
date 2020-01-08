@@ -1,6 +1,6 @@
 /obj/structure/fireaxecabinet
 	name = "fire axe cabinet"
-	desc = "There is a small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
+	desc = "There is a small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if. Alt-click to open and close."
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "fireaxe"
 	anchored = TRUE
@@ -42,7 +42,6 @@
 		var/obj/item/stack/sheet/glass/G = I
 		if(G.get_amount() < 2)
 			to_chat(user, "<span class='warning'>You need two glass sheets to fix [src]!</span>")
-			return
 		to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
 		if(do_after(user, 20, target = src) && G.use(2))
 			broken = 0
@@ -53,13 +52,11 @@
 			var/obj/item/twohanded/fireaxe/F = I
 			if(F.wielded)
 				to_chat(user, "<span class='warning'>Unwield the [F.name] first.</span>")
-				return
 			if(!user.transferItemToLoc(F, src))
 				return
 			fireaxe = F
 			to_chat(user, "<span class='notice'>You place the [F.name] back in the [name].</span>")
 			update_icon()
-			return
 		else if(!broken)
 			toggle_open()
 	else
@@ -115,7 +112,6 @@
 			to_chat(user, "<span class='notice'>You take the fire axe from the [name].</span>")
 			src.add_fingerprint(user)
 			update_icon()
-			return
 	toggle_open()
 
 /obj/structure/fireaxecabinet/attack_paw(mob/living/user)
@@ -123,7 +119,6 @@
 
 /obj/structure/fireaxecabinet/attack_ai(mob/user)
 	toggle_lock(user)
-	return
 
 /obj/structure/fireaxecabinet/attack_tk(mob/user)
 	if(locked)
@@ -132,7 +127,6 @@
 	else
 		open = !open
 		update_icon()
-		return
 
 /obj/structure/fireaxecabinet/update_icon()
 	cut_overlays()
@@ -170,12 +164,9 @@
 /obj/structure/fireaxecabinet/proc/toggle_open()
 	if(locked)
 		to_chat(usr, "<span class='warning'>The [name] won't budge!</span>")
-		return
 	else
 		open = !open
 		update_icon()
-		return
 
 /obj/structure/fireaxecabinet/AltClick(mob/user)
 	toggle_open()
-
