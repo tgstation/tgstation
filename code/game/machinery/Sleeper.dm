@@ -296,8 +296,17 @@
 		list(/datum/reagent/colorful_reagent),
 		list(/datum/reagent/drug/space_drugs)
 	)//Exclusively uses non-lethal, "fun" chems. At an obvious downside.
+	var/spray_chems = list(
+		/datum/reagent/spraytan, /datum/reagent/hair_dye, /datum/reagent/baldium, /datum/reagent/concentrated_barbers_aid
+	)//Chemicals that need to have a touch or vapor reaction to be applied, not the standard chamber reaction.
 	enter_message = "<span class='notice'><b>You're surrounded by some funky music inside the chamber. You go deaf as you feel waves of krunk vibe within you.</b></span>"
 
 /obj/machinery/sleeper/party/inject_chem(chem, mob/user)
 	. = ..()
+	if(chem in spray_chems)
+		occupant.reagents.reaction(user, VAPOR)
+		playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE, -6)
+		if(user)
+			log_combat(user, occupant, "sprayed [chem] into", addition = "via [src]")
 	occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, 4) //You're injecting chemicals into yourself from a recalled, decrepit medical machine. What did you expect?
+	return TRUE
