@@ -534,7 +534,7 @@
 	update_icon()
 
 /obj/item/storage/crayons/update_overlays()
-	. = list()
+	. = ..()
 	for(var/obj/item/toy/crayon/crayon in contents)
 		. += mutable_appearance('icons/obj/crayons.dmi', crayon.crayon_color)
 

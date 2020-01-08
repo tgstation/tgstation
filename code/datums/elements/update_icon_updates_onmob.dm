@@ -1,8 +1,9 @@
 //update_icon() may change the onmob icons
 //Very good name, I know
 
-/datum/element/update_icon_updates_onmob/Attach(obj/item/target)
-	if(!istype(target))
+/datum/element/update_icon_updates_onmob/Attach(datum/target)
+	. = ..()
+	if(!istype(target, /obj/item))
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_ATOM_UPDATED_ICON, .proc/update_onmob)
 

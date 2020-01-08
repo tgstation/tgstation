@@ -493,11 +493,11 @@
 /// Updates the icon of the atom
 /atom/proc/update_icon()
 	var/signalOut = SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON)
-	var/postSignal = FALSE
+	. = FALSE
 
 	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_ICON_STATE))
 		update_icon_state()
-		postSignal = TRUE
+		. = TRUE
 
 	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_OVERLAYS))
 		var/list/new_overlays = update_overlays()
@@ -507,10 +507,9 @@
 		if(length(new_overlays))
 			managed_overlays = new_overlays
 			add_overlay(new_overlays)
-		postSignal = TRUE
+		. = TRUE
 
-	if(postSignal)
-		SEND_SIGNAL(src, COMSIG_ATOM_UPDATED_ICON)
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATED_ICON, signalOut, .)
 
 /// Updates the icon state of the atom
 /atom/proc/update_icon_state()
