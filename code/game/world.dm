@@ -133,6 +133,8 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_paper_log = "[GLOB.log_directory]/paper.log"
 	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
 	GLOB.world_shuttle_log = "[GLOB.log_directory]/shuttle.log"
+	GLOB.subsystem_log = "[GLOB.log_directory]/subsystem.log"
+
 
 #ifdef UNIT_TESTS
 	GLOB.test_log = file("[GLOB.log_directory]/tests.log")
@@ -149,6 +151,7 @@ GLOBAL_VAR(restart_counter)
 	start_log(GLOB.world_job_debug_log)
 	start_log(GLOB.tgui_log)
 	start_log(GLOB.world_shuttle_log)
+	start_log(GLOB.subsystem_log)
 
 	GLOB.changelog_hash = md5('html/changelog.html') //for telling if the changelog has changed recently
 	if(fexists(GLOB.config_error_log))
@@ -164,6 +167,14 @@ GLOBAL_VAR(restart_counter)
 	log_runtime(GLOB.revdata.get_log_message())
 
 /world/Topic(T, addr, master, key)
+	if(!SSfail2topic)
+		return "Server not initialized."
+	else if(SSfail2topic.IsRateLimited(addr))
+		return "Rate limited."
+
+	if(length(T) > CONFIG_GET(number/topic_max_size))
+		return "Payload too large!"
+
 	TGS_TOPIC	//redirect to server tools if necessary
 
 	var/static/list/topic_handlers = TopicHandlers()

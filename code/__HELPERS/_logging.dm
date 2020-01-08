@@ -171,6 +171,9 @@
 	if (CONFIG_GET(flag/log_job_debug))
 		WRITE_LOG(GLOB.world_job_debug_log, "JOB: [text]")
 
+/proc/log_subsystem(subsystem, text)
+	WRITE_LOG(GLOB.subsystem_log, "[subsystem]: [text]")
+
 /* Log to both DD and the logfile. */
 /proc/log_world(text)
 #ifdef USE_CUSTOM_ERROR_HANDLER
@@ -190,8 +193,8 @@
 /proc/log_mapping(text)
 	WRITE_LOG(GLOB.world_map_error_log, text)
 
-/* ui logging */ 
- 
+/* ui logging */
+
 /proc/log_tgui(text)
 	WRITE_LOG(GLOB.tgui_log, text)
 
