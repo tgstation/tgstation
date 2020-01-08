@@ -3,11 +3,21 @@
 SUBSYSTEM_DEF(profiler)
 	name = "Profiler"
 	init_order = INIT_ORDER_PROFILER
-	flags = SS_NO_FIRE
+	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
+	wait = 600
 
 /datum/controller/subsystem/profiler/Initialize()
 	if(CONFIG_GET(flag/auto_profile))
 		StartProfiling()
+	return ..()
+
+/datum/controller/subsystem/profiler/fire()
+	if(CONFIG_GET(flag/auto_profile))
+		DumpFile()
+
+/datum/controller/subsystem/profiler/Shutdown()
+	if(CONFIG_GET(flag/auto_profile))
+		DumpFile()
 	return ..()
 
 /datum/controller/subsystem/profiler/proc/StartProfiling()
@@ -29,8 +39,3 @@ SUBSYSTEM_DEF(profiler)
 		fdel(json_file)
 	WRITE_FILE(json_file, current_profile_data)
 #endif
-
-/datum/controller/subsystem/profiler/Shutdown()
-	if(CONFIG_GET(flag/auto_profile))
-		DumpFile()
-	return ..()
