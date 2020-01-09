@@ -735,7 +735,7 @@
 
 obj/item/bodypart/l_arm/prosthetic
 	name = "high-grade prosthetic left arm"
-	desc = "A well-made robotic limb coated in synthflesh. Able to withstand more damage than a normal human limb."
+	desc = "A well-made robotic limb coated in a flesh-like rubber. Able to withstand more damage than a normal human limb."
 	icon_state = "fake_human_l_arm"
 	brute_reduction = 5
 	burn_reduction = 0
@@ -744,7 +744,7 @@ obj/item/bodypart/l_arm/prosthetic
 
 /obj/item/bodypart/r_arm/prosthetic
 	name = "high-grade prosthetic right arm"
-	desc = "A well-made robotic limb coated in synthflesh. Able to withstand more damage than a normal human limb."
+	desc = "A well-made robotic limb coated in a flesh-like rubber. Able to withstand more damage than a normal human limb."
 	icon_state = "fake_human_r_arm"
 	brute_reduction = 5
 	burn_reduction = 0
@@ -753,7 +753,7 @@ obj/item/bodypart/l_arm/prosthetic
 
 /obj/item/bodypart/l_leg/prosthetic
 	name = "high-grade prosthetic left leg"
-	desc = "A well-made robotic limb coated in synthflesh. Able to withstand more damage than a normal human limb."
+	desc = "A well-made robotic limb coated in a flesh-like rubber. Able to withstand more damage than a normal human limb."
 	icon_state = "fake_human_l_leg"
 	brute_reduction = 5
 	burn_reduction = 0
@@ -762,7 +762,7 @@ obj/item/bodypart/l_arm/prosthetic
 
 /obj/item/bodypart/r_leg/prosthetic
 	name = "high-grade prosthetic right leg"
-	desc = "A well-made robotic limb coated in synthflesh. Able to withstand more damage than a normal human limb."
+	desc = "A well-made robotic limb coated in a flesh-like rubber. Able to withstand more damage than a normal human limb."
 	icon_state = "fake_human_r_leg"
 	brute_reduction = 5
 	burn_reduction = 0
