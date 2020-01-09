@@ -2,7 +2,6 @@
 
 #define SEC_RECORD_BOT_COOLDOWN 60 SECONDS
 
-
 /mob/living/simple_animal/bot/secbot/proc/arrest_security_record(mob/living/carbon/C, arrest_type, threat, location)
 
 	if(!C) //Sanity
@@ -28,14 +27,21 @@
 
 	var/bot_authenticated = "[S.name]"
 	var/bot_rank = "Security Robot"
+	var/match_found
 
 	for(var/datum/data/record/R in GLOB.data_core.security)
 		if(!R) //Sanity
 			return
 
 		if(R.fields["name"] == "[C.name]")
+			match_found = TRUE
 			active2 = R //We found the record we want
 			break
+
+	if(!match_found) //No record match; alert Security.
+		playsound(S, 'sound/machines/engine_alert1.ogg', 100, FALSE) //SOUND ALARM!!
+		S.speak("WARNING!! No security record found for [arrest_type ? "Detained" : "Arrested"] level [threat] scumbag <b>[C]</b> at [location]. Recommend further investigation", S.radio_channel)
+		return
 
 	var/counter = 1
 	while(active2.fields[text("com_[]", counter)])
@@ -50,7 +56,7 @@
 		weapons = "YES"
 
 	var/t1 = "<b>[bot_authenticated] [arrest_type ? "Detained" : "Arrested"]:</b> [C.name] <b>LOCATION:</b> [location]. <BR>\
-			<b>STATUS:</b> [active2.fields["criminal"]] <b>IDENTIFIED?:</b> [unknown]. <b>UNAUTHORIZED WEAPONS?:</b> [weapons]. <b>THREAT LEVEL:</b> [threat]."
+			<b>STATUS:</b> [active2.fields["criminal"]] <b>CONCEALED IDENTITY?:</b> [unknown]. <b>UNAUTHORIZED WEAPONS?:</b> [weapons]. <b>THREAT LEVEL:</b> [threat]."
 
 	active2.fields[text("com_[]", counter)] = text("<b>Made by [] ([]) on [] [], []</b><BR>[]", bot_authenticated, bot_rank, station_time_timestamp(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
 
