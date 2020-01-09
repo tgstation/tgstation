@@ -11,10 +11,10 @@
 	var/role = "Security Officer"
 	var/list/name_source
 	var/random_names = TRUE
+	var/rip_and_tear = FALSE
 	show_in_antagpanel = FALSE
 	antag_moodlet = /datum/mood_event/focused
 	can_hijack = HIJACK_PREVENT
-	rip_and_tear = FALSE
 
 /datum/antagonist/ert/on_gain()
 	if(random_names)
@@ -127,6 +127,10 @@
 	role = "Clown"
 	outfit = /datum/outfit/ert/clown
 
+/datum/antagonist/ert/clown/New()
+	. = ..()
+	name_source = GLOB.clown_names
+
 /datum/antagonist/ert/janitor/party
 	role = "Party Cleaning Service"
 	outfit = /datum/outfit/ert/janitor/party
@@ -135,9 +139,9 @@
 	role = "Party Bouncer"
 	outfit = /datum/outfit/ert/security/party
 
-/datum/antagonist/ert/engineering/party
+/datum/antagonist/ert/engineer/party
 	role = "Party Constructor"
-	outfit = /datum/outfit/ert/engineering/party
+	outfit = /datum/outfit/ert/engineer/party
 
 /datum/antagonist/ert/clown/party
 	role = "Party Comedian"

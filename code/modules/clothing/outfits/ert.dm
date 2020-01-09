@@ -316,7 +316,6 @@
 	var/obj/item/radio/R = H.ears
 	R.keyslot = new /obj/item/encryptionkey/headset_service
 	R.recalculateChannels()
-	H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names)) //rename the mob AFTER they're equipped so their ID gets updated properly.
 	H.dna.add_mutation(CLOWNMUT)
 	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
 		M.mutadone_proof = TRUE
@@ -385,7 +384,7 @@
 		/obj/item/storage/box/handcuffs=1)
 
 
-/datum/outfit/ert/engineering/party
+/datum/outfit/ert/engineer/party
 	name = "ERP Constructor"
 
 	uniform = /obj/item/clothing/under/rank/engineering/engineer/hazard
@@ -403,7 +402,7 @@
 		/obj/item/etherealballdeployer=1,\
 		/obj/item/construction/rcd/loaded=1)
 
-/datum/outfit/ert/medic/party
+/datum/outfit/ert/clown/party
 	name = "ERP Comedian"
 
 	uniform = /obj/item/clothing/under/rank/civilian/clown

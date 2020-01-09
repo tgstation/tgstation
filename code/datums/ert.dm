@@ -78,5 +78,5 @@
 	opendoors = FALSE
 	rename_team = "Emergency Response Party"
 	mission = "Create entertainment for the crew."
-	polldesc = "a Code [code] Nanotrasen Emergency Response Party"
+	polldesc = "a Code Rainbow Nanotrasen Emergency Response Party"
 	code = "Rainbow"
