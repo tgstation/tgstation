@@ -1067,6 +1067,17 @@
 	hidden = TRUE
 	experimental = TRUE
 
+/datum/techweb_node/bluerazor
+	id = "bluerazor"
+	display_name = "Bluespace Hair-B-Gone Tech"
+	description = "A breakthrough in shaving technology."
+	prereq_ids = list("bluespace_basic")
+	design_ids = list("bluerazor") //yeah like anyone's gonna use this
+	research_cost = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+	export_price = 2500
+	hidden = TRUE
+	experimental = TRUE
+
 //Helpers for debugging/balancing the techweb in its entirety!
 /proc/total_techweb_exports()
 	var/list/datum/techweb_node/processing = list()
