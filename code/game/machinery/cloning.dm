@@ -5,6 +5,7 @@
 
 #define CLONE_INITIAL_DAMAGE     150    //Clones in clonepods start with 150 cloneloss damage and 150 brainloss damage, thats just logical
 #define MINIMUM_HEAL_LEVEL 40
+#define CLONING_MEMORY_LOSS TRUE
 
 #define SPEAK(message) radio.talk_into(src, message, radio_channel)
 
@@ -222,10 +223,14 @@
 		if(grab_ghost_when == CLONER_FRESH_CLONE)
 			H.grab_ghost()
 			to_chat(H, "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>")
-
+			if(CLONING_MEMORY_LOSS==TRUE)
+				to_chat(H, "<span class='userdanger'>Because you are being cloned (instead of being revived via some other method), YOUR CHARACTER WILL NOT REMEMBER THE CAUSE, CIRCUMSTANCES, OR DETAILS OF THEIR DEATH WHEN THEY EMERGE FROM THEIR CLONING POD.</span>")
+			
 		if(grab_ghost_when == CLONER_MATURE_CLONE)
 			H.ghostize(TRUE)	//Only does anything if they were still in their old body and not already a ghost
 			to_chat(H.get_ghost(TRUE), "<span class='notice'>Your body is beginning to regenerate in a cloning pod. You will become conscious when it is complete.</span>")
+			if(CLONING_MEMORY_LOSS==TRUE)
+				to_chat(H, "<span class='userdanger'>Because you are being cloned (instead of being revived via some other method), YOUR CHARACTER WILL NOT REMEMBER THE CAUSE, CIRCUMSTANCES, OR DETAILS OF THEIR DEATH WHEN THEY EMERGE FROM THEIR CLONING POD.</span>")
 
 	if(H)
 		H.faction |= factions
@@ -433,6 +438,8 @@
 		mob_occupant.grab_ghost()
 		to_chat(occupant, "<span class='notice'><b>There is a bright flash!</b><br><i>You feel like a new being.</i></span>")
 		mob_occupant.flash_act()
+		if(CLONING_MEMORY_LOSS==TRUE)
+			to_chat(occupant, "<span class='userdanger'>Because you were cloned (instead of revived via some other method), YOUR CHARACTER DOES NOT REMEMBER THE CAUSE, CIRCUMSTANCES, OR DETAILS OF THEIR DEATH.</span>") //Yes, this will tell the cloned person that they do not remember what caused their death twice. That's intentional, because this is super important and different from how cloners used to work here on /tg/.
 
 	occupant.forceMove(T)
 	icon_state = "pod_0"
