@@ -34,12 +34,14 @@
 
 /obj/item/clothing/mask/gas/alt3
 	name = "gas mask"
-	desc = "A face-covering mask that cannot be connected to an air supply. Any claims that these are rebranded russian old stock masks are false."
+	desc = "A face-covering mask that cannot be connected to an air supply. Turns out to not be that great at blocking gasses."
 	icon_state = "gas_alt4"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 10, "fire" = 5, "acid" = 5)
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_NORMAL
+	gas_transfer_coefficient = 0.001 //not that this will ever be used but there you go
+	permeability_coefficient = 0.001
 	item_state = "gas_alt4"
 
 /obj/item/clothing/mask/gas/atmos
