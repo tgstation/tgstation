@@ -179,8 +179,7 @@
 				size = "xtrlarge"
 			if(5 to 16)
 				size = "large"
-//			if(17 to 28)
-//				use normal pinion
+			//17 through 28 use the normal pinion, "pinondirect"
 			if(29 to INFINITY)
 				size = "small"
 	add_overlay("pinondirect[size]")
