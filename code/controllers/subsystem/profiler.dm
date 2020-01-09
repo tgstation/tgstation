@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(profiler)
 #endif
 
 /datum/controller/subsystem/profiler/proc/StopProfiling()
-#if DM_BUILD > 1506 && DM_VERSION > 513
+#if DM_BUILD >= 1506 && DM_VERSION >= 513
 	world.Profile(PROFILE_STOP)
 #endif
 
