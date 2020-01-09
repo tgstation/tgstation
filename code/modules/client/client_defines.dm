@@ -26,8 +26,6 @@
 	var/total_count_reset = 0
 	///Internal counter for clients sending external (IRC/Discord) relay messages via ahelp to prevent spamming. Set to a number every time an admin reply is sent, decremented for every client send.
 	var/externalreplyamount = 0
-	///You should use this to store the result of SDQL queries. This exists for saveable VAREDITS.
-	var/list/sdql_stored_datums
 		/////////
 		//OTHER//
 		/////////
