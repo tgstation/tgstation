@@ -381,7 +381,7 @@
 	l_pocket = /obj/item/assembly/flash
 	r_pocket = /obj/item/storage/wallet
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
-		/obj/item/clothing/head/helmet/police=1,\ //in backpack instead of on person because it ruins big guy bouncer
+		/obj/item/clothing/head/helmet/police=1,\
 		/obj/item/storage/box/handcuffs=1)
 
 
