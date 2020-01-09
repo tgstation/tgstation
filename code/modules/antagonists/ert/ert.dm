@@ -14,6 +14,7 @@
 	show_in_antagpanel = FALSE
 	antag_moodlet = /datum/mood_event/focused
 	can_hijack = HIJACK_PREVENT
+	rip_and_tear = FALSE
 
 /datum/antagonist/ert/on_gain()
 	if(random_names)
@@ -72,6 +73,7 @@
 	name = "Deathsquad Trooper"
 	outfit = /datum/outfit/death_commando
 	role = "Trooper"
+	rip_and_tear = TRUE
 
 /datum/antagonist/ert/medic/inquisitor
 	outfit = /datum/outfit/ert/medic/inquisitor
@@ -121,6 +123,30 @@
 	outfit = /datum/outfit/centcom_intern/leader
 	role = "Head Intern"
 
+/datum/antagonist/ert/clown
+	role = "Clown"
+	outfit = /datum/outfit/ert/clown
+
+/datum/antagonist/ert/janitor/party
+	role = "Party Cleaning Service"
+	outfit = /datum/outfit/ert/janitor/party
+
+/datum/antagonist/ert/security/party
+	role = "Party Bouncer"
+	outfit = /datum/outfit/ert/security/party
+
+/datum/antagonist/ert/engineering/party
+	role = "Party Constructor"
+	outfit = /datum/outfit/ert/engineering/party
+
+/datum/antagonist/ert/clown/party
+	role = "Party Comedian"
+	outfit = /datum/outfit/ert/clown/party
+
+/datum/antagonist/ert/commander/party
+	role = "Party Coordinator"
+	outfit = /datum/outfit/ert/commander/party
+
 /datum/antagonist/ert/create_team(datum/team/ert/new_team)
 	if(istype(new_team))
 		ert_team = new_team
@@ -146,23 +172,8 @@
 		missiondesc += " Lead your squad to ensure the completion of the mission. Board the shuttle when your team is ready."
 	else
 		missiondesc += " Follow orders given to you by your squad leader."
-
+	if(!rip_and_tear)
 		missiondesc += "Avoid civilian casualties when possible."
-
-	missiondesc += "<BR><B>Your Mission</B> : [ert_team.mission.explanation_text]"
-	to_chat(owner,missiondesc)
-
-/datum/antagonist/ert/deathsquad/greet()
-	if(!ert_team)
-		return
-
-	to_chat(owner, "<B><font size=3 color=red>You are the [name].</font></B>")
-
-	var/missiondesc = "Your squad is being sent on a mission to [station_name()] by Nanotrasen's Security Division."
-	if(leader) //If Squad Leader
-		missiondesc += " Lead your squad to ensure the completion of the mission. Board the shuttle when your team is ready."
-	else
-		missiondesc += " Follow orders given to you by your squad leader."
 
 	missiondesc += "<BR><B>Your Mission</B> : [ert_team.mission.explanation_text]"
 	to_chat(owner,missiondesc)

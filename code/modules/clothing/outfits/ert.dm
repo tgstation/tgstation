@@ -1,6 +1,7 @@
 /datum/outfit/ert
 	name = "ERT Common"
 
+	mask = /obj/item/clothing/mask/gas/sechailer
 	uniform = /obj/item/clothing/under/rank/centcom/officer
 	shoes = /obj/item/clothing/shoes/combat/swat
 	gloves = /obj/item/clothing/gloves/combat
@@ -31,7 +32,6 @@
 	belt = /obj/item/storage/belt/security/full
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
-		/obj/item/clothing/mask/gas/sechailer=1,\
 		/obj/item/gun/energy/e_gun=1)
 	l_pocket = /obj/item/switchblade
 
@@ -47,24 +47,23 @@
 /datum/outfit/ert/commander/alert
 	name = "ERT Commander - High Alert"
 
+	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
-		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/gun/energy/pulse/pistol/loyalpin=1)
 	l_pocket = /obj/item/melee/transforming/energy/sword/saber
 
 /datum/outfit/ert/security
 	name = "ERT Security"
 
-	id = /obj/item/card/id/ert/Security
+	id = /obj/item/card/id/ert/security
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/sec
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	back = /obj/item/storage/backpack/ert/security
 	belt = /obj/item/storage/belt/security/full
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/storage/box/handcuffs=1,\
-		/obj/item/clothing/mask/gas/sechailer=1,\
 		/obj/item/gun/energy/e_gun/stun=1,\
 		/obj/item/melee/baton/loaded=1)
 
@@ -81,9 +80,9 @@
 /datum/outfit/ert/security/alert
 	name = "ERT Security - High Alert"
 
+	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/storage/box/handcuffs=1,\
-		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/gun/energy/pulse/carbine/loyalpin=1)
 
@@ -91,7 +90,7 @@
 /datum/outfit/ert/medic
 	name = "ERT Medic"
 
-	id = /obj/item/card/id/ert/Medical
+	id = /obj/item/card/id/ert/medical
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/med
 	glasses = /obj/item/clothing/glasses/hud/health
 	back = /obj/item/storage/backpack/ert/medical
@@ -99,7 +98,6 @@
 	r_hand = /obj/item/storage/firstaid/regular
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
-		/obj/item/clothing/mask/gas/sechailer=1,\
 		/obj/item/gun/energy/e_gun=1,\
 		/obj/item/reagent_containers/hypospray/combat=1,\
 		/obj/item/gun/medbeam=1)
@@ -117,9 +115,9 @@
 /datum/outfit/ert/medic/alert
 	name = "ERT Medic - High Alert"
 
+	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
-		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/gun/energy/pulse/pistol/loyalpin=1,\
 		/obj/item/reagent_containers/hypospray/combat/nanites=1,\
 		/obj/item/gun/medbeam=1)
@@ -127,7 +125,7 @@
 /datum/outfit/ert/engineer
 	name = "ERT Engineer"
 
-	id = /obj/item/card/id/ert/Engineer
+	id = /obj/item/card/id/ert/engineer
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/engi
 	glasses =  /obj/item/clothing/glasses/meson/engine
 	back = /obj/item/storage/backpack/ert/engineer
@@ -136,7 +134,6 @@
 	r_hand = /obj/item/storage/firstaid/regular
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
-		/obj/item/clothing/mask/gas/sechailer=1,\
 		/obj/item/gun/energy/e_gun=1,\
 		/obj/item/construction/rcd/loaded=1)
 
@@ -153,9 +150,9 @@
 /datum/outfit/ert/engineer/alert
 	name = "ERT Engineer - High Alert"
 
+	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
-		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/gun/energy/pulse/pistol/loyalpin=1,\
 		/obj/item/construction/rcd/combat=1)
 
@@ -224,16 +221,6 @@
 		/obj/item/reagent_containers/hypospray/combat/heresypurge=1,
 		/obj/item/gun/medbeam=1)
 
-/datum/outfit/ert/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-
-	if(visualsOnly)
-		return
-
-	var/obj/item/radio/R = H.ears
-	R.keyslot = new /obj/item/encryptionkey/heads/hop
-	R.recalculateChannels()
-
 /datum/outfit/ert/chaplain
 	name = "ERT Chaplain"
 
@@ -248,10 +235,16 @@
 		/obj/item/gun/energy/e_gun=1,
 		)
 
+/datum/outfit/ert/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	if(visualsOnly)
+		return
+	var/obj/item/radio/R = H.ears
+	R.keyslot = new /obj/item/encryptionkey/heads/hop
+	R.recalculateChannels()
+
 /datum/outfit/ert/chaplain/inquisitor
 	name = "Inquisition Chaplain"
-
-	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
 
 	belt = /obj/item/storage/belt/soulstone/full/chappy
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,
@@ -264,7 +257,7 @@
 /datum/outfit/ert/janitor
 	name = "ERT Janitor"
 
-	id = /obj/item/card/id/ert/Janitor
+	id = /obj/item/card/id/ert/janitor
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/jani
 	glasses = /obj/item/clothing/glasses/night
 	back = /obj/item/storage/backpack
@@ -275,7 +268,6 @@
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/storage/box/lights/mixed=1,\
 		/obj/item/melee/baton/loaded=1,\
-		/obj/item/clothing/mask/gas/sechailer=1,\
 		/obj/item/mop/advanced=1,\
 		/obj/item/reagent_containers/glass/bucket=1,\
 		/obj/item/grenade/clusterbuster/cleaner=1)
@@ -292,12 +284,42 @@
 
 /datum/outfit/ert/janitor/heavy
 	name = "ERT Janitor - Heavy Duty"
+
+	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	r_hand = /obj/item/reagent_containers/spray/chemsprayer/janitor
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/storage/box/lights/mixed=1,\
 		/obj/item/melee/baton/loaded=1,\
-		/obj/item/clothing/mask/gas/sechailer=1,\
 		/obj/item/grenade/clusterbuster/cleaner=3)
+
+/datum/outfit/ert/clown
+	name = "ERT Clown"
+
+	suit = /obj/item/clothing/suit/space/hardsuit/ert/clown
+	mask = /obj/item/clothing/mask/gas/clown_hat
+	id = /obj/item/card/id/ert/clown
+	glasses = /obj/item/clothing/glasses/godeye
+	back = /obj/item/storage/backpack/clown
+	belt = /obj/item/storage/belt/champion
+	shoes = /obj/item/clothing/shoes/clown_shoes/combat
+	r_pocket = /obj/item/bikehorn/golden
+	l_pocket = /obj/item/reagent_containers/food/snacks/grown/banana
+	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
+		/obj/item/melee/transforming/energy/sword/bananium=1,\
+		/obj/item/shield/energy/bananium=1,\
+		/obj/item/gun/ballistic/revolver/reverse=1)
+
+/datum/outfit/ert/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	if(visualsOnly)
+		return
+	var/obj/item/radio/R = H.ears
+	R.keyslot = new /obj/item/encryptionkey/headset_service
+	R.recalculateChannels()
+	H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names)) //rename the mob AFTER they're equipped so their ID gets updated properly.
+	H.dna.add_mutation(CLOWNMUT)
+	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
+		M.mutadone_proof = TRUE
 
 /datum/outfit/centcom_intern
 	name = "CentCom Intern"
@@ -333,3 +355,74 @@
 	suit_store = /obj/item/gun/ballistic/rifle/boltaction
 	r_hand = /obj/item/megaphone
 	head = /obj/item/clothing/head/intern
+
+/datum/outfit/ert/janitor/party
+	name = "ERP Cleaning Service"
+
+	uniform = /obj/item/clothing/under/misc/overalls
+	mask = /obj/item/clothing/mask/bandana/durathread
+	suit = /obj/item/clothing/suit/apron
+	glasses = /obj/item/clothing/glasses/meson
+	belt = /obj/item/storage/belt/janitor/full
+	r_pocket = /obj/item/grenade/chem_grenade/cleaner
+	l_pocket = /obj/item/grenade/chem_grenade/cleaner
+	l_hand = /obj/item/storage/bag/trash
+	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
+		/obj/item/storage/box/lights/mixed=1,\
+		/obj/item/mop/advanced=1,\
+		/obj/item/reagent_containers/glass/bucket=1)
+
+/datum/outfit/ert/security/party
+	name = "ERP Bouncer"
+
+	uniform = /obj/item/clothing/under/color/black
+	suit = /obj/item/clothing/suit/armor/vest
+	belt = /obj/item/melee/classic_baton/telescopic
+	l_pocket = /obj/item/assembly/flash
+	r_pocket = /obj/item/storage/wallet
+	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
+		/obj/item/clothing/head/helmet/police=1,\ //in backpack instead of on person because it ruins big guy bouncer
+		/obj/item/storage/box/handcuffs=1)
+
+
+/datum/outfit/ert/engineering/party
+	name = "ERP Constructor"
+
+	uniform = /obj/item/clothing/under/rank/engineering/engineer/hazard
+	mask = /obj/item/clothing/mask/gas/atmos
+	head = /obj/item/clothing/head/hardhat/weldhat
+	suit = /obj/item/clothing/suit/hazardvest
+	glasses =  /obj/item/clothing/glasses/meson/engine
+	belt = /obj/item/storage/belt/utility/full
+	l_pocket = /obj/item/rcd_ammo/large
+	r_hand = /obj/item/storage/firstaid/regular
+	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
+		/obj/item/stack/sheet/metal/fifty=1,\
+		/obj/item/stack/sheet/glass/fifty=1,\
+		/obj/item/stack/sheet/plasteel/twenty=1,\
+		/obj/item/etherealballdeployer=1,\
+		/obj/item/construction/rcd/loaded=1)
+
+/datum/outfit/ert/medic/party
+	name = "ERP Comedian"
+
+	uniform = /obj/item/clothing/under/rank/civilian/clown
+	head = /obj/item/clothing/head/chameleon
+	suit = /obj/item/clothing/suit/chameleon
+	glasses = /obj/item/clothing/glasses/chameleon
+	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
+		/obj/item/shield/energy/bananium=1,\
+		/obj/item/instrument/piano_synth=1)
+
+/datum/outfit/ert/commander/party
+	name = "ERP Coordinator"
+
+	uniform = /obj/item/clothing/under/rank/captain/parade
+	head = /obj/item/clothing/head/caphat/parade
+	suit = /obj/item/clothing/suit/armor/vest/capcarapace/alt
+	belt = /obj/item/storage/belt/sabre
+	r_hand = /obj/item/toy/balloon
+	l_pocket = /obj/item/kitchen/knife
+	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
+		/obj/item/storage/box/fireworks=3,\
+		/obj/item/reagent_containers/food/snacks/store/cake/birthday=1)

@@ -525,30 +525,30 @@ update_label()
 	access = get_all_accesses()+get_ert_access("commander")-ACCESS_CHANGE_IDS
 	. = ..()
 
-/obj/item/card/id/ert/Security
+/obj/item/card/id/ert/security
 	registered_name = "Security Response Officer"
 	assignment = "Security Response Officer"
 	icon_state = "ert_security"
 
-/obj/item/card/id/ert/Security/Initialize()
+/obj/item/card/id/ert/security/Initialize()
 	access = get_all_accesses()+get_ert_access("sec")-ACCESS_CHANGE_IDS
 	. = ..()
 
-/obj/item/card/id/ert/Engineer
+/obj/item/card/id/ert/engineer
 	registered_name = "Engineer Response Officer"
 	assignment = "Engineer Response Officer"
 	icon_state = "ert_engineer"
 
-/obj/item/card/id/ert/Engineer/Initialize()
+/obj/item/card/id/ert/engineer/Initialize()
 	access = get_all_accesses()+get_ert_access("eng")-ACCESS_CHANGE_IDS
 	. = ..()
 
-/obj/item/card/id/ert/Medical
+/obj/item/card/id/ert/medical
 	registered_name = "Medical Response Officer"
 	assignment = "Medical Response Officer"
 	icon_state = "ert_medic"
 
-/obj/item/card/id/ert/Medical/Initialize()
+/obj/item/card/id/ert/medical/Initialize()
 	access = get_all_accesses()+get_ert_access("med")-ACCESS_CHANGE_IDS
 	. = ..()
 
@@ -561,12 +561,21 @@ update_label()
 	access = get_all_accesses()+get_ert_access("sec")-ACCESS_CHANGE_IDS
 	. = ..()
 
-/obj/item/card/id/ert/Janitor
+/obj/item/card/id/ert/janitor
 	registered_name = "Janitorial Response Officer"
 	assignment = "Janitorial Response Officer"
 	icon_state = "ert_janitor"
 
-/obj/item/card/id/ert/Janitor/Initialize()
+/obj/item/card/id/ert/janitor/Initialize()
+	access = get_all_accesses()
+	. = ..()
+
+/obj/item/card/id/ert/clown
+	registered_name = "Entertaining Response Officer"
+	assignment = "Entertaining Response Officer"
+	icon_state = "ert_clown"
+
+/obj/item/card/id/ert/clown/Initialize()
 	access = get_all_accesses()
 	. = ..()
 
