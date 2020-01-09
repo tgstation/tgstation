@@ -571,8 +571,8 @@ update_label()
 	. = ..()
 
 /obj/item/card/id/ert/clown
-	registered_name = "Entertaining Response Officer"
-	assignment = "Entertaining Response Officer"
+	registered_name = "Entertainment Response Officer"
+	assignment = "Entertainment Response Officer"
 	icon_state = "ert_clown"
 
 /obj/item/card/id/ert/clown/Initialize()
