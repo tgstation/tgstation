@@ -764,6 +764,7 @@
 			show_to(user)
 
 /datum/component/storage/proc/signal_on_pickup(datum/source, mob/user)
+	update_actions()
 	for(var/mob/M in can_see_contents() - user)
 		close(M)
 
