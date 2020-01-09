@@ -467,6 +467,15 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
+/datum/techweb_node/prosthesis
+	id = "prosthesis"
+	display_name = "Prosthesis Technology"
+	description = "Replacement limbs for when someone inevitably knocks yours off."
+	prereq_ids = list("biotech")
+	design_ids = list("prosthetic_l_arm", "prosthetic_r_arm", "prosthetic_l_leg", "prosthetic_r_leg")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
 /datum/techweb_node/cryotech
 	id = "cryotech"
 	display_name = "Cryostasis Technology"

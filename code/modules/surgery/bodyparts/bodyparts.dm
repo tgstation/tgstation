@@ -288,7 +288,7 @@
 		C = source
 		if(!original_owner)
 			original_owner = source
-	else 
+	else
 		C = owner
 		if(original_owner && owner != original_owner) //Foreign limb
 			no_update = TRUE
@@ -732,3 +732,39 @@
 	dismemberable = 0
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
+
+obj/item/bodypart/l_arm/prosthetic
+	name = "high-grade prosthetic left arm"
+	desc = "A well-made robotic limb coated in synthflesh. Able to withstand more damage than a normal human limb."
+	icon_state = "fake_human_l_arm"
+	brute_reduction = 5
+	burn_reduction = 0
+	max_damage = 40
+	status = BODYPART_ROBOTIC
+
+/obj/item/bodypart/r_arm/prosthetic
+	name = "high-grade prosthetic right arm"
+	desc = "A well-made robotic limb coated in synthflesh. Able to withstand more damage than a normal human limb."
+	icon_state = "fake_human_r_arm"
+	brute_reduction = 5
+	burn_reduction = 0
+	max_damage = 40
+	status = BODYPART_ROBOTIC
+
+/obj/item/bodypart/l_leg/prosthetic
+	name = "high-grade prosthetic left leg"
+	desc = "A well-made robotic limb coated in synthflesh. Able to withstand more damage than a normal human limb."
+	icon_state = "fake_human_l_leg"
+	brute_reduction = 5
+	burn_reduction = 0
+	max_damage = 40
+	status = BODYPART_ROBOTIC
+
+/obj/item/bodypart/r_leg/prosthetic
+	name = "high-grade prosthetic right leg"
+	desc = "A well-made robotic limb coated in synthflesh. Able to withstand more damage than a normal human limb."
+	icon_state = "fake_human_r_leg"
+	brute_reduction = 5
+	burn_reduction = 0
+	max_damage = 40
+	status = BODYPART_ROBOTIC

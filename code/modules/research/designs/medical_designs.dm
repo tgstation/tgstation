@@ -593,6 +593,51 @@
 	build_path = /obj/item/organ/ears/cybernetic/upgraded
 	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/prosthetic_l_arm
+	name = "High-grade Prosthetic Left Arm"
+	desc = "A sturdy replacement arm."
+	id = "prosthetic_l_arm"
+	build_type = PROTOLATHE
+	construction_time = 40
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 500)
+	build_path = /obj/item/bodypart/l_arm/prosthetic
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/prosthetic_r_arm
+	name = "High-grade Prosthetic Right Arm"
+	desc = "A sturdy replacement arm."
+	id = "prosthetic_r_arm"
+	build_type = PROTOLATHE
+	construction_time = 40
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 500)
+	build_path = /obj/item/bodypart/r_arm/prosthetic
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/prosthetic_l_leg
+	name = "High-grade Prosthetic Left Leg"
+	desc = "A sturdy replacement leg."
+	id = "prosthetic_l_leg"
+	build_type = PROTOLATHE
+	construction_time = 40
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 500)
+	build_path = /obj/item/bodypart/l_leg/prosthetic
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/prosthetic_r_leg
+	name = "High-grade Prosthetic Right Leg"
+	desc = "A sturdy replacement leg."
+	id = "prosthetic_r_leg"
+	build_type = PROTOLATHE
+	construction_time = 40
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 500)
+	build_path = /obj/item/bodypart/r_leg/prosthetic
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /////////////////////
 ///Surgery Designs///
 /////////////////////
