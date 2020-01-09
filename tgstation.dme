@@ -2837,6 +2837,7 @@
 #include "code\modules\surgery\core_removal.dm"
 #include "code\modules\surgery\coronary_bypass.dm"
 #include "code\modules\surgery\dental_implant.dm"
+#include "code\modules\surgery\detoxification.dm"
 #include "code\modules\surgery\experimental_dissection.dm"
 #include "code\modules\surgery\eye_surgery.dm"
 #include "code\modules\surgery\healing.dm"
