@@ -359,7 +359,7 @@
 	name = "ERP Cleaning Service"
 
 	uniform = /obj/item/clothing/under/misc/overalls
-	mask = /obj/item/clothing/mask/bandana/durathread
+	mask = /obj/item/clothing/mask/bandana/blue
 	suit = /obj/item/clothing/suit/apron
 	glasses = /obj/item/clothing/glasses/meson
 	belt = /obj/item/storage/belt/janitor/full
