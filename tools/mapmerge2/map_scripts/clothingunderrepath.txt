@@ -44,7 +44,6 @@
 /obj/item/clothing/under/jabroni : /obj/item/clothing/under/costume/jabroni
 /obj/item/clothing/under/owl : /obj/item/clothing/under/costume/owl
 /obj/item/clothing/under/griffin : /obj/item/clothing/under/costume/griffin
-/obj/item/clothing/under/cloud : /obj/item/clothing/under/costume/cloud
 /obj/item/clothing/under/schoolgirl : /obj/item/clothing/under/costume/schoolgirl
 /obj/item/clothing/under/schoolgirl/red : /obj/item/clothing/under/costume/schoolgirl/red
 /obj/item/clothing/under/schoolgirl/green : /obj/item/clothing/under/costume/schoolgirl/green

@@ -271,14 +271,10 @@
 			qdel(src)
 		return TRUE
 
-/obj/structure/girder/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
+/obj/structure/girder/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if((mover.pass_flags & PASSGRILLE) || istype(mover, /obj/projectile))
 		return prob(girderpasschance)
-	else
-		if(istype(mover, /obj/projectile))
-			return prob(girderpasschance)
-		else
-			return 0
 
 /obj/structure/girder/CanAStarPass(ID, dir, caller)
 	. = !density
