@@ -304,7 +304,7 @@
 	shoes = /obj/item/clothing/shoes/clown_shoes/combat
 	r_pocket = /obj/item/bikehorn/golden
 	l_pocket = /obj/item/reagent_containers/food/snacks/grown/banana
-	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
+	backpack_contents = list(/obj/item/storage/box/hug/survival=1,\
 		/obj/item/melee/transforming/energy/sword/bananium=1,\
 		/obj/item/shield/energy/bananium=1,\
 		/obj/item/gun/ballistic/revolver/reverse=1)
@@ -391,10 +391,7 @@
 	mask = /obj/item/clothing/mask/gas/atmos
 	head = /obj/item/clothing/head/hardhat/weldhat
 	suit = /obj/item/clothing/suit/hazardvest
-	glasses =  /obj/item/clothing/glasses/meson/engine
-	belt = /obj/item/storage/belt/utility/full
-	l_pocket = /obj/item/rcd_ammo/large
-	r_hand = /obj/item/storage/firstaid/regular
+	r_hand = /obj/item/areaeditor/blueprints
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/stack/sheet/metal/fifty=1,\
 		/obj/item/stack/sheet/glass/fifty=1,\
@@ -410,7 +407,7 @@
 	head = /obj/item/clothing/head/chameleon
 	suit = /obj/item/clothing/suit/chameleon
 	glasses = /obj/item/clothing/glasses/chameleon
-	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
+	backpack_contents = list(/obj/item/storage/box/hug/survival=1,\
 		/obj/item/shield/energy/bananium=1,\
 		/obj/item/instrument/piano_synth=1)
 
