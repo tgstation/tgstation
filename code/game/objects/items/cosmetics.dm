@@ -227,32 +227,30 @@
 	else
 		..()
 
-/obj/item/bluerazor
+/obj/item/razor/bluerazor
 	name = "bluespace razor"
 	desc = "A razor full of bluespace energy."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "bluerazor"
 	id = "bluerazor"
-	flags_1 = CONDUCT_1
-	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/bluerazor/suicide_act(mob/living/carbon/user)
+/obj/item/razor/bluerazor/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins shaving [user.p_them()]self without the razor guard, sparks flying everywhere! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	shave(user, BODY_ZONE_PRECISE_MOUTH)
 	shave(user, BODY_ZONE_HEAD)//doesnt need to be BODY_ZONE_HEAD specifically, but whatever
 	return BRUTELOSS
 
-/obj/item/bluerazor/proc/shave(mob/living/carbon/human/H, location = BODY_ZONE_PRECISE_MOUTH)
+/obj/item/razor/bluerazor/proc/shave(mob/living/carbon/human/H, location = BODY_ZONE_PRECISE_MOUTH)
 	if(location == BODY_ZONE_PRECISE_MOUTH)
 		H.facial_hairstyle = "Shaved"
 	else
 		H.hairstyle = "Skinhead"
 
 	H.update_hair()
-	playsound(loc, 'sound/items/welder2.ogg', 20, TRUE)
+	playsound(loc, 'sound/items/welder2.ogg',  20, TRUE), (loc, 'sound/weapons/taser.ogg', 1, TRUE)//sparks
 
 
-/obj/item/bluerazor/attack(mob/M, mob/user)
+/obj/item/razor/bluerazor/attack/blueshave(mob/M, mob/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/location = user.zone_selected
@@ -263,7 +261,7 @@
 			if(user.a_intent == INTENT_HELP)
 				if(H.gender == MALE)
 					if (H == user)
-						to_chat(user, "<span class='warning'>You need a mirror to properly style your own facial hair!</span>")
+						to_chat(user, "<span class='warning'>You need a mirror to properly style your own facial hair! Even with bluespace machinery!</span>")
 						return
 					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 						return
@@ -273,7 +271,7 @@
 						return
 					user.visible_message("<span class='notice'>[user] tries to change [H]'s facial hairstyle using [src].</span>", "<span class='notice'>You try to change [H]'s facial hairstyle using [src].</span>")
 					if(new_style && do_after(user, 25, target = H))
-						user.visible_message("<span class='notice'>[user] successfully changes [H]'s facial hairstyle using [src].</span>", "<span class='notice'>You successfully change [H]'s facial hairstyle using [src].</span>")
+						user.visible_message("<span class='notice'>[user] successfully changes [H]'s facial hairstyle using [src], though his skin is a bit burnt from the bluespace sparks.</span>", "<span class='notice'>You successfully change [H]'s facial hairstyle using [src].</span>")
 						H.facial_hairstyle = new_style
 						H.update_hair()
 						return
@@ -296,14 +294,14 @@
 										 "<span class='notice'>You take a moment to shave your facial hair with [src], but faster than before!</span>")
 					if(do_after(user, 20, target = H))
 						user.visible_message("<span class='notice'>[user] shaves [user.p_their()] facial hair clean with [src].</span>", \
-											 "<span class='notice'>You finish shaving with [src]. Fast and clean!</span>")
+											 "<span class='notice'>You finish shaving with [src]. Fast and clean, but the sparks have burnt your face a bit.</span>")
 						shave(H, location)
 				else
 					user.visible_message("<span class='warning'>[user] tries to shave [H]'s facial hair with [src] extremely fast!</span>", \
 										 "<span class='notice'>You start shaving [H]'s facial hair...</span>")
 					if(do_after(user, 20, target = H))
 						user.visible_message("<span class='warning'>[user] shaves off [H]'s facial hair with [src].</span>", \
-											 "<span class='notice'>You shave [H]'s facial hair clean off.</span>")
+											 "<span class='notice'>You shave [H]'s facial hair clean off, though his skin is a bit burnt from the bluespace sparks.</span>")
 						shave(H, location)
 
 		else if(location == BODY_ZONE_HEAD)
@@ -340,7 +338,7 @@
 										 "<span class='notice'>You start to shave your head with [src]...</span>")
 					if(do_after(user, 1, target = H))
 						user.visible_message("<span class='notice'>[user] shaves [user.p_their()] head with [src].</span>", \
-											 "<span class='notice'>You finish shaving with [src].</span>")
+											 "<span class='notice'>You finish shaving with [src], but the sparks have burnt your face a bit.</span>")
 						shave(H, location)
 				else
 					var/turf/H_loc = H.loc
@@ -349,9 +347,11 @@
 					if(do_after(user, 20, target = H))
 						if(H_loc == H.loc)
 							user.visible_message("<span class='warning'>[user] shaves [H]'s head bald with [src]!</span>", \
-												 "<span class='notice'>You shave [H]'s head bald.</span>")
+												 "<span class='notice'>You shave [H]'s head bald. You can see tiny burns on his skin</span>")
 							shave(H, location)
 		else
 			..()
 	else
 		..()
+
+/obj/item/razor/bluerazor/bluecutting //will finish this after seeking advice

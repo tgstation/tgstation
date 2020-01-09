@@ -217,7 +217,7 @@
 	display_name = "Applied Bluespace Research"
 	description = "Using bluespace to make things faster and better."
 	prereq_ids = list("bluespace_basic", "engineering")
-	design_ids = list("bs_rped","minerbag_holding", "bluespacebeaker", "bluespacesyringe", "phasic_scanning", "roastingstick", "ore_silo")
+	design_ids = list("bs_rped","minerbag_holding", "bluespacebeaker", "bluespacesyringe", "phasic_scanning", "roastingstick", "ore_silo", "bluerazor")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
 
@@ -1063,17 +1063,6 @@
 	prereq_ids = list("base")
 	design_ids = list("bright_helmet", "rld_mini")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	export_price = 2500
-	hidden = TRUE
-	experimental = TRUE
-
-/datum/techweb_node/bluerazor
-	id = "bluerazor"
-	display_name = "Bluespace Hair-B-Gone Tech"
-	description = "A breakthrough in shaving technology."
-	prereq_ids = list("bluespace_basic")
-	design_ids = list("bluerazor") //yeah like anyone's gonna use this
-	research_cost = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 	export_price = 2500
 	hidden = TRUE
 	experimental = TRUE
