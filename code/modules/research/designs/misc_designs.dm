@@ -67,7 +67,18 @@
 //////////////////Misc///////////////////
 /////////////////////////////////////////
 
+/datum/design/bluerazor
+	name = "Bluespace Razor"
+	desc = "A razor full of bluespace energy."
+	id = "bluerazor"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 600, /datum/material/bluespace = 300)
+	build_path = obj/item/razor/bluerazor
+	cathegory = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/welding_goggles
+
 	name = "Welding Goggles"
 	desc = "Protects the eyes from bright flashes; approved by the mad scientist association."
 	id = "welding_goggles"
@@ -275,7 +286,7 @@
 	build_path = /obj/item/tank/internals/plasma/empty
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
-	
+
 /datum/design/id
 	name = "Identification Card"
 	desc = "A card used to provide ID and determine access across the station."
@@ -284,7 +295,7 @@
 	materials = list(/datum/material/iron=200, /datum/material/glass = 100)
 	build_path = /obj/item/card/id
 	category = list("Electronics")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE	
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
