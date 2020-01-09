@@ -231,13 +231,13 @@
 	name = "bluespace razor"
 	desc = "A razor full of bluespace energy."
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "razor"
+	icon_state = "bluerazor"
 	id = "bluerazor"
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/bluerazor/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins shaving [user.p_them()]self without the razor guard! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] begins shaving [user.p_them()]self without the razor guard, sparks flying everywhere! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	shave(user, BODY_ZONE_PRECISE_MOUTH)
 	shave(user, BODY_ZONE_HEAD)//doesnt need to be BODY_ZONE_HEAD specifically, but whatever
 	return BRUTELOSS
@@ -292,14 +292,14 @@
 					return
 
 				if(H == user) //shaving yourself
-					user.visible_message("<span class='notice'>[user] starts to shave [user.p_their()] facial hair with [src].</span>", \
-										 "<span class='notice'>You take a moment to shave your facial hair with [src]...</span>")
+					user.visible_message("<span class='notice'>[user] starts to shave [user.p_their()] facial hair with [src] extremely fast!</span>", \
+										 "<span class='notice'>You take a moment to shave your facial hair with [src], but faster than before!</span>")
 					if(do_after(user, 20, target = H))
 						user.visible_message("<span class='notice'>[user] shaves [user.p_their()] facial hair clean with [src].</span>", \
 											 "<span class='notice'>You finish shaving with [src]. Fast and clean!</span>")
 						shave(H, location)
 				else
-					user.visible_message("<span class='warning'>[user] tries to shave [H]'s facial hair with [src].</span>", \
+					user.visible_message("<span class='warning'>[user] tries to shave [H]'s facial hair with [src] extremely fast!</span>", \
 										 "<span class='notice'>You start shaving [H]'s facial hair...</span>")
 					if(do_after(user, 20, target = H))
 						user.visible_message("<span class='warning'>[user] shaves off [H]'s facial hair with [src].</span>", \
