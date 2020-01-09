@@ -102,6 +102,7 @@
 
 #define CLONER_FRESH_CLONE "fresh"
 #define CLONER_MATURE_CLONE "mature"
+#define CLONING_MEMORY_LOSS 	TRUE  //Determines if spacemen remember how they died upon being cloned. This does NOT affect their memories of how they died if revived via other means, such as podcloning, defibrillation, or surgery.
 
 //species traits for mutantraces
 #define MUTCOLORS		1
