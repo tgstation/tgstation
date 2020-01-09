@@ -107,6 +107,8 @@
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 
+/var/proximity = TRUE
+
 /obj/item/razor/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins shaving [user.p_them()]self without the razor guard! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	shave(user, BODY_ZONE_PRECISE_MOUTH)
@@ -234,6 +236,8 @@
 	icon_state = "bluerazor"
 	id = "bluerazor"
 
+/var/proximity = FALSE
+
 /obj/item/razor/bluerazor/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins shaving [user.p_them()]self without the razor guard, sparks flying everywhere! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	shave(user, BODY_ZONE_PRECISE_MOUTH)
@@ -241,6 +245,7 @@
 	return BRUTELOSS
 
 /obj/item/razor/bluerazor/proc/shave(mob/living/carbon/human/H, location = BODY_ZONE_PRECISE_MOUTH)
+
 	if(location == BODY_ZONE_PRECISE_MOUTH)
 		H.facial_hairstyle = "Shaved"
 	else
@@ -260,6 +265,10 @@
 		if(location == BODY_ZONE_PRECISE_MOUTH)
 			if(user.a_intent == INTENT_HELP)
 				if(H.gender == MALE)
+
+				if(!proximity && prox_check)
+        return
+
 					if (H == user)
 						to_chat(user, "<span class='warning'>You need a mirror to properly style your own facial hair! Even with bluespace machinery!</span>")
 						return
@@ -305,6 +314,10 @@
 						shave(H, location)
 
 		else if(location == BODY_ZONE_HEAD)
+
+		if(!proximity && prox_check)
+        return
+
 			if(user.a_intent == INTENT_HELP)
 				if (H == user)
 					to_chat(user, "<span class='warning'>You need a mirror to properly style your own hair!</span>")
@@ -353,5 +366,4 @@
 			..()
 	else
 		..()
-
-/obj/item/razor/bluerazor/bluecutting //will finish this after seeking advice
+		
