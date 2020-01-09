@@ -7,6 +7,7 @@
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
+	var/next_beep = 0 //Prevents spamming of the construction sound
 	max_integrity = 200
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
@@ -30,7 +31,9 @@
 	var/platingmodifier = 1
 	if(HAS_TRAIT(user, TRAIT_QUICK_BUILD))
 		platingmodifier = 0.7
-		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
+		if(next_beep <= world.time)
+			next_beep = world.time + 10
+			playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
 	add_fingerprint(user)
 
 	if(istype(W, /obj/item/gun/energy/plasmacutter))
