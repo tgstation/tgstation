@@ -147,7 +147,7 @@ Difficulty: Medium
 	while(amount > 0)
 		if(QDELETED(target))
 			break
-		var/turf/T = pick(RANGE_TURFS(1, target))
+		var/turf/T = pick(RANGE_TURFS(1, get_turf(target)))
 		new /obj/effect/temp_visual/lava_warning(T, 60) // longer reset time for the lava
 		amount--
 		SLEEP_CHECK_DEATH(delay)
