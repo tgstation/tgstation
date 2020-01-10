@@ -7,6 +7,9 @@ export const NtosNetChat = props => {
 
   const {
     adminmode,
+    authed,
+    username,
+    active_channel,
     all_channels = [],
     clients = [],
     messages = [],
@@ -14,74 +17,118 @@ export const NtosNetChat = props => {
 
   return (
     <Section
-      title="test"
-      minHeight="600px" bottom="0px">
-        <Box height="100%" backgroundColor="#0000FF">
-          test
-        </Box>
-        {/*
-      <Table backgroundColor="#0000FF" height="100%" bottom="0px">
-        <Table.Row height="100%" bottom="0px">
+      height="600px">
+      <Table
+        height="580px">
+        <Table.Row>
           <Table.Cell
+            verticalAlign="top"
             style={{
               width: '200px',
             }}>
-            <Box>
-              <Button
+            <Box
+              height="537px"
+              overflowY="scroll">
+              <Button.Input
                 fluid
-                content="Generate Test Channel"
-                onClick={() => act('PRG_newchannel', {
-                  new_channel_name: 'Test Channel',
-                })}
-              />
+                content="New Channel..."
+                onCommit={value => act('PRG_newchannel', {
+                  new_channel_name: value,
+                })} />
               {all_channels.map(channel => (
                 <Button
                   fluid
                   key={channel.chan}
                   content={channel.chan}
+                  selected={channel.id === active_channel}
                   color="transparent"
                   onClick={() => act('PRG_joinchannel', {
                     id: channel.id,
-                  })}
-                />
+                  })} />
               ))}
             </Box>
+            <Button.Input
+              fluid
+              mt={1}
+              content={username + '...'}
+              onCommit={value => act('PRG_changename', {
+                new_name: value,
+              })}
+            />
+            <Button
+              fluid
+              bold
+              content={"ADMIN MODE: " + (adminmode ? 'ON' : 'OFF')}
+              color={adminmode ? 'bad' : 'good'}
+              onClick={() => act('PRG_toggleadmin')}
+            />
           </Table.Cell>
-          <Table.Cell height="100%">
-            <Flex height="100%" direction="column">
-              <Flex.Item grow={1}>
-                {messages.map(message => (
-                  <Box
-                    key={message.msg}>
-                    {message.msg}
-                  </Box>
-                ))}
-              </Flex.Item>
-              <Flex.Item>
-                <Input
-                  fluid
-                  onChange={(e, value) => act('PRG_speak', {
-                    message: value,
-                  })}
-                />
-              </Flex.Item>
-            </Flex>
+          <Table.Cell>
+            <Box
+              height="560px"
+              overflowY="scroll">
+              {messages.map(message => (
+                <Box
+                  key={message.msg}>
+                  {message.msg}
+                </Box>
+              ))}
+            </Box>
+            <Input
+              fluid
+              selfClear
+              mt={1}
+              onEnter={(e, value) => act('PRG_speak', {
+                message: value,
+              })}
+            />
           </Table.Cell>
           <Table.Cell
+            verticalAlign="top"
             style={{
               width: '150px',
             }}>
-            <Box>
+            <Box
+              height="500px"
+              overflowY="scroll">
               {clients.map(client => (
                 <Box key={client.name}>
                   {client.name}
                 </Box>
               ))}
             </Box>
+            {active_channel !== null && (
+              <Button.Confirm
+                fluid
+                content="Leave Channel"
+                onClick={() => act('PRG_leavechannel')}
+              />
+            )}
+            {!!authed && (
+              <Fragment>
+                <Button.Confirm
+                  fluid
+                  content="Delete Channel"
+                  onClick={() => act('PRG_deletechannel')}
+                />
+                <Button.Input
+                  fluid
+                  content="Rename Channel..."
+                  onCommit={value => act('PRG_renamechannel', {
+                    new_name: value,
+                  })} />
+                <Button.Input
+                  fluid
+                  content="Set Password..."
+                  onCommit={value => act('PRG_setpassword', {
+                    new_password: value,
+                  })}
+                />
+              </Fragment>
+            )}
           </Table.Cell>
         </Table.Row>
       </Table>
-              */}
     </Section>
   );
 };

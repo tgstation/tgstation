@@ -11,7 +11,7 @@
 	available_on_ntnet = 1
 	tgui_id = "ntos_net_chat"
 	ui_x = 900
-	ui_y = 700
+	ui_y = 675
 
 	var/last_message				// Used to generate the toolbar icon
 	var/username
@@ -49,7 +49,7 @@
 			return TRUE
 		if("PRG_joinchannel")
 			var/new_target = text2num(params["id"])
-			if(!new_target || new_target == active_channel)
+			if(isnull(new_target) || new_target == active_channel)
 				return
 
 			if(netadmin_mode)
@@ -57,8 +57,8 @@
 				return TRUE
 
 			active_channel =  new_target
+			channel = SSnetworks.station_network.get_chat_channel_by_id(new_target)
 			if(!(src in channel.clients) && !channel.password)
-				channel = SSnetworks.station_network.get_chat_channel_by_id(new_target)
 				channel.add_client(src)
 			return TRUE
 		if("PRG_leavechannel")
@@ -93,7 +93,7 @@
 			var/newname = sanitize(params["new_name"])
 			if(!newname)
 				return
-			if(active_channel)
+			if(!isnull(active_channel))
 				channel.add_status_message("[username] is now known as [newname].")
 			username = newname
 			return TRUE
@@ -187,6 +187,7 @@
 		data["all_channels"] = all_channels
 
 	data["active_channel"] = active_channel
+	data["username"] = username
 	data["adminmode"] = netadmin_mode
 	var/datum/ntnet_conversation/channel = SSnetworks.station_network.get_chat_channel_by_id(active_channel)
 	if(channel)

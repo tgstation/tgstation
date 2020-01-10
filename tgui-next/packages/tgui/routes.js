@@ -388,7 +388,7 @@ const ROUTES = {
   ntos_net_chat: {
     component: () => NtosNetChat,
     wrapper: () => NtosWrapper,
-    scrollable: true,
+    scrollable: false,
     theme: 'ntos',
   },
   ntos_net_downloader: {

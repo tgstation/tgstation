@@ -6,6 +6,9 @@ import { refocusLayout } from '../refocus';
 import { Box } from './Box';
 import { Icon } from './Icon';
 import { Tooltip } from './Tooltip';
+import { Input } from './Input';
+import { Component, createRef } from 'inferno';
+import { Grid } from './Grid';
 
 const logger = createLogger('Button');
 
@@ -107,3 +110,135 @@ export const ButtonCheckbox = props => {
 };
 
 Button.Checkbox = ButtonCheckbox;
+
+export class ButtonConfirm extends Component {
+  constructor() {
+    super();
+    this.state = {
+      clickedOnce: false,
+    };
+    this.handleClick = () => {
+      if (this.state.clickedOnce) {
+        this.setClickedOnce(false);
+      }
+    };
+  }
+
+  setClickedOnce(clickedOnce) {
+    this.setState({
+      clickedOnce,
+    });
+    if (clickedOnce) {
+      setTimeout(() => window.addEventListener('click', this.handleClick));
+    }
+    else {
+      window.removeEventListener('click', this.handleClick);
+    }
+  }
+
+  render() {
+    const {
+      confirmMessage = "Confirm?",
+      confirmColor = "bad",
+      color,
+      content,
+      onClick,
+      ...rest
+    } = this.props;
+    return (
+      <Button
+        content={this.state.clickedOnce ? confirmMessage : content}
+        color={this.state.clickedOnce ? confirmColor : color}
+        onClick={() => this.state.clickedOnce
+          ? onClick()
+          : this.setClickedOnce(true)}
+        {...rest}
+      />
+    );
+  }
+}
+
+Button.Confirm = ButtonConfirm;
+
+export class ButtonInput extends Component {
+  constructor() {
+    super();
+    this.state = {
+      inInput: false,
+      currentText: "",
+    };
+  }
+
+  setCurrentText(currentText) {
+    this.setState({
+      currentText,
+    });
+  }
+
+  setInInput(inInput) {
+    this.setState({
+      inInput,
+    });
+    if (!inInput) {
+      if (this.state.currentText !== "") {
+        this.props.onCommit(this.state.currentText);
+      } else {
+        this.props.onCommit("Untitled");
+      }
+      this.setCurrentText("");
+    }
+  }
+
+  render() {
+    const {
+      fluid,
+      placeholder,
+      maxLength,
+      ...rest
+    } = this.props;
+
+    const input = (
+      <table
+        className="Table"
+        style={{
+          'margin-top': '0px',
+        }}>
+        <tr className="Table__row">
+          <td className="Table__cell">
+            <Input
+              fluid
+              value={this.state.currentText}
+              onInput={(e, value) => this.setCurrentText(value)}
+              onEnter={(e, value) => this.setInInput(false)}
+            />
+          </td>
+          <td className="Table__cell Table__cell--collapsing">
+            <Button
+              icon="times"
+              color="bad"
+              onClick={() => this.setInInput(false)}
+            />
+          </td>
+        </tr>
+      </table>
+    );
+
+    const button = (
+      <Button
+        fluid={fluid}
+        onClick={() => this.setInInput(true)}
+        {...rest}
+      />
+    );
+
+    return (
+      this.state.inInput ? (
+        input
+      ) : (
+        button
+      )
+    );
+  }
+}
+
+Button.Input = ButtonInput;
