@@ -541,7 +541,7 @@
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V, purge)
 	var/chemicals_lost = M.reagents.total_volume / 10
-	if(purge == TRUE)
+	if(purge)
 		chemicals_lost = (2 * M.reagents.total_volume)/3				//For detoxification surgery, we're manually pumping the stomach out of chemcials, so it's far more efficient.
 	M.reagents.trans_to(V, chemicals_lost, transfered_by = M)
 	for(var/datum/reagent/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
