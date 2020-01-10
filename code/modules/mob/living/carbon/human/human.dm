@@ -796,7 +796,7 @@
 		override = dna.species.override_float
 	..()
 
-/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = 0, stun = 1, distance = 0, message = 1, toxic = 0)
+/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = 0, stun = 1, distance = 0, message = 1, toxic = 0, purge = FALSE)
 	if(blood && (NOBLOOD in dna.species.species_traits) && !HAS_TRAIT(src, TRAIT_TOXINLOVER))
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
