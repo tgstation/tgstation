@@ -195,10 +195,6 @@
 /datum/status_effect/bloodchill/on_remove()
 	owner._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/bloodchill)
 
-/datum/movespeed_modifier/bloodchill
-	id = "bloodchilled"
-	multiplicative_slowdown = 3
-
 /datum/status_effect/bonechill
 	id = "bonechill"
 	duration = 80
@@ -216,11 +212,6 @@
 
 /datum/status_effect/bonechill/on_remove()
 	owner._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/bonechill)
-
-/datum/movespeed_modifier/bonechill
-	id = "bonechilled"
-	multiplicative_slowdown = 3
-
 /obj/screen/alert/status_effect/bonechill
 	name = "Bonechilled"
 	desc = "You feel a shiver down your spine after hearing the haunting noise of bone rattling. You'll move slower and get frostbite for a while!"

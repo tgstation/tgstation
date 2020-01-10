@@ -51,8 +51,3 @@
 	while(!active && stacks) //Damage stacks decrease fairly rapidly while not in sanic mode
 		stacks--
 		sleep(20)
-
-/datum/movespeed_modifier/strained_muscles
-	id = MOVESPEED_ID_CHANGELING_MUSCLES
-	multiplicative_slowdown = -1
-	blacklisted_movetypes = (FLYING|FLOATING)

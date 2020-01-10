@@ -39,8 +39,3 @@
 			var/mob/living/carbon/human/H = L
 			H.physiology.damage_resistance += 100
 	..()
-
-/datum/movespeed_modifier/shrink_ray
-	id = MOVESPEED_ID_SHRINK_RAY
-	movetypes = GROUNd
-	multiplicative_slowdown = 4

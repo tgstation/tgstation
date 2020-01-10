@@ -29,8 +29,3 @@
 	if(istype(OT))
 		OT.MakeSlippery(TURF_WET_LUBE, 20)
 		return TRUE
-
-/datum/movespeed_modifier/snail_crawl
-	id = MOVESPEED_ID_SNAIL_CRAWL
-	multiplicative_slowdown = -7
-	movetypes = GROUnD
