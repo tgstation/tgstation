@@ -40,29 +40,6 @@ Behavior that's still missing from this component that original food items had t
 	///Last time we checked for food likes
 	var/last_check_time
 
-
-	//var/dried_type = null //move this to obj/item/dry-able or to a dry component
-	//var/dry = 0 //move this to obj/item/dry-able or to a dry component
-
-
-	///Should be done through some kind of seperate cooking code
-	//var/cooked_type = null  //should be on the item itself.
-
-
-	///Custom food component
-	//var/filling_color = "#FFFFFF" //color to use when added to custom food.
-	//var/custom_food_type = null  //for food customizing. path of the custom food to create
-	//var/customfoodfilling = 1 // whether it can be used as filling in custom food
-
-
-	///THIS NEEDS TO BE MOVED TO A PROCCESABLE COMPONENT. Allowing you to use an item to transform an item into another item. E.G. cutting, smashing, etc
-	/// Type path For cut-able food.
-	///var/slice_path = null
-	/// Amount of slices for cutting
-	///var/slices_num = 0
-	/// Time it takes to cut food
-	///var/slice_duration = 20
-
 /datum/component/edible/Initialize(list/initial_reagents, food_flags = NONE, foodtypes = NONE, volume = 50, eat_time = 30, list/tastes, list/eatverbs = list("bite","chew","nibble","gnaw","gobble","chomp"), bite_consumption = 2, datum/callback/after_eat)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -95,7 +72,7 @@ Behavior that's still missing from this component that original food items had t
 		src.junkiness = junkiness
 	src.after_eat = after_eat
 
-	owner = parent
+	var/atom/owner = parent
 
 	owner.create_reagents(volume, INJECTABLE)
 
@@ -127,6 +104,8 @@ Behavior that's still missing from this component that original food items had t
 
 ///All the checks for the act of eating itself and
 /datum/component/edible/proc/TryToEat(mob/living/eater, mob/living/feeder)
+	var/atom/owner = parent
+
 	if(feeder.a_intent == INTENT_HARM)
 		return
 	if(!owner.reagents.total_volume)//Shouldn't be needed but it checks to see if it has anything left in it.
@@ -179,6 +158,8 @@ Behavior that's still missing from this component that original food items had t
 
 ///This function lets the eater take a bite and transfers the reagents to the eater.
 /datum/component/edible/proc/TakeBite(mob/living/eater, mob/living/feeder)
+	var/atom/owner = parent
+
 	if(!owner.reagents)
 		return FALSE
 	if(eater.satiety > -200)
@@ -243,6 +224,8 @@ Behavior that's still missing from this component that original food items had t
 
 ///Delete the item when it is fully eaten
 /datum/component/edible/proc/On_Consume(mob/living/eater)
+	var/atom/owner = parent
+
 	if(!eater)
 		return
 	if(!owner.reagents.total_volume)
@@ -250,6 +233,8 @@ Behavior that's still missing from this component that original food items had t
 
 ///Ability to feed food to puppers
 /datum/component/edible/proc/UseByAnimal(datum/source, mob/user)
+	var/atom/owner = parent
+
 	if(!isdog(user))
 		return
 	var/mob/living/L = user
@@ -263,9 +248,3 @@ Behavior that's still missing from this component that original food items had t
 		if(sattisfaction_text)
 			L.emote("me", 1, "[sattisfaction_text]")
 		qdel(parent)
-
-
-///For now, microwaving does nothing but it should interact with the food properly in the future as it does with other food.
-/datum/component/edible/proc/microwave_act(datum/source, obj/machinery/microwave/M)
-	return
-
