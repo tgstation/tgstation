@@ -147,7 +147,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 			modified = TRUE
 	else
 		CRASH("Invalid modifier")
-	if(!isnull(multiplicative_slowdown)
+	if(!isnull(multiplicative_slowdown))
 		final.multiplicative_slowdown = multiplicative_slowdown
 		modified = TRUE
 	if(inject)
