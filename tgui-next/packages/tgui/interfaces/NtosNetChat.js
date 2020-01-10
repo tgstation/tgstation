@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Grid, LabeledList, ProgressBar, Section, Input, Table } from '../components';
+import { AnimatedNumber, Box, Button, Grid, LabeledList, ProgressBar, Section, Input, Table, Flex } from '../components';
 import { Fragment } from 'inferno';
 
 export const NtosNetChat = props => {
@@ -14,10 +14,14 @@ export const NtosNetChat = props => {
 
   return (
     <Section
-      minHeight="600px"
-    >
-      <Table>
-        <Table.Row>
+      title="test"
+      minHeight="600px" bottom="0px">
+        <Box height="100%" backgroundColor="#0000FF">
+          test
+        </Box>
+        {/*
+      <Table backgroundColor="#0000FF" height="100%" bottom="0px">
+        <Table.Row height="100%" bottom="0px">
           <Table.Cell
             style={{
               width: '200px',
@@ -43,21 +47,25 @@ export const NtosNetChat = props => {
               ))}
             </Box>
           </Table.Cell>
-          <Table.Cell>
-            <Box height="100%">
-              {messages.map(message => (
-                <Box
-                  key={message.msg}>
-                  {message.msg}
-                </Box>
-              ))}
-            </Box>
-            <Input
-              fluid
-              onChange={(e, value) => act('PRG_speak', {
-                message: value,
-              })}
-            />
+          <Table.Cell height="100%">
+            <Flex height="100%" direction="column">
+              <Flex.Item grow={1}>
+                {messages.map(message => (
+                  <Box
+                    key={message.msg}>
+                    {message.msg}
+                  </Box>
+                ))}
+              </Flex.Item>
+              <Flex.Item>
+                <Input
+                  fluid
+                  onChange={(e, value) => act('PRG_speak', {
+                    message: value,
+                  })}
+                />
+              </Flex.Item>
+            </Flex>
           </Table.Cell>
           <Table.Cell
             style={{
@@ -73,6 +81,7 @@ export const NtosNetChat = props => {
           </Table.Cell>
         </Table.Row>
       </Table>
+              */}
     </Section>
   );
 };
