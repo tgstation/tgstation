@@ -43,11 +43,3 @@
 	reagents_list = list(/datum/reagent/medicine/C2/instabitaluri = 75)
 	build_path = /obj/item/melee/synthetic_arm_blade
 	category = list("other","emagged")
-
-/datum/design/lizardtail
-	name = "Tail"
-	id = "tail"
-	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/C2/instabitaluri = 25)
-	build_path = /obj/item/organ/tail/lizard
-	category = list("initial","lizard")
