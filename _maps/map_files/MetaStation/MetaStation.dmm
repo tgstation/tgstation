@@ -47069,7 +47069,6 @@
 	dir = 4;
 	network = list("ss13","medbay")
 	},
-/obj/structure/chair/greyscale,
 /obj/item/radio/intercom{
 	pixel_x = -28
 	},
@@ -47082,10 +47081,12 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/structure/chair,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cbS" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/security/checkpoint/medical)
 "cbT" = (
@@ -47812,6 +47813,7 @@
 	network = list("medbay");
 	pixel_x = -32
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "cdy" = (
@@ -48216,6 +48218,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "ceB" = (
@@ -49323,24 +49326,24 @@
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "cgX" = (
-/obj/structure/chair/greyscale,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/structure/chair,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cgY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/chair/greyscale,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/structure/chair,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cgZ" = (
@@ -51223,9 +51226,6 @@
 /turf/open/floor/plating,
 /area/medical/medbay/central)
 "clo" = (
-/obj/structure/chair/greyscale{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -51233,6 +51233,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/structure/chair{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "clp" = (
@@ -72430,13 +72433,13 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "hcZ" = (
-/obj/structure/chair/greyscale{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/structure/chair{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "hdb" = (
