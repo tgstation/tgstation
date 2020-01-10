@@ -96,7 +96,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		type_id_datum = type_id_datum.id
 	if(!LAZYACCESS(movespeed_modification, type_id_datum))
 		return FALSE
-	LAZYREMOVE(movespeed_modification, id)
+	LAZYREMOVE(movespeed_modification, type_id_datum)
 	UNSETEMPTY(movespeed_modification)
 	if(update)
 		update_movespeed(FALSE)
@@ -139,13 +139,13 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 	. = 0
 	var/list/conflict_tracker = list()
 	for(var/id in get_movespeed_modifiers())
-		var/list/data = movespeed_modification[id]
-		if(!(data[MOVESPEED_DATA_INDEX_MOVETYPE] & movement_type)) // We don't affect any of these move types, skip
+		var/datum/movespeed_modifier/M = movespeed_modification[id]
+		if(!(M.movetypes & movement_type)) // We don't affect any of these move types, skip
 			continue
-		if(data[MOVESPEED_DATA_INDEX_BL_MOVETYPE] & movement_type) // There's a movetype here that disables this modifier, skip
+		if(M.blacklisted_movetypes & movement_type) // There's a movetype here that disables this modifier, skip
 			continue
-		var/conflict = data[MOVESPEED_DATA_INDEX_CONFLICT]
-		var/amt = data[MOVESPEED_DATA_INDEX_MULTIPLICATIVE_SLOWDOWN]
+		var/conflict = M.conflict
+		var/amt = M.multiplicative_slowdown
 		if(conflict)
 			// Conflicting modifiers prioritize the larger slowdown or the larger speedup
 			// We purposefuly don't handle mixing speedups and slowdowns on the same id
@@ -183,20 +183,20 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		return
 	var/list/assembled = list()
 	for(var/our_id in movespeed_modification)
-		var/list/our_data = movespeed_modification[our_id]
-		if(!islist(our_data) || (our_data.len < MOVESPEED_DATA_INDEX_PRIORITY) || movespeed_data_null_check(our_data))
+		var/datum/movespeed_modifier/M = movespeed_modification[our_id]
+		if(!istype(M) || movespeed_data_null_check(M))
 			movespeed_modification -= our_id
 			continue
-		var/our_priority = our_data[MOVESPEED_DATA_INDEX_PRIORITY]
+		var/our_priority = M.priority
 		var/resolved = FALSE
 		for(var/their_id in assembled)
-			var/list/their_data = assembled[their_id]
-			if(their_data[MOVESPEED_DATA_INDEX_PRIORITY] < our_priority)
+			var/datum/movespeed_modifier/other = assembled[their_id]
+			if(other.priority < our_priority)
 				assembled.Insert(assembled.Find(their_id), our_id)
-				assembled[our_id] = our_data
+				assembled[our_id] = M
 				resolved = TRUE
 				break
 		if(!resolved)
-			assembled[our_id] = our_data
+			assembled[our_id] = M
 	movespeed_modification = assembled
 	UNSETEMPTY(movespeed_modification)

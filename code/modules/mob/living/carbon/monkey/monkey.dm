@@ -95,8 +95,6 @@
 			if(changeling)
 				stat("Chemical Storage", "[changeling.chem_charges]/[changeling.chem_storage]")
 				stat("Absorbed DNA", changeling.absorbedcount)
-	return
-
 
 /mob/living/carbon/monkey/verb/removeinternal()
 	set name = "Remove Internals"
