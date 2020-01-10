@@ -70,8 +70,7 @@
 	new /obj/item/clothing/head/hardhat/red(src)
 
 	var/newmask = pick( /obj/item/clothing/mask/gas/alt,
-						/obj/item/clothing/mask/gas/alt2,
-						/obj/item/clothing/mask/gas/alt3)
+						/obj/item/clothing/mask/gas/alt2)
 	new newmask(src)
 
 /obj/structure/closet/firecloset/full/PopulateContents()
@@ -82,8 +81,7 @@
 	new /obj/item/clothing/head/hardhat/red(src)
 
 	var/newmask = pick( /obj/item/clothing/mask/gas/alt,
-						/obj/item/clothing/mask/gas/alt2,
-						/obj/item/clothing/mask/gas/alt3)
+						/obj/item/clothing/mask/gas/alt2)
 	new newmask(src)
 
 /*
