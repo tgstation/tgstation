@@ -34,25 +34,40 @@ Key procs
 
 //ANY ADD/REMOVE DONE IN UPDATE_MOVESPEED MUST HAVE THE UPDATE ARGUMENT SET AS FALSE!
 
+GLOBAL_LIST_EMPTY(movespeed_modification_cache)
+/proc/get_cached_movespeed_modification(modtype)
+	if(!ispath(modtype, /datum/movespeed_modification))
+		CRASH("[modtype] is not a movespeed modification type.")
+	var/datum/movespeed_modification/M = GLOB.movespeed_modification_cache[modtype] || ((GLOB.movespeed_modification_cache[modtype] = new modtype))
+	return M
+
 ///Add a move speed modifier to a mob
-/mob/proc/add_movespeed_modifier(id, update=TRUE, priority=0, flags=NONE, override=FALSE, multiplicative_slowdown=0, movetypes=ALL, blacklisted_movetypes=NONE, conflict=FALSE)
-	var/list/temp = list(priority, flags, multiplicative_slowdown, movetypes, blacklisted_movetypes, conflict) //build the modification list
-	var/resort = TRUE
-	if(LAZYACCESS(movespeed_modification, id))
-		var/list/existing_data = movespeed_modification[id]
-		if(movespeed_modifier_identical_check(existing_data, temp))
+/mob/proc/_REFACTORING_add_movespeed_modifier(datum/movespeed_modification/type_or_datum, update = TRUE, override = FALSE)
+	if(ispath(type_or_datum))
+		type_or_datum = get_cached_movespeed_modification(type_or_datum)
+	if(!istype(type_or_datum))
+		CRASH("Invalid modification datum")
+	var/oldpriority
+	var/datum/movespeed_modification/existing = LAZYACCESS(movespeed_modification, type_or_datum.id)
+	if(existing)
+		if(existing == type_or_datum)		//same thing don't need to touch
+			return TRUE
+		if(!override)						//not overriding, do not overwrite same ID.
 			return FALSE
-		if(!override)
-			return FALSE
-		if(priority == existing_data[MOVESPEED_DATA_INDEX_PRIORITY])
-			resort = FALSE // We don't need to re-sort if we're replacing something already there and it's the same priority
-	LAZYSET(movespeed_modification, id, temp)
+		oldpriority = existing.priority
+		remove_movespeed_modifier(existing, FLASE)
+	LAZYSET(movespeed_modification, type_or_datum.id, type_or_datum)
+	var/resort = type_or_datum.priority == oldpriority
 	if(update)
 		update_movespeed(resort)
 	return TRUE
 
 ///Remove a move speed modifier from a mob
-/mob/proc/remove_movespeed_modifier(id, update = TRUE)
+/mob/proc/_REFACTORING_remove_movespeed_modifier(datum/movespeed_modification/type_id_datum, update = TRUE)
+	if(ispath(type_id_datum))
+		type_id_datum = get_cached_movespeed_modification(type_id_datum)
+	if(istype(type_id_datum))
+		type_id_datum = type_id_datum.id
 	if(!LAZYACCESS(movespeed_modification, id))
 		return FALSE
 	LAZYREMOVE(movespeed_modification, id)
@@ -73,7 +88,11 @@ Key procs
 		add_movespeed_modifier(MOVESPEED_ID_ADMIN_VAREDIT, TRUE, 100, override = TRUE, multiplicative_slowdown = diff)
 
 ///Is there a movespeed modifier for this mob
-/mob/proc/has_movespeed_modifier(id)
+/mob/proc/has_movespeed_modifier(datum/movespeed_modifier/datum_type_id)
+	if(ispath(datum_type_id))
+		datum_type_id = get_cached_movespeed_modification(datum_type_id)
+	if(istype(datum_type_id))
+		datum_type_id = datum_type_id.id
 	return LAZYACCESS(movespeed_modification, id)
 
 ///Set or update the global movespeed config on a mob
@@ -115,15 +134,6 @@ Key procs
 /mob/proc/get_movespeed_modifiers()
 	return movespeed_modification
 
-///Check if a movespeed modifier is identical to another
-/mob/proc/movespeed_modifier_identical_check(list/mod1, list/mod2)
-	if(!islist(mod1) || !islist(mod2) || mod1.len < MOVESPEED_DATA_INDEX_MAX || mod2.len < MOVESPEED_DATA_INDEX_MAX)
-		return FALSE
-	for(var/i in 1 to MOVESPEED_DATA_INDEX_MAX)
-		if(mod1[i] != mod2[i])
-			return FALSE
-	return TRUE
-
 ///Calculate the total slowdown of all movespeed modifiers
 /mob/proc/total_multiplicative_slowdown()
 	. = 0
@@ -164,3 +174,27 @@ Key procs
 			assembled[our_id] = our_data
 	movespeed_modification = assembled
 	UNSETEMPTY(movespeed_modification)
+
+/**
+  * Movespeed modification datums.
+  */
+
+/datum/movespeed_modification
+	/// Unique ID. You can never have different modifications with the same ID
+	var/id = "ERROR"
+
+	/// Higher ones override lower priorities. This is NOT used for ID, ID must be unique, if it isn't unique the newer one overwrites automatically if overriding.
+	var/priority = 0
+	var/flags = NONE
+
+	/// Multiplicative slowdown
+	var/multiplicative_slowdown = 0
+
+	/// Movetypes this applies to
+	var/movetypes = ALL
+
+	/// Movetypes this never applies to
+	var/blacklisted_movetypes = NONE
+
+	/// Other modification datums this conflicts with.
+	var/conflicts_with
