@@ -185,7 +185,7 @@
 	alert_type = /obj/screen/alert/status_effect/bloodchill
 
 /datum/status_effect/bloodchill/on_apply()
-	owner.add_movespeed_modifier("bloodchilled", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = 3)
+	owner._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/bloodchill)
 	return ..()
 
 /datum/status_effect/bloodchill/tick()
@@ -193,7 +193,11 @@
 		owner.adjustFireLoss(2)
 
 /datum/status_effect/bloodchill/on_remove()
-	owner.remove_movespeed_modifier("bloodchilled")
+	owner._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/bloodchill)
+
+/datum/movespeed_modifier/bloodchill
+	id = "bloodchilled"
+	multiplicative_slowdown = 3
 
 /datum/status_effect/bonechill
 	id = "bonechill"
@@ -201,7 +205,7 @@
 	alert_type = /obj/screen/alert/status_effect/bonechill
 
 /datum/status_effect/bonechill/on_apply()
-	owner.add_movespeed_modifier("bonechilled", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = 3)
+	owner._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/bonechill)
 	return ..()
 
 /datum/status_effect/bonechill/tick()
@@ -211,7 +215,11 @@
 		owner.adjust_bodytemperature(-10)
 
 /datum/status_effect/bonechill/on_remove()
-	owner.remove_movespeed_modifier("bonechilled")
+	owner._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/bonechill)
+
+/datum/movespeed_modifier/bonechill
+	id = "bonechilled"
+	multiplicative_slowdown = 3
 
 /obj/screen/alert/status_effect/bonechill
 	name = "Bonechilled"

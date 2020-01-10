@@ -31,12 +31,12 @@
 
 /datum/action/changeling/strained_muscles/proc/muscle_loop(mob/living/carbon/user)
 	while(active)
-		user.add_movespeed_modifier(MOVESPEED_ID_CHANGELING_MUSCLES, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+		user._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
 		if(user.stat != CONSCIOUS || user.staminaloss >= 90)
 			active = !active
 			to_chat(user, "<span class='notice'>Our muscles relax without the energy to strengthen them.</span>")
 			user.Paralyze(40)
-			user.remove_movespeed_modifier(MOVESPEED_ID_CHANGELING_MUSCLES)
+			user._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
 			break
 
 		stacks++
@@ -51,3 +51,8 @@
 	while(!active && stacks) //Damage stacks decrease fairly rapidly while not in sanic mode
 		stacks--
 		sleep(20)
+
+/datum/movespeed_modifier/strained_muscles
+	id = MOVESPEED_ID_CHANGELING_MUSCLES
+	multiplicative_slowdown = -1
+	blacklisted_movetypes = (FLYING|FLOATING)

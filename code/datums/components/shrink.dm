@@ -14,7 +14,7 @@
 	parent_atom.opacity = 0
 	if(isliving(parent_atom))
 		var/mob/living/L = parent_atom
-		L._REFACTORING_add_movespeed_modifier(/datum/movespeed_modification/shrink_ray)
+		L._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
 			C.unequip_everything()
@@ -40,7 +40,7 @@
 			H.physiology.damage_resistance += 100
 	..()
 
-/datum/movespeed_modification/shrink_ray
+/datum/movespeed_modifier/shrink_ray
 	id = MOVESPEED_ID_SHRINK_RAY
 	movetypes = GROUNd
 	multiplicative_slowdown = 4

@@ -497,9 +497,13 @@
 /mob/living/carbon/update_mobility()
 	. = ..()
 	if(!(mobility_flags & MOBILITY_STAND))
-		add_movespeed_modifier(MOVESPEED_ID_CARBON_CRAWLING, TRUE, multiplicative_slowdown = CRAWLING_ADD_SLOWDOWN)
+		_REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
 	else
-		remove_movespeed_modifier(MOVESPEED_ID_CARBON_CRAWLING, TRUE)
+		_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
+
+/datum/movespeed_modifier/carbon_crawling
+	id = MOVESPEED_ID_CARBON_CRAWLING
+	multiplicative_slowdown = CRAWLING_ADD_SLOWDOWN
 
 //Updates the mob's health from bodyparts and mob damage variables
 /mob/living/carbon/updatehealth()

@@ -35,10 +35,12 @@ Key procs
 //ANY ADD/REMOVE DONE IN UPDATE_MOVESPEED MUST HAVE THE UPDATE ARGUMENT SET AS FALSE!
 
 GLOBAL_LIST_EMPTY(movespeed_modification_cache)
+
+/// Grabs a STATIC MODIFIER datum from cache. YOU MUST NEVER EDIT THESE DATUMS, OR IT WILL AFFECT ANYTHING ELSE USING IT TOO!
 /proc/get_cached_movespeed_modification(modtype)
-	if(!ispath(modtype, /datum/movespeed_modification))
+	if(!ispath(modtype, /datum/movespeed_modifier))
 		CRASH("[modtype] is not a movespeed modification type.")
-	var/datum/movespeed_modification/M = GLOB.movespeed_modification_cache[modtype] || ((GLOB.movespeed_modification_cache[modtype] = new modtype))
+	var/datum/movespeed_modifier/M = GLOB.movespeed_modification_cache[modtype] || ((GLOB.movespeed_modification_cache[modtype] = new modtype))
 	return M
 
 ///Add a move speed modifier to a mob
@@ -48,7 +50,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 	if(!istype(type_or_datum))
 		CRASH("Invalid modification datum")
 	var/oldpriority
-	var/datum/movespeed_modification/existing = LAZYACCESS(movespeed_modification, type_or_datum.id)
+	var/datum/movespeed_modifier/existing = LAZYACCESS(movespeed_modification, type_or_datum.id)
 	if(existing)
 		if(existing == type_or_datum)		//same thing don't need to touch
 			return TRUE
@@ -68,7 +70,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		type_id_datum = get_cached_movespeed_modification(type_id_datum)
 	if(istype(type_id_datum))
 		type_id_datum = type_id_datum.id
-	if(!LAZYACCESS(movespeed_modification, id))
+	if(!LAZYACCESS(movespeed_modification, type_id_datum))
 		return FALSE
 	LAZYREMOVE(movespeed_modification, id)
 	UNSETEMPTY(movespeed_modification)
@@ -93,7 +95,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		datum_type_id = get_cached_movespeed_modification(datum_type_id)
 	if(istype(datum_type_id))
 		datum_type_id = datum_type_id.id
-	return LAZYACCESS(movespeed_modification, id)
+	return LAZYACCESS(movespeed_modification, datum_type_id)
 
 ///Set or update the global movespeed config on a mob
 /mob/proc/update_config_movespeed()
@@ -179,7 +181,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
   * Movespeed modification datums.
   */
 
-/datum/movespeed_modification
+/datum/movespeed_modifier
 	/// Unique ID. You can never have different modifications with the same ID
 	var/id = "ERROR"
 
