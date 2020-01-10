@@ -79,9 +79,8 @@
 		for(var/i in 1 to amount)
 			new upgrade_item(get_turf(parent))
 
-/datum/component/armor_plate/proc/apply_mech_overlays(datum/source, list/overlays)
+/datum/component/armor_plate/proc/apply_mech_overlays(obj/mecha/mech, list/overlays)
 	if(amount)
-		var/obj/mecha/mech = parent
 		var/overlay_string = "ripley-g"
 		if(amount >= 3)
 			overlay_string += "-full"
