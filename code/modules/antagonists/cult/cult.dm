@@ -377,8 +377,8 @@
 		if(O.check_completion() == -1)
 			return -1
 		else if(!O.check_completion())
-			return FALSE
-	return TRUE
+			return 0
+	return 1
 
 /datum/team/cult/roundend_report()
 	var/list/parts = list()
