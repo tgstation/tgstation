@@ -37,7 +37,7 @@
 
 /mob/living/proc/update_turf_movespeed(turf/open/T)
 	if(isopenturf(T))
-		add_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD, update=TRUE, priority=100, override=TRUE, multiplicative_slowdown=T.slowdown, movetypes=GROUND)
+		add_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD, update=TRUE, priority=100, override=TRUE, multiplicative_slowdown=T.slowdown, movetypes=GROUND, blacklisted_movetypes=(FLYING|FLOATING))
 	else
 		remove_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD)
 
