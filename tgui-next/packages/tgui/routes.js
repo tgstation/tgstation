@@ -81,6 +81,7 @@ import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { SatelliteControl } from './interfaces/SatelliteControl';
 import { ScannerGate } from './interfaces/ScannerGate';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
+import { Signaler } from './interfaces/Signaler';
 import { Sleeper } from './interfaces/Sleeper';
 import { SlimeBodySwapper } from './interfaces/SlimeBodySwapper';
 import { SmartVend } from './interfaces/SmartVend';
@@ -466,6 +467,10 @@ const ROUTES = {
   shuttle_manipulator: {
     component: () => ShuttleManipulator,
     scrollable: true,
+  },
+  signaler: {
+    component: () => Signaler,
+    scrollable: false,
   },
   sleeper: {
     component: () => Sleeper,
