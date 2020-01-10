@@ -225,8 +225,6 @@
 	active_power_usage = 50
 	max_integrity = 300
 	var/active = FALSE
-	var/power = 0
-	var/maximum_stored_power = 500
 	var/locked = TRUE
 	var/shield_range = 8
 	var/obj/structure/cable/attached // the attached cable
@@ -235,6 +233,9 @@
 	name = "xenobiology shield wall generator"
 	desc = "A shield generator meant for use in xenobiology."
 	req_access = list(ACCESS_XENOBIOLOGY)
+
+/obj/machinery/power/shieldwallgen/anchored
+	anchored = TRUE
 
 /obj/machinery/power/shieldwallgen/Initialize()
 	. = ..()
