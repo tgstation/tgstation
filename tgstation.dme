@@ -2383,6 +2383,7 @@
 #include "code\modules\movespeed\modifiers\innate.dm"
 #include "code\modules\movespeed\modifiers\reagent.dm"
 #include "code\modules\movespeed\modifiers\status_effects.dm"
+#include "code\modules\movespeed\modifiers\variable.dm"
 #include "code\modules\ninja\__ninjaDefines.dm"
 #include "code\modules\ninja\energy_katana.dm"
 #include "code\modules\ninja\ninja_event.dm"

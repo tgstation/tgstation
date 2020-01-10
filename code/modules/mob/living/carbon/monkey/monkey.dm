@@ -60,14 +60,13 @@
 
 /mob/living/carbon/monkey/on_reagent_change()
 	. = ..()
-	remove_movespeed_modifier(MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD, TRUE)
 	var/amount
 	if(reagents.has_reagent(/datum/reagent/medicine/morphine))
 		amount = -1
 	if(reagents.has_reagent(/datum/reagent/consumable/nuka_cola))
 		amount = -1
 	if(amount)
-		add_movespeed_modifier(MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
+		add_or_update_movespeed_modifier(/datum/movespeed_modifier/variable/monkey_reagent_speedmod, TRUE, amount)
 
 /mob/living/carbon/monkey/updatehealth()
 	. = ..()
@@ -76,14 +75,14 @@
 		var/health_deficiency = (maxHealth - health)
 		if(health_deficiency >= 45)
 			slow += (health_deficiency / 25)
-	add_movespeed_modifier(MOVESPEED_ID_MONKEY_HEALTH_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = slow)
+		add_or_update_movespeed_modifier(/datum/movespeed_modifier/variable/monkey_health_speedmod, TRUE, slow)
 
 /mob/living/carbon/monkey/adjust_bodytemperature(amount)
 	. = ..()
 	var/slow = 0
 	if (bodytemperature < 283.222)
 		slow += ((283.222 - bodytemperature) / 10) * 1.75
-	add_movespeed_modifier(MOVESPEED_ID_MONKEY_TEMPERATURE_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = slow)
+		add_or_update_movespeed_modifier(/datum/movespeed_modifier/variable/monkey_temperature_speedmod, TRUE, slow)
 
 /mob/living/carbon/monkey/Stat()
 	..()
