@@ -246,7 +246,7 @@
 	if(!is_open)
 		icon_state = "regen_mesh_closed"
 	else
-		..()
+		return ..()
 
 /obj/item/stack/medical/mesh/heal(mob/living/M, mob/user)
 	. = ..()

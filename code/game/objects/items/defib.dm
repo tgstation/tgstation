@@ -310,6 +310,7 @@
 	var/base_icon_state = "defibpaddles"
 
 /obj/item/twohanded/shockpaddles/ComponentInitialize()
+	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/twohanded/shockpaddles/Destroy()

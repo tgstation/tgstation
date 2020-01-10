@@ -30,8 +30,8 @@
 	trigger_guard = TRIGGER_GUARD_NORMAL
 
 /obj/item/flamethrower/ComponentInitialize()
+	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	return ..()
 
 /obj/item/flamethrower/Destroy()
 	if(weldtool)

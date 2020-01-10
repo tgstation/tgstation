@@ -24,8 +24,8 @@
 	var/mob/listeningTo
 
 /obj/item/twohanded/rcl/ComponentInitialize()
+	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	return ..()
 
 /obj/item/twohanded/rcl/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/pipe_cleaner_coil))

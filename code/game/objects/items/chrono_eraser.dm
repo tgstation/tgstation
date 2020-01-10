@@ -66,8 +66,8 @@
 		return INITIALIZE_HINT_QDEL
 
 /obj/item/gun/energy/chrono_gun/ComponentInitialize()
+	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
-	return ..()
 
 /obj/item/gun/energy/chrono_gun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(field)

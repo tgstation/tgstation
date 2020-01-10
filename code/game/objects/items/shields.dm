@@ -131,8 +131,8 @@
 	embedded_flash = new(src)
 
 /obj/item/shield/riot/flash/ComponentInitialize()
+	. = .. ()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	return ..()
 
 /obj/item/shield/riot/flash/attack(mob/living/M, mob/user)
 	. =  embedded_flash.attack(M, user)

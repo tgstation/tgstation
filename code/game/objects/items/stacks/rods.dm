@@ -78,8 +78,8 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	cost = 250
 
 /obj/item/stack/rods/cyborg/ComponentInitialize()
+	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
-	return ..()
 
 /obj/item/stack/rods/ten
 	amount = 10

@@ -43,8 +43,8 @@
 	update_icon()
 
 /obj/item/weldingtool/ComponentInitialize()
+	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	return ..()
 
 /obj/item/weldingtool/update_icon_state()
 	if(welding)
