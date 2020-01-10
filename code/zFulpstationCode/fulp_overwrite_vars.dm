@@ -80,51 +80,46 @@
 //***********************************************************************
 
 
-/mob/living/silicon/robot/modules/medical
-	radio = /obj/item/radio/borg/medical
-
-/obj/item/radio/borg/medical
-	keyslot = new /obj/item/encryptionkey/headset_med
+/obj/item/robot_module/medical/do_transform_delay()
+	..()
+	borg_set_radio(/obj/item/encryptionkey/headset_med, FREQ_MEDICAL)
 
 
-/mob/living/silicon/robot/modules/engineering
-	radio = /obj/item/radio/borg/medical
-
-/obj/item/radio/borg/engineering
-	keyslot = new /obj/item/encryptionkey/headset_eng
+/obj/item/robot_module/engineering/do_transform_delay()
+	..()
+	borg_set_radio(/obj/item/encryptionkey/headset_eng, FREQ_ENGINEERING)
 
 
-/mob/living/silicon/robot/modules/security
-	radio = /obj/item/radio/borg/security
+/obj/item/robot_module/security/do_transform_delay()
+	..()
+	borg_set_radio(/obj/item/encryptionkey/headset_sec, FREQ_SECURITY)
 
-/mob/living/silicon/robot/modules/peacekeeper
-	radio = /obj/item/radio/borg/security
-
-/obj/item/radio/borg/security
-	keyslot = new /obj/item/encryptionkey/headset_sec
-
-
-/mob/living/silicon/robot/modules/miner
-	radio = /obj/item/radio/borg/mining
-
-/obj/item/radio/borg/mining
-	keyslot = new /obj/item/encryptionkey/headset_mining
+/obj/item/robot_module/peacekeeper/do_transform_delay()
+	..()
+	borg_set_radio(/obj/item/encryptionkey/headset_sec, FREQ_SECURITY)
 
 
-/mob/living/silicon/robot/modules/clown
-	radio = /obj/item/radio/borg/service
+/obj/item/robot_module/miner/do_transform_delay()
+	..()
+	borg_set_radio(/obj/item/encryptionkey/headset_mining, FREQ_SUPPLY)
 
-/mob/living/silicon/robot/modules/standard
-	radio = /obj/item/radio/borg/service
 
-/mob/living/silicon/robot/modules/janitor
-	radio = /obj/item/radio/borg/service
+/obj/item/robot_module/clown/do_transform_delay()
+	..()
+	borg_set_radio(/obj/item/encryptionkey/headset_service, FREQ_SERVICE)
 
-/mob/living/silicon/robot/modules/butler
-	radio = /obj/item/radio/borg/service
+/obj/item/robot_module/standard/do_transform_delay()
+	..()
+	borg_set_radio(/obj/item/encryptionkey/headset_service, FREQ_SERVICE)
 
-/obj/item/radio/borg/service
-	keyslot = new /obj/item/encryptionkey/headset_service
+/obj/item/robot_module/janitor/do_transform_delay()
+	..()
+	borg_set_radio(/obj/item/encryptionkey/headset_service, FREQ_SERVICE)
+
+/obj/item/robot_module/butler/do_transform_delay()
+	..()
+	borg_set_radio(/obj/item/encryptionkey/headset_service, FREQ_SERVICE)
+
 
 //***********************************************************************
 //** FULP PROPER RADIO CHANNELS FOR BORGS by Surrealistik Nov 2019 ENDS

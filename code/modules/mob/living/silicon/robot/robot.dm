@@ -981,6 +981,7 @@
 
 /mob/living/silicon/robot/proc/ResetModule()
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
+	borg_reset_radio() //FULPSTATION BORG RADIOS by Surrealistik Jan 2020
 	uneq_all()
 	shown_robot_modules = FALSE
 	if(hud_used)
