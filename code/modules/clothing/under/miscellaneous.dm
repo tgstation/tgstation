@@ -141,8 +141,8 @@
 	armor = list("melee" = 10, "laser" = 10, "fire" = 40, "acid" = 10, "bomb" = 5)
 
 /obj/item/clothing/under/misc/bouncer
-	name = "bouncer jumpsuit"
-	desc = "A jumpsuit made from a little bit more resistant fibers, makes you seem like a cool guy."
+	name = "bouncer uniform"
+	desc = "A uniform made from a little bit more resistant fibers, makes you seem like a cool guy."
 	icon_state = "bouncer"
 	item_state = "bouncer"
 	can_adjust = FALSE
