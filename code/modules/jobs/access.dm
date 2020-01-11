@@ -365,7 +365,7 @@
 	return get_all_jobs() + list("Prisoner", "Entertainment Response Officer", "Religious Response Officer", "Janitorial Response Officer", "Death Commando")
 
 /proc/get_all_centcom_jobs()
-	return list("VIP Guest","Custodian","Thunderdome Overseer","CentCom Official","Medical Officer","Research Officer","Special Ops Officer","Admiral","CentCom Commander","Emergency Response Team Commander","Security Response Officer","Engineering Response Officer", "Medical Response Officer","CentCom Bartender")
+	return list("Central Command","VIP Guest","Custodian","Thunderdome Overseer","CentCom Official","Medical Officer","Research Officer","Special Ops Officer","Admiral","CentCom Commander","Emergency Response Team Commander","Security Response Officer","Engineering Response Officer", "Medical Response Officer","CentCom Bartender")
 
 /obj/item/proc/GetJobName() //Used in secHUD icon generation
 	var/obj/item/card/id/I = GetID()

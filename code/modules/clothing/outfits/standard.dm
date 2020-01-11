@@ -1,4 +1,8 @@
-/datum/outfit/spec_ops
+/datum/outfit/centcom/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	var/obj/item/implant/mindshield/L = new/obj/item/implant/mindshield(H)//hmm lets have centcom officials become revs
+	L.implant(H, null, 1)
+
+/datum/outfit/centcom/spec_ops
 	name = "Special Ops Officer"
 
 	uniform = /obj/item/clothing/under/syndicate
@@ -14,7 +18,7 @@
 	back = /obj/item/storage/backpack/satchel/leather
 	id = /obj/item/card/id/centcom
 
-/datum/outfit/spec_ops/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/centcom/spec_ops/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
@@ -307,7 +311,7 @@
 	shoes = /obj/item/clothing/shoes/sandal/marisa
 	head = /obj/item/clothing/head/wizard/marisa
 
-/datum/outfit/soviet
+/datum/outfit/centcom/soviet
 	name = "Soviet Admiral"
 
 	uniform = /obj/item/clothing/under/costume/soviet
@@ -322,7 +326,7 @@
 
 	id = /obj/item/card/id/centcom
 
-/datum/outfit/soviet/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/centcom/soviet/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
@@ -362,7 +366,7 @@
 	r_hand= /obj/item/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/death_commando
+/datum/outfit/centcom/death_commando
 	name = "Death Commando"
 
 	uniform = /obj/item/clothing/under/rank/centcom/commander
@@ -387,18 +391,13 @@
 		/obj/item/flashlight=1,\
 		/obj/item/grenade/c4/x4=1)
 
-/datum/outfit/death_commando/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/centcom/death_commando/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
 	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_CENTCOM)
 	R.freqlock = TRUE
-
-	var/obj/item/implant/mindshield/L = new/obj/item/implant/mindshield(H)//Here you go Deuryn
-	L.implant(H, null, 1)
-
-
 	var/obj/item/card/id/W = H.wear_id
 	W.access = get_all_accesses()//They get full station access.
 	W.access += get_centcom_access("Death Commando")//Let's add their alloted CentCom access.
@@ -406,7 +405,7 @@
 	W.registered_name = H.real_name
 	W.update_label()
 
-/datum/outfit/death_commando/officer
+/datum/outfit/centcom/death_commando/officer
 	name = "Death Commando Officer"
 	head = /obj/item/clothing/head/helmet/space/beret
 

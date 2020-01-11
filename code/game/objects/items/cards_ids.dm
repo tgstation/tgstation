@@ -505,7 +505,7 @@ update_label()
 	desc = "An ID straight from Central Command."
 	icon_state = "centcom"
 	registered_name = "Central Command"
-	assignment = "General"
+	assignment = "Central Command"
 	uses_overlays = FALSE
 
 /obj/item/card/id/centcom/Initialize()
