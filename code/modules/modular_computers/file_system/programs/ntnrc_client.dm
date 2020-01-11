@@ -93,9 +93,11 @@
 			var/newname = sanitize(params["new_name"])
 			if(!newname)
 				return
-			if(!isnull(active_channel))
-				channel.add_status_message("[username] is now known as [newname].")
 			username = newname
+			for(var/C in SSnetworks.station_network.chat_channels)
+				var/datum/ntnet_conversation/chan = C
+				if(src in chan.clients)
+					chan.add_status_message("[username] is now known as [newname].")
 			return TRUE
 		if("PRG_savelog")
 			if(!channel)
@@ -168,6 +170,11 @@
 		channel.remove_client(src)
 	..()
 
+/datum/computer_file/program/chatclient/ui_static_data(mob/user)
+	var/list/data = list()
+	data["can_admin"] = can_run(user, TRUE, ACCESS_NETWORK)
+	return data
+
 /datum/computer_file/program/chatclient/ui_data(mob/user)
 	if(!SSnetworks.station_network || !SSnetworks.station_network.chat_channels)
 		return list()
@@ -184,7 +191,7 @@
 				"chan" = conv.title,
 				"id" = conv.id
 			)))
-		data["all_channels"] = all_channels
+	data["all_channels"] = all_channels
 
 	data["active_channel"] = active_channel
 	data["username"] = username
@@ -217,6 +224,7 @@
 			data["messages"] = list()
 	else
 		data["clients"] = list()
+		data["authed"] = FALSE
 		data["messages"] = list()
 
 	return data
