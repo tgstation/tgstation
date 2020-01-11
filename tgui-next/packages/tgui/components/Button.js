@@ -189,10 +189,16 @@ export class ButtonInput extends Component {
   commitResult(e) {
     if (this.inputRef) {
       const input = this.inputRef.current;
-      const value = input.value === ""
-        ? this.props.defaultValue
-        : input.value;
-      this.props.onCommit(e, value);
+      const hasValue = (input.value !== "");
+      if (hasValue) {
+        this.props.onCommit(e, input.value);
+        return;
+      } else {
+        if (!this.props.defaultValue) {
+          return;
+        }
+        this.props.onCommit(e, this.props.defaultValue);
+      }
     }
   }
 
@@ -247,9 +253,5 @@ export class ButtonInput extends Component {
     );
   }
 }
-
-ButtonInput.defaultProps = {
-  defaultValue: "Unnamed",
-};
 
 Button.Input = ButtonInput;

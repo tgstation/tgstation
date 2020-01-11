@@ -93,11 +93,11 @@
 			var/newname = sanitize(params["new_name"])
 			if(!newname)
 				return
-			username = newname
 			for(var/C in SSnetworks.station_network.chat_channels)
 				var/datum/ntnet_conversation/chan = C
 				if(src in chan.clients)
 					chan.add_status_message("[username] is now known as [newname].")
+			username = newname
 			return TRUE
 		if("PRG_savelog")
 			if(!channel)
@@ -172,7 +172,7 @@
 
 /datum/computer_file/program/chatclient/ui_static_data(mob/user)
 	var/list/data = list()
-	data["can_admin"] = can_run(user, TRUE, ACCESS_NETWORK)
+	data["can_admin"] = can_run(user, FALSE, ACCESS_NETWORK)
 	return data
 
 /datum/computer_file/program/chatclient/ui_data(mob/user)
@@ -200,6 +200,10 @@
 	if(channel)
 		data["title"] = channel.title
 		var/authed = FALSE
+		if(!channel.password)
+			authed = TRUE
+		if(netadmin_mode)
+			authed = TRUE
 		var/list/clients = list()
 		for(var/C in channel.clients)
 			if(C == src)

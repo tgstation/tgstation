@@ -1,19 +1,27 @@
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Grid, LabeledList, ProgressBar, Section, Input, Table, Flex } from '../components';
+import { AnimatedNumber, Box, Button, Grid, LabeledList, ProgressBar, Section, Input, Table, Icon, Flex } from '../components';
 import { Fragment } from 'inferno';
+import { createLogger } from '../logging';
+
+const logger = createLogger('ntos chat');
 
 export const NtosNetChat = props => {
   const { act, data } = useBackend(props);
 
   const {
+    can_admin,
     adminmode,
     authed,
     username,
     active_channel,
+    is_operator,
     all_channels = [],
     clients = [],
     messages = [],
   } = data;
+
+  const in_channel = (active_channel !== null);
+  const authorized = (authed || adminmode);
 
   return (
     <Section
@@ -51,27 +59,52 @@ export const NtosNetChat = props => {
               fluid
               mt={1}
               content={username + '...'}
+              currentValue={username}
               onCommit={(e, value) => act('PRG_changename', {
                 new_name: value,
               })} />
-            <Button
-              fluid
-              bold
-              content={"ADMIN MODE: " + (adminmode ? 'ON' : 'OFF')}
-              color={adminmode ? 'bad' : 'good'}
-              onClick={() => act('PRG_toggleadmin')} />
+            {!!can_admin && (
+              <Button
+                fluid
+                bold
+                content={"ADMIN MODE: " + (adminmode ? 'ON' : 'OFF')}
+                color={adminmode ? 'bad' : 'good'}
+                onClick={() => act('PRG_toggleadmin')} />
+            )}
           </Table.Cell>
           <Table.Cell>
             <Box
               height="560px"
               overflowY="scroll">
-              {messages.map(message => (
-                <Box
-                  key={message.msg}>
-                  {message.msg}
-                </Box>
-              ))}
+              {in_channel && (
+                authorized ? (
+                  messages.map(message => (
+                    <Box
+                      key={message.msg}>
+                      {message.msg}
+                    </Box>
+                  ))
+                ) : (
+                  <Box
+                    textAlign="center">
+                    <Icon
+                      name="exclamation-triangle"
+                      mt={4}
+                      fontSize="40px" />
+                    <Box
+                      mt={1}
+                      bold
+                      fontSize="18px">
+                      THIS CHANNEL IS PASSWORD PROTECTED
+                    </Box>
+                    <Box mt={1}>
+                      INPUT PASSWORD TO ACCESS
+                    </Box>
+                  </Box>
+                )
+              )}
             </Box>
+
             <Input
               fluid
               selfClear
@@ -94,7 +127,7 @@ export const NtosNetChat = props => {
                 </Box>
               ))}
             </Box>
-            {active_channel !== null && (
+            {(in_channel && authorized) && (
               <Fragment>
                 <Button.Input
                   fluid
@@ -109,7 +142,7 @@ export const NtosNetChat = props => {
                   onClick={() => act('PRG_leavechannel')} />
               </Fragment>
             )}
-            {!!authed && (
+            {!!is_operator && authed && (
               <Fragment>
                 <Button.Confirm
                   fluid
