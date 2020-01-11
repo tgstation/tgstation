@@ -550,7 +550,8 @@ CREATE TABLE `SS13_ticket` (
   `action` varchar(20) NOT NULL DEFAULT 'Message',
   `message` text NOT NULL,
   `timestamp` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `who` varchar(32) DEFAULT NULL,
+  `recipient` varchar(32) NOT NULL DEFAULT '',
+  `sender` varchar(32) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
