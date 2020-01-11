@@ -22,9 +22,9 @@
 	var/width = 0
 	///size of covered area, parallel to dir
 	var/height = 0
-	///position relative to covered area, perpendicular to dir
+	///position relative to covered area, perpendicular to dir. You shouldn't modify this for mobile dockingports
 	var/dwidth = 0
-	///position relative to covered area, parallel to dir
+	///position relative to covered area, parallel to dir. You shouldn't modify this for mobile dockingports
 	var/dheight = 0
 
 	var/area_type
