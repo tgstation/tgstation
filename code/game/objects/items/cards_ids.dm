@@ -535,8 +535,8 @@ update_label()
 	. = ..()
 
 /obj/item/card/id/ert/engineer
-	registered_name = "Engineer Response Officer"
-	assignment = "Engineer Response Officer"
+	registered_name = "Engineering Response Officer"
+	assignment = "Engineering Response Officer"
 	icon_state = "ert_engineer"
 
 /obj/item/card/id/ert/engineer/Initialize()
@@ -578,6 +578,15 @@ update_label()
 /obj/item/card/id/ert/clown/Initialize()
 	access = get_all_accesses()
 	. = ..()
+
+/obj/item/card/id/ert/deathsquad
+	name = "\improper Death Squad ID"
+	id_type_name = "\improper Death Squad ID"
+	desc = "A Death Squad ID card."
+	icon_state = "deathsquad" //NO NO SIR DEATH SQUADS ARENT A PART OF NANOTRASEN AT ALL
+	registered_name = "Death Commando"
+	assignment = "Death Commando"
+	uses_overlays = FALSE
 
 /obj/item/card/id/debug
 	name = "\improper Debug ID"
