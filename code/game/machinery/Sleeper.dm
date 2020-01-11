@@ -282,10 +282,11 @@
 
 /obj/machinery/sleeper/party
 	name = "party pod"
-	desc = "'Sleeper' units were once known for their healing properties, until a lengthy investigation revealed they were also dosing patients with deadly lead acetate. This appears to be an old 'sleeper' unit repurposed as a 'Party Pod'. It’s probably not a good idea to use it."
+	desc = "'Sleeper' units were once known for their healing properties, until a lengthy investigation revealed they were also dosing patients with deadly lead acetate. This appears to be one of those old 'sleeper' units repurposed as a 'Party Pod'. It’s probably not a good idea to use it."
 	icon_state = "partypod"
 	idle_power_usage = 3000
 	circuit = /obj/item/circuitboard/machine/sleeper/party
+	var/leddit = FALSE //Get it like reddit and lead alright fine
 	ui_x = 260
 	ui_y = 375
 
@@ -299,7 +300,7 @@
 	var/spray_chems = list(
 		/datum/reagent/spraytan, /datum/reagent/hair_dye, /datum/reagent/baldium, /datum/reagent/concentrated_barbers_aid
 	)//Chemicals that need to have a touch or vapor reaction to be applied, not the standard chamber reaction.
-	enter_message = "<span class='notice'><b>You're surrounded by some funky music inside the chamber. You go deaf as you feel waves of krunk vibe within you.</b></span>"
+	enter_message = "<span class='notice'><b>You're surrounded by some funky music inside the chamber. You zone out as you feel waves of krunk vibe within you.</b></span>"
 
 /obj/machinery/sleeper/party/inject_chem(chem, mob/user)
 	..()
@@ -308,5 +309,12 @@
 		playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE, -6)
 		if(user)
 			log_combat(user, occupant, "sprayed [chem] into", addition = "via [src]")
-	occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, 4) //You're injecting chemicals into yourself from a recalled, decrepit medical machine. What did you expect?
+	if(leddit)
+		occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, 4) //You're injecting chemicals into yourself from a recalled, decrepit medical machine. What did you expect?
+	else if (prob(20))
+		occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, rand(1,3))
 	return TRUE
+
+/obj/machinery/sleeper/party/emag_act(mob/user)
+	..()
+	leddit = TRUE

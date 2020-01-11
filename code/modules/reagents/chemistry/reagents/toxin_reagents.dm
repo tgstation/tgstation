@@ -906,7 +906,7 @@
 
 /datum/reagent/toxin/leadacetate
 	name = "Lead Acetate"
-	description = "Used hundreds of years ago as a sweetener, before they realized it was incredibly poisonious."
+	description = "Used hundreds of years ago as a sweetener, before it was realized that it's incredibly poisonous."
 	reagent_state = SOLID
 	color = "#2b2b2b" // rgb: 127, 132, 0
 	toxpwr = 0.5
