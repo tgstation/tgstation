@@ -193,7 +193,6 @@
 	r_hand = /obj/item/nullrod/scythe/talking/chainsword
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,
-		/obj/item/clothing/mask/gas/sechailer=1,
 		/obj/item/gun/energy/e_gun=1)
 
 /datum/outfit/ert/security/inquisitor
@@ -203,7 +202,6 @@
 
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,
 		/obj/item/storage/box/handcuffs=1,
-		/obj/item/clothing/mask/gas/sechailer=1,
 		/obj/item/gun/energy/e_gun/stun=1,
 		/obj/item/melee/baton/loaded=1,
 		/obj/item/construction/rcd/loaded=1)
@@ -215,7 +213,6 @@
 
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,
 		/obj/item/melee/baton/loaded=1,
-		/obj/item/clothing/mask/gas/sechailer=1,
 		/obj/item/gun/energy/e_gun=1,
 		/obj/item/reagent_containers/hypospray/combat=1,
 		/obj/item/reagent_containers/hypospray/combat/heresypurge=1,
@@ -231,7 +228,6 @@
 	belt = /obj/item/storage/belt/soulstone
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,
 		/obj/item/nullrod=1,
-		/obj/item/clothing/mask/gas/sechailer=1,
 		/obj/item/gun/energy/e_gun=1,
 		)
 
@@ -250,7 +246,6 @@
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,
 		/obj/item/grenade/chem_grenade/holy=1,
 		/obj/item/nullrod=1,
-		/obj/item/clothing/mask/gas/sechailer=1,
 		/obj/item/gun/energy/e_gun=1,
 		)
 
