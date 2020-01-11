@@ -389,12 +389,12 @@
 
 /obj/effect/proc_holder/spell/self/lay_genetic_web
 	name = "Lay Web"
-	desc = "Drops a web"
+	desc = "Drops a web. Only you will be able to traverse your web easily, making it pretty good for keeping you safe."
 	clothes_req = FALSE
 	human_req = TRUE
 	charge_max = 100
 	action_icon = 'icons/mob/actions/actions_genetic.dmi'
-	action_icon_state = "spike"
+	action_icon_state = "lay_web"
 
 /obj/effect/proc_holder/spell/self/lay_genetic_web/cast(mob/user = usr)
 	var/mob/living/carbon/human/spider = owner
