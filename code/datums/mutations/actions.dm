@@ -391,24 +391,28 @@
 	name = "Lay Web"
 	desc = "Drops a web. Only you will be able to traverse your web easily, making it pretty good for keeping you safe."
 	clothes_req = FALSE
-	human_req = TRUE
-	charge_max = 100
+	human_req = FALSE
+	charge_max = 4 SECONDS //the same time to lay a web
 	action_icon = 'icons/mob/actions/actions_genetic.dmi'
 	action_icon_state = "lay_web"
 
-/obj/effect/proc_holder/spell/self/lay_genetic_web/cast(mob/user = usr)
-	var/mob/living/carbon/human/spider = owner
-	if(!isturf(spider.loc))
-		return
-	var/turf/T = get_turf(spider)
+/obj/effect/proc_holder/spell/self/lay_genetic_web/cast_check(skipcharge = 0,mob/user = usr)
+	..()
+	if(!isturf(user.loc))
+		to_chat(user, "<span class='warning'>You can't lay webs here!</span>")
+		return FALSE
+	var/turf/T = get_turf(user)
 	var/obj/structure/spider/stickyweb/genetic/W = locate() in T
 	if(W)
-		to_chat(spider, "<span class='warning'>There's already a web here!</span>")
-		return
+		to_chat(user, "<span class='warning'>There's already a web here!</span>")
+		return FALSE
 
-	spider.visible_message("<span class='notice'>[spider] begins to secrete a sticky substance.</span>","<span class='notice'>You begin to lay a web.</span>")
-	if(!do_after(spider, 4 SECONDS, target = T))
+/obj/effect/proc_holder/spell/self/lay_genetic_web/cast(mob/user = usr)
+	var/turf/T = get_turf(owner)
+
+	owner.visible_message("<span class='notice'>[owner] begins to secrete a sticky substance.</span>","<span class='notice'>You begin to lay a web.</span>")
+	if(!do_after(owner, 4 SECONDS, target = T))
 		to_chat(S, "<span class='warning'>Your web spinning was interrupted!</span>")
 		return
 	else
-		new /obj/structure/spider/stickyweb/genetic(T, spider)
+		new /obj/structure/spider/stickyweb/genetic(T, owner)
