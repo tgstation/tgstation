@@ -153,5 +153,5 @@
 	desc = "A jumpsuit made by party people, from party people, for party people."
 	icon = 'icons/obj/clothing/under/captain.dmi'
 	icon_state = "captain_parade"
-	item_state = "captain_parade"
+	item_state = "by_suit"
 	can_adjust = FALSE
