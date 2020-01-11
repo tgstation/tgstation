@@ -16,7 +16,7 @@
 	/// stationary ports and whatnot to tell them your ship's mobile
 	/// port can be used in these places, or the docking port is compatible, etc.
 	var/id
-	///this should point -away- from the dockingport door, ie towards the ship
+	///Common standard is for this to point -away- from the dockingport door, ie towards the ship
 	dir = NORTH
 	///size of covered area, perpendicular to dir
 	var/width = 0
