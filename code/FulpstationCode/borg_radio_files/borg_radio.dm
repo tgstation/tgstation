@@ -1,5 +1,5 @@
 /mob/living/silicon/robot/proc/borg_reset_radio()
-	qdel(radio.keyslot)
+	QDEL_NULL(radio.keyslot)
 	radio.keyslot = null
 
 
@@ -9,4 +9,6 @@
 
 	var/mob/living/silicon/robot/R = loc
 	R.radio.keyslot = new B
+
 	R.radio.subspace_transmission = TRUE
+	R.radio.recalculateChannels()
