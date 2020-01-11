@@ -543,13 +543,13 @@ CREATE TABLE `SS13_achievement_metadata` (
 DROP TABLE IF EXISTS `SS13_ticket`;
 CREATE TABLE `SS13_ticket` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `server_ip` int(10) NOT NULL,
-  `server_port` tinyint(5) NOT NULL,
-  `round_id` int(11) NOT NULL,
-  `ticket` int(11) NOT NULL,
+  `server_ip` int(10) unsigned NOT NULL,
+  `server_port` smallint(5) unsigned NOT NULL,
+  `round_id` int(11) unsigned NOT NULL,
+  `ticket` smallint(11) unsigned NOT NULL,
   `action` varchar(20) NOT NULL DEFAULT 'Message',
-  `message` longtext NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `message` text NOT NULL,
+  `timestamp` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `who` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;

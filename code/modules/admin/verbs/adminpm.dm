@@ -159,14 +159,11 @@
 				admin_ticket_log(src, interaction_message)
 				if(recipient != src)	//reeee
 					admin_ticket_log(recipient, interaction_message)
-				SSblackbox.LogAhelp(current_ticket.id, "Reply", msg, src.ckey)
 			else		//recipient is an admin but sender is not
 				var/replymsg = "Reply PM from-<b>[key_name(src, recipient, 1)]</b>: <span class='linkify'>[keywordparsedmsg]</span>"
 				admin_ticket_log(src, "<font color='red'>[replymsg]</font>")
 				to_chat(recipient, "<span class='danger'>[replymsg]</span>")
 				to_chat(src, "<span class='notice'>PM to-<b>Admins</b>: <span class='linkify'>[msg]</span></span>")
-				SSblackbox.LogAhelp(current_ticket.id, "Reply", msg, src.ckey)
-
 
 			//play the receiving admin the adminhelp sound (if they have them enabled)
 			if(recipient.prefs.toggles & SOUND_ADMINHELP)
@@ -207,6 +204,8 @@
 		for(var/client/X in GLOB.admins)
 			if(X.key!=key && X.key!=recipient.key)	//check client/X is an admin and isn't the sender or recipient
 				to_chat(X, "<span class='notice'><B>PM: [key_name(src, X, 0)]-&gt;[key_name(recipient, X, 0)]:</B> [keywordparsedmsg]</span>" )
+
+	SSblackbox.LogAhelp(current_ticket.id, "Reply", msg, src.ckey)
 
 /client/proc/popup_admin_pm(client/recipient, msg)
 	var/sender = src

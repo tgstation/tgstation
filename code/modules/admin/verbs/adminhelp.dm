@@ -108,13 +108,13 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(C.current_ticket)
 		C.current_ticket.initiator = C
 		C.current_ticket.AddInteraction("Client reconnected.")
-		SSblackbox.LogAhelp(C.current_ticket.id, "Client reconnected", C.ckey)
+		SSblackbox.LogAhelp(C.current_ticket.id, "Reconnected", "Client reconnected", C.ckey)
 
 //Dissasociate ticket
 /datum/admin_help_tickets/proc/ClientLogout(client/C)
 	if(C.current_ticket)
 		C.current_ticket.AddInteraction("Client disconnected.")
-		SSblackbox.LogAhelp(C.current_ticket.id, "Client disonnected", C.ckey)
+		SSblackbox.LogAhelp(C.current_ticket.id, "Disconnected", "Client disconnected", C.ckey)
 		C.current_ticket.initiator = null
 		C.current_ticket = null
 
@@ -300,7 +300,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/msg = "<span class='adminhelp'>Ticket [TicketHref("#[id]")] reopened by [key_name_admin(usr)].</span>"
 	message_admins(msg)
 	log_admin_private(msg)
-	SSblackbox.LogAhelp(id, "Reopened", "Reopened by [usr.ckey]", usr.ckey)
+	SSblackbox.LogAhelp(id, "Reopened", "Reopened by [usr.key]", usr.ckey)
 	SSblackbox.record_feedback("tally", "ahelp_stats", 1, "reopened")
 	TicketPanel()	//can only be done from here, so refresh it
 
@@ -326,7 +326,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		SSblackbox.record_feedback("tally", "ahelp_stats", 1, "closed")
 		var/msg = "Ticket [TicketHref("#[id]")] closed by [key_name]."
 		message_admins(msg)
-		SSblackbox.LogAhelp(id, "Closed", "Closed by [usr.ckey]", usr.ckey)
+		SSblackbox.LogAhelp(id, "Closed", "Closed by [usr.key]", usr.ckey)
 		log_admin_private(msg)
 
 //Mark open ticket as resolved/legitimate, returns ahelp verb
@@ -345,7 +345,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		SSblackbox.record_feedback("tally", "ahelp_stats", 1, "resolved")
 		var/msg = "Ticket [TicketHref("#[id]")] resolved by [key_name]"
 		message_admins(msg)
-		SSblackbox.LogAhelp(id, "Resolved", "Resolved by [usr.ckey]", usr.ckey)
+		SSblackbox.LogAhelp(id, "Resolved", "Resolved by [usr.key]", usr.ckey)
 		log_admin_private(msg)
 
 //Close and return ahelp verb, use if ticket is incoherent
@@ -367,7 +367,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	message_admins(msg)
 	log_admin_private(msg)
 	AddInteraction("Rejected by [key_name].")
-	SSblackbox.LogAhelp(id, "Rejected", "Rejected by [usr.ckey]", usr.ckey)
+	SSblackbox.LogAhelp(id, "Rejected", "Rejected by [usr.key]", usr.ckey)
 	Close(silent = TRUE)
 
 //Resolve ticket with IC Issue message
@@ -386,7 +386,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	message_admins(msg)
 	log_admin_private(msg)
 	AddInteraction("Marked as IC issue by [key_name]")
-	SSblackbox.LogAhelp(id, "IC Issue", "Marked as IC issue [usr.ckey]", usr.ckey)
+	SSblackbox.LogAhelp(id, "IC Issue", "Marked as IC issue [usr.key]", usr.ckey)
 	Resolve(silent = TRUE)
 
 //Show the ticket panel
