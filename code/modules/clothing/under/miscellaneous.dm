@@ -139,3 +139,18 @@
 	item_state = "durathread"
 	can_adjust = FALSE
 	armor = list("melee" = 10, "laser" = 10, "fire" = 40, "acid" = 10, "bomb" = 5)
+
+/obj/item/clothing/under/misc/bouncer
+	name = "bouncer jumpsuit"
+	desc = "A jumpsuit made from a little bit more resistant fibers, makes you seem like a cool guy."
+	icon_state = "bouncer"
+	item_state = "bouncer"
+	can_adjust = FALSE
+	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
+
+/obj/item/clothing/under/misc/coordinator
+	name = "coordinator jumpsuit"
+	desc = "A jumpsuit made by party people, from party people, for party people."
+	icon_state = "coordinator"
+	item_state = "coordinator"
+	can_adjust = FALSE

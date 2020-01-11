@@ -260,7 +260,7 @@
 	id = /obj/item/card/id/ert/janitor
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/jani
 	glasses = /obj/item/clothing/glasses/night
-	back = /obj/item/storage/backpack
+	back = /obj/item/storage/backpack/ert/janitor
 	belt = /obj/item/storage/belt/janitor/full
 	r_pocket = /obj/item/grenade/chem_grenade/cleaner
 	l_pocket = /obj/item/grenade/chem_grenade/cleaner
@@ -299,7 +299,7 @@
 	mask = /obj/item/clothing/mask/gas/clown_hat
 	id = /obj/item/card/id/ert/clown
 	glasses = /obj/item/clothing/glasses/godeye
-	back = /obj/item/storage/backpack/clown
+	back = /obj/item/storage/backpack/ert/clown
 	belt = /obj/item/storage/belt/champion
 	shoes = /obj/item/clothing/shoes/clown_shoes/combat
 	r_pocket = /obj/item/bikehorn/golden
