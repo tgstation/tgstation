@@ -446,6 +446,6 @@
 /obj/item/clothing/head/coordinator
 	name = "coordinator cap"
 	desc = "A cap for a party ooordinator, stylish!."
-	icon_state = "coordinator"
-	item_state = "coordinator"
+	icon_state = "capcap"
+	item_state = "that"
 	armor = list("melee" = 25, "bullet" = 15, "laser" = 25, "energy" = 35, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
