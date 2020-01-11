@@ -311,7 +311,7 @@
 			return (rolled_number in winners)
 		if(ROULETTE_BET_2TO1_THIRD)
 			//numbers in the third column
-			var/list/winners = list(3, 5, 8, 12, 15, 18, 21, 24, 27, 30, 33, 36)
+			var/list/winners = list(3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36)
 			return (rolled_number in winners)
 
 
