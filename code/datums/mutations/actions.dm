@@ -357,13 +357,13 @@
 	to_chat(transfered, "<span class='warning'>You feel a tiny prick!</span>")
 	transferer.reagents.trans_to(transfered, transferer.reagents.total_volume, 1, 1, 0, transfered_by = transferer)
 
-	var/obj/item/bodypaspikert/L = spikey.loc
+	var/obj/item/bodypart/L = spikey.loc
 
 	L.embedded_objects -= spikey
 	//this is where it would deal damage, if it transfers chems it removes itself so no damage
 	spikey.forceMove(get_turf(L))
-	spikey.unembedded()
 	transfered.visible_message("<span class='notice'>[spikey] falls out of [transfered]!</span>")
+	spikey.unembedded()
 	if(!transfered.has_embedded_objects())
 		transfered.clear_alert("embeddedobject")
 		transfered.SEND_SIGNAL(usr, COMSIG_CLEAR_MOOD_EVENT, "embedded")
