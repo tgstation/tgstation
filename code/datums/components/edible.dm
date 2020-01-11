@@ -27,8 +27,6 @@ Behavior that's still missing from this component that original food items had t
 	var/volume = 50
 	///Amount of seconds it takes to eat this food
 	var/eat_time = 30
-	///List of tastes players can taste when they consume something, for example list("crisps" = 2, "salt" = 1)
-	var/list/tastes = list("nothing")
 	///Defines how much it lowers someones satiety (Need to eat, essentialy)
 	var/junkiness = 0
 	///Message to send when eating
@@ -49,27 +47,17 @@ Behavior that's still missing from this component that original food items had t
 	if(isitem(parent))
 		var/obj/item/I = parent
 		RegisterSignal(I, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
-		RegisterSignal(I, COMSIG_ITEM_MICROWAVE_ACT, .proc/microwave_act)
 	else if(isturf(parent))
 		var/turf/T = parent
 		RegisterSignal(T, COMSIG_ATOM_ATTACK_HAND, .proc/TryToEatTurf)
 
-	if(bite_consumption)
-		src.bite_consumption = bite_consumption
-	if(food_flags)
-		src.food_flags = food_flags
-	if(foodtypes)
-		src.foodtypes = foodtypes
-	if(volume)
-		src.volume = volume
-	if(eat_time)
-		src.eat_time = eat_time
-	if(tastes)
-		src.tastes = tastes
-	if(eatverbs)
-		src.eatverbs = eatverbs
-	if(junkiness)
-		src.junkiness = junkiness
+	src.bite_consumption = bite_consumption
+	src.food_flags = food_flags
+	src.foodtypes = foodtypes
+	src.volume = volume
+	src.eat_time = eat_time
+	src.eatverbs = eatverbs
+	src.junkiness = junkiness
 	src.after_eat = after_eat
 
 	var/atom/owner = parent
