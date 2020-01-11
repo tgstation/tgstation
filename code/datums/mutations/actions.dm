@@ -233,7 +233,7 @@
 
 /datum/mutation/human/tongue_spike
 	name = "Tongue Spike"
-	desc = "Allows a creature to voluntary shoot their tongue out...?"
+	desc = "Allows a creature to voluntary shoot their tongue out as a deadly weapon."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your feel like you can throw your voice.</span>"
 	instability = 15
@@ -244,7 +244,7 @@
 
 /obj/effect/proc_holder/spell/self/tongue_spike
 	name = "Launch spike"
-	desc = "Shoot your tongue out in the direction you're facing, embedding it for a fairly large amount of damage."
+	desc = "Shoot your tongue out in the direction you're facing, embedding it and dealing damage until they remove it."
 	clothes_req = FALSE
 	human_req = FALSE
 	charge_max = 100
@@ -293,8 +293,13 @@
 	addtimer(CALLBACK(src, .proc/checkembedded), 5 SECONDS)
 
 /obj/item/hardened_spike/proc/checkembedded()
-	if(!istype(loc, /obj/item/bodypart))
-		unembedded()
+	if(ishuman(loc))
+		var/mob/living/carbon/human/embedtest = loc
+		for(var/l in embedtest.bodyparts)
+			var/obj/item/bodypart/limb = l
+			if(src in limb.embedded_objects)
+				return limb
+	unembedded()
 
 /obj/item/hardened_spike/unembedded()
 	var/turf/T = get_turf(src)
@@ -305,6 +310,7 @@
 	qdel(src)
 
 /datum/mutation/human/tongue_spike/chem
+	name = "Chem Spike"
 	desc = "Allows a creature to voluntary shoot their tongue out as biomass, allowing a long range transfer of chemicals."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your feel like you can really connect with people by throwing your voice.</span>"
@@ -326,17 +332,21 @@
 	icon_state = "tonguespikechem"
 	throwforce = 2 //2 + 2 (WEIGHT_CLASS_SMALL) * 0 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = i didnt do the math again but very low or smthin
 	embedding = list("embedded_pain_multiplier" = 0, "embed_chance" = 100, "embedded_fall_chance" = 0, "embedded_pain_chance" = 0, "embedded_ignore_throwspeed_threshold" = TRUE) //never hurts once it's in you
+	var/been_places = FALSE
 	var/datum/action/innate/send_chems/chems
 
 /obj/item/hardened_spike/chem/embedded(mob/living/carbon/human/embedded_mob)
-	chems = new
-	chems.transfered = embedded_mob
-	chems.spikey = src
-	to_chat(fired_by, "<span class='notice'>Link established! Use the \"Transfer Chemicals\" ability to send your chemicals to the linked target!")
-	chems.Grant(fired_by)
+	if(!been_places)
+		been_places = TRUE
+		chems = new
+		chems.transfered = embedded_mob
+		chems.spikey = src
+		to_chat(fired_by, "<span class='notice'>Link established! Use the \"Transfer Chemicals\" ability to send your chemicals to the linked target!")
+		chems.Grant(fired_by)
 
 /obj/item/hardened_spike/chem/unembedded()
 	to_chat(fired_by, "<span class='warning'>Link lost!")
+	QDEL_NULL(chems)
 	..()
 
 /datum/action/innate/send_chems
@@ -357,13 +367,13 @@
 	to_chat(transfered, "<span class='warning'>You feel a tiny prick!</span>")
 	transferer.reagents.trans_to(transfered, transferer.reagents.total_volume, 1, 1, 0, transfered_by = transferer)
 
-	var/obj/item/bodypart/L = spikey.loc
+	var/obj/item/bodypart/L = checkembedded()
 
 	L.embedded_objects -= spikey
 	//this is where it would deal damage, if it transfers chems it removes itself so no damage
 	spikey.forceMove(get_turf(L))
 	transfered.visible_message("<span class='notice'>[spikey] falls out of [transfered]!</span>")
-	spikey.unembedded()
 	if(!transfered.has_embedded_objects())
 		transfered.clear_alert("embeddedobject")
-		transfered.SEND_SIGNAL(usr, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+		SEND_SIGNAL(transfered, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+	spikey.unembedded()
