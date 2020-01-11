@@ -53,6 +53,7 @@
 #define EXTRASTUN	/datum/mutation/human/extrastun
 #define GELADIKINESIS		/datum/mutation/human/geladikinesis
 #define CRYOKINESIS /datum/mutation/human/cryokinesis
+#define SPIDER_WEB	/datum/mutation/human/webbing
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"

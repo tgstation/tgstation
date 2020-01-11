@@ -246,7 +246,7 @@
 	name = "Launch spike"
 	desc = "Shoot your tongue out in the direction you're facing, embedding it and dealing damage until they remove it."
 	clothes_req = FALSE
-	human_req = FALSE
+	human_req = TRUE
 	charge_max = 100
 	action_icon = 'icons/mob/actions/actions_genetic.dmi'
 	action_icon_state = "spike"
@@ -377,3 +377,38 @@
 		transfered.clear_alert("embeddedobject")
 		SEND_SIGNAL(transfered, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 	spikey.unembedded()
+
+//spider webs
+/datum/mutation/human/webbing
+	name = "Webbing Production"
+	desc = "Allows the user to lay webbing, and travel through it. User will grow psychologically attached to laying webs if used enough."
+	quality = POSITIVE
+	text_gain_indication = "<span class='notice'>Your skin feels webby.</span>"
+	instability = 15
+	power = /obj/effect/proc_holder/spell/self/lay_genetic_web
+
+/obj/effect/proc_holder/spell/self/lay_genetic_web
+	name = "Lay Web"
+	desc = "Drops a web"
+	clothes_req = FALSE
+	human_req = TRUE
+	charge_max = 100
+	action_icon = 'icons/mob/actions/actions_genetic.dmi'
+	action_icon_state = "spike"
+
+/obj/effect/proc_holder/spell/self/lay_genetic_web/cast(mob/user = usr)
+	var/mob/living/carbon/human/spider = owner
+	if(!isturf(spider.loc))
+		return
+	var/turf/T = get_turf(spider)
+	var/obj/structure/spider/stickyweb/genetic/W = locate() in T
+	if(W)
+		to_chat(spider, "<span class='warning'>There's already a web here!</span>")
+		return
+
+	spider.visible_message("<span class='notice'>[spider] begins to secrete a sticky substance.</span>","<span class='notice'>You begin to lay a web.</span>")
+	if(!do_after(spider, 4 SECONDS, target = T))
+		to_chat(S, "<span class='warning'>Your web spinning was interrupted!</span>")
+		return
+	else
+		new /obj/structure/spider/stickyweb/genetic(T, spider)
