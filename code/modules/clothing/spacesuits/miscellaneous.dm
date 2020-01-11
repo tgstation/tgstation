@@ -250,17 +250,17 @@ Contains:
 
 	//ERT Clown
 /obj/item/clothing/head/helmet/space/hardsuit/ert/clown
-	name = "emergency response party clown helmet"
-	desc = "The integrated helmet of an ERP hardsuit, this one is colourful!"
-	icon_state = "hardsuit0-clown"
-	item_state = "hardsuit0-clown"
-	hardsuit_type = "hardsuit-clown"
+	name = "emergency response team clown helmet"
+	desc = "The integrated helmet of an ERT hardsuit, this one is colourful!"
+	icon_state = "hardsuit0-ert_clown"
+	item_state = "hardsuit0-ert_clown"
+	hardsuit_type = "ert_clown"
 
 /obj/item/clothing/suit/space/hardsuit/ert/clown
-	name = "emergency response party clown hardsuit"
-	desc = "The non-standard issue hardsuit of the ERP, this one is colourful! Offers superb protection against environmental hazards. Does not offer superb protection against a ravaging crew."
-	icon_state = "hardsuit-clown"
-	item_state = "hardsuit-clown"
+	name = "emergency response team clown hardsuit"
+	desc = "The non-standard issue hardsuit of the ERT, this one is colourful! Offers superb protection against environmental hazards. Does not offer superb protection against a ravaging crew."
+	icon_state = "ert_clown"
+	item_state = "ert_clown"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/clown
 	allowed = list(/obj/item/tank/internals, /obj/item/bikehorn, /obj/item/instrument, /obj/item/reagent_containers/food/snacks/grown/banana, /obj/item/grown/bananapeel)
 
