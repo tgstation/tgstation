@@ -1,5 +1,5 @@
 import { classes, pureComponentHooks } from 'common/react';
-import { tridentVersion } from '../byond';
+import { tridentVersion, act } from '../byond';
 import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from '../hotkeys';
 import { createLogger } from '../logging';
 import { refocusLayout } from '../refocus';
@@ -163,82 +163,93 @@ Button.Confirm = ButtonConfirm;
 export class ButtonInput extends Component {
   constructor() {
     super();
+    this.inputRef = createRef();
     this.state = {
       inInput: false,
-      currentText: "",
     };
-  }
-
-  setCurrentText(currentText) {
-    this.setState({
-      currentText,
-    });
   }
 
   setInInput(inInput) {
     this.setState({
       inInput,
     });
-    if (!inInput) {
-      if (this.state.currentText !== "") {
-        this.props.onCommit(this.state.currentText);
-      } else {
-        this.props.onCommit("Untitled");
+    if (this.inputRef) {
+      const input = this.inputRef.current;
+      if (inInput) {
+        input.value = this.props.currentValue || "";
+        try {
+          input.focus();
+          input.select();
+        }
+        catch {}
       }
-      this.setCurrentText("");
+    }
+  }
+
+  commitResult(e) {
+    if (this.inputRef) {
+      const input = this.inputRef.current;
+      const value = input.value === ""
+        ? this.props.defaultValue
+        : input.value;
+      this.props.onCommit(e, value);
     }
   }
 
   render() {
     const {
       fluid,
+      content,
+      color = 'default',
       placeholder,
       maxLength,
       ...rest
     } = this.props;
 
-    const input = (
-      <table
-        className="Table"
-        style={{
-          'margin-top': '0px',
-        }}>
-        <tr className="Table__row">
-          <td className="Table__cell">
-            <Input
-              fluid
-              value={this.state.currentText}
-              onInput={(e, value) => this.setCurrentText(value)}
-              onEnter={(e, value) => this.setInInput(false)}
-            />
-          </td>
-          <td className="Table__cell Table__cell--collapsing">
-            <Button
-              icon="times"
-              color="bad"
-              onClick={() => this.setInInput(false)}
-            />
-          </td>
-        </tr>
-      </table>
-    );
-
-    const button = (
-      <Button
-        fluid={fluid}
-        onClick={() => this.setInInput(true)}
-        {...rest}
-      />
-    );
-
     return (
-      this.state.inInput ? (
-        input
-      ) : (
-        button
-      )
+      <Box
+        className={classes([
+          'Button',
+          fluid && 'Button--fluid',
+          'Button--color--' + color,
+        ])}
+        {...rest}
+        onClick={() => this.setInInput(true)}>
+        <div>
+          {content}
+        </div>
+        <input
+          ref={this.inputRef}
+          className="NumberInput__input"
+          style={{
+            'display': !this.state.inInput ? 'none' : undefined,
+            'text-align': 'left',
+          }}
+          onBlur={e => {
+            if (!this.state.inInput) {
+              return;
+            }
+            this.setInInput(false);
+            this.commitResult(e);
+          }}
+          onKeyDown={e => {
+            if (e.keyCode === KEY_ENTER) {
+              this.setInInput(false);
+              this.commitResult(e);
+              return;
+            }
+            if (e.keyCode === KEY_ESCAPE) {
+              this.setInInput(false);
+            }
+          }}
+        />
+      </Box>
     );
   }
 }
+
+ButtonInput.defaultProps = {
+  defaultValue: "Unnamed",
+};
 
 Button.Input = ButtonInput;
