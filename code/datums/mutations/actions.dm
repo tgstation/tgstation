@@ -367,7 +367,7 @@
 	to_chat(transfered, "<span class='warning'>You feel a tiny prick!</span>")
 	transferer.reagents.trans_to(transfered, transferer.reagents.total_volume, 1, 1, 0, transfered_by = transferer)
 
-	var/obj/item/bodypart/L = checkembedded()
+	var/obj/item/bodypart/L = spikey.checkembedded()
 
 	L.embedded_objects -= spikey
 	//this is where it would deal damage, if it transfers chems it removes itself so no damage
@@ -408,11 +408,11 @@
 		return FALSE
 
 /obj/effect/proc_holder/spell/self/lay_genetic_web/cast(mob/user = usr)
-	var/turf/T = get_turf(owner)
+	var/turf/T = get_turf(user)
 
-	owner.visible_message("<span class='notice'>[owner] begins to secrete a sticky substance.</span>","<span class='notice'>You begin to lay a web.</span>")
-	if(!do_after(owner, 4 SECONDS, target = T))
-		to_chat(S, "<span class='warning'>Your web spinning was interrupted!</span>")
+	user.visible_message("<span class='notice'>[user] begins to secrete a sticky substance.</span>","<span class='notice'>You begin to lay a web.</span>")
+	if(!do_after(user, 4 SECONDS, target = T))
+		to_chat(user, "<span class='warning'>Your web spinning was interrupted!</span>")
 		return
 	else
-		new /obj/structure/spider/stickyweb/genetic(T, owner)
+		new /obj/structure/spider/stickyweb/genetic(T, user)
