@@ -18,6 +18,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()
+	..()
 
 /datum/outfit/centcom/ert/commander
 	name = "ERT Commander"
@@ -184,6 +185,7 @@
 	W.assignment = "CentCom Official"
 	W.registered_name = H.real_name
 	W.update_label()
+	..()
 
 /datum/outfit/centcom/ert/commander/inquisitor
 	name = "Inquisition Commander"

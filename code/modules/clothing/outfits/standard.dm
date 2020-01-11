@@ -35,6 +35,7 @@
 	var/obj/item/radio/headset/R = H.ears
 	R.set_frequency(FREQ_CENTCOM)
 	R.freqlock = TRUE
+	..()
 
 /datum/outfit/space
 	name = "Standard Space Gear"
@@ -264,6 +265,7 @@
 	W.assignment = "CentCom Commander"
 	W.registered_name = H.real_name
 	W.update_label()
+	..()
 
 /datum/outfit/ghost_cultist
 	name = "Cultist Ghost"
@@ -339,6 +341,7 @@
 	W.assignment = "Admiral"
 	W.registered_name = H.real_name
 	W.update_label()
+	..()
 
 /datum/outfit/mobster
 	name = "Mobster"
@@ -407,6 +410,7 @@
 	W.assignment = "Death Commando"
 	W.registered_name = H.real_name
 	W.update_label()
+	..()
 
 /datum/outfit/centcom/death_commando/officer
 	name = "Death Commando Officer"
