@@ -248,8 +248,6 @@
 	else
 		return ..()
 
-
-
 /obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/H,upgrade_type)
 	if(!(upgrade_type in power_lottery[H]))
 		return

@@ -3,6 +3,9 @@
   */
 
 /datum/movespeed_modifier
+	/// Whether or not this is a variable modifier. Variable modifiers can NOT be ever auto-cached. ONLY CHECKED VIA INITIAL(), EFFECTIVELY READ ONLY (and for very good reason)
+	var/variable = FALSE
+
 	/// Unique ID. You can never have different modifications with the same ID
 	var/id = "ERROR"
 
@@ -64,16 +67,16 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 /proc/get_cached_movespeed_modification(modtype)
 	if(!ispath(modtype, /datum/movespeed_modifier))
 		CRASH("[modtype] is not a movespeed modification typepath.")
-	if(ispath(modtype, /datum/movespeed_modifier/variable))
+	var/datum/movespeed_modifier/M = modtype
+	if(initial(M.variable))
 		CRASH("[modtype] is a variable modifier, and can never be cached.")
-	var/datum/movespeed_modifier/M = GLOB.movespeed_modification_cache[modtype] || ((GLOB.movespeed_modification_cache[modtype] = new modtype))
-	return M
+	return GLOB.movespeed_modification_cache[modtype] || ((GLOB.movespeed_modification_cache[modtype] = new modtype))
 
 ///Add a move speed modifier to a mob. If a variable subtype is passed in as the first argument, it will make a new datum.
 /mob/proc/_REFACTORING_add_movespeed_modifier(datum/movespeed_modifier/type_or_datum, update = TRUE, override = FALSE)
 	var/created = FALSE
 	if(ispath(type_or_datum))
-		if(!ispath(type_or_datum, /datum/movespeed_modifier/variable))
+		if(!initial(type_or_datum.variable))
 			type_or_datum = get_cached_movespeed_modification(type_or_datum)
 		else
 			created = TRUE
@@ -100,12 +103,14 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 ///Remove a move speed modifier from a mob, whether static or variable.
 /mob/proc/_REFACTORING_remove_movespeed_modifier(datum/movespeed_modifier/type_id_datum, update = TRUE)
 	if(ispath(type_id_datum))
-		if(!ispath(type_id_datum, /datum/movespeed_modifier/variable))
+		if(!initial(type_id_datum.variable))
 			type_id_datum = get_cached_movespeed_modification(type_id_datum)
 		else
 			type_id_datum = initial(type_id_datum.id)
 	if(istype(type_id_datum))
 		type_id_datum = type_id_datum.id
+	if(!istext(type_id_datum))
+		CRASH("Invalid ID")
 	if(!LAZYACCESS(movespeed_modification, type_id_datum))
 		return FALSE
 	LAZYREMOVE(movespeed_modification, type_id_datum)
@@ -116,7 +121,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 
 /// Used for variable slowdowns like hunger/health loss/etc, works somewhat like the old list-based modification adds.
 /// Implies override.
-/mob/proc/add_or_update_variable_movespeed_modifier(datum/movespeed_modifier/variable/type_id_datum, update = TRUE, multiplicative_slowdown)
+/mob/proc/add_or_update_variable_movespeed_modifier(datum/movespeed_modifier/type_id_datum, update = TRUE, multiplicative_slowdown)
 	/*
 	How this SHOULD work is:
 	1. Ensures type_id_datum one way or another refers to a /variable datum. This makes sure it can't be cached. This includes if it's already in the modification list.
@@ -128,12 +133,14 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 	. = FALSE
 	var/modified = FALSE
 	var/inject = FALSE
-	var/datum/movespeed_modifier/variable/final
+	var/datum/movespeed_modifier/final
 	if(istext(type_id_datum))
 		final = LAZYACCESS(movespeed_modification, type_id_datum)
 		if(!istype(final))
 			CRASH("Couldn't find existing modification when only provided an ID.")
 	else if(ispath(type_id_datum))
+		if(!initial(type_id_datum.variable))
+			CRASH("Not a variable modifier")
 		var/id = initial(type_id_datum.id)
 		final = LAZYACCESS(movespeed_modification, type_id_datum)
 		if(!istype(final))
@@ -141,6 +148,8 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 			inject = TRUE
 			modified = TRUE
 	else if(istype(type_id_datum))
+		if(!initial(type_id_datum.variable))
+			CRASH("Not a variable modifier")
 		final = type_id_datum
 		if(!LAZYACCESS(movespeed_modification, final.id))
 			inject = TRUE
@@ -198,7 +207,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 			continue
 		if(M.blacklisted_movetypes & movement_type) // There's a movetype here that disables this modifier, skip
 			continue
-		var/conflict = M.conflict
+		var/conflict = M.conflicts_with
 		var/amt = M.multiplicative_slowdown
 		if(conflict)
 			// Conflicting modifiers prioritize the larger slowdown or the larger speedup
@@ -219,7 +228,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 	. = 0
 	for(var/id in get_movespeed_modifiers())
 		var/datum/movespeed_modifier/M = movespeed_modification[id]
-		. += M.multiplicative_slowdown()
+		. += M.multiplicative_slowdown
 
 ///Checks if a move speed modifier is valid and not missing any data
 /proc/movespeed_data_null_check(datum/movespeed_modifier/M)		//Determines if a data list is not meaningful and should be discarded.

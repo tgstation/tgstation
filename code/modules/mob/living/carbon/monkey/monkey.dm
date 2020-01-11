@@ -66,7 +66,7 @@
 	if(reagents.has_reagent(/datum/reagent/consumable/nuka_cola))
 		amount = -1
 	if(amount)
-		add_or_update_movespeed_modifier(/datum/movespeed_modifier/variable/monkey_reagent_speedmod, TRUE, amount)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/monkey_reagent_speedmod, TRUE, amount)
 
 /mob/living/carbon/monkey/updatehealth()
 	. = ..()
@@ -75,14 +75,14 @@
 		var/health_deficiency = (maxHealth - health)
 		if(health_deficiency >= 45)
 			slow += (health_deficiency / 25)
-		add_or_update_movespeed_modifier(/datum/movespeed_modifier/variable/monkey_health_speedmod, TRUE, slow)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/monkey_health_speedmod, TRUE, slow)
 
 /mob/living/carbon/monkey/adjust_bodytemperature(amount)
 	. = ..()
 	var/slow = 0
 	if (bodytemperature < 283.222)
 		slow += ((283.222 - bodytemperature) / 10) * 1.75
-		add_or_update_movespeed_modifier(/datum/movespeed_modifier/variable/monkey_temperature_speedmod, TRUE, slow)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/monkey_temperature_speedmod, TRUE, slow)
 
 /mob/living/carbon/monkey/Stat()
 	..()

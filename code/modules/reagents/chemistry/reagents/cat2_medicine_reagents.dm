@@ -100,17 +100,19 @@
 	var/spammer = 0
 
 /datum/reagent/medicine/C2/lenturi/on_mob_life(mob/living/carbon/M)
-		M.adjustFireLoss(-3 * REM)
-		M.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.4 * REM)
-		..()
-		return TRUE
-/datum/reagent/medicine/C2/lenturi/on_mob_metabolize(mob/living/carbon/M)
-	M.add_movespeed_modifier(MOVESPEED_ID_LENTURI, update=TRUE, priority=100, multiplicative_slowdown=1.50, blacklisted_movetypes=(FLYING|FLOATING))
-	. = ..()
-/datum/reagent/medicine/C2/lenturi/on_mob_end_metabolize(mob/living/carbon/M)
-	M.remove_movespeed_modifier(MOVESPEED_ID_LENTURI)
+	M.adjustFireLoss(-3 * REM)
+	M.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.4 * REM)
+	..()
+	return TRUE
 
-	. = ..()
+/datum/reagent/medicine/C2/lenturi/on_mob_metabolize(mob/living/carbon/M)
+	M._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
+	return ..()
+
+/datum/reagent/medicine/C2/lenturi/on_mob_end_metabolize(mob/living/carbon/M)
+	M._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
+	return ..()
+
 /datum/reagent/medicine/C2/aiuri
 	name = "Aiuri"
 	description = "Used to treat burns. Does minor eye damage."
