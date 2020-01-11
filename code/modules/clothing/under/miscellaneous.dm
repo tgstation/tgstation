@@ -151,6 +151,7 @@
 /obj/item/clothing/under/misc/coordinator
 	name = "coordinator jumpsuit"
 	desc = "A jumpsuit made by party people, from party people, for party people."
-	icon_state = "coordinator"
-	item_state = "coordinator"
+	icon = 'icons/obj/clothing/under/captain.dmi'
+	icon_state = "captain_parade"
+	item_state = "captain_parade"
 	can_adjust = FALSE
