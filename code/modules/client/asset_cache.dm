@@ -630,22 +630,6 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"pill22" = 'icons/UI_Icons/Pills/pill22.png',
 	)
 
-
-/datum/asset/spritesheet/simple/roulette
-	name = "roulette"
-	assets = list(
-		"black" = 'icons/UI_Icons/Roulette/black.png',
-		"red" = 'icons/UI_Icons/Roulette/red.png',
-		"odd" = 'icons/UI_Icons/Roulette/odd.png',
-		"even" = 'icons/UI_Icons/Roulette/even.png',
-		"low" = 'icons/UI_Icons/Roulette/1-18.png',
-		"high" = 'icons/UI_Icons/Roulette/19-36.png',
-		"nano" = 'icons/UI_Icons/Roulette/nano.png',
-		"zero" = 'icons/UI_Icons/Roulette/0.png'
-
-	)
-
-
 //this exists purely to avoid meta by pre-loading all language icons.
 /datum/asset/language/register()
 	for(var/path in typesof(/datum/language))
