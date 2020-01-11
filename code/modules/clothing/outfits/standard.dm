@@ -1,4 +1,7 @@
 /datum/outfit/centcom/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
 	var/obj/item/implant/mindshield/L = new/obj/item/implant/mindshield(H)//hmm lets have centcom officials become revs
 	L.implant(H, null, 1)
 
