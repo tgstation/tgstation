@@ -113,3 +113,24 @@ $bg-map: colors.$bg-map !default;
 .Button--selected {
   @include button-color($color-selected);
 }
+
+.Button--altselect--holder {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  text-align: right;
+}
+
+.Button--altselect--indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  width: 3px;
+  background-color: colors.$white;
+}

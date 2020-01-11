@@ -53,6 +53,7 @@ export class Tabs extends Component {
     const {
       className,
       vertical,
+      altSelection,
       children,
       ...rest
     } = props;
@@ -100,7 +101,8 @@ export class Tabs extends Component {
                   highlight && !active && 'color-yellow',
                   className,
                 ])}
-                selected={active}
+                selected={!altSelection && active}
+                altSelected={altSelection && active}
                 color="transparent"
                 onClick={e => {
                   this.setState({ activeTabKey: key });
