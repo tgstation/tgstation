@@ -1067,12 +1067,21 @@
 	hidden = TRUE
 	experimental = TRUE
 
+<<<<<<< HEAD
 /datum/techweb_node/spec_eng
 	id = "spec_eng"
 	display_name = "Specialized Engineering"
 	description = "Conventional wisdom has deemed these engineering products 'technically' safe, but far too dangerous to traditionally condone."
 	prereq_ids = list("base")
 	design_ids = list("lava_rods", "eng_gloves")
+=======
+/datum/techweb_node/aus_security
+	id = "aus_security"
+	display_name = "Australicus Security Protocols"
+	description = "It is said that security in the Australicus sector is tight, so we took some pointers from their equipment. Thankfully, our sector lacks any signs of these, 'dropbears'."
+	prereq_ids = list("base")
+	design_ids = list("pin_explorer", "stun_boomerang")
+>>>>>>> upstream/master
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 2500
 	hidden = TRUE
