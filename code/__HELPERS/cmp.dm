@@ -35,7 +35,7 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_datum_text_dsc(datum/a, datum/b, variable)
 	return sorttext(a.vars[variable], b.vars[variable])
-	
+
 /proc/cmp_ckey_asc(client/a, client/b)
 	return sorttext(b.ckey, a.ckey)
 
@@ -50,6 +50,9 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_subsystem_priority(datum/controller/subsystem/a, datum/controller/subsystem/b)
 	return a.priority - b.priority
+
+/proc/cmp_filter_data_priority(list/A, list/B)
+	return A["priority"] - B["priority"]
 
 /proc/cmp_timer(datum/timedevent/a, datum/timedevent/b)
 	return a.timeToRun - b.timeToRun

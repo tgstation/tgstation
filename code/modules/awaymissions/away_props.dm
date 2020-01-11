@@ -6,10 +6,11 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	anchored = TRUE
 
-/obj/effect/oneway/CanPass(atom/movable/mover, turf/target)
+/obj/effect/oneway/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	var/turf/T = get_turf(src)
 	var/turf/MT = get_turf(mover)
-	return ..() && (T == MT || get_dir(MT,T) == dir)
+	return . && (T == MT || get_dir(MT,T) == dir)
 
 
 /obj/effect/wind
@@ -44,7 +45,8 @@
 	if(blocked_types.len)
 		blocked_types = typecacheof(blocked_types)
 
-/obj/effect/path_blocker/CanPass(atom/movable/mover, turf/target)
+/obj/effect/path_blocker/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(blocked_types.len)
 		var/list/mover_contents = mover.GetAllContents()
 		for(var/atom/movable/thing in mover_contents)
