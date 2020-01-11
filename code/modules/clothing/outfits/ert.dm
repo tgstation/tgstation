@@ -374,7 +374,7 @@
 /datum/outfit/ert/security/party
 	name = "ERP Bouncer"
 
-	uniform = /obj/item/clothing/under/color/black
+	uniform = /obj/item/clothing/under/misc/bouncer
 	suit = /obj/item/clothing/suit/armor/vest
 	belt = /obj/item/melee/classic_baton/telescopic
 	l_pocket = /obj/item/assembly/flash
@@ -414,9 +414,9 @@
 /datum/outfit/ert/commander/party
 	name = "ERP Coordinator"
 
-	uniform = /obj/item/clothing/under/rank/captain/parade
-	head = /obj/item/clothing/head/caphat/parade
-	suit = /obj/item/clothing/suit/armor/vest/capcarapace/alt
+	uniform = /obj/item/clothing/under/misc/coordinator
+	head = /obj/item/clothing/head/coordinator
+	suit = /obj/item/clothing/suit/coordinator
 	belt = /obj/item/storage/belt/sabre
 	r_hand = /obj/item/toy/balloon
 	l_pocket = /obj/item/kitchen/knife
