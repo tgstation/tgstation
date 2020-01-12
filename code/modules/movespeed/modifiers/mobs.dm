@@ -73,6 +73,7 @@
 /datum/movespeed_modifier/turf_slowdown
 	id = MOVESPEED_ID_LIVING_TURF_SPEEDMOD
 	movetypes = GROUND
+	blacklisted_movetypes = (FLYING|FLOATING)
 	variable = TRUE
 
 /datum/movespeed_modifier/bulky_drag

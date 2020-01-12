@@ -243,7 +243,7 @@
 		if(prob(25))
 			var/deja_vu = pick_n_take(hear_dejavu)
 			var/static/regex/quoted_spoken_message = regex("\".+\"", "gi")
-			hearing_args[HEARING_MESSAGE] = quoted_spoken_message.Replace(hearing_args[HEARING_MESSAGE], "\"[deja_vu]\"") //Quotes included to avoid cases where someone says part of their name
+			hearing_args[HEARING_RAW_MESSAGE] = quoted_spoken_message.Replace(hearing_args[HEARING_RAW_MESSAGE], "\"[deja_vu]\"") //Quotes included to avoid cases where someone says part of their name
 			return
 	if(hear_dejavu.len >= 15)
 		if(prob(50))

@@ -224,7 +224,7 @@
 					return
 			. = TRUE
 		else
-			bot_control(action, usr) // Kill this later.
+			bot_control(action, usr, params) // Kill this later.
 			. = TRUE
 
 /mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, list/params = list(), pda = FALSE)

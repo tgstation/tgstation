@@ -796,7 +796,7 @@
 
 /datum/reagent/sodium
 	name = "Sodium"
-	description = "A soft silver metal that can easily be cut with a knife. It's not salt just yet, so refrain from putting in on your chips."
+	description = "A soft silver metal that can easily be cut with a knife. It's not salt just yet, so refrain from putting it on your chips."
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "salty metal"
@@ -1881,7 +1881,7 @@
 
 /datum/reagent/bz_metabolites
 	name = "BZ metabolites"
-	description = "A harmless metabolite of BZ gas"
+	description = "A harmless metabolite of BZ gas."
 	color = "#FAFF00"
 	taste_description = "acrid cinnamon"
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
@@ -1922,7 +1922,7 @@
 	if(M.dizziness < 6)
 		M.dizziness = CLAMP(M.dizziness + 3, 0, 5)
 	if(prob(20))
-		to_chat(M, "You feel confused and disorientated.")
+		to_chat(M, "You feel confused and disoriented.")
 	..()
 
 /datum/reagent/peaceborg/tire

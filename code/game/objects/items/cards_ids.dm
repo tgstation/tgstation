@@ -41,13 +41,13 @@
 	.=..()
 	update_icon()
 
-/obj/item/card/data/update_icon()
-	cut_overlays()
+/obj/item/card/data/update_overlays()
+	. = ..()
 	if(detail_color == COLOR_FLOORTILE_GRAY)
 		return
 	var/mutable_appearance/detail_overlay = mutable_appearance('icons/obj/card.dmi', "[icon_state]-color")
 	detail_overlay.color = detail_color
-	add_overlay(detail_overlay)
+	. += detail_overlay
 
 /obj/item/card/data/full_color
 	desc = "A plastic magstripe card for simple and speedy data storage and transfer. This one has the entire card colored."
@@ -124,6 +124,7 @@
 	. = ..()
 	if(mapload && access_txt)
 		access = text2access(access_txt)
+	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, .proc/update_in_wallet)
 
 /obj/item/card/id/Destroy()
 	if (registered_account)
@@ -297,26 +298,23 @@
 /obj/item/card/id/RemoveID()
 	return src
 
-/obj/item/card/id/update_icon(blank=FALSE)
-	cut_overlays()
-	cached_flat_icon = null
+/obj/item/card/id/update_overlays()
+	. = ..()
 	if(!uses_overlays)
 		return
+	cached_flat_icon = null
 	var/job = assignment ? ckey(GetJobName()) : null
-	var/list/add_overlays = list()
-	if(!blank)
-		add_overlays += mutable_appearance(icon, "assigned")
+	if(registered_name && registered_name != "Captain")
+		. += mutable_appearance(icon, "assigned")
 	if(job)
-		add_overlays += mutable_appearance(icon, "id[job]")
-	add_overlay(add_overlays)
-	update_in_wallet(add_overlays)
+		. += mutable_appearance(icon, "id[job]")
 
-/obj/item/card/id/proc/update_in_wallet(overlays)
+/obj/item/card/id/proc/update_in_wallet()
 	if(istype(loc, /obj/item/storage/wallet))
 		var/obj/item/storage/wallet/powergaming = loc
 		if(powergaming.front_id == src)
 			powergaming.update_label()
-			powergaming.update_icon(overlays)
+			powergaming.update_icon()
 
 /obj/item/card/id/proc/get_cached_flat_icon()
 	if(!cached_flat_icon)
@@ -338,7 +336,7 @@ update_label()
 /obj/item/card/id/proc/update_label()
 	var/blank = !registered_name
 	name = "[blank ? id_type_name : "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
-	update_icon(blank)
+	update_icon()
 
 /obj/item/card/id/silver
 	name = "silver identification card"
@@ -495,7 +493,7 @@ update_label()
 /obj/item/card/id/captains_spare/update_label() //so it doesn't change to Captain's ID card (Captain) on a sneeze
 	if(registered_name == "Captain")
 		name = "[id_type_name][(!assignment || assignment == "Captain") ? "" : " ([assignment])"]"
-		update_icon(TRUE)
+		update_icon()
 	else
 		..()
 
@@ -505,7 +503,7 @@ update_label()
 	desc = "An ID straight from Central Command."
 	icon_state = "centcom"
 	registered_name = "Central Command"
-	assignment = "General"
+	assignment = "Central Command"
 	uses_overlays = FALSE
 
 /obj/item/card/id/centcom/Initialize()
@@ -525,30 +523,30 @@ update_label()
 	access = get_all_accesses()+get_ert_access("commander")-ACCESS_CHANGE_IDS
 	. = ..()
 
-/obj/item/card/id/ert/Security
+/obj/item/card/id/ert/security
 	registered_name = "Security Response Officer"
 	assignment = "Security Response Officer"
 	icon_state = "ert_security"
 
-/obj/item/card/id/ert/Security/Initialize()
+/obj/item/card/id/ert/security/Initialize()
 	access = get_all_accesses()+get_ert_access("sec")-ACCESS_CHANGE_IDS
 	. = ..()
 
-/obj/item/card/id/ert/Engineer
-	registered_name = "Engineer Response Officer"
-	assignment = "Engineer Response Officer"
+/obj/item/card/id/ert/engineer
+	registered_name = "Engineering Response Officer"
+	assignment = "Engineering Response Officer"
 	icon_state = "ert_engineer"
 
-/obj/item/card/id/ert/Engineer/Initialize()
+/obj/item/card/id/ert/engineer/Initialize()
 	access = get_all_accesses()+get_ert_access("eng")-ACCESS_CHANGE_IDS
 	. = ..()
 
-/obj/item/card/id/ert/Medical
+/obj/item/card/id/ert/medical
 	registered_name = "Medical Response Officer"
 	assignment = "Medical Response Officer"
 	icon_state = "ert_medic"
 
-/obj/item/card/id/ert/Medical/Initialize()
+/obj/item/card/id/ert/medical/Initialize()
 	access = get_all_accesses()+get_ert_access("med")-ACCESS_CHANGE_IDS
 	. = ..()
 
@@ -561,14 +559,32 @@ update_label()
 	access = get_all_accesses()+get_ert_access("sec")-ACCESS_CHANGE_IDS
 	. = ..()
 
-/obj/item/card/id/ert/Janitor
+/obj/item/card/id/ert/janitor
 	registered_name = "Janitorial Response Officer"
 	assignment = "Janitorial Response Officer"
 	icon_state = "ert_janitor"
 
-/obj/item/card/id/ert/Janitor/Initialize()
+/obj/item/card/id/ert/janitor/Initialize()
 	access = get_all_accesses()
 	. = ..()
+
+/obj/item/card/id/ert/clown
+	registered_name = "Entertainment Response Officer"
+	assignment = "Entertainment Response Officer"
+	icon_state = "ert_clown"
+
+/obj/item/card/id/ert/clown/Initialize()
+	access = get_all_accesses()
+	. = ..()
+
+/obj/item/card/id/ert/deathsquad
+	name = "\improper Death Squad ID"
+	id_type_name = "\improper Death Squad ID"
+	desc = "A Death Squad ID card."
+	icon_state = "deathsquad" //NO NO SIR DEATH SQUADS ARENT A PART OF NANOTRASEN AT ALL
+	registered_name = "Death Commando"
+	assignment = "Death Commando"
+	uses_overlays = FALSE
 
 /obj/item/card/id/debug
 	name = "\improper Debug ID"

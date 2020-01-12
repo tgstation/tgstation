@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - admin: "Admin basic disease trigger and custom disease renaming should now work properly."
