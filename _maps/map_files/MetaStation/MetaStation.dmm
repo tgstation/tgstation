@@ -48817,9 +48817,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "cfP" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
 /obj/machinery/medical_kiosk,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -50607,11 +50604,11 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cjR" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
@@ -51275,6 +51272,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -75506,6 +75506,13 @@
 /obj/machinery/pinpointer_dispenser,
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
+"tut" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "twp" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -100927,7 +100934,7 @@ ceB
 cbS
 cgY
 cir
-cjM
+tut
 cfP
 cmv
 cnF
