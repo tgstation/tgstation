@@ -36,6 +36,7 @@
 		hud_used.show_hud(hud_used.hud_version)
 		hud_used.update_ui_style(ui_style2icon(client.prefs.UI_style))
 
+	logout_time = 0 //Zero it up, to allow the person to despawn at will after re-logging.
 	next_move = 1
 
 	..()

@@ -19,10 +19,10 @@
 	var/map_file = "BoxStation.dmm"
 
 	var/traits = null
-	var/space_ruin_levels = 7
-	var/space_empty_levels = 1
+	var/space_ruin_levels = -1
+	var/space_empty_levels = -1
 
-	var/minetype = "lavaland"
+	var/minetype
 
 	var/allow_custom_shuttles = TRUE
 	var/shuttles = list(

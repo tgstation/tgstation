@@ -1,0 +1,8 @@
+{
+    "map_name": "Sunny Dale",
+    "map_path": "map_files/SunnyDale",
+    "map_file": "SunnyDale.dmm",
+	"shuttles": {
+	    "cargo": "cargo_delta"
+    }
+}

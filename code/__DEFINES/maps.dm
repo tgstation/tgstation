@@ -6,14 +6,10 @@ The list DEFAULT_MAP_TRAITS at the bottom of this file should correspond to
 the maps that are hardcoded, as set in _maps/_basemap.dm. SSmapping is
 responsible for loading every non-hardcoded z-level.
 
-As of 2018-02-04, the typical z-levels for a single-level station are:
+As of 2020-01-11, the typical z-levels for a single-level station are:
 1: CentCom
 2: Station
-3-4: Randomized space
-5: Mining
 6: City of Cogs
-7-11: Randomized space
-12: Empty space
 13: Transit space
 
 Multi-Z stations are supported and multi-Z mining and away missions would
@@ -61,8 +57,8 @@ require only minor tweaks.
 #define ZTRAIT_BASETURF "Baseturf"
 
 // default trait definitions, used by SSmapping
-#define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE)
-#define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE)
+#define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE, ZTRAIT_GRAVITY)
+#define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE, ZTRAIT_BASETURF = /turf/open/floor/plating/f13, ZTRAIT_GRAVITY)
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
 #define ZTRAITS_LAVALAND list(\
     ZTRAIT_MINING = TRUE, \
