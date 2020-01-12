@@ -52,7 +52,7 @@
 
 /obj/machinery/scanner_gate/Crossed(atom/movable/AM)
 	..()
-	if(!(stat & (BROKEN|NOPOWER)) && isliving(AM))
+	if(!(machine_stat & (BROKEN|NOPOWER)) && isliving(AM))
 		perform_scan(AM)
 
 /obj/machinery/scanner_gate/proc/set_scanline(type, duration)
