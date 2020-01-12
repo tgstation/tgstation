@@ -15,6 +15,11 @@
 	strip_delay = 100 //air pods don't fall out
 	custom_price = 1800
 
+/obj/item/clothing/ears/spacepods/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/earhealing)
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
 	desc = "Protects your hearing from loud noises, and quiet ones as well."
