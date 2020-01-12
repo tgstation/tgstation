@@ -1,7 +1,7 @@
 /obj/item/seeds/agave
 	name = "pack of agave seeds"
 	desc = "These seeds grow into an agave plant."
-	icon = 'icons/obj/hydroponics/seeds.dmi'
+	icon = 'fallout/icons/hydroponics/seeds.dmi'
 	icon_state = "seed-agave"
 	species = "agave"
 	plantname = "agave plant"
@@ -12,7 +12,7 @@
 	growthstages = 3
 	production = 7
 	maturation = 7
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	growing_icon = 'fallout/icons/hydroponics/wasteland_plants.dmi'
 	icon_grow = "agave-grow"
 	icon_dead = "agave-dead"
 	icon_harvest = "agave-harvest"

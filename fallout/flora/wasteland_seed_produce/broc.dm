@@ -1,6 +1,7 @@
 /obj/item/seeds/poppy/broc
 	name = "pack of broc seeds"
 	desc = "These seeds grow into broc flowers."
+	icon = 'fallout/icons/hydroponics/seeds.dmi'
 	icon_state = "seed-broc"
 	species = "broc"
 	plantname = "broc flowers"
@@ -18,6 +19,7 @@
 	seed = /obj/item/seeds/poppy/broc
 	name = "broc flower"
 	desc = "This vibrant, orange flower grows on tall stalks in the wasteland and exhibits moderate healing properties, even when unprocessed."
+	icon = 'fallout/icons/hydroponics/harvest.dmi'
 	icon_state = "broc"
 	//slot_flags = SLOT_HEAD
 	filling_color = "#FF6347"

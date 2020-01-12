@@ -1,6 +1,7 @@
 /obj/item/seeds/xander
 	name = "pack of xander seeds"
 	desc = "These seeds grow into xander roots."
+	icon = 'fallout/icons/hydroponics/seeds.dmi'
 	icon_state = "seed-xander"
 	species = "xander"
 	plantname = "xander roots"
@@ -20,6 +21,7 @@
 	seed = /obj/item/seeds/xander
 	name = "xander root"
 	desc = "Xander roots are large, hardy, turnip-like roots with mild healing properties."
+	icon = 'fallout/icons/hydroponics/harvest.dmi'
 	icon_state = "xander"
 	filling_color = "#FF6347"
 
