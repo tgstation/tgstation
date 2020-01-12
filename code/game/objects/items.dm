@@ -92,6 +92,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	///All items with sharpness of IS_SHARP or higher will automatically get the butchering component.
 	var/sharpness = IS_BLUNT
 
+	var/autopsy_description = null
+
 	var/tool_behaviour = NONE
 	var/toolspeed = 1
 

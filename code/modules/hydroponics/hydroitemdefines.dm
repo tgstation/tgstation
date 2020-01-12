@@ -91,6 +91,7 @@
 	item_state = "hatchet"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
+	autopsy_description = "chopped wounds"
 	flags_1 = CONDUCT_1
 	force = 12
 	w_class = WEIGHT_CLASS_SMALL

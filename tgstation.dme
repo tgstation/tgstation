@@ -2832,6 +2832,7 @@
 #include "code\modules\station_goals\shield.dm"
 #include "code\modules\station_goals\station_goal.dm"
 #include "code\modules\surgery\amputation.dm"
+#include "code\modules\surgery\autopsy.dm"
 #include "code\modules\surgery\brain_surgery.dm"
 #include "code\modules\surgery\cavity_implant.dm"
 #include "code\modules\surgery\core_removal.dm"

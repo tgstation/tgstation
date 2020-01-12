@@ -540,6 +540,7 @@
 		update_sight()
 		clear_alert("not_enough_oxy")
 		reload_fullscreen()
+		damage_record = list()
 		. = TRUE
 		if(mind)
 			for(var/S in mind.spell_list)
@@ -596,6 +597,7 @@
 	jitteriness = 0
 	update_mobility()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
+
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
 /mob/living/proc/can_be_revived()
