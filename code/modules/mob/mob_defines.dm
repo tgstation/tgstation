@@ -177,6 +177,7 @@
 	  * leave null for no sound. used for *deathgasp
 	  */
 	var/deathsound
+	var/logout_time = 0 //for despawn and general logging
 
 	///the current turf being examined in the stat panel
 	var/turf/listed_turf = null

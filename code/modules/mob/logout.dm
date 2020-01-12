@@ -3,12 +3,13 @@
 	SStgui.on_logout(src)
 	unset_machine()
 	GLOB.player_list -= src
+	logout_time = world.time
 
 	..()
 
 	if(loc)
 		loc.on_log(FALSE)
-	
+
 	if(client)
 		for(var/foo in client.player_details.post_logout_callbacks)
 			var/datum/callback/CB = foo
