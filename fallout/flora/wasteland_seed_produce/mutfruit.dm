@@ -1,6 +1,7 @@
 /obj/item/seeds/mutfruit
 	name = "pack of mutfruit seeds"
 	desc = "These seeds grow into a mutfruit sapling."
+	icon = 'fallout/icons/hydroponics/harvest.dmi'
 	icon_state = "seed-mutfruit"
 	species = "mutfruit"
 	plantname = "mutfruit sapling"

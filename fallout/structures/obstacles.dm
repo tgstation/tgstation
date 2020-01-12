@@ -122,7 +122,7 @@
 	. = ..()
 	layer = 4.2
 
-/obj/structure/fence/fencedoor/attackby(obj/item/weapon/I, mob/living/user, params)
+/obj/structure/fence/fencedoor/attackby(obj/item/I, mob/living/user, params)
 	if (density)
 		icon_state = "fence_door_front_open"
 		playsound(src.loc, open_sound, 40, 0, 0)
