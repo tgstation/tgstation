@@ -22,6 +22,7 @@
 	var/list/features = null
 	var/factions = null
 	var/list/quirks = null
+	var/sampleDNA = null
 	var/contains_sample = 0
 
 /obj/item/seeds/replicapod/Initialize()
@@ -57,6 +58,7 @@
 		blood_type = null
 		features = null
 		factions = null
+		sampleDNA = null
 		contains_sample = FALSE
 
 /obj/item/seeds/replicapod/get_analyzer_text()
