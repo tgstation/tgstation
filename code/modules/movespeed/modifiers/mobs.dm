@@ -122,3 +122,6 @@
 /datum/movespeed_modifier/carbon_crawling
 	id = MOVESPEED_ID_CARBON_CRAWLING
 	multiplicative_slowdown = CRAWLING_ADD_SLOWDOWN
+
+/datum/movespeed_modifier/mob_config_speedmod
+	id = MOVESPEED_ID_CONFIG_SPEEDMOD
