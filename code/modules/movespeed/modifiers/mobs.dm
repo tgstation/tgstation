@@ -25,10 +25,12 @@
 /datum/movespeed_modifier/damage_slowdown
 	id = MOVESPEED_ID_DAMAGE_SLOWDOWN
 	blacklisted_movetypes = FLOATING|FLYING
+	variable = TRUE
 
 /datum/movespeed_modifier/damage_slowdown_flying
 	id = MOVESPEED_ID_DAMAGE_SLOWDOWN_FLYING
 	movetypes = FLOATING
+	variable = TRUE
 
 /datum/movespeed_modifier/equipment_speedmod
 	variable = TRUE
@@ -125,3 +127,4 @@
 
 /datum/movespeed_modifier/mob_config_speedmod
 	id = MOVESPEED_ID_CONFIG_SPEEDMOD
+	variable = TRUE

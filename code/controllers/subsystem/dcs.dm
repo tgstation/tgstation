@@ -9,7 +9,7 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 
 /datum/controller/subsystem/processing/dcs/proc/GetElement(datum/element/eletype, ...)
 	var/element_id = eletype
-	
+
 	if(initial(eletype.element_flags) & ELEMENT_BESPOKE)
 		var/list/fullid = list("[eletype]")
 		for(var/i in initial(eletype.id_arg_index) to length(args))
@@ -19,7 +19,7 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 			else
 				fullid += "[REF(argument)]"
 		element_id = fullid.Join("&")
-			
+
 	. = elements_by_type[element_id]
 	if(.)
 		return

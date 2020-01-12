@@ -72,7 +72,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		CRASH("[modtype] is a variable modifier, and can never be cached.")
 	return GLOB.movespeed_modification_cache[modtype] || ((GLOB.movespeed_modification_cache[modtype] = new modtype))
 
-///Add a move speed modifier to a mob. If a variable subtype is passed in as the first argument, it will make a new datum.
+///Add a move speed modifier to a mob. If a variable subtype is passed in as the first argument, it will make a new datum. If ID conflicts, it will overwrite the old ID.
 /mob/proc/add_movespeed_modifier(datum/movespeed_modifier/type_or_datum, update = TRUE)
 	if(ispath(type_or_datum))
 		if(!initial(type_or_datum.variable))
@@ -113,7 +113,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		update_movespeed(FALSE)
 	return TRUE
 
-/// Used for variable slowdowns like hunger/health loss/etc, works somewhat like the old list-based modification adds. Implies override. Returns the modifier datum if successful
+/// Used for variable slowdowns like hunger/health loss/etc, works somewhat like the old list-based modification adds. Returns the modifier datum if successful
 /mob/proc/add_or_update_variable_movespeed_modifier(datum/movespeed_modifier/type_id_datum, update = TRUE, multiplicative_slowdown)
 	/*
 	How this SHOULD work is:
@@ -136,7 +136,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		var/id = initial(type_id_datum.id)
 		final = LAZYACCESS(movespeed_modification, id)
 		if(!istype(final))
-			final = new
+			final = new type_id_datum
 			inject = TRUE
 			modified = TRUE
 	else if(istype(type_id_datum))
@@ -152,7 +152,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		final.multiplicative_slowdown = multiplicative_slowdown
 		modified = TRUE
 	if(inject)
-		add_movespeed_modifier(final, FALSE, TRUE)
+		add_movespeed_modifier(final, FALSE)
 	if(update && modified)
 		update_movespeed(TRUE)
 	return final

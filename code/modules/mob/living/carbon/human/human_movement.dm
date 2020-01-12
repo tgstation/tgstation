@@ -6,6 +6,8 @@
 			var/datum/movespeed_modifier/M = considering[id]
 			if(M.flags & IGNORE_NOSLOW)
 				.[id] = M
+	else
+		. = considering
 
 /mob/living/carbon/human/slip(knockdown_amount, obj/O, lube, paralyze, forcedrop)
 	if(HAS_TRAIT(src, TRAIT_NOSLIPALL))
