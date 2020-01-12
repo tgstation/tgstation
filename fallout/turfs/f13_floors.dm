@@ -82,7 +82,7 @@ GLOBAL_LIST(archdrop_desert_sand)
 		. = TRUE
 
 //Make sure we delete the plant if we ever change turfs
-/turf/open/floor/plating/f13/outside/desert/ChangeTurf()
+/turf/open/floor/plating/f13/outside/desert/ChangeTurf(path, new_baseturf, flags)
 	if(turfPlant)
 		qdel(turfPlant)
 	. =  ..()
