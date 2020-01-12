@@ -422,11 +422,11 @@
 
 /datum/reagent/medicine/ephedrine/on_mob_metabolize(mob/living/L)
 	..()
-	L._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
 	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 
 /datum/reagent/medicine/ephedrine/on_mob_end_metabolize(mob/living/L)
-	L._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
 	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 	..()
 
@@ -806,11 +806,11 @@
 
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/L)
 	..()
-	L._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/reagent/stimulants)
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/stimulants)
 	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 
 /datum/reagent/medicine/stimulants/on_mob_end_metabolize(mob/living/L)
-	L._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/reagent/stimulants)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/stimulants)
 	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 	..()
 
@@ -1038,10 +1038,10 @@
 
 /datum/reagent/medicine/changelinghaste/on_mob_metabolize(mob/living/L)
 	..()
-	L._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/reagent/changelinghaste)
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/changelinghaste)
 
 /datum/reagent/medicine/changelinghaste/on_mob_end_metabolize(mob/living/L)
-	L._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/reagent/changelinghaste)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/changelinghaste)
 	..()
 
 /datum/reagent/medicine/changelinghaste/on_mob_life(mob/living/carbon/M)
@@ -1348,14 +1348,14 @@
 	..()
 	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
-	L._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/reagent/badstims)
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/badstims)
 	L.ignore_slowdown(type)
 
 /datum/reagent/medicine/badstims/on_mob_end_metabolize(mob/living/L)
 	..()
 	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
-	L._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/reagent/badstims)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/badstims)
 	L.unignore_slowdown(type)
 	L.Dizzy(0)
 	L.Jitter(0)

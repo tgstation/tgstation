@@ -1230,10 +1230,10 @@
 
 /datum/reagent/nitryl/on_mob_metabolize(mob/living/L)
 	..()
-	L._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/reagent/nitryl)
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nitryl)
 
 /datum/reagent/nitryl/on_mob_end_metabolize(mob/living/L)
-	L._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nitryl)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nitryl)
 	..()
 
 /////////////////////////Colorful Powder////////////////////////////

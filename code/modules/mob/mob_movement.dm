@@ -330,7 +330,7 @@
 /mob/proc/update_gravity(has_gravity, override=FALSE)
 	var/speed_change = max(0, has_gravity - STANDARD_GRAVITY)
 	if(!speed_change)
-		_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/gravity)
+		remove_movespeed_modifier(/datum/movespeed_modifier/gravity)
 	else
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/gravity, multiplicative_slowdown=speed_change)
 

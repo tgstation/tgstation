@@ -172,9 +172,9 @@
 	if(!victim.client || !istype(victim))
 		return
 	to_chat(victim, "<span class='notice'>You feel fast!</span>")
-	victim._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
+	victim.add_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
 	sleep(duration)
-	victim._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
+	victim.remove_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
 	to_chat(victim, "<span class='notice'>You slow down.</span>")
 
 /datum/movespeed_modifier/yellow_orb

@@ -106,11 +106,11 @@
 	return TRUE
 
 /datum/reagent/medicine/C2/lenturi/on_mob_metabolize(mob/living/carbon/M)
-	M._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
+	M.add_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
 	return ..()
 
 /datum/reagent/medicine/C2/lenturi/on_mob_end_metabolize(mob/living/carbon/M)
-	M._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
+	M.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
 	return ..()
 
 /datum/reagent/medicine/C2/aiuri

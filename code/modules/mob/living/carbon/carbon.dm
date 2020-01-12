@@ -497,9 +497,9 @@
 /mob/living/carbon/update_mobility()
 	. = ..()
 	if(!(mobility_flags & MOBILITY_STAND))
-		_REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
+		add_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
 	else
-		_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
+		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
 
 /datum/movespeed_modifier/carbon_crawling
 	id = MOVESPEED_ID_CARBON_CRAWLING
@@ -526,9 +526,9 @@
 
 	med_hud_set_health()
 	if(stat == SOFT_CRIT)
-		_REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
+		add_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 	else
-		_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
+		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 
 /mob/living/carbon/update_stamina()
 	var/stam = getStaminaLoss()

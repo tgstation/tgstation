@@ -185,7 +185,7 @@
 	alert_type = /obj/screen/alert/status_effect/bloodchill
 
 /datum/status_effect/bloodchill/on_apply()
-	owner._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/status_effect/bloodchill)
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/bloodchill)
 	return ..()
 
 /datum/status_effect/bloodchill/tick()
@@ -193,7 +193,7 @@
 		owner.adjustFireLoss(2)
 
 /datum/status_effect/bloodchill/on_remove()
-	owner._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bloodchill)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bloodchill)
 
 /datum/status_effect/bonechill
 	id = "bonechill"
@@ -201,7 +201,7 @@
 	alert_type = /obj/screen/alert/status_effect/bonechill
 
 /datum/status_effect/bonechill/on_apply()
-	owner._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/status_effect/bonechill)
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/bonechill)
 	return ..()
 
 /datum/status_effect/bonechill/tick()
@@ -211,7 +211,7 @@
 		owner.adjust_bodytemperature(-10)
 
 /datum/status_effect/bonechill/on_remove()
-	owner._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bonechill)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bonechill)
 /obj/screen/alert/status_effect/bonechill
 	name = "Bonechilled"
 	desc = "You feel a shiver down your spine after hearing the haunting noise of bone rattling. You'll move slower and get frostbite for a while!"
@@ -365,11 +365,11 @@ datum/status_effect/rebreathing/tick()
 	duration = 30
 
 /datum/status_effect/tarfoot/on_apply()
-	owner._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/status_effect/tarfoot)
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/tarfoot)
 	return ..()
 
 /datum/status_effect/tarfoot/on_remove()
-	owner._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/tarfoot)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/tarfoot)
 
 /datum/status_effect/spookcookie
 	id = "spookcookie"
@@ -691,7 +691,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	return ..()
 
 /datum/status_effect/stabilized/sepia/on_remove()
-	owner._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia)
 
 /datum/status_effect/stabilized/cerulean
 	id = "stabilizedcerulean"
@@ -899,7 +899,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	colour = "light pink"
 
 /datum/status_effect/stabilized/lightpink/on_apply()
-	owner._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/status_effect/lightpink)
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/lightpink)
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/tick()
@@ -910,7 +910,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/on_remove()
-	owner._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/lightpink)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/lightpink)
 
 /datum/status_effect/stabilized/adamantine
 	id = "stabilizedadamantine"

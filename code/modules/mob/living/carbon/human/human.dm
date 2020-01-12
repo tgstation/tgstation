@@ -1018,7 +1018,7 @@
 	return FALSE
 
 /mob/living/carbon/human/proc/clear_shove_slowdown()
-	_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/shove)
+	remove_movespeed_modifier(/datum/movespeed_modifier/shove)
 	var/active_item = get_active_held_item()
 	if(is_type_in_typecache(active_item, GLOB.shove_disarming_types))
 		visible_message("<span class='warning'>[src.name] regains their grip on \the [active_item]!</span>", "<span class='warning'>You regain your grip on \the [active_item]</span>", null, COMBAT_MESSAGE_RANGE)
@@ -1031,16 +1031,16 @@
 	. = ..()
 	dna?.species.spec_updatehealth(src)
 	if(HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))
-		_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
-		_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
+		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
+		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 		return
 	var/health_deficiency = max((maxHealth - health), staminaloss)
 	if(health_deficiency >= 40)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 	else
-		_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
-		_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
+		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
+		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 
 /mob/living/carbon/human/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))

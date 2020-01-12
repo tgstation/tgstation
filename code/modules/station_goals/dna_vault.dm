@@ -277,7 +277,7 @@
 			ADD_TRAIT(H, TRAIT_PIERCEIMMUNE, "dna_vault")
 		if(VAULT_SPEED)
 			to_chat(H, "<span class='notice'>Your legs feel faster.</span>")
-			H._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup)
+			H.add_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup)
 		if(VAULT_QUICK)
 			to_chat(H, "<span class='notice'>Your arms move as fast as lightning.</span>")
 			H.next_move_modifier = 0.5

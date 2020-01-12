@@ -73,7 +73,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 	return GLOB.movespeed_modification_cache[modtype] || ((GLOB.movespeed_modification_cache[modtype] = new modtype))
 
 ///Add a move speed modifier to a mob. If a variable subtype is passed in as the first argument, it will make a new datum.
-/mob/proc/_REFACTORING_add_movespeed_modifier(datum/movespeed_modifier/type_or_datum, update = TRUE)
+/mob/proc/add_movespeed_modifier(datum/movespeed_modifier/type_or_datum, update = TRUE)
 	if(ispath(type_or_datum))
 		if(!initial(type_or_datum.variable))
 			type_or_datum = get_cached_movespeed_modifier(type_or_datum)
@@ -95,7 +95,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 	return TRUE
 
 ///Remove a move speed modifier from a mob, whether static or variable.
-/mob/proc/_REFACTORING_remove_movespeed_modifier(datum/movespeed_modifier/type_id_datum, update = TRUE)
+/mob/proc/remove_movespeed_modifier(datum/movespeed_modifier/type_id_datum, update = TRUE)
 	if(ispath(type_id_datum))
 		if(!initial(type_id_datum.variable))
 			type_id_datum = get_cached_movespeed_modifier(type_id_datum)
@@ -152,7 +152,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		final.multiplicative_slowdown = multiplicative_slowdown
 		modified = TRUE
 	if(inject)
-		_REFACTORING_add_movespeed_modifier(final, FALSE, TRUE)
+		add_movespeed_modifier(final, FALSE, TRUE)
 	if(update && modified)
 		update_movespeed(TRUE)
 	return final
@@ -162,14 +162,14 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 	var/slowdown_edit = (var_name == NAMEOF(src, cached_multiplicative_slowdown))
 	var/diff
 	if(slowdown_edit && isnum(cached_multiplicative_slowdown) && isnum(var_value))
-		_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/admin_varedit)
+		remove_movespeed_modifier(/datum/movespeed_modifier/admin_varedit)
 		diff = var_value - cached_multiplicative_slowdown
 	. = ..()
 	if(. && slowdown_edit && isnum(diff))
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/admin_varedit, multiplicative_slowdown = diff)
 
 ///Is there a movespeed modifier for this mob
-/mob/proc/_REFACTORING_has_movespeed_modifier(datum/movespeed_modifier/datum_type_id)
+/mob/proc/has_movespeed_modifier(datum/movespeed_modifier/datum_type_id)
 	if(ispath(datum_type_id))
 		datum_type_id = get_cached_movespeed_modifier(datum_type_id)
 	if(istype(datum_type_id))

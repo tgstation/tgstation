@@ -1210,7 +1210,7 @@
 		if(limbless_slowdown)
 			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/limbless, multiplicative_slowdown = limbless_slowdown)
 		else
-			_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/limbless)
+			remove_movespeed_modifier(/datum/movespeed_modifier/limbless)
 
 /mob/living/proc/fall(forced)
 	if(!(mobility_flags & MOBILITY_USE))

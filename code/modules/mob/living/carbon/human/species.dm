@@ -353,7 +353,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.dna.features["wings"] = "None"
 		C.update_body()
 
-	C._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/species)
+	C.remove_movespeed_modifier(/datum/movespeed_modifier/species)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
@@ -1026,14 +1026,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(H.overeatduration < 100)
 			to_chat(H, "<span class='notice'>You feel fit again!</span>")
 			REMOVE_TRAIT(H, TRAIT_FAT, OBESITY)
-			H._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
+			H.remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 	else
 		if(H.overeatduration >= 100)
 			to_chat(H, "<span class='danger'>You suddenly feel blubbery!</span>")
 			ADD_TRAIT(H, TRAIT_FAT, OBESITY)
-			H._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/obesity)
+			H.add_movespeed_modifier(/datum/movespeed_modifier/obesity)
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 
@@ -1094,7 +1094,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(E.get_charge(H) <= ETHEREAL_CHARGE_NORMAL)
 					H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/hunger, multiplicative_slowdown = (1.5 * (1 - E.get_charge(H) / 100)))
 			else
-				H._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/hunger)
+				H.remove_movespeed_modifier(/datum/movespeed_modifier/hunger)
 
 	switch(H.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
@@ -1377,8 +1377,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			var/knocked_item = FALSE
 			if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
 				target_held_item = null
-			if(!target._REFACTORING_has_movespeed_modifier(/datum/movespeed_modifier/shove))
-				target._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/shove)
+			if(!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+				target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
 				if(target_held_item)
 					target.visible_message("<span class='danger'>[target.name]'s grip on \the [target_held_item] loosens!</span>",
 						"<span class='warning'>Your grip on \the [target_held_item] loosens!</span>", null, COMBAT_MESSAGE_RANGE)
@@ -1643,7 +1643,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
 
-		H._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/cold)
+		H.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
 
 		var/burn_damage
 		var/firemodifier = H.fire_stacks / 50
@@ -1683,7 +1683,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	else
 		H.clear_alert("temp")
-		H._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/cold)
+		H.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 

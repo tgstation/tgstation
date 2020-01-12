@@ -26,31 +26,31 @@
 	return ..()
 
 /mob/living/proc/update_move_intent_slowdown()
-	_REFACTORING_add_movespeed_modifier((m_intent == MOVE_INTENT_WALK)? /datum/movespeed_modifier/config_walk_run/walk : /datum/movespeed_modifier/config_walk_run/run, override = TRUE)
+	add_movespeed_modifier((m_intent == MOVE_INTENT_WALK)? /datum/movespeed_modifier/config_walk_run/walk : /datum/movespeed_modifier/config_walk_run/run, override = TRUE)
 
 /mob/living/proc/update_turf_movespeed(turf/open/T)
 	if(istype(T))
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/turf_slowdown, multiplicative_slowdown = T.slowdown)
 	else
-		_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/turf_slowdown)
+		remove_movespeed_modifier(/datum/movespeed_modifier/turf_slowdown)
 
 /mob/living/proc/update_pull_movespeed()
 	if(pulling)
 		if(isliving(pulling))
 			var/mob/living/L = pulling
 			if(!slowed_by_drag || (L.mobility_flags & MOBILITY_STAND) || L.buckled || grab_state >= GRAB_AGGRESSIVE)
-				_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/bulky_drag)
+				remove_movespeed_modifier(/datum/movespeed_modifier/bulky_drag)
 				return
 			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/bulky_drag, multiplicative_slowdown = PULL_PRONE_SLOWDOWN)
 			return
 		if(isobj(pulling))
 			var/obj/structure/S = pulling
 			if(!slowed_by_drag || !S.drag_slowdown)
-				_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/bulky_drag)
+				remove_movespeed_modifier(/datum/movespeed_modifier/bulky_drag)
 				return
 			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/bulky_drag, multiplicative_slowdown = S.drag_slowdown)
 			return
-	_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/bulky_drag)
+	remove_movespeed_modifier(/datum/movespeed_modifier/bulky_drag)
 
 /mob/living/can_zFall(turf/T, levels)
 	return ..()

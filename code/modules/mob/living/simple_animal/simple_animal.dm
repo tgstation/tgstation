@@ -367,7 +367,7 @@
 
 /mob/living/simple_animal/proc/update_simplemob_varspeed()
 	if(speed == 0)
-		_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed)
+		remove_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed)
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed, multiplicative_slowdown = speed)
 
 /mob/living/simple_animal/Stat()

@@ -1232,20 +1232,20 @@
 /mob/setGrabState(newstate)
 	. = ..()
 	if(grab_state == GRAB_PASSIVE)
-		_REFACTORING_remove_movespeed_modifier(MOVESPEED_ID_MOB_GRAB_STATE)
+		remove_movespeed_modifier(MOVESPEED_ID_MOB_GRAB_STATE)
 	else
 		switch(grab_state)
 			if(GRAB_AGGRESSIVE)
-				_REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/aggressive)
+				add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/aggressive)
 			if(GRAB_NECK)
-				_REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/neck)
+				add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/neck)
 			if(GRAB_KILL)
-				_REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/kill)
+				add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/kill)
 
 /mob/proc/update_equipment_speed_mods()
 	var/speedies = equipped_speed_mods()
 	if(!speedies)
-		_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/equipment_speedmod)
+		remove_movespeed_modifier(/datum/movespeed_modifier/equipment_speedmod)
 	else
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/equipment_speedmod, multiplicative_slowdown = speedies)
 

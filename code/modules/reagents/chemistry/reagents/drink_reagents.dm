@@ -376,10 +376,10 @@
 
 /datum/reagent/consumable/nuka_cola/on_mob_metabolize(mob/living/L)
 	..()
-	L._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/reagent/nuka_cola)
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nuka_cola)
 
 /datum/reagent/consumable/nuka_cola/on_mob_end_metabolize(mob/living/L)
-	L._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nuka_cola)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nuka_cola)
 	..()
 
 /datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/carbon/M)
@@ -556,10 +556,10 @@
 /datum/reagent/consumable/monkey_energy/on_mob_metabolize(mob/living/L)
 	..()
 	if(ismonkey(L))
-		L._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/reagent/monkey_energy)
+		L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/monkey_energy)
 
 /datum/reagent/consumable/monkey_energy/on_mob_end_metabolize(mob/living/L)
-	L._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/reagent/monkey_energy)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/monkey_energy)
 	..()
 
 /datum/reagent/consumable/monkey_energy/overdose_process(mob/living/M)

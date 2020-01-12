@@ -14,7 +14,7 @@
 	parent_atom.opacity = 0
 	if(isliving(parent_atom))
 		var/mob/living/L = parent_atom
-		L._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
+		L.add_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
 			C.unequip_everything()
@@ -34,7 +34,7 @@
 	parent_atom.opacity = oldopac
 	if(isliving(parent_atom))
 		var/mob/living/L = parent_atom
-		L._REFACTORING_remove_movespeed_modifier(MOVESPEED_ID_SHRINK_RAY)
+		L.remove_movespeed_modifier(MOVESPEED_ID_SHRINK_RAY)
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			H.physiology.damage_resistance += 100

@@ -254,9 +254,9 @@
 /mob/living/silicon/pai/Process_Spacemove(movement_dir = 0)
 	. = ..()
 	if(!.)
-		_REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/pai_spacewalk)
+		add_movespeed_modifier(/datum/movespeed_modifier/pai_spacewalk)
 		return TRUE
-	_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/pai_spacewalk)
+	remove_movespeed_modifier(/datum/movespeed_modifier/pai_spacewalk)
 	return TRUE
 
 /mob/living/silicon/pai/examine(mob/user)

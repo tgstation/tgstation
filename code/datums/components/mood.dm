@@ -208,27 +208,27 @@
 	switch(sanity)
 		if(SANITY_INSANE to SANITY_CRAZY)
 			setInsanityEffect(MAJOR_INSANITY_PEN)
-			master._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/sanity/insane, override = TRUE)
+			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/insane, override = TRUE)
 			sanity_level = 6
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
 			setInsanityEffect(MINOR_INSANITY_PEN)
-			master._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/sanity/crazy, override = TRUE)
+			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/crazy, override = TRUE)
 			sanity_level = 5
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			setInsanityEffect(0)
-			master._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/sanity/disturbed, override = TRUE)
+			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/disturbed, override = TRUE)
 			sanity_level = 4
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
 			setInsanityEffect(0)
-			master._REFACTORING_remove_movespeed_modifier(MOVESPEED_ID_SANITY)
+			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			sanity_level = 3
 		if(SANITY_NEUTRAL+1 to SANITY_GREAT+1) //shitty hack but +1 to prevent it from responding to super small differences
 			setInsanityEffect(0)
-			master._REFACTORING_remove_movespeed_modifier(MOVESPEED_ID_SANITY)
+			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			sanity_level = 2
 		if(SANITY_GREAT+1 to INFINITY)
 			setInsanityEffect(0)
-			master._REFACTORING_remove_movespeed_modifier(MOVESPEED_ID_SANITY)
+			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			sanity_level = 1
 	update_mood_icon()
 
