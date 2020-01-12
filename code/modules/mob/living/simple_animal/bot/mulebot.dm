@@ -157,7 +157,7 @@
 
 /mob/living/simple_animal/bot/mulebot/bullet_act(obj/projectile/Proj)
 	. = ..()
-	if(.)
+	if(. && !QDELETED(src)) //Got hit and not blown up yet.
 		if(prob(50) && !isnull(load))
 			unload(0)
 		if(prob(25))
@@ -224,7 +224,7 @@
 					return
 			. = TRUE
 		else
-			bot_control(action, usr) // Kill this later.
+			bot_control(action, usr, params) // Kill this later.
 			. = TRUE
 
 /mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, list/params = list(), pda = FALSE)

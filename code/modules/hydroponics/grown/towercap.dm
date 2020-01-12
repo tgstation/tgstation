@@ -164,12 +164,12 @@
 	. = ..()
 	StartBurning()
 
-/obj/structure/bonfire/CanPass(atom/movable/mover, turf/target)
+/obj/structure/bonfire/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
 		return TRUE
 	if(mover.throwing)
 		return TRUE
-	return ..()
 
 /obj/structure/bonfire/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/rods) && !can_buckle && !grill)

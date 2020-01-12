@@ -53,14 +53,14 @@
 			AM.forceMove(drop_location())
 			do_transform(AM)
 
-/obj/machinery/transformer/CanPass(atom/movable/mover, turf/target)
+/obj/machinery/transformer/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	// Allows items to go through,
 	// to stop them from blocking the conveyor belt.
 	if(!ishuman(mover))
-		var/dir = get_dir(src, mover)
-		if(dir == EAST)
-			return ..()
-	return 0
+		if(get_dir(src, mover) == EAST)
+			return
+	return FALSE
 
 /obj/machinery/transformer/process()
 	if(cooldown && (cooldown_timer <= world.time))
