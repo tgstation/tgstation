@@ -315,17 +315,11 @@
 	START_PROCESSING(SSobj, src)
 	on = TRUE
 	update_icon()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
 
 /obj/item/borg/upgrade/selfrepair/proc/deactivate_sr()
 	STOP_PROCESSING(SSobj, src)
 	on = FALSE
 	update_icon()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
 
 /obj/item/borg/upgrade/selfrepair/process()
 	if(!repair_tick)
