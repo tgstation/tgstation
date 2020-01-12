@@ -30,7 +30,7 @@ GLOBAL_LIST(archdrop_desert_sand)
 	name = "What the fuck mappers? why is this here"
 	desc = "If found, scream at the github repo about this"
 	icon_state = "wasteland1"
-	icon = 'fallout/icons/turfs/ground.dmi'
+	icon = 'fallout/icons/turf/ground.dmi'
 /* TODO: day night system and make it particularly less killing the server's cpu
 	turf_light_range = 3
 	turf_light_power = 0.75
@@ -39,7 +39,7 @@ GLOBAL_LIST(archdrop_desert_sand)
 /turf/open/floor/plating/f13/outside/desert
 	name = "\proper desert"
 	desc = "A stretch of desert."
-	icon = 'fallout/icons/f13desert.dmi'
+	icon = 'fallout/icons/turf/f13desert.dmi'
 	icon_state = "wasteland1"
 	var/obj/structure/flora/turfPlant = null
 	slowdown = 2
@@ -55,30 +55,30 @@ GLOBAL_LIST(archdrop_desert_sand)
 		plantGrass()
 
 /turf/open/floor/plating/f13/outside/desert/proc/plantGrass(Plantforce = FALSE)
-	var/Weight = 0
-	var/randPlant = null
+	var/weight = 0
+	var/randplant = null
 
 	//spontaneously spawn grass
 	if(Plantforce || prob(GRASS_SPONTANEOUS))
-		randPlant = pickweight(LUSH_PLANT_SPAWN_LIST) //Create a new grass object at this location, and assign var
-		turfPlant = new randPlant(src)
+		randplant = pickweight(LUSH_PLANT_SPAWN_LIST) //Create a new grass object at this location, and assign var
+		turfPlant = new randplant(src)
 		. = TRUE //in case we ever need this to return if we spawned
 		return .
 
 	//loop through neighbouring desert turfs, if they have grass, then increase weight
 	for(var/turf/open/floor/plating/f13/outside/desert/T in RANGE_TURFS(3, src))
 		if(T.turfPlant)
-			Weight += GRASS_WEIGHT
+			weight += GRASS_WEIGHT
 
 	//use weight to try to spawn grass
-	if(prob(Weight))
+	if(prob(weight))
 
 		//If surrounded on 5+ sides, pick from lush
-		if(Weight == (5 * GRASS_WEIGHT))
-			randPlant = pickweight(LUSH_PLANT_SPAWN_LIST)
+		if(weight == (5 * GRASS_WEIGHT))
+			randplant = pickweight(LUSH_PLANT_SPAWN_LIST)
 		else
-			randPlant = pickweight(DESOLATE_PLANT_SPAWN_LIST)
-		turfPlant = new randPlant(src)
+			randplant = pickweight(DESOLATE_PLANT_SPAWN_LIST)
+		turfPlant = new randplant(src)
 		. = TRUE
 
 //Make sure we delete the plant if we ever change turfs
@@ -90,17 +90,17 @@ GLOBAL_LIST(archdrop_desert_sand)
 /turf/open/floor/plating/f13/outside/road
 	name = "\proper road"
 	desc = "A stretch of road."
-	icon = 'fallout/icons/f13road.dmi'
+	icon = 'fallout/icons/turf/f13road.dmi'
 	icon_state = "outermiddle"
 
 /turf/open/floor/wood/f13
-	icon = 'fallout/icons/turfs/floors.dmi'
+	icon = 'fallout/icons/turf/floors.dmi'
 	icon_state = "housewood1"
 
-	New()
-		..()
-		if(icon_state == "housewood1")
-			icon_state = "housewood[rand(1,3)]"
+/turf/open/floor/wood/f13/Initialize()
+	. = ..()
+	if(icon_state == "housewood1")
+		icon_state = "housewood[rand(1,3)]"
 
 /turf/open/floor/wood/f13/carpet
 	icon_state = "carpet"
@@ -191,7 +191,7 @@ GLOBAL_LIST(archdrop_desert_sand)
 /turf/open/floor/plating/f13/inside/mountain
 	name = "mountain"
 	desc = "Damp cave flooring."
-	icon = 'fallout/icons/f13floors2.dmi'
+	icon = 'fallout/icons/turf/f13floors2.dmi'
 	icon_state = "mountain0"
 	var/obj/structure/flora/turfPlant = null
 
@@ -212,7 +212,7 @@ GLOBAL_LIST(archdrop_desert_sand)
 
 /turf/open/floor/plasteel/f13/vault_floor
 	name = "vault floor"
-	icon = 'fallout/icons/f13floors2.dmi'
+	icon = 'fallout/icons/turf/f13floors2.dmi'
 	icon_state = "vault_floor"
 	planetary_atmos = FALSE // They're _inside_ a vault.
 
@@ -471,7 +471,7 @@ GLOBAL_LIST(archdrop_desert_sand)
 
 
 /turf/open/floor/circuit/f13_blue
-	icon = 'fallout/icons/f13floors2.dmi'
+	icon = 'fallout/icons/turf/f13floors2.dmi'
 	icon_state = "bcircuit2"
 	icon_normal = "bcircuit2"
 
@@ -480,7 +480,7 @@ GLOBAL_LIST(archdrop_desert_sand)
 	on = FALSE
 
 /turf/open/floor/circuit/f13_green
-	icon = 'fallout/icons/f13floors2.dmi'
+	icon = 'fallout/icons/turf/f13floors2.dmi'
 	icon_state = "gcircuit2"
 	icon_normal = "gcircuit2"
 	light_color = LIGHT_COLOR_GREEN
@@ -491,7 +491,7 @@ GLOBAL_LIST(archdrop_desert_sand)
 	on = FALSE
 
 /turf/open/floor/circuit/f13_red
-	icon = 'fallout/icons/f13floors2.dmi'
+	icon = 'fallout/icons/turf/f13floors2.dmi'
 	icon_state = "rcircuit1"
 	icon_normal = "rcircuit1"
 	light_color = LIGHT_COLOR_FLARE
@@ -500,3 +500,15 @@ GLOBAL_LIST(archdrop_desert_sand)
 /turf/open/floor/circuit/f13_red/off
 	icon_state = "rcircuitoff1"
 	on = FALSE
+
+/turf/open/f13/inside
+	icon = 'fallout/icons/turf/f13floorsmisc.dmi'
+	icon_state = "housewood1"
+
+/turf/open/f13/inside/wood
+	name = "wood planks"
+	desc = "Rotting wooden flooring."
+
+/turf/open/floor/plasteel/f13
+	icon = 'fallout/icons/turf/f13floors2.dmi'
+	icon_state = "floor"

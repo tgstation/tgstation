@@ -38,8 +38,10 @@ SUBSYSTEM_DEF(title)
 
 	icon = new(fcopy_rsc(file_path))
 
+	/* What could possibly go wrong? -tgclaw
 	if(splash_turf)
 		splash_turf.icon = icon
+	*/
 
 	return ..()
 

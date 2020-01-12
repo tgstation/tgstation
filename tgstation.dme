@@ -2976,6 +2976,8 @@
 #include "fallout\flora\wasteland_seed_produce\mutfruit.dm"
 #include "fallout\flora\wasteland_seed_produce\xander.dm"
 #include "fallout\items\hay_stack.dm"
+#include "fallout\structures\doors.dm"
+#include "fallout\structures\obstacles.dm"
 #include "fallout\turfs\f13_floors.dm"
 #include "fallout\turfs\walls.dm"
 #include "interface\interface.dm"

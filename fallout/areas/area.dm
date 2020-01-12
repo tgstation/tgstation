@@ -1,6 +1,6 @@
 //FALLOUT
 /area/f13
-	icon = 'fallout/icons/f13areas.dmi'
+	icon = 'fallout/icons/turf/f13areas.dmi'
 	has_gravity = STANDARD_GRAVITY
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 

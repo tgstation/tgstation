@@ -16,7 +16,7 @@
 	icon_grow = "agave-grow"
 	icon_dead = "agave-dead"
 	icon_harvest = "agave-harvest"
-	reagents_add = list("kelotane" = 0.05, "lipolicide" = 0.05)
+	//reagents_add = list("kelotane" = 0.05, "lipolicide" = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/agave
 	seed = /obj/item/seeds/agave
