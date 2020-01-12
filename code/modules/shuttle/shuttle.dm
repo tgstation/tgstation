@@ -18,13 +18,13 @@
 	var/id
 	///Common standard is for this to point -away- from the dockingport door, ie towards the ship
 	dir = NORTH
-	///size of covered area, perpendicular to dir
+	///size of covered area, perpendicular to dir. You shouldn't modify this for mobile dockingports, set automatically.
 	var/width = 0
-	///size of covered area, parallel to dir
+	///size of covered area, parallel to dir. You shouldn't modify this for mobile dockingports, set automatically.
 	var/height = 0
-	///position relative to covered area, perpendicular to dir. You shouldn't modify this for mobile dockingports
+	///position relative to covered area, perpendicular to dir. You shouldn't modify this for mobile dockingports, set automatically.
 	var/dwidth = 0
-	///position relative to covered area, parallel to dir. You shouldn't modify this for mobile dockingports
+	///position relative to covered area, parallel to dir. You shouldn't modify this for mobile dockingports, set automatically.
 	var/dheight = 0
 
 	var/area_type
