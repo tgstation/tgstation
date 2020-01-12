@@ -1249,3 +1249,8 @@
 	for(var/obj/item/I in held_items)
 		if(I.item_flags & SLOWS_WHILE_IN_HAND)
 			. += I.slowdown
+
+/mob/proc/set_stat(new_stat)
+	if(new_stat == stat)
+		return
+	stat = new_stat

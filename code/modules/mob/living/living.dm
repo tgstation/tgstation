@@ -534,7 +534,7 @@
 		GLOB.dead_mob_list -= src
 		GLOB.alive_mob_list += src
 		set_suicide(FALSE)
-		stat = UNCONSCIOUS //the mob starts unconscious,
+		set_stat(UNCONSCIOUS) //the mob starts unconscious,
 		updatehealth() //then we check if the mob should wake up.
 		update_mobility()
 		update_sight()
