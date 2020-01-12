@@ -118,3 +118,7 @@
 /datum/movespeed_modifier/slime_tempmod
 	id = MOVESPEED_ID_SLIME_TEMPMOD
 	variable = TRUE
+
+/datum/movespeed_modifier/carbon_crawling
+	id = MOVESPEED_ID_CARBON_CRAWLING
+	multiplicative_slowdown = CRAWLING_ADD_SLOWDOWN

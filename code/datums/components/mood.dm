@@ -208,15 +208,15 @@
 	switch(sanity)
 		if(SANITY_INSANE to SANITY_CRAZY)
 			setInsanityEffect(MAJOR_INSANITY_PEN)
-			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/insane, override = TRUE)
+			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/insane)
 			sanity_level = 6
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
 			setInsanityEffect(MINOR_INSANITY_PEN)
-			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/crazy, override = TRUE)
+			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/crazy)
 			sanity_level = 5
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			setInsanityEffect(0)
-			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/disturbed, override = TRUE)
+			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/disturbed)
 			sanity_level = 4
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
 			setInsanityEffect(0)
@@ -231,19 +231,6 @@
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			sanity_level = 1
 	update_mood_icon()
-
-/datum/movespeed_modifier/sanity
-	id = MOVESPEED_ID_SANITY
-	movetypes = (~FLYING)
-
-/datum/movespeed_modifier/sanity/insane
-	multiplicative_slowdown = 1
-
-/datum/movespeed_modifier/sanity/crazy
-	multiplicative_slowdown = 0.5
-
-/datum/movespeed_modifier/sanity/disturbed
-	multiplicative_slowdown = 0.25
 
 /datum/component/mood/proc/setInsanityEffect(newval)
 	if(newval == insanity_effect)

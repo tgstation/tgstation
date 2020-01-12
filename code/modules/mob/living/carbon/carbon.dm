@@ -501,10 +501,6 @@
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
 
-/datum/movespeed_modifier/carbon_crawling
-	id = MOVESPEED_ID_CARBON_CRAWLING
-	multiplicative_slowdown = CRAWLING_ADD_SLOWDOWN
-
 //Updates the mob's health from bodyparts and mob damage variables
 /mob/living/carbon/updatehealth()
 	if(status_flags & GODMODE)
