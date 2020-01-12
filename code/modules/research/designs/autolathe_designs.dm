@@ -1060,3 +1060,11 @@
 	materials = list(/datum/material/plastic = 1000)
 	build_path = /obj/item/storage/box/plastic
 	category = list("initial", "Misc")
+	
+/datum/design/firing_pin
+	name = "Electronic Firing Pin"
+	id = "firing_pin"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
+	build_path = /obj/item/firing_pin
+	category = list("hacked", "Security")
