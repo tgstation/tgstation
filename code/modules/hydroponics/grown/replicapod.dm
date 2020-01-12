@@ -42,6 +42,7 @@
 				features = B.data["features"]
 				factions = B.data["factions"]
 				quirks = B.data["quirks"]
+				sampleDNA = B.data["blood_DNA"]
 				contains_sample = TRUE
 				visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
 				log_cloning("[key_name(mind)]'s cloning record was added to [src] at [AREACOORD(src)].")
@@ -61,13 +62,12 @@
 /obj/item/seeds/replicapod/get_analyzer_text()
 	var/text = ..()
 	if(contains_sample)
-		text += "\n It contains a blood sample!"
+		text += "\n It contains a blood sample with blood DNA \"sampleDNA\"." //blood DNA is readable by forensics scanners
 	return text
-
 
 /obj/item/seeds/replicapod/harvest(mob/user) //now that one is fun -- Urist
 	var/obj/machinery/hydroponics/parent = loc
-	var/make_podman = 0
+	var/make_podman = FALSE
 	var/ckey_holder = null
 	var/list/result = list()
 	if(CONFIG_GET(flag/revival_pod_plants))
@@ -76,11 +76,11 @@
 				if(isobserver(M))
 					var/mob/dead/observer/O = M
 					if(O.ckey == ckey && O.can_reenter_corpse)
-						make_podman = 1
+						make_podman = TRUE
 						break
 				else
 					if(M.ckey == ckey && M.stat == DEAD && !M.suiciding)
-						make_podman = 1
+						make_podman = TRUE
 						if(isliving(M))
 							var/mob/living/L = M
 							make_podman = !L.hellbound
@@ -92,7 +92,7 @@
 						var/mob/dead/observer/O = M
 						if(!O.can_reenter_corpse)
 							break
-					make_podman = 1
+					make_podman = TRUE
 					if(isliving(M))
 						var/mob/living/L = M
 						make_podman = !L.hellbound
@@ -119,6 +119,7 @@
 		podman.hardset_dna(null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
 		log_cloning("[key_name(mind)] cloned as a podman via [src] in [parent] at [AREACOORD(parent)].")
+		podman.notify_ghost_cloning("You have been cloned by a replica pod and can now enter your new body.", source = podman)
 
 	else //else, one packet of seeds. maybe two
 		var/seed_count = 1
