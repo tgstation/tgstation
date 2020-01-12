@@ -7,20 +7,6 @@
 	slot_flags = ITEM_SLOT_EARS
 	resistance_flags = NONE
 
-/obj/item/clothing/ears/spacepods
-	name = "nanotrasen space pods"
-	desc = "Flex your money, AND ignore what everone else says, all at once!"
-	icon = 'icons/obj/clothing/accessories.dmi'
-	icon_state = "spacepods"
-	item_state = "spacepods"
-	strip_delay = 100 //air pods don't fall out
-	custom_premium_price = 1800
-
-/obj/item/clothing/ears/spacepods/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/eardamaging)
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
-
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
 	desc = "Protects your hearing from loud noises, and quiet ones as well."
@@ -35,6 +21,15 @@
 	. = ..()
 	AddElement(/datum/element/earhealing)
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+
+/obj/item/clothing/ears/earmuffs/spacepods
+	name = "nanotrasen space pods"
+	desc = "Flex your money, AND ignore what everone else says, all at once!"
+	icon = 'icons/obj/clothing/accessories.dmi'
+	icon_state = "spacepods"
+	item_state = "spacepods"
+	strip_delay = 100 //air pods don't fall out
+	custom_premium_price = 1800
 
 /obj/item/clothing/ears/headphones
 	name = "headphones"
