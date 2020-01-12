@@ -505,7 +505,7 @@ update_label()
 	desc = "An ID straight from Central Command."
 	icon_state = "centcom"
 	registered_name = "Central Command"
-	assignment = "General"
+	assignment = "Central Command"
 	uses_overlays = FALSE
 
 /obj/item/card/id/centcom/Initialize()
@@ -525,30 +525,30 @@ update_label()
 	access = get_all_accesses()+get_ert_access("commander")-ACCESS_CHANGE_IDS
 	. = ..()
 
-/obj/item/card/id/ert/Security
+/obj/item/card/id/ert/security
 	registered_name = "Security Response Officer"
 	assignment = "Security Response Officer"
 	icon_state = "ert_security"
 
-/obj/item/card/id/ert/Security/Initialize()
+/obj/item/card/id/ert/security/Initialize()
 	access = get_all_accesses()+get_ert_access("sec")-ACCESS_CHANGE_IDS
 	. = ..()
 
-/obj/item/card/id/ert/Engineer
-	registered_name = "Engineer Response Officer"
-	assignment = "Engineer Response Officer"
+/obj/item/card/id/ert/engineer
+	registered_name = "Engineering Response Officer"
+	assignment = "Engineering Response Officer"
 	icon_state = "ert_engineer"
 
-/obj/item/card/id/ert/Engineer/Initialize()
+/obj/item/card/id/ert/engineer/Initialize()
 	access = get_all_accesses()+get_ert_access("eng")-ACCESS_CHANGE_IDS
 	. = ..()
 
-/obj/item/card/id/ert/Medical
+/obj/item/card/id/ert/medical
 	registered_name = "Medical Response Officer"
 	assignment = "Medical Response Officer"
 	icon_state = "ert_medic"
 
-/obj/item/card/id/ert/Medical/Initialize()
+/obj/item/card/id/ert/medical/Initialize()
 	access = get_all_accesses()+get_ert_access("med")-ACCESS_CHANGE_IDS
 	. = ..()
 
@@ -561,14 +561,32 @@ update_label()
 	access = get_all_accesses()+get_ert_access("sec")-ACCESS_CHANGE_IDS
 	. = ..()
 
-/obj/item/card/id/ert/Janitor
+/obj/item/card/id/ert/janitor
 	registered_name = "Janitorial Response Officer"
 	assignment = "Janitorial Response Officer"
 	icon_state = "ert_janitor"
 
-/obj/item/card/id/ert/Janitor/Initialize()
+/obj/item/card/id/ert/janitor/Initialize()
 	access = get_all_accesses()
 	. = ..()
+
+/obj/item/card/id/ert/clown
+	registered_name = "Entertainment Response Officer"
+	assignment = "Entertainment Response Officer"
+	icon_state = "ert_clown"
+
+/obj/item/card/id/ert/clown/Initialize()
+	access = get_all_accesses()
+	. = ..()
+
+/obj/item/card/id/ert/deathsquad
+	name = "\improper Death Squad ID"
+	id_type_name = "\improper Death Squad ID"
+	desc = "A Death Squad ID card."
+	icon_state = "deathsquad" //NO NO SIR DEATH SQUADS ARENT A PART OF NANOTRASEN AT ALL
+	registered_name = "Death Commando"
+	assignment = "Death Commando"
+	uses_overlays = FALSE
 
 /obj/item/card/id/debug
 	name = "\improper Debug ID"
