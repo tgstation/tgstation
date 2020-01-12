@@ -14,7 +14,12 @@
 					/obj/item/flashlight/seclite = 4,
 					/obj/item/restraints/legcuffs/bola/energy = 7)
 	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,
-					  /obj/item/storage/fancy/donut_box = 2)
+					  /obj/item/storage/fancy/donut_box = 2,
+					  /obj/item/clothing/under/rank/security/constable = 2,
+					  /obj/item/clothing/head/helmet/constable = 2,
+					  /obj/item/clothing/gloves/color/white = 2,
+					  /obj/item/clothing/mask/whistle = 2,
+					  /obj/item/conversion_kit = 2)
 	premium = list(/obj/item/storage/belt/security/webbing = 5,
 				   /obj/item/coin/antagtoken = 1,
 				   /obj/item/clothing/head/helmet/blueshirt = 1,

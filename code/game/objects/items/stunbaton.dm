@@ -37,12 +37,25 @@
 		else
 			cell = new preload_cell_type(src)
 	update_icon()
+	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/convert)
 
 
 /obj/item/melee/baton/Destroy()
 	if(cell)
 		QDEL_NULL(cell)
+	UnregisterSignal(src, COMSIG_PARENT_ATTACKBY)
 	return ..()
+
+/obj/item/melee/baton/proc/convert(datum/source, obj/item/I, mob/user)
+	if(istype(I,/obj/item/conversion_kit))
+		var/turf/T = get_turf(src)
+		var/obj/item/melee/classic_baton/B = new /obj/item/melee/classic_baton (T)
+		B.alpha = 20
+		playsound(T, 'sound/items/drill_use.ogg', 80, TRUE, -1)
+		animate(src, alpha = 0, time = 10)
+		animate(B, alpha = 255, time = 10)
+		qdel(I)
+		qdel(src)
 
 /obj/item/melee/baton/handle_atom_del(atom/A)
 	if(A == cell)
@@ -50,7 +63,6 @@
 		turned_on = FALSE
 		update_icon()
 	return ..()
-
 
 /obj/item/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
