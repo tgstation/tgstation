@@ -39,7 +39,6 @@
 #define SMOOTH_DIAGONAL	(1<<2)	//if atom should smooth diagonally, this should be present in 'smooth' var
 #define SMOOTH_BORDER	(1<<3)	//atom will smooth with the borders of the map
 #define SMOOTH_QUEUED	(1<<4)	//atom is currently queued to smooth.
-#define SMOOTH_OLD		(1<<5)	//If the icon uses the old junction stuff.
 
 #define NULLTURF_BORDER 123456789
 
@@ -119,11 +118,7 @@
 	if(QDELETED(A))
 		return
 
-	if(A.smooth & SMOOTH_OLD)
-		A:recalculate_junction()
-		A:relative()
-
-	else if(A.smooth & (SMOOTH_TRUE | SMOOTH_MORE))
+	if(A.smooth & (SMOOTH_TRUE | SMOOTH_MORE))
 		var/adjacencies = calculate_adjacencies(A)
 
 		if(A.smooth & SMOOTH_DIAGONAL)
@@ -406,25 +401,3 @@
 	icon_state = "smooth"
 	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL|SMOOTH_BORDER
 	canSmoothWith = null
-
-///OLD SMOOTH SYSTEM
-
-/atom
-	var/icon_type_smooth
-	var/junction
-
-/atom/proc/recalculate_junction()
-	junction = 0
-
-	for(var/cdir in GLOB.cardinals)
-		var/turf/T = get_step(src,cdir)
-		if(!T)
-			continue
-		for(var/a_type in canSmoothWith)
-			var/A = locate(a_type) in T
-			if(A || T.type == a_type)
-				junction |= cdir
-				break
-
-atom/proc/relative(custom_junction = junction)
-	icon_state = "[src.icon_type_smooth][custom_junction]"
