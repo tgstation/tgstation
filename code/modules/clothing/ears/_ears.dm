@@ -10,6 +10,7 @@
 /obj/item/clothing/ears/spacepods
 	name = "nanotrasen space pods"
 	desc = "Flex your money, AND ignore what everone else says, all at once!"
+	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "spacepods"
 	item_state = "spacepods"
 	strip_delay = 100 //air pods don't fall out
