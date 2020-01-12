@@ -7,6 +7,14 @@
 	slot_flags = ITEM_SLOT_EARS
 	resistance_flags = NONE
 
+/obj/item/clothing/ears/spacepods
+	name = "nanotrasen space pods"
+	desc = "Flex your money, AND ignore what everone else says, all at once!"
+	icon_state = "spacepods"
+	item_state = "spacepods"
+	strip_delay = 100 //air pods don't fall out
+	custom_price = 1800
+
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
 	desc = "Protects your hearing from loud noises, and quiet ones as well."
