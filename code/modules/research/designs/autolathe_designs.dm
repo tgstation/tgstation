@@ -1060,7 +1060,7 @@
 	materials = list(/datum/material/plastic = 1000)
 	build_path = /obj/item/storage/box/plastic
 	category = list("initial", "Misc")
-	
+
 /datum/design/firing_pin
 	name = "Electronic Firing Pin"
 	id = "firing_pin"
