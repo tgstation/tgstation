@@ -14,7 +14,7 @@
 	icon_state = "spacepods"
 	item_state = "spacepods"
 	strip_delay = 100 //air pods don't fall out
-	custom_price = 1800
+	custom_premium_price = 1800
 
 /obj/item/clothing/ears/spacepods/ComponentInitialize()
 	. = ..()
