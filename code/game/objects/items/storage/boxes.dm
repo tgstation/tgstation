@@ -49,11 +49,10 @@
 	user.visible_message("<span class='suicide'>[user] beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
-/obj/item/storage/box/update_icon()
+/obj/item/storage/box/update_overlays()
 	. = ..()
 	if(illustration)
-		cut_overlays()
-		add_overlay(illustration)
+		. += illustration
 
 /obj/item/storage/box/attack_self(mob/user)
 	..()
@@ -451,7 +450,7 @@
 	name = "box of teriyaki-flavoured donk-pockets"
 	icon_state = "donkpocketboxteriyaki"
 	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/teriyaki
-	
+
 /obj/item/storage/box/donkpockets/donkpocketpizza
 	name = "box of pizza-flavoured donk-pockets"
 	icon_state = "donkpocketboxpizza"
@@ -466,7 +465,7 @@
 	name = "box of berry-flavoured donk-pockets"
 	icon_state = "donkpocketboxberry"
 	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/berry
-	
+
 /obj/item/storage/box/donkpockets/donkpockethonk
 	name = "box of banana-flavoured donk-pockets"
 	icon_state = "donkpocketboxbanana"
@@ -871,10 +870,11 @@
 	foldable = null
 	var/design = NODESIGN
 
-/obj/item/storage/box/papersack/update_icon()
+/obj/item/storage/box/papersack/update_icon_state()
 	if(contents.len == 0)
 		icon_state = "[item_state]"
-	else icon_state = "[item_state]_closed"
+	else
+		icon_state = "[item_state]_closed"
 
 /obj/item/storage/box/papersack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))
@@ -1201,3 +1201,51 @@
 		/obj/item/storage/box/material=1
 		)
 	generate_items_inside(items_inside,src)
+
+/obj/item/storage/box/plastic
+	name = "plastic box"
+	desc = "It's a solid, plastic shell box."
+	icon_state = "plasticbox"
+	foldable = null
+	illustration = "writing"
+	custom_materials = list(/datum/material/plastic = 1000) //You lose most if recycled.
+
+
+/obj/item/storage/box/fireworks
+	name = "box of fireworks"
+	desc = "Contains an assortment of fireworks."
+	illustration = "flashbang"
+
+/obj/item/storage/box/fireworks/PopulateContents()
+	for(var/i in 1 to 3)
+		new/obj/item/sparkler(src)
+		new/obj/item/grenade/firecracker(src)
+	new /obj/item/toy/snappop(src)
+
+/obj/item/storage/box/fireworks/dangerous
+
+/obj/item/storage/box/fireworks/dangerous/PopulateContents()
+	for(var/i in 1 to 3)
+		new/obj/item/sparkler(src)
+		new/obj/item/grenade/firecracker(src)
+	if(prob(20))
+		new /obj/item/grenade/syndieminibomb/concussion/frag(src)
+	else
+		new /obj/item/toy/snappop(src)
+
+/obj/item/storage/box/firecrackers
+	name = "box of firecrackers"
+	desc = "A box filled with illegal firecracker. You wonder who still makes these."
+	icon_state = "syndiebox"
+
+/obj/item/storage/box/firecrackers/PopulateContents()
+	for(var/i in 1 to 7)
+		new/obj/item/grenade/firecracker(src)
+
+/obj/item/storage/box/sparklers
+	name = "box of sparklers"
+	desc = "A box of NT brand sparklers, burns hot even in the cold of space-winter."
+
+/obj/item/storage/box/sparklers/PopulateContents()
+	for(var/i in 1 to 7)
+		new/obj/item/sparkler(src)

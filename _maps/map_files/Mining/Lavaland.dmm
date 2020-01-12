@@ -1462,7 +1462,7 @@
 /area/mine/living_quarters)
 "ed" = (
 /obj/machinery/camera{
-	c_tag = "Crew Area Hallway West";
+	c_tag = "Crew Area Hallway";
 	network = list("mine")
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
@@ -2193,7 +2193,7 @@
 /area/mine/living_quarters)
 "fL" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -3637,6 +3637,12 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
+"vh" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
 "vq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
 /turf/open/floor/plasteel,
@@ -3676,10 +3682,11 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	name = "Labor Camp Security APC";
 	dir = 1;
+	name = "Labor Camp Security APC";
 	pixel_y = 23
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "zn" = (
@@ -3799,7 +3806,7 @@
 /area/mine/laborcamp/security)
 "Fe" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/structure/mirror{
@@ -4236,7 +4243,7 @@
 /area/mine/living_quarters)
 "YY" = (
 /obj/machinery/camera{
-	c_tag = "Crew Area";
+	c_tag = "Crew Area Hallway West";
 	dir = 1;
 	network = list("mine")
 	},
@@ -10393,8 +10400,8 @@ bk
 az
 az
 yr
-UH
-ch
+vh
+bh
 GI
 Fd
 Hd
@@ -10651,7 +10658,7 @@ yr
 yr
 yr
 za
-ch
+bh
 QN
 oW
 sM

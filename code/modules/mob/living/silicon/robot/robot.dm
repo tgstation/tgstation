@@ -707,7 +707,7 @@
 	if(lamp_intensity && (turn_off || stat || low_power_mode))
 		to_chat(src, "<span class='danger'>Your headlamp has been deactivated.</span>")
 		lamp_intensity = 0
-		lamp_cooldown = world.time + cooldown
+		lamp_cooldown = cooldown == BORG_LAMP_CD_RESET ? 0 : max(world.time + cooldown, lamp_cooldown)
 	else
 		set_light(lamp_intensity)
 
@@ -1174,7 +1174,7 @@
 
 /mob/living/silicon/robot/resist()
 	. = ..()
-	if(!buckled_mobs.len)
+	if(!has_buckled_mobs())
 		return
 	for(var/i in buckled_mobs)
 		var/mob/unbuckle_me_now = i

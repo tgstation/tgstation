@@ -8474,7 +8474,7 @@
 	pixel_x = 28
 	},
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -8594,7 +8594,7 @@
 "qm" = (
 /obj/machinery/light/small,
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -11
 	},
 /obj/structure/mirror{
@@ -8701,7 +8701,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "qx" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -9056,7 +9056,7 @@
 	pixel_x = 28
 	},
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/freezer{
@@ -12250,7 +12250,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "wL" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/machinery/light/small,

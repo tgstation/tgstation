@@ -314,7 +314,7 @@
 /area/ruin/space/djstation)
 "be" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},

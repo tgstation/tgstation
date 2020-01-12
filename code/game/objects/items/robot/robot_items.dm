@@ -154,11 +154,7 @@
 	var/static/list/charge_machines = typecacheof(list(/obj/machinery/cell_charger, /obj/machinery/recharger, /obj/machinery/recharge_station, /obj/machinery/mech_bay_recharge_port))
 	var/static/list/charge_items = typecacheof(list(/obj/item/stock_parts/cell, /obj/item/gun/energy))
 
-/obj/item/borg/charger/Initialize()
-	. = ..()
-
-/obj/item/borg/charger/update_icon()
-	..()
+/obj/item/borg/charger/update_icon_state()
 	icon_state = "charger_[mode]"
 
 /obj/item/borg/charger/attack_self(mob/user)
@@ -597,7 +593,7 @@
 	update_icon()
 	to_chat(user, "<span class='boldnotice'>You [active? "activate":"deactivate"] [src].</span>")
 
-/obj/item/borg/projectile_dampen/update_icon()
+/obj/item/borg/projectile_dampen/update_icon_state()
 	icon_state = "[initial(icon_state)][active]"
 
 /obj/item/borg/projectile_dampen/proc/activate_field()
@@ -853,23 +849,22 @@
 		else
 			. += "Nothing."
 
-/obj/item/borg/apparatus/beaker/update_icon()
-	cut_overlays()
+/obj/item/borg/apparatus/beaker/update_overlays()
+	. = ..()
+	var/mutable_appearance/arm = mutable_appearance(icon = icon, icon_state = "borg_beaker_apparatus_arm")
 	if(stored)
 		COMPILE_OVERLAYS(stored)
 		stored.pixel_x = 0
 		stored.pixel_y = 0
-		var/image/img = image("icon"=stored, "layer"=FLOAT_LAYER)
-		var/image/arm = image("icon"="borg_beaker_apparatus_arm", "layer"=FLOAT_LAYER)
+		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
 		if(istype(stored, /obj/item/reagent_containers/glass/beaker))
 			arm.pixel_y = arm.pixel_y - 3
-		img.plane = FLOAT_PLANE
-		add_overlay(img)
-		add_overlay(arm)
+		stored_copy.layer = FLOAT_LAYER
+		stored_copy.plane = FLOAT_PLANE
+		. += stored_copy
 	else
-		var/image/arm = image("icon"="borg_beaker_apparatus_arm", "layer"=FLOAT_LAYER)
 		arm.pixel_y = arm.pixel_y - 5
-		add_overlay(arm)
+	. += arm
 
 /obj/item/borg/apparatus/beaker/attack_self(mob/living/silicon/robot/user)
 	if(stored && !user.client?.keys_held["Alt"] && user.a_intent != "help")
@@ -911,24 +906,20 @@
 	. = ..()
 	update_icon()
 
-/obj/item/borg/apparatus/circuit/update_icon()
-	cut_overlays()
+/obj/item/borg/apparatus/circuit/update_overlays()
+	. = ..()
+	var/mutable_appearance/arm = mutable_appearance(icon, "borg_hardware_apparatus_arm1")
 	if(stored)
 		COMPILE_OVERLAYS(stored)
 		stored.pixel_x = -3
 		stored.pixel_y = 0
-		var/image/arm
-		if(istype(stored, /obj/item/circuitboard))
-			arm = image("icon"="borg_hardware_apparatus_arm1", "layer"=FLOAT_LAYER)
-		else
-			arm = image("icon"="borg_hardware_apparatus_arm2", "layer"=FLOAT_LAYER)
-		var/image/img = image("icon"=stored, "layer"=FLOAT_LAYER)
-		img.plane = FLOAT_PLANE
-		add_overlay(arm)
-		add_overlay(img)
-	else
-		var/image/arm = image("icon"="borg_hardware_apparatus_arm1", "layer"=FLOAT_LAYER)
-		add_overlay(arm)
+		if(!istype(stored, /obj/item/circuitboard))
+			arm.icon_state = "borg_hardware_apparatus_arm2"
+		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
+		stored_copy.layer = FLOAT_LAYER
+		stored_copy.plane = FLOAT_PLANE
+		. += stored_copy
+	. += arm
 
 /obj/item/borg/apparatus/circuit/examine()
 	. = ..()

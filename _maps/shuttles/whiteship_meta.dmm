@@ -1002,7 +1002,7 @@
 "bG" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/toilet{
@@ -2549,7 +2549,7 @@
 "dR" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/effect/decal/cleanable/food/flour,
@@ -2562,7 +2562,7 @@
 "dT" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
