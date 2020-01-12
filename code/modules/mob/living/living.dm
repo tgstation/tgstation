@@ -1208,9 +1208,9 @@
 			if(!has_legs && has_arms < 2)
 				limbless_slowdown += 6 - (has_arms * 3)
 		if(limbless_slowdown)
-			add_movespeed_modifier(MOVESPEED_ID_LIVING_LIMBLESS, update=TRUE, priority=100, override=TRUE, multiplicative_slowdown=limbless_slowdown, movetypes=GROUND)
+			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/limbless, multiplicative_slowdown = limbless_slowdown)
 		else
-			remove_movespeed_modifier(MOVESPEED_ID_LIVING_LIMBLESS, update=TRUE)
+			_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/limbless)
 
 /mob/living/proc/fall(forced)
 	if(!(mobility_flags & MOBILITY_USE))

@@ -318,10 +318,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		fly = new
 		fly.Grant(C)
 
-	C.add_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE, 100, override=TRUE, multiplicative_slowdown=speedmod, movetypes=(~FLYING))
+	C.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, multiplicative_slowdown=speedmod)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
-
 
 /datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	if(C.dna.species.exotic_bloodtype)
@@ -354,7 +353,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.dna.features["wings"] = "None"
 		C.update_body()
 
-	C.remove_movespeed_modifier(MOVESPEED_ID_SPECIES)
+	C._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/species)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
@@ -1378,8 +1377,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			var/knocked_item = FALSE
 			if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
 				target_held_item = null
-			if(!target.has_movespeed_modifier(MOVESPEED_ID_SHOVE))
-				target.add_movespeed_modifier(MOVESPEED_ID_SHOVE, multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH)
+			if(!target._REFACTORING_has_movespeed_modifier(/datum/movespeed_modifier/shove))
+				target._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/shove)
 				if(target_held_item)
 					target.visible_message("<span class='danger'>[target.name]'s grip on \the [target_held_item] loosens!</span>",
 						"<span class='warning'>Your grip on \the [target_held_item] loosens!</span>", null, COMBAT_MESSAGE_RANGE)
@@ -1644,7 +1643,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
 
-		H.remove_movespeed_modifier(MOVESPEED_ID_COLD)
+		H._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/cold)
 
 		var/burn_damage
 		var/firemodifier = H.fire_stacks / 50
@@ -1670,7 +1669,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
 		//Sorry for the nasty oneline but I don't want to assign a variable on something run pretty frequently
-		H.add_movespeed_modifier(MOVESPEED_ID_COLD, override = TRUE, multiplicative_slowdown = ((BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR), blacklisted_movetypes = FLOATING)
+		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 		switch(H.bodytemperature)
 			if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
 				H.throw_alert("temp", /obj/screen/alert/cold, 1)
@@ -1684,7 +1683,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	else
 		H.clear_alert("temp")
-		H.remove_movespeed_modifier(MOVESPEED_ID_COLD)
+		H._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/cold)
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 

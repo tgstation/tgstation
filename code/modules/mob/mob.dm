@@ -1232,16 +1232,22 @@
 /mob/setGrabState(newstate)
 	. = ..()
 	if(grab_state == GRAB_PASSIVE)
-		remove_movespeed_modifier(MOVESPEED_ID_MOB_GRAB_STATE, update=TRUE)
+		_REFACTORING_remove_movespeed_modifier(MOVESPEED_ID_MOB_GRAB_STATE)
 	else
-		add_movespeed_modifier(MOVESPEED_ID_MOB_GRAB_STATE, update=TRUE, priority=100, override=TRUE, multiplicative_slowdown=grab_state*3, blacklisted_movetypes=FLOATING)
+		switch(grab_state)
+			if(GRAB_AGGRESSIVE)
+				_REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/aggressive)
+			if(GRAB_NECK)
+				_REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/neck)
+			if(GRAB_KILL)
+				_REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/kill)
 
 /mob/proc/update_equipment_speed_mods()
 	var/speedies = equipped_speed_mods()
 	if(!speedies)
-		remove_movespeed_modifier(MOVESPEED_ID_MOB_EQUIPMENT, update=TRUE)
+		_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/equipment_speedmod)
 	else
-		add_movespeed_modifier(MOVESPEED_ID_MOB_EQUIPMENT, update=TRUE, priority=100, override=TRUE, multiplicative_slowdown=speedies, blacklisted_movetypes=FLOATING)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/equipment_speedmod, multiplicative_slowdown = speedies)
 
 /// Gets the combined speed modification of all worn items
 /// Except base mob type doesnt really wear items

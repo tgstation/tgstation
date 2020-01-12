@@ -212,13 +212,13 @@
 
 /datum/component/riding/human/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
 	var/mob/living/carbon/human/H = parent
-	H.remove_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING)
+	H._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 	. = ..()
 
 /datum/component/riding/human/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
 	. = ..()
 	var/mob/living/carbon/human/H = parent
-	H.add_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING, multiplicative_slowdown = HUMAN_CARRY_SLOWDOWN)
+	H._REFACTORING_add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 
 /datum/component/riding/human/proc/on_host_unarmed_melee(atom/target)
 	var/mob/living/carbon/human/H = parent

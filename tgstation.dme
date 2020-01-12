@@ -2381,6 +2381,8 @@
 #include "code\modules\movespeed\_movespeed_modifier.dm"
 #include "code\modules\movespeed\modifiers\components.dm"
 #include "code\modules\movespeed\modifiers\innate.dm"
+#include "code\modules\movespeed\modifiers\items.dm"
+#include "code\modules\movespeed\modifiers\misc.dm"
 #include "code\modules\movespeed\modifiers\mobs.dm"
 #include "code\modules\movespeed\modifiers\reagent.dm"
 #include "code\modules\movespeed\modifiers\status_effects.dm"

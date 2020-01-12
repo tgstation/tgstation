@@ -64,7 +64,7 @@ Key procs
 GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 
 /// Grabs a STATIC MODIFIER datum from cache. YOU MUST NEVER EDIT THESE DATUMS, OR IT WILL AFFECT ANYTHING ELSE USING IT TOO!
-/proc/get_cached_movespeed_modification(modtype)
+/proc/get_cached_movespeed_modifier(modtype)
 	if(!ispath(modtype, /datum/movespeed_modifier))
 		CRASH("[modtype] is not a movespeed modification typepath.")
 	var/datum/movespeed_modifier/M = modtype
@@ -73,13 +73,11 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 	return GLOB.movespeed_modification_cache[modtype] || ((GLOB.movespeed_modification_cache[modtype] = new modtype))
 
 ///Add a move speed modifier to a mob. If a variable subtype is passed in as the first argument, it will make a new datum.
-/mob/proc/_REFACTORING_add_movespeed_modifier(datum/movespeed_modifier/type_or_datum, update = TRUE, override = FALSE)
-	var/created = FALSE
+/mob/proc/_REFACTORING_add_movespeed_modifier(datum/movespeed_modifier/type_or_datum, update = TRUE)
 	if(ispath(type_or_datum))
 		if(!initial(type_or_datum.variable))
-			type_or_datum = get_cached_movespeed_modification(type_or_datum)
+			type_or_datum = get_cached_movespeed_modifier(type_or_datum)
 		else
-			created = TRUE
 			type_or_datum = new type_or_datum
 	if(!istype(type_or_datum))
 		CRASH("Invalid modification datum")
@@ -88,10 +86,6 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 	if(existing)
 		if(existing == type_or_datum)		//same thing don't need to touch
 			return TRUE
-		if(!override)						//not overriding, do not overwrite same ID.
-			if(created)			//make sure we clean up after ourselves.
-				qdel(type_or_datum)
-			return FALSE
 		oldpriority = existing.priority
 		remove_movespeed_modifier(existing, FALSE)
 	LAZYSET(movespeed_modification, type_or_datum.id, type_or_datum)
@@ -104,7 +98,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 /mob/proc/_REFACTORING_remove_movespeed_modifier(datum/movespeed_modifier/type_id_datum, update = TRUE)
 	if(ispath(type_id_datum))
 		if(!initial(type_id_datum.variable))
-			type_id_datum = get_cached_movespeed_modification(type_id_datum)
+			type_id_datum = get_cached_movespeed_modifier(type_id_datum)
 		else
 			type_id_datum = initial(type_id_datum.id)
 	if(istype(type_id_datum))
@@ -119,8 +113,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		update_movespeed(FALSE)
 	return TRUE
 
-/// Used for variable slowdowns like hunger/health loss/etc, works somewhat like the old list-based modification adds.
-/// Implies override.
+/// Used for variable slowdowns like hunger/health loss/etc, works somewhat like the old list-based modification adds. Implies override. Returns the modifier datum if successful
 /mob/proc/add_or_update_variable_movespeed_modifier(datum/movespeed_modifier/type_id_datum, update = TRUE, multiplicative_slowdown)
 	/*
 	How this SHOULD work is:
@@ -130,7 +123,6 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 	4. If any of the rest of the args are not null (see: multiplicative slowdown), modify the datum
 	5. Update if necessary
 	*/
-	. = FALSE
 	var/modified = FALSE
 	var/inject = FALSE
 	var/datum/movespeed_modifier/final
@@ -142,7 +134,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		if(!initial(type_id_datum.variable))
 			CRASH("Not a variable modifier")
 		var/id = initial(type_id_datum.id)
-		final = LAZYACCESS(movespeed_modification, type_id_datum)
+		final = LAZYACCESS(movespeed_modification, id)
 		if(!istype(final))
 			final = new
 			inject = TRUE
@@ -163,23 +155,23 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		_REFACTORING_add_movespeed_modifier(final, FALSE, TRUE)
 	if(update && modified)
 		update_movespeed(TRUE)
-	return TRUE
+	return final
 
 ///Handles the special case of editing the movement var
 /mob/vv_edit_var(var_name, var_value)
 	var/slowdown_edit = (var_name == NAMEOF(src, cached_multiplicative_slowdown))
 	var/diff
 	if(slowdown_edit && isnum(cached_multiplicative_slowdown) && isnum(var_value))
-		remove_movespeed_modifier(MOVESPEED_ID_ADMIN_VAREDIT)
+		_REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/admin_varedit)
 		diff = var_value - cached_multiplicative_slowdown
 	. = ..()
 	if(. && slowdown_edit && isnum(diff))
-		add_movespeed_modifier(MOVESPEED_ID_ADMIN_VAREDIT, TRUE, 100, override = TRUE, multiplicative_slowdown = diff)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/admin_varedit, multiplicative_slowdown = diff)
 
 ///Is there a movespeed modifier for this mob
-/mob/proc/has_movespeed_modifier(datum/movespeed_modifier/datum_type_id)
+/mob/proc/_REFACTORING_has_movespeed_modifier(datum/movespeed_modifier/datum_type_id)
 	if(ispath(datum_type_id))
-		datum_type_id = get_cached_movespeed_modification(datum_type_id)
+		datum_type_id = get_cached_movespeed_modifier(datum_type_id)
 	if(istype(datum_type_id))
 		datum_type_id = datum_type_id.id
 	return LAZYACCESS(movespeed_modification, datum_type_id)

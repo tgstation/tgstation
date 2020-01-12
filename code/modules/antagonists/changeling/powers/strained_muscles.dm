@@ -18,7 +18,7 @@
 	if(active)
 		to_chat(user, "<span class='notice'>Our muscles tense and strengthen.</span>")
 	else
-		user.remove_movespeed_modifier(MOVESPEED_ID_CHANGELING_MUSCLES)
+		user._REFACTORING_remove_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
 		to_chat(user, "<span class='notice'>Our muscles relax.</span>")
 		if(stacks >= 10)
 			to_chat(user, "<span class='danger'>We collapse in exhaustion.</span>")

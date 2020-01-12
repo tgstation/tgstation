@@ -683,7 +683,7 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/sepia/tick()
 	if(prob(50) && mod > -1)
 		mod--
-		owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia, multiplicative_slowdown = -0.5)
+		owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia, multiplicative_slowdown = -0.5)
 	else if(mod < 1)
 		mod++
 		// yeah a value of 0 does nothing but replacing the trait in place is cheaper than removing and adding repeatedly

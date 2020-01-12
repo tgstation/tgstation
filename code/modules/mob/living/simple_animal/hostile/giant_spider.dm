@@ -206,10 +206,10 @@
 	. = ..()
 	if(slowed_by_webs)
 		if(!(locate(/obj/structure/spider/stickyweb) in loc))
-			remove_movespeed_modifier(MOVESPEED_ID_TARANTULA_WEB)
+			remove_movespeed_modifier(/datum/movespeed_modifier/tarantula_web)
 			slowed_by_webs = FALSE
 	else if(locate(/obj/structure/spider/stickyweb) in loc)
-		add_movespeed_modifier(MOVESPEED_ID_TARANTULA_WEB, priority=100, multiplicative_slowdown=3)
+		add_movespeed_modifier(/datum/movespeed_modifier/tarantula_web)
 		slowed_by_webs = TRUE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/ice //spiders dont usually like tempatures of 140 kelvin who knew
