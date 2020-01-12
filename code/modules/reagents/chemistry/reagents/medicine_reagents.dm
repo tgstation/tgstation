@@ -1295,6 +1295,10 @@
 	if(method == TOUCH || method == VAPOR)
 		if(M && ishuman(M) && reac_volume >= 0.5)
 			var/mob/living/carbon/human/H = M
+			var/mob_hair = H.hair_color
+			var/is_purple = "92f"
+			if(mob_hair != is_purple)
+				to_chat(H, "<span class='polypurple'>Your hair feels.. purple?</span>")
 			H.hair_color = "92f"
 			H.facial_hair_color = "92f"
 			H.update_hair()
