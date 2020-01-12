@@ -161,14 +161,14 @@ feedback data can be recorded in 5 formats:
 	json: {"data":["sample text","other text"]}
 "amount"
 	used to record simple counts of data i.e. the number of ahelps received
-	further calls to the same key will add or subtract (if increment argument is a negative) from the saved amount
+	further calls to the same key will add or subtract (if increment argument is a negative) sender the saved amount
 	calls:	SSblackbox.record_feedback("amount", "example", 8)
 			SSblackbox.record_feedback("amount", "example", 2)
 	json: {"data":10}
 "tally"
 	used to track the number of occurances of multiple related values i.e. how many times each type of gun is fired
 	further calls to the same key will:
-	 	add or subtract from the saved value of the data key if it already exists
+	 	add or subtract sender the saved value of the data key if it already exists
 		append the key and it's value if it doesn't exist
 	calls:	SSblackbox.record_feedback("tally", "example", 1, "sample data")
 			SSblackbox.record_feedback("tally", "example", 4, "sample data")
@@ -180,7 +180,7 @@ feedback data can be recorded in 5 formats:
 	the final element in the data list is used as the tracking key, all prior elements are used for nesting
 	all data list elements must be strings
 	further calls to the same key will:
-	 	add or subtract from the saved value of the data key if it already exists in the same multi-dimensional position
+	 	add or subtract sender the saved value of the data key if it already exists in the same multi-dimensional position
 		append the key and it's value if it doesn't exist
 	calls: 	SSblackbox.record_feedback("nested tally", "example", 1, list("fruit", "orange", "apricot"))
 			SSblackbox.record_feedback("nested tally", "example", 2, list("fruit", "orange", "orange"))
@@ -270,7 +270,7 @@ Versioning
 	key = new_key
 	key_type = new_key_type
 
-/datum/controller/subsystem/blackbox/proc/LogAhelp(ticket, action, message, who)
+/datum/controller/subsystem/blackbox/proc/LogAhelp(ticket, action, message, recipient, sender)
 
 	if(!SSdbcore.Connect())
 		return
@@ -278,12 +278,13 @@ Versioning
 	ticket = sanitizeSQL(ticket)
 	action = sanitizeSQL(action)
 	message = sanitizeSQL(message)
-	who = sanitizeSQL(who)
-	server_ip = sanitizeSQL(world.internet_address)
-	server_port = sanitizeSQL(world.port)
-	round_id = sanitizeSQL(GLOB.round_id)
+	recipient = sanitizeSQL(recipient)
+	sender = sanitizeSQL(sender)
+	var/server_ip = sanitizeSQL(world.internet_address)
+	var/server_port = sanitizeSQL(world.port)
+	var/round_id = sanitizeSQL(GLOB.round_id)
 
-	var/datum/DBQuery/query_log_ahelp = SSdbcore.NewQuery("INSERT INTO [format_table_name("ticket")] (ticket, action, message, who, server_ip, server_port, round_id, timestamp) VALUES ('[ticket]', '[action]', '[message]', '[who]', INET_ATON(IF('[server_ip]' LIKE '', '0', '[server_ip]')), '[port]','[round_id]', '[SQLtime()]')")
+	var/datum/DBQuery/query_log_ahelp = SSdbcore.NewQuery("INSERT INTO [format_table_name("ticket")] (ticket, action, message, recipient, sender, server_ip, server_port, round_id, timestamp) VALUES ('[ticket]', '[action]', '[message]', '[recipient]', '[sender]', INET_ATON(IF('[server_ip]' LIKE '', '0', '[server_ip]')), '[server_port]','[round_id]', '[SQLtime()]')")
 	query_log_ahelp.Execute()
 	qdel(query_log_ahelp)
 
