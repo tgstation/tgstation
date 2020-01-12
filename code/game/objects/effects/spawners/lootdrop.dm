@@ -374,6 +374,14 @@
 				/obj/item/circuitboard/computer/robotics
 				)
 
+/obj/effect/spawner/lootdrop/mafia_outfit
+	name = "mafia outfit spawner"
+	loot = list(
+				/obj/effect/spawner/bundle/costume/mafia = 4,
+				/obj/effect/spawner/bundle/costume/mafia/white = 1,
+				/obj/effect/spawner/bundle/costume/mafia/checkered = 1
+				)
+
 //finds the probabilities of items spawning from a loot spawner's loot pool
 /obj/item/loot_table_maker
 	icon = 'icons/effects/landmarks_static.dmi'

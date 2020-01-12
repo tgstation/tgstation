@@ -2356,6 +2356,22 @@
 					/obj/item/vending_refill/wardrobe/law_wardrobe)
 	crate_name = "security department supply crate"
 
+/datum/supply_pack/costumes_toys/mafia
+	name = "Cosa Nostra Starter Pack"
+	desc = "This crate contains everything you need to set up your own ethnicity-based racketeering operation."
+	cost = 1000
+	contains = list()
+	contraband = TRUE
+
+/datum/supply_pack/costumes_toys/mafia/fill(obj/structure/closet/crate/C)
+	for(var/i in 1 to 4)
+		new /obj/effect/spawner/lootdrop/mafia_outfit(C)
+		//Remind me to add the madonna pictures here.
+		if(prob(30)) //Not all mafioso have mustaches, some people also find this item annoying.
+			new /obj/item/clothing/mask/fakemoustache/italian(C)
+	if(prob(10)) //A little extra sugar every now and then to shake things up.
+		new	/obj/item/switchblade(C)
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Miscellaneous ///////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
