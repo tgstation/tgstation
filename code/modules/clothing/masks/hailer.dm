@@ -181,13 +181,11 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	desc = "A police whistle for when you need to make sure the criminals hear you."
 	icon_state = "whistle"
 	item_state = "whistle"
+	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_NECK
 	custom_price = 150
 	actions_types = list(/datum/action/item_action/halt)
 
 /obj/item/clothing/mask/whistle/ui_action_click(mob/user, action)
-	whistle()
-
-/obj/item/clothing/mask/whistle/verb/whistle()
 	if(cooldown < world.time - 100)
 		usr.audible_message("<font color='red' size='5'><b>HALT!</b></font>")
 		playsound(src.loc, "sound/misc/whistle.ogg", 100, FALSE, 4)

@@ -22,6 +22,8 @@
 	var/throw_hit_chance = 35
 	var/preload_cell_type //if not empty the baton starts with this type of cell
 
+	var/convertable = TRUE //if it can converted with a conversion kit
+
 /obj/item/melee/baton/get_cell()
 	return cell
 
@@ -47,7 +49,7 @@
 	return ..()
 
 /obj/item/melee/baton/proc/convert(datum/source, obj/item/I, mob/user)
-	if(istype(I,/obj/item/conversion_kit))
+	if(istype(I,/obj/item/conversion_kit) && convertable)
 		var/turf/T = get_turf(src)
 		var/obj/item/melee/classic_baton/B = new /obj/item/melee/classic_baton (T)
 		B.alpha = 20
@@ -247,6 +249,7 @@
 	hitcost = 2000
 	throw_hit_chance = 10
 	slot_flags = ITEM_SLOT_BACK
+	convertable = FALSE
 	var/obj/item/assembly/igniter/sparkler = 0
 
 /obj/item/melee/baton/cattleprod/Initialize()
@@ -273,6 +276,7 @@
 	throw_range = 5
 	hitcost = 2000
 	throw_hit_chance = 99  //Have you prayed today?
+	convertable = FALSE
 	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
 
 /obj/item/melee/baton/boomerang/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
