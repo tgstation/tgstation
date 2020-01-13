@@ -897,7 +897,8 @@
 			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
 			if(!GG)
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
-			GG.reagents.add_reagent(type, reac_volume)
+			if(GG)
+				GG.reagents.add_reagent(type, reac_volume)
 
 /datum/reagent/uranium/radium
 	name = "Radium"
