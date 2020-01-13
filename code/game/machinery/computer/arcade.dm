@@ -162,6 +162,11 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_xmas")
 		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_xmas")
 		weapons = strings(ARCADE_FILE, "rpg_weapon_xmas")
+	else if(SSevents.holidays && SSevents.holidays[VALENTINES])
+		name_action = pick_list(ARCADE_FILE, "rpg_action_valentines")
+		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_valentines")
+		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_valentines")
+		weapons = strings(ARCADE_FILE, "rpg_weapon_valentines")
 	else
 		name_action = pick_list(ARCADE_FILE, "rpg_action")
 		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective")
