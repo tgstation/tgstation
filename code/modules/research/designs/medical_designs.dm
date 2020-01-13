@@ -136,8 +136,18 @@
 	desc = "Allows tracking of someone's location if their suit sensors are turned to tracking beacon."
 	id = "crewpinpointer"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 3000, /datum/material/glass = 1500, /datum/material/gold = 200)
+	materials = list(/datum/material/iron = 3000, /datum/material/glass = 1500, /datum/material/gold = 500)
 	build_path = /obj/item/pinpointer/crew
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/crewpinpointerprox
+	name = "Proximity Crew Pinpointer"
+	desc = "Displays your approximate proximity to someone if their suit sensors are turned to tracking beacon."
+	id = "crewpinpointerprox"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1200, /datum/material/glass = 300, /datum/material/gold = 200)
+	build_path = /obj/item/pinpointer/crew/prox
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
