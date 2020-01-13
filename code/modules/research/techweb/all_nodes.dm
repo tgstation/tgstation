@@ -1067,6 +1067,17 @@
 	hidden = TRUE
 	experimental = TRUE
 
+/datum/techweb_node/spec_eng
+	id = "spec_eng"
+	display_name = "Specialized Engineering"
+	description = "Conventional wisdom has deemed these engineering products 'technically' safe, but far too dangerous to traditionally condone."
+	prereq_ids = list("base")
+	design_ids = list("lava_rods", "eng_gloves")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 2500
+	hidden = TRUE
+	experimental = TRUE
+
 /datum/techweb_node/aus_security
 	id = "aus_security"
 	display_name = "Australicus Security Protocols"
