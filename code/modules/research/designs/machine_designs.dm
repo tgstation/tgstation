@@ -74,6 +74,14 @@
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/board/gas_miner
+	name = "Machine Design (Gas Miner Board)"
+	desc = "The circuit board for a gas miner."
+	id = "gas_miner"
+	build_path = /obj/item/circuitboard/machine/gas_miner
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/board/space_heater
 	name = "Machine Design (Space Heater Board)"
 	desc = "The circuit board for a space heater."
