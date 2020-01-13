@@ -48,9 +48,6 @@
 	var/display_craftable_only = FALSE
 	var/display_compact = TRUE
 
-
-
-
 /*	This is what procs do:
 	get_environment - gets a list of things accessable for crafting by user
 	get_surroundings - takes a list of things and makes a list of key-types to values-amounts of said type in the list
@@ -59,8 +56,6 @@
 	construct_item - takes a recipe and a user, call all the checking procs, calls do_after, checks all the things again, calls del_reqs, creates result, calls CheckParts of said result with argument being list returned by deel_reqs
 	del_reqs - takes recipe and a user, loops over the recipes reqs var and tries to find everything in the list make by get_environment and delete it/add to parts list, then returns the said list
 */
-
-
 
 /**
   * Check that the contents of the recipe meet the requirements.
@@ -194,7 +189,6 @@
 			return I //Send the item back to whatever called this proc so it can handle whatever it wants to do with the new item
 		return ", missing tool."
 	return ", missing component."
-
 
 /*Del reqs works like this:
 
@@ -335,7 +329,6 @@
 		ui = new(user, src, ui_key, "personal_crafting", "Crafting Menu", 700, 800, master_ui, state)
 		ui.open()
 
-
 /datum/component/personal_crafting/ui_data(mob/user)
 	var/list/data = list()
 	data["busy"] = busy
@@ -386,7 +379,6 @@
 
 	data["crafting_recipes"] = crafting_recipes
 	return data
-
 
 /datum/component/personal_crafting/ui_act(action, params)
 	if(..())
