@@ -17,8 +17,9 @@
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/step_action()
 	. = ..()
+	var/mob/wearer = loc
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
-	if(on)
+	if(on && istype(wearer))
 		if(bananium.get_material_amount(/datum/material/bananium) < 100)
 			on = !on
 			if(!always_noslip)
@@ -26,7 +27,7 @@
 			update_icon()
 			to_chat(loc, "<span class='warning'>You ran out of bananium!</span>")
 		else
-			new /obj/item/grown/bananapeel/specialpeel(get_step(src,turn(usr.dir, 180))) //honk
+			new /obj/item/grown/bananapeel/specialpeel(get_step(src,turn(wearer.dir, 180))) //honk
 			bananium.use_amount_mat(100, /datum/material/bananium)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/attack_self(mob/user)
