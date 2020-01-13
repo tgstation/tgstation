@@ -14,16 +14,16 @@
 	yield = 1 //seeds if there isn't a dna inside
 	potency = 30
 	var/volume = 5
-	var/ckey = null
-	var/realName = null
-	var/datum/mind/mind = null
-	var/blood_gender = null
-	var/blood_type = null
-	var/list/features = null
-	var/factions = null
-	var/list/quirks = null
-	var/sampleDNA = null
-	var/contains_sample = 0
+	var/ckey
+	var/realName
+	var/datum/mind/mind
+	var/blood_gender
+	var/blood_type
+	var/list/features
+	var/factions
+	var/list/quirks
+	var/sampleDNA
+	var/contains_sample = FALSE
 
 /obj/item/seeds/replicapod/Initialize()
 	. = ..()
@@ -64,7 +64,7 @@
 /obj/item/seeds/replicapod/get_analyzer_text()
 	var/text = ..()
 	if(contains_sample)
-		text += "\n It contains a blood sample with blood DNA \"sampleDNA\"." //blood DNA is readable by forensics scanners
+		text += "\n It contains a blood sample with blood DNA (UE) \"sampleDNA\"." //blood DNA (UE) shows in medical records and is readable by forensics scanners
 	return text
 
 /obj/item/seeds/replicapod/harvest(mob/user) //now that one is fun -- Urist
