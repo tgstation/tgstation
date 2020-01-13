@@ -1,6 +1,6 @@
 /datum/surgery/autopsy
 	name = "Autopsy"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/incise,
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/incise,/datum/surgery_step/autopsy,/datum/surgery_step/close)
 
 	target_mobtypes = list(/mob/living)
 	possible_locs = list(BODY_ZONE_CHEST)
@@ -37,7 +37,7 @@
 
 		else if(istype(O,/obj/projectile))
 			var/obj/projectile/P = O
-			N.info +="Analysis shows that [target] was hit by a [P.flag == "bomb" ? "explosion-like projectile" : "[P.flag]" ] causing [P.damage > 10 ? "[P.damage > 20 ? "devastating" : "deep" ]" : "shallow" ] [P.damage_type] damage.[P.flag == "bullet" ? "The bullet holes match with [P.name]s" : "" ]<BR><BR>"
+			N.info +="Analysis shows that [target] was hit by a [P.flag == "bomb" ? "explosion-like projectile" : "[P.flag]" ] causing [P.damage > 10 ? "[P.damage > 20 ? "devastating" : "deep" ]" : "shallow" ] [P.damage_type] damage. [P.flag == "bullet" ? "The bullet holes match with [P.name]s" : "" ] <BR><BR>"
 
 		else if(O > 0)
 			N.info +="Analysis shows that [target] was brawled for [O > 5 ? "[O > 10 ? "major" : "moderate" ]" : "minor" ] damage.<BR><BR>"
