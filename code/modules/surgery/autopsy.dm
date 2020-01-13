@@ -1,7 +1,7 @@
 /datum/surgery/autopsy
 	name = "Autopsy"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/clamp_bleeders,
-				 /datum/surgery_step/autopsy, /datum/surgery_step/close)
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/incise,
+
 	target_mobtypes = list(/mob/living)
 	possible_locs = list(BODY_ZONE_CHEST)
 	requires_tech = FALSE
