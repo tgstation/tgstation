@@ -151,10 +151,15 @@
 	return ..() // Return vamp check
 
 /mob/living/carbon/proc/scan_blood_volume()
-	// Vamps don't show up normally to scanners unless Masquerade power is on ----> scanner.dm
+	// Vamps don't show up as healthy to scanners unless Masquerade power is on ----> scanner.dm
+	if (AmMasquerading())
+		return BLOOD_VOLUME_NORMAL
+
+	return blood_volume
+
+/mob/living/proc/AmMasquerading()
 	if (mind)
 		var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 		if (istype(bloodsuckerdatum) && bloodsuckerdatum.poweron_masquerade)
-			return BLOOD_VOLUME_NORMAL
-
-	return blood_volume
+			return TRUE
+	return FALSE
