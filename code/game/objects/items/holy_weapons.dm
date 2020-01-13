@@ -195,7 +195,7 @@
 	item_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	autopsy_description = "radiant cauterized wounds"
+	autopsy_description = "radiant cauterizations"
 	force = 18
 	throw_speed = 3
 	throw_range = 4
