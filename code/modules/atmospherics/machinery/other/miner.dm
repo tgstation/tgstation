@@ -7,7 +7,7 @@
 
 /obj/machinery/atmospherics/miner
 	name = "gas miner"
-	desc = "A high-tech bluespace manifold which generates a constant flow of gas. Due to its high power draw, it must be powered by a direct connection to a wire node."
+	desc = "A high-tech bluespace manifold which generates a constant flow of gas."
 	icon = 'icons/obj/atmospherics/components/miners.dmi'
 	icon_state = "miner"
 	density = FALSE
@@ -74,6 +74,10 @@
 	if(!active)
 		return FALSE
 	var/turf/T = get_turf(src)
+	if(!T.get_Cable_node())
+		status_message = "<span class='boldwarning'>CABLE NODE NOT FOUND</span>"
+		set_broken(TRUE)
+		return FALSE
 	if(!isopenturf(T))
 		status_message = "<span class='boldnotice'>VENT BLOCKED</span>"
 		set_broken(TRUE)
@@ -136,9 +140,6 @@
 		if(C && C.powernet && (C.powernet.avail > amount))
 			C.powernet.load += amount
 			return TRUE
-	if(powered())
-		use_power(amount)
-		return TRUE
 	return FALSE
 
 /obj/machinery/atmospherics/miner/update_icon()
