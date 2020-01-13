@@ -1267,6 +1267,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block)
 			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block)
 			log_combat(user, target, "punched")
+		target.damage_record += damage
+
 
 		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
 			target.visible_message("<span class='danger'>[user] knocks [target] down!</span>", \
