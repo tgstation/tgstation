@@ -109,7 +109,15 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		ATMOS_GAS_MONITOR_SENSOR_INCINERATOR = "Incinerator Chamber",
 		ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB = "Toxins Mixing Chamber"
 	)
+	var/list/miners = list(
+		ATMOS_GAS_MONITOR_MINER_N2 = "Nitrogen Miner",
+		ATMOS_GAS_MONITOR_MINER_O2 = "Oxygen Miner",
+		ATMOS_GAS_MONITOR_MINER_CO2 = "Carbon Dioxide Miner",
+		ATMOS_GAS_MONITOR_MINER_TOX = "Plasma Miner",
+		ATMOS_GAS_MONITOR_MINER_N2O = "Nitrous Oxide Miner",
+	)
 	var/list/sensor_information = list()
+	var/list/miner_information = list()
 	var/datum/radio_frequency/radio_connection
 
 	light_color = LIGHT_COLOR_CYAN
@@ -147,6 +155,19 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 			"temperature"	= info["temperature"],
 			"gases"			= info["gases"]
 		))
+	data["miners"] = list()
+	for(var/id_tag in miners)
+		var/long_name = miners[id_tag]
+		var/list/info = miner_information[id_tag]
+		if(!info)
+			continue
+		data["miners"] += list(list(
+			"id_tag"		= id_tag,
+			"long_name" 	= sanitize(long_name),
+			"gas type"		= info["gas_type"],
+			"mole output"	= info["mole_out"],
+			"status"		= info["status"]
+		))
 	return data
 
 /obj/machinery/computer/atmos_control/receive_signal(datum/signal/signal)
@@ -154,10 +175,11 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		return
 
 	var/id_tag = signal.data["id_tag"]
-	if(!id_tag || !sensors.Find(id_tag))
-		return
-
-	sensor_information[id_tag] = signal.data
+	if(id_tag)
+		if(sensors.Find(id_tag))
+			sensor_information[id_tag] = signal.data
+		else if(miners.Find(id_tag))
+			miner_information[id_tag] = signal.data
 
 /obj/machinery/computer/atmos_control/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
@@ -201,6 +223,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	input_tag = ATMOS_GAS_MONITOR_INPUT_O2
 	output_tag = ATMOS_GAS_MONITOR_OUTPUT_O2
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_O2 = "Oxygen Tank")
+	miners = list(ATMOS_GAS_MONITOR_MINER_O2 = "Oxygen Miner")
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank/oxygen_tank
 
 /obj/machinery/computer/atmos_control/tank/toxin_tank
@@ -208,6 +231,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	input_tag = ATMOS_GAS_MONITOR_INPUT_TOX
 	output_tag = ATMOS_GAS_MONITOR_OUTPUT_TOX
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_TOX = "Plasma Tank")
+	miners = list(ATMOS_GAS_MONITOR_MINER_TOX = "Plasma Miner")
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank/toxin_tank
 
 /obj/machinery/computer/atmos_control/tank/air_tank
@@ -229,6 +253,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	input_tag = ATMOS_GAS_MONITOR_INPUT_N2O
 	output_tag = ATMOS_GAS_MONITOR_OUTPUT_N2O
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_N2O = "Nitrous Oxide Tank")
+	miners = list(ATMOS_GAS_MONITOR_MINER_N2O = "Nitrous Oxide Miner")
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank/nitrous_tank
 
 /obj/machinery/computer/atmos_control/tank/nitrogen_tank
@@ -236,6 +261,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	input_tag = ATMOS_GAS_MONITOR_INPUT_N2
 	output_tag = ATMOS_GAS_MONITOR_OUTPUT_N2
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_N2 = "Nitrogen Tank")
+	miners = list(ATMOS_GAS_MONITOR_MINER_N2 = "Nitrogen Miner")
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank/nitrogen_tank
 
 /obj/machinery/computer/atmos_control/tank/carbon_tank
@@ -243,6 +269,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	input_tag = ATMOS_GAS_MONITOR_INPUT_CO2
 	output_tag = ATMOS_GAS_MONITOR_OUTPUT_CO2
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_CO2 = "Carbon Dioxide Tank")
+	miners = list(ATMOS_GAS_MONITOR_MINER_CO2 = "Carbon Dioxide Miner")
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank/carbon_tank
 
 // This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this

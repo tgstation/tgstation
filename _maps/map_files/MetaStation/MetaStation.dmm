@@ -1267,6 +1267,25 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
+"acS" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrous_output{
+	dir = 8
+	},
+/turf/open/floor/engine/n2o{
+	initial_gas_mix = "n2o=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
+"acT" = (
+/turf/open/floor/engine/n2o{
+	initial_gas_mix = "n2o=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
+"acU" = (
+/obj/machinery/air_sensor/atmos/nitrous_tank,
+/turf/open/floor/engine/n2o{
+	initial_gas_mix = "n2o=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "acV" = (
 /obj/structure/table,
 /obj/item/reagent_containers/glass/bottle/morphine{
@@ -1589,6 +1608,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"adv" = (
+/obj/machinery/atmospherics/miner/n2o,
+/turf/open/floor/engine/n2o{
+	initial_gas_mix = "n2o=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "adw" = (
 /obj/structure/chair/stool,
 /obj/machinery/light/small{
@@ -1645,6 +1670,14 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
+"adB" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/engine/n2o{
+	initial_gas_mix = "n2o=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "adC" = (
 /obj/machinery/flasher{
 	id = "insaneflash";
@@ -1872,6 +1905,23 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hos)
+"aeb" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrous_input{
+	dir = 8
+	},
+/turf/open/floor/engine/n2o{
+	initial_gas_mix = "n2o=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
+"aec" = (
+/obj/machinery/camera{
+	c_tag = "Atmospherics Tank - N2O";
+	dir = 8
+	},
+/turf/open/floor/engine/n2o{
+	initial_gas_mix = "n2o=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "aed" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
@@ -2274,6 +2324,14 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"aeR" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxin_output{
+	dir = 8
+	},
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "aeS" = (
 /obj/machinery/button/door{
 	id = "permacell2";
@@ -2318,6 +2376,11 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"aeV" = (
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "aeW" = (
 /obj/machinery/button/door{
 	id = "permacell1";
@@ -2358,6 +2421,12 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"aeY" = (
+/obj/effect/landmark/xeno_spawn,
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "aeZ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -2382,6 +2451,18 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"afb" = (
+/obj/machinery/air_sensor/atmos/toxin_tank,
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
+"afc" = (
+/obj/machinery/atmospherics/miner/toxins,
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "afd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -2877,6 +2958,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"afW" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "afX" = (
 /turf/closed/wall,
 /area/ai_monitored/security/armory)
@@ -3042,6 +3131,14 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
+"agk" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxin_input{
+	dir = 8
+	},
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "agl" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
@@ -3050,6 +3147,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hos)
+"agm" = (
+/obj/machinery/camera{
+	c_tag = "Atmospherics Tank - Toxins";
+	dir = 8
+	},
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "agn" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -3103,6 +3209,14 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
+"agu" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/carbon_output{
+	dir = 8
+	},
+/turf/open/floor/engine/co2{
+	initial_gas_mix = "co2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "agv" = (
 /obj/machinery/camera{
 	c_tag = "Fitness Room - Fore"
@@ -3163,6 +3277,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
+"agC" = (
+/turf/open/floor/engine/co2{
+	initial_gas_mix = "co2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "agD" = (
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = 32
@@ -3382,6 +3501,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"agV" = (
+/obj/machinery/air_sensor/atmos/carbon_tank,
+/turf/open/floor/engine/co2{
+	initial_gas_mix = "co2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "agW" = (
 /obj/structure/table/wood,
 /obj/machinery/recharger,
@@ -3457,6 +3582,12 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/maintenance/fore)
+"ahf" = (
+/obj/machinery/atmospherics/miner/carbon_dioxide,
+/turf/open/floor/engine/co2{
+	initial_gas_mix = "co2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "ahg" = (
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
@@ -3623,6 +3754,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"ahD" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/engine/co2{
+	initial_gas_mix = "co2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "ahE" = (
 /obj/structure/closet/l3closet/security,
 /obj/effect/turf_decal/tile/red,
@@ -4152,6 +4291,14 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/security/main)
+"aiE" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/carbon_input{
+	dir = 8
+	},
+/turf/open/floor/engine/co2{
+	initial_gas_mix = "co2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "aiF" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -4182,6 +4329,15 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hos)
+"aiI" = (
+/obj/machinery/camera{
+	c_tag = "Atmospherics Tank - CO2";
+	dir = 8
+	},
+/turf/open/floor/engine/co2{
+	initial_gas_mix = "co2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "aiJ" = (
 /turf/closed/wall/r_wall,
 /area/security/range)
@@ -4567,6 +4723,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/warden)
+"ajz" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrogen_input{
+	dir = 1
+	},
+/turf/open/floor/engine/n2{
+	initial_gas_mix = "n2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "ajA" = (
 /obj/structure/table,
 /obj/machinery/recharger{
@@ -5255,6 +5419,20 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
+"akG" = (
+/obj/machinery/air_sensor/atmos/nitrogen_tank,
+/turf/open/floor/engine/n2{
+	initial_gas_mix = "n2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
+"akH" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrogen_output{
+	dir = 1
+	},
+/turf/open/floor/engine/n2{
+	initial_gas_mix = "n2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "akI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -5911,6 +6089,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/security/brig)
+"alT" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/oxygen_input{
+	dir = 1
+	},
+/turf/open/floor/engine/o2{
+	initial_gas_mix = "o2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "alU" = (
 /obj/structure/rack,
 /obj/item/gun/energy/disabler{
@@ -5999,6 +6185,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/warden)
+"amc" = (
+/obj/machinery/air_sensor/atmos/oxygen_tank,
+/turf/open/floor/engine/o2{
+	initial_gas_mix = "o2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "amd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -6280,6 +6472,14 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/crew_quarters/fitness/recreation)
+"amF" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/oxygen_output{
+	dir = 1
+	},
+/turf/open/floor/engine/o2{
+	initial_gas_mix = "o2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "amG" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -6618,6 +6818,11 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
+"anp" = (
+/turf/open/floor/engine/n2{
+	initial_gas_mix = "n2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "anq" = (
 /obj/structure/rack,
 /obj/item/gun/energy/e_gun{
@@ -6641,6 +6846,26 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
+"anr" = (
+/obj/machinery/atmospherics/miner/nitrogen,
+/turf/open/floor/engine/n2{
+	initial_gas_mix = "n2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
+"ans" = (
+/obj/machinery/camera{
+	c_tag = "Atmospherics Tank - N2";
+	dir = 8
+	},
+/turf/open/floor/engine/n2{
+	initial_gas_mix = "n2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
+"ant" = (
+/turf/open/floor/engine/o2{
+	initial_gas_mix = "o2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "anu" = (
 /obj/machinery/vending/security,
 /obj/machinery/firealarm{
@@ -7110,6 +7335,12 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
+"aot" = (
+/obj/machinery/atmospherics/miner/oxygen,
+/turf/open/floor/engine/o2{
+	initial_gas_mix = "o2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "aou" = (
 /obj/structure/rack,
 /obj/machinery/light{
@@ -7155,6 +7386,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
+"aow" = (
+/obj/machinery/camera{
+	c_tag = "Atmospherics Tank - O2";
+	dir = 8
+	},
+/turf/open/floor/engine/o2{
+	initial_gas_mix = "o2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "aox" = (
 /obj/structure/grille,
 /turf/open/floor/plating{
@@ -7182,6 +7422,12 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/security/warden)
+"aoA" = (
+/obj/machinery/light/small,
+/turf/open/floor/engine/n2{
+	initial_gas_mix = "n2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "aoB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/red{
@@ -7535,6 +7781,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
+"apl" = (
+/obj/machinery/light/small,
+/turf/open/floor/engine/o2{
+	initial_gas_mix = "o2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "apm" = (
 /turf/closed/wall,
 /area/maintenance/solars/starboard/fore)
@@ -38802,15 +39054,6 @@
 	},
 /turf/open/space,
 /area/space/nearstation)
-"bJc" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrous_output{
-	dir = 8
-	},
-/turf/open/floor/engine/n2o,
-/area/engine/atmos)
-"bJd" = (
-/turf/open/floor/engine/n2o,
-/area/engine/atmos)
 "bJe" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -39477,22 +39720,6 @@
 "bKG" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/plasteel/dark,
-/area/engine/atmos)
-"bKH" = (
-/obj/machinery/air_sensor/atmos/nitrous_tank,
-/turf/open/floor/engine/n2o,
-/area/engine/atmos)
-"bKI" = (
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide{
-	valve_open = 1
-	},
-/turf/open/floor/engine/n2o,
-/area/engine/atmos)
-"bKJ" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "bKK" = (
 /obj/structure/grille,
@@ -40168,19 +40395,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/plasteel/dark,
-/area/engine/atmos)
-"bMm" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrous_input{
-	dir = 8
-	},
-/turf/open/floor/engine/n2o,
-/area/engine/atmos)
-"bMn" = (
-/obj/machinery/camera{
-	c_tag = "Atmospherics Tank - N2O";
-	dir = 8
-	},
-/turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "bMo" = (
 /obj/machinery/airalarm/server{
@@ -41614,19 +41828,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
-"bPx" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxin_output{
-	dir = 8
-	},
-/turf/open/floor/engine/plasma,
-/area/engine/atmos)
-"bPy" = (
-/turf/open/floor/engine/plasma,
-/area/engine/atmos)
-"bPz" = (
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/engine/plasma,
-/area/engine/atmos)
 "bPA" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -42148,20 +42349,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/engine/atmos)
-"bQX" = (
-/obj/machinery/air_sensor/atmos/toxin_tank,
-/turf/open/floor/engine/plasma,
-/area/engine/atmos)
-"bQY" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
-/turf/open/floor/engine/plasma,
-/area/engine/atmos)
-"bQZ" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "bRa" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -42723,19 +42910,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/engine/atmos)
-"bSk" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxin_input{
-	dir = 8
-	},
-/turf/open/floor/engine/plasma,
-/area/engine/atmos)
-"bSl" = (
-/obj/machinery/camera{
-	c_tag = "Atmospherics Tank - Toxins";
-	dir = 8
-	},
-/turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "bSn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -43767,15 +43941,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
-"bUI" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/carbon_output{
-	dir = 8
-	},
-/turf/open/floor/engine/co2,
-/area/engine/atmos)
-"bUJ" = (
-/turf/open/floor/engine/co2,
-/area/engine/atmos)
 "bUK" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -44238,20 +44403,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/engine/atmos)
-"bVN" = (
-/obj/machinery/air_sensor/atmos/carbon_tank,
-/turf/open/floor/engine/co2,
-/area/engine/atmos)
-"bVO" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/turf/open/floor/engine/co2,
-/area/engine/atmos)
-"bVP" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/engine/co2,
 /area/engine/atmos)
 "bVQ" = (
 /obj/machinery/light/small{
@@ -44964,19 +45115,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/engine/atmos)
-"bXr" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/carbon_input{
-	dir = 8
-	},
-/turf/open/floor/engine/co2,
-/area/engine/atmos)
-"bXs" = (
-/obj/machinery/camera{
-	c_tag = "Atmospherics Tank - CO2";
-	dir = 8
-	},
-/turf/open/floor/engine/co2,
 /area/engine/atmos)
 "bXt" = (
 /obj/machinery/power/solar_control{
@@ -49779,38 +49917,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
 /area/aisat)
-"chN" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrogen_input{
-	dir = 1
-	},
-/turf/open/floor/engine/n2,
-/area/engine/atmos)
-"chO" = (
-/obj/machinery/air_sensor/atmos/nitrogen_tank,
-/turf/open/floor/engine/n2,
-/area/engine/atmos)
-"chP" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrogen_output{
-	dir = 1
-	},
-/turf/open/floor/engine/n2,
-/area/engine/atmos)
-"chQ" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/oxygen_input{
-	dir = 1
-	},
-/turf/open/floor/engine/o2,
-/area/engine/atmos)
-"chR" = (
-/obj/machinery/air_sensor/atmos/oxygen_tank,
-/turf/open/floor/engine/o2,
-/area/engine/atmos)
-"chS" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/oxygen_output{
-	dir = 1
-	},
-/turf/open/floor/engine/o2,
-/area/engine/atmos)
 "chT" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/air_input{
 	dir = 1
@@ -50349,34 +50455,6 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
-"cjc" = (
-/turf/open/floor/engine/n2,
-/area/engine/atmos)
-"cjd" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/open/floor/engine/n2,
-/area/engine/atmos)
-"cje" = (
-/obj/machinery/camera{
-	c_tag = "Atmospherics Tank - N2";
-	dir = 8
-	},
-/turf/open/floor/engine/n2,
-/area/engine/atmos)
-"cjf" = (
-/turf/open/floor/engine/o2,
-/area/engine/atmos)
-"cjg" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/engine/o2,
-/area/engine/atmos)
-"cjh" = (
-/obj/machinery/camera{
-	c_tag = "Atmospherics Tank - O2";
-	dir = 8
-	},
-/turf/open/floor/engine/o2,
-/area/engine/atmos)
 "cji" = (
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/engine/air,
@@ -51035,14 +51113,6 @@
 	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
-"ckG" = (
-/obj/machinery/light/small,
-/turf/open/floor/engine/n2,
-/area/engine/atmos)
-"ckH" = (
-/obj/machinery/light/small,
-/turf/open/floor/engine/o2,
-/area/engine/atmos)
 "ckI" = (
 /turf/open/floor/engine/air,
 /area/engine/atmos)
@@ -118567,9 +118637,9 @@ ccN
 ceg
 cfu
 cgA
-chN
-cjc
-cjc
+ajz
+anp
+anp
 bAR
 aaf
 aaa
@@ -118824,9 +118894,9 @@ ccO
 bza
 aaf
 gJs
-chO
-cjd
-ckG
+akG
+anr
+aoA
 bAR
 aaf
 aaa
@@ -119081,9 +119151,9 @@ ccP
 ceh
 cfv
 cgA
-chP
-cje
-cjc
+akH
+ans
+anp
 bAR
 aaf
 aaa
@@ -119595,9 +119665,9 @@ ccR
 ceg
 cfu
 cgA
-chQ
-cjf
-cjf
+alT
+ant
+ant
 bAR
 aaf
 aaa
@@ -119852,9 +119922,9 @@ ccS
 bza
 aaf
 gJs
-chR
-cjg
-ckH
+amc
+aot
+apl
 bAR
 aaf
 aaa
@@ -120109,9 +120179,9 @@ ccP
 ceh
 cfw
 cgA
-chS
-cjh
-cjf
+amF
+aow
+ant
 bAR
 aaf
 aaa
@@ -122661,17 +122731,17 @@ bCB
 bEd
 bGa
 bAR
-bJc
-bKH
-bMm
+acS
+acU
+aeb
 bAR
-bPx
-bQX
-bSk
+aeR
+afb
+agk
 bAR
-bUI
-bVN
-bXr
+agu
+agV
+aiE
 bAR
 aaf
 aMr
@@ -122918,17 +122988,17 @@ bCC
 bCC
 bCC
 bAR
-bJd
-bKI
-bJd
+acT
+adv
+acT
 bAR
-bPy
-bQY
-bPy
+aeV
+afc
+aeV
 bAR
-bUJ
-bVO
-bUJ
+agC
+ahf
+agC
 bAR
 aaf
 aMq
@@ -123175,17 +123245,17 @@ bCC
 bEe
 bGb
 bAR
-bJd
-bKJ
-bMn
+acT
+adB
+aec
 bAR
-bPz
-bQZ
-bSl
+aeY
+afW
+agm
 bAR
-bUJ
-bVP
-bXs
+agC
+ahD
+aiI
 bAR
 aaf
 aMr

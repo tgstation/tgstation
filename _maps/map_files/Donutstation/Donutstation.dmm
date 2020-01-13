@@ -3364,6 +3364,12 @@
 /obj/effect/mapping_helpers/iannewyear,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
+"aia" = (
+/obj/machinery/atmospherics/miner/n2o,
+/turf/open/floor/engine/n2o{
+	initial_gas_mix = "n2o=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "aib" = (
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
@@ -3390,6 +3396,12 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
+"aie" = (
+/obj/machinery/atmospherics/miner/toxins,
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "aif" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -3561,6 +3573,24 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
+"aiD" = (
+/obj/machinery/atmospherics/miner/carbon_dioxide,
+/turf/open/floor/engine/co2{
+	initial_gas_mix = "co2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
+"aiE" = (
+/obj/machinery/atmospherics/miner/nitrogen,
+/turf/open/floor/engine/n2{
+	initial_gas_mix = "n2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
+"aiF" = (
+/obj/machinery/atmospherics/miner/oxygen,
+/turf/open/floor/engine/o2{
+	initial_gas_mix = "o2=1000;TEMP=293.15"
+	},
+/area/engine/atmos)
 "aiH" = (
 /obj/machinery/door/airlock/external{
 	name = "Supply Dock Airlock";
@@ -5129,14 +5159,6 @@
 	dir = 5
 	},
 /area/crew_quarters/kitchen)
-"anM" = (
-/obj/machinery/atmospherics/miner/n2o{
-	max_ext_kpa = 2500
-	},
-/turf/open/floor/engine/n2o{
-	initial_gas_mix = "n2o=1000;TEMP=293.15"
-	},
-/area/engine/atmos)
 "anQ" = (
 /obj/structure/sign/warning/docking{
 	pixel_x = 32
@@ -8823,14 +8845,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
-"ayh" = (
-/obj/machinery/atmospherics/miner/toxins{
-	max_ext_kpa = 2500
-	},
-/turf/open/floor/engine/plasma{
-	initial_gas_mix = "plasma=1000;TEMP=293.15"
-	},
-/area/engine/atmos)
 "ayi" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -9125,14 +9139,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
-/area/engine/atmos)
-"ayS" = (
-/obj/machinery/atmospherics/miner/carbon_dioxide{
-	max_ext_kpa = 2500
-	},
-/turf/open/floor/engine/co2{
-	initial_gas_mix = "co2=1000;TEMP=293.15"
-	},
 /area/engine/atmos)
 "ayT" = (
 /obj/machinery/light/small{
@@ -40350,14 +40356,6 @@
 	initial_gas_mix = "n2=1000;TEMP=293.15"
 	},
 /area/engine/atmos)
-"cdM" = (
-/obj/machinery/atmospherics/miner/nitrogen{
-	max_ext_kpa = 2500
-	},
-/turf/open/floor/engine/n2{
-	initial_gas_mix = "n2=1000;TEMP=293.15"
-	},
-/area/engine/atmos)
 "cdN" = (
 /turf/open/floor/engine/o2{
 	initial_gas_mix = "o2=1000;TEMP=293.15"
@@ -40760,14 +40758,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"ceK" = (
-/obj/machinery/atmospherics/miner/oxygen{
-	max_ext_kpa = 2500
-	},
-/turf/open/floor/engine/o2{
-	initial_gas_mix = "o2=1000;TEMP=293.15"
-	},
-/area/engine/atmos)
 "ceL" = (
 /obj/machinery/light/small,
 /obj/machinery/camera{
@@ -86620,7 +86610,7 @@ azt
 azJ
 avb
 aDD
-cdM
+aiE
 cdL
 bPb
 pjJ
@@ -87648,7 +87638,7 @@ azx
 azN
 avb
 aDJ
-ceK
+aiF
 cdN
 bPb
 pjJ
@@ -90203,15 +90193,15 @@ auL
 auL
 acj
 bFq
-anM
+aia
 bSf
 acj
 axJ
-ayh
+aie
 axJ
 acj
 ayD
-ayS
+aiD
 ayD
 acj
 bcq

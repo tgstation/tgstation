@@ -6,6 +6,7 @@ import { Apc } from './interfaces/Apc';
 import { AtmosAlertConsole } from './interfaces/AtmosAlertConsole';
 import { AtmosControlConsole } from './interfaces/AtmosControlConsole';
 import { AtmosFilter } from './interfaces/AtmosFilter';
+import { AtmosMiner } from './interfaces/AtmosMiner';
 import { AtmosMixer } from './interfaces/AtmosMixer';
 import { AtmosPump } from './interfaces/AtmosPump';
 import { BankMachine } from './interfaces/BankMachine';
@@ -119,6 +120,10 @@ const ROUTES = {
   },
   atmos_filter: {
     component: () => AtmosFilter,
+    scrollable: false,
+  },
+  atmos_miner: {
+    component: () => AtmosMiner,
     scrollable: false,
   },
   atmos_mixer: {

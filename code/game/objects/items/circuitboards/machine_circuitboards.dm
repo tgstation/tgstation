@@ -377,6 +377,22 @@
 #undef PATH_FREEZER
 #undef PATH_HEATER
 
+/obj/item/circuitboard/machine/gasminer
+	name = "Gas Miner (Machine Board)"
+	icon_state = "engineering"
+	build_path = /obj/machinery/atmospherics/miner
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 2,
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/capacitor = 2,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/stack/sheet/plasteel = 1,
+		/obj/item/stack/ore/bluespace_crystal = 1)
+
+/obj/item/circuitboard/machine/gasminer/all
+	name = "Universal Gas Miner (Machine Board)"
+	build_path = /obj/machinery/atmospherics/miner/all
+
 //Generic
 
 /obj/item/circuitboard/machine/circuit_imprinter

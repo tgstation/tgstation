@@ -259,14 +259,17 @@
 #define ATMOS_GAS_MONITOR_INPUT_O2 "o2_in"
 #define ATMOS_GAS_MONITOR_OUTPUT_O2 "o2_out"
 #define ATMOS_GAS_MONITOR_SENSOR_O2 "o2_sensor"
+#define ATMOS_GAS_MONITOR_MINER_O2 "o2_miner"
 
 #define ATMOS_GAS_MONITOR_INPUT_TOX "tox_in"
 #define ATMOS_GAS_MONITOR_OUTPUT_TOX "tox_out"
 #define ATMOS_GAS_MONITOR_SENSOR_TOX "tox_sensor"
+#define ATMOS_GAS_MONITOR_MINER_TOX "tox_miner"
 
 #define ATMOS_GAS_MONITOR_INPUT_AIR "air_in"
 #define ATMOS_GAS_MONITOR_OUTPUT_AIR "air_out"
 #define ATMOS_GAS_MONITOR_SENSOR_AIR "air_sensor"
+#define ATMOS_GAS_MONITOR_MINER_AIR "air_miner"
 
 #define ATMOS_GAS_MONITOR_INPUT_MIX "mix_in"
 #define ATMOS_GAS_MONITOR_OUTPUT_MIX "mix_out"
@@ -275,14 +278,17 @@
 #define ATMOS_GAS_MONITOR_INPUT_N2O "n2o_in"
 #define ATMOS_GAS_MONITOR_OUTPUT_N2O "n2o_out"
 #define ATMOS_GAS_MONITOR_SENSOR_N2O "n2o_sensor"
+#define ATMOS_GAS_MONITOR_MINER_N2O "n2o_miner"
 
 #define ATMOS_GAS_MONITOR_INPUT_N2 "n2_in"
 #define ATMOS_GAS_MONITOR_OUTPUT_N2 "n2_out"
 #define ATMOS_GAS_MONITOR_SENSOR_N2 "n2_sensor"
+#define ATMOS_GAS_MONITOR_MINER_N2 "n2_miner"
 
 #define ATMOS_GAS_MONITOR_INPUT_CO2 "co2_in"
 #define ATMOS_GAS_MONITOR_OUTPUT_CO2 "co2_out"
 #define ATMOS_GAS_MONITOR_SENSOR_CO2 "co2_sensor"
+#define ATMOS_GAS_MONITOR_MINER_CO2 "co2_miner"
 
 #define ATMOS_GAS_MONITOR_INPUT_INCINERATOR "incinerator_in"
 #define ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR "incinerator_out"
