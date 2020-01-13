@@ -33,7 +33,7 @@
 
 		if(istype(O,/obj/item))
 			var/obj/item/I = O
-			N.info += "Analysis shows that [target] was attacked by a  [I.sharpness == IS_BLUNT ? "blunt" : "sharp"] object causing [I.autopsy_description != null ? "[I.autopsy_description] of " : " [I.force > 10 ? "[I.force > 20 ? "devastating" : "deep" ]" : "shallow" ] "] [I.damtype] damage.<BR><BR>" //double breaks for easier reading
+			N.info += "Analysis shows that [target] was attacked by a  [I.sharpness == IS_BLUNT ? "blunt" : "sharp"] object [I.autopsy_description != null ? "dealing [I.autopsy_description]" : "" ] causing [I.force > 10 ? "[I.force > 20 ? "devastating" : "deep" ]" : "shallow" ]  [I.damtype] damage.<BR><BR>" //double breaks for easier reading
 
 		else if(istype(O,/obj/projectile))
 			var/obj/projectile/P = O
