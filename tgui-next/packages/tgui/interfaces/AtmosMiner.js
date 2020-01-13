@@ -61,6 +61,26 @@ export const AtmosMiner = props => {
               rate: 'max',
             })} />
         </LabeledList.Item>
+        <LabeledList.Item label="Pressure Limit">
+          <NumberInput
+            animated
+            value={parseFloat(data.kpa_limit)}
+            width="63px"
+            unit="kpa"
+            minValue={0}
+            maxValue={data.max_kpa}
+            onDrag={(e, value) => act('limit', {
+              rate: value,
+            })} />
+          <Button
+            ml={1}
+            icon="plus"
+            content="Max"
+            disabled={data.kpa_limit === data.max_kpa}
+            onClick={() => act('limit', {
+              rate: 'max',
+            })} />
+        </LabeledList.Item>
         <LabeledList.Item label="Gas Type">
           {mineTypes.map(mine => (
             <Button
