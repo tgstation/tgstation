@@ -121,7 +121,6 @@
 		podman.hardset_dna(null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
 		log_cloning("[key_name(mind)] cloned as a podman via [src] in [parent] at [AREACOORD(parent)].")
-		podman.notify_ghost_cloning("You have been cloned by a replica pod and can now enter your new body.", source = podman)
 
 	else //else, one packet of seeds. maybe two
 		var/seed_count = 1
