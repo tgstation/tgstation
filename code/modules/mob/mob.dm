@@ -1253,4 +1253,6 @@
 /mob/proc/set_stat(new_stat)
 	if(new_stat == stat)
 		return
+	. = stat
 	stat = new_stat
+	SEND_SIGNAL(src, COMSIG_MOB_STATCHANGE, new_stat, .)
