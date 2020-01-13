@@ -19,7 +19,7 @@
 	var/spawn_mol = 0
 	var/max_ext_mol = INFINITY
 	var/max_ext_kpa = 6500
-	var/set_ext_kpa = 2500
+	var/set_ext_kpa = 2500 // This is the old var-edited limit set by maps that had gas miners before they became standard.
 	var/list/permitted_gases = list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma, /datum/gas/nitrous_oxide)
 	var/overlay_color = "#FFFFFF"
 
@@ -202,8 +202,8 @@
 
 	data["rate"] = round(spawn_mol)
 	data["max_rate"] = round(spawn_mol_max)
-	data["kpa_limit"] = set_ext_kpa
-	data["max_kpa"] = max_ext_kpa
+	data["kpa_limit"] = round(set_ext_kpa)
+	data["max_kpa"] = round(max_ext_kpa)
 
 	var/datum/gas_mixture/air = return_air()
 	data["pressure"] = air.return_pressure()
