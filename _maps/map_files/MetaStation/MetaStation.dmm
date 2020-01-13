@@ -49332,17 +49332,6 @@
 /obj/structure/chair,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"cgY" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/structure/chair,
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
 "cgZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
@@ -49998,10 +49987,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
-"cir" = (
-/obj/machinery/atmospherics/pipe/manifold/supply,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "ciu" = (
@@ -51262,6 +51247,9 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -74453,6 +74441,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
+"ppb" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "ppz" = (
 /obj/machinery/vending/boozeomat/all_access,
 /obj/effect/decal/cleanable/cobweb,
@@ -75065,6 +75061,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"rMv" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "rOP" = (
 /obj/structure/sign/poster/official/random,
 /turf/closed/wall,
@@ -100932,8 +100935,8 @@ caf
 caf
 ceB
 cbS
-cgY
-cir
+cgX
+cbY
 tut
 cfP
 cmv
@@ -101447,8 +101450,8 @@ cal
 ceD
 cfT
 cgZ
-cup
-wSP
+rMv
+ppb
 clq
 cmu
 cmu
