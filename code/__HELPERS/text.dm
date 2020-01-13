@@ -265,7 +265,7 @@
 //Returns a string with the first element of the string capitalized.
 /proc/capitalize(t)
 	. = t
-	if(t)
+	if(t && length(t))
 		. = t[1]
 		return uppertext(.) + copytext(t, 1 + length(.))
 
