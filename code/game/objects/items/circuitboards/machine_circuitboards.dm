@@ -377,7 +377,7 @@
 #undef PATH_FREEZER
 #undef PATH_HEATER
 
-/obj/item/circuitboard/machine/gasminer
+/obj/item/circuitboard/machine/gas_miner
 	name = "Gas Miner (Machine Board)"
 	icon_state = "engineering"
 	build_path = /obj/machinery/atmospherics/miner
@@ -389,7 +389,7 @@
 		/obj/item/stack/sheet/plasteel = 1,
 		/obj/item/stack/ore/bluespace_crystal = 1)
 
-/obj/item/circuitboard/machine/gasminer/all
+/obj/item/circuitboard/machine/gas_miner/all
 	name = "Universal Gas Miner (Machine Board)"
 	build_path = /obj/machinery/atmospherics/miner/all
 
