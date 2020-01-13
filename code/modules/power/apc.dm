@@ -788,20 +788,19 @@
 	if(.)
 		return
 
-	var/mob/living/carbon/human/H = user
-	if(istype(H))
-		var/datum/species/ethereal/eth_species = H.dna?.species
-		if(istype(eth_species) && H.a_intent == INTENT_HARM)
+	if(isethereal(user))
+		var/mob/living/carbon/human/H = user
+		if(H.a_intent == INTENT_HARM)
 			if(cell.charge <= (cell.maxcharge / 2)) // if charge is under 50% you shouldnt drain it
 				to_chat(H, "<span class='warning'>The APC doesn't have much power, you probably shouldn't drain any.</span>")
 				return
 			var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
-			if(stomach.crystal_charge > 95)
+			if(stomach.crystal_charge > 145)
 				to_chat(H, "<span class='warning'>Your charge is full!</span>")
 				return
 			to_chat(H, "<span class='notice'>You start channeling some power through the APC into your body.</span>")
 			if(do_after(user, 75, target = src))
-				if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > 95))
+				if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > 145))
 					return
 				if(istype(stomach))
 					to_chat(H, "<span class='notice'>You receive some charge from the APC.</span>")
@@ -810,7 +809,7 @@
 				else
 					to_chat(H, "<span class='warning'>You can't receive charge from the APC!</span>")
 			return
-		if(istype(eth_species) && H.a_intent == INTENT_GRAB)
+		if(H.a_intent == INTENT_GRAB)
 			if(cell.charge == cell.maxcharge)
 				to_chat(H, "<span class='warning'>The APC is full!</span>")
 				return
