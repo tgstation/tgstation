@@ -64,6 +64,7 @@ import { NtnetRelay } from './interfaces/NtnetRelay';
 import { NtosArcade } from './interfaces/NtosArcade';
 import { NtosConfiguration } from './interfaces/NtosConfiguration';
 import { NtosMain } from './interfaces/NtosMain';
+import { NtosNetChat } from './interfaces/NtosNetChat';
 import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
 import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
 import { NtosWrapper } from './interfaces/NtosWrapper';
@@ -382,6 +383,12 @@ const ROUTES = {
     component: () => NtosMain,
     wrapper: () => NtosWrapper,
     scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_net_chat: {
+    component: () => NtosNetChat,
+    wrapper: () => NtosWrapper,
+    scrollable: false,
     theme: 'ntos',
   },
   ntos_net_downloader: {
