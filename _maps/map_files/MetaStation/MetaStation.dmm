@@ -49341,10 +49341,12 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cha" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/sink{
 	dir = 8;
 	pixel_x = 12
@@ -49356,6 +49358,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "chb" = (
@@ -49990,13 +49995,13 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "ciu" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "civ" = (
@@ -50591,9 +50596,6 @@
 "cjR" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
@@ -51248,9 +51250,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "clr" = (
@@ -51260,9 +51259,6 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -75402,6 +75398,12 @@
 /obj/machinery/meter,
 /turf/open/floor/engine,
 /area/engine/engineering)
+"sWn" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "tay" = (
 /turf/closed/wall,
 /area/medical/medbay/central)
@@ -76334,6 +76336,12 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1;
+	external_pressure_bound = 140;
+	name = "server vent";
+	pressure_checks = 0
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "wYq" = (
@@ -100679,7 +100687,7 @@ cdw
 ceA
 cbS
 cgX
-cbY
+sWn
 wSP
 hcZ
 cmv
