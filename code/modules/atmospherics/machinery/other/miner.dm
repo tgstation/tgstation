@@ -11,7 +11,7 @@
 	icon = 'icons/obj/atmospherics/components/miners.dmi'
 	icon_state = "miner"
 	density = FALSE
-	circuit = /obj/item/circuitboard/machine/gasminer
+	circuit = /obj/item/circuitboard/machine/gas_miner
 
 	var/spawn_id = null
 	var/spawn_temp = T20C
@@ -19,6 +19,7 @@
 	var/spawn_mol = 0
 	var/max_ext_mol = INFINITY
 	var/max_ext_kpa = 6500
+	var/set_ext_kpa = 2500
 	var/list/permitted_gases = list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma, /datum/gas/nitrous_oxide)
 	var/overlay_color = "#FFFFFF"
 
@@ -92,7 +93,7 @@
 		set_broken(TRUE)
 		return FALSE
 	var/datum/gas_mixture/G = OT.return_air()
-	if(G.return_pressure() > (max_ext_kpa - ((spawn_mol*spawn_temp*R_IDEAL_GAS_EQUATION)/(CELL_VOLUME))))
+	if(G.return_pressure() > (set_ext_kpa - ((spawn_mol*spawn_temp*R_IDEAL_GAS_EQUATION)/(CELL_VOLUME))))
 		status_message = "<span class='boldwarning'>EXTERNAL PRESSURE OVER THRESHOLD</span>"
 		set_broken(TRUE)
 		return FALSE
@@ -198,8 +199,11 @@
 	data["on"] = active
 	data["broken"] = broken
 	data["state"] = status_message
+
 	data["rate"] = round(spawn_mol)
 	data["max_rate"] = round(spawn_mol_max)
+	data["kpa_limit"] = set_ext_kpa
+	data["max_kpa"] = max_ext_kpa
 
 	var/datum/gas_mixture/air = return_air()
 	data["pressure"] = air.return_pressure()
@@ -237,6 +241,21 @@
 			if(.)
 				spawn_mol = CLAMP(rate, 0, spawn_mol_max)
 				investigate_log("was set to [spawn_mol] mol/s by [key_name(usr)]", INVESTIGATE_ATMOS)
+		if("limit")
+			var/limit = params["limit"]
+			if(limit == "max")
+				limit = max_ext_kpa
+				. = TRUE
+			else if(limit == "input")
+				limit = input("New output kpa limit (0-[max_ext_kpa] mol/s):", name, set_ext_kpa) as num|null
+				if(!isnull(limit) && !..())
+					. = TRUE
+			else if(text2num(limit) != null)
+				limit = text2num(limit)
+				. = TRUE
+			if(.)
+				set_ext_kpa = CLAMP(limit, 0, max_ext_kpa)
+				investigate_log("was set to [set_ext_kpa] kpa limit by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("mine")
 			spawn_id = null
 			var/mine_name = "nothing"
