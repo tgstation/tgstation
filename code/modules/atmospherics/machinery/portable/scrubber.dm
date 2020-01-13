@@ -105,7 +105,7 @@
 				on = FALSE
 				update_icon()
 		else if(on && holding)
-			investigate_log("[key_name(user)] started a transfer into [holding].<br>", INVESTIGATE_ATMOS)
+			investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/scrubber/ui_act(action, params)
 	if(..())
