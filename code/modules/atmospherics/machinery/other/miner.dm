@@ -322,32 +322,39 @@
 /obj/machinery/atmospherics/miner/n2o
 	name = "\improper N2O Gas Miner"
 	spawn_id = /datum/gas/nitrous_oxide
+	permitted_gases = list(/datum/gas/nitrous_oxide)
 	id_tag = ATMOS_GAS_MONITOR_MINER_N2O
 
 /obj/machinery/atmospherics/miner/nitrogen
 	name = "\improper N2 Gas Miner"
 	spawn_id = /datum/gas/nitrogen
+	permitted_gases = list(/datum/gas/nitrogen)
 	id_tag = ATMOS_GAS_MONITOR_MINER_N2
 
 /obj/machinery/atmospherics/miner/oxygen
 	name = "\improper O2 Gas Miner"
 	spawn_id = /datum/gas/oxygen
+	permitted_gases = list(/datum/gas/oxygen)
 	id_tag = ATMOS_GAS_MONITOR_MINER_O2
 
 /obj/machinery/atmospherics/miner/toxins
 	name = "\improper Plasma Gas Miner"
 	spawn_id = /datum/gas/plasma
+	permitted_gases = list(/datum/gas/plasma)
 	id_tag = ATMOS_GAS_MONITOR_MINER_TOX
 
 /obj/machinery/atmospherics/miner/carbon_dioxide
 	name = "\improper CO2 Gas Miner"
 	spawn_id = /datum/gas/carbon_dioxide
+	permitted_gases = list(/datum/gas/carbon_dioxide)
 	id_tag = ATMOS_GAS_MONITOR_MINER_CO2
 
 /obj/machinery/atmospherics/miner/bz
 	name = "\improper BZ Gas Miner"
 	spawn_id = /datum/gas/bz
+	permitted_gases = list(/datum/gas/bz)
 
 /obj/machinery/atmospherics/miner/water_vapor
 	name = "\improper Water Vapor Gas Miner"
 	spawn_id = /datum/gas/water_vapor
+	permitted_gases = list(/datum/gas/water_vapor)
