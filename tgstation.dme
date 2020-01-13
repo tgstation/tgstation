@@ -522,6 +522,8 @@
 #include "code\datums\elements\selfknockback.dm"
 #include "code\datums\elements\snail_crawl.dm"
 #include "code\datums\elements\squish.dm"
+#include "code\datums\elements\update_icon_blocker.dm"
+#include "code\datums\elements\update_icon_updates_onmob.dm"
 #include "code\datums\elements\waddling.dm"
 #include "code\datums\helper_datums\events.dm"
 #include "code\datums\helper_datums\getrev.dm"
