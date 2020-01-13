@@ -32,7 +32,7 @@
 
 	if(ishuman(M) && source.force && source.get_sharpness())
 		var/mob/living/carbon/human/H = M
-		if((H.health <= H.crit_threshold || (user.pulling == H && user.grab_state >= GRAB_NECK) || H.IsSleeping()) && user.zone_selected == BODY_ZONE_HEAD) // Only sleeping, neck grabbed, or crit, can be sliced.
+		if((user.pulling == H && user.grab_state >= GRAB_NECK) && user.zone_selected == BODY_ZONE_HEAD) // Only neck grabbed can be sliced.
 			if(H.has_status_effect(/datum/status_effect/neck_slice))
 				user.show_message("<span class='warning'>[H]'s neck has already been already cut, you can't make the bleeding any worse!</span>", MSG_VISUAL, \
 								"<span class='warning'>Their neck has already been already cut, you can't make the bleeding any worse!</span>")
