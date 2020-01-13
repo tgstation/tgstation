@@ -585,11 +585,14 @@ so as to remain in compliance with the most up-to-date laws."
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
 // Re-render all alerts - also called in /datum/hud/show_hud() because it's needed there
-/datum/hud/proc/reorganize_alerts()
+/datum/hud/proc/reorganize_alerts(mob/viewmob)
+	var/mob/screenmob = viewmob || mymob
+	if(!screenmob.client)
+		return
 	var/list/alerts = mymob.alerts
 	if(!hud_shown)
 		for(var/i = 1, i <= alerts.len, i++)
-			mymob.client.screen -= alerts[alerts[i]]
+			screenmob.client.screen -= alerts[alerts[i]]
 		return 1
 	for(var/i = 1, i <= alerts.len, i++)
 		var/obj/screen/alert/alert = alerts[alerts[i]]
@@ -609,7 +612,10 @@ so as to remain in compliance with the most up-to-date laws."
 			else
 				. = ""
 		alert.screen_loc = .
-		mymob.client.screen |= alert
+		screenmob.client.screen |= alert
+	if(!viewmob)
+		for(var/M in mymob.observers)
+			reorganize_alerts(M)
 	return 1
 
 /obj/screen/alert/Click(location, control, params)
