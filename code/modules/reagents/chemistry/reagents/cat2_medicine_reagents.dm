@@ -341,7 +341,8 @@
 			if(show_message)
 				to_chat(Carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 			SEND_SIGNAL(Carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
-			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && Carbies.getFireLoss() < 100) //Has to heal at least 200 burn before unhusking, not all through instabitaluri.
+			//Has to be at less than 100 burn damage and have 75 isntabitaluri before unhusking. Corpses dont metabolize.
+			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && Carbies.getFireLoss() < 100 && Carbies.reagents.has_reagent(/datum/reagent/medicine/C2/instabitaluri, 75))
 				Carbies.cure_husk("burn")
 	..()
 	return TRUE
