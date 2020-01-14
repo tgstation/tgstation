@@ -106,7 +106,7 @@
 				to_chat(usr, "<span class='alert'>Error: Insufficient points for [prize.equipment_name] on [I]!</span>")
 				flick(icon_deny, src)
 			else
-				if (I.mining_points -= prize.cost)
+				if ((I.mining_points -= prize.cost) + 1) //Bruh moment
 					to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
 					new prize.equipment_path(src.loc)
 					SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
