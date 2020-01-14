@@ -1,0 +1,4 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - rscadd: "tgui-next ntos chat"

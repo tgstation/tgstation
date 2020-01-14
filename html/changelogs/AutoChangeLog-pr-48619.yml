@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Fixed some metastation mapping issues. Mostly double cables, dead end atmos. Added two new APC's, Medbay Central and Kitchen Cold Room."

@@ -137,11 +137,11 @@
 		else
 			recharge_port = null
 
-/obj/machinery/computer/mech_bay_power_console/update_icon()
-	..()
+/obj/machinery/computer/mech_bay_power_console/update_overlays()
+	. = ..()
 	if(!recharge_port || !recharge_port.recharging_mech || !recharge_port.recharging_mech.cell || !(recharge_port.recharging_mech.cell.charge < recharge_port.recharging_mech.cell.maxcharge) || stat & (NOPOWER|BROKEN))
 		return
-	add_overlay("recharge_comp_on")
+	. += "recharge_comp_on"
 
 /obj/machinery/computer/mech_bay_power_console/Initialize()
 	. = ..()

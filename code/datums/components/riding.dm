@@ -20,6 +20,9 @@
 	var/ride_check_ridden_incapacitated = FALSE
 
 	var/del_on_unbuckle_all = FALSE
+	
+	/// If the "vehicle" is a mob, respect MOBILITY_MOVE on said mob.
+	var/respect_mob_mobility = TRUE
 
 /datum/component/riding/Initialize()
 	if(!ismovableatom(parent))
@@ -175,6 +178,10 @@
 			return
 		if(!Process_Spacemove(direction) || !isturf(AM.loc))
 			return
+		if(isliving(AM) && respect_mob_mobility)
+			var/mob/living/M = AM
+			if(!(M.mobility_flags & MOBILITY_MOVE))
+				return
 		step(AM, direction)
 
 		if((direction & (direction - 1)) && (AM.loc == next))		//moved diagonally

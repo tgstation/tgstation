@@ -11,16 +11,17 @@
 	. = ..()
 	update_icon()
 
-/obj/item/stack/arcadeticket/update_icon()
+/obj/item/stack/arcadeticket/update_icon_state()
 	var/amount = get_amount()
-	if((amount >= 12) && (amount > 0))
-		icon_state = "arcade-ticket_4"
-	else if((amount >= 6) && (amount > 0))
-		icon_state = "arcade-ticket_3"
-	else if((amount >= 2) && (amount > 0))
-		icon_state = "arcade-ticket_2"
-	else
-		icon_state = "arcade-ticket"
+	switch(amount)
+		if(12 to INFINITY)
+			icon_state = "arcade-ticket_4"
+		if(6 to 12)
+			icon_state = "arcade-ticket_3"
+		if(2 to 6)
+			icon_state = "arcade-ticket_2"
+		else
+			icon_state = "arcade-ticket"
 
 /obj/item/stack/arcadeticket/proc/pay_tickets()
 	amount -= 2
