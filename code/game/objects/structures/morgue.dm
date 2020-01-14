@@ -181,7 +181,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 			icon_state = "morgue1"
 		else
 			icon_state = "morgue2" // Dead, brainded mob.
-			var/list/compiled = recursive_mob_check(src, 0, 0) // Search for mobs in all contents.
+			var/list/compiled = GetAllContents(/mob/living) // Search for mobs in all contents.
 			if(!length(compiled)) // No mobs?
 				icon_state = "morgue3"
 				return
