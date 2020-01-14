@@ -52,7 +52,7 @@
 	if(ishuman(eater))
 		var/mob/living/carbon/human/H = eater
 		to_chat(H, "<span class='notice'>Your hair shapes into something... fruity?!</span>")
-		H.hairstyle = pick("Very Long Strawberry")
+		H.hairstyle = pick("Very Long Strawberry", "Very Long Watermelon")
 		H.update_hair()
 
 /datum/sprite_accessory/hair/garlic
@@ -61,3 +61,7 @@
 /datum/sprite_accessory/hair/garlic/strawberry
 	name = "Very Long Strawberry"
 	icon_state = "hair_vlongspotted"
+
+/datum/sprite_accessory/hair/garlic/watermelon
+	name = "Very Long Watermelon"
+	icon_state = "hair_unkeptline"
