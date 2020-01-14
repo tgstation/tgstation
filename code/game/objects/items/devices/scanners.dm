@@ -320,8 +320,7 @@ GENE SCANNER
 	if(M.tod && (M.stat == DEAD || ((HAS_TRAIT(M, TRAIT_FAKEDEATH)) && !advanced)))
 		render_list += "<span class='info ml-1'>Time of Death: [M.tod]</span>\n"
 		var/tdelta = round(world.time - M.timeofdeath)
-		if(tdelta < (DEFIB_TIME_LIMIT * 10))
-			render_list += "<span class='alert ml-1'><b>Subject died [DisplayTimeText(tdelta)] ago, defibrillation may be possible!</b></span>\n"
+		render_list += "<span class='alert ml-1'><b>Subject died [DisplayTimeText(tdelta)] ago.</b></span>\n"
 
 	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
