@@ -1,8 +1,18 @@
 //FALLOUT
 /area/f13
+	name = "wasteland"
 	icon = 'fallout/icons/turf/f13areas.dmi'
+	icon_state = "desert"
+	requires_power = FALSE
+	poweralm = FALSE
+	power_environ = FALSE
+	power_equip = FALSE
+	outdoors = TRUE
 	has_gravity = STANDARD_GRAVITY
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	lightswitch = FALSE //no. just no
+	ambientsounds = list('fallout/sound/f13ambience/wasteland.ogg', 'fallout/sound/f13ambience/sewer.ogg')
+	flags_1 = NONE //>desert >>has destroyed robo dirt on it
 
 /area/f13/admeme
 	icon_state = "secret"

@@ -59,8 +59,6 @@
 	icon_state = ""
 	layer = FLY_LAYER
 	bullet_bounce_sound = null
-	var/atom/movable/fullDark
-	var/ticker_time = 300
 
 /turf/closed/indestructible/splashscreen/New()
 	/*
@@ -70,26 +68,7 @@
 	*/
 
 	..()
-	src.fullDark = new/atom/movable{
-		icon = 'fallout/icons/splashscreen.dmi' //Replace with actual icon
-		icon_state = "transition" //Replace with actual state
-		layer = 61;
-		alpha = 0;
-		}(src)
 	icon_state = "title[rand(1,13)]"
-	switch_slide()
-
-/turf/closed/indestructible/splashscreen/proc/switch_slide()
-	unreveal_title()
-
-/turf/closed/indestructible/splashscreen/proc/unreveal_title()
-	animate(fullDark,alpha=255,time=10,easing=CUBIC_EASING)
-	addtimer(CALLBACK(src, .proc/reveal_title, 12)) //buffer of about 1/5 of the time of the animation, since they are not synchronized: the sleep happens on the server, but the animation is played for each client using directX. It's good to leave a buffer, but most of the time the directX will be much faster than the server anyway so you probably wont have any problems.
-
-/turf/closed/indestructible/splashscreen/proc/reveal_title()
-	icon_state = "title[rand(1,13)]"
-	animate(fullDark,alpha=0,time=10,easing=CUBIC_EASING)
-	addtimer(CALLBACK(src, .proc/switch_slide, ticker_time))
 
 /turf/closed/indestructible/splashscreen/vv_edit_var(var_name, var_value)
 	. = ..()
