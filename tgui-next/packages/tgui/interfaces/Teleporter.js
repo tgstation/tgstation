@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section } from '../components';
 
@@ -13,21 +12,16 @@ export const Teleporter = props => {
     target,
   } = data;
   return (
-    <Fragment>
+    <Section>
       {!power_station && (
-        <Section>
-          <Box color="bad" textAlign="center">
-            No power station linked.
-          </Box>
-        </Section>
+        <Box color="bad" textAlign="center">
+          No power station linked.
+        </Box>
       ) || (!teleporter_hub && (
-        <Section>
-          <Box color="bad" textAlign="center">
-            No hub linked.
-          </Box>
-        </Section>
+        <Box color="bad" textAlign="center">
+          No hub linked.
+        </Box>
       )) || (
-      <Section>
         <LabeledList>
           <LabeledList.Item label="Current Regime"
             buttons={(
@@ -69,8 +63,7 @@ export const Teleporter = props => {
             ))}
           </LabeledList.Item>
         </LabeledList>
-      </Section>
       )}
-    </Fragment>
+    </Section>
   );
 };
