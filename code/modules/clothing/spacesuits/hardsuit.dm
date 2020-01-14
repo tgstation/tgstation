@@ -155,7 +155,7 @@
 			to_chat(user, "<span class='warning'>The helmet of [src] does not require a new bulb.</span>")
 			return
 		var/obj/item/light/L = I
-		if(L.status != LIGHT_OK)
+		if(L.status)
 			to_chat(user, "<span class='warning'>This bulb is too damaged to use as a replacement!</span>")
 			return
 		if(do_after(user, 50, 1, src))
