@@ -1,4 +1,7 @@
 #define SUMMON_POSSIBILITIES 3
+#define CULT_VICTORY 1
+#define CULT_LOSS 0
+#define CULT_NARSIE_KILLED -1
 
 /datum/antagonist/cult
 	name = "Cultist"
@@ -369,22 +372,22 @@
 
 /datum/objective/eldergod/check_completion()
 	if(killed)
-		return -1 // You failed so hard that even the code went backwards.
+		return CULT_NARSIE_KILLED // You failed so hard that even the code went backwards.
 	return summoned || completed
 
 /datum/team/cult/proc/check_cult_victory()
 	for(var/datum/objective/O in objectives)
-		if(O.check_completion() == -1)
-			return -1
+		if(O.check_completion() == CULT_NARSIE_KILLED)
+			return CULT_NARSIE_KILLED
 		else if(!O.check_completion())
-			return 0
-	return 1
+			return CULT_LOSS
+	return CULT_VICTORY
 
 /datum/team/cult/roundend_report()
 	var/list/parts = list()
 	var/victory = check_cult_victory()
 
-	if(victory == -1) // Epic failure, you summoned your god and then someone killed it.
+	if(victory == CULT_NARSIE_KILLED) // Epic failure, you summoned your god and then someone killed it.
 		parts += "<span class='redtext big'>Nar'sie has been killed! The cult will haunt the universe no longer!</span>"
 	else if(victory)
 		parts += "<span class='greentext big'>The cult has succeeded! Nar'Sie has snuffed out another torch in the void!</span>"
