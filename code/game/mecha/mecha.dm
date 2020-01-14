@@ -926,7 +926,7 @@
 	return
 
 /obj/mecha/proc/moved_inside(mob/living/carbon/human/H)
-	if(H && H.client && H in range(1))
+	if(H && H.client && (H in range(1)))
 		occupant = H
 		H.forceMove(src)
 		H.update_mouse_pointer()

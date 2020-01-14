@@ -453,7 +453,7 @@
 	var/list/result = list()
 	for(var/m in group)
 		var/mob/M = m
-		if(!M.key || !M.client || (ignore_category && GLOB.poll_ignore[ignore_category] && M.ckey in GLOB.poll_ignore[ignore_category]))
+		if(!M.key || !M.client || (ignore_category && GLOB.poll_ignore[ignore_category] && (M.ckey in GLOB.poll_ignore[ignore_category])))
 			continue
 		if(be_special_flag)
 			if(!(M.client.prefs) || !(be_special_flag in M.client.prefs.be_special))

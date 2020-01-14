@@ -551,7 +551,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A simple, yet superb mixture of Vodka and orange juice. Just the thing for the tired engineer."
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/M)
-	if(M.mind && M.mind.assigned_role in list("Station Engineer", "Atmospheric Technician", "Chief Engineer")) //Engineers lose radiation poisoning at a massive rate.
+	var/static/list/increased_rad_loss = list("Station Engineer", "Atmospheric Technician", "Chief Engineer")
+	if(M.mind && (M.mind.assigned_role in increased_rad_loss)) //Engineers lose radiation poisoning at a massive rate.
 		M.radiation = max(M.radiation - 25, 0)
 	return ..()
 
