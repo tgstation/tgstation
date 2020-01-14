@@ -70,7 +70,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 	var/datum/movespeed_modifier/M = modtype
 	if(initial(M.variable))
 		CRASH("[modtype] is a variable modifier, and can never be cached.")
-	return GLOB.movespeed_modification_cache[modtype] || ((GLOB.movespeed_modification_cache[modtype] = new modtype))
+	return GLOB.movespeed_modification_cache[modtype] || (GLOB.movespeed_modification_cache[modtype] = new modtype)
 
 ///Add a move speed modifier to a mob. If a variable subtype is passed in as the first argument, it will make a new datum. If ID conflicts, it will overwrite the old ID.
 /mob/proc/add_movespeed_modifier(datum/movespeed_modifier/type_or_datum, update = TRUE)
@@ -143,8 +143,6 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		if(!LAZYACCESS(movespeed_modification, final.id))
 			inject = TRUE
 			modified = TRUE
-	else
-		CRASH("Invalid modifier")
 	if(!isnull(multiplicative_slowdown))
 		final.multiplicative_slowdown = multiplicative_slowdown
 		modified = TRUE
