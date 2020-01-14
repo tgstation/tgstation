@@ -69,9 +69,9 @@ GLOBAL_LIST_EMPTY(emote_list)
 				.[E.key] = list(E)
 			else
 				.[E.key] += E
-		else
+		else if(E.message) //Assuming all non-base emotes have this
 			stack_trace("Keyless emote: [E.type]")
-		
+
 		if(E.key_third_person) //This one is optional
 			if(!.[E.key_third_person])
 				.[E.key_third_person] = list(E)
