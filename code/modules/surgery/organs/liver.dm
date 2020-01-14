@@ -86,6 +86,8 @@
 	organ_flags = ORGAN_SYNTHETIC
 	toxTolerance = 2
 	toxLethality = 0.011
+	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
+
 	var/emp_vulnerability = 80	//Chance of permanent effects if emp-ed.
 
 /obj/item/organ/liver/cybernetic/tier2

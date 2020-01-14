@@ -434,6 +434,8 @@
 	icon_state = "lungs-c"
 	organ_flags = ORGAN_SYNTHETIC
 	safe_oxygen_min = 16
+	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
+
 	var/emp_vulnerability = 80	//Chance of permanent effects if emp-ed.
 
 /obj/item/organ/lungs/cybernetic/tier2
