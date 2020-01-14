@@ -2,7 +2,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	/obj/item/clothing/head/helmet/space,
 	/obj/item/clothing/head/welding,
 	/obj/item/clothing/head/mob_holder, //I am so very upset that this breaks things
-	/obj/item/clothing/head/chameleon \
+	/obj/item/clothing/head/chameleon/broken \
 	)))
 
 /mob/living/silicon/robot/attack_robot(mob/user)
