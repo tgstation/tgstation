@@ -24,14 +24,9 @@
 	desc = "A rotting hunk of wood."
 	icon = 'fallout/icons/turf/walls/f13wood_wall.dmi'
 
-/turf/closed/indestructible/f13matrix
-	name = "matrix"
-	desc = "<font color='#157206'>You suddenly realize the truth - there is no spoon.<br>Digital simulation ends here.</font>"
-	icon = 'fallout/icons/turf/walls/f13misc.dmi'
-
 /turf/closed/indestructible/f13/matrix //The Chosen One from Arroyo!
 	name = "matrix"
-	desc = "<font color='#6eaa2c'>You suddenly realize the truth - there is no spoon.<br>Digital simulation ends here.</font>"
+	desc = "<font color='#6eaa2c'>You suddenly realize the truth - there is no spoon.<br>Digital simulation ends here.</font> If you click and drag your character and release it on this wall, it will allow you to removed from the simulation."
 	icon = 'fallout/icons/turf/walls/f13misc.dmi'
 	icon_state = "matrix"
 
@@ -68,3 +63,4 @@
 	message_admins(dat)
 	log_admin(dat)
 	departing_mob.visible_message("<span class='notice'>[departing_mob == user ? "Out of their own volition, " : "Ushered by [user], "][departing_mob] crosses the border and departs the Mojave.</span>")
+	qdel(departing_mob)
