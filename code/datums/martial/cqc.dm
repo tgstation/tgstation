@@ -50,6 +50,7 @@
 		to_chat(A, "<span class='danger'>You slam [D] into the ground!</span>")
 		playsound(get_turf(A), 'sound/weapons/slam.ogg', 50, TRUE, -1)
 		D.apply_damage(10, BRUTE)
+		D.damage_record += new /datum/autopsy_record(src,"unarmed",BRUTE,10,"slam technique")
 		D.Paralyze(120)
 		log_combat(A, D, "slammed (CQC)")
 	return TRUE
@@ -65,6 +66,7 @@
 		var/atom/throw_target = get_edge_target_turf(D, A.dir)
 		D.throw_at(throw_target, 1, 14, A)
 		D.apply_damage(10, A.dna.species.attack_type)
+		D.damage_record += new /datum/autopsy_record(src,"unarmed",A.dna.species.attack_type,10,"kick technique")
 		log_combat(A, D, "kicked (CQC)")
 	if(D.IsParalyzed() && !D.stat)
 		log_combat(A, D, "knocked out (Head kick)(CQC)")
@@ -117,6 +119,7 @@
 			A.put_in_hands(I)
 		D.adjustStaminaLoss(50)
 		D.apply_damage(25, A.dna.species.attack_type)
+		D.damage_record += new /datum/autopsy_record(src,"unarmed",A.dna.species.attack_type,25,"consecutive CQC technique")
 	return TRUE
 
 /datum/martial_art/cqc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -151,6 +154,7 @@
 		bonus_damage += 5
 		picked_hit_type = "stomp"
 	D.apply_damage(bonus_damage, BRUTE)
+	D.damage_record += new /datum/autopsy_record(src,"unarmed",BRUTE,bonus_damage,"close-quarter combat")
 	if(picked_hit_type == "kick" || picked_hit_type == "stomp")
 		playsound(get_turf(D), 'sound/weapons/cqchit2.ogg', 50, TRUE, -1)
 	else
@@ -165,6 +169,7 @@
 		to_chat(A, "<span class='danger'>You leg sweep [D]!</span>")
 		playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 		D.apply_damage(10, BRUTE)
+		D.damage_record += new /datum/autopsy_record(src,"unarmed",BRUTE,10,"close-quarter combat")
 		D.Paralyze(60)
 		log_combat(A, D, "sweeped (CQC)")
 	return TRUE
@@ -187,6 +192,7 @@
 				A.put_in_hands(I)
 			D.Jitter(2)
 			D.apply_damage(5, A.dna.species.attack_type)
+			D.damage_record += new /datum/autopsy_record(src,"unarmed",A.dna.species.attack_type,5,"close-quarter combat")
 	else
 		D.visible_message("<span class='danger'>[A] fails to disarm [D]!</span>", \
 						"<span class='userdanger'>You're nearly disarmed by [A]!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, A)

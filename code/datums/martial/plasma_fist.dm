@@ -84,7 +84,7 @@
 		A.color = "#9C00FF"
 		flash_color(A, flash_color = "#9C00FF", flash_time = 3 SECONDS)
 		animate(A, color = oldcolor, time = 3 SECONDS)
-	
+
 
 /datum/martial_art/plasma_fist/proc/Apotheosis(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A.say("APOTHEOSIS!!", forced="plasma fist")
@@ -103,9 +103,9 @@
 
 	to_chat(A, "<span class='userdanger'>The explosion knocks your soul out of your body!</span>")
 	A.ghostize(FALSE) //prevents... horrible memes just believe me
-
-	A.apply_damage(rand(50,70), BRUTE)
-
+	var/dmg = rand(50,70)
+	A.apply_damage(dmg, BRUTE)
+	A.damage_record += new /datum/autopsy_record(src,"unarmed",BRUTE,dmg,"apotheosis technique")
 	addtimer(CALLBACK(src,.proc/Apotheosis_end, A), 6 SECONDS)
 	playsound(boomspot, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
 	explosion(boomspot,plasma_power,plasma_power*2,plasma_power*4,ignorecap = TRUE)

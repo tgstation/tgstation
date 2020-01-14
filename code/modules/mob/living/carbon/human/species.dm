@@ -1267,7 +1267,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block)
 			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block)
 			log_combat(user, target, "punched")
-		target.damage_record += damage
+		var/datum/autopsy_record/AR = new /datum/autopsy_record(src,"unarmed",user.dna.species.attack_type,damage)
+		target.damage_record += AR
 
 
 		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)

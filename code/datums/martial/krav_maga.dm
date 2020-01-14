@@ -94,6 +94,7 @@
 	to_chat(A, "<span class='danger'>You leg sweep [D]!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	D.apply_damage(5, BRUTE)
+	D.damage_record += new /datum/autopsy_record(src,"unarmed", BRUTE,5,"leg sweep")
 	D.Paralyze(40)
 	log_combat(A, D, "leg sweeped")
 	return 1
@@ -115,6 +116,7 @@
 	to_chat(A, "<span class='danger'>You karate chop [D]'s neck, rendering [D.p_them()] unable to speak!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
 	D.apply_damage(5, A.dna.species.attack_type)
+	D.damage_record += new /datum/autopsy_record(src,"unarmed",A.dna.species.attack_type,5,"neck chop")
 	if(D.silent <= 10)
 		D.silent = CLAMP(D.silent + 10, 0, 10)
 	log_combat(A, D, "neck chopped")
@@ -145,6 +147,7 @@
 	D.visible_message("<span class='danger'>[A] [picked_hit_type]s [D]!</span>", \
 					"<span class='userdanger'>You're [picked_hit_type]ed by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 	to_chat(A, "<span class='danger'>You [picked_hit_type] [D]!</span>")
+	D.damage_record += new /datum/autopsy_record(src,"unarmed",A.dna.species.attack_type,bonus_damage,"krav maga")
 	log_combat(A, D, "[picked_hit_type] with [name]")
 	return 1
 

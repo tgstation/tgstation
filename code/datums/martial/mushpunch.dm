@@ -13,7 +13,9 @@
 	D.visible_message("<span class='danger'>[A] [atk_verb]ed [D] with such inhuman strength that it sends [D.p_them()] flying backwards!</span>", \
 					"<span class='userdanger'>You're [atk_verb]ed by [A] with such inhuman strength that it sends you flying backwards!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
 	to_chat(A, "<span class='danger'>You [atk_verb] [D] with such inhuman strength that it sends [D.p_them()] flying backwards!</span>")
-	D.apply_damage(rand(15,30), A.dna.species.attack_type)
+	var/dmg = rand(15,30)
+	D.apply_damage(dmg, A.dna.species.attack_type)
+	D.damage_record += new /datum/autopsy_record(src,"unarmed",A.dna.species.attack_type,dmg,"mushpunch technique")
 	playsound(D, 'sound/effects/meteorimpact.ogg', 25, TRUE, -1)
 	var/throwtarget = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
 	D.throw_at(throwtarget, 4, 2, A)//So stuff gets tossed around at the same time.

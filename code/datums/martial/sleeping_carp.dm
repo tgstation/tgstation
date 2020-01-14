@@ -46,6 +46,7 @@
 		D.emote("scream")
 		D.dropItemToGround(D.get_active_held_item())
 		D.apply_damage(5, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+		D.damage_record += new /datum/autopsy_record(src,"unarmed",BRUTE,5,"wrist wrench technique")
 		D.Stun(60)
 		return TRUE
 
@@ -91,6 +92,7 @@
 						"<span class='userdanger'>Your jaw is kicked by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
 		to_chat(A, "<span class='danger'>You kick [D] in the jaw!</span>")
 		D.apply_damage(20, A.dna.species.attack_type, BODY_ZONE_HEAD)
+		D.damage_record += new /datum/autopsy_record(src,"unarmed",A.dna.species.attack_type,20,"head kick technique")
 		D.drop_all_held_items()
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, TRUE, -1)
 		D.Stun(80)
@@ -107,6 +109,7 @@
 		if(D.stat)
 			D.death() //FINISH HIM!
 		D.apply_damage(50, A.dna.species.attack_type, BODY_ZONE_CHEST)
+		D.damage_record += new /datum/autopsy_record(src,"unarmed",A.dna.species.attack_type,50,"elbow drop technique")
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 75, TRUE, -1)
 		return TRUE
 	return FALSE
@@ -137,7 +140,9 @@
 	D.visible_message("<span class='danger'>[A] [atk_verb]s [D]!</span>", \
 					"<span class='userdanger'>[A] [atk_verb]s you!</span>", null, null, A)
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
-	D.apply_damage(rand(10,15), BRUTE)
+	var/dmg = rand(10,15)
+	D.apply_damage(dmg, BRUTE)
+	D.damage_record += new /datum/autopsy_record(src,"unarmed",A.dna.species.attack_type,dmg,"martial technique")
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	if(prob(D.getBruteLoss()) && (D.mobility_flags & MOBILITY_STAND))
 		D.visible_message("<span class='warning'>[D] stumbles and falls!</span>", "<span class='userdanger'>The blow sends you to the ground!</span>")

@@ -67,11 +67,10 @@
 
 	if(force && M == user && user.client)
 		user.client.give_award(/datum/award/achievement/misc/selfouch, user)
-
+	var/datum/autopsy_record/AR = new /datum/autopsy_record(src,"weapon",damtype,force,name,sharpness,autopsy_description,FALSE)
+	M.damage_record += AR
 	user.do_attack_animation(M)
 	M.attacked_by(src, user)
-	if(force)
-		M.damage_record += src
 	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 
@@ -96,6 +95,7 @@
 		//only witnesses close by and the victim see a hit message.
 		log_combat(user, src, "attacked", I)
 	take_damage(I.force, I.damtype, "melee", 1)
+
 
 /mob/living/attacked_by(obj/item/I, mob/living/user)
 	send_item_attack_message(I, user)

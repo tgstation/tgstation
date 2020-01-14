@@ -45,8 +45,12 @@
 							"<span class='userdanger'>You're [atk_verb]ed by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
 			to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
 			playsound(get_turf(D), 'sound/weapons/punch1.ogg', 40, TRUE, -1)
-			D.apply_damage(rand(5,10), A.dna.species.attack_type, BODY_ZONE_HEAD)
-			A.apply_damage(rand(5,10), A.dna.species.attack_type, BODY_ZONE_HEAD)
+			var/dmg = rand(5,10)
+			D.apply_damage(dmg, A.dna.species.attack_type, BODY_ZONE_HEAD)
+			A.apply_damage(dmg, A.dna.species.attack_type, BODY_ZONE_HEAD)
+			var/datum/autopsy_record/AR = new /datum/autopsy_record(src,"unarmed",A.dna.species.attack_type,dmg,"psycho attack")
+			D.damage_record += AR
+			A.damage_record += AR
 			if(!istype(D.head,/obj/item/clothing/head/helmet/) && !istype(D.head,/obj/item/clothing/head/hardhat))
 				D.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 			A.Stun(rand(10,45))
@@ -57,7 +61,9 @@
 			D.visible_message("<span class='danger'>[A] [atk_verb]s [D] with such inhuman strength that it sends [D.p_them()] flying backwards!</span>", \
 							"<span class='userdanger'>You're [atk_verb]ed by [A] with such inhuman strength that it sends you flying backwards!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
 			to_chat(A, "<span class='danger'>You [atk_verb] [D] with such inhuman strength that it sends [D.p_them()] flying backwards!</span>")
-			D.apply_damage(rand(15,30), A.dna.species.attack_type)
+			var/dmg2 = rand(15,30)
+			D.apply_damage(dmg2, A.dna.species.attack_type)
+			D.damage_record += new /datum/autopsy_record(src,"unarmed",A.dna.species.attack_type,dmg2,"psycho attack")
 			playsound(get_turf(D), 'sound/effects/meteorimpact.ogg', 25, TRUE, -1)
 			var/throwtarget = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
 			D.throw_at(throwtarget, 4, 2, A)//So stuff gets tossed around at the same time.
