@@ -5,8 +5,8 @@
 	icon_keyboard = "teleport_key"
 	light_color = LIGHT_COLOR_BLUE
 	circuit = /obj/item/circuitboard/computer/teleporter
-	ui_x = 300
-	ui_y = 200
+	ui_x = 450
+	ui_y = 130
 	var/regime_set = "Teleporter"
 	var/id
 	var/obj/machinery/teleport/station/power_station
@@ -46,13 +46,12 @@
 	data["teleporter_hub"] = power_station?.teleporter_hub ? TRUE : FALSE
 	data["regime_set"] = regime_set
 	data["target"] = !target ? "None" : "[get_area(target)] [(regime_set != "Gate") ? "" : "Teleporter"]"
+	data["calibrating"] = calibrating
 
-	if(calibrating)
-		data["calibration"] = "In Progress"
-	else if(power_station?.teleporter_hub?.calibrated || power_station?.teleporter_hub?.accuracy >= 3)
-		data["calibration"] = "Optimal"
+	if(power_station?.teleporter_hub?.calibrated || power_station?.teleporter_hub?.accuracy >= 3)
+		data["calibrated"] = TRUE
 	else
-		data["calibration"] = "Sub-Optimal"
+		data["calibrated"] = FALSE
 
 	return data
 
