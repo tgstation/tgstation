@@ -116,6 +116,11 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	..()
 
+/obj/item/clothing/suit/space/hardsuit/examine(mob/user)
+	. = ..()
+	if(!helmet && helmettype)
+		. += "<span class'notice'> The helmet on [src] seems to be malfunctioning. It may be repairable with a welder.</span>"
+
 /obj/item/clothing/suit/space/hardsuit/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/tank/jetpack/suit))
 		if(jetpack)
@@ -142,6 +147,18 @@
 		jetpack = null
 		to_chat(user, "<span class='notice'>You successfully remove the jetpack from [src].</span>")
 		return
+	else if(I.tool_behaviour == TOOL_WELDER && helmettype)
+		if(src == user.get_item_by_slot(ITEM_SLOT_OCLOTHING))
+			to_chat(user, "<span class='warning'> You cannot repair the helmet of [src] while wearing it.</span>")
+			return
+		if(helmet)
+			to_chat(user, "<span class='warning'> The helmet of [src] does not require repairs.</span>")
+			return
+		if(!I.tool_start_check(user))
+			return
+		if(I.use_tool(src, user, 100, 10, 100))
+			helmet = new helmettype(src)
+			to_chat(user, "<span class='notice'> You have successfully repaired [src]'s helmet.</span>")
 	return ..()
 
 
