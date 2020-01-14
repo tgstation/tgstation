@@ -1,0 +1,6 @@
+author: "JJRcop"
+delete-after: True
+changes: 
+  - rscadd: "New proximity crew pinpointer."
+  - balance: "Paramedic's crew pinpointer replaced with proximity crew pinpointer."
+  - balance: "The crew monitor was moved to premium items in nanomed, same with the handheld crew pinpointer"

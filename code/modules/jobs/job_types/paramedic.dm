@@ -31,7 +31,7 @@
 	belt = /obj/item/storage/belt/medical/paramedic
 	id = /obj/item/card/id
 	l_pocket = /obj/item/pda/medical
-	r_pocket = /obj/item/pinpointer/crew
+	r_pocket = /obj/item/pinpointer/crew/prox
 	backpack_contents = list(/obj/item/roller=1)
 	pda_slot = ITEM_SLOT_LPOCKET
 

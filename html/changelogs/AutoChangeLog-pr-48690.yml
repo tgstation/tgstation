@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - admin: "Added another SDQL option. Using \"UPDATE selectors SET #null=value\" will now resolve value and discard the return. This is useful if you only care about the side effect of a proc."

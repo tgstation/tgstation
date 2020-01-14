@@ -1,0 +1,8 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - rscadd: "Added ERP"
+  - bugfix: "champion belt sprite now shows again"
+  - bugfix: "centcom commanders and officials have mindshield implants"
+  - imageadd: "a couple of ert related sprites have been added"
+  - tweak: "ert members start with hailers on instead of them being in backpack"

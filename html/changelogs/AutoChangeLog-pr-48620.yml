@@ -1,5 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Various Kilo Station mapping fixes. Station connected caves are now properly low pressure."
-  - balance: "Kilo Station solars are no longer connected roundstart."
