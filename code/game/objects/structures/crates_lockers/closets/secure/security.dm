@@ -204,9 +204,6 @@
 	new /obj/item/pinpointer/crew(src)
 	new /obj/item/twohanded/binoculars(src)
 	new /obj/item/storage/box/rxglasses/spyglasskit(src)
-	new /obj/item/retractor(src)
-	new /obj/item/scalpel(src)
-	new /obj/item/cautery(src)
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections"
