@@ -269,7 +269,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	if(prob(10))
 		to_chat(owner, "<span class='small boldannounce'>auth 'akjv9c88asdf12nb' hunter2</span>")
 	else
-		to_chat(owner, "<span class='small boldannounce'>auth 'akjv9c88asdf12nb' ******************</span>")
+		to_chat(owner, "<span class='small boldannounce'>auth 'akjv9c88asdf12nb' *******</span>")
 	owner.playsound_local(owner, 'sound/items/timer.ogg', 50, 0)
 	sleep(30)
 	if(!owner || QDELETED(owner))
@@ -305,7 +305,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	if(prob(10))
 		to_chat(owner, "<span class='small boldannounce'>hunter2</span>")
 	else
-		to_chat(owner, "<span class='small boldannounce'>******************</span>")
+		to_chat(owner, "<span class='small boldannounce'>*******</span>")
 	sleep(40)
 	if(!owner || QDELETED(owner))
 		return
