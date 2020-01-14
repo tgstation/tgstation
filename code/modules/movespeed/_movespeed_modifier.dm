@@ -7,7 +7,7 @@
 	var/variable = FALSE
 
 	/// Unique ID. You can never have different modifications with the same ID
-	var/id = "ERROR"
+	var/id
 
 	/// Higher ones override lower priorities. This is NOT used for ID, ID must be unique, if it isn't unique the newer one overwrites automatically if overriding.
 	var/priority = 0
@@ -101,14 +101,13 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 			type_id_datum = get_cached_movespeed_modifier(type_id_datum)
 		else
 			type_id_datum = initial(type_id_datum.id)
-	if(istype(type_id_datum))
+	else
 		type_id_datum = type_id_datum.id
 	if(!istext(type_id_datum))
 		CRASH("Invalid ID")
 	if(!LAZYACCESS(movespeed_modification, type_id_datum))
 		return FALSE
 	LAZYREMOVE(movespeed_modification, type_id_datum)
-	UNSETEMPTY(movespeed_modification)
 	if(update)
 		update_movespeed(FALSE)
 	return TRUE
@@ -128,14 +127,14 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 	var/datum/movespeed_modifier/final
 	if(istext(type_id_datum))
 		final = LAZYACCESS(movespeed_modification, type_id_datum)
-		if(!istype(final))
+		if(!final)
 			CRASH("Couldn't find existing modification when only provided an ID.")
 	else if(ispath(type_id_datum))
 		if(!initial(type_id_datum.variable))
 			CRASH("Not a variable modifier")
 		var/id = initial(type_id_datum.id)
 		final = LAZYACCESS(movespeed_modification, id)
-		if(!istype(final))
+		if(!final)
 			final = new type_id_datum
 			inject = TRUE
 			modified = TRUE
@@ -172,7 +171,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 /mob/proc/has_movespeed_modifier(datum/movespeed_modifier/datum_type_id)
 	if(ispath(datum_type_id))
 		datum_type_id = get_cached_movespeed_modifier(datum_type_id)
-	if(istype(datum_type_id))
+	else if(!istext(datum_type_id))
 		datum_type_id = datum_type_id.id
 	return LAZYACCESS(movespeed_modification, datum_type_id)
 
