@@ -4,7 +4,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "signmaker_med"
 	var/obj/structure/bed/holobed/loaded = null
-	var/holo_range = 4
+	var/holo_range = 7
 
 
 /obj/item/holobed_projector/Destroy()
@@ -55,8 +55,6 @@
 	playsound(get_turf(src), 'sound/machines/chime.ogg', 30, TRUE)
 	new /obj/effect/temp_visual/dir_setting/firing_effect/magic(get_turf(loaded))
 
-	loaded.handle_unbuckling()
-	loaded.visible_message("<span class='warning'>[loaded] suddenly flickers and vanishes!</span>")
 	qdel(loaded)
 	loaded = null
 
@@ -95,8 +93,22 @@
 	buildstacktype = null
 	buildstackamount = 0
 	bolts = FALSE
-	resistance_flags = INDESTRUCTIBLE | ACID_PROOF | FREEZE_PROOF | UNACIDABLE | FIRE_PROOF | LAVA_PROOF //It's basically indestructible except for EMPs.
+	max_integrity = 1 // A single attack will dissipate it.
+	integrity_failure = 0
+	resistance_flags = ACID_PROOF | FREEZE_PROOF | UNACIDABLE | FIRE_PROOF | LAVA_PROOF //It's basically indestructible except for EMPs and physical dissipation.
 	var/obj/item/holobed_projector/projector = null
+
+/obj/structure/bed/holobed/Destroy()
+	if(projector)
+		projector.loaded = null //Get rid of the holobed this is projecting
+
+	new /obj/effect/temp_visual/dir_setting/firing_effect/magic(src.loc)
+	handle_unbuckling()
+	visible_message("<span class='warning'>[src] suddenly flickers and vanishes!</span>")
+	return ..()
+
+/obj/structure/bed/holobed/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	playsound(src, 'sound/effects/empulse.ogg', 50, TRUE)
 
 /obj/structure/bed/holobed/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
@@ -104,6 +116,9 @@
 		return
 	else
 		return ..()
+
+/obj/structure/bed/holobed/deconstruct(disassembled = TRUE)
+	qdel(src)
 
 /obj/structure/bed/holobed/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/holobed_projector))
