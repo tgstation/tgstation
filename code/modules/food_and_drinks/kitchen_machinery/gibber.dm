@@ -38,7 +38,7 @@
 			if(M.rating >= 2)
 				. += "<span class='notice'>Gibber has been upgraded to process inorganic materials.</span>"
 
-/obj/machinery/gibber/update_icon()
+/obj/machinery/gibber/update_overlays()
 	cut_overlays()
 	if (dirty)
 		add_overlay("grbloody")

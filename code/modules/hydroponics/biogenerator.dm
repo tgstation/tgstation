@@ -60,7 +60,7 @@
 /obj/machinery/biogenerator/on_reagent_change(changetype)			//When the reagents change, change the icon as well.
 	update_icon()
 
-/obj/machinery/biogenerator/update_icon()
+/obj/machinery/biogenerator/update_icon_state()
 	if(panel_open)
 		icon_state = "biogen-empty-o"
 	else if(!src.beaker)
@@ -69,7 +69,6 @@
 		icon_state = "biogen-stand"
 	else
 		icon_state = "biogen-work"
-	return
 
 /obj/machinery/biogenerator/attackby(obj/item/O, mob/user, params)
 	if(user.a_intent == INTENT_HARM)

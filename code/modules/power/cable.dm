@@ -121,7 +121,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		invisibility = i ? INVISIBILITY_MAXIMUM : 0
 	update_icon()
 
-/obj/structure/cable/update_icon()
+/obj/structure/cable/update_icon_state()
 	if(!linked_dirs)
 		icon_state = "[cable_layer]-noconnection"
 	else
