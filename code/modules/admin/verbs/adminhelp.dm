@@ -203,7 +203,6 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		if(admin_number_present <= 0)
 			to_chat(C, "<span class='notice'>No active admins are online, your adminhelp was sent through TGS to admins who are available. This may use IRC or Discord.</span>")
 			heard_by_no_admins = TRUE
-	SSblackbox.LogAhelp(id, "Ticket Opened", msg, initiator.ckey)
 	GLOB.ahelp_tickets.active_tickets += src
 
 /datum/admin_help/Destroy()
@@ -271,6 +270,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	//show it to the person adminhelping too
 	to_chat(initiator, "<span class='adminnotice'>PM to-<b>Admins</b>: <span class='linkify'>[msg]</span></span>")
+	SSblackbox.LogAhelp(id, "Ticket Opened", msg, null, initiator.ckey)
 
 //Reopen a closed ticket
 /datum/admin_help/proc/Reopen()
@@ -326,7 +326,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		SSblackbox.record_feedback("tally", "ahelp_stats", 1, "closed")
 		var/msg = "Ticket [TicketHref("#[id]")] closed by [key_name]."
 		message_admins(msg)
-		SSblackbox.LogAhelp(id, "Closed", "Closed by [usr.key]", usr.ckey)
+		SSblackbox.LogAhelp(id, "Closed", "Closed by [usr.key]", null, usr.ckey)
 		log_admin_private(msg)
 
 //Mark open ticket as resolved/legitimate, returns ahelp verb
@@ -345,7 +345,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		SSblackbox.record_feedback("tally", "ahelp_stats", 1, "resolved")
 		var/msg = "Ticket [TicketHref("#[id]")] resolved by [key_name]"
 		message_admins(msg)
-		SSblackbox.LogAhelp(id, "Resolved", "Resolved by [usr.key]", usr.ckey)
+		SSblackbox.LogAhelp(id, "Resolved", "Resolved by [usr.key]", null, usr.ckey)
 		log_admin_private(msg)
 
 //Close and return ahelp verb, use if ticket is incoherent
@@ -367,7 +367,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	message_admins(msg)
 	log_admin_private(msg)
 	AddInteraction("Rejected by [key_name].")
-	SSblackbox.LogAhelp(id, "Rejected", "Rejected by [usr.key]", usr.ckey)
+	SSblackbox.LogAhelp(id, "Rejected", "Rejected by [usr.key]", null, usr.ckey)
 	Close(silent = TRUE)
 
 //Resolve ticket with IC Issue message
@@ -386,7 +386,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	message_admins(msg)
 	log_admin_private(msg)
 	AddInteraction("Marked as IC issue by [key_name]")
-	SSblackbox.LogAhelp(id, "IC Issue", "Marked as IC issue [usr.key]", usr.ckey)
+	SSblackbox.LogAhelp(id, "IC Issue", "Marked as IC issue by [usr.key]", null,  usr.ckey)
 	Resolve(silent = TRUE)
 
 //Show the ticket panel
