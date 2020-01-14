@@ -1,0 +1,5 @@
+author: "Fhaxaris"
+delete-after: True
+changes: 
+  - bugfix: "the bluespace randomness generator is no longer being used incorrectly"
+  - bugfix: "nanites getting removed all at once when you get shocked, heavy sleeping being really random if it actually increases the time you sleep, the scary cloning sound (???), and lightbulbs randomly pretending you have insulated gloves are all fixed."

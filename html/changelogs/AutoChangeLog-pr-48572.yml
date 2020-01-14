@@ -1,4 +1,0 @@
-author: "floyd"
-delete-after: True
-changes: 
-  - code_imp: "skills now use dictionaries for modifiers"

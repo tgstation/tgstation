@@ -52418,9 +52418,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/research{
-	abandoned = "47, 9";
 	name = "Genetics Lab";
-	req_access_txt = "47"
+	req_access_txt = "9"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4

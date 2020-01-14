@@ -47,6 +47,10 @@
 	. = ..()
 	create_reagents(10)
 
+/obj/item/toy/waterballoon/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
 /obj/item/toy/waterballoon/attack(mob/living/carbon/human/M, mob/user)
 	return
 
@@ -101,7 +105,7 @@
 		icon_state = "burst"
 		qdel(src)
 
-/obj/item/toy/waterballoon/update_icon()
+/obj/item/toy/waterballoon/update_icon_state()
 	if(src.reagents.total_volume >= 1)
 		icon_state = "waterballoon"
 		item_state = "balloon"
@@ -245,8 +249,8 @@
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
 	var/amount_left = 7
 
-/obj/item/toy/ammo/gun/update_icon()
-	src.icon_state = text("357OLD-[]", src.amount_left)
+/obj/item/toy/ammo/gun/update_icon_state()
+	icon_state = "357OLD-[amount_left]"
 
 /obj/item/toy/ammo/gun/examine(mob/user)
 	. = ..()
@@ -741,15 +745,16 @@
 	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
 	update_icon()
 
-/obj/item/toy/cards/deck/update_icon()
-	if(cards.len > 26)
-		icon_state = "deck_[deckstyle]_full"
-	else if(cards.len > 10)
-		icon_state = "deck_[deckstyle]_half"
-	else if(cards.len > 0)
-		icon_state = "deck_[deckstyle]_low"
-	else if(cards.len == 0)
-		icon_state = "deck_[deckstyle]_empty"
+/obj/item/toy/cards/deck/update_icon_state()
+	switch(cards.len)
+		if(27 to INFINITY)
+			icon_state = "deck_[deckstyle]_full"
+		if(11 to 27)
+			icon_state = "deck_[deckstyle]_half"
+		if(1 to 11)
+			icon_state = "deck_[deckstyle]_low"
+		else
+			icon_state = "deck_[deckstyle]_empty"
 
 /obj/item/toy/cards/deck/attack_self(mob/user)
 	if(cooldown < world.time - 50)

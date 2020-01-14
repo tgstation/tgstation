@@ -8,7 +8,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/C2/instabitaluri = 25)
 	build_path = /obj/item/bodypart/l_arm
-	category = list("initial","human","lizard","fly","moth","plasmaman")
+	category = list("initial","human","lizard","moth","plasmaman","ethereal")
 
 /datum/design/rightarm
 	name = "Right Arm"
@@ -16,7 +16,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/C2/instabitaluri = 25)
 	build_path = /obj/item/bodypart/r_arm
-	category = list("initial","human","lizard","fly","moth","plasmaman")
+	category = list("initial","human","lizard","moth","plasmaman","ethereal")
 
 /datum/design/leftleg
 	name = "Left Leg"
@@ -24,7 +24,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/C2/instabitaluri = 25)
 	build_path = /obj/item/bodypart/l_leg
-	category = list("initial","human","lizard","fly","moth","plasmaman")
+	category = list("initial","human","lizard","moth","plasmaman","ethereal")
 
 /datum/design/rightleg
 	name = "Right Leg"
@@ -32,7 +32,9 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/C2/instabitaluri = 25)
 	build_path = /obj/item/bodypart/r_leg
-	category = list("initial","human","lizard","fly","moth","plasmaman")
+	category = list("initial","human","lizard","moth","plasmaman","ethereal")
+
+//Non-limb limb designs
 
 /datum/design/armblade
 	name = "Arm Blade"

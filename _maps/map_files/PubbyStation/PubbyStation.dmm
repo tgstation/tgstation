@@ -27491,7 +27491,7 @@
 "bsr" = (
 /obj/machinery/dna_scannernew,
 /obj/machinery/camera{
-	c_tag = "Genetics Cloning";
+	c_tag = "Cloning Lab";
 	dir = 4;
 	network = list("ss13","medbay")
 	},
@@ -27656,7 +27656,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/camera,
+/obj/machinery/camera{
+	c_tag = "Medbay Cryogenics";
+	network = list("ss13","medbay")
+	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bsF" = (
@@ -27692,7 +27695,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -27979,7 +27981,7 @@
 	},
 /obj/machinery/door/airlock/research{
 	name = "Xenobiology Lab";
-	req_access_txt = "55"
+	req_one_access_txt = "55, 9"
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
@@ -30681,6 +30683,7 @@
 	dir = 8
 	},
 /obj/machinery/camera{
+	c_tag = "Medbay Treatment";
 	dir = 4;
 	network = list("ss13","medbay")
 	},
@@ -43200,7 +43203,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/machinery/camera/emp_proof{
+/obj/machinery/camera{
 	c_tag = "Engineering Port Aft";
 	dir = 1
 	},
@@ -46562,7 +46565,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -49967,13 +49969,13 @@
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
 "fhE" = (
-/obj/machinery/camera/emp_proof{
-	c_tag = "Engine Containment Port Aft";
-	dir = 1;
-	network = list("engine")
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
+	},
+/obj/machinery/camera{
+	c_tag = "Engineering Supermatter Port Aft";
+	dir = 1;
+	network = list("ss13","engine")
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -50119,12 +50121,12 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "fwi" = (
-/obj/machinery/camera/emp_proof{
-	c_tag = "Engine Containment Starboard Fore";
-	network = list("engine")
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Engineering Supermatter Port Fore";
+	network = list("ss13","engine")
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -51025,6 +51027,13 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/engine,
 /area/engine/engineering)
+"hDD" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "hDG" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Auxillary Base Construction";
@@ -51291,6 +51300,16 @@
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
+"igu" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Engineering Supermatter Starboard Fore";
+	network = list("ss13","engine")
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
 "igE" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
@@ -51547,10 +51566,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/camera/emp_proof{
-	c_tag = "Engine Containment Starboard Fore";
+/obj/machinery/camera{
+	c_tag = "Engineering Supermatter Starboard Mid";
 	dir = 8;
-	network = list("engine")
+	network = list("ss13","engine")
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -52710,6 +52729,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"luM" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "lzJ" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/carpet,
@@ -53925,7 +53951,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/machinery/camera/emp_proof{
+/obj/machinery/camera{
 	c_tag = "Engineering Starboard Aft";
 	dir = 1
 	},
@@ -54594,14 +54620,13 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "pKg" = (
-/obj/machinery/camera/emp_proof{
-	c_tag = "Engine Containment Starboard Aft";
-	dir = 1;
-	network = list("engine");
-	pixel_x = 22
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
+	},
+/obj/machinery/camera{
+	c_tag = "Engineering Supermatter Starboard Aft";
+	dir = 1;
+	network = list("ss13","engine")
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -56502,10 +56527,10 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/camera/emp_proof{
-	c_tag = "Engine Containment Starboard Fore";
+/obj/machinery/camera{
+	c_tag = "Engineering Supermatter Port Mid";
 	dir = 4;
-	network = list("engine")
+	network = list("ss13","engine")
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -81965,8 +81990,8 @@ aHE
 aAL
 aAL
 rlV
-aDZ
-aGV
+aAL
+luM
 aAL
 aAL
 aQA
@@ -82223,7 +82248,7 @@ aIL
 aDZ
 aDZ
 aDZ
-aGV
+hDD
 aDZ
 aDZ
 aQB
@@ -91030,7 +91055,7 @@ cci
 cam
 ogX
 cbj
-fwi
+igu
 vPX
 jBn
 mUa

@@ -23,7 +23,9 @@
 	var/inertia_moving = 0
 	var/inertia_next_move = 0
 	var/inertia_move_delay = 5
-	var/pass_flags = 0
+	var/pass_flags = NONE
+	/// If false makes CanPass call CanPassThrough on this type instead of using default behaviour
+	var/generic_canpass = TRUE
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
 	var/atom/movable/moving_from_pull		//attempt to resume grab after moving instead of before.
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
@@ -648,10 +650,15 @@
 /atom/movable/proc/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	return FALSE
 
-/atom/movable/CanPass(atom/movable/mover, turf/target)
+/atom/movable/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(mover in buckled_mobs)
-		return 1
-	return ..()
+		return TRUE
+
+/// Returns true or false to allow src to move through the blocker, mover has final say
+/atom/movable/proc/CanPassThrough(atom/blocker, turf/target, blocker_opinion)
+	SHOULD_CALL_PARENT(TRUE)
+	return blocker_opinion
 
 // called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /atom/movable/proc/on_exit_storage(datum/component/storage/concrete/S)

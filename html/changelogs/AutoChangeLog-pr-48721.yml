@@ -1,0 +1,5 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "Fixed shield wall generators in the abandoned space zoo ruin attempting to spawn powered"
+  - tweak: "Replaced the magical infinite charge SMES in the abandoned space zoo ruin with a regular one"
