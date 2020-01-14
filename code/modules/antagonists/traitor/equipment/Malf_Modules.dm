@@ -266,7 +266,10 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	sleep(3)
 	if(!owner || QDELETED(owner))
 		return
-	to_chat(owner, "<span class='small boldannounce'>auth 'akjv9c88asdf12nb' ******************</span>")
+	if(prob(10))
+		to_chat(owner, "<span class='small boldannounce'>auth 'akjv9c88asdf12nb' hunter2</span>")
+	else
+		to_chat(owner, "<span class='small boldannounce'>auth 'akjv9c88asdf12nb' ******************</span>")
 	owner.playsound_local(owner, 'sound/items/timer.ogg', 50, 0)
 	sleep(30)
 	if(!owner || QDELETED(owner))
