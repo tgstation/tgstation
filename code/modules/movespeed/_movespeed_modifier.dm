@@ -27,7 +27,7 @@
 
 /*! How move speed for mobs works
 
-Move speed is now calculated by using a list of movespeed modifiers, which is a list itself (to avoid datum overhead)
+Move speed is now calculated by using modifier datums which are added to mobs. Some of them (nonvariable ones) are globally cached, the variable ones are instanced and changed based on need.
 
 This gives us the ability to have multiple sources of movespeed, reliabily keep them applied and remove them when they should be
 
@@ -79,8 +79,6 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 			type_or_datum = get_cached_movespeed_modifier(type_or_datum)
 		else
 			type_or_datum = new type_or_datum
-	if(!istype(type_or_datum))
-		CRASH("Invalid modification datum")
 	var/oldpriority
 	var/datum/movespeed_modifier/existing = LAZYACCESS(movespeed_modification, type_or_datum.id)
 	if(existing)
@@ -138,7 +136,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 			final = new type_id_datum
 			inject = TRUE
 			modified = TRUE
-	else if(istype(type_id_datum))
+	else
 		if(!initial(type_id_datum.variable))
 			CRASH("Not a variable modifier")
 		final = type_id_datum
@@ -238,7 +236,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 	var/list/assembled = list()
 	for(var/our_id in movespeed_modification)
 		var/datum/movespeed_modifier/M = movespeed_modification[our_id]
-		if(!istype(M) || movespeed_data_null_check(M))
+		if(movespeed_data_null_check(M))
 			movespeed_modification -= our_id
 			continue
 		var/our_priority = M.priority
