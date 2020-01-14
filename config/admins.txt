@@ -4,67 +4,83 @@
 #Ranks will match to those with the same name in admin_ranks.txt, if a match isn't found the user won't be adminned.
 #If SQL-based admin loading is enabled, admins listed here will always be loaded first and will override any duplicate entries in the database.
 
+#Fulp Crew
 
 TheSwain = Fulp Crew
 Clowno = Fulp Crew
-#fulpstation = Fulp Crew
 Oney = Fulp Crew
 tomamoto = Fulp Crew
-Grupert87 = Admin
-Grupert99 = Admin
-Krinkels = Admin
-Rumpelgeist = Admin
-ImpendingRiot = Moderator
-#FaKanza = Admin
-#Trickytyfly = Admin
-Coolsuf6 = Admin
-Coolsurf6 = Admin
-#ADMINS
-
-saladata = Admin
-RootVeggie = Admin
-Hugh Mann = Admin
-Krzychukoko = Admin
-Hestymk1 = Admin
-Patrick10ghost = Admin
-DrachenKlaue = Admin
-ChocolateJ = Admin
-Axolotl123 = Admin
-#Qustinnus = Admin removing this abusive boy
-Idontcareacount = Admin
-Ss4gogeta0 = Fulp Crew
 Windarkata = Fulp Crew
-Bricksqwad = Admin
+
+#ADMINS
+Patrick10ghost = Admin
 Ishiro = Admin
 hiimchros = Admin
 InkPacket = Admin
 Kasabaru = Admin
-RaveMaster93 = Admin
 Dr. Fake Name = Admin
 tamaguen = Admin
+Misdoubtful = Admin
+
+#Admin Jrs
+Glubtok = Admin Jr.
+Shadowflame909 = Admin Jr.
+Samuuu3 = Admin Jr.
+SpacingNevada = Admin Jr.
+
+#Admin Candidates
+BLU_REMOTE = Admin Candidate
+papaporopaprito = Admin Candidate
+BringTheBoom = Admin Candidate
+Saliferous = Admin Candidate
 
 #MODERATORS
-Hydraliks = Moderator
-DrTarry = Moderator
-HorusTheHelpful = Moderator
-M.Green = Moderator
-Bobalobdob = Moderator
-The P.I.S.S. = Moderator
 Shmiff = Moderator
-#HeavenDIO = Moderator
-SuperStimpy = Moderator
-BLU_REMOTE = Admin Candidate
-shlomobergerstein = Admin Jr.
-#Evilsack = Moderator
-#Malgover = Moderator
-Misdoubtful = Admin Jr.
-Shadowflame909 = Admin Jr.
-Glubtok = Admin Candidate
-BringTheBoom = Moderator
 Heliocintrini = Moderator
-
-#TRIAL ADMINS
-BLANK = Admin Jr.
+TheTeenyTiny = Moderator
+Sliggist = Moderator
+Guillaume Prata = Moderator
+Shadowtail117 = Moderator
+Toxika = Moderator
+SkyCinnamon = Moderator
+Buzzardman2 = Moderator
+Beardlessjoe = Moderator
+atlasrules87 = Moderator
+Abraxis12Gaming = Moderator
 
 #DEFROCKED
+#RaveMaster93 = Admin
+#Coolsuf6 = Admin
+#Coolsurf6 = Admin
+#Grupert87 = Admin
+#Grupert99 = Admin
+#Krinkels = Admin
+#Rumpelgeist = Admin
+#saladata = Admin
+#RootVeggie = Admin
+#Hugh Mann = Admin
+#Krzychukoko = Admin
+#Hestymk1 = Admin
+#DrachenKlaue = Admin
+#ChocolateJ = Admin
+#Axolotl123 = Admin
+#Idontcareacount = Admin
+#Bricksqwad = Admin
+#ImpendingRiot = Moderator
+#Hydraliks = Moderator
+#DrTarry = Moderator
+#HorusTheHelpful = Moderator
+#M.Green = Moderator
+#Bobalobdob = Moderator
+#The P.I.S.S. = Moderator
+#SuperStimpy = Moderator
 #Badguy1009REMOVED = Moderator
+#Ss4gogeta0 = Fulp Crew
+#shlomobergerstein = Admin Jr.
+#Evilsack = Moderator
+#Malgover = Moderator
+#HeavenDIO = Moderator
+#fulpstation = Fulp Crew
+#FaKanza = Admin
+#Trickytyfly = Admin
+#Qustinnus = Admin removing this abusive boy
