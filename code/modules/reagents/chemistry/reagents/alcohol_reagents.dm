@@ -1476,6 +1476,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 20
 	taste_description = "a sweet milky flavor with notes of toasted sugar"
 	glass_icon_state = "glass_white"
+	glass_name = "Creme de Coconut"
 	glass_desc = "An unintimidating glass of coconut liqueur."
 
 /datum/reagent/consumable/ethanol/quadruple_sec
