@@ -95,7 +95,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 /// Remove a move speed modifier from a mob, whether static or variable.
 /mob/proc/remove_movespeed_modifier(datum/movespeed_modifier/type_id_datum, update = TRUE)
 	if(ispath(type_id_datum))
-		ype_id_datum = initial(type_id_datum.id)
+		type_id_datum = initial(type_id_datum.id)
 	else if(!istext(type_id_datum))		//if it isn't text it has to be a datum, as it isn't a type.
 		type_id_datum = type_id_datum.id
 	if(!LAZYACCESS(movespeed_modification, type_id_datum))
