@@ -184,7 +184,7 @@
 	if(!helmettype)
 		return
 	if(!helmet)
-		to_chat(H, "<span class='warning'> The helmet seems to be damaged! You can try to repair it with a welder. </span>")
+		to_chat(H, "<span class='warning'> The helmet's lightbulb seems to be damaged! You'll need a replacement bulb.</span>")
 		return
 	if(!suittoggled)
 		if(ishuman(src.loc))

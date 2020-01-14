@@ -119,7 +119,7 @@
 /obj/item/clothing/suit/space/hardsuit/examine(mob/user)
 	. = ..()
 	if(!helmet && helmettype)
-		. += "<span class='notice'> The helmet on [src] seems to be malfunctioning. It may be repairable with a welder.</span>"
+		. += "<span class='notice'> The helmet on [src] seems to be malfunctioning. It's light bulb needs to be replaced.</span>"
 
 /obj/item/clothing/suit/space/hardsuit/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/tank/jetpack/suit))
@@ -147,18 +147,22 @@
 		jetpack = null
 		to_chat(user, "<span class='notice'>You successfully remove the jetpack from [src].</span>")
 		return
-	else if(I.tool_behaviour == TOOL_WELDER && helmettype)
+	else if(istype(I, /obj/item/light) && helmettype)
 		if(src == user.get_item_by_slot(ITEM_SLOT_OCLOTHING))
-			to_chat(user, "<span class='warning'> You cannot repair the helmet of [src] while wearing it.</span>")
+			to_chat(user, "<span class='warning'>You cannot replace the bulb in the helmet of [src] while wearing it.</span>")
 			return
 		if(helmet)
-			to_chat(user, "<span class='warning'> The helmet of [src] does not require repairs.</span>")
+			to_chat(user, "<span class='warning'>The helmet of [src] does not require a new bulb.</span>")
 			return
-		if(!I.tool_start_check(user))
+		var/obj/item/light/L = I
+		if(L.status != LIGHT_OK)
+			to_chat(user, "<span class='warning'>This bulb is too damaged to use as a replacement!</span>")
 			return
-		if(I.use_tool(src, user, 100, 10, 100))
+		if(do_after(user, 50, 1, src))
+			qdel(I)
 			helmet = new helmettype(src)
-			to_chat(user, "<span class='notice'> You have successfully repaired [src]'s helmet.</span>")
+			to_chat(user, "<span class='notice'>You have successfully repaired [src]'s helmet.</span>")
+			new /obj/item/light/bulb/broken(get_turf(src))
 	return ..()
 
 
