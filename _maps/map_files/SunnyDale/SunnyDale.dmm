@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/indestructible/f13/matrix,
+/turf/closed/indestructible/f13matrix,
 /area/f13)
 "b" = (
 /turf/open/floor/plating/f13/outside/desert,
