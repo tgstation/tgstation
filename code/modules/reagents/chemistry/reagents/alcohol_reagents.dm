@@ -934,7 +934,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#FF7F3B" // rgb: 255, 127, 59
 	boozepwr = 35
 	quality = DRINK_GOOD
-	taste_description = "pineapple, coconut, and orange"
+	taste_description = "pineapple, coconut, and a hint of coffee"
 	glass_icon_state = "bahama_mama"
 	glass_name = "Bahama Mama"
 	glass_desc = "A tropical cocktail with a complex blend of flavors."
