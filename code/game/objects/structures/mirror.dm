@@ -22,6 +22,9 @@
 		return
 
 	if(ishuman(user))
+		if(isvampire(user))
+			to_chat(user, "<span class='notice'>You have no reflection, dummy.</span>")
+			return
 		var/mob/living/carbon/human/H = user
 
 		//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
