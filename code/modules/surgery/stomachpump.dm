@@ -4,7 +4,7 @@
 				/datum/surgery_step/retract_skin,
 				/datum/surgery_step/incise,
 				/datum/surgery_step/clamp_bleeders,
-				/datum/surgery_step/detox,
+				/datum/surgery_step/stomach_pump,
 				/datum/surgery_step/close)
 
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
