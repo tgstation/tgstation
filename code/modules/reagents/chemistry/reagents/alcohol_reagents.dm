@@ -2188,7 +2188,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 20
 	color = "#EAD677"
 	quality = DRINK_NICE
-	foodtype = PINEAPPLE
 	taste_description = "sugary and tart"
 	glass_icon_state = "painkiller"
 	glass_name = "Painkiller"

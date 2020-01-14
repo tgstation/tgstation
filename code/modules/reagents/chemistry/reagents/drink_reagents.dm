@@ -809,7 +809,6 @@
 	taste_description = "pineapple"
 	glass_name = "glass of pineapple juice"
 	glass_desc = "Tart, tropical, and hotly debated."
-	foodtype = PINEAPPLE
 
 /datum/reagent/consumable/peachjuice //Intended to be extremely rare due to being the limiting ingredients in the blazaam drink
 	name = "Peach Juice"
