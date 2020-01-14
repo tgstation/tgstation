@@ -1042,7 +1042,8 @@
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
 "acF" = (
-/turf/open/floor/engine/airless,
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/engine/air,
 /area/engine/atmos)
 "acG" = (
 /obj/structure/disposalpipe/segment{
@@ -4602,8 +4603,7 @@
 	dir = 1
 	},
 /obj/machinery/camera{
-	c_tag = "Cargo - Docking Bay North";
-	dir = 2
+	c_tag = "Cargo - Docking Bay North"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -5135,9 +5135,7 @@
 	},
 /area/crew_quarters/kitchen)
 "anM" = (
-/obj/machinery/atmospherics/miner/n2o{
-	max_ext_kpa = 2500
-	},
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/engine/n2o{
 	initial_gas_mix = "n2o=1000;TEMP=293.15"
 	},
@@ -8450,7 +8448,7 @@
 /area/hallway/primary/central)
 "axn" = (
 /obj/effect/landmark/xeno_spawn,
-/turf/open/floor/engine/airless,
+/turf/open/floor/engine/air,
 /area/engine/atmos)
 "axo" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -8833,9 +8831,7 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
 "ayh" = (
-/obj/machinery/atmospherics/miner/toxins{
-	max_ext_kpa = 2500
-	},
+/obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/engine/plasma{
 	initial_gas_mix = "plasma=1000;TEMP=293.15"
 	},
@@ -9136,9 +9132,7 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
 "ayS" = (
-/obj/machinery/atmospherics/miner/carbon_dioxide{
-	max_ext_kpa = 2500
-	},
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/open/floor/engine/co2{
 	initial_gas_mix = "co2=1000;TEMP=293.15"
 	},
@@ -10853,17 +10847,17 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/air_input{
 	dir = 1
 	},
-/turf/open/floor/engine/airless,
+/turf/open/floor/engine/air,
 /area/engine/atmos)
 "aDF" = (
 /obj/machinery/air_sensor/atmos/air_tank,
-/turf/open/floor/engine/airless,
+/turf/open/floor/engine/air,
 /area/engine/atmos)
 "aDG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos/air_output{
 	dir = 1
 	},
-/turf/open/floor/engine/airless,
+/turf/open/floor/engine/air,
 /area/engine/atmos)
 "aDH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrogen_output{
@@ -10911,7 +10905,7 @@
 	dir = 1;
 	network = list("ss13","Atmospherics")
 	},
-/turf/open/floor/engine/airless,
+/turf/open/floor/engine/air,
 /area/engine/atmos)
 "aDO" = (
 /obj/machinery/door/airlock/research{
@@ -40218,9 +40212,7 @@
 	},
 /area/engine/atmos)
 "cdM" = (
-/obj/machinery/atmospherics/miner/nitrogen{
-	max_ext_kpa = 2500
-	},
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/engine/n2{
 	initial_gas_mix = "n2=1000;TEMP=293.15"
 	},
@@ -40637,9 +40629,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "ceK" = (
-/obj/machinery/atmospherics/miner/oxygen{
-	max_ext_kpa = 2500
-	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/engine/o2{
 	initial_gas_mix = "o2=1000;TEMP=293.15"
 	},
@@ -40935,6 +40925,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"cFG" = (
+/turf/open/floor/engine/air,
+/area/engine/atmos)
 "cGH" = (
 /obj/structure/girder,
 /obj/structure/grille/broken,
@@ -89255,7 +89248,7 @@ aDw
 avb
 aDF
 acF
-acF
+cFG
 bPb
 pjJ
 bPb
@@ -89511,8 +89504,8 @@ azD
 aDx
 aDC
 aDG
-acF
-acF
+cFG
+cFG
 acj
 aal
 bPb
