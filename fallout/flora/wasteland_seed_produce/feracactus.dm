@@ -2,7 +2,7 @@
 	name = "pack of barrel cactus seeds"
 	desc = "These seeds grow into a barrel cactus."
 	icon_state = "seed-feracactus"
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	growing_icon = 'fallout/icons/hydroponics/wasteland_plants.dmi'
 	icon_grow = "feracactus-grow"
 	icon_dead = "feracactus-dead"
 	icon_harvest = "feracactus-harvest"

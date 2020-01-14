@@ -7,13 +7,19 @@
 	var/has_prod = TRUE
 	var/obj/item/reagent_containers/food/snacks/grown/produce = null //If only we used ACTUAL plants
 
+/obj/structure/flora/wasteplant/Initialize()
+	. = ..()
+	update_icon()
+
 /obj/structure/flora/wasteplant/attack_hand(mob/user)
 	if(has_prod)
 		user.put_in_hands(new produce)
-		user << "<span class='notice'>You take [produce] from [src].</span>"
+		to_chat(user, "<span class='notice'>You take [produce.name] from [src].</span>")
 		has_prod = FALSE
 		update_icon() //Won't update due to proc otherwise
 		addtimer(CALLBACK(src, .proc/regrow), 10 MINUTES)
+	else
+		to_chat(user, "<span class='warning'>Seems to be nothing on this plant.</span>")
 	update_icon()
 
 /obj/structure/flora/wasteplant/proc/regrow()

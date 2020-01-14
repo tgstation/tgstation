@@ -1,6 +1,7 @@
 /obj/item/seeds/fungus
 	name = "pack of cave fungus mycelium"
 	desc = "This mycelium grows into cave fungi, an edible variety of mushroom with anti-toxic properties."
+	icon = 'fallout/icons/hydroponics/seeds.dmi'
 	icon_state = "seed-fungus"
 	species = "cave fungus"
 	plantname = "cave fungi"

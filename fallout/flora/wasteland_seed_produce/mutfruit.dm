@@ -1,6 +1,7 @@
 /obj/item/seeds/mutfruit
 	name = "pack of mutfruit seeds"
 	desc = "These seeds grow into a mutfruit sapling."
+	icon = 'fallout/icons/hydroponics/seeds.dmi'
 	icon_state = "seed-mutfruit"
 	species = "mutfruit"
 	plantname = "mutfruit sapling"
@@ -19,6 +20,7 @@
 	seed = /obj/item/seeds/mutfruit
 	name = "mutfruit"
 	desc = "Mutfruit provides both hydration and sustenance, but the mutated plant also carries small amounts of radiation."
+	icon = 'fallout/icons/hydroponics/harvest.dmi'
 	icon_state = "mutfruit"
 	filling_color = "#FF6347"
 

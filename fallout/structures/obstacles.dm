@@ -25,6 +25,7 @@
 	layer = 4.2
 
 /obj/structure/fence/fencenormal/CanPass(atom/movable/mover, turf/target, height=0)
+	..()
 	if (!density)
 		return 1
 	if (dir!=SOUTH)
@@ -121,7 +122,7 @@
 	. = ..()
 	layer = 4.2
 
-/obj/structure/fence/fencedoor/attackby(obj/item/weapon/I, mob/living/user, params)
+/obj/structure/fence/fencedoor/attackby(obj/item/I, mob/living/user, params)
 	if (density)
 		icon_state = "fence_door_front_open"
 		playsound(src.loc, open_sound, 40, 0, 0)
@@ -149,6 +150,7 @@
 	density = !density
 
 /obj/structure/fence/fencedoor/CanPass(atom/movable/mover, turf/target, height=0)
+	..()
 	if (!density)
 		return 1
 	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
@@ -181,7 +183,7 @@
 	var/open_sound = 'fallout/sound/f13machines/doorchainlink_open.ogg'
 	var/close_sound = 'fallout/sound/f13machines/doorchainlink_close.ogg'
 
-/obj/structure/fence/fencedoorside/attackby(obj/item/weapon/I, mob/living/user, params)
+/obj/structure/fence/fencedoorside/attackby(obj/item/I, mob/living/user, params)
 	if (density)
 		icon_state = "fence_door_side_open"
 		playsound(src.loc, open_sound, 40, 0, 0)
@@ -209,6 +211,7 @@
 	density = !density
 
 /obj/structure/fence/fencedoorside/CanPass(atom/movable/mover, turf/target, height=0)
+	..()
 	if (mover.loc == loc)
 		return 1
 	return !density
@@ -235,6 +238,7 @@
 	layer = 4.2
 
 /obj/structure/handrail/b_central/CanPass(atom/movable/mover, turf/target, height=0)
+	..()
 	if (dir!=SOUTH)
 		return 0
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
@@ -268,6 +272,7 @@
 	layer = 4.2
 
 /obj/structure/handrail/b_intersect/CanPass(atom/movable/mover, turf/target, height=0)
+	..()
 	if (dir!=SOUTH)
 		return 0
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
@@ -316,6 +321,7 @@
 	layer = 4.2
 
 /obj/structure/handrail/y_central/CanPass(atom/movable/mover, turf/target, height=0)
+	..()
 	if (dir!=SOUTH)
 		return 0
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
@@ -349,6 +355,7 @@
 	layer = 4.2
 
 /obj/structure/handrail/y_intersect/CanPass(atom/movable/mover, turf/target, height=0)
+	..()
 	if (dir!=SOUTH)
 		return 0
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
