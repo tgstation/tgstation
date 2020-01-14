@@ -370,8 +370,7 @@ GENE SCANNER
 	if(M.tod && (M.stat == DEAD || ((HAS_TRAIT(M, TRAIT_FAKEDEATH)) && !advanced)))
 		to_chat(user, "<span class='info'>Time of Death: [M.tod]</span>")
 		var/tdelta = round(world.time - M.timeofdeath)
-		if(tdelta < (DEFIB_TIME_LIMIT * 10))
-			to_chat(user, "<span class='alert'><b>Subject died [DisplayTimeText(tdelta)] ago, defibrillation may be possible!</b></span>")
+		to_chat(user, "<span class='alert'><b>Subject died [DisplayTimeText(tdelta)] ago.</b></span>")
 
 	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
