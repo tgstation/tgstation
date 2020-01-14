@@ -214,9 +214,6 @@
 /proc/_step_away(ref, trg, max)
 	step_away(ref, trg, max)
 
-/proc/_file(name)
-	return file(name)
-
 /proc/_has_trait(datum/thing,trait)
 	return HAS_TRAIT(thing,trait)
 
