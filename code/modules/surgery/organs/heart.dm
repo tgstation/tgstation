@@ -206,7 +206,7 @@
 		owner.Dizzy(10)
 		owner.losebreath += 10
 		severe_cooldown = world.time + 20 SECONDS
-	if(prob(emp_vulnerability))	//Chance of permanent effects
+	if(prob(emp_vulnerability/severity))	//Chance of permanent effects
 		organ_flags = ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
 		Stop()
 		owner.visible_message("<span class='danger'>[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!</span>", \
