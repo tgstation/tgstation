@@ -302,7 +302,10 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	sleep(14)
 	if(!owner || QDELETED(owner))
 		return
-	to_chat(owner, "<span class='small boldannounce'>******************</span>")
+	if(prob(10))
+		to_chat(owner, "<span class='small boldannounce'>hunter2</span>")
+	else
+		to_chat(owner, "<span class='small boldannounce'>******************</span>")
 	sleep(40)
 	if(!owner || QDELETED(owner))
 		return
