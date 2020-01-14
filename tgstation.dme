@@ -794,6 +794,7 @@
 #include "code\FulpstationCode\t5_parts.dm"
 #include "code\FulpstationCode\wintercoats.dm"
 #include "code\FulpstationCode\body_camera_files\body_camera_procs.dm"
+#include "code\FulpstationCode\borg_radio_files\borg_radio.dm"
 #include "code\FulpstationCode\halloween_costumes\_event.dm"
 #include "code\FulpstationCode\halloween_costumes\alien_green.dm"
 #include "code\FulpstationCode\halloween_costumes\alien_grey.dm"
