@@ -105,6 +105,7 @@
 	reagents.clear_reagents()
 
 /obj/machinery/plumbing/synthesizer/update_overlays()
+	. = ..()
 	var/mutable_appearance/r_overlay = mutable_appearance(icon, "[icon_state]_overlay")
 	if(reagent_id)
 		r_overlay.color = initial(reagent_id.color)

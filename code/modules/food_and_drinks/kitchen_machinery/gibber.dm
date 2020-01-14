@@ -39,17 +39,17 @@
 				. += "<span class='notice'>Gibber has been upgraded to process inorganic materials.</span>"
 
 /obj/machinery/gibber/update_overlays()
-	cut_overlays()
+	. = ..()
 	if (dirty)
-		add_overlay("grbloody")
+		. +="grbloody"
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!occupant)
-		add_overlay("grjam")
+		. += "grjam"
 	else if (operating)
-		add_overlay("gruse")
+		. += "gruse"
 	else
-		add_overlay("gridle")
+		. += "gridle"
 
 /obj/machinery/gibber/attack_paw(mob/user)
 	return attack_hand(user)
