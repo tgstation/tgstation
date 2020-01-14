@@ -1,0 +1,4 @@
+author: "Buggy123"
+delete-after: True
+changes: 
+  - rscadd: "Centcomm has updated their emergency temporal response protocols, and will now correctly stand down if a major threat is destroyed before countermeasures can be deployed."
