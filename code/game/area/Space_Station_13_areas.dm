@@ -180,6 +180,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Fore Maintenance"
 	icon_state = "fmaint"
 
+/area/maintenance/fore/upper
+	name = "Upper Fore Maintenance"
+
 /area/maintenance/fore/secondary
 	name = "Fore Maintenance"
 	icon_state = "fmaint_2"
@@ -254,6 +257,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hallway/primary/central
 	name = "Central Primary Hallway"
 	icon_state = "hallC"
+
+/area/hallway/primary/upper
+	name = "Upper Central Primary Hallway"
+	icon_state = "hallC"
+
 
 /area/hallway/secondary/command
 	name = "Command Hallway"
@@ -341,6 +349,15 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "Sleep"
 	safe = TRUE
 
+/area/crew_quarters/dorms/barracks
+	name = "Sleep Barracks"
+
+/area/crew_quarters/dorms/barracks/male
+	name = "Male Sleep Barracks"
+
+/area/crew_quarters/dorms/barracks/female
+	name = "Female Sleep Barracks"
+
 /area/crew_quarters/toilet
 	name = "Dormitory Toilets"
 	icon_state = "toilet"
@@ -372,6 +389,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/fitness/locker_room
 	name = "Unisex Locker Room"
 	icon_state = "fitness"
+
+/area/crew_quarters/fitness/locker_room/male
+	name = "Male Locker Room"
+
+/area/crew_quarters/fitness/locker_room/female
+	name = "Female Locker Room"
+
 
 /area/crew_quarters/fitness/recreation
 	name = "Recreation Area"
@@ -1113,3 +1137,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/tcommsat/server
 	name = "Telecomms Server Room"
 	icon_state = "tcomsatcham"
+
+
+//External Hull Access
+/area/maintenance/external
+	name = "External Hull Access"
+	icon_state = "amaint"
+
+/area/maintenance/external/aft
+	name = "Aft External Hull Access"
+
+/area/maintenance/external/port
+	name = "Port External Hull Access"
+
+/area/maintenance/external/port/bow
+	name = "Port Bow External Hull Access"
