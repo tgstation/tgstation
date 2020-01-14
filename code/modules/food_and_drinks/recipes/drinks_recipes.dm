@@ -268,8 +268,8 @@
 /datum/chemical_reaction/bahama_mama
 	name = "Bahama Mama"
 	id = /datum/reagent/consumable/ethanol/bahama_mama
-	results = list(/datum/reagent/consumable/ethanol/bahama_mama = 6)
-	required_reagents = list(/datum/reagent/consumable/ethanol/creme_de_coconut = 2, /datum/reagent/consumable/orangejuice = 2, /datum/reagent/consumable/pineapplejuice = 1, /datum/reagent/consumable/grenadine = 1)
+	results = list(/datum/reagent/consumable/ethanol/bahama_mama = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/creme_de_coconut = 1, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/rum = 2, /datum/reagent/consumable/pineapplejuice = 1)
 
 /datum/chemical_reaction/singulo
 	name = "Singulo"
