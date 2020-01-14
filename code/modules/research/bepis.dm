@@ -138,7 +138,6 @@
 			new /obj/item/stack/circuit_stack/full(dropturf)
 		if(reward_number == 2)
 			new /obj/item/airlock_painter/decal(dropturf)
-
 		return
 	if(gauss_real <= -1)	//Critical Failure
 		say("ERROR: CRITICAL MACHIME MALFUNCTI- ON. CURRENCY IS NOT CRASH. CANNOT COMPUTE COMMAND: 'make bucks'") //not a typo, for once.

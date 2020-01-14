@@ -78,7 +78,6 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/welding_goggles
-
 	name = "Welding Goggles"
 	desc = "Protects the eyes from bright flashes; approved by the mad scientist association."
 	id = "welding_goggles"
