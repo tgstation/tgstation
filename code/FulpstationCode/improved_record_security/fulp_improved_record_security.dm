@@ -1,6 +1,3 @@
-#define SEC_RECORD_BAD_CLEARANCE "ACCESS DENIED: User ID has inadequate clearance."
-
-#define SEC_RECORD_BOT_COOLDOWN 60 SECONDS
 
 /mob/living/simple_animal/bot/secbot/proc/arrest_security_record(mob/living/carbon/C, arrest_type, threat, location)
 
