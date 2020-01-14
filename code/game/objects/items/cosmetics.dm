@@ -231,13 +231,14 @@
 
 /obj/item/razor/bluerazor
 	name = "bluespace razor"
-	desc = "A razor full of bluespace energy."
+	desc = "A razor sparkling with bluespace energy."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "bluerazor"
 	id = "bluerazor"
 	var/works_from_distance = TRUE
 	var/play_blueshave_sound = 'sound/items/phsoom.ogg'
 
+/obj/item/razor/bluerazor/proc/play_blueshave_sound()
 
 /obj/item/razor/bluerazor/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins shaving [user.p_them()]self without the razor guard, sparks flying everywhere! It looks like [user.p_theyre()] trying to commit suicide!</span>")
