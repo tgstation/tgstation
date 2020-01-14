@@ -96,6 +96,7 @@ import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
 import { Tank } from './interfaces/Tank';
 import { TankDispenser } from './interfaces/TankDispenser';
+import { Teleporter } from './interfaces/Teleporter';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { TurbineComputer } from './interfaces/TurbineComputer';
 import { Uplink } from './interfaces/Uplink';
@@ -537,6 +538,10 @@ const ROUTES = {
   },
   tank_dispenser: {
     component: () => TankDispenser,
+    scrollable: false,
+  },
+  teleporter: {
+    component: () => Teleporter,
     scrollable: false,
   },
   thermomachine: {

@@ -5,6 +5,8 @@
 	icon_keyboard = "teleport_key"
 	light_color = LIGHT_COLOR_BLUE
 	circuit = /obj/item/circuitboard/computer/teleporter
+	ui_x = 300
+	ui_y = 200
 	var/regime_set = "Teleporter"
 	var/id
 	var/obj/machinery/teleport/station/power_station
@@ -31,34 +33,30 @@
 			break
 	return power_station
 
-/obj/machinery/computer/teleporter/ui_interact(mob/user)
-	. = ..()
-	var/data = "<h3>Teleporter Status</h3>"
-	if(!power_station)
-		data += "<div class='statusDisplay'>No power station linked.</div>"
-	else if(!power_station.teleporter_hub)
-		data += "<div class='statusDisplay'>No hub linked.</div>"
+/obj/machinery/computer/teleporter/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "teleporter", name, ui_x, ui_y, master_ui, state)
+		ui.open()
+
+/obj/machinery/computer/teleporter/ui_data(mob/user)
+	var/list/data = list()
+	data["power_station"] = power_station ? TRUE : FALSE
+	data["teleporter_hub"] = power_station?.teleporter_hub ? TRUE : FALSE
+	data["regime_set"] = regime_set
+	data["target"] = !target ? "None" : "[get_area(target)] [(regime_set != "Gate") ? "" : "Teleporter"]"
+
+	if(calibrating)
+		data["calibration"] = "In Progress"
+	else if(power_station?.teleporter_hub?.calibrated || power_station?.teleporter_hub?.accuracy >= 3)
+		data["calibration"] = "Optimal"
 	else
-		data += "<div class='statusDisplay'>Current regime: [regime_set]<BR>"
-		data += "Current target: [(!target) ? "None" : "[get_area(target)] [(regime_set != "Gate") ? "" : "Teleporter"]"]<BR>"
-		if(calibrating)
-			data += "Calibration: <font color='yellow'>In Progress</font>"
-		else if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accuracy >= 3)
-			data += "Calibration: <font color='green'>Optimal</font>"
-		else
-			data += "Calibration: <font color='red'>Sub-Optimal</font>"
-		data += "</div><BR>"
+		data["calibration"] = "Sub-Optimal"
 
-		data += "<A href='?src=[REF(src)];regimeset=1'>Change regime</A><BR>"
-		data += "<A href='?src=[REF(src)];settarget=1'>Set target</A><BR>"
+	return data
 
-		data += "<BR><A href='?src=[REF(src)];calibrate=1'>Calibrate Hub</A>"
-
-	var/datum/browser/popup = new(user, "teleporter", name, 400, 400)
-	popup.set_content(data)
-	popup.open()
-
-/obj/machinery/computer/teleporter/Topic(href, href_list)
+/obj/machinery/computer/teleporter/ui_act(action, params)
 	if(..())
 		return
 
@@ -69,38 +67,39 @@
 		say("Error: Calibration in progress. Stand by.")
 		return
 
-	if(href_list["regimeset"])
-		power_station.engaged = 0
-		power_station.teleporter_hub.update_icon()
-		power_station.teleporter_hub.calibrated = 0
-		reset_regime()
-	if(href_list["settarget"])
-		power_station.engaged = 0
-		power_station.teleporter_hub.update_icon()
-		power_station.teleporter_hub.calibrated = 0
-		set_target(usr)
-	if(href_list["calibrate"])
-		if(!target)
-			say("Error: No target set to calibrate to.")
-			return
-		if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accuracy >= 3)
-			say("Hub is already calibrated!")
-			return
-		say("Processing hub calibration to target...")
+	switch(action)
+		if("regimeset")
+			power_station.engaged = FALSE
+			power_station.teleporter_hub.update_icon()
+			power_station.teleporter_hub.calibrated = FALSE
+			reset_regime()
+			. = TRUE
+		if("settarget")
+			power_station.engaged = FALSE
+			power_station.teleporter_hub.update_icon()
+			power_station.teleporter_hub.calibrated = FALSE
+			set_target(usr)
+			. = TRUE
+		if("calibrate")
+			if(!target)
+				say("Error: No target set to calibrate to.")
+				return
+			if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accuracy >= 3)
+				say("Hub is already calibrated!")
+				return
 
-		calibrating = 1
-		power_station.update_icon()
-		spawn(50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
-			calibrating = 0
-			if(check_hub_connection())
-				power_station.teleporter_hub.calibrated = 1
-				say("Calibration complete.")
-			else
-				say("Error: Unable to detect hub.")
+			say("Processing hub calibration to target...")
+			calibrating = TRUE
 			power_station.update_icon()
-			updateDialog()
-
-	updateDialog()
+			spawn(50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
+				calibrating = FALSE
+				if(check_hub_connection())
+					power_station.teleporter_hub.calibrated = TRUE
+					say("Calibration complete.")
+				else
+					say("Error: Unable to detect hub.")
+				power_station.update_icon()
+			. = TRUE
 
 /obj/machinery/computer/teleporter/proc/check_hub_connection()
 	if(!power_station)
