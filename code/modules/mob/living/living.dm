@@ -1390,4 +1390,6 @@
 		forceMove(error_landmark.loc)
 	else
 		forceMove(locate(4,4,1)) //Even if the landmark is missing, this should put them in the error room.
+		//If you're here from seeing this error, I'm sorry. I'm so very sorry. The error landmark should be a sacred object that nobody has any business messing with, and someone did!
+		//Consider seeing a therapist.
 		CRASH("ERROR-ERROR: ERROR landmark missing!")
