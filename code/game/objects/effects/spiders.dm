@@ -38,17 +38,18 @@
 
 /obj/structure/spider/stickyweb/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-	if(!genetic)
-		if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
+	if(genetic)
+		return
+	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
+		return TRUE
+	else if(isliving(mover))
+		if(istype(mover.pulledby, /mob/living/simple_animal/hostile/poison/giant_spider))
 			return TRUE
-		else if(isliving(mover))
-			if(istype(mover.pulledby, /mob/living/simple_animal/hostile/poison/giant_spider))
-				return TRUE
-			if(prob(50))
-				to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
-				return FALSE
-		else if(istype(mover, /obj/projectile))
-			return prob(30)
+		if(prob(50))
+			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
+			return FALSE
+	else if(istype(mover, /obj/projectile))
+		return prob(30)
 
 /obj/structure/spider/stickyweb/genetic //for the spider genes in genetics
 	genetic = TRUE
@@ -59,7 +60,7 @@
 	. = ..()
 
 /obj/structure/spider/stickyweb/genetic/CanAllowThrough(atom/movable/mover, turf/target)
-	. = ..() //this is the normal spide web return aka a spider would make this TRUE
+	. = ..() //this is the normal spider web return aka a spider would make this TRUE
 	if(mover == allowed_mob)
 		return TRUE
 	else if(isliving(mover)) //we change the spider to not be able to go through here
@@ -68,7 +69,8 @@
 		if(prob(50))
 			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
 			return FALSE
-	//we don't have projectile here because that's the only case that would get this far, meaning the above layer already did it. am i making this weird, explaining . = ..()?
+	else if(istype(mover, /obj/projectile))
+		return prob(30)
 
 /obj/structure/spider/eggcluster
 	name = "egg cluster"
