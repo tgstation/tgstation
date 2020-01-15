@@ -132,6 +132,7 @@
 	. = ..()
 	if(!ion_trail)
 		ion_trail = new
+	ion_trail.auto_process = FALSE
 	ion_trail.set_up(M)
 
 /obj/item/organ/cyberimp/chest/thrusters/Remove(mob/living/carbon/M, special = 0)
@@ -152,12 +153,14 @@
 		if(allow_thrust(0.01))
 			ion_trail.start()
 			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/move_react)
+			RegisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE, .proc/pre_move_react)
 			owner.add_movespeed_modifier(MOVESPEED_ID_CYBER_THRUSTER, priority=100, multiplicative_slowdown=-0.5, movetypes=FLOATING, conflict=MOVE_CONFLICT_JETPACK)
 			if(!silent)
 				to_chat(owner, "<span class='notice'>You turn your thrusters set on.</span>")
 	else
 		ion_trail.stop()
 		UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE)
 		owner.remove_movespeed_modifier(MOVESPEED_ID_CYBER_THRUSTER)
 		if(!silent)
 			to_chat(owner, "<span class='notice'>You turn your thrusters set off.</span>")
@@ -175,6 +178,8 @@
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/move_react()
 	allow_thrust(0.01)
+/obj/item/organ/cyberimp/chest/thrusters/proc/pre_move_react()
+	ion_trail.oldposition = get_turf(src)
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/allow_thrust(num)
 	if(!on || !owner)
@@ -193,6 +198,7 @@
 	// (just in case someone would ever use this implant system to make cyber-alien ops with jetpacks and taser arms)
 	if(owner.getPlasma() >= num*100)
 		owner.adjustPlasma(-num*100)
+		ion_trail.generate_effect()
 		return 1
 
 	// Priority 3: use internals tank.
@@ -201,6 +207,7 @@
 		var/datum/gas_mixture/removed = I.air_contents.remove(num)
 		if(removed.total_moles() > 0.005)
 			T.assume_air(removed)
+			ion_trail.generate_effect()
 			return 1
 		else
 			T.assume_air(removed)
