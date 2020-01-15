@@ -1,3 +1,13 @@
+## Fallout Ashcloud - Fallout-themed /tg/station SS13 codebase
+
+Project management spreadsheet
+https://docs.google.com/spreadsheets/d/1OWALWobTJi6JX9uDle_465BzH5ZGVKww1VzKhLo8kk0/edit?usp=sharing
+(DM ChronicPwnage on Discord to take ownership of a task)
+
+
+
+
+
 ## /tg/station codebase
 
 [![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation) [![Krihelimeter](https://www.krihelinator.xyz/badge/tgstation/tgstation)](https://www.krihelinator.xyz)  
