@@ -53,7 +53,7 @@
 	head = /obj/item/clothing/head/helmet/space/plasmaman/security/warden
 	uniform = /obj/item/clothing/under/plasmaman/security/warden
 
-/datum/outfit/plamaman/prisoner
+/datum/outfit/plasmaman/prisoner
 	name = "Prisoner Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/prisoner
