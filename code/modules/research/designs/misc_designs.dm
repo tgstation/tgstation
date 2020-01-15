@@ -87,6 +87,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/bluerazor
+	name = "Bluespace Razor"
+	desc = "A razor sparkling with bluespace energy."
+	id = "bluerazor"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 600, /datum/material/bluespace = 300)
+	build_path = obj/item/razor/bluerazor
+	cathegory = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/welding_mask
 	name = "Welding Gas Mask"
 	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
