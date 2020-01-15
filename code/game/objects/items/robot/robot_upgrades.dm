@@ -428,6 +428,10 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/medical)
+	var/backpack = FALSE //True if we get the defib from a physical backpack unit rather than an upgrade card, so that we can return that upon deactivate()
+
+/obj/item/borg/upgrade/defib/backpack
+	backpack = TRUE
 
 /obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -441,6 +445,10 @@
 	if (.)
 		var/obj/item/twohanded/shockpaddles/cyborg/S = locate() in R.module
 		R.module.remove_module(S, TRUE)
+		if(backpack)
+			new /obj/item/defibrillator(get_turf(R))
+			qdel(src)
+		
 
 /obj/item/borg/upgrade/processor
 	name = "medical cyborg surgical processor"
