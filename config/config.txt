@@ -17,7 +17,7 @@ $include antag_rep.txt
 SERVERNAME Fulpstation
 
 ## Server Caption: Shows next to the server name in the BYOND hub.
-#SERVERCAPTION The Problems of the Future, Today!
+SERVERCAPTION The Problems of the Future, Today!
 #SERVERCAPTION The Crew that Flies Together, Dies Together
 #SERVERCAPTION 100% Crash-Free since 2019!
 #SERVERCAPTION We have a Vampire problem...
@@ -27,7 +27,7 @@ SERVERNAME Fulpstation
 #SERVERCAPTION Home of the Orignal Cringe
 #SERVERCAPTION Come for the Vampires, Stay for the Suck
 #SERVERCAPTION All the Good Players Are Taken
-SERVERCAPTION The Rise of the Beefmen...
+#SERVERCAPTION The Rise of the Beefmen...
 
 ## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
 SERVERSQLNAME fulpstation
@@ -250,7 +250,8 @@ FORUMURL https://fulpstation.com
 
 ## Rules address
 # RULESURL http://www.tgstation13.org/wiki/Rules
-RULESURL https://fulpstation.com/showthread.php?tid=342
+# RULESURL https://fulpstation.com/showthread.php?tid=342
+RULESURL https://fulpstation.com/showthread.php?tid=844
 
 ## Github address
 # GITHUBURL https://www.github.com/tgstation/tgstation
@@ -507,3 +508,12 @@ DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
 ##	For reference, Goonstation uses a resolution of 21x15 for it's widescreen mode.
 ##	Do note that changing this value will affect the title screen. The title screen will have to be updated manually if this is changed.
 DEFAULT_VIEW 15x15
+
+##Default view size, in tiles. Should *always* be square.
+## The alternative square viewport size if you're using a widescreen view size
+## You probably shouldn't ever be changing this, but it's here if you want to.
+DEFAULT_VIEW_SQUARE 15x15
+
+
+## Enable automatic profiling - Byond 513.1506 and newer only.
+#AUTO_PROFILE

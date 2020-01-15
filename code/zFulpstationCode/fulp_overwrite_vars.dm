@@ -73,6 +73,7 @@
 //SEC BODY CAMS by Surrealistik Oct 2019 ENDS
 //******************************************************
 
+
 //***********************************************************************
 //** FULP PROPER RADIO CHANNELS FOR BORGS by Surrealistik Nov 2019 BEGINS
 //**---------------------------------------------------------------------
@@ -126,3 +127,38 @@
 //**---------------------------------------------------------------------
 //** Borgs now have access to appropriate secure radio channels
 //***********************************************************************
+
+//***************************************************************************
+//** FULPSTATION HOLOBEDS by Surrealistik Nov 2019 BEGINS
+//---------------------------------------------------------------------------
+//** Adds no-collision holobeds to the medborg. Support for handheld versions
+//***************************************************************************
+
+/obj/item/robot_module/medical
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/healthanalyzer,
+		/obj/item/reagent_containers/borghypo,
+		/obj/item/borg/apparatus/beaker,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/surgical_drapes,
+		/obj/item/retractor,
+		/obj/item/hemostat,
+		/obj/item/cautery,
+		/obj/item/surgicaldrill,
+		/obj/item/scalpel,
+		/obj/item/circular_saw,
+		/obj/item/extinguisher/mini,
+		/obj/item/holobed_projector/robot,
+		/obj/item/borg/cyborghug/medical,
+		/obj/item/stack/medical/gauze/cyborg,
+		/obj/item/organ_storage,
+		/obj/item/borg/lollipop)
+
+//***************************************************************************
+//** FULPSTATION HOLOBEDS by Surrealistik Nov 2019 ENDS
+//---------------------------------------------------------------------------
+//** Adds no-collision holobeds to the medborg. Support for handheld versions
+//***************************************************************************
+

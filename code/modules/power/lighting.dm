@@ -725,8 +725,8 @@
 	on = TRUE
 	update()
 
-/obj/machinery/light/tesla_act(power, tesla_flags)
-	if(tesla_flags & TESLA_MACHINE_EXPLOSIVE)
+/obj/machinery/light/zap_act(power, zap_flags)
+	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
 		explosion(src,0,0,0,flame_range = 5, adminlog = 0)
 		qdel(src)
 	else
