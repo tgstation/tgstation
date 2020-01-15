@@ -549,7 +549,7 @@ CREATE TABLE `SS13_ticket` (
   `ticket` smallint(11) unsigned NOT NULL,
   `action` varchar(20) NOT NULL DEFAULT 'Message',
   `message` text NOT NULL,
-  `timestamp` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `timestamp` datetime NOT NULL,
   `recipient` varchar(32) DEFAULT NULL,
   `sender` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
