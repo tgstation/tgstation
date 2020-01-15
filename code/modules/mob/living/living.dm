@@ -1383,3 +1383,11 @@
 			STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[getStaminaLoss()]</a>
 		</font>
 	"}
+
+/mob/living/proc/move_to_error_room()
+	var/obj/effect/landmark/error/error_landmark = locate(/obj/effect/landmark/error) in GLOB.landmarks_list
+	if(error_landmark)
+		forceMove(error_landmark.loc)
+	else
+		forceMove(locate(4,4,1)) //Even if the landmark is missing, this should put them in the error room.
+		CRASH("ERROR-ERROR: ERROR landmark missing!")
