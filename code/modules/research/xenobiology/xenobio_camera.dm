@@ -35,6 +35,7 @@
 	var/obj/item/slimepotion/slime/current_potion
 	var/max_slimes = 5
 	var/monkeys = 0
+	var/static/list/already_researched = list() //List of cores that've already been used for research
 
 	icon_screen = "slime_comp"
 	icon_keyboard = "rd_key"
@@ -169,6 +170,18 @@
 		current_potion = O
 		to_chat(user, "<span class='notice'>You load [O] in the console's potion slot[replaced ? ", replacing the one that was there before" : ""].</span>")
 		return
+	else if(istype(O, /obj/item/slime_extract))
+		if(!already_researched[O.type])
+			playsound(src, 'sound/machines/ping.ogg', 50, 3, -1)
+			visible_message("<span class='notice'>You insert the [O] into a slot on the [src]. It pings and prints out some research notes worth 2,000 points!</span>")
+			new /obj/item/research_notes(drop_location(src), 2000, "xenobiology")
+			already_researched[O.type] = TRUE
+			qdel(O)
+			return
+		else
+			visible_message("<span class='notice'>[src] buzzes and displays a message: Slime core already researched!")
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 3, -1)
+			return
 	..()
 
 /obj/machinery/computer/camera_advanced/xenobio/multitool_act(mob/living/user, obj/item/multitool/I)
