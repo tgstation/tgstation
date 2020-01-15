@@ -62,7 +62,8 @@
 	/datum/material/runite,
 	/datum/material/plastic,
 	/datum/material/adamantine,
-	/datum/material/mythril
+	/datum/material/mythril,
+	/datum/material/wood
 	), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
@@ -145,8 +146,8 @@
 		flick("autolathe_r",src)//plays glass insertion animation by default otherwise
 	else
 		flick("autolathe_o",src)//plays metal insertion animation
-			
-				
+
+
 		use_power(min(1000, amount_inserted / 100))
 	updateUsrDialog()
 
