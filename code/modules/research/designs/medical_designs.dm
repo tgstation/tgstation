@@ -508,7 +508,7 @@
 
 /datum/design/cybernetic_liver
 	name = "Basic Cybernetic Liver"
-	desc = "A basic cybernetic liver"
+	desc = "A basic cybernetic liver."
 	id = "cybernetic_liver"
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 40
@@ -519,14 +519,14 @@
 
 /datum/design/cybernetic_liver/tier2
 	name = "Cybernetic Liver"
-	desc = "A cybernetic liver"
+	desc = "A cybernetic liver."
 	id = "cybernetic_liver_tier2"
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/organ/liver/cybernetic/tier2
 
 /datum/design/cybernetic_liver/tier3
 	name = "Upgraded Cybernetic Liver"
-	desc = "An upgraded cybernetic liver"
+	desc = "An upgraded cybernetic liver."
 	id = "cybernetic_liver_tier3"
 	construction_time = 50
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver=500)
@@ -534,7 +534,7 @@
 
 /datum/design/cybernetic_heart
 	name = "Basic Cybernetic Heart"
-	desc = "A basic cybernetic heart"
+	desc = "A basic cybernetic heart."
 	id = "cybernetic_heart"
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 40
@@ -545,14 +545,14 @@
 
 /datum/design/cybernetic_heart/tier2
 	name = "Cybernetic Heart"
-	desc = "A cybernetic heart"
+	desc = "A cybernetic heart."
 	id = "cybernetic_heart_tier2"
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/organ/heart/cybernetic/tier2
 
 /datum/design/cybernetic_heart/tier3
 	name = "Upgraded Cybernetic Heart"
-	desc = "An upgraded cybernetic heart"
+	desc = "An upgraded cybernetic heart."
 	id = "cybernetic_heart_tier3"
 	construction_time = 50
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver=500)
