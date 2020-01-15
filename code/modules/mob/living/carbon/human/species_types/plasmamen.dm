@@ -77,6 +77,9 @@
 		if("Cook")
 			O = new /datum/outfit/plasmaman/chef
 
+		if("Prisoner")
+			O = new /datum/outfit/plasmaman/prisoner
+
 		if("Security Officer")
 			O = new /datum/outfit/plasmaman/security
 
