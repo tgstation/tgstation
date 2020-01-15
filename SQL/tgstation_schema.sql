@@ -549,9 +549,9 @@ CREATE TABLE `ticket` (
   `ticket` smallint(11) unsigned NOT NULL,
   `action` varchar(20) NOT NULL DEFAULT 'Message',
   `message` text NOT NULL,
-  `timestamp` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `recipient` varchar(32) NOT NULL DEFAULT '',
-  `sender` varchar(32) NOT NULL DEFAULT '',
+  `timestamp` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `recipient` varchar(32) DEFAULT NULL,
+  `sender` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
