@@ -74,6 +74,60 @@
 //******************************************************
 
 
+//***********************************************************************
+//** FULP PROPER RADIO CHANNELS FOR BORGS by Surrealistik Nov 2019 BEGINS
+//**---------------------------------------------------------------------
+//** Borgs now have access to appropriate secure radio channels
+//***********************************************************************
+
+
+/obj/item/robot_module/medical/do_transform_delay()
+	..()
+	borg_set_radio(/obj/item/encryptionkey/headset_med, FREQ_MEDICAL)
+
+
+/obj/item/robot_module/engineering/do_transform_delay()
+	..()
+	borg_set_radio(/obj/item/encryptionkey/headset_eng, FREQ_ENGINEERING)
+
+
+/obj/item/robot_module/security/do_transform_delay()
+	..()
+	borg_set_radio(/obj/item/encryptionkey/headset_sec, FREQ_SECURITY)
+
+/obj/item/robot_module/peacekeeper/do_transform_delay()
+	..()
+	borg_set_radio(/obj/item/encryptionkey/headset_sec, FREQ_SECURITY)
+
+
+/obj/item/robot_module/miner/do_transform_delay()
+	..()
+	borg_set_radio(/obj/item/encryptionkey/headset_mining, FREQ_SUPPLY)
+
+
+/obj/item/robot_module/clown/do_transform_delay()
+	..()
+	borg_set_radio(/obj/item/encryptionkey/headset_service, FREQ_SERVICE)
+
+/obj/item/robot_module/standard/do_transform_delay()
+	..()
+	borg_set_radio(/obj/item/encryptionkey/headset_service, FREQ_SERVICE)
+
+/obj/item/robot_module/janitor/do_transform_delay()
+	..()
+	borg_set_radio(/obj/item/encryptionkey/headset_service, FREQ_SERVICE)
+
+/obj/item/robot_module/butler/do_transform_delay()
+	..()
+	borg_set_radio(/obj/item/encryptionkey/headset_service, FREQ_SERVICE)
+
+
+//***********************************************************************
+//** FULP PROPER RADIO CHANNELS FOR BORGS by Surrealistik Nov 2019 ENDS
+//**---------------------------------------------------------------------
+//** Borgs now have access to appropriate secure radio channels
+//***********************************************************************
+
 //***************************************************************************
 //** FULPSTATION HOLOBEDS by Surrealistik Nov 2019 BEGINS
 //---------------------------------------------------------------------------
@@ -107,3 +161,4 @@
 //---------------------------------------------------------------------------
 //** Adds no-collision holobeds to the medborg. Support for handheld versions
 //***************************************************************************
+
