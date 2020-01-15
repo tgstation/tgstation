@@ -138,14 +138,14 @@
 
 		if(stat == CONSCIOUS && stasis)
 			to_chat(src, "<span class='danger'>Nerve gas in the air has put you in stasis!</span>")
-			stat = UNCONSCIOUS
+			set_stat(UNCONSCIOUS)
 			powerlevel = 0
 			rabid = 0
 			update_mobility()
 			regenerate_icons()
 		else if(stat == UNCONSCIOUS && !stasis)
 			to_chat(src, "<span class='notice'>You wake up from the stasis.</span>")
-			stat = CONSCIOUS
+			set_stat(CONSCIOUS)
 			update_mobility()
 			regenerate_icons()
 
