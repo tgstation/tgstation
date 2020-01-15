@@ -18984,12 +18984,12 @@
 	dir = 4;
 	pixel_x = 27
 	},
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/t_scanner,
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/item/clothing/gloves/color/fyellow,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aQz" = (

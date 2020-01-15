@@ -46708,9 +46708,9 @@
 /area/storage/primary)
 "bKt" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/storage/box/lights/mixed,
 /obj/effect/turf_decal/bot,
+/obj/item/clothing/gloves/color/fyellow,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "bKu" = (
