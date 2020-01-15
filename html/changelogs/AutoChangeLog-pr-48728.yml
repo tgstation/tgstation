@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "Adds a new surgery, Stomach Pump, which allows you to purge a patient's stomach via surgery while surgically dead."
