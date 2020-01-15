@@ -1,17 +1,17 @@
 datum/job/f13/vault/overseer
-    title = "Vault Overseer"
-    flag = F13OVERSEER
-    total_positions = 1
+	title = "Vault Overseer"
+	flag = F13OVERSEER
+	total_positions = 1
 	spawn_positions = 1
-    description = "I am the vault"
-    supervisor = "guh"
+	description = "I am the vault"
+	supervisor = "guh"
 
-    outfit = /datum/outfit/job/overseer
+	outfit = /datum/outfit/job/overseer
 
-    display_order = JOB_DISPLAY_ORDER_OVERSEER
+	display_order = JOB_DISPLAY_ORDER_OVERSEER
 
 /datum/outfit/job/overseer
-    ..()
+	..()
 	name = "Vault Overseer"
 	jobtype = /datum/job/f13/vault/overseer
 
