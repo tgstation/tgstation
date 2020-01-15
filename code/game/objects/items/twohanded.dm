@@ -94,9 +94,6 @@
 		return
 	unwield(user)
 
-/obj/item/twohanded/update_icon()
-	return
-
 /obj/item/twohanded/attack_self(mob/user)
 	. = ..()
 	if(wielded) //Trying to unwield it
@@ -238,9 +235,8 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
 
-/obj/item/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
+/obj/item/twohanded/fireaxe/update_icon_state()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
-	return
 
 /obj/item/twohanded/fireaxe/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -332,12 +328,11 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/twohanded/dualsaber/update_icon()
+/obj/item/twohanded/dualsaber/update_icon_state()
 	if(wielded)
 		icon_state = "dualsaber[saber_color][wielded]"
 	else
 		icon_state = "dualsaber0"
-	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /obj/item/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
@@ -473,7 +468,7 @@
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
-/obj/item/twohanded/spear/update_icon()
+/obj/item/twohanded/spear/update_icon_state()
 	icon_state = "[icon_prefix][wielded]"
 
 /obj/item/twohanded/spear/CheckParts(list/parts_list)
@@ -529,7 +524,7 @@
 	. = ..()
 	. += "<span class='notice'>Alt-click to set your war cry.</span>"
 
-/obj/item/twohanded/spear/explosive/update_icon()
+/obj/item/twohanded/spear/explosive/update_icon_state()
 	icon_state = "spearbomb[wielded]"
 
 /obj/item/twohanded/spear/explosive/AltClick(mob/user)
@@ -691,7 +686,7 @@
 	force_unwielded = 100
 	force_wielded = 500000 // Kills you DEAD.
 
-/obj/item/twohanded/pitchfork/update_icon()
+/obj/item/twohanded/pitchfork/update_icon_state()
 	icon_state = "pitchfork[wielded]"
 
 /obj/item/twohanded/pitchfork/suicide_act(mob/user)
@@ -766,7 +761,7 @@
 				return 1
 	return 0
 
-/obj/item/twohanded/vibro_weapon/update_icon()
+/obj/item/twohanded/vibro_weapon/update_icon_state()
 	icon_state = "hfrequency[wielded]"
 
 /*
@@ -778,7 +773,7 @@
 	desc = "A large, vicious axe crafted out of several sharpened bone plates and crudely tied together. Made of monsters, by killing monsters, for killing monsters."
 	force_wielded = 23
 
-/obj/item/twohanded/fireaxe/boneaxe/update_icon()
+/obj/item/twohanded/fireaxe/boneaxe/update_icon_state()
 	icon_state = "bone_axe[wielded]"
 
 /*
@@ -794,7 +789,7 @@
 	throwforce = 22
 	armour_penetration = 15				//Enhanced armor piercing
 
-/obj/item/twohanded/spear/bonespear/update_icon()
+/obj/item/twohanded/spear/bonespear/update_icon_state()
 	icon_state = "bone_spear[wielded]"
 
 /obj/item/twohanded/binoculars

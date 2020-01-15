@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Blob structures and hierophant barriers should no longer let the wrong things just walk through them"

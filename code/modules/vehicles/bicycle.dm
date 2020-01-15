@@ -11,10 +11,12 @@
 	D.vehicle_move_delay = 0
 
 
-/obj/vehicle/ridden/bicycle/tesla_act() // :::^^^)))
+/obj/vehicle/ridden/bicycle/zap_act(zap_str, zap_flags, shocked_targets) // :::^^^)))
+	//This didn't work for 3 years because none ever tested it I hate life
 	name = "fried bicycle"
 	desc = "Well spent."
 	color = rgb(63, 23, 4)
 	can_buckle = FALSE
+	. = ..()
 	for(var/m in buckled_mobs)
 		unbuckle_mob(m,1)

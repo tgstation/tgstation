@@ -733,3 +733,10 @@
 	item_state = "mystichood"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR|HIDEFACE|HIDEMASK
+
+/obj/item/clothing/suit/coordinator
+	name = "coordinator jacket"
+	desc = "A jacket for a party ooordinator, stylish!."
+	icon_state = "capformal"
+	item_state = "capspacesuit"
+	armor = list("melee" = 25, "bullet" = 15, "laser" = 25, "energy" = 35, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
