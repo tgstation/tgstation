@@ -276,8 +276,11 @@
 	desc = "The nanites synthesize serotonin inside the host's brain, creating an artificial sense of happiness."
 	use_rate = 0.1
 	rogue_types = list(/datum/nanite_program/brain_decay)
-	extra_settings = list(NES_MOOD_MESSAGE)
 	var/message = "HAPPINESS ENHANCEMENT"
+
+/datum/nanite_program/good_mood/register_extra_settings()
+	. = ..()
+	extra_settings[NES_MOOD_MESSAGE] = new /datum/nanite_extra_setting/text("")
 
 /datum/nanite_program/good_mood/set_extra_setting(user, setting)
 	if(setting == NES_MOOD_MESSAGE)
@@ -306,8 +309,11 @@
 	desc = "The nanites suppress the production of serotonin inside the host's brain, creating an artificial state of depression."
 	use_rate = 0.1
 	rogue_types = list(/datum/nanite_program/brain_decay)
-	extra_settings = list(NES_MOOD_MESSAGE)
 	var/message = "HAPPINESS SUPPRESSION"
+
+/datum/nanite_program/bad_mood/register_extra_settings()
+	. = ..()
+	extra_settings[NES_MOOD_MESSAGE] = new /datum/nanite_extra_setting/text("")
 
 /datum/nanite_program/bad_mood/set_extra_setting(user, setting)
 	if(setting == NES_MOOD_MESSAGE)
