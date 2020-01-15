@@ -67,16 +67,6 @@
 //////////////////Misc///////////////////
 /////////////////////////////////////////
 
-/datum/design/bluerazor
-	name = "Bluespace Razor"
-	desc = "A razor full of bluespace energy."
-	id = "bluerazor"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 600, /datum/material/bluespace = 300)
-	build_path = obj/item/razor/bluerazor
-	cathegory = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SERVICE
-
 /datum/design/welding_goggles
 	name = "Welding Goggles"
 	desc = "Protects the eyes from bright flashes; approved by the mad scientist association."
@@ -305,6 +295,25 @@
 	build_path = /obj/item/card/id
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/eng_gloves
+	name = "Tinkers Gloves"
+	desc = "Overdesigned engineering gloves that have automated construction subroutines dialed in, allowing for faster construction while worn."
+	id = "eng_gloves"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
+	build_path = /obj/item/clothing/gloves/color/latex/engineering
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/lavarods
+	name = "Lava-Resistant Metal Rods"
+	id = "lava_rods"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron=1000, /datum/material/plasma=500, /datum/material/titanium=2000)
+	build_path = /obj/item/stack/rods/lava
+	category = list("initial", "Stock Parts")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
