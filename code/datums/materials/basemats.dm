@@ -205,18 +205,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	if(istype(source, /obj/item))
 		var/obj/item/wooden = source
 		wooden.resistance_flags |= FLAMMABLE
-		if(istype(wooden, /obj/item/melee))
-			var/obj/item/melee/wooden_stick = wooden
-			wooden_stick.force = 2
 
 /datum/material/wood/on_removed_obj(atom/source, material_flags)
 	. = ..()
 	if(istype(source, /obj/item))
 		var/obj/item/wooden = source
 		wooden.resistance_flags &= ~FLAMMABLE
-		if(istype(wooden, /obj/item/melee))
-			var/obj/item/melee/wooden_stick = wooden
-			wooden_stick.force = initial(wooden_stick.force)
 
 ///Stronk force increase
 /datum/material/adamantine
