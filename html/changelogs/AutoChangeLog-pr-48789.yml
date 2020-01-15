@@ -1,0 +1,4 @@
+author: "JJRcop"
+delete-after: True
+changes: 
+  - bugfix: "Fixed unwanted behavior with pinpointer icons."
