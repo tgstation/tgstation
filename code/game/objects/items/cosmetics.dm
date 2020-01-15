@@ -102,7 +102,7 @@
 /obj/item/razor
 	name = "electric razor"
 	desc = "The latest and greatest power razor born from the science of shaving."
-	icon = 'icons/obj/bluerazor.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "razor"
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
@@ -230,7 +230,7 @@
 /obj/item/razor/bluerazor
 	name = "bluespace razor"
 	desc = "A razor sparkling with bluespace energy."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/bluerazor.dmi'
 	icon_state = "bluerazor"
 	id = "bluerazor"
 	var/works_from_distance = TRUE
