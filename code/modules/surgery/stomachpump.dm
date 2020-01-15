@@ -10,7 +10,6 @@
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST)
 	requires_bodypart_type = TRUE
-	replaced_by = null
 	ignore_clothes = FALSE
 
 /datum/surgery/stomach_pump/can_start(mob/user, mob/living/carbon/target)
