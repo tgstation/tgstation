@@ -2185,7 +2185,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/painkiller
 	name = "Painkiller"
-	description = "Dulls your pain. Emotional pain, that is."
+	description = "Dulls your pain. Not sure if that's a good thing or a bad thing."
 	boozepwr = 20
 	color = "#EAD677"
 	quality = DRINK_NICE
@@ -2193,3 +2193,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "painkiller"
 	glass_name = "Painkiller"
 	glass_desc = "A combination of tropical juices and rum. Surely this will make you feel better."
+
+/datum/reagent/consumable/ethanol/painkiller/on_mob_life(mob/living/carbon/M)
+	M.hal_screwyhud = SCREWYHUD_HEALTHY
+	..()
+
+/datum/reagent/consumable/ethanol/painkiller/on_mob_end_metabolize(mob/living/M)
+	if(iscarbon(M))
+		var/mob/living/carbon/N = M
+		N.hal_screwyhud = SCREWYHUD_NONE
+	..()
