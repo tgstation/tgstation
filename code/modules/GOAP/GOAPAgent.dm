@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 		return TRUE
 	return FALSE
 
-/datum/goap_agent/proc/goap_process()
+/datum/goap_agent/process()
 	if(!agent)
 		return FALSE
 	switch(brain_state)

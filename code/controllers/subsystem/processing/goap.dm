@@ -16,7 +16,8 @@ PROCESSING_SUBSYSTEM_DEF(goap)
 		if(QDELETED(thing))
 			processing -= thing
 		else if(thing.able_to_run())
-			if(thing.goap_process(wait) == PROCESS_KILL)
-				processing -= thing
+			if(thing.process(wait) == PROCESS_KILL)
+				// fully stop so that a future START_PROCESSING will work
+				STOP_PROCESSING(src, thing)
 		if(MC_TICK_CHECK)
 			return
