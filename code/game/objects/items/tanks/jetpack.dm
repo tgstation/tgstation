@@ -17,6 +17,7 @@
 /obj/item/tank/jetpack/Initialize()
 	. = ..()
 	ion_trail = new
+	ion_trail.auto_process = FALSE
 	ion_trail.set_up(src)
 
 /obj/item/tank/jetpack/populate_gas()
@@ -55,6 +56,7 @@
 	icon_state = "[initial(icon_state)]-on"
 	ion_trail.start()
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/move_react)
+	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, .proc/pre_move_react)
 	if(full_speed)
 		user.add_movespeed_modifier(MOVESPEED_ID_JETPACK, priority=100, multiplicative_slowdown=-0.5, movetypes=FLOATING, conflict=MOVE_CONFLICT_JETPACK)
 
@@ -64,10 +66,17 @@
 	icon_state = initial(icon_state)
 	ion_trail.stop()
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
 	user.remove_movespeed_modifier(MOVESPEED_ID_JETPACK)
 
 /obj/item/tank/jetpack/proc/move_react(mob/user)
-	allow_thrust(0.01, user)
+	if(length(user.client.keys_held & user.client.movement_keys))
+		if(!isturf(user.loc) || has_gravity(user) || pulledby || throwing)
+			return
+		allow_thrust(0.01, user)
+
+/obj/item/tank/jetpack/proc/pre_move_react(mob/user)
+	ion_trail.oldposition = get_turf(src)
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, mob/living/user)
 	if(!on)
@@ -83,6 +92,7 @@
 
 	var/turf/T = get_turf(user)
 	T.assume_air(removed)
+	ion_trail.generate_effect()
 
 	return TRUE
 
@@ -122,6 +132,7 @@
 
 	var/turf/T = get_turf(user)
 	T.assume_air(removed)
+	ion_trail.generate_effect()
 
 	return TRUE
 
