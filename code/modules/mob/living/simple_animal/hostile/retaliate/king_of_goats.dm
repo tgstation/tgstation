@@ -208,7 +208,7 @@ Difficulty: Insanely Hard
 				explosion(get_step(src,pick(GLOB.cardinals)), -1, 3, 4, 3, 6)
 				stop_automated_movement = FALSE
 				spellscast += 3
-				(!(getBruteLoss() > health_holder))
+				if(!(getBruteLoss() > health_holder))
 					adjustBruteLoss(health_holder - getBruteLoss()) //our own magicks cannot harm us
 			else
 				visible_message("<span class='notice'>\The [src] loses concentration and huffs haughtily.</span>")

@@ -612,6 +612,7 @@
 	throwforce = 25
 	force = 25
 	attack_verb = list("chomped")
+	gender = MALE
 
 /obj/item/toy/plush/goatplushie/angry/kinggoat/ascendedkinggoat
 	name = "Ascended King Goat Plushie"
@@ -627,10 +628,10 @@
 		I.play_tool_sound(src)
 		qdel(src)
 		var/turf/location = get_turf(user)
-		new/obj/item/toy/plush/goatplushie/angry/masterguardgoat(location)
-		new/obj/item/toy/plush/goatplushie/angry/masterguardgoat(location)
-		new/obj/item/toy/plush/goatplushie/angry/masterguardgoat(location)
-		new/obj/item/toy/plush/goatplushie/angry/masterguardgoat(location)
+		new/obj/item/toy/plush/goatplushie/angry/guardgoat/masterguardgoat(location)
+		new/obj/item/toy/plush/goatplushie/angry/guardgoat/masterguardgoat(location)
+		new/obj/item/toy/plush/goatplushie/angry/guardgoat/masterguardgoat(location)
+		new/obj/item/toy/plush/goatplushie/angry/guardgoat/masterguardgoat(location)
 		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
 		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
 		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
@@ -654,7 +655,7 @@
 	icon_state = "guardgoat"
 	throwforce = 10
 
-/obj/item/toy/plush/goatplushie/angry/masterguardgoat
+/obj/item/toy/plush/goatplushie/angry/guardgoat/masterguardgoat
 	name = "royal guard goat plushie"
 	desc = "A plushie depicting one of the royal King Goat's guards, tasked to protecting the king at all costs and training new goat guards."
 	icon_state = "royalguardgoat"
