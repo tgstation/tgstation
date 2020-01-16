@@ -109,7 +109,7 @@
 
 /mob/living/simple_animal/slime/handle_environment(datum/gas_mixture/environment)
 	var/loc_temp = get_temperature(environment)
-	var/divisor = 10 // The divisor controls how fast body temperature changes
+	var/divisor = 10 /// The divisor controls how fast body temperature changes, lower causes faster changes
 
 	if(abs(loc_temp - bodytemperature) > 50) // If the difference is great, reduce the divisor for faster stabilization
 		divisor = 5
