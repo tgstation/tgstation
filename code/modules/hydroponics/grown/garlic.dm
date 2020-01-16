@@ -49,19 +49,24 @@
 	bitesize = reagents.total_volume //one bite!
 
 /obj/item/reagent_containers/food/snacks/grown/garlic/hairy/On_Consume(mob/living/eater)
-	if(ishuman(eater))
+	if(!reagents.total_volume && ishuman(eater))
 		var/mob/living/carbon/human/H = eater
-		to_chat(H, "<span class='notice'>Your hair shapes into something... fruity?!</span>")
-		H.hairstyle = pick("Very Long Strawberry", "Very Long Watermelon")
+		var/datum/sprite_accessory/hair/garlic/newstyle = pick(subtypesof(/datum/sprite_accessory/hair/garlic))
+		to_chat(H, "<span class='notice'>Your hair reshapes into something... fruity?!</span>")
+		H.hairstyle = newstyle.name
+		H.hair_color = sanitize_hexcolor(newstyle.haircolor)
 		H.update_hair()
 
 /datum/sprite_accessory/hair/garlic
 	locked = TRUE
+	var/haircolor
 
 /datum/sprite_accessory/hair/garlic/strawberry
 	name = "Very Long Strawberry"
 	icon_state = "hair_vlongspotted"
+	haircolor = "#df2929" //red
 
 /datum/sprite_accessory/hair/garlic/watermelon
 	name = "Very Long Watermelon"
 	icon_state = "hair_unkeptline"
+	haircolor = "#00852c" //kinda dark green
