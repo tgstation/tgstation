@@ -559,7 +559,7 @@
 	START_PROCESSING(SSprocessing, src)
 
 /obj/item/toy/plush/goatplushie/angry/process()
-	if (prob(25) && !target)
+	if (prob(25) && !target && !faction_check("goat"))
 		var/list/targets_to_pick_from = list()
 		for(var/mob/living/carbon/C in view(7, src))
 			if(considered_alive(C.mind))
@@ -572,7 +572,7 @@
 		ram()
 
 /obj/item/toy/plush/goatplushie/angry/proc/ram()
-	if(prob((obj_flags & EMAGGED) ? 98:90) && isturf(loc) && considered_alive(target.mind))
+	if(prob((obj_flags & EMAGGED) ? 98:90) && isturf(loc) && considered_alive(target.mind) && !faction_check("goat"))
 		throw_at(target, 10, 10)
 		visible_message("<span class='danger'>[src] rams [target]!</span>")
 		cooldown = world.time + cooldown_modifier
@@ -601,7 +601,7 @@
 
 /obj/item/toy/plush/realgoat
 	name = "goat plushie"
-	desc = "Despite its cuddly appearance and plush nature, it will beat you up all the same, or atleast it would if it wasnt a normal plushie."
+	desc = "Despite its cuddly appearance and plush nature, it will beat you up all the same... or at least it would if it wasn't a normal plushie."
 	icon_state = "realgoat"
 	squeak_override = list('sound/items/goatsound.ogg'=1)
 
@@ -609,26 +609,17 @@
 	name = "King Goat Plushie"
 	desc = "A plushie depicting the king of all goats."
 	icon_state = "kinggoat"
-	cooldown_modifier = 3
 	throwforce = 25
 	force = 25
 	attack_verb = list("chomped")
 
-/obj/item/toy/plush/goatplushie/angry/ascendedkinggoat
+/obj/item/toy/plush/goatplushie/angry/kinggoat/ascendedkinggoat
 	name = "Ascended King Goat Plushie"
 	desc = "A plushie depicting the god of all goats."
 	icon_state = "ascendedkinggoat"
-	cooldown_modifier = 1
 	throwforce = 30
 	force = 30
-	attack_verb = list("chomped")
-
-/obj/item/toy/plush/goatplushie/angry/ascendedkinggoat/attackby(obj/item/I,mob/living/user,params)
-	if(I.get_sharpness())
-		user.visible_message("<span class='notice'>[user] attempts to stab [src]!</span>", "<span class='suicide'>The knife bounces off [src]'s back before breaking into millions of pieces... [src] glares at [user]!</span>") // You fucked up now son
-		I.play_tool_sound(src)
-		qdel(I)
-		user.gib()
+	divine = TRUE
 
 /obj/item/toy/plush/goatplushie/angry/kinggoat/attackby(obj/item/I,mob/living/user,params)
 	if(I.get_sharpness())
@@ -648,27 +639,23 @@
 		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
 		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
 		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
-
-/obj/item/toy/plush/goatplushie/angry/kinggoat/attackby(/obj/item/reagent_containers/food/snacks/grown/cabbage/C,mob/living/user,params)
-		var/C = /obj/item/reagent_containers/food/snacks/grown/cabbage
-		user.visible_message("<span class='notice'>[user] watches as [src] takes a bite out of the cabbage!</span>", "<span class='notice'>[src]'s fur now starts glowing it seems it has ascended!</span>")
+	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/cabbage))
+		user.visible_message("<span class='notice'>[user] watches as [src] takes a bite out of the cabbage!</span>", "<span class='notice'>[src]'s fur starts glowing. It seems they have ascended!</span>")
 		playsound(src, 'sound/items/eatfood.ogg', 50, 1)
-		qdel(C)
+		qdel(I)
 		qdel(src)
 		var/turf/location = get_turf(user)
-		new/obj/item/toy/plush/goatplushie/angry/ascendedkinggoat(location)
+		new/obj/item/toy/plush/goatplushie/angry/kinggoat/ascendedkinggoat(location)
 
 
 /obj/item/toy/plush/goatplushie/angry/guardgoat
 	name = "guard goat plushie"
-	desc = "A plushie depicting one of the king goats guards, tasked to protecting the king at all costs."
+	desc = "A plushie depicting one of the King Goat's guards, tasked to protect the king at all costs."
 	icon_state = "guardgoat"
-	cooldown_modifier = 5
 	throwforce = 10
 
 /obj/item/toy/plush/goatplushie/angry/masterguardgoat
 	name = "royal guard goat plushie"
-	desc = "A plushie depicting one of the royal king goats guards, tasked to protecting the king at all costs and training new goat guards."
+	desc = "A plushie depicting one of the royal King Goat's guards, tasked to protecting the king at all costs and training new goat guards."
 	icon_state = "royalguardgoat"
-	cooldown_modifier = 4
 	throwforce = 15

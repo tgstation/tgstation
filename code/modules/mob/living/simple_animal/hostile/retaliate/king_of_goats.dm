@@ -9,7 +9,7 @@ The three stages of the king goat:
  Stage 3: Oh boy your in for it now at this stage the king goat will completly heal and grow slightly bigger and start glowing it has the exact same attacks as stage 2 but is much more intimidating if you can defeat him at stage three he will fall over dead on the ground and drop a ladder so you may now leave the arena but dont forget to grab the loot first!
 The loot:
 The goat gun: This weapon as the name implies fires goats at your enemies knocking them down and doing a bit of brute damage it self recharges and combined with the goat pope hat or king goat pelt can lead to some interesting shenigans,
-The king goat pelt: Hope you brought a knife cause your gonna need to butcher the king goats corpse to get this prize. Once you butcher the king goat you can grab his pelt and wear it on your head as armor, boasting complete bomb immunity and slightly better gun and laser immunity then the drake helm at the cost of slightly reduced melee protection this is THE prize to show who the king of lavaland really is around here! Also makes goats friendly towards you as long as you are wearing it for they will see you as their new king.
+The king goat pelt: Hope you brought a knife cause your gonna need to butcher the king goats corpse to get this prize. Once you butcher the king goat you can grab his pelt and wear it on your head as armor, boasting decent bomb resistance and slightly better gun and laser resistance then the drake helm at the cost of slightly reduced melee protection this is THE prize to show who the king of lavaland really is around here! Also makes goats friendly towards you as long as you are wearing it for they will see you as their new king.
 Difficulty: Insanely Hard
 */
 
@@ -77,7 +77,7 @@ Difficulty: Insanely Hard
 	desc = "The King of Kings, God amongst men, and your superior in every way."
 	icon_state = "king_goat2"
 	icon_living = "king_goat2"
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 36, /obj/item/clothing/head/goatpelt/king = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 4, /obj/item/clothing/head/goatpelt/king = 1)
 	health = 750
 	maxHealth = 750
 	armour_penetration = 50
@@ -207,8 +207,8 @@ Difficulty: Insanely Hard
 				explosion(get_step(src,pick(GLOB.cardinals)), -1, 1, 4, 4, 6)
 				explosion(get_step(src,pick(GLOB.cardinals)), -1, 3, 4, 3, 6)
 				stop_automated_movement = FALSE
-				spellscast += 2
-				if(!getBruteLoss() > health_holder)
+				spellscast += 3
+				(!(getBruteLoss() > health_holder))
 					adjustBruteLoss(health_holder - getBruteLoss()) //our own magicks cannot harm us
 			else
 				visible_message("<span class='notice'>\The [src] loses concentration and huffs haughtily.</span>")
@@ -272,19 +272,22 @@ Difficulty: Insanely Hard
 			L.stop_sound_channel(CHANNEL_JUKEBOX)
 	if(move_to_delay < 3)
 		move_to_delay += 0.1
-	if((health <= 150 && !phase3 && spellscast == 5) || (stat == DEAD && !phase3)) //begin phase 3, reset spell limit and heal
+	if((health <= 150 && !phase3 && spellscast == 9) || (stat == DEAD && !phase3)) //begin phase 3, reset spell limit and heal
 		phase3_transition()
 	if(!.)
 		return FALSE
-	if(special_attacks >= 6 && melee_damage_type != BRUTE)
+	if(special_attacks >= 9 && melee_damage_type != BRUTE)
 		visible_message("<span class='cult'>The energy surrounding \the [src]'s horns dissipates.</span>")
 		melee_damage_type = BRUTE
+	if(special_attacks >= 9 && melee_damage_lower == 50)
+		visible_message("<span class='cult'>The [src]' horns shrink back down to normal size.</span>")
+		melee_damage_lower = 40
 
 /mob/living/simple_animal/hostile/retaliate/goat/king/proc/OnDeath()
 	visible_message("<span class='cult'>\The [src] lets loose a terrific wail as its wounds close shut with a flash of light, and its eyes glow even brighter than before!</span>")
 	var/mob/living/simple_animal/hostile/retaliate/goat/king/phase2/nextgoat = new(src.loc)
 	nextgoat.enemies |= enemies
-	qdel(src);
+	qdel(src)
 
 /mob/living/simple_animal/hostile/retaliate/goat/king/phase2/OnDeath()
 	for(var/mob/L in rangers)
@@ -318,7 +321,6 @@ Difficulty: Insanely Hard
 			L.gib()
 		if(prob(stun_chance))
 			L.Paralyze(5)
-			L.confused += 1
 			visible_message("<span class='warning'>\The [L] is bowled over by the impact of [src]'s attack!</span>")
 
 /mob/living/simple_animal/hostile/retaliate/goat/king/phase2/AttackingTarget()
