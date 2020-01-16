@@ -10,7 +10,6 @@ datum/job/f13/vault/overseer
 	display_order = JOB_DISPLAY_ORDER_OVERSEER
 
 /datum/outfit/job/overseer
-	..()
 	name = "Vault Overseer"
 	jobtype = /datum/job/f13/vault/overseer
 
