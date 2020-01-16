@@ -2189,12 +2189,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 20
 	color = "#EAD677"
 	quality = DRINK_NICE
-	taste_description = "sugary and tart"
+	taste_description = "sugary tartness"
 	glass_icon_state = "painkiller"
 	glass_name = "Painkiller"
 	glass_desc = "A combination of tropical juices and rum. Surely this will make you feel better."
 
 /datum/reagent/consumable/ethanol/painkiller/on_mob_life(mob/living/carbon/M)
+	// Causes the health doll to display blue regardless of damage, until the drink is metabolized.
 	M.hal_screwyhud = SCREWYHUD_HEALTHY
 	..()
 
@@ -2203,3 +2204,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		var/mob/living/carbon/N = M
 		N.hal_screwyhud = SCREWYHUD_NONE
 	..()
+
+/datum/reagent/consumable/ethanol/pina_colada
+	name = "Pina Colada"
+	description = "A fresh pineapple drink with coconut rum. Yum."
+	boozepwr = 40
+	color = "#FFF1B2"
+	quality = DRINK_FANTASTIC
+	taste_description = "pineapple, coconut, and a hint of the ocean"
+	glass_icon_state = "pina_colada"
+	glass_name = "Pina Colada"
+	glass_desc = "If you like pina coladas, and getting caught in the rain... well, you'll like this drink."
