@@ -44,7 +44,7 @@
 
 			var/cockroaches = prob(33) ? 3 : 0
 			while(cockroaches)
-				new /mob/living/simple_animal/cockroach(get_turf(vent))
+				new /mob/living/simple_animal/hostile/cockroach(get_turf(vent))
 				cockroaches--
 		CHECK_TICK
 
