@@ -65,7 +65,7 @@
 	var/stam_regen_start_time = 0 //used to halt stamina regen temporarily
 	var/stam_paralyzed = FALSE //knocks you down
 
-	/// Protection (insulation) from the elements
-	/// 0 - 1 value which corresponds to the percentage of protection
+	/// Protection (insulation) from the heat, Value 0-1 corresponding to the percentage of protection
 	var/heat_protection = 0 // No heat protection
+	/// Protection (insulation) from the cold, Value 0-1 corresponding to the percentage of protection
 	var/cold_protection = 0 // No cold protection
