@@ -4,43 +4,31 @@
 /area/lavaland/surface/outdoors/explored)
 "b" = (
 /turf/closed/wall/mineral/silver,
-/area/ruin/powered{
-	name = "King Goat Lair"
-	})
+/area/ruin/powered)
 "c" = (
 /turf/closed/wall/mineral/gold,
-/area/ruin/powered{
-	name = "King Goat Lair"
-	})
+/area/ruin/powered)
 "d" = (
 /obj/structure/mineral_door/transparent/diamond{
 	sheetAmount = 1
 	},
 /turf/open/floor/mineral/silver,
-/area/ruin/powered{
-	name = "King Goat Lair"
-	})
+/area/ruin/powered)
 "e" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/mineral/gold,
-/area/ruin/powered{
-	name = "King Goat Lair"
-	})
+/area/ruin/powered)
 "f" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/mineral/gold,
-/area/ruin/powered{
-	name = "King Goat Lair"
-	})
+/area/ruin/powered)
 "g" = (
 /turf/open/floor/mineral/diamond,
-/area/ruin/powered{
-	name = "King Goat Lair"
-	})
+/area/ruin/powered)
 "k" = (
 /obj/structure/ladder/unbreakable{
 	desc = "This seems to be the ladder to the King of Goats lair. Looks to be a one way trip...";
@@ -48,9 +36,7 @@
 	name = "Ladder to the King of Goats Lair"
 	},
 /turf/open/floor/mineral/gold,
-/area/ruin/powered{
-	name = "King Goat Lair"
-	})
+/area/ruin/powered)
 "q" = (
 /obj/effect/mob_spawn/human/miner{
 	assignedrole = "null";
@@ -62,17 +48,13 @@
 /obj/item/stack/ore/bluespace_crystal,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/mineral/gold,
-/area/ruin/powered{
-	name = "King Goat Lair"
-	})
+/area/ruin/powered)
 "r" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/mineral/gold,
-/area/ruin/powered{
-	name = "King Goat Lair"
-	})
+/area/ruin/powered)
 "s" = (
 /obj/item/paper/crumpled{
 	info = "Lest ye be prepared abandon all hope ye who enter here.";
@@ -80,20 +62,14 @@
 	},
 /obj/effect/decal/remains/human,
 /turf/open/floor/mineral/diamond,
-/area/ruin/powered{
-	name = "King Goat Lair"
-	})
+/area/ruin/powered)
 "t" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/gold,
-/area/ruin/powered{
-	name = "King Goat Lair"
-	})
+/area/ruin/powered)
 "H" = (
 /turf/open/floor/mineral/gold,
-/area/ruin/powered{
-	name = "King Goat Lair"
-	})
+/area/ruin/powered)
 
 (1,1,1) = {"
 a
