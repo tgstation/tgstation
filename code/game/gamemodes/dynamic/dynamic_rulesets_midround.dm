@@ -48,7 +48,7 @@
 				trimmed_list.Remove(M)
 				continue
 		if (M.mind)
-			if (restrict_ghost_roles && M.mind.assigned_role in GLOB.exp_specialmap[EXP_TYPE_SPECIAL]) // Are they playing a ghost role?
+			if (restrict_ghost_roles && (M.mind.assigned_role in GLOB.exp_specialmap[EXP_TYPE_SPECIAL])) // Are they playing a ghost role?
 				trimmed_list.Remove(M)
 				continue
 			if (M.mind.assigned_role in restricted_roles) // Does their job allow it?
