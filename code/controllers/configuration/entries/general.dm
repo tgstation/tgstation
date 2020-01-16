@@ -83,6 +83,8 @@
 
 /datum/config_entry/flag/log_job_debug	// log roundstart divide occupations debug information to a file
 
+/datum/config_entry/flag/log_shuttle // log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
+
 /datum/config_entry/flag/allow_admin_ooccolor	// Allows admins with relevant permissions to have their own ooc colour
 
 /datum/config_entry/flag/allow_admin_asaycolor //Allows admins with relevant permissions to have a personalized asay color
@@ -487,3 +489,4 @@
 
 /datum/config_entry/flag/reopen_roundstart_suicide_roles_command_report
 
+/datum/config_entry/flag/auto_profile

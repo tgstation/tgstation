@@ -159,7 +159,7 @@
 			mmi.forceMove(T)
 		if(mmi.brainmob)
 			if(mmi.brainmob.stat == DEAD)
-				mmi.brainmob.stat = CONSCIOUS
+				mmi.brainmob.set_stat(CONSCIOUS)
 				GLOB.dead_mob_list -= mmi.brainmob
 				GLOB.alive_mob_list += mmi.brainmob
 			mind.transfer_to(mmi.brainmob)
@@ -707,7 +707,7 @@
 	if(lamp_intensity && (turn_off || stat || low_power_mode))
 		to_chat(src, "<span class='danger'>Your headlamp has been deactivated.</span>")
 		lamp_intensity = 0
-		lamp_cooldown = world.time + cooldown
+		lamp_cooldown = cooldown == BORG_LAMP_CD_RESET ? 0 : max(world.time + cooldown, lamp_cooldown)
 	else
 		set_light(lamp_intensity)
 
@@ -945,13 +945,13 @@
 			return
 		if(IsUnconscious() || IsStun() || IsKnockdown() || IsParalyzed() || getOxyLoss() > maxHealth*0.5)
 			if(stat == CONSCIOUS)
-				stat = UNCONSCIOUS
+				set_stat(UNCONSCIOUS)
 				become_blind(UNCONSCIOUS_BLIND)
 				update_mobility()
 				update_headlamp()
 		else
 			if(stat == UNCONSCIOUS)
-				stat = CONSCIOUS
+				set_stat(CONSCIOUS)
 				cure_blind(UNCONSCIOUS_BLIND)
 				update_mobility()
 				update_headlamp()
@@ -1048,7 +1048,6 @@
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name	//update the camera name too
 	diag_hud_set_aishell()
-	notify_ai(AI_SHELL)
 
 /mob/living/silicon/robot/proc/revert_shell()
 	if(!shell)
@@ -1175,7 +1174,7 @@
 
 /mob/living/silicon/robot/resist()
 	. = ..()
-	if(!buckled_mobs.len)
+	if(!has_buckled_mobs())
 		return
 	for(var/i in buckled_mobs)
 		var/mob/unbuckle_me_now = i

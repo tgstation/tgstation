@@ -305,12 +305,9 @@
 		activate_sr()
 
 
-/obj/item/borg/upgrade/selfrepair/update_icon()
+/obj/item/borg/upgrade/selfrepair/update_icon_state()
 	if(toggle_action)
 		icon_state = "selfrepair_[on ? "on" : "off"]"
-		for(var/X in actions)
-			var/datum/action/A = X
-			A.UpdateButtonIcon()
 	else
 		icon_state = "cyborg_upgrade5"
 
@@ -489,7 +486,7 @@
 	if (.)
 		if(R.shell)
 			R.undeploy()
-			R.notify_ai(AI_SHELL)
+			R.notify_ai(DISCONNECT)
 
 /obj/item/borg/upgrade/expand
 	name = "borg expander"

@@ -210,6 +210,9 @@
 	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
 		statelaws()
 
+	if (href_list["printlawtext"]) // this is kinda backwards
+		to_chat(usr, href_list["printlawtext"])
+
 	return
 
 

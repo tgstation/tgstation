@@ -12,6 +12,7 @@
 	inherent_factions = list("faithless")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	mutanteyes = /obj/item/organ/eyes/night_vision
+	species_language_holder = /datum/language_holder/shadowpeople
 
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
@@ -185,7 +186,7 @@
 
 		if(iscyborg(AM))
 			var/mob/living/silicon/robot/borg = AM
-			if(!borg.lamp_cooldown)
+			if(borg.lamp_intensity)
 				borg.update_headlamp(TRUE, INFINITY)
 				to_chat(borg, "<span class='danger'>Your headlamp is fried! You'll need a human to help replace it.</span>")
 		else

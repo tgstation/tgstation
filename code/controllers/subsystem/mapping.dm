@@ -233,7 +233,7 @@ SUBSYSTEM_DEF(mapping)
 	station_start = world.maxz + 1
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_STATION)
- 
+
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET map_name = '[config.map_name]' WHERE id = [GLOB.round_id]")
 		query_round_map_name.Execute()
@@ -266,7 +266,7 @@ SUBSYSTEM_DEF(mapping)
 		fdel("_maps/custom/[config.map_file]")
 		// And as the file is now removed set the next map to default.
 		next_map_config = load_map_config(default_to_box = TRUE)
-	
+
 GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/generate_station_area_list()
@@ -284,10 +284,9 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		log_world("ERROR: Station areas list failed to generate!")
 
 /datum/controller/subsystem/mapping/proc/maprotate()
-	if(map_voted)
-		map_voted = FALSE
+	if(map_voted || SSmapping.next_map_config) //If voted or set by other means.
 		return
-	
+
 	var/players = GLOB.clients.len
 	var/list/mapvotes = list()
 	//count votes
@@ -308,7 +307,11 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	for (var/map in mapvotes)
 		if (!map)
 			mapvotes.Remove(map)
+			continue
 		if (!(map in global.config.maplist))
+			mapvotes.Remove(map)
+			continue
+		if(map in SSpersistence.blocked_maps)
 			mapvotes.Remove(map)
 			continue
 		var/datum/map_config/VM = global.config.maplist[map]
@@ -336,6 +339,13 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	. = changemap(VM)
 	if (. && VM.map_name != config.map_name)
 		to_chat(world, "<span class='boldannounce'>Map rotation has chosen [VM.map_name] for next round!</span>")
+
+/datum/controller/subsystem/mapping/proc/mapvote()
+	if(map_voted || SSmapping.next_map_config) //If voted or set by other means.
+		return
+	if(SSvote.mode) //Theres already a vote running, default to rotation.
+		maprotate()
+	SSvote.initiate_vote("map", "automatic map rotation")
 
 /datum/controller/subsystem/mapping/proc/changemap(var/datum/map_config/VM)
 	if(!VM.MakeNextMap())

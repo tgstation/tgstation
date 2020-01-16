@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - admin: "Added logging for when an Exosuit Console is used to EMP a mech."

@@ -11,6 +11,7 @@
 	disliked_food = null
 	liked_food = GROSS
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
+	species_language_holder = /datum/language_holder/fly
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.type == /datum/reagent/toxin/pestkiller)

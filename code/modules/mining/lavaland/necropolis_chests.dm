@@ -391,7 +391,7 @@
 	desc = "Mid or feed."
 	ammo_type = /obj/item/ammo_casing/magic/hook
 	icon_state = "hook"
-	item_state = "chain"
+	item_state = "hook"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	fire_sound = 'sound/weapons/batonextend.ogg'
@@ -411,12 +411,13 @@
 	icon_state = "hook"
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	pass_flags = PASSTABLE
-	damage = 25
-	armour_penetration = 100
+	damage = 20
+	stamina = 20
+	armour_penetration = 60
 	damage_type = BRUTE
 	hitsound = 'sound/effects/splat.ogg'
-	paralyze = 30
 	var/chain
+	var/knockdown_time = (0.5 SECONDS)
 
 /obj/projectile/hook/fire(setAngle)
 	if(firer)
@@ -432,6 +433,10 @@
 			return
 		A.visible_message("<span class='danger'>[A] is snagged by [firer]'s hook!</span>")
 		new /datum/forced_movement(A, get_turf(firer), 5, TRUE)
+		if (isliving(target))
+			var/mob/living/fresh_meat = target
+			fresh_meat.Knockdown(knockdown_time)
+			return
 		//TODO: keep the chain beamed to A
 		//TODO: needs a callback to delete the chain
 
@@ -452,7 +457,7 @@
 
 /obj/projectile/hook/bounty
 	damage = 0
-	paralyze = 20
+	stamina = 40
 
 //Immortality Talisman
 /obj/item/immortality_talisman
@@ -577,7 +582,7 @@
 	if(!user.can_read(src))
 		return FALSE
 	to_chat(user, "<span class='notice'>You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops.</span>")
-	user.grant_all_languages(omnitongue=TRUE)
+	user.grant_all_languages()
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
 

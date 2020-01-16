@@ -143,6 +143,56 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "The silky, smokey whiskey goodness inside the glass makes the drink look very classy."
 	shot_glass_icon_state = "shotglassbrown"
 
+/datum/reagent/consumable/ethanol/whiskey/kong
+	name = "Kong"
+	description = "Makes You Go Ape!&#174;"
+	color = "#332100" // rgb: 51, 33, 0
+	addiction_threshold = 15
+	taste_description = "the grip of a giant ape"
+	glass_name = "glass of Kong"
+	glass_desc = "Makes You Go Ape!&#174;"
+
+/datum/reagent/consumable/ethanol/whiskey/kong/addiction_act_stage1(mob/living/M)
+	if(prob(5))
+		to_chat(M, "<span class='notice'>You've made so many mistakes.</span>")
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "depression_minimal", /datum/mood_event/depression_minimal)
+	..()
+
+/datum/reagent/consumable/ethanol/whiskey/kong/addiction_act_stage2(mob/living/M)
+	if(prob(5))
+		to_chat(M, "<span class='notice'>No matter what you do, people will always get hurt.</span>")
+	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "depression_minimal", /datum/mood_event/depression_minimal)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "depression_mild", /datum/mood_event/depression_mild)
+	..()
+
+/datum/reagent/consumable/ethanol/whiskey/kong/addiction_act_stage3(mob/living/M)
+	if(prob(5))
+		to_chat(M, "<span class='notice'>You've lost so many people.</span>")
+	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "depression_mild", /datum/mood_event/depression_mild)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "depression_moderate", /datum/mood_event/depression_moderate)
+	..()
+
+/datum/reagent/consumable/ethanol/whiskey/kong/addiction_act_stage4(mob/living/M)
+	if(prob(5))
+		to_chat(M, "<span class='notice'>Just lie down and die.</span>")
+	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "depression_moderate", /datum/mood_event/depression_moderate)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "depression_severe", /datum/mood_event/depression_severe)
+	..()
+
+/datum/reagent/consumable/ethanol/whiskey/candycorn
+	name = "candy corn liquor"
+	description = "Like they drank in 2D speakeasies."
+	color = "#ccb800" // rgb: 204, 184, 0
+	taste_description = "pancake syrup"
+	glass_name = "glass of candy corn liquor"
+	glass_desc = "Good for your Imagination."
+	var/hal_amt = 4
+
+/datum/reagent/consumable/ethanol/whiskey/candycorn/on_mob_life(mob/living/carbon/M)
+	if(prob(10))
+		M.hallucination += hal_amt //conscious dreamers can be treasurers to their own currency
+	..()
+
 /datum/reagent/consumable/ethanol/thirteenloko
 	name = "Thirteen Loko"
 	description = "A potent mixture of caffeine and alcohol."
@@ -453,7 +503,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "cola"
 	glass_icon_state = "whiskeycolaglass"
 	glass_name = "whiskey cola"
-	glass_desc = "An innocent-looking mixture of cola and Whiskey. Delicious."
+	glass_desc = "An innocent-looking mixture of cola and whiskey. Delicious."
 
 
 /datum/reagent/consumable/ethanol/martini
@@ -524,7 +574,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "tomatoes with a hint of lime"
 	glass_icon_state = "bloodymaryglass"
 	glass_name = "Bloody Mary"
-	glass_desc = "Tomato juice, mixed with Vodka and a lil' bit of lime. Tastes like liquid murder."
+	glass_desc = "Tomato juice, mixed with Vodka and a li'l bit of lime. Tastes like liquid murder."
 
 /datum/reagent/consumable/ethanol/bloody_mary/on_mob_life(mob/living/carbon/C)
 	if(C.blood_volume < BLOOD_VOLUME_NORMAL)
@@ -924,7 +974,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "sweet and salty alcohol"
 	glass_icon_state = "red_meadglass"
 	glass_name = "Red Mead"
-	glass_desc = "A True Viking's Beverage, though its color is strange."
+	glass_desc = "A true Viking's beverage, though its color is strange."
 
 /datum/reagent/consumable/ethanol/mead
 	name = "Mead"
@@ -936,7 +986,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "sweet, sweet alcohol"
 	glass_icon_state = "meadglass"
 	glass_name = "Mead"
-	glass_desc = "A Viking's Beverage, though a cheap one."
+	glass_desc = "A Viking's beverage, though a cheap one."
 
 /datum/reagent/consumable/ethanol/iced_beer
 	name = "Iced Beer"
@@ -954,7 +1004,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/grog
 	name = "Grog"
-	description = "Watered down rum, Nanotrasen approves!"
+	description = "Watered-down rum, Nanotrasen approves!"
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 1 //Basically nothing
 	taste_description = "a poor excuse for alcohol"
@@ -1118,7 +1168,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A drink from Mime Heaven."
 
 /datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/carbon/M)
-	if(ishuman(M) && M.job == "Mime")
+	if(ishuman(M) && M.mind?.miming)
 		M.silent = max(M.silent, MIMEDRINK_SILENCE_DURATION)
 		M.heal_bodypart_damage(1,1)
 		. = 1
@@ -1463,7 +1513,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/grasshopper
 	name = "Grasshopper"
 	description = "A fresh and sweet dessert shooter. Difficult to look manly while drinking this."
-	color = "00ff00"
+	color = "#00ff00"
 	boozepwr = 25
 	quality = DRINK_GOOD
 	taste_description = "chocolate and mint dancing around your mouth"
@@ -1474,7 +1524,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/stinger
 	name = "Stinger"
 	description = "A snappy way to end the day."
-	color = "ccff99"
+	color = "#ccff99"
 	boozepwr = 25
 	quality = DRINK_NICE
 	taste_description = "a slap on the face in the best possible way"
@@ -1693,6 +1743,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Mojito"
 	glass_desc = "A drink that looks as refreshing as it tastes."
 
+/datum/reagent/consumable/ethanol/moscow_mule
+	name = "Moscow Mule"
+	description = "A chilly drink that reminds you of the Derelict."
+	color = "#EEF1AA"
+	boozepwr = 30
+	quality = DRINK_GOOD
+	taste_description = "refreshing spiciness"
+	glass_icon_state = "moscow_mule"
+	glass_name = "Moscow Mule"
+	glass_desc = "A chilly drink that reminds you of the Derelict."
+
 /datum/reagent/consumable/ethanol/fernet
 	name = "Fernet"
 	description = "An incredibly bitter herbal liqueur used as a digestif."
@@ -1730,7 +1791,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/fanciulli
 
 	name = "Fanciulli"
-	description = "What if the Manhattan coctail ACTUALLY used a bitter herb liquour? Helps you sobers up." //also causes a bit of stamina damage to symbolize the afterdrink lazyness
+	description = "What if the Manhattan cocktail ACTUALLY used a bitter herb liquour? Helps you sober up." //also causes a bit of stamina damage to symbolize the afterdrink lazyness
 	color = "#CA933F" // rgb: 202, 147, 63
 	boozepwr = -10
 	quality = DRINK_NICE
@@ -1760,7 +1821,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "a bitter freshness"
 	glass_icon_state= "minted_fernet"
 	glass_name = "glass of branca menta"
-	glass_desc = "A glass of Branca Menta, perfect for those lazy and hot sunday summer afternoons." //Get lazy literally by drinking this
+	glass_desc = "A glass of Branca Menta, perfect for those lazy and hot Sunday summer afternoons." //Get lazy literally by drinking this
 
 
 /datum/reagent/consumable/ethanol/branca_menta/on_mob_life(mob/living/carbon/M)
@@ -1786,7 +1847,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A fizzy cocktail for those looking to start fresh."
 
 /datum/reagent/consumable/ethanol/blank_paper/on_mob_life(mob/living/carbon/M)
-	if(ishuman(M) && M.job == "Mime")
+	if(ishuman(M) && M.mind?.miming)
 		M.silent = max(M.silent, MIMEDRINK_SILENCE_DURATION)
 		M.heal_bodypart_damage(1,1)
 		. = 1

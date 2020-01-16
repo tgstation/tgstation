@@ -106,7 +106,7 @@
 // Randomly pick a symptom to activate.
 /datum/disease/advance/stage_act()
 	..()
-	if(carrier)
+	if(carrier || QDELETED(src)) // Could be cured in parent call.
 		return
 
 	if(symptoms && symptoms.len)
@@ -248,7 +248,7 @@
 			SetSpread(DISEASE_SPREAD_CONTACT_FLUIDS)
 		else
 			SetSpread(DISEASE_SPREAD_BLOOD)
-		
+
 		permeability_mod = max(CEILING(0.4 * properties["transmittable"], 1), 1)
 		cure_chance = 15 - CLAMP(properties["resistance"], -5, 5) // can be between 10 and 20
 		stage_prob = max(properties["stage_rate"], 2)
@@ -419,7 +419,7 @@
 
 	 // Should be only 1 entry left, but if not let's only return a single entry
 	var/datum/disease/advance/to_return = pick(diseases)
-	to_return.Refresh(1)
+	to_return.Refresh(TRUE)
 	return to_return
 
 /proc/SetViruses(datum/reagent/R, list/data)
@@ -464,8 +464,9 @@
 		var/new_name = stripped_input(user, "Name your new disease.", "New Name")
 		if(!new_name)
 			return
-		D.AssignName(new_name)
 		D.Refresh()
+		D.AssignName(new_name)	//Updates the master copy
+		D.name = new_name //Updates our copy
 
 		var/list/targets = list("Random")
 		targets += sortNames(GLOB.human_list)

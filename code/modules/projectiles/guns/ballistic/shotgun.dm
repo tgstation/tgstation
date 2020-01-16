@@ -51,9 +51,9 @@
 
 // Automatic Shotguns//
 
-/obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user as mob|obj)
+/obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user)
 	..()
-	src.rack()
+	rack()
 
 /obj/item/gun/ballistic/shotgun/automatic/combat
 	name = "combat shotgun"

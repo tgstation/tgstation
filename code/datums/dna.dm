@@ -305,6 +305,11 @@
 		var/datum/species/old_species = dna.species
 		dna.species = new_race
 		dna.species.on_species_gain(src, old_species, pref_load)
+		if(ishuman(src))
+			qdel(language_holder)
+			var/species_holder = initial(mrace.species_language_holder)
+			language_holder = new species_holder(src)
+		update_atom_languages()
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()
@@ -333,7 +338,7 @@
 		set_species(newrace, icon_update=0)
 
 	if(newreal_name)
-		real_name = newreal_name
+		dna.real_name = newreal_name
 		dna.generate_unique_enzymes()
 
 	if(newblood_type)
@@ -510,7 +515,7 @@
 			var/datum/mutation/human/HM = dna.get_mutation(mutation)
 			if(HM)
 				HM.scrambled = TRUE
-				if(HM.quality & resilient) 
+				if(HM.quality & resilient)
 					HM.mutadone_proof = TRUE
 		return TRUE
 

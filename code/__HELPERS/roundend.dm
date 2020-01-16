@@ -59,10 +59,12 @@
 				else
 					category = "others"
 					mob_data["typepath"] = M.type
-		//Ghosts don't care about minds, we want to retain ckey data etc
+		//Ghosts don't care about minds, but we want to retain ckey data etc
 		if(isobserver(M))
 			count_only = FALSE
 			escape_status = "ghosts"
+			if(!M.mind)
+				mob_data["ckey"] = M.key
 			category = null //ghosts are one list deep
 		//All other mindless stuff just gets counts by name
 		if(count_only)
@@ -186,10 +188,16 @@
 		cb.InvokeAsync()
 	LAZYCLEARLIST(round_end_events)
 
+	var/speed_round = FALSE
+	if(world.time - SSticker.round_start_time <= 300 SECONDS)
+		speed_round = TRUE
+
 	for(var/client/C in GLOB.clients)
 		if(!C.credits)
 			C.RollCredits()
 		C.playtitlemusic(40)
+		if(speed_round)
+			C.give_award(/datum/award/achievement/misc/speed_round, C.mob)
 
 	var/popcount = gather_roundend_feedback()
 	display_report(popcount)

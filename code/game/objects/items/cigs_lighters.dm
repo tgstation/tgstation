@@ -578,6 +578,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	resistance_flags = FIRE_PROOF
 	light_color = LIGHT_COLOR_FIRE
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/fuel/oil = 5)
+	custom_price = 55
 
 /obj/item/lighter/Initialize()
 	. = ..()
@@ -599,11 +600,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		user.visible_message("<span class='suicide'>[user] begins whacking [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		return BRUTELOSS
 
-/obj/item/lighter/update_icon()
-	cut_overlays()
-	var/mutable_appearance/lighter_overlay = mutable_appearance(icon,"lighter_overlay_[overlay_state][lit ? "-on" : ""]")
+/obj/item/lighter/update_overlays()
+	. = ..()
+	. += create_lighter_overlay()
+
+/obj/item/lighter/update_icon_state()
 	icon_state = "[initial(icon_state)][lit ? "-on" : ""]"
-	add_overlay(lighter_overlay)
+
+/obj/item/lighter/proc/create_lighter_overlay()
+	return mutable_appearance(icon, "lighter_overlay_[overlay_state][lit ? "-on" : ""]")
 
 /obj/item/lighter/ignition_effect(atom/A, mob/user)
 	if(get_temperature())
@@ -725,12 +730,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		lighter_color = pick(color_list)
 	update_icon()
 
-/obj/item/lighter/greyscale/update_icon()
-	cut_overlays()
-	var/mutable_appearance/lighter_overlay = mutable_appearance(icon,"lighter_overlay_[overlay_state][lit ? "-on" : ""]")
-	icon_state = "[initial(icon_state)][lit ? "-on" : ""]"
+/obj/item/lighter/greyscale/create_lighter_overlay()
+	var/mutable_appearance/lighter_overlay = ..()
 	lighter_overlay.color = lighter_color
-	add_overlay(lighter_overlay)
+	return lighter_overlay
 
 /obj/item/lighter/greyscale/ignition_effect(atom/A, mob/user)
 	if(get_temperature())

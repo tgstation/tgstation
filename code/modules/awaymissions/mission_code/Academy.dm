@@ -171,16 +171,8 @@
 	var/reusable = TRUE
 	var/used = FALSE
 
-/obj/item/dice/d20/fate/stealth
-	name = "d20"
-	desc = "A die with twenty sides. The preferred die to throw at the GM."
-
 /obj/item/dice/d20/fate/one_use
 	reusable = FALSE
-
-/obj/item/dice/d20/fate/one_use/stealth
-	name = "d20"
-	desc = "A die with twenty sides. The preferred die to throw at the GM."
 
 /obj/item/dice/d20/fate/cursed
 	name = "cursed Die of Fate"
@@ -189,6 +181,23 @@
 
 	rigged = DICE_TOTALLY_RIGGED
 	rigged_value = 1
+
+/obj/item/dice/d20/fate/cursed/one_use
+	reusable = FALSE
+
+/obj/item/dice/d20/fate/stealth
+	name = "d20"
+	desc = "A die with twenty sides. The preferred die to throw at the GM."
+
+/obj/item/dice/d20/fate/stealth/one_use
+	reusable = FALSE
+
+/obj/item/dice/d20/fate/stealth/cursed
+	rigged = DICE_TOTALLY_RIGGED
+	rigged_value = 1
+
+/obj/item/dice/d20/fate/stealth/cursed/one_use
+	reusable = FALSE
 
 /obj/item/dice/d20/fate/diceroll(mob/user)
 	. = ..()

@@ -390,7 +390,7 @@
 	if(TRAIT_BOMBIMMUNE in dna.species.species_traits)
 		return
 	..()
-	if (!severity)
+	if (!severity || QDELETED(src))
 		return
 	var/brute_loss = 0
 	var/burn_loss = 0
