@@ -54,11 +54,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/datum/action/innate/flight/fly //the actual flying ability given to flying species
 	var/wings_icon = "Angel" //the icon used for the wings
 
-	// Body temperature defaults
-	// this enables different species to have different body temperature settings
+	/// The natural temperature for a body
 	var/bodytemp_normal = BODYTEMP_NORMAL
+	/// Minimum amount of kelvin moved toward normal body temperature per tick.
 	var/bodytemp_autorecovery_min = BODYTEMP_AUTORECOVERY_MINIMUM
+	/// The body temperature limit the body can take before it starts taking damage from heat.
 	var/bodytemp_heat_damage_limit = BODYTEMP_HEAT_DAMAGE_LIMIT
+	/// The body temperature limit the body can take before it starts taking damage from cold.
 	var/bodytemp_cold_damage_limit = BODYTEMP_COLD_DAMAGE_LIMIT
 
 	// species-only traits. Can be found in DNA.dm
@@ -1617,28 +1619,21 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 // ENVIRONMENT HANDLERS //
 //////////////////////////
 
-/// Handle the environment for the species
+/// Handle the environment for species
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
-	// Get the temperature of the current area
 	var/areatemp = H.get_temperature(environment)
+	var/natural = 0 // Body temperature stability have the body try and normalize on it's own
 
-	// Part one of body temperature stability have the body try and normalize on it's own
-	var/natural = 0
-	// If you are dead your body does not stabilize naturally
-	if(H.stat != DEAD)
-		// Get the amount of change in temp the body will apply on it's own
+	if(H.stat != DEAD) // If you are dead your body does not stabilize naturally
 		natural = natural_bodytemperature_stabilization(H)
 
-	// Get the mobs thermal protection and environmental change
+	/// Get the mobs thermal protection and environmental change
 	var/thermal_protection = 1 // The inverse of the amount of protection
-	var/environment_change = 0 // The amount of change the enviroment is causing
-	var/natural_change = 0 // the amount of change from natural stabilization after thermal protection
+	var/environment_change = 0 // The amount of change the from the enviroment
+	var/natural_change = 0 // The amount that natural stabilization changes after applying thermal protection
 
 	if(areatemp > H.bodytemperature) // It is hot here
-		// Get the thermal protection of the mob
-		// This returns a 0 - 1 value which corresponds to the percentage of protection
-		thermal_protection -= H.get_heat_protection(areatemp)
-		// How much the environment heats the mob with thermal protection
+		thermal_protection -= H.get_heat_protection(areatemp) // Get the thermal protection of the mob
 		environment_change = min(thermal_protection * (areatemp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR, \
 			BODYTEMP_HEATING_MAX)
 
@@ -1652,9 +1647,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			natural_change = (1 / (thermal_protection + 1)) * natural
 
 	else // It is cold here
-		// Get the thermal protection of the mob, this returns a 0 - 1 value
-		// which corresponds to the percentage of protection
-		thermal_protection -= H.get_cold_protection(areatemp)
+		thermal_protection -= H.get_cold_protection(areatemp) // Get the thermal protection of the mob
 
 		if(!H.on_fire) // If we are on fire ignore local temperature in cold areas
 			if(H.bodytemperature < bodytemp_normal)
@@ -1677,10 +1670,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	H.adjust_bodytemperature(natural_change + environment_change)
 
 /// Handle the body temperature status effects for the species
+/// Traits for resitance to heat or cold are handled here.
 /datum/species/proc/handle_body_temperature(mob/living/carbon/human/H)
-	// +30, -40 degrees from 310K is the 'safe' zone for humans, where no damage is dealt.
-	// Traits for resitance to heat or cold are handled here.
-
 	// Body temperature is too hot, and we do not have resist traits
 	if(H.bodytemperature > bodytemp_heat_damage_limit && !HAS_TRAIT(H, TRAIT_RESISTHEAT))
 		// Clear cold mood and apply hot mood
@@ -1694,6 +1685,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/firemodifier = H.fire_stacks / 50
 		if (!H.on_fire) // We are not on fire, reduce the modifier
 			firemodifier = min(firemodifier, 0)
+
 		// this can go below 5 at log 2.5
 		burn_damage = max(log(2 - firemodifier, (H.bodytemperature - bodytemp_normal)) - 5,0)
 
@@ -1748,12 +1740,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 
-// Handle the air pressure of the environment
-// This allows for species overrides
+/// Handle the air pressure of the environment
 /datum/species/proc/handle_environment_pressure(datum/gas_mixture/environment, mob/living/carbon/human/H)
-	// Get the current pressure for the area
 	var/pressure = environment.return_pressure()
-	// Returns how much pressure actually affects the mob.
 	var/adjusted_pressure = H.calculate_affecting_pressure(pressure)
 
 	// Set alerts and apply damage based on the amount of pressure
@@ -1793,12 +1782,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				H.adjustBruteLoss(LOW_PRESSURE_DAMAGE * H.physiology.pressure_mod)
 				H.throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
 
-// Used to stabilize the normal body temperature on living mobs
-// returns the amount of change to body temperature
+/// Used to stabilize the body temperature back to normal on living mobs
+/// Returns the amount of degrees kelvin to change the body temperature
 /datum/species/proc/natural_bodytemperature_stabilization(mob/living/carbon/human/H)
-	// Get current body temperature
-	var/body_temp = H.bodytemperature
-	// Get the difference between our current body temp and what is a normal body temp
+	var/body_temp = H.bodytemperature // Get current body temperature
 	var/body_temperature_difference = bodytemp_normal - body_temp
 
 	// We are very cold, increate body temperature

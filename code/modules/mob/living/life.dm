@@ -1,5 +1,4 @@
-// This is the divisor which comes into play when the mob's loc temperature is different than their body temperature.
-// Make this lower to change body temp faster.
+/// This divisor controls how fast body temperature changes to match the environment
 #define BODYTEMP_DIVISOR 8
 
 /mob/living/proc/Life(seconds, times_fired)
@@ -87,11 +86,10 @@
 /mob/living/proc/handle_random_events()
 	return
 
+// Base mob environment handler for body temperature
 /mob/living/proc/handle_environment(datum/gas_mixture/environment)
-	// Get the current air temperature
 	var/loc_temp = get_temperature(environment)
 
-	// Update the body temperature
 	if(loc_temp < bodytemperature) // it is cold here
 		if(!on_fire) // do not reduce body temp when on fire
 			adjust_bodytemperature(max((loc_temp - bodytemperature) / BODYTEMP_DIVISOR, BODYTEMP_COOLING_MAX))

@@ -22,15 +22,13 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	outfit_important_for_life = /datum/outfit/plasmaman
 
-	// Body temperature for Plasmen is much lower
-	// they can handle colder environments
-	// but they are hurt at hot temps faster as it is harder to hold their form
-	// and they will regain temperature more slowly in some situations
+	// Body temperature for Plasmen is much lower human as they can handle colder environments
 	bodytemp_normal = (BODYTEMP_NORMAL - 40)
+	// The minimum amount they stabilize per tick is reduced making hot areas harder to deal with
 	bodytemp_autorecovery_min = 2
+	// They are hurt at hot temps faster as it is harder to hold their form
 	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT - 20) // about 40C
-	// In the event they loss the cold resist trait
-	// This also has an effect on how fast they stabilize body temp
+	// This effects how fast body temp stabilizes, also if cold resit is lost on the mob
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 50) // about -50c
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)

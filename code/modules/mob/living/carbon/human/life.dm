@@ -105,12 +105,12 @@
 			var/obj/item/organ/lungs/lun = L
 			lun.check_breath(breath,src)
 
+/// Environment handlers for species
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
 	// If we are in a cryo bed do not process life functions
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
 
-	// hand off to the species handlers
 	dna.species.handle_environment(environment, src)
 	dna.species.handle_environment_pressure(environment, src)
 	dna.species.handle_body_temperature(src)
@@ -181,12 +181,8 @@
 
 	return thermal_protection_flags
 
-// Temperature is the temperature you're being exposed to.
-// This returns a 0 - 1 value which corresponds to the percentage of protection
 /mob/living/carbon/human/get_heat_protection(temperature)
 	var/thermal_protection_flags = get_heat_protection_flags(temperature)
-
-	// Apply the mobs base protection
 	var/thermal_protection = heat_protection
 
 	// Apply clothing items protection
@@ -242,16 +238,12 @@
 
 	return thermal_protection_flags
 
-// Temperature is the temperature you're being exposed to.
-// This returns a 0 - 1 value which corresponds to the percentage of protection
 /mob/living/carbon/human/get_cold_protection(temperature)
-	// There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them.
+	// There is an occasional bug where the temperature is miscalculated in areas with small amounts of gas.
 	// This is necessary to ensure that does not affect this calculation.
 	// Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
 	temperature = max(temperature, 2.7)
 	var/thermal_protection_flags = get_cold_protection_flags(temperature)
-
-	// Apply the mobs base protection
 	var/thermal_protection = cold_protection
 
 	// Apply clothing items protection
