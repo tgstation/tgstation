@@ -3,8 +3,7 @@ datum/job/f13/vault/overseer
 	flag = F13OVERSEER
 	total_positions = 1
 	spawn_positions = 1
-	description = "I am the vault"
-	supervisor = "guh"
+	supervisors = "guh"
 
 	outfit = /datum/outfit/job/overseer
 
