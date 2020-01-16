@@ -52,6 +52,8 @@
 
 
 /obj/item/tank/jetpack/proc/turn_on(mob/user)
+	if(!allow_thrust(0.01))
+		return
 	on = TRUE
 	icon_state = "[initial(icon_state)]-on"
 	ion_trail.start()
