@@ -68,6 +68,7 @@
 				if(!G.chambered || !G.chambered.BB)
 					continue
 				target = G
+				break
 			else if(I.force > C.best_force)
 				C.best_force = I.force
 				target = I

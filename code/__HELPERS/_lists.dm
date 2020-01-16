@@ -21,6 +21,7 @@
 #define LAZYCLEARLIST(L) if(L) L.Cut()
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
 #define reverseList(L) reverseRange(L.Copy())
+#define PEEKLIST(L) ((L.len ? L[L.len] : null))
 
 // binary search sorted insert
 // IN: Object to be inserted

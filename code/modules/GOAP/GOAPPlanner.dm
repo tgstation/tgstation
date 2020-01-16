@@ -49,32 +49,59 @@
 		plan += climblist[i]
 	return plan
 
+/*
+	Returns a list of plan nodes that are the END of a possible plan
+	These nodes have the cost of the entire plan (allowing you to choose, eg: the cheapest plan)
+	to construct a plan from the chosen node, simply follow the node parent
+	chain until you hit a node with no parent:
 
-//Works backwards from the goal to the start to find the best path
-//TODO: remove recursion
-/datum/goap_planner/proc/BuildPossiblePlans(list/end, datum/goap_plan_node/parent, list/usable_actions, list/goal)
-	var/list/plan_tree = list()
-	for(var/a in usable_actions)
-		var/datum/goap_action/GA = a
-		if(!InState(GA.effects, parent.state, "usable_actions")) // this won't get us to the goal
-			continue
-		//What does the world look like if we run this action?
-		var/list/current_state = ShowMeTheFuture(parent.state, GA.effects, GA.preconditions) // remove the effects and add the preconditions
-		var/datum/goap_plan_node/node = new()
-		node.parent = parent
-		var/budget = parent.cost+GA.cost
-		node.cost = budget
-		node.state = current_state
-		node.action = GA
+	var/list/plan = list()
+	var/datum/goap_plan_node/climber = chosen_node
+	while(climber)
+		if(climber.action)
+			plan += climber.action
+		climber = climber.parent
+	... then reverse the plan list to get it in START->END order ...
+*/
+/datum/goap_planner/proc/BuildPossiblePlans(list/end, datum/goap_plan_node/parent0, list/usable_actions0, list/goal)
+	var/list/plan_end_nodes  = list()                 //List of nodes that end a plan (thus, can be used to form plans in reverse)
 
-		if(InState(current_state, end, "add_to_plan_tree"))
-			plan_tree += node
-		else
-			usable_actions -= GA
-			var/list/subtree = BuildPossiblePlans(end, node, usable_actions, goal)
-			plan_tree += subtree
-		CHECK_TICK
-	return plan_tree
+	//Stacks
+	var/list/parent_stack    = list(parent0)          //Parent node stack (List of nodes)
+	var/list/actions_stack   = list(usable_actions0)  //Actions stack (List of lists of actions)
+
+	var depth = 1
+	while(depth>0)
+		var/list/usable_actions = PEEKLIST(actions_stack)
+		for(var/a in usable_actions)
+			var/datum/goap_action/GA = a
+			var/datum/goap_plan_node/parent = PEEKLIST(parent_stack)
+			if(!InState(GA.effects, parent.state, "usable_actions")) // this won't get us to the goal
+				continue
+
+			//What does the world look like if we run this action?
+			var/list/current_state = ShowMeTheFuture(parent.state, GA.effects, GA.preconditions) // remove the effects and add the preconditions
+			var/datum/goap_plan_node/node = new()
+			node.parent = parent
+			var/budget = parent.cost+GA.cost
+			node.cost = budget
+			node.state = current_state
+			node.action = GA
+
+			//This node reaches the goal, add it, but keep going to find more plans
+			if(InState(current_state, end, "add_to_plan_tree"))
+				plan_end_nodes += node
+			else
+				usable_actions -= GA //NOTE 2
+				parent_stack += node
+				actions_stack += usable_actions.Copy() //NOTE 1
+				depth++
+			CHECK_TICK
+
+		pop(parent_stack)
+		pop(actions_stack)
+		depth--
+	return plan_end_nodes
 
 
 /datum/goap_planner/proc/ShowMeTheFuture(list/state, list/remove, list/add)
