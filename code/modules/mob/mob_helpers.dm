@@ -197,7 +197,7 @@
   * text is the inputted message, replace_characters will cause original letters to be replaced and chance are the odds that a character gets modified.
   */
 /proc/Gibberish(text, replace_characters = FALSE, chance = 50)
-	text = html_decode(text) 
+	text = html_decode(text)
 	. = ""
 	var/rawchar = ""
 	var/letter = ""
@@ -210,47 +210,6 @@
 			for(var/j in 1 to rand(0, 2))
 				letter += pick("#", "@", "*", "&", "%", "$", "/", "<", ">", ";", "*", "*", "*", "*", "*", "*", "*")
 		. += letter
-	return sanitize(.)
-
-
-/**
-  * Convert a message into leet non gaijin speak
-  *
-  * The difference with stutter is that this proc can stutter more than 1 letter
-  *
-  * The issue here is that anything that does not have a space is treated as one word (in many instances). For instance, "LOOKING," is a word, including the comma.
-  *
-  * It's fairly easy to fix if dealing with single letters but not so much with compounds of letters./N
-  */
-/proc/ninjaspeak(phrase) //NINJACODE
-	phrase = html_decode(phrase)
-	var/leng = length(phrase)
-	. = ""
-	var/stutterphrase = ""
-	var/rawchar = ""
-	var/n_mod = rand(1, 4)
-	for(var/i = 1, i <= leng, i += length(rawchar))
-		rawchar = phrase[i]
-		if(rawchar == " " || i == leng)
-			n_mod = -1
-		if(n_mod > 0)
-			n_mod--
-			stutterphrase += rawchar
-			continue
-		if(rawchar != " ")
-			stutterphrase += rawchar
-
-		n_mod = rand(1, 4)
-		if(stutterphrase && prob(50))
-			if(prob(30))
-				stutterphrase = "[stutterphrase]-[stutterphrase]-[stutterphrase]"
-			else
-				stutterphrase = "[stutterphrase]-[stutterphrase]"
-		if(rawchar == " ")
-			stutterphrase += rawchar
-
-		. += stutterphrase
-		stutterphrase = ""
 	return sanitize(.)
 
 ///Shake the camera of the person viewing the mob SO REAL!
