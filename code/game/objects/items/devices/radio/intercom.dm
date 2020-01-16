@@ -27,8 +27,7 @@
 
 /obj/item/radio/intercom/examine(mob/user)
 	. = ..()
-	var/user_in_range = (src in view(MODE_RANGE_INTERCOM, user))
-	. += "<span class='notice'>Use [MODE_TOKEN_INTERCOM] to speak into it[user_in_range ? "." : ", if you get closer."]</span>"
+	. += "<span class='notice'>Use [MODE_TOKEN_INTERCOM] when nearby to speak into it.</span>"
 	if(!unfastened)
 		. += "<span class='notice'>It's <b>screwed</b> and secured to the wall.</span>"
 	else
