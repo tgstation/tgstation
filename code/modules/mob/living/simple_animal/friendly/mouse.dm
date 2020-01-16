@@ -91,6 +91,13 @@
 			visible_message("<span class='notice'>[src] nibbles through the [cheese], attracting another mouse!</span>")
 			qdel(cheese)
 			return
+	for(var/obj/item/reagent_containers/food/snacks/royalcheese/bigcheese in range(1, src))
+		visible_message("<span class='warning'>[src] devours [bigcheese]! He morphs into something... greater!</span>")
+		qdel(bigcheese)
+		qdel(src)
+		var/mob/living/simple_animal/hostile/regalrat = new /mob/living/simple_animal/hostile/regalrat
+		regalrat.say("RISE, MY SUBJECTS! SCREEEEEEE!", language = /datum/language/aphasia)
+		return
 
 /*
  * Mouse types
