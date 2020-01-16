@@ -9,7 +9,6 @@ datum/job/f13/vault/dweller
 	display_order = JOB_DISPLAY_ORDER_DWELLER
 
 /datum/outfit/job/dweller
-	..()
 	name = "Vault Dweller"
 	jobtype = /datum/job/f13/vault/dweller
 
