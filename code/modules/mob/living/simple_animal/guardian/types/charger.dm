@@ -65,7 +65,7 @@
 				L.drop_all_held_items()
 				L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you!</span>")
 				L.apply_damage(20, BRUTE)
-				playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)
+				playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, TRUE)
 				shake_camera(L, 4, 3)
 				shake_camera(src, 2, 3)
 

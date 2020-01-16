@@ -3,13 +3,13 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/closed/mineral,
+/turf/closed/mineral/random/no_caves,
 /area/ruin/unpowered/no_grav)
 "c" = (
 /turf/closed/mineral/random/high_chance,
 /area/ruin/unpowered/no_grav)
 "d" = (
-/turf/closed/mineral,
+/turf/closed/mineral/random/no_caves,
 /area/ruin/unpowered)
 "e" = (
 /turf/open/floor/plating/asteroid/airless,

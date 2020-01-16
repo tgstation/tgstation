@@ -5,7 +5,7 @@
 	icon_state = "empty"
 	req_access = list(ACCESS_BAR)
 	max_integrity = 500
-	integrity_failure = 250
+	integrity_failure = 0.5
 	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	buildable_sign = 0
 
@@ -54,9 +54,9 @@
 /obj/structure/sign/barsign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
+			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/structure/sign/barsign/attack_ai(mob/user)
 	return attack_hand(user)
@@ -122,7 +122,7 @@
 
 
 /obj/structure/sign/barsign/proc/pick_sign(mob/user)
-	var/picked_name = input(user, "Available Signage", "Bar Sign", name) as null|anything in get_bar_names()
+	var/picked_name = input(user, "Available Signage", "Bar Sign", name) as null|anything in sortList(get_bar_names())
 	if(!picked_name)
 		return
 	chosen_sign = set_sign_by_name(picked_name)
@@ -283,6 +283,11 @@
 	name = "The Lightbulb"
 	icon = "the_lightbulb"
 	desc = "A cafe popular among moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms."
+
+/datum/barsign/goose
+	name = "The Loose Goose"
+	icon = "goose"
+	desc = "Drink till you puke and/or break the laws of reality!"
 
 /datum/barsign/hiddensigns
 	hidden = TRUE

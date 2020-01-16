@@ -26,7 +26,7 @@
 	action_background_icon_state = "bg_cult"
 
 /obj/effect/proc_holder/spell/aoe_turf/area_conversion/cast(list/targets, mob/user = usr)
-	playsound(get_turf(user), 'sound/items/welder.ogg', 75, 1)
+	playsound(get_turf(user), 'sound/items/welder.ogg', 75, TRUE)
 	for(var/turf/T in targets)
 		T.narsie_act(FALSE, TRUE, 100 - (get_dist(user, T) * 25))
 
@@ -152,9 +152,9 @@
 	max_targets = 6
 	action_icon_state = "magicm"
 	action_background_icon_state = "bg_demon"
-	proj_type = /obj/item/projectile/magic/spell/magic_missile/lesser
+	proj_type = /obj/projectile/magic/spell/magic_missile/lesser
 
-/obj/item/projectile/magic/spell/magic_missile/lesser
+/obj/projectile/magic/spell/magic_missile/lesser
 	color = "red" //Looks more culty this way
 	range = 10
 
@@ -272,7 +272,7 @@
 
 	S.add_atom_colour("#990000", FIXED_COLOUR_PRIORITY)
 	S.faction = list("cult")
-	playsound(get_turf(S), 'sound/effects/ghost.ogg', 100, 1)
+	playsound(get_turf(S), 'sound/effects/ghost.ogg', 100, TRUE)
 	new /obj/effect/temp_visual/cult/sac(get_turf(S))
 
 /obj/effect/proc_holder/spell/targeted/dominate/can_target(mob/living/target)
@@ -291,7 +291,7 @@
 /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/juggernaut
 	name = "Gauntlet Echo"
 	desc = "Channels energy into your gauntlet - firing its essence forward in a slow moving, yet devastating, attack."
-	proj_type = /obj/item/projectile/magic/spell/juggernaut
+	proj_type = /obj/projectile/magic/spell/juggernaut
 	charge_max = 350
 	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
@@ -299,7 +299,7 @@
 	action_background_icon_state = "bg_demon"
 	sound = 'sound/weapons/resonator_blast.ogg'
 
-/obj/item/projectile/magic/spell/juggernaut
+/obj/projectile/magic/spell/juggernaut
 	name = "Gauntlet Echo"
 	icon_state = "cultfist"
 	alpha = 180
@@ -313,7 +313,7 @@
 	range = 15
 	speed = 7
 
-/obj/item/projectile/magic/spell/juggernaut/on_hit(atom/target, blocked)
+/obj/projectile/magic/spell/juggernaut/on_hit(atom/target, blocked)
 	. = ..()
 	var/turf/T = get_turf(src)
 	playsound(T, 'sound/weapons/resonator_blast.ogg', 100, FALSE)

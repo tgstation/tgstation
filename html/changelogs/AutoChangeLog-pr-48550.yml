@@ -1,0 +1,5 @@
+author: "wesoda25"
+delete-after: True
+changes: 
+  - rscadd: "You can now charge through APC's and Energy Cells as an Ethereal! Click an APC on harm intent to drain its energy, or on grab intent to give it your own energy! Click the energy cell while its in your hand to siphon its energy."
+  - balance: "You now receive less charge from light as an Ethereal."

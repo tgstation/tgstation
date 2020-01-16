@@ -61,7 +61,7 @@
 	to_chat(explodee, "<span class='danger'><B>[source] was boobytrapped!</B></span>")
 	to_chat(src, "<span class='danger'><B>Success! Your trap caught [explodee]</B></span>")
 	var/turf/T = get_turf(source)
-	playsound(T,'sound/effects/explosion2.ogg', 200, 1)
+	playsound(T,'sound/effects/explosion2.ogg', 200, TRUE)
 	new /obj/effect/temp_visual/explosion(T)
 	explodee.ex_act(EXPLODE_HEAVY)
 	UNREGISTER_BOMB_SIGNALS(source)

@@ -11,11 +11,15 @@
 	output_dir = SOUTH
 	req_access = list(ACCESS_MINERAL_STOREROOM)
 	speed_process = TRUE
-	circuit = /obj/item/circuitboard/machine/ore_redemption
 	layer = BELOW_OBJ_LAYER
+	circuit = /obj/item/circuitboard/machine/ore_redemption
+	ui_x = 440
+	ui_y = 550
+
 	var/points = 0
 	var/ore_pickup_rate = 15
-	var/sheet_per_ore = 1
+	var/ore_multiplier = 1
+	var/point_upgrade = 1
 	var/list/ore_values = list(/datum/material/iron = 1, /datum/material/glass = 1,  /datum/material/plasma = 15,  /datum/material/silver = 16, /datum/material/gold = 18, /datum/material/titanium = 30, /datum/material/uranium = 30, /datum/material/diamond = 50, /datum/material/bluespace = 50, /datum/material/bananium = 60)
 	var/message_sent = FALSE
 	var/list/ore_buffer = list()
@@ -30,25 +34,27 @@
 
 /obj/machinery/mineral/ore_redemption/Destroy()
 	QDEL_NULL(stored_research)
+	materials = null
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/RefreshParts()
 	var/ore_pickup_rate_temp = 15
-	var/sheet_per_ore_temp = 1
+	var/point_upgrade_temp = 1
+	var/ore_multiplier_temp = 1
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		sheet_per_ore_temp = 0.65 + (0.15 * B.rating)
-	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
-		sheet_per_ore_temp += (0.20 * L.rating)
+		ore_multiplier_temp = 0.65 + (0.35 * B.rating)
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		ore_pickup_rate_temp = 15 * M.rating
-
+	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
+		point_upgrade_temp = 0.65 + (0.35 * L.rating)
 	ore_pickup_rate = ore_pickup_rate_temp
-	sheet_per_ore = round(sheet_per_ore_temp, 0.01)
+	point_upgrade = point_upgrade_temp
+	ore_multiplier = round(ore_multiplier_temp, 0.01)
 
 /obj/machinery/mineral/ore_redemption/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Smelting <b>[sheet_per_ore]</b> sheet(s) per piece of ore.<br>Ore pickup speed at <b>[ore_pickup_rate]</b>.</span>"
+		. += "<span class='notice'>The status display reads: Smelting <b>[ore_multiplier]</b> sheet(s) per piece of ore.<br>Reward point generation at <b>[point_upgrade*100]%</b>.<br>Ore pickup speed at <b>[ore_pickup_rate]</b>.</span>"
 	if(panel_open)
 		. += "<span class='notice'>Alt-click to rotate the input and output direction.</span>"
 
@@ -63,20 +69,20 @@
 	ore_buffer -= O
 
 	if(O && O.refined_type)
-		points += O.points * O.amount
+		points += O.points * point_upgrade * O.amount
 
 	var/material_amount = mat_container.get_item_material_amount(O)
 
 	if(!material_amount)
 		qdel(O) //no materials, incinerate it
 
-	else if(!mat_container.has_space(material_amount * sheet_per_ore * O.amount)) //if there is no space, eject it
+	else if(!mat_container.has_space(material_amount * O.amount)) //if there is no space, eject it
 		unload_mineral(O)
 
 	else
-		var/mats = O.materials & mat_container.materials
+		var/mats = O.custom_materials & mat_container.materials
 		var/amount = O.amount
-		mat_container.insert_item(O, sheet_per_ore) //insert it
+		mat_container.insert_item(O, ore_multiplier) //insert it
 		materials.silo_log(src, "smelted", amount, "someone", mats)
 		qdel(O)
 
@@ -184,7 +190,7 @@
 	var/obj/item/stack/ore/O = W
 	if(istype(O))
 		if(O.refined_type == null)
-			to_chat(user, "<span class='notice'>[O] has already been refined!</span>")
+			to_chat(user, "<span class='warning'>[O] has already been refined!</span>")
 			return
 
 	return ..()
@@ -202,7 +208,7 @@
 /obj/machinery/mineral/ore_redemption/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "ore_redemption_machine", "Ore Redemption Machine", 440, 550, master_ui, state)
+		ui = new(user, src, ui_key, "ore_redemption_machine", "Ore Redemption Machine", ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/mineral/ore_redemption/ui_data(mob/user)
@@ -232,6 +238,7 @@
 		data["disconnected"] = "mineral withdrawal is on hold"
 
 	data["diskDesigns"] = list()
+	data["hasDisk"] = FALSE
 	if(inserted_disk)
 		data["hasDisk"] = TRUE
 		if(inserted_disk.blueprints.len)
@@ -251,10 +258,11 @@
 			var/mob/M = usr
 			var/obj/item/card/id/I = M.get_idcard(TRUE)
 			if(points)
-				if(I && I.registered_account.adjust_money(points))
+				if(I)
+					I.mining_points += points
 					points = 0
 				else
-					to_chat(usr, "<span class='warning'>No ID detected.</span>")
+					to_chat(usr, "<span class='warning'>No valid ID detected.</span>")
 			else
 				to_chat(usr, "<span class='warning'>No points to claim.</span>")
 			return TRUE
@@ -318,7 +326,9 @@
 				return
 			var/alloy_id = params["id"]
 			var/datum/design/alloy = stored_research.isDesignResearchedID(alloy_id)
-			if((check_access(inserted_scan_id) || allowed(usr)) && alloy)
+			var/mob/M = usr
+			var/obj/item/card/id/I = M.get_idcard(TRUE)
+			if((check_access(I) || allowed(usr)) && alloy)
 				var/smelt_amount = can_smelt_alloy(alloy)
 				var/desired = 0
 				if (params["sheets"])
@@ -341,10 +351,6 @@
 /obj/machinery/mineral/ore_redemption/ex_act(severity, target)
 	do_sparks(5, TRUE, src)
 	..()
-
-/obj/machinery/mineral/ore_redemption/power_change()
-	..()
-	update_icon()
 
 /obj/machinery/mineral/ore_redemption/update_icon()
 	if(powered())

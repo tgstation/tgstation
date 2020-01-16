@@ -1,7 +1,7 @@
 /datum/component/thermite
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/amount
-	var/burn_coeff
+	var/burn_require
 	var/overlay
 
 	var/static/list/blacklist = typecacheof(list(
@@ -26,13 +26,13 @@
 		return COMPONENT_INCOMPATIBLE
 
 	if(immunelist[parent.type])
-		burn_coeff = 0 //Yeah the overlay can still go on it and be cleaned but you arent burning down a diamond wall
-	else if(resistlist[parent.type])
-		burn_coeff = 0.25
+		amount = 0 //Yeah the overlay can still go on it and be cleaned but you arent burning down a diamond wall
 	else
-		burn_coeff = 1
-
-	amount = _amount*10
+		amount = _amount
+		if(resistlist[parent.type])
+			burn_require = 50
+		else
+			burn_require = 30
 
 	var/turf/master = parent
 	overlay = mutable_appearance('icons/effects/effects.dmi', "thermite")
@@ -41,6 +41,11 @@
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react)
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby_react)
 	RegisterSignal(parent, COMSIG_ATOM_FIRE_ACT, .proc/flame_react)
+
+/datum/component/thermite/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT)
+	UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
+	UnregisterSignal(parent, COMSIG_ATOM_FIRE_ACT)
 
 /datum/component/thermite/Destroy()
 	var/turf/master = parent
@@ -58,16 +63,20 @@
 /datum/component/thermite/proc/thermite_melt(mob/user)
 	var/turf/master = parent
 	master.cut_overlay(overlay)
+	playsound(master, 'sound/items/welder.ogg', 100, TRUE)
 	var/obj/effect/overlay/thermite/fakefire = new(master)
+	addtimer(CALLBACK(src, .proc/burn_parent, fakefire, user), min(amount * 0.35 SECONDS, 20 SECONDS))
+	UnregisterFromParent()
 
-	playsound(master, 'sound/items/welder.ogg', 100, 1)
-
-	if(amount * burn_coeff >= 50)
+/datum/component/thermite/proc/burn_parent(var/datum/fakefire, mob/user)
+	var/turf/master = parent
+	if(!QDELETED(fakefire))
+		qdel(fakefire)
+	if(user)
+		master.add_hiddenprint(user)
+	if(amount >= burn_require)
 		master = master.Melt()
 		master.burn_tile()
-		if(user)
-			master.add_hiddenprint(user)
-	QDEL_IN(fakefire, 10 SECONDS)
 	qdel(src)
 
 /datum/component/thermite/proc/clean_react(datum/source, strength)
@@ -79,5 +88,5 @@
 		thermite_melt()
 
 /datum/component/thermite/proc/attackby_react(datum/source, obj/item/thing, mob/user, params)
-	if(thing.is_hot())
+	if(thing.get_temperature())
 		thermite_melt(user)

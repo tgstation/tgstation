@@ -2,10 +2,6 @@
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
-"ab" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/template_noop)
 "ac" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
@@ -26,6 +22,9 @@
 	icon_state = "damaged5"
 	},
 /area/solar/derelict_starboard)
+"ai" = (
+/turf/template_noop,
+/area/ruin/space/derelict/singularity_engine)
 "ap" = (
 /obj/machinery/power/solar{
 	id = "derelictsolar";
@@ -183,11 +182,12 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/porta_turret_cover,
+/obj/structure/fluff/oldturret,
+/obj/structure/fluff/oldturret,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bg" = (
-/obj/machinery/porta_turret_cover,
+/obj/structure/fluff/oldturret,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bh" = (
@@ -357,7 +357,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bP" = (
-/obj/machinery/porta_turret_cover,
+/obj/structure/fluff/oldturret,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bQ" = (
@@ -393,20 +393,21 @@
 "bV" = (
 /obj/structure/rack,
 /obj/item/circuitboard/machine/circuit_imprinter,
+/obj/item/aiModule/core/full/drone{
+	pixel_x = -4;
+	pixel_y = -2
+	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bW" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Worn-out APC";
-	pixel_x = -25
+/turf/closed/indestructible/riveted{
+	color = "#FF8888"
 	},
-/obj/structure/cable,
-/turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bX" = (
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
+/obj/structure/rack,
+/obj/item/circuitboard/machine/generator,
+/turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bY" = (
 /obj/structure/frame/computer{
@@ -534,6 +535,7 @@
 "cC" = (
 /obj/structure/rack,
 /obj/item/electronics/apc,
+/obj/item/electronics/airalarm,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 "cD" = (
@@ -579,7 +581,7 @@
 "cQ" = (
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -601,6 +603,7 @@
 /obj/structure/rack,
 /obj/item/stack/cable_coil/cut,
 /obj/item/stack/cable_coil/cut,
+/obj/item/storage/box/lights/mixed,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 "cT" = (
@@ -1155,7 +1158,7 @@
 /obj/structure/table,
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/cable,
@@ -1261,7 +1264,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/access)
 "fw" = (
-/obj/item/drone_shell/dusty,
+/obj/effect/mob_spawn/drone/derelict,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/access)
 "fx" = (
@@ -1537,7 +1540,7 @@
 "gB" = (
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
@@ -1982,7 +1985,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "in" = (
-/obj/item/drone_shell/dusty,
+/obj/effect/mob_spawn/drone/derelict,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "io" = (
@@ -2143,12 +2146,6 @@
 "iR" = (
 /obj/item/shard{
 	icon_state = "medium"
-	},
-/turf/template_noop,
-/area/template_noop)
-"iS" = (
-/obj/structure/window/reinforced{
-	dir = 1
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -2330,7 +2327,7 @@
 "jz" = (
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/white,
@@ -2552,7 +2549,7 @@
 "kr" = (
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -2570,6 +2567,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
+"kx" = (
+/obj/machinery/door/airlock/vault/derelict,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
 "kB" = (
 /obj/structure/window/fulltile,
 /turf/open/floor/plating/airless,
@@ -2669,7 +2670,7 @@
 "la" = (
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
@@ -2792,11 +2793,13 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plating/airless,
+/turf/closed/wall/r_wall,
 /area/ruin/space/derelict/atmospherics)
 "lw" = (
-/obj/machinery/atmospherics/components/unary/tank/air,
-/turf/open/floor/plating/airless,
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/engine/air{
+	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
+	},
 /area/ruin/space/derelict/atmospherics)
 "lx" = (
 /turf/closed/wall,
@@ -2866,25 +2869,17 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
-"lM" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 6
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/atmospherics)
 "lN" = (
-/obj/machinery/atmospherics/pipe/manifold/cyan/hidden,
-/obj/machinery/meter,
-/turf/open/floor/plating/airless,
+/obj/machinery/atmospherics/components/unary/vent_scrubber,
+/turf/open/floor/engine/air{
+	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
+	},
 /area/ruin/space/derelict/atmospherics)
 "lO" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	dir = 9
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste,
+/turf/open/floor/engine/air{
+	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
 	},
-/turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
 "lP" = (
 /obj/machinery/door/airlock/maintenance{
@@ -2921,13 +2916,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/atmospherics)
-"lW" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/binary/valve,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
 "lX" = (
@@ -3078,11 +3066,22 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/atmospherics)
 "my" = (
-/obj/machinery/light/small,
-/turf/open/floor/plasteel/airless{
-	icon_state = "damaged5"
+/obj/machinery/light{
+	dir = 1
 	},
-/area/ruin/space/derelict/atmospherics)
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
 "mz" = (
 /obj/structure/lattice,
 /turf/template_noop,
@@ -3429,8 +3428,8 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/item/drone_shell/dusty,
 /obj/structure/cable,
+/obj/effect/mob_spawn/drone/derelict,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
 "nV" = (
@@ -3563,9 +3562,27 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge)
+"pZ" = (
+/obj/machinery/air_sensor/atmos/air_tank,
+/turf/open/floor/engine/air{
+	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
+	},
+/area/ruin/space/derelict/atmospherics)
+"rC" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/titanium{
+	amount = 15
+	},
+/obj/item/stack/sheet/mineral/wood/fifty,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
 "rK" = (
 /turf/template_noop,
 /area/ruin/space/derelict/medical)
+"tc" = (
+/obj/item/wallframe/airalarm,
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/atmospherics)
 "tS" = (
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
@@ -3573,6 +3590,16 @@
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"vo" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 15
+	},
+/obj/item/stack/sheet/mineral/silver{
+	amount = 15
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
 "vC" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -3590,6 +3617,10 @@
 	},
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
+"xr" = (
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
 "Av" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating/airless,
@@ -3599,6 +3630,12 @@
 	icon_state = "damaged3"
 	},
 /area/space/nearstation)
+"CZ" = (
+/obj/item/clothing/suit/space/syndicate/black/green,
+/turf/open/floor/plasteel/airless{
+	icon_state = "damaged2"
+	},
+/area/ruin/space/derelict/bridge/ai_upload)
 "DE" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Airlock"
@@ -3608,11 +3645,32 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
+"DX" = (
+/obj/machinery/light,
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
 "Ev" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/space/nearstation)
+"ES" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/atmospherics)
 "Gu" = (
 /obj/structure/grille,
 /turf/template_noop,
@@ -3621,19 +3679,70 @@
 /obj/structure/lattice,
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
+"GP" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
 "Ih" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/ruin/space/derelict/hallway/primary/port)
+"Ik" = (
+/obj/structure/closet/crate,
+/obj/item/clothing/head/beanie/rasta,
+/obj/item/clothing/head/beanie/black,
+/obj/item/clothing/head/beanie/christmas,
+/obj/item/clothing/head/beanie/darkblue,
+/obj/item/clothing/head/beanie/red,
+/obj/item/clothing/head/beanie/waldo,
+/obj/item/clothing/head/bearpelt,
+/obj/item/clothing/head/beret/vintage,
+/obj/item/clothing/head/bomb_hood,
+/obj/item/clothing/head/bunnyhead,
+/obj/item/clothing/head/cardborg,
+/obj/item/clothing/head/cone,
+/obj/item/clothing/head/festive,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/sec,
+/obj/item/clothing/head/jester,
+/obj/item/clothing/head/nun_hood,
+/obj/item/clothing/head/papersack,
+/obj/item/clothing/head/rabbitears,
+/obj/item/clothing/head/snowman,
+/obj/item/clothing/head/sombrero,
+/obj/item/clothing/head/wig,
+/obj/item/clothing/head/wizard/fake,
+/obj/item/clothing/head/wizard/santa,
+/obj/item/clothing/head/xenos,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
 "IA" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "floorscorched2"
 	},
 /area/space/nearstation)
+"Kf" = (
+/obj/item/paper/fluff/ruins/thederelict/vaultraider,
+/obj/effect/decal/remains/human{
+	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
+	name = "Syndicate agent remains"
+	},
+/turf/open/floor/plasteel/airless{
+	icon_state = "damaged2"
+	},
+/area/ruin/space/derelict/bridge/ai_upload)
 "KN" = (
 /turf/closed/wall,
 /area/ruin/space/derelict/hallway/primary/port)
+"KP" = (
+/obj/item/dronespeak_manual,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
+"KS" = (
+/obj/item/storage/box/lights/mixed,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/se_solar)
 "KT" = (
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
@@ -3647,13 +3756,49 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
+"Lr" = (
+/obj/machinery/computer/vaultcontroller{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
 "Lv" = (
 /turf/closed/wall,
 /area/space/nearstation)
+"LX" = (
+/obj/machinery/power/smes/engineering{
+	charge = 0
+	},
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
+"Mi" = (
+/obj/machinery/pipedispenser,
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/atmospherics)
 "MQ" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
+"MS" = (
+/obj/machinery/atmospherics/pipe/simple/supply/visible,
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/atmospherics)
+"Ni" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Worn-out APC";
+	pixel_x = -25;
+	start_charge = 0
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
+"Ob" = (
+/obj/item/clothing/head/helmet/space/syndicate/black/green,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
 "Oj" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/bridge/access)
@@ -3667,6 +3812,16 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/solar_control)
+"PR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/visible,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/atmospherics)
+"Qt" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/visible,
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/atmospherics)
 "Rd" = (
 /obj/item/stack/cable_coil,
 /turf/open/floor/plasteel/airless{
@@ -3687,22 +3842,78 @@
 "Tm" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary/port)
+"TJ" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/item/storage/box/lights/mixed,
+/turf/open/floor/plasteel/airless/white,
+/area/ruin/space/derelict/medical)
 "Uz" = (
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"UG" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/space/derelict/bridge/ai_upload)
+"Vt" = (
+/obj/structure/cable,
+/turf/closed/indestructible/riveted{
+	color = "#FF8888"
+	},
+/area/ruin/space/derelict/bridge/ai_upload)
 "Vz" = (
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary/port)
+"VV" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/atmospherics)
 "Xq" = (
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/ruin/space/derelict/singularity_engine)
+"Xu" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
+"YQ" = (
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
+"Zu" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 15
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 15
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
 "ZB" = (
 /obj/structure/lattice,
 /turf/template_noop,
 /area/space/nearstation)
+"ZM" = (
+/obj/machinery/droneDispenser/derelict,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/bridge/access)
 
 (1,1,1) = {"
 aa
@@ -3761,17 +3972,17 @@ aa
 aa
 aa
 aa
+ZB
 aa
 aa
 aa
-aa
-it
+ZB
 iH
-iS
+ZB
 aa
 aa
-aa
-aa
+ZB
+ZB
 aa
 aa
 aa
@@ -3871,9 +4082,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+ZB
+ZB
+ZB
 aa
 Gu
 hQ
@@ -3884,9 +4095,9 @@ iT
 hQ
 hQ
 Gu
-aa
-aa
-aa
+ZB
+ZB
+ZB
 aa
 aa
 aa
@@ -3983,8 +4194,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+ZB
+ZB
 gX
 gX
 gX
@@ -4000,7 +4211,7 @@ jL
 aY
 aY
 ZB
-aa
+ZB
 aa
 aa
 aa
@@ -4097,7 +4308,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 gX
 hj
 gX
@@ -4209,8 +4420,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+ZB
+ZB
 gX
 hj
 gX
@@ -4322,8 +4533,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+ZB
+ZB
 gX
 hj
 hj
@@ -4436,7 +4647,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 gX
 hj
 ht
@@ -4549,7 +4760,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 gX
 hk
 hk
@@ -4775,7 +4986,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 gX
 hk
 hk
@@ -4888,7 +5099,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 gX
 hk
 gX
@@ -5000,8 +5211,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+ZB
+ZB
 gX
 hk
 gX
@@ -5113,7 +5324,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 aa
 gX
 hl
@@ -5226,7 +5437,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 aa
 gX
 hj
@@ -5339,8 +5550,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+ZB
+ZB
 gX
 gX
 gX
@@ -5453,9 +5664,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+ZB
+ZB
+ZB
 gX
 hk
 hH
@@ -5567,8 +5778,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+ZB
+ZB
 gX
 hk
 hk
@@ -5681,7 +5892,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 gX
 gX
 gX
@@ -5797,7 +6008,7 @@ aa
 aa
 hv
 hI
-hV
+TJ
 hI
 iA
 hI
@@ -6012,9 +6223,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+ZB
+ZB
+ZB
 aa
 aa
 aa
@@ -6125,10 +6336,10 @@ aa
 aa
 aa
 aa
+ZB
 aa
-aa
-aa
-aa
+ZB
+ZB
 aa
 aa
 aa
@@ -6236,7 +6447,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 ZB
 dr
 dr
@@ -6312,6 +6523,13 @@ aa
 aa
 aa
 aa
+ZB
+aa
+aa
+aa
+ZB
+ZB
+ZB
 aa
 aa
 aa
@@ -6341,14 +6559,7 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ZB
 dr
 dr
 dr
@@ -6424,6 +6635,16 @@ aa
 aa
 aa
 aa
+ZB
+aa
+ZB
+ZB
+ZB
+aa
+aa
+aa
+ZB
+ZB
 aa
 aa
 aa
@@ -6446,18 +6667,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ZB
+ZB
 aa
 ZB
 ZB
@@ -6537,7 +6748,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 ax
 ax
 ax
@@ -6546,6 +6757,7 @@ ax
 ax
 ax
 aa
+ZB
 aa
 aa
 aa
@@ -6565,10 +6777,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+ZB
+ZB
+ZB
 aa
 aa
 ZB
@@ -6621,8 +6832,8 @@ md
 mZ
 mZ
 ZB
-aa
-aa
+ZB
+ZB
 aa
 aa
 aa
@@ -6651,7 +6862,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 ax
 aK
 aR
@@ -6659,16 +6870,16 @@ aW
 aR
 ax
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ZB
+ZB
+ZB
+ZB
+ZB
+ZB
+ZB
+ZB
+ZB
+ZB
 aa
 aa
 aa
@@ -6680,7 +6891,7 @@ aa
 aa
 ZB
 aa
-aa
+ZB
 dr
 dr
 dr
@@ -6735,7 +6946,7 @@ mU
 mZ
 ZB
 ay
-aa
+ZB
 aa
 aa
 aa
@@ -6763,7 +6974,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 ax
 ax
 aL
@@ -6848,8 +7059,8 @@ mU
 mZ
 ny
 ac
-aa
-aa
+ZB
+ZB
 aa
 aa
 aa
@@ -6877,9 +7088,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+ZB
+ZB
+ZB
 ax
 aX
 be
@@ -6992,7 +7203,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 ax
 ax
 aW
@@ -7106,7 +7317,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 ax
 aR
 aR
@@ -7593,11 +7804,11 @@ eZ
 dW
 dW
 dW
-aa
-aa
-aa
-aa
-aa
+ai
+ai
+ai
+ai
+ai
 dW
 dW
 gS
@@ -7630,7 +7841,7 @@ mx
 ls
 mM
 ls
-lt
+tc
 mP
 lx
 aa
@@ -7706,11 +7917,11 @@ dW
 dW
 dW
 dW
-aa
-aa
-aa
-aa
-aa
+ai
+ai
+ai
+ai
+ai
 dW
 dW
 dO
@@ -7819,11 +8030,11 @@ fa
 dW
 dW
 dW
-aa
-aa
-aa
-aa
-aa
+ai
+ai
+ai
+ai
+ai
 dW
 dW
 dP
@@ -7932,11 +8143,11 @@ dW
 dW
 dW
 dW
-aa
-aa
-aa
-aa
-aa
+ai
+ai
+ai
+ai
+ai
 dW
 dP
 dX
@@ -7958,11 +8169,11 @@ go
 gc
 go
 go
-fZ
+gk
 lv
-lM
-lW
-ma
+lv
+lv
+lt
 ls
 lt
 lt
@@ -8045,11 +8256,11 @@ dW
 dW
 dW
 dW
-aa
-aa
-aa
-aa
-aa
+ai
+ai
+ai
+ai
+ai
 dW
 dO
 eh
@@ -8071,12 +8282,12 @@ go
 gc
 go
 go
-fZ
+gk
 lw
 lN
-lt
-ls
-lt
+Qt
+PR
+MS
 mp
 ls
 ls
@@ -8184,18 +8395,18 @@ go
 gc
 go
 go
-fZ
-lw
+gk
+pZ
 lO
-ls
-ls
+ES
+VV
 mk
 mq
-my
+mp
 lt
 lt
 lt
-lt
+Mi
 mQ
 lt
 lt
@@ -8297,10 +8508,10 @@ jZ
 gc
 go
 go
-fZ
-lx
-lx
-lx
+gk
+ly
+ly
+ly
 lx
 lx
 mr
@@ -8537,7 +8748,7 @@ mp
 mp
 mt
 lx
-aa
+lz
 md
 nk
 nu
@@ -8648,9 +8859,9 @@ mt
 lx
 lx
 mt
-ab
-ab
-aa
+lA
+lA
+lz
 md
 nl
 nv
@@ -8801,7 +9012,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 ax
 ax
 ax
@@ -8809,7 +9020,7 @@ ax
 bo
 aR
 by
-by
+bX
 bg
 ax
 bV
@@ -8897,8 +9108,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+ZB
+ZB
 aa
 aa
 "}
@@ -8914,7 +9125,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 Uz
 ax
 bj
@@ -9010,10 +9221,10 @@ aa
 aa
 aa
 aa
+ZB
 aa
-aa
-aa
-aa
+ZB
+ZB
 "}
 (48,1,1) = {"
 aa
@@ -9027,7 +9238,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 Uz
 ax
 bj
@@ -9253,7 +9464,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 Uz
 ax
 bj
@@ -9366,7 +9577,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 Uz
 ax
 bj
@@ -9479,7 +9690,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 Uz
 ax
 bj
@@ -9488,7 +9699,7 @@ bj
 bj
 ax
 ax
-bz
+bJ
 ax
 ax
 ax
@@ -9600,11 +9811,11 @@ bj
 bj
 bj
 ax
-ax
-bJ
-ax
-ax
-ax
+bz
+bz
+bO
+bz
+bP
 ax
 aa
 aa
@@ -9705,7 +9916,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 Uz
 ax
 bj
@@ -9713,11 +9924,11 @@ bj
 bj
 bj
 ax
-bz
-bz
+bE
+bE
+bQ
+bY
 bO
-bW
-bP
 ax
 aa
 aa
@@ -9827,11 +10038,11 @@ bj
 bj
 ax
 bz
+bL
+bR
 bK
-bO
-bX
-bX
-ce
+cd
+ax
 aa
 aa
 aa
@@ -9931,7 +10142,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 Uz
 ax
 bj
@@ -9940,11 +10151,11 @@ bj
 bj
 ax
 bz
-bE
-bK
-bY
-cd
-ce
+bM
+bL
+bF
+bO
+ax
 ci
 ci
 ci
@@ -10052,12 +10263,12 @@ bj
 bj
 bj
 ax
+bF
+Kf
+CZ
+bZ
 bE
-bE
-bQ
-bK
-bO
-ce
+ax
 aa
 aa
 aa
@@ -10157,7 +10368,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 Uz
 ax
 bj
@@ -10165,11 +10376,11 @@ bj
 bj
 bj
 ax
-bz
-bL
-bR
-bF
-bE
+bG
+Ob
+xr
+GP
+YQ
 ce
 aa
 aa
@@ -10240,7 +10451,7 @@ mZ
 mZ
 nG
 nM
-nR
+KS
 nX
 oa
 oi
@@ -10270,7 +10481,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 Uz
 ax
 bj
@@ -10278,10 +10489,10 @@ bj
 bj
 bj
 ax
-bz
-bM
-bL
+bO
 bE
+bO
+bO
 bO
 ce
 aa
@@ -10375,15 +10586,15 @@ ZB
 aa
 aa
 aa
+ZB
+ZB
 aa
 aa
+ZB
+ZB
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+ZB
 Sv
 ax
 bj
@@ -10391,12 +10602,12 @@ bj
 bj
 bj
 ax
-bF
 bK
-bK
-bZ
-bz
-ce
+Lr
+xr
+YQ
+LX
+UG
 ce
 ce
 ce
@@ -10482,7 +10693,7 @@ vf
 ZB
 ZB
 vf
-aa
+ZB
 "}
 (61,1,1) = {"
 aa
@@ -10493,7 +10704,7 @@ vf
 vf
 vf
 vf
-aa
+ZB
 aa
 aa
 aa
@@ -10504,17 +10715,17 @@ bj
 bj
 bj
 ax
-bG
-bz
-bO
-bO
-bO
+ax
+ax
+kx
+ce
+ax
 ax
 bj
 bj
 bj
 cs
-cx
+ZM
 cF
 cx
 cT
@@ -10585,21 +10796,21 @@ oc
 nN
 nN
 nN
+ZB
 aa
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+ZB
+ZB
+ZB
 aa
 "}
 (62,1,1) = {"
-aa
-aa
+ZB
+ZB
 aa
 aa
 ZB
@@ -10609,20 +10820,20 @@ vf
 aa
 aa
 aa
-aa
+ZB
 Uz
 ax
 bj
 bj
 bj
 bj
-ax
-bz
-bO
-bO
-bz
-bz
-ax
+bW
+bW
+bW
+kx
+Vt
+bW
+bW
 bj
 bj
 bj
@@ -10698,7 +10909,7 @@ mf
 mf
 mf
 mf
-aa
+ZB
 aa
 aa
 aa
@@ -10722,20 +10933,20 @@ vf
 aa
 aa
 aa
-aa
+ZB
 Uz
 ax
 bj
 bj
 bj
 bj
-ax
-ax
-ax
-ax
-ax
-ax
-ax
+bW
+Xu
+bz
+bz
+Ni
+Xu
+bW
 bj
 bj
 bj
@@ -10811,7 +11022,7 @@ nN
 nN
 oc
 oc
-aa
+ZB
 aa
 aa
 aa
@@ -10835,20 +11046,20 @@ vf
 aa
 aa
 aa
-aa
+ZB
 Uz
 ax
 bj
 bj
 bj
 bj
-ax
-ax
-ax
-ax
-ax
-ax
-ax
+bW
+my
+bz
+Ik
+bz
+DX
+bW
 bj
 bj
 bj
@@ -10924,8 +11135,8 @@ mf
 mf
 mf
 mf
-aa
-aa
+ZB
+ZB
 aa
 aa
 aa
@@ -10945,23 +11156,23 @@ ap
 aa
 aa
 vf
-aa
-aa
-aa
-aa
+ZB
+ZB
+ZB
+ZB
 Uz
 ax
 bj
 bj
 bj
 bj
-bj
-bj
-bj
-bj
-bj
-bj
-bj
+bW
+Zu
+bz
+rC
+KP
+vo
+bW
 bj
 bj
 bj
@@ -11030,15 +11241,15 @@ aa
 it
 ml
 vC
+ZB
+ZB
 aa
+ZB
 aa
+ZB
+ZB
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+ZB
 aa
 aa
 aa
@@ -11068,13 +11279,13 @@ bj
 bj
 bj
 bj
-bj
-bj
-bj
-bj
-bj
-bj
-bj
+bW
+bW
+bW
+bW
+bW
+bW
+bW
 bj
 bj
 bj
@@ -11150,8 +11361,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+ZB
+ZB
 aa
 aa
 aa
@@ -11254,9 +11465,9 @@ aa
 aa
 aa
 aa
-aa
+ZB
 vC
-aa
+ZB
 aa
 aa
 aa
@@ -11368,7 +11579,7 @@ aa
 mv
 aa
 aa
-aa
+ZB
 aa
 aa
 aa
@@ -11481,7 +11692,7 @@ aa
 aa
 iR
 aa
-aa
+ZB
 aa
 aa
 aa
@@ -11594,7 +11805,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 aa
 aa
 aa
@@ -11706,8 +11917,8 @@ aa
 aa
 aa
 aa
-aa
-mv
+ZB
+ZB
 aa
 aa
 aa
@@ -11818,7 +12029,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 aa
 aa
 aa
@@ -11930,8 +12141,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+ZB
+ZB
 aa
 aa
 aa
@@ -12042,7 +12253,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 aa
 aa
 aa
@@ -12094,13 +12305,13 @@ as
 bi
 bi
 ch
+ZB
 aa
 aa
 aa
 aa
 aa
-aa
-aa
+ZB
 ac
 dz
 dN
@@ -12154,7 +12365,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 aa
 aa
 aa
@@ -12191,7 +12402,7 @@ vf
 aa
 aa
 aa
-aa
+ZB
 aa
 aa
 aa
@@ -12206,15 +12417,15 @@ ca
 as
 aa
 aa
+ZB
+ZB
 aa
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
+ZB
 ch
 aa
 ac
@@ -12225,7 +12436,7 @@ ay
 eu
 ac
 ac
-aa
+ZB
 aa
 ay
 ay
@@ -12266,7 +12477,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 aa
 aa
 aa
@@ -12313,6 +12524,11 @@ aa
 aa
 aa
 aa
+ZB
+aa
+aa
+ZB
+ZB
 aa
 aa
 aa
@@ -12323,22 +12539,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ZB
+ZB
 aa
 aa
 aa
 aa
 eV
 aa
+ZB
 aa
-aa
-aa
+ZB
 aa
 ay
 ay
@@ -12380,7 +12591,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 aa
 aa
 aa
@@ -12414,6 +12625,7 @@ ZB
 aa
 aa
 ZB
+ZB
 aa
 aa
 aa
@@ -12449,8 +12661,7 @@ aa
 aa
 aa
 aa
-aa
-aa
+ZB
 aa
 aa
 aY
@@ -12493,7 +12704,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 aa
 aa
 aa
@@ -12527,7 +12738,7 @@ ZB
 vf
 vf
 vf
-aa
+ZB
 aa
 aa
 aa
@@ -12606,7 +12817,7 @@ aa
 ay
 ac
 ac
-aa
+ZB
 aa
 aa
 aa
@@ -12632,14 +12843,14 @@ aa
 aa
 "}
 (80,1,1) = {"
+ZB
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+ZB
+ZB
+ZB
 aa
 aa
 aa
@@ -12719,7 +12930,7 @@ ac
 ac
 ac
 aa
-aa
+ZB
 aa
 aa
 aa
@@ -12831,7 +13042,7 @@ ay
 aa
 ay
 aa
-aa
+ZB
 aa
 aa
 aa
@@ -12904,7 +13115,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 ay
 ay
 ay
@@ -12912,7 +13123,7 @@ ay
 ay
 ay
 ay
-aa
+ZB
 aa
 aa
 aa
@@ -12944,7 +13155,7 @@ aY
 aY
 aY
 aY
-aa
+ZB
 aa
 aa
 aa
@@ -13017,15 +13228,15 @@ aa
 aa
 aa
 aa
+ZB
+ZB
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+ZB
+ZB
 aa
 aa
 aa
@@ -13058,7 +13269,7 @@ ac
 ac
 ac
 aa
-aa
+ZB
 aa
 aa
 aa

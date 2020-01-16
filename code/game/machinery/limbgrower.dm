@@ -6,7 +6,7 @@
 
 /obj/machinery/limbgrower
 	name = "limb grower"
-	desc = "It grows new limbs using Synthflesh."
+	desc = "It grows new limbs using Synthflesh (Instabitaluri)."
 	icon = 'icons/obj/machines/limbgrower.dmi'
 	icon_state = "limbgrower_idleoff"
 	density = TRUE
@@ -26,9 +26,9 @@
 	var/list/categories = list(
 							"human",
 							"lizard",
-							"fly",
 							"moth",
 							"plasmaman",
+							"ethereal",
 							"other"
 							)
 
@@ -98,10 +98,10 @@
 				return
 
 
-			var/synth_cost = being_built.reagents_list[/datum/reagent/medicine/synthflesh]*prod_coeff
+			var/synth_cost = being_built.reagents_list[/datum/reagent/medicine/C2/instabitaluri]*prod_coeff
 			var/power = max(2000, synth_cost/5)
 
-			if(reagents.has_reagent(/datum/reagent/medicine/synthflesh, being_built.reagents_list[/datum/reagent/medicine/synthflesh]*prod_coeff))
+			if(reagents.has_reagent(/datum/reagent/medicine/C2/instabitaluri, being_built.reagents_list[/datum/reagent/medicine/C2/instabitaluri]*prod_coeff))
 				busy = TRUE
 				use_power(power)
 				flick("limbgrower_fill",src)
@@ -115,8 +115,8 @@
 	return
 
 /obj/machinery/limbgrower/proc/build_item()
-	if(reagents.has_reagent(/datum/reagent/medicine/synthflesh, being_built.reagents_list[/datum/reagent/medicine/synthflesh]*prod_coeff))	//sanity check, if this happens we are in big trouble
-		reagents.remove_reagent(/datum/reagent/medicine/synthflesh,being_built.reagents_list[/datum/reagent/medicine/synthflesh]*prod_coeff)
+	if(reagents.has_reagent(/datum/reagent/medicine/C2/instabitaluri, being_built.reagents_list[/datum/reagent/medicine/C2/instabitaluri]*prod_coeff))	//sanity check, if this happens we are in big trouble
+		reagents.remove_reagent(/datum/reagent/medicine/C2/instabitaluri,being_built.reagents_list[/datum/reagent/medicine/C2/instabitaluri]*prod_coeff)
 		var/buildpath = being_built.build_path
 		if(ispath(buildpath, /obj/item/bodypart))	//This feels like spatgheti code, but i need to initilise a limb somehow
 			build_limb(buildpath)
@@ -124,7 +124,7 @@
 			//Just build whatever it is
 			new buildpath(loc)
 	else
-		src.visible_message("<span class=\"error\"> Something went very wrong and there isnt enough synthflesh anymore!</span>")
+		src.visible_message("<span class='warning'>Something went very wrong, there isn't enough instabitaluri anymore!</span>")
 	busy = FALSE
 	flick("limbgrower_unfill",src)
 	icon_state = "limbgrower_idleoff"
@@ -134,17 +134,23 @@
 	//i need to create a body part manually using a set icon (otherwise it doesnt appear)
 	var/obj/item/bodypart/limb
 	limb = new buildpath(loc)
-	if(selected_category=="human" || selected_category=="lizard") //Species with greyscale parts should be included here
+	if(selected_category=="human" || selected_category=="lizard" || selected_category=="ethereal") //Species with greyscale parts should be included here
+		if(selected_category=="human")			//humans don't use the full colour spectrum, they use random_skin_tone
+			limb.skin_tone = random_skin_tone()
+		else
+			limb.species_color = random_short_color()
+
 		limb.icon = 'icons/mob/human_parts_greyscale.dmi'
 		limb.should_draw_greyscale = TRUE
 	else
 		limb.icon = 'icons/mob/human_parts.dmi'
-	// Set this limb up using the specias name and body zone
+	// Set this limb up using the species name and body zone
 	limb.icon_state = "[selected_category]_[limb.body_zone]"
-	limb.name = "\improper synthetic [selected_category] [parse_zone(limb.body_zone)]"
-	limb.desc = "A synthetic [selected_category] limb that will morph on its first use in surgery. This one is for the [parse_zone(limb.body_zone)]."
+	limb.name = "\improper biosynthetic [selected_category] [parse_zone(limb.body_zone)]"
+	limb.desc = "A synthetically produced [selected_category] limb, grown in a tube. This one is for the [parse_zone(limb.body_zone)]."
 	limb.species_id = selected_category
 	limb.update_icon_dropped()
+	limb.original_owner = "limb grower"	 //prevents updating the icon, so a lizard arm on a human stays a lizard arm etc.
 
 /obj/machinery/limbgrower/RefreshParts()
 	reagents.maximum_volume = 0
@@ -159,7 +165,7 @@
 /obj/machinery/limbgrower/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Storing up to <b>[reagents.maximum_volume]u</b> of synthflesh.<br>Synthflesh consumption at <b>[prod_coeff*100]%</b>.</span>"
+		. += "<span class='notice'>The status display reads: Storing up to <b>[reagents.maximum_volume]u</b> of instabitaluri.<br>Instabitaluri consumption at <b>[prod_coeff*100]%</b>.</span>"
 
 /obj/machinery/limbgrower/proc/main_win(mob/user)
 	var/dat = "<div class='statusDisplay'><h3>Limb Grower Menu:</h3><br>"
@@ -211,12 +217,12 @@
 	return dat
 
 /obj/machinery/limbgrower/proc/can_build(datum/design/D)
-	return (reagents.has_reagent(/datum/reagent/medicine/synthflesh, D.reagents_list[/datum/reagent/medicine/synthflesh]*prod_coeff)) //Return whether the machine has enough synthflesh to produce the design
+	return (reagents.has_reagent(/datum/reagent/medicine/C2/instabitaluri, D.reagents_list[/datum/reagent/medicine/C2/instabitaluri]*prod_coeff)) //Return whether the machine has enough instabitaluri to produce the design
 
 /obj/machinery/limbgrower/proc/get_design_cost(datum/design/D)
 	var/dat
-	if(D.reagents_list[/datum/reagent/medicine/synthflesh])
-		dat += "[D.reagents_list[/datum/reagent/medicine/synthflesh] * prod_coeff] Synthetic flesh "
+	if(D.reagents_list[/datum/reagent/medicine/C2/instabitaluri])
+		dat += "[D.reagents_list[/datum/reagent/medicine/C2/instabitaluri] * prod_coeff] SynthFlesh (instabitaluri)"
 	return dat
 
 /obj/machinery/limbgrower/emag_act(mob/user)

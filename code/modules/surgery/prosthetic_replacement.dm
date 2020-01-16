@@ -19,6 +19,7 @@
 	name = "add prosthetic"
 	implements = list(/obj/item/bodypart = 100, /obj/item/organ_storage = 100, /obj/item/twohanded/required/chainsaw = 100, /obj/item/melee/synthetic_arm_blade = 100)
 	time = 32
+	experience_given = 5 //won't get full XP if rejected
 	var/organ_rejection_dam = 0
 
 /datum/surgery_step/add_prosthetic/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -49,20 +50,21 @@
 
 		if(target_zone == BP.body_zone) //so we can't replace a leg with an arm, or a human arm with a monkey arm.
 			display_results(user, target, "<span class='notice'>You begin to replace [target]'s [parse_zone(target_zone)] with [tool]...</span>",
-				"[user] begins to replace [target]'s [parse_zone(target_zone)] with [tool].",
-				"[user] begins to replace [target]'s [parse_zone(target_zone)].")
+				"<span class='notice'>[user] begins to replace [target]'s [parse_zone(target_zone)] with [tool].</span>",
+				"<span class='notice'>[user] begins to replace [target]'s [parse_zone(target_zone)].</span>")
 		else
 			to_chat(user, "<span class='warning'>[tool] isn't the right type for [parse_zone(target_zone)].</span>")
 			return -1
 	else if(target_zone == BODY_ZONE_L_ARM || target_zone == BODY_ZONE_R_ARM)
 		display_results(user, target, "<span class='notice'>You begin to attach [tool] onto [target]...</span>",
-			"[user] begins to attach [tool] onto [target]'s [parse_zone(target_zone)].",
-			"[user] begins to attach something onto [target]'s [parse_zone(target_zone)].")
+			"<span class='notice'>[user] begins to attach [tool] onto [target]'s [parse_zone(target_zone)].</span>",
+			"<span class='notice'>[user] begins to attach something onto [target]'s [parse_zone(target_zone)].</span>")
 	else
 		to_chat(user, "<span class='warning'>[tool] must be installed onto an arm.</span>")
 		return -1
 
-/datum/surgery_step/add_prosthetic/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/add_prosthetic/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+	. = ..()
 	if(istype(tool, /obj/item/organ_storage))
 		tool.icon_state = initial(tool.icon_state)
 		tool.desc = initial(tool.desc)
@@ -73,24 +75,26 @@
 		L.attach_limb(target)
 		if(organ_rejection_dam)
 			target.adjustToxLoss(organ_rejection_dam)
+			experience_given -= (round(organ_rejection_dam/10))
 		display_results(user, target, "<span class='notice'>You succeed in replacing [target]'s [parse_zone(target_zone)].</span>",
-			"[user] successfully replaces [target]'s [parse_zone(target_zone)] with [tool]!",
-			"[user] successfully replaces [target]'s [parse_zone(target_zone)]!")
-		return 1
+			"<span class='notice'>[user] successfully replaces [target]'s [parse_zone(target_zone)] with [tool]!</span>",
+			"<span class='notice'>[user] successfully replaces [target]'s [parse_zone(target_zone)]!</span>")
+		return
 	else
 		var/obj/item/bodypart/L = target.newBodyPart(target_zone, FALSE, FALSE)
 		L.is_pseudopart = TRUE
 		L.attach_limb(target)
-		user.visible_message("[user] finishes attaching [tool]!", "<span class='notice'>You attach [tool].</span>")
+		user.visible_message("<span class='notice'>[user] finishes attaching [tool]!</span>", "<span class='notice'>You attach [tool].</span>")
 		display_results(user, target, "<span class='notice'>You attach [tool].</span>",
-			"[user] finishes attaching [tool]!",
-			"[user] finishes the attachment procedure!")
+			"<span class='notice'>[user] finishes attaching [tool]!</span>",
+			"<span class='notice'>[user] finishes the attachment procedure!</span>")
 		qdel(tool)
 		if(istype(tool, /obj/item/twohanded/required/chainsaw))
 			var/obj/item/mounted_chainsaw/new_arm = new(target)
 			target_zone == BODY_ZONE_R_ARM ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
-			return 1
+			return
 		else if(istype(tool, /obj/item/melee/synthetic_arm_blade))
 			var/obj/item/melee/arm_blade/new_arm = new(target,TRUE,TRUE)
 			target_zone == BODY_ZONE_R_ARM ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
-			return 1
+			return
+	return ..() //if for some reason we fail everything we'll print out some text okay?

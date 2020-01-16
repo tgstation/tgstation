@@ -14,7 +14,8 @@
 	cast_sound = null
 	human_req = TRUE
 
-	action_icon_state = "mime"
+	action_icon = 'icons/mob/actions/actions_mime.dmi'
+	action_icon_state = "invisible_wall"
 	action_background_icon_state = "bg_mime"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/Click()
@@ -43,7 +44,8 @@
 	cast_sound = null
 	human_req = TRUE
 
-	action_icon_state = "mime"
+	action_icon = 'icons/mob/actions/actions_mime.dmi'
+	action_icon_state = "invisible_chair"
 	action_background_icon_state = "bg_mime"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair/Click()
@@ -72,7 +74,7 @@
 	summon_type = list(/obj/item/storage/box/mime)
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='notice'>You conjure up an invisible box, large enough to store a few things.</span>"
-	summon_lifespan = 250
+	summon_lifespan = 500
 	charge_max = 300
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
@@ -80,7 +82,8 @@
 	cast_sound = null
 	human_req = TRUE
 
-	action_icon_state = "mime"
+	action_icon = 'icons/mob/actions/actions_mime.dmi'
+	action_icon_state = "invisible_box"
 	action_background_icon_state = "bg_mime"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_box/cast(list/targets,mob/user = usr)
@@ -114,7 +117,8 @@
 	range = -1
 	include_user = TRUE
 
-	action_icon_state = "mime"
+	action_icon = 'icons/mob/actions/actions_mime.dmi'
+	action_icon_state = "mime_speech"
 	action_background_icon_state = "bg_mime"
 
 /obj/effect/proc_holder/spell/targeted/mime/speak/Click()
@@ -156,7 +160,8 @@
 	range = -1
 	include_user = TRUE
 
-	action_icon_state = "mime"
+	action_icon = 'icons/mob/actions/actions_mime.dmi'
+	action_icon_state = "invisible_blockade"
 	action_background_icon_state = "bg_mime"
 
 /obj/effect/proc_holder/spell/targeted/forcewall/mime/Click()
@@ -180,16 +185,17 @@
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='dangers'>You fire your finger gun!</span>"
 	range = 20
-	projectile_type = /obj/item/projectile/bullet/mime
+	projectile_type = /obj/projectile/bullet/mime
 	projectile_amount = 3
 	sound = null
 	active_msg = "You draw your fingers!"
 	deactive_msg = "You put your fingers at ease. Another time."
 	active = FALSE
 
-	action_icon_state = "mime"
+	action_icon = 'icons/mob/actions/actions_mime.dmi'
+	action_icon_state = "finger_guns0"
 	action_background_icon_state = "bg_mime"
-	base_icon_state = "mime"
+	base_icon_state = "finger_guns"
 
 
 /obj/effect/proc_holder/spell/aimed/finger_guns/Click()

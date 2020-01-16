@@ -82,8 +82,8 @@
   */
 /proc/slur(n)
 	var/phrase = html_decode(n)
-	var/leng = lentext(phrase)
-	var/counter=lentext(phrase)
+	var/leng = length(phrase)
+	var/counter=length(phrase)
 	var/newphrase=""
 	var/newletter=""
 	while(counter>=1)
@@ -117,8 +117,8 @@
 /// Makes you talk like you got cult stunned, which is slurring but with some dark messages
 /proc/cultslur(n) // Inflicted on victims of a stun talisman
 	var/phrase = html_decode(n)
-	var/leng = lentext(phrase)
-	var/counter=lentext(phrase)
+	var/leng = length(phrase)
+	var/counter=length(phrase)
 	var/newphrase=""
 	var/newletter=""
 	while(counter>=1)
@@ -404,38 +404,37 @@
   * * notify_suiciders If it should notify suiciders (who do not qualify for many ghost roles)
   * * notify_volume How loud the sound should be to spook the user
   */
-/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/mutable_appearance/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, header = null, notify_suiciders = TRUE, var/notify_volume = 100) //Easy notification of ghosts.
+/proc/notify_ghosts(message, ghost_sound = null, enter_link = null, atom/source = null, mutable_appearance/alert_overlay = null, action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, header = null, notify_suiciders = TRUE, notify_volume = 100) //Easy notification of ghosts.
 	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
 		return
 	for(var/mob/dead/observer/O in GLOB.player_list)
-		if(O.client)
-			if(!notify_suiciders && (O in GLOB.suicided_mob_list))
-				continue
-			if (ignore_key && O.ckey in GLOB.poll_ignore[ignore_key])
-				continue
-			var/orbit_link
-			if (source && action == NOTIFY_ORBIT)
-				orbit_link = " <a href='?src=[REF(O)];follow=[REF(source)]'>(Orbit)</a>"
-			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""][orbit_link]</span>")
-			if(ghost_sound)
-				SEND_SOUND(O, sound(ghost_sound, volume = notify_volume))
-			if(flashwindow)
-				window_flash(O.client)
-			if(source)
-				var/obj/screen/alert/notify_action/A = O.throw_alert("[REF(source)]_notify_action", /obj/screen/alert/notify_action)
-				if(A)
-					if(O.client.prefs && O.client.prefs.UI_style)
-						A.icon = ui_style2icon(O.client.prefs.UI_style)
-					if (header)
-						A.name = header
-					A.desc = message
-					A.action = action
-					A.target = source
-					if(!alert_overlay)
-						alert_overlay = new(source)
-					alert_overlay.layer = FLOAT_LAYER
-					alert_overlay.plane = FLOAT_PLANE
-					A.add_overlay(alert_overlay)
+		if(!notify_suiciders && (O in GLOB.suicided_mob_list))
+			continue
+		if (ignore_key && O.ckey in GLOB.poll_ignore[ignore_key])
+			continue
+		var/orbit_link
+		if (source && action == NOTIFY_ORBIT)
+			orbit_link = " <a href='?src=[REF(O)];follow=[REF(source)]'>(Orbit)</a>"
+		to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""][orbit_link]</span>")
+		if(ghost_sound)
+			SEND_SOUND(O, sound(ghost_sound, volume = notify_volume))
+		if(flashwindow)
+			window_flash(O.client)
+		if(source)
+			var/obj/screen/alert/notify_action/A = O.throw_alert("[REF(source)]_notify_action", /obj/screen/alert/notify_action)
+			if(A)
+				if(O.client.prefs && O.client.prefs.UI_style)
+					A.icon = ui_style2icon(O.client.prefs.UI_style)
+				if (header)
+					A.name = header
+				A.desc = message
+				A.action = action
+				A.target = source
+				if(!alert_overlay)
+					alert_overlay = new(source)
+				alert_overlay.layer = FLOAT_LAYER
+				alert_overlay.plane = FLOAT_PLANE
+				A.add_overlay(alert_overlay)
 
 /**
   * Heal a robotic body part on a mob
@@ -451,7 +450,7 @@
 		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
 			if(affecting.heal_damage(brute_heal, burn_heal, 0, BODYPART_ROBOTIC))
 				H.update_damage_overlays()
-			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].", \
+			user.visible_message("<span class='notice'>[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].</span>", \
 			"<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H == user ? "your" : "[H]'s"] [affecting.name].</span>")
 			return 1 //successful heal
 		else
@@ -505,11 +504,13 @@
 		return FALSE
 
 ///Is the mob a flying mob
-/mob/proc/is_flying(mob/M = src)
-	if(M.movement_type & FLYING)
-		return 1
-	else
-		return 0
+/mob/proc/is_flying()
+	return (movement_type & FLYING)
+
+///Is the mob a floating mob
+/mob/proc/is_floating()
+	return (movement_type & FLOATING)
+
 
 ///Clicks a random nearby mob with the source from this mob
 /mob/proc/click_random_mob()

@@ -60,7 +60,7 @@
 		if(!length(possible))
 			to_chat(user,"<span class='warning'>Despite your best efforts, there are no scents to be found on [sniffed]...</span>")
 			return
-		tracking_target = input(user, "Choose a scent to remember.", "Scent Tracking") as null|anything in possible
+		tracking_target = input(user, "Choose a scent to remember.", "Scent Tracking") as null|anything in sortNames(possible)
 		if(!tracking_target)
 			if(!old_target)
 				to_chat(user,"<span class='warning'>You decide against remembering any scents. Instead, you notice your own nose in your peripheral vision. This goes on to remind you of that one time you started breathing manually and couldn't stop. What an awful day that was.</span>")
@@ -120,7 +120,7 @@
 	charge_max = 600
 	clothes_req = FALSE
 	range = 20
-	projectile_type = /obj/item/projectile/magic/aoe/fireball/firebreath
+	projectile_type = /obj/projectile/magic/aoe/fireball/firebreath
 	base_icon_state = "fireball"
 	action_icon_state = "fireball0"
 	sound = 'sound/magic/demon_dies.ogg' //horrifying lizard noises
@@ -138,10 +138,10 @@
 			to_chat(C,"<span class='warning'>Something in front of your mouth caught fire!</span>")
 			return FALSE
 
-/obj/effect/proc_holder/spell/aimed/firebreath/ready_projectile(obj/item/projectile/P, atom/target, mob/user, iteration)
-	if(!istype(P, /obj/item/projectile/magic/aoe/fireball))
+/obj/effect/proc_holder/spell/aimed/firebreath/ready_projectile(obj/projectile/P, atom/target, mob/user, iteration)
+	if(!istype(P, /obj/projectile/magic/aoe/fireball))
 		return
-	var/obj/item/projectile/magic/aoe/fireball/F = P
+	var/obj/projectile/magic/aoe/fireball/F = P
 	switch(strength)
 		if(1 to 3)
 			F.exp_light = strength-1
@@ -149,7 +149,7 @@
 			F.exp_heavy = strength-3
 	F.exp_fire += strength
 
-/obj/item/projectile/magic/aoe/fireball/firebreath
+/obj/projectile/magic/aoe/fireball/firebreath
 	name = "fire breath"
 	exp_heavy = 0
 	exp_light = 0
@@ -190,3 +190,43 @@
 /obj/effect/proc_holder/spell/self/void/cast(mob/user = usr)
 	. = ..()
 	new /obj/effect/immortality_talisman/void(get_turf(user), user)
+
+/datum/mutation/human/self_amputation
+	name = "Autotomy"
+	desc = "Allows a creature to voluntary discard a random appendage."
+	quality = POSITIVE
+	text_gain_indication = "<span class='notice'>Your joints feel loose.</span>"
+	instability = 30
+	power = /obj/effect/proc_holder/spell/self/self_amputation
+
+	energy_coeff = 1
+	synchronizer_coeff = 1
+
+/obj/effect/proc_holder/spell/self/self_amputation
+	name = "Drop a limb"
+	desc = "Concentrate to make a random limb pop right off your body."
+	clothes_req = FALSE
+	human_req = FALSE
+	charge_max = 100
+	action_icon_state = "autotomy"
+
+/obj/effect/proc_holder/spell/self/self_amputation/cast(mob/user = usr)
+	if(!iscarbon(user))
+		return
+
+	var/mob/living/carbon/C = user
+	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
+		return
+
+	var/list/parts = list()
+	for(var/X in C.bodyparts)
+		var/obj/item/bodypart/BP = X
+		if(BP.body_part != HEAD && BP.body_part != CHEST)
+			if(BP.dismemberable)
+				parts += BP
+	if(!parts.len)
+		to_chat(usr, "<span class='notice'>You can't shed any more limbs!</span>")
+		return
+
+	var/obj/item/bodypart/BP = pick(parts)
+	BP.dismember()

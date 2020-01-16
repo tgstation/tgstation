@@ -121,7 +121,7 @@
 			else
 				to_chat(user, "<span class='warning'>There is not enough ice cream left!</span>")
 		else
-			to_chat(user, "<span class='notice'>[O] already has ice cream in it.</span>")
+			to_chat(user, "<span class='warning'>[O] already has ice cream in it!</span>")
 		return 1
 	if(istype(O, /obj/item/reagent_containers) && !(O.item_flags & ABSTRACT) && O.is_open_container())
 		. = TRUE //no afterattack
@@ -145,7 +145,7 @@
 		if(R.type in icecream_vat_reagents)
 			beaker.reagents.trans_id_to(src, R.type, R.volume)
 			say("Internalizing reagent.")
-			playsound(src, 'sound/items/drink.ogg', 25, 1)
+			playsound(src, 'sound/items/drink.ogg', 25, TRUE)
 	return
 
 
@@ -237,7 +237,7 @@
 	desc = "Delicious [cone_name] cone, but no ice cream."
 
 
-/obj/item/reagent_containers/food/snacks/icecream/proc/add_ice_cream(var/flavour_name, var/datum/reagents/R = null)
+/obj/item/reagent_containers/food/snacks/icecream/proc/add_ice_cream(flavour_name, datum/reagents/R = null)
 	name = "[flavour_name] icecream"
 	switch (flavour_name) // adding the actual reagents advertised in the ingredient list
 		if ("vanilla")

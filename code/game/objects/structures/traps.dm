@@ -89,7 +89,7 @@
 	var/stun_time = 100
 
 /obj/structure/trap/stun/trap_effect(mob/living/L)
-	L.electrocute_act(30, src, safety=1) // electrocute act does a message.
+	L.electrocute_act(30, src, flags = SHOCK_NOGLOVES) // electrocute act does a message.
 	L.Paralyze(stun_time)
 
 /obj/structure/trap/stun/hunter
@@ -149,7 +149,7 @@
 
 /obj/item/bountytrap/proc/announce_fugitive()
 	spark_system.start()
-	playsound(src, 'sound/machines/ding.ogg', 50, 1)
+	playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 	radio.talk_into(src, "Fugitive has triggered this trap in the [get_area_name(src)]!", RADIO_CHANNEL_COMMON)
 
 /obj/item/bountytrap/attack_self(mob/living/user)
@@ -212,3 +212,16 @@
 /obj/structure/trap/ward/Initialize()
 	. = ..()
 	QDEL_IN(src, time_between_triggers)
+
+/obj/structure/trap/cult
+	name = "unholy trap"
+	desc = "A trap that rings with unholy energy. You think you hear... chittering?"
+	icon_state = "trap-cult"
+
+/obj/structure/trap/cult/trap_effect(mob/living/L)
+	to_chat(L, "<span class='danger'><B>With a crack, the hostile constructs come out of hiding, stunning you!</B></span>")
+	L.electrocute_act(10, src, flags = SHOCK_NOGLOVES) // electrocute act does a message.
+	L.Paralyze(20)
+	new /mob/living/simple_animal/hostile/construct/proteon/hostile(loc)
+	new /mob/living/simple_animal/hostile/construct/proteon/hostile(loc)
+	QDEL_IN(src, 30)

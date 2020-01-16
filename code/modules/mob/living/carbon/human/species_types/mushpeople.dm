@@ -10,8 +10,8 @@
 	nojumpsuit = TRUE
 
 	say_mod = "poofs" //what does a mushroom sound like
-	species_traits = list(MUTCOLORS, NOEYESPRITES,NOFLASH, NO_UNDERWEAR)
-	inherent_traits = list(TRAIT_NOBREATH)
+	species_traits = list(MUTCOLORS, NOEYESPRITES, NO_UNDERWEAR)
+	inherent_traits = list(TRAIT_NOBREATH, TRAIT_NOFLASH)
 	inherent_factions = list("mushroom")
 	speedmod = 1.5 //faster than golems but not by much
 
@@ -19,7 +19,7 @@
 	punchdamagehigh = 14
 	punchstunthreshold = 14 //about 44% chance to stun
 
-	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM)
+	no_equip = list(ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING)
 
 	burnmod = 1.25
 	heatmod = 1.5
@@ -27,12 +27,10 @@
 	mutanteyes = /obj/item/organ/eyes/night_vision/mushroom
 	use_skintones = FALSE
 	var/datum/martial_art/mushpunch/mush
+	species_language_holder = /datum/language_holder/mushroom
 
 /datum/species/mush/check_roundstart_eligible()
 	return FALSE //hard locked out of roundstart on the order of design lead kor, this can be removed in the future when planetstation is here OR SOMETHING but right now we have a problem with races.
-
-/datum/species/mush/after_equip_job(datum/job/J, mob/living/carbon/human/H)
-	H.grant_language(/datum/language/mushroom) //pomf pomf
 
 /datum/species/mush/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

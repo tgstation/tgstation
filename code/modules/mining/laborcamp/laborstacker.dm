@@ -8,6 +8,9 @@ GLOBAL_LIST(labor_sheet_values)
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
 	density = FALSE
+	ui_x = 315
+	ui_y = 430
+
 	var/obj/machinery/mineral/stacking_machine/laborstacker/stacking_machine = null
 	var/machinedir = SOUTH
 	var/obj/machinery/door/airlock/release_door
@@ -36,7 +39,7 @@ GLOBAL_LIST(labor_sheet_values)
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "labor_claim_console", name, 450, 475, master_ui, state)
+		ui = new(user, src, ui_key, "labor_claim_console", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/mineral/labor_claim_console/ui_data(mob/user)
@@ -47,7 +50,6 @@ GLOBAL_LIST(labor_sheet_values)
 	if(obj_flags & EMAGGED)
 		can_go_home = TRUE
 
-	data["status_info"] = "No Prisoner ID detected."
 	var/obj/item/card/id/I = user.get_idcard(TRUE)
 	if(istype(I, /obj/item/card/id/prisoner))
 		var/obj/item/card/id/prisoner/P = I
@@ -57,6 +59,9 @@ GLOBAL_LIST(labor_sheet_values)
 			data["status_info"] = "Goal met!"
 		else
 			data["status_info"] = "You are [(P.goal - P.points)] points away."
+	else
+		data["status_info"] = "No Prisoner ID detected."
+		data["id_points"] = 0
 
 	if(stacking_machine)
 		data["unclaimed_points"] = stacking_machine.points
@@ -78,24 +83,26 @@ GLOBAL_LIST(labor_sheet_values)
 				P.points += stacking_machine.points
 				stacking_machine.points = 0
 				to_chat(usr, "<span class='notice'>Points transferred.</span>")
+				. = TRUE
 			else
-				to_chat(usr, "<span class='notice'>No valid id for point transfer detected.</span>")
+				to_chat(usr, "<span class='alert'>No valid id for point transfer detected.</span>")
 		if("move_shuttle")
 			if(!alone_in_area(get_area(src), usr))
-				to_chat(usr, "<span class='warning'>Prisoners are only allowed to be released while alone.</span>")
+				to_chat(usr, "<span class='alert'>Prisoners are only allowed to be released while alone.</span>")
 			else
 				switch(SSshuttle.moveShuttle("laborcamp", "laborcamp_home", TRUE))
 					if(1)
-						to_chat(usr, "<span class='notice'>Shuttle not found.</span>")
+						to_chat(usr, "<span class='alert'>Shuttle not found.</span>")
 					if(2)
-						to_chat(usr, "<span class='notice'>Shuttle already at station.</span>")
+						to_chat(usr, "<span class='alert'>Shuttle already at station.</span>")
 					if(3)
-						to_chat(usr, "<span class='notice'>No permission to dock could be granted.</span>")
+						to_chat(usr, "<span class='alert'>No permission to dock could be granted.</span>")
 					else
 						if(!(obj_flags & EMAGGED))
 							Radio.set_frequency(FREQ_SECURITY)
 							Radio.talk_into(src, "A prisoner has returned to the station. Minerals and Prisoner ID card ready for retrieval.", FREQ_SECURITY)
 						to_chat(usr, "<span class='notice'>Shuttle received message and will be sent shortly.</span>")
+						. = TRUE
 
 /obj/machinery/mineral/labor_claim_console/proc/locate_stacking_machine()
 	stacking_machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))

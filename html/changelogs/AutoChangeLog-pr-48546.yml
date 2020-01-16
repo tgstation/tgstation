@@ -1,0 +1,6 @@
+author: "JMoldy"
+delete-after: True
+changes: 
+  - balance: "Removes hitstun on meathook"
+  - balance: "Changes meathook's damage from 25 brute at 100 armor penetration to 20 brute, 20 stamina at 60 armor penetration"
+  - balance: "Changes the bounty hunter's meathook to do 40 stamina damage instead of a stun, adds a half-second knockdown."

@@ -21,6 +21,12 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 	dog_fashion = /datum/dog_fashion/head
+	drop_sound = 'sound/items/handling/paper_drop.ogg'
+	pickup_sound =  'sound/items/handling/paper_pickup.ogg'
+	grind_results = list(/datum/reagent/cellulose = 3)
+
+
+	var/extra_headers //For additional styling or other js features.
 
 	var/info		//What's actually written on the paper.
 	var/info_links	//A different version of the paper which includes html links at fields and EOF
@@ -47,11 +53,11 @@
 	. = ..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
-	update_icon()
+	update_icon_state()
 	updateinfolinks()
 
 
-/obj/item/paper/update_icon()
+/obj/item/paper/update_icon_state()
 
 	if(resistance_flags & ON_FIRE)
 		icon_state = "paper_onfire"
@@ -69,11 +75,11 @@
 
 	if(in_range(user, src) || isobserver(user))
 		if(user.is_literate())
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
-			onclose(user, "[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE>[extra_headers]</HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=paper[md5(name)]")
+			onclose(user, "paper[md5(name)]")
 		else
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
-			onclose(user, "[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE>[extra_headers]</HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=paper[md5(name)]")
+			onclose(user, "paper[md5(name)]")
 	else
 		. += "<span class='warning'>You're too far away to read it!</span>"
 
@@ -110,7 +116,7 @@
 	if(rigged && (SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
 		if(!spam_flag)
 			spam_flag = TRUE
-			playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
+			playsound(loc, 'sound/items/bikehorn.ogg', 50, TRUE)
 			addtimer(CALLBACK(src, .proc/reset_spamflag), 20)
 
 
@@ -179,7 +185,7 @@
 	LAZYCLEARLIST(stamped)
 	cut_overlays()
 	updateinfolinks()
-	update_icon()
+	update_icon_state()
 
 
 /obj/item/paper/proc/parsepencode(t, obj/item/pen/P, mob/user, iscrayon = 0)
@@ -274,7 +280,7 @@
 				info += t // Oh, he wants to edit to the end of the file, let him.
 				updateinfolinks()
 			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=[REF(src)];help=1'>\[?\]</A></div></HTML>", "window=[name]") // Update the window
-			update_icon()
+			update_icon_state()
 
 
 /obj/item/paper/attackby(obj/item/P, mob/living/carbon/human/user, params)
@@ -312,7 +318,7 @@
 
 		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
-	if(P.is_hot())
+	if(P.get_temperature())
 		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
 								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
@@ -334,13 +340,13 @@
 /obj/item/paper/fire_act(exposed_temperature, exposed_volume)
 	..()
 	if(!(resistance_flags & FIRE_PROOF))
-		icon_state = "paper_onfire"
+		add_overlay("paper_onfire_overlay")
 		info = "[stars(info)]"
 
 
 /obj/item/paper/extinguish()
 	..()
-	update_icon()
+	cut_overlay("paper_onfire_overlay")
 
 /*
  * Construction paper
@@ -365,8 +371,11 @@
 	icon_state = "scrap"
 	slot_flags = null
 
-/obj/item/paper/crumpled/update_icon()
+/obj/item/paper/crumpled/update_icon_state()
 	return
 
 /obj/item/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"
+
+/obj/item/paper/crumpled/muddy
+	icon_state = "scrap_mud"

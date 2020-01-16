@@ -8,23 +8,24 @@
 	var/obj/item/pda/storedpda = null
 	var/list/colorlist = list()
 
-
-/obj/machinery/pdapainter/update_icon()
-	cut_overlays()
-
+/obj/machinery/pdapainter/update_icon_state()
 	if(stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
 		return
-
-	if(storedpda)
-		add_overlay("[initial(icon_state)]-closed")
 
 	if(powered())
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]-off"
 
-	return
+/obj/machinery/pdapainter/update_overlays()
+	. = ..()
+
+	if(stat & BROKEN)
+		return
+
+	if(storedpda)
+		. += "[initial(icon_state)]-closed"
 
 /obj/machinery/pdapainter/Initialize()
 	. = ..()
@@ -68,9 +69,9 @@
 		if(O.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
 			if(!O.tool_start_check(user, amount=0))
 				return
-			user.visible_message("[user] is repairing [src].", \
+			user.visible_message("<span class='notice'>[user] is repairing [src].</span>", \
 							"<span class='notice'>You begin repairing [src]...</span>", \
-							"<span class='italics'>You hear welding.</span>")
+							"<span class='hear'>You hear welding.</span>")
 			if(O.use_tool(src, user, 40, volume=50))
 				if(!(stat & BROKEN))
 					return
@@ -100,10 +101,7 @@
 		return ..()
 
 /obj/machinery/pdapainter/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!(stat & BROKEN))
-			stat |= BROKEN
-			update_icon()
+	obj_break()
 
 /obj/machinery/pdapainter/attack_hand(mob/user)
 	. = ..()
@@ -116,7 +114,7 @@
 			to_chat(user, "<span class='info'>You manage to eject the loaded PDA.</span>")
 		else
 			var/obj/item/pda/P
-			P = input(user, "Select your color!", "PDA Painting") as null|anything in colorlist
+			P = input(user, "Select your color!", "PDA Painting") as null|anything in sortNames(colorlist)
 			if(!P)
 				return
 			if(!in_range(src, user))
@@ -145,8 +143,3 @@
 		update_icon()
 	else
 		to_chat(usr, "<span class='warning'>[src] is empty!</span>")
-
-
-/obj/machinery/pdapainter/power_change()
-	..()
-	update_icon()

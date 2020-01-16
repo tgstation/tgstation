@@ -36,7 +36,7 @@
 			if(istype(P, /obj/item/circuitboard/computer) && !circuit)
 				if(!user.transferItemToLoc(P, src))
 					return
-				playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 				to_chat(user, "<span class='notice'>You place [P] inside the frame.</span>")
 				icon_state = "1"
 				circuit = P
@@ -92,7 +92,7 @@
 			if(istype(P, /obj/item/stack/sheet/glass))
 				if(!P.tool_start_check(user, amount=2))
 					return
-				playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 				to_chat(user, "<span class='notice'>You start to put in the glass panel...</span>")
 				if(P.use_tool(src, user, 20, amount=2))
 					if(state != 3)

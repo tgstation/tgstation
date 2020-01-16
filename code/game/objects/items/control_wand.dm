@@ -28,7 +28,7 @@
 			mode = WAND_EMERGENCY
 		if(WAND_EMERGENCY)
 			mode = WAND_OPEN
-	to_chat(user, "Now in mode: [mode].")
+	to_chat(user, "<span class='notice'>Now in mode: [mode].</span>")
 
 // Airlock remote works by sending NTNet packets to whatever it's pointed at.
 /obj/item/door_remote/afterattack(atom/A, mob/user)

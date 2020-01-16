@@ -115,16 +115,17 @@ Class Procs:
 	var/atom/movable/occupant = null
 	var/speed_process = FALSE // Process as fast as possible?
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
-	var/obj/item/card/id/inserted_scan_id
-	var/obj/item/card/id/inserted_modify_id
-	var/list/region_access = null // For the identification console (card.dm)
-	var/list/head_subordinates = null // For the identification console (card.dm)
-	var/authenticated = 0 // For the identification console (card.dm)
 
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
 	var/fair_market_price = 69
 	var/market_verb = "Customer"
 	var/payment_department = ACCOUNT_ENG
+
+	// For storing and overriding ui id and dimensions
+	var/tgui_id // ID of TGUI interface
+	var/ui_style // ID of custom TGUI style (optional)
+	var/ui_x // Default size of TGUI window, in pixels
+	var/ui_y
 
 /obj/machinery/Initialize()
 	if(!armor)
@@ -140,11 +141,16 @@ Class Procs:
 		START_PROCESSING(SSmachines, src)
 	else
 		START_PROCESSING(SSfastprocess, src)
-	power_change()
-	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
 
 	if (occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/LateInitialize()
+	. = ..()
+	power_change()
+	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
 
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
@@ -372,8 +378,13 @@ Class Procs:
 	M.icon_state = "box_1"
 
 /obj/machinery/obj_break(damage_flag)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	SHOULD_CALL_PARENT(1)
+	. = ..()
+	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		stat |= BROKEN
+		SEND_SIGNAL(src, COMSIG_MACHINERY_BROKEN, damage_flag)
+		update_icon()
+		return TRUE
 
 /obj/machinery/contents_explosion(severity, target)
 	if(occupant)
@@ -426,7 +437,7 @@ Class Procs:
 		if(I.use_tool(src, user, time, extra_checks = CALLBACK(src, .proc/unfasten_wrench_check, prev_anchored, user)))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
 			setAnchored(!anchored)
-			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			SEND_SIGNAL(src, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, anchored)
 			return SUCCESSFUL_UNFASTEN
 		return FAILED_UNFASTEN
@@ -508,8 +519,6 @@ Class Procs:
 				. += "<span class='warning'>It's falling apart!</span>"
 	if(user.research_scanner && component_parts)
 		. += display_parts(user, TRUE)
-	if(inserted_scan_id || inserted_modify_id)
-		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/on_construction()
@@ -522,11 +531,11 @@ Class Procs:
 /obj/machinery/proc/can_be_overridden()
 	. = 1
 
-/obj/machinery/tesla_act(power, tesla_flags, shocked_objects)
+/obj/machinery/zap_act(power, zap_flags, shocked_objects)
 	..()
-	if(prob(85) && (tesla_flags & TESLA_MACHINE_EXPLOSIVE))
+	if(prob(85) && (zap_flags & ZAP_MACHINE_EXPLOSIVE) && !(resistance_flags & INDESTRUCTIBLE))
 		explosion(src, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
-	if(tesla_flags & TESLA_OBJ_DAMAGE)
+	if(zap_flags & ZAP_OBJ_DAMAGE)
 		take_damage(power/2000, BURN, "energy")
 		if(prob(40))
 			emp_act(EMP_LIGHT)
@@ -543,72 +552,3 @@ Class Procs:
 	. = . % 9
 	AM.pixel_x = -8 + ((.%3)*8)
 	AM.pixel_y = -8 + (round( . / 3)*8)
-
-/obj/machinery/proc/id_insert_scan(mob/user, obj/item/card/id/I)
-	I = user.get_active_held_item()
-	if(istype(I))
-		if(inserted_scan_id)
-			to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
-			return
-		if(!user.transferItemToLoc(I, src))
-			return
-		inserted_scan_id = I
-		user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
-							"<span class='notice'>You insert the ID card into the console.</span>")
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-		updateUsrDialog()
-
-/obj/machinery/proc/id_eject_scan(mob/user)
-	if(!inserted_scan_id)
-		to_chat(user, "<span class='warning'>There's no ID card in the console!</span>")
-		return
-	if(inserted_scan_id)
-		inserted_scan_id.forceMove(drop_location())
-		if(!issilicon(user) && Adjacent(user))
-			user.put_in_hands(inserted_scan_id)
-		inserted_scan_id = null
-		user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
-							"<span class='notice'>You get the ID card from the console.</span>")
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-		updateUsrDialog()
-
-/obj/machinery/proc/id_eject_modify(mob/user)
-	if(inserted_modify_id)
-		GLOB.data_core.manifest_modify(inserted_modify_id.registered_name, inserted_modify_id.assignment)
-		inserted_modify_id.update_label()
-		inserted_modify_id.forceMove(drop_location())
-		if(!issilicon(user) && Adjacent(user))
-			user.put_in_hands(inserted_modify_id)
-		user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
-							"<span class='notice'>You get the ID card from the console.</span>")
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-		inserted_modify_id = null
-		region_access = null
-		head_subordinates = null
-		updateUsrDialog()
-
-/obj/machinery/proc/id_insert_modify(mob/user)
-	var/obj/item/card/id/I = user.get_active_held_item()
-	if(istype(I))
-		if(inserted_modify_id)
-			to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
-			return
-		if(!user.transferItemToLoc(I, src))
-			return
-		inserted_modify_id = I
-		user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
-							"<span class='notice'>You insert the ID card into the console.</span>")
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-		updateUsrDialog()
-
-/obj/machinery/AltClick(mob/user)
-	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational())
-		return
-	if(inserted_modify_id)
-		id_eject_modify(user)
-		authenticated = FALSE
-		return
-	if(inserted_scan_id)
-		id_eject_scan(user)
-		authenticated = FALSE
-		return

@@ -5,6 +5,8 @@
 
 	icon_state = "synthesizer"
 	icon = 'icons/obj/plumbing/plumbers.dmi'
+	rcd_cost = 25
+	rcd_delay = 15
 
 	///Amount we produce for every process. Ideally keep under 5 since thats currently the standard duct capacity
 	var/amount = 1
@@ -46,14 +48,12 @@
 		/datum/reagent/fuel
 	)
 
-/obj/machinery/plumbing/synthesizer/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/plumbing/simple_supply)
+	ui_x = 300
+	ui_y = 375
 
-/obj/machinery/plumbing/synthesizer/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I)
-	return TRUE
+/obj/machinery/plumbing/synthesizer/Initialize(mapload, bolt)
+	. = ..()
+	AddComponent(/datum/component/plumbing/simple_supply, bolt)
 
 /obj/machinery/plumbing/synthesizer/process()
 	if(stat & NOPOWER || !reagent_id || !amount)
@@ -65,7 +65,7 @@
 /obj/machinery/plumbing/synthesizer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "synthesizer", name, 300, 435, master_ui, state)
+		ui = new(user, src, ui_key, "synthesizer", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/plumbing/synthesizer/ui_data(mob/user)

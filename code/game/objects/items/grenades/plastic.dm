@@ -66,7 +66,11 @@
 	prime()
 
 /obj/item/grenade/c4/attack_self(mob/user)
-	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
+	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num|null
+
+	if (isnull(newtime))
+		return
+
 	if(user.get_active_held_item() == src)
 		newtime = CLAMP(newtime, 10, 60000)
 		det_time = newtime
@@ -116,8 +120,6 @@
 			message_say = "FOR THE HIVE!"
 		else if(UM.has_antag_datum(/datum/antagonist/cult))
 			message_say = "FOR NAR'SIE!"
-		else if(UM.has_antag_datum(/datum/antagonist/clockcult))
-			message_say = "FOR RATVAR!"
 		else if(UM.has_antag_datum(/datum/antagonist/rev))
 			message_say = "VIVA LA REVOLUTION!"
 		else if(UM.has_antag_datum(/datum/antagonist/brother))

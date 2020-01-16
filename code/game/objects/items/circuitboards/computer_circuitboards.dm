@@ -38,7 +38,7 @@
 
 /obj/item/circuitboard/computer/card/minor/examine(user)
 	..()
-	to_chat(user, "Currently set to \"[dept_list[target_dept]]\".")
+	to_chat(user, "<span class='notice'>Currently set to \"[dept_list[target_dept]]\".</span>")
 
 
 //obj/item/circuitboard/computer/shield
@@ -62,6 +62,14 @@
 	name = "Atmospheric Monitor (Computer Board)"
 	icon_state = "engineering"
 	build_path = /obj/machinery/computer/atmos_control
+
+/obj/item/circuitboard/computer/atmos_control/incinerator
+	name = "Incinerator Air Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/incinerator
+
+/obj/item/circuitboard/computer/atmos_control/toxinsmix
+	name = "Toxins Mixing Air Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/toxinsmix
 
 /obj/item/circuitboard/computer/atmos_control/tank
 	name = "Tank Control (Computer Board)"
@@ -94,10 +102,6 @@
 /obj/item/circuitboard/computer/atmos_control/tank/carbon_tank
 	name = "Carbon Dioxide Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/carbon_tank
-
-/obj/item/circuitboard/computer/atmos_control/tank/incinerator
-	name = "Incinerator Air Control (Computer Board)"
-	build_path = /obj/machinery/computer/atmos_control/tank/incinerator
 
 /obj/item/circuitboard/computer/auxillary_base
 	name = "Auxillary Base Management Console (Computer Board)"
@@ -442,7 +446,7 @@
 		contraband = !contraband
 		to_chat(user, "<span class='notice'>Receiver spectrum set to [contraband ? "Broad" : "Standard"].</span>")
 	else
-		to_chat(user, "<span class='notice'>The spectrum chip is unresponsive.</span>")
+		to_chat(user, "<span class='alert'>The spectrum chip is unresponsive.</span>")
 
 /obj/item/circuitboard/computer/cargo/emag_act(mob/living/user)
 	if(!(obj_flags & EMAGGED))
@@ -457,7 +461,7 @@
 /obj/item/circuitboard/computer/cargo/express/multitool_act(mob/living/user)
 	. = ..()
 	if (!(obj_flags & EMAGGED))
-		to_chat(user, "<span class='notice'>Routing protocols are already set to: \"factory defaults\".</span>")
+		to_chat(user, "<span class='alert'>Routing protocols are already set to: \"factory defaults\".</span>")
 	else
 		to_chat(user, "<span class='notice'>You reset the routing protocols to: \"factory defaults\".</span>")
 		obj_flags &= ~EMAGGED

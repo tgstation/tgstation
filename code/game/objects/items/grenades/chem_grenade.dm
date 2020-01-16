@@ -115,8 +115,8 @@
 				user.log_message("removed [O] ([reagent_list]) from [src]", LOG_GAME)
 			beakers = list()
 			to_chat(user, "<span class='notice'>You open the [initial(name)] assembly and remove the payload.</span>")
-			wires.detach_assembly(wires.get_wire(1))
 			return
+		wires.detach_assembly(wires.get_wire(1))
 		new /obj/item/stack/cable_coil(get_turf(src),1)
 		stage_change(GRENADE_EMPTY)
 		to_chat(user, "<span class='notice'>You remove the activation mechanism from the [initial(name)] assembly.</span>")
@@ -166,7 +166,7 @@
 				to_chat(user, "<span class='warning'>You prime [src], activating its proximity sensor.</span>")
 			else
 				to_chat(user, "<span class='warning'>You prime [src]! [DisplayTimeText(det_time)]!</span>")
-	playsound(src, 'sound/weapons/armbomb.ogg', volume, 1)
+	playsound(src, 'sound/weapons/armbomb.ogg', volume, TRUE)
 	icon_state = initial(icon_state) + "_active"
 	if(landminemode)
 		landminemode.activate()
@@ -185,7 +185,7 @@
 	var/turf/detonation_turf = get_turf(src)
 
 	if(!chem_splash(detonation_turf, affected_area, reactants, ignition_temp, threatscale) && !no_splash)
-		playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
+		playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
 		if(beakers.len)
 			for(var/obj/O in beakers)
 				O.forceMove(drop_location())

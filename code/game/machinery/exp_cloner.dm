@@ -9,7 +9,7 @@
 	internal_radio = FALSE
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/experimental/growclone(clonename, ui, mutation_index, mindref, last_death, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
+/obj/machinery/clonepod/experimental/growclone(clonename, ui, mutation_index, mindref, last_death, blood_type, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
 	if(panel_open)
 		return NONE
 	if(mess || attempting)
@@ -20,7 +20,7 @@
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
-	H.hardset_dna(ui, mutation_index, H.real_name, null, mrace, features)
+	H.hardset_dna(ui, mutation_index, H.real_name, blood_type, mrace, features)
 
 	if(efficiency > 2)
 		var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
@@ -231,31 +231,33 @@
 
 		loading = TRUE
 		updateUsrDialog()
-		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
+		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 		say("Initiating scan...")
 
-		spawn(20)
-			clone_occupant(scanner.occupant)
-			loading = FALSE
-			updateUsrDialog()
-			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+		addtimer(CALLBACK(src, .proc/do_clone), 2 SECONDS)
 
 		//No locking an open scanner.
 	else if ((href_list["lock"]) && !isnull(scanner) && scanner.is_operational())
 		if ((!scanner.locked) && (scanner.occupant))
 			scanner.locked = TRUE
-			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 		else
 			scanner.locked = FALSE
-			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 
 	else if (href_list["refresh"])
 		updateUsrDialog()
-		playsound(src, "terminal_type", 25, 0)
+		playsound(src, "terminal_type", 25, FALSE)
 
 	add_fingerprint(usr)
 	updateUsrDialog()
 	return
+
+/obj/machinery/computer/prototype_cloning/proc/do_clone()
+	clone_occupant(scanner.occupant)
+	loading = FALSE
+	updateUsrDialog()
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 
 /obj/machinery/computer/prototype_cloning/proc/clone_occupant(occupant)
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
@@ -269,15 +271,15 @@
 
 	if(!istype(dna))
 		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
-		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 		return
 	if((HAS_TRAIT(mob_occupant, TRAIT_HUSK)) && (src.scanner.scan_level < 2))
 		scantemp = "<font class='bad'>Subject's body is too damaged to scan properly.</font>"
-		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
+		playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 		return
 	if(HAS_TRAIT(mob_occupant, TRAIT_BADDNA))
 		scantemp = "<font class='bad'>Subject's DNA is damaged beyond any hope of recovery.</font>"
-		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
+		playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 		return
 
 	var/clone_species
@@ -291,14 +293,14 @@
 	//Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
 	if(!LAZYLEN(pods))
 		temp = "<font class='bad'>No Clonepods detected.</font>"
-		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 	else if(!pod)
 		temp = "<font class='bad'>No Clonepods available.</font>"
-		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 	else if(pod.occupant)
 		temp = "<font class='bad'>Cloning cycle already in progress.</font>"
-		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 	else
-		pod.growclone(mob_occupant.real_name, dna.uni_identity, dna.mutation_index, null, null, clone_species, dna.features, mob_occupant.faction)
+		pod.growclone(mob_occupant.real_name, dna.uni_identity, dna.mutation_index, null, null, dna.blood_type, clone_species, dna.features, mob_occupant.faction)
 		temp = "[mob_occupant.real_name] => <font class='good'>Cloning data sent to pod.</font>"
-		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)

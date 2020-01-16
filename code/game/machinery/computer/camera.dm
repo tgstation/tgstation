@@ -56,16 +56,16 @@
 	return ..()
 
 /obj/machinery/computer/security/interact(mob/user)
-	if(stat)
+	if (stat)
+		return
+	if (ismob(user) && !isliving(user)) // ghosts don't need cameras
 		return
 	if (!network)
 		user.unset_machine()
 		CRASH("No camera network")
-		return
 	if (!(islist(network)))
 		user.unset_machine()
 		CRASH("Camera network is not a list")
-		return
 	if(..())
 		user.unset_machine()
 		return
@@ -81,7 +81,7 @@
 		if(!(user in watchers))
 			user.unset_machine() // no usable camera on the network, we disconnect the user from the computer.
 			return
-	playsound(src, 'sound/machines/terminal_prompt.ogg', 25, 0)
+	playsound(src, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
 	use_camera_console(user)
 
 /obj/machinery/computer/security/proc/use_camera_console(mob/user)
@@ -91,14 +91,14 @@
 		return
 	if(!t)
 		user.unset_machine()
-		playsound(src, 'sound/machines/terminal_off.ogg', 25, 0)
+		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 		return
 
 	var/obj/machinery/camera/C = camera_list[t]
 
 	if(t == "Cancel")
 		user.unset_machine()
-		playsound(src, 'sound/machines/terminal_off.ogg', 25, 0)
+		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 		return
 	if(C)
 		var/camera_fail = 0
@@ -115,7 +115,7 @@
 			user.unset_machine()
 			return 0
 
-		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
+		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 		if(isAI(user))
 			var/mob/living/silicon/ai/A = user
 			A.eyeobj.setLoc(get_turf(C))
@@ -162,7 +162,6 @@
 	icon_state = "television"
 	icon_keyboard = null
 	icon_screen = "detective_tv"
-	clockwork = TRUE //it'd look weird
 	pass_flags = PASSTABLE
 
 /obj/machinery/computer/security/mining
@@ -208,14 +207,12 @@
 	network = list("thunder")
 	density = FALSE
 	circuit = null
-	clockwork = TRUE //it'd look very weird
 	light_power = 0
 
-/obj/machinery/computer/security/telescreen/update_icon()
+/obj/machinery/computer/security/telescreen/update_icon_state()
 	icon_state = initial(icon_state)
 	if(stat & BROKEN)
 		icon_state += "b"
-	return
 
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"

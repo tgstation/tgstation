@@ -19,20 +19,20 @@
     initial_icon_state = initial(icon_state)
     return ..()
 
-/obj/machinery/aug_manipulator/update_icon()
-	cut_overlays()
-
+/obj/machinery/aug_manipulator/update_icon_state()
 	if(stat & BROKEN)
 		icon_state = "[initial_icon_state]-broken"
 		return
-
-	if(storedpart)
-		add_overlay("[initial_icon_state]-closed")
 
 	if(powered())
 		icon_state = initial_icon_state
 	else
 		icon_state = "[initial_icon_state]-off"
+
+/obj/machinery/aug_manipulator/update_overlays()
+	. = ..()
+	if(storedpart)
+		. += "[initial_icon_state]-closed"
 
 /obj/machinery/aug_manipulator/Destroy()
 	QDEL_NULL(storedpart)
@@ -78,9 +78,9 @@
 			if(!O.tool_start_check(user, amount=0))
 				return
 
-			user.visible_message("[user] begins repairing [src].", \
+			user.visible_message("<span class='notice'>[user] begins repairing [src].</span>", \
 				"<span class='notice'>You begin repairing [src]...</span>", \
-				"<span class='italics'>You hear welding.</span>")
+				"<span class='hear'>You hear welding.</span>")
 
 			if(O.use_tool(src, user, 40, volume=50))
 				if(!(stat & BROKEN))
@@ -93,12 +93,6 @@
 			to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
 	else
 		return ..()
-
-/obj/machinery/aug_manipulator/obj_break(damage_flag)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!(stat & BROKEN))
-			stat |= BROKEN
-			update_icon()
 
 /obj/machinery/aug_manipulator/attack_hand(mob/user)
 	. = ..()
@@ -134,7 +128,3 @@
 		return
 	else
 		eject_part(user)
-
-/obj/machinery/aug_manipulator/power_change()
-	..()
-	update_icon()

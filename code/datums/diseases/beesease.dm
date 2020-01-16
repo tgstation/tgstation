@@ -10,7 +10,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	desc = "If left untreated subject will regurgitate bees."
 	severity = DISEASE_SEVERITY_MEDIUM
-	infectable_biotypes = list(MOB_ORGANIC, MOB_UNDEAD) //bees nesting in corpses
+	infectable_biotypes = MOB_ORGANIC|MOB_UNDEAD //bees nesting in corpses
 
 /datum/disease/beesease/stage_act()
 	..()

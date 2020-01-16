@@ -94,6 +94,13 @@
 #define NUKESTATE_CORE_EXPOSED	1
 #define NUKESTATE_CORE_REMOVED	0
 
+#define NUKEUI_AWAIT_DISK 0
+#define NUKEUI_AWAIT_CODE 1
+#define NUKEUI_AWAIT_TIMER 2
+#define NUKEUI_AWAIT_ARM 3
+#define NUKEUI_TIMING 4
+#define NUKEUI_EXPLODED 5
+
 #define NUKE_OFF_LOCKED		0
 #define NUKE_OFF_UNLOCKED	1
 #define NUKE_ON_TIMING		2
@@ -106,3 +113,7 @@
 //cloning defines. These are flags.
 #define CLONING_SUCCESS (1<<0)
 #define CLONING_DELETE_RECORD (1<<1)
+
+//these flags are used to tell the DNA modifier if a plant gene cannot be extracted or modified.
+#define PLANT_GENE_REMOVABLE	(1<<0)
+#define PLANT_GENE_EXTRACTABLE	(1<<1)
