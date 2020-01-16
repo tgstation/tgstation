@@ -424,7 +424,8 @@ SUBSYSTEM_DEF(job)
 		if(length(GLOB.jobspawn_overrides[rank]))
 			S = pick(GLOB.jobspawn_overrides[rank])
 		else
-			for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
+			for(var/_sloc in GLOB.start_landmarks_list)
+				var/obj/effect/landmark/start/sloc = _sloc
 				if(sloc.name != rank)
 					continue
 				S = sloc
