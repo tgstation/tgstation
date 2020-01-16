@@ -79,17 +79,36 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 			type_or_datum = get_cached_movespeed_modifier(type_or_datum)
 		else
 			type_or_datum = new type_or_datum
-	var/oldpriority
 	var/datum/movespeed_modifier/existing = LAZYACCESS(movespeed_modification, type_or_datum.id)
 	if(existing)
 		if(existing == type_or_datum)		//same thing don't need to touch
 			return TRUE
 		oldpriority = existing.priority
 		remove_movespeed_modifier(existing, FALSE)
+	LAZYINITLIST(movespeed_modification)
+	var/listlen = length(movespeed_modification)
+	if(!listlen)
+		movespeed_modification[type_or_datum.id] = type_or_datum
+	else
+		var/left = 1
+		var/right = listlen
+		var/mid = (left + right) >> 1
+		var/datum/movespeed_modifier/curr
+		while(left < right)
+			var/id = movespeed_modification[mid]
+			curr = movespeed_modification[id]
+			if(curr.priority <= type_or_datum.priority)
+				left = mid + 1
+			else
+				right = mid
+			mid = (left + right) >> 1
+		curr = movespeed_modification[mid]
+		mid = curr.priority > type_or_datum.priority? mid : mid + 1
+		movespeed_modification.Insert(mid, type_or_datum.id)
+		movespeed_modification[type_or_datum.id] = type_or_datum
 	LAZYSET(movespeed_modification, type_or_datum.id, type_or_datum)
-	var/resort = type_or_datum.priority == oldpriority
 	if(update)
-		update_movespeed(resort)
+		update_movespeed()
 	return TRUE
 
 /// Remove a move speed modifier from a mob, whether static or variable.
@@ -178,9 +197,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		return GLOB.mob_config_movespeed_type_lookup[type]
 
 ///Go through the list of movespeed modifiers and calculate a final movespeed
-/mob/proc/update_movespeed(resort = TRUE)
-	if(resort)
-		sort_movespeed_modlist()
+/mob/proc/update_movespeed()
 	. = 0
 	var/list/conflict_tracker = list()
 	for(var/id in get_movespeed_modifiers())
@@ -217,31 +234,3 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 	. = TRUE
 	if(M.multiplicative_slowdown)
 		. = FALSE
-
-/**
-  * Sort the list of move speed modifiers
-  *
-  * Verifies it too. Sorts highest priority (first applied) to lowest priority (last applied)
-  */
-/mob/proc/sort_movespeed_modlist()
-	if(!movespeed_modification)
-		return
-	var/list/assembled = list()
-	for(var/our_id in movespeed_modification)
-		var/datum/movespeed_modifier/M = movespeed_modification[our_id]
-		if(movespeed_data_null_check(M))
-			movespeed_modification -= our_id
-			continue
-		var/our_priority = M.priority
-		var/resolved = FALSE
-		for(var/their_id in assembled)
-			var/datum/movespeed_modifier/other = assembled[their_id]
-			if(other.priority < our_priority)
-				assembled.Insert(assembled.Find(their_id), our_id)
-				assembled[our_id] = M
-				resolved = TRUE
-				break
-		if(!resolved)
-			assembled[our_id] = M
-	movespeed_modification = assembled
-	UNSETEMPTY(movespeed_modification)
