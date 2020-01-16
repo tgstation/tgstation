@@ -156,3 +156,19 @@
 	icon_state = "captain_parade"
 	item_state = "by_suit"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/misc/changshan_red
+	name = "red changshan"
+	desc = "A gorgeously embroidered silk shirt."
+	icon_state = "changshan_red"
+	item_state = "changshan_red"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	can_adjust = FALSE
+
+/obj/item/clothing/under/misc/changshan_blue
+	name = "blue changshan"
+	desc = "A gorgeously embroidered silk shirt."
+	icon_state = "changshan_blue"
+	item_state = "changshan_blue"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	can_adjust = FALSE
