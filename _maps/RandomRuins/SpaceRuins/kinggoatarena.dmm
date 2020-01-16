@@ -1,0 +1,43 @@
+"a" = (/turf/closed/indestructible/riveted/uranium,/area/ruin/powered/kinggoat_arena)
+"b" = (/turf/open/indestructible/hotelwood{desc = "Very rich floor made out of pure diamond! This floor seems indestructible for some reason..."; icon_state = "diamond"; name = "diamond floor"},/area/ruin/powered/kinggoat_arena)
+"c" = (/obj/structure/chair/bronze,/mob/living/simple_animal/hostile/retaliate/goat/king,/turf/open/indestructible/hotelwood{desc = "Very rich floor made out of pure diamond! This floor seems indestructible for some reason..."; icon_state = "diamond"; name = "diamond floor"},/area/ruin/powered/kinggoat_arena)
+"d" = (/mob/living/simple_animal/hostile/retaliate/goat/guard/pope,/turf/open/indestructible/hotelwood{desc = "Very rich floor made out of pure diamond! This floor seems indestructible for some reason..."; icon_state = "diamond"; name = "diamond floor"},/area/ruin/powered/kinggoat_arena)
+"e" = (/obj/effect/portal/permanent/one_way/destroy{id = "king goat arena"; name = "king goat arena portal"; teleport_channel = "free"},/turf/open/indestructible/hotelwood{desc = "Very rich floor made out of pure diamond! This floor seems indestructible for some reason..."; icon_state = "diamond"; name = "diamond floor"},/area/ruin/powered/kinggoat_arena)
+"f" = (/mob/living/simple_animal/hostile/retaliate/goose{desc = "If you are alive and reading this you should not be in this room and should prob tell a admin how you got here."; name = "The Paradox Goose"},/turf/open/indestructible/hotelwood{desc = "Very rich floor made out of pure diamond! This floor seems indestructible for some reason..."; icon_state = "diamond"; name = "diamond floor"},/area/ruin/powered/kinggoat_arena)
+"g" = (/obj/structure/ladder/unbreakable{desc = "This seems to be the ladder to the King of Goats' lair. Looks to be a one way trip..."; height = 1; id = "goatlayer"; name = "Ladder to the King of Goats Lair"},/turf/open/indestructible/hotelwood{desc = "Very rich floor made out of pure gold! This floor seems indestructible for some reason..."; icon_state = "gold"; name = "gold floor"},/area/ruin/powered/kinggoat_arena)
+"h" = (/turf/open/indestructible/hotelwood{desc = "Very rich floor made out of pure gold! This floor seems indestructible for some reason..."; icon_state = "gold"; name = "gold floor"},/area/ruin/powered/kinggoat_arena)
+"i" = (/obj/machinery/door/airlock/gold/glass{desc = "Once you go in the portal past this door there is no going back..."; name = "POINT OF NO RETURN"},/turf/open/indestructible/hotelwood{desc = "Very rich floor made out of pure gold! This floor seems indestructible for some reason..."; icon_state = "gold"; name = "gold floor"},/area/ruin/powered/kinggoat_arena)
+"j" = (/obj/effect/portal/permanent/one_way/keep{id = "king goat arena"; name = "king goat arena portal"; teleport_channel = "free"},/turf/open/indestructible/hotelwood{desc = "Very rich floor made out of pure gold! This floor seems indestructible for some reason..."; icon_state = "gold"; name = "gold floor"},/area/ruin/powered/kinggoat_arena)
+
+(1,1,1) = {"
+aaaaaaaaaaaaa
+abbbbbcdbbbba
+abbbbbbbbbbba
+abbbbbbbbbbba
+abbbbbbbbbbba
+abbbbbbbbbbba
+abbbbbbbbbbba
+abbbbbbbbbbba
+abbbbbbbbbbba
+abbbbbebbbbba
+aaaaaaaaaaaaa
+abbbbbbbbbbba
+abbbbbbbbbbba
+abbbbbbbbbbba
+abbbbbbbbbbba
+abbbbbbbbbbba
+abbbbbbbbbbba
+abbbbbbbbbbba
+abbbbbbbbbbba
+abbbbbfbbbbba
+abbbbbbbbbbba
+abbbbbbbbbbba
+abbbbbbbbbbba
+abbbbbbbbbbba
+abbbbbbbbbbba
+abbbbbbbbbbba
+abbbbbbbbbbba
+aaaaaaaaaaaaa
+aghhhhhhhhija
+aaaaaaaaaaaaa
+"}

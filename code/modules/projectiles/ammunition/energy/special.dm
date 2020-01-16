@@ -74,3 +74,7 @@
 	projectile_type = /obj/projectile/beam/shrink
 	select_name = "shrink ray"
 	e_cost = 200
+
+/obj/item/ammo_casing/energy/goat
+	projectile_type = /obj/projectile/goat
+	select_name = "goat"
