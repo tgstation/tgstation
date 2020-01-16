@@ -1,6 +1,6 @@
 datum/job/f13/wasteland/wastelander
 	title = "Wastelander"
-	flag = F13WASTELANDER
+	//flag = F13WASTELANDER
 	total_positions = -1
 	spawn_positions = -1
 	supervisors = "muh anarchy"

@@ -1,6 +1,6 @@
 datum/job/f13/vault/overseer
 	title = "Vault Overseer"
-	flag = F13OVERSEER
+	//flag = F13OVERSEER
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "guh"
