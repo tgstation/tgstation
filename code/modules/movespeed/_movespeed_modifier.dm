@@ -83,7 +83,6 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 	if(existing)
 		if(existing == type_or_datum)		//same thing don't need to touch
 			return TRUE
-		oldpriority = existing.priority
 		remove_movespeed_modifier(existing, FALSE)
 	LAZYINITLIST(movespeed_modification)
 	var/listlen = length(movespeed_modification)
