@@ -1,10 +1,9 @@
 datum/job/f13/wasteland/raider
 	title = "Raider"
-	flag = F13RAIDER
+	//flag = F13RAIDER
 	total_positions = -1
 	spawn_positions = -1
-	description = "A wasteland murderhobo"
-	supervisor = "muh anarchy"
+	supervisors = "muh anarchy"
 
 	outfit = /datum/outfit/job/raider
 

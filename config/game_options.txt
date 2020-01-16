@@ -468,8 +468,8 @@ ROUNDSTART_RACES ethereal
 ## Uncomment to give players the choice of joining as a human with mutant bodyparts before they join the game
 #JOIN_WITH_MUTANT_HUMANS
 
-##Overflow job. Default is assistant
-OVERFLOW_JOB Assistant
+##Overflow job. Default is wastelander
+OVERFLOW_JOB Wastelander
 
 ## Overflow slot cap. Set to -1 for unlimited. If limited, it will still open up if every other job is full.
 OVERFLOW_CAP -1
