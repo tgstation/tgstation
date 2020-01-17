@@ -94,7 +94,7 @@
 
 /mob/living/simple_animal/hostile/glockroach/magdump/Shoot(atom/targeted_atom, bullet_count)
 	. = ..()
-	if(bullet_count = AS_MANY_BULLETS_A_MAG_GOT)
+	if(bullet_count == AS_MANY_BULLETS_A_MAG_GOT)
 		reloading_n_shit()
 
 /mob/living/simple_animal/hostile/glockroach/magdump/proc/reloading_n_shit()
