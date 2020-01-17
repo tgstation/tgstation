@@ -133,17 +133,15 @@
 	if(gauss_real >= gauss_minor) //Minor Success.
 		var/reward_number = 1
 		say("Experiment concluded with partial success. Dispensing compiled research efforts.")
-		reward_number = rand(1,3)
+		reward_number = rand(1,4)
 		if(reward_number == 1)
 			new /obj/item/stack/circuit_stack/full(dropturf)
 		if(reward_number == 2)
 			new /obj/item/airlock_painter/decal(dropturf)
 		if(reward_number == 3)
-<<<<<<< HEAD
-			new /obj/item/circuitboard/machine/sleeper/party(dropturf)
-=======
 			new /obj/item/pen/survival(dropturf)
->>>>>>> upstream/master
+		if(reward_number == 4)
+			new /obj/item/circuitboard/machine/sleeper/party(dropturf)
 		return
 	if(gauss_real <= -1)	//Critical Failure
 		say("ERROR: CRITICAL MACHIME MALFUNCTI- ON. CURRENCY IS NOT CRASH. CANNOT COMPUTE COMMAND: 'make bucks'") //not a typo, for once.
