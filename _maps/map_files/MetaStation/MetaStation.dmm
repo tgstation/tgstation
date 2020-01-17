@@ -16695,10 +16695,6 @@
 /obj/structure/table,
 /obj/item/assembly/signaler,
 /obj/item/assembly/signaler,
-/obj/item/multitool,
-/obj/item/multitool{
-	pixel_x = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
@@ -18662,18 +18658,11 @@
 /area/crew_quarters/locker)
 "aPM" = (
 /obj/structure/rack,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = -1
-	},
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = 4;
-	pixel_y = -4
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/effect/spawner/lootdrop/costume,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aPN" = (
@@ -19249,7 +19238,6 @@
 /area/crew_quarters/locker)
 "aRa" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/costume,
 /obj/effect/spawner/lootdrop/costume,
 /obj/item/clothing/mask/balaclava,
 /obj/machinery/airalarm{

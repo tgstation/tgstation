@@ -11069,8 +11069,6 @@
 /obj/structure/table,
 /obj/item/assembly/signaler,
 /obj/item/assembly/signaler,
-/obj/item/multitool,
-/obj/item/multitool,
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},

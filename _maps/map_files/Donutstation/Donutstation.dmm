@@ -4602,8 +4602,7 @@
 	dir = 1
 	},
 /obj/machinery/camera{
-	c_tag = "Cargo - Docking Bay North";
-	dir = 2
+	c_tag = "Cargo - Docking Bay North"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -20242,10 +20241,6 @@
 /area/crew_quarters/kitchen)
 "bdD" = (
 /obj/structure/table,
-/obj/item/multitool{
-	pixel_x = 6
-	},
-/obj/item/multitool,
 /obj/item/assembly/signaler,
 /obj/item/assembly/signaler,
 /obj/effect/turf_decal/tile/brown{

@@ -11700,10 +11700,6 @@
 /obj/item/radio/intercom{
 	pixel_y = 20
 	},
-/obj/item/multitool,
-/obj/item/multitool{
-	pixel_x = 4
-	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aDo" = (
@@ -17723,14 +17719,6 @@
 /obj/structure/table,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
-"aTA" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = -1
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/locker)
 "aTB" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
@@ -17739,10 +17727,6 @@
 /area/crew_quarters/locker)
 "aTC" = (
 /obj/structure/table,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = -1
-	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
@@ -70749,7 +70733,7 @@ aOp
 aPA
 aQR
 aQN
-aTA
+aTz
 aUq
 aWq
 aXs

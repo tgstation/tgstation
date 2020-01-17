@@ -22847,7 +22847,6 @@
 	pixel_y = 4
 	},
 /obj/item/storage/toolbox/electrical,
-/obj/item/multitool,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -22855,7 +22854,6 @@
 	dir = 4;
 	pixel_x = -26
 	},
-/obj/item/multitool,
 /turf/open/floor/plasteel/dark,
 /area/storage/primary)
 "aKe" = (
@@ -58082,11 +58080,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = 2;
-	pixel_y = 4
-	},
-/obj/item/storage/toolbox/emergency,
+/obj/item/razor,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "bJp" = (
