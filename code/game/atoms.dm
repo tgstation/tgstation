@@ -1252,6 +1252,10 @@
 
 	if(isspaceturf(T)) // Turf never has gravity
 		return 0
+	if(istype(T, /turf/open/openspace)) //openspace in a space area doesn't get gravity
+		var/area/A = get_area(T)
+		if(istype(A, /area/space))
+			return 0
 
 	var/area/A = get_area(T)
 	if(A.has_gravity) // Areas which always has gravity
