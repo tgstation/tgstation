@@ -99,7 +99,7 @@
 
 /mob/living/simple_animal/hostile/glockroach/magdump/proc/reloading_n_shit()
 	to_chat(src, "<span class='warning'>YOU EMPTY SON, RELOADING</span>")
-	/obj/item/ammo_box/magazine/m45/ohnine = new(get_turf(src))
+	new /obj/item/ammo_box/magazine/m45/ohnine(get_turf(src))
 	addtimer(CALLBACK(src, .proc/donereloadin), 10 SECONDS)
 
 /mob/living/simple_animal/hostile/glockroach/magdump/proc/donereloadin()
