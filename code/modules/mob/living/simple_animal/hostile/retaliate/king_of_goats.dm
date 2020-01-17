@@ -27,6 +27,8 @@ Difficulty: Insanely Hard
 	icon_living = "king_goat"
 	icon_dead = "king_goat_dead"
 	faction = list("goat_king")
+	speak = list("EHEHEHEHEH","eh?")
+	speak_chance = 1
 	attack_same = FALSE
 	speak_emote = list("brays in a booming voice")
 	emote_hear = list("brays in a booming voice")
@@ -34,6 +36,7 @@ Difficulty: Insanely Hard
 	response_help_continuous  = "placates"
 	response_harm_continuous   = "assaults"
 	attack_verb_simple = "brutalized"
+	attack_sound = 'sound/weapons/punch1.ogg'
 	health = 500
 	a_intent = INTENT_HARM
 	sentience_type = SENTIENCE_BOSS
