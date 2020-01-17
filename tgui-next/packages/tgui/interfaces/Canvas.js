@@ -78,16 +78,13 @@ class PaintCanvas extends Component {
     );
   }
 }
-
-PaintCanvas.defaultHooks = pureComponentHooks;
-
 export const Canvas = props => {
   const { act, data } = useBackend(props);
   return (
     <Box textAlign="center">
       <PaintCanvas
         value={data.grid}
-        onCanvasClick={(x, y) => act("paint", { x: x, y: y })} />
+        onCanvasClick={(x, y) => act("paint", { x, y })} />
       <Box>{data.name}</Box>
     </Box>);
 };
