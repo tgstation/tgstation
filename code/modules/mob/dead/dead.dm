@@ -70,11 +70,10 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	set desc= "Jump to the other server"
 	if(notransform)
 		return
-	var/list/csa = CONFIG_GET(keyed_list/cross_server)
 	var/list/our_id = CONFIG_GET(string/cross_comms_name)
-	var/list/other = csa.Copy() - our_id
+	var/list/csa = CONFIG_GET(keyed_list/cross_server) - our_id
 	var/pick
-	switch(other.len)
+	switch(csa.len)
 		if(0)
 			verbs -= /mob/dead/proc/server_hop
 			to_chat(src, "<span class='notice'>Server Hop has been disabled.</span>")
