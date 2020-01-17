@@ -19,7 +19,7 @@ Difficulty: Insanely Hard
 
 
 //the king and his court
-/mob/living/simple_animal/hostile/retaliate/goat/king
+/mob/living/simple_animal/hostile/megafauna/king
 	name = "king of the goats"
 	desc = "The oldest and wisest of the goats. King of his race, peerless in dignity and power. His golden fleece radiates nobility."
 	icon = 'icons/mob/king_of_goats.dmi'
@@ -61,7 +61,7 @@ Difficulty: Insanely Hard
 
 	var/stun_chance = 5 //chance per attack to Weaken target
 
-/mob/living/simple_animal/hostile/retaliate/goat/king/ex_act(severity, target)
+/mob/living/simple_animal/hostile/megafauna/king/ex_act(severity, target)
 	switch (severity)
 		if (1)
 			adjustBruteLoss(100)
@@ -72,7 +72,7 @@ Difficulty: Insanely Hard
 		if(3)
 			adjustBruteLoss(25)
 
-/mob/living/simple_animal/hostile/retaliate/goat/king/phase2
+/mob/living/simple_animal/hostile/megafauna/king/phase2
 	name = "emperor of the goats"
 	desc = "The King of Kings, God amongst men, and your superior in every way."
 	icon_state = "king_goat2"
@@ -95,11 +95,11 @@ Difficulty: Insanely Hard
 	var/current_song_length = 1200
 	stun_chance = 7
 
-/mob/living/simple_animal/hostile/retaliate/goat/king/phase2/Initialize()
+/mob/living/simple_animal/hostile/megafauna/king/phase2/Initialize()
 	. = ..()
 	update_icon()
 
-/mob/living/simple_animal/hostile/retaliate/goat/king/Found(atom/A)
+/mob/living/simple_animal/hostile/megafauna/king/Found(atom/A)
 	if(isliving(A))
 		return A
 	return ..()
@@ -158,14 +158,12 @@ Difficulty: Insanely Hard
 	move_to_delay = 3
 	loot = list(/obj/item/clothing/head/goatpope)
 
-/mob/living/simple_animal/hostile/retaliate/goat/king/Retaliate()
+/mob/living/simple_animal/hostile/megafauna/king/OpenFire()
 	..()
 	if(stat == CONSCIOUS && prob(5))
 		visible_message("<span class='warning'>\The [src] bellows indignantly, with a judgemental gleam in his eye.</span>")
 
-/mob/living/simple_animal/hostile/retaliate/goat/king/phase2/Retaliate()
-	set waitfor = FALSE
-	..()
+/mob/living/simple_animal/hostile/megafauna/king/phase2/OpenFire()
 	if(spellscast < 5)
 		if(prob(5) && move_to_delay >= 3) //speed buff
 			spellscast++
@@ -181,11 +179,11 @@ Difficulty: Insanely Hard
 			spellscast++
 			visible_message("<span class='cult'>\The [src] summons the imperial guard to his aid, and they appear in a flash!</span>")
 			var/mob/living/simple_animal/hostile/retaliate/goat/guard/master/M = new(get_step(src,pick(GLOB.cardinals)))
-			M.enemies |= enemies
+			M.Retaliate()
 			var/mob/living/simple_animal/hostile/retaliate/goat/guard/G = new(get_step(src,pick(GLOB.cardinals)))
-			G.enemies |= enemies
+			G.Retaliate()
 			G = new(get_step(src,pick(GLOB.cardinals)))
-			G.enemies |= enemies
+			G.Retaliate()
 
 		else if(prob(5)) //EMP blast
 			spellscast++
@@ -216,7 +214,7 @@ Difficulty: Insanely Hard
 
 		else return
 
-/mob/living/simple_animal/hostile/retaliate/goat/king/phase2/proc/phase3_transition()
+/mob/living/simple_animal/hostile/megafauna/king/phase2/proc/phase3_transition()
 	phase3 = TRUE
 	spellscast = 0
 	maxHealth = 750
@@ -235,7 +233,7 @@ Difficulty: Insanely Hard
 	visible_message("<span class='cult'>\The [src]' wounds close with a flash, and when he emerges, he's even larger than before!</span>")
 
 
-/mob/living/simple_animal/hostile/retaliate/goat/king/phase2/update_icon()
+/mob/living/simple_animal/hostile/megafauna/king/phase2/update_icon()
 	var/matrix/M = new
 	if(phase3)
 		icon_state = "king_goat3"
@@ -246,7 +244,7 @@ Difficulty: Insanely Hard
 	transform = M
 	pixel_y = 10
 
-/mob/living/simple_animal/hostile/retaliate/goat/king/phase2/Life()
+/mob/living/simple_animal/hostile/megafauna/king/phase2/Life()
 	. = ..()
 	if(stat != DEAD)
 		var/sound/song_played = sound(current_song)
@@ -283,13 +281,12 @@ Difficulty: Insanely Hard
 		visible_message("<span class='cult'>The [src]' horns shrink back down to normal size.</span>")
 		melee_damage_lower = 40
 
-/mob/living/simple_animal/hostile/retaliate/goat/king/proc/OnDeath()
+/mob/living/simple_animal/hostile/megafauna/king/proc/OnDeath()
 	visible_message("<span class='cult'>\The [src] lets loose a terrific wail as its wounds close shut with a flash of light, and its eyes glow even brighter than before!</span>")
-	var/mob/living/simple_animal/hostile/retaliate/goat/king/phase2/nextgoat = new(src.loc)
-	nextgoat.enemies |= enemies
+	new /mob/living/simple_animal/hostile/megafauna/king/phase2(get_turf(src))
 	qdel(src)
 
-/mob/living/simple_animal/hostile/retaliate/goat/king/phase2/OnDeath()
+/mob/living/simple_animal/hostile/megafauna/king/phase2/OnDeath()
 	for(var/mob/L in rangers)
 		rangers -= L
 		if(!L || !L.client)
@@ -301,11 +298,11 @@ Difficulty: Insanely Hard
 		new /obj/item/gun/energy/goatgun(loc)
 		new /obj/item/toy/plush/goatplushie/angry/kinggoat(loc) //If someone dies from this after beating the king goat im going to laugh
 
-/mob/living/simple_animal/hostile/retaliate/goat/king/death()
+/mob/living/simple_animal/hostile/megafauna/king/death()
 	..()
 	OnDeath()
 
-/mob/living/simple_animal/hostile/retaliate/goat/king/phase2/Destroy()
+/mob/living/simple_animal/hostile/megafauna/king/phase2/Destroy()
 	for(var/mob/L in rangers)
 		rangers -= L
 		if(!L || !L.client)
@@ -313,7 +310,7 @@ Difficulty: Insanely Hard
 		L.stop_sound_channel(CHANNEL_JUKEBOX)
 	. = ..()
 
-/mob/living/simple_animal/hostile/retaliate/goat/king/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/king/AttackingTarget()
 	. = ..()
 	if(isliving(target))
 		var/mob/living/L = target
@@ -323,7 +320,7 @@ Difficulty: Insanely Hard
 			L.Paralyze(5)
 			visible_message("<span class='warning'>\The [L] is bowled over by the impact of [src]'s attack!</span>")
 
-/mob/living/simple_animal/hostile/retaliate/goat/king/phase2/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/king/phase2/AttackingTarget()
 	. = ..()
 	if(isliving(target))
 		if(melee_damage_type != BRUTE)

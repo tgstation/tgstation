@@ -47,7 +47,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/Life()
 	. = ..()
-	if(. && sentience_type != SENTIENCE_BOSS)
+	if(.)
 		//chance to go crazy and start wacking stuff
 		if(!enemies.len && prob(1))
 			Retaliate()
@@ -100,9 +100,6 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/AttackingTarget()
 	. = ..()
-	if(. && isliving(target))
-		var/mob/living/L = target
-		L.visible_message("<span class='warning'>[src] rams [L]!</span>")
 	if(. && ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(istype(H.dna.species, /datum/species/pod))
