@@ -28,6 +28,7 @@
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/chew_probability = 1
+	faction = list("rat")
 
 /mob/living/simple_animal/mouse/Initialize()
 	. = ..()
@@ -93,10 +94,10 @@
 			return
 	for(var/obj/item/reagent_containers/food/snacks/royalcheese/bigcheese in range(1, src))
 		visible_message("<span class='warning'>[src] devours [bigcheese]! He morphs into something... greater!</span>")
-		qdel(bigcheese)
-		qdel(src)
 		var/mob/living/simple_animal/hostile/regalrat = new /mob/living/simple_animal/hostile/regalrat
 		regalrat.say("RISE, MY SUBJECTS! SCREEEEEEE!", language = /datum/language/aphasia)
+		qdel(bigcheese)
+		qdel(src)
 		return
 
 /*
