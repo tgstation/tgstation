@@ -1,0 +1,6 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - balance: "Reduced heart decay, effectively extending the defib timer slightly to a little under four minutes before requiring heart surgery."
+  - balance: "Slightly reduced the probability of ear damage causing you to intermittently go deaf."
+  - tweak: "Defib timer is gone, its all organ decay now. The defib hud icon is also gone since any corpse is now defibbable, also making fakedeath a bit more convincing."

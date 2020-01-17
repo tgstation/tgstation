@@ -187,7 +187,7 @@ Slimecrossing Potions
 	if(M.maxHealth <= 0)
 		to_chat(user, "<span class='warning'>The slime is too unstable to return!</span>")
 	M.revive(full_heal = TRUE, admin_revive = FALSE)
-	M.stat = CONSCIOUS
+	M.set_stat(CONSCIOUS)
 	M.visible_message("<span class='notice'>[M] is filled with renewed vigor and blinks awake!</span>")
 	M.maxHealth -= 10 //Revival isn't healthy.
 	M.health -= 10

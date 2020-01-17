@@ -1,0 +1,4 @@
+author: "Vondiech"
+delete-after: True
+changes: 
+  - bugfix: "Metastation medical lobby vent no longer over-pressurizes the lobby room."

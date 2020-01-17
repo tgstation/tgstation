@@ -13,10 +13,17 @@
 			return FALSE
 		log_access("Failed Login (invalid data): [key] [address]-[computer_id]")
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided invalid or blank information to the server on connection (byond username, IP, and Computer ID.) Provided information for reference: Username:'[key]' IP:'[address]' Computer ID:'[computer_id]'. (If you continue to get this error, please restart byond or contact byond support.)")
-
+	
+	if (type == "world")
+		return ..() //shunt world topic banchecks to purely to byond's internal ban system
+		
 	var/admin = FALSE
 	var/ckey = ckey(key)
-
+	
+	var/client/C = GLOB.directory[ckey]
+	if (C && ckey == C.ckey && computer_id == C.computer_id && address == C.address)
+		return //don't recheck connected clients.
+		
 	//IsBanned can get re-called on a user in certain situations, this prevents that leading to repeated messages to admins.
 	var/static/list/checkedckeys = list()
 	//magic voodo to check for a key in a list while also adding that key to the list without having to do two associated lookups
@@ -24,8 +31,6 @@
 
 	if(GLOB.admin_datums[ckey] || GLOB.deadmins[ckey])
 		admin = TRUE
-
-	var/client/C = GLOB.directory[ckey]
 
 
 	//Whitelist

@@ -29,6 +29,11 @@
 	var/stealth_armor = list("melee" = 15, "bullet" = 15, "laser" = 15, "energy" = 25, "bomb" = 15, "bio" = 15, "rad" = 15, "fire" = 70, "acid" = 70)
 	var/combat_armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 50, "rad" = 50, "fire" = 90, "acid" = 90)
 
+/obj/item/clothing/suit/armor/abductor/vest/Initialize()
+	. = ..()
+	stealth_armor = getArmor(arglist(stealth_armor))
+	combat_armor = getArmor(arglist(combat_armor))
+
 /obj/item/clothing/suit/armor/abductor/vest/proc/toggle_nodrop()
 	if(HAS_TRAIT_FROM(src, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT))
 		REMOVE_TRAIT(src, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT)

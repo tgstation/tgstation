@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "A new Technology has been implemented as a major reward in the B.E.P.I.S., Specialized Engineering, to appeal to engineering utility and new construction horizons."
+  - tweak: "Watchers will now actively consume diamond ore left lying around, alongside the new survival pens."

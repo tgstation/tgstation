@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - bugfix: "Decapitated heads with destroyed brains no longer mislead you into thinking they're unrevivable when examined"

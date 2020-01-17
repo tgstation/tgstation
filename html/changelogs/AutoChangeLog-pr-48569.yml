@@ -1,0 +1,7 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - rscadd: "Species body temperature handling"
+  - balance: "Plasmamen, Lizardpeople, Ethereal have custom body temperatures to deal with"
+  - bugfix: "natural body temp stabilization now returns proper values"
+  - refactor: "clean up of the environment handles for mobs and species"

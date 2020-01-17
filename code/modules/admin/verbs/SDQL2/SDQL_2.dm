@@ -99,6 +99,10 @@
 
 	Don't crash the server, OK?
 
+	"UPDATE /mob/living/carbon/monkey SET #null = forceMove(usr.loc)"
+
+	Writing "#null" in front of the "=" will call the proc and discard the return value.
+
 	A quick recommendation: before you run something like a DELETE or another query.. Run it through SELECT
 	first.
 	You'd rather not gib every player on accident.
@@ -777,6 +781,9 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 		var/datum/temp = d
 		var/i = 0
 		for(var/v in sets)
+			if(v == "#null")
+				SDQL_expression(d, set_list[sets])
+				break
 			if(++i == sets.len)
 				if(superuser)
 					if(temp.vars.Find(v))
