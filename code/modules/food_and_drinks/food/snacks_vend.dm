@@ -13,6 +13,18 @@
 	tastes = list("candy" = 1)
 	foodtype = JUNKFOOD | SUGAR
 
+/obj/item/reagent_containers/food/snacks/candy/bronx
+	name = "south bronx paradise"
+	desc = "Lose weight, guaranteed! Wait, the package actally says 'south bronx parasite'..."
+	icon_state = "bronx"
+	item_state = "candy"
+	trash = /obj/item/trash/candy
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2, /datum/reagent/toxin/lipolicide = 2, /datum/reagent/yuck = 2)
+	junkiness = 10
+	filling_color = "#e4d4b7"
+	tastes = list("candy" = 5, "weight loss" = 4, "insect larva" = 1)
+	foodtype = JUNKFOOD | RAW | GROSS
+
 /obj/item/reagent_containers/food/snacks/sosjerky
 	name = "\improper Scaredy's Private Reserve Beef Jerky"
 	icon_state = "sosjerky"
