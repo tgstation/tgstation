@@ -39,6 +39,13 @@
 	else
 		icon_state = "45-[ammo_count()]"
 
+/obj/item/ammo_box/magazine/m45/ohnine //vanity
+	name = "handgun magazine (.9)"
+	desc= "What is this, a magazine for ants?!"
+	ammo_type = /obj/item/ammo_casing/glockroach
+	caliber = "0.9"
+	max_ammo = 15
+
 /obj/item/ammo_box/magazine/pistolm9mm
 	name = "pistol magazine (9mm)"
 	icon_state = "9x19p-8"

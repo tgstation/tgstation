@@ -67,3 +67,42 @@
 /mob/living/simple_animal/hostile/glockroach/ex_act() //Explosions are a terrible way to handle a cockroach.
 	return
 
+#define AS_MANY_BULLETS_A_MAG_GOT 15
+
+#define REAL_NIGGA_HOURS 24 HOURS
+
+/mob/living/simple_animal/hostile/glockroach/magdump
+	name = "south bronx glockroach"
+	desc = "HOLY SHIT, THAT COCKROACH HAS STREET KNOWLEDGE!"
+	rapid = AS_MANY_BULLETS_A_MAG_GOT //one magazine, aka how many times we shoot
+	rapid_fire_delay = 1
+	ranged_cooldown_time = REAL_NIGGA_HOURS //we set it to fire after reload
+
+/mob/living/simple_animal/hostile/glockroach/magdump/OpenFire(atom/A)
+	if(CheckFriendlyFire(A))
+		return
+	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
+
+
+	if(rapid > 1)
+		var/datum/callback/cb = CALLBACK(src, .proc/Shoot, A, rapid)
+		for(var/i in 1 to rapid)
+			addtimer(cb, (i - 1)*rapid_fire_delay)
+	else
+		Shoot(A)
+	ranged_cooldown = world.time + ranged_cooldown_time
+
+/mob/living/simple_animal/hostile/glockroach/magdump/Shoot(atom/targeted_atom, bullet_count)
+	. = ..()
+	if(bullet_count = AS_MANY_BULLETS_A_MAG_GOT)
+		reloading_n_shit()
+
+/mob/living/simple_animal/hostile/glockroach/magdump/proc/reloading_n_shit()
+	to_chat(src, "<span class='warning'>YOU EMPTY SON, RELOADING</span>")
+	var/obj/item/ammo_box/magazine/m45/ohnine/mag = new(get_turf(src))
+	addtimer(CALLBACKCALLBACK(src, .proc/donereloadin) 10 SECONDS)
+
+/mob/living/simple_animal/hostile/glockroach/magdump/proc/donereloadin()
+	to_chat(src, "<span class='warning'>AIGHT YOU READY TO DROP A NIGGA WHO ACT UP</span>")
+	playsound('sound/weapons/gun/pistol/rack.ogg')
+	ranged_cooldown = 0
