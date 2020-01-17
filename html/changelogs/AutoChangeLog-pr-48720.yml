@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Fugitives now reports the correct amount minimum candidates to deadchat if it fails."
