@@ -28,10 +28,10 @@
 	verb_ask = "chitters inquisitively"
 	verb_exclaim = "chitters loudly"
 	verb_yell = "chitters loudly"
-	var/squish_chance = 50
 	del_on_death = TRUE
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	AIStatus = AI_OFF
+	var/squish_chance = 50
 
 /obj/projectile/glockroachbullet
 	damage = 10 //same damage as a hivebot
