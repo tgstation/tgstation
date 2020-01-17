@@ -23,8 +23,6 @@ Behavior that's still missing from this component that original food items had t
 	var/food_flags = NONE
 	///Bitfield of the types of this food
 	var/foodtypes = NONE
-	///Size of the food's volume
-	var/volume = 50
 	///Amount of seconds it takes to eat this food
 	var/eat_time = 30
 	///Defines how much it lowers someones satiety (Need to eat, essentialy)
@@ -54,7 +52,6 @@ Behavior that's still missing from this component that original food items had t
 	src.bite_consumption = bite_consumption
 	src.food_flags = food_flags
 	src.foodtypes = foodtypes
-	src.volume = volume
 	src.eat_time = eat_time
 	src.eatverbs = eatverbs
 	src.junkiness = junkiness
@@ -99,12 +96,14 @@ Behavior that's still missing from this component that original food items had t
 	if(!owner.reagents.total_volume)//Shouldn't be needed but it checks to see if it has anything left in it.
 		to_chat(feeder, "<span class='warning'>None of [parent] left, oh no!</span>")
 		qdel(parent)
-		return FALSE
+		return
 	if(!CanConsume(eater, feeder))
-		return FALSE
+		return
 	var/fullness = eater.nutrition + 10 //The theoretical fullness of the person eating if they were to eat this
 	for(var/datum/reagent/consumable/C in eater.reagents.reagent_list) //we add the nutrition value of what we're currently digesting
 		fullness += C.nutriment_factor * C.volume / C.metabolization_rate
+	
+	. = COMPONENT_ITEM_NO_ATTACK //Point of no return I suppose
 
 	if(eater == feeder)//If you're eating it yourself.
 		if(!do_mob(feeder, eater, eat_time)) //Gotta pass the minimal eat time
@@ -142,7 +141,6 @@ Behavior that's still missing from this component that original food items had t
 									"<span class='userdanger'>[feeder] forces you to eat [parent]!</span>")
 
 	TakeBite(eater, feeder)
-	return COMPONENT_ITEM_NO_ATTACK
 
 ///This function lets the eater take a bite and transfers the reagents to the eater.
 /datum/component/edible/proc/TakeBite(mob/living/eater, mob/living/feeder)
