@@ -120,7 +120,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/structure/closet/secure_closet/security,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/structure/closet/secure_closet/security/sec,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "ao" = (
@@ -618,6 +621,10 @@
 /obj/machinery/vending/wardrobe/sec_wardrobe,
 /turf/open/floor/plasteel,
 /area/security/brig)
+"bu" = (
+/obj/machinery/biogenerator,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "bv" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating/airless,
@@ -828,21 +835,16 @@
 /turf/closed/wall/r_wall,
 /area/security/brig)
 "bY" = (
-/obj/structure/rack,
-/obj/item/gun/energy/laser{
-	pixel_x = -3;
-	pixel_y = 3
+/obj/machinery/newscaster{
+	pixel_y = 32
 	},
-/obj/item/gun/energy/laser,
-/obj/item/gun/energy/laser{
-	pixel_x = 3;
-	pixel_y = -3
+/obj/effect/turf_decal/tile/red{
+	dir = 4
 	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
-/obj/item/gun/energy/e_gun/hos,
+/obj/machinery/rnd/production/protolathe/department/security,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "bZ" = (
@@ -866,21 +868,13 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "ca" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/structure/closet/secure_closet/security,
+/obj/structure/closet/secure_closet/security/sec,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "cb" = (
@@ -1090,7 +1084,11 @@
 /turf/open/floor/carpet,
 /area/hallway/primary/central)
 "cC" = (
-/obj/structure/closet/secure_closet/security,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
@@ -1100,19 +1098,20 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/security/sec,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "cD" = (
-/obj/machinery/newscaster{
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/tile/red{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
+/obj/structure/rack,
+/obj/item/clothing/suit/armor/reactive,
+/obj/item/clothing/suit/hooded/ablative,
+/obj/item/gun/energy/e_gun/hos,
+/turf/open/floor/plasteel{
+	dir = 2
 	},
-/turf/open/floor/plasteel,
 /area/security/brig)
 "cE" = (
 /obj/machinery/photocopier,
@@ -1337,18 +1336,36 @@
 /turf/open/floor/engine,
 /area/science/lab)
 "dh" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/structure/rack,
+/obj/item/gun/energy/laser{
+	pixel_x = -3;
+	pixel_y = 3
 	},
-/obj/machinery/rnd/production/protolathe/department/security,
-/turf/open/floor/plasteel{
-	dir = 2
+/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser{
+	pixel_x = 3;
+	pixel_y = -3
 	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel,
 /area/security/brig)
 "di" = (
 /obj/machinery/rnd/production/protolathe/department/cargo,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"dj" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/suit/armor/reactive,
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 8;
+	on = 1
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "dk" = (
 /obj/machinery/requests_console{
 	department = "Robotics";
@@ -1518,15 +1535,17 @@
 	},
 /area/security/brig)
 "dJ" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/armor/laserproof,
-/obj/item/clothing/suit/armor/reactive,
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
 	},
-/obj/item/clothing/suit/hooded/ablative,
-/obj/item/clothing/suit/armor/reactive/teleport,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/structure/closet/secure_closet/security/sec,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "dK" = (
@@ -1853,6 +1872,10 @@
 	},
 /turf/closed/wall,
 /area/maintenance/port)
+"eu" = (
+/obj/machinery/vending/assist,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "ev" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -2068,9 +2091,9 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "eS" = (
-/obj/machinery/vending/assist,
-/turf/open/floor/plating,
-/area/maintenance/starboard)
+/obj/machinery/vending/tool,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "eT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
@@ -2129,9 +2152,16 @@
 	},
 /area/hallway/primary/central)
 "eY" = (
-/obj/machinery/vending/tool,
-/turf/open/floor/plating,
-/area/maintenance/starboard)
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plasteel,
+/area/science/robotics/lab)
 "eZ" = (
 /obj/machinery/mineral/ore_redemption{
 	input_dir = 4
@@ -2788,16 +2818,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/science/robotics/lab)
-"gt" = (
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
-/turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "gu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -3564,12 +3584,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"hV" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "47"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "hW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -3680,20 +3694,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"ig" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/obj/structure/closet/secure_closet/security,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/turf/open/floor/plasteel,
-/area/security/brig)
 "ih" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -47755,8 +47755,8 @@ ea
 fO
 fp
 eR
-ca
-ig
+cC
+dJ
 cj
 cj
 cj
@@ -48519,9 +48519,9 @@ aS
 aB
 bL
 cj
-cC
-bt
 an
+bt
+ca
 gk
 bZ
 gk
@@ -49290,7 +49290,7 @@ aa
 aa
 BH
 cj
-cD
+bY
 io
 io
 eg
@@ -50062,7 +50062,7 @@ BH
 BH
 aS
 cj
-dh
+cD
 io
 xH
 cj
@@ -50336,7 +50336,7 @@ qW
 zz
 ed
 eN
-jc
+eN
 ks
 kR
 nX
@@ -50577,8 +50577,8 @@ aa
 aa
 cj
 am
-bY
-dJ
+dh
+dj
 cj
 cj
 cj
@@ -50592,7 +50592,7 @@ gg
 qW
 kt
 ed
-eN
+ed
 eN
 iZ
 eN
@@ -50848,8 +50848,8 @@ fK
 js
 qW
 zz
+eu
 ed
-eS
 jc
 eN
 jc
@@ -51105,8 +51105,8 @@ hz
 jt
 qW
 zz
+eS
 ed
-eY
 jl
 mO
 kS
@@ -51640,7 +51640,7 @@ uD
 vb
 uD
 vb
-hV
+bu
 bx
 aS
 rC
@@ -53922,7 +53922,7 @@ cm
 cm
 cm
 cr
-gt
+eY
 cl
 hS
 iw
