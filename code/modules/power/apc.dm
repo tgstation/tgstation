@@ -104,6 +104,7 @@
 	var/update_overlay = -1
 	var/icon_update_needed = FALSE
 	var/obj/machinery/computer/apc_control/remote_control = null
+	var/drain_stop = 0 //keeps ethereals from spamming drain
 
 /obj/machinery/power/apc/unlocked
 	locked = FALSE
@@ -784,13 +785,9 @@
 // attack with hand - remove cell (if cover open) or interact with the APC
 
 /obj/machinery/power/apc/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-
 	if(isethereal(user))
 		var/mob/living/carbon/human/H = user
-		if(H.a_intent == INTENT_HARM)
+		if((H.a_intent == INTENT_HARM) && (drain_stop < world.time -75))
 			if(cell.charge <= (cell.maxcharge / 2)) // if charge is under 50% you shouldnt drain it
 				to_chat(H, "<span class='warning'>The APC doesn't have much power, you probably shouldn't drain any.</span>")
 				return
@@ -798,6 +795,7 @@
 			if(stomach.crystal_charge > 145)
 				to_chat(H, "<span class='warning'>Your charge is full!</span>")
 				return
+			drain_stop = world.time
 			to_chat(H, "<span class='notice'>You start channeling some power through the APC into your body.</span>")
 			if(do_after(user, 75, target = src))
 				if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > 145))
@@ -809,7 +807,7 @@
 				else
 					to_chat(H, "<span class='warning'>You can't receive charge from the APC!</span>")
 			return
-		if(H.a_intent == INTENT_GRAB)
+		if((H.a_intent == INTENT_GRAB) && (drain_stop < world.time -75))
 			if(cell.charge == cell.maxcharge)
 				to_chat(H, "<span class='warning'>The APC is full!</span>")
 				return
@@ -817,6 +815,7 @@
 			if(stomach.crystal_charge < 10)
 				to_chat(H, "<span class='warning'>Your charge is too low!</span>")
 				return
+			drain_stop = world.time
 			to_chat(H, "<span class='notice'>You start channeling power through your body into the APC.</span>")
 			if(do_after(user, 75, target = src))
 				if(cell.charge == cell.maxcharge || (stomach.crystal_charge < 10))
@@ -828,6 +827,10 @@
 				else
 					to_chat(H, "<span class='warning'>You can't transfer power to the APC!</span>")
 			return
+
+	. = ..()
+	if(.)
+		return
 
 	if(opened && (!issilicon(user)))
 		if(cell)

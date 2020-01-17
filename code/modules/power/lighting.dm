@@ -637,9 +637,11 @@
 
 		if(istype(H))
 			var/datum/species/ethereal/eth_species = H.dna?.species
-			if(istype(eth_species))
+			var/drain_stop = 0
+			if((istype(eth_species)) && (drain_stop < world.time -30))
 				to_chat(H, "<span class='notice'>You start channeling some power through the [fitting] into your body.</span>")
-				if(do_after(user, 50, target = src))
+				drain_stop = world.time
+				if(do_after(user, 30, target = src))
 					var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
 					if(istype(stomach))
 						to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
