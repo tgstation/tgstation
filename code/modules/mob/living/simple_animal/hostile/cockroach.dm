@@ -29,7 +29,7 @@
 	verb_exclaim = "chitters loudly"
 	verb_yell = "chitters loudly"
 	var/squish_chance = 50
-	del_on_death = 1
+	del_on_death = TRUE
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	AIStatus = AI_OFF
 
@@ -81,4 +81,3 @@
 
 /mob/living/simple_animal/hostile/cockroach/ex_act() //Explosions are a terrible way to handle a cockroach.
 	return
-
