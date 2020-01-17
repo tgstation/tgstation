@@ -7,7 +7,7 @@
 /area/ruin/powered/kinggoat_arena)
 "c" = (
 /obj/structure/chair/bronze,
-/mob/living/simple_animal/hostile/retaliate/goat/king,
+/mob/living/simple_animal/hostile/megafauna/king,
 /turf/open/indestructible/diamond,
 /area/ruin/powered/kinggoat_arena)
 "d" = (

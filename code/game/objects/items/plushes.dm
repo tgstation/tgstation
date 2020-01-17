@@ -622,9 +622,16 @@
 	force = 30
 	divine = TRUE
 
+/obj/item/toy/plush/goatplushie/angry/kinggoat/ascendedkinggoat/attackby(obj/item/I,mob/living/user,params)
+	if(I.get_sharpness())
+		user.visible_message("<span class='notice'>[user] attempts to destroy [src]!</span>", "<span class='suicide'>[I] bounces off [src]'s back before breaking into millions of pieces... [src] glares at [user]!</span>") // You fucked up now son
+		I.play_tool_sound(src)
+		qdel(I)
+		user.gib()
+
 /obj/item/toy/plush/goatplushie/angry/kinggoat/attackby(obj/item/I,mob/living/user,params)
 	if(I.get_sharpness())
-		user.visible_message("<span class='notice'>[user] stabs [src] to shreds!</span>", "<span class='notice'>[src]'s death has attracted the attention of the king goat plushie guards!</span>")
+		user.visible_message("<span class='notice'>[user] rips [src] to shreds!</span>", "<span class='notice'>[src]'s death has attracted the attention of the king goat plushie guards!</span>")
 		I.play_tool_sound(src)
 		qdel(src)
 		var/turf/location = get_turf(user)
