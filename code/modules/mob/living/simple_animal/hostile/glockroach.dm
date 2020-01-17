@@ -100,7 +100,7 @@
 /mob/living/simple_animal/hostile/glockroach/magdump/proc/reloading_n_shit()
 	to_chat(src, "<span class='warning'>YOU EMPTY SON, RELOADING</span>")
 	var/obj/item/ammo_box/magazine/m45/ohnine/mag = new(get_turf(src))
-	addtimer(CALLBACKCALLBACK(src, .proc/donereloadin) 10 SECONDS)
+	addtimer(CALLBACK(src, .proc/donereloadin), 10 SECONDS)
 
 /mob/living/simple_animal/hostile/glockroach/magdump/proc/donereloadin()
 	to_chat(src, "<span class='warning'>AIGHT YOU READY TO DROP A NIGGA WHO ACT UP</span>")
