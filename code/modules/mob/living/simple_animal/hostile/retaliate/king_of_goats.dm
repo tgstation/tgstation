@@ -42,6 +42,7 @@ Difficulty: Insanely Hard
 	sentience_type = SENTIENCE_BOSS
 	stat_attack = DEAD
 	wander = FALSE
+	movement_type = GROUND
 	maxHealth = 500
 	armour_penetration = 35
 	melee_damage_lower = 35
@@ -51,10 +52,6 @@ Difficulty: Insanely Hard
 	obj_damage = 400
 	vision_range = 5
 	aggro_vision_range = 18
-	move_force = MOVE_FORCE_OVERPOWERING
-	move_resist = MOVE_FORCE_OVERPOWERING
-	pull_force = MOVE_FORCE_OVERPOWERING
-	mob_size = MOB_SIZE_LARGE
 	robust_searching = TRUE
 	move_to_delay = 3
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -167,7 +164,7 @@ Difficulty: Insanely Hard
 		visible_message("<span class='warning'>\The [src] bellows indignantly, with a judgemental gleam in his eye.</span>")
 
 /mob/living/simple_animal/hostile/megafauna/king/phase2/OpenFire()
-	if(spellscast < 5)
+	if(spellscast < 9)
 		if(prob(5) && move_to_delay >= 3) //speed buff
 			spellscast++
 			visible_message("<span class='cult'>\The [src] shimmers and seems to phase in and out of reality itself!</span>")
