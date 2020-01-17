@@ -171,11 +171,12 @@
 		to_chat(user, "<span class='notice'>You load [O] in the console's potion slot[replaced ? ", replacing the one that was there before" : ""].</span>")
 		return
 	else if(istype(O, /obj/item/slime_extract))
-		if(!already_researched[O.type])
+		var/obj/item/slime_extract/E = O
+		if(!already_researched[E.type])
 			playsound(src, 'sound/machines/ping.ogg', 50, 3, -1)
-			visible_message("<span class='notice'>You insert the [O] into a slot on the [src]. It pings and prints out some research notes worth 1,000 points!</span>")
-			new /obj/item/research_notes(drop_location(src), 1000, "xenobiology")
-			already_researched[O.type] = TRUE
+			visible_message("<span class='notice'>You insert the [E] into a slot on the [src]. It pings and prints out some research notes worth [E.research] points!</span>")
+			new /obj/item/research_notes(drop_location(src), E.research, "xenobiology")
+			already_researched[E.type] = TRUE
 			qdel(O)
 			return
 		else
