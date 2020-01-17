@@ -223,6 +223,8 @@
 
 	var/rigged = FALSE			// true if rigged to explode
 
+	var/drain_stop = 0 //keeps ethereals from spam draining energy
+
 	var/obj/item/stock_parts/cell/cell
 	var/start_with_cell = TRUE	// if true, this fixture generates a very weak cell at roundstart
 
@@ -637,7 +639,6 @@
 
 		if(istype(H))
 			var/datum/species/ethereal/eth_species = H.dna?.species
-			var/drain_stop = 0
 			if((istype(eth_species)) && (drain_stop < world.time -30))
 				to_chat(H, "<span class='notice'>You start channeling some power through the [fitting] into your body.</span>")
 				drain_stop = world.time
