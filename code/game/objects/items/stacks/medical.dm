@@ -239,13 +239,14 @@
 	. = ..()
 	if(amount == max_amount)	 //only seal full mesh packs
 		is_open = FALSE
-		icon_state = "regen_mesh_closed"
+		update_icon()
 
 
-/obj/item/stack/medical/mesh/update_icon()
+/obj/item/stack/medical/mesh/update_icon_state()
 	if(!is_open)
-		return
-	. = ..()
+		icon_state = "regen_mesh_closed"
+	else
+		return ..()
 
 /obj/item/stack/medical/mesh/heal(mob/living/M, mob/user)
 	. = ..()

@@ -28,6 +28,7 @@
 @include meta.load-css('./components/NuclearBomb.scss');
 @include meta.load-css('./components/NumberInput.scss');
 @include meta.load-css('./components/ProgressBar.scss');
+@include meta.load-css('./components/Roulette.scss');
 @include meta.load-css('./components/Section.scss');
 @include meta.load-css('./components/Table.scss');
 @include meta.load-css('./components/Tabs.scss');
@@ -40,4 +41,8 @@
   background-size: 70%;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.action_test {
+  display: inherit;
 }

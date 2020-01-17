@@ -144,10 +144,9 @@
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
 
-/obj/mecha/update_icon()
-	if (silicon_pilot && silicon_icon_state)
+/obj/mecha/update_icon_state()
+	if(silicon_pilot && silicon_icon_state)
 		icon_state = silicon_icon_state
-	. = ..()
 
 /obj/mecha/get_cell()
 	return cell
@@ -927,7 +926,7 @@
 	return
 
 /obj/mecha/proc/moved_inside(mob/living/carbon/human/H)
-	if(H && H.client && H in range(1))
+	if(H && H.client && (H in range(1)))
 		occupant = H
 		H.forceMove(src)
 		H.update_mouse_pointer()

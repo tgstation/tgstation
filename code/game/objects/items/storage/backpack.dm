@@ -204,6 +204,15 @@
 	desc = "A spacious backpack with lots of pockets, worn by Engineers of an Emergency Response Team."
 	icon_state = "ert_engineering"
 
+/obj/item/storage/backpack/ert/janitor
+	name = "emergency response team janitor backpack"
+	desc = "A spacious backpack with lots of pockets, worn by Janitors of an Emergency Response Team."
+	icon_state = "ert_janitor"
+
+/obj/item/storage/backpack/ert/clown
+	name = "emergency response team clown backpack"
+	desc = "A spacious backpack with lots of pockets, worn by Clowns of an Emergency Response Team."
+	icon_state = "ert_clown"
 /*
  * Satchel Types
  */

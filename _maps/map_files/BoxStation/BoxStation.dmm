@@ -27295,6 +27295,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bsz" = (
@@ -34683,6 +34684,7 @@
 /area/medical/medbay/central)
 "bLX" = (
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers,
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bLY" = (
@@ -49590,6 +49592,10 @@
 /obj/structure/table,
 /turf/open/floor/plasteel,
 /area/hydroponics)
+"fGg" = (
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel/white,
+/area/medical/sleeper)
 "fGF" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/bot,
@@ -52418,9 +52424,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/research{
-	abandoned = "47, 9";
 	name = "Genetics Lab";
-	req_access_txt = "47"
+	req_access_txt = "9"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -90053,7 +90058,7 @@ bAs
 bvj
 bCL
 bxO
-bDR
+fGg
 bDR
 bIk
 bJC

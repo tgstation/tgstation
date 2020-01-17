@@ -41,8 +41,9 @@
 	if(.)
 		return
 	to_chat(user, "<span class='notice'>You take down [src].</span>")
-	victim.forceMove(drop_location())
-	victim = null
+	if(victim)
+		victim.forceMove(drop_location())
+		victim = null
 	spear.forceMove(drop_location())
 	spear = null
 	qdel(src)

@@ -152,7 +152,7 @@
 		ReplaceLight(target, user)
 	to_chat(user, status_string())
 
-/obj/item/lightreplacer/update_icon()
+/obj/item/lightreplacer/update_icon_state()
 	icon_state = "lightreplacer[(obj_flags & EMAGGED ? 1 : 0)]"
 
 /obj/item/lightreplacer/proc/status_string()

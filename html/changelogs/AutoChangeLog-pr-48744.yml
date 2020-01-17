@@ -1,0 +1,4 @@
+author: "Paxilmaniac"
+delete-after: True
+changes: 
+  - bugfix: "many masks, mostly clown masks, are now the same height all around"

@@ -64,6 +64,7 @@ import { NtnetRelay } from './interfaces/NtnetRelay';
 import { NtosArcade } from './interfaces/NtosArcade';
 import { NtosConfiguration } from './interfaces/NtosConfiguration';
 import { NtosMain } from './interfaces/NtosMain';
+import { NtosNetChat } from './interfaces/NtosNetChat';
 import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
 import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
 import { NtosWrapper } from './interfaces/NtosWrapper';
@@ -78,6 +79,7 @@ import { PortablePump, PortableScrubber } from './interfaces/PortableAtmos';
 import { PowerMonitor } from './interfaces/PowerMonitor';
 import { Radio } from './interfaces/Radio';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
+import { Roulette } from './interfaces/Roulette';
 import { SatelliteControl } from './interfaces/SatelliteControl';
 import { ScannerGate } from './interfaces/ScannerGate';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
@@ -383,6 +385,12 @@ const ROUTES = {
     scrollable: true,
     theme: 'ntos',
   },
+  ntos_net_chat: {
+    component: () => NtosNetChat,
+    wrapper: () => NtosWrapper,
+    scrollable: false,
+    theme: 'ntos',
+  },
   ntos_net_downloader: {
     component: () => NtosNetDownloader,
     wrapper: () => NtosWrapper,
@@ -451,6 +459,11 @@ const ROUTES = {
   radio: {
     component: () => Radio,
     scrollable: false,
+  },
+  roulette: {
+    component: () => Roulette,
+    scrollable: false,
+    theme: 'cardtable',
   },
   rpd: {
     component: () => RapidPipeDispenser,

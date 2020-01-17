@@ -274,12 +274,12 @@ em						{font-style: normal;	font-weight: bold;}
 
 .say					{}
 .deadsay				{color: #e2c1ff}
-.binarysay				{color: #20c20e;	background-color: #000000;	display: block;}
+.binarysay				{color: #1e90ff;}
 .binarysay a			{color: #00ff00;}
 .binarysay a:active, .binarysay a:visited {color: #88ff88;}
 .radio					{color: #1ecc43;}
 .sciradio				{color: #c68cfa;}
-.comradio				{color: #5177ff;}
+.comradio				{color: #fcdf03;}
 .secradio				{color: #dd3535;}
 .medradio				{color: #57b8f0;}
 .engradio				{color: #f37746;}

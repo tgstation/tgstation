@@ -20,6 +20,11 @@
 	inherent_traits = list(TRAIT_NOHUNGER)
 	sexes = FALSE //no fetish content allowed
 	toxic_food = NONE
+	// Body temperature for ethereals is much higher then humans as they like hotter environments
+	bodytemp_normal = (BODYTEMP_NORMAL + 50)
+	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_SPREAD // about 150C
+	// Cold temperatures hurt faster as it is harder to move with out the heat energy
+	bodytemp_cold_damage_limit = (T20C - 10) // about 10c
 	var/current_color
 	var/EMPeffect = FALSE
 	var/emageffect = FALSE
@@ -30,7 +35,6 @@
 	var/static/g2 = 164
 	var/static/b2 = 149
 	//this is shit but how do i fix it? no clue.
-
 
 /datum/species/ethereal/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	.=..()
