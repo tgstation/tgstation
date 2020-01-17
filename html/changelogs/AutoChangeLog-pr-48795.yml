@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - rscadd: "Teleporter Control Console now uses tgui-next."

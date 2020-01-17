@@ -898,7 +898,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	if(target)//If we found something
 		//Do the animation to zap to it from here
-		zapstart.Beam(target, icon_state="nzcrentrs_power", time=5)
+		zapstart.Beam(target, icon_state="sm_arc", time=5)
 		var/zapdir = get_dir(zapstart, target)
 		if(zapdir)
 			. = zapdir

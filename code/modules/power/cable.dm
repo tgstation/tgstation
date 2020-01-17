@@ -580,6 +580,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 /obj/structure/cable_bridge/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
 	qdel(src)
+	return TRUE
 
 #undef UNDER_SMES
 #undef UNDER_TERMINAL

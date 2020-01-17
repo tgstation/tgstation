@@ -15,6 +15,7 @@
 
 #define MODE_INTERCOM "intercom"
 #define MODE_KEY_INTERCOM "i"
+#define MODE_TOKEN_INTERCOM ":i"
 
 #define MODE_BINARY "binary"
 #define MODE_KEY_BINARY "b"
@@ -62,6 +63,9 @@
 
 //Eavesdropping
 #define EAVESDROP_EXTRA_RANGE 1 //how much past the specified message_range does the message get starred, whispering only
+
+/// How close intercoms can be for radio code use
+#define MODE_RANGE_INTERCOM 1
 
 // A link given to ghost alice to follow bob
 #define FOLLOW_LINK(alice, bob) "<a href=?src=[REF(alice)];follow=[REF(bob)]>(F)</a>"

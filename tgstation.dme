@@ -2855,6 +2855,7 @@
 #include "code\modules\surgery\plastic_surgery.dm"
 #include "code\modules\surgery\prosthetic_replacement.dm"
 #include "code\modules\surgery\remove_embedded_object.dm"
+#include "code\modules\surgery\stomachpump.dm"
 #include "code\modules\surgery\surgery.dm"
 #include "code\modules\surgery\surgery_helpers.dm"
 #include "code\modules\surgery\surgery_step.dm"

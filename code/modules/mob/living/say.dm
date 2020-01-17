@@ -361,7 +361,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		if(message_mode == MODE_HEADSET)
 			imp.radio.talk_into(src, message, , spans, language)
 			return ITALICS | REDUCE_RANGE
-		if(message_mode == MODE_DEPARTMENT || message_mode in imp.radio.channels)
+		if(message_mode == MODE_DEPARTMENT || (message_mode in imp.radio.channels))
 			imp.radio.talk_into(src, message, message_mode, spans, language)
 			return ITALICS | REDUCE_RANGE
 
@@ -380,7 +380,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 				return ITALICS | REDUCE_RANGE
 
 		if(MODE_INTERCOM)
-			for (var/obj/item/radio/intercom/I in view(1, null))
+			for (var/obj/item/radio/intercom/I in view(MODE_RANGE_INTERCOM, null))
 				I.talk_into(src, message, , spans, language)
 			return ITALICS | REDUCE_RANGE
 

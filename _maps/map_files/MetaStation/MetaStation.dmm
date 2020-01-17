@@ -45218,14 +45218,8 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "bYc" = (
-/obj/structure/window/spawner/east,
-/obj/structure/window/spawner/north,
-/obj/structure/window/spawner,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/ausbushes/palebush,
-/turf/open/floor/grass,
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
 /area/hallway/primary/central)
 "bYd" = (
 /obj/machinery/door/firedoor,
@@ -71689,15 +71683,6 @@
 /obj/structure/grille/broken,
 /turf/open/space/basic,
 /area/space/nearstation)
-"dVQ" = (
-/obj/structure/window/spawner/west,
-/obj/structure/window/spawner/north,
-/obj/structure/window/spawner,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fernybush,
-/turf/open/floor/grass,
-/area/hallway/primary/central)
 "dVT" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -71847,17 +71832,6 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
-"eza" = (
-/obj/structure/window/spawner/west,
-/obj/structure/window/spawner/east,
-/obj/structure/window/spawner/north,
-/obj/structure/window/spawner,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/stalkybush,
-/turf/open/floor/grass,
-/area/hallway/primary/central)
 "eAa" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -76337,10 +76311,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1;
-	external_pressure_bound = 140;
-	name = "server vent";
-	pressure_checks = 0
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -108646,7 +108617,7 @@ sKL
 bUb
 bVb
 bWG
-dVQ
+bSS
 bSS
 bSS
 bSS
@@ -109417,7 +109388,7 @@ jZS
 bUd
 bVq
 bWJ
-eza
+bYc
 bZs
 aWf
 ccr
