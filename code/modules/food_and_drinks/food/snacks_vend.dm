@@ -19,7 +19,7 @@
 	icon_state = "bronx"
 	item_state = "candy"
 	trash = /obj/item/trash/candy
-	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2, /datum/reagent/toxin/lipolicide = 2, /datum/reagent/yuck = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/sugar = 1, /datum/reagent/toxin/lipolicide = 2, /datum/reagent/yuck = 5)
 	junkiness = 10
 	filling_color = "#e4d4b7"
 	tastes = list("candy" = 5, "weight loss" = 4, "insect larva" = 1)
