@@ -101,3 +101,14 @@
 		log_mapping("[src] at [AREACOORD(src)] had an invalid firing pin type: [initial_firing_pin].")
 	else
 		pin = new initial_firing_pin(src)
+
+/obj/item/firing_pin/mech
+	name = "electronic mech firing pin"
+	desc = "A small authentication device, to be inserted into a firearm receiver to allow operation. NT safety regulations require all new designs to incorporate one. This one is specifically designed to be installed into mech and exosuit weaponry only."
+
+/obj/item/firing_pin/mech/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
+	if(!proximity_flag)
+		return
+	if(istype(target, /obj/item/gun))
+		to_chat(user, "<span class='warning'>This firing pin is incompatible with guns and only be installed into mech weaponry!</span>")
