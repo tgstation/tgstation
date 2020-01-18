@@ -222,6 +222,17 @@
 
 ///Can the mover object pass this atom, while heading for the target turf
 /atom/proc/CanPass(atom/movable/mover, turf/target)
+	SHOULD_CALL_PARENT(TRUE)
+	if(mover.movement_type & UNSTOPPABLE)
+		return TRUE
+	. = CanAllowThrough(mover, target)
+	// This is cheaper than calling the proc every time since most things dont override CanPassThrough
+	if(!mover.generic_canpass)
+		return mover.CanPassThrough(src, target, .)
+
+/// Returns true or false to allow the mover to move through src
+/atom/proc/CanAllowThrough(atom/movable/mover, turf/target)
+	SHOULD_CALL_PARENT(TRUE)
 	return !density
 
 /**
@@ -1158,8 +1169,7 @@
 		target.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
 
 /atom/movable/proc/add_filter(name,priority,list/params)
-	if(!filter_data)
-		filter_data = list()
+	LAZYINITLIST(filter_data)
 	var/list/p = params.Copy()
 	p["priority"] = priority
 	filter_data[name] = p
@@ -1167,7 +1177,7 @@
 
 /atom/movable/proc/update_filters()
 	filters = null
-	sortTim(filter_data,associative = TRUE)
+	filter_data = sortTim(filter_data, /proc/cmp_filter_data_priority, TRUE)
 	for(var/f in filter_data)
 		var/list/data = filter_data[f]
 		var/list/arguments = data.Copy()

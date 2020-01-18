@@ -117,6 +117,7 @@ There is no point for a testament, but maybe a confession is appropriate. I've n
 	mob_name = "Syndicate engineer"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
+
 	short_desc = "Syndicate engineer, You have been charged by your superiors to repair a derelict station"
 	flavour_text = "You must ensure that the station can support human life. You're pretty sure nobody will disturb you here, yet you can't shake the feeling this job will be like no other."
 	important_info = "Leaving the station is forbidden"

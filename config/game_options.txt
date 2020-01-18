@@ -364,9 +364,9 @@ RANDOM_LAWS corporate
 ## Quirky laws. Shouldn't cause too much harm
 RANDOM_LAWS hippocratic
 RANDOM_LAWS maintain
-RANDOM_LAWS drone
-RANDOM_LAWS liveandletlive
-RANDOM_LAWS peacekeeper
+#RANDOM_LAWS drone
+#RANDOM_LAWS liveandletlive
+#RANDOM_LAWS peacekeeper
 RANDOM_LAWS reporter
 #RANDOM_LAWS hulkamania
 

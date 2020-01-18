@@ -16,7 +16,7 @@
 "ap" = (/turf/closed/wall/rust,/area/ruin/has_grav/prototype/chemistry)
 "aq" = (/obj/machinery/atmospherics/components/unary/outlet_injector{icon_state = "inje_map-2"; dir = 1},/turf/open/floor/plating/airless,/area/ruin/has_grav/prototype/engineering)
 "ar" = (/obj/effect/decal/cleanable/dirt,/turf/closed/wall,/area/ruin/has_grav/prototype/nhallway)
-"as" = (/turf/open/floor/plasteel/airless,/area/ruin/has_grav/prototype/chemistry)
+"as" = (/obj/item/stock_parts/manipulator,/obj/item/stock_parts/manipulator,/obj/item/stock_parts/matter_bin,/obj/item/stock_parts/matter_bin,/obj/item/stock_parts/micro_laser,/obj/item/stock_parts/scanning_module,/obj/structure/closet/crate/science,/obj/item/stock_parts/matter_bin,/obj/item/stock_parts/matter_bin,/obj/item/stock_parts/matter_bin,/obj/item/stock_parts/micro_laser,/obj/item/stock_parts/scanning_module,/turf/open/floor/plasteel/airless,/area/ruin/has_grav/prototype/chemistry)
 "at" = (/obj/effect/decal/cleanable/molten_object/large,/turf/open/floor/plating/airless,/area/ruin/has_grav/prototype/chemistry)
 "au" = (/turf/template_noop,/area/ruin/has_grav/prototype/chemistry)
 "av" = (/obj/item/stack/tile/carpet/green/fifty,/turf/template_noop,/area/space)
@@ -106,7 +106,7 @@
 "cb" = (/obj/structure/lattice,/obj/effect/decal/cleanable/glass,/turf/template_noop,/area/ruin/has_grav/prototype/garden)
 "cc" = (/obj/structure/lattice,/obj/structure/girder/displaced,/turf/template_noop,/area/ruin/has_grav/prototype/garden)
 "cd" = (/obj/structure/cable,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plating/airless,/area/ruin/has_grav/prototype/garden)
-"ce" = (/turf/open/floor/plating/airless{icon_state = "platingdmg1"},/area/ruin/has_grav/prototype/nhallway)
+"ce" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/item/stack/cable_coil/cut{icon_state = "pipecleaner1"},/obj/machinery/portable_atmospherics/canister/air,/turf/open/floor/plasteel/airless,/area/ruin/has_grav/prototype/nhallway)
 "cf" = (/obj/structure/closet/crate/hydroponics,/obj/item/seeds/tomato,/obj/item/seeds/eggplant,/obj/item/seeds/orange,/obj/item/seeds/sunflower,/obj/item/circuitboard/machine/hydroponics,/obj/item/circuitboard/machine/hydroponics,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/item/seeds/glowshroom,/turf/open/floor/plating/airless,/area/ruin/has_grav/prototype/garden)
 "cg" = (/obj/structure/lattice,/obj/structure/table/wood,/turf/template_noop,/area/ruin/has_grav/prototype/shallway)
 "ch" = (/obj/structure/bed,/obj/item/bedsheet/green,/turf/open/floor/plating/airless,/area/ruin/has_grav/prototype/shallway)
@@ -138,7 +138,7 @@
 "cH" = (/obj/structure/lattice,/turf/template_noop,/area/ruin/has_grav/prototype/engineering)
 "cI" = (/obj/structure/dresser,/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{dir = 5},/obj/machinery/light/small,/turf/open/floor/plating/airless,/area/ruin/has_grav/prototype/shallway)
 "cJ" = (/obj/structure/lattice,/obj/item/stack/tile/grass{amount = 50},/obj/structure/closet/crate/hydroponics,/obj/item/reagent_containers/glass/bucket,/obj/item/shovel/spade,/turf/template_noop,/area/ruin/has_grav/prototype/garden)
-"cK" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/item/stack/cable_coil/cut{icon_state = "pipecleaner1"},/turf/open/floor/plasteel/airless,/area/ruin/has_grav/prototype/nhallway)
+"cK" = (/turf/open/floor/plasteel/airless,/turf/open/floor/plating/airless{icon_state = "platingdmg2"},/area/ruin/has_grav/prototype/nhallway)
 "cL" = (/obj/item/stack/tile/plasteel,/turf/template_noop,/area/ruin/has_grav/prototype/engineering)
 "cM" = (/obj/item/stack/cable_coil/cut{icon_state = "pipecleaner1"},/obj/machinery/atmospherics/components/unary/vent_scrubber,/turf/open/floor/plating/airless,/area/ruin/has_grav/prototype/nhallway)
 "cN" = (/turf/closed/wall,/area/ruin/has_grav/prototype/shallway)
@@ -201,7 +201,7 @@
 "dS" = (/obj/effect/turf_decal/stripes/line{dir = 6},/obj/item/stack/sheet/rglass{amount = 50},/obj/item/stack/sheet/rglass{amount = 50},/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/glass/fifty,/obj/item/stack/sheet/glass/fifty,/obj/item/stack/sheet/plasteel{amount = 10},/obj/structure/closet,/turf/open/floor/plating/airless,/area/ruin/has_grav/prototype/engineering)
 "dT" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/closed/wall/r_wall,/area/ruin/has_grav/prototype/Captain)
 "dU" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating/airless,/area/ruin/has_grav/prototype/shallway)
-"dV" = (/obj/effect/decal/cleanable/glass,/obj/machinery/atmospherics/components/unary/vent_pump{icon_state = "vent_map-2"; dir = 1},/obj/item/flashlight/glowstick/cyan,/turf/open/floor/plating/airless{icon_state = "damaged1"},/area/ruin/has_grav/prototype/shallway)
+"dV" = (/obj/machinery/iv_drip,/turf/template_noop,/area/ruin/has_grav/prototype/chemistry)
 "dW" = (/turf/open/floor/plating/airless{icon_state = "platingdmg3"},/area/ruin/has_grav/prototype/shallway)
 "dX" = (/obj/structure/lattice,/obj/structure/grille/broken,/turf/template_noop,/area/ruin/has_grav/prototype/engineering)
 "dY" = (/obj/effect/turf_decal/stripes/line{dir = 4},/obj/effect/turf_decal/stripes/line{dir = 6},/obj/structure/extinguisher_cabinet{dir = 4; pixel_x = 24},/obj/item/pipe_dispenser,/obj/structure/rack,/turf/open/floor/plating/airless,/area/ruin/has_grav/prototype/engineering)
@@ -228,7 +228,7 @@
 "et" = (/obj/machinery/portable_atmospherics/pump,/turf/open/floor/plating/airless,/area/ruin/has_grav/prototype/engineering)
 "eu" = (/obj/effect/turf_decal/stripes/line,/obj/item/stack/tile/plasteel,/obj/effect/decal/cleanable/glass,/obj/structure/frame/computer{anchored = 1; dir = 1},/turf/open/floor/plating/airless,/area/ruin/has_grav/prototype/engineering)
 "ev" = (/obj/machinery/portable_atmospherics/scrubber,/turf/template_noop,/area/space)
-"ew" = (/turf/open/floor/plating/airless{icon_state = "platingdmg1"},/obj/structure/cable,/obj/machinery/atmospherics/pipe/manifold/supply/hidden,/turf/open/floor/plating/airless{icon_state = "platingdmg2"},/area/ruin/has_grav/prototype/shallway)
+"ew" = (/obj/effect/decal/cleanable/glass,/obj/machinery/atmospherics/components/unary/vent_pump{icon_state = "vent_map-2"; dir = 1},/obj/item/flashlight/glowstick/cyan,/turf/open/floor/plasteel/airless,/area/ruin/has_grav/prototype/shallway)
 "ex" = (/obj/machinery/door/airlock/command{name = "Captain's Office"; req_access_txt = "20"},/obj/structure/cable,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/door/firedoor,/turf/open/floor/wood/airless,/area/ruin/has_grav/prototype/Captain)
 "ey" = (/obj/machinery/door/airlock/engineering,/obj/structure/cable,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/door/firedoor,/turf/open/floor/plasteel/airless,/area/ruin/has_grav/prototype/engineering)
 "ez" = (/obj/machinery/portable_atmospherics/canister/toxins,/turf/open/floor/plating/airless,/area/ruin/has_grav/prototype/chemistry)
@@ -247,7 +247,7 @@
 "eM" = (/obj/item/shard{icon_state = "medium"},/obj/machinery/atmospherics/components/unary/vent_scrubber{icon_state = "scrub_map-2"; dir = 1},/turf/open/floor/plasteel/airless,/area/ruin/has_grav/prototype/shallway)
 "eN" = (/obj/structure/cable,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plating/airless,/area/ruin/has_grav/prototype/engineering)
 "eO" = (/obj/machinery/light/small{brightness = 3; dir = 8},/turf/open/floor/plasteel/airless{icon_state = "checker"},/area/ruin/has_grav/prototype/shallway)
-"eP" = (/obj/item/circuitboard/machine/stasis,/obj/item/circuitboard/machine/clonepod,/obj/item/circuitboard/machine/clonescanner,/obj/item/circuitboard/machine/clonescanner,/obj/structure/closet/crate/secure/science,/turf/template_noop,/area/ruin/has_grav/prototype/shallway)
+"eP" = (/turf/open/floor/plating/airless{icon_state = "platingdmg1"},/obj/structure/cable,/obj/machinery/atmospherics/pipe/manifold/supply/hidden,/turf/open/floor/plating/airless{icon_state = "platingdmg2"},/area/ruin/has_grav/prototype/shallway)
 "eQ" = (/obj/structure/cable,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/open/floor/wood/airless,/area/ruin/has_grav/prototype/Captain)
 "eR" = (/obj/structure/cable,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/turf/open/floor/wood/airless,/area/ruin/has_grav/prototype/Captain)
 "eS" = (/obj/structure/girder/reinforced,/turf/open/floor/plating/airless,/area/ruin/has_grav/prototype/Captain)
@@ -264,14 +264,14 @@
 "fd" = (/obj/structure/window/plasma/reinforced/spawner,/obj/structure/window/plasma/reinforced/spawner{icon_state = "plasmarwindow"; dir = 4},/obj/machinery/portable_atmospherics/canister/air,/turf/open/floor/engine/air,/area/ruin/has_grav/prototype/engineering)
 "fe" = (/obj/structure/cable,/obj/machinery/atmospherics/components/unary/vent_scrubber{icon_state = "scrub_map-2"; dir = 1},/turf/open/floor/wood/airless,/area/ruin/has_grav/prototype/Captain)
 "ff" = (/obj/item/stack/sheet/metal,/turf/open/floor/plating/airless,/area/ruin/has_grav/prototype/shallway)
-"fg" = (/turf/open/floor/plasteel/airless/solarpanel,/turf/template_noop,/area/space/nearstation)
+"fg" = (/obj/machinery/power/solar,/turf/open/floor/plasteel/airless/solarpanel,/area/space/nearstation)
 "fh" = (/obj/structure/closet/wardrobe/pjs,/obj/machinery/airalarm/unlocked{dir = 4; icon_state = "alarm0"; pixel_x = -24},/turf/open/floor/wood/airless,/area/ruin/has_grav/prototype/Captain)
 "fi" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/structure/door_assembly/door_assembly_public,/turf/open/floor/plasteel/airless,/area/ruin/has_grav/prototype/shallway)
 "fj" = (/obj/item/stack/tile/plasteel,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/item/tank/internals/oxygen,/turf/open/floor/plating/airless,/area/ruin/has_grav/prototype/engineering)
 "fk" = (/obj/structure/cable,/obj/machinery/firealarm{dir = 1; pixel_y = -24},/turf/open/floor/wood/airless,/area/ruin/has_grav/prototype/Captain)
 "fl" = (/turf/open/space/basic,/turf/closed/wall/mineral/plastitanium/interior{icon_state = "d-nw"},/turf/closed/wall/mineral/plastitanium/interior{icon_state = "d-nw-0"},/area/ruin/space/has_grav/powered)
-"fm" = (/obj/item/stock_parts/manipulator,/obj/item/stock_parts/manipulator,/obj/item/stock_parts/matter_bin,/obj/item/stock_parts/matter_bin,/obj/item/stock_parts/micro_laser,/obj/item/stock_parts/scanning_module,/obj/structure/closet/crate/science,/obj/item/stock_parts/matter_bin,/obj/item/stock_parts/matter_bin,/obj/item/stock_parts/matter_bin,/obj/item/stock_parts/micro_laser,/obj/item/stock_parts/scanning_module,/turf/open/floor/plasteel/airless,/area/ruin/has_grav/prototype/shallway)
-"fn" = (/turf/open/floor/plasteel/airless/solarpanel,/obj/machinery/power/solar,/turf/template_noop,/area/space/nearstation)
+"fm" = (/turf/open/floor/plasteel/airless,/area/ruin/has_grav/prototype/shallway)
+"fn" = (/obj/item/circuitboard/machine/stasis,/obj/item/circuitboard/machine/clonepod,/obj/item/circuitboard/machine/clonescanner,/obj/structure/closet/crate/secure/science,/obj/item/circuitboard/computer/cloning,/turf/template_noop,/area/ruin/has_grav/prototype/shallway)
 "fo" = (/turf/closed/wall/r_wall/rust,/area/ruin/has_grav/prototype/Captain)
 "fp" = (/obj/structure/lattice/catwalk,/obj/structure/cable,/turf/template_noop,/area/space/nearstation)
 "fq" = (/obj/structure/lattice/catwalk,/turf/template_noop,/area/space/nearstation)
@@ -287,6 +287,7 @@
 "fA" = (/obj/structure/table/wood,/obj/item/paper_bin,/obj/item/pen/red,/turf/open/floor/pod/dark,/area/ruin/space/has_grav/powered)
 "fB" = (/obj/effect/mob_spawn/human/syndicate_engineer,/obj/item/flashlight/flare,/turf/open/floor/pod/dark,/area/ruin/space/has_grav/powered)
 "fC" = (/turf/open/space/basic,/turf/closed/wall/mineral/plastitanium/interior{icon_state = "d-sw"},/turf/closed/wall/mineral/plastitanium/interior{icon_state = "d-sw-0"},/area/ruin/space/has_grav/powered)
+"fD" = (/turf/open/floor/plasteel/airless/solarpanel,/obj/machinery/power/solar,/turf/template_noop,/area/space/nearstation)
 
 (1,1,1) = {"
 aaaaaaafafafafafafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -296,26 +297,26 @@ aaaRasaCaHaJaeaQaRaaaaaaaaahalaXaXaXalalahahaaaa
 aaaRaTbtagaHaibRaRaaaaaaaaalbabbbcbdacaBalaaaaaa
 aaapbfaHauaHboaoafaaaaaaaXbhbibjbkblclbnalahahaa
 aaaaafaHcrauaxawafaaaaaaaXaLbpbAbDbsctbdbualaaaa
-aaaaafayaPaubvbOafaXaaaaalbwbGbxbrcuctfcbualaaaa
+aaaaafayaPdVbvbOafaXaaaaalbwbGbxbrcuctfcbualaaaa
 aaahahafbyauafaPbeaXalaAalbKbGbzbHbIbMbdbBalaaaa
 ahahafafdrbPafezeBalaEfbalbSbzbXdaaGbdbmalahahaa
 aNaOdkaWaYbYaZbTbTalbWcjalbFarcnalalalalalaaahaa
 aaaVbEbqbCcdaWcfcvcwcwcycEcCbzcDbMalbxbxbxaaaaaa
-aabJbqaVeccFcpbLcxclcKcMcebzcUcVcZalbxbxbxaaaaaa
+aabJbqaVeccFcpbLcxclcecMcKbzcUcVcZalbxbxbxaaaaaa
 bNbUbqcSbqbqbqcJbTaFcNcTdcalddaldbcqahahaaaaaaaa
 aaaZcadgcbaObqbEcccgchcBchaldjalczcqahaaaaavaaaa
 aabTcAdncpaWcdaMaVdcaIaKaSalcOalcRcqcqdqdqdqaaaa
 ahahdAdBdAaFdDdKcNaUckcIcQaleaaleNcscYdedfdNdqaa
 aafodOdRegdTbgcPenenfieeehekeqfjeAdmdhdpdsdudGdq
 aadleieIdMdAdDbQdJdoeLeMdLdzcGbVeNdvdtdwdxdycidq
-aadleleQeRexcmcoeVcXewdIeZeydZcHcLefebfdemesdCcq
-aadlejfeeJeSbZdVeUdEdFdWeocqcsetdHcHeDeEeFeGdYdq
+aadleleQeRexcmcoeVcXePdIeZeydZcHcLefebfdemesdCcq
+aadlejfeeJeSbZeweUdEdFdWeocqcsetdHcHeDeEeFeGdYdq
 aadAfhfkdidAfmffdEdPdQeraFahahcscGcGeueCeddSdqaa
-ahahdAfodAeHeKeKcNdUePcNahahahcsepcGdXcWeYdqahah
+ahahdAfodAeHeKeKcNdUfncNahahahcsepcGdXcWeYdqahah
 aaahahahaaaFeOeTaFaaaaaaaaaaevaaaaaaaaaaaqahahaa
-aaaafafaaaaFeWeXaFaafgfgaafnfgaaaaaaaaaaaaaaaaaa
-aaaafpfpfpfqfqfpfpfpfqfqfqfqfpfrfnaaaaaaaaaaaaaa
-aaaafnfaaaaaaaaaaaaafnfgaafgfgaaaaaaaaaaaaaaaaaa
+aaaafafaaaaFeWeXaFaafafaaafgfaaaaaaaaaaaaaaaaaaa
+aaaafpfpfpfqfqfpfpfpfqfqfqfqfpfrfgaaaaaaaaaaaaaa
+aaaafDfaaaaaaaaaaaaafgfaaafafaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaflfsftfsfufvfw
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafufxfyfyfzfuaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafufAfyfyfBfuaa

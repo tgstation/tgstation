@@ -425,6 +425,8 @@ Auto Patrol: []"},
 			target = C
 			oldtarget_name = C.name
 			speak("Level [threatlevel] infraction alert!")
+			if(declare_arrests) //FULPSTATION IMPROVED RECORD SECURITY PR -Surrealistik Jan 2020
+				speak("Level [threatlevel] scumbag <b>[C]</b> detected at [get_area(src)]. Attempting to [arrest_type ? "detain" : "arrest"]", radio_channel)//FULPSTATION IMPROVED RECORD SECURITY PR -Surrealistik Jan 2020
 			if(ranged)
 				playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
 			else

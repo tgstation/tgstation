@@ -497,12 +497,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "liz o' nine tails"
 	desc = "A whip fashioned from the severed tails of lizards."
 	icon_state = "tailwhip"
+	item_state = "tailwhip"
 	item_flags = NONE
 
 /obj/item/melee/chainofcommand/tailwhip/kitty
 	name = "cat o' nine tails"
 	desc = "A whip fashioned from the severed tails of cats."
 	icon_state = "catwhip"
+	item_state = "catwhip"
 
 /obj/item/melee/skateboard
 	name = "improvised skateboard"

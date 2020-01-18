@@ -24,10 +24,10 @@
 
 	// Heart
 	var/obj/item/organ/heart/H = new
-		H.Insert(owner.current)
+	H.Insert(owner.current)
 	// Eyes
 	var/obj/item/organ/eyes/E = new
-		E.Insert(owner.current)
+	E.Insert(owner.current)
 
 
 
