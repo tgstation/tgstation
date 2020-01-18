@@ -44526,7 +44526,9 @@
 "csy" = (
 /obj/structure/table,
 /obj/item/weldingtool,
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "csD" = (
@@ -49684,10 +49686,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
-"gFq" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space/nearstation)
 "gGJ" = (
 /obj/machinery/camera/autoname{
 	icon_state = "camera";
@@ -50089,6 +50087,11 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
+"jdH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/lootdrop/maintenance/four,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "jiK" = (
 /obj/structure/closet/toolcloset,
 /obj/effect/turf_decal/tile/yellow,
@@ -51498,12 +51501,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/storage/primary)
-"pqe" = (
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "pqP" = (
 /obj/machinery/light{
 	dir = 4
@@ -91226,7 +91223,7 @@ aaa
 aaf
 aaa
 csn
-csD
+cOe
 csX
 ctg
 cua
@@ -92504,8 +92501,8 @@ cmd
 cmd
 cmd
 cmd
+cmd
 lOY
-gFq
 aaa
 aaa
 aaf
@@ -92761,9 +92758,9 @@ nEk
 djq
 bip
 bip
+bip
 hTU
-aaf
-aaa
+aoV
 aaa
 aaf
 aaa
@@ -93018,8 +93015,8 @@ bjL
 bjL
 bjL
 cmi
+bip
 hTU
-aaa
 aaa
 aaa
 aaa
@@ -93275,8 +93272,8 @@ bjL
 bjL
 cmi
 xYA
+bip
 vjm
-aaa
 aaa
 aaa
 aaa
@@ -93532,8 +93529,8 @@ bjL
 cmi
 xYA
 xYA
+bip
 jtt
-aaa
 aaa
 aaa
 aaa
@@ -93789,9 +93786,9 @@ cln
 cmh
 cnd
 cnE
+bip
 jtt
 aoV
-aaa
 aaa
 aaa
 aaa
@@ -94046,8 +94043,8 @@ cAe
 cmj
 cne
 xYA
+bip
 jtt
-aaa
 aaa
 aaa
 aaa
@@ -94303,8 +94300,8 @@ bjL
 lwc
 fPm
 lwc
+bip
 jtt
-aaa
 aaa
 aaa
 aaa
@@ -94560,8 +94557,8 @@ cfn
 cgd
 cng
 bip
+bip
 jtt
-aaa
 aaa
 aaa
 aaa
@@ -94817,8 +94814,8 @@ bip
 mSR
 cnf
 bip
+bip
 jtt
-aaa
 aaa
 aaa
 aaa
@@ -95074,8 +95071,8 @@ clp
 mSR
 cnf
 bip
+bip
 jtt
-aaa
 aaa
 aaa
 aaa
@@ -95331,8 +95328,8 @@ bip
 mSR
 lZN
 bip
+bip
 jtt
-aaa
 aaa
 aaa
 aaa
@@ -95588,8 +95585,8 @@ bip
 mSR
 cnf
 bip
+bip
 jtt
-aaa
 aaa
 aaa
 aaa
@@ -95845,8 +95842,8 @@ bip
 mSR
 cnf
 bip
+bip
 jtt
-aaa
 aaa
 aaa
 aaa
@@ -96102,8 +96099,8 @@ bip
 mSR
 efK
 bip
+bip
 jtt
-aaa
 aaa
 aaa
 aaa
@@ -96359,8 +96356,8 @@ bip
 mSR
 bip
 bip
+bip
 jtt
-aaa
 aaa
 aaa
 aaa
@@ -96616,8 +96613,8 @@ wBC
 mSR
 bip
 bip
+bip
 jtt
-aaa
 aaa
 aaa
 aaa
@@ -96873,8 +96870,8 @@ bip
 mSR
 bip
 bip
+bip
 jtt
-aaa
 aaa
 aaa
 aaa
@@ -97130,8 +97127,8 @@ bip
 pxd
 bip
 bip
+bip
 jtt
-aaa
 aaa
 aaa
 aaa
@@ -97387,8 +97384,8 @@ bip
 bip
 bip
 bip
+bip
 jtt
-aaa
 aaa
 aaa
 aaa
@@ -97644,8 +97641,8 @@ bip
 bip
 bip
 bip
+bip
 jtt
-aaa
 aaa
 aaa
 aaa
@@ -97901,8 +97898,8 @@ bip
 bip
 bip
 bip
+bip
 jtt
-aaa
 aaa
 aaa
 aaa
@@ -98158,13 +98155,13 @@ bip
 bip
 bip
 iKL
+bip
 mtK
 cNW
 cNW
 cOT
 cOT
 aag
-aaa
 aaa
 aaa
 aaa
@@ -98415,13 +98412,13 @@ bip
 bip
 bip
 bip
+bip
 mtK
-cwy
+jdH
 keQ
 cOe
 cqu
 aag
-aaa
 aaa
 aaa
 aaa
@@ -98672,13 +98669,13 @@ bip
 bip
 bip
 bip
+bip
 mtK
-cmn
-keQ
+cNW
+cNW
 cqu
 cOT
 aag
-aaa
 aaa
 aaa
 aaa
@@ -98929,12 +98926,12 @@ bip
 bip
 oZc
 bip
+bip
 mtK
-cmn
+cwy
 cmn
 cmn
 cOT
-aaa
 aaa
 aaa
 aaa
@@ -99187,11 +99184,11 @@ mtK
 mtK
 mtK
 mtK
+mtK
 cmn
 cmn
 cmn
 cOT
-aaa
 aaa
 aaa
 aaa
@@ -99442,13 +99439,13 @@ cko
 clq
 cmq
 jsw
+jsw
 cri
 cTI
 cmn
 cBT
 cBU
 cOT
-aaa
 aaa
 aaa
 aaa
@@ -99699,13 +99696,13 @@ cNW
 cOx
 cBL
 cOe
+cOe
 cvO
 cNW
 cNW
 cNW
 cNW
 hnW
-aaa
 aaa
 aaa
 aaa
@@ -99956,7 +99953,7 @@ cNW
 cNW
 cNW
 cNW
-pqe
+cOe
 csy
 cko
 cAf
