@@ -49,7 +49,7 @@ SUBSYSTEM_DEF(profiler)
 #else
 	var/timer = TICK_USAGE_REAL
 	var/current_profile_data = world.Profile(PROFILE_REFRESH,format="json")
-	cost_fetch = MC_AVERAGE(cost_fetch, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+	fetch_cost = MC_AVERAGE(fetch_cost, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 	if(!length(current_profile_data)) //Would be nice to have explicit proc to check this
 		stack_trace("Warning, profiling stopped manually before dump.")
 	var/json_file = file("[GLOB.log_directory]/[PROFILER_FILENAME]")
@@ -57,5 +57,5 @@ SUBSYSTEM_DEF(profiler)
 		fdel(json_file)
 	timer = TICK_USAGE_REAL
 	WRITE_FILE(json_file, current_profile_data)
-	cost_write = MC_AVERAGE(cost_write, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+	write_cost = MC_AVERAGE(write_cost, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 #endif
