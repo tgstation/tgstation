@@ -5,6 +5,13 @@ SUBSYSTEM_DEF(profiler)
 	init_order = INIT_ORDER_PROFILER
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 	wait = 600
+	var/fetch_cost = 0
+	var/write_cost = 0
+
+/datum/controller/subsystem/profiler/stat_entry(msg)
+	msg += "F:round(fetch_cost,1)"
+	msg += "W:round(write_cost,1)"
+	..(msg)
 
 /datum/controller/subsystem/profiler/Initialize()
 	if(CONFIG_GET(flag/auto_profile))
@@ -40,11 +47,15 @@ SUBSYSTEM_DEF(profiler)
 	stack_trace("Auto profiling unsupported on this byond version")
 	CONFIG_SET(flag/auto_profile, FALSE)
 #else
+	var/timer = TICK_USAGE_REAL
 	var/current_profile_data = world.Profile(PROFILE_REFRESH,format="json")
+	cost_fetch = MC_AVERAGE(cost_fetch, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 	if(!length(current_profile_data)) //Would be nice to have explicit proc to check this
 		stack_trace("Warning, profiling stopped manually before dump.")
 	var/json_file = file("[GLOB.log_directory]/[PROFILER_FILENAME]")
 	if(fexists(json_file))
 		fdel(json_file)
+	timer = TICK_USAGE_REAL
 	WRITE_FILE(json_file, current_profile_data)
+	cost_write = MC_AVERAGE(cost_write, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 #endif
