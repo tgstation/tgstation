@@ -14,16 +14,24 @@
 	foodtype = JUNKFOOD | SUGAR
 
 /obj/item/reagent_containers/food/snacks/candy/bronx
-	name = "south bronx paradise"
-	desc = "Lose weight, guaranteed! Wait, the package actally says 'south bronx parasite'..."
+	name = "South Bronx Paradise bar"
+	desc = "Lose weight, guaranteed! Wait, the package actually says 'South Bronx Parasite'..."
 	icon_state = "bronx"
 	item_state = "candy"
 	trash = /obj/item/trash/candy
-	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/sugar = 1, /datum/reagent/toxin/lipolicide = 2, /datum/reagent/yuck = 5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2, /datum/reagent/yuck = 1)
 	junkiness = 10
+	bitesize = 10
 	filling_color = "#e4d4b7"
 	tastes = list("candy" = 5, "weight loss" = 4, "insect larva" = 1)
 	foodtype = JUNKFOOD | RAW | GROSS
+
+/obj/item/reagent_containers/food/snacks/candy/bronx/On_Consume(mob/living/eater)
+	. = ..()
+	if(ishuman(eater))
+		var/mob/living/carbon/human/carl = eater
+		var/datum/disease/P = new /datum/disease/parasite()
+		carl.ForceContractDisease(P, FALSE, TRUE)
 
 /obj/item/reagent_containers/food/snacks/sosjerky
 	name = "\improper Scaredy's Private Reserve Beef Jerky"
