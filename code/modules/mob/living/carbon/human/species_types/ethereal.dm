@@ -69,7 +69,7 @@
 		if(!emageffect)
 			current_color = rgb(r2 + ((r1-r2)*healthpercent), g2 + ((g1-g2)*healthpercent), b2 + ((b1-b2)*healthpercent))
 		H.set_light(1 + (2 * healthpercent), 1 + (1 * healthpercent), current_color)
-		fixed_mut_color = copytext(current_color, 2)
+		fixed_mut_color = copytext_char(current_color, 2)
 	else
 		H.set_light(0)
 		fixed_mut_color = rgb(128,128,128)

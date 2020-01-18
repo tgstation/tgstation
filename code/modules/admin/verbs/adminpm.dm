@@ -40,7 +40,7 @@
 		return
 	var/client/C
 	if(istext(whom))
-		if(cmptext(copytext(whom,1,2),"@"))
+		if(whom[1] == "@")
 			whom = findStealthKey(whom)
 		C = GLOB.directory[whom]
 	else if(istype(whom, /client))
@@ -75,7 +75,7 @@
 	var/client/recipient
 	var/external = 0
 	if(istext(whom))
-		if(cmptext(copytext(whom,1,2),"@"))
+		if(whom[1] == "@")
 			whom = findStealthKey(whom)
 		if(whom == "IRCKEY")
 			external = 1
@@ -132,7 +132,7 @@
 
 	//clean the message if it's not sent by a high-rank admin
 	if(!check_rights(R_SERVER|R_DEBUG,0)||external)//no sending html to the poor bots
-		msg = trim(sanitize(copytext(msg,1,MAX_MESSAGE_LEN)))
+		msg = trim(sanitize(msg), MAX_MESSAGE_LEN)
 		if(!msg)
 			return
 
@@ -177,7 +177,7 @@
 				if(!recipient.current_ticket)
 					new /datum/admin_help(msg, recipient, TRUE)
 					already_logged = TRUE
-					SSblackbox.LogAhelp(recipient.current_ticket.id, "Ticket Opened", msg, null, recipient.ckey)
+					SSblackbox.LogAhelp(recipient.current_ticket.id, "Ticket Opened", msg, recipient.ckey, src.ckey)
 
 				to_chat(recipient, "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
 				to_chat(recipient, "<span class='adminsay'>Admin PM from-<b>[key_name(src, recipient, 0)]</b>: <span class='linkify'>[msg]</span></span>")
@@ -293,7 +293,7 @@
 	if(!stealthkey)
 		stealthkey = GenTgsStealthKey()
 
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
 	if(!msg)
 		return "Error: No message"
 

@@ -278,8 +278,8 @@ Versioning
 	ticket = sanitizeSQL(ticket)
 	action = sanitizeSQL(action)
 	message = sanitizeSQL(message)
-	recipient = recipient ? "'sanitizeSQL(recipient)'" : "NULL"
-	sender = sender ? "'sanitizeSQL(sender)'" : "NULL"
+	recipient = recipient ? "'[sanitizeSQL(recipient)]'" : "NULL"
+	sender = sender ? "'[sanitizeSQL(sender)]'" : "NULL"
 	var/server_ip = sanitizeSQL(world.internet_address)
 	var/server_port = sanitizeSQL(world.port)
 	var/round_id = sanitizeSQL(GLOB.round_id)
