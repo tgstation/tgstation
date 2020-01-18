@@ -116,6 +116,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Security Maintenance"
 	icon_state = "maint_sec"
 
+/area/maintenance/department/security/upper
+	name = "Upper Security Maintenance"
+
 /area/maintenance/department/security/brig
 	name = "Brig Maintenance"
 	icon_state = "maint_brig"
@@ -164,6 +167,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Aft Maintenance"
 	icon_state = "amaint"
 
+/area/maintenance/aft/upper
+	name = "Upper Aft Maintenance"
+
 /area/maintenance/aft/secondary
 	name = "Aft Maintenance"
 	icon_state = "amaint_2"
@@ -190,6 +196,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/starboard
 	name = "Starboard Maintenance"
 	icon_state = "smaint"
+
+/area/maintenance/starboard/upper
+	name = "Upper Starboard Maintenance"
 
 /area/maintenance/starboard/central
 	name = "Central Starboard Maintenance"

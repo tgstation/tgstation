@@ -345,12 +345,10 @@
 
 	//Changes the exosuit name.
 	if(href_list["change_name"])
-		var/userinput = input(usr, "Choose a new exosuit name.", "Rename exosuit", "") as null|text
-		if(usr != occupant || usr.incapacitated())
+		var/userinput = stripped_input(usr, "Choose a new exosuit name.", "Rename exosuit", "", MAX_NAME_LEN)
+		if(!userinput || usr != occupant || usr.incapacitated())
 			return
-		if(!isnull(userinput))
-			var/newname = copytext(sanitize_name(userinput),1,MAX_NAME_LEN)
-			name = newname ? newname : initial(name)
+		name = userinput
 		return
 
 	//Toggles ID upload.

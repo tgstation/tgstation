@@ -506,9 +506,8 @@
 	suffix = "donut"
 	name = "arrival shuttle (Donut)"
 
-/datum/map_template/shuttle/elevator/donut
-	prefix = "_maps/shuttles/elevator_"
-	suffix = "donut"
+/datum/map_template/shuttle/donut_elevator
+	suffix = "elevator_donut"
 	name = "elevator shuttle (Donut)"
 
 /datum/map_template/shuttle/infiltrator/basic

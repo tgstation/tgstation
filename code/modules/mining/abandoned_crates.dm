@@ -29,14 +29,17 @@
 		var/input = input(usr, "Enter [codelen] digits. All digits must be unique.", "Deca-Code Lock", "") as text|null
 		if(user.canUseTopic(src, BE_CLOSE))
 			var/list/sanitised = list()
-			var/sanitycheck = 1
-			for(var/i=1,i<=length(input),i++) //put the guess into a list
-				sanitised += text2num(copytext(input,i,i+1))
-			for(var/i=1,i<=(length(input)-1),i++) //compare each digit in the guess to all those following it
-				for(var/j=(i+1),j<=length(input),j++)
+			var/sanitycheck = TRUE
+			var/char = ""
+			var/length_input = length(input)
+			for(var/i = 1, i <= length_input, i += length(char)) //put the guess into a list
+				char = input[i]
+				sanitised += text2num(char)
+			for(var/i = 1, i <= length(sanitised) - 1, i++) //compare each digit in the guess to all those following it
+				for(var/j = i + 1, j <= length(sanitised), j++)
 					if(sanitised[i] == sanitised[j])
-						sanitycheck = null //if a digit is repeated, reject the input
-			if (input == code)
+						sanitycheck = FALSE //if a digit is repeated, reject the input
+			if(input == code)
 				to_chat(user, "<span class='notice'>The crate unlocks!</span>")
 				locked = FALSE
 				cut_overlays()
@@ -44,7 +47,7 @@
 				tamperproof = 0 // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
 				if(!spawned_loot)
 					spawn_loot()
-			else if (input == null || sanitycheck == null || length(input) != codelen)
+			else if(!input || !sanitycheck || length(sanitised) != codelen)
 				to_chat(user, "<span class='notice'>You leave the crate alone.</span>")
 			else
 				to_chat(user, "<span class='warning'>A red light flashes.</span>")
@@ -69,20 +72,27 @@
 			else
 				to_chat(user, "<span class='notice'>* Anti-Tamper Bomb will activate after [attempts] failed access attempts.</span>")
 			if(lastattempt != null)
-				var/list/guess = list()
-				var/list/answer = list()
-				var/bulls = 0
-				var/cows = 0
-				for(var/i=1,i<=length(lastattempt),i++)
-					guess += text2num(copytext(lastattempt,i,i+1))
-				for(var/i=1,i<=length(lastattempt),i++)
-					answer += text2num(copytext(code,i,i+1))
-				for(var/i = 1, i < codelen + 1, i++) // Go through list and count matches
-					if( answer.Find(guess[i],1,codelen+1))
-						++cows
-					if( answer[i] == guess[i])
+				var/bulls = 0 //right position, right number
+				var/cows = 0 //wrong position but in the puzzle
+
+				var/lastattempt_char = ""
+				var/length_lastattempt = length(lastattempt)
+				var/lastattempt_it = 1
+
+				var/code_char = ""
+				var/length_code = length(code)
+				var/code_it = 1
+
+				while(lastattempt_it <= length_lastattempt && code_it <= length_code) // Go through list and count matches
+					lastattempt_char = lastattempt[lastattempt_it]
+					code_char = code[code_it]
+					if(lastattempt_char == code_char)
 						++bulls
-						--cows
+					else if(findtext(code, lastattempt_char))
+						++cows
+
+					lastattempt_it += length(lastattempt_char)
+					code_it += length(code_char)
 
 				to_chat(user, "<span class='notice'>Last code attempt, [lastattempt], had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions.</span>")
 			return

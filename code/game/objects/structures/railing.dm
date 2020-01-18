@@ -6,10 +6,15 @@
 	density = TRUE
 	anchored = TRUE
 	climbable = TRUE
-	var/list/dir9 = list(NORTH, WEST) //ugly ass checks specific to the corner rails with intercardinal directions
-	var/list/dir10 = list(SOUTH, WEST)
-	var/list/dir5 = list(NORTH, EAST)
-	var/list/dir6 = list(SOUTH, EAST)
+	var/list/dir_NORTHWEST = list(NORTH, WEST) //ugly ass checks specific to the corner rails with intercardinal directions
+	var/list/dir_SOUTHWEST = list(SOUTH, WEST)
+	var/list/dir_NORTHEAST = list(NORTH, EAST)
+	var/list/dir_SOUTHEAST = list(SOUTH, EAST)
+
+/obj/structure/railing/corner //aesthetic corner sharp edges hurt oof ouch
+	icon_state = "railing_corner"
+	density = FALSE
+	climbable = FALSE
 
 /obj/structure/railing/attackby(obj/item/I, mob/living/user, params)
 	add_fingerprint(user)
@@ -42,25 +47,25 @@
 /obj/structure/railing/CanPass(atom/movable/mover, turf/target)
 	if(get_dir(loc, target) == dir)
 		return !density
-	if(dir == 9 && get_dir(loc, target) in dir9)
+	if(dir == NORTHWEST && get_dir(loc, target) in dir_NORTHWEST)
 		return !density
-	if(dir == 10 && get_dir(loc, target) in dir10)
+	if(dir == SOUTHWEST && get_dir(loc, target) in dir_SOUTHWEST)
 		return !density
-	if(dir == 5 && get_dir(loc, target) in dir5)
+	if(dir == NORTHEAST && get_dir(loc, target) in dir_NORTHEAST)
 		return !density
-	if(dir == 6 && get_dir(loc, target) in dir6)
+	if(dir == SOUTHEAST && get_dir(loc, target) in dir_SOUTHEAST)
 		return !density
-	return 1
+	return TRUE
 
 /obj/structure/railing/CheckExit(atom/movable/O, turf/target)
 	if(get_dir(O.loc, target) == dir)
 		return 0
-	if(dir == 9 && get_dir(loc, target) in dir9)
+	if(dir == NORTHWEST && get_dir(loc, target) in dir_NORTHWEST)
 		return 0
-	if(dir == 10 && get_dir(loc, target) in dir10)
+	if(dir == SOUTHWEST && get_dir(loc, target) in dir_SOUTHWEST)
 		return 0
-	if(dir == 5 && get_dir(loc, target) in dir5)
+	if(dir == NORTHEAST && get_dir(loc, target) in dir_NORTHEAST)
 		return 0
-	if(dir == 6 && get_dir(loc, target) in dir6)
+	if(dir == SOUTHEAST && get_dir(loc, target) in dir_SOUTHEAST)
 		return 0
 	return 1

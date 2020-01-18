@@ -246,6 +246,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	set_us_up_the_bomb(owner)
 
 /datum/action/innate/ai/nuke_station/proc/set_us_up_the_bomb(mob/living/owner)
+	var/pass = prob(10) ? "******" : "hunter2"
 	set waitfor = FALSE
 	to_chat(owner, "<span class='small boldannounce'>run -o -a 'selfdestruct'</span>")
 	sleep(5)
@@ -266,7 +267,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	sleep(3)
 	if(!owner || QDELETED(owner))
 		return
-	to_chat(owner, "<span class='small boldannounce'>auth 'akjv9c88asdf12nb' ******************</span>")
+	to_chat(owner, "<span class='small boldannounce'>auth 'akjv9c88asdf12nb' [pass]</span>")
 	owner.playsound_local(owner, 'sound/items/timer.ogg', 50, 0)
 	sleep(30)
 	if(!owner || QDELETED(owner))
@@ -299,7 +300,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	sleep(14)
 	if(!owner || QDELETED(owner))
 		return
-	to_chat(owner, "<span class='small boldannounce'>******************</span>")
+	to_chat(owner, "<span class='small boldannounce'>[pass]</span>")
 	sleep(40)
 	if(!owner || QDELETED(owner))
 		return

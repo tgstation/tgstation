@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "Boxstation: Roundstart Paramedics now properly start in medbay."
