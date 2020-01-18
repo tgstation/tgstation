@@ -41497,21 +41497,18 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cgo" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cgp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/obj/structure/cable,
+/obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cgr" = (
@@ -41852,14 +41849,6 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
-"chv" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "chw" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -42204,11 +42193,6 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/starboard/aft)
-"ciK" = (
-/obj/structure/rack,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "ciL" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
@@ -42473,11 +42457,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"cjC" = (
-/obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "cjD" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/solars/starboard/aft)
@@ -42731,12 +42710,6 @@
 "cko" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
-/area/maintenance/starboard/aft)
-"ckp" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/two,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "ckr" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -43037,12 +43010,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"cls" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/three,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "clt" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -43260,7 +43227,7 @@
 	},
 /area/maintenance/starboard/aft)
 "cmr" = (
-/obj/structure/closet/toolcloset,
+/obj/structure/rack,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
@@ -49031,10 +48998,10 @@
 /turf/closed/wall,
 /area/hallway/secondary/service)
 "cVu" = (
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cYY" = (
@@ -50191,6 +50158,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/fore)
+"jsw" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "jsP" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -50622,6 +50593,18 @@
 	dir = 8
 	},
 /area/science/research)
+"kZR" = (
+/obj/structure/closet/toolcloset,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
+"lar" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "lcg" = (
 /obj/machinery/light{
 	dir = 4
@@ -50800,6 +50783,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"lSv" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "lST" = (
 /obj/structure/table,
 /obj/machinery/recharger,
@@ -51229,11 +51219,8 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "nZl" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/structure/rack,
+/turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "ofT" = (
 /obj/machinery/computer/bounty,
@@ -51590,6 +51577,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"pxV" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "pzA" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -51928,13 +51922,10 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "qQH" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/effect/spawner/lootdrop/minor/bowler_or_that,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "qRW" = (
@@ -51983,6 +51974,11 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"ryM" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance/three,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "rAt" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -52327,15 +52323,11 @@
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "tfg" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/maintenance/starboard/aft)
 "tgl" = (
 /obj/effect/turf_decal/stripes/line{
@@ -52363,6 +52355,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"tkC" = (
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "tqd" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -52920,12 +52916,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"vFo" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/chemistry)
 "vFS" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/brown{
@@ -53095,6 +53085,11 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
+"wtc" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "wBd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -92752,8 +92747,6 @@ cgc
 qBr
 ciF
 cjw
-bip
-vFo
 uGz
 clk
 xfL
@@ -92761,6 +92754,8 @@ vQQ
 jox
 nEk
 djq
+bip
+bip
 bip
 bip
 hTU
@@ -99430,20 +99425,20 @@ xaZ
 cOe
 cOe
 cOe
+cOe
+cOe
+cOe
+cOe
 czG
 czR
-ydc
-ydc
-ydc
-ydc
 czW
 cAb
 cko
 clq
 cmq
+jsw
+jsw
 cri
-cgt
-cOe
 cTI
 cmn
 cBT
@@ -99686,21 +99681,21 @@ wQy
 nXU
 nXU
 ceM
-cNZ
+kvJ
 cgo
+ydc
+ydc
+ydc
+wtc
 czS
-cOb
-cOb
-cOb
-cOb
 cOb
 cAd
 cNW
 cOx
 cBL
+cOe
+cOe
 cvO
-cNW
-cNW
 cNW
 cNW
 cNW
@@ -99945,6 +99940,10 @@ cNY
 nWA
 cNY
 tfg
+cOb
+cNY
+cNY
+lar
 hBY
 cNW
 cNW
@@ -99952,14 +99951,10 @@ cNW
 cNW
 cNW
 cNW
-cNW
-cOe
 cOe
 csy
 cko
 cAf
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -100202,15 +100197,17 @@ cOe
 cPA
 cNW
 qQH
-chw
-ciK
-cjC
-ckp
-cls
-cmr
+cOe
+cOe
 cNW
-cOe
-cOe
+cgm
+chw
+cmr
+tkC
+bNB
+ryM
+kZR
+cNW
 cOe
 cmo
 cNW
@@ -100218,8 +100215,6 @@ aaf
 aaf
 aaf
 aaf
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -100459,20 +100454,20 @@ hYR
 ceO
 cNW
 cgp
-chv
+cri
 nZl
-nZl
-czR
-cVu
-cdr
 cNW
+pxV
+cVu
+lSv
 cOe
 cOe
+cOe
+cOe
+cNW
 cOe
 cou
 cOT
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -100720,16 +100715,16 @@ cvO
 cNW
 cNW
 cNW
-clt
-cdr
+cgr
+cms
 cNW
-cOe
-cOe
+cNW
+cNW
+cNW
+cNW
 cOe
 bMB
 cOT
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -100977,9 +100972,11 @@ cvO
 cNW
 aaa
 cNW
-cgr
-cms
-cNW
+cgm
+cdr
+cOe
+cOe
+cOe
 cOe
 cOe
 cOe
@@ -100992,8 +100989,6 @@ aaf
 aaf
 aaf
 aaf
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -101235,15 +101230,15 @@ cOT
 aaa
 cOT
 cgm
-cdr
-cOe
-cOe
-cOe
-cOe
+cQw
 cNW
 cNW
-aaa
-aaa
+cNW
+cNW
+cNW
+cNW
+cNW
+cNW
 aaa
 aaa
 aaa
@@ -101493,11 +101488,11 @@ aaa
 cOT
 cgm
 cQw
-cNW
-cNW
-cNW
-cNW
-cNW
+aaf
+aaf
+aaf
+aaf
+aaf
 aaS
 aaS
 aaS
@@ -101750,11 +101745,11 @@ aaa
 cNW
 cgm
 cQw
-aaf
-aaf
-aaf
-aaf
-aaf
+aaa
+aaa
+aaa
+aaa
+aaa
 aaS
 aaa
 aaf
