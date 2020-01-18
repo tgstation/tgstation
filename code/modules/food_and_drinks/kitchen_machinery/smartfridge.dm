@@ -97,7 +97,7 @@
 				update_icon()
 			return TRUE
 
-		if(istype(O, /obj/item/storage/bag))
+		if(istype(O, /obj/item/storage/bag) || istype(O, /obj/item/organ_storage)) //FULPSTATION MEDBORG ORGAN STORAGE FIX Surrealistik Nov 2019
 			var/obj/item/storage/P = O
 			var/loaded = 0
 			for(var/obj/G in P.contents)
