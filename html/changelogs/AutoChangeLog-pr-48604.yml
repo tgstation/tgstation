@@ -1,4 +1,0 @@
-author: "SteelSlayer"
-delete-after: True
-changes: 
-  - rscadd: "Remote signalers now use tgui-next"

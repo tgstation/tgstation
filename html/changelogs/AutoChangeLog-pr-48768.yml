@@ -1,4 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - bugfix: "Corrected a cable loop on kilo that was likely preventing proper power"
