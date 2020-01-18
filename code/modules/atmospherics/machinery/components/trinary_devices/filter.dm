@@ -14,8 +14,8 @@
 	construction_type = /obj/item/pipe/trinary/flippable
 	pipe_state = "filter"
 
-	ui_x = 475
-	ui_y = 195
+	ui_x = 390
+	ui_y = 187
 
 /obj/machinery/atmospherics/components/trinary/filter/CtrlClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
@@ -59,12 +59,6 @@
 /obj/machinery/atmospherics/components/trinary/filter/update_icon_nopipes()
 	var/on_state = on && nodes[1] && nodes[2] && nodes[3] && is_operational()
 	icon_state = "filter_[on_state ? "on" : "off"][flipped ? "_f" : ""]"
-
-/obj/machinery/atmospherics/components/trinary/filter/power_change()
-	var/old_stat = stat
-	..()
-	if(stat != old_stat)
-		update_icon()
 
 /obj/machinery/atmospherics/components/trinary/filter/process_atmos()
 	..()

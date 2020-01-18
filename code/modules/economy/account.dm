@@ -58,7 +58,7 @@
 				bank_card_talk("ERROR: Payday aborted, departmental funds insufficient.")
 				return FALSE
 			else
-				bank_card_talk("Payday processed, account now holds $[account_balance].")
+				bank_card_talk("Payday processed, account now holds [account_balance] cr.")
 				return TRUE
 	bank_card_talk("ERROR: Payday aborted, unable to contact departmental account.")
 	return FALSE
@@ -79,13 +79,13 @@
 
 			card_holder.playsound_local(get_turf(card_holder), 'sound/machines/twobeep_high.ogg', 50, TRUE)
 			if(card_holder.can_hear())
-				to_chat(card_holder, "[icon2html(icon_source, card_holder)] *[message]*")
+				to_chat(card_holder, "[icon2html(icon_source, card_holder)] <span class='notice'>[message]</span>")
 		else if(isturf(A.loc)) //If on the ground
 			for(var/mob/M in hearers(1,get_turf(A)))
 				if(M.client && !(M.client.prefs.chat_toggles & CHAT_BANKCARD) && !force)
 					return
 				playsound(A, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-				A.audible_message("[icon2html(icon_source, hearers(A))] *[message]*", null, 1)
+				A.audible_message("[icon2html(icon_source, hearers(A))] <span class='notice'>[message]</span>", null, 1)
 				break
 		else
 			for(var/mob/M in A.loc) //If inside a container with other mobs (e.g. locker)
@@ -93,7 +93,7 @@
 					return
 				M.playsound_local(get_turf(M), 'sound/machines/twobeep_high.ogg', 50, TRUE)
 				if(M.can_hear())
-					to_chat(M, "[icon2html(icon_source, M)] *[message]*")
+					to_chat(M, "[icon2html(icon_source, M)] <span class='notice'>[message]</span>")
 
 /datum/bank_account/department
 	account_holder = "Guild Credit Agency"

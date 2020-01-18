@@ -230,7 +230,7 @@
 	flags_cover = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
-	visor_flags_cover = MASKCOVERSMOUTH
+	visor_flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
 	slot_flags = ITEM_SLOT_MASK
 	adjusted_flags = ITEM_SLOT_HEAD
 	icon_state = "bandbotany"
@@ -242,7 +242,7 @@
 	. = ..()
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		if((C.get_item_by_slot(SLOT_HEAD == src)) || (C.get_item_by_slot(SLOT_WEAR_MASK) == src))
+		if((C.get_item_by_slot(ITEM_SLOT_HEAD == src)) || (C.get_item_by_slot(ITEM_SLOT_MASK) == src))
 			to_chat(user, "<span class='warning'>You can't tie [src] while wearing it!</span>")
 			return
 	if(slot_flags & ITEM_SLOT_HEAD)

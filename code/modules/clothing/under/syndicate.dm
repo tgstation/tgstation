@@ -18,6 +18,7 @@
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 40)
 	alt_covers_chest = TRUE
 	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
 
 /obj/item/clothing/under/syndicate/tacticool
 	name = "tacticool turtleneck"
@@ -33,12 +34,15 @@
 	item_state = "bl_suit"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 40)
 	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
 
 /obj/item/clothing/under/syndicate/sniper
 	name = "Tactical turtleneck suit"
 	desc = "A double seamed tactical turtleneck disguised as a civilian grade silk suit. Intended for the most formal operator. The collar is really sharp."
+	icon = 'icons/obj/clothing/under/suits.dmi'
 	icon_state = "really_black_suit"
 	item_state = "bl_suit"
+	mob_overlay_icon = 'icons/mob/clothing/under/suits.dmi'
 	can_adjust = FALSE
 
 /obj/item/clothing/under/syndicate/camo

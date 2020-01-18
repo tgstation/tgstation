@@ -20,7 +20,7 @@
 				reform, making a loud, grotesque sound!</span>",
 				"<span class='userdanger'>Your limbs regrow, making a \
 				loud, crunchy sound and giving you great pain!</span>",
-				"<span class='italics'>You hear organic matter ripping \
+				"<span class='hear'>You hear organic matter ripping \
 				and tearing!</span>")
 			C.emote("scream")
 			C.regenerate_limbs(1)

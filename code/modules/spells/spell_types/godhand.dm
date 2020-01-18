@@ -31,6 +31,8 @@
 
 /obj/item/melee/touch_attack/afterattack(atom/target, mob/user, proximity)
 	. = ..()
+	if(!proximity)
+		return
 	user.say(catchphrase, forced = "spell")
 	playsound(get_turf(user), on_use_sound,50,TRUE)
 	charges--
@@ -71,7 +73,7 @@
 		if(part)
 			part.dismember()
 		return ..()
-	var/obj/item/clothing/suit/hooded/bloated_human/suit = M.get_item_by_slot(SLOT_WEAR_SUIT)
+	var/obj/item/clothing/suit/hooded/bloated_human/suit = M.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 	if(istype(suit))
 		M.visible_message("<span class='danger'>[M]'s [suit] explodes off of them into a puddle of gore!</span>")
 		M.dropItemToGround(suit)

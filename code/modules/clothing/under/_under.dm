@@ -6,6 +6,9 @@
 	permeability_coefficient = 0.9
 	slot_flags = ITEM_SLOT_ICLOTHING
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
+	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound =  'sound/items/handling/cloth_pickup.ogg'
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
 	var/has_sensor = HAS_SENSORS // For the crew computer
 	var/random_sensor = TRUE
@@ -74,11 +77,11 @@
 			adjusted = DIGITIGRADE_STYLE
 		H.update_inv_w_uniform()
 
-	if(slot == SLOT_W_UNIFORM && freshly_laundered)
+	if(slot == ITEM_SLOT_ICLOTHING && freshly_laundered)
 		freshly_laundered = FALSE
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "fresh_laundry", /datum/mood_event/fresh_laundry)
 
-	if(attached_accessory && slot != SLOT_HANDS && ishuman(user))
+	if(attached_accessory && slot != ITEM_SLOT_HANDS && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		attached_accessory.on_uniform_equip(src, user)
 		if(attached_accessory.above_suit)

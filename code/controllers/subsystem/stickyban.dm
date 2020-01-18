@@ -10,11 +10,15 @@ SUBSYSTEM_DEF(stickyban)
 
 
 /datum/controller/subsystem/stickyban/Initialize(timeofday)
+	if (length(GLOB.stickybanadminexemptions))
+		restore_stickybans()
 	var/list/bannedkeys = sticky_banned_ckeys()
 	//sanitize the sticky ban list
 
 	//delete db bans that no longer exist in the database and add new legacy bans to the database
 	if (SSdbcore.Connect() || length(SSstickyban.dbcache))
+		if (length(GLOB.stickybanadminexemptions))
+			restore_stickybans()
 		for (var/oldban in (world.GetConfig("ban") - bannedkeys))
 			var/ckey = ckey(oldban)
 			if (ckey != oldban && (ckey in bannedkeys))
@@ -29,6 +33,8 @@ SUBSYSTEM_DEF(stickyban)
 				bannedkeys += ckey
 			world.SetConfig("ban", oldban, null)
 
+	if (length(GLOB.stickybanadminexemptions)) //the previous loop can sleep
+		restore_stickybans()
 
 	for (var/bannedkey in bannedkeys)
 		var/ckey = ckey(bannedkey)

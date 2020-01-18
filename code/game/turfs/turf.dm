@@ -27,7 +27,7 @@
 	var/requires_activation	//add to air processing after initialize?
 	var/changing_turf = FALSE
 
-	var/bullet_bounce_sound = 'sound/weapons/bulletremove.ogg' //sound played when a shell casing is ejected ontop of the turf.
+	var/bullet_bounce_sound = 'sound/weapons/gun/general/mag_bullet_remove.ogg' //sound played when a shell casing is ejected ontop of the turf.
 	var/bullet_sizzle = FALSE //used by ammo_casing/bounce_away() to determine if the shell casing should make a sizzle sound when it's ejected over the turf
 							//IE if the turf is supposed to be water, set TRUE.
 
@@ -141,11 +141,18 @@
 /turf/proc/zAirOut(direction, turf/source)
 	return FALSE
 
-/turf/proc/zImpact(atom/movable/A, levels = 1)
+/turf/proc/zImpact(atom/movable/A, levels = 1, turf/prev_turf)
+	var/flags = NONE
+	var/mov_name = A.name
 	for(var/i in contents)
 		var/atom/thing = i
-		if(thing.intercept_zImpact(A, levels))
-			return FALSE
+		flags |= thing.intercept_zImpact(A, levels)
+		if(flags & FALL_STOP_INTERCEPTING)
+			break
+	if(prev_turf && !(flags & FALL_NO_MESSAGE))
+		prev_turf.visible_message("<span class='danger'>[mov_name] falls through [prev_turf]!</span>")
+	if(flags & FALL_INTERCEPTED)
+		return
 	if(zFall(A, ++levels))
 		return FALSE
 	A.visible_message("<span class='danger'>[A] crashes into [src]!</span>")
@@ -161,11 +168,10 @@
 		return FALSE
 	if(!force && (!can_zFall(A, levels, target) || !A.can_zFall(src, levels, target, DOWN)))
 		return FALSE
-	A.visible_message("<span class='danger'>[A] falls through [src]!</span>")
 	A.zfalling = TRUE
 	A.forceMove(target)
 	A.zfalling = FALSE
-	target.zImpact(A, levels)
+	target.zImpact(A, levels, src)
 	return TRUE
 
 /turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
@@ -184,8 +190,6 @@
 		return TRUE
 	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = C
-		for(var/obj/structure/cable/LC in src)
-			return
 		coil.place_turf(src, user)
 		return TRUE
 	else if(can_have_cabling() && istype(C, /obj/item/stack/pipe_cleaner_coil))
@@ -200,16 +204,6 @@
 	else if(istype(C, /obj/item/twohanded/rcl))
 		handleRCL(C, user)
 
-	return FALSE
-
-/turf/CanPass(atom/movable/mover, turf/target)
-	if(!target)
-		return FALSE
-
-	if(istype(mover)) // turf/Enter(...) will perform more advanced checks
-		return !density
-
-	stack_trace("Non movable passed to turf CanPass : [mover]")
 	return FALSE
 
 //There's a lot of QDELETED() calls here if someone can figure out how to optimize this but not runtime when something gets deleted by a Bump/CanPass/Cross call, lemme know or go ahead and fix this mess - kevinz000
@@ -281,9 +275,6 @@
 	if(!AM.zfalling)
 		zFall(AM)
 
-/turf/proc/is_plasteel_floor()
-	return FALSE
-
 // A proc in case it needs to be recreated or badmins want to change the baseturfs
 /turf/proc/assemble_baseturfs(turf/fake_baseturf_type)
 	var/static/list/created_baseturf_lists = list()
@@ -349,15 +340,6 @@
 	var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 	if(L && (L.flags_1 & INITIALIZED_1))
 		qdel(L)
-
-/turf/proc/phase_damage_creatures(damage,mob/U = null)//>Ninja Code. Hurts and knocks out creatures on this turf //NINJACODE
-	for(var/mob/living/M in src)
-		if(M==U)
-			continue//Will not harm U. Since null != M, can be excluded to kill everyone.
-		M.adjustBruteLoss(damage)
-		M.Unconscious(damage * 4)
-	for(var/obj/mecha/M in src)
-		M.take_damage(damage*2, BRUTE, "melee", 1)
 
 /turf/proc/Bless()
 	new /obj/effect/blessing(src)
@@ -458,15 +440,6 @@
 		if(ismob(A) || .)
 			A.narsie_act()
 
-/turf/ratvar_act(force, ignore_mobs, probability = 40)
-	. = (prob(probability) || force)
-	for(var/I in src)
-		var/atom/A = I
-		if(ignore_mobs && ismob(A))
-			continue
-		if(ismob(A) || .)
-			A.ratvar_act()
-
 /turf/proc/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = icon
 	underlay_appearance.icon_state = icon_state
@@ -537,7 +510,7 @@
 /turf/AllowDrop()
 	return TRUE
 
-/turf/proc/add_vomit_floor(mob/living/M, toxvomit = NONE)
+/turf/proc/add_vomit_floor(mob/living/M, toxvomit = NONE, purge = FALSE)
 
 	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
 
@@ -554,22 +527,25 @@
 	if (iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(C.reagents)
-			clear_reagents_to_vomit_pool(C,V)
+			clear_reagents_to_vomit_pool(C,V, purge)
 
-/proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V)
-	M.reagents.trans_to(V, M.reagents.total_volume / 10, transfered_by = M)
+/proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V, purge = FALSE)
+	var/chemicals_lost = M.reagents.total_volume / 10
+	if(purge)
+		chemicals_lost = (2 * M.reagents.total_volume)/3				//For detoxification surgery, we're manually pumping the stomach out of chemcials, so it's far more efficient.
+	M.reagents.trans_to(V, chemicals_lost, transfered_by = M)
 	for(var/datum/reagent/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
-		if(istype(R, /datum/reagent/consumable))
+		if(istype(R, /datum/reagent/consumable) || purge)
 			var/datum/reagent/consumable/nutri_check = R
 			if(nutri_check.nutriment_factor >0)
-				M.reagents.remove_reagent(R.type,R.volume)
+				M.reagents.remove_reagent(R.type, min(R.volume, 10))
 
 //Whatever happens after high temperature fire dies out or thermite reaction works.
 //Should return new turf
 /turf/proc/Melt()
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
-/turf/bullet_act(obj/item/projectile/P)
+/turf/bullet_act(obj/projectile/P)
 	. = ..()
 	if(. != BULLET_ACT_FORCE_PIERCE)
 		. =  BULLET_ACT_TURF

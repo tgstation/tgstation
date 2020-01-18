@@ -9,7 +9,7 @@
 	equip_delay_other = 20
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	custom_price = 10
+	custom_price = 75
 	undyeable = TRUE
 
 /obj/item/clothing/gloves/botanic_leather
@@ -27,7 +27,7 @@
 
 /obj/item/clothing/gloves/combat
 	name = "combat gloves"
-	desc = "These tactical gloves are fireproof and shock resistant."
+	desc = "These tactical gloves are fireproof and electrically insulated."
 	icon_state = "black"
 	item_state = "blackgloves"
 	siemens_coefficient = 0

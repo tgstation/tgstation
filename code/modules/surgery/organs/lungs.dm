@@ -6,7 +6,7 @@
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LUNGS
 	gender = PLURAL
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_SMALL
 
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY
@@ -387,6 +387,9 @@
 		if(breath_temperature > heat_level_1_threshold)
 			if(prob(20))
 				to_chat(H, "<span class='warning'>You feel [hot_message] in your [name]!</span>")
+
+	// The air you breathe out should match your body temperature
+	breath.temperature = H.bodytemperature
 
 /obj/item/organ/lungs/on_life()
 	..()

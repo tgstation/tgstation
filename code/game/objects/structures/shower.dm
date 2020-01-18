@@ -127,7 +127,6 @@
 
 /obj/machinery/shower/proc/wash_mob(mob/living/L)
 	SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
-	L.wash_cream()
 	L.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	if(iscarbon(L))
@@ -145,16 +144,16 @@
 		if(M.head && wash_obj(M.head))
 			M.update_inv_head()
 
-		if(M.glasses && !(SLOT_GLASSES in obscured) && wash_obj(M.glasses))
+		if(M.glasses && !(ITEM_SLOT_EYES in obscured) && wash_obj(M.glasses))
 			M.update_inv_glasses()
 
-		if(M.wear_mask && !(SLOT_WEAR_MASK in obscured) && wash_obj(M.wear_mask))
+		if(M.wear_mask && !(ITEM_SLOT_MASK in obscured) && wash_obj(M.wear_mask))
 			M.update_inv_wear_mask()
 
 		if(M.ears && !(HIDEEARS in obscured) && wash_obj(M.ears))
 			M.update_inv_ears()
 
-		if(M.wear_neck && !(SLOT_NECK in obscured) && wash_obj(M.wear_neck))
+		if(M.wear_neck && !(ITEM_SLOT_NECK in obscured) && wash_obj(M.wear_neck))
 			M.update_inv_neck()
 
 		if(M.shoes && !(HIDESHOES in obscured) && wash_obj(M.shoes))

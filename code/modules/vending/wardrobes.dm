@@ -2,8 +2,8 @@
 	icon_state = "refill_clothes"
 
 /obj/machinery/vending/wardrobe
-	default_price = 50
-	extra_price = 75
+	default_price = 350
+	extra_price = 450
 	payment_department = NO_FREEBIES
 	input_display_header = "Returned Clothing"
 
@@ -57,9 +57,9 @@
 					/obj/item/clothing/under/rank/medical/doctor/purple = 4,
 					/obj/item/clothing/under/rank/medical/doctor = 4,
 					/obj/item/clothing/suit/toggle/labcoat = 4,
-					/obj/item/clothing/suit/toggle/labcoat/emt = 4,
+					/obj/item/clothing/suit/toggle/labcoat/paramedic = 4,
 					/obj/item/clothing/shoes/sneakers/white = 4,
-					/obj/item/clothing/head/soft/emt = 4,
+					/obj/item/clothing/head/soft/paramedic = 4,
 					/obj/item/clothing/suit/apron/surgical = 4,
 					/obj/item/clothing/mask/surgical = 4)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
@@ -237,7 +237,9 @@
 					/obj/item/circuitboard/machine/dish_drive = 1,
 					/obj/item/clothing/glasses/sunglasses/reagent = 1,
 					/obj/item/clothing/neck/petcollar = 1,
-					/obj/item/storage/belt/bandolier = 1)
+					/obj/item/storage/belt/bandolier = 1,
+					/obj/item/storage/pill_bottle/dice/hazard = 1,
+					/obj/item/storage/bag/money = 2)
 	premium = list(/obj/item/storage/box/dishdrive = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/bar_wardrobe
 	payment_department = ACCOUNT_SRV
@@ -261,6 +263,8 @@
 					/obj/item/clothing/under/rank/civilian/chef = 1,
 					/obj/item/clothing/under/rank/civilian/chef/skirt = 2,
 					/obj/item/clothing/head/chefhat = 1,
+					/obj/item/clothing/under/rank/civilian/cookjorts = 2,
+					/obj/item/clothing/shoes/cookflops = 2,
 					/obj/item/reagent_containers/glass/rag = 1,
 					/obj/item/clothing/suit/hooded/wintercoat = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
@@ -283,7 +287,7 @@
 					/obj/item/melee/flyswatter = 2,
 					/obj/item/flashlight = 2,
 					/obj/item/clothing/suit/caution = 6,
-					/obj/item/holosign_creator/janibarrier = 2,
+					/obj/item/holosign_creator = 2,
 					/obj/item/lightreplacer = 2,
 					/obj/item/soap/nanotrasen = 2,
 					/obj/item/storage/bag/trash = 2,
@@ -387,8 +391,8 @@
 	icon_state = "genedrobe"
 	product_ads = "Perfect for the mad scientist in you!"
 	vend_reply = "Thank you for using the GeneDrobe!"
-	products = list(/obj/item/clothing/under/rank/medical/geneticist = 2,
-					/obj/item/clothing/under/rank/medical/geneticist/skirt = 2,
+	products = list(/obj/item/clothing/under/rank/rnd/geneticist = 2,
+					/obj/item/clothing/under/rank/rnd/geneticist/skirt = 2,
 					/obj/item/clothing/shoes/sneakers/white = 2,
 					/obj/item/clothing/suit/toggle/labcoat/genetics = 2,
 					/obj/item/storage/backpack/genetics = 2,

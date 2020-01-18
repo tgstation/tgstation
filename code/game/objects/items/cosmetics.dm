@@ -115,9 +115,9 @@
 
 /obj/item/razor/proc/shave(mob/living/carbon/human/H, location = BODY_ZONE_PRECISE_MOUTH)
 	if(location == BODY_ZONE_PRECISE_MOUTH)
-		H.facial_hair_style = "Shaved"
+		H.facial_hairstyle = "Shaved"
 	else
-		H.hair_style = "Skinhead"
+		H.hairstyle = "Skinhead"
 
 	H.update_hair()
 	playsound(loc, 'sound/items/welder2.ogg', 20, TRUE)
@@ -138,14 +138,14 @@
 						return
 					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 						return
-					var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in GLOB.facial_hair_styles_list
+					var/new_style = input(user, "Select a facial hairstyle", "Grooming")  as null|anything in GLOB.facial_hairstyles_list
 					if(!get_location_accessible(H, location))
 						to_chat(user, "<span class='warning'>The mask is in the way!</span>")
 						return
-					user.visible_message("<span class='notice'>[user] tries to change [H]'s facial hair style using [src].</span>", "<span class='notice'>You try to change [H]'s facial hair style using [src].</span>")
+					user.visible_message("<span class='notice'>[user] tries to change [H]'s facial hairstyle using [src].</span>", "<span class='notice'>You try to change [H]'s facial hairstyle using [src].</span>")
 					if(new_style && do_after(user, 60, target = H))
-						user.visible_message("<span class='notice'>[user] successfully changes [H]'s facial hair style using [src].</span>", "<span class='notice'>You successfully change [H]'s facial hair style using [src].</span>")
-						H.facial_hair_style = new_style
+						user.visible_message("<span class='notice'>[user] successfully changes [H]'s facial hairstyle using [src].</span>", "<span class='notice'>You successfully change [H]'s facial hairstyle using [src].</span>")
+						H.facial_hairstyle = new_style
 						H.update_hair()
 						return
 				else
@@ -158,7 +158,7 @@
 				if(!get_location_accessible(H, location))
 					to_chat(user, "<span class='warning'>The mask is in the way!</span>")
 					return
-				if(H.facial_hair_style == "Shaved")
+				if(H.facial_hairstyle == "Shaved")
 					to_chat(user, "<span class='warning'>Already clean-shaven!</span>")
 					return
 
@@ -184,14 +184,14 @@
 					return
 				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
-				var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in GLOB.hair_styles_list
+				var/new_style = input(user, "Select a hairstyle", "Grooming")  as null|anything in GLOB.hairstyles_list
 				if(!get_location_accessible(H, location))
 					to_chat(user, "<span class='warning'>The headgear is in the way!</span>")
 					return
 				user.visible_message("<span class='notice'>[user] tries to change [H]'s hairstyle using [src].</span>", "<span class='notice'>You try to change [H]'s hairstyle using [src].</span>")
 				if(new_style && do_after(user, 60, target = H))
 					user.visible_message("<span class='notice'>[user] successfully changes [H]'s hairstyle using [src].</span>", "<span class='notice'>You successfully change [H]'s hairstyle using [src].</span>")
-					H.hair_style = new_style
+					H.hairstyle = new_style
 					H.update_hair()
 					return
 
@@ -202,7 +202,7 @@
 				if(!get_location_accessible(H, location))
 					to_chat(user, "<span class='warning'>The headgear is in the way!</span>")
 					return
-				if(H.hair_style == "Bald" || H.hair_style == "Balding Hair" || H.hair_style == "Skinhead")
+				if(H.hairstyle == "Bald" || H.hairstyle == "Balding Hair" || H.hairstyle == "Skinhead")
 					to_chat(user, "<span class='warning'>There is not enough hair left to shave!</span>")
 					return
 

@@ -29,7 +29,7 @@
 		if(I.use_tool(src, user, 50, volume=50))
 			visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
 				"<span class='notice'>You cut \the [src] apart with \the [I].</span>",
-				"<span class='italics'>You hear welding.</span>")
+				"<span class='hear'>You hear welding.</span>")
 			new /obj/item/stack/sheet/metal(src.loc, 4)
 			qdel(src)
 		return
@@ -72,7 +72,7 @@
 			if(user.pulling != L)
 				return
 			playsound(src.loc, 'sound/effects/splat.ogg', 25, TRUE)
-			L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
+			L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='hear'>You hear a squishy wet noise.</span>")
 			L.forceMove(drop_location())
 			L.emote("scream")
 			L.add_splatter_floor()
@@ -100,7 +100,7 @@
 		if(M != user)
 			M.visible_message("<span class='notice'>[user] tries to pull [M] free of [src]!</span>",\
 				"<span class='notice'>[user] is trying to pull you off [src], opening up fresh wounds!</span>",\
-				"<span class='italics'>You hear a squishy wet noise.</span>")
+				"<span class='hear'>You hear a squishy wet noise.</span>")
 			if(!do_after(user, 300, target = src))
 				if(M && M.buckled)
 					M.visible_message("<span class='notice'>[user] fails to free [M]!</span>",\
@@ -110,7 +110,7 @@
 		else
 			M.visible_message("<span class='warning'>[M] struggles to break free from [src]!</span>",\
 			"<span class='notice'>You struggle to break free from [src], exacerbating your wounds! (Stay still for two minutes.)</span>",\
-			"<span class='italics'>You hear a wet squishing noise..</span>")
+			"<span class='hear'>You hear a wet squishing noise..</span>")
 			M.adjustBruteLoss(30)
 			if(!do_after(M, 1200, target = src))
 				if(M && M.buckled)

@@ -142,6 +142,8 @@
 		dat += "Replacement Game Mode: <B>[SSticker.mode.replacementmode.name]</B><BR>"
 	else
 		dat += "Current Game Mode: <B>[SSticker.mode.name]</B><BR>"
+	if(istype(SSticker.mode, /datum/game_mode/dynamic))	// Currently only used by dynamic. If more start using this, find a better way.
+		dat += "<a href='?_src_=holder;[HrefToken()];gamemode_panel=1'>Gamemode Panel</a><br>"
 	dat += "Round Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B><BR>"
 	dat += "<B>Emergency shuttle</B><BR>"
 	if(EMERGENCY_IDLE_OR_RECALLED)
@@ -149,10 +151,10 @@
 	else
 		var/timeleft = SSshuttle.emergency.timeLeft()
 		if(SSshuttle.emergency.mode == SHUTTLE_CALL)
-			dat += "ETA: <a href='?_src_=holder;[HrefToken()];edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]</a><BR>"
+			dat += "ETA: <a href='?_src_=holder;[HrefToken()];edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_leading(num2text(timeleft % 60), 2, "0")]</a><BR>"
 			dat += "<a href='?_src_=holder;[HrefToken()];call_shuttle=2'>Send Back</a><br>"
 		else
-			dat += "ETA: <a href='?_src_=holder;[HrefToken()];edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]</a><BR>"
+			dat += "ETA: <a href='?_src_=holder;[HrefToken()];edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_leading(num2text(timeleft % 60), 2, "0")]</a><BR>"
 	dat += "<B>Continuous Round Status</B><BR>"
 	dat += "<a href='?_src_=holder;[HrefToken()];toggle_continuous=1'>[CONFIG_GET(keyed_list/continuous)[SSticker.mode.config_tag] ? "Continue if antagonists die" : "End on antagonist death"]</a>"
 	if(CONFIG_GET(keyed_list/continuous)[SSticker.mode.config_tag])

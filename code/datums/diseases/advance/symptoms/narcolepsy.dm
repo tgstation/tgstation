@@ -24,8 +24,10 @@ Bonus
 	symptom_delay_max = 85
 	severity = 4
 	var/yawning = FALSE
-	threshold_desc = "<b>Transmission 4:</b> Causes the host to periodically emit a yawn that spreads the virus in a manner similar to that of a sneeze.<br>\
-					  <b>Stage Speed 10:</b> Causes narcolepsy more often, increasing the chance of the host falling asleep."
+	threshold_descs = list(
+		"Transmission 4" = "Causes the host to periodically emit a yawn that spreads the virus in a manner similar to that of a sneeze.",
+		"Stage Speed 10" = "Causes narcolepsy more often, increasing the chance of the host falling asleep.",
+	)
 
 /datum/symptom/narcolepsy/Start(datum/disease/advance/A)
 	if(!..())
@@ -48,14 +50,16 @@ Bonus
 		if(3)
 			if(prob(50))
 				to_chat(M, "<span class='warning'>You try to focus on staying awake.</span>")
-			M.drowsyness += 5
+			if(M.drowsyness < 70)
+				M.drowsyness += 5
 		if(4)
 			if(prob(50))
 				if(yawning)
 					to_chat(M, "<span class='warning'>You try and fail to suppress a yawn.</span>")
 				else
 					to_chat(M, "<span class='warning'>You nod off for a moment.</span>") //you can't really yawn while nodding off, can you?
-			M.drowsyness += 10
+			if(M.drowsyness < 70)
+				M.drowsyness += 10
 			if(yawning)
 				M.emote("yawn")
 				if(M.CanSpreadAirborneDisease())
@@ -63,7 +67,8 @@ Bonus
 		if(5)
 			if(prob(50))
 				to_chat(M, "<span class='warning'>[pick("So tired...","You feel very sleepy.","You have a hard time keeping your eyes open.","You try to stay awake.")]</span>")
-			M.drowsyness = CLAMP(M.drowsyness, M.drowsyness + 40, 70)
+			if(M.drowsyness < 70)
+				M.drowsyness += 40
 			if(yawning)
 				M.emote("yawn")
 				if(M.CanSpreadAirborneDisease())

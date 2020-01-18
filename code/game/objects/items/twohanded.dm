@@ -35,13 +35,13 @@
 	wielded = 0
 	if(!isnull(force_unwielded))
 		force = force_unwielded
-	var/sf = findtext(name," (Wielded)")
+	var/sf = findtext(name, " (Wielded)", -10)//10 == length(" (Wielded)")
 	if(sf)
-		name = copytext(name,1,sf)
+		name = copytext(name, 1, sf)
 	else //something wrong
 		name = "[initial(name)]"
 	update_icon()
-	if(user.get_item_by_slot(SLOT_BACK) == src)
+	if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
 		user.update_inv_back()
 	else
 		user.update_inv_hands()
@@ -94,9 +94,6 @@
 		return
 	unwield(user)
 
-/obj/item/twohanded/update_icon()
-	return
-
 /obj/item/twohanded/attack_self(mob/user)
 	. = ..()
 	if(wielded) //Trying to unwield it
@@ -129,6 +126,7 @@
 	return ..()
 
 /obj/item/twohanded/offhand/dropped(mob/living/user, show_message = TRUE) //Only utilized by dismemberment since you can't normally switch to the offhand to drop it.
+	SHOULD_CALL_PARENT(0)
 	var/obj/I = user.get_active_held_item()
 	if(I && istype(I, /obj/item/twohanded))
 		var/obj/item/twohanded/thw = I
@@ -183,15 +181,14 @@
 	. = ..()
 
 /obj/item/twohanded/required/equipped(mob/user, slot)
-	..()
-	var/slotbit = slotdefine2slotbit(slot)
-	if(slot_flags & slotbit)
+	. = ..()
+	if(slot_flags & slot)
 		var/datum/O = user.is_holding_item_of_type(/obj/item/twohanded/offhand)
 		if(!O || QDELETED(O))
 			return
 		qdel(O)
 		return
-	if(slot == SLOT_HANDS)
+	if(slot == ITEM_SLOT_HANDS)
 		wield(user)
 	else
 		unwield(user)
@@ -238,9 +235,8 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
 
-/obj/item/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
+/obj/item/twohanded/fireaxe/update_icon_state()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
-	return
 
 /obj/item/twohanded/fireaxe/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -251,12 +247,9 @@
 	if(!proximity)
 		return
 	if(wielded) //destroys windows and grilles in one hit
-		if(istype(A, /obj/structure/window))
-			var/obj/structure/window/W = A
-			W.take_damage(200, BRUTE, "melee", 0)
-		else if(istype(A, /obj/structure/grille))
-			var/obj/structure/grille/G = A
-			G.take_damage(40, BRUTE, "melee", 0)
+		if(istype(A, /obj/structure/window) || istype(A, /obj/structure/grille))
+			var/obj/structure/W = A
+			W.obj_destruction("fireaxe")
 
 
 /*
@@ -335,12 +328,11 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/twohanded/dualsaber/update_icon()
+/obj/item/twohanded/dualsaber/update_icon_state()
 	if(wielded)
 		icon_state = "dualsaber[saber_color][wielded]"
 	else
 		icon_state = "dualsaber0"
-	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /obj/item/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
@@ -356,11 +348,7 @@
 		INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
 /obj/item/twohanded/dualsaber/proc/jedi_spin(mob/living/user)
-	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
-		user.setDir(i)
-		if(i == WEST)
-			user.emote("flip")
-		sleep(1)
+	dance_rotate(user, CALLBACK(user, /mob.proc/dance_flip))
 
 /obj/item/twohanded/dualsaber/proc/impale(mob/living/user)
 	to_chat(user, "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on [src].</span>")
@@ -462,7 +450,7 @@
 	throw_speed = 4
 	embedding = list("embedded_impact_pain_multiplier" = 3)
 	armour_penetration = 10
-	materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
+	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 	sharpness = IS_SHARP
@@ -474,16 +462,13 @@
 /obj/item/twohanded/spear/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
+	AddComponent(/datum/component/jousting)
 
 /obj/item/twohanded/spear/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
-/obj/item/twohanded/spear/Initialize()
-	. = ..()
-	AddComponent(/datum/component/jousting)
-
-/obj/item/twohanded/spear/update_icon()
+/obj/item/twohanded/spear/update_icon_state()
 	icon_state = "[icon_prefix][wielded]"
 
 /obj/item/twohanded/spear/CheckParts(list/parts_list)
@@ -495,15 +480,6 @@
 		icon_prefix = "spearplasma"
 	update_icon()
 	qdel(tip)
-	var/obj/item/grenade/G = locate() in parts_list
-	if(G)
-		var/obj/item/twohanded/spear/explosive/lance = new /obj/item/twohanded/spear/explosive(src.loc, G)
-		lance.force_wielded = force_wielded
-		lance.force_unwielded = force_unwielded
-		lance.throwforce = throwforce
-		lance.icon_prefix = icon_prefix
-		parts_list -= G
-		qdel(src)
 	..()
 
 
@@ -520,6 +496,21 @@
 	desc = "A makeshift spear with [G] attached to it"
 	update_icon()
 
+
+/obj/item/twohanded/spear/explosive/CheckParts(list/parts_list)
+	var/obj/item/grenade/G = locate() in parts_list
+	if(G)
+		var/obj/item/twohanded/spear/lancePart = locate() in parts_list
+		force_wielded = lancePart.force_wielded
+		force_unwielded = lancePart.force_unwielded
+		throwforce = lancePart.throwforce
+		icon_prefix = lancePart.icon_prefix
+		parts_list -= G
+		parts_list -= lancePart
+		Initialize(src.loc, G)
+		qdel(lancePart)
+	..()
+
 /obj/item/twohanded/spear/explosive/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	user.say("[war_cry]", forced="spear warcry")
@@ -533,7 +524,7 @@
 	. = ..()
 	. += "<span class='notice'>Alt-click to set your war cry.</span>"
 
-/obj/item/twohanded/spear/explosive/update_icon()
+/obj/item/twohanded/spear/explosive/update_icon_state()
 	icon_state = "spearbomb[wielded]"
 
 /obj/item/twohanded/spear/explosive/AltClick(mob/user)
@@ -568,11 +559,13 @@
 	throwforce = 13
 	throw_speed = 2
 	throw_range = 4
-	materials = list(/datum/material/iron=13000)
+	custom_materials = list(/datum/material/iron=13000)
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = "swing_hit"
 	sharpness = IS_SHARP
 	actions_types = list(/datum/action/item_action/startchainsaw)
+	tool_behaviour = TOOL_SAW
+	toolspeed = 0.5
 	var/on = FALSE
 
 /obj/item/twohanded/required/chainsaw/Initialize()
@@ -630,13 +623,10 @@
 
 //GREY TIDE
 /obj/item/twohanded/spear/grey_tide
-	icon_state = "spearglass0"
 	name = "\improper Grey Tide"
 	desc = "Recovered from the aftermath of a revolt aboard Defense Outpost Theta Aegis, in which a seemingly endless tide of Assistants caused heavy casualities among Nanotrasen military forces."
 	force_unwielded = 15
 	force_wielded = 25
-	throwforce = 20
-	throw_speed = 4
 	attack_verb = list("gored")
 
 /obj/item/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
@@ -696,7 +686,7 @@
 	force_unwielded = 100
 	force_wielded = 500000 // Kills you DEAD.
 
-/obj/item/twohanded/pitchfork/update_icon()
+/obj/item/twohanded/pitchfork/update_icon_state()
 	icon_state = "pitchfork[wielded]"
 
 /obj/item/twohanded/pitchfork/suicide_act(mob/user)
@@ -704,6 +694,7 @@
 	return (BRUTELOSS)
 
 /obj/item/twohanded/pitchfork/demonic/pickup(mob/living/user)
+	. = ..()
 	if(isliving(user) && user.mind && user.owns_soul() && !is_devil(user))
 		var/mob/living/U = user
 		U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \
@@ -770,7 +761,7 @@
 				return 1
 	return 0
 
-/obj/item/twohanded/vibro_weapon/update_icon()
+/obj/item/twohanded/vibro_weapon/update_icon_state()
 	icon_state = "hfrequency[wielded]"
 
 /*
@@ -782,32 +773,23 @@
 	desc = "A large, vicious axe crafted out of several sharpened bone plates and crudely tied together. Made of monsters, by killing monsters, for killing monsters."
 	force_wielded = 23
 
-/obj/item/twohanded/fireaxe/boneaxe/update_icon()
+/obj/item/twohanded/fireaxe/boneaxe/update_icon_state()
 	icon_state = "bone_axe[wielded]"
 
 /*
  * Bone Spear
  */
-/obj/item/twohanded/bonespear	//Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
+/obj/item/twohanded/spear/bonespear	//Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
 	icon_state = "bone_spear0"
-	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "bone spear"
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
-	force = 11
-	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK
-	force_unwielded = 11
-	force_wielded = 20					//I have no idea how to balance
+	force = 12
+	force_unwielded = 12
+	force_wielded = 20
 	throwforce = 22
-	throw_speed = 4
-	embedding = list("embedded_impact_pain_multiplier" = 3)
 	armour_penetration = 15				//Enhanced armor piercing
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
-	sharpness = IS_SHARP
 
-/obj/item/twohanded/bonespear/update_icon()
+/obj/item/twohanded/spear/bonespear/update_icon_state()
 	icon_state = "bone_spear[wielded]"
 
 /obj/item/twohanded/binoculars
@@ -856,8 +838,9 @@
 
 /obj/item/twohanded/binoculars/unwield(mob/user)
 	. = ..()
-	UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-	listeningTo = null
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+		listeningTo = null
 	user.visible_message("<span class='notice'>[user] lowers [src].</span>", "<span class='notice'>You lower [src].</span>")
 	item_state = "binoculars"
 	user.regenerate_icons()

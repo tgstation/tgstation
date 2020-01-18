@@ -88,12 +88,12 @@
 	return (OXYLOSS)
 
 /obj/item/storage/backpack/santabag/proc/regenerate_presents()
-	addtimer(CALLBACK(src, .proc/regenerate_presents), rand(30 SECONDS, 60 SECONDS))
+	addtimer(CALLBACK(src, .proc/regenerate_presents), 30 SECONDS)
 
 	var/mob/M = get(loc, /mob)
 	if(!istype(M))
 		return
-	if(HAS_TRAIT(M, TRAIT_CANNOT_OPEN_PRESENTS))
+	if(M.mind && HAS_TRAIT(M.mind, TRAIT_CANNOT_OPEN_PRESENTS))
 		var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 		var/turf/floor = get_turf(src)
 		var/obj/item/I = new /obj/item/a_gift/anything(floor)
@@ -204,6 +204,15 @@
 	desc = "A spacious backpack with lots of pockets, worn by Engineers of an Emergency Response Team."
 	icon_state = "ert_engineering"
 
+/obj/item/storage/backpack/ert/janitor
+	name = "emergency response team janitor backpack"
+	desc = "A spacious backpack with lots of pockets, worn by Janitors of an Emergency Response Team."
+	icon_state = "ert_janitor"
+
+/obj/item/storage/backpack/ert/clown
+	name = "emergency response team clown backpack"
+	desc = "A spacious backpack with lots of pockets, worn by Clowns of an Emergency Response Team."
+	icon_state = "ert_clown"
 /*
  * Satchel Types
  */
@@ -212,11 +221,13 @@
 	name = "satchel"
 	desc = "A trendy looking satchel."
 	icon_state = "satchel-norm"
+	item_state = "satchel-norm"
 
 /obj/item/storage/backpack/satchel/leather
 	name = "leather satchel"
 	desc = "It's a very fancy satchel made with fine leather."
 	icon_state = "satchel"
+	item_state = "satchel"
 
 /obj/item/storage/backpack/satchel/leather/withwallet/PopulateContents()
 	new /obj/item/storage/wallet/random(src)
@@ -228,67 +239,68 @@
 	name = "industrial satchel"
 	desc = "A tough satchel with extra pockets."
 	icon_state = "satchel-eng"
-	item_state = "engiepack"
+	item_state = "satchel-eng"
 	resistance_flags = FIRE_PROOF
 
 /obj/item/storage/backpack/satchel/med
 	name = "medical satchel"
 	desc = "A sterile satchel used in medical departments."
 	icon_state = "satchel-med"
-	item_state = "medicalpack"
+	item_state = "satchel-med"
 
 /obj/item/storage/backpack/satchel/vir
 	name = "virologist satchel"
 	desc = "A sterile satchel with virologist colours."
 	icon_state = "satchel-vir"
-	item_state = "viropack"
+	item_state = "satchel-vir"
 
 /obj/item/storage/backpack/satchel/chem
 	name = "chemist satchel"
 	desc = "A sterile satchel with chemist colours."
 	icon_state = "satchel-chem"
-	item_state = "chempack"
+	item_state = "satchel-chem"
 
 /obj/item/storage/backpack/satchel/gen
 	name = "geneticist satchel"
 	desc = "A sterile satchel with geneticist colours."
 	icon_state = "satchel-gen"
-	item_state = "genepack"
+	item_state = "satchel-gen"
 
 /obj/item/storage/backpack/satchel/tox
 	name = "scientist satchel"
 	desc = "Useful for holding research materials."
 	icon_state = "satchel-tox"
-	item_state = "toxpack"
+	item_state = "satchel-tox"
 
 /obj/item/storage/backpack/satchel/hyd
 	name = "botanist satchel"
 	desc = "A satchel made of all natural fibers."
 	icon_state = "satchel-hyd"
-	item_state = "botpack"
+	item_state = "satchel-hyd"
 
 /obj/item/storage/backpack/satchel/sec
 	name = "security satchel"
 	desc = "A robust satchel for security related needs."
 	icon_state = "satchel-sec"
-	item_state = "securitypack"
+	item_state = "satchel-sec"
 
 /obj/item/storage/backpack/satchel/explorer
 	name = "explorer satchel"
 	desc = "A robust satchel for stashing your loot."
 	icon_state = "satchel-explorer"
-	item_state = "explorerpack"
+	item_state = "satchel-explorer"
 
 /obj/item/storage/backpack/satchel/cap
 	name = "captain's satchel"
 	desc = "An exclusive satchel for Nanotrasen officers."
 	icon_state = "satchel-cap"
-	item_state = "captainpack"
+	item_state = "satchel-cap"
 
 /obj/item/storage/backpack/satchel/flat
 	name = "smuggler's satchel"
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
+	item_state = "satchel-flat"
 	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
 	level = 1
 
@@ -538,15 +550,6 @@
 	new /obj/item/ammo_box/magazine/m12g(src)
 	new /obj/item/ammo_box/magazine/m12g(src)
 	new /obj/item/clothing/glasses/thermal/syndi(src)
-
-/obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
-	desc = "A large duffel bag containing a tactical medkit, a Donksoft machine gun, a big jumbo box of riot darts, and a knock-off pair of magboots."
-
-/obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle/PopulateContents()
-	new /obj/item/clothing/shoes/magboots/syndie(src)
-	new /obj/item/storage/firstaid/tactical(src)
-	new /obj/item/gun/ballistic/automatic/l6_saw/toy(src)
-	new /obj/item/ammo_box/foambox/riot(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
 	desc = "A large duffel bag containing a medical equipment, a Donksoft LMG, a big jumbo box of riot darts, and a knock-off pair of magboots."

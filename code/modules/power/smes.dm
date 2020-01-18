@@ -57,7 +57,7 @@
 					break dir_loop
 
 	if(!terminal)
-		stat |= BROKEN
+		obj_break()
 		return
 	terminal.master = src
 	update_icon()
@@ -202,7 +202,7 @@
 	if(terminal)
 		terminal.master = null
 		terminal = null
-		stat |= BROKEN
+		obj_break()
 
 
 /obj/machinery/power/smes/update_icon()

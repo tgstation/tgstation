@@ -57,7 +57,6 @@
 #define FLOODLIGHT_NEEDS_WIRES 0
 #define FLOODLIGHT_NEEDS_LIGHTS 1
 #define FLOODLIGHT_NEEDS_SECURING 2
-#define FLOODLIGHT_NEEDS_WRENCHING 3
 
 //other construction-related things
 
@@ -98,6 +97,7 @@
 #define CAT_SOUP	"Soups"
 #define CAT_SPAGHETTI	"Spaghettis"
 #define CAT_ICE	"Frozen"
+#define CAT_DRINK "Drinks"
 
 #define RCD_FLOORWALL 1
 #define RCD_AIRLOCK 2

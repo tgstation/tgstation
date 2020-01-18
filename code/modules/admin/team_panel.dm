@@ -111,7 +111,7 @@
 	for(var/mob/M in GLOB.mob_list)
 		if(M.mind)
 			minds |= M.mind
-	var/datum/mind/value = input("Select new member:", "New team member", null) as null|anything in minds
+	var/datum/mind/value = input("Select new member:", "New team member", null) as null|anything in sortNames(minds)
 	if (!value)
 		return
 
@@ -169,7 +169,7 @@
 //This is here if you want admin created teams to tell each other apart easily.
 /datum/team/custom/proc/admin_force_hud(mob/user)
 	var/list/possible_icons = icon_states('icons/mob/hud.dmi')
-	var/new_hud_state = input(user,"Choose hud icon state","Custom HUD","traitor") as null|anything in possible_icons
+	var/new_hud_state = input(user,"Choose hud icon state","Custom HUD","traitor") as null|anything in sortList(possible_icons)
 	if(!new_hud_state)
 		return
 	//suppose could ask for color too

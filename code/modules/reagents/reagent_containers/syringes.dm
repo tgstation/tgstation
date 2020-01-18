@@ -12,8 +12,9 @@
 	var/mode = SYRINGE_DRAW
 	var/busy = FALSE		// needed for delayed drawing of blood
 	var/proj_piercing = 0 //does it pierce through thick clothes when shot with syringe gun
-	materials = list(/datum/material/iron=10, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 	reagent_flags = TRANSPARENT
+	custom_price = 150
 
 /obj/item/reagent_containers/syringe/Initialize()
 	. = ..()
@@ -137,7 +138,7 @@
 						return
 					if(L.reagents.total_volume >= L.reagents.maximum_volume)
 						return
-					L.visible_message("<span class='danger'>[user] injects [L] with the syringe!", \
+					L.visible_message("<span class='danger'>[user] injects [L] with the syringe!</span>", \
 									"<span class='userdanger'>[user] injects you with the syringe!</span>")
 
 				if(L != user)
@@ -181,13 +182,13 @@
 
 /obj/item/reagent_containers/syringe/multiver
 	name = "syringe (multiver)"
-	desc = "Contains multiver."
-	list_reagents = list(/datum/reagent/medicine/C2/multiver = 15)
+	desc = "Contains multiver. Diluted with granibitaluri."
+	list_reagents = list(/datum/reagent/medicine/C2/multiver = 6, /datum/reagent/medicine/granibitaluri = 9)
 
 /obj/item/reagent_containers/syringe/convermol
 	name = "syringe (convermol)"
-	desc = "Contains convermol."
-	list_reagents = list(/datum/reagent/medicine/C2/convermol = 15)
+	desc = "Contains convermol. Diluted with granibitaluri."
+	list_reagents = list(/datum/reagent/medicine/C2/convermol = 6, /datum/reagent/medicine/granibitaluri = 9)
 
 /obj/item/reagent_containers/syringe/antiviral
 	name = "syringe (spaceacillin)"
@@ -264,8 +265,8 @@
 	list_reagents = list(/datum/reagent/medicine/oxandrolone = 15)
 
 /obj/item/reagent_containers/syringe/salacid
-	name = "syringe (salicyclic acid)"
-	desc = "Contains salicyclic acid, used to treat severe brute damage."
+	name = "syringe (salicylic acid)"
+	desc = "Contains salicylic acid, used to treat severe brute damage."
 	list_reagents = list(/datum/reagent/medicine/sal_acid = 15)
 
 /obj/item/reagent_containers/syringe/penacid

@@ -498,7 +498,6 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	if (isnull(A)) //If theres no supplypod bay mapped into centcom, throw an error
 		to_chat(holder.mob, "No /area/centcom/supplypod/loading/one (or /two or /three or /four) in the world! You can make one yourself (then refresh) for now, but yell at a mapper to fix this, today!")
 		CRASH("No /area/centcom/supplypod/loading/one (or /two or /three or /four) has been mapped into the centcom z-level!")
-		return
 	orderedArea = list()
 	if (!isemptylist(A.contents)) //Go through the area passed into the proc, and figure out the top left and bottom right corners by calculating max and min values
 		var/startX = A.contents[1].x //Create the four values (we do it off a.contents[1] so they have some sort of arbitrary initial value. They should be overwritten in a few moments)
@@ -600,8 +599,8 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 		for (var/X in temp_pod.explosionSize)
 			explosionString += "[X]|"
 
-	var/msg = "launched [podString][whomString].[delayString][damageString][explosionString]"
-	message_admins("[key_name_admin(usr)] [msg] in [AREACOORD(specificTarget)].")
+	var/msg = "launched [podString] towards [whomString] [delayString][damageString][explosionString]"
+	message_admins("[key_name_admin(usr)] [msg] in [ADMIN_VERBOSEJMP(specificTarget)].")
 	if (!isemptylist(whoDyin))
 		for (var/mob/living/M in whoDyin)
 			admin_ticket_log(M, "[key_name_admin(usr)] [msg]")

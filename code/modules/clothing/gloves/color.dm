@@ -2,13 +2,15 @@
 	dying_key = DYE_REGISTRY_GLOVES
 
 /obj/item/clothing/gloves/color/yellow
-	desc = "These gloves will protect the wearer from electric shock."
+	desc = "These gloves provide protection against electric shock."
 	name = "insulated gloves"
 	icon_state = "yellow"
 	item_state = "ygloves"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
+	custom_price = 1200
+	custom_premium_price = 1200
 
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap knockoffs of the coveted ones - no way this can end badly."
@@ -67,7 +69,7 @@
 
 /obj/item/clothing/gloves/color/red/insulated
 	name = "insulated gloves"
-	desc = "These gloves will protect the wearer from electric shock."
+	desc = "These gloves provide protection against electric shock."
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
@@ -130,20 +132,42 @@
 
 /obj/item/clothing/gloves/color/latex
 	name = "latex gloves"
-	desc = "Cheap sterile gloves made from latex."
+	desc = "Cheap sterile gloves made from latex. Transfers minor paramedic knowledge to the user via budget nanochips."
 	icon_state = "latex"
-	item_state = "lgloves"
+	item_state = "latex"
 	siemens_coefficient = 0.3
 	permeability_coefficient = 0.01
 	transfer_prints = TRUE
 	resistance_flags = NONE
+	var/carrytrait = TRAIT_QUICK_CARRY
+
+/obj/item/clothing/gloves/color/latex/equipped(mob/user, slot)
+	..()
+	if(slot == ITEM_SLOT_GLOVES)
+		ADD_TRAIT(user, carrytrait, CLOTHING_TRAIT)
+
+/obj/item/clothing/gloves/color/latex/dropped(mob/user)
+	..()
+	REMOVE_TRAIT(user, carrytrait, CLOTHING_TRAIT)
 
 /obj/item/clothing/gloves/color/latex/nitrile
 	name = "nitrile gloves"
-	desc = "Pricy sterile gloves that are stronger than latex."
+	desc = "Pricy sterile gloves that are thicker than latex. Transfers intimate paramedic knowledge into the user via nanochips."
 	icon_state = "nitrile"
 	item_state = "nitrilegloves"
 	transfer_prints = FALSE
+	carrytrait = TRAIT_QUICKER_CARRY
+
+/obj/item/clothing/gloves/color/latex/engineering
+	name = "tinker's gloves"
+	desc = "Overdesigned engineering gloves that have automated construction subrutines dialed in, allowing for faster construction while worn."
+	icon = 'icons/obj/clothing/clockwork_garb.dmi'
+	icon_state = "clockwork_gauntlets"
+	item_state = "clockwork_gauntlets"
+	siemens_coefficient = 0.8
+	permeability_coefficient = 0.3
+	carrytrait = TRAIT_QUICK_BUILD
+	custom_materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
 
 /obj/item/clothing/gloves/color/white
 	name = "white gloves"

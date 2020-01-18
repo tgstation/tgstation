@@ -7,7 +7,7 @@
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 200
-	integrity_failure = 100
+	integrity_failure = 0.5
 
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
@@ -29,20 +29,20 @@
 
 		//handle facial hair (if necessary)
 		if(H.gender != FEMALE)
-			var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in GLOB.facial_hair_styles_list
+			var/new_style = input(user, "Select a facial hairstyle", "Grooming")  as null|anything in GLOB.facial_hairstyles_list
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return	//no tele-grooming
 			if(new_style)
-				H.facial_hair_style = new_style
+				H.facial_hairstyle = new_style
 		else
-			H.facial_hair_style = "Shaved"
+			H.facial_hairstyle = "Shaved"
 
 		//handle normal hair
-		var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in GLOB.hair_styles_list
+		var/new_style = input(user, "Select a hairstyle", "Grooming")  as null|anything in GLOB.hairstyles_list
 		if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 			return	//no tele-grooming
 		if(new_style)
-			H.hair_style = new_style
+			H.hairstyle = new_style
 
 		H.update_hair()
 
@@ -106,6 +106,7 @@
 			var/datum/species/S = speciestype
 			if(initial(S.changesource_flags) & MIRROR_MAGIC)
 				choosable_races += initial(S.id)
+		choosable_races = sortList(choosable_races)
 	..()
 
 /obj/structure/mirror/magic/lesser/New()
@@ -135,8 +136,7 @@
 
 	switch(choice)
 		if("name")
-			var/newname = copytext(sanitize_name(input(H, "Who are we again?", "Name change", H.name) as null|text),1,MAX_NAME_LEN)
-
+			var/newname = sanitize_name(reject_bad_text(stripped_input(H, "Who are we again?", "Name change", H.name, MAX_NAME_LEN)))
 			if(!newname)
 				return
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
@@ -211,7 +211,7 @@
 			H.update_mutations_overlay() //(hulk male/female)
 
 		if("hair")
-			var/hairchoice = alert(H, "Hair style or hair color?", "Change Hair", "Style", "Color")
+			var/hairchoice = alert(H, "Hairstyle or hair color?", "Change Hair", "Style", "Color")
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
 			if(hairchoice == "Style") //So you just want to use a mirror then?

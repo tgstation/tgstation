@@ -66,6 +66,8 @@
 		original_name = name // can't use initial because of random posters
 		name = "poster - [name]"
 		desc = "A large piece of space-resistant printed paper. [desc]"
+	
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 300), 0)
 
 /obj/structure/sign/poster/proc/randomise(base_type)
 	var/list/poster_types = subtypesof(base_type)
@@ -128,7 +130,7 @@
 	if (smooth & SMOOTH_DIAGONAL)
 		for (var/O in overlays)
 			var/image/I = O
-			if (copytext(I.icon_state, 1, 3) == "d-")
+			if(copytext(I.icon_state, 1, 3) == "d-") //3 == length("d-") + 1
 				return
 
 	var/stuff_on_wall = 0

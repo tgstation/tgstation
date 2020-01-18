@@ -4,7 +4,6 @@
 
 <script>
 import { winset } from 'util/byond'
-import { lock } from 'util/dragresize'
 
 component.exports = {
   components: {
@@ -30,6 +29,7 @@ component.exports = {
     const interfaces = require('interfaces/**/*.ract', { mode: 'hash' })
     if (requested in interfaces) {
       this.components.interface = interfaces[requested] // Use the interface specified in the config...
+      document.body.classList.add(requested) //Name of the interface class for interface-level css
     } else {
       this.components.interface = interfaces.error // ...unless it does not exist.
     }
@@ -41,12 +41,6 @@ component.exports = {
     })
   },
   oncomplete () {
-    // If the window starts off screen, pull it back.
-    if (this.get('config.locked')) {
-      let {x, y} = lock(window.screenLeft, window.screenTop)
-      winset(this.get('config.window'), 'pos', `${x},${y}`)
-    }
-
     // Give focus back to the map.
     winset('mapwindow.map', 'focus', true)
   }
@@ -58,6 +52,6 @@ component.exports = {
   <warnings/>
   <interface/>
 </main>
-{{#if config.titlebar}}
+{{#if config.fancy}}
   <resize/>
 {{/if}}

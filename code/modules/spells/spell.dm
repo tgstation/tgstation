@@ -355,6 +355,13 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/cast(list/targets,mob/user = usr)
 	return
 
+/obj/effect/proc_holder/spell/proc/view_or_range(distance = world.view, center=usr, type="view")
+	switch(type)
+		if("view")
+			. = view(distance,center)
+		if("range")
+			. = range(distance,center)
+
 /obj/effect/proc_holder/spell/proc/revert_cast(mob/user = usr) //resets recharge or readds a charge
 	switch(charge_type)
 		if("recharge")
@@ -428,7 +435,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				//Adds a safety check post-input to make sure those targets are actually in range.
 				var/mob/M
 				if(!random_target)
-					M = input("Choose the target for the spell.", "Targeting") as null|mob in possible_targets
+					M = input("Choose the target for the spell.", "Targeting") as null|mob in sortNames(possible_targets)
 				else
 					switch(random_target_priority)
 						if(TARGET_RANDOM)
@@ -469,7 +476,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		return
 
 	perform(targets,user=user)
-
 /obj/effect/proc_holder/spell/aoe_turf/choose_targets(mob/user = usr)
 	var/list/targets = list()
 

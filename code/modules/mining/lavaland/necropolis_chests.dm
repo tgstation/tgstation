@@ -208,7 +208,7 @@
 	var/mob/living/carbon/human/active_owner
 
 /obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot)
-	return slot == SLOT_NECK
+	return slot == ITEM_SLOT_NECK
 
 /obj/item/clothing/neck/necklace/memento_mori/dropped(mob/user)
 	..()
@@ -250,10 +250,7 @@
 	if(!MM.active_owner)
 		if(ishuman(owner))
 			MM.memento(owner)
-	else
-		to_chat(owner, "<span class='warning'>You try to free your lifeforce from the pendant...</span>")
-		if(do_after(owner, 40, target = owner))
-			MM.mori()
+			Remove(MM.active_owner) //Remove the action button, since there's no real use in having it now.
 
 //Wisp Lantern
 /obj/item/wisp_lantern
@@ -337,7 +334,7 @@
 
 /obj/item/warp_cube/attack_self(mob/user)
 	if(!linked)
-		to_chat(user, "[src] fizzles uselessly.")
+		to_chat(user, "<span class='warning'>[src] fizzles uselessly.</span>")
 		return
 	if(teleporting)
 		return
@@ -394,7 +391,7 @@
 	desc = "Mid or feed."
 	ammo_type = /obj/item/ammo_casing/magic/hook
 	icon_state = "hook"
-	item_state = "chain"
+	item_state = "hook"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	fire_sound = 'sound/weapons/batonextend.ogg'
@@ -405,29 +402,30 @@
 /obj/item/ammo_casing/magic/hook
 	name = "hook"
 	desc = "A hook."
-	projectile_type = /obj/item/projectile/hook
+	projectile_type = /obj/projectile/hook
 	caliber = "hook"
 	icon_state = "hook"
 
-/obj/item/projectile/hook
+/obj/projectile/hook
 	name = "hook"
 	icon_state = "hook"
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	pass_flags = PASSTABLE
-	damage = 25
-	armour_penetration = 100
+	damage = 20
+	stamina = 20
+	armour_penetration = 60
 	damage_type = BRUTE
 	hitsound = 'sound/effects/splat.ogg'
-	paralyze = 30
 	var/chain
+	var/knockdown_time = (0.5 SECONDS)
 
-/obj/item/projectile/hook/fire(setAngle)
+/obj/projectile/hook/fire(setAngle)
 	if(firer)
 		chain = firer.Beam(src, icon_state = "chain", time = INFINITY, maxdistance = INFINITY)
 	..()
 	//TODO: root the firer until the chain returns
 
-/obj/item/projectile/hook/on_hit(atom/target)
+/obj/projectile/hook/on_hit(atom/target)
 	. = ..()
 	if(ismovableatom(target))
 		var/atom/movable/A = target
@@ -435,10 +433,14 @@
 			return
 		A.visible_message("<span class='danger'>[A] is snagged by [firer]'s hook!</span>")
 		new /datum/forced_movement(A, get_turf(firer), 5, TRUE)
+		if (isliving(target))
+			var/mob/living/fresh_meat = target
+			fresh_meat.Knockdown(knockdown_time)
+			return
 		//TODO: keep the chain beamed to A
 		//TODO: needs a callback to delete the chain
 
-/obj/item/projectile/hook/Destroy()
+/obj/projectile/hook/Destroy()
 	qdel(chain)
 	return ..()
 
@@ -451,11 +453,11 @@
 	to_chat(user, "<span class='warning'>The [src] isn't ready to fire yet!</span>")
 
 /obj/item/ammo_casing/magic/hook/bounty
-	projectile_type = /obj/item/projectile/hook/bounty
+	projectile_type = /obj/projectile/hook/bounty
 
-/obj/item/projectile/hook/bounty
+/obj/projectile/hook/bounty
 	damage = 0
-	paralyze = 20
+	stamina = 40
 
 //Immortality Talisman
 /obj/item/immortality_talisman
@@ -579,8 +581,8 @@
 /obj/item/book_of_babel/attack_self(mob/user)
 	if(!user.can_read(src))
 		return FALSE
-	to_chat(user, "You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops.")
-	user.grant_all_languages(omnitongue=TRUE)
+	to_chat(user, "<span class='notice'>You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops.</span>")
+	user.grant_all_languages()
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
 
@@ -640,7 +642,7 @@
 	to_chat(user, "<span class='notice'>You unfold the ladder. It extends much farther than you were expecting.</span>")
 	var/last_ladder = null
 	for(var/i in 1 to world.maxz)
-		if(is_centcom_level(i) || is_reserved_level(i) || is_reebe(i) || is_away_level(i))
+		if(is_centcom_level(i) || is_reserved_level(i) || is_away_level(i))
 			continue
 		var/turf/T2 = locate(ladder_x, ladder_y, i)
 		last_ladder = new /obj/structure/ladder/unbreakable/jacob(T2, null, last_ladder)
@@ -1039,7 +1041,7 @@
 		var/mob/living/L = I
 		da_list[L.real_name] = L
 
-	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in da_list
+	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in sortList(da_list)
 
 	choice = da_list[choice]
 
@@ -1047,11 +1049,11 @@
 		used = FALSE
 		return
 	if(!(isliving(choice)))
-		to_chat(user, "[choice] is already dead!")
+		to_chat(user, "<span class='warning'>[choice] is already dead!</span>")
 		used = FALSE
 		return
 	if(choice == user)
-		to_chat(user, "You feel like writing your own name into a cursed death warrant would be unwise.")
+		to_chat(user, "<span class='warning'>You feel like writing your own name into a cursed death warrant would be unwise.</span>")
 		used = FALSE
 		return
 
@@ -1069,8 +1071,8 @@
 /obj/structure/closet/crate/necropolis/colossus
 	name = "colossus chest"
 
-/obj/structure/closet/crate/necropolis/colossus/bullet_act(obj/item/projectile/P)
-	if(istype(P, /obj/item/projectile/colossus))
+/obj/structure/closet/crate/necropolis/colossus/bullet_act(obj/projectile/P)
+	if(istype(P, /obj/projectile/colossus))
 		return BULLET_ACT_FORCE_PIERCE
 	return ..()
 

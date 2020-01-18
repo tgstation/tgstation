@@ -48,7 +48,7 @@
 				trans = reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user)
 			else
 				trans = reagents.copy_to(M, amount_per_transfer_from_this)
-			to_chat(user, "<span class='notice'>[trans] unit\s injected.  [reagents.total_volume] unit\s remaining in [src].</span>")
+			to_chat(user, "<span class='notice'>[trans] unit\s injected. [reagents.total_volume] unit\s remaining in [src].</span>")
 			log_combat(user, M, "injected", src, "([contained])")
 		return TRUE
 	return FALSE
@@ -97,18 +97,19 @@
 
 /obj/item/reagent_containers/hypospray/medipen
 	name = "epinephrine medipen"
-	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge."
+	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Contains a powerful preservative that can delay decomposition when applied to a dead body."
 	icon_state = "medipen"
 	item_state = "medipen"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	amount_per_transfer_from_this = 10
-	volume = 10
+	amount_per_transfer_from_this = 13
+	volume = 13
 	ignore_flags = 1 //so you can medipen through hardsuits
 	reagent_flags = DRAWABLE
 	flags_1 = null
-	list_reagents = list(/datum/reagent/medicine/epinephrine = 10)
-	custom_price = 40
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/toxin/formaldehyde = 3)
+	custom_price = 150
+	custom_premium_price = 300
 
 /obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -182,8 +183,8 @@
 	list_reagents = list(/datum/reagent/medicine/pen_acid = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/salacid
-	name = "salicyclic acid medipen"
-	desc = "A autoinjector containing salicyclic acid, used to treat severe brute damage."
+	name = "salicylic acid medipen"
+	desc = "A autoinjector containing salicylic acid, used to treat severe brute damage."
 	icon_state = "salacid"
 	item_state = "salacid"
 	list_reagents = list(/datum/reagent/medicine/sal_acid = 10)
@@ -217,9 +218,9 @@
 	desc = "A medipen for surviving in the harshest of environments, heals and protects from environmental hazards. WARNING: Do not inject more than one pen in quick succession."
 	icon_state = "stimpen"
 	item_state = "stimpen"
-	volume = 57
-	amount_per_transfer_from_this = 57
-	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/lavaland_extract = 2, /datum/reagent/medicine/omnizine = 5)
+	volume = 60
+	amount_per_transfer_from_this = 60
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/lavaland_extract = 2, /datum/reagent/medicine/omnizine = 5, /datum/reagent/medicine/oxandrolone = 8, /datum/reagent/medicine/sal_acid = 8, /datum/reagent/medicine/morphine = 2)
 
 /obj/item/reagent_containers/hypospray/medipen/atropine
 	name = "atropine autoinjector"

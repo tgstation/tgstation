@@ -90,11 +90,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		..()
 
 /obj/item/proc/help_light_cig(mob/living/M)
-	var/mask_item = M.get_item_by_slot(SLOT_WEAR_MASK)
+	var/mask_item = M.get_item_by_slot(ITEM_SLOT_MASK)
 	if(istype(mask_item, /obj/item/clothing/mask/cigarette))
 		return mask_item
 
-/obj/item/match/is_hot()
+/obj/item/match/get_temperature()
 	return lit * heat
 
 /obj/item/match/firebrand
@@ -144,7 +144,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.add_reagent_list(list_reagents)
 	if(starts_lit)
 		light()
-	AddComponent(/datum/component/knockoff,90,list(BODY_ZONE_PRECISE_MOUTH),list(SLOT_WEAR_MASK))//90% to knock off when wearing a mask
+	AddComponent(/datum/component/knockoff,90,list(BODY_ZONE_PRECISE_MOUTH),list(ITEM_SLOT_MASK))//90% to knock off when wearing a mask
 
 /obj/item/clothing/mask/cigarette/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -217,7 +217,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/extinguish()
 	if(!lit)
 		return
-	name = copytext(name,5,length(name)+1)
+	name = copytext_char(name, 5) //5 == length_char("lit ") + 1
 	attack_verb = null
 	hitsound = null
 	damtype = BRUTE
@@ -298,7 +298,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/fire_act(exposed_temperature, exposed_volume)
 	light()
 
-/obj/item/clothing/mask/cigarette/is_hot()
+/obj/item/clothing/mask/cigarette/get_temperature()
 	return lit * heat
 
 // Cigarette brands.
@@ -307,10 +307,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A Space Cigarette brand cigarette."
 
 /obj/item/clothing/mask/cigarette/dromedary
-	desc = "A DromedaryCo brand cigarette."
+	desc = "A DromedaryCo brand cigarette. Contrary to popular belief, does not contain Calomel, but is reported to have a watery taste."
+	list_reagents = list(/datum/reagent/drug/nicotine = 13, /datum/reagent/water = 5) //camel has water
 
 /obj/item/clothing/mask/cigarette/uplift
-	desc = "An Uplift Smooth brand cigarette."
+	desc = "An Uplift Smooth brand cigarette. Smells refreshing."
 	list_reagents = list(/datum/reagent/drug/nicotine = 13, /datum/reagent/consumable/menthol = 5)
 
 /obj/item/clothing/mask/cigarette/robust
@@ -321,7 +322,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/gold = 3) // Just enough to taste a hint of expensive metal.
 
 /obj/item/clothing/mask/cigarette/carp
-	desc = "A Carp Classic brand cigarette."
+	desc = "A Carp Classic brand cigarette. A small label on its side indicates that it does NOT contain carpotoxin."
+
+/obj/item/clothing/mask/cigarette/carp/Initialize()
+	. = ..()
+	if(prob(5))
+		list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/toxin/carpotoxin = 3) //they lied
 
 /obj/item/clothing/mask/cigarette/syndicate
 	desc = "An unknown brand cigarette."
@@ -370,6 +376,23 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/rollie/mindbreaker
 	list_reagents = list(/datum/reagent/toxin/mindbreaker = 35, /datum/reagent/toxin/lipolicide = 15)
+
+/obj/item/clothing/mask/cigarette/candy
+	name = "Little Timmy's candy cigarette"
+	desc = "For all ages*! Doesn't contain any amount of nicotine. Health and safety risks can be read on the tip of the cigarette."
+	smoketime = 120
+	icon_on = "candyon"
+	icon_off = "candyoff" //make sure to add positional sprites in icons/obj/cigarettes.dmi if you add more.
+	item_state = "candyoff"
+	icon_state = "candyoff"
+	type_butt = /obj/item/reagent_containers/food/snacks/candy_trash
+	list_reagents = list(/datum/reagent/consumable/sugar = 10, /datum/reagent/consumable/caramel = 10)
+
+/obj/item/clothing/mask/cigarette/candy/nicotine
+	desc = "For all ages*! Doesn't contain any* amount of nicotine. Health and safety risks can be read on the tip of the cigarette."
+	type_butt = /obj/item/reagent_containers/food/snacks/candy_trash/nicotine
+	list_reagents = list(/datum/reagent/consumable/sugar = 10, /datum/reagent/consumable/caramel = 10, /datum/reagent/drug/nicotine = 20) //oh no!
+	smoke_all = TRUE //timmy's not getting out of this one
 
 /obj/item/cigbutt/roach
 	name = "roach"
@@ -554,7 +577,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	heat = 1500
 	resistance_flags = FIRE_PROOF
 	light_color = LIGHT_COLOR_FIRE
-	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/oil = 5)
+	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/fuel/oil = 5)
+	custom_price = 55
 
 /obj/item/lighter/Initialize()
 	. = ..()
@@ -576,14 +600,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		user.visible_message("<span class='suicide'>[user] begins whacking [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		return BRUTELOSS
 
-/obj/item/lighter/update_icon()
-	cut_overlays()
-	var/mutable_appearance/lighter_overlay = mutable_appearance(icon,"lighter_overlay_[overlay_state][lit ? "-on" : ""]")
+/obj/item/lighter/update_overlays()
+	. = ..()
+	. += create_lighter_overlay()
+
+/obj/item/lighter/update_icon_state()
 	icon_state = "[initial(icon_state)][lit ? "-on" : ""]"
-	add_overlay(lighter_overlay)
+
+/obj/item/lighter/proc/create_lighter_overlay()
+	return mutable_appearance(icon, "lighter_overlay_[overlay_state][lit ? "-on" : ""]")
 
 /obj/item/lighter/ignition_effect(atom/A, mob/user)
-	if(is_hot())
+	if(get_temperature())
 		. = "<span class='rose'>With a single flick of [user.p_their()] wrist, [user] smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
 
 /obj/item/lighter/proc/set_lit(new_lit)
@@ -661,7 +689,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/lighter/process()
 	open_flame()
 
-/obj/item/lighter/is_hot()
+/obj/item/lighter/get_temperature()
 	return lit * heat
 
 
@@ -702,15 +730,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		lighter_color = pick(color_list)
 	update_icon()
 
-/obj/item/lighter/greyscale/update_icon()
-	cut_overlays()
-	var/mutable_appearance/lighter_overlay = mutable_appearance(icon,"lighter_overlay_[overlay_state][lit ? "-on" : ""]")
-	icon_state = "[initial(icon_state)][lit ? "-on" : ""]"
+/obj/item/lighter/greyscale/create_lighter_overlay()
+	var/mutable_appearance/lighter_overlay = ..()
 	lighter_overlay.color = lighter_color
-	add_overlay(lighter_overlay)
+	return lighter_overlay
 
 /obj/item/lighter/greyscale/ignition_effect(atom/A, mob/user)
-	if(is_hot())
+	if(get_temperature())
 		. = "<span class='notice'>After some fiddling, [user] manages to light [A] with [src].</span>"
 
 
@@ -840,7 +866,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.clear_reagents()
 
 /obj/item/clothing/mask/vape/equipped(mob/user, slot)
-	if(slot == SLOT_WEAR_MASK)
+	. = ..()
+	if(slot == ITEM_SLOT_MASK)
 		if(!screw)
 			to_chat(user, "<span class='notice'>You start puffing on the vape.</span>")
 			DISABLE_BITFIELD(reagents.flags, NO_REACT)
@@ -849,8 +876,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			to_chat(user, "<span class='warning'>You need to close the cap first!</span>")
 
 /obj/item/clothing/mask/vape/dropped(mob/user)
-	var/mob/living/carbon/C = user
-	if(C.get_item_by_slot(SLOT_WEAR_MASK) == src)
+	. = ..()
+	if(user.get_item_by_slot(ITEM_SLOT_MASK) == src)
 		ENABLE_BITFIELD(reagents.flags, NO_REACT)
 		STOP_PROCESSING(SSobj, src)
 

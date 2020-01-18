@@ -81,7 +81,7 @@
 	if (express_console)
 		unlink_console()
 	else
-		to_chat(user, "<span class='notice'>There is no linked console!</span>")
+		to_chat(user, "<span class='alert'>There is no linked console.</span>")
 
 /obj/item/supplypod_beacon/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/pen)) //give a tag that is visible from the linked express console

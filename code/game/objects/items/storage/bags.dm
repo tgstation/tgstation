@@ -55,14 +55,16 @@
 	playsound(loc, 'sound/items/eatfood.ogg', 50, TRUE, -1)
 	return (TOXLOSS)
 
-/obj/item/storage/bag/trash/update_icon()
-	if(contents.len == 0)
-		icon_state = "[initial(icon_state)]"
-	else if(contents.len < 12)
-		icon_state = "[initial(icon_state)]1"
-	else if(contents.len < 21)
-		icon_state = "[initial(icon_state)]2"
-	else icon_state = "[initial(icon_state)]3"
+/obj/item/storage/bag/trash/update_icon_state()
+	switch(contents.len)
+		if(0)
+			icon_state = "[initial(icon_state)]"
+		if(0 to 11)
+			icon_state = "[initial(icon_state)]1"
+		if(11 to 20)
+			icon_state = "[initial(icon_state)]2"
+		else
+			icon_state = "[initial(icon_state)]3"
 
 /obj/item/storage/bag/trash/cyborg
 	insertable = FALSE
@@ -100,7 +102,7 @@
 	desc = "This little bugger can be used to store and transport ores."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "satchel"
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKET
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_NORMAL
 	component_type = /datum/component/storage/concrete/stack
 	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
@@ -108,6 +110,7 @@
 
 /obj/item/storage/bag/ore/ComponentInitialize()
 	. = ..()
+	AddComponent(/datum/component/rad_insulation, 0.01) //please datum mats no more cancer
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
 	STR.set_holdable(list(/obj/item/stack/ore))
@@ -194,7 +197,13 @@
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 100
 	STR.max_items = 100
-	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/grown, /obj/item/seeds, /obj/item/grown, /obj/item/reagent_containers/honeycomb, /obj/item/disk/plantgene))
+	STR.set_holdable(list(
+		/obj/item/reagent_containers/food/snacks/grown,
+		/obj/item/seeds,
+		/obj/item/grown,
+		/obj/item/reagent_containers/honeycomb,
+		/obj/item/disk/plantgene
+		))
 ////////
 
 /obj/item/storage/bag/plants/portaseeder
@@ -231,7 +240,14 @@
 	. = ..()
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
-	STR.set_holdable(list(/obj/item/stack/sheet), list(/obj/item/stack/sheet/mineral/sandstone, /obj/item/stack/sheet/mineral/wood))
+	STR.set_holdable(list(
+			/obj/item/stack/sheet,
+			/obj/item/stack/tile/bronze
+			),
+		list(
+			/obj/item/stack/sheet/mineral/sandstone,
+			/obj/item/stack/sheet/mineral/wood
+			))
 	STR.max_combined_stack_amount = 300
 
 // -----------------------------
@@ -267,7 +283,11 @@
 	STR.max_combined_w_class = 21
 	STR.max_items = 7
 	STR.display_numerical_stacking = FALSE
-	STR.set_holdable(list(/obj/item/book, /obj/item/storage/book, /obj/item/spellbook))
+	STR.set_holdable(list(
+		/obj/item/book,
+		/obj/item/storage/book,
+		/obj/item/spellbook
+		))
 
 /*
  * Trays - Agouri
@@ -283,7 +303,7 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
-	materials = list(/datum/material/iron=3000)
+	custom_materials = list(/datum/material/iron=3000)
 
 /obj/item/storage/bag/tray/ComponentInitialize()
 	. = ..()
@@ -315,10 +335,13 @@
 			step(I, pick(NORTH,SOUTH,EAST,WEST))
 			sleep(rand(2,4))
 
-/obj/item/storage/bag/tray/update_icon()
-	cut_overlays()
+/obj/item/storage/bag/tray/update_overlays()
+	. = ..()
 	for(var/obj/item/I in contents)
-		add_overlay(new /mutable_appearance(I))
+		var/mutable_appearance/I_copy = new(I)
+		I_copy.plane = FLOAT_PLANE
+		I_copy.layer = FLOAT_LAYER
+		. += I_copy
 
 /obj/item/storage/bag/tray/Entered()
 	. = ..()
@@ -346,7 +369,16 @@
 	STR.max_combined_w_class = 200
 	STR.max_items = 50
 	STR.insert_preposition = "in"
-	STR.set_holdable(list(/obj/item/reagent_containers/pill, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/medigel, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/chem_pack))
+	STR.set_holdable(list(
+		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/food/drinks/waterbottle,
+		/obj/item/reagent_containers/medigel,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/chem_pack
+		))
 
 /*
  *  Biowaste bag (mostly for xenobiologists)
@@ -366,7 +398,19 @@
 	STR.max_combined_w_class = 200
 	STR.max_items = 25
 	STR.insert_preposition = "in"
-	STR.set_holdable(list(/obj/item/slime_extract, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/blood, /obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/food/snacks/deadmouse, /obj/item/reagent_containers/food/snacks/monkeycube))
+	STR.set_holdable(list(
+		/obj/item/slime_extract,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/blood,
+		/obj/item/reagent_containers/hypospray/medipen,
+		/obj/item/reagent_containers/food/snacks/deadmouse,
+		/obj/item/reagent_containers/food/snacks/monkeycube,
+		/obj/item/organ,
+		/obj/item/bodypart
+		))
 
 /*
  *  Construction bag (for engineering, holds stock parts and electronics)
@@ -387,4 +431,13 @@
 	STR.max_items = 50
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.insert_preposition = "in"
-	STR.set_holdable(list(/obj/item/stack/ore/bluespace_crystal, /obj/item/assembly, /obj/item/stock_parts, /obj/item/reagent_containers/glass/beaker, /obj/item/stack/cable_coil, /obj/item/circuitboard, /obj/item/electronics))
+	STR.set_holdable(list(
+		/obj/item/stack/ore/bluespace_crystal,
+		/obj/item/assembly,
+		/obj/item/stock_parts,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/stack/cable_coil,
+		/obj/item/circuitboard,
+		/obj/item/electronics,
+		/obj/item/wallframe/camera
+		))

@@ -163,13 +163,13 @@
 /obj/machinery/ticket_machine/attack_hand(mob/living/carbon/user)
 	. = ..()
 	if(!ready)
-		to_chat(user,"You press the button, but nothing happens...")
+		to_chat(user,"<span class='warning'>You press the button, but nothing happens...</span>")
 		return
 	if(ticket_number >= max_number)
-		to_chat(user,"Ticket supply depleted, please refill this unit with a hand labeller refill cartridge!")
+		to_chat(user,"<span class='warning'>Ticket supply depleted, please refill this unit with a hand labeller refill cartridge!</span>")
 		return
 	if((user in ticket_holders) && !(obj_flags & EMAGGED))
-		to_chat(user, "You already have a ticket!")
+		to_chat(user, "<span class='warning'>You already have a ticket!</span>")
 		return
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 100, FALSE)
 	ticket_number ++
@@ -214,7 +214,7 @@
 
 /obj/item/ticket_machine_ticket/attackby(obj/item/P, mob/living/carbon/human/user, params) //Stolen from papercode
 	..()
-	if(P.is_hot())
+	if(P.get_temperature())
 		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
 								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")

@@ -35,7 +35,8 @@
 		icon_state = "stickyweb2"
 	. = ..()
 
-/obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target)
+/obj/structure/spider/stickyweb/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
 		return TRUE
 	else if(isliving(mover))
@@ -44,9 +45,8 @@
 		if(prob(50))
 			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
 			return FALSE
-	else if(istype(mover, /obj/item/projectile))
+	else if(istype(mover, /obj/projectile))
 		return prob(30)
-	return TRUE
 
 /obj/structure/spider/eggcluster
 	name = "egg cluster"
@@ -141,9 +141,14 @@
 			var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = pick(vents)
 			if(prob(50))
 				visible_message("<B>[src] scrambles into the ventilation ducts!</B>", \
-								"<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
+								"<span class='hear'>You hear something scampering through the ventilation ducts.</span>")
 
 			spawn(rand(20,60))
+				if(!exit_vent || exit_vent.welded)
+					forceMove(entry_vent)
+					entry_vent = null
+					return
+
 				forceMove(exit_vent)
 				var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
 				spawn(travel_time)
@@ -154,7 +159,7 @@
 						return
 
 					if(prob(50))
-						audible_message("<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
+						audible_message("<span class='hear'>You hear something scampering through the ventilation ducts.</span>")
 					sleep(travel_time)
 
 					if(!exit_vent || exit_vent.welded)

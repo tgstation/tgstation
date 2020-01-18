@@ -39,11 +39,13 @@ Difficulty: Hard
 	desc = "A massive metal club that hangs in the air as though waiting. It'll make you dance to its beat."
 	health = 2500
 	maxHealth = 2500
-	attacktext = "clubs"
+	attack_verb_continuous = "clubs"
+	attack_verb_simple = "club"
 	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	icon_state = "hierophant"
 	icon_living = "hierophant"
-	friendly = "stares down"
+	friendly_verb_continuous = "stares down"
+	friendly_verb_simple = "stare down"
 	icon = 'icons/mob/lavaland/hierophant_new.dmi'
 	faction = list("boss") //asteroid mobs? get that shit out of my beautiful square house
 	speak_emote = list("preaches")
@@ -59,8 +61,9 @@ Difficulty: Hard
 	crusher_loot = list(/obj/item/hierophant_club, /obj/item/crusher_trophy/vortex_talisman)
 	wander = FALSE
 	gps_name = "Zealous Signal"
-	medal_type = BOSS_MEDAL_HIEROPHANT
-	score_type = HIEROPHANT_SCORE
+	achievement_type = /datum/award/achievement/boss/hierophant_kill
+	crusher_achievement_type = /datum/award/achievement/boss/hierophant_crusher
+	score_achievement_type = /datum/award/score/hierophant_score
 	del_on_death = TRUE
 	deathsound = 'sound/magic/repulse.ogg'
 	attack_action_types = list(/datum/action/innate/megafauna_attack/blink,
@@ -129,7 +132,7 @@ Difficulty: Hard
 	var/mob/living/L
 	if(isliving(target))
 		L = target
-		target_slowness += L.movement_delay()
+		target_slowness += L.cached_multiplicative_slowdown
 	if(client)
 		target_slowness += 1
 
@@ -194,7 +197,7 @@ Difficulty: Hard
 	else //just release a burst of power
 		INVOKE_ASYNC(src, .proc/burst, get_turf(src))
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/proc/blink_spam(var/blink_counter, var/target_slowness, var/cross_counter)
+/mob/living/simple_animal/hostile/megafauna/hierophant/proc/blink_spam(blink_counter, target_slowness, cross_counter)
 	ranged_cooldown = world.time + max(5, major_attack_cooldown - anger_modifier * 0.75)
 	if(health < maxHealth * 0.5 && blink_counter > 1)
 		visible_message("<span class='hierophant'>\"Mx ampp rsx iwgeti.\"</span>")
@@ -216,7 +219,7 @@ Difficulty: Hard
 	else
 		blink(target)
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/proc/cross_blast_spam(var/blink_counter, var/target_slowness, var/cross_counter)
+/mob/living/simple_animal/hostile/megafauna/hierophant/proc/cross_blast_spam(blink_counter, target_slowness, cross_counter)
 	ranged_cooldown = world.time + max(5, major_attack_cooldown - anger_modifier * 0.75)
 	visible_message("<span class='hierophant'>\"Piezi mx rsalivi xs vyr.\"</span>")
 	blinking = TRUE
@@ -236,7 +239,7 @@ Difficulty: Hard
 	blinking = FALSE
 
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/proc/chaser_swarm(var/blink_counter, var/target_slowness, var/cross_counter)
+/mob/living/simple_animal/hostile/megafauna/hierophant/proc/chaser_swarm(blink_counter, target_slowness, cross_counter)
 	ranged_cooldown = world.time + max(5, major_attack_cooldown - anger_modifier * 0.75)
 	visible_message("<span class='hierophant'>\"Mx gerrsx lmhi.\"</span>")
 	blinking = TRUE
@@ -263,7 +266,7 @@ Difficulty: Hard
 	SLEEP_CHECK_DEATH(8)
 	blinking = FALSE
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/proc/blasts(mob/victim, var/list/directions = GLOB.cardinals) //fires cross blasts with a delay
+/mob/living/simple_animal/hostile/megafauna/hierophant/proc/blasts(mob/victim, list/directions = GLOB.cardinals) //fires cross blasts with a delay
 	var/turf/T = get_turf(victim)
 	if(!T)
 		return
@@ -398,14 +401,14 @@ Difficulty: Hard
 	if(health > 0 || stat == DEAD)
 		return
 	else
-		stat = DEAD
+		set_stat(DEAD)
 		blinking = TRUE //we do a fancy animation, release a huge burst(), and leave our staff.
 		visible_message("<span class='hierophant'>\"Mrmxmexmrk wipj-hiwxvygx wiuyirgi...\"</span>")
 		visible_message("<span class='hierophant_warning'>[src] shrinks, releasing a massive burst of energy!</span>")
 		for(var/mob/living/L in view(7,src))
 			stored_nearby += L // store the people to grant the achievements to once we die
 		hierophant_burst(null, get_turf(src), 10)
-		stat = CONSCIOUS // deathgasp wont run if dead, stupid
+		set_stat(CONSCIOUS) // deathgasp wont run if dead, stupid
 		..(force_grant = stored_nearby)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Destroy()
@@ -525,18 +528,18 @@ Difficulty: Hard
 	queue_smooth_neighbors(src)
 	return ..()
 
-/obj/effect/temp_visual/hierophant/wall/CanPass(atom/movable/mover, turf/target)
+/obj/effect/temp_visual/hierophant/wall/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(QDELETED(caster))
 		return FALSE
 	if(mover == caster.pulledby)
-		return TRUE
-	if(istype(mover, /obj/item/projectile))
-		var/obj/item/projectile/P = mover
+		return
+	if(istype(mover, /obj/projectile))
+		var/obj/projectile/P = mover
 		if(P.firer == caster)
-			return TRUE
-	if(mover == caster)
-		return TRUE
-	return FALSE
+			return
+	if(mover != caster)
+		return FALSE
 
 /obj/effect/temp_visual/hierophant/chaser //a hierophant's chaser. follows target around, moving and producing a blast every speed deciseconds.
 	duration = 98

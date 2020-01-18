@@ -124,13 +124,13 @@
 				to_chat(usr, "<span class='danger'>Unauthorized access.</span>")
 
 		else if(href_list["warn"])
-			var/warning = copytext(sanitize(input(usr,"Message:","Enter your message here!","")),1,MAX_MESSAGE_LEN)
+			var/warning = stripped_input(usr, "Message:", "Enter your message here!", "", MAX_MESSAGE_LEN)
 			if(!warning)
 				return
 			var/obj/item/implant/I = locate(href_list["warn"]) in GLOB.tracked_implants
 			if(I && istype(I) && I.imp_in)
 				var/mob/living/R = I.imp_in
-				to_chat(R, "<span class='italics'>You hear a voice in your head saying: '[warning]'</span>")
+				to_chat(R, "<span class='hear'>You hear a voice in your head saying: '[warning]'</span>")
 				log_directed_talk(usr, R, warning, LOG_SAY, "implant message")
 
 		src.add_fingerprint(usr)

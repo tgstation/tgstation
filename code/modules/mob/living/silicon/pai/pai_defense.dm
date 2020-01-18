@@ -8,10 +8,24 @@
 		return
 	take_holo_damage(50/severity)
 	Paralyze(400/severity)
-	silent = max(30/severity, silent)
+	silent = max(20/severity, silent)
 	if(holoform)
 		fold_in(force = TRUE)
 	//Need more effects that aren't instadeath or permanent law corruption.
+	//Ask and you shall receive
+	switch(rand(1, 3))
+		if(1)
+			stuttering = 1
+			to_chat(src, "<span class='danger'>Warning: Feedback loop detected in speech module.</span>")
+		if(2)
+			slurring = 1
+			to_chat(src, "<span class='danger'>Warning: Audio synthesizer CPU stuck.</span>")
+		if(3)
+			derpspeech = 1
+			to_chat(src, "<span class='danger'>Warning: Vocabulary databank corrupted.</span>")
+	if(prob(40))
+		mind.language_holder.selected_language = get_random_spoken_language()
+
 
 /mob/living/silicon/pai/ex_act(severity, target)
 	take_holo_damage(severity * 50)
@@ -36,7 +50,7 @@
 			user.do_attack_animation(src)
 			if (user.name == master)
 				visible_message("<span class='notice'>Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence.</span>")
-				spawn(10)
+				if(do_after(user, 1 SECONDS, TRUE, src))
 					fold_in()
 					if(user.put_in_hands(card))
 						user.visible_message("<span class='notice'>[user] promptly scoops up [user.p_their()] pAI's card.</span>")
@@ -44,7 +58,7 @@
 				visible_message("<span class='danger'>[user] stomps on [src]!.</span>")
 				take_holo_damage(2)
 
-/mob/living/silicon/pai/bullet_act(obj/item/projectile/Proj)
+/mob/living/silicon/pai/bullet_act(obj/projectile/Proj)
 	if(Proj.stun)
 		fold_in(force = TRUE)
 		src.visible_message("<span class='warning'>The electrically-charged projectile disrupts [src]'s holomatrix, forcing [src] to fold in!</span>")

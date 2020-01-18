@@ -195,11 +195,6 @@
 /datum/status_effect/bloodchill/on_remove()
 	owner.remove_movespeed_modifier("bloodchilled")
 
-/obj/screen/alert/status_effect/bloodchill
-	name = "Bloodchilled"
-	desc = "You feel a shiver down your spine after getting hit with a glob of cold blood. You'll move slower and get frostbite for a while!"
-	icon_state = "bloodchill"
-
 /datum/status_effect/bonechill
 	id = "bonechill"
 	duration = 80
@@ -467,7 +462,7 @@ datum/status_effect/rebreathing/tick()
 /datum/status_effect/stabilized/grey/tick()
 	for(var/mob/living/simple_animal/slime/S in range(1, get_turf(owner)))
 		if(!(owner in S.Friends))
-			to_chat(owner, "<span class='notice'>[linked_extract] pulses gently as it communicates with [S]</span>")
+			to_chat(owner, "<span class='notice'>[linked_extract] pulses gently as it communicates with [S].</span>")
 			S.Friends[owner] = 1
 	return ..()
 
@@ -562,7 +557,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	name = "burning fingertips"
 	desc = "You shouldn't see this."
 
-/obj/item/hothands/is_hot()
+/obj/item/hothands/get_temperature()
 	return 290 //Below what's required to ignite plasma.
 
 /datum/status_effect/stabilized/darkpurple
@@ -689,7 +684,7 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/sepia/tick()
 	if(prob(50) && mod > -1)
 		mod--
-		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, override = TRUE, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, override = TRUE, update=TRUE, priority=100, multiplicative_slowdown=-0.5, blacklisted_movetypes=(FLYING|FLOATING))
 	else if(mod < 1)
 		mod++
 		// yeah a value of 0 does nothing but replacing the trait in place is cheaper than removing and adding repeatedly
@@ -905,7 +900,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	colour = "light pink"
 
 /datum/status_effect/stabilized/lightpink/on_apply()
-	owner.add_movespeed_modifier(MOVESPEED_ID_SLIME_STATUS, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+	owner.add_movespeed_modifier(MOVESPEED_ID_SLIME_STATUS, update=TRUE, priority=100, multiplicative_slowdown=-0.5, blacklisted_movetypes=(FLYING|FLOATING))
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/tick()
@@ -934,9 +929,10 @@ datum/status_effect/stabilized/blue/on_remove()
 		familiar = new linked.mob_type(get_turf(owner.loc))
 		familiar.name = linked.mob_name
 		familiar.del_on_death = TRUE
-		familiar.copy_known_languages_from(owner, FALSE)
+		familiar.copy_languages(owner, LANGUAGE_MASTER)
 		if(linked.saved_mind)
 			linked.saved_mind.transfer_to(familiar)
+			familiar.update_atom_languages()
 			familiar.ckey = linked.saved_mind.key
 	else
 		if(familiar.mind)

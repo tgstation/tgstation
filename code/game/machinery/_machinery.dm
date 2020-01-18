@@ -121,7 +121,10 @@ Class Procs:
 	var/market_verb = "Customer"
 	var/payment_department = ACCOUNT_ENG
 
-	var/ui_x	//For storing and overriding ui dimensions
+	// For storing and overriding ui id and dimensions
+	var/tgui_id // ID of TGUI interface
+	var/ui_style // ID of custom TGUI style (optional)
+	var/ui_x // Default size of TGUI window, in pixels
 	var/ui_y
 
 /obj/machinery/Initialize()
@@ -138,11 +141,16 @@ Class Procs:
 		START_PROCESSING(SSmachines, src)
 	else
 		START_PROCESSING(SSfastprocess, src)
-	power_change()
-	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
 
 	if (occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/LateInitialize()
+	. = ..()
+	power_change()
+	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
 
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
@@ -370,8 +378,13 @@ Class Procs:
 	M.icon_state = "box_1"
 
 /obj/machinery/obj_break(damage_flag)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	SHOULD_CALL_PARENT(1)
+	. = ..()
+	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		stat |= BROKEN
+		SEND_SIGNAL(src, COMSIG_MACHINERY_BROKEN, damage_flag)
+		update_icon()
+		return TRUE
 
 /obj/machinery/contents_explosion(severity, target)
 	if(occupant)
@@ -518,11 +531,11 @@ Class Procs:
 /obj/machinery/proc/can_be_overridden()
 	. = 1
 
-/obj/machinery/tesla_act(power, tesla_flags, shocked_objects)
+/obj/machinery/zap_act(power, zap_flags, shocked_objects)
 	..()
-	if(prob(85) && (tesla_flags & TESLA_MACHINE_EXPLOSIVE))
+	if(prob(85) && (zap_flags & ZAP_MACHINE_EXPLOSIVE) && !(resistance_flags & INDESTRUCTIBLE))
 		explosion(src, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
-	if(tesla_flags & TESLA_OBJ_DAMAGE)
+	if(zap_flags & ZAP_OBJ_DAMAGE)
 		take_damage(power/2000, BURN, "energy")
 		if(prob(40))
 			emp_act(EMP_LIGHT)

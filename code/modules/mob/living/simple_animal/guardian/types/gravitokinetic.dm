@@ -13,8 +13,8 @@
 ///Removes gravity from affected mobs upon guardian death to prevent permanent effects
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/death()
 	. = ..()
-	for(var/datum/component/C in gravito_targets)
-		remove_gravity(C)
+	for(var/i in gravito_targets)
+		remove_gravity(i)
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/AttackingTarget()
 	. = ..()
@@ -38,26 +38,28 @@
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/Recall(forced)
 	. = ..()
 	to_chat(src, "<span class='danger'><B>You have released your gravitokinetic powers!</span></B>")
-	for(var/datum/component/C in gravito_targets)
-		remove_gravity(C)
+	for(var/i in gravito_targets)
+		remove_gravity(i)
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/Moved(oldLoc, dir)
 	. = ..()
-	for(var/datum/component/C in gravito_targets)
-		if(get_dist(src, C.parent) > gravity_power_range)
-			remove_gravity(C)
+	for(var/i in gravito_targets)
+		if(get_dist(src, i) > gravity_power_range)
+			remove_gravity(i)
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/add_gravity(atom/A, new_gravity = 2)
-    var/datum/component/C = A.AddComponent(/datum/component/forced_gravity,new_gravity)
-    RegisterSignal(A, COMSIG_MOVABLE_MOVED, .proc/__distance_check)
-    gravito_targets.Add(C)
-    playsound(src, 'sound/effects/gravhit.ogg', 100, TRUE)
+	A.AddElement(/datum/element/forced_gravity, new_gravity)
+	gravito_targets[A] = new_gravity
+	RegisterSignal(A, COMSIG_MOVABLE_MOVED, .proc/__distance_check)
+	playsound(src, 'sound/effects/gravhit.ogg', 100, TRUE)
 
-/mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/remove_gravity(datum/component/C)
-	UnregisterSignal(C.parent, COMSIG_MOVABLE_MOVED)
-	gravito_targets.Remove(C)
-	qdel(C)
+/mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/remove_gravity(atom/target)
+	if(isnull(gravito_targets[target]))
+		return
+	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
+	target.RemoveElement(/datum/element/forced_gravity, gravito_targets[target])
+	gravito_targets -= target
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/__distance_check(atom/movable/AM, OldLoc, Dir, Forced)
 	if(get_dist(src, AM) > gravity_power_range)
-		remove_gravity(AM.GetComponent(/datum/component/forced_gravity))
+		remove_gravity(AM)

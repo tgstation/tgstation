@@ -5,8 +5,8 @@
 //Damage defines //TODO: merge these down to reduce on defines
 #define BRUTE		"brute"
 #define BURN		"fire"
-#define TOX			"tox"
-#define OXY			"oxy"
+#define TOX			"toxin"
+#define OXY			"oxygen"
 #define CLONE		"clone"
 #define STAMINA 	"stamina"
 #define BRAIN		"brain"
@@ -107,6 +107,7 @@
 
 //the define for visible message range in combat
 #define COMBAT_MESSAGE_RANGE 3
+#define DEFAULT_MESSAGE_RANGE 7
 
 //Shove knockdown lengths (deciseconds)
 #define SHOVE_KNOCKDOWN_SOLID 30

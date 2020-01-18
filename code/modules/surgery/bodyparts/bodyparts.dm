@@ -99,7 +99,7 @@
 	..()
 
 /obj/item/bodypart/attackby(obj/item/W, mob/user, params)
-	if(W.is_sharp())
+	if(W.get_sharpness())
 		add_fingerprint(user)
 		if(!contents.len)
 			to_chat(user, "<span class='warning'>There is nothing left inside [src]!</span>")
@@ -288,11 +288,12 @@
 		C = source
 		if(!original_owner)
 			original_owner = source
-	else if(original_owner && owner != original_owner) //Foreign limb
-		no_update = TRUE
-	else
+	else 
 		C = owner
-		no_update = FALSE
+		if(original_owner && owner != original_owner) //Foreign limb
+			no_update = TRUE
+		else
+			no_update = FALSE
 
 	if(HAS_TRAIT(C, TRAIT_HUSK) && is_organic_limb())
 		species_id = "husk" //overrides species_id

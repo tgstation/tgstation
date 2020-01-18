@@ -33,19 +33,19 @@
 	H.eye_color = "000"
 	H.gender = MALE
 	H.skin_tone = "caucasian3"
-	H.hair_style = "Business Hair 3"
-	H.facial_hair_style = "Shaved"
+	H.hairstyle = "Business Hair 3"
+	H.facial_hairstyle = "Shaved"
 	H.hair_color = "000"
 	H.facial_hair_color = H.hair_color
 	H.update_body()
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 	var/list/no_drops = list()
-	no_drops += H.get_item_by_slot(SLOT_SHOES)
-	no_drops += H.get_item_by_slot(SLOT_W_UNIFORM)
-	no_drops += H.get_item_by_slot(SLOT_WEAR_SUIT)
-	no_drops += H.get_item_by_slot(SLOT_HEAD)
-	no_drops += H.get_item_by_slot(SLOT_GLASSES)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_FEET)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_ICLOTHING)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_HEAD)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_EYES)
 	for(var/i in no_drops)
 		var/obj/item/I = i
 		ADD_TRAIT(I, TRAIT_NODROP, CURSED_ITEM_TRAIT)

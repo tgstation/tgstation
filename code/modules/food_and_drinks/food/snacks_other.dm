@@ -129,7 +129,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6)
 	filling_color = "#FFD700"
 	tastes = list("fries" = 3, "cheese" = 1)
-	foodtype = VEGETABLES | GRAIN
+	foodtype = VEGETABLES | GRAIN | DAIRY
 	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/badrecipe
@@ -382,7 +382,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/honey = 5)
 	filling_color = "#F2CE91"
 	tastes = list("oats" = 3, "nuts" = 2, "honey" = 1)
-	foodtype = FRUIT | SUGAR
+	foodtype = GRAIN | SUGAR
 
 /obj/item/reagent_containers/food/snacks/stuffedlegion
 	name = "stuffed legion"
@@ -454,7 +454,7 @@
 
 /obj/item/reagent_containers/food/snacks/lollipop/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_WEAR_MASK)
+	if(slot == ITEM_SLOT_MASK)
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj, src)
@@ -558,14 +558,19 @@
 	. += "<span class='notice'>If you had a rod you could make <b>butter on a stick</b>.</span>"
 
 /obj/item/reagent_containers/food/snacks/butter/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/rods))//they will always have at least one if they are holding it.
-		to_chat(user, "<span class='notice'>You stick the rod into the stick of butter.</span>")
+	if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = W
+		if(!R.use(1))//borgs can still fail this if they have no metal
+			to_chat(user, "<span class='warning'>You do not have enough metal to put [src] on a stick!</span>")
+			return ..()
+		to_chat(user, "<span class='notice'>You stick the rod into the stick of butter.</span>")
 		var/obj/item/reagent_containers/food/snacks/butter/on_a_stick/new_item = new(usr.loc)
 		var/replace = (user.get_inactive_held_item() == R)
-		R.use(1)
 		if(!R && replace)
 			user.put_in_hands(new_item)
+		qdel(src)
+		return TRUE
+	..()
 
 /obj/item/reagent_containers/food/snacks/butter/on_a_stick //there's something so special about putting it on a stick.
 	name = "butter on a stick"
@@ -612,7 +617,7 @@
 	volume = 30
 
 /obj/item/reagent_containers/food/snacks/canned/proc/open_can(mob/user)
-	to_chat(user, "You pull back the tab of \the [src].")
+	to_chat(user, "<span class='notice'>You pull back the tab of \the [src].</span>")
 	playsound(user.loc, 'sound/items/foodcanopen.ogg', 50)
 	ENABLE_BITFIELD(reagents.flags, OPENCONTAINER)
 	spillable = TRUE
@@ -660,9 +665,21 @@
 /obj/item/reagent_containers/food/snacks/crab_rangoon
 	name = "Crab Rangoon"
 	desc = "Has many names, like crab puffs, cheese wontons, crab dumplings? Whatever you call them, they're a fabulous blast of cream cheesy crab."
-	icon_state = "crabrangoon1"
+	icon_state = "crabrangoon"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	filling_color = "#f2efdc"
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("cream cheese" = 4, "crab" = 3, "crispiness" = 2)
 	foodtype = MEAT | DAIRY | GRAIN
+
+/obj/item/reagent_containers/food/snacks/cornchips
+	name = "boritos corn chips"
+	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce."
+	icon_state = "boritos"
+	trash = /obj/item/trash/boritos
+	bitesize = 2
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/sodiumchloride = 3)
+	junkiness = 20
+	filling_color = "#ECA735"
+	tastes = list("fried corn" = 1)
+	foodtype = JUNKFOOD | FRIED

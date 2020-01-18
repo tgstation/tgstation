@@ -38,7 +38,7 @@
 	maptext_width = 32
 	maptext_y = -1
 	ui_x = 300
-	ui_y = 200
+	ui_y = 138 
 
 /obj/machinery/door_timer/Initialize()
 	. = ..()
@@ -62,7 +62,7 @@
 				targets += C
 
 	if(!targets.len)
-		stat |= BROKEN
+		obj_break()
 	update_icon()
 
 
@@ -77,12 +77,6 @@
 		if(world.time - activation_time >= timer_duration)
 			timer_end() // open doors, reset timer, clear status screen
 		update_icon()
-
-// has the door power sitatuation changed, if so update icon.
-/obj/machinery/door_timer/power_change()
-	..()
-	update_icon()
-
 
 // open/closedoor checks if door_timer has power, if so it checks if the
 // linked door is open/closed (by density) then opens it/closes it.
@@ -171,7 +165,7 @@
 	if(timing)
 		var/disp1 = id
 		var/time_left = time_left(seconds = TRUE)
-		var/disp2 = "[add_zero(num2text((time_left / 60) % 60),2)]:[add_zero(num2text(time_left % 60), 2)]"
+		var/disp2 = "[add_leading(num2text((time_left / 60) % 60), 2, "0")]:[add_leading(num2text(time_left % 60), 2, "0")]"
 		if(length(disp2) > CHARS_PER_LINE)
 			disp2 = "Error"
 		update_display(disp1, disp2)

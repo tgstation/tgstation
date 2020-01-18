@@ -298,11 +298,7 @@
 			return 250
 
 		if(SLIME_ACTIVATE_MAJOR)
-			var/location = get_turf(user)
-			var/datum/effect_system/foam_spread/s = new()
-			s.set_up(20, location, user.reagents)
-			s.start()
-			user.reagents.clear_reagents()
+			user.reagents.create_foam(/datum/effect_system/foam_spread,20)
 			user.visible_message("<span class='danger'>Foam spews out from [user]'s skin!</span>", "<span class='warning'>You activate [src], and foam bursts out of your skin!</span>")
 			return 600
 
@@ -532,7 +528,8 @@
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
-			var/chosen = pick(subtypesof(/obj/item/toy/crayon/spraycan))
+			var/blacklisted_cans = list(/obj/item/toy/crayon/spraycan/borg, /obj/item/toy/crayon/spraycan/infinite)
+			var/chosen = pick(subtypesof(/obj/item/toy/crayon/spraycan) - blacklisted_cans)
 			var/obj/item/O = new chosen(null)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
@@ -615,6 +612,8 @@
 
 /obj/item/slimepotion/afterattack(obj/item/reagent_containers/target, mob/user , proximity)
 	. = ..()
+	if(!proximity)
+		return
 	if (istype(target))
 		to_chat(user, "<span class='warning'>You cannot transfer [src] to [target]! It appears the potion must be given directly to a slime to absorb.</span>" )
 		return
@@ -642,7 +641,7 @@
 	M.set_nutrition(700)
 	to_chat(M, "<span class='warning'>You absorb the potion and feel your intense desire to feed melt away.</span>")
 	to_chat(user, "<span class='notice'>You feed the slime the potion, removing its hunger and calming it.</span>")
-	var/newname = copytext(sanitize_name(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
+	var/newname = sanitize_name(stripped_input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime", MAX_NAME_LEN))
 
 	if (!newname)
 		newname = "pet slime"
@@ -687,7 +686,7 @@
 		if(SM.flags_1 & HOLOGRAM_1) //Check to see if it's a holodeck creature
 			to_chat(SM, "<span class='userdanger'>You also become depressingly aware that you are not a real creature, but instead a holoform. Your existence is limited to the parameters of the holodeck.</span>")
 		to_chat(user, "<span class='notice'>[SM] accepts [src] and suddenly becomes attentive and aware. It worked!</span>")
-		SM.copy_known_languages_from(user, FALSE)
+		SM.copy_languages(user)
 		after_success(user, SM)
 		qdel(src)
 	else
@@ -717,7 +716,9 @@
 	var/prompted = 0
 	var/animal_type = SENTIENCE_ORGANIC
 
-/obj/item/slimepotion/transference/afterattack(mob/living/M, mob/user)
+/obj/item/slimepotion/transference/afterattack(mob/living/M, mob/user, proximity)
+	if(!proximity)
+		return
 	if(prompted || !ismob(M))
 		return
 	if(!isanimal(M) || M.ckey) //much like sentience, these will not work on something that is already player controlled
@@ -837,8 +838,10 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potyellow"
 
-/obj/item/slimepotion/speed/afterattack(obj/C, mob/user)
+/obj/item/slimepotion/speed/afterattack(obj/C, mob/user, proximity)
 	. = ..()
+	if(!proximity)
+		return
 	if(!istype(C))
 		to_chat(user, "<span class='warning'>The potion can only be used on items or vehicles!</span>")
 		return
@@ -872,8 +875,10 @@
 	resistance_flags = FIRE_PROOF
 	var/uses = 3
 
-/obj/item/slimepotion/fireproof/afterattack(obj/item/clothing/C, mob/user)
+/obj/item/slimepotion/fireproof/afterattack(obj/item/clothing/C, mob/user, proximity)
 	. = ..()
+	if(!proximity)
+		return
 	if(!uses)
 		qdel(src)
 		return
@@ -981,7 +986,7 @@
 	item_state = "tile-bluespace"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
-	materials = list(/datum/material/iron=500)
+	custom_materials = list(/datum/material/iron=500)
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
@@ -998,7 +1003,7 @@
 	item_state = "tile-sepia"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
-	materials = list(/datum/material/iron=500)
+	custom_materials = list(/datum/material/iron=500)
 	throwforce = 10
 	throw_speed = 0.1
 	throw_range = 28

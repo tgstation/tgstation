@@ -52,7 +52,7 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='italics'>You hear a metallic creaking from [src].</span>")
+		"<span class='hear'>You hear a metallic creaking from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 			return
@@ -75,13 +75,13 @@
 		eyes.Blend("#[H.eye_color]", ICON_MULTIPLY)
 
 	var/datum/sprite_accessory/S
-	S = GLOB.hair_styles_list[H.hair_style]
+	S = GLOB.hairstyles_list[H.hairstyle]
 	if(S && (HAIR in H.dna.species.species_traits))
 		var/icon/hair = icon("icon" = S.icon, "icon_state" = "[S.icon_state]")
 		hair.Blend("#[H.hair_color]", ICON_MULTIPLY)
 		eyes.Blend(hair, ICON_OVERLAY)
 
-	S = GLOB.facial_hair_styles_list[H.facial_hair_style]
+	S = GLOB.facial_hairstyles_list[H.facial_hairstyle]
 	if(S && (FACEHAIR in H.dna.species.species_traits))
 		var/icon/facial = icon("icon" = S.icon, "icon_state" = "[S.icon_state]")
 		facial.Blend("#[H.facial_hair_color]", ICON_MULTIPLY)
@@ -210,7 +210,6 @@
 		open_machine()
 		SendBack(H)
 		return "<span class='bad'>Specimen braindead - disposed.</span>"
-	return "<span class='bad'>ERROR</span>"
 
 
 /obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)

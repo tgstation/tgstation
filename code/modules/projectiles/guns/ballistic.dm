@@ -7,39 +7,39 @@
 	w_class = WEIGHT_CLASS_NORMAL
 
 	///sound when inserting magazine
-	var/load_sound = "gun_insert_full_magazine"
+	var/load_sound = 'sound/weapons/gun/general/magazine_insert_full.ogg'
 	///sound when inserting an empty magazine
-	var/load_empty_sound = "gun_insert_empty_magazine"
+	var/load_empty_sound = 'sound/weapons/gun/general/magazine_insert_empty.ogg'
 	///volume of loading sound
 	var/load_sound_volume = 40
 	///whether loading sound should vary
 	var/load_sound_vary = TRUE
 	///sound of racking
-	var/rack_sound = "gun_slide_lock"
+	var/rack_sound = 'sound/weapons/gun/general/bolt_rack.ogg'
 	///volume of racking
 	var/rack_sound_volume = 60
 	///whether racking sound should vary
 	var/rack_sound_vary = TRUE
 	///sound of when the bolt is locked back manually
-	var/lock_back_sound = "sound/weapons/pistollock.ogg"
+	var/lock_back_sound = 'sound/weapons/gun/general/slide_lock_1.ogg'
 	///volume of lock back
 	var/lock_back_sound_volume = 60
 	///whether lock back varies
 	var/lock_back_sound_vary = TRUE
 	///Sound of ejecting a magazine
-	var/eject_sound = "gun_remove_empty_magazine"
+	var/eject_sound = 'sound/weapons/gun/general/magazine_remove_full.ogg'
 	///sound of ejecting an empty magazine
-	var/eject_empty_sound = "gun_remove_full_magazine"
+	var/eject_empty_sound = 'sound/weapons/gun/general/magazine_remove_empty.ogg'
 	///volume of ejecting a magazine
 	var/eject_sound_volume = 40
 	///whether eject sound should vary
 	var/eject_sound_vary = TRUE
 	///sound of dropping the bolt or releasing a slide
-	var/bolt_drop_sound = 'sound/weapons/gun_chamber_round.ogg'
+	var/bolt_drop_sound = 'sound/weapons/gun/general/bolt_drop.ogg'
 	///volume of bolt drop/slide release
 	var/bolt_drop_sound_volume = 60
 	///empty alarm sound (if enabled)
-	var/empty_alarm_sound = 'sound/weapons/smg_empty_alarm.ogg'
+	var/empty_alarm_sound = 'sound/weapons/gun/general/empty_alarm.ogg'
 	///empty alarm volume sound
 	var/empty_alarm_volume = 70
 	///whether empty alarm sound varies
@@ -59,8 +59,6 @@
 	var/empty_alarm = FALSE
 	///Whether the gun supports multiple special mag types
 	var/special_mags = FALSE
-	///Whether the gun is currently alarmed to prevent it from spamming sounds
-	var/alarmed = FALSE
 	///The bolt type of the gun, affects quite a bit of functionality, see combat.dm defines for bolt types: BOLT_TYPE_STANDARD; BOLT_TYPE_LOCKING; BOLT_TYPE_OPEN; BOLT_TYPE_NO_BOLT
 	var/bolt_type = BOLT_TYPE_STANDARD
  	///Used for locking bolt and open bolt guns. Set a bit differently for the two but prevents firing when true for both.
@@ -296,7 +294,7 @@
 	update_icon()
 
 /obj/item/gun/ballistic/AltClick(mob/user)
-	if (unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if (unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		reskin_obj(user)
 		return
 	if(loc == user)
@@ -320,20 +318,19 @@
 			update_icon()
 
 ///postfire empty checks for bolt locking and sound alarms
-/obj/item/gun/ballistic/proc/postfire_empty_checks()
+/obj/item/gun/ballistic/proc/postfire_empty_checks(last_shot_succeeded)
 	if (!chambered && !get_ammo())
-		if (!alarmed && empty_alarm)
+		if (empty_alarm && last_shot_succeeded)
 			playsound(src, empty_alarm_sound, empty_alarm_volume, empty_alarm_vary)
-			alarmed = TRUE
 			update_icon()
-		if (bolt_type == BOLT_TYPE_LOCKING)
+		if (last_shot_succeeded && bolt_type == BOLT_TYPE_LOCKING)
 			bolt_locked = TRUE
 			update_icon()
 
 /obj/item/gun/ballistic/afterattack()
 	prefire_empty_checks()
 	. = ..() //The gun actually firing
-	postfire_empty_checks()
+	postfire_empty_checks(.)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/gun/ballistic/attack_hand(mob/user)
@@ -409,7 +406,7 @@
 /obj/item/gun/ballistic/suicide_act(mob/user)
 	var/obj/item/organ/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
 	if (B && chambered && chambered.BB && can_trigger_gun(user) && !chambered.BB.nodamage)
-		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		sleep(25)
 		if(user.is_holding(src))
 			var/turf/T = get_turf(user)
@@ -432,17 +429,13 @@
 #undef BRAINS_BLOWN_THROW_RANGE
 
 GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
-	/obj/item/circular_saw,
 	/obj/item/gun/energy/plasmacutter,
 	/obj/item/melee/transforming/energy,
-	/obj/item/twohanded/required/chainsaw,
-	/obj/item/nullrod/claymore/chainsaw_sword,
-	/obj/item/nullrod/chainsaw,
-	/obj/item/mounted_chainsaw)))
+	)))
 
 ///Handles all the logic of sawing off guns,
 /obj/item/gun/ballistic/proc/sawoff(mob/user, obj/item/saw)
-	if(!saw.is_sharp() || !is_type_in_typecache(saw, GLOB.gun_saw_types)) //needs to be sharp. Otherwise turned off eswords can cut this.
+	if(!saw.get_sharpness() || !is_type_in_typecache(saw, GLOB.gun_saw_types) && !saw.tool_behaviour == TOOL_SAW) //needs to be sharp. Otherwise turned off eswords can cut this.
 		return
 	if(sawn_off)
 		to_chat(user, "<span class='warning'>\The [src] is already shortened!</span>")
@@ -493,5 +486,3 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 /obj/item/suppressor/specialoffer
 	name = "cheap suppressor"
 	desc = "A foreign knock-off suppressor, it feels flimsy, cheap, and brittle. Still fits most weapons."
-	icon = 'icons/obj/guns/projectile.dmi'
-	icon_state = "suppressor"

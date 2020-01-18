@@ -11,11 +11,11 @@
   * Unsets the focus var
   *
   * Clears alerts for this mob
-  * 
+  *
   * Resets all the observers perspectives to the tile this mob is on
-  * 
+  *
   * qdels any client colours in place on this mob
-  * 
+  *
   * Ghostizes the client attached to this mob
   *
   * Parent call
@@ -26,7 +26,6 @@
 	GLOB.mob_list -= src
 	GLOB.dead_mob_list -= src
 	GLOB.alive_mob_list -= src
-	GLOB.all_clockwork_mobs -= src
 	GLOB.mob_directory -= tag
 	focus = null
 	for (var/alert in alerts)
@@ -36,9 +35,7 @@
 			var/mob/dead/observe = M
 			observe.reset_perspective(null)
 	qdel(hud_used)
-	for(var/cc in client_colours)
-		qdel(cc)
-	client_colours = null
+	QDEL_LIST(client_colours)
 	ghostize()
 	..()
 	return QDEL_HINT_HARDDEL
@@ -48,7 +45,7 @@
   *
   * Sends global signal COMSIG_GLOB_MOB_CREATED
   *
-  * Adds to global lists 
+  * Adds to global lists
   * * GLOB.mob_list
   * * GLOB.mob_directory (by tag)
   * * GLOB.dead_mob_list - if mob is dead
@@ -134,42 +131,41 @@
 /mob/proc/get_photo_description(obj/item/camera/camera)
 	return "a ... thing?"
 
-/** 
-  * Show a message to this mob (visual)
+/**
+  * Show a message to this mob (visual or audible)
   */
 /mob/proc/show_message(msg, type, alt_msg, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
-
 	if(!client)
 		return
 
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 
 	if(type)
-		if(type & 1 && eye_blind )//Vision related
+		if(type & MSG_VISUAL && eye_blind )//Vision related
 			if(!alt_msg)
 				return
 			else
 				msg = alt_msg
 				type = alt_type
 
-		if(type & 2 && !can_hear())//Hearing related
+		if(type & MSG_AUDIBLE && !can_hear())//Hearing related
 			if(!alt_msg)
 				return
 			else
 				msg = alt_msg
 				type = alt_type
-				if(type & 1 && eye_blind)
+				if(type & MSG_VISUAL && eye_blind)
 					return
 	// voice muffling
 	if(stat == UNCONSCIOUS)
-		if(type & 2) //audio
+		if(type & MSG_AUDIBLE) //audio
 			to_chat(src, "<I>... You can almost hear something ...</I>")
-	else
-		to_chat(src, msg)
+		return
+	to_chat(src, msg)
 
 /**
   * Generate a visible message from this atom
-  * 
+  *
   * Show a message to all player mobs who sees this atom
   *
   * Show a message to the src mob (if the src is a mob)
@@ -184,39 +180,53 @@
   * * vision_distance (optional) define how many tiles away the message can be seen.
   * * ignored_mob (optional) doesn't show any message to a given mob if TRUE.
   */
-/atom/proc/visible_message(message, self_message, blind_message, vision_distance, list/ignored_mobs)
+/atom/proc/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
 	if(!islist(ignored_mobs))
 		ignored_mobs = list(ignored_mobs)
-	var/range = 7
-	if(vision_distance)
-		range = vision_distance
-	for(var/mob/M in get_hearers_in_view(range, src))
+	var/list/hearers = get_hearers_in_view(vision_distance, src) //caches the hearers and then removes ignored mobs.
+	hearers -= ignored_mobs
+	if(self_message)
+		hearers -= src
+	for(var/mob/M in hearers)
 		if(!M.client)
 			continue
-		if(M in ignored_mobs)
-			continue
+		//This entire if/else chain could be in two lines but isn't for readibilties sake.
 		var/msg = message
-		if(M == src) //the src always see the main message or self message
-			if(self_message)
-				msg = self_message
-		else
-			if(M.see_invisible<invisibility || (T != loc && T != src))//if src is invisible to us or is inside something (and isn't a turf),
-				if(blind_message) // then people see blind message if there is one, otherwise nothing.
-					msg = blind_message
-				else
-					continue
+		if(M.see_invisible < invisibility)//if src is invisible to M
+			msg = blind_message
+		else if(T != loc && T != src) //if src is inside something and not a turf.
+			msg = blind_message
+		else if(T.lighting_object && T.lighting_object.invisibility <= M.see_invisible && T.is_softly_lit()) //if it is too dark.
+			msg = blind_message
+		if(!msg)
+			continue
+		M.show_message(msg, MSG_VISUAL, blind_message, MSG_AUDIBLE)
 
-			else if(T.lighting_object)
-				if(T.lighting_object.invisibility <= M.see_invisible && T.is_softly_lit()) //the light object is dark and not invisible to us
-					if(blind_message)
-						msg = blind_message
-					else
-						continue
+///Adds the functionality to self_message.
+/mob/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs)
+	. = ..()
+	if(self_message)
+		show_message(self_message, MSG_VISUAL, blind_message, MSG_AUDIBLE)
 
-		M.show_message(msg,1,blind_message,2)
+/**
+  * Show a message to all mobs in earshot of this atom
+  *
+  * Use for objects performing audible actions
+  *
+  * vars:
+  * * message is the message output to anyone who can hear.
+  * * deaf_message (optional) is what deaf people will see.
+  * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
+  */
+/atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message)
+	var/list/hearers = get_hearers_in_view(hearing_distance, src)
+	if(self_message)
+		hearers -= src
+	for(var/mob/M in hearers)
+		M.show_message(message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
 
 /**
   * Show a message to all mobs in earshot of this one
@@ -229,32 +239,10 @@
   * * deaf_message (optional) is what deaf people will see.
   * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
   */
-/mob/audible_message(message, deaf_message, hearing_distance, self_message)
-	var/range = 7
-	if(hearing_distance)
-		range = hearing_distance
-	for(var/mob/M in get_hearers_in_view(range, src))
-		var/msg = message
-		if(self_message && M==src)
-			msg = self_message
-		M.show_message( msg, 2, deaf_message, 1)
-
-/**
-  * Show a message to all mobs in earshot of this atom
-  *
-  * Use for objects performing audible actions
-  *
-  * vars:
-  * * message is the message output to anyone who can hear.
-  * * deaf_message (optional) is what deaf people will see.
-  * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
-  */
-/atom/proc/audible_message(message, deaf_message, hearing_distance)
-	var/range = 7
-	if(hearing_distance)
-		range = hearing_distance
-	for(var/mob/M in get_hearers_in_view(range, src))
-		M.show_message( message, 2, deaf_message, 1)
+/mob/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message)
+	. = ..()
+	if(self_message)
+		show_message(self_message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
 
 ///Get the item on the mob in the storage slot identified by the id passed in
 /mob/proc/get_item_by_slot(slot_id)
@@ -299,8 +287,10 @@
   * set disable_warning to disable the 'you are unable to equip that' warning.
   *
   * unset redraw_mob to prevent the mob icons from being redrawn at the end.
+  *
+  * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
   */
-/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE)
+/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE, initial = FALSE)
 	if(!istype(W))
 		return FALSE
 	if(!W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self))
@@ -310,7 +300,7 @@
 			if(!disable_warning)
 				to_chat(src, "<span class='warning'>You are unable to equip that!</span>")
 		return FALSE
-	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
+	equip_to_slot(W, slot, redraw_mob, initial) //This proc should not ever fail.
 	return TRUE
 
 /**
@@ -325,15 +315,16 @@
 	return
 
 /**
-  * Equip an item to the slot or delete 
+  * Equip an item to the slot or delete
   *
   * This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to
   * equip people when the round starts and when events happen and such.
   *
   * Also bypasses equip delay checks, since the mob isn't actually putting it on.
+  * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
   */
-/mob/proc/equip_to_slot_or_del(obj/item/W, slot)
-	return equip_to_slot_if_possible(W, slot, TRUE, TRUE, FALSE, TRUE)
+/mob/proc/equip_to_slot_or_del(obj/item/W, slot, initial = FALSE)
+	return equip_to_slot_if_possible(W, slot, TRUE, TRUE, FALSE, TRUE, initial)
 
 /**
   * Auto equip the passed in item the appropriate slot based on equipment priority
@@ -349,14 +340,14 @@
 
 	if(!slot_priority)
 		slot_priority = list( \
-			SLOT_BACK, SLOT_WEAR_ID,\
-			SLOT_W_UNIFORM, SLOT_WEAR_SUIT,\
-			SLOT_WEAR_MASK, SLOT_HEAD, SLOT_NECK,\
-			SLOT_SHOES, SLOT_GLOVES,\
-			SLOT_EARS, SLOT_GLASSES,\
-			SLOT_BELT, SLOT_S_STORE,\
-			SLOT_L_STORE, SLOT_R_STORE,\
-			SLOT_GENERC_DEXTROUS_STORAGE\
+			ITEM_SLOT_BACK, ITEM_SLOT_ID,\
+			ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING,\
+			ITEM_SLOT_MASK, ITEM_SLOT_HEAD, ITEM_SLOT_NECK,\
+			ITEM_SLOT_FEET, ITEM_SLOT_GLOVES,\
+			ITEM_SLOT_EARS, ITEM_SLOT_EYES,\
+			ITEM_SLOT_BELT, ITEM_SLOT_SUITSTORE,\
+			ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET,\
+			ITEM_SLOT_DEX_STORAGE\
 		)
 
 	for(var/slot in slot_priority)
@@ -446,7 +437,7 @@
 	set name = "Point To"
 	set category = "Object"
 
-	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
+	if(!src || !isturf(src.loc) || !(A in view(client.view, src)))
 		return FALSE
 	if(istype(A, /obj/effect/temp_visual/point))
 		return FALSE
@@ -485,15 +476,11 @@
 
 ///Update the pulling hud icon
 /mob/proc/update_pull_hud_icon()
-	if(hud_used)
-		if(hud_used.pull_icon)
-			hud_used.pull_icon.update_icon(src)
+	hud_used?.pull_icon?.update_icon()
 
 ///Update the resting hud icon
 /mob/proc/update_rest_hud_icon()
-	if(hud_used)
-		if(hud_used.rest_icon)
-			hud_used.rest_icon.update_icon(src)
+	hud_used?.rest_icon?.update_icon()
 
 /**
   * Verb to activate the object in your held hand
@@ -540,9 +527,9 @@
 		if (world.time < memory_throttle_time)
 			return
 		memory_throttle_time = world.time + 5 SECONDS
-		msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+		msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 		msg = sanitize(msg)
-		
+
 		mind.store_memory(msg)
 	else
 		to_chat(src, "You don't have a mind datum for some reason, so you can't add a note to it.")
@@ -627,7 +614,7 @@
 			show_inv(machine)
 
 
-	if(href_list["item"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(href_list["item"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		var/slot = text2num(href_list["item"])
 		var/hand_index = text2num(href_list["hand_index"])
 		var/obj/item/what
@@ -671,7 +658,7 @@
 		return
 	if(isAI(M))
 		return
-/** 
+/**
   * Handle the result of a click drag onto this mob
   *
   * For mobs this just shows the inventory
@@ -680,7 +667,12 @@
 	. = ..()
 	if(ismob(dropping) && dropping != user)
 		var/mob/M = dropping
-		M.show_inv(user)
+		if(ismob(user))
+			var/mob/U = user
+			if(!iscyborg(U) || U.a_intent == INTENT_HARM)
+				M.show_inv(U)
+		else
+			M.show_inv(user)
 
 ///Is the mob muzzled (default false)
 /mob/proc/is_muzzled()
@@ -688,7 +680,7 @@
 
 /**
   * Output an update to the stat panel for the client
-  * 
+  *
   * calculates client ping, round id, server time, time dilation and other data about the round
   * and puts it in the mob status panel on a regular loop
   */
@@ -704,7 +696,10 @@
 			stat(null, "Next Map: [cached.map_name]")
 		stat(null, "Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]")
 		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
-		stat(null, "Round Time: [worldtime2text()]")
+		if (SSticker.round_start_time)
+			stat(null, "Round Time: [gameTimestamp("hh:mm:ss", (world.time - SSticker.round_start_time))]")
+		else
+			stat(null, "Lobby Time: [gameTimestamp("hh:mm:ss", 0)]")
 		stat(null, "Station Time: [station_time_timestamp()]")
 		stat(null, "Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
 		if(SSshuttle.emergency)
@@ -817,6 +812,9 @@
 		return FALSE
 	return ..()
 
+/mob/dead/observer/canface()
+	return TRUE
+
 ///Hidden verb to turn east
 /mob/verb/eastface()
 	set hidden = TRUE
@@ -877,7 +875,7 @@
 		return mind.grab_ghost(force = force)
 
 ///Notify a ghost that it's body is being cloned
-/mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg', var/atom/source = null, flashwindow)
+/mob/proc/notify_ghost_cloning(message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", sound = 'sound/effects/genetics.ogg', atom/source = null, flashwindow)
 	var/mob/dead/observer/ghost = get_ghost()
 	if(ghost)
 		ghost.notify_cloning(message, sound, source, flashwindow)
@@ -920,7 +918,7 @@
   */
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(M.buckled)
-		return 0
+		return FALSE
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
 		var/old_density = density
@@ -928,7 +926,7 @@
 		var/can_step = step_towards(M, T)
 		density = old_density
 		if(!can_step)
-			return 0
+			return FALSE
 	return ..()
 
 ///Call back post buckle to a mob to offset your visual height
@@ -963,7 +961,7 @@
 	return IsAdminGhost(src) || Adjacent(A)
 
 ///Can the mob use Topic to interact with machines
-/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
+/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 	return
 
 ///Can this mob use storage
@@ -1006,7 +1004,7 @@
   * Fully update the name of a mob
   *
   * This will update a mob's name, real_name, mind.name, GLOB.data_core records, pda, id and traitor text
-  * 
+  *
   * Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
   */
 /mob/proc/fully_replace_character_name(oldname,newname)
@@ -1123,6 +1121,9 @@
 /mob/proc/get_idcard(hand_first)
 	return
 
+/mob/proc/get_id_in_hand()
+	return
+
 /**
   * Get the mob VV dropdown extras
   */
@@ -1139,6 +1140,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_PLAYER_PANEL, "Show player panel")
 	VV_DROPDOWN_OPTION(VV_HK_BUILDMODE, "Toggle Buildmode")
 	VV_DROPDOWN_OPTION(VV_HK_DIRECT_CONTROL, "Assume Direct Control")
+	VV_DROPDOWN_OPTION(VV_HK_GIVE_DIRECT_CONTROL, "Give Direct Control")
 	VV_DROPDOWN_OPTION(VV_HK_OFFER_GHOSTS, "Offer Control to Ghosts")
 
 /mob/vv_do_topic(list/href_list)
@@ -1183,6 +1185,10 @@
 		if(!check_rights(NONE))
 			return
 		usr.client.cmd_assume_direct_control(src)
+	if(href_list[VV_HK_GIVE_DIRECT_CONTROL])
+		if(!check_rights(NONE))
+			return
+		usr.client.cmd_give_direct_control(src)
 	if(href_list[VV_HK_OFFER_GHOSTS])
 		if(!check_rights(NONE))
 			return
@@ -1196,6 +1202,10 @@
 		if("logging")
 			return debug_variable(var_name, logging, 0, src, FALSE)
 	. = ..()
+
+/mob/vv_auto_rename(new_name)
+	//Do not do parent's actions, as we *usually* do this differently.
+	fully_replace_character_name(real_name, new_name)
 
 ///Show the language menu for this mob
 /mob/verb/open_language_menu()
@@ -1217,3 +1227,32 @@
 /mob/setMovetype(newval)
 	. = ..()
 	update_movespeed(FALSE)
+
+/// Updates the grab state of the mob and updates movespeed
+/mob/setGrabState(newstate)
+	. = ..()
+	if(grab_state == GRAB_PASSIVE)
+		remove_movespeed_modifier(MOVESPEED_ID_MOB_GRAB_STATE, update=TRUE)
+	else
+		add_movespeed_modifier(MOVESPEED_ID_MOB_GRAB_STATE, update=TRUE, priority=100, override=TRUE, multiplicative_slowdown=grab_state*3, blacklisted_movetypes=FLOATING)
+
+/mob/proc/update_equipment_speed_mods()
+	var/speedies = equipped_speed_mods()
+	if(!speedies)
+		remove_movespeed_modifier(MOVESPEED_ID_MOB_EQUIPMENT, update=TRUE)
+	else
+		add_movespeed_modifier(MOVESPEED_ID_MOB_EQUIPMENT, update=TRUE, priority=100, override=TRUE, multiplicative_slowdown=speedies, blacklisted_movetypes=FLOATING)
+
+/// Gets the combined speed modification of all worn items
+/// Except base mob type doesnt really wear items
+/mob/proc/equipped_speed_mods()
+	for(var/obj/item/I in held_items)
+		if(I.item_flags & SLOWS_WHILE_IN_HAND)
+			. += I.slowdown
+
+/mob/proc/set_stat(new_stat)
+	if(new_stat == stat)
+		return
+	SEND_SIGNAL(src, COMSIG_MOB_STATCHANGE, new_stat)
+	. = stat
+	stat = new_stat

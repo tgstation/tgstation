@@ -15,7 +15,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 3
-	materials = list(/datum/material/iron = 7500, /datum/material/glass = 100)
+	custom_materials = list(/datum/material/iron = 7500, /datum/material/glass = 100)
 	var/open = TRUE
 	var/locked = FALSE
 	var/list/occupants = list()
@@ -89,7 +89,7 @@
 	if(target.mob_size > max_occupant_weight)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
-			if(iscatperson(H))
+			if(isfelinid(H))
 				to_chat(user, "<span class='warning'>You'd need a lot of catnip and treats, plus maybe a laser pointer, for that to work.</span>")
 			else
 				to_chat(user, "<span class='warning'>Humans, generally, do not fit into pet carriers.</span>")
@@ -141,14 +141,16 @@
 		update_icon()
 		remove_occupant(user)
 
-/obj/item/pet_carrier/update_icon()
-	cut_overlay("unlocked")
-	cut_overlay("locked")
+/obj/item/pet_carrier/update_icon_state()
 	if(open)
 		icon_state = initial(icon_state)
 	else
 		icon_state = "pet_carrier_[!occupants.len ? "closed" : "occupied"]"
-		add_overlay("[locked ? "" : "un"]locked")
+
+/obj/item/pet_carrier/update_overlays()
+	. = ..()
+	if(!open)
+		. += "[locked ? "" : "un"]locked"
 
 /obj/item/pet_carrier/MouseDrop(atom/over_atom)
 	. = ..()

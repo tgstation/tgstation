@@ -5,7 +5,7 @@
 		</ui-button>
 	{{/partial}}
 	{{#each data.default_programs}}
-	<ui-button action='load_program' params='{"type": {{type}}}' style='{{data.program == type ? "selected" : null}}'>
+		<ui-button action='load_program' params='{"type": {{type}}}' style='{{data.program == type ? "selected" : null}}'>
 				{{name}}
 	</ui-button><br>
 	{{/each}}

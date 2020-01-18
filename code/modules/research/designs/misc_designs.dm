@@ -87,6 +87,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/bright_helmet
+	name = "Workplace-Ready Firefighter Helmet"
+	desc = "By applying state of the art lighting technology to a fire helmet with industry standard photo-chemical hardening methods, this hardhat will protect you from robust workplace hazards."
+	id = "bright_helmet"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/plastic = 3000, /datum/material/silver = 500)
+	build_path = /obj/item/clothing/head/hardhat/red/upgraded
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_CARGO
+
 /datum/design/portaseeder
 	name = "Portable Seed Extractor"
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
@@ -265,7 +275,7 @@
 	build_path = /obj/item/tank/internals/plasma/empty
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
-	
+
 /datum/design/id
 	name = "Identification Card"
 	desc = "A card used to provide ID and determine access across the station."
@@ -274,7 +284,26 @@
 	materials = list(/datum/material/iron=200, /datum/material/glass = 100)
 	build_path = /obj/item/card/id
 	category = list("Electronics")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE	
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/eng_gloves
+	name = "Tinkers Gloves"
+	desc = "Overdesigned engineering gloves that have automated construction subroutines dialed in, allowing for faster construction while worn."
+	id = "eng_gloves"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
+	build_path = /obj/item/clothing/gloves/color/latex/engineering
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/lavarods
+	name = "Lava-Resistant Metal Rods"
+	id = "lava_rods"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron=1000, /datum/material/plasma=500, /datum/material/titanium=2000)
+	build_path = /obj/item/stack/rods/lava
+	category = list("initial", "Stock Parts")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
@@ -350,7 +379,7 @@
 	id = "holobarrier_jani"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000, /datum/material/silver = 1000)
-	build_path = /obj/structure/holosign/barrier/wetsign
+	build_path = /obj/item/holosign_creator/janibarrier
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
@@ -408,6 +437,26 @@
 	build_path = /obj/item/reactive_armour_shell
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/knight_armour
+	name = "Knight Armour"
+	desc = "A royal knight's favorite garments. Can be trimmed by any friendly person."
+	id = "knight_armour"
+	build_type = AUTOLATHE
+	materials = list(MAT_CATEGORY_RIGID = 10000)
+	build_path = /obj/item/clothing/suit/armor/riot/knight/greyscale
+	category = list("Imported")
+
+/datum/design/knight_helmet
+	name = "Knight Helmet"
+	desc = "A royal knight's favorite hat. If you hold it upside down it's actually a bucket."
+	id = "knight_helmet"
+	build_type = AUTOLATHE
+	materials = list(MAT_CATEGORY_RIGID = 5000)
+	build_path = /obj/item/clothing/head/helmet/knight/greyscale
+	category = list("Imported")
+
+
 
 /////////////////////////////////////////
 /////////////Security////////////////////
@@ -473,4 +522,11 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-
+/datum/design/plumbing_rcd
+	name = "Plumbing Constructor"
+	id = "plumbing_rcd"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 75000, /datum/material/glass = 37500, /datum/material/plastic = 1000)
+	build_path = /obj/item/construction/plumbing
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL

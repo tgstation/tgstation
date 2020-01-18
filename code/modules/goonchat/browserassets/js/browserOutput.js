@@ -29,7 +29,7 @@ var opts = {
 	'scrollSnapTolerance': 10, //If within x pixels of bottom
 	'clickTolerance': 10, //Keep focus if outside x pixels of mousedown position on mouseup
 	'imageRetryDelay': 50, //how long between attempts to reload images (in ms)
-	'imageRetryLimit': 50, //how many attempts should we make? 
+	'imageRetryLimit': 50, //how many attempts should we make?
 	'popups': 0, //Amount of popups opened ever
 	'wasd': false, //Is the user in wasd mode?
 	'priorChatHeight': 0, //Thing for height-resizing detection
@@ -67,7 +67,7 @@ var opts = {
 	'updatedVolume': 0, //The volume level that is sent to the server
 	'musicStartAt': 0, //The position the music starts playing
 	'musicEndAt': 0, //The position the music... stops playing... if null, doesn't apply (so the music runs through)
-	
+
 	'defaultMusicVolume': 25,
 
 	'messageCombining': true,
@@ -161,7 +161,7 @@ function byondDecode(message) {
 	// The replace for + is because FOR SOME REASON, BYOND replaces spaces with a + instead of %20, and a plus with %2b.
 	// Marvelous.
 	message = message.replace(/\+/g, "%20");
-	try { 
+	try {
 		// This is a workaround for the above not always working when BYOND's shitty url encoding breaks. (byond bug id:2399401)
 		if (decodeURIComponent) {
 			message = decodeURIComponent(message);
@@ -494,8 +494,8 @@ function handleClientData(ckey, ip, compid) {
 				return; //Record already exists
 			}
 		}
-
-		if (opts.clientData.length >= opts.clientDataLimit) {
+		//Lets make sure we obey our limit (can connect from server with higher limit)
+		while (opts.clientData.length >= opts.clientDataLimit) {
 			opts.clientData.shift();
 		}
 	} else {
@@ -727,8 +727,8 @@ $(function() {
 	*
 	******************************************/
 	var savedConfig = {
-		'sfontSize': getCookie('fontsize'),
-		'slineHeight': getCookie('lineheight'),
+		fontsize: getCookie('fontsize'),
+		lineheight: getCookie('lineheight'),
 		'spingDisabled': getCookie('pingdisabled'),
 		'shighlightTerms': getCookie('highlightterms'),
 		'shighlightColor': getCookie('highlightcolor'),
@@ -737,13 +737,13 @@ $(function() {
 		'sdarkmode': getCookie('darkmode'),
 	};
 
-	if (savedConfig.sfontSize) {
-		$messages.css('font-size', savedConfig.sfontSize);
-		internalOutput('<span class="internal boldnshit">Loaded font size setting of: '+savedConfig.sfontSize+'</span>', 'internal');
+	if (savedConfig.fontsize) {
+		$messages.css('font-size', savedConfig.fontsize);
+		internalOutput('<span class="internal boldnshit">Loaded font size setting of: '+savedConfig.fontsize+'</span>', 'internal');
 	}
-	if (savedConfig.slineHeight) {
-		$("body").css('line-height', savedConfig.slineHeight);
-		internalOutput('<span class="internal boldnshit">Loaded line height setting of: '+savedConfig.slineHeight+'</span>', 'internal');
+	if (savedConfig.lineheight) {
+		$("body").css('line-height', savedConfig.lineheight);
+		internalOutput('<span class="internal boldnshit">Loaded line height setting of: '+savedConfig.lineheight+'</span>', 'internal');
 	}
 	if(savedConfig.sdarkmode == 'true'){
 		swap();
@@ -784,7 +784,7 @@ $(function() {
 	else{
 		$('#adminMusic').prop('volume', opts.defaultMusicVolume / 100);
 	}
-	
+
 	if (savedConfig.smessagecombining) {
 		if (savedConfig.smessagecombining == 'false') {
 			opts.messageCombining = false;
@@ -974,41 +974,31 @@ $(function() {
 	});
 
 	$('#decreaseFont').click(function(e) {
-		var fontSize = parseInt($messages.css('font-size'));
-		fontSize = fontSize - 1 + 'px';
-		$messages.css({'font-size': fontSize});
-		setCookie('fontsize', fontSize, 365);
-		internalOutput('<span class="internal boldnshit">Font size set to '+fontSize+'</span>', 'internal');
+		savedConfig.fontsize = Math.max(parseInt(savedConfig.fontsize || 13) - 1, 1) + 'px';
+		$messages.css({'font-size': savedConfig.fontsize});
+		setCookie('fontsize', savedConfig.fontsize, 365);
+		internalOutput('<span class="internal boldnshit">Font size set to '+savedConfig.fontsize+'</span>', 'internal');
 	});
 
 	$('#increaseFont').click(function(e) {
-		var fontSize = parseInt($messages.css('font-size'));
-		fontSize = fontSize + 1 + 'px';
-		$messages.css({'font-size': fontSize});
-		setCookie('fontsize', fontSize, 365);
-		internalOutput('<span class="internal boldnshit">Font size set to '+fontSize+'</span>', 'internal');
+		savedConfig.fontsize = (parseInt(savedConfig.fontsize || 13) + 1) + 'px';
+		$messages.css({'font-size': savedConfig.fontsize});
+		setCookie('fontsize', savedConfig.fontsize, 365);
+		internalOutput('<span class="internal boldnshit">Font size set to '+savedConfig.fontsize+'</span>', 'internal');
 	});
 
 	$('#decreaseLineHeight').click(function(e) {
-		var Heightline = parseFloat($("body").css('line-height'));
-		var Sizefont = parseFloat($("body").css('font-size'));
-		var lineheightvar = Heightline / Sizefont
-		lineheightvar -= 0.1;
-		lineheightvar = lineheightvar.toFixed(1)
-		$("body").css({'line-height': lineheightvar});
-		setCookie('lineheight', lineheightvar, 365);
-		internalOutput('<span class="internal boldnshit">Line height set to '+lineheightvar+'</span>', 'internal');
+		savedConfig.lineheight = Math.max(parseFloat(savedConfig.lineheight || 1.2) - 0.1, 0.1).toFixed(1);
+		$("body").css({'line-height': savedConfig.lineheight});
+		setCookie('lineheight', savedConfig.lineheight, 365);
+		internalOutput('<span class="internal boldnshit">Line height set to '+savedConfig.lineheight+'</span>', 'internal');
 	});
 
 	$('#increaseLineHeight').click(function(e) {
-		var Heightline = parseFloat($("body").css('line-height'));
-		var Sizefont = parseFloat($("body").css('font-size'));
-		var lineheightvar = Heightline / Sizefont
-		lineheightvar += 0.1;
-		lineheightvar = lineheightvar.toFixed(1)
-		$("body").css({'line-height': lineheightvar});
-		setCookie('lineheight', lineheightvar, 365);
-		internalOutput('<span class="internal boldnshit">Line height set to '+lineheightvar+'</span>', 'internal');
+		savedConfig.lineheight = (parseFloat(savedConfig.lineheight || 1.2) + 0.1).toFixed(1);
+		$("body").css({'line-height': savedConfig.lineheight});
+		setCookie('lineheight', savedConfig.lineheight, 365);
+		internalOutput('<span class="internal boldnshit">Line height set to '+savedConfig.lineheight+'</span>', 'internal');
 	});
 
 	$('#togglePing').click(function(e) {
@@ -1026,7 +1016,7 @@ $(function() {
 		// Requires IE 10+ to issue download commands. Just opening a popup
 		// window will cause Ctrl+S to save a blank page, ignoring innerHTML.
 		if (!window.Blob) {
-			output('<span class="big red">This function is only supported on IE 10+. Upgrade if possible.</span>', 'internal');
+			output('<span class="big red">This function is only supported on IE 10 and up. Upgrade if possible.</span>', 'internal');
 			return;
 		}
 
@@ -1110,7 +1100,7 @@ $(function() {
 		$messages.empty();
 		opts.messageCount = 0;
 	});
-	
+
 	$('#musicVolumeSpan').hover(function() {
 		$('#musicVolumeText').addClass('hidden');
 		$('#musicVolume').removeClass('hidden');
@@ -1137,9 +1127,9 @@ $(function() {
 	});
 
 	$('img.icon').error(iconError);
-	
-	
-		
+
+
+
 
 	/*****************************************
 	*

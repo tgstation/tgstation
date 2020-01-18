@@ -47,6 +47,9 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, GLOB.socks_list)
 	return pick(GLOB.socks_list)
 
+/proc/random_backpack()
+	return pick(GLOB.backpacklist)
+
 /proc/random_features()
 	if(!GLOB.tails_list_human.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, GLOB.tails_list_human)
@@ -75,23 +78,23 @@
 	//For now we will always return none for tail_human and ears.
 	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),"ethcolor" = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)], "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs", "caps" = pick(GLOB.caps_list), "moth_wings" = pick(GLOB.moth_wings_list), "moth_markings" = pick(GLOB.moth_markings_list)))
 
-/proc/random_hair_style(gender)
+/proc/random_hairstyle(gender)
 	switch(gender)
 		if(MALE)
-			return pick(GLOB.hair_styles_male_list)
+			return pick(GLOB.hairstyles_male_list)
 		if(FEMALE)
-			return pick(GLOB.hair_styles_female_list)
+			return pick(GLOB.hairstyles_female_list)
 		else
-			return pick(GLOB.hair_styles_list)
+			return pick(GLOB.hairstyles_list)
 
-/proc/random_facial_hair_style(gender)
+/proc/random_facial_hairstyle(gender)
 	switch(gender)
 		if(MALE)
-			return pick(GLOB.facial_hair_styles_male_list)
+			return pick(GLOB.facial_hairstyles_male_list)
 		if(FEMALE)
-			return pick(GLOB.facial_hair_styles_female_list)
+			return pick(GLOB.facial_hairstyles_female_list)
 		else
-			return pick(GLOB.facial_hair_styles_list)
+			return pick(GLOB.facial_hairstyles_list)
 
 /proc/random_unique_name(gender, attempts_to_find_unique_name=10)
 	for(var/i in 1 to attempts_to_find_unique_name)
@@ -134,7 +137,7 @@
 /proc/random_skin_tone()
 	return pick(GLOB.skin_tones)
 
-GLOBAL_LIST_INIT(skin_tones, list(
+GLOBAL_LIST_INIT(skin_tones, sortList(list(
 	"albino",
 	"caucasian1",
 	"caucasian2",
@@ -147,7 +150,7 @@ GLOBAL_LIST_INIT(skin_tones, list(
 	"indian",
 	"african1",
 	"african2"
-	))
+	)))
 
 GLOBAL_LIST_EMPTY(species_list)
 
@@ -409,14 +412,18 @@ GLOBAL_LIST_EMPTY(species_list)
 /proc/deadchat_broadcast(message, source=null, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
 	message = "<span class='deadsay'>[source]<span class='linkify'>[message]</span></span>"
 	for(var/mob/M in GLOB.player_list)
-		var/datum/preferences/prefs
-		if(M.client && M.client.prefs)
-			prefs = M.client.prefs
-		else
-			prefs = new
+		var/chat_toggles = TOGGLES_DEFAULT_CHAT
+		var/toggles = TOGGLES_DEFAULT
+		var/list/ignoring
+		if(M.client.prefs)
+			var/datum/preferences/prefs = M.client.prefs
+			chat_toggles = prefs.chat_toggles
+			toggles = prefs.toggles
+			ignoring = prefs.ignoring
+
 
 		var/override = FALSE
-		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
+		if(M.client.holder && (chat_toggles & CHAT_DEAD))
 			override = TRUE
 		if(HAS_TRAIT(M, TRAIT_SIXTHSENSE))
 			override = TRUE
@@ -424,15 +431,18 @@ GLOBAL_LIST_EMPTY(species_list)
 			continue
 		if(M.stat != DEAD && !override)
 			continue
-		if(speaker_key && speaker_key in prefs.ignoring)
+		if(speaker_key && (speaker_key in ignoring))
 			continue
 
 		switch(message_type)
 			if(DEADCHAT_DEATHRATTLE)
-				if(prefs.toggles & DISABLE_DEATHRATTLE)
+				if(toggles & DISABLE_DEATHRATTLE)
 					continue
 			if(DEADCHAT_ARRIVALRATTLE)
-				if(prefs.toggles & DISABLE_ARRIVALRATTLE)
+				if(toggles & DISABLE_ARRIVALRATTLE)
+					continue
+			if(DEADCHAT_LAWCHANGE)
+				if(!(chat_toggles & CHAT_GHOSTLAWS))
 					continue
 
 		if(isobserver(M))
@@ -487,3 +497,15 @@ GLOBAL_LIST_EMPTY(species_list)
 	REMOVE_TRAIT(L, TRAIT_PASSTABLE, source)
 	if(!HAS_TRAIT(L, TRAIT_PASSTABLE))
 		L.pass_flags &= ~PASSTABLE
+
+/proc/dance_rotate(atom/movable/AM, datum/callback/callperrotate, set_original_dir=FALSE)
+	set waitfor = FALSE
+	var/originaldir = AM.dir
+	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
+		if(!AM)
+			return
+		AM.setDir(i)
+		callperrotate?.Invoke()
+		sleep(1)
+	if(set_original_dir)
+		AM.setDir(originaldir)

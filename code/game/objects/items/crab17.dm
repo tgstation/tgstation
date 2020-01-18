@@ -28,11 +28,10 @@
 	desc = "This is good for spacecoin because"
 	icon = 'icons/obj/money_machine.dmi'
 	icon_state = "bogdanoff"
-	layer = TABLE_LAYER //So that the crate inside doesn't appear underneath
+	layer = LARGE_MOB_LAYER
 	armor = list("melee" = 80, "bullet" = 30, "laser" = 30, "energy" = 60, "bomb" = 90, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 80)
 	density = TRUE
 	pixel_z = -8
-	layer = LARGE_MOB_LAYER
 	max_integrity = 5000
 	var/list/accounts_to_rob
 	var/mob/living/carbon/human/bogdanoff
@@ -64,7 +63,7 @@
 		if(do_after(user, 40, target = src))
 			if(!card.registered_account.being_dumped)
 				return
-			to_chat(user, "<span class='warning'>You quickly cash out your funds to a more secure banking location. Funds are safu.</span>")
+			to_chat(user, "<span class='warning'>You quickly cash out your funds to a more secure banking location. Funds are safu.</span>") // This is a reference and not a typo
 			card.registered_account.being_dumped = FALSE
 			card.registered_account.withdrawDelay = 0
 			if(check_if_finished())

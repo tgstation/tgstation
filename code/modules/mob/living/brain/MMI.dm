@@ -59,7 +59,7 @@
 		brainmob.container = src
 		var/fubar_brain = newbrain.brain_death && newbrain.suicided && brainmob.suiciding //brain is damaged beyond repair or from a suicider
 		if(!fubar_brain && !(newbrain.organ_flags & ORGAN_FAILING)) // the brain organ hasn't been beaten to death, nor was from a suicider.
-			brainmob.stat = CONSCIOUS //we manually revive the brain mob
+			brainmob.set_stat(CONSCIOUS) //we manually revive the brain mob
 			GLOB.dead_mob_list -= brainmob
 			GLOB.alive_mob_list += brainmob
 		else if(!fubar_brain && newbrain.organ_flags & ORGAN_FAILING) // the brain is damaged, but not from a suicider
@@ -78,11 +78,12 @@
 
 		SSblackbox.record_feedback("amount", "mmis_filled", 1)
 
+		log_game("[key_name(user)] has put the brain of [key_name(brainmob)] into an MMI at [AREACOORD(src)]")
+
 	else if(brainmob)
 		O.attack(brainmob, user) //Oh noooeeeee
 	else
 		return ..()
-
 
 /obj/item/mmi/attack_self(mob/user)
 	if(!brain)
@@ -97,12 +98,13 @@
 /obj/item/mmi/proc/eject_brain(mob/user)
 	brainmob.container = null //Reset brainmob mmi var.
 	brainmob.forceMove(brain) //Throw mob into brain.
-	brainmob.stat = DEAD
+	brainmob.set_stat(DEAD)
 	brainmob.emp_damage = 0
 	brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
 	GLOB.alive_mob_list -= brainmob //Get outta here
 	GLOB.dead_mob_list |= brainmob
 	brain.brainmob = brainmob //Set the brain to use the brainmob
+	log_game("[key_name(user)] has ejected the brain of [key_name(brainmob)] from an MMI at [AREACOORD(src)]")
 	brainmob = null //Set mmi brainmob var to null
 	if(user)
 		user.put_in_hands(brain) //puts brain in the user's hand or otherwise drops it on the user's turf
@@ -110,7 +112,6 @@
 		brain.forceMove(get_turf(src))
 	brain.organ_flags &= ~ORGAN_FROZEN
 	brain = null //No more brain in here
-
 
 /obj/item/mmi/proc/transfer_identity(mob/living/L) //Same deal as the regular brain proc. Used for human-->robot people.
 	if(!brainmob)
@@ -197,20 +198,47 @@
 
 /obj/item/mmi/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>There is a switch to toggle the radio system [radio.on ? "off" : "on"].[brain ? " It is currently being covered by [brain]." : null]</span>"
+	if(radio)
+		. += "<span class='notice'>There is a switch to toggle the radio system [radio.on ? "off" : "on"].[brain ? " It is currently being covered by [brain]." : null]</span>"
 	if(brainmob)
 		var/mob/living/brain/B = brainmob
 		if(!B.key || !B.mind || B.stat == DEAD)
-			. += "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>"
-
+			. += "<span class='warning'>\The [src] indicates that the brain is completely unresponsive.</span>"
 		else if(!B.client)
-			. += "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>"
-
+			. += "<span class='warning'>\The [src] indicates that the brain is currently inactive; it might change.</span>"
 		else
-			. += "<span class='notice'>The MMI indicates the brain is active.</span>"
+			. += "<span class='notice'>\The [src] indicates that the brain is active.</span>"
 
 /obj/item/mmi/relaymove(mob/user)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move
+
+/obj/item/mmi/proc/brain_check(mob/user)
+	var/mob/living/brain/B = brainmob
+	if(!B)
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] indicates that there is no brain present!</span>")
+		return FALSE
+	if(!B.key || !B.mind)
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] indicates that their mind is completely unresponsive!</span>")
+		return FALSE
+	if(!B.client)
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] indicates that their mind is currently inactive.</span>")
+		return FALSE
+	if(B.suiciding || brain?.suicided)
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] indicates that their mind has no will to live!</span>")
+		return FALSE
+	if(B.stat == DEAD || brain?.brain_death)
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] indicates that the brain is dead!</span>")
+		return FALSE
+	if(brain?.organ_flags & ORGAN_FAILING)
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] indicates that the brain is damaged!</span>")
+		return FALSE
+	return TRUE
 
 /obj/item/mmi/syndie
 	name = "\improper Syndicate Man-Machine Interface"

@@ -47,6 +47,10 @@
 	. = ..()
 	create_reagents(10)
 
+/obj/item/toy/waterballoon/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
 /obj/item/toy/waterballoon/attack(mob/living/carbon/human/M, mob/user)
 	return
 
@@ -78,7 +82,7 @@
 				to_chat(user, "<span class='notice'>You fill the balloon with the contents of [I].</span>")
 				I.reagents.trans_to(src, 10, transfered_by = user)
 				update_icon()
-	else if(I.is_sharp())
+	else if(I.get_sharpness())
 		balloon_burst()
 	else
 		return ..()
@@ -94,14 +98,14 @@
 			T = get_turf(AT)
 		else
 			T = get_turf(src)
-		T.visible_message("<span class='danger'>[src] bursts!</span>","<span class='italics'>You hear a pop and a splash.</span>")
+		T.visible_message("<span class='danger'>[src] bursts!</span>","<span class='hear'>You hear a pop and a splash.</span>")
 		reagents.reaction(T)
 		for(var/atom/A in T)
 			reagents.reaction(A)
 		icon_state = "burst"
 		qdel(src)
 
-/obj/item/toy/waterballoon/update_icon()
+/obj/item/toy/waterballoon/update_icon_state()
 	if(src.reagents.total_volume >= 1)
 		icon_state = "waterballoon"
 		item_state = "balloon"
@@ -188,7 +192,7 @@
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(/datum/material/iron=10, /datum/material/glass=10)
+	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7
 
@@ -227,14 +231,14 @@
 		return
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
-		user.show_message("<span class='warning'>*click*</span>", 2)
-		playsound(src, 'sound/weapons/gun_dry_fire.ogg', 30, TRUE)
+		user.show_message("<span class='warning'>*click*</span>", MSG_AUDIBLE)
+		playsound(src, 'sound/weapons/gun/revolver/dry_fire.ogg', 30, TRUE)
 		return
-	playsound(user, 'sound/weapons/gunshot.ogg', 100, TRUE)
+	playsound(user, 'sound/weapons/gun/revolver/shot.ogg', 100, TRUE)
 	src.bullets--
 	user.visible_message("<span class='danger'>[user] fires [src] at [target]!</span>", \
 						"<span class='danger'>You fire [src] at [target]!</span>", \
-						 "<span class='italics'>You hear a gunshot!</span>")
+						 "<span class='hear'>You hear a gunshot!</span>")
 
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
@@ -242,11 +246,11 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "357OLD-7"
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(/datum/material/iron=10, /datum/material/glass=10)
+	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
 	var/amount_left = 7
 
-/obj/item/toy/ammo/gun/update_icon()
-	src.icon_state = text("357OLD-[]", src.amount_left)
+/obj/item/toy/ammo/gun/update_icon_state()
+	icon_state = "357OLD-[amount_left]"
 
 /obj/item/toy/ammo/gun/examine(mob/user)
 	. = ..()
@@ -348,13 +352,13 @@
 /obj/item/toy/windupToolbox/attack_self(mob/user)
 	if(!active)
 		icon_state = "his_grace_awakened"
-		to_chat(user, "<span class='warning'>You wind up [src], it begins to rumble.</span>")
+		to_chat(user, "<span class='notice'>You wind up [src], it begins to rumble.</span>")
 		active = TRUE
 		playsound(src, 'sound/effects/pope_entry.ogg', 100)
 		Rumble()
 		addtimer(CALLBACK(src, .proc/stopRumble), 600)
 	else
-		to_chat(user, "[src] is already active.")
+		to_chat(user, "<span class='warning'>[src] is already active!</span>")
 
 /obj/item/toy/windupToolbox/proc/Rumble()
 	var/static/list/transforms
@@ -426,13 +430,13 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/ash_type = /obj/effect/decal/cleanable/ash
 
-/obj/item/toy/snappop/proc/pop_burst(var/n=3, var/c=1)
+/obj/item/toy/snappop/proc/pop_burst(n=3, c=1)
 	var/datum/effect_system/spark_spread/s = new()
 	s.set_up(n, c, src)
 	s.start()
 	new ash_type(loc)
 	visible_message("<span class='warning'>[src] explodes!</span>",
-		"<span class='italics'>You hear a snap!</span>")
+		"<span class='hear'>You hear a snap!</span>")
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 	qdel(src)
 
@@ -476,6 +480,7 @@
 	var/timer = 0
 	var/cooldown = 30
 	var/quiet = 0
+	w_class = WEIGHT_CLASS_SMALL
 
 //all credit to skasi for toy mech fun ideas
 /obj/item/toy/prize/attack_self(mob/user)
@@ -581,8 +586,7 @@
 		INVOKE_ASYNC(src, .proc/do_toy_talk, user)
 
 		cooldown = TRUE
-		spawn(recharge_time)
-			cooldown = FALSE
+		addtimer(VARSET_CALLBACK(src, cooldown, FALSE), recharge_time)
 		return
 	..()
 
@@ -612,6 +616,7 @@
 	name = "toy AI"
 	desc = "A little toy model AI core with real law announcing action!"
 	icon_state = "AI"
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/talking/AI/generate_messages()
 	return list(generate_ion_law())
@@ -649,6 +654,7 @@
 	messages = list("You won't get away this time, Griffin!", "Stop right there, criminal!", "Hoot! Hoot!", "I am the night!")
 	chattering = TRUE
 	phomeme = "owl"
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/talking/griffin
 	name = "griffin action figure"
@@ -657,6 +663,7 @@
 	messages = list("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
 	chattering = TRUE
 	phomeme = "griffin"
+	w_class = WEIGHT_CLASS_SMALL
 
 /*
 || A Deck of Cards for playing various games of chance ||
@@ -738,15 +745,16 @@
 	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
 	update_icon()
 
-/obj/item/toy/cards/deck/update_icon()
-	if(cards.len > 26)
-		icon_state = "deck_[deckstyle]_full"
-	else if(cards.len > 10)
-		icon_state = "deck_[deckstyle]_half"
-	else if(cards.len > 0)
-		icon_state = "deck_[deckstyle]_low"
-	else if(cards.len == 0)
-		icon_state = "deck_[deckstyle]_empty"
+/obj/item/toy/cards/deck/update_icon_state()
+	switch(cards.len)
+		if(27 to INFINITY)
+			icon_state = "deck_[deckstyle]_full"
+		if(11 to 27)
+			icon_state = "deck_[deckstyle]_half"
+		if(1 to 11)
+			icon_state = "deck_[deckstyle]_low"
+		else
+			icon_state = "deck_[deckstyle]_empty"
 
 /obj/item/toy/cards/deck/attack_self(mob/user)
 	if(cooldown < world.time - 50)
@@ -1029,45 +1037,72 @@
 	var/cooldown = 0
 
 /obj/item/toy/nuke/attack_self(mob/user)
-	if (cooldown < world.time)
-		cooldown = world.time + 1800 //3 minutes
-		user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
+	if (obj_flags & EMAGGED && cooldown < world.time)
+		cooldown = world.time + 600
+		user.visible_message("<span class='hear'>You hear the click of a button.</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>")
+		sleep(5)
+		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
+		sleep(140)
+		user.visible_message("<span class='alert'>[src] violently explodes!</span>")
+		explosion(src, 0, 0, 1, 0)
+		qdel(src)
+	else if (cooldown < world.time)
+		cooldown = world.time + 600 //1 minute
+		user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='hear'>You hear the click of a button.</span>")
 		sleep(5)
 		icon_state = "nuketoy"
-		playsound(src, 'sound/machines/alarm.ogg', 100, FALSE)
+		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
 		sleep(135)
 		icon_state = "nuketoycool"
 		sleep(cooldown - world.time)
 		icon_state = "nuketoyidle"
 	else
 		var/timeleft = (cooldown - world.time)
-		to_chat(user, "<span class='alert'>Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on a small display.</span>")
+		to_chat(user, "<span class='alert'>Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on the small display.</span>")
+		sleep(5)
 
+
+/obj/item/toy/nuke/emag_act(mob/user)
+	if (obj_flags & EMAGGED)
+		return
+	to_chat(user, "<span class = 'notice'> You short-circuit \the [src].</span>")
+	obj_flags |= EMAGGED
 /*
  * Fake meteor
  */
 
 /obj/item/toy/minimeteor
 	name = "\improper Mini-Meteor"
-	desc = "Relive the excitement of a meteor shower! SweetMeat-eor. Co is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor."
+	desc = "Relive the excitement of a meteor shower! SweetMeat-eor Co. is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "minimeteor"
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/toy/minimeteor/emag_act(mob/user)
+	if (obj_flags & EMAGGED)
+		return
+	to_chat(user, "<span class = 'notice'> You short-circuit whatever electronics exist inside \the [src], if there even are any.</span>")
+	obj_flags |= EMAGGED
+
 /obj/item/toy/minimeteor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(!..())
+	if (obj_flags & EMAGGED)
+		playsound(src, 'sound/effects/meteorimpact.ogg', 40, TRUE)
+		explosion(get_turf(hit_atom), -1, -1, 1)
+		for(var/mob/M in urange(10, src))
+			if(!M.stat && !isAI(M))
+				shake_camera(M, 3, 1)
+	else
 		playsound(src, 'sound/effects/meteorimpact.ogg', 40, TRUE)
 		for(var/mob/M in urange(10, src))
 			if(!M.stat && !isAI(M))
 				shake_camera(M, 3, 1)
-		qdel(src)
 
 /*
  * Toy big red button
  */
 /obj/item/toy/redbutton
 	name = "big red button"
-	desc = "A big, plastic red button. Reads 'From HonkCo Pranks?' on the back."
+	desc = "A big, plastic red button. Reads 'From HonkCo Pranks!' on the back."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bigred"
 	w_class = WEIGHT_CLASS_SMALL
@@ -1076,7 +1111,7 @@
 /obj/item/toy/redbutton/attack_self(mob/user)
 	if (cooldown < world.time)
 		cooldown = (world.time + 300) // Sets cooldown at 30 seconds
-		user.visible_message("<span class='warning'>[user] presses the big red button.</span>", "<span class='notice'>You press the button, it plays a loud noise!</span>", "<span class='italics'>The button clicks loudly.</span>")
+		user.visible_message("<span class='warning'>[user] presses the big red button.</span>", "<span class='notice'>You press the button, it plays a loud noise!</span>", "<span class='hear'>The button clicks loudly.</span>")
 		playsound(src, 'sound/effects/explosionfar.ogg', 50, FALSE)
 		for(var/mob/M in urange(10, src)) // Checks range
 			if(!M.stat && !isAI(M)) // Checks to make sure whoever's getting shaken is alive/not the AI
@@ -1117,11 +1152,6 @@
 	item_state = "beachball"
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
 
-/obj/item/toy/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user)
-	. = ..()
-	if(user.dropItemToGround(src))
-		throw_at(target, throw_range, throw_speed)
-
 /*
  * Clockwork Watch
  */
@@ -1138,7 +1168,7 @@
 /obj/item/toy/clockwork_watch/attack_self(mob/user)
 	if (cooldown < world.time)
 		cooldown = world.time + 1800 //3 minutes
-		user.visible_message("<span class='warning'>[user] rotates a cogwheel on [src].</span>", "<span class='notice'>You rotate a cogwheel on [src], it plays a loud noise!</span>", "<span class='italics'>You hear cogwheels turning.</span>")
+		user.visible_message("<span class='warning'>[user] rotates a cogwheel on [src].</span>", "<span class='notice'>You rotate a cogwheel on [src], it plays a loud noise!</span>", "<span class='hear'>You hear cogwheels turning.</span>")
 		playsound(src, 'sound/magic/clockwork/ark_activation.ogg', 50, FALSE)
 	else
 		to_chat(user, "<span class='alert'>The cogwheels are already turning!</span>")
@@ -1212,6 +1242,7 @@
 	var/cooldown = 0
 	var/toysay = "What the fuck did you do?"
 	var/toysound = 'sound/machines/click.ogg'
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/figure/Initialize()
 	. = ..()
@@ -1350,6 +1381,11 @@
 	icon_state = "md"
 	toysay = "The patient is already dead!"
 
+/obj/item/toy/figure/paramedic
+	name = "Paramedic action figure"
+	icon_state = "paramedic"
+	toysay = "And the best part? I'm not even a real doctor!"
+
 /obj/item/toy/figure/mime
 	name = "Mime action figure"
 	icon_state = "mime"
@@ -1425,7 +1461,7 @@
 	if(!new_name)
 		return
 	doll_name = new_name
-	to_chat(user, "You name the dummy as \"[doll_name]\"")
+	to_chat(user, "<span class='notice'>You name the dummy as \"[doll_name]\".</span>")
 	name = "[initial(name)] - [doll_name]"
 
 /obj/item/toy/dummy/talk_into(atom/movable/A, message, channel, list/spans, datum/language/language)

@@ -114,7 +114,7 @@
 		to_chat(user, "<span class='notice'>You try to pet [src], but it has no stuffing. Aww...</span>")
 
 /obj/item/toy/plush/attackby(obj/item/I, mob/living/user, params)
-	if(I.is_sharp())
+	if(I.get_sharpness())
 		if(!grenade)
 			if(!stuffed)
 				to_chat(user, "<span class='warning'>You already murdered it!</span>")
@@ -170,19 +170,19 @@
 
 	//we are not catholic
 	if(young == TRUE || Kisser.young == TRUE)
-		user.show_message("<span class='notice'>[src] plays tag with [Kisser].</span>", 1,
-			"<span class='notice'>They're happy.</span>", 0)
+		user.show_message("<span class='notice'>[src] plays tag with [Kisser].</span>", MSG_VISUAL,
+			"<span class='notice'>They're happy.</span>", NONE)
 		Kisser.cheer_up()
 		cheer_up()
 
 	//never again
 	else if(Kisser in scorned)
 		//message, visible, alternate message, neither visible nor audible
-		user.show_message("<span class='notice'>[src] rejects the advances of [Kisser]!</span>", 1,
-			"<span class='notice'>That didn't feel like it worked.</span>", 0)
+		user.show_message("<span class='notice'>[src] rejects the advances of [Kisser]!</span>", MSG_VISUAL,
+			"<span class='notice'>That didn't feel like it worked.</span>", NONE)
 	else if(src in Kisser.scorned)
-		user.show_message("<span class='notice'>[Kisser] realises who [src] is and turns away.</span>", 1,
-			"<span class='notice'>That didn't feel like it worked.</span>", 0)
+		user.show_message("<span class='notice'>[Kisser] realises who [src] is and turns away.</span>", MSG_VISUAL,
+			"<span class='notice'>That didn't feel like it worked.</span>", NONE)
 
 	//first comes love
 	else if(Kisser.lover != src && Kisser.partner != src)	//cannot be lovers or married
@@ -202,8 +202,8 @@
 			new_lover(Kisser)
 			Kisser.new_lover(src)
 		else
-			user.show_message("<span class='notice'>[src] rejects the advances of [Kisser], maybe next time?</span>", 1,
-								"<span class='notice'>That didn't feel like it worked, this time.</span>", 0)
+			user.show_message("<span class='notice'>[src] rejects the advances of [Kisser], maybe next time?</span>", MSG_VISUAL,
+								"<span class='notice'>That didn't feel like it worked, this time.</span>", NONE)
 
 	//then comes marriage
 	else if(Kisser.lover == src && Kisser.partner != src)	//need to be lovers (assumes loving is a two way street) but not married (also assumes similar)
@@ -216,6 +216,7 @@
 	else if(Kisser.partner == src && !plush_child)	//the one advancing does not take ownership of the child and we have a one child policy in the toyshop
 		user.visible_message("<span class='notice'>[user] is going to break [Kisser] and [src] by bashing them like that.</span>",
 									"<span class='notice'>[Kisser] passionately embraces [src] in your hands. Look away you perv!</span>")
+		user.client.give_award(/datum/award/achievement/misc/rule8, user)
 		if(plop(Kisser))
 			user.visible_message("<span class='notice'>Something drops at the feet of [user].</span>",
 							"<span class='notice'>The miracle of oh god did that just come out of [src]?!</span>")
@@ -227,7 +228,7 @@
 
 	//then oh fuck something unexpected happened
 	else
-		user.show_message("<span class='warning'>[Kisser] and [src] don't know what to do with one another.</span>", 0)
+		user.show_message("<span class='warning'>[Kisser] and [src] don't know what to do with one another.</span>", NONE)
 
 /obj/item/toy/plush/proc/heartbreak(obj/item/toy/plush/Brutus)
 	if(lover != Brutus)
@@ -523,7 +524,6 @@
 	attack_verb = list("blorbled", "slimed", "absorbed")
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
-	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 
 /obj/item/toy/plush/awakenedplushie
 	name = "awakened plushie"

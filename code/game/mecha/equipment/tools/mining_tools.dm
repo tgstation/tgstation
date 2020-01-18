@@ -13,6 +13,8 @@
 	energy_drain = 10
 	force = 15
 	harmful = TRUE
+	tool_behaviour = TOOL_DRILL
+	toolspeed = 0.9
 	var/drill_delay = 7
 	var/drill_level = DRILL_BASIC
 
@@ -31,7 +33,7 @@
 			return
 	target.visible_message("<span class='warning'>[chassis] starts to drill [target].</span>", \
 					"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \
-					 "<span class='italics'>You hear drilling.</span>")
+					 "<span class='hear'>You hear drilling.</span>")
 
 	if(do_after_cooldown(target))
 		set_ready_state(FALSE)
@@ -141,6 +143,7 @@
 	drill_delay = 4
 	drill_level = DRILL_HARDENED
 	force = 15
+	toolspeed = 0.7
 
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner

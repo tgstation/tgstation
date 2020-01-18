@@ -152,7 +152,7 @@
 		if(allow_thrust(0.01))
 			ion_trail.start()
 			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/move_react)
-			owner.add_movespeed_modifier(MOVESPEED_ID_CYBER_THRUSTER, priority=100, multiplicative_slowdown=-2, movetypes=FLOATING, conflict=MOVE_CONFLICT_JETPACK)
+			owner.add_movespeed_modifier(MOVESPEED_ID_CYBER_THRUSTER, priority=100, multiplicative_slowdown=-0.5, movetypes=FLOATING, conflict=MOVE_CONFLICT_JETPACK)
 			if(!silent)
 				to_chat(owner, "<span class='notice'>You turn your thrusters set on.</span>")
 	else

@@ -4,7 +4,7 @@
 /area/template_noop)
 "ab" = (
 /obj/structure/grille,
-/obj/structure/window/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /obj/machinery/door/poddoor/preopen{
 	id = "escape_cockpit_windows";
 	name = "Cockpit Blast Door"
@@ -590,7 +590,7 @@
 /area/shuttle/escape)
 "br" = (
 /obj/structure/grille,
-/obj/structure/window/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bs" = (

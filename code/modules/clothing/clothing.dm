@@ -2,9 +2,10 @@
 	name = "clothing"
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
-	integrity_failure = 80
+	integrity_failure = 0.4
 	var/damaged_clothes = 0 //similar to machine's BROKEN stat and structure's broken var
-	var/flash_protect = 0		//What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
+	///What level of bright light protection item has.
+	var/flash_protect = FLASH_PROTECTION_NONE
 	var/tint = 0				//Sets the item's level of visual impairment tint, normally set to the same as flash_protect
 	var/up = 0					//but separated to allow items to protect but not impair vision, like space helmets
 	var/visor_flags = 0			//flags that are added/removed when an item is adjusted up/down
@@ -103,7 +104,7 @@
 	..()
 	if (!istype(user))
 		return
-	if(slot_flags & slotdefine2slotbit(slot)) //Was equipped to a valid slot for this item?
+	if(slot_flags & slot) //Was equipped to a valid slot for this item?
 		if (LAZYLEN(user_vars_to_edit))
 			for(var/variable in user_vars_to_edit)
 				if(variable in user.vars)
@@ -318,9 +319,8 @@ BLIND     // can't see anything
 /obj/item/clothing/obj_destruction(damage_flag)
 	if(damage_flag == "bomb" || damage_flag == "melee")
 		var/turf/T = get_turf(src)
-		spawn(1) //so the shred survives potential turf change from the explosion.
-			var/obj/effect/decal/cleanable/shreds/Shreds = new(T)
-			Shreds.desc = "The sad remains of what used to be [name]."
+		//so the shred survives potential turf change from the explosion.
+		addtimer(CALLBACK_NEW(/obj/effect/decal/cleanable/shreds, list(T, name)), 1)
 		deconstruct(FALSE)
 	else
 		..()

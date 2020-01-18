@@ -1902,6 +1902,9 @@
 "wh" = (
 /turf/template_noop,
 /area/awaymission/BMPship)
+"xA" = (
+/turf/closed/mineral/random/no_caves,
+/area/awaymission/BMPship)
 "ya" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "packerMine"
@@ -1994,9 +1997,9 @@ aa
 aa
 aa
 aa
-gb
-gb
-gb
+xA
+xA
+xA
 aa
 aa
 aa
@@ -2045,9 +2048,9 @@ aa
 aa
 aa
 fS
-gb
-gb
-gb
+xA
+xA
+xA
 aa
 aa
 aa
@@ -2096,10 +2099,10 @@ aa
 aa
 aa
 fS
-gb
-gb
-gb
-gb
+xA
+xA
+xA
+xA
 aa
 aa
 aa
@@ -2148,8 +2151,8 @@ aa
 aa
 aa
 fS
-gb
-gb
+xA
+xA
 fS
 fS
 aa
@@ -2210,9 +2213,9 @@ aa
 aa
 aa
 aa
-gb
-gb
-gb
+xA
+xA
+xA
 aa
 aa
 aa
@@ -2260,11 +2263,11 @@ aa
 wh
 fS
 fS
-gb
-gb
-gb
-gb
-gb
+xA
+xA
+xA
+xA
+xA
 aa
 aa
 aa
@@ -2310,13 +2313,13 @@ aa
 fS
 fS
 fS
-gb
-gb
-gb
-gb
-gb
-gb
-gb
+xA
+xA
+xA
+xA
+xA
+xA
+xA
 aa
 aa
 aa
@@ -2361,14 +2364,14 @@ hn
 fS
 fS
 fS
-gb
-gb
-gb
-gb
-gb
-gb
-gb
-gb
+xA
+xA
+xA
+xA
+xA
+xA
+xA
+xA
 aa
 aa
 aa
@@ -2414,13 +2417,13 @@ fS
 fS
 fS
 fS
-gb
-gb
-gb
-gb
-gb
-gb
-gb
+xA
+xA
+xA
+xA
+xA
+xA
+xA
 aa
 aa
 "}
@@ -2468,10 +2471,10 @@ fS
 fS
 fS
 fS
-gb
-gb
-gb
-gb
+xA
+xA
+xA
+xA
 aa
 aa
 "}
@@ -2520,8 +2523,8 @@ fS
 fS
 fS
 fS
-gb
-gb
+xA
+xA
 fS
 aa
 aa
@@ -3643,8 +3646,8 @@ gb
 fS
 fS
 fS
-gb
-gb
+xA
+xA
 aa
 aa
 "}
@@ -3694,9 +3697,9 @@ fS
 fS
 fS
 fS
-gb
-gb
-gb
+xA
+xA
+xA
 aa
 "}
 (35,1,1) = {"
@@ -3744,10 +3747,10 @@ fS
 fS
 fS
 fS
-gb
-gb
-gb
-gb
+xA
+xA
+xA
+xA
 aa
 "}
 (36,1,1) = {"
@@ -3795,10 +3798,10 @@ aa
 aa
 aa
 aa
-gb
-gb
-gb
-gb
+xA
+xA
+xA
+xA
 aa
 "}
 (37,1,1) = {"
@@ -3847,8 +3850,8 @@ aa
 aa
 aa
 aa
-gb
-gb
+xA
+xA
 aa
 aa
 "}

@@ -35,10 +35,6 @@ obj/machinery/spaceship_navigation_beacon/emp_act()
 	else
 		icon_state = "core-open"
 
-/obj/machinery/spaceship_navigation_beacon/power_change()
-	. = ..()
-	update_icon()
-
 /obj/machinery/spaceship_navigation_beacon/multitool_act(mob/living/user, obj/item/multitool/I)
 	..()
 	if(panel_open)

@@ -139,10 +139,10 @@
 	if(src.operating)
 		return
 	if(!src.occupant)
-		audible_message("<span class='italics'>You hear a loud metallic grinding sound.</span>")
+		audible_message("<span class='hear'>You hear a loud metallic grinding sound.</span>")
 		return
 	use_power(1000)
-	audible_message("<span class='italics'>You hear a loud squelchy grinding sound.</span>")
+	audible_message("<span class='hear'>You hear a loud squelchy grinding sound.</span>")
 	playsound(src.loc, 'sound/machines/juicer.ogg', 50, TRUE)
 	operating = TRUE
 	update_icon()
@@ -216,7 +216,7 @@
 		meatslab.throw_at(pick(nearby_turfs),i,3)
 		for (var/turfs=1 to meat_produced)
 			var/turf/gibturf = pick(nearby_turfs)
-			if (!gibturf.density && src in view(gibturf))
+			if (!gibturf.density && (src in view(gibturf)))
 				new gibtype(gibturf,i,diseases)
 
 	pixel_x = initial(pixel_x) //return to its spot after shaking

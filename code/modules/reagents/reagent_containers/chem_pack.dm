@@ -9,22 +9,10 @@
 	obj_flags = UNIQUE_RENAME
 	resistance_flags = ACID_PROOF
 	var/sealed = FALSE
-
-/obj/item/reagent_containers/chem_pack/on_reagent_change(changetype)
-	update_icon()
-
-/obj/item/reagent_containers/chem_pack/update_icon()
-	cut_overlays()
-
-	var/v = min(round(reagents.total_volume / volume * 10), 10)
-	if(v > 0)
-		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "chempack1")
-		filling.icon_state = "chempack[v]"
-		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling)
+	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 
 /obj/item/reagent_containers/chem_pack/AltClick(mob/living/user)
-	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERY) && !sealed)
+	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) && !sealed)
 		if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50)))
 			to_chat(user, "<span class='warning'>Uh... whoops! You accidentally spill the content of the bag onto yourself.</span>")
 			SplashReagents(user)

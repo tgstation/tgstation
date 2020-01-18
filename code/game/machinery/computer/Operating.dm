@@ -14,7 +14,6 @@
 	var/obj/structure/table/optable/table
 	var/list/advanced_surgeries = list()
 	var/datum/techweb/linked_techweb
-	var/menu = MENU_OPERATION
 	light_color = LIGHT_COLOR_BLUE
 	var/list/linked_stasisbeds
 
@@ -33,7 +32,7 @@
 	if(istype(O, /obj/item/disk/surgery))
 		user.visible_message("<span class='notice'>[user] begins to load \the [O] in \the [src]...</span>", \
 			"<span class='notice'>You begin to load a surgery protocol from \the [O]...</span>", \
-			"<span class='italics'>You hear the chatter of a floppy drive.</span>")
+			"<span class='hear'>You hear the chatter of a floppy drive.</span>")
 		var/obj/item/disk/surgery/D = O
 		if(do_after(user, 10, target = src))
 			advanced_surgeries |= D.surgeries
@@ -71,7 +70,6 @@
 /obj/machinery/computer/operating/ui_data(mob/user)
 	var/list/data = list()
 	data["table"] = table
-	data["menu"] = menu
 
 	var/list/surgeries = list()
 	for(var/X in advanced_surgeries)
@@ -82,8 +80,8 @@
 		surgeries += list(surgery)
 	data["surgeries"] = surgeries
 	if(table)
-		data["patient"] = list()
 		if(table.check_patient())
+			data["patient"] = list()
 			patient = table.patient
 			switch(patient.stat)
 				if(CONSCIOUS)
@@ -127,15 +125,14 @@
 						"alternative_step" = alternative_step,
 						"alt_chems_needed" = alt_chems_needed
 					))
+		else
+			data["patient"] = null
 	return data
 
 /obj/machinery/computer/operating/ui_act(action, params)
 	if(..())
 		return
 	switch(action)
-		if("change_menu")
-			menu = text2num(params["menu"])
-			. = TRUE
 		if("sync")
 			sync_surgeries()
 			. = TRUE

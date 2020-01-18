@@ -6,6 +6,7 @@
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	valid_territory = FALSE
+	flags_1 = CAN_BE_DIRTY_1
 
 //Survival Capsule
 /obj/item/survivalcapsule
@@ -173,7 +174,7 @@
 		return TRUE
 
 	user.visible_message("<span class='warning'>[user] disassembles [src].</span>",
-		"<span class='notice'>You start to disassemble [src]...</span>", "<span class='italics'>You hear clanking and banging noises.</span>")
+		"<span class='notice'>You start to disassemble [src]...</span>", "<span class='hear'>You hear clanking and banging noises.</span>")
 	if(I.use_tool(src, user, 20, volume=50))
 		new /obj/item/gps(loc)
 		qdel(src)
@@ -253,7 +254,7 @@
 		return TRUE
 
 	user.visible_message("<span class='warning'>[user] disassembles [src].</span>",
-		"<span class='notice'>You start to disassemble [src]...</span>", "<span class='italics'>You hear clanking and banging noises.</span>")
+		"<span class='notice'>You start to disassemble [src]...</span>", "<span class='hear'>You hear clanking and banging noises.</span>")
 	if(I.use_tool(src, user, 20, volume=50))
 		deconstruct()
 	return TRUE
