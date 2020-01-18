@@ -45,6 +45,7 @@ map kilostation
 endmap
 
 map ministation
+	maxplayers 25
 	votable
 endmap
 
