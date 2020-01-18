@@ -24,6 +24,7 @@
 	name = "Lawyer"
 	jobtype = /datum/job/lawyer
 
+	back = null
 	belt = /obj/item/pda/lawyer
 	ears = /obj/item/radio/headset/headset_srvsec
 	uniform = /obj/item/clothing/under/rank/civilian/lawyer/bluesuit
@@ -34,6 +35,10 @@
 	r_pocket = /obj/item/clothing/accessory/lawyers_badge
 
 	chameleon_extras = /obj/item/stamp/law
+
+	backpack = null
+	satchel = null //any department backpack for the lawyer is no backpack, but you may still start with one by specifying your own
+	duffelbag = null
 
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
