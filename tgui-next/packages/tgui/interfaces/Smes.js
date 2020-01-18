@@ -78,7 +78,7 @@ export const Smes = props => {
             <NumberInput
               value={Math.round(data.inputLevel/1000)}
               unit="kW"
-              width="50px"
+              width="65px"
               minValue={0}
               maxValue={data.inputLevelMax/1000}
               onChange={(e, value) => {
@@ -145,7 +145,7 @@ export const Smes = props => {
             <NumberInput
               value={Math.round(data.outputLevel/1000)}
               unit="kW"
-              width="50px"
+              width="65px"
               minValue={0}
               maxValue={data.outputLevelMax/1000}
               onChange={(e, value) => {
