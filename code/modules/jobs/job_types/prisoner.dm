@@ -1,25 +1,24 @@
 /datum/job/prisoner
 	title = "Prisoner"
 	flag = PRISONER
-	department_head = list("Head of security")
+	department_head = list("The Security Team")
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 3
-	spawn_positions = 3
-	supervisors = "the head of security and warden"
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "the security team"
 
 	outfit = /datum/outfit/job/prisoner
 
 	display_order = JOB_DISPLAY_ORDER_PRISONER
 
 /datum/outfit/job/prisoner
-	name = "prisoner"
+	name = "Prisoner"
 	jobtype = /datum/job/prisoner
 
 	uniform = /obj/item/clothing/under/rank/prisoner
 	shoes = /obj/item/clothing/shoes/sneakers/orange
 	id = /obj/item/card/id/prisoner
-	ears = 0
-	belt = 0
-	back = 0
-	box = 0
+	ears = null
+	belt = null
+	box = null

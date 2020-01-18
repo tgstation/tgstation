@@ -60,7 +60,6 @@
 	icon_state = "clown_envirosuit"
 	item_state = "clown_envirosuit"
 
-
 /obj/item/clothing/under/plasmaman/prisoner
 	name = "prisoner envirosuit"
 	desc = "An orange envirosuit identifying and protecting a criminal plasmaman."
