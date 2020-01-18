@@ -111,12 +111,6 @@
 	set waitfor = FALSE
 	if(prefs && (prefs.toggles & SOUND_LOBBY))
 		SEND_SOUND(src, sound(returncreditsmusic(), repeat = 0, wait = 0, volume = vol, channel = CHANNEL_LOBBYMUSIC)) // FULPSTATION: Play end music! SO SAD!
-/client/proc/returncreditsmusic()
-	if (prob(15))
-		return 'sound/Fulpsounds/Fulp_Uhoh_Stinky.ogg'
-	if (prob(5))
-		return 'sound/Fulpsounds/Fulp_Piano_Old.ogg'
-	return 'sound/Fulpsounds/Fulp_Piano.ogg'
 
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.

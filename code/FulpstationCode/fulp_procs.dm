@@ -1,6 +1,12 @@
 
 
-
+// Called from sound.dm to find a track to play
+/client/proc/returncreditsmusic() // FULPSTATION
+	if (prob(15))
+		return 'sound/Fulpsounds/Fulp_Uhoh_Stinky.ogg'
+	if (prob(5))
+		return 'sound/Fulpsounds/Fulp_Piano_Old.ogg'
+	return 'sound/Fulpsounds/Fulp_Piano.ogg'
 
 
 // Can someone see the turf indicated? //
