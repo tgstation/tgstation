@@ -4,147 +4,105 @@
 
 /datum/job/captain/New()
 	..()
+	MAP_JOB_CHECK
 	total_positions = 1
 	spawn_positions = 1
 
 /datum/job/hop/New()
 	..()
+	MAP_JOB_CHECK
 	total_positions = 1
 	spawn_positions = 1
 
 /datum/job/cargo_tech/New()
 	..()
+	MAP_JOB_CHECK
 	total_positions = 3
 	spawn_positions = 3
 
 /datum/job/engineer/New()
 	..()
+	MAP_JOB_CHECK
 	total_positions = 4
 	spawn_positions = 4
 
 /datum/job/doctor/New()
 	..()
+	MAP_JOB_CHECK
 	total_positions = 4
 	spawn_positions = 4
 
 /datum/job/chemist/New()
 	..()
+	MAP_JOB_CHECK
 	total_positions = 1
 	spawn_positions = 1
 
 
 /datum/job/scientist/New()
 	..()
+	MAP_JOB_CHECK
 	total_positions = 4
 	spawn_positions = 4
 
 /datum/job/detective/New()
 	..()
+	MAP_JOB_CHECK
 	total_positions = 1
 	spawn_positions = 1
 
 /datum/job/officer/New()
 	..()
+	MAP_JOB_CHECK
 	total_positions = 4
 	spawn_positions = 4
 
 /datum/job/cyborg/New()
 	..()
+	MAP_JOB_CHECK
 	total_positions = 1
 	spawn_positions = 1
 
 /datum/job/ai/New()
 	..()
+	MAP_JOB_CHECK
 	total_positions = 1
 	spawn_positions = 1
 
 
 //Removed
 
-/datum/job/hydro/New()
-	..()
-	total_positions = 0
-	spawn_positions = 0
+MAP_REMOVE_JOB(hydro)
 
-/datum/job/qm/New()
-	..()
-	total_positions = 0
-	spawn_positions = 0
+MAP_REMOVE_JOB(qm)
 
-/datum/job/mining/New()
-	..()
-	total_positions = 0
-	spawn_positions = 0
+MAP_REMOVE_JOB(mining)
 
-/datum/job/curator/New()
-	..()
-	total_positions = 0
-	spawn_positions = 0
+MAP_REMOVE_JOB(curator)
 
-/datum/job/librarian/New()
-	..()
-	total_positions = 0
-	spawn_positions = 0
+MAP_REMOVE_JOB(librarian)
 
-/datum/job/lawyer/New()
-	..()
-	total_positions = 0
-	spawn_positions = 0
+MAP_REMOVE_JOB(lawyer)
 
-/datum/job/chaplain/New()
-	..()
-	total_positions = 0
-	spawn_positions = 0
+MAP_REMOVE_JOB(chaplain)
 
-/datum/job/chief_engineer/New()
-	..()
-	total_positions = 0
-	spawn_positions = 0
+MAP_REMOVE_JOB(chief_engineer)
 
-/datum/job/atmos/New()
-	..()
-	total_positions = 0
-	spawn_positions = 0
+MAP_REMOVE_JOB(atmos)
 
-/datum/job/cmo/New()
-	..()
-	total_positions = 0
-	spawn_positions = 0
+MAP_REMOVE_JOB(cmo)
 
-/datum/job/geneticist/New()
-	..()
-	total_positions = 0
-	spawn_positions = 0
+MAP_REMOVE_JOB(geneticist)
 
-/datum/job/virologist/New()
-	..()
-	total_positions = 0
-	spawn_positions = 0
+MAP_REMOVE_JOB(virologist)
 
-/datum/job/rd/New()
-	..()
-	total_positions = 0
-	spawn_positions = 0
+MAP_REMOVE_JOB(rd)
 
-/datum/job/roboticist/New()
-	..()
-	total_positions = 0
-	spawn_positions = 0
+MAP_REMOVE_JOB(roboticist)
 
-/datum/job/hos/New()
-	..()
-	total_positions = 0
-	spawn_positions = 0
+MAP_REMOVE_JOB(hos)
 
-/datum/job/warden/New()
-	..()
-	total_positions = 0
-	spawn_positions = 0
+MAP_REMOVE_JOB(warden)
 
-/datum/job/paramedic/New()
-	..()
-	total_positions = 0
-	spawn_positions = 0
-
-
+MAP_REMOVE_JOB(paramedic)
 
