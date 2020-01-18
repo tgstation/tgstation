@@ -249,3 +249,4 @@ When crafting most items, you can either manually combine parts or use the craft
 Suit storage units not only remove blood and dirt from clothing, but also radiation!
 Remote devices will work when used through cameras. For example: Bluespace RPEDs and door remotes.
 You can light a cigar on a supermatter crystal.
+

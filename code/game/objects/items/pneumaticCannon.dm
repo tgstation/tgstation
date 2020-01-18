@@ -254,11 +254,11 @@
 		tank = thetank
 	update_icon()
 
-/obj/item/pneumatic_cannon/update_icon()
-	cut_overlays()
+/obj/item/pneumatic_cannon/update_overlays()
+	. = ..()
 	if(!tank)
 		return
-	add_overlay(tank.icon_state)
+	. += tank.icon_state
 
 /obj/item/pneumatic_cannon/proc/fill_with_type(type, amount)
 	if(!ispath(type, /obj) && !ispath(type, /mob))
@@ -316,6 +316,7 @@
 	checktank = FALSE
 	range_multiplier = 3
 	throw_amount = 1
+	pressureSetting = 2
 	maxWeightClass = 2 //a single magspear
 	spin_item = FALSE
 	var/static/list/magspear_typecache = typecacheof(/obj/item/throwing_star/magspear)

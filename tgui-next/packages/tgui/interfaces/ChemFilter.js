@@ -1,12 +1,10 @@
-import { Fragment } from 'inferno';
-import { act } from '../byond';
-import { Button, Section, Grid } from '../components';
-
+import { Component, Fragment } from 'inferno';
+import { useBackend } from '../backend';
+import { Button, Grid, Section, Input } from '../components';
 
 export const ChemFilterPane = props => {
-  const {state} = props;
-  const {ref} = state.config;
-  const {title, list} = props;
+  const { act } = useBackend(props);
+  const { title, list, reagentName, onReagentInput } = props;
   const titleKey = title.toLowerCase();
   return (
     <Section
@@ -15,50 +13,82 @@ export const ChemFilterPane = props => {
       ml={0.5}
       mr={0.5}
       buttons={(
-        <Button
-          icon="plus"
-          onClick={() => act(ref, "add", {which: titleKey})}
-        />
-      )}
-    >
+        <Fragment>
+          <Input
+            placeholder="Reagent"
+            width="140px"
+            onInput={(e, value) => onReagentInput(value)} />
+          <Button
+            icon="plus"
+            onClick={() => act('add', {
+              which: titleKey,
+              name: reagentName,
+            })} />
+        </Fragment>
+      )}>
       {list.map(filter => (
         <Fragment key={filter}>
           <Button
             fluid
             icon="minus"
             content={filter}
-            onClick={() => act(ref, "remove", {which: titleKey, reagent: filter})}
-          />
+            onClick={() => act('remove', {
+              which: titleKey,
+              reagent: filter,
+            })} />
         </Fragment>
       ))}
     </Section>
   );
 };
 
-export const ChemFilter = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
-  const {
-    left = [],
-    right = [],
-  } = data;
-  return (
-    <Grid style={{ width: "100%" }}>
-      <Grid.Item style={{ width: "50%" }}>
-        <ChemFilterPane
-          title="Left"
-          list={left}
-          state={state}
-        />
-      </Grid.Item>
-      <Grid.Item style={{ width: "50%" }}>
-        <ChemFilterPane
-          title="Right"
-          list={right}
-          state={state}
-        />
-      </Grid.Item>
-    </Grid>
-  );
-};
+export class ChemFilter extends Component {
+  constructor() {
+    super();
+    this.state = {
+      leftReagentName: '',
+      rightReagentName: '',
+    };
+  }
+
+  setLeftReagentName(leftReagentName) {
+    this.setState({
+      leftReagentName,
+    });
+  }
+
+  setRightReagentName(rightReagentName) {
+    this.setState({
+      rightReagentName,
+    });
+  }
+
+  render() {
+    const { state } = this.props;
+    const { data } = state;
+    const {
+      left = [],
+      right = [],
+    } = data;
+    return (
+      <Grid>
+        <Grid.Column>
+          <ChemFilterPane
+            title="Left"
+            list={left}
+            reagentName={this.state.leftReagentName}
+            onReagentInput={value => this.setLeftReagentName(value)}
+            state={state} />
+        </Grid.Column>
+        <Grid.Column>
+          <ChemFilterPane
+            title="Right"
+            list={right}
+            reagentName={this.state.rightReagentName}
+            onReagentInput={value => this.setRightReagentName(value)}
+            state={state} />
+        </Grid.Column>
+      </Grid>
+    );
+  }
+}

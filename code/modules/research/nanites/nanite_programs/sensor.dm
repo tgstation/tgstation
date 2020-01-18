@@ -2,33 +2,21 @@
 	name = "Sensor Nanites"
 	desc = "These nanites send a signal code when a certain condition is met."
 	unique = FALSE
-	extra_settings = list(NES_SENT_CODE)
 	var/can_rule = FALSE
-	var/sent_code = 0
 
-/datum/nanite_program/sensor/set_extra_setting(user, setting)
-	if(setting == NES_SENT_CODE)
-		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
-		if(isnull(new_code))
-			return
-		sent_code = CLAMP(round(new_code, 1), 1, 9999)
-
-/datum/nanite_program/sensor/get_extra_setting(setting)
-	if(setting == NES_SENT_CODE)
-		return sent_code
-
-/datum/nanite_program/sensor/copy_extra_settings_to(datum/nanite_program/sensor/target)
-	target.sent_code = sent_code
+/datum/nanite_program/sensor/register_extra_settings()
+	extra_settings[NES_SENT_CODE] = new /datum/nanite_extra_setting/number(0, 1, 9999)
 
 /datum/nanite_program/sensor/proc/check_event()
 	return FALSE
 
 /datum/nanite_program/sensor/proc/send_code()
 	if(activated)
-		SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, sent_code, "a [name] program")
+		var/datum/nanite_extra_setting/ES = extra_settings[NES_SENT_CODE]
+		SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, ES.value, "a [name] program")
 
 /datum/nanite_program/sensor/active_effect()
-	if(sent_code && check_event())
+	if(check_event())
 		send_code()
 
 /datum/nanite_program/sensor/proc/make_rule(datum/nanite_program/target)
@@ -40,36 +28,15 @@
 	can_trigger = TRUE
 	trigger_cost = 0
 	trigger_cooldown = 10
-	extra_settings = list(NES_SENT_CODE,NES_DELAY)
 	var/spent = FALSE
-	var/delay = 0
 
-/datum/nanite_program/sensor/repeat/set_extra_setting(user, setting)
-	if(setting == NES_SENT_CODE)
-		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
-		if(isnull(new_code))
-			return
-		sent_code = CLAMP(round(new_code, 1), 1, 9999)
-	if(setting == NES_DELAY)
-		var/new_delay = input(user, "Set the delay in seconds:", name, null) as null|num
-		if(isnull(new_delay))
-			return
-		delay = (CLAMP(round(new_delay, 1), 0, 3600)) * 10 //max 1 hour
+/datum/nanite_program/sensor/repeat/register_extra_settings()
+	. = ..()
+	extra_settings[NES_DELAY] = new /datum/nanite_extra_setting/number(0, 0, 3600, "s")
 
-/datum/nanite_program/sensor/repeat/get_extra_setting(setting)
-	if(setting == NES_SENT_CODE)
-		return sent_code
-	if(setting == NES_DELAY)
-		return "[delay/10] seconds"
-
-/datum/nanite_program/sensor/repeat/copy_extra_settings_to(datum/nanite_program/sensor/repeat/target)
-	target.sent_code = sent_code
-	target.delay = delay
-
-/datum/nanite_program/sensor/repeat/trigger()
-	if(!..())
-		return
-	addtimer(CALLBACK(src, .proc/send_code), delay)
+/datum/nanite_program/sensor/repeat/on_trigger(comm_message)
+	var/datum/nanite_extra_setting/ES = extra_settings[NES_DELAY]
+	addtimer(CALLBACK(src, .proc/send_code), ES.get_value() * 10)
 
 /datum/nanite_program/sensor/relay_repeat
 	name = "Relay Signal Repeater"
@@ -77,99 +44,46 @@
 	can_trigger = TRUE
 	trigger_cost = 0
 	trigger_cooldown = 10
-	extra_settings = list(NES_SENT_CODE,NES_RELAY_CHANNEL,NES_DELAY)
 	var/spent = FALSE
-	var/delay = 0
-	var/relay_channel = 0
 
-/datum/nanite_program/sensor/relay_repeat/set_extra_setting(user, setting)
-	if(setting == NES_SENT_CODE)
-		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
-		if(isnull(new_code))
-			return
-		sent_code = CLAMP(round(new_code, 1), 1, 9999)
-	if(setting == NES_RELAY_CHANNEL)
-		var/new_channel = input(user, "Set the relay channel (1-9999):", name, null) as null|num
-		if(isnull(new_channel))
-			return
-		relay_channel = CLAMP(round(new_channel, 1), 1, 9999)
-	if(setting == NES_DELAY)
-		var/new_delay = input(user, "Set the delay in seconds:", name, null) as null|num
-		if(isnull(new_delay))
-			return
-		delay = (CLAMP(round(new_delay, 1), 0, 3600)) * 10 //max 1 hour
+/datum/nanite_program/sensor/relay_repeat/register_extra_settings()
+	. = ..()
+	extra_settings[NES_RELAY_CHANNEL] = new /datum/nanite_extra_setting/number(1, 1, 9999)
+	extra_settings[NES_DELAY] = new /datum/nanite_extra_setting/number(0, 0, 3600, "s")
 
-/datum/nanite_program/sensor/relay_repeat/get_extra_setting(setting)
-	if(setting == NES_SENT_CODE)
-		return sent_code
-	if(setting == NES_RELAY_CHANNEL)
-		return relay_channel
-	if(setting == NES_DELAY)
-		return "[delay/10] seconds"
-
-/datum/nanite_program/sensor/relay_repeat/copy_extra_settings_to(datum/nanite_program/sensor/relay_repeat/target)
-	target.sent_code = sent_code
-	target.delay = delay
-	target.relay_channel = relay_channel
-
-/datum/nanite_program/sensor/relay_repeat/trigger()
-	if(!..())
-		return
-	addtimer(CALLBACK(src, .proc/send_code), delay)
+/datum/nanite_program/sensor/relay_repeat/on_trigger(comm_message)
+	var/datum/nanite_extra_setting/ES = extra_settings[NES_DELAY]
+	addtimer(CALLBACK(src, .proc/send_code), ES.get_value() * 10)
 
 /datum/nanite_program/sensor/relay_repeat/send_code()
-	if(activated && relay_channel)
+	var/datum/nanite_extra_setting/relay = extra_settings[NES_RELAY_CHANNEL]
+	if(activated && relay.get_value())
 		for(var/X in SSnanites.nanite_relays)
 			var/datum/nanite_program/relay/N = X
-			N.relay_signal(sent_code, relay_channel, "a [name] program")
+			var/datum/nanite_extra_setting/code = extra_settings[NES_SENT_CODE]
+			N.relay_signal(code.get_value(), relay.get_value(), "a [name] program")
 
 /datum/nanite_program/sensor/health
 	name = "Health Sensor"
 	desc = "The nanites receive a signal when the host's health is above/below a target percentage."
-	extra_settings = list(NES_SENT_CODE,NES_HEALTH_PERCENT,NES_DIRECTION)
 	can_rule = TRUE
 	var/spent = FALSE
-	var/percent = 50
-	var/direction = "Above"
 
-/datum/nanite_program/sensor/health/set_extra_setting(user, setting)
-	if(setting == NES_SENT_CODE)
-		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
-		if(isnull(new_code))
-			return
-		sent_code = CLAMP(round(new_code, 1), 1, 9999)
-	if(setting == NES_HEALTH_PERCENT)
-		var/new_percent = input(user, "Set the health percentage:", name, null) as null|num
-		if(isnull(new_percent))
-			return
-		percent = CLAMP(round(new_percent, 1), -99, 100)
-	if(setting == NES_DIRECTION)
-		if(direction == "Above")
-			direction = "Below"
-		else
-			direction = "Above"
-
-/datum/nanite_program/sensor/health/get_extra_setting(setting)
-	if(setting == NES_SENT_CODE)
-		return sent_code
-	if(setting == NES_HEALTH_PERCENT)
-		return "[percent]%"
-	if(setting == NES_DIRECTION)
-		return direction
-
-/datum/nanite_program/sensor/health/copy_extra_settings_to(datum/nanite_program/sensor/health/target)
-	target.sent_code = sent_code
-	target.percent = percent
-	target.direction = direction
+/datum/nanite_program/sensor/health/register_extra_settings()
+	. = ..()
+	extra_settings[NES_HEALTH_PERCENT] = new /datum/nanite_extra_setting/number(50, -99, 100, "%")
+	extra_settings[NES_DIRECTION] = new /datum/nanite_extra_setting/boolean(TRUE, "Above", "Below")
 
 /datum/nanite_program/sensor/health/check_event()
 	var/health_percent = host_mob.health / host_mob.maxHealth * 100
+	var/datum/nanite_extra_setting/percent = extra_settings[NES_HEALTH_PERCENT]
+	var/datum/nanite_extra_setting/direction = extra_settings[NES_DIRECTION]
 	var/detected = FALSE
-	if(direction == "Above")
-		if(health_percent >= percent)
+	if(direction.get_value())
+		if(health_percent >= percent.get_value())
 			detected = TRUE
 	else
-		if(health_percent < percent)
+		if(health_percent < percent.get_value())
 			detected = TRUE
 
 	if(detected)
@@ -183,8 +97,10 @@
 
 /datum/nanite_program/sensor/health/make_rule(datum/nanite_program/target)
 	var/datum/nanite_rule/health/rule = new(target)
-	rule.above = (direction == "Above")
-	rule.threshold = percent
+	var/datum/nanite_extra_setting/direction = extra_settings[NES_DIRECTION]
+	var/datum/nanite_extra_setting/percent = extra_settings[NES_HEALTH_PERCENT]
+	rule.above = direction.get_value()
+	rule.threshold = percent.get_value()
 	return rule
 
 /datum/nanite_program/sensor/crit
@@ -223,51 +139,24 @@
 /datum/nanite_program/sensor/nanite_volume
 	name = "Nanite Volume Sensor"
 	desc = "The nanites receive a signal when the nanite supply is above/below a certain percentage."
-	extra_settings = list(NES_SENT_CODE,NES_NANITE_PERCENT,NES_DIRECTION)
 	can_rule = TRUE
 	var/spent = FALSE
-	var/percent = 50
-	var/direction = "Above"
 
-/datum/nanite_program/sensor/nanite_volume/set_extra_setting(user, setting)
-	if(setting == NES_SENT_CODE)
-		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
-		if(isnull(new_code))
-			return
-		sent_code = CLAMP(round(new_code, 1), 1, 9999)
-	if(setting == NES_NANITE_PERCENT)
-		var/new_percent = input(user, "Set the nanite percentage:", name, null) as null|num
-		if(isnull(new_percent))
-			return
-		percent = CLAMP(round(new_percent, 1), 1, 100)
-	if(setting == NES_DIRECTION)
-		if(direction == "Above")
-			direction = "Below"
-		else
-			direction = "Above"
-
-/datum/nanite_program/sensor/nanite_volume/get_extra_setting(setting)
-	if(setting == NES_SENT_CODE)
-		return sent_code
-	if(setting == NES_NANITE_PERCENT)
-		return "[percent]%"
-	if(setting == NES_DIRECTION)
-		return direction
-
-/datum/nanite_program/sensor/nanite_volume/copy_extra_settings_to(datum/nanite_program/sensor/nanite_volume/target)
-	target.sent_code = sent_code
-	target.percent = percent
-	target.direction = direction
+/datum/nanite_program/sensor/nanite_volume/register_extra_settings()
+	. = ..()
+	extra_settings[NES_NANITE_PERCENT] = new /datum/nanite_extra_setting/number(50, -99, 100, "%")
+	extra_settings[NES_DIRECTION] = new /datum/nanite_extra_setting/boolean(TRUE, "Above", "Below")
 
 /datum/nanite_program/sensor/nanite_volume/check_event()
 	var/nanite_percent = (nanites.nanite_volume - nanites.safety_threshold)/(nanites.max_nanites - nanites.safety_threshold)*100
+	var/datum/nanite_extra_setting/percent = extra_settings[NES_NANITE_PERCENT]
+	var/datum/nanite_extra_setting/direction = extra_settings[NES_DIRECTION]
 	var/detected = FALSE
-
-	if(direction == "Above")
-		if(nanite_percent >= percent)
+	if(direction.get_value())
+		if(nanite_percent >= percent.get_value())
 			detected = TRUE
 	else
-		if(nanite_percent < percent)
+		if(nanite_percent < percent.get_value())
 			detected = TRUE
 
 	if(detected)
@@ -281,64 +170,32 @@
 
 /datum/nanite_program/sensor/nanite_volume/make_rule(datum/nanite_program/target)
 	var/datum/nanite_rule/nanites/rule = new(target)
-	rule.above = (direction == "Above")
-	rule.threshold = percent
+	var/datum/nanite_extra_setting/direction = extra_settings[NES_DIRECTION]
+	var/datum/nanite_extra_setting/percent = extra_settings[NES_NANITE_PERCENT]
+	rule.above = direction.get_value()
+	rule.threshold = percent.get_value()
 	return rule
 
 /datum/nanite_program/sensor/damage
 	name = "Damage Sensor"
 	desc = "The nanites receive a signal when a host's specific damage type is above/below a target value."
-	extra_settings = list(NES_SENT_CODE,NES_DAMAGE_TYPE,NES_DAMAGE,NES_DIRECTION)
 	can_rule = TRUE
 	var/spent = FALSE
-	var/damage_type = BRUTE
-	var/damage = 50
-	var/direction = "Above"
 
-/datum/nanite_program/sensor/damage/set_extra_setting(user, setting)
-	if(setting == NES_SENT_CODE)
-		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
-		if(isnull(new_code))
-			return
-		sent_code = CLAMP(round(new_code, 1), 1, 9999)
-	if(setting == NES_DAMAGE)
-		var/new_damage = input(user, "Set the damage threshold:", name, null) as null|num
-		if(isnull(new_damage))
-			return
-		damage = CLAMP(round(new_damage, 1), 0, 500)
-	if(setting == NES_DAMAGE_TYPE)
-		var/list/damage_types = list(BRUTE,BURN,TOX,OXY,CLONE)
-		var/new_damage_type = input("Choose the damage type", name) as null|anything in sortList(damage_types)
-		if(!new_damage_type)
-			return
-		damage_type = new_damage_type
-	if(setting == NES_DIRECTION)
-		if(direction == "Above")
-			direction = "Below"
-		else
-			direction = "Above"
-
-/datum/nanite_program/sensor/damage/get_extra_setting(setting)
-	if(setting == NES_SENT_CODE)
-		return sent_code
-	if(setting == NES_DAMAGE)
-		return damage
-	if(setting == NES_DAMAGE_TYPE)
-		return capitalize(damage_type)
-	if(setting == NES_DIRECTION)
-		return direction
-
-/datum/nanite_program/sensor/damage/copy_extra_settings_to(datum/nanite_program/sensor/damage/target)
-	target.sent_code = sent_code
-	target.damage = damage
-	target.damage_type = damage_type
-	target.direction = direction
+/datum/nanite_program/sensor/damage/register_extra_settings()
+	. = ..()
+	extra_settings[NES_DAMAGE_TYPE] = new /datum/nanite_extra_setting/type(BRUTE, list(BRUTE, BURN, TOX, OXY, CLONE))
+	extra_settings[NES_DAMAGE] = new /datum/nanite_extra_setting/number(50, 0, 500)
+	extra_settings[NES_DIRECTION] = new /datum/nanite_extra_setting/boolean(TRUE, "Above", "Below")
 
 /datum/nanite_program/sensor/damage/check_event()
 	var/reached_threshold = FALSE
-	var/check_above = (direction == "Above")
+	var/datum/nanite_extra_setting/type = extra_settings[NES_DAMAGE_TYPE]
+	var/datum/nanite_extra_setting/damage = extra_settings[NES_DAMAGE]
+	var/datum/nanite_extra_setting/direction = extra_settings[NES_DIRECTION]
+	var/check_above =  direction.get_value()
 	var/damage_amt = 0
-	switch(damage_type)
+	switch(type.get_value())
 		if(BRUTE)
 			damage_amt = host_mob.getBruteLoss()
 		if(BURN)
@@ -350,11 +207,12 @@
 		if(CLONE)
 			damage_amt = host_mob.getCloneLoss()
 
-	if(damage_amt >= damage)
-		if(check_above)
+	if(check_above)
+		if(damage_amt >= damage.get_value())
 			reached_threshold = TRUE
-	else if(!check_above)
-		reached_threshold = TRUE
+	else
+		if(damage_amt < damage.get_value())
+			reached_threshold = TRUE
 
 	if(reached_threshold)
 		if(!spent)
@@ -367,18 +225,23 @@
 
 /datum/nanite_program/sensor/damage/make_rule(datum/nanite_program/target)
 	var/datum/nanite_rule/damage/rule = new(target)
-	rule.above = (direction == "Above")
-	rule.threshold = damage
-	rule.damage_type = damage_type
+	var/datum/nanite_extra_setting/direction = extra_settings[NES_DIRECTION]
+	var/datum/nanite_extra_setting/damage_type = extra_settings[NES_DAMAGE_TYPE]
+	var/datum/nanite_extra_setting/damage = extra_settings[NES_DAMAGE]
+	rule.above  =  direction.get_value()
+	rule.threshold = damage.get_value()
+	rule.damage_type = damage_type.get_value()
 	return rule
 
 /datum/nanite_program/sensor/voice
 	name = "Voice Sensor"
 	desc = "Sends a signal when the nanites hear a determined word or sentence."
-	extra_settings = list(NES_SENT_CODE,NES_SENTENCE,NES_INCLUSIVE_MODE)
 	var/spent = FALSE
-	var/sentence = ""
-	var/inclusive = TRUE
+
+/datum/nanite_program/sensor/voice/register_extra_settings()
+	. = ..()
+	extra_settings[NES_SENTENCE] = new /datum/nanite_extra_setting/text("")
+	extra_settings[NES_INCLUSIVE_MODE] = new /datum/nanite_extra_setting/boolean(TRUE, "Inclusive", "Exclusive")
 
 /datum/nanite_program/sensor/voice/on_mob_add()
 	. = ..()
@@ -387,59 +250,25 @@
 /datum/nanite_program/sensor/voice/on_mob_remove()
 	UnregisterSignal(host_mob, COMSIG_MOVABLE_HEAR, .proc/on_hear)
 
-/datum/nanite_program/sensor/voice/set_extra_setting(user, setting)
-	if(setting == NES_SENT_CODE)
-		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
-		if(isnull(new_code))
-			return
-		sent_code = CLAMP(round(new_code, 1), 1, 9999)
-	if(setting == NES_SENTENCE)
-		var/new_sentence = stripped_input(user, "Choose the sentence that triggers the sensor.", NES_SENTENCE, sentence, MAX_MESSAGE_LEN)
-		if(!new_sentence)
-			return
-		sentence = new_sentence
-	if(setting == NES_INCLUSIVE_MODE)
-		var/new_inclusive = input("Should the sensor detect the sentence if contained within another sentence?", name) as null|anything in list("Inclusive","Exclusive")
-		if(!new_inclusive)
-			return
-		inclusive = (new_inclusive == "Inclusive")
-
-/datum/nanite_program/sensor/voice/get_extra_setting(setting)
-	if(setting == NES_SENT_CODE)
-		return sent_code
-	if(setting == NES_SENTENCE)
-		return sentence
-	if(setting == NES_INCLUSIVE_MODE)
-		if(inclusive)
-			return "Inclusive"
-		else
-			return "Exclusive"
-
-/datum/nanite_program/sensor/voice/copy_extra_settings_to(datum/nanite_program/sensor/voice/target)
-	target.sent_code = sent_code
-	target.sentence = sentence
-	target.inclusive = inclusive
-
 /datum/nanite_program/sensor/voice/proc/on_hear(datum/source, list/hearing_args)
-	if(!sentence)
+	var/datum/nanite_extra_setting/sentence = extra_settings[NES_SENTENCE]
+	var/datum/nanite_extra_setting/inclusive = extra_settings[NES_INCLUSIVE_MODE]
+	if(!sentence.get_value())
 		return
-	if(inclusive)
+	if(inclusive.get_value())
 		if(findtextEx(hearing_args[HEARING_RAW_MESSAGE], sentence))
 			send_code()
 	else
 		if(hearing_args[HEARING_RAW_MESSAGE] == sentence)
 			send_code()
 
-/datum/nanite_program/sensor/race
-	name = "Race Sensor"
-	desc = "When triggered, the nanites scan the host to determine their race and output a signal depending on the conditions set in the settings."
+/datum/nanite_program/sensor/species
+	name = "Species Sensor"
+	desc = "When triggered, the nanites scan the host to determine their species and output a signal depending on the conditions set in the settings."
 	can_trigger = TRUE
 	trigger_cost = 0
 	trigger_cooldown = 5
 
-	extra_settings = list(NES_SENT_CODE,NES_RACE,NES_MODE)
-	var/race_type = "Human"
-	var/mode = "Is"
 	var/list/static/allowed_species = list(
     	"Human" = /datum/species/human,
     	"Lizard" = /datum/species/lizard,
@@ -451,60 +280,35 @@
 		"Jelly" = /datum/species/jelly
 	)
 
-/datum/nanite_program/sensor/race/set_extra_setting(user, setting)
-	if(setting == NES_SENT_CODE)
-		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
-		if(isnull(new_code))
-			return
-		sent_code = CLAMP(round(new_code, 1), 1, 9999)
-	if(setting == NES_RACE)
-		var/list/race_types = list()
-		for(var/name in allowed_species)
-			race_types += name
-		race_types += "Other"
-		var/new_race_type = input("Choose the race", name) as null|anything in sortList(race_types)
-		if(!new_race_type)
-			return
-		race_type = new_race_type
-	if(setting == NES_MODE)
-		mode = mode == "Is" ? "Is Not" : "Is"
+/datum/nanite_program/sensor/species/register_extra_settings()
+	. = ..()
+	var/list/species_types = list()
+	for(var/name in allowed_species)
+		species_types += name
+	species_types += "Other"
+	extra_settings[NES_RACE] = new /datum/nanite_extra_setting/type("Human", species_types)
+	extra_settings[NES_MODE] = new /datum/nanite_extra_setting/boolean(TRUE, "Is", "Is Not")
 
-
-/datum/nanite_program/sensor/race/get_extra_setting(setting)
-	if(setting == NES_SENT_CODE)
-		return sent_code
-	if(setting == NES_RACE)
-		return race_type
-	if(setting == NES_MODE)
-		return mode
-
-/datum/nanite_program/sensor/race/copy_extra_settings_to(datum/nanite_program/sensor/race/target)
-	target.sent_code = sent_code
-	target.race_type = race_type
-	target.mode = mode
-
-/datum/nanite_program/sensor/race/trigger()
-	if(!..())
-		return
-
-	var/species = allowed_species[race_type]
-	var/race_match = FALSE
+/datum/nanite_program/sensor/species/on_trigger(comm_message)
+	var/datum/nanite_extra_setting/species_type = extra_settings[NES_RACE]
+	var/species = allowed_species[species_type.get_value()]
+	var/species_match = FALSE
 
 	if(species)
 		if(is_species(host_mob, species))
-			race_match = TRUE
+			species_match = TRUE
 	else	//this is the check for the "Other" option
-		race_match = TRUE
+		species_match = TRUE
 		for(var/name in allowed_species)
 			var/species_other = allowed_species[name]
 			if(is_species(host_mob, species_other))
-				race_match = FALSE
+				species_match = FALSE
 				break
 
-	switch(mode)
-		if("Is")
-			if(race_match)
-				send_code()
-		if("Is Not")
-			if(!race_match)
-				send_code()
+	var/datum/nanite_extra_setting/mode = extra_settings[NES_MODE]
+	if(mode.get_value())
+		if(species_match)
+			send_code()
+	else
+		if(!species_match)
+			send_code()

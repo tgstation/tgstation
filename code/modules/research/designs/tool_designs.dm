@@ -47,7 +47,7 @@
 
 /datum/design/rcd_upgrade/frames
 	name = "RCD frames designs upgrade"
-	desc = "Adds the computer frame and machine frame to the RCD."
+	desc = "Adds computer and machine frame designs to the RCD."
 	id = "rcd_upgrade_frames"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver = 1500, /datum/material/titanium = 2000)
@@ -57,7 +57,7 @@
 
 /datum/design/rcd_upgrade/simple_circuits
 	name = "RCD simple circuits designs upgrade"
-	desc = "Adds the simple circuits to the RCD."
+	desc = "Adds the ability to produce simple circuits using the RCD."
 	id = "rcd_upgrade_simple_circuits"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver = 1500, /datum/material/titanium = 2000)
@@ -67,13 +67,23 @@
 
 /datum/design/rcd_upgrade/silo_link
 	name = "Advanced RCD silo link upgrade"
-	desc = "Adds the silo dirrect link to the RCD."
+	desc = "Upgrades the RCD to be able to pull materials from the ore silo. The RCD must be linked to the silo using a multitool before it will function."
 	id = "rcd_upgrade_silo_link"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2500, /datum/material/silver = 2500, /datum/material/titanium = 2500, /datum/material/bluespace = 2500)
 	build_path = /obj/item/rcd_upgrade/silo_link
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/rld_mini
+	name = "Mini Rapid Light Device (MRLD)"
+	desc = "A tool that can portable and standing lighting orbs and glowsticks."
+	id = "rld_mini"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 20000, /datum/material/glass = 10000, /datum/material/plastic = 8000, /datum/material/gold = 2000)
+	build_path = /obj/item/construction/rld/mini
+	category = list("Tool Designs")
+	departmental_flags =  DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
 
 /////////////////////////////////////////
 //////////////Alien Tools////////////////

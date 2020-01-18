@@ -151,6 +151,7 @@
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),TCMB)
 			G.react(src)
 			qdel(hotspot)
+	//fixed
 	var/obj/effect/acid/A = (locate(/obj/effect/acid) in T)
 	if(A)
 		A.acid_level = max(A.acid_level - reac_volume*50, 0)
@@ -213,15 +214,15 @@
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M)
 	if(!data)
-		data = 1
-	data++
+		data = list("misc" = 1)
+	data["misc"]++
 	M.jitteriness = min(M.jitteriness+4,10)
 	if(iscultist(M))
 		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
 			to_chat(M, "<span class='cultlarge'>Your blood rites falter as holy water scours your body!</span>")
 			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
 				qdel(BS)
-	if(data >= 25)		// 10 units, 45 seconds @ metabolism 0.4 units & tick rate 1.8 sec
+	if(data["misc"] >= 25)		// 10 units, 45 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 		if(!M.stuttering)
 			M.stuttering = 1
 		M.stuttering = min(M.stuttering+4, 10)
@@ -233,7 +234,7 @@
 				M.Unconscious(120)
 				to_chat(M, "<span class='cultlarge'>[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
 				"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")].</span>")
-	if(data >= 60)	// 30 units, 135 seconds
+	if(data["misc"] >= 60)	// 30 units, 135 seconds
 		if(iscultist(M))
 			SSticker.mode.remove_cultist(M.mind, FALSE, TRUE)
 		M.jitteriness = 0
@@ -250,6 +251,37 @@
 		for(var/obj/effect/rune/R in T)
 			qdel(R)
 	T.Bless()
+
+/datum/reagent/hydrogen_peroxide
+	name = "Hydrogen peroxide"
+	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen and oxygen." //intended intended
+	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
+	taste_description = "burning water"
+	var/cooling_temperature = 2
+	glass_icon_state = "glass_clear"
+	glass_name = "glass of oxygenated water"
+	glass_desc = "The father of all refreshments. Surely it tastes great, right?"
+	shot_glass_icon_state = "shotglassclear"
+
+/*
+ *	Water reaction to turf
+ */
+
+/datum/reagent/hydrogen_peroxide/reaction_turf(turf/open/T, reac_volume)
+	if(!istype(T))
+		return
+	if(reac_volume >= 5)
+		T.MakeSlippery(TURF_WET_WATER, 10 SECONDS, min(reac_volume*1.5 SECONDS, 60 SECONDS))
+/*
+ *	Water reaction to a mob
+ */
+
+/datum/reagent/hydrogen_peroxide/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with h2o2 can burn them !
+	if(!istype(M))
+		return
+	if(method == TOUCH)
+		M.adjustFireLoss(2, 0) // burns
+	..()
 
 /datum/reagent/fuel/unholywater		//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
 	name = "Unholy Water"
@@ -359,9 +391,13 @@
 
 			if(MUTCOLORS in N.dna.species.species_traits) //take current alien color and darken it slightly
 				var/newcolor = ""
-				var/len = length(N.dna.features["mcolor"])
-				for(var/i=1, i<=len, i+=1)
-					var/ascii = text2ascii(N.dna.features["mcolor"],i)
+				var/string = N.dna.features["mcolor"]
+				var/len = length(string)
+				var/char = ""
+				var/ascii = 0
+				for(var/i=1, i<=len, i += length(char))
+					char = string[i]
+					ascii = text2ascii(char)
 					switch(ascii)
 						if(48)
 							newcolor += "0"
@@ -372,7 +408,7 @@
 						if(98 to 102)
 							newcolor += ascii2text(ascii-1)	//letters b to f lowercase
 						if(65)
-							newcolor +="9"
+							newcolor += "9"
 						if(66 to 70)
 							newcolor += ascii2text(ascii+31)	//letters B to F - translates to lowercase
 						else
@@ -760,7 +796,7 @@
 
 /datum/reagent/sodium
 	name = "Sodium"
-	description = "A soft silver metal that can easily be cut with a knife. It's not salt just yet, so refrain from putting in on your chips."
+	description = "A soft silver metal that can easily be cut with a knife. It's not salt just yet, so refrain from putting it on your chips."
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "salty metal"
@@ -1194,7 +1230,7 @@
 
 /datum/reagent/nitryl/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.65, blacklisted_movetypes=(FLYING|FLOATING))
 
 /datum/reagent/nitryl/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(type)
@@ -1480,6 +1516,38 @@
 	color = "#D35415"
 	taste_description = "chemicals"
 
+/datum/reagent/pentaerythritol
+	name = "Pentaerythritol"
+	description = "Slow down, it ain't no spelling bee!"
+	reagent_state = SOLID
+	color = "#E66FFF"
+	taste_description = "acid"
+
+/datum/reagent/acetaldehyde
+	name = "Acetaldehyde"
+	description = "Similar to plastic. Tastes like dead people."
+	reagent_state = SOLID
+	color = "#EEEEEF"
+	taste_description = "dead people" //made from formaldehyde, ya get da joke ?
+
+/datum/reagent/acetone_oxide
+	name = "Acetone oxide"
+	description = "Enslaved oxygen"
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	taste_description = "acid"
+
+
+/datum/reagent/acetone_oxide/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people kills people!
+	if(!istype(M))
+		return
+	if(method == TOUCH)
+		M.adjustFireLoss(2, FALSE) // burns,
+		M.adjust_fire_stacks((reac_volume / 10))
+	..()
+
+
+
 /datum/reagent/phenol
 	name = "Phenol"
 	description = "An aromatic ring of carbon with a hydroxyl group. A useful precursor to some medicines, but has no healing properties on its own."
@@ -1519,12 +1587,12 @@
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/carbon/M)
 	if(can_colour_mobs)
 		M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
-		return ..()
+	return ..()
 
 /datum/reagent/colorful_reagent/reaction_mob(mob/living/M, reac_volume)
 	if(can_colour_mobs)
 		M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
-		..()
+	..()
 
 /datum/reagent/colorful_reagent/reaction_obj(obj/O, reac_volume)
 	if(O)
@@ -1571,6 +1639,7 @@
 			var/mob/living/carbon/human/H = M
 			var/datum/sprite_accessory/hair/picked_hair = pick(GLOB.hairstyles_list)
 			var/datum/sprite_accessory/facial_hair/picked_beard = pick(GLOB.facial_hairstyles_list)
+			to_chat(H, "<span class='notice'>Hair starts sprouting from your scalp.</span>")
 			H.hairstyle = picked_hair
 			H.facial_hairstyle = picked_beard
 			H.update_hair()
@@ -1586,8 +1655,25 @@
 	if(method == TOUCH || method == VAPOR)
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
+			to_chat(H, "<span class='notice'>Your hair starts growing at an incredible speed!</span>")
 			H.hairstyle = "Very Long Hair"
 			H.facial_hairstyle = "Beard (Very Long)"
+			H.update_hair()
+
+/datum/reagent/baldium
+	name = "Baldium"
+	description = "A major cause of hair loss across the world."
+	reagent_state = LIQUID
+	color = "#ecb2cf"
+	taste_description = "bitterness"
+
+/datum/reagent/baldium/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(method == TOUCH || method == VAPOR)
+		if(M && ishuman(M))
+			var/mob/living/carbon/human/H = M
+			to_chat(H, "<span class='danger'>Your hair is falling out in clumps!</span>")
+			H.hairstyle = "Bald"
+			H.facial_hairstyle = "Shaved"
 			H.update_hair()
 
 /datum/reagent/saltpetre
@@ -1795,7 +1881,7 @@
 
 /datum/reagent/bz_metabolites
 	name = "BZ metabolites"
-	description = "A harmless metabolite of BZ gas"
+	description = "A harmless metabolite of BZ gas."
 	color = "#FAFF00"
 	taste_description = "acrid cinnamon"
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
@@ -1836,7 +1922,7 @@
 	if(M.dizziness < 6)
 		M.dizziness = CLAMP(M.dizziness + 3, 0, 5)
 	if(prob(20))
-		to_chat(M, "You feel confused and disorientated.")
+		to_chat(M, "You feel confused and disoriented.")
 	..()
 
 /datum/reagent/peaceborg/tire
@@ -1939,4 +2025,3 @@
 	reagent_state = SOLID
 	color = "#E6E6DA"
 	taste_mult = 0
-

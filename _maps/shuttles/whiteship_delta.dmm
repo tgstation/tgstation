@@ -69,7 +69,7 @@
 	pixel_y = 16
 	},
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -201,21 +201,21 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot_white,
 /obj/structure/closet/crate,
-/obj/item/reagent_containers/glass/waterbottle/large{
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/glass/waterbottle/large,
-/obj/item/reagent_containers/glass/waterbottle/large{
+/obj/item/reagent_containers/food/drinks/waterbottle/large,
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/glass/waterbottle{
+/obj/item/reagent_containers/food/drinks/waterbottle{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/glass/waterbottle,
-/obj/item/reagent_containers/glass/waterbottle{
+/obj/item/reagent_containers/food/drinks/waterbottle,
+/obj/item/reagent_containers/food/drinks/waterbottle{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -2195,7 +2195,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/power/apc{
 	name = "Frigate Medbay APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/spider/stickyweb,
 /obj/structure/cable,

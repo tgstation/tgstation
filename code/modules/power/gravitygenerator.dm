@@ -39,9 +39,9 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	if(prob(20))
 		set_broken()
 
-/obj/machinery/gravity_generator/tesla_act(power, tesla_flags)
+/obj/machinery/gravity_generator/zap_act(power, zap_flags)
 	..()
-	if(tesla_flags & TESLA_MACHINE_EXPLOSIVE)
+	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
 		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
 /obj/machinery/gravity_generator/update_icon()
@@ -79,7 +79,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	return main_part.attackby(I, user)
 
 /obj/machinery/gravity_generator/part/get_status()
-	return main_part.get_status()
+	return main_part?.get_status()
 
 /obj/machinery/gravity_generator/part/attack_hand(mob/user)
 	return main_part.attack_hand(user)
@@ -117,6 +117,8 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	sprite_number = 8
 	use_power = IDLE_POWER_USE
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
+	ui_x = 400
+	ui_y = 165
 	var/on = TRUE
 	var/breaker = TRUE
 	var/list/parts = list()
@@ -220,40 +222,34 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 				return
 	return ..()
 
-/obj/machinery/gravity_generator/main/ui_interact(mob/user)
-	if(stat & BROKEN)
-		return
-	var/dat = "Gravity Generator Breaker: "
-	if(breaker)
-		dat += "<span class='linkOn'>ON</span> <A href='?src=[REF(src)];gentoggle=1'>OFF</A>"
-	else
-		dat += "<A href='?src=[REF(src)];gentoggle=1'>ON</A> <span class='linkOn'>OFF</span> "
+/obj/machinery/gravity_generator/main/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "gravity_generator", name, ui_x, ui_y, master_ui, state)
+		ui.open()
 
-	dat += "<br>Generator Status:<br><div class='statusDisplay'>"
-	if(charging_state != POWER_IDLE)
-		dat += "<font class='bad'>WARNING</font> Radiation Detected. <br>[charging_state == POWER_UP ? "Charging..." : "Discharging..."]"
-	else if(on)
-		dat += "Powered."
-	else
-		dat += "Unpowered."
+/obj/machinery/gravity_generator/main/ui_data(mob/user)
+	var/list/data = list()
 
-	dat += "<br>Gravity Charge: [charge_count]%</div>"
+	data["breaker"] = breaker
+	data["charge_count"] = charge_count
+	data["charging_state"] = charging_state
+	data["on"] = on
+	data["operational"] = (stat & BROKEN) ? FALSE : TRUE
 
-	var/datum/browser/popup = new(user, "gravgen", name)
-	popup.set_content(dat)
-	popup.open()
+	return data
 
-
-/obj/machinery/gravity_generator/main/Topic(href, href_list)
-
+/obj/machinery/gravity_generator/main/ui_act(action, params)
 	if(..())
 		return
 
-	if(href_list["gentoggle"])
-		breaker = !breaker
-		investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [key_name(usr)].", INVESTIGATE_GRAVITY)
-		set_power()
-		src.updateUsrDialog()
+	switch(action)
+		if("gentoggle")
+			breaker = !breaker
+			investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [key_name(usr)].", INVESTIGATE_GRAVITY)
+			set_power()
+			. = TRUE
 
 // Power and Icon States
 

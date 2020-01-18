@@ -248,8 +248,8 @@
 		R.SetEmagged(FALSE)
 
 /obj/item/borg/upgrade/lavaproof
-	name = "mining cyborg lavaproof tracks"
-	desc = "An upgrade kit to apply specialized coolant systems and insulation layers to mining cyborg tracks, enabling them to withstand exposure to molten rock."
+	name = "mining cyborg lavaproof chassis"
+	desc = "An upgrade kit to apply specialized coolant systems and insulation layers to a mining cyborg's chassis, enabling them to withstand exposure to molten rock."
 	icon_state = "ash_plating"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	require_module = 1
@@ -305,12 +305,9 @@
 		activate_sr()
 
 
-/obj/item/borg/upgrade/selfrepair/update_icon()
+/obj/item/borg/upgrade/selfrepair/update_icon_state()
 	if(toggle_action)
 		icon_state = "selfrepair_[on ? "on" : "off"]"
-		for(var/X in actions)
-			var/datum/action/A = X
-			A.UpdateButtonIcon()
 	else
 		icon_state = "cyborg_upgrade5"
 
@@ -489,7 +486,7 @@
 	if (.)
 		if(R.shell)
 			R.undeploy()
-			R.notify_ai(AI_SHELL)
+			R.notify_ai(DISCONNECT)
 
 /obj/item/borg/upgrade/expand
 	name = "borg expander"

@@ -71,13 +71,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 // Removes the specified antag hud from the player. Usually called in an antag datum file
 /datum/antagonist/proc/remove_antag_hud(antag_hud_type, mob/living/mob_override)
 	var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
-	hud.join_hud(mob_override)
+	hud.leave_hud(mob_override)
 	set_antag_hud(mob_override, null)
 
 // Handles adding and removing the clumsy mutation from clown antags. Gets called in apply/remove_innate_effects
 /datum/antagonist/proc/handle_clown_mutation(mob/living/mob_override, message, removing = TRUE)
 	var/mob/living/carbon/human/H = mob_override
-	if(H && istype(H) && H.mind.assigned_role == "Clown")
+	if(H && istype(H) && owner.assigned_role == "Clown")
 		if(removing) // They're a clown becoming an antag, remove clumsy
 			H.dna.remove_mutation(CLOWNMUT)
 			if(!silent && message)
@@ -238,7 +238,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 			return
 
 /datum/antagonist/proc/edit_memory(mob/user)
-	var/new_memo = copytext(trim(input(user,"Write new memory", "Memory", antag_memory) as null|message),1,MAX_MESSAGE_LEN)
+	var/new_memo = stripped_multiline_input(user, "Write new memory", "Memory", antag_memory, MAX_MESSAGE_LEN)
 	if (isnull(new_memo))
 		return
 	antag_memory = new_memo

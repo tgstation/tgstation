@@ -40,7 +40,7 @@
 			return FALSE
 	if(istype(tool, /obj/item/melee/baton))
 		var/obj/item/melee/baton/B = tool
-		if(!B.status)
+		if(!B.turned_on)
 			to_chat(user, "<span class='warning'>[B] needs to be active!</span>")
 			return FALSE
 	if(istype(tool, /obj/item/gun/energy))
@@ -57,7 +57,7 @@
 		"<span class='notice'>[user] prepares to shock [target]'s brain with [tool].</span>")
 	target.notify_ghost_cloning("Someone is trying to zap your brain. Re-enter your corpse if you want to be revived!", source = target)
 
-/datum/surgery_step/revive/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/revive/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	display_results(user, target, "<span class='notice'>You successfully shock [target]'s brain with [tool]...</span>",
 		"<span class='notice'>[user] send a powerful shock to [target]'s brain with [tool]...</span>",
 		"<span class='notice'>[user] send a powerful shock to [target]'s brain with [tool]...</span>")

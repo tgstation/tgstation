@@ -167,7 +167,7 @@
 	dog_fashion = /datum/dog_fashion/head/kitty
 
 /obj/item/clothing/head/kitty/equipped(mob/living/carbon/human/user, slot)
-	if(ishuman(user) && slot == SLOT_HEAD)
+	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
 		update_icon(user)
 		user.update_inv_head() //Color might have been changed by update_icon.
 	..()
@@ -206,7 +206,7 @@
 
 /obj/item/clothing/head/cardborg/equipped(mob/living/user, slot)
 	..()
-	if(ishuman(user) && slot == SLOT_HEAD)
+	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
 		var/mob/living/carbon/human/H = user
 		if(istype(H.wear_suit, /obj/item/clothing/suit/cardborg))
 			var/obj/item/clothing/suit/cardborg/CB = H.wear_suit
@@ -274,7 +274,7 @@
 	desc = "A bunch of hair without a head attached. This one changes color to match the hair of the wearer. Nothing natural about that."
 	color = "#FFF"
 	adjustablecolor = FALSE
-	custom_price = 25
+	custom_price = 100
 
 /obj/item/clothing/head/wig/natural/Initialize(mapload)
 	hairstyle = pick(GLOB.hairstyles_list - "Bald")
@@ -282,7 +282,7 @@
 
 /obj/item/clothing/head/wig/natural/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(ishuman(user) && slot == SLOT_HEAD)
+	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
 		color = "#[user.hair_color]"
 		update_icon()
 		user.update_inv_head()
@@ -294,14 +294,14 @@
 	icon_state = "clockwork_helmet_old"
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEEARS|HIDEHAIR
-	armor = list("melee" = 5, "bullet" = 0, "laser" = -5, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
+	armor = list("melee" = 5, "bullet" = 0, "laser" = -5, "energy" = -15, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
 
 /obj/item/clothing/head/foilhat
 	name = "tinfoil hat"
 	desc = "Thought control rays, psychotronic scanning. Don't mind that, I'm protected cause I made this hat."
 	icon_state = "foilhat"
 	item_state = "foilhat"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = -5,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = -5, "fire" = 0, "acid" = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = -5,"energy" = -15, "bomb" = 0, "bio" = 0, "rad" = -5, "fire" = 0, "acid" = 0)
 	equip_delay_other = 140
 	clothing_flags = ANTI_TINFOIL_MANEUVER
 	var/datum/brain_trauma/mild/phobia/conspiracies/paranoia
@@ -316,7 +316,7 @@
 
 /obj/item/clothing/head/foilhat/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot != SLOT_HEAD || warped)
+	if(slot != ITEM_SLOT_HEAD || warped)
 		return
 	if(paranoia)
 		QDEL_NULL(paranoia)
@@ -349,7 +349,7 @@
 	if(!isliving(loc) || !paranoia)
 		return
 	var/mob/living/target = loc
-	if(target.get_item_by_slot(SLOT_HEAD) != src)
+	if(target.get_item_by_slot(ITEM_SLOT_HEAD) != src)
 		return
 	QDEL_NULL(paranoia)
 	if(!target.IsUnconscious())

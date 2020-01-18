@@ -196,48 +196,6 @@
 
 	return
 
-// Better recursive loop, technically sort of not actually recursive cause that shit is retarded, enjoy.
-//No need for a recursive limit either
-/proc/recursive_mob_check(atom/O,client_check=1,sight_check=1,include_radio=1)
-
-	var/list/processing_list = list(O)
-	var/list/processed_list = list()
-	var/list/found_mobs = list()
-
-	while(processing_list.len)
-
-		var/atom/A = processing_list[1]
-		var/passed = 0
-
-		if(ismob(A))
-			var/mob/A_tmp = A
-			passed=1
-
-			if(client_check && !A_tmp.client)
-				passed=0
-
-			if(sight_check && !isInSight(A_tmp, O))
-				passed=0
-
-		else if(include_radio && istype(A, /obj/item/radio))
-			passed=1
-
-			if(sight_check && !isInSight(A, O))
-				passed=0
-
-		if(passed)
-			found_mobs |= A
-
-		for(var/atom/B in A)
-			if(!processed_list[B])
-				processing_list |= B
-
-		processing_list.Cut(1, 2)
-		processed_list[A] = A
-
-	return found_mobs
-
-
 /proc/get_hearers_in_view(R, atom/source)
 	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)
@@ -262,6 +220,7 @@
 		var/atom/A = processing_list[1]
 		if(A.flags_1 & HEAR_1)
 			. += A
+			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
 		processing_list.Cut(1, 2)
 		processing_list += A.contents
 
@@ -319,22 +278,6 @@
 
 	else
 		return 0
-
-
-/proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
-	//returns only NORTH, SOUTH, EAST, or WEST
-	var/dx = finish.x - start.x
-	var/dy = finish.y - start.y
-	if(abs(dy) > abs (dx)) //slope is above 1:1 (move horizontally in a tie)
-		if(dy > 0)
-			return get_step(start, SOUTH)
-		else
-			return get_step(start, NORTH)
-	else
-		if(dx > 0)
-			return get_step(start, WEST)
-		else
-			return get_step(start, EAST)
 
 
 /proc/try_move_adjacent(atom/movable/AM)
@@ -468,7 +411,7 @@
 	var/list/result = list()
 	for(var/m in group)
 		var/mob/M = m
-		if(!M.key || !M.client || (ignore_category && GLOB.poll_ignore[ignore_category] && M.ckey in GLOB.poll_ignore[ignore_category]))
+		if(!M.key || !M.client || (ignore_category && GLOB.poll_ignore[ignore_category] && (M.ckey in GLOB.poll_ignore[ignore_category])))
 			continue
 		if(be_special_flag)
 			if(!(M.client.prefs) || !(be_special_flag in M.client.prefs.be_special))
@@ -508,8 +451,6 @@
 		else
 			++i
 	return L
-
-/proc/poll_helper(var/mob/living/M)
 
 /proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)
@@ -556,7 +497,7 @@
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))
 		return
 	var/area/A = get_area(character)
-	deadchat_broadcast(" has arrived at the station at <span class='name'>[A.name]</span>.", "<span class='game'><span class='name'>[character.real_name]</span> ([rank])", follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	deadchat_broadcast("<span class='game'> has arrived at the station at <span class='name'>[A.name]</span>.</span>", "<span class='game'><span class='name'>[character.real_name]</span> ([rank])</span>", follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
 	if((!GLOB.announcement_systems.len) || (!character.mind))
 		return
 	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))

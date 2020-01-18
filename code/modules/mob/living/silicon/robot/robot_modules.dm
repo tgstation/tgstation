@@ -221,7 +221,7 @@
 	R.setDir(SOUTH)
 	R.anchored = FALSE
 	R.notransform = FALSE
-	R.update_headlamp()
+	R.update_headlamp(FALSE, BORG_LAMP_CD_RESET)
 	R.notify_ai(NEW_MODULE)
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
@@ -510,6 +510,21 @@
 	moduleselect_icon = "miner"
 	hat_offset = 0
 	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes.
+
+/obj/item/robot_module/miner/be_transformed_to(obj/item/robot_module/old_module)
+	var/mob/living/silicon/robot/R = loc
+	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in sortList(list("Lavaland Miner", "Asteroid Miner", "Spider Miner"))
+	if(!borg_icon)
+		return FALSE
+	switch(borg_icon)
+		if("Lavaland Miner")
+			cyborg_base_icon = "miner"
+		if("Asteroid Miner")
+			cyborg_base_icon = "minerOLD"
+			special_light_key = "miner"
+		if("Spider Miner")
+			cyborg_base_icon = "spidermin"
+	return ..()
 
 /obj/item/robot_module/miner/rebuild_modules()
 	. = ..()

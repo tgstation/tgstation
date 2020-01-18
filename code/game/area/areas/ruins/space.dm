@@ -243,19 +243,17 @@
 /area/ruin/space/has_grav/ancientstation/atmo
 	name = "Beta Station Atmospherics"
 	icon_state = "red"
+	ambientsounds = ENGINEERING
 	has_gravity = TRUE
 
-/area/ruin/space/has_grav/ancientstation/betanorth
-	name = "Beta Station North Corridor"
-	icon_state = "blue"
-
-/area/ruin/space/has_grav/ancientstation/solar
-	name = "Station Solar Array"
-	icon_state = "panelsAP"
+/area/ruin/space/has_grav/ancientstation/betacorridor
+	name = "Beta Station Main Corridor"
+	icon_state = "bluenew"
 
 /area/ruin/space/has_grav/ancientstation/engi
 	name = "Charlie Station Engineering"
 	icon_state = "engine"
+	ambientsounds = ENGINEERING
 
 /area/ruin/space/has_grav/ancientstation/comm
 	name = "Charlie Station Command"
@@ -287,11 +285,24 @@
 
 /area/ruin/space/has_grav/ancientstation/deltaai
 	name = "Delta Station AI Core"
-	icon_state = "teleporter"
+	icon_state = "ai"
+	ambientsounds = list('sound/ambience/ambimalf.ogg', 'sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg')
 
 /area/ruin/space/has_grav/ancientstation/mining
 	name = "Beta Station Mining Equipment"
-	icon_state = "green"
+	icon_state = "mining"
+
+/area/ruin/space/has_grav/ancientstation/medbay
+	name = "Beta Station Medbay"
+	icon_state = "medbay"
+
+/area/ruin/space/has_grav/ancientstation/betastorage
+	name = "Beta Station Storage"
+	icon_state = "storage"
+
+/area/solar/ancientstation
+	name = "Charlie Station Solar Array"
+	icon_state = "panelsP"
 
 //DERELICT
 

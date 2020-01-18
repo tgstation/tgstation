@@ -29,6 +29,14 @@
 	materials = AddComponent(/datum/component/remote_materials, "lathe", mapload)
 	RefreshParts()
 
+/obj/machinery/rnd/production/Destroy()
+	materials = null
+	cached_designs = null
+	matching_designs = null
+	QDEL_NULL(stored_research)
+	host_research = null
+	return ..()
+
 /obj/machinery/rnd/production/proc/update_research()
 	host_research.copy_research_to(stored_research, TRUE)
 	update_designs()
@@ -50,10 +58,6 @@
 	var/datum/browser/popup = new(user, "rndconsole", name, 460, 550)
 	popup.set_content(generate_ui())
 	popup.open()
-
-/obj/machinery/rnd/production/Destroy()
-	QDEL_NULL(stored_research)
-	return ..()
 
 /obj/machinery/rnd/production/proc/calculate_efficiency()
 	efficiency_coeff = 1

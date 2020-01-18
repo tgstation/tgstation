@@ -411,7 +411,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	..()
 	var/item
 	if(!item_type)
-		item = pick(list("esword","taser","ebow","baton","dual_esword","clockspear","ttv","flash","armblade"))
+		item = pick(list("esword","taser","ebow","baton","dual_esword","ttv","flash","armblade"))
 	else
 		item = item_type
 	feedback_details += "Item: [item]"
@@ -643,10 +643,10 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		target.playsound_local(get_turf(airlock), 'sound/machines/boltsup.ogg',30,0,3)
 	qdel(src)
 
-/obj/effect/hallucination/fake_door_lock/CanPass(atom/movable/mover, turf/_target)
+/obj/effect/hallucination/fake_door_lock/CanAllowThrough(atom/movable/mover, turf/_target)
+	. = ..()
 	if(mover == target && airlock.density)
 		return FALSE
-	return TRUE
 
 /datum/hallucination/chat
 
@@ -732,7 +732,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if(close_other) //increase the odds
 			for(var/i in 1 to 5)
 				message_pool.Add("<span class='warning'>You feel a tiny prick!</span>")
-		var/obj/item/storage/equipped_backpack = other.get_item_by_slot(SLOT_BACK)
+		var/obj/item/storage/equipped_backpack = other.get_item_by_slot(ITEM_SLOT_BACK)
 		if(istype(equipped_backpack))
 			for(var/i in 1 to 5) //increase the odds
 				message_pool.Add("<span class='notice'>[other] puts the [pick(\

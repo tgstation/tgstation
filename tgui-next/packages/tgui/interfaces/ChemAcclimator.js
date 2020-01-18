@@ -1,12 +1,9 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
-import { Button, Section, LabeledList } from '../components';
-import { NumberInput } from '../components/NumberInput';
+import { useBackend } from '../backend';
+import { Button, LabeledList, NumberInput, Section } from '../components';
 
 export const ChemAcclimator = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   return (
     <Fragment>
       <Section title="Acclimator">
@@ -23,8 +20,9 @@ export const ChemAcclimator = props => {
               maxValue={1000}
               step={5}
               stepPixelSize={2}
-              onChange={(e, value) => act(ref, "set_target_temperature", {temperature: value})}
-            />
+              onChange={(e, value) => act('set_target_temperature', {
+                temperature: value,
+              })} />
           </LabeledList.Item>
           <LabeledList.Item label="Acceptable Temp. Difference">
             <NumberInput
@@ -34,8 +32,11 @@ export const ChemAcclimator = props => {
               minValue={1}
               maxValue={data.target_temperature}
               stepPixelSize={2}
-              onChange={(e, value) => act(ref, "set_allowed_temperature_difference", {temperature: value})}
-            />
+              onChange={(e, value) => {
+                act('set_allowed_temperature_difference', {
+                  temperature: value,
+                });
+              }} />
           </LabeledList.Item>
         </LabeledList>
       </Section>
@@ -46,10 +47,8 @@ export const ChemAcclimator = props => {
             icon="power-off"
             content={data.enabled ? "On" : "Off"}
             selected={data.enabled}
-            onClick={() => act(ref, 'toggle_power')}
-          />
-        )}
-      >
+            onClick={() => act('toggle_power')} />
+        )}>
         <LabeledList>
           <LabeledList.Item label="Volume">
             <NumberInput
@@ -60,8 +59,9 @@ export const ChemAcclimator = props => {
               maxValue={200}
               step={2}
               stepPixelSize={2}
-              onChange={(e, value) => act(ref, 'change_volume', {volume: value})}
-            />
+              onChange={(e, value) => act('change_volume', {
+                volume: value,
+              })} />
           </LabeledList.Item>
           <LabeledList.Item label="Current Operation">
             {data.acclimate_state}

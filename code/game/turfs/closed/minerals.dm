@@ -64,12 +64,12 @@
 		if(I.use_tool(src, user, 40, volume=50))
 			if(ismineralturf(src))
 				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
-				gets_drilled(user)
+				gets_drilled(user, TRUE)
 				SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
 	else
 		return attack_hand(user)
 
-/turf/closed/mineral/proc/gets_drilled(user, give_exp = TRUE)
+/turf/closed/mineral/proc/gets_drilled(user, give_exp = FALSE)
 	if (mineralType && (mineralAmt > 0))
 		new mineralType(src, mineralAmt)
 		SSblackbox.record_feedback("tally", "ore_mined", mineralAmt, mineralType)
@@ -126,12 +126,12 @@
 	switch(severity)
 		if(3)
 			if (prob(75))
-				gets_drilled(null, 1)
+				gets_drilled(null, FALSE)
 		if(2)
 			if (prob(90))
-				gets_drilled(null, 1)
+				gets_drilled(null, FALSE)
 		if(1)
-			gets_drilled(null, 1)
+			gets_drilled(null, FALSE)
 	return
 
 /turf/closed/mineral/Spread(turf/T)
@@ -545,20 +545,27 @@
 		to_chat(usr, "<span class='warning'>Only a more advanced species could break a rock such as this one!</span>")
 		return FALSE
 	var/mob/living/carbon/human/H = user
-	if(H.mind.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_LEGENDARY)
+	if(H.mind.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER)
 		. = ..()
 	else
 		to_chat(usr, "<span class='warning'>The rock seems to be too strong to destroy. Maybe I can break it once I become a master miner.</span>")
 
 
-/turf/closed/mineral/strong/gets_drilled(user)
+/turf/closed/mineral/strong/gets_drilled(mob/user)
+	if(!ishuman(user))
+		return // see attackby
+	var/mob/living/carbon/human/H = user
+	if(!(H.mind.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER))
+		return
 	drop_ores()
+	H.client.give_award(/datum/award/achievement/skill/legendary_miner, H)
 	var/flags = NONE
 	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
 	ScrapeAway(flags=flags)
 	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
+	H.mind.adjust_experience(/datum/skill/mining, 100) //yay!
 
 /turf/closed/mineral/strong/proc/drop_ores()
 	if(prob(10))

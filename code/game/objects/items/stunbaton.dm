@@ -16,7 +16,7 @@
 
 	var/cooldown = (2.5 SECONDS)
 	var/stunforce = (5 SECONDS)
-	var/status = 0
+	var/turned_on = FALSE
 	var/obj/item/stock_parts/cell/cell
 	var/hitcost = 1000
 	var/throw_hit_chance = 35
@@ -38,10 +38,24 @@
 			cell = new preload_cell_type(src)
 	update_icon()
 
+
+/obj/item/melee/baton/Destroy()
+	if(cell)
+		QDEL_NULL(cell)
+	return ..()
+
+/obj/item/melee/baton/handle_atom_del(atom/A)
+	if(A == cell)
+		cell = null
+		turned_on = FALSE
+		update_icon()
+	return ..()
+
+
 /obj/item/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	//Only mob/living types have stun handling
-	if(status && prob(throw_hit_chance) && iscarbon(hit_atom))
+	if(turned_on && prob(throw_hit_chance) && iscarbon(hit_atom))
 		baton_effect(hit_atom)
 
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
@@ -52,15 +66,15 @@
 		//Note this value returned is significant, as it will determine
 		//if a stun is applied or not
 		. = cell.use(chrgdeductamt)
-		if(status && cell.charge < hitcost)
+		if(turned_on && cell.charge < hitcost)
 			//we're below minimum, turn off
-			status = 0
+			turned_on = FALSE
 			update_icon()
-			playsound(loc, "sparks", 75, TRUE, -1)
+			playsound(src, "sparks", 75, TRUE, -1)
 
 
-/obj/item/melee/baton/update_icon()
-	if(status)
+/obj/item/melee/baton/update_icon_state()
+	if(turned_on)
 		icon_state = "[initial(icon_state)]_active"
 	else if(!cell)
 		icon_state = "[initial(icon_state)]_nocell"
@@ -95,18 +109,18 @@
 			cell.forceMove(get_turf(src))
 			cell = null
 			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
-			status = 0
+			turned_on = FALSE
 			update_icon()
 	else
 		return ..()
 
 /obj/item/melee/baton/attack_self(mob/user)
 	if(cell && cell.charge > hitcost)
-		status = !status
-		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
-		playsound(loc, "sparks", 75, TRUE, -1)
+		turned_on = !turned_on
+		to_chat(user, "<span class='notice'>[src] is now [turned_on ? "on" : "off"].</span>")
+		playsound(src, "sparks", 75, TRUE, -1)
 	else
-		status = 0
+		turned_on = FALSE
 		if(!cell)
 			to_chat(user, "<span class='warning'>[src] does not have a power source!</span>")
 		else
@@ -115,7 +129,7 @@
 	add_fingerprint(user)
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
-	if(status && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
+	if(turned_on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 		user.Knockdown(stunforce*3)
@@ -133,7 +147,7 @@
 			return
 
 	if(user.a_intent != INTENT_HARM)
-		if(status)
+		if(turned_on)
 			if(cooldown_check <= world.time)
 				if(baton_effect(M, user))
 					user.do_attack_animation(M)
@@ -144,7 +158,7 @@
 			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 	else
-		if(status)
+		if(turned_on)
 			if(cooldown_check <= world.time)
 				baton_effect(M, user)
 		..()
@@ -155,14 +169,14 @@
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
 			playsound(L, 'sound/weapons/genhit.ogg', 50, TRUE)
-			return 0
+			return FALSE
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
 		if(!R || !R.cell || !R.cell.use(hitcost))
-			return 0
+			return FALSE
 	else
 		if(!deductcharge(hitcost))
-			return 0
+			return FALSE
 
 	/// After a target is hit, we do a chunk of stamina damage, along with other effects.
 	/// After a period of time, we then check to see what stun duration we give.
@@ -181,7 +195,7 @@
 								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
 		log_combat(user, L, "stunned")
 
-	playsound(loc, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
@@ -230,3 +244,52 @@
 /obj/item/melee/baton/cattleprod/baton_effect()
 	if(sparkler.activate())
 		..()
+
+/obj/item/melee/baton/cattleprod/Destroy()
+	if(sparkler)
+		QDEL_NULL(sparkler)
+	return ..()
+
+/obj/item/melee/baton/boomerang
+	name = "\improper OZtek Boomerang"
+	desc = "A device invented in 2486 for the great Space Emu War by the confederacy of Australicus, these high-tech boomerangs also work exceptionally well at stunning crewmembers. Just be careful to catch it when thrown!"
+	throw_speed = 1
+	icon_state = "boomerang"
+	item_state = "boomerang"
+	force = 5
+	throwforce = 5
+	throw_range = 5
+	hitcost = 2000
+	throw_hit_chance = 99  //Have you prayed today?
+	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
+
+/obj/item/melee/baton/boomerang/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
+	if(turned_on)
+		if(ishuman(thrower))
+			var/mob/living/carbon/human/H = thrower
+			H.throw_mode_off() //so they can catch it on the return.
+	return ..()
+
+/obj/item/melee/baton/boomerang/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(turned_on)
+		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
+		if(ishuman(hit_atom) && !caught && prob(throw_hit_chance))//if they are a carbon and they didn't catch it
+			baton_effect(hit_atom)
+		if(thrownby && !caught)
+			sleep(1)
+			if(!QDELETED(src))
+				throw_at(thrownby, throw_range+2, throw_speed, null, TRUE)
+	else
+		return ..()
+
+
+/obj/item/melee/baton/boomerang/update_icon()
+	if(turned_on)
+		icon_state = "[initial(icon_state)]_active"
+	else if(!cell)
+		icon_state = "[initial(icon_state)]_nocell"
+	else
+		icon_state = "[initial(icon_state)]"
+
+/obj/item/melee/baton/boomerang/loaded //Same as above, comes with a cell.
+	preload_cell_type = /obj/item/stock_parts/cell/high

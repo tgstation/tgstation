@@ -37,7 +37,7 @@ to translate concepts between old and new tgui, read this
 
 You will need these programs to start developing in tgui:
 
-- [Node v12.10+](https://nodejs.org/en/download/current/)
+- [Node v12.13+](https://nodejs.org/en/download/)
 - [Yarn v1.19+](https://yarnpkg.com/en/docs/install)
 - [MSys2](https://www.msys2.org/) (optional)
 
@@ -65,6 +65,9 @@ Run one of the following:
   hot module replacement and logging facilities in all running instances
   of tgui. In short, this means that you will instantly see changes in the
   game as you code it. Very useful, highly recommended.
+  In order to use, you should start the game server first, connect to it so dreamseeker is
+  open, then start the dev server. You'll know if it's hooked correctly if data gets dumped
+  to the log when tgui windows are opened.
 - `bin/tgui --dev --reload` - reload byond cache once.
 - `bin/tgui --dev --debug` - run server with debug logging enabled.
 - `bin/tgui --dev --no-hot` - disable hot module replacement (helps when
@@ -175,11 +178,11 @@ Props:
 first appears. If you set initial to `0` for example, number will always
 animate starting from `0`, and if omitted, it will not play an initial
 animation.
-- `format: function` - Output formatter.
+- `format: value => value` - Output formatter.
   - Example: `value => Math.round(value)`.
-- `children: function` - Pull a raw number to animate more complex things
-deeper in the DOM tree.
-  - Example: `value => <Icon rotation={value} />`
+- `children: (formattedValue, rawValue) => any` - Pull the animated number to
+animate more complex things deeper in the DOM tree.
+  - Example: `(_, value) => <Icon rotation={value} />`
 
 ### `BlockQuote`
 
@@ -238,6 +241,8 @@ Props:
 - `height: number` - Box height.
 - `minHeight: number` - Box minimum height.
 - `maxHeight: number` - Box maximum height.
+- `fontSize: number` - Font size.
+- `fontFamily: string` - Font family.
 - `lineHeight: number` - Directly affects the height of text lines.
 Useful for adjusting button height.
 - `inline: boolean` - Forces the `Box` to appear as an `inline-block`,
@@ -253,6 +258,7 @@ all available horizontal space.
 - `opacity: number` - Opacity, from 0 to 1.
 - `bold: boolean` - Make text bold.
 - `italic: boolean` - Make text italic.
+- `nowrap: boolean` - Stops text from wrapping.
 - `textAlign: string` - Align text inside the box.
   - `left` (default)
   - `center`
@@ -292,10 +298,90 @@ over the button.
   - `bottom` (default) - Show tooltip below the button.
   - `left` - Show tooltip on the left of the button.
   - `right` - Show tooltip on the right of the button.
+- `ellipsis: boolean` - If button width is constrained, button text will
+be truncated with an ellipsis. Be careful however, because this prop breaks
+the baseline alignment.
 - `title: string` - A native browser tooltip, which appears when hovering
 over the button.
 - `content/children: any` - Content to render inside the button.
 - `onClick: function` - Called when element is clicked.
+
+### `Button.Checkbox`
+
+A ghetto checkbox, made entirely using existing Button API.
+
+Props:
+
+- See inherited props: [Button](#button)
+- `checked: boolean` - Boolean value, which marks the checkbox as checked.
+
+### `Button.Confirm`
+
+A button with a an extra confirmation step, using native button component.
+
+Props:
+
+- See inherited props: [Button](#button)
+- `confirmMessage: string` - Text to display after first click; defaults to "Confirm?"
+- `confirmColor: string` - Color to display after first click; default to "bad"
+
+### `Button.Input`
+
+A button that turns into an input box after the first click. Turns back into a button after the user hits enter, defocuses, or hits escape. Enter and defocus commit, while escape cancels.
+
+Props:
+ - See inherited props: [Box](#box)
+ - `fluid`: fill availible horizontal space
+ - `onCommit: (e, value) => void`: function that is called after the user defocuses the input or presses enter
+ - `currentValue: string`: default string to display when the input is shown
+ - `defaultValue: string`: default value emitted if the user leaves the box blank when hitting enter or defocusing. If left undefined, will cancel the change on a blank defocus/enter
+
+### `Collapsible`
+
+Displays contents when open, acts as a fluid button when closed. Click to toggle, closed by default.
+
+Props:
+  - See inherited props: [Box](#box)
+  - `children: any` - What is collapsed when closed
+  - `title: string` - Text to display on the button for collapsing
+  - `color: string` - Color of the button; see [Button](#button)
+  - `buttons: any` - Buttons or other content to render inline with the button
+
+### `ColorBox`
+
+Displays a 1-character wide colored square. Can be used as a status indicator,
+or for visually representing a color.
+
+If you want to set a background color on an element, use a plain
+[Box](#box) instead.
+
+Props:
+
+- See inherited props: [Box](#box)
+- `color: string` - Color of the box.
+
+### `Dimmer`
+
+Dims surrounding area to emphasize content placed inside.
+
+Props:
+
+- See inherited props: [Box](#box)
+
+### `Dropdown`
+
+A simple dropdown box component. Lets the user select from a list of options and displays selected entry.
+
+Props:
+
+  - See inherited props: [Box](#box)
+  - `options: string[]` - An array of strings which will be displayed in the dropdown when open
+  - `selected: string` - Currently selected entry
+  - `width: number` - Width of dropdown button and resulting menu
+  - `over: boolean` - dropdown renders over instead of below
+  - `color: string` - color of dropdown button
+  - `onClick: (e) => void` - Called when dropdown button is clicked
+  - `onSelected: (value) => void` - Called when a value is picked from the list, `value` is the value that was picked
 
 ### `Flex`
 
@@ -328,6 +414,10 @@ two flex items as far as possible from each other.
 Props:
 
 - See inherited props: [Box](#box)
+- `spacing: number` - Spacing between flex items, in integer units
+(1 unit - 0.5em). Does not directly relate to a flex css property
+(adds a modifier class under the hood), and only integer numbers are
+supported.
 - `direction: string` - This establishes the main-axis, thus defining the
 direction flex items are placed in the flex container.
   - `row` (default) - left to right.
@@ -411,7 +501,7 @@ Props:
 
 Props:
 
-- See inherited props: [Table.Cell](#table-cell)
+- See inherited props: [Table.Cell](#tablecell)
 - `size: number` (default: 1) - Size of the column relative to other columns.
 
 ### `Icon`
@@ -448,7 +538,9 @@ Props:
 
 - See inherited props: [Box](#box)
 - `value: string` - Value of an input.
+- `placeholder: string` - Text placed into Input box when value is otherwise nothing. Clears automatically when focused.
 - `fluid: boolean` - Fill all available horizontal space.
+- `selfClear: boolean` - Clear after hitting enter, as well as remain focused when this happens. Useful for things like chat inputs
 - `onChange: (e, value) => void` - An event, which fires when you commit
 the text by either unfocusing the input box, or by pressing the Enter key.
 - `onInput: (e, value) => void` - An event, which fires on every keypress.
@@ -540,6 +632,9 @@ dragging the input.
 - `stepPixelSize: number` (default: 1) - Screen distance mouse needs
 to travel to adjust value by one `step`.
 - `width: string|number` - Width of the element, in `Box` units or pixels.
+- `height: string|numer` - Height of the element, in `Box` units or pixels.
+- `lineHeight: string|number` - lineHeight of the element, in `Box` units or pixels.
+- `fontSize: string|number` - fontSize of the element, in `Box` units or pixels.
 - `format: value => value` - Format value using this function before
 displaying it.
 - `suppressFlicker: number` - A number in milliseconds, for which the input

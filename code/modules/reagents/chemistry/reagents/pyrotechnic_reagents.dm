@@ -109,6 +109,20 @@
 	e.start()
 	holder.clear_reagents()
 
+/datum/reagent/rdx
+	name = "RDX"
+	description = "Military grade explosive"
+	reagent_state = SOLID
+	color = "#FFFFFF"
+	taste_description = "salt"
+
+/datum/reagent/tatp
+	name = "TaTP"
+	description = "Suicide grade explosive"
+	reagent_state = SOLID
+	color = "#FFFFFF"
+	taste_description = "death"
+
 /datum/reagent/flash_powder
 	name = "Flash Powder"
 	description = "Makes a very bright flash."

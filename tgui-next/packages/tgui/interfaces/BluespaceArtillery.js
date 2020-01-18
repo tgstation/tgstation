@@ -1,19 +1,15 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NoticeBox, Section } from '../components';
 
 export const BluespaceArtillery = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
-
+  const { act, data } = useBackend(props);
   const {
     notice,
     connected,
     unlocked,
     target,
   } = data;
-
   return (
     <Fragment>
       {!!notice && (
@@ -29,7 +25,7 @@ export const BluespaceArtillery = props => {
               <Button
                 icon="crosshairs"
                 disabled={!unlocked}
-                onClick={() => act(ref, 'recalibrate')} />
+                onClick={() => act('recalibrate')} />
             )}>
             <Box
               color={target ? 'average' : 'bad'}
@@ -48,7 +44,7 @@ export const BluespaceArtillery = props => {
                   fontSize="30px"
                   textAlign="center"
                   lineHeight="46px"
-                  onClick={() => act(ref, 'fire')} />
+                  onClick={() => act('fire')} />
               </Box>
             ) : (
               <Fragment>
@@ -72,7 +68,7 @@ export const BluespaceArtillery = props => {
               <Button
                 icon="wrench"
                 content="Complete Deployment"
-                onClick={() => act(ref, 'build')} />
+                onClick={() => act('build')} />
             </LabeledList.Item>
           </LabeledList>
         </Section>

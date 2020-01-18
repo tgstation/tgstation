@@ -300,9 +300,10 @@
 /mob/proc/ShiftClickOn(atom/A)
 	A.ShiftClick(src)
 	return
+
 /atom/proc/ShiftClick(mob/user)
-	SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user)
-	if(user.client && user.client.eye == user || user.client.eye == user.loc)
+	var/flags = SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user)
+	if(user.client && (user.client.eye == user || user.client.eye == user.loc || flags & COMPONENT_ALLOW_EXAMINATE))
 		user.examinate(src)
 	return
 
@@ -343,7 +344,7 @@
 /atom/proc/AltClick(mob/user)
 	SEND_SIGNAL(src, COMSIG_CLICK_ALT, user)
 	var/turf/T = get_turf(src)
-	if(T && user.TurfAdjacent(T))
+	if(T && (isturf(loc) || isturf(src)) && user.TurfAdjacent(T))
 		user.listed_turf = T
 		user.client.statpanel = T.name
 

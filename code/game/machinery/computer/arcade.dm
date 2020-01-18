@@ -81,18 +81,14 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		user.client.give_award(/datum/award/achievement/misc/pulse, user)
 		return
 
-	if(!contents.len)
-		var/prizeselect
-		if(prize_override)
-			prizeselect = pickweight(prize_override)
-		else
-			prizeselect = pickweight(GLOB.arcade_prize_pool)
-		new prizeselect(src)
-
-	var/atom/movable/the_prize = pick(contents)
+	var/prizeselect
+	if(prize_override)
+		prizeselect = pickweight(prize_override)
+	else
+		prizeselect = pickweight(GLOB.arcade_prize_pool)
+	var/atom/movable/the_prize = new prizeselect(get_turf(src))
+	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 	visible_message("<span class='notice'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
-
-	the_prize.forceMove(get_turf(src))
 
 /obj/machinery/computer/arcade/emp_act(severity)
 	. = ..()
@@ -118,6 +114,19 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		new empprize(loc)
 	explosion(loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
 
+/obj/machinery/computer/arcade/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/stack/arcadeticket))
+		var/obj/item/stack/arcadeticket/T = O
+		var/amount = T.get_amount()
+		if(amount <2)
+			to_chat(user, "<span class='warning'>You need 2 tickets to claim a prize!</span>")
+			return
+		prizevend(user)
+		T.pay_tickets()
+		T.update_icon()
+		O = T
+		to_chat(user, "<span class='notice'>You turn in 2 tickets to the [src] and claim a prize!</span>")
+		return
 
 // ** BATTLE ** //
 
@@ -153,6 +162,11 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_xmas")
 		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_xmas")
 		weapons = strings(ARCADE_FILE, "rpg_weapon_xmas")
+	else if(SSevents.holidays && SSevents.holidays[VALENTINES])
+		name_action = pick_list(ARCADE_FILE, "rpg_action_valentines")
+		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_valentines")
+		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_valentines")
+		weapons = strings(ARCADE_FILE, "rpg_weapon_valentines")
 	else
 		name_action = pick_list(ARCADE_FILE, "rpg_action")
 		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective")
@@ -492,6 +506,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		Radio.talk_into(src, "PSYCH ALERT: Crewmember [gamer] recorded displaying antisocial tendencies in [get_area(src)]. Please schedule psych evaluation.", FREQ_MEDICAL)
 
 		gamers[gamer] = -1
+
+		gamer.client.give_award(/datum/award/achievement/misc/gamer, gamer) // PSYCH REPORT NOTE: patient kept rambling about how they did it for an "achievement", recommend continued holding for observation
 
 		if(!isnull(GLOB.data_core.general))
 			for(var/datum/data/record/R in GLOB.data_core.general)
@@ -1258,6 +1274,11 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			prizevend(user)
 	else
 		to_chat(c_user, "<span class='notice'>You (wisely) decide against putting your hand in the machine.</span>")
+
+/obj/machinery/computer/arcade/amputation/festive //dispenses wrapped gifts instead of arcade prizes, also known as the ancap christmas tree
+	name = "Mediborg's Festive Amputation Adventure"
+	desc = "A picture of a blood-soaked medical cyborg wearing a Santa hat flashes on the screen. The mediborg has a speech bubble that says, \"Put your hand in the machine if you aren't a <b>coward!</b>\""
+	prize_override = list(/obj/item/a_gift/anything = 1)
 
 #undef ORION_TRAIL_WINTURN
 #undef ORION_TRAIL_RAIDERS

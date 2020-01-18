@@ -55,7 +55,7 @@
 
 /obj/item/clothing/shoes/equipped(mob/user, slot)
 	. = ..()
-	if(offset && slot_flags & slotdefine2slotbit(slot))
+	if(offset && (slot_flags & slot))
 		user.pixel_y += offset
 		worn_y_dimension -= (offset * 2)
 		user.update_inv_shoes()
