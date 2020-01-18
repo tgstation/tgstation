@@ -214,6 +214,11 @@
 	icon_state = "fedora_white"
 	item_state = "fedora_white"
 
+/obj/item/clothing/head/fedora/beige
+	name = "beige fedora"
+	icon_state = "fedora_beige"
+	item_state = "fedora_beige"
+
 /obj/item/clothing/head/fedora/suicide_act(mob/user)
 	if(user.gender == FEMALE)
 		return 0

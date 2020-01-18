@@ -189,3 +189,10 @@
 		/obj/item/clothing/head/fedora,
 		/obj/item/clothing/under/suit/checkered,
 		/obj/item/clothing/shoes/laceup)
+
+/obj/effect/spawner/bundle/costume/mafia/beige
+	name = "beige mafia outfit spawner"
+	items = list(
+		/obj/item/clothing/head/fedora/beige,
+		/obj/item/clothing/under/suit/beige,
+		/obj/item/clothing/shoes/laceup)

@@ -377,9 +377,10 @@
 /obj/effect/spawner/lootdrop/mafia_outfit
 	name = "mafia outfit spawner"
 	loot = list(
-				/obj/effect/spawner/bundle/costume/mafia = 4,
+				/obj/effect/spawner/bundle/costume/mafia = 5,
 				/obj/effect/spawner/bundle/costume/mafia/white = 1,
-				/obj/effect/spawner/bundle/costume/mafia/checkered = 1
+				/obj/effect/spawner/bundle/costume/mafia/checkered = 1,
+				/obj/effect/spawner/bundle/costume/mafia/beige = 1
 				)
 
 //finds the probabilities of items spawning from a loot spawner's loot pool
