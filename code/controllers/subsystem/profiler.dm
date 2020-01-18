@@ -4,7 +4,8 @@ SUBSYSTEM_DEF(profiler)
 	name = "Profiler"
 	init_order = INIT_ORDER_PROFILER
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
-	wait = 600
+	wait = 3000
+	flags = SS_NO_TICK_CHECK 
 	var/fetch_cost = 0
 	var/write_cost = 0
 
@@ -50,6 +51,7 @@ SUBSYSTEM_DEF(profiler)
 	var/timer = TICK_USAGE_REAL
 	var/current_profile_data = world.Profile(PROFILE_REFRESH,format="json")
 	fetch_cost = MC_AVERAGE(fetch_cost, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+	CHECK_TICK
 	if(!length(current_profile_data)) //Would be nice to have explicit proc to check this
 		stack_trace("Warning, profiling stopped manually before dump.")
 	var/json_file = file("[GLOB.log_directory]/[PROFILER_FILENAME]")
