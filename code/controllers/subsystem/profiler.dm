@@ -10,8 +10,8 @@ SUBSYSTEM_DEF(profiler)
 	var/write_cost = 0
 
 /datum/controller/subsystem/profiler/stat_entry(msg)
-	msg += "F:[round(fetch_cost,1)]"
-	msg += "W:[round(write_cost,1)]"
+	msg += "F:[round(fetch_cost,1)]ms"
+	msg += "|W:[round(write_cost,1)]ms"
 	..(msg)
 
 /datum/controller/subsystem/profiler/Initialize()
