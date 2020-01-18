@@ -41497,17 +41497,12 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cgo" = (
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cgp" = (
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
 /obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
@@ -49122,6 +49117,14 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"dxb" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "dyk" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -51398,6 +51401,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"oZn" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "pfj" = (
 /obj/machinery/power/apc{
 	areastring = "/area/storage/tools";
@@ -51927,9 +51937,6 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "qQH" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/effect/spawner/lootdrop/minor/bowler_or_that,
 /obj/structure/rack,
 /turf/open/floor/plating,
@@ -52328,13 +52335,6 @@
 /obj/machinery/dna_scannernew,
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
-"tfg" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
 "tgl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -99685,7 +99685,7 @@ nXU
 ceM
 kvJ
 cgo
-ydc
+dxb
 ydc
 ydc
 wtc
@@ -99941,8 +99941,8 @@ cNY
 cNY
 nWA
 cNY
-tfg
-cOb
+cNY
+oZn
 cNY
 cNY
 lar
@@ -100199,7 +100199,7 @@ cOe
 cPA
 cNW
 qQH
-cOe
+cvO
 cOe
 cNW
 cgm
@@ -100456,7 +100456,7 @@ hYR
 ceO
 cNW
 cgp
-cri
+cvO
 cOe
 cNW
 pxV
