@@ -156,35 +156,3 @@
 	icon_state = "captain_parade"
 	item_state = "by_suit"
 	can_adjust = FALSE
-
-/obj/item/clothing/under/misc/changshan_red
-	name = "red changshan"
-	desc = "A gorgeously embroidered silk shirt."
-	icon_state = "changshan_red"
-	item_state = "changshan_red"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	can_adjust = FALSE
-
-/obj/item/clothing/under/misc/changshan_blue
-	name = "blue changshan"
-	desc = "A gorgeously embroidered silk shirt."
-	icon_state = "changshan_blue"
-	item_state = "changshan_blue"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	can_adjust = FALSE
-
-/obj/item/clothing/under/misc/cheongsam_red
-	name = "red cheongsam"
-	desc = "A gorgeously embroidered silk dress."
-	icon_state = "cheongsam_red"
-	item_state = "cheongsam_red"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	can_adjust = FALSE
-
-/obj/item/clothing/under/misc/cheongsam_blue
-	name = "blue cheongsam"
-	desc = "A gorgeously embroidered silk dress."
-	icon_state = "cheongsam_blue"
-	item_state = "cheongsam_blue"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	can_adjust = FALSE
