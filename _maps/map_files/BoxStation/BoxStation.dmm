@@ -44526,9 +44526,7 @@
 "csy" = (
 /obj/structure/table,
 /obj/item/weldingtool,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "csD" = (
@@ -49686,6 +49684,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
+"gFq" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space/nearstation)
 "gGJ" = (
 /obj/machinery/camera/autoname{
 	icon_state = "camera";
@@ -50318,6 +50320,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"keQ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/wall,
+/area/maintenance/starboard/aft)
 "keW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/sorting/mail{
@@ -51218,10 +51224,6 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/science/xenobiology)
-"nZl" = (
-/obj/structure/rack,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "ofT" = (
 /obj/machinery/computer/bounty,
 /turf/open/floor/plasteel,
@@ -51496,6 +51498,12 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"pqe" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "pqP" = (
 /obj/machinery/light{
 	dir = 4
@@ -51926,6 +51934,7 @@
 	dir = 4
 	},
 /obj/effect/spawner/lootdrop/minor/bowler_or_that,
+/obj/structure/rack,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "qRW" = (
@@ -52680,10 +52689,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
-"uDP" = (
-/obj/machinery/light,
-/turf/open/floor/plasteel/white,
-/area/medical/chemistry)
 "uES" = (
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -92500,8 +92505,8 @@ cmd
 cmd
 cmd
 lOY
-cmd
-cmd
+gFq
+aaa
 aaa
 aaf
 csD
@@ -92756,10 +92761,10 @@ nEk
 djq
 bip
 bip
-bip
-bip
 hTU
 aaf
+aaa
+aaa
 aaf
 aaa
 aaa
@@ -93013,9 +93018,9 @@ bjL
 bjL
 bjL
 cmi
-bip
-bip
 hTU
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -93270,9 +93275,9 @@ bjL
 bjL
 cmi
 xYA
-bip
-uDP
 vjm
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -93527,9 +93532,9 @@ bjL
 cmi
 xYA
 xYA
-bip
-bip
 jtt
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -93784,10 +93789,10 @@ cln
 cmh
 cnd
 cnE
-bip
-bip
 jtt
 aoV
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -94041,9 +94046,9 @@ cAe
 cmj
 cne
 xYA
-bip
-bip
 jtt
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -94298,9 +94303,9 @@ bjL
 lwc
 fPm
 lwc
-bip
-bip
 jtt
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -94555,9 +94560,9 @@ cfn
 cgd
 cng
 bip
-bip
-bip
 jtt
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -94812,9 +94817,9 @@ bip
 mSR
 cnf
 bip
-bip
-bip
 jtt
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -95069,9 +95074,9 @@ clp
 mSR
 cnf
 bip
-bip
-bip
 jtt
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -95326,9 +95331,9 @@ bip
 mSR
 lZN
 bip
-bip
-bip
 jtt
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -95574,8 +95579,8 @@ bDb
 bDb
 bDb
 bDb
-mtK
-mtK
+cNW
+cNW
 ccq
 czY
 hTU
@@ -95583,9 +95588,9 @@ bip
 mSR
 cnf
 bip
-bip
-bip
 jtt
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -95840,9 +95845,9 @@ bip
 mSR
 cnf
 bip
-bip
-bip
 jtt
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -96097,9 +96102,9 @@ bip
 mSR
 efK
 bip
-bip
-bip
 jtt
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -96354,9 +96359,9 @@ bip
 mSR
 bip
 bip
-bip
-bip
 jtt
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -96603,7 +96608,7 @@ lOR
 uyS
 bDb
 aaa
-mtK
+cNW
 ccq
 czY
 hTU
@@ -96611,9 +96616,9 @@ wBC
 mSR
 bip
 bip
-bip
-bip
 jtt
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -96860,7 +96865,7 @@ prl
 ujh
 bIx
 aaa
-mtK
+cNW
 cBN
 czY
 hTU
@@ -96868,9 +96873,9 @@ bip
 mSR
 bip
 bip
-bip
-bip
 jtt
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -97116,7 +97121,7 @@ bMi
 bMi
 ddD
 qyX
-aaa
+gXs
 cOT
 fif
 czY
@@ -97125,9 +97130,9 @@ bip
 pxd
 bip
 bip
-bip
-bip
 jtt
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -97382,9 +97387,9 @@ bip
 bip
 bip
 bip
-bip
-bip
 jtt
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -97630,7 +97635,7 @@ bZb
 bMi
 bMk
 qyX
-aaa
+gXs
 cOT
 cgm
 czY
@@ -97639,9 +97644,9 @@ bip
 bip
 bip
 bip
-bip
-bip
 jtt
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -97888,7 +97893,7 @@ dOm
 kKM
 bDb
 aaa
-mtK
+cNW
 cgm
 czY
 hTU
@@ -97896,9 +97901,9 @@ bip
 bip
 bip
 bip
-bip
-bip
 jtt
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -98145,21 +98150,21 @@ ylC
 xbN
 bIx
 aaa
-mtK
+cNW
 cgm
 czY
 hTU
 bip
 bip
 bip
-bip
 iKL
-bip
 mtK
-cOT
+cNW
+cNW
 cOT
 cOT
 aag
+aaa
 aaa
 aaa
 aaa
@@ -98410,13 +98415,13 @@ bip
 bip
 bip
 bip
-bip
-bip
 mtK
-cOe
+cwy
+keQ
 cOe
 cqu
 aag
+aaa
 aaa
 aaa
 aaa
@@ -98667,13 +98672,13 @@ bip
 bip
 bip
 bip
-bip
 mtK
-mtK
+cmn
+keQ
 cqu
 cOT
-cOT
 aag
+aaa
 aaa
 aaa
 aaa
@@ -98923,13 +98928,13 @@ jtt
 bip
 bip
 oZc
-hpH
 bip
 mtK
-cwy
+cmn
 cmn
 cmn
 cOT
+aaa
 aaa
 aaa
 aaa
@@ -99172,11 +99177,10 @@ bDb
 bDb
 bDb
 bDb
-mtK
-mtK
+cNW
+cNW
 czX
 cAc
-mtK
 mtK
 mtK
 mtK
@@ -99187,6 +99191,7 @@ cmn
 cmn
 cmn
 cOT
+aaa
 aaa
 aaa
 aaa
@@ -99437,13 +99442,13 @@ cko
 clq
 cmq
 jsw
-jsw
 cri
 cTI
 cmn
 cBT
 cBU
 cOT
+aaa
 aaa
 aaa
 aaa
@@ -99694,13 +99699,13 @@ cNW
 cOx
 cBL
 cOe
-cOe
 cvO
 cNW
 cNW
 cNW
 cNW
 hnW
+aaa
 aaa
 aaa
 aaa
@@ -99951,7 +99956,7 @@ cNW
 cNW
 cNW
 cNW
-cOe
+pqe
 csy
 cko
 cAf
@@ -100455,7 +100460,7 @@ ceO
 cNW
 cgp
 cri
-nZl
+cOe
 cNW
 pxV
 cVu
