@@ -21,7 +21,6 @@
 	var/hitcost = 1000
 	var/throw_hit_chance = 35
 	var/preload_cell_type //if not empty the baton starts with this type of cell
-
 	var/convertable = TRUE //if it can converted with a conversion kit
 
 /obj/item/melee/baton/get_cell()
