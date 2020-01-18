@@ -34,6 +34,9 @@
 	if (targloc == curloc)
 		return 0
 
+	if (!handle_pins()) //FULP Mech Weapon Firing Pins PR by Surrealistik Oct 2019
+		return FALSE
+
 	set_ready_state(0)
 	for(var/i=1 to get_shot_amount())
 		var/obj/projectile/A = new projectile(curloc)
