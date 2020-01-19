@@ -565,7 +565,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	else
 		if(launchRandomItem)
 			var/atom/movable/O = pick_n_take(launchList)
-				O.forceMove(toLaunch) //and forceMove any atom/moveable into the supplypod
+			O.forceMove(toLaunch) //and forceMove any atom/moveable into the supplypod
 		else
 			for (var/atom/movable/O in launchList) //If we aren't cloning the objects, just go through the launchList
 				O.forceMove(toLaunch) //and forceMove any atom/moveable into the supplypod
