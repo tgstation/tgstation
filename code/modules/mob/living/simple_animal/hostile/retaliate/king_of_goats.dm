@@ -158,13 +158,15 @@ Difficulty: Insanely Hard
 	move_to_delay = 3
 	loot = list(/obj/item/clothing/head/goatpope)
 
-/mob/living/simple_animal/hostile/megafauna/king/OpenFire()
+/mob/living/simple_animal/hostile/megafauna/king/Retaliate()
 	..()
 	if(stat == CONSCIOUS && prob(5))
 		visible_message("<span class='warning'>\The [src] bellows indignantly, with a judgemental gleam in his eye.</span>")
 
-/mob/living/simple_animal/hostile/megafauna/king/phase2/OpenFire()
-	if(spellscast < 9)
+/mob/living/simple_animal/hostile/megafauna/king/phase2/Retaliate()
+	set waitfor = FALSE
+	..()
+	if(spellscast < 10)
 		if(prob(5) && move_to_delay >= 3) //speed buff
 			spellscast++
 			visible_message("<span class='cult'>\The [src] shimmers and seems to phase in and out of reality itself!</span>")
@@ -179,11 +181,11 @@ Difficulty: Insanely Hard
 			spellscast++
 			visible_message("<span class='cult'>\The [src] summons the imperial guard to his aid, and they appear in a flash!</span>")
 			var/mob/living/simple_animal/hostile/retaliate/goat/guard/master/M = new(get_step(src,pick(GLOB.cardinals)))
-			M.Retaliate()
+			M.enemies |= enemies
 			var/mob/living/simple_animal/hostile/retaliate/goat/guard/G = new(get_step(src,pick(GLOB.cardinals)))
-			G.Retaliate()
+			G.enemies |= enemies
 			G = new(get_step(src,pick(GLOB.cardinals)))
-			G.Retaliate()
+			G.enemies |= enemies
 
 		else if(prob(5)) //EMP blast
 			spellscast++
@@ -205,7 +207,7 @@ Difficulty: Insanely Hard
 				explosion(get_step(src,pick(GLOB.cardinals)), -1, 1, 4, 4, 6)
 				explosion(get_step(src,pick(GLOB.cardinals)), -1, 3, 4, 3, 6)
 				stop_automated_movement = FALSE
-				spellscast += 3
+				spellscast++
 				if(!(getBruteLoss() > health_holder))
 					adjustBruteLoss(health_holder - getBruteLoss()) //our own magicks cannot harm us
 			else
@@ -270,14 +272,14 @@ Difficulty: Insanely Hard
 			L.stop_sound_channel(CHANNEL_JUKEBOX)
 	if(move_to_delay < 3)
 		move_to_delay += 0.1
-	if((health <= 150 && !phase3 && spellscast == 9) || (stat == DEAD && !phase3)) //begin phase 3, reset spell limit and heal
+	if((health <= 150 && !phase3 && spellscast == 10) || (stat == DEAD && !phase3)) //begin phase 3, reset spell limit and heal
 		phase3_transition()
 	if(!.)
 		return FALSE
-	if(special_attacks >= 9 && melee_damage_type != BRUTE)
+	if(special_attacks >= 10 && melee_damage_type != BRUTE)
 		visible_message("<span class='cult'>The energy surrounding \the [src]'s horns dissipates.</span>")
 		melee_damage_type = BRUTE
-	if(special_attacks >= 9 && melee_damage_lower == 50)
+	if(special_attacks >= 10 && melee_damage_lower == 50)
 		visible_message("<span class='cult'>The [src]' horns shrink back down to normal size.</span>")
 		melee_damage_lower = 40
 
