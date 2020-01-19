@@ -5,15 +5,10 @@
 	use_rate = 0
 	rogue_types = list(/datum/nanite_program/necrotic)
 	protocol_class = NANITE_PROTOCOL_REPLICATION
-	var/implantation_time = 0
 	var/boost_duration = 1200
 
-/datum/nanite_program/protocol/kickstart/on_mob_add()
-	..()
-	implantation_time = world.time
-
 /datum/nanite_program/protocol/kickstart/check_conditions()
-	if(!(world.time < implantation_time + boost_duration))
+	if(!(world.time < nanites.start_time + boost_duration))
 		return FALSE
 	return ..()
 
@@ -28,7 +23,7 @@
 	rogue_types = list(/datum/nanite_program/necrotic)
 	protocol_class = NANITE_PROTOCOL_REPLICATION
 	var/factory_efficiency = 0
-	var/max_efficiency = 2000 //Goes up to 2 bonus regen per tick after 18 minutes and 20 seconds
+	var/max_efficiency = 1000 //Goes up to 2 bonus regen per tick after 16 minutes and 40 seconds
 
 /datum/nanite_program/protocol/factory/on_process()
 	if(!activated || !check_conditions())
@@ -49,7 +44,7 @@
 
 /datum/nanite_program/protocol/factory/active_effect()
 	factory_efficiency = min(factory_efficiency + 1, max_efficiency)
-	nanites.adjust_nanites(null, round(0.001 * factory_efficiency, 0.1))
+	nanites.adjust_nanites(null, round(0.002 * factory_efficiency, 0.1))
 
 /datum/nanite_program/protocol/tinker
 	name = "Tinker Protocol"
@@ -57,7 +52,7 @@
 	use_rate = 0
 	rogue_types = list(/datum/nanite_program/necrotic)
 	protocol_class = NANITE_PROTOCOL_REPLICATION
-	var/boost = 1.5
+	var/boost = 2
 	var/list/valid_reagents = list(
 		/datum/reagent/iron,
 		/datum/reagent/copper,
@@ -92,10 +87,19 @@
 	use_rate = 0
 	rogue_types = list(/datum/nanite_program/necrotic)
 	protocol_class = NANITE_PROTOCOL_REPLICATION
-	var/boost = 2.5
+	var/boost = 3
 
 /datum/nanite_program/protocol/offline/check_conditions()
-	if(!(nanites.host_mob.IsSleeping() || nanites.host_mob.IsUnconscious() || nanites.host_mob.health <= nanites.host_mob.crit_threshold || HAS_TRAIT(nanites.host_mob, TRAIT_DEATHCOMA)))
+	var/is_offline = FALSE
+	if(nanites.host_mob.IsSleeping() || nanites.host_mob.IsUnconscious())
+		is_offline = TRUE
+	if(nanites.host_mob.stat == DEAD || HAS_TRAIT(nanites.host_mob, TRAIT_DEATHCOMA)))
+		is_offline = TRUE
+	if(nanites.host_mob.InCritical() && !HAS_TRAIT(nanites.host_mob, TRAIT_NOSOFTCRIT)))
+		is_offline = TRUE
+	if(nanites.host_mob.InFullCritical() && !HAS_TRAIT(nanites.host_mob, TRAIT_NOHARDCRIT)))
+		is_offline = TRUE
+	if(!is_offline)
 		return FALSE
 	return ..()
 
