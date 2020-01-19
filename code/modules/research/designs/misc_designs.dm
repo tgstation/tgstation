@@ -275,7 +275,7 @@
 	build_path = /obj/item/tank/internals/plasma/empty
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
-	
+
 /datum/design/id
 	name = "Identification Card"
 	desc = "A card used to provide ID and determine access across the station."
@@ -284,7 +284,17 @@
 	materials = list(/datum/material/iron=200, /datum/material/glass = 100)
 	build_path = /obj/item/card/id
 	category = list("Electronics")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE	
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/plasticducky
+	name = "Rubber Ducky"
+	desc = "The classic Nanotracen design for competitively priced bath based duck toys. No need for fancy Waffle co. rubber, buy Plastic Ducks today!"
+	id = "plasticducky"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = 1000)
+	build_path = /obj/item/bikehorn/rubberducky/plasticducky
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
