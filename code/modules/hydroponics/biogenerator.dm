@@ -204,6 +204,11 @@
 	popup.set_content(dat)
 	popup.open()
 
+/obj/machinery/biogenerator/AltClick(mob/living/user)
+	. = ..()
+	if(istype(user) && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		detach(user)
+
 /obj/machinery/biogenerator/proc/activate()
 	if (usr.stat != CONSCIOUS)
 		return
@@ -287,9 +292,9 @@
 	update_icon()
 	return .
 
-/obj/machinery/biogenerator/proc/detach()
+/obj/machinery/biogenerator/proc/detach(mob/living/user)
 	if(beaker)
-		beaker.forceMove(drop_location())
+		user.put_in_hands(beaker)
 		beaker = null
 		update_icon()
 
@@ -304,7 +309,7 @@
 		updateUsrDialog()
 
 	else if(href_list["detach"])
-		detach()
+		detach(usr)
 		updateUsrDialog()
 
 	else if(href_list["create"])
