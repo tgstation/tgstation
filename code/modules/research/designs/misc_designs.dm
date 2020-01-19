@@ -286,16 +286,6 @@
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
-/datum/design/plasticducky
-	name = "Rubber Ducky"
-	desc = "The classic Nanotracen design for competitively priced bath based duck toys. No need for fancy Waffle co. rubber, buy Plastic Ducks today!"
-	id = "plasticducky"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/plastic = 1000)
-	build_path = /obj/item/bikehorn/rubberducky/plasticducky
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
-
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////
