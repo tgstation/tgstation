@@ -80,12 +80,12 @@
 		if(gentle)
 			M.visible_message("<span class='warning'>[M] is thrown clear of [AM]!</span>", \
 			"<span class='warning'>You're thrown clear of [AM]!</span>")
+			M.throw_at(target, 10, 3, AM, gentle = TRUE)
 		else
 			M.visible_message("<span class='warning'>[M] is thrown violently from [AM]!</span>", \
 			"<span class='warning'>You're thrown violently from [AM]!</span>")
-		M.throw_at(target, 14, 5, AM, gentle = gentle)
-		if(!gentle)
-			M.Knockdown(3 SECONDS)
+			M.throw_at(target, 14, 5, AM, gentle = FALSE)
+		M.Knockdown(3 SECONDS)
 
 /datum/component/riding/proc/handle_vehicle_offsets()
 	var/atom/movable/AM = parent
