@@ -237,7 +237,7 @@
 
 /obj/item/bikehorn/rubberducky/plasticducky
 	name = "plastic ducky"
-	desc = "It appears to be a cheap plastic knockoff of a loveable bathtime toy."
+	desc = "It's a cheap plastic knockoff of a loveable bathtime toy."
 
 /obj/structure/sink
 	name = "sink"
