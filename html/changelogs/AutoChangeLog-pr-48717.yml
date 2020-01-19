@@ -1,0 +1,6 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - balance: "Husking now requires more burn damage before it happens."
+  - balance: "100u instabitaluri (synthflesh) can now cure husking when burn damage is below 50."
+  - balance: "Roundstart beaker of instabitaluri removed from all stations."
