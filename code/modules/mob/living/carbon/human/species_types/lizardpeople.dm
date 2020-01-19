@@ -29,9 +29,18 @@
 	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT + 20) // This puts lizards 10 above lavaland max heat for ash lizards.
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 10)
 
-/// Lizards are cold blooded and do not stabilize body temperature naturally
+/// Lizards are cold blooded and do not stabilize body temperature naturally unless very cold
 /datum/species/lizard/natural_bodytemperature_stabilization(mob/living/carbon/human/H)
-	return 0
+	// We are very cold, increate body temperature
+	// let lizards stabilize to 10 degrees over cold damage limit.
+	if(body_temp <= (bodytemp_cold_damage_limit + 10))
+		return max((body_temperature_difference * H.metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), \
+			bodytemp_autorecovery_min)
+
+	// We are very hot, reduce the body temperature
+	// let lizards stabilize to 10 degrees under hot damage limit.
+	if(body_temp >= (bodytemp_heat_damage_limit - 10))
+		return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -bodytemp_autorecovery_min)
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
