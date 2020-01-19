@@ -1,0 +1,4 @@
+author: "Improvedname"
+delete-after: True
+changes: 
+  - rscadd: "Adds a sprite for the way-finding pinpointer."
