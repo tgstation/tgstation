@@ -22,21 +22,34 @@
 
 /datum/nanite_program/protocol/factory
 	name = "Factory Protocol"
-	desc = "Replication Protocol: the nanites build a factory matrix within the host, gradually increasing replication speed over time. The factory decays if the protocol is not active."
+	desc = "Replication Protocol: the nanites build a factory matrix within the host, gradually increasing replication speed over time. \
+	The factory decays if the protocol is not active, or if the nanites are disrupted by shocks or EMPs."
 	use_rate = 0
 	rogue_types = list(/datum/nanite_program/necrotic)
 	protocol_class = NANITE_PROTOCOL_REPLICATION
 	var/factory_efficiency = 0
-	var/max_efficiency = 400 //Goes up to 2 bonus regen per tick
+	var/max_efficiency = 2000 //Goes up to 2 bonus regen per tick after 18 minutes and 20 seconds
 
 /datum/nanite_program/protocol/factory/on_process()
 	if(!activated || !check_conditions())
-		factory_efficiency = max(0, factory_efficiency - 3)
+		factory_efficiency = max(0, factory_efficiency - 5)
 	..()
+
+/datum/nanite_program/protocol/factory/on_emp(severity)
+	..()
+	factory_efficiency = max(0, factory_efficiency - 300)
+
+/datum/nanite_program/protocol/factory/on_shock(shock_damage)
+	..()
+	factory_efficiency = max(0, factory_efficiency - 200)
+
+/datum/nanite_program/protocol/factory/on_minor_shock()
+	..()
+	factory_efficiency = max(0, factory_efficiency - 100)
 
 /datum/nanite_program/protocol/factory/active_effect()
 	factory_efficiency = min(factory_efficiency + 1, max_efficiency)
-	nanites.adjust_nanites(null, round(0.005 * factory_efficiency, 0.5))
+	nanites.adjust_nanites(null, round(0.001 * factory_efficiency, 0.1))
 
 /datum/nanite_program/protocol/tinker
 	name = "Tinker Protocol"
