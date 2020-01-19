@@ -62,6 +62,9 @@
 	if(R.mind)
 		R.mind.grab_ghost()
 		playsound(loc, 'sound/voice/liveagain.ogg', 75, TRUE)
+		var/datum/component/gps/G = R.GetComponent(/datum/component/gps)
+		if(G)
+			G.RemoveComponent()
 
 	R.revive(full_heal = FALSE, admin_revive = FALSE)
 

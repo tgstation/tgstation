@@ -7,6 +7,7 @@
 /mob/living/silicon/death(gibbed)
 	if(!gibbed)
 		emote("deathgasp")
+		AddComponent(/datum/component/gps, "Cyborg Distress Signal")
 	diag_hud_set_status()
 	diag_hud_set_health()
 	update_health_hud()
