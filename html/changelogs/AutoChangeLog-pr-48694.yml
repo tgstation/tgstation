@@ -1,4 +1,0 @@
-author: "Fhaxaris"
-delete-after: True
-changes: 
-  - bugfix: "flying and floating mobs are no longer affected by the turf under them."

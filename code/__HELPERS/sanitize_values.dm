@@ -16,7 +16,7 @@
 		return value
 	if(default)
 		return default
-		
+
 /proc/sanitize_inlist(value, list/List, default)
 	if(value in List)
 		return value
@@ -52,9 +52,12 @@
 	var/start = 1 + (text2ascii(color, 1) == 35)
 	var/len = length(color)
 	var/char = ""
+	// RRGGBB -> RGB but awful
+	var/convert_to_shorthand = desired_format == 3 && length_char(color) > 3
 
 	. = ""
-	for(var/i = start, i <= len, i += length(char))
+	var/i = start
+	while(i <= len)
 		char = color[i]
 		switch(text2ascii(char))
 			if(48 to 57)		//numbers 0 to 9
@@ -65,6 +68,9 @@
 				. += lowertext(char)
 			else
 				break
+		i += length(char)
+		if(convert_to_shorthand && i <= len) //skip next one
+			i += length(color[i])
 
 	if(length_char(.) != desired_format)
 		if(default)
@@ -74,7 +80,9 @@
 	return crunch + .
 
 /proc/sanitize_ooccolor(color)
-	var/list/HSL = rgb2hsl(hex2num(copytext(color,2,4)),hex2num(copytext(color,4,6)),hex2num(copytext(color,6,8)))
+	if(length(color) != length_char(color))
+		CRASH("Invalid characters in color '[color]'")
+	var/list/HSL = rgb2hsl(hex2num(copytext(color, 2, 4)), hex2num(copytext(color, 4, 6)), hex2num(copytext(color, 6, 8)))
 	HSL[3] = min(HSL[3],0.4)
 	var/list/RGB = hsl2rgb(arglist(HSL))
 	return "#[num2hex(RGB[1],2)][num2hex(RGB[2],2)][num2hex(RGB[3],2)]"
