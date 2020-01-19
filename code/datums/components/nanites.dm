@@ -12,6 +12,8 @@
 	var/list/datum/nanite_program/programs = list()
 	var/max_programs = NANITE_PROGRAM_LIMIT
 
+	var/list/datum/nanite_program/protocol/protocols = list() ///Separate list of protocol programs, to avoid looping through the whole programs list when cheking for conflicts
+
 	var/stealth = FALSE //if TRUE, does not appear on HUDs and health scans
 	var/diagnostics = TRUE //if TRUE, displays program list when scanned by nanite scanners
 
@@ -114,7 +116,7 @@
 			cloud_sync()
 			next_sync = world.time + NANITE_SYNC_DELAY
 	set_nanite_bar()
-	
+
 
 /datum/component/nanites/proc/delete_nanites()
 	qdel(src)
