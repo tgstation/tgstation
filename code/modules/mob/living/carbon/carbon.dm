@@ -68,11 +68,7 @@
 	. = ..()
 	var/hurt = TRUE
 	if(istype(throwingdatum, /datum/thrownthing))
-		var/datum/thrownthing/D = throwingdatum
-		if(iscyborg(D.thrower))
-			var/mob/living/silicon/robot/R = D.thrower
-			if(!R.emagged)
-				hurt = FALSE
+		hurt = !throwingdatum.gentle
 	if(hit_atom.density && isturf(hit_atom))
 		if(hurt)
 			Paralyze(20)
@@ -126,6 +122,7 @@
 
 	var/atom/movable/thrown_thing
 	var/obj/item/I = get_active_held_item()
+	var/gentle = FALSE
 
 	if(!I)
 		if(pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
@@ -136,10 +133,14 @@
 				if(HAS_TRAIT(src, TRAIT_PACIFISM))
 					to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
 					return
+				if(src.a_intent == INTENT_HELP)
+					gentle = TRUE
 				var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 				var/turf/end_T = get_turf(target)
-				if(start_T && end_T)
+				if(start_T && end_T && gentle)
 					log_combat(src, throwable_mob, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
+				else
+					log_combat(src, throwable_mob, "thrown with help intent", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
 
 	else if(!CHECK_BITFIELD(I.item_flags, ABSTRACT) && !HAS_TRAIT(I, TRAIT_NODROP))
 		thrown_thing = I
@@ -154,7 +155,7 @@
 						"<span class='danger'>You throw [thrown_thing].</span>")
 		log_message("has thrown [thrown_thing]", LOG_ATTACK)
 		newtonian_move(get_dir(target, src))
-		thrown_thing.safe_throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src, null, null, null, move_force)
+		thrown_thing.safe_throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src, null, null, null, move_force, gentle)
 
 /mob/living/carbon/restrained(ignore_grab)
 	. = (handcuffed || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))
