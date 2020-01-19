@@ -6107,7 +6107,7 @@
 /area/hallway/primary/central)
 "aqG" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel,
@@ -10891,7 +10891,7 @@
 /area/security/prison)
 "aDT" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/cable,
@@ -10977,7 +10977,7 @@
 /area/security/prison)
 "aEe" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/freezer,
@@ -20168,7 +20168,7 @@
 	dir = 6
 	},
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -21234,7 +21234,7 @@
 /area/crew_quarters/bar)
 "bgc" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 12
 	},
 /obj/structure/mirror{
@@ -24940,7 +24940,7 @@
 	dir = 4
 	},
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -25239,7 +25239,7 @@
 /area/engine/atmos)
 "bqa" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -30621,7 +30621,7 @@
 /area/hydroponics/garden)
 "bCS" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 12
 	},
 /obj/item/radio/intercom{
@@ -32144,7 +32144,7 @@
 /area/security/courtroom)
 "bGp" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /turf/open/floor/plating,
@@ -35291,7 +35291,7 @@
 /area/gateway)
 "bOM" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 12
 	},
 /obj/structure/mirror{
@@ -36990,7 +36990,7 @@
 /area/science/lab)
 "bTq" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -40248,7 +40248,7 @@
 /area/maintenance/port/fore)
 "ceh" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 12
 	},
 /turf/open/floor/plating,
