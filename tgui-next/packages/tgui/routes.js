@@ -15,6 +15,7 @@ import { Bepis } from './interfaces/Bepis';
 import { BorgPanel } from './interfaces/BorgPanel';
 import { BrigTimer } from './interfaces/BrigTimer';
 import { Canister } from './interfaces/Canister';
+import { Canvas } from './interfaces/Canvas';
 import { Cargo, CargoExpress } from './interfaces/Cargo';
 import { CellularEmporium } from './interfaces/CellularEmporium';
 import { CentcomPodLauncher } from './interfaces/CentcomPodLauncher';
@@ -173,6 +174,10 @@ const ROUTES = {
   },
   canister: {
     component: () => Canister,
+    scrollable: false,
+  },
+  canvas: {
+    component: () => Canvas,
     scrollable: false,
   },
   cargo: {
