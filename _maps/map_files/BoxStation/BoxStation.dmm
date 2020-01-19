@@ -5167,6 +5167,11 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
+"akV" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "akW" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/security/glass{
@@ -41080,11 +41085,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/sign/warning/biohazard,
 /turf/closed/wall/r_wall,
-/area/maintenance/starboard/aft)
-"ceI" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space/basic,
 /area/maintenance/starboard/aft)
 "ceJ" = (
 /obj/structure/disposalpipe/segment,
@@ -93000,7 +93000,7 @@ caO
 sjK
 ccI
 cdL
-ceI
+akV
 cfo
 bip
 lrg
