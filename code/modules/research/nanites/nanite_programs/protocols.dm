@@ -95,9 +95,9 @@
 		is_offline = TRUE
 	if(nanites.host_mob.stat == DEAD || HAS_TRAIT(nanites.host_mob, TRAIT_DEATHCOMA))
 		is_offline = TRUE
-	if(nanites.host_mob.InCritical() && !HAS_TRAIT(nanites.host_mob, TRAIT_NOSOFTCRIT)))
+	if(nanites.host_mob.InCritical() && !HAS_TRAIT(nanites.host_mob, TRAIT_NOSOFTCRIT))
 		is_offline = TRUE
-	if(nanites.host_mob.InFullCritical() && !HAS_TRAIT(nanites.host_mob, TRAIT_NOHARDCRIT)))
+	if(nanites.host_mob.InFullCritical() && !HAS_TRAIT(nanites.host_mob, TRAIT_NOHARDCRIT))
 		is_offline = TRUE
 	if(!is_offline)
 		return FALSE
