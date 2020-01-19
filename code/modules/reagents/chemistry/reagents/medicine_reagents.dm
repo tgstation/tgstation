@@ -199,6 +199,14 @@
 	..()
 	. = 1
 
+/datum/reagent/medicine/rezadone/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	. = ..()
+	if(iscarbon(M))
+		var/mob/living/carbon/patient = M
+		if(reac_volume >= 5 && HAS_TRAIT_FROM(patient, TRAIT_HUSK, "burn") && patient.getFireLoss() < 50) //One carp yields 12u rezadone.
+			patient.cure_husk("burn")
+			patient.visible_message("<span class='nicegreen'>[patient]'s body rapidly absorbs moisture from the enviroment, taking on a more healthy appearance.")
+
 /datum/reagent/medicine/spaceacillin
 	name = "Spaceacillin"
 	description = "Spaceacillin will prevent a patient from conventionally spreading any diseases they are currently infected with."

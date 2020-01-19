@@ -64,6 +64,7 @@ import { NtnetRelay } from './interfaces/NtnetRelay';
 import { NtosArcade } from './interfaces/NtosArcade';
 import { NtosConfiguration } from './interfaces/NtosConfiguration';
 import { NtosMain } from './interfaces/NtosMain';
+import { NtosNetChat } from './interfaces/NtosNetChat';
 import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
 import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
 import { NtosWrapper } from './interfaces/NtosWrapper';
@@ -95,6 +96,7 @@ import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
 import { Tank } from './interfaces/Tank';
 import { TankDispenser } from './interfaces/TankDispenser';
+import { Teleporter } from './interfaces/Teleporter';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { TurbineComputer } from './interfaces/TurbineComputer';
 import { Uplink } from './interfaces/Uplink';
@@ -384,6 +386,12 @@ const ROUTES = {
     scrollable: true,
     theme: 'ntos',
   },
+  ntos_net_chat: {
+    component: () => NtosNetChat,
+    wrapper: () => NtosWrapper,
+    scrollable: false,
+    theme: 'ntos',
+  },
   ntos_net_downloader: {
     component: () => NtosNetDownloader,
     wrapper: () => NtosWrapper,
@@ -530,6 +538,10 @@ const ROUTES = {
   },
   tank_dispenser: {
     component: () => TankDispenser,
+    scrollable: false,
+  },
+  teleporter: {
+    component: () => Teleporter,
     scrollable: false,
   },
   thermomachine: {

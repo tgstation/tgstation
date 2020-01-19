@@ -101,7 +101,7 @@
 		var/datum/blackmarket_purchase/P = transmitting
 		if(!P.item)
 			QDEL_NULL(transmitting)
-		if(!P.item in T.contents)
+		if(!(P.item in T.contents))
 			QDEL_NULL(transmitting)
 			return
 		do_teleport(P.item, get_turf(P.uplink))

@@ -1513,7 +1513,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -1747,7 +1747,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat_interior)
 "acW" = (
@@ -1947,7 +1946,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "adn" = (
@@ -2209,7 +2207,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat/foyer)
 "adF" = (
@@ -2370,7 +2367,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "adS" = (
@@ -2517,7 +2513,6 @@
 	pixel_x = -22
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "aed" = (
@@ -2536,7 +2531,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "aef" = (
@@ -2623,11 +2617,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/bridge)
-"aen" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "aeo" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -2913,7 +2902,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "aeT" = (
@@ -4840,7 +4828,6 @@
 	name = "Abandoned External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/fore)
 "ahZ" = (
@@ -5183,7 +5170,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/cable,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -6593,7 +6579,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/fore)
 "akP" = (
@@ -9451,7 +9436,6 @@
 	network = list("minisat")
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat_interior)
 "api" = (
@@ -12576,6 +12560,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "atY" = (
@@ -12670,6 +12655,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "aug" = (
@@ -18765,9 +18751,7 @@
 	},
 /area/engine/atmos)
 "aDA" = (
-/obj/machinery/atmospherics/miner/nitrogen{
-	max_ext_kpa = 2500
-	},
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/engine/n2{
 	initial_gas_mix = "n2=1000;TEMP=293.15"
 	},
@@ -18778,9 +18762,7 @@
 	},
 /area/engine/atmos)
 "aDD" = (
-/obj/machinery/atmospherics/miner/oxygen{
-	max_ext_kpa = 2500
-	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/engine/o2{
 	initial_gas_mix = "o2=1000;TEMP=293.15"
 	},
@@ -19704,25 +19686,19 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/cryo)
 "aFm" = (
-/obj/machinery/atmospherics/miner/carbon_dioxide{
-	max_ext_kpa = 2500
-	},
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/open/floor/engine/co2{
 	initial_gas_mix = "co2=1000;TEMP=293.15"
 	},
 /area/engine/atmos)
 "aFn" = (
-/obj/machinery/atmospherics/miner/toxins{
-	max_ext_kpa = 2500
-	},
+/obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/engine/plasma{
 	initial_gas_mix = "plasma=1000;TEMP=293.15"
 	},
 /area/engine/atmos)
 "aFo" = (
-/obj/machinery/atmospherics/miner/n2o{
-	max_ext_kpa = 2500
-	},
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/engine/n2o{
 	initial_gas_mix = "n2o=1000;TEMP=293.15"
 	},
@@ -33358,6 +33334,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /mob/living/simple_animal/bot/secbot/pingsky,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat_interior)
 "aZi" = (
@@ -72801,6 +72778,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "cfv" = (
@@ -73357,6 +73335,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat_interior)
 "cgq" = (
@@ -73626,6 +73605,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat_interior)
 "cgK" = (
@@ -74027,6 +74007,7 @@
 	dir = 4
 	},
 /obj/machinery/holopad/secure,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat_interior)
 "chq" = (
@@ -74411,6 +74392,8 @@
 	dir = 5
 	},
 /obj/structure/cable,
+/obj/structure/cable_bridge,
+/obj/structure/cable/layer3,
 /turf/open/floor/engine,
 /area/ai_monitored/storage/satellite)
 "cic" = (
@@ -93840,6 +93823,10 @@
 "dvN" = (
 /turf/open/floor/plating/asteroid/lowpressure,
 /area/space/nearstation)
+"dSr" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/engine/air,
+/area/engine/atmos)
 "fhz" = (
 /obj/structure/cable,
 /obj/machinery/holopad/secure,
@@ -119807,8 +119794,8 @@ aDD
 aMO
 aFM
 aMY
+dSr
 bUQ
-aMY
 bFP
 cCX
 bUZ
@@ -121255,19 +121242,19 @@ adR
 adZ
 aec
 aee
-aen
+cHu
 cHu
 aeS
 aeS
-aen
+cHu
 aeS
 aeS
-aen
+cHu
 aeS
 aeS
-aen
-aen
-aen
+cHu
+cHu
+cHu
 ahY
 aiD
 akO

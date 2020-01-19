@@ -306,7 +306,6 @@
 	var/req_defib = TRUE
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
 	var/grab_ghost = FALSE
-	var/tlimit = DEFIB_TIME_LIMIT * 10
 	var/base_icon_state = "defibpaddles"
 
 /obj/item/twohanded/shockpaddles/ComponentInitialize()
@@ -356,13 +355,16 @@
 	cooldown = FALSE
 	update_icon()
 
-/obj/item/twohanded/shockpaddles/New(mainunit)
-	..()
-	if(check_defib_exists(mainunit, src) && req_defib)
-		defib = mainunit
-		forceMove(defib)
-		busy = FALSE
-		update_icon()
+/obj/item/twohanded/shockpaddles/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_STORAGE_INSERT, GENERIC_ITEM_TRAIT) //stops shockpaddles from being inserted in BoH
+	if(!req_defib)
+		return //If it doesn't need a defib, just say it exists
+	if (!loc || !istype(loc, /obj/item/defibrillator)) //To avoid weird issues from admin spawns
+		return INITIALIZE_HINT_QDEL
+	defib = loc
+	busy = FALSE
+	update_icon()
 
 /obj/item/twohanded/shockpaddles/update_icon_state()
 	icon_state = "[base_icon_state][wielded]"
@@ -396,15 +398,6 @@
 	defib.on = FALSE
 	forceMove(defib)
 	defib.update_power()
-
-/obj/item/twohanded/shockpaddles/proc/check_defib_exists(mainunit, mob/living/carbon/M, obj/O)
-	if(!req_defib)
-		return TRUE //If it doesn't need a defib, just say it exists
-	if (!mainunit || !istype(mainunit, /obj/item/defibrillator))	//To avoid weird issues from admin spawns
-		qdel(O)
-		return FALSE
-	else
-		return TRUE
 
 /obj/item/twohanded/shockpaddles/attack(mob/M, mob/user)
 
@@ -459,8 +452,6 @@
 /obj/item/twohanded/shockpaddles/proc/can_defib(mob/living/carbon/H)
 	var/obj/item/organ/heart = H.getorgan(/obj/item/organ/heart)
 	if(H.suiciding || H.hellbound || HAS_TRAIT(H, TRAIT_HUSK))
-		return
-	if((world.time - H.timeofdeath) > tlimit)
 		return
 	if((H.getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (H.getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
 		return
@@ -568,7 +559,6 @@
 		playsound(src, 'sound/machines/defib_charge.ogg', 75, FALSE)
 		var/total_burn	= 0
 		var/total_brute	= 0
-		var/tplus = world.time - H.timeofdeath	//length of time spent dead
 		var/obj/item/organ/heart = H.getorgan(/obj/item/organ/heart)
 		if(do_after(user, 20, target = H)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
 			for(var/obj/item/carried_item in H.contents)
@@ -592,8 +582,6 @@
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
 				else if (H.hellbound)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's soul appears to be on another plane of existence. Further attempts futile.</span>"
-				else if (tplus > tlimit)
-					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Body has decayed for too long. Further attempts futile.</span>"
 				else if (!heart)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's heart is missing.</span>"
 				else if (heart.organ_flags & ORGAN_FAILING)

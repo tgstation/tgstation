@@ -1,5 +1,0 @@
-author: "Dorsidwarf"
-delete-after: True
-changes: 
-  - tweak: "Added ethereals & tails to the limbgrower and removed flypeople"
-  - rscadd: "Limbgrower limbs are now appropriately randomly coloured instead of plain white."
