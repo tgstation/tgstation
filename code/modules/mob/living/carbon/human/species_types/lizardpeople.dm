@@ -31,6 +31,9 @@
 
 /// Lizards are cold blooded and do not stabilize body temperature naturally unless very cold
 /datum/species/lizard/natural_bodytemperature_stabilization(mob/living/carbon/human/H)
+	var/body_temp = H.bodytemperature // Get current body temperature
+	var/body_temperature_difference = bodytemp_normal - body_temp
+
 	// We are very cold, increate body temperature
 	// let lizards stabilize to 10 degrees over cold damage limit.
 	if(body_temp <= (bodytemp_cold_damage_limit + 10))
