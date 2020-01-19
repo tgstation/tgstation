@@ -27981,7 +27981,7 @@
 	},
 /obj/machinery/door/airlock/research{
 	name = "Xenobiology Lab";
-	req_access_txt = "55"
+	req_one_access_txt = "55, 9"
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,

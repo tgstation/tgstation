@@ -27,6 +27,7 @@
 
 /obj/item/radio/intercom/examine(mob/user)
 	. = ..()
+	. += "<span class='notice'>Use [MODE_TOKEN_INTERCOM] when nearby to speak into it.</span>"
 	if(!unfastened)
 		. += "<span class='notice'>It's <b>screwed</b> and secured to the wall.</span>"
 	else

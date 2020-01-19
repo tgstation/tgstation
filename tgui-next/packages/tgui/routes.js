@@ -64,6 +64,7 @@ import { NtnetRelay } from './interfaces/NtnetRelay';
 import { NtosArcade } from './interfaces/NtosArcade';
 import { NtosConfiguration } from './interfaces/NtosConfiguration';
 import { NtosMain } from './interfaces/NtosMain';
+import { NtosNetChat } from './interfaces/NtosNetChat';
 import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
 import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
 import { NtosWrapper } from './interfaces/NtosWrapper';
@@ -78,9 +79,11 @@ import { PortablePump, PortableScrubber } from './interfaces/PortableAtmos';
 import { PowerMonitor } from './interfaces/PowerMonitor';
 import { Radio } from './interfaces/Radio';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
+import { Roulette } from './interfaces/Roulette';
 import { SatelliteControl } from './interfaces/SatelliteControl';
 import { ScannerGate } from './interfaces/ScannerGate';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
+import { Signaler } from './interfaces/Signaler';
 import { Sleeper } from './interfaces/Sleeper';
 import { SlimeBodySwapper } from './interfaces/SlimeBodySwapper';
 import { SmartVend } from './interfaces/SmartVend';
@@ -93,6 +96,7 @@ import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
 import { Tank } from './interfaces/Tank';
 import { TankDispenser } from './interfaces/TankDispenser';
+import { Teleporter } from './interfaces/Teleporter';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { TurbineComputer } from './interfaces/TurbineComputer';
 import { Uplink } from './interfaces/Uplink';
@@ -382,6 +386,12 @@ const ROUTES = {
     scrollable: true,
     theme: 'ntos',
   },
+  ntos_net_chat: {
+    component: () => NtosNetChat,
+    wrapper: () => NtosWrapper,
+    scrollable: false,
+    theme: 'ntos',
+  },
   ntos_net_downloader: {
     component: () => NtosNetDownloader,
     wrapper: () => NtosWrapper,
@@ -451,6 +461,11 @@ const ROUTES = {
     component: () => Radio,
     scrollable: false,
   },
+  roulette: {
+    component: () => Roulette,
+    scrollable: false,
+    theme: 'cardtable',
+  },
   rpd: {
     component: () => RapidPipeDispenser,
     scrollable: true,
@@ -466,6 +481,10 @@ const ROUTES = {
   shuttle_manipulator: {
     component: () => ShuttleManipulator,
     scrollable: true,
+  },
+  signaler: {
+    component: () => Signaler,
+    scrollable: false,
   },
   sleeper: {
     component: () => Sleeper,
@@ -519,6 +538,10 @@ const ROUTES = {
   },
   tank_dispenser: {
     component: () => TankDispenser,
+    scrollable: false,
+  },
+  teleporter: {
+    component: () => Teleporter,
     scrollable: false,
   },
   thermomachine: {

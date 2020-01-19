@@ -71,3 +71,12 @@
 	rename_team = "Horde of Interns"
 	mission = "Assist in conflict resolution."
 	polldesc = "an unpaid internship opportunity with Nanotrasen"
+
+/datum/ert/erp
+	roles = list(/datum/antagonist/ert/security/party, /datum/antagonist/ert/clown/party, /datum/antagonist/ert/engineer/party, /datum/antagonist/ert/janitor/party)
+	leader_role = /datum/antagonist/ert/commander/party
+	opendoors = FALSE
+	rename_team = "Emergency Response Party"
+	mission = "Create entertainment for the crew."
+	polldesc = "a Code Rainbow Nanotrasen Emergency Response Party"
+	code = "Rainbow"

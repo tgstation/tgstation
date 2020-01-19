@@ -1,4 +1,0 @@
-author: "Thebleh"
-delete-after: True
-changes: 
-  - bugfix: "Cyborgs now receive proper text feedback when attempting to cancel a surgery."

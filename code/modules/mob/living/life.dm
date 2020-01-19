@@ -1,3 +1,6 @@
+/// This divisor controls how fast body temperature changes to match the environment
+#define BODYTEMP_DIVISOR 8
+
 /mob/living/proc/Life(seconds, times_fired)
 	set waitfor = FALSE
 	set invisibility = 0
@@ -83,8 +86,15 @@
 /mob/living/proc/handle_random_events()
 	return
 
+// Base mob environment handler for body temperature
 /mob/living/proc/handle_environment(datum/gas_mixture/environment)
-	return
+	var/loc_temp = get_temperature(environment)
+
+	if(loc_temp < bodytemperature) // it is cold here
+		if(!on_fire) // do not reduce body temp when on fire
+			adjust_bodytemperature(max((loc_temp - bodytemperature) / BODYTEMP_DIVISOR, BODYTEMP_COOLING_MAX))
+	else // this is a hot place
+		adjust_bodytemperature(min((loc_temp - bodytemperature) / BODYTEMP_DIVISOR, BODYTEMP_HEATING_MAX))
 
 /mob/living/proc/handle_fire()
 	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
@@ -143,3 +153,5 @@
 	if(gravity >= GRAVITY_DAMAGE_TRESHOLD) //Aka gravity values of 3 or more
 		var/grav_stregth = gravity - GRAVITY_DAMAGE_TRESHOLD
 		adjustBruteLoss(min(grav_stregth,3))
+
+#undef BODYTEMP_DIVISOR

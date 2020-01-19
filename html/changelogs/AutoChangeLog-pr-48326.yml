@@ -1,5 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - rscadd: "Struggling to find your way around Kilo, Delta, Donut or even Box and Meta? Look for the pinpointer dispenser at arrivals."
-  - bugfix: "Modifying a navigation beacon's codes list or location name now correctly updates the associated global lists (this is an IC thing, try it)"
