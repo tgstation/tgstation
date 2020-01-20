@@ -17,7 +17,7 @@
 	var/stasis_can_toggle = 0
 	var/mattress_state = "stasis_on"
 	var/obj/effect/overlay/vis/mattress_on
-	var/obj/machinery/computer/operating/op_computer = null
+	var/obj/machinery/computer/operating/op_computer
 
 /obj/machinery/stasis/Initialize()
 	. = ..()
