@@ -235,6 +235,9 @@
 	icon_state = "rubberducky"
 	item_state = "rubberducky"
 
+/obj/item/bikehorn/rubberducky/plasticducky
+	name = "plastic ducky"
+	desc = "It's a cheap plastic knockoff of a loveable bathtime toy."
 
 /obj/structure/sink
 	name = "sink"
