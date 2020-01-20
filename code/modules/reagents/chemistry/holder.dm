@@ -210,9 +210,8 @@
 			if(preserve_data)
 				trans_data = copy_data(T)
 			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
-			if(method)
-				R.react_single(T, target_atom, method, part, show_message)
-				T.on_transfer(target_atom, method, transfer_amount * multiplier)
+			R.react_single(T, target_atom, method, part, show_message)
+			T.on_transfer(target_atom, method, transfer_amount * multiplier)
 			remove_reagent(T.type, transfer_amount)
 			transfer_log[T.type] = transfer_amount
 	else
@@ -230,9 +229,8 @@
 				transfer_amount = T.volume
 			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1)
 			to_transfer = max(to_transfer - transfer_amount , 0)
-			if(method)
-				R.react_single(T, target_atom, method, transfer_amount, show_message)
-				T.on_transfer(target_atom, method, transfer_amount * multiplier)
+			R.react_single(T, target_atom, method, transfer_amount, show_message)
+			T.on_transfer(target_atom, method, transfer_amount * multiplier)
 			remove_reagent(T.type, transfer_amount)
 			transfer_log[T.type] = transfer_amount
 
@@ -694,7 +692,7 @@
 			R.on_merge(data, amount)
 			if(!no_react)
 				handle_reactions()
-			return TRUE
+			return R
 
 	//otherwise make a new one
 	var/datum/reagent/R = new D.type(data)
@@ -712,7 +710,7 @@
 		my_atom.on_reagent_change(ADD_REAGENT)
 	if(!no_react)
 		handle_reactions()
-	return TRUE
+	return R
 
 /datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null) // Like add_reagent but you can enter a list. Format it like this: list(/datum/reagent/toxin = 10, "beer" = 15)
 	for(var/r_id in list_reagents)

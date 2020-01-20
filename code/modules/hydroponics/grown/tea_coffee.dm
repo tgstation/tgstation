@@ -23,7 +23,6 @@
 	filling_color = "#008000"
 	grind_results = list(/datum/reagent/toxin/teapowder = 0)
 	dry_grind = TRUE
-	can_distill = FALSE
 
 // Tea Astra
 /obj/item/seeds/tea/astra
@@ -72,7 +71,7 @@
 	bitesize_mod = 2
 	dry_grind = TRUE
 	grind_results = list(/datum/reagent/toxin/coffeepowder = 0)
-	distill_reagent = /datum/reagent/consumable/ethanol/kahlua
+
 
 // Coffee Robusta
 /obj/item/seeds/coffee/robusta

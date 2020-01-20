@@ -134,7 +134,8 @@
 	desc = "<I>Plumus Hellmus</I>: Plump, soft and s-so inviting~"
 	icon_state = "plumphelmet"
 	filling_color = "#9370DB"
-	distill_reagent = /datum/reagent/consumable/ethanol/manly_dorf
+
+	wine_power = 80
 
 // Walking Mushroom
 /obj/item/seeds/plump/walkingmushroom
@@ -159,7 +160,6 @@
 	desc = "<I>Plumus Locomotus</I>: The beginning of the great walk."
 	icon_state = "walkingmushroom"
 	filling_color = "#9370DB"
-	can_distill = FALSE
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user)
 	if(isspaceturf(user.loc))

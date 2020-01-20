@@ -1264,3 +1264,6 @@
 				max_grav = max(G.setting,max_grav)
 			return max_grav
 	return SSmapping.level_trait(T.z, ZTRAIT_GRAVITY)
+
+/atom/proc/on_brew()
+	return

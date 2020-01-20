@@ -2173,3 +2173,34 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		M.adjust_fire_stacks(1)
 		M.IgniteMob()
 	..()
+
+/datum/reagent/consumable/ethanol/customizable
+	name = "Ale"
+	description = "An alcoholic beverage brewed by hand."
+	color = "#664300" // rgb: 102, 67, 0
+	nutriment_factor = 1 * REAGENTS_METABOLISM
+	boozepwr = 0 // filled out by brewing
+	taste_description = "ale"
+	glass_name = "glass of ale"
+	glass_desc = "A glass of ale. You feel a fey mood coming on just looking at it."
+	var/datum/reagents/contained_reagents
+
+/datum/reagent/consumable/ethanol/customizable/New()
+	. ..()
+	contained_reagents = new/datum/reagents(10000)
+
+/datum/reagent/consumable/ethanol/customizable/on_mob_life(mob/living/M)
+	..()
+	for(var/R in contained_reagents.reagent_list)
+		var/datum/reagent/RA = R
+		RA.volume = volume
+		RA.on_mob_life(M)
+
+/datum/reagent/consumable/ethanol/customizable/on_transfer(atom/A)
+	var/datum/reagent/consumable/ethanol/customizable/TA = A.reagents.has_reagent(/datum/reagent/consumable/ethanol/customizable)
+	if(TA)
+		for(var/datum/reagent/REA in contained_reagents.reagent_list)
+			if(!is_type_in_list(REA, TA.contained_reagents.reagent_list))
+				TA.contained_reagents.add_reagent(REA.type, 1)
+		TA.boozepwr = boozepwr
+	..()

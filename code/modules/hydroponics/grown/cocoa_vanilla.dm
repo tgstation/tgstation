@@ -27,7 +27,7 @@
 	bitesize_mod = 2
 	foodtype = FRUIT
 	tastes = list("cocoa" = 1)
-	distill_reagent = /datum/reagent/consumable/ethanol/creme_de_cacao
+
 
 // Vanilla Pod
 /obj/item/seeds/cocoapod/vanillapod
@@ -49,7 +49,7 @@
 	filling_color = "#FFD700"
 	foodtype = FRUIT
 	tastes = list("vanilla" = 1)
-	distill_reagent = /datum/reagent/consumable/vanilla //Takes longer, but you can get even more vanilla from it.
+
 
 /obj/item/seeds/cocoapod/bungotree
 	name = "pack of bungo tree seeds"
@@ -81,7 +81,7 @@
 	foodtype = FRUIT
 	juice_results = list(/datum/reagent/consumable/bungojuice = 0)
 	tastes = list("bungo" = 2, "tropical fruitiness" = 1)
-	distill_reagent = null
+
 
 /obj/item/reagent_containers/food/snacks/grown/bungopit
 	seed = /obj/item/seeds/cocoapod/bungotree

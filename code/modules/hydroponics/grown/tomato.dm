@@ -25,7 +25,7 @@
 	foodtype = FRUIT
 	grind_results = list(/datum/reagent/consumable/ketchup = 0)
 	juice_results = list(/datum/reagent/consumable/tomatojuice = 0)
-	distill_reagent = /datum/reagent/consumable/enzyme
+
 
 // Blood Tomato
 /obj/item/seeds/tomato/blood
@@ -48,7 +48,7 @@
 	filling_color = "#FF0000"
 	foodtype = FRUIT | GROSS
 	grind_results = list(/datum/reagent/consumable/ketchup = 0, /datum/reagent/blood = 0)
-	distill_reagent = /datum/reagent/consumable/ethanol/bloody_mary
+
 
 // Blue Tomato
 /obj/item/seeds/tomato/blue
@@ -72,7 +72,7 @@
 	icon_state = "bluetomato"
 	splat_type = /obj/effect/decal/cleanable/oil
 	filling_color = "#0000FF"
-	distill_reagent = /datum/reagent/consumable/laughter
+
 
 // Bluespace Tomato
 /obj/item/seeds/tomato/blue/bluespace
@@ -93,7 +93,7 @@
 	name = "bluespace tomato"
 	desc = "So lubricated, you might slip through space-time."
 	icon_state = "bluespacetomato"
-	distill_reagent = null
+
 	wine_power = 80
 
 // Killer Tomato
@@ -120,7 +120,7 @@
 	icon_state = "killertomato"
 	var/awakening = 0
 	filling_color = "#FF0000"
-	distill_reagent = /datum/reagent/consumable/ethanol/demonsblood
+
 
 /obj/item/reagent_containers/food/snacks/grown/tomato/killer/attack(mob/M, mob/user, def_zone)
 	if(awakening)

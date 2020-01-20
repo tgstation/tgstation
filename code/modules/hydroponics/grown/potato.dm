@@ -27,7 +27,7 @@
 	bitesize = 100
 	foodtype = VEGETABLES
 	juice_results = list(/datum/reagent/consumable/potato_juice = 0)
-	distill_reagent = /datum/reagent/consumable/ethanol/vodka
+
 
 /obj/item/reagent_containers/food/snacks/grown/potato/wedges
 	name = "potato wedges"
@@ -64,4 +64,4 @@
 	name = "sweet potato"
 	desc = "It's sweet."
 	icon_state = "sweetpotato"
-	distill_reagent = /datum/reagent/consumable/ethanol/sbiten
+

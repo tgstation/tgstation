@@ -413,6 +413,14 @@
 	foodtype = GRAIN | ALCOHOL
 	custom_price = 60
 
+/obj/item/reagent_containers/food/drinks/wooden_mug
+	name = "wooden mug"
+	desc = "A mug for serving hearty brews."
+	icon = 'icons/obj/drinks.dmi'
+	item_state = "manlydorfglass"
+	icon_state = "manlydorfglass"
+	spillable = TRUE
+
 /obj/item/reagent_containers/food/drinks/sillycup
 	name = "paper cup"
 	desc = "A paper water cup."

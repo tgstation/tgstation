@@ -28,7 +28,7 @@
 	foodtype = FRUIT
 	juice_results = list(/datum/reagent/consumable/berryjuice = 0)
 	tastes = list("berry" = 1)
-	distill_reagent = /datum/reagent/consumable/ethanol/gin
+
 
 // Poison Berries
 /obj/item/seeds/berry/poison
@@ -51,7 +51,7 @@
 	foodtype = FRUIT | TOXIC
 	juice_results = list(/datum/reagent/consumable/poisonberryjuice = 0)
 	tastes = list("poison-berry" = 1)
-	distill_reagent = null
+
 	wine_power = 35
 
 // Death Berries
@@ -76,7 +76,7 @@
 	filling_color = "#708090"
 	foodtype = FRUIT | TOXIC
 	tastes = list("death-berry" = 1)
-	distill_reagent = null
+
 	wine_power = 50
 
 // Glow Berries
@@ -102,7 +102,7 @@
 	filling_color = "#7CFC00"
 	foodtype = FRUIT
 	tastes = list("glow-berry" = 1)
-	distill_reagent = null
+
 	wine_power = 60
 
 // Cherries
@@ -220,7 +220,7 @@
 	foodtype = FRUIT
 	juice_results = list(/datum/reagent/consumable/grapejuice = 0)
 	tastes = list("grape" = 1)
-	distill_reagent = /datum/reagent/consumable/ethanol/wine
+
 
 // Green Grapes
 /obj/item/seeds/grape/green
@@ -238,4 +238,4 @@
 	icon_state = "greengrapes"
 	filling_color = "#7FFF00"
 	tastes = list("green grape" = 1)
-	distill_reagent = /datum/reagent/consumable/ethanol/cognac
+

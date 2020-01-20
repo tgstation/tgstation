@@ -78,4 +78,3 @@
 	desc = "The textile industry's dark secret."
 	icon_state = "carpetclump"
 	stacktype = /obj/item/stack/tile/carpet
-	can_distill = FALSE

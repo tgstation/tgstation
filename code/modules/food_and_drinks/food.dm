@@ -15,6 +15,7 @@
 	var/foodtype = NONE
 	var/last_check_time
 	var/in_container = FALSE //currently just stops "was bitten X times!" messages on canned food
+	var/wine_power = 10 //Determines the boozepwr of the ale.
 
 /obj/item/reagent_containers/food/Initialize(mapload)
 	. = ..()
@@ -46,5 +47,12 @@
 			if((foodtype & BREAKFAST) && world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
 				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "breakfast", /datum/mood_event/breakfast)
 			last_check_time = world.time
+
+/obj/item/reagent_containers/food/on_brew()
+	var/list/my_reagents = list()
+	for(var/R in reagents.reagent_list)
+		var/datum/reagent/RE = R
+		my_reagents += RE.type
+	return list("reagents" = my_reagents, "booze_power" = wine_power, "prefix" = name)
 
 #undef STOP_SERVING_BREAKFAST

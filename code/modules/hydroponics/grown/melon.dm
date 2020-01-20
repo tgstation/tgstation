@@ -57,7 +57,7 @@
 	filling_color = "#FFD700"
 	dried_type = null
 	wine_power = 70 //Water to wine, baby.
-	wine_flavor = "divinity"
+
 
 /obj/item/reagent_containers/food/snacks/grown/holymelon/Initialize()
 	. = ..()

@@ -47,4 +47,4 @@
 	filling_color = "#F8F8FF"
 	bitesize_mod = 2
 	foodtype = MEAT
-	distill_reagent = /datum/reagent/consumable/ethanol/eggnog
+
