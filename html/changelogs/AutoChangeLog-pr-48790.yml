@@ -1,0 +1,4 @@
+author: "Couls"
+delete-after: True
+changes: 
+  - tweak: "hardsuit helmets are now repairable by using a lightbulb on the hardsuit"

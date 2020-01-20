@@ -1,0 +1,4 @@
+author: "TheChosenEvilOne"
+delete-after: True
+changes: 
+  - balance: "Dry Heat Sterilization (converting miasma to oxygen with heat) no longer generates research points."

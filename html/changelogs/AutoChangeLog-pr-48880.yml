@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Kilo and Donut now has the right amount of gas in the atmos gas tanks."
