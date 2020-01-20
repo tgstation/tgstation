@@ -4,7 +4,7 @@
 	max_stages = 4
 	cure_text = "Surgical removal of the liver."
 	agent = "Consuming Live Parasites"
-	spread_text = "Does not spread biologically"
+	spread_text = "Non-Biological"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	permeability_mod = 1
 	desc = "If left untreated the subject will passively lose nutrients, and eventually lose their liver."
@@ -32,12 +32,14 @@
 				affected_mob.adjust_nutrition(-3)
 		if(3)
 			if(prob(20))
-				to_chat(affected_mob, "<span class='notice'>You're... REALLY starting to feel the weight loss.</span>")
+				if(prob(20))
+					to_chat(affected_mob, "<span class='notice'>You're... REALLY starting to feel the weight loss.</span>")
 				affected_mob.adjust_nutrition(-6)
 		if(4)
 			if(prob(30))
 				if(affected_mob.nutrition >= 100)
-					to_chat(affected_mob, "<span class='warning'>You feel like your body's shedding weight rapidly!</span>")
+					if(prob(10))
+						to_chat(affected_mob, "<span class='warning'>You feel like your body's shedding weight rapidly!</span>")
 					affected_mob.adjust_nutrition(-12)
 				else
 					var/turf/T = get_turf(C)
