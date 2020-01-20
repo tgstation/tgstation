@@ -111,12 +111,19 @@
 	return
 
 /obj/machinery/rnd/bepis/proc/calcsuccess()
-	var/turf/dropturf = get_turf(pick(view(1,src)))
+	var/turf/dropturf = null
 	var/gauss_major = 0
 	var/gauss_minor = 0
 	var/gauss_real = 0
-	if(!dropturf) //Check to verify the turf exists and the reward isn't lost somehow.
-		dropturf = drop_location()
+	var/list/turfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z))		//NO MORE DISCS IN WINDOWS
+	while(length(turfs))
+		var/turf/T = pick_n_take(turfs)
+		if(is_blocked_turf(T, exclude_mobs=TRUE))
+			continue
+		else
+			dropturf = T
+	if (!dropturf)
+		dropturf = loc
 	gauss_major = (gaussian(major_threshold, std) - negative_cash_offset)	//This is the randomized profit value that this experiment has to surpass to unlock a tech.
 	gauss_minor = (gaussian(minor_threshold, std) - negative_cash_offset)	//And this is the threshold to instead get a minor prize.
 	gauss_real = (gaussian(banked_cash, std*inaccuracy_percentage) + positive_cash_offset)	//this is the randomized profit value that your experiment expects to give.
