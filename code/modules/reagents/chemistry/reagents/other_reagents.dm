@@ -1803,6 +1803,7 @@
 
 /datum/reagent/growthserum/on_mob_end_metabolize(mob/living/M)
 	M.resize = 1/current_size
+	current_size = 1
 	M.update_transform()
 	..()
 
