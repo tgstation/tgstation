@@ -235,7 +235,6 @@
 	icon_state = "rubberducky"
 	item_state = "rubberducky"
 
-
 /obj/structure/sink
 	name = "sink"
 	icon = 'icons/obj/watercloset.dmi'
