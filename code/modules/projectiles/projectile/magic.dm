@@ -701,5 +701,5 @@
 	damage_type = BURN
 	nodamage = FALSE
 	armour_penetration = 100
-	temperature = 50
+	temperature = -50
 	flag = "magic"
