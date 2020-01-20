@@ -18,6 +18,7 @@
 	var/dry_grind = FALSE //If TRUE, this object needs to be dry to be ground up
 	var/can_distill = TRUE //If FALSE, this object cannot be distilled into an alcohol.
 	var/distill_reagent //If NULL and this object can be distilled, it uses a generic fruit_wine reagent and adjusts its variables.
+	var/distill_difficulty = 0 // This is multiplied by the traditional fermentation rate, so that plants can distill at different rates.
 	var/wine_flavor //If NULL, this is automatically set to the fruit's flavor. Determines the flavor of the wine if distill_reagent is NULL.
 	var/wine_power = 10 //Determines the boozepwr of the wine if distill_reagent is NULL.
 

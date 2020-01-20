@@ -28,6 +28,7 @@
 	icon_state = "crunchy"
 	bitesize_mod = 2
 	distill_reagent = /datum/reagent/toxin/mutagen
+	distill_difficulty = 11.25	//Between 1:30 to 2:15 to ferment, to maintain cooperation as the best method to obtain mutagen.
 
 /obj/item/reagent_containers/food/snacks/grown/random/Initialize()
 	. = ..()
