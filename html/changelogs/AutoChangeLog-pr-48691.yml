@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - balance: "See the below, optimal power setups may have changed, try out those 100% plasma hell setups of yours, it should actually give you a power benefit now. Oh and Pluoxium should be a bit more of a safety gas now."
-  - bugfix: "Fixed the SM not increasing/decreasing rad output with most gasses."

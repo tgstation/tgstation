@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed tesla immunity being lost if you have reactive armor and refund the lighting bolt spell / vice versa"

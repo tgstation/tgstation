@@ -1,4 +1,0 @@
-author: "ExcessiveUseOfCobblestone"
-delete-after: True
-changes: 
-  - bugfix: "Players who are old (and wrinkly) will no longer receive the waypoint unless they have the quirk now."
