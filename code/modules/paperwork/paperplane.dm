@@ -33,7 +33,9 @@
 
 /obj/item/paperplane/handle_atom_del(atom/A)
 	if(A == internalPaper)
+		var/obj/item/paper/P = internalPaper
 		internalPaper = null
+		P.moveToNullspace() //So we're not deleting it twice when deleting our contents.
 		if(!QDELETED(src))
 			qdel(src)
 	return ..()

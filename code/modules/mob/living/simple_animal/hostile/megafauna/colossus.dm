@@ -45,8 +45,8 @@ Difficulty: Very Hard
 	pixel_x = -32
 	del_on_death = TRUE
 	gps_name = "Angelic Signal"
-	achievement_type = /datum/award/achievement/boss/colussus_kill
-	crusher_achievement_type = /datum/award/achievement/boss/colussus_crusher
+	achievement_type = /datum/award/achievement/boss/colossus_kill
+	crusher_achievement_type = /datum/award/achievement/boss/colossus_crusher
 	score_achievement_type = /datum/award/score/colussus_score
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/colossus/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
@@ -129,6 +129,8 @@ Difficulty: Very Hard
 		if(H.mind)
 			if(istype(H.mind.martial_art, /datum/martial_art/the_sleeping_carp))
 				. = TRUE
+		if (is_species(H, /datum/species/golem/sand))
+			. = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
 	ranged_cooldown = world.time + 40

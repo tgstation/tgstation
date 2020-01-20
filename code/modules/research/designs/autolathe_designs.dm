@@ -536,7 +536,7 @@
 	name = "Pill Bottle"
 	id = "pillbottle"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 20, /datum/material/glass = 100)
+	materials = list(/datum/material/plastic = 20, /datum/material/glass = 100)
 	build_path = /obj/item/storage/pill_bottle
 	category = list("initial", "Medical", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
@@ -691,6 +691,15 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/iron = 10, /datum/material/glass = 20)
 	build_path = /obj/item/reagent_containers/syringe
+	category = list("initial", "Medical", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/dropper
+	name = "Dropper"
+	id = "dropper"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/glass = 10, /datum/material/plastic = 30)
+	build_path = /obj/item/reagent_containers/dropper
 	category = list("initial", "Medical", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 

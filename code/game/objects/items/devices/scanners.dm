@@ -37,7 +37,7 @@ GENE SCANNER
 
 /obj/item/t_scanner/proc/toggle_on()
 	on = !on
-	icon_state = copytext(icon_state, 1, length(icon_state))+"[on]"
+	icon_state = copytext_char(icon_state, 1, -1) + "[on]"
 	if(on)
 		START_PROCESSING(SSobj, src)
 	else
@@ -320,8 +320,7 @@ GENE SCANNER
 	if(M.tod && (M.stat == DEAD || ((HAS_TRAIT(M, TRAIT_FAKEDEATH)) && !advanced)))
 		render_list += "<span class='info ml-1'>Time of Death: [M.tod]</span>\n"
 		var/tdelta = round(world.time - M.timeofdeath)
-		if(tdelta < (DEFIB_TIME_LIMIT * 10))
-			render_list += "<span class='alert ml-1'><b>Subject died [DisplayTimeText(tdelta)] ago, defibrillation may be possible!</b></span>\n"
+		render_list += "<span class='alert ml-1'><b>Subject died [DisplayTimeText(tdelta)] ago.</b></span>\n"
 
 	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
@@ -734,10 +733,10 @@ GENE SCANNER
 
 		if(sequence)
 			var/display
-			for(var/i in 0 to length(sequence) / DNA_MUTATION_BLOCKS-1)
+			for(var/i in 0 to length_char(sequence) / DNA_MUTATION_BLOCKS-1)
 				if(i)
 					display += "-"
-				display += copytext(sequence, 1 + i*DNA_MUTATION_BLOCKS, DNA_MUTATION_BLOCKS*(1+i) + 1)
+				display += copytext_char(sequence, 1 + i*DNA_MUTATION_BLOCKS, DNA_MUTATION_BLOCKS*(1+i) + 1)
 
 			to_chat(user, "<span class='boldnotice'>[display]</span><br>")
 

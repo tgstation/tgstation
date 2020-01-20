@@ -534,7 +534,7 @@
 		GLOB.dead_mob_list -= src
 		GLOB.alive_mob_list += src
 		set_suicide(FALSE)
-		stat = UNCONSCIOUS //the mob starts unconscious,
+		set_stat(UNCONSCIOUS) //the mob starts unconscious,
 		updatehealth() //then we check if the mob should wake up.
 		update_mobility()
 		update_sight()
@@ -1384,3 +1384,15 @@
 			STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[getStaminaLoss()]</a>
 		</font>
 	"}
+
+/mob/living/proc/move_to_error_room()
+	var/obj/effect/landmark/error/error_landmark = locate(/obj/effect/landmark/error) in GLOB.landmarks_list
+	if(error_landmark)
+		forceMove(error_landmark.loc)
+	else
+		forceMove(locate(4,4,1)) //Even if the landmark is missing, this should put them in the error room.
+		//If you're here from seeing this error, I'm sorry. I'm so very sorry. The error landmark should be a sacred object that nobody has any business messing with, and someone did!
+		//Consider seeing a therapist.
+		var/ERROR_ERROR_LANDMARK_ERROR = "ERROR-ERROR: ERROR landmark missing!"
+		log_mapping(ERROR_ERROR_LANDMARK_ERROR)
+		CRASH(ERROR_ERROR_LANDMARK_ERROR)

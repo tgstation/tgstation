@@ -127,15 +127,20 @@
 
 		if("crossserver")
 			if(authenticated==2)
+				var/dest = href_list["cross_dest"]
 				if(!checkCCcooldown())
 					to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 					return
-				var/input = stripped_multiline_input(usr, "Please choose a message to transmit to allied stations.  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
+				var/warning = dest == "all" ? "Please choose a message to transmit to allied stations." : "Please choose a message to transmit to [dest] sector station."
+				var/input = stripped_multiline_input(usr, "[warning]  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
 				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
 					return
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
-				send2otherserver("[station_name()]", input,"Comms_Console")
+				if(dest == "all")
+					send2otherserver("[station_name()]", input,"Comms_Console")
+				else
+					send2otherserver("[station_name()]", input,"Comms_Console", list(dest))
 				minor_announce(input, title = "Outgoing message to allied station")
 				usr.log_talk(input, LOG_SAY, tag="message to the other server")
 				message_admins("[ADMIN_LOOKUPFLW(usr)] has sent a message to the other server.")
@@ -470,9 +475,15 @@
 				if (authenticated==2)
 					dat += "<BR><BR><B>Captain Functions</B>"
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=announce'>Make a Captain's Announcement</A> \]"
-					var/cross_servers_count = length(CONFIG_GET(keyed_list/cross_server))
-					if(cross_servers_count)
-						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=crossserver'>Send a message to [cross_servers_count == 1 ? "an " : ""]allied station[cross_servers_count > 1 ? "s" : ""]</A> \]"
+					var/list/cross_servers = CONFIG_GET(keyed_list/cross_server)
+					var/our_id = CONFIG_GET(string/cross_comms_name)
+					if(cross_servers.len)
+						for(var/server in cross_servers)
+							if(server == our_id)
+								continue
+							dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=crossserver=all;cross_dest=[server]'>Send a message to station in [server] sector.</A> \]"
+						if(cross_servers.len > 2)
+							dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=crossserver;cross_dest=all'>Send a message to all allied stations</A> \]"
 					if(SSmapping.config.allow_custom_shuttles)
 						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=purchase_menu'>Purchase Shuttle</A> \]"
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=changeseclevel'>Change Alert Level</A> \]"

@@ -1,4 +1,7 @@
 #define SUMMON_POSSIBILITIES 3
+#define CULT_VICTORY 1
+#define CULT_LOSS 0
+#define CULT_NARSIE_KILLED -1
 
 /datum/antagonist/cult
 	name = "Cultist"
@@ -351,6 +354,7 @@
 
 /datum/objective/eldergod
 	var/summoned = FALSE
+	var/killed = FALSE
 	var/list/summon_spots = list()
 
 /datum/objective/eldergod/New()
@@ -367,18 +371,25 @@
 	explanation_text = "Summon Nar'Sie by invoking the rune 'Summon Nar'Sie'. <b>The summoning can only be accomplished in [english_list(summon_spots)] - where the veil is weak enough for the ritual to begin.</b>"
 
 /datum/objective/eldergod/check_completion()
+	if(killed)
+		return CULT_NARSIE_KILLED // You failed so hard that even the code went backwards.
 	return summoned || completed
 
 /datum/team/cult/proc/check_cult_victory()
 	for(var/datum/objective/O in objectives)
-		if(!O.check_completion())
-			return FALSE
-	return TRUE
+		if(O.check_completion() == CULT_NARSIE_KILLED)
+			return CULT_NARSIE_KILLED
+		else if(!O.check_completion())
+			return CULT_LOSS
+	return CULT_VICTORY
 
 /datum/team/cult/roundend_report()
 	var/list/parts = list()
+	var/victory = check_cult_victory()
 
-	if(check_cult_victory())
+	if(victory == CULT_NARSIE_KILLED) // Epic failure, you summoned your god and then someone killed it.
+		parts += "<span class='redtext big'>Nar'sie has been killed! The cult will haunt the universe no longer!</span>"
+	else if(victory)
 		parts += "<span class='greentext big'>The cult has succeeded! Nar'Sie has snuffed out another torch in the void!</span>"
 	else
 		parts += "<span class='redtext big'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>"

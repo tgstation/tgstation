@@ -35,9 +35,9 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	. = ..()
 	. += GLOB.rod_recipes
 
-/obj/item/stack/rods/update_icon()
+/obj/item/stack/rods/update_icon_state()
 	var/amount = get_amount()
-	if((amount <= 5) && (amount > 0))
+	if(amount <= 5)
 		icon_state = "rods-[amount]"
 	else
 		icon_state = "rods"
@@ -77,8 +77,9 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	is_cyborg = 1
 	cost = 250
 
-/obj/item/stack/rods/cyborg/update_icon()
-	return
+/obj/item/stack/rods/cyborg/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/stack/rods/ten
 	amount = 10
@@ -88,3 +89,19 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/fifty
 	amount = 50
+
+/obj/item/stack/rods/lava
+	name = "heat resistant rod"
+	desc = "Treated, specialized metal rods. When exposed to the vaccum of space their coating breaks off, but they can hold up against the extreme heat of active lava."
+	singular_name = "heat resistant rod"
+	icon_state = "rods"
+	item_state = "rods"
+	color = "#5286b9ff"
+	flags_1 = CONDUCT_1
+	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/iron=1000, /datum/material/plasma=500, /datum/material/titanium=2000)
+	max_amount = 30
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
+
+/obj/item/stack/rods/lava/thirty
+	amount = 30

@@ -46,7 +46,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
 		parent.update_movement_keys(src)
 		to_chat(parent, "<span class='userdanger'>Empty keybindings, setting default to [hotkeys ? "Hotkey" : "Classic"] mode</span>")
-		
+
 	if(current_version < 30)
 		if(clientfps == 0)
 			clientfps = 60
@@ -141,7 +141,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return
-	path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/[filename]"
+	path = "data/player_saves/[ckey[1]]/[ckey]/[filename]"
 
 /datum/preferences/proc/load_preferences()
 	if(!path)
@@ -396,7 +396,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(!features["ethcolor"] || features["ethcolor"] == "#000")
 		features["ethcolor"] = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
-	
+
 	if(!features["beefcolor"] || features["beefcolor"] == "") // FULP
 		features["beefcolor"] = GLOB.color_list_beefman[pick(GLOB.color_list_beefman)]
 	if(!features["beefeyes"] || features["beefeyes"] == "") // FULP
@@ -433,8 +433,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	jumpsuit_style	= sanitize_inlist(jumpsuit_style, GLOB.jumpsuitlist, initial(jumpsuit_style))
 	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
 	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 3, 0)
-	features["ethcolor"]	= copytext(features["ethcolor"],1,7)
-	features["beefcolor"]	= copytext(features["beefcolor"],1,7) // FULP
+	features["ethcolor"]	= copytext_char(features["ethcolor"], 1, 7)
+	features["beefcolor"]	= copytext_char(features["beefcolor"], 1, 7) // FULP
 	features["beefeyes"]	= sanitize_inlist(features["beefeyes"], GLOB.eyes_beefman) // FULP
 	features["beefmouth"]	= sanitize_inlist(features["beefmouth"], GLOB.mouths_beefman) // FULP
 	features["tail_lizard"]	= sanitize_inlist(features["tail_lizard"], GLOB.tails_list_lizard)

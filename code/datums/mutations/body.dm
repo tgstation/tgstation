@@ -227,6 +227,13 @@
 	text_gain_indication = "<span class='notice'>You feel strong.</span>"
 	difficulty = 16
 
+/datum/mutation/human/stimmed
+	name = "Stimmed"
+	desc = "The user's chemical balance is more robust."
+	quality = POSITIVE
+	text_gain_indication = "<span class='notice'>You feel stimmed.</span>"
+	difficulty = 16
+
 /datum/mutation/human/insulated
 	name = "Insulated"
 	desc = "The affected person does not conduct electricity."

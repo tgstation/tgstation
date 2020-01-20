@@ -496,7 +496,7 @@
 			if(has_power() && (W.flags_1 & CONDUCT_1))
 				do_sparks(3, TRUE, src)
 				if (prob(75))
-					electrocute_mob(user, get_area(src), src, rand(0.7,1.0), TRUE)
+					electrocute_mob(user, get_area(src), src, (rand(7,10) * 0.1), TRUE)
 	else
 		return ..()
 
@@ -643,7 +643,7 @@
 					var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
 					if(istype(stomach))
 						to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
-						stomach.adjust_charge(5)
+						stomach.adjust_charge(2)
 					else
 						to_chat(H, "<span class='warning'>You can't receive charge from the [fitting]!</span>")
 				return

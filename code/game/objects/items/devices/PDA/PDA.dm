@@ -164,26 +164,26 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return TRUE
 	return FALSE
 
-/obj/item/pda/update_icon()
-	cut_overlays()
-	var/mutable_appearance/overlay = new()
+/obj/item/pda/update_overlays()
+	. = ..()
+	var/mutable_appearance/overlay = new(icon)
 	overlay.pixel_x = overlays_x_offset
 	if(id)
 		overlay.icon_state = "id_overlay"
-		add_overlay(new /mutable_appearance(overlay))
+		. += new /mutable_appearance(overlay)
 	if(inserted_item)
 		overlay.icon_state = "insert_overlay"
-		add_overlay(new /mutable_appearance(overlay))
+		. += new /mutable_appearance(overlay)
 	if(fon)
 		overlay.icon_state = "light_overlay"
-		add_overlay(new /mutable_appearance(overlay))
+		. += new /mutable_appearance(overlay)
 	if(pai)
 		if(pai.pai)
 			overlay.icon_state = "pai_overlay"
-			add_overlay(new /mutable_appearance(overlay))
+			. += new /mutable_appearance(overlay)
 		else
 			overlay.icon_state = "pai_off_overlay"
-			add_overlay(new /mutable_appearance(overlay))
+			. += new /mutable_appearance(overlay)
 
 /obj/item/pda/MouseDrop(mob/over, src_location, over_location)
 	var/mob/M = usr
@@ -533,13 +533,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("Clear")//Clears messages
 				tnote = null
 			if("Ringtone")
-				var/t = input(U, "Please enter new ringtone", name, ttone) as text|null
+				var/t = stripped_input(U, "Please enter new ringtone", name, ttone, 20)
 				if(in_range(src, U) && loc == U && t)
 					if(SEND_SIGNAL(src, COMSIG_PDA_CHANGE_RINGTONE, U, t) & COMPONENT_STOP_RINGTONE_CHANGE)
 						U << browse(null, "window=pda")
 						return
 					else
-						ttone = copytext(sanitize(t), 1, 20)
+						ttone = t
 				else
 					U << browse(null, "window=pda")
 					return
