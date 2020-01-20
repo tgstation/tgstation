@@ -80,7 +80,7 @@
 		if(gentle)
 			M.visible_message("<span class='warning'>[M] is thrown clear of [AM]!</span>", \
 			"<span class='warning'>You're thrown clear of [AM]!</span>")
-			M.throw_at(target, 10, 3, AM, gentle = TRUE)
+			M.throw_at(target, 8, 3, AM, gentle = TRUE)
 		else
 			M.visible_message("<span class='warning'>[M] is thrown violently from [AM]!</span>", \
 			"<span class='warning'>You're thrown violently from [AM]!</span>")
