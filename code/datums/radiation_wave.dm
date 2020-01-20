@@ -49,10 +49,8 @@
 	if(strength<RAD_BACKGROUND_RADIATION)
 		qdel(src)
 		return
-
-	if(radiate(atoms, FLOOR(min(strength,remaining_contam), 1)))
-		//oof ow ouch
-		remaining_contam = max(0,remaining_contam-((min(strength,remaining_contam)-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT))
+	var/last_radiation_amount = radiate(atoms, FLOOR(min(strength,remaining_contam), 1))
+	remaining_contam = max(0,remaining_contam-last_radiation_amount)
 	check_obstructions(atoms) // reduce our overall strength if there are radiation insulators
 
 /datum/radiation_wave/proc/get_rad_atoms()
@@ -119,11 +117,11 @@
 		if(CHECK_BITFIELD(thing.rad_flags, RAD_NO_CONTAMINATE) || SEND_SIGNAL(thing, COMSIG_ATOM_RAD_CONTAMINATING, strength) & COMPONENT_BLOCK_CONTAMINATION)
 			continue
 		contam_atoms += thing
-	var/did_contam = FALSE
+	var/did_contam = 0
 	if(length(can_contam))
 		var/rad_strength = ((strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT)/contam_atoms.len
 		for(var/k in 1 to contam_atoms.len)
 			var/atom/thing = contam_atoms[k]
 			thing.AddComponent(/datum/component/radioactive, rad_strength, source)
-			did_contam = TRUE
+			did_contam += rad_strength
 	return did_contam
