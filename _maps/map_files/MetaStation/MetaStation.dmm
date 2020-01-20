@@ -762,9 +762,7 @@
 /obj/machinery/camera{
 	c_tag = "Bar"
 	},
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/structure/fermenting_barrel,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "abR" = (
@@ -54311,7 +54309,6 @@
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/machinery/computer/scan_consolenew{
-	icon_state = "computer";
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
@@ -72440,7 +72437,6 @@
 "hFV" = (
 /obj/machinery/door/window/westleft{
 	name = "safety door";
-	req_access_txt = "0";
 	req_one_access_txt = "47"
 	},
 /turf/open/floor/plasteel/white,
@@ -76144,6 +76140,7 @@
 /area/hallway/primary/port)
 "wyV" = (
 /obj/machinery/holopad,
+/obj/structure/fermenting_barrel,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -76293,6 +76290,14 @@
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/port)
+"wWN" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/structure/fermenting_barrel,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "wYq" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood,
@@ -111192,7 +111197,7 @@ rBy
 bUk
 bVv
 bWQ
-bWQ
+wWN
 bWQ
 caL
 ccv

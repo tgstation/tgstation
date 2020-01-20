@@ -5281,7 +5281,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "aoo" = (
-/obj/structure/reagent_dispensers/beerkeg,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -5290,6 +5289,7 @@
 	dir = 4;
 	network = list("ss13","Bar Area")
 	},
+/obj/structure/fermenting_barrel,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aop" = (
@@ -5327,6 +5327,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/structure/fermenting_barrel,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aov" = (
@@ -50743,6 +50744,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 25
 	},
+/obj/structure/fermenting_barrel,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},

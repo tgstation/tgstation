@@ -14975,6 +14975,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26
 	},
+/obj/structure/fermenting_barrel,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "aHF" = (
@@ -113725,6 +113726,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/maintenance/department/science)
+"eHW" = (
+/obj/structure/fermenting_barrel,
+/turf/open/floor/plasteel/white,
+/area/crew_quarters/kitchen)
 "eJc" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/closed/wall/r_wall,
@@ -115978,6 +115983,20 @@
 "saw" = (
 /turf/closed/wall/r_wall,
 /area/science/misc_lab/range)
+"sbD" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/fermenting_barrel,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "scS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -149586,7 +149605,7 @@ bar
 bhC
 bjt
 blh
-bnj
+sbD
 boA
 bqB
 bnj
@@ -152667,7 +152686,7 @@ bcg
 bdF
 bfb
 aYC
-bdJ
+eHW
 bjE
 blt
 aYC

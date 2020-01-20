@@ -22515,9 +22515,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bfp" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21"
-	},
 /obj/machinery/button/door{
 	id = "kitchenwindowshutters";
 	name = "Kitchen Window Shutters Control";
@@ -22525,6 +22522,7 @@
 	pixel_y = 5;
 	req_access_txt = "28"
 	},
+/obj/structure/fermenting_barrel,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bfr" = (
@@ -53145,6 +53143,11 @@
 /obj/item/gun/ballistic/shotgun/toy,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
+"mwu" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/fermenting_barrel,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/bar)
 "mwG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -58152,6 +58155,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
+"xZY" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/structure/fermenting_barrel,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "ybX" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -84819,7 +84829,7 @@ aXS
 aRL
 aWR
 aXT
-aYO
+xZY
 aZU
 bbb
 bbZ
@@ -91499,7 +91509,7 @@ aQN
 aPE
 aVj
 aWm
-bck
+mwu
 aYi
 cpk
 bag
