@@ -21,7 +21,7 @@
 		return
 
 	if(istype(M))
-		if(user.a_intent == INTENT_HARM)
+		if(user.a_intent == INTENT_HARM && !(reagent_flags & SMART_CAP))
 			var/R
 			M.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [M]!</span>", \
 							"<span class='userdanger'>[user] splashes the contents of [src] onto you!</span>")
@@ -84,7 +84,7 @@
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>")
 
 	else if(reagents.total_volume)
-		if(user.a_intent == INTENT_HARM)
+		if(user.a_intent == INTENT_HARM && !(reagent_flags & SMART_CAP))
 			user.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 								"<span class='notice'>You splash the contents of [src] onto [target].</span>")
 			reagents.reaction(target, TOUCH)

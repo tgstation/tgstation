@@ -14,6 +14,7 @@
 	var/spillable = FALSE
 	var/list/fill_icon_thresholds = null
 	var/fill_icon_state = null // Optional custom name for reagent fill icon_state prefix
+	var/reagent_underlay = FALSE //if set to true place the "overlay" below the container.
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
@@ -84,7 +85,7 @@
 		. = TRUE
 
 /obj/item/reagent_containers/proc/SplashReagents(atom/target, thrown = FALSE)
-	if(!reagents || !reagents.total_volume || !spillable)
+	if(!reagents || !reagents.total_volume || !spillable || reagent_flags & SMART_CAP)
 		return
 
 	if(ismob(target) && target.reagents)
@@ -145,5 +146,7 @@
 				filling.icon_state = "[fill_name][fill_icon_thresholds[i]]"
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		if(reagent_underlay)
+			filling.layer = BELOW_OBJ_LAYER
 		add_overlay(filling)
 	. = ..()

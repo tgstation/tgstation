@@ -62,6 +62,15 @@
 	build_path = /obj/item/reagent_containers/glass/beaker/plastic
 	category = list("Medical Designs")
 
+/datum/design/jerrycan
+	name = "Plastic Jerrycan"
+	id = "jerrycan"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE | DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(/datum/material/plastic = 4000)
+	build_path = /obj/item/reagent_containers/glass/jerrycan
+	category = list("Medical Designs")
+
 /datum/design/meta_beaker
 	name = "Metamaterial Beaker"
 	id = "meta_beaker"
