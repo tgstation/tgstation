@@ -16,8 +16,9 @@
 	R.freqlock = TRUE
 
 	var/obj/item/card/id/W = H.wear_id
-	W.registered_name = H.real_name
-	W.update_label()
+	if(W)
+		W.registered_name = H.real_name
+		W.update_label()
 	..()
 
 /datum/outfit/centcom/ert/commander

@@ -13,13 +13,13 @@
 
 	. = ""
 	var/list/words = list()
-	while(length(.) < length(input))
+	while(length_char(.) < length_char(input))
 		words += generate_code_phrase(return_list=TRUE)
 		. = jointext(words, ", ")
 
 	. = capitalize(.)
 
-	var/input_ending = copytext(input, length(input))
+	var/input_ending = copytext_char(input, -1)
 
 	var/static/list/endings
 	if(!endings)

@@ -37,7 +37,7 @@ GENE SCANNER
 
 /obj/item/t_scanner/proc/toggle_on()
 	on = !on
-	icon_state = copytext(icon_state, 1, length(icon_state))+"[on]"
+	icon_state = copytext_char(icon_state, 1, -1) + "[on]"
 	if(on)
 		START_PROCESSING(SSobj, src)
 	else
@@ -733,10 +733,10 @@ GENE SCANNER
 
 		if(sequence)
 			var/display
-			for(var/i in 0 to length(sequence) / DNA_MUTATION_BLOCKS-1)
+			for(var/i in 0 to length_char(sequence) / DNA_MUTATION_BLOCKS-1)
 				if(i)
 					display += "-"
-				display += copytext(sequence, 1 + i*DNA_MUTATION_BLOCKS, DNA_MUTATION_BLOCKS*(1+i) + 1)
+				display += copytext_char(sequence, 1 + i*DNA_MUTATION_BLOCKS, DNA_MUTATION_BLOCKS*(1+i) + 1)
 
 			to_chat(user, "<span class='boldnotice'>[display]</span><br>")
 

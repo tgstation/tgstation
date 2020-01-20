@@ -217,7 +217,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/extinguish()
 	if(!lit)
 		return
-	name = copytext(name,5,length(name)+1)
+	name = copytext_char(name, 5) //5 == length_char("lit ") + 1
 	attack_verb = null
 	hitsound = null
 	damtype = BRUTE

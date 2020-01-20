@@ -1513,7 +1513,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -1747,7 +1747,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat_interior)
 "acW" = (
@@ -1947,7 +1946,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "adn" = (
@@ -2209,7 +2207,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat/foyer)
 "adF" = (
@@ -2370,7 +2367,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "adS" = (
@@ -2517,7 +2513,6 @@
 	pixel_x = -22
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "aed" = (
@@ -2536,7 +2531,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "aef" = (
@@ -2623,11 +2617,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/bridge)
-"aen" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "aeo" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -2913,7 +2902,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "aeT" = (
@@ -4840,7 +4828,6 @@
 	name = "Abandoned External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/fore)
 "ahZ" = (
@@ -5183,7 +5170,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/cable,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -6593,7 +6579,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/fore)
 "akP" = (
@@ -9451,7 +9436,6 @@
 	network = list("minisat")
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat_interior)
 "api" = (
@@ -12576,6 +12560,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "atY" = (
@@ -12670,6 +12655,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "aug" = (
@@ -18760,26 +18746,18 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "aDz" = (
-/turf/open/floor/engine/n2{
-	initial_gas_mix = "n2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/n2,
 /area/engine/atmos)
 "aDA" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/open/floor/engine/n2{
-	initial_gas_mix = "n2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/n2,
 /area/engine/atmos)
 "aDC" = (
-/turf/open/floor/engine/o2{
-	initial_gas_mix = "o2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/o2,
 /area/engine/atmos)
 "aDD" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/engine/o2{
-	initial_gas_mix = "o2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/o2,
 /area/engine/atmos)
 "aDE" = (
 /obj/machinery/camera{
@@ -19599,19 +19577,13 @@
 /turf/open/floor/grass,
 /area/medical/genetics/cloning)
 "aFc" = (
-/turf/open/floor/engine/co2{
-	initial_gas_mix = "co2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/co2,
 /area/engine/atmos)
 "aFd" = (
-/turf/open/floor/engine/plasma{
-	initial_gas_mix = "plasma=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "aFe" = (
-/turf/open/floor/engine/n2o{
-	initial_gas_mix = "n2o=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "aFf" = (
 /turf/open/floor/engine/vacuum,
@@ -19701,21 +19673,15 @@
 /area/medical/cryo)
 "aFm" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/turf/open/floor/engine/co2{
-	initial_gas_mix = "co2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/co2,
 /area/engine/atmos)
 "aFn" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
-/turf/open/floor/engine/plasma{
-	initial_gas_mix = "plasma=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "aFo" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
-/turf/open/floor/engine/n2o{
-	initial_gas_mix = "n2o=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "aFp" = (
 /obj/machinery/computer/med_data,
@@ -20312,9 +20278,7 @@
 	name = "atmospherics camera";
 	network = list("ss13","engine")
 	},
-/turf/open/floor/engine/n2{
-	initial_gas_mix = "n2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/n2,
 /area/engine/atmos)
 "aGl" = (
 /obj/structure/table,
@@ -20792,45 +20756,33 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrogen_input{
 	dir = 4
 	},
-/turf/open/floor/engine/n2{
-	initial_gas_mix = "n2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/n2,
 /area/engine/atmos)
 "aGV" = (
 /obj/machinery/air_sensor/atmos/nitrogen_tank,
-/turf/open/floor/engine/n2{
-	initial_gas_mix = "n2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/n2,
 /area/engine/atmos)
 "aGW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrogen_output{
 	dir = 4
 	},
-/turf/open/floor/engine/n2{
-	initial_gas_mix = "n2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/n2,
 /area/engine/atmos)
 "aGX" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/oxygen_input{
 	dir = 4
 	},
-/turf/open/floor/engine/o2{
-	initial_gas_mix = "o2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/o2,
 /area/engine/atmos)
 "aGY" = (
 /obj/machinery/air_sensor/atmos/oxygen_tank,
-/turf/open/floor/engine/o2{
-	initial_gas_mix = "o2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/o2,
 /area/engine/atmos)
 "aGZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/oxygen_output{
 	dir = 4
 	},
-/turf/open/floor/engine/o2{
-	initial_gas_mix = "o2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/o2,
 /area/engine/atmos)
 "aHa" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/air_input{
@@ -20852,67 +20804,49 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/carbon_input{
 	dir = 1
 	},
-/turf/open/floor/engine/co2{
-	initial_gas_mix = "co2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/co2,
 /area/engine/atmos)
 "aHe" = (
 /obj/machinery/air_sensor/atmos/carbon_tank,
-/turf/open/floor/engine/co2{
-	initial_gas_mix = "co2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/co2,
 /area/engine/atmos)
 "aHf" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/carbon_output{
 	dir = 1
 	},
-/turf/open/floor/engine/co2{
-	initial_gas_mix = "co2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/co2,
 /area/engine/atmos)
 "aHg" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxin_input{
 	dir = 1
 	},
-/turf/open/floor/engine/plasma{
-	initial_gas_mix = "plasma=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "aHh" = (
 /obj/machinery/air_sensor/atmos/toxin_tank,
-/turf/open/floor/engine/plasma{
-	initial_gas_mix = "plasma=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "aHi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxin_output{
 	dir = 1
 	},
-/turf/open/floor/engine/plasma{
-	initial_gas_mix = "plasma=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "aHj" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrous_input{
 	dir = 1
 	},
-/turf/open/floor/engine/n2o{
-	initial_gas_mix = "n2o=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "aHk" = (
 /obj/machinery/air_sensor/atmos/nitrous_tank,
-/turf/open/floor/engine/n2o{
-	initial_gas_mix = "n2o=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "aHl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrous_output{
 	dir = 1
 	},
-/turf/open/floor/engine/n2o{
-	initial_gas_mix = "n2o=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "aHm" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/mix_input{
@@ -24602,9 +24536,7 @@
 /area/security/main)
 "aML" = (
 /obj/machinery/light/floor,
-/turf/open/floor/engine/n2{
-	initial_gas_mix = "n2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/n2,
 /area/engine/atmos)
 "aMM" = (
 /obj/machinery/door/airlock/maintenance{
@@ -24648,9 +24580,7 @@
 /area/science/mixing/chamber)
 "aMO" = (
 /obj/machinery/light/floor,
-/turf/open/floor/engine/o2{
-	initial_gas_mix = "o2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/o2,
 /area/engine/atmos)
 "aMP" = (
 /obj/structure/chair{
@@ -24777,9 +24707,7 @@
 	name = "atmospherics camera";
 	network = list("ss13","engine")
 	},
-/turf/open/floor/engine/co2{
-	initial_gas_mix = "co2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/co2,
 /area/engine/atmos)
 "aNa" = (
 /obj/machinery/camera{
@@ -24788,9 +24716,7 @@
 	name = "atmospherics camera";
 	network = list("ss13","engine")
 	},
-/turf/open/floor/engine/plasma{
-	initial_gas_mix = "plasma=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "aNb" = (
 /obj/machinery/camera{
@@ -24799,9 +24725,7 @@
 	name = "atmospherics camera";
 	network = list("ss13","engine")
 	},
-/turf/open/floor/engine/n2o{
-	initial_gas_mix = "n2o=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "aNc" = (
 /obj/machinery/camera{
@@ -30915,15 +30839,11 @@
 /area/medical/virology)
 "aVF" = (
 /obj/effect/landmark/xeno_spawn,
-/turf/open/floor/engine/o2{
-	initial_gas_mix = "o2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/o2,
 /area/engine/atmos)
 "aVG" = (
 /obj/effect/landmark/xeno_spawn,
-/turf/open/floor/engine/n2o{
-	initial_gas_mix = "n2o=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "aVH" = (
 /obj/machinery/status_display/evac,
@@ -33348,6 +33268,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /mob/living/simple_animal/bot/secbot/pingsky,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat_interior)
 "aZi" = (
@@ -54486,9 +54407,7 @@
 /area/maintenance/port)
 "bDR" = (
 /obj/machinery/light/floor,
-/turf/open/floor/engine/co2{
-	initial_gas_mix = "co2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/co2,
 /area/engine/atmos)
 "bDS" = (
 /obj/structure/table,
@@ -55668,9 +55587,7 @@
 /area/maintenance/port)
 "bFG" = (
 /obj/machinery/light/floor,
-/turf/open/floor/engine/plasma{
-	initial_gas_mix = "plasma=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "bFH" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -57222,9 +57139,7 @@
 /area/hallway/primary/port)
 "bId" = (
 /obj/machinery/light/floor,
-/turf/open/floor/engine/n2o{
-	initial_gas_mix = "n2o=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "bIe" = (
 /obj/machinery/atmospherics/pipe/simple/purple/visible,
@@ -57793,9 +57708,7 @@
 	name = "atmospherics camera";
 	network = list("ss13","engine")
 	},
-/turf/open/floor/engine/o2{
-	initial_gas_mix = "o2=1000;TEMP=293.15"
-	},
+/turf/open/floor/engine/o2,
 /area/engine/atmos)
 "bIV" = (
 /turf/closed/wall,
@@ -72791,6 +72704,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "cfv" = (
@@ -73347,6 +73261,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat_interior)
 "cgq" = (
@@ -73616,6 +73531,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat_interior)
 "cgK" = (
@@ -74017,6 +73933,7 @@
 	dir = 4
 	},
 /obj/machinery/holopad/secure,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat_interior)
 "chq" = (
@@ -74401,6 +74318,8 @@
 	dir = 5
 	},
 /obj/structure/cable,
+/obj/structure/cable_bridge,
+/obj/structure/cable/layer3,
 /turf/open/floor/engine,
 /area/ai_monitored/storage/satellite)
 "cic" = (
@@ -121249,19 +121168,19 @@ adR
 adZ
 aec
 aee
-aen
+cHu
 cHu
 aeS
 aeS
-aen
+cHu
 aeS
 aeS
-aen
+cHu
 aeS
 aeS
-aen
-aen
-aen
+cHu
+cHu
+cHu
 ahY
 aiD
 akO
