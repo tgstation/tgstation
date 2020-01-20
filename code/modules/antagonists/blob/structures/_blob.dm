@@ -67,10 +67,10 @@
 /obj/structure/blob/BlockSuperconductivity()
 	return atmosblock
 
-/obj/structure/blob/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSBLOB))
-		return 1
-	return 0
+/obj/structure/blob/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(!(mover.pass_flags & PASSBLOB))
+		return FALSE
 
 /obj/structure/blob/CanAtmosPass(turf/T)
 	return !atmosblock
@@ -207,7 +207,7 @@
 		if(prob(100 - severity * 30))
 			new /obj/effect/temp_visual/emp(get_turf(src))
 
-/obj/structure/blob/tesla_act(power)
+/obj/structure/blob/zap_act(power)
 	..()
 	if(overmind)
 		if(overmind.blobstrain.tesla_reaction(src, power))
@@ -299,7 +299,6 @@
 /obj/structure/blob/proc/change_to(type, controller)
 	if(!ispath(type))
 		CRASH("change_to(): invalid type for blob")
-		return
 	var/obj/structure/blob/B = new type(src.loc, controller)
 	B.creation_action()
 	B.update_icon()

@@ -1210,12 +1210,16 @@
 	wet = 16
 	},
 /area/ruin/powered/clownplanet)
+"eE" = (
+/obj/effect/mapping_helpers/no_lava,
+/turf/closed/wall/r_wall,
+/area/ruin/powered/clownplanet)
 "eX" = (
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/lavaland/surface/outdoors/explored)
+/area/ruin/powered/clownplanet)
 "gX" = (
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/chasm/lavaland,
@@ -1241,7 +1245,7 @@
 /turf/open/floor/noslip{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/lavaland/surface/outdoors/explored)
+/area/ruin/powered/clownplanet)
 "Hj" = (
 /obj/effect/decal/cleanable/food/pie_smudge,
 /obj/effect/turf_decal/tile/yellow{
@@ -1291,6 +1295,13 @@
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/clownplanet)
+"RW" = (
+/obj/effect/mapping_helpers/no_lava,
+/mob/living/simple_animal/hostile/retaliate/clown,
+/turf/open/floor/noslip{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/powered/clownplanet)
 "TD" = (
 /obj/structure/disposalpipe/trunk,
 /obj/structure/disposaloutlet{
@@ -1307,7 +1318,7 @@
 /turf/open/floor/noslip{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/lavaland/surface/outdoors/explored)
+/area/ruin/powered/clownplanet)
 "XO" = (
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -1322,6 +1333,7 @@
 "YI" = (
 /obj/machinery/light/small,
 /obj/effect/mapping_helpers/no_lava,
+/mob/living/simple_animal/hostile/retaliate/clown,
 /turf/open/floor/noslip{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -1703,7 +1715,7 @@ cc
 "}
 (12,1,1) = {"
 aa
-Mv
+XO
 cc
 ye
 ap
@@ -1736,8 +1748,8 @@ ye
 cc
 "}
 (13,1,1) = {"
-XO
-Mv
+eE
+eE
 cc
 ye
 cc
@@ -1770,7 +1782,7 @@ ye
 cc
 "}
 (14,1,1) = {"
-XO
+eE
 Xm
 cc
 cc
@@ -1805,7 +1817,7 @@ cc
 "}
 (15,1,1) = {"
 eX
-eX
+RW
 LH
 ch
 ch
@@ -1838,7 +1850,7 @@ ye
 cc
 "}
 (16,1,1) = {"
-eX
+RW
 CB
 YI
 cc
@@ -1873,7 +1885,7 @@ cc
 "}
 (17,1,1) = {"
 eX
-eX
+RW
 TD
 ch
 ch
@@ -1906,8 +1918,8 @@ ye
 cc
 "}
 (18,1,1) = {"
-XO
-eX
+eE
+RW
 cc
 cc
 ye
@@ -1940,8 +1952,8 @@ ye
 cc
 "}
 (19,1,1) = {"
-XO
-Mv
+eE
+eE
 cc
 ye
 ye
@@ -2043,7 +2055,7 @@ cc
 "}
 (22,1,1) = {"
 aa
-Mv
+XO
 cc
 ye
 aq

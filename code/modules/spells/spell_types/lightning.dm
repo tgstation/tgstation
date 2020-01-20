@@ -75,7 +75,7 @@
 		current.electrocute_act(bolt_energy,"Lightning Bolt",flags = SHOCK_NOGLOVES)
 		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, TRUE, -1)
 		var/list/possible_targets = new
-		for(var/mob/living/M in view_or_range(range,target,"view"))
+		for(var/mob/living/M in view(range,target))
 			if(user == M || target == M && los_check(current,M)) // || origin == M ? Not sure double shockings is good or not
 				continue
 			possible_targets += M

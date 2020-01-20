@@ -13,27 +13,26 @@
 	throwforce = 15
 	throw_range = 1
 	w_class = WEIGHT_CLASS_HUGE
-	var/charged = 5
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_string = "LORD SINGULOTH HIMSELF"
+	var/charged = 5
 
-/obj/item/twohanded/singularityhammer/New()
-	..()
+/obj/item/twohanded/singularityhammer/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/twohanded/singularityhammer/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	return ..()
+	. = ..()
 
 /obj/item/twohanded/singularityhammer/process()
 	if(charged < 5)
 		charged++
 	return
 
-/obj/item/twohanded/singularityhammer/update_icon()  //Currently only here to fuck with the on-mob icons.
+/obj/item/twohanded/singularityhammer/update_icon_state()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "mjollnir[wielded]"
-	return
 
 /obj/item/twohanded/singularityhammer/proc/vortex(turf/pull, mob/wielder)
 	for(var/atom/X in orange(5,pull))
@@ -41,7 +40,7 @@
 			var/atom/movable/A = X
 			if(A == wielder)
 				continue
-			if(A && !A.anchored && !ishuman(X))
+			if(A && !A.anchored && !ishuman(X) && !isobserver(X))
 				step_towards(A,pull)
 				step_towards(A,pull)
 				step_towards(A,pull)
@@ -109,6 +108,5 @@
 	if(isliving(hit_atom))
 		shock(hit_atom)
 
-/obj/item/twohanded/mjollnir/update_icon()  //Currently only here to fuck with the on-mob icons.
+/obj/item/twohanded/mjollnir/update_icon_state()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "mjollnir[wielded]"
-	return

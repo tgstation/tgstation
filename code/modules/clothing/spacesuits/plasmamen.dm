@@ -148,7 +148,7 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/security
 	name = "security plasma envirosuit helmet"
-	desc = "A plasmaman containment helmet designed for security officers, protecting them from being flashed and burning alive, along-side other undesirables."
+	desc = "A plasmaman containment helmet designed for security officers, protecting them from being flashed and burning alive, alongside other undesirables."
 	icon_state = "security_envirohelm"
 	item_state = "security_envirohelm"
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 75)
@@ -160,10 +160,16 @@
 	item_state = "warden_envirohelm"
 
 /obj/item/clothing/head/helmet/space/plasmaman/medical
-	name = "medical's plasma envirosuit helmet"
-	desc = "An envriohelmet designed for plasmaman medical doctors, having two stripes down it's length to denote as much"
+	name = "medical doctor's plasma envirosuit helmet"
+	desc = "An envirohelmet designed for plasmaman medical doctors, having two stripes down its length to denote as much."
 	icon_state = "doctor_envirohelm"
 	item_state = "doctor_envirohelm"
+
+/obj/item/clothing/head/helmet/space/plasmaman/paramedic
+	name = "paramedic plasma envirosuit helmet"
+	desc = "An envirohelmet designed for plasmaman paramedics, with darker blue stripes compared to the medical model."
+	icon_state = "paramedic_envirohelm"
+	item_state = "paramedic_envirohelm"
 
 /obj/item/clothing/head/helmet/space/plasmaman/genetics
 	name = "geneticist's plasma envirosuit helmet"

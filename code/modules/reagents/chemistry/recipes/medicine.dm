@@ -18,11 +18,19 @@
 	results = list(/datum/reagent/medicine/spaceacillin = 2)
 	required_reagents = list(/datum/reagent/cryptobiolin = 1, /datum/reagent/medicine/epinephrine = 1)
 
+/datum/chemical_reaction/oculine
+	name = "Oculine"
+	id = /datum/reagent/medicine/oculine
+	results = list(/datum/reagent/medicine/oculine = 3)
+	required_reagents = list(/datum/reagent/medicine/C2/multiver = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
+	mix_message = "The mixture bubbles noticeably and becomes a dark grey color!"
+
 /datum/chemical_reaction/inacusiate
 	name = /datum/reagent/medicine/inacusiate
 	id = /datum/reagent/medicine/inacusiate
 	results = list(/datum/reagent/medicine/inacusiate = 2)
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/multiver = 1)
+	mix_message = "The mixture sputters loudly and becomes a light grey color!"
 
 /datum/chemical_reaction/synaptizine
 	name = "Synaptizine"
@@ -105,13 +113,6 @@
 	required_reagents = list(/datum/reagent/fuel/oil = 1, /datum/reagent/carbon = 1, /datum/reagent/bromine = 1, /datum/reagent/diethylamine = 1, /datum/reagent/consumable/ethanol = 1)
 	mix_message = "The mixture dries into a pale blue powder."
 
-/datum/chemical_reaction/oculine
-	name = "Oculine"
-	id = /datum/reagent/medicine/oculine
-	results = list(/datum/reagent/medicine/oculine = 3)
-	required_reagents = list(/datum/reagent/medicine/C2/multiver = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
-	mix_message = "The mixture sputters loudly and becomes a pale pink color."
-
 /datum/chemical_reaction/atropine
 	name = "Atropine"
 	id = /datum/reagent/medicine/atropine
@@ -186,10 +187,10 @@
 	results = list(/datum/reagent/medicine/regen_jelly = 2)
 	required_reagents = list(/datum/reagent/medicine/omnizine = 1, /datum/reagent/toxin/slimejelly = 1)
 
-/datum/chemical_reaction/corazone
-	name = "Corazone"
-	id = /datum/reagent/medicine/corazone
-	results = list(/datum/reagent/medicine/corazone = 3)
+/datum/chemical_reaction/higadrite
+	name = "Higadrite"
+	id = /datum/reagent/medicine/higadrite
+	results = list(/datum/reagent/medicine/higadrite = 3)
 	required_reagents = list(/datum/reagent/phenol = 2, /datum/reagent/lithium = 1)
 
 /datum/chemical_reaction/morphine
@@ -229,9 +230,9 @@
 /datum/chemical_reaction/granibitaluri
 	name = "Granibitaluri"
 	id = /datum/reagent/medicine/granibitaluri
-	results = list(/datum/reagent/medicine/granibitaluri = 1)
-	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/space_cleaner/sterilizine = 1) //haha guys totally not some sort of saline reference!
-	required_temp = 373
+	results = list(/datum/reagent/medicine/granibitaluri = 3)
+	required_reagents = list(/datum/reagent/acetone = 1, /datum/reagent/phenol = 1, /datum/reagent/nitrogen = 1)
+	required_catalysts = list(/datum/reagent/iron = 5)
 
 /datum/chemical_reaction/medsuture
 	name = "Medicated Suture"
@@ -243,4 +244,6 @@
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/medical/suture/medicated(location)
 	return
+
+
 

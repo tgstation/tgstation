@@ -1,10 +1,9 @@
-import { act } from '../byond';
-import { AnimatedNumber, Button, LabeledList, Section } from '../components';
+import { useBackend } from '../backend';
+import { Button, LabeledList, NumberInput, Section } from '../components';
+import { getGasLabel } from '../constants';
 
 export const AtmosFilter = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const filterTypes = data.filter_types || [];
   return (
     <Section>
@@ -14,29 +13,35 @@ export const AtmosFilter = props => {
             icon={data.on ? 'power-off' : 'times'}
             content={data.on ? 'On' : 'Off'}
             selected={data.on}
-            onClick={() => act(ref, 'power')} />
+            onClick={() => act('power')} />
         </LabeledList.Item>
         <LabeledList.Item label="Transfer Rate">
+          <NumberInput
+            animated
+            value={parseFloat(data.rate)}
+            width="63px"
+            unit="L/s"
+            minValue={0}
+            maxValue={200}
+            onDrag={(e, value) => act('rate', {
+              rate: value,
+            })} />
           <Button
-            icon="pencil-alt"
-            content="Set"
-            onClick={() => act(ref, 'rate', {rate: 'input'})} />
-          <Button
+            ml={1}
             icon="plus"
             content="Max"
             disabled={data.rate === data.max_rate}
-            onClick={() => act(ref, 'rate', {rate: 'max'})} />
-          {' '}
-          <AnimatedNumber value={parseFloat(data.rate)} />
-          {' L/s'}
+            onClick={() => act('rate', {
+              rate: 'max',
+            })} />
         </LabeledList.Item>
         <LabeledList.Item label="Filter">
           {filterTypes.map(filter => (
             <Button
               key={filter.id}
               selected={filter.selected}
-              content={filter.name}
-              onClick={() => act(ref, 'filter', {
+              content={getGasLabel(filter.id, filter.name)}
+              onClick={() => act('filter', {
                 mode: filter.id,
               })} />
           ))}

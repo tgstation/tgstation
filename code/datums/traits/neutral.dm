@@ -129,8 +129,42 @@
 /datum/quirk/phobia/post_add()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.gain_trauma(new /datum/brain_trauma/mild/phobia(H.client.prefs.phobia), TRAUMA_RESILIENCE_ABSOLUTE)
-	
+
 /datum/quirk/phobia/remove()
 	var/mob/living/carbon/human/H = quirk_holder
 	if(H)
 		H.cure_trauma_type(/datum/brain_trauma/mild/phobia, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/needswayfinder
+	name = "Navigationally Challenged"
+	desc = "Lacking familiarity with certain stations, you start with a wayfinding pinpointer where available."
+	value = 0
+	medical_record_text = "Patient demonstrates a keen ability to get lost."
+
+	var/obj/item/pinpointer/wayfinding/wayfinder
+	var/where
+
+/datum/quirk/needswayfinder/on_spawn()
+	if(!GLOB.wayfindingbeacons.len)
+		return
+	var/mob/living/carbon/human/H = quirk_holder
+
+	wayfinder = new /obj/item/pinpointer/wayfinding
+	wayfinder.owner = H.real_name
+	wayfinder.roundstart = TRUE
+
+	var/list/slots = list(
+		"in your left pocket" = ITEM_SLOT_LPOCKET,
+		"in your right pocket" = ITEM_SLOT_RPOCKET,
+		"in your backpack" = ITEM_SLOT_BACKPACK
+	)
+	where = H.equip_in_one_of_slots(wayfinder, slots, FALSE) || "at your feet"
+
+/datum/quirk/needswayfinder/post_add()
+	if(!GLOB.wayfindingbeacons.len)
+		return
+	if(where == "in your backpack")
+		var/mob/living/carbon/human/H = quirk_holder
+		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
+
+	to_chat(quirk_holder, "<span class='notice'>There is a pinpointer [where], which can help you find your way around. Click in-hand to activate.</span>")

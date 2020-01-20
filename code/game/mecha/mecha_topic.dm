@@ -77,7 +77,6 @@
 ///Returns HTML for mech actions. Ideally, this proc would be empty for the base mecha. Segmented for easy refactoring.
 /obj/mecha/proc/get_actions()
 	. = ""
-	. += "[thrusters_action.owner ? "<b>Thrusters: </b> [thrusters_active ? "Enabled" : "Disabled"]<br>" : ""]"
 	. += "[defense_action.owner ? "<b>Defense Mode: </b> [defense_mode ? "Enabled" : "Disabled"]<br>" : ""]"
 	. += "[overload_action.owner ? "<b>Leg Actuators Overload: </b> [leg_overload_mode ? "Enabled" : "Disabled"]<br>" : ""]"
 	. += "[smoke_action.owner ? "<b>Smoke: </b> [smoke]<br>" : ""]"
@@ -153,7 +152,7 @@
 	if(equipment.len)
 		for(var/X in equipment)
 			var/obj/item/mecha_parts/mecha_equipment/W = X
-			. += "[W.name] <a href='?src=[REF(W)];detach=1'>Detach</a><br>"
+			. += "[W.name] [W.detachable?"<a href='?src=[REF(W)];detach=1'>Detach</a><br>":"\[Non-removable\]<br>"]"
 	. += {"<b>Available equipment slots:</b> [max_equip-equipment.len]
 	</div>
 	</div>"}
@@ -346,12 +345,10 @@
 
 	//Changes the exosuit name.
 	if(href_list["change_name"])
-		var/userinput = input(usr, "Choose a new exosuit name.", "Rename exosuit", "") as null|text
-		if(usr != occupant || usr.incapacitated())
+		var/userinput = stripped_input(usr, "Choose a new exosuit name.", "Rename exosuit", "", MAX_NAME_LEN)
+		if(!userinput || usr != occupant || usr.incapacitated())
 			return
-		if(!isnull(userinput))
-			var/newname = copytext(sanitize_name(userinput),1,MAX_NAME_LEN)
-			name = newname ? newname : initial(name)
+		name = userinput
 		return
 
 	//Toggles ID upload.

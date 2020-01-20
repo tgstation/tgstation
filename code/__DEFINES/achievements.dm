@@ -1,3 +1,5 @@
+// Keep the identifiers here below 32 characters, you can put the full display name in the actual achievement datum
+
 #define ACHIEVEMENT_DEFAULT "default"
 #define ACHIEVEMENT_SCORE "score"
 
@@ -10,6 +12,18 @@
 #define MEDAL_THANKSALOT 		"The Best Driver"
 #define MEDAL_HELBITALJANKEN	"Hel-bent on Winning"
 #define MEDAL_MATERIALCRAFT 	"Getting an Upgrade"
+#define MEDAL_DISKPLEASE	 	"Disk, Please!"
+#define MEDAL_GAMER			 	"I'm Not Important"
+#define MEDAL_VENDORSQUISH		"Teenage Anarchist"
+#define MEDAL_SWIRLIE			"Bowl-d"
+#define MEDAL_SELFOUCH			"Hands???"
+#define MEDAL_SANDMAN			"Mister Sandman"
+#define MEDAL_CLEANBOSS			"Cleanboss"
+#define MEDAL_RULE8				"Rule 8"
+#define MEDAL_LONGSHIFT			"longshift"
+
+//Skill medal hub IDs
+#define MEDAL_LEGENDARY_MINER		"Legendary Miner"
 
 
 //Boss medals

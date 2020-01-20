@@ -7,26 +7,27 @@
 	var/capacity
 ///Add a duct to our network
 /datum/ductnet/proc/add_duct(obj/machinery/duct/D)
-	if(!D || D in ducts)
+	if(!D || (D in ducts))
 		return
 	ducts += D
 	D.duct = src
 ///Remove a duct from our network and commit suicide, because this is probably easier than to check who that duct was connected to and what part of us was lost
 /datum/ductnet/proc/remove_duct(obj/machinery/duct/ducting)
 	destroy_network(FALSE)
-	for(var/A in ducting.neighbours)
-		var/obj/machinery/duct/D = A
-		D.attempt_connect() //we destroyed the network, so now we tell the disconnected ducts neighbours they can start making a new ductnet
+	for(var/obj/machinery/duct/D in ducting.neighbours)
+		addtimer(CALLBACK(D, /obj/machinery/duct/proc/reconnect), 0) //all needs to happen after the original duct that was destroyed finishes destroying itself
+		addtimer(CALLBACK(D, /obj/machinery/duct/proc/generate_connects), 0)
 	qdel(src)
 ///add a plumbing object to either demanders or suppliers
 /datum/ductnet/proc/add_plumber(datum/component/plumbing/P, dir)
 	if(!P.can_add(src, dir))
-		return
+		return FALSE
 	P.ducts[num2text(dir)] = src
 	if(dir & P.supply_connects)
 		suppliers += P
 	else if(dir & P.demand_connects)
 		demanders += P
+	return TRUE
 ///remove a plumber. we dont delete ourselves because ductnets dont persist through plumbing objects
 /datum/ductnet/proc/remove_plumber(datum/component/plumbing/P)
 	suppliers.Remove(P) //we're probably only in one of these, but Remove() is inherently sane so this is fine
@@ -51,7 +52,7 @@
 	for(var/A in D.ducts)
 		var/obj/machinery/duct/M = A
 		M.duct = src //forget your old master
-	
+
 	destroy_network()
 ///destroy the network and tell all our ducts and plumbers we are gone
 /datum/ductnet/proc/destroy_network(delete=TRUE)

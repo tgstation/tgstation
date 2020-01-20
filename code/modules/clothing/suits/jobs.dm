@@ -106,12 +106,13 @@
 
 
 //Mime
-/obj/item/clothing/suit/suspenders
+/obj/item/clothing/suit/toggle/suspenders
 	name = "suspenders"
 	desc = "They suspend the illusion of the mime's play."
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here
+	togglename = "straps"
 
 //Security
 /obj/item/clothing/suit/security/officer
@@ -165,7 +166,7 @@
 	item_state = "techpriest"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/techpriest
-	
+
 /obj/item/clothing/head/hooded/techpriest
 	name = "techpriest's hood"
 	desc = "A hood for those who REALLY love their toasters."

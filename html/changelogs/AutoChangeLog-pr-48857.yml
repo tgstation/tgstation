@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Atmospherics, janitors closet and virology areas no longer block cult runes."

@@ -1,7 +1,7 @@
 <script>
 import { UI_INTERACTIVE, UI_UPDATE, UI_DISABLED } from 'util/constants'
 import { href, winget, winset, runCommand } from 'util/byond'
-import { drag } from 'util/dragresize'
+import { drag, lock } from 'util/dragresize'
 
 component.exports = {
   computed: {
@@ -26,8 +26,14 @@ component.exports = {
     this.set('screenOffsetY', 0);
     winget(this.get('config.window'), 'pos')
       .then(pos => {
-        this.set('screenOffsetX', window.screenX - pos.x);
-        this.set('screenOffsetY', window.screenY - pos.y);
+        this.set('screenOffsetX', pos.x - window.screenX);
+        this.set('screenOffsetY', pos.y - window.screenY);
+
+        // If the window starts off screen, pull it back.
+        let {x, y} = lock(window.screenLeft, window.screenTop)
+        if (x !== window.screenLeft || y !== window.screenTop) {
+          winset(this.get('config.window'), 'pos', `${x},${y}`);
+        }
       });
 
     const ondrag = drag.bind(this)

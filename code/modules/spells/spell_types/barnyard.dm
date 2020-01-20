@@ -46,6 +46,6 @@
 						   "<span class='danger'>Your face burns up, and shortly after the fire you realise you have the face of a barnyard animal!</span>")
 	if(!target.dropItemToGround(target.wear_mask))
 		qdel(target.wear_mask)
-	target.equip_to_slot_if_possible(magichead, SLOT_WEAR_MASK, 1, 1)
+	target.equip_to_slot_if_possible(magichead, ITEM_SLOT_MASK, 1, 1)
 
 	target.flash_act()

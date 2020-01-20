@@ -1,58 +1,56 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NoticeBox, Section } from '../components';
 
 export const BluespaceArtillery = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
+  const {
+    notice,
+    connected,
+    unlocked,
+    target,
+  } = data;
   return (
     <Fragment>
-      {!!data.notice && (
+      {!!notice && (
         <NoticeBox>
-          {data.notice}
+          {notice}
         </NoticeBox>
       )}
-      {data.connected ? (
+      {connected ? (
         <Fragment>
           <Section
             title="Target"
             buttons={(
               <Button
                 icon="crosshairs"
-                disabled={!data.unlocked}
-                onclick={() => act(ref, 'recalibrate')} />
+                disabled={!unlocked}
+                onClick={() => act('recalibrate')} />
             )}>
             <Box
-              color={data.target ? 'average' : 'bad'}
-              style={{
-                'font-size': '25px',
-              }}>
-              {data.target || 'No Target Set'}
+              color={target ? 'average' : 'bad'}
+              fontSize="25px">
+              {target || 'No Target Set'}
             </Box>
           </Section>
           <Section>
-            {data.unlocked ? (
+            {unlocked ? (
               <Box style={{ margin: 'auto' }}>
                 <Button
+                  fluid
                   content="FIRE"
                   color="bad"
-                  fluid={1}
-                  disabled={!data.target}
-                  style={{
-                    'font-size': '30px',
-                    'text-align': 'center',
-                    'line-height': '46px',
-                  }}
-                  onClick={() => act(ref, 'fire')} />
+                  disabled={!target}
+                  fontSize="30px"
+                  textAlign="center"
+                  lineHeight="46px"
+                  onClick={() => act('fire')} />
               </Box>
             ) : (
               <Fragment>
                 <Box
                   color="bad"
-                  style={{
-                    'font-size': '18px',
-                  }}>
+                  fontSize="18px">
                   Bluespace artillery is currently locked.
                 </Box>
                 <Box mt={1}>
@@ -70,7 +68,7 @@ export const BluespaceArtillery = props => {
               <Button
                 icon="wrench"
                 content="Complete Deployment"
-                onClick={() => act(ref, 'build')} />
+                onClick={() => act('build')} />
             </LabeledList.Item>
           </LabeledList>
         </Section>

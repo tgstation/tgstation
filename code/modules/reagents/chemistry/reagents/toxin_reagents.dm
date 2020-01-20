@@ -143,7 +143,7 @@
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/carbon/M)
 	if(HAS_TRAIT(M, TRAIT_FAT))
-		M.gib()
+		M.inflate_gib()
 	return ..()
 
 /datum/reagent/toxin/carpotoxin
@@ -801,6 +801,18 @@
 /datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/carbon/M)
 	M.adjustFireLoss(current_cycle/10, 0)
 	. = 1
+	..()
+
+/datum/reagent/toxin/acid/nitracid
+	name = "Nitric acid"
+	description = "Nitric acid is an extremely corrosive chemical substance that violently reacts with living organic tissue."
+	color = "#5050FF"
+	toxpwr = 2
+	acidpwr = 5.0
+
+/datum/reagent/toxin/acid/nitracid/on_mob_life(mob/living/carbon/M)
+	M.adjustFireLoss(current_cycle/15, FALSE) //here you go nervar
+	. = TRUE
 	..()
 
 /datum/reagent/toxin/delayed
