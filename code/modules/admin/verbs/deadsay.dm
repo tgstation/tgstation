@@ -14,7 +14,7 @@
 	if (handle_spam_prevention(msg,MUTE_DEADCHAT))
 		return
 
-	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	mob.log_talk(msg, LOG_DSAY)
 
 	if (!msg)
