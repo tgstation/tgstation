@@ -10,10 +10,11 @@
 	var/datum/song/handheld/song
 	var/instrumentId = "generic"
 	var/instrumentExt = "mid"
+	var/instrumentRange = 15
 
 /obj/item/instrument/Initialize()
 	. = ..()
-	song = new(instrumentId, src, instrumentExt)
+	song = new(instrumentId, src, instrumentExt, instrumentRange)
 
 /obj/item/instrument/Destroy()
 	QDEL_NULL(song)
@@ -43,6 +44,9 @@
 
 	user.set_machine(src)
 	song.interact(user)
+
+/obj/item/instrument/proc/update_playing_state(playing)
+	return
 
 /obj/item/instrument/violin
 	name = "space violin"
@@ -78,6 +82,28 @@
 	if(!insTypes[chosen])
 		return
 	return changeInstrument(chosen)
+
+/obj/item/instrument/piano_synth/headphones
+	name = "headphones"
+	desc = "Unce unce unce unce. Boop!"
+	icon = 'icons/obj/clothing/accessories.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
+	icon_state = "headphones"
+	item_state = "headphones"
+	slot_flags = ITEM_SLOT_EARS | ITEM_SLOT_HEAD
+	force = 0
+	w_class = WEIGHT_CLASS_SMALL
+	custom_price = 125
+	instrumentRange = 1
+
+/obj/item/instrument/piano_synth/headphones/update_playing_state(user, new_play_state)
+	icon_state = "[initial(icon_state)][new_play_state? "_on" : ""]"
+	update_icon()
+	var/mob/living/carbon/human/H = user
+	if(istype(H))
+		H.update_inv_ears()
+		H.update_inv_head()
 
 /obj/item/instrument/banjo
 	name = "banjo"
@@ -266,7 +292,8 @@
 							/obj/item/instrument/saxophone,
 							/obj/item/instrument/trombone,
 							/obj/item/instrument/recorder,
-							/obj/item/instrument/harmonica
+							/obj/item/instrument/harmonica,
+							/obj/item/instrument/piano_synth/headphones
 							)
 		for(var/V in templist)
 			var/atom/A = V
