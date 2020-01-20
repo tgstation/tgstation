@@ -1,5 +1,0 @@
-author: "Skoglol, sprites by ArcaneMusic"
-delete-after: True
-changes: 
-  - rscadd: "New basic tier of cybernetic organs, available roundstart. Worse than bio organs, but printable en masse."
-  - balance: "Changed emp effect on cybernetic heart, lungs, liver. Now applies an instant (on cooldown) effect, and has a chance to trigger organ decay."
