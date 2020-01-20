@@ -44,5 +44,5 @@ Detective=3,1
 Security Officer=15,5
 Deputy=4,4 //FULP
 
-AI=0,1
-Cyborg=0,2
+AI=1,1
+Cyborg=2,2
