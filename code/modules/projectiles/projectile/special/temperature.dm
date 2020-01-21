@@ -14,9 +14,9 @@
 		var/thermal_protection = 1 // The inverse of the amount of protection
 
 		if(temperature > 0) // The projectile is hot
-			thermal_protection -= hit_mob.get_heat_protection(temperature)
+			thermal_protection -= hit_mob.get_heat_protection(hit_mob.bodytemperature + temperature)
 		else // The projectile was cold
-			thermal_protection -= hit_mob.get_cold_protection(temperature)
+			thermal_protection -= hit_mob.get_cold_protection(hit_mob.bodytemperature + temperature)
 
 		// The new body temperature is adjusted by 100-blocked % of the bullet's effect temperature
 		// Reduce the amount of the effect temperature change based on the amount of insulation the mob is wearing
@@ -34,6 +34,7 @@
 /obj/projectile/temp/cryo
 	name = "cryo beam"
 	range = 3
+	temperature = -240 // Single slow shot reduces temp greatly
 
 /obj/projectile/temp/cryo/on_range()
 	var/turf/T = get_turf(src)
