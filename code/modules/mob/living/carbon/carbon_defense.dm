@@ -271,23 +271,35 @@
 		// Warm them up with hugs
 		if(bodytemperature > M.bodytemperature) // they are warmer leech from them
 			var/temp_diff = bodytemperature - M.bodytemperature
+
 			M.adjust_bodytemperature(min((1 - M.get_insulation_protection(bodytemperature)) * temp_diff / BODYTEMP_HEAT_DIVISOR, \
-			BODYTEMP_HEATING_MAX))
+			BODYTEMP_HEATING_MAX)) // warm up the giver
+			adjust_bodytemperature(min((1 - get_insulation_protection(M.bodytemperature)) * temp_diff / BODYTEMP_COLD_DIVISOR, \
+			BODYTEMP_COOLING_MAX)) // cool down the reciver
+
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, src)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
 
 		else // you are warm share the heat of life
 			var/temp_diff = M.bodytemperature - bodytemperature
+
 			adjust_bodytemperature(min((1 - get_insulation_protection(M.bodytemperature)) * temp_diff / BODYTEMP_HEAT_DIVISOR, \
-			BODYTEMP_HEATING_MAX))
+			BODYTEMP_HEATING_MAX)) // warm up the reciver
+			M.adjust_bodytemperature(min((1 - M.get_insulation_protection(bodytemperature)) * temp_diff / BODYTEMP_COLD_DIVISOR, \
+			BODYTEMP_COOLING_MAX)) // cool down the giver
+
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, M)
 
-		// Let people know if they hugged someone really warm
+		// Let people know if they hugged someone really warm or really cold
 		if(M.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
-			to_chat(src, "<span class='warning'>[M] felt like they are over heating when they hugged you.</span>")
+			to_chat(src, "<span class='warning'>It feels like [M] is over heating when they hugged you.</span>")
+		else if(M.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+			to_chat(src, "<span class='warning'>It feels like [M] is freezing when they hugged you.</span>")
 
 		if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
-			to_chat(M, "<span class='warning'>[src] felt like they are over heating when you hugged them.</span>")
+			to_chat(M, "<span class='warning'>It feels like [src] is over heating when you hugged them.</span>")
+		else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+			to_chat(M, "<span class='warning'>It feels like [src] is freezing when you hugged them.</span>")
 
 		if(HAS_TRAIT(M, TRAIT_FRIENDLY))
 			var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
