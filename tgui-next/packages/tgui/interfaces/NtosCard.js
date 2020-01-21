@@ -38,7 +38,7 @@ export const NtosCard = props => {
             <Input
               value={id_owner}
               width="250px"
-              onChange={(e, value) => act('PRG_edit', {
+              onInput={(e, value) => act('PRG_edit', {
                 name: value,
               })} />
           )
