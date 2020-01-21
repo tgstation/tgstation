@@ -5,7 +5,8 @@
 	product_ads = "We like plants!;Don't you want some?;The greenest thumbs ever.;We like big plants.;Soft soil..."
 	icon_state = "nutri"
 	icon_deny = "nutri-deny"
-	products = list(/obj/item/reagent_containers/spray/pestspray = 20,
+	products = list(/obj/item/reagent_containers/glass/bottle/nutrient/ez = 5,
+					/obj/item/reagent_containers/spray/pestspray = 20,
 					/obj/item/reagent_containers/syringe = 5,
 					/obj/item/storage/bag/plants = 5,
 					/obj/item/cultivator = 3,
@@ -18,7 +19,7 @@
 					  /obj/item/reagent_containers/glass/jerrycan/diethylamine = 1)
 	refill_canister = /obj/item/vending_refill/hydronutrients
 	default_price = 100
-	extra_price = 1000
+	extra_price = 250
 	payment_department = ACCOUNT_SRV
 
 /obj/item/vending_refill/hydronutrients

@@ -15,6 +15,10 @@
 	..()
 	add_overlay("[initial(icon_state)]_shine")
 
+/obj/item/reagent_containers/glass/jerrycan/Initialize()
+	update_icon()
+	..()
+
 /obj/item/reagent_containers/glass/jerrycan/eznutriment
 	name = "E-Z-Nutrient can"
 	desc = "A large container presumably filled to the brim with 'E-Z-Nutrient'-brand plant nutrient. It can't get easier than this."
@@ -25,7 +29,7 @@
 	name = "Left 4 Zed can"
 	desc = "A large container labled 'Left 4 Zed' plant nutrient. A good choice when the stronger stuff is unavailable."
 	list_reagents = list(/datum/reagent/plantnutriment/left4zednutriment = 200)
-	custom_premium_price = 350
+	custom_premium_price = 300
 
 /obj/item/reagent_containers/glass/jerrycan/robustharvest
 	name = "Robust Harvest can"
@@ -37,10 +41,10 @@
 	name = "NT-Ag ammonia can"
 	desc = "A large container labled 'NT-Ag' liquid ammonia. A warning label reads: Store separately from chlorine-based cleaning products!"
 	list_reagents = list(/datum/reagent/ammonia = 200)
-	custom_premium_price = 1000
+	custom_premium_price = 800
 
 /obj/item/reagent_containers/glass/jerrycan/diethylamine
 	name = "NT-Ag diethylamine can"
 	desc = "A large container labled 'NT-Ag' diethylamine. A disclaimer written in bold letters reads: FOR AGRICULTURAL USE ONLY. RESALE PROHIBITED."
 	list_reagents = list(/datum/reagent/diethylamine = 200)
-	custom_premium_price = 1000
+	custom_premium_price = 600
