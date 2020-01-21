@@ -356,7 +356,7 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "spikechemswap"
 	name = "Transfer Chemicals"
-	desc = "Send all of your reagents into whoever the chem spike is embedded in. One use."
+	desc = "Send all of your reagents into whomever the chem spike is embedded in. One use."
 	var/obj/item/hardened_spike/chem/spikey
 	var/mob/living/carbon/human/transfered
 
