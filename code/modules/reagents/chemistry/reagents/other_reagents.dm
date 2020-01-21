@@ -2072,16 +2072,14 @@
 	var/time_multiplier = 1 MINUTES //1 minute per unit of gravitum on objects. Seems overpowered, but the whole thing is very niche
 
 /datum/reagent/gravitum/reaction_obj(obj/O, volume)
-	var/datum/component/C = new /datum/component/forced_gravity(O, 0)
-	QDEL_IN(C, volume * time_multiplier)
-	return
+	QDEL_IN(new /datum/element/forced_gravity(O, 0), volume * time_multiplier)
 
 /datum/reagent/gravitum/on_mob_add(mob/living/L)
-	L.AddComponent(/datum/component/forced_gravity, 0) //0 is the gravity, and in this case weightless
+	L.AddElement(/datum/element/forced_gravity, 0) //0 is the gravity, and in this case weightless
 
 /datum/reagent/gravitum/on_mob_end_metabolize(mob/living/L)
-	var/datum/component/C = GetComponent(/datum/component/forced_gravity)
-	qdel(C)
+	qdel(GetElement(/datum/element/forced_gravity))
+
 /datum/reagent/cellulose
 	name = "Cellulose Fibers"
 	description = "A crystaline polydextrose polymer, plants swear by this stuff."
