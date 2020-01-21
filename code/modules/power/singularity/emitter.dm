@@ -407,7 +407,7 @@
 	auto.Grant(M, src)
 
 /datum/action/innate/protoemitter
-	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_MOBILITY | AB_CHECK_HANDS_USE
 	var/obj/machinery/power/emitter/prototype/PE
 	var/mob/living/carbon/U
 

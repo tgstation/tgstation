@@ -39,12 +39,11 @@
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
-	verbs += /mob/living/proc/lay_down
+	verbs += /mob/living/proc/toggle_rest
 
-/mob/living/simple_animal/pet/cat/update_mobility()
-	..()
-	if(client && stat != DEAD)
-		if (resting)
+/mob/living/simple_animal/pet/cat/set_body_position_visuals()
+	if(stat != DEAD)
+		if(IS_PRONE(src))
 			icon_state = "[icon_living]_rest"
 			collar_type = "[initial(collar_type)]_rest"
 		else

@@ -134,7 +134,10 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.stat || usr.restrained())
+	if(!isliving(usr))
+		return
+	var/mob/living/user = usr
+	if(!LIVING_CAN_USE_HANDS(user))
 		return
 
 	if(storedpda)

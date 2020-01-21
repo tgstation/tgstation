@@ -17,7 +17,7 @@
 	else if(leap_on_click)
 		icon_state = "alien[caste]_pounce"
 
-	else if(!(mobility_flags & MOBILITY_STAND))
+	else if(IS_PRONE(src))
 		icon_state = "alien[caste]_sleep"
 	else if(mob_size == MOB_SIZE_LARGE)
 		icon_state = "alien[caste]"
@@ -41,8 +41,8 @@
 			var/old_icon = icon
 			icon = alt_icon
 			alt_icon = old_icon
-		pixel_x = get_standard_pixel_x_offset(mobility_flags & MOBILITY_STAND)
-		pixel_y = get_standard_pixel_y_offset(mobility_flags & MOBILITY_STAND)
+		pixel_x = get_standard_pixel_x_offset(lying_angle)
+		pixel_y = get_standard_pixel_y_offset(lying_angle)
 	update_inv_hands()
 	update_inv_handcuffed()
 
@@ -50,12 +50,6 @@
 	if(!..())
 	//	update_icons() //Handled in update_transform(), leaving this here as a reminder
 		update_transform()
-
-/mob/living/carbon/alien/humanoid/update_transform() //The old method of updating lying/standing was update_icons(). Aliens still expect that.
-	if(lying)
-		lying = 90 //Anything else looks retarded
-	..()
-	update_icons()
 
 /mob/living/carbon/alien/humanoid/update_inv_handcuffed()
 	remove_overlay(HANDCUFF_LAYER)

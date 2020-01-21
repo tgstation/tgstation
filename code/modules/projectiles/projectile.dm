@@ -264,7 +264,7 @@
 	if(result == BULLET_ACT_FORCE_PIERCE)
 		if(!CHECK_BITFIELD(movement_type, UNSTOPPABLE))
 			temporary_unstoppable_movement = TRUE
-			ENABLE_BITFIELD(movement_type, UNSTOPPABLE)
+			add_movement_flags(UNSTOPPABLE)
 		return process_hit(T, select_target(T), qdel_self, TRUE)		//Hit whatever else we can since we're piercing through but we're still on the same tile.
 	else if(result == BULLET_ACT_TURF)									//We hit the turf but instead we're going to also hit something else on it.
 		return process_hit(T, select_target(T), QDEL_SELF, TRUE)
@@ -544,11 +544,13 @@
 	if(!isliving(target))
 		if(target.layer < PROJECTILE_HIT_THRESHHOLD_LAYER)
 			return FALSE
-	else
-		var/mob/living/L = target
-		if(!direct_target)
-			if(!CHECK_BITFIELD(L.mobility_flags, MOBILITY_USE | MOBILITY_STAND | MOBILITY_MOVE) || !(L.stat == CONSCIOUS))		//If they're able to 1. stand or 2. use items or 3. move, AND they are not softcrit,  they are not stunned enough to dodge projectiles passing over.
-				return FALSE
+	else if(!direct_target)
+		var/mob/living/living_target = target
+		if(living_target.stat != CONSCIOUS)
+			return FALSE
+		if(LIVING_CAN_STAND(living_target) || LIVING_CAN_USE_HANDS(living_target) || LIVING_CAN_MOVE(living_target))
+			return TRUE //If they're able to stand or use items or move they are not stunned enough to dodge projectiles passing over.
+		return FALSE
 	return TRUE
 
 //Spread is FORCED!
@@ -622,7 +624,7 @@
 	if(.)
 		if(temporary_unstoppable_movement)
 			temporary_unstoppable_movement = FALSE
-			DISABLE_BITFIELD(movement_type, UNSTOPPABLE)
+			remove_movement_flags(UNSTOPPABLE)
 		if(fired && can_hit_target(original, permutated, TRUE))
 			Bump(original)
 

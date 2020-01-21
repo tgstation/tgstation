@@ -52,7 +52,7 @@
 			var/mob/living/simple_animal/A = L
 			if (!A.dextrous)
 				return
-		if(L.mobility_flags & MOBILITY_MOVE)
+		if(LIVING_CAN_MOVE(L))
 			climb_structure(user)
 			return
 	if(!istype(O, /obj/item) || user.get_active_held_item() != O)
@@ -75,7 +75,7 @@
 	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
 								"<span class='notice'>You start climbing onto [src]...</span>")
 	var/adjusted_climb_time = climb_time
-	if(user.restrained()) //climbing takes twice as long when restrained.
+	if(HAS_TRAIT(user, TRAIT_RESTRAINED)) //climbing takes twice as long when restrained.
 		adjusted_climb_time *= 2
 	if(isalien(user))
 		adjusted_climb_time *= 0.25 //aliens are terrifyingly fast

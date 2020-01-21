@@ -647,7 +647,7 @@
 		return FALSE
 
 ///Called when gravity returns after floating I think
-/atom/proc/handle_fall()
+/atom/proc/handle_fall(mob/faller)
 	return
 
 ///Respond to the singularity eating this atom

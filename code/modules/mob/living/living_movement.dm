@@ -10,12 +10,12 @@
 		var/obj/projectile/P = mover
 		return !P.can_hit_target(src, P.permutated, src == P.original, TRUE)
 	if(mover.throwing)
-		return (!density || !(mobility_flags & MOBILITY_STAND) || (mover.throwing.thrower == src && !ismob(mover)))
+		return (!density || IS_PRONE(src) || (mover.throwing.thrower == src && !ismob(mover)))
 	if(buckled == mover)
 		return TRUE
 	if(ismob(mover) && (mover in buckled_mobs))
 		return TRUE
-	return (!mover.density || . || !(mobility_flags & MOBILITY_STAND))
+	return (!mover.density || . || IS_PRONE(src))
 
 /mob/living/toggle_move_intent()
 	. = ..()
@@ -45,7 +45,7 @@
 	if(pulling)
 		if(isliving(pulling))
 			var/mob/living/L = pulling
-			if(!slowed_by_drag || (L.mobility_flags & MOBILITY_STAND) || L.buckled || grab_state >= GRAB_AGGRESSIVE)
+			if(!slowed_by_drag || IS_PRONE(L) || L.buckled || grab_state >= GRAB_AGGRESSIVE)
 				remove_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING)
 				return
 			add_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING, multiplicative_slowdown = PULL_PRONE_SLOWDOWN)
@@ -64,3 +64,19 @@
 
 /mob/living/canZMove(dir, turf/target)
 	return can_zTravel(target, dir) && (movement_type & FLYING)
+
+/mob/living/add_movement_flags(flags_to_add)
+	. = ..()
+	if(isnull(.))
+		return
+	if(!(. & (FLYING|FLOATING)) && (movement_type & (FLYING|FLOATING)))
+		if(HAS_TRAIT(src, TRAIT_GROUND_IMMOBILE))
+			REMOVE_TRAIT(src, TRAIT_IMMOBILE, TRAIT_GROUND_IMMOBILE)
+
+/mob/living/remove_movement_flags(flags_to_remove)
+	. = ..()
+	if(isnull(.))
+		return
+	if((. & (FLYING|FLOATING)) && !(movement_type & (FLYING|FLOATING)))
+		if(HAS_TRAIT(src, TRAIT_GROUND_IMMOBILE))
+			ADD_TRAIT(src, TRAIT_IMMOBILE, TRAIT_GROUND_IMMOBILE)

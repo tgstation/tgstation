@@ -24,12 +24,13 @@
 	var/staminaloss = 0		//Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
 	var/crit_threshold = HEALTH_THRESHOLD_CRIT // when the mob goes from "normal" to crit
 
-	var/mobility_flags = MOBILITY_FLAGS_DEFAULT
+	var/mobility_flags = MOBILITY_FLAGS_DEFAULT //What the mob has the potential to do, mobility-wise.
 
 	var/resting = FALSE
+	var/body_position = POS_STANDING
 
-	var/lying = 0			//number of degrees. DO NOT USE THIS IN CHECKS. CHECK FOR MOBILITY FLAGS INSTEAD!!
-	var/lying_prev = 0		//last value of lying on update_mobility
+	var/lying_angle = 0	//BYOND angles: 0 is NORTH (standing up), 90 is EAST (lying, head facing right), 180 is SOUTH (upside-down), 270 is WEST (lying, head facing left), 380 is NORTH again.
+	var/lying_prev = 0	//Last value of lying_angle
 
 	var/confused = 0	//Makes the mob move in random directions.
 

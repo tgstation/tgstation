@@ -18,7 +18,7 @@
 
 	emittersemicd = TRUE
 	addtimer(CALLBACK(src, .proc/emittercool), emittercd)
-	mobility_flags = MOBILITY_FLAGS_DEFAULT
+	set_mobility_flags(MOBILITY_FLAGS_DEFAULT)
 	density = TRUE
 	if(istype(card.loc, /obj/item/pda))
 		var/obj/item/pda/P = card.loc
@@ -60,7 +60,7 @@
 	var/turf/T = drop_location()
 	card.forceMove(T)
 	forceMove(card)
-	mobility_flags = NONE
+	set_mobility_flags(NONE)
 	density = FALSE
 	set_light(0)
 	holoform = FALSE
@@ -74,17 +74,21 @@
 	if(!choice)
 		return FALSE
 	chassis = choice
-	update_resting()
+	set_body_position_visuals()
 	to_chat(src, "<span class='boldnotice'>You switch your holochassis projection composite to [chassis].</span>")
 
-/mob/living/silicon/pai/update_resting()
+/mob/living/silicon/pai/set_body_position(new_pos, silent = TRUE)
 	. = ..()
-	if(resting)
-		icon_state = "[chassis]_rest"
-	else
+	if(isnull(.))
+		return
+	if(loc != card && !silent)
+		visible_message("<span class='notice'>[src] [resting ? "lays down for a moment..." : "perks up from the ground"]</span>")
+
+/mob/living/silicon/pai/set_body_position_visuals()
+	if(body_position == POS_STANDING)
 		icon_state = "[chassis]"
-	if(loc != card)
-		visible_message("<span class='notice'>[src] [resting? "lays down for a moment..." : "perks up from the ground"]</span>")
+	else
+		icon_state = "[chassis]_rest"
 
 /mob/living/silicon/pai/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
 	return FALSE

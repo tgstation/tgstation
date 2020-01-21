@@ -18,7 +18,7 @@
 
 /mob/living/carbon/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
 	verbs += /mob/living/proc/mob_sleep
-	verbs += /mob/living/proc/lay_down
+	verbs += /mob/living/proc/toggle_rest
 
 	if(unique_name) //used to exclude pun pun
 		gender = pick(MALE, FEMALE)

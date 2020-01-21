@@ -46,8 +46,10 @@
 	if((interaction_flags_atom & INTERACT_ATOM_REQUIRES_DEXTERITY) && !user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
-	if(!(interaction_flags_atom & INTERACT_ATOM_IGNORE_INCAPACITATED) && user.incapacitated((interaction_flags_atom & INTERACT_ATOM_IGNORE_RESTRAINED), !(interaction_flags_atom & INTERACT_ATOM_CHECK_GRAB)))
-		return FALSE
+	if(isliving(user))
+		var/mob/living/living_user = user
+		if((!(interaction_flags_atom & INTERACT_ATOM_STANDING) && IS_PRONE(living_user)) || (!(interaction_flags_atom & INTERACT_ATOM_IGNORE_IMMOBILITY) && !LIVING_CAN_MOVE(living_user)) || (!(interaction_flags_atom & INTERACT_ATOM_IGNORE_HANDBLOCK) && !LIVING_CAN_USE_HANDS(living_user)))
+			return FALSE
 	return TRUE
 
 /atom/ui_status(mob/user)
@@ -70,11 +72,6 @@
 	if(interaction_flags_atom & INTERACT_ATOM_UI_INTERACT)
 		return ui_interact(user)
 	return FALSE
-
-/*
-/mob/living/carbon/human/RestrainedClickOn(atom/A) ---carbons will handle this
-	return
-*/
 
 /mob/living/carbon/RestrainedClickOn(atom/A)
 	return 0

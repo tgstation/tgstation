@@ -1,16 +1,13 @@
 /*
 	AI ClickOn()
 
-	Note currently ai restrained() returns 0 in all cases,
-	therefore restrained code has been removed
-
 	The AI can double click to move the camera (this was already true but is cleaner),
 	or double click a mob to track them.
 
 	Note that AI have no need for the adjacency proc, and so this proc is a lot cleaner.
 */
 /mob/living/silicon/ai/DblClickOn(atom/A, params)
-	if(control_disabled || incapacitated())
+	if(control_disabled || !LIVING_CAN_USE_HANDS(src))
 		return
 
 	if(ismob(A))
@@ -37,7 +34,7 @@
 	if(check_click_intercept(params,A))
 		return
 
-	if(control_disabled || incapacitated())
+	if(control_disabled || !LIVING_CAN_USE_HANDS(src))
 		return
 
 	var/turf/pixel_turf = get_turf_pixel(A)

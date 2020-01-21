@@ -305,9 +305,6 @@
 		if(connected_ai)
 			stat("Master AI:", connected_ai.name)
 
-/mob/living/silicon/robot/restrained(ignore_grab)
-	. = 0
-
 /mob/living/silicon/robot/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)
 		return
@@ -631,8 +628,7 @@
 		connected_ai.connected_robots -= src
 		src.connected_ai = null
 	lawupdate = FALSE
-	lockcharge = FALSE
-	mobility_flags |= MOBILITY_FLAGS_DEFAULT
+	set_lockcharge(FALSE)
 	scrambledcodes = TRUE
 	//Disconnect it's camera so it's not so easily tracked.
 	if(!QDELETED(builtInCamera))
@@ -662,8 +658,7 @@
 		throw_alert("locked", /obj/screen/alert/locked)
 	else
 		clear_alert("locked")
-	lockcharge = state
-	update_mobility()
+	set_lockcharge(state)
 
 /mob/living/silicon/robot/proc/SetEmagged(new_state)
 	emagged = new_state
@@ -947,13 +942,11 @@
 			if(stat == CONSCIOUS)
 				set_stat(UNCONSCIOUS)
 				become_blind(UNCONSCIOUS_BLIND)
-				update_mobility()
 				update_headlamp()
 		else
 			if(stat == UNCONSCIOUS)
 				set_stat(CONSCIOUS)
 				cure_blind(UNCONSCIOUS_BLIND)
-				update_mobility()
 				update_headlamp()
 	diag_hud_set_status()
 	diag_hud_set_health()
@@ -1205,3 +1198,14 @@
 		cell.charge = min(cell.charge + amount, cell.maxcharge)
 	if(repairs)
 		heal_bodypart_damage(repairs, repairs - 1)
+
+
+/mob/living/silicon/robot/proc/set_lockcharge(new_value)
+	if(new_value == lockcharge)
+		return
+	. = lockcharge
+	lockcharge = new_value
+	if(lockcharge)
+		ADD_TRAIT(src, TRAIT_IMMOBILE, LACK_OF_POWER_TRAIT)
+	else
+		REMOVE_TRAIT(src, TRAIT_IMMOBILE, LACK_OF_POWER_TRAIT)

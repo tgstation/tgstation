@@ -10,16 +10,14 @@
 		return ELEMENT_INCOMPATIBLE
 
 	var/mob/living/carbon/C = target
-	var/was_lying = (C.lying != 0)
-	addtimer(CALLBACK(src, .proc/Detach, C, was_lying), duration)
+	addtimer(CALLBACK(src, .proc/Detach, C, IS_HORIZONTAL(C)), duration)
 
 	C.transform = C.transform.Scale(TALL, SHORT)
 
 /datum/element/squish/Detach(mob/living/carbon/C, was_lying)
 	. = ..()
 	if(istype(C))
-		var/is_lying = (C.lying != 0)
-		if(was_lying == is_lying)
+		if(was_lying == IS_HORIZONTAL(C))
 			C.transform = C.transform.Scale(SHORT, TALL)
 		else
 			C.transform = C.transform.Scale(TALL, SHORT)

@@ -58,7 +58,10 @@
 	..()
 	usr.set_machine(src)
 	if(href_list["remove"])
-		if((usr.stat || usr.restrained()))	//For when a player is handcuffed while they have the notice window open
+		if(!isliving(usr))
+			return
+		var/mob/living/living_user = usr
+		if(!LIVING_CAN_USE_HANDS(living_user))
 			return
 		var/obj/item/I = locate(href_list["remove"]) in contents
 		if(istype(I) && I.loc == src)
@@ -68,7 +71,10 @@
 			icon_state = "nboard0[notices]"
 
 	if(href_list["write"])
-		if((usr.stat || usr.restrained())) //For when a player is handcuffed while they have the notice window open
+		if(!isliving(usr))
+			return
+		var/mob/living/living_user = usr
+		if(!LIVING_CAN_USE_HANDS(living_user))
 			return
 		var/obj/item/P = locate(href_list["write"]) in contents
 		if(istype(P) && P.loc == src)

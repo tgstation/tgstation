@@ -66,18 +66,18 @@
 
 /obj/item/book/mimery/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained() || src.loc != usr)
+	if(!ishuman(usr) || loc != usr)
 		return
-	if (!ishuman(usr))
+	var/mob/living/carbon/human/human_user = usr
+	if(!LIVING_CAN_USE_HANDS(human_user))
 		return
-	var/mob/living/carbon/human/H = usr
-	if(H.is_holding(src) && H.mind)
-		H.set_machine(src)
+	if(human_user.is_holding(src) && human_user.mind)
+		human_user.set_machine(src)
 		if (href_list["invisible_wall"])
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null))
+			human_user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null))
 		if (href_list["invisible_chair"])
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair(null))
+			human_user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair(null))
 		if (href_list["invisible_box"])
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_box(null))
-	to_chat(usr, "<span class='notice'>The book disappears into thin air.</span>")
+			human_user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_box(null))
+	to_chat(human_user, "<span class='notice'>The book disappears into thin air.</span>")
 	qdel(src)

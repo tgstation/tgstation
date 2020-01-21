@@ -41,7 +41,10 @@
 
 /obj/item/locator/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained())
+	if(!isliving(usr))
+		return
+	var/mob/living/living_user = usr
+	if(!LIVING_CAN_USE_HANDS(living_user))
 		return
 	var/turf/current_location = get_turf(usr)//What turf is the user on?
 	if(!current_location || is_centcom_level(current_location.z))//If turf was not found or they're on CentCom

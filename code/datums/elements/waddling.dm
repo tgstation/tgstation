@@ -14,8 +14,8 @@
 	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 
 /datum/element/waddling/proc/LivingWaddle(mob/living/target)
-	if(target.incapacitated() || !(target.mobility_flags & MOBILITY_STAND))
-		return
+	if(target.buckled || !IS_STANDING(target) || !LIVING_CAN_MOVE(target))
+		return //Not moving on its own feet.
 	Waddle(target)
 
 /datum/element/waddling/proc/Waddle(atom/movable/target)

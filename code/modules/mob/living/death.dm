@@ -1,5 +1,5 @@
 /mob/living/gib(no_brain, no_organs, no_bodyparts)
-	var/prev_lying = lying
+	var/prev_lying = lying_angle
 	if(stat != DEAD)
 		death(TRUE)
 
@@ -70,7 +70,6 @@
 	update_action_buttons_icon()
 	update_damage_hud()
 	update_health_hud()
-	update_mobility()
 	med_hud_set_health()
 	med_hud_set_status()
 	if(!gibbed && !QDELETED(src))

@@ -225,7 +225,7 @@
 /mob/living/simple_animal/proc/handle_automated_movement()
 	set waitfor = FALSE
 	if(!stop_automated_movement && wander)
-		if((isturf(loc) || allow_movement_on_non_turfs) && (mobility_flags & MOBILITY_MOVE))		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		if((isturf(loc) || allow_movement_on_non_turfs) && LIVING_CAN_MOVE(src))		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
@@ -403,7 +403,7 @@
 			new i(loc)
 
 /mob/living/simple_animal/death(gibbed)
-	movement_type &= ~FLYING
+	remove_movement_flags(FLYING)
 	if(nest)
 		nest.spawned_mobs -= src
 		nest = null
@@ -458,8 +458,7 @@
 		icon = initial(icon)
 		icon_state = icon_living
 		density = initial(density)
-		mobility_flags = MOBILITY_FLAGS_DEFAULT
-		update_mobility()
+		set_mobility_flags(MOBILITY_FLAGS_DEFAULT)
 		. = TRUE
 		setMovetype(initial(movement_type))
 
@@ -514,21 +513,22 @@
 	else
 		..()
 
-/mob/living/simple_animal/update_mobility(value_otherwise = TRUE)
-	if(IsUnconscious() || IsParalyzed() || IsStun() || IsKnockdown() || IsParalyzed() || stat || resting)
-		drop_all_held_items()
-		mobility_flags = NONE
-	else if(buckled)
-		mobility_flags = MOBILITY_FLAGS_INTERACTION
+/mob/living/simple_animal/set_resting(rest, silent = TRUE)
+	. = ..()
+	if(isnull(.))
+		return
+	if(resting)
+		ADD_TRAIT(src, TRAIT_IMMOBILE, STANCE_REST_TRAIT)
 	else
-		if(value_otherwise)
-			mobility_flags = MOBILITY_FLAGS_DEFAULT
-		else
-			mobility_flags = NONE
-	if(!(mobility_flags & MOBILITY_MOVE))
-		walk(src, 0) //stop mid walk
+		REMOVE_TRAIT(src, TRAIT_IMMOBILE, STANCE_REST_TRAIT)
 
-	update_transform()
+/mob/living/simple_animal/on_mobility_loss()
+	. = ..()
+	walk(src, 0) //stop mid walk
+	update_action_buttons_icon()
+
+/mob/living/simple_animal/on_mobility_gain()
+	. = ..()
 	update_action_buttons_icon()
 
 /mob/living/simple_animal/update_transform()

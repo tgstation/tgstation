@@ -113,25 +113,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMP_PROTECT_CONTENTS (1<<1)
 #define EMP_PROTECT_WIRES (1<<2)
 
-//Mob mobility var flags
-/// can move
-#define MOBILITY_MOVE			(1<<0)
-/// can, and is, standing up
-#define MOBILITY_STAND			(1<<1)
-/// can pickup items
-#define MOBILITY_PICKUP			(1<<2)
-/// can hold and use items
-#define MOBILITY_USE			(1<<3)
-/// can use interfaces like machinery
-#define MOBILITY_UI				(1<<4)
-/// can use storage item
-#define MOBILITY_STORAGE		(1<<5)
-/// can pull things
-#define MOBILITY_PULL			(1<<6)
-
-#define MOBILITY_FLAGS_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL)
-#define MOBILITY_FLAGS_INTERACTION (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_UI | MOBILITY_STORAGE)
-
 // radiation
 #define RAD_PROTECT_CONTENTS (1<<0)
 #define RAD_NO_CONTAMINATE (1<<1)

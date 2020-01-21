@@ -98,7 +98,7 @@
 	return FALSE
 
 /datum/martial_art/the_sleeping_carp/proc/elbowDrop(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!(D.mobility_flags & MOBILITY_STAND))
+	if(IS_PRONE(D))
 		log_combat(A, D, "elbow dropped (Sleeping Carp)")
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='danger'>[A] elbow drops [D]!</span>", \
@@ -139,7 +139,7 @@
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
 	D.apply_damage(rand(10,15), BRUTE)
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
-	if(prob(D.getBruteLoss()) && (D.mobility_flags & MOBILITY_STAND))
+	if(prob(D.getBruteLoss()) && !IS_PRONE(D))
 		D.visible_message("<span class='warning'>[D] stumbles and falls!</span>", "<span class='userdanger'>The blow sends you to the ground!</span>")
 		D.Paralyze(80)
 	log_combat(A, D, "[atk_verb] (Sleeping Carp)")
@@ -154,9 +154,11 @@
 
 /datum/martial_art/the_sleeping_carp/on_projectile_hit(mob/living/carbon/human/A, obj/projectile/P, def_zone)
 	. = ..()
-	if(A.incapacitated(FALSE, TRUE)) //NO STUN
+	if(IS_PRONE(A)) //PRONE
 		return BULLET_ACT_HIT
-	if(!(A.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
+	if(!LIVING_CAN_MOVE(A)) //IMMMOBILIZED
+		return BULLET_ACT_HIT
+	if(!LIVING_CAN_USE_HANDS(A)) //NO, UNABLE TO USE
 		return BULLET_ACT_HIT
 	if(A.dna && A.dna.check_mutation(HULK)) //NO HULK
 		return BULLET_ACT_HIT

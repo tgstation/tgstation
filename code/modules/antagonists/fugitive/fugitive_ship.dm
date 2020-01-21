@@ -16,7 +16,7 @@
 	var/mob/living/fugitive_hunter = user
 	if(!isliving(fugitive_hunter))
 		return
-	if(fugitive_hunter.stat || (!(fugitive_hunter.mobility_flags & MOBILITY_STAND) || !(fugitive_hunter.mobility_flags & MOBILITY_UI)) || !Adjacent(fugitive_hunter) || !target.Adjacent(fugitive_hunter) || !ishuman(target))
+	if(IS_PRONE(fugitive_hunter) || !ishuman(target) || !LIVING_CAN_UI(fugitive_hunter) || !Adjacent(fugitive_hunter) || !target.Adjacent(fugitive_hunter))
 		return
 	var/mob/living/carbon/human/fugitive = target
 	var/datum/antagonist/fugitive/fug_antag = fugitive.mind.has_antag_datum(/datum/antagonist/fugitive)

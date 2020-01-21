@@ -7,6 +7,7 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM) //for mechas
 	speech_span = SPAN_ROBOT
+	mobility_flags = NONE
 
 /mob/living/brain/Initialize()
 	. = ..()
@@ -33,12 +34,6 @@
 		ghostize()		//Ghostize checks for key so nothing else is necessary.
 	container = null
 	return ..()
-
-/mob/living/brain/update_mobility()
-	if(in_contents_of(/obj/mecha))
-		mobility_flags = MOBILITY_FLAGS_DEFAULT
-	else
-		mobility_flags = NONE
 
 /mob/living/brain/ex_act() //you cant blow up brainmobs because it makes transfer_to() freak out when borgs blow up.
 	return

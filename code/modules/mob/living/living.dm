@@ -1,5 +1,7 @@
 /mob/living/Initialize()
 	. = ..()
+	register_init_signals()
+	set_up_mobility()
 	if(unique_name)
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
@@ -46,6 +48,37 @@
 	sharedSoullinks = null
 	return ..()
 
+/mob/living/proc/register_init_signals()
+	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_DEATHCOMA), .proc/on_deathcoma_trait_change)
+	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_KNOCKEDOUT), .proc/on_knockedout_trait_change)
+	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_RESTRAINED), .proc/on_restrained_trait_change)
+
+/mob/living/proc/on_deathcoma_trait_change(datum/source, change_flag)
+	if(change_flag == COMPONENT_ADD_TRAIT)
+		ADD_TRAIT(src, TRAIT_KNOCKEDOUT, TRAIT_DEATHCOMA)
+	else
+		REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, TRAIT_DEATHCOMA)
+
+/mob/living/proc/on_knockedout_trait_change(datum/source, change_flag)
+	if(change_flag == COMPONENT_ADD_TRAIT)
+		ADD_TRAIT(src, TRAIT_IMMOBILE, TRAIT_KNOCKEDOUT)
+		ADD_TRAIT(src, TRAIT_STANDINGBLOCKED, TRAIT_KNOCKEDOUT)
+		ADD_TRAIT(src, TRAIT_HANDSBLOCKED, TRAIT_KNOCKEDOUT)
+		if(stat < UNCONSCIOUS)
+			set_stat(UNCONSCIOUS)
+	else
+		REMOVE_TRAIT(src, TRAIT_IMMOBILE, TRAIT_KNOCKEDOUT)
+		REMOVE_TRAIT(src, TRAIT_STANDINGBLOCKED, TRAIT_KNOCKEDOUT)
+		REMOVE_TRAIT(src, TRAIT_HANDSBLOCKED, TRAIT_KNOCKEDOUT)
+		if(stat < DEAD)
+			update_stat()
+
+/mob/living/proc/on_restrained_trait_change(datum/source, change_flag)
+	if(change_flag == COMPONENT_ADD_TRAIT)
+		ADD_TRAIT(src, TRAIT_HANDSBLOCKED, TRAIT_RESTRAINED)
+	else
+		REMOVE_TRAIT(src, TRAIT_HANDSBLOCKED, TRAIT_RESTRAINED)
+
 /mob/living/onZImpact(turf/T, levels)
 	if(!isgroundlessturf(T))
 		ZImpactDamage(T, levels)
@@ -91,7 +124,7 @@
 	var/they_can_move = TRUE
 	if(isliving(M))
 		var/mob/living/L = M
-		they_can_move = L.mobility_flags & MOBILITY_MOVE
+		they_can_move = LIVING_CAN_MOVE(L)
 		//Also spread diseases
 		for(var/thing in diseases)
 			var/datum/disease/D = thing
@@ -104,18 +137,17 @@
 				ContactContractDisease(D)
 
 		//Should stop you pushing a restrained person out of the way
-		if(L.pulledby && L.pulledby != src && L.restrained())
+		if(L.pulledby && L.pulledby != src && HAS_TRAIT(L, TRAIT_RESTRAINED))
 			if(!(world.time % 5))
 				to_chat(src, "<span class='warning'>[L] is restrained, you cannot push past.</span>")
 			return TRUE
 
-		if(L.pulling)
-			if(ismob(L.pulling))
-				var/mob/P = L.pulling
-				if(P.restrained())
-					if(!(world.time % 5))
-						to_chat(src, "<span class='warning'>[L] is restraining [P], you cannot push past.</span>")
-					return TRUE
+		if(L.pulling && isliving(L.pulling))
+			var/mob/living/living_pulled = L.pulling
+			if(HAS_TRAIT(living_pulled, TRAIT_RESTRAINED))
+				if(!(world.time % 5))
+					to_chat(src, "<span class='warning'>[L] is restraining [living_pulled], you cannot push past.</span>")
+				return TRUE
 
 	if(moving_diagonally)//no mob swap during diagonal moves.
 		return TRUE
@@ -130,12 +162,13 @@
 			//You can swap with the person you are dragging on grab intent, and restrained people in most cases
 			if(M.pulledby == src && a_intent == INTENT_GRAB && !too_strong)
 				mob_swap = TRUE
-			else if(
-				!(HAS_TRAIT(M, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP))&&\
-				((M.restrained() && !too_strong) || M.a_intent == INTENT_HELP) &&\
-				(restrained() || a_intent == INTENT_HELP)
-			)
-				mob_swap = TRUE
+			else if(!(HAS_TRAIT(M, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP)) && (a_intent == INTENT_HELP || HAS_TRAIT(src, TRAIT_RESTRAINED)))
+				if(isliving(M))
+					var/mob/living_bumper = M
+					if(living_bumper.a_intent == INTENT_HELP || (!too_strong && HAS_TRAIT(living_bumper, TRAIT_RESTRAINED)))
+						mob_swap = TRUE
+				else
+					mob_swap = TRUE
 		if(mob_swap)
 			//switch our position with M
 			if(loc && !loc.Adjacent(M.loc))
@@ -244,7 +277,7 @@
 		return FALSE
 	if(!(AM.can_be_pulled(src, state, force)))
 		return FALSE
-	if(throwing || !(mobility_flags & MOBILITY_PULL))
+	if(throwing || !LIVING_CAN_PULL(src))
 		return FALSE
 
 	AM.add_fingerprint(src)
@@ -296,6 +329,8 @@
 			M.LAssailant = usr
 		if(isliving(M))
 			var/mob/living/L = M
+			if(L.stat == SOFT_CRIT)
+				ADD_TRAIT(L, TRAIT_IMMOBILE, SOFTCRIT_PULLED_TRAIT)
 			//Share diseases that are spread by touch
 			for(var/thing in diseases)
 				var/datum/disease/D = thing
@@ -336,16 +371,12 @@
 		if(SOUTH)
 			animate(M, pixel_x = 0, pixel_y = -offset, 3)
 		if(EAST)
-			if(M.lying == 270) //update the dragged dude's direction if we've turned
-				M.lying = 90
-				M.update_transform() //force a transformation update, otherwise it'll take a few ticks for update_mobility() to do so
-				M.lying_prev = M.lying
+			if(M.lying_angle == 270) //update the dragged dude's direction if we've turned
+				M.set_lying_angle(90)
 			animate(M, pixel_x = offset, pixel_y = 0, 3)
 		if(WEST)
-			if(M.lying == 90)
-				M.lying = 270
-				M.update_transform()
-				M.lying_prev = M.lying
+			if(M.lying_angle == 90)
+				M.set_lying_angle(270)
 			animate(M, pixel_x = -offset, pixel_y = 0, 3)
 
 /mob/living/proc/reset_pull_offsets(mob/living/M, override)
@@ -397,9 +428,8 @@
 			to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		death()
 
-/mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE, ignore_stasis = FALSE)
-	if(stat || IsUnconscious() || IsStun() || IsParalyzed() || (check_immobilized && IsImmobilized()) || (!ignore_restraints && restrained(ignore_grab)) || (!ignore_stasis && IS_IN_STASIS(src)))
-		return TRUE
+/mob/living/incapacitated()
+	return IS_INCAPACITATED(src)
 
 /mob/living/canUseStorage()
 	if (get_num_arms() <= 0)
@@ -423,6 +453,49 @@
 /mob/living/proc/setMaxHealth(newMaxHealth)
 	maxHealth = newMaxHealth
 
+/mob/living/set_stat(new_stat)
+	. = ..()
+	if(isnull(.))
+		return
+	switch(stat)
+		if(UNCONSCIOUS, DEAD)
+			if(. < UNCONSCIOUS)
+				ADD_TRAIT(src, TRAIT_IMMOBILE, STAT_UNCONSCIOUS_TRAIT)
+		if(SOFT_CRIT)
+			if(pulledby)
+				ADD_TRAIT(src, TRAIT_IMMOBILE, SOFTCRIT_PULLED_TRAIT)
+			add_movespeed_modifier(MOVESPEED_ID_CARBON_SOFTCRIT, multiplicative_slowdown = SOFTCRIT_ADD_SLOWDOWN)
+		if(CONSCIOUS)
+			REMOVE_TRAIT(src, TRAIT_STANDINGBLOCKED, STAT_NOTCONSCIOUS_TRAIT)
+			REMOVE_TRAIT(src, TRAIT_HANDSBLOCKED, STAT_NOTCONSCIOUS_TRAIT)
+	switch(.)
+		if(UNCONSCIOUS, DEAD)
+			if(stat < UNCONSCIOUS)
+				REMOVE_TRAIT(src, TRAIT_IMMOBILE, STAT_UNCONSCIOUS_TRAIT)
+		if(SOFT_CRIT)
+			if(pulledby)
+				REMOVE_TRAIT(src, TRAIT_IMMOBILE, SOFTCRIT_PULLED_TRAIT)
+			remove_movespeed_modifier(MOVESPEED_ID_CARBON_SOFTCRIT)
+		if(CONSCIOUS)
+			ADD_TRAIT(src, TRAIT_STANDINGBLOCKED, STAT_NOTCONSCIOUS_TRAIT)
+			ADD_TRAIT(src, TRAIT_HANDSBLOCKED, STAT_NOTCONSCIOUS_TRAIT)
+
+/mob/living/setGrabState(newstate)
+	. = ..()
+	if(isnull(.))
+		return
+	switch(grab_state)
+		if(GRAB_PASSIVE, GRAB_AGGRESSIVE)
+			if(. > GRAB_AGGRESSIVE)
+				REMOVE_TRAIT(src, TRAIT_IMMOBILE, GRABSTATE_NECK_TRAIT)
+				REMOVE_TRAIT(src, TRAIT_STANDINGBLOCKED, GRABSTATE_NECK_TRAIT)
+				REMOVE_TRAIT(src, TRAIT_HANDSBLOCKED, GRABSTATE_NECK_TRAIT)
+		if(GRAB_NECK, GRAB_KILL)
+			if(. < GRAB_NECK)
+				ADD_TRAIT(src, TRAIT_IMMOBILE, GRABSTATE_NECK_TRAIT)
+				ADD_TRAIT(src, TRAIT_STANDINGBLOCKED, GRABSTATE_NECK_TRAIT)
+				ADD_TRAIT(src, TRAIT_HANDSBLOCKED, GRABSTATE_NECK_TRAIT)
+
 // MOB PROCS //END
 
 /mob/living/proc/mob_sleep()
@@ -435,34 +508,47 @@
 	else
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
 			SetSleeping(400) //Short nap
-	update_mobility()
 
 /mob/proc/get_contents()
 
-/mob/living/proc/lay_down()
+/mob/living/proc/toggle_rest()
 	set name = "Rest"
 	set category = "IC"
 
-	if(!resting)
-		set_resting(TRUE, FALSE)
-	else
-		if(do_after(src, 10, target = src))
-			set_resting(FALSE, FALSE)
-		else
-			to_chat(src, "<span class='warning'>You fail to get up!</span>")
+	set_resting(!resting, FALSE)
+
 
 /mob/living/proc/set_resting(rest, silent = TRUE)
-	if(!silent)
-		if(rest)
-			to_chat(src, "<span class='notice'>You are now resting.</span>")
-		else
-			to_chat(src, "<span class='notice'>You get up.</span>")
+	if(resting == rest)
+		return
+	. = resting
 	resting = rest
-	update_resting()
+	if(!resting)
+		if(IS_STANDING(src))
+			if(!silent)
+				to_chat(src, "<span class='notice'>You will no longer try to lay down as soon as able.</span>")
+		else if(!LIVING_CAN_STAND(src) || buckled)
+			if(!silent)
+				to_chat(src, "<span class='notice'>You will stand up as soon as you are able to.</span>")
+		else
+			if(!silent)
+				to_chat(src, "<span class='notice'>You stand up.</span>")
+			get_up(FALSE, silent)
+	else
+		if(!IS_STANDING(src))
+			if(!silent)
+				to_chat(src, "<span class='notice'>You are now resting.</span>")
+		else if(buckled)
+			if(!silent)
+				to_chat(src, "<span class='notice'>You will try to lay down as soon as you are able to.</span>")
+		else
+			if(!silent)
+				to_chat(src, "<span class='notice'>You lay down.</span>")
+			lay_down(silent)
+	update_resting_visuals()
 
-/mob/living/proc/update_resting()
+/mob/living/proc/update_resting_visuals()
 	update_rest_hud_icon()
-	update_mobility()
 
 //Recursive function to find everything a mob is holding. Really shitty proc tbh.
 /mob/living/get_contents()
@@ -536,7 +622,6 @@
 		set_suicide(FALSE)
 		set_stat(UNCONSCIOUS) //the mob starts unconscious,
 		updatehealth() //then we check if the mob should wake up.
-		update_mobility()
 		update_sight()
 		clear_alert("not_enough_oxy")
 		reload_fullscreen()
@@ -546,7 +631,7 @@
 				var/obj/effect/proc_holder/spell/spell = S
 				spell.updateButtonIcon()
 
-/mob/living/proc/remove_CC(should_update_mobility = TRUE)
+/mob/living/proc/remove_CC()
 	SetStun(0, FALSE)
 	SetKnockdown(0, FALSE)
 	SetImmobilized(0, FALSE)
@@ -554,8 +639,6 @@
 	SetSleeping(0, FALSE)
 	setStaminaLoss(0)
 	SetUnconscious(0, FALSE)
-	if(should_update_mobility)
-		update_mobility()
 
 /mob/living/Crossed(atom/movable/AM)
 	. = ..()
@@ -572,7 +655,7 @@
 	setToxLoss(0, 0) //zero as second argument not automatically call updatehealth().
 	setOxyLoss(0, 0)
 	setCloneLoss(0, 0)
-	remove_CC(FALSE)
+	remove_CC()
 	set_disgust(0)
 	losebreath = 0
 	radiation = 0
@@ -594,7 +677,6 @@
 	stuttering = 0
 	slurring = 0
 	jitteriness = 0
-	update_mobility()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
@@ -607,13 +689,8 @@
 	return
 
 /mob/living/Move(atom/newloc, direct)
-	if(lying)
-		if(direct & EAST)
-			lying = 90
-		if(direct & WEST)
-			lying = 270
-		update_transform()
-		lying_prev = lying
+	if(IS_HORIZONTAL(src))
+		lying_angle_on_movement(direct)
 	if (buckled && buckled.loc != newloc) //not updating position
 		if (!buckled.anchored)
 			return buckled.Move(newloc, direct)
@@ -638,8 +715,17 @@
 	if(active_storage && !(CanReach(active_storage.parent,view_only = TRUE)))
 		active_storage.close(src)
 
-	if(!(mobility_flags & MOBILITY_STAND) && !buckled && prob(getBruteLoss()*200/maxHealth))
+	if(IS_PRONE(src) && !buckled && prob((getBruteLoss() * 200) / maxHealth))
 		makeTrail(newloc, T, old_direction)
+
+/mob/living/proc/lying_angle_on_movement(direct)
+	if(direct & EAST)
+		set_lying_angle(90)
+	else if(direct & WEST)
+		set_lying_angle(270)
+
+/mob/living/carbon/alien/humanoid/lying_angle_on_movement(direct)
+	return
 
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
 	if(!has_gravity())
@@ -713,7 +799,7 @@
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/can_resist()
-	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
+	return !((next_move > world.time) || IS_PARALYZED(src))
 
 /mob/living/verb/resist()
 	set name = "Resist"
@@ -725,7 +811,7 @@
 
 	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
 	//resisting grabs (as if it helps anyone...)
-	if(!restrained(ignore_grab = 1) && pulledby)
+	if(!HAS_TRAIT(src, TRAIT_RESTRAINED) && pulledby)
 		log_combat(src, pulledby, "resisted grab")
 		resist_grab()
 		return
@@ -739,7 +825,7 @@
 		var/obj/C = loc
 		C.container_resist(src)
 
-	else if(mobility_flags & MOBILITY_MOVE)
+	else if(LIVING_CAN_MOVE(src))
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
 		else if(last_special <= world.time)
@@ -811,13 +897,12 @@
 	if(anchored || (buckled && buckled.anchored))
 		fixed = 1
 	if(on && !(movement_type & FLOATING) && !fixed)
-		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
-		sleep(10)
-		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
-		setMovetype(movement_type | FLOATING)
+		animate(src, pixel_y = pixel_y + 2, time = 1 SECONDS, loop = -1)
+		animate(pixel_y = pixel_y - 2, time = 1 SECONDS, loop = -1)
+		add_movement_flags(FLOATING)
 	else if(((!on || fixed) && (movement_type & FLOATING)))
-		animate(src, pixel_y = get_standard_pixel_y_offset(lying), time = 10)
-		setMovetype(movement_type & ~FLOATING)
+		animate(src, pixel_y = get_standard_pixel_y_offset(lying_angle), time = 10)
+		remove_movement_flags(FLOATING)
 
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
@@ -896,11 +981,11 @@
 	var/amplitude = min(4, (jitteriness/100) + 1)
 	var/pixel_x_diff = rand(-amplitude, amplitude)
 	var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
-	var/final_pixel_x = get_standard_pixel_x_offset(lying)
-	var/final_pixel_y = get_standard_pixel_y_offset(lying)
+	var/final_pixel_x = get_standard_pixel_x_offset(lying_angle)
+	var/final_pixel_y = get_standard_pixel_y_offset(lying_angle)
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
 	animate(pixel_x = final_pixel_x , pixel_y = final_pixel_y , time = 2)
-	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
+	remove_movement_flags(FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
 /mob/living/proc/get_temperature(datum/gas_mixture/environment)
 	var/loc_temp = environment ? environment.temperature : T0C
@@ -914,10 +999,10 @@
 		loc_temp = heat_turf.temperature
 	return loc_temp
 
-/mob/living/proc/get_standard_pixel_x_offset(lying = 0)
+/mob/living/proc/get_standard_pixel_x_offset(lying_angle = 0)
 	return initial(pixel_x)
 
-/mob/living/proc/get_standard_pixel_y_offset(lying = 0)
+/mob/living/proc/get_standard_pixel_y_offset(lying_angle = 0)
 	return initial(pixel_y)
 
 /mob/living/cancel_camera()
@@ -1130,92 +1215,6 @@
 /mob/living/can_be_pulled()
 	return ..() && !(buckled && buckled.buckle_prevents_pull)
 
-//Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
-//Robots, animals and brains have their own version so don't worry about them
-/mob/living/proc/update_mobility()
-	var/stat_softcrit = stat == SOFT_CRIT
-	var/stat_conscious = (stat == CONSCIOUS) || stat_softcrit
-	var/conscious = !IsUnconscious() && stat_conscious && !HAS_TRAIT(src, TRAIT_DEATHCOMA)
-	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
-	var/restrained = restrained()
-	var/has_legs = get_num_legs()
-	var/has_arms = get_num_arms()
-	var/paralyzed = IsParalyzed()
-	var/stun = IsStun()
-	var/knockdown = IsKnockdown()
-	var/ignore_legs = get_leg_ignore()
-	var/canmove = !IsImmobilized() && !stun && conscious && !paralyzed && !buckled && (!stat_softcrit || !pulledby) && !chokehold && !IsFrozen() && !IS_IN_STASIS(src) && (has_arms || ignore_legs || has_legs)
-	if(canmove)
-		mobility_flags |= MOBILITY_MOVE
-	else
-		mobility_flags &= ~MOBILITY_MOVE
-	var/canstand_involuntary = conscious && !stat_softcrit && !knockdown && !chokehold && !paralyzed && (ignore_legs || has_legs) && !(buckled && buckled.buckle_lying)
-	var/canstand = canstand_involuntary && !resting
-
-	var/should_be_lying = !canstand
-	if(buckled)
-		if(buckled.buckle_lying != -1)
-			should_be_lying = buckled.buckle_lying
-
-	if(should_be_lying)
-		mobility_flags &= ~MOBILITY_STAND
-		if(buckled)
-			if(buckled.buckle_lying != -1)
-				lying = buckled.buckle_lying
-		if(!lying) //force them on the ground
-			lying = pick(90, 270)
-	else
-		mobility_flags |= MOBILITY_STAND
-		lying = 0
-
-	if(should_be_lying || restrained || incapacitated())
-		mobility_flags &= ~(MOBILITY_UI|MOBILITY_PULL)
-	else
-		mobility_flags |= MOBILITY_UI|MOBILITY_PULL
-
-
-
-	var/canitem = !paralyzed && !stun && conscious && !chokehold && !restrained && has_arms
-	if(canitem)
-		mobility_flags |= (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_STORAGE)
-	else
-		mobility_flags &= ~(MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_STORAGE)
-	if(!(mobility_flags & MOBILITY_USE))
-		drop_all_held_items()
-	if(!(mobility_flags & MOBILITY_PULL))
-		if(pulling)
-			stop_pulling()
-	if(!(mobility_flags & MOBILITY_UI))
-		unset_machine()
-	density = !lying
-	if(lying)
-		if(!lying_prev)
-			fall(!canstand_involuntary)
-		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
-			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
-	else
-		if(layer == LYING_MOB_LAYER)
-			layer = initial(layer)
-	update_transform()
-	lying_prev = lying
-
-	// Movespeed mods based on arms/legs quantity
-	if(!get_leg_ignore())
-		var/limbless_slowdown = 0
-		// These checks for <2 should be swapped out for something else if we ever end up with a species with more than 2
-		if(has_legs < 2)
-			limbless_slowdown += 6 - (has_legs * 3)
-			if(!has_legs && has_arms < 2)
-				limbless_slowdown += 6 - (has_arms * 3)
-		if(limbless_slowdown)
-			add_movespeed_modifier(MOVESPEED_ID_LIVING_LIMBLESS, update=TRUE, priority=100, override=TRUE, multiplicative_slowdown=limbless_slowdown, movetypes=GROUND)
-		else
-			remove_movespeed_modifier(MOVESPEED_ID_LIVING_LIMBLESS, update=TRUE)
-
-/mob/living/proc/fall(forced)
-	if(!(mobility_flags & MOBILITY_USE))
-		drop_all_held_items()
-
 /mob/living/proc/AddAbility(obj/effect/proc_holder/A)
 	abilities.Add(A)
 	A.on_gain(src)
@@ -1253,7 +1252,6 @@
 	if(.)
 		if(client)
 			reset_perspective()
-		update_mobility() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
 
 /mob/living/proc/update_z(new_z) // 1+ to register, null to unregister
 	if (registered_z != new_z)
@@ -1395,3 +1393,74 @@
 		var/ERROR_ERROR_LANDMARK_ERROR = "ERROR-ERROR: ERROR landmark missing!"
 		log_mapping(ERROR_ERROR_LANDMARK_ERROR)
 		CRASH(ERROR_ERROR_LANDMARK_ERROR)
+
+
+/mob/living/proc/lay_down(silent = TRUE)
+	set_body_position(POS_PRONE, silent)
+
+/mob/living/proc/get_up(forced, silent = TRUE)
+	set waitfor = FALSE
+	if(resting)
+		if(!forced)
+			CRASH("Something called get_up() on a resting mob wihout the forced variable. Mobs are supposed to get up on their own when able to. This shouldn't have happened.")
+		set_resting(FALSE)
+	set_body_position(POS_STANDING, silent)
+
+/mob/living/proc/set_body_position(new_pos, silent = TRUE)
+	if(body_position == new_pos)
+		return
+	. = body_position
+	body_position = new_pos
+	if(body_position == POS_PRONE)
+		ADD_TRAIT(src, TRAIT_PULLBLOCKED, PRONE_TRAIT)
+		ADD_TRAIT(src, TRAIT_UIBLOCKED, PRONE_TRAIT)
+	else if(. == POS_PRONE)
+		REMOVE_TRAIT(src, TRAIT_PULLBLOCKED, PRONE_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_UIBLOCKED, PRONE_TRAIT)
+	set_body_position_visuals(.)
+
+/mob/living/carbon/set_body_position(new_pos, silent = TRUE)
+	. = ..()
+	if(isnull(.))
+		return
+	if(body_position == POS_PRONE)
+		if(!LIVING_CAN_STAND(src)) //Involuntary fall.
+			loc.handle_fall(src) //Dropping-to-the-ground sound.
+		add_movespeed_modifier(MOVESPEED_ID_CARBON_CRAWLING, TRUE, multiplicative_slowdown = CRAWLING_ADD_SLOWDOWN)
+	else
+		remove_movespeed_modifier(MOVESPEED_ID_CARBON_CRAWLING, TRUE)
+
+/mob/living/proc/set_body_position_visuals(old_pos)
+	if(body_position == POS_STANDING)
+		set_lying_angle(0)
+	else
+		set_lying_angle(pick(90, 270))
+
+/mob/living/carbon/alien/larva/set_body_position_visuals(old_pos)
+	update_icons()
+
+/mob/living/carbon/alien/humanoid/set_body_position_visuals(old_pos)
+	if(body_position == POS_STANDING)
+		set_lying_angle(0)
+	else
+		set_lying_angle(90) //Anything else looks retarded
+	update_icons()
+
+/mob/living/proc/set_lying_angle(new_lying)
+	if(new_lying == lying_angle)
+		return
+	. = lying_angle
+	lying_angle = new_lying
+	if(lying_angle != lying_prev)
+		update_transform()
+		lying_prev = lying_angle
+	if(lying_angle)
+		if(layer == initial(layer)) //to avoid things like hiding larvas.
+			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
+		if(!.)
+			density = FALSE
+	else
+		if(layer == LYING_MOB_LAYER)
+			layer = initial(layer)
+		if(.)
+			density = initial(density)

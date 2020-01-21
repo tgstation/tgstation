@@ -36,7 +36,7 @@ Self-sustaining extracts:
 	var/amount = 5
 	var/secondary
 
-	if ((user.get_active_held_item() != src || user.stat || user.restrained()))
+	if(QDELETED(user) || user.get_active_held_item() != src)
 		return
 	if(!reagentselect)
 		return

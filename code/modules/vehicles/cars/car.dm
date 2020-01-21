@@ -32,14 +32,16 @@
 	playsound(src, engine_sound, 100, TRUE)
 	return TRUE
 
-/obj/vehicle/sealed/car/MouseDrop_T(atom/dropping, mob/M)
-	if(M.stat || M.restrained())
-		return FALSE
-	if((car_traits & CAN_KIDNAP) && isliving(dropping) && M != dropping)
-		var/mob/living/L = dropping
-		L.visible_message("<span class='warning'>[M] starts forcing [L] into [src]!</span>")
-		mob_try_forced_enter(M, L)
-	return ..()
+/obj/vehicle/sealed/car/MouseDrop_T(atom/dropping, mob/living/user)
+	if(!isliving(user))
+		return
+	if(!LIVING_CAN_USE_HANDS(user))
+		return
+	if(!(car_traits & CAN_KIDNAP) || user == dropping || !isliving(dropping))
+		return ..()
+	var/mob/living/living_dropping = dropping
+	living_dropping.visible_message("<span class='warning'>[user] starts forcing [living_dropping] into [src]!</span>")
+	mob_try_forced_enter(user, living_dropping)
 
 /obj/vehicle/sealed/car/mob_try_exit(mob/M, mob/user, silent = FALSE)
 	if(M == user && (occupants[M] & VEHICLE_CONTROL_KIDNAPPED))

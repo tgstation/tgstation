@@ -7,6 +7,7 @@
 	icon_state = "cursehand0"
 	hitsound = 'sound/effects/curse4.ogg'
 	layer = LARGE_MOB_LAYER
+	movement_type = FLYING|UNSTOPPABLE
 	damage_type = BURN
 	damage = 10
 	paralyze = 20
@@ -17,7 +18,6 @@
 
 /obj/projectile/curse_hand/Initialize(mapload)
 	. = ..()
-	ENABLE_BITFIELD(movement_type, UNSTOPPABLE)
 	handedness = prob(50)
 	icon_state = "cursehand[handedness]"
 
@@ -31,7 +31,7 @@
 
 /obj/projectile/curse_hand/prehit(atom/target)
 	if(target == original)
-		DISABLE_BITFIELD(movement_type, UNSTOPPABLE)
+		remove_movement_flags(UNSTOPPABLE)
 	else if(!isturf(target))
 		return FALSE
 	return ..()

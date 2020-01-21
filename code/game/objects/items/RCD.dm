@@ -279,7 +279,10 @@ RLD
 
 /obj/item/construction/rcd/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained())
+	if(!isliving(usr))
+		return
+	var/mob/living/living_user = usr
+	if(!LIVING_CAN_USE_HANDS(living_user))
 		return
 
 	if (href_list["close"])

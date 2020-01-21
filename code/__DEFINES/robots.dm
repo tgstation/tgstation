@@ -52,3 +52,8 @@
 #define ASSEMBLY_FIFTH_STEP     4
 
 #define BORG_LAMP_CD_RESET -1 //special value to reset cyborg's lamp_cooldown
+
+#define POWER_RESTORATION_OFF 0
+#define POWER_RESTORATION_START 1
+#define POWER_RESTORATION_SEARCH_APC 2
+#define POWER_RESTORATION_APC_FOUND 3

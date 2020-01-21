@@ -40,7 +40,7 @@
 	. = ..()
 
 	if(shoes)
-		if(mobility_flags & MOBILITY_STAND)
+		if(IS_STANDING(src))
 			if(loc == NewLoc)
 				if(!has_gravity(loc))
 					return

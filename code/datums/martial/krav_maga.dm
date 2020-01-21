@@ -132,7 +132,7 @@
 	log_combat(A, D, "punched")
 	var/picked_hit_type = pick("punch", "kick")
 	var/bonus_damage = 10
-	if(!(D.mobility_flags & MOBILITY_STAND))
+	if(IS_PRONE(D))
 		bonus_damage += 5
 		picked_hit_type = "stomp"
 	D.apply_damage(bonus_damage, A.dna.species.attack_type)

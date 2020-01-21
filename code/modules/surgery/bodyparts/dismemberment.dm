@@ -127,7 +127,6 @@
 	C.update_health_hud() //update the healthdoll
 	C.update_body()
 	C.update_hair()
-	C.update_mobility()
 
 	if(!Tsec)	// Tsec = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 		qdel(src)
@@ -174,6 +173,7 @@
 		..()
 
 /obj/item/bodypart/r_arm/drop_limb(special)
+	owner.remove_functional_arm(src)
 	var/mob/living/carbon/C = owner
 	..()
 	if(C && !special)
@@ -192,6 +192,7 @@
 
 
 /obj/item/bodypart/l_arm/drop_limb(special)
+	owner.remove_functional_arm(src)
 	var/mob/living/carbon/C = owner
 	..()
 	if(C && !special)
@@ -211,6 +212,7 @@
 
 /obj/item/bodypart/r_leg/drop_limb(special)
 	if(owner && !special)
+		owner.remove_functional_leg(src)
 		if(owner.legcuffed)
 			owner.legcuffed.forceMove(owner.drop_location()) //At this point bodypart is still in nullspace
 			owner.legcuffed.dropped(owner)
@@ -222,6 +224,7 @@
 
 /obj/item/bodypart/l_leg/drop_limb(special) //copypasta
 	if(owner && !special)
+		owner.remove_functional_leg(src)
 		if(owner.legcuffed)
 			owner.legcuffed.forceMove(owner.drop_location())
 			owner.legcuffed.dropped(owner)
@@ -309,7 +312,6 @@
 	C.update_body()
 	C.update_hair()
 	C.update_damage_overlays()
-	C.update_mobility()
 
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special)

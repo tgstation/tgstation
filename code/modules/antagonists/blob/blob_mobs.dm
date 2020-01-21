@@ -124,7 +124,7 @@
 	mob_biotypes |= MOB_HUMANOID
 	melee_damage_lower += 8
 	melee_damage_upper += 11
-	movement_type = GROUND
+	setMovetype(GROUND)
 	death_cloud_size = 0
 	icon = H.icon
 	icon_state = "zombie"

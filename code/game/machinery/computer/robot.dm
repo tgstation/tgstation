@@ -58,7 +58,7 @@
 					spacer = TRUE
 				var/mob/living/silicon/robot/R = robo
 				dat += "<b>Name:</b> [R.name]<br>"
-				var/can_move = (R.mobility_flags & MOBILITY_MOVE)
+				var/can_move = (LIVING_CAN_MOVE(R))
 				dat += "<b>Status:</b> [R.stat ? "Not Responding" : (can_move ? "Normal" : "Locked Down")]<br>"
 
 				if(can_move)
@@ -72,7 +72,7 @@
 						dat += "<A href='?src=[REF(src)];magbot=[REF(R)]'>(<font color=blue><i>Hack</i></font>)</A> "
 				else if(IsAdminGhost(user) && !R.emagged)
 					dat += "<A href='?src=[REF(src)];magbot=[REF(R)]'>(<font color=blue><i>Hack</i></font>)</A> "
-				dat += "<A href='?src=[REF(src)];stopbot=[REF(R)]'>(<font color=green><i>[(R.mobility_flags & MOBILITY_MOVE) ? "Lockdown" : "Release"]</i></font>)</A> "
+				dat += "<A href='?src=[REF(src)];stopbot=[REF(R)]'>(<font color=green><i>[(can_move) ? "Lockdown" : "Release"]</i></font>)</A> "
 				dat += "<A href='?src=[REF(src)];killbot=[REF(R)]'>(<font color=red><i>Destroy</i></font>)</A>"
 			dat += "</div>"
 

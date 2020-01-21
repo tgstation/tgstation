@@ -58,7 +58,7 @@
 
 /mob/living/carbon/attackby(obj/item/I, mob/user, params)
 	for(var/datum/surgery/S in surgeries)
-		if(!(mobility_flags & MOBILITY_STAND) || !S.lying_required)
+		if(IS_PRONE(src) || !S.lying_required)
 			if((S.self_operable || user != src) && (user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM))
 				if(S.next_step(user,user.a_intent))
 					return 1
@@ -156,8 +156,6 @@
 		newtonian_move(get_dir(target, src))
 		thrown_thing.safe_throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src, null, null, null, move_force)
 
-/mob/living/carbon/restrained(ignore_grab)
-	. = (handcuffed || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))
 
 /mob/living/carbon/proc/canBeHandcuffed()
 	return 0
@@ -227,9 +225,6 @@
 								"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on your [ITEM.name].</span>", null, null, usr)
 				to_chat(usr, "<span class='notice'>You [internal ? "open" : "close"] the valve on [src]'s [ITEM.name].</span>")
 
-/mob/living/carbon/fall(forced)
-    loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
-
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 
@@ -240,7 +235,7 @@
 		return FALSE
 
 /mob/living/carbon/resist_buckle()
-	if(restrained())
+	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
 		changeNext_move(CLICK_CD_BREAKOUT)
 		last_special = world.time + CLICK_CD_BREAKOUT
 		var/buckle_cd = 600
@@ -378,8 +373,8 @@
 			update_inv_legcuffed()
 			return TRUE
 
-/mob/living/carbon/get_standard_pixel_y_offset(lying = 0)
-	if(lying)
+/mob/living/carbon/get_standard_pixel_y_offset(lying_angle = 0)
+	if(lying_angle)
 		return -6
 	else
 		return initial(pixel_y)
@@ -494,12 +489,6 @@
 	if(dna)
 		dna.real_name = real_name
 
-/mob/living/carbon/update_mobility()
-	. = ..()
-	if(!(mobility_flags & MOBILITY_STAND))
-		add_movespeed_modifier(MOVESPEED_ID_CARBON_CRAWLING, TRUE, multiplicative_slowdown = CRAWLING_ADD_SLOWDOWN)
-	else
-		remove_movespeed_modifier(MOVESPEED_ID_CARBON_CRAWLING, TRUE)
 
 //Updates the mob's health from bodyparts and mob damage variables
 /mob/living/carbon/updatehealth()
@@ -516,15 +505,11 @@
 	health = round(maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute, DAMAGE_PRECISION)
 	staminaloss = round(total_stamina, DAMAGE_PRECISION)
 	update_stat()
-	update_mobility()
 	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD*2) && stat == DEAD )
 		become_husk("burn")
 
 	med_hud_set_health()
-	if(stat == SOFT_CRIT)
-		add_movespeed_modifier(MOVESPEED_ID_CARBON_SOFTCRIT, TRUE, multiplicative_slowdown = SOFTCRIT_ADD_SLOWDOWN)
-	else
-		remove_movespeed_modifier(MOVESPEED_ID_CARBON_SOFTCRIT, TRUE)
+
 
 /mob/living/carbon/update_stamina()
 	var/stam = getStaminaLoss()
@@ -772,7 +757,6 @@
 				set_stat(CONSCIOUS)
 			cure_blind(UNCONSCIOUS_BLIND)
 			REMOVE_TRAIT(src, TRAIT_SIXTHSENSE, "near-death")
-		update_mobility()
 	update_damage_hud()
 	update_health_hud()
 	med_hud_set_status()
@@ -780,17 +764,16 @@
 //called when we get cuffed/uncuffed
 /mob/living/carbon/proc/update_handcuffed()
 	if(handcuffed)
-		drop_all_held_items()
-		stop_pulling()
+		ADD_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
 		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "handcuffed", /datum/mood_event/handcuffed)
 	else
+		REMOVE_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
 		clear_alert("handcuffed")
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "handcuffed")
 	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
 	update_inv_handcuffed()
 	update_hud_handcuffed()
-	update_mobility()
 
 /mob/living/carbon/fully_heal(admin_revive = FALSE)
 	if(reagents)
@@ -865,14 +848,23 @@
 		O.owner = src
 		bodyparts.Remove(X)
 		bodyparts.Add(O)
-		if(O.body_part == ARM_LEFT)
-			l_arm_index_next += 2
-			O.held_index = l_arm_index_next //1, 3, 5, 7...
-			hand_bodyparts += O
-		else if(O.body_part == ARM_RIGHT)
-			r_arm_index_next += 2
-			O.held_index = r_arm_index_next //2, 4, 6, 8...
-			hand_bodyparts += O
+		switch(O.body_part)
+			if(ARM_LEFT)
+				l_arm_index_next += 2
+				O.held_index = l_arm_index_next //1, 3, 5, 7...
+				hand_bodyparts += O
+				if(!O.is_disabled())
+					add_functional_arm(O)
+			if(ARM_RIGHT)
+				r_arm_index_next += 2
+				O.held_index = r_arm_index_next //2, 4, 6, 8...
+				hand_bodyparts += O
+				if(!O.is_disabled())
+					add_functional_arm(O)
+			if(LEG_LEFT, LEG_RIGHT)
+				if(!O.is_disabled())
+					add_functional_leg(O)
+
 
 /mob/living/carbon/do_after_coefficent()
 	. = ..()
@@ -1028,3 +1020,56 @@
 	if(mood)
 		if(mood.sanity < SANITY_UNSTABLE)
 			return TRUE
+
+
+/mob/living/carbon/proc/add_functional_arm(obj/item/bodypart/enabled_arm)
+	if(enabled_arm in functional_arms)
+		return
+	. = LAZYLEN(functional_arms)
+	LAZYADD(functional_arms, enabled_arm)
+	if(!. && !LAZYLEN(functional_legs))
+		REMOVE_TRAIT(src, TRAIT_GROUND_IMMOBILE, CARBON_LIMBLESS_TRAIT)
+	update_limbless_slowdown()
+
+/mob/living/carbon/proc/remove_functional_arm(obj/item/bodypart/disabled_arm)
+	if(disabled_arm in functional_arms)
+		return
+	. = LAZYLEN(functional_arms)
+	LAZYREMOVE(functional_arms, disabled_arm)
+	if(!LAZYLEN(functional_arms))
+		if(!LAZYLEN(functional_legs))
+			ADD_TRAIT(src, TRAIT_GROUND_IMMOBILE, CARBON_LIMBLESS_TRAIT)
+	update_limbless_slowdown()
+
+/mob/living/carbon/proc/add_functional_leg(obj/item/bodypart/enabled_leg)
+	if(enabled_leg in functional_legs)
+		return
+	. = LAZYLEN(functional_legs)
+	LAZYADD(functional_legs, enabled_leg)
+	if(!.)
+		REMOVE_TRAIT(src, TRAIT_GROUND_STANDINGBLOCKED, CARBON_LEGLESS_TRAIT)
+		if(!LAZYLEN(functional_arms))
+			REMOVE_TRAIT(src, TRAIT_GROUND_IMMOBILE, CARBON_LIMBLESS_TRAIT)
+	update_limbless_slowdown()
+
+/mob/living/carbon/proc/remove_functional_leg(obj/item/bodypart/disabled_leg)
+	if(disabled_leg in functional_legs)
+		return
+	. = LAZYLEN(functional_legs)
+	LAZYREMOVE(functional_legs, disabled_leg)
+	if(!LAZYLEN(functional_legs))
+		ADD_TRAIT(src, TRAIT_GROUND_STANDINGBLOCKED, CARBON_LEGLESS_TRAIT)
+		if(!LAZYLEN(functional_arms))
+			ADD_TRAIT(src, TRAIT_GROUND_IMMOBILE, CARBON_LIMBLESS_TRAIT)
+	update_limbless_slowdown()
+
+/mob/living/carbon/proc/update_limbless_slowdown()
+	var/limbless_slowdown = 0
+	if(LAZYLEN(functional_legs) < 2)
+		limbless_slowdown += 6 - (LAZYLEN(functional_legs) * 3)
+		if(limbless_slowdown == 6) //No legs.
+			limbless_slowdown += 6 - (LAZYLEN(functional_arms) * 3)
+	if(limbless_slowdown)
+		add_movespeed_modifier(MOVESPEED_ID_LIVING_LIMBLESS, priority = 100, override = TRUE, multiplicative_slowdown = limbless_slowdown, movetypes = GROUND)
+	else
+		remove_movespeed_modifier(MOVESPEED_ID_LIVING_LIMBLESS)

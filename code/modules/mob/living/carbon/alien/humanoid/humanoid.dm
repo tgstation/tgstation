@@ -25,9 +25,6 @@
 	. = ..()
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.5, -3)
 
-/mob/living/carbon/alien/humanoid/restrained(ignore_grab)
-	return handcuffed
-
 /mob/living/carbon/alien/humanoid/show_inv(mob/user)
 	user.set_machine(src)
 	var/list/dat = list()
@@ -76,7 +73,7 @@
 	pulledby.stop_pulling()
 	. = 0
 
-/mob/living/carbon/alien/humanoid/get_standard_pixel_y_offset(lying = 0)
+/mob/living/carbon/alien/humanoid/get_standard_pixel_y_offset(lying_angle = 0)
 	if(leaping)
 		return -32
 	else if(custom_pixel_y_offset)
@@ -84,7 +81,7 @@
 	else
 		return initial(pixel_y)
 
-/mob/living/carbon/alien/humanoid/get_standard_pixel_x_offset(lying = 0)
+/mob/living/carbon/alien/humanoid/get_standard_pixel_x_offset(lying_angle = 0)
 	if(leaping)
 		return -32
 	else if(custom_pixel_x_offset)

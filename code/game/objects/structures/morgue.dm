@@ -341,26 +341,19 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	else
 		to_chat(user, "<span class='warning'>That's not connected to anything!</span>")
 
-/obj/structure/tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user)
-	if(!ismovableatom(O) || O.anchored || !Adjacent(user) || !user.Adjacent(O) || O.loc == user)
+/obj/structure/tray/MouseDrop_T(atom/movable/movable_dropped, mob/living/user)
+	if(!isliving(user) || IS_PRONE(user) || !LIVING_CAN_USE_HANDS(user) || !ismovableatom(movable_dropped) || movable_dropped.anchored || movable_dropped.loc == user || !Adjacent(user) || !user.Adjacent(movable_dropped))
 		return
-	if(!ismob(O))
-		if(!istype(O, /obj/structure/closet/body_bag))
+	if(!isliving(movable_dropped))
+		if(!istype(movable_dropped, /obj/structure/closet/body_bag))
 			return
 	else
-		var/mob/M = O
-		if(M.buckled)
+		var/mob/living/living_dropped = movable_dropped
+		if(living_dropped.buckled)
 			return
-	if(!ismob(user) || user.incapacitated())
-		return
-	if(isliving(user))
-		var/mob/living/L = user
-		if(!(L.mobility_flags & MOBILITY_STAND))
-			return
-	O.forceMove(src.loc)
-	if (user != O)
-		visible_message("<span class='warning'>[user] stuffs [O] into [src].</span>")
-	return
+	movable_dropped.forceMove(loc)
+	if (user != movable_dropped)
+		visible_message("<span class='warning'>[user] stuffs [movable_dropped] into [src].</span>")
 
 /*
  * Crematorium tray

@@ -177,9 +177,12 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			return "unknown"
 
-/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null)
+/proc/do_mob(mob/user , mob/target, time = 3 SECONDS, ignore_flags = NONE, progress = TRUE, datum/callback/extra_checks)
 	if(!user || !target)
 		return 0
+	var/mob/living/living_user
+	if(isliving(user))
+		living_user = user
 	var/user_loc = user.loc
 
 	var/drifting = 0
@@ -203,14 +206,13 @@ GLOBAL_LIST_EMPTY(species_list)
 		if(QDELETED(user) || QDELETED(target))
 			. = 0
 			break
-		if(uninterruptible)
+		if(ignore_flags & UNINTERRUPTIBLE)
 			continue
 
 		if(drifting && !user.inertia_dir)
 			drifting = 0
 			user_loc = user.loc
-
-		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_held_item() != holding || user.incapacitated() || (extra_checks && !extra_checks.Invoke()))
+		if((!(ignore_flags & IGNORE_LOC_CHANGE) && ((!drifting && user.loc != user_loc) || target.loc != target_loc)) || (!(ignore_flags & IGNORE_HAND) && user.get_active_held_item() != holding) || (living_user && IS_INCAPACITATED(living_user)) || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
 	if (progress)
@@ -300,9 +302,12 @@ GLOBAL_LIST_EMPTY(species_list)
 	. = 1
 	return
 
-/proc/do_after_mob(mob/user, list/targets, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks, required_mobility_flags = MOBILITY_STAND)
+/proc/do_after_mob(mob/user, list/targets, time = 3 SECONDS, ignore_flags = NONE, progress = 1, datum/callback/extra_checks)
 	if(!user || !targets)
 		return 0
+	var/mob/living/living_user
+	if(isliving(user))
+		living_user = user
 	if(!islist(targets))
 		targets = list(targets)
 	var/user_loc = user.loc
@@ -322,9 +327,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	var/endtime = world.time + time
 	var/starttime = world.time
-	var/mob/living/L
-	if(isliving(user))
-		L = user
+
 	. = 1
 	mainloop:
 		while(world.time < endtime)
@@ -334,19 +337,15 @@ GLOBAL_LIST_EMPTY(species_list)
 			if(QDELETED(user) || !targets)
 				. = 0
 				break
-			if(uninterruptible)
+			if(ignore_flags & UNINTERRUPTIBLE)
 				continue
 
 			if(drifting && !user.inertia_dir)
 				drifting = 0
 				user_loc = user.loc
 
-			if(L && !CHECK_MULTIPLE_BITFIELDS(L.mobility_flags, required_mobility_flags))
-				. = 0
-				break
-
 			for(var/atom/target in targets)
-				if((!drifting && user_loc != user.loc) || QDELETED(target) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || (extra_checks && !extra_checks.Invoke()))
+				if(QDELETED(target) || (!(ignore_flags & IGNORE_LOC_CHANGE) && ((!drifting && user_loc != user.loc) || originalloc[target] != target.loc)) || (!(ignore_flags & IGNORE_HAND) && user.get_active_held_item() != holding) || (living_user && IS_INCAPACITATED(living_user)) || (extra_checks && !extra_checks.Invoke()))
 					. = 0
 					break mainloop
 	if(progbar)

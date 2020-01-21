@@ -98,8 +98,10 @@
 		CtrlClickOn(A)
 		return
 
-	if(incapacitated(ignore_restraints = 1))
-		return
+	if(isliving(src)) //Ugly, but don't want to tempt coders to further redefine a is_stunned() proc to make it return FALSE on certain mobs.
+		var/mob/living/living_clicker = src
+		if(IS_STUNNED(living_clicker))
+			return
 
 	face_atom(A)
 
@@ -113,7 +115,7 @@
 		var/obj/mecha/M = loc
 		return M.click_action(A,src,params)
 
-	if(restrained())
+	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
 		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
 		RestrainedClickOn(A)
 		return
@@ -323,14 +325,15 @@
 		ML.pulled(src)
 
 /mob/living/carbon/human/CtrlClick(mob/user)
-	if(ishuman(user) && Adjacent(user) && !user.incapacitated())
-		if(world.time < user.next_move)
-			return FALSE
-		var/mob/living/carbon/human/H = user
-		H.dna.species.grab(H, src, H.mind.martial_art)
-		H.changeNext_move(CLICK_CD_MELEE)
-	else
-		..()
+	if(!ishuman(user) || !Adjacent(user))
+		return ..()
+	var/mob/living/carbon/human/human_user = user
+	if(IS_INCAPACITATED(human_user))
+		return ..()
+	if(world.time < user.next_move)
+		return FALSE
+	human_user.dna.species.grab(human_user, src, human_user.mind.martial_art)
+	human_user.changeNext_move(CLICK_CD_MELEE)
 /*
 	Alt click
 	Unused except for AI

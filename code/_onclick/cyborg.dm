@@ -42,12 +42,6 @@
 
 	face_atom(A) // change direction to face what you clicked on
 
-	/*
-	cyborg restrained() currently does nothing
-	if(restrained())
-		RestrainedClickOn(A)
-		return
-	*/
 	if(aicamera.in_camera_mode) //Cyborg picture taking
 		aicamera.camera_mode_off()
 		aicamera.captureimage(A, usr)
@@ -61,7 +55,7 @@
 
 	if(W)
 		// buckled cannot prevent machine interlinking but stops arm movement
-		if( buckled || incapacitated())
+		if( buckled || !LIVING_CAN_USE_HANDS(src))
 			return
 
 		if(W == A)

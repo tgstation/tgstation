@@ -53,6 +53,7 @@
 
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
+	var/mob/living/watcher
 
 
 
@@ -85,13 +86,24 @@
 /mob/living/simple_animal/hostile/statue/Life()
 	..()
 	if(!client && target) // If we have a target and we're AI controlled
-		var/mob/watching = can_be_seen()
+		var/mob/living/new_watcher = can_be_seen()
+		if(!new_watcher)
+			if(watcher)
+				watcher = null
+				REMOVE_TRAIT(src, TRAIT_IMMOBILE, INNATE_TRAIT)
+				REMOVE_TRAIT(src, TRAIT_HANDSBLOCKED, INNATE_TRAIT)
+			return
+		if(!watcher)
+			watcher = new_watcher
+			ADD_TRAIT(src, TRAIT_IMMOBILE, INNATE_TRAIT)
+			ADD_TRAIT(src, TRAIT_HANDSBLOCKED, INNATE_TRAIT)
 		// If they're not our target
-		if(watching && watching != target)
+		if(new_watcher != target)
 			// This one is closer.
-			if(get_dist(watching, src) > get_dist(target, src))
+			if(get_dist(new_watcher, src) > get_dist(target, src))
 				LoseTarget()
-				GiveTarget(watching)
+				GiveTarget(new_watcher)
+				watcher = new_watcher
 
 /mob/living/simple_animal/hostile/statue/AttackingTarget()
 	if(can_be_seen(get_turf(loc)))
@@ -228,8 +240,3 @@
 
 /mob/living/simple_animal/hostile/statue/sentience_act()
 	faction -= "neutral"
-
-/mob/living/simple_animal/hostile/statue/restrained(ignore_grab)
-	. = ..()
-	if(can_be_seen(loc))
-		return 1

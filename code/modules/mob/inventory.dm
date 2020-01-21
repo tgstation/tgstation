@@ -181,7 +181,7 @@
 	return FALSE					//nonliving mobs don't have hands
 
 /mob/living/put_in_hand_check(obj/item/I)
-	if(istype(I) && ((mobility_flags & MOBILITY_PICKUP) || (I.item_flags & ABSTRACT)))
+	if(istype(I) && (LIVING_CAN_PICK_UP(src) || (I.item_flags & ABSTRACT)))
 		return TRUE
 	return FALSE
 
@@ -479,4 +479,6 @@
 			BP.held_index = i
 			bodyparts += BP
 			hand_bodyparts[i] = BP
+			if(!BP.is_disabled())
+				add_functional_arm(BP)
 	..() //Don't redraw hands until we have organs for them

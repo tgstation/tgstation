@@ -107,14 +107,15 @@
 	startpos = null
 
 /obj/item/gun/energy/chrono_gun/proc/field_check(obj/structure/chrono_field/F)
-	if(F)
-		if(field == F)
-			var/turf/currentpos = get_turf(src)
-			var/mob/living/user = loc
-			if((currentpos == startpos) && (field in view(CHRONO_BEAM_RANGE, currentpos)) && (user.mobility_flags & MOBILITY_STAND) && (user.stat == CONSCIOUS))
-				return 1
-		field_disconnect(F)
-		return 0
+	if(!F)
+		return
+	if(field == F)
+		var/turf/currentpos = get_turf(src)
+		var/mob/living/user = loc
+		if(currentpos == startpos && (field in view(CHRONO_BEAM_RANGE, currentpos)) && !IS_PRONE(user) && LIVING_CAN_USE_HANDS(user))
+			return TRUE
+	field_disconnect(F)
+	return FALSE
 
 /obj/item/gun/energy/chrono_gun/proc/pass_mind(datum/mind/M)
 	if(TED)

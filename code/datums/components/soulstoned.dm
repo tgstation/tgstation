@@ -12,7 +12,8 @@
 	S.forceMove(container)
 
 	S.status_flags |= GODMODE
-	S.mobility_flags = NONE
+	ADD_TRAIT(S, TRAIT_IMMOBILE, SOULSTONE_TRAIT)
+	ADD_TRAIT(S, TRAIT_HANDSBLOCKED, SOULSTONE_TRAIT)
 	S.health = S.maxHealth
 	S.bruteloss = 0
 
@@ -26,6 +27,5 @@
 /datum/component/soulstoned/UnregisterFromParent()
 	var/mob/living/simple_animal/S = parent
 	S.status_flags &= ~GODMODE
-	S.mobility_flags = MOBILITY_FLAGS_DEFAULT
-
-  
+	REMOVE_TRAIT(S, TRAIT_IMMOBILE, SOULSTONE_TRAIT)
+	REMOVE_TRAIT(S, TRAIT_HANDSBLOCKED, SOULSTONE_TRAIT)

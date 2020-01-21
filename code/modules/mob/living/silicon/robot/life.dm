@@ -92,12 +92,3 @@
 		add_overlay(fire_overlay)
 	else
 		cut_overlay(fire_overlay)
-
-/mob/living/silicon/robot/update_mobility()
-	if(stat || buckled || lockcharge)
-		mobility_flags &= ~MOBILITY_MOVE
-	else
-		mobility_flags = MOBILITY_FLAGS_DEFAULT
-	update_transform()
-	update_action_buttons_icon()
-

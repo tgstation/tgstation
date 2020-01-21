@@ -51,7 +51,7 @@
   * * being grabbed
   * * being buckled  (relaymove() is called to the buckled atom instead)
   * * having your loc be some other mob (relaymove() is called on that mob instead)
-  * * Not having MOBILITY_MOVE
+  * * having TRAIT_IMMOBILE
   * * Failing Process_Spacemove() call
   *
   * At this point, if the mob is is confused, then a random direction and target turf will be calculated for you to travel to instead
@@ -107,7 +107,7 @@
 	if(mob.buckled)							//if we're buckled to something, tell it we moved.
 		return mob.buckled.relaymove(mob, direct)
 
-	if(!(L.mobility_flags & MOBILITY_MOVE))
+	if(!LIVING_CAN_MOVE(L))
 		return FALSE
 
 	if(isobj(mob.loc) || ismob(mob.loc))	//Inside an object, tell it we moved
@@ -154,18 +154,19 @@
   * Called by client/Move()
   */
 /client/proc/Process_Grab()
-	if(mob.pulledby)
-		if((mob.pulledby == mob.pulling) && (mob.pulledby.grab_state == GRAB_PASSIVE))			//Don't autoresist passive grabs if we're grabbing them too.
-			return
-		if(mob.incapacitated(ignore_restraints = 1))
-			move_delay = world.time + 10
-			return TRUE
-		else if(mob.restrained(ignore_grab = 1))
-			move_delay = world.time + 10
-			to_chat(src, "<span class='warning'>You're restrained! You can't move!</span>")
-			return TRUE
-		else
-			return mob.resist_grab(1)
+	if(!mob.pulledby || !isliving(mob))
+		return
+	var/mob/living/grabbed_user = mob
+	if((grabbed_user.pulledby == grabbed_user.pulling) && (grabbed_user.pulledby.grab_state == GRAB_PASSIVE)) //Don't autoresist passive grabs if we're grabbing them too.
+		return
+	if(IS_STUNNED(grabbed_user))
+		move_delay = world.time + 1 SECONDS
+		return TRUE
+	if(HAS_TRAIT(grabbed_user, TRAIT_RESTRAINED))
+		move_delay = world.time + 1 SECONDS
+		to_chat(src, "<span class='warning'>You're restrained! You can't move!</span>")
+		return TRUE
+	return grabbed_user.resist_grab(1)
 
 /**
   * Allows mobs to ignore density and phase through objects

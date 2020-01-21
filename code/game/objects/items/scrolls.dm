@@ -30,19 +30,18 @@
 
 /obj/item/teleportation_scroll/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained() || src.loc != usr)
+	if(!ishuman(usr) || loc != usr)
 		return
-	if (!ishuman(usr))
-		return 1
-	var/mob/living/carbon/human/H = usr
-	if(H.is_holding(src))
-		H.set_machine(src)
+	var/mob/living/carbon/human/human_user = usr
+	if(!LIVING_CAN_USE_HANDS(human_user))
+		return
+	if(human_user.is_holding(src))
+		human_user.set_machine(src)
 		if (href_list["spell_teleport"])
 			if(uses)
-				teleportscroll(H)
-	if(H)
-		attack_self(H)
-	return
+				teleportscroll(human_user)
+	if(!QDELETED(human_user))
+		attack_self(human_user)
 
 /obj/item/teleportation_scroll/proc/teleportscroll(mob/user)
 

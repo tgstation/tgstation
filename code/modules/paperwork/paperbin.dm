@@ -62,7 +62,7 @@
 /obj/item/paper_bin/attack_hand(mob/user)
 	if(isliving(user))
 		var/mob/living/L = user
-		if(!(L.mobility_flags & MOBILITY_PICKUP))
+		if(!LIVING_CAN_PICK_UP(L))
 			return
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(bin_pen)

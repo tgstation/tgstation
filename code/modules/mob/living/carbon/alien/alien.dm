@@ -28,7 +28,7 @@
 
 /mob/living/carbon/alien/Initialize()
 	verbs += /mob/living/proc/mob_sleep
-	verbs += /mob/living/proc/lay_down
+	verbs += /mob/living/proc/toggle_rest
 
 	create_bodyparts() //initialize bodyparts
 
@@ -117,7 +117,7 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/alien/canBeHandcuffed()
 	return 1
 
-/mob/living/carbon/alien/get_standard_pixel_y_offset(lying = 0)
+/mob/living/carbon/alien/get_standard_pixel_y_offset(lying_angle = 0)
 	return initial(pixel_y)
 
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)

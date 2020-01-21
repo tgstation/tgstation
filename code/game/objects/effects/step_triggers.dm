@@ -64,7 +64,7 @@
 	if(isliving(AM))
 		var/mob/living/M = AM
 		if(immobilize)
-			M.mobility_flags &= ~MOBILITY_MOVE
+			ADD_TRAIT(M, TRAIT_IMMOBILE, STEPTRIGGER_THROWER_TRAIT)
 
 	affecting.Add(AM)
 	while(AM && !stopthrow)
@@ -101,8 +101,7 @@
 	if(isliving(AM))
 		var/mob/living/M = AM
 		if(immobilize)
-			M.mobility_flags |= MOBILITY_MOVE
-		M.update_mobility()
+			REMOVE_TRAIT(M, TRAIT_IMMOBILE, STEPTRIGGER_THROWER_TRAIT)
 
 /* Stops things thrown by a thrower, doesn't do anything */
 

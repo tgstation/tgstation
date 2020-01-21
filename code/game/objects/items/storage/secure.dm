@@ -80,7 +80,12 @@
 
 /obj/item/storage/secure/Topic(href, href_list)
 	..()
-	if ((usr.stat || usr.restrained()) || (get_dist(src, usr) > 1))
+	if(!isliving(usr))
+		return
+	var/mob/living/living_user = usr
+	if(!LIVING_CAN_STORAGE(living_user))
+		return
+	if(get_dist(src, usr) > 1)
 		return
 	if (href_list["type"])
 		if (href_list["type"] == "E")

@@ -60,7 +60,7 @@
 /obj/item/toy/cards/deck/cas/draw_card(mob/user)
 	if(isliving(user))
 		var/mob/living/L = user
-		if(!(L.mobility_flags & MOBILITY_PICKUP))
+		if(!LIVING_CAN_PICK_UP(L))
 			return
 	if(cards.len == 0)
 		to_chat(user, "<span class='warning'>There are no more cards to draw!</span>")

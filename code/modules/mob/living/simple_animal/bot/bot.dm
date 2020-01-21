@@ -114,7 +114,7 @@
 	if(stat)
 		return FALSE
 	on = TRUE
-	update_mobility()
+	REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, LACK_OF_POWER_TRAIT)
 	set_light(initial(light_range))
 	update_icon()
 	diag_hud_set_botstat()
@@ -122,7 +122,7 @@
 
 /mob/living/simple_animal/bot/proc/turn_off()
 	on = FALSE
-	update_mobility()
+	ADD_TRAIT(src, TRAIT_KNOCKEDOUT, LACK_OF_POWER_TRAIT)
 	set_light(0)
 	bot_reset() //Resets an AI's call, should it exist.
 	update_icon()
@@ -158,11 +158,6 @@
 	if(path_hud)
 		path_hud.add_to_hud(src)
 		path_hud.add_hud_to(src)
-
-/mob/living/simple_animal/bot/update_mobility()
-	. = ..()
-	if(!on)
-		mobility_flags = NONE
 
 /mob/living/simple_animal/bot/Destroy()
 	if(path_hud)

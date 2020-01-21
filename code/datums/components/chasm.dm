@@ -111,7 +111,7 @@
 			var/mob/living/L = AM
 			L.notransform = TRUE
 			L.Stun(200)
-			L.resting = TRUE
+			L.set_resting(TRUE)
 
 		var/oldtransform = AM.transform
 		var/oldcolor = AM.color

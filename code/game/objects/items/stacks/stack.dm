@@ -189,7 +189,9 @@
 
 /obj/item/stack/Topic(href, href_list)
 	..()
-	if (usr.restrained() || usr.stat || usr.get_active_held_item() != src)
+	if(!isliving(usr))
+		return
+	if(usr.get_active_held_item() != src)
 		return
 	if (href_list["sublist"] && !href_list["make"])
 		interact(usr, text2num(href_list["sublist"]))

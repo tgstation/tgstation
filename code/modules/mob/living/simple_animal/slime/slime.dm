@@ -496,7 +496,7 @@
 
 	SStun = world.time + rand(20,60)
 
-	mobility_flags &= ~MOBILITY_MOVE
+	ADD_TRAIT(src, TRAIT_IMMOBILE, SLIME_DISCLIPLINE_TRAIT)
 	if(user)
 		step_away(src,user,15)
 
@@ -505,7 +505,7 @@
 /mob/living/simple_animal/slime/proc/slime_move(mob/user)
 	if(user)
 		step_away(src,user,15)
-	update_mobility()
+	REMOVE_TRAIT(src, TRAIT_IMMOBILE, SLIME_DISCLIPLINE_TRAIT)
 
 /mob/living/simple_animal/slime/pet
 	docile = 1

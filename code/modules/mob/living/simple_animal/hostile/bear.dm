@@ -24,7 +24,7 @@
 	health = 60
 	speed = 0
 	spacewalk = TRUE
-	
+
 	obj_damage = 60
 	melee_damage_lower = 20
 	melee_damage_upper = 30
@@ -38,14 +38,14 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
-	
+
 	faction = list("russian")
-	
+
 	footstep_type = FOOTSTEP_MOB_CLAW
-	
+
 	var/armored = FALSE
 	var/rideable = FALSE
-	
+
 /mob/living/simple_animal/hostile/bear/Life()
 	. = ..()
 	if(!rideable && mind)
@@ -58,12 +58,12 @@
 		D.set_vehicle_dir_layer(EAST, ABOVE_MOB_LAYER)
 		D.set_vehicle_dir_layer(WEST, ABOVE_MOB_LAYER)
 		rideable = TRUE
-	
+
 /mob/living/simple_animal/hostile/bear/update_icons()
 	..()
 	if(armored)
 		add_overlay("armor_bear")
-		
+
 
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
@@ -168,7 +168,7 @@ mob/living/simple_animal/hostile/bear/butter //The mighty companion to Cak. Seve
 mob/living/simple_animal/hostile/bear/butter/AttackingTarget() //Makes some attacks by the butter bear slip those who dare cross its path.
 	if(isliving(target))
 		var/mob/living/L = target
-		if((L.mobility_flags & MOBILITY_STAND))
+		if(IS_STANDING(L))
 			L.Knockdown(20)
 			playsound(loc, 'sound/misc/slip.ogg', 15)
 			L.visible_message("<span class='danger'>[L] slips on butter!</span>")

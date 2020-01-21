@@ -6,12 +6,12 @@
 #define INTERACT_ATOM_UI_INTERACT 					(1<<2)
 /// user must be dextrous
 #define INTERACT_ATOM_REQUIRES_DEXTERITY 			(1<<3)
-/// ignores incapacitated check
-#define INTERACT_ATOM_IGNORE_INCAPACITATED		 	(1<<4)
-/// incapacitated check ignores restrained
-#define INTERACT_ATOM_IGNORE_RESTRAINED 			(1<<5)
-/// incapacitated check checks grab
-#define INTERACT_ATOM_CHECK_GRAB 					(1<<6)
+/// ignores standing check
+#define INTERACT_ATOM_STANDING						(1<<4)
+/// ignores immobility check
+#define INTERACT_ATOM_IGNORE_IMMOBILITY				(1<<5)
+/// ignores handblock check
+#define INTERACT_ATOM_IGNORE_HANDBLOCK				(1<<6)
 /// prevents leaving fingerprints automatically on attack_hand
 #define INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND	(1<<7)
 /// adds hiddenprints instead of fingerprints on interact

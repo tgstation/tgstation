@@ -158,7 +158,7 @@
 /mob/living/carbon/true_devil/resist_fire()
 	//They're immune to fire.
 
-/mob/living/carbon/true_devil/attack_hand(mob/living/carbon/human/M)
+/mob/living/carbon/true_devil/attack_hand(mob/living/carbon/human/M) //This code is not being triggered ever. Delete or fix?
 	. = ..()
 	if(.)
 		switch(M.a_intent)
@@ -171,7 +171,7 @@
 				log_combat(M, src, "attacked")
 				updatehealth()
 			if ("disarm")
-				if (!(mobility_flags & MOBILITY_STAND) && !ascended) //No stealing the arch devil's pitchfork.
+				if (!IS_PRONE(src) && !ascended) //No stealing the arch devil's pitchfork.
 					if (prob(5))
 						Unconscious(40)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)

@@ -445,7 +445,7 @@
 			to_chat(M, "<span class='notice'>Your hands spaz out and you drop what you were holding!</span>")
 			M.Jitter(10)
 
-	M.AdjustAllImmobility(-20, FALSE)
+	M.AdjustAllImmobility(-20)
 	M.adjustStaminaLoss(-1*REM, FALSE)
 	..()
 	return TRUE
@@ -693,7 +693,7 @@
 	M.adjustStaminaLoss(-0.5*REM, 0)
 	. = 1
 	if(prob(20))
-		M.AdjustAllImmobility(-20, FALSE)
+		M.AdjustAllImmobility(-20)
 	..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/M)
@@ -828,7 +828,7 @@
 		M.adjustToxLoss(-1*REM, 0)
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
-	M.AdjustAllImmobility(-60, FALSE)
+	M.AdjustAllImmobility(-60)
 	M.adjustStaminaLoss(-5*REM, 0)
 	..()
 	. = 1
@@ -1013,7 +1013,7 @@
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
 	..()
-	M.AdjustAllImmobility(-20, FALSE)
+	M.AdjustAllImmobility(-20)
 	M.adjustStaminaLoss(-10, 0)
 	M.Jitter(10)
 	M.Dizzy(10)
@@ -1120,7 +1120,7 @@
 /datum/reagent/medicine/modafinil/on_mob_life(mob/living/carbon/M)
 	if(!overdosed) // We do not want any effects on OD
 		overdose_threshold = overdose_threshold + rand(-10,10)/10 // for extra fun
-		M.AdjustAllImmobility(-5, FALSE)
+		M.AdjustAllImmobility(-5)
 		M.adjustStaminaLoss(-0.5*REM, 0)
 		M.Jitter(1)
 		metabolization_rate = 0.01 * REAGENTS_METABOLISM * rand(5,20) // randomizes metabolism between 0.02 and 0.08 per tick

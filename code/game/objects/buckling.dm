@@ -1,7 +1,7 @@
 /atom/movable
 	var/can_buckle = 0
-	var/buckle_lying = -1 //bed-like behaviour, forces mob.lying = buckle_lying if != -1
-	var/buckle_requires_restraints = 0 //require people to be handcuffed before being able to buckle. eg: pipes
+	var/buckle_lying = -1 //bed-like behaviour, forces mob.lying_angle = buckle_lying if != -1
+	var/buckle_requires_restraints = FALSE //require people to be handcuffed before being able to buckle. eg: pipes
 	var/list/mob/living/buckled_mobs = null //list()
 	var/max_buckled_mobs = 1
 	var/buckle_prevents_pull = FALSE
@@ -46,7 +46,7 @@
 	if(check_loc && M.loc != loc)
 		return FALSE
 
-	if((!can_buckle && !force) || M.buckled || (buckled_mobs.len >= max_buckled_mobs) || (buckle_requires_restraints && !M.restrained()) || M == src)
+	if((!can_buckle && !force) || M.buckled || (buckled_mobs.len >= max_buckled_mobs) || (buckle_requires_restraints && !HAS_TRAIT(M, TRAIT_RESTRAINED)) || M == src)
 		return FALSE
 	M.buckling = src
 	if(!M.can_buckle() && !force)
@@ -71,7 +71,16 @@
 	M.buckled = src
 	M.setDir(dir)
 	buckled_mobs |= M
-	M.update_mobility()
+	ADD_TRAIT(M, TRAIT_IMMOBILE, BUCKLED_TRAIT)
+	if(buckle_lying != -1)
+		M.set_lying_angle(buckle_lying)
+		if(buckle_lying > 0)
+			M.setDir(SOUTH)
+			M.lay_down()
+			ADD_TRAIT(M, TRAIT_STANDINGBLOCKED, BUCKLED_TRAIT)
+		else
+			M.set_body_position(POS_STANDING) //It's not get_up(forced = TRUE) because we don't want to force them to stop resting if they are.
+			M.setDir(dir)
 	M.throw_alert("buckled", /obj/screen/alert/restrained/buckled)
 	post_buckle_mob(M)
 
@@ -90,9 +99,16 @@
 		. = buckled_mob
 		buckled_mob.buckled = null
 		buckled_mob.anchored = initial(buckled_mob.anchored)
-		buckled_mob.update_mobility()
 		buckled_mob.clear_alert("buckled")
 		buckled_mobs -= buckled_mob
+		REMOVE_TRAIT(buckled_mob, TRAIT_STANDINGBLOCKED, BUCKLED_TRAIT)
+		REMOVE_TRAIT(buckled_mob, TRAIT_IMMOBILE, BUCKLED_TRAIT)
+		if(buckled_mob.resting)
+			if(!IS_PRONE(buckled_mob))
+				buckled_mob.lay_down()
+		else if(!IS_STANDING(buckled_mob) && LIVING_CAN_STAND(buckled_mob))
+			buckled_mob.get_up()
+
 		SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob, force)
 
 		post_unbuckle_mob(.)

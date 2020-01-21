@@ -58,10 +58,12 @@
 
 /obj/item/electropack/Topic(href, href_list)
 	//..()
-	var/mob/living/carbon/C = usr
-	if(usr.stat || usr.restrained() || C.back == src)
+	if(!ishuman(usr))
 		return
-	if((ishuman(usr) && usr.contents.Find(src)) || usr.contents.Find(master) || (in_range(src, usr) && isturf(loc)))
+	var/mob/living/carbon/human/human_user = usr
+	if(human_user.back == src || !LIVING_CAN_PICK_UP(human_user))
+		return
+	if(usr.contents.Find(src) || usr.contents.Find(master) || (in_range(src, usr) && isturf(loc)))
 		usr.set_machine(src)
 		if(href_list["freq"])
 			SSradio.remove_object(src, frequency)

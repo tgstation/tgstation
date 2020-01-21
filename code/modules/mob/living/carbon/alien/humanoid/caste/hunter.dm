@@ -31,7 +31,7 @@
 #define MAX_ALIEN_LEAP_DIST 7
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_at(atom/A)
-	if((mobility_flags & (MOBILITY_MOVE | MOBILITY_STAND)) != (MOBILITY_MOVE | MOBILITY_STAND) || leaping)
+	if(leaping || IS_PRONE(src) || !LIVING_CAN_MOVE(src))
 		return
 
 	if(pounce_cooldown > world.time)
@@ -84,7 +84,6 @@
 		if(leaping)
 			leaping = FALSE
 			update_icons()
-			update_mobility()
 
 
 /mob/living/carbon/alien/humanoid/float(on)

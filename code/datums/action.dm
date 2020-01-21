@@ -1,7 +1,7 @@
-#define AB_CHECK_RESTRAINED 1
-#define AB_CHECK_STUN 2
-#define AB_CHECK_LYING 4
-#define AB_CHECK_CONSCIOUS 8
+#define AB_CHECK_CONSCIOUS	(1<<0)
+#define AB_CHECK_MOBILITY	(1<<2)
+#define AB_CHECK_HANDS_USE	(1<<3)
+#define AB_CHECK_STANDING	(1<<4)
 
 /datum/action
 	var/name = "Generic Action"
@@ -94,22 +94,20 @@
 /datum/action/proc/IsAvailable()
 	if(!owner)
 		return FALSE
-	if(check_flags & AB_CHECK_RESTRAINED)
-		if(owner.restrained())
-			return FALSE
-	if(check_flags & AB_CHECK_STUN)
-		if(isliving(owner))
-			var/mob/living/L = owner
-			if(L.IsParalyzed() || L.IsStun())
-				return FALSE
-	if(check_flags & AB_CHECK_LYING)
-		if(isliving(owner))
-			var/mob/living/L = owner
-			if(!(L.mobility_flags & MOBILITY_STAND))
-				return FALSE
 	if(check_flags & AB_CHECK_CONSCIOUS)
-		if(owner.stat)
+		if(owner.stat != CONSCIOUS)
 			return FALSE
+	if(isliving(owner))
+		var/mob/living/living_owner = owner
+		if(check_flags & AB_CHECK_MOBILITY)
+			if(!LIVING_CAN_MOVE(living_owner))
+				return FALSE
+		if(check_flags & AB_CHECK_HANDS_USE)
+			if(!LIVING_CAN_USE_HANDS(living_owner))
+				return FALSE
+		if(check_flags & AB_CHECK_STANDING)
+			if(IS_PRONE(living_owner))
+				return FALSE
 	return TRUE
 
 /datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
@@ -148,7 +146,7 @@
 
 //Presets for item actions
 /datum/action/item_action
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_MOBILITY | AB_CHECK_HANDS_USE | AB_CHECK_STANDING
 	button_icon_state = null
 	// If you want to override the normal icon being the item
 	// then change this to an icon state
@@ -495,7 +493,7 @@
 /datum/action/item_action/agent_box
 	name = "Deploy Box"
 	desc = "Find inner peace, here, in the box."
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_MOBILITY | AB_CHECK_HANDS_USE
 	background_icon_state = "bg_agent"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "deploy_box"

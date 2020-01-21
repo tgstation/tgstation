@@ -349,19 +349,13 @@
 
 // mousedrop a crate to load the bot
 // can load anything if hacked
-/mob/living/simple_animal/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
-	var/mob/living/L = user
-
-	if (!istype(L))
+/mob/living/simple_animal/bot/mulebot/MouseDrop_T(atom/movable/movable_dropped, mob/living/user)
+	if(!isliving(user) || IS_PRONE(user) || !ismovableatom(movable_dropped) || isdead(movable_dropped) || iscameramob(movable_dropped) || istype(movable_dropped, /obj/effect/dummy/phased_mob))
 		return
-
-	if(user.incapacitated() || (istype(L) && !(L.mobility_flags & MOBILITY_STAND)))
+	if(!LIVING_CAN_USE_HANDS(user))
 		return
+	load(movable_dropped)
 
-	if(!istype(AM) || isdead(AM) || iscameramob(AM) || istype(AM, /obj/effect/dummy/phased_mob))
-		return
-
-	load(AM)
 
 // called to load a crate
 /mob/living/simple_animal/bot/mulebot/proc/load(atom/movable/AM)
@@ -773,9 +767,11 @@
 	var/ghost_rider = FALSE
 
 /mob/living/simple_animal/bot/mulebot/paranormal/MouseDrop_T(atom/movable/AM, mob/user)
-	var/mob/living/L = user
-
-	if(user.incapacitated() || (istype(L) && !(L.mobility_flags & MOBILITY_STAND)))
+	if(isliving(user))
+		var/mob/living/living_user = user
+		if(living_user.incapacitated() || IS_PRONE(living_user) || !LIVING_CAN_USE_HANDS(living_user))
+			return
+	else if(!isobserver(user))
 		return
 
 	if(!istype(AM) || iscameramob(AM) || istype(AM, /obj/effect/dummy/phased_mob)) //allows ghosts!

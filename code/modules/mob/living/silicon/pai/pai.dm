@@ -172,9 +172,6 @@
 		else
 			stat(null, text("Systems nonfunctional"))
 
-/mob/living/silicon/pai/restrained(ignore_grab)
-	. = FALSE
-
 // See software.dm for Topic()
 
 /mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
@@ -239,7 +236,7 @@
 
 /datum/action/innate/pai/rest/Trigger()
 	..()
-	P.lay_down()
+	P.toggle_rest()
 
 /datum/action/innate/pai/light
 	name = "Toggle Integrated Lights"

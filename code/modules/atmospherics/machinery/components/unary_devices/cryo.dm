@@ -255,9 +255,6 @@
 		on = FALSE
 	for(var/mob/M in contents) //only drop mobs
 		M.forceMove(get_turf(src))
-		if(isliving(M))
-			var/mob/living/L = M
-			L.update_mobility()
 	occupant = null
 	flick("pod-open-anim", src)
 	..()

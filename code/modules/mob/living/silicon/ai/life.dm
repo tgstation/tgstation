@@ -1,8 +1,3 @@
-#define POWER_RESTORATION_OFF 0
-#define POWER_RESTORATION_START 1
-#define POWER_RESTORATION_SEARCH_APC 2
-#define POWER_RESTORATION_APC_FOUND 3
-
 /mob/living/silicon/ai/Life()
 	if (stat == DEAD)
 		return
@@ -93,6 +88,20 @@
 	sync_lighting_plane_alpha()
 
 
+/mob/living/silicon/ai/proc/set_aiRestorePowerRoutine(new_val)
+	if(aiRestorePowerRoutine == new_val)
+		return
+	. = aiRestorePowerRoutine
+	aiRestorePowerRoutine = new_val
+	if(aiRestorePowerRoutine)
+		if(!.)
+			ADD_TRAIT(src, TRAIT_IMMOBILE, LACK_OF_POWER_TRAIT)
+			ADD_TRAIT(src, TRAIT_HANDSBLOCKED, LACK_OF_POWER_TRAIT)
+	else if(.)
+		REMOVE_TRAIT(src, TRAIT_IMMOBILE, LACK_OF_POWER_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_HANDSBLOCKED, LACK_OF_POWER_TRAIT)
+
+
 /mob/living/silicon/ai/proc/start_RestorePowerRoutine()
 	to_chat(src, "<span class='notice'>Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection.</span>")
 	end_multicam()
@@ -110,7 +119,7 @@
 	T = get_turf(src)
 	if(isspaceturf(T))
 		to_chat(src, "<span class='alert'>Unable to verify! No power connection detected!</span>")
-		aiRestorePowerRoutine = POWER_RESTORATION_SEARCH_APC
+		set_aiRestorePowerRoutine(POWER_RESTORATION_SEARCH_APC)
 		return
 	to_chat(src, "<span class='notice'>Connection verified. Searching for APC in power network.</span>")
 	sleep(50)
@@ -131,7 +140,7 @@
 					to_chat(src, "<span class='alert'>Unable to locate APC!</span>")
 				else
 					to_chat(src, "<span class='alert'>Lost connection with the APC!</span>")
-			aiRestorePowerRoutine = POWER_RESTORATION_SEARCH_APC
+			set_aiRestorePowerRoutine(POWER_RESTORATION_SEARCH_APC)
 			return
 		if(AIarea.power_equip)
 			if(!isspaceturf(T))
@@ -152,7 +161,7 @@
 				apc_override = 1
 				theAPC.ui_interact(src, state = GLOB.conscious_state)
 				apc_override = 0
-				aiRestorePowerRoutine = POWER_RESTORATION_APC_FOUND
+				set_aiRestorePowerRoutine(POWER_RESTORATION_APC_FOUND)
 		sleep(50)
 		theAPC = null
 
@@ -162,13 +171,13 @@
 			to_chat(src, "<span class='notice'>Alert cancelled. Power has been restored.</span>")
 		else
 			to_chat(src, "<span class='notice'>Alert cancelled. Power has been restored without our assistance.</span>")
-		aiRestorePowerRoutine = POWER_RESTORATION_OFF
+		set_aiRestorePowerRoutine(POWER_RESTORATION_OFF)
 		set_blindness(0)
 		update_sight()
 
 /mob/living/silicon/ai/proc/ai_lose_power()
 	disconnect_shell()
-	aiRestorePowerRoutine = POWER_RESTORATION_START
+	set_aiRestorePowerRoutine(POWER_RESTORATION_START)
 	blind_eyes(1)
 	update_sight()
 	to_chat(src, "<span class='alert'>You've lost power!</span>")

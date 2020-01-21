@@ -35,12 +35,17 @@
 	onclose(user, "scroll")
 
 /obj/machinery/artillerycontrol/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(.)
 		return
-	var/A
-	A = input("Area to bombard", "Open Fire", A) in GLOB.teleportlocs
+	if(!isliving(usr))
+		return
+	var/mob/living/living_user = usr
+	if(!LIVING_CAN_USE_HANDS(living_user))
+		return
+	var/A = input(usr, "Area to bombard", "Open Fire") in GLOB.teleportlocs
 	var/area/thearea = GLOB.teleportlocs[A]
-	if(usr.stat || usr.restrained())
+	if(QDELETED(src) || !LIVING_CAN_USE_HANDS(living_user))
 		return
 	if(reload < reload_cooldown)
 		return

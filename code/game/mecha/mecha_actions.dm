@@ -22,7 +22,7 @@
 
 
 /datum/action/innate/mecha
-	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_MOBILITY | AB_CHECK_HANDS_USE
 	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
 	var/obj/mecha/chassis
 

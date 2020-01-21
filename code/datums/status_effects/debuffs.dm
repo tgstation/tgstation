@@ -12,12 +12,10 @@
 	. = ..()
 	if(.)
 		if(updating_canmove)
-			owner.update_mobility()
 			if(needs_update_stat || issilicon(owner))
 				owner.update_stat()
 
 /datum/status_effect/incapacitating/on_remove()
-	owner.update_mobility()
 	if(needs_update_stat || issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
 		owner.update_stat()
 
@@ -25,21 +23,77 @@
 /datum/status_effect/incapacitating/stun
 	id = "stun"
 
+/datum/status_effect/incapacitating/stun/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_IMMOBILE, STATUSEFFECT_STUN_TRAIT)
+	ADD_TRAIT(owner, TRAIT_HANDSBLOCKED, STATUSEFFECT_STUN_TRAIT)
+
+/datum/status_effect/incapacitating/stun/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILE, STATUSEFFECT_STUN_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_HANDSBLOCKED, STATUSEFFECT_STUN_TRAIT)
+	return ..()
+
 //KNOCKDOWN
 /datum/status_effect/incapacitating/knockdown
 	id = "knockdown"
+
+/datum/status_effect/incapacitating/knockdown/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_STANDINGBLOCKED, STATUSEFFECT_KNOCKDOWN_TRAIT)
+
+/datum/status_effect/incapacitating/knockdown/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_STANDINGBLOCKED, STATUSEFFECT_KNOCKDOWN_TRAIT)
+	return ..()
 
 //IMMOBILIZED
 /datum/status_effect/incapacitating/immobilized
 	id = "immobilized"
 
+/datum/status_effect/incapacitating/immobilized/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_IMMOBILE, STATUSEFFECT_IMMOBILIZED_TRAIT)
+
+/datum/status_effect/incapacitating/immobilized/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILE, STATUSEFFECT_IMMOBILIZED_TRAIT)
+	return ..()
+
 /datum/status_effect/incapacitating/paralyzed
 	id = "paralyzed"
+
+/datum/status_effect/incapacitating/paralyzed/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_IMMOBILE, STATUSEFFECT_PARALYZED_TRAIT)
+	ADD_TRAIT(owner, TRAIT_STANDINGBLOCKED, STATUSEFFECT_PARALYZED_TRAIT)
+	ADD_TRAIT(owner, TRAIT_HANDSBLOCKED, STATUSEFFECT_PARALYZED_TRAIT)
+
+/datum/status_effect/incapacitating/paralyzed/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILE, STATUSEFFECT_PARALYZED_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_STANDINGBLOCKED, STATUSEFFECT_PARALYZED_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_HANDSBLOCKED, STATUSEFFECT_PARALYZED_TRAIT)
+	return ..()
 
 //UNCONSCIOUS
 /datum/status_effect/incapacitating/unconscious
 	id = "unconscious"
 	needs_update_stat = TRUE
+
+/datum/status_effect/incapacitating/unconscious/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, STATUSEFFECT_UNCONSCIOUS_TRAIT)
+
+/datum/status_effect/incapacitating/unconscious/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, STATUSEFFECT_UNCONSCIOUS_TRAIT)
+	return ..()
 
 /datum/status_effect/incapacitating/unconscious/tick()
 	if(owner.getStaminaLoss())
@@ -99,42 +153,51 @@
 
 //STASIS
 /datum/status_effect/incapacitating/stasis
-        id = "stasis"
-        duration = -1
-        tick_interval = 10
-        alert_type = /obj/screen/alert/status_effect/stasis
-        var/last_dead_time
+	id = "stasis"
+	duration = -1
+	tick_interval = 10
+	alert_type = /obj/screen/alert/status_effect/stasis
+	var/last_dead_time
 
 /datum/status_effect/incapacitating/stasis/proc/update_time_of_death()
-        if(last_dead_time)
-                var/delta = world.time - last_dead_time
-                var/new_timeofdeath = owner.timeofdeath + delta
-                owner.timeofdeath = new_timeofdeath
-                owner.tod = station_time_timestamp(wtime=new_timeofdeath)
-                last_dead_time = null
-        if(owner.stat == DEAD)
-                last_dead_time = world.time
+	if(last_dead_time)
+		var/delta = world.time - last_dead_time
+		var/new_timeofdeath = owner.timeofdeath + delta
+		owner.timeofdeath = new_timeofdeath
+		owner.tod = station_time_timestamp(wtime=new_timeofdeath)
+		last_dead_time = null
+	if(owner.stat == DEAD)
+		last_dead_time = world.time
 
 /datum/status_effect/incapacitating/stasis/on_creation(mob/living/new_owner, set_duration, updating_canmove)
-        . = ..()
-        update_time_of_death()
-        owner.reagents?.end_metabolization(owner, FALSE)
+	. = ..()
+	update_time_of_death()
+	owner.reagents?.end_metabolization(owner, FALSE)
 
 /datum/status_effect/incapacitating/stasis/tick()
-        update_time_of_death()
+	update_time_of_death()
+
+/datum/status_effect/incapacitating/paralyzed/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_IMMOBILE, STATUSEFFECT_STASIS_TRAIT)
+	//add_hand_block_flags(HANDBLOCK_TRAIT_STASIS)
 
 /datum/status_effect/incapacitating/stasis/on_remove()
-        update_time_of_death()
-        return ..()
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILE, STATUSEFFECT_STASIS_TRAIT)
+	//remove_hand_block_flags(HANDBLOCK_TRAIT_STASIS)
+	update_time_of_death()
+	return ..()
 
 /datum/status_effect/incapacitating/stasis/be_replaced()
-        update_time_of_death()
-        return ..()
+	update_time_of_death()
+	return ..()
 
 /obj/screen/alert/status_effect/stasis
-        name = "Stasis"
-        desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
-        icon_state = "stasis"
+	name = "Stasis"
+	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
+	icon_state = "stasis"
 
 //GOLEM GANG
 
@@ -478,7 +541,7 @@
 	if(prob(15))
 		switch(rand(1,5))
 			if(1)
-				if((owner.mobility_flags & MOBILITY_MOVE) && isturf(owner.loc))
+				if((LIVING_CAN_MOVE(owner)) && isturf(owner.loc))
 					to_chat(owner, "<span class='warning'>Your leg spasms!</span>")
 					step(owner, pick(GLOB.cardinals))
 			if(2)

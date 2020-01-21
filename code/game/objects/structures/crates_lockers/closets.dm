@@ -288,7 +288,7 @@
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(!istype(O) || O.anchored || istype(O, /obj/screen))
 		return
-	if(!istype(user) || user.incapacitated() || !(user.mobility_flags & MOBILITY_STAND))
+	if(!istype(user) || IS_PRONE(user) || !LIVING_CAN_USE_HANDS(user))
 		return
 	if(!Adjacent(user) || !user.Adjacent(O))
 		return
@@ -338,7 +338,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!(user.mobility_flags & MOBILITY_STAND) && get_dist(src, user) > 0)
+	if(IS_PRONE(user) && get_dist(src, user) > 0)
 		return
 
 	if(!toggle(user))
@@ -504,11 +504,11 @@
 	step_towards(user, T2)
 	T1 = get_turf(user)
 	if(T1 == T2)
-		user.resting = TRUE //so people can jump into crates without slamming the lid on their head
+		user.set_resting(TRUE) //so people can jump into crates without slamming the lid on their head
 		if(!close(user))
 			to_chat(user, "<span class='warning'>You can't get [src] to close!</span>")
-			user.resting = FALSE
+			user.set_resting(FALSE)
 			return
-		user.resting = FALSE
+		user.set_resting(FALSE)
 		togglelock(user)
 		T1.visible_message("<span class='warning'>[user] dives into [src]!</span>")

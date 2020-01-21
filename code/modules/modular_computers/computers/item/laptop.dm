@@ -62,16 +62,19 @@
 
 /obj/item/modular_computer/laptop/MouseDrop(obj/over_object, src_location, over_location)
 	. = ..()
+	if(!isliving(usr))
+		return
+	var/mob/living/user = usr
+	if(!LIVING_CAN_USE_HANDS(user))
+		return
 	if(over_object == usr || over_object == src)
 		try_toggle_open(usr)
 	else if(istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
 		var/mob/M = usr
-
-		if(!M.restrained() && !M.stat)
-			if(!isturf(loc) || !Adjacent(M))
-				return
-			M.put_in_hand(src, H.held_index)
+		if(!isturf(loc) || !Adjacent(M))
+			return
+		M.put_in_hand(src, H.held_index)
 
 /obj/item/modular_computer/laptop/attack_hand(mob/user)
 	. = ..()

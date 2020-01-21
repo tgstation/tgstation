@@ -139,19 +139,18 @@
 				if(DEAD)
 					to_chat(user, "<span class='warning'>You cannot [key] while dead!</span>")
 			return FALSE
-		if(restraint_check)
-			if(isliving(user))
-				var/mob/living/L = user
-				if(L.IsParalyzed() || L.IsStun())
-					if(!intentional)
-						return FALSE
-					to_chat(user, "<span class='warning'>You cannot [key] while stunned!</span>")
+		if(isliving(user) && restraint_check)
+			var/mob/living/living_user = user
+			if(living_user.IsParalyzed() || living_user.IsStun()) //Should be turned into mobility/trait checks.
+				if(!intentional)
 					return FALSE
-		if(restraint_check && user.restrained())
-			if(!intentional)
+				to_chat(user, "<span class='warning'>You cannot [key] while stunned!</span>")
 				return FALSE
-			to_chat(user, "<span class='warning'>You cannot [key] while restrained!</span>")
-			return FALSE
+			if(HAS_TRAIT(living_user, TRAIT_RESTRAINED))
+				if(!intentional)
+					return FALSE
+				to_chat(user, "<span class='warning'>You cannot [key] while restrained!</span>")
+				return FALSE
 
 	if(isliving(user))
 		var/mob/living/L = user

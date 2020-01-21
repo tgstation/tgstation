@@ -1,6 +1,6 @@
 /mob/living/carbon/human/Initialize()
 	verbs += /mob/living/proc/mob_sleep
-	verbs += /mob/living/proc/lay_down
+	verbs += /mob/living/proc/toggle_rest
 
 	icon_state = ""		//Remove the inherent human icon that is visible on the map editor. We're rendering ourselves limb by limb, having it still be there results in a bug where the basic human icon appears below as south in all directions and generally looks nasty.
 
@@ -372,7 +372,7 @@
 		if(href_list["hud"] == "s")
 			if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
 				return
-			if(usr.stat || usr == src) //|| !usr.canmove || usr.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
+			if(usr.stat || usr == src) //|| !LIVING_CAN_MOVE(usr) || HAS_TRAIT(usr, TRAIT_RESTRAINED)) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 				return													  //Non-fluff: This allows sec to set people to arrest as they get disarmed or beaten
 			// Checks the user has security clearence before allowing them to change arrest status via hud, comment out to enable all access
 			var/allowed_access = null
@@ -494,7 +494,7 @@
 
 
 /mob/living/carbon/human/proc/canUseHUD()
-	return (mobility_flags & MOBILITY_USE)
+	return LIVING_CAN_USE_HANDS(src)
 
 /mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, penetrate_thick = 0)
 	. = 1 // Default to returning true.
@@ -693,7 +693,7 @@
 	cut_overlay(MA)
 
 /mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
-	if(!(mobility_flags & MOBILITY_UI))
+	if(!LIVING_CAN_UI(src))
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
 	if(!Adjacent(M) && (M.loc != src))
@@ -948,7 +948,7 @@
 	return (istype(target) && target.stat == CONSCIOUS)
 
 /mob/living/carbon/human/proc/can_be_firemanned(mob/living/carbon/target)
-	return (ishuman(target) && !(target.mobility_flags & MOBILITY_STAND))
+	return (ishuman(target) && IS_PRONE(src))
 
 /mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
 	var/carrydelay = 50 //if you have latex you are faster at grabbing
@@ -978,7 +978,7 @@
 		visible_message("<span class='notice'>[target] starts to climb onto [src]...</span>")
 		if(do_after(target, 15, target = src))
 			if(can_piggyback(target))
-				if(target.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
+				if(!IS_UP_AND_ABLE(target) || !IS_UP_AND_ABLE(src))
 					target.visible_message("<span class='warning'>[target] can't hang onto [src]!</span>")
 					return
 				buckle_mob(target, TRUE, TRUE, FALSE, 0, 2)
@@ -996,7 +996,7 @@
 	buckle_lying = lying_buckle
 	var/datum/component/riding/human/riding_datum = LoadComponent(/datum/component/riding/human)
 	if(target_hands_needed)
-		riding_datum.ride_check_rider_restrained = TRUE
+		riding_datum.ride_check_rider_hand_blocked = TRUE
 	if(buckled_mobs && ((target in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled)
 		return
 	var/equipped_hands_self
@@ -1053,6 +1053,36 @@
 	else
 		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
 		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN_FLYING)
+
+/mob/living/carbon/human/add_movement_flags(flags_to_add)
+	. = ..()
+	if(isnull(.))
+		return
+	if(!(. & (FLYING|FLOATING)) && (movement_type & (FLYING|FLOATING))) //Gained flight / lost gravity.
+		if(HAS_TRAIT(src, TRAIT_GROUND_STANDINGBLOCKED))
+			REMOVE_TRAIT(src, TRAIT_STANDINGBLOCKED, TRAIT_GROUND_STANDINGBLOCKED)
+
+/mob/living/carbon/human/remove_movement_flags(flags_to_remove)
+	. = ..()
+	if(isnull(.))
+		return
+	if((. & (FLYING|FLOATING)) && !(movement_type & (FLYING|FLOATING))) //Lost flight / gained gravity.
+		if(HAS_TRAIT(src, TRAIT_GROUND_STANDINGBLOCKED))
+			ADD_TRAIT(src, TRAIT_STANDINGBLOCKED, TRAIT_GROUND_STANDINGBLOCKED)
+
+/mob/living/carbon/human/get_up(forced, silent = TRUE)
+	if(!forced)
+		var/datum/callback/rest_checks = CALLBACK(src, .proc/get_up_checks)
+		if(!do_mob(src, src, 2 SECONDS, ignore_flags = (IGNORE_LOC_CHANGE|IGNORE_HAND), extra_checks = rest_checks))
+			if(!silent)
+				to_chat(src, "<span class='warning'>You fail to get up!</span>")
+			return
+	return ..()
+
+/mob/living/carbon/human/proc/get_up_checks()
+	if(resting || buckled || IS_STANDING(src) || !LIVING_CAN_STAND(src))
+		return FALSE
+	return TRUE
 
 
 /mob/living/carbon/human/adjust_nutrition(var/change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks

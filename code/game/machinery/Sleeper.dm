@@ -98,8 +98,8 @@
 	if(user.stat || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
 		return
 	if(isliving(user))
-		var/mob/living/L = user
-		if(!(L.mobility_flags & MOBILITY_STAND))
+		var/mob/living/living_user = user
+		if(!LIVING_CAN_USE_HANDS(living_user))
 			return
 	close_machine(target)
 

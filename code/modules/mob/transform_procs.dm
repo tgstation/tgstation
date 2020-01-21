@@ -437,7 +437,9 @@
 	if (notransform)
 		return
 	notransform = TRUE
-	mobility_flags = NONE
+	//Immobile + hands blocked = stun
+	ADD_TRAIT(src, TRAIT_IMMOBILE, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_HANDSBLOCKED, TRAIT_GENERIC)
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
@@ -468,7 +470,9 @@
 	if (notransform)
 		return
 	notransform = TRUE
-	mobility_flags = NONE
+	//Immobile + hands blocked = stun
+	ADD_TRAIT(src, TRAIT_IMMOBILE, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_HANDSBLOCKED, TRAIT_GENERIC)
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()

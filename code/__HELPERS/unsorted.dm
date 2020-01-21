@@ -815,7 +815,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	/*This can be used to add additional effects on interactions between mobs depending on how the mobs are facing each other, such as adding a crit damage to blows to the back of a guy's head.
 	Given how click code currently works (Nov '13), the initiating mob will be facing the target mob most of the time
 	That said, this proc should not be used if the change facing proc of the click code is overridden at the same time*/
-	if(!ismob(target) || !(target.mobility_flags & MOBILITY_STAND))
+	if(!ismob(target) || IS_HORIZONTAL(target))
 	//Make sure we are not doing this for things that can't have a logical direction to the players given that the target would be on their side
 		return FALSE
 	if(initator.dir == target.dir) //mobs are facing the same direction
@@ -892,7 +892,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 		return FALSE
 	if(isliving(A))
 		var/mob/living/LA = A
-		if(!(LA.mobility_flags & MOBILITY_STAND))
+		if(IS_HORIZONTAL(LA))
 			return FALSE
 	var/goal_dir = get_dir(A,B)
 	var/clockwise_A_dir = turn(A.dir, -45)
@@ -1351,7 +1351,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	return temp
 
 //same as do_mob except for movables and it allows both to drift and doesn't draw progressbar
-/proc/do_atom(atom/movable/user , atom/movable/target, time = 30, uninterruptible = 0,datum/callback/extra_checks = null)
+/proc/do_atom(atom/movable/user , atom/movable/target, time = 3 SECONDS, ignore_flags = NONE ,datum/callback/extra_checks)
 	if(!user || !target)
 		return TRUE
 	var/user_loc = user.loc
@@ -1373,7 +1373,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		if(QDELETED(user) || QDELETED(target))
 			. = 0
 			break
-		if(uninterruptible)
+		if(ignore_flags & UNINTERRUPTIBLE)
 			continue
 
 		if(drifting && !user.inertia_dir)
@@ -1384,7 +1384,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			target_drifting = FALSE
 			target_loc = target.loc
 
-		if((!drifting && user.loc != user_loc) || (!target_drifting && target.loc != target_loc) || (extra_checks && !extra_checks.Invoke()))
+		if((!(ignore_flags & IGNORE_LOC_CHANGE) && (!drifting && user.loc != user_loc) || (!target_drifting && target.loc != target_loc)) || (extra_checks && !extra_checks.Invoke()))
 			. = FALSE
 			break
 

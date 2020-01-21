@@ -49,18 +49,12 @@
 	return 0
 
 // taken from /mob/living/carbon/human/interactive/
-/mob/living/carbon/monkey/proc/IsDeadOrIncap(checkDead = TRUE)
-	if(!(mobility_flags & MOBILITY_FLAGS_INTERACTION))
-		return 1
-	if(health <= 0 && checkDead)
-		return 1
-	if(IsUnconscious())
-		return 1
-	if(IsStun() || IsParalyzed())
-		return 1
-	if(stat)
-		return 1
-	return 0
+/mob/living/carbon/monkey/proc/IsDeadOrIncap()
+	if(stat != CONSCIOUS)
+		return TRUE
+	if(!LIVING_CAN_USE_HANDS(src) || !LIVING_CAN_MOVE(src))
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/monkey/proc/battle_screech()
 	if(next_battle_screech < world.time)
@@ -131,7 +125,7 @@
 
 /mob/living/carbon/monkey/proc/handle_combat()
 	if(pickupTarget)
-		if(IsDeadOrIncap() || restrained() || blacklistItems[pickupTarget] || HAS_TRAIT(pickupTarget, TRAIT_NODROP))
+		if(IsDeadOrIncap() || blacklistItems[pickupTarget] || HAS_TRAIT(pickupTarget, TRAIT_NODROP))
 			pickupTarget = null
 		else
 			pickupTimer++

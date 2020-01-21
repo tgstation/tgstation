@@ -48,9 +48,9 @@
 		return
 	if(get_active_held_item())
 		return
-	if(!(mobility_flags & MOBILITY_MOVE))
+	if(IS_PRONE(src))
 		return
-	if(restrained())
+	if(!LIVING_CAN_USE_HANDS(src))
 		return
 	return TRUE
 
@@ -124,7 +124,7 @@
 			ContactContractDisease(D)
 
 	for(var/datum/surgery/S in surgeries)
-		if(!(mobility_flags & MOBILITY_STAND) || !S.lying_required)
+		if(IS_PRONE(src) || !S.lying_required)
 			if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
 				if(S.next_step(user, user.a_intent))
 					return 1
@@ -258,7 +258,7 @@
 		to_chat(M, "<span class='warning'>You can't put [p_them()] out with just your bare hands!</span>")
 		return
 
-	if(!(mobility_flags & MOBILITY_STAND))
+	if(IS_PRONE(src))
 		if(buckled)
 			to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!</span>")
 			return

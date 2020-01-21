@@ -51,7 +51,7 @@
 
 		if(cooldown < world.time - 10) //cooldown to avoid message spam.
 			var/atom/A = parent
-			if(!H.incapacitated(ignore_restraints = TRUE))
+			if(!IS_PRONE(H))
 				H.visible_message("<span class='danger'>[H] steps on [A].</span>", \
 						"<span class='userdanger'>You step on [A]!</span>")
 			else

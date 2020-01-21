@@ -725,36 +725,35 @@
 
 /obj/item/spellbook/Topic(href, href_list)
 	..()
-	var/mob/living/carbon/human/H = usr
-
-	if(H.stat || H.restrained())
+	if(!ishuman(usr))
 		return
-	if(!ishuman(H))
-		return TRUE
+	var/mob/living/carbon/human/human_user = usr
+	if(!LIVING_CAN_USE_HANDS(human_user))
+		return
+	if(loc != usr && !(isturf(loc) && in_range(src, usr)))
+		return
 
-	if(H.mind.special_role == "apprentice")
+	if(human_user.mind.special_role == "apprentice")
 		temp = "If you got caught sneaking a peek from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not."
 		return
 
-	var/datum/spellbook_entry/E = null
-	if(loc == H || (in_range(src, H) && isturf(loc)))
-		H.set_machine(src)
-		if(href_list["buy"])
-			E = entries[text2num(href_list["buy"])]
-			if(E && E.CanBuy(H,src))
-				if(E.Buy(H,src))
-					if(E.limit)
-						E.limit--
-					uses -= E.cost
-		else if(href_list["refund"])
-			E = entries[text2num(href_list["refund"])]
-			if(E && E.refundable)
-				var/result = E.Refund(H,src)
-				if(result > 0)
-					if(!isnull(E.limit))
-						E.limit += result
-					uses += result
-		else if(href_list["page"])
-			tab = sanitize(href_list["page"])
-	attack_self(H)
-	return
+	human_user.set_machine(src)
+
+	if(href_list["buy"])
+		var/datum/spellbook_entry/entry = entries[text2num(href_list["buy"])]
+		if(entry && entry.CanBuy(human_user, src) && entry.Buy(human_user, src))
+			if(entry.limit)
+				entry.limit--
+			uses -= entry.cost
+	else if(href_list["refund"])
+		var/datum/spellbook_entry/entry = entries[text2num(href_list["refund"])]
+		if(entry?.refundable)
+			var/result = entry.Refund(human_user, src)
+			if(result > 0)
+				if(!isnull(entry.limit))
+					entry.limit += result
+				uses += result
+	else if(href_list["page"])
+		tab = sanitize(href_list["page"])
+
+	attack_self(human_user)

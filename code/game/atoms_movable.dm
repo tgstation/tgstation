@@ -35,7 +35,7 @@
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
 	var/atom/movable/pulling
-	var/grab_state = 0
+	var/grab_state = GRAB_PASSIVE
 	var/throwforce = 0
 	var/datum/component/orbiter/orbiting
 	var/can_be_z_moved = TRUE
@@ -155,17 +155,21 @@
 		if(!supress_message)
 			M.visible_message("<span class='warning'>[src] grabs [M] passively.</span>", \
 				"<span class='danger'>[src] grabs you passively.</span>")
+		if(isliving(M))
+			var/mob/living/pulled_living = M
+			if(pulled_living.stat == SOFT_CRIT)
+				ADD_TRAIT(pulled_living, TRAIT_IMMOBILE, SOFTCRIT_PULLED_TRAIT)
 	return TRUE
 
 /atom/movable/proc/stop_pulling()
 	if(pulling)
 		pulling.pulledby = null
-		var/mob/living/ex_pulled = pulling
 		pulling = null
 		setGrabState(0)
-		if(isliving(ex_pulled))
-			var/mob/living/L = ex_pulled
-			L.update_mobility()// mob gets up if it was lyng down in a chokehold
+		if(isliving(pulling))
+			var/mob/living/pulled_living = pulling
+			if(pulled_living.stat == SOFT_CRIT)
+				REMOVE_TRAIT(pulled_living, TRAIT_IMMOBILE, SOFTCRIT_PULLED_TRAIT)
 
 /atom/movable/proc/Move_Pulled(atom/A)
 	if(!pulling)
@@ -484,7 +488,26 @@
 		AM.onTransitZ(old_z,new_z)
 
 /atom/movable/proc/setMovetype(newval)
-	movement_type = newval
+	if(movement_type == newval)
+		return
+	var/nonchanging_flags = newval & movement_type
+	. = movement_type
+	if(newval & nonchanging_flags)
+		add_movement_flags(newval & nonchanging_flags)
+	if(. & nonchanging_flags)
+		remove_movement_flags(movement_type & nonchanging_flags)
+
+/atom/movable/proc/add_movement_flags(flags_to_add)
+	if(flags_to_add == (movement_type & flags_to_add))
+		return //Nothing new to add.
+	. = movement_type
+	movement_type |= flags_to_add
+
+/atom/movable/proc/remove_movement_flags(flags_to_remove)
+	if(!(movement_type & flags_to_remove))
+		return //Nothing old to remove.
+	. = movement_type
+	movement_type &= ~flags_to_remove
 
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below
@@ -771,12 +794,11 @@
 		return
 	if(on && !(movement_type & FLOATING))
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
-		sleep(10)
-		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
-		setMovetype(movement_type | FLOATING)
+		animate(pixel_y = pixel_y - 2, time = 10, loop = -1)
+		add_movement_flags(FLOATING)
 	else if (!on && (movement_type & FLOATING))
 		animate(src, pixel_y = initial(pixel_y), time = 10)
-		setMovetype(movement_type & ~FLOATING)
+		remove_movement_flags(FLOATING)
 
 
 /* 	Language procs
@@ -887,6 +909,9 @@
 /// Updates the grab state of the movable
 /// This exists to act as a hook for behaviour
 /atom/movable/proc/setGrabState(newstate)
+	if(newstate == grab_state)
+		return
+	. = grab_state
 	grab_state = newstate
 
 /obj/item/proc/do_pickup_animation(atom/target)

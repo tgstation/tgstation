@@ -136,7 +136,6 @@
 
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
-	buckled = null
 	pixel_x = initial(pixel_x)
 	pixel_y = initial(pixel_y)
 
@@ -363,7 +362,6 @@
 	if(pulledby && !stat && parrot_state != PARROT_WANDER)
 		if(buckled)
 			buckled.unbuckle_mob(src, TRUE)
-			buckled = null
 		icon_state = icon_living
 		parrot_state = PARROT_WANDER
 		pixel_x = initial(pixel_x)
@@ -385,7 +383,7 @@
 
 
 /mob/living/simple_animal/parrot/handle_automated_movement()
-	if(!isturf(src.loc) || !(mobility_flags & MOBILITY_MOVE) || buckled)
+	if(!isturf(src.loc) || !LIVING_CAN_MOVE(src) || buckled)
 		return //If it can't move, dont let it move. (The buckled check probably isn't necessary thanks to canmove)
 
 	if(client && stat == CONSCIOUS && parrot_state != icon_living)
@@ -830,7 +828,6 @@
 		if(buckled)
 			to_chat(src, "<span class='notice'>You are no longer sitting on [buckled]'s shoulder.</span>")
 			buckled.unbuckle_mob(src, TRUE)
-		buckled = null
 		pixel_x = initial(pixel_x)
 		pixel_y = initial(pixel_y)
 

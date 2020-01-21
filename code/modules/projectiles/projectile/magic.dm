@@ -163,7 +163,7 @@
 		return
 
 	M.notransform = TRUE
-	M.mobility_flags = NONE
+	ADD_TRAIT(M, TRAIT_IMMOBILE, TRAIT_GENERIC)
 	M.icon = null
 	M.cut_overlays()
 	M.invisibility = INVISIBILITY_ABSTRACT

@@ -255,7 +255,7 @@
 /mob/living/carbon/canSuicide()
 	if(!..())
 		return
-	if(!(mobility_flags & MOBILITY_USE))	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
+	if(!LIVING_CAN_USE_HANDS(src))
 		to_chat(src, "<span class='warning'>You can't commit suicide whilst immobile! ((You can type Ghost instead however.))</span>")
 		return
 	return TRUE

@@ -85,7 +85,11 @@
 	update_icon()
 	linked_techweb = SSresearch.science_tech
 
-/mob/living/simple_animal/bot/medbot/update_mobility()
+/mob/living/simple_animal/bot/medbot/on_mobility_loss()
+	. = ..()
+	update_icon()
+
+/mob/living/simple_animal/bot/medbot/on_mobility_gain()
 	. = ..()
 	update_icon()
 

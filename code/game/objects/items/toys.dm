@@ -725,7 +725,7 @@
 /obj/item/toy/cards/deck/proc/draw_card(mob/user)
 	if(isliving(user))
 		var/mob/living/L = user
-		if(!(L.mobility_flags & MOBILITY_PICKUP))
+		if(!LIVING_CAN_PICK_UP(L))
 			return
 	var/choice = null
 	if(cards.len == 0)
@@ -794,7 +794,7 @@
 /obj/item/toy/cards/deck/MouseDrop(atom/over_object)
 	. = ..()
 	var/mob/living/M = usr
-	if(!istype(M) || !(M.mobility_flags & MOBILITY_PICKUP))
+	if(!istype(M) || !LIVING_CAN_PICK_UP(M))
 		return
 	if(Adjacent(usr))
 		if(over_object == M && loc != M)
@@ -843,7 +843,7 @@
 	if(usr.stat || !ishuman(usr))
 		return
 	var/mob/living/carbon/human/cardUser = usr
-	if(!(cardUser.mobility_flags & MOBILITY_USE))
+	if(!LIVING_CAN_USE_HANDS(cardUser))
 		return
 	var/O = src
 	if(href_list["pick"])
@@ -985,7 +985,7 @@
 		return ..()
 
 /obj/item/toy/cards/singlecard/attack_self(mob/living/carbon/human/user)
-	if(!ishuman(user) || !(user.mobility_flags & MOBILITY_USE))
+	if(!ishuman(user))
 		return
 	Flip()
 

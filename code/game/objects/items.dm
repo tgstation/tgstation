@@ -193,13 +193,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	set category = "Object"
 	set src in oview(1)
 
-	if(!isturf(loc) || usr.stat || usr.restrained())
+	if(!isliving(usr) || !isturf(loc))
 		return
-
-	if(isliving(usr))
-		var/mob/living/L = usr
-		if(!(L.mobility_flags & MOBILITY_PICKUP))
-			return
+	var/mob/living/living_user = usr
+	if(!LIVING_CAN_PICK_UP(living_user))
+		return
 
 	var/turf/T = loc
 	loc = null
@@ -459,7 +457,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(isliving(usr))
 		var/mob/living/L = usr
-		if(!(L.mobility_flags & MOBILITY_PICKUP))
+		if(!LIVING_CAN_PICK_UP(L))
 			return
 
 	if(usr.get_active_held_item() == null) // Let me know if this has any problems -Yota

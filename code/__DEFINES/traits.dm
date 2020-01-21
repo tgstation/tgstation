@@ -1,4 +1,6 @@
 // trait accessor defines
+#define SIGNAL_TRAIT(trait_ref) "trait [trait_ref]"
+
 #define ADD_TRAIT(target, trait, source) \
 	do { \
 		var/list/_L; \
@@ -6,12 +8,14 @@
 			target.status_traits = list(); \
 			_L = target.status_traits; \
 			_L[trait] = list(source); \
+			SEND_SIGNAL(target, SIGNAL_TRAIT(trait), COMPONENT_ADD_TRAIT); \
 		} else { \
 			_L = target.status_traits; \
 			if (_L[trait]) { \
 				_L[trait] |= list(source); \
 			} else { \
 				_L[trait] = list(source); \
+				SEND_SIGNAL(target, SIGNAL_TRAIT(trait), COMPONENT_ADD_TRAIT); \
 			} \
 		} \
 	} while (0)
@@ -31,7 +35,8 @@
 				} \
 			};\
 			if (!length(_L[trait])) { \
-				_L -= trait \
+				_L -= trait; \
+				SEND_SIGNAL(target, SIGNAL_TRAIT(trait), COMPONENT_REMOVE_TRAIT); \
 			}; \
 			if (!length(_L)) { \
 				target.status_traits = null \
@@ -46,7 +51,9 @@
 			for (var/_T in _L) { \
 				_L[_T] &= _S;\
 				if (!length(_L[_T])) { \
-					_L -= _T } \
+					_L -= _T; \
+					SEND_SIGNAL(target, SIGNAL_TRAIT(_T), COMPONENT_REMOVE_TRAIT); \
+					}; \
 				};\
 				if (!length(_L)) { \
 					target.status_traits = null\
@@ -61,6 +68,17 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 */
 
 //mob traits
+#define TRAIT_KNOCKEDOUT				"knockedout" //Forces the user to stay unconscious.
+#define TRAIT_IMMOBILE					"immobile" //User is unable to move by its own volition.
+#define TRAIT_GROUND_IMMOBILE			"ground-immobile" //User is unable to use ground means of locomotion.
+#define TRAIT_STANDINGBLOCKED			"standingblocked" //User is unable to stand up or remain standing.
+#define TRAIT_GROUND_STANDINGBLOCKED	"ground-standingblocked" //User is unable to use stay upright on gravity.
+#define TRAIT_HANDSBLOCKED				"handsblocked" //User is unable to use their hands or hold/use items.
+#define TRAIT_PICKUPBLOCKED				"pickupblocked" //User is unable to pick up items not already in their hands.
+#define TRAIT_UIBLOCKED					"uiblocked" //User is unable to use UI interfaces.
+#define TRAIT_STORAGEBLOCKED			"storageblocked" //User is unable to access storage containers, or put or remove things from them.
+#define TRAIT_PULLBLOCKED				"pullblocked" //User is unable to pull things.
+#define TRAIT_RESTRAINED				"restrained" //Special case of hands block with timed resist actions and immobility on certain conditions.
 #define TRAIT_BLIND 			"blind"
 #define TRAIT_MUTE				"mute"
 #define TRAIT_EMOTEMUTE			"emotemute"
@@ -216,8 +234,32 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define GLASSES_TRAIT "glasses"
 #define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
 #define INNATE_TRAIT "innate"
+#define BUCKLED_TRAIT "buckled"
+#define COLDTEMP_TRAIT "coldtemp" //Cold temperature.
+#define PRONE_TRAIT "prone-trait" //Lying down.
+#define LACK_OF_POWER_TRAIT "lack-of-power"
 
 // unique trait sources, still defines
+#define STANCE_REST_TRAIT "stance-rest"
+#define GRABSTATE_NECK_TRAIT "grabstate-neck"
+#define STAT_UNCONSCIOUS_TRAIT "stat-unconscious" //Unconscious or Dead.
+#define STAT_NOTCONSCIOUS_TRAIT "stat-notconscious" //Soft-crit, Unconscious or Dead.
+#define STATUSEFFECT_STUN_TRAIT "statuseffect-stun"
+#define STATUSEFFECT_KNOCKDOWN_TRAIT "statuseffect-knockdown"
+#define STATUSEFFECT_IMMOBILIZED_TRAIT "statuseffect-immobilized"
+#define STATUSEFFECT_PARALYZED_TRAIT "statuseffect-paralyzed"
+#define STATUSEFFECT_UNCONSCIOUS_TRAIT "statuseffect-unconscious"
+#define STATUSEFFECT_STASIS_TRAIT "statuseffect-stasis"
+#define STATUSEFFECT_FREON_TRAIT "statuseffect-freon"
+#define SOULSTONE_TRAIT "soulstone"
+#define SOFTCRIT_PULLED_TRAIT "softcrit-pulled"
+#define STEPTRIGGER_THROWER_TRAIT "steptrigger-thrower"
+#define WARPWHISTLE_TRAIT "warpwhistle"
+#define XENO_BURSTING_TRAIT "xeno-bursting"
+#define ETHEREAL_JAUNT_TRAIT "ethereal-jaunt"
+#define CARBON_LIMBLESS_TRAIT "carbon-limbless"
+#define CARBON_LEGLESS_TRAIT "carbon-legless"
+#define SLIME_DISCLIPLINE_TRAIT "slime-discipline"
 #define CLONING_POD_TRAIT "cloning-pod"
 #define STATUE_MUTE "statue"
 #define CHANGELING_DRAIN "drain"
@@ -256,3 +298,5 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
 #define MADE_UNCLONEABLE "made-uncloneable"
 #define TIMESTOP_TRAIT "timestop"
+#define HANDCUFFED_TRAIT "handcuffed"
+#define STRAIGHTJACKET_TRAIT "straightjacket"

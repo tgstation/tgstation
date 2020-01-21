@@ -240,11 +240,10 @@
 /obj/item/bodypart/proc/set_disabled(new_disabled)
 	if(disabled == new_disabled)
 		return
+	. = disabled
 	disabled = new_disabled
 	owner.update_health_hud() //update the healthdoll
 	owner.update_body()
-	owner.update_mobility()
-	return TRUE //if there was a change.
 
 //Updates an organ's brute/burn states for use by update_damage_overlays()
 //Returns 1 if we need to update overlays. 0 otherwise.
@@ -288,7 +287,7 @@
 		C = source
 		if(!original_owner)
 			original_owner = source
-	else 
+	else
 		C = owner
 		if(original_owner && owner != original_owner) //Foreign limb
 			no_update = TRUE
@@ -508,6 +507,15 @@
 	px_x = -6
 	px_y = 0
 
+/obj/item/bodypart/l_arm/Destroy()
+	owner.remove_functional_arm(src)
+	return ..()
+
+/obj/item/bodypart/l_arm/attach_limb(mob/living/carbon/limb_receiver, special)
+	. = ..()
+	if(!is_disabled())
+		limb_receiver.add_functional_arm(src)
+
 /obj/item/bodypart/l_arm/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_L_ARM))
 		return BODYPART_DISABLED_PARALYSIS
@@ -515,20 +523,27 @@
 
 /obj/item/bodypart/l_arm/set_disabled(new_disabled)
 	. = ..()
-	if(!.)
+	if(isnull(.))
 		return
-	if(disabled == BODYPART_DISABLED_DAMAGE)
-		if(owner.stat < UNCONSCIOUS)
-			owner.emote("scream")
-		if(owner.stat < DEAD)
-			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-		if(held_index)
-			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
-	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-		if(owner.stat < DEAD)
-			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+	switch(disabled)
+		if(BODYPART_NOT_DISABLED)
+			owner.add_functional_arm(src)
+		if(BODYPART_DISABLED_DAMAGE)
+			if(owner.stat < UNCONSCIOUS)
+				owner.emote("scream")
+			if(owner.stat < DEAD)
+				to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
 			if(held_index)
 				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
+			if(!.)
+				owner.remove_functional_arm(src)
+		if(BODYPART_DISABLED_PARALYSIS)
+			if(owner.stat < DEAD)
+				to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+				if(held_index)
+					owner.dropItemToGround(owner.get_item_for_held_index(held_index))
+			if(!.)
+				owner.remove_functional_arm(src)
 	if(owner.hud_used)
 		var/obj/screen/inventory/hand/L = owner.hud_used.hand_slots["[held_index]"]
 		if(L)
@@ -572,6 +587,15 @@
 	px_y = 0
 	max_stamina_damage = 50
 
+/obj/item/bodypart/r_arm/Destroy()
+	owner.remove_functional_arm(src)
+	return ..()
+
+/obj/item/bodypart/r_arm/attach_limb(mob/living/carbon/limb_receiver, special)
+	. = ..()
+	if(!is_disabled())
+		limb_receiver.add_functional_arm(src)
+
 /obj/item/bodypart/r_arm/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_R_ARM))
 		return BODYPART_DISABLED_PARALYSIS
@@ -579,20 +603,27 @@
 
 /obj/item/bodypart/r_arm/set_disabled(new_disabled)
 	. = ..()
-	if(!.)
+	if(isnull(.))
 		return
-	if(disabled == BODYPART_DISABLED_DAMAGE)
-		if(owner.stat < UNCONSCIOUS)
-			owner.emote("scream")
-		if(owner.stat < DEAD)
-			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-		if(held_index)
-			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
-	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-		if(owner.stat < DEAD)
-			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+	switch(disabled)
+		if(BODYPART_NOT_DISABLED)
+			owner.add_functional_arm(src)
+		if(BODYPART_DISABLED_DAMAGE)
+			if(owner.stat < UNCONSCIOUS)
+				owner.emote("scream")
+			if(owner.stat < DEAD)
+				to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
 			if(held_index)
 				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
+			if(!.)
+				owner.remove_functional_arm(src)
+		if(BODYPART_DISABLED_PARALYSIS)
+			if(owner.stat < DEAD)
+				to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+				if(held_index)
+					owner.dropItemToGround(owner.get_item_for_held_index(held_index))
+			if(!.)
+				owner.remove_functional_arm(src)
 	if(owner.hud_used)
 		var/obj/screen/inventory/hand/R = owner.hud_used.hand_slots["[held_index]"]
 		if(R)
@@ -633,6 +664,15 @@
 	px_y = 12
 	max_stamina_damage = 50
 
+/obj/item/bodypart/l_leg/Destroy()
+	owner.remove_functional_leg(src)
+	return ..()
+
+/obj/item/bodypart/l_leg/attach_limb(mob/living/carbon/limb_receiver, special)
+	. = ..()
+	if(!is_disabled())
+		limb_receiver.add_functional_leg(src)
+
 /obj/item/bodypart/l_leg/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_L_LEG))
 		return BODYPART_DISABLED_PARALYSIS
@@ -640,16 +680,23 @@
 
 /obj/item/bodypart/l_leg/set_disabled(new_disabled)
 	. = ..()
-	if(!.)
+	if(isnull(.))
 		return
-	if(disabled == BODYPART_DISABLED_DAMAGE)
-		if(owner.stat < UNCONSCIOUS)
-			owner.emote("scream")
-		if(owner.stat < DEAD)
-			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-		if(owner.stat < DEAD)
-			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+	switch(disabled)
+		if(BODYPART_NOT_DISABLED)
+			owner.add_functional_leg(src)
+		if(BODYPART_DISABLED_DAMAGE)
+			if(owner.stat < UNCONSCIOUS)
+				owner.emote("scream")
+			if(owner.stat < DEAD)
+				to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
+			if(!.)
+				owner.remove_functional_leg(src)
+		if(BODYPART_DISABLED_PARALYSIS)
+			if(owner.stat < DEAD)
+				to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+			if(!.)
+				owner.remove_functional_leg(src)
 
 /obj/item/bodypart/l_leg/digitigrade
 	name = "left digitigrade leg"
@@ -691,6 +738,15 @@
 	px_y = 12
 	max_stamina_damage = 50
 
+/obj/item/bodypart/r_leg/Destroy()
+	owner.remove_functional_leg(src)
+	return ..()
+
+/obj/item/bodypart/r_leg/attach_limb(mob/living/carbon/limb_receiver, special)
+	. = ..()
+	if(!is_disabled())
+		limb_receiver.add_functional_leg(src)
+
 /obj/item/bodypart/r_leg/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_R_LEG))
 		return BODYPART_DISABLED_PARALYSIS
@@ -698,16 +754,23 @@
 
 /obj/item/bodypart/r_leg/set_disabled(new_disabled)
 	. = ..()
-	if(!.)
+	if(isnull(.))
 		return
-	if(disabled == BODYPART_DISABLED_DAMAGE)
-		if(owner.stat < UNCONSCIOUS)
-			owner.emote("scream")
-		if(owner.stat < DEAD)
-			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-		if(owner.stat < DEAD)
-			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+	switch(disabled)
+		if(BODYPART_NOT_DISABLED)
+			owner.add_functional_leg(src)
+		if(BODYPART_DISABLED_DAMAGE)
+			if(owner.stat < UNCONSCIOUS)
+				owner.emote("scream")
+			if(owner.stat < DEAD)
+				to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
+			if(!.)
+				owner.remove_functional_leg(src)
+		if(BODYPART_DISABLED_PARALYSIS)
+			if(owner.stat < DEAD)
+				to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+			if(!.)
+				owner.remove_functional_leg(src)
 
 /obj/item/bodypart/r_leg/digitigrade
 	name = "right digitigrade leg"

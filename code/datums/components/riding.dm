@@ -16,12 +16,12 @@
 	var/override_allow_spacemove = FALSE
 	var/drive_verb = "drive"
 	var/ride_check_rider_incapacitated = FALSE
-	var/ride_check_rider_restrained = FALSE
+	var/ride_check_rider_hand_blocked = FALSE
 	var/ride_check_ridden_incapacitated = FALSE
 
 	var/del_on_unbuckle_all = FALSE
-	
-	/// If the "vehicle" is a mob, respect MOBILITY_MOVE on said mob.
+
+	/// If the "vehicle" is a mob, respect TRAIT_IMMOBILE on said mob.
 	var/respect_mob_mobility = TRUE
 
 /datum/component/riding/Initialize()
@@ -63,8 +63,8 @@
 
 /datum/component/riding/proc/ride_check(mob/living/M)
 	var/atom/movable/AM = parent
-	var/mob/AMM = AM
-	if((ride_check_rider_restrained && M.restrained(TRUE)) || (ride_check_rider_incapacitated && M.incapacitated(FALSE, TRUE)) || (ride_check_ridden_incapacitated && istype(AMM) && AMM.incapacitated(FALSE, TRUE)))
+	var/mob/living/AMM = AM
+	if((ride_check_rider_hand_blocked && !LIVING_CAN_PICK_UP(M)) || (ride_check_rider_incapacitated && IS_INCAPACITATED(M)) || (ride_check_ridden_incapacitated && istype(AMM) && IS_INCAPACITATED(AMM)))
 		M.visible_message("<span class='warning'>[M] falls off of [AM]!</span>", \
 						"<span class='warning'>You fall off of [AM]!</span>")
 		AM.unbuckle_mob(M)
@@ -180,7 +180,7 @@
 			return
 		if(isliving(AM) && respect_mob_mobility)
 			var/mob/living/M = AM
-			if(!(M.mobility_flags & MOBILITY_MOVE))
+			if(!LIVING_CAN_MOVE(M))
 				return
 		step(AM, direction)
 
@@ -371,4 +371,4 @@
 		if(rider in AM.buckled_mobs)
 			AM.unbuckle_mob(rider)
 	. = ..()
-	
+

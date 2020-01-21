@@ -69,7 +69,10 @@
 
 /obj/item/clipboard/Topic(href, href_list)
 	..()
-	if(usr.stat || usr.restrained())
+	if(!isliving(usr))
+		return
+	var/mob/living/user = usr
+	if(!LIVING_CAN_USE_HANDS(user))
 		return
 
 	if(usr.contents.Find(src))

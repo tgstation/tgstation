@@ -814,7 +814,7 @@
 	AI.cancel_camera()
 	AI.controlled_mech = src
 	AI.remote_control = src
-	AI.mobility_flags = ALL //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
+	AI.set_mobility_flags(ALL) //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
 	AI.can_shunt = 0 //ONE AI ENTERS. NO AI LEAVES.
 	to_chat(AI, AI.can_dominate_mechs ? "<span class='announce'>Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" :\
 		"<span class='notice'>You have been uploaded to a mech's onboard computer.</span>")
@@ -983,7 +983,7 @@
 	B.forceMove(src) //should allow relaymove
 	B.reset_perspective(src)
 	B.remote_control = src
-	B.update_mobility()
+	B.set_mobility_flags(MOBILITY_FLAGS_DEFAULT)
 	B.update_mouse_pointer()
 	icon_state = initial(icon_state)
 	update_icon()
@@ -1071,7 +1071,7 @@
 				L.reset_perspective()
 			mmi.mecha = null
 			mmi.update_icon()
-			L.mobility_flags = NONE
+			L.set_mobility_flags(NONE)
 		icon_state = initial(icon_state)+"-open"
 		setDir(dir_in)
 

@@ -22,7 +22,6 @@
 			if(stat == CONSCIOUS)
 				set_stat(UNCONSCIOUS)
 				become_blind(UNCONSCIOUS_BLIND)
-				update_mobility()
 		else
 			if(stat == UNCONSCIOUS)
 				set_stat(CONSCIOUS)

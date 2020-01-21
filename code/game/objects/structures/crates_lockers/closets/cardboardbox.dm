@@ -50,7 +50,7 @@
 		egged = world.time + SNAKE_SPAM_TICKS
 		for(var/mob/living/L in alerted)
 			if(!L.stat)
-				if(!L.incapacitated(ignore_restraints = 1))
+				if(LIVING_CAN_MOVE(L))
 					L.face_atom(src)
 				L.do_alert_animation(L)
 		playsound(loc, 'sound/machines/chime.ogg', 50, FALSE, -5)

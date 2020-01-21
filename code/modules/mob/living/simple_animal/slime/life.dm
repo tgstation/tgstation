@@ -2,7 +2,6 @@
 /mob/living/simple_animal/slime
 	var/AIproc = 0 // determines if the AI loop is activated
 	var/Atkcool = 0 // attack cooldown
-	var/Tempstun = 0 // temporary temperature stuns
 	var/Discipline = 0 // if a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
 	var/SStun = 0 // stun variable
 
@@ -43,8 +42,8 @@
 
 	AIproc = 1
 
-	while(AIproc && stat != DEAD && (attacked || hungry || rabid || buckled))
-		if(!(mobility_flags & MOBILITY_MOVE)) //also covers buckling. Not sure why buckled is in the while condition if we're going to immediately break, honestly
+	while(AIproc && stat != DEAD && (attacked || hungry || rabid))
+		if(!LIVING_CAN_MOVE(src))
 			break
 
 		if(!Target || client)
@@ -72,7 +71,7 @@
 						if(Target.Adjacent(src))
 							Target.attack_slime(src)
 					break
-				if((Target.mobility_flags & MOBILITY_STAND) && prob(80))
+				if(IS_STANDING(Target) && prob(80))
 
 					if(Target.client && Target.health >= 20)
 						if(!Atkcool)
@@ -110,7 +109,7 @@
 /mob/living/simple_animal/slime/handle_environment(datum/gas_mixture/environment)
 	var/loc_temp = get_temperature(environment)
 	var/divisor = 10 /// The divisor controls how fast body temperature changes, lower causes faster changes
-
+	. = bodytemperature
 	if(abs(loc_temp - bodytemperature) > 50) // If the difference is great, reduce the divisor for faster stabilization
 		divisor = 5
 
@@ -120,17 +119,16 @@
 	else // This is a hot place
 		adjust_bodytemperature((loc_temp - bodytemperature) / divisor)
 
-	if(bodytemperature < (T0C + 5)) // start calculating temperature damage etc
-		if(bodytemperature <= (T0C - 40)) // stun temperature
-			Tempstun = 1
-
+	if(bodytemperature <= (T0C - 40))
+		if(. > (T0C - 40)) // stun temperature
+			ADD_TRAIT(src, TRAIT_IMMOBILE, COLDTEMP_TRAIT)
 		if(bodytemperature <= (T0C - 50)) // hurt temperature
 			if(bodytemperature <= 50) // sqrting negative numbers is bad
 				adjustBruteLoss(200)
 			else
 				adjustBruteLoss(round(sqrt(bodytemperature)) * 2)
-	else
-		Tempstun = 0
+	else if(. <= (T0C - 40))
+		REMOVE_TRAIT(src, TRAIT_IMMOBILE, COLDTEMP_TRAIT)
 
 	if(stat != DEAD)
 		var/bz_percentage =0
@@ -143,12 +141,10 @@
 			set_stat(UNCONSCIOUS)
 			powerlevel = 0
 			rabid = 0
-			update_mobility()
 			regenerate_icons()
 		else if(stat == UNCONSCIOUS && !stasis)
 			to_chat(src, "<span class='notice'>You wake up from the stasis.</span>")
 			set_stat(CONSCIOUS)
-			update_mobility()
 			regenerate_icons()
 
 	updatehealth()
@@ -261,11 +257,6 @@
 
 
 /mob/living/simple_animal/slime/proc/handle_targets()
-	update_mobility()
-	if(Tempstun)
-		if(!buckled) // not while they're eating!
-			mobility_flags &= ~MOBILITY_MOVE
-
 	if(attacked > 50)
 		attacked = 50
 
@@ -282,7 +273,7 @@
 			Discipline--
 
 	if(!client)
-		if(!(mobility_flags & MOBILITY_MOVE))
+		if(!LIVING_CAN_MOVE(src))
 			return
 
 		if(buckled)
@@ -362,13 +353,13 @@
 			if (Leader)
 				if(holding_still)
 					holding_still = max(holding_still - 1, 0)
-				else if((mobility_flags & MOBILITY_MOVE) && isturf(loc))
+				else if(LIVING_CAN_MOVE(src) && isturf(loc))
 					step_to(src, Leader)
 
 			else if(hungry)
 				if (holding_still)
 					holding_still = max(holding_still - hungry, 0)
-				else if((mobility_flags & MOBILITY_MOVE) && isturf(loc) && prob(50))
+				else if(LIVING_CAN_MOVE(src) && isturf(loc) && prob(50))
 					step(src, pick(GLOB.cardinals))
 
 			else
@@ -376,7 +367,7 @@
 					holding_still = max(holding_still - 1, 0)
 				else if (docile && pulledby)
 					holding_still = 10
-				else if((mobility_flags & MOBILITY_MOVE) && isturf(loc) && prob(33))
+				else if(LIVING_CAN_MOVE(src) && isturf(loc) && prob(33))
 					step(src, pick(GLOB.cardinals))
 		else if(!AIproc)
 			INVOKE_ASYNC(src, .proc/AIprocess)

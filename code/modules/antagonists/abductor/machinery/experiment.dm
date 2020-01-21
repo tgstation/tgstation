@@ -14,9 +14,8 @@
 	var/message_cooldown = 0
 	var/breakout_time = 450
 
-/obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
-	var/mob/living/L = user
-	if(user.stat || (isliving(user) && (!(L.mobility_flags & MOBILITY_STAND) || !(L.mobility_flags & MOBILITY_UI))) || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
+/obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/living/user)
+	if(!isliving(user) || IS_PRONE(user) || !ishuman(target) || !LIVING_CAN_USE_HANDS(user) || !LIVING_CAN_UI(user) || !Adjacent(user) || !target.Adjacent(user))
 		return
 	if(isabductor(target))
 		return

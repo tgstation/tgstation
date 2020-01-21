@@ -6,7 +6,6 @@
 	mob_size = MOB_SIZE_SMALL
 	density = FALSE
 	hud_type = /datum/hud/larva
-
 	maxHealth = 25
 	health = 25
 
@@ -43,9 +42,6 @@
 //can't equip anything
 /mob/living/carbon/alien/larva/attack_ui(slot_id)
 	return
-
-/mob/living/carbon/alien/larva/restrained(ignore_grab)
-	. = 0
 
 // new damage icon system
 // now constructs damage icon for each organ from mask * damage field

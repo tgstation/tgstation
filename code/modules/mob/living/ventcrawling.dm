@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 	if(IsStun() || IsParalyzed())
 		to_chat(src, "<span class='warning'>You can't vent crawl while you're stunned!</span>")
 		return
-	if(restrained())
+	if(HAS_TRAIT(src, TRAIT_RESTRAINED) || IS_NECKGRABBED(src))
 		to_chat(src, "<span class='warning'>You can't vent crawl while you're restrained!</span>")
 		return
 	if(has_buckled_mobs())
@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 					A.pipe_vision_img.plane = ABOVE_HUD_PLANE
 				client.images += A.pipe_vision_img
 				pipes_shown += A.pipe_vision_img
-	setMovetype(movement_type | VENTCRAWLING)
+	add_movement_flags(VENTCRAWLING)
 
 
 /mob/living/proc/remove_ventcrawl()
@@ -108,9 +108,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image
 	pipes_shown.len = 0
-	setMovetype(movement_type & ~VENTCRAWLING)
-
-
+	remove_movement_flags(VENTCRAWLING)
 
 
 //OOP

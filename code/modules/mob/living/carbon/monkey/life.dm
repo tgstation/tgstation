@@ -13,7 +13,7 @@
 
 		if(!client)
 			if(stat == CONSCIOUS)
-				if(on_fire || buckled || restrained())
+				if(on_fire || buckled || HAS_TRAIT(src, TRAIT_RESTRAINED) || IS_NECKGRABBED(src))
 					if(!resisting && prob(MONKEY_RESIST_PROB))
 						resisting = TRUE
 						walk_to(src,0)
@@ -21,7 +21,7 @@
 				else if(resisting)
 					resisting = FALSE
 				else if((mode == MONKEY_IDLE && !pickupTarget && !prob(MONKEY_SHENANIGAN_PROB)) || !handle_combat())
-					if(prob(25) && (mobility_flags & MOBILITY_MOVE) && isturf(loc) && !pulledby)
+					if(prob(25) && LIVING_CAN_MOVE(src) && isturf(loc) && !pulledby)
 						step(src, pick(GLOB.cardinals))
 					else if(prob(1))
 						emote(pick("scratch","jump","roll","tail"))

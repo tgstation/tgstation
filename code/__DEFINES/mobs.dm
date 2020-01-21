@@ -335,3 +335,8 @@
 #define WABBAJACK     (1<<6)
 
 #define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;
+
+//do_mob/do_after_mob/do_atom flags
+#define UNINTERRUPTIBLE (1<<0)
+#define IGNORE_LOC_CHANGE (1<<1)
+#define IGNORE_HAND (1<<2)

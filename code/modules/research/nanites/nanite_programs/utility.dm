@@ -160,7 +160,7 @@
 	if(!host_mob.client) //less brainpower
 		points *= 0.25
 	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = points))
-	
+
 /datum/nanite_program/researchplus
 	name = "Neural Network"
 	desc = "The nanites link the host's brains together forming a neural research network, that becomes more efficient with the amount of total hosts."
@@ -184,7 +184,7 @@
 		SSnanites.neural_network_count--
 	else
 		SSnanites.neural_network_count -= 0.25
-	
+
 /datum/nanite_program/researchplus/active_effect()
 	if(!iscarbon(host_mob))
 		return
@@ -336,7 +336,7 @@
 /datum/action/innate/nanite_button
 	name = "Button"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_MOBILITY | AB_CHECK_HANDS_USE
 	button_icon_state = "power_green"
 	var/datum/nanite_program/dermal_button/program
 

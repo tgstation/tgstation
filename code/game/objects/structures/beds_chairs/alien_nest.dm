@@ -69,8 +69,8 @@
 	add_overlay(nest_overlay)
 
 /obj/structure/bed/nest/post_unbuckle_mob(mob/living/M)
-	M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
-	M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
+	M.pixel_x = M.get_standard_pixel_x_offset(M.lying_angle)
+	M.pixel_y = M.get_standard_pixel_y_offset(M.lying_angle)
 	M.layer = initial(M.layer)
 	cut_overlay(nest_overlay)
 

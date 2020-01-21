@@ -464,6 +464,6 @@
 			if(prob(5+(allowed(M)*4)))
 				if(isliving(M))
 					var/mob/living/L = M
-					if(!(L.mobility_flags & MOBILITY_MOVE))
+					if(!LIVING_CAN_MOVE(L))
 						continue
 				dance(M)
