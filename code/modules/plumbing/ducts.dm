@@ -62,7 +62,6 @@ All the important duct code:
 		attempt_connect()
 ///start looking around us for stuff to connect to
 /obj/machinery/duct/proc/attempt_connect()
-	reset_connects() //All connects are gathered here again eitherway, we might aswell reset it so they properly update when reconnecting
 
 	for(var/atom/movable/AM in loc)
 		var/datum/component/plumbing/P = AM.GetComponent(/datum/component/plumbing)
@@ -205,6 +204,9 @@ All the important duct code:
 /obj/machinery/duct/proc/add_connects(new_connects) //make this a define to cut proc calls?
 	if(!lock_connects)
 		connects |= new_connects
+/obj/machinery/duct/proc/remove_connects(dead_connects)
+	if(!lock_connects)
+		connects &= ~dead_connects
 ///remove our connects
 /obj/machinery/duct/proc/reset_connects()
 	if(!lock_connects)
