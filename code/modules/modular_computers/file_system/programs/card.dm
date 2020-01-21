@@ -64,7 +64,7 @@
 		return
 
 	region_access = list()
-	if(ACCESS_CHANGE_IDS in id_card.access)
+	if(!target_dept && (ACCESS_CHANGE_IDS in id_card.access))
 		minor = FALSE
 		authenticated = TRUE
 		update_static_data(user)
@@ -191,7 +191,7 @@
 					id_card.assignment = custom_name
 					id_card.update_label()
 			else
-				if(!(target in head_subordinates))
+				if(minor && !(target in head_subordinates))
 					return
 				var/list/new_access = list()
 				if(is_centcom)
