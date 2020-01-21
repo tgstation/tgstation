@@ -199,6 +199,7 @@
 
 /obj/item/clothing/glasses/sunglasses/reagent
 	name = "beer goggles"
+	icon_state = "sunhudsci"
 	desc = "A pair of sunglasses outfitted with apparatus to scan reagents, as well as providing an innate understanding of liquid viscosity while in motion."
 	clothing_flags = SCAN_REAGENTS
 
