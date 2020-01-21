@@ -258,6 +258,14 @@
 		to_chat(M, "<span class='warning'>You can't put [p_them()] out with just your bare hands!</span>")
 		return
 
+	if(M.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+		to_chat(M, "<span class='warning'>You feel to warm to hug [src].</span>")
+		return
+
+	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+		to_chat(M, "<span class='warning'>[src] looks like they are over heating, they do not want a hug.</span>")
+		return
+
 	if(!(mobility_flags & MOBILITY_STAND))
 		if(buckled)
 			to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!</span>")
