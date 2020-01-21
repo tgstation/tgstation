@@ -45,16 +45,7 @@
 
 		active = TRUE
 
-	if(abs(external.temperature - internal.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		var/external_heat_capacity = external.heat_capacity()
-		var/internal_heat_capacity = internal.heat_capacity()
-		var/combined_heat_capacity = external_heat_capacity + internal_heat_capacity
-		if(combined_heat_capacity)
-			var/temperature = (internal.temperature * internal_heat_capacity + external.temperature * external_heat_capacity) / combined_heat_capacity
-			external.temperature = temperature
-			internal.temperature = temperature
-
-			active = TRUE
+	active = internal.temperature_share(external, OPEN_HEAT_TRANSFER_COEFFICIENT) ? TRUE : active
 
 	if(active)
 		air_update_turf()
