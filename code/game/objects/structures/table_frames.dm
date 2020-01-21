@@ -41,7 +41,7 @@
 				make_new_table(material.tableVariant)
 		else
 			if(material.get_amount() < 1)
-				to_chat(user, "<span class='warning'>You need one metal sheet to do this!</span>")
+				to_chat(user, "<span class='warning'>You need one sheet to do this!</span>")
 				return
 			to_chat(user, "<span class='notice'>You start adding [material] to [src]...</span>")
 			if(do_after(user, 20, target = src) && material.use(1))

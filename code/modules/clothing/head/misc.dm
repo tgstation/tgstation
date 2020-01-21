@@ -291,6 +291,9 @@
 	icon_state = "jester_hat"
 	dynamic_hair_suffix = ""
 
+/obj/item/clothing/head/jester/alt
+	icon_state = "jester2"
+
 /obj/item/clothing/head/rice_hat
 	name = "rice hat"
 	desc = "Welcome to the rice fields, motherfucker."
@@ -349,12 +352,6 @@
 	desc = "Walk like an Egyptian."
 	icon_state = "pharoah_hat"
 	item_state = "pharoah_hat"
-
-/obj/item/clothing/head/jester/alt
-	name = "jester hat"
-	desc = "A hat with bells, to add some merriness to the suit."
-	icon_state = "jester_hat"
-	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/nemes
 	name = "headdress of Nemes"
@@ -445,3 +442,10 @@
 	desc = "A horrifying mix of beanie and softcap in CentCom green. You'd have to be pretty desperate for power over your peers to agree to wear this."
 	icon_state = "intern_hat"
 	item_state = "intern_hat"
+
+/obj/item/clothing/head/coordinator
+	name = "coordinator cap"
+	desc = "A cap for a party ooordinator, stylish!."
+	icon_state = "capcap"
+	item_state = "that"
+	armor = list("melee" = 25, "bullet" = 15, "laser" = 25, "energy" = 35, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)

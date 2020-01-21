@@ -46,6 +46,11 @@
 	update_icon()
 	PopulateContents()
 
+	RegisterSignal(src, COMSIG_ATOM_CANREACH, .proc/canreach_react)
+
+/obj/structure/closet/proc/canreach_react(datum/source, list/next)
+	return COMPONENT_BLOCK_REACH //closed block, open have nothing inside.
+
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
 	return
@@ -92,10 +97,10 @@
 		if(HAS_TRAIT(L, TRAIT_SKITTISH))
 			. += "<span class='notice'>Ctrl-Shift-click [src] to jump inside.</span>"
 
-/obj/structure/closet/CanPass(atom/movable/mover, turf/target)
+/obj/structure/closet/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(wall_mounted)
 		return TRUE
-	return !density
 
 /obj/structure/closet/proc/can_open(mob/living/user)
 	if(welded || locked)
