@@ -12,7 +12,8 @@
 	if(is_type_in_list(W, already_brewing))
 		to_chat(user, "You're already brewing that!")
 		return FALSE
-	var/brewing_result = W.on_brew() // list("reagents" = list("reagent1", "reagent2"), "booze_power" = 420, "prefix" = "arse")
+	var/brewing_result = list()
+	SEND_SIGNAL(W, COMSIG_ATOM_ON_BREW, brewing_result)
 	if(istype(W, /obj/item/reagent_containers) && !brewing_result)
 		return FALSE
 	if(!brewing_result)

@@ -11,6 +11,7 @@
 
 /obj/item/grown/Initialize(newloc, obj/item/seeds/new_seed)
 	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_ON_BREW, .proc/on_brew)
 	create_reagents(50)
 
 	if(new_seed)
@@ -61,9 +62,11 @@
 	for(var/i in 1 to grind_results.len)
 		grind_results[grind_results[i]] = round(seed.potency)
 
-/obj/item/grown/on_brew()
+/obj/item/grown/proc/on_brew(datum/source, list/brewing_results)
 	var/list/my_reagents = list()
 	for(var/R in reagents.reagent_list)
 		var/datum/reagent/RE = R
 		my_reagents += RE.type
-	return list("reagents" = my_reagents, "booze_power" = booze_power, "prefix" = name)
+	brewing_results["reagents"] = my_reagents
+	brewing_results["booze_power"] = booze_power
+	brewing_results["prefix"] = name

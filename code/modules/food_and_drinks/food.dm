@@ -19,6 +19,7 @@
 
 /obj/item/reagent_containers/food/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_ON_BREW, .proc/on_brew)
 	if(!mapload)
 		pixel_x = rand(-5, 5)
 		pixel_y = rand(-5, 5)
@@ -48,11 +49,14 @@
 				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "breakfast", /datum/mood_event/breakfast)
 			last_check_time = world.time
 
-/obj/item/reagent_containers/food/on_brew()
+/obj/item/reagent_containers/food/proc/on_brew(datum/source, list/brewing_results)
 	var/list/my_reagents = list()
 	for(var/R in reagents.reagent_list)
 		var/datum/reagent/RE = R
 		my_reagents += RE.type
-	return list("reagents" = my_reagents, "booze_power" = wine_power, "prefix" = name)
+	brewing_results["reagents"] = my_reagents
+	brewing_results["booze_power"] = wine_power
+	brewing_results["prefix"] = name
+
 
 #undef STOP_SERVING_BREAKFAST
