@@ -356,7 +356,7 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "spikechemswap"
 	name = "Transfer Chemicals"
-	desc = "Purge all of the chemicals into you, sending it to the person who has the chemical spike embedded into you."
+	desc = "Send all of your reagents into whoever the chem spike is embedded in. One use."
 	var/obj/item/hardened_spike/chem/spikey
 	var/mob/living/carbon/human/transfered
 
@@ -382,7 +382,7 @@
 //spider webs
 /datum/mutation/human/webbing
 	name = "Webbing Production"
-	desc = "Allows the user to lay webbing, and travel through it. User will grow psychologically attached to laying webs if used enough."
+	desc = "Allows the user to lay webbing, and travel through it."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your skin feels webby.</span>"
 	instability = 15
@@ -398,7 +398,7 @@
 	action_icon_state = "lay_web"
 
 /obj/effect/proc_holder/spell/self/lay_genetic_web/cast_check(skipcharge = 0,mob/user = usr)
-	..()
+	. = ..()
 	if(!isturf(user.loc))
 		to_chat(user, "<span class='warning'>You can't lay webs here!</span>")
 		return FALSE
