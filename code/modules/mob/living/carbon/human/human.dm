@@ -221,6 +221,7 @@
 			L.embedded_objects -= I
 			L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
 			I.forceMove(get_turf(src))
+			I.unembedded()
 			usr.put_in_hands(I)
 			usr.emote("scream")
 			usr.visible_message("<span class='notice'>[usr] successfully rips [I] out of [usr.p_their()] [L.name]!</span>", "<span class='notice'>You successfully remove [I] from your [L.name].</span>")
