@@ -129,6 +129,7 @@
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
 	synchronizer_coeff = 1
+	var/list/yelled = list("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")
 
 /datum/mutation/human/tourettes/on_life()
 	if(prob(10 * GET_MUTATION_SYNCHRONIZER(src)) && owner.stat == CONSCIOUS && !owner.IsStun())
@@ -137,7 +138,7 @@
 			if(1)
 				owner.emote("twitch")
 			if(2 to 3)
-				owner.say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]", forced="tourette's syndrome")
+				owner.say("[prob(50) ? ";" : ""][pick(yelled)]", forced=name)
 		var/x_offset_old = owner.pixel_x
 		var/y_offset_old = owner.pixel_y
 		var/x_offset = owner.pixel_x + rand(-2,2)
@@ -382,3 +383,90 @@
 			owner.SetStun(owner.AmountStun()*2)
 			owner.visible_message("<span class='danger'>[owner] tries to stand up, but trips!</span>", "<span class='userdanger'>You trip over your own feet!</span>")
 			stun_cooldown = world.time + 300
+
+/datum/mutation/human/martyrdom
+	name = "Internal Martyrdom"
+	desc = "A mutation that makes the body destruct when near death. Not damaging, but very, VERY disorienting."
+	locked = TRUE
+	quality = POSITIVE //not that cloning will be an option a lot but generally lets keep this around i guess?
+	text_gain_indication = "<span class='warning'>You get an intense feeling of heartburn.</span>"
+	text_lose_indication = "<span class'notice'>Your internal organs feel at ease.</span>"
+
+/datum/mutation/human/martyrdom/on_acquiring()
+	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, .proc/bloody_shower)
+
+/datum/mutation/human/martyrdom/on_losing()
+	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
+
+/datum/mutation/human/martyrdom/proc/bloody_shower(new_stat)
+	if(new_stat != UNCONSCIOUS)
+		return
+	var/list/organs = owner.getorganszone(BODY_ZONE_HEAD, 1)
+
+	for(var/obj/item/organ/I in organs)
+		I.Remove(owner, 1)
+
+	explosion(get_turf(owner), 0, 0, 2, 0, TRUE)
+	for(var/mob/living/carbon/human/H in range(2,owner))
+		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+		to_chat(H, "<span class='userdanger'>You are blinded by a shower of blood!</span>")
+		H.Stun(20)
+		H.blur_eyes(20)
+		eyes?.applyOrganDamage(5)
+		H.confused += 3
+	for(var/mob/living/silicon/S in range(2,owner))
+		to_chat(S, "<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")
+		S.Paralyze(60)
+	owner.gib()
+
+/datum/mutation/human/supermatter_proof
+	name = "Supermatter Immunity"
+	desc = "A mutation that makes the body immune to the destructive effects of the supermatter."
+	locked = TRUE
+	quality = POSITIVE
+	text_gain_indication = "<span class='warning'>You feel super.</span>"
+	text_lose_indication = "<span class'notice'>You don't feel so super anymore...</span>"
+
+/datum/mutation/human/space_mutant
+	name = "Space Morphing"
+	desc = "A mutation that slowly adapts the user to live in space. Removes itself when complete or if there is nothing to adapt."
+	locked = TRUE
+	quality = NEGATIVE
+	text_gain_indication = "<span class='warning'>You feel kinda spaced out...</span>"
+	text_lose_indication = "<span class'notice'>You feel your insides settle.</span>"
+
+	var/static/list/mutant_organs = list(
+	ORGAN_SLOT_LUNGS = /obj/item/organ/lungs/space_adaption,
+	ORGAN_SLOT_LIVER = /obj/item/organ/liver/space_adaption
+	)))
+
+	var/mutation_timer
+
+/datum/mutation/human/space_mutant_one/on_acquiring()
+	mutation_timer = addtimer(CALLBACK(src, .proc/mutie_timer_ticked), 5 MINUTES, TIMER_STOPPABLE)
+
+/datum/mutation/human/space_mutant_one/on_losing()
+	deltimer(mutation_timer)
+
+/datum/mutation/human/space_mutant_one/proc/mutie_timer_ticked()
+	adapt_organ()
+	if(!QDELETED(src))
+		mutation_timer = addtimer(CALLBACK(src, .proc/mutie_timer_ticked), 5 MINUTES, TIMER_STOPPABLE)
+
+/datum/mutation/human/space_mutant_one/proc/adapt_organ()
+	if(!M.internal_organs) //first case: no organs to adapt
+		remove(src)
+		return
+	var/obj/item/organ/targetorg
+	for(var/O in shuffle(M.internal_organs))
+		var/obj/item/organ/organ = O
+		if(istype(organ, mutant_organs[organ.zone]))
+			continue
+		targetorg = organ
+		break
+	if(!targetorg) //second case: no organs that are adaptable
+		remove(src)
+		return
+	to_chat(owner, "<span class='danger'>You feel strange.</span>")
+	targetorg = new mutant_organs[targetorg.zone]()//note here for readability target organ switches from the organ getting replaced to the organ replacing the old
+	targetorg.Insert(owner, special = TRUE, drop_if_replaced = FALSE)

@@ -7,10 +7,11 @@
 	text_gain_indication = "<span class='notice'>Your body feels warm!</span>"
 	time_coeff = 5
 	instability = 30
+	var/hasvisuals = TRUE
 
 /datum/mutation/human/space_adaptation/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
-	if(!(type in visual_indicators))
+	if(!(type in visual_indicators) && hasvisuals)
 		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "fire", -MUTATIONS_LAYER))
 
 /datum/mutation/human/space_adaptation/get_visual_indicator()

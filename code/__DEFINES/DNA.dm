@@ -6,6 +6,7 @@
 #define HULK		/datum/mutation/human/hulk
 #define XRAY		/datum/mutation/human/thermal/x_ray
 #define SPACEMUT	/datum/mutation/human/space_adaptation
+#define SPACEMORPHING		/datum/mutation/human/space_mutant
 #define TK			/datum/mutation/human/telekinesis
 #define NERVOUS		/datum/mutation/human/nervousness
 #define EPILEPSY	/datum/mutation/human/epilepsy
@@ -54,6 +55,8 @@
 #define GELADIKINESIS		/datum/mutation/human/geladikinesis
 #define CRYOKINESIS /datum/mutation/human/cryokinesis
 #define SPIDER_WEB	/datum/mutation/human/webbing
+#define MARTYRDOM	/datum/mutation/human/martyrdom
+#define SUPERMATTERPROOF	/datum/mutation/human/supermatter_proof
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"

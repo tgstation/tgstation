@@ -755,6 +755,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		var/mob/living/user = AM
 		if(user.status_flags & GODMODE)
 			return
+		if(ishuman(AM))
+			var/mob/living/carbon/human/proofed = user
+			if(proofed.dna && SUPERMATTERPROOF in proofed.dna.mutations)
+				to_chat(proofed, "<span class='green'>You can't help but notice that contact with the supermatter has not killed you instantly!</span>")
+				if(proofed.client)
+					proofed.client.give_award(/datum/award/achievement/misc/supermatter_survived, proofed)
 		message_admins("[src] has consumed [key_name_admin(user)] [ADMIN_JMP(src)].")
 		investigate_log("has consumed [key_name(user)].", INVESTIGATE_SUPERMATTER)
 		user.dust(force = TRUE)

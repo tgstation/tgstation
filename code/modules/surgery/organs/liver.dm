@@ -79,6 +79,13 @@
 	toxLethality = LIVER_DEFAULT_TOX_LETHALITY * 2.5 // rejects its owner early after too much punishment
 	toxTolerance = 15 // complete toxin immunity like xenos have would be too powerful
 
+/obj/item/organ/liver/space_adaption
+	name = "mutated liver"
+	desc = "Something horribly wrong has happened to this liver. It has changed to only process in space, but the processing also produces happy chemicals."
+	icon_state = "liver-p"
+
+/obj/item/organ/liver/space_adaption/on_life()
+
 /obj/item/organ/liver/cybernetic
 	name = "basic cybernetic liver"
 	icon_state = "liver-c"

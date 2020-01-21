@@ -43,7 +43,7 @@
 	desc = "You janked hard"
 	database_id = MEDAL_HELBITALJANKEN
 	icon = "helbital"
-    
+
 /datum/award/achievement/misc/getting_an_upgrade
 	name = "Getting an upgrade"
 	desc = "Make your first unique material item!"
@@ -95,3 +95,9 @@
 	desc = "Well, that didn't take long."
 	database_id = MEDAL_LONGSHIFT
 	icon = "longshift"
+
+/datum/award/achievement/misc/supermatter_survived
+	name = "Supermatter Touched (Without violent death)"
+	desc = "Lets hope those radiation burns don't set in until after the celebrations."
+	database_id = MEDAL_SUPERMATTERTOUCH
+	icon = "suppermatter"
