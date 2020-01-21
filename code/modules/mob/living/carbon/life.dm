@@ -631,6 +631,20 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(bodytemperature >= BODYTEMP_HEAT_DAMAGE_LIMIT)
 		return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)
 
+/**
+ * Get the insulation that is appropriate to the temperature you're being exposed to.
+ * All clothing, natural insulation, and traits are combined returning a single value.
+ *
+ * required temperature The Temperature that you're being exposed to
+ *
+ * return the percentage of protection as a value from 0 - 1
+**/
+/mob/living/carbon/proc/get_insulation_protection(temperature)
+	if (temperature > bodytemperature) // exposed to heat, get heat protection
+		return get_heat_protection(temperature)
+	else // exposed to a cold, get cold protection
+		return get_cold_protection(temperature)
+
 /// This returns the percentage of protection from heat as a value from 0 - 1
 /// temperature is the temperature you're being exposed to
 /mob/living/carbon/proc/get_heat_protection(temperature)

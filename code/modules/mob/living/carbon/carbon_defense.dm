@@ -271,14 +271,14 @@
 		// Warm them up with hugs
 		if(bodytemperature > M.bodytemperature) // they are warmer leech from them
 			var/temp_diff = bodytemperature - M.bodytemperature
-			M.adjust_bodytemperature(min((1 - M.get_heat_protection(bodytemperature)) * temp_diff / BODYTEMP_HEAT_DIVISOR, \
+			M.adjust_bodytemperature(min((1 - M.get_insulation_protection(bodytemperature)) * temp_diff / BODYTEMP_HEAT_DIVISOR, \
 			BODYTEMP_HEATING_MAX))
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, src)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
 
 		else // you are warm share the heat of life
 			var/temp_diff = M.bodytemperature - bodytemperature
-			adjust_bodytemperature(min((1 - get_heat_protection(M.bodytemperature)) * temp_diff / BODYTEMP_HEAT_DIVISOR, \
+			adjust_bodytemperature(min((1 - get_insulation_protection(M.bodytemperature)) * temp_diff / BODYTEMP_HEAT_DIVISOR, \
 			BODYTEMP_HEATING_MAX))
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, M)
 

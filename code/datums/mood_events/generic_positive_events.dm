@@ -24,9 +24,6 @@
 	mood_change = 1
 	timeout = 2 MINUTES
 
-/datum/mood_event/warmhug/add_effects()
-	description = "<span class='nicegreen'>Someone gave me a warm cozy hug!</span>\n"
-
 /datum/mood_event/arcade
 	description = "<span class='nicegreen'>I beat the arcade game!</span>\n"
 	mood_change = 3
