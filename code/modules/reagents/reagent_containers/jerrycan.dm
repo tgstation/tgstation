@@ -41,10 +41,10 @@
 	name = "NT-Ag ammonia can"
 	desc = "A large container labled 'NT-Ag' liquid ammonia. A warning label reads: Store separately from chlorine-based cleaning products!"
 	list_reagents = list(/datum/reagent/ammonia = 200)
-	custom_premium_price = 800
+
 
 /obj/item/reagent_containers/glass/jerrycan/diethylamine
 	name = "NT-Ag diethylamine can"
 	desc = "A large container labled 'NT-Ag' diethylamine. A disclaimer written in bold letters reads: FOR AGRICULTURAL USE ONLY. RESALE PROHIBITED."
 	list_reagents = list(/datum/reagent/diethylamine = 200)
-	custom_premium_price = 600
+

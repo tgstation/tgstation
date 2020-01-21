@@ -19,7 +19,7 @@
 					  /obj/item/reagent_containers/glass/jerrycan/diethylamine = 1)
 	refill_canister = /obj/item/vending_refill/hydronutrients
 	default_price = 100
-	extra_price = 250
+	extra_price = 800
 	payment_department = ACCOUNT_SRV
 
 /obj/item/vending_refill/hydronutrients
