@@ -65,11 +65,11 @@
 		out += "The air around [master] feels warm"
 	switch(strength)
 		if(RAD_AMOUNT_LOW to RAD_AMOUNT_MEDIUM)
-			out += "[out ? " and it " : "[master] "]feels weird to look at."
+			out += "[length(out) ? " and it " : "[master] "]feels weird to look at."
 		if(RAD_AMOUNT_MEDIUM to RAD_AMOUNT_HIGH)
-			out += "[out ? " and it " : "[master] "]seems to be glowing a bit."
+			out += "[length(out) ? " and it " : "[master] "]seems to be glowing a bit."
 		if(RAD_AMOUNT_HIGH to INFINITY) //At this level the object can contaminate other objects
-			out += "[out ? " and it " : "[master] "]hurts to look at."
+			out += "[length(out) ? " and it " : "[master] "]hurts to look at."
 		else
 			out += "."
 	to_chat(user, out.Join())

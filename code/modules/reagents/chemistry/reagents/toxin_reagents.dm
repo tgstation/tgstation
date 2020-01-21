@@ -144,7 +144,7 @@
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/carbon/M)
 	if(HAS_TRAIT(M, TRAIT_FAT))
-		M.gib()
+		M.inflate_gib()
 	return ..()
 
 /datum/reagent/toxin/carpotoxin
@@ -346,7 +346,8 @@
 	description = "Finely shredded tea leaves, used for making tea."
 	reagent_state = SOLID
 	color = "#7F8400" // rgb: 127, 132, 0
-	toxpwr = 0.5
+	toxpwr = 0.1
+	taste_description = "green tea"
 
 /datum/reagent/toxin/mutetoxin //the new zombie powder.
 	name = "Mute Toxin"
@@ -408,7 +409,7 @@
 				M.emote("sneeze")
 			if(4)
 				if(prob(75))
-					to_chat(M, "You scratch at an itch.")
+					to_chat(M, "<span class='danger'>You scratch at an itch.</span>")
 					M.adjustBruteLoss(2*REM, 0)
 					. = 1
 	..()
@@ -485,7 +486,7 @@
 	if(prob(5))
 		M.losebreath += 1
 	if(prob(8))
-		to_chat(M, "You feel horrendously weak!")
+		to_chat(M, "<span class='danger'>You feel horrendously weak!</span>")
 		M.Stun(40, 0)
 		M.adjustToxLoss(2*REM, 0)
 	return ..()
@@ -514,15 +515,15 @@
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/M)
 	if(prob(15))
-		to_chat(M, "You scratch at your head.")
+		to_chat(M, "<span class='danger'>You scratch at your head.</span>")
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = 1
 	if(prob(15))
-		to_chat(M, "You scratch at your leg.")
+		to_chat(M, "<span class='danger'>You scratch at your leg.</span>")
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = 1
 	if(prob(15))
-		to_chat(M, "You scratch at your arm.")
+		to_chat(M, "<span class='danger'>You scratch at your arm.</span>")
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = 1
 	if(prob(3))
@@ -803,6 +804,18 @@
 	. = 1
 	..()
 
+/datum/reagent/toxin/acid/nitracid
+	name = "Nitric acid"
+	description = "Nitric acid is an extremely corrosive chemical substance that violently reacts with living organic tissue."
+	color = "#5050FF"
+	toxpwr = 2
+	acidpwr = 5.0
+
+/datum/reagent/toxin/acid/nitracid/on_mob_life(mob/living/carbon/M)
+	M.adjustFireLoss(current_cycle/15, FALSE) //here you go nervar
+	. = TRUE
+	..()
+
 /datum/reagent/toxin/delayed
 	name = "Toxin Microcapsules"
 	description = "Causes heavy toxin damage after a brief time of inactivity."
@@ -845,7 +858,7 @@
 	taste_description = "bone hurting"
 	overdose_threshold = 50
 
-/datum/reagent/toxin/bonehurtingjuice/on_mob_metabolize(mob/living/carbon/M)
+/datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/M)
 	M.say("oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
@@ -853,46 +866,25 @@
 	if(prob(20))
 		switch(rand(1, 3))
 			if(1)
-				var/list/possible_says = list("oof.", "ouch!", "my bones.", "oof ouch.", "oof ouch my bones.")
-				M.say(pick(possible_says), forced = /datum/reagent/toxin/bonehurtingjuice)
+				M.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
 			if(2)
-				var/list/possible_mes = list("oofs softly.", "looks like their bones hurt.", "grimaces, as though their bones hurt.")
-				M.say("*custom " + pick(possible_mes), forced = /datum/reagent/toxin/bonehurtingjuice)
+				M.emote("me", 1, pick("oofs silently.", "looks like their bones hurt.", "grimaces, as though their bones hurt."))
 			if(3)
 				to_chat(M, "<span class='warning'>Your bones hurt!</span>")
 	return ..()
 
 /datum/reagent/toxin/bonehurtingjuice/overdose_process(mob/living/carbon/M)
 	if(prob(4) && iscarbon(M)) //big oof
-		var/selected_part
-		switch(rand(1, 4)) //God help you if the same limb gets picked twice quickly.
-			if(1)
-				selected_part = BODY_ZONE_L_ARM
-			if(2)
-				selected_part = BODY_ZONE_R_ARM
-			if(3)
-				selected_part = BODY_ZONE_L_LEG
-			if(4)
-				selected_part = BODY_ZONE_R_LEG
+		var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
 		var/obj/item/bodypart/bp = M.get_bodypart(selected_part)
-		if(M.dna.species.type != /datum/species/skeleton && M.dna.species.type != /datum/species/plasmaman) //We're so sorry skeletons, you're so misunderstood
-			if(bp)
-				bp.receive_damage(0, 0, 200)
-				playsound(M, get_sfx("desceration"), 50, TRUE, -1)
-				M.visible_message("<span class='warning'>[M]'s bones hurt too much!!</span>", "<span class='danger'>Your bones hurt too much!!</span>")
-				M.say("OOF!!", forced = /datum/reagent/toxin/bonehurtingjuice)
-			else //SUCH A LUST FOR REVENGE!!!
-				to_chat(M, "<span class='warning'>A phantom limb hurts!</span>")
-				M.say("Why are we still here, just to suffer?", forced = /datum/reagent/toxin/bonehurtingjuice)
-		else //you just want to socialize
-			if(bp)
-				playsound(M, get_sfx("desceration"), 50, TRUE, -1)
-				M.visible_message("<span class='warning'>[M] rattles loudly and flails around!!</span>", "<span class='danger'>Your bones hurt so much that your missing muscles spasm!!</span>")
-				M.say("OOF!!", forced=/datum/reagent/toxin/bonehurtingjuice)
-				bp.receive_damage(200, 0, 0) //But I don't think we should
-			else
-				to_chat(M, "<span class='warning'>Your missing arm aches from wherever you left it.</span>")
-				M.emote("sigh")
+		if(bp)
+			playsound(M, get_sfx("desceration"), 50, TRUE, -1)
+			M.visible_message("<span class='warning'>[M]'s bones hurt too much!!</span>", "<span class='danger'>Your bones hurt too much!!</span>")
+			M.say("OOF!!", forced = /datum/reagent/toxin/bonehurtingjuice)
+			bp.receive_damage(0, 0, 200)
+		else //SUCH A LUST FOR REVENGE!!!
+			to_chat(M, "<span class='warning'>A phantom limb hurts!</span>")
+			M.say("Why are we still here, just to suffer?", forced = /datum/reagent/toxin/bonehurtingjuice)
 	return ..()
 
 /datum/reagent/toxin/bungotoxin

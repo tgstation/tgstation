@@ -149,9 +149,12 @@
 /mob/living/simple_animal/hostile/alien/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
 		adjustBruteLoss(2)
+		throw_alert("temp", /obj/screen/alert/cold, 1)
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(20)
-
+		throw_alert("temp", /obj/screen/alert/hot, 3)
+	else
+		clear_alert("temp")
 
 /mob/living/simple_animal/hostile/alien/maid
 	name = "lusty xenomorph maid"
@@ -174,7 +177,7 @@
 /mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
 	if(ismovableatom(target))
 		if(istype(target, /obj/effect/decal/cleanable))
-			visible_message("<span class='notice'>[src] cleans up \the [target].")
+			visible_message("<span class='notice'>[src] cleans up \the [target].</span>")
 			qdel(target)
 			return TRUE
 		var/atom/movable/M = target

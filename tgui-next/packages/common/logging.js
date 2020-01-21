@@ -1,8 +1,3 @@
-/**
- * Copyright (c) 2019 Aleksej Komarov
- * SPDX-License-Identifier: GPL-2.0-or-later
- */
-
 const inception = Date.now();
 
 // Runtime detection

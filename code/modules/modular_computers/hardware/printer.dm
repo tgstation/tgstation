@@ -10,7 +10,7 @@
 
 /obj/item/computer_hardware/printer/diagnostics(mob/living/user)
 	..()
-	to_chat(user, "Paper level: [stored_paper]/[max_paper].")
+	to_chat(user, "<span class='notice'>Paper level: [stored_paper]/[max_paper].</span>")
 
 /obj/item/computer_hardware/printer/examine(mob/user)
 	. = ..()

@@ -32,6 +32,6 @@
 	static_inventory += using
 
 	zone_select = new /obj/screen/zone_sel/alien()
-	zone_select.update_icon()
 	zone_select.hud = src
+	zone_select.update_icon()
 	static_inventory += zone_select

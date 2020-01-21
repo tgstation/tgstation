@@ -11,7 +11,6 @@
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
-	mats_per_stack = 500
 	var/turf_type = null
 	var/mineralType = null
 	novariants = TRUE
@@ -326,3 +325,11 @@
 	custom_materials = null // All other Borg versions of items have no Metal or Glass - RR
 	is_cyborg = 1
 	cost = 125
+
+/obj/item/stack/tile/plastic
+	name = "plastic tile"
+	singular_name = "plastic floor tile"
+	desc = "A tile of cheap, flimsy plastic flooring."
+	icon_state = "tile_plastic"
+	custom_materials = list(/datum/material/plastic=500)
+	turf_type = /turf/open/floor/plastic

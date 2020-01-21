@@ -22,16 +22,6 @@
 	var/width = 0
 	/// The window height
 	var/height = 0
-	/// Extra options to winset().
-	var/window_options = list(
-	  "focus" = FALSE,
-	  "titlebar" = TRUE,
-	  "can_resize" = TRUE,
-	  "can_minimize" = TRUE,
-	  "can_maximize" = FALSE,
-	  "can_close" = TRUE,
-	  "auto_format" = FALSE
-	)
 	/// The style to be used for this UI.
 	var/style = "nanotrasen"
 	/// The interface (template) to be used for this UI.
@@ -52,7 +42,6 @@
 	var/datum/tgui/master_ui
 	/// Children of this UI.
 	var/list/datum/tgui/children = list()
-	var/titlebar = TRUE
 	var/custom_browser_id = FALSE
 	var/ui_screen = "home"
 
@@ -77,7 +66,7 @@
 	src.user = user
 	src.src_object = src_object
 	src.ui_key = ui_key
-	src.window_id = browser_id ? browser_id : "[REF(src_object)]-[ui_key]"
+	src.window_id = browser_id ? browser_id : "[REF(src_object)]-[ui_key]" // DO NOT replace with \ref here. src_object could potentially be tagged
 	src.custom_browser_id = browser_id ? TRUE : FALSE
 
 	set_interface(interface)
@@ -110,18 +99,43 @@
 	if(status < UI_UPDATE)
 		return // Bail if we're not supposed to open.
 
+	var/window_size
+	if(width && height) // If we have a width and height, use them.
+		window_size = "size=[width]x[height];"
+	else
+		window_size = ""
+
+	// Remove titlebar and resize handles for a fancy window
+	var/have_title_bar
+	if(user.client.prefs.tgui_fancy)
+		have_title_bar = "titlebar=0;can_resize=0;"
+	else
+		have_title_bar = "titlebar=1;can_resize=1;"
+
+	// Generate page html
+	var/html
+	html = SStgui.basehtml
+	// Allow the src object to override the html if needed
+	html = src_object.ui_base_html(html)
+	// Replace template tokens with important UI data
+	// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
+	// be tagged, so this is an effective unwrap
+	html = replacetextEx(html, "\[ref]", "\ref[src]")
+	html = replacetextEx(html, "\[style]", style)
+
+	// Open the window.
+	user << browse(html, "window=[window_id];can_minimize=0;auto_format=0;[window_size][have_title_bar]")
+	if (!custom_browser_id)
+		// Instruct the client to signal UI when the window is closed.
+		// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
+		// be tagged, so this is an effective unwrap
+		winset(user, window_id, "on-close=\"uiclose \ref[src]\"")
+
 	if(!initial_data)
 		initial_data = src_object.ui_data(user)
 	if(!initial_static_data)
 		initial_static_data = src_object.ui_static_data(user)
 
-	var/window_size = ""
-	if(width && height) // If we have a width and height, use them.
-		window_size = "size=[width]x[height];"
-
-	user << browse(get_html(), "window=[window_id];[window_size][list2params(window_options)]") // Open the window.
-	if (!custom_browser_id)
-		winset(user, window_id, "on-close=\"uiclose [REF(src)]\"") // Instruct the client to signal UI when the window is closed.
 	SStgui.on_open(src)
 
  /**
@@ -161,16 +175,6 @@
  /**
   * public
   *
-  * Sets the browse() window options for this UI.
-  *
-  * required window_options list The window options to set.
- **/
-/datum/tgui/proc/set_window_options(list/window_options)
-	src.window_options = window_options
-
- /**
-  * public
-  *
   * Set the style for this UI.
   *
   * required style string The new UI style.
@@ -201,57 +205,6 @@
  /**
   * private
   *
-  * Generate HTML for this UI.
-  *
-  * return string UI HTML output.
- **/
-/datum/tgui/proc/get_html()
-	var/html
-	html = SStgui.basehtml
-
-	//Allow the src object to override the html if needed
-	html = src_object.ui_base_html(html)
-	//Strip out any remaining custom tags that are used in ui_base_html
-	html = replacetext(html, "<!--customheadhtml-->", "")
-
-	//Setup for tgui stuff, including styles
-	html = replacetextEx(html, "\[ref]", "[REF(src)]")
-	html = replacetextEx(html, "\[style]", style)
-	return html
-
- /**
-  * private
-  *
-  * Get the config data/datastructure to initialize the UI with.
-  *
-  * return list The config data.
- **/
-/datum/tgui/proc/get_config_data()
-	var/list/config_data = list(
-			"title"     = title,
-			"status"    = status,
-			"screen"	= ui_screen,
-			"style"     = style,
-			"interface" = interface,
-			"fancy"     = user.client.prefs.tgui_fancy,
-			"locked"    = user.client.prefs.tgui_lock && !custom_browser_id,
-			"window"    = window_id,
-			"ref"       = "[REF(src)]",
-			"user"      = list(
-				"name"  = user.name,
-				"ref"   = "[REF(user)]"
-			),
-			"srcObject" = list(
-				"name" = "[src_object]",
-				"ref"  = "[REF(src_object)]"
-			),
-			"titlebar" = titlebar
-		)
-	return config_data
-
- /**
-  * private
-  *
   * Package the data to send to the UI, as JSON.
   * This includes the UI data and config_data.
   *
@@ -260,7 +213,21 @@
 /datum/tgui/proc/get_json(list/data, list/static_data)
 	var/list/json_data = list()
 
-	json_data["config"] = get_config_data()
+	json_data["config"] = list(
+		"title" = title,
+		"status" = status,
+		"screen" = ui_screen,
+		"style" = style,
+		"interface" = interface,
+		"fancy" = user.client.prefs.tgui_fancy,
+		"locked" = user.client.prefs.tgui_lock && !custom_browser_id,
+		"observer" = isobserver(user),
+		"window" = window_id,
+		// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
+		// be tagged, so this is an effective unwrap
+		"ref" = "\ref[src]"
+	)
+	
 	if(!isnull(data))
 		json_data["data"] = data
 	if(!isnull(static_data))
@@ -296,6 +263,9 @@
 				ui_screen = params["screen"]
 			SStgui.update_uis(src_object)
 		if("tgui:log")
+			// Force window to show frills on fatal errors
+			if(params["fatal"])
+				winset(user, window_id, "titlebar=1;can-resize=1;size=600x600")
 			log_message(params["log"])
 		if("tgui:link")
 			user << link(params["url"])
@@ -367,7 +337,6 @@
 	var/status = src_object.ui_status(user, state)
 	if(master_ui)
 		status = min(status, master_ui.status)
-
 	set_status(status, push)
 	if(status == UI_CLOSE)
 		close()
@@ -390,9 +359,6 @@
 			src.status = status
 			if(status == UI_DISABLED || push) // Update if the UI just because disabled, or a push is requested.
 				push_data(null, force = TRUE)
-
-/datum/tgui/proc/set_titlebar(value)
-	titlebar = value
 
 /datum/tgui/proc/log_message(message)
 	log_tgui("[user] ([user.ckey]) using \"[title]\":\n[message]")

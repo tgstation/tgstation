@@ -287,7 +287,7 @@
 
 /obj/machinery/microwave/proc/loop(type, time, wait = max(12 - 2 * efficiency, 2)) // standard wait is 10
 	if(stat & (NOPOWER|BROKEN))
-		if(MICROWAVE_PRE)
+		if(type == MICROWAVE_PRE)
 			pre_fail()
 		return
 	if(!time)
@@ -309,7 +309,7 @@
 	var/metal = 0
 	for(var/obj/item/O in ingredients)
 		O.microwave_act(src)
-		if(O.custom_materials || O.custom_materials.len)
+		if(O.custom_materials && length(O.custom_materials))
 			if(O.custom_materials[getmaterialref(/datum/material/iron)])
 				metal += O.custom_materials[getmaterialref(/datum/material/iron)]
 

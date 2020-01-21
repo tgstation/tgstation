@@ -14,7 +14,7 @@
 						/obj/item/clothing/under/rank/rnd/scientist = 1,
 						/obj/item/clothing/under/rank/medical/chemist = 1,
 						/obj/item/clothing/under/rank/medical/chief_medical_officer = 1,
-						/obj/item/clothing/under/rank/medical/geneticist = 1,
+						/obj/item/clothing/under/rank/rnd/geneticist = 1,
 						/obj/item/clothing/under/rank/medical/virologist = 1,
 						/obj/item/clothing/under/rank/medical/doctor/nurse = 1,
 						/obj/item/clothing/under/rank/medical/doctor = 1,

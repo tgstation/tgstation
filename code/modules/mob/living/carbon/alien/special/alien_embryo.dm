@@ -10,9 +10,9 @@
 /obj/item/organ/body_egg/alien_embryo/on_find(mob/living/finder)
 	..()
 	if(stage < 4)
-		to_chat(finder, "It's small and weak, barely the size of a foetus.")
+		to_chat(finder, "<span class='notice'>It's small and weak, barely the size of a foetus.</span>")
 	else
-		to_chat(finder, "It's grown quite large, and writhes slightly as you look at it.")
+		to_chat(finder, "<span class='notice'>It's grown quite large, and writhes slightly as you look at it.</span>")
 		if(prob(10))
 			AttemptGrow(0)
 
@@ -129,5 +129,6 @@ Des: Removes all images from the mob infected by this embryo
 /obj/item/organ/body_egg/alien_embryo/RemoveInfectionImages()
 	for(var/mob/living/carbon/alien/alien in GLOB.player_list)
 		for(var/image/I in alien.client.images)
-			if(dd_hasprefix_case(I.icon_state, "infected") && I.loc == owner)
+			var/searchfor = "infected"
+			if(I.loc == owner && findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))
 				qdel(I)

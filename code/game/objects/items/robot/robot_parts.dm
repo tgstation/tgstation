@@ -40,20 +40,20 @@
 	chest.cell = new /obj/item/stock_parts/cell/high/plus(chest)
 	update_icon()
 
-/obj/item/robot_suit/update_icon()
-	cut_overlays()
+/obj/item/robot_suit/update_overlays()
+	. = ..()
 	if(l_arm)
-		add_overlay("[l_arm.icon_state]+o")
+		. += "[l_arm.icon_state]+o"
 	if(r_arm)
-		add_overlay("[r_arm.icon_state]+o")
+		. += "[r_arm.icon_state]+o"
 	if(chest)
-		add_overlay("[chest.icon_state]+o")
+		. += "[chest.icon_state]+o"
 	if(l_leg)
-		add_overlay("[l_leg.icon_state]+o")
+		. += "[l_leg.icon_state]+o"
 	if(r_leg)
-		add_overlay("[r_leg.icon_state]+o")
+		. += "[r_leg.icon_state]+o"
 	if(head)
-		add_overlay("[head.icon_state]+o")
+		. += "[head.icon_state]+o"
 
 /obj/item/robot_suit/proc/check_completion()
 	if(src.l_arm && src.r_arm)
@@ -97,7 +97,7 @@
 				head = null
 			to_chat(user, "<span class='notice'>You disassemble the cyborg shell.</span>")
 	else
-		to_chat(user, "<span class='notice'>There is nothing to remove from the endoskeleton.</span>")
+		to_chat(user, "<span class='warning'>There is nothing to remove from the endoskeleton!</span>")
 	update_icon()
 
 /obj/item/robot_suit/proc/put_in_hand_or_drop(mob/living/user, obj/item/I) //normal put_in_hands() drops the item ontop of the player, this drops it at the suit's loc
@@ -112,7 +112,7 @@
 		return TRUE
 
 	if(!chest) //can't remove a cell if there's no chest to remove it from.
-		to_chat(user, "<span class='notice'>[src] has no attached torso.</span>")
+		to_chat(user, "<span class='warning'>[src] has no attached torso!</span>")
 		return
 
 	var/obj/item/stock_parts/cell/temp_cell = user.is_holding_item_of_type(/obj/item/stock_parts/cell)
@@ -131,7 +131,7 @@
 			to_chat(user, "<span class='notice'>You remove [chest.cell] from [src].</span>")
 			chest.cell = null
 		else
-			to_chat(user, "<span class='notice'>The power cell slot in [src]'s torso is empty.</span>")
+			to_chat(user, "<span class='warning'>The power cell slot in [src]'s torso is empty!</span>")
 		return
 
 	to_chat(user, "<span class='notice'>You [chest.cell ? "replace [src]'s [chest.cell.name] with [temp_cell]" : "insert [temp_cell] into [src]"].</span>")
@@ -243,39 +243,20 @@
 			if(!isturf(loc))
 				to_chat(user, "<span class='warning'>You can't put [M] in, the frame has to be standing on the ground to be perfectly precise!</span>")
 				return
-			if(!M.brainmob)
-				to_chat(user, "<span class='warning'>Sticking an empty [M.name] into the frame would sort of defeat the purpose!</span>")
+			if(!M.brain_check(user))
 				return
 
-			var/mob/living/brain/BM = M.brainmob
-			if(!BM.key || !BM.mind)
-				to_chat(user, "<span class='warning'>The MMI indicates that their mind is completely unresponsive; there's no point!</span>")
-				return
-
-			if(!BM.client) //braindead
-				to_chat(user, "<span class='warning'>The MMI indicates that their mind is currently inactive; it might change!</span>")
-				return
-
-			if(BM.stat == DEAD || BM.suiciding || (M.brain && (M.brain.brain_death || M.brain.suicided)))
-				to_chat(user, "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>")
-				return
-
-			if(M.brain?.organ_flags & ORGAN_FAILING)
-				to_chat(user, "<span class='warning'>The MMI indicates that the brain is damaged!</span>")
-				return
-
-			if(is_banned_from(BM.ckey, "Cyborg") || QDELETED(src) || QDELETED(BM) || QDELETED(user) || QDELETED(M) || !Adjacent(user))
+			var/mob/living/brain/B = M.brainmob
+			if(is_banned_from(B.ckey, "Cyborg") || QDELETED(src) || QDELETED(B) || QDELETED(user) || QDELETED(M) || !Adjacent(user))
 				if(!QDELETED(M))
 					to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
 				return
-
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/nocell(get_turf(loc))
 			if(!O)
 				return
-
 			if(M.laws && M.laws.id != DEFAULT_AI_LAWID)
 				aisync = 0
 				lawsync = 0
@@ -298,7 +279,7 @@
 				if(M.laws.id == DEFAULT_AI_LAWID)
 					O.make_laws()
 
-			SSticker.mode.remove_antag_for_borging(BM.mind)
+			SSticker.mode.remove_antag_for_borging(B.mind)
 			O.job = "Cyborg"
 
 			O.cell = chest.cell
@@ -309,9 +290,9 @@
 				qdel(O.mmi)
 			O.mmi = W //and give the real mmi to the borg.
 
-			O.updatename(BM.client)
+			O.updatename(B.client)
 
-			BM.mind.transfer_to(O)
+			B.mind.transfer_to(O)
 
 			if(O.mind && O.mind.special_role)
 				O.mind.store_memory("As a cyborg, you must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.")
@@ -354,7 +335,6 @@
 			if(!lawsync)
 				O.lawupdate = FALSE
 				O.make_laws()
-
 
 			O.cell = chest.cell
 			chest.cell.forceMove(O)
@@ -406,7 +386,7 @@
 	else if(href_list["Master"])
 		forced_ai = select_active_ai(usr)
 		if(!forced_ai)
-			to_chat(usr, "<span class='error'>No active AIs detected.</span>")
+			to_chat(usr, "<span class='alert'>No active AIs detected.</span>")
 
 	else if(href_list["Law"])
 		lawsync = !lawsync

@@ -8,10 +8,12 @@
 /datum/antagonist/highlander/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
 	ADD_TRAIT(L, TRAIT_NOGUNS, "highlander")
+	ADD_TRAIT(L, TRAIT_NODISMEMBER, "highlander")
 
 /datum/antagonist/highlander/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
 	REMOVE_TRAIT(L, TRAIT_NOGUNS, "highlander")
+	REMOVE_TRAIT(L, TRAIT_NODISMEMBER, "highlander")
 
 /datum/antagonist/highlander/proc/forge_objectives()
 	var/datum/objective/steal/steal_objective = new
@@ -47,11 +49,11 @@
 			qdel(I)
 	H.regenerate_icons()
 	H.revive(full_heal = TRUE, admin_revive = TRUE)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/kilt/highlander(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/radio/headset/heads/captain(H), SLOT_EARS)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), SLOT_HEAD)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/pinpointer/nuke(H), SLOT_L_STORE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/kilt/highlander(H), ITEM_SLOT_ICLOTHING)
+	H.equip_to_slot_or_del(new /obj/item/radio/headset/heads/captain(H), ITEM_SLOT_EARS)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), ITEM_SLOT_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), ITEM_SLOT_FEET)
+	H.equip_to_slot_or_del(new /obj/item/pinpointer/nuke(H), ITEM_SLOT_LPOCKET)
 	for(var/obj/item/pinpointer/nuke/P in H)
 		P.attack_self(H)
 	var/obj/item/card/id/centcom/W = new(H)
@@ -61,7 +63,7 @@
 	W.registered_name = H.real_name
 	ADD_TRAIT(W, TRAIT_NODROP, HIGHLANDER)
 	W.update_label()
-	H.equip_to_slot_or_del(W, SLOT_WEAR_ID)
+	H.equip_to_slot_or_del(W, ITEM_SLOT_ID)
 
 	sword = new(H)
 	if(!GLOB.highlander)

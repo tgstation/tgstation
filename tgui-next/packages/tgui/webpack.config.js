@@ -3,6 +3,16 @@ const path = require('path');
 const BuildNotifierPlugin = require('webpack-build-notifier');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 
+const SASS_FUNCTIONS = {
+  // Power function polyfill
+  'math-pow($number, $exp)': (number, exp) => {
+    const sass = require('sass');
+    return new sass.types.Number(Math.pow(
+      number.getValue(),
+      exp.getValue()));
+  },
+};
+
 module.exports = (env = {}, argv) => {
   const config = {
     mode: argv.mode === 'production' ? 'production' : 'development',
@@ -10,11 +20,18 @@ module.exports = (env = {}, argv) => {
     entry: {
       tgui: [
         path.resolve(__dirname, './styles/main.scss'),
+        path.resolve(__dirname, './styles/themes/cardtable.scss'),
+        path.resolve(__dirname, './styles/themes/ntos.scss'),
+        path.resolve(__dirname, './styles/themes/hackerman.scss'),
+        path.resolve(__dirname, './styles/themes/retro.scss'),
+        path.resolve(__dirname, './styles/themes/syndicate.scss'),
         path.resolve(__dirname, './index.js'),
       ],
     },
     output: {
-      path: path.resolve(__dirname, './public/bundles'),
+      path: argv.mode === 'production'
+        ? path.resolve(__dirname, './public')
+        : path.resolve(__dirname, './public/.tmp'),
       filename: '[name].bundle.js',
       chunkFilename: '[name].chunk.js',
     },
@@ -26,7 +43,6 @@ module.exports = (env = {}, argv) => {
       rules: [
         {
           test: /\.m?jsx?$/,
-          // exclude: /node_modules/,
           use: [
             {
               loader: 'babel-loader',
@@ -46,6 +62,8 @@ module.exports = (env = {}, argv) => {
                 plugins: [
                   '@babel/plugin-transform-jscript',
                   'babel-plugin-inferno',
+                  'babel-plugin-transform-remove-console',
+                  'common/string.babel-plugin.cjs',
                 ],
               },
             },
@@ -62,52 +80,24 @@ module.exports = (env = {}, argv) => {
             },
             {
               loader: 'css-loader',
-              options: {
-                url: false,
-              },
+              options: {},
             },
             {
               loader: 'sass-loader',
+              options: {
+                sassOptions: {
+                  functions: SASS_FUNCTIONS,
+                },
+              },
+            },
+          ],
+        },
+        {
+          test: /\.(png|jpg|svg)$/,
+          use: [
+            {
+              loader: 'url-loader',
               options: {},
-            },
-          ],
-        },
-        {
-          test: /\.css$/,
-          use: [
-            {
-              loader: ExtractCssChunks.loader,
-              options: {
-                hot: argv.hot,
-              },
-            },
-            {
-              loader: 'css-loader',
-              options: {
-                url: false,
-              },
-            },
-          ],
-        },
-        {
-          test: /\.(png|jpg|gif|ico)$/,
-          use: [
-            {
-              loader: 'file-loader',
-              options: {
-                name: 'images/[name].[ext]',
-              },
-            },
-          ],
-        },
-        {
-          test: /\.(ttf|woff|woff2|eot|svg)$/,
-          use: [
-            {
-              loader: 'file-loader',
-              options: {
-                name: 'fonts/[name].[ext]',
-              },
             },
           ],
         },
@@ -115,25 +105,16 @@ module.exports = (env = {}, argv) => {
     },
     optimization: {
       noEmitOnErrors: true,
-      // splitChunks: {
-      //   cacheGroups: {
-      //     commons: {
-      //       test: /[\\/]node_modules[\\/]/,
-      //       name: 'vendor',
-      //       chunks: 'all',
-      //     },
-      //   },
-      // },
     },
     performance: {
       hints: false,
     },
-    // Unfortunately, source maps don't work with BYOND's IE.
     devtool: false,
     plugins: [
       new webpack.EnvironmentPlugin({
         NODE_ENV: env.NODE_ENV || argv.mode || 'development',
         WEBPACK_HMR_ENABLED: env.WEBPACK_HMR_ENABLED || argv.hot || false,
+        DEV_SERVER_IP: env.DEV_SERVER_IP || null,
       }),
       new ExtractCssChunks({
         filename: '[name].bundle.css',
@@ -196,6 +177,7 @@ module.exports = (env = {}, argv) => {
     if (argv.hot) {
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
     }
+    config.devtool = 'cheap-module-source-map';
     config.devServer = {
       // Informational flags
       progress: false,

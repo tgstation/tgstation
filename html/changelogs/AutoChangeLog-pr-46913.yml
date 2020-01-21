@@ -1,6 +1,0 @@
-author: "Qustinnus"
-delete-after: True
-changes: 
-  - rscadd: "Basic skill framework, only applied to mining at the moment. Use a pickaxe or drill to become more efficient and mine faster."
-  - rscadd: "New ruin; the very strong rock. If you become good enough at mining maybe you can crack it open."
-  - balance: "nerfs mythril mat"

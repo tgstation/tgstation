@@ -46,18 +46,19 @@
 		return FALSE
 	if(already_known(user))
 		return FALSE
-	if(used && oneuse)
-		recoil(user)
-	else
-		on_reading_start(user)
-		reading = TRUE
-		for(var/i=1, i<=pages_to_mastery, i++)
-			if(!turn_page(user))
-				on_reading_stopped()
-				reading = FALSE
-				return
-		if(do_after(user,50, user))
-			on_reading_finished(user)
+	if(used)
+		if(oneuse)
+			recoil(user)
+		return FALSE
+	on_reading_start(user)
+	reading = TRUE
+	for(var/i=1, i<=pages_to_mastery, i++)
+		if(!turn_page(user))
+			on_reading_stopped()
+			reading = FALSE
+			return
+	if(do_after(user,50, user))
+		on_reading_finished(user)
 		reading = FALSE
 	return TRUE
 
@@ -72,7 +73,7 @@
 		return TRUE
 	for(var/datum/action/A in user.actions)
 		if(A.type == granted_action)
-			to_chat(user, "<span class='notice'>You already know all about [actionname].</span>")
+			to_chat(user, "<span class='warning'>You already know all about [actionname]!</span>")
 			return TRUE
 	return FALSE
 
@@ -125,9 +126,9 @@
 		if(knownspell.type == spell)
 			if(user.mind)
 				if(iswizard(user))
-					to_chat(user,"<span class='notice'>You're already far more versed in this spell than this flimsy how-to book can provide.</span>")
+					to_chat(user,"<span class='warning'>You're already far more versed in this spell than this flimsy how-to book can provide!</span>")
 				else
-					to_chat(user,"<span class='notice'>You've already read this one.</span>")
+					to_chat(user,"<span class='warning'>You've already read this one!</span>")
 			return TRUE
 	return FALSE
 
@@ -147,7 +148,7 @@
 /obj/item/book/granter/spell/onlearned(mob/user)
 	..()
 	if(oneuse)
-		user.visible_message("<span class='caution'>[src] glows dark for a second!</span>")
+		user.visible_message("<span class='warning'>[src] glows dark for a second!</span>")
 
 /obj/item/book/granter/spell/fireball
 	spell = /obj/effect/proc_holder/spell/aimed/fireball
@@ -180,7 +181,7 @@
 
 /obj/item/book/granter/spell/smoke/recoil(mob/user)
 	..()
-	to_chat(user,"<span class='caution'>Your stomach rumbles...</span>")
+	to_chat(user,"<span class='warning'>Your stomach rumbles...</span>")
 	if(user.nutrition)
 		user.set_nutrition(200)
 		if(user.nutrition <= 0)
@@ -270,7 +271,7 @@
 		var/obj/item/clothing/magichead = new /obj/item/clothing/mask/horsehead/cursed(user.drop_location())
 		if(!user.dropItemToGround(user.wear_mask))
 			qdel(user.wear_mask)
-		user.equip_to_slot_if_possible(magichead, SLOT_WEAR_MASK, TRUE, TRUE)
+		user.equip_to_slot_if_possible(magichead, ITEM_SLOT_MASK, TRUE, TRUE)
 		qdel(src)
 	else
 		to_chat(user,"<span class='notice'>I say thee neigh</span>") //It still lives here
@@ -394,6 +395,9 @@
 		name = "empty scroll"
 		icon_state = "blankscroll"
 
+/obj/item/book/granter/martial/plasma_fist/nobomb
+	martial = /datum/martial_art/plasma_fist/nobomb
+
 // I did not include mushpunch's grant, it is not a book and the item does it just fine.
 
 //Crafting Recipe books
@@ -413,7 +417,13 @@
 /obj/item/book/granter/crafting_recipe/cooking_sweets_101
 	name = "Cooking Desserts 101"
 	desc = "A cook book that teaches you some more of the newest desserts. AI approved, and a best seller on Honkplanet."
-	crafting_recipe_types = list(/datum/crafting_recipe/food/mimetart, /datum/crafting_recipe/food/berrytart, /datum/crafting_recipe/food/cocolavatart, /datum/crafting_recipe/food/clowncake, /datum/crafting_recipe/food/vanillacake)
+	crafting_recipe_types = list(
+		/datum/crafting_recipe/food/mimetart,
+		/datum/crafting_recipe/food/berrytart,
+		/datum/crafting_recipe/food/cocolavatart,
+		/datum/crafting_recipe/food/clowncake,
+		/datum/crafting_recipe/food/vanillacake
+	)
 	icon_state = "cooking_learing_sweets"
 	oneuse = FALSE
 	remarks = list("So that is how icing is made!", "Placing fruit on top? How simple...", "Huh layering cake seems harder then this...", "This book smells like candy", "A clown must have made this page, or they forgot to spell check it before printing...", "Wait, a way to cook slime to be safe?")

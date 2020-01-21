@@ -12,8 +12,8 @@
 	density = FALSE
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
-	ui_x = 375
-	ui_y = 550
+	ui_x = 250
+	ui_y = 465
 
 	var/efficiency = 1
 	var/min_health = -25
@@ -55,7 +55,7 @@
 		available_chems |= possible_chems[i]
 	reset_chem_buttons()
 
-/obj/machinery/sleeper/update_icon()
+/obj/machinery/sleeper/update_icon_state()
 	if(state_open)
 		icon_state = "[initial(icon_state)]-open"
 	else

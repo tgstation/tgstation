@@ -63,8 +63,11 @@
 
 
 /obj/item/gun/magic/process()
+	if (charges >= max_charges)
+		charge_tick = 0
+		return
 	charge_tick++
-	if(charge_tick < recharge_rate || charges >= max_charges)
+	if(charge_tick < recharge_rate)
 		return 0
 	charge_tick = 0
 	charges++

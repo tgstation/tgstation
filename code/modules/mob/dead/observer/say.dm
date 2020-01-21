@@ -1,13 +1,17 @@
+/mob/dead/observer/check_emote(message, forced)
+	if(message == "*spin" || message == "*flip")
+		emote(copytext(message, length(message[1]) + 1), intentional = !forced)
+		return TRUE
+
 /mob/dead/observer/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if (!message)
 		return
 
 	var/message_mode = get_message_mode(message)
 	if(client && (message_mode == MODE_ADMIN || message_mode == MODE_DEADMIN))
-		message = copytext(message, 3)
-		if(findtext(message, " ", 1, 2))
-			message = copytext(message, 2)
+		message = copytext_char(message, 3)
+		message = trim_left(message)
 
 		if(message_mode == MODE_ADMIN)
 			client.cmd_admin_say(message)

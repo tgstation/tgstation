@@ -1,7 +1,8 @@
-import { map } from 'common/fp';
+import { map } from 'common/collections';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { AnimatedNumber, Box, Button, LabeledList, Section, Tabs } from '../components';
+import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 export const Cargo = props => {
   const { state } = props;
@@ -42,13 +43,11 @@ export const Cargo = props => {
         )}>
         <LabeledList>
           <LabeledList.Item label="Shuttle">
-            {(data.docked && !data.requestonly) ? (
+            {data.docked && !data.requestonly && (
               <Button
                 content={data.location}
                 onClick={() => act(ref, 'send')} />
-            ) : (
-              <Fragment>{data.location}</Fragment>
-            )}
+            ) || data.location}
           </LabeledList.Item>
           <LabeledList.Item label="CentCom Message">
             {data.message}
@@ -61,7 +60,7 @@ export const Cargo = props => {
                   disabled={!(data.away && data.docked)}
                   onClick={() => act(ref, 'loan')} />
               ) : (
-                <span className="color-bad">Loaned to Centcom</span>
+                <Box color="bad">Loaned to Centcom</Box>
               )}
             </LabeledList.Item>
           ) : ''}
@@ -81,7 +80,7 @@ export const Cargo = props => {
                   {cartButtons}
                   <Button
                     ml={1}
-                    icon={data.self_paid ? 'check-square-o' : 'square-o' }
+                    icon={data.self_paid ? 'check-square-o' : 'square-o'}
                     content="Buy Privately"
                     selected={data.self_paid}
                     onClick={() => act(ref, 'toggleprivate')} />
@@ -163,6 +162,8 @@ const Catalog = props => {
                 content={(data.self_paid
                   ? Math.round(pack.cost * 1.1)
                   : pack.cost) + ' credits'}
+                tooltip={pack.desc}
+                tooltipPosition="left"
                 onClick={() => act(ref, 'add', {
                   id: pack.id,
                 })} />
@@ -190,54 +191,55 @@ const Requests = props => {
   const { state, requests } = props;
   const { config, data } = state;
   const { ref } = config;
+  if (requests.length === 0) {
+    return (
+      <Box color="good">
+        No Requests
+      </Box>
+    );
+  }
+  // Labeled list reimplementation to squeeze extra columns out of it
   return (
-    <Fragment>
-      {requests.length ? (
-        // Labeled list reimplementation to squeeze extra columns out of it
-        <table className="LabeledList">
-          {requests.map(request => (
-            <Fragment key={request.id}>
-              <tr className="LabeledList__row candystripe">
-                <td className="LabeledList__cell LabeledList__label">
-                  #{request.id}:
-                </td>
-                <td className="LabeledList__cell LabeledList__content">
-                  {request.object}
-                </td>
-                <td className="LabeledList__cell">
-                  By <b>{request.orderer}</b>
-                </td>
-                <td className="LabeledList__cell">
-                  <i>{request.reason}</i>
-                </td>
-                <td className="LabeledList__cell LabeledList__buttons">
-                  {request.cost} credits
-                  {' '}
-                  {!data.requestonly && (
-                    <Fragment>
-                      <Button
-                        icon="check"
-                        color="good"
-                        onClick={() => act(ref, 'approve', {
-                          id: request.id,
-                        })} />
-                      <Button
-                        icon="times"
-                        color="bad"
-                        onClick={() => act(ref, 'deny', {
-                          id: request.id,
-                        })} />
-                    </Fragment>
-                  )}
-                </td>
-              </tr>
-            </Fragment>
-          ))}
-        </table>
-      ) : (
-        <span className="color-good">No Requests</span>
-      )}
-    </Fragment>
+    <table className="LabeledList">
+      {requests.map(request => (
+        <Fragment key={request.id}>
+          <tr className="LabeledList__row candystripe">
+            <td className="LabeledList__cell LabeledList__label">
+              #{request.id}:
+            </td>
+            <td className="LabeledList__cell LabeledList__content">
+              {request.object}
+            </td>
+            <td className="LabeledList__cell">
+              By <b>{request.orderer}</b>
+            </td>
+            <td className="LabeledList__cell">
+              <i>{request.reason}</i>
+            </td>
+            <td className="LabeledList__cell LabeledList__buttons">
+              {request.cost} credits
+              {' '}
+              {!data.requestonly && (
+                <Fragment>
+                  <Button
+                    icon="check"
+                    color="good"
+                    onClick={() => act(ref, 'approve', {
+                      id: request.id,
+                    })} />
+                  <Button
+                    icon="times"
+                    color="bad"
+                    onClick={() => act(ref, 'deny', {
+                      id: request.id,
+                    })} />
+                </Fragment>
+              )}
+            </td>
+          </tr>
+        </Fragment>
+      ))}
+    </table>
   );
 };
 
@@ -291,6 +293,56 @@ const Cart = props => {
             </Box>
           )}
         </Box>
+      )}
+    </Fragment>
+  );
+};
+
+export const CargoExpress = props => {
+  const { state } = props;
+  const { config, data } = state;
+  const { ref } = config;
+  const supplies = data.supplies || {};
+  return (
+    <Fragment>
+      <InterfaceLockNoticeBox
+        siliconUser={data.siliconUser}
+        locked={data.locked}
+        onLockStatusChange={() => act(ref, 'lock')}
+        accessText="a QM-level ID card" />
+      {!data.locked &&(
+        <Fragment>
+          <Section
+            title="Cargo Express"
+            buttons={(
+              <Box inline bold>
+                <AnimatedNumber value={Math.round(data.points)} /> credits
+              </Box>
+            )}>
+            <LabeledList>
+              <LabeledList.Item label="Landing Location">
+                <Button
+                  content="Cargo Bay"
+                  selected={!data.usingBeacon}
+                  onClick={() => act(ref, 'LZCargo')} />
+                <Button
+                  selected={data.usingBeacon}
+                  disabled={!data.hasBeacon}
+                  onClick={() => act(ref, 'LZBeacon')}>
+                  {data.beaconzone} ({data.beaconName})
+                </Button>
+                <Button
+                  content={data.printMsg}
+                  disabled={!data.canBuyBeacon}
+                  onClick={() => act(ref, 'printBeacon')} />
+              </LabeledList.Item>
+              <LabeledList.Item label="Notice">
+                {data.message}
+              </LabeledList.Item>
+            </LabeledList>
+          </Section>
+          <Catalog state={state} supplies={supplies} />
+        </Fragment>
       )}
     </Fragment>
   );

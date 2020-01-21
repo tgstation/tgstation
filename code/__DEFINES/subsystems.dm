@@ -20,7 +20,7 @@
   *
   * make sure you add an update to the schema_version stable in the db changelog
   */
-#define DB_MINOR_VERSION 3
+#define DB_MINOR_VERSION 7
 
 
 //! ## Timing subsystem
@@ -98,6 +98,7 @@
 // Subsystems shutdown in the reverse of the order they initialize in
 // The numbers just define the ordering, they are meaningless otherwise.
 
+#define INIT_ORDER_PROFILER			101
 #define INIT_ORDER_TITLE			100
 #define INIT_ORDER_GARBAGE			99
 #define INIT_ORDER_DBCORE			95
@@ -105,6 +106,7 @@
 #define INIT_ORDER_SERVER_MAINT		93
 #define INIT_ORDER_INPUT			85
 #define INIT_ORDER_VIS				80
+#define INIT_ORDER_ACHIEVEMENTS		77
 #define INIT_ORDER_MATERIALS		76
 #define INIT_ORDER_RESEARCH			75
 #define INIT_ORDER_EVENTS			70

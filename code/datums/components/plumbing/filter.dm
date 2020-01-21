@@ -31,7 +31,7 @@
 			direction = get_original_direction(text2num(A))
 			break
 	if(reagent)
-		reagents.trans_id_to(target.reagents, reagent, amount)
+		reagents.trans_id_to(target.parent, reagent, amount)
 	else
 		for(var/A in reagents.reagent_list)
 			var/datum/reagent/R = A

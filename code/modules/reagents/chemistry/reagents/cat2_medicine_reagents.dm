@@ -56,8 +56,8 @@
 			return
 		else //VICTORY ROYALE
 			to_chat(M, "<span class='hierophant'>You win, and the malevolent spirits fade away as well as your wounds.</span>")
-			SSmedals.UnlockMedal(MEDAL_HELBITALJANKEN,M.client)
-			M.revive(TRUE)
+			M.client.give_award(/datum/award/achievement/misc/helbitaljanken, M)
+			M.revive(full_heal = TRUE, admin_revive = FALSE)
 			M.reagents.del_reagent(type)
 			return
 
@@ -95,7 +95,7 @@
 	name = "Lenturi"
 	description = "Used to treat burns. Makes you move slower while it is in your system. Applies stomach damage when it leaves your system."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#6171FF"
 	var/resetting_probability = 0
 	var/spammer = 0
 
@@ -115,7 +115,7 @@
 	name = "Aiuri"
 	description = "Used to treat burns. Does minor eye damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#8C93FF"
 	var/resetting_probability = 0
 	var/message_cd = 0
 
@@ -228,13 +228,14 @@
 		if(istype(the_reagent, /datum/reagent/medicine))
 			medibonus += 1
 	M.adjustToxLoss(-0.2 * medibonus)
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus ? 2.5/medibonus : 1)
-	for(var/datum/reagent/the_reagent2 in M.reagents.reagent_list)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus ? 1.5/medibonus : 1)
+	for(var/r2 in M.reagents.reagent_list)
+		var/datum/reagent/the_reagent2 = r2
 		if(the_reagent2 == src)
 			continue
-		var/amount2purge = medibonus*0.1
-		if(istype(the_reagent2,/datum/reagent/toxin))
-			amount2purge *= 5 //very good antitox (well just removing them) for roundstart availability
+		var/amount2purge = 0.1
+		if(istype(the_reagent2,/datum/reagent/toxin) || istype(the_reagent2,/datum/reagent/consumable/ethanol/))
+			amount2purge *= (5*medibonus) //very good antitox and antidrink (well just removing them) for roundstart availability
 		else if(medibonus >= 5 && istype(the_reagent2, /datum/reagent/medicine)) //5 unique meds (4+multiver) will make it not purge medicines
 			continue
 		M.reagents.remove_reagent(the_reagent2.type, amount2purge)
@@ -340,8 +341,32 @@
 			if(show_message)
 				to_chat(Carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 			SEND_SIGNAL(Carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
+			//Has to be at less than TRESHOLD_UNHUSK burn damage and have 100 isntabitaluri before unhusking. Corpses dont metabolize.
+			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && Carbies.getFireLoss() < TRESHOLD_UNHUSK && Carbies.reagents.has_reagent(/datum/reagent/medicine/C2/instabitaluri, 100))
+				Carbies.cure_husk("burn")
+				Carbies.visible_message("<span class='nicegreen'>You successfully replace most of the burnt off flesh of [Carbies].")
 	..()
 	return TRUE
+
+/******ORGAN HEALING******/
+/*Suffix: -rite*/
+/datum/reagent/medicine/C2/penthrite
+	name = "Penthrite"
+	description = "An explosive compound used to stabilize heart conditions. May interfere with stomach acid!"
+	color = "#F5F5F5"
+	self_consuming = TRUE
+
+/datum/reagent/medicine/C2/penthrite/on_mob_add(mob/living/M)
+	. = ..()
+	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
+
+/datum/reagent/medicine/C2/penthrite/on_mob_metabolize(mob/living/M)
+	. = ..()
+	M.adjustOrganLoss(ORGAN_SLOT_STOMACH,0.5 * REM)
+
+/datum/reagent/medicine/C2/penthrite/on_mob_end_metabolize(mob/living/M)
+	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
+	. = ..()
 
 /******NICHE******/
 //todo

@@ -65,7 +65,7 @@
 
 	money++ //SPESSH MAJICKS
 
-/obj/machinery/computer/slot_machine/update_icon()
+/obj/machinery/computer/slot_machine/update_icon_state()
 	if(stat & NOPOWER)
 		icon_state = "slots0"
 

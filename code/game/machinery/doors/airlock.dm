@@ -401,8 +401,8 @@
 // shock user with probability prb (if all connections & power are working)
 // returns TRUE if shocked, FALSE otherwise
 // The preceding comment was borrowed from the grille's shock script
-/obj/machinery/door/airlock/proc/shock(mob/user, prb)
-	if(!hasPower())		// unpowered, no shock
+/obj/machinery/door/airlock/proc/shock(mob/living/user, prb)
+	if(!istype(user) || !hasPower())		// unpowered, no shock
 		return FALSE
 	if(shockCooldown > world.time)
 		return FALSE	//Already shocked someone recently?
@@ -677,43 +677,43 @@
 	set waitfor = 0
 	if(!aiHacking)
 		aiHacking = TRUE
-		to_chat(user, "Airlock AI control has been blocked. Beginning fault-detection.")
+		to_chat(user, "<span class='warning'>Airlock AI control has been blocked. Beginning fault-detection.</span>")
 		sleep(50)
 		if(canAIControl(user))
-			to_chat(user, "Alert cancelled. Airlock control has been restored without our assistance.")
+			to_chat(user, "<span class='notice'>Alert cancelled. Airlock control has been restored without our assistance.</span>")
 			aiHacking = FALSE
 			return
 		else if(!canAIHack())
-			to_chat(user, "Connection lost! Unable to hack airlock.")
+			to_chat(user, "<span class='warning'>Connection lost! Unable to hack airlock.</span>")
 			aiHacking = FALSE
 			return
-		to_chat(user, "Fault confirmed: airlock control wire disabled or cut.")
+		to_chat(user, "<span class='notice'>Fault confirmed: airlock control wire disabled or cut.</span>")
 		sleep(20)
-		to_chat(user, "Attempting to hack into airlock. This may take some time.")
+		to_chat(user, "<span class='notice'>Attempting to hack into airlock. This may take some time.</span>")
 		sleep(200)
 		if(canAIControl(user))
-			to_chat(user, "Alert cancelled. Airlock control has been restored without our assistance.")
+			to_chat(user, "<span class='notice'>Alert cancelled. Airlock control has been restored without our assistance.</span>")
 			aiHacking = FALSE
 			return
 		else if(!canAIHack())
-			to_chat(user, "Connection lost! Unable to hack airlock.")
+			to_chat(user, "<span class='warning'>Connection lost! Unable to hack airlock.</span>")
 			aiHacking = FALSE
 			return
-		to_chat(user, "Upload access confirmed. Loading control program into airlock software.")
+		to_chat(user, "<span class='notice'>Upload access confirmed. Loading control program into airlock software.</span>")
 		sleep(170)
 		if(canAIControl(user))
-			to_chat(user, "Alert cancelled. Airlock control has been restored without our assistance.")
+			to_chat(user, "<span class='notice'>Alert cancelled. Airlock control has been restored without our assistance.</span>")
 			aiHacking = FALSE
 			return
 		else if(!canAIHack())
-			to_chat(user, "Connection lost! Unable to hack airlock.")
+			to_chat(user, "<span class='warning'>Connection lost! Unable to hack airlock.</span>")
 			aiHacking = FALSE
 			return
-		to_chat(user, "Transfer complete. Forcing airlock to execute program.")
+		to_chat(user, "<span class='notice'>Transfer complete. Forcing airlock to execute program.</span>")
 		sleep(50)
 		//disable blocked control
 		aiControlDisabled = 2
-		to_chat(user, "Receiving control information from airlock.")
+		to_chat(user, "<span class='notice'>Receiving control information from airlock.</span>")
 		sleep(10)
 		//bring up airlock dialog
 		aiHacking = FALSE
@@ -1054,6 +1054,7 @@
 	update_freelook_sight()
 	sleep(4)
 	density = FALSE
+	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	air_update_turf(1)
 	sleep(1)
 	layer = OPEN_DOOR_LAYER
@@ -1096,10 +1097,12 @@
 	layer = CLOSED_DOOR_LAYER
 	if(air_tight)
 		density = TRUE
+		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(1)
 	sleep(1)
 	if(!air_tight)
 		density = TRUE
+		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(1)
 	sleep(4)
 	if(!safe)
@@ -1134,7 +1137,7 @@
 	else
 		optionlist = list("Standard", "Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Freezer", "Science", "Virology", "Mining", "Maintenance", "External", "External Maintenance")
 
-	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
+	var/paintjob = input(user, "Please select a paintjob for this airlock.") in sortList(optionlist)
 	if((!in_range(src, usr) && loc != usr) || !W.use_paint(user))
 		return
 	switch(paintjob)
@@ -1416,14 +1419,14 @@
 				loseMainPower()
 				update_icon()
 			else
-				to_chat(usr, "Main power is already offline.")
+				to_chat(usr, "<span class='warning'>Main power is already offline.</span>")
 			. = TRUE
 		if("disrupt-backup")
 			if(!secondsBackupPowerLost)
 				loseBackupPower()
 				update_icon()
 			else
-				to_chat(usr, "Backup power is already offline.")
+				to_chat(usr, "<span class='warning'>Backup power is already offline.</span>")
 			. = TRUE
 		if("shock-restore")
 			shock_restore(usr)
@@ -1464,7 +1467,7 @@
 	if(!user_allowed(user))
 		return
 	if(wires.is_cut(WIRE_SHOCK))
-		to_chat(user, "Can't un-electrify the airlock - The electrification wire is cut.")
+		to_chat(user, "<span class='warning'>Can't un-electrify the airlock - The electrification wire is cut.</span>")
 	else if(isElectrified())
 		set_electrified(MACHINE_NOT_ELECTRIFIED, user)
 
@@ -1472,7 +1475,7 @@
 	if(!user_allowed(user))
 		return
 	if(wires.is_cut(WIRE_SHOCK))
-		to_chat(user, "The electrification wire has been cut")
+		to_chat(user, "<span class='warning'>The electrification wire has been cut.</span>")
 	else
 		set_electrified(MACHINE_DEFAULT_ELECTRIFY_TIME, user)
 
@@ -1480,7 +1483,7 @@
 	if(!user_allowed(user))
 		return
 	if(wires.is_cut(WIRE_SHOCK))
-		to_chat(user, "The electrification wire has been cut")
+		to_chat(user, "<span class='warning'>The electrification wire has been cut.</span>")
 	else
 		set_electrified(MACHINE_ELECTRIFIED_PERMANENT, user)
 
@@ -1495,8 +1498,10 @@
 			to_chat(user, "<span class='warning'>The door has no power - you can't raise the door bolts.</span>")
 		else
 			unbolt()
+			log_combat(user, src, "unbolted")
 	else
 		bolt()
+		log_combat(user, src, "bolted")
 
 /obj/machinery/door/airlock/proc/toggle_emergency(mob/user)
 	if(!user_allowed(user))

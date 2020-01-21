@@ -71,6 +71,12 @@
 	head = /obj/item/clothing/head/helmet/space/plasmaman/medical
 	uniform = /obj/item/clothing/under/plasmaman/medical
 
+/datum/outfit/plasmaman/paramedic
+	name = "Paramedic Plasmaman"
+
+	head = /obj/item/clothing/head/helmet/space/plasmaman/paramedic
+	uniform = /obj/item/clothing/under/plasmaman/paramedic
+
 /datum/outfit/plasmaman/viro
 	name = "Virology Plasmaman"
 

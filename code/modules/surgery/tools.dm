@@ -77,6 +77,13 @@
 	tool_behaviour = TOOL_DRILL
 	toolspeed = 1
 
+/obj/item/surgicaldrill/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] rams [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	addtimer(CALLBACK(user, /mob/living/carbon.proc/gib, null, null, TRUE, TRUE), 25)
+	user.SpinAnimation(3, 10)
+	playsound(user, 'sound/machines/juicer.ogg', 20, TRUE)
+	return (MANUAL_SUICIDE)
+
 /obj/item/surgicaldrill/augment
 	desc = "Effectively a small power drill contained within your arm, edges dulled to prevent tissue damage. May or may not pierce the heavens."
 	hitsound = 'sound/weapons/circsawhit.ogg'
@@ -180,10 +187,10 @@
 	if(!proximity)
 		return
 	if(contents.len)
-		to_chat(user, "<span class='notice'>[src] already has something inside it.</span>")
+		to_chat(user, "<span class='warning'>[src] already has something inside it!</span>")
 		return
 	if(!isorgan(I) && !isbodypart(I))
-		to_chat(user, "<span class='notice'>[src] can only hold body parts!</span>")
+		to_chat(user, "<span class='warning'>[src] can only hold body parts!</span>")
 		return
 
 	user.visible_message("<span class='notice'>[user] puts [I] into [src].</span>", "<span class='notice'>You put [I] inside [src].</span>")
@@ -211,7 +218,7 @@
 		icon_state = "evidenceobj"
 		desc = "A container for holding body parts."
 	else
-		to_chat(user, "[src] is empty.")
+		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 	return
 
 /obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
@@ -323,3 +330,73 @@
 /obj/item/surgicaldrill/advanced/examine()
 	. = ..()
 	. += " It's set to [tool_behaviour == TOOL_DRILL ? "drilling" : "mending"] mode."
+
+/obj/item/shears
+	name = "amputation shears"
+	desc = "A type of heavy duty surgical shears used for achieving a clean separation between limb and patient. Keeping the patient still is imperative to be able to secure and align the shears."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "shears"
+	flags_1 = CONDUCT_1
+	item_flags = SURGICAL_TOOL
+	toolspeed  = 1
+	force = 12
+	w_class = WEIGHT_CLASS_NORMAL
+	throwforce = 6
+	throw_speed = 2
+	throw_range = 5
+	custom_materials = list(/datum/material/iron=8000, /datum/material/titanium=6000)
+	attack_verb = list("sheared", "snipped")
+	sharpness = IS_SHARP
+	custom_premium_price = 1800
+
+/obj/item/shears/attack(mob/living/M, mob/user)
+	if(!iscarbon(M) || user.a_intent != INTENT_HELP)
+		return ..()
+
+	if(user.zone_selected == BODY_ZONE_CHEST)
+		return ..()
+
+	var/mob/living/carbon/patient = M
+
+	if(HAS_TRAIT(patient, TRAIT_NODISMEMBER))
+		to_chat(user, "<span class='warning'>The patient's limbs look too sturdy to amputate.</span>")
+		return
+
+	var/candidate_name
+	var/obj/item/organ/tail_snip_candidate
+	var/obj/item/bodypart/limb_snip_candidate
+
+	if(user.zone_selected == BODY_ZONE_PRECISE_GROIN)
+		tail_snip_candidate = patient.getorganslot(ORGAN_SLOT_TAIL)
+		if(!tail_snip_candidate)
+			to_chat(user, "<span class='warning'>[patient] does not have a tail.</span>")
+			return
+		candidate_name = tail_snip_candidate.name
+
+	else
+		limb_snip_candidate = patient.get_bodypart(check_zone(user.zone_selected))
+		if(!limb_snip_candidate)
+			to_chat(user, "<span class='warning'>[patient] is already missing that limb, what more do you want?</span>")
+			return
+		candidate_name = limb_snip_candidate.name
+
+	var/amputation_speed_mod
+
+	patient.visible_message("<span class='danger'>[user] begins to secure [src] around [patient]'s [candidate_name].</span>", "<span class='userdanger'>[user] begins to secure [src] around your [candidate_name]!</span>")
+	playsound(get_turf(patient), 'sound/items/ratchet.ogg', 20, TRUE)
+	if(patient.stat == DEAD || patient.stat == UNCONSCIOUS || patient.IsStun()) //Stun is used by paralytics like curare it should not be confused with the more common paralyze.
+		amputation_speed_mod = 0.5
+	else if(patient.jitteriness >= 1)
+		amputation_speed_mod = 1.5
+	else
+		amputation_speed_mod = 1
+
+	if(do_after(user,  toolspeed * 150 * amputation_speed_mod, target = patient))
+		playsound(get_turf(patient), 'sound/weapons/bladeslice.ogg', 250, TRUE)
+		if(user.zone_selected == BODY_ZONE_PRECISE_GROIN) //OwO
+			tail_snip_candidate.Remove(patient)
+			tail_snip_candidate.forceMove(get_turf(patient))
+		else
+			limb_snip_candidate.dismember()
+		user.visible_message("<span class='danger'>[src] violently slams shut, amputating [patient]'s [candidate_name].</span>", "<span class='notice'>You amputate [patient]'s [candidate_name] with [src].</span>")
+

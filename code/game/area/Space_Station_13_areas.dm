@@ -32,6 +32,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	outdoors = TRUE
 	ambientsounds = SPACE
 	blob_allowed = FALSE //Eating up space doesn't count for victory as a blob.
+	flags_1 = CAN_BE_DIRTY_1
 
 /area/space/nearstation
 	icon_state = "space_near"
@@ -60,6 +61,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	blob_allowed = FALSE //Nope, no winning on the asteroid as a blob. Gotta eat the station.
 	valid_territory = FALSE
 	ambientsounds = MINING
+	flags_1 = CAN_BE_DIRTY_1
 
 /area/asteroid/nearstation
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
@@ -419,7 +421,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/library
 	name = "Library"
 	icon_state = "library"
-	flags_1 = NONE
+	flags_1 = CULT_PERMITTED_1
 
 /area/library/lounge
 	name = "Library Lounge"
@@ -428,7 +430,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/library/abandoned
 	name = "Abandoned Library"
 	icon_state = "library"
-	flags_1 = NONE
+	flags_1 = CULT_PERMITTED_1
 
 /area/chapel
 	icon_state = "chapel"
@@ -477,7 +479,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/atmos
 	name = "Atmospherics"
 	icon_state = "atmos"
-	flags_1 = NONE
+	flags_1 = CULT_PERMITTED_1
 
 /area/engine/atmospherics_engine
 	name = "Atmospherics Engine"
@@ -487,6 +489,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/engine_room //donut station specific
 	name = "Engine Room"
 	icon_state = "atmos_engine"
+
+/area/engine/lobby
+	name = "Engineering Lobby"
+	icon_state = "engi_lobby"
 
 /area/engine/engine_room/external
 	name = "Supermatter External Access"
@@ -660,7 +666,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/virology
 	name = "Virology"
 	icon_state = "virology"
-	flags_1 = NONE
+	flags_1 = CULT_PERMITTED_1
 
 /area/medical/morgue
 	name = "Morgue"
@@ -671,12 +677,16 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Chemistry"
 	icon_state = "chem"
 
-/area/medical/apothecary
-	name = "Apothecary"
-	icon_state = "apothecary"
+/area/medical/pharmacy
+	name = "Pharmacy"
+	icon_state = "pharmacy"
 
 /area/medical/surgery
 	name = "Surgery"
+	icon_state = "surgery"
+
+/area/medical/surgery/room_b
+	name = "Surgery B"
 	icon_state = "surgery"
 
 /area/medical/cryo
@@ -840,7 +850,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/janitor
 	name = "Custodial Closet"
 	icon_state = "janitor"
-	flags_1 = NONE
+	flags_1 = CULT_PERMITTED_1
 
 /area/hydroponics
 	name = "Hydroponics"
@@ -890,6 +900,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Toxins Mixing Chamber"
 	icon_state = "toxmix"
 	valid_territory = FALSE
+
+/area/science/genetics
+	name = "Genetics Lab"
+	icon_state = "geneticssci"
 
 /area/science/misc_lab
 	name = "Testing Lab"

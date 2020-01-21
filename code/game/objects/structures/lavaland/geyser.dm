@@ -35,10 +35,10 @@
 		to_chat(user, "<span class='warning'>The [P.name] isn't strong enough!</span>")
 		return
 	if(activated)
-		to_chat(user, "<span class'warning'>The [name] is already active!")
+		to_chat(user, "<span class'warning'>The [name] is already active!</span>")
 		return
 
-	to_chat(user, "<span class='notice'>You start vigorously plunging [src]!")
+	to_chat(user, "<span class='notice'>You start vigorously plunging [src]!</span>")
 	if(do_after(user, 50*P.plunge_mod, target = src) && !activated)
 		start_chemming()
 
@@ -67,7 +67,7 @@
 
 /obj/item/plunger/reinforced
 	name = "reinforced plunger"
-	desc = " It's an M. 7 Reinforced Plunger© for heavy duty plunging."
+	desc = "It's an M. 7 Reinforced Plunger© for heavy duty plunging."
 	icon_state = "reinforced_plunger"
 
 	reinforced = TRUE

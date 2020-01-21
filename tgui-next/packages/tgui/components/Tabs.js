@@ -1,35 +1,66 @@
 import { classes, normalizeChildren } from 'common/react';
 import { Component } from 'inferno';
-import { Button } from './Button';
 import { Box } from './Box';
+import { Button } from './Button';
+
+// A magic value for enforcing type safety
+const TAB_MAGIC_TYPE = 'Tab';
+
+const validateTabs = tabs => {
+  for (let tab of tabs) {
+    if (!tab.props || tab.props.__type__ !== TAB_MAGIC_TYPE) {
+      const json = JSON.stringify(tab, null, 2);
+      throw new Error('<Tabs> only accepts children of type <Tabs.Tab>.'
+        + 'This is what we received: ' + json);
+    }
+  }
+};
 
 export class Tabs extends Component {
   constructor(props) {
     super(props);
-    const tabs = normalizeChildren(props.children);
-    const firstTab = tabs[0];
-    const firstTabKey = firstTab && (firstTab.key || firstTab.props.label);
     this.state = {
-      activeTabKey: props.activeTab || firstTabKey || null,
+      activeTabKey: null,
+    };
+  }
+
+  getActiveTab() {
+    const { state, props } = this;
+    const tabs = normalizeChildren(props.children);
+    validateTabs(tabs);
+    // Get active tab
+    let activeTabKey = props.activeTab || state.activeTabKey;
+    // Verify that active tab exists
+    let activeTab = tabs
+      .find(tab => {
+        const key = tab.key || tab.props.label;
+        return key === activeTabKey;
+      });
+    // Set first tab as the active tab
+    if (!activeTab) {
+      activeTab = tabs[0];
+      activeTabKey = activeTab && (activeTab.key || activeTab.props.label);
+    }
+    return {
+      tabs,
+      activeTab,
+      activeTabKey,
     };
   }
 
   render() {
-    const { state, props } = this;
+    const { props } = this;
     const {
       className,
       vertical,
       children,
       ...rest
     } = props;
-    const tabs = normalizeChildren(children);
-    // Find the active tab
-    const activeTabKey = props.activeTab || state.activeTabKey;
-    const activeTab = tabs
-      .find(tab => {
-        const key = tab.key || tab.props.label;
-        return key === activeTabKey;
-      });
+    const {
+      tabs,
+      activeTab,
+      activeTabKey,
+    } = this.getActiveTab();
     // Retrieve tab content
     let content = null;
     if (activeTab) {
@@ -66,7 +97,7 @@ export class Tabs extends Component {
                 className={classes([
                   'Tabs__tab',
                   active && 'Tabs__tab--active',
-                  highlight && !active && 'color-bright-yellow',
+                  highlight && !active && 'color-yellow',
                   className,
                 ])}
                 selected={active}
@@ -96,5 +127,9 @@ export class Tabs extends Component {
  * tab container.
  */
 export const Tab = props => null;
+
+Tab.defaultProps = {
+  __type__: TAB_MAGIC_TYPE,
+};
 
 Tabs.Tab = Tab;

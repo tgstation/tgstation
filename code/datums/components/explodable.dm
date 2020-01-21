@@ -104,7 +104,10 @@
 /// Expldoe and remove the object
 /datum/component/explodable/proc/detonate()
 	var/atom/A = parent
-	explosion(A, devastation_range, heavy_impact_range, light_impact_range, flash_range) //epic explosion time
+	var/log = TRUE
+	if(light_impact_range < 1)
+		log = FALSE
+	explosion(A, devastation_range, heavy_impact_range, light_impact_range, flash_range, log) //epic explosion time
 	if(always_delete)
 		qdel(A)
 

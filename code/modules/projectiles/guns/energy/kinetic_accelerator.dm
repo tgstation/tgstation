@@ -87,7 +87,7 @@
 	if(!holds_charge)
 		empty()
 
-/obj/item/gun/energy/kinetic_accelerator/shoot_live_shot()
+/obj/item/gun/energy/kinetic_accelerator/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
 	. = ..()
 	attempt_reload()
 
@@ -134,13 +134,7 @@
 		carried = 1
 
 	deltimer(recharge_timerid)
-	
-	var/skill_modifier
-	if(ishuman(holder))
-		var/mob/living/carbon/human/H = holder
-		skill_modifier = H.mind.get_skill_speed_modifier(/datum/skill/mining)
-
-	recharge_timerid = addtimer(CALLBACK(src, .proc/reload), recharge_time * carried * skill_modifier, TIMER_STOPPABLE)
+	recharge_timerid = addtimer(CALLBACK(src, .proc/reload), recharge_time * carried, TIMER_STOPPABLE)
 
 /obj/item/gun/energy/kinetic_accelerator/emp_act(severity)
 	return

@@ -307,6 +307,12 @@
 	results = list(/datum/reagent/consumable/ethanol/barefoot = 3)
 	required_reagents = list(/datum/reagent/consumable/berryjuice = 1, /datum/reagent/consumable/cream = 1, /datum/reagent/consumable/ethanol/vermouth = 1)
 
+/datum/chemical_reaction/moscow_mule
+	name = "Moscow Mule"
+	id = /datum/reagent/consumable/ethanol/moscow_mule
+	results = list(/datum/reagent/consumable/ethanol/moscow_mule = 10)
+	required_reagents = list(/datum/reagent/consumable/sol_dry = 5, /datum/reagent/consumable/ethanol/vodka = 5, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/ice = 1)
+	mix_sound = 'sound/effects/bubbles2.ogg'
 
 ////DRINKS THAT REQUIRED IMPROVED SPRITES BELOW:: -Agouri/////
 
@@ -559,6 +565,25 @@
 	results = list(/datum/reagent/consumable/milk/chocolate_milk = 2)
 	required_reagents = list(/datum/reagent/consumable/milk = 1, /datum/reagent/consumable/coco = 1)
 	mix_message = "The color changes as the mixture blends smoothly."
+
+/datum/chemical_reaction/hot_coco
+	name = "Hot Coco"
+	id = /datum/reagent/consumable/hot_coco
+	results = list(/datum/reagent/consumable/hot_coco = 5)
+	required_reagents = list(/datum/reagent/consumable/milk = 5, /datum/reagent/consumable/coco = 1)
+	required_temp = 320
+
+/datum/chemical_reaction/coffee
+	name = "Coffee"
+	id = /datum/reagent/consumable/coffee
+	results = list(/datum/reagent/consumable/coffee = 5)
+	required_reagents = list(/datum/reagent/toxin/coffeepowder = 1, /datum/reagent/water = 5)
+
+/datum/chemical_reaction/tea
+	name = "Tea"
+	id = /datum/reagent/consumable/tea
+	results = list(/datum/reagent/consumable/tea = 5)
+	required_reagents = list(/datum/reagent/toxin/teapowder = 1, /datum/reagent/water = 5)
 
 /datum/chemical_reaction/eggnog
 	name = /datum/reagent/consumable/ethanol/eggnog
