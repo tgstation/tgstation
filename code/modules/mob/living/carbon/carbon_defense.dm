@@ -268,6 +268,18 @@
 		M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 					"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
+
+		// Warm them up with hugs
+		if(bodytemperature > M.bodytemperature) // you are warm share it
+			var/temp_diff = bodytemperature - M.bodytemperature
+			M.adjust_bodytemperature(min((1 - M.get_heat_protection(bodytemperature)) * temp_diff / BODYTEMP_HEAT_DIVISOR, \
+			BODYTEMP_HEATING_MAX))
+
+		else // they are warmer leech from them
+			var/temp_diff = M.bodytemperature - bodytemperature
+			adjust_bodytemperature(min((1 - get_heat_protection(M.bodytemperature)) * temp_diff / BODYTEMP_HEAT_DIVISOR, \
+			BODYTEMP_HEATING_MAX))
+
 		if(HAS_TRAIT(M, TRAIT_FRIENDLY))
 			var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 			if (mood.sanity >= SANITY_GREAT)
