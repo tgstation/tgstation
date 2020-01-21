@@ -258,14 +258,6 @@
 		to_chat(M, "<span class='warning'>You can't put [p_them()] out with just your bare hands!</span>")
 		return
 
-	if(M.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
-		to_chat(M, "<span class='warning'>You feel to warm to hug [src].</span>")
-		return
-
-	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
-		to_chat(M, "<span class='warning'>[src] looks like they are over heating, they do not want a hug.</span>")
-		return
-
 	if(!(mobility_flags & MOBILITY_STAND))
 		if(buckled)
 			to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!</span>")
@@ -275,18 +267,27 @@
 	else
 		M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 					"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
 
 		// Warm them up with hugs
-		if(bodytemperature > M.bodytemperature) // you are warm share it
+		if(bodytemperature > M.bodytemperature) // they are warmer leech from them
 			var/temp_diff = bodytemperature - M.bodytemperature
 			M.adjust_bodytemperature(min((1 - M.get_heat_protection(bodytemperature)) * temp_diff / BODYTEMP_HEAT_DIVISOR, \
 			BODYTEMP_HEATING_MAX))
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, src)
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
 
-		else // they are warmer leech from them
+		else // you are warm share the heat of life
 			var/temp_diff = M.bodytemperature - bodytemperature
 			adjust_bodytemperature(min((1 - get_heat_protection(M.bodytemperature)) * temp_diff / BODYTEMP_HEAT_DIVISOR, \
 			BODYTEMP_HEATING_MAX))
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, M)
+
+		// Let people know if they hugged someone really warm
+		if(M.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+			to_chat(src, "<span class='warning'>[M] felt like they are over heating when they hugged you.</span>")
+
+		if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+			to_chat(M, "<span class='warning'>[src] felt like they are over heating when you hugged them.</span>")
 
 		if(HAS_TRAIT(M, TRAIT_FRIENDLY))
 			var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
