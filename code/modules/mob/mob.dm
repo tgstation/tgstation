@@ -138,7 +138,7 @@
 	if(!client)
 		return
 
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 
 	if(type)
 		if(type & MSG_VISUAL && eye_blind )//Vision related
@@ -527,7 +527,7 @@
 		if (world.time < memory_throttle_time)
 			return
 		memory_throttle_time = world.time + 5 SECONDS
-		msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+		msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 		msg = sanitize(msg)
 
 		mind.store_memory(msg)
@@ -1249,3 +1249,10 @@
 	for(var/obj/item/I in held_items)
 		if(I.item_flags & SLOWS_WHILE_IN_HAND)
 			. += I.slowdown
+
+/mob/proc/set_stat(new_stat)
+	if(new_stat == stat)
+		return
+	SEND_SIGNAL(src, COMSIG_MOB_STATCHANGE, new_stat)
+	. = stat
+	stat = new_stat

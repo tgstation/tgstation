@@ -32,13 +32,13 @@
 /obj/item/defibrillator/Initialize() //starts without a cell for rnd
 	. = ..()
 	paddles = new paddle_type(src)
-	update_icon()
+	update_power()
 	return
 
 /obj/item/defibrillator/loaded/Initialize() //starts with hicap
 	. = ..()
 	cell = new(src)
-	update_icon()
+	update_power()
 	return
 
 /obj/item/defibrillator/fire_act(exposed_temperature, exposed_volume)
@@ -51,10 +51,6 @@
 	if(paddles?.loc == src)
 		paddles.extinguish()
 
-/obj/item/defibrillator/update_icon()
-	update_power()
-	return ..()
-
 /obj/item/defibrillator/proc/update_power()
 	if(!QDELETED(cell))
 		if(QDELETED(paddles) || cell.charge < paddles.revivecost)
@@ -63,6 +59,7 @@
 			powered = TRUE
 	else
 		powered = FALSE
+	update_icon()
 
 /obj/item/defibrillator/update_overlays()
 	. = ..()
@@ -83,7 +80,7 @@
 /obj/item/defibrillator/CheckParts(list/parts_list)
 	..()
 	cell = locate(/obj/item/stock_parts/cell) in contents
-	update_icon()
+	update_power()
 
 /obj/item/defibrillator/ui_action_click()
 	toggle_paddles()
@@ -131,7 +128,7 @@
 				return
 			cell = W
 			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
-			update_icon()
+			update_power()
 
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(cell)
@@ -139,7 +136,7 @@
 			cell.forceMove(get_turf(src))
 			cell = null
 			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
-			update_icon()
+			update_power()
 	else
 		return ..()
 
@@ -165,7 +162,7 @@
 		safety = TRUE
 		visible_message("<span class='notice'>[src] beeps: Safety protocols enabled!</span>")
 		playsound(src, 'sound/machines/defib_saftyOn.ogg', 50, FALSE)
-	update_icon()
+	update_power()
 
 /obj/item/defibrillator/proc/toggle_paddles()
 	set name = "Toggle Paddles"
@@ -178,14 +175,14 @@
 		if(!usr.put_in_hands(paddles))
 			on = FALSE
 			to_chat(user, "<span class='warning'>You need a free hand to hold the paddles!</span>")
-			update_icon()
+			update_power()
 			return
 	else
 		//Remove from their hands and back onto the defib unit
 		paddles.unwield()
 		remove_paddles(user)
 
-	update_icon()
+	update_power()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -195,7 +192,7 @@
 	..()
 	if((slot_flags == ITEM_SLOT_BACK && slot != ITEM_SLOT_BACK) || (slot_flags == ITEM_SLOT_BELT && slot != ITEM_SLOT_BELT))
 		remove_paddles(user)
-		update_icon()
+		update_power()
 
 /obj/item/defibrillator/item_action_slot_check(slot, mob/user)
 	if(slot == user.getBackSlot())
@@ -219,12 +216,11 @@
 	if(cell)
 		if(cell.charge < (paddles.revivecost+chrgdeductamt))
 			powered = FALSE
-			update_icon()
+			update_power()
 		if(cell.use(chrgdeductamt))
-			update_icon()
+			update_power()
 			return TRUE
 		else
-			update_icon()
 			return FALSE
 
 /obj/item/defibrillator/proc/cooldowncheck(mob/user)
@@ -240,7 +236,7 @@
 			playsound(src, 'sound/machines/defib_failed.ogg', 50, FALSE)
 	paddles.cooldown = FALSE
 	paddles.update_icon()
-	update_icon()
+	update_power()
 
 /obj/item/defibrillator/compact
 	name = "compact defibrillator"
@@ -257,7 +253,7 @@
 /obj/item/defibrillator/compact/loaded/Initialize()
 	. = ..()
 	cell = new(src)
-	update_icon()
+	update_power()
 
 /obj/item/defibrillator/compact/combat
 	name = "combat defibrillator"
@@ -272,13 +268,12 @@
 /obj/item/defibrillator/compact/combat/loaded/Initialize()
 	. = ..()
 	cell = new /obj/item/stock_parts/cell/infinite(src)
-	update_icon()
+	update_power()
 
 /obj/item/defibrillator/compact/combat/loaded/attackby(obj/item/W, mob/user, params)
 	if(W == paddles)
 		paddles.unwield()
 		toggle_paddles()
-		update_icon()
 		return
 
 /obj/item/defibrillator/compact/combat/loaded/nanotrasen
@@ -311,8 +306,11 @@
 	var/req_defib = TRUE
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
 	var/grab_ghost = FALSE
-	var/tlimit = DEFIB_TIME_LIMIT * 10
 	var/base_icon_state = "defibpaddles"
+
+/obj/item/twohanded/shockpaddles/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/twohanded/shockpaddles/Destroy()
 	defib = null
@@ -357,22 +355,22 @@
 	cooldown = FALSE
 	update_icon()
 
-/obj/item/twohanded/shockpaddles/New(mainunit)
-	..()
-	if(check_defib_exists(mainunit, src) && req_defib)
-		defib = mainunit
-		forceMove(defib)
-		busy = FALSE
-		update_icon()
+/obj/item/twohanded/shockpaddles/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_STORAGE_INSERT, GENERIC_ITEM_TRAIT) //stops shockpaddles from being inserted in BoH
+	if(!req_defib)
+		return //If it doesn't need a defib, just say it exists
+	if (!loc || !istype(loc, /obj/item/defibrillator)) //To avoid weird issues from admin spawns
+		return INITIALIZE_HINT_QDEL
+	defib = loc
+	busy = FALSE
+	update_icon()
 
-/obj/item/twohanded/shockpaddles/update_icon()
+/obj/item/twohanded/shockpaddles/update_icon_state()
 	icon_state = "[base_icon_state][wielded]"
 	item_state = icon_state
 	if(cooldown)
 		icon_state = "[base_icon_state][wielded]_cooldown"
-	if(iscarbon(loc))
-		var/mob/living/carbon/C = loc
-		C.update_inv_hands()
 
 /obj/item/twohanded/shockpaddles/suicide_act(mob/user)
 	user.visible_message("<span class='danger'>[user] is putting the live paddles on [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -399,16 +397,7 @@
 		return
 	defib.on = FALSE
 	forceMove(defib)
-	defib.update_icon()
-
-/obj/item/twohanded/shockpaddles/proc/check_defib_exists(mainunit, mob/living/carbon/M, obj/O)
-	if(!req_defib)
-		return TRUE //If it doesn't need a defib, just say it exists
-	if (!mainunit || !istype(mainunit, /obj/item/defibrillator))	//To avoid weird issues from admin spawns
-		qdel(O)
-		return FALSE
-	else
-		return TRUE
+	defib.update_power()
 
 /obj/item/twohanded/shockpaddles/attack(mob/M, mob/user)
 
@@ -463,8 +452,6 @@
 /obj/item/twohanded/shockpaddles/proc/can_defib(mob/living/carbon/H)
 	var/obj/item/organ/heart = H.getorgan(/obj/item/organ/heart)
 	if(H.suiciding || H.hellbound || HAS_TRAIT(H, TRAIT_HUSK))
-		return
-	if((world.time - H.timeofdeath) > tlimit)
 		return
 	if((H.getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (H.getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
 		return
@@ -572,7 +559,6 @@
 		playsound(src, 'sound/machines/defib_charge.ogg', 75, FALSE)
 		var/total_burn	= 0
 		var/total_brute	= 0
-		var/tplus = world.time - H.timeofdeath	//length of time spent dead
 		var/obj/item/organ/heart = H.getorgan(/obj/item/organ/heart)
 		if(do_after(user, 20, target = H)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
 			for(var/obj/item/carried_item in H.contents)
@@ -596,8 +582,6 @@
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
 				else if (H.hellbound)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's soul appears to be on another plane of existence. Further attempts futile.</span>"
-				else if (tplus > tlimit)
-					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Body has decayed for too long. Further attempts futile.</span>"
 				else if (!heart)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's heart is missing.</span>"
 				else if (heart.organ_flags & ORGAN_FAILING)

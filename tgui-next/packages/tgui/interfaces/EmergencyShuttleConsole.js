@@ -65,7 +65,7 @@ export const EmergencyShuttleConsole = props => {
               icon="minus"
               content="REPEAL"
               disabled={!enabled}
-              onClick={() => act('authorize')} />
+              onClick={() => act('repeal')} />
           </Grid.Column>
         </Grid>
         <Section

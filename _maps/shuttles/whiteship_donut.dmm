@@ -252,7 +252,7 @@
 "aQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/item/soap,

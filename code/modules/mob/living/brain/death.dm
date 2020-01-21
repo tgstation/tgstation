@@ -1,7 +1,7 @@
 /mob/living/brain/death(gibbed)
 	if(stat == DEAD)
 		return
-	stat = DEAD
+	set_stat(DEAD)
 
 	if(!gibbed && container)//If not gibbed but in a container.
 		var/obj/item/mmi = container

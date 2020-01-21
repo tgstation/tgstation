@@ -144,10 +144,12 @@ Difficulty: Medium
 	if(!target)
 		return
 	target.visible_message("<span class='boldwarning'>Lava starts to pool up around you!</span>")
+	
 	while(amount > 0)
 		if(QDELETED(target))
 			break
-		var/turf/T = pick(RANGE_TURFS(1, target))
+		var/turf/TT = get_turf(target)
+		var/turf/T = pick(RANGE_TURFS(1,TT))
 		new /obj/effect/temp_visual/lava_warning(T, 60) // longer reset time for the lava
 		amount--
 		SLEEP_CHECK_DEATH(delay)

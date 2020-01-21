@@ -225,8 +225,6 @@
 	active_power_usage = 50
 	max_integrity = 300
 	var/active = FALSE
-	var/power = 0
-	var/maximum_stored_power = 500
 	var/locked = TRUE
 	var/shield_range = 8
 	var/obj/structure/cable/attached // the attached cable
@@ -235,6 +233,9 @@
 	name = "xenobiology shield wall generator"
 	desc = "A shield generator meant for use in xenobiology."
 	req_access = list(ACCESS_XENOBIOLOGY)
+
+/obj/machinery/power/shieldwallgen/anchored
+	anchored = TRUE
 
 /obj/machinery/power/shieldwallgen/Initialize()
 	. = ..()
@@ -451,11 +452,10 @@
 		if(gen_secondary) //using power may cause us to be destroyed
 			gen_secondary.add_load(drain_amount * 0.5)
 
-/obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target)
+/obj/machinery/shieldwall/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return prob(20)
 	else
 		if(istype(mover, /obj/projectile))
 			return prob(10)
-		else
-			return !density

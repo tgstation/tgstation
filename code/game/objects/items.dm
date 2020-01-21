@@ -766,7 +766,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(tool_behaviour == TOOL_MINING && ishuman(user))
 		var/mob/living/carbon/human/H = user
-		skill_modifier = H.mind.get_skill_speed_modifier(/datum/skill/mining)
+		skill_modifier = H.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
 
 	delay *= toolspeed * skill_modifier
 
@@ -851,6 +851,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	return ..()
+
+/obj/item/proc/embedded(mob/living/carbon/human/embedded_mob)
+	return
+
+/obj/item/proc/unembedded()
+	return
 
 /obj/item/proc/canStrip(mob/stripper, mob/owner)
 	return !HAS_TRAIT(src, TRAIT_NODROP)

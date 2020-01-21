@@ -2174,7 +2174,7 @@
 /area/security/prison)
 "agO" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -12203,7 +12203,7 @@
 /area/hallway/primary/central)
 "aEZ" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -14432,7 +14432,7 @@
 /area/crew_quarters/cafeteria)
 "aLE" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -14522,9 +14522,23 @@
 /turf/open/floor/plasteel,
 /area/storage/eva)
 "aLU" = (
-/obj/structure/closet/crate/rcd,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = 8
+	},
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/storage/eva)
@@ -16245,21 +16259,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
-"aQA" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "aQB" = (
-/obj/structure/disposalpipe/junction/flip{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -19353,7 +19358,7 @@
 /area/janitor)
 "aXQ" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -19911,7 +19916,7 @@
 /area/hydroponics)
 "aYQ" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel,
@@ -21711,7 +21716,7 @@
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/mop,
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/machinery/light_switch{
@@ -24240,7 +24245,7 @@
 "bkm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/effect/turf_decal/tile/green{
@@ -27477,7 +27482,7 @@
 "bsr" = (
 /obj/machinery/dna_scannernew,
 /obj/machinery/camera{
-	c_tag = "Genetics Cloning";
+	c_tag = "Cloning Lab";
 	dir = 4;
 	network = list("ss13","medbay")
 	},
@@ -27642,7 +27647,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/camera,
+/obj/machinery/camera{
+	c_tag = "Medbay Cryogenics";
+	network = list("ss13","medbay")
+	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bsF" = (
@@ -27678,7 +27686,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -27921,7 +27928,7 @@
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/white,
@@ -27965,7 +27972,7 @@
 	},
 /obj/machinery/door/airlock/research{
 	name = "Xenobiology Lab";
-	req_access_txt = "55"
+	req_one_access_txt = "55, 9"
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
@@ -29353,7 +29360,7 @@
 	dir = 8
 	},
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -29700,7 +29707,7 @@
 /area/science/explab)
 "bxL" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/dark,
@@ -30217,7 +30224,7 @@
 /area/science/explab)
 "byQ" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -30609,7 +30616,7 @@
 /area/medical/genetics)
 "bzL" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -30667,6 +30674,7 @@
 	dir = 8
 	},
 /obj/machinery/camera{
+	c_tag = "Medbay Treatment";
 	dir = 4;
 	network = list("ss13","medbay")
 	},
@@ -32783,7 +32791,7 @@
 /area/medical/virology)
 "bEs" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -33550,7 +33558,7 @@
 /area/medical/medbay/central)
 "bFP" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -34183,7 +34191,6 @@
 /area/medical/medbay/central)
 "bHb" = (
 /obj/structure/closet/crate/freezer/surplus_limbs,
-/obj/item/reagent_containers/glass/beaker/instabitaluri,
 /obj/machinery/newscaster/security_unit{
 	pixel_y = 32
 	},
@@ -34643,7 +34650,7 @@
 	pixel_x = 28
 	},
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/effect/turf_decal/tile/green{
@@ -38636,7 +38643,7 @@
 	name = "Atmospherics Monitoring";
 	req_access_txt = "24"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/engine/lobby)
 "bRs" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -43186,7 +43193,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/machinery/camera/emp_proof{
+/obj/machinery/camera{
 	c_tag = "Engineering Port Aft";
 	dir = 1
 	},
@@ -44149,7 +44156,7 @@
 /area/chapel/main/monastery)
 "chu" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -44260,7 +44267,7 @@
 /area/chapel/main/monastery)
 "chU" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel,
@@ -46548,7 +46555,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -49953,13 +49959,13 @@
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
 "fhE" = (
-/obj/machinery/camera/emp_proof{
-	c_tag = "Engine Containment Port Aft";
-	dir = 1;
-	network = list("engine")
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
+	},
+/obj/machinery/camera{
+	c_tag = "Engineering Supermatter Port Aft";
+	dir = 1;
+	network = list("ss13","engine")
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -50105,12 +50111,12 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "fwi" = (
-/obj/machinery/camera/emp_proof{
-	c_tag = "Engine Containment Starboard Fore";
-	network = list("engine")
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Engineering Supermatter Port Fore";
+	network = list("ss13","engine")
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -51011,6 +51017,13 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/engine,
 /area/engine/engineering)
+"hDD" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "hDG" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Auxillary Base Construction";
@@ -51141,7 +51154,7 @@
 /area/maintenance/department/science)
 "hTl" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 12
 	},
 /obj/structure/mirror{
@@ -51277,6 +51290,16 @@
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
+"igu" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Engineering Supermatter Starboard Fore";
+	network = list("ss13","engine")
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
 "igE" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
@@ -51533,10 +51556,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/camera/emp_proof{
-	c_tag = "Engine Containment Starboard Fore";
+/obj/machinery/camera{
+	c_tag = "Engineering Supermatter Starboard Mid";
 	dir = 8;
-	network = list("engine")
+	network = list("ss13","engine")
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -51687,7 +51710,7 @@
 /area/space/nearstation)
 "jhD" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -52696,6 +52719,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"luM" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "lzJ" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/carpet,
@@ -53911,7 +53941,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/machinery/camera/emp_proof{
+/obj/machinery/camera{
 	c_tag = "Engineering Starboard Aft";
 	dir = 1
 	},
@@ -54077,7 +54107,7 @@
 	dir = 4
 	},
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel,
@@ -54580,20 +54610,19 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "pKg" = (
-/obj/machinery/camera/emp_proof{
-	c_tag = "Engine Containment Starboard Aft";
-	dir = 1;
-	network = list("engine");
-	pixel_x = 22
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
+	},
+/obj/machinery/camera{
+	c_tag = "Engineering Supermatter Starboard Aft";
+	dir = 1;
+	network = list("ss13","engine")
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "pMG" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -56373,7 +56402,7 @@
 /area/engine/engineering)
 "tXn" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -56488,10 +56517,10 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/camera/emp_proof{
-	c_tag = "Engine Containment Starboard Fore";
+/obj/machinery/camera{
+	c_tag = "Engineering Supermatter Port Mid";
 	dir = 4;
-	network = list("engine")
+	network = list("ss13","engine")
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -81951,11 +81980,11 @@ aHE
 aAL
 aAL
 rlV
-aDZ
-aGV
+aAL
+luM
 aAL
 aAL
-aQA
+aHE
 aAL
 aAL
 aTO
@@ -82209,7 +82238,7 @@ aIL
 aDZ
 aDZ
 aDZ
-aGV
+hDD
 aDZ
 aDZ
 aQB
@@ -91016,7 +91045,7 @@ cci
 cam
 ogX
 cbj
-fwi
+igu
 vPX
 jBn
 mUa
