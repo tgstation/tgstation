@@ -1462,7 +1462,7 @@
 /area/mine/living_quarters)
 "ed" = (
 /obj/machinery/camera{
-	c_tag = "Crew Area Hallway West";
+	c_tag = "Crew Area Hallway";
 	network = list("mine")
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
@@ -4243,7 +4243,7 @@
 /area/mine/living_quarters)
 "YY" = (
 /obj/machinery/camera{
-	c_tag = "Crew Area";
+	c_tag = "Crew Area Hallway West";
 	dir = 1;
 	network = list("mine")
 	},

@@ -142,6 +142,7 @@
 	},
 /obj/structure/table/glass,
 /obj/effect/turf_decal/trimline/green/filled/end,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/plasteel/dark,
 /area/ruin/powered/seedvault)
 "ax" = (
@@ -230,6 +231,7 @@
 /area/ruin/powered/seedvault)
 "aH" = (
 /obj/machinery/door/airlock/vault,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "aI" = (
@@ -362,6 +364,9 @@
 /area/ruin/powered/seedvault)
 "aY" = (
 /obj/effect/decal/cleanable/food/plant_smudge,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
 "aZ" = (
@@ -506,13 +511,13 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/grass,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bn" = (
 /obj/structure/window/spawner/east,
 /obj/structure/flora/ausbushes/palebush,
 /obj/structure/flora/ausbushes/ppflowers,
-/turf/open/floor/grass,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bo" = (
 /obj/machinery/chem_master/condimaster,
@@ -551,19 +556,19 @@
 "br" = (
 /obj/structure/flora/ausbushes/sunnybush,
 /obj/structure/flora/grass/jungle/b,
-/turf/open/floor/grass,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bs" = (
 /obj/structure/window/spawner/east,
 /obj/structure/flora/ausbushes/sparsegrass,
-/turf/open/floor/grass,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bt" = (
 /obj/structure/window/spawner,
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/genericbush,
 /obj/structure/flora/ausbushes/brflowers,
-/turf/open/floor/grass,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bu" = (
 /obj/structure/window/spawner/east,
@@ -571,7 +576,7 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/grass,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bv" = (
 /obj/machinery/light,
@@ -633,6 +638,67 @@
 "bD" = (
 /turf/closed/wall/r_wall,
 /area/lavaland/surface/outdoors)
+"ca" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered/seedvault)
+"oR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered/seedvault)
+"pW" = (
+/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered/seedvault)
+"qQ" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered/seedvault)
+"sv" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/vault,
+/area/ruin/powered/seedvault)
+"Bb" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered/seedvault)
+"DA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/powered/seedvault)
+"Eu" = (
+/obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered/seedvault)
+"KF" = (
+/obj/machinery/door/airlock/titanium,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/vault,
+/area/ruin/powered/seedvault)
+"PH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered/seedvault)
+"Uz" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/powered/seedvault)
+"Vn" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered/seedvault)
 
 (1,1,1) = {"
 aa
@@ -706,7 +772,7 @@ ac
 ak
 ah
 ac
-ah
+ca
 ac
 ac
 ac
@@ -728,7 +794,7 @@ ac
 ap
 ah
 as
-ah
+PH
 aQ
 av
 al
@@ -748,9 +814,9 @@ aa
 aa
 ac
 ap
-ah
-ah
-ah
+Vn
+Bb
+qQ
 ah
 av
 am
@@ -772,7 +838,7 @@ ac
 aq
 ah
 ac
-ah
+PH
 aU
 ac
 ac
@@ -794,7 +860,7 @@ ac
 ac
 ac
 ac
-ah
+PH
 ah
 aS
 ac
@@ -816,7 +882,7 @@ ac
 ar
 at
 az
-ah
+PH
 ah
 aT
 ac
@@ -838,7 +904,7 @@ ad
 al
 al
 al
-ah
+PH
 ah
 al
 aC
@@ -858,16 +924,16 @@ ac
 ac
 ae
 al
-ah
-ah
-ah
-ah
-ah
-ah
+Vn
+Bb
+pW
+Bb
+Bb
+Bb
 aH
-ah
-bb
-aN
+Bb
+DA
+Uz
 aV
 aW
 be
@@ -882,7 +948,7 @@ af
 am
 al
 al
-ah
+PH
 ah
 al
 aD
@@ -904,7 +970,7 @@ ac
 ac
 aw
 al
-ah
+PH
 ah
 aF
 ac
@@ -926,7 +992,7 @@ ag
 an
 al
 al
-ah
+PH
 ah
 ah
 au
@@ -946,9 +1012,9 @@ aa
 ac
 ai
 al
-ah
-ah
-ah
+Vn
+Bb
+qQ
 ah
 aF
 ac
@@ -970,7 +1036,7 @@ aj
 al
 al
 al
-aU
+Eu
 ac
 ac
 ac
@@ -992,7 +1058,7 @@ ac
 ao
 al
 al
-ah
+PH
 ac
 aX
 aE
@@ -1014,10 +1080,10 @@ ac
 ac
 ax
 aJ
-ah
-au
-aA
-aA
+oR
+KF
+sv
+sv
 aY
 aM
 ac

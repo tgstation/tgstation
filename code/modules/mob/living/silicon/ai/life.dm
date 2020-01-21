@@ -75,7 +75,7 @@
 			death()
 			return
 		else if(stat == UNCONSCIOUS)
-			stat = CONSCIOUS
+			set_stat(CONSCIOUS)
 	diag_hud_set_status()
 
 /mob/living/silicon/ai/update_sight()

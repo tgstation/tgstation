@@ -57,6 +57,13 @@ const mapColorPropTo = attrName => (style, value) => {
 const styleMapperByPropName = {
   // Direct mapping
   position: mapRawPropTo('position'),
+  overflow: mapRawPropTo('overflow'),
+  overflowX: mapRawPropTo('overflow-x'),
+  overflowY: mapRawPropTo('overflow-y'),
+  top: mapUnitPropTo('top'),
+  bottom: mapUnitPropTo('bottom'),
+  left: mapUnitPropTo('left'),
+  right: mapUnitPropTo('right'),
   width: mapUnitPropTo('width'),
   minWidth: mapUnitPropTo('min-width'),
   maxWidth: mapUnitPropTo('max-width'),

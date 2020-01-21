@@ -244,3 +244,17 @@
 		item_state = initial(item_state)
 		lefthand_file = initial(lefthand_file)
 		righthand_file = initial(righthand_file)
+
+/obj/item/pen/survival
+	name = "survival pen"
+	desc = "The latest in portable survival technology, this pen was designed as a miniature diamond pickaxe. Watchers find them very desirable for their diamond exterior."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "digging_pen"
+	item_state = "pen"
+	force = 3
+	w_class = WEIGHT_CLASS_TINY
+	custom_materials = list(/datum/material/iron=10, /datum/material/diamond=100, /datum/material/titanium = 10)
+	pressure_resistance = 2
+	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
+	tool_behaviour = TOOL_MINING //For the classic "digging out of prison with a spoon but you're in space so this analogy doesn't work" situation.
+	toolspeed = 10 //You will never willingly choose to use one of these over a shovel.

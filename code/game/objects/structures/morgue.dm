@@ -181,7 +181,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 			icon_state = "morgue1"
 		else
 			icon_state = "morgue2" // Dead, brainded mob.
-			var/list/compiled = recursive_mob_check(src, 0, 0) // Search for mobs in all contents.
+			var/list/compiled = GetAllContents(/mob/living) // Search for mobs in all contents.
 			if(!length(compiled)) // No mobs?
 				icon_state = "morgue3"
 				return
@@ -378,13 +378,12 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	desc = "Apply corpse before closing."
 	icon_state = "morguet"
 
-/obj/structure/tray/m_tray/CanPass(atom/movable/mover, turf/target)
+/obj/structure/tray/m_tray/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
-		return 1
+		return TRUE
 	if(locate(/obj/structure/table) in get_turf(mover))
-		return 1
-	else
-		return 0
+		return TRUE
 
 /obj/structure/tray/m_tray/CanAStarPass(ID, dir, caller)
 	. = !density

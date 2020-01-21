@@ -78,7 +78,7 @@
 		is_powered = FALSE
 	icon_state = icon_name + "[is_powered]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
 
-/obj/machinery/recycler/CanPass(atom/movable/AM)
+/obj/machinery/recycler/CanAllowThrough(atom/movable/AM)
 	. = ..()
 	if(!anchored)
 		return
@@ -113,7 +113,7 @@
 		if(istype(AM, /obj/item))
 			var/obj/item/bodypart/head/as_head = AM
 			var/obj/item/mmi/as_mmi = AM
-			if(istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain))
+			if(istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /obj/item/dullahan_relay))
 				living_detected = TRUE
 			nom += AM
 		else if(isliving(AM))

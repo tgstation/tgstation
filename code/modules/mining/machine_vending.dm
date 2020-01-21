@@ -93,31 +93,28 @@
 /obj/machinery/mineral/equipment_vendor/Topic(href, href_list)
 	if(..())
 		return
-	if(href_list["purchase"])
-		var/mob/M = usr
-		var/obj/item/card/id/I = M.get_idcard(TRUE)
-		if(istype(I))
-			var/datum/data/mining_equipment/prize = locate(href_list["purchase"]) in prize_list
-			if (!prize || !(prize in prize_list))
-				to_chat(usr, "<span class='alert'>Error: Invalid choice!</span>")
-				flick(icon_deny, src)
-				return
-			if(prize.cost > I.mining_points)
-				to_chat(usr, "<span class='alert'>Error: Insufficient points for [prize.equipment_name] on [I]!</span>")
-				flick(icon_deny, src)
-			else
-				if (I.mining_points -= prize.cost)
-					to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
-					new prize.equipment_path(src.loc)
-					SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
-				else
-					to_chat(usr, "<span class='alert'>Error: Transaction failure, please try again later!</span>")
-					flick(icon_deny, src)
-		else
-			to_chat(usr, "<span class='alert'>Error: An ID is required!</span>")
-			flick(icon_deny, src)
+	if(!href_list["purchase"])
+		return
+	var/mob/M = usr
+	var/obj/item/card/id/I = M.get_idcard(TRUE)
+	if(!istype(I))
+		to_chat(usr, "<span class='alert'>Error: An ID is required!</span>")
+		flick(icon_deny, src)
+		return
+	var/datum/data/mining_equipment/prize = locate(href_list["purchase"]) in prize_list
+	if (!prize || !(prize in prize_list))
+		to_chat(usr, "<span class='alert'>Error: Invalid choice!</span>")
+		flick(icon_deny, src)
+		return
+	if(prize.cost > I.mining_points)
+		to_chat(usr, "<span class='alert'>Error: Insufficient points for [prize.equipment_name] on [I]!</span>")
+		flick(icon_deny, src)
+		return
+	I.mining_points -= prize.cost
+	to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
+	new prize.equipment_path(loc)
+	SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
 	updateUsrDialog()
-	return
 
 /obj/machinery/mineral/equipment_vendor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/mining_voucher))
