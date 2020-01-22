@@ -1075,6 +1075,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "armory"
 	ambientsounds = HIGHSEC
 
+/area/ai_monitored/security/armory/upper
+	name = "Upper Armory"
+
 /area/ai_monitored/storage/eva
 	name = "EVA Storage"
 	icon_state = "eva"
