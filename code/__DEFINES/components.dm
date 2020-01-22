@@ -434,4 +434,5 @@
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"					//from turf AltClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"				//from monkey CtrlClickOn(): (/mob)
 
+//Brewing Stuff
 #define COMSIG_ATOM_ON_BREW "oh, shit, i'm sorry"
