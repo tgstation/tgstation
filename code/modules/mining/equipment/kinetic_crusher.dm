@@ -443,3 +443,27 @@
 
 /obj/effect/temp_visual/hierophant/wall/crusher
 	duration = 75
+
+/obj/item/crusher_trophy/king_goat
+	name = "king goat hoof"
+	desc = "A hoof from the king of all goats, it still glows with a fraction of its original power... Suitable as a trophy for a kinetic crusher."
+	icon_state = "goat_hoof" //needs a better sprite but I cant sprite .
+	denied_type = /obj/item/crusher_trophy/king_goat
+
+/obj/item/crusher_trophy/king_goat/effect_desc()
+	return "you to passivily recharge markers 5x as fast while equipped and do a decent amount of damage at the cost of dulling the blade"
+
+/obj/item/crusher_trophy/king_goat/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user)
+	marker.damage = 10 //in my testing only does damage to simple mobs so should be fine to have it high
+
+/obj/item/crusher_trophy/king_goat/add_to(obj/item/twohanded/kinetic_crusher/H, mob/living/user)
+	. = ..()
+	if(.)
+		H.charge_time = 3
+		H.force_wielded = 5
+
+/obj/item/crusher_trophy/king_goat/remove_from(obj/item/twohanded/kinetic_crusher/H, mob/living/user)
+	. = ..()
+	if(.)
+		H.charge_time = 15
+		H.force_wielded = 20
