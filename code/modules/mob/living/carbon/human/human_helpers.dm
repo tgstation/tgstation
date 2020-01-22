@@ -86,7 +86,7 @@
 	return
 
 //Gets ID card from a human. If hand_first is false the one in the id slot is prioritized, otherwise inventory slots go first.
-/mob/living/carbon/human/get_idcard(hand_first)
+/mob/living/carbon/human/get_idcard(hand_first = TRUE)
 	//Check hands
 	var/obj/item/card/id/id_card
 	var/obj/item/held_item

@@ -108,7 +108,7 @@
 			return
 
 	var/mob/user = usr
-	var/obj/item/card/id/user_id_card = user.get_idcard()
+	var/obj/item/card/id/user_id_card = user.get_idcard(FALSE)
 
 	var/obj/item/card/id/id_card = card_slot.stored_card
 

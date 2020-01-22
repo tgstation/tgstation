@@ -96,10 +96,10 @@
 		vote_description = new_description
 
 /obj/structure/votebox/proc/is_operator(mob/user)
-	return user?.get_idcard(TRUE) == owner
+	return user?.get_idcard() == owner
 
 /obj/structure/votebox/proc/apply_vote(obj/item/paper/I,mob/living/user)
-	var/obj/item/card/id/voter_card = user.get_idcard(TRUE)
+	var/obj/item/card/id/voter_card = user.get_idcard()
 	if(id_auth)
 		if(!voter_card)
 			to_chat(user,"<span class='warning'>[src] requires a valid ID card to vote!</span>")
