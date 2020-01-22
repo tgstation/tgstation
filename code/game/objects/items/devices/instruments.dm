@@ -97,13 +97,13 @@
 	custom_price = 125
 	instrumentRange = 1
 
+/obj/item/instrument/piano_synth/headphones/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
 /obj/item/instrument/piano_synth/headphones/update_playing_state(user, new_play_state)
 	icon_state = "[initial(icon_state)][new_play_state? "_on" : ""]"
 	update_icon()
-	var/mob/living/carbon/human/H = user
-	if(istype(H))
-		H.update_inv_ears()
-		H.update_inv_head()
 
 /obj/item/instrument/banjo
 	name = "banjo"
