@@ -54317,24 +54317,13 @@
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "crW" = (
-<<<<<<< HEAD/obj/structure/bed/roller,
-/obj/machinery/door/window/westleft{
-	base_state = "right";
-	dir = 1;
-	icon_state = "right";
-	name = "Monkey Pen";
-	pixel_y = 2;
-	req_access_txt = "9"
-	},
-/mob/living/carbon/monkey,
-=======/obj/effect/turf_decal/tile/purple{
+/obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/machinery/dna_scannernew,
->>>>>>> 0c518ab9b07cdb112c924dbbcc2aa4219b74a1b9/area/science/genetics,
-/turf/open/floor/plasteel/dark,
-/turf/open/floor/plasteel/white)
+/turf/open/floor/plasteel/white,
+/area/science/genetics)
 "crZ" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin{
