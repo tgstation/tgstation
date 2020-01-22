@@ -97,30 +97,29 @@
 	chamber_round()
 	update_icon()
 
-/obj/item/gun/ballistic/update_icon()
-	if (QDELETED(src))
-		return
-	..()
+/obj/item/gun/ballistic/update_icon_state()
 	if(current_skin)
 		icon_state = "[unique_reskin[current_skin]][sawn_off ? "_sawn" : ""]"
 	else
 		icon_state = "[initial(icon_state)][sawn_off ? "_sawn" : ""]"
-	cut_overlays()
+
+/obj/item/gun/ballistic/update_overlays()
+	. = ..()
 	if (bolt_type == BOLT_TYPE_LOCKING)
-		add_overlay("[icon_state]_bolt[bolt_locked ? "_locked" : ""]")
+		. += "[icon_state]_bolt[bolt_locked ? "_locked" : ""]"
 	if (bolt_type == BOLT_TYPE_OPEN && bolt_locked)
-		add_overlay("[icon_state]_bolt")
+		. += "[icon_state]_bolt"
 	if (suppressed)
-		add_overlay("[icon_state]_suppressor")
+		. += "[icon_state]_suppressor"
 	if(!chambered && empty_indicator)
-		add_overlay("[icon_state]_empty")
+		. += "[icon_state]_empty"
 	if (magazine)
 		if (special_mags)
-			add_overlay("[icon_state]_mag_[initial(magazine.icon_state)]")
+			. += "[icon_state]_mag_[initial(magazine.icon_state)]"
 			if (!magazine.ammo_count())
-				add_overlay("[icon_state]_mag_empty")
+				. += "[icon_state]_mag_empty"
 		else
-			add_overlay("[icon_state]_mag")
+			. += "[icon_state]_mag"
 			var/capacity_number = 0
 			switch(get_ammo() / magazine.max_ammo)
 				if(0.2 to 0.39)
@@ -134,7 +133,7 @@
 				if(1.0)
 					capacity_number = 100
 			if (capacity_number)
-				add_overlay("[icon_state]_mag_[capacity_number]")
+				. += "[icon_state]_mag_[capacity_number]"
 
 
 /obj/item/gun/ballistic/process_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
@@ -294,7 +293,7 @@
 	update_icon()
 
 /obj/item/gun/ballistic/AltClick(mob/user)
-	if (unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if (unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		reskin_obj(user)
 		return
 	if(loc == user)
@@ -406,7 +405,7 @@
 /obj/item/gun/ballistic/suicide_act(mob/user)
 	var/obj/item/organ/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
 	if (B && chambered && chambered.BB && can_trigger_gun(user) && !chambered.BB.nodamage)
-		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		sleep(25)
 		if(user.is_holding(src))
 			var/turf/T = get_turf(user)
@@ -486,4 +485,3 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 /obj/item/suppressor/specialoffer
 	name = "cheap suppressor"
 	desc = "A foreign knock-off suppressor, it feels flimsy, cheap, and brittle. Still fits most weapons."
-

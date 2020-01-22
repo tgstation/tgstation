@@ -124,6 +124,15 @@
 	category = list("initial","Tools","Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/plunger
+	name = "Plunger"
+	id = "plunger"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 150)
+	build_path = /obj/item/plunger
+	category = list("initial","Tools","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/welding_helmet
 	name = "Welding Helmet"
 	id = "welding_helmet"
@@ -263,6 +272,15 @@
 	category = list("hacked","Misc","Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
 
+/datum/design/generic_gas_tank
+	name = "Generic Gas Tank"
+	id = "generic_tank"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 1000)
+	build_path = /obj/item/tank/internals/generic
+	category = list("initial","Misc","Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
+
 /datum/design/metal
 	name = "Metal"
 	id = "metal"
@@ -315,6 +333,14 @@
 	build_path = /obj/item/kitchen/knife
 	category = list("initial","Dinnerware")
 
+/datum/design/plastic_knife
+	name = "Plastic Knife"
+	id = "plastic_knife"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/plastic = 100)
+	build_path = /obj/item/kitchen/knife/plastic
+	category = list("initial", "Tool Designs","Dinnerware")
+
 /datum/design/fork
 	name = "Fork"
 	id = "fork"
@@ -322,6 +348,24 @@
 	materials = list(/datum/material/iron = 80)
 	build_path = /obj/item/kitchen/fork
 	category = list("initial","Dinnerware")
+
+/datum/design/plastic_fork
+	name = "Plastic Fork"
+	id = "plastic_fork"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/plastic = 80)
+	build_path = /obj/item/kitchen/fork/plastic
+	category = list("initial", "Tool Designs", "Dinnerware")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/plastic_spoon
+	name = "Plastic Spoon"
+	id = "plastic_spoon"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/plastic = 120)
+	build_path = /obj/item/kitchen/spoon/plastic
+	category = list("initial", "Tool Designs", "Dinnerware")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/tray
 	name = "Tray"
@@ -492,7 +536,7 @@
 	name = "Pill Bottle"
 	id = "pillbottle"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 20, /datum/material/glass = 100)
+	materials = list(/datum/material/plastic = 20, /datum/material/glass = 100)
 	build_path = /obj/item/storage/pill_bottle
 	category = list("initial", "Medical", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
@@ -650,6 +694,15 @@
 	category = list("initial", "Medical", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/dropper
+	name = "Dropper"
+	id = "dropper"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/glass = 10, /datum/material/plastic = 30)
+	build_path = /obj/item/reagent_containers/dropper
+	category = list("initial", "Medical", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/prox_sensor
 	name = "Proximity Sensor"
 	id = "prox_sensor"
@@ -674,14 +727,6 @@
 	materials = list(/datum/material/iron = 500)
 	build_path = /obj/item/flamethrower/full
 	category = list("hacked", "Security")
-
-/datum/design/rcd
-	name = "Rapid Construction Device (RCD)"
-	id = "rcd"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 30000)
-	build_path = /obj/item/construction/rcd
-	category = list("hacked", "Construction")
 
 /datum/design/rpd
 	name = "Rapid Pipe Dispenser (RPD)"
@@ -855,9 +900,10 @@
 	name = "Conveyor Belt"
 	id = "conveyor_belt"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 5000)
-	build_path = /obj/item/conveyor_construct
+	materials = list(/datum/material/iron = 3000)
+	build_path = /obj/item/stack/conveyor
 	category = list("initial", "Construction")
+	maxstack = 30
 
 /datum/design/conveyor_switch
 	name = "Conveyor Belt Switch"
@@ -965,4 +1011,61 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2000)
 	build_path = /obj/item/vending_refill/custom
+	category = list("initial", "Misc")
+
+/datum/design/ducts
+	name = "Fluid Ducts"
+	id = "fluid_ducts"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 500)
+	build_path = /obj/item/stack/ducts
+	category = list("initial", "Construction")
+	maxstack = 50
+
+/datum/design/toygun
+	name = "Cap Gun"
+	id = "toygun"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 100, /datum/material/glass = 50)
+	build_path = /obj/item/toy/gun
+	category = list("hacked", "Misc")
+
+/datum/design/capbox
+	name = "Box of Cap Gun Shots"
+	id = "capbox"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 20, /datum/material/glass = 5)
+	build_path = /obj/item/toy/ammo/gun
+	category = list("hacked", "Misc")
+
+/datum/design/plastic_tree
+	name = "Plastic Potted Plant"
+	id = "plastic_trees"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/plastic = 8000)
+	build_path = /obj/item/twohanded/required/kirbyplants/fullysynthetic
+	category = list("initial", "Misc")
+
+/datum/design/beads
+	name = "Plastic Bead Necklace"
+	id = "plastic_necklace"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/plastic = 500)
+	build_path = /obj/item/clothing/neck/beads
+	category = list("initial", "Misc")
+
+/datum/design/plastic_ring
+	name = "Plastic Can Rings"
+	id = "ring_holder"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/plastic = 1200)
+	build_path = /obj/item/storage/cans
+	category = list("initial", "Dinnerware")
+
+/datum/design/plastic_box
+	name = "Plastic Box"
+	id = "plastic_box"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/plastic = 1000)
+	build_path = /obj/item/storage/box/plastic
 	category = list("initial", "Misc")

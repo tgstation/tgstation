@@ -9,6 +9,8 @@
 	flags_1 = CONDUCT_1
 	force = 3
 	throwforce = 10
+	var/acti_sound = 'sound/items/welderactivate.ogg'
+	var/deac_sound = 'sound/items/welderdeactivate.ogg'
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
@@ -26,6 +28,10 @@
 	var/create_with_tank = FALSE
 	var/igniter_type = /obj/item/assembly/igniter
 	trigger_guard = TRIGGER_GUARD_NORMAL
+
+/obj/item/flamethrower/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/flamethrower/Destroy()
 	if(weldtool)
@@ -49,21 +55,17 @@
 		igniter.flamethrower_process(location)
 
 
-/obj/item/flamethrower/update_icon()
-	cut_overlays()
+/obj/item/flamethrower/update_icon_state()
+	item_state = "flamethrower_[lit]"
+
+/obj/item/flamethrower/update_overlays()
+	. = ..()
 	if(igniter)
-		add_overlay("+igniter[status]")
+		. += "+igniter[status]"
 	if(ptank)
-		add_overlay("+ptank")
+		. += "+ptank"
 	if(lit)
-		add_overlay("+lit")
-		item_state = "flamethrower_1"
-	else
-		item_state = "flamethrower_0"
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_hands()
-	return
+		. += "+lit"
 
 /obj/item/flamethrower/afterattack(atom/target, mob/user, flag)
 	. = ..()
@@ -160,11 +162,15 @@
 	to_chat(user, "<span class='notice'>You [lit ? "extinguish" : "ignite"] [src]!</span>")
 	lit = !lit
 	if(lit)
+		set_light(1)
+		playsound(loc, acti_sound, 50, TRUE)
 		START_PROCESSING(SSobj, src)
 		if(!warned_admins)
 			message_admins("[ADMIN_LOOKUPFLW(user)] has lit a flamethrower.")
 			warned_admins = TRUE
 	else
+		set_light(0)
+		playsound(loc, deac_sound, 50, TRUE)
 		STOP_PROCESSING(SSobj,src)
 	update_icon()
 

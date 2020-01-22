@@ -34,6 +34,7 @@
 
 /obj/machinery/mineral/ore_redemption/Destroy()
 	QDEL_NULL(stored_research)
+	materials = null
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/RefreshParts()
@@ -189,7 +190,7 @@
 	var/obj/item/stack/ore/O = W
 	if(istype(O))
 		if(O.refined_type == null)
-			to_chat(user, "<span class='notice'>[O] has already been refined!</span>")
+			to_chat(user, "<span class='warning'>[O] has already been refined!</span>")
 			return
 
 	return ..()
@@ -237,6 +238,7 @@
 		data["disconnected"] = "mineral withdrawal is on hold"
 
 	data["diskDesigns"] = list()
+	data["hasDisk"] = FALSE
 	if(inserted_disk)
 		data["hasDisk"] = TRUE
 		if(inserted_disk.blueprints.len)
@@ -350,9 +352,8 @@
 	do_sparks(5, TRUE, src)
 	..()
 
-/obj/machinery/mineral/ore_redemption/update_icon()
+/obj/machinery/mineral/ore_redemption/update_icon_state()
 	if(powered())
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]-off"
-	return

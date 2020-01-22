@@ -47,13 +47,13 @@
 	if(prob(75))
 		pixel_y = rand(0, 16)
 
-/obj/item/screwdriver/update_icon()
+/obj/item/screwdriver/update_overlays()
+	. = ..()
 	if(!random_color) //icon override
 		return
-	cut_overlays()
 	var/mutable_appearance/base_overlay = mutable_appearance(icon, "screwdriver_screwybits")
 	base_overlay.appearance_flags = RESET_COLOR
-	add_overlay(base_overlay)
+	. += base_overlay
 
 /obj/item/screwdriver/worn_overlays(isinhands = FALSE, icon_file)
 	. = list()
@@ -84,15 +84,6 @@
 		M = user
 	return eyestab(M,user)
 
-/obj/item/screwdriver/brass
-	name = "brass screwdriver"
-	desc = "A screwdriver made of brass. The handle feels freezing cold."
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon_state = "screwdriver_brass"
-	item_state = "screwdriver_brass"
-	toolspeed = 0.5
-	random_color = FALSE
-
 /obj/item/screwdriver/abductor
 	name = "alien screwdriver"
 	desc = "An ultrasonic screwdriver."
@@ -108,7 +99,7 @@
 
 /obj/item/screwdriver/power
 	name = "hand drill"
-	desc = "A simple powered hand drill. It's fitted with a screw bit."
+	desc = "A simple powered hand drill."
 	icon_state = "drill_screw"
 	item_state = "drill"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -125,16 +116,28 @@
 	toolspeed = 0.7
 	random_color = FALSE
 
+/obj/item/screwdriver/power/examine()
+	. = ..()
+	. += " It's fitted with a [tool_behaviour == TOOL_SCREWDRIVER ? "screw" : "bolt"] bit."
+
 /obj/item/screwdriver/power/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is putting [src] to [user.p_their()] temple. It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	if(tool_behaviour == TOOL_SCREWDRIVER)
+		user.visible_message("<span class='suicide'>[user] is putting [src] to [user.p_their()] temple. It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	else
+		user.visible_message("<span class='suicide'>[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	playsound(loc, 'sound/items/drill_use.ogg', 50, TRUE, -1)
 	return(BRUTELOSS)
 
 /obj/item/screwdriver/power/attack_self(mob/user)
-	playsound(get_turf(user),'sound/items/change_drill.ogg',50,TRUE)
-	var/obj/item/wrench/power/b_drill = new /obj/item/wrench/power(drop_location())
-	to_chat(user, "<span class='notice'>You attach the bolt driver bit to [src].</span>")
-	qdel(src)
-	user.put_in_active_hand(b_drill)
+	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
+	if(tool_behaviour == TOOL_SCREWDRIVER)
+		tool_behaviour = TOOL_WRENCH
+		to_chat(user, "<span class='notice'>You attach the bolt bit to [src].</span>")
+		icon_state = "drill_bolt"
+	else
+		tool_behaviour = TOOL_SCREWDRIVER
+		to_chat(user, "<span class='notice'>You attach the screw bit to [src].</span>")
+		icon_state = "drill_screw"
 
 /obj/item/screwdriver/cyborg
 	name = "automated screwdriver"

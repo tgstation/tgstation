@@ -106,7 +106,9 @@
 		            /obj/item/clothing/shoes/cowboy/black = 2,
 		            /obj/item/clothing/suit/jacket/miljacket = 1,
 		            /obj/item/clothing/suit/apron/purple_bartender = 2,
-		            /obj/item/clothing/under/rank/civilian/bartender/purple = 2)
+		            /obj/item/clothing/under/rank/civilian/bartender/purple = 2,
+		            /obj/item/clothing/suit/toggle/suspenders/blue = 2,
+		            /obj/item/clothing/suit/toggle/suspenders/gray = 2)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 1,
 					  /obj/item/clothing/under/syndicate/tacticool/skirt = 1,
 		              /obj/item/clothing/mask/balaclava = 1,
@@ -124,10 +126,11 @@
 		           /obj/item/clothing/suit/jacket/leather/overcoat = 1,
 		           /obj/item/clothing/under/pants/mustangjeans = 1,
 		           /obj/item/clothing/neck/necklace/dope = 3,
-		           /obj/item/clothing/suit/jacket/letterman_nanotrasen = 1)
+		           /obj/item/clothing/suit/jacket/letterman_nanotrasen = 1,
+		           /obj/item/clothing/ears/earmuffs/spacepods = 1)
 	refill_canister = /obj/item/vending_refill/clothing
-	default_price = 50
-	extra_price = 75
+	default_price = 60
+	extra_price = 120
 	payment_department = NO_FREEBIES
 
 /obj/machinery/vending/clothing/canLoadItem(obj/item/I,mob/user)

@@ -63,7 +63,7 @@
 				. = pod
 
 /proc/grow_clone_from_record(obj/machinery/clonepod/pod, datum/data/record/R, empty)
-	return pod.growclone(R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mindref"], R.fields["last_death"], R.fields["mrace"], R.fields["features"], R.fields["factions"], R.fields["quirks"], R.fields["bank_account"], R.fields["traumas"], empty)
+	return pod.growclone(R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mindref"], R.fields["last_death"], R.fields["blood_type"], R.fields["mrace"], R.fields["features"], R.fields["factions"], R.fields["quirks"], R.fields["bank_account"], R.fields["traumas"], empty)
 
 /obj/machinery/computer/cloning/process()
 	if(!(scanner && LAZYLEN(pods) && autoprocess))
@@ -357,13 +357,7 @@
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 		say("Initiating scan...")
 
-		spawn(20)
-			scan_occupant(scanner.occupant, usr, body_only)
-
-			loading = FALSE
-			updateUsrDialog()
-			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
-
+		addtimer(CALLBACK(src, .proc/do_scan, usr, body_only), 2 SECONDS)
 
 		//No locking an open scanner.
 	else if ((href_list["lock"]) && !isnull(scanner) && scanner.is_operational())
@@ -523,6 +517,13 @@
 	updateUsrDialog()
 	return
 
+/obj/machinery/computer/cloning/proc/do_scan(mob/user, body_only)
+	scan_occupant(scanner.occupant, user, body_only)
+
+	loading = FALSE
+	updateUsrDialog()
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+
 /obj/machinery/computer/cloning/proc/scan_occupant(occupant, mob/M, body_only)
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
 	var/datum/dna/dna
@@ -577,7 +578,7 @@
 		R.fields["mrace"] = rando_race.type
 
 	R.fields["name"] = mob_occupant.real_name
-	R.fields["id"] = copytext(md5(mob_occupant.real_name), 2, 6)
+	R.fields["id"] = copytext_char(md5(mob_occupant.real_name), 2, 6)
 	R.fields["UE"] = dna.unique_enzymes
 	R.fields["UI"] = dna.uni_identity
 	R.fields["SE"] = dna.mutation_index
@@ -597,7 +598,7 @@
 
 	R.fields["bank_account"] = has_bank_account
 	R.fields["mindref"] = "[REF(mob_occupant.mind)]"
-	R.fields["last_death"] = mob_occupant.stat == DEAD ? mob_occupant.mind.last_death : -1
+	R.fields["last_death"] = mob_occupant.stat == DEAD && mob_occupant.mind ? mob_occupant.mind.last_death : -1
 	R.fields["body_only"] = body_only
 
 	if(!body_only)

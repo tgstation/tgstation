@@ -55,14 +55,14 @@
 		w_class = WEIGHT_CLASS_BULKY
 		hitsound = 'sound/weapons/blade1.ogg'
 		playsound(user, 'sound/weapons/saberon.ogg', 20, TRUE)
-		to_chat(user, "<span class='warning'>[src] is now active.</span>")
+		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 	else
 		force = 3
 		icon_state = "sword0"
 		w_class = WEIGHT_CLASS_SMALL
 		hitsound = "swing_hit"
 		playsound(user, 'sound/weapons/saberoff.ogg', 20, TRUE)
-		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
+		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 	return
 
 //BASKETBALL OBJECTS
@@ -157,7 +157,7 @@
 	power_channel = ENVIRON
 
 /obj/machinery/readybutton/attack_ai(mob/user as mob)
-	to_chat(user, "The station AI is not to interact with these devices.")
+	to_chat(user, "<span class='warning'>The station AI is not to interact with these devices!</span>")
 	return
 
 /obj/machinery/readybutton/attack_paw(mob/user as mob)
@@ -165,7 +165,7 @@
 	return
 
 /obj/machinery/readybutton/attackby(obj/item/W as obj, mob/user as mob, params)
-	to_chat(user, "The device is a solid button, there's nothing you can do with it!")
+	to_chat(user, "<span class='warning'>The device is a solid button, there's nothing you can do with it!</span>")
 
 /obj/machinery/readybutton/attack_hand(mob/user as mob)
 	. = ..()
@@ -197,7 +197,7 @@
 	if(numbuttons == numready)
 		begin_event()
 
-/obj/machinery/readybutton/update_icon()
+/obj/machinery/readybutton/update_icon_state()
 	if(ready)
 		icon_state = "auth_on"
 	else
@@ -212,7 +212,7 @@
 			qdel(W)
 
 	for(var/mob/M in currentarea)
-		to_chat(M, "FIGHT!")
+		to_chat(M, "<span class='userdanger'>FIGHT!</span>")
 
 /obj/machinery/conveyor/holodeck
 

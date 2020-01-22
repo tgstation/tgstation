@@ -10,6 +10,7 @@
 #define UNIQUE_RENAME			(1<<6) // can you customize the description/name of the thing?
 #define USES_TGUI				(1<<7)	//put on things that use tgui on ui_interact instead of custom/old UI.
 #define FROZEN					(1<<8)
+#define BLOCK_Z_FALL			(1<<9) // Should this object block z falling?
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
@@ -50,3 +51,4 @@
 #define ORGAN_FAILING			(1<<2)	//Failing organs perform damaging effects until replaced or fixed
 #define ORGAN_EXTERNAL			(1<<3)	//Was this organ implanted/inserted/etc, if true will not be removed during species change.
 #define ORGAN_VITAL				(1<<4)	//Currently only the brain
+#define ORGAN_SYNTHETIC_EMP		(1<<5)	//Synthetic organ affected by an EMP. Deteriorates over time.

@@ -36,9 +36,10 @@
 			if(!H.wear_mask)
 				to_chat(H, "<span class='warning'>You need a mask!</span>")
 				return
-			if(H.wear_mask.mask_adjusted)
+			var/is_clothing = isclothing(H.wear_mask)
+			if(is_clothing && H.wear_mask.mask_adjusted)
 				H.wear_mask.adjustmask(H)
-			if(!(H.wear_mask.clothing_flags & MASKINTERNALS))
+			if(!is_clothing || !(H.wear_mask.clothing_flags & MASKINTERNALS))
 				to_chat(H, "<span class='warning'>[H.wear_mask] can't use [src]!</span>")
 				return
 
@@ -125,21 +126,13 @@
 	var/mob/living/carbon/human/H = user
 	user.visible_message("<span class='suicide'>[user] is putting [src]'s valve to [user.p_their()] lips! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
-	if (!QDELETED(H) && air_contents && air_contents.return_pressure() >= 1000)
-		for(var/obj/item/W in H)
-			H.dropItemToGround(W)
-			if(prob(50))
-				step(W, pick(GLOB.alldirs))
+	if(!QDELETED(H) && air_contents && air_contents.return_pressure() >= 1000)
 		ADD_TRAIT(H, TRAIT_DISFIGURED, TRAIT_GENERIC)
-		H.bleed_rate = 5
-		H.gib_animation()
-		sleep(3)
-		H.adjustBruteLoss(1000) //to make the body super-bloody
-		H.spawn_gibs()
-		H.spill_organs()
-		H.spread_bodyparts()
-
-	return (BRUTELOSS)
+		H.inflate_gib()
+		return MANUAL_SUICIDE
+	else
+		to_chat(user, "<span class='warning'>There isn't enough pressure in [src] to commit suicide with...</span>")
+	return SHAME
 
 /obj/item/tank/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -152,7 +145,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "tanks", name, 420, 200, master_ui, state)
+		ui = new(user, src, ui_key, "tanks", name, 400, 120, master_ui, state)
 		ui.open()
 
 /obj/item/tank/ui_data(mob/user)

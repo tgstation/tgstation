@@ -57,8 +57,8 @@
 	damage_deflection = 10
 	resistance_flags = FIRE_PROOF
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
-	ui_x = 535
-	ui_y = 515
+	ui_x = 450
+	ui_y = 460
 
 	var/lon_range = 1.5
 	var/area/area
@@ -93,7 +93,6 @@
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
 	var/mob/living/silicon/ai/occupier = null
 	var/transfer_in_progress = FALSE //Is there an AI being transferred out of us?
-	var/obj/item/clockwork/integration_cog/integration_cog //Is there a cog siphoning power?
 	var/longtermpower = 10
 	var/auto_name = FALSE
 	var/failure_timer = 0
@@ -266,9 +265,6 @@
 		else
 			. += {"It's [ !terminal ? "not" : "" ] wired up.\n
 			The electronics are[!has_electronics?"n't":""] installed."}
-		if(user.Adjacent(src) && integration_cog)
-			. += "<span class='warning'>[src]'s innards have been replaced by strange brass machinery!</span>"
-
 	else
 		if (stat & MAINT)
 			. += "The cover is closed. Something is wrong with it. It doesn't work."
@@ -276,9 +272,6 @@
 			. += "The cover is broken. It may be hard to force it open."
 		else
 			. += "The cover is closed."
-
-	if(integration_cog && is_servant_of_ratvar(user))
-		. += "<span class='brass'>There is an integration cog installed!</span>"
 
 	. += "<span class='notice'>Alt-Click the APC to [ locked ? "unlock" : "lock"] the interface.</span>"
 
@@ -458,16 +451,6 @@
 							"<span class='notice'>You remove the power control board.</span>")
 						new /obj/item/electronics/apc(loc)
 						return
-		else if(integration_cog)
-			user.visible_message("<span class='notice'>[user] starts prying [integration_cog] from [src]...</span>", \
-			"<span class='notice'>You painstakingly start tearing [integration_cog] out of [src]'s guts...</span>")
-			W.play_tool_sound(src)
-			if(W.use_tool(src, user, 100))
-				user.visible_message("<span class='notice'>[user] destroys [integration_cog] in [src]!</span>", \
-				"<span class='notice'>[integration_cog] comes free with a clank and snaps in two as the machinery returns to normal!</span>")
-				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-				QDEL_NULL(integration_cog)
-			return
 		else if (opened!=APC_COVER_REMOVED)
 			opened = APC_COVER_CLOSED
 			coverlocked = TRUE //closing cover relocks it
@@ -520,7 +503,7 @@
 		return
 	else
 		panel_open = !panel_open
-		to_chat(user, "The wires have been [panel_open ? "exposed" : "unexposed"]")
+		to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
 		update_icon()
 
 /obj/machinery/power/apc/wirecutter_act(mob/living/user, obj/item/W)
@@ -576,7 +559,6 @@
 		var/turf/host_turf = get_turf(src)
 		if(!host_turf)
 			CRASH("attackby on APC when it's not on a turf")
-			return
 		if (host_turf.intact)
 			to_chat(user, "<span class='warning'>You must remove the floor plating in front of the APC first!</span>")
 			return
@@ -654,7 +636,7 @@
 			return
 	else if (istype(W, /obj/item/wallframe/apc) && opened)
 		if (!(stat & BROKEN || opened==APC_COVER_REMOVED || obj_integrity < max_integrity)) // There is nothing to repair
-			to_chat(user, "<span class='warning'>You found no reason for repairing this APC</span>")
+			to_chat(user, "<span class='warning'>You found no reason for repairing this APC!</span>")
 			return
 		if (!(stat & BROKEN) && opened==APC_COVER_REMOVED) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
 			user.visible_message("<span class='notice'>[user.name] replaces missing APC's cover.</span>", \
@@ -677,32 +659,6 @@
 			obj_integrity = max_integrity
 			if (opened==APC_COVER_REMOVED)
 				opened = APC_COVER_OPENED
-			update_icon()
-	else if(istype(W, /obj/item/clockwork/integration_cog) && is_servant_of_ratvar(user))
-		if(integration_cog)
-			to_chat(user, "<span class='warning'>This APC already has a cog.</span>")
-			return
-		if(!opened)
-			user.visible_message("<span class='warning'>[user] slices [src]'s cover lock, and it swings wide open!</span>", \
-			"<span class='alloy'>You slice [src]'s cover lock apart with [W], and the cover swings open.</span>")
-			opened = APC_COVER_OPENED
-			update_icon()
-		else
-			user.visible_message("<span class='warning'>[user] presses [W] into [src]!</span>", \
-			"<span class='alloy'>You hold [W] in place within [src], and it slowly begins to warm up...</span>")
-			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-			if(!do_after(user, 70, target = src))
-				return
-			user.visible_message("<span class='warning'>[user] installs [W] in [src]!</span>", \
-			"<span class='alloy'>Replicant alloy rapidly covers the APC's innards, replacing the machinery.</span><br>\
-			<span class='brass'>This APC will now passively provide power for the cult!</span>")
-			playsound(user, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
-			user.transferItemToLoc(W, src)
-			integration_cog = W
-			START_PROCESSING(SSfastprocess, W)
-			playsound(src, 'sound/machines/clockcult/steam_whoosh.ogg', 50, FALSE)
-			opened = APC_COVER_CLOSED
-			locked = FALSE
 			update_icon()
 		return
 	else if(panel_open && !opened && is_wire_tool(W))
@@ -831,6 +787,48 @@
 	. = ..()
 	if(.)
 		return
+
+	if(isethereal(user))
+		var/mob/living/carbon/human/H = user
+		if(H.a_intent == INTENT_HARM)
+			if(cell.charge <= (cell.maxcharge / 2)) // if charge is under 50% you shouldnt drain it
+				to_chat(H, "<span class='warning'>The APC doesn't have much power, you probably shouldn't drain any.</span>")
+				return
+			var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+			if(stomach.crystal_charge > 145)
+				to_chat(H, "<span class='warning'>Your charge is full!</span>")
+				return
+			to_chat(H, "<span class='notice'>You start channeling some power through the APC into your body.</span>")
+			if(do_after(user, 75, target = src))
+				if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > 145))
+					return
+				if(istype(stomach))
+					to_chat(H, "<span class='notice'>You receive some charge from the APC.</span>")
+					stomach.adjust_charge(10)
+					cell.charge -= 10
+				else
+					to_chat(H, "<span class='warning'>You can't receive charge from the APC!</span>")
+			return
+		if(H.a_intent == INTENT_GRAB)
+			if(cell.charge == cell.maxcharge)
+				to_chat(H, "<span class='warning'>The APC is full!</span>")
+				return
+			var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+			if(stomach.crystal_charge < 10)
+				to_chat(H, "<span class='warning'>Your charge is too low!</span>")
+				return
+			to_chat(H, "<span class='notice'>You start channeling power through your body into the APC.</span>")
+			if(do_after(user, 75, target = src))
+				if(cell.charge == cell.maxcharge || (stomach.crystal_charge < 10))
+					return
+				if(istype(stomach))
+					to_chat(H, "<span class='notice'>You transfer some power to the APC.</span>")
+					stomach.adjust_charge(-10)
+					cell.charge += 10
+				else
+					to_chat(H, "<span class='warning'>You can't transfer power to the APC!</span>")
+			return
+
 	if(opened && (!issilicon(user)))
 		if(cell)
 			user.visible_message("<span class='notice'>[user] removes \the [cell] from [src]!</span>", "<span class='notice'>You remove \the [cell].</span>")
@@ -853,7 +851,7 @@
 
 /obj/machinery/power/apc/ui_data(mob/user)
 	var/list/data = list(
-		"locked" = locked && !(integration_cog && is_servant_of_ratvar(user)),
+		"locked" = locked,
 		"failTime" = failure_timer,
 		"isOperating" = operating,
 		"externalPower" = main_status,
@@ -961,13 +959,13 @@
 		. = UI_INTERACTIVE
 
 /obj/machinery/power/apc/ui_act(action, params)
-	if(..() || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege && !failure_timer && !(integration_cog && (is_servant_of_ratvar(usr)))))
+	if(..() || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege && !failure_timer))
 		return
 	switch(action)
 		if("lock")
 			if(usr.has_unlimited_silicon_privilege)
 				if((obj_flags & EMAGGED) || (stat & (BROKEN|MAINT)))
-					to_chat(usr, "The APC does not respond to the command.")
+					to_chat(usr, "<span class='warning'>The APC does not respond to the command!</span>")
 				else
 					locked = !locked
 					update_icon()
@@ -1042,9 +1040,9 @@
 	if(get_malf_status(malf) != 1)
 		return
 	if(malf.malfhacking)
-		to_chat(malf, "You are already hacking an APC.")
+		to_chat(malf, "<span class='warning'>You are already hacking an APC!</span>")
 		return
-	to_chat(malf, "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process.")
+	to_chat(malf, "<span class='notice'>Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process.</span>")
 	malf.malfhack = src
 	malf.malfhacking = addtimer(CALLBACK(malf, /mob/living/silicon/ai/.proc/malfhacked, src), 600, TIMER_STOPPABLE)
 
@@ -1163,9 +1161,9 @@
 	if(terminal && terminal.powernet)
 		terminal.add_load(amount)
 
-/obj/machinery/power/apc/avail()
+/obj/machinery/power/apc/avail(amount)
 	if(terminal)
-		return terminal.avail()
+		return terminal.avail(amount)
 	else
 		return 0
 
@@ -1482,5 +1480,5 @@
 /obj/item/electronics/apc
 	name = "power control module"
 	icon_state = "power_mod"
-	custom_price = 5
+	custom_price = 50
 	desc = "Heavy-duty switching circuits for power control."

@@ -5,6 +5,8 @@
 
 	icon_state = "synthesizer"
 	icon = 'icons/obj/plumbing/plumbers.dmi'
+	rcd_cost = 25
+	rcd_delay = 15
 
 	///Amount we produce for every process. Ideally keep under 5 since thats currently the standard duct capacity
 	var/amount = 1
@@ -14,8 +16,6 @@
 	var/static/list/possible_amounts = list(0,1,2,3,4,5)
 	///The reagent we are producing. We are a typepath, but are also typecast because there's several occations where we need to use initial.
 	var/datum/reagent/reagent_id = null
-	///reagent overlay. its the colored pipe thingies. we track this because overlays.Cut() is bad
-	var/image/r_overlay
 	///straight up copied from chem dispenser. Being a subtype would be extremely tedious and making it global would restrict potential subtypes using different dispensable_reagents
 	var/list/dispensable_reagents = list(
 		/datum/reagent/aluminium,
@@ -47,16 +47,11 @@
 	)
 
 	ui_x = 300
-	ui_y = 435
+	ui_y = 375
 
-/obj/machinery/plumbing/synthesizer/Initialize(mapload)
+/obj/machinery/plumbing/synthesizer/Initialize(mapload, bolt)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_supply)
-
-/obj/machinery/plumbing/synthesizer/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I)
-	return TRUE
+	AddComponent(/datum/component/plumbing/simple_supply, bolt)
 
 /obj/machinery/plumbing/synthesizer/process()
 	if(stat & NOPOWER || !reagent_id || !amount)
@@ -109,15 +104,11 @@
 	update_icon()
 	reagents.clear_reagents()
 
-/obj/machinery/plumbing/synthesizer/update_icon()
-	if(!r_overlay)
-		r_overlay = image(icon, "[icon_state]_overlay")
-	else
-		overlays -= r_overlay //we remove it because overlays are completely unnaffected by changing the object, you need to reapply it
-
+/obj/machinery/plumbing/synthesizer/update_overlays()
+	. = ..()
+	var/mutable_appearance/r_overlay = mutable_appearance(icon, "[icon_state]_overlay")
 	if(reagent_id)
 		r_overlay.color = initial(reagent_id.color)
 	else
 		r_overlay.color = "#FFFFFF"
-
-	overlays += r_overlay
+	. += r_overlay

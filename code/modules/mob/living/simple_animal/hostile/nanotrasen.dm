@@ -29,7 +29,7 @@
 	speak = list("Stop resisting!", "I AM THE LAW!", "Face the wrath of the golden bolt!", "Stop breaking the law, asshole!")
 	search_objects = 1
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_SHOE
 
 
 /mob/living/simple_animal/hostile/nanotrasen/Aggro()

@@ -13,7 +13,7 @@
 	icon_state = "vest_stealth"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-	armor = list("melee" = 15, "bullet" = 15, "laser" = 15, "energy" = 15, "bomb" = 15, "bio" = 15, "rad" = 15, "fire" = 70, "acid" = 70)
+	armor = list("melee" = 15, "bullet" = 15, "laser" = 15, "energy" = 25, "bomb" = 15, "bio" = 15, "rad" = 15, "fire" = 70, "acid" = 70)
 	actions_types = list(/datum/action/item_action/hands_free/activate)
 	allowed = list(
 		/obj/item/abductor,
@@ -26,8 +26,13 @@
 	var/stealth_active = 0
 	var/combat_cooldown = 10
 	var/datum/icon_snapshot/disguise
-	var/stealth_armor = list("melee" = 15, "bullet" = 15, "laser" = 15, "energy" = 15, "bomb" = 15, "bio" = 15, "rad" = 15, "fire" = 70, "acid" = 70)
+	var/stealth_armor = list("melee" = 15, "bullet" = 15, "laser" = 15, "energy" = 25, "bomb" = 15, "bio" = 15, "rad" = 15, "fire" = 70, "acid" = 70)
 	var/combat_armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 50, "rad" = 50, "fire" = 90, "acid" = 90)
+
+/obj/item/clothing/suit/armor/abductor/vest/Initialize()
+	. = ..()
+	stealth_armor = getArmor(arglist(stealth_armor))
+	combat_armor = getArmor(arglist(combat_armor))
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/toggle_nodrop()
 	if(HAS_TRAIT_FROM(src, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT))
@@ -56,7 +61,7 @@
 		A.UpdateButtonIcon()
 
 /obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user)
-	if(slot == SLOT_WEAR_SUIT) //we only give the mob the ability to activate the vest if he's actually wearing it.
+	if(slot == ITEM_SLOT_OCLOTHING) //we only give the mob the ability to activate the vest if he's actually wearing it.
 		return TRUE
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
@@ -418,8 +423,9 @@
 <br>
 Congratulations! You are now trained for invasive xenobiology research!"}
 
-/obj/item/paper/guides/antag/abductor/update_icon()
-	return
+/obj/item/paper/guides/antag/abductor/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/paper/guides/antag/abductor/AltClick()
 	return //otherwise it would fold into a paperplane.
@@ -441,6 +447,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list(/datum/action/item_action/toggle_mode)
 
+/obj/item/absductor/baton/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
 /obj/item/abductor/baton/proc/toggle(mob/living/user=usr)
 	mode = (mode+1)%BATON_MODES
 	var/txt
@@ -457,7 +467,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	to_chat(usr, "<span class='notice'>You switch the baton to [txt] mode.</span>")
 	update_icon()
 
-/obj/item/abductor/baton/update_icon()
+/obj/item/abductor/baton/update_icon_state()
 	switch(mode)
 		if(BATON_STUN)
 			icon_state = "wonderprodStun"
@@ -640,7 +650,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/radio/headset/abductor/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
 /obj/item/radio/headset/abductor/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_SCREWDRIVER)
@@ -673,7 +683,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	if(viable)
 		playsound(src, 'sound/effects/phasein.ogg', 50, TRUE)
 		var/new_machine = new spawned_machine(loc)
-		visible_message("<span class='notice'>[new_machine] warps on top of the beacon!")
+		visible_message("<span class='notice'>[new_machine] warps on top of the beacon!</span>")
 		qdel(src)
 	else
 		playsound(src, 'sound/machines/buzz-two.ogg', 50)
@@ -799,7 +809,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "bed"
 	can_buckle = 1
 
-	var/static/list/injected_reagents = list(/datum/reagent/medicine/corazone)
+	var/static/list/injected_reagents = list(/datum/reagent/medicine/cordiolis_hepatico)
 
 /obj/structure/table/optable/abductor/Crossed(atom/movable/AM)
 	. = ..()

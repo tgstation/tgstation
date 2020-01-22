@@ -3,12 +3,12 @@
 	desc = "A man-portable anti-armor weapon designed to disable mechanical threats at range."
 	icon_state = "ionrifle"
 	item_state = null	//so the human update icon uses the icon_state instead.
+	shaded_charge = TRUE
 	can_flashlight = TRUE
 	w_class = WEIGHT_CLASS_HUGE
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
-	ammo_x_offset = 3
 	flight_x_offset = 17
 	flight_y_offset = 9
 
@@ -22,7 +22,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	pin = null
-	ammo_x_offset = 2
 	flight_x_offset = 18
 	flight_y_offset = 11
 
@@ -34,11 +33,11 @@
 	pin = null
 	ammo_x_offset = 1
 
-/obj/item/gun/energy/decloner/update_icon()
-	..()
+/obj/item/gun/energy/decloner/update_overlays()
+	. = ..()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
-		add_overlay("decloner_spin")
+		. += "decloner_spin"
 
 /obj/item/gun/energy/decloner/unrestricted
 	pin = /obj/item/firing_pin
@@ -138,9 +137,10 @@
 	var/light_intensity = 1
 	var/charge_weld = 25 //amount of charge used up to start action (multiplied by amount) and per progress_flash_divisor ticks of welding
 
-/obj/item/gun/energy/plasmacutter/Initialize()
+/obj/item/gun/energy/plasmacutter/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 25, 105, 0, 'sound/weapons/plasma_cutter.ogg')
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/gun/energy/plasmacutter/examine(mob/user)
 	. = ..()
@@ -205,10 +205,6 @@
 	else
 		. = ..(amount=1)
 
-
-/obj/item/gun/energy/plasmacutter/update_icon()
-	return
-
 /obj/item/gun/energy/plasmacutter/adv
 	name = "advanced plasma cutter"
 	icon_state = "adv_plasmacutter"
@@ -226,9 +222,8 @@
 	var/obj/effect/portal/p_orange
 	var/atmos_link = FALSE
 
-/obj/item/gun/energy/wormhole_projector/update_icon()
-	icon_state = "[initial(icon_state)][select]"
-	item_state = icon_state
+/obj/item/gun/energy/wormhole_projector/update_icon_state()
+	icon_state = item_state = "[initial(icon_state)][select]"
 
 /obj/item/gun/energy/wormhole_projector/update_ammo_types()
 	. = ..()
@@ -273,7 +268,8 @@
 	p_blue.link_portal(p_orange)
 
 /obj/item/gun/energy/wormhole_projector/proc/create_portal(obj/projectile/beam/wormhole/W, turf/target)
-	var/obj/effect/portal/P = new /obj/effect/portal(target, src, 300, null, FALSE, null, atmos_link)
+	var/obj/effect/portal/P = new /obj/effect/portal(target, 300, null, FALSE, null, atmos_link)
+	RegisterSignal(P, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
 	if(istype(W, /obj/projectile/beam/wormhole/orange))
 		qdel(p_orange)
 		p_orange = P
@@ -295,8 +291,9 @@
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
 
-/obj/item/gun/energy/printer/update_icon()
-	return
+/obj/item/gun/energy/printer/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/gun/energy/printer/emp_act()
 	return
@@ -321,6 +318,9 @@
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit."
 	ammo_type = list(/obj/item/ammo_casing/energy/instakill)
 	force = 60
+	charge_sections = 5
+	ammo_x_offset = 2
+	shaded_charge = FALSE
 
 /obj/item/gun/energy/laser/instakill/red
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a red design."

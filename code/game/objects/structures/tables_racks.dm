@@ -52,11 +52,6 @@
 	qdel(src)
 	new /obj/structure/table/wood(A)
 
-/obj/structure/table/ratvar_act()
-	var/atom/A = loc
-	qdel(src)
-	new /obj/structure/table/reinforced/brass(A)
-
 /obj/structure/table/attack_paw(mob/user)
 	return attack_hand(user)
 
@@ -94,15 +89,15 @@
 /obj/structure/table/attack_tk()
 	return FALSE
 
-/obj/structure/table/CanPass(atom/movable/mover, turf/target)
+/obj/structure/table/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
-		return 1
+		return TRUE
 	if(mover.throwing)
-		return 1
+		return TRUE
 	if(locate(/obj/structure/table) in get_turf(mover))
-		return 1
-	else
-		return !density
+		return TRUE
 
 /obj/structure/table/CanAStarPass(ID, dir, caller)
 	. = !density
@@ -133,7 +128,7 @@
 	pushed_mob.Knockdown(30)
 	pushed_mob.apply_damage(10, BRUTE)
 	pushed_mob.apply_damage(40, STAMINA)
-	if(user.mind?.martial_art?.smashes_tables)
+	if(user.mind?.martial_art.smashes_tables && user.mind?.martial_art.can_use(user))
 		deconstruct(FALSE)
 	playsound(pushed_mob, "sound/effects/tableslam.ogg", 90, TRUE)
 	pushed_mob.visible_message("<span class='danger'>[user] slams [pushed_mob] onto \the [src]!</span>", \
@@ -146,7 +141,7 @@
 	pushed_mob.apply_damage(40, BRUTE, BODY_ZONE_HEAD)
 	pushed_mob.apply_damage(60, STAMINA)
 	take_damage(50)
-	if(user.mind?.martial_art?.smashes_tables)
+	if(user.mind?.martial_art.smashes_tables && user.mind?.martial_art.can_use(user))
 		deconstruct(FALSE)
 	playsound(pushed_mob, "sound/effects/tableheadsmash.ogg", 90, TRUE)
 	pushed_mob.visible_message("<span class='danger'>[user] smashes [pushed_mob]'s head against \the [src]!</span>",
@@ -194,7 +189,12 @@
 /obj/structure/table/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/turf/T = get_turf(src)
-		new buildstack(T, buildstackamount)
+		if(buildstack)
+			new buildstack(T, buildstackamount)
+		else
+			for(var/i in custom_materials)
+				var/datum/material/M = i
+				new M.sheet_type(T, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
 		if(!wrench_disassembly)
 			new frame(T)
 		else
@@ -203,7 +203,10 @@
 
 
 /obj/structure/table/greyscale
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'
+	icon_state = "table"
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	buildstack = null //No buildstack, so generate from mat datums
 
 
 /*
@@ -427,42 +430,6 @@
 	else
 		. = ..()
 
-/obj/structure/table/reinforced/brass
-	name = "brass table"
-	desc = "A solid, slightly beveled brass table."
-	icon = 'icons/obj/smooth_structures/brass_table.dmi'
-	icon_state = "brass_table"
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	frame = /obj/structure/table_frame/brass
-	framestack = /obj/item/stack/tile/brass
-	buildstack = /obj/item/stack/tile/brass
-	framestackamount = 1
-	buildstackamount = 1
-	canSmoothWith = list(/obj/structure/table/reinforced/brass, /obj/structure/table/bronze)
-
-/obj/structure/table/reinforced/brass/Initialize()
-	. = ..()
-	change_construction_value(2)
-
-/obj/structure/table/reinforced/brass/Destroy()
-	change_construction_value(-2)
-	return ..()
-
-/obj/structure/table/reinforced/brass/tablepush(mob/living/user, mob/living/pushed_mob)
-	.= ..()
-	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
-
-/obj/structure/table/reinforced/brass/narsie_act()
-	take_damage(rand(15, 45), BRUTE)
-	if(src) //do we still exist?
-		var/previouscolor = color
-		color = "#960000"
-		animate(src, color = previouscolor, time = 8)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
-
-/obj/structure/table/reinforced/brass/ratvar_act()
-	obj_integrity = max_integrity
-
 /obj/structure/table/bronze
 	name = "bronze table"
 	desc = "A solid table made out of bronze."
@@ -470,7 +437,7 @@
 	icon_state = "brass_table"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	buildstack = /obj/item/stack/tile/bronze
-	canSmoothWith = list(/obj/structure/table/reinforced/brass, /obj/structure/table/bronze)
+	canSmoothWith = list(/obj/structure/table/bronze)
 
 /obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
 	..()
@@ -500,6 +467,11 @@
 		if(computer)
 			computer.table = src
 			break
+
+/obj/structure/table/optable/Destroy()
+	. = ..()
+	if(computer && computer.table == src)
+		computer.table = null
 
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
@@ -535,13 +507,12 @@
 	. = ..()
 	. += "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>"
 
-/obj/structure/rack/CanPass(atom/movable/mover, turf/target)
-	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
-		return 1
+/obj/structure/rack/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(.)
+		return
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
-		return 1
-	else
-		return 0
+		return TRUE
 
 /obj/structure/rack/CanAStarPass(ID, dir, caller)
 	. = !density

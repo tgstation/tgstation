@@ -149,9 +149,12 @@
 		new /obj/effect/temp_visual/emp(get_turf(S))
 
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
-	new /obj/item/holochip(drop_location(), credits_stored)
-	to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
-	credits_stored = 0
+	if(credits_stored)	// Prevents spamming empty holochips
+		new /obj/item/holochip(drop_location(), credits_stored)
+		to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
+		credits_stored = 0
+	else
+		to_chat(user,"<span class='notice'>There's nothing to withdraw.</span>")
 
 /obj/machinery/shuttle_scrambler/proc/send_notification()
 	priority_announce("Data theft signal detected, source registered on local gps units.")
@@ -161,7 +164,7 @@
 	active = FALSE
 	STOP_PROCESSING(SSobj,src)
 
-/obj/machinery/shuttle_scrambler/update_icon()
+/obj/machinery/shuttle_scrambler/update_icon_state()
 	if(active)
 		icon_state = "dominator-blue"
 	else

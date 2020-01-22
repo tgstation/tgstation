@@ -198,7 +198,7 @@ GLOBAL_LIST_EMPTY(explosions)
 			var/list/items = list()
 			for(var/I in T)
 				var/atom/A = I
-				if (!A.prevent_content_explosion()) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
+				if (!(A.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
 					items += A.GetAllContents()
 			for(var/O in items)
 				var/atom/A = O
@@ -279,10 +279,7 @@ GLOBAL_LIST_EMPTY(explosions)
 		log_world("## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds.")
 
 	if(running)	//if we aren't in a hurry
-		//Machines which report explosions.
-		for(var/array in GLOB.doppler_arrays)
-			var/obj/machinery/doppler_array/A = array
-			A.sense_explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, took,orig_dev_range, orig_heavy_range, orig_light_range)
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_EXPLOSION, epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
 
 	++stopped
 	qdel(src)

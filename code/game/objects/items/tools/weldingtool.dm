@@ -42,23 +42,25 @@
 	reagents.add_reagent(/datum/reagent/fuel, max_fuel)
 	update_icon()
 
+/obj/item/weldingtool/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
-/obj/item/weldingtool/proc/update_torch()
+/obj/item/weldingtool/update_icon_state()
 	if(welding)
-		add_overlay("[initial(icon_state)]-on")
 		item_state = "[initial(item_state)]1"
 	else
 		item_state = "[initial(item_state)]"
 
 
-/obj/item/weldingtool/update_icon()
-	cut_overlays()
+/obj/item/weldingtool/update_overlays()
+	. = ..()
 	if(change_icons)
 		var/ratio = get_fuel() / max_fuel
 		ratio = CEILING(ratio*4, 1) * 25
-		add_overlay("[initial(icon_state)][ratio]")
-	update_torch()
-	return
+		. += "[initial(icon_state)][ratio]"
+	if(welding)
+		. += "[initial(icon_state)]-on"
 
 
 /obj/item/weldingtool/process()
@@ -195,11 +197,6 @@
 		set_light(0)
 		switched_on(user)
 		update_icon()
-		//mob icon update
-		if(ismob(loc))
-			var/mob/M = loc
-			M.update_inv_hands(0)
-
 		return 0
 	return 1
 
@@ -380,14 +377,6 @@
 	light_intensity = 1
 	toolspeed = 0.5
 	var/nextrefueltick = 0
-
-/obj/item/weldingtool/experimental/brass
-	name = "brass welding tool"
-	desc = "A brass welder that seems to constantly refuel itself. It is faintly warm to the touch."
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon_state = "brasswelder"
-	item_state = "brasswelder"
-
 
 /obj/item/weldingtool/experimental/process()
 	..()

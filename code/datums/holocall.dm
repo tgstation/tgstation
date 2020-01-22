@@ -32,20 +32,29 @@
 	var/datum/action/innate/end_holocall/hangup	//hangup action
 
 	var/call_start_time
+	var/head_call = FALSE //calls from a head of staff autoconnect, if the recieving pad is not secure.
 
 //creates a holocall made by `caller` from `calling_pad` to `callees`
-/datum/holocall/New(mob/living/caller, obj/machinery/holopad/calling_pad, list/callees)
+/datum/holocall/New(mob/living/caller, obj/machinery/holopad/calling_pad, list/callees, elevated_access = FALSE)
 	call_start_time = world.time
 	user = caller
 	calling_pad.outgoing_call = src
 	calling_holopad = calling_pad
+	head_call = elevated_access
 	dialed_holopads = list()
 
 	for(var/I in callees)
 		var/obj/machinery/holopad/H = I
 		if(!QDELETED(H) && H.is_operational())
 			dialed_holopads += H
-			H.say("Incoming call.")
+			if(head_call)
+				if(H.secure)
+					calling_pad.say("Auto-connection refused, falling back to call mode.")
+					H.say("Incoming call.")
+				else
+					H.say("Incoming connection.")
+			else
+				H.say("Incoming call.")
 			LAZYADD(H.holo_calls, src)
 
 	if(!dialed_holopads.len)
@@ -160,6 +169,8 @@
 
 	hangup = new(eye, src)
 	hangup.Grant(user)
+	playsound(H, 'sound/machines/ping.ogg', 100)
+	H.say("Connection established.")
 
 //Checks the validity of a holocall and qdels itself if it's not. Returns TRUE if valid, FALSE otherwise
 /datum/holocall/proc/Check()
@@ -241,10 +252,10 @@
 			record.caller_image = holodiskOriginal.record.caller_image
 			record.entries = holodiskOriginal.record.entries.Copy()
 			record.language = holodiskOriginal.record.language
-			to_chat(user, "You copy the record from [holodiskOriginal] to [src] by connecting the ports!")
+			to_chat(user, "<span class='notice'>You copy the record from [holodiskOriginal] to [src] by connecting the ports!</span>")
 			name = holodiskOriginal.name
 		else
-			to_chat(user, "[holodiskOriginal] has no record on it!")
+			to_chat(user, "<span class='warning'>[holodiskOriginal] has no record on it!</span>")
 	..()
 
 /obj/item/disk/holodisk/proc/build_record()
@@ -257,8 +268,8 @@
 		var/splitpoint = findtext(prepared_line," ")
 		if(!splitpoint)
 			continue
-		var/command = copytext(prepared_line,1,splitpoint)
-		var/value = copytext(prepared_line,splitpoint+1)
+		var/command = copytext(prepared_line, 1, splitpoint)
+		var/value = copytext(prepared_line, splitpoint + length(prepared_line[splitpoint]))
 		switch(command)
 			if("DELAY")
 				var/delay_value = text2num(value)

@@ -61,8 +61,9 @@ Difficulty: Hard
 	crusher_loot = list(/obj/item/hierophant_club, /obj/item/crusher_trophy/vortex_talisman)
 	wander = FALSE
 	gps_name = "Zealous Signal"
-	medal_type = BOSS_MEDAL_HIEROPHANT
-	score_type = HIEROPHANT_SCORE
+	achievement_type = /datum/award/achievement/boss/hierophant_kill
+	crusher_achievement_type = /datum/award/achievement/boss/hierophant_crusher
+	score_achievement_type = /datum/award/score/hierophant_score
 	del_on_death = TRUE
 	deathsound = 'sound/magic/repulse.ogg'
 	attack_action_types = list(/datum/action/innate/megafauna_attack/blink,
@@ -131,7 +132,7 @@ Difficulty: Hard
 	var/mob/living/L
 	if(isliving(target))
 		L = target
-		target_slowness += L.movement_delay()
+		target_slowness += L.cached_multiplicative_slowdown
 	if(client)
 		target_slowness += 1
 
@@ -400,14 +401,14 @@ Difficulty: Hard
 	if(health > 0 || stat == DEAD)
 		return
 	else
-		stat = DEAD
+		set_stat(DEAD)
 		blinking = TRUE //we do a fancy animation, release a huge burst(), and leave our staff.
 		visible_message("<span class='hierophant'>\"Mrmxmexmrk wipj-hiwxvygx wiuyirgi...\"</span>")
 		visible_message("<span class='hierophant_warning'>[src] shrinks, releasing a massive burst of energy!</span>")
 		for(var/mob/living/L in view(7,src))
 			stored_nearby += L // store the people to grant the achievements to once we die
 		hierophant_burst(null, get_turf(src), 10)
-		stat = CONSCIOUS // deathgasp wont run if dead, stupid
+		set_stat(CONSCIOUS) // deathgasp wont run if dead, stupid
 		..(force_grant = stored_nearby)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Destroy()
@@ -527,18 +528,18 @@ Difficulty: Hard
 	queue_smooth_neighbors(src)
 	return ..()
 
-/obj/effect/temp_visual/hierophant/wall/CanPass(atom/movable/mover, turf/target)
+/obj/effect/temp_visual/hierophant/wall/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(QDELETED(caster))
 		return FALSE
 	if(mover == caster.pulledby)
-		return TRUE
+		return
 	if(istype(mover, /obj/projectile))
 		var/obj/projectile/P = mover
 		if(P.firer == caster)
-			return TRUE
-	if(mover == caster)
-		return TRUE
-	return FALSE
+			return
+	if(mover != caster)
+		return FALSE
 
 /obj/effect/temp_visual/hierophant/chaser //a hierophant's chaser. follows target around, moving and producing a blast every speed deciseconds.
 	duration = 98

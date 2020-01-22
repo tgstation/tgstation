@@ -8,7 +8,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_heater
 	ui_x = 275
-	ui_y = 400
+	ui_y = 320
 
 	var/obj/item/reagent_containers/beaker = null
 	var/target_temperature = 300
@@ -25,7 +25,7 @@
 		beaker = null
 		update_icon()
 
-/obj/machinery/chem_heater/update_icon()
+/obj/machinery/chem_heater/update_icon_state()
 	if(beaker)
 		icon_state = "mixer1b"
 	else

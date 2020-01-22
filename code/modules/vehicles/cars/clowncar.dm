@@ -41,7 +41,7 @@
 	if(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED).len >= 30)
 		for(var/i in return_drivers())
 			var/mob/voreman = i
-			SSmedals.UnlockMedal(MEDAL_CLOWNCARKING,voreman.client)
+			voreman.client.give_award(/datum/award/achievement/misc/round_and_full, voreman)
 
 /obj/vehicle/sealed/car/clowncar/attack_animal(mob/living/simple_animal/M)
 	if((M.loc != src) || M.environment_smash & (ENVIRONMENT_SMASH_WALLS|ENVIRONMENT_SMASH_RWALLS))
@@ -92,7 +92,7 @@
 	to_chat(user, "<span class='danger'>You scramble \the [src]'s child safety lock, and a panel with six colorful buttons appears!</span>")
 	initialize_controller_action_type(/datum/action/vehicle/sealed/RollTheDice, VEHICLE_CONTROL_DRIVE)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/Cannon, VEHICLE_CONTROL_DRIVE)
-	AddComponent(/datum/component/waddling)
+	AddElement(/datum/element/waddling)
 
 /obj/vehicle/sealed/car/clowncar/Destroy()
   playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
@@ -201,4 +201,4 @@
 	if(thankscount >= 100)
 		for(var/i in return_drivers())
 			var/mob/busdriver = i
-			SSmedals.UnlockMedal(MEDAL_THANKSALOT,busdriver.client)
+			busdriver.client.give_award(/datum/award/achievement/misc/the_best_driver, busdriver)

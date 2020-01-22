@@ -118,7 +118,7 @@
 	QDEL_NULL(sparks)
 	return ..()
 
-/obj/machinery/power/emitter/update_icon()
+/obj/machinery/power/emitter/update_icon_state()
 	if(active && powernet)
 		icon_state = avail(active_power_usage) ? icon_state_on : icon_state_underpowered
 	else
@@ -255,7 +255,7 @@
 /obj/machinery/power/emitter/welder_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(active)
-		to_chat(user, "Turn \the [src] off first.")
+		to_chat(user, "<span class='warning'>Turn \the [src] off first!</span>")
 		return TRUE
 
 	switch(state)

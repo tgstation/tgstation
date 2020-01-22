@@ -46,7 +46,7 @@
 			diode = W
 			to_chat(user, "<span class='notice'>You install a [diode.name] in [src].</span>")
 		else
-			to_chat(user, "<span class='notice'>[src] already has a diode installed.</span>")
+			to_chat(user, "<span class='warning'>[src] already has a diode installed!</span>")
 
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(diode)

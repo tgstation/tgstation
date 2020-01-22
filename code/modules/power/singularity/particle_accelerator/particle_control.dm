@@ -57,7 +57,7 @@
 		active = FALSE
 		connected_parts.Cut()
 
-/obj/machinery/particle_accelerator/control_box/update_icon()
+/obj/machinery/particle_accelerator/control_box/update_icon_state()
 	if(active)
 		icon_state = "control_boxp1"
 	else
@@ -80,7 +80,7 @@
 		return
 
 	if(!interface_control)
-		to_chat(usr, "<span class='error'>ERROR: Request timed out. Check wire contacts.</span>")
+		to_chat(usr, "<span class='alert'>ERROR: Request timed out. Check wire contacts.</span>")
 		return
 
 	if(href_list["close"])

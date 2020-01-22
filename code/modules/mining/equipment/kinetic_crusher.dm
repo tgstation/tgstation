@@ -63,7 +63,7 @@
 
 /obj/item/twohanded/kinetic_crusher/attack(mob/living/target, mob/living/carbon/user)
 	if(!wielded)
-		to_chat(user, "<span class='warning'>[src] is too heavy to use with one hand. You fumble and drop everything.")
+		to_chat(user, "<span class='warning'>[src] is too heavy to use with one hand! You fumble and drop everything.</span>")
 		user.drop_all_held_items()
 		return
 	var/datum/status_effect/crusher_damage/C = target.has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
@@ -141,18 +141,15 @@
 	else
 		set_light(0)
 
-/obj/item/twohanded/kinetic_crusher/update_icon()
-	..()
-	cut_overlays()
-	if(!charged)
-		add_overlay("[icon_state]_uncharged")
-	if(light_on)
-		add_overlay("[icon_state]_lit")
-	spawn(1)
-		for(var/X in actions)
-			var/datum/action/A = X
-			A.UpdateButtonIcon()
+/obj/item/twohanded/kinetic_crusher/update_icon_state()
 	item_state = "crusher[wielded]"
+
+/obj/item/twohanded/kinetic_crusher/update_overlays()
+	. = ..()
+	if(!charged)
+		. += "[icon_state]_uncharged"
+	if(light_on)
+		. += "[icon_state]_lit"
 
 //destablizing force
 /obj/projectile/destabilizer

@@ -8,8 +8,8 @@
 	name = "portable air pump"
 	icon_state = "psiphon:0"
 	density = TRUE
-	ui_x = 420
-	ui_y = 415
+	ui_x = 300
+	ui_y = 315
 
 	var/on = FALSE
 	var/direction = PUMP_OUT
@@ -31,14 +31,15 @@
 	QDEL_NULL(pump)
 	return ..()
 
-/obj/machinery/portable_atmospherics/pump/update_icon()
+/obj/machinery/portable_atmospherics/pump/update_icon_state()
 	icon_state = "psiphon:[on]"
 
-	cut_overlays()
+/obj/machinery/portable_atmospherics/pump/update_overlays()
+	. = ..()
 	if(holding)
-		add_overlay("siphon-open")
+		. += "siphon-open"
 	if(connected_port)
-		add_overlay("siphon-connector")
+		. += "siphon-connector"
 
 /obj/machinery/portable_atmospherics/pump/process_atmos()
 	..()
@@ -92,8 +93,8 @@
 /obj/machinery/portable_atmospherics/pump/ui_data()
 	var/data = list()
 	data["on"] = on
-	data["direction"] = direction
-	data["connected"] = connected_port ? 1 : 0
+	data["direction"] = direction == PUMP_IN ? TRUE : FALSE
+	data["connected"] = connected_port ? TRUE : FALSE
 	data["pressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
 	data["target_pressure"] = round(pump.target_pressure ? pump.target_pressure : 0)
 	data["default_pressure"] = round(PUMP_DEFAULT_PRESSURE)
@@ -104,6 +105,8 @@
 		data["holding"] = list()
 		data["holding"]["name"] = holding.name
 		data["holding"]["pressure"] = round(holding.air_contents.return_pressure())
+	else
+		data["holding"] = null
 	return data
 
 /obj/machinery/portable_atmospherics/pump/ui_act(action, params)

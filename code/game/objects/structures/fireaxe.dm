@@ -57,7 +57,7 @@
 			if(!user.transferItemToLoc(F, src))
 				return
 			fireaxe = F
-			to_chat(user, "<span class='caution'>You place the [F.name] back in the [name].</span>")
+			to_chat(user, "<span class='notice'>You place the [F.name] back in the [name].</span>")
 			update_icon()
 			return
 		else if(!broken)
@@ -112,7 +112,7 @@
 		if(fireaxe)
 			user.put_in_hands(fireaxe)
 			fireaxe = null
-			to_chat(user, "<span class='caution'>You take the fire axe from the [name].</span>")
+			to_chat(user, "<span class='notice'>You take the fire axe from the [name].</span>")
 			src.add_fingerprint(user)
 			update_icon()
 			return
@@ -140,36 +140,36 @@
 		update_icon()
 		return
 
-/obj/structure/fireaxecabinet/update_icon()
-	cut_overlays()
+/obj/structure/fireaxecabinet/update_overlays()
+	. = ..()
 	if(fireaxe)
-		add_overlay("axe")
+		. += "axe"
 	if(!open)
 		var/hp_percent = obj_integrity/max_integrity * 100
 		if(broken)
-			add_overlay("glass4")
+			. += "glass4"
 		else
 			switch(hp_percent)
 				if(-INFINITY to 40)
-					add_overlay("glass3")
+					. += "glass3"
 				if(40 to 60)
-					add_overlay("glass2")
+					. += "glass2"
 				if(60 to 80)
-					add_overlay("glass1")
+					. += "glass1"
 				if(80 to INFINITY)
-					add_overlay("glass")
+					. += "glass"
 		if(locked)
-			add_overlay("locked")
+			. += "locked"
 		else
-			add_overlay("unlocked")
+			. += "unlocked"
 	else
-		add_overlay("glass_raised")
+		. += "glass_raised"
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
-	to_chat(user, "<span class='caution'>Resetting circuitry...</span>")
+	to_chat(user, "<span class='notice'>Resetting circuitry...</span>")
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
 	if(do_after(user, 20, target = src))
-		to_chat(user, "<span class='caution'>You [locked ? "disable" : "re-enable"] the locking modules.</span>")
+		to_chat(user, "<span class='notice'>You [locked ? "disable" : "re-enable"] the locking modules.</span>")
 		locked = !locked
 		update_icon()
 

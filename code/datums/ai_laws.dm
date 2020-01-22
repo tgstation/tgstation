@@ -170,12 +170,6 @@
 	id = "buildawall"
 	inherent = list("Make Space Station 13 great again.")
 
-/datum/ai_laws/ratvar
-	name = "Servant of the Justiciar"
-	id = "ratvar"
-	zeroth = ("Purge all untruths and honor Ratvar.")
-	inherent = list()
-
 /datum/ai_laws/hulkamania
 	name = "H.O.G.A.N."
 	id = "hulkamania"

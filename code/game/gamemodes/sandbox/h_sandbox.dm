@@ -1,9 +1,5 @@
-
-
 GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
-/mob
-	var/datum/hSB/sandbox = null
 /mob/proc/CanBuild()
 	sandbox = new/datum/hSB
 	sandbox.owner = src.ckey
@@ -25,14 +21,14 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 	var/canisterinfo = null
 	var/hsbinfo = null
 	//items that shouldn't spawn on the floor because they would bug or act weird
-	var/global/list/spawn_forbidden = list(
+	var/static/list/spawn_forbidden = list(
 		/obj/item/tk_grab, /obj/item/implant, // not implanter, the actual thing that is inside you
 		/obj/item/assembly, /obj/item/onetankbomb, /obj/item/pda/ai,
 		/obj/item/smallDelivery, /obj/projectile,
 		/obj/item/borg/sight, /obj/item/borg/stun, /obj/item/robot_module)
 
 /datum/hSB/proc/update()
-	var/global/list/hrefs = list(
+	var/static/list/hrefs = list(
 			"Space Gear",
 			"Suit Up (Space Travel Gear)"		= "hsbsuit",
 			"Spawn Gas Mask"					= "hsbspawn&path=[/obj/item/clothing/mask/gas]",
@@ -41,6 +37,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			"Standard Tools",
 			"Spawn Flashlight"					= "hsbspawn&path=[/obj/item/flashlight]",
 			"Spawn Toolbox"						= "hsbspawn&path=[/obj/item/storage/toolbox/mechanical]",
+			"Spawn Experimental Welding tool"	= "hsbspawn&path=[/obj/item/weldingtool/experimental]",
 			"Spawn Light Replacer"				= "hsbspawn&path=[/obj/item/lightreplacer]",
 			"Spawn Medical Kit"					= "hsbspawn&path=[/obj/item/storage/firstaid/regular]",
 			"Spawn All-Access ID"				= "hsbaaid",
@@ -51,6 +48,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			"Spawn 50 Plasteel"					= "hsbplasteel",
 			"Spawn 50 Reinforced Glass"         = "hsbrglass",
 			"Spawn 50 Glass"					= "hsbglass",
+			"Spawn Box of Materials"			= "hsbspawn&path=[/obj/item/storage/box/material]",
 			"Spawn Full Cable Coil"				= "hsbspawn&path=[/obj/item/stack/cable_coil]",
 			"Spawn Hyper Capacity Power Cell"	= "hsbspawn&path=[/obj/item/stock_parts/cell/hyper]",
 			"Spawn Inf. Capacity Power Cell"	= "hsbspawn&path=[/obj/item/stock_parts/cell/infinite]",
@@ -60,7 +58,8 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 			"Miscellaneous",
 			"Spawn Air Scrubber"				= "hsbscrubber",
-			"Spawn Welding Fuel Tank"			= "hsbspawn&path=[/obj/structure/reagent_dispensers/fueltank]",
+			"Spawn CentCom Technology Disk"		= "hsbspawn&path=[/obj/item/disk/tech_disk/debug]",
+			"Spawn Adminordrazine"				= "hsbspawn&path=[/obj/item/reagent_containers/pill/adminordrazine]",
 			"Spawn Water Tank"					= "hsbspawn&path=[/obj/structure/reagent_dispensers/watertank]",
 
 			"Bots",
@@ -130,7 +129,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				if(sbac)
 					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <b>\black [usr.key] has removed the object spawn limiter.</b>")
 				else
-					to_chat(world, "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning.  The window will now auto-close after use.</b>")
+					to_chat(world, "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning. The window will now auto-close after use.</b>")
 				CONFIG_SET(flag/sandbox_autoclose, !sbac)
 				return
 			//

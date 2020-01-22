@@ -131,7 +131,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/attack(mob/living/target, mob/living/user)
 	. = ..()
 	if(!QDELETED(target) && iscarbon(target) && target.stat == DEAD && target.mind && target.mind.special_role == "highlander")
-		user.fully_heal() //STEAL THE LIFE OF OUR FALLEN FOES
+		user.fully_heal(admin_revive = FALSE) //STEAL THE LIFE OF OUR FALLEN FOES
 		add_notch(user)
 		target.visible_message("<span class='warning'>[target] crumbles to dust beneath [user]'s blows!</span>", "<span class='userdanger'>As you fall, your body crumbles to dust!</span>")
 		target.dust()
@@ -497,12 +497,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "liz o' nine tails"
 	desc = "A whip fashioned from the severed tails of lizards."
 	icon_state = "tailwhip"
+	item_state = "tailwhip"
 	item_flags = NONE
 
 /obj/item/melee/chainofcommand/tailwhip/kitty
 	name = "cat o' nine tails"
 	desc = "A whip fashioned from the severed tails of cats."
 	icon_state = "catwhip"
+	item_state = "catwhip"
 
 /obj/item/melee/skateboard
 	name = "improvised skateboard"
@@ -526,7 +528,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "skateboard2"
 	item_state = "skateboard2"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/pro
-	custom_premium_price = 300
+	custom_premium_price = 500
 
 /obj/item/melee/skateboard/hoverboard
 	name = "hoverboard"
@@ -568,7 +570,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		..()
 		return
 	if(homerun_ready)
-		to_chat(user, "<span class='notice'>You're already ready to do a home run!</span>")
+		to_chat(user, "<span class='warning'>You're already ready to do a home run!</span>")
 		..()
 		return
 	to_chat(user, "<span class='warning'>You begin gathering strength...</span>")
@@ -705,3 +707,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		to_chat(user, "<span class='warning'>[M] is too close to use [src] on.</span>")
 		return
 	M.attack_hand(user)
+
+/obj/item/gohei
+	name = "gohei"
+	desc = "A wooden stick with white streamers at the end. Originally used by shrine maidens to purify things. Now used by the station's valued weeaboos."
+	force = 5
+	throwforce = 5
+	hitsound = "swing_hit"
+	attack_verb = list("whacked", "thwacked", "walloped", "socked")
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "gohei"
+	item_state = "gohei"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'

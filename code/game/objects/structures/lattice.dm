@@ -33,9 +33,6 @@
 /obj/structure/lattice/blob_act(obj/structure/blob/B)
 	return
 
-/obj/structure/lattice/ratvar_act()
-	new /obj/structure/lattice/clockwork(loc)
-
 /obj/structure/lattice/attackby(obj/item/C, mob/user, params)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
@@ -69,29 +66,6 @@
 	if(current_size >= STAGE_FOUR)
 		deconstruct()
 
-/obj/structure/lattice/clockwork
-	name = "cog lattice"
-	desc = "A lightweight support lattice. These hold the Justicar's station together."
-	icon = 'icons/obj/smooth_structures/lattice_clockwork.dmi'
-
-/obj/structure/lattice/clockwork/Initialize(mapload)
-	canSmoothWith += /turf/open/indestructible/clock_spawn_room //list overrides are a terrible thing
-	. = ..()
-	ratvar_act()
-	if(is_reebe(z))
-		resistance_flags |= INDESTRUCTIBLE
-
-/obj/structure/lattice/clockwork/ratvar_act()
-	if(ISODD(x+y))
-		icon = 'icons/obj/smooth_structures/lattice_clockwork_large.dmi'
-		pixel_x = -9
-		pixel_y = -9
-	else
-		icon = 'icons/obj/smooth_structures/lattice_clockwork.dmi'
-		pixel_x = 0
-		pixel_y = 0
-	return TRUE
-
 /obj/structure/lattice/catwalk
 	name = "catwalk"
 	desc = "A catwalk for easier EVA maneuvering and cable placement."
@@ -100,12 +74,10 @@
 	number_of_rods = 2
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
+	obj_flags = CAN_BE_HIT | BLOCK_Z_FALL
 
 /obj/structure/lattice/catwalk/deconstruction_hints(mob/user)
 	return "<span class='notice'>The supporting rods look like they could be <b>cut</b>.</span>"
-
-/obj/structure/lattice/catwalk/ratvar_act()
-	new /obj/structure/lattice/catwalk/clockwork(loc)
 
 /obj/structure/lattice/catwalk/Move()
 	var/turf/T = loc
@@ -119,32 +91,29 @@
 		C.deconstruct()
 	..()
 
-/obj/structure/lattice/catwalk/clockwork
-	name = "clockwork catwalk"
-	icon = 'icons/obj/smooth_structures/catwalk_clockwork.dmi'
-	canSmoothWith = list(/obj/structure/lattice,
-	/turf/open/floor,
-	/turf/open/indestructible/clock_spawn_room,
-	/turf/closed/wall,
-	/obj/structure/falsewall)
-	smooth = SMOOTH_MORE
+/obj/structure/lattice/lava
+	name = "heatproof support lattice"
+	desc = "A specialized support beam for building across lava. Watch your step."
+	icon = 'icons/obj/smooth_structures/catwalk.dmi'
+	icon_state = "catwalk"
+	number_of_rods = 1
+	color = "#5286b9ff"
+	smooth = SMOOTH_TRUE
+	canSmoothWith = null
+	obj_flags = CAN_BE_HIT | BLOCK_Z_FALL
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
-/obj/structure/lattice/catwalk/clockwork/Initialize(mapload)
+/obj/structure/lattice/lava/deconstruction_hints(mob/user)
+	return "<span class='notice'>The rods look like they could be <b>cut</b>, but the <i>heat treatment will shatter off</i>. There's space for a <i>tile</i>.</span>"
+
+/obj/structure/lattice/lava/attackby(obj/item/C, mob/user, params)
 	. = ..()
-	ratvar_act()
-	if(!mapload)
-		new /obj/effect/temp_visual/ratvar/floor/catwalk(loc)
-		new /obj/effect/temp_visual/ratvar/beam/catwalk(loc)
-	if(is_reebe(z))
-		resistance_flags |= INDESTRUCTIBLE
-
-/obj/structure/lattice/catwalk/clockwork/ratvar_act()
-	if(ISODD(x+y))
-		icon = 'icons/obj/smooth_structures/catwalk_clockwork_large.dmi'
-		pixel_x = -9
-		pixel_y = -9
-	else
-		icon = 'icons/obj/smooth_structures/catwalk_clockwork.dmi'
-		pixel_x = 0
-		pixel_y = 0
-	return TRUE
+	if(istype(C, /obj/item/stack/tile/plasteel))
+		var/obj/item/stack/tile/plasteel/P = C
+		if(P.use(1))
+			to_chat(user, "<span class='notice'>You construct a floor plating, as lava settles around the rods.</span>")
+			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+			new /turf/open/floor/plating(locate(x, y, z))
+		else
+			to_chat(user, "<span class='warning'>You need one floor tile to build atop [src].</span>")
+		return

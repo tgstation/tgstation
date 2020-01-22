@@ -49,11 +49,10 @@
 	unique_name = 1
 	gold_core_spawnable = HOSTILE_SPAWN
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	footstep_type = FOOTSTEP_MOB_CLAW
 	var/playable_spider = FALSE
 	var/datum/action/innate/spider/lay_web/lay_web
 	var/directive = "" //Message passed down to children, to relay the creator's orders
-
-	do_footstep = TRUE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Initialize()
 	. = ..()
@@ -91,7 +90,7 @@
 	if(spider_ask == "No" || !src || QDELETED(src))
 		return 1
 	if(key)
-		to_chat(user, "<span class='notice'>Someone else already took this spider.</span>")
+		to_chat(user, "<span class='warning'>Someone else already took this spider!</span>")
 		return 1
 	key = user.key
 	if(directive)
@@ -166,6 +165,7 @@
 	melee_damage_upper = 20
 	poison_per_bite = 5
 	move_to_delay = 5
+	gold_core_spawnable = NO_SPAWN
 
 //vipers are the rare variant of the hunter, no IMMEDIATE damage but so much poison medical care will be needed fast.
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper
@@ -182,7 +182,6 @@
 	move_to_delay = 4
 	poison_type = /datum/reagent/toxin/venom //all in venom, glass cannon. you bite 5 times and they are DEFINITELY dead, but 40 health and you are extremely obvious. Ambush, maybe?
 	speed = 1
-	gold_core_spawnable = NO_SPAWN
 
 //tarantulas are really tanky, regenerating (maybe), hulky monster but are also extremely slow, so.
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula
@@ -547,8 +546,12 @@
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
 		adjustBruteLoss(20)
+		throw_alert("temp", /obj/screen/alert/cold, 3)
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(20)
+		throw_alert("temp", /obj/screen/alert/hot, 3)
+	else
+		clear_alert("temp")
 
 #undef SPIDER_IDLE
 #undef SPINNING_WEB

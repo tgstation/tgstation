@@ -51,7 +51,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	update_icon()
 	reset_busy()
 
-/obj/machinery/rnd/destructive_analyzer/update_icon()
+/obj/machinery/rnd/destructive_analyzer/update_icon_state()
 	if(loaded_item)
 		icon_state = "d_analyzer_l"
 	else
@@ -62,7 +62,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	var/datum/component/material_container/storage = linked_console?.linked_lathe?.materials.mat_container
 	if(storage) //Also sends salvaged materials to a linked protolathe, if any.
 		for(var/material in thing.custom_materials)
-			var/can_insert = min((storage.max_amount - storage.total_amount), (max(thing.custom_materials[material]*(decon_mod/10), thing.custom_materials[material])))
+			var/can_insert = min((storage.max_amount - storage.total_amount), (min(thing.custom_materials[material]*(decon_mod/10), thing.custom_materials[material])))
 			storage.insert_amount_mat(can_insert, material)
 			. += can_insert
 		if (.)
@@ -132,7 +132,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/user_mode_string = ""
 		if(length(point_value))
 			user_mode_string = " for [json_encode(point_value)] points"
-		else if(loaded_item.custom_materials.len)
+		else if(length(loaded_item.custom_materials))
 			user_mode_string = " for material reclamation"
 		var/choice = input("Are you sure you want to destroy [loaded_item][user_mode_string]?") in list("Proceed", "Cancel")
 		if(choice == "Cancel")

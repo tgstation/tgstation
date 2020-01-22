@@ -57,7 +57,7 @@
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
 	if(!allowed(user))
-		to_chat(user, "<span class='warning'>Error - Unauthorized User</span>")
+		to_chat(user, "<span class='alert'>Error - Unauthorized User.</span>")
 		playsound(src, 'sound/misc/compiler-failure.ogg', 50, TRUE)
 		return
 	..()
@@ -147,7 +147,16 @@
 	gas_type = /datum/gas/miasma
 	filled = 1
 
+/obj/machinery/portable_atmospherics/canister/fusion_test
+	name = "fusion test canister"
+	desc = "Don't be a badmin."
 
+/obj/machinery/portable_atmospherics/canister/fusion_test/create_gas()
+	air_contents.add_gases(/datum/gas/carbon_dioxide, /datum/gas/plasma, /datum/gas/tritium)
+	air_contents.gases[/datum/gas/carbon_dioxide][MOLES] = 500
+	air_contents.gases[/datum/gas/plasma][MOLES] = 500
+	air_contents.gases[/datum/gas/tritium][MOLES] = 350
+	air_contents.temperature = 15000
 
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
 	if(timing)
@@ -209,66 +218,31 @@
 		air_contents.gases[gas_type][MOLES] = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 		if(starter_temp)
 			air_contents.temperature = starter_temp
+
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
 	air_contents.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 	air_contents.gases[/datum/gas/nitrogen][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
-#define CANISTER_UPDATE_HOLDING		(1<<0)
-#define CANISTER_UPDATE_CONNECTED	(1<<1)
-#define CANISTER_UPDATE_EMPTY		(1<<2)
-#define CANISTER_UPDATE_LOW			(1<<3)
-#define CANISTER_UPDATE_MEDIUM		(1<<4)
-#define CANISTER_UPDATE_FULL		(1<<5)
-#define CANISTER_UPDATE_DANGER		(1<<6)
-/obj/machinery/portable_atmospherics/canister/update_icon()
+/obj/machinery/portable_atmospherics/canister/update_icon_state()
 	if(stat & BROKEN)
-		cut_overlays()
 		icon_state = "[icon_state]-1"
-		return
-
-	var/last_update = update
-	update = 0
-
+	
+/obj/machinery/portable_atmospherics/canister/update_overlays()
+	. = ..()
 	if(holding)
-		update |= CANISTER_UPDATE_HOLDING
+		. += "can-open"
 	if(connected_port)
-		update |= CANISTER_UPDATE_CONNECTED
+		. += "can-connector"
 	var/pressure = air_contents.return_pressure()
-	if(pressure < 10)
-		update |= CANISTER_UPDATE_EMPTY
-	else if(pressure < 5 * ONE_ATMOSPHERE)
-		update |= CANISTER_UPDATE_LOW
-	else if(pressure < 10 * ONE_ATMOSPHERE)
-		update |= CANISTER_UPDATE_MEDIUM
-	else if(pressure < 40 * ONE_ATMOSPHERE)
-		update |= CANISTER_UPDATE_FULL
-	else
-		update |= CANISTER_UPDATE_DANGER
-
-	if(update == last_update)
-		return
-
-	cut_overlays()
-	if(update & CANISTER_UPDATE_HOLDING)
-		add_overlay("can-open")
-	if(update & CANISTER_UPDATE_CONNECTED)
-		add_overlay("can-connector")
-	if(update & CANISTER_UPDATE_LOW)
-		add_overlay("can-o0")
-	else if(update & CANISTER_UPDATE_MEDIUM)
-		add_overlay("can-o1")
-	else if(update & CANISTER_UPDATE_FULL)
-		add_overlay("can-o2")
-	else if(update & CANISTER_UPDATE_DANGER)
-		add_overlay("can-o3")
-#undef CANISTER_UPDATE_HOLDING
-#undef CANISTER_UPDATE_CONNECTED
-#undef CANISTER_UPDATE_EMPTY
-#undef CANISTER_UPDATE_LOW
-#undef CANISTER_UPDATE_MEDIUM
-#undef CANISTER_UPDATE_FULL
-#undef CANISTER_UPDATE_DANGER
+	if(pressure >= 40 * ONE_ATMOSPHERE)
+		. += "can-o3"
+	else if(pressure >= 10 * ONE_ATMOSPHERE)
+		. += "can-o2"
+	else if(pressure >= 5 * ONE_ATMOSPHERE)
+		. += "can-o1"
+	else if(pressure >= 10)
+		. += "can-o0"
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
@@ -394,7 +368,7 @@
 		return
 	switch(action)
 		if("relabel")
-			var/label = input("New canister label:", name) as null|anything in label2types
+			var/label = input("New canister label:", name) as null|anything in sortList(label2types)
 			if(label && !..())
 				var/newtype = label2types[label]
 				if(newtype)

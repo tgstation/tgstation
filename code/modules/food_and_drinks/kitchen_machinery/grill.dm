@@ -17,7 +17,7 @@
 	. = ..()
 	grill_loop = new(list(src), FALSE)
 
-/obj/machinery/grill/update_icon()
+/obj/machinery/grill/update_icon_state()
 	if(grilled_item)
 		icon_state = "grill"
 	else if(grill_fuel)
@@ -45,7 +45,7 @@
 			if(HAS_TRAIT(I, TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))
 				return ..()
 			else if(!grill_fuel)
-				to_chat(user, "<span class='notice'>There is not enough fuel.</span>")
+				to_chat(user, "<span class='warning'>There is not enough fuel!</span>")
 				return
 			else if(!grilled_item && user.transferItemToLoc(I, src))
 				grilled_item = I

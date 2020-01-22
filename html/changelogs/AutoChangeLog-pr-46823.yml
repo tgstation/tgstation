@@ -1,8 +1,0 @@
-author: "Toxicby"
-delete-after: True
-changes: 
-  - rscadd: "Seiver, a chem favoring radpurging (cold temps) or antitoxin (hot temps) based on temperature (NOTE: NOT ATMOS TEMP)"
-  - rscdel: "Fiziver is now removed in favore of Seiver. Seiver uses old Fiziver recipe."
-  - balance: "Multiver is now geared towards chem-purging, and the unique-med mechanic is more rewarding than just amplifying the effects. Lowered toxin damage."
-  - balance: "Syriniver is now geared towards tox-healing. Lowered chem-purging and make it nondiscriminatory barring itself. Musiver has even lower chem-purging and is completely nondiscriminatory."
-  - balance: "2 multiver bottles in the Medivend were replaced with syriniver since they now have more distinct functionalities."

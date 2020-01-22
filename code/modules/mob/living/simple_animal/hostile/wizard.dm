@@ -35,7 +35,7 @@
 
 	var/next_cast = 0
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_SHOE
 
 /mob/living/simple_animal/hostile/wizard/Initialize()
 	. = ..()

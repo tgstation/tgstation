@@ -87,7 +87,7 @@
 		"<span class='notice'>- Capacity: <b>[max_n_of_items]</b> items.</span>\n"+\
 		"<span class='notice'>- Cook time reduced by <b>[(efficiency - 1) * 25]%</b>.</span>"
 
-/obj/machinery/microwave/update_icon()
+/obj/machinery/microwave/update_icon_state()
 	if(broken)
 		icon_state = "mwb"
 	else if(dirty_anim_playing)
@@ -287,7 +287,7 @@
 
 /obj/machinery/microwave/proc/loop(type, time, wait = max(12 - 2 * efficiency, 2)) // standard wait is 10
 	if(stat & (NOPOWER|BROKEN))
-		if(MICROWAVE_PRE)
+		if(type == MICROWAVE_PRE)
 			pre_fail()
 		return
 	if(!time)
@@ -309,7 +309,7 @@
 	var/metal = 0
 	for(var/obj/item/O in ingredients)
 		O.microwave_act(src)
-		if(O.custom_materials || O.custom_materials.len)
+		if(O.custom_materials && length(O.custom_materials))
 			if(O.custom_materials[getmaterialref(/datum/material/iron)])
 				metal += O.custom_materials[getmaterialref(/datum/material/iron)]
 

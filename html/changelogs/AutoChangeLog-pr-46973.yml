@@ -1,4 +1,0 @@
-author: "willox"
-delete-after: True
-changes: 
-  - code_imp: "removed duplicate goliath_hide definition"

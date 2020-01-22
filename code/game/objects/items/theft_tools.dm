@@ -134,7 +134,7 @@
 	if(istype(W, /obj/item/hemostat/supermatter))
 		var/obj/item/hemostat/supermatter/tongs = W
 		if (tongs.sliver)
-			to_chat(user, "<span class='notice'>\The [tongs] is already holding a supermatter sliver!</span>")
+			to_chat(user, "<span class='warning'>\The [tongs] is already holding a supermatter sliver!</span>")
 			return FALSE
 		forceMove(tongs)
 		tongs.sliver = src
@@ -224,7 +224,7 @@
 	QDEL_NULL(sliver)
 	return ..()
 
-/obj/item/hemostat/supermatter/update_icon()
+/obj/item/hemostat/supermatter/update_icon_state()
 	if(sliver)
 		icon_state = "supermatter_tongs_loaded"
 	else

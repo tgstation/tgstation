@@ -84,13 +84,6 @@
 /obj/structure/window/narsie_act()
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 
-/obj/structure/window/ratvar_act()
-	if(!fulltile)
-		new/obj/structure/window/reinforced/clockwork(get_turf(src), dir)
-	else
-		new/obj/structure/window/reinforced/clockwork/fulltile(get_turf(src))
-	qdel(src)
-
 /obj/structure/window/singularity_pull(S, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
@@ -102,13 +95,15 @@
 	else
 		..(FULLTILE_WINDOW_DIR)
 
-/obj/structure/window/CanPass(atom/movable/mover, turf/target)
+/obj/structure/window/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return 1
 	if(dir == FULLTILE_WINDOW_DIR)
 		return 0	//full tile window, you can't move into it!
-	if(get_dir(loc, target) == dir)
-		return !density
+	var/attempted_dir = get_dir(loc, target)
+	if(attempted_dir == dir)
+		return
 	if(istype(mover, /obj/structure/window))
 		var/obj/structure/window/W = mover
 		if(!valid_window_location(loc, W.ini_dir))
@@ -119,7 +114,8 @@
 			return FALSE
 	else if(istype(mover, /obj/machinery/door/window) && !valid_window_location(loc, mover.dir))
 		return FALSE
-	return 1
+	else if(attempted_dir != dir)
+		return TRUE
 
 /obj/structure/window/CheckExit(atom/movable/O, turf/target)
 	if(istype(O) && (O.pass_flags & PASSGLASS))
@@ -311,7 +307,8 @@
 		queue_smooth_neighbors(src)
 
 //merges adjacent full-tile windows into one
-/obj/structure/window/update_icon()
+/obj/structure/window/update_overlays()
+	. = ..()
 	if(!QDELETED(src))
 		if(!fulltile)
 			return
@@ -326,7 +323,7 @@
 		if(ratio > 75)
 			return
 		crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
-		add_overlay(crack_overlay)
+		. += crack_overlay
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 
@@ -717,83 +714,6 @@
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME
 
-/obj/structure/window/reinforced/clockwork
-	name = "brass window"
-	desc = "A paper-thin pane of translucent yet reinforced brass."
-	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
-	icon_state = "clockwork_window_single"
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	max_integrity = 80
-	armor = list("melee" = 60, "bullet" = 25, "laser" = 0, "energy" = 0, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
-	explosion_block = 2 //fancy AND hard to destroy. the most useful combination.
-	decon_speed = 40
-	glass_type = /obj/item/stack/tile/brass
-	glass_amount = 1
-	reinf = FALSE
-	var/made_glow = FALSE
-
-/obj/structure/window/reinforced/clockwork/Initialize(mapload, direct)
-	. = ..()
-	change_construction_value(fulltile ? 2 : 1)
-
-/obj/structure/window/reinforced/clockwork/spawnDebris(location)
-	. = list()
-	var/gearcount = fulltile ? 4 : 2
-	for(var/i in 1 to gearcount)
-		. += new /obj/item/clockwork/alloy_shards/medium/gear_bit(location)
-
-/obj/structure/window/reinforced/clockwork/setDir(direct)
-	if(!made_glow)
-		var/obj/effect/E = new /obj/effect/temp_visual/ratvar/window/single(get_turf(src))
-		E.setDir(direct)
-		made_glow = TRUE
-	..()
-
-/obj/structure/window/reinforced/clockwork/Destroy()
-	change_construction_value(fulltile ? -2 : -1)
-	return ..()
-
-/obj/structure/window/reinforced/clockwork/ratvar_act()
-	if(GLOB.ratvar_awakens)
-		obj_integrity = max_integrity
-		update_icon()
-
-/obj/structure/window/reinforced/clockwork/narsie_act()
-	take_damage(rand(25, 75), BRUTE)
-	if(!QDELETED(src))
-		var/previouscolor = color
-		color = "#960000"
-		animate(src, color = previouscolor, time = 8)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
-
-/obj/structure/window/reinforced/clockwork/unanchored
-	anchored = FALSE
-
-/obj/structure/window/reinforced/clockwork/fulltile
-	icon_state = "clockwork_window"
-	smooth = SMOOTH_TRUE
-	canSmoothWith = null
-	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
-	dir = FULLTILE_WINDOW_DIR
-	max_integrity = 120
-	level = 3
-	glass_amount = 2
-
-/obj/structure/window/reinforced/clockwork/spawnDebris(location)
-	. = list()
-	for(var/i in 1 to 4)
-		. += new /obj/item/clockwork/alloy_shards/medium/gear_bit(location)
-
-/obj/structure/window/reinforced/clockwork/Initialize(mapload, direct)
-	made_glow = TRUE
-	new /obj/effect/temp_visual/ratvar/window(get_turf(src))
-	return ..()
-
-
-/obj/structure/window/reinforced/clockwork/fulltile/unanchored
-	anchored = FALSE
-
 /obj/structure/window/paperframe
 	name = "paper frame"
 	desc = "A fragile separator made of thin wood and paper."
@@ -877,3 +797,26 @@
 			return
 	..()
 	update_icon()
+
+/obj/structure/window/bronze
+	name = "brass window"
+	desc = "A paper-thin pane of translucent yet reinforced brass. Nevermind, this is just weak bronze!"
+	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
+	icon_state = "clockwork_window_single"
+	glass_type = /obj/item/stack/tile/bronze
+
+/obj/structure/window/bronze/unanchored
+	anchored = FALSE
+
+/obj/structure/window/bronze/fulltile
+	icon_state = "clockwork_window"
+	smooth = SMOOTH_TRUE
+	canSmoothWith = null
+	fulltile = TRUE
+	flags_1 = PREVENT_CLICK_UNDER_1
+	dir = FULLTILE_WINDOW_DIR
+	max_integrity = 50
+	glass_amount = 2
+
+/obj/structure/window/bronze/fulltile/unanchored
+	anchored = FALSE

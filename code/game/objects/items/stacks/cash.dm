@@ -12,6 +12,7 @@
 	full_w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	var/value = 0
+	grind_results = list(/datum/reagent/cellulose = 10)
 
 /obj/item/stack/spacecash/Initialize()
 	. = ..()
@@ -71,3 +72,8 @@
 	icon_state = "spacecash1000"
 	singular_name = "one thousand credit bill"
 	value = 1000
+
+/obj/item/stack/spacecash/c10000
+	icon_state = "spacecash10000"
+	singular_name = "ten thousand credit bill"
+	value = 10000

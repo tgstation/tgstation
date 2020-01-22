@@ -12,13 +12,15 @@
 	flight_x_offset = 15
 	flight_y_offset = 9
 	automatic_charge_overlays = FALSE
+	can_bayonet = TRUE
+	knife_x_offset = 20
+	knife_y_offset = 12
 	var/overheat_time = 16
 	var/holds_charge = FALSE
 	var/unique_frequency = FALSE // modified by KA modkits
 	var/overheat = FALSE
-	can_bayonet = TRUE
-	knife_x_offset = 20
-	knife_y_offset = 12
+	var/mob/holder
+
 
 	var/max_mod_capacity = 100
 	var/list/modkits = list()
@@ -85,17 +87,19 @@
 	if(!holds_charge)
 		empty()
 
-/obj/item/gun/energy/kinetic_accelerator/shoot_live_shot()
+/obj/item/gun/energy/kinetic_accelerator/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
 	. = ..()
 	attempt_reload()
 
 /obj/item/gun/energy/kinetic_accelerator/equipped(mob/user)
 	. = ..()
+	holder = user
 	if(!can_shoot())
 		attempt_reload()
 
 /obj/item/gun/energy/kinetic_accelerator/dropped()
 	. = ..()
+	holder = null
 	if(!QDELING(src) && !holds_charge)
 		// Put it on a delay because moving item from slot to hand
 		// calls dropped().
@@ -144,12 +148,10 @@
 	update_icon()
 	overheat = FALSE
 
-/obj/item/gun/energy/kinetic_accelerator/update_icon()
-	..()
+/obj/item/gun/energy/kinetic_accelerator/update_overlays()
+	. = ..()
 	if(!can_shoot())
-		add_overlay("[icon_state]_empty")
-	else
-		cut_overlays()
+		. += "[icon_state]_empty"
 
 //Casing
 /obj/item/ammo_casing/energy/kinetic

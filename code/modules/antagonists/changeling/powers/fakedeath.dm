@@ -33,7 +33,7 @@
 	if(!user || !istype(user))
 		return
 	user.cure_fakedeath("changeling")
-	user.revive(full_heal = TRUE)
+	user.revive(full_heal = TRUE, admin_revive = FALSE)
 	var/list/missing = user.get_missing_limbs()
 	missing -= BODY_ZONE_HEAD // headless changelings are funny
 	if(missing.len)

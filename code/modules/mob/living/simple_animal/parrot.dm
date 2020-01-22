@@ -213,8 +213,8 @@
 				ears.forceMove(drop_location())
 				ears = null
 				for(var/possible_phrase in speak)
-					if(copytext(possible_phrase,1,3) in GLOB.department_radio_keys)
-						possible_phrase = copytext(possible_phrase,3)
+					if(copytext_char(possible_phrase, 2, 3) in GLOB.department_radio_keys)
+						possible_phrase = copytext_char(possible_phrase, 3)
 
 	//Adding things to inventory
 	else if(href_list["add_inv"])
@@ -390,7 +390,6 @@
 
 	if(client && stat == CONSCIOUS && parrot_state != icon_living)
 		icon_state = icon_living
-		//Because the most appropriate place to set icon_state is movement_delay(), clearly
 
 //-----SLEEPING
 	if(parrot_state == PARROT_PERCH)
@@ -423,8 +422,8 @@
 						if(prob(50))
 							useradio = 1
 
-						if((copytext(possible_phrase,1,2) in GLOB.department_radio_prefixes) && (copytext(possible_phrase,2,3) in GLOB.department_radio_keys))
-							possible_phrase = "[useradio?pick(available_channels):""][copytext(possible_phrase,3)]" //crop out the channel prefix
+						if((possible_phrase[1] in GLOB.department_radio_prefixes) && (copytext_char(possible_phrase, 2, 3) in GLOB.department_radio_keys))
+							possible_phrase = "[useradio?pick(available_channels):""][copytext_char(possible_phrase, 3)]" //crop out the channel prefix
 						else
 							possible_phrase = "[useradio?pick(available_channels):""][possible_phrase]"
 
@@ -432,8 +431,8 @@
 
 				else //If we have no headset or channels to use, dont try to use any!
 					for(var/possible_phrase in speak)
-						if((copytext(possible_phrase,1,2) in GLOB.department_radio_prefixes) && (copytext(possible_phrase,2,3) in GLOB.department_radio_keys))
-							possible_phrase = copytext(possible_phrase,3) //crop out the channel prefix
+						if((possible_phrase[1] in GLOB.department_radio_prefixes) && (copytext_char(possible_phrase, 2, 3) in GLOB.department_radio_keys))
+							possible_phrase = copytext_char(possible_phrase, 3) //crop out the channel prefix
 						newspeak.Add(possible_phrase)
 				speak = newspeak
 
@@ -471,11 +470,11 @@
 					return
 			return
 
-		if(parrot_interest && parrot_interest in view(src))
+		if(parrot_interest && (parrot_interest in view(src)))
 			parrot_state = PARROT_SWOOP | PARROT_STEAL
 			return
 
-		if(parrot_perch && parrot_perch in view(src))
+		if(parrot_perch && (parrot_perch in view(src)))
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
 			return
 
@@ -863,7 +862,7 @@
 	else
 		melee_damage_upper = parrot_damage_upper
 		a_intent = INTENT_HARM
-	to_chat(src, "You will now [a_intent] others.")
+	to_chat(src, "<span class='notice'>You will now [a_intent] others.</span>")
 	return
 
 /*
@@ -960,12 +959,6 @@
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
-/mob/living/simple_animal/parrot/Poly/ratvar_act()
-	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 75, TRUE)
-	var/mob/living/simple_animal/parrot/clock_hawk/H = new(loc)
-	H.setDir(dir)
-	qdel(src)
-
 /mob/living/simple_animal/parrot/Poly/ghost
 	name = "The Ghost of Poly"
 	desc = "Doomed to squawk the Earth."
@@ -1002,22 +995,3 @@
 	H.ForceContractDisease(P)
 	parrot_interest = null
 	H.visible_message("<span class='danger'>[src] dive bombs into [H]'s chest and vanishes!</span>", "<span class='userdanger'>[src] dive bombs into your chest, vanishing! This can't be good!</span>")
-
-
-/mob/living/simple_animal/parrot/clock_hawk
-	name = "clock hawk"
-	desc = "Cbyl jnaan penpxre! Fdhnnnjx!"
-	icon_state = "clock_hawk_fly"
-	icon_living = "clock_hawk_fly"
-	icon_sit = "clock_hawk_sit"
-	speak = list("Penpxre!", "Ratvar vf n qhzo anzr naljnl!")
-	speak_emote = list("squawks rustily", "says crassly", "yells brassly")
-	emote_hear = list("squawks rustily.", "bawks metallically!")
-	emote_see = list("flutters its metal wings.")
-	faction = list("ratvar")
-	gold_core_spawnable = NO_SPAWN
-	del_on_death = TRUE
-	deathsound = 'sound/magic/clockwork/anima_fragment_death.ogg'
-
-/mob/living/simple_animal/parrot/clock_hawk/ratvar_act()
-	return

@@ -41,7 +41,7 @@
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.</span>"
 
-/obj/machinery/smartfridge/update_icon()
+/obj/machinery/smartfridge/update_icon_state()
 	if(!stat)
 		if (visible_contents)
 			switch(contents.len)
@@ -294,13 +294,12 @@
 	..()
 	update_icon()
 
-/obj/machinery/smartfridge/drying_rack/update_icon()
-	..()
-	cut_overlays()
+/obj/machinery/smartfridge/drying_rack/update_overlays()
+	. = ..()
 	if(drying)
-		add_overlay("drying_rack_drying")
+		. += "drying_rack_drying"
 	if(contents.len)
-		add_overlay("drying_rack_filled")
+		. += "drying_rack_filled"
 
 /obj/machinery/smartfridge/drying_rack/process()
 	..()
@@ -402,7 +401,7 @@
 	var/repair_rate = 0
 
 /obj/machinery/smartfridge/organ/accept_check(obj/item/O)
-	if(istype(O, /obj/item/organ))
+	if(isorgan(O) || isbodypart(O))
 		return TRUE
 	return FALSE
 
@@ -410,8 +409,9 @@
 	. = ..()
 	if(!.)	//if the item loads, clear can_decompose
 		return
-	var/obj/item/organ/organ = O
-	organ.organ_flags |= ORGAN_FROZEN
+	if(isorgan(O))
+		var/obj/item/organ/organ = O
+		organ.organ_flags |= ORGAN_FROZEN
 
 /obj/machinery/smartfridge/organ/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)

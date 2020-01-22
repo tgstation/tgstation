@@ -1,4 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes: 
-  - bugfix: "atmos and captain gas masks no longer have floating pixel"

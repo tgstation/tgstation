@@ -62,8 +62,10 @@ Difficulty: Hard
 	var/enrage_time = 70
 	var/revving_charge = FALSE
 	gps_name = "Bloody Signal"
-	medal_type = BOSS_MEDAL_BUBBLEGUM
-	score_type = BUBBLEGUM_SCORE
+	achievement_type = /datum/award/achievement/boss/bubblegum_kill
+	crusher_achievement_type = /datum/award/achievement/boss/bubblegum_crusher
+	score_achievement_type = /datum/award/score/bubblegum_score
+
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	deathsound = 'sound/magic/enter_blood.ogg'
 	attack_action_types = list(/datum/action/innate/megafauna_attack/triple_charge,
@@ -425,10 +427,10 @@ Difficulty: Hard
 	severity = EXPLODE_LIGHT // puny mortals
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/CanPass(atom/movable/mover, turf/target)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination))
 		return TRUE
-	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Goto(target, delay, minimum_distance)
 	if(!charging)
@@ -505,8 +507,9 @@ Difficulty: Hard
 	alpha = 127.5
 	crusher_loot = null
 	loot = null
-	medal_type = null
-	score_type = null
+	achievement_type = null
+	crusher_achievement_type = null
+	score_achievement_type = null
 	deathmessage = "Explodes into a pool of blood!"
 	deathsound = 'sound/effects/splat.ogg'
 	true_spawn = FALSE
@@ -523,10 +526,10 @@ Difficulty: Hard
 	new /obj/effect/decal/cleanable/blood(get_turf(src))
 	. = ..()
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/CanPass(atom/movable/mover, turf/target)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum)) // hallucinations should not be stopping bubblegum or eachother
 		return TRUE
-	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Life()
 	return

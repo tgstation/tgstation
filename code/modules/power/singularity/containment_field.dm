@@ -11,14 +11,21 @@
 	use_power = NO_POWER_USE
 	interaction_flags_atom = NONE
 	interaction_flags_machine = NONE
+	CanAtmosPass = ATMOS_PASS_NO
 	light_range = 4
 	layer = ABOVE_OBJ_LAYER
 	var/obj/machinery/field/generator/FG1 = null
 	var/obj/machinery/field/generator/FG2 = null
 
+/obj/machinery/field/containment/Initialize()
+	. = ..()
+	air_update_turf(TRUE)
+
 /obj/machinery/field/containment/Destroy()
 	FG1.fields -= src
 	FG2.fields -= src
+	CanAtmosPass = ATMOS_PASS_YES
+	air_update_turf(TRUE)
 	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -99,10 +106,10 @@
 		return
 
 
-/obj/machinery/field/CanPass(atom/movable/mover, turf/target)
+/obj/machinery/field/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(hasShocked || isliving(mover) || ismachinery(mover) || isstructure(mover) || ismecha(mover))
 		return FALSE
-	return ..()
 
 /obj/machinery/field/proc/shock(mob/living/user)
 	var/shock_damage = min(rand(30,40),rand(30,40))

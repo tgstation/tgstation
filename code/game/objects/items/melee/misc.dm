@@ -165,7 +165,7 @@
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum."
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "baton"
+	icon_state = "classic_baton"
 	item_state = "classic_baton"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
@@ -237,7 +237,7 @@
 
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
-		to_chat(user, "<span class ='danger'>You hit yourself over the head.</span>")
+		to_chat(user, "<span class ='userdanger'>You hit yourself over the head!</span>")
 
 		user.Paralyze(knockdown_time_carbon * force)
 		user.adjustStaminaLoss(stamina_damage)
@@ -542,7 +542,7 @@
 /obj/item/melee/roastingstick/Initialize()
 	. = ..()
 	if (!ovens)
-		ovens = typecacheof(list(/obj/singularity, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire, /obj/structure/destructible/clockwork/massive/ratvar))
+		ovens = typecacheof(list(/obj/singularity, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire))
 
 /obj/item/melee/roastingstick/attack_self(mob/user)
 	on = !on
@@ -579,12 +579,10 @@
 		held_sausage = null
 	update_icon()
 
-/obj/item/melee/roastingstick/update_icon()
+/obj/item/melee/roastingstick/update_overlays()
 	. = ..()
-	cut_overlays()
 	if (held_sausage)
-		var/mutable_appearance/sausage = mutable_appearance(icon, "roastingstick_sausage")
-		add_overlay(sausage)
+		. += mutable_appearance(icon, "roastingstick_sausage")
 
 /obj/item/melee/roastingstick/proc/extend(user)
 	to_chat(user, "<span class='warning'>You extend [src].</span>")
@@ -609,14 +607,14 @@
 		return
 	if (is_type_in_typecache(target, ovens))
 		if (held_sausage && held_sausage.roasted)
-			to_chat("Your [held_sausage] has already been cooked.")
+			to_chat("<span class='warning'>Your [held_sausage] has already been cooked!</span>")
 			return
 		if (istype(target, /obj/singularity) && get_dist(user, target) < 10)
-			to_chat(user, "You send [held_sausage] towards [target].")
+			to_chat(user, "<span class='notice'>You send [held_sausage] towards [target].</span>")
 			playsound(src, 'sound/items/rped.ogg', 50, TRUE)
 			beam = user.Beam(target,icon_state="rped_upgrade",time=100)
 		else if (user.Adjacent(target))
-			to_chat(user, "You extend [src] towards [target].")
+			to_chat(user, "<span class='notice'>You extend [src] towards [target].</span>")
 			playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
 		else
 			return
@@ -627,9 +625,35 @@
 			playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
-	to_chat(user, "You finish roasting [held_sausage]")
+	to_chat(user, "<span class='notice'>You finish roasting [held_sausage].</span>")
 	playsound(src,'sound/items/welder2.ogg',50,TRUE)
 	held_sausage.add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
 	held_sausage.name = "[target.name]-roasted [held_sausage.name]"
 	held_sausage.desc = "[held_sausage.desc] It has been cooked to perfection on \a [target]."
 	update_icon()
+
+/obj/item/melee/cleric_mace
+	name = "cleric mace"
+	desc = "The grandson of the club, yet the grandfather of the baseball bat. Most notably used by holy orders in days past."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "mace_greyscale"
+	item_state = "mace_greyscale"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR //Material type changes the prefix as well as the color.
+	custom_materials = list(/datum/material/iron = 12000)  //Defaults to an Iron Mace.
+	slot_flags = ITEM_SLOT_BELT
+	force = 14
+	w_class = WEIGHT_CLASS_BULKY
+	throwforce = 8
+	block_chance = 10
+	armour_penetration = 50
+	attack_verb = list("smacked", "struck", "cracked", "beaten")
+	var/overlay_state = "mace_handle"
+	var/mutable_appearance/overlay
+
+/obj/item/melee/cleric_mace/Initialize()
+	. = ..()
+	overlay = mutable_appearance(icon, overlay_state)
+	overlay.appearance_flags = RESET_COLOR
+	add_overlay(overlay)

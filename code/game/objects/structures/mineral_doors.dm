@@ -57,10 +57,10 @@
 		return
 	return TryToSwitchState(user)
 
-/obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target)
+/obj/structure/mineral_door/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
-	return !density
 
 /obj/structure/mineral_door/proc/TryToSwitchState(atom/user)
 	if(isSwitchingStates || !anchored)
@@ -119,7 +119,7 @@
 	update_icon()
 	isSwitchingStates = FALSE
 
-/obj/structure/mineral_door/update_icon()
+/obj/structure/mineral_door/update_icon_state()
 	icon_state = "[initial(icon_state)][door_opened ? "open":""]"
 
 /obj/structure/mineral_door/attackby(obj/item/I, mob/user)
@@ -164,7 +164,7 @@
 
 	user.visible_message("<span class='notice'>[user] starts to weld apart [src]!</span>", "<span class='notice'>You start welding apart [src].</span>")
 	if(!I.use_tool(src, user, 60, 5, 50))
-		to_chat(user, "<span class='warning'>You failed to weld apart [src]!/span>")
+		to_chat(user, "<span class='warning'>You failed to weld apart [src]!</span>")
 		return
 
 	user.visible_message("<span class='notice'>[user] welded [src] into pieces!</span>", "<span class='notice'>You welded apart [src]!</span>")
@@ -178,7 +178,7 @@
 
 	user.visible_message("<span class='notice'>[user] starts to pry apart [src]!</span>", "<span class='notice'>You start prying apart [src].</span>")
 	if(!I.use_tool(src, user, 60, volume = 50))
-		to_chat(user, "<span class='warning'>You failed to pry apart [src]!/span>")
+		to_chat(user, "<span class='warning'>You failed to pry apart [src]!</span>")
 		return
 
 	user.visible_message("<span class='notice'>[user] pried [src] into pieces!</span>", "<span class='notice'>You pried apart [src]!</span>")

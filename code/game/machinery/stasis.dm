@@ -19,6 +19,19 @@
 	var/obj/effect/overlay/vis/mattress_on
 	var/obj/machinery/computer/operating/op_computer
 
+/obj/machinery/stasis/Initialize()
+	. = ..()
+	for(var/direction in GLOB.cardinals)
+		op_computer = locate(/obj/machinery/computer/operating, get_step(src, direction))
+		if(op_computer)
+			op_computer.sbed = src
+			break
+
+/obj/machinery/stasis/Destroy()
+	. = ..()
+	if(op_computer && op_computer.sbed == src)
+		op_computer.sbed = null
+
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.</span>"
@@ -52,7 +65,16 @@
 /obj/machinery/stasis/proc/stasis_running()
 	return stasis_enabled && is_operational()
 
-/obj/machinery/stasis/update_icon()
+/obj/machinery/stasis/update_icon_state()
+	if(stat & BROKEN)
+		icon_state = "stasis_broken"
+		return
+	if(panel_open || stat & MAINT)
+		icon_state = "stasis_maintenance"
+		return
+	icon_state = "stasis"
+
+/obj/machinery/stasis/update_overlays()
 	. = ..()
 	var/_running = stasis_running()
 	var/list/overlays_to_remove = managed_vis_overlays
@@ -69,14 +91,6 @@
 		overlays_to_remove = managed_vis_overlays - mattress_on
 
 	SSvis_overlays.remove_vis_overlay(src, overlays_to_remove)
-
-	if(stat & BROKEN)
-		icon_state = "stasis_broken"
-		return
-	if(panel_open || stat & MAINT)
-		icon_state = "stasis_maintenance"
-		return
-	icon_state = "stasis"
 
 /obj/machinery/stasis/obj_break(damage_flag)
 	. = ..()
@@ -108,6 +122,12 @@
 	if(stasis_running() && check_nap_violations())
 		chill_out(L)
 	update_icon()
+
+/obj/machinery/stasis/proc/check_patient()
+	if(occupant)
+		return TRUE
+	else
+		return FALSE
 
 /obj/machinery/stasis/post_unbuckle_mob(mob/living/L)
 	thaw_them(L)
