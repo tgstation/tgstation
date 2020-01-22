@@ -239,7 +239,8 @@ All foods are distributed among various categories. Use common sense.
 			"<span class='notice'>You inaccurately slice [src] with your [W]!</span>" \
 		)
 		slices_lost = rand(1,min(1,round(slices_num/2)))
-
+	if((istype(src, /obj/item/reagent_containers/food/snacks/pizza)) && (src.name == "cheese keyzza"))
+		user.visible_message("<span class='warning'>You feel as though something of value has been lost...</span>")
 	var/reagents_per_slice = reagents.total_volume/slices_num
 	for(var/i=1 to (slices_num-slices_lost))
 		var/obj/item/reagent_containers/food/snacks/slice = new slice_path (loc)
