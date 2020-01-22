@@ -95,7 +95,7 @@
 		AM.forceMove(drop_location())
 	holdingitems = list()
 
-/obj/machinery/reagentgrinder/update_icon()
+/obj/machinery/reagentgrinder/update_icon_state()
 	if(beaker)
 		icon_state = "juicer1"
 	else
