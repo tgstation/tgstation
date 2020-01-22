@@ -204,6 +204,7 @@ All the important duct code:
 /obj/machinery/duct/proc/add_connects(new_connects) //make this a define to cut proc calls?
 	if(!lock_connects)
 		connects |= new_connects
+//remove a connect direction
 /obj/machinery/duct/proc/remove_connects(dead_connects)
 	if(!lock_connects)
 		connects &= ~dead_connects
