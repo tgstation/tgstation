@@ -611,30 +611,27 @@
 		unset_machine()
 		src << browse(null, t1)
 
-	if(href_list["refresh"])
-		if(machine && in_range(src, user))
-			show_inv(machine)
+	if(user != src)
+		if(href_list["item"] && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+			var/slot = text2num(href_list["item"])
+			var/hand_index = text2num(href_list["hand_index"])
+			var/obj/item/what
+			if(hand_index)
+				what = get_item_for_held_index(hand_index)
+				slot = list(slot,hand_index)
+			else
+				what = get_item_by_slot(slot)
+			if(what)
+				if(!(what.item_flags & ABSTRACT))
+					user.stripPanelUnequip(what,src,slot)
+			else
+				user.stripPanelEquip(what,src,slot)
 
-	if(href_list["item"] && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) && user != src)
-		var/slot = text2num(href_list["item"])
-		var/hand_index = text2num(href_list["hand_index"])
-		var/obj/item/what
-		if(hand_index)
-			what = get_item_for_held_index(hand_index)
-			slot = list(slot,hand_index)
-		else
-			what = get_item_by_slot(slot)
-		if(what)
-			if(!(what.item_flags & ABSTRACT))
-				user.stripPanelUnequip(what,src,slot)
-		else
-			user.stripPanelEquip(what,src,slot)
-
-	if(user.machine == src)
-		if(Adjacent(user))
-			show_inv(user)
-		else
-			user << browse(null,"window=mob[REF(src)]")
+		if(user.machine == src)
+			if(Adjacent(user))
+				show_inv(user)
+			else
+				user << browse(null,"window=mob[REF(src)]")
 
 // The src mob is trying to strip an item from someone
 // Defined in living.dm
