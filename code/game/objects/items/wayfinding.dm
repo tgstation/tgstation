@@ -125,7 +125,7 @@
 /obj/item/pinpointer/wayfinding //Help players new to a station find their way around
 	name = "wayfinding pinpointer"
 	desc = "A handheld tracking device that points to useful places."
-	icon_state = "pinpointer_crew"
+	icon_state = "pinpointer_way"
 	resistance_flags = NONE
 	var/owner = null
 	var/list/beacons = list()

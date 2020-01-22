@@ -283,7 +283,7 @@
 		return ..()
 
 
-/obj/item/melee/baton/boomerang/update_icon()
+/obj/item/melee/baton/boomerang/update_icon_state()
 	if(turned_on)
 		icon_state = "[initial(icon_state)]_active"
 	else if(!cell)

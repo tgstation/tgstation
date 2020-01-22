@@ -55,7 +55,7 @@
 <tr>
 <th><A href='?src=[REF(src)];choice=Sorting;sort=name'>Name</A></th>
 <th><A href='?src=[REF(src)];choice=Sorting;sort=id'>ID</A></th>
-<th>Fingerprints (F) | DNA (D)</th>
+<th>Fingerprints (F) | DNA UE (D)</th>
 <th><A href='?src=[REF(src)];choice=Sorting;sort=bloodtype'>Blood Type</A></th>
 <th>Physical Status</th>
 <th>Mental Status</th>

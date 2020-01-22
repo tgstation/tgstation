@@ -170,7 +170,9 @@
 		/obj/item/pinpointer/crew,
 		/obj/item/holosign_creator/medical,
 		/obj/item/construction/plumbing,
-		/obj/item/plunger
+		/obj/item/plunger,
+		/obj/item/reagent_containers/spray,
+		/obj/item/shears
 		))
 
 /obj/item/storage/belt/medical/paramedic/PopulateContents()

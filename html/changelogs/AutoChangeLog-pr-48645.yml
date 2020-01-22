@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - tweak: "Added an air tank and vents to the seed vault lavaland ruin"
-  - bugfix: "Fixed active turfs in the seed vault lavaland ruin"
