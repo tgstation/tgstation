@@ -501,7 +501,7 @@
 	if(world.time > next_process)
 		next_process = world.time + process_interval
 		if(!H.reagents.addiction_list.Find(reagent_instance))
-			if(!reagent_instance)
+			if(QDELETED(reagent_instance))
 				reagent_instance = new reagent_type()
 			else
 				reagent_instance.addiction_stage = 0
