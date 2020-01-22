@@ -269,26 +269,12 @@
 					"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
 
 		// Warm them up with hugs
-		if(bodytemperature > M.bodytemperature) // they are warmer leech from them
-			var/temp_diff = bodytemperature - M.bodytemperature
-
-			M.adjust_bodytemperature(min((1 - M.get_insulation_protection(bodytemperature)) * temp_diff / BODYTEMP_HEAT_DIVISOR, \
-			BODYTEMP_HEATING_MAX)) // warm up the giver
-			adjust_bodytemperature(min((1 - get_insulation_protection(M.bodytemperature)) * temp_diff / BODYTEMP_COLD_DIVISOR, \
-			BODYTEMP_COOLING_MAX)) // cool down the reciver
-
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, src)
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
-
-		else // you are warm share the heat of life
-			var/temp_diff = M.bodytemperature - bodytemperature
-
-			adjust_bodytemperature(min((1 - get_insulation_protection(M.bodytemperature)) * temp_diff / BODYTEMP_HEAT_DIVISOR, \
-			BODYTEMP_HEATING_MAX)) // warm up the reciver
-			M.adjust_bodytemperature(min((1 - M.get_insulation_protection(bodytemperature)) * temp_diff / BODYTEMP_COLD_DIVISOR, \
-			BODYTEMP_COOLING_MAX)) // cool down the giver
-
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, M)
+		share_bodytemperature(M)
+		if(bodytemperature > M.bodytemperature)
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, src) // Hugger got a warm hug
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug) // Reciver always gets a mood for being hugged
+		else
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, M) // You got a warm hug
 
 		// Let people know if they hugged someone really warm or really cold
 		if(M.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
