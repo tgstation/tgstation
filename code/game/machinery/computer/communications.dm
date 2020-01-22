@@ -700,6 +700,7 @@
 		return
 	if(!(user.can_speak())) //No more cheating, mime/random mute guy!
 		input = "..."
+		to_chat(user, "<span class='warning'>You find yourself unable to speak.</span>")
 	else
 		input = user.treat_message(input) //Adds slurs and so on. Someone should make this use languages too.
 	SScommunications.make_announcement(user, is_silicon, input)
