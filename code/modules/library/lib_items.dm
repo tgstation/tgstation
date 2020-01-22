@@ -139,12 +139,11 @@
 	qdel(src)
 
 
-/obj/structure/bookcase/update_icon()
+/obj/structure/bookcase/update_icon_state()
 	if(contents.len < 5)
 		icon_state = "book-[contents.len]"
 	else
 		icon_state = "book-5"
-
 
 /obj/structure/bookcase/manuals/medical
 	name = "medical manuals bookcase"

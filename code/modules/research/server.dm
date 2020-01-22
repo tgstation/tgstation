@@ -38,14 +38,13 @@
 		tot_rating += SP.rating
 	heat_gen /= max(1, tot_rating)
 
-/obj/machinery/rnd/server/update_icon()
-	if (stat & EMPED || stat & NOPOWER)
+/obj/machinery/rnd/server/update_icon_state()
+	if(stat & EMPED || stat & NOPOWER)
 		icon_state = "RD-server-off"
-		return
-	if (research_disabled)
+	else if(research_disabled)
 		icon_state = "RD-server-halt"
-		return
-	icon_state = "RD-server-on"
+	else
+		icon_state = "RD-server-on"
 
 /obj/machinery/rnd/server/power_change()
 	. = ..()
