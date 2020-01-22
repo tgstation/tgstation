@@ -37,6 +37,7 @@
 	var/poddoor = FALSE
 	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
 	var/safety_mode = FALSE ///Whether or not the airlock can be opened with bare hands while unpowered
+	var/can_crush = TRUE /// Whether or not the door can crush mobs.
 
 /obj/machinery/door/examine(mob/user)
 	. = ..()
@@ -142,10 +143,10 @@
 	. = ..()
 	move_update_air(T)
 
-/obj/machinery/door/CanPass(atom/movable/mover, turf/target)
+/obj/machinery/door/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return !opacity
-	return !density
 
 /obj/machinery/door/proc/bumpopen(mob/user)
 	if(operating)
@@ -165,7 +166,7 @@
 	. = ..()
 	if(.)
 		return
-	if(try_safety_unlock(user))	
+	if(try_safety_unlock(user))
 		return
 	return try_to_activate_door(user)
 
@@ -325,11 +326,15 @@
 	operating = FALSE
 	air_update_turf(1)
 	update_freelook_sight()
+
+	if(!can_crush)
+		return TRUE
+
 	if(safe)
 		CheckForMobs()
 	else
 		crush()
-	return 1
+	return TRUE
 
 /obj/machinery/door/proc/CheckForMobs()
 	if(locate(/mob/living) in get_turf(src))

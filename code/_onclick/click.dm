@@ -300,9 +300,10 @@
 /mob/proc/ShiftClickOn(atom/A)
 	A.ShiftClick(src)
 	return
+
 /atom/proc/ShiftClick(mob/user)
-	SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user)
-	if(user.client && user.client.eye == user || user.client.eye == user.loc)
+	var/flags = SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user)
+	if(user.client && (user.client.eye == user || user.client.eye == user.loc || flags & COMPONENT_ALLOW_EXAMINATE))
 		user.examinate(src)
 	return
 

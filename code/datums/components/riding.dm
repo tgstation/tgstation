@@ -20,6 +20,9 @@
 	var/ride_check_ridden_incapacitated = FALSE
 
 	var/del_on_unbuckle_all = FALSE
+	
+	/// If the "vehicle" is a mob, respect MOBILITY_MOVE on said mob.
+	var/respect_mob_mobility = TRUE
 
 /datum/component/riding/Initialize()
 	if(!ismovableatom(parent))
@@ -32,14 +35,10 @@
 	var/atom/movable/AM = parent
 	restore_position(M)
 	unequip_buckle_inhands(M)
-	M.updating_glide_size = TRUE
 	if(del_on_unbuckle_all && !AM.has_buckled_mobs())
 		qdel(src)
 
 /datum/component/riding/proc/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
-	var/atom/movable/AM = parent
-	M.set_glide_size(AM.glide_size)
-	M.updating_glide_size = FALSE
 	handle_vehicle_offsets()
 
 /datum/component/riding/proc/handle_vehicle_layer()
@@ -57,10 +56,8 @@
 
 /datum/component/riding/proc/vehicle_moved(datum/source)
 	var/atom/movable/AM = parent
-	AM.set_glide_size(DELAY_TO_GLIDE_SIZE(vehicle_move_delay))
-	for(var/mob/M in AM.buckled_mobs)
-		ride_check(M)
-		M.set_glide_size(AM.glide_size)
+	for(var/i in AM.buckled_mobs)
+		ride_check(i)
 	handle_vehicle_offsets()
 	handle_vehicle_layer()
 
@@ -181,6 +178,10 @@
 			return
 		if(!Process_Spacemove(direction) || !isturf(AM.loc))
 			return
+		if(isliving(AM) && respect_mob_mobility)
+			var/mob/living/M = AM
+			if(!(M.mobility_flags & MOBILITY_MOVE))
+				return
 		step(AM, direction)
 
 		if((direction & (direction - 1)) && (AM.loc == next))		//moved diagonally

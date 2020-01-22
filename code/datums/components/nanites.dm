@@ -188,7 +188,7 @@
 	holder.icon_state = "nanites[nanite_percent]"
 
 /datum/component/nanites/proc/on_emp(datum/source, severity)
-	nanite_volume *= (rand(0.60, 0.90))		//Lose 10-40% of nanites
+	nanite_volume *= (rand(60, 90) * 0.01)		//Lose 10-40% of nanites
 	adjust_nanites(null, -(rand(5, 50)))		//Lose 5-50 flat nanite volume
 	if(prob(40/severity))
 		cloud_id = 0
@@ -197,7 +197,7 @@
 		NP.on_emp(severity)
 
 /datum/component/nanites/proc/on_shock(datum/source, shock_damage)
-	nanite_volume *= (rand(0.45, 0.80))		//Lose 20-55% of nanites
+	nanite_volume *= (rand(45, 80) * 0.01)		//Lose 20-55% of nanites
 	adjust_nanites(null, -(rand(5, 50)))			//Lose 5-50 flat nanite volume
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X

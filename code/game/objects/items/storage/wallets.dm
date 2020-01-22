@@ -65,21 +65,15 @@
 	. = ..()
 	refreshID()
 
-/obj/item/storage/wallet/update_icon(list/override_overlays)
-	if(!override_overlays && front_id == cached_front_id) //Icon didn't actually change
-		return
-	cut_overlays()
-	cached_flat_icon = null
-	cached_front_id = front_id
-	if(front_id)
-		var/list/add_overlays = list()
-		add_overlays += mutable_appearance(front_id.icon, front_id.icon_state)
-		if(override_overlays)
-			add_overlays += override_overlays
-		else
-			add_overlays += front_id.overlays
-		add_overlays += mutable_appearance(icon, "wallet_overlay")
-		add_overlay(add_overlays)
+/obj/item/storage/wallet/update_overlays()
+	. = ..()
+	if(front_id != cached_front_id)
+		cached_flat_icon = null
+		cached_front_id = front_id
+		if(front_id)
+			. += mutable_appearance(front_id.icon, front_id.icon_state)
+			. += front_id.overlays
+			. += mutable_appearance(icon, "wallet_overlay")
 
 /obj/item/storage/wallet/proc/get_cached_flat_icon()
 	if(!cached_flat_icon)

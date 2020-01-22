@@ -23,6 +23,15 @@
 	outfit_important_for_life = /datum/outfit/plasmaman
 	species_language_holder = /datum/language_holder/skeleton
 
+	// Body temperature for Plasmen is much lower human as they can handle colder environments
+	bodytemp_normal = (BODYTEMP_NORMAL - 40)
+	// The minimum amount they stabilize per tick is reduced making hot areas harder to deal with
+	bodytemp_autorecovery_min = 2
+	// They are hurt at hot temps faster as it is harder to hold their form
+	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT - 20) // about 40C
+	// This effects how fast body temp stabilizes, also if cold resit is lost on the mob
+	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 50) // about -50c
+
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
 	var/atmos_sealed = FALSE
