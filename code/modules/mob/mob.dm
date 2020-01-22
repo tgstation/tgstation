@@ -604,17 +604,18 @@
   * * handles the strip panel equip and unequip as well if "item" sent
   */
 /mob/Topic(href, href_list)
+	var/mob/user = usr
+
 	if(href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
 		unset_machine()
 		src << browse(null, t1)
 
 	if(href_list["refresh"])
-		if(machine && in_range(src, usr))
+		if(machine && in_range(src, user))
 			show_inv(machine)
 
-
-	if(href_list["item"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+	if(href_list["item"] && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) && user != src)
 		var/slot = text2num(href_list["item"])
 		var/hand_index = text2num(href_list["hand_index"])
 		var/obj/item/what
@@ -625,15 +626,15 @@
 			what = get_item_by_slot(slot)
 		if(what)
 			if(!(what.item_flags & ABSTRACT))
-				usr.stripPanelUnequip(what,src,slot)
+				user.stripPanelUnequip(what,src,slot)
 		else
-			usr.stripPanelEquip(what,src,slot)
+			user.stripPanelEquip(what,src,slot)
 
-	if(usr.machine == src)
-		if(Adjacent(usr))
-			show_inv(usr)
+	if(user.machine == src)
+		if(Adjacent(user))
+			show_inv(user)
 		else
-			usr << browse(null,"window=mob[REF(src)]")
+			user << browse(null,"window=mob[REF(src)]")
 
 // The src mob is trying to strip an item from someone
 // Defined in living.dm
