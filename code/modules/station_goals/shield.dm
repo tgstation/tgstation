@@ -121,7 +121,7 @@
 		anchored = FALSE
 	update_icon()
 
-/obj/machinery/satellite/update_icon()
+/obj/machinery/satellite/update_icon_state()
 	icon_state = active ? "sat_active" : "sat_inactive"
 
 /obj/machinery/satellite/multitool_act(mob/living/user, obj/item/I)

@@ -64,7 +64,7 @@ export const CodexGigas = props => {
             <Button
               key={title.toLowerCase()}
               content={title}
-              disabled={data.currentSection >= 2}
+              disabled={data.currentSection > 2}
               onClick={() => act(title + ' ')} />
           ))}
         </LabeledList.Item>
@@ -73,7 +73,7 @@ export const CodexGigas = props => {
             <Button
               key={name.toLowerCase()}
               content={name}
-              disabled={data.currentSection >= 4}
+              disabled={data.currentSection > 4}
               onClick={() => act(name)} />
           ))}
         </LabeledList.Item>
@@ -89,7 +89,7 @@ export const CodexGigas = props => {
         <LabeledList.Item label="Submit">
           <Button
             content="Search"
-            disabled={data.currentSection <= 4}
+            disabled={data.currentSection < 4}
             onClick={() => act('search')} />
         </LabeledList.Item>
       </LabeledList>

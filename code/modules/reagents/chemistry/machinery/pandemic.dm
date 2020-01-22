@@ -128,16 +128,16 @@
 	update_icon()
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 
-/obj/machinery/computer/pandemic/update_icon()
+/obj/machinery/computer/pandemic/update_icon_state()
 	if(stat & BROKEN)
 		icon_state = (beaker ? "mixer1_b" : "mixer0_b")
-		return
-
-	icon_state = "mixer[(beaker) ? "1" : "0"][powered() ? "" : "_nopower"]"
-	if(wait)
-		add_overlay("waitlight")
 	else
-		cut_overlays()
+		icon_state = "mixer[(beaker) ? "1" : "0"][powered() ? "" : "_nopower"]"
+
+/obj/machinery/computer/pandemic/update_overlays()
+	. = ..()
+	if(wait)
+		. += "waitlight"
 
 /obj/machinery/computer/pandemic/proc/eject_beaker()
 	if(beaker)
