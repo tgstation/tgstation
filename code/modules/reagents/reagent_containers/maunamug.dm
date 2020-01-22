@@ -80,7 +80,6 @@
 	else if(!user.transferItemToLoc(I, src))
 		return
 	cell = I
-	I.add_fingerprint(user)
 	user.visible_message("<span class='notice'>\The [user] inserts a power cell into \the [src].</span>", "<span class='notice'>You insert the power cell into \the [src].</span>")
 	update_icon()
 
@@ -111,4 +110,3 @@
 		var/mutable_appearance/mug_glow = mutable_appearance(icon, "maunamug_incand")
 		mug_glow.alpha = 255 * intensity
 		add_overlay(mug_glow)
-
