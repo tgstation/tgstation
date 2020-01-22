@@ -116,7 +116,7 @@
 
 		if(isliving(user))
 			var/mob/living/L = user
-			if(L.job == "Clown" && L.mind && L.mind.special_role)
+			if(HAS_TRAIT(L, TRAIT_NAIVE))
 				just_sleeping = TRUE
 
 		if(!just_sleeping)
