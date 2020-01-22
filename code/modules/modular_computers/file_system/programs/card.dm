@@ -118,8 +118,8 @@
 				playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 				return
 			if(authenticate(user, user_id_card))
-				return TRUE
 				playsound(computer, 'sound/machines/terminal_on.ogg', 50, FALSE)
+				return TRUE
 		if("PRG_logout")
 			authenticated = FALSE
 			playsound(computer, 'sound/machines/terminal_off.ogg', 50, FALSE)
