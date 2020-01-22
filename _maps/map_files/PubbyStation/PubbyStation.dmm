@@ -33446,10 +33446,10 @@
 /turf/open/floor/grass,
 /area/science/genetics)
 "bFy" = (
+/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/science/genetics)
 "bFB" = (
@@ -55260,10 +55260,10 @@
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "rlj" = (
+/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/science/genetics)
 "rlV" = (
