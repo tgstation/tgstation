@@ -30,10 +30,10 @@
 		to_chat(user, "You brew a batch of ale.")
 		var/obj/item/reagent_containers/food/drinks/wooden_mug/AB = new(get_turf(src))
 		var/datum/reagent/consumable/ethanol/customizable/ale = AB.reagents.add_reagent(/datum/reagent/consumable/ethanol/customizable, 50)
-		var/current_highest_boozepwr = list("prefix" = "christaincode", "power" = 0)
+		var/current_highest_boozepwr = list("prefix" = "unobtainium", "power" = 0)
 		for(var/A in brewables)
-			var/list/christaincode = A["reagents"]
-			for(var/R in christaincode)
+			var/list/brew_reagents = A["reagents"]
+			for(var/R in brew_reagents)
 				if(!ale.contained_reagents.has_reagent(R))
 					ale.contained_reagents.add_reagent(R, 30)
 			ale.boozepwr += A["booze_power"]
