@@ -640,10 +640,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
  * return the percentage of protection as a value from 0 - 1
 **/
 /mob/living/carbon/proc/get_insulation_protection(temperature)
-	if (temperature > bodytemperature) // exposed to heat, get heat protection
-		return get_heat_protection(temperature)
-	else // exposed to a cold, get cold protection
-		return get_cold_protection(temperature)
+	return (temperature > bodytemperature) ? get_heat_protection(temperature) : get_cold_protection(temperature)
 
 /// This returns the percentage of protection from heat as a value from 0 - 1
 /// temperature is the temperature you're being exposed to
