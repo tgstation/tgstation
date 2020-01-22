@@ -427,6 +427,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 												"We should store bank records in a webscale datastore, like /dev/null.",
 												"You ever wonder if /dev/null supports sharding?",
 												"Do you know who ate all the donuts?",
+												"Have you tried pooling the beams?",
 												"What if we use a language that was written on a napkin and created over 1 weekend for all of our servers?"))
 
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
