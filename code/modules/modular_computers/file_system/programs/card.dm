@@ -115,14 +115,14 @@
 	switch(action)
 		if("PRG_authenticate")
 			if(!computer || !user_id_card)
-				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
+				playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 				return
 			if(authenticate(user, user_id_card))
 				return TRUE
-				playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
+				playsound(computer, 'sound/machines/terminal_on.ogg', 50, FALSE)
 		if("PRG_logout")
 			authenticated = FALSE
-			playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
+			playsound(computer, 'sound/machines/terminal_off.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_print")
 			if(!computer || !printer)
@@ -146,7 +146,7 @@
 				to_chat(usr, "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>")
 				return
 			else
-				playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
+				playsound(computer, 'sound/machines/terminal_on.ogg', 50, FALSE)
 				computer.visible_message("<span class='notice'>\The [computer] prints out a paper.</span>")
 			return TRUE
 		if("PRG_eject")
@@ -161,7 +161,7 @@
 					if(!user.transferItemToLoc(I, computer))
 						return
 					card_slot.stored_card = I
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+			playsound(computer, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_terminate")
 			if(!computer || !authenticated)
@@ -173,7 +173,7 @@
 			id_card.access -= get_all_centcom_access() + get_all_accesses()
 			id_card.assignment = "Unassigned"
 			id_card.update_label()
-			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
+			playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_edit")
 			if(!computer || !authenticated || !id_card)
@@ -183,7 +183,7 @@
 				return
 			id_card.registered_name = new_name
 			id_card.update_label()
-			playsound(src, "terminal_type", 50, FALSE)
+			playsound(computer, "terminal_type", 50, FALSE)
 			return TRUE
 		if("PRG_assign")
 			if(!computer || !authenticated || !id_card)
@@ -218,7 +218,7 @@
 				id_card.access |= new_access
 				id_card.assignment = target
 				id_card.update_label()
-			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_access")
 			if(!computer || !authenticated)
@@ -229,19 +229,19 @@
 					id_card.access -= access_type
 				else
 					id_card.access |= access_type
-				playsound(src, "terminal_type", 50, FALSE)
+				playsound(computer, "terminal_type", 50, FALSE)
 				return TRUE
 		if("PRG_grantall")
 			if(!computer || !authenticated)
 				return
 			id_card.access |= (is_centcom ? get_all_centcom_access() : get_all_accesses())
-			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_denyall")
 			if(!computer || !authenticated)
 				return
 			id_card.access.Cut()
-			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
+			playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_grantregion")
 			if(!computer || !authenticated)
@@ -250,7 +250,7 @@
 			if(isnull(region))
 				return
 			id_card.access |= get_region_accesses(region)
-			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_denyregion")
 			if(!computer || !authenticated)
@@ -259,7 +259,7 @@
 			if(isnull(region))
 				return
 			id_card.access -= get_region_accesses(region)
-			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
+			playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 			return TRUE
 
 
