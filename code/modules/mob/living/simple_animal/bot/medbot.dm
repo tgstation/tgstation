@@ -177,6 +177,9 @@
 	return
 
 /mob/living/simple_animal/bot/medbot/attackby(obj/item/W as obj, mob/user as mob, params)
+	if((istype(W, /obj/item/reagent_containers/food/snacks/pizza/margherita)) && (W.name == "cheese keyzza"))
+		to_chat(user, "<span class='warning'>[src] studies [W] intently for a while, then hands it back.</span>")
+		studies [W] intently for a while, then hands it back.
 	var/current_health = health
 	..()
 	if(health < current_health) //if medbot took some damage
