@@ -2185,7 +2185,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/painkiller
 	name = "Painkiller"
-	description = "Dulls your pain. Not sure if that's a good thing or a bad thing."
+	description = "Dulls your pain. Your emotional pain, that is."
 	boozepwr = 20
 	color = "#EAD677"
 	quality = DRINK_NICE
