@@ -254,3 +254,16 @@
 	suffix = "lavaland_surface_elephant_graveyard.dmm"
 	allow_duplicates = FALSE
 	cost = 10
+
+/datum/map_template/ruin/lavaland/gas_vent
+	name = "Gas Vent"
+	id = "vent"
+	description = "A strange, flickering vent, endlessly spewing gas into the atmosphere."
+	suffix = "lavaland_surface_gas_vent.dmm"
+	always_place = TRUE
+	allow_duplicates = TRUE
+	multiply_placed = 7 // Lavaland can have up to 7 gas types, though whether they can all spawn at once is more complicated.
+	unpickable = TRUE // We don't want more spawning randomly.
+	cost = 0
+
+

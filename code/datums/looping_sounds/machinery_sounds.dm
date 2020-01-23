@@ -61,3 +61,13 @@
 	mid_sounds = list('sound/machines/roulettejackpot.ogg')
 	volume = 85
 	vary = TRUE
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/looping_sound/ventcap
+	start_sound = 'sound/machines/shower/shower_start.ogg'
+	mid_length = 11
+	mid_sounds = list('sound/weather/ashstorm/inside/.ogg')
+	end_sound = 'sound/machines/generator/generator_end.ogg'
+	volume = 85
+	vary = TRUE

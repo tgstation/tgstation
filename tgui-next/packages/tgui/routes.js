@@ -8,6 +8,7 @@ import { AtmosControlConsole } from './interfaces/AtmosControlConsole';
 import { AtmosFilter } from './interfaces/AtmosFilter';
 import { AtmosMixer } from './interfaces/AtmosMixer';
 import { AtmosPump } from './interfaces/AtmosPump';
+import { AtmosVentCap } from './interfaces/AtmosVentCap';
 import { BankMachine } from './interfaces/BankMachine';
 import { BlackmarketUplink } from './interfaces/BlackmarketUplink';
 import { BluespaceArtillery } from './interfaces/BluespaceArtillery';
@@ -143,6 +144,10 @@ const ROUTES = {
   },
   atmos_pump: {
     component: () => AtmosPump,
+    scrollable: false,
+  },
+  atmos_ventcap: {
+    component: () => AtmosVentCap,
     scrollable: false,
   },
   bepis: {

@@ -1176,6 +1176,7 @@
 #include "code\game\objects\structures\crates_lockers\crates\wooden.dm"
 #include "code\game\objects\structures\lavaland\geyser.dm"
 #include "code\game\objects\structures\lavaland\necropolis_tendril.dm"
+#include "code\game\objects\structures\lavaland\vent.dm"
 #include "code\game\objects\structures\signs\_signs.dm"
 #include "code\game\objects\structures\signs\signs_departments.dm"
 #include "code\game\objects\structures\signs\signs_maps.dm"

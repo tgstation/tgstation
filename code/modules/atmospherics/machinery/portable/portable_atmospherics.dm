@@ -9,6 +9,7 @@
 	var/datum/gas_mixture/air_contents
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
 	var/obj/item/tank/holding
+	var/has_tank_slot = TRUE
 
 	var/volume = 0
 
@@ -118,7 +119,7 @@
 	return TRUE
 
 /obj/machinery/portable_atmospherics/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/tank))
+	if(istype(W, /obj/item/tank) && has_tank_slot)
 		if(!(stat & BROKEN))
 			var/obj/item/tank/T = W
 			if(!user.transferItemToLoc(T, src))
@@ -135,7 +136,7 @@
 				W.play_tool_sound(src)
 				user.visible_message( \
 					"[user] disconnects [src].", \
-					"<span class='notice'>You unfasten [src] from the port.</span>", \
+					"<span class='notice'>You unfasten [src] from the [connected_port].</span>", \
 					"<span class='hear'>You hear a ratchet.</span>")
 				update_icon()
 				return
@@ -145,12 +146,12 @@
 					to_chat(user, "<span class='notice'>Nothing happens.</span>")
 					return
 				if(!connect(possible_port))
-					to_chat(user, "<span class='notice'>[name] failed to connect to the port.</span>")
+					to_chat(user, "<span class='notice'>[name] failed to connect to the [connected_port].</span>")
 					return
 				W.play_tool_sound(src)
 				user.visible_message( \
 					"[user] connects [src].", \
-					"<span class='notice'>You fasten [src] to the port.</span>", \
+					"<span class='notice'>You fasten [src] to the [connected_port].</span>", \
 					"<span class='hear'>You hear a ratchet.</span>")
 				update_icon()
 				investigate_log("was connected to [possible_port] by [key_name(user)].<br>", INVESTIGATE_ATMOS)

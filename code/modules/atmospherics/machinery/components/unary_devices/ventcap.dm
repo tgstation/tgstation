@@ -1,0 +1,195 @@
+/obj/machinery/portable_atmospherics/ventcap
+	icon = 'icons/obj/atmospherics/components/vent.dmi'
+	icon_state = "ventcap"
+
+	name = "atmospheric vent cap"
+	desc = "Interfaces with a atmospheric vent to collect large quantities of gas rushing up from deep beneath the surface."
+
+	density = TRUE
+	max_integrity = 300
+	layer = OBJ_LAYER
+	circuit = /obj/item/circuitboard/machine/ventcap
+	idle_power_usage = 0
+	active_power_usage = 2000
+	ui_x = 300
+	ui_y = 230
+
+	var/icon_state_off = "freezer"
+	var/icon_state_on = "freezer_1"
+	var/icon_state_growing = "freezer-o"
+	var/icon_state_venting = "freezer-o"
+
+	var/growing = FALSE // Whether or not the machine is expanding the bluespace whatchamajig to produce more gas.
+	var/gas_type = null
+	var/base_rate = 0
+	var/current_rate = 0
+	var/output_temperature = T0C
+	var/emergency_venting = FALSE
+
+
+	var/base_volume = 1000
+	var/current_volume = 1000 // Production rate is directly tied to its volume; it fills itself with pressure_limit KPA every atmos tick.
+	var/exponential_percentage = 1/100 // This is the percentage of growth per process_atmos().
+	var/pressure_limit = MAX_OUTPUT_PRESSURE // The point where we start exponentially decreasing output.
+	var/emergency_vent_pressure = MAX_OUTPUT_PRESSURE * 4 // The point where slow exponential decrease is not enough, so we start venting it into the surroundings.
+	var/destruction_gas_multiplier = 100 //If you break it, you get this many cycles worth of gas all at once. Does not include exponential growth because that'd be bad.
+
+	var/datum/looping_sound/ventcap/soundloop
+
+
+/obj/machinery/portable_atmospherics/ventcap/process_atmos()
+	..()
+	if(!gas_type)
+		return FALSE
+		on = FALSE
+	update_power()
+
+	var/datum/gas_mixture/air_contents = airs[1]
+	var/pressure = air_contents.return_pressure() // So we don't have to call that proc multiple times.
+
+	if(pressure > pressure_limit)
+		if(pressure > emergency_pressure_limit)
+			emergency_venting = TRUE
+			emergency_vent()
+		adjust_volume(exponential_percentage*(emergency_venting ? -2 : -1)) // Loses output faster if venting.
+		air_contents.volume = current_volume
+	else if(growing && do_powerstuff(active_power_usage)) // Gains output only if power is supplied
+		adjust_volume(exponential_percentage)
+
+	harvest() // What, you thought that giant, billowing geyser of gas would stop just because you asked politely?
+
+	return TRUE
+
+/obj/machinery/portable_atmospherics/ventcap/proc/adjust_volume(var/percentage)
+	var/datum/gas_mixture/air_contents = airs[1]
+	current_volume = max(round(current_volume * base_rate * (1 + percentage), 1), base_volume)
+	air_contents.volume = current_volume
+
+/obj/machinery/portable_atmospherics/ventcap/proc/harvest()
+	var/datum/gas_mixture/air_contents = airs[1]
+	var/datum/gas_mixture/bountiful_harvest = new
+	var/harvest_moles = ((pressure_limit)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*output_temperature)) // Exactly enough moles to add pressure_limit KPA to it.
+
+	bountiful_harvest.assert_gas(gas_type)
+	bountiful_harvest.gases[gas_type][MOLES] = (harvest_moles)
+	bountiful_harvest.temperature = output_temperature
+	
+	air_contents.merge(bountiful_harvest)
+
+/obj/machinery/portable_atmospherics/ventcap/proc/emergency_vent()
+	var/datum/gas_mixture/air_contents = airs[1]
+	var/overpressure = max((air_contents.return_pressure() - emergency_vent_pressure), 0) // Just incase var editing goes wrong.
+	var/vent_moles = ((overpressure)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)) // Vent just enough to close the (imaginary) emergency release valve.
+
+	var/datum/gas_mixture/vented = air_contents.remove(vent_moles)
+	loc.assume_air(vented)
+	air_update_turf()
+
+/obj/machinery/portable_atmospherics/ventcap/proc/do_powerstuff(amount)
+	var/turf/T = get_turf(src)
+
+	if(T && istype(T))
+		var/obj/structure/cable/C = T.get_cable_node() //check if we have a node cable on the machine turf, the first found is picked
+		if(C && C.powernet && (C.powernet.avail > amount))
+			C.powernet.load += amount
+			return TRUE
+	if(powered()) //Or, if we don't have a cable node, check if we're in a powered area.
+		use_power(amount)
+		return TRUE
+	return FALSE
+
+/obj/machinery/portable_atmospherics/ventcap/proc/update_power()
+	if(!growing)
+		active_power_usage = idle_power_usage
+	var/power_multiplier = round(sqrt(current_volume/base_volume), 0.1) // Power usage increases as you try to get more gas out, but not linearly.
+	active_power_usage = initial(active_power_usage)*power_multiplier
+
+/obj/machinery/portable_atmospherics/ventcap/attackby(obj/item/I, mob/user, params)
+	if((I.tool_behaviour == TOOL_WRENCH) && on)
+		to_chat(user, "<span class='userdanger'>As you begin unwrenching \the [src] a torrent of air begins to escape and \the [src] rumbles ominously... this seems like a really bad idea!</span>")
+		if(I.use_tool(src, user, 20, volume=50))
+			rupture()
+		return
+	. = ..()
+
+
+/obj/machinery/portable_atmospherics/ventcap/Initialize()
+	. = ..()
+	soundloop = new(list(src), TRUE)
+
+
+/obj/machinery/portable_atmospherics/ventcap/Destroy()
+	. = ..()
+	QDEL_NULL(soundloop)
+	if(on)
+		rupture()
+
+/obj/machinery/portable_atmospherics/ventcap/proc/rupture()
+		visible_message("<span class='danger'>[src] violently ruptures!</span>")
+		var/datum/gas_mixture/air_contents = airs[1]
+		var/datum/gas_mixture/foomf = new
+		var/scale_amount = 5*round(sqrt(current_volume/base_volume), 0.1)
+		var/boom_moles = destruction_multiplier*((pressure_limit)*(current_volume)/(R_IDEAL_GAS_EQUATION*output_temperature))
+
+		foomf.assert_gas(gas_type)
+		foomf.gases[gas_type][MOLES] = (boom_moles) // Quite a bit of overpressure, but it'll dissipate into the atmosphere quickly enough.
+		foomf.temperature = output_temperature
+		loc.assume_air(foomf)
+		for(var/turf/open/tile in adjacent_turfs)
+			if(istype(tile))
+				tile.assume_air(foomf)
+		
+		for(var/atom/movable/A in range(loc, scale_amount))
+			var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(loc, src)))
+			A.safe_throw_at(throwtarget,scale_amount,1, force = MOVE_FORCE_EXTREMELY_STRONG)
+		
+		explosion(loc, -1, 0, scale_amount/5, scale_amount, 0, flame_range = scale_amount*2) // Maybe don't break the dangerously high pressure machinery on top of a weird bluespace thingy.
+		if(!QDELETED(src))
+			qdel(src)
+
+/obj/machinery/portable_atmospherics/ventcap/update_icon()
+	if(on && is_operational())
+		if(venting)
+			icon_state = icon_state_venting
+		else if(growing)
+			icon_state = icon_state_growing
+		else
+			icon_state = icon_state_on
+	else
+		icon_state = icon_state_off
+
+/obj/machinery/portable_atmospherics/ventcap/connect(obj/machinery/atmospherics/components/unary/portables_connector/vent)
+	. = ..()
+	gas_type = vent.gastype
+
+/obj/machinery/portable_atmospherics/ventcap/disconnect()
+	. = ..()
+	gas_type = null
+
+
+
+/obj/machinery/portable_atmospherics/ventcap/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "atmos_ventcap", name, ui_x, ui_y, master_ui, state)
+		ui.open()
+
+/obj/machinery/portable_atmospherics/ventcap/ui_data()
+	var/data = list()
+	data["on"] = on
+	data["growing"] = growing
+	data["state"] = status_message
+
+	data["volume"] = round(current_volume)
+	data["growing"] = growing
+	data["emergency_venting"] = emergency_venting
+	data["max_kpa"] = round(max_ext_kpa)
+
+	var/datum/gas_mixture/air = return_air()
+	data["pressure"] = air.return_pressure()
+	data["temperature"] = air.temperature
+
+/obj/machinery/portable_atmospherics/ventcap/ui_act(action, params)
+	if(..())
+		return

@@ -127,7 +127,9 @@
 		//That's done remove from priority even if it failed
 		if(forced)
 			//TODO : handle forced ruins with multiple variants
-			forced_ruins -= current_pick
+			current_pick.multiply_placed--
+			if(current_pick.multiply_placed < 1)
+				forced_ruins -= current_pick
 			forced = FALSE
 
 		if(failed_to_place)
