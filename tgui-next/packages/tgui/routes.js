@@ -64,14 +64,19 @@ import { NaniteProgrammer } from './interfaces/NaniteProgrammer';
 import { NaniteRemote } from './interfaces/NaniteRemote';
 import { NotificationPreferences } from './interfaces/NotificationPreferences';
 import { NtnetRelay } from './interfaces/NtnetRelay';
+import { NtosAiRestorer } from './interfaces/NtosAiRestorer';
 import { NtosArcade } from './interfaces/NtosArcade';
 import { NtosCard } from './interfaces/NtosCard';
 import { NtosConfiguration } from './interfaces/NtosConfiguration';
 import { NtosCrewManifest } from './interfaces/NtosCrewManifest';
+import { NtosFileManager } from './interfaces/NtosFileManager';
 import { NtosJobManager } from './interfaces/NtosJobManager';
 import { NtosMain } from './interfaces/NtosMain';
 import { NtosNetChat } from './interfaces/NtosNetChat';
+import { NtosNetDos } from './interfaces/NtosNetDos';
 import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
+import { NtosNetMonitor } from './interfaces/NtosNetMonitor';
+import { NtosRevelation } from './interfaces/NtosRevelation';
 import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
 import { NtosWrapper } from './interfaces/NtosWrapper';
 import { NuclearBomb } from './interfaces/NuclearBomb';
@@ -388,6 +393,12 @@ const ROUTES = {
     component: () => NtnetRelay,
     scrollable: false,
   },
+  ntos_ai_restorer: {
+    component: () => NtosAiRestorer,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
   ntos_arcade: {
     component: () => NtosArcade,
     wrapper: () => NtosWrapper,
@@ -412,6 +423,12 @@ const ROUTES = {
     scrollable: true,
     theme: 'ntos',
   },
+  ntos_file_manager: {
+    component: () => NtosFileManager,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
   ntos_job_manager: {
     component: () => NtosJobManager,
     wrapper: () => NtosWrapper,
@@ -430,8 +447,20 @@ const ROUTES = {
     scrollable: false,
     theme: 'ntos',
   },
+  ntos_net_dos: {
+    component: () => NtosNetDos,
+    wrapper: () => NtosWrapper,
+    scrollable: false,
+    theme: 'syndicate',
+  },
   ntos_net_downloader: {
     component: () => NtosNetDownloader,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_net_monitor: {
+    component: () => NtosNetMonitor,
     wrapper: () => NtosWrapper,
     scrollable: true,
     theme: 'ntos',
@@ -441,6 +470,12 @@ const ROUTES = {
     wrapper: () => NtosWrapper,
     scrollable: true,
     theme: 'ntos',
+  },
+  ntos_revelation: {
+    component: () => NtosRevelation,
+    wrapper: () => NtosWrapper,
+    scrollable: false,
+    theme: 'syndicate',
   },
   ntos_station_alert: {
     component: () => StationAlertConsole,
