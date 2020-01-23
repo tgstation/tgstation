@@ -15,6 +15,10 @@
 
 	dog_fashion = /datum/dog_fashion/head
 
+/obj/item/clothing/head/hardhat/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
 /obj/item/clothing/head/hardhat/attack_self(mob/living/user)
 	toggle_helmet_light(user)
 
@@ -26,16 +30,8 @@
 		turn_off(user)
 	update_icon()
 
-/obj/item/clothing/head/hardhat/update_icon()
-	icon_state = "hardhat[on]_[hat_type]"
-	item_state = "hardhat[on]_[hat_type]"
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.update_inv_head()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon(force = TRUE)
-	..()
+/obj/item/clothing/head/hardhat/update_icon_state()
+	icon_state = item_state = "hardhat[on]_[hat_type]"
 
 /obj/item/clothing/head/hardhat/proc/turn_on(mob/user)
 	set_light(brightness_on)
@@ -139,11 +135,10 @@
 		if(!up)
 			. += mutable_appearance('icons/mob/clothing/head.dmi', "weldvisor")
 
-/obj/item/clothing/head/hardhat/weldhat/update_icon()
-	cut_overlays()
+/obj/item/clothing/head/hardhat/weldhat/update_overlays()
+	. = ..()
 	if(!up)
-		add_overlay("weldvisor")
-	..()
+		. += "weldvisor"
 
 /obj/item/clothing/head/hardhat/weldhat/orange
 	icon_state = "hardhat0_orange"

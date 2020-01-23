@@ -178,10 +178,6 @@
 		AM.pipe_eject(0)
 	update_icon()
 
-// update the icon & overlays to reflect mode & status
-/obj/machinery/disposal/update_icon()
-	return
-
 /obj/machinery/disposal/proc/flush()
 	flushing = TRUE
 	flushAnimation()
@@ -349,16 +345,14 @@
 	pressure_charging = TRUE
 	update_icon()
 
-/obj/machinery/disposal/bin/update_icon()
-	cut_overlays()
+/obj/machinery/disposal/bin/update_overlays()
+	. = ..()
 	if(stat & BROKEN)
-		pressure_charging = FALSE
-		flush = FALSE
 		return
 
 	//flush handle
 	if(flush)
-		add_overlay("dispover-handle")
+		. += "dispover-handle"
 
 	//only handle is shown if no power
 	if(stat & NOPOWER || panel_open)
@@ -366,13 +360,13 @@
 
 	//check for items in disposal - occupied light
 	if(contents.len > 0)
-		add_overlay("dispover-full")
+		. += "dispover-full"
 
 	//charging and ready light
 	if(pressure_charging)
-		add_overlay("dispover-charge")
+		. += "dispover-charge"
 	else if(full_pressure)
-		add_overlay("dispover-ready")
+		. += "dispover-ready"
 
 /obj/machinery/disposal/bin/proc/do_flush()
 	set waitfor = FALSE

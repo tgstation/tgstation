@@ -57,7 +57,7 @@
 	reagents.adjust_thermal_energy((target_temperature - reagents.chem_temp) * heater_coefficient * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
 	reagents.handle_reactions()
 
-/obj/machinery/plumbing/acclimator/update_icon()
+/obj/machinery/plumbing/acclimator/update_icon_state()
 	icon_state = initial(icon_state)
 	switch(acclimate_state)
 		if(COOLING)
