@@ -496,9 +496,9 @@
 	update_health_hud()
 
 /mob/living/update_health_hud()
+	var/severity = 0
+	var/healthpercent = (health/maxHealth) * 100
 	if(hud_used?.healths)
-		var/severity = 0
-		var/healthpercent = (health/maxHealth) * 100
 		switch(healthpercent)
 			if(100 to INFINITY)
 				hud_used.healths.icon_state = "health0"
@@ -520,10 +520,37 @@
 			else
 				hud_used.healths.icon_state = "health7"
 				severity = 6
-		if(severity > 0)
-			overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
-		else
-			clear_fullscreen("brute")
+	if(hud_used?.healthdoll) //to really put you in the boots of a simplemob
+		var/obj/screen/healthdoll/living/livingdoll = hud_used.healthdoll
+		switch(healthpercent)
+			if(100 to INFINITY)
+				livingdoll.icon_state = "living0"
+			if(80 to 100)
+				livingdoll.icon_state = "living1"
+				severity = 1
+			if(60 to 80)
+				livingdoll.icon_state = "living2"
+				severity = 2
+			if(40 to 60)
+				livingdoll.icon_state = "living3"
+				severity = 3
+			if(20 to 40)
+				livingdoll.icon_state = "living4"
+				severity = 4
+			if(1 to 20)
+				livingdoll.icon_state = "living5"
+				severity = 5
+			else
+				livingdoll.icon_state = "living6"
+				severity = 6
+		if(!livingdoll.filtered)
+			livingdoll.filtered = TRUE
+			livingdoll.filters += filter(type="alpha", icon = icon(icon, icon_state))
+			livingdoll.filters += filter(type="drop_shadow", size = -1)
+	if(severity > 0)
+		overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
+	else
+		clear_fullscreen("brute")
 
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
 /mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE)
