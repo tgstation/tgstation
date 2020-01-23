@@ -41,7 +41,7 @@
 	var/locked = TRUE			//if the turret's behaviour control access is locked
 	var/controllock = FALSE		//if the turret responds to control panels
 
-	var/installation = /obj/item/gun/energy/e_gun/turret		//the type of weapon installed by default
+	var/installation = null		//the type of weapon installed by default
 	var/obj/item/gun/stored_gun = null
 	var/gun_charge = 0		//the charge of the gun when retrieved from wreckage
 
@@ -713,6 +713,10 @@
 		return TRUE
 
 /obj/machinery/porta_turret/ai
+	stun_projectile = /obj/projectile/energy/electrode
+	stun_projectile_sound = 'sound/weapons/taser.ogg'
+	lethal_projectile = /obj/projectile/beam/laser
+	lethal_projectile_sound = 'sound/weapons/laser.ogg'
 	faction = list("silicon")
 	turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS | TURRET_FLAG_SHOOT_HEADS
 
