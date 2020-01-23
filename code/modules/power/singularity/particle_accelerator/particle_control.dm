@@ -57,7 +57,7 @@
 		active = FALSE
 		connected_parts.Cut()
 
-/obj/machinery/particle_accelerator/control_box/update_icon()
+/obj/machinery/particle_accelerator/control_box/update_icon_state()
 	if(active)
 		icon_state = "control_boxp1"
 	else

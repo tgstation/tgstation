@@ -15,9 +15,9 @@
 	bolt_drop_sound = 'sound/weapons/gun/rifle/bolt_in.ogg'
 	tac_reloads = FALSE
 
-obj/item/gun/ballistic/rifle/update_icon()
-	..()
-	add_overlay("[icon_state]_bolt[bolt_locked ? "_locked" : ""]")
+obj/item/gun/ballistic/rifle/update_overlays()
+	. = ..()
+	. += "[icon_state]_bolt[bolt_locked ? "_locked" : ""]"
 
 obj/item/gun/ballistic/rifle/rack(mob/user = null)
 	if (bolt_locked == FALSE)

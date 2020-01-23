@@ -232,12 +232,14 @@
 
 //Adds 'char' ahead of 'text' until there are 'count' characters total
 /proc/add_leading(text, count, char = " ")
+	text = "[text]"
 	var/charcount = count - length_char(text)
 	var/list/chars_to_add[max(charcount + 1, 0)]
 	return jointext(chars_to_add, char) + text
 
 //Adds 'char' behind 'text' until there are 'count' characters total
 /proc/add_trailing(text, count, char = " ")
+	text = "[text]"
 	var/charcount = count - length_char(text)
 	var/list/chars_to_add[max(charcount + 1, 0)]
 	return text + jointext(chars_to_add, char)
