@@ -172,14 +172,23 @@
 	else if(istype(O, /obj/item/slime_extract))
 		var/obj/item/slime_extract/E = O
 		if(!SSresearch.slime_already_researched[E.type])
-			playsound(src, 'sound/machines/ping.ogg', 50, 3, -1)
-			visible_message("<span class='notice'>You insert [E] into a slot on the [src]. It pings and prints out some research notes worth [E.research] points!</span>")
-			new /obj/item/research_notes(drop_location(src), E.research, "xenobiology")
-			SSresearch.slime_already_researched[E.type] = TRUE
-			qdel(O)
-			return
+			if(E.research == null || E.research == 0)
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 3, -1)
+				visible_message("<span class='notice'>[src] buzzes and displays a message: Invalid extract! (You shouldn't be seeing this. If you are, tell someone.)</span>")
+				return
+			if(E.Uses == 0)
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 3, -1)
+				visible_message("<span class='notice'>[src] buzzes and displays a message: Extract consumed - no research available.</span>")
+				return
+			else
+				playsound(src, 'sound/machines/ping.ogg', 50, 3, -1)
+				visible_message("<span class='notice'>You insert [E] into a slot on the [src]. It pings and prints out some research notes worth [E.research] points!</span>")
+				new /obj/item/research_notes(drop_location(src), E.research, "xenobiology")
+				SSresearch.slime_already_researched[E.type] = TRUE
+				qdel(O)
+				return
 		else
-			visible_message("<span class='notice'>[src] buzzes and displays a message: Slime extract already researched!")
+			visible_message("<span class='notice'>[src] buzzes and displays a message: Slime extract already researched!</span>")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 3, -1)
 			return
 	..()
