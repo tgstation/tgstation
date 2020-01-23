@@ -74,6 +74,8 @@
 				GLOB.time_last_changed_position = world.time / 10
 			j.total_positions++
 			opened_positions[edit_job_target]++
+			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+			return TRUE
 		if("PRG_close_job")
 			var/edit_job_target = params["target"]
 			var/datum/job/j = SSjob.GetJob(edit_job_target)
@@ -84,13 +86,30 @@
 				GLOB.time_last_changed_position = world.time / 10
 			j.total_positions--
 			opened_positions[edit_job_target]--
+			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+			return TRUE
+		if("PRG_priority")
+			if(length(SSjob.prioritized_jobs) >= 5)
+				return
+			var/priority_target = params["target"]
+			var/datum/job/j = SSjob.GetJob(priority_target)
+			if(!j)
+				return
+			if(j.total_positions <= j.current_positions)
+				return
+			if(j in SSjob.prioritized_jobs)
+				SSjob.prioritized_jobs -= j
+			else
+				SSjob.prioritized_jobs += j
+			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+			return TRUE
 
 
 /datum/computer_file/program/job_management/ui_data(mob/user)
 	var/list/data = get_header_data()
 
 	var/authed = FALSE
-	var/obj/item/card/id/user_id = user.get_idcard()
+	var/obj/item/card/id/user_id = user.get_idcard(FALSE)
 	if(user_id)
 		if(ACCESS_CHANGE_IDS in user_id.access)
 			authed = TRUE
@@ -113,5 +132,10 @@
 	data["slots"] = pos
 	var/delta = round(change_position_cooldown - ((world.time / 10) - GLOB.time_last_changed_position), 1)
 	data["cooldown"] = delta < 0 ? 0 : delta
+	var/list/priority = list()
+	for(var/j in SSjob.prioritized_jobs)
+		var/datum/job/job = j
+		priority += job.title
+	data["prioritized"] = priority
 	return data
 

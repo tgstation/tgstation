@@ -8,6 +8,7 @@ export const NtosJobManager = props => {
     authed,
     cooldown,
     slots = [],
+    prioritized = [],
   } = data;
 
   if (!authed) {
@@ -32,12 +33,29 @@ export const NtosJobManager = props => {
         </Dimmer>
       )}
       <Table>
+        <Table.Row header>
+          <Table.Cell>
+            Prioritized
+          </Table.Cell>
+          <Table.Cell>
+            Slots
+          </Table.Cell>
+        </Table.Row>
         {slots.map(slot => (
           <Table.Row
             key={slot.title}
             className="candystripe">
-            <Table.Cell bold>
-              {slot.title}
+            <Table.Cell
+              bold>
+              <Button.Checkbox
+                fluid
+                content={slot.title}
+                disabled={slot.total <= 0}
+                checked={slot.total > 0 && prioritized.includes(slot.title)}
+                onClick={() => act('PRG_priority', {
+                  target: slot.title,
+                })}
+              />
             </Table.Cell>
             <Table.Cell collapsing>
               {slot.current} / {slot.total}
