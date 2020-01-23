@@ -92,6 +92,8 @@ export class Tabs extends Component {
             } = tab.props;
             const key = tab.key || tab.props.label;
             const active = tab.active || key === activeTabKey;
+            const altSelectionStyle = 'Button--altSelected'
+            + (vertical ? '--right' : '--bottom');
             return (
               <Button
                 key={key}
@@ -99,10 +101,10 @@ export class Tabs extends Component {
                   'Tabs__tab',
                   active && 'Tabs__tab--active',
                   highlight && !active && 'color-yellow',
+                  altSelection && active && altSelectionStyle,
                   className,
                 ])}
                 selected={!altSelection && active}
-                altSelected={altSelection && active}
                 color="transparent"
                 onClick={e => {
                   this.setState({ activeTabKey: key });

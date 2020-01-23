@@ -20,7 +20,6 @@ export const Button = props => {
     color,
     disabled,
     selected,
-    altSelected,
     tooltip,
     tooltipPosition,
     ellipsis,
@@ -88,11 +87,6 @@ export const Button = props => {
       )}
       {content}
       {children}
-      {altSelected && (
-        <div className="Button--altselect--holder">
-          <span className="Button--altselect--indicator" />
-        </div>
-      )}
       {tooltip && (
         <Tooltip
           content={tooltip}

@@ -291,7 +291,6 @@ Props:
   transparent and slightly dim when inactive.
 - `disabled: boolean` - Disables and greys out the button.
 - `selected: boolean` - Activates the button (gives it a green color).
-- `altSelected: boolean` - Similar to selected, but adds a white selection indicator to the right side of the button.
 - `tooltip: string` - A fancy, boxy tooltip, which appears when hovering
 over the button.
 - `tooltipPosition: string` - Position of the tooltip.
@@ -812,7 +811,8 @@ Props:
 
 - `vertical: boolean` - Use a vertical configuration, where tabs will appear
 stacked on the left side of the container.
-- `altSelection` - Whether the tab buttons select via standard select or alternate selection (see [Button](#button))
+- `altSelection` - Whether the tab buttons select via standard select (color change) or by adding a white indicator to the selected tab.
+  Intended for usage on interfaces where tab color has relevance.
 - `children: Tab[]` - This component only accepts tabs as its children.
 
 ### `Tabs.Tab`

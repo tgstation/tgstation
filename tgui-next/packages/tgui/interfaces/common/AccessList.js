@@ -1,4 +1,4 @@
-import { Tabs, Table, Section, Button, Grid } from "../../components";
+import { Tabs, Section, Button, Grid } from "../../components";
 import { Fragment } from "inferno";
 import { sortBy } from "common/collections";
 
