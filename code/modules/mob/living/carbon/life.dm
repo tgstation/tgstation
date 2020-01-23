@@ -679,15 +679,22 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
  * * max_temp (optional) The maximum body temperature after adjustment
  * * use_insulation (optional) modifies the amount based on the amount of insulation the mob has
  * * use_steps (optional) Use the body temp divisors and max change rates
+ * * hardsuit_fix (optional) num bodytemp_normal - H.bodytemperature Use hardsuit override until hardsuits fix is done...
  */
-/mob/living/carbon/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY, use_insulation=FALSE, use_steps=FALSE)
+/mob/living/carbon/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY, use_insulation=FALSE, use_steps=FALSE, \
+											hardsuit_fix=FALSE)
 	// apply insulation to the amount of change
 	if(use_insulation)
 		amount *= (1 - get_insulation_protection(bodytemperature + amount))
 
-	// use the bodytemp divisors to get the change step, with max step size
+	// Extra calculation for hardsuits to bleed off heat
+	if(hardsuit_fix)
+		amount += hardsuit_fix
+
+	// Use the bodytemp divisors to get the change step, with max step size
 	if(use_steps)
-		amount = (amount > 0) ? min(amount / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX) : max(amount / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
+		amount = (amount > 0) ? min(amount / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX) : \
+			max(amount / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
 
 	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
 		bodytemperature = CLAMP(bodytemperature + amount,min_temp,max_temp)
