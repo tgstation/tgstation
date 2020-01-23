@@ -55,7 +55,11 @@
 	. = ..()
 	update_icon()
 
-/obj/item/clothing/ears/headphones/update_icon()
+/obj/item/clothing/ears/headphones/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/clothing/ears/headphones/update_icon_state()
 	icon_state = "[initial(icon_state)]_[headphones_on? "on" : "off"]"
 	item_state = "[initial(item_state)]_[headphones_on? "on" : "off"]"
 

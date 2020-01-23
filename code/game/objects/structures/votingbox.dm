@@ -1,3 +1,6 @@
+#define VOTE_TEXT_LIMIT 255
+#define MAX_VOTES 255
+
 /obj/structure/votebox
 	name = "voting box"
 	desc = "A automatic voting box."
@@ -110,6 +113,11 @@
 		voted += voter_card
 		to_chat(user,"<span class='notice'>You cast your vote.</span>")
 
+/obj/structure/votebox/proc/valid_vote(obj/item/paper/I)
+	if(length_char(text) > VOTE_TEXT_LIMIT || findtext(text,"<h1>Voting Results:</h1><hr><ol>"))
+		return FALSE
+	return TRUE
+
 /obj/structure/votebox/proc/shred(mob/user)
 	for(var/obj/item/paper/P in contents)
 		qdel(P)
@@ -151,8 +159,13 @@
 
 /obj/structure/votebox/proc/print_tally(mob/user)
 	var/list/results = list()
+	var/i = 0
 	for(var/obj/item/paper/P in contents)
+		if(i++ > MAX_VOTES)
+			break
 		var/text = P.info
+		if(!valid_vote(P))
+			continue
 		if(!results[text])
 			results[text] = 1
 		else
@@ -189,6 +202,8 @@
 	user.put_in_hands(P)
 	to_chat(user,"<span class='notice'>[src] prints out the voting tally.</span>")
 
-/obj/structure/votebox/update_icon()
-	. = ..()
+/obj/structure/votebox/update_icon_state()
 	icon_state = "votebox_[voting_active ? "active" : "maint"]"
+
+#undef VOTE_TEXT_LIMIT
+#undef MAX_VOTES
