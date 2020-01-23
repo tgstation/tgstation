@@ -43,7 +43,7 @@
 	damage_type = BURN
 	nodamage = TRUE
 	flag = "energy"
-	temperature = 50
+	temperature = -50 // Cools you down! per hit!
 
 /obj/projectile/temp/basilisk/heated
 	name = "energy blast"
@@ -186,7 +186,7 @@ mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
 	damage = 5
 	damage_type = BURN
 	nodamage = FALSE
-	temperature = 500 //Heats you up!
+	temperature = 200 // Heats you up! per hit!
 
 /obj/projectile/temp/basilisk/magmawing/on_hit(atom/target, blocked = FALSE)
 	. = ..()
