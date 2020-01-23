@@ -203,13 +203,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/wood/on_applied_obj(obj/source, amount, material_flags)
 	. = ..()
 	if(material_flags & MATERIAL_AFFECT_STATISTICS)
-		var/obj/item/wooden = source
+		var/obj/wooden = source
 		wooden.resistance_flags |= FLAMMABLE
 
 /datum/material/wood/on_removed_obj(obj/source, material_flags)
 	. = ..()
 	if(material_flags & MATERIAL_AFFECT_STATISTICS)
-		var/obj/item/wooden = source
+		var/obj/wooden = source
 		wooden.resistance_flags &= ~FLAMMABLE
 
 ///Stronk force increase
