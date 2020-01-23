@@ -15,7 +15,7 @@
 	bypasses_immunity = TRUE
 
 /datum/disease/parasite/stage_act()
-	..()
+	. = ..()
 	var/mob/living/carbon/C = affected_mob
 	var/obj/item/organ/liver/L = C.getorgan(/obj/item/organ/liver)
 	if(!L)

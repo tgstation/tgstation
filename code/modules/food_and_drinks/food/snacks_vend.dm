@@ -15,7 +15,7 @@
 
 /obj/item/reagent_containers/food/snacks/candy/bronx
 	name = "South Bronx Paradise bar"
-	desc = "Lose weight, guaranteed! Wait, the package actually says 'South Bronx Parasite'..."
+	desc = "Lose weight, guaranteed! Caramel Mocha Flavor. Something about product consumption..."
 	icon_state = "bronx"
 	item_state = "candy"
 	trash = /obj/item/trash/candy
@@ -25,6 +25,7 @@
 	filling_color = "#e4d4b7"
 	tastes = list("candy" = 5, "weight loss" = 4, "insect larva" = 1)
 	foodtype = JUNKFOOD | RAW | GROSS
+	var/revelation = FALSE
 
 /obj/item/reagent_containers/food/snacks/candy/bronx/On_Consume(mob/living/eater)
 	. = ..()
@@ -35,9 +36,11 @@
 
 /obj/item/reagent_containers/food/snacks/candy/bronx/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>Geeze, you need to get to get your eyes checked. You should look again...</span>")
-	desc = "Lose weight, guaranteed! Caramel Mocha Flavor! WARNING: PRODUCT NOT FIT FOR HUMAN CONSUMPTION. CONTAINS LIVE DIAMPHIDIA SPECIMENS."
-	name = "South Bronx Parasite bar"
+	if(revelation == FALSE)
+		to_chat(user, "<span class='notice'>Geeze, you need to get to get your eyes checked. You should look again...</span>")
+		desc = "Lose weight, guaranteed! Caramel Mocha Flavor! WARNING: PRODUCT NOT FIT FOR HUMAN CONSUMPTION. CONTAINS LIVE DIAMPHIDIA SPECIMENS."
+		name = "South Bronx Parasite bar"
+		revelation = TRUE
 
 /obj/item/reagent_containers/food/snacks/sosjerky
 	name = "\improper Scaredy's Private Reserve Beef Jerky"
