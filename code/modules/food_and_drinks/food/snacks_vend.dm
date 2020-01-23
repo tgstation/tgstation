@@ -33,6 +33,12 @@
 		var/datum/disease/P = new /datum/disease/parasite()
 		carl.ForceContractDisease(P, FALSE, TRUE)
 
+/obj/item/reagent_containers/food/snacks/candy/bronx/examine(mob/user)
+	. = ..()
+	to_chat(user, "<span class='notice'>Geeze, you need to get to get your eyes checked. You should look again...</span>")
+	desc = "Lose weight, guaranteed! Caramel Mocha Flavor! WARNING: PRODUCT NOT FIT FOR HUMAN CONSUMPTION. CONTAINS LIVE DIAMPHIDIA SPECIMENS."
+	name = "South Bronx Parasite bar"
+
 /obj/item/reagent_containers/food/snacks/sosjerky
 	name = "\improper Scaredy's Private Reserve Beef Jerky"
 	icon_state = "sosjerky"
