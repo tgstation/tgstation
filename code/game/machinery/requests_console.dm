@@ -70,7 +70,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	armor = list("melee" = 70, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 
 /obj/machinery/requests_console/update_icon_state()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		set_light(0)
 	else
 		set_light(1.4,0.7,"#34D352")//green light
@@ -79,7 +79,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			icon_state="req_comp_open"
 		else
 			icon_state="req_comp_rewired"
-	else if(stat & NOPOWER)
+	else if(machine_stat & NOPOWER)
 		if(icon_state != "req_comp_off")
 			icon_state = "req_comp_off"
 	else

@@ -21,7 +21,7 @@
 	. = ..()
 	pump = new(src, FALSE)
 	pump.on = TRUE
-	pump.stat = 0
+	pump.machine_stat = 0
 	pump.build_network()
 
 /obj/machinery/portable_atmospherics/pump/Destroy()

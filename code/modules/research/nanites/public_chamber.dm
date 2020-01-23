@@ -33,9 +33,9 @@
 	update_icon()
 
 /obj/machinery/public_nanite_chamber/proc/inject_nanites(mob/living/attacker)
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	if((stat & MAINT) || panel_open)
+	if((machine_stat & MAINT) || panel_open)
 		return
 	if(!occupant || busy)
 		return
@@ -61,9 +61,9 @@
 	occupant.AddComponent(/datum/component/nanites, 75, cloud_id)
 
 /obj/machinery/public_nanite_chamber/proc/change_cloud(mob/living/attacker)
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	if((stat & MAINT) || panel_open)
+	if((machine_stat & MAINT) || panel_open)
 		return
 	if(!occupant || busy)
 		return
@@ -98,10 +98,10 @@
 
 /obj/machinery/public_nanite_chamber/update_overlays()
 	. = ..()
-	if((stat & MAINT) || panel_open)
+	if((machine_stat & MAINT) || panel_open)
 		. += "maint"
 
-	else if(!(stat & (NOPOWER|BROKEN)))
+	else if(!(machine_stat & (NOPOWER|BROKEN)))
 		if(busy || locked)
 			. += "red"
 			if(locked)

@@ -124,7 +124,7 @@
 
 /obj/machinery/seed_extractor/ui_interact(mob/user)
 	. = ..()
-	if (stat)
+	if (machine_stat)
 		return FALSE
 
 	var/dat = "<b>Stored seeds:</b><br>"

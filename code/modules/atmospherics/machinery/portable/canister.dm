@@ -202,7 +202,7 @@
 		create_gas()
 	pump = new(src, FALSE)
 	pump.on = TRUE
-	pump.stat = 0
+	pump.machine_stat = 0
 	pump.build_network()
 
 /obj/machinery/portable_atmospherics/canister/Destroy()
@@ -225,9 +225,9 @@
 	air_contents.gases[/datum/gas/nitrogen][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
 /obj/machinery/portable_atmospherics/canister/update_icon_state()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		icon_state = "[icon_state]-1"
-	
+
 /obj/machinery/portable_atmospherics/canister/update_overlays()
 	. = ..()
 	if(holding)
@@ -251,7 +251,7 @@
 
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!(stat & BROKEN))
+		if(!(machine_stat & BROKEN))
 			canister_break()
 		if(disassembled)
 			new /obj/item/stack/sheet/metal (loc, 10)
@@ -264,7 +264,7 @@
 	if(user.a_intent == INTENT_HARM)
 		return FALSE
 
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		if(!I.tool_start_check(user, amount=0))
 			return TRUE
 		to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
@@ -309,7 +309,7 @@
 
 /obj/machinery/portable_atmospherics/canister/process_atmos()
 	..()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return PROCESS_KILL
 	if(timing && valve_timer < world.time)
 		valve_open = !valve_open
