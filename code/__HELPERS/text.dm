@@ -656,7 +656,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	if(fexists(log))
 		oldjson = json_decode(file2text(log))
 		oldentries = oldjson["data"]
-	if(!isemptylist(oldentries))
+	if(!!length(oldentries))
 		for(var/string in accepted)
 			for(var/old in oldentries)
 				if(string == old)
@@ -666,7 +666,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	var/list/finalized = list()
 	finalized = accepted.Copy() + oldentries.Copy() //we keep old and unreferenced phrases near the bottom for culling
 	listclearnulls(finalized)
-	if(!isemptylist(finalized) && length(finalized) > storemax)
+	if(!!length(finalized) && length(finalized) > storemax)
 		finalized.Cut(storemax + 1)
 	fdel(log)
 

@@ -1106,7 +1106,9 @@ B --><-- A
 	A.cut_overlay(O)
 
 /proc/get_random_station_turf()
-	return safepick(get_area_turfs(pick(GLOB.the_station_areas)))
+	var/list/turfs = get_area_turfs(pick(GLOB.the_station_areas))
+	if (length(turfs))
+		return pick(get_area_turfs(pick(GLOB.the_station_areas)))
 
 /proc/get_safe_random_station_turf() //excludes dense turfs (like walls) and areas that have valid_territory set to FALSE
 	for (var/i in 1 to 5)

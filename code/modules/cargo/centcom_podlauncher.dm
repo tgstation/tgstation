@@ -127,10 +127,10 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			var/list/turfs = list()
 			for(var/turf/T in A)
 				turfs.Add(T) //Fill a list with turfs in the area
-			var/turf/T = safepick(turfs) //Only teleport if the list isn't empty
-			if(!T) //If the list is empty, error and cancel
+			if (!length(turfs)) //If the list is empty, error and cancel
 				to_chat(M, "Nowhere to jump to!")
-				return
+				return //Only teleport if the list isn't empty
+			var/turf/T = pick(turfs)
 			M.forceMove(T) //Perform the actual teleport
 			log_admin("[key_name(usr)] jumped to [AREACOORD(A)]")
 			message_admins("[key_name_admin(usr)] jumped to [AREACOORD(A)]")
@@ -499,7 +499,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 		to_chat(holder.mob, "No /area/centcom/supplypod/loading/one (or /two or /three or /four) in the world! You can make one yourself (then refresh) for now, but yell at a mapper to fix this, today!")
 		CRASH("No /area/centcom/supplypod/loading/one (or /two or /three or /four) has been mapped into the centcom z-level!")
 	orderedArea = list()
-	if (!isemptylist(A.contents)) //Go through the area passed into the proc, and figure out the top left and bottom right corners by calculating max and min values
+	if (length(A.contents)) //Go through the area passed into the proc, and figure out the top left and bottom right corners by calculating max and min values
 		var/startX = A.contents[1].x //Create the four values (we do it off a.contents[1] so they have some sort of arbitrary initial value. They should be overwritten in a few moments)
 		var/endX = A.contents[1].x
 		var/startY = A.contents[1].y
@@ -527,7 +527,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			numTurfs ++
 
 	launchList = list() //Anything in launchList will go into the supplypod when it is launched
-	if (!isemptylist(acceptableTurfs) && !temp_pod.reversing && !temp_pod.effectMissile) //We dont fill the supplypod if acceptableTurfs is empty, if the pod is going in reverse (effectReverse=true), or if the pod is acitng like a missile (effectMissile=true)
+	if (length(acceptableTurfs) && !temp_pod.reversing && !temp_pod.effectMissile) //We dont fill the supplypod if acceptableTurfs is empty, if the pod is going in reverse (effectReverse=true), or if the pod is acitng like a missile (effectMissile=true)
 		switch(launchChoice)
 			if(0) //If we are launching all the turfs at once
 				for (var/turf/T in acceptableTurfs)
@@ -563,7 +563,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 		//If we aren't cloning objects, taking and removing the first item each time from the acceptableTurfs list will inherently iterate through the list in order
 
 /datum/centcom_podlauncher/proc/updateSelector() //Ensures that the selector effect will showcase the next item if needed
-	if (launchChoice == 1 && !isemptylist(acceptableTurfs) && !temp_pod.reversing && !temp_pod.effectMissile) //We only show the selector if we are taking items from the bay
+	if (launchChoice == 1 && length(acceptableTurfs) && !temp_pod.reversing && !temp_pod.effectMissile) //We only show the selector if we are taking items from the bay
 		var/index = launchCounter + 1 //launchCounter acts as an index to the ordered acceptableTurfs list, so adding one will show the next item in the list
 		if (index > acceptableTurfs.len) //out of bounds check
 			index = 1
@@ -601,6 +601,6 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 
 	var/msg = "launched [podString] towards [whomString] [delayString][damageString][explosionString]"
 	message_admins("[key_name_admin(usr)] [msg] in [ADMIN_VERBOSEJMP(specificTarget)].")
-	if (!isemptylist(whoDyin))
+	if (length(whoDyin))
 		for (var/mob/living/M in whoDyin)
 			admin_ticket_log(M, "[key_name_admin(usr)] [msg]")
