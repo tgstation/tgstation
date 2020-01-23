@@ -2194,17 +2194,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Painkiller"
 	glass_desc = "A combination of tropical juices and rum. Surely this will make you feel better."
 
-/datum/reagent/consumable/ethanol/painkiller/on_mob_life(mob/living/carbon/M)
-	// Causes the health doll to display blue regardless of damage, until the drink is metabolized.
-	M.hal_screwyhud = SCREWYHUD_HEALTHY
-	..()
-
-/datum/reagent/consumable/ethanol/painkiller/on_mob_end_metabolize(mob/living/M)
-	if(iscarbon(M))
-		var/mob/living/carbon/N = M
-		N.hal_screwyhud = SCREWYHUD_NONE
-	..()
-
 /datum/reagent/consumable/ethanol/pina_colada
 	name = "Pina Colada"
 	description = "A fresh pineapple drink with coconut rum. Yum."
