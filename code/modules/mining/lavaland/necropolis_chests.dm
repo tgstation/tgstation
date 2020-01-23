@@ -411,12 +411,13 @@
 	icon_state = "hook"
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	pass_flags = PASSTABLE
-	damage = 25
-	armour_penetration = 100
+	damage = 20
+	stamina = 20
+	armour_penetration = 60
 	damage_type = BRUTE
 	hitsound = 'sound/effects/splat.ogg'
-	paralyze = 30
 	var/chain
+	var/knockdown_time = (0.5 SECONDS)
 
 /obj/projectile/hook/fire(setAngle)
 	if(firer)
@@ -432,6 +433,10 @@
 			return
 		A.visible_message("<span class='danger'>[A] is snagged by [firer]'s hook!</span>")
 		new /datum/forced_movement(A, get_turf(firer), 5, TRUE)
+		if (isliving(target))
+			var/mob/living/fresh_meat = target
+			fresh_meat.Knockdown(knockdown_time)
+			return
 		//TODO: keep the chain beamed to A
 		//TODO: needs a callback to delete the chain
 
@@ -452,7 +457,7 @@
 
 /obj/projectile/hook/bounty
 	damage = 0
-	paralyze = 20
+	stamina = 40
 
 //Immortality Talisman
 /obj/item/immortality_talisman
@@ -1034,8 +1039,6 @@
 	var/list/da_list = list()
 	for(var/I in GLOB.alive_mob_list & GLOB.player_list)
 		var/mob/living/L = I
-		if(is_centcom_level(L.z))
-			continue
 		da_list[L.real_name] = L
 
 	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in sortList(da_list)

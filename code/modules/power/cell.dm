@@ -148,6 +148,28 @@
 				if(prob(25))
 					corrupt()
 
+/obj/item/stock_parts/cell/attack_self(mob/user)
+	if(isethereal(user))
+		var/mob/living/carbon/human/H = user
+		if(charge < 100)
+			to_chat(H, "<span class='warning'>The [src] doesn't have enough power!</span>")
+			return
+		var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+		if(stomach.crystal_charge > 146)
+			to_chat(H, "<span class='warning'>Your charge is full!</span>")
+			return
+		to_chat(H, "<span class='notice'>You clumsily channel power through the [src] and into your body, wasting some in the process.</span>")
+		if(do_after(user, 5, target = src))
+			if((charge < 100) || (stomach.crystal_charge > 146))
+				return
+			if(istype(stomach))
+				to_chat(H, "<span class='notice'>You receive some charge from the [src].</span>")
+				stomach.adjust_charge(3)
+				charge -= 100 //you waste way more than you receive, so that ethereals cant just steal one cell and forget about hunger
+			else
+				to_chat(H, "<span class='warning'>You can't receive charge from the [src]!</span>")
+		return
+
 
 /obj/item/stock_parts/cell/blob_act(obj/structure/blob/B)
 	ex_act(EXPLODE_DEVASTATE)
