@@ -545,7 +545,8 @@
 				severity = 6
 		if(!livingdoll.filtered)
 			livingdoll.filtered = TRUE
-			livingdoll.filters += filter(type="alpha", icon = icon(icon, icon_state))
+			var/icon/mob_mask = icon(icon, icon_state)
+			livingdoll.filters += filter(type="alpha", icon = mob_mask)
 			livingdoll.filters += filter(type="drop_shadow", size = -1)
 	if(severity > 0)
 		overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)

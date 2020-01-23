@@ -6,10 +6,6 @@
 	var/list/screen_info = list()//x,x pix, y, y pix || x,y
 	var/del_on_map_removal = TRUE//this could probably be changed to be a proc, for conditional removal. for now, this works.
 
-/obj/screen/Initialize(mapload, _hud)
-	. = ..()
-	hud = _hud
-
 /client/proc/clear_map(var/map_to_clear)//not really needed most of the time, as the client's screen list gets reset on relog. any of the buttons are going to get caught by garbage collection anyway. they're effectively qdel'd.
 	if(!map_to_clear|| !(map_to_clear in screen_maps))
 		return FALSE
