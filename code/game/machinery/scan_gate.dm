@@ -52,7 +52,7 @@
 
 /obj/machinery/scanner_gate/Crossed(atom/movable/AM)
 	..()
-	if(!(stat & (BROKEN|NOPOWER)) && isliving(AM))
+	if(!(machine_stat & (BROKEN|NOPOWER)) && isliving(AM))
 		perform_scan(AM)
 
 /obj/machinery/scanner_gate/proc/set_scanline(type, duration)
@@ -229,7 +229,7 @@
 				"Starving",
   				"Obese"
 			)
-			if(new_nutrition && new_nutrition in nutrition_list)
+			if(new_nutrition && (new_nutrition in nutrition_list))
 				switch(new_nutrition)
 					if("Starving")
 						detect_nutrition = NUTRITION_LEVEL_STARVING

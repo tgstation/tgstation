@@ -98285,6 +98285,7 @@
 	name = "Surgery B APC";
 	pixel_y = 23
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
 "dBs" = (
@@ -98897,6 +98898,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
 "dCP" = (
@@ -115117,6 +115119,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
+"mSk" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/medical/surgery/room_b)
 "mUY" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -115493,6 +115499,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port)
+"pif" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/tile/blue,
+/obj/structure/cable,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "pmQ" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -115931,6 +115943,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/medical/surgery/room_b)
 "rOf" = (
@@ -116267,6 +116280,10 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
+"uxC" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel/white,
+/area/medical/surgery/room_b)
 "uCc" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 4;
@@ -116662,6 +116679,8 @@
 /area/science/nanite)
 "wZq" = (
 /obj/effect/landmark/start/medical_doctor,
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
 "xaf" = (
@@ -116701,6 +116720,7 @@
 /area/medical/medbay/central)
 "xxD" = (
 /obj/machinery/smartfridge/organ,
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
 "xze" = (
@@ -163282,7 +163302,7 @@ dAg
 dnB
 dkC
 xsF
-dnB
+pif
 iko
 dnB
 dJo
@@ -163796,7 +163816,7 @@ dma
 dBo
 dEd
 dEc
-dEe
+uxC
 wLR
 rmX
 mIX
@@ -164053,7 +164073,7 @@ dyE
 vko
 dFj
 vko
-loc
+mSk
 dBp
 loc
 vko
@@ -164566,7 +164586,7 @@ dma
 dma
 dBr
 dCO
-dEe
+uxC
 wZq
 eNA
 dEe

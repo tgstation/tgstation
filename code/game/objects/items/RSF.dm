@@ -7,7 +7,7 @@ RSF
 	name = "\improper Rapid-Service-Fabricator"
 	desc = "A device used to rapidly deploy service items."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "rcd"
+	icon_state = "rsf"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	opacity = 0
@@ -35,6 +35,7 @@ RSF
 		matter += 10
 		playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
 		to_chat(user, "<span class='notice'>The RSF now holds [matter]/30 fabrication-units.</span>")
+		icon_state = "rsf"
 	else
 		return ..()
 
@@ -69,9 +70,11 @@ RSF
 		var/mob/living/silicon/robot/R = user
 		if(!R.cell || R.cell.charge < 200)
 			to_chat(user, "<span class='warning'>You do not have enough power to use [src].</span>")
+			icon_state = "rsf_empty"
 			return
 	else if (matter < 1)
 		to_chat(user, "<span class='warning'>\The [src] doesn't have enough matter left.</span>")
+		icon_state = "rsf_empty"
 		return
 
 	var/turf/T = get_turf(A)
