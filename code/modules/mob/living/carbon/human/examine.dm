@@ -114,10 +114,8 @@
 	if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		appears_dead = TRUE
 
-		if(isliving(user))
-			var/mob/living/L = user
-			if(HAS_TRAIT(L, TRAIT_NAIVE))
-				just_sleeping = TRUE
+		if(isliving(user) && HAS_TRAIT(user, TRAIT_NAIVE))
+			just_sleeping = TRUE
 
 		if(!just_sleeping)
 			if(suiciding)
