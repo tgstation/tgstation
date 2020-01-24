@@ -1,5 +1,5 @@
 /obj/effect/appearance_clone
-	var/isturned = FALSE
+	var/turn_angle = 0
 
 /obj/effect/appearance_clone/New(loc, atom/A)			//Intentionally not Initialize(), to make sure the clone assumes the intended appearance in time for the camera getFlatIcon.
 	if(istype(A))
@@ -11,8 +11,7 @@
 			step_y = AM.step_y
 			if(iscarbon(A))
 				var/mob/living/carbon/C = A
-				if(C.resting || C.stat < CONSCIOUS)
-					isturned = TRUE
+				turn_angle = C.lying
 	. = ..()
 
 /obj/item/camera/proc/camera_get_icon(list/turfs, turf/center, psize_x = 96, psize_y = 96, datum/turf_reservation/clone_area, size_x, size_y, total_x, total_y)
@@ -73,17 +72,14 @@
 	for(var/atom/A in sorted)
 		var/xo = (A.x - center.x) * world.icon_size + A.pixel_x + xcomp
 		var/yo = (A.y - center.y) * world.icon_size + A.pixel_y + ycomp
-		var/turnit = FALSE
 		if(ismovableatom(A))
 			var/obj/effect/appearance_clone/clone = A
 			xo += clone.step_x
 			yo += clone.step_y
-			if(clone.isturned)
-				turnit = TRUE
 		var/icon/img = getFlatIcon(A)
 		if(img)
-			if(turnit) //the cheapest (so best, considering cams don't need to be laggier) way of doing this, considering getFlatIcon doesn't give a snot about transforms.'
-				img.Turn(90)
+			if(A.turn_angle) //the cheapest (so best, considering cams don't need to be laggier) way of doing this, considering getFlatIcon doesn't give a snot about transforms.'
+				img.Turn(A.turn_angle)
 			res.Blend(img, blendMode2iconMode(A.blend_mode), xo, yo)
 		CHECK_TICK
 
