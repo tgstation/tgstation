@@ -163,7 +163,7 @@
 		step(src, get_dir(M, src))
 
 /obj/machinery/power/emitter/process()
-	if(stat & (BROKEN))
+	if(machine_stat & (BROKEN))
 		return
 	if(state != EMITTER_WELDED || (!powernet && active_power_usage))
 		active = FALSE

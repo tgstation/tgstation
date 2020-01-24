@@ -54,7 +54,7 @@
 			min_wrate = 0
 
 /obj/machinery/plantgenes/update_icon_state()
-	if((stat & (BROKEN|NOPOWER)))
+	if((machine_stat & (BROKEN|NOPOWER)))
 		icon_state = "dnamod-off"
 	else
 		icon_state = "dnamod"

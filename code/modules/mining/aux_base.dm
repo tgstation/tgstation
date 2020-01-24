@@ -53,7 +53,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 			var/obj/machinery/porta_turret/aux_base/T = PDT
 			var/integrity = max((T.obj_integrity-T.integrity_failure * T.max_integrity)/(T.max_integrity-T.integrity_failure * max_integrity)*100, 0)
 			var/status
-			if(T.stat & BROKEN)
+			if(T.machine_stat & BROKEN)
 				status = "<span class='bad'>ERROR</span>"
 			else if(!T.on)
 				status = "Disabled"
