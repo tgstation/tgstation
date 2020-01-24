@@ -769,7 +769,7 @@
 /mob/living/simple_animal/bot/mulebot/paranormal/MouseDrop_T(atom/movable/AM, mob/user)
 	if(isliving(user))
 		var/mob/living/living_user = user
-		if(living_user.incapacitated() || IS_PRONE(living_user) || !LIVING_CAN_USE_HANDS(living_user))
+		if(IS_PRONE(living_user) || !LIVING_CAN_USE_HANDS(living_user))
 			return
 	else if(!isobserver(user))
 		return

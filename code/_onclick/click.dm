@@ -98,10 +98,8 @@
 		CtrlClickOn(A)
 		return
 
-	if(isliving(src)) //Ugly, but don't want to tempt coders to further redefine a is_stunned() proc to make it return FALSE on certain mobs.
-		var/mob/living/living_clicker = src
-		if(IS_STUNNED(living_clicker))
-			return
+	if(IS_INCAPACITATED(src))
+		return
 
 	face_atom(A)
 
@@ -328,7 +326,7 @@
 	if(!ishuman(user) || !Adjacent(user))
 		return ..()
 	var/mob/living/carbon/human/human_user = user
-	if(IS_INCAPACITATED(human_user))
+	if((IS_INCAPACITATED(human_user) || !LIVING_CAN_USE_HANDS(human_user)))
 		return ..()
 	if(world.time < user.next_move)
 		return FALSE

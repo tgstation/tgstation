@@ -1,3 +1,5 @@
+#define TRAIT_STATUS_EFFECT(effect_id) "[effect_id]-trait"
+
 //Largely negative status effects go here, even if they have small benificial effects
 //STUN EFFECTS
 /datum/status_effect/incapacitating
@@ -15,6 +17,16 @@
 			if(needs_update_stat || issilicon(owner))
 				owner.update_stat()
 
+/datum/status_effect/incapacitating/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	return ..()
+
 /datum/status_effect/incapacitating/on_remove()
 	if(needs_update_stat || issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
 		owner.update_stat()
@@ -27,12 +39,12 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(owner, TRAIT_IMMOBILE, STATUSEFFECT_STUN_TRAIT)
-	ADD_TRAIT(owner, TRAIT_HANDSBLOCKED, STATUSEFFECT_STUN_TRAIT)
+	ADD_TRAIT(owner, TRAIT_IMMOBILE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_HANDSBLOCKED, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/stun/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_IMMOBILE, STATUSEFFECT_STUN_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_HANDSBLOCKED, STATUSEFFECT_STUN_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_HANDSBLOCKED, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 //KNOCKDOWN
@@ -43,10 +55,10 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(owner, TRAIT_STANDINGBLOCKED, STATUSEFFECT_KNOCKDOWN_TRAIT)
+	ADD_TRAIT(owner, TRAIT_STANDINGBLOCKED, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/knockdown/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_STANDINGBLOCKED, STATUSEFFECT_KNOCKDOWN_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_STANDINGBLOCKED, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 //IMMOBILIZED
@@ -57,10 +69,10 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(owner, TRAIT_IMMOBILE, STATUSEFFECT_IMMOBILIZED_TRAIT)
+	ADD_TRAIT(owner, TRAIT_IMMOBILE, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/immobilized/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_IMMOBILE, STATUSEFFECT_IMMOBILIZED_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILE, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/incapacitating/paralyzed
@@ -70,14 +82,14 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(owner, TRAIT_IMMOBILE, STATUSEFFECT_PARALYZED_TRAIT)
-	ADD_TRAIT(owner, TRAIT_STANDINGBLOCKED, STATUSEFFECT_PARALYZED_TRAIT)
-	ADD_TRAIT(owner, TRAIT_HANDSBLOCKED, STATUSEFFECT_PARALYZED_TRAIT)
+	ADD_TRAIT(owner, TRAIT_IMMOBILE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_STANDINGBLOCKED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_HANDSBLOCKED, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/paralyzed/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_IMMOBILE, STATUSEFFECT_PARALYZED_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_STANDINGBLOCKED, STATUSEFFECT_PARALYZED_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_HANDSBLOCKED, STATUSEFFECT_PARALYZED_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_STANDINGBLOCKED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_HANDSBLOCKED, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 //UNCONSCIOUS
@@ -89,10 +101,10 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, STATUSEFFECT_UNCONSCIOUS_TRAIT)
+	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/unconscious/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, STATUSEFFECT_UNCONSCIOUS_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/incapacitating/unconscious/tick()

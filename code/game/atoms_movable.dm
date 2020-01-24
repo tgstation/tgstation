@@ -134,7 +134,7 @@
 			return FALSE
 		// Are we trying to pull something we are already pulling? Then enter grab cycle and end.
 		if(AM == pulling)
-			setGrabState(state)
+			setGrabState(state, pulling)
 			if(istype(AM,/mob/living))
 				var/mob/living/AMob = AM
 				AMob.grabbedby(src)
@@ -148,7 +148,7 @@
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 	pulling = AM
 	AM.pulledby = src
-	setGrabState(state)
+	setGrabState(state, pulling)
 	if(ismob(AM))
 		var/mob/M = AM
 		log_combat(src, M, "grabbed", addition="passive grab")
@@ -163,9 +163,10 @@
 
 /atom/movable/proc/stop_pulling()
 	if(pulling)
+		var/atom/movable/pulled = pulling
 		pulling.pulledby = null
 		pulling = null
-		setGrabState(0)
+		setGrabState(GRAB_PASSIVE, pulled)
 		if(isliving(pulling))
 			var/mob/living/pulled_living = pulling
 			if(pulled_living.stat == SOFT_CRIT)
@@ -908,7 +909,7 @@
 
 /// Updates the grab state of the movable
 /// This exists to act as a hook for behaviour
-/atom/movable/proc/setGrabState(newstate)
+/atom/movable/proc/setGrabState(newstate, atom/movable/grabbed_thing)
 	if(newstate == grab_state)
 		return
 	. = grab_state

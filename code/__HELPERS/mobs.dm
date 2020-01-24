@@ -212,7 +212,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		if(drifting && !user.inertia_dir)
 			drifting = 0
 			user_loc = user.loc
-		if((!(ignore_flags & IGNORE_LOC_CHANGE) && ((!drifting && user.loc != user_loc) || target.loc != target_loc)) || (!(ignore_flags & IGNORE_HAND) && user.get_active_held_item() != holding) || (living_user && IS_INCAPACITATED(living_user)) || (extra_checks && !extra_checks.Invoke()))
+		if((!(ignore_flags & IGNORE_LOC_CHANGE) && ((!drifting && user.loc != user_loc) || target.loc != target_loc)) || (!(ignore_flags & IGNORE_HAND) && user.get_active_held_item() != holding) || (living_user && (IS_INCAPACITATED(living_user) || IS_RESTRAINED(living_user))) || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
 	if (progress)
@@ -345,7 +345,7 @@ GLOBAL_LIST_EMPTY(species_list)
 				user_loc = user.loc
 
 			for(var/atom/target in targets)
-				if(QDELETED(target) || (!(ignore_flags & IGNORE_LOC_CHANGE) && ((!drifting && user_loc != user.loc) || originalloc[target] != target.loc)) || (!(ignore_flags & IGNORE_HAND) && user.get_active_held_item() != holding) || (living_user && IS_INCAPACITATED(living_user)) || (extra_checks && !extra_checks.Invoke()))
+				if(QDELETED(target) || (!(ignore_flags & IGNORE_LOC_CHANGE) && ((!drifting && user_loc != user.loc) || originalloc[target] != target.loc)) || (!(ignore_flags & IGNORE_HAND) && user.get_active_held_item() != holding) || (living_user && (IS_INCAPACITATED(living_user) || IS_RESTRAINED(living_user))) || (extra_checks && !extra_checks.Invoke()))
 					. = 0
 					break mainloop
 	if(progbar)

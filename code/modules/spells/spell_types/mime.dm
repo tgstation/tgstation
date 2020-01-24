@@ -200,6 +200,9 @@
 
 /obj/effect/proc_holder/spell/aimed/finger_guns/Click()
 	var/mob/living/carbon/human/owner = usr
+	if(IS_RESTRAINED(owner))
+		to_chat(owner, "<span class='warning'>You can't properly point your fingers while restrained.</span>")
+		return
 	if(IS_INCAPACITATED(owner))
 		to_chat(owner, "<span class='warning'>You can't properly point your fingers while incapacitated.</span>")
 		return

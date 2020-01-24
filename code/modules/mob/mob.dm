@@ -1225,7 +1225,7 @@
 	update_movespeed(FALSE)
 
 /// Updates the grab state of the mob and updates movespeed
-/mob/setGrabState(newstate)
+/mob/setGrabState(newstate, atom/movable/grabbed_thing)
 	. = ..()
 	if(isnull(.))
 		return

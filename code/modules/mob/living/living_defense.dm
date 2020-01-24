@@ -167,7 +167,7 @@
 			if(user.a_intent != INTENT_GRAB)
 				to_chat(user, "<span class='warning'>You must be on grab intent to upgrade your grab further!</span>")
 				return 0
-		user.setGrabState(user.grab_state + 1)
+		user.setGrabState(user.grab_state + 1, src)
 		switch(user.grab_state)
 			if(GRAB_AGGRESSIVE)
 				var/add_log = ""
@@ -180,8 +180,6 @@
 					visible_message("<span class='danger'>[user] grabs [src] aggressively!</span>", \
 									"<span class='userdanger'>[user] grabs you aggressively!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, user)
 					to_chat(user, "<span class='danger'>You grab [src] aggressively!</span>")
-					drop_all_held_items()
-				stop_pulling()
 				log_combat(user, src, "grabbed", addition="aggressive grab[add_log]")
 			if(GRAB_NECK)
 				log_combat(user, src, "grabbed", addition="neck grab")

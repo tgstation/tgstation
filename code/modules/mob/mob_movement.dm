@@ -159,7 +159,7 @@
 	var/mob/living/grabbed_user = mob
 	if((grabbed_user.pulledby == grabbed_user.pulling) && (grabbed_user.pulledby.grab_state == GRAB_PASSIVE)) //Don't autoresist passive grabs if we're grabbing them too.
 		return
-	if(IS_STUNNED(grabbed_user))
+	if(IS_INCAPACITATED(grabbed_user))
 		move_delay = world.time + 1 SECONDS
 		return TRUE
 	if(HAS_TRAIT(grabbed_user, TRAIT_RESTRAINED))

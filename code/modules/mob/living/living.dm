@@ -480,21 +480,24 @@
 			ADD_TRAIT(src, TRAIT_STANDINGBLOCKED, STAT_NOTCONSCIOUS_TRAIT)
 			ADD_TRAIT(src, TRAIT_HANDSBLOCKED, STAT_NOTCONSCIOUS_TRAIT)
 
-/mob/living/setGrabState(newstate)
+/mob/living/setGrabState(newstate, atom/movable/grabbed_thing)
 	. = ..()
 	if(isnull(.))
 		return
+	if(QDELETED(grabbed_thing) || !isliving(grabbed_thing))
+		return
+	var/mob/living/living_grabbed_thing = grabbed_thing
 	switch(grab_state)
 		if(GRAB_PASSIVE, GRAB_AGGRESSIVE)
 			if(. > GRAB_AGGRESSIVE)
-				REMOVE_TRAIT(src, TRAIT_IMMOBILE, GRABSTATE_NECK_TRAIT)
-				REMOVE_TRAIT(src, TRAIT_STANDINGBLOCKED, GRABSTATE_NECK_TRAIT)
-				REMOVE_TRAIT(src, TRAIT_HANDSBLOCKED, GRABSTATE_NECK_TRAIT)
+				REMOVE_TRAIT(living_grabbed_thing, TRAIT_IMMOBILE, GRABSTATE_NECK_TRAIT)
+				REMOVE_TRAIT(living_grabbed_thing, TRAIT_STANDINGBLOCKED, GRABSTATE_NECK_TRAIT)
+				REMOVE_TRAIT(living_grabbed_thing, TRAIT_HANDSBLOCKED, GRABSTATE_NECK_TRAIT)
 		if(GRAB_NECK, GRAB_KILL)
 			if(. < GRAB_NECK)
-				ADD_TRAIT(src, TRAIT_IMMOBILE, GRABSTATE_NECK_TRAIT)
-				ADD_TRAIT(src, TRAIT_STANDINGBLOCKED, GRABSTATE_NECK_TRAIT)
-				ADD_TRAIT(src, TRAIT_HANDSBLOCKED, GRABSTATE_NECK_TRAIT)
+				ADD_TRAIT(living_grabbed_thing, TRAIT_IMMOBILE, GRABSTATE_NECK_TRAIT)
+				ADD_TRAIT(living_grabbed_thing, TRAIT_STANDINGBLOCKED, GRABSTATE_NECK_TRAIT)
+				ADD_TRAIT(living_grabbed_thing, TRAIT_HANDSBLOCKED, GRABSTATE_NECK_TRAIT)
 
 // MOB PROCS //END
 
@@ -799,7 +802,7 @@
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/can_resist()
-	return !((next_move > world.time) || IS_PARALYZED(src))
+	return next_move <= world.time && !IS_INCAPACITATED(src)
 
 /mob/living/verb/resist()
 	set name = "Resist"

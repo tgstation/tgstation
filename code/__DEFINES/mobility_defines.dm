@@ -37,16 +37,11 @@
 #define LIVING_CAN_STORAGE(living) (living.mobility_flags & MOBILITY_STORAGE && !HAS_TRAIT(living, TRAIT_STORAGEBLOCKED))
 #define LIVING_CAN_PULL(living) (living.mobility_flags & MOBILITY_PULL && !HAS_TRAIT(living, TRAIT_PULLBLOCKED))
 
-//Common check, for inability to both move or use items.
-#define IS_STUNNED(living) (!LIVING_CAN_MOVE(living) && !LIVING_CAN_USE_HANDS(living))
-//Common check, restrained + stunned.
-#define IS_INCAPACITATED(living) (HAS_TRAIT(living, TRAIT_RESTRAINED) || IS_STUNNED(living))
-//Unable to move, stand or use hands. Like the side-effects of unconsciousness.
-#define IS_PARALYZED(living) (!LIVING_CAN_MOVE(living) && !LIVING_CAN_STAND(living) && !LIVING_CAN_USE_HANDS(living))
-//A lot of incapacitated() checks meant to look for something like this.
-#define IS_UP_AND_ABLE(living) (IS_STANDING(living) && LIVING_CAN_MOVE(living) && LIVING_CAN_USE_HANDS(living))
-//Checks against restraints, or that ignore the mob being restrained.
-#define IS_UP_AND_MOBILE(living) (IS_STANDING(living) && LIVING_CAN_MOVE(living))
-
-//Pretty snowflakey, formely a form of restraint (is resistible) but was more different than similar to the other restraint sources.
+//Generic harmful effects.
+#define IS_INCAPACITATED(mob) (mob.stat != CONSCIOUS || HAS_TRAIT(mob, TRAIT_INCAPACITATED))
+//Restraints.
+#define IS_RESTRAINED(living) (HAS_TRAIT(living, TRAIT_RESTRAINED))
+//Neckgrab.
 #define IS_NECKGRABBED(movable) (movable.pulledby && movable.pulledby.grab_state >= GRAB_AGGRESSIVE)
+//Generally healthy and functioning. It checks for both if is standing and can stand both because it could be legless and sitting on a chair, for example. Lots of checks, shouldn't be needed in general.
+#define IS_UP_AND_ABLE(living) (!IS_INCAPACITATED(living) && !buckled && IS_STANDING(living) && LIVING_CAN_STAND(living) && LIVING_CAN_MOVE(living) && LIVING_CAN_USE_HANDS(living))

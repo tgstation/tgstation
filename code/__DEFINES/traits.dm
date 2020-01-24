@@ -69,6 +69,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 //mob traits
 #define TRAIT_KNOCKEDOUT				"knockedout" //Forces the user to stay unconscious.
+#define TRAIT_INCAPACITATED				"incapacitated" //Doesn't much by itself. It's a sign that another harmful thing is happening.
 #define TRAIT_IMMOBILE					"immobile" //User is unable to move by its own volition.
 #define TRAIT_GROUND_IMMOBILE			"ground-immobile" //User is unable to use ground means of locomotion.
 #define TRAIT_STANDINGBLOCKED			"standingblocked" //User is unable to stand up or remain standing.
@@ -244,11 +245,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define GRABSTATE_NECK_TRAIT "grabstate-neck"
 #define STAT_UNCONSCIOUS_TRAIT "stat-unconscious" //Unconscious or Dead.
 #define STAT_NOTCONSCIOUS_TRAIT "stat-notconscious" //Soft-crit, Unconscious or Dead.
-#define STATUSEFFECT_STUN_TRAIT "statuseffect-stun"
-#define STATUSEFFECT_KNOCKDOWN_TRAIT "statuseffect-knockdown"
-#define STATUSEFFECT_IMMOBILIZED_TRAIT "statuseffect-immobilized"
-#define STATUSEFFECT_PARALYZED_TRAIT "statuseffect-paralyzed"
-#define STATUSEFFECT_UNCONSCIOUS_TRAIT "statuseffect-unconscious"
 #define STATUSEFFECT_STASIS_TRAIT "statuseffect-stasis"
 #define STATUSEFFECT_FREON_TRAIT "statuseffect-freon"
 #define SOULSTONE_TRAIT "soulstone"
