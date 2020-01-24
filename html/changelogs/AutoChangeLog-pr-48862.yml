@@ -1,0 +1,5 @@
+author: "OnlineGirlfriend"
+delete-after: True
+changes: 
+  - rscadd: "changshan, cheongsam available in Autodrobe"
+  - imageadd: "sprites for red and blue changshan/cheongsam"

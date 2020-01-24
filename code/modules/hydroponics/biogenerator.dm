@@ -152,7 +152,7 @@
 		to_chat(user, "<span class='warning'>You cannot put this in [src.name]!</span>")
 
 /obj/machinery/biogenerator/ui_interact(mob/user)
-	if(stat & BROKEN || panel_open)
+	if(machine_stat & BROKEN || panel_open)
 		return
 	. = ..()
 	var/dat
@@ -211,7 +211,7 @@
 /obj/machinery/biogenerator/proc/activate()
 	if (usr.stat != CONSCIOUS)
 		return
-	if (src.stat != NONE) //NOPOWER etc
+	if (src.machine_stat != NONE) //NOPOWER etc
 		return
 	if(processing)
 		to_chat(usr, "<span class='warning'>The biogenerator is in the process of working.</span>")

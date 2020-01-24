@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - admin: "harm alarm logging now goes into user attack logs instead of game logs"
