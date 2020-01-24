@@ -152,9 +152,9 @@
 /proc/recursive_hear_check(O)
 	var/list/processing_list = list(O)
 	. = list()
-	var/i = 1
+	var/i = 0
 	while(i < length(processing_list))
-		var/atom/A = processing_list[i++]
+		var/atom/A = processing_list[++i]
 		if(A.flags_1 & HEAR_1)
 			. += A
 		processing_list += A.contents
@@ -214,9 +214,9 @@
 			processing_list += O
 		T.luminosity = lum
 
-	var/i = 1
+	var/i = 0
 	while(i < length(processing_list)) // recursive_hear_check inlined here
-		var/atom/A = processing_list[i++]
+		var/atom/A = processing_list[++i]
 		if(A.flags_1 & HEAR_1)
 			. += A
 			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
