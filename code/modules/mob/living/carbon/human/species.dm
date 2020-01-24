@@ -1712,19 +1712,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		// clear any hot moods and apply cold mood
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
-<<<<<<< HEAD
-		//Sorry for the nasty oneline but I don't want to assign a variable on something run pretty frequently
-		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR))
-=======
-
 		// Apply cold slow down
-		H.add_movespeed_modifier(MOVESPEED_ID_COLD, override = TRUE, \
-			multiplicative_slowdown = ((bodytemp_cold_damage_limit - H.bodytemperature) / COLD_SLOWDOWN_FACTOR), \
-			blacklisted_movetypes = FLOATING)
-
+		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((bodytemp_cold_damage_limit - H.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 		// Display alerts based on the amount of cold damage being taken
 		// Apply more damage based on how cold you are
->>>>>>> tgstation/master
 		switch(H.bodytemperature)
 			if(200 to bodytemp_cold_damage_limit)
 				H.throw_alert("temp", /obj/screen/alert/cold, 1)

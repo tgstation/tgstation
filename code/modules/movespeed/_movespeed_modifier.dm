@@ -84,27 +84,8 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		if(existing == type_or_datum)		//same thing don't need to touch
 			return TRUE
 		remove_movespeed_modifier(existing, FALSE)
-	LAZYINITLIST(movespeed_modification)
-	var/listlen = length(movespeed_modification)
-	if(!listlen)
-		movespeed_modification[type_or_datum.id] = type_or_datum
-	else
-		var/left = 1
-		var/right = listlen
-		var/mid = (left + right) >> 1
-		var/datum/movespeed_modifier/curr
-		while(left < right)
-			var/id = movespeed_modification[mid]
-			curr = movespeed_modification[id]
-			if(curr.priority <= type_or_datum.priority)
-				left = mid + 1
-			else
-				right = mid
-			mid = (left + right) >> 1
-		curr = movespeed_modification[mid]
-		mid = curr.priority > type_or_datum.priority? mid : mid + 1
-		movespeed_modification.Insert(mid, type_or_datum.id)
-		movespeed_modification[type_or_datum.id] = type_or_datum
+	if(length(movespeed_modification))
+		BINARY_INSERT(type_or_datum.id, movespeed_modification, datum/movespeed_modifier, type_or_datum, priority, __BIN_LIST[__BIN_LIST[__BIN_MID]])
 	LAZYSET(movespeed_modification, type_or_datum.id, type_or_datum)
 	if(update)
 		update_movespeed()
