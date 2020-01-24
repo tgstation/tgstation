@@ -326,7 +326,7 @@
 /datum/disease/advance/proc/Devolve(ignore_mutable = FALSE)
 	if(!mutable && !ignore_mutable)
 		return
-	if(length(symptoms))
+	if(length(symptoms) > 1)
 		var/datum/symptom/S = pick(symptoms)
 		if(S)
 			RemoveSymptom(S)
