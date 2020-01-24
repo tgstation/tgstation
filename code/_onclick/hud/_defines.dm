@@ -109,7 +109,6 @@
 
 //living
 #define ui_living_pull "EAST-1:28,CENTER-2:15"
-#define ui_living_health "EAST-1:28,CENTER:15"
 #define ui_living_healthdoll "EAST-1:28,CENTER-2:13"
 
 //borgs

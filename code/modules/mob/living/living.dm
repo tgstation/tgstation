@@ -498,28 +498,6 @@
 /mob/living/update_health_hud()
 	var/severity = 0
 	var/healthpercent = (health/maxHealth) * 100
-	if(hud_used?.healths)
-		switch(healthpercent)
-			if(100 to INFINITY)
-				hud_used.healths.icon_state = "health0"
-			if(80 to 100)
-				hud_used.healths.icon_state = "health1"
-				severity = 1
-			if(60 to 80)
-				hud_used.healths.icon_state = "health2"
-				severity = 2
-			if(40 to 60)
-				hud_used.healths.icon_state = "health3"
-				severity = 3
-			if(20 to 40)
-				hud_used.healths.icon_state = "health4"
-				severity = 4
-			if(1 to 20)
-				hud_used.healths.icon_state = "health5"
-				severity = 5
-			else
-				hud_used.healths.icon_state = "health7"
-				severity = 6
 	if(hud_used?.healthdoll) //to really put you in the boots of a simplemob
 		var/obj/screen/healthdoll/living/livingdoll = hud_used.healthdoll
 		switch(healthpercent)
@@ -546,6 +524,8 @@
 		if(!livingdoll.filtered)
 			livingdoll.filtered = TRUE
 			var/icon/mob_mask = icon(icon, icon_state)
+			if(mob_mask.Height() > world.icon_size || mob_mask.Width() > world.icon_size)
+				mob_mask = icon('icons/mob/screen_gen.dmi', "megasprite") //swap to something that fits if they wont
 			livingdoll.filters += filter(type="alpha", icon = mob_mask)
 			livingdoll.filters += filter(type="drop_shadow", size = -1)
 	if(severity > 0)
