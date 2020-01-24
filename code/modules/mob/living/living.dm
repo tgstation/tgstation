@@ -526,7 +526,7 @@
 			var/icon/mob_mask = icon(icon, icon_state)
 			if(mob_mask.Height() > world.icon_size || mob_mask.Width() > world.icon_size)
 				mob_mask = icon('icons/mob/screen_gen.dmi', "megasprite") //swap to something that fits if they wont
-			livingdoll.filters += filter(type="alpha", icon = mob_mask)
+			UNLINT(livingdoll.filters += filter(type="alpha", icon = mob_mask))
 			livingdoll.filters += filter(type="drop_shadow", size = -1)
 	if(severity > 0)
 		overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
