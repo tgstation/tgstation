@@ -22,6 +22,9 @@
  *		Snowballs
  *		Clockwork Watches
  *		Toy Daggers
+ *		Trick Blindfold
+ *		Sqeaky Brain
+ *		Broken Radio
  */
 
 
@@ -1489,3 +1492,12 @@
 	icon_state = "shell[rand(1,3)]"
 	color = pickweight(possible_colors)
 	setDir(pick(GLOB.cardinals))
+
+/obj/item/toy/blindfold
+	name = "trick blindfold"
+	desc = "A see-through blindfold perfect for cheating at games like pin the tail on the donkey."
+	icon_state = "blindfold"
+	item_state = "blindfold"
+	w_class = WEIGHT_CLASS_SMALL
+	flags_cover = GLASSESCOVERSEYES
+	slot_flags = ITEM_SLOT_EYES
