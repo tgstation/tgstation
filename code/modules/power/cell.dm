@@ -150,7 +150,7 @@
 					corrupt()
 
 /obj/item/stock_parts/cell/attack_self(mob/user)
-	if((isethereal(user)) && (drain_stop < world.time -20))
+	if((isethereal(user)) && (drain_stop < world.time))
 		var/mob/living/carbon/human/H = user
 		if(charge < 100)
 			to_chat(H, "<span class='warning'>The [src] doesn't have enough power!</span>")
@@ -160,7 +160,7 @@
 			to_chat(H, "<span class='warning'>Your charge is full!</span>")
 			return
 		to_chat(H, "<span class='notice'>You clumsily channel power through the [src] and into your body, wasting some in the process.</span>")
-		drain_stop = world.time
+		drain_stop = world.time + 20
 		if(do_after(user, 20, target = src))
 			if((charge < 100) || (stomach.crystal_charge > 146))
 				return
