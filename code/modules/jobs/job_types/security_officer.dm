@@ -98,15 +98,8 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 			while (length(possible_turfs))
 				var/I = rand(1, possible_turfs.len)
 				var/turf/target = possible_turfs[I]
-				if(!target.density)
-					var/clear = TRUE
-					for(var/obj/O in target)
-						if(O.density)
-							clear = FALSE
-							break
-					if(clear)
-						if (H.Move(target))
-							break
+				if (H.Move(target))
+					break
 				possible_turfs.Cut(I,I+1)
 	if(department)
 		to_chat(M, "<b>You have been assigned to [department]!</b>")
