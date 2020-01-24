@@ -78,8 +78,8 @@
 			yo += clone.step_y
 		var/icon/img = getFlatIcon(A)
 		if(img)
-			if(A.turn_angle) //the cheapest (so best, considering cams don't need to be laggier) way of doing this, considering getFlatIcon doesn't give a snot about transforms.'
-				img.Turn(A.turn_angle)
+			if(clone.turn_angle) //the cheapest (so best, considering cams don't need to be laggier) way of doing this, considering getFlatIcon doesn't give a snot about transforms.'
+				img.Turn(clone.turn_angle)
 			res.Blend(img, blendMode2iconMode(A.blend_mode), xo, yo)
 		CHECK_TICK
 
