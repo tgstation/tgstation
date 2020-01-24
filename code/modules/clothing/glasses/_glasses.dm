@@ -521,3 +521,10 @@
 		xray = !xray
 		var/mob/living/carbon/human/H = user
 		H.update_sight()
+
+/obj/item/clothing/glasses/trickblindfold
+	name = "trick blindfold"
+	desc = "A see-through blindfold perfect for cheating at games like pin the tail on the donkey."
+	icon_state = "trickblindfold"
+	item_state = "blindfold"
+	resistance_flags = FLAMMABLE
