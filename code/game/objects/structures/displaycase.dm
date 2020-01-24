@@ -343,3 +343,65 @@
 	name = initial(I.name)
 	icon = initial(I.icon)
 	icon_state = initial(I.icon_state)
+
+/obj/structure/displaycase/forsale
+	name = "sales case"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "glassbox0"
+	desc = "A display case for prized possessions."
+	density = FALSE
+	armor = list("melee" = 30, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
+	max_integrity = 50
+	integrity_failure = 0.25
+	req_access = list(ACCESS_KITCHEN)
+	var/sale_price = 20
+	var/datum/bank_account/payments_acc = null
+
+/obj/structure/displaycase/forsale/update_icon()	//remind me to fix my shitcode later
+	var/icon/I
+	if(open)
+		I = icon('icons/obj/stationobjs.dmi',"laserbox0")
+	else
+		I = icon('icons/obj/stationobjs.dmi',"laserbox0")
+	if(broken)
+		I = icon('icons/obj/stationobjs.dmi',"laserboxb0")
+	if(showpiece)
+		var/icon/S = getFlatIcon(showpiece)
+		S.Scale(17,17)
+		I.Blend(S,ICON_UNDERLAY,8,8)
+	src.icon = I
+	return
+
+/obj/structure/displaycase/forsale/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	if(I.tool_behaviour == TOOL_MULTITOOL && user.a_intent == INTENT_HELP && !broken)
+		var/new_price = input("Set the sale price for this sale post.","New price", sale_price) as num|null
+		if(!new_price || (get_dist(src,user) > 1))
+			to_chat(user, "<span class='warning'>You can't set a price like this.</span>")
+			return
+		sale_price = CLAMP(round(sale_price, 1), 10, 1000)
+		to_chat(user, "<span class='notice'>The cost is now set to [sale_price].</span>")
+		return 1
+	if(istype(I, /obj/item/card/id))
+		var/obj/item/card/id/potential_acc = I
+		if(!potential_acc.registered_account || !allowed(user) || payments_acc || (payments_acc == potential_acc.registered_account))
+			to_chat(user, "<span class='warning'>Sales podeum previously registered, or unable to register card.</span>")
+			return
+		payments_acc = potential_acc.registered_account
+		to_chat(user, "<span class='notice'>Sales podeum registered.</span>")
+
+/obj/structure/displaycase/forsale/CtrlClick(mob/user)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/customer = user
+		if(customer.get_idcard(TRUE))
+			var/obj/item/card/id/C = customer.get_idcard(TRUE)
+			if(C.registered_account)
+				var/datum/bank_account/account = C.registered_account
+				if(!account.has_money(sale_price))
+					to_chat(user, "<span class='notice'>You do not possess the funds to purchase this.</span>")
+					return
+				else
+					account.adjust_money(-sale_price)
+					if(payments_acc)
+						payments_acc.adjust_money(sale_price)
