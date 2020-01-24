@@ -29,7 +29,7 @@ export const Timer = props => {
       )}>
       <Button
         icon="fast-backward"
-        onClick={() => act('input', { adjust: -10 })} />
+        onClick={() => act('input', { adjust: -30 })} />
       <Button
         icon="backward"
         onClick={() => act('input', { adjust: -1 })} />
@@ -42,7 +42,7 @@ export const Timer = props => {
         onClick={() => act('input', { adjust: 1 })} />
       <Button
         icon="fast-forward"
-        onClick={() => act('input', { adjust: 10 })} />
+        onClick={() => act('input', { adjust: 30 })} />
     </Section>
   );
 };
