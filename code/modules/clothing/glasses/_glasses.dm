@@ -301,7 +301,6 @@
 	desc = "A see-through blindfold perfect for cheating at games like pin the stun baton on the clown."
 	icon_state = "trickblindfold"
 	item_state = "blindfold"
-	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/glasses/blindfold/white
 	name = "blind personnel blindfold"
