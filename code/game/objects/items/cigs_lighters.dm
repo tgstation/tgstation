@@ -101,6 +101,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "firebrand"
 	desc = "An unlit firebrand. It makes you wonder why it's not just called a stick."
 	smoketime = 20 //40 seconds
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
 	grind_results = list(/datum/reagent/carbon = 2)
 
 /obj/item/match/firebrand/Initialize()
@@ -132,6 +133,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/chem_volume = 30
 	var/smoke_all = FALSE /// Should we smoke all of the chems in the cig before it runs out. Splits each puff to take a portion of the overall chems so by the end you'll always have consumed all of the chems inside.
 	var/list/list_reagents = list(/datum/reagent/drug/nicotine = 15)
+	var/lung_harm = 1 //How bad it is for you
 
 /obj/item/clothing/mask/cigarette/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer.</span>")
@@ -217,7 +219,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/extinguish()
 	if(!lit)
 		return
-	name = copytext(name,5,length(name)+1)
+	name = copytext_char(name, 5) //5 == length_char("lit ") + 1
 	attack_verb = null
 	hitsound = null
 	damtype = BRUTE
@@ -248,6 +250,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					to_smoke = reagents.total_volume/((smoketime * 2) / (dragtime / 10))
 
 				reagents.reaction(C, INGEST, fraction)
+				var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
+				if(L && !(L.organ_flags & ORGAN_SYNTHETIC))
+					C.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm)
 				if(!reagents.trans_to(C, to_smoke))
 					reagents.remove_any(to_smoke)
 				return

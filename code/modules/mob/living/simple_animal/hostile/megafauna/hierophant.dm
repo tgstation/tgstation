@@ -401,14 +401,14 @@ Difficulty: Hard
 	if(health > 0 || stat == DEAD)
 		return
 	else
-		stat = DEAD
+		set_stat(DEAD)
 		blinking = TRUE //we do a fancy animation, release a huge burst(), and leave our staff.
 		visible_message("<span class='hierophant'>\"Mrmxmexmrk wipj-hiwxvygx wiuyirgi...\"</span>")
 		visible_message("<span class='hierophant_warning'>[src] shrinks, releasing a massive burst of energy!</span>")
 		for(var/mob/living/L in view(7,src))
 			stored_nearby += L // store the people to grant the achievements to once we die
 		hierophant_burst(null, get_turf(src), 10)
-		stat = CONSCIOUS // deathgasp wont run if dead, stupid
+		set_stat(CONSCIOUS) // deathgasp wont run if dead, stupid
 		..(force_grant = stored_nearby)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Destroy()
@@ -533,13 +533,13 @@ Difficulty: Hard
 	if(QDELETED(caster))
 		return FALSE
 	if(mover == caster.pulledby)
-		return TRUE
+		return
 	if(istype(mover, /obj/projectile))
 		var/obj/projectile/P = mover
 		if(P.firer == caster)
-			return TRUE
-	if(mover == caster)
-		return TRUE
+			return
+	if(mover != caster)
+		return FALSE
 
 /obj/effect/temp_visual/hierophant/chaser //a hierophant's chaser. follows target around, moving and producing a blast every speed deciseconds.
 	duration = 98

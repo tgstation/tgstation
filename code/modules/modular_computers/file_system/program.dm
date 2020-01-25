@@ -71,7 +71,7 @@
 // Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
 // User has to wear their ID for ID Scan to work.
 // Can also be called manually, with optional parameter being access_to_check to scan the user's ID
-/datum/computer_file/program/proc/can_run(mob/user, loud = 0, access_to_check, transfer = 0)
+/datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, transfer = FALSE)
 	// Defaults to required_access
 	if(!access_to_check)
 		if(transfer && transfer_access)
@@ -79,16 +79,16 @@
 		else
 			access_to_check = required_access
 	if(!access_to_check) // No required_access, allow it.
-		return 1
+		return TRUE
 
 	if(!transfer && computer && (computer.obj_flags & EMAGGED))	//emags can bypass the execution locks but not the download ones.
-		return 1
+		return TRUE
 
 	if(IsAdminGhost(user))
-		return 1
+		return TRUE
 
 	if(issilicon(user))
-		return 1
+		return TRUE
 
 	if(ishuman(user))
 		var/obj/item/card/id/D
@@ -102,14 +102,14 @@
 		if(!I && !D)
 			if(loud)
 				to_chat(user, "<span class='danger'>\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning.</span>")
-			return 0
+			return FALSE
 
 		if(I)
 			if(access_to_check in I.GetAccess())
-				return 1
+				return TRUE
 		else if(D)
 			if(access_to_check in D.GetAccess())
-				return 1
+				return TRUE
 		if(loud)
 			to_chat(user, "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>")
 	return 0

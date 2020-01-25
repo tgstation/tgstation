@@ -1,0 +1,4 @@
+author: "TheVekter"
+delete-after: True
+changes: 
+  - rscadd: "Added the ability for Xenobiologists to spend slime extracts for research points. Only one of each extract can be used for points."

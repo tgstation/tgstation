@@ -21,9 +21,9 @@
 	isGlass = TRUE
 	foodtype = ALCOHOL
 
-/obj/item/reagent_containers/food/drinks/bottle/update_icon()
-	..()
-	add_overlay("[initial(icon_state)]shine")
+/obj/item/reagent_containers/food/drinks/bottle/update_overlays()
+	. = ..()
+	. += "[initial(icon_state)]shine"
 
 /obj/item/reagent_containers/food/drinks/bottle/small
 	name = "small glass bottle"
