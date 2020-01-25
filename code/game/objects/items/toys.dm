@@ -22,8 +22,8 @@
  *		Snowballs
  *		Clockwork Watches
  *		Toy Daggers
- *		Sqeaky Brain
  *		Broken Radio
+ *		squeaky brain
  */
 
 
@@ -1495,7 +1495,7 @@
 /obj/item/toy/brokenradio
 	name = "broken radio"
 	desc = "An old radio that produces nothing but static when turned on."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "broken_radio"
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
@@ -1509,3 +1509,16 @@
 	else
 		to_chat(user, "<span class='warning'>The dial on [src] jams up</span>")
 		return
+
+/obj/item/toy/braintoy
+	name = "squeaky brain"
+	desc = "A Mr. Monstrous brand toy made to imitate a human brain in smell and texture."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "brain-old"
+	var/cooldown = 0
+
+/obj/item/toy/braintoy/attack_self(mob/user)
+	if(cooldown <= world.time)
+		cooldown = (world.time + 10)
+		sleep(5)
+		playsound(src, 'sound/effects/blobattack.ogg', 50, FALSE)
