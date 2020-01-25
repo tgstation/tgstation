@@ -107,11 +107,12 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/tamed(whomst)
 	friends = whomst
+	faction = whomst.faction.Copy()
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/saddle) && !saddled)
-		if((tame && (user in friends)) && (do_after(user,100,target=src)))
+		if(tame && do_after(user,100,target=src))
 			user.visible_message("<span class='notice'>You manage to put the saddle on [src], you can now ride him.</span>")
 			saddled = TRUE
 			can_buckle = TRUE
@@ -123,7 +124,7 @@
 			D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 			D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
 			D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
-			D.keytype = /obj/item/lasso
+			D.keytype = /obj/item/key/lasso
 			D.drive_verb = "ride"
 		else
 			user.visible_message("<span class='warning'>[src] is rocking around! You can't put the saddle on!</span>")
@@ -236,7 +237,7 @@
 /obj/item/key/lasso
 	name = "lasso"
 	desc = "Perfect for taming all kinds of supernatural beasts! (Warning: only perfect for taming one kind of supernatural beast.)"
-	icon = 'items_and_weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "whip"
 	item_state = "chain"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -245,5 +246,5 @@
 /obj/item/saddle
 	name = "saddle"
 	desc = "This saddle will solve all your problems with being killed by lava beasts!"
-	icon = 'items_and_weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "saddle"
