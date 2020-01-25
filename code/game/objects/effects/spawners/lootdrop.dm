@@ -68,7 +68,8 @@
 				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
 				/obj/item/bikehorn/golden,
 				/obj/item/grenade/clusterbuster,
-				/obj/item/storage/box/syndie_kit/throwing_weapons = 3)
+				/obj/item/storage/box/syndie_kit/throwing_weapons = 3,
+				/obj/item/gun/ballistic/revolver/mateba)
 
 /obj/effect/spawner/lootdrop/gambling
 	name = "gambling valuables spawner"

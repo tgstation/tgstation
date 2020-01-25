@@ -6,10 +6,6 @@
 	density = TRUE
 	anchored = TRUE
 	climbable = TRUE
-	var/list/dir_NORTHWEST = list(NORTH, WEST) //ugly ass checks specific to the corner rails with intercardinal directions
-	var/list/dir_SOUTHWEST = list(SOUTH, WEST)
-	var/list/dir_NORTHEAST = list(NORTH, EAST)
-	var/list/dir_SOUTHEAST = list(SOUTH, EAST)
 
 /obj/structure/railing/corner //aesthetic corner sharp edges hurt oof ouch
 	icon_state = "railing_corner"
@@ -45,27 +41,17 @@
 		return TRUE
 
 /obj/structure/railing/CanPass(atom/movable/mover, turf/target)
-	if(get_dir(loc, target) == dir)
-		return !density
-	if(dir == NORTHWEST && get_dir(loc, target) in dir_NORTHWEST)
-		return !density
-	if(dir == SOUTHWEST && get_dir(loc, target) in dir_SOUTHWEST)
-		return !density
-	if(dir == NORTHEAST && get_dir(loc, target) in dir_NORTHEAST)
-		return !density
-	if(dir == SOUTHEAST && get_dir(loc, target) in dir_SOUTHEAST)
+	if(get_dir(loc, target) & dir)
 		return !density
 	return TRUE
 
+/obj/structure/railing/corner/CanPass()
+	return TRUE
+
 /obj/structure/railing/CheckExit(atom/movable/O, turf/target)
-	if(get_dir(O.loc, target) == dir)
+	if(get_dir(loc, target) & dir)
 		return 0
-	if(dir == NORTHWEST && get_dir(loc, target) in dir_NORTHWEST)
-		return 0
-	if(dir == SOUTHWEST && get_dir(loc, target) in dir_SOUTHWEST)
-		return 0
-	if(dir == NORTHEAST && get_dir(loc, target) in dir_NORTHEAST)
-		return 0
-	if(dir == SOUTHEAST && get_dir(loc, target) in dir_SOUTHEAST)
-		return 0
+	return 1
+
+/obj/structure/railing/corner/CheckExit()
 	return 1

@@ -506,10 +506,6 @@
 	suffix = "donut"
 	name = "arrival shuttle (Donut)"
 
-/datum/map_template/shuttle/donut_elevator
-	suffix = "elevator_donut"
-	name = "elevator shuttle (Donut)"
-
 /datum/map_template/shuttle/infiltrator/basic
 	suffix = "basic"
 	name = "basic syndicate infiltrator"
