@@ -22,7 +22,6 @@
  *		Snowballs
  *		Clockwork Watches
  *		Toy Daggers
- *		Trick Blindfold
  *		Sqeaky Brain
  *		Broken Radio
  */
@@ -1492,3 +1491,19 @@
 	icon_state = "shell[rand(1,3)]"
 	color = pickweight(possible_colors)
 	setDir(pick(GLOB.cardinals))
+
+/obj/item/toy/brokenradio
+	name = "broken radio"
+	desc = "An old radio that produces nothing but static when turned on."
+	icon = 'broken_radio'
+	icon_state = "broken_radio"
+	w_class = WEIGHT_CLASS_SMALL
+	var/cooldown = 0
+
+/obj/item/toy/brokenradio/attack_self(mob/user)
+	if (cooldown < world.time)
+		cooldown = world.time + 1200
+		user.visible_message("<span class='warning'>[user] adjusts the dial on [src].</span>", "<span class='notice'>You adjust the dial on [src].</span>")
+		playsound(src, 'sound/item/radiostatic.ogg', 50, FALSE)
+	else
+		to_chat(user, "<span class='alert'>The dial is stuck in place.</span>")
