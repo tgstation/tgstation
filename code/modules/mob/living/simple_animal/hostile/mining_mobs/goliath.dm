@@ -111,7 +111,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/saddle) && !saddled)
-		if((tame && (user in friends)) && (do_after(user,100,target=src))
+		if((tame && (user in friends)) && (do_after(user,100,target=src)))
 			user.visible_message("<span class='notice'>You manage to put the saddle on [src], you can now ride him.</span>")
 			saddled = TRUE
 			can_buckle = TRUE
