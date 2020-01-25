@@ -235,5 +235,5 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		var/val = round(materials[key]) / MINERAL_MATERIAL_AMOUNT
 		msg += sep
 		sep = ", "
-		msg += "[amount < 0 ? "-" : "+"][val] [copytext(key, 2)]"
+		msg += "[amount < 0 ? "-" : "+"][val] [copytext(key, length(key[1]) + 1)]"
 	formatted = msg.Join()

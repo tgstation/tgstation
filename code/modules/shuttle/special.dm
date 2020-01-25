@@ -21,7 +21,7 @@
 		desc = "Oh no, not again."
 	update_icon()
 
-/obj/machinery/power/emitter/energycannon/magical/update_icon()
+/obj/machinery/power/emitter/energycannon/magical/update_icon_state()
 	if(active)
 		icon_state = icon_state_on
 	else
@@ -223,15 +223,15 @@
 	var/static/list/check_times = list()
 	var/list/payees = list()
 
-/obj/machinery/scanner_gate/luxury_shuttle/CanPass(atom/movable/mover, turf/target)
+/obj/machinery/scanner_gate/luxury_shuttle/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+
 	if(mover in approved_passengers)
 		set_scanline("scanning", 10)
 		return TRUE
 
 	if(!isliving(mover)) //No stowaways
 		return FALSE
-
-	return FALSE
 
 /obj/machinery/scanner_gate/luxury_shuttle/Crossed(atom/movable/AM)
 	return

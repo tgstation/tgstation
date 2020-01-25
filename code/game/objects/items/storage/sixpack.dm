@@ -13,10 +13,8 @@
 	user.visible_message("<span class='suicide'>[user] begins popping open a final cold one with the boys! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
-/obj/item/storage/cans/update_icon()
-	var/icon_status = 0
-	icon_status = contents.len
-	icon_state = "[initial(icon_state)][icon_status]"
+/obj/item/storage/cans/update_icon_state()
+	icon_state = "[initial(icon_state)][contents.len]"
 
 /obj/item/storage/cans/Initialize()
 	. = ..()

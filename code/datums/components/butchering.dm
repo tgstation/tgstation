@@ -118,7 +118,7 @@
 	if(!istype(L))
 		return
 	var/obj/machinery/recycler/eater = parent
-	if(eater.safety_mode || (eater.stat & (BROKEN|NOPOWER))) //I'm so sorry.
+	if(eater.safety_mode || (eater.machine_stat & (BROKEN|NOPOWER))) //I'm so sorry.
 		return
 	if(L.stat == DEAD && (L.butcher_results || L.guaranteed_butcher_results))
 		Butcher(parent, L)

@@ -22,7 +22,7 @@
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/T = pick(turfs)
-		new /datum/spacevine_controller(T, event = src) //spawn a controller at turf
+		new /datum/spacevine_controller(T, pick(subtypesof(/datum/spacevine_mutation)), rand(10,100), rand(5,10), src) //spawn a controller at turf with randomized stats and a single random mutation
 
 
 /datum/spacevine_mutation
@@ -533,11 +533,10 @@
 	if(!override)
 		qdel(src)
 
-/obj/structure/spacevine/CanPass(atom/movable/mover, turf/target)
+/obj/structure/spacevine/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(isvineimmune(mover))
-		. = TRUE
-	else
-		. = ..()
+		return TRUE
 
 /proc/isvineimmune(atom/A)
 	. = FALSE

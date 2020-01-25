@@ -139,7 +139,7 @@
 		contents += secret
 
 /obj/structure/toilet/greyscale
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstacktype = null
 
 /obj/structure/urinal
@@ -234,7 +234,6 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "rubberducky"
 	item_state = "rubberducky"
-
 
 /obj/structure/sink
 	name = "sink"
@@ -398,7 +397,7 @@
 
 /obj/structure/sink/greyscale
 	icon_state = "sink_greyscale"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstacktype = null
 
 //Shower Curtains//

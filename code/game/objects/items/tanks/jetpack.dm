@@ -56,7 +56,7 @@
 	ion_trail.start()
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/move_react)
 	if(full_speed)
-		user.add_movespeed_modifier(MOVESPEED_ID_JETPACK, priority=100, multiplicative_slowdown=-0.25, movetypes=FLOATING, conflict=MOVE_CONFLICT_JETPACK)
+		user.add_movespeed_modifier(MOVESPEED_ID_JETPACK, priority=100, multiplicative_slowdown=-0.5, movetypes=FLOATING, conflict=MOVE_CONFLICT_JETPACK)
 
 /obj/item/tank/jetpack/proc/turn_off(mob/user)
 	on = FALSE

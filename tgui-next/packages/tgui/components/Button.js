@@ -1,11 +1,14 @@
 import { classes, pureComponentHooks } from 'common/react';
-import { tridentVersion } from '../byond';
+import { tridentVersion, act } from '../byond';
 import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from '../hotkeys';
 import { createLogger } from '../logging';
 import { refocusLayout } from '../refocus';
 import { Box } from './Box';
 import { Icon } from './Icon';
 import { Tooltip } from './Tooltip';
+import { Input } from './Input';
+import { Component, createRef } from 'inferno';
+import { Grid } from './Grid';
 
 const logger = createLogger('Button');
 
@@ -107,3 +110,148 @@ export const ButtonCheckbox = props => {
 };
 
 Button.Checkbox = ButtonCheckbox;
+
+export class ButtonConfirm extends Component {
+  constructor() {
+    super();
+    this.state = {
+      clickedOnce: false,
+    };
+    this.handleClick = () => {
+      if (this.state.clickedOnce) {
+        this.setClickedOnce(false);
+      }
+    };
+  }
+
+  setClickedOnce(clickedOnce) {
+    this.setState({
+      clickedOnce,
+    });
+    if (clickedOnce) {
+      setTimeout(() => window.addEventListener('click', this.handleClick));
+    }
+    else {
+      window.removeEventListener('click', this.handleClick);
+    }
+  }
+
+  render() {
+    const {
+      confirmMessage = "Confirm?",
+      confirmColor = "bad",
+      color,
+      content,
+      onClick,
+      ...rest
+    } = this.props;
+    return (
+      <Button
+        content={this.state.clickedOnce ? confirmMessage : content}
+        color={this.state.clickedOnce ? confirmColor : color}
+        onClick={() => this.state.clickedOnce
+          ? onClick()
+          : this.setClickedOnce(true)}
+        {...rest}
+      />
+    );
+  }
+}
+
+Button.Confirm = ButtonConfirm;
+
+export class ButtonInput extends Component {
+  constructor() {
+    super();
+    this.inputRef = createRef();
+    this.state = {
+      inInput: false,
+    };
+  }
+
+  setInInput(inInput) {
+    this.setState({
+      inInput,
+    });
+    if (this.inputRef) {
+      const input = this.inputRef.current;
+      if (inInput) {
+        input.value = this.props.currentValue || "";
+        try {
+          input.focus();
+          input.select();
+        }
+        catch {}
+      }
+    }
+  }
+
+  commitResult(e) {
+    if (this.inputRef) {
+      const input = this.inputRef.current;
+      const hasValue = (input.value !== "");
+      if (hasValue) {
+        this.props.onCommit(e, input.value);
+        return;
+      } else {
+        if (!this.props.defaultValue) {
+          return;
+        }
+        this.props.onCommit(e, this.props.defaultValue);
+      }
+    }
+  }
+
+  render() {
+    const {
+      fluid,
+      content,
+      color = 'default',
+      placeholder,
+      maxLength,
+      ...rest
+    } = this.props;
+
+    return (
+      <Box
+        className={classes([
+          'Button',
+          fluid && 'Button--fluid',
+          'Button--color--' + color,
+        ])}
+        {...rest}
+        onClick={() => this.setInInput(true)}>
+        <div>
+          {content}
+        </div>
+        <input
+          ref={this.inputRef}
+          className="NumberInput__input"
+          style={{
+            'display': !this.state.inInput ? 'none' : undefined,
+            'text-align': 'left',
+          }}
+          onBlur={e => {
+            if (!this.state.inInput) {
+              return;
+            }
+            this.setInInput(false);
+            this.commitResult(e);
+          }}
+          onKeyDown={e => {
+            if (e.keyCode === KEY_ENTER) {
+              this.setInInput(false);
+              this.commitResult(e);
+              return;
+            }
+            if (e.keyCode === KEY_ESCAPE) {
+              this.setInInput(false);
+            }
+          }}
+        />
+      </Box>
+    );
+  }
+}
+
+Button.Input = ButtonInput;

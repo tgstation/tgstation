@@ -4,7 +4,7 @@
 	var/param = message
 	var/custom_param = findchar(act, " ")
 	if(custom_param)
-		param = copytext(act, custom_param + 1, length(act) + 1)
+		param = copytext(act, custom_param + length(act[custom_param]))
 		act = copytext(act, 1, custom_param)
 
 	var/list/key_emotes = GLOB.emote_list[act]

@@ -107,6 +107,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
+/datum/design/mauna_mug
+	name = "Mauna Mug"
+	desc = "This awesome mug will ensure your coffee never stays cold!"
+	id = "mauna_mug"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 100)
+	build_path = /obj/item/reagent_containers/glass/maunamug
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 /datum/design/portaseeder
 	name = "Portable Seed Extractor"
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
@@ -295,6 +305,26 @@
 	build_path = /obj/item/card/id
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/eng_gloves
+	name = "Tinkers Gloves"
+	desc = "Overdesigned engineering gloves that have automated construction subroutines dialed in, allowing for faster construction while worn."
+	id = "eng_gloves"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
+	build_path = /obj/item/clothing/gloves/color/latex/engineering
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/lavarods
+	name = "Lava-Resistant Metal Rods"
+	id = "lava_rods"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron=1000, /datum/material/plasma=500, /datum/material/titanium=2000)
+	build_path = /obj/item/stack/rods/lava
+	category = list("initial", "Stock Parts")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
