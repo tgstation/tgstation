@@ -100,7 +100,7 @@
 	loot = list()
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
-	food_type = list(/obj/item/reagent_containers/food/snacks/salad/aesirsalad,/obj/item/reagent_containers/food/snacks/burger/superbite,/obj/item/reagent_containers/food/snacks/powercrepe,/obj/item/reagent_containers/food/snacks/stuffedlegion)//h-he's fancy!
+	food_type = list(/obj/item/reagent_containers/food/snacks/customizable/salad/ashsalad, /obj/item/reagent_containers/food/snacks/customizable/soup/ashsoup)//use lavaland plants to feed the lavaland monster
 	tame_chance = 20
 	bonus_tame_chance = 10
 	var/saddled = FALSE
@@ -237,7 +237,7 @@
 	timerid = QDEL_IN(src, 7)
 
 /obj/item/key/lasso
-	name = "lasso"
+	name = "bone lasso"
 	desc = "Perfect for taming all kinds of supernatural beasts! (Warning: only perfect for taming one kind of supernatural beast.)"
 	force = 12
 	icon = 'icons/obj/items_and_weapons.dmi'
