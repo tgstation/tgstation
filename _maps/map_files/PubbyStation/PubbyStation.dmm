@@ -33452,10 +33452,10 @@
 /turf/open/floor/grass,
 /area/science/genetics)
 "bFy" = (
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/science/genetics)
 "bFB" = (
@@ -54708,6 +54708,17 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"pVr" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/structure/displaycase/forsale,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/bar)
 "pVD" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -55267,10 +55278,10 @@
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "rlj" = (
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/science/genetics)
 "rlV" = (
@@ -55605,6 +55616,22 @@
 /obj/structure/girder,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
+"sbI" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchenshutters";
+	name = "kitchen shutters"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/displaycase/forsale,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/kitchen)
 "sbY" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/wood,
@@ -88689,7 +88716,7 @@ bad
 bbl
 bbl
 bbl
-bbl
+sbI
 aRN
 bgo
 bhd
@@ -90996,7 +91023,7 @@ aPE
 cpb
 bah
 bah
-aYg
+pVr
 cpi
 bag
 bbr

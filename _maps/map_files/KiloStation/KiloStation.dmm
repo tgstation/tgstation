@@ -33333,8 +33333,8 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
-/mob/living/simple_animal/bot/secbot/pingsky,
 /obj/structure/cable,
+/mob/living/simple_animal/bot/secbot/pingsky,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat_interior)
 "aZi" = (
@@ -43083,6 +43083,7 @@
 	name = "Hallway Hatch"
 	},
 /obj/structure/window/reinforced,
+/obj/item/reagent_containers/food/snacks/pie/cream,
 /turf/open/floor/plating,
 /area/crew_quarters/kitchen)
 "bmT" = (
@@ -44174,11 +44175,11 @@
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
-/obj/item/reagent_containers/food/snacks/pie/cream,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchen";
 	name = "Serving Hatch"
 	},
+/obj/structure/displaycase/forsale,
 /turf/open/floor/plating,
 /area/crew_quarters/kitchen)
 "box" = (

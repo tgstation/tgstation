@@ -32524,6 +32524,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/structure/displaycase/forsale,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "bGZ" = (
@@ -38502,6 +38503,16 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
+"bYB" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchenshutter";
+	name = "privacy shutters"
+	},
+/obj/structure/displaycase/forsale,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 "bYJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
@@ -83566,7 +83577,7 @@ akG
 bZC
 alu
 alF
-anJ
+bYB
 anJ
 aoj
 anJ

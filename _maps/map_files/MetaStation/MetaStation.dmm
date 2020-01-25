@@ -39323,6 +39323,7 @@
 	id = "kitchen";
 	name = "Serving Hatch"
 	},
+/obj/structure/displaycase/forsale,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
