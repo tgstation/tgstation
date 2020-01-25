@@ -97,16 +97,6 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_CARGO
 
-/datum/design/rolling_table
-	name = "Table-with-Wheels"
-	desc = "We duct-taped some wheels to the bottom of a table. It's goddamn science alright?"
-	id = "rolling_table"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 4000)
-	build_path = /obj/structure/table/rolling
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
-
 /datum/design/mauna_mug
 	name = "Mauna Mug"
 	desc = "This awesome mug will ensure your coffee never stays cold!"
@@ -114,6 +104,16 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 100)
 	build_path = /obj/item/reagent_containers/glass/maunamug
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
+/datum/design/rolling_table
+	name = "Table-with-Wheels"
+	desc = "We duct-taped some wheels to the bottom of a table. It's goddamn science alright?"
+	id = "rolling_table"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 4000)
+	build_path = /obj/structure/table/rolling
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
