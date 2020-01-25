@@ -20,7 +20,7 @@
 	var/ride_check_ridden_incapacitated = FALSE
 
 	var/del_on_unbuckle_all = FALSE
-	
+
 	/// If the "vehicle" is a mob, respect MOBILITY_MOVE on said mob.
 	var/respect_mob_mobility = TRUE
 
@@ -192,7 +192,7 @@
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
 	else
-		to_chat(user, "<span class='warning'>You'll need the keys in one of your hands to [drive_verb] [AM].</span>")
+		to_chat(user, "<span class='warning'>You'll need [keytype] in one of your hands to [drive_verb] [AM].</span>")
 
 /datum/component/riding/proc/Unbuckle(atom/movable/M)
 	addtimer(CALLBACK(parent, /atom/movable/.proc/unbuckle_mob, M), 0, TIMER_UNIQUE)
@@ -371,4 +371,4 @@
 		if(rider in AM.buckled_mobs)
 			AM.unbuckle_mob(rider)
 	. = ..()
-	
+
