@@ -217,6 +217,7 @@
 ///Table on wheels
 /obj/structure/table/rolling
 	name = "Rolling table"
+	desc = "A NT brand \"Rolly poly\" rolling table. It can and will move."
 	anchored = FALSE
 	smooth = SMOOTH_FALSE
 	canSmoothWith = list()
@@ -229,19 +230,19 @@
 	attached_items += I
 	RegisterSignal(I, COMSIG_MOVABLE_MOVED, .proc/RemoveItemFromTable) //Listen for the pickup event, unregister on pick-up so we aren't moved
 
-/obj/structure/table/rolling/proc/RemoveItemFromTable()
+/obj/structure/table/rolling/proc/RemoveItemFromTable(datum/source, newloc, dir)
+	if(newloc != loc) //Did we not move with the table? because that shit's ok
+		return FALSE
 	attached_items -= source
 	UnregisterSignal(source, COMSIG_ITEM_PICKUP)
 
-/obj/structure/table/rolling/Move(atom/newloc, direct, glide_size_override)
-	var/turf/T = get_turf(src)
-	if(!..())
-		return FALSE
-	for(var/mob/M in T.contents)//Kidnap everyone on top
-		M.forceMove(newloc, direct)
+/obj/structure/table/rolling/Moved(atom/OldLoc, Dir)
+	for(var/mob/M in OldLoc.contents)//Kidnap everyone on top
+		M.forceMove(loc)
 	for(var/x in attached_items)
 		var/atom/movable/AM = x
-		AM.Move(newloc, direct)
+		if(!AM.Move(loc))
+			RemoveItemFromTable(AM, AM.loc)
 	return TRUE
 
 /*
