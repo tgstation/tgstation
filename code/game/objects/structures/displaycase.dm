@@ -10,6 +10,7 @@
 	max_integrity = 200
 	integrity_failure = 0.25
 	var/obj/item/showpiece = null
+	var/obj/item/showpiece_type = null //This allows for showpieces that can only hold items if they're the same istype as this.
 	var/alert = TRUE
 	var/open = FALSE
 	var/openable = TRUE
@@ -131,6 +132,9 @@
 				to_chat(user,  "<span class='notice'>You [open ? "close":"open"] [src].</span>")
 				toggle_lock(user)
 	else if(open && !showpiece)
+		if(!istype(W, showpiece_type) && showpiece_type)
+			to_chat(user, "<span class='notice'>This doesn't belong in this kind of display.</span>")
+			return TRUE
 		if(user.transferItemToLoc(W, src))
 			showpiece = W
 			to_chat(user, "<span class='notice'>You put [W] on display.</span>")
@@ -205,6 +209,21 @@
 		if(do_after(user, 30, target = src) && user.transferItemToLoc(I,src))
 			electronics = I
 			to_chat(user, "<span class='notice'>You install the airlock electronics.</span>")
+
+	else if(istype(I, /obj/item/stock_parts/card_reader))
+		var/obj/item/stock_parts/card_reader/C = I
+		to_chat(user, "<span class='notice'>You start adding [C] to [src]...</span>")
+		if(do_after(user, 20, target = src))
+			var/obj/structure/displaycase/forsale/sale = new(src.loc)
+			if(electronics)
+				electronics.forceMove(sale)
+				sale.electronics = electronics
+				if(electronics.one_access)
+					sale.req_one_access = electronics.accesses
+				else
+					sale.req_access = electronics.accesses
+			qdel(src)
+			qdel(C)
 
 	else if(istype(I, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = I
@@ -345,57 +364,71 @@
 	icon_state = initial(I.icon_state)
 
 /obj/structure/displaycase/forsale
-	name = "sales case"
+	name = "vend-a-tray"
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "glassbox0"
-	desc = "A display case for prized possessions."
+	icon_state = "laserbox0"
+	desc = "A display case with an ID-card swipe, to purchase the contents."
 	density = FALSE
-	armor = list("melee" = 30, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
-	max_integrity = 50
-	integrity_failure = 0.25
+	max_integrity = 100
 	req_access = list(ACCESS_KITCHEN)
+	showpiece_type = /obj/item/reagent_containers/food
 	var/sale_price = 20
 	var/datum/bank_account/payments_acc = null
 
 /obj/structure/displaycase/forsale/update_icon()	//remind me to fix my shitcode later
 	var/icon/I
 	if(open)
-		I = icon('icons/obj/stationobjs.dmi',"laserbox0")
+		I = icon('icons/obj/stationobjs.dmi',"laserboxb0")
 	else
 		I = icon('icons/obj/stationobjs.dmi',"laserbox0")
 	if(broken)
 		I = icon('icons/obj/stationobjs.dmi',"laserboxb0")
+	if(!showpiece && !open)
+		I = icon('icons/obj/stationobjs.dmi',"laserbox_open")
 	if(showpiece)
 		var/icon/S = getFlatIcon(showpiece)
 		S.Scale(17,17)
-		I.Blend(S,ICON_UNDERLAY,8,8)
+		I.Blend(S,ICON_UNDERLAY,8,12)
 	src.icon = I
 	return
 
 /obj/structure/displaycase/forsale/attackby(obj/item/I, mob/living/user, params)
-	. = ..()
 	if(I.tool_behaviour == TOOL_MULTITOOL && user.a_intent == INTENT_HELP && !broken)
-		var/new_price = input("Set the sale price for this sale post.","New price", sale_price) as num|null
+		var/new_price = input("Set the sale price for this vend-a-tray.","new price") as num|null
 		if(!new_price || (get_dist(src,user) > 1))
-			to_chat(user, "<span class='warning'>You can't set a price like this.</span>")
 			return
-		sale_price = CLAMP(round(sale_price, 1), 10, 1000)
+		sale_price = CLAMP(round(new_price, 1), 10, 1000)
 		to_chat(user, "<span class='notice'>The cost is now set to [sale_price].</span>")
 		return 1
 	if(istype(I, /obj/item/card/id))
 		var/obj/item/card/id/potential_acc = I
-		if(!potential_acc.registered_account || !allowed(user) || payments_acc || (payments_acc == potential_acc.registered_account))
+		/*if(!potential_acc.registered_account || !allowed(user) || !(payments_acc == potential_acc.registered_account))
 			to_chat(user, "<span class='warning'>Sales podeum previously registered, or unable to register card.</span>")
+			return*/
+		if(!payments_acc)
+			payments_acc = potential_acc.registered_account
+			to_chat(user, "<span class='notice'>Vend-a-tray registered.</span>")
+		else if(payments_acc != potential_acc.registered_account)
+			to_chat(user, "<span class='warning'>Vend-a-tray already registered.</span>")
 			return
-		payments_acc = potential_acc.registered_account
-		to_chat(user, "<span class='notice'>Sales podeum registered.</span>")
+	. = ..()
+
+/obj/structure/displaycase/forsale/examine(mob/user)
+	. = ..()
+	if(showpiece && !open)
+		. += "<span class='notice'>[showpiece] is for sale for [sale_price] credits. Ctrl-click to purchase.</span>"
 
 /obj/structure/displaycase/forsale/CtrlClick(mob/user)
-	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/customer = user
+		if(!showpiece)
+			to_chat(user, "<span class='notice'>There's nothing for sale.</span>")
+			return
 		if(customer.get_idcard(TRUE))
 			var/obj/item/card/id/C = customer.get_idcard(TRUE)
+			var/confirm = alert(user, "Purchase [showpiece] for [sale_price]?", "Purchase?", "Confirm", "Cancel")
+			if(confirm == "Cancel")
+				return
 			if(C.registered_account)
 				var/datum/bank_account/account = C.registered_account
 				if(!account.has_money(sale_price))
@@ -405,3 +438,8 @@
 					account.adjust_money(-sale_price)
 					if(payments_acc)
 						payments_acc.adjust_money(sale_price)
+					customer.put_in_hands(showpiece)
+					to_chat(user, "<span class='notice'>You purchase [showpiece] for [sale_price] credits.</span>")
+					showpiece = null
+					update_icon()
+
