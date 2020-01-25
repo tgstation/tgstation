@@ -145,3 +145,40 @@
 	user.gib()
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE, -1)
 	return MANUAL_SUICIDE
+
+/obj/item/virgin_mary
+	name = "A picture of the virgin mary"
+	desc = "Burning this in your hand makes you a true mafioso"
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "virgin_mary"
+	resistance_flags = FLAMMABLE
+	///Has this item been used already.
+	var/used_up = FALSE
+	///List of mobs that have already been mobbed.
+	var/static/list/mob_mobs = list()
+
+/obj/item/virgin_mary/fire_act(exposed_temperature, exposed_volume)
+	. = ..()
+	if(used_up)
+		return FALSE
+	if(!ishuman(loc)) //A human needs to be holding it, ya cheezit.
+		return FALSE
+	var/mob/living/carbon/human/joe = loc
+
+	if(joe in mob_mobs) //Only one nickname fuckhead
+		to_chat(joe, "<span class='warning'>You have already been initiated into the mafioso life.</span>")
+		return FALSE
+
+	to_chat(joe, "<span class='notice'>As you burn the picture you feel like you can pick up a fitting nickname</span>")
+	var/nickname = input(joe, "Pick a nickname", "Mafioso Nicknames") as text|null
+	if(!nickname)
+		return FALSE
+	var/new_name
+	var/space_position = findtext(joe.real_name, " ")
+	if(space_position)//Can we find a space?
+		new_name = "[copytext(joe.real_name, 1, space_position)] \"[nickname]\" [copytext(joe.real_name, space_position)]"
+	else //Append otherwise
+		new_name = "[joe.real_name] \"[nickname]\""
+	joe.real_name = new_name
+	used_up = TRUE
+	mob_mobs += joe
