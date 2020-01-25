@@ -89,6 +89,9 @@ export const Bepis = props => {
             <Box>
 				Average technology cost: {data.mean_value}
             </Box>
+            <Box>
+				Current chance of Success: Est. {data.success_estimate}%
+            </Box>
             {data.error_name && (
               <Box color="bad">
                 Previous Failure Reason: Deposited cash value too low.
