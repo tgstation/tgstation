@@ -556,6 +556,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 10
 	throwforce = 12
 	attack_verb = list("beat", "smacked")
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3.5)
 	w_class = WEIGHT_CLASS_HUGE
 	var/homerun_ready = 0
 	var/homerun_able = 0

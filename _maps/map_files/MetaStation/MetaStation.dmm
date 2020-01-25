@@ -924,6 +924,15 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space/nearstation)
+"acl" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/bodycontainer/morgue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
 "acm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -55111,13 +55120,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
-"ctB" = (
-/obj/structure/bodycontainer/morgue,
-/obj/structure/bodycontainer/morgue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/medical/morgue)
 "ctC" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Morgue Maintenance";
@@ -55481,17 +55483,6 @@
 /mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/science/genetics)
-"cuu" = (
-/obj/machinery/camera{
-	c_tag = "Morgue";
-	network = list("ss13","medbay")
-	},
-/obj/structure/bodycontainer/morgue,
-/obj/structure/bodycontainer/morgue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/medical/morgue)
 "cuv" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -56558,16 +56549,6 @@
 "cxs" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/medical/morgue)
-"cxt" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/bodycontainer/morgue,
-/obj/structure/bodycontainer/morgue{
-	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
@@ -101958,13 +101939,13 @@ uGS
 uGS
 csD
 cCe
-cuu
+dbr
 cCj
-ctB
-cxt
+tFJ
+acl
 cCj
-ctB
-ctB
+tFJ
+tFJ
 cCj
 dbr
 tFJ
@@ -103243,13 +103224,13 @@ cnL
 uGS
 cbC
 cCe
-ctB
+tFJ
 cvE
-ctB
-ctB
+tFJ
+tFJ
 cCj
-cxt
-ctB
+acl
+tFJ
 cCe
 cCe
 cCe

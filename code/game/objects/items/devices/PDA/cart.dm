@@ -263,7 +263,7 @@ Code:
 
 			var/turf/pda_turf = get_turf(src)
 			for(var/obj/machinery/computer/monitor/pMon in GLOB.machines)
-				if(pMon.stat & (NOPOWER | BROKEN)) //check to make sure the computer is functional
+				if(pMon.machine_stat & (NOPOWER | BROKEN)) //check to make sure the computer is functional
 					continue
 				if(pda_turf.z != pMon.z) //and that we're on the same zlevel as the computer (lore: limited signal strength)
 					continue

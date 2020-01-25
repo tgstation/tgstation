@@ -196,5 +196,11 @@ GLOBAL_LIST_INIT(bitfields, list(
 		"MOB_EPIC" = MOB_EPIC,
 		"MOB_REPTILE" = MOB_REPTILE,
 		"MOB_SPIRIT" = MOB_SPIRIT
+	),
+	"machine_stat" = list (
+		"BROKEN" = BROKEN,
+		"NOPOWER"	= NOPOWER,
+		"MAINT"	= MAINT,
+		"EMPED" = EMPED
 	)
 	))

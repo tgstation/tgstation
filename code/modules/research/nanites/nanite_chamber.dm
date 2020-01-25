@@ -51,9 +51,9 @@
 	SEND_SIGNAL(occupant, COMSIG_NANITE_SET_CLOUD, cloud_id)
 
 /obj/machinery/nanite_chamber/proc/inject_nanites()
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	if((stat & MAINT) || panel_open)
+	if((machine_stat & MAINT) || panel_open)
 		return
 	if(!occupant || busy)
 		return
@@ -78,9 +78,9 @@
 	occupant.AddComponent(/datum/component/nanites, 100)
 
 /obj/machinery/nanite_chamber/proc/remove_nanites(datum/nanite_program/NP)
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	if((stat & MAINT) || panel_open)
+	if((machine_stat & MAINT) || panel_open)
 		return
 	if(!occupant || busy)
 		return
@@ -118,10 +118,10 @@
 /obj/machinery/nanite_chamber/update_overlays()
 	. = ..()
 
-	if((stat & MAINT) || panel_open)
+	if((machine_stat & MAINT) || panel_open)
 		. += "maint"
 
-	else if(!(stat & (NOPOWER|BROKEN)))
+	else if(!(machine_stat & (NOPOWER|BROKEN)))
 		if(busy || locked)
 			. += "red"
 			if(locked)
