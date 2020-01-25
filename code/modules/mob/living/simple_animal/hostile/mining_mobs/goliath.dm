@@ -32,7 +32,7 @@
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
-	gender = MALE//lavaland elite goliath says that its female and its stronger because of sexual dimorphism, so normal goliaths should be male
+	gender = MALE//lavaland elite goliath says that i'''' 't s female and i ''t s stronger because of sexual dimorphism, so normal goliaths should be male
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide)
@@ -114,7 +114,7 @@
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/saddle) && !saddled)
 		if(tame && do_after(user,55,target=src))
-			user.visible_message("<span class='notice'>You manage to put [O] on [src], you can now ride him.</span>")
+			user.visible_message("<span class='notice'>You manage to put [O] on [src], you can now ride [p_them()].</span>")
 			qdel(O)
 			saddled = TRUE
 			can_buckle = TRUE
