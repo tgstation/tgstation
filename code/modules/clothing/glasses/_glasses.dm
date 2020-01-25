@@ -527,3 +527,4 @@
 		xray = !xray
 		var/mob/living/carbon/human/H = user
 		H.update_sight()
+
