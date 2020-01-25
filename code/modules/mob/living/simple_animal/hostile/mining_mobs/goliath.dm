@@ -50,9 +50,11 @@
 		return
 	icon_state = pre_attack_icon
 
-/mob/living/simple_animal/hostile/asteroid/goliath/revive(full_heal = FALSE, admin_revive = FALSE)
+/mob/living/simple_animal/hostile/asteroid/goliath/revive(full_heal = FALSE, admin_revive = FALSE)//who the fuck anchors mobs
 	if(..())
-		anchored = TRUE
+		move_force = MOVE_FORCE_VERY_STRONG
+		move_resist = MOVE_FORCE_VERY_STRONG
+		pull_force = MOVE_FORCE_VERY_STRONG
 		. = 1
 
 /mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
