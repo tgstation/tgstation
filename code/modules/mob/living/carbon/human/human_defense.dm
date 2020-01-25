@@ -463,6 +463,10 @@
 
 ///Calculates the siemens coeff based on clothing and species, can also restart hearts.
 /mob/living/carbon/human/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
+	if(istype(gloves, /obj/item/clothing/gloves/color/yellow/sprayon)) //Checks to see if the gloves are spray-on, if yes, damage the gloves.
+		var/obj/item/clothing/gloves/color/yellow/sprayon/temp = gloves
+		temp.Shocked()
+
 	//Calculates the siemens coeff based on clothing. Completely ignores the arguments
 	if(flags & SHOCK_TESLA) //I hate this entire block. This gets the siemens_coeff for tesla shocks
 		if(gloves && gloves.siemens_coefficient <= 0)
