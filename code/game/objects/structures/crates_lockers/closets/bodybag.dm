@@ -49,10 +49,10 @@
 		tagged = 0
 		update_icon()
 
-/obj/structure/closet/body_bag/update_icon()
-	..()
-	if (tagged)
-		add_overlay("bodybag_label")
+/obj/structure/closet/body_bag/update_overlays()
+	. = ..()
+	if(tagged)
+		. += "bodybag_label"
 
 /obj/structure/closet/body_bag/open(mob/living/user)
 	. = ..()

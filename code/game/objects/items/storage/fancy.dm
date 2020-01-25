@@ -323,7 +323,7 @@
 	STR.max_items = 5
 	STR.set_holdable(list(/obj/item/clothing/mask/cigarette/cigar))
 
-/obj/item/storage/fancy/cigarettes/cigars/update_icon()
+/obj/item/storage/fancy/cigarettes/cigars/update_icon_state()
 	if(fancy_open)
 		icon_state = "[initial(icon_state)]_open"
 	else

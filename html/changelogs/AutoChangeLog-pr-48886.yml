@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - admin: "Podlauncher now supports sending a single random item instead of the entire turfs contents."

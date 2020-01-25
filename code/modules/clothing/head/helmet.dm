@@ -314,7 +314,11 @@
 
 //LightToggle
 
-/obj/item/clothing/head/helmet/update_icon()
+/obj/item/clothing/head/helment/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/clothing/head/helmet/update_icon_state()
 	var/state = "[initial(icon_state)]"
 	if(attached_light)
 		if(attached_light.on)
@@ -323,10 +327,6 @@
 			state += "-flight" //etc.
 
 	icon_state = state
-
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.update_inv_head()
 
 /obj/item/clothing/head/helmet/ui_action_click(mob/user, action)
 	if(istype(action, alight))
