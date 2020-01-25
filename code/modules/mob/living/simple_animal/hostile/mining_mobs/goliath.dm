@@ -101,19 +101,21 @@
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 	food_type = list(/obj/item/reagent_containers/food/snacks/salad/aesirsalad,/obj/item/reagent_containers/food/snacks/burger/superbite,/obj/item/reagent_containers/food/snacks/powercrepe,/obj/item/reagent_containers/food/snacks/stuffedlegion)//h-he's fancy!
-	tame_chance = 10
-	bonus_tame_chance = 5
+	tame_chance = 20
+	bonus_tame_chance = 10
 	var/saddled = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/tamed(whomst)
-	friends = whomst
-	faction = whomst.faction.Copy()
+	var/mob/living/fren = whomst
+	friends = fren
+	faction = fren.faction.Copy()
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/saddle) && !saddled)
-		if(tame && do_after(user,100,target=src))
-			user.visible_message("<span class='notice'>You manage to put the saddle on [src], you can now ride him.</span>")
+		if(tame && do_after(user,55,target=src))
+			user.visible_message("<span class='notice'>You manage to put [O] on [src], you can now ride him.</span>")
+			qdel(O)
 			saddled = TRUE
 			can_buckle = TRUE
 			buckle_lying = FALSE
@@ -237,11 +239,15 @@
 /obj/item/key/lasso
 	name = "lasso"
 	desc = "Perfect for taming all kinds of supernatural beasts! (Warning: only perfect for taming one kind of supernatural beast.)"
+	force = 12
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "whip"
 	item_state = "chain"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
+	hitsound = 'sound/weapons/whip.ogg'
+	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/saddle
 	name = "saddle"
