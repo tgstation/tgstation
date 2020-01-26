@@ -898,7 +898,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	if(target)//If we found something
 		//Do the animation to zap to it from here
-		zapstart.Beam(target, icon_state="nzcrentrs_power", time=5)
+		zapstart.Beam(target, icon_state="sm_arc", time=5)
 		var/zapdir = get_dir(zapstart, target)
 		if(zapdir)
 			. = zapdir
@@ -930,7 +930,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//Then we finish it all up
 		//This gotdamn variable is a boomer and keeps giving me problems
 		var/turf/T = get_turf(target)
-		var/pressure = T.return_air().return_pressure()
+		var/pressure = max(1,T.return_air().return_pressure())
 		//We get our range with the strength of the zap and the pressure, the lower the former and the higher the latter the better
 		var/new_range = CLAMP(zap_str / pressure * 10, 2, 7)
 		if(prob(5))

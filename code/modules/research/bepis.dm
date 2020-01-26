@@ -111,11 +111,19 @@
 	return
 
 /obj/machinery/rnd/bepis/proc/calcsuccess()
-	var/turf/dropturf = get_turf(pick(view(1,src)))
+	var/turf/dropturf = null
 	var/gauss_major = 0
 	var/gauss_minor = 0
 	var/gauss_real = 0
-	if(!dropturf) //Check to verify the turf exists and the reward isn't lost somehow.
+	var/list/turfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z))		//NO MORE DISCS IN WINDOWS
+	while(length(turfs))
+		var/turf/T = pick_n_take(turfs)
+		if(is_blocked_turf(T, exclude_mobs=TRUE))
+			continue
+		else
+			dropturf = T
+			break
+	if (!dropturf)
 		dropturf = drop_location()
 	gauss_major = (gaussian(major_threshold, std) - negative_cash_offset)	//This is the randomized profit value that this experiment has to surpass to unlock a tech.
 	gauss_minor = (gaussian(minor_threshold, std) - negative_cash_offset)	//And this is the threshold to instead get a minor prize.
@@ -133,11 +141,13 @@
 	if(gauss_real >= gauss_minor) //Minor Success.
 		var/reward_number = 1
 		say("Experiment concluded with partial success. Dispensing compiled research efforts.")
-		reward_number = rand(1,2)
+		reward_number = rand(1,3)
 		if(reward_number == 1)
 			new /obj/item/stack/circuit_stack/full(dropturf)
 		if(reward_number == 2)
 			new /obj/item/airlock_painter/decal(dropturf)
+		if(reward_number == 3)
+			new /obj/item/pen/survival(dropturf)
 		return
 	if(gauss_real <= -1)	//Critical Failure
 		say("ERROR: CRITICAL MACHIME MALFUNCTI- ON. CURRENCY IS NOT CRASH. CANNOT COMPUTE COMMAND: 'make bucks'") //not a typo, for once.

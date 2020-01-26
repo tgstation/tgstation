@@ -3,11 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-/obj/machinery/power/shieldwallgen{
-	active = 2;
-	anchored = 1;
-	power = 1
-	},
+/obj/machinery/power/shieldwallgen/anchored,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
@@ -153,11 +149,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/abandonedzoo)
 "aE" = (
-/obj/machinery/power/shieldwallgen{
-	active = 2;
-	anchored = 1;
-	power = 1
-	},
+/obj/machinery/power/shieldwallgen/anchored,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
@@ -248,7 +240,6 @@
 /obj/machinery/power/apc/unlocked{
 	dir = 8;
 	environ = 0;
-	equipment = 0;
 	lighting = 0;
 	name = "Worn-out APC";
 	pixel_x = -25
@@ -367,11 +358,8 @@
 /turf/open/floor/plasteel/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "bf" = (
-/obj/machinery/power/smes/magical{
-	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
-	name = "power storage unit"
-	},
 /obj/structure/cable,
+/obj/machinery/power/smes/engineering,
 /turf/open/floor/plasteel/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "bg" = (
@@ -435,13 +423,13 @@
 /turf/open/floor/plasteel/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "bs" = (
-/obj/machinery/power/shieldwallgen,
 /obj/structure/cable,
+/obj/machinery/power/shieldwallgen/anchored,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "bt" = (
-/obj/machinery/power/shieldwallgen,
 /obj/structure/cable,
+/obj/machinery/power/shieldwallgen/anchored,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
 "bu" = (
@@ -496,6 +484,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bD" = (
 /obj/item/clothing/mask/facehugger/dead,
+/obj/structure/alien/weeds,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
 "bE" = (
@@ -654,7 +643,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "wF" = (
 /obj/machinery/door/airlock/hatch{
@@ -690,6 +679,11 @@
 "KN" = (
 /turf/template_noop,
 /area/space/nearstation)
+"Ng" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/abandonedzoo)
 
 (1,1,1) = {"
 ab
@@ -979,7 +973,7 @@ bl
 at
 ac
 bB
-bB
+Ng
 bD
 bH
 ac
@@ -1002,7 +996,7 @@ ac
 bC
 bH
 bH
-bX
+bB
 bT
 aa
 "}
@@ -1022,7 +1016,7 @@ aL
 aD
 bD
 bB
-bX
+Ng
 bO
 bU
 bW
@@ -1043,7 +1037,7 @@ aQ
 ac
 bB
 bB
-bX
+bB
 bX
 bP
 aa

@@ -19,6 +19,19 @@
 	var/obj/effect/overlay/vis/mattress_on
 	var/obj/machinery/computer/operating/op_computer
 
+/obj/machinery/stasis/Initialize()
+	. = ..()
+	for(var/direction in GLOB.cardinals)
+		op_computer = locate(/obj/machinery/computer/operating, get_step(src, direction))
+		if(op_computer)
+			op_computer.sbed = src
+			break
+
+/obj/machinery/stasis/Destroy()
+	. = ..()
+	if(op_computer && op_computer.sbed == src)
+		op_computer.sbed = null
+
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.</span>"
@@ -53,10 +66,10 @@
 	return stasis_enabled && is_operational()
 
 /obj/machinery/stasis/update_icon_state()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		icon_state = "stasis_broken"
 		return
-	if(panel_open || stat & MAINT)
+	if(panel_open || machine_stat & MAINT)
 		icon_state = "stasis_maintenance"
 		return
 	icon_state = "stasis"
@@ -109,6 +122,12 @@
 	if(stasis_running() && check_nap_violations())
 		chill_out(L)
 	update_icon()
+
+/obj/machinery/stasis/proc/check_patient()
+	if(occupant)
+		return TRUE
+	else
+		return FALSE
 
 /obj/machinery/stasis/post_unbuckle_mob(mob/living/L)
 	thaw_them(L)

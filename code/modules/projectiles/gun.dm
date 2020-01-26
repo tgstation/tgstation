@@ -351,10 +351,6 @@
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 	return TRUE
 
-/obj/item/gun/update_icon()
-	..()
-
-
 /obj/item/gun/proc/reset_semicd()
 	semicd = FALSE
 

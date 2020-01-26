@@ -40,7 +40,7 @@ export const Mule = props => {
             icon={on ? 'power-off' : 'times'}
             content={on ? 'On' : 'Off'}
             selected={on}
-            onClick={() => act('on')}
+            onClick={() => act('power')}
           />
         )} >
         <ProgressBar
