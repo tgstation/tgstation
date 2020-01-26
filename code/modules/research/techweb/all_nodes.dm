@@ -11,53 +11,13 @@
 	design_ids = list("basic_matter_bin", "basic_cell", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani", "desttagger", "handlabel", "packagewrap",
 					"destructive_analyzer", "circuit_imprinter", "experimentor", "rdconsole", "bepis", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab",
 					"paystand", "space_heater", "bucket", "sec_rshot", "sec_beanbag_slug", "sec_bshot", "sec_slug", "sec_Islug", "sec_dart", "sec_38", "rglass", "plasteel",
-					"plastitanium", "plasmaglass", "plasmareinforcedglass", "titaniumglass", "plastitaniumglass", "plastic_knife", "plastic_fork", "plastic_spoon")
-
-/datum/techweb_node/mmi
-	id = "mmi"
-	starting_node = TRUE
-	display_name = "Man Machine Interface"
-	description = "A slightly Frankensteinian device that allows human brains to interface natively with software APIs."
-	design_ids = list("mmi")
-
-/datum/techweb_node/cyborg
-	id = "cyborg"
-	starting_node = TRUE
-	display_name = "Cyborg Construction"
-	description = "Sapient robots with preloaded tool modules and programmable laws."
-	design_ids = list("robocontrol", "sflash", "borg_suit", "borg_head", "borg_chest", "borg_r_arm", "borg_l_arm", "borg_r_leg", "borg_l_leg", "borgupload",
-					"cyborgrecharger", "borg_upgrade_restart", "borg_upgrade_rename")
-
-/datum/techweb_node/mech
-	id = "mecha"
-	starting_node = TRUE
-	display_name = "Mechanical Exosuits"
-	description = "Mechanized exosuits that are several magnitudes stronger and more powerful than the average human."
-	design_ids = list("mecha_tracking", "mechacontrol", "mechapower", "mech_recharger", "ripley_chassis", "firefighter_chassis", "ripley_torso", "ripley_left_arm",
-					"ripley_right_arm", "ripley_left_leg", "ripley_right_leg", "ripley_main", "ripley_peri", "ripleyupgrade", "mech_hydraulic_clamp")
-
-/datum/techweb_node/mech_tools
-	id = "mech_tools"
-	starting_node = TRUE
-	display_name = "Basic Exosuit Equipment"
-	description = "Various tools fit for basic mech units"
-	design_ids = list("mech_drill", "mech_mscanner", "mech_extinguisher")
-
-/datum/techweb_node/basic_tools
-	id = "basic_tools"
-	starting_node = TRUE
-	display_name = "Basic Tools"
-	description = "Basic mechanical, electronic, surgical and botanical tools."
-	design_ids = list("screwdriver", "wrench", "wirecutters", "crowbar", "multitool", "welding_tool", "tscanner", "analyzer", "cable_coil", "pipe_painter", "airlock_painter",
-					"cultivator", "plant_analyzer", "shovel", "spade", "hatchet", "mop", "plunger")
-
-/datum/techweb_node/basic_medical
-	id = "basic_medical"
-	starting_node = TRUE
-	display_name = "Basic Medical Equipment"
-	description = "Basic medical tools and equipment."
-	design_ids = list("cybernetic_liver", "cybernetic_heart", "cybernetic_lungs", "scalpel", "circular_saw", "surgicaldrill", "retractor", "cautery", "hemostat",
-					"surgical_drapes", "syringe", "plumbing_rcd", "beaker", "large_beaker", "xlarge_beaker", "dropper")
+					"plastitanium", "plasmaglass", "plasmareinforcedglass", "titaniumglass", "plastitaniumglass", "plastic_knife", "plastic_fork", "plastic_spoon", "mmi", 
+					"robocontrol", "sflash", "borg_suit", "borg_head", "borg_chest", "borg_r_arm", "borg_l_arm", "borg_r_leg", "borg_l_leg", "borgupload", "cyborgrecharger",
+					"borg_upgrade_restart", "borg_upgrade_rename", "mecha_tracking", "mechacontrol", "mechapower", "mech_recharger", "ripley_chassis", "firefighter_chassis",
+					"ripley_torso", "ripley_left_arm", "ripley_right_arm", "ripley_left_leg", "ripley_right_leg", "ripley_main", "ripley_peri", "ripleyupgrade", "mech_hydraulic_clamp",
+					"mech_drill", "mech_mscanner", "mech_extinguisher", "screwdriver", "wrench", "wirecutters", "crowbar", "multitool", "welding_tool", "tscanner", "analyzer",
+					"cable_coil", "pipe_painter", "airlock_painter", "cultivator", "plant_analyzer", "shovel", "spade", "hatchet", "mop", "plunger", "cybernetic_liver", "cybernetic_heart",
+					"cybernetic_lungs", "scalpel", "circular_saw", "surgicaldrill", "retractor", "cautery", "hemostat", "surgical_drapes", "syringe", "plumbing_rcd", "beaker", "large_beaker", "xlarge_beaker", "dropper")
 
 /////////////////////////Biotech/////////////////////////
 /datum/techweb_node/biotech
