@@ -2173,3 +2173,23 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		M.adjust_fire_stacks(1)
 		M.IgniteMob()
 	..()
+
+/datum/reagent/consumable/ethanol/himalayan
+	name = "Himalayan"
+	description = "Freezing cold; its a miracle"
+	boozepwr = 40
+	color = "##3f498f" // 254, 131, 8
+	quality = DRINK_FANTASTIC
+	taste_description = "freezing cold"
+	glass_icon_state = "himalayan"
+	glass_name = "Himalayan"
+	glass_desc = "A ridiclously cold drink, topped with a snowball. Guaranteed to bring you a blue, blue christmas."
+
+/datum/reagent/consumable/ethanol/himalayan/on_mob_life(mob/living/carbon/M)
+	// Cools the user down while the reagent is in the body. Occasionally causes a brain freeze, giving you a case of minor brain damage.
+	M.adjust_bodytemperature(-25 * TEMPERATURE_DAMAGE_COEFFICIENT)
+	if (prob(5))
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2)
+		to_chat(M, "<span class='notice'>["Your head pounds; you have a brain freeze!"]</span>")
+
+	..()

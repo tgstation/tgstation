@@ -818,3 +818,9 @@
 	id = /datum/reagent/consumable/ethanol/mauna_loa
 	results = list(/datum/reagent/consumable/ethanol/mauna_loa = 5)
 	required_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/bahama_mama = 2)
+
+/datum/chemical_reaction/himalayan
+	name = "Himalayan"
+	id = /datum/reagent/consumable/ethanol/himalayan
+	results = list(/datum/reagent/consumable/ethanol/himalayan = 10)
+	required_reagents = list(/datum/reagent/consumable/ice = 5, /datum/reagent/consumable/frostoil = 5, /datum/reagent/consumable/ethanol/vodka = 1, /datum/reagent/consumable/tonic = 1 )
