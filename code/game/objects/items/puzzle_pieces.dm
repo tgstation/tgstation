@@ -13,6 +13,7 @@
 	throw_range = 7
 	var/puzzle_id = null
 
+//Two test keys for use alongside the two test doors.
 /obj/item/keycard/cheese
 	name = "cheese keycard"
 	desc = "Look, I still don't understand the reference. What the heck is a keyzza?"
@@ -31,7 +32,7 @@
 
 /obj/machinery/door/keycard
 	name = "locked door"
-	desc = "This door only opens when a keycard is swiped. It's strong enough, it could probably withstand anything that happens to it."
+	desc = "This door only opens when a keycard is swiped. This thing looks virtually indestructable, however."
 	icon = 'icons/obj/doors/doorpuzzle.dmi'
 	icon_state = "door_closed"
 	explosion_block = 3
@@ -62,7 +63,7 @@
 	if(istype(I,/obj/item/keycard))
 		var/obj/item/keycard/key = I
 		if((!puzzle_id || puzzle_id == key.puzzle_id)  && density)
-			to_chat(user, "<span class='notice'>The door beeps, and opens itself.</span>")
+			to_chat(user, "<span class='notice'>The door beeps, and slides opens.</span>")
 			open()
 			return
 		else if(puzzle_id != key.puzzle_id)
@@ -72,6 +73,7 @@
 			to_chat(user, "<span class='notice'>This door doesn't appear to close.</span>")
 			return
 
+//Test doors. Gives admins a few doors to use quickly should they so choose.
 /obj/machinery/door/keycard/cheese
 	name = "blue airlock"
 	desc = "Smells like... pizza?"
@@ -114,7 +116,7 @@
 /obj/item/pressure_plate/hologrid/examine(mob/user)
 	. = ..()
 	if(claimed)
-	. += "<span class='notice'>This one appears to be opened already.</span>"
+		. += "<span class='notice'>This one appears to be spent already.</span>"
 
 /obj/item/pressure_plate/hologrid/trigger()
 	reward = new reward(loc)
