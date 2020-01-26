@@ -71,10 +71,10 @@
 		return
 	var/material_amount = get_item_material_amount(I)
 	if(!material_amount)
-		to_chat(user, "<span class='warning'>[I] does not contain sufficient amounts of metal or glass to be accepted by [parent].</span>")
+		to_chat(user, "<span class='warning'>[I] does not contain sufficient materials to be accepted by [parent].</span>")
 		return
 	if(!has_space(material_amount))
-		to_chat(user, "<span class='warning'>[parent] is full. Please remove metal or glass from [parent] in order to insert more.</span>")
+		to_chat(user, "<span class='warning'>[parent] is full. Please remove materials from [parent] in order to insert more.</span>")
 		return
 	user_insert(I, user)
 
@@ -96,17 +96,10 @@
 		return
 	var/inserted = insert_item(I, stack_amt = requested_amount)
 	if(inserted)
-		if(istype(I, /obj/item/stack))
-			var/obj/item/stack/S = I
-			to_chat(user, "<span class='notice'>You insert [inserted] [S.singular_name][inserted>1 ? "s" : ""] into [parent].</span>")
-			if(!QDELETED(I) && I == active_held && !user.put_in_hands(I))
-				stack_trace("Warning: User could not put object back in hand during material container insertion, line [__LINE__]! This can lead to issues.")
-				I.forceMove(user.drop_location())
-		else
-			to_chat(user, "<span class='notice'>You insert a material total of [inserted] into [parent].</span>")
-			qdel(I)
+		to_chat(user, "<span class='notice'>You insert a material total of [inserted] into [parent].</span>")
+		qdel(I)
 		if(after_insert)
-			after_insert.Invoke(I.type, last_inserted_id, inserted)
+			after_insert.Invoke(I, last_inserted_id, inserted)
 	else if(I == active_held)
 		user.put_in_active_hand(I)
 
@@ -114,8 +107,6 @@
 /datum/component/material_container/proc/insert_item(obj/item/I, var/multiplier = 1, stack_amt)
 	if(!I)
 		return FALSE
-	if(istype(I, /obj/item/stack))
-		return insert_stack(I, stack_amt, multiplier)
 
 	multiplier = CEILING(multiplier, 0.01)
 
@@ -130,34 +121,11 @@
 	var/primary_mat
 	var/max_mat_value = 0
 	for(var/MAT in materials)
-		materials[MAT] += I.materials[MAT] * multiplier
-		total_amount += I.materials[MAT] * multiplier
-		if(I.materials[MAT] > max_mat_value)
+		materials[MAT] += I.custom_materials[MAT] * multiplier
+		total_amount += I.custom_materials[MAT] * multiplier
+		if(I.custom_materials[MAT] > max_mat_value)
 			primary_mat = MAT
 	return primary_mat
-
-/// Proc for putting a stack inside of the container
-/datum/component/material_container/proc/insert_stack(obj/item/stack/S, amt, multiplier = 1) 
-	if(isnull(amt))
-		amt = S.amount
-
-	if(amt <= 0)
-		return FALSE
-
-	if(amt > S.amount)
-		amt = S.amount
-
-	var/material_amt = get_item_material_amount(S)
-	if(!material_amt)
-		return FALSE
-
-	amt = min(amt, round(((max_amount - total_amount) / material_amt)))
-	if(!amt)
-		return FALSE
-
-	last_inserted_id = insert_item_materials(S,amt * multiplier)
-	S.use(amt)
-	return amt
 
 /// For inserting an amount of material
 /datum/component/material_container/proc/insert_amount_mat(amt, var/datum/material/mat) 
@@ -338,11 +306,11 @@
 
 ///returns the amount of material relevant to this container; if this container does not support glass, any glass in 'I' will not be taken into account
 /datum/component/material_container/proc/get_item_material_amount(obj/item/I)
-	if(!istype(I))
+	if(!istype(I) || !I.custom_materials)
 		return FALSE
 	var/material_amount = 0
 	for(var/MAT in materials)
-		material_amount += I.materials[MAT]
+		material_amount += I.custom_materials[MAT]
 	return material_amount
 
 /// Returns the amount of a specific material in this container.

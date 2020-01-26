@@ -8,9 +8,12 @@
 /*
  * Stacks
  */
+
+
 /obj/item/stack
 	icon = 'icons/obj/stack_objects.dmi'
 	gender = PLURAL
+	material_modifier = 0.01
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
@@ -21,7 +24,11 @@
 	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
 	var/full_w_class = WEIGHT_CLASS_NORMAL //The weight class the stack should have at amount > 2/3rds max_amount
 	var/novariants = TRUE //Determines whether the item should update it's sprites based on amount.
+	var/list/mats_per_unit //list that tells you how much is in a single unit.
+	///Datum material type that this stack is made of
+	var/material_type
 	//NOTE: When adding grind_results, the amounts should be for an INDIVIDUAL ITEM - these amounts will be multiplied by the stack size in on_grind()
+	var/obj/structure/table/tableVariant // we tables now (stores table variant to be built from this stack)
 
 /obj/item/stack/on_grind()
 	for(var/i in 1 to grind_results.len) //This should only call if it's ground, so no need to check if grind_results exists
@@ -34,7 +41,6 @@
 	return TRUE
 
 /obj/item/stack/Initialize(mapload, new_amount, merge = TRUE)
-	. = ..()
 	if(new_amount != null)
 		amount = new_amount
 	while(amount > max_amount)
@@ -42,12 +48,32 @@
 		new type(loc, max_amount, FALSE)
 	if(!merge_type)
 		merge_type = type
+	if(custom_materials && custom_materials.len)
+		mats_per_unit = list()
+		var/in_process_mat_list = custom_materials.Copy()
+		for(var/i in custom_materials)
+			mats_per_unit[getmaterialref(i)] = in_process_mat_list[i]
+			custom_materials[i] *= amount
+	. = ..()
 	if(merge)
 		for(var/obj/item/stack/S in loc)
 			if(S.merge_type == merge_type)
 				merge(S)
+	var/list/temp_recipes = get_main_recipes()
+	recipes = temp_recipes.Copy()
+	if(material_type)
+		var/datum/material/M = getmaterialref(material_type) //First/main material
+		for(var/i in M.categories)
+			switch(i)
+				if(MAT_CATEGORY_RIGID)
+					var/list/temp = SSmaterials.rigid_stack_recipes.Copy()
+					recipes += temp
 	update_weight()
 	update_icon()
+
+/obj/item/stack/proc/get_main_recipes()
+	SHOULD_CALL_PARENT(1)
+	return list()//empty list
 
 /obj/item/stack/proc/update_weight()
 	if(amount <= (max_amount * (1/3)))
@@ -57,16 +83,16 @@
 	else
 		w_class = full_w_class
 
-/obj/item/stack/update_icon()
+
+/obj/item/stack/update_icon_state()
 	if(novariants)
-		return ..()
+		return
 	if(amount <= (max_amount * (1/3)))
 		icon_state = initial(icon_state)
 	else if (amount <= (max_amount * (2/3)))
 		icon_state = "[initial(icon_state)]_2"
 	else
 		icon_state = "[initial(icon_state)]_3"
-	..()
 
 
 /obj/item/stack/Destroy()
@@ -182,8 +208,13 @@
 		if(!building_checks(R, multiplier))
 			return
 		if (R.time)
+			var/adjusted_time = 0
 			usr.visible_message("<span class='notice'>[usr] starts building \a [R.title].</span>", "<span class='notice'>You start building \a [R.title]...</span>")
-			if (!do_after(usr, R.time, target = usr))
+			if(HAS_TRAIT(usr, R.trait_booster))
+				adjusted_time = (R.time * R.trait_modifier)
+			else
+				adjusted_time = R.time
+			if (!do_after(usr, adjusted_time, target = usr))
 				return
 			if(!building_checks(R, multiplier))
 				return
@@ -202,6 +233,12 @@
 			O.setDir(usr.dir)
 		use(R.req_amount * multiplier)
 
+		if(R.applies_mats && custom_materials && custom_materials.len)
+			var/list/used_materials = list()
+			for(var/i in custom_materials)
+				used_materials[getmaterialref(i)] = R.req_amount / R.res_amount * (MINERAL_MATERIAL_AMOUNT / custom_materials.len)
+			O.set_custom_materials(used_materials)
+
 		//START: oh fuck i'm so sorry
 		if(istype(O, /obj/structure/windoor_assembly))
 			var/obj/structure/windoor_assembly/W = O
@@ -213,8 +250,7 @@
 
 		else if(istype(O, /obj/item/restraints/handcuffs/cable))
 			var/obj/item/cuffs = O
-			cuffs.item_color = item_color
-			cuffs.update_icon()
+			cuffs.color = color
 
 		if (QDELETED(O))
 			return //It's a stack and has already been merged
@@ -286,6 +322,8 @@
 	amount -= used
 	if(check)
 		zero_amount()
+	for(var/i in mats_per_unit)
+		custom_materials[i] = amount * mats_per_unit[i]
 	update_icon()
 	update_weight()
 	return TRUE
@@ -317,6 +355,10 @@
 		source.add_charge(amount * cost)
 	else
 		src.amount += amount
+	if(mats_per_unit && mats_per_unit.len)
+		for(var/i in mats_per_unit)
+			custom_materials[i] = mats_per_unit[i] * src.amount
+		set_custom_materials() //Refresh
 	update_icon()
 	update_weight()
 
@@ -422,8 +464,11 @@
 	var/on_floor = FALSE
 	var/window_checks = FALSE
 	var/placement_checks = FALSE
+	var/applies_mats = FALSE
+	var/trait_booster = null
+	var/trait_modifier = 1
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE )
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE, applies_mats = FALSE, trait_booster = null, trait_modifier = 1)
 
 
 	src.title = title
@@ -436,6 +481,9 @@
 	src.on_floor = on_floor
 	src.window_checks = window_checks
 	src.placement_checks = placement_checks
+	src.applies_mats = applies_mats
+	src.trait_booster = trait_booster
+	src.trait_modifier = trait_modifier
 /*
  * Recipe list datum
  */

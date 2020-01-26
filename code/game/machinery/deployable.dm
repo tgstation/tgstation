@@ -37,20 +37,19 @@
 	else
 		return ..()
 
-/obj/structure/barricade/CanPass(atom/movable/mover, turf/target)//So bullets will fly over and stuff.
+/obj/structure/barricade/CanAllowThrough(atom/movable/mover, turf/target)//So bullets will fly over and stuff.
+	. = ..()
 	if(locate(/obj/structure/barricade) in get_turf(mover))
-		return 1
-	else if(istype(mover, /obj/item/projectile))
+		return TRUE
+	else if(istype(mover, /obj/projectile))
 		if(!anchored)
-			return 1
-		var/obj/item/projectile/proj = mover
+			return TRUE
+		var/obj/projectile/proj = mover
 		if(proj.firer && Adjacent(proj.firer))
-			return 1
+			return TRUE
 		if(prob(proj_pass_rate))
-			return 1
-		return 0
-	else
-		return !density
+			return TRUE
+		return FALSE
 
 
 
@@ -74,7 +73,8 @@
 			to_chat(user, "<span class='notice'>You start adding [I] to [src]...</span>")
 			if(do_after(user, 50, target=src))
 				W.use(5)
-				new /turf/closed/wall/mineral/wood/nonmetal(get_turf(src))
+				var/turf/T = get_turf(src)
+				T.PlaceOnTop(/turf/closed/wall/mineral/wood/nonmetal)
 				qdel(src)
 				return
 	return ..()
@@ -165,7 +165,7 @@
 		if(HORIZONTAL)
 			mode = SINGLE
 
-	to_chat(user, "[src] is now in [mode] mode.")
+	to_chat(user, "<span class='notice'>[src] is now in [mode] mode.</span>")
 
 /obj/item/grenade/barrier/prime()
 	new /obj/structure/barricade/security(get_turf(src.loc))

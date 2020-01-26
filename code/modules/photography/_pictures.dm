@@ -36,16 +36,16 @@
 	if(autogenerate_icon && !picture_icon && picture_image)
 		regenerate_small_icon()
 
-/datum/picture/proc/get_small_icon()
+/datum/picture/proc/get_small_icon(iconstate)
 	if(!picture_icon)
-		regenerate_small_icon()
+		regenerate_small_icon(iconstate)
 	return picture_icon
 
-/datum/picture/proc/regenerate_small_icon()
+/datum/picture/proc/regenerate_small_icon(iconstate)
 	if(!picture_image)
 		return
 	var/icon/small_img = icon(picture_image)
-	var/icon/ic = icon('icons/obj/items_and_weapons.dmi', "photo")
+	var/icon/ic = icon('icons/obj/items_and_weapons.dmi', iconstate ? iconstate :"photo")
 	small_img.Scale(8, 8)
 	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
 	picture_icon = ic
@@ -117,9 +117,9 @@
 			if(data.len < 5)
 				return null
 			var/timestamp = data[2]
-			var/year = copytext(timestamp, 1, 5)
-			var/month = copytext(timestamp, 5, 7)
-			var/day = copytext(timestamp, 7, 9)
+			var/year = copytext_char(timestamp, 1, 5)
+			var/month = copytext_char(timestamp, 5, 7)
+			var/day = copytext_char(timestamp, 7, 9)
 			var/round = data[4]
 			. += "[year]/[month]/[day]/round-[round]"
 		if("O")

@@ -1,5 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - rscadd: "Sabotage bundle had their airlock charges removed. As compensation they gets some more plastic explosives and a box of signalers."
-  - rscdel: "Removed airlock charge from the game"

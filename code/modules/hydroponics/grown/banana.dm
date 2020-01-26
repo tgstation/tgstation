@@ -29,7 +29,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1)
+	playsound(loc, 'sound/items/bikehorn.ogg', 50, TRUE, -1)
 	sleep(25)
 	if(!user)
 		return (OXYLOSS)
@@ -56,7 +56,7 @@
 
 /obj/item/grown/bananapeel/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is deliberately slipping on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(loc, 'sound/misc/slip.ogg', 50, 1, -1)
+	playsound(loc, 'sound/misc/slip.ogg', 50, TRUE, -1)
 	return (BRUTELOSS)
 
 

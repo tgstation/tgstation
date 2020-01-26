@@ -17,10 +17,25 @@
 	var/stasis_can_toggle = 0
 	var/mattress_state = "stasis_on"
 	var/obj/effect/overlay/vis/mattress_on
+	var/obj/machinery/computer/operating/op_computer
+
+/obj/machinery/stasis/Initialize()
+	. = ..()
+	for(var/direction in GLOB.cardinals)
+		op_computer = locate(/obj/machinery/computer/operating, get_step(src, direction))
+		if(op_computer)
+			op_computer.sbed = src
+			break
+
+/obj/machinery/stasis/Destroy()
+	. = ..()
+	if(op_computer && op_computer.sbed == src)
+		op_computer.sbed = null
 
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.</span>"
+	. += "<span class='notice'>[src] is [op_computer ? "linked" : "<b>NOT</b> linked"] to an operating computer.</span>"
 
 /obj/machinery/stasis/proc/play_power_sound()
 	var/_running = stasis_running()
@@ -50,7 +65,16 @@
 /obj/machinery/stasis/proc/stasis_running()
 	return stasis_enabled && is_operational()
 
-/obj/machinery/stasis/update_icon()
+/obj/machinery/stasis/update_icon_state()
+	if(machine_stat & BROKEN)
+		icon_state = "stasis_broken"
+		return
+	if(panel_open || machine_stat & MAINT)
+		icon_state = "stasis_maintenance"
+		return
+	icon_state = "stasis"
+
+/obj/machinery/stasis/update_overlays()
 	. = ..()
 	var/_running = stasis_running()
 	var/list/overlays_to_remove = managed_vis_overlays
@@ -68,23 +92,14 @@
 
 	SSvis_overlays.remove_vis_overlay(src, overlays_to_remove)
 
-	if(stat & BROKEN)
-		icon_state = "stasis_broken"
-		return
-	if(panel_open || stat & MAINT)
-		icon_state = "stasis_maintenance"
-		return
-	icon_state = "stasis"
-
 /obj/machinery/stasis/obj_break(damage_flag)
 	. = ..()
-	play_power_sound()
-	update_icon()
+	if(.)
+		play_power_sound()
 
 /obj/machinery/stasis/power_change()
 	. = ..()
 	play_power_sound()
-	update_icon()
 
 /obj/machinery/stasis/proc/chill_out(mob/living/target)
 	if(target != occupant)
@@ -107,6 +122,12 @@
 	if(stasis_running() && check_nap_violations())
 		chill_out(L)
 	update_icon()
+
+/obj/machinery/stasis/proc/check_patient()
+	if(occupant)
+		return TRUE
+	else
+		return FALSE
 
 /obj/machinery/stasis/post_unbuckle_mob(mob/living/L)
 	thaw_them(L)

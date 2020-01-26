@@ -20,7 +20,7 @@
 	bonus_reagents = list(/datum/reagent/medicine/omnizine = 2, /datum/reagent/consumable/nutriment/vitamin = 6)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/medicine/omnizine = 8, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("leaves" = 1)
-	foodtype = VEGETABLES
+	foodtype = VEGETABLES | FRUIT
 
 /obj/item/reagent_containers/food/snacks/salad/herbsalad
 	name = "herb salad"

@@ -11,6 +11,7 @@
 	disliked_food = null
 	liked_food = GROSS
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
+	species_language_holder = /datum/language_holder/fly
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.type == /datum/reagent/toxin/pestkiller)
@@ -25,7 +26,7 @@
 		if(nutri_check.nutriment_factor > 0)
 			var/turf/pos = get_turf(H)
 			H.vomit(0, FALSE, FALSE, 2, TRUE)
-			playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+			playsound(pos, 'sound/effects/splat.ogg', 50, TRUE)
 			H.visible_message("<span class='danger'>[H] vomits on the floor!</span>", \
 						"<span class='userdanger'>You throw up on the floor!</span>")
 	..()

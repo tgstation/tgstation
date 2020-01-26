@@ -17,6 +17,7 @@
 	var/mutable_appearance/center
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/New()
+	icon_state = ""
 	center = mutable_appearance(icon, "manifold4w_center")
 	return ..()
 

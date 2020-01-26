@@ -16,7 +16,7 @@
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 50))
 			user.visible_message("<span class='notice'>[user] disassembles [src]!</span>", "<span class='notice'>You break down [src] into scrap metal.</span>")
-			playsound(user, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(user, 'sound/items/deconstruct.ogg', 50, TRUE)
 			new/obj/item/stack/sheet/metal(drop_location())
 			qdel(src)
 		return
@@ -104,7 +104,7 @@
 	icon_state = "driverseat"
 
 /obj/structure/fluff/bus/passable/seat/driver/attack_hand(mob/user)
-	playsound(src, 'sound/items/carhorn.ogg', 50, 1)
+	playsound(src, 'sound/items/carhorn.ogg', 50, TRUE)
 	. = ..()
 
 /obj/structure/fluff/paper
@@ -224,3 +224,53 @@
 /obj/structure/fluff/beach_umbrella/syndi
 	icon_state = "syndi_brella"
 
+/obj/structure/fluff/clockwork
+	name = "Clockwork Fluff"
+	icon = 'icons/obj/clockwork_objects.dmi'
+	deconstructible = FALSE
+
+/obj/structure/fluff/clockwork/alloy_shards
+	name = "replicant alloy shards"
+	desc = "Broken shards of some oddly malleable metal. They occasionally move and seem to glow."
+	icon_state = "alloy_shards"
+
+/obj/structure/fluff/clockwork/alloy_shards/small
+	icon_state = "shard_small1"
+
+/obj/structure/fluff/clockwork/alloy_shards/medium
+	icon_state = "shard_medium1"
+
+/obj/structure/fluff/clockwork/alloy_shards/medium_gearbit
+	icon_state = "gear_bit1"
+
+/obj/structure/fluff/clockwork/alloy_shards/large
+	icon_state = "shard_large1"
+
+/obj/structure/fluff/clockwork/blind_eye
+	name = "blind eye"
+	desc = "A heavy brass eye, its red iris fallen dark."
+	icon_state = "blind_eye"
+
+/obj/structure/fluff/clockwork/fallen_armor
+	name = "fallen armor"
+	desc = "Lifeless chunks of armor. They're designed in a strange way and won't fit on you."
+	icon_state = "fallen_armor"
+
+/obj/structure/fluff/clockwork/clockgolem_remains
+	name = "clockwork golem scrap"
+	desc = "A pile of scrap metal. It seems damaged beyond repair."
+	icon_state = "clockgolem_dead"
+
+/obj/structure/fluff/hedge
+	name = "hedge"
+	desc = "A large bushy hedge."
+	icon = 'icons/obj/smooth_structures/hedge.dmi'
+	icon_state = "hedge"
+	smooth = SMOOTH_TRUE
+	canSmoothWith = list(/obj/structure/fluff/hedge, /obj/structure/fluff/hedge/opaque)
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/hedge/opaque //useful for mazes and such
+	opacity = 1

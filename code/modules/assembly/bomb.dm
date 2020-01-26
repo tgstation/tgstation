@@ -19,15 +19,17 @@
 /obj/item/onetankbomb/examine(mob/user)
 	return bombtank.examine(user)
 
-/obj/item/onetankbomb/update_icon()
-	cut_overlays()
+/obj/item/onetankbomb/update_icon_state()
 	if(bombtank)
 		icon = bombtank.icon
 		icon_state = bombtank.icon_state
+
+/obj/item/onetankbomb/update_overlays()
+	. = ..()
 	if(bombassembly)
-		add_overlay(bombassembly.icon_state)
-		copy_overlays(bombassembly)
-		add_overlay("bomb_assembly")
+		. += bombassembly.icon_state
+		. += bombassembly.overlays
+		. += "bomb_assembly"
 
 /obj/item/onetankbomb/wrench_act(mob/living/user, obj/item/I)
 	..()
@@ -47,7 +49,7 @@
 	..()
 	. = FALSE
 	if(status)
-		to_chat(user, "<span class='notice'>[bombtank] already has a pressure hole!</span>")
+		to_chat(user, "<span class='warning'>[bombtank] already has a pressure hole!</span>")
 		return
 	if(!I.tool_start_check(user, amount=0))
 		return
@@ -155,8 +157,10 @@
 	if(bomb_mixture.temperature > (T0C + 400))
 		strength = (fuel_moles/15)
 
-		if(strength >=1)
+		if(strength >=2)
 			explosion(ground_zero, round(strength,1), round(strength*2,1), round(strength*3,1), round(strength*4,1))
+		else if(strength >=1)
+			explosion(ground_zero, round(strength,1), round(strength*2,1), round(strength*2,1), round(strength*3,1))
 		else if(strength >=0.5)
 			explosion(ground_zero, 0, 1, 2, 4)
 		else if(strength >=0.2)
@@ -170,7 +174,7 @@
 
 		if(strength >=1)
 			explosion(ground_zero, 0, round(strength,1), round(strength*2,1), round(strength*3,1))
-		else if (strength >=0.5)
+		else if(strength >=0.5)
 			explosion(ground_zero, -1, 0, 1, 2)
 		else
 			ground_zero.assume_air(bomb_mixture)
@@ -179,7 +183,7 @@
 	else if(bomb_mixture.temperature > (T0C + 100))
 		strength = (fuel_moles/25)
 
-		if (strength >=1)
+		if(strength >=1)
 			explosion(ground_zero, -1, 0, round(strength,1), round(strength*3,1))
 		else
 			ground_zero.assume_air(bomb_mixture)

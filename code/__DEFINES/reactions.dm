@@ -33,7 +33,6 @@
 #define NOBLIUM_RESEARCH_AMOUNT				1000
 #define BZ_RESEARCH_SCALE					4
 #define BZ_RESEARCH_MAX_AMOUNT				400
-#define MIASMA_RESEARCH_AMOUNT				40
 #define STIMULUM_RESEARCH_AMOUNT			50
 //Plasma fusion properties
 #define FUSION_ENERGY_THRESHOLD				3e9 	//Amount of energy it takes to start a fusion reaction
@@ -48,3 +47,4 @@
 #define FUSION_RAD_MAX						2000
 #define FUSION_RAD_COEFFICIENT				(-1000)
 #define FUSION_INSTABILITY_ENDOTHERMALITY   2
+#define FUSION_MAXIMUM_TEMPERATURE			1e8

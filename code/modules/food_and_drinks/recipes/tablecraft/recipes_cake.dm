@@ -77,6 +77,16 @@
 	result = /obj/item/reagent_containers/food/snacks/store/cake/birthday
 	subcategory = CAT_CAKE
 
+/datum/crafting_recipe/food/energycake
+	name = "Energy cake"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/cake/birthday = 1,
+		/obj/item/melee/transforming/energy/sword = 1,
+	)
+	blacklist = list(/obj/item/reagent_containers/food/snacks/store/cake/birthday/energy)
+	result = /obj/item/reagent_containers/food/snacks/store/cake/birthday/energy
+	subcategory = CAT_CAKE
+
 /datum/crafting_recipe/food/braincake
 	name = "Brain cake"
 	reqs = list(
@@ -149,6 +159,39 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/bsvc
 	subcategory = CAT_CAKE
+
+/datum/crafting_recipe/food/clowncake
+	name = "clown cake"
+	always_availible = FALSE
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1,
+		/obj/item/reagent_containers/food/snacks/sundae = 2,
+		/obj/item/reagent_containers/food/snacks/grown/banana = 5
+	)
+	result = /obj/item/reagent_containers/food/snacks/store/cake/clown_cake
+	subcategory = CAT_CAKE
+
+/datum/crafting_recipe/food/vanillacake
+	name = "vanilla cake"
+	always_availible = FALSE
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1,
+		/obj/item/reagent_containers/food/snacks/grown/vanillapod = 2
+	)
+	result = /obj/item/reagent_containers/food/snacks/store/cake/vanilla_cake
+	subcategory = CAT_CAKE
+
+/datum/crafting_recipe/food/trumpetcake
+	name = "Spaceman's Cake"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1,
+		/obj/item/reagent_containers/food/snacks/grown/trumpet = 2,
+		/datum/reagent/consumable/cream = 5,
+		/datum/reagent/consumable/berryjuice = 5
+	)
+	result = /obj/item/reagent_containers/food/snacks/store/cake/trumpet
+	subcategory = CAT_CAKE
+
 
 /datum/crafting_recipe/food/cak
 	name = "Living cat/cake hybrid"

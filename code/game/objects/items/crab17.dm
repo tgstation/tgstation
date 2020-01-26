@@ -28,11 +28,10 @@
 	desc = "This is good for spacecoin because"
 	icon = 'icons/obj/money_machine.dmi'
 	icon_state = "bogdanoff"
-	layer = TABLE_LAYER //So that the crate inside doesn't appear underneath
+	layer = LARGE_MOB_LAYER
 	armor = list("melee" = 80, "bullet" = 30, "laser" = 30, "energy" = 60, "bomb" = 90, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 80)
 	density = TRUE
 	pixel_z = -8
-	layer = LARGE_MOB_LAYER
 	max_integrity = 5000
 	var/list/accounts_to_rob
 	var/mob/living/carbon/human/bogdanoff
@@ -64,7 +63,7 @@
 		if(do_after(user, 40, target = src))
 			if(!card.registered_account.being_dumped)
 				return
-			to_chat(user, "<span class='warning'>You quickly cash out your funds to a more secure banking location. Funds are safu.</span>")
+			to_chat(user, "<span class='warning'>You quickly cash out your funds to a more secure banking location. Funds are safu.</span>") // This is a reference and not a typo
 			card.registered_account.being_dumped = FALSE
 			card.registered_account.withdrawDelay = 0
 			if(check_if_finished())
@@ -88,17 +87,17 @@
 	sleep(10)
 	if(QDELETED(src))
 		return
-	playsound(src, 'sound/machines/click.ogg', 15, 1, -3)
+	playsound(src, 'sound/machines/click.ogg', 15, TRUE, -3)
 	cut_overlay("flaps")
 	sleep(10)
 	if(QDELETED(src))
 		return
-	playsound(src, 'sound/machines/click.ogg', 15, 1, -3)
+	playsound(src, 'sound/machines/click.ogg', 15, TRUE, -3)
 	cut_overlay("hatch")
 	sleep(30)
 	if(QDELETED(src))
 		return
-	playsound(src,'sound/machines/twobeep.ogg',50,0)
+	playsound(src,'sound/machines/twobeep.ogg',50,FALSE)
 	var/mutable_appearance/hologram = mutable_appearance(icon, "hologram")
 	hologram.pixel_y = 16
 	add_overlay(hologram)
@@ -130,7 +129,7 @@
 	sleep(5)
 	if(QDELETED(src))
 		return
-	playsound(src,'sound/machines/triple_beep.ogg',50,0)
+	playsound(src,'sound/machines/triple_beep.ogg',50,FALSE)
 	add_overlay("text")
 	sleep(10)
 	if(QDELETED(src))
@@ -218,13 +217,13 @@
 	dump = new /obj/structure/checkoutmachine(null, bogdanoff)
 	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(src)] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
 	animate(DF, pixel_z = -8, time = 5, , easing = LINEAR_EASING)
-	playsound(src,  'sound/weapons/mortar_whistle.ogg', 70, 1, 6)
+	playsound(src,  'sound/weapons/mortar_whistle.ogg', 70, TRUE, 6)
 	addtimer(CALLBACK(src, .proc/endLaunch), 5, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
 
 
 /obj/effect/dumpeetTarget/proc/endLaunch()
 	QDEL_NULL(DF) //Delete the falling machine effect, because at this point its animation is over. We dont use temp_visual because we want to manually delete it as soon as the pod appears
-	playsound(src, "explosion", 80, 1)
+	playsound(src, "explosion", 80, TRUE)
 	dump.forceMove(get_turf(src))
 	qdel(src) //The target's purpose is complete. It can rest easy now

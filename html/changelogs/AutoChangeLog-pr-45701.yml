@@ -1,5 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - bugfix: "CHANGETURF_INHERIT_AIR proreply replace, or not replace air."
-  - bugfix: "No more unintended air creation."

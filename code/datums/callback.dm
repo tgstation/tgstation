@@ -221,3 +221,5 @@
 		sleep(resolution*world.tick_lag)
 	return CS.finished
 
+/proc/___callbacknew(typepath, arguments)
+	new typepath(arglist(arguments))

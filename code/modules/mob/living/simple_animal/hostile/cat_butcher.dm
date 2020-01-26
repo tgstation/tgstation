@@ -8,9 +8,6 @@
 	icon_gib = "syndicate_gib"
 	speak_chance = 0
 	turns_per_move = 5
-	response_help = "pokes"
-	response_disarm = "shoves"
-	response_harm = "hits"
 	speed = 0
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
@@ -19,7 +16,8 @@
 	harm_intent_damage = 5
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	attacktext = "slashes at"
+	attack_verb_continuous = "slashes at"
+	attack_verb_simple = "slash at"
 	attack_sound = 'sound/weapons/circsawhit.ogg'
 	a_intent = INTENT_HARM
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
@@ -37,7 +35,7 @@
 		var/mob/living/carbon/human/L = target
 		var/obj/item/organ/tail/cat/tail = L.getorgan(/obj/item/organ/tail/cat)
 		if(!QDELETED(tail))
-			visible_message("[src] severs [L]'s tail in one swift swipe!", "<span class='notice'>You sever [L]'s tail in one swift swipe.</span>")
+			visible_message("<span class='notice'>[src] severs [L]'s tail in one swift swipe!</span>", "<span class='notice'>You sever [L]'s tail in one swift swipe.</span>")
 			tail.Remove(L)
 			var/obj/item/organ/tail/cat/dropped_tail = new(target.drop_location())
 			dropped_tail.color = L.hair_color

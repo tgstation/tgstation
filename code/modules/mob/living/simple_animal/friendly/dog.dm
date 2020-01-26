@@ -2,9 +2,12 @@
 
 /mob/living/simple_animal/pet/dog
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	response_help  = "pets"
-	response_disarm = "bops"
-	response_harm   = "kicks"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "bops"
+	response_disarm_simple = "bop"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
 	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
 	speak_emote = list("barks", "woofs")
 	emote_hear = list("barks!", "woofs!", "yaps.","pants.")
@@ -13,8 +16,64 @@
 	see_in_dark = 5
 	speak_chance = 1
 	turns_per_move = 10
+	var/turns_since_scan = 0
+	var/obj/movement_target
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_CLAW
+
+/mob/living/simple_animal/pet/dog/Life()
+	..()
+
+	//Feeding, chasing food, FOOOOODDDD
+	if(!stat && !resting && !buckled)
+		turns_since_scan++
+		if(turns_since_scan > 5)
+			turns_since_scan = 0
+			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
+				movement_target = null
+				stop_automated_movement = 0
+			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
+				movement_target = null
+				stop_automated_movement = 0
+				for(var/obj/item/reagent_containers/food/snacks/S in oview(src,3))
+					if(isturf(S.loc) || ishuman(S.loc))
+						movement_target = S
+						break
+			if(movement_target)
+				stop_automated_movement = 1
+				step_to(src,movement_target,1)
+				sleep(3)
+				step_to(src,movement_target,1)
+				sleep(3)
+				step_to(src,movement_target,1)
+
+				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
+					var/turf/T = get_turf(movement_target)
+					if(!T)
+						return
+					if (T.x < src.x)
+						setDir(WEST)
+					else if (T.x > src.x)
+						setDir(EAST)
+					else if (T.y < src.y)
+						setDir(SOUTH)
+					else if (T.y > src.y)
+						setDir(NORTH)
+					else
+						setDir(SOUTH)
+
+					if(!Adjacent(movement_target)) //can't reach food through windows.
+						return
+
+					if(isturf(movement_target.loc))
+						movement_target.attack_animal(src)
+					else if(ishuman(movement_target.loc) )
+						if(prob(20))
+							emote("me", 1, "stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
+
+		if(prob(1))
+			emote("me", 1, pick("dances around.","chases its tail!"))
+			INVOKE_ASYNC(GLOBAL_PROC, .proc/dance_rotate, src)
 
 //Corgis and pugs are now under one dog subtype
 
@@ -134,12 +193,12 @@
 			to_chat(user, "<span class='warning'>You can't shave this corgi, it's already been shaved!</span>")
 			return
 		if (nofur)
-			to_chat(user, "<span class='warning'> You can't shave this corgi, it doesn't have a fur coat!</span>")
+			to_chat(user, "<span class='warning'>You can't shave this corgi, it doesn't have a fur coat!</span>")
 			return
-		user.visible_message("[user] starts to shave [src] using \the [O].", "<span class='notice'>You start to shave [src] using \the [O]...</span>")
+		user.visible_message("<span class='notice'>[user] starts to shave [src] using \the [O].</span>", "<span class='notice'>You start to shave [src] using \the [O]...</span>")
 		if(do_after(user, 50, target = src))
-			user.visible_message("[user] shaves [src]'s hair using \the [O].")
-			playsound(loc, 'sound/items/welder2.ogg', 20, 1)
+			user.visible_message("<span class='notice'>[user] shaves [src]'s hair using \the [O].</span>")
+			playsound(loc, 'sound/items/welder2.ogg', 20, TRUE)
 			shaved = TRUE
 			icon_living = "[initial(icon_living)]_shaved"
 			icon_dead = "[initial(icon_living)]_shaved_dead"
@@ -175,7 +234,7 @@
 					update_corgi_fluff()
 					regenerate_icons()
 				else
-					to_chat(usr, "<span class='danger'>There is nothing to remove from its [remove_from].</span>")
+					to_chat(usr, "<span class='warning'>There is nothing to remove from its [remove_from]!</span>")
 					return
 			if("back")
 				if(inventory_back)
@@ -184,7 +243,7 @@
 					update_corgi_fluff()
 					regenerate_icons()
 				else
-					to_chat(usr, "<span class='danger'>There is nothing to remove from its [remove_from].</span>")
+					to_chat(usr, "<span class='warning'>There is nothing to remove from its [remove_from]!</span>")
 					return
 			if("collar")
 				if(pcollar)
@@ -201,7 +260,11 @@
 
 		switch(add_to)
 			if("collar")
-				add_collar(usr.get_active_held_item(), usr)
+				var/obj/item/clothing/neck/petcollar/P = usr.get_active_held_item()
+				if(!istype(P))
+					to_chat(usr,"<span class='warning'>That's not a collar.</span>")
+					return
+				add_collar(P, usr)
 				update_corgi_fluff()
 
 			if(BODY_ZONE_HEAD)
@@ -215,7 +278,7 @@
 					var/obj/item/item_to_add = usr.get_active_held_item()
 
 					if(!item_to_add)
-						usr.visible_message("[usr] pets [src].","<span class='notice'>You rest your hand on [src]'s back for a moment.</span>")
+						usr.visible_message("<span class='notice'>[usr] pets [src].</span>", "<span class='notice'>You rest your hand on [src]'s back for a moment.</span>")
 						return
 
 					if(!usr.temporarilyRemoveItemFromInventory(item_to_add))
@@ -236,9 +299,7 @@
 						item_to_add.forceMove(drop_location())
 						if(prob(25))
 							step_rand(item_to_add)
-						for(var/i in list(1,2,4,8,4,8,4,dir))
-							setDir(i)
-							sleep(1)
+						dance_rotate(src, set_original_dir=TRUE)
 						return
 
 					item_to_add.forceMove(src)
@@ -266,7 +327,7 @@
 			to_chat(user, "<span class='warning'>You can't put more than one hat on [src]!</span>")
 		return
 	if(!item_to_add)
-		user.visible_message("[user] pets [src].","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
+		user.visible_message("<span class='notice'>[user] pets [src].</span>", "<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
 		if(flags_1 & HOLOGRAM_1)
 			return
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
@@ -286,9 +347,9 @@
 		if(health <= 0)
 			to_chat(user, "<span class='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on [p_them()].</span>")
 		else if(user)
-			user.visible_message("[user] puts [item_to_add] on [real_name]'s head.  [src] looks at [user] and barks once.",
-				"<span class='notice'>You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags [p_their()] tail once and barks.</span>",
-				"<span class='italics'>You hear a friendly-sounding bark.</span>")
+			user.visible_message("<span class='notice'>[user] puts [item_to_add] on [real_name]'s head. [src] looks at [user] and barks once.</span>",
+				"<span class='notice'>You put [item_to_add] on [real_name]'s head. [src] gives you a peculiar look, then wags [p_their()] tail once and barks.</span>",
+				"<span class='hear'>You hear a friendly-sounding bark.</span>")
 		item_to_add.forceMove(src)
 		src.inventory_head = item_to_add
 		update_corgi_fluff()
@@ -298,9 +359,7 @@
 		item_to_add.forceMove(drop_location())
 		if(prob(25))
 			step_rand(item_to_add)
-		for(var/i in list(1,2,4,8,4,8,4,dir))
-			setDir(i)
-			sleep(1)
+		dance_rotate(src, set_original_dir=TRUE)
 
 	return valid
 
@@ -330,11 +389,12 @@
 	real_name = "Ian"	//Intended to hold the name without altering it.
 	gender = MALE
 	desc = "It's the HoP's beloved corgi."
-	var/turns_since_scan = 0
-	var/obj/movement_target
-	response_help  = "pets"
-	response_disarm = "bops"
-	response_harm   = "kicks"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "bops"
+	response_disarm_simple = "bop"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
 	var/age = 0
@@ -361,7 +421,7 @@
 		icon_state = "old_corgi"
 		icon_living = "old_corgi"
 		icon_dead = "old_corgi_dead"
-		desc = "At a ripe old age of [record_age] Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
+		desc = "At a ripe old age of [record_age], Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
 		turns_per_move = 20
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Life()
@@ -417,60 +477,6 @@
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/Life()
-	..()
-
-	//Feeding, chasing food, FOOOOODDDD
-	if(!stat && !resting && !buckled)
-		turns_since_scan++
-		if(turns_since_scan > 5)
-			turns_since_scan = 0
-			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
-				movement_target = null
-				stop_automated_movement = 0
-			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
-				movement_target = null
-				stop_automated_movement = 0
-				for(var/obj/item/reagent_containers/food/snacks/S in oview(src,3))
-					if(isturf(S.loc) || ishuman(S.loc))
-						movement_target = S
-						break
-			if(movement_target)
-				stop_automated_movement = 1
-				step_to(src,movement_target,1)
-				sleep(3)
-				step_to(src,movement_target,1)
-				sleep(3)
-				step_to(src,movement_target,1)
-
-				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
-					if (movement_target.loc.x < src.x)
-						setDir(WEST)
-					else if (movement_target.loc.x > src.x)
-						setDir(EAST)
-					else if (movement_target.loc.y < src.y)
-						setDir(SOUTH)
-					else if (movement_target.loc.y > src.y)
-						setDir(NORTH)
-					else
-						setDir(SOUTH)
-
-					if(!Adjacent(movement_target)) //can't reach food through windows.
-						return
-
-					if(isturf(movement_target.loc) )
-						movement_target.attack_animal(src)
-					else if(ishuman(movement_target.loc) )
-						if(prob(20))
-							emote("me", 1, "stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
-
-		if(prob(1))
-			emote("me", 1, pick("dances around.","chases its tail!"))
-			spawn(0)
-				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					setDir(i)
-					sleep(1)
-
 /mob/living/simple_animal/pet/dog/corgi/Ian/narsie_act()
 	playsound(src, 'sound/magic/demon_dies.ogg', 75, TRUE)
 	var/mob/living/simple_animal/pet/dog/corgi/narsie/N = new(loc)
@@ -491,11 +497,16 @@
 /mob/living/simple_animal/pet/dog/corgi/narsie/Life()
 	..()
 	for(var/mob/living/simple_animal/pet/P in range(1, src))
-		if(P != src && prob(5))
+		if(P != src && !istype(P,/mob/living/simple_animal/pet/dog/corgi/narsie))
 			visible_message("<span class='warning'>[src] devours [P]!</span>", \
 			"<span class='cult big bold'>DELICIOUS SOULS</span>")
 			playsound(src, 'sound/magic/demon_attack1.ogg', 75, TRUE)
 			narsie_act()
+			if(P.mind)
+				if(P.mind.hasSoul)
+					P.mind.hasSoul = FALSE //Nars-Ian ate your soul; you don't have one anymore
+				else
+					visible_message("<span class='cult big bold'>... Aw, someone beat me to this one.</span>")
 			P.gib()
 
 /mob/living/simple_animal/pet/dog/corgi/narsie/update_corgi_fluff()
@@ -601,16 +612,18 @@
 	icon_state = "lisa"
 	icon_living = "lisa"
 	icon_dead = "lisa_dead"
-	response_help  = "pets"
-	response_disarm = "bops"
-	response_harm   = "kicks"
-	var/turns_since_scan = 0
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "bops"
+	response_disarm_simple = "bop"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
 	var/puppies = 0
 
 //Lisa already has a cute bow!
 /mob/living/simple_animal/pet/dog/corgi/Lisa/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		to_chat(usr, "<span class='danger'>[src] already has a cute bow!</span>")
+		to_chat(usr, "<span class='warning'>[src] already has a cute bow!</span>")
 		return
 	..()
 
@@ -618,25 +631,6 @@
 	..()
 
 	make_babies()
-
-	if(!stat && !resting && !buckled)
-		if(prob(1))
-			emote("me", 1, pick("dances around.","chases her tail."))
-			spawn(0)
-				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					setDir(i)
-					sleep(1)
-
-/mob/living/simple_animal/pet/dog/pug/Life()
-	..()
-
-	if(!stat && !resting && !buckled)
-		if(prob(1))
-			emote("me", 1, pick("chases its tail."))
-			spawn(0)
-				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					setDir(i)
-					sleep(1)
 
 /mob/living/simple_animal/pet/dog/attack_hand(mob/living/carbon/human/M)
 	. = ..()

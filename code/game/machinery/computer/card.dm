@@ -65,17 +65,14 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
 
 /obj/machinery/computer/card/attackby(obj/I, mob/user, params)
-	if(istype(I, /obj/item/card/id))
-		if(!inserted_scan_id)
+	if(isidcard(I))
+		if(check_access(I) && !inserted_scan_id)
 			if(id_insert(user, I, inserted_scan_id))
 				inserted_scan_id = I
-			return
-		if(!inserted_modify_id)
-			if(id_insert(user, I, inserted_modify_id))
-				inserted_modify_id = I
-			return
-		else
-			to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
+				updateUsrDialog()
+		else if(id_insert(user, I, inserted_modify_id))
+			inserted_modify_id = I
+			updateUsrDialog()
 	else
 		return ..()
 
@@ -133,29 +130,40 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			return JOB_MAX_POSITIONS
 	return JOB_DENIED
 
-/obj/machinery/computer/card/proc/id_insert(mob/user, obj/item/card/id/I, target)
-	if(istype(I))
-		if(target)
-			to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
-			return FALSE
-		if(!user.transferItemToLoc(I, src))
-			return FALSE
-		user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
-							"<span class='notice'>You insert the ID card into the console.</span>")
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-		updateUsrDialog()
-		return TRUE
+
+/obj/machinery/computer/card/proc/id_insert(mob/user, obj/item/inserting_item, obj/item/target)
+	var/obj/item/card/id/card_to_insert = inserting_item
+	var/holder_item = FALSE
+
+	if(!isidcard(card_to_insert))
+		card_to_insert = inserting_item.RemoveID()
+		holder_item = TRUE
+
+	if(!card_to_insert || !user.transferItemToLoc(card_to_insert, src))
+		return FALSE
+
+	if(target)
+		if(holder_item && inserting_item.InsertID(target))
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		else
+			id_eject(user, target)
+
+	user.visible_message("<span class='notice'>[user] inserts \the [card_to_insert] into \the [src].</span>",
+						"<span class='notice'>You insert \the [card_to_insert] into \the [src].</span>")
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	updateUsrDialog()
+	return TRUE
 
 /obj/machinery/computer/card/proc/id_eject(mob/user, obj/target)
 	if(!target)
-		to_chat(user, "<span class='warning'>There's no ID card in the console!</span>")
+		to_chat(user, "<span class='warning'>That slot is empty!</span>")
 		return FALSE
 	else
 		target.forceMove(drop_location())
 		if(!issilicon(user) && Adjacent(user))
 			user.put_in_hands(target)
-		user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
-							"<span class='notice'>You get the ID card from the console.</span>")
+		user.visible_message("<span class='notice'>[user] gets \the [target] from \the [src].</span>", \
+							"<span class='notice'>You get \the [target] from \the [src].</span>")
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 		updateUsrDialog()
 		return TRUE
@@ -167,12 +175,12 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	if(inserted_modify_id)
 		if(id_eject(user, inserted_modify_id))
 			inserted_modify_id = null
-			authenticated = FALSE
+			updateUsrDialog()
 			return
 	if(inserted_scan_id)
 		if(id_eject(user, inserted_scan_id))
 			inserted_scan_id = null
-			authenticated = FALSE
+			updateUsrDialog()
 			return
 
 /obj/machinery/computer/card/ui_interact(mob/user)
@@ -187,15 +195,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	else if(mode == 2)
 		// JOB MANAGEMENT
 		dat += {"<a href='?src=[REF(src)];choice=return'>Return</a>
-		 || Confirm Identity:
-		<a href='?src=[REF(src)];choice=inserted_scan_id'>[(inserted_scan_id ? html_encode(inserted_scan_id.name) : "--------")]</a>
 		<table><tr><td style='width:25%'><b>Job</b></td><td style='width:25%'><b>Slots</b></td>
 		<td style='width:25%'><b>Open job</b></td><td style='width:25%'><b>Close job</b><td style='width:25%'><b>Prioritize</b></td></td></tr>"}
-		var/ID
-		if(inserted_scan_id && (ACCESS_CHANGE_IDS in inserted_scan_id.access) && !target_dept)
-			ID = 1
-		else
-			ID = 0
 		for(var/datum/job/job in SSjob.occupations)
 			dat += "<tr>"
 			if(job.title in blacklisted)
@@ -205,7 +206,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				<td>"}
 			switch(can_open_job(job))
 				if(JOB_ALLOWED)
-					if(ID)
+					if(authenticated == 2)
 						dat += "<a href='?src=[REF(src)];choice=make_job_available;job=[job.title]'>Open Position</a><br>"
 					else
 						dat += "Open Position"
@@ -219,7 +220,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			dat += "</td><td>"
 			switch(can_close_job(job))
 				if(JOB_ALLOWED)
-					if(ID)
+					if(authenticated == 2)
 						dat += "<a href='?src=[REF(src)];choice=make_job_unavailable;job=[job.title]'>Close Position</a>"
 					else
 						dat += "Close Position"
@@ -235,7 +236,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				if(0)
 					dat += "Denied"
 				else
-					if(ID)
+					if(authenticated == 2)
 						if(job in SSjob.prioritized_jobs)
 							dat += "<a href='?src=[REF(src)];choice=prioritize_job;job=[job.title]'>Deprioritize</a>"
 						else
@@ -262,9 +263,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				Confirm Identity: <a href='?src=[REF(src)];choice=inserted_scan_id'>[scan_name]</a><br>"}
 		else
 			header += {"<div align='center'><br>
-				<a href='?src=[REF(src)];choice=inserted_modify_id'>Remove [target_name]</a> ||
-				<a href='?src=[REF(src)];choice=inserted_scan_id'>Remove [scan_name]</a><br>
+				Target: <a href='?src=[REF(src)];choice=inserted_modify_id'>Remove [target_name]</a> ||
+				Confirm Identity: <a href='?src=[REF(src)];choice=inserted_scan_id'>Remove [scan_name]</a><br>
 				<a href='?src=[REF(src)];choice=mode;mode_target=1'>Access Crew Manifest</a><br>
+				[!target_dept ? "<a href='?src=[REF(src)];choice=mode;mode_target=2'>Job Management</a><br>" : ""]
 				<a href='?src=[REF(src)];choice=logout'>Log Out</a></div>"}
 
 		header += "<hr>"
@@ -339,15 +341,15 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						accesses += "<br>"
 					accesses += "</td>"
 				accesses += "</tr></table>"
-			body = "[carddesc.Join()]<br>[jobs.Join()]<br><br>[accesses.Join()]" //CHECK THIS
+			body = "[carddesc.Join()]<br>[jobs.Join()]<br><br>[accesses.Join()]<hr>" //CHECK THIS
 
-		else
-			body = {"<a href='?src=[REF(src)];choice=auth'>{Log in}</a> <br><hr>
-				<a href='?src=[REF(src)];choice=mode;mode_target=1'>Access Crew Manifest</a>"}
+		else if (!authenticated)
+			body = {"<a href='?src=[REF(src)];choice=auth'>Log In</a><br><hr>
+				<a href='?src=[REF(src)];choice=mode;mode_target=1'>Access Crew Manifest</a><br><hr>"}
 			if(!target_dept)
-				body += "<br><hr><a href='?src=[REF(src)];choice=mode;mode_target=2'>Job Management</a>"
+				body += "<a href='?src=[REF(src)];choice=mode;mode_target=2'>Job Management</a><hr>"
 
-		dat = list("<tt>", header.Join(), body, "<hr><br></tt>")
+		dat = list("<tt>", header.Join(), body, "<br></tt>")
 	var/datum/browser/popup = new(user, "id_com", src.name, 900, 620)
 	popup.set_content(dat.Join())
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -365,25 +367,31 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	usr.set_machine(src)
 	switch(href_list["choice"])
 		if ("inserted_modify_id")
-			if (inserted_modify_id)
+			if(inserted_modify_id && !usr.get_active_held_item())
 				if(id_eject(usr, inserted_modify_id))
 					inserted_modify_id = null
-			else
-				var/mob/M = usr
-				var/obj/item/card/id/I = M.get_idcard(TRUE)
-				if(id_insert(usr, I, inserted_modify_id))
-					inserted_modify_id = I
+					updateUsrDialog()
+					return
+			if(usr.get_id_in_hand())
+				var/obj/item/held_item = usr.get_active_held_item()
+				var/obj/item/card/id/id_to_insert = held_item.GetID()
+				if(id_insert(usr, held_item, inserted_modify_id))
+					inserted_modify_id = id_to_insert
+					updateUsrDialog()
 		if ("inserted_scan_id")
-			if (inserted_scan_id)
+			if(inserted_scan_id && !usr.get_active_held_item())
 				if(id_eject(usr, inserted_scan_id))
 					inserted_scan_id = null
-			else
-				var/mob/M = usr
-				var/obj/item/card/id/I = M.get_idcard(TRUE)
-				if(id_insert(usr, I, inserted_scan_id))
-					inserted_scan_id = I
+					updateUsrDialog()
+					return
+			if(usr.get_id_in_hand())
+				var/obj/item/held_item = usr.get_active_held_item()
+				var/obj/item/card/id/id_to_insert = held_item.GetID()
+				if(id_insert(usr, held_item, inserted_scan_id))
+					inserted_scan_id = id_to_insert
+					updateUsrDialog()
 		if ("auth")
-			if ((!( authenticated ) && (inserted_scan_id || issilicon(usr)) && (inserted_modify_id || mode)))
+			if ((!( authenticated ) && (inserted_scan_id || issilicon(usr)) || mode))
 				if (check_access(inserted_scan_id))
 					region_access = list()
 					head_subordinates = list()
@@ -453,7 +461,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 							updateUsrDialog()
 							break
 					if(!jobdatum)
-						to_chat(usr, "<span class='error'>No log exists for this job.</span>")
+						to_chat(usr, "<span class='alert'>No log exists for this job.</span>")
 						updateUsrDialog()
 						return
 					if(inserted_modify_id.registered_account)
@@ -468,7 +476,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				inserted_modify_id.assignment = "Unassigned"
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			else
-				to_chat(usr, "<span class='error'>You are not authorized to demote this position.</span>")
+				to_chat(usr, "<span class='alert'>You are not authorized to demote this position.</span>")
 		if ("reg")
 			if (authenticated)
 				var/t2 = inserted_modify_id
@@ -478,7 +486,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						inserted_modify_id.registered_name = newName
 						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 					else
-						to_chat(usr, "<span class='error'>Invalid name entered.</span>")
+						to_chat(usr, "<span class='alert'>Invalid name entered.</span>")
 						updateUsrDialog()
 						return
 		if ("mode")
@@ -487,11 +495,11 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		if("return")
 			//DISPLAY MAIN MENU
 			mode = 3;
-			playsound(src, "terminal_type", 25, 0)
+			playsound(src, "terminal_type", 25, FALSE)
 
 		if("make_job_available")
 			// MAKE ANOTHER JOB POSITION AVAILABLE FOR LATE JOINERS
-			if(inserted_scan_id && (ACCESS_CHANGE_IDS in inserted_scan_id.access) && !target_dept)
+			if(authenticated && !target_dept)
 				var/edit_job_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
@@ -508,7 +516,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 		if("make_job_unavailable")
 			// MAKE JOB POSITION UNAVAILABLE FOR LATE JOINERS
-			if(inserted_scan_id && (ACCESS_CHANGE_IDS in inserted_scan_id.access) && !target_dept)
+			if(authenticated && !target_dept)
 				var/edit_job_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
@@ -526,7 +534,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 		if ("prioritize_job")
 			// TOGGLE WHETHER JOB APPEARS AS PRIORITIZED IN THE LOBBY
-			if(inserted_scan_id && (ACCESS_CHANGE_IDS in inserted_scan_id.access) && !target_dept)
+			if(authenticated && !target_dept)
 				var/priority_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(priority_target)
 				if(!j)
@@ -542,7 +550,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					return
 				else
 					SSjob.prioritized_jobs += j
-				to_chat(usr, "<span class='notice'>[j.title] has been successfully [priority ?  "prioritized" : "unprioritized"]. Potential employees will notice your request.</span>")
+				to_chat(usr, "<span class='notice'>[j.title] has been successfully [priority ? "prioritized" : "unprioritized"]. Potential employees will notice your request.</span>")
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 
 		if ("print")

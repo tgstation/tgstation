@@ -5,7 +5,7 @@
 	var/light_impact_range = 2
 	var/flash_range = 3
 	var/equipped_slot //For items, lets us determine where things should be hit.
-	
+
 /datum/component/explodable/Initialize(devastation_range_override, heavy_impact_range_override, light_impact_range_override, flash_range_override)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -20,8 +20,8 @@
 			RegisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), .proc/explodable_attack)
 			RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 			RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
-				
-			
+
+
 
 	if(devastation_range_override)
 		devastation_range = devastation_range_override
@@ -45,18 +45,18 @@
 /datum/component/explodable/proc/explodable_attack(datum/source, atom/movable/target, mob/living/user)
 	check_if_detonate(target)
 
-///Called when you attack a specific body part of the thing this is equipped on. Useful for exploding pants. 
+///Called when you attack a specific body part of the thing this is equipped on. Useful for exploding pants.
 /datum/component/explodable/proc/explodable_attack_zone(datum/source, damage, damagetype, def_zone)
 	if(!def_zone)
 		return
 	if(damagetype != BURN) //Don't bother if it's not fire.
 		return
 	if(!is_hitting_zone(def_zone)) //You didn't hit us! ha!
-		return	
+		return
 	detonate()
 
 /datum/component/explodable/proc/on_equip(datum/source, mob/equipper, slot)
-	RegisterSignal(equipper, COMSIG_MOB_APPLY_DAMGE,  .proc/explodable_attack_zone)
+	RegisterSignal(equipper, COMSIG_MOB_APPLY_DAMGE,  .proc/explodable_attack_zone, TRUE)
 
 /datum/component/explodable/proc/on_drop(datum/source, mob/user)
 	UnregisterSignal(user, COMSIG_MOB_APPLY_DAMGE)
@@ -87,13 +87,13 @@
 		if(I.body_parts_covered & bodypart.body_part)
 			return TRUE
 	return FALSE
-	
+
 
 /datum/component/explodable/proc/check_if_detonate(target)
 	if(!isitem(target))
 		return
 	var/obj/item/I = target
-	if(!I.is_hot())
+	if(!I.get_temperature())
 		return
 	detonate() //If we're touching a hot item we go boom
 
@@ -101,7 +101,10 @@
 /// Expldoe and remove the object
 /datum/component/explodable/proc/detonate()
 	var/atom/A = parent
-	explosion(A, devastation_range, heavy_impact_range, light_impact_range, flash_range) //epic explosion time
+	var/log = TRUE
+	if(light_impact_range < 1)
+		log = FALSE
+	explosion(A, devastation_range, heavy_impact_range, light_impact_range, flash_range, log) //epic explosion time
 	qdel(A)
 
 

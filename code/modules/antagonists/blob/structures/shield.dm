@@ -44,7 +44,7 @@
 	brute_resist = 0.5
 	explosion_block = 2
 
-/obj/structure/blob/shield/reflective/handle_ricochet(obj/item/projectile/P)
+/obj/structure/blob/shield/reflective/handle_ricochet(obj/projectile/P)
 	var/turf/p_turf = get_turf(P)
 	var/face_direction = get_dir(src, p_turf)
 	var/face_angle = dir2angle(face_direction)

@@ -9,6 +9,8 @@
 	legs_required = 0	//You'll probably be using this if you don't have legs
 	canmove = TRUE
 	density = FALSE		//Thought I couldn't fix this one easily, phew
+	// Run speed delay is multiplied with this for vehicle move delay.
+	var/delay_multiplier = 6.7
 
 /obj/vehicle/ridden/wheelchair/Initialize()
 	. = ..()
@@ -41,16 +43,19 @@
 			canmove = FALSE
 			addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)
 			return FALSE
-		var/datum/component/riding/D = GetComponent(/datum/component/riding)
-		//1.5 (movespeed as of this change) multiplied by 6.7 gets ABOUT 10 (rounded), the old constant for the wheelchair that gets divided by how many arms they have
-		//if that made no sense this simply makes the wheelchair speed change along with movement speed delay
-		D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 6.7) / min(user.get_num_arms(), 2)
+		set_move_delay(user)
 	return ..()
+
+/obj/vehicle/ridden/wheelchair/proc/set_move_delay(mob/living/user)
+	var/datum/component/riding/D = GetComponent(/datum/component/riding)
+	//1.5 (movespeed as of this change) multiplied by 6.7 gets ABOUT 10 (rounded), the old constant for the wheelchair that gets divided by how many arms they have
+	//if that made no sense this simply makes the wheelchair speed change along with movement speed delay
+	D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / min(user.get_num_arms(), 2)
 
 /obj/vehicle/ridden/wheelchair/Moved()
 	. = ..()
 	cut_overlays()
-	playsound(src, 'sound/effects/roll.ogg', 75, 1)
+	playsound(src, 'sound/effects/roll.ogg', 75, TRUE)
 	if(has_buckled_mobs())
 		handle_rotation_overlayed()
 

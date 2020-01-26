@@ -1,4 +1,0 @@
-author: "Dawson1917"
-delete-after: True
-changes: 
-  - rscadd: "Ported the Fix Air verb from Yogstation. Admins can use it to quickly reset an area's atmos to its default composition."

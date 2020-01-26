@@ -21,6 +21,9 @@
 	density = TRUE
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/smes
+	ui_x = 340
+	ui_y = 440
+
 	var/capacity = 5e6 // maximum charge
 	var/charge = 0 // actual charge
 
@@ -54,7 +57,7 @@
 					break dir_loop
 
 	if(!terminal)
-		stat |= BROKEN
+		obj_break()
 		return
 	terminal.master = src
 	update_icon()
@@ -96,7 +99,7 @@
 		if(!terminal)
 			to_chat(user, "<span class='alert'>No power terminal found.</span>")
 			return
-		stat &= ~BROKEN
+		machine_stat &= ~BROKEN
 		update_icon()
 		return
 
@@ -126,7 +129,7 @@
 			return
 
 		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
-		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 
 		if(do_after(user, 20, target = src))
 			if(C.get_amount() < 10 || !C)
@@ -137,8 +140,7 @@
 				return
 			if(!terminal)
 				C.use(10)
-				user.visible_message(\
-					"[user.name] has built a power terminal.",\
+				user.visible_message("<span class='notice'>[user.name] has built a power terminal.</span>",\
 					"<span class='notice'>You build the power terminal.</span>")
 
 				//build the terminal and link it to the network
@@ -194,44 +196,43 @@
 	terminal = new/obj/machinery/power/terminal(T)
 	terminal.setDir(get_dir(T,src))
 	terminal.master = src
-	stat &= ~BROKEN
+	machine_stat &= ~BROKEN
 
 /obj/machinery/power/smes/disconnect_terminal()
 	if(terminal)
 		terminal.master = null
 		terminal = null
-		stat |= BROKEN
+		obj_break()
 
 
-/obj/machinery/power/smes/update_icon()
-	cut_overlays()
-	if(stat & BROKEN)
+/obj/machinery/power/smes/update_overlays()
+	. = ..()
+	if(machine_stat & BROKEN)
 		return
 
 	if(panel_open)
 		return
 
 	if(outputting)
-		add_overlay("smes-op1")
+		. += "smes-op1"
 	else
-		add_overlay("smes-op0")
+		. += "smes-op0"
 
 	if(inputting)
-		add_overlay("smes-oc1")
-	else
-		if(input_attempt)
-			add_overlay("smes-oc0")
+		. += "smes-oc1"
+	else if(input_attempt)
+		. += "smes-oc0"
 
 	var/clevel = chargedisplay()
 	if(clevel>0)
-		add_overlay("smes-og[clevel]")
+		. += "smes-og[clevel]"
 
 
 /obj/machinery/power/smes/proc/chargedisplay()
 	return CLAMP(round(5.5*charge/capacity),0,5)
 
 /obj/machinery/power/smes/process()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return
 
 	//store machine state to see if we need to update the icon overlays
@@ -290,7 +291,7 @@
 // called after all power processes are finished
 // restores charge level to smes if there was excess this ptick
 /obj/machinery/power/smes/proc/restore()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return
 
 	if(!outputting)
@@ -321,7 +322,7 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "smes", name, 340, 440, master_ui, state)
+		ui = new(user, src, ui_key, "smes", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/smes/ui_data()

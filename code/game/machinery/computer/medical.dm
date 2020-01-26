@@ -55,7 +55,7 @@
 <tr>
 <th><A href='?src=[REF(src)];choice=Sorting;sort=name'>Name</A></th>
 <th><A href='?src=[REF(src)];choice=Sorting;sort=id'>ID</A></th>
-<th>Fingerprints (F) | DNA (D)</th>
+<th>Fingerprints (F) | DNA UE (D)</th>
 <th><A href='?src=[REF(src)];choice=Sorting;sort=bloodtype'>Blood Type</A></th>
 <th>Physical Status</th>
 <th>Mental Status</th>
@@ -163,11 +163,6 @@
 						var/turf/bl = get_turf(M)
 						if(bl)	//if it can't find a turf for the medibot, then it probably shouldn't be showing up
 							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
-							if((!isnull(M.reagent_glass)) && M.use_beaker)
-								bdat += "Reservoir: \[[M.reagent_glass.reagents.total_volume]/[M.reagent_glass.reagents.maximum_volume]\]<br>"
-							else
-								bdat += "Using Internal Synthesizer.<br>"
-
 					if(!bdat)
 						dat += "<br><center>None detected</center>"
 					else
@@ -510,7 +505,7 @@
 				if(!( printing ))
 					printing = 1
 					GLOB.data_core.medicalPrintCount++
-					playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
+					playsound(loc, 'sound/items/poster_being_created.ogg', 100, TRUE)
 					sleep(30)
 					var/obj/item/paper/P = new /obj/item/paper( loc )
 					P.info = "<CENTER><B>Medical Record - (MR-[GLOB.data_core.medicalPrintCount])</B></CENTER><BR>"
@@ -540,7 +535,7 @@
 
 /obj/machinery/computer/med_data/emp_act(severity)
 	. = ..()
-	if(!(stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
+	if(!(machine_stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
 		for(var/datum/data/record/R in GLOB.data_core.medical)
 			if(prob(10/severity))
 				switch(rand(1,6))
@@ -569,7 +564,7 @@
 	if(user)
 		if(message)
 			if(authenticated)
-				if(user.canUseTopic(src, BE_CLOSE))
+				if(user.canUseTopic(src, !issilicon(user)))
 					if(!record1 || record1 == active1)
 						if(!record2 || record2 == active2)
 							return 1
@@ -581,5 +576,4 @@
 	icon_state = "laptop"
 	icon_screen = "medlaptop"
 	icon_keyboard = "laptop_key"
-	clockwork = TRUE //it'd look weird
 	pass_flags = PASSTABLE

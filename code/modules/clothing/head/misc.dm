@@ -6,7 +6,7 @@
 	desc = "It's good to be emperor."
 	item_state = "that"
 	flags_inv = 0
-	armor = list("melee" = 30, "bullet" = 15, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list("melee" = 30, "bullet" = 15, "laser" = 30, "energy" = 40, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	strip_delay = 80
 
 /obj/item/clothing/head/powdered_wig
@@ -119,14 +119,6 @@
 
 	dog_fashion = /datum/dog_fashion/head/rabbit
 
-
-/obj/item/clothing/head/flatcap
-	name = "flat cap"
-	desc = "A working man's cap."
-	icon_state = "flat_cap"
-	item_state = "detective"
-
-
 /obj/item/clothing/head/pirate
 	name = "pirate hat"
 	desc = "Yarr."
@@ -138,19 +130,21 @@
 	var/datum/language/piratespeak/L = new
 
 /obj/item/clothing/head/pirate/equipped(mob/user, slot)
+	. = ..()
 	if(!ishuman(user))
 		return
-	if(slot == SLOT_HEAD)
-		user.grant_language(/datum/language/piratespeak/)
-		to_chat(user, "You suddenly know how to speak like a pirate!")
+	if(slot == ITEM_SLOT_HEAD)
+		user.grant_language(/datum/language/piratespeak/, TRUE, TRUE, LANGUAGE_HAT)
+		to_chat(user, "<span class='boldnotice'>You suddenly know how to speak like a pirate!</span>")
 
 /obj/item/clothing/head/pirate/dropped(mob/user)
+	. = ..()
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	if(H.get_item_by_slot(SLOT_HEAD) == src)
-		user.remove_language(/datum/language/piratespeak/)
-		to_chat(user, "You can no longer speak like a pirate.")
+	if(H.get_item_by_slot(ITEM_SLOT_HEAD) == src)
+		user.remove_language(/datum/language/piratespeak/, TRUE, TRUE, LANGUAGE_HAT)
+		to_chat(user, "<span class='boldnotice'>You can no longer speak like a pirate.</span>")
 
 /obj/item/clothing/head/pirate/captain
 	icon_state = "hgpiratecap"
@@ -206,6 +200,7 @@
 	desc = "A helmet made out of chitinous alien hide."
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /obj/item/clothing/head/fedora
 	name = "fedora"
@@ -221,7 +216,7 @@
 	user.visible_message("<span class='suicide'>[user] is donning [src]! It looks like [user.p_theyre()] trying to be nice to girls.</span>")
 	user.say("M'lady.", forced = "fedora suicide")
 	sleep(10)
-	H.facial_hair_style = "Neckbeard"
+	H.facial_hairstyle = "Neckbeard"
 	return(BRUTELOSS)
 
 /obj/item/clothing/head/sombrero
@@ -263,7 +258,7 @@
 	desc = "Ain't nobody gonna cheat the hangman in my town."
 	icon_state = "hunter"
 	item_state = "hunter"
-	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 15, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/head/cone
@@ -296,6 +291,9 @@
 	icon_state = "jester_hat"
 	dynamic_hair_suffix = ""
 
+/obj/item/clothing/head/jester/alt
+	icon_state = "jester2"
+
 /obj/item/clothing/head/rice_hat
 	name = "rice hat"
 	desc = "Welcome to the rice fields, motherfucker."
@@ -322,7 +320,7 @@
 	name = "crown"
 	desc = "A crown fit for a king, a petty king maybe."
 	icon_state = "crown"
-	armor = list("melee" = 15, "bullet" = 0, "laser" = 0,"energy" = 15, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
+	armor = list("melee" = 15, "bullet" = 0, "laser" = 0,"energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	dynamic_hair_suffix = ""
 
@@ -353,13 +351,7 @@
 	name = "pharaoh hat"
 	desc = "Walk like an Egyptian."
 	icon_state = "pharoah_hat"
-	icon_state = "pharoah_hat"
-
-/obj/item/clothing/head/jester/alt
-	name = "jester hat"
-	desc = "A hat with bells, to add some merriness to the suit."
-	icon_state = "jester_hat2"
-	dynamic_hair_suffix = ""
+	item_state = "pharoah_hat"
 
 /obj/item/clothing/head/nemes
 	name = "headdress of Nemes"
@@ -379,7 +371,7 @@
 
 /obj/item/clothing/head/frenchberet/equipped(mob/M, slot)
 	. = ..()
-	if (slot == SLOT_HEAD)
+	if (slot == ITEM_SLOT_HEAD)
 		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	else
 		UnregisterSignal(M, COMSIG_MOB_SAY)
@@ -433,3 +425,27 @@
 	desc = "An extra-mustahabb way of showing your devotion to Allah."
 	icon_state = "taqiyahred"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small
+
+/obj/item/clothing/head/shrine_wig
+	name = "shrine maiden's wig"
+	desc = "Purify in style!"
+	flags_inv = HIDEHAIR //bald
+	mob_overlay_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	icon_state = "shrine_wig"
+	item_state = "shrine_wig"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	dynamic_hair_suffix = ""
+
+/obj/item/clothing/head/intern
+	name = "\improper CentCom Head Intern beancap"
+	desc = "A horrifying mix of beanie and softcap in CentCom green. You'd have to be pretty desperate for power over your peers to agree to wear this."
+	icon_state = "intern_hat"
+	item_state = "intern_hat"
+
+/obj/item/clothing/head/coordinator
+	name = "coordinator cap"
+	desc = "A cap for a party ooordinator, stylish!."
+	icon_state = "capcap"
+	item_state = "that"
+	armor = list("melee" = 25, "bullet" = 15, "laser" = 25, "energy" = 35, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)

@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Removed rogue pixel on salbutamol pen inhand sprite."

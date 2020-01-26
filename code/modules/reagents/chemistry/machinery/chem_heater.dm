@@ -7,6 +7,9 @@
 	idle_power_usage = 40
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_heater
+	ui_x = 275
+	ui_y = 320
+
 	var/obj/item/reagent_containers/beaker = null
 	var/target_temperature = 300
 	var/heater_coefficient = 0.1
@@ -22,7 +25,7 @@
 		beaker = null
 		update_icon()
 
-/obj/machinery/chem_heater/update_icon()
+/obj/machinery/chem_heater/update_icon_state()
 	if(beaker)
 		icon_state = "mixer1b"
 	else
@@ -58,7 +61,7 @@
 
 /obj/machinery/chem_heater/process()
 	..()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		return
 	if(on)
 		if(beaker && beaker.reagents.total_volume)
@@ -93,7 +96,7 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "chem_heater", name, 275, 400, master_ui, state)
+		ui = new(user, src, ui_key, "chem_heater", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/chem_heater/ui_data()

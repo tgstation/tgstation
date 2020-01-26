@@ -12,8 +12,8 @@
 	network_destination = "power monitoring system"
 	size = 9
 	tgui_id = "ntos_power_monitor"
-	ui_x = 1200
-	ui_y = 1000
+	ui_x = 550
+	ui_y = 700
 
 	var/has_alert = 0
 	var/obj/structure/cable/attached_wire

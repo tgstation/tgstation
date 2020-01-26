@@ -79,9 +79,9 @@
 
 	if(!silent)
 		if(istype(custom_sound))				//This is where the camera actually finishes its exposure.
-			playsound(loc, custom_sound, 75, 1, -3)
+			playsound(loc, custom_sound, 75, TRUE, -3)
 		else
-			playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
+			playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, TRUE, -3)
 
 	if(wipe_atoms)
 		QDEL_LIST(atoms)

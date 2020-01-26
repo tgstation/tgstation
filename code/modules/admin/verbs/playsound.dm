@@ -49,8 +49,23 @@
 
 	log_admin("[key_name(src)] played a local sound [S]")
 	message_admins("[key_name_admin(src)] played a local sound [S]")
-	playsound(get_turf(src.mob), S, 50, 0, 0)
+	playsound(get_turf(src.mob), S, 50, FALSE, FALSE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Local Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/play_direct_mob_sound(S as sound, mob/M)
+	set category = "Fun"
+	set name = "Play Direct Mob Sound"
+	if(!check_rights(R_SOUND))
+		return
+
+	if(!M)
+		M = input(usr, "Choose a mob to play the sound to. Only they will hear it.", "Play Mob Sound") as null|anything in sortNames(GLOB.player_list)
+	if(!M || QDELETED(M))
+		return
+	log_admin("[key_name(src)] played a direct mob sound [S] to [M].")
+	message_admins("[key_name_admin(src)] played a direct mob sound [S] to [ADMIN_LOOKUPFLW(M)].")
+	SEND_SOUND(M, S)
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Direct Mob Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/play_web_sound()
 	set category = "Fun"
@@ -155,9 +170,8 @@
 	log_admin("[key_name(src)] stopped all currently playing sounds.")
 	message_admins("[key_name_admin(src)] stopped all currently playing sounds.")
 	for(var/mob/M in GLOB.player_list)
-		if(M.client)
-			SEND_SOUND(M, sound(null))
-			var/client/C = M.client
-			if(C && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
-				C.chatOutput.stopMusic()
+		SEND_SOUND(M, sound(null))
+		var/client/C = M.client
+		if(C && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
+			C.chatOutput.stopMusic()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stop All Playing Sounds") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

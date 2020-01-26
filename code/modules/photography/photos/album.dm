@@ -6,10 +6,12 @@
 	desc = "A big book used to store photos and mementos."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "album"
-	item_state = "briefcase"
-	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
+	item_state = "album"
+	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	resistance_flags = FLAMMABLE
+	w_class = WEIGHT_CLASS_SMALL
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	var/persistence_id
 
 /obj/item/storage/photo_album/Initialize()

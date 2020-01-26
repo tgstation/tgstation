@@ -3,15 +3,15 @@
 	name = "secway"
 	desc = "A brave security cyborg gave its life to help you look like a complete tool."
 	icon_state = "secway"
-	max_integrity = 100
-	armor = list("melee" = 20, "bullet" = 15, "laser" = 10, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
+	max_integrity = 60
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
 	key_type = /obj/item/key/security
-	integrity_failure = 50
+	integrity_failure = 0.5
 
 /obj/vehicle/ridden/secway/Initialize()
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 1.5
+	D.vehicle_move_delay = 1.75
 	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list( 0, 4)))
 
 /obj/vehicle/ridden/secway/obj_break()
@@ -19,7 +19,7 @@
 	return ..()
 
 /obj/vehicle/ridden/secway/process()
-	if(obj_integrity >= integrity_failure)
+	if(obj_integrity >= integrity_failure * max_integrity)
 		return PROCESS_KILL
 	if(prob(20))
 		return
@@ -46,7 +46,7 @@
 	STOP_PROCESSING(SSobj,src)
 	return ..()
 
-/obj/vehicle/ridden/secway/bullet_act(obj/item/projectile/P)
+/obj/vehicle/ridden/secway/bullet_act(obj/projectile/P)
 	if(prob(60) && buckled_mobs)
 		for(var/mob/M in buckled_mobs)
 			M.bullet_act(P)
