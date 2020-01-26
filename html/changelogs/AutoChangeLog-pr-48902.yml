@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "The B.E.P.I.S. no longer shunts rewards into the walls and windows of the station."

@@ -39,8 +39,8 @@
 /obj/structure/closet/crate/update_icon_state()
 	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
 
-/obj/structure/closet/crate/update_overlays()
-	. = ..()
+/obj/structure/closet/crate/closet_update_overlays(list/new_overlays)
+	. = new_overlays
 	if(manifest)
 		. += "manifest"
 
