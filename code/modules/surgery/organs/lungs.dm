@@ -11,8 +11,10 @@
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY
 
+	low_threshold_passed = "<span class='warning'>You feel short of breath.</span>"
 	high_threshold_passed = "<span class='warning'>You feel some sort of constriction around your chest as your breathing becomes shallow and rapid.</span>"
 	now_fixed = "<span class='warning'>Your lungs seem to once again be able to hold air.</span>"
+	low_threshold_cleared = "<span class='info'>You can breath normally again.</span>"
 	high_threshold_cleared = "<span class='info'>The constriction around your chest loosens as your breathing calms down.</span>"
 
 	//Breath damage
@@ -393,6 +395,12 @@
 
 /obj/item/organ/lungs/on_life()
 	..()
+	if((!failed) && (damage > low_threshold))
+		if(prob(5))
+			owner.emote("cough")
+	if((!failed) && (damage > high_threshold))
+		if(prob(10))
+			owner.emote("cough")
 	if((!failed) && ((organ_flags & ORGAN_FAILING)))
 		if(owner.stat == CONSCIOUS)
 			owner.visible_message("<span class='danger'>[owner] grabs [owner.p_their()] throat, struggling for breath!</span>", \
