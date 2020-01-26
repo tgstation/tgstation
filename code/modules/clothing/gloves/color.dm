@@ -47,6 +47,9 @@
 	if(shocks_remaining < 0)
 		qdel(src) //if we run out of uses, the gloves crumble away into nothing, just like my dreams after working with .dm
 
+/obj/item/clothing/gloves/color/yellow/sprayon/dropped()
+	qdel(src) //loose nodrop items bad
+
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap knockoffs of the coveted ones - no way this can end badly."
 	name = "budget insulated gloves"
