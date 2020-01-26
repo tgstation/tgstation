@@ -103,10 +103,10 @@
 			if(target && !target.stat)
 				O.throw_at(target, 5, 10)
 
-/obj/effect/anomaly/grav/Crossed(mob/A)
-	gravShock(A)
+/obj/effect/anomaly/grav/Crossed(atom/movable/AM)
+	gravShock(AM)
 
-/obj/effect/anomaly/grav/Bump(mob/A)
+/obj/effect/anomaly/grav/Bump(atom/A)
 	gravShock(A)
 
 /obj/effect/anomaly/grav/Bumped(atom/movable/AM)
@@ -149,11 +149,11 @@
 	for(var/mob/living/M in range(0, src))
 		mobShock(M)
 
-/obj/effect/anomaly/flux/Crossed(mob/living/M)
-	mobShock(M)
+/obj/effect/anomaly/flux/Crossed(atom/movable/AM)
+	mobShock(AM)
 
-/obj/effect/anomaly/flux/Bump(mob/living/M)
-	mobShock(M)
+/obj/effect/anomaly/flux/Bump(atom/A)
+	mobShock(A)
 
 /obj/effect/anomaly/flux/Bumped(atom/movable/AM)
 	mobShock(AM)
