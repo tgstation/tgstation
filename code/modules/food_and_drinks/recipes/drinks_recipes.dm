@@ -823,5 +823,5 @@
 	name = "Himalayan"
 	id = /datum/reagent/consumable/ethanol/himalayan
 	results = list(/datum/reagent/consumable/ethanol/himalayan = 10)
-	required_reagents = list(/datum/reagent/consumable/ice = 5, /datum/reagent/consumable/frostoil = 5, /datum/reagent/consumable/ethanol/vodka_tonic = 2 )
+	required_reagents = list(/datum/reagent/consumable/ice = 5, /datum/reagent/consumable/frostoil = 5, /datum/reagent/consumable/ethanol/vodkatonic = 2 )
 	
