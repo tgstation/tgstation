@@ -108,7 +108,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
 /datum/design/rolling_table
-	name = "Table-with-Wheels"
+	name = "Rolly poly"
 	desc = "We duct-taped some wheels to the bottom of a table. It's goddamn science alright?"
 	id = "rolling_table"
 	build_type = PROTOLATHE
