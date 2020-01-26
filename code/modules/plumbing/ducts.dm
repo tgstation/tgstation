@@ -219,7 +219,7 @@ All the important duct code:
 					adjacents += D
 	return adjacents
 
-/obj/machinery/duct/update_icon() //setting connects isnt a parameter because sometimes we make more than one change, overwrite it completely or just add it to the bitfield
+/obj/machinery/duct/update_icon_state()
 	var/temp_icon = initial(icon_state)
 	for(var/D in GLOB.cardinals)
 		if(D & connects)
@@ -232,6 +232,7 @@ All the important duct code:
 			if(D == WEST)
 				temp_icon += "_w"
 	icon_state = temp_icon
+
 ///update the layer we are on
 /obj/machinery/duct/proc/handle_layer()
 	var/offset
@@ -334,8 +335,9 @@ All the important duct code:
 	. = ..()
 	update_connects()
 
-/obj/machinery/duct/multilayered/update_icon()
-	return
+/obj/machinery/duct/multilayered/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/machinery/duct/multilayered/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -363,7 +365,6 @@ All the important duct code:
 	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
 	icon_state = "ducts"
 	custom_materials = list(/datum/material/iron=500)
-	mats_per_stack = 500
 	w_class = WEIGHT_CLASS_TINY
 	novariants = FALSE
 	max_amount = 50

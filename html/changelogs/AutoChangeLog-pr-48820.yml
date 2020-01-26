@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - tweak: "Wood is now a datum material, and behaves like other datum materials."

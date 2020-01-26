@@ -146,3 +146,9 @@
 
 /mob/living/carbon/CanSpreadAirborneDisease()
 	return !((head && (head.flags_cover & HEADCOVERSMOUTH) && (head.armor.getRating("bio") >= 25)) || (wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH) && (wear_mask.armor.getRating("bio") >= 25)))
+
+/mob/living/proc/set_shocked()
+	flags_1 |= SHOCKED_1
+
+/mob/living/proc/reset_shocked()
+	flags_1 &= ~ SHOCKED_1

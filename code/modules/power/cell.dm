@@ -54,16 +54,16 @@
 	else
 		return PROCESS_KILL
 
-/obj/item/stock_parts/cell/update_icon()
-	cut_overlays()
+/obj/item/stock_parts/cell/update_overlays()
+	. = ..()
 	if(grown_battery)
-		add_overlay(image('icons/obj/power.dmi',"grown_wires"))
+		. += mutable_appearance('icons/obj/power.dmi', "grown_wires")
 	if(charge < 0.01)
 		return
 	else if(charge/maxcharge >=0.995)
-		add_overlay("cell-o2")
+		. += "cell-o2"
 	else
-		add_overlay("cell-o1")
+		. += "cell-o1"
 
 /obj/item/stock_parts/cell/proc/percent()		// return % charge of cell
 	return 100*charge/maxcharge
@@ -148,6 +148,28 @@
 				if(prob(25))
 					corrupt()
 
+/obj/item/stock_parts/cell/attack_self(mob/user)
+	if(isethereal(user))
+		var/mob/living/carbon/human/H = user
+		if(charge < 100)
+			to_chat(H, "<span class='warning'>The [src] doesn't have enough power!</span>")
+			return
+		var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+		if(stomach.crystal_charge > 146)
+			to_chat(H, "<span class='warning'>Your charge is full!</span>")
+			return
+		to_chat(H, "<span class='notice'>You clumsily channel power through the [src] and into your body, wasting some in the process.</span>")
+		if(do_after(user, 5, target = src))
+			if((charge < 100) || (stomach.crystal_charge > 146))
+				return
+			if(istype(stomach))
+				to_chat(H, "<span class='notice'>You receive some charge from the [src].</span>")
+				stomach.adjust_charge(3)
+				charge -= 100 //you waste way more than you receive, so that ethereals cant just steal one cell and forget about hunger
+			else
+				to_chat(H, "<span class='warning'>You can't receive charge from the [src]!</span>")
+		return
+
 
 /obj/item/stock_parts/cell/blob_act(obj/structure/blob/B)
 	ex_act(EXPLODE_DEVASTATE)
@@ -225,6 +247,7 @@
 	icon_state = "h+cell"
 	maxcharge = 15000
 	chargerate = 2250
+	rating = 2
 
 /obj/item/stock_parts/cell/high/empty/Initialize()
 	. = ..()
@@ -237,6 +260,7 @@
 	maxcharge = 20000
 	custom_materials = list(/datum/material/glass=300)
 	chargerate = 2000
+	rating = 3
 
 /obj/item/stock_parts/cell/super/empty/Initialize()
 	. = ..()
@@ -249,6 +273,7 @@
 	maxcharge = 30000
 	custom_materials = list(/datum/material/glass=400)
 	chargerate = 3000
+	rating = 4
 
 /obj/item/stock_parts/cell/hyper/empty/Initialize()
 	. = ..()
@@ -262,6 +287,7 @@
 	maxcharge = 40000
 	custom_materials = list(/datum/material/glass=600)
 	chargerate = 4000
+	rating = 5
 
 /obj/item/stock_parts/cell/bluespace/empty/Initialize()
 	. = ..()
@@ -287,9 +313,9 @@
 	maxcharge = 50000
 	ratingdesc = FALSE
 
-/obj/item/stock_parts/cell/infinite/abductor/update_icon()
-	return
-
+/obj/item/stock_parts/cell/infinite/abductor/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/stock_parts/cell/potato
 	name = "potato battery"

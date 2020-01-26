@@ -189,7 +189,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)
 	screenmob.update_action_buttons(1)
-	reorganize_alerts()
+	reorganize_alerts(screenmob)
 	screenmob.reload_fullscreen()
 	update_parallax_pref(screenmob)
 

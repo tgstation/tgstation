@@ -8,6 +8,7 @@
 	use_power = IDLE_POWER_USE
 	anchored = TRUE
 	density = TRUE
+	flags_1 = HEAR_1
 	circuit = /obj/item/circuitboard/machine/nanite_programmer
 	ui_x = 420
 	ui_y = 550
@@ -129,3 +130,9 @@
 				timer *= 10 //convert to deciseconds
 				program.timer_trigger_delay = timer
 			. = TRUE
+
+/obj/machinery/nanite_programmer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	. = ..()
+	var/static/regex/when = regex("(?:^\\W*when|when\\W*$)", "i") //starts or ends with when
+	if(findtext(raw_message, when) && !istype(speaker, /obj/machinery/nanite_programmer))
+		say("When you code it!!")

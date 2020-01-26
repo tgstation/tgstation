@@ -41,6 +41,10 @@
 	tail_type = "Smooth"
 	var/spines = "None"
 
+/obj/item/organ/tail/lizard/Initialize()
+	..()
+	color = "#"+ random_color()
+
 /obj/item/organ/tail/lizard/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
 	..()
 	if(istype(H))

@@ -63,8 +63,11 @@
 
 
 /obj/item/gun/magic/process()
+	if (charges >= max_charges)
+		charge_tick = 0
+		return
 	charge_tick++
-	if(charge_tick < recharge_rate || charges >= max_charges)
+	if(charge_tick < recharge_rate)
 		return 0
 	charge_tick = 0
 	charges++
@@ -72,8 +75,6 @@
 		recharge_newshot()
 	return 1
 
-/obj/item/gun/magic/update_icon()
-	return
 
 /obj/item/gun/magic/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, "<span class='warning'>The [name] whizzles quietly.</span>")

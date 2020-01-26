@@ -13,15 +13,20 @@
 
 /obj/item/stack/circuit_stack/attack_hand(mob/user)
 	var/mob/living/carbon/human/H = user
-	if(!user.get_inactive_held_item() == src)
+	if(user.get_inactive_held_item() != src)
 		return ..()
 	else
 		if(zero_amount())
 			return
-		chosen_circuit = input("What type of circuit would you like to remove?", "Choose a Circuit Type", chosen_circuit) in list("airlock","firelock","fire alarm","air alarm","APC")
+		chosen_circuit = input("What type of circuit would you like to remove?", "Choose a Circuit Type", chosen_circuit) in list("airlock","firelock","fire alarm","air alarm","APC","cancel")
 		if(zero_amount())
 			return
+		if(loc != user)
+			return
 		switch(chosen_circuit)
+			if("cancel")
+				to_chat(user, "<span class='notice'>You wisely avoid putting your hands anywhere near [src].</span>")
+				return
 			if("airlock")
 				circuit_type = /obj/item/electronics/airlock
 			if("firelock")
@@ -46,7 +51,6 @@
 		else
 			H.apply_damage(15, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 			to_chat(user, "<span class='warning'>You give yourself a wicked cut on [src]'s many sharp corners and edges!</span>")
-		..()
 
 /obj/item/stack/circuit_stack/full
 	amount = 8
