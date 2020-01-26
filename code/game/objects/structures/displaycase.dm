@@ -367,7 +367,7 @@
 	name = "vend-a-tray"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "laserbox0"
-	desc = "A display case with an ID-card swipe, to purchase the contents."
+	desc = "A display case with an ID-card swipe, to purchase the contents. Ctrl-Click to purchase the contained item."
 	density = FALSE
 	max_integrity = 100
 	req_access = list(ACCESS_KITCHEN)
@@ -393,30 +393,31 @@
 	return
 
 /obj/structure/displaycase/forsale/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_MULTITOOL && user.a_intent == INTENT_HELP && !broken)
-		var/new_price = input("Set the sale price for this vend-a-tray.","new price") as num|null
-		if(!new_price || (get_dist(src,user) > 1))
-			return
-		sale_price = CLAMP(round(new_price, 1), 10, 1000)
-		to_chat(user, "<span class='notice'>The cost is now set to [sale_price].</span>")
-		return 1
 	if(istype(I, /obj/item/card/id))
 		var/obj/item/card/id/potential_acc = I
-		/*if(!potential_acc.registered_account || !allowed(user) || !(payments_acc == potential_acc.registered_account))
-			to_chat(user, "<span class='warning'>Sales podeum previously registered, or unable to register card.</span>")
-			return*/
 		if(!payments_acc)
 			payments_acc = potential_acc.registered_account
 			to_chat(user, "<span class='notice'>Vend-a-tray registered.</span>")
 		else if(payments_acc != potential_acc.registered_account)
 			to_chat(user, "<span class='warning'>Vend-a-tray already registered.</span>")
 			return
+	if(istype(I, /obj/item/pda))
+		var/obj/item/pda/pda = I
+		if(pda.id.registered_account != payments_acc)
+			to_chat(user, "<span class='notice'>You don't own [src].</span>")
+			return
+		var/new_price = input("Set the sale price for this vend-a-tray.","new price") as num|null
+		if(!new_price || (get_dist(src,user) > 1))
+			return
+		sale_price = CLAMP(round(new_price, 1), 10, 1000)
+		to_chat(user, "<span class='notice'>The cost is now set to [sale_price]. Use your PDA with ID to change the cost.</span>")
+		return 1
 	. = ..()
 
 /obj/structure/displaycase/forsale/examine(mob/user)
 	. = ..()
 	if(showpiece && !open)
-		. += "<span class='notice'>[showpiece] is for sale for [sale_price] credits. Ctrl-click to purchase.</span>"
+		. += "<span class='notice'>[showpiece] is for sale for [sale_price] credits.</span>"
 
 /obj/structure/displaycase/forsale/CtrlClick(mob/user)
 	if(ishuman(user))
@@ -440,6 +441,7 @@
 						payments_acc.adjust_money(sale_price)
 					customer.put_in_hands(showpiece)
 					to_chat(user, "<span class='notice'>You purchase [showpiece] for [sale_price] credits.</span>")
+					flick("laserbox_vend", src)
 					showpiece = null
 					update_icon()
 
