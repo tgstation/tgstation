@@ -100,6 +100,7 @@ import { Tank } from './interfaces/Tank';
 import { TankDispenser } from './interfaces/TankDispenser';
 import { Teleporter } from './interfaces/Teleporter';
 import { ThermoMachine } from './interfaces/ThermoMachine';
+import { Timer } from './interfaces/Timer';
 import { TurbineComputer } from './interfaces/TurbineComputer';
 import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
@@ -556,6 +557,10 @@ const ROUTES = {
   },
   thermomachine: {
     component: () => ThermoMachine,
+    scrollable: false,
+  },
+  timer: {
+    component: () => Timer,
     scrollable: false,
   },
   turbine_computer: {
