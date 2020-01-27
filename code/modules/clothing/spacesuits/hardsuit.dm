@@ -304,6 +304,7 @@
 	. = ..()
 	if(istype(loc, /obj/item/clothing/suit/space/hardsuit/syndi))
 		linkedsuit = loc
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_CONTENTS)
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/attack_self(mob/user) //Toggle Helmet
 	if(!isturf(user.loc))
@@ -574,6 +575,10 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security/hos
 	jetpack = /obj/item/tank/jetpack/suit
 	cell = /obj/item/stock_parts/cell/super
+
+/obj/item/clothing/suit/space/hardsuit/security/hos/Initialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
 
 	//SWAT MKII
 /obj/item/clothing/head/helmet/space/hardsuit/swat

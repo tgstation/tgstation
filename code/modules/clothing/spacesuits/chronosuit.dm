@@ -198,7 +198,6 @@
 				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Starting ui display driver")
 				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Initializing chronowalk4-view")
 				new_camera(user)
-				START_PROCESSING(SSobj, src)
 				activated = 1
 			else
 				to_chat(user, "\[ <span style='color: #ff0000;'>fail</span> \] Mounting /dev/helm")

@@ -49,7 +49,7 @@
 	var/temperature_setting = BODYTEMP_NORMAL /// The default temperature setting
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high /// If this is a path, this gets created as an object in Initialize.
 	var/cell_cover_open = FALSE /// Status of the cell cover on the suit
-	var/thermal_on = TRUE /// Status of the thermal regulator
+	var/thermal_on = FALSE /// Status of the thermal regulator
 
 /obj/item/clothing/suit/space/Initialize(mapload)
 	. = ..()
@@ -78,7 +78,15 @@
 
 // Clean up the cell on destroy
 /obj/item/clothing/suit/space/Destroy()
-	cell = null
+	if(cell)
+		QDEL_NULL(cell)
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/clothing/suit/space/handle_atom_del(atom/A)
+	if(A == cell)
+		cell = null
+		thermal_on = FALSE
 	return ..()
 
 /obj/item/clothing/suit/space/get_cell()
@@ -86,6 +94,9 @@
 
 /obj/item/clothing/suit/space/examine(mob/user)
 	. = ..()
+	if(!in_range(src, user) && !isobserver(user))
+		return
+
 	. += "Thermal regulator is [thermal_on ? "on" : "off"], the temperature is set to \
 		[round(temperature_setting-T0C,0.1)] &deg;C ([round(temperature_setting*1.8-459.67,0.1)] &deg;F)"
 	. += "Charge remaining: [cell ? "[cell.charge / cell.maxcharge * 100]%" : "invalid"]"
@@ -98,9 +109,15 @@
 
 /obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, params)
 	if(cell_cover_open && I.tool_behaviour == TOOL_SCREWDRIVER)
+		var/range_low = 20 // Default min temp
+		var/range_high = 45 // default max temp
+		if(obj_flags & EMAGGED)
+			range_low = -20 // emagged low
+			range_high = 120 // emagged high
+
 		var/deg_c = input(user, "What temperature would you like to set the thermal regulator to? \
-			(20-45 degrees celcius)") as null|num
-		if(deg_c && deg_c >= 20 && deg_c <= 45)
+			([range_low]-[range_high] degrees celcius)") as null|num
+		if(deg_c && deg_c >= range_low && deg_c <= range_high)
 			temperature_setting = round(T0C + deg_c, 0.1)
 			to_chat(user, "<span class='notice'>You see the readout change to [deg_c] c.</span>")
 	else if(istype(I, /obj/item/stock_parts/cell))
@@ -112,6 +129,12 @@
 			to_chat(user, "<span class='notice'>You successfully install \the [cell] into [src].</span>")
 			return
 	return ..()
+
+/obj/item/clothing/suit/space/ui_action_click(mob/user, datum/action/A)
+	if(istype(A, /datum/action/item_action/toggle_spacesuit_cell))
+		toggle_spacesuit_cell(user)
+	else if(istype(A, /datum/action/item_action/toggle_spacesuit))
+		toggle_spacesuit(user)
 
 /obj/item/clothing/suit/space/attack_self(mob/user)
 	if(cell_cover_open && cell)
@@ -128,5 +151,19 @@
 /obj/item/clothing/suit/space/proc/toggle_spacesuit(mob/user)
 	thermal_on = !thermal_on
 	to_chat(user, "<span class='notice'>You turn [thermal_on ? "on" : "off"] the thermal regulator on \the [src].</span>")
+
+/obj/item/clothing/suit/space/emag_act(mob/user)
+	if(!(obj_flags & EMAGGED))
+		obj_flags |= EMAGGED
+		user.visible_message("<span class='warning'>You emag [src], overwriting thermal regulator restrictions.</span>")
+		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], overwriting thermal regulator restrictions.")
+	playsound(src, "sparks", 50, TRUE)
+
+/obj/item/clothing/suit/space/emag_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_CONTENTS)
+		return
+	if(cell)
+		cell.emp_act(severity)
 
 #undef THERMAL_REGULATOR_COST

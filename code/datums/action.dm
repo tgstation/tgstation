@@ -274,19 +274,29 @@
 
 /datum/action/item_action/toggle_spacesuit_cell
 	name = "Toggle Suit Cell Cover"
+	icon_icon = 'icons/mob/actions/actions_spacesuit.dmi'
+	button_icon_state = "cover_closed"
 
 /datum/action/item_action/toggle_spacesuit_cell/Trigger()
+	. = ..()
 	var/obj/item/clothing/suit/space/suit = target
-	if(istype(suit))
-		suit.toggle_spacesuit_cell(owner)
+	if(!istype(suit))
+		return
+	button_icon_state = "cover_[suit.cell_cover_open ? "open" : "closed"]"
+	UpdateButtonIcon()
 
 /datum/action/item_action/toggle_spacesuit
 	name = "Toggle Suit Suit Thermal Regulator"
+	icon_icon = 'icons/mob/actions/actions_spacesuit.dmi'
+	button_icon_state = "thermal_off"
 
 /datum/action/item_action/toggle_spacesuit/Trigger()
+	. = ..()
 	var/obj/item/clothing/suit/space/suit = target
-	if(istype(suit))
-		suit.toggle_spacesuit(owner)
+	if(!istype(suit))
+		return
+	button_icon_state = "thermal_[suit.thermal_on ? "on" : "off"]"
+	UpdateButtonIcon()
 
 /datum/action/item_action/toggle_headphones
 	name = "Toggle Headphones"

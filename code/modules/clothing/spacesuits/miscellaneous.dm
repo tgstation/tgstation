@@ -174,6 +174,7 @@ Contains:
 /obj/item/clothing/head/helmet/space/hardsuit/ert/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_CONTENTS)
 
 /obj/item/clothing/suit/space/hardsuit/ert
 	name = "emergency response team commander hardsuit"
