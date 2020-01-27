@@ -129,6 +129,11 @@
 	glass_desc = "The father of all refreshments."
 	shot_glass_icon_state = "shotglassclear"
 
+/datum/reagent/water/on_mob_life(mob/living/carbon/M)
+	M.adjustToxLoss(-0.1*REM, 0)
+	current_cycle++
+	holder.remove_reagent(type, metabolization_rate / M.metabolism_efficiency)
+
 /*
  *	Water reaction to turf
  */
