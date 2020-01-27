@@ -397,9 +397,9 @@
 		var/obj/item/card/id/potential_acc = I
 		if(!payments_acc)
 			payments_acc = potential_acc.registered_account
-			to_chat(user, "<span class='notice'>Vend-a-tray registered.</span>")
+			to_chat(user, "<span class='notice'>Vend-a-tray registered. Use a PDA with your ID to change the cost.</span>")
 		else if(payments_acc != potential_acc.registered_account)
-			to_chat(user, "<span class='warning'>Vend-a-tray already registered.</span>")
+			to_chat(user, "<span class='warning'>This Vend-a-tray is already registered.</span>")
 			return
 	if(istype(I, /obj/item/pda))
 		var/obj/item/pda/pda = I
@@ -410,9 +410,32 @@
 		if(!new_price || (get_dist(src,user) > 1))
 			return
 		sale_price = CLAMP(round(new_price, 1), 10, 1000)
-		to_chat(user, "<span class='notice'>The cost is now set to [sale_price]. Use your PDA with ID to change the cost.</span>")
+		to_chat(user, "<span class='notice'>The cost is now set to [sale_price].</span>")
 		return 1
+	if(I.tool_behaviour == TOOL_WRENCH && open && user.a_intent == INTENT_HELP )
+		if(anchored)
+			to_chat(user, "<span class='notice'>You start unsecuring [src]...</span>")
+		else
+			to_chat(user, "<span class='notice'>You start securing [src]...</span>")
+		if(I.use_tool(src, user, 16, volume=50))
+			if(QDELETED(I))
+				return
+			if(anchored)
+				to_chat(user, "<span class='notice'>You unsecure [src].</span>")
+			else
+				to_chat(user, "<span class='notice'>You secure [src].</span>")
+			anchored = !anchored
+			return
+	else if(I.tool_behaviour == TOOL_WRENCH && !open && user.a_intent == INTENT_HELP)
+		to_chat(user, "<span class='notice'>[src] must be open to move it.</span>")
+		return
 	. = ..()
+
+/obj/structure/displaycase/forsale/emag_act(mob/user)
+	. = ..()
+	payments_acc = null
+	req_access = list()
+	to_chat(user, "<span class='warning'>[src]'s card reader fizzles and smokes, and the account owner is reset.</span>")
 
 /obj/structure/displaycase/forsale/examine(mob/user)
 	. = ..()
@@ -441,6 +464,7 @@
 						payments_acc.adjust_money(sale_price)
 					customer.put_in_hands(showpiece)
 					to_chat(user, "<span class='notice'>You purchase [showpiece] for [sale_price] credits.</span>")
+					icon = 'icons/obj/stationobjs.dmi'
 					flick("laserbox_vend", src)
 					showpiece = null
 					update_icon()
