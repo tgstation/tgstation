@@ -26,7 +26,6 @@ Contents:
 
 		//Important parts of the suit.
 	var/mob/living/carbon/human/affecting = null
-	var/obj/item/stock_parts/cell/cell
 	var/datum/effect_system/spark_spread/spark_system
 	var/datum/techweb/stored_research
 	var/obj/item/disk/tech_disk/t_disk//To copy design onto disk.

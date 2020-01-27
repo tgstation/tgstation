@@ -272,6 +272,23 @@
 	if(istype(H))
 		H.toggle_welding_screen(owner)
 
+/datum/action/item_action/toggle_spacesuit_cell
+	name = "Toggle Suit Cell Cover"
+
+/datum/action/item_action/toggle_spacesuit_cell/Trigger()
+	var/obj/item/clothing/suit/space/suit = target
+	if(istype(suit))
+		suit.toggle_spacesuit_cell(owner)
+
+/datum/action/item_action/toggle_headphones
+	name = "Toggle Headphones"
+	desc = "UNTZ UNTZ UNTZ"
+
+/datum/action/item_action/toggle_headphones/Trigger()
+	var/obj/item/clothing/ears/headphones/H = target
+	if(istype(H))
+		H.toggle(owner)
+
 /datum/action/item_action/toggle_unfriendly_fire
 	name = "Toggle Friendly Fire \[ON\]"
 	desc = "Toggles if the club's blasts cause friendly fire."

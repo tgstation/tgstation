@@ -166,6 +166,7 @@
 		finish_chronowalk(user, to_turf)
 
 /obj/item/clothing/suit/space/chronos/process()
+	. = ..()
 	if(activated)
 		var/mob/living/carbon/human/user = src.loc
 		if(user && ishuman(user) && (user.wear_suit == src))
@@ -178,8 +179,6 @@
 						camera.remove_target_ui()
 			else
 				new_camera(user)
-	else
-		STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/chronos/proc/activate()
 	if(!activating && !activated && !teleporting)
