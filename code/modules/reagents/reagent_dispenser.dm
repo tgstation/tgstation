@@ -155,6 +155,12 @@
 	user.put_in_hands(S)
 	paper_cups--
 
+/obj/structure/reagent_dispensers/water_cooler/golden
+	name = "gilded water cooler"
+	desc = "Now this is true luxury."
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "water_cooler_gold"
+
 /obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"
 	desc = "Beer is liquid bread, it's good for you..."
