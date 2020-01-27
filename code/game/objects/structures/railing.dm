@@ -41,6 +41,7 @@
 		return TRUE
 
 /obj/structure/railing/CanPass(atom/movable/mover, turf/target)
+	..()
 	if(get_dir(loc, target) & dir)
 		return !density
 	return TRUE
@@ -49,6 +50,7 @@
 	return TRUE
 
 /obj/structure/railing/CheckExit(atom/movable/O, turf/target)
+	..()
 	if(get_dir(loc, target) & dir)
 		return 0
 	return 1
