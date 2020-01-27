@@ -372,6 +372,7 @@
 	max_integrity = 100
 	req_access = list(ACCESS_KITCHEN)
 	showpiece_type = /obj/item/reagent_containers/food
+	alert = FALSE //No, we're not calling the fire department because someone stole your cookie.
 	var/sale_price = 20
 	var/datum/bank_account/payments_acc = null
 
