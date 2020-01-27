@@ -148,7 +148,7 @@
 
 /obj/item/virgin_mary
 	name = "A picture of the virgin mary"
-	desc = "Burning this in your hand makes you a true mafioso"
+	desc = "A small, cheap icon depicting the virgin mother."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "virgin_mary"
 	resistance_flags = FLAMMABLE
@@ -157,28 +157,48 @@
 	///List of mobs that have already been mobbed.
 	var/static/list/mob_mobs = list()
 
-/obj/item/virgin_mary/fire_act(exposed_temperature, exposed_volume)
-	. = ..()
-	if(used_up)
-		return FALSE
-	if(!ishuman(loc)) //A human needs to be holding it, ya cheezit.
-		return FALSE
-	var/mob/living/carbon/human/joe = loc
 
-	if(joe in mob_mobs) //Only one nickname fuckhead
-		to_chat(joe, "<span class='warning'>You have already been initiated into the mafioso life.</span>")
-		return FALSE
+/obj/item/virgin_mary/attackby(obj/item/W, mob/user, params)
+	var/ignition_msg = W.ignition_effect(src, user)
+	if(ignition_msg)
+		if(resistance_flags & ON_FIRE)
+			return
+		user.dropItemToGround(src)
+		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [W]!</span>", "<span class='danger'>You light [src] on fire!</span>")
+		fire_act()
+		if(used_up)
+			return ..()
+		if(!isliving(user) || !user.mind) //A sentient mob needs to be burning it, ya cheezit.
+			return ..()
+		var/mob/living/joe = user
 
-	to_chat(joe, "<span class='notice'>As you burn the picture you feel like you can pick up a fitting nickname</span>")
-	var/nickname = input(joe, "Pick a nickname", "Mafioso Nicknames") as text|null
-	if(!nickname)
-		return FALSE
-	var/new_name
-	var/space_position = findtext(joe.real_name, " ")
-	if(space_position)//Can we find a space?
-		new_name = "[copytext(joe.real_name, 1, space_position)] \"[nickname]\" [copytext(joe.real_name, space_position)]"
-	else //Append otherwise
-		new_name = "[joe.real_name] \"[nickname]\""
-	joe.real_name = new_name
-	used_up = TRUE
-	mob_mobs += joe
+		if(joe in mob_mobs) //Only one nickname fuckhead
+			to_chat(joe, "<span class='warning'>You have already been initiated into the mafioso life.</span>")
+			return FALSE
+
+		to_chat(joe, "<span class='notice'>As you burn the picture you feel like you can pick up a fitting nickname</span>")
+		var/nickname = input(joe, "Pick a nickname", "Mafioso Nicknames") as text|null
+		if(!nickname)
+			return FALSE
+		var/new_name
+		var/space_position = findtext(joe.real_name, " ")
+		if(space_position)//Can we find a space?
+			new_name = "[copytext(joe.real_name, 1, space_position)] \"[nickname]\" [copytext(joe.real_name, space_position)]"
+		else //Append otherwise
+			new_name = "[joe.real_name] \"[nickname]\""
+		joe.real_name = new_name
+		used_up = TRUE
+		mob_mobs += joe
+		joe.say("As burns this saint, so will burn my soul. I enter alive and I will have to get out dead.", forced = /obj/item/virgin_mary)
+		to_chat(joe, "<span class='userdanger'>Being inducted into the mafia does not grant antagonist status.</span>")
+	else
+		return ..()
+
+/obj/item/virgin_mary/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] starts saying their Hail Mary's at a terrifying pace! It looks like [user.p_theyre()] trying to enter the afterlife!</span>")
+	user.say("Hail Mary, full of grace, the Lord is with thee. Blessed are thou amongst women, and blessed is the fruit of thy womb, Jesus. Holy Mary, mother of God, pray for us sinners, now and at the hour of our death. Amen. ", forced = /obj/item/virgin_mary)
+	sleep(50) //I can't get the timers to work, so sleep it is.
+	if(!user)
+		return
+	user.say("O my Mother, preserve me this day from mortal sin...", forced = /obj/item/virgin_mary)
+	return (OXYLOSS)
