@@ -133,7 +133,7 @@
 
 /obj/structure/holosign/barrier/medical/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-	if(force_allaccess)
+	if(force_allaccess || issilicon(mover))
 		return TRUE
 	if(ishuman(mover))
 		return CheckHuman(mover)
