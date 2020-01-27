@@ -71,6 +71,14 @@
 /obj/item/gun/energy/pulse/destroyer/attack_self(mob/living/user)
 	to_chat(user, "<span class='danger'>[src.name] has three settings, and they are all DESTROY.</span>")
 
+/obj/item/gun/energy/pulse/destroyer/annihilator
+	name = "pulse ANNIHILATOR"
+	desc = "For when the situation calls for a little more than a pulse destroyer."
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter/pulse)
+
+/obj/item/weapon/gun/energy/pulse/destroyer/annihilator/attack_self(mob/living/user)
+	user << "<span class='danger'>[src.name] has no settings, only ANNIHILATION!</span>"
+
 /obj/item/gun/energy/pulse/pistol/m1911
 	name = "\improper M1911-P"
 	desc = "A compact pulse core in a classic handgun frame for Nanotrasen officers. It's not the size of the gun, it's the size of the hole it puts through people."
