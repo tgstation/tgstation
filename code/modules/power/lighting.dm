@@ -832,8 +832,11 @@
 	. = ..()
 	AddComponent(/datum/component/caltrop, force)
 
-/obj/item/light/Crossed(mob/living/L)
+/obj/item/light/Crossed(atom/movable/AM)
 	. = ..()
+	if(!isliving(AM))
+		return
+	var/mob/living/L = AM
 	if(istype(L) && !(L.is_flying() || L.is_floating() || L.buckled))
 		playsound(src, 'sound/effects/glass_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
 		if(status == LIGHT_BURNED || status == LIGHT_OK)

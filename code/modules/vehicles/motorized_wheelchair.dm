@@ -135,32 +135,32 @@
 	. += "Energy efficiency: [power_efficiency]"
 	. += "Power: [power_cell.charge] out of [power_cell.maxcharge]"
 
-/obj/vehicle/ridden/wheelchair/motorized/Bump(atom/movable/M)
+/obj/vehicle/ridden/wheelchair/motorized/Bump(atom/A)
 	. = ..()
 	// Here is the shitty emag functionality.
-	if(obj_flags & EMAGGED && (istype(M, /turf/closed) || isliving(M)))
+	if(obj_flags & EMAGGED && (istype(A, /turf/closed) || isliving(A)))
 		explosion(src, -1, 1, 3, 2, 0)
 		visible_message("<span class='boldwarning'>[src] explodes!!</span>")
 		return
 	// If the speed is higher than delay_multiplier throw the person on the wheelchair away
-	if(M.density && speed > delay_multiplier && has_buckled_mobs())
+	if(A.density && speed > delay_multiplier && has_buckled_mobs())
 		var/mob/living/H = buckled_mobs[1]
 		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
 		unbuckle_mob(H)
 		H.throw_at(throw_target, 2, 3)
 		H.Knockdown(100)
 		H.adjustStaminaLoss(40)
-		if(isliving(M))
-			var/mob/living/D = M
+		if(isliving(A))
+			var/mob/living/D = A
 			throw_target = get_edge_target_turf(D, pick(GLOB.cardinals))
 			D.throw_at(throw_target, 2, 3)
 			D.Knockdown(80)
 			D.adjustStaminaLoss(35)
-			visible_message("<span class='danger'>[src] crashes into [M], sending [H] and [D] flying!</span>")
+			visible_message("<span class='danger'>[src] crashes into [A], sending [H] and [D] flying!</span>")
 		else
-			visible_message("<span class='danger'>[src] crashes into [M], sending [H] flying!</span>")
+			visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		
+
 /obj/vehicle/ridden/wheelchair/motorized/emag_act(mob/user)
 	if((obj_flags & EMAGGED) || !panel_open)
 		return
