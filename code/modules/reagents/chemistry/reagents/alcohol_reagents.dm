@@ -2191,6 +2191,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if (prob(5))
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2)
 		M.apply_status_effect(/datum/status_effect/freon/watcher)
-		to_chat(M, "<span class='notice'>["Your blood is so cold, it freezes the air around you! Even worse, you have a brain freeze!"]/span>")
+		to_chat(M, "<span class='notice'>"Your blood is so cold, it freezes the air around you! Even worse, you have a brain freeze!"</span>")
 
 	..()
