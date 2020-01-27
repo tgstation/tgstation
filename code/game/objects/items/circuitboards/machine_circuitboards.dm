@@ -377,6 +377,15 @@
 #undef PATH_FREEZER
 #undef PATH_HEATER
 
+/obj/item/circuitboard/machine/ventcap
+	name = "Vent Cap (Machine Board)"
+	build_path = /obj/machinery/portable_atmospherics/ventcap
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 5,
+		/obj/item/stock_parts/matter_bin = 2,
+		/obj/item/stock_parts/capacitor = 2,
+		/obj/item/stock_parts/micro_laser = 4)
+
 //Generic
 
 /obj/item/circuitboard/machine/circuit_imprinter

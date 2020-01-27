@@ -65,9 +65,14 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/looping_sound/ventcap
-	start_sound = 'sound/machines/shower/shower_start.ogg'
-	mid_length = 11
-	mid_sounds = list('sound/weather/ashstorm/inside/.ogg')
-	end_sound = 'sound/machines/generator/generator_end.ogg'
-	volume = 85
+	mid_sounds = list(
+		'sound/weather/ashstorm/inside/active_mid1.ogg'=1,
+		'sound/weather/ashstorm/inside/active_mid2.ogg'=1,
+		'sound/weather/ashstorm/inside/active_mid3.ogg'=1
+		)
+	mid_length = 80
+	start_sound = 'sound/weather/ashstorm/inside/active_start.ogg'
+	start_length = 130
+	end_sound = 'sound/weather/ashstorm/inside/active_end.ogg'
+	volume = 60
 	vary = TRUE

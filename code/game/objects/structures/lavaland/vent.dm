@@ -7,7 +7,6 @@
 	can_unwrench = FALSE
 	pixel_x = -16
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	has_tank_slot = FALSE
 	
 	var/naturally_spawned = FALSE // Naturally spawned vents have this set to TRUE. This is so these can be manually spawned without having the vent immediately qdel itself if other vents already exist.
 	var/gastype = null
@@ -31,7 +30,7 @@
 		if(env.gases[gas][MOLES] > 0)
 			possible_gases += gas
 
-	for(var/obj/structure/atmosphere_vent/vent in GLOB.atmospheric_vents)
+	for(var/obj/machinery/atmospherics/components/unary/portables_connector/atmosphere_vent/vent in GLOB.atmospheric_vents)
 		if(vent.z == src.z)
 			possible_gases -= vent.gastype
 
