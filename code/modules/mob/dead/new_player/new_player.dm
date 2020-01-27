@@ -438,14 +438,14 @@
 			SSjob.prioritized_jobs -= prioritized_job
 	dat += "<table><tr><td valign='top'>"
 	var/column_counter = 0
-	// render each department's available jobs
-	for(var/category in (GLOB.exp_jobsmap - EXP_TYPE_CREW))
-		// exp_jobsmap contains department names mapped to available jobs and an appropriate color
-		var/cat_color = GLOB.exp_jobsmap[category]["color"]
+	// render each category's available jobs
+	for(var/category in GLOB.position_categories)
+		// position_categories contains category names mapped to available jobs and an appropriate color
+		var/cat_color = GLOB.position_categories[category]["color"]
 		dat += "<fieldset style='width: 185px; border: 2px solid [cat_color]; display: inline'>"
 		dat += "<legend align='center' style='color: [cat_color]'>[category]</legend>"
 		var/list/dept_dat = list()
-		for(var/job in GLOB.exp_jobsmap[category]["titles"])
+		for(var/job in GLOB.position_categories[category]["jobs"])
 			var/datum/job/job_datum = SSjob.name_occupations[job]
 			if(job_datum && IsJobUnavailable(job_datum.title, TRUE) == JOB_AVAILABLE)
 				var/command_bold = ""
