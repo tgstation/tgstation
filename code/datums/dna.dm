@@ -397,6 +397,8 @@
 			update_body_parts()
 		if(mutations_overlay_update)
 			update_mutations_overlay()
+	//update speech sound, for lings and such.
+	speech_sound = gender
 
 
 /mob/proc/domutcheck()

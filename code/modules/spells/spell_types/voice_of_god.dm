@@ -12,7 +12,7 @@
 	var/cooldown_mod = 1
 	var/power_mod = 1
 	var/list/spans = list("colossus","yell")
-	var/speech_sound = 'sound/magic/clockwork/invoke_general.ogg'
+	var/invoke_sound = 'sound/magic/clockwork/invoke_general.ogg'
 
 /obj/effect/proc_holder/spell/voice_of_god/can_cast(mob/user = usr)
 	if(!user.can_speak())
@@ -32,7 +32,7 @@
 	..()
 
 /obj/effect/proc_holder/spell/voice_of_god/cast(list/targets, mob/user = usr)
-	playsound(get_turf(user), speech_sound, 300, TRUE, 5)
+	playsound(get_turf(user), invoke_sound, 300, TRUE, 5)
 	var/cooldown = voice_of_god(uppertext(command), user, spans, base_multiplier = power_mod)
 	charge_max = (cooldown * cooldown_mod)
 
@@ -42,4 +42,4 @@
 	power_mod = 0.1
 	cooldown_mod = 0.5
 	spans = list("clown")
-	speech_sound = 'sound/spookoween/scary_horn2.ogg'
+	invoke_sound = 'sound/spookoween/scary_horn2.ogg'

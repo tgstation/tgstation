@@ -19,6 +19,7 @@
 	var/verb_sing = "sings"
 	var/verb_yell = "yells"
 	var/speech_span
+	var/speech_sound
 	var/inertia_dir = 0
 	var/atom/inertia_last_loc
 	var/inertia_moving = 0

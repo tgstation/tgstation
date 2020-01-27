@@ -194,9 +194,6 @@
 	. = ..()
 	languages_possible = languages_possible_alien
 
-/obj/item/organ/tongue/alien/handle_speech(datum/source, list/speech_args)
-	playsound(owner, "hiss", 25, TRUE, TRUE)
-
 /obj/item/organ/tongue/bone
 	name = "bone \"tongue\""
 	desc = "Apparently skeletons alter the sounds they produce through oscillation of their teeth, hence their characteristic rattling."

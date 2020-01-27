@@ -300,6 +300,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
 
+	//speech sound
+	if(speech_sound)
+		playsound(src, speech_sound, 50, TRUE, ignore_walls = FALSE)
+
 /mob/proc/binarycheck()
 	return FALSE
 
