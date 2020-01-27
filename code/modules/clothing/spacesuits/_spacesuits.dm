@@ -1,3 +1,5 @@
+#define THERMAL_REGULATOR_COST 16 // the cost per tick for the thermal regulator
+
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
 //      Meaning the the suit is defined directly after the corrisponding helmet. Just like below!
 /obj/item/clothing/head/helmet/space
@@ -43,10 +45,11 @@
 	strip_delay = 80
 	equip_delay_other = 80
 	resistance_flags = NONE
-	actions_types = list(/datum/action/item_action/toggle_spacesuit_cell)
-	var/temperature_setting = BODYTEMP_NORMAL // The default temperature setting
+	actions_types = list(/datum/action/item_action/toggle_spacesuit, /datum/action/item_action/toggle_spacesuit_cell)
+	var/temperature_setting = BODYTEMP_NORMAL /// The default temperature setting
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high /// If this is a path, this gets created as an object in Initialize.
-	var/cell_cover_open = FALSE
+	var/cell_cover_open = FALSE /// Status of the cell cover on the suit
+	var/thermal_on = TRUE /// Status of the thermal regulator
 
 /obj/item/clothing/suit/space/Initialize(mapload)
 	. = ..()
@@ -66,14 +69,12 @@
 
 // Space Suit temperature regulation and power usage
 /obj/item/clothing/suit/space/process()
-	if(cell.charge <= 0)
-		return
-
-	var/mob/living/carbon/human/user = src.loc
-	if(user && ishuman(user) && user.wear_suit == src)
-		var/temp_diff = temperature_setting - user.bodytemperature
-		user.adjust_bodytemperature(temp_diff)
-		cell.charge -= 16
+	if(thermal_on && cell.charge >= THERMAL_REGULATOR_COST)
+		var/mob/living/carbon/human/user = src.loc
+		if(user && ishuman(user) && user.wear_suit == src)
+			var/temp_diff = temperature_setting - user.bodytemperature
+			user.adjust_bodytemperature(temp_diff) // TODO: use_steps=True when #48920 merged
+			cell.charge -= THERMAL_REGULATOR_COST
 
 // Clean up the cell on destroy
 /obj/item/clothing/suit/space/Destroy()
@@ -85,7 +86,8 @@
 
 /obj/item/clothing/suit/space/examine(mob/user)
 	. = ..()
-	. += "Thermal regulator status: [round(temperature_setting-T0C,0.1)] &deg;C ([round(temperature_setting*1.8-459.67,0.1)] &deg;F)"
+	. += "Thermal regulator is [thermal_on ? "on" : "off"], the temperature is set to \
+		[round(temperature_setting-T0C,0.1)] &deg;C ([round(temperature_setting*1.8-459.67,0.1)] &deg;F)"
 	. += "Charge remaining: [cell ? "[cell.charge / cell.maxcharge * 100]%" : "invalid"]"
 	if(cell_cover_open)
 		. += "The cell cover is open!"
@@ -96,7 +98,8 @@
 
 /obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, params)
 	if(cell_cover_open && I.tool_behaviour == TOOL_SCREWDRIVER)
-		var/deg_c = input(user, "What temperature would you like to set the thermal regulator to? (20-45 degrees celcius)") as null|num
+		var/deg_c = input(user, "What temperature would you like to set the thermal regulator to? \
+			(20-45 degrees celcius)") as null|num
 		if(deg_c && deg_c >= 20 && deg_c <= 45)
 			temperature_setting = round(T0C + deg_c, 0.1)
 			to_chat(user, "<span class='notice'>You see the readout change to [deg_c] c.</span>")
@@ -106,20 +109,24 @@
 			return
 		if(user.transferItemToLoc(I, src))
 			cell = I
-			to_chat(user, "<span class='notice'>You successfully install the [cell] into [src].</span>")
+			to_chat(user, "<span class='notice'>You successfully install \the [cell] into [src].</span>")
 			return
 	return ..()
 
 /obj/item/clothing/suit/space/attack_self(mob/user)
 	if(cell_cover_open && cell)
-		user.visible_message("<span class='notice'>[user] removes [cell] from [src]!</span>", "<span class='notice'>You remove [cell].</span>")
+		user.visible_message("<span class='notice'>[user] removes \the [cell] from [src]!</span>", \
+			"<span class='notice'>You remove [cell].</span>")
 		cell.add_fingerprint(user)
 		user.put_in_hands(cell)
 		cell = null
 
 /obj/item/clothing/suit/space/proc/toggle_spacesuit_cell(mob/user)
 	cell_cover_open = !cell_cover_open
-	if(cell_cover_open)
-		to_chat(user, "<span class='notice'>You open the cell cover on [src].</span>")
-	else
-		to_chat(user, "<span class='notice'>You close the cell cover on [src].</span>")
+	to_chat(user, "<span class='notice'>You [cell_cover_open ? "open" : "close"] the cell cover on \the [src].</span>")
+
+/obj/item/clothing/suit/space/proc/toggle_spacesuit(mob/user)
+	thermal_on = !thermal_on
+	to_chat(user, "<span class='notice'>You turn [thermal_on ? "on" : "off"] the thermal regulator on \the [src].</span>")
+
+#undef THERMAL_REGULATOR_COST

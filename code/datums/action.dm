@@ -280,6 +280,14 @@
 	if(istype(suit))
 		suit.toggle_spacesuit_cell(owner)
 
+/datum/action/item_action/toggle_spacesuit
+	name = "Toggle Suit Suit Thermal Regulator"
+
+/datum/action/item_action/toggle_spacesuit/Trigger()
+	var/obj/item/clothing/suit/space/suit = target
+	if(istype(suit))
+		suit.toggle_spacesuit(owner)
+
 /datum/action/item_action/toggle_headphones
 	name = "Toggle Headphones"
 	desc = "UNTZ UNTZ UNTZ"
