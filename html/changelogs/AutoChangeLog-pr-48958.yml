@@ -1,0 +1,4 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - balance: "Xenobio-spawned magicarps can no longer cast resurrection bolt"
