@@ -8,7 +8,7 @@
 	idle_power_usage = 50
 	active_power_usage = 300
 	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/brain)
-	circuit = /obj/item/circuitboard/machine/clonescanner
+	circuit = /obj/item/circuitboard/machine/dnascanner
 	var/locked = FALSE
 	var/damage_coeff
 	var/scan_level
@@ -145,7 +145,7 @@
 
 //Just for transferring between genetics machines.
 /obj/item/disk/data
-	name = "cloning data disk"
+	name = "DNA data disk"
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	var/list/fields = list()
 	var/list/mutations = list()

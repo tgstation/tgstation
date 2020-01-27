@@ -344,7 +344,7 @@
 				/obj/item/circuitboard/computer/med_data,
 				/obj/item/circuitboard/machine/smoke_machine,
 				/obj/item/circuitboard/machine/chem_master,
-				/obj/item/circuitboard/machine/clonescanner,
+				/obj/item/circuitboard/machine/dnascanner,
 				/obj/item/circuitboard/computer/pandemic
 				)
 

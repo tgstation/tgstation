@@ -178,12 +178,12 @@
 	category = list ("Medical Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
-/datum/design/board/clonescanner
-	name = "Machine Design (Cloning Scanner)"
+/datum/design/board/dnascanner
+	name = "Machine Design (DNA Scanner)"
 	desc = "Allows for the construction of circuit boards used to build a Cloning Scanner."
-	id = "clonescanner"
+	id = "dnascanner"
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	build_path = /obj/item/circuitboard/machine/clonescanner
+	build_path = /obj/item/circuitboard/machine/dnascanner
 	category = list("Medical Machinery")
 
 /datum/design/board/biogenerator

@@ -654,8 +654,8 @@
 	else
 		return ..()
 
-/obj/item/circuitboard/machine/clonescanner
-	name = "Cloning Scanner (Machine Board)"
+/obj/item/circuitboard/machine/dnascanner
+	name = "DNA Scanner (Machine Board)"
 	icon_state = "medical"
 	build_path = /obj/machinery/dna_scannernew
 	req_components = list(

@@ -472,7 +472,7 @@
 	display_name = "Genetic Engineering"
 	description = "We have the technology to change him."
 	prereq_ids = list("biotech")
-	design_ids = list("clonescanner", "scan_console", "cloning_disk")
+	design_ids = list("dnascanner", "scan_console", "dna_disk")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
