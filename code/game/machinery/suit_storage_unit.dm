@@ -310,6 +310,8 @@
 /obj/machinery/suit_storage_unit/process()
 	if(!suit)
 		return
+	if(!istype(suit, /obj/item/clothing/suit/space))
+		return
 	if(!suit.cell)
 		return
 
