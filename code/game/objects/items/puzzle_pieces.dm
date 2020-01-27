@@ -11,6 +11,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 7
+	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	var/puzzle_id = null
 
 //Two test keys for use alongside the two test doors.
@@ -32,7 +33,7 @@
 
 /obj/machinery/door/keycard
 	name = "locked door"
-	desc = "This door only opens when a keycard is swiped. This thing looks virtually indestructable, however."
+	desc = "This door only opens when a keycard is swiped. It looks virtually indestructable."
 	icon = 'icons/obj/doors/doorpuzzle.dmi'
 	icon_state = "door_closed"
 	explosion_block = 3
@@ -81,7 +82,7 @@
 
 /obj/machinery/door/keycard/swordfish
 	name = "blue airlock"
-	desc = "If nautical notions be something you wish."
+	desc = "If nautical nonsense be something you wish."
 	puzzle_id = "swordfish"
 
 //*************************
@@ -90,7 +91,7 @@
 //We're working off a subtype of pressureplates, which should work just a BIT better now.
 /obj/structure/holobox
 	name = "holobox"
-	desc = "A projected hologram similar to PAi holochassis, containing a secure decryption key."
+	desc = "A hard-light box, containing a secure decryption key."
 	icon = 'icons/obj/puzzle_small.dmi'
 	icon_state = "laserbox"
 	density = TRUE
@@ -110,8 +111,10 @@
 	active = TRUE
 	trigger_delay = 10
 	protected = TRUE
+	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	var/reward = /obj/item/reagent_containers/food/snacks/cookie
 	var/claimed = FALSE
+
 
 /obj/item/pressure_plate/hologrid/examine(mob/user)
 	. = ..()
