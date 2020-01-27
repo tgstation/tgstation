@@ -11,8 +11,8 @@ export const HypnoChair = props => {
         backgroundColor="#450F44">
         The Enhanced Interrogation Chamber is designed to induce a deep-rooted
         trance trigger into the subject. Once the procedure is complete,
-        by using the implanted trigger phrase, the authorities are able to ensure
-        immediate and complete obedience and truthfulness.
+        by using the implanted trigger phrase, the authorities are able to
+         ensure immediate and complete obedience and truthfulness.
       </Section>
       <Section
         title="Occupant Information"
