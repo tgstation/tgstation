@@ -2178,7 +2178,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	name = "Himalayan"
 	description = "Freezing cold; its a miracle"
 	boozepwr = 40
-	color = "##3f498f" // 254, 131, 8
+	color = "##0000ff"
 	quality = DRINK_FANTASTIC
 	taste_description = "freezing cold"
 	glass_icon_state = "himalayan"
@@ -2186,10 +2186,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A ridiclously cold drink, topped with a snowball. Guaranteed to bring you a blue, blue christmas."
 
 /datum/reagent/consumable/ethanol/himalayan/on_mob_life(mob/living/carbon/M)
-	// Cools the user down while the reagent is in the body. Occasionally causes a brain freeze, giving you a case of minor brain damage.
+	// Cools the user down while the reagent is in the body. Occasionally causes a brain freeze, giving you a case of minor brain damage and freezing you solid.
 	M.adjust_bodytemperature(-25 * TEMPERATURE_DAMAGE_COEFFICIENT)
 	if (prob(5))
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2)
-		to_chat(M, "<span class='notice'>["Your head pounds; you have a brain freeze!"]</span>")
+		M.apply_status_effect(/datum/status_effect/freon/watcher)
+		to_chat(M, "<span class='notice'>["Your blood is so cold, it freezes the air around you! Even worse, you have a brain freeze!"]/span>")
 
 	..()
