@@ -201,7 +201,7 @@
 	description = "Supposedly able to neutralize acids in the body."
 	taste_description = "bitter water"
 	glass_name = "glass of alkaline water"
-	glass_desc = "Aparently good for wait loss, anti-aging, and cancer resistance"
+	glass_desc = "Apparently good for wait loss, anti-aging, and cancer resistance."
 
 /datum/reagent/water/holywater
 	name = "Holy Water"
