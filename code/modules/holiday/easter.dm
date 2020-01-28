@@ -102,6 +102,13 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
+//Bunny bag!
+/obj/item/storage/backpack/satchel/bunnysatchel
+	name = "Easter Bunny Satchel"
+	desc = "Good for your eyes."
+	icon_state = "satchel-carrot"
+	item_state = "satchel-carrot"
+
 //Egg prizes and egg spawns!
 /obj/item/reagent_containers/food/snacks/egg
 	var/containsPrize = FALSE
@@ -117,6 +124,7 @@
 /obj/item/reagent_containers/food/snacks/egg/proc/dispensePrize(turf/where)
 	var/won = pick(/obj/item/clothing/head/bunnyhead,
 	/obj/item/clothing/suit/bunnysuit,
+	/obj/item/storage/backpack/satchel/bunnysatchel,
 	/obj/item/reagent_containers/food/snacks/grown/carrot,
 	/obj/item/reagent_containers/food/snacks/chocolateegg,
 	/obj/item/toy/balloon,
