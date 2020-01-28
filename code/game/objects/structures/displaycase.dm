@@ -398,7 +398,7 @@
 		var/obj/item/card/id/potential_acc = I
 		if(!payments_acc)
 			payments_acc = potential_acc.registered_account
-			playsound(src, 'sound/machines/click', 20, TRUE)
+			playsound(src, 'sound/machines/click.ogg', 20, TRUE)
 			to_chat(user, "<span class='notice'>Vend-a-tray registered. Use a PDA with your ID to change the cost.</span>")
 		else if(payments_acc != potential_acc.registered_account)
 			to_chat(user, "<span class='warning'>This Vend-a-tray is already registered.</span>")
