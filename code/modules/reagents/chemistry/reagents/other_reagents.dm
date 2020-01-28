@@ -133,11 +133,7 @@
 	current_cycle++
 	holder.remove_reagent(type, metabolization_rate / M.metabolism_efficiency)
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "hydration", /datum/mood_event/hydration, name)
-	M.AdjustStun(-3, FALSE)
-	M.AdjustKnockdown(-3, FALSE)
 	M.AdjustUnconscious(-3, FALSE)
-	M.AdjustParalyzed(-3, FALSE)
-	M.AdjustImmobilized(-3, FALSE)
 
 /*
  *	Water reaction to turf
