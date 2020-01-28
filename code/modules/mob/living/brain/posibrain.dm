@@ -177,5 +177,5 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	else
 		icon_state = initial(icon_state)
 
-/obj/item/mmi/posibrain/update_overlays()
+/obj/item/mmi/posibrain/add_mmi_overlay()
 	return
