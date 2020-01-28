@@ -693,8 +693,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 
 	// Use the bodytemp divisors to get the change step, with max step size
 	if(use_steps)
-		amount = (amount > 0) ? min(amount / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX) : \
-			max(amount / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
+		amount = (amount > 0) ? min(amount / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX) : max(amount / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
 
 	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
 		bodytemperature = CLAMP(bodytemperature + amount,min_temp,max_temp)
