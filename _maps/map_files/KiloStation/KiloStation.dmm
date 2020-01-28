@@ -31909,14 +31909,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/item/radio{
-	desc = "An old handheld radio. You could use it, if you really wanted to.";
-	icon_state = "radio";
-	name = "old radio"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/displaycase/forsale,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "aXn" = (
@@ -93759,6 +93755,19 @@
 /obj/machinery/holopad/secure,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
+"gXk" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/item/radio{
+	desc = "An old handheld radio. You could use it, if you really wanted to.";
+	icon_state = "radio";
+	name = "old radio"
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/bar)
 "llk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -119920,7 +119929,7 @@ aKK
 cfa
 btE
 aXm
-btX
+gXk
 bva
 aYv
 btX
