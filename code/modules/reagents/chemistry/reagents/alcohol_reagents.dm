@@ -2178,7 +2178,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	name = "Himalayan"
 	description = "Freezing cold; its a miracle"
 	boozepwr = 40
-	color = "##0000ff"
+	color = "#0000ff"
 	quality = DRINK_FANTASTIC
 	taste_description = "freezing cold"
 	glass_icon_state = "himalayan"
