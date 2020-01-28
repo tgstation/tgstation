@@ -4,6 +4,9 @@
 
 #define MACHINE_OPERATION 100000
 #define MACHINE_OVERLOAD 500000
+#define MAJOR_THRESHOLD 4500
+#define MINOR_THRESHOLD 3500
+#define STANDARD_DEVIATION 800
 
 /obj/machinery/rnd/bepis
 	name = "\improper B.E.P.I.S. Chamber"
@@ -22,9 +25,9 @@
 	var/account_name					//name of the payer's account.
 	var/error_cause = null
 	//Vars related to probability and chance of success for testing
-	var/major_threshold = 6000
-	var/minor_threshold = 3000
-	var/std = 1000 //That's Standard Deviation, what did you think it was?
+	var/major_threshold = MAJOR_THRESHOLD
+	var/minor_threshold = MINOR_THRESHOLD
+	var/std = STANDARD_DEVIATION //That's Standard Deviation, what did you think it was?
 	//Stock part variables
 	var/power_saver = 1
 	var/inaccuracy_percentage = 1.5
