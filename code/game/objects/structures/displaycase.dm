@@ -398,6 +398,7 @@
 		var/obj/item/card/id/potential_acc = I
 		if(!payments_acc)
 			payments_acc = potential_acc.registered_account
+			playsound(src, 'sound/machines/click', 20, TRUE)
 			to_chat(user, "<span class='notice'>Vend-a-tray registered. Use a PDA with your ID to change the cost.</span>")
 		else if(payments_acc != potential_acc.registered_account)
 			to_chat(user, "<span class='warning'>This Vend-a-tray is already registered.</span>")
@@ -457,6 +458,7 @@
 			if(C.registered_account)
 				var/datum/bank_account/account = C.registered_account
 				if(!account.has_money(sale_price))
+
 					to_chat(user, "<span class='notice'>You do not possess the funds to purchase this.</span>")
 					return
 				else
@@ -465,6 +467,7 @@
 						payments_acc.adjust_money(sale_price)
 					customer.put_in_hands(showpiece)
 					to_chat(user, "<span class='notice'>You purchase [showpiece] for [sale_price] credits.</span>")
+					playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
 					icon = 'icons/obj/stationobjs.dmi'
 					flick("laserbox_vend", src)
 					showpiece = null
