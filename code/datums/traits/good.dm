@@ -128,12 +128,17 @@ datum/quirk/fan_mime
 
 /datum/quirk/light_step
 	name = "Light Step"
-	desc = "You walk with a gentle step; stepping on sharp objects is quieter, less painful and you won't leave footprints behind you."
-	value = 1
+	desc = "You walk with a gentle step; footsteps and stepping on sharp objects is quieter and less painful."
+	value = 2
 	mob_trait = TRAIT_LIGHT_STEP
 	gain_text = "<span class='notice'>You walk with a little more litheness.</span>"
 	lose_text = "<span class='danger'>You start tromping around like a barbarian.</span>"
 	medical_record_text = "Patient's dexterity belies a strong capacity for stealth."
+
+/datum/quirk/light_step/on_spawn()
+	var/datum/component/footstep/C = quirk_holder.GetComponent(/datum/component/footstep)
+	C.volume *= 0.6
+	C.e_range -= 2
 
 /datum/quirk/musician
 	name = "Musician"
