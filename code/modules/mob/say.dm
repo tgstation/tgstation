@@ -36,6 +36,19 @@
 
 	usr.emote("me",1,message,TRUE)
 
+//Singing verb
+/mob/verb/sing_verb(message as text)
+	set name = "Sing"
+	set category = "IC"
+	if(GLOB.say_disabled)	//This is here to try to identify lag problems
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		return
+	sing(message)
+
+///sing a lovely song
+/mob/proc/sing(message, datum/language/language=null)
+	say(message, language) //only living mobs can sing, dead things are pretty tonedeaf
+
 ///Speak as a dead person (ghost etc)
 /mob/proc/say_dead(var/message)
 	var/name = real_name
@@ -101,6 +114,7 @@
   *
   * Result can be
   * * MODE_WHISPER (Quiet speech)
+  * * MODE_SING (Singing)
   * * MODE_HEADSET (Common radio channel)
   * * A department radio (lots of values here)
   */
@@ -108,6 +122,8 @@
 	var/key = message[1]
 	if(key == "#")
 		return MODE_WHISPER
+	else if(key == "~")
+		return MODE_SING
 	else if(key == ";")
 		return MODE_HEADSET
 	else if((length(message) > (length(key) + 1)) && (key in GLOB.department_radio_prefixes))

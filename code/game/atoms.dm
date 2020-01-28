@@ -1093,6 +1093,8 @@
 			log_say(log_text)
 		if(LOG_WHISPER)
 			log_whisper(log_text)
+		if(LOG_SING)
+			log_sing(log_text)
 		if(LOG_EMOTE)
 			log_emote(log_text)
 		if(LOG_DSAY)
