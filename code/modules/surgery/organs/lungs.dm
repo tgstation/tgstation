@@ -428,32 +428,6 @@
 		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma][MOLES])
 		owner.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
 
-/obj/item/organ/lungs/space_adaption //breathes nothing, unsafe to breathe anything normally inhaled.
-	name = "mutated lungs"
-	desc = "Something horribly wrong has happened to these lungs. They have changed to allow the user to live without breathing, but any kind of gas has become dangerous to the system."
-	icon_state = "lungs-plasma"
-
-	high_threshold_passed = "<span class='warning'>You feel some sort of constriction around your chest. You're not sure whether you should breathe or not to fix it.</span>"
-	now_fixed = "<span class='warning'>Your lungs seem to once again be able to... process...</span>"
-	high_threshold_cleared = "<span class='info'>The constriction around your chest loosens as your breathing calms down.</span>"
-
-	//any amount of any is handled in the special lung's check_breath
-	safe_oxygen_min = 0
-	safe_co2_max = 0
-	safe_toxins_max = 0
-	SA_para_min = 0
-	SA_sleep_min = 0
-	BZ_trip_balls_min = 0
-	gas_stimulation_min = 0
-
-/obj/item/organ/lungs/space_adaption/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
-	. = ..()
-	if(!breath || (breath.total_moles() != 0))
-		H.throw_alert("too_much_anything", /obj/screen/alert/too_much_anything)
-		H.adjustOxyLoss(-5)
-	else
-		H.clear_alert("too_much_anything")
-
 /obj/item/organ/lungs/cybernetic
 	name = "basic cybernetic lungs"
 	desc = "A basic cybernetic version of the lungs found in traditional humanoid entities."

@@ -149,11 +149,6 @@
 	name = "Choking (Plasma)"
 	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
 	icon_state = "too_much_tox"
-
-/obj/screen/alert/too_much_anything
-	name = "Choking (Atmospherics)"
-	desc = "There's something in the air (Hint: the air is the problem) and you're breathing it in. Find somewhere with no atmos!"
-	icon_state = "too_much_any"
 //End gas alerts
 
 
