@@ -47,6 +47,7 @@
 	return TRUE
 
 /obj/structure/railing/corner/CanPass()
+	SHOULD_CALL_PARENT(FALSE)
 	return TRUE
 
 /obj/structure/railing/CheckExit(atom/movable/O, turf/target)
