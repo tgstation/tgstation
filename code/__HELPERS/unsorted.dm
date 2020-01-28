@@ -1108,7 +1108,7 @@ B --><-- A
 /proc/get_random_station_turf()
 	var/list/turfs = get_area_turfs(pick(GLOB.the_station_areas))
 	if (length(turfs))
-		return pick(get_area_turfs(pick(GLOB.the_station_areas)))
+		return pick(turfs)
 
 /proc/get_safe_random_station_turf() //excludes dense turfs (like walls) and areas that have valid_territory set to FALSE
 	for (var/i in 1 to 5)
