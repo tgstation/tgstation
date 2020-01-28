@@ -1185,6 +1185,7 @@
 "acK" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "acL" = (
@@ -11336,6 +11337,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
+/obj/structure/reagent_dispensers/water_cooler/golden,
 /turf/open/floor/circuit/green{
 	luminosity = 2
 	},
@@ -33617,11 +33619,10 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bww" = (
-/obj/structure/table/wood,
-/obj/item/folder/yellow,
 /obj/machinery/firealarm{
 	pixel_y = 28
 	},
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bwx" = (
@@ -44175,9 +44176,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel/dark/corner{
 	dir = 1
 	},
@@ -49580,10 +49579,7 @@
 	},
 /area/science/research)
 "chu" = (
-/obj/machinery/status_display/ai{
-	pixel_y = 32
-	},
-/obj/structure/chair/stool,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -57060,10 +57056,10 @@
 /turf/open/floor/plasteel/white/side,
 /area/medical/medbay/aft)
 "cyR" = (
-/obj/machinery/vending/cigarette,
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel/white/side,
 /area/medical/medbay/aft)
 "cyT" = (
