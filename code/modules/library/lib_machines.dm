@@ -29,6 +29,7 @@
 
 /obj/machinery/computer/libraryconsole/ui_interact(mob/user)
 	. = ..()
+	return FALSE
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
 		if(0)
@@ -206,6 +207,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 
 /obj/machinery/computer/libraryconsole/bookmanagement/ui_interact(mob/user)
 	. = ..()
+	return FALSE
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
 		if(0)
