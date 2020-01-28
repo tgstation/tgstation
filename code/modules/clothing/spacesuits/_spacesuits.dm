@@ -56,42 +56,65 @@
 	if(ispath(cell))
 		cell = new cell(src)
 
-// Turn on the suit when it is worn
+/// Start Processing on the space suit when it is worn to heat the wearer
 /obj/item/clothing/suit/space/equipped(mob/user, slot)
 	. = ..()
 	if(slot == ITEM_SLOT_OCLOTHING) // Check that the slot is valid
 		START_PROCESSING(SSobj, src)
 
-// On removal turn off
+// On removal stop processing, save battery
 /obj/item/clothing/suit/space/dropped(mob/user)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
+	var/mob/living/carbon/human/human = user
+	if(istype(human))
+		human.update_spacesuit_hud_icon("0")
 
 // Space Suit temperature regulation and power usage
 /obj/item/clothing/suit/space/process()
-	if(thermal_on && cell.charge >= THERMAL_REGULATOR_COST)
-		var/mob/living/carbon/human/user = src.loc
-		if(user && ishuman(user) && user.wear_suit == src)
+	var/mob/living/carbon/human/user = src.loc
+	if(!user || !ishuman(user) || !(user.wear_suit == src))
+		return
+	if(!cell)
+		user.update_spacesuit_hud_icon("missing")
+	else
+		var/cell_percent = cell.charge / cell.maxcharge
+		if(cell_percent > 0.75)
+			user.update_spacesuit_hud_icon("high")
+		else if(cell_percent > 0.25)
+			user.update_spacesuit_hud_icon("mid")
+		else if(cell_percent > 0.01 && cell.charge > THERMAL_REGULATOR_COST)
+			user.update_spacesuit_hud_icon("low")
+		else
+			user.update_spacesuit_hud_icon("empty")
+
+		if(thermal_on && cell.charge >= THERMAL_REGULATOR_COST)
 			var/temp_diff = temperature_setting - user.bodytemperature
-			user.adjust_bodytemperature(temp_diff) // TODO: use_steps=True when #48920 merged
+			user.adjust_bodytemperature(temp_diff) // TODO: use_steps=TRUE when #48920 merged
 			cell.charge -= THERMAL_REGULATOR_COST
 
 // Clean up the cell on destroy
 /obj/item/clothing/suit/space/Destroy()
 	if(cell)
 		QDEL_NULL(cell)
+	var/mob/living/carbon/human/human = src.loc
+	if(istype(human))
+		human.update_spacesuit_hud_icon("0")
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
+// Clean up the cell on destroy
 /obj/item/clothing/suit/space/handle_atom_del(atom/A)
 	if(A == cell)
 		cell = null
 		thermal_on = FALSE
 	return ..()
 
+// support for items that interact with the cell
 /obj/item/clothing/suit/space/get_cell()
 	return cell
 
+// Show the status of the suit and the cell
 /obj/item/clothing/suit/space/examine(mob/user)
 	. = ..()
 	if(!in_range(src, user) && !isobserver(user))
@@ -107,8 +130,11 @@
 		else
 			. += "\The [cell] is in place."
 
+// object handling for accessing features of the suit
 /obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, params)
-	if(cell_cover_open && I.tool_behaviour == TOOL_SCREWDRIVER)
+	if(I.tool_behaviour == TOOL_CROWBAR)
+		toggle_spacesuit_cell(user)
+	else if(cell_cover_open && I.tool_behaviour == TOOL_SCREWDRIVER)
 		var/range_low = 20 // Default min temp
 		var/range_high = 45 // default max temp
 		if(obj_flags & EMAGGED)
@@ -130,22 +156,26 @@
 			return
 	return ..()
 
+/// Open the cell cover when ALT+Click on the suit
 /obj/item/clothing/suit/space/AltClick(mob/living/user)
-	..()
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
-	if(cell_cover_open && cell)
-		remove_cell(user)
-	else
-		toggle_spacesuit_cell(user)
+	toggle_spacesuit_cell(user)
 
-/obj/item/clothing/suit/space/ui_action_click(mob/user, datum/action/A)
-	if(istype(A, /datum/action/item_action/toggle_spacesuit))
-		toggle_spacesuit(user)
+/// Remove the cell whent he cover is open on CTRL+Click
+/obj/item/clothing/suit/space/CtrlClick(mob/living/user)
+	if(istype(user) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		if(cell_cover_open && cell)
+			remove_cell(user)
+			return
+	return ..()
 
+// Remove suit when using the suit on its self
 /obj/item/clothing/suit/space/attack_self(mob/user)
 	remove_cell(user)
 
+/// Remove the cell from the suit if the over is open
 /obj/item/clothing/suit/space/proc/remove_cell(mob/user)
 	if(cell_cover_open && cell)
 		user.visible_message("<span class='notice'>[user] removes \the [cell] from [src]!</span>", \
@@ -154,14 +184,17 @@
 		user.put_in_hands(cell)
 		cell = null
 
+/// Toggle the space suit's cell cover
 /obj/item/clothing/suit/space/proc/toggle_spacesuit_cell(mob/user)
 	cell_cover_open = !cell_cover_open
 	to_chat(user, "<span class='notice'>You [cell_cover_open ? "open" : "close"] the cell cover on \the [src].</span>")
 
+/// Toggle the space suit's thermal regulator status
 /obj/item/clothing/suit/space/proc/toggle_spacesuit(mob/user)
 	thermal_on = !thermal_on
 	to_chat(user, "<span class='notice'>You turn [thermal_on ? "on" : "off"] the thermal regulator on \the [src].</span>")
 
+// let emags override the temperature settings
 /obj/item/clothing/suit/space/emag_act(mob/user)
 	if(!(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED
@@ -169,6 +202,7 @@
 		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], overwriting thermal regulator restrictions.")
 	playsound(src, "sparks", 50, TRUE)
 
+// zap the cell if we get hit with an emp
 /obj/item/clothing/suit/space/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)

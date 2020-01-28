@@ -281,6 +281,7 @@
 	var/obj/item/clothing/suit/space/suit = target
 	if(!istype(suit))
 		return
+	suit.toggle_spacesuit()
 	button_icon_state = "thermal_[suit.thermal_on ? "on" : "off"]"
 	UpdateButtonIcon()
 

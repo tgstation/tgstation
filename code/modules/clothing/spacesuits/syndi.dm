@@ -16,6 +16,10 @@
 	armor = list("melee" = 40, "bullet" = 50, "laser" = 30,"energy" = 40, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 80, "acid" = 85)
 	cell = /obj/item/stock_parts/cell/hyper
 
+/obj/item/clothing/suit/space/hardsuit/syndicate/Initialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_CONTENTS)
+
 //Green syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/green
 	name = "green space helmet"
