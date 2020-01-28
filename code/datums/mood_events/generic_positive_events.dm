@@ -187,5 +187,5 @@
 
 /datum/mood_event/hydration
 	description = "<span class='nicegreen'>I feel healthy and refreshed!</span>\n"
-	mood_change = 4
+	mood_change = 2
 	timeout = 6 MINUTES
