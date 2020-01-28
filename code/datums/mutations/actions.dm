@@ -315,8 +315,8 @@
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your feel like you can really connect with people by throwing your voice.</span>"
 	instability = 15
+	locked = TRUE
 	power = /obj/effect/proc_holder/spell/self/tongue_spike/chem
-
 	energy_coeff = 1
 	synchronizer_coeff = 1
 

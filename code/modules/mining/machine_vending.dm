@@ -221,7 +221,7 @@
 		new /datum/data/mining_equipment("Modification Kit",    		/obj/item/borg/upgrade/modkit/trigger_guard,					1700),
 		new /datum/data/mining_equipment("The Liberator's Legacy",  	/obj/item/storage/box/rndboards,								2000)
 		)
-	. = ..()
+	return ..()
 
 /**********************Mining Equipment Vendor Items**************************/
 
