@@ -8,6 +8,7 @@
 	var/on = FALSE
 	var/volume_rate = 1000
 	var/overpressure_m = 80
+	var/use_overlays = TRUE
 	volume = 1000
 
 	var/list/scrubbing = list(/datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitryl, /datum/gas/tritium, /datum/gas/hypernoblium, /datum/gas/water_vapor)
@@ -18,14 +19,17 @@
 	air_update_turf()
 	return ..()
 
-/obj/machinery/portable_atmospherics/scrubber/update_icon()
+/obj/machinery/portable_atmospherics/scrubber/update_icon_state()
 	icon_state = "pscrubber:[on]"
 
-	cut_overlays()
+/obj/machinery/portable_atmospherics/scrubber/update_overlays()
+	. = ..()
+	if(!use_overlays)
+		return
 	if(holding)
-		add_overlay("scrubber-open")
+		. += "scrubber-open"
 	if(connected_port)
-		add_overlay("scrubber-connector")
+		. += "scrubber-connector"
 
 /obj/machinery/portable_atmospherics/scrubber/process_atmos()
 	..()
@@ -105,7 +109,7 @@
 				on = FALSE
 				update_icon()
 		else if(on && holding)
-			investigate_log("[key_name(user)] started a transfer into [holding].<br>", INVESTIGATE_ATMOS)
+			investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/scrubber/ui_act(action, params)
 	if(..())
@@ -135,6 +139,7 @@
 	volume = 50000
 
 	var/movable = FALSE
+	use_overlays = FALSE
 
 /obj/machinery/portable_atmospherics/scrubber/huge/movable
 	movable = TRUE
@@ -142,7 +147,7 @@
 /obj/machinery/portable_atmospherics/scrubber/huge/movable/cargo
 	anchored = FALSE
 
-/obj/machinery/portable_atmospherics/scrubber/huge/update_icon()
+/obj/machinery/portable_atmospherics/scrubber/huge/update_icon_state()
 	icon_state = "scrubber:[on]"
 
 /obj/machinery/portable_atmospherics/scrubber/huge/process_atmos()

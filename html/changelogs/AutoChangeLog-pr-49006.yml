@@ -1,0 +1,4 @@
+author: "Names-Are-Hard"
+delete-after: True
+changes: 
+  - bugfix: "Fixed moth markings not saving properly"

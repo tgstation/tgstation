@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - imageadd: "new hud icons for ert, service hud icons recolored, some hud icons simplified or small recolors, some job id card icons recolored and changed job id cards for ert"

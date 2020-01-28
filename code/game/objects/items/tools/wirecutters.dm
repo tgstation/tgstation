@@ -42,13 +42,13 @@
 		add_atom_colour(wirecutter_colors[our_color], FIXED_COLOUR_PRIORITY)
 		update_icon()
 
-/obj/item/wirecutters/update_icon()
+/obj/item/wirecutters/update_overlays()
+	. = ..()
 	if(!random_color) //icon override
 		return
-	cut_overlays()
 	var/mutable_appearance/base_overlay = mutable_appearance(icon, "cutters_cutty_thingy")
 	base_overlay.appearance_flags = RESET_COLOR
-	add_overlay(base_overlay)
+	. += base_overlay
 
 /obj/item/wirecutters/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/restraints/handcuffs/cable))

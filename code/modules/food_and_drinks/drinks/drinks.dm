@@ -348,7 +348,7 @@
 // heehoo bottle flipping
 /obj/item/reagent_containers/food/drinks/waterbottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(cap_on && reagents.total_volume)
+	if(!QDELETED(src) && cap_on && reagents.total_volume)
 		if(prob(flip_chance)) // landed upright
 			src.visible_message("<span class='notice'>[src] lands upright!</span>")
 			if(throwingdatum.thrower)
