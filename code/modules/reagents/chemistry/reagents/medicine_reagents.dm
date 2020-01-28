@@ -342,10 +342,7 @@
 /datum/reagent/medicine/omnizine/protozine
 	name = "Protozine"
 	description = "A less environmentally friendly and somewhat weaker variant of omnizine."
-	reagent_state = LIQUID
 	color = "#d8c7b7"
-	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	overdose_threshold = 30
 	healing = 0.2
 
 /datum/reagent/medicine/calomel
