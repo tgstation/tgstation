@@ -4,9 +4,9 @@
 
 #define MACHINE_OPERATION 100000
 #define MACHINE_OVERLOAD 500000
-#define MAJOR_THRESHOLD 4500
+#define MAJOR_THRESHOLD 5500
 #define MINOR_THRESHOLD 3500
-#define STANDARD_DEVIATION 800
+#define STANDARD_DEVIATION 1000
 
 /obj/machinery/rnd/bepis
 	name = "\improper B.E.P.I.S. Chamber"
@@ -33,6 +33,9 @@
 	var/inaccuracy_percentage = 1.5
 	var/positive_cash_offset = 0
 	var/negative_cash_offset = 0
+	var/minor_rewards = list(/obj/item/stack/circuit_stack/full,
+					/obj/item/airlock_painter/decal,
+					/obj/item/pen/survival)
 	var/static/list/item_list = list()
 
 /obj/machinery/rnd/bepis/attackby(obj/item/O, mob/user, params)
@@ -142,15 +145,9 @@
 			say("Expended all available experimental technology nodes. Resorting to minor rewards.")
 		return
 	if(gauss_real >= gauss_minor) //Minor Success.
-		var/reward_number = 1
+		var/reward = pick(minor_rewards)
+		new reward(dropturf)
 		say("Experiment concluded with partial success. Dispensing compiled research efforts.")
-		reward_number = rand(1,3)
-		if(reward_number == 1)
-			new /obj/item/stack/circuit_stack/full(dropturf)
-		if(reward_number == 2)
-			new /obj/item/airlock_painter/decal(dropturf)
-		if(reward_number == 3)
-			new /obj/item/pen/survival(dropturf)
 		return
 	if(gauss_real <= -1)	//Critical Failure
 		say("ERROR: CRITICAL MACHIME MALFUNCTI- ON. CURRENCY IS NOT CRASH. CANNOT COMPUTE COMMAND: 'make bucks'") //not a typo, for once.
