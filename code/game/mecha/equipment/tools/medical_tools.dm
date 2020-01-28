@@ -104,7 +104,6 @@
 		if(patient)
 			temp = "<br />\[Occupant: [patient] ([patient.stat > 1 ? "*DECEASED*" : "Health: [patient.health]%"])\]<br /><a href='?src=[REF(src)];view_stats=1'>View stats</a>|<a href='?src=[REF(src)];eject=1'>Eject</a>"
 		return "[output] [temp]"
-	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/Topic(href,href_list)
 	..()
@@ -119,7 +118,6 @@
 		var/datum/reagent/R = locate(href_list["inject"]) in SG.reagents.reagent_list
 		if (istype(R))
 			inject_reagent(R, SG)
-	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/get_patient_stats()
 	if(!patient)
@@ -284,7 +282,6 @@
 	var/output = ..()
 	if(output)
 		return "[output] \[<a href=\"?src=[REF(src)];toggle_mode=1\">[mode? "Analyze" : "Launch"]</a>\]<br />\[Syringes: [syringes.len]/[max_syringes] | Reagents: [reagents.total_volume]/[reagents.maximum_volume]\]<br /><a href='?src=[REF(src)];show_reagents=1'>Reagents list</a>"
-	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/action(atom/movable/target)
 	if(!action_checks(target))
@@ -322,8 +319,8 @@
 				var/list/mobs = new
 				for(var/mob/living/carbon/M in mechsyringe.loc)
 					mobs += M
-				var/mob/living/carbon/M = safepick(mobs)
-				if(M)
+				if(length(mobs))
+					var/mob/living/carbon/M = pick(mobs)
 					var/R
 					mechsyringe.visible_message("<span class=\"attack\"> [M] was hit by the syringe!</span>")
 					if(M.can_inject(null, 1))
@@ -385,8 +382,6 @@
 		return
 	if (href_list["purge_all"])
 		reagents.clear_reagents()
-		return
-	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/get_reagents_page()
 	var/output = {"<html>
@@ -496,12 +491,10 @@
 		send_byjax(chassis.occupant,"msyringegun.browser","reagents",get_current_reagents())
 		send_byjax(chassis.occupant,"msyringegun.browser","reagents_form",get_reagents_form())
 		return 1
-	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/on_reagent_change(changetype)
 	..()
 	update_equip_info()
-	return
 
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/process()

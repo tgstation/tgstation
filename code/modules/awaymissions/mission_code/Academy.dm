@@ -389,8 +389,9 @@
 	icon_state = "1"
 	color = rgb(0,0,255)
 
-/obj/structure/ladder/unbreakable/rune/update_icon()
-	return
+/obj/structure/ladder/unbreakable/rune/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/structure/ladder/unbreakable/rune/show_fluff_message(up,mob/user)
 	user.visible_message("<span class='notice'>[user] activates \the [src].</span>", "<span class='notice'>You activate \the [src].</span>")

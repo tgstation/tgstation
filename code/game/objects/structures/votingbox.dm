@@ -202,8 +202,7 @@
 	user.put_in_hands(P)
 	to_chat(user,"<span class='notice'>[src] prints out the voting tally.</span>")
 
-/obj/structure/votebox/update_icon()
-	. = ..()
+/obj/structure/votebox/update_icon_state()
 	icon_state = "votebox_[voting_active ? "active" : "maint"]"
 
 #undef VOTE_TEXT_LIMIT

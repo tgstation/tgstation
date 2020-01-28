@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - bugfix: "Increases the amount of shadowperson mutation toxin found in each of the black pills that legion corpses sometimes have in their pockets from 1u to 5u. They should actually turn you into a shadowperson if you eat them now."

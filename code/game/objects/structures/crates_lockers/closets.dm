@@ -46,6 +46,11 @@
 	update_icon()
 	PopulateContents()
 
+	RegisterSignal(src, COMSIG_ATOM_CANREACH, .proc/canreach_react)
+
+/obj/structure/closet/proc/canreach_react(datum/source, list/next)
+	return COMPONENT_BLOCK_REACH //closed block, open have nothing inside.
+
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
 	return
@@ -55,27 +60,35 @@
 	return ..()
 
 /obj/structure/closet/update_icon()
-	cut_overlays()
+	. = ..()
 	if(!opened)
 		layer = OBJ_LAYER
-		if(icon_door)
-			add_overlay("[icon_door]_door")
-		else
-			add_overlay("[icon_state]_door")
-		if(welded)
-			add_overlay(icon_welded)
-		if(secure && !broken)
-			if(locked)
-				add_overlay("locked")
-			else
-				add_overlay("unlocked")
-
 	else
 		layer = BELOW_OBJ_LAYER
-		if(icon_door_override)
-			add_overlay("[icon_door]_open")
+
+/obj/structure/closet/update_overlays()
+	. = ..()
+	closet_update_overlays(.)
+
+/obj/structure/closet/proc/closet_update_overlays(list/new_overlays)
+	. = new_overlays
+	if(!opened)
+		if(icon_door)
+			. += "[icon_door]_door"
 		else
-			add_overlay("[icon_state]_open")
+			. += "[icon_state]_door"
+		if(welded)
+			. += icon_welded
+		if(secure && !broken)
+			if(locked)
+				. += "locked"
+			else
+				. += "unlocked"
+	else
+		if(icon_door_override)
+			. += "[icon_door]_open"
+		else
+			. += "[icon_state]_open"
 
 /obj/structure/closet/examine(mob/user)
 	. = ..()

@@ -27,7 +27,7 @@
 
 // TODO: Implement more logic here. For now it's only a placeholder.
 /obj/machinery/ntnet_relay/is_operational()
-	if(stat & (BROKEN | NOPOWER | EMPED))
+	if(machine_stat & (BROKEN | NOPOWER | EMPED))
 		return FALSE
 	if(dos_failure)
 		return FALSE
@@ -35,7 +35,7 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/ntnet_relay/update_icon()
+/obj/machinery/ntnet_relay/update_icon_state()
 	if(is_operational())
 		icon_state = "bus"
 	else

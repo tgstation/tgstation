@@ -1,0 +1,4 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - balance: "Temperature based projectiles respect insulation"

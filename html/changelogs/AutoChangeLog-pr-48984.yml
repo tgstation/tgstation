@@ -1,0 +1,4 @@
+author: "Thebleh"
+delete-after: True
+changes: 
+  - bugfix: "Roundstart implant cases now properly display their content"
