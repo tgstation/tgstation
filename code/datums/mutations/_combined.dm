@@ -39,4 +39,4 @@
 
 /datum/generecipe/martyrdom
 	required = "/datum/mutation/human/strong; /datum/mutation/human/stimmed"
-	result = TONGUESPIKECHEM
+	result = MARTYRDOM

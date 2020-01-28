@@ -761,7 +761,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				if(proofed.client)
 					to_chat(proofed, "<span class='notice'>[src] kinda stings a bit.</span>")
 					proofed.client.give_award(/datum/award/achievement/misc/supermatter_survived, proofed)
-			return
+				return
 		message_admins("[src] has consumed [key_name_admin(user)] [ADMIN_JMP(src)].")
 		investigate_log("has consumed [key_name(user)].", INVESTIGATE_SUPERMATTER)
 		user.dust(force = TRUE)
