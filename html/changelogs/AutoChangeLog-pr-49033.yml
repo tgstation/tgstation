@@ -1,0 +1,4 @@
+author: "Names-Are-Hard"
+delete-after: True
+changes: 
+  - bugfix: "borgs can go through medical holobarriers"
