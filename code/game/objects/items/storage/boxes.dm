@@ -296,6 +296,7 @@
 /obj/item/storage/box/wall_flash
 	name = "wall-mounted flash kit"
 	desc = "This box contains everything necessary to build a wall-mounted flash. <B>WARNING: Flashes can cause serious eye damage, protective eyewear is required.</B>"
+	icon_state = "secbox"
 	illustration = "flash"
 
 /obj/item/storage/box/wall_flash/PopulateContents()
@@ -315,6 +316,7 @@
 /obj/item/storage/box/teargas
 	name = "box of tear gas grenades (WARNING)"
 	desc = "<B>WARNING: These devices are extremely dangerous and can cause blindness and skin irritation.</B>"
+	icon_state = "secbox"
 	illustration = "grenade"
 
 /obj/item/storage/box/teargas/PopulateContents()
@@ -550,6 +552,7 @@
 /obj/item/storage/box/prisoner
 	name = "box of prisoner IDs"
 	desc = "Take away their last shred of dignity, their name."
+	icon_state = "secbox"
 	illustration = "id"
 
 /obj/item/storage/box/prisoner/PopulateContents()
@@ -565,6 +568,7 @@
 /obj/item/storage/box/seccarts
 	name = "box of PDA security cartridges"
 	desc = "A box full of PDA cartridges used by Security."
+	icon_state = "secbox"
 	illustration = "pda"
 
 /obj/item/storage/box/seccarts/PopulateContents()
@@ -752,7 +756,6 @@
 /obj/item/storage/box/metalfoam
 	name = "box of metal foam grenades"
 	desc = "To be used to rapidly seal hull breaches."
-	icon_state = "box"
 	illustration = "grenade"
 
 /obj/item/storage/box/metalfoam/PopulateContents()
@@ -835,6 +838,7 @@
 /obj/item/storage/box/lethalshot
 	name = "box of lethal shotgun shots"
 	desc = "A box full of lethal shots, designed for riot shotguns."
+	icon_state = "secbox"
 	illustration = "redbullet"
 
 /obj/item/storage/box/lethalshot/PopulateContents()
@@ -1255,7 +1259,6 @@
 /obj/item/storage/box/sparklers
 	name = "box of sparklers"
 	desc = "A box of NT brand sparklers, burns hot even in the cold of space-winter."
-	icon_state = "box"
 	illustration = "sparkler"
 
 /obj/item/storage/box/sparklers/PopulateContents()
