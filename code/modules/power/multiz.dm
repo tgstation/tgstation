@@ -55,10 +55,10 @@
 	. = ..()
 
 /obj/machinery/power/deck_relay/obj_break()
+	..()
 	if(broken_status == RELAY_OK)
 		break_connections()
 		visible_message("<span class='warning'>[src]'s insulation breaks, fraying and severing the cable bundle!</span>")
-		desc += " The insulation is ripped apart and the cables are frayed beyond use."
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
 		icon_state = "cablerelay-broken"
 		broken_status = RELAY_ADD_CABLE
