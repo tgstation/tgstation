@@ -138,13 +138,16 @@
 		char = t_in[i]
 
 		switch(text2ascii(char))
+			//see https://en.wikipedia.org/wiki/List_of_Unicode_characters for a list of symbols
 			// A  .. Z
-			if(65 to 90)			//Uppercase Letters
+			//SKIPPED: 208: Ð, 215: ×, 222: Þ
+			if(65 to 90, 192 to 207, 209 to 214, 216 to 221)			//Uppercase Letters
 				number_of_alphanumeric++
 				last_char_group = LETTERS_DETECTED
 
 			// a  .. z
-			if(97 to 122)			//Lowercase Letters
+			//SKIPPED: 240: ð (lowercase of 208), 247: ÷, 254: þ (lowercase of 222)
+			if(97 to 122, 223 to 239, 241 to 246, 248 to 253, 255)			//Lowercase Letters
 				if(last_char_group == NO_CHARS_DETECTED || last_char_group == SPACES_DETECTED || last_char_group == SYMBOLS_DETECTED) //start of a word
 					char = uppertext(char)
 				number_of_alphanumeric++
