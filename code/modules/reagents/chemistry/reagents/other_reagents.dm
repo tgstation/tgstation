@@ -252,6 +252,12 @@
 			qdel(R)
 	T.Bless()
 
+/datum/reagent/water/hollowwater
+	name = "Hollow Water"
+	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen, but it looks kinda hollow."
+	color = "#88878777"
+	taste_description = "emptyiness"
+
 /datum/reagent/hydrogen_peroxide
 	name = "Hydrogen peroxide"
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen and oxygen." //intended intended
@@ -2027,14 +2033,14 @@
 	taste_description = "bananas"
 	can_synth = TRUE
 
-/datum/reagent/protonium
-	name = "Protonium"
+/datum/reagent/wittel
+	name = "Wittel"
 	description = "An extremely rare metallic-white substance only found on demon-class planets."
 	color = "#FFFFFF" // rgb: 255, 255, 255
 	taste_mult = 0 // oderless and tasteless
 
-/datum/reagent/metal_morphium
-	name = "Metal Morphium"
+/datum/reagent/metalgen
+	name = "Metalgen"
 	data = list("material"=null)
 	description = "A purple metal morphic liquid, said to impose it's metallic properties on whatever it touches."
 	color = "#b000aa"
@@ -2042,15 +2048,15 @@
 	var/applied_material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	var/minumum_material_amount = 100
 
-/datum/reagent/metal_morphium/reaction_obj(obj/O, volume)
+/datum/reagent/metalgen/reaction_obj(obj/O, volume)
 	metal_morph(O)
 	return
 
-/datum/reagent/metal_morphium/reaction_turf(turf/T, volume)
+/datum/reagent/metalgen/reaction_turf(turf/T, volume)
 	metal_morph(T)
 	return
 
-/datum/reagent/metal_morphium/proc/metal_morph(atom/A)
+/datum/reagent/metalgen/proc/metal_morph(atom/A)
 	var/metal_dat = data["material"]
 	if(!metal_dat)
 		return
@@ -2080,7 +2086,7 @@
 	L.AddElement(/datum/element/forced_gravity, 0) //0 is the gravity, and in this case weightless
 
 /datum/reagent/gravitum/on_mob_end_metabolize(mob/living/L)
-	qdel(GetElement(/datum/element/forced_gravity))
+	L.RemoveElement(/datum/element/forced_gravity)
 
 /datum/reagent/cellulose
 	name = "Cellulose Fibers"
@@ -2088,3 +2094,11 @@
 	reagent_state = SOLID
 	color = "#E6E6DA"
 	taste_mult = 0
+
+/datum/reagent/cellulose
+	name = "Cellulose Fibers"
+	description = "A crystaline polydextrose polymer, plants swear by this stuff."
+	reagent_state = SOLID
+	color = "#E6E6DA"
+	taste_mult = 0
+

@@ -1176,15 +1176,6 @@
 	icon_state = "supply"
 	build_path = /obj/machinery/rnd/production/techfab/department/cargo
 
-/obj/item/circuitboard/machine/pump
-	name = "Portable Liquid Pump (Machine Board)"
-	icon_state = "supply"
-	build_path = /obj/machinery/power/liquid_pump
-	needs_anchored = FALSE
-	req_components = list(
-		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/stock_parts/matter_bin = 2)
-
 //Misc
 
 

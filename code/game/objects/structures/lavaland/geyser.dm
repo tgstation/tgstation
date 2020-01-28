@@ -44,7 +44,7 @@
 
 /obj/structure/geyser/random
 	erupting_state = null
-	var/list/options = list(/datum/reagent/fuel/oil = 2, /datum/reagent/clf3 = 1) //fucking add more
+	var/list/options = list(/datum/reagent/clf3 = 1, /datum/reagent/water/hollowwater = 1, /datum/reagent/medicine/omnizine/protozine = 0.5) //fucking add more
 
 /obj/structure/geyser/random/Initialize()
 	. = ..()
