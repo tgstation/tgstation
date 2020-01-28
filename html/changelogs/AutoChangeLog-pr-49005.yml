@@ -1,0 +1,4 @@
+author: "Names-Are-Hard"
+delete-after: True
+changes: 
+  - bugfix: "phobia quirk properly saves now"
