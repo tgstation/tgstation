@@ -303,12 +303,20 @@
 	enter_message = "<span class='notice'><b>You're surrounded by some funky music inside the chamber. You zone out as you feel waves of krunk vibe within you.</b></span>"
 
 /obj/machinery/sleeper/party/inject_chem(chem, mob/user)
-	..()
+	var/datum/reagents/holder = new()
 	if(chem in spray_chems)
-		occupant.reagents.reaction(occupant, VAPOR, 0)
+		holder.add_reagent(chem_buttons[chem], 10) //I hope this is the correct way to do this.
+		holder.reaction(occupant, VAPOR, 0)
+		holder.trans_to(occupant, 10)
+
 		playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE, -6)
 		if(user)
 			log_combat(user, occupant, "sprayed [chem] into", addition = "via [src]")
+	else
+		if((chem in available_chems) && chem_allowed(chem))
+			occupant.reagents.add_reagent(chem_buttons[chem], 10) //emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
+			if(user)
+				log_combat(user, occupant, "injected [chem] into", addition = "via [src]")
 	if(leddit)
 		occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, 4) //You're injecting chemicals into yourself from a recalled, decrepit medical machine. What did you expect?
 	else if (prob(20))
