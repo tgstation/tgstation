@@ -740,3 +740,9 @@
 	required_reagents = list(/datum/reagent/acetone = 1, /datum/reagent/toxin/formaldehyde = 1, /datum/reagent/water = 1)
 	required_temp = 450
 
+/datum/chemical_reaction/alkaline
+	name = "Alkaline Water"
+	id = /datum/reagent/water/alkaline
+	results = list(/datum/reagent/water/alkaline = 5)
+	required_reagents = list(/datum/reagent/saltpetre = 1, /datum/reagent/water = 5)
+

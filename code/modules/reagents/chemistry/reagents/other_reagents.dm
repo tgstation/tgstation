@@ -129,6 +129,16 @@
 	glass_desc = "The father of all refreshments."
 	shot_glass_icon_state = "shotglassclear"
 
+/datum/reagent/water/on_mob_life(mob/living/carbon/M)
+	current_cycle++
+	holder.remove_reagent(type, metabolization_rate / M.metabolism_efficiency)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "hydration", /datum/mood_event/hydration, name)
+	M.AdjustStun(-3, FALSE)
+	M.AdjustKnockdown(-3, FALSE)
+	M.AdjustUnconscious(-3, FALSE)
+	M.AdjustParalyzed(-3, FALSE)
+	M.AdjustImmobilized(-3, FALSE)
+
 /*
  *	Water reaction to turf
  */
@@ -189,6 +199,13 @@
 		M.adjust_fire_stacks(-(reac_volume / 10))
 		M.ExtinguishMob()
 	..()
+
+/datum/reagent/water/alkaline
+	name = "Alkaline Water"
+	description = "Supposedly able to neutralize acids in the body."
+	taste_description = "bitter water"
+	glass_name = "glass of alkaline water"
+	glass_desc = "Aparently good for wait loss, anti-aging, and cancer resistance"
 
 /datum/reagent/water/holywater
 	name = "Holy Water"
