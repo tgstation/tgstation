@@ -44,7 +44,7 @@
 
 /obj/structure/geyser/random
 	erupting_state = null
-	var/list/options = list(/datum/reagent/clf3 = 1, /datum/reagent/water/hollowwater = 0.5, /datum/reagent/medicine/omnizine/protozine = 0.5, /datum/reagent/metalgen = 0.1)
+	var/list/options = list(/datum/reagent/clf3 = 1, /datum/reagent/water/hollowwater = 0.5, /datum/reagent/medicine/omnizine/protozine = 0.5, /datum/reagent/wittel = 0.1)
 
 /obj/structure/geyser/random/Initialize()
 	. = ..()
