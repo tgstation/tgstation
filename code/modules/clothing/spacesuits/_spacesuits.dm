@@ -45,7 +45,7 @@
 	strip_delay = 80
 	equip_delay_other = 80
 	resistance_flags = NONE
-	actions_types = list(/datum/action/item_action/toggle_spacesuit, /datum/action/item_action/toggle_spacesuit_cell)
+	actions_types = list(/datum/action/item_action/toggle_spacesuit)
 	var/temperature_setting = BODYTEMP_NORMAL /// The default temperature setting
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high /// If this is a path, this gets created as an object in Initialize.
 	var/cell_cover_open = FALSE /// Status of the cell cover on the suit
@@ -120,7 +120,7 @@
 		if(deg_c && deg_c >= range_low && deg_c <= range_high)
 			temperature_setting = round(T0C + deg_c, 0.1)
 			to_chat(user, "<span class='notice'>You see the readout change to [deg_c] c.</span>")
-	else if(istype(I, /obj/item/stock_parts/cell))
+	else if(cell_cover_open && istype(I, /obj/item/stock_parts/cell))
 		if(cell)
 			to_chat(user, "<span class='warning'>[src] already has a cell installed.</span>")
 			return
@@ -130,13 +130,23 @@
 			return
 	return ..()
 
-/obj/item/clothing/suit/space/ui_action_click(mob/user, datum/action/A)
-	if(istype(A, /datum/action/item_action/toggle_spacesuit_cell))
+/obj/item/clothing/suit/space/AltClick(mob/living/user)
+	..()
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	if(cell_cover_open && cell)
+		remove_cell(user)
+	else
 		toggle_spacesuit_cell(user)
-	else if(istype(A, /datum/action/item_action/toggle_spacesuit))
+
+/obj/item/clothing/suit/space/ui_action_click(mob/user, datum/action/A)
+	if(istype(A, /datum/action/item_action/toggle_spacesuit))
 		toggle_spacesuit(user)
 
 /obj/item/clothing/suit/space/attack_self(mob/user)
+	remove_cell(user)
+
+/obj/item/clothing/suit/space/proc/remove_cell(mob/user)
 	if(cell_cover_open && cell)
 		user.visible_message("<span class='notice'>[user] removes \the [cell] from [src]!</span>", \
 			"<span class='notice'>You remove [cell].</span>")
@@ -159,7 +169,7 @@
 		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], overwriting thermal regulator restrictions.")
 	playsound(src, "sparks", 50, TRUE)
 
-/obj/item/clothing/suit/space/emag_act(severity)
+/obj/item/clothing/suit/space/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return

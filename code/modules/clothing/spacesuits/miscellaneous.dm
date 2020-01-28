@@ -174,7 +174,6 @@ Contains:
 /obj/item/clothing/head/helmet/space/hardsuit/ert/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_CONTENTS)
 
 /obj/item/clothing/suit/space/hardsuit/ert
 	name = "emergency response team commander hardsuit"
@@ -189,6 +188,10 @@ Contains:
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	cell = /obj/item/stock_parts/cell/bluespace
+
+/obj/item/clothing/suit/space/hardsuit/ert/Initialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_CONTENTS)
 
 	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/sec

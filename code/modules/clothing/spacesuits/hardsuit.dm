@@ -11,7 +11,7 @@
 	var/on = FALSE
 	var/obj/item/clothing/suit/space/hardsuit/suit
 	var/hardsuit_type = "engineering" //Determines used sprites: hardsuit[on]-[type]
-	actions_types = list(/datum/action/item_action/toggle_spacesuit, /datum/action/item_action/toggle_spacesuit_cell, /datum/action/item_action/toggle_helmet_light)
+	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH	| PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	var/rad_count = 0
@@ -101,7 +101,7 @@
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/t_scanner, /obj/item/construction/rcd, /obj/item/pipe_dispenser)
 	siemens_coefficient = 0
 	var/obj/item/clothing/head/helmet/space/hardsuit/helmet
-	actions_types = list(/datum/action/item_action/toggle_spacesuit, /datum/action/item_action/toggle_spacesuit_cell, /datum/action/item_action/toggle_helmet)
+	actions_types = list(/datum/action/item_action/toggle_spacesuit, /datum/action/item_action/toggle_helmet)
 	var/helmettype = /obj/item/clothing/head/helmet/space/hardsuit
 	var/obj/item/tank/jetpack/suit/jetpack = null
 	var/hardsuit_type
@@ -293,7 +293,7 @@
 	armor = list("melee" = 40, "bullet" = 50, "laser" = 30, "energy" = 40, "bomb" = 35, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 90)
 	on = TRUE
 	var/obj/item/clothing/suit/space/hardsuit/syndi/linkedsuit = null
-	actions_types = list(/datum/action/item_action/toggle_spacesuit, /datum/action/item_action/toggle_spacesuit_cell, /datum/action/item_action/toggle_helmet_mode)
+	actions_types = list(/datum/action/item_action/toggle_helmet_mode)
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	visor_flags = STOPSPRESSUREDAMAGE
 
@@ -304,7 +304,6 @@
 	. = ..()
 	if(istype(loc, /obj/item/clothing/suit/space/hardsuit/syndi))
 		linkedsuit = loc
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_CONTENTS)
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/attack_self(mob/user) //Toggle Helmet
 	if(!isturf(user.loc))
@@ -375,6 +374,10 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	jetpack = /obj/item/tank/jetpack/suit
 	cell = /obj/item/stock_parts/cell/hyper
+
+/obj/item/clothing/suit/space/hardsuit/syndi/Initialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_CONTENTS)
 
 //Elite Syndie suit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
@@ -495,7 +498,7 @@
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 20, "bomb" = 100, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 80)
 	var/explosion_detection_dist = 21
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SCAN_REAGENTS | SNUG_FIT
-	actions_types = list(/datum/action/item_action/toggle_spacesuit, /datum/action/item_action/toggle_spacesuit_cell, /datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_research_scanner)
+	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_research_scanner)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/Initialize()
 	. = ..()
@@ -534,7 +537,6 @@
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 20, "bomb" = 100, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 80)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/rd
 	cell = /obj/item/stock_parts/cell/super
-
 
 	//Security hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/security
@@ -591,7 +593,7 @@
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR //we want to see the mask //this makes the hardsuit not fireproof you genius
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	actions_types = list(/datum/action/item_action/toggle_spacesuit, /datum/action/item_action/toggle_spacesuit_cell)
+	actions_types = list()
 
 /obj/item/clothing/head/helmet/space/hardsuit/swat/attack_self()
 
@@ -609,6 +611,7 @@
 /obj/item/clothing/suit/space/hardsuit/swat/Initialize()
 	. = ..()
 	allowed = GLOB.security_hardsuit_allowed
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_CONTENTS)
 
 	//Captain
 /obj/item/clothing/head/helmet/space/hardsuit/swat/captain
@@ -736,8 +739,6 @@
 		s.start()
 		owner.visible_message("<span class='danger'>[owner]'s shields deflect [attack_text] in a shower of sparks!</span>")
 		current_charges--
-		if(recharge_rate)
-			START_PROCESSING(SSobj, src)
 		if(current_charges <= 0)
 			owner.visible_message("<span class='warning'>[owner]'s shield overloads!</span>")
 			shield_state = "broken"
@@ -747,16 +748,15 @@
 
 
 /obj/item/clothing/suit/space/hardsuit/shielded/Destroy()
-	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/clothing/suit/space/hardsuit/shielded/process()
-	if(world.time > recharge_cooldown && current_charges < max_charges)
+	. = ..()
+	if(recharge_rate && world.time > recharge_cooldown && current_charges < max_charges)
 		current_charges = CLAMP((current_charges + recharge_rate), 0, max_charges)
 		playsound(loc, 'sound/magic/charge.ogg', 50, TRUE)
 		if(current_charges == max_charges)
 			playsound(loc, 'sound/machines/ding.ogg', 50, TRUE)
-			STOP_PROCESSING(SSobj, src)
 		shield_state = "[shield_on]"
 		if(ishuman(loc))
 			var/mob/living/carbon/human/C = loc
@@ -896,4 +896,4 @@
 	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 60, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	actions_types = list(/datum/action/item_action/toggle_spacesuit, /datum/action/item_action/toggle_spacesuit_cell)
+	actions_types = list()
