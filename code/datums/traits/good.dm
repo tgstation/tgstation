@@ -137,8 +137,9 @@ datum/quirk/fan_mime
 
 /datum/quirk/light_step/on_spawn()
 	var/datum/component/footstep/C = quirk_holder.GetComponent(/datum/component/footstep)
-	C.volume *= 0.6
-	C.e_range -= 2
+	if(C)
+		C.volume *= 0.6
+		C.e_range -= 2
 
 /datum/quirk/musician
 	name = "Musician"
