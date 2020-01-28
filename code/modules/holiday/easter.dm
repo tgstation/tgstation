@@ -106,8 +106,8 @@
 /obj/item/storage/backpack/satchel/bunnysatchel
 	name = "Easter Bunny Satchel"
 	desc = "Good for your eyes."
-	icon_state = "satchel-carrot"
-	item_state = "satchel-carrot"
+	icon_state = "satchel_carrot"
+	item_state = "satchel_carrot"
 
 //Egg prizes and egg spawns!
 /obj/item/reagent_containers/food/snacks/egg
