@@ -25,11 +25,6 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply, bolt)
 
-/obj/machinery/plumbing/liquid_pump/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I)
-	return TRUE
-
 ///please note that the component has a hook in the parent call, wich handles activating and deactivating
 /obj/machinery/plumbing/liquid_pump/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
 	. = ..()
@@ -47,7 +42,6 @@
 			geyser = G
 			update_icon()
 		if(!geyser) //we didnt find one, abort
-			anchored = FALSE
 			geyserless = TRUE
 			visible_message("<span class='warning'>The [name] makes a sad beep!</span>")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
