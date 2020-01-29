@@ -49,7 +49,13 @@ GLOBAL_LIST_EMPTY(eyes_beefman)//, list( "Peppercorns", "Capers", "Olives" ))
 GLOBAL_LIST_EMPTY(mouths_beefman)//, list( "Smile1", "Smile2", "Frown1", "Frown2", "Grit1", "Grit2" ))
 
 
-//sec stuff for surreal 
+//sec stuff for surreal
 #define SEC_RECORD_BAD_CLEARANCE "ACCESS DENIED: User ID has inadequate clearance."
 
 #define SEC_RECORD_BOT_COOLDOWN 60 SECONDS
+
+//Chaplain Starter Sith Traitor Item
+
+#define FORCETRAINING_BLOCKCHANCE	30
+
+#define MARTIALART_STARTERSITH "starter sith"

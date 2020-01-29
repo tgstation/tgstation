@@ -206,9 +206,9 @@
 
 
 //***************************************************************************
-//** FULPSTATION SECBORG MODULE UPDATE by Surrealistik Jan 2020 BEGINS
+//** FULPSTATION SITH STARTER KIT by Surrealistik Jan 2020 BEGINS
 //---------------------------------------------------------------------------
-//** Expands the Secborg's module items and upgrades.
+//** Adds Sith Starter Kit traitor bundle for the Chaplain
 //***************************************************************************
 
 //************************************************************************
@@ -309,3 +309,10 @@
 //*****************************************************************************
 //** Engineer Borg Manipulator Improvement by Surrealistik Oct 2019 ENDS
 //*****************************************************************************
+/obj/item/melee/transforming/energy/sword
+	var/datum/effect_system/spark_spread/spark_system
+//***************************************************************************
+//** FULPSTATION SITH STARTER KIT by Surrealistik Jan 2020 ENDS
+//---------------------------------------------------------------------------
+//** Adds Sith Starter Kit traitor bundle for the Chaplain
+//***************************************************************************
