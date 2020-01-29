@@ -46,7 +46,7 @@
 
 #define MODE_MONKEY "monkeyhive"
 
-#define MODE_SING "~"
+#define MODE_SING "%"
 
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"
