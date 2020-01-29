@@ -189,6 +189,7 @@ Contains:
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	cell = /obj/item/stock_parts/cell/bluespace
 
+// ERT suit's gets EMP Protection
 /obj/item/clothing/suit/space/hardsuit/ert/Initialize()
 	. = ..()
 	AddComponent(/datum/component/empprotection, EMP_PROTECT_CONTENTS)
