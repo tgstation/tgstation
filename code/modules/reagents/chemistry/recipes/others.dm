@@ -709,13 +709,13 @@
 	new /obj/item/slime_extract/grey(location)
 
 /datum/chemical_reaction/metalgen
-	name = "metal morphium"
+	name = "metalgen"
 	id = /datum/reagent/metalgen
 	required_reagents = list(/datum/reagent/wittel = 1, /datum/reagent/bluespace = 1, /datum/reagent/toxin/mutagen = 1)
 	results = list(/datum/reagent/metalgen = 1)
 
 /datum/chemical_reaction/metalgen_imprint
-	name = "metal morphium"
+	name = "metalgen imprint"
 	id = /datum/reagent/metalgen
 	required_reagents = list(/datum/reagent/metalgen = 1, /datum/reagent/liquid_dark_matter = 1)
 	results = list(/datum/reagent/metalgen = 1)
