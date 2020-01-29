@@ -273,7 +273,7 @@
 		H.toggle_welding_screen(owner)
 
 /datum/action/item_action/toggle_spacesuit
-	name = "Toggle Suit Suit Thermal Regulator"
+	name = "Toggle Suit Thermal Regulator"
 	icon_icon = 'icons/mob/actions/actions_spacesuit.dmi'
 	button_icon_state = "thermal_off"
 

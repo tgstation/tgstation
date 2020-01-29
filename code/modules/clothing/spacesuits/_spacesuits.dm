@@ -89,8 +89,7 @@
 			user.update_spacesuit_hud_icon("empty")
 
 		if(thermal_on && cell.charge >= THERMAL_REGULATOR_COST)
-			var/temp_diff = temperature_setting - user.bodytemperature
-			user.adjust_bodytemperature(temp_diff) // TODO: use_steps=TRUE when #48920 merged
+			user.adjust_bodytemperature(temperature_setting - user.bodytemperature) // TODO: use_steps=TRUE when #48920 merged
 			cell.charge -= THERMAL_REGULATOR_COST
 
 // Clean up the cell on destroy
@@ -122,7 +121,7 @@
 
 	. += "Thermal regulator is [thermal_on ? "on" : "off"], the temperature is set to \
 		[round(temperature_setting-T0C,0.1)] &deg;C ([round(temperature_setting*1.8-459.67,0.1)] &deg;F)"
-	. += "Charge remaining: [cell ? "[cell.charge / cell.maxcharge * 100]%" : "invalid"]"
+	. += "Charge remaining: [cell ? "[round(cell.charge / cell.maxcharge * 100)]%" : "invalid"]"
 	if(cell_cover_open)
 		. += "The cell cover is open!"
 		if(!cell)
@@ -134,6 +133,7 @@
 /obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR)
 		toggle_spacesuit_cell(user)
+		return
 	else if(cell_cover_open && I.tool_behaviour == TOOL_SCREWDRIVER)
 		var/range_low = 20 // Default min temp c
 		var/range_high = 45 // default max temp c
@@ -146,6 +146,7 @@
 		if(deg_c && deg_c >= range_low && deg_c <= range_high)
 			temperature_setting = round(T0C + deg_c, 0.1)
 			to_chat(user, "<span class='notice'>You see the readout change to [deg_c] c.</span>")
+		return
 	else if(cell_cover_open && istype(I, /obj/item/stock_parts/cell))
 		if(cell)
 			to_chat(user, "<span class='warning'>[src] already has a cell installed.</span>")
