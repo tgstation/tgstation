@@ -135,11 +135,11 @@
 	if(I.tool_behaviour == TOOL_CROWBAR)
 		toggle_spacesuit_cell(user)
 	else if(cell_cover_open && I.tool_behaviour == TOOL_SCREWDRIVER)
-		var/range_low = 20 // Default min temp
-		var/range_high = 45 // default max temp
+		var/range_low = 20 // Default min temp c
+		var/range_high = 45 // default max temp c
 		if(obj_flags & EMAGGED)
-			range_low = -20 // emagged low
-			range_high = 120 // emagged high
+			range_low = -20 // emagged min temp c
+			range_high = 120 // emagged max temp c
 
 		var/deg_c = input(user, "What temperature would you like to set the thermal regulator to? \
 			([range_low]-[range_high] degrees celcius)") as null|num
