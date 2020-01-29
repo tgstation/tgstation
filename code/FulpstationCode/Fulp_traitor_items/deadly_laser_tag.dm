@@ -94,6 +94,16 @@
 		activate_parental_lock(user)
 		modifystate = 0
 
+/obj/item/gun/energy/laser/redtag/deadly/multitool_act(user, I)
+	if(!parental_lock)
+		to_chat(user, "<span class='notice'>You reset the parental lock ID; [src] can now imprint a new ID.</span>")
+		playsound(loc, SEC_BODY_CAM_SOUND, get_clamped_volume(), TRUE, -1)
+
+/obj/item/gun/energy/laser/redtag/deadly/emag_act(mob/user)
+	if(ID_imprint)
+		ID_imprint = null
+		to_chat(user, "<span class='warning'>You forcibly reset the [src]'s parental lock ID; it can now imprint a new ID.</span>")
+
 /obj/item/gun/energy/laser/redtag/deadly/attack_self(mob/living/user as mob)
 	if(parental_lock)
 		return
@@ -111,8 +121,11 @@
 	update_icon(TRUE)
 	return
 
+//Blue gun procs
+
 /obj/item/gun/energy/laser/bluetag/deadly/attackby(obj/item/W, mob/user, params)
 	. = ..()
+
 	var/obj/item/card/id/I
 	if (istype(W, /obj/item/card/id))
 		I = W
@@ -123,12 +136,12 @@
 	if(!I)
 		return
 
+	playsound(loc, SEC_BODY_CAM_SOUND, get_clamped_volume(), TRUE, -1)
+
 	if(!ID_imprint)
 		to_chat(user, "<span class='notice'>Parental lock ID imprinted. Swipe again with imprinted ID to toggle the parental lock feature.</span>")
 		ID_imprint = I
 		return
-
-	playsound(loc, SEC_BODY_CAM_SOUND, get_clamped_volume(), TRUE, -1)
 
 	if(parental_lock)
 		parental_lock = FALSE
@@ -140,6 +153,17 @@
 		to_chat(user, "<span class='notice'>Parental lock activated. Swipe again with imprinted ID to toggle the parental lock feature.</span>")
 		activate_parental_lock(user)
 		modifystate = 0
+
+/obj/item/gun/energy/laser/bluetag/deadly/multitool_act(user, I)
+	if(!parental_lock)
+		to_chat(user, "<span class='notice'>You reset the parental lock ID; [src] can now imprint a new ID.</span>")
+		playsound(loc, SEC_BODY_CAM_SOUND, get_clamped_volume(), TRUE, -1)
+
+/obj/item/gun/energy/laser/bluetag/deadly/emag_act(mob/user)
+	if(ID_imprint)
+		ID_imprint = null
+		to_chat(user, "<span class='warning'>You forcibly reset the [src]'s parental lock ID; it can now imprint a new ID.</span>")
+
 
 /obj/item/gun/energy/laser/bluetag/deadly/attack_self(mob/living/user as mob)
 	if(parental_lock)
