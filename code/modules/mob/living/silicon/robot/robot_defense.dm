@@ -86,19 +86,17 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, "<span class='warning'>You can't reach the wiring!</span>")
 		return
 
-	if(W.tool_behaviour == TOOL_SCREWDRIVER && opened && !cell)	// haxing
-		wiresexposed = !wiresexposed
-		to_chat(user, "<span class='notice'>The wires have been [wiresexposed ? "exposed" : "unexposed"].</span>")
-		update_icons()
-		return
-
-	if(W.tool_behaviour == TOOL_SCREWDRIVER && opened && cell)	// radio
-		if(shell)
-			to_chat(user, "<span class='warning'>You cannot seem to open the radio compartment!</span>")	//Prevent AI radio key theft
-		else if(radio)
-			radio.attackby(W,user)//Push it to the radio to let it handle everything
-		else
-			to_chat(user, "<span class='warning'>Unable to locate a radio!</span>")
+	if(W.tool_behaviour == TOOL_SCREWDRIVER && opened)	// wire hacking or radio management
+		if(!cell) //haxing
+			wiresexposed = !wiresexposed
+			to_chat(user, "<span class='notice'>The wires have been [wiresexposed ? "exposed" : "unexposed"].</span>")
+		else //radio
+			if(shell)
+				to_chat(user, "<span class='warning'>You cannot seem to open the radio compartment!</span>")	//Prevent AI radio key theft
+			else if(radio)
+				radio.attackby(W,user)//Push it to the radio to let it handle everything
+			else
+				to_chat(user, "<span class='warning'>Unable to locate a radio!</span>")
 		update_icons()
 		return
 
