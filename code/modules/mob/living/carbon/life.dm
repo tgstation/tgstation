@@ -607,7 +607,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	else if(bodytemperature >= BODYTEMP_HEAT_DAMAGE_LIMIT)
 		natural_change = min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)
 
-	var/thermal_protection = get_insulation_protection(bodytemperature + natural_change)
+	var/thermal_protection = 1 - get_insulation_protection(areatemp) // invert the protection
 	if(areatemp > bodytemperature) // It is hot here
 		if(bodytemperature < BODYTEMP_NORMAL)
 			// Our bodytemp is below normal we are cold, insulation helps us retain body heat
