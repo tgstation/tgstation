@@ -21,6 +21,10 @@
 	///volume of our internal buffer
 	var/volume = 200
 
+/obj/machinery/plumbing/liquid_pump/Initialize(mapload, bolt)
+	. = ..()
+	AddComponent(/datum/component/plumbing/simple_supply, bolt)
+
 /obj/machinery/plumbing/liquid_pump/wrench_act(mob/living/user, obj/item/I)
 	..()
 	default_unfasten_wrench(user, I)

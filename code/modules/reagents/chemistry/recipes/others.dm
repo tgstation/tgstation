@@ -769,5 +769,5 @@
 	name = "Holy Water"
 	id = /datum/reagent/water/holywater
 	results = list(/datum/reagent/water/holywater = 1)
-	required_reagents = list(/datum/reagent/water = 1)
+	required_reagents = list(/datum/reagent/water/hollowwater = 1)
 	required_catalysts = list(/datum/reagent/water/holywater = 1)
