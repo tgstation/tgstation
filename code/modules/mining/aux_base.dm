@@ -53,7 +53,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 			var/obj/machinery/porta_turret/aux_base/T = PDT
 			var/integrity = max((T.obj_integrity-T.integrity_failure * T.max_integrity)/(T.max_integrity-T.integrity_failure * max_integrity)*100, 0)
 			var/status
-			if(T.stat & BROKEN)
+			if(T.machine_stat & BROKEN)
 				status = "<span class='bad'>ERROR</span>"
 			else if(!T.on)
 				status = "Disabled"
@@ -101,7 +101,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		var/list/all_mining_turfs = list()
 		for (var/z_level in SSmapping.levels_by_trait(ZTRAIT_MINING))
 			all_mining_turfs += Z_TURFS(z_level)
-		var/turf/LZ = safepick(all_mining_turfs) //Pick a random mining Z-level turf
+		var/turf/LZ = pick(all_mining_turfs) //Pick a random mining Z-level turf
 		if(!ismineralturf(LZ) && !istype(LZ, /turf/open/floor/plating/asteroid))
 		//Find a suitable mining turf. Reduces chance of landing in a bad area
 			to_chat(usr, "<span class='warning'>Landing zone scan failed. Please try again.</span>")

@@ -66,7 +66,7 @@
 
 /obj/machinery/space_heater/update_overlays()
 	. = ..()
-	
+
 	if(panel_open)
 		. += "sheater-open"
 
@@ -137,7 +137,7 @@
 
 /obj/machinery/space_heater/emp_act(severity)
 	. = ..()
-	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_CONTENTS)
+	if(machine_stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_CONTENTS)
 		return
 	if(cell)
 		cell.emp_act(severity)

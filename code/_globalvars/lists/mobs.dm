@@ -64,12 +64,16 @@ GLOBAL_LIST_EMPTY(emote_list)
 	. = list()
 	for(var/path in subtypesof(/datum/emote))
 		var/datum/emote/E = new path()
-		if(!.[E.key])
-			.[E.key] = list(E)
-		else
-			.[E.key] += E
-		
-		if(!.[E.key_third_person])
-			.[E.key_third_person] = list(E)
-		else
-			.[E.key_third_person] |= E
+		if(E.key)
+			if(!.[E.key])
+				.[E.key] = list(E)
+			else
+				.[E.key] += E
+		else if(E.message) //Assuming all non-base emotes have this
+			stack_trace("Keyless emote: [E.type]")
+
+		if(E.key_third_person) //This one is optional
+			if(!.[E.key_third_person])
+				.[E.key_third_person] = list(E)
+			else
+				.[E.key_third_person] |= E

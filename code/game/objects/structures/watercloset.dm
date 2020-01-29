@@ -228,6 +228,11 @@
 	icon_state = "urinalcake_squish"
 	addtimer(VARSET_CALLBACK(src, icon_state, "urinalcake"), 8)
 
+/obj/item/bikehorn/rubberducky/plasticducky
+	name = "plastic ducky"
+	desc = "It's a cheap plastic knockoff of a loveable bathtime toy."
+	custom_materials = list(/datum/material/plastic = 1000)
+
 /obj/item/bikehorn/rubberducky
 	name = "rubber ducky"
 	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~"	//thanks doohl
