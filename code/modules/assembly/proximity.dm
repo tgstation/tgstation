@@ -152,5 +152,6 @@
 		if("input")
 			var/value = text2num(params["adjust"])
 			if(value)
-				time = min(max(round(time+value), 0), 600)
+				var/newtime = round(time+value)
+				time = CLAMP(newtime, 0, 600)
 				. = TRUE
