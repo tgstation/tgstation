@@ -198,7 +198,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		spans |= L.spans
 	
 	if(message_mode == MODE_SING)
-		var/randomnote = pick("♩", "♪", "♫")
+		var/randomnote = pick("\u2669", "\u266A", "\u266B")
 		spans |= SPAN_SINGING
 		message = "[randomnote] [message] [randomnote]"
 

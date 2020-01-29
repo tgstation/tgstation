@@ -97,9 +97,6 @@ LOG_VOTE
 ## log client Whisper
 LOG_WHISPER
 
-## log client Sing
-LOG_SING
-
 ## log emotes
 LOG_EMOTE
 

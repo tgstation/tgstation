@@ -118,10 +118,6 @@
 	if (CONFIG_GET(flag/log_whisper))
 		WRITE_LOG(GLOB.world_game_log, "WHISPER: [text]")
 
-/proc/log_sing(text)
-	if (CONFIG_GET(flag/log_sing))
-		WRITE_LOG(GLOB.world_game_log, "SING: [text]")
-
 /proc/log_emote(text)
 	if (CONFIG_GET(flag/log_emote))
 		WRITE_LOG(GLOB.world_game_log, "EMOTE: [text]")
