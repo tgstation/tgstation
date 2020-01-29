@@ -79,6 +79,7 @@ import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { PortableGenerator } from './interfaces/PortableGenerator';
 import { PortablePump, PortableScrubber } from './interfaces/PortableAtmos';
 import { PowerMonitor } from './interfaces/PowerMonitor';
+import { ProximitySensor } from './interfaces/ProximitySensor';
 import { Radio } from './interfaces/Radio';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { Roulette } from './interfaces/Roulette';
@@ -467,6 +468,10 @@ const ROUTES = {
   power_monitor: {
     component: () => PowerMonitor,
     scrollable: true,
+  },
+  proximity_sensor: {
+    component: () => ProximitySensor,
+    scrollable: false,
   },
   radio: {
     component: () => Radio,
