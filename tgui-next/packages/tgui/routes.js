@@ -46,6 +46,7 @@ import { GulagTeleporterConsole } from './interfaces/GulagTeleporterConsole';
 import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
 import { Holodeck } from './interfaces/Holodeck';
 import { ImplantChair } from './interfaces/ImplantChair';
+import { InfraredEmitter } from './interfaces/InfraredEmitter';
 import { Intellicard } from './interfaces/Intellicard';
 import { KeycardAuth } from './interfaces/KeycardAuth';
 import { LaborClaimConsole } from './interfaces/LaborClaimConsole';
@@ -303,6 +304,10 @@ const ROUTES = {
   },
   implantchair: {
     component: () => ImplantChair,
+    scrollable: false,
+  },
+  infrared_emitter: {
+    component: () => InfraredEmitter,
     scrollable: false,
   },
   intellicard: {
