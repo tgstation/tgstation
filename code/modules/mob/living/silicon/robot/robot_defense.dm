@@ -120,7 +120,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return
 	if(istype(W, /obj/item/defibrillator) && user.a_intent == "help")
 		if(!opened)
-			to_chat(user, "<span class='warning'>You must access the borg's internals!</span>")
+			to_chat(user, "<span class='warning'>You must access the cyborg's internals!</span>")
 			return
 		if(!istype(module, /obj/item/robot_module/medical))
 			to_chat(user, "<span class='warning'>[src] does not have correct mounting points for a defibrillator!</span>")
@@ -190,9 +190,9 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
-			to_chat(user, "<span class='warning'>You must access the borg's internals!</span>")
+			to_chat(user, "<span class='warning'>You must access the cyborg's internals!</span>")
 		else if(!src.module && U.require_module)
-			to_chat(user, "<span class='warning'>The borg must choose a module before it can be upgraded!</span>")
+			to_chat(user, "<span class='warning'>The cyborg must choose a module before it can be upgraded!</span>")
 		else if(U.locked)
 			to_chat(user, "<span class='warning'>The upgrade is locked and cannot be used yet!</span>")
 		else
