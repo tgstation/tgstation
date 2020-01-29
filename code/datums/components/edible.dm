@@ -31,8 +31,6 @@ Behavior that's still missing from this component that original food items had t
 	var/list/eatverbs
 	///Callback to be ran for when you take a bite of something
 	var/datum/callback/after_eat
-	///Atom that owns this component
-	var/atom/owner
 	///Last time we checked for food likes
 	var/last_check_time
 
@@ -57,17 +55,20 @@ Behavior that's still missing from this component that original food items had t
 	src.junkiness = junkiness
 	src.after_eat = after_eat
 
-	var/atom/owner = parent
+	if(!istype(parent, /atom))
+		return COMPONENT_INCOMPATIBLE
 
-	owner.create_reagents(volume, INJECTABLE)
+	var/atom/A = parent
+
+	A.create_reagents(volume, INJECTABLE)
 
 	if(initial_reagents)
 		for(var/rid in initial_reagents)
 			var/amount = initial_reagents[rid]
 			if(tastes && tastes.len && (rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin))
-				owner.reagents.add_reagent(rid, amount, tastes.Copy())
+				A.reagents.add_reagent(rid, amount, tastes.Copy())
 			else
-				owner.reagents.add_reagent(rid, amount)
+				A.reagents.add_reagent(rid, amount)
 
 /datum/component/edible/proc/examine(datum/source, mob/user, list/examine_list)
 	if(!food_flags & FOOD_IN_CONTAINER)
@@ -89,12 +90,15 @@ Behavior that's still missing from this component that original food items had t
 
 ///All the checks for the act of eating itself and
 /datum/component/edible/proc/TryToEat(mob/living/eater, mob/living/feeder)
-	var/atom/owner = parent
+	if(!istype(parent, /atom))
+		return
+
+	var/atom/A = parent
 
 	if(feeder.a_intent == INTENT_HARM)
 		return
-	if(!owner.reagents.total_volume)//Shouldn't be needed but it checks to see if it has anything left in it.
-		to_chat(feeder, "<span class='warning'>None of [parent] left, oh no!</span>")
+	if(!A.reagents.total_volume)//Shouldn't be needed but it checks to see if it has anything left in it.
+		to_chat(feeder, "<span class='warning'>None of [A] left, oh no!</span>")
 		qdel(parent)
 		return
 	if(!CanConsume(eater, feeder))
@@ -102,7 +106,7 @@ Behavior that's still missing from this component that original food items had t
 	var/fullness = eater.nutrition + 10 //The theoretical fullness of the person eating if they were to eat this
 	for(var/datum/reagent/consumable/C in eater.reagents.reagent_list) //we add the nutrition value of what we're currently digesting
 		fullness += C.nutriment_factor * C.volume / C.metabolization_rate
-	
+
 	. = COMPONENT_ITEM_NO_ATTACK //Point of no return I suppose
 
 	if(eater == feeder)//If you're eating it yourself.
@@ -111,7 +115,7 @@ Behavior that's still missing from this component that original food items had t
 		var/eatverb = pick(eatverbs)
 		if(junkiness && eater.satiety < -150 && eater.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(eater, TRAIT_VORACIOUS))
 			to_chat(eater, "<span class='warning'>You don't feel like eating any more junk food at the moment!</span>")
-			return FALSE
+			return
 		else if(fullness <= 50)
 			eater.visible_message("<span class='notice'>[eater] hungrily [eatverb]s \the [parent], gobbling it down!</span>", "<span class='notice'>You hungrily [eatverb] \the [parent], gobbling it down!</span>")
 		else if(fullness > 50 && fullness < 150)
@@ -122,7 +126,7 @@ Behavior that's still missing from this component that original food items had t
 			eater.visible_message("<span class='notice'>[eater] unwillingly [eatverb]s a bit of \the [parent].</span>", "<span class='notice'>You unwillingly [eatverb] a bit of \the [parent].</span>")
 		else if(fullness > (600 * (1 + eater.overeatduration / 2000)))	// The more you eat - the more you can eat
 			eater.visible_message("<span class='warning'>[eater] cannot force any more of \the [parent] to go down [eater.p_their()] throat!</span>", "<span class='warning'>You cannot force any more of \the [parent] to go down your throat!</span>")
-			return FALSE
+			return
 	else //If you're feeding it to someone else.
 		if(isbrain(eater))
 			to_chat(feeder, "<span class='warning'>[eater] doesn't seem to have a mouth!</span>")
@@ -133,10 +137,11 @@ Behavior that's still missing from this component that original food items had t
 		else
 			eater.visible_message("<span class='warning'>[feeder] cannot force any more of [parent] down [eater]'s throat!</span>", \
 									"<span class='warning'>[feeder] cannot force any more of [parent] down your throat!</span>")
-			return FALSE
+			return
 		if(!do_mob(feeder, eater)) //Wait 3 seconds before you can feed
 			return
-		log_combat(feeder, eater, "fed", owner.reagents.log_list())
+
+		log_combat(feeder, eater, "fed", A.reagents.log_list())
 		eater.visible_message("<span class='danger'>[feeder] forces [eater] to eat [parent]!</span>", \
 									"<span class='userdanger'>[feeder] forces you to eat [parent]!</span>")
 
@@ -144,17 +149,20 @@ Behavior that's still missing from this component that original food items had t
 
 ///This function lets the eater take a bite and transfers the reagents to the eater.
 /datum/component/edible/proc/TakeBite(mob/living/eater, mob/living/feeder)
-	var/atom/owner = parent
+	if(!istype(parent, /atom))
+		return
 
-	if(!owner.reagents)
+	var/atom/A = parent
+
+	if(!A.reagents)
 		return FALSE
 	if(eater.satiety > -200)
 		eater.satiety -= junkiness
 	playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
-	if(owner.reagents.total_volume)
+	if(A.reagents.total_volume)
 		SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder)
-		var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
-		owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, method = INGEST)
+		var/fraction = min(bite_consumption / A.reagents.total_volume, 1)
+		A.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, method = INGEST)
 		bitecount++
 		On_Consume(eater)
 		checkLiked(fraction, eater)
@@ -210,16 +218,22 @@ Behavior that's still missing from this component that original food items had t
 
 ///Delete the item when it is fully eaten
 /datum/component/edible/proc/On_Consume(mob/living/eater)
-	var/atom/owner = parent
+	if(!istype(parent, /atom))
+		return
+
+	var/atom/A = parent
 
 	if(!eater)
 		return
-	if(!owner.reagents.total_volume)
+	if(!A.reagents.total_volume)
 		qdel(parent)
 
 ///Ability to feed food to puppers
 /datum/component/edible/proc/UseByAnimal(datum/source, mob/user)
-	var/atom/owner = parent
+	if(!istype(parent, /atom))
+		return
+
+	var/atom/A = parent
 
 	if(!isdog(user))
 		return
@@ -228,7 +242,7 @@ Behavior that's still missing from this component that original food items had t
 		L.emote("me", 1, "nibbles away at \the [parent]")
 	bitecount++
 	. = COMPONENT_ITEM_NO_ATTACK
-	L.taste(owner.reagents) // why should carbons get all the fun?
+	L.taste(A.reagents) // why should carbons get all the fun?
 	if(bitecount >= 5)
 		var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where \the [parent] was")
 		if(sattisfaction_text)
