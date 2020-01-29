@@ -138,8 +138,7 @@
 
 	switch(action)
 		if("scanning")
-			var/toggle = scanning ? FALSE : TRUE
-			toggle_scan(toggle)
+			toggle_scan(!scanning)
 			. = TRUE
 		if("sense")
 			var/value = text2num(params["range"])
