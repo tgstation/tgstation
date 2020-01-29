@@ -78,8 +78,16 @@
 /datum/antagonist/ert/medic/inquisitor
 	outfit = /datum/outfit/centcom/ert/medic/inquisitor
 
+/datum/antagonist/ert/medic/inquisitor/on_gain()
+	. = ..()
+	owner.isholy = TRUE
+
 /datum/antagonist/ert/security/inquisitor
 	outfit = /datum/outfit/centcom/ert/security/inquisitor
+
+/datum/antagonist/ert/security/inquisitor/on_gain()
+	. = ..()
+	owner.isholy = TRUE
 
 /datum/antagonist/ert/chaplain
 	role = "Chaplain"

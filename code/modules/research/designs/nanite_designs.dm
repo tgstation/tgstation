@@ -31,7 +31,7 @@
 	id = "research_nanites"
 	program_type = /datum/nanite_program/research
 	category = list("Utility Nanites")
-	
+
 /datum/design/nanites/researchplus
 	name = "Neural Network"
 	desc = "The nanites link the host's brains together forming a neural research network, that becomes more efficient with the amount of total hosts. Can be overloaded to increase research output."
@@ -105,7 +105,7 @@
 
 /datum/design/nanites/emp
 	name = "Electromagnetic Resonance"
-	desc = "The nanites cause an elctromagnetic pulse around the host when triggered. Will corrupt other nanite programs!"
+	desc = "The nanites cause an electromagnetic pulse around the host when triggered. Will corrupt other nanite programs!"
 	id = "emp_nanites"
 	program_type = /datum/nanite_program/emp
 	category = list("Utility Nanites")

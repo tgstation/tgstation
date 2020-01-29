@@ -1,7 +1,6 @@
 /datum/component/personal_crafting/Initialize()
-	if(!ismob(parent))
-		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_MOB_CLIENT_LOGIN, .proc/create_mob_button)
+	if(ismob(parent))
+		RegisterSignal(parent, COMSIG_MOB_CLIENT_LOGIN, .proc/create_mob_button)
 
 /datum/component/personal_crafting/proc/create_mob_button(mob/user, client/CL)
 	var/datum/hud/H = user.hud_used
@@ -49,9 +48,6 @@
 	var/display_craftable_only = FALSE
 	var/display_compact = TRUE
 
-
-
-
 /*	This is what procs do:
 	get_environment - gets a list of things accessable for crafting by user
 	get_surroundings - takes a list of things and makes a list of key-types to values-amounts of said type in the list
@@ -61,8 +57,6 @@
 	del_reqs - takes recipe and a user, loops over the recipes reqs var and tries to find everything in the list make by get_environment and delete it/add to parts list, then returns the said list
 */
 
-
-
 /**
   * Check that the contents of the recipe meet the requirements.
   *
@@ -70,7 +64,7 @@
   * R: The /datum/crafting_recipe being attempted.
   * contents: List of items to search for R's reqs.
   */
-/datum/component/personal_crafting/proc/check_contents(mob/user, datum/crafting_recipe/R, list/contents)
+/datum/component/personal_crafting/proc/check_contents(atom/a, datum/crafting_recipe/R, list/contents)
 	var/list/item_instances = contents["instances"]
 	contents = contents["other"]
 
@@ -104,36 +98,25 @@
 		if(contents[requirement_path] < R.chem_catalysts[requirement_path])
 			return FALSE
 
-	return R.check_requirements(user, requirements_list)
+	return R.check_requirements(a, requirements_list)
 
-/datum/component/personal_crafting/proc/get_environment(mob/user, list/blacklist = null)
+/datum/component/personal_crafting/proc/get_environment(atom/a, list/blacklist = null, radius_range = 1)
 	. = list()
-	for(var/obj/item/I in user.held_items)
-		. += I
-	if(!isturf(user.loc))
-		return
-	var/list/L = block(get_step(user, SOUTHWEST), get_step(user, NORTHEAST))
-	for(var/A in L)
-		var/turf/T = A
-		if(T.Adjacent(user))
-			for(var/B in T)
-				var/atom/movable/AM = B
-				if(AM.flags_1 & HOLOGRAM_1)
-					continue
-				. += AM
-	for(var/slot in list(ITEM_SLOT_RPOCKET, ITEM_SLOT_LPOCKET))
-		. += user.get_item_by_slot(slot)
-	if(blacklist)
-		for(var/obj/B in .)
-			if(blacklist.Find(B.type))
-				. -= B
 
-/datum/component/personal_crafting/proc/get_surroundings(mob/user)
+	if(!isturf(a.loc))
+		return
+
+	for(var/atom/movable/AM in range(radius_range, a))
+		if(AM.flags_1 & HOLOGRAM_1)
+			continue
+		. += AM
+
+/datum/component/personal_crafting/proc/get_surroundings(atom/a)
 	. = list()
 	.["tool_behaviour"] = list()
 	.["other"] = list()
 	.["instances"] = list()
-	for(var/obj/item/I in get_environment(user))
+	for(var/obj/item/I in get_environment(a))
 		if(I.flags_1 & HOLOGRAM_1)
 			continue
 		if(.["instances"][I.type])
@@ -154,13 +137,13 @@
 						.["other"][A.type] += A.volume
 			.["other"][I.type] += 1
 
-/datum/component/personal_crafting/proc/check_tools(mob/user, datum/crafting_recipe/R, list/contents)
+/datum/component/personal_crafting/proc/check_tools(atom/a, datum/crafting_recipe/R, list/contents)
 	if(!R.tools.len)
 		return TRUE
 	var/list/possible_tools = list()
 	var/list/present_qualities = list()
 	present_qualities |= contents["tool_behaviour"]
-	for(var/obj/item/I in user.contents)
+	for(var/obj/item/I in a.contents)
 		if(istype(I, /obj/item/storage))
 			for(var/obj/item/SI in I.contents)
 				possible_tools += SI.type
@@ -185,29 +168,27 @@
 			return FALSE
 	return TRUE
 
-/datum/component/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R)
-	var/list/contents = get_surroundings(user)
+/datum/component/personal_crafting/proc/construct_item(atom/a, datum/crafting_recipe/R)
+	var/list/contents = get_surroundings(a)
 	var/send_feedback = 1
-	if(check_contents(user, R, contents))
-		if(check_tools(user, R, contents))
-			if(do_after(user, R.time, target = user))
-				contents = get_surroundings(user)
-				if(!check_contents(user, R, contents))
-					return ", missing component."
-				if(!check_tools(user, R, contents))
-					return ", missing tool."
-				var/list/parts = del_reqs(R, user)
-				var/atom/movable/I = new R.result (get_turf(user.loc))
-				I.CheckParts(parts, R)
-				if(isitem(I))
-					user.put_in_hands(I)
-				if(send_feedback)
-					SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)
-				return 0
-			return "."
+	if(check_contents(a, R, contents))
+		if(check_tools(a, R, contents))
+			//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
+			if(ismob(a) && !do_after(a, R.time, target = a))
+				return "."
+			contents = get_surroundings(a)
+			if(!check_contents(a, R, contents))
+				return ", missing component."
+			if(!check_tools(a, R, contents))
+				return ", missing tool."
+			var/list/parts = del_reqs(R, a)
+			var/atom/movable/I = new R.result (get_turf(a.loc))
+			I.CheckParts(parts, R)
+			if(send_feedback)
+				SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)
+			return I //Send the item back to whatever called this proc so it can handle whatever it wants to do with the new item
 		return ", missing tool."
 	return ", missing component."
-
 
 /*Del reqs works like this:
 
@@ -233,7 +214,7 @@
 	del_reqs return the list of parts resulting object will receive as argument of CheckParts proc, on the atom level it will add them all to the contents, on all other levels it calls ..() and does whatever is needed afterwards but from contents list already
 */
 
-/datum/component/personal_crafting/proc/del_reqs(datum/crafting_recipe/R, mob/user)
+/datum/component/personal_crafting/proc/del_reqs(datum/crafting_recipe/R, atom/a)
 	var/list/surroundings
 	var/list/Deletion = list()
 	. = list()
@@ -242,7 +223,7 @@
 	main_loop:
 		for(var/A in R.reqs)
 			amt = R.reqs[A]
-			surroundings = get_environment(user, R.blacklist)
+			surroundings = get_environment(a, R.blacklist)
 			surroundings -= Deletion
 			if(ispath(A, /datum/reagent))
 				var/datum/reagent/RG = new A
@@ -335,6 +316,7 @@
 	if(user == parent)
 		ui_interact(user)
 
+//For the UI related things we're going to assume the user is a mob rather than typesetting it to an atom as the UI isn't generated if the parent is an atom
 /datum/component/personal_crafting/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_turf_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -346,7 +328,6 @@
 			cur_subcategory = CAT_NONE
 		ui = new(user, src, ui_key, "personal_crafting", "Crafting Menu", 700, 800, master_ui, state)
 		ui.open()
-
 
 /datum/component/personal_crafting/ui_data(mob/user)
 	var/list/data = list()
@@ -399,7 +380,6 @@
 	data["crafting_recipes"] = crafting_recipes
 	return data
 
-
 /datum/component/personal_crafting/ui_act(action, params)
 	if(..())
 		return
@@ -408,11 +388,16 @@
 			var/datum/crafting_recipe/TR = locate(params["recipe"]) in GLOB.crafting_recipes
 			busy = TRUE
 			ui_interact(usr)
-			var/fail_msg = construct_item(usr, TR)
-			if(!fail_msg)
+			var/atom/movable/result = construct_item(usr, TR)
+			if(!istext(result)) //We made an item and didn't get a fail message
+				if(ismob(usr)) //In case the user is actually possessing a non mob like a machine
+					var/mob/m = usr
+					m.put_in_hands(result)
+				else
+					result.forceMove(usr.loc)
 				to_chat(usr, "<span class='notice'>[TR.name] constructed.</span>")
 			else
-				to_chat(usr, "<span class='warning'>Construction failed[fail_msg]</span>")
+				to_chat(usr, "<span class='warning'>Construction failed[result]</span>")
 			busy = FALSE
 		if("toggle_recipes")
 			display_craftable_only = !display_craftable_only

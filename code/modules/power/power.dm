@@ -118,18 +118,18 @@
   */
 /obj/machinery/proc/power_change()
 	SHOULD_CALL_PARENT(1)
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return
 	if(powered(power_channel))
-		if(stat & NOPOWER)
+		if(machine_stat & NOPOWER)
 			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_RESTORED)
 			. = TRUE
-		stat &= ~NOPOWER
+		machine_stat &= ~NOPOWER
 	else
-		if(!(stat & NOPOWER))
+		if(!(machine_stat & NOPOWER))
 			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_LOST)
 			. = TRUE
-		stat |= NOPOWER
+		machine_stat |= NOPOWER
 	update_icon()
 
 // connect the machine to a powernet if a node cable or a terminal is present on the turf

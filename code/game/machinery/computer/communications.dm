@@ -709,6 +709,11 @@
 	var/input = stripped_input(user, "Please choose a message to announce to the station crew.", "What?")
 	if(!input || !user.canUseTopic(src, !issilicon(usr)))
 		return
+	if(!(user.can_speak())) //No more cheating, mime/random mute guy!
+		input = "..."
+		to_chat(user, "<span class='warning'>You find yourself unable to speak.</span>")
+	else
+		input = user.treat_message(input) //Adds slurs and so on. Someone should make this use languages too.
 	SScommunications.make_announcement(user, is_silicon, input)
 	deadchat_broadcast(" made a priority announcement from <span class='name'>[get_area_name(usr, TRUE)]</span>.", "<span class='name'>[user.real_name]</span>", user)
 

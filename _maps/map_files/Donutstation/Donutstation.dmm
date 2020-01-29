@@ -20177,10 +20177,6 @@
 /area/crew_quarters/kitchen)
 "bdD" = (
 /obj/structure/table,
-/obj/item/multitool{
-	pixel_x = 6
-	},
-/obj/item/multitool,
 /obj/item/assembly/signaler,
 /obj/item/assembly/signaler,
 /obj/effect/turf_decal/tile/brown{

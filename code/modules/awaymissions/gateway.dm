@@ -107,7 +107,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		icon_state = "offcenter"
 
 /obj/machinery/gateway/centerstation/process()
-	if((stat & (NOPOWER)) && use_power)
+	if((machine_stat & (NOPOWER)) && use_power)
 		if(active)
 			toggleoff()
 		return
