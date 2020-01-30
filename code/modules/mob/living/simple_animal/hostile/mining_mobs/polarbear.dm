@@ -34,7 +34,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/polarbear/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(health <= maxHealth*0.25)
+	if(health <= maxHealth*0.5)
 		if(!aggressive_message_said && target)
 			visible_message("<span class='danger'>The [name] gets an enraged look at [target]!</span>")
 			aggressive_message_said = TRUE

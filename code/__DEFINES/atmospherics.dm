@@ -72,7 +72,7 @@
 #define WALL_HEAT_TRANSFER_COEFFICIENT		0.0
 #define OPEN_HEAT_TRANSFER_COEFFICIENT		0.4
 /// a hack for now
-#define WINDOW_HEAT_TRANSFER_COEFFICIENT	0.1	
+#define WINDOW_HEAT_TRANSFER_COEFFICIENT	0.1
 /// a hack to help make vacuums "cold", sacrificing realism for gameplay
 #define HEAT_CAPACITY_VACUUM				7000
 
@@ -104,7 +104,7 @@
 
 // Pressure limits.
 /// This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
-#define HAZARD_HIGH_PRESSURE				550	
+#define HAZARD_HIGH_PRESSURE				550
 /// This determins when the orange pressure icon is displayed (it is 0.7 * HAZARD_HIGH_PRESSURE)
 #define WARNING_HIGH_PRESSURE				325
 /// This is when the gray low pressure icon is displayed. (it is 2.5 * HAZARD_LOW_PRESSURE)
@@ -252,6 +252,7 @@
 
 //ATMOS MIX IDS
 #define LAVALAND_DEFAULT_ATMOS		"LAVALAND_ATMOS"
+#define ICEMOON_DEFAULT_ATMOS		"ICEMOON_ATMOS"
 
 //ATMOSIA GAS MONITOR TAGS
 #define ATMOS_GAS_MONITOR_INPUT_O2 "o2_in"

@@ -1,40 +1,40 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/floor/plating/ice,
+/turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
 "b" = (
 /obj/structure/flora/rock/icy,
-/turf/open/floor/plating/ice,
+/turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
 "c" = (
 /obj/structure/ladder,
-/turf/open/floor/plating/ice,
+/turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
 "d" = (
 /turf/template_noop,
 /area/template_noop)
-"e" = (
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner,
-/turf/open/floor/plating/ice,
-/area/icemoon/underground/explored)
 "f" = (
 /obj/item/flashlight/lantern{
 	on = 1
 	},
-/turf/open/floor/plating/ice,
+/turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
 "g" = (
 /obj/item/clothing/suit/hooded/explorer,
 /obj/effect/decal/cleanable/blood/gibs/up,
-/turf/open/floor/plating/ice,
+/turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
 "h" = (
 /obj/item/clothing/shoes/winterboots/ice_boots,
-/turf/open/floor/plating/ice,
+/turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
 "i" = (
 /obj/item/kitchen/knife/combat/survival,
-/turf/open/floor/plating/ice,
+/turf/open/floor/plating/ice/icemoon,
+/area/icemoon/underground/explored)
+"T" = (
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner,
+/turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
 
 (1,1,1) = {"
@@ -76,7 +76,7 @@ a
 a
 a
 a
-e
+a
 a
 a
 a
@@ -401,7 +401,7 @@ a
 a
 a
 a
-a
+T
 a
 a
 a
