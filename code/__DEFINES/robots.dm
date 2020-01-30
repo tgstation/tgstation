@@ -27,6 +27,7 @@
 #define BOT_NAV				15	// computing navigation
 #define BOT_WAIT_FOR_NAV	16	// waiting for nav computation
 #define BOT_NO_ROUTE		17	// no destination beacon found (or no route)
+#define BOT_SHOWERSTANCE	18	// cleaning unhygienic humans
 
 //Bot types
 #define SEC_BOT				(1<<0)	// Secutritrons (Beepsky) and ED-209s
@@ -36,6 +37,7 @@
 #define MED_BOT				(1<<4)	// Medibots
 #define HONK_BOT			(1<<5)	// Honkbots & ED-Honks
 #define FIRE_BOT			(1<<6)  // Firebots
+#define HYGIENE_BOT			(1<<7)  // Hygienebots
 
 //AI notification defines
 #define		NEW_BORG     1
