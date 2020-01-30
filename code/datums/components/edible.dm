@@ -40,9 +40,7 @@ Behavior that's still missing from this component that original food items had t
 
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ANIMAL, .proc/UseByAnimal)
-	if(isitem(parent))
-		var/obj/item/I = parent
-		RegisterSignal(I, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
 	else if(isturf(parent))
 		var/turf/T = parent
 		RegisterSignal(T, COMSIG_ATOM_ATTACK_HAND, .proc/TryToEatTurf)
@@ -54,9 +52,6 @@ Behavior that's still missing from this component that original food items had t
 	src.eatverbs = eatverbs
 	src.junkiness = junkiness
 	src.after_eat = after_eat
-
-	if(!istype(parent, /atom))
-		return COMPONENT_INCOMPATIBLE
 
 	var/atom/A = parent
 
@@ -90,8 +85,6 @@ Behavior that's still missing from this component that original food items had t
 
 ///All the checks for the act of eating itself and
 /datum/component/edible/proc/TryToEat(mob/living/eater, mob/living/feeder)
-	if(!istype(parent, /atom))
-		return
 
 	var/atom/A = parent
 
@@ -149,8 +142,6 @@ Behavior that's still missing from this component that original food items had t
 
 ///This function lets the eater take a bite and transfers the reagents to the eater.
 /datum/component/edible/proc/TakeBite(mob/living/eater, mob/living/feeder)
-	if(!istype(parent, /atom))
-		return
 
 	var/atom/A = parent
 
@@ -218,8 +209,6 @@ Behavior that's still missing from this component that original food items had t
 
 ///Delete the item when it is fully eaten
 /datum/component/edible/proc/On_Consume(mob/living/eater)
-	if(!istype(parent, /atom))
-		return
 
 	var/atom/A = parent
 
