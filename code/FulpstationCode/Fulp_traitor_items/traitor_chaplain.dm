@@ -48,7 +48,7 @@
 
 	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the Sith...</i></b>")
 
-	to_chat(usr, "<span class='notice'>Force Lightning</span>: Fires a bolt of force lightning at a random target within 3 tiles.")
+	to_chat(usr, "<span class='notice'>Force Lightning</span>: Fires a bolt of force lightning at a random target within 4 tiles (sacred text sold separately!).")
 	to_chat(usr, "<span class='notice'>Force Push</span>: Move things around with the power of the Force.")
 	to_chat(usr, "<span class='notice'>Light Saber Training</span>: You can deflect most projectiles and melee attacks while holding an activated energy sword.")
 
@@ -83,7 +83,7 @@
 	if(!user.mind.has_martialart(MARTIALART_STARTERSITH))
 		return FALSE
 
-	if (prob(FORCETRAINING_BLOCKCHANCE)) //30% chance to reflect if we have sith training
+	if (!user.incapacitated() && prob(FORCETRAINING_BLOCKCHANCE)) //30% chance to reflect if we have sith training
 		spark_system.start()
 		playsound(src, pick('sound/weapons/blade1.ogg'), 75, TRUE)
 		return TRUE
@@ -122,6 +122,7 @@
 	new /obj/effect/decal/cleanable/ash(get_turf(src))
 	qdel(src)
 
+#define FORCELIGHTNING_REFLECT_MULTIPLIER	0.25
 
 /obj/effect/proc_holder/spell/targeted/force_lightning
 	name = "Force Lightning"
@@ -169,21 +170,31 @@
 
 
 /obj/effect/proc_holder/spell/targeted/force_lightning/cast(list/targets, mob/user = usr)
-	if(!can_cast(user))
+	if(user.incapacitated())
+		to_chat(user, "<span class='warning'>You're in no condition to use [src]!</span>")
 		return
 
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(C.handcuffed)
-			to_chat(user, "<span class='warning'>You can't use [src] while handcuffed!</span>")
+	var/mob/living/L
+	if(isliving(user))
+		L = user
+		if(!L.get_bodypart(BODY_ZONE_R_ARM) && !L.get_bodypart(BODY_ZONE_R_ARM))
+			to_chat(user, "<span class='warning'>You need at least one hand to use [src]!</span>")
 			return
 
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			if(C.handcuffed)
+				to_chat(user, "<span class='warning'>You can't use [src] while handcuffed!</span>")
+				return
+
 	existing_targets = list()
+	existing_targets += user
+
 	if(!targets.len)
 		to_chat(user, "<span class='warning'>No target found in range!</span>")
 		return
 	spark_setup()
-	user.say(pick("My hate has made me powerful...","I AM THE SENATE!!", "If you will not be turned... you will be destroyed!!", "You will pay the price for your lack of vision!!", "Young fool, only now, at the end, do you understand.", "Your feeble skills are no match for the power of the Dark Side!", "UNNNNLIMITEDDDD POWAHHHH!!", "And now young Skywalker, you will die."))
+	user.say(pick("NO. NO. NO... YOU WILL DIE!!", "You underestimate the power of the Dark Side!", "My hate has made me powerful...","I AM THE SENATE!!", "If you will not be turned... you will be destroyed!!", "You will pay the price for your lack of vision!!", "Young fool, only now, at the end, do you understand.", "Your feeble skills are no match for the power of the Dark Side!", "POWAH!!! UNNNNLIMITEDDDD POWAHHHH!!", "And now young Skywalker, you will die."))
 	var/mob/living/carbon/target = targets[1]
 	if(get_dist(user,target)>range)
 		to_chat(user, "<span class='warning'>[target.p_theyre(TRUE)] too far away!</span>")
@@ -194,9 +205,10 @@
 
 	var/damage = rand(min_damage,max_damage)
 
-	if(isliving(user))
-		var/mob/living/L = user
+	if(L)
 		L.adjustStaminaLoss(damage * stamina_damage_multiplier) //Take stamina damage equal to half the amount of electrical damage.
+		if(L.getStaminaLoss() >= 100)
+			user.say(pick("I'm weak... too weak...", "Nooo... please...", "Don't let him kill me...", "Please! Don't!", "I can't hold on any longer...", "Help me! HELP ME!", "I was right, the Jedi are taking over!"))
 
 	Bolt(user, target,damage,max_bounces,range, user)
 
@@ -204,13 +216,29 @@
 
 	if(bolt_energy < 1) //Stop if we would do no damage.
 		return
+
+
+
 	origin.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
 	var/mob/living/current = target
 
 	playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, TRUE, -1)
 
+	var/obj/item/melee/transforming/energy/sword/S = current.get_active_held_item()
+	if(!current.incapacitated() && istype(S, /obj/item/melee/transforming/energy/sword) && prob(S.block_chance)) //Can block force lightning with light sabers
+		S.spark_system.start()
+		playsound(S, pick('sound/weapons/blade1.ogg'), 75, TRUE)
+		if(prob(S.block_chance * FORCELIGHTNING_REFLECT_MULTIPLIER)) //This is a % of your base block chance.
+			current.visible_message("<span class='warning'>[current] reflects the [src] with [S] back at [origin]!</span>", "<span class='userdanger'>You reflect the [src] with [S] back at [origin]!</span>")
+			existing_targets -= origin //So we can always reflect back at the source.
+			Bolt(current,origin,bolt_energy,bounces,bolt_range, user)
+			return
+		else
+			current.visible_message("<span class='warning'>[current] deflects the [src] with [S], remaining unharmed!</span>", "<span class='userdanger'>You deflect the [src] with [S], remaining unharmed!</span>")
+			return
+
 	if(current.anti_magic_check())
-		current.visible_message("<span class='warning'>[current] absorbs the spell, remaining unharmed!</span>", "<span class='userdanger'>You absorb the spell, remaining unharmed!</span>")
+		current.visible_message("<span class='warning'>[current] absorbs the [src], remaining unharmed!</span>", "<span class='userdanger'>You absorb the [src], remaining unharmed!</span>")
 	else
 		current.electrocute_act(bolt_energy,"Force Lightning",1,bolt_flags)
 		spark_system.attach(target)
@@ -226,10 +254,11 @@
 
 	var/list/possible_targets = list()
 	for(var/mob/living/M in view(bolt_range,current))
+		/*
 		if(user == M) //Don't ask me why I have to arrange the conditional gates in this way; it just does not work if it they're all in the same row with || separators.
 			//to_chat(world, "Target [M] skipped. [M] is caster: [user]") //DEBUG
-			continue
-		else if (!los_check(current,M) )
+			continue*/
+		if (!los_check(current,M) )
 			//to_chat(world, "Target [M] skipped; LoS check to [current] failed.") //DEBUG
 			continue
 		else if (origin == M)
@@ -248,3 +277,5 @@
 	var/new_damage = bolt_energy - bolt_decay_per_bounce
 	if(next && new_damage >= 1)
 		Bolt(current,next,new_damage,bounces - 1,bolt_range - 1, user)
+
+#undef FORCELIGHTNING_REFLECT_MULTIPLIER

@@ -71,7 +71,7 @@
 			Comes complete with 4 guns and reflective laser vests. Adult supervision recommended. \
 			Swipe gun with ID to toggle state of the art stealth parental locks!"
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
-	item = /obj/item/storage/box/syndicate/laser_tag_partypack_red
+	item = /obj/structure/closet/crate/laser_tag_partypack_red
 	cost = 50
 
 /datum/uplink_item/role_restricted/laser_tag_partypack_blue
@@ -81,5 +81,5 @@
 			Comes complete with 4 guns and reflective laser vests. Adult supervision recommended. \
 			Swipe gun with ID to toggle state of the art stealth parental locks!"
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
-	item = /obj/item/storage/box/syndicate/laser_tag_partypack_blue
+	item = /obj/structure/closet/crate/laser_tag_partypack_blue
 	cost = 50

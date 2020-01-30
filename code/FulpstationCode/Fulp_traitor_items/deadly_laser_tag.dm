@@ -1,12 +1,18 @@
 /obj/item/storage/box/syndicate/laser_tag_kit_red/PopulateContents()
+	new /obj/item/clothing/head/helmet/redtaghelm/deadly(src)
 	new /obj/item/clothing/suit/redtag/deadly_laser_tag(src)
 	new /obj/item/gun/energy/laser/redtag/deadly(src)
 
 /obj/item/storage/box/syndicate/laser_tag_kit_blue/PopulateContents()
+	new /obj/item/clothing/head/helmet/bluetaghelm/deadly(src)
 	new /obj/item/clothing/suit/bluetag/deadly_laser_tag(src)
 	new /obj/item/gun/energy/laser/bluetag/deadly(src)
 
-/obj/item/storage/box/syndicate/laser_tag_partypack_blue/PopulateContents()
+/obj/structure/closet/crate/laser_tag_partypack_blue/PopulateContents()
+	new /obj/item/clothing/head/helmet/bluetaghelm/deadly(src)
+	new /obj/item/clothing/head/helmet/bluetaghelm/deadly(src)
+	new /obj/item/clothing/head/helmet/bluetaghelm/deadly(src)
+	new /obj/item/clothing/head/helmet/bluetaghelm/deadly(src)
 	new /obj/item/clothing/suit/bluetag/deadly_laser_tag(src)
 	new /obj/item/clothing/suit/bluetag/deadly_laser_tag(src)
 	new /obj/item/clothing/suit/bluetag/deadly_laser_tag(src)
@@ -16,7 +22,11 @@
 	new /obj/item/gun/energy/laser/bluetag/deadly(src)
 	new /obj/item/gun/energy/laser/bluetag/deadly(src)
 
-/obj/item/storage/box/syndicate/laser_tag_partypack_red/PopulateContents()
+/obj/structure/closet/crate/laser_tag_partypack_red/PopulateContents()
+	new /obj/item/clothing/head/helmet/redtaghelm/deadly(src)
+	new /obj/item/clothing/head/helmet/redtaghelm/deadly(src)
+	new /obj/item/clothing/head/helmet/redtaghelm/deadly(src)
+	new /obj/item/clothing/head/helmet/redtaghelm/deadly(src)
 	new /obj/item/clothing/suit/redtag/deadly_laser_tag(src)
 	new /obj/item/clothing/suit/redtag/deadly_laser_tag(src)
 	new /obj/item/clothing/suit/redtag/deadly_laser_tag(src)
@@ -25,6 +35,29 @@
 	new /obj/item/gun/energy/laser/redtag/deadly(src)
 	new /obj/item/gun/energy/laser/redtag/deadly(src)
 	new /obj/item/gun/energy/laser/redtag/deadly(src)
+
+
+//X-TREME Laser Tag Helmets
+
+/obj/item/clothing/head/helmet/redtaghelm/deadly
+	armor = list("melee" = 15, "bullet" = 10, "laser" = 60,"energy" = 60, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	var/hit_reflect_chance = 50
+
+/obj/item/clothing/head/helmet/redtaghelm/deadly/IsReflect(def_zone)
+	if(!(def_zone in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_EYES))) //If not shot where ablative is covering you, you don't get the reflection bonus!
+		return FALSE
+	if (prob(hit_reflect_chance))
+		return TRUE
+
+/obj/item/clothing/head/helmet/bluetaghelm/deadly
+	armor = list("melee" = 15, "bullet" = 10, "laser" = 60,"energy" = 60, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	var/hit_reflect_chance = 50
+
+/obj/item/clothing/head/helmet/bluetaghelm/deadly/IsReflect(def_zone)
+	if(!(def_zone in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_EYES))) //If not shot where ablative is covering you, you don't get the reflection bonus!
+		return FALSE
+	if (prob(hit_reflect_chance))
+		return TRUE
 
 //X-TREME Laser Tag Vests
 
@@ -32,14 +65,20 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	heat_protection = CHEST|GROIN|ARMS
-	armor = list("melee" = 10, "bullet" = 10, "laser" = 60, "energy" = 60, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 15, "bullet" = 10, "laser" = 60, "energy" = 60, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	var/hit_reflect_chance = 50
+
+/obj/item/clothing/suit/bluetag/deadly_laser_tag/IsReflect(def_zone)
+	if(!(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))) //If not shot where ablative is covering you, you don't get the reflection bonus!
+		return FALSE
+	if (prob(hit_reflect_chance))
+		return TRUE
 
 /obj/item/clothing/suit/redtag/deadly_laser_tag
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	heat_protection = CHEST|GROIN|ARMS
-	armor = list("melee" = 10, "bullet" = 10, "laser" = 60, "energy" = 60, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 15, "bullet" = 10, "laser" = 60, "energy" = 60, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	var/hit_reflect_chance = 50
 
 /obj/item/clothing/suit/redtag/deadly_laser_tag/IsReflect(def_zone)
