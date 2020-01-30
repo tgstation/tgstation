@@ -116,7 +116,6 @@
 
 /obj/item/storage/box/disks_nanite
 	name = "nanite program disks box"
-	icon_state = "scibox"
 	illustration = "disk_kit"
 
 /obj/item/storage/box/disks_nanite/PopulateContents()
@@ -176,7 +175,6 @@
 /obj/item/storage/box/gloves
 	name = "box of latex gloves"
 	desc = "Contains sterile latex gloves."
-	icon_state = "medbox"
 	illustration = "latex"
 
 /obj/item/storage/box/gloves/PopulateContents()
@@ -186,7 +184,6 @@
 /obj/item/storage/box/masks
 	name = "box of sterile masks"
 	desc = "This box contains sterile medical masks."
-	icon_state = "medbox"
 	illustration = "sterile"
 
 /obj/item/storage/box/masks/PopulateContents()
@@ -215,7 +212,6 @@
 /obj/item/storage/box/medipens
 	name = "box of medipens"
 	desc = "A box full of epinephrine MediPens."
-	icon_state = "medbox"
 	illustration = "syringe"
 
 /obj/item/storage/box/medipens/PopulateContents()
@@ -262,7 +258,6 @@
 /obj/item/storage/box/medigels
 	name = "box of medical gels"
 	desc = "A box full of medical gel applicators, with unscrewable caps and precision spray heads."
-	icon_state = "medbox"
 	illustration = "medgel"
 
 /obj/item/storage/box/medigels/PopulateContents()
@@ -272,7 +267,6 @@
 /obj/item/storage/box/injectors
 	name = "box of DNA injectors"
 	desc = "This box contains injectors, it seems."
-	icon_state = "scibox"
 	illustration = "dna"
 
 /obj/item/storage/box/injectors/PopulateContents()
@@ -357,7 +351,6 @@
 /obj/item/storage/box/minertracker
 	name = "boxed tracking implant kit"
 	desc = "For finding those who have died on the accursed lavaworld."
-	icon_state = "cargobox"
 	illustration = "implant"
 
 /obj/item/storage/box/minertracker/PopulateContents()
@@ -667,7 +660,6 @@
 /obj/item/storage/box/pillbottles
 	name = "box of pill bottles"
 	desc = "It has pictures of pill bottles on its front."
-	icon_state = "medbox"
 	illustration = "pillbox"
 
 /obj/item/storage/box/pillbottles/PopulateContents()
@@ -1087,7 +1079,6 @@
 
 /obj/item/storage/box/emptysandbags
 	name = "box of empty sandbags"
-	icon_state = "cargobox"
 	illustration = "sandbag"
 
 /obj/item/storage/box/emptysandbags/PopulateContents()
@@ -1097,7 +1088,6 @@
 /obj/item/storage/box/rndboards
 	name = "\proper the liberator's legacy"
 	desc = "A box containing a gift for worthy golems."
-	icon_state = "scibox"
 	illustration = "scicircuit"
 
 /obj/item/storage/box/rndboards/PopulateContents()
@@ -1109,7 +1099,6 @@
 /obj/item/storage/box/silver_sulf
 	name = "box of silver sulfadiazine patches"
 	desc = "Contains patches used to treat burns."
-	icon_state = "medbox"
 	illustration = "firepatch"
 
 /obj/item/storage/box/silver_sulf/PopulateContents()
