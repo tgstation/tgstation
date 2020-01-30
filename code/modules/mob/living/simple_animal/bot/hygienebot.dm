@@ -136,7 +136,7 @@
 			if(!target)
 				last_found = world.time
 			if(target.loc != loc && !isturf(target.loc))
-					back_to_hunt()
+				back_to_hunt()
 
 		if(BOT_START_PATROL)
 			look_for_lowhygiene()
