@@ -475,7 +475,7 @@
 			if(istype(I, /obj/item/stack/ducts))
 				var/obj/item/stack/ducts/D = I
 				if(D.get_amount() < 1)
-					to_chat(user, "<span class='warning'>You need one fluoid duct to finish [src]</span>")
+					to_chat(user, "<span class='warning'>You need one fluid duct to finish [src]</span>")
 					return
 				to_chat(user, "<span class='notice'>You start to pipe up [src]...</span>")
 				if(do_after(user, 40, target = src))
