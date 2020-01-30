@@ -243,3 +243,10 @@
 		var/n = text2num(href_list["nextTag"])
 		currTag = n
 	openwindow(usr)
+
+/obj/item/barcode_sticker
+	name = "barcode sticker"
+	desc = "A barcode sticker that when attached to a wrapped object, gives the owner part of the profit."
+	icon = 'icons/obj/delivery.dmi'
+	icon_state = "barcodesticker"
+	item_state = "paper"
