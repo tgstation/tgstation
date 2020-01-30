@@ -129,7 +129,7 @@
 	if(O.force != 0 && !(O.item_flags & NOBLUDGEON))
 		setOrganDamage(maxHealth) //fails the brain as the brain was attacked, they're pretty fragile.
 		visible_message("<span class='danger'>[user] hits [src] with [O]!</span>")
-		to_chat(M, "<span class='danger'>You hit [src] with [O]!</span>")
+		to_chat(user, "<span class='danger'>You hit [src] with [O]!</span>")
 
 /obj/item/organ/brain/examine(mob/user)
 	. = ..()

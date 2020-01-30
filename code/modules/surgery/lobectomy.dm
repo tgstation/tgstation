@@ -17,6 +17,7 @@
 	name = "excise damaged lung node"
 	implements = list(TOOL_SCALPEL = 95, /obj/item/melee/transforming/energy/sword = 65, /obj/item/kitchen/knife = 45,
 		/obj/item/shard = 35)
+	repeatable = TRUE
 	time = 42
 	experience_given = 10
 

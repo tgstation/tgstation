@@ -23,6 +23,7 @@
 	name = "remove damaged liver section"
 	implements = list(TOOL_SCALPEL = 95, /obj/item/melee/transforming/energy/sword = 65, /obj/item/kitchen/knife = 45,
 		/obj/item/shard = 35)
+	repeatable = TRUE
 	time = 52
 	experience_given = 10
 
