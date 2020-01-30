@@ -12,7 +12,7 @@
 	density = FALSE
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
-	ui_x = 250
+	ui_x = 310
 	ui_y = 465
 
 	var/efficiency = 1
@@ -287,13 +287,13 @@
 	idle_power_usage = 3000
 	circuit = /obj/item/circuitboard/machine/sleeper/party
 	var/leddit = FALSE //Get it like reddit and lead alright fine
-	ui_x = 260
-	ui_y = 375
+	ui_x = 310
+	ui_y = 400
 
 	controls_inside = TRUE
 	possible_chems = list(
 		list(/datum/reagent/consumable/ethanol/beer, /datum/reagent/consumable/laughter),
-		list(/datum/reagent/spraytan,/datum/reagent/concentrated_barbers_aid),
+		list(/datum/reagent/spraytan,/datum/reagent/barbers_aid),
 		list(/datum/reagent/colorful_reagent,/datum/reagent/hair_dye),
 		list(/datum/reagent/drug/space_drugs,/datum/reagent/baldium)
 	)//Exclusively uses non-lethal, "fun" chems. At an obvious downside.
@@ -303,21 +303,20 @@
 	enter_message = "<span class='notice'><b>You're surrounded by some funky music inside the chamber. You zone out as you feel waves of krunk vibe within you.</b></span>"
 
 /obj/machinery/sleeper/party/inject_chem(chem, mob/user)
-	var/datum/reagents/holder = new()
-	if(chem in spray_chems)
-		holder.add_reagent(chem_buttons[chem], 10) //I hope this is the correct way to do this.
-		holder.reaction(occupant, VAPOR, 0)
-		holder.trans_to(occupant, 10)
-
-		playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE, -6)
-		if(user)
-			log_combat(user, occupant, "sprayed [chem] into", addition = "via [src]")
 	if(leddit)
 		occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, 4) //You're injecting chemicals into yourself from a recalled, decrepit medical machine. What did you expect?
 	else if (prob(20))
 		occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, rand(1,3))
+	if(chem in spray_chems)
+		var/datum/reagents/holder = new()
+		holder.add_reagent(chem_buttons[chem], 10) //I hope this is the correct way to do this.
+		holder.reaction(occupant, VAPOR, 0)
+		holder.trans_to(occupant, 10)
+		playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE, -6)
+		if(user)
+			log_combat(user, occupant, "sprayed [chem] into", addition = "via [src]")
+		return TRUE
 	..()
-	return TRUE
 
 /obj/machinery/sleeper/party/emag_act(mob/user)
 	..()
