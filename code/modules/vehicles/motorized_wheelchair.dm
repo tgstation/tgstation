@@ -150,8 +150,8 @@
 	if(A.density && speed > delay_multiplier && has_buckled_mobs())
 
 		if(t5 >= 30) //FULP: If T5 is greater than 30, run that fucker over!
-			if(isliving(M))
-				RunOver(M)
+			if(isliving(A))
+				RunOver(A)
 				return
 		// If T5 (T5 identifier) is less than 30, execute as normal
 
