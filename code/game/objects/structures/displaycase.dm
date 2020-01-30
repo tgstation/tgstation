@@ -467,6 +467,9 @@
 		if(!showpiece)
 			to_chat(user, "<span class='notice'>There's nothing for sale.</span>")
 			return
+		if(broken)
+			to_chat(user, "<span class='notice'>[src] appears to be broken.</span>")
+			return
 		if(customer.get_idcard(TRUE))
 			var/obj/item/card/id/C = customer.get_idcard(TRUE)
 			var/confirm = alert(user, "Purchase [showpiece] for [sale_price]?", "Purchase?", "Confirm", "Cancel")
@@ -475,7 +478,6 @@
 			if(C.registered_account)
 				var/datum/bank_account/account = C.registered_account
 				if(!account.has_money(sale_price))
-
 					to_chat(user, "<span class='notice'>You do not possess the funds to purchase this.</span>")
 					return
 				else
