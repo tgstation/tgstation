@@ -30496,8 +30496,8 @@
 /area/medical/medbay/zone2)
 "bzF" = (
 /obj/machinery/door/window/eastleft{
-	name = "Monkey Pen";
-	req_one_access_txt = "5"
+	name = "Petting Garden";
+	req_one_access_txt = null
 	},
 /mob/living/simple_animal/pet/dog/corgi/puppy,
 /turf/open/floor/grass,
