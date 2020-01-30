@@ -18,6 +18,7 @@
 	var/start_showpiece_type = null //add type for items on display
 	var/list/start_showpieces = list() //Takes sublists in the form of list("type" = /obj/item/bikehorn, "trophy_message" = "henk")
 	var/trophy_message = ""
+	var/glass_fix = TRUE
 
 /obj/structure/displaycase/Initialize()
 	. = ..()
@@ -139,7 +140,7 @@
 			showpiece = W
 			to_chat(user, "<span class='notice'>You put [W] on display.</span>")
 			update_icon()
-	else if(istype(W, /obj/item/stack/sheet/glass) && broken)
+	else if(istype(W, /obj/item/stack/sheet/glass) && broken && glass_fix)
 		var/obj/item/stack/sheet/glass/G = W
 		if(G.get_amount() < 2)
 			to_chat(user, "<span class='warning'>You need two glass sheets to fix the case!</span>")
@@ -373,6 +374,7 @@
 	req_access = list(ACCESS_KITCHEN)
 	showpiece_type = /obj/item/reagent_containers/food
 	alert = FALSE //No, we're not calling the fire department because someone stole your cookie.
+	glass_fix = FALSE //Fixable with tools instead.
 	var/sale_price = 20
 	var/datum/bank_account/payments_acc = null
 
@@ -382,10 +384,10 @@
 		I = icon('icons/obj/stationobjs.dmi',"laserboxb0")
 	else
 		I = icon('icons/obj/stationobjs.dmi',"laserbox0")
-	if(broken)
-		I = icon('icons/obj/stationobjs.dmi',"laserboxb0")
 	if(!showpiece && !open)
 		I = icon('icons/obj/stationobjs.dmi',"laserbox_open")
+	if(broken)
+		I = icon('icons/obj/stationobjs.dmi',"laserbox_broken")
 	if(showpiece)
 		var/icon/S = getFlatIcon(showpiece)
 		S.Scale(17,17)
@@ -396,12 +398,15 @@
 /obj/structure/displaycase/forsale/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/card/id))
 		var/obj/item/card/id/potential_acc = I
-		if(!payments_acc)
+		if(!payments_acc && potential_acc.registered_account)
 			payments_acc = potential_acc.registered_account
 			playsound(src, 'sound/machines/click.ogg', 20, TRUE)
-			to_chat(user, "<span class='notice'>Vend-a-tray registered. Use a PDA with your ID to change the cost.</span>")
+			to_chat(user, "<span class='notice'>Vend-a-tray registered. Use a PDA with your ID inside to change the sale price.</span>")
+		else if(!potential_acc.registered_account)
+			to_chat(user, "<span class='warning'>This ID card has no account registered!</span>")
+			return
 		else if(payments_acc != potential_acc.registered_account)
-			to_chat(user, "<span class='warning'>This Vend-a-tray is already registered.</span>")
+			to_chat(user, "<span class='warning'>This Vend-a-tray is already registered!</span>")
 			return
 	if(istype(I, /obj/item/pda))
 		var/obj/item/pda/pda = I
@@ -433,6 +438,16 @@
 		return
 	. = ..()
 
+/obj/structure/displaycase/forsale/multitool_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(broken)
+		to_chat(user, "<span class='notice'>You start recalibrating [src]'s hover field...</span>")
+		if(do_after(user, 20, target = src))
+			broken = 0
+			obj_integrity = max_integrity
+			update_icon()
+		return TRUE
+
 /obj/structure/displaycase/forsale/emag_act(mob/user)
 	. = ..()
 	payments_acc = null
@@ -443,6 +458,8 @@
 	. = ..()
 	if(showpiece && !open)
 		. += "<span class='notice'>[showpiece] is for sale for [sale_price] credits.</span>"
+	if(broken)
+		. += "<span class='notice'>[src] is sparking and the hover field generator seems to be overloaded. Use a multitool to fix it.</span>"
 
 /obj/structure/displaycase/forsale/CtrlClick(mob/user)
 	if(ishuman(user))
@@ -473,3 +490,9 @@
 					showpiece = null
 					update_icon()
 
+/obj/structure/displaycase/forsale/obj_break(damage_flag)
+	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+		broken = TRUE
+		playsound(src, "shatter", 70, TRUE)
+		update_icon()
+		trigger_alarm() //In case it's given an alarm anyway.
