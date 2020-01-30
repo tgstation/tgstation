@@ -49,7 +49,6 @@
 /datum/surgery_step/coronary_bypass
 	name = "graft coronary bypass"
 	implements = list(TOOL_HEMOSTAT = 90, TOOL_WIRECUTTER = 35, /obj/item/stack/packageWrap = 15, /obj/item/stack/cable_coil = 5)
-	repeatable = TRUE
 	time = 90
 	experience_given = 20
 
