@@ -102,9 +102,9 @@
 	loot = list()
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
-	food_type = list(/obj/item/reagent_containers/food/snacks/customizable/salad/ashsalad, /obj/item/reagent_containers/food/snacks/customizable/soup/ashsoup)//use lavaland plants to feed the lavaland monster
-	tame_chance = 20
-	bonus_tame_chance = 10
+	food_type = list(/obj/item/reagent_containers/food/snacks/customizable/salad/ashsalad, /obj/item/reagent_containers/food/snacks/customizable/soup/ashsoup, /obj/item/reagent_containers/food/snacks/grown/ash_flora)//use lavaland plants to feed the lavaland monster
+	tame_chance = 10
+	bonus_tame_chance = 5
 	var/saddled = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/tamed(whomst)
