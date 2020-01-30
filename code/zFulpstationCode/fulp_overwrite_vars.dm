@@ -205,6 +205,11 @@
 //***************************************************************************
 
 
+//***************************************************************************
+//** FULPSTATION SECBORG MODULE UPDATE by Surrealistik Jan 2020 BEGINS
+//---------------------------------------------------------------------------
+//** Expands the Secborg's module items and upgrades.
+//***************************************************************************
 
 //************************************************************************
 //** Airlock Electroadaptive Psuedo Circuit BEGINS - Surrealistik Oct 2019
@@ -218,3 +223,19 @@
 //************************************************************************
 //** Airlock Electroadaptive Psuedo Circuit ENDS - Surrealistik Oct 2019
 //************************************************************************
+/obj/item/robot_module/security
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/restraints/handcuffs/cable/zipties,
+		/obj/item/melee/baton/loaded,
+		/obj/item/gun/energy/disabler/cyborg,
+		/obj/item/reagent_containers/spray/pepper/cyborg,
+		/obj/item/clothing/mask/gas/sechailer/cyborg,
+		/obj/item/crowbar/cyborg,
+		/obj/item/extinguisher/mini)
+
+//***************************************************************************
+//** FULPSTATION SECBORG MODULE UPDATE by Surrealistik Jan 2020 BEGINS
+//---------------------------------------------------------------------------
+//** Expands the Secborg's module items and upgrades.
+//***************************************************************************
