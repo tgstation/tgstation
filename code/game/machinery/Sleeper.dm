@@ -312,15 +312,11 @@
 		playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE, -6)
 		if(user)
 			log_combat(user, occupant, "sprayed [chem] into", addition = "via [src]")
-	else
-		if((chem in available_chems) && chem_allowed(chem))
-			occupant.reagents.add_reagent(chem_buttons[chem], 10) //emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
-			if(user)
-				log_combat(user, occupant, "injected [chem] into", addition = "via [src]")
 	if(leddit)
 		occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, 4) //You're injecting chemicals into yourself from a recalled, decrepit medical machine. What did you expect?
 	else if (prob(20))
 		occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, rand(1,3))
+	..()
 	return TRUE
 
 /obj/machinery/sleeper/party/emag_act(mob/user)
