@@ -840,8 +840,7 @@
 /obj/item/storage/box/rubbershot
 	name = "box of rubber shots"
 	desc = "A box full of rubber shots, designed for riot shotguns."
-	icon_state = "secbox"
-	illustration = "greenbullet"
+	icon_state = "rubbershot_box"
 
 /obj/item/storage/box/rubbershot/PopulateContents()
 	for(var/i in 1 to 7)
@@ -850,8 +849,7 @@
 /obj/item/storage/box/lethalshot
 	name = "box of lethal shotgun shots"
 	desc = "A box full of lethal shots, designed for riot shotguns."
-	icon_state = "secbox"
-	illustration = "redbullet"
+	icon_state = "lethalshot_box"
 
 /obj/item/storage/box/lethalshot/PopulateContents()
 	for(var/i in 1 to 7)
@@ -860,7 +858,7 @@
 /obj/item/storage/box/beanbag
 	name = "box of beanbags"
 	desc = "A box full of beanbag shells."
-	illustration = "greenbullet"
+	illustration = "rubbershot_box"
 
 /obj/item/storage/box/beanbag/PopulateContents()
 	for(var/i in 1 to 6)
