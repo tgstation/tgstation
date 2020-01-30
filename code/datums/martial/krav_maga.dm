@@ -94,7 +94,7 @@
 	to_chat(A, "<span class='danger'>You leg sweep [D]!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	D.apply_damage(5, BRUTE)
-	D.Paralyze(40)
+	D.Knockdown(40)
 	log_combat(A, D, "leg sweeped")
 	return 1
 
