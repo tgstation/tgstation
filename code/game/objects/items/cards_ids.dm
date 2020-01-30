@@ -411,8 +411,8 @@ update_label()
 
 			var/target_occupation = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", assignment ? assignment : "Assistant", MAX_MESSAGE_LEN)
 			if(!target_occupation)
-				registered_name = ""
 				return
+			registered_name = input_name
 			assignment = target_occupation
 			update_label()
 			forged = TRUE

@@ -233,7 +233,7 @@
 	. = ..()
 	update_icon()
 
-/obj/item/clothing/head/wig/update_icon()
+/obj/item/clothing/head/wig/update_icon_state()
 	var/datum/sprite_accessory/S = GLOB.hairstyles_list[hairstyle]
 	if(!S)
 		icon = 'icons/obj/clothing/hats.dmi'

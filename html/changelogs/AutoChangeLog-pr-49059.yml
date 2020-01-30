@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes:
+  - balance: "Light step no longer prevents bloody/oily footprints, instead gives you quieter footsteps."

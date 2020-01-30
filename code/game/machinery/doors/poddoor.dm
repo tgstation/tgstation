@@ -92,5 +92,5 @@
 	return
 
 /obj/machinery/door/poddoor/try_to_crowbar(obj/item/I, mob/user)
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		open(1)

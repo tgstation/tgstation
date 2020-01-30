@@ -27,10 +27,11 @@
 
 		//Subtypes from the above that actually should explode.
 		var/list/unsafe_area_subtypes = typecacheof(list(/area/engine/break_room))
-		
-		allowed_areas = make_associative(GLOB.the_station_areas) - safe_area_types + unsafe_area_subtypes
 
-	return safepick(typecache_filter_list(GLOB.sortedAreas,allowed_areas))
+		allowed_areas = make_associative(GLOB.the_station_areas) - safe_area_types + unsafe_area_subtypes
+	var/list/possible_areas = typecache_filter_list(GLOB.sortedAreas,allowed_areas)
+	if (length(possible_areas))
+		return pick(possible_areas)
 
 /datum/round_event/anomaly/setup()
 	impact_area = findEventArea()
@@ -44,7 +45,7 @@
 	priority_announce("Localized energetic flux wave detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert")
 
 /datum/round_event/anomaly/start()
-	var/turf/T = safepick(get_area_turfs(impact_area))
+	var/turf/T = pick(get_area_turfs(impact_area))
 	var/newAnomaly
 	if(T)
 		newAnomaly = new anomaly_path(T)

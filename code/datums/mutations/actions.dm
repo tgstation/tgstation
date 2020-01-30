@@ -187,7 +187,7 @@
 	if(!isturf(user.loc))
 		return FALSE
 
-/obj/effect/proc_holder/spell/self/void/cast(mob/user = usr)
+/obj/effect/proc_holder/spell/self/void/cast(list/targets, mob/user = usr)
 	. = ..()
 	new /obj/effect/immortality_talisman/void(get_turf(user), user)
 
@@ -210,7 +210,7 @@
 	charge_max = 100
 	action_icon_state = "autotomy"
 
-/obj/effect/proc_holder/spell/self/self_amputation/cast(mob/user = usr)
+/obj/effect/proc_holder/spell/self/self_amputation/cast(list/targets, mob/user = usr)
 	if(!iscarbon(user))
 		return
 
@@ -252,7 +252,7 @@
 	action_icon_state = "spike"
 	var/spike_path = /obj/item/hardened_spike
 
-/obj/effect/proc_holder/spell/self/tongue_spike/cast(mob/user = usr)
+/obj/effect/proc_holder/spell/self/tongue_spike/cast(list/targets, mob/user = usr)
 	if(!iscarbon(user))
 		return
 
@@ -315,8 +315,8 @@
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your feel like you can really connect with people by throwing your voice.</span>"
 	instability = 15
+	locked = TRUE
 	power = /obj/effect/proc_holder/spell/self/tongue_spike/chem
-
 	energy_coeff = 1
 	synchronizer_coeff = 1
 
@@ -356,7 +356,7 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "spikechemswap"
 	name = "Transfer Chemicals"
-	desc = "Purge all of the chemicals into you, sending it to the person who has the chemical spike embedded into you."
+	desc = "Send all of your reagents into whomever the chem spike is embedded in. One use."
 	var/obj/item/hardened_spike/chem/spikey
 	var/mob/living/carbon/human/transfered
 
@@ -382,7 +382,7 @@
 //spider webs
 /datum/mutation/human/webbing
 	name = "Webbing Production"
-	desc = "Allows the user to lay webbing, and travel through it. User will grow psychologically attached to laying webs if used enough."
+	desc = "Allows the user to lay webbing, and travel through it."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your skin feels webby.</span>"
 	instability = 15
@@ -398,7 +398,7 @@
 	action_icon_state = "lay_web"
 
 /obj/effect/proc_holder/spell/self/lay_genetic_web/cast_check(skipcharge = 0,mob/user = usr)
-	..()
+	. = ..()
 	if(!isturf(user.loc))
 		to_chat(user, "<span class='warning'>You can't lay webs here!</span>")
 		return FALSE
@@ -408,7 +408,7 @@
 		to_chat(user, "<span class='warning'>There's already a web here!</span>")
 		return FALSE
 
-/obj/effect/proc_holder/spell/self/lay_genetic_web/cast(mob/user = usr)
+/obj/effect/proc_holder/spell/self/lay_genetic_web/cast(list/targets, mob/user = usr)
 	var/turf/T = get_turf(user)
 
 	user.visible_message("<span class='notice'>[user] begins to secrete a sticky substance.</span>","<span class='notice'>You begin to lay a web.</span>")
