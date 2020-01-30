@@ -219,8 +219,6 @@ Behavior that's still missing from this component that original food items had t
 
 ///Ability to feed food to puppers
 /datum/component/edible/proc/UseByAnimal(datum/source, mob/user)
-	if(!istype(parent, /atom))
-		return
 
 	var/atom/A = parent
 
