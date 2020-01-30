@@ -21,4 +21,3 @@
 	id = /obj/item/card/id/prisoner
 	ears = null
 	belt = null
-	box = null
