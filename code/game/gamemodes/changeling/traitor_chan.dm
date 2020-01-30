@@ -4,7 +4,7 @@
 	report_type = "traitorchan"
 	false_report_weight = 10
 	traitors_possible = 3 //hard limit on traitors if scaling is turned off
-	restricted_jobs = list("AI", "Cyborg")
+	restricted_jobs = list("Prisoner","AI", "Cyborg")
 	required_players = 25
 	required_enemies = 1	// how many of each type are required
 	recommended_enemies = 3
