@@ -43,6 +43,8 @@
 	if(is_devil(src))
 		INVOKE_ASYNC(is_devil(src), /datum/antagonist/devil.proc/beginResurrectionCheck, src)
 
+	to_chat(src, "<span class='warning'>You have died. Barring complete bodyloss, you can in most cases be revived by other players. If you do not wish to be brought back, use the \"Do Not Resuscitate\" verb in the ghost tab.</span>")
+
 /mob/living/carbon/human/proc/makeSkeleton()
 	ADD_TRAIT(src, TRAIT_DISFIGURED, TRAIT_GENERIC)
 	set_species(/datum/species/skeleton)
