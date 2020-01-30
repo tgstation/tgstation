@@ -224,18 +224,22 @@
 
 	playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, TRUE, -1)
 
-	var/obj/item/melee/transforming/energy/sword/S = current.get_active_held_item()
-	if(!current.incapacitated() && istype(S, /obj/item/melee/transforming/energy/sword) && prob(S.block_chance)) //Can block force lightning with light sabers
-		S.spark_system.start()
-		playsound(S, pick('sound/weapons/blade1.ogg'), 75, TRUE)
-		if(prob(S.block_chance * FORCELIGHTNING_REFLECT_MULTIPLIER)) //This is a % of your base block chance.
-			current.visible_message("<span class='warning'>[current] reflects the [src] with [S] back at [origin]!</span>", "<span class='userdanger'>You reflect the [src] with [S] back at [origin]!</span>")
-			existing_targets -= origin //So we can always reflect back at the source.
-			Bolt(current,origin,bolt_energy,bounces,bolt_range, user)
-			return
-		else
-			current.visible_message("<span class='warning'>[current] deflects the [src] with [S], remaining unharmed!</span>", "<span class='userdanger'>You deflect the [src] with [S], remaining unharmed!</span>")
-			return
+	var/obj/item/melee/transforming/energy/sword/S = current.get_active_held_item() //Check if we have an esword
+	if(!current.incapacitated() && istype(S, /obj/item/melee/transforming/energy/sword)) //Can block force lightning with light sabers
+		var/final_block_chance = S.block_chance
+		if(current.mind.has_martialart(MARTIALART_STARTERSITH)) //We get bonuses from force training if we have it.
+			final_block_chance += FORCETRAINING_BLOCKCHANCE
+		if(prob(final_block_chance)) //Final chance of deflecting or reflecting.
+			S.spark_system.start()
+			playsound(S, pick('sound/weapons/blade1.ogg'), 75, TRUE)
+			if(prob(final_block_chance * FORCELIGHTNING_REFLECT_MULTIPLIER)) //This is a % of your final block chance; on a success we reflect instead of just deflect.
+				current.visible_message("<span class='warning'>[current] reflects the [src] with [S] back at [origin]!</span>", "<span class='userdanger'>You reflect the [src] with [S] back at [origin]!</span>")
+				existing_targets -= origin //So we can always reflect back at the source.
+				Bolt(current,origin,bolt_energy,bounces,bolt_range, user)
+				return
+			else
+				current.visible_message("<span class='warning'>[current] deflects the [src] with [S], remaining unharmed!</span>", "<span class='userdanger'>You deflect the [src] with [S], remaining unharmed!</span>")
+				return
 
 	if(current.anti_magic_check())
 		current.visible_message("<span class='warning'>[current] absorbs the [src], remaining unharmed!</span>", "<span class='userdanger'>You absorb the [src], remaining unharmed!</span>")
