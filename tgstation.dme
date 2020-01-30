@@ -938,7 +938,6 @@
 #include "code\game\objects\items\plushes.dm"
 #include "code\game\objects\items\pneumaticCannon.dm"
 #include "code\game\objects\items\powerfist.dm"
-#include "code\game\objects\items\puzzle_pieces.dm"
 #include "code\game\objects\items\RCD.dm"
 #include "code\game\objects\items\RCL.dm"
 #include "code\game\objects\items\religion.dm"
