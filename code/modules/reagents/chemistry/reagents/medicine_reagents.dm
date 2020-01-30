@@ -714,42 +714,41 @@
 	harmful = TRUE
 
 /datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(M.stat == DEAD && method == TOUCH)
-		if(M.suiciding || M.hellbound) //they are never coming back
-			M.visible_message("<span class='warning'>[M]'s body does not react...</span>")
-			return
-		if(M.getBruteLoss()+M.getFireLoss() >= 200 || HAS_TRAIT(M, TRAIT_HUSK) || reac_volume < round((M.getBruteLoss()+M.getFireLoss())/30)) //body will die from brute+burn on revive or you haven't provided enough to revive. at 180-200 damage, you'll need 6u
-			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
-			M.do_jitter_animation(10)
-			return
-		else
-			M.visible_message("<span class='warning'>[M]'s body starts convulsing!</span>")
-			M.notify_ghost_cloning(source = M)
-			M.do_jitter_animation(10)
-			addtimer(CALLBACK(M, /mob/living/carbon.proc/do_jitter_animation, 10), 40) //jitter immediately, then again after 4 and 8 seconds
-			addtimer(CALLBACK(M, /mob/living/carbon.proc/do_jitter_animation, 10), 80)
-			sleep(100) //so the ghost has time to re-enter
+	if(M.stat != DEAD || method != TOUCH)
+		return ..()
+	if(M.suiciding || M.hellbound) //they are never coming back
+		M.visible_message("<span class='warning'>[M]'s body does not react...</span>")
+		return
+	var/amount_to_revive = round((M.getBruteLoss()+M.getFireLoss())/20)//upto 10 units
+	if(M.getBruteLoss()+M.getFireLoss() >= 200 || HAS_TRAIT(M, TRAIT_HUSK) || reac_volume < amount_to_revive) //body will die from brute+burn on revive or you haven't provided enough to revive.
+		M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
+		M.do_jitter_animation(10)
+		return
+	M.visible_message("<span class='warning'>[M]'s body starts convulsing!</span>")
+	M.notify_ghost_cloning(source = M)
+	M.do_jitter_animation(10)
+	addtimer(CALLBACK(M, /mob/living/carbon.proc/do_jitter_animation, 10), 40) //jitter immediately, then again after 4 and 8 seconds
+	addtimer(CALLBACK(M, /mob/living/carbon.proc/do_jitter_animation, 10), 80)
+	sleep(100) //so the ghost has time to re-enter
 
+	var/excess_healing = 5*(reac_volume-amount_to_revive) //excess reagent will heal blood and organs across the board
+	if(iscarbon(M) && excess_healing)
+		var/mob/living/carbon/C = M
+		if(!(C.dna?.species && (NOBLOOD in C.dna.species.species_traits)))
+			C.blood_volume += (excess_healing*2)//1 excess = 10 blood
 
-			if(iscarbon(M))
-				var/mob/living/carbon/C = M
-				if(!(C.dna?.species && (NOBLOOD in C.dna.species.species_traits)))
-					C.blood_volume = max(C.blood_volume, BLOOD_VOLUME_NORMAL) //so you don't instantly re-die from a lack of blood
+		for(var/i in C.internal_organs)
+			var/obj/item/organ/O = i
+			if(O.organ_flags & ORGAN_SYNTHETIC)
+				continue
+			O.applyOrganDamage(excess_healing*-1)//1 excess = 5 organ damage healed
 
-				var/organ_damage_healing = 10*reac_volume //more reagent used, more healing for organs!
-				for(var/i in C.internal_organs)
-					var/obj/item/organ/O = i
-					O.applyOrganDamage(organ_damage_healing*-1)
-					if(O.damage >= O.high_threshold) //why do we live? just to suffer?
-						O.setOrganDamage(O.high_threshold-1)
-
-
-			M.adjustOxyLoss(-20, TRUE)
-			M.adjustToxLoss(-20, TRUE) //slime friendly
-			M.updatehealth()
-			if(M.revive(full_heal = FALSE, admin_revive = FALSE))
-				M.emote("gasp")
-				log_combat(M, M, "revived", src)
+	M.adjustOxyLoss(-20, TRUE)
+	M.adjustToxLoss(-20, TRUE) //slime friendly
+	M.updatehealth()
+	if(M.revive(full_heal = FALSE, admin_revive = FALSE))
+		M.emote("gasp")
+		log_combat(M, M, "revived", src)
 	..()
 
 /datum/reagent/medicine/strange_reagent/on_mob_life(mob/living/carbon/M)
