@@ -231,7 +231,7 @@
 	color = "#49002E" // rgb: 73, 0, 46
 	toxpwr = 1
 	taste_mult = 1
-	taste_description = "hot sause"
+	taste_description = "hot sauce"
 
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, reac_volume)
 	if(istype(O, /obj/structure/alien/weeds))

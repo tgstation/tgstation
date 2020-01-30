@@ -13,7 +13,7 @@
 	description = "An illegal chemical compound used as drug."
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 30
-	taste_description = "your own tounge"
+	taste_description = "your own tongue"
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(15)
 	if(isturf(M.loc) && !isspaceturf(M.loc))
