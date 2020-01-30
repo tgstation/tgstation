@@ -94,9 +94,9 @@
 	. = ..()
 	if(organ_flags & ORGAN_FAILING)
 		if(status == ORGAN_ROBOTIC)
-			. += "<span class='warning'>[src] seems to be broken!</span>"
+			. += "<span class='warning'>[src] seems to be broken.</span>"
 			return
-		. += "<span class='warning'>[src] has decayed for too long, and has turned a sickly color! It doesn't look like it will work anymore!</span>"
+		. += "<span class='warning'>[src] has decayed for too long, and has turned a sickly color. It probably won't work like this, maybe if you could fix it somehow.</span>"
 		return
 	if(damage > high_threshold)
 		. += "<span class='warning'>[src] is starting to look discolored.</span>"
