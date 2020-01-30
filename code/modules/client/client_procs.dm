@@ -453,6 +453,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 //////////////
 
 /client/Del()
+	GLOB.clients -= src
+	GLOB.directory -= ckey
+	if(!gc_destroyed)
+		Destroy() //Clean up signals and timers.
 	if(credits)
 		QDEL_LIST(credits)
 	log_access("Logout: [key_name(src)]")
@@ -477,10 +481,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			)
 
 			send2tgs("Server", "[cheesy_message] (No admins online)")
-
 	GLOB.ahelp_tickets.ClientLogout(src)
-	GLOB.directory -= ckey
-	GLOB.clients -= src
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
