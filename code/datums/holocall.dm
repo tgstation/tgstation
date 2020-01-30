@@ -268,8 +268,8 @@
 		var/splitpoint = findtext(prepared_line," ")
 		if(!splitpoint)
 			continue
-		var/command = copytext(prepared_line,1,splitpoint)
-		var/value = copytext(prepared_line,splitpoint+1)
+		var/command = copytext(prepared_line, 1, splitpoint)
+		var/value = copytext(prepared_line, splitpoint + length(prepared_line[splitpoint]))
 		switch(command)
 			if("DELAY")
 				var/delay_value = text2num(value)

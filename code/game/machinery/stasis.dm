@@ -19,10 +19,23 @@
 	var/obj/effect/overlay/vis/mattress_on
 	var/obj/machinery/computer/operating/op_computer
 
+/obj/machinery/stasis/Initialize()
+	. = ..()
+	for(var/direction in GLOB.cardinals)
+		op_computer = locate(/obj/machinery/computer/operating, get_step(src, direction))
+		if(op_computer)
+			op_computer.sbed = src
+			break
+
+/obj/machinery/stasis/Destroy()
+	. = ..()
+	if(op_computer && op_computer.sbed == src)
+		op_computer.sbed = null
+
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.</span>"
-	. += "<span class='notice'>[src] is [op_computer ? "linked" : "<b>NOT</b> linked"] to an operating computer.</span>"
+	. += "<span class='notice'>\The [src] is [op_computer ? "linked" : "<b>NOT</b> linked"] to a nearby operating computer.</span>"
 
 /obj/machinery/stasis/proc/play_power_sound()
 	var/_running = stasis_running()
@@ -39,6 +52,9 @@
 		stasis_enabled = !stasis_enabled
 		stasis_can_toggle = world.time + STASIS_TOGGLE_COOLDOWN
 		playsound(src, 'sound/machines/click.ogg', 60, TRUE)
+		user.visible_message("<span class='notice'>\The [src] [stasis_enabled ? "powers on" : "shuts down"].</span>", \
+					"<span class='notice'>You [stasis_enabled ? "power on" : "shut down"] \the [src].</span>", \
+					"<span class='hear'>You hear a nearby machine [stasis_enabled ? "power on" : "shut down"].</span>")
 		play_power_sound()
 		update_icon()
 
@@ -53,10 +69,10 @@
 	return stasis_enabled && is_operational()
 
 /obj/machinery/stasis/update_icon_state()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		icon_state = "stasis_broken"
 		return
-	if(panel_open || stat & MAINT)
+	if(panel_open || machine_stat & MAINT)
 		icon_state = "stasis_maintenance"
 		return
 	icon_state = "stasis"
@@ -109,6 +125,12 @@
 	if(stasis_running() && check_nap_violations())
 		chill_out(L)
 	update_icon()
+
+/obj/machinery/stasis/proc/check_patient()
+	if(occupant)
+		return TRUE
+	else
+		return FALSE
 
 /obj/machinery/stasis/post_unbuckle_mob(mob/living/L)
 	thaw_them(L)

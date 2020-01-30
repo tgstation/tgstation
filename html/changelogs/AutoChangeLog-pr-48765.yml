@@ -1,0 +1,4 @@
+author: "ma44"
+delete-after: True
+changes: 
+  - refactor: "Crafting has now been refactored and allows non mobs to have the ability to craft, at least that's what would come out of it if someone further developed the idea."

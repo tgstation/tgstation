@@ -263,7 +263,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	add_fingerprint(user)
 	ui_interact(user)
 
-/obj/item/ui_act(action, params)
+/obj/item/ui_act(action, list/params)
 	add_fingerprint(usr)
 	return ..()
 
@@ -850,6 +850,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	return ..()
+
+/obj/item/proc/embedded(mob/living/carbon/human/embedded_mob)
+	return
+
+/obj/item/proc/unembedded()
+	return
 
 /obj/item/proc/canStrip(mob/stripper, mob/owner)
 	return !HAS_TRAIT(src, TRAIT_NODROP)

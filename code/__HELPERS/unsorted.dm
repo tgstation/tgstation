@@ -6,22 +6,16 @@
 
 //Inverts the colour of an HTML string
 /proc/invertHTML(HTMLstring)
-
-	if (!( istext(HTMLstring) ))
+	if(!istext(HTMLstring))
 		CRASH("Given non-text argument!")
-	else
-		if (length(HTMLstring) != 7)
-			CRASH("Given non-HTML argument!")
+	else if(length(HTMLstring) != 7)
+		CRASH("Given non-HTML argument!")
+	else if(length_char(HTMLstring) != 7)
+		CRASH("Given non-hex symbols in argument!")
 	var/textr = copytext(HTMLstring, 2, 4)
 	var/textg = copytext(HTMLstring, 4, 6)
 	var/textb = copytext(HTMLstring, 6, 8)
-	var/r = hex2num(textr)
-	var/g = hex2num(textg)
-	var/b = hex2num(textb)
-	textr = num2hex(255 - r, 2)
-	textg = num2hex(255 - g, 2)
-	textb = num2hex(255 - b, 2)
-	return text("#[][][]", textr, textg, textb)
+	return rgb(255 - hex2num(textr), 255 - hex2num(textg), 255 - hex2num(textb))
 
 /proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
 	if(!start || !end)
@@ -1112,7 +1106,9 @@ B --><-- A
 	A.cut_overlay(O)
 
 /proc/get_random_station_turf()
-	return safepick(get_area_turfs(pick(GLOB.the_station_areas)))
+	var/list/turfs = get_area_turfs(pick(GLOB.the_station_areas))
+	if (length(turfs))
+		return pick(turfs)
 
 /proc/get_safe_random_station_turf() //excludes dense turfs (like walls) and areas that have valid_territory set to FALSE
 	for (var/i in 1 to 5)
@@ -1400,7 +1396,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 /proc/GUID()
 	var/const/GUID_VERSION = "b"
 	var/const/GUID_VARIANT = "d"
-	var/node_id = copytext(md5("[rand()*rand(1,9999999)][world.name][world.hub][world.hub_password][world.internet_address][world.address][world.contents.len][world.status][world.port][rand()*rand(1,9999999)]"), 1, 13)
+	var/node_id = copytext_char(md5("[rand()*rand(1,9999999)][world.name][world.hub][world.hub_password][world.internet_address][world.address][world.contents.len][world.status][world.port][rand()*rand(1,9999999)]"), 1, 13)
 
 	var/time_high = "[num2hex(text2num(time2text(world.realtime,"YYYY")), 2)][num2hex(world.realtime, 6)]"
 

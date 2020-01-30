@@ -255,8 +255,8 @@
 	if(cap)
 		cap.forceMove(src)
 		capacitor = cap
-		return
-	capacitor = new /obj/item/stock_parts/capacitor(src)
+	else
+		capacitor = new /obj/item/stock_parts/capacitor(src)
 
 /obj/mecha/proc/add_cabin()
 	cabin_air = new
@@ -491,9 +491,9 @@
 	if(dir_to_target && !(dir_to_target & dir))//wrong direction
 		return
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
-		target = safepick(view(3,target))
-		if(!target)
+		if (!target)
 			return
+		target = pick(view(3,target))
 
 	var/mob/living/L = user
 	if(!Adjacent(target))
@@ -511,7 +511,10 @@
 			selected.start_cooldown()
 	else
 		if(internal_damage & MECHA_INT_CONTROL_LOST)
-			target = safepick(oview(1,src))
+			var/list/possible_targets = oview(1,src)
+			if (!length(possible_targets))
+				return
+			target = pick(possible_targets)
 		if(!melee_can_hit || !istype(target, /atom))
 			return
 		target.mech_melee_attack(src)
@@ -624,20 +627,18 @@
 
 /obj/mecha/proc/mechstep(direction)
 	var/current_dir = dir
-	var/result = step(src,direction)
+	. = step(src,direction)
 	if(strafe)
 		setDir(current_dir)
-	if(result && !step_silent)
+	if(. && !step_silent)
 		play_stepsound()
 	step_silent = FALSE
-	return result
 
 /obj/mecha/proc/mechsteprand()
-	var/result = step_rand(src)
-	if(result && !step_silent)
+	. = step_rand(src)
+	if(. && !step_silent)
 		play_stepsound()
 	step_silent = FALSE
-	return result
 
 /obj/mecha/Bump(var/atom/obstacle)
 	if(phasing && get_charge() >= phasing_energy_drain && !throwing)
@@ -676,29 +677,28 @@
 ///////////////////////////////////
 
 /obj/mecha/proc/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
-	if(!islist(possible_int_damage) || isemptylist(possible_int_damage))
+	if(!islist(possible_int_damage) || !length(possible_int_damage))
 		return
 	if(prob(20))
 		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
 			for(var/T in possible_int_damage)
 				if(internal_damage & T)
 					possible_int_damage -= T
-			var/int_dam_flag = safepick(possible_int_damage)
-			if(int_dam_flag)
-				setInternalDamage(int_dam_flag)
+			if (length(possible_int_damage))
+				var/int_dam_flag = pick(possible_int_damage)
+				if(int_dam_flag)
+					setInternalDamage(int_dam_flag)
 	if(prob(5))
 		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
-			var/obj/item/mecha_parts/mecha_equipment/ME = safepick(equipment)
-			if(ME)
+			if (length(equipment))
+				var/obj/item/mecha_parts/mecha_equipment/ME = pick(equipment)
 				qdel(ME)
-	return
 
 /obj/mecha/proc/setInternalDamage(int_dam_flag)
 	internal_damage |= int_dam_flag
 	log_message("Internal damage of type [int_dam_flag].", LOG_MECHA)
 	SEND_SOUND(occupant, sound('sound/machines/warning-buzzer.ogg',wait=0))
 	diag_hud_set_mechstat()
-	return
 
 /obj/mecha/proc/clearInternalDamage(int_dam_flag)
 	if(internal_damage & int_dam_flag)
@@ -867,13 +867,11 @@
 	var/datum/gas_mixture/t_air = return_air()
 	if(t_air)
 		. = t_air.return_pressure()
-	return
 
 /obj/mecha/return_temperature()
 	var/datum/gas_mixture/t_air = return_air()
 	if(t_air)
 		. = t_air.return_temperature()
-	return
 
 /obj/mecha/MouseDrop_T(mob/M, mob/user)
 	if((user != M) || user.incapacitated() || !Adjacent(user))
@@ -923,9 +921,9 @@
 			moved_inside(user)
 	else
 		to_chat(user, "<span class='warning'>You stop entering the exosuit!</span>")
-	return
 
 /obj/mecha/proc/moved_inside(mob/living/carbon/human/H)
+	. = FALSE
 	if(H && H.client && (H in range(1)))
 		occupant = H
 		H.forceMove(src)
@@ -939,21 +937,20 @@
 		playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
 		if(!internal_damage)
 			SEND_SOUND(occupant, sound('sound/mecha/nominal.ogg',volume=50))
-		return 1
-	else
-		return 0
+		return TRUE
 
 /obj/mecha/proc/mmi_move_inside(obj/item/mmi/M, mob/user)
+	. = FALSE
 	if(!M.brain_check(user))
-		return FALSE
+		return
 
 	var/mob/living/brain/B = M.brainmob
 	if(occupant)
 		to_chat(user, "<span class='warning'>Occupant detected!</span>")
-		return FALSE
+		return
 	if(dna_lock && (!B.stored_dna || (dna_lock != B.stored_dna.unique_enzymes)))
 		to_chat(user, "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>")
-		return FALSE
+		return
 
 	visible_message("<span class='notice'>[user] starts to insert an MMI into [name].</span>")
 
@@ -964,7 +961,6 @@
 			to_chat(user, "<span class='warning'>Occupant detected!</span>")
 	else
 		to_chat(user, "<span class='notice'>You stop inserting the MMI.</span>")
-	return FALSE
 
 /obj/mecha/proc/mmi_moved_inside(obj/item/mmi/M, mob/user)
 	if(!(Adjacent(M) && Adjacent(user)))
@@ -1020,7 +1016,6 @@
 		armor = armor.modifyRating(energy = (capacitor.rating * -5)) //lose the energy armor if we lose this cap
 		capacitor = null
 		update_part_values()
-		return
 
 /obj/mecha/proc/go_out(forced, atom/newloc = loc)
 	if(!occupant)
@@ -1104,7 +1099,6 @@
 	if(message)
 		if(occupant && occupant.client)
 			to_chat(occupant, "[icon2html(src, occupant)] [message]")
-	return
 
 GLOBAL_VAR_INIT(year, time2text(world.realtime,"YYYY"))
 GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???

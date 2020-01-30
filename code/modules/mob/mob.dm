@@ -138,7 +138,7 @@
 	if(!client)
 		return
 
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 
 	if(type)
 		if(type & MSG_VISUAL && eye_blind )//Vision related
@@ -527,7 +527,7 @@
 		if (world.time < memory_throttle_time)
 			return
 		memory_throttle_time = world.time + 5 SECONDS
-		msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+		msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 		msg = sanitize(msg)
 
 		mind.store_memory(msg)
@@ -604,36 +604,34 @@
   * * handles the strip panel equip and unequip as well if "item" sent
   */
 /mob/Topic(href, href_list)
+	var/mob/user = usr
+
 	if(href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
 		unset_machine()
 		src << browse(null, t1)
 
-	if(href_list["refresh"])
-		if(machine && in_range(src, usr))
-			show_inv(machine)
+	if(user != src)
+		if(href_list["item"] && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+			var/slot = text2num(href_list["item"])
+			var/hand_index = text2num(href_list["hand_index"])
+			var/obj/item/what
+			if(hand_index)
+				what = get_item_for_held_index(hand_index)
+				slot = list(slot,hand_index)
+			else
+				what = get_item_by_slot(slot)
+			if(what)
+				if(!(what.item_flags & ABSTRACT))
+					user.stripPanelUnequip(what,src,slot)
+			else
+				user.stripPanelEquip(what,src,slot)
 
-
-	if(href_list["item"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
-		var/slot = text2num(href_list["item"])
-		var/hand_index = text2num(href_list["hand_index"])
-		var/obj/item/what
-		if(hand_index)
-			what = get_item_for_held_index(hand_index)
-			slot = list(slot,hand_index)
-		else
-			what = get_item_by_slot(slot)
-		if(what)
-			if(!(what.item_flags & ABSTRACT))
-				usr.stripPanelUnequip(what,src,slot)
-		else
-			usr.stripPanelEquip(what,src,slot)
-
-	if(usr.machine == src)
-		if(Adjacent(usr))
-			show_inv(usr)
-		else
-			usr << browse(null,"window=mob[REF(src)]")
+		if(user.machine == src)
+			if(Adjacent(user))
+				show_inv(user)
+			else
+				user << browse(null,"window=mob[REF(src)]")
 
 // The src mob is trying to strip an item from someone
 // Defined in living.dm

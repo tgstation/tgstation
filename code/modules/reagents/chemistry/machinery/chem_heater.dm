@@ -25,7 +25,7 @@
 		beaker = null
 		update_icon()
 
-/obj/machinery/chem_heater/update_icon()
+/obj/machinery/chem_heater/update_icon_state()
 	if(beaker)
 		icon_state = "mixer1b"
 	else
@@ -61,7 +61,7 @@
 
 /obj/machinery/chem_heater/process()
 	..()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		return
 	if(on)
 		if(beaker && beaker.reagents.total_volume)
