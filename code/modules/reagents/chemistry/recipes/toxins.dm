@@ -77,7 +77,7 @@
 	id = /datum/reagent/toxin/mutetoxin
 	results = list(/datum/reagent/toxin/mutetoxin = 2)
 	required_reagents = list(/datum/reagent/uranium = 2, /datum/reagent/water = 1, /datum/reagent/carbon = 1)
-	mix_message = "<span class='danger'>The soulution releases a vapor that makes your tongue and vocal cords tense up.</span>"
+	mix_message = "<span class='danger'>The solution releases a vapor that makes your tongue and vocal cords tense up.</span>"
 
 /datum/chemical_reaction/zombiepowder
 	name = "Zombie Powder"
