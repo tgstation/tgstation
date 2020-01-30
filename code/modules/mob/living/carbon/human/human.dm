@@ -443,7 +443,8 @@
 				if(fine < 0)
 					to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
 					return
-				fine = min(fine, 1000) //maxFine in the regular sec thing. pretty sure this should be a referece to that somehow.
+				var/maxFine = CONFIG_GET(number/maxfine)
+				fine = min(fine, maxFine)
 
 				var/crime = GLOB.data_core.createCrimeEntry(t1, "", allowed_access, station_time_timestamp(), fine)
 				for (var/obj/item/pda/P in GLOB.PDAs)
@@ -461,7 +462,6 @@
 				GLOB.data_core.addCitation(R.fields["id"], crime)
 				investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [R.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 			return
-
 
 			if(href_list["add_crime"])
 				switch(alert("What crime would you like to add?","Security HUD","Minor Crime","Major Crime","Cancel"))

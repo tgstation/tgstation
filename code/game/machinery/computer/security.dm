@@ -17,7 +17,6 @@
 	//Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
-	var/maxFine = 1000
 
 	light_color = LIGHT_COLOR_RED
 
@@ -740,6 +739,7 @@ What a mess.*/
 								to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
 								return
 
+							var/maxFine = CONFIG_GET(number/maxfine)
 							fine = min(fine, maxFine)
 
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))

@@ -566,5 +566,8 @@ MONKEYCAP 64
 ## A cap on how many mice can be bred via cheese wedges
 RATCAP 64
 
+## Maximum fine for a citation
+MAXFINE 2000
+
 ## Enable the capitalist agenda on your server.
 ECONOMY
