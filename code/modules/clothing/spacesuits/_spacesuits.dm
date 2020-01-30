@@ -1,4 +1,4 @@
-#define THERMAL_REGULATOR_COST 16 // the cost per tick for the thermal regulator
+#define THERMAL_REGULATOR_COST 18 // the cost per tick for the thermal regulator
 
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
 //      Meaning the the suit is defined directly after the corrisponding helmet. Just like below!
@@ -79,9 +79,9 @@
 		user.update_spacesuit_hud_icon("missing")
 	else
 		var/cell_percent = cell.charge / cell.maxcharge
-		if(cell_percent > 0.75)
+		if(cell_percent > 0.6)
 			user.update_spacesuit_hud_icon("high")
-		else if(cell_percent > 0.25)
+		else if(cell_percent > 0.20)
 			user.update_spacesuit_hud_icon("mid")
 		else if(cell_percent > 0.01 && cell.charge > THERMAL_REGULATOR_COST)
 			user.update_spacesuit_hud_icon("low")
@@ -89,7 +89,11 @@
 			user.update_spacesuit_hud_icon("empty")
 
 		if(thermal_on && cell.charge >= THERMAL_REGULATOR_COST)
-			user.adjust_bodytemperature(temperature_setting - user.bodytemperature) // TODO: use_steps=TRUE when #48920 merged
+			// TODO: use_steps=TRUE capped=FALSE when #48920 merged and remove this mess
+			if(user.bodytemperature < temperature_setting)
+				user.adjust_bodytemperature((temperature_setting - user.bodytemperature) / BODYTEMP_HEAT_DIVISOR)
+			else
+				user.adjust_bodytemperature((temperature_setting - user.bodytemperature) / BODYTEMP_COLD_DIVISOR)
 			cell.charge -= THERMAL_REGULATOR_COST
 
 // Clean up the cell on destroy
@@ -119,15 +123,15 @@
 	if(!in_range(src, user) && !isobserver(user))
 		return
 
-	. += "Thermal regulator is [thermal_on ? "on" : "off"], the temperature is set to \
+	. += "The thermal regulator is [thermal_on ? "on" : "off"] and the temperature is set to \
 		[round(temperature_setting-T0C,0.1)] &deg;C ([round(temperature_setting*1.8-459.67,0.1)] &deg;F)"
-	. += "Charge remaining: [cell ? "[round(cell.charge / cell.maxcharge * 100)]%" : "invalid"]"
+	. += "The power meeter shows [cell ? "[round(cell.charge / cell.maxcharge * 100)]%" : "!invalid!"] charge remaining."
 	if(cell_cover_open)
-		. += "The cell cover is open!"
+		. += "The cell cover is open exposing the cell and setting knobs."
 		if(!cell)
 			. += "The slot for a cell is empty."
 		else
-			. += "\The [cell] is in place."
+			. += "\The [cell] is firmly in place."
 
 // object handling for accessing features of the suit
 /obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, params)
