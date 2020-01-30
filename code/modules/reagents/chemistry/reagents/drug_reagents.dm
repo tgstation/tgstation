@@ -13,7 +13,7 @@
 	description = "An illegal chemical compound used as drug."
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 30
-
+	taste_description = "your own tounge"
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(15)
 	if(isturf(M.loc) && !isspaceturf(M.loc))
@@ -171,6 +171,7 @@
 	overdose_threshold = 20
 	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	taste_description = "drain cleaner"
 
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()
@@ -448,7 +449,7 @@
 	color = "#e38e44"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 30
-
+	taste_description = "rebellion"
 /datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)

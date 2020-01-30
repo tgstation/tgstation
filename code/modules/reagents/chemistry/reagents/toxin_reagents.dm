@@ -231,6 +231,7 @@
 	color = "#49002E" // rgb: 73, 0, 46
 	toxpwr = 1
 	taste_mult = 1
+	taste_description = "hot sause"
 
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, reac_volume)
 	if(istype(O, /obj/structure/alien/weeds))
@@ -299,6 +300,7 @@
 	color = "#000067" // rgb: 0, 0, 103
 	toxpwr = 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	taste_description = "caustic garlic"
 
 /datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/carbon/M)
 	switch(current_cycle)
@@ -428,6 +430,7 @@
 	color = "#B4004B"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 1
+	taste_description = "vinegar"
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
@@ -480,6 +483,7 @@
 	color = "#00B4FF"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 1.25
+	taste_description = "almonds"
 
 /datum/reagent/toxin/cyanide/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
@@ -588,6 +592,7 @@
 	color = "#6496FA"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	toxpwr = 0
+	taste_description = "onions"
 
 /datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 10)
@@ -618,8 +623,9 @@
 	color = "#FFFFFF"
 	toxpwr = 0
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	taste_description = "fungi"
 
-/datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
+datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
 	var/toxdamage = current_cycle*3*REM
 	M.log_message("has taken [toxdamage] toxin damage from amanitin toxin", LOG_ATTACK)
 	M.adjustToxLoss(toxdamage)
@@ -649,6 +655,7 @@
 	color = "#7DC3A0"
 	metabolization_rate = 0.06 * REAGENTS_METABOLISM
 	toxpwr = 1.75
+	taste_description = "parsley"
 
 /datum/reagent/toxin/coniine/on_mob_life(mob/living/carbon/M)
 	M.losebreath += 5

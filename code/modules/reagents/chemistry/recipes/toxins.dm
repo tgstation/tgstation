@@ -12,6 +12,7 @@
 	results = list(/datum/reagent/toxin/fentanyl = 1)
 	required_reagents = list(/datum/reagent/drug/space_drugs = 1)
 	required_temp = 674
+	mix_message = "<span class='danger'>The space drugs burn away, leaving behind a thick residue.</span>"
 
 /datum/chemical_reaction/cyanide
 	name = "Cyanide"
@@ -19,7 +20,7 @@
 	results = list(/datum/reagent/toxin/cyanide = 3)
 	required_reagents = list(/datum/reagent/fuel/oil = 1, /datum/reagent/ammonia = 1, /datum/reagent/oxygen = 1)
 	required_temp = 380
-
+a
 /datum/chemical_reaction/itching_powder
 	name = "Itching Powder"
 	id = /datum/reagent/toxin/itching_powder
@@ -39,6 +40,7 @@
 	results = list(/datum/reagent/toxin/acid/nitracid = 2)
 	required_reagents = list(/datum/reagent/toxin/acid/fluacid = 1, /datum/reagent/nitrogen = 1, /datum/reagent/oxygen = 1)
 	required_temp = 380
+	mix_message = "<span class='danger'>A strong acrid smell fills the air.</span>"
 
 /datum/chemical_reaction/sulfonal
 	name = /datum/reagent/toxin/sulfonal
@@ -75,6 +77,7 @@
 	id = /datum/reagent/toxin/mutetoxin
 	results = list(/datum/reagent/toxin/mutetoxin = 2)
 	required_reagents = list(/datum/reagent/uranium = 2, /datum/reagent/water = 1, /datum/reagent/carbon = 1)
+	mix_message = "<span class='danger'>The soulution releases a vapor tht makes your tounge and vocal cords tense up.</span>"
 
 /datum/chemical_reaction/zombiepowder
 	name = "Zombie Powder"
@@ -119,6 +122,7 @@
 	id = /datum/reagent/toxin/mimesbane
 	results = list(/datum/reagent/toxin/mimesbane = 3)
 	required_reagents = list(/datum/reagent/uranium/radium = 1, /datum/reagent/toxin/mutetoxin = 1, /datum/reagent/consumable/nothing = 1)
+	mix_message = "<span class='danger'>A silent scream is heard in the distance.</span>"
 
 /datum/chemical_reaction/bonehurtingjuice
 	name = "Bone Hurting Juice"
