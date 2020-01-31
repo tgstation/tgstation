@@ -1,5 +1,5 @@
 /datum/martial_art/krav_maga
-	name = "Krav Maga"
+	name = "Cheesed Krav Maga" //you can use this version anywhere; the warden version is a subtype
 	id = MARTIALART_KRAVMAGA
 	var/datum/action/neck_chop/neckchop = new/datum/action/neck_chop()
 	var/datum/action/leg_sweep/legsweep = new/datum/action/leg_sweep()
@@ -121,12 +121,16 @@
 	return 1
 
 /datum/martial_art/krav_maga/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(!can_use(A))
+		return FALSE
 	if(check_streak(A,D))
 		return 1
 	log_combat(A, D, "grabbed (Krav Maga)")
 	..()
 
 /datum/martial_art/krav_maga/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(!can_use(A))
+		return FALSE
 	if(check_streak(A,D))
 		return 1
 	log_combat(A, D, "punched")
@@ -149,25 +153,22 @@
 	return 1
 
 /datum/martial_art/krav_maga/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(!can_use(A))
+		return FALSE
 	if(check_streak(A,D))
 		return 1
-	var/obj/item/I = null
-	if(prob(60))
-		I = D.get_active_held_item()
-		if(I)
-			if(D.temporarilyRemoveItemFromInventory(I))
-				A.put_in_hands(I)
-		D.visible_message("<span class='danger'>[A] disarms [D]!</span>", \
-						"<span class='userdanger'>You're disarmed by [A]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, A)
-		to_chat(A, "<span class='danger'>You disarm [D]!</span>")
-		playsound(D, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-	else
-		D.visible_message("<span class='danger'>[A] fails to disarm [D]!</span>", \
-						"<span class='userdanger'>You're nearly disarmed by [A]!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, A)
-		to_chat(A, "<span class='warning'>You fail to disarm [D]!</span>")
-		playsound(D, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
-	log_combat(A, D, "disarmed (Krav Maga)", "[I ? " removing \the [I]" : ""]")
-	return 1
+	log_combat(A, D, "shoved (Krav Maga)")
+	..()
+
+//The warden's special version of krav maga that only works while they're in a sec
+/datum/martial_art/krav_maga/warden
+	name = "Krav Maga"
+
+//Prevents use if the cook is not in the kitchen.
+/datum/martial_art/krav_maga/warden/can_use(mob/living/carbon/human/H) //STAY IN THE FUCKING BRIG
+	if(!istype(get_area(H), /area/security)) //or at least in a sec outpost (any subtype of /area/security counts)
+		return FALSE
+	return ..()
 
 //Krav Maga Gloves
 
@@ -192,7 +193,7 @@
 
 /obj/item/clothing/gloves/krav_maga/sec//more obviously named, given to sec
 	name = "krav maga gloves"
-	desc = "These gloves can teach you to perform Krav Maga using nanochips."
+	desc = "The interiors of these gloves have been officially declared to be a part of Sec by a drunk Chief Engineer. A warden who wears them can use krav maga anywhere, as their hands are technically inside of Sec at all times. Nanochips embedded in the gloves allow even those who haven't been trained in channelling the Sec Force to use krav maga while wearing them." //the Sec Force is like the Speed Force, but for space law and being a warden and stuff
 	icon_state = "fightgloves"
 	item_state = "fightgloves"
 	cold_protection = HANDS
@@ -203,7 +204,7 @@
 
 /obj/item/clothing/gloves/krav_maga/combatglovesplus
 	name = "combat gloves plus"
-	desc = "These tactical gloves are fireproof and electrically insulated, and through the use of nanochip technology will teach you the martial art of krav maga."
+	desc = "These tactical gloves are fireproof and electrically insulated. Microscopic runes engraved in the threads of these gloves forcibly siphon power from the Sec Force, potentially causing long-term damage to the Sec Force if they are kept in one place for too long. Nanochips embedded in the gloves allow even those who haven't been trained in channelling stolen Sec Force energy to use krav maga while wearing them." //shut up, my lore isn't dumb, YOU JUST AREN'T SMART ENOUGH TO COMPREHEND MY GENIUS
 	icon_state = "black"
 	item_state = "blackgloves"
 	siemens_coefficient = 0
