@@ -2774,7 +2774,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "aio" = (
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/security,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
@@ -27283,7 +27283,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/scientist,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -32323,7 +32323,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bDq" = (
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/virology,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -32810,7 +32810,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bEu" = (
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/virology,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 10
 	},
@@ -52405,7 +52405,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "kFD" = (
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/scientist,
 /obj/machinery/light{
 	dir = 8
 	},

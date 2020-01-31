@@ -61005,7 +61005,7 @@
 	network = list("ss13","medbay")
 	},
 /obj/machinery/light,
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/virology,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
@@ -61014,7 +61014,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "cHy" = (
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/virology,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
