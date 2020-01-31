@@ -91,7 +91,7 @@
 				if(clone.turn_angle) //the cheapest (so best, considering cams don't need to be laggier) way of doing this, considering getFlatIcon doesn't give a snot about transforms.'
 					img.Turn(clone.turn_angle)
 				res.Blend(img, blendMode2iconMode(clone.blend_mode), xo, yo)
-				CHECK_TICK
+			CHECK_TICK
 
 	if(!silent)
 		if(istype(custom_sound))				//This is where the camera actually finishes its exposure.
