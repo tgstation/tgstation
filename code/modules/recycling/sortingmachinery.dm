@@ -95,7 +95,6 @@
 		sticker = new /obj/item/barcode(src)
 		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
 		for(var/obj/I in reverseRange(contents))
-			to_chat(world,"fuck.")
 			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, I)
 
 		var/overlaystring = "[icon_state]_tag"
@@ -245,7 +244,7 @@
 	icon_state = "cargotagger"
 	var/currTag = 0 //Destinations are stored in code\globalvars\lists\flavor_misc.dm
 	var/locked_destination = FALSE //if true, users can't open the destination tag window to prevent changing the tagger's current destination
-	w_class = WEIGHT_CLASS_SMALL
+	w_class =  WEIGHT_CLASS_TINY
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'

@@ -46,6 +46,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 		var/sold = FALSE
 		if(QDELETED(thing))
 			continue
+
 		//But first I'm going to check if you're getting the full payout.
 		if(istype(thing, /obj/structure/bigDelivery))
 			var/obj/structure/bigDelivery/tagged = thing
@@ -61,7 +62,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 				continue
 			if(E.applies_to(thing, allowed_categories, apply_elastic))
 				sold = E.sell_object(thing, report, dry_run, allowed_categories , apply_elastic, split_profit)
-				SEND_SIGNAL(thing, COMSIG_ITEM_SOLD, thing)
+				SEND_SIGNAL(thing, COMSIG_ITEM_SOLD, E.get_cost(thing, allowed_categories , apply_elastic))
 				report.exported_atoms += " [thing.name]"
 				if(!QDELETED(thing))
 					report.exported_atoms_ref += thing
@@ -143,18 +144,6 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/amount = get_amount(O)
 	if(amount <=0 || the_cost <=0)
 		return FALSE
-	/*
-	if(istype(O, /obj/structure/bigDelivery))
-		var/obj/structure/bigDelivery/tagged = O
-		if(tagged.sticker)
-			tagged.sticker.payments_acc.adjust_money(the_cost/2) //I couldn't find a way to add more periods here
-			the_cost = the_cost/2
-
-	if(istype(O, /obj/item/smallDelivery))
-		var/obj/item/smallDelivery/tagged = O
-		if(tagged.sticker)
-			tagged.sticker.payments_acc.adjust_money(the_cost/2)
-			the_cost = the_cost/2 */
 
 	report.total_value[src] += the_cost
 

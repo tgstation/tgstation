@@ -7,10 +7,7 @@
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_SOLD, .proc/split_profit)
 
-/datum/component/pricetag/proc/split_profit(obj/source)
-	var/datum/export_report/ex = export_item_and_contents(source, allowed_categories = (ALL), dry_run=TRUE)
-	var/price = 0
-	for(var/x in ex.total_amount)
-		price += ex.total_value[x]
+/datum/component/pricetag/proc/split_profit(var/item_value)
+	var/price = item_value
 	if(price)
 		owner.adjust_money(price/2)
