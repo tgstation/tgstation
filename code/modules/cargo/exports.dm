@@ -34,6 +34,8 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/list/contents = AM.GetAllContents()
 
 	var/datum/export_report/report = external_report
+
+	var/datum/bank_account/seller_acc = null
 	if(!report) //If we don't have any longer transaction going on
 		report = new
 
@@ -41,13 +43,30 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	for(var/i in reverseRange(contents))
 		var/atom/movable/thing = i
 		var/sold = FALSE
+		var/split_profit = FALSE	//Wrapped items with barcodes all get their profit split.
 		if(QDELETED(thing))
 			continue
+
+		//Checking to see if it's a barcoded, wrapped item.
+		if(istype(thing, /obj/structure/bigDelivery))
+			var/obj/structure/bigDelivery/tagged = thing
+			to_chat(world, "is_type worked")
+			if(tagged.sticker)
+				split_profit = TRUE
+				seller_acc = tagged.sticker.payments_acc
+				to_chat(world, "split profit worked")
+		if(istype(thing, /obj/item/smallDelivery))
+			var/obj/item/smallDelivery/tagged = thing
+			if(tagged.sticker)
+				split_profit = TRUE
+				seller_acc = tagged.sticker.payments_acc
+				to_chat(world, "split profit worked")
+
 		for(var/datum/export/E in GLOB.exports_list)
 			if(!E)
 				continue
 			if(E.applies_to(thing, allowed_categories, apply_elastic))
-				sold = E.sell_object(thing, report, dry_run, allowed_categories , apply_elastic)
+				sold = E.sell_object(thing, report, dry_run, allowed_categories , apply_elastic, split_profit, seller_acc)
 				report.exported_atoms += " [thing.name]"
 				if(!QDELETED(thing))
 					report.exported_atoms_ref += thing
@@ -124,13 +143,22 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 // Called only once, when the object is actually sold by the datum.
 // Adds item's cost and amount to the current export cycle.
 // get_cost, get_amount and applies_to do not neccesary mean a successful sale.
-/datum/export/proc/sell_object(obj/O, datum/export_report/report, dry_run = TRUE, allowed_categories = EXPORT_CARGO , apply_elastic = TRUE)
+/datum/export/proc/sell_object(obj/O, datum/export_report/report, dry_run = TRUE, allowed_categories = EXPORT_CARGO , apply_elastic = TRUE, split_profit = FALSE, var/datum/bank_account/payto = null)
 	var/the_cost = get_cost(O, allowed_categories , apply_elastic)
 	var/amount = get_amount(O)
-
+	var/datum/bank_account/payments_acc = payto
+	if(split_profit)
+		to_chat(world, "we got profit on sell")
+	if(payto)
+		to_chat(world, "and we got something in the account")
 	if(amount <=0 || the_cost <=0)
 		return FALSE
 
+	if(split_profit)
+		the_cost = (the_cost/2)
+		payments_acc.adjust_money(the_cost)
+		to_chat(world, "It reached the 'the cost' split")
+	/*
 	if(istype(O, /obj/structure/bigDelivery))
 		var/obj/structure/bigDelivery/tagged = O
 		if(tagged.sticker)
@@ -141,7 +169,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 		var/obj/item/smallDelivery/tagged = O
 		if(tagged.sticker)
 			tagged.sticker.payments_acc.adjust_money(the_cost/2)
-			the_cost = the_cost/2
+			the_cost = the_cost/2 */
 
 	report.total_value[src] += the_cost
 
