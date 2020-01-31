@@ -107,8 +107,8 @@
 		if(power)
 			owner.RemoveSpell(power)
 			qdel(src)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/proc/update_mutations_overlay()
 	return

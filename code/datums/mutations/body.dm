@@ -423,9 +423,11 @@
 	desc = "A mutation that makes the body reject the head. Stands for Head All Depleted Syndrome. Warning: Removing this mutation is very dangerous."
 	quality = NEGATIVE //holy shit no eyes or tongue or ears
 	text_gain_indication = "<span class='warning'>Something feels off.</span>" //heh
-	text_lose_indication = "<span class'notice'>You notice your head is back.</span>"
 
 /datum/mutation/human/headless/on_acquiring()
+	. = ..()
+	if(.)//cant add
+		return TRUE
 	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
 	if(brain) //so this doesn't instantly kill you
 		brain.organ_flags &= ~ORGAN_VITAL
@@ -433,15 +435,24 @@
 
 	var/obj/item/bodypart/head/head = owner.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
+		owner.visible_message("<span class='warning'>[owner]'s head splatters with a sickening crunch!</span>" ignored_mobs = list(owner))
+		new /obj/effect/gibspawner/generic(get_turf(owner), owner)
+		head.dismember(BRUTE)
+		head.drop_organs()
 		qdel(head)
-
+		owner.regenerate_icons()
 	RegisterSignal(owner, COMSIG_LIVING_REGENERATE_LIMBS, .proc/rejecthead)
 
 /datum/mutation/human/headless/on_losing()
+	. = ..()
+	if(.)//cant remove
+		return TRUE
 	UnregisterSignal(owner, COMSIG_LIVING_REGENERATE_LIMBS)
-	owner.regenerate_limb(BODY_ZONE_HEAD, noheal = TRUE) //noheal needs to be TRUE to prevent weird adding and removing mutation healing
-	owner.apply_damage(damage = 50, damagetype = BRUTE, def_zone = BODY_ZONE_HEAD) //and this to really prevent it
-
+	var/successful = owner.regenerate_limb(BODY_ZONE_HEAD, noheal = TRUE) //noheal needs to be TRUE to prevent weird adding and removing mutation healing
+	if(successful)
+		owner.apply_damage(damage = 50, damagetype = BRUTE, def_zone = BODY_ZONE_HEAD) //and this to really prevent it
+		owner.visible_message("<span class='warning'>[owner]'s head returns with a sickening crunch!</span>", "<span class='warning'>Your head regrows with a sickening crack! Ouch.</span>")
+		new /obj/effect/gibspawner/generic(get_turf(owner), owner)
 
 /datum/mutation/human/headless/proc/rejecthead(datum/source, noheal = FALSE, list/excluded_limbs) //seriously you aren't getting your head back
 	excluded_limbs |= BODY_ZONE_HEAD
