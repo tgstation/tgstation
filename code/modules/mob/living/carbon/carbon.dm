@@ -141,7 +141,7 @@
 				if(start_T && end_T)
 					log_combat(src, throwable_mob, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
 
-	else if(!CHECK_BITFIELD(I.item_flags, ABSTRACT) && !HAS_TRAIT(I, TRAIT_NODROP))
+	else if(!(I.item_flags & ABSTRACT) && !HAS_TRAIT(I, TRAIT_NODROP))
 		thrown_thing = I
 		dropItemToGround(I, silent = TRUE)
 
