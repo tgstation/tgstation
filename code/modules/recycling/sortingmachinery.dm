@@ -96,7 +96,7 @@
 		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
 		for(var/X in contents)
 			var/obj/profit = X
-			profit.AddComponent(/datum/component/pricetag, sticker.payments_acc)
+			profit.AddComponent(/datum/component/pricetag, sticker.payments_acc, profit)
 
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
@@ -336,7 +336,6 @@
 	playsound(src, 'sound/machines/click.ogg', 40, TRUE)
 	to_chat(user, "<span class='notice'>You print a new barcode.</span>")
 	new /obj/item/barcode(loc)
-	//new_barcode.payments_acc = payments_acc         Get this working
 
 /obj/item/sales_tagger/CtrlClick(mob/user)
 	. = ..()
