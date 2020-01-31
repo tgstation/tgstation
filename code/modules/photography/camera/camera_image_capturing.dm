@@ -84,8 +84,8 @@
 			var/obj/effect/appearance_clone/clone = X
 			var/xo = (clone.x - center.x) * world.icon_size + clone.pixel_x + xcomp
 			var/yo = (clone.y - center.y) * world.icon_size + clone.pixel_y + ycomp
-			xo += AM.step_x
-			yo += AM.step_y
+			xo += clone.step_x
+			yo += clone.step_y
 			var/icon/img = getFlatIcon(clone)
 			if(img)
 				if(clone.turn_angle) //the cheapest (so best, considering cams don't need to be laggier) way of doing this, considering getFlatIcon doesn't give a snot about transforms.'
