@@ -69,18 +69,17 @@
 	var/ycomp = FLOOR(psize_y / 2, 1) - 15
 
 
-	for(var/atom/A in sorted)
-		var/xo = (A.x - center.x) * world.icon_size + A.pixel_x + xcomp
-		var/yo = (A.y - center.y) * world.icon_size + A.pixel_y + ycomp
-		if(ismovableatom(A))
-			var/obj/effect/appearance_clone/clone = A
-			xo += clone.step_x
-			yo += clone.step_y
-		var/icon/img = getFlatIcon(A)
+	for(var/X in sorted)
+		var/obj/effect/appearance_clone/clone = X
+		var/xo = (clone.x - center.x) * world.icon_size + clone.pixel_x + xcomp
+		var/yo = (clone.y - center.y) * world.icon_size + clone.pixel_y + ycomp
+		xo += clone.step_x
+		yo += clone.step_y
+		var/icon/img = getFlatIcon(clone)
 		if(img)
 			if(clone.turn_angle) //the cheapest (so best, considering cams don't need to be laggier) way of doing this, considering getFlatIcon doesn't give a snot about transforms.'
 				img.Turn(clone.turn_angle)
-			res.Blend(img, blendMode2iconMode(A.blend_mode), xo, yo)
+			res.Blend(img, blendMode2iconMode(clone.blend_mode), xo, yo)
 		CHECK_TICK
 
 	if(!silent)
