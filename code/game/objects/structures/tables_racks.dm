@@ -234,7 +234,7 @@
 	if(newloc != loc) //Did we not move with the table? because that shit's ok
 		return FALSE
 	attached_items -= source
-	UnregisterSignal(source, COMSIG_ITEM_PICKUP)
+	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 
 /obj/structure/table/rolling/Moved(atom/OldLoc, Dir)
 	for(var/mob/M in OldLoc.contents)//Kidnap everyone on top
