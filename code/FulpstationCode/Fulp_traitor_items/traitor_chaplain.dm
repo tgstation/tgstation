@@ -194,7 +194,7 @@
 		to_chat(user, "<span class='warning'>No target found in range!</span>")
 		return
 	spark_setup()
-	user.say(pick("So be it... Jedi.", "NO. NO. NO... <i>YOU</i> WILL DIE!!", "You underestimate the power of the Dark Side!", "My hate has made me powerful...","I AM THE SENATE!!", "If you will not be turned... you will be destroyed!!", "You will pay the price for your lack of vision!!", "Young fool, only now, at the end, do you understand.", "Your feeble skills are no match for the power of the Dark Side!", "POWAAHHH!!", "UNNNNLIMITEDDDD POWAHHHH!!", "And now, young Skywalker, you will die."))
+	user.say(pick("It's treason then!", "So be it... Jedi.", "NO. NO. NO... <i>YOU</i> WILL DIE!!", "You underestimate the power of the Dark Side!", "My hate has made me powerful...","I AM THE SENATE!!", "If you will not be turned... you will be destroyed!!", "You will pay the price for your lack of vision!!", "Young fool, only now, at the end, do you understand.", "Your feeble skills are no match for the power of the Dark Side!", "POWAAHHH!!", "UNNNNLIMITEDDDD POWAHHHH!!", "And now, young Skywalker, you will die."))
 	var/mob/living/carbon/target = targets[1]
 	if(get_dist(user,target)>range)
 		to_chat(user, "<span class='warning'>[target.p_theyre(TRUE)] too far away!</span>")
