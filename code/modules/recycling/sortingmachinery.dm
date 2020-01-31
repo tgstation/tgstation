@@ -94,9 +94,9 @@
 		tagger.paper_count -= 1
 		sticker = new /obj/item/barcode(src)
 		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
-		for(var/X in contents)
-			var/obj/profit = X
-			profit.AddComponent(/datum/component/pricetag, sticker.payments_acc, profit)
+		for(var/obj/I in reverseRange(contents))
+			to_chat(world,"fuck.")
+			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, I)
 
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
@@ -231,6 +231,8 @@
 		tagger.paper_count -= 1
 		sticker = new /obj/item/barcode(src)
 		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
+		for(var/obj/I in reverseRange(contents))
+			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, I)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext(overlaystring, 5)
