@@ -8,7 +8,7 @@
 
 #define DEFAULT_SCAN_RANGE		7	//default view range for finding targets.
 
-//Mode defines
+//Mode defines. If you add a new one make sure you update mode_name in /mob/living/simple_animal/bot
 #define BOT_IDLE 			0	// idle
 #define BOT_HUNT 			1	// found target, hunting
 #define BOT_PREP_ARREST 	2	// at target, preparing to arrest
