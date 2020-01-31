@@ -130,7 +130,19 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 
 	if(amount <=0 || the_cost <=0)
 		return FALSE
-	
+
+	if(istype(O, /obj/structure/bigDelivery))
+		var/obj/structure/bigDelivery/tagged = O
+		if(tagged.sticker)
+			tagged.sticker.payments_acc.adjust_money(the_cost/2) //I couldn't find a way to add more periods here
+			the_cost = the_cost/2
+
+	if(istype(O, /obj/item/smallDelivery))
+		var/obj/item/smallDelivery/tagged = O
+		if(tagged.sticker)
+			tagged.sticker.payments_acc.adjust_money(the_cost/2)
+			the_cost = the_cost/2
+
 	report.total_value[src] += the_cost
 
 	if(istype(O, /datum/export/material))

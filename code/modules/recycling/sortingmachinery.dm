@@ -8,6 +8,7 @@
 	var/giftwrapped = FALSE
 	var/sortTag = 0
 	var/obj/item/paper/note
+	var/obj/item/barcode/sticker
 
 /obj/structure/bigDelivery/interact(mob/user)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
@@ -78,6 +79,26 @@
 			overlaystring = copytext(overlaystring, 5) //5 == length("gift") + 1
 		add_overlay(overlaystring)
 
+	else if(istype(W, /obj/item/sales_tagger))
+		var/obj/item/sales_tagger/tagger = W
+		if(sticker)
+			to_chat(user, "<span class='warning'>This package already has a barcode attached!</span>")
+			return
+		if(!(tagger.payments_acc))
+			to_chat(user, "<span class='warning'>Swipe an ID on [tagger] first!</span>")
+			return
+		if(tagger.paper_count <= 0)
+			to_chat(user, "<span class='warning'>[tagger] is out of paper!</span>")
+			return
+		user.visible_message("<span class='notice'>[user] attaches a barcode to [src].</span>", "<span class='notice'>You attach a barcode to [src].</span>")
+		tagger.paper_count -= 1
+		sticker = new /obj/item/barcode(src)
+		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
+		var/overlaystring = "[icon_state]_tag"
+		if(giftwrapped)
+			overlaystring = copytext(overlaystring, 5)
+		add_overlay(overlaystring)
+
 	else
 		return ..()
 
@@ -108,6 +129,7 @@
 	var/giftwrapped = 0
 	var/sortTag = 0
 	var/obj/item/paper/note
+	var/obj/item/barcode/sticker
 
 /obj/item/smallDelivery/contents_explosion(severity, target)
 	for(var/atom/movable/AM in contents)
@@ -190,6 +212,26 @@
 			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
 		add_overlay(overlaystring)
 
+	else if(istype(W, /obj/item/sales_tagger))
+		var/obj/item/sales_tagger/tagger = W
+		if(sticker)
+			to_chat(user, "<span class='warning'>This package already has a barcode attached!</span>")
+			return
+		if(!(tagger.payments_acc))
+			to_chat(user, "<span class='warning'>Swipe an ID on [tagger] first!</span>")
+			return
+		if(tagger.paper_count <= 0)
+			to_chat(user, "<span class='warning'>[tagger] is out of paper!</span>")
+			return
+		user.visible_message("<span class='notice'>[user] attaches a barcode to [src].</span>", "<span class='notice'>You attach a barcode to [src].</span>")
+		tagger.paper_count -= 1
+		sticker = new /obj/item/barcode(src)
+		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
+		var/overlaystring = "[icon_state]_tag"
+		if(giftwrapped)
+			overlaystring = copytext(overlaystring, 5)
+		add_overlay(overlaystring)
+
 /obj/item/destTagger
 	name = "destination tagger"
 	desc = "Used to set the destination of properly wrapped packages."
@@ -244,9 +286,62 @@
 		currTag = n
 	openwindow(usr)
 
-/obj/item/barcode_sticker
-	name = "barcode sticker"
-	desc = "A barcode sticker that when attached to a wrapped object, gives the owner part of the profit."
-	icon = 'icons/obj/delivery.dmi'
-	icon_state = "barcodesticker"
-	item_state = "paper"
+/obj/item/sales_tagger
+	name = "sales tagger"
+	desc = "A scanner that lets you tag wrapped items for sale, splitting the profit between you and cargo. Ctrl-Click to clear the registered account."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "salestagger"
+	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	w_class = WEIGHT_CLASS_TINY
+	slot_flags = ITEM_SLOT_BELT
+	var/datum/bank_account/payments_acc = null
+	var/paper_count = 10
+	var/max_paper_count = 20
+
+/obj/item/sales_tagger/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	if(istype(I, /obj/item/card/id))
+		var/obj/item/card/id/potential_acc = I
+		if(potential_acc.registered_account)
+			payments_acc = potential_acc.registered_account
+			playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
+			to_chat(user, "<span class='notice'>[src] registers the ID card. Tag a wrapped item to create a barcode.</span>")
+		else if(!potential_acc.registered_account)
+			to_chat(user, "<span class='warning'>This ID card has no account registered!</span>")
+			return
+		else if(payments_acc != potential_acc.registered_account)
+			to_chat(user, "<span class='notice'>ID card already registered.</span>")
+	if(istype(I, /obj/item/paper))
+		if (!(paper_count >=  max_paper_count))
+			paper_count += 10
+			qdel(I)
+			if (paper_count >=  max_paper_count)
+				paper_count = max_paper_count
+				to_chat(user, "<span class='notice'>[src]'s paper supply is now full.</span>")
+				return
+			to_chat(user, "<span class='notice'>You refill [src]'s paper supply, you have [paper_count] left.</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>[src]'s paper supply is full.</span>")
+			return
+
+/obj/item/sales_tagger/attack_self(mob/user)
+	. = ..()
+	playsound(src, 'sound/machines/click.ogg', 40, TRUE)
+	to_chat(user, "<span class='notice'>You print a new barcode.</span>")
+	new /obj/item/barcode(loc)
+	//new_barcode.payments_acc = payments_acc         Get this working
+
+/obj/item/sales_tagger/CtrlClick(mob/user)
+	. = ..()
+	payments_acc = null
+	to_chat(user, "<span class='notice'>You clear the registered account.</span>")
+
+/obj/item/barcode
+	name = "Barcode tag"
+	desc = "A tiny tag, associated with a crewmember's account. Attach to a wrapped item to give that account a portion of the wrapped item's profit."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "barcode"
+	var/datum/bank_account/payments_acc = null
