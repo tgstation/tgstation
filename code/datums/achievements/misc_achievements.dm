@@ -95,9 +95,3 @@
 	desc = "Well, that didn't take long."
 	database_id = MEDAL_LONGSHIFT
 	icon = "longshift"
-
-/datum/award/achievement/misc/supermatter_survived
-	name = "Supermatter Touched (Without violent death)"
-	desc = "Lets hope those radiation burns don't set in until after the celebrations."
-	database_id = MEDAL_SUPERMATTERTOUCH
-	icon = "suppermatter"
