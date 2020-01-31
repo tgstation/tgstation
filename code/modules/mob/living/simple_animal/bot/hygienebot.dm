@@ -46,8 +46,13 @@
 
 	..()
 
+/mob/living/simple_animal/bot/hygienebot/Cross(atom/movable/AM)
+	. = ..()
+	if(washing)
+		wash_atom(AM)
+
 /mob/living/simple_animal/bot/hygienebot/Crossed(atom/movable/AM)
-	..()
+	. = ..()
 	if(washing)
 		wash_atom(AM)
 
@@ -61,7 +66,7 @@
 	else
 		icon_state = "drone"
 	if(washing)
-		var/mutable_appearance/water_overlay = mutable_appearance(icon,"dronewater")
+		var/mutable_appearance/water_overlay = mutable_appearance(icon, emagged ? "dronefire" : "dronewater")
 		add_overlay(water_overlay)
 
 /mob/living/simple_animal/bot/hygienebot/turn_off()
@@ -76,9 +81,14 @@
 	last_found = world.time
 
 
+/mob/living/simple_animal/bot/hygienebot/Crossed(atom/movable/AM)
+	. = ..()
+	if(washing)
+		wash_atom(AM)
+
 /mob/living/simple_animal/bot/hygienebot/Moved()
 	. = ..()
-	if(washing && isturf(loc))
+	if(washing && isturf(loc) && !emagged)
 		var/turf/open/OT = loc
 		OT.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
@@ -90,7 +100,7 @@
 		wash_atom(loc)
 		for(var/AM in loc)
 			wash_atom(AM)
-		if(isopenturf(loc))
+		if(isopenturf(loc) && !emagged)
 			var/turf/open/tile = loc
 			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
@@ -103,15 +113,20 @@
 
 		if(BOT_HUNT)		// hunting for stinkman
 			// if can't reach stinkman for long enough, don't give up, try harder.
-			switch(frustration)
-				if(0 to 4)
-					currentspeed = 5
-					stop_washing()
-					mad = FALSE
-				if(4 to INFINITY)
-					currentspeed = 2.5
-					start_washing()
-					mad = TRUE
+			if(emagged) //lol fuck em up
+				currentspeed = 8
+				start_washing()
+				mad = TRUE
+			else
+				switch(frustration)
+					if(0 to 4)
+						currentspeed = 5
+						stop_washing()
+						mad = FALSE
+					if(4 to INFINITY)
+						currentspeed = 2.5
+						start_washing()
+						mad = TRUE
 			if(target)
 				if(target.loc == loc && isturf(target.loc)) //LADIES AND GENTLEMAN WE GOTEM PREPARE TO DUMP
 					start_washing()
@@ -171,7 +186,6 @@
 	for (var/mob/living/carbon/human/H in view(7,src)) //Find the NEET
 		if((H.name == oldtarget_name) && (world.time < last_found + 100))
 			continue
-
 		if(!check_purity(H)) //Theyre impure
 			target = H
 			oldtarget_name = H.name
@@ -213,6 +227,9 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	return	dat
 
 /mob/living/simple_animal/bot/hygienebot/proc/check_purity(mob/living/L)
+	if(emagged && L.stat != DEAD)
+		return FALSE
+
 	var/obj/item/head = L.get_item_by_slot(ITEM_SLOT_HEAD)
 	if(head)
 		if(HAS_BLOOD_DNA(head))
@@ -241,7 +258,9 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 /mob/living/simple_animal/bot/hygienebot/proc/wash_atom(atom/A)
 	SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
-
+	if(emagged)
+		A.fire_act()
+		return //lol pranked no cleaning besides that
 	if(isobj(A))
 		wash_obj(A)
 	else if(isturf(A))
