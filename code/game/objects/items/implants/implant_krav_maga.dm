@@ -1,6 +1,6 @@
 /obj/item/implant/krav_maga
 	name = "krav maga implant"
-	desc = "Teaches you the arts of Krav Maga in 5 short instructional videos beamed directly into your eyeballs."
+	desc = "Uses midisecians to teach you the arts of Krav Maga." //midisecians are like midichlorians, but for the Sec Force instead of the Force
 	icon = 'icons/obj/wizard.dmi'
 	icon_state ="scroll2"
 	activated = 1
@@ -11,7 +11,7 @@
 				<b>Name:</b> Krav Maga Implant<BR>
 				<b>Life:</b> 4 hours after death of host<BR>
 				<b>Implant Details:</b> <BR>
-				<b>Function:</b> Teaches even the clumsiest host the arts of Krav Maga."}
+				<b>Function:</b> Teaches even the clumsiest host the arts of Krav Maga via the use of midisecians."}
 	return dat
 
 /obj/item/implant/krav_maga/activate()
