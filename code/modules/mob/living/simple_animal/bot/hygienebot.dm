@@ -125,7 +125,7 @@
 					walk_to(src, target,0, currentspeed)
 					if(mad && prob(60))
 						playsound(loc, 'sound/effects/hygienebot_angry.ogg', 60, 1)
-						speak(pick("Get back here you foul smelling fucker", "If you don't get back here right now I'm going to give you a fucking vasectomy", "STOP RUNNING OR I WILL CUT YOUR ARTERIES.", "Just fucking let me clean you you arsehole!", "STOP. RUNNING.", "Either you stop running or I will fucking drag you out of an airlock", "I just want to fucking clean you you troglodyte"))
+						speak(pick("Get back here you foul smelling fucker.", "If you don't get back here right now I'm going to give you a fucking vasectomy.", "STOP RUNNING OR I WILL CUT YOUR ARTERIES!", "Just fucking let me clean you you arsehole!", "STOP. RUNNING.", "Either you stop running or I will fucking drag you out of an airlock.", "I just want to fucking clean you you troglodyte.", "If you don't come back here I'll put a green cloud around you cunt."))
 					if((get_dist(src, target)) >= (olddist))
 						frustration++
 					else
