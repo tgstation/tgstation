@@ -431,11 +431,10 @@
 	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
 	if(brain) //so this doesn't instantly kill you
 		brain.organ_flags &= ~ORGAN_VITAL
-		brain.decoy_override = TRUE
 
 	var/obj/item/bodypart/head/head = owner.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
-		owner.visible_message("<span class='warning'>[owner]'s head splatters with a sickening crunch!</span>" ignored_mobs = list(owner))
+		owner.visible_message("<span class='warning'>[owner]'s head splatters with a sickening crunch!</span>", ignored_mobs = list(owner))
 		new /obj/effect/gibspawner/generic(get_turf(owner), owner)
 		head.dismember(BRUTE)
 		head.drop_organs()
@@ -447,12 +446,14 @@
 	. = ..()
 	if(.)//cant remove
 		return TRUE
-	UnregisterSignal(owner, COMSIG_LIVING_REGENERATE_LIMBS)
 	var/successful = owner.regenerate_limb(BODY_ZONE_HEAD, noheal = TRUE) //noheal needs to be TRUE to prevent weird adding and removing mutation healing
-	if(successful)
-		owner.apply_damage(damage = 50, damagetype = BRUTE, def_zone = BODY_ZONE_HEAD) //and this to really prevent it
-		owner.visible_message("<span class='warning'>[owner]'s head returns with a sickening crunch!</span>", "<span class='warning'>Your head regrows with a sickening crack! Ouch.</span>")
-		new /obj/effect/gibspawner/generic(get_turf(owner), owner)
+	if(!successful)
+		return TRUE // trouble
+	UnregisterSignal(owner, COMSIG_LIVING_REGENERATE_LIMBS)
+	owner.dna.species.regenerate_organs(owner, excluded_limbs = list(BODY_ZONE_CHEST)) //only regenerate head
+	owner.apply_damage(damage = 50, damagetype = BRUTE, def_zone = BODY_ZONE_HEAD) //and this to really prevent it
+	owner.visible_message("<span class='warning'>[owner]'s head returns with a sickening crunch!</span>", "<span class='warning'>Your head regrows with a sickening crack! Ouch.</span>")
+	new /obj/effect/gibspawner/generic(get_turf(owner), owner)
 
 /datum/mutation/human/headless/proc/rejecthead(datum/source, noheal = FALSE, list/excluded_limbs) //seriously you aren't getting your head back
 	excluded_limbs |= BODY_ZONE_HEAD
