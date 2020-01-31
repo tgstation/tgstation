@@ -48,23 +48,24 @@
 							)
 
 /obj/machinery/autolathe/Initialize()
-	AddComponent(/datum/component/material_container,
-	list(/datum/material/iron,
-	/datum/material/glass,
-	/datum/material/gold,
-	/datum/material/silver,
-	/datum/material/diamond,
-	/datum/material/uranium,
-	/datum/material/plasma,
-	/datum/material/bluespace,
-	/datum/material/bananium,
-	/datum/material/titanium,
-	/datum/material/runite,
-	/datum/material/plastic,
-	/datum/material/adamantine,
-	/datum/material/mythril,
-	/datum/material/wood
-	), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
+	var/static/list/allowed_types = list(
+		/datum/material/iron,
+		/datum/material/glass,
+		/datum/material/gold,
+		/datum/material/silver,
+		/datum/material/diamond,
+		/datum/material/uranium,
+		/datum/material/plasma,
+		/datum/material/bluespace,
+		/datum/material/bananium,
+		/datum/material/titanium,
+		/datum/material/runite,
+		/datum/material/plastic,
+		/datum/material/adamantine,
+		/datum/material/mythril,
+		/datum/material/wood,
+		)
+	AddComponent(/datum/component/material_container, allowed_types, _show_on_examine=TRUE, _after_insert=CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
 	wires = new /datum/wires/autolathe(src)
