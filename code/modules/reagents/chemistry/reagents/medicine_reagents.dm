@@ -706,15 +706,15 @@
 
 /datum/reagent/medicine/strange_reagent
 	name = "Strange Reagent"
-	description = "A miracle drug capable of bringing the dead back to life. Works topically if the target has less than 200 total brute and burn damage and hasn't been husked. Requires more reagent depending on damage inflicted. Causes damage to the living."
+	description = "A miracle drug capable of bringing the dead back to life. Works orally if the target has less than 200 total brute and burn damage and hasn't been husked. Requires more reagent depending on damage inflicted. Causes damage to the living."
 	reagent_state = LIQUID
 	color = "#A0E85E"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 1.25 * REAGENTS_METABOLISM
 	taste_description = "magnets"
 	harmful = TRUE
 
 /datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(M.stat != DEAD || method != TOUCH)
+	if(M.stat != DEAD || method != INGEST)
 		return ..()
 	if(M.suiciding || M.hellbound) //they are never coming back
 		M.visible_message("<span class='warning'>[M]'s body does not react...</span>")
