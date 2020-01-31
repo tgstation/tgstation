@@ -60,7 +60,7 @@
 /obj/machinery/biogenerator/on_reagent_change(changetype)			//When the reagents change, change the icon as well.
 	update_icon()
 
-/obj/machinery/biogenerator/update_icon()
+/obj/machinery/biogenerator/update_icon_state()
 	if(panel_open)
 		icon_state = "biogen-empty-o"
 	else if(!src.beaker)
@@ -69,7 +69,6 @@
 		icon_state = "biogen-stand"
 	else
 		icon_state = "biogen-work"
-	return
 
 /obj/machinery/biogenerator/attackby(obj/item/O, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
@@ -153,7 +152,7 @@
 		to_chat(user, "<span class='warning'>You cannot put this in [src.name]!</span>")
 
 /obj/machinery/biogenerator/ui_interact(mob/user)
-	if(stat & BROKEN || panel_open)
+	if(machine_stat & BROKEN || panel_open)
 		return
 	. = ..()
 	var/dat
@@ -204,10 +203,15 @@
 	popup.set_content(dat)
 	popup.open()
 
+/obj/machinery/biogenerator/AltClick(mob/living/user)
+	. = ..()
+	if(istype(user) && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		detach(user)
+
 /obj/machinery/biogenerator/proc/activate()
 	if (usr.stat != CONSCIOUS)
 		return
-	if (src.stat != NONE) //NOPOWER etc
+	if (src.machine_stat != NONE) //NOPOWER etc
 		return
 	if(processing)
 		to_chat(usr, "<span class='warning'>The biogenerator is in the process of working.</span>")
@@ -287,9 +291,9 @@
 	update_icon()
 	return .
 
-/obj/machinery/biogenerator/proc/detach()
+/obj/machinery/biogenerator/proc/detach(mob/living/user)
 	if(beaker)
-		beaker.forceMove(drop_location())
+		user.put_in_hands(beaker)
 		beaker = null
 		update_icon()
 
@@ -304,7 +308,7 @@
 		updateUsrDialog()
 
 	else if(href_list["detach"])
-		detach()
+		detach(usr)
 		updateUsrDialog()
 
 	else if(href_list["create"])

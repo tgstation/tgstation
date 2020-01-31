@@ -16,6 +16,7 @@
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
 	var/verb_whisper = "whispers"
+	var/verb_sing = "sings"
 	var/verb_yell = "yells"
 	var/speech_span
 	var/inertia_dir = 0

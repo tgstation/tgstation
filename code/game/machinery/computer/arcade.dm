@@ -45,6 +45,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/card/emagfake = 1,
 		/obj/item/clothing/shoes/wheelys = 2,
 		/obj/item/clothing/shoes/kindleKicks = 2,
+		/obj/item/toy/plush/goatplushie/angry/realgoat = 2,
 		/obj/item/storage/belt/military/snack = 2))
 
 /obj/machinery/computer/arcade
@@ -96,7 +97,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(prize_override)
 		override = TRUE
 
-	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
+	if(machine_stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 
 	var/empprize = null
@@ -162,6 +163,11 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_xmas")
 		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_xmas")
 		weapons = strings(ARCADE_FILE, "rpg_weapon_xmas")
+	else if(SSevents.holidays && SSevents.holidays[VALENTINES])
+		name_action = pick_list(ARCADE_FILE, "rpg_action_valentines")
+		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_valentines")
+		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_valentines")
+		weapons = strings(ARCADE_FILE, "rpg_weapon_valentines")
 	else
 		name_action = pick_list(ARCADE_FILE, "rpg_action")
 		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective")

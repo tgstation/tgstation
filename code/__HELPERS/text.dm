@@ -232,12 +232,14 @@
 
 //Adds 'char' ahead of 'text' until there are 'count' characters total
 /proc/add_leading(text, count, char = " ")
+	text = "[text]"
 	var/charcount = count - length_char(text)
 	var/list/chars_to_add[max(charcount + 1, 0)]
 	return jointext(chars_to_add, char) + text
 
 //Adds 'char' behind 'text' until there are 'count' characters total
 /proc/add_trailing(text, count, char = " ")
+	text = "[text]"
 	var/charcount = count - length_char(text)
 	var/list/chars_to_add[max(charcount + 1, 0)]
 	return text + jointext(chars_to_add, char)
@@ -263,9 +265,11 @@
 	return trim_left(trim_right(text))
 
 //Returns a string with the first element of the string capitalized.
-/proc/capitalize(t as text)
-	. = t[1]
-	return uppertext(.) + copytext(t, 1 + length(.))
+/proc/capitalize(t)
+	. = t
+	if(t)
+		. = t[1]
+		return uppertext(.) + copytext(t, 1 + length(.))
 
 /proc/stringmerge(text,compare,replace = "*")
 //This proc fills in all spaces with the "replace" var (* by default) with whatever
@@ -654,7 +658,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	if(fexists(log))
 		oldjson = json_decode(file2text(log))
 		oldentries = oldjson["data"]
-	if(!isemptylist(oldentries))
+	if(length(oldentries))
 		for(var/string in accepted)
 			for(var/old in oldentries)
 				if(string == old)
@@ -664,7 +668,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	var/list/finalized = list()
 	finalized = accepted.Copy() + oldentries.Copy() //we keep old and unreferenced phrases near the bottom for culling
 	listclearnulls(finalized)
-	if(!isemptylist(finalized) && length(finalized) > storemax)
+	if(length(finalized) > storemax)
 		finalized.Cut(storemax + 1)
 	fdel(log)
 

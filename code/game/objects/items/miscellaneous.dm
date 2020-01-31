@@ -120,8 +120,8 @@
 		/obj/item/organ/cyberimp/arm/toolset,
 		/obj/item/organ/cyberimp/arm/surgery,
 		/obj/item/organ/cyberimp/chest/thrusters,
-		/obj/item/organ/lungs/cybernetic/upgraded,
-		/obj/item/organ/liver/cybernetic/upgraded) //cyberimplants range from a nice bonus to fucking broken bullshit so no subtypesof
+		/obj/item/organ/lungs/cybernetic/tier3,
+		/obj/item/organ/liver/cybernetic/tier3) //cyberimplants range from a nice bonus to fucking broken bullshit so no subtypesof
 		for(var/V in templist)
 			var/atom/A = V
 			augment_list[initial(A.name)] = A
