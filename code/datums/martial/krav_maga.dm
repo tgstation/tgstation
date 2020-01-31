@@ -193,7 +193,7 @@
 
 /obj/item/clothing/gloves/krav_maga/sec//more obviously named, given to sec
 	name = "krav maga gloves"
-	desc = "The interiors of these gloves have been officially declared to be a part of Sec by a drunk Chief Engineer. A warden who wears them can use krav maga anywhere, as their hands are technically inside of Sec at all times. Nanochips embedded in the gloves allow even those who haven't been trained in channelling the Sec Force to use krav maga while wearing them." //the Sec Force is like the Speed Force, but for space law and being a warden and stuff
+	desc = "The interiors of these gloves have been officially declared to be a part of Sec by a drunk Chief Engineer. A warden who wears them can use Krav Maga anywhere, as their hands are technically inside of Sec at all times. Nanochips embedded in the gloves allow even those who haven't been trained in channelling the Sec Force to use Krav Maga while wearing them." //the Sec Force is like the Speed Force, but for being a warden, using Krav Maga, etc. instead of going fast
 	icon_state = "fightgloves"
 	item_state = "fightgloves"
 	cold_protection = HANDS
@@ -204,7 +204,7 @@
 
 /obj/item/clothing/gloves/krav_maga/combatglovesplus
 	name = "combat gloves plus"
-	desc = "These tactical gloves are fireproof and electrically insulated. Microscopic runes engraved in the threads of these gloves forcibly siphon power from the Sec Force, potentially causing long-term damage to the Sec Force if they are kept in one place for too long. Nanochips embedded in the gloves allow even those who haven't been trained in channelling stolen Sec Force energy to use krav maga while wearing them." //shut up, my lore isn't dumb, YOU JUST AREN'T SMART ENOUGH TO COMPREHEND MY GENIUS
+	desc = "These tactical gloves are fireproof and electrically insulated. Microscopic runes engraved in the threads of these gloves forcibly siphon power from the Sec Force, causing long-term damage to the Sec Force in an area if they are kept in one place for too long. Nanochips embedded in the gloves allow even those who haven't been trained in channelling stolen Sec Force energy to use Krav Maga while wearing them." //shut up, my lore isn't dumb, YOU JUST AREN'T SMART ENOUGH TO COMPREHEND MY GENIUS
 	icon_state = "black"
 	item_state = "blackgloves"
 	siemens_coefficient = 0
