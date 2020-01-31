@@ -77,7 +77,7 @@
 				xo += AM.step_x
 				yo += AM.step_y
 			var/icon/img = getFlatIcon(A)
-			res.Blend(img, blendMode2iconMode(clone.blend_mode), xo, yo)
+			res.Blend(img, blendMode2iconMode(A.blend_mode), xo, yo)
 			CHECK_TICK
 	else
 		for(var/X in sorted) //these are clones
