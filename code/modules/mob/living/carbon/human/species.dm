@@ -1158,7 +1158,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	return
 
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(!((target.health < 0 || HAS_TRAIT(target, TRAIT_FAKEDEATH) || target.getOxyLoss > 50) && !(target.mobility_flags & MOBILITY_STAND)))
+	if(!((target.health < 0 || HAS_TRAIT(target, TRAIT_FAKEDEATH) || target.getOxyLoss() > 50) && !(target.mobility_flags & MOBILITY_STAND)))
 		target.help_shake_act(user)
 		if(target != user)
 			log_combat(user, target, "shaken")
