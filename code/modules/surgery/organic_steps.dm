@@ -110,6 +110,12 @@
 		"<span class='notice'>[user] begins to saw through the bone in [target]'s [parse_zone(target_zone)].</span>",
 		"<span class='notice'>[user] begins to saw through the bone in [target]'s [parse_zone(target_zone)].</span>")
 
+/datum/surgery_step/saw/tool_check(mob/user, obj/item/tool)
+	if(implement_type == /obj/item && !(tool.get_sharpness() && (tool.force >= 10)))
+		return FALSE
+
+	return TRUE
+
 /datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	target.apply_damage(50, BRUTE, "[target_zone]")
 	display_results(user, target, "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open.</span>",
