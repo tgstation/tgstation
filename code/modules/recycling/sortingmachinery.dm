@@ -12,6 +12,7 @@
 
 /obj/structure/bigDelivery/interact(mob/user)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	qdel(src)
 
 /obj/structure/bigDelivery/Destroy()
@@ -97,11 +98,27 @@
 		sticker.percent_cut = tagger.percent_cut	//same, but for the percentage taken.
 		for(var/obj/I in reverseRange(contents))
 			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.percent_cut)
-
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext(overlaystring, 5)
 		add_overlay(overlaystring)
+	else if(istype(W, /obj/item/barcode))
+		var/obj/item/barcode/sticker = W
+		if(sticker)
+			to_chat(user, "<span class='warning'>This package already has a barcode attached!</span>")
+			return
+		if(!(sticker.payments_acc))
+			to_chat(user, "<span class='warning'>This barcode seems to be invalid. Guess it's trash now.</span>")
+			return
+		if(!user.transferItemToLoc(W, src))
+			to_chat(user, "<span class='warning'>For some reason, you can't attach [W]!</span>")
+			return
+		tag = W
+		var/overlaystring = "[icon_state]_tag"
+		if(giftwrapped)
+			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
+		add_overlay(overlaystring)
+
 
 	else
 		return ..()
@@ -118,6 +135,7 @@
 		to_chat(user, "<span class='notice'>You successfully removed [O]'s wrapping !</span>")
 		O.forceMove(loc)
 		playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+		new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 		qdel(src)
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
@@ -145,6 +163,7 @@
 		var/atom/movable/AM = X
 		user.put_in_hands(AM)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	qdel(src)
 
 /obj/item/smallDelivery/attack_self_tk(mob/user)
@@ -159,6 +178,7 @@
 			var/atom/movable/AM = X
 			AM.forceMove(src.loc)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	qdel(src)
 
 /obj/item/smallDelivery/examine(mob/user)
@@ -237,6 +257,22 @@
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext(overlaystring, 5)
+		add_overlay(overlaystring)
+	else if(istype(W, /obj/item/barcode))
+		var/obj/item/barcode/sticker = W
+		if(sticker)
+			to_chat(user, "<span class='warning'>This package already has a barcode attached!</span>")
+			return
+		if(!(sticker.payments_acc))
+			to_chat(user, "<span class='warning'>This barcode seems to be invalid. Guess it's trash now.</span>")
+			return
+		if(!user.transferItemToLoc(W, src))
+			to_chat(user, "<span class='warning'>For some reason, you can't attach [W]!</span>")
+			return
+		tag = W
+		var/overlaystring = "[icon_state]_tag"
+		if(giftwrapped)
+			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
 		add_overlay(overlaystring)
 
 /obj/item/destTagger
@@ -353,6 +389,7 @@
 	to_chat(user, "<span class='notice'>You print a new barcode.</span>")
 	var/obj/item/barcode/new_barcode = new /obj/item/barcode(src)
 	new_barcode.payments_acc = payments_acc		//The sticker gets the scanner's registered account.
+	user.put_in_hands(new_barcode)
 
 /obj/item/sales_tagger/CtrlClick(mob/user)
 	. = ..()
