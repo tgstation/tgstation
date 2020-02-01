@@ -2717,6 +2717,7 @@
 #include "code\modules\research\nanites\extra_settings\type.dm"
 #include "code\modules\research\nanites\nanite_programs\buffing.dm"
 #include "code\modules\research\nanites\nanite_programs\healing.dm"
+#include "code\modules\research\nanites\nanite_programs\protocols.dm"
 #include "code\modules\research\nanites\nanite_programs\rogue.dm"
 #include "code\modules\research\nanites\nanite_programs\sensor.dm"
 #include "code\modules\research\nanites\nanite_programs\suppression.dm"
