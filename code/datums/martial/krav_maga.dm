@@ -135,11 +135,11 @@
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
 	var/armor_block = D.run_armor_check(affecting, "melee")
 	var/picked_hit_type = pick("punch", "kick")
-	var/bonus_damage = 10
+	var/bonus_damage = 0
 	if(!(D.mobility_flags & MOBILITY_STAND))
 		bonus_damage += 5
 		picked_hit_type = "stomp"
-	D.apply_damage(bonus_damage, A.dna.species.attack_type, affecting, armor_block)
+	D.apply_damage(rand(5,10) + bonus_damage, A.dna.species.attack_type, affecting, armor_block)
 	if(picked_hit_type == "kick" || picked_hit_type == "stomp")
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		playsound(get_turf(D), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
@@ -157,31 +157,25 @@
 		return 1
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
 	var/armor_block = D.run_armor_check(affecting, "melee")
-	var/obj/item/I = null
+	if((D.mobility_flags & MOBILITY_STAND))
+		D.visible_message("<span class='danger'>[A] reprimands [D]!</span>", \
+					"<span class='userdanger'>You're slapped by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
+		to_chat(A, "<span class='danger'>You jab [D]!</span>")
+		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+		playsound(D, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
+		D.apply_damage(rand(5,10), STAMINA, affecting, armor_block)
+		log_combat(A, D, "punched nonlethally")
 	if(!(D.mobility_flags & MOBILITY_STAND))
 		D.visible_message("<span class='danger'>[A] reprimands [D]!</span>", \
 					"<span class='userdanger'>You're manhandled by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 		to_chat(A, "<span class='danger'>You stomp [D]!</span>")
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		playsound(D, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
-		D.apply_damage(rand(5,15), STAMINA, affecting, armor_block)
+		D.apply_damage(rand(10,15), STAMINA, affecting, armor_block)
 		log_combat(A, D, "stomped nonlethally")
-	if((D.mobility_flags & MOBILITY_STAND))
-		I = D.get_active_held_item()
-		if(prob(60))
-			if(I)
-				if(D.temporarilyRemoveItemFromInventory(I))
-					A.put_in_hands(I)
-			D.visible_message("<span class='danger'>[A] disarms [D]!</span>", \
-						"<span class='userdanger'>You're disarmed by [A]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, A)
-			to_chat(A, "<span class='danger'>You disarm [D]!</span>")
-			playsound(D, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-		else
-			D.visible_message("<span class='danger'>[A] fails to disarm [D]!</span>", \
-						"<span class='userdanger'>You're nearly disarmed by [A]!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, A)
-			to_chat(A, "<span class='warning'>You fail to disarm [D]!</span>")
-			playsound(D, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
-	log_combat(A, D, "disarmed (Krav Maga)", "[I ? " removing \the [I]" : ""]")
+	if(prob(D.getStaminaLoss()))
+		D.visible_message("<span class='warning'>[D] sputters and recoils in pain!</span>", "<span class='userdanger'>You recoil in pain as you are jabbed in a nerve!</span>")
+		D.drop_all_held_items()
 	return 1
 
 //Krav Maga Gloves
