@@ -65,22 +65,47 @@
 /obj/effect/proc_holder/spell/targeted/tesla/proc/Bolt(mob/origin,mob/target,bolt_energy,bounces,mob/user = usr)
 	origin.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
 	var/mob/living/carbon/current = target
-	if(current.anti_magic_check())
+	var/whywouldyoueverusethisagainstajedi = FALSE
+	var/helditem=current.get_active_held_item()
+	if(helditem)
+		if(istype(helditem, /obj/item/melee/transforming/energy/sword) && helditem.active) //only works if they have an esword in their active hand
+			whywouldyoueverusethisagainstajedi = TRUE
+		else if(istype(helditem, /obj/item/twohanded/dualsaber) && helditem.wielded) //or a double-bladed esword
+			whywouldyoueverusethisagainstajedi = TRUE
+		else if(istype(helditem, /obj/item/nullrod/claymore/saber)) //or one of the null rod variants that look like eswords
+			whywouldyoueverusethisagainstajedi = TRUE
+	if(current.anti_magic_check() && !whywouldyoueverusethisagainstajedi) //we only want to absorb the spell if we can't reflect it
 		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, TRUE, -1)
 		current.visible_message("<span class='warning'>[current] absorbs the spell, remaining unharmed!</span>", "<span class='userdanger'>You absorb the spell, remaining unharmed!</span>")
 	else if(bounces < 1)
-		current.electrocute_act(bolt_energy,"Lightning Bolt",flags = SHOCK_NOGLOVES)
 		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, TRUE, -1)
+		if(whywouldyoueverusethisagainstajedi)
+			current.visible_message("<span class='warning'>[current]'s [helditem] absorbs the spell's electricity, dissipating it harmlessly!</span>", "<span class='userdanger'>Your [helditem] absorbs the spell's electricity, dissipating it harmlessly!</span>")
+		else
+			if(current.electrocute_act(bolt_energy,"Lightning Bolt",flags = SHOCK_NOGLOVES) && current == user) //you got your lightning reflected back at you, and you're not immune to it
+				current.emote("scream")
+				ADD_TRAIT(current, TRAIT_DISFIGURED, "got palp'd")
+				return     //alright, meme's over, guys, let's not bounce to anyone else
 	else
-		current.electrocute_act(bolt_energy,"Lightning Bolt",flags = SHOCK_NOGLOVES)
 		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, TRUE, -1)
+		if(!whywouldyoueverusethisagainstajedi) //if the caster is also holding a lightsaber, they can ping pong the electricity back and forth with a jedi until it dissipates
+			if(current.electrocute_act(bolt_energy,"Lightning Bolt",flags = SHOCK_NOGLOVES) && current == user) //you got your lightning reflected back at you, and you're not immune to it
+				current.emote("scream")
+				ADD_TRAIT(current, TRAIT_DISFIGURED, "got palp'd")
+				return     //alright, meme's over, guys, let's not bounce to anyone else
 		var/list/possible_targets = new
 		for(var/mob/living/M in view(range,target))
+			if(user == M && current!=user && whywouldyoueverusethisagainstajedi && los_check(current,M))
+				current.visible_message("<span class='warning'>[current]'s [helditem] reflects the spell's electricity, sending it back to [M]!</span>", "<span class='userdanger'>Your [helditem] reflects the spell's electricity, sending it back to [M]!</span>") //even if the jedi is, like, the third guy in the chain, I'm still gonna use the word "reflect", because the electricity is still being sent back to the caster
+				Bolt(current,M,max((bolt_energy-5),5),bounces-1,user)
+				return
 			if(user == M || target == M && los_check(current,M)) // || origin == M ? Not sure double shockings is good or not
 				continue
 			possible_targets += M
 		if(!possible_targets.len)
+			current.visible_message("<span class='warning'>[current]'s [helditem] absorbs the spell's electricity, dissipating it harmlessly!</span>", "<span class='userdanger'>Your [helditem] absorbs the spell's electricity, dissipating it harmlessly!</span>")
 			return
 		var/mob/living/next = pick(possible_targets)
 		if(next)
+			current.visible_message("<span class='warning'>[current]'s [helditem] deflects the spell's electricity, sending it to [next]!</span>", "<span class='userdanger'>Your [helditem] deflects the spell's electricity, sending it to [next]!</span>")
 			Bolt(current,next,max((bolt_energy-5),5),bounces-1,user)
