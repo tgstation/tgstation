@@ -69,11 +69,11 @@
 	var/helditem=current.get_active_held_item()
 	if(helditem)
 		if(istype(helditem, /obj/item/melee/transforming/energy/sword)) //only works if they have an esword in their active hand
-			/obj/item/melee/transforming/energy/sword/H=helditem
+			var/obj/item/melee/transforming/energy/sword/H=helditem
 			if(H.active)
 				whywouldyoueverusethisagainstajedi = TRUE
 		else if(istype(helditem, /obj/item/twohanded/dualsaber)) //or a double-bladed esword
-			/obj/item/twohanded/dualsaber/H=helditem
+			var/obj/item/twohanded/dualsaber/H=helditem
 			if(H.wielded)
 				whywouldyoueverusethisagainstajedi = TRUE
 		else if(istype(helditem, /obj/item/nullrod/claymore/saber)) //or one of the null rod variants that look like eswords
