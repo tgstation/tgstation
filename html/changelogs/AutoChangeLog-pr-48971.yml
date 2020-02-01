@@ -1,0 +1,4 @@
+author: "Bawhoppen"
+delete-after: True
+changes: 
+  - bugfix: "Drawers & filing cabinets may now unwrench once again."

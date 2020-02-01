@@ -989,6 +989,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(H.back)
 				if(SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_CAN_INSERT, I, H, TRUE))
 					return TRUE
+		if(ITEM_SLOT_LHANDSTORE)
+			var/obj/item/held_left = H.get_held_items_for_side(LEFT_HANDS)
+			if(held_left)
+				if(SEND_SIGNAL(held_left, COMSIG_TRY_STORAGE_CAN_INSERT, I, H, TRUE))
+					return TRUE
 			return FALSE
 	return FALSE //Unsupported slot
 

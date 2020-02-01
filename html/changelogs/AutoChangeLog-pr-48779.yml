@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - tweak: "neck slices no longer work on critical/dead/sleeping people, but they now require just an aggressive grab"
