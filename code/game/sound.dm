@@ -174,5 +174,5 @@
 			if("bark")
 				soundin = pickweight(list('sound/voice/speech/bark1.ogg' = 49, 'sound/voice/speech/arf.ogg' = 1))
 			if("meow")
-				soundin = pick('sound/voice/speech/meow1.ogg', 'sound/voice/speech/meow2.ogg')
+				soundin = pick('sound/voice/speech/meow1.ogg')
 	return soundin
