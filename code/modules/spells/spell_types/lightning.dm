@@ -101,7 +101,7 @@
 		for(var/mob/living/M in view(range,target))
 			if(user == M && current!=user && whywouldyoueverusethisagainstajedi && los_check(current,M))
 				current.visible_message("<span class='warning'>[current]'s [helditem] reflects the spell's electricity, sending it back to [M]!</span>", "<span class='userdanger'>Your [helditem] reflects the spell's electricity, sending it back to [M]!</span>") //even if the jedi is, like, the third guy in the chain, I'm still gonna use the word "reflect", because the electricity is still being sent back to the caster
-				Bolt(current,M,max((bolt_energy-5),5),bounces-1,user)
+				Bolt(current, M, max((bolt_energy - 5), 5), bounces-1, user)
 				return
 			if(user == M || target == M && los_check(current,M)) // || origin == M ? Not sure double shockings is good or not
 				continue
