@@ -96,6 +96,7 @@
 "bR" = (/obj/structure/table/wood/fancy/royalblue,/obj/machinery/light{dir = 4},/obj/item/paper_bin,/obj/item/pen/fourcolor,/turf/open/floor/carpet,/area/wizard_station)
 "bS" = (/obj/machinery/light{dir = 4},/turf/open/floor/carpet/green,/area/wizard_station)
 "bT" = (/obj/structure/disposalpipe/segment{dir = 6},/turf/closed/wall/mineral/wood,/area/wizard_station)
+"bU" = (/obj/machinery/door/firedoor,/obj/machinery/door/unpowered/shuttle,/turf/open/floor/mineral/gold,/area/wizard_station)
 "bV" = (/obj/structure/sign/warning/nosmoking,/turf/closed/wall/mineral/wood,/area/wizard_station)
 "bW" = (/obj/structure/disposalpipe/segment{dir = 5},/turf/closed/wall/mineral/wood,/area/wizard_station)
 "bX" = (/obj/structure/disposalpipe/segment{dir = 5},/turf/open/floor/carpet/blue,/area/wizard_station)
@@ -111,7 +112,8 @@
 "ch" = (/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{dir = 4},/turf/open/floor/carpet/blue,/area/wizard_station)
 "ci" = (/obj/machinery/chem_dispenser/drinks/fullupgrade{dir = 4},/turf/open/floor/carpet/blue,/area/wizard_station)
 "cj" = (/obj/structure/table/wood/fancy/red,/obj/item/pen/fourcolor,/obj/item/storage/fancy/cigarettes,/obj/item/paper_bin,/obj/item/storage/pill_bottle/dice,/turf/open/floor/carpet/blue,/area/wizard_station)
-"ck" = (/obj/structure/rack,/obj/item/circuitboard/machine/circuit_imprinter,/obj/item/circuitboard/computer/rdconsole,/obj/item/circuitboard/machine/autolathe,/turf/open/floor/mineral/plastitanium,/area/wizard_station)
+"ck" = (/obj/machinery/door/airlock/wood,/obj/machinery/door/firedoor,/turf/open/floor/carpet,/area/wizard_station)
+"cl" = (/obj/structure/rack,/obj/item/circuitboard/machine/autolathe,/turf/open/floor/mineral/plastitanium,/area/wizard_station)
 "cm" = (/obj/machinery/light,/obj/machinery/portable_atmospherics/canister/air,/obj/structure/statue/diamond/ai2,/turf/open/floor/carpet,/area/wizard_station)
 "cn" = (/mob/living/simple_animal/hostile/alien/maid/barmaid{health = 10000},/turf/open/floor/carpet/blue,/area/wizard_station)
 "co" = (/obj/structure/table/reinforced,/obj/item/reagent_containers/food/drinks/shaker,/turf/open/floor/carpet/blue,/area/wizard_station)
@@ -148,8 +150,9 @@ aaaaaaaaaaaaabajagaeahahahahahaeagajabaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaabajagahahahahahahahagajabaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaabajagahahahahahahahagajabaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaabajagaiataiaiaiataiagajabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaabajajajajajajajajajajajabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaababacacacacacacacacacababababababaaaaaaaaaaaaaa
+aaaaaaaaaaaaabajajajajajbUajajajajajabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaababajajajacagacajajajababaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaabacacacacckacacacacababababababaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaabacapaqananananauakakakakakaIabaaaaaaaaaaaaaa
 ababababababababacavavavanavavavacaraDaHaAaRabaaaaaaaaaaaaaa
 abacacacacacacacacawavavanavavazacaEaxaxayaRabaaaaaaaaaaaaaa
@@ -159,7 +162,7 @@ abacaWaWaWacaSacacaLaLaLanaLaLaLacaMaxaxbabWaXaYabaaaaaaaaaa
 abacaCcaaQaccdbjacaZaqanananbbaZacaOaxaxbeacabbdabaaaaaaaaaa
 abacacacacacacacacbgaqanananbbbRacbkasblbqacabcDabaaaaaaaaaa
 ababababababababacaZaqanananbbaZacbTakakakakakcGabaaaaaaaaaa
-aaaaababababababacbmbmbmanbmbmbmacaVbEbEbEbEbEacababababaaaa
+aaaaababababababacbmbmbmanbmbmbmacaVbEbEbEbEbEacabababababaa
 aaaaabacacacacacacbmbmbmanbmbmbmaccHacacacacacacacacacacabaa
 aaaaabacbnboboboacbpanananananbtacbubrbrcEbsbrbrbrbrbfacabab
 aaaaabacbvbHbHbSacbQbQbQanbQbQbQacbwbxbycFbAbBbDbGbDcqacacab
@@ -169,9 +172,9 @@ aaaaabacbobHbHbHaoanananananananaccrccccbzbAbKbLbMcebzcbacab
 aaaaabacbvbHbHbSaccmanalalalancmacchcnccbzbAcjbDbGbDcqacacab
 aaaaabacbnboboboacacacacacacbCacaccibscobzctcpcpcpcpbfacabab
 aaaaabacacacacacaccucCcLcvcscwbhaccccPacacacacacacacacacabbN
-aaaaababababababaccycwcwcwcwcwbPacacacabababababababababbNaa
-aaaabNbNbNbNababacbiczcRcScxckbFacabababbNbNbNbNbNbNbNbNaaaa
-aaaaaaaaaaaabNabacacacacacacacacacababbNaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaabNababababababababababbNaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaabNbNbNbNbNbNbNbNbNbNaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaababababababaccycwcwcwcwcwbPacacacacabababababababababaa
+aaaabNbNbNabababacbiczcRcScxclbFacababababbNbNbNbNbNbNbNbNaa
+aaaaaaaaaabNababacacacacacacacacacababbNbNaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaabNabababababababababababbNaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaabNbNbNbNbNbNbNbNbNbNbNaaaaaaaaaaaaaaaaaaaaaaaa
 "}
