@@ -44635,9 +44635,8 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/chief)
 "kAU" = (
-/obj/machinery/power/emitter/anchored{
-	dir = 8;
-	state = 2
+/obj/machinery/power/emitter/welded{
+	dir = 8
 	},
 /obj/machinery/camera{
 	c_tag = "Engine -Emitters Right";
@@ -45457,9 +45456,8 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "mHo" = (
-/obj/machinery/power/emitter/anchored{
-	dir = 8;
-	state = 2
+/obj/machinery/power/emitter/welded{
+	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -47064,9 +47062,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "pLI" = (
-/obj/machinery/power/emitter/anchored{
-	dir = 4;
-	state = 2
+/obj/machinery/power/emitter/welded{
+	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -49619,9 +49616,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "vbr" = (
-/obj/machinery/power/emitter/anchored{
-	dir = 4;
-	state = 2
+/obj/machinery/power/emitter/welded{
+	dir = 4
 	},
 /obj/machinery/camera{
 	c_tag = "Engine - Emitters Left";
