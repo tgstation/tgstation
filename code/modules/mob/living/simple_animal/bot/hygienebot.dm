@@ -189,7 +189,7 @@
 		if(!check_purity(H)) //Theyre impure
 			target = H
 			oldtarget_name = H.name
-			speak("Unhygienic client found, Please stand still so I can clean you")
+			speak("Unhygienic client found. Please stand still so I can clean you.")
 			playsound(loc, 'sound/effects/hygienebot_happy.ogg', 60, 1)
 			visible_message("<b>[src]</b> points at [H.name]!")
 			mode = BOT_HUNT
