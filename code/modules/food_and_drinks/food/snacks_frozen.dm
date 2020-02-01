@@ -135,7 +135,7 @@
 	name = "pineapple snowcone"
 	desc = "Pineapple syrup drizzled over a snowball in a paper cup."
 	icon_state = "pineapple_sc"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/water = 10)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/pineapplejuice = 5)
 	tastes = list("ice" = 1, "water" = 1, "pineapples" = 5)
 	foodtype = PINEAPPLE //Pineapple to allow all that like pineapple to enjoy
 

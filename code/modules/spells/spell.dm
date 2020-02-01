@@ -552,7 +552,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	school = "restoration"
 	sound = 'sound/magic/staff_healing.ogg'
 
-/obj/effect/proc_holder/spell/self/basic_heal/cast(mob/living/carbon/human/user) //Note the lack of "list/targets" here. Instead, use a "user" var depending on mob requirements.
+/obj/effect/proc_holder/spell/self/basic_heal/cast(list/targets, mob/living/carbon/human/user) //Note the lack of "list/targets" here. Instead, use a "user" var depending on mob requirements.
 	//Also, notice the lack of a "for()" statement that looks through the targets. This is, again, because the spell can only have a single target.
 	user.visible_message("<span class='warning'>A wreath of gentle light passes over [user]!</span>", "<span class='notice'>You wreath yourself in healing light!</span>")
 	user.adjustBruteLoss(-10)
