@@ -63,10 +63,10 @@
 	Reset(user)
 
 /obj/effect/proc_holder/spell/targeted/tesla/proc/Bolt(mob/origin,mob/target,bolt_energy,bounces,mob/user = usr)
-	origin.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
+	origin.Beam(target,icon_state = "lightning[rand(1,12)]",time=5)
 	var/mob/living/carbon/current = target
 	var/whywouldyoueverusethisagainstajedi = FALSE
-	var/helditem=current.get_active_held_item()
+	var/helditem = current.get_active_held_item()
 	if(helditem)
 		if(istype(helditem, /obj/item/melee/transforming/energy/sword)) //only works if they have an esword in their active hand
 			var/obj/item/melee/transforming/energy/sword/H=helditem
@@ -99,7 +99,7 @@
 				return     //alright, meme's over, guys, let's not bounce to anyone else
 		var/list/possible_targets = new
 		for(var/mob/living/M in view(range,target))
-			if(user == M && current!=user && whywouldyoueverusethisagainstajedi && los_check(current,M))
+			if(user == M && current != user && whywouldyoueverusethisagainstajedi && los_check(current,M))
 				current.visible_message("<span class='warning'>[current]'s [helditem] reflects the spell's electricity, sending it back to [M]!</span>", "<span class='userdanger'>Your [helditem] reflects the spell's electricity, sending it back to [M]!</span>") //even if the jedi is, like, the third guy in the chain, I'm still gonna use the word "reflect", because the electricity is still being sent back to the caster
 				Bolt(current, M, max((bolt_energy - 5), 5), bounces-1, user)
 				return
@@ -112,4 +112,4 @@
 		var/mob/living/next = pick(possible_targets)
 		if(next)
 			current.visible_message("<span class='warning'>[current]'s [helditem] deflects the spell's electricity, sending it to [next]!</span>", "<span class='userdanger'>Your [helditem] deflects the spell's electricity, sending it to [next]!</span>")
-			Bolt(current,next,max((bolt_energy-5),5),bounces-1,user)
+			Bolt(current, next, max((bolt_energy-5), 5), bounces-1, user)
