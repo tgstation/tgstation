@@ -622,6 +622,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Port Bow Solar Array"
 	icon_state = "panelsFP"
 
+/area/solar/aisat
+	name = "AI Satellite Solars"
+	icon_state = "yellow"
 
 //Solar Maint
 
@@ -1088,6 +1091,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "EVA Storage"
 	icon_state = "eva"
 	ambientsounds = HIGHSEC
+
+/area/ai_monitored/storage/eva/upper
+	name = "Upper EVA Storage"
 
 /area/ai_monitored/storage/satellite
 	name = "AI Satellite Maint"
