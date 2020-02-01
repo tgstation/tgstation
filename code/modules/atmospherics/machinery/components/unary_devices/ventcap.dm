@@ -14,10 +14,10 @@
 	ui_x = 300
 	ui_y = 230
 
-	var/icon_state_off = "ventcap"
-	var/icon_state_on = "ventcap_on"
-	var/icon_state_growing = "ventcap-grow"
-	var/icon_state_venting = "ventcap-vent"
+	var/icon_state_off = "ventcap_unanchored"
+	var/icon_state_on = "ventcap_anchored"
+	var/icon_state_growing = "ventcap-growing"
+	var/icon_state_venting = "ventcap-venting"
 
 	var/on = FALSE // Technically doesn't use power while 'on', only while growing.
 	var/growing = FALSE // Whether or not the machine is expanding the bluespace whatchamajig to produce more gas.
@@ -128,6 +128,9 @@
 		return
 	. = ..()
 
+/obj/machinery/portable_atmospherics/ventcap/update_icon()
+	if(active)
+		if(
 
 /obj/machinery/portable_atmospherics/ventcap/Initialize()
 	. = ..()
