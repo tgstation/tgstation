@@ -32,7 +32,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 		setupExports()
 
 	var/split_profit = FALSE
-	var/profit_ratio = 1 //Just in case.
+	var/profit_ratio = 1 //Percentage that gets sent to the seller, rest goes to cargo.
 
 	var/list/contents = AM.GetAllContents()
 
@@ -135,12 +135,11 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 // Called only once, when the object is actually sold by the datum.
 // Adds item's cost and amount to the current export cycle.
 // get_cost, get_amount and applies_to do not neccesary mean a successful sale.
-/datum/export/proc/sell_object(obj/O, datum/export_report/report, dry_run = TRUE, allowed_categories = EXPORT_CARGO , apply_elastic = TRUE, split_profit = FALSE, profit_ratio = 0)
+/datum/export/proc/sell_object(obj/O, datum/export_report/report, dry_run = TRUE, allowed_categories = EXPORT_CARGO , apply_elastic = TRUE, split_profit = FALSE, profit_ratio = 50)
 	var/the_cost = get_cost(O, allowed_categories , apply_elastic)
 	var/amount = get_amount(O)
 	if(amount <=0 || the_cost <=0)
 		return FALSE
-	to_chat(world, "split profit is [split_profit]")
 	if(split_profit)
 		the_cost = the_cost*((100-profit_ratio)/100)
 	report.total_value[src] += the_cost

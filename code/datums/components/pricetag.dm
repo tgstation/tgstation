@@ -13,5 +13,7 @@
 /datum/component/pricetag/proc/split_profit(var/item_value)
 	var/price = item_value
 	if(price)
-		owner.adjust_money(price*(profit_ratio/100))
+		var/adjusted_value = price*(profit_ratio/100)
+		owner.adjust_money(adjusted_value)
+		owner.bank_card_talk("Sale recorded. [adjusted_value] credits added to account.")
 

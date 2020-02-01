@@ -94,9 +94,9 @@
 		tagger.paper_count -= 1
 		sticker = new /obj/item/barcode(src)
 		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
-		sticker.percent_cut = tagger.percent_cut	//same, but for the percentage taken.
+		var/percent_cut = tagger.percent_cut	//same, but for the percentage taken.
 		for(var/obj/I in reverseRange(contents))
-			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, I, sticker.percent_cut)
+			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, percent_cut)
 
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
