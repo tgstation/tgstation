@@ -1249,3 +1249,18 @@
 /obj/item/storage/box/sparklers/PopulateContents()
 	for(var/i in 1 to 7)
 		new/obj/item/sparkler(src)
+
+/obj/item/storage/box/shipping
+	name = "box of shipping supplies"
+	desc = "Contains several scanners and labelers for shipping things. Wrapping Paper not included."
+	illustration = "shipping"
+
+/obj/item/storage/box/shipping/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/destTagger=1,\
+		/obj/item/sales_tagger=1,\
+		/obj/item/export_scanner=1,\
+		/obj/item/stack/packageWrap/small=2,\
+		/obj/item/stack/wrapping_paper/small=1
+		)
+	generate_items_inside(items_inside,src)

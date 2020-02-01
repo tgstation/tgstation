@@ -19,6 +19,7 @@
 	var/turf/T = get_turf(src)
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(T)
+		SEND_SIGNAL(AM, COMSIG_ITEM_UNWRAPPED)
 	return ..()
 
 /obj/structure/bigDelivery/contents_explosion(severity, target)
@@ -135,6 +136,7 @@
 		to_chat(user, "<span class='notice'>You successfully removed [O]'s wrapping !</span>")
 		O.forceMove(loc)
 		playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+		SEND_SIGNAL(O, COMSIG_ITEM_UNWRAPPED)
 		new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 		qdel(src)
 	else
@@ -162,6 +164,7 @@
 	for(var/X in contents)
 		var/atom/movable/AM = X
 		user.put_in_hands(AM)
+		SEND_SIGNAL(AM, COMSIG_ITEM_UNWRAPPED)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	qdel(src)
@@ -173,10 +176,12 @@
 		for(var/X in contents)
 			var/atom/movable/AM = X
 			M.put_in_hands(AM)
+			SEND_SIGNAL(AM, COMSIG_ITEM_UNWRAPPED)
 	else
 		for(var/X in contents)
 			var/atom/movable/AM = X
 			AM.forceMove(src.loc)
+			SEND_SIGNAL(AM, COMSIG_ITEM_UNWRAPPED)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	qdel(src)
@@ -258,6 +263,7 @@
 		if(giftwrapped)
 			overlaystring = copytext(overlaystring, 5)
 		add_overlay(overlaystring)
+
 	else if(istype(W, /obj/item/barcode))
 		var/obj/item/barcode/sticker = W
 		if(sticker)
