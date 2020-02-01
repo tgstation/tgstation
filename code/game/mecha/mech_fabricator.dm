@@ -218,7 +218,7 @@
 			remove_from_queue(1)
 		else
 			return FALSE
-		D = listgetindex(queue, 1)
+		D = LAZYACCESS(queue, 1)
 	say("Queue processing finished successfully.")
 
 /obj/machinery/mecha_part_fabricator/proc/list_queue()

@@ -1,0 +1,4 @@
+author: "floyd"
+delete-after: True
+changes: 
+  - bugfix: "You can no longer dupe mats by making tables from rods"

@@ -1,0 +1,4 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - bugfix: "Fixed sanity not decreasing after reaching a positive threshold"
