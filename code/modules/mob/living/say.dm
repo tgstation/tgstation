@@ -217,6 +217,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mode)
 
+	if(!(check_if_can_breathe(src)))
+		to_chat(usr, "<span class='danger'>You can't breathe and can't speak!</span>")
+		return
+		
 	if(succumbed)
 		succumb(1)
 		to_chat(src, compose_message(src, language, message, , spans, message_mode))
