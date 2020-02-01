@@ -42,8 +42,8 @@
 	flight_y_offset = 10
 
 /obj/item/gun/energy/disabler/personal
-	name = "personal self-defense disabler"
-	desc = "A small, dna-locked disabler, intended for self-defense."
+	name = "PSD"
+	desc = "The Personal Self-Defense disabler is a small, dna-locked disabler, intended for self-defense."
 	icon_state = "personal"
 	item_state = "gun"
 	pin = /obj/item/firing_pin/dna
@@ -68,6 +68,7 @@
 	if(H.dna && H.dna.unique_enzymes)
 		var/obj/item/firing_pin/dna/P = pin
 		P.unique_enzymes = H.dna.unique_enzymes
+		name = "[H.real_name]'s [initial(name)]"
 
 /obj/item/gun/energy/disabler/cyborg
 	name = "cyborg disabler"
