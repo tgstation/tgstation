@@ -203,6 +203,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/overlay_state = "creamsicle_o" //This is the edible part of the popsicle.
 	var/bite_states = 4 //This value value is used for correctly setting the bitesize to ensure every bite changes the sprite. Do not set to zero.
+	foodtype = DAIRY | SUGAR
 
 /obj/item/reagent_containers/food/snacks/popsicle/Initialize()
 	. = ..()
@@ -232,23 +233,29 @@
 	name = "orange creamsicle"
 	desc = "A classic orange creamsicle. A sunny frozen treat."
 	list_reagents = list(/datum/reagent/consumable/orangejuice = 4, /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 2, /datum/reagent/consumable/sugar = 4)
+	bonus_reagents = list(/datum/reagent/consumable/orangejuice = 4, /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 2, /datum/reagent/consumable/sugar = 4)
+	foodtype = FRUIT | DAIRY | SUGAR
 
 /obj/item/reagent_containers/food/snacks/popsicle/creamsicle_berry
 	name = "berry creamsicle"
 	desc = "A vibrant berry creamsicle. A berry good frozen treat."
 	list_reagents = list(/datum/reagent/consumable/berryjuice = 4, /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 2, /datum/reagent/consumable/sugar = 4)
+	bonus_reagents = list(/datum/reagent/consumable/berryjuice = 4, /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 2, /datum/reagent/consumable/sugar = 4)
 	overlay_state = "creamsicle_m"
+	foodtype = FRUIT | DAIRY | SUGAR
 
 /obj/item/reagent_containers/food/snacks/popsicle/jumbo
 	name = "jumbo icecream"
 	desc = "A luxurius icecream covered in rich chocolate. It seems smaller than you remember it being."
 	list_reagents = list(/datum/reagent/consumable/hot_coco = 4, /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 3, /datum/reagent/consumable/sugar = 4)
+	bonus_reagents = list(/datum/reagent/consumable/hot_coco = 4, /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 3, /datum/reagent/consumable/sugar = 2)
 	overlay_state = "jumbo"
 
 /obj/item/reagent_containers/food/snacks/popsicle/nogga_black
 	name = "nogga black"
 	desc = "A salty licorice icecream recently reintroduced due to all the records of the controversy being lost to time. Those who cannot remember the past are doomed to repeat it."
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sodiumchloride = 1,  /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 1, /datum/reagent/consumable/sugar = 4)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sodiumchloride = 1,  /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 1, /datum/reagent/consumable/sugar = 4)
 	tastes = list("salty liquorice")
 	overlay_state = "nogga_black"
 
@@ -260,4 +267,5 @@
 	desc = "A neapolitan vanilla and chocolate icecream cone. It menaces with a sprinkling of caramelized nuts."
 	tastes = list("chopped hazelnuts", "waffle")
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/hot_coco = 4, /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 4, /datum/reagent/consumable/sugar = 2)
-
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/hot_coco = 4, /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 4, /datum/reagent/consumable/sugar = 1)
+	foodtype = DAIRY | SUGAR
