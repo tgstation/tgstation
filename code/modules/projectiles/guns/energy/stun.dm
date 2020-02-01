@@ -41,6 +41,34 @@
 	flight_x_offset = 15
 	flight_y_offset = 10
 
+/obj/item/gun/energy/disabler/personal
+	name = "personal self-defense disabler"
+	desc = "A small, dna-locked disabler, intended for self-defense."
+	icon_state = "personal"
+	item_state = "gun"
+	pin = /obj/item/firing_pin/dna
+	w_class = WEIGHT_CLASS_TINY // It starts in your survival box, 'cause it helps you survive.
+	cell_type = /obj/item/stock_parts/cell{charge = 300; maxcharge = 300} // Just enough to disable someone with 2 shots leeway.
+	ammo_x_offset = 2
+	charge_sections = 2
+	can_flashlight = FALSE // This is a bare-bones weapon, no fancy features like these newfangled 'flash-lights'
+	flight_x_offset = 13
+	flight_y_offset = 12
+
+/obj/item/gun/energy/disabler/personal/Initialize() // On spawn, set it to be dna-locked to the owner.
+	. = ..()
+	var/humanfound = null
+	if(ishuman(loc))
+		humanfound = loc
+	if(ishuman(loc.loc)) //Check if in backpack.
+		humanfound = (loc.loc)
+	if(!humanfound)
+		return
+	var/mob/living/carbon/human/H = humanfound
+	if(H.dna && H.dna.unique_enzymes)
+		var/obj/item/firing_pin/dna/P = pin
+		P.unique_enzymes = H.dna.unique_enzymes
+
 /obj/item/gun/energy/disabler/cyborg
 	name = "cyborg disabler"
 	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."

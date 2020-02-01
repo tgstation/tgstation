@@ -127,9 +127,11 @@
 	var/mask_type = /obj/item/clothing/mask/breath
 	var/internal_type = /obj/item/tank/internals/emergency_oxygen
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
+	var/defense_type = /obj/item/gun/energy/disabler/personal
 
 /obj/item/storage/box/survival/PopulateContents()
 	new mask_type(src)
+	new defense_type(src)
 	if(!isnull(medipen_type))
 		new medipen_type(src)
 
