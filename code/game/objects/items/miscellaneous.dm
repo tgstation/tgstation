@@ -176,7 +176,7 @@
 			to_chat(joe, "<span class='warning'>You have already been initiated into the mafioso life.</span>")
 			return FALSE
 
-		to_chat(joe, "<span class='notice'>As you burn the picture you feel like you can pick up a fitting nickname</span>")
+		to_chat(joe, "<span class='notice'>As you burn the picture, a nickname comes to mind...</span>")
 		var/nickname = input(joe, "Pick a nickname", "Mafioso Nicknames") as text|null
 		if(!nickname)
 			return FALSE
@@ -197,8 +197,11 @@
 /obj/item/virgin_mary/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] starts saying their Hail Mary's at a terrifying pace! It looks like [user.p_theyre()] trying to enter the afterlife!</span>")
 	user.say("Hail Mary, full of grace, the Lord is with thee. Blessed are thou amongst women, and blessed is the fruit of thy womb, Jesus. Holy Mary, mother of God, pray for us sinners, now and at the hour of our death. Amen. ", forced = /obj/item/virgin_mary)
-	sleep(50) //I can't get the timers to work, so sleep it is.
-	if(!user)
-		return
-	user.say("O my Mother, preserve me this day from mortal sin...", forced = /obj/item/virgin_mary)
-	return (OXYLOSS)
+
+	addtimer(CALLBACK(src, .proc/manual_suicide, user), 50)
+	addtimer(CALLBACK(user, /atom/movable/proc/say, "O my Mother, preserve me this day from mortal sin..."), 25)
+	return MANUAL_SUICIDE
+
+/obj/item/virgin_mary/proc/manual_suicide(mob/living/user)
+	user.adjustOxyLoss(200)
+	user.death(0)
