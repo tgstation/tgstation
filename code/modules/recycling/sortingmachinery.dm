@@ -94,8 +94,9 @@
 		tagger.paper_count -= 1
 		sticker = new /obj/item/barcode(src)
 		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
+		sticker.percent_cut = tagger.percent_cut	//same, but for the percentage taken.
 		for(var/obj/I in reverseRange(contents))
-			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, I)
+			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, I, sticker.percent_cut)
 
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
@@ -304,6 +305,12 @@
 	var/datum/bank_account/payments_acc = null
 	var/paper_count = 10
 	var/max_paper_count = 20
+	var/percent_cut = 20
+
+/obj/item/sales_tagger/examine(mob/user)
+	. = ..()
+	. += "[src] has [paper_count]/[max_paper_count] available barcodes. Refill with paper."
+	. += "Profit split on sale is currently set to [percent_cut]%."
 
 /obj/item/sales_tagger/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
@@ -334,14 +341,31 @@
 
 /obj/item/sales_tagger/attack_self(mob/user)
 	. = ..()
+	if(paper_count <=  0)
+		to_chat(user, "<span class='warning'>You're out of paper!'.</span>")
+		return
+	if(!payments_acc)
+		to_chat(user, "<span class='warning'>You need to swipe [src] with an ID card first.</span>")
+		return
+	paper_count -= 1
 	playsound(src, 'sound/machines/click.ogg', 40, TRUE)
 	to_chat(user, "<span class='notice'>You print a new barcode.</span>")
-	new /obj/item/barcode(loc)
+	var/obj/item/barcode/new_barcode = new /obj/item/barcode(src)
+	new_barcode.payments_acc = payments_acc		//The sticker gets the scanner's registered account.
 
 /obj/item/sales_tagger/CtrlClick(mob/user)
 	. = ..()
 	payments_acc = null
 	to_chat(user, "<span class='notice'>You clear the registered account.</span>")
+
+/obj/item/sales_tagger/AltClick(mob/user)
+	. = ..()
+	var/potential_cut = input("How much would you like to payout to the registered card?","Percentage Profit") as num|null
+	if(!potential_cut)
+		percent_cut = 50
+	percent_cut = CLAMP(round(potential_cut, 1), 1, 50)
+	to_chat(user, "<span class='notice'>[percent_cut]% profit will be recieved if a package with a barcode is sold.</span>")
+	return
 
 /obj/item/barcode
 	name = "Barcode tag"
@@ -350,3 +374,4 @@
 	icon_state = "barcode"
 	w_class = WEIGHT_CLASS_TINY
 	var/datum/bank_account/payments_acc = null
+	var/percent_cut = 5
