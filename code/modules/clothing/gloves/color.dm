@@ -174,6 +174,7 @@
 	desc = "These look pretty fancy."
 	icon_state = "white"
 	item_state = "wgloves"
+	custom_price = 200
 
 /obj/effect/spawner/lootdrop/gloves
 	name = "random gloves"
