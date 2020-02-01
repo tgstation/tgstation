@@ -149,8 +149,8 @@
 /obj/item/virgin_mary
 	name = "A picture of the virgin mary"
 	desc = "A small, cheap icon depicting the virgin mother."
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "virgin_mary"
+	icon = 'icons/obj/blackmarket.dmi'
+	icon_state = "madonna"
 	resistance_flags = FLAMMABLE
 	///Has this item been used already.
 	var/used_up = FALSE
