@@ -97,10 +97,26 @@
 		sticker.percent_cut = tagger.percent_cut	//same, but for the percentage taken.
 		for(var/obj/I in reverseRange(contents))
 			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.percent_cut)
-
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext(overlaystring, 5)
+		add_overlay(overlaystring)
+
+	else if(istype(W, /obj/item/barcode))
+		var/obj/item/barcode/sticker = W
+		if(sticker)
+			to_chat(user, "<span class='warning'>This package already has a barcode attached!</span>")
+			return
+		if(!(sticker.payments_acc))
+			to_chat(user, "<span class='warning'>This barcode seems to be invalid. Guess it's trash now.</span>")
+			return
+		if(!user.transferItemToLoc(W, src))
+			to_chat(user, "<span class='warning'>For some reason, you can't attach [W]!</span>")
+			return
+		tag = W
+		var/overlaystring = "[icon_state]_tag"
+		if(giftwrapped)
+			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
 		add_overlay(overlaystring)
 
 	else
@@ -239,6 +255,23 @@
 			overlaystring = copytext(overlaystring, 5)
 		add_overlay(overlaystring)
 
+	else if(istype(W, /obj/item/barcode))
+		var/obj/item/barcode/sticker = W
+		if(sticker)
+			to_chat(user, "<span class='warning'>This package already has a barcode attached!</span>")
+			return
+		if(!(sticker.payments_acc))
+			to_chat(user, "<span class='warning'>This barcode seems to be invalid. Guess it's trash now.</span>")
+			return
+		if(!user.transferItemToLoc(W, src))
+			to_chat(user, "<span class='warning'>For some reason, you can't attach [W]!</span>")
+			return
+		tag = W
+		var/overlaystring = "[icon_state]_tag"
+		if(giftwrapped)
+			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
+		add_overlay(overlaystring)
+
 /obj/item/destTagger
 	name = "destination tagger"
 	desc = "Used to set the destination of properly wrapped packages."
@@ -353,6 +386,7 @@
 	to_chat(user, "<span class='notice'>You print a new barcode.</span>")
 	var/obj/item/barcode/new_barcode = new /obj/item/barcode(src)
 	new_barcode.payments_acc = payments_acc		//The sticker gets the scanner's registered account.
+	user.put_in_hands(new_barcode)
 
 /obj/item/sales_tagger/CtrlClick(mob/user)
 	. = ..()
