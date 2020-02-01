@@ -216,7 +216,7 @@
 <TT><B>Hygienebot X2 controls</B></TT><BR><BR>
 Status: []<BR>
 Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-Maintenance panel panel is [open ? "opened" : "closed"]"},
+Maintenance panel is [open ? "opened" : "closed"]"},
 
 "<A href='?src=[REF(src)];power=[TRUE]'>[on ? "On" : "Off"]</A>" )
 
