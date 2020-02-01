@@ -867,7 +867,6 @@
 	force_wielded = 12
 	attack_verb = list("swept", "brushed off", "bludgeoned", "whacked")
 	resistance_flags = FLAMMABLE
-	var/insertable = TRUE
 
 /obj/item/twohanded/broom/update_icon_state()
 	icon_state = "broom[wielded]"
@@ -911,10 +910,6 @@
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
 
 /obj/item/twohanded/broom/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J) //bless you whoever fixes this copypasta
-	if(insertable)
-		J.put_in_cart(src, user)
-		J.mybroom=src
-		J.update_icon()
-	else
-		to_chat(user, "<span class='warning'>You are unable to fit your [name] into the [J.name].</span>")
-		return
+	J.put_in_cart(src, user)
+	J.mybroom=src
+	J.update_icon()
