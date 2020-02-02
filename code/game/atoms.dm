@@ -476,9 +476,13 @@
 		. += desc
 
 	if(custom_materials)
+		var/materials_desc
 		for(var/i in custom_materials)
 			var/datum/material/M = i
-			. += "<u>It is made out of [M.name]</u>."
+			if(materials_desc)
+				materials_desc += ", "
+			materials_desc += "[M.name]"
+		. += "<u>It is made out of [materials_desc]</u>."
 	if(reagents)
 		if(reagents.flags & TRANSPARENT)
 			. += "It contains:"
