@@ -69,6 +69,8 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=changebombcap'>Change bomb cap</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=masspurrbation'>Mass Purrbation</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=massremovepurrbation'>Mass Remove Purrbation</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=massimmerse'>Fully Immerse Everyone</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=unmassimmerse'>Un-Fully Immerse Everyone</A><BR>
 			"}
 
 	dat += "<BR>"
@@ -338,7 +340,7 @@
 			if(!SSticker.HasRoundStarted())
 				alert("The game hasn't started yet!")
 				return
-			var/objective = copytext(sanitize(input("Enter an objective")),1,MAX_MESSAGE_LEN)
+			var/objective = stripped_input(usr, "Enter an objective")
 			if(!objective)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Traitor All", "[objective]"))
@@ -413,7 +415,7 @@
 						var/obj/item/clothing/under/costume/schoolgirl/I = new seifuku
 						var/olduniform = H.w_uniform
 						H.temporarilyRemoveItemFromInventory(H.w_uniform, TRUE, FALSE)
-						H.equip_to_slot_or_del(I, SLOT_W_UNIFORM)
+						H.equip_to_slot_or_del(I, ITEM_SLOT_ICLOTHING)
 						qdel(olduniform)
 						if(droptype == "Yes")
 							ADD_TRAIT(I, TRAIT_NODROP, ADMIN_TRAIT)
@@ -442,7 +444,7 @@
 					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
 					E = DC.runEvent()
 				if("Choose")
-					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in sortList(typesof(/datum/disease, /proc/cmp_typepaths_asc))
+					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in sortList(typesof(/datum/disease), /proc/cmp_typepaths_asc)
 					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
 					var/datum/round_event/disease_outbreak/DO = DC.runEvent()
 					DO.virus_type = virus
@@ -594,6 +596,22 @@
 			message_admins("[key_name_admin(usr)] has removed everyone from \
 				purrbation.")
 			log_admin("[key_name(usr)] has removed everyone from purrbation.")
+
+		if("massimmerse")
+			if(!check_rights(R_FUN))
+				return
+			mass_immerse()
+			message_admins("[key_name_admin(usr)] has Fully Immersed \
+				everyone!")
+			log_admin("[key_name(usr)] has Fully Immersed everyone.")
+
+		if("unmassimmerse")
+			if(!check_rights(R_FUN))
+				return
+			mass_immerse(remove=TRUE)
+			message_admins("[key_name_admin(usr)] has Un-Fully Immersed \
+				everyone!")
+			log_admin("[key_name(usr)] has Un-Fully Immersed everyone.")
 
 		if("customportal")
 			if(!check_rights(R_FUN))

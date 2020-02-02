@@ -116,7 +116,7 @@
 	if(hack)
 		if(hacked)
 			return
-			Stun(40)
+		Stun(40)
 		visible_message("<span class='warning'>[src]'s display glows a vicious red!</span>", \
 						"<span class='userdanger'>ERROR: LAW OVERRIDE DETECTED</span>")
 		to_chat(src, "<span class='boldannounce'>From now on, these are your laws:</span>")

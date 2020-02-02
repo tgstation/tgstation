@@ -1,28 +1,24 @@
-
-import { Fragment } from 'inferno';
-import { act } from '../byond';
-import { Button, Section, Table, NoticeBox } from '../components';
-import { map } from 'common/fp';
+import { map } from 'common/collections';
+import { useBackend } from '../backend';
+import { Button, NoticeBox, Section, Table } from '../components';
 
 export const SmartVend = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   return (
     <Section
       title="Storage"
       buttons={!!data.isdryer && (
         <Button
-          icon={data.drying ? "stop" : "tint"}
-          onClick={() => act(ref, 'Dry')}>
-          {data.drying ? "Stop drying" : "Dry"}
+          icon={data.drying ? 'stop' : 'tint'}
+          onClick={() => act('Dry')}>
+          {data.drying ? 'Stop drying' : 'Dry'}
         </Button>
       )}>
-      {data.contents.length === 0 ? (
+      {data.contents.length === 0 && (
         <NoticeBox>
           Unfortunately, this {data.name} is empty.
         </NoticeBox>
-      ) : (
+      ) || (
         <Table>
           <Table.Row header>
             <Table.Cell>
@@ -45,14 +41,14 @@ export const SmartVend = props => {
                 <Button
                   content="One"
                   disabled={value.amount < 1}
-                  onClick={() => act(ref, 'Release', {
+                  onClick={() => act('Release', {
                     name: value.name,
                     amount: 1,
                   })} />
                 <Button
                   content="Many"
                   disabled={value.amount <= 1}
-                  onClick={() => act(ref, 'Release', {
+                  onClick={() => act('Release', {
                     name: value.name,
                   })} />
               </Table.Cell>
@@ -60,4 +56,6 @@ export const SmartVend = props => {
           ))(data.contents)}
         </Table>
       )}
-    </Section>); };
+    </Section>
+  );
+};

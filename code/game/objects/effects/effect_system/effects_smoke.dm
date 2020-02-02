@@ -93,10 +93,9 @@
 				S.set_opacity(TRUE)
 			newsmokes.Add(S)
 
-	if(newsmokes.len)
-		spawn(1) //the smoke spreads rapidly but not instantly
-			for(var/obj/effect/particle_effect/smoke/SM in newsmokes)
-				SM.spread_smoke()
+	//the smoke spreads rapidly but not instantly
+	for(var/obj/effect/particle_effect/smoke/SM in newsmokes)
+		addtimer(CALLBACK(SM, /obj/effect/particle_effect/smoke.proc/spread_smoke), 1)
 
 
 /datum/effect_system/smoke_spread
@@ -133,13 +132,11 @@
 		M.emote("cough")
 		return 1
 
-/obj/effect/particle_effect/smoke/bad/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /obj/projectile/beam))
-		var/obj/projectile/beam/B = mover
+/obj/effect/particle_effect/smoke/bad/Crossed(atom/movable/AM, oldloc)
+	. = ..()
+	if(istype(AM, /obj/projectile/beam))
+		var/obj/projectile/beam/B = AM
 		B.damage = (B.damage/2)
-	return 1
-
-
 
 /datum/effect_system/smoke_spread/bad
 	effect_type = /obj/effect/particle_effect/smoke/bad

@@ -48,11 +48,10 @@
 
 //////////////////////////SNOW CONES///////////////////////
 
-/datum/crafting_recipe/food/flaverless_sc
-	name = "Flaverless snowcone"
+/datum/crafting_recipe/food/flavorless_sc
+	name = "Flavorless snowcone"
 	reqs = list(
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,
-		/datum/reagent/water  = 5,
 		/datum/reagent/consumable/ice = 15
 	)
 	result = /obj/item/reagent_containers/food/snacks/snowcones
@@ -62,9 +61,8 @@
 	name = "Pineapple snowcone"
 	reqs = list(
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,
-		/datum/reagent/water  = 5,
 		/datum/reagent/consumable/ice = 15,
-		/obj/item/reagent_containers/food/snacks/pineappleslice = 2
+		/datum/reagent/consumable/pineapplejuice = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/snowcones/pineapple
 	subcategory = CAT_ICE
@@ -73,7 +71,6 @@
 	name = "Lime snowcone"
 	reqs = list(
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,
-		/datum/reagent/water  = 5,
 		/datum/reagent/consumable/ice = 15,
 		/datum/reagent/consumable/limejuice = 5
 	)
@@ -84,7 +81,6 @@
 	name = "Lemon snowcone"
 	reqs = list(
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,
-		/datum/reagent/water  = 5,
 		/datum/reagent/consumable/ice = 15,
 		/datum/reagent/consumable/lemonjuice = 5
 	)
@@ -95,7 +91,6 @@
 	name = "Apple snowcone"
 	reqs = list(
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,
-		/datum/reagent/water  = 5,
 		/datum/reagent/consumable/ice = 15,
 		/datum/reagent/consumable/applejuice = 5
 	)
@@ -106,7 +101,6 @@
 	name = "Grape snowcone"
 	reqs = list(
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,
-		/datum/reagent/water  = 5,
 		/datum/reagent/consumable/ice = 15,
 		/datum/reagent/consumable/grapejuice = 5
 	)
@@ -117,7 +111,6 @@
 	name = "Orange snowcone"
 	reqs = list(
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,
-		/datum/reagent/water  = 5,
 		/datum/reagent/consumable/ice = 15,
 		/datum/reagent/consumable/orangejuice = 5
 	)
@@ -128,7 +121,6 @@
 	name = "Bluecherry snowcone"
 	reqs = list(
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,
-		/datum/reagent/water  = 5,
 		/datum/reagent/consumable/ice = 15,
 		/datum/reagent/consumable/bluecherryjelly= 5
 	)
@@ -139,22 +131,20 @@
 	name = "Cherry snowcone"
 	reqs = list(
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,
-		/datum/reagent/water  = 5,
 		/datum/reagent/consumable/ice = 15,
 		/datum/reagent/consumable/cherryjelly= 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/snowcones/red
 	subcategory = CAT_ICE
 
-/datum/crafting_recipe/food/mix_sc
-	name = "Mixed berrie snowcone"
+/datum/crafting_recipe/food/berry_sc
+	name = "Berry snowcone"
 	reqs = list(
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,
-		/datum/reagent/water  = 5,
 		/datum/reagent/consumable/ice = 15,
-		/datum/reagent/consumable/berryjuice = 10
+		/datum/reagent/consumable/berryjuice = 5
 	)
-	result = /obj/item/reagent_containers/food/snacks/snowcones/mix
+	result = /obj/item/reagent_containers/food/snacks/snowcones/berry
 	subcategory = CAT_ICE
 
 /datum/crafting_recipe/food/fruitsalad_sc
@@ -174,7 +164,6 @@
 	name = "Mime snowcone"
 	reqs = list(
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,
-		/datum/reagent/water  = 5,
 		/datum/reagent/consumable/ice = 15,
 		/datum/reagent/consumable/nothing = 5
 	)
@@ -185,40 +174,46 @@
 	name = "Clown snowcone"
 	reqs = list(
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,
-		/datum/reagent/water  = 5,
 		/datum/reagent/consumable/ice = 15,
-		/datum/reagent/consumable/clownstears = 5
+		/datum/reagent/consumable/laughter = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/snowcones/clown
 	subcategory = CAT_ICE
 
 /datum/crafting_recipe/food/soda_sc
-	name = "Soda water snowcone"
+	name = "Space Cola snowcone"
 	reqs = list(
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,
-		/datum/reagent/water  = 5,
 		/datum/reagent/consumable/ice = 15,
-		/datum/reagent/consumable/sodawater = 15
+		/datum/reagent/consumable/space_cola = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/snowcones/soda
 	subcategory = CAT_ICE
 
-/datum/crafting_recipe/food/pwgrmer_sc
-	name = "Pwergamer snowcone"
+/datum/crafting_recipe/food/spacemountainwind_sc
+	name = "Space Mountain Wind snowcone"
 	reqs = list(
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,
-		/datum/reagent/water  = 5,
+		/datum/reagent/consumable/ice = 15,
+		/datum/reagent/consumable/spacemountainwind = 5
+	)
+	result = /obj/item/reagent_containers/food/snacks/snowcones/spacemountainwind
+	subcategory = CAT_ICE
+
+/datum/crafting_recipe/food/pwrgame_sc
+	name = "Pwrgame snowcone"
+	reqs = list(
+		/obj/item/reagent_containers/food/drinks/sillycup = 1,
 		/datum/reagent/consumable/ice = 15,
 		/datum/reagent/consumable/pwr_game = 15
 	)
-	result = /obj/item/reagent_containers/food/snacks/snowcones/pwgrmer
+	result = /obj/item/reagent_containers/food/snacks/snowcones/pwrgame
 	subcategory = CAT_ICE
 
 /datum/crafting_recipe/food/honey_sc
 	name = "Honey snowcone"
 	reqs = list(
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,
-		/datum/reagent/water  = 5,
 		/datum/reagent/consumable/ice = 15,
 		/datum/reagent/consumable/honey = 5
 	)
@@ -229,7 +224,6 @@
 	name = "Rainbow snowcone"
 	reqs = list(
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,
-		/datum/reagent/water  = 5,
 		/datum/reagent/consumable/ice = 15,
 		/datum/reagent/colorful_reagent = 1 //Harder to make
 	)

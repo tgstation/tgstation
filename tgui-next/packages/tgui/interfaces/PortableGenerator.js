@@ -1,23 +1,19 @@
-
 import { Fragment } from 'inferno';
-import { act } from '../byond';
-import { Box, Button, Section, NoticeBox, LabeledList, ProgressBar } from '../components';
+import { useBackend } from '../backend';
+import { Box, Button, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
 
 export const PortableGenerator = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   let stackPercentState;
   if (data.stack_percent > 50) {
-    stackPercentState = "good";
+    stackPercentState = 'good';
   }
   else if (data.stack_percent > 15) {
-    stackPercentState = "average";
+    stackPercentState = 'average';
   }
   else {
-    stackPercentState = "bad";
+    stackPercentState = 'bad';
   }
-
   return (
     <Fragment>
       {!data.anchored && (
@@ -27,29 +23,30 @@ export const PortableGenerator = props => {
         <LabeledList>
           <LabeledList.Item label="Power switch">
             <Button
-              icon={data.active ? "power-off" : "times"}
-              onClick={() => act(ref, 'toggle_power')}
+              icon={data.active ? 'power-off' : 'times'}
+              onClick={() => act('toggle_power')}
               disabled={!data.ready_to_boot}>
-              {data.active ? "On" : "Off"}
+              {data.active ? 'On' : 'Off'}
             </Button>
           </LabeledList.Item>
-          <LabeledList.Item label={data.sheet_name + " sheets"}>
+          <LabeledList.Item label={data.sheet_name + ' sheets'}>
             <Box inline color={stackPercentState}>{data.sheets}</Box>
             {(data.sheets >= 1) && (
               <Button
+                ml={1}
                 icon="eject"
                 disabled={data.active}
-                onClick={() => act(ref, 'eject')}>
+                onClick={() => act('eject')}>
                 Eject
               </Button>
             )}
           </LabeledList.Item>
           <LabeledList.Item label="Current sheet level">
             <ProgressBar
-              value={data.stack_percent}
+              value={data.stack_percent / 100}
               ranges={{
-                good: [5, Infinity],
-                average: [0.01, 5],
+                good: [0.1, Infinity],
+                average: [0.01, 0.1],
                 bad: [-Infinity, 0.01],
               }} />
           </LabeledList.Item>
@@ -74,20 +71,22 @@ export const PortableGenerator = props => {
           <LabeledList.Item label="Adjust output">
             <Button
               icon="minus"
-              onClick={() => act(ref, 'lower_power')}>
+              onClick={() => act('lower_power')}>
               {data.power_generated}
             </Button>
             <Button
               icon="plus"
-              onClick={() => act(ref, 'higher_power')}>
+              onClick={() => act('higher_power')}>
               {data.power_generated}
             </Button>
           </LabeledList.Item>
           <LabeledList.Item label="Power available">
-            <Box inline color={data.connected ? "" : "Bad"}>
+            <Box inline color={!data.connected && 'bad'}>
               {data.connected ? data.power_available : "Unconnected"}
             </Box>
           </LabeledList.Item>
         </LabeledList>
       </Section>
-    </Fragment>); };
+    </Fragment>
+  );
+};

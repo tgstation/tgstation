@@ -11,7 +11,6 @@
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
-	mats_per_stack = 500
 	var/turf_type = null
 	var/mineralType = null
 	novariants = TRUE

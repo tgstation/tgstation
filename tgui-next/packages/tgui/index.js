@@ -117,8 +117,10 @@ const parseStateJson = json => {
     return JSON.parse(json, reviver);
   }
   catch (err) {
-    logger.error('JSON parsing error: ' + err.message + '\n' + json);
-    throw err;
+    logger.log(err);
+    logger.log('What we got:', json);
+    const msg = err && err.message;
+    throw new Error('JSON parsing error: ' + msg);
   }
 };
 

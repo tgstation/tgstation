@@ -132,7 +132,13 @@
 	var/shouldwakeup = FALSE
 
 	///Domestication.
-	var/tame = 0
+	var/tame = FALSE
+	///What the mob eats, typically used for taming or animal husbandry.
+	var/list/food_type
+	///Starting success chance for taming.
+	var/tame_chance
+	///Added success chance after every failed tame attempt.
+	var/bonus_tame_chance
 
 	///I don't want to confuse this with client registered_z.
 	var/my_z
@@ -167,6 +173,25 @@
 
 	return ..()
 
+/mob/living/simple_animal/attackby(obj/item/O, mob/user, params)
+	if(!is_type_in_list(O, food_type))
+		..()
+		return
+	else
+		user.visible_message("<span class='notice'>[user] hand-feeds [O] to [src].</span>", "<span class='notice'>You hand-feed [O] to [src].</span>")
+		qdel(O)
+		if(tame)
+			return
+		if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
+			tame = TRUE
+			tamed()
+		else
+			tame_chance += bonus_tame_chance
+
+///Extra effects to add when the mob is tamed, such as adding a riding component
+/mob/living/simple_animal/proc/tamed()
+	return
+
 /mob/living/simple_animal/examine(mob/user)
 	. = ..()
 	if(stat == DEAD)
@@ -183,7 +208,7 @@
 		if(health <= 0)
 			death()
 		else
-			stat = CONSCIOUS
+			set_stat(CONSCIOUS)
 	med_hud_set_status()
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
@@ -245,15 +270,14 @@
 					else
 						emote("me", 2, pick(emote_hear))
 
-
-/mob/living/simple_animal/proc/environment_is_safe(datum/gas_mixture/environment, check_temp = FALSE)
+/mob/living/simple_animal/proc/environment_air_is_safe()
 	. = TRUE
 
 	if(pulledby && pulledby.grab_state >= GRAB_KILL && atmos_requirements["min_oxy"])
 		. = FALSE //getting choked
 
-	if(isturf(src.loc) && isopenturf(src.loc))
-		var/turf/open/ST = src.loc
+	if(isturf(loc) && isopenturf(loc))
+		var/turf/open/ST = loc
 		if(ST.air)
 			var/ST_gases = ST.air.gases
 			ST.air.assert_gases(arglist(GLOB.hardcoded_gases))
@@ -285,29 +309,51 @@
 			if(atmos_requirements["min_oxy"] || atmos_requirements["min_tox"] || atmos_requirements["min_n2"] || atmos_requirements["min_co2"])
 				. = FALSE
 
-	if(check_temp)
-		var/areatemp = get_temperature(environment)
-		if((areatemp < minbodytemp) || (areatemp > maxbodytemp))
-			. = FALSE
-
+/mob/living/simple_animal/proc/environment_temperature_is_safe(datum/gas_mixture/environment)
+	. = TRUE
+	var/areatemp = get_temperature(environment)
+	if((areatemp < minbodytemp) || (areatemp > maxbodytemp))
+		. = FALSE
 
 /mob/living/simple_animal/handle_environment(datum/gas_mixture/environment)
-	var/atom/A = src.loc
+	var/atom/A = loc
 	if(isturf(A))
 		var/areatemp = get_temperature(environment)
-		if( abs(areatemp - bodytemperature) > 5)
+		if(abs(areatemp - bodytemperature) > 5)
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
 			adjust_bodytemperature(diff)
 
-	if(!environment_is_safe(environment))
+	if(!environment_air_is_safe())
 		adjustHealth(unsuitable_atmos_damage)
+		if(unsuitable_atmos_damage > 0)
+			throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+	else
+		clear_alert("not_enough_oxy")
 
 	handle_temperature_damage()
 
 /mob/living/simple_animal/proc/handle_temperature_damage()
-	if((bodytemperature < minbodytemp) || (bodytemperature > maxbodytemp))
+	if(bodytemperature < minbodytemp)
 		adjustHealth(unsuitable_atmos_damage)
+		switch(unsuitable_atmos_damage)
+			if(1 to 5)
+				throw_alert("temp", /obj/screen/alert/cold, 1)
+			if(5 to 10)
+				throw_alert("temp", /obj/screen/alert/cold, 2)
+			if(10 to INFINITY)
+				throw_alert("temp", /obj/screen/alert/cold, 3)
+	else if(bodytemperature > maxbodytemp)
+		adjustHealth(unsuitable_atmos_damage)
+		switch(unsuitable_atmos_damage)
+			if(1 to 5)
+				throw_alert("temp", /obj/screen/alert/hot, 1)
+			if(5 to 10)
+				throw_alert("temp", /obj/screen/alert/hot, 2)
+			if(10 to INFINITY)
+				throw_alert("temp", /obj/screen/alert/hot, 3)
+	else
+		clear_alert("temp")
 
 /mob/living/simple_animal/gib()
 	if(butcher_results || guaranteed_butcher_results)
@@ -333,8 +379,8 @@
 
 /mob/living/simple_animal/emote(act, m_type=1, message = null, intentional = FALSE)
 	if(stat)
-		return
-	. = ..()
+		return FALSE
+	return ..()
 
 /mob/living/simple_animal/proc/set_varspeed(var_value)
 	speed = var_value
@@ -601,6 +647,8 @@
 		return ..()
 
 /mob/living/simple_animal/relaymove(mob/user, direction)
+	if (stat == DEAD)
+		return
 	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
 	if(tame && riding_datum)
 		riding_datum.handle_ride(user, direction)

@@ -1,6 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Lava no longer slows you down."
-  - bugfix: "Getting hurt no longer adds a move delay."
-  - bugfix: "Lava will no longer prevent you from ghosting out of your dead body."

@@ -102,7 +102,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 
 /obj/item/clothing/glasses/science/item_action_slot_check(slot)
-	if(slot == SLOT_GLASSES)
+	if(slot == ITEM_SLOT_EYES)
 		return 1
 
 /obj/item/clothing/glasses/night
@@ -199,17 +199,24 @@
 
 /obj/item/clothing/glasses/sunglasses/reagent
 	name = "beer goggles"
+	icon_state = "sunhudbeer"
 	desc = "A pair of sunglasses outfitted with apparatus to scan reagents, as well as providing an innate understanding of liquid viscosity while in motion."
 	clothing_flags = SCAN_REAGENTS
 
 /obj/item/clothing/glasses/sunglasses/reagent/equipped(mob/user, slot)
 	. = ..()
-	if(ishuman(user) && slot == SLOT_GLASSES)
+	if(ishuman(user) && slot == ITEM_SLOT_EYES)
 		ADD_TRAIT(user, TRAIT_BOOZE_SLIDER, CLOTHING_TRAIT)
 
 /obj/item/clothing/glasses/sunglasses/reagent/dropped(mob/user)
 	. = ..()
 	REMOVE_TRAIT(user, TRAIT_BOOZE_SLIDER, CLOTHING_TRAIT)
+
+/obj/item/clothing/glasses/sunglasses/chemical
+	name = "science glasses"
+	icon_state = "sunhudsci"
+	desc = "A pair of tacky purple sunglasses that allow the wearer to recognize various chemical compounds with only a glance."
+	clothing_flags = SCAN_REAGENTS
 
 /obj/item/clothing/glasses/sunglasses/garb
 	name = "black gar glasses"
@@ -282,7 +289,7 @@
 
 /obj/item/clothing/glasses/blindfold/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot == SLOT_GLASSES)
+	if(slot == ITEM_SLOT_EYES)
 		user.become_blind("blindfold_[REF(src)]")
 
 /obj/item/clothing/glasses/blindfold/dropped(mob/living/carbon/human/user)
@@ -297,7 +304,7 @@
 	var/colored_before = FALSE
 
 /obj/item/clothing/glasses/blindfold/white/equipped(mob/living/carbon/human/user, slot)
-	if(ishuman(user) && slot == SLOT_GLASSES)
+	if(ishuman(user) && slot == ITEM_SLOT_EYES)
 		update_icon(user)
 		user.update_inv_glasses() //Color might have been changed by update_icon.
 	..()
@@ -468,3 +475,49 @@
 		add_client_colour(G.glass_colour_type)
 	else
 		remove_client_colour(G.glass_colour_type)
+
+/obj/item/clothing/glasses/debug
+	name = "debug glasses"
+	desc = "Medical, security and diagnostic hud. Alt click to toggle xray."
+	icon_state = "nvgmeson"
+	item_state = "nvgmeson"
+	flags_cover = GLASSESCOVERSEYES
+	darkness_view = 8
+	flash_protect = FLASH_PROTECTION_WELDER
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	glass_colour_type = FALSE
+	clothing_flags = SCAN_REAGENTS
+	vision_flags = SEE_TURFS
+	var/list/hudlist = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_SECURITY_ADVANCED)
+	var/xray = FALSE
+
+/obj/item/clothing/glasses/debug/equipped(mob/user, slot)
+	. = ..()
+	if(slot != ITEM_SLOT_EYES)
+		return
+	if(ishuman(user))
+		for(var/hud in hudlist)
+			var/datum/atom_hud/H = GLOB.huds[hud]
+			H.add_hud_to(user)
+		ADD_TRAIT(user, TRAIT_MEDICAL_HUD, GLASSES_TRAIT)
+		ADD_TRAIT(user, TRAIT_SECURITY_HUD, GLASSES_TRAIT)
+
+/obj/item/clothing/glasses/debug/dropped(mob/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_MEDICAL_HUD, GLASSES_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, GLASSES_TRAIT)
+	if(ishuman(user))
+		for(var/hud in hudlist)
+			var/datum/atom_hud/H = GLOB.huds[hud]
+			H.remove_hud_from(user)
+
+/obj/item/clothing/glasses/debug/AltClick(mob/user)
+	. = ..()
+	if(ishuman(user))
+		if(xray)
+			vision_flags -= SEE_MOBS|SEE_OBJS
+		else
+			vision_flags += SEE_MOBS|SEE_OBJS
+		xray = !xray
+		var/mob/living/carbon/human/H = user
+		H.update_sight()

@@ -1,10 +1,10 @@
 
-/proc/create_portal_pair(turf/source, turf/destination, _creator = null, _lifespan = 300, accuracy = 0, newtype = /obj/effect/portal, atmos_link_override)
+/proc/create_portal_pair(turf/source, turf/destination, _lifespan = 300, accuracy = 0, newtype = /obj/effect/portal, atmos_link_override)
 	if(!istype(source) || !istype(destination))
 		return
 	var/turf/actual_destination = get_teleport_turf(destination, accuracy)
-	var/obj/effect/portal/P1 = new newtype(source, _creator, _lifespan, null, FALSE, null, atmos_link_override)
-	var/obj/effect/portal/P2 = new newtype(actual_destination, _creator, _lifespan, P1, TRUE, null, atmos_link_override)
+	var/obj/effect/portal/P1 = new newtype(source, _lifespan, null, FALSE, null, atmos_link_override)
+	var/obj/effect/portal/P2 = new newtype(actual_destination, _lifespan, P1, TRUE, null, atmos_link_override)
 	if(!istype(P1)||!istype(P2))
 		return
 	P1.link_portal(P2)
@@ -21,7 +21,6 @@
 	var/obj/effect/portal/linked
 	var/hardlinked = TRUE			//Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
 	var/teleport_channel = TELEPORT_CHANNEL_BLUESPACE
-	var/creator
 	var/turf/hard_target			//For when a portal needs a hard target and isn't to be linked.
 	var/atmos_link = FALSE			//Link source/destination atmos.
 	var/turf/open/atmos_source		//Atmos link source
@@ -71,7 +70,7 @@
 	if(Adjacent(user))
 		user.forceMove(get_turf(src))
 
-/obj/effect/portal/Initialize(mapload, _creator, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
+/obj/effect/portal/Initialize(mapload, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
 	. = ..()
 	GLOB.portals += src
 	if(!istype(_linked) && automatic_link)
@@ -83,7 +82,6 @@
 		atmos_link = atmos_link_override
 	link_portal(_linked)
 	hardlinked = automatic_link
-	creator = _creator
 	if(isturf(hard_target_override))
 		hard_target = hard_target_override
 
@@ -134,10 +132,7 @@
 			LAZYREMOVE(atmos_destination.atmos_adjacent_turfs, atmos_source)
 		atmos_destination = null
 
-/obj/effect/portal/Destroy()				//Calls on_portal_destroy(destroyed portal, location of destroyed portal) on creator if creator has such call.
-	if(creator && hascall(creator, "on_portal_destroy"))
-		call(creator, "on_portal_destroy")(src, src.loc)
-	creator = null
+/obj/effect/portal/Destroy()
 	GLOB.portals -= src
 	unlink_atmos()
 	if(hardlinked && !QDELETED(linked))
@@ -193,7 +188,7 @@
 	var/id // var edit or set id in map editor
 	hardlinked = FALSE // dont qdel my portal nerd
 
-/obj/effect/portal/permanent/Initialize(mapload, _creator, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
+/obj/effect/portal/permanent/Initialize(mapload, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
 	. = ..()
 	set_linked()
 
@@ -214,7 +209,27 @@
 		other.linked = src
 	linked = pick(possible)
 
-/obj/effect/portal/permanent/teleport(atom/movable/M, force = FALSE)
+/obj/effect/portal/permanent/teleport(atom/movable/M, force = FALSE) // Made perma portals always teleport even in noteleport areas since they are mapmaker only
+	if(!force && (!istype(M) || iseffect(M) || (ismecha(M) && !mech_sized) || (isobj(M) && !ismob(M)))) //Things that shouldn't teleport.
+		return
+	var/turf/real_target = get_link_target_turf()
+	if(!istype(real_target))
+		return FALSE
+	if(!force && (!ismecha(M) && !istype(M, /obj/projectile) && M.anchored && !allow_anchored))
+		return
+	if(ismegafauna(M))
+		message_admins("[M] has used a portal at [ADMIN_VERBOSEJMP(src)] made by [usr].")
+	var/no_effect = FALSE
+	if(last_effect == world.time)
+		no_effect = TRUE
+	else
+		last_effect = world.time
+	if(do_teleport(M, real_target, innate_accuracy_penalty, no_effects = no_effect, channel = teleport_channel, forced = TRUE))
+		if(istype(M, /obj/projectile))
+			var/obj/projectile/P = M
+			P.ignore_source_check = TRUE
+		return TRUE
+	return FALSE
 	// try to search for a new one if something was var edited etc
 	set_linked()
 	. = ..()

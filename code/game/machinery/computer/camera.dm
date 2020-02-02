@@ -23,7 +23,7 @@
 		network += "[idnum][i]"
 
 /obj/machinery/computer/security/check_eye(mob/user)
-	if( (stat & (NOPOWER|BROKEN)) || user.incapacitated() || user.eye_blind )
+	if( (machine_stat & (NOPOWER|BROKEN)) || user.incapacitated() || user.eye_blind )
 		user.unset_machine()
 		return
 	if(!(user in watchers))
@@ -56,18 +56,16 @@
 	return ..()
 
 /obj/machinery/computer/security/interact(mob/user)
-	if (stat)
+	if (machine_stat)
 		return
 	if (ismob(user) && !isliving(user)) // ghosts don't need cameras
 		return
 	if (!network)
 		user.unset_machine()
 		CRASH("No camera network")
-		return
 	if (!(islist(network)))
 		user.unset_machine()
 		CRASH("Camera network is not a list")
-		return
 	if(..())
 		user.unset_machine()
 		return
@@ -213,7 +211,7 @@
 
 /obj/machinery/computer/security/telescreen/update_icon_state()
 	icon_state = initial(icon_state)
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		icon_state += "b"
 
 /obj/machinery/computer/security/telescreen/entertainment

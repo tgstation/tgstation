@@ -1,7 +1,7 @@
 /obj/item/electronics/airlock
 	name = "airlock electronics"
 	req_access = list(ACCESS_MAINT_TUNNELS)
-	custom_price = 5
+	custom_price = 50
 
 	var/list/accesses = list()
 	var/one_access = 0
@@ -18,23 +18,30 @@
 		ui = new(user, src, ui_key, "airlock_electronics", name, 420, 485, master_ui, state)
 		ui.open()
 
-/obj/item/electronics/airlock/ui_data()
+/obj/item/electronics/airlock/ui_static_data(mob/user)
 	var/list/data = list()
 	var/list/regions = list()
-
 	for(var/i in 1 to 7)
-		var/list/region = list()
 		var/list/accesses = list()
-		for(var/j in get_region_accesses(i))
-			var/list/access = list()
-			access["name"] = get_access_desc(j)
-			access["id"] = j
-			access["req"] = (j in src.accesses)
-			accesses[++accesses.len] = access
-		region["name"] = get_region_accesses_name(i)
-		region["accesses"] = accesses
-		regions[++regions.len] = region
+		for(var/access in get_region_accesses(i))
+			if (get_access_desc(access))
+				accesses += list(list(
+					"desc" = replacetext(get_access_desc(access), "&nbsp", " "),
+					"ref" = access,
+				))
+
+		regions += list(list(
+			"name" = get_region_accesses_name(i),
+			"regid" = i,
+			"accesses" = accesses
+		))
+
 	data["regions"] = regions
+	return data
+
+/obj/item/electronics/airlock/ui_data()
+	var/list/data = list()
+	data["accesses"] = accesses
 	data["oneAccess"] = one_access
 	data["unres_direction"] = unres_sides
 
@@ -64,4 +71,16 @@
 		if("direc_set")
 			var/unres_direction = text2num(params["unres_direction"])
 			unres_sides ^= unres_direction //XOR, toggles only the bit that was clicked
+			. = TRUE
+		if("grant_region")
+			var/region = text2num(params["region"])
+			if(isnull(region))
+				return
+			accesses |= get_region_accesses(region)
+			. = TRUE
+		if("deny_region")
+			var/region = text2num(params["region"])
+			if(isnull(region))
+				return
+			accesses -= get_region_accesses(region)
 			. = TRUE

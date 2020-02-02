@@ -5,22 +5,24 @@
 	var/modifier = 0
 
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, created_volume)
-	var/turf/T = get_turf(holder.my_atom)
-	var/inside_msg
-	if(ismob(holder.my_atom))
-		var/mob/M = holder.my_atom
-		inside_msg = " inside [ADMIN_LOOKUPFLW(M)]"
-	var/lastkey = holder.my_atom.fingerprintslast
-	var/touch_msg = "N/A"
-	if(lastkey)
-		var/mob/toucher = get_mob_by_key(lastkey)
-		touch_msg = "[ADMIN_LOOKUPFLW(toucher)]"
-	if(!istype(holder.my_atom, /obj/machinery/plumbing)) //excludes standard plumbing equipment from spamming admins with this shit
-		message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
-	log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
-	var/datum/effect_system/reagents_explosion/e = new()
-	e.set_up(modifier + round(created_volume/strengthdiv, 1), T, 0, 0)
-	e.start()
+	var/power = modifier + round(created_volume/strengthdiv, 1)
+	if(power > 0)
+		var/turf/T = get_turf(holder.my_atom)
+		var/inside_msg
+		if(ismob(holder.my_atom))
+			var/mob/M = holder.my_atom
+			inside_msg = " inside [ADMIN_LOOKUPFLW(M)]"
+		var/lastkey = holder.my_atom.fingerprintslast
+		var/touch_msg = "N/A"
+		if(lastkey)
+			var/mob/toucher = get_mob_by_key(lastkey)
+			touch_msg = "[ADMIN_LOOKUPFLW(toucher)]"
+		if(!istype(holder.my_atom, /obj/machinery/plumbing)) //excludes standard plumbing equipment from spamming admins with this shit
+			message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
+		log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
+		var/datum/effect_system/reagents_explosion/e = new()
+		e.set_up(power , T, 0, 0)
+		e.start()
 	holder.clear_reagents()
 
 
@@ -28,7 +30,7 @@
 	name = "Nitroglycerin"
 	id = /datum/reagent/nitroglycerin
 	results = list(/datum/reagent/nitroglycerin = 2)
-	required_reagents = list(/datum/reagent/glycerol = 1, /datum/reagent/toxin/acid/fluacid = 1, /datum/reagent/toxin/acid = 1)
+	required_reagents = list(/datum/reagent/glycerol = 1, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/toxin/acid = 1)
 	strengthdiv = 2
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin/on_reaction(datum/reagents/holder, created_volume)
@@ -44,12 +46,105 @@
 	required_temp = 474
 	strengthdiv = 2
 
+/datum/chemical_reaction/reagent_explosion/rdx
+	name = "RDX"
+	id = /datum/reagent/rdx
+	results = list(/datum/reagent/rdx= 2)
+	required_reagents = list(/datum/reagent/phenol = 2, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/acetone_oxide = 1 )
+	required_temp = 404
+	strengthdiv = 8
+
+/datum/chemical_reaction/reagent_explosion/rdx/on_reaction(datum/reagents/holder, created_volume)
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
+		return
+	holder.remove_reagent(/datum/reagent/rdx, created_volume*2)
+	..()
+
+/datum/chemical_reaction/reagent_explosion/rdx_explosion
+	name = "Heat RDX explosion"
+	id = "rdx_explosion"
+	required_reagents = list(/datum/reagent/rdx = 1)
+	required_temp = 474
+	strengthdiv = 8
+
+/datum/chemical_reaction/reagent_explosion/rdx_explosion2 //makes rdx unique , on its own it is a good bomb, but when combined with liquid electricity it becomes truly destructive
+	name = "Electric RDX explosion"
+	id = "rdx_explosion2"
+	required_reagents = list(/datum/reagent/rdx = 1 , /datum/reagent/consumable/liquidelectricity = 1)
+	strengthdiv = 4
+	modifier = 2
+
+/datum/chemical_reaction/reagent_explosion/rdx_explosion2/on_reaction(datum/reagents/holder, created_volume)
+	var/fire_range = round(created_volume/100)
+	var/turf/T = get_turf(holder.my_atom)
+	for(var/turf/turf in range(fire_range,T))
+		new /obj/effect/hotspot(turf)
+	holder.chem_temp = 500
+	..()
+
+/datum/chemical_reaction/reagent_explosion/rdx_explosion3
+	name = "Teslium RDX explosion"
+	id = "rdx_explosion3"
+	required_reagents = list(/datum/reagent/rdx = 1 , /datum/reagent/teslium = 1)
+	modifier = 4
+	strengthdiv = 4
+
+/datum/chemical_reaction/reagent_explosion/rdx_explosion3/on_reaction(datum/reagents/holder, created_volume)
+	var/fire_range = round(created_volume/50)
+	var/turf/T = get_turf(holder.my_atom)
+	for(var/turf/turf in range(fire_range,T))
+		new /obj/effect/hotspot(turf)
+	holder.chem_temp = 750
+	..()
+
+/datum/chemical_reaction/reagent_explosion/tatp
+	name = "TaTP"
+	id = /datum/reagent/tatp
+	results = list(/datum/reagent/tatp= 1)
+	required_reagents = list(/datum/reagent/acetone_oxide = 1, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/pentaerythritol = 1 )
+	required_temp = 450
+	strengthdiv = 3
+
+/datum/chemical_reaction/reagent_explosion/tatp/New()
+	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateInfo)) //method used by secret sauce.
+
+/datum/chemical_reaction/reagent_explosion/tatp/proc/UpdateInfo()
+	required_temp = 450 + rand(-49,49)  //this gets loaded only on round start
+
+
+/datum/chemical_reaction/reagent_explosion/tatp/on_reaction(datum/reagents/holder, created_volume)
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
+		return
+	holder.remove_reagent(/datum/reagent/tatp, created_volume)
+	..()
+
+/datum/chemical_reaction/reagent_explosion/tatp_explosion
+	name = "TaTP explosion"
+	id = "tatp_explosion"
+	required_reagents = list(/datum/reagent/tatp = 1)
+	required_temp = 550 // this makes making tatp before pyro nades, and extreme pain in the ass to make
+	strengthdiv = 3
+
+/datum/chemical_reaction/reagent_explosion/tatp_explosion/New()
+	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateInfo))
+
+
+/datum/chemical_reaction/reagent_explosion/tatp_explosion/proc/UpdateInfo()
+	required_temp = 550 + rand(-49,49)
+
+
+/datum/chemical_reaction/reagent_explosion/penthrite_explosion
+	name = "Penthrite explosion"
+	id = "penthrite_explosion"
+	required_reagents = list(/datum/reagent/medicine/C2/penthrite = 1, /datum/reagent/phenol = 1, /datum/reagent/acetone_oxide = 1)
+	required_temp = 315
+	strengthdiv = 5
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion
 	name = "Explosion"
 	id = "potassium_explosion"
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/potassium = 1)
-	strengthdiv = 10
+	strengthdiv = 20
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom
 	name = "Holy Explosion"
@@ -425,7 +520,7 @@
 	modifier = -100
 	mix_message = "<span class='boldannounce'>The teslium starts to spark as electricity arcs away from it!</span>"
 	mix_sound = 'sound/machines/defib_zap.ogg'
-	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE | TESLA_MOB_STUN
+	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_IS_TESLA
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/on_reaction(datum/reagents/holder, created_volume)
 	var/T1 = created_volume * 20		//100 units : Zap 3 times, with powers 2000/5000/12000. Tesla revolvers have a power of 10000 for comparison.
@@ -433,15 +528,15 @@
 	var/T3 = created_volume * 120
 	sleep(5)
 	if(created_volume >= 75)
-		tesla_zap(holder.my_atom, 7, T1, tesla_flags)
+		tesla_zap(holder.my_atom, 7, T1, zap_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
 		sleep(15)
 	if(created_volume >= 40)
-		tesla_zap(holder.my_atom, 7, T2, tesla_flags)
+		tesla_zap(holder.my_atom, 7, T2, zap_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
 		sleep(15)
 	if(created_volume >= 10)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
-		tesla_zap(holder.my_atom, 7, T3, tesla_flags)
+		tesla_zap(holder.my_atom, 7, T3, zap_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
 	..()
 

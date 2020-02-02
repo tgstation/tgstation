@@ -33,9 +33,9 @@
 	update_icon()
 
 /obj/machinery/public_nanite_chamber/proc/inject_nanites(mob/living/attacker)
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	if((stat & MAINT) || panel_open)
+	if((machine_stat & MAINT) || panel_open)
 		return
 	if(!occupant || busy)
 		return
@@ -60,32 +60,54 @@
 		log_combat(attacker, occupant, "injected", null, "with nanites via [src]")
 	occupant.AddComponent(/datum/component/nanites, 75, cloud_id)
 
-/obj/machinery/public_nanite_chamber/update_icon()
-	cut_overlays()
+/obj/machinery/public_nanite_chamber/proc/change_cloud(mob/living/attacker)
+	if(machine_stat & (NOPOWER|BROKEN))
+		return
+	if((machine_stat & MAINT) || panel_open)
+		return
+	if(!occupant || busy)
+		return
 
-	if((stat & MAINT) || panel_open)
-		add_overlay("maint")
+	var/locked_state = locked
+	locked = TRUE
 
-	else if(!(stat & (NOPOWER|BROKEN)))
-		if(busy || locked)
-			add_overlay("red")
-			if(locked)
-				add_overlay("bolted")
-		else
-			add_overlay("green")
+	set_busy(TRUE, "[initial(icon_state)]_raising")
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_active"),20)
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_falling"),40)
+	addtimer(CALLBACK(src, .proc/complete_cloud_change, locked_state, attacker),60)
 
+/obj/machinery/public_nanite_chamber/proc/complete_cloud_change(locked_state, mob/living/attacker)
+	locked = locked_state
+	set_busy(FALSE)
+	if(!occupant)
+		return
+	if(attacker)
+		occupant.investigate_log("had their nanite cloud ID changed into [cloud_id] by [key_name(attacker)] using [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
+	SEND_SIGNAL(occupant, COMSIG_NANITE_SET_CLOUD, cloud_id)
 
-
+/obj/machinery/public_nanite_chamber/update_icon_state()
 	//running and someone in there
 	if(occupant)
 		if(busy)
 			icon_state = busy_icon_state
 		else
 			icon_state = initial(icon_state)+ "_occupied"
-		return
+	else
+		//running
+		icon_state = initial(icon_state)+ (state_open ? "_open" : "")
 
-	//running
-	icon_state = initial(icon_state)+ (state_open ? "_open" : "")
+/obj/machinery/public_nanite_chamber/update_overlays()
+	. = ..()
+	if((machine_stat & MAINT) || panel_open)
+		. += "maint"
+
+	else if(!(machine_stat & (NOPOWER|BROKEN)))
+		if(busy || locked)
+			. += "red"
+			if(locked)
+				. += "bolted"
+		else
+			. += "green"
 
 /obj/machinery/public_nanite_chamber/proc/toggle_open(mob/user)
 	if(panel_open)
@@ -135,6 +157,9 @@
 	if(occupant)
 		var/mob/living/L = occupant
 		if(SEND_SIGNAL(L, COMSIG_HAS_NANITES))
+			var/datum/component/nanites/nanites = L.GetComponent(/datum/component/nanites)
+			if(nanites && nanites.cloud_id != cloud_id)
+				change_cloud(attacker)
 			return
 		if(L.mob_biotypes & (MOB_ORGANIC | MOB_UNDEAD))
 			inject_nanites(attacker)

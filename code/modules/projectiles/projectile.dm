@@ -290,8 +290,8 @@
 		if(!can_hit_target(M, permutated, M == original, TRUE))
 			continue
 		mobs += M
-	var/mob/M = safepick(mobs)
-	if(M)
+	if (length(mobs))
+		var/mob/M = pick(mobs)
 		return M.lowest_buckled_mob()
 	var/list/obj/possible_objs = typecache_filter_list(T, GLOB.typecache_machine_or_structure)
 	var/list/obj/objs = list()
@@ -299,8 +299,8 @@
 		if(!can_hit_target(O, permutated, O == original, TRUE))
 			continue
 		objs += O
-	var/obj/O = safepick(objs)
-	if(O)
+	if (length(objs))
+		var/obj/O = pick(objs)
 		return O
 	//Nothing else is here that we can hit, hit the turf if we haven't.
 	if(!(T in permutated) && can_hit_target(T, permutated, T == original, TRUE))
@@ -392,6 +392,7 @@
 	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, Angle, SSprojectiles.global_pixel_speed)
 	last_projectile_move = world.time
 	fired = TRUE
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_FIRE)
 	if(hitscan)
 		process_hitscan()
 	if(!(datum_flags & DF_ISPROCESSING))

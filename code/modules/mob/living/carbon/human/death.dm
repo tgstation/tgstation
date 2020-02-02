@@ -34,7 +34,8 @@
 		if(M.occupant == src)
 			M.go_out()
 
-	dna.species.spec_death(gibbed, src)
+	if(!QDELETED(dna)) //The gibbed param is bit redundant here since dna won't exist at this point if they got deleted.
+		dna.species.spec_death(gibbed, src)
 
 	if(SSticker.HasRoundStarted())
 		SSblackbox.ReportDeath(src)

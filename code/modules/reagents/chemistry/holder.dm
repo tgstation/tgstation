@@ -71,6 +71,8 @@
 
 /datum/reagents/Destroy()
 	. = ..()
+	//We're about to delete all reagents, so lets cleanup
+	addiction_list.Cut()
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
@@ -102,6 +104,7 @@
 	var/list/cached_reagents = reagent_list
 	var/total_transfered = 0
 	var/current_list_element = 1
+	var/initial_list_length = cached_reagents.len //stored here because removing can cause some reagents to be deleted, ergo length change.
 
 	current_list_element = rand(1, cached_reagents.len)
 
@@ -115,14 +118,16 @@
 			current_list_element = 1
 
 		var/datum/reagent/R = cached_reagents[current_list_element]
-		remove_reagent(R.type, 1)
+		var/remove_amt = min(amount-total_transfered,round(amount/rand(2,initial_list_length),round(amount/10,0.01))) //double round to keep it at a somewhat even spread relative to amount without getting funky numbers.
+		//min ensures we don't go over amount.
+		remove_reagent(R.type, remove_amt)
 
 		current_list_element++
-		total_transfered++
+		total_transfered += remove_amt
 		update_total()
 
 	handle_reactions()
-	return total_transfered
+	return total_transfered //this should be amount unless the loop is prematurely broken, in which case it'll be lower. It shouldn't ever go OVER amount.
 
 /datum/reagents/proc/remove_all(amount = 1)
 	var/list/cached_reagents = reagent_list
@@ -543,8 +548,10 @@
 					R.metabolizing = FALSE
 					R.on_mob_end_metabolize(M)
 				R.on_mob_delete(M)
-			qdel(R)
+			//Clear from relevant lists
+			addiction_list -= R
 			reagent_list -= R
+			qdel(R)
 			update_total()
 			if(my_atom)
 				my_atom.on_reagent_change(DEL_REAGENT)
@@ -717,7 +724,6 @@
 	if(isnull(amount))
 		amount = 0
 		CRASH("null amount passed to reagent code")
-		return FALSE
 
 	if(!isnum(amount))
 		return FALSE
