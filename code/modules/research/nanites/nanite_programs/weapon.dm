@@ -116,7 +116,7 @@
 
 /datum/nanite_program/emp
 	name = "Electromagnetic Resonance"
-	desc = "The nanites cause an elctromagnetic pulse around the host when triggered. Will corrupt other nanite programs!"
+	desc = "The nanites cause an electromagnetic pulse around the host when triggered. Will corrupt other nanite programs!"
 	can_trigger = TRUE
 	trigger_cost = 10
 	trigger_cooldown = 50
@@ -185,7 +185,7 @@
 	if(host_mob.mind && host_mob.mind.has_antag_datum(/datum/antagonist/brainwashed))
 		host_mob.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 	log_game("[key_name(host_mob)] is no longer brainwashed by nanites.")
-	
+
 /datum/nanite_program/comm/mind_control/disable_passive_effect()
 	. = ..()
 	end_brainwashing()

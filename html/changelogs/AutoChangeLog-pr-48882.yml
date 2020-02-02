@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Added the Nanite Replication Protocols node to the B.E.P.I.S."
+  - rscadd: "It contains 4 Nanite Protocols, i.e. Nanite Programs that cannot be active at the same time in a host. These programs boost Nanite replication rate in different scenarios."

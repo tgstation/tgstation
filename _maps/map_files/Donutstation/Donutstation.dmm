@@ -13119,7 +13119,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
 "aJV" = (
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/virology,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -20180,10 +20180,6 @@
 /area/crew_quarters/kitchen)
 "bdD" = (
 /obj/structure/table,
-/obj/item/multitool{
-	pixel_x = 6
-	},
-/obj/item/multitool,
 /obj/item/assembly/signaler,
 /obj/item/assembly/signaler,
 /obj/effect/turf_decal/tile/brown{
@@ -29382,7 +29378,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bzR" = (
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/virology,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},

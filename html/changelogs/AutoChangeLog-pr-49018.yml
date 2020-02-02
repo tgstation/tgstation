@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "Recent graduates of the Rat'var Academy of Trapmaking and Puzzlecraft have begun giving lectures in your local area about how to make more interesting puzzle systems, before they were all arrested for heresy."
+  - bugfix: "Pressure Plates can now be activated On/Off by Ctrl-Clicking them, so they can actually be used."
