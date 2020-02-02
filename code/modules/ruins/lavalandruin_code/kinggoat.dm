@@ -1,5 +1,6 @@
 /turf/open/indestructible/gold
 	name = "gold floor"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	baseturfs = /turf/open/indestructible/gold
 	icon_state = "gold"
 	tiled_dirt = FALSE
@@ -7,6 +8,7 @@
 
 /turf/open/indestructible/diamond
 	name = "diamond floor"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	baseturfs = /turf/open/indestructible/diamond
 	icon_state = "diamond"
 	tiled_dirt = FALSE
