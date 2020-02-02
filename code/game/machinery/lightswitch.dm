@@ -24,7 +24,7 @@
 	update_icon()
 
 /obj/machinery/light_switch/update_icon_state()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		icon_state = "light-p"
 	else
 		if(area.lightswitch)
@@ -56,5 +56,5 @@
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
 		return
-	if(!(stat & (BROKEN|NOPOWER)))
+	if(!(machine_stat & (BROKEN|NOPOWER)))
 		power_change()

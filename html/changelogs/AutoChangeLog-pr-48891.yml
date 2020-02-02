@@ -1,0 +1,4 @@
+author: "blessedmulligan"
+delete-after: True
+changes: 
+  - rscadd: "The behavior of cyborg's *spin emote now changes with intent; on harm intent, it will throw its passenger farther and damage and stun them if they hit a wall or another person."

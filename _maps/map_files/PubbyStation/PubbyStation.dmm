@@ -2774,7 +2774,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "aio" = (
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/security,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
@@ -7504,6 +7504,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
+/obj/machinery/navbeacon/wayfinding/minisat_access_ai,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "atN" = (
@@ -8072,6 +8073,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding/vault,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/nuke_storage)
 "auZ" = (
@@ -8086,6 +8088,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding/gateway,
 /turf/open/floor/plasteel,
 /area/gateway)
 "avb" = (
@@ -8932,6 +8935,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/machinery/navbeacon/wayfinding/sec,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "awO" = (
@@ -10322,6 +10326,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding/aiupload,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "aAD" = (
@@ -10485,6 +10490,7 @@
 	req_access_txt = "4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/navbeacon/wayfinding/det,
 /turf/open/floor/plasteel/dark,
 /area/security/detectives_office)
 "aBg" = (
@@ -11069,8 +11075,6 @@
 /obj/structure/table,
 /obj/item/assembly/signaler,
 /obj/item/assembly/signaler,
-/obj/item/multitool,
-/obj/item/multitool,
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
@@ -11318,6 +11322,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding/hop,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "aCW" = (
@@ -13055,6 +13060,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/navbeacon/wayfinding/bridge,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "aHh" = (
@@ -14252,6 +14258,7 @@
 	req_access_txt = "18"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/navbeacon/wayfinding/eva,
 /turf/open/floor/plasteel,
 /area/storage/eva)
 "aLc" = (
@@ -14267,6 +14274,7 @@
 	req_access_txt = "17"
 	},
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding/teleporter,
 /turf/open/floor/plasteel,
 /area/teleporter)
 "aLe" = (
@@ -17461,6 +17469,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding/disposals,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "aTz" = (
@@ -17784,6 +17793,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/navbeacon/wayfinding/cargo,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "aUp" = (
@@ -22080,6 +22090,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/navbeacon/wayfinding/hydro,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bel" = (
@@ -22135,6 +22146,7 @@
 	id = "kitchenwindowshutters";
 	name = "kitchen shutters"
 	},
+/obj/machinery/navbeacon/wayfinding/kitchen,
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "bep" = (
@@ -22471,6 +22483,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding/janitor,
 /turf/open/floor/plasteel,
 /area/janitor)
 "bfj" = (
@@ -22943,6 +22956,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Bar"
 	},
+/obj/machinery/navbeacon/wayfinding/bar,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "bgv" = (
@@ -26361,6 +26375,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/navbeacon/wayfinding/med,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bpV" = (
@@ -27285,7 +27300,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/scientist,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -29114,6 +29129,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /obj/effect/turf_decal/tile/neutral,
+/obj/machinery/navbeacon/wayfinding/minisat_access_chapel_library,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bws" = (
@@ -29568,6 +29584,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding/research,
 /turf/open/floor/plasteel/dark,
 /area/science/explab)
 "bxr" = (
@@ -32325,7 +32342,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bDq" = (
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/virology,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -32812,7 +32829,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bEu" = (
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/virology,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 10
 	},
@@ -33443,10 +33460,10 @@
 /turf/open/floor/grass,
 /area/science/genetics)
 "bFy" = (
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/science/genetics)
 "bFB" = (
@@ -38643,6 +38660,7 @@
 	name = "Atmospherics Monitoring";
 	req_access_txt = "24"
 	},
+/obj/machinery/navbeacon/wayfinding/atmos,
 /turf/open/floor/plasteel,
 /area/engine/lobby)
 "bRs" = (
@@ -38896,6 +38914,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding/techstorage,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "bRV" = (
@@ -39599,6 +39618,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding/engineering,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bTG" = (
@@ -41580,6 +41600,7 @@
 	req_access_txt = "24"
 	},
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding/incinerator,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
 "bYv" = (
@@ -43384,6 +43405,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding/minisat_access_tcomms,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "cet" = (
@@ -45803,6 +45825,7 @@
 	name = "Dormitories"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/navbeacon/wayfinding/dorms,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "cor" = (
@@ -50257,6 +50280,14 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
+"fTZ" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external{
+	name = "Port Docking Bay 1"
+	},
+/obj/machinery/navbeacon/wayfinding/dockarrival,
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "fUA" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/red{
@@ -51453,6 +51484,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+/obj/machinery/navbeacon/wayfinding/dockescpod,
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "izF" = (
@@ -52407,7 +52439,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "kFD" = (
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/scientist,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -53971,6 +54003,7 @@
 	id = "assistantshutters";
 	name = "storage shutters"
 	},
+/obj/machinery/navbeacon/wayfinding/tools,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "ooh" = (
@@ -55257,10 +55290,10 @@
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "rlj" = (
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/science/genetics)
 "rlV" = (
@@ -55839,6 +55872,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/lobby)
+"sEz" = (
+/obj/machinery/pinpointer_dispenser,
+/turf/closed/wall/r_wall,
+/area/security/checkpoint/customs)
 "sEB" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment,
@@ -57497,6 +57534,17 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
+"wDs" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock";
+	safety_mode = 1
+	},
+/obj/machinery/navbeacon/wayfinding/dockesc,
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "wDA" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -58069,6 +58117,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/navbeacon/wayfinding/lawyer,
 /turf/open/floor/plasteel/dark,
 /area/lawoffice)
 "xNx" = (
@@ -76334,7 +76383,7 @@ aHA
 aHA
 aHA
 xee
-aKB
+wDs
 nYn
 fTY
 xee
@@ -78654,7 +78703,7 @@ aWK
 aYG
 aZA
 baN
-bbQ
+fTZ
 bcX
 bdV
 aaa
@@ -80196,7 +80245,7 @@ aXK
 aXH
 aXH
 aXH
-aXH
+sEz
 bdc
 bdX
 bfa

@@ -8,7 +8,6 @@
 	component_type = /datum/component/storage/concrete/wallet
 
 	var/obj/item/card/id/front_id = null
-	var/obj/item/card/id/cached_front_id = null
 	var/list/combined_access
 	var/cached_flat_icon
 
@@ -67,13 +66,11 @@
 
 /obj/item/storage/wallet/update_overlays()
 	. = ..()
-	if(front_id != cached_front_id)
-		cached_flat_icon = null
-		cached_front_id = front_id
-		if(front_id)
-			. += mutable_appearance(front_id.icon, front_id.icon_state)
-			. += front_id.overlays
-			. += mutable_appearance(icon, "wallet_overlay")
+	cached_flat_icon = null
+	if(front_id)
+		. += mutable_appearance(front_id.icon, front_id.icon_state)
+		. += front_id.overlays
+		. += mutable_appearance(icon, "wallet_overlay")
 
 /obj/item/storage/wallet/proc/get_cached_flat_icon()
 	if(!cached_flat_icon)

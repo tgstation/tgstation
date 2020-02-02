@@ -73,7 +73,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 /obj/machinery/gateway/proc/toggleon(mob/user)
 	return FALSE
 
-/obj/machinery/gateway/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG)
+/obj/machinery/gateway/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return
 
 /obj/machinery/gateway/centerstation/Initialize()
@@ -107,7 +107,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		icon_state = "offcenter"
 
 /obj/machinery/gateway/centerstation/process()
-	if((stat & (NOPOWER)) && use_power)
+	if((machine_stat & (NOPOWER)) && use_power)
 		if(active)
 			toggleoff()
 		return
