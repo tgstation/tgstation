@@ -173,7 +173,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/should_have_stomach = !(NOSTOMACH in species_traits)
 	var/should_have_tail = mutanttail
 
-	if(!BODY_ZONE_CHEST in excluded_limbs)
+	if(!(BODY_ZONE_CHEST in excluded_limbs))
 
 		if(heart && (!should_have_heart || replace_current))
 			heart.Remove(C,1)
@@ -226,7 +226,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			tail = new mutanttail()
 			tail.Insert(C)
 
-	if(C.get_bodypart(BODY_ZONE_HEAD) && (!BODY_ZONE_HEAD in excluded_limbs))
+	if(C.get_bodypart(BODY_ZONE_HEAD) && (!(BODY_ZONE_HEAD in excluded_limbs)))
 		if(brain && (replace_current || !should_have_brain))
 			if(!brain.decoy_override)//Just keep it if it's fake
 				brain.Remove(C,TRUE,TRUE)
