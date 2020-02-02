@@ -223,7 +223,7 @@
 //************************************************************************
 //** Airlock Electroadaptive Psuedo Circuit ENDS - Surrealistik Oct 2019
 //************************************************************************
-/obj/item/robot_module/security
+/obj/item/robot_module/security //Now has a crowbar to allow it to navigate depowered areas, and a default pepperspray.
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/restraints/handcuffs/cable/zipties,
@@ -232,7 +232,12 @@
 		/obj/item/reagent_containers/spray/pepper/cyborg,
 		/obj/item/clothing/mask/gas/sechailer/cyborg,
 		/obj/item/crowbar/cyborg,
-		/obj/item/extinguisher/mini)
+		/obj/item/extinguisher/mini,
+		/obj/item/handheld_sec_record_uplink/cyborg,
+		)
+
+/obj/item/borg/upgrade/pinpointer //Sec borg can now install the crew monitor/pinpointer module.
+	module_type = list(/obj/item/robot_module/medical, /obj/item/robot_module/syndicate_medical, /obj/item/robot_module/security)
 
 //***************************************************************************
 //** FULPSTATION SECBORG MODULE UPDATE by Surrealistik Jan 2020 BEGINS
