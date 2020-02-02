@@ -958,7 +958,7 @@
 	name = "Unisex Restroom"
 	},
 /turf/open/floor/plasteel/freezer,
-/area/security/prison)
+/area/security/prison/toilet)
 "aci" = (
 /obj/vehicle/ridden/secway,
 /turf/open/floor/plasteel/dark,
@@ -1191,7 +1191,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
-/area/security/prison)
+/area/security/prison/toilet)
 "acL" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -1368,7 +1368,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/freezer,
-/area/security/prison)
+/area/security/prison/toilet)
 "adg" = (
 /obj/machinery/button/door{
 	id = "armory";

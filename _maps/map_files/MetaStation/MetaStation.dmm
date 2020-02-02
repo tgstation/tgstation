@@ -840,7 +840,7 @@
 	name = "Unisex Restroom"
 	},
 /turf/open/floor/plasteel/freezer,
-/area/security/prison)
+/area/security/prison/toilet)
 "abZ" = (
 /obj/structure/table,
 /obj/item/book/manual/chef_recipes{
@@ -967,7 +967,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
-/area/security/prison)
+/area/security/prison/toilet)
 "acq" = (
 /obj/structure/table,
 /obj/item/storage/box/donkpockets{

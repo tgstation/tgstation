@@ -2677,6 +2677,11 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"agw" = (
+/obj/effect/landmark/start/geneticist,
+/mob/living/carbon/monkey,
+/turf/open/floor/plasteel,
+/area/medical/genetics)
 "agx" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -3260,6 +3265,12 @@
 "ahM" = (
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
+"ahN" = (
+/obj/machinery/door/airlock{
+	name = "Unisex Restroom"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/security/prison/toilet)
 "ahO" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -3348,6 +3359,10 @@
 /obj/effect/mapping_helpers/iannewyear,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
+"aia" = (
+/obj/structure/toilet,
+/turf/open/floor/plasteel/freezer,
+/area/security/prison/toilet)
 "aib" = (
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
@@ -3374,6 +3389,9 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
+"aie" = (
+/turf/open/floor/plasteel/freezer,
+/area/security/prison/toilet)
 "aif" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -3545,6 +3563,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
+"aiD" = (
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/freezer,
+/area/security/prison/toilet)
+"aiE" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
+/turf/open/floor/plasteel/freezer,
+/area/security/prison/toilet)
 "aiH" = (
 /obj/machinery/door/airlock/external{
 	name = "Supply Dock Airlock";
@@ -10880,16 +10909,6 @@
 "aDQ" = (
 /turf/closed/wall/r_wall,
 /area/security/processing)
-"aDR" = (
-/obj/machinery/door/airlock{
-	name = "Unisex Restroom"
-	},
-/turf/open/floor/plasteel/freezer,
-/area/security/prison)
-"aDS" = (
-/obj/structure/toilet,
-/turf/open/floor/plasteel/freezer,
-/area/security/prison)
 "aDT" = (
 /obj/structure/sink{
 	dir = 8;
@@ -10975,13 +10994,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/security/prison)
-"aEe" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
-/turf/open/floor/plasteel/freezer,
 /area/security/prison)
 "aEf" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -18050,11 +18062,6 @@
 	dir = 8
 	},
 /area/medical/genetics)
-"aYg" = (
-/mob/living/carbon/monkey,
-/obj/effect/landmark/start/geneticist,
-/turf/open/floor/plasteel,
-/area/medical/genetics)
 "aYh" = (
 /mob/living/carbon/monkey,
 /turf/open/floor/plasteel/white/corner,
@@ -21675,10 +21682,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
-"bhp" = (
-/obj/machinery/light/small,
-/turf/open/floor/plasteel/freezer,
-/area/security/prison)
 "bhq" = (
 /obj/structure/table,
 /obj/machinery/recharger,
@@ -74718,7 +74721,7 @@ aAK
 trK
 aBe
 aJW
-aYg
+agw
 aYc
 aBU
 aGn
@@ -102745,8 +102748,8 @@ aZA
 aZE
 arp
 arq
-aDR
-arq
+ahN
+aie
 aDQ
 aDQ
 baB
@@ -103003,8 +103006,8 @@ aeQ
 afq
 aiN
 aiN
-arq
-arq
+aie
+aie
 aij
 bDI
 aNZ
@@ -103259,9 +103262,9 @@ ajB
 aeZ
 afx
 aiN
-aDS
-arq
-bhp
+aia
+aie
+aiD
 aij
 aEb
 baB
@@ -103516,9 +103519,9 @@ ajB
 aeZ
 afy
 aiN
-aDS
-arq
-aEe
+aia
+aie
+aiE
 aij
 aaa
 aRT
