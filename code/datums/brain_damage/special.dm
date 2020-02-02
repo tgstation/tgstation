@@ -196,7 +196,7 @@
 		linked = FALSE
 		return
 	to_chat(owner, "<span class='warning'>You're pulled through spacetime!</span>")
-	do_teleport(owner, get_turf(linked_target),null,TRUE,channel = TELEPORT_CHANNEL_QUANTUM)
+	do_teleport(owner, get_turf(linked_target), null, TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
 	owner.playsound_local(owner, 'sound/magic/repulse.ogg', 100, FALSE)
 	linked_target = null
 	linked = FALSE
