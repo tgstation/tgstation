@@ -14,11 +14,6 @@
 	if(health <= HEALTH_THRESHOLD_DEAD)
 		if(stat != DEAD)
 			death()
-		var/obj/item/organ/brain/BR
-		if(container && container.brain)
-			BR = container.brain
-		else if(istype(loc, /obj/item/organ/brain))
-			BR = loc
 
 /mob/living/brain/proc/handle_emp_damage()
 	if(emp_damage)

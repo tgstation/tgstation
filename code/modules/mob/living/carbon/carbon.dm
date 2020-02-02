@@ -800,7 +800,6 @@
 	for(var/O in internal_organs)
 		var/obj/item/organ/organ = O
 		organ.setOrganDamage(0)
-	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
