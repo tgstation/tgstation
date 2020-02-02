@@ -19,7 +19,6 @@
 
 	var/suicided = FALSE
 	var/mob/living/brain/brainmob = null
-	var/brain_death = FALSE //if the brainmob was intentionally killed by attacking the brain after removal, or by severe braindamage
 	var/decoy_override = FALSE	//if it's a fake brain with no brainmob assigned. Feedback messages will be faked as if it does have a brainmob. See changelings & dullahans.
 	//two variables necessary for calculating whether we get a brain trauma or not
 	var/damage_delta = 0
@@ -106,9 +105,6 @@
 
 	if((organ_flags & ORGAN_FAILING) && O.is_drainable() && O.reagents.has_reagent(/datum/reagent/medicine/mannitol)) //attempt to heal the brain
 		. = TRUE //don't do attack animation.
-		if(brain_death || brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
-			to_chat(user, "<span class='warning'>[src] is far too damaged, there's nothing else we can do for it!</span>")
-			return
 
 		if(!O.reagents.has_reagent(/datum/reagent/medicine/mannitol, 10))
 			to_chat(user, "<span class='warning'>There's not enough mannitol in [O] to restore [src]!</span>")
@@ -137,9 +133,7 @@
 		. += "<span class='info'>It's started turning slightly grey. They must not have been able to handle the stress of it all.</span>"
 	else if(brainmob)
 		if(brainmob.get_ghost(FALSE, TRUE))
-			if(brain_death || brainmob.health <= HEALTH_THRESHOLD_DEAD)
-				. += "<span class='info'>It's lifeless and severely damaged.</span>"
-			else if(organ_flags & ORGAN_FAILING)
+			if(organ_flags & ORGAN_FAILING)
 				. += "<span class='info'>It seems to still have a bit of energy within it, but it's rather damaged... You may be able to restore it with some <b>mannitol</b>.</span>"
 			else
 				. += "<span class='info'>You can feel the small spark of life still left in this one.</span>"
@@ -203,7 +197,6 @@
 	if(damage >= BRAIN_DAMAGE_DEATH) //rip
 		to_chat(owner, "<span class='userdanger'>The last spark of life in your brain fizzles out...</span>")
 		owner.death()
-		brain_death = TRUE
 
 /obj/item/organ/brain/check_damage_thresholds(mob/M)
 	. = ..()
