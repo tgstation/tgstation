@@ -140,6 +140,15 @@
 
 /obj/item/gun/magic/wand/polymorph/zap_self(mob/living/user)
 	..() //because the user mob ceases to exists by the time wabbajack fully resolves
+
+	// Disconnect AI's in shells
+	if(istype(user, /mob/living/silicon/robot))
+		var/mob/living/silicon/robot/borgo = user
+		if(borgo.connected_ai)
+			borgo.connected_ai.connected_robots -= borgo
+		if(borgo.shell)
+			GLOB.available_ai_shells -= borgo
+
 	wabbajack(user)
 	charges--
 
