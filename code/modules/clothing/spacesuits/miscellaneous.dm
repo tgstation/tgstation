@@ -13,6 +13,7 @@ Contains:
  - Freedom's spacesuit (freedom from vacuum's oppression)
  - Carp hardsuit
  - Bounty hunter hardsuit
+ - Blackmarket combat medic hardsuit
 */
 
 	//Death squad armored space suits, not hardsuits!
@@ -426,3 +427,22 @@ Contains:
 	armor = list("melee" = 60, "bullet" = 40, "laser" = 40, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	strip_delay = 130
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+//We can either be alive monsters or dead monsters. You choose.
+/obj/item/clothing/head/helmet/space/hardsuit/combatmedic
+	name = "endemic combat medic helmet"
+	desc = "The integrated helmet of the combat medic hardsuit, this has a bright, glowing facemask."
+	icon_state = "hardsuit0-combatmedic"
+	item_state = "hardsuit0-combatmedic"
+	armor = list("melee" = 40, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 20, "bio" = 70, "rad" = 50, "fire" = 30, "acid" = 50)
+	hardsuit_type = "combatmedic"
+
+/obj/item/clothing/suit/space/hardsuit/combatmedic
+	name = "endemic combat medic hardsuit"
+	desc = "The standard issue hardsuit of infectious disease officers, before the formation of ERT teams. This model is labeled 'Veradux'."
+	icon_state = "combatmedic"
+	item_state = "combatmedic"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/combatmedic
+	armor = list("melee" = 40, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 20, "bio" = 70, "rad" = 50, "fire" = 30, "acid" = 50)
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
+	allowed = list(/obj/item/gun, /obj/item/melee/baton, /obj/item/twohanded/fireaxe, /obj/item/tank/internals)
