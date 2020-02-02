@@ -83,7 +83,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	attack_verb = list("devastated", "brutalized", "committed a war crime against", "obliterated", "humiliated")
 	tool_behaviour = null
-	toolspeed = 0
+	toolspeed = null
 	var/on = FALSE
 
 /obj/item/wrench/combat/ComponentInitialize()
