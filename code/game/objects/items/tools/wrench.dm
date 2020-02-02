@@ -79,14 +79,14 @@
 	name = "combat wrench"
 	desc = "It's like a normal wrench but edgier. Can be found on the battlefield."
 	icon_state = "wrench_combat"
-	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	item_state = "wrench_combat"
 	attack_verb = list("devastated", "brutalized", "committed a war crime against", "obliterated", "humiliated")
 	tool_behaviour = null
 	toolspeed = null
 	var/on = FALSE
 
 /obj/item/wrench/combat/ComponentInitialize()
+	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/wrench/combat/attack_self(mob/living/user)
@@ -112,12 +112,8 @@
 
 /obj/item/wrench/combat/update_icon_state()
 	if(on)
-		icon_state = "combat_wrench_on"
-		item_state = "combat_wrench_on"
-		lefthand_file = "[initial(item_state)]1"
-		righthand_file = "[initial(item_state)]1"
+		icon_state = "[initial(icon_state)]_on"
+		item_state = "[initial(item_state)]1"
 	else
-		icon_state = initial(icon_state)
-		item_state = initial(item_state)
-		lefthand_file = "[initial(item_state)]"
-		righthand_file = "[initial(item_state)]"
+		icon_state = "[initial(icon_state)]"
+		item_state = "[initial(item_state)]"
