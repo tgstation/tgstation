@@ -330,15 +330,15 @@
 	. = ..()
 
 /obj/item/reagent_containers/food/drinks/waterbottle/attack(mob/target, mob/user, def_zone)
-	if(cap_on && reagents.total_volume && istype(target))
-		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
+	if(!target)
 		return
 
 	if(user.a_intent != INTENT_HARM)
-		return ..()
+		if(cap_on && reagents.total_volume && istype(target))
+			to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
+			return
 
-	if(!target)
-		return
+		return ..()
 
 	if(!cap_on)
 		SplashReagents(target)
