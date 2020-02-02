@@ -1,5 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - rscadd: "Clicking a pack of seeds with a pen allows you to set the plant's name, description and the pack of seeds' description. Useful for differentiating genetically modified plants. These changes will persist through different generations of the plant."
-  - rscadd: "Hydroponics trays update their name and description to reflect the plant inside them. They revert to default when emptied."

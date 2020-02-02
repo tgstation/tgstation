@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - bugfix: "Positronics no longer have MMIs visually spawn on them."
