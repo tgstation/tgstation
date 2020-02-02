@@ -9073,6 +9073,7 @@
 /obj/machinery/atmospherics/pipe/simple/dark/hidden/layer1{
 	dir = 4
 	},
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "ayQ" = (
@@ -10884,11 +10885,11 @@
 	name = "Unisex Restroom"
 	},
 /turf/open/floor/plasteel/freezer,
-/area/security/prison)
+/area/security/prison/toilet)
 "aDS" = (
 /obj/structure/toilet,
 /turf/open/floor/plasteel/freezer,
-/area/security/prison)
+/area/security/prison/toilet)
 "aDT" = (
 /obj/structure/sink{
 	dir = 8;
@@ -10981,7 +10982,7 @@
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/freezer,
-/area/security/prison)
+/area/security/prison/toilet)
 "aEf" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -18561,6 +18562,7 @@
 	dir = 9
 	},
 /obj/structure/cable,
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aZz" = (
@@ -18596,6 +18598,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 9
 	},
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aZD" = (
@@ -21675,7 +21678,7 @@
 "bhp" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/freezer,
-/area/security/prison)
+/area/security/prison/toilet)
 "bhq" = (
 /obj/structure/table,
 /obj/machinery/recharger,
@@ -47861,6 +47864,9 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"rrH" = (
+/turf/open/floor/plasteel/freezer,
+/area/security/prison/toilet)
 "rrR" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
@@ -102743,7 +102749,7 @@ aZE
 arp
 arq
 aDR
-arq
+rrH
 aDQ
 aDQ
 baB
@@ -103000,8 +103006,8 @@ aeQ
 afq
 aiN
 aiN
-arq
-arq
+rrH
+rrH
 aij
 bDI
 aNZ
@@ -103257,7 +103263,7 @@ aeZ
 afx
 aiN
 aDS
-arq
+rrH
 bhp
 aij
 aEb
@@ -103514,7 +103520,7 @@ aeZ
 afy
 aiN
 aDS
-arq
+rrH
 aEe
 aij
 aaa
