@@ -226,7 +226,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ABYSSAL_GAZE_BLIND "abyssal_gaze"
 #define HIGHLANDER "highlander"
 #define TRAIT_HULK "hulk"
-#define STASIS_MUTE "stasis"
+#define POSSESSION_CRYSTAL_TRAIT "possession_crystal"
 #define GENETICS_SPELL "genetics_spell"
 #define EYES_COVERED "eyes_covered"
 #define CULT_EYES "cult_eyes"

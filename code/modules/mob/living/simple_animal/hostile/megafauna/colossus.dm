@@ -761,7 +761,7 @@ Difficulty: Very Hard
 	if(isliving(A) && holder_animal)
 		var/mob/living/L = A
 		L.notransform = 1
-		ADD_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
+		ADD_TRAIT(L, TRAIT_MUTE, POSSESSION_CRYSTAL_TRAIT)
 		L.status_flags |= GODMODE
 		L.mind.transfer_to(holder_animal)
 		var/obj/effect/proc_holder/spell/targeted/exit_possession/P = new /obj/effect/proc_holder/spell/targeted/exit_possession
@@ -771,7 +771,7 @@ Difficulty: Very Hard
 /obj/structure/closet/stasis/dump_contents(var/kill = 1)
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/L in src)
-		REMOVE_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
+		REMOVE_TRAIT(L, TRAIT_MUTE, POSSESSION_CRYSTAL_TRAIT)
 		L.status_flags &= ~GODMODE
 		L.notransform = 0
 		if(holder_animal)
