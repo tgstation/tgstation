@@ -290,8 +290,8 @@
 		if(!can_hit_target(M, permutated, M == original, TRUE))
 			continue
 		mobs += M
-	var/mob/M = safepick(mobs)
-	if(M)
+	if (length(mobs))
+		var/mob/M = pick(mobs)
 		return M.lowest_buckled_mob()
 	var/list/obj/possible_objs = typecache_filter_list(T, GLOB.typecache_machine_or_structure)
 	var/list/obj/objs = list()
@@ -299,8 +299,8 @@
 		if(!can_hit_target(O, permutated, O == original, TRUE))
 			continue
 		objs += O
-	var/obj/O = safepick(objs)
-	if(O)
+	if (length(objs))
+		var/obj/O = pick(objs)
 		return O
 	//Nothing else is here that we can hit, hit the turf if we haven't.
 	if(!(T in permutated) && can_hit_target(T, permutated, T == original, TRUE))

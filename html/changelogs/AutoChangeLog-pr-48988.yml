@@ -1,0 +1,4 @@
+author: "danxensen"
+delete-after: True
+changes: 
+  - bugfix: "fixed late join menu to work when AI is disabled"

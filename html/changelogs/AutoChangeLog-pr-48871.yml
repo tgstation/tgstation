@@ -1,0 +1,4 @@
+author: "TheChosenEvilOne"
+delete-after: True
+changes: 
+  - bugfix: "Atmospheric reaction priority works correctly now, this means hypernob will stop all reactions and reactions should generally be more consistent between rounds."
