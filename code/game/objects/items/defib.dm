@@ -584,8 +584,6 @@
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's heart too damaged, replace or repair and try again.</span>"
 				else if(total_burn >= MAX_REVIVE_FIRE_DAMAGE || total_brute >= MAX_REVIVE_BRUTE_DAMAGE || HAS_TRAIT(H, TRAIT_HUSK))
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Tissue damage too severe, repair and try again.</span>"
-				else if(H.get_ghost())
-					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - No activity in patient's brain. Further attempts may be successful.</span>"
 				else
 					var/obj/item/organ/brain/BR = H.getorgan(/obj/item/organ/brain)
 					if(BR)
@@ -614,6 +612,7 @@
 					user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful.</span>")
 					playsound(src, 'sound/machines/defib_success.ogg', 50, FALSE)
 					H.set_heartattack(FALSE)
+					H.grab_ghost()
 					H.revive(full_heal = FALSE, admin_revive = FALSE)
 					H.emote("gasp")
 					H.Jitter(100)

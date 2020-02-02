@@ -119,7 +119,8 @@
 			return
 
 		user.visible_message("<span class='notice'>[user] pours the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.</span>", "<span class='notice'>You pour the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.</span>")
-		setOrganDamage(damage - (0.05 * maxHealth))	//heals a small amount, and by using "setorgandamage", we clear the failing variable if that was up
+		var/healby = O.reagents.get_reagent_amount(/datum/reagent/medicine/mannitol)
+		setOrganDamage(damage - healby*2)	//heals 2 damage per unit of mannitol, and by using "setorgandamage", we clear the failing variable if that was up
 		O.reagents.clear_reagents()
 		return
 
@@ -133,29 +134,18 @@
 
 /obj/item/organ/brain/examine(mob/user)
 	. = ..()
-
 	if(suicided)
 		. += "<span class='info'>It's started turning slightly grey. They must not have been able to handle the stress of it all.</span>"
-	else if(brainmob)
-		if(brainmob.get_ghost(FALSE, TRUE))
-			if(brainmob.health <= HEALTH_THRESHOLD_DEAD)
-				. += "<span class='info'>It's lifeless and severely damaged.</span>"
-			else if(organ_flags & ORGAN_FAILING)
-				. += "<span class='info'>It seems to still have a bit of energy within it, but it's rather damaged... You may be able to restore it with some <b>mannitol</b>.</span>"
-			else
-				. += "<span class='info'>You can feel the small spark of life still left in this one.</span>"
-		else if(organ_flags & ORGAN_FAILING)
-			. += "<span class='info'>It seems particularly lifeless and is rather damaged... You may be able to restore it with some <b>mannitol</b> incase it becomes functional again later.</span>"
+		return
+	if((brainmob && (brainmob.client || brainmob.get_ghost())) || decoy_override)
+		if(organ_flags & ORGAN_FAILING)
+			. += "<span class='info'>It seems to still have a bit of energy within it, but it's rather damaged... You may be able to restore it with some <b>mannitol</b>.</span>"
+		else if(damage >= BRAIN_DAMAGE_DEATH*0.5)
+			. += "<span class='info'>You can feel the small spark of life still left in this one, but it's got some bruises. You may be able to restore it with some <b>mannitol</b>.</span>"
 		else
-			. += "<span class='info'>This one seems particularly lifeless. Perhaps it will regain some of its luster later.</span>"
+			. += "<span class='info'>You can feel the small spark of life still left in this one.</span>"
 	else
-		if(decoy_override)
-			if(organ_flags & ORGAN_FAILING)
-				. += "<span class='info'>It seems particularly lifeless and is rather damaged... You may be able to restore it with some <b>mannitol</b> incase it becomes functional again later.</span>"
-			else
-				. += "<span class='info'>This one seems particularly lifeless. Perhaps it will regain some of its luster later.</span>"
-		else
-			. += "<span class='info'>This one is completely devoid of life.</span>"
+		. += "<span class='info'>This one is completely devoid of life.</span>"
 
 /obj/item/organ/brain/attack(mob/living/carbon/C, mob/user)
 	if(!istype(C))
