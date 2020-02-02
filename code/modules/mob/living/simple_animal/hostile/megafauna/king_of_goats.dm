@@ -78,6 +78,8 @@ Difficulty: Insanely Hard
 	icon_state = "king_goat2"
 	icon_living = "king_goat2"
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 4, /obj/item/clothing/head/goatpelt/king = 1)
+	achievement_type = /datum/award/achievement/boss/king_goat_kill
+	crusher_achievement_type = /datum/award/achievement/boss/king_goat_crusher
 	health = 750
 	maxHealth = 750
 	armour_penetration = 50
@@ -85,6 +87,7 @@ Difficulty: Insanely Hard
 	melee_damage_upper = 60
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
 	pixel_y = 5
+	crusher_loot = list(/obj/item/crusher_trophy/king_goat)
 
 	var/spellscast = 0
 	var/phase3 = FALSE
@@ -166,7 +169,7 @@ Difficulty: Insanely Hard
 /mob/living/simple_animal/hostile/megafauna/king/phase2/Retaliate()
 	set waitfor = FALSE
 	..()
-	if(spellscast < 10)
+	if(spellscast < 5)
 		if(prob(5) && move_to_delay >= 3) //speed buff
 			spellscast++
 			visible_message("<span class='cult'>\The [src] shimmers and seems to phase in and out of reality itself!</span>")
@@ -271,15 +274,15 @@ Difficulty: Insanely Hard
 				continue
 			L.stop_sound_channel(CHANNEL_JUKEBOX)
 	if(move_to_delay < 3)
-		move_to_delay += 0.1
-	if((health <= 150 && !phase3 && spellscast == 10) || (stat == DEAD && !phase3)) //begin phase 3, reset spell limit and heal
+		move_to_delay += 0.2
+	if((health <= 150 && !phase3 && spellscast == 5) || (stat == DEAD && !phase3)) //begin phase 3, reset spell limit and heal
 		phase3_transition()
 	if(!.)
 		return FALSE
-	if(special_attacks >= 10 && melee_damage_type != BRUTE)
+	if(special_attacks >= 5 && melee_damage_type != BRUTE)
 		visible_message("<span class='cult'>The energy surrounding \the [src]'s horns dissipates.</span>")
 		melee_damage_type = BRUTE
-	if(special_attacks >= 10 && melee_damage_lower == 50)
+	if(special_attacks >= 5 && melee_damage_lower == 50)
 		visible_message("<span class='cult'>The [src]' horns shrink back down to normal size.</span>")
 		melee_damage_lower = 40
 
