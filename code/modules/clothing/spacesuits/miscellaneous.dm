@@ -445,4 +445,5 @@ Contains:
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/combatmedic
 	armor = list("melee" = 40, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 20, "bio" = 70, "rad" = 50, "fire" = 30, "acid" = 50)
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
-	allowed = list(/obj/item/gun, /obj/item/melee/baton, /obj/item/twohanded/fireaxe, /obj/item/tank/internals)
+	allowed = list(/obj/item/gun, /obj/item/melee/baton, /obj/item/twohanded/fireaxe, /obj/item/tank/internals, /obj/item/storage/box/pillbottles,\
+	/obj/item/storage/firstaid, /obj/item/stack/medical/gauze, /obj/item/stack/medical/suture, /obj/item/stack/medical/mesh, /obj/item/storage/bag/chemistry)
