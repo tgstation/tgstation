@@ -35,7 +35,8 @@
 	var/negative_cash_offset = 0
 	var/minor_rewards = list(/obj/item/stack/circuit_stack/full,	//To add a new minor reward, add it here.
 					/obj/item/airlock_painter/decal,
-					/obj/item/pen/survival)
+					/obj/item/pen/survival,
+					/obj/item/circuitboard/machine/sleeper/party)
 	var/static/list/item_list = list()
 
 /obj/machinery/rnd/bepis/attackby(obj/item/O, mob/user, params)
@@ -148,18 +149,6 @@
 		var/reward = pick(minor_rewards)
 		new reward(dropturf)
 		say("Experiment concluded with partial success. Dispensing compiled research efforts.")
-<<<<<<< HEAD
-		reward_number = rand(1,4)
-		if(reward_number == 1)
-			new /obj/item/stack/circuit_stack/full(dropturf)
-		if(reward_number == 2)
-			new /obj/item/airlock_painter/decal(dropturf)
-		if(reward_number == 3)
-			new /obj/item/pen/survival(dropturf)
-		if(reward_number == 4)
-			new /obj/item/circuitboard/machine/sleeper/party(dropturf)
-=======
->>>>>>> upstream/master
 		return
 	if(gauss_real <= -1)	//Critical Failure
 		say("ERROR: CRITICAL MACHIME MALFUNCTI- ON. CURRENCY IS NOT CRASH. CANNOT COMPUTE COMMAND: 'make bucks'") //not a typo, for once.
