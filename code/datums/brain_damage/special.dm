@@ -125,7 +125,7 @@
 	desc = "Patient is prone to frequent spontaneous quantum entanglement, against all odds, causing spatial anomalies."
 	scan_desc = "quantum alignment"
 	gain_text = "<span class='notice'>You feel faintly connected to everything around you...</span>"
-	lose_text = "<span class='warning'>You no longer feel strangely connected to your surroundings.</span>"
+	lose_text = "<span class='warning'>You no longer feel connected to your surroundings.</span>"
 	var/atom/linked_target = null
 	var/linked = FALSE
 	var/returning = FALSE
