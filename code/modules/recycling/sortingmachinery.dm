@@ -19,12 +19,17 @@
 	var/turf/T = get_turf(src)
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(T)
-		SEND_SIGNAL(AM, COMSIG_ITEM_UNWRAPPED)
+	var/list/wrap_contents = src.GetAllContents()
+	for(var/atom/movable/I in reverseRange(wrap_contents))
+		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
 	return ..()
 
 /obj/structure/bigDelivery/contents_explosion(severity, target)
 	for(var/atom/movable/AM in contents)
 		AM.ex_act()
+	var/list/wrap_contents = src.GetAllContents()
+	for(var/atom/movable/I in reverseRange(wrap_contents))
+		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
 
 /obj/structure/bigDelivery/examine(mob/user)
 	. = ..()
@@ -97,7 +102,9 @@
 		sticker = new /obj/item/barcode(src)
 		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
 		sticker.percent_cut = tagger.percent_cut	//same, but for the percentage taken.
-		for(var/obj/I in reverseRange(contents))
+
+		var/list/wrap_contents = src.GetAllContents()
+		for(var/obj/I in reverseRange(wrap_contents))
 			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.percent_cut)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
@@ -164,7 +171,9 @@
 	for(var/X in contents)
 		var/atom/movable/AM = X
 		user.put_in_hands(AM)
-		SEND_SIGNAL(AM, COMSIG_ITEM_UNWRAPPED)
+	var/list/wrap_contents = src.GetAllContents()
+	for(var/atom/movable/I in reverseRange(wrap_contents))
+		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	qdel(src)
@@ -176,12 +185,14 @@
 		for(var/X in contents)
 			var/atom/movable/AM = X
 			M.put_in_hands(AM)
-			SEND_SIGNAL(AM, COMSIG_ITEM_UNWRAPPED)
 	else
 		for(var/X in contents)
 			var/atom/movable/AM = X
 			AM.forceMove(src.loc)
 			SEND_SIGNAL(AM, COMSIG_ITEM_UNWRAPPED)
+	var/list/wrap_contents = src.GetAllContents()
+	for(var/obj/I in reverseRange(wrap_contents))
+		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	qdel(src)
@@ -257,7 +268,9 @@
 		sticker = new /obj/item/barcode(src)
 		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
 		sticker.percent_cut = tagger.percent_cut	//as above, as before.
-		for(var/obj/I in reverseRange(contents))
+
+		var/list/wrap_contents = src.GetAllContents()
+		for(var/obj/I in reverseRange(wrap_contents))
 			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.percent_cut)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)

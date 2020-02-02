@@ -7,12 +7,11 @@
 		owner = _owner
 	if(_profit_ratio)
 		profit_ratio = _profit_ratio
-
-/datum/component/pricetag/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_SOLD, .proc/split_profit)
+	RegisterSignal(parent, COMSIG_ITEM_UNWRAPPED, .proc/Unwrapped)
 
-/datum/component/pricetag/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_UNWRAPPED))
+/datum/component/pricetag/proc/Unwrapped()
+	qdel(src) //Once it leaves it's wrapped container, the object in question should lose it's pricetag component.
 
 /datum/component/pricetag/proc/split_profit(var/item_value)
 	var/price = item_value
@@ -20,4 +19,3 @@
 		var/adjusted_value = price*(profit_ratio/100)
 		owner.adjust_money(adjusted_value)
 		owner.bank_card_talk("Sale recorded. [adjusted_value] credits added to account.")
-

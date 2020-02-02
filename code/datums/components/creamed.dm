@@ -53,9 +53,9 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 
 /datum/component/creamed/UnregisterFromParent()
 	UnregisterSignal(parent, list(
-		COMSIG_COMPONENT_CLEAN_ACT, 
+		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_COMPONENT_CLEAN_FACE_ACT))
-	
+
 ///Callback to remove pieface
 /datum/component/creamed/proc/clean_up(datum/source, strength)
 	if(strength >= CLEAN_WEAK)
