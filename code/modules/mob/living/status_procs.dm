@@ -439,7 +439,7 @@
 		update_body()
 	else
 		ADD_TRAIT(src, TRAIT_HUSK, source)
-	
+
 /mob/living/proc/cure_fakedeath(source)
 	REMOVE_TRAIT(src, TRAIT_FAKEDEATH, source)
 	REMOVE_TRAIT(src, TRAIT_DEATHCOMA, source)
@@ -456,6 +456,16 @@
 	ADD_TRAIT(src, TRAIT_DEATHCOMA, source)
 	tod = station_time_timestamp()
 	update_stat()
+
+/mob/living/proc/cure_stasis(source)
+	REMOVE_TRAIT(src, TRAIT_STASIS, source)
+	if(!HAS_TRAIT(src, TRAIT_STASIS))
+		remove_status_effect(STATUS_EFFECT_STASIS)
+
+/mob/living/proc/stasis(source)
+	ADD_TRAIT(src, TRAIT_STASIS, source)
+	if(!has_status_effect(STATUS_EFFECT_STASIS))
+		apply_status_effect(STATUS_EFFECT_STASIS, null, TRUE)
 
 /mob/living/proc/unignore_slowdown(source)
 	REMOVE_TRAIT(src, TRAIT_IGNORESLOWDOWN, source)
