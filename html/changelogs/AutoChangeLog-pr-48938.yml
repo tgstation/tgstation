@@ -1,0 +1,5 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - rscadd: "tgui-next NTOS card console, job manager, and crew manifest"
+  - tweak: "airlock electronics interface is a little fancier"

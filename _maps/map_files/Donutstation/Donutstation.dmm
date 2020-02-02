@@ -13118,7 +13118,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
 "aJV" = (
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/virology,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -29375,7 +29375,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bzR" = (
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/virology,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},

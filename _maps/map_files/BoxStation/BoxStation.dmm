@@ -36046,7 +36046,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/virology,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -36513,7 +36513,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bQH" = (
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/virology,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},

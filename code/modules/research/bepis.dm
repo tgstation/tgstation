@@ -4,6 +4,9 @@
 
 #define MACHINE_OPERATION 100000
 #define MACHINE_OVERLOAD 500000
+#define MAJOR_THRESHOLD 5500
+#define MINOR_THRESHOLD 3500
+#define STANDARD_DEVIATION 1000
 
 /obj/machinery/rnd/bepis
 	name = "\improper B.E.P.I.S. Chamber"
@@ -22,14 +25,17 @@
 	var/account_name					//name of the payer's account.
 	var/error_cause = null
 	//Vars related to probability and chance of success for testing
-	var/major_threshold = 6000
-	var/minor_threshold = 3000
-	var/std = 1000 //That's Standard Deviation, what did you think it was?
+	var/major_threshold = MAJOR_THRESHOLD
+	var/minor_threshold = MINOR_THRESHOLD
+	var/std = STANDARD_DEVIATION //That's Standard Deviation, what did you think it was?
 	//Stock part variables
 	var/power_saver = 1
 	var/inaccuracy_percentage = 1.5
 	var/positive_cash_offset = 0
 	var/negative_cash_offset = 0
+	var/minor_rewards = list(/obj/item/stack/circuit_stack/full,	//To add a new minor reward, add it here.
+					/obj/item/airlock_painter/decal,
+					/obj/item/pen/survival)
 	var/static/list/item_list = list()
 
 /obj/machinery/rnd/bepis/attackby(obj/item/O, mob/user, params)
@@ -139,8 +145,10 @@
 			say("Expended all available experimental technology nodes. Resorting to minor rewards.")
 		return
 	if(gauss_real >= gauss_minor) //Minor Success.
-		var/reward_number = 1
+		var/reward = pick(minor_rewards)
+		new reward(dropturf)
 		say("Experiment concluded with partial success. Dispensing compiled research efforts.")
+<<<<<<< HEAD
 		reward_number = rand(1,4)
 		if(reward_number == 1)
 			new /obj/item/stack/circuit_stack/full(dropturf)
@@ -150,6 +158,8 @@
 			new /obj/item/pen/survival(dropturf)
 		if(reward_number == 4)
 			new /obj/item/circuitboard/machine/sleeper/party(dropturf)
+=======
+>>>>>>> upstream/master
 		return
 	if(gauss_real <= -1)	//Critical Failure
 		say("ERROR: CRITICAL MACHIME MALFUNCTI- ON. CURRENCY IS NOT CRASH. CANNOT COMPUTE COMMAND: 'make bucks'") //not a typo, for once.

@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - balance: "B.E.P.I.S. Major reward techs are now slightly cheaper to offset the addition of new techs."
+  - code_imp: "It's now easier to make things B.E.P.I.S. minor rewards."
