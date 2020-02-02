@@ -42,6 +42,10 @@
 	.=..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT) //Cursed with the power of science, or something
 
+/obj/item/clothing/gloves/color/yellow/sprayon/equipped(mob/user, slot)
+	. = ..()
+	RegisterSignal(user, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/Shocked)
+
 /obj/item/clothing/gloves/color/yellow/sprayon/proc/Shocked()
 	shocks_remaining--
 	if(shocks_remaining < 0)
