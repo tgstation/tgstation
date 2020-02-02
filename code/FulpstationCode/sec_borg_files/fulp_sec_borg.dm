@@ -345,6 +345,7 @@
 	desc = "An integrated e-bola launcher that draws from a cyborg's power cell."
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
+	charge_delay = 8
 	ammo_type = list(/obj/item/ammo_casing/energy/bola)
 
 /obj/item/borg/upgrade/e_bola
@@ -377,7 +378,7 @@
 /obj/item/ammo_casing/energy/bola
 	projectile_type = /obj/projectile/energy/trap/cyborg
 	select_name = "bola"
-	e_cost = 250
+	e_cost = 400
 	harmful = FALSE
 
 //CYBORG PEPPERSPRAY IMPROVED SYNTHESIZER
