@@ -61,7 +61,7 @@
 /obj/machinery/stasis/Exited(atom/movable/AM, atom/newloc)
 	if(AM == occupant)
 		var/mob/living/L = AM
-		if(IS_IN_STASIS(L))
+		if(HAS_TRAIT(L, TRAIT_STASIS))
 			thaw_them(L)
 	. = ..()
 
@@ -144,9 +144,9 @@
 		return
 	var/mob/living/L_occupant = occupant
 	if(stasis_running())
-		if(!IS_IN_STASIS(L_occupant))
+		if(!HAS_TRAIT(L_occupant, TRAIT_STASIS))
 			chill_out(L_occupant)
-	else if(IS_IN_STASIS(L_occupant))
+	else if(HAS_TRAIT(L_occupant, TRAIT_STASIS))
 		thaw_them(L_occupant)
 
 /obj/machinery/stasis/screwdriver_act(mob/living/user, obj/item/I)

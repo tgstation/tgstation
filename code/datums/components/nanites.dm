@@ -108,7 +108,7 @@
 		adjust_nanites(null, arguments[1]) //just add to the nanite volume
 
 /datum/component/nanites/process()
-	if(!IS_IN_STASIS(host_mob))
+	if(!HAS_TRAIT(host_mob, TRAIT_STASIS))
 		adjust_nanites(null, regen_rate)
 		add_research()
 		for(var/X in programs)

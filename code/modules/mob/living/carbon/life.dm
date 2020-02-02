@@ -8,7 +8,7 @@
 		damageoverlaytemp = 0
 		update_damage_hud()
 
-	if(!IS_IN_STASIS(src))
+	if(!HAS_TRAIT(src, TRAIT_STASIS))
 
 		//Reagent processing needs to come before breathing, to prevent edge cases.
 		handle_organs()
