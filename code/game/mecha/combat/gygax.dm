@@ -56,7 +56,7 @@
 		C.forceMove(src)
 		cell = C
 		return
-	cell = new /obj/item/stock_parts/cell/super(src)
+	cell = new /obj/item/stock_parts/cell/bluespace(src)
 
 
 /obj/mecha/combat/gygax/GrantActions(mob/living/user, human_occupant = 0)
