@@ -297,7 +297,7 @@
 	user.cure_blind("blindfold_[REF(src)]")
 
 /obj/item/clothing/glasses/trickblindfold
-	name = "trick blindfold"
+	name = "blindfold"
 	desc = "A see-through blindfold perfect for cheating at games like pin the stun baton on the clown."
 	icon_state = "trickblindfold"
 	item_state = "blindfold"
