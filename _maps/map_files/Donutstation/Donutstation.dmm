@@ -18051,8 +18051,8 @@
 	},
 /area/medical/genetics)
 "aYg" = (
-/obj/effect/landmark/start/geneticist,
 /mob/living/carbon/monkey,
+/obj/effect/landmark/start/geneticist,
 /turf/open/floor/plasteel,
 /area/medical/genetics)
 "aYh" = (
