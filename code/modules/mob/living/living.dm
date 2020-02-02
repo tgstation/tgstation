@@ -1298,7 +1298,7 @@
 	return
 
 /mob/living/proc/set_name()
-	var/numba = rand(1, 1000)
+	numba = rand(1, 1000)
 	name = "[name] ([numba])"
 	real_name = name
 
