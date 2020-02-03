@@ -1587,6 +1587,7 @@
 #include "code\modules\cargo\bounties\slime.dm"
 #include "code\modules\cargo\bounties\special.dm"
 #include "code\modules\cargo\bounties\virus.dm"
+#include "code\modules\cargo\exports\food_and_drink.dm"
 #include "code\modules\cargo\exports\gear.dm"
 #include "code\modules\cargo\exports\large_objects.dm"
 #include "code\modules\cargo\exports\lavaland.dm"
