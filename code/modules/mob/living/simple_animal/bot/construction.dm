@@ -460,7 +460,7 @@
 	created_name = "Hygienebot"
 
 /obj/item/bot_assembly/hygienebot/attackby(obj/item/I, mob/user, params)
-	..()
+	. = ..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
 			if(I.tool_behaviour == TOOL_WELDER)
@@ -487,3 +487,4 @@
 				H.name = created_name
 				qdel(I)
 				qdel(src)
+				return TRUE

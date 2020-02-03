@@ -1055,6 +1055,19 @@
 		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN_FLYING)
 
 
+/mob/living/carbon/human/washed(var/atom/washer)
+	. = ..()
+	if(wear_suit)
+		update_inv_wear_suit()
+	else if(w_uniform)
+		update_inv_w_uniform()
+
+	if(!is_mouth_covered())
+		lip_style = null
+		update_body()
+	if(belt)
+		update_inv_belt()
+
 /mob/living/carbon/human/adjust_nutrition(var/change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
 		return FALSE

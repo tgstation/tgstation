@@ -1028,3 +1028,37 @@
 	if(mood)
 		if(mood.sanity < SANITY_UNSTABLE)
 			return TRUE
+
+/mob/living/carbon/washed(var/atom/washer)
+		. = ..()
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
+
+		for(var/obj/item/I in held_items)
+			I.washed(washer)
+
+		if(back)
+			update_inv_back(0)
+
+		var/list/obscured = check_obscured_slots()
+
+		if(head)
+			update_inv_head()
+
+		if(glasses && !(ITEM_SLOT_EYES in obscured))
+			update_inv_glasses()
+
+		if(wear_mask && !(ITEM_SLOT_MASK in obscured))
+			update_inv_wear_mask()
+
+		if(ears && !(HIDEEARS in obscured))
+			update_inv_ears()
+
+		if(wear_neck && !(ITEM_SLOT_NECK in obscured))
+			update_inv_neck()
+
+		if(shoes && !(HIDESHOES in obscured))
+			update_inv_shoes()
+
+		var/washgloves = FALSE
+		if(gloves && !(HIDEGLOVES in obscured))
+			washgloves = TRUE

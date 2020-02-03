@@ -860,6 +860,22 @@
 			color = C
 			return
 
+
+///Proc for being washed by a shower
+/atom/proc/washed(var/atom/washer)
+	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+	remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+
+	var/datum/component/radioactive/healthy_green_glow = thing.GetComponent(/datum/component/radioactive)
+	if(!healthy_green_glow || QDELETED(healthy_green_glow))
+		return
+	var/strength = healthy_green_glow.strength
+	if(strength <= RAD_BACKGROUND_RADIATION)
+		qdel(healthy_green_glow)
+		return
+	healthy_green_glow.strength -= max(0, (healthy_green_glow.strength - (RAD_BACKGROUND_RADIATION * 2)) * 0.2)
+
+
 /**
   * call back when a var is edited on this atom
   *
