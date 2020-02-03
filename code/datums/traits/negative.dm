@@ -519,7 +519,6 @@
 	accessory_type = /obj/item/lighter/greyscale
 
 /datum/quirk/junkie/smoker/on_spawn()
-	quirk_holder.adjustOrganLoss(ORGAN_SLOT_LUNGS, STANDARD_ORGAN_THRESHOLD*0.2)
 	drug_container_type = pick(/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/fancy/cigarettes/cigpack_midori,
 		/obj/item/storage/fancy/cigarettes/cigpack_uplift,

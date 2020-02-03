@@ -395,18 +395,18 @@
 
 /obj/item/organ/lungs/on_life()
 	..()
-	if((!failed) && (damage > low_threshold))
-		if(damage > high_threshold)
-			if(prob(10))
-				owner.emote("cough")
-		else
+	if(!failed)
+		if((damage >= low_threshold) && (damage < high_threshold))
 			if(prob(5))
 				owner.emote("cough")
-	if((!failed) && ((organ_flags & ORGAN_FAILING)))
-		if(owner.stat == CONSCIOUS)
-			owner.visible_message("<span class='danger'>[owner] grabs [owner.p_their()] throat, struggling for breath!</span>", \
-								"<span class='userdanger'>You suddenly feel like you can't breathe!</span>")
-		failed = TRUE
+		if(damage >= high_threshold)
+			if(prob(10))
+				owner.emote("cough")
+		if(organ_flags & ORGAN_FAILING)
+			if(owner.stat == CONSCIOUS)
+				owner.visible_message("<span class='danger'>[owner] grabs [owner.p_their()] throat, struggling for breath!</span>", \
+									"<span class='userdanger'>You suddenly feel like you can't breathe!</span>")
+			failed = TRUE
 	else if(!(organ_flags & ORGAN_FAILING))
 		failed = FALSE
 	return
