@@ -44,22 +44,23 @@
 
 
 /obj/machinery/portable_atmospherics/ventcap/RefreshParts()
-	var/list/pinfo = list()
-		
+	var/list/part_number = list(bin = 0, capacitor = 0, laser = 0) // Done this way so part numbers can be balanced more easily, as assumed part numbers are not baked in to the code.
+	var/list/part_rating = list(bin = 0, capacitor = 0, laser = 0) // Also it's resistant to bugs/features that add extra parts to machines.
+
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		pinfo[1]++
-		pinfo["[pinfo[1]]"] += M.rating
+		part_number[bin]++
+		part_rating[bin] += M.rating
 	for(var/obj/item/stock_parts/capacitor/M in component_parts)
-		pinfo[1]++
-		pinfo["[pinfo[1]]"] += M.rating
+		part_number[capacitor]++
+		part_rating[capacitor] += M.rating
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
-		pinfo[1]++
-		pinfo["[pinfo[1]]"] += M.rating
+		part_number[laser]++
+		part_rating[laser] += M.rating
 	
-	pressure_limit = initial(pressure_limit) * (1 + ((pinfo[1] / pinfo["[pinfo[1]]"]) - 1)/3) // Pressure limit up to doubles with better matter bins.
+	pressure_limit = initial(pressure_limit) * (1 + ((part_number[bin] / part_rating[bin]) - 1)/3) // Pressure limit up to doubles with better matter bins.
 	emergency_vent_pressure = pressure_limit * 4 // Emergency vent pressure is always 4x the pressure limit.
-	power_usage_mult = initial(power_usage_mult) * (pinfo[3] / pinfo["[pinfo[3]]"]) / (pinfo[2] / pinfo["[pinfo[2]]"]) // Power usage increases with better lasers and is mitigated by capacitors.
-	exponential_percentage = initial(exponential_percentage) * (pinfo[3] / pinfo["[pinfo[3]]"]) // Growth rate increases up to 4x with better lasers.
+	power_usage_mult = initial(power_usage_mult) * (part_number[laser] / part_rating[laser]) / (part_number[capacitor] / part_rating[capacitor]) // Power usage increases with better lasers and is mitigated by capacitors.
+	exponential_percentage = initial(exponential_percentage) * (part_number[laser] / part_rating[laser]) // Growth rate increases up to 4x with better lasers.
 	
 
 /obj/machinery/portable_atmospherics/ventcap/process_atmos()
