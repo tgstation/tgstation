@@ -39,7 +39,6 @@
 		/obj/item/reagent_containers/food/snacks/donkpocket,
 		/obj/item/reagent_containers/food/snacks/cookie,
 		/obj/item/reagent_containers/food/snacks/popcorn,
-		/obj/item/reagent_containers/food/snacks/canned/peaches/maint,
 		/obj/item/reagent_containers/food/snacks/breadslice,	//same reasoning as cake slices, but breads are cheaper.
 		/obj/item/reagent_containers/food/snacks/tofu,
 		/obj/item/reagent_containers/food/snacks/spiderleg,
@@ -56,13 +55,20 @@
 		/obj/item/reagent_containers/food/snacks/tortilla,
 		/obj/item/reagent_containers/food/snacks/pineappleslice,
 		/obj/item/reagent_containers/food/snacks/tinychocolate,
-		/obj/item/reagent_containers/food/snacks/canned/beans,
 		/obj/item/reagent_containers/food/snacks/fortunecookie,
 		/obj/item/reagent_containers/food/snacks/pie/plain,
 		/obj/item/reagent_containers/food/snacks/salad/ricebowl,
 		/obj/item/reagent_containers/food/snacks/salad/boiledrice,
 		/obj/item/reagent_containers/food/snacks/twobread,
-		/obj/item/reagent_containers/food/snacks/soup/wish)
+		/obj/item/reagent_containers/food/snacks/soup/wish,
+		/obj/item/reagent_containers/food/snacks/fries,
+		/obj/item/reagent_containers/food/snacks/carrotfries,
+		/obj/item/reagent_containers/food/snacks/tatortot,
+		/obj/item/reagent_containers/food/snacks/boiledegg,
+		/obj/item/reagent_containers/food/snacks/onionrings,
+		/obj/item/reagent_containers/food/snacks/yakiimo,
+		/obj/item/reagent_containers/food/snacks/spaghetti/boiledspaghetti,
+		/obj/item/reagent_containers/food/snacks/faggot)
 	include_subtypes = TRUE
 
 //Tier 2: Fast Food.
@@ -83,33 +89,27 @@
 		/obj/item/reagent_containers/food/snacks/burger/rat,
 		/obj/item/reagent_containers/food/snacks/burger/empoweredburger,
 		/obj/item/reagent_containers/food/snacks/burger/cheese,
-		/obj/item/reagent_containers/food/snacks/faggot,
 		/obj/item/reagent_containers/food/snacks/sausage,
 		/obj/item/reagent_containers/food/snacks/nugget,
+		/obj/item/reagent_containers/food/snacks/canned/peaches/maint,
+		/obj/item/reagent_containers/food/snacks/canned/beans,
 		/obj/item/reagent_containers/food/snacks/kebab/human,
 		/obj/item/reagent_containers/food/snacks/kebab/tofu,
 		/obj/item/reagent_containers/food/snacks/kebab/rat,
 		/obj/item/reagent_containers/food/snacks/kebab/monkey,
 		/obj/item/reagent_containers/food/snacks/butter/on_a_stick,
 		/obj/item/reagent_containers/food/snacks/friedegg,
-		/obj/item/reagent_containers/food/snacks/boiledegg,
 		/obj/item/reagent_containers/food/snacks/icecreamsandwich,
 		/obj/item/reagent_containers/food/snacks/spidereggsham,
 		/obj/item/reagent_containers/food/snacks/pigblanket,
-		/obj/item/reagent_containers/food/snacks/chocolatebar,
 		/obj/item/reagent_containers/food/snacks/loadedbakedpotato,
 		/obj/item/reagent_containers/food/snacks/pancakes,
 		/obj/item/reagent_containers/food/snacks/store/cheesewheel,
-		/obj/item/reagent_containers/food/snacks/fries,
 		/obj/item/reagent_containers/food/snacks/cheesyfries,
-		/obj/item/reagent_containers/food/snacks/carrotfries,
-		/obj/item/reagent_containers/food/snacks/tatortot,
 		/obj/item/reagent_containers/food/snacks/eggplantparm,
-		/obj/item/reagent_containers/food/snacks/yakiimo,
 		/obj/item/reagent_containers/food/snacks/roastparsnip,
 		/obj/item/reagent_containers/food/snacks/nachos,
 		/obj/item/reagent_containers/food/snacks/branrequests,
-		/obj/item/reagent_containers/food/snacks/onionrings,
 		/obj/item/reagent_containers/food/snacks/donut/meat,
 		/obj/item/reagent_containers/food/snacks/donut/berry,
 		/obj/item/reagent_containers/food/snacks/donut/jelly/berry,
@@ -135,7 +135,6 @@
 		/obj/item/reagent_containers/food/snacks/toastedsandwich,
 		/obj/item/reagent_containers/food/snacks/grilledcheese,
 		/obj/item/reagent_containers/food/snacks/butteredtoast,
-		/obj/item/reagent_containers/food/snacks/spaghetti/boiledspaghetti,
 		/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato,
 		/obj/item/reagent_containers/food/snacks/spaghetti/butternoodles,
 		/obj/item/reagent_containers/food/snacks/spaghetti/meatballspaghetti,
@@ -283,6 +282,7 @@
 		/obj/item/reagent_containers/food/snacks/store/cake/vanilla_cake,
 		/obj/item/reagent_containers/food/snacks/store/cake/clown_cake,
 		/obj/item/reagent_containers/food/snacks/store/cake/trumpet,
+		/obj/item/reagent_containers/food/snacks/store/cake/hardware_cake,
 		/obj/item/reagent_containers/food/snacks/benedict,
 		/obj/item/reagent_containers/food/snacks/honkdae,
 		/obj/item/reagent_containers/food/snacks/cubancarp,
@@ -353,10 +353,9 @@
 //But, if you know a guy, who knows a guy, he might just take it off your hands for ya, for a pretty good price, too.
 /datum/export/food/illegal
 	cost = 500
-	message = "of quote-enquote 'food'"
+	message = "of quote-unquote 'food'"
 	export_category = EXPORT_CONTRABAND
 	export_types = list(
 		/obj/item/reagent_containers/food/snacks/store/cake/birthday/energy,
-		/obj/item/reagent_containers/food/snacks/store/cake/hardware_cake,
 		/obj/item/reagent_containers/food/snacks/pizza/arnold)
 	include_subtypes = TRUE
