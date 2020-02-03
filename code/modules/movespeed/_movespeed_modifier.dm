@@ -70,7 +70,10 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 	var/datum/movespeed_modifier/M = modtype
 	if(initial(M.variable))
 		CRASH("[modtype] is a variable modifier, and can never be cached.")
-	return GLOB.movespeed_modification_cache[modtype] || (GLOB.movespeed_modification_cache[modtype] = new modtype)
+	M = GLOB.movespeed_modification_cache[modtype]
+	if(!M)
+		M = GLOB.movespeed_modification_cache[modtype] = new modtype
+	return M
 
 ///Add a move speed modifier to a mob. If a variable subtype is passed in as the first argument, it will make a new datum. If ID conflicts, it will overwrite the old ID.
 /mob/proc/add_movespeed_modifier(datum/movespeed_modifier/type_or_datum, update = TRUE)
@@ -85,7 +88,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 			return TRUE
 		remove_movespeed_modifier(existing, FALSE)
 	if(length(movespeed_modification))
-		BINARY_INSERT(type_or_datum.id, movespeed_modification, datum/movespeed_modifier, type_or_datum, priority, __BIN_LIST[__BIN_LIST[__BIN_MID]])
+		BINARY_INSERT(type_or_datum.id, movespeed_modification, datum/movespeed_modifier, type_or_datum, priority, COMPARE_VALUE)
 	LAZYSET(movespeed_modification, type_or_datum.id, type_or_datum)
 	if(update)
 		update_movespeed()
