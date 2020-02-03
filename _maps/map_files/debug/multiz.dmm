@@ -1216,8 +1216,7 @@
 /turf/open/floor/plating,
 /area/engine/storage)
 "jD" = (
-/obj/structure/fluff/railing/corner{
-	icon_state = "railing_corner";
+/obj/structure/railing/corner{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -1242,6 +1241,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
+"km" = (
+/obj/structure/railing/corner,
+/turf/open/floor/plating,
+/area/construction)
 "lm" = (
 /obj/machinery/light{
 	dir = 1
@@ -1531,8 +1534,7 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "CP" = (
-/obj/structure/fluff/railing{
-	icon_state = "railing";
+/obj/structure/railing{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -1608,8 +1610,7 @@
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "In" = (
-/obj/structure/fluff/railing{
-	icon_state = "railing";
+/obj/structure/railing{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -1699,8 +1700,7 @@
 /turf/open/floor/plating,
 /area/engine/storage)
 "Pm" = (
-/obj/structure/fluff/railing/corner{
-	icon_state = "railing_corner";
+/obj/structure/railing/corner{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1735,6 +1735,12 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"Se" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/construction)
 "St" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -1744,8 +1750,7 @@
 /turf/open/floor/plasteel,
 /area/construction)
 "Tf" = (
-/obj/structure/fluff/railing{
-	icon_state = "railing";
+/obj/structure/railing{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -2884,7 +2889,7 @@ dn
 dn
 dn
 dn
-dn
+km
 In
 jD
 dL
@@ -2992,7 +2997,7 @@ dn
 dn
 dn
 dn
-dn
+Se
 CP
 Pm
 ij
