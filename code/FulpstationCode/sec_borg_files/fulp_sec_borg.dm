@@ -55,15 +55,17 @@
 	R.cell.use(charge_cost)
 	reagents.add_reagent(generate_type, generate_amount)
 
-
-//SEC CAMERA UPLINK UPGRADE
+//*******************************************
+//SEC CAMERA UPLINK ITEM AND UPGRADE - BEGINS
+//*******************************************
 
 /obj/item/handheld_camera_monitor/cyborg
 
 	name = "security camera remote uplink"
-	desc = "Used to access the various cameras on the station."
+	desc = "Used to remotely access the station's camera network."
 	icon = 'icons/obj/device.dmi'
 	icon_state	= "camera_bug"
+	actions_types = list(/datum/action/item_action/camera_uplink)
 	var/sound = SEC_BODY_CAM_SOUND
 
 /obj/item/handheld_camera_monitor/cyborg/attack_self(mob/user)
@@ -81,142 +83,35 @@
 
 	return
 
-/* //Keeping this here but commented just in case unforeseen bugs make this remote access solution untenable.
-/obj/item/handheld_camera_monitor/cyborg/Initialize()
-	. = ..()
-	for(var/i in network)
-		network -= i
-		network += lowertext(i)
+/obj/machinery/computer/security/proc/check_handheld_camera_monitor(mob/user) //Checks for a handheld camera uplink when using camera monitors.
+	if(user.check_for_item(/obj/item/handheld_camera_monitor))
+		return TRUE
+	return FALSE
 
-/obj/item/handheld_camera_monitor/cyborg/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
-	for(var/i in network)
-		network -= i
-		network += "[idnum][i]"
-
-/obj/item/handheld_camera_monitor/cyborg/check_eye(mob/user)
-	if( user.incapacitated() || user.eye_blind )
-		cancel_camera_view(user)
-		return
-	if(!(user in watchers))
-		cancel_camera_view(user)
-		return
-	if(!watchers[user])
-		cancel_camera_view(user)
-		return
-	var/obj/machinery/camera/C = watchers[user]
-	if(!C.can_use())
-		cancel_camera_view(user)
-		return
-	if(iscyborg(user) || long_ranged)
-		var/list/viewing = viewers(src)
-		if(!viewing.Find(user))
-			cancel_camera_view(user)
-		return
-	if(!issilicon(user) && !Adjacent(user))
-		cancel_camera_view(user)
-		return
-
-/obj/item/handheld_camera_monitor/cyborg/proc/cancel_camera_view(mob/user)
-	watchers.Remove(user)
-	user.reset_perspective(null)
-
-/obj/item/handheld_camera_monitor/cyborg/Destroy()
-	if(watchers.len)
-		for(var/mob/M in watchers)
-			cancel_camera_view(M) //to properly reset the view of the users if the console is deleted.
-	return ..()
-
-/obj/item/handheld_camera_monitor/cyborg/attack_self(mob/user)
-	if (ismob(user) && !isliving(user)) // ghosts don't need cameras
-		return
-	if (!network)
-		cancel_camera_view(user)
-		CRASH("No camera network")
-	if (!(islist(network)))
-		cancel_camera_view(user)
-		CRASH("Camera network is not a list")
+/obj/item/handheld_camera_monitor/cyborg/camera_uplink/ui_action_click()
 	if(..())
-		cancel_camera_view(user)
 		return
-
-	check_bodycamera_unlock(user) ///Fulpstation Sec Bodycamera PR - Surrealistik Oct 2019; allows access to the body camera network with Sec access.
-	var/list/camera_list = get_available_cameras()
-	if(!(user in watchers))
-		for(var/Num in camera_list)
-			var/obj/machinery/camera/CAM = camera_list[Num]
-			if(istype(CAM))
-				if(CAM.can_use())
-					watchers[user] = CAM //let's give the user the first usable camera, and then let him change to the camera he wants.
-					break
-		if(!(user in watchers))
-			cancel_camera_view(user) // no usable camera on the network, we disconnect the user from the computer.
-			return
-	playsound(loc, sound, get_clamped_volume(), TRUE, -1)
-	use_camera_console(user)
-
-/obj/item/handheld_camera_monitor/cyborg/proc/use_camera_console(mob/user)
-	check_bodycamera_unlock(user) ///Fulpstation Sec Bodycamera PR - Surrealistik Oct 2019; allows access to the body camera network with Sec access.
-	var/list/camera_list = get_available_cameras()
-	var/t = input(user, "Which camera should you change to?") as null|anything in camera_list
-
-	if(!t)
-		cancel_camera_view(user)
-		playsound(src, sound, 25, FALSE)
+	if(!issilicon(usr))
 		return
-
-	var/obj/machinery/camera/C = camera_list[t]
-
-	if(t == "Cancel")
-		cancel_camera_view(user)
-		playsound(src, sound, 25, FALSE)
+	var/obj/item/handheld_camera_monitor/cyborg/PP = usr.check_for_item(/obj/item/handheld_camera_monitor)
+	if(!PP)
 		return
-	if(C)
-		var/camera_fail = 0
-		if(!C.can_use() || user.eye_blind || user.incapacitated())
-			camera_fail = 1
+	PP.attack_self(usr)
 
-		if(camera_fail)
-			cancel_camera_view(user)
-			return 0
+/datum/action/item_action/camera_uplink
+	name = "Camera Uplink"
+	desc = "Uplink to the station's camera network."
 
-		playsound(src, sound, 25, FALSE)
-		user.reset_perspective(C)
-		user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
-		user.clear_fullscreen("flash", 5)
-		watchers[user] = C
-		addtimer(CALLBACK(src, .proc/use_camera_console, user), 5)
-	else
-		cancel_camera_view(user)
+/mob/proc/check_for_item(typepath)
+	if(locate(typepath) in src)
+		return (locate(typepath) in src)
 
-//returns the list of cameras accessible from this computer
-/obj/item/handheld_camera_monitor/cyborg/proc/get_available_cameras()
-	var/list/L = list()
-	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
-		if((is_away_level(z) || is_away_level(C.z)) && (C.z != z))//if on away mission, can only receive feed from same z_level cameras
-			continue
-		L.Add(C)
+	if(iscyborg(src))
+		var/mob/living/silicon/robot/R = src
+		return (locate(typepath) in R.module)
 
-	camera_sort(L)
+	return FALSE
 
-	var/list/D = list()
-	D["Cancel"] = "Cancel"
-	for(var/obj/machinery/camera/C in L)
-		if(!C.network)
-			stack_trace("Camera in a cameranet has no camera network")
-			continue
-		if(!(islist(C.network)))
-			stack_trace("Camera in a cameranet has a non-list camera network")
-			continue
-		var/list/tempnetwork = C.network&network
-		if(tempnetwork.len)
-			D["[C.c_tag][(C.status ? null : " (Deactivated)")]"] = C
-	return D
-
-/obj/item/handheld_camera_monitor/cyborg/proc/check_bodycamera_unlock(user)
-	if(allowed(user))
-		network += "sec_bodycameras" //We can tap into the body camera network with appropriate access
-	else
-		network -= "sec_bodycameras"*/
 
 /obj/item/borg/upgrade/camera_uplink
 	name = "cyborg camera uplink"
@@ -225,7 +120,6 @@
 	icon_state = "camera_bug"
 	require_module = TRUE
 	module_type = list(/obj/item/robot_module/security)
-	var/datum/action/camera_uplink
 
 
 /obj/item/borg/upgrade/camera_uplink/action(mob/living/silicon/robot/R, user = usr)
@@ -240,34 +134,26 @@
 		PP = new(R.module)
 		R.module.basic_modules += PP
 		R.module.add_module(PP, FALSE, TRUE)
-		camera_uplink = new /datum/action/item_action/camera_uplink(src)
-		camera_uplink.Grant(R)
+		//camera_uplink = new /datum/action/item_action/camera_uplink(src)
+		//camera_uplink.Grant(R)
 
 
 /obj/item/borg/upgrade/camera_uplink/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		camera_uplink.Remove(R)
-		QDEL_NULL(camera_uplink)
+		//camera_uplink.Remove(R)
+		//QDEL_NULL(camera_uplink)
 		var/obj/item/handheld_camera_monitor/cyborg/PP = locate() in R.module
 		R.module.remove_module(PP, TRUE)
 
-/obj/item/borg/upgrade/camera_uplink/ui_action_click()
-	if(..())
-		return
-	if(!issilicon(usr))
-		return
-	var/mob/living/silicon/robot/R = usr
-	var/obj/item/handheld_camera_monitor/cyborg/PP = locate() in R.module
-	if(!PP)
-		return
-	PP.attack_self(R)
+//*******************************************
+//SEC CAMERA UPLINK ITEM AND UPGRADE - ENDS
+//*******************************************
 
-/datum/action/item_action/camera_uplink
-	name = "Camera Uplink"
-	desc = "Uplink to the station's camera network."
 
-//SEC HOLOBARRIER UPGRADE
+//*******************************************
+//SEC HOLOBARRIER ITEM AND UPGRADE - BEGINS
+//*******************************************
 
 /obj/item/borg/upgrade/sec_holobarrier
 	name = "cyborg security holobarrier projector"
@@ -337,12 +223,18 @@
 			qdel(H)
 		to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
 
+//*******************************************
+//SEC HOLOBARRIER ITEM AND UPGRADE - ENDS
+//*******************************************
 
-//INTEGRATED E-BOLA (lol) LAUNCHER
+//*******************************************
+//SEC INTEGRATED E-BOLA (lol) LAUNCHER ITEM AND UPGRADE - BEGINS
+//*******************************************
 
 /obj/item/gun/energy/e_gun/e_bola/cyborg
 	name = "\improper Integrated E-BOLA Launcher"
 	desc = "An integrated e-bola launcher that draws from a cyborg's power cell."
+	icon_state = "dragnet"
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
 	charge_delay = 8
@@ -381,7 +273,64 @@
 	e_cost = 400
 	harmful = FALSE
 
-//CYBORG PEPPERSPRAY IMPROVED SYNTHESIZER
+//*******************************************
+//SEC INTEGRATED E-BOLA (lol) LAUNCHER ITEM AND UPGRADE - ENDS
+//*******************************************
+
+//*******************************************
+//SEC INTEGRATED ENERGY GUN ITEM AND UPGRADE - BEGINS
+//*******************************************
+
+/obj/item/gun/energy/e_gun/cyborg
+	name = "\improper Integrated Energy Gun"
+	desc = "An integrated energy gun that draws from a cyborg's power cell."
+	can_charge = FALSE
+	use_cyborg_cell = TRUE
+
+/obj/item/borg/upgrade/e_gun
+	name = "cyborg energy gun"
+	desc = "A module that equips the unit with an energy gun."
+	icon = 'icons/obj/guns/energy.dmi'
+	icon_state = "energy"
+	require_module = TRUE
+	module_type = list(/obj/item/robot_module/security)
+
+/obj/item/borg/upgrade/e_gun/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/gun/energy/e_gun/cyborg/E = locate() in R.module.modules
+		if(E)
+			to_chat(user, "<span class='warning'>This unit already has a [E] installed!</span>")
+			return FALSE
+
+		E = new(R.module)
+		R.module.basic_modules += E
+		R.module.add_module(E, FALSE, TRUE)
+
+/obj/item/borg/upgrade/e_gun/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		var/obj/item/gun/energy/e_gun/cyborg/E = locate() in R.module.modules
+		if (E)
+			R.module.remove_module(E, TRUE)
+
+/obj/item/gun/energy/e_gun/cyborg/can_shoot()
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	if(GLOB.security_level < SEC_LEVEL_RED && shot.harmful)
+		if(ismob(loc))
+			playsound(loc, 'sound/machines/buzz-two.ogg', get_clamped_volume(), TRUE, -1)
+			to_chat(loc,"<span class='warning'>ERROR: Weapon cannot fire on lethal modes while the alert level is less than red.</span>")
+		return FALSE
+	return !QDELETED(cell) ? (cell.charge >= shot.e_cost) : FALSE
+
+//*******************************************
+//SEC INTEGRATED ENERGY GUN ITEM AND UPGRADE - ENDS
+//*******************************************
+
+
+//*******************************************
+//CYBORG PEPPERSPRAY IMPROVED SYNTHESIZER UPGRADE - BEGINS
+//*******************************************
 
 /obj/item/borg/upgrade/peppersprayupgrade
 	name = "cyborg improved capsaicin synthesizer module"
@@ -416,19 +365,26 @@
 		T.volume = initial(T.volume)
 		T.upgraded = FALSE
 
-//Records Uplink
+//*******************************************
+//CYBORG PEPPERSPRAY IMPROVED SYNTHESIZER UPGRADE - ENDS
+//*******************************************
+
+//*******************************************
+//CYBORG RECORD UPLINK ITEM AND UPGRADE - BEGINS
+//*******************************************
 
 /obj/item/handheld_sec_record_uplink/cyborg
 
 	name = "security record remote uplink"
-	desc = "Used to access the various cameras on the station."
+	desc = "Used to remotely access the station's security record database."
 	icon = 'icons/obj/device.dmi'
 	icon_state	= "gangtool-red"
+	actions_types = list(/datum/action/item_action/sec_record_uplink)
 	var/sound = SEC_BODY_CAM_SOUND
 
 /obj/item/handheld_sec_record_uplink/cyborg/attack_self(mob/user)
 	for(var/obj/machinery/computer/secure_data/S in GLOB.machines)
-		if(S.stat & (NOPOWER|BROKEN)) //Filter out telescreens and broken/depowered consoles
+		if(S.stat & (NOPOWER|BROKEN)) //Filter out broken/depowered consoles
 			continue
 		else
 			playsound(src, sound, get_clamped_volume(), TRUE, -1)
@@ -437,7 +393,7 @@
 
 		if(!S)
 			playsound(src, 'sound/machines/buzz-two.ogg', get_clamped_volume(), TRUE, -1)
-			to_chat(user,"<span class='warning'>ERROR: No functioning security consoles found for uplink.</span>")
+			to_chat(user,"<span class='warning'>ERROR: No functioning security record consoles found for uplink.</span>")
 
 	return
 
@@ -447,16 +403,18 @@
 		return
 	if(!issilicon(usr))
 		return
-	var/mob/living/silicon/robot/R = usr
-	var/obj/item/handheld_sec_record_uplink/cyborg/PP = locate() in R.module
+	var/obj/item/handheld_sec_record_uplink/cyborg/PP = usr.check_for_item(/obj/item/handheld_sec_record_uplink)
 	if(!PP)
 		return
-	PP.attack_self(R)
-
+	PP.attack_self(usr)
 
 /datum/action/item_action/sec_record_uplink
 	name = "Security Record Uplink"
 	desc = "Uplink to the station's security record database."
+
+//*******************************************
+//CYBORG RECORD UPLINK ITEM AND UPGRADE - ENDS
+//*******************************************
 
 
 //CYBORG DESIGN DATUMS
@@ -494,6 +452,15 @@
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/peppersprayupgrade
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 5000, /datum/material/silver = 2000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_e_gun
+	name = "Cyborg Upgrade (Integrated Energy Gun)"
+	id = "borg_upgrade_e_gun"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/e_gun
+	materials = list(/datum/material/iron = 20000 , /datum/material/glass = 6000, /datum/material/gold = 2000, /datum/material/uranium = 5000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 

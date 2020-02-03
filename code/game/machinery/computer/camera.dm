@@ -36,7 +36,7 @@
 	if(!C.can_use())
 		user.unset_machine()
 		return
-	if( (iscyborg(user) || long_ranged) && !locate(/obj/item/handheld_camera_monitor, user)) //FULPSTATION SEC BORG UPGRADE PR by Surrealistik Feb 2020; allows sec borgs to remotely access.
+	if( (iscyborg(user) || long_ranged) && !check_handheld_camera_monitor(user)) //FULPSTATION SEC BORG UPGRADE PR by Surrealistik Feb 2020; allows sec borgs to remotely access.
 		var/list/viewing = viewers(src)
 		if(!viewing.Find(user))
 			user.unset_machine()
@@ -106,7 +106,7 @@
 		var/camera_fail = 0
 		if(!C.can_use() || user.machine != src || user.eye_blind || user.incapacitated())
 			camera_fail = 1
-		else if( (iscyborg(user) || long_ranged) && !locate(/obj/item/handheld_camera_monitor, user)) //FULPSTATION SEC BORG UPGRADE PR by Surrealistik Feb 2020; allows sec borgs to remotely access.
+		else if( (iscyborg(user) || long_ranged) && !check_handheld_camera_monitor(user)) //FULPSTATION SEC BORG UPGRADE PR by Surrealistik Feb 2020; allows sec borgs to remotely access.
 			var/list/viewing = viewers(src)
 			if(!viewing.Find(user))
 				camera_fail = 1
