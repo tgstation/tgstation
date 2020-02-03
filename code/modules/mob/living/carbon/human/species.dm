@@ -1427,7 +1427,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						"<span class='danger'>[M] attempts to touch you!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, M)
 		to_chat(M, "<span class='warning'>You attempt to touch [H]!</span>")
 		return 0
-	SEND_SIGNAL(M, COMSIG_ATOM_ATTACK_HAND, M, H, attacker_style)
+	SEND_SIGNAL(M, COMSIG_MOB_ATTACK_HAND, M, H, attacker_style)
 	switch(M.a_intent)
 		if("help")
 			help(M, H, attacker_style)
