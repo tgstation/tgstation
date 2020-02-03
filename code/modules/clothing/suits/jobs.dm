@@ -12,6 +12,14 @@
 	body_parts_covered = CHEST|GROIN
 	allowed = list(/obj/item/reagent_containers/spray/plantbgone, /obj/item/plant_analyzer, /obj/item/seeds, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/cultivator, /obj/item/reagent_containers/spray/pestspray, /obj/item/hatchet, /obj/item/storage/bag/plants)
 
+/obj/item/clothing/suit/apron/waders
+	name = "horticultural waders"
+	desc = "A pair of heavy duty leather waders, perfect for insulating your soft flesh from spills, soil and thorns."
+	icon_state = "hort_waders"
+	item_state = "hort_waders"
+	body_parts_covered = CHEST|GROIN|LEGS
+	permeability_coefficient = 0.5
+
 //Captain
 /obj/item/clothing/suit/captunic
 	name = "captain's parade tunic"
