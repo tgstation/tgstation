@@ -20,7 +20,7 @@
 	var/ride_check_ridden_incapacitated = FALSE
 
 	var/del_on_unbuckle_all = FALSE
-	
+
 	/// If the "vehicle" is a mob, respect MOBILITY_MOVE on said mob.
 	var/respect_mob_mobility = TRUE
 
@@ -70,16 +70,21 @@
 		AM.unbuckle_mob(M)
 	return TRUE
 
-/datum/component/riding/proc/force_dismount(mob/living/M)
+/datum/component/riding/proc/force_dismount(mob/living/M, gentle = FALSE)
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(M)
 	if(isanimal(AM) || iscyborg(AM))
 		var/turf/target = get_edge_target_turf(AM, AM.dir)
 		var/turf/targetm = get_step(get_turf(AM), AM.dir)
 		M.Move(targetm)
-		M.visible_message("<span class='warning'>[M] is thrown clear of [AM]!</span>", \
-		"<span class='warning'>You're thrown clear of [AM]!</span>")
-		M.throw_at(target, 14, 5, AM)
+		if(gentle)
+			M.visible_message("<span class='warning'>[M] is thrown clear of [AM]!</span>", \
+			"<span class='warning'>You're thrown clear of [AM]!</span>")
+			M.throw_at(target, 8, 3, AM, gentle = TRUE)
+		else
+			M.visible_message("<span class='warning'>[M] is thrown violently from [AM]!</span>", \
+			"<span class='warning'>You're thrown violently from [AM]!</span>")
+			M.throw_at(target, 14, 5, AM, gentle = FALSE)
 		M.Knockdown(3 SECONDS)
 
 /datum/component/riding/proc/handle_vehicle_offsets()
@@ -371,4 +376,4 @@
 		if(rider in AM.buckled_mobs)
 			AM.unbuckle_mob(rider)
 	. = ..()
-	
+

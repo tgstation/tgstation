@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/talk_key = get_key(message)
 
-	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE)
+	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE, MODE_SING = TRUE)
 
 	var/ic_blocked = FALSE
 	if(client && !forced && CHAT_FILTER_CHECK(message))
@@ -196,6 +196,15 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(language)
 		var/datum/language/L = GLOB.language_datum_instances[language]
 		spans |= L.spans
+	
+	if(message_mode == MODE_SING)
+	#if DM_VERSION < 513
+		var/randomnote = "~"
+	#else
+		var/randomnote = pick("\u2669", "\u266A", "\u266B")
+	#endif
+		spans |= SPAN_SINGING
+		message = "[randomnote] [message] [randomnote]"
 
 	var/radio_return = radio(message, message_mode, spans, language)
 	if(radio_return & ITALICS)
@@ -395,10 +404,14 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		. = "stammers"
 	else if(derpspeech)
 		. = "gibbers"
+	else if(message_mode == MODE_SING)
+		. = verb_sing
 	else
 		. = ..()
 
 /mob/living/whisper(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	if(!message)
+		return
 	say("#[message]", bubble_type, spans, sanitize, language, ignore_spam, forced)
 
 /mob/living/get_language_holder(get_minds = TRUE)
