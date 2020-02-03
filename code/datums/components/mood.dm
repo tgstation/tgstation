@@ -200,7 +200,7 @@
 		if(!override && HAS_TRAIT(parent, TRAIT_UNSTABLE))
 			maximum = sanity
 		if(amount > maximum)
-			amount = max(maximum, sanity)
+			amount = min(maximum, sanity)
 	if(amount == sanity) //Prevents stuff from flicking around.
 		return
 	sanity = amount

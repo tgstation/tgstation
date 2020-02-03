@@ -840,7 +840,7 @@
 	name = "Unisex Restroom"
 	},
 /turf/open/floor/plasteel/freezer,
-/area/security/prison)
+/area/security/prison/toilet)
 "abZ" = (
 /obj/structure/table,
 /obj/item/book/manual/chef_recipes{
@@ -967,7 +967,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
-/area/security/prison)
+/area/security/prison/toilet)
 "acq" = (
 /obj/structure/table,
 /obj/item/storage/box/donkpockets{
@@ -16688,10 +16688,6 @@
 /obj/structure/table,
 /obj/item/assembly/signaler,
 /obj/item/assembly/signaler,
-/obj/item/multitool,
-/obj/item/multitool{
-	pixel_x = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
@@ -18655,18 +18651,11 @@
 /area/crew_quarters/locker)
 "aPM" = (
 /obj/structure/rack,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = -1
-	},
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = 4;
-	pixel_y = -4
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/effect/spawner/lootdrop/costume,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aPN" = (
@@ -18977,12 +18966,12 @@
 	dir = 4;
 	pixel_x = 27
 	},
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/t_scanner,
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/item/clothing/gloves/color/fyellow,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aQz" = (
@@ -19242,7 +19231,6 @@
 /area/crew_quarters/locker)
 "aRa" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/costume,
 /obj/effect/spawner/lootdrop/costume,
 /obj/item/clothing/mask/balaclava,
 /obj/machinery/airalarm{
@@ -61017,7 +61005,7 @@
 	network = list("ss13","medbay")
 	},
 /obj/machinery/light,
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/virology,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
@@ -61026,7 +61014,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "cHy" = (
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/virology,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -71851,6 +71839,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"fos" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "ftu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -75978,6 +75971,13 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
 /area/science/misc_lab/range)
+"vVP" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "vWK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -98766,7 +98766,7 @@ aaI
 aaI
 acE
 adb
-abE
+fos
 abE
 aem
 aeN
@@ -99794,7 +99794,7 @@ aca
 act
 acI
 add
-acv
+vVP
 adS
 aen
 aeM
@@ -100822,7 +100822,7 @@ abE
 abE
 abE
 ade
-abE
+fos
 abE
 aeo
 aeQ

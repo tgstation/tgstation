@@ -593,6 +593,7 @@
 	desc = "A sliced piece of juicy pineapple."
 	icon_state = "pineapple_slice"
 	filling_color = "#F6CB0B"
+	juice_results = list(/datum/reagent/consumable/pineapplejuice = 3)
 	tastes = list("pineapple" = 1)
 	foodtype = FRUIT | PINEAPPLE
 

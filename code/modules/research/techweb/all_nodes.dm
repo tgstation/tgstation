@@ -1001,6 +1001,17 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000, TECHWEB_POINT_TYPE_NANITES = 4000)
 	export_price = 15000
 
+/datum/techweb_node/nanite_replication_protocols
+	id = "nanite_replication_protocols"
+	display_name = "Nanite Replication Protocols"
+	description = "Advanced behaviours that allow nanites to exploit certain circumstances to replicate faster."
+	prereq_ids = list("nanite_smart")
+	design_ids = list("kickstart_nanites","factory_nanites","tinker_nanites","offline_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 2500)
+	export_price = 2500
+	hidden = TRUE
+	experimental = TRUE
+
 ////////////////////////Alien technology////////////////////////
 /datum/techweb_node/alientech //AYYYYYYYYLMAOO tech
 	id = "alientech"
@@ -1082,6 +1093,10 @@
 	description = "A bored scientist was thinking to himself for very long...and then realized his coffee got cold! He made this invention to solve this extreme problem."
 	prereq_ids = list("base")
 	design_ids = list("mauna_mug")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 2500
+	hidden = TRUE
+	experimental = TRUE
 
 /datum/techweb_node/spec_eng
 	id = "spec_eng"
