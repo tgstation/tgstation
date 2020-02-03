@@ -1,3 +1,8 @@
+#define MODE_OFF 0
+#define MODE_NORMAL 1
+#define MODE_OVERPRESSURE 2
+#define MODE_VENTING 3
+
 /obj/machinery/portable_atmospherics/ventcap
 	icon = 'icons/obj/atmospherics/components/miners.dmi'
 	icon_state = "ventcap"
@@ -20,12 +25,12 @@
 	var/icon_state_venting = "ventcap-venting"
 
 	var/on = FALSE // Technically doesn't use power while 'on', only while growing.
-	var/growing = FALSE // Whether or not the machine is expanding the bluespace whatchamajig to produce more gas.
+	var/mode = MODE_OFF
+	var/icon_mode = MODE_OFF
 	var/gas_type = null
 	var/base_rate = 0
 	var/current_rate = 0
 	var/output_temperature = T0C
-	var/emergency_venting = FALSE
 	var/power_usage_mult = 1
 
 	var/base_volume = 1000
@@ -68,7 +73,7 @@
 
 	if(pressure > pressure_limit)
 		if(pressure > emergency_vent_pressure)
-			emergency_venting = TRUE
+			mode = MODE_VENTING
 			emergency_vent()
 		adjust_volume(exponential_percentage*(emergency_venting ? -2 : -1)) // Loses output faster if venting.
 		air_contents.volume = current_volume
@@ -128,10 +133,6 @@
 		return
 	. = ..()
 
-/obj/machinery/portable_atmospherics/ventcap/update_icon()
-	if(active)
-		if(
-
 /obj/machinery/portable_atmospherics/ventcap/Initialize()
 	. = ..()
 	soundloop = new(list(src), TRUE)
@@ -165,16 +166,33 @@
 	if(!QDELETED(src))
 		qdel(src)
 
-/obj/machinery/portable_atmospherics/ventcap/update_icon()
+/obj/machinery/portable_atmospherics/ventcap/iconstuff()
 	if(on && is_operational())
-		if(emergency_venting)
+		switch(icon_mode)
+			if(MODE_VENTING)
+				if(!mode == MODE_VENTING)
+					flick(ventcap_venting_end, src)
+					icon_mode = MODE_OVERPRESSURE
+			if(MODE_OVERPRESSURE)
+				if(mode == MODE_VENTING)
+					flick(ventcap_venting_start, src)
+					icon_state = icon_state_venting
+					icon_mode = MODE_VENTING
+				else if(mode == MODE_NORMAL)
+					flick(ventcap_venting_start, src)
+					icon_state = icon_state_venting
+					icon_mode = MODE_VENTING
+			if(MODE_NORMAL)
+			
+			if(MODE_OFF)
+				
+				
+		if(mode == MODE_VENTING && !icon_mode == MODE_VENTING)
+			icon_mode = MODE_VENTING
 			icon_state = icon_state_venting
-		else if(growing)
-			icon_state = icon_state_growing
-		else
-			icon_state = icon_state_on
-	else
-		icon_state = icon_state_off
+			flick(ventcap_venting_start, src)
+		else if(icon_mode == MODE_VENTING)
+			flick(ventcap_venting_end, src)
 
 /obj/machinery/portable_atmospherics/ventcap/connect(obj/machinery/atmospherics/components/unary/portables_connector/atmosphere_vent/thevent)
 	. = ..()
@@ -220,3 +238,7 @@
 /obj/machinery/portable_atmospherics/ventcap/ui_act(action, params)
 	if(..())
 		return
+
+#undef MODE_NORMAL
+#undef MODE_OVERPRESSURE
+#undef MODE_VENTING
