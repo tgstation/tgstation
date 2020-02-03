@@ -460,10 +460,9 @@
 /obj/machinery/jukebox/disco/process()
 	. = ..()
 	if(active)
-		for(var/mob/M in rangers)
+		for(var/mob/living/M in rangers)
 			if(prob(5+(allowed(M)*4)))
-				if(isliving(M))
-					var/mob/living/L = M
-					if(!(L.mobility_flags & MOBILITY_MOVE))
-						continue
+				var/mob/living/L = M
+				if(!(L.mobility_flags & MOBILITY_MOVE))
+					continue
 				dance(M)
