@@ -15,7 +15,7 @@
 
 /datum/movespeed_modifier/reagent/badstims
 	id = "reagent_badstims"
-	multiplicative_slowdown = -0.35
+	multiplicative_slowdown = -0.45
 
 /datum/movespeed_modifier/reagent/monkey_energy
 	id = "reagent_monkey_energy"

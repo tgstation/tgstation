@@ -1345,9 +1345,6 @@
 		var/obj/item/I = M.get_active_held_item()
 		if(I && M.dropItemToGround(I))
 			to_chat(M, "<span class='notice'>Your hands spaz out and you drop what you were holding!</span>")
-	if(prob(33))
-		M.losebreath++
-		M.adjustOxyLoss(1, 0)
 	M.adjustStaminaLoss(-10, 0)
 	M.Jitter(10)
 	M.Dizzy(15)

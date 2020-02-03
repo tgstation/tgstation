@@ -207,3 +207,12 @@
 		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
 	}
+
+// Air subsystem subtasks
+#define SSAIR_PIPENETS 1
+#define SSAIR_ATMOSMACHINERY 2
+#define SSAIR_ACTIVETURFS 3
+#define SSAIR_EXCITEDGROUPS 4
+#define SSAIR_HIGHPRESSURE 5
+#define SSAIR_HOTSPOTS 6
+#define SSAIR_SUPERCONDUCTIVITY 7
