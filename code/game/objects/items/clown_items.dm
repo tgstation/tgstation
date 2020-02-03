@@ -73,6 +73,13 @@
 	icon_state = "soapsyndie"
 	cleanspeed = 5 //faster than mop so it is useful for traitors who want to clean crime scenes
 
+/obj/item/soap/omega
+	name = "omega soap"
+	desc = "The most advanced soap known to mankind."
+	icon_state = "soapomega"
+	cleanspeed = 3 //Only the truest of mind soul and body get one of these
+	uses = 301
+
 /obj/item/soap/suicide_act(mob/user)
 	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!", forced="soap suicide")
 	user.visible_message("<span class='suicide'>[user] lifts [src] to [user.p_their()] mouth and gnaws on it furiously, producing a thick froth! [user.p_they(TRUE)]'ll never get that BB gun now!</span>")
