@@ -17,19 +17,17 @@
 
 /obj/structure/bigDelivery/Destroy()
 	var/turf/T = get_turf(src)
+	for(var/obj/I in src.GetAllContents())
+		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(T)
-	var/list/wrap_contents = src.GetAllContents()
-	for(var/atom/movable/I in reverseRange(wrap_contents))
-		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
 	return ..()
 
 /obj/structure/bigDelivery/contents_explosion(severity, target)
+	for(var/obj/I in src.GetAllContents())
+		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
 	for(var/atom/movable/AM in contents)
 		AM.ex_act()
-	var/list/wrap_contents = src.GetAllContents()
-	for(var/atom/movable/I in reverseRange(wrap_contents))
-		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
 
 /obj/structure/bigDelivery/examine(mob/user)
 	. = ..()
@@ -104,7 +102,7 @@
 		sticker.percent_cut = tagger.percent_cut	//same, but for the percentage taken.
 
 		var/list/wrap_contents = src.GetAllContents()
-		for(var/obj/I in reverseRange(wrap_contents))
+		for(var/obj/I in wrap_contents)
 			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.percent_cut)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
@@ -168,12 +166,11 @@
 
 /obj/item/smallDelivery/attack_self(mob/user)
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
+	for(var/obj/I in src.GetAllContents())
+		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
 	for(var/X in contents)
 		var/atom/movable/AM = X
 		user.put_in_hands(AM)
-	var/list/wrap_contents = src.GetAllContents()
-	for(var/atom/movable/I in reverseRange(wrap_contents))
-		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	qdel(src)
@@ -184,15 +181,13 @@
 		M.temporarilyRemoveItemFromInventory(src, TRUE)
 		for(var/X in contents)
 			var/atom/movable/AM = X
+			SEND_SIGNAL(AM, COMSIG_ITEM_UNWRAPPED)
 			M.put_in_hands(AM)
 	else
 		for(var/X in contents)
 			var/atom/movable/AM = X
 			AM.forceMove(src.loc)
 			SEND_SIGNAL(AM, COMSIG_ITEM_UNWRAPPED)
-	var/list/wrap_contents = src.GetAllContents()
-	for(var/obj/I in reverseRange(wrap_contents))
-		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	qdel(src)
@@ -270,7 +265,7 @@
 		sticker.percent_cut = tagger.percent_cut	//as above, as before.
 
 		var/list/wrap_contents = src.GetAllContents()
-		for(var/obj/I in reverseRange(wrap_contents))
+		for(var/obj/I in wrap_contents)
 			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.percent_cut)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
