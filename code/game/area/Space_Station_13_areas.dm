@@ -1168,6 +1168,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Telecomms Server Room"
 	icon_state = "tcomsatcham"
 
+/area/tcommsat/server/upper
+	name = "Upper Telecomms Server Room"
 
 //External Hull Access
 /area/maintenance/external
