@@ -1,63 +1,59 @@
 /obj/machinery/medipen_refiller
 	name = "Medipen Refiller"
-	desc = "A machine that refills used medipens with new synthetized chemicals, the process may damage the injector."
+	desc = "A machine that refills used medipens with chemicals, it needs them first."
 	icon = 'icons/obj/machines/medipen_refiller.dmi'
 	icon_state = "medipen_refiller"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/medipen_refiller
 	idle_power_usage = 100
-	/// current charges counter
-	var/charges = 0
-	/// maximum charges it can have
-	var/max_charges = 1
-	/// prob of recharging on process * 2
-	var/recharge_rate = 2
 	/// list of medipen subtypes it can refill
-	var/list/allowed = list()
+	var/list/allowed = list(/obj/item/reagent_containers/hypospray/medipen = /datum/reagent/medicine/epinephrine,
+						    /obj/item/reagent_containers/hypospray/medipen/atropine = /datum/reagent/medicine/atropine,
+						    /obj/item/reagent_containers/hypospray/medipen/salbutamol = /datum/reagent/medicine/salbutamol,
+						    /obj/item/reagent_containers/hypospray/medipen/oxandrolone = /datum/reagent/medicine/oxandrolone,
+						    /obj/item/reagent_containers/hypospray/medipen/salacid = /datum/reagent/medicine/sal_acid,
+						    /obj/item/reagent_containers/hypospray/medipen/penacid = /datum/reagent/medicine/pen_acid)
 	/// var to prevent glitches in the animation
 	var/busy = FALSE
 
-/obj/machinery/medipen_refiller/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>It has [charges] charges stored and can hold a maximum of [max_charges] charges.</span>"
-
-/obj/machinery/medipen_refiller/process()
-	if(charges < max_charges && prob(recharge_rate))
-		charges++
-
 /obj/machinery/medipen_refiller/Initialize()
 	. = ..()
-	RefreshParts()
+	create_reagents(100)
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
+		reagents.maximum_volume += 100 * B.rating
 	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/check_refill)
-	START_PROCESSING(SSobj,src)
+	AddComponent(/datum/component/plumbing/simple_demand)
 
 /obj/machinery/medipen_refiller/Destroy()
 	UnregisterSignal(src, COMSIG_PARENT_ATTACKBY)
-	STOP_PROCESSING(SSobj,src)
 	return ..()
 
 /obj/machinery/medipen_refiller/RefreshParts()
-	for(var/obj/item/stock_parts/matter_bin/MB in component_parts)
-		recharge_rate = MB.rating*2
-		max_charges = MB.rating
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		allowed = list(/obj/item/reagent_containers/hypospray/medipen)
-		var/T = M.rating
-		if(T >= 2)
-			allowed += /obj/item/reagent_containers/hypospray/medipen/atropine
-			allowed += /obj/item/reagent_containers/hypospray/medipen/salbutamol
-		if(T >= 3)
-			allowed += /obj/item/reagent_containers/hypospray/medipen/oxandrolone
-			allowed += /obj/item/reagent_containers/hypospray/medipen/salacid
-		if(T >= 4)
-			allowed += /obj/item/reagent_containers/hypospray/medipen/penacid
-		return TRUE
+	var/new_volume = 100
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
+		new_volume += 100 * B.rating
+	if(!reagents)
+		create_reagents(new_volume)
+	reagents.maximum_volume = new_volume
+	return TRUE
 
 /// proc that handles the messages and animation, calls refill to end the animation
 /obj/machinery/medipen_refiller/proc/check_refill(datum/source, obj/item/I, mob/user)
+	if(default_unfasten_wrench(user, I, 40))
+		return
+	if(default_deconstruction_screwdriver(user, "medipen_refiller_open", "medipen_refiller", I))
+		return
+	if(default_deconstruction_crowbar(I))
+		return
 	if(busy)
 		to_chat(user, "<span class='danger'>The machine is busy.</span>")
 		return
+	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
+		var/obj/item/reagent_containers/RC = I
+		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
+		if(units)
+			to_chat(user, "<span class='notice'>You transfer [units] units of the solution to [src].</span>")
+			return
 	if(!istype(I, /obj/item/reagent_containers/hypospray/medipen))
 		to_chat(user, "<span class='danger'>The machine doesn't recognize [I.name] as a valid object!</span>")
 		return
@@ -68,21 +64,18 @@
 	if(P.reagents && P.reagents.reagent_list.len)
 		to_chat(user, "<span class='notice'>The medipen is already filled.</span>")
 		return
-	if(!charges)
-		to_chat(user, "<span class='danger'>Not enough energy stored, please wait.</span>")
-		return
-	if(prob(80))
+	if(reagents.has_reagent(allowed[P.type], 10))
 		busy = TRUE
 		add_overlay("active")
-		addtimer(CALLBACK(src, .proc/refill, P, user), 30)
-		charges--
-		to_chat(user, "<span class='notice'>Medipen refilled.</span>")
+		addtimer(CALLBACK(src, .proc/refill, P, user), 20)
+		qdel(P)
 	else
-		to_chat(user, "<span class='danger'>The medipen was too damaged breaking apart.</span>")
-	qdel(P)
+		to_chat(user, "<span class='danger'>There arent enough reagents to finish this operation.</span>")
 
 /// refills the medipen
 /obj/machinery/medipen_refiller/proc/refill(obj/item/reagent_containers/hypospray/medipen/P, mob/user)
 	new P.type(loc)
+	reagents.remove_reagent(allowed[P.type], 10)
 	cut_overlays()
 	busy = FALSE
+	to_chat(user, "<span class='notice'>Medipen refilled.</span>")
