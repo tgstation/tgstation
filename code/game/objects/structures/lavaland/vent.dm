@@ -8,8 +8,8 @@
 	pixel_x = -16
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	
+	var/gas_types = LAVALAND_DEFAULT_ATMOS // What kind of gasses it can pick from, either a atmosphere type or a string
 	var/naturally_spawned = FALSE // Naturally spawned vents have this set to TRUE. This is so these can be manually spawned without having the vent immediately qdel itself if other vents already exist.
-	var/available_gases = LAVALAND_DEFAULT_ATMOS	
 	var/gastype = null
 	var/vent_id = null // By default, just the z-level it spawns on. Natural vents of the same ID will not have duplicate gases
 
@@ -24,24 +24,25 @@
 
 	var/list/possible_gases = list()
 
-	for(var/gastype in GLOB.meta_gas_info)
-		env.assert_gas(gastype)
-	for(var/gas in LAVALAND_DEFAULT_ATMOS)
-		if(env.gases[gas][MOLES] > 0)
+	var/datum/gas_mixture/gastypes = new type
+
+	gastypes.parse_gas_string(gas_types)
+
+	for(var/gas in gastypes)
+		if(gastypes[gas][MOLES] > 0)
 			possible_gases += gas
+
+	var/list/remaining_gases = possible_gases
 
 	for(var/vent in GLOB.atmospheric_vents)
 		var/obj/machinery/atmospherics/components/unary/portables_connector/atmosphere_vent/V = vent
 		if(V.vent_id == vent_id)
-			possible_gases -= V.gastype
+			remaining_gases -= V.gastype
 
-	if(!possible_gases.len && naturally_spawned)
-		qdel(src)
-		return
+	gastype = pick([remaining_gases.len ? available_gases : possible_gases]) // If we have one of each, just spawn at random now
 
 	GLOB.atmospheric_vents += src
 
-	gastype = pick(possible_gases)
 
 /obj/machinery/atmospherics/components/unary/portables_connector/atmosphere_vent/Destroy()
 	GLOB.atmospheric_vents -= src
