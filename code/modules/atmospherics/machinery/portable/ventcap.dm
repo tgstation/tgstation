@@ -82,6 +82,7 @@
 		adjust_volume(exponential_percentage)
 
 	harvest() // What, you thought that giant, billowing geyser of gas would stop just because you asked politely?
+	iconstuff() // Handles the animations, which need careful sequencing to not break.
 
 	return TRUE
 
@@ -168,32 +169,34 @@
 		qdel(src)
 
 /obj/machinery/portable_atmospherics/ventcap/iconstuff()
-	if(on && is_operational())
-		switch(icon_mode)
-			if(MODE_VENTING)
-				if(!mode == MODE_VENTING)
-					flick(ventcap_venting_end, src)
-					icon_mode = MODE_OVERPRESSURE
-			if(MODE_OVERPRESSURE)
-				if(mode == MODE_VENTING)
-					flick(ventcap_venting_start, src)
-					icon_state = icon_state_venting
-					icon_mode = MODE_VENTING
-				else if(mode == MODE_NORMAL)
-					flick(ventcap_venting_start, src)
-					icon_state = icon_state_venting
-					icon_mode = MODE_VENTING
-			if(MODE_NORMAL)
-			
-			if(MODE_OFF)
-				
-				
-		if(mode == MODE_VENTING && !icon_mode == MODE_VENTING)
-			icon_mode = MODE_VENTING
-			icon_state = icon_state_venting
-			flick(ventcap_venting_start, src)
-		else if(icon_mode == MODE_VENTING)
-			flick(ventcap_venting_end, src)
+	switch(icon_mode)
+		if(MODE_VENTING)
+			if(!mode == MODE_VENTING)
+				flick(ventcap_venting_end, src)
+				icon_mode = MODE_OVERPRESSURE
+		if(MODE_OVERPRESSURE)
+			if(mode == MODE_VENTING)
+				icon_state = icon_state_venting
+				flick(ventcap_venting_start, src)
+				icon_mode = MODE_VENTING
+			else if(mode == MODE_NORMAL)
+				icon_state = icon_state_venting
+				flick(ventcap_venting_start, src)
+				icon_mode = MODE_VENTING
+		if(MODE_NORMAL)
+			if(mode == MODE_OVERPRESSURE)
+				icon_state = icon_state_overpressure
+				flick(ventcap_overpressure_start, src)
+				icon_mode = MODE_OVERPRESSURE
+			else if(mode == MODE_OFF)
+				icon_state = icon_state_retracted
+				flick(ventcap_retract, src)
+				icon_mode = MODE_OFF
+		if(MODE_OFF)
+			if(mode == MODE_NORMAL)
+				icon_state = icon_state_extended
+				flick(ventcap_extend, src)
+				icon_mode = MODE_NORMAL
 
 /obj/machinery/portable_atmospherics/ventcap/connect(obj/machinery/atmospherics/components/unary/portables_connector/atmosphere_vent/thevent)
 	. = ..()
