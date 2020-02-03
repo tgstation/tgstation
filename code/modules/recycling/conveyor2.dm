@@ -18,7 +18,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/list/affecting	// the list of all items that will be moved this ptick
 	var/id = ""			// the control ID	- must match controller ID
 	var/verted = 1		// Inverts the direction the conveyor belt moves.
-	speed_process = TRUE
+	processing_flags = START_PROCESSING_ON_INIT | FAST_PROCESS_SPEED
 	var/conveying = FALSE
 
 /obj/machinery/conveyor/centcom_auto
@@ -231,7 +231,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
-	speed_process = TRUE
+	processing_flags = START_PROCESSING_ON_INIT | FAST_PROCESS_SPEED
 
 	var/position = 0			// 0 off, -1 reverse, 1 forward
 	var/last_pos = -1			// last direction setting

@@ -113,7 +113,7 @@ Class Procs:
 	var/critical_machine = FALSE //If this machine is critical to station operation and should have the area be excempted from power failures.
 	var/list/occupant_typecache //if set, turned into typecache in Initialize, other wise, defaults to mob/living typecache
 	var/atom/movable/occupant = null
-	var/speed_process = FALSE // Process as fast as possible?
+	var/processing_flags = START_PROCESSING_ON_INIT | NORMAL_PROCESS_SPEED
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
@@ -137,10 +137,8 @@ Class Procs:
 		circuit = new circuit
 		circuit.apply_default_parts(src)
 
-	if(!speed_process)
-		START_PROCESSING(SSmachines, src)
-	else
-		START_PROCESSING(SSfastprocess, src)
+	if(processing_flags & START_PROCESSING_ON_INIT)
+		begin_processing()
 
 	if (occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
@@ -154,16 +152,25 @@ Class Procs:
 
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
-	if(!speed_process)
-		STOP_PROCESSING(SSmachines, src)
-	else
-		STOP_PROCESSING(SSfastprocess, src)
+	end_processing()
 	dropContents()
 	if(length(component_parts))
 		for(var/atom/A in component_parts)
 			qdel(A)
 		component_parts.Cut()
 	return ..()
+
+/obj/machinery/proc/begin_processing()
+	if(processing_flags & NORMAL_PROCESS_SPEED)
+		START_PROCESSING(SSmachines, src)
+	else
+		START_PROCESSING(SSfastprocess, src)
+
+/obj/machinery/proc/end_processing()
+	if(processing_flags & NORMAL_PROCESS_SPEED)
+		STOP_PROCESSING(SSmachines, src)
+	else
+		STOP_PROCESSING(SSfastprocess, src)
 
 /obj/machinery/proc/locate_machinery()
 	return

@@ -13,6 +13,13 @@
 #define ACTIVE_POWER_USE 2
 
 
+// bitflags for a machine's processing preferences
+#define START_PROCESSING_ON_INIT 	(1<<0)	// if the machine should start processing on Initialize()
+#define START_PROCESSING_MANUALLY 	(1<<1)	// if the machine will start processing in the future, after Initialize(), such as when a certain condition is met
+#define NORMAL_PROCESS_SPEED		(1<<2)	// normal processing speed (SSobj and SSmachines)
+#define FAST_PROCESS_SPEED			(1<<3)	// fast processing speed (SSfastprocess)
+
+
 //bitflags for door switches.
 #define OPEN	(1<<0)
 #define IDSCAN	(1<<1)

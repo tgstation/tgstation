@@ -5,6 +5,36 @@
 /obj/machinery/mineral
 	var/input_dir = NORTH
 	var/output_dir = SOUTH
+	var/turf/input_turf = null
+	processing_flags = START_PROCESSING_ON_INIT | FAST_PROCESS_SPEED
+
+/obj/machinery/mineral/Initialize(mapload)
+	. = ..()
+	register_input_turf()
+
+/obj/machinery/mineral/Destroy()
+	. = ..()
+	unregister_input_turf()
+
+obj/machinery/mineral/proc/register_input_turf()
+	input_turf = get_step(src, input_dir) // get the turf that players need to place the ore/items onto, defaults to NORTH at round start
+	if(input_turf && istype(input_turf)) // make sure there is actually a turf
+		RegisterSignal(input_turf, COMSIG_ATOM_ENTERED, .proc/begin_processing, TRUE) // listens for when an atom ENTERS the input_turf, tells the machine to begin processing
+
+obj/machinery/mineral/proc/unregister_input_turf()
+	if(input_turf)
+		UnregisterSignal(input_turf, COMSIG_ATOM_ENTERED)
+
+/obj/machinery/mineral/begin_processing()
+	. = ..()
+	// unregistering here prevents `begin_processing` getting called for every item thats dropped onto the `input_turf`
+	// if we did not unregister, that means when someone drops 200 ore stacks, it would call begin_processing 200 times. Not good, and also unnecessary.
+	unregister_input_turf()
+
+/obj/machinery/mineral/end_processing()
+	. = ..()
+	// re-register the signal we unregistered in begin_processing
+	register_input_turf()
 
 /obj/machinery/mineral/proc/unload_mineral(atom/movable/S)
 	S.forceMove(drop_location())
@@ -19,7 +49,6 @@
 	density = TRUE
 	var/obj/machinery/mineral/processing_unit/machine = null
 	var/machinedir = EAST
-	speed_process = TRUE
 
 /obj/machinery/mineral/processing_unit_console/Initialize()
 	. = ..()

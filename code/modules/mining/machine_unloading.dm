@@ -8,7 +8,6 @@
 	density = TRUE
 	input_dir = WEST
 	output_dir = EAST
-	speed_process = TRUE
 
 /obj/machinery/mineral/unloading_machine/process()
 	var/turf/T = get_step(src,input_dir)

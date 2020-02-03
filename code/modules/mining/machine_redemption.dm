@@ -10,7 +10,6 @@
 	input_dir = NORTH
 	output_dir = SOUTH
 	req_access = list(ACCESS_MINERAL_STOREROOM)
-	speed_process = TRUE
 	layer = BELOW_OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/ore_redemption
 	ui_x = 440
@@ -21,11 +20,12 @@
 	var/ore_multiplier = 1
 	var/point_upgrade = 1
 	var/list/ore_values = list(/datum/material/iron = 1, /datum/material/glass = 1,  /datum/material/plasma = 15,  /datum/material/silver = 16, /datum/material/gold = 18, /datum/material/titanium = 30, /datum/material/uranium = 30, /datum/material/diamond = 50, /datum/material/bluespace = 50, /datum/material/bananium = 60)
-	var/message_sent = FALSE
+	var/console_notify_timer // timer used for callbacks to send_console_message(). Used for preventing multiple calls to the proc while the ORM is eating a stack of ores
 	var/list/ore_buffer = list()
 	var/datum/techweb/stored_research
 	var/obj/item/disk/design_disk/inserted_disk
 	var/datum/component/remote_materials/materials
+	processing_flags = START_PROCESSING_MANUALLY | FAST_PROCESS_SPEED
 
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
@@ -123,7 +123,8 @@
 	var/datum/component/material_container/mat_container = materials.mat_container
 	if(!mat_container || !is_station_level(z))
 		return
-	message_sent = TRUE
+
+	console_notify_timer = null
 
 	var/area/A = get_area(src)
 	var/msg = "Now available in [A]:<br>"
@@ -152,7 +153,8 @@
 /obj/machinery/mineral/ore_redemption/process()
 	if(!materials.mat_container || panel_open || !powered())
 		return
-	var/atom/input = get_step(src, input_dir)
+
+	var/atom/input = input_turf
 	var/obj/structure/ore_box/OB = locate() in input
 	if(OB)
 		input = OB
@@ -165,13 +167,19 @@
 		CHECK_TICK
 
 	if(LAZYLEN(ore_buffer))
-		message_sent = FALSE
 		process_ores(ore_buffer)
-	else if(!message_sent)
-		send_console_message()
+		if(!console_notify_timer)
+			// gives 5 seconds for a load of ores to be sucked up by the ORM before it sends out request console notifications. This should be enough time for most deposits that people make
+			console_notify_timer = addtimer(CALLBACK(src, .proc/send_console_message), 50)
+
+	end_processing()
 
 /obj/machinery/mineral/ore_redemption/attackby(obj/item/W, mob/user, params)
 	if(default_unfasten_wrench(user, W))
+		if(anchored) // in case there's any ore already sitting on the input_turf when we wrench the ORM down, we want to start processing to scoop it up
+			begin_processing() // we don't need to register the signal here. `end_processing` getting called at the end of process() and will re-register the signal to the input_turf
+		else
+			unregister_input_turf()
 		return
 	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
 		updateUsrDialog()
@@ -199,10 +207,12 @@
 	. = ..()
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
-	if (panel_open)
+	if(panel_open)
 		input_dir = turn(input_dir, -90)
 		output_dir = turn(output_dir, -90)
 		to_chat(user, "<span class='notice'>You change [src]'s I/O settings, setting the input to [dir2text(input_dir)] and the output to [dir2text(output_dir)].</span>")
+		unregister_input_turf() // someone just rotated the input and output directions, unregister the old turf
+		register_input_turf() // register the new one
 		return TRUE
 
 /obj/machinery/mineral/ore_redemption/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)

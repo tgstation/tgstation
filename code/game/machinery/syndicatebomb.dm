@@ -11,7 +11,7 @@
 	density = FALSE
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	speed_process = TRUE
+	processing_flags = START_PROCESSING_ON_INIT | FAST_PROCESS_SPEED
 
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_OFFLINE
 
@@ -192,10 +192,10 @@
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	var/new_timer = input(user, "Please set the timer.", "Timer", "[timer_set]") as num|null
-	
+
 	if (isnull(new_timer))
 		return
-	
+
 	if(in_range(src, user) && isliving(user)) //No running off and setting bombs from across the station
 		timer_set = CLAMP(new_timer, minimum_timer, maximum_timer)
 		loc.visible_message("<span class='notice'>[icon2html(src, viewers(src))] timer set for [timer_set] seconds.</span>")

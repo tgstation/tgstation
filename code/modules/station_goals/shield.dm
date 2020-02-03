@@ -133,7 +133,7 @@
 	name = "\improper Meteor Shield Satellite"
 	desc = "A meteor point-defense satellite."
 	mode = "M-SHIELD"
-	speed_process = TRUE
+	processing_flags = START_PROCESSING_ON_INIT | FAST_PROCESS_SPEED
 	var/kill_range = 14
 
 /obj/machinery/satellite/meteor_shield/proc/space_los(meteor)
