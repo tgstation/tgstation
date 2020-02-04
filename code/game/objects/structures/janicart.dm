@@ -7,11 +7,11 @@
 	density = TRUE
 	//copypaste sorry
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
-	var/obj/item/storage/bag/trash/mybag	= null
-	var/obj/item/mop/mymop = null
-	var/obj/item/twohanded/broom/mybroom = null
-	var/obj/item/reagent_containers/spray/cleaner/myspray = null
-	var/obj/item/lightreplacer/myreplacer = null
+	var/obj/item/storage/bag/trash/mybag
+	var/obj/item/mop/mymop
+	var/obj/item/twohanded/broom/mybroom
+	var/obj/item/reagent_containers/spray/cleaner/myspray
+	var/obj/item/lightreplacer/myreplacer
 	var/signs = 0
 	var/const/max_signs = 4
 
