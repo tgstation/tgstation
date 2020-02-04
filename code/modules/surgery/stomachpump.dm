@@ -48,7 +48,7 @@
 			var/datum/surgery/stomach_pump/stom_pump = surgery
 			if(stom_pump.accumulated_experience > MEDICAL_SKILL_MEDIUM*10) //capped so you can't dope bodies and purge for ezxp
 				experience_given = (H.reagents.total_volume - reagents_volume_before_pump)/(MEDICAL_SKILL_MEDIUM)
-				accumulated_experience += experience_given
+				stom_pump.accumulated_experience += experience_given
 	return ..()
 
 /datum/surgery_step/stomach_pump/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
