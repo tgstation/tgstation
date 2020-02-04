@@ -1,6 +1,7 @@
 /mob/living/carbon/monkey
 	name = "monkey"
 	verb_say = "chimpers"
+	speech_sound = "monkey"
 	initial_language_holder = /datum/language_holder/monkey
 	icon = 'icons/mob/monkey.dmi'
 	icon_state = "monkey1"

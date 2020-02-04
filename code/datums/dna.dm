@@ -307,12 +307,13 @@
 			qdel(language_holder)
 			var/species_holder = initial(mrace.species_language_holder)
 			language_holder = new species_holder(src)
+
+			speech_sound = ""
+			if(dna.species.speech_sound)
+				speech_sound = dna.species.speech_sound
+				if(dna.species.gendered_speech)
+					speech_sound += gender
 		update_atom_languages()
-	speech_sound = ""
-	if(dna.species.speech_sound)
-		speech_sound = dna.species.speech_sound
-		if(dna.species.gendered_speech)
-			speech_sound += gender
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()

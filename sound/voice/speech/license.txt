@@ -1,12 +1,17 @@
 female1.ogg, female2.ogg, female3.ogg, female4.ogg from https://freesound.org/people/esperar/sounds/170766/ by esperar.
-https://creativecommons.org/publicdomain/zero/1.0/
+It has been licensed under CC0, which can be found at https://creativecommons.org/publicdomain/zero/1.0/
 
 male1.ogg, male2.ogg, male3.ogg, male4.ogg, male5.ogg cut down and normalized from https://freesound.org/people/ckvoiceover/sounds/401339/ by ckvoiceover
 It has been licensed under CC-BY 3.0, which can be found at http://creativecommons.org/licenses/by/3.0/
 
 synthetic1.ogg, synthetic2.ogg from https://freesound.org/people/BranndyBottle/sounds/464688/ by BranndyBottle
-https://creativecommons.org/publicdomain/zero/1.0/
+It has been licensed under CC0, which can be found at https://creativecommons.org/publicdomain/zero/1.0/
 
 meow1.ogg from https://freesound.org/people/skymary/sounds/412017/ by skymary
-https://creativecommons.org/publicdomain/zero/1.0/
+It has been licensed under CC0, which can be found at https://creativecommons.org/publicdomain/zero/1.0/
 
+parrot1.ogg, parrot2.ogg, parrot3.ogg cleaned, cut and normalized from https://freesound.org/people/jmagiera/sounds/321170/ by jmagiera
+It has been licensed under CC-BY 3.0, which can be found at http://creativecommons.org/licenses/by/3.0/
+
+monkey1.ogg from https://freesound.org/people/AntumDeluge/sounds/417816/ by AntumDeluge
+It has been licensed under CC0, which can be found at https://creativecommons.org/publicdomain/zero/1.0/
