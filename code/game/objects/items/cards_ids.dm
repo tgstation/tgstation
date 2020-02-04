@@ -158,10 +158,12 @@
 		var/obj/item/storage/bag/money/money_bag = W
 		var/list/money_contained = money_bag.contents
 
-		var/money_added = mass_insert_money(money_contained, user)
+		for (var/money in money_contained) // money bag contents are guaranteed to be money
+			registered_account.adjust_money(money.get_item_credit_value())
 
-		if (money_added)
+		if (money_contained.len)
 			to_chat(user, "<span class='notice'>You stuff the contents into the card! They disappear in a puff of bluespace smoke, adding [money_added] worth of credits to the linked account.</span>")
+		QDEL_LIST(money_contained)
 		return
 	else
 		return ..()
