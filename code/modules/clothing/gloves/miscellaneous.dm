@@ -54,14 +54,3 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	armor = list("melee" = 15, "bullet" = 25, "laser" = 15, "energy" = 15, "bomb" = 20, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0)
-
-/obj/item/clothing/gloves/rapid
-	name = "Gloves of the North Star"
-	desc = "Just looking at these fills you with an urge to beat the shit out of people."
-	icon_state = "rapid"
-	item_state = "rapid"
-	transfer_prints = TRUE
-
-/obj/item/clothing/gloves/rapid/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/punchcooldown)
