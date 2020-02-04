@@ -134,7 +134,8 @@
 	for(var/D in GLOB.cardinals)
 		if(D & (demand_connects | supply_connects))
 			for(var/obj/machinery/duct/duct in get_step(parent, D))
-				duct.attempt_connect()
+				duct.remove_connects(turn(D, 180))
+				duct.update_icon()
 
 ///settle wherever we are, and start behaving like a piece of plumbing
 /datum/component/plumbing/proc/enable()
@@ -156,7 +157,7 @@
 				if(istype(A, /obj/machinery/duct))
 					var/obj/machinery/duct/duct = A
 					duct.attempt_connect()
-				else 
+				else
 					var/datum/component/plumbing/P = A.GetComponent(/datum/component/plumbing)
 					if(P)
 						direct_connect(P, D)

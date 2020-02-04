@@ -62,7 +62,7 @@
 	reqs = list(
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,
 		/datum/reagent/consumable/ice = 15,
-		/obj/item/reagent_containers/food/snacks/pineappleslice = 2
+		/datum/reagent/consumable/pineapplejuice = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/snowcones/pineapple
 	subcategory = CAT_ICE

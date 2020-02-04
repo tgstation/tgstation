@@ -724,6 +724,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		radiation_pulse(src, 150, 4)
 
+	else if(Adjacent(user)) //if the item is stuck to the person, kill the person too instead of eating just the item.
+		var/vis_msg = "<span class='danger'>[user] reaches out and touches [src] with [W], inducing a resonance... [W] starts to glow briefly before the light continues up to [user]'s body. [user.p_they(TRUE)] bursts into flames before flashing into dust!</span>"
+		var/mob_msg = "<span class='userdanger'>You reach out and touch [src] with [W]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>"
+		dust_mob(user, vis_msg, mob_msg)
+
 /obj/machinery/power/supermatter_crystal/wrench_act(mob/user, obj/item/tool)
 	..()
 	if (moveable)

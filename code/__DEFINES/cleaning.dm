@@ -9,6 +9,8 @@
 #define CLEAN_IMPRESSIVE	5
 /// Cleans things spotless down to the atomic structure
 #define CLEAN_GOD			6
+/// Never cleaned
+#define CLEAN_NEVER 7
 
 //How strong things have to be to wipe forensic evidence...
 #define CLEAN_STRENGTH_FINGERPRINTS CLEAN_IMPRESSIVE

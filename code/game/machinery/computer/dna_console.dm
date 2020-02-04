@@ -126,9 +126,6 @@
 	if(user.client)
 		var/datum/asset/simple/assets =  get_asset_datum(/datum/asset/simple/genetics)
 		assets.send(user.client)
-	if(!(in_range(src, user) || issilicon(user)))
-		popup.close()
-		return
 	popup.add_stylesheet("scannernew", 'html/browser/scannernew.css')
 
 	var/mob/living/carbon/viable_occupant
@@ -565,10 +562,6 @@
 
 /obj/machinery/computer/scan_consolenew/Topic(href, href_list)
 	if(..())
-		return
-	if(!isturf(usr.loc))
-		return
-	if(!((isturf(loc) && in_range(src, usr)) || issilicon(usr)))
 		return
 	if(current_screen == "working")
 		return
