@@ -296,7 +296,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		/client/proc/readmin
 		)
 
-
+/client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
 
 /client/proc/hide_verbs()
 	set name = "Adminverbs - Hide All"
