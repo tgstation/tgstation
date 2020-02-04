@@ -55319,9 +55319,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "cud" = (
-/obj/machinery/light{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
@@ -72009,6 +72006,9 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "fUC" = (
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/circuit,
 /area/science/misc_lab/range)
 "fWc" = (
