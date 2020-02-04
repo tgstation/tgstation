@@ -141,7 +141,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 //Checks admin notice
 /client/verb/admin_notice()
 	set name = "Adminnotice"
-	set category = "Administration"
+	set category = "Admin"
 	set desc ="Check the admin notice if it has been set"
 
 	if(GLOB.admin_notice)
