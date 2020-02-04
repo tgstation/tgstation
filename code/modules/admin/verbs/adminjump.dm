@@ -1,7 +1,7 @@
 /client/proc/jumptoarea(area/A in GLOB.sortedAreas)
 	set name = "Jump to Area"
 	set desc = "Area to jump to"
-	set category = "Admin"
+	set category = "Admin - Game"
 	if(!src.holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
