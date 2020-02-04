@@ -297,7 +297,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 /client/proc/hide_verbs()
 	set name = "Adminverbs - Hide All"
-	set category = "Administration"
+	set category = "Admin"
 
 	remove_admin_verbs()
 	verbs += /client/proc/show_verbs
@@ -308,7 +308,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 /client/proc/show_verbs()
 	set name = "Adminverbs - Show"
-	set category = "Administration"
+	set category = "Admin"
 
 	verbs -= /client/proc/show_verbs
 	add_admin_verbs()
@@ -373,7 +373,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 /client/proc/ban_panel()
 	set name = "Banning Panel"
-	set category = "Administration"
+	set category = "Admin"
 	if(!check_rights(R_BAN))
 		return
 	holder.ban_panel()
@@ -381,7 +381,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 /client/proc/unban_panel()
 	set name = "Unbanning Panel"
-	set category = "Administration"
+	set category = "Admin"
 	if(!check_rights(R_BAN))
 		return
 	holder.unban_panel()
@@ -422,7 +422,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	GLOB.stealthminID["[ckey]"] = "@[num2text(num)]"
 
 /client/proc/stealth()
-	set category = "Administration"
+	set category = "Admin"
 	set name = "Stealth Mode"
 	if(holder)
 		if(holder.fakekey)
@@ -622,7 +622,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 /client/proc/deadmin()
 	set name = "Deadmin"
-	set category = "Administration"
+	set category = "Admin"
 	set desc = "Shed your admin powers."
 
 	if(!holder)
@@ -640,7 +640,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 /client/proc/readmin()
 	set name = "Readmin"
-	set category = "Administration"
+	set category = "Admin"
 	set desc = "Regain your admin powers."
 
 	var/datum/admins/A = GLOB.deadmins[ckey]
