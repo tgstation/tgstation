@@ -376,7 +376,7 @@
 		desc = "It's completely blank."
 		name = "empty scroll"
 		icon_state = "blankscroll"
-
+		
 /obj/item/book/granter/martial/north_star
 	martial = /datum/martial_art/north_star
 	name = "mysterious scroll"
@@ -444,3 +444,4 @@
 	icon_state = "cooking_learing_sweets"
 	oneuse = FALSE
 	remarks = list("So that is how icing is made!", "Placing fruit on top? How simple...", "Huh layering cake seems harder then this...", "This book smells like candy", "A clown must have made this page, or they forgot to spell check it before printing...", "Wait, a way to cook slime to be safe?")
+	
