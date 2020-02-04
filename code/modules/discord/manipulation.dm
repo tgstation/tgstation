@@ -1,7 +1,7 @@
 // Verb to manipulate IDs and ckeys
 /client/proc/discord_id_manipulation()
 	set name = "Discord Manipulation"
-	set category = "Administration"
+	set category = "Admin"
 
 	if(!check_rights(R_ADMIN))
 		return
