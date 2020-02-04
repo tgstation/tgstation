@@ -67,7 +67,7 @@
 
 /client/proc/reload_admins()
 	set name = "Reload Admins"
-	set category = "Administration"
+	set category = "Admin"
 
 	if(!src.holder)
 		return
