@@ -11,8 +11,7 @@
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	C.add_blood_DNA(return_blood_DNA())
 	if (bloodiness)
-		if (C.bloodiness < MAX_SHOE_BLOODINESS)
-			C.bloodiness += bloodiness
+		C.bloodiness = min((C.bloodiness + bloodiness),MAX_SHOE_BLOODINESS)
 	return ..()
 
 /obj/effect/decal/cleanable/blood/old
