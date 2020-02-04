@@ -30,7 +30,7 @@
 
 	active = TRUE
 	locked = TRUE
-	state = 2
+	welded = TRUE
 
 /obj/machinery/power/emitter/energycannon/RefreshParts()
 	return

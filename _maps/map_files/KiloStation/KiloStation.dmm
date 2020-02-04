@@ -89422,9 +89422,8 @@
 	},
 /area/engine/engineering)
 "cGO" = (
-/obj/machinery/power/emitter/anchored{
-	dir = 4;
-	state = 2
+/obj/machinery/power/emitter/welded{
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -89433,9 +89432,8 @@
 	},
 /area/engine/engineering)
 "cGP" = (
-/obj/machinery/power/emitter/anchored{
-	dir = 8;
-	state = 2
+/obj/machinery/power/emitter/welded{
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -89547,9 +89545,8 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/power/emitter/anchored{
-	dir = 4;
-	state = 2
+/obj/machinery/power/emitter/welded{
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
