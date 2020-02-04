@@ -57,7 +57,7 @@
 	to_chat(src, msg)
 
 /client/verb/adminwho()
-	set category = "Admin"
+	set category = "Administration"
 	set name = "Adminwho"
 
 	var/msg = "<b>Current Admins:</b>\n"
