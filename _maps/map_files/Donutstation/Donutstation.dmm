@@ -9073,6 +9073,7 @@
 /obj/machinery/atmospherics/pipe/simple/dark/hidden/layer1{
 	dir = 4
 	},
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "ayQ" = (
@@ -10884,11 +10885,11 @@
 	name = "Unisex Restroom"
 	},
 /turf/open/floor/plasteel/freezer,
-/area/security/prison)
+/area/security/prison/toilet)
 "aDS" = (
 /obj/structure/toilet,
 /turf/open/floor/plasteel/freezer,
-/area/security/prison)
+/area/security/prison/toilet)
 "aDT" = (
 /obj/structure/sink{
 	dir = 8;
@@ -10981,7 +10982,7 @@
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/freezer,
-/area/security/prison)
+/area/security/prison/toilet)
 "aEf" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -13118,7 +13119,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
 "aJV" = (
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/virology,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -18561,6 +18562,7 @@
 	dir = 9
 	},
 /obj/structure/cable,
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aZz" = (
@@ -18596,6 +18598,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 9
 	},
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aZD" = (
@@ -21675,7 +21678,7 @@
 "bhp" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/freezer,
-/area/security/prison)
+/area/security/prison/toilet)
 "bhq" = (
 /obj/structure/table,
 /obj/machinery/recharger,
@@ -29375,7 +29378,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bzR" = (
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/virology,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -44635,9 +44638,8 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/chief)
 "kAU" = (
-/obj/machinery/power/emitter/anchored{
-	dir = 8;
-	state = 2
+/obj/machinery/power/emitter/welded{
+	dir = 8
 	},
 /obj/machinery/camera{
 	c_tag = "Engine -Emitters Right";
@@ -45457,9 +45459,8 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "mHo" = (
-/obj/machinery/power/emitter/anchored{
-	dir = 8;
-	state = 2
+/obj/machinery/power/emitter/welded{
+	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -47064,9 +47065,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "pLI" = (
-/obj/machinery/power/emitter/anchored{
-	dir = 4;
-	state = 2
+/obj/machinery/power/emitter/welded{
+	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -47861,6 +47861,9 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"rrH" = (
+/turf/open/floor/plasteel/freezer,
+/area/security/prison/toilet)
 "rrR" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
@@ -49619,9 +49622,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "vbr" = (
-/obj/machinery/power/emitter/anchored{
-	dir = 4;
-	state = 2
+/obj/machinery/power/emitter/welded{
+	dir = 4
 	},
 /obj/machinery/camera{
 	c_tag = "Engine - Emitters Left";
@@ -102743,7 +102745,7 @@ aZE
 arp
 arq
 aDR
-arq
+rrH
 aDQ
 aDQ
 baB
@@ -103000,8 +103002,8 @@ aeQ
 afq
 aiN
 aiN
-arq
-arq
+rrH
+rrH
 aij
 bDI
 aNZ
@@ -103257,7 +103259,7 @@ aeZ
 afx
 aiN
 aDS
-arq
+rrH
 bhp
 aij
 aEb
@@ -103514,7 +103516,7 @@ aeZ
 afy
 aiN
 aDS
-arq
+rrH
 aEe
 aij
 aaa

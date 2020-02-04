@@ -840,7 +840,7 @@
 	name = "Unisex Restroom"
 	},
 /turf/open/floor/plasteel/freezer,
-/area/security/prison)
+/area/security/prison/toilet)
 "abZ" = (
 /obj/structure/table,
 /obj/item/book/manual/chef_recipes{
@@ -967,7 +967,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
-/area/security/prison)
+/area/security/prison/toilet)
 "acq" = (
 /obj/structure/table,
 /obj/item/storage/box/donkpockets{
@@ -55319,9 +55319,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "cud" = (
-/obj/machinery/light{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
@@ -61005,7 +61002,7 @@
 	network = list("ss13","medbay")
 	},
 /obj/machinery/light,
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/virology,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
@@ -61014,7 +61011,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "cHy" = (
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/virology,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -68567,9 +68564,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "deK" = (
-/obj/machinery/power/emitter/anchored{
-	state = 2
-	},
+/obj/machinery/power/emitter/welded,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -68779,17 +68774,15 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "dfB" = (
-/obj/machinery/power/emitter/anchored{
-	dir = 1;
-	state = 2
+/obj/machinery/power/emitter/welded{
+	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dfC" = (
-/obj/machinery/power/emitter/anchored{
-	dir = 1;
-	state = 2
+/obj/machinery/power/emitter/welded{
+	dir = 1
 	},
 /obj/machinery/light{
 	dir = 4
@@ -71839,6 +71832,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"fos" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "ftu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -72008,6 +72006,9 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "fUC" = (
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/circuit,
 /area/science/misc_lab/range)
 "fWc" = (
@@ -75966,6 +75967,13 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
 /area/science/misc_lab/range)
+"vVP" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "vWK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -98754,7 +98762,7 @@ aaI
 aaI
 acE
 adb
-abE
+fos
 abE
 aem
 aeN
@@ -99782,7 +99790,7 @@ aca
 act
 acI
 add
-acv
+vVP
 adS
 aen
 aeM
@@ -100810,7 +100818,7 @@ abE
 abE
 abE
 ade
-abE
+fos
 abE
 aeo
 aeQ

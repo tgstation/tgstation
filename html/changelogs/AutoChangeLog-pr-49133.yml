@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Attacking the Supermatter crystal with a NODROP item (ie cyborgs with literally any item, ninjas, highlanders, ect) will now dust the user."

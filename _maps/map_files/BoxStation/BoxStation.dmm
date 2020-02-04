@@ -779,6 +779,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "abN" = (
@@ -957,7 +958,7 @@
 	name = "Unisex Restroom"
 	},
 /turf/open/floor/plasteel/freezer,
-/area/security/prison)
+/area/security/prison/toilet)
 "aci" = (
 /obj/vehicle/ridden/secway,
 /turf/open/floor/plasteel/dark,
@@ -1177,6 +1178,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "acK" = (
@@ -1189,7 +1191,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
-/area/security/prison)
+/area/security/prison/toilet)
 "acL" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -1366,7 +1368,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/freezer,
-/area/security/prison)
+/area/security/prison/toilet)
 "adg" = (
 /obj/machinery/button/door{
 	id = "armory";
@@ -36046,7 +36048,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/virology,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -36513,7 +36515,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bQH" = (
-/obj/structure/closet/l3closet,
+/obj/structure/closet/l3closet/virology,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -46635,9 +46637,8 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cAu" = (
-/obj/machinery/power/emitter/anchored{
-	dir = 4;
-	state = 2
+/obj/machinery/power/emitter/welded{
+	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -48246,9 +48247,8 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "cHj" = (
-/obj/machinery/power/emitter/anchored{
-	dir = 8;
-	state = 2
+/obj/machinery/power/emitter/welded{
+	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -52864,6 +52864,11 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"vgp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "vhn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -78552,7 +78557,7 @@ aat
 aat
 aat
 ace
-aat
+vgp
 aat
 adH
 aei

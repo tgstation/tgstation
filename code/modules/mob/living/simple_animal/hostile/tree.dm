@@ -6,6 +6,7 @@
 	icon_living = "pine_1"
 	icon_dead = "pine_1"
 	icon_gib = "pine_1"
+	health_doll_icon = "pine_1"
 	gender = NEUTER
 	speak_chance = 0
 	turns_per_move = 5
@@ -40,7 +41,7 @@
 	loot = list(/obj/item/stack/sheet/mineral/wood)
 	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
-	
+
 	var/is_tree = TRUE
 
 /mob/living/simple_animal/hostile/tree/Life()
@@ -73,6 +74,7 @@
 	icon_living = "festivus_pole"
 	icon_dead = "festivus_pole"
 	icon_gib = "festivus_pole"
+	health_doll_icon = "festivus_pole"
 	response_help_continuous = "rubs"
 	response_help_simple = "rub"
 	loot = list(/obj/item/stack/rods)
@@ -80,7 +82,7 @@
 	faction = list()
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	is_tree = FALSE
-	
+
 /mob/living/simple_animal/hostile/tree/festivus/attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(M.a_intent == "help")
