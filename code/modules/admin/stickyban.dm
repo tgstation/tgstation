@@ -469,7 +469,7 @@
 
 /client/proc/stickybanpanel()
 	set name = "Sticky Ban Panel"
-	set category = "Admin"
+	set category = "Administration"
 	if (!holder)
 		return
 	holder.stickyban_show()
