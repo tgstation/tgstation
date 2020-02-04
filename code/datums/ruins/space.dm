@@ -293,3 +293,9 @@
 	suffix = "clericden.dmm"
 	name = "Cleric's Den"
 	description = "Once part of a larger monastery, this holy order of long dead clerics practiced far less non-violence than they preached. Appears to have been untouched by looters, however. Odd."
+
+/datum/map_template/ruin/space/hellfactory
+	id = "hellfactory"
+	suffix = "hellfactory.dmm"
+	name = "Hell Factory"
+	description = "An abandoned warehouse and brewing facility, which has been recently abandoned. Reports claim that the security system entered an ultra-hard lockdown, but these reports are inconclusive."
