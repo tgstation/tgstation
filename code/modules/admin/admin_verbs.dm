@@ -7,7 +7,6 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/deadmin,				/*destroys our own admin datum so we can play as a regular player*/
 	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
 	/client/proc/hide_verbs,			/*hides all our adminverbs*/
-	/client/proc/hide_most_verbs,		/*hides all our hideable adminverbs*/
 	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
 	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
 	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
@@ -295,8 +294,6 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		/client/proc/disable_debug_verbs,
 		/client/proc/readmin
 		)
-
-/client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
 
 /client/proc/hide_verbs()
 	set name = "Adminverbs - Hide All"
