@@ -167,6 +167,8 @@
 				soundin = pickweight(list('sound/voice/speech/bark1.ogg' = 49, 'sound/voice/speech/arf.ogg' = 1))
 			if("meow")
 				soundin = pick('sound/voice/speech/meow1.ogg')
+			if("parrot")
+				soundin = pick('sound/voice/speech/parrot1.ogg', 'sound/voice/speech/parrot2.ogg', 'sound/voice/speech/parrot3.ogg')
 			if("humanmale")
 				soundin = pick('sound/voice/speech/male1.ogg', 'sound/voice/speech/male2.ogg', 'sound/voice/speech/male3.ogg', 'sound/voice/speech/male4.ogg', 'sound/voice/speech/male5.ogg')
 			if("humanfemale")
