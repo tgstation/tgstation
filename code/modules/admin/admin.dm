@@ -505,7 +505,7 @@
 
 
 /datum/admins/proc/announce()
-	set category = "Administration"
+	set category = "Admin"
 	set name = "Announce"
 	set desc="Announce your desires to the world"
 	if(!check_rights(0))
@@ -655,7 +655,7 @@
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Delay Game Start") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/unprison(mob/M in GLOB.mob_list)
-	set category = "Administration"
+	set category = "Admin"
 	set name = "Unprison"
 	if (is_centcom_level(M.z))
 		SSjob.SendToLateJoin(M)
