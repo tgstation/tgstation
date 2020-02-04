@@ -978,7 +978,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 
 /client/proc/show_tip()
-	set category = "Administration"
+	set category = "Admin"
 	set name = "Show Tip"
 	set desc = "Sends a tip (that you specify) to all players. After all \
 		you're the experienced player here."
@@ -1143,7 +1143,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)
 
 /client/proc/cmd_admin_check_player_exp()	//Allows admins to determine who the newer players are.
-	set category = "Administration"
+	set category = "Admin"
 	set name = "Player Playtime"
 	if(!check_rights(R_ADMIN))
 		return
