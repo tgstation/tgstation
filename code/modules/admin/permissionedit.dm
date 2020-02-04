@@ -1,5 +1,5 @@
 /client/proc/edit_admin_permissions()
-	set category = "Administration"
+	set category = "Admin"
 	set name = "Permissions Panel"
 	set desc = "Edit admin permissions"
 	if(!check_rights(R_PERMISSIONS))
