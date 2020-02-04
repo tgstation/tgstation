@@ -99,9 +99,9 @@
 	tastes = list("fries" = 3, "salt" = 1)
 	foodtype = VEGETABLES | GRAIN | FRIED
 
-/obj/item/reagent_containers/food/snacks/fries/ComponentInitialize()
+/obj/item/reagent_containers/food/snacks/fries/Initialize()
 	. = ..()
-	AddComponent(/datum/component/dunkable, 10)
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/tatortot
 	name = "tator tot"
@@ -112,9 +112,9 @@
 	tastes = list("potato" = 3, "valids" = 1)
 	foodtype = FRIED | VEGETABLES
 
-/obj/item/reagent_containers/food/snacks/tatortot/ComponentInitialize()
+/obj/item/reagent_containers/food/snacks/tatortot/Initialize()
 	. = ..()
-	AddComponent(/datum/component/dunkable, 10)
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/soydope
 	name = "soy dope"
@@ -137,9 +137,9 @@
 	tastes = list("fries" = 3, "cheese" = 1)
 	foodtype = VEGETABLES | GRAIN | DAIRY
 
-/obj/item/reagent_containers/food/snacks/cheesyfries/ComponentInitialize()
+/obj/item/reagent_containers/food/snacks/cheesyfries/Initialize()
 	. = ..()
-	AddComponent(/datum/component/dunkable, 10)
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/badrecipe
 	name = "burned mess"
@@ -159,9 +159,9 @@
 	tastes = list("carrots" = 3, "salt" = 1)
 	foodtype = VEGETABLES
 
-/obj/item/reagent_containers/food/snacks/carrotfries/ComponentInitialize()
+/obj/item/reagent_containers/food/snacks/carrotfries/Initialize()
 	. = ..()
-	AddComponent(/datum/component/dunkable, 10)
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/candiedapple
 	name = "candied apple"

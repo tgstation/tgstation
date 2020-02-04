@@ -23,9 +23,9 @@
 	if(prob(30))
 		decorate_donut()
 
-/obj/item/reagent_containers/food/snacks/donut/ComponentInitialize()
+/obj/item/reagent_containers/food/snacks/donut/Initialize()
 	. = ..()
-	AddComponent(/datum/component/dunkable, 10)
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/donut/proc/decorate_donut()
 	if(is_decorated || !decorated_icon)
@@ -550,9 +550,9 @@
 	tastes = list("cookie" = 1)
 	foodtype = GRAIN | SUGAR
 
-/obj/item/reagent_containers/food/snacks/cookie/ComponentInitialize()
+/obj/item/reagent_containers/food/snacks/cookie/Initialize()
 	. = ..()
-	AddComponent(/datum/component/dunkable, 10)
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/fortunecookie
 	name = "fortune cookie"
@@ -646,9 +646,9 @@
 	tastes = list("sweetness" = 1)
 	foodtype = GRAIN | JUNKFOOD | SUGAR
 
-/obj/item/reagent_containers/food/snacks/sugarcookie/ComponentInitialize()
+/obj/item/reagent_containers/food/snacks/sugarcookie/Initialize()
 	. = ..()
-	AddComponent(/datum/component/dunkable, 10)
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/chococornet
 	name = "chocolate cornet"
@@ -670,9 +670,9 @@
 	tastes = list("cookie" = 2, "oat" = 1)
 	foodtype = GRAIN
 
-/obj/item/reagent_containers/food/snacks/oatmealcookie/ComponentInitialize()
+/obj/item/reagent_containers/food/snacks/oatmealcookie/Initialize()
 	. = ..()
-	AddComponent(/datum/component/dunkable, 10)
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/raisincookie
 	name = "raisin cookie"
@@ -684,9 +684,9 @@
 	tastes = list("cookie" = 1, "raisins" = 1)
 	foodtype = GRAIN | FRUIT
 
-/obj/item/reagent_containers/food/snacks/raisincookie/ComponentInitialize()
+/obj/item/reagent_containers/food/snacks/raisincookie/Initialize()
 	. = ..()
-	AddComponent(/datum/component/dunkable, 10)
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/cherrycupcake
 	name = "cherry cupcake"

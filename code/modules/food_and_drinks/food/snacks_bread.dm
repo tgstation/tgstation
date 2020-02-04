@@ -6,9 +6,9 @@
 	tastes = list("bread" = 10)
 	foodtype = GRAIN
 
-/obj/item/reagent_containers/food/snacks/store/bread/ComponentInitialize()
+/obj/item/reagent_containers/food/snacks/store/bread/Initialize()
 	. = ..()
-	AddComponent(/datum/component/dunkable, 10)
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/breadslice
 	icon = 'icons/obj/food/burgerbread.dmi'
@@ -20,9 +20,9 @@
 	customfoodfilling = 0 //to avoid infinite bread-ception
 	foodtype = GRAIN
 
-/obj/item/reagent_containers/food/snacks/breadslice/ComponentInitialize()
+/obj/item/reagent_containers/food/snacks/breadslice/Initialize()
 	. = ..()
-	AddComponent(/datum/component/dunkable, 10)
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/store/bread/plain
 	name = "bread"
