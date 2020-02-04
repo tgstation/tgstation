@@ -7,7 +7,7 @@
 	rcd_cost = 30
 	rcd_delay = 30
 	buffer = 400
-	var/eat_dir = NORTH
+	var/eat_dir = SOUTH
 
 /obj/machinery/plumbing/grinder_chemical/Initialize(mapload, bolt)
 	. = ..()
@@ -19,10 +19,9 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/plumbing/grinder_chemical/wrench_act(mob/living/user, obj/item/I)
-	..()
+/obj/machinery/plumbing/grinder_chemical/setDir(newdir)
+	. = ..()
 	eat_dir = dir
-	return TRUE
 
 /obj/machinery/plumbing/grinder_chemical/CanAllowThrough(atom/movable/AM)
 	. = ..()
