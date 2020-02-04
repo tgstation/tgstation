@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/hellfactory)
@@ -46,7 +46,10 @@
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/hellfactory)
 "ah" = (
-/turf/closed/wall/r_wall,
+/turf/closed/indestructible{
+	icon = 'icons/turf/walls/reinforced_wall.dmi';
+	icon_state = "r_wall"
+	},
 /area/ruin/space/has_grav/hellfactoryoffice)
 "ai" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
@@ -58,7 +61,10 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction/layer3{
 	dir = 8
 	},
-/turf/closed/wall/r_wall,
+/turf/closed/indestructible{
+	icon = 'icons/turf/walls/reinforced_wall.dmi';
+	icon_state = "r_wall"
+	},
 /area/ruin/space/has_grav/hellfactoryoffice)
 "aj" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/visible{
@@ -542,10 +548,6 @@
 /obj/item/stack/sheet/glass,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
-"bH" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space)
 "bI" = (
 /obj/structure/fermenting_barrel,
 /obj/machinery/conveyor/auto{
@@ -935,9 +937,6 @@
 /obj/item/keycard/entry,
 /turf/open/space/basic,
 /area/ruin/space/has_grav/hellfactory)
-"cT" = (
-/turf/closed/wall/r_wall/rust,
-/area/ruin/space/has_grav/hellfactoryoffice)
 "cU" = (
 /obj/machinery/door/keycard/office,
 /turf/open/floor/plasteel/dark,
@@ -1163,7 +1162,7 @@ ct
 cE
 aW
 cR
-bH
+cQ
 "}
 (9,1,1) = {"
 aa
@@ -1227,7 +1226,7 @@ al
 ao
 aG
 ao
-cT
+ah
 bg
 aA
 aA
@@ -1325,7 +1324,7 @@ cz
 cE
 ac
 cR
-bH
+cQ
 "}
 (15,1,1) = {"
 aa
@@ -1362,7 +1361,7 @@ aq
 ao
 ao
 ao
-cT
+ah
 aB
 aA
 br
