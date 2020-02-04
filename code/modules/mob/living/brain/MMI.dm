@@ -57,7 +57,7 @@
 		newbrain.brainmob = null
 		brainmob.forceMove(src)
 		brainmob.container = src
-		var/fubar_brain = newbrain.suicided && brainmob.suiciding //brain is damaged beyond repair or from a suicider
+		var/fubar_brain = newbrain.suicided || brainmob.suiciding //brain is from a suicider
 		if(!fubar_brain && !(newbrain.organ_flags & ORGAN_FAILING)) // the brain organ hasn't been beaten to death, nor was from a suicider.
 			brainmob.set_stat(CONSCIOUS) //we manually revive the brain mob
 			GLOB.dead_mob_list -= brainmob
