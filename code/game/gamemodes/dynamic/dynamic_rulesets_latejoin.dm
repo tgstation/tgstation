@@ -140,7 +140,7 @@
 				R.remove_revolutionary(FALSE, "gamemode")
 				if(M.current)
 					var/mob/living/carbon/C = M.current
-					if(C.stat == DEAD)
+					if(istype(C) && C.stat == DEAD)
 						C.makeUncloneable()
 			if(M.has_antag_datum(/datum/antagonist/rev))
 				var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev)
