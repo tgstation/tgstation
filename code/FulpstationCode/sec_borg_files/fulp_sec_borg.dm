@@ -102,15 +102,6 @@
 	name = "Camera Uplink"
 	desc = "Uplink to the station's camera network."
 
-/mob/proc/check_for_item(typepath)
-	if(locate(typepath) in src)
-		return (locate(typepath) in src)
-
-	if(iscyborg(src))
-		var/mob/living/silicon/robot/R = src
-		return (locate(typepath) in R.module)
-
-	return FALSE
 
 
 /obj/item/borg/upgrade/camera_uplink
@@ -286,42 +277,88 @@
 	desc = "An integrated energy gun that draws from a cyborg's power cell."
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 
-/obj/item/borg/upgrade/e_gun
-	name = "cyborg energy gun"
-	desc = "A module that equips the unit with an energy gun."
-	icon = 'icons/obj/guns/energy.dmi'
-	icon_state = "energy"
+/obj/item/borg/upgrade/e_gun_lethal
+	name = "cyborg lethal mode unlock"
+	desc = "A module that unlocks the lethal mode for a cyborg's integrated energy gun for use during red alert."
+	icon_state = "cyborg_upgrade3"
 	require_module = TRUE
 	module_type = list(/obj/item/robot_module/security)
 
-/obj/item/borg/upgrade/e_gun/action(mob/living/silicon/robot/R, user = usr)
+/obj/item/borg/upgrade/e_gun_lethal/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		var/obj/item/gun/energy/e_gun/cyborg/E = locate() in R.module.modules
-		if(E)
-			to_chat(user, "<span class='warning'>This unit already has a [E] installed!</span>")
+		var/obj/item/gun/energy/e_gun/cyborg/T = locate() in R.module.modules
+		if(!T)
+			to_chat(user, "<span class='warning'>There's no [T] in this unit!</span>")
+			return FALSE
+		if(T.ammo_type.len > 1)
+			to_chat(R, "<span class='warning'>Lethals are already unlocked for your [T]!</span>")
+			to_chat(user, "<span class='warning'>Lethals are already unlocked for [R]'s [T]!</span>")
 			return FALSE
 
-		E = new(R.module)
-		R.module.basic_modules += E
-		R.module.add_module(E, FALSE, TRUE)
+		T.ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
+		T.update_ammo_types()
 
-/obj/item/borg/upgrade/e_gun/deactivate(mob/living/silicon/robot/R, user = usr)
+/obj/item/borg/upgrade/e_gun_lethal/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		var/obj/item/gun/energy/e_gun/cyborg/E = locate() in R.module.modules
-		if (E)
-			R.module.remove_module(E, TRUE)
+		var/obj/item/gun/energy/e_gun/cyborg/T = locate() in R.module.modules
+		if(!T)
+			return FALSE
+		if(!R.emagged) //If we're emagged, don't revert.
+			T.ammo_type = initial(T.ammo_type)
 
-/obj/item/gun/energy/e_gun/cyborg/can_shoot()
+//Where we check to see if station is on red alert and the lethal mode can be used.
+
+/obj/item/gun/energy/e_gun/cyborg/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	if(!check_alert_level())
+		return
+	return ..()
+
+/obj/item/gun/energy/e_gun/cyborg/proc/check_alert_level()
+	var/mob/living/silicon/robot/R = loc
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if(GLOB.security_level < SEC_LEVEL_RED && shot.harmful)
-		if(ismob(loc))
-			playsound(loc, 'sound/machines/buzz-two.ogg', get_clamped_volume(), TRUE, -1)
-			to_chat(loc,"<span class='warning'>ERROR: Weapon cannot fire on lethal modes while the alert level is less than red.</span>")
+	if(!R || !iscyborg(R))
 		return FALSE
-	return !QDELETED(cell) ? (cell.charge >= shot.e_cost) : FALSE
+
+	if((GLOB.security_level < SEC_LEVEL_RED && shot.harmful) && !R.emagged) //If we're emagged we don't care about alert level
+		playsound(loc, 'sound/machines/buzz-two.ogg', get_clamped_volume(), TRUE, -1)
+		to_chat(loc,"<span class='warning'>ERROR: Weapon cannot fire on lethal modes while the alert level is less than red.</span>")
+		return FALSE
+
+	return TRUE
+
+/obj/item/borg/upgrade/e_gun_cooler
+	name = "cyborg energy gun cooling module"
+	desc = "Used to cool an integrated energy gun, increasing the potential current in it and thus its recharge rate."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = list(/obj/item/robot_module/security)
+
+/obj/item/borg/upgrade/e_gun_cooler/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/gun/energy/e_gun/cyborg/T = locate() in R.module.modules
+		if(!T)
+			to_chat(user, "<span class='warning'>There's no [T] in this unit!</span>")
+			return FALSE
+		if(T.charge_delay <= 2)
+			to_chat(R, "<span class='warning'>A cooling unit is already installed!</span>")
+			to_chat(user, "<span class='warning'>There's no room for another cooling unit!</span>")
+			return FALSE
+
+		T.charge_delay = max(2 , T.charge_delay - 4)
+
+/obj/item/borg/upgrade/e_gun_cooler/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		var/obj/item/gun/energy/e_gun/cyborg/T = locate() in R.module.modules
+		if(!T)
+			return FALSE
+		T.charge_delay = initial(T.charge_delay)
+
 
 //*******************************************
 //SEC INTEGRATED ENERGY GUN ITEM AND UPGRADE - ENDS
@@ -455,15 +492,23 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
-/datum/design/borg_upgrade_e_gun
-	name = "Cyborg Upgrade (Integrated Energy Gun)"
-	id = "borg_upgrade_e_gun"
+/datum/design/borg_upgrade_e_gun_lethal
+	name = "Cyborg Upgrade (Integrated Energy Gun Kill Capacitors)"
+	id = "borg_upgrade_e_gun_kill"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/e_gun
+	build_path = /obj/item/borg/upgrade/e_gun_lethal
 	materials = list(/datum/material/iron = 20000 , /datum/material/glass = 6000, /datum/material/gold = 2000, /datum/material/uranium = 5000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_upgrade_e_gun_cooler
+	name = "Cyborg Upgrade (Integrated Energy Gun Cooling Module)"
+	id = "borg_upgrade_e_gun_cooler"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/e_gun_cooler
+	materials = list(/datum/material/iron = 20000 , /datum/material/glass = 6000, /datum/material/gold = 2000, /datum/material/diamond = 2000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
 
 //TECHWEB ENTRIES
 
@@ -475,3 +520,26 @@
 	design_ids = list("borg_upgrade_cameralink", "borg_upgrade_secprojector", "borg_upgrade_e-bola", "borg_upgrade_pepperspray")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 5000
+
+//EMAG INTERACTIONS
+
+/mob/living/silicon/robot/proc/fulp_emag_features() //Enable kill mode.when emagged
+	if(istype(module, /obj/item/robot_module/security)) //Thus far we only deal with security modules; there is support for others though.
+		var/obj/item/gun/energy/e_gun/cyborg/T = check_for_item(/obj/item/gun/energy/e_gun/cyborg)
+		if(!T)
+			return
+		if(emagged)
+			T.ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
+		else if(!locate(/obj/item/borg/upgrade/e_gun_lethal) in upgrades) //Only revert if we don't have the requisite upgrade for lethals
+			T.ammo_type = initial(T.ammo_type)
+		T.update_ammo_types()
+
+/mob/proc/check_for_item(typepath)
+	if(locate(typepath) in src)
+		return (locate(typepath) in src)
+
+	if(iscyborg(src))
+		var/mob/living/silicon/robot/R = src
+		return (locate(typepath) in R.module)
+
+	return FALSE
