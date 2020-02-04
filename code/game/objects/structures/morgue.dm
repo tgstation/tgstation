@@ -48,7 +48,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 /obj/structure/bodycontainer/update_icon()
 	return
 
-/obj/structure/bodycontainer/relaymove(mob/user)
+/obj/structure/bodycontainer/relaymove(mob/user) //also called by /obj/structure/closet/body_bag/relaymove()
 	if(user.stat || !isturf(loc))
 		return
 	if(locked)
@@ -57,6 +57,20 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 			to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 		return
 	open()
+
+/obj/structure/bodycontainer/relay_container_resist(mob/living/user, obj/O)
+	if(!locked)
+		user.visible_message(null, \
+		"<span class='notice'>You lean on the back of [src] and start pushing the tray open... (this will take about [DisplayTimeText(breakout_time *0.25)].)</span>", \
+		"<span class='hear'>You hear a metallic creaking from [src].</span>")
+		user.changeNext_move(CLICK_CD_BREAKOUT)
+		user.last_special = world.time + CLICK_CD_BREAKOUT
+		if(!do_after(user, (breakout_time * 0.25), FALSE, user.loc))
+			return
+		if(locked)
+			to_chat(user, "<span class='warning'>[src]'s door won't budge, perhaps you should try again...</span>")
+			return
+	return container_resist(user)
 
 /obj/structure/bodycontainer/attack_paw(mob/user)
 	return attack_hand(user)

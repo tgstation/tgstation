@@ -17,6 +17,7 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	drag_slowdown = 0
 	var/foldedbag_path = /obj/item/bodybag
+	var/breaking_out = FALSE
 	var/obj/item/bodybag/foldedbag_instance = null
 	var/tagged = 0 // so closet code knows to put the tag overlay back
 
@@ -58,6 +59,24 @@
 	. = ..()
 	if(.)
 		mouse_drag_pointer = MOUSE_INACTIVE_POINTER
+
+/obj/structure/closet/body_bag/relaymove(mob/user)
+	if(user.stat)
+		return
+	if(istype(loc, /obj/structure/bodycontainer))
+		var/obj/structure/bodycontainer/bc = loc
+		if(!bc.locked)
+			breaking_out = TRUE
+			to_chat(user, "<span class='notice'>You start wiggling around inside of [bc], trying to hit the release button within it.</span>")
+			bc.audible_message("<span class='hear'>You hear a metallic creaking from [bc].</span>")
+			playsound(bc, 'sound/effects/clang.ogg', 50, TRUE)
+			if(do_after(user, (bc.breakout_time * 0.25), FALSE, src))
+				bc.relaymove(user) //forward it to the container's relay move to make sure the user hasn't died, the morgue tray wasn't locked afterwards, ect.
+			breaking_out = FALSE
+		else
+			bc.relaymove(user) //let the morgue tray handle warning messages.
+	else
+		return ..()
 
 /obj/structure/closet/body_bag/close()
 	. = ..()
