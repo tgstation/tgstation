@@ -61,7 +61,7 @@
 	return container
 
 /datum/admins/proc/beaker_panel()
-	set category = "Debug"
+	set category = "Admin - Event"
 	set name = "Spawn reagent container"
 	if(!check_rights())
 		return
