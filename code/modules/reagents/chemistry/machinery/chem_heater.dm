@@ -32,20 +32,19 @@
 		icon_state = "mixer0b"
 
 /obj/machinery/chem_heater/AltClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	. = ..()
+	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	replace_beaker(user)
-	return
 
 /obj/machinery/chem_heater/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
+	if(!user)
+		return FALSE
 	if(beaker)
-		beaker.forceMove(drop_location())
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(beaker)
+		user.put_in_hands(beaker)
+		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
-	else
-		beaker = null
 	update_icon()
 	return TRUE
 

@@ -295,7 +295,7 @@ Class Procs:
 		user.set_machine(src)
 	. = ..()
 
-/obj/machinery/ui_act(action, params)
+/obj/machinery/ui_act(action, list/params)
 	add_fingerprint(usr)
 	return ..()
 

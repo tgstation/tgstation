@@ -64,6 +64,43 @@
 /obj/effect/mapping_helpers/iannewyear,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hop)
+"aaj" = (
+/obj/machinery/shower{
+	dir = 4
+	},
+/obj/item/soap/nanotrasen,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/security/prison/toilet)
+"aak" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/security/prison/toilet)
+"aal" = (
+/obj/machinery/door/airlock{
+	name = "Bathroom"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/sign/poster/official/cleanliness{
+	pixel_y = 32
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/security/prison/toilet)
 "aao" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -6381,9 +6418,8 @@
 /turf/open/space,
 /area/solar/port/fore)
 "ark" = (
-/obj/machinery/power/emitter/anchored{
-	dir = 1;
-	state = 2
+/obj/machinery/power/emitter/welded{
+	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/circuit/green,
@@ -6449,9 +6485,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
-/obj/machinery/power/emitter/anchored{
-	dir = 1;
-	state = 2
+/obj/machinery/power/emitter/welded{
+	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/circuit/green,
@@ -17208,15 +17243,6 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
-"aMc" = (
-/obj/machinery/shower{
-	dir = 4
-	},
-/obj/item/soap/nanotrasen,
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/security/prison)
 "aMd" = (
 /obj/structure/table,
 /obj/item/storage/crayons,
@@ -17893,34 +17919,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"aNx" = (
-/obj/structure/toilet{
-	dir = 4
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/security/prison)
-"aNy" = (
-/obj/machinery/door/airlock{
-	name = "Bathroom"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_y = 32
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/security/prison)
 "aNz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -22168,6 +22166,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aUx" = (
@@ -22212,6 +22211,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aUA" = (
@@ -22240,6 +22240,7 @@
 /area/security/prison)
 "aUB" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -46708,9 +46709,9 @@
 /area/storage/primary)
 "bKt" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/storage/box/lights/mixed,
 /obj/effect/turf_decal/bot,
+/obj/item/clothing/gloves/color/fyellow,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "bKu" = (
@@ -50214,8 +50215,6 @@
 /obj/structure/table/reinforced,
 /obj/item/assembly/timer,
 /obj/item/assembly/timer,
-/obj/item/multitool,
-/obj/item/multitool,
 /obj/machinery/light,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -70084,11 +70083,6 @@
 /area/crew_quarters/locker)
 "cAq" = (
 /obj/structure/table,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/toolbox/emergency,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -168350,8 +168344,8 @@ ajr
 aaa
 aad
 aFm
-aMc
-aNx
+aaj
+aak
 aFm
 aQY
 aSE
@@ -168608,7 +168602,7 @@ aaa
 aad
 aFm
 aKV
-aNy
+aal
 aFm
 aFm
 aFm
