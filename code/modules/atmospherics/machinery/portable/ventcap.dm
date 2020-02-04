@@ -190,12 +190,12 @@
 				icon_mode = MODE_OVERPRESSURE
 			else if(mode == MODE_OFF)
 				icon_state = icon_state_retracted
-				flick(ventcap_retract, src)
+				flick(ventcap_retracting, src)
 				icon_mode = MODE_OFF
 		if(MODE_OFF)
 			if(mode == MODE_NORMAL)
 				icon_state = icon_state_extended
-				flick(ventcap_extend, src)
+				flick(ventcap_extending, src)
 				icon_mode = MODE_NORMAL
 
 /obj/machinery/portable_atmospherics/ventcap/connect(obj/machinery/atmospherics/components/unary/portables_connector/atmosphere_vent/thevent)
