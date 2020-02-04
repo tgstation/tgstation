@@ -1,9 +1,0 @@
-author: "OnlineGirlfriend"
-delete-after: True
-changes: 
-  - rscadd: "pineapple juice, creme de coconut"
-  - rscadd: "Pina Colada cocktail"
-  - rscadd: "Painkiller cocktail"
-  - rscadd: "pineapples and pineapple slices can be juiced"
-  - tweak: "Bahama Mama recipe, pineapple snowcone recipe"
-  - imageadd: "pineapple juicebox sprite, pineapple juice carton sprite, Painkiller sprite, Pina Colada sprite"
