@@ -8,3 +8,4 @@
 #define MARTIALART_KRAVMAGA "krav maga"
 #define MARTIALART_CQC "CQC"
 #define MARTIALART_PLASMAFIST "plasma fist"
+#define MARTIALART_NORTHSTAR "north star"

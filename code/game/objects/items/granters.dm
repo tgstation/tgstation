@@ -377,6 +377,23 @@
 		name = "empty scroll"
 		icon_state = "blankscroll"
 
+/obj/item/book/granter/martial/north_star
+	martial = /datum/martial_art/north_star
+	name = "mysterious scroll"
+	martialname = "the north star"
+	desc = "A scroll filled with strange markings. It seems to be drawings of some sort of martial art."
+	greet = "<span class='sciradio'>You have learned the ancient martial art of The North Star! You will be able to punch and kick at ludicrous speeds!</span>"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "scroll2"
+	remarks = list("Focus... And you'll be able to incapacitate any foe in seconds...", "I must attack as quickly as possible...", "I don't think this would combine with other martial arts...", "Overwhelm them with your punches...")
+
+/obj/item/book/granter/martial/north_star/onlearned(mob/living/carbon/user)
+	..()
+	if(oneuse == TRUE)
+		desc = "It's completely blank."
+		name = "empty scroll"
+		icon_state = "blankscroll"
+
 /obj/item/book/granter/martial/plasma_fist
 	martial = /datum/martial_art/plasma_fist
 	name = "frayed scroll"
