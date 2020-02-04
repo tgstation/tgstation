@@ -75,6 +75,7 @@
 
 	var/last_bumped = 0
 	var/unique_name = 0 //if a mob's name should be appended with an id when created e.g. Mob (666)
+	var/numba = 0 //the id a mob gets when it's created
 
 	var/list/butcher_results = null //these will be yielded from butchering with a probability chance equal to the butcher item's effectiveness
 	var/list/guaranteed_butcher_results = null //these will always be yielded from butchering
