@@ -2,7 +2,7 @@
 /client/proc/getserverlogs()
 	set name = "Get Server Logs"
 	set desc = "View/retrieve logfiles."
-	set category = "Admin"
+	set category = "Administration"
 
 	browseserverlogs()
 
