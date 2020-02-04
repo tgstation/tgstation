@@ -308,6 +308,11 @@
 			var/species_holder = initial(mrace.species_language_holder)
 			language_holder = new species_holder(src)
 		update_atom_languages()
+	speech_sound = ""
+	if(dna.species.speech_sound)
+		speech_sound = dna.species.speech_sound
+		if(dna.species.gendered_speech)
+			speech_sound += gender
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()
@@ -397,8 +402,11 @@
 			update_body_parts()
 		if(mutations_overlay_update)
 			update_mutations_overlay()
-	//update speech sound, for lings and such.
-	speech_sound = gender
+	speech_sound = ""
+	if(dna.species.speech_sound)
+		speech_sound = dna.species.speech_sound
+		if(dna.species.gendered_speech)
+			speech_sound += gender
 
 
 /mob/proc/domutcheck()

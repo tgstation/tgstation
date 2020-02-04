@@ -301,8 +301,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
 
 	//speech sound
-	if(speech_sound)
-		playsound(src, speech_sound, 50, TRUE, ignore_walls = FALSE)
+	if(speech_sound && speech_sound_cd < world.time)
+		playsound(src, speech_sound, 20, TRUE, ignore_walls = FALSE)
+		speech_sound_cd = world.time + 10 SECONDS
 
 /mob/proc/binarycheck()
 	return FALSE

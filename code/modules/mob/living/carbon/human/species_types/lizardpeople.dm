@@ -3,6 +3,7 @@
 	name = "Lizardperson"
 	id = "lizard"
 	say_mod = "hisses"
+	speech_sound = "lizard"
 	default_color = "00FF00"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE

@@ -1737,7 +1737,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.name = character.real_name
 
 	character.gender = gender
-	character.speech_sound = gender
 	character.age = age
 
 	character.eye_color = eye_color

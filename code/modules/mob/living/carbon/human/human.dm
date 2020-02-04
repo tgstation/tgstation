@@ -23,9 +23,6 @@
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, 2)
 	GLOB.human_list += src
 
-	//Set initial speech sound, might change later for player mobs.
-	speech_sound = gender
-
 /mob/living/carbon/human/proc/setup_human_dna()
 	//initialize dna. for spawned humans; overwritten by other code
 	create_dna(src)
