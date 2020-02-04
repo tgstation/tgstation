@@ -426,7 +426,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/dangerous/rapid
 	name = "Gloves of the North Star"
-	desc = "These gloves teach a martial art that allows the user to punch and kick people very fast. Does not improve weapon attack speed or the meaty fists of a hulk."
+	desc = "These gloves teach the user a martial art that allows them to punch people very fast. Does not improve weapon attack speed or the meaty fists of a hulk."
 	item = /obj/item/clothing/gloves/rapid
 	cost = 8
 
