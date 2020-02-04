@@ -96,7 +96,7 @@
 		open(TRUE)
 
 /obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/humanoid/user)
-	if(density)
+	if(density & !(resistance_flags & INDESTRUCTIBLE))
 		add_fingerprint(user)
 		user.visible_message("<span class='warning'>[user] begins prying open [src].</span>",\
 					"<span class='noticealien'>You begin digging your claws into [src] with all your might!</span>",\
