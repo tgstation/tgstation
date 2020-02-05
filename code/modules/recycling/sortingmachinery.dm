@@ -13,19 +13,16 @@
 /obj/structure/bigDelivery/interact(mob/user)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
+	unwrap_contents()
 	qdel(src)
 
 /obj/structure/bigDelivery/Destroy()
 	var/turf/T = get_turf(src)
-	for(var/obj/I in src.GetAllContents())
-		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(T)
 	return ..()
 
 /obj/structure/bigDelivery/contents_explosion(severity, target)
-	for(var/obj/I in src.GetAllContents())
-		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
 	for(var/atom/movable/AM in contents)
 		AM.ex_act()
 
@@ -141,13 +138,18 @@
 		to_chat(user, "<span class='notice'>You successfully removed [O]'s wrapping !</span>")
 		O.forceMove(loc)
 		playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
-		SEND_SIGNAL(O, COMSIG_ITEM_UNWRAPPED)
 		new /obj/effect/decal/cleanable/wrapping(get_turf(user))
+		unwrap_contents()
 		qdel(src)
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
 			to_chat(user, "<span class='warning'>You fail to remove [O]'s wrapping!</span>")
 
+/obj/structure/bigDelivery/proc/unwrap_contents()
+	if(!sticker)
+		return
+	for(var/obj/I in src.GetAllContents())
+		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
 
 /obj/item/smallDelivery
 	name = "parcel"
@@ -166,8 +168,7 @@
 
 /obj/item/smallDelivery/attack_self(mob/user)
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
-	for(var/obj/I in src.GetAllContents())
-		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
+	unwrap_contents()
 	for(var/X in contents)
 		var/atom/movable/AM = X
 		user.put_in_hands(AM)
@@ -181,15 +182,14 @@
 		M.temporarilyRemoveItemFromInventory(src, TRUE)
 		for(var/X in contents)
 			var/atom/movable/AM = X
-			SEND_SIGNAL(AM, COMSIG_ITEM_UNWRAPPED)
 			M.put_in_hands(AM)
 	else
 		for(var/X in contents)
 			var/atom/movable/AM = X
 			AM.forceMove(src.loc)
-			SEND_SIGNAL(AM, COMSIG_ITEM_UNWRAPPED)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
+	unwrap_contents()
 	qdel(src)
 
 /obj/item/smallDelivery/examine(mob/user)
@@ -288,6 +288,12 @@
 		if(giftwrapped)
 			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
 		add_overlay(overlaystring)
+
+/obj/structure/smallDelivery/proc/unwrap_contents()
+	if(!sticker)
+		return
+	for(var/obj/I in src.GetAllContents())
+		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
 
 /obj/item/destTagger
 	name = "destination tagger"
@@ -417,7 +423,6 @@
 		percent_cut = 50
 	percent_cut = CLAMP(round(potential_cut, 1), 1, 50)
 	to_chat(user, "<span class='notice'>[percent_cut]% profit will be recieved if a package with a barcode is sold.</span>")
-	return
 
 /obj/item/barcode
 	name = "Barcode tag"

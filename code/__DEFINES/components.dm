@@ -302,7 +302,9 @@
 
 // /obj/item signals for economy
 #define COMSIG_ITEM_SOLD "item_sold"							//called when an item is sold by the exports subsystem
-#define COMSIG_ITEM_UNWRAPPED "item_unwrapped"
+#define COMSIG_ITEM_UNWRAPPED "item_unwrapped"					//called when a wrapped up item is opened, large or small.
+	#define COMSIG_ITEM_SPLIT_VALUE  1
+#define COMSIG_ITEM_SPLIT_PROFIT "item_split_profits"			//Called when getting the item's exact ratio for cargo's profit.
 
 // /obj/item/clothing signals
 #define COMSIG_SHOES_STEP_ACTION "shoes_step_action"			//from base of obj/item/clothing/shoes/proc/step_action(): ()

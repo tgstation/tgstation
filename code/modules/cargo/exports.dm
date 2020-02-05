@@ -31,7 +31,6 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	if(!GLOB.exports_list.len)
 		setupExports()
 
-	var/split_profit = FALSE
 	var/profit_ratio = 1 //Percentage that gets sent to the seller, rest goes to cargo.
 
 	var/list/contents = AM.GetAllContents()
@@ -48,17 +47,12 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 		if(QDELETED(thing))
 			continue
 
-		//But first I'm going to check if you're getting the full payout.
-		if(thing.GetComponent(/datum/component/pricetag))
-			profit_ratio = (thing.GetComponent(/datum/component/pricetag)).profit_ratio
-			split_profit = TRUE
-
 		for(var/datum/export/E in GLOB.exports_list)
 			if(!E)
 				continue
 			if(E.applies_to(thing, allowed_categories, apply_elastic))
-				sold = E.sell_object(thing, report, dry_run, allowed_categories , apply_elastic, split_profit, profit_ratio)
-				SEND_SIGNAL(thing, COMSIG_ITEM_SOLD, item_value = E.get_cost(thing, allowed_categories , apply_elastic))
+				//SEND_SIGNAL(thing, COMSIG_ITEM_SOLD, item_value = E.get_cost(thing, allowed_categories , apply_elastic))
+				sold = E.sell_object(thing, report, dry_run, allowed_categories , apply_elastic, profit_ratio)
 				report.exported_atoms += " [thing.name]"
 				if(!QDELETED(thing))
 					report.exported_atoms_ref += thing
@@ -135,12 +129,14 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 // Called only once, when the object is actually sold by the datum.
 // Adds item's cost and amount to the current export cycle.
 // get_cost, get_amount and applies_to do not neccesary mean a successful sale.
-/datum/export/proc/sell_object(obj/O, datum/export_report/report, dry_run = TRUE, allowed_categories = EXPORT_CARGO , apply_elastic = TRUE, split_profit = FALSE, profit_ratio = 50)
+/datum/export/proc/sell_object(obj/O, datum/export_report/report, dry_run = TRUE, allowed_categories = EXPORT_CARGO , apply_elastic = TRUE)
 	var/the_cost = get_cost(O, allowed_categories , apply_elastic)
 	var/amount = get_amount(O)
+	var/profit_ratio = 50
 	if(amount <=0 || the_cost <=0)
 		return FALSE
-	if(split_profit)
+	if(SEND_SIGNAL(O, COMSIG_ITEM_SOLD, item_value = get_cost(O, allowed_categories , apply_elastic)) & COMSIG_ITEM_SPLIT_VALUE)
+		profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT)
 		the_cost = the_cost*((100-profit_ratio)/100)
 	report.total_value[src] += the_cost
 
