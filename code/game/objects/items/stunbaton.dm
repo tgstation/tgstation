@@ -1,34 +1,51 @@
 /obj/item/melee/baton
 	name = "stun baton"
 	desc = "A stun baton for incapacitating people with."
+
 	icon_state = "stunbaton"
 	item_state = "baton"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	slot_flags = ITEM_SLOT_BELT
+
 	force = 10
-	throwforce = 7
-	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("beaten")
+
+	w_class = WEIGHT_CLASS_NORMAL
+	slot_flags = ITEM_SLOT_BELT
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
-	var/cooldown_check = 0
+	throwforce = 7
+	var/throw_stun_chance = 35
 
-	var/cooldown = (2.5 SECONDS)
-	var/stunforce = (5 SECONDS)
+	var/attack_cooldown_check = (0 SECONDS)
+	var/attack_cooldown = (2.5 SECONDS)
+	var/stunsound = 'sound/weapons/egloves.ogg'
+	var/confusion_amt = 10
+	var/stamina_loss_amt = 60
+	var/apply_stun_delay = (2 SECONDS)
+	var/stuntime = (5 SECONDS)
+
 	var/turned_on = FALSE
+	var/activate_sound = "sparks"
+
 	var/obj/item/stock_parts/cell/cell
-	var/hitcost = 1000
-	var/throw_hit_chance = 35
 	var/preload_cell_type //if not empty the baton starts with this type of cell
+	var/cellhitcost = 1000
 	var/convertable = TRUE //if it can converted with a conversion kit
+	var/toggle_sound = "sparks"
+	var/stun_sound = 'sound/weapons/egloves.ogg'
 
 /obj/item/melee/baton/get_cell()
 	return cell
 
 /obj/item/melee/baton/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	return (FIRELOSS)
+	if(cell && cell.charge && turned_on)
+		user.visible_message("<span class='suicide'>[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		. = (FIRELOSS)
+		attack(user,user)
+	else
+		user.visible_message("<span class='suicide'>[user] is shoving the [name] down their throat! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		. = (OXYLOSS)
 
 /obj/item/melee/baton/Initialize()
 	. = ..()
@@ -68,7 +85,7 @@
 /obj/item/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	//Only mob/living types have stun handling
-	if(turned_on && prob(throw_hit_chance) && iscarbon(hit_atom))
+	if(turned_on && prob(throw_stun_chance) && iscarbon(hit_atom))
 		baton_effect(hit_atom)
 
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
@@ -79,11 +96,11 @@
 		//Note this value returned is significant, as it will determine
 		//if a stun is applied or not
 		. = cell.use(chrgdeductamt)
-		if(turned_on && cell.charge < hitcost)
+		if(turned_on && cell.charge < cellhitcost)
 			//we're below minimum, turn off
 			turned_on = FALSE
 			update_icon()
-			playsound(src, "sparks", 75, TRUE, -1)
+			playsound(src, activate_sound, 75, TRUE, -1)
 
 
 /obj/item/melee/baton/update_icon_state()
@@ -107,7 +124,7 @@
 		if(cell)
 			to_chat(user, "<span class='warning'>[src] already has a cell!</span>")
 		else
-			if(C.maxcharge < hitcost)
+			if(C.maxcharge < cellhitcost)
 				to_chat(user, "<span class='notice'>[src] requires a higher capacity cell.</span>")
 				return
 			if(!user.transferItemToLoc(W, src))
@@ -128,10 +145,13 @@
 		return ..()
 
 /obj/item/melee/baton/attack_self(mob/user)
-	if(cell && cell.charge > hitcost)
+	toggle_on(user)
+
+/obj/item/melee/baton/proc/toggle_on(mob/user)
+	if(cell && cell.charge > cellhitcost)
 		turned_on = !turned_on
 		to_chat(user, "<span class='notice'>[src] is now [turned_on ? "on" : "off"].</span>")
-		playsound(src, "sparks", 75, TRUE, -1)
+		playsound(src, activate_sound, 75, TRUE, -1)
 	else
 		turned_on = FALSE
 		if(!cell)
@@ -145,8 +165,8 @@
 	if(turned_on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Knockdown(stunforce*3)
-		deductcharge(hitcost)
+		user.Knockdown(stuntime*3)
+		deductcharge(cellhitcost)
 		return
 
 	if(iscyborg(M))
@@ -161,7 +181,7 @@
 
 	if(user.a_intent != INTENT_HARM)
 		if(turned_on)
-			if(cooldown_check <= world.time)
+			if(attack_cooldown_check <= world.time)
 				if(baton_effect(M, user))
 					user.do_attack_animation(M)
 					return
@@ -172,34 +192,30 @@
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 	else
 		if(turned_on)
-			if(cooldown_check <= world.time)
+			if(attack_cooldown_check <= world.time)
 				baton_effect(M, user)
 		..()
 
 
 /obj/item/melee/baton/proc/baton_effect(mob/living/L, mob/user)
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
-			playsound(L, 'sound/weapons/genhit.ogg', 50, TRUE)
-			return FALSE
+	check_shields(L, user)
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
-		if(!R || !R.cell || !R.cell.use(hitcost))
+		if(!R || !R.cell || !R.cell.use(cellhitcost))
 			return FALSE
 	else
-		if(!deductcharge(hitcost))
+		if(!deductcharge(cellhitcost))
 			return FALSE
 
 	/// After a target is hit, we do a chunk of stamina damage, along with other effects.
 	/// After a period of time, we then check to see what stun duration we give.
 	L.Jitter(20)
-	L.confused = max(10, L.confused)
+	L.confused = max(confusion_amt, L.confused)
 	L.stuttering = max(8, L.stuttering)
-	L.adjustStaminaLoss(60)
+	L.adjustStaminaLoss(stamina_loss_amt)
 
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
-	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, L), 2 SECONDS)
+	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, L), apply_stun_delay)
 
 	if(user)
 		L.lastattacker = user.real_name
@@ -208,13 +224,13 @@
 								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
 		log_combat(user, L, "stunned")
 
-	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
+	playsound(src, stunsound, 50, TRUE, -1)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		H.forcesay(GLOB.hit_appends)
 
-	cooldown_check = world.time + cooldown
+	attack_cooldown_check = world.time + attack_cooldown
 
 	return 1
 
@@ -222,16 +238,23 @@
 /obj/item/melee/baton/proc/apply_stun_effect_end(mob/living/target)
 	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine stun duration
 	if(trait_check)
-		target.Knockdown(stunforce * 0.1)
+		target.Knockdown(stuntime * 0.1)
 	else
-		target.Knockdown(stunforce)
+		target.Knockdown(stuntime)
 	if(!target.IsKnockdown())
-		to_chat(target, "<span class='warning'>You muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]</span>")
+		to_chat(target, "<span class='warning'>Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]</span>")
 
 /obj/item/melee/baton/emp_act(severity)
 	. = ..()
 	if (!(. & EMP_PROTECT_SELF))
 		deductcharge(1000 / severity)
+
+/obj/item/melee/baton/proc/check_shields(mob/living/L, mob/user)
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
+			playsound(L, 'sound/weapons/genhit.ogg', 50, TRUE)
+			return FALSE
 
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/cattleprod
@@ -244,9 +267,9 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
-	stunforce = (5 SECONDS)
-	hitcost = 2000
-	throw_hit_chance = 10
+	stuntime = (5 SECONDS)
+	cellhitcost = 2000
+	throw_stun_chance = 10
 	slot_flags = ITEM_SLOT_BACK
 	convertable = FALSE
 	var/obj/item/assembly/igniter/sparkler = 0
@@ -273,8 +296,8 @@
 	force = 5
 	throwforce = 5
 	throw_range = 5
-	hitcost = 2000
-	throw_hit_chance = 99  //Have you prayed today?
+	cellhitcost = 2000
+	throw_stun_chance = 99  //Have you prayed today?
 	convertable = FALSE
 	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
 
@@ -288,7 +311,7 @@
 /obj/item/melee/baton/boomerang/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(turned_on)
 		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
-		if(ishuman(hit_atom) && !caught && prob(throw_hit_chance))//if they are a carbon and they didn't catch it
+		if(ishuman(hit_atom) && !caught && prob(throw_stun_chance))//if they are a carbon and they didn't catch it
 			baton_effect(hit_atom)
 		if(thrownby && !caught)
 			sleep(1)

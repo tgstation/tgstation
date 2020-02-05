@@ -67,7 +67,7 @@
 "n" = (
 /obj/structure/table/abductor,
 /obj/machinery/recharger,
-/obj/item/abductor/baton{
+/obj/item/melee/baton/abductor{
 	desc = "Even aliens can see the use of a good old fashioned beating stick."
 	},
 /turf/open/floor/plating/abductor,
