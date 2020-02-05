@@ -6182,8 +6182,7 @@
 	pixel_y = 10
 	},
 /obj/item/toy/cards/deck/cas/black{
-	pixel_x = -7;
-	pixel_y = 0
+	pixel_x = -7
 	},
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
@@ -19619,7 +19618,6 @@
 /area/maintenance/port)
 "aYb" = (
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 8
 	},
 /turf/open/floor/engine,
@@ -25221,6 +25219,10 @@
 /obj/item/assembly/timer{
 	pixel_x = 3;
 	pixel_y = -3
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -22
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
@@ -33679,7 +33681,6 @@
 "bIO" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/machinery/computer/camera_advanced/xenobio{
-	icon_state = "computer";
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -34442,7 +34443,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 5
 	},
 /turf/open/floor/plasteel,
@@ -36102,8 +36102,7 @@
 	dir = 1
 	},
 /obj/structure/sign/warning/deathsposal{
-	pixel_x = -31;
-	pixel_y = 0
+	pixel_x = -31
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -36138,11 +36137,11 @@
 /obj/structure/table/glass,
 /obj/item/storage/box/monkeycubes,
 /obj/machinery/button/door{
+	id = "xenobiomain";
 	name = "Containment Blast Doors";
 	pixel_x = 1;
 	pixel_y = -26;
-	req_access_txt = "55";
-	id = "xenobiomain"
+	req_access_txt = "55"
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -36199,7 +36198,6 @@
 	},
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -36930,7 +36928,6 @@
 	pressure_checks = 0
 	},
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
@@ -37345,10 +37342,9 @@
 /area/science/xenobiology)
 "bTb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	name = "killroom vent";
-	icon_state = "vent_map_siphon_on-2";
 	dir = 1;
-	external_pressure_bound = 120
+	external_pressure_bound = 120;
+	name = "killroom vent"
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/freezer,
@@ -37703,7 +37699,6 @@
 	dir = 4
 	},
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 8
 	},
 /turf/open/floor/engine,
@@ -40621,8 +40616,7 @@
 "ccQ" = (
 /obj/structure/sink{
 	dir = 4;
-	pixel_x = -12;
-	pixel_y = 0
+	pixel_x = -12
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -49402,7 +49396,6 @@
 	dir = 8
 	},
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 5
 	},
 /turf/open/floor/engine,
@@ -49733,7 +49726,6 @@
 /area/vacant_room/commissary)
 "gGJ" = (
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 5
 	},
 /turf/open/floor/engine,
@@ -49995,7 +49987,6 @@
 	dir = 4
 	},
 /obj/machinery/computer/camera_advanced/xenobio{
-	icon_state = "computer";
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -50314,8 +50305,7 @@
 /area/science/xenobiology)
 "jUW" = (
 /obj/machinery/camera/autoname{
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
@@ -50536,7 +50526,6 @@
 	},
 /obj/machinery/light,
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 1
 	},
 /obj/structure/cable,
@@ -50982,11 +50971,11 @@
 	pixel_y = -2
 	},
 /obj/machinery/button/door{
+	id = "xenobiomain";
 	name = "Containment Blast Doors";
 	pixel_x = 1;
 	pixel_y = -26;
-	req_access_txt = "55";
-	id = "xenobiomain"
+	req_access_txt = "55"
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -51613,10 +51602,9 @@
 /area/security/detectives_office)
 "pvI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	name = "killroom vent";
-	icon_state = "vent_map_siphon_on-2";
 	dir = 1;
-	external_pressure_bound = 120
+	external_pressure_bound = 120;
+	name = "killroom vent"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/science/xenobiology)
