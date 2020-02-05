@@ -7,6 +7,7 @@
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
 	key_type = /obj/item/key/security
 	integrity_failure = 0.5
+	var/last_rev
 
 	var/obj/item/reagent_containers/food/snacks/grown/banana/eddie_murphy
 
@@ -58,11 +59,13 @@
 	return ..()
 
 /obj/vehicle/ridden/secway/driver_move(mob/user, direction)
-	. = ..()
-	if(eddie_murphy)
-		visible_message("<span class='warning'>[src] sputters and refuses to move!</span>")
-		return
-	return TRUE
+	if(is_key(inserted_key) && eddie_murphy)
+		if(last_rev + 10 < world.time)
+			visible_message("<span class='warning'>[src] sputters and refuses to move!</span>")
+			playsound(src, "sound/effects/stall.ogg", 70)
+			last_rev = world.time
+		return FALSE
+	return ..()
 
 /obj/vehicle/ridden/secway/examine(mob/user)
 	. = ..()
