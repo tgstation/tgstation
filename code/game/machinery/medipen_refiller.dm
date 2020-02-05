@@ -1,6 +1,6 @@
 /obj/machinery/medipen_refiller
 	name = "Medipen Refiller"
-	desc = "A machine that refills used medipens with chemicals, it needs them first."
+	desc = "A machine that refills used medipens with chemicals."
 	icon = 'icons/obj/machines/medipen_refiller.dmi'
 	icon_state = "medipen_refiller"
 	density = TRUE
@@ -39,12 +39,10 @@
 
 /// proc that handles the messages and animation, calls refill to end the animation
 /obj/machinery/medipen_refiller/proc/check_refill(datum/source, obj/item/I, mob/user)
-	if(default_unfasten_wrench(user, I, 40))
-		return
 	if(default_deconstruction_screwdriver(user, "medipen_refiller_open", "medipen_refiller", I))
-		return
+		return TRUE
 	if(default_deconstruction_crowbar(I))
-		return
+		return TRUE
 	if(busy)
 		to_chat(user, "<span class='danger'>The machine is busy.</span>")
 		return
@@ -52,7 +50,7 @@
 		var/obj/item/reagent_containers/RC = I
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)
-			to_chat(user, "<span class='notice'>You transfer [units] units of the solution to [src].</span>")
+			to_chat(user, "<span class='notice'>You transfer [units] units of the solution to the [name].</span>")
 			return
 	if(!istype(I, /obj/item/reagent_containers/hypospray/medipen))
 		to_chat(user, "<span class='danger'>The machine doesn't recognize [I.name] as a valid object!</span>")
@@ -71,6 +69,18 @@
 		qdel(P)
 	else
 		to_chat(user, "<span class='danger'>There arent enough reagents to finish this operation.</span>")
+
+/obj/machinery/medipen_refiller/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
+	to_chat(user, "<span class='notice'>You start furiously plunging [name].")
+	if(do_after(user, 30, target = src))
+		to_chat(user, "<span class='notice'>You finish plunging the [name].")
+		reagents.reaction(get_turf(src), TOUCH) //splash on the floor
+		reagents.clear_reagents()
+
+/obj/machinery/medipen_refiller/wrench_act(mob/living/user, obj/item/I)
+	..()
+	default_unfasten_wrench(user, I)
+	return TRUE
 
 /// refills the medipen
 /obj/machinery/medipen_refiller/proc/refill(obj/item/reagent_containers/hypospray/medipen/P, mob/user)
