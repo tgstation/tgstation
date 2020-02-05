@@ -9,7 +9,7 @@
 	gender = MALE
 	speak = list("Meow!", "Esp!", "Purr!", "HSSSSS")
 	speak_emote = list("purrs", "meows")
-	speech_sound = "meow"
+	speech_sound = "cat"
 	emote_hear = list("meows.", "mews.")
 	emote_see = list("shakes its head.", "shivers.")
 	speak_chance = 1

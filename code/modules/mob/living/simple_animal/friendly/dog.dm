@@ -16,7 +16,7 @@
 	see_in_dark = 5
 	speak_chance = 1
 	turns_per_move = 10
-	speech_sound = "bark"
+	speech_sound = "dog"
 	var/turns_since_scan = 0
 	var/obj/movement_target
 
