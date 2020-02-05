@@ -20,6 +20,7 @@
 	response_harm_simple = "stomp on"
 	emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("blorbles")
+	speech_sound = "slime"
 	bubble_icon = "slime"
 	initial_language_holder = /datum/language_holder/slime
 

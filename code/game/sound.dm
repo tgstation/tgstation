@@ -171,6 +171,8 @@
 				soundin = pick('sound/voice/speech/monkey1.ogg')
 			if("parrot")
 				soundin = pick('sound/voice/speech/parrot1.ogg', 'sound/voice/speech/parrot2.ogg', 'sound/voice/speech/parrot3.ogg')
+			if("slime")
+				soundin = pick('sound/voice/speech/slime1.ogg')
 			if("humanmale")
 				soundin = pick('sound/voice/speech/humanmale1.ogg', 'sound/voice/speech/humanmale2.ogg', 'sound/voice/speech/humanmale3.ogg', 'sound/voice/speech/humanmale4.ogg', 'sound/voice/speech/humanmale5.ogg')
 			if("humanfemale")

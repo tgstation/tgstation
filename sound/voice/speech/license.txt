@@ -15,3 +15,6 @@ It has been licensed under CC-BY 3.0, which can be found at http://creativecommo
 
 monkey1.ogg from https://freesound.org/people/AntumDeluge/sounds/417816/ by AntumDeluge
 It has been licensed under CC0, which can be found at https://creativecommons.org/publicdomain/zero/1.0/
+
+slime1.ogg cut down and normalized, from https://freesound.org/people/MWLANDI/sounds/85865/ by MWLANDI
+It has been licensed under CC-BY 3.0, which can be found at http://creativecommons.org/licenses/by/3.0/
