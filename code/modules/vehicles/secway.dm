@@ -8,6 +8,8 @@
 	key_type = /obj/item/key/security
 	integrity_failure = 0.5
 
+	var/obj/item/reagent_containers/food/snacks/grown/banana/eddie_murphy
+
 /obj/vehicle/ridden/secway/Initialize()
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
@@ -28,6 +30,14 @@
 	smoke.start()
 
 /obj/vehicle/ridden/secway/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/reagent_containers/food/snacks/grown/banana))
+		// ignore the occupants because they're presumably too distracted to notice the guy stuffing fruit into their vehicle's exhaust. do segways have exhausts? they do now!
+		user.visible_message("<span class='warning'>[user] begins stuffing [W] into [src]'s tailpipe.</span>", "<span class='warning'>You begin stuffing [W] into [src]'s tailpipe...</span>", ignored_mobs = occupants)
+		if(do_after(user, 30, target = src))
+			user.visible_message("<span class='warning'>[user] stuffs [W] into [src]'s tailpipe.</span>", "<span class='warning'>You stuff [W] into [src]'s tailpipe.</span>", ignored_mobs = occupants)
+			eddie_murphy = W
+			W.forceMove(src)
+
 	if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
 		if(obj_integrity < max_integrity)
 			if(W.use_tool(src, user, 0, volume = 50, amount = 1))
@@ -37,6 +47,28 @@
 					to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
 		return TRUE
 	return ..()
+
+/obj/vehicle/ridden/secway/attack_hand(mob/living/user)
+	if(eddie_murphy)                                                       // v lol
+		user.visible_message("<span class='warning'>[user] begins cleaning [eddie_murphy] out of [src].</span>", "<span class='warning'>You begin cleaning [eddie_murphy] out of [src]...</span>")
+		if(do_after(user, 60, target = src))
+			user.visible_message("<span class='warning'>[user] cleans [eddie_murphy] out of [src].</span>", "<span class='warning'>You manage to get [eddie_murphy] out of [src].</span>")
+			eddie_murphy.forceMove(get_turf(src))
+			eddie_murphy = null
+	return ..()
+
+/obj/vehicle/ridden/secway/driver_move(mob/user, direction)
+	. = ..()
+	if(eddie_murphy)
+		visible_message("<span class='warning'>[src] sputters and refuses to move!</span>")
+		return
+	return TRUE
+
+/obj/vehicle/ridden/secway/examine(mob/user)
+	. = ..()
+
+	if(eddie_murphy)
+		. += "<span class='warning'>Something appears to be stuck in its exhaust...</span>"
 
 /obj/vehicle/ridden/secway/obj_destruction()
 	explosion(src, -1, 0, 2, 4, flame_range = 3)
