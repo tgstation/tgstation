@@ -21,7 +21,7 @@
 
 /obj/machinery/plumbing/grinder_chemical/setDir(newdir)
 	. = ..()
-	eat_dir = dir
+	eat_dir = newdir
 
 /obj/machinery/plumbing/grinder_chemical/CanAllowThrough(atom/movable/AM)
 	. = ..()
