@@ -289,7 +289,7 @@
 			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
 		add_overlay(overlaystring)
 
-/obj/structure/smallDelivery/proc/unwrap_contents()
+/obj/item/smallDelivery/proc/unwrap_contents()
 	if(!sticker)
 		return
 	for(var/obj/I in src.GetAllContents())
