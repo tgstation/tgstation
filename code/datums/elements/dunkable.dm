@@ -5,11 +5,10 @@
 
 /datum/element/dunkable/Attach(datum/target, amount_per_dunk)
 	. = ..()
-	if(isitem(target))
-		dunk_amount = amount_per_dunk
-		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/get_dunked)
-	else
+	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
+	dunk_amount = amount_per_dunk
+	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/get_dunked)
 
 /datum/element/dunkable/Detach(datum/target)
 	. = ..()
