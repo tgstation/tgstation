@@ -452,22 +452,22 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	slot_flags = ITEM_SLOT_BELT
 
 	actions_types = list(/datum/action/item_action/toggle_mode)
-	convertable = FALSE
+	convertible = FALSE
 
-	attack_cooldown = (0 SECONDS)
+	attack_cooldown = 0 SECONDS
 	confusion_amt = 0
 	stamina_loss_amt = 0
-	apply_stun_delay = (0 SECONDS)
-	stuntime = (14 SECONDS)
+	apply_stun_delay = 0 SECONDS
+	stun_time = 14 SECONDS
 
 	preload_cell_type = /obj/item/stock_parts/cell/infinite //Any sufficiently advanced technology is indistinguishable from magic
 	activate_sound = null
-	var/can_remove_cell = FALSE
+	can_remove_cell = FALSE
 
 	var/mode = BATON_STUN
 
-	var/sleeptime = (2 MINUTES)
-	var/timetocuff = (3 SECONDS)
+	var/sleep_time = 2 MINUTES
+	var/time_to_cuff = 3 SECONDS
 
 /obj/item/melee/baton/abductor/ComponentInitialize()
 	. = ..()
@@ -512,7 +512,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	if(!AbductorCheck(user))
 		return
 
-	if(!deductcharge(cellhitcost))
+	if(!deductcharge(cell_hit_cost))
 		to_chat(user, "<span class='warning'>[src] [cell ? "is out of charge" : "does not have a power source installed"].</span>")
 		return FALSE
 
@@ -548,21 +548,17 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	StunAttack(target)
 
 /obj/item/melee/baton/abductor/proc/StunAttack(mob/living/L)
-	L.Paralyze(stuntime)
+	L.Paralyze(stun_time)
 
 /obj/item/melee/baton/abductor/attack_self(mob/living/user)
 	toggle(user)
-
-/obj/item/melee/baton/abductor/attackby(obj/item/W, mob/user, params)
-	if(can_remove_cell)
-		return ..()
 
 /obj/item/melee/baton/abductor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	turned_on = FALSE
 	..()
 
 /obj/item/melee/baton/abductor/proc/SleepAttack(mob/living/L,mob/living/user)
-	playsound(src, stunsound, 50, TRUE, -1)
+	playsound(src, stun_sound, 50, TRUE, -1)
 	if(L.incapacitated(TRUE, TRUE))
 		if(L.anti_magic_check(FALSE, FALSE, TRUE))
 			to_chat(user, "<span class='warning'>The specimen's tinfoil protection is interfering with the sleep inducement!</span>")
@@ -572,7 +568,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			return
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
-		L.Sleeping(sleeptime)
+		L.Sleeping(sleep_time)
 		log_combat(user, L, "put to sleep")
 	else
 		if(L.anti_magic_check(FALSE, FALSE, TRUE, 0))
@@ -594,7 +590,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
 			C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
 									"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
-			if(do_mob(user, C, timetocuff) && (C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore()))
+			if(do_mob(user, C, time_to_cuff) && (C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore()))
 				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/restraints/handcuffs/energy/used(C)
 					C.update_handcuffed()
@@ -635,7 +631,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "cuff" // Needs sprite
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	breakouttime = (45 SECONDS)
+	breakouttime = 45 SECONDS
 	trashtype = /obj/item/restraints/handcuffs/energy/used
 	flags_1 = NONE
 

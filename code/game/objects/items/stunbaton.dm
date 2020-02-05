@@ -17,23 +17,24 @@
 	throwforce = 7
 	var/throw_stun_chance = 35
 
-	var/attack_cooldown_check = (0 SECONDS)
-	var/attack_cooldown = (2.5 SECONDS)
-	var/stunsound = 'sound/weapons/egloves.ogg'
-	var/confusion_amt = 10
-	var/stamina_loss_amt = 60
-	var/apply_stun_delay = (2 SECONDS)
-	var/stuntime = (5 SECONDS)
+	var/obj/item/stock_parts/cell/cell
+	var/preload_cell_type //if not empty the baton starts with this type of cell
+	var/cell_hit_cost = 1000
+	var/can_remove_cell = TRUE
 
 	var/turned_on = FALSE
 	var/activate_sound = "sparks"
 
-	var/obj/item/stock_parts/cell/cell
-	var/preload_cell_type //if not empty the baton starts with this type of cell
-	var/cellhitcost = 1000
-	var/convertable = TRUE //if it can converted with a conversion kit
-	var/toggle_sound = "sparks"
+	var/attack_cooldown_check = 0 SECONDS
+	var/attack_cooldown = 2.5 SECONDS
 	var/stun_sound = 'sound/weapons/egloves.ogg'
+
+	var/confusion_amt = 10
+	var/stamina_loss_amt = 60
+	var/apply_stun_delay = 2 SECONDS
+	var/stun_time = 5 SECONDS
+
+	var/convertible = TRUE //if it can be converted with a conversion kit
 
 /obj/item/melee/baton/get_cell()
 	return cell
@@ -65,7 +66,7 @@
 	return ..()
 
 /obj/item/melee/baton/proc/convert(datum/source, obj/item/I, mob/user)
-	if(istype(I,/obj/item/conversion_kit) && convertable)
+	if(istype(I,/obj/item/conversion_kit) && convertible)
 		var/turf/T = get_turf(src)
 		var/obj/item/melee/classic_baton/B = new /obj/item/melee/classic_baton (T)
 		B.alpha = 20
@@ -96,7 +97,7 @@
 		//Note this value returned is significant, as it will determine
 		//if a stun is applied or not
 		. = cell.use(chrgdeductamt)
-		if(turned_on && cell.charge < cellhitcost)
+		if(turned_on && cell.charge < cell_hit_cost)
 			//we're below minimum, turn off
 			turned_on = FALSE
 			update_icon()
@@ -124,7 +125,7 @@
 		if(cell)
 			to_chat(user, "<span class='warning'>[src] already has a cell!</span>")
 		else
-			if(C.maxcharge < cellhitcost)
+			if(C.maxcharge < cell_hit_cost)
 				to_chat(user, "<span class='notice'>[src] requires a higher capacity cell.</span>")
 				return
 			if(!user.transferItemToLoc(W, src))
@@ -134,21 +135,24 @@
 			update_icon()
 
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		if(cell)
-			cell.update_icon()
-			cell.forceMove(get_turf(src))
-			cell = null
-			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
-			turned_on = FALSE
-			update_icon()
+		tryremovecell(user)
 	else
 		return ..()
+
+/obj/item/melee/baton/proc/tryremovecell(mob/user)
+	if(cell && can_remove_cell)
+		cell.update_icon()
+		cell.forceMove(get_turf(src))
+		cell = null
+		to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
+		turned_on = FALSE
+		update_icon()
 
 /obj/item/melee/baton/attack_self(mob/user)
 	toggle_on(user)
 
 /obj/item/melee/baton/proc/toggle_on(mob/user)
-	if(cell && cell.charge > cellhitcost)
+	if(cell && cell.charge > cell_hit_cost)
 		turned_on = !turned_on
 		to_chat(user, "<span class='notice'>[src] is now [turned_on ? "on" : "off"].</span>")
 		playsound(src, activate_sound, 75, TRUE, -1)
@@ -161,13 +165,17 @@
 	update_icon()
 	add_fingerprint(user)
 
-/obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
+/obj/item/melee/baton/proc/clumsy_check(mob/living/carbon/human/user)
 	if(turned_on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
+		playsound(src, stun_sound, 75, TRUE, -1)
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Knockdown(stuntime*3)
-		deductcharge(cellhitcost)
+		user.Knockdown(stun_time*3)
+		deductcharge(cell_hit_cost)
 		return
+
+/obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
+	clumsy_check(user)
 
 	if(iscyborg(M))
 		..()
@@ -201,10 +209,10 @@
 	check_shields(L, user)
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
-		if(!R || !R.cell || !R.cell.use(cellhitcost))
+		if(!R || !R.cell || !R.cell.use(cell_hit_cost))
 			return FALSE
 	else
-		if(!deductcharge(cellhitcost))
+		if(!deductcharge(cell_hit_cost))
 			return FALSE
 
 	/// After a target is hit, we do a chunk of stamina damage, along with other effects.
@@ -224,7 +232,7 @@
 								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
 		log_combat(user, L, "stunned")
 
-	playsound(src, stunsound, 50, TRUE, -1)
+	playsound(src, stun_sound, 50, TRUE, -1)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
@@ -238,9 +246,9 @@
 /obj/item/melee/baton/proc/apply_stun_effect_end(mob/living/target)
 	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine stun duration
 	if(trait_check)
-		target.Knockdown(stuntime * 0.1)
+		target.Knockdown(stun_time * 0.1)
 	else
-		target.Knockdown(stuntime)
+		target.Knockdown(stun_time)
 	if(!target.IsKnockdown())
 		to_chat(target, "<span class='warning'>Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]</span>")
 
@@ -267,11 +275,11 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
-	stuntime = (5 SECONDS)
-	cellhitcost = 2000
+	stun_time = 5 SECONDS
+	cell_hit_cost = 2000
 	throw_stun_chance = 10
 	slot_flags = ITEM_SLOT_BACK
-	convertable = FALSE
+	convertible = FALSE
 	var/obj/item/assembly/igniter/sparkler = 0
 
 /obj/item/melee/baton/cattleprod/Initialize()
@@ -296,9 +304,9 @@
 	force = 5
 	throwforce = 5
 	throw_range = 5
-	cellhitcost = 2000
+	cell_hit_cost = 2000
 	throw_stun_chance = 99  //Have you prayed today?
-	convertable = FALSE
+	convertible = FALSE
 	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
 
 /obj/item/melee/baton/boomerang/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE)
