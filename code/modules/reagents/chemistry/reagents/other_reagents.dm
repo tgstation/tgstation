@@ -129,11 +129,11 @@
 	glass_desc = "The father of all refreshments."
 	shot_glass_icon_state = "shotglassclear"
 
-/datum/reagent/water/on_mob_life(mob/living/carbon/M)
+/datum/reagent/water/on_mob_metabolize(mob/living/carbon/M)
 	current_cycle++
 	holder.remove_reagent(type, metabolization_rate / M.metabolism_efficiency)
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "hydration", /datum/mood_event/hydration, name)
-	M.AdjustUnconscious(-3, FALSE)
+	M.AdjustSleeping(-3, FALSE)
 
 /*
  *	Water reaction to turf
