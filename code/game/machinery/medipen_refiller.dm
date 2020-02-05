@@ -18,7 +18,7 @@
 
 /obj/machinery/medipen_refiller/Initialize()
 	. = ..()
-	create_reagents(100)
+	create_reagents(100, TRANSPARENT)
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		reagents.maximum_volume += 100 * B.rating
 	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/check_refill)
@@ -33,16 +33,12 @@
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		new_volume += 100 * B.rating
 	if(!reagents)
-		create_reagents(new_volume)
+		create_reagents(new_volume, TRANSPARENT)
 	reagents.maximum_volume = new_volume
 	return TRUE
 
 /// proc that handles the messages and animation, calls refill to end the animation
 /obj/machinery/medipen_refiller/proc/check_refill(datum/source, obj/item/I, mob/user)
-	if(default_deconstruction_screwdriver(user, "medipen_refiller_open", "medipen_refiller", I))
-		return TRUE
-	if(default_deconstruction_crowbar(I))
-		return TRUE
 	if(busy)
 		to_chat(user, "<span class='danger'>The machine is busy.</span>")
 		return
@@ -51,6 +47,9 @@
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)
 			to_chat(user, "<span class='notice'>You transfer [units] units of the solution to the [name].</span>")
+			return
+		else
+			to_chat(user, "<span class='danger'>The [name] is full.</span>")
 			return
 	if(!istype(I, /obj/item/reagent_containers/hypospray/medipen))
 		to_chat(user, "<span class='danger'>The machine doesn't recognize [I.name] as a valid object!</span>")
@@ -74,13 +73,24 @@
 	to_chat(user, "<span class='notice'>You start furiously plunging [name].")
 	if(do_after(user, 30, target = src))
 		to_chat(user, "<span class='notice'>You finish plunging the [name].")
-		reagents.reaction(get_turf(src), TOUCH) //splash on the floor
+		reagents.reaction(get_turf(src), TOUCH)
 		reagents.clear_reagents()
 
 /obj/machinery/medipen_refiller/wrench_act(mob/living/user, obj/item/I)
 	..()
 	default_unfasten_wrench(user, I)
 	return TRUE
+
+/obj/machinery/medipen_refiller/crowbar_act(mob/user, obj/item/I)
+	default_deconstruction_crowbar(I)
+	return TRUE
+
+/obj/machinery/medipen_refiller/screwdriver_act(mob/living/user, obj/item/I)
+	. = TRUE
+	if(..())
+		return
+	if(default_deconstruction_screwdriver(user, "medipen_refiller_open", "medipen_refiller", I))
+		return
 
 /// refills the medipen
 /obj/machinery/medipen_refiller/proc/refill(obj/item/reagent_containers/hypospray/medipen/P, mob/user)
