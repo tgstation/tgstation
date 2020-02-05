@@ -144,9 +144,9 @@
 		return
 	var/mob/living/L_occupant = occupant
 	if(stasis_running())
-		if(!HAS_TRAIT(L_occupant, TRAIT_STASIS))
+		if(!HAS_TRAIT_FROM(L_occupant, TRAIT_STASIS, STASIS_MACHINE_TRAIT))
 			chill_out(L_occupant)
-	else if(HAS_TRAIT(L_occupant, TRAIT_STASIS))
+	else if(HAS_TRAIT_FROM(L_occupant, TRAIT_STASIS, STASIS_MACHINE_TRAIT))
 		thaw_them(L_occupant)
 
 /obj/machinery/stasis/screwdriver_act(mob/living/user, obj/item/I)
