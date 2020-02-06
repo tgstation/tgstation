@@ -149,7 +149,7 @@
 	if(!sticker)
 		return
 	for(var/obj/I in src.GetAllContents())
-		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
+		SEND_SIGNAL(I, COMSIG_STRUCTURE_UNWRAPPED)
 
 /obj/item/smallDelivery
 	name = "parcel"
