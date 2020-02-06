@@ -118,3 +118,4 @@
 	desc = "It has counterweights that adjust to the amount of pressure put on it using a complex array of springs and screws."
 	icon_state = "crowbar_syndie"
 	toolspeed = 0.5
+	force = 8
