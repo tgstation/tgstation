@@ -223,8 +223,17 @@
 			L.Move(landing_turf, vehicle_target.dir)
 			passtable_off(L, VEHICLE_TRAIT)
 			V.pass_flags &= ~PASSTABLE
-		if(locate(/obj/structure/table) in V.loc.contents)
+		var/the_legend = L.mind.get_skill_level(/datum/skill/skating) >= SKILL_LEVEL_MASTER
+		var/list/valid_grinds = the_legend ? list(/obj/structure/table, /mob/living) : list(/obj/structure/table)
+		var/valid = FALSE
+		for(var/i in valid_grinds)
+			if(locate(i) in V.loc.contents)
+				valid = TRUE
+		if(valid)
 			V.grinding = TRUE
 			V.icon_state = "[V.board_icon]-grind"
 			addtimer(CALLBACK(V, /obj/vehicle/ridden/scooter/skateboard/.proc/grind), 2)
 		next_ollie = world.time + 5
+
+/mob/proc/kek()
+	mind.adjust_experience(/datum/skill/skating, 10000)

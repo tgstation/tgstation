@@ -61,6 +61,8 @@
 	///Stamina drain multiplier
 	var/instability = 10
 
+	var/saved_grind_skill = 0
+
 /obj/vehicle/ridden/scooter/skateboard/Initialize()
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
@@ -121,11 +123,21 @@
 ///Moves the vehicle forward and if it lands on a table, repeats
 /obj/vehicle/ridden/scooter/skateboard/proc/grind()
 	vehicle_move(dir)
-	if(has_buckled_mobs() && locate(/obj/structure/table) in loc.contents)
-		var/mob/living/L = buckled_mobs[1]
+	if(!has_buckled_mobs())
+		return
+	var/mob/living/L = buckled_mobs[1]
+	var/the_legend = L.mind.get_skill_level(/datum/skill/skating) >= SKILL_LEVEL_MASTER
+	var/list/valid_grinds = the_legend ? list(/obj/structure/table, /mob/living) : list(/obj/structure/table)
+	var/valid = FALSE
+	for(var/i in valid_grinds)
+		if(locate(i) in loc.contents)
+			valid = TRUE
+	if(valid)
 		L.adjustStaminaLoss(instability*0.5)
 		if (L.getStaminaLoss() >= 100)
 			playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
+			L?.mind.adjust_experience(/datum/skill/skating, -saved_grind_skill)
+			saved_grind_skill = initial(saved_grind_skill)
 			unbuckle_mob(L)
 			var/atom/throw_target = get_edge_target_turf(src, pick(GLOB.cardinals))
 			L.throw_at(throw_target, 2, 2)
@@ -136,6 +148,7 @@
 			return
 		else
 			playsound(src, 'sound/vehicles/skateboard_roll.ogg', 50, TRUE)
+			saved_grind_skill += SKATER_SKILL_GRIND
 			if(prob (25))
 				var/turf/location = get_turf(loc)
 				if(location)
@@ -144,6 +157,10 @@
 			addtimer(CALLBACK(src, .proc/grind), 2)
 			return
 	else
+		L?.mind.adjust_experience(/datum/skill/skating, saved_grind_skill)
+		//if(L.mind.get_skill_level(/datum/skill/skating) >= SKILL_LEVEL_JOURNEYMAN)
+		//	to_chat(L, "<span class='warning'>Radical, bro-hone! You think you got the skills to jump start a bomb from your hands.</span>")
+		saved_grind_skill = initial(saved_grind_skill)
 		grinding = FALSE
 		icon_state = board_icon
 

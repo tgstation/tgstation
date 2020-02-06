@@ -518,8 +518,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	///The vehicle counterpart for the board
 	var/board_item_type = /obj/vehicle/ridden/scooter/skateboard
 
+/obj/item/melee/skateboard/attack_self_tk(mob/user)
+	return //don't want people remotely jumping on their board
+
 /obj/item/melee/skateboard/attack_self(mob/user)
 	new board_item_type(get_turf(user))
+	var/obj/vehicle/ridden/scooter/skateboard/S = new board_item_type(get_turf(user))
+	if(user.mind.get_skill_level(/datum/skill/skating) >= SKILL_LEVEL_JOURNEYMAN)
+		S.buckle_mob(user)
 	qdel(src)
 
 /obj/item/melee/skateboard/pro
