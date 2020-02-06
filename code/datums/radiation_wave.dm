@@ -49,8 +49,7 @@
 	if(strength<RAD_BACKGROUND_RADIATION)
 		qdel(src)
 		return
-	var/last_contam_amount = radiate(atoms, strength)
-	remaining_contam = max(0,remaining_contam-last_contam_amount)
+	radiate(atoms, strength)
 	check_obstructions(atoms) // reduce our overall strength if there are radiation insulators
 
 /datum/radiation_wave/proc/get_rad_atoms()
@@ -93,10 +92,13 @@
 
 /datum/radiation_wave/proc/radiate(list/atoms, strength)
 	var/can_contam = strength >= RAD_MINIMUM_CONTAMINATION
-	var/list/contam_atoms = list()
-	for(var/k in 1 to atoms.len)
-		var/atom/thing = atoms[k]
-		if(!thing)
+	var/contamination_strength = (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT
+	contamination_strength = max(contamination_strength, RAD_BACKGROUND_RADIATION)
+	// It'll never reach 100% chance but the further out it gets the more likely it'll contaminate
+	var/contamination_chance = 100 - (90 / (1 + steps * 0.1))
+	for(var/k in atoms)
+		var/atom/thing = k
+		if(QDELETED(thing))
 			continue
 		thing.rad_act(strength)
 
@@ -114,14 +116,16 @@
 			))
 		if(!can_contaminate || !can_contam || blacklisted[thing.type])
 			continue
-		if(CHECK_BITFIELD(thing.rad_flags, RAD_NO_CONTAMINATE) || SEND_SIGNAL(thing, COMSIG_ATOM_RAD_CONTAMINATING, strength) & COMPONENT_BLOCK_CONTAMINATION)
+		if(thing.rad_flags & RAD_NO_CONTAMINATE || SEND_SIGNAL(thing, COMSIG_ATOM_RAD_CONTAMINATING, strength) & COMPONENT_BLOCK_CONTAMINATION)
 			continue
-		contam_atoms += thing
-	var/did_contam = 0
-	if(length(contam_atoms) && prob(50+steps*10)) // the prob lets it carry a bit further
-		var/rad_strength = min((strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT,remaining_contam)/contam_atoms.len
-		for(var/k in 1 to contam_atoms.len)
-			var/atom/thing = contam_atoms[k]
-			thing.AddComponent(/datum/component/radioactive, rad_strength, source)
-			did_contam += rad_strength
-	return did_contam
+
+		if(contamination_strength > remaining_contam)
+			contamination_strength = remaining_contam
+		if(!prob(contamination_chance))
+			continue
+		if(SEND_SIGNAL(thing, COMSIG_ATOM_RAD_CONTAMINATING, strength) & COMPONENT_BLOCK_CONTAMINATION)
+			continue
+		remaining_contam -= contamination_strength
+		if(remaining_contam < RAD_BACKGROUND_RADIATION)
+			can_contaminate = FALSE
+		thing.AddComponent(/datum/component/radioactive, contamination_strength, source)
