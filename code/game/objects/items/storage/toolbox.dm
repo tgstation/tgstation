@@ -164,7 +164,7 @@
 	new /obj/item/weldingtool/largetank(src)
 	new /obj/item/crowbar/syndie(src)
 	new /obj/item/wirecutters/syndie(src)
-	new /obj/item/multitool(src)
+	new /obj/item/multitool/syndie(src)
 	new /obj/item/clothing/gloves/combat(src)
 
 /obj/item/storage/toolbox/drone

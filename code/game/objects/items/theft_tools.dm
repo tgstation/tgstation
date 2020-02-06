@@ -264,23 +264,3 @@
 	QDEL_NULL(sliver)
 	update_icon()
 
-//Don't know where else to put fancy syndicate tools
-
-/obj/item/wrench/syndie
-	name = "suspicious-looking wrench"
-	desc = "It’s one of those fancy wrenches that you turn backward without twisting the bolt for faster action."
-	icon_state = "wrench_syndie"
-	toolspeed = 0.5
-
-/obj/item/crowbar/syndie
-	name = "suspicious-looking crowbar"
-	desc = "It has counterweights that adjust to the amount of pressure put on it using a complex array of springs and screws."
-	icon_state = "crowbar_syndie"
-	toolspeed = 0.5
-
-/obj/item/wirecutters/syndie
-	name = "suspicious-looking wirecutters"
-	desc = "The blades of these wirecutters have very fine serrated teeth."
-	icon_state = "cutters_syndie"
-	toolspeed = 0.5
-	random_color = FALSE

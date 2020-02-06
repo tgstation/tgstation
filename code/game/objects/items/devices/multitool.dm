@@ -174,3 +174,10 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "multitool_cyborg"
 	toolspeed = 0.5
+
+/obj/item/multitool/syndie
+	name = "suspicious-looking multitool"
+	desc = "A dark, sinister multitool with an ominous glowing screen."
+	icon_state = "multitool_syndie"
+	toolspeed = 0.5
+
