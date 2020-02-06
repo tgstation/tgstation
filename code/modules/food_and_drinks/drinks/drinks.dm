@@ -653,7 +653,7 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/sol_dry
 	name = "Sol Dry"
 	desc = "Maybe this will help your tummy feel better. Maybe not."
-	icon_state = "ginger_ale"
+	icon_state = "sol_dry"
 	list_reagents = list(/datum/reagent/consumable/sol_dry = 30)
 	foodtype = SUGAR
 
