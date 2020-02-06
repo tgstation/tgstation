@@ -15,6 +15,7 @@ import { Bepis } from './interfaces/Bepis';
 import { BorgPanel } from './interfaces/BorgPanel';
 import { BrigTimer } from './interfaces/BrigTimer';
 import { Canister } from './interfaces/Canister';
+import { Canvas } from './interfaces/Canvas';
 import { Cargo, CargoExpress } from './interfaces/Cargo';
 import { CellularEmporium } from './interfaces/CellularEmporium';
 import { CentcomPodLauncher } from './interfaces/CentcomPodLauncher';
@@ -62,7 +63,10 @@ import { NaniteRemote } from './interfaces/NaniteRemote';
 import { NotificationPreferences } from './interfaces/NotificationPreferences';
 import { NtnetRelay } from './interfaces/NtnetRelay';
 import { NtosArcade } from './interfaces/NtosArcade';
+import { NtosCard } from './interfaces/NtosCard';
 import { NtosConfiguration } from './interfaces/NtosConfiguration';
+import { NtosCrewManifest } from './interfaces/NtosCrewManifest';
+import { NtosJobManager } from './interfaces/NtosJobManager';
 import { NtosMain } from './interfaces/NtosMain';
 import { NtosNetChat } from './interfaces/NtosNetChat';
 import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
@@ -96,7 +100,9 @@ import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
 import { Tank } from './interfaces/Tank';
 import { TankDispenser } from './interfaces/TankDispenser';
+import { Teleporter } from './interfaces/Teleporter';
 import { ThermoMachine } from './interfaces/ThermoMachine';
+import { Timer } from './interfaces/Timer';
 import { TurbineComputer } from './interfaces/TurbineComputer';
 import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
@@ -172,6 +178,10 @@ const ROUTES = {
   },
   canister: {
     component: () => Canister,
+    scrollable: false,
+  },
+  canvas: {
+    component: () => Canvas,
     scrollable: false,
   },
   cargo: {
@@ -373,8 +383,26 @@ const ROUTES = {
     scrollable: false,
     theme: 'ntos',
   },
+  ntos_card: {
+    component: () => NtosCard,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
   ntos_configuration: {
     component: () => NtosConfiguration,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_crew_manifest: {
+    component: () => NtosCrewManifest,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_job_manager: {
+    component: () => NtosJobManager,
     wrapper: () => NtosWrapper,
     scrollable: true,
     theme: 'ntos',
@@ -539,8 +567,16 @@ const ROUTES = {
     component: () => TankDispenser,
     scrollable: false,
   },
+  teleporter: {
+    component: () => Teleporter,
+    scrollable: false,
+  },
   thermomachine: {
     component: () => ThermoMachine,
+    scrollable: false,
+  },
+  timer: {
+    component: () => Timer,
     scrollable: false,
   },
   turbine_computer: {

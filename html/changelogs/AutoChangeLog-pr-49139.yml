@@ -1,0 +1,6 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed spell books becoming unreadable if you moved while reading them."
+  - bugfix: "Fixed progress bars not showing up for spell books."
+  - bugfix: "Fixed an exploit where spell books didn't always have to be in your hand to finish reading them."

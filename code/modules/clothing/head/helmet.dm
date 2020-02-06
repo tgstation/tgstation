@@ -163,6 +163,16 @@
 	icon_state = "policehelm"
 	dynamic_hair_suffix = ""
 
+/obj/item/clothing/head/helmet/constable
+	name = "constable helmet"
+	desc = "A british looking helmet."
+	mob_overlay_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	icon_state = "constable"
+	item_state = "constable"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	custom_price = 350
+
 /obj/item/clothing/head/helmet/swat/nanotrasen
 	name = "\improper SWAT helmet"
 	desc = "An extremely robust, space-worthy helmet with the Nanotrasen logo emblazoned on the top."
@@ -314,7 +324,11 @@
 
 //LightToggle
 
-/obj/item/clothing/head/helmet/update_icon()
+/obj/item/clothing/head/helment/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/clothing/head/helmet/update_icon_state()
 	var/state = "[initial(icon_state)]"
 	if(attached_light)
 		if(attached_light.on)
@@ -323,10 +337,6 @@
 			state += "-flight" //etc.
 
 	icon_state = state
-
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.update_inv_head()
 
 /obj/item/clothing/head/helmet/ui_action_click(mob/user, action)
 	if(istype(action, alight))

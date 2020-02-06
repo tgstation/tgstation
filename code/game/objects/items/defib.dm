@@ -23,7 +23,6 @@
 	var/obj/item/twohanded/shockpaddles/paddles
 	var/obj/item/stock_parts/cell/high/cell
 	var/combat = FALSE //if true, revive through hardsuits, allow for combat shocking
-	var/grab_ghost = FALSE // Do we pull the ghost back into their body?
 	var/cooldown_duration = 5 SECONDS//how long does it take to recharge
 
 /obj/item/defibrillator/get_cell()
@@ -305,8 +304,6 @@
 	var/obj/item/defibrillator/defib
 	var/req_defib = TRUE
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
-	var/grab_ghost = FALSE
-	var/tlimit = DEFIB_TIME_LIMIT * 10
 	var/base_icon_state = "defibpaddles"
 
 /obj/item/twohanded/shockpaddles/ComponentInitialize()
@@ -442,11 +439,9 @@
 		do_harm(H, user)
 		return
 
-	if((!req_defib && grab_ghost) || (req_defib && defib.grab_ghost))
+	if(can_defib(H))
 		H.notify_ghost_cloning("Your heart is being defibrillated!")
 		H.grab_ghost() // Shove them back in their body.
-	else if(can_defib(H))
-		H.notify_ghost_cloning("Your heart is being defibrillated. Re-enter your corpse if you want to be revived!", source = src)
 
 	do_help(H, user)
 
@@ -454,14 +449,12 @@
 	var/obj/item/organ/heart = H.getorgan(/obj/item/organ/heart)
 	if(H.suiciding || H.hellbound || HAS_TRAIT(H, TRAIT_HUSK))
 		return
-	if((world.time - H.timeofdeath) > tlimit)
-		return
 	if((H.getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (H.getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
 		return
 	if(!heart || (heart.organ_flags & ORGAN_FAILING))
 		return
 	var/obj/item/organ/brain/BR = H.getorgan(/obj/item/organ/brain)
-	if(QDELETED(BR) || BR.brain_death || (BR.organ_flags & ORGAN_FAILING) || BR.suicided)
+	if(QDELETED(BR) || (BR.organ_flags & ORGAN_FAILING) || BR.suicided)
 		return
 	return TRUE
 
@@ -562,7 +555,6 @@
 		playsound(src, 'sound/machines/defib_charge.ogg', 75, FALSE)
 		var/total_burn	= 0
 		var/total_brute	= 0
-		var/tplus = world.time - H.timeofdeath	//length of time spent dead
 		var/obj/item/organ/heart = H.getorgan(/obj/item/organ/heart)
 		if(do_after(user, 20, target = H)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
 			for(var/obj/item/carried_item in H.contents)
@@ -586,23 +578,17 @@
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
 				else if (H.hellbound)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's soul appears to be on another plane of existence. Further attempts futile.</span>"
-				else if (tplus > tlimit)
-					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Body has decayed for too long. Further attempts futile.</span>"
 				else if (!heart)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's heart is missing.</span>"
 				else if (heart.organ_flags & ORGAN_FAILING)
-					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's heart too damaged.</span>"
+					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's heart too damaged, replace or repair and try again.</span>"
 				else if(total_burn >= MAX_REVIVE_FIRE_DAMAGE || total_brute >= MAX_REVIVE_BRUTE_DAMAGE || HAS_TRAIT(H, TRAIT_HUSK))
-					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Severe tissue damage makes recovery of patient impossible via defibrillator. Further attempts futile.</span>"
-				else if(H.get_ghost())
-					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - No activity in patient's brain. Further attempts may be successful.</span>"
+					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Tissue damage too severe, repair and try again.</span>"
 				else
 					var/obj/item/organ/brain/BR = H.getorgan(/obj/item/organ/brain)
 					if(BR)
 						if(BR.organ_flags & ORGAN_FAILING)
-							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's brain tissue is damaged making recovery of patient impossible via defibrillator. Further attempts futile.</span>"
-						if(BR.brain_death)
-							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's brain damaged beyond point of no return. Further attempts futile.</span>"
+							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's brain is too damaged, repair and try again. </span>"
 						if(BR.suicided || BR.brainmob?.suiciding)
 							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - No intelligence pattern can be detected in patient's brain. Further attempts futile.</span>"
 					else
@@ -626,6 +612,7 @@
 					user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful.</span>")
 					playsound(src, 'sound/machines/defib_success.ogg', 50, FALSE)
 					H.set_heartattack(FALSE)
+					H.grab_ghost()
 					H.revive(full_heal = FALSE, admin_revive = FALSE)
 					H.emote("gasp")
 					H.Jitter(100)

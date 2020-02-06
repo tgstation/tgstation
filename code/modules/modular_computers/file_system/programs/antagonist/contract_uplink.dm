@@ -9,7 +9,6 @@
 	unsendable = 1
 	undeletable = 1
 	tgui_id = "synd_contract"
-	ui_style = "syndicate"
 	ui_x = 500
 	ui_y = 600
 	var/error = ""

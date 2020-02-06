@@ -593,6 +593,7 @@
 	desc = "A sliced piece of juicy pineapple."
 	icon_state = "pineapple_slice"
 	filling_color = "#F6CB0B"
+	juice_results = list(/datum/reagent/consumable/pineapplejuice = 3)
 	tastes = list("pineapple" = 1)
 	foodtype = FRUIT | PINEAPPLE
 
@@ -619,7 +620,7 @@
 /obj/item/reagent_containers/food/snacks/canned/proc/open_can(mob/user)
 	to_chat(user, "<span class='notice'>You pull back the tab of \the [src].</span>")
 	playsound(user.loc, 'sound/items/foodcanopen.ogg', 50)
-	ENABLE_BITFIELD(reagents.flags, OPENCONTAINER)
+	reagents.flags |= OPENCONTAINER
 	spillable = TRUE
 
 /obj/item/reagent_containers/food/snacks/canned/attack_self(mob/user)

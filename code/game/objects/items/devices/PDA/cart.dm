@@ -231,13 +231,8 @@ Code:
 <a href='byond://?src=[REF(src)];choice=Signal Code;scode=1'>+</a>
 <a href='byond://?src=[REF(src)];choice=Signal Code;scode=5'>+</a><br>"}
 		if (41) //crew manifest
-
 			menu = "<h4>[PDAIMG(notes)] Crew Manifest</h4>"
-			menu += "Entries cannot be modified from this terminal.<br><br>"
-			if(GLOB.data_core.general)
-				for (var/datum/data/record/t in sortRecord(GLOB.data_core.general))
-					menu += "[t.fields["name"]] - [t.fields["rank"]]<br>"
-			menu += "<br>"
+			menu += "<center>[GLOB.data_core.get_manifest_html(monochrome=TRUE)]</center>"
 
 
 		if (42) //status displays
@@ -263,7 +258,7 @@ Code:
 
 			var/turf/pda_turf = get_turf(src)
 			for(var/obj/machinery/computer/monitor/pMon in GLOB.machines)
-				if(pMon.stat & (NOPOWER | BROKEN)) //check to make sure the computer is functional
+				if(pMon.machine_stat & (NOPOWER | BROKEN)) //check to make sure the computer is functional
 					continue
 				if(pda_turf.z != pMon.z) //and that we're on the same zlevel as the computer (lore: limited signal strength)
 					continue

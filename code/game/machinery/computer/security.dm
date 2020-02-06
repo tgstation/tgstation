@@ -608,7 +608,7 @@ What a mess.*/
 				switch(href_list["field"])
 					if("name")
 						if(istype(active1, /datum/data/record) || istype(active2, /datum/data/record))
-							var/t1 = copytext(sanitize(input("Please input name:", "Secure. records", active1.fields["name"], null)  as text),1,MAX_MESSAGE_LEN)
+							var/t1 = stripped_input(usr, "Please input name:", "Secure. records", active1.fields["name"], MAX_MESSAGE_LEN)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							if(istype(active1, /datum/data/record))
@@ -873,7 +873,7 @@ What a mess.*/
 /obj/machinery/computer/secure_data/emp_act(severity)
 	. = ..()
 
-	if(stat & (BROKEN|NOPOWER) || . & EMP_PROTECT_SELF)
+	if(machine_stat & (BROKEN|NOPOWER) || . & EMP_PROTECT_SELF)
 		return
 
 	for(var/datum/data/record/R in GLOB.data_core.security)

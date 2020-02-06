@@ -270,13 +270,13 @@
 	update_name()
 	update_icon()
 
-/obj/structure/door_assembly/update_icon()
-	cut_overlays()
+/obj/structure/door_assembly/update_overlays()
+	. = ..()
 	if(!glass)
-		add_overlay(get_airlock_overlay("fill_construction", icon))
-	else if(glass)
-		add_overlay(get_airlock_overlay("glass_construction", overlays_file))
-	add_overlay(get_airlock_overlay("panel_c[state+1]", overlays_file))
+		. += get_airlock_overlay("fill_construction", icon)
+	else
+		. += get_airlock_overlay("glass_construction", overlays_file)
+	. += get_airlock_overlay("panel_c[state+1]", overlays_file)
 
 /obj/structure/door_assembly/proc/update_name()
 	name = ""

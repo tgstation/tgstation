@@ -22,6 +22,24 @@
 	AddElement(/datum/element/earhealing)
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
+/obj/item/clothing/ears/earmuffs/equipped(mob/user, slot)
+	. = ..()
+	if(ishuman(user) && slot == ITEM_SLOT_EARS)
+		ADD_TRAIT(user, TRAIT_DEAF, CLOTHING_TRAIT)
+
+/obj/item/clothing/ears/earmuffs/dropped(mob/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_DEAF, CLOTHING_TRAIT)
+
+/obj/item/clothing/ears/earmuffs/spacepods
+	name = "nanotrasen space pods"
+	desc = "Flex your money, AND ignore what everone else says, all at once!"
+	icon = 'icons/obj/clothing/accessories.dmi'
+	icon_state = "spacepods"
+	item_state = "spacepods"
+	strip_delay = 100 //air pods don't fall out
+	custom_premium_price = 1800
+
 /obj/item/clothing/ears/headphones
 	name = "headphones"
 	desc = "Unce unce unce unce. Boop!"
@@ -37,7 +55,11 @@
 	. = ..()
 	update_icon()
 
-/obj/item/clothing/ears/headphones/update_icon()
+/obj/item/clothing/ears/headphones/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/clothing/ears/headphones/update_icon_state()
 	icon_state = "[initial(icon_state)]_[headphones_on? "on" : "off"]"
 	item_state = "[initial(item_state)]_[headphones_on? "on" : "off"]"
 

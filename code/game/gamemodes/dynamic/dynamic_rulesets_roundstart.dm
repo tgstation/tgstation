@@ -402,19 +402,20 @@
 	else if (check_heads_victory())
 		finished = STATION_VICTORY
 		SSshuttle.clearHostileEnvironment(src)
-		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
-			We have remotely blacklisted the head revolutionaries from your cloning software to prevent accidental cloning.", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
 		revolution.save_members()
 		for(var/datum/mind/M in revolution.members)	// Remove antag datums and prevents podcloned or exiled headrevs restarting rebellions.
 			if(M.has_antag_datum(/datum/antagonist/rev/head))
 				var/datum/antagonist/rev/head/R = M.has_antag_datum(/datum/antagonist/rev/head)
 				R.remove_revolutionary(FALSE, "gamemode")
-				var/mob/living/carbon/C = M.current
-				if(C.stat == DEAD)
-					C.makeUncloneable()
+				if(M.current)
+					var/mob/living/carbon/C = M.current
+					if(istype(C) && C.stat == DEAD)
+						C.makeUncloneable()
 			if(M.has_antag_datum(/datum/antagonist/rev))
 				var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev)
 				R.remove_revolutionary(FALSE, "gamemode")
+		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
+			We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
 		return RULESET_STOP_PROCESSING
 
 /// Checks for revhead loss conditions and other antag datums.
