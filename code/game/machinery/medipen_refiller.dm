@@ -21,12 +21,8 @@
 	create_reagents(100, TRANSPARENT)
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		reagents.maximum_volume += 100 * B.rating
-	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/check_refill)
 	AddComponent(/datum/component/plumbing/simple_demand)
 
-/obj/machinery/medipen_refiller/Destroy()
-	UnregisterSignal(src, COMSIG_PARENT_ATTACKBY)
-	return ..()
 
 /obj/machinery/medipen_refiller/RefreshParts()
 	var/new_volume = 100
@@ -37,8 +33,8 @@
 	reagents.maximum_volume = new_volume
 	return TRUE
 
-/// proc that handles the messages and animation, calls refill to end the animation
-/obj/machinery/medipen_refiller/proc/check_refill(datum/source, obj/item/I, mob/user)
+///  handles the messages and animation, calls refill to end the animation
+/obj/machinery/medipen_refiller/attackby(obj/item/I, mob/user, params)
 	if(busy)
 		to_chat(user, "<span class='danger'>The machine is busy.</span>")
 		return
@@ -51,23 +47,23 @@
 		else
 			to_chat(user, "<span class='danger'>The [name] is full.</span>")
 			return
-	if(!istype(I, /obj/item/reagent_containers/hypospray/medipen))
-		to_chat(user, "<span class='danger'>The machine doesn't recognize [I.name] as a valid object!</span>")
+	if(istype(I, /obj/item/reagent_containers/hypospray/medipen))
+		var/obj/item/reagent_containers/hypospray/medipen/P = I
+		if(!(LAZYFIND(allowed, P.type)))
+			to_chat(user, "<span class='danger'>Error! Unknown schematics.</span>")
+			return
+		if(P.reagents && P.reagents.reagent_list.len)
+			to_chat(user, "<span class='notice'>The medipen is already filled.</span>")
+			return
+		if(reagents.has_reagent(allowed[P.type], 10))
+			busy = TRUE
+			add_overlay("active")
+			addtimer(CALLBACK(src, .proc/refill, P, user), 20)
+			qdel(P)
+			return
+		to_chat(user, "<span class='danger'>There aren't enough reagents to finish this operation.</span>")
 		return
-	var/obj/item/reagent_containers/hypospray/medipen/P = I
-	if(!(LAZYFIND(allowed, P.type)))
-		to_chat(user, "<span class='danger'>Error! Unknown schematics.</span>")
-		return
-	if(P.reagents && P.reagents.reagent_list.len)
-		to_chat(user, "<span class='notice'>The medipen is already filled.</span>")
-		return
-	if(reagents.has_reagent(allowed[P.type], 10))
-		busy = TRUE
-		add_overlay("active")
-		addtimer(CALLBACK(src, .proc/refill, P, user), 20)
-		qdel(P)
-	else
-		to_chat(user, "<span class='danger'>There arent enough reagents to finish this operation.</span>")
+	..()
 
 /obj/machinery/medipen_refiller/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	to_chat(user, "<span class='notice'>You start furiously plunging [name].")
@@ -82,15 +78,14 @@
 	return TRUE
 
 /obj/machinery/medipen_refiller/crowbar_act(mob/user, obj/item/I)
+	..()
 	default_deconstruction_crowbar(I)
 	return TRUE
 
 /obj/machinery/medipen_refiller/screwdriver_act(mob/living/user, obj/item/I)
-	. = TRUE
-	if(..())
-		return
-	if(default_deconstruction_screwdriver(user, "medipen_refiller_open", "medipen_refiller", I))
-		return
+    . = ..()
+    if(!.)
+        return default_deconstruction_screwdriver(user, "medipen_refiller_open", "medipen_refiller", I)
 
 /// refills the medipen
 /obj/machinery/medipen_refiller/proc/refill(obj/item/reagent_containers/hypospray/medipen/P, mob/user)
