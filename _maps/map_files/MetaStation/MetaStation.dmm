@@ -6552,7 +6552,7 @@
 "ank" = (
 /obj/structure/lattice,
 /obj/machinery/camera/motion{
-	c_tag = "E.V.A. Storage";
+	c_tag = "Armory External";
 	dir = 8
 	},
 /turf/open/space/basic,
@@ -54308,7 +54308,6 @@
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/machinery/computer/scan_consolenew{
-	icon_state = "computer";
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
@@ -72350,7 +72349,6 @@
 "hFV" = (
 /obj/machinery/door/window/westleft{
 	name = "safety door";
-	req_access_txt = "0";
 	req_one_access_txt = "47"
 	},
 /turf/open/floor/plasteel/white,
