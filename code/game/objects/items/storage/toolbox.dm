@@ -146,7 +146,7 @@
 		new /obj/item/stack/cable_coil(src,MAXCOIL,pickedcolor)
 
 /obj/item/storage/toolbox/syndicate
-	name = "suspicious looking toolbox"
+	name = "suspicious-looking toolbox"
 	icon_state = "syndicate"
 	item_state = "toolbox_syndi"
 	force = 15
@@ -160,10 +160,10 @@
 
 /obj/item/storage/toolbox/syndicate/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
-	new /obj/item/wrench(src)
+	new /obj/item/wrench/syndie(src)
 	new /obj/item/weldingtool/largetank(src)
-	new /obj/item/crowbar/red(src)
-	new /obj/item/wirecutters(src, "red")
+	new /obj/item/crowbar/syndie(src)
+	new /obj/item/wirecutters/syndie(src)
 	new /obj/item/multitool(src)
 	new /obj/item/clothing/gloves/combat(src)
 
