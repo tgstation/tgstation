@@ -169,6 +169,28 @@
 		current_potion = O
 		to_chat(user, "<span class='notice'>You load [O] in the console's potion slot[replaced ? ", replacing the one that was there before" : ""].</span>")
 		return
+	else if(istype(O, /obj/item/slime_extract))
+		var/obj/item/slime_extract/E = O
+		if(!SSresearch.slime_already_researched[E.type])
+			if(!E.research)
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 3, -1)
+				visible_message("<span class='notice'>[src] buzzes and displays a message: Invalid extract! (You shouldn't be seeing this. If you are, tell someone.)</span>")
+				return
+			if(E.Uses <= 0)
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 3, -1)
+				visible_message("<span class='notice'>[src] buzzes and displays a message: Extract consumed - no research available.</span>")
+				return
+			else
+				playsound(src, 'sound/machines/ping.ogg', 50, 3, -1)
+				visible_message("<span class='notice'>You insert [E] into a slot on the [src]. It pings and prints out some research notes worth [E.research] points!</span>")
+				new /obj/item/research_notes(drop_location(), E.research, "xenobiology")
+				SSresearch.slime_already_researched[E.type] = TRUE
+				qdel(O)
+				return
+		else
+			visible_message("<span class='notice'>[src] buzzes and displays a message: Slime extract already researched!</span>")
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 3, -1)
+			return
 	..()
 
 /obj/machinery/computer/camera_advanced/xenobio/multitool_act(mob/living/user, obj/item/multitool/I)
@@ -452,7 +474,7 @@
 
 //Pick up monkey
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoMonkeyClickCtrl(mob/living/user, mob/living/carbon/monkey/M)
-	if(!GLOB.cameranet.checkTurfVis(M.loc))
+	if(!isturf(M.loc) || !GLOB.cameranet.checkTurfVis(M.loc))
 		to_chat(user, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 		return
 	var/mob/living/C = user

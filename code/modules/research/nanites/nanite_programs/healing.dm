@@ -53,7 +53,7 @@
 	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
 
 /datum/nanite_program/purging/check_conditions()
-	var/foreign_reagent = LAZYLEN(host_mob.reagents.reagent_list)
+	var/foreign_reagent = length(host_mob.reagents?.reagent_list)
 	if(!host_mob.getToxLoss() && !foreign_reagent)
 		return FALSE
 	return ..()
@@ -232,7 +232,7 @@
 	if(!C.getorgan(/obj/item/organ/heart)) //what are we even shocking
 		return FALSE
 	var/obj/item/organ/brain/BR = C.getorgan(/obj/item/organ/brain)
-	if(QDELETED(BR) || BR.brain_death || (BR.organ_flags & ORGAN_FAILING) || BR.suicided)
+	if(QDELETED(BR) || (BR.organ_flags & ORGAN_FAILING) || BR.suicided)
 		return FALSE
 	if(C.get_ghost())
 		return FALSE

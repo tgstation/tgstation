@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Beakers should no longer nullspace when quick swapped or alt clicked out of certain pieces of machinery."

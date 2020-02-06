@@ -124,7 +124,7 @@
 
 ///Material chair
 /obj/structure/chair/greyscale
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	item_chair = /obj/item/chair/greyscale
 	buildstacktype = null //Custom mats handle this
 
@@ -314,7 +314,7 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
-	else if(custom_materials[getmaterialref(/datum/material/iron)])
+	else if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)])
 		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 
@@ -340,7 +340,7 @@
 		smash(user)
 
 /obj/item/chair/greyscale
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	origin_type = /obj/structure/chair/greyscale
 
 /obj/item/chair/stool
@@ -464,6 +464,7 @@
 		to_chat(Mob, "<span class='warning'>The chair begins to pop and crack, you're too heavy!</span>")
 		if(do_after(Mob, 60, 1, Mob, 0))
 			Mob.visible_message("<span class='notice'>The plastic chair snaps under [Mob]'s weight!</span>")
+			new /obj/effect/decal/cleanable/plastic(loc)
 			qdel(src)
 
 /obj/item/chair/plastic

@@ -23,8 +23,8 @@
 // Returns special prefixes for the station name on certain days. You wind up with names like "Christmas Object Epsilon". See new_station_name()
 /datum/holiday/proc/getStationPrefix()
 	//get the first word of the Holiday and use that
-	var/i = findtext(name," ",1,0)
-	return copytext(name,1,i)
+	var/i = findtext(name, " ")
+	return copytext(name, 1, i)
 
 // Return 1 if this holidy should be celebrated today
 /datum/holiday/proc/shouldCelebrate(dd, mm, yy, ww, ddd)
@@ -602,12 +602,16 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 	return pick("Fluffy","Bunny","Easter","Egg")
 
 /datum/holiday/ianbirthday
-	name = "Ian's Birthday"
-	begin_day = 15
-	begin_month = MARCH
+	name = "Ian's Birthday" //github.com/tgstation/tgstation/commit/de7e4f0de0d568cd6e1f0d7bcc3fd34700598acb
+	begin_month = SEPTEMBER
+	begin_day = 9
+	end_day = 10
 
 /datum/holiday/ianbirthday/greet()
 	return "Happy birthday, Ian!"
+
+/datum/holiday/ianbirthday/getStationPrefix()
+	return pick("Ian", "Corgi", "Erro")
 
 /datum/holiday/hotdogday //I have plans for this.
 	name = "National Hot Dog Day"

@@ -91,6 +91,7 @@
 /obj/machinery/suit_storage_unit/cmo
 	suit_type = /obj/item/clothing/suit/space/hardsuit/medical
 	mask_type = /obj/item/clothing/mask/breath
+	storage_type = /obj/item/tank/internals/oxygen
 
 /obj/machinery/suit_storage_unit/rd
 	suit_type = /obj/item/clothing/suit/space/hardsuit/rd
@@ -162,7 +163,7 @@
 		else
 			. += "uv"
 	else if(state_open)
-		if(stat & BROKEN)
+		if(machine_stat & BROKEN)
 			. += "broken"
 		else
 			. += "open"

@@ -4,6 +4,7 @@
 	speech_verb = "buzzes"
 	ask_verb = "buzzes"
 	exclaim_verb = "loudly buzzes"
+	sing_verb = "hums"
 	key = "z"
 	space_chance = 0
 	syllables = list(

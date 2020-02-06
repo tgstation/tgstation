@@ -126,7 +126,8 @@
 		           /obj/item/clothing/suit/jacket/leather/overcoat = 1,
 		           /obj/item/clothing/under/pants/mustangjeans = 1,
 		           /obj/item/clothing/neck/necklace/dope = 3,
-		           /obj/item/clothing/suit/jacket/letterman_nanotrasen = 1)
+		           /obj/item/clothing/suit/jacket/letterman_nanotrasen = 1,
+		           /obj/item/clothing/ears/earmuffs/spacepods = 1)
 	refill_canister = /obj/item/vending_refill/clothing
 	default_price = 60
 	extra_price = 120

@@ -129,9 +129,10 @@
 	var/newcolor = color2hex(pick(10;"green", 5;"blue", 3;"red", 1;"purple"))
 	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 
-/obj/item/rupee/Crossed(mob/M)
-	if(!istype(M))
+/obj/item/rupee/Crossed(atom/movable/AM)
+	if(!ismob(AM))
 		return
+	var/mob/M = AM
 	if(M.put_in_hands(src))
 		if(src != M.get_active_held_item())
 			M.swap_hand()

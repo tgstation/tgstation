@@ -199,6 +199,14 @@
 	..()
 	. = 1
 
+/datum/reagent/medicine/rezadone/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	. = ..()
+	if(iscarbon(M))
+		var/mob/living/carbon/patient = M
+		if(reac_volume >= 5 && HAS_TRAIT_FROM(patient, TRAIT_HUSK, "burn") && patient.getFireLoss() < TRESHOLD_UNHUSK) //One carp yields 12u rezadone.
+			patient.cure_husk("burn")
+			patient.visible_message("<span class='nicegreen'>[patient]'s body rapidly absorbs moisture from the enviroment, taking on a more healthy appearance.")
+
 /datum/reagent/medicine/spaceacillin
 	name = "Spaceacillin"
 	description = "Spaceacillin will prevent a patient from conventionally spreading any diseases they are currently infected with."
@@ -422,7 +430,7 @@
 
 /datum/reagent/medicine/ephedrine/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.85, blacklisted_movetypes=(FLYING|FLOATING))
+	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.5, blacklisted_movetypes=(FLYING|FLOATING))
 	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 
 /datum/reagent/medicine/ephedrine/on_mob_end_metabolize(mob/living/L)
@@ -1337,9 +1345,6 @@
 		var/obj/item/I = M.get_active_held_item()
 		if(I && M.dropItemToGround(I))
 			to_chat(M, "<span class='notice'>Your hands spaz out and you drop what you were holding!</span>")
-	if(prob(33))
-		M.losebreath++
-		M.adjustOxyLoss(1, 0)
 	M.adjustStaminaLoss(-10, 0)
 	M.Jitter(10)
 	M.Dizzy(15)
@@ -1348,7 +1353,7 @@
 	..()
 	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
-	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.35, blacklisted_movetypes=(FLYING|FLOATING))
+	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.45, blacklisted_movetypes=(FLYING|FLOATING))
 	L.ignore_slowdown(type)
 
 /datum/reagent/medicine/badstims/on_mob_end_metabolize(mob/living/L)

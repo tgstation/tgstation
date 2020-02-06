@@ -31,7 +31,7 @@
 			eat_dir = WEST
 			return TRUE
 
-/obj/machinery/plumbing/grinder_chemical/CanPass(atom/movable/AM)
+/obj/machinery/plumbing/grinder_chemical/CanAllowThrough(atom/movable/AM)
 	. = ..()
 	if(!anchored)
 		return
@@ -44,7 +44,7 @@
 	grind(AM)
 
 /obj/machinery/plumbing/grinder_chemical/proc/grind(atom/AM)
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		return
 	if(reagents.holder_full())
 		return

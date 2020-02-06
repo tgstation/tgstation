@@ -208,7 +208,7 @@
 		if(health <= 0)
 			death()
 		else
-			stat = CONSCIOUS
+			set_stat(CONSCIOUS)
 	med_hud_set_status()
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
@@ -270,15 +270,14 @@
 					else
 						emote("me", 2, pick(emote_hear))
 
-
-/mob/living/simple_animal/proc/environment_is_safe(datum/gas_mixture/environment, check_temp = FALSE)
+/mob/living/simple_animal/proc/environment_air_is_safe()
 	. = TRUE
 
 	if(pulledby && pulledby.grab_state >= GRAB_KILL && atmos_requirements["min_oxy"])
 		. = FALSE //getting choked
 
-	if(isturf(src.loc) && isopenturf(src.loc))
-		var/turf/open/ST = src.loc
+	if(isturf(loc) && isopenturf(loc))
+		var/turf/open/ST = loc
 		if(ST.air)
 			var/ST_gases = ST.air.gases
 			ST.air.assert_gases(arglist(GLOB.hardcoded_gases))
@@ -310,29 +309,51 @@
 			if(atmos_requirements["min_oxy"] || atmos_requirements["min_tox"] || atmos_requirements["min_n2"] || atmos_requirements["min_co2"])
 				. = FALSE
 
-	if(check_temp)
-		var/areatemp = get_temperature(environment)
-		if((areatemp < minbodytemp) || (areatemp > maxbodytemp))
-			. = FALSE
-
+/mob/living/simple_animal/proc/environment_temperature_is_safe(datum/gas_mixture/environment)
+	. = TRUE
+	var/areatemp = get_temperature(environment)
+	if((areatemp < minbodytemp) || (areatemp > maxbodytemp))
+		. = FALSE
 
 /mob/living/simple_animal/handle_environment(datum/gas_mixture/environment)
-	var/atom/A = src.loc
+	var/atom/A = loc
 	if(isturf(A))
 		var/areatemp = get_temperature(environment)
-		if( abs(areatemp - bodytemperature) > 5)
+		if(abs(areatemp - bodytemperature) > 5)
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
 			adjust_bodytemperature(diff)
 
-	if(!environment_is_safe(environment))
+	if(!environment_air_is_safe())
 		adjustHealth(unsuitable_atmos_damage)
+		if(unsuitable_atmos_damage > 0)
+			throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+	else
+		clear_alert("not_enough_oxy")
 
 	handle_temperature_damage()
 
 /mob/living/simple_animal/proc/handle_temperature_damage()
-	if((bodytemperature < minbodytemp) || (bodytemperature > maxbodytemp))
+	if(bodytemperature < minbodytemp)
 		adjustHealth(unsuitable_atmos_damage)
+		switch(unsuitable_atmos_damage)
+			if(1 to 5)
+				throw_alert("temp", /obj/screen/alert/cold, 1)
+			if(5 to 10)
+				throw_alert("temp", /obj/screen/alert/cold, 2)
+			if(10 to INFINITY)
+				throw_alert("temp", /obj/screen/alert/cold, 3)
+	else if(bodytemperature > maxbodytemp)
+		adjustHealth(unsuitable_atmos_damage)
+		switch(unsuitable_atmos_damage)
+			if(1 to 5)
+				throw_alert("temp", /obj/screen/alert/hot, 1)
+			if(5 to 10)
+				throw_alert("temp", /obj/screen/alert/hot, 2)
+			if(10 to INFINITY)
+				throw_alert("temp", /obj/screen/alert/hot, 3)
+	else
+		clear_alert("temp")
 
 /mob/living/simple_animal/gib()
 	if(butcher_results || guaranteed_butcher_results)

@@ -12,16 +12,15 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 4)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 4, /obj/item/clothing/head/goatpelt = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
-	faction = list("neutral")
+	faction = list("goat")
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	attack_same = 1
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -375,3 +374,34 @@
 		user.visible_message("<span class='notice'>[user] milks [src] using \the [O].</span>", "<span class='notice'>You milk [src] using \the [O].</span>")
 	else
 		to_chat(user, "<span class='warning'>The udder is dry. Wait a bit longer...</span>")
+
+/mob/living/simple_animal/deer
+	name = "doe"
+	desc = "A gentle, peaceful forest animal. How did this get into space?"
+	icon_state = "deer-doe"
+	icon_living = "deer-doe"
+	icon_dead = "deer-doe-dead"
+	gender = FEMALE
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	speak = list("Weeeeeeee?","Weeee","WEOOOOOOOOOO")
+	speak_emote = list("grunts","grunts lowly")
+	emote_hear = list("brays.")
+	emote_see = list("shakes its head.")
+	speak_chance = 1
+	turns_per_move = 5
+	see_in_dark = 6
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 3)
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently nudges"
+	response_disarm_simple = "gently nudges aside"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
+	attack_verb_continuous = "bucks"
+	attack_verb_simple = "buck"
+	attack_sound = 'sound/weapons/punch1.ogg'
+	health = 75
+	maxHealth = 75
+	blood_volume = BLOOD_VOLUME_NORMAL
+	food_type = list(/obj/item/reagent_containers/food/snacks/grown/apple)
+	footstep_type = FOOTSTEP_MOB_SHOE

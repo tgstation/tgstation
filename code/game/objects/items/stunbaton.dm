@@ -21,6 +21,7 @@
 	var/hitcost = 1000
 	var/throw_hit_chance = 35
 	var/preload_cell_type //if not empty the baton starts with this type of cell
+	var/convertable = TRUE //if it can converted with a conversion kit
 
 /obj/item/melee/baton/get_cell()
 	return cell
@@ -37,12 +38,25 @@
 		else
 			cell = new preload_cell_type(src)
 	update_icon()
+	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/convert)
 
 
 /obj/item/melee/baton/Destroy()
 	if(cell)
 		QDEL_NULL(cell)
+	UnregisterSignal(src, COMSIG_PARENT_ATTACKBY)
 	return ..()
+
+/obj/item/melee/baton/proc/convert(datum/source, obj/item/I, mob/user)
+	if(istype(I,/obj/item/conversion_kit) && convertable)
+		var/turf/T = get_turf(src)
+		var/obj/item/melee/classic_baton/B = new /obj/item/melee/classic_baton (T)
+		B.alpha = 20
+		playsound(T, 'sound/items/drill_use.ogg', 80, TRUE, -1)
+		animate(src, alpha = 0, time = 10)
+		animate(B, alpha = 255, time = 10)
+		qdel(I)
+		qdel(src)
 
 /obj/item/melee/baton/handle_atom_del(atom/A)
 	if(A == cell)
@@ -50,7 +64,6 @@
 		turned_on = FALSE
 		update_icon()
 	return ..()
-
 
 /obj/item/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
@@ -73,7 +86,7 @@
 			playsound(src, "sparks", 75, TRUE, -1)
 
 
-/obj/item/melee/baton/update_icon()
+/obj/item/melee/baton/update_icon_state()
 	if(turned_on)
 		icon_state = "[initial(icon_state)]_active"
 	else if(!cell)
@@ -235,6 +248,7 @@
 	hitcost = 2000
 	throw_hit_chance = 10
 	slot_flags = ITEM_SLOT_BACK
+	convertable = FALSE
 	var/obj/item/assembly/igniter/sparkler = 0
 
 /obj/item/melee/baton/cattleprod/Initialize()
@@ -250,3 +264,47 @@
 		QDEL_NULL(sparkler)
 	return ..()
 
+/obj/item/melee/baton/boomerang
+	name = "\improper OZtek Boomerang"
+	desc = "A device invented in 2486 for the great Space Emu War by the confederacy of Australicus, these high-tech boomerangs also work exceptionally well at stunning crewmembers. Just be careful to catch it when thrown!"
+	throw_speed = 1
+	icon_state = "boomerang"
+	item_state = "boomerang"
+	force = 5
+	throwforce = 5
+	throw_range = 5
+	hitcost = 2000
+	throw_hit_chance = 99  //Have you prayed today?
+	convertable = FALSE
+	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
+
+/obj/item/melee/baton/boomerang/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE)
+	if(turned_on)
+		if(ishuman(thrower))
+			var/mob/living/carbon/human/H = thrower
+			H.throw_mode_off() //so they can catch it on the return.
+	return ..()
+
+/obj/item/melee/baton/boomerang/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(turned_on)
+		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
+		if(ishuman(hit_atom) && !caught && prob(throw_hit_chance))//if they are a carbon and they didn't catch it
+			baton_effect(hit_atom)
+		if(thrownby && !caught)
+			sleep(1)
+			if(!QDELETED(src))
+				throw_at(thrownby, throw_range+2, throw_speed, null, TRUE)
+	else
+		return ..()
+
+
+/obj/item/melee/baton/boomerang/update_icon_state()
+	if(turned_on)
+		icon_state = "[initial(icon_state)]_active"
+	else if(!cell)
+		icon_state = "[initial(icon_state)]_nocell"
+	else
+		icon_state = "[initial(icon_state)]"
+
+/obj/item/melee/baton/boomerang/loaded //Same as above, comes with a cell.
+	preload_cell_type = /obj/item/stock_parts/cell/high

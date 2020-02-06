@@ -161,7 +161,7 @@
 
 	var/temp_list = list()
 	for(var/i in custom_materials)
-		temp_list[getmaterialref(i)] = custom_materials[i] //Get the proper instanced version
+		temp_list[SSmaterials.GetMaterialRef(i)] = custom_materials[i] //Get the proper instanced version
 
 	custom_materials = null //Null the list to prepare for applying the materials properly
 	set_custom_materials(temp_list)
@@ -222,6 +222,17 @@
 
 ///Can the mover object pass this atom, while heading for the target turf
 /atom/proc/CanPass(atom/movable/mover, turf/target)
+	SHOULD_CALL_PARENT(TRUE)
+	if(mover.movement_type & UNSTOPPABLE)
+		return TRUE
+	. = CanAllowThrough(mover, target)
+	// This is cheaper than calling the proc every time since most things dont override CanPassThrough
+	if(!mover.generic_canpass)
+		return mover.CanPassThrough(src, target, .)
+
+/// Returns true or false to allow the mover to move through src
+/atom/proc/CanAllowThrough(atom/movable/mover, turf/target)
+	SHOULD_CALL_PARENT(TRUE)
 	return !density
 
 /**
@@ -493,9 +504,11 @@
 /// Updates the icon of the atom
 /atom/proc/update_icon()
 	var/signalOut = SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON)
+	. = FALSE
 
 	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_ICON_STATE))
 		update_icon_state()
+		. = TRUE
 
 	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_OVERLAYS))
 		var/list/new_overlays = update_overlays()
@@ -505,6 +518,9 @@
 		if(length(new_overlays))
 			managed_overlays = new_overlays
 			add_overlay(new_overlays)
+		. = TRUE
+
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATED_ICON, signalOut, .)
 
 /// Updates the icon state of the atom
 /atom/proc/update_icon_state()
@@ -1103,6 +1119,8 @@
 			log_game(log_text)
 		if(LOG_MECHA)
 			log_mecha(log_text)
+		if(LOG_SHUTTLE)
+			log_shuttle(log_text)
 		else
 			stack_trace("Invalid individual logging type: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
 			log_game(log_text)
@@ -1156,8 +1174,7 @@
 		target.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
 
 /atom/movable/proc/add_filter(name,priority,list/params)
-	if(!filter_data)
-		filter_data = list()
+	LAZYINITLIST(filter_data)
 	var/list/p = params.Copy()
 	p["priority"] = priority
 	filter_data[name] = p
@@ -1165,7 +1182,7 @@
 
 /atom/movable/proc/update_filters()
 	filters = null
-	sortTim(filter_data,associative = TRUE)
+	filter_data = sortTim(filter_data, /proc/cmp_filter_data_priority, TRUE)
 	for(var/f in filter_data)
 		var/list/data = filter_data[f]
 		var/list/arguments = data.Copy()
@@ -1187,7 +1204,7 @@
 
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
-			var/datum/material/custom_material = getmaterialref(i)
+			var/datum/material/custom_material = SSmaterials.GetMaterialRef(i)
 			custom_material.on_removed(src, material_flags) //Remove the current materials
 
 	if(!length(materials))
@@ -1196,7 +1213,7 @@
 	custom_materials = list() //Reset the list
 
 	for(var/x in materials)
-		var/datum/material/custom_material = getmaterialref(x)
+		var/datum/material/custom_material = SSmaterials.GetMaterialRef(x)
 
 		if(!(material_flags & MATERIAL_NO_EFFECTS))
 			custom_material.on_applied(src, materials[custom_material] * multiplier * material_modifier, material_flags)

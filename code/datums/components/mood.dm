@@ -200,7 +200,7 @@
 		if(!override && HAS_TRAIT(parent, TRAIT_UNSTABLE))
 			maximum = sanity
 		if(amount > maximum)
-			amount = max(maximum, sanity)
+			amount = min(maximum, sanity)
 	if(amount == sanity) //Prevents stuff from flicking around.
 		return
 	sanity = amount
@@ -340,6 +340,10 @@
 			clear_event(null, "charge")
 		if(ETHEREAL_CHARGE_ALMOSTFULL to ETHEREAL_CHARGE_FULL)
 			add_event(null, "charge", /datum/mood_event/charged)
+		if(ETHEREAL_CHARGE_FULL to ETHEREAL_CHARGE_OVERLOAD)
+			add_event(null, "charge", /datum/mood_event/overcharged)
+		if(ETHEREAL_CHARGE_OVERLOAD to ETHEREAL_CHARGE_DANGEROUS)
+			add_event(null, "charge", /datum/mood_event/supercharged)
 
 /datum/component/mood/proc/check_area_mood(datum/source, area/A)
 	update_beauty(A)

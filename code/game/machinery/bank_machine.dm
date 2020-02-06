@@ -35,7 +35,7 @@
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(D)
 			D.adjust_money(value)
-			to_chat(user, "<span class='notice'>You deposit [I]. The Cargo Budget is now $[D.account_balance].</span>")
+			to_chat(user, "<span class='notice'>You deposit [I]. The Cargo Budget is now [D.account_balance] cr.</span>")
 		qdel(I)
 		return
 	return ..()
@@ -43,7 +43,7 @@
 /obj/machinery/computer/bank_machine/process()
 	..()
 	if(siphoning)
-		if (stat & (BROKEN|NOPOWER))
+		if (machine_stat & (BROKEN|NOPOWER))
 			say("Insufficient power. Halting siphon.")
 			end_syphon()
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)

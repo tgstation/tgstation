@@ -2969,7 +2969,7 @@
 /area/awaymission/moonoutpost19/research)
 "gr" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -3751,7 +3751,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "hS" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/urinal{
@@ -3940,7 +3940,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "ik" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -4222,7 +4222,7 @@
 /area/awaymission/moonoutpost19/research)
 "iN" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},

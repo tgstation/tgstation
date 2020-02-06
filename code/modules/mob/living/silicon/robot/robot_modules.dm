@@ -83,8 +83,8 @@
 
 		if(is_type_in_list(S, list(/obj/item/stack/sheet/metal, /obj/item/stack/rods, /obj/item/stack/tile/plasteel)))
 			if(S.custom_materials && custom_materials.len)
-				if(S.custom_materials[getmaterialref(/datum/material/iron)])
-					S.cost = S.custom_materials[getmaterialref(/datum/material/iron)] * 0.25
+				if(S.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)])
+					S.cost = S.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)] * 0.25
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/metal)
 
 		else if(istype(S, /obj/item/stack/sheet/glass))
@@ -221,7 +221,7 @@
 	R.setDir(SOUTH)
 	R.anchored = FALSE
 	R.notransform = FALSE
-	R.update_headlamp()
+	R.update_headlamp(FALSE, BORG_LAMP_CD_RESET)
 	R.notify_ai(NEW_MODULE)
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
