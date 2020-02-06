@@ -930,3 +930,51 @@
 	. = ..()
 	if(istype(A, /obj/item/aiModule) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
 		to_chat(user, "<span class='warning'>This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up.</span>")
+
+/////////////////////
+//syndi disk holder//
+/////////////////////
+
+/obj/item/borg/apparatus/disk
+	name = "disk storage apparatus"
+	desc = "A special apparatus for carrying and inserting disks. Alt-Z or right-click to drop the stored object."
+	icon_state = "borg_disk_app"
+	storable = list(/obj/item/disk)
+
+/obj/item/borg/apparatus/disk/Initialize()
+	. = ..()
+	update_icon()
+
+/obj/item/borg/apparatus/disk/pre_attack()
+	..()
+	if(stored)
+		RegisterSignal(loc, COMSIG_MOB_DEATH, .proc/dropdisk)
+
+/obj/item/borg/apparatus/disk/Exited(atom/A)
+	..()
+	if(!stored)
+		UnregisterSignal(loc, COMSIG_MOB_DEATH, .proc/dropdisk)
+
+/obj/item/borg/apparatus/disk/proc/dropdisk(datum/source)
+	if(stored)
+		stored.forceMove(get_turf(usr))
+		UnregisterSignal(source, COMSIG_MOB_DEATH, .proc/dropdisk)
+
+/obj/item/borg/apparatus/disk/update_overlays()
+	. = ..()
+	var/mutable_appearance/arm = mutable_appearance(icon, "borg_disk_arm1")
+	if(stored)
+		COMPILE_OVERLAYS(stored)
+		stored.pixel_x = 0
+		stored.pixel_y = 0
+		arm.icon_state = "borg_disk_arm2"
+		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
+		stored_copy.layer = FLOAT_LAYER
+		stored_copy.plane = FLOAT_PLANE
+		. += stored_copy
+	. += arm
+
+/obj/item/borg/apparatus/disk/examine()
+	. = ..()
+	if(stored)
+		. += "The apparatus currently has [stored] secured."
