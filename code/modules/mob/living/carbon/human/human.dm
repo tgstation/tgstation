@@ -432,8 +432,9 @@
 				return
 
 			if(href_list["add_citation"])
+				var/maxFine = CONFIG_GET(number/maxfine)
 				var/t1 = stripped_input("Please input citation crime:", "Security HUD", "", null)
-				var/fine = FLOOR(input("Please input citation fine:", "Security HUD", 50) as num|null, 1)
+				var/fine = FLOOR(input("Please input citation fine, up to [maxFine]:", "Security HUD", 50) as num|null, 1)
 				if(!R || !t1 || !fine || !allowed_access)
 					return
 				if(!H.canUseHUD())
@@ -443,7 +444,6 @@
 				if(fine < 0)
 					to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
 					return
-				var/maxFine = CONFIG_GET(number/maxfine)
 				fine = min(fine, maxFine)
 
 				var/crime = GLOB.data_core.createCrimeEntry(t1, "", allowed_access, station_time_timestamp(), fine)
@@ -461,7 +461,7 @@
 						usr.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
 				GLOB.data_core.addCitation(R.fields["id"], crime)
 				investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [R.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
-			return
+				return
 
 			if(href_list["add_crime"])
 				switch(alert("What crime would you like to add?","Security HUD","Minor Crime","Major Crime","Cancel"))

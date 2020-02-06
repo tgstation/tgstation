@@ -729,18 +729,18 @@ What a mess.*/
 								GLOB.data_core.removeMajorCrime(active1.fields["id"], href_list["cdataid"])
 					if("citation_add")
 						if(istype(active1, /datum/data/record))
+							var/maxFine = CONFIG_GET(number/maxfine)
+
 							var/t1 = stripped_input(usr, "Please input citation crime:", "Secure. records", "", null)
-							var/fine = FLOOR(input(usr, "Please input citation fine:", "Secure. records", 50) as num|null, 1)
+							var/fine = FLOOR(input(usr, "Please input citation fine, up to [maxFine]:", "Secure. records", 50) as num|null, 1)
 
 							if (isnull(fine))
 								return
+							fine = min(fine, maxFine)
 
 							if(fine < 0)
 								to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
 								return
-
-							var/maxFine = CONFIG_GET(number/maxfine)
-							fine = min(fine, maxFine)
 
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
