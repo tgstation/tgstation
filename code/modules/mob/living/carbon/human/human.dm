@@ -432,13 +432,13 @@
 				return
 
 			if(href_list["add_citation"])
+				var/t1 = stripped_input("Please input citation crime:", "Security HUD", "", null)
+				var/fine = FLOOR(input("Please input citation fine:", "Security HUD", 50) as num|null, 1)
+				if(!R || !t1 || !fine || !allowed_access)
+					return
 				if(!H.canUseHUD())
 					return
 				if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
-					return
-				var/t1 = stripped_input("Please input citation crime:", "Security HUD", "", null)
-				var/fine = FLOOR(input("Please input citation fine:", "Security HUD", 50) as num|null, 1)
-				if(isnull(fine))
 					return
 				if(fine < 0)
 					to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
