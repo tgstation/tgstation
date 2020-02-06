@@ -1,12 +1,21 @@
 /datum/radiation_wave
+	/// The thing that spawned this radiation wave
 	var/source
-	var/turf/master_turf //The center of the wave
-	var/steps=0 //How far we've moved
-	var/intensity //How strong it was originaly
-	var/remaining_contam //How much contaminated material it still has
-	var/range_modifier //Higher than 1 makes it drop off faster, 0.5 makes it drop off half etc
-	var/move_dir //The direction of movement
-	var/list/__dirs //The directions to the side of the wave, stored for easy looping
+	/// The center of the wave
+	var/turf/master_turf
+	/// How far we've moved
+	var/steps=0
+	/// How strong it was originaly
+	var/intensity
+	/// How much contaminated material it still has
+	var/remaining_contam
+	/// Higher than 1 makes it drop off faster, 0.5 makes it drop off half etc
+	var/range_modifier
+	/// The direction of movement
+	var/move_dir
+	/// The directions to the side of the wave, stored for easy looping
+	var/list/__dirs
+	/// Whether or not this radiation wave can create contaminated objects
 	var/can_contaminate
 
 /datum/radiation_wave/New(atom/_source, dir, _intensity=0, _range_modifier=RAD_DISTANCE_COEFFICIENT, _can_contaminate=TRUE)
