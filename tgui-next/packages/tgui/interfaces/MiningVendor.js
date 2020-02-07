@@ -16,7 +16,7 @@ export const MiningVendor = props => {
         {data.user && (
           <Box>
           Welcome, <b>{data.user.name || "Unknown"}</b>,
-            {' '}
+            &nbsp;
             <b>{data.user.job || "Unemployed"}</b>!
             <br />
           Your balance is <b>{data.user.points} mining points</b>.
@@ -40,7 +40,7 @@ export const MiningVendor = props => {
                       'vertical-align': 'middle',
                       'horizontal-align': 'middle',
                     }} />
-                  {' '}<b>{product.name}</b>
+                  &nbsp;<b>{product.name}</b>
                 </Table.Cell>
                 <Table.Cell>
                   <Button
