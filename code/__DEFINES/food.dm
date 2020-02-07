@@ -20,7 +20,10 @@
 #define DRINK_FANTASTIC	4
 #define FOOD_AMAZING 5
 
-<<<<<<< HEAD
+#define FOOD_IN_CONTAINER (1<<0)
+
+#define STOP_SERVING_BREAKFAST (15 MINUTES)
+
 #define FOOD_WORTHLESS 0
 #define FOOD_JUNK 6
 #define FOOD_FAST 40
@@ -28,8 +31,3 @@
 #define FOOD_EXOTIC 150
 #define FOOD_LEGENDARY 1000
 #define FOOD_ILLEGAL 1000
-=======
-#define FOOD_IN_CONTAINER (1<<0)
-
-#define STOP_SERVING_BREAKFAST (15 MINUTES)
->>>>>>> upstream/master
