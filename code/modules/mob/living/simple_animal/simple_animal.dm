@@ -184,12 +184,12 @@
 			return
 		if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
 			tame = TRUE
-			tamed()
+			tamed(user)
 		else
 			tame_chance += bonus_tame_chance
 
 ///Extra effects to add when the mob is tamed, such as adding a riding component
-/mob/living/simple_animal/proc/tamed()
+/mob/living/simple_animal/proc/tamed(whomst)
 	return
 
 /mob/living/simple_animal/examine(mob/user)
