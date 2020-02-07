@@ -106,7 +106,7 @@
 				var/list/notes = splittext(beat, "/")
 				for(var/note in splittext(notes[1], "-"))
 					if(!playing || shouldStopPlaying(user))//If the instrument is playing, or special case
-						toggle_playing(FALSE)
+						toggle_playing(user, FALSE)
 						return
 					if(!length(note))
 						continue
@@ -311,7 +311,7 @@
 /datum/song/proc/toggle_playing(user, new_play_state)
 	playing = new_play_state
 	if(playing)
-		INVOKE_ASYNC(src, .proc/playsong, usr)
+		INVOKE_ASYNC(src, .proc/playsong, user)
 	else
 		hearing_mobs = null
 
