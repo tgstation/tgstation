@@ -45,8 +45,12 @@
 	user.set_machine(src)
 	song.interact(user)
 
-/obj/item/instrument/proc/update_playing_state(playing)
+/obj/item/instrument/proc/start_playing()
 	return
+
+/obj/item/instrument/proc/stop_playing()
+	return
+
 
 /obj/item/instrument/violin
 	name = "space violin"
@@ -100,9 +104,15 @@
 /obj/item/instrument/piano_synth/headphones/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
+	RegisterSignal(src, COMSIG_SONG_START, .proc/start_playing)
+	RegisterSignal(src, COMSIG_SONG_END, .proc/stop_playing)
 
-/obj/item/instrument/piano_synth/headphones/update_playing_state(user, new_play_state)
-	icon_state = "[initial(icon_state)][new_play_state? "_on" : ""]"
+/obj/item/instrument/piano_synth/headphones/start_playing()
+	icon_state = "[initial(icon_state)]_on"
+	update_icon()
+
+/obj/item/instrument/piano_synth/headphones/stop_playing()
+	icon_state = "[initial(icon_state)]"
 	update_icon()
 
 /obj/item/instrument/banjo

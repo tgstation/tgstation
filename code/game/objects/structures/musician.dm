@@ -300,7 +300,6 @@
 	else if(href_list["stop"])
 		toggle_playing(usr, FALSE)
 
-
 	updateDialog(usr)
 	return
 
@@ -312,8 +311,10 @@
 	playing = new_play_state
 	if(playing)
 		INVOKE_ASYNC(src, .proc/playsong, user)
+		SEND_SIGNAL(instrumentObj, COMSIG_SONG_START)
 	else
 		hearing_mobs = null
+		SEND_SIGNAL(instrumentObj, COMSIG_SONG_END)
 
 // subclass for handheld instruments, like violin
 /datum/song/handheld
@@ -326,11 +327,6 @@
 		return !isliving(instrumentObj.loc)
 	else
 		return TRUE
-
-/datum/song/handheld/toggle_playing(user, new_play_state)
-	. = ..()
-	var/obj/item/instrument/instrument = instrumentObj
-	instrument.update_playing_state(user, new_play_state)
 
 //////////////////////////////////////////////////////////////////////////
 
