@@ -1,0 +1,11 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - balance: "Brain death is no longer a thing, no arbitrary unhealable death. Uses organ damage like the rest."
+  - bugfix: "Brains can now be attacked again."
+  - bugfix: "Brains no longer report you SSD if you are in the brain and not ghosted out."
+  - balance: "Brains healed with mannitol now heal 2 damage per unit at a 10 unit minimum, instead of a flat 10 damage for any amount over 10 units."
+  - spellcheck: "Defib faliure feedback is now more clear and hints at how to fix it."
+  - tweak: "Defibs now force the ghost back."
+  - spellcheck: "Improved brain feedback, no longer reports SSD."
+  - balance: "Stomach pump and brain surgery are now repeatable surgeries."
