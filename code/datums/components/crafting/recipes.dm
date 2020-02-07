@@ -786,3 +786,11 @@
             /obj/item/shovel/spade = 1)
 	result = /obj/item/shovel/serrated
 	category = CAT_PRIMAL
+
+/datum/crafting_recipe/lasso
+	name = "Bone Lasso"
+	reqs = list(
+            /obj/item/stack/sheet/bone = 1,
+            /obj/item/stack/sheet/sinew = 5)
+	result = /obj/item/key/lasso
+	category = CAT_PRIMAL

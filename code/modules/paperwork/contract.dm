@@ -112,56 +112,56 @@
 	info = "This shouldn't be seen. Error DEVIL:6"
 
 /obj/item/paper/contract/infernal/power/update_text(signature = "____________", blood = 0)
-	info = "<center><B>Contract for infernal power</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [devil_datum.truename], in exchange for power and physical strength. I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life. I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
+	info = "<center><B>Contract for infernal power</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [devil_datum.truename], in exchange for power and physical strength. I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, or otherwise brought back to life. I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
 	if(blood)
 		info += "<font face=\"Nyala\" color=#600A0A size=6><i>[signature]</i></font>"
 	else
 		info += "<i>[signature]</i>"
 
 /obj/item/paper/contract/infernal/wealth/update_text(signature = "____________", blood = 0)
-	info = "<center><B>Contract for unlimited wealth</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [devil_datum.truename], in exchange for a pocket that never runs out of valuable resources. I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life. I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
+	info = "<center><B>Contract for unlimited wealth</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [devil_datum.truename], in exchange for a pocket that never runs out of valuable resources. I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, or otherwise brought back to life. I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
 	if(blood)
 		info += "<font face=\"Nyala\" color=#600A0A size=6><i>[signature]</i></font>"
 	else
 		info += "<i>[signature]</i>"
 
 /obj/item/paper/contract/infernal/prestige/update_text(signature = "____________", blood = 0)
-	info = "<center><B>Contract for prestige</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [devil_datum.truename], in exchange for prestige and esteem among my peers. I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life. I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
+	info = "<center><B>Contract for prestige</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [devil_datum.truename], in exchange for prestige and esteem among my peers. I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, or otherwise brought back to life. I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
 	if(blood)
 		info += "<font face=\"Nyala\" color=#600A0A size=6><i>[signature]</i></font>"
 	else
 		info += "<i>[signature]</i>"
 
 /obj/item/paper/contract/infernal/magic/update_text(signature = "____________", blood = 0)
-	info = "<center><B>Contract for magic</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [devil_datum.truename], in exchange for arcane abilities beyond normal human ability. I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life. I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
+	info = "<center><B>Contract for magic</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [devil_datum.truename], in exchange for arcane abilities beyond normal human ability. I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, or otherwise brought back to life. I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
 	if(blood)
 		info += "<font face=\"Nyala\" color=#600A0A size=6><i>[signature]</i></font>"
 	else
 		info += "<i>[signature]</i>"
 
 /obj/item/paper/contract/infernal/revive/update_text(signature = "____________", blood = 0)
-	info = "<center><B>Contract for resurrection</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [devil_datum.truename], in exchange for resurrection and curing of all injuries. I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life. I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
+	info = "<center><B>Contract for resurrection</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [devil_datum.truename], in exchange for resurrection and curing of all injuries. I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, or otherwise brought back to life. I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
 	if(blood)
 		info += "<font face=\"Nyala\" color=#600A0A size=6><i>[signature]</i></font>"
 	else
 		info += "<i>[signature]</i>"
 
 /obj/item/paper/contract/infernal/knowledge/update_text(signature = "____________", blood = 0)
-	info = "<center><B>Contract for knowledge</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [devil_datum.truename], in exchange for boundless knowledge. I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life. I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
+	info = "<center><B>Contract for knowledge</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [devil_datum.truename], in exchange for boundless knowledge. I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, or otherwise brought back to life. I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
 	if(blood)
 		info += "<font face=\"Nyala\" color=#600A0A size=6><i>[signature]</i></font>"
 	else
 		info += "<i>[signature]</i>"
 
 /obj/item/paper/contract/infernal/friend/update_text(signature = "____________", blood = 0)
-	info = "<center><B>Contract for a friend</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [devil_datum.truename], in exchange for a friend. I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life. I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
+	info = "<center><B>Contract for a friend</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [devil_datum.truename], in exchange for a friend. I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, or otherwise brought back to life. I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
 	if(blood)
 		info += "<font face=\"Nyala\" color=#600A0A size=6><i>[signature]</i></font>"
 	else
 		info += "<i>[signature]</i>"
 
 /obj/item/paper/contract/infernal/unwilling/update_text(signature = "____________", blood = 0)
-	info = "<center><B>Contract for slave</B></center><BR><BR><BR>I, [target], hereby offer my soul to the infernal hells by way of the infernal agent [devil_datum.truename]. I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life. I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
+	info = "<center><B>Contract for slave</B></center><BR><BR><BR>I, [target], hereby offer my soul to the infernal hells by way of the infernal agent [devil_datum.truename]. I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, or otherwise brought back to life. I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
 	if(blood)
 		info += "<font face=\"Nyala\" color=#600A0A size=6><i>[signature]</i></font>"
 	else

@@ -140,6 +140,7 @@
 
 /obj/item/gun/magic/wand/polymorph/zap_self(mob/living/user)
 	..() //because the user mob ceases to exists by the time wabbajack fully resolves
+
 	wabbajack(user)
 	charges--
 

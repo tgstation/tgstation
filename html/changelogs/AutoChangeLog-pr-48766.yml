@@ -1,0 +1,7 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - refactor: "The abductor baton is now a child of the regular stun baton. There shouldn't be a functional difference."
+  - tweak: "You need to be an abductor to change baton modes. Seemed like an oversight"
+  - spellcheck: "Fixes some typos in the abductor baton's messages"
+  - admin: "Both regular stun baton and abductor baton have had a lot of vars exposed pertaining to their functionality so that could come in handy I guess"

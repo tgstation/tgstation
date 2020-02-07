@@ -1,0 +1,4 @@
+author: "armhulen fikou gang"
+delete-after: True
+changes: 
+  - imageadd: "a lot of >32x32 mobs now have icons for their health dolls"

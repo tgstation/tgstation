@@ -35,14 +35,13 @@
 #define ITEM_SLOT_NECK			(1<<12)
 #define ITEM_SLOT_HANDS			(1<<13)
 #define ITEM_SLOT_BACKPACK		(1<<14)
-#define ITEM_SLOT_LHANDSTORE	(1<<15)
-#define ITEM_SLOT_SUITSTORE		(1<<16)
-#define ITEM_SLOT_LPOCKET		(1<<17)
-#define ITEM_SLOT_RPOCKET		(1<<18)
-#define ITEM_SLOT_HANDCUFFED	(1<<19)
-#define ITEM_SLOT_LEGCUFFED		(1<<20)
+#define ITEM_SLOT_SUITSTORE		(1<<15)
+#define ITEM_SLOT_LPOCKET		(1<<16)
+#define ITEM_SLOT_RPOCKET		(1<<17)
+#define ITEM_SLOT_HANDCUFFED	(1<<18)
+#define ITEM_SLOT_LEGCUFFED		(1<<19)
 
-#define SLOTS_AMT				21 // Keep this up to date!
+#define SLOTS_AMT				20 // Keep this up to date!
 
 //SLOT GROUP HELPERS
 #define ITEM_SLOT_POCKETS		(ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET)

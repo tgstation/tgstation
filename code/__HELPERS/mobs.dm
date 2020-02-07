@@ -341,7 +341,7 @@ GLOBAL_LIST_EMPTY(species_list)
 				drifting = 0
 				user_loc = user.loc
 
-			if(L && !CHECK_MULTIPLE_BITFIELDS(L.mobility_flags, required_mobility_flags))
+			if(L && !((L.mobility_flags & required_mobility_flags) == required_mobility_flags))
 				. = 0
 				break
 
