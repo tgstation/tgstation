@@ -181,6 +181,10 @@
 				soundin = pick('sound/voice/speech/humanplural.ogg')
 			if("lizard")
 				soundin = pick('sound/voice/speech/lizard1.ogg', 'sound/voice/speech/lizard2.ogg', 'sound/voice/speech/lizard3.ogg')
+			if("moth")
+				soundin = pick('sound/voice/speech/moth1.ogg', 'sound/voice/speech/moth2.ogg', 'sound/voice/speech/moth3.ogg')
+			if("chatter")
+				soundin = pick('sound/voice/speech/chatter1.ogg', 'sound/voice/speech/chatter2.ogg')
 			if("synthetic")
 				soundin = pick('sound/voice/speech/synthetic1.ogg', 'sound/voice/speech/synthetic2.ogg')
 	return soundin

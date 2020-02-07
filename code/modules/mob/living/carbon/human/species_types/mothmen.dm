@@ -2,6 +2,7 @@
 	name = "Mothman"
 	id = "moth"
 	say_mod = "flutters"
+	speech_sound = "moth"
 	default_color = "00FF00"
 	species_traits = list(LIPS, NOEYESPRITES)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG

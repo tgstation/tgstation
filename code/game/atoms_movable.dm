@@ -21,6 +21,7 @@
 	var/speech_span
 	var/speech_sound = ""
 	var/speech_sound_cd
+	var/speech_sound_delay = 15 SECONDS
 	var/inertia_dir = 0
 	var/atom/inertia_last_loc
 	var/inertia_moving = 0

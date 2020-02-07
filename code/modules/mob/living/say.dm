@@ -303,7 +303,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	//speech sound
 	if(speech_sound && speech_sound_cd < world.time)
 		playsound(src, speech_sound, 15, TRUE, (-7 + message_range), ignore_walls = FALSE)
-		speech_sound_cd = world.time + 10 SECONDS
+		speech_sound_cd = world.time + speech_sound_delay
 
 /mob/proc/binarycheck()
 	return FALSE
