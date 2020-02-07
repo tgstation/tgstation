@@ -130,10 +130,10 @@
 	var/list/valid_grinds = the_legend ? list(/obj/structure/table, /mob/living) : list(/obj/structure/table)
 	var/valid = FALSE
 	for(var/i in valid_grinds)
-		if(locate(i) in loc.contents)
+		if(i != L && locate(i) in loc.contents)
 			valid = TRUE
 	if(valid)
-		L.adjustStaminaLoss(instability*0.5)
+		L.adjustStaminaLoss(instability * L.mind.get_skill_modifier(/datum/skill/skating, SKILL_SPEED_MODIFIER))
 		if (L.getStaminaLoss() >= 100)
 			playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
 			L?.mind.adjust_experience(/datum/skill/skating, -saved_grind_skill)
@@ -148,7 +148,7 @@
 			return
 		else
 			playsound(src, 'sound/vehicles/skateboard_roll.ogg', 50, TRUE)
-			saved_grind_skill += SKATER_SKILL_GRIND
+			saved_grind_skill += SKATER_SKILL_GRIND_XP
 			if(prob (25))
 				var/turf/location = get_turf(loc)
 				if(location)
@@ -158,8 +158,6 @@
 			return
 	else
 		L?.mind.adjust_experience(/datum/skill/skating, saved_grind_skill)
-		//if(L.mind.get_skill_level(/datum/skill/skating) >= SKILL_LEVEL_JOURNEYMAN)
-		//	to_chat(L, "<span class='warning'>Radical, bro-hone! You think you got the skills to jump start a bomb from your hands.</span>")
 		saved_grind_skill = initial(saved_grind_skill)
 		grinding = FALSE
 		icon_state = board_icon

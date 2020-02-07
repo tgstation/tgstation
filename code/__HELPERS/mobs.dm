@@ -498,6 +498,19 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(!HAS_TRAIT(L, TRAIT_PASSTABLE))
 		L.pass_flags &= ~PASSTABLE
 
+/proc/passmob_on(target, source)
+	var/mob/living/L = target
+	if (!HAS_TRAIT(L, TRAIT_PASSMOB) && L.pass_flags & PASSMOB)
+		ADD_TRAIT(L, TRAIT_PASSMOB, INNATE_TRAIT)
+	ADD_TRAIT(L, TRAIT_PASSMOB, source)
+	L.pass_flags |= PASSMOB
+
+/proc/passmob_off(target, source)
+	var/mob/living/L = target
+	REMOVE_TRAIT(L, TRAIT_PASSMOB, source)
+	if(!HAS_TRAIT(L, TRAIT_PASSMOB))
+		L.pass_flags &= ~PASSMOB
+
 /proc/dance_rotate(atom/movable/AM, datum/callback/callperrotate, set_original_dir=FALSE)
 	set waitfor = FALSE
 	var/originaldir = AM.dir

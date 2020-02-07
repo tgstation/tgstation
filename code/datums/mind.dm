@@ -148,10 +148,7 @@
 		return //same level or we just started earning xp towards the first level.
 	if(silent)
 		return
-	if(known_skills[S] >= old_level)
-		to_chat(current, "<span class='nicegreen'>I feel like I've become more proficient at [S.name]!</span>")
-	else
-		to_chat(current, "<span class='warning'>I feel like I've become worse at [S.name]!</span>")
+	S.level_changed(src, known_skills[S], old_level)
 
 ///Gets the skill's singleton and returns the result of its get_skill_modifier
 /datum/mind/proc/get_skill_modifier(skill, modifier)

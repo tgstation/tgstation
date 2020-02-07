@@ -27,4 +27,4 @@
 #define CLEAN_SKILL_BEAUTY_ADJUSTMENT	15//It's a denominator so no 0. Higher number = less cleaning xp per cleanable
 #define CLEAN_SKILL_GENERIC_WASH_XP	1.5//Value. Higher number = more XP when cleaning non-cleanables (walls/floors/lips)
 
-#define SKATER_SKILL_GRIND 1 //how much skeet you greet per grinding some iron, totals the bow wow then pounds you up or down depending on whether you landed it or slammed
+#define SKATER_SKILL_GRIND_XP 1 //how much skeet you greet per grinding some iron, totals the bow wow then pounds you up or down depending on whether you landed it or slammed

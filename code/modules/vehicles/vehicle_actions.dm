@@ -205,8 +205,9 @@
 		if (V.grinding)
 			return
 		var/mob/living/L = owner
+		var/the_legend = L.mind.get_skill_level(/datum/skill/skating) >= SKILL_LEVEL_MASTER
 		var/turf/landing_turf = get_step(V.loc, V.dir)
-		L.adjustStaminaLoss(V.instability*2)
+		L.adjustStaminaLoss(V.instability*2)//didn't add a skill stamina cost reduction here on purpose
 		if (L.getStaminaLoss() >= 100)
 			playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
 			V.unbuckle_mob(L)
@@ -220,10 +221,15 @@
 			playsound(V, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
 			passtable_on(L, VEHICLE_TRAIT)
 			V.pass_flags |= PASSTABLE
+			if(the_legend)
+				passmob_on(L, VEHICLE_TRAIT)
+				V.pass_flags |= PASSMOB
 			L.Move(landing_turf, vehicle_target.dir)
+			if(the_legend)
+				passmob_off(L, VEHICLE_TRAIT)
+				V.pass_flags &= ~PASSMOB
 			passtable_off(L, VEHICLE_TRAIT)
 			V.pass_flags &= ~PASSTABLE
-		var/the_legend = L.mind.get_skill_level(/datum/skill/skating) >= SKILL_LEVEL_MASTER
 		var/list/valid_grinds = the_legend ? list(/obj/structure/table, /mob/living) : list(/obj/structure/table)
 		var/valid = FALSE
 		for(var/i in valid_grinds)
