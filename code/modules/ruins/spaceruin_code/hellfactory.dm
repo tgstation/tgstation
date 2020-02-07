@@ -16,7 +16,7 @@
 
 /obj/item/keycard/stockroom
 	name = "stockroom keycard"
-	desc = "The Brewzone, first rate brewing and packaging. This one is labeled 'stockroom'."
+	desc = "The Heck Brewzone, first rate brewing and packaging. This one is labeled 'stockroom'."
 	color = "#1272f0"
 	puzzle_id = "factory2"
 
@@ -27,6 +27,6 @@
 
 /obj/item/keycard/entry
 	name = "secure keycard"
-	desc = "The Brewzone, first rate brewing and packaging. This one is labeled 'front door'."
+	desc = "The Heck Brewzone, first rate brewing and packaging. This one is labeled 'front door'."
 	color = "#12f049"
 	puzzle_id = "factory3"
