@@ -57,6 +57,7 @@
 	var/poster_item_name = "hypothetical poster"
 	var/poster_item_desc = "This hypothetical poster item should not exist, let's be honest here."
 	var/poster_item_icon_state = "rolled_poster"
+	var/poster_item_type = /obj/item/poster
 
 /obj/structure/sign/poster/Initialize()
 	. = ..()
@@ -66,6 +67,8 @@
 		original_name = name // can't use initial because of random posters
 		name = "poster - [name]"
 		desc = "A large piece of space-resistant printed paper. [desc]"
+
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 300), 0)
 
 /obj/structure/sign/poster/proc/randomise(base_type)
 	var/list/poster_types = subtypesof(base_type)
@@ -102,8 +105,8 @@
 		return
 	if(ruined)
 		return
-	visible_message("[user] rips [src] in a single, decisive motion!" )
-	playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, 1)
+	visible_message("<span class='notice'>[user] rips [src] in a single, decisive motion!</span>" )
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, TRUE)
 
 	var/obj/structure/sign/poster/ripped/R = new(loc)
 	R.pixel_y = pixel_y
@@ -114,7 +117,7 @@
 /obj/structure/sign/poster/proc/roll_and_drop(loc)
 	pixel_x = 0
 	pixel_y = 0
-	var/obj/item/poster/P = new(loc, src)
+	var/obj/item/poster/P = new poster_item_type(loc, src)
 	forceMove(P)
 	return P
 
@@ -128,7 +131,7 @@
 	if (smooth & SMOOTH_DIAGONAL)
 		for (var/O in overlays)
 			var/image/I = O
-			if (copytext(I.icon_state, 1, 3) == "d-")
+			if(copytext(I.icon_state, 1, 3) == "d-") //3 == length("d-") + 1
 				return
 
 	var/stuff_on_wall = 0
@@ -149,7 +152,7 @@
 	flick("poster_being_set",D)
 	D.forceMove(src)
 	qdel(P)	//delete it now to cut down on sanity checks afterwards. Agouri's code supports rerolling it anyway
-	playsound(D.loc, 'sound/items/poster_being_created.ogg', 100, 1)
+	playsound(D.loc, 'sound/items/poster_being_created.ogg', 100, TRUE)
 
 	if(do_after(user, PLACE_SPEED, target=src))
 		if(!D || QDELETED(D))
@@ -407,6 +410,18 @@
 	name = "Masked Men"
 	desc = "A poster advertising a movie about some masked men."
 	icon_state = "poster44"
+
+//annoyingly, poster45 is in another file.
+
+/obj/structure/sign/poster/contraband/free_key
+	name = "Free Syndicate Encryption Key"
+	desc = "A poster about traitors begging for more."
+	icon_state = "poster46"
+
+/obj/structure/sign/poster/contraband/bountyhunters
+	name = "Bounty Hunters"
+	desc = "A poster advertising bounty hunting services. \"I hear you got a problem.\""
+	icon_state = "poster47"
 
 /obj/structure/sign/poster/official
 	poster_item_name = "motivational poster"

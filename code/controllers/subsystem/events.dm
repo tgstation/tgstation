@@ -91,16 +91,16 @@ SUBSYSTEM_DEF(events)
 	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
 		E.max_occurrences = 0
 	else if(. == EVENT_READY)
-		E.random = TRUE
-		E.runEvent()
+		E.runEvent(random = TRUE)
 
 //allows a client to trigger an event
 //aka Badmin Central
 // > Not in modules/admin
 // REEEEEEEEE
+// Why the heck is this here! Took me so damn long to find!
 /client/proc/forceEvent()
 	set name = "Trigger Event"
-	set category = "Fun"
+	set category = "Admin - Events"
 
 	if(!holder ||!check_rights(R_FUN))
 		return

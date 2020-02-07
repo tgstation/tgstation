@@ -27,7 +27,7 @@
 					switch(M.lingcheck())
 						if (LINGHIVE_LING)
 							var/mob/living/L = M
-							if (!L.has_trait(CHANGELING_HIVEMIND_MUTE))
+							if (!HAS_TRAIT(L, CHANGELING_HIVEMIND_MUTE))
 								to_chat(M, msg)
 						if(LINGHIVE_LINK)
 							to_chat(M, msg)
@@ -35,7 +35,7 @@
 							if(prob(40))
 								to_chat(M, "<span class='changeling'>We can faintly sense an outsider trying to communicate through the hivemind...</span>")
 		if(LINGHIVE_LING)
-			if (user.has_trait(CHANGELING_HIVEMIND_MUTE))
+			if (HAS_TRAIT(user, CHANGELING_HIVEMIND_MUTE))
 				to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
 				return FALSE
 			var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -52,7 +52,7 @@
 							to_chat(M, msg)
 						if(LINGHIVE_LING)
 							var/mob/living/L = M
-							if (!L.has_trait(CHANGELING_HIVEMIND_MUTE))
+							if (!HAS_TRAIT(L, CHANGELING_HIVEMIND_MUTE))
 								to_chat(M, msg)
 						if(LINGHIVE_OUTSIDER)
 							if(prob(40))

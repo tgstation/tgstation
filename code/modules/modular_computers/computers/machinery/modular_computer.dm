@@ -37,8 +37,8 @@
 	return ..()
 
 /obj/machinery/modular_computer/examine(mob/user)
-	..()
-	get_modular_computer_parts_examine(user)
+	. = ..()
+	. += get_modular_computer_parts_examine(user)
 
 /obj/machinery/modular_computer/attack_ghost(mob/dead/observer/user)
 	. = ..()
@@ -55,7 +55,7 @@
 	icon_state = icon_state_powered
 
 	if(!cpu || !cpu.enabled)
-		if (!(stat & NOPOWER) && (cpu && cpu.use_power()))
+		if (!(machine_stat & NOPOWER) && (cpu && cpu.use_power()))
 			add_overlay(screen_icon_screensaver)
 		else
 			icon_state = icon_state_unpowered
@@ -67,7 +67,7 @@
 		else
 			add_overlay(screen_icon_state_menu)
 
-	if(cpu && cpu.obj_integrity <= cpu.integrity_failure)
+	if(cpu && cpu.obj_integrity <= cpu.integrity_failure * cpu.max_integrity)
 		add_overlay("bsod")
 		add_overlay("broken")
 
@@ -121,17 +121,16 @@
 		visible_message("<span class='danger'>\The [src]'s screen flickers [battery_module ? "\"BATTERY [malfunction ? "MALFUNCTION" : "CRITICAL"]\"" : "\"EXTERNAL POWER LOSS\""] warning as it shuts down unexpectedly.</span>")
 		if(cpu)
 			cpu.shutdown_computer(0)
-	stat |= NOPOWER
+	machine_stat |= NOPOWER
 	update_icon()
 
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()
 	if(cpu && cpu.use_power()) // If MC_CPU still has a power source, PC wouldn't go offline.
-		stat &= ~NOPOWER
+		machine_stat &= ~NOPOWER
 		update_icon()
 		return
-	..()
-	update_icon()
+	. = ..()
 
 /obj/machinery/modular_computer/attackby(var/obj/item/W as obj, mob/user)
 	if(cpu && !(flags_1 & NODECONSTRUCT_1))
@@ -157,6 +156,6 @@
 // "Stun" weapons can cause minor damage to components (short-circuits?)
 // "Burn" damage is equally strong against internal components and exterior casing
 // "Brute" damage mostly damages the casing.
-/obj/machinery/modular_computer/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/modular_computer/bullet_act(obj/projectile/Proj)
 	if(cpu)
 		cpu.bullet_act(Proj)

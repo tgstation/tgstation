@@ -25,25 +25,22 @@
 				return
 
 			if(M != user)
-				M.visible_message(\
-					"[user.name] pulls [M.name] free from the sticky nest!",\
+				M.visible_message("<span class='notice'>[user.name] pulls [M.name] free from the sticky nest!</span>",\
 					"<span class='notice'>[user.name] pulls you free from the gelatinous resin.</span>",\
-					"<span class='italics'>You hear squelching...</span>")
+					"<span class='hear'>You hear squelching...</span>")
 			else
-				M.visible_message(\
-					"<span class='warning'>[M.name] struggles to break free from the gelatinous resin!</span>",\
+				M.visible_message("<span class='warning'>[M.name] struggles to break free from the gelatinous resin!</span>",\
 					"<span class='notice'>You struggle to break free from the gelatinous resin... (Stay still for two minutes.)</span>",\
-					"<span class='italics'>You hear squelching...</span>")
+					"<span class='hear'>You hear squelching...</span>")
 				if(!do_after(M, 1200, target = src))
 					if(M && M.buckled)
 						to_chat(M, "<span class='warning'>You fail to unbuckle yourself!</span>")
 					return
 				if(!M.buckled)
 					return
-				M.visible_message(\
-					"<span class='warning'>[M.name] breaks free from the gelatinous resin!</span>",\
+				M.visible_message("<span class='warning'>[M.name] breaks free from the gelatinous resin!</span>",\
 					"<span class='notice'>You break free from the gelatinous resin!</span>",\
-					"<span class='italics'>You hear squelching...</span>")
+					"<span class='hear'>You hear squelching...</span>")
 
 			unbuckle_mob(M)
 			add_fingerprint(user)
@@ -61,10 +58,9 @@
 		unbuckle_all_mobs()
 
 	if(buckle_mob(M))
-		M.visible_message(\
-			"[user.name] secretes a thick vile goo, securing [M.name] into [src]!",\
+		M.visible_message("<span class='notice'>[user.name] secretes a thick vile goo, securing [M.name] into [src]!</span>",\
 			"<span class='danger'>[user.name] drenches you in a foul-smelling resin, trapping you in [src]!</span>",\
-			"<span class='italics'>You hear squelching...</span>")
+			"<span class='hear'>You hear squelching...</span>")
 
 /obj/structure/bed/nest/post_buckle_mob(mob/living/M)
 	M.pixel_y = 0
@@ -81,9 +77,9 @@
 /obj/structure/bed/nest/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+			playsound(loc, 'sound/effects/attackblob.ogg', 100, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/structure/bed/nest/attack_alien(mob/living/carbon/alien/user)
 	if(user.a_intent != INTENT_HARM)

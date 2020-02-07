@@ -68,8 +68,8 @@
 
 /obj/item/storage/bag/easterbasket/Initialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/egg, /obj/item/reagent_containers/food/snacks/chocolateegg, /obj/item/reagent_containers/food/snacks/boiledegg))
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/egg, /obj/item/reagent_containers/food/snacks/chocolateegg, /obj/item/reagent_containers/food/snacks/boiledegg))
 
 /obj/item/storage/bag/easterbasket/proc/countEggs()
 	cut_overlays()
@@ -113,7 +113,6 @@
 	. = ..()
 	var/eggcolor = pick("blue","green","mime","orange","purple","rainbow","red","yellow")
 	icon_state = "egg-[eggcolor]"
-	item_color = "[eggcolor]"
 
 /obj/item/reagent_containers/food/snacks/egg/proc/dispensePrize(turf/where)
 	var/won = pick(/obj/item/clothing/head/bunnyhead,
@@ -154,7 +153,7 @@
 		/datum/reagent/consumable/sugar = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/hotcrossbun
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 
 /obj/item/reagent_containers/food/snacks/store/cake/brioche
@@ -163,7 +162,7 @@
 	icon_state = "briochecake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/brioche
 	slices_num = 6
-	bonus_reagents = list("nutriment" = 10, "vitamin" = 2)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 2)
 
 /obj/item/reagent_containers/food/snacks/cakeslice/brioche
 	name = "brioche cake slice"
@@ -178,16 +177,16 @@
 		/datum/reagent/consumable/sugar = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/brioche
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /obj/item/reagent_containers/food/snacks/scotchegg
 	name = "scotch egg"
 	desc = "A boiled egg wrapped in a delicious, seasoned meatball."
 	icon_state = "scotchegg"
-	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	bitesize = 3
 	filling_color = "#FFFFF0"
-	list_reagents = list("nutriment" = 6)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6)
 
 /datum/crafting_recipe/food/scotchegg
 	name = "Scotch egg"
@@ -198,14 +197,14 @@
 		/obj/item/reagent_containers/food/snacks/faggot = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/scotchegg
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /obj/item/reagent_containers/food/snacks/soup/mammi
 	name = "Mammi"
 	desc = "A bowl of mushy bread and milk. It reminds you, not too fondly, of a bowel movement."
 	icon_state = "mammi"
-	bonus_reagents = list("nutriment" = 3, "vitamin" = 1)
-	list_reagents = list("nutriment" = 8, "vitamin" = 1)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 1)
 
 /datum/crafting_recipe/food/mammi
 	name = "Mammi"
@@ -215,14 +214,14 @@
 		/datum/reagent/consumable/milk = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/soup/mammi
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /obj/item/reagent_containers/food/snacks/chocolatebunny
 	name = "chocolate bunny"
 	desc = "Contains less than 10% real rabbit!"
 	icon_state = "chocolatebunny"
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
-	list_reagents = list("nutriment" = 4, "sugar" = 2, "cocoa" = 2)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/coco = 2)
 	filling_color = "#A0522D"
 
 /datum/crafting_recipe/food/chocolatebunny
@@ -232,4 +231,4 @@
 		/obj/item/reagent_containers/food/snacks/chocolatebar = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/chocolatebunny
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD

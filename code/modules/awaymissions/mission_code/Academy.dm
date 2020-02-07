@@ -127,7 +127,7 @@
 
 	if(!current_wizard)
 		return
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", ROLE_WIZARD, null, ROLE_WIZARD, 50, current_wizard)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", ROLE_WIZARD, null, ROLE_WIZARD, 50, current_wizard, POLL_IGNORE_ACADEMY_WIZARD)
 
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
@@ -171,16 +171,8 @@
 	var/reusable = TRUE
 	var/used = FALSE
 
-/obj/item/dice/d20/fate/stealth
-	name = "d20"
-	desc = "A die with twenty sides. The preferred die to throw at the GM."
-
 /obj/item/dice/d20/fate/one_use
 	reusable = FALSE
-
-/obj/item/dice/d20/fate/one_use/stealth
-	name = "d20"
-	desc = "A die with twenty sides. The preferred die to throw at the GM."
 
 /obj/item/dice/d20/fate/cursed
 	name = "cursed Die of Fate"
@@ -189,6 +181,23 @@
 
 	rigged = DICE_TOTALLY_RIGGED
 	rigged_value = 1
+
+/obj/item/dice/d20/fate/cursed/one_use
+	reusable = FALSE
+
+/obj/item/dice/d20/fate/stealth
+	name = "d20"
+	desc = "A die with twenty sides. The preferred die to throw at the GM."
+
+/obj/item/dice/d20/fate/stealth/one_use
+	reusable = FALSE
+
+/obj/item/dice/d20/fate/stealth/cursed
+	rigged = DICE_TOTALLY_RIGGED
+	rigged_value = 1
+
+/obj/item/dice/d20/fate/stealth/cursed/one_use
+	reusable = FALSE
 
 /obj/item/dice/d20/fate/diceroll(mob/user)
 	. = ..()
@@ -206,6 +215,7 @@
 		addtimer(CALLBACK(src, .proc/effect, user, .), 1 SECONDS)
 
 /obj/item/dice/d20/fate/equipped(mob/user, slot)
+	. = ..()
 	if(!ishuman(user) || !user.mind || (user.mind in SSticker.mode.wizards))
 		to_chat(user, "<span class='warning'>You feel the magic of the dice is restricted to ordinary humans! You should leave it alone.</span>")
 		user.dropItemToGround(src)
@@ -217,6 +227,7 @@
 		if(1)
 			//Dust
 			T.visible_message("<span class='userdanger'>[user] turns to dust!</span>")
+			user.hellbound = TRUE
 			user.dust()
 		if(2)
 			//Death
@@ -271,7 +282,7 @@
 		if(12)
 			//Healing
 			T.visible_message("<span class='userdanger'>[user] looks very healthy!</span>")
-			user.revive(full_heal = 1, admin_revive = 1)
+			user.revive(full_heal = TRUE, admin_revive = TRUE)
 		if(13)
 			//Mad Dosh
 			T.visible_message("<span class='userdanger'>Mad dosh shoots out of [src]!</span>")
@@ -320,7 +331,7 @@
 		if(17)
 			//Tator Kit
 			T.visible_message("<span class='userdanger'>A suspicious box appears!</span>")
-			new /obj/item/storage/box/syndicate(drop_location())
+			new /obj/item/storage/box/syndicate/bundle_A(drop_location())
 			do_smoke(0, drop_location())
 		if(18)
 			//Captain ID
@@ -340,7 +351,7 @@
 
 /datum/outfit/butler
 	name = "Butler"
-	uniform = /obj/item/clothing/under/suit_jacket/really_black
+	uniform = /obj/item/clothing/under/suit/black_really
 	shoes = /obj/item/clothing/shoes/laceup
 	head = /obj/item/clothing/head/bowler
 	glasses = /obj/item/clothing/glasses/monocle
@@ -378,11 +389,12 @@
 	icon_state = "1"
 	color = rgb(0,0,255)
 
-/obj/structure/ladder/unbreakable/rune/update_icon()
-	return
+/obj/structure/ladder/unbreakable/rune/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/structure/ladder/unbreakable/rune/show_fluff_message(up,mob/user)
-	user.visible_message("[user] activates \the [src].","<span class='notice'>You activate \the [src].</span>")
+	user.visible_message("<span class='notice'>[user] activates \the [src].</span>", "<span class='notice'>You activate \the [src].</span>")
 
 /obj/structure/ladder/unbreakable/rune/use(mob/user, is_ghost=FALSE)
 	if(is_ghost || !(user.mind in SSticker.mode.wizards))

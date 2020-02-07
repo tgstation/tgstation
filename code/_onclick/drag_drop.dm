@@ -84,12 +84,6 @@
 /obj/item/proc/onMouseUp(object, location, params, mob)
 	return
 
-/obj/item
-	var/canMouseDown = FALSE
-
-/obj/item/gun
-	var/automatic = 0 //can gun use it, 0 is no, anything above 0 is the delay between clicks in ds
-
 /obj/item/gun/CanItemAutoclick(object, location, params)
 	. = automatic
 
@@ -101,20 +95,6 @@
 
 /obj/screen/click_catcher/IsAutoclickable()
 	. = 1
-
-//Please don't roast me too hard
-/client/MouseMove(object,location,control,params)
-	mouseParams = params
-	mouseLocation = location
-	mouseObject = object
-	mouseControlObject = control
-	if(mob && LAZYLEN(mob.mousemove_intercept_objects))
-		for(var/datum/D in mob.mousemove_intercept_objects)
-			D.onMouseMove(object, location, control, params)
-	..()
-
-/datum/proc/onMouseMove(object, location, control, params)
-	return
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
 	var/list/L = params2list(params)

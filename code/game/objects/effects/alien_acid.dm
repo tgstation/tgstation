@@ -38,7 +38,7 @@
 		return 0
 
 	if(prob(5))
-		playsound(loc, 'sound/items/welder.ogg', 100, 1)
+		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
 
 	for(var/obj/O in target)
 		if(prob(20) && !(resistance_flags & UNACIDABLE))
@@ -61,7 +61,7 @@
 			var/acid_used = min(acid_level*0.05, 20)
 			if(L.acid_act(10, acid_used, "feet"))
 				acid_level = max(0, acid_level - acid_used*10)
-				playsound(L, 'sound/weapons/sear.ogg', 50, 1)
+				playsound(L, 'sound/weapons/sear.ogg', 50, TRUE)
 				to_chat(L, "<span class='userdanger'>[src] burns you!</span>")
 
 //xenomorph corrosive acid
@@ -73,7 +73,7 @@
 	. = ..()
 	if(.)
 		if(prob(45))
-			playsound(loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
 		target_strength--
 		if(target_strength <= 0)
 			target.visible_message("<span class='warning'>[target] collapses under its own weight into a puddle of goop and undigested debris!</span>")

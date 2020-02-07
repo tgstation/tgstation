@@ -39,12 +39,10 @@ GLOBAL_PROTECT(href_token)
 		return
 	if(!ckey)
 		QDEL_IN(src, 0)
-		throw EXCEPTION("Admin datum created without a ckey")
-		return
+		CRASH("Admin datum created without a ckey")
 	if(!istype(R))
 		QDEL_IN(src, 0)
-		throw EXCEPTION("Admin datum created without a rank")
-		return
+		CRASH("Admin datum created without a rank")
 	target = ckey
 	name = "[ckey]'s admin datum ([R])"
 	rank = R

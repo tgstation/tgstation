@@ -14,21 +14,24 @@
 	maxHealth = 5
 	health = 5
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/mouse = 1)
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "splats"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "splats"
+	response_harm_simple = "splat"
 	density = FALSE
 	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/chew_probability = 1
 
 /mob/living/simple_animal/mouse/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, /datum/outputs/squeak, 100)
+	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg'=1), 100)
 	if(!body_color)
 		body_color = pick( list("brown","gray","white") )
 	icon_state = "mouse_[body_color]"
@@ -70,12 +73,24 @@
 			if(C && prob(15))
 				if(C.avail())
 					visible_message("<span class='warning'>[src] chews through the [C]. It's toast!</span>")
-					playsound(src, 'sound/effects/sparks2.ogg', 100, 1)
+					playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
 					C.deconstruct()
 					death(toast=1)
 				else
 					C.deconstruct()
 					visible_message("<span class='warning'>[src] chews through the [C].</span>")
+	for(var/obj/item/reagent_containers/food/snacks/cheesewedge/cheese in range(1, src))
+		if(prob(10))
+			var/cap = CONFIG_GET(number/ratcap)
+			if(LAZYLEN(SSmobs.cheeserats) >= cap)
+				visible_message("<span class='warning'>[src] carefully eats the cheese, hiding it from the [cap] mice on the station!</span>")
+				qdel(cheese)
+				return
+			var/mob/living/newmouse = new /mob/living/simple_animal/mouse(loc)
+			SSmobs.cheeserats += newmouse
+			visible_message("<span class='notice'>[src] nibbles through the [cheese], attracting another mouse!</span>")
+			qdel(cheese)
+			return
 
 /*
  * Mouse types
@@ -93,13 +108,20 @@
 	body_color = "brown"
 	icon_state = "mouse_brown"
 
+/mob/living/simple_animal/mouse/Destroy()
+	SSmobs.cheeserats -= src
+	return ..()
+
 //TOM IS ALIVE! SQUEEEEEEEE~K :)
 /mob/living/simple_animal/mouse/brown/Tom
 	name = "Tom"
 	desc = "Jerry the cat is not amused."
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "splats"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "splats"
+	response_harm_simple = "splat"
 	gold_core_spawnable = NO_SPAWN
 
 /obj/item/reagent_containers/food/snacks/deadmouse
@@ -109,18 +131,36 @@
 	icon_state = "mouse_gray_dead"
 	bitesize = 3
 	eatverb = "devour"
-	list_reagents = list("nutriment" = 3, "vitamin" = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtype = GROSS | MEAT | RAW
-	grind_results = list("blood" = 20, "liquidgibs" = 5)
+	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
+
+/obj/item/reagent_containers/food/snacks/deadmouse/examine(mob/user)
+	. = ..()
+	if (reagents?.has_reagent(/datum/reagent/yuck) || reagents?.has_reagent(/datum/reagent/fuel))
+		. += "<span class='warning'>It's dripping with fuel and smells terrible.</span>"
 
 /obj/item/reagent_containers/food/snacks/deadmouse/attackby(obj/item/I, mob/user, params)
-	if(I.is_sharp() && user.a_intent == INTENT_HARM)
+	if(I.get_sharpness() && user.a_intent == INTENT_HARM)
 		if(isturf(loc))
 			new /obj/item/reagent_containers/food/snacks/meat/slab/mouse(loc)
 			to_chat(user, "<span class='notice'>You butcher [src].</span>")
 			qdel(src)
 		else
 			to_chat(user, "<span class='warning'>You need to put [src] on a surface to butcher it!</span>")
+	else
+		return ..()
+
+/obj/item/reagent_containers/food/snacks/deadmouse/afterattack(obj/target, mob/living/user, proximity_flag)
+	if(proximity_flag && reagents && target.is_open_container())
+		// is_open_container will not return truthy if target.reagents doesn't exist
+		var/datum/reagents/target_reagents = target.reagents
+		var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
+		if(target_reagents.has_reagent(/datum/reagent/fuel) && target_reagents.trans_to(src, trans_amount))
+			to_chat(user, "<span class='notice'>You dip [src] into [target].</span>")
+			reagents.trans_to(target, reagents.total_volume)
+		else
+			to_chat(user, "<span class='warning'>That's a terrible idea.</span>")
 	else
 		return ..()
 

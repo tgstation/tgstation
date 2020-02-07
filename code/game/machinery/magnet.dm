@@ -46,10 +46,10 @@
 // update the invisibility and icon
 /obj/machinery/magnetic_module/hide(intact)
 	invisibility = intact ? INVISIBILITY_MAXIMUM : 0
-	updateicon()
+	update_icon()
 
 // update the icon_state
-/obj/machinery/magnetic_module/proc/updateicon()
+/obj/machinery/magnetic_module/update_icon_state()
 	var/state="floor_magnet"
 	var/onstate=""
 	if(!on)
@@ -134,7 +134,7 @@
 
 
 /obj/machinery/magnetic_module/process()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		on = FALSE
 
 	// Sanity checks:
@@ -161,7 +161,7 @@
 	else
 		use_power = NO_POWER_USE
 
-	updateicon()
+	update_icon()
 
 
 /obj/machinery/magnetic_module/proc/magnetic_process() // proc that actually does the magneting
@@ -292,8 +292,7 @@
 
 		radio_connection.post_signal(src, signal, filter = RADIO_MAGNETS)
 
-		spawn(1)
-			updateUsrDialog() // pretty sure this increases responsiveness
+		updateUsrDialog()
 
 	if(href_list["operation"])
 		switch(href_list["operation"])
@@ -306,7 +305,7 @@
 				if(speed <= 0)
 					speed = 1
 			if("setpath")
-				var/newpath = copytext(sanitize(input(usr, "Please define a new path!",,path) as text|null),1,MAX_MESSAGE_LEN)
+				var/newpath = stripped_input(usr, "Please define a new path!", "New Path", path, MAX_MESSAGE_LEN)
 				if(newpath && newpath != "")
 					moving = 0 // stop moving
 					path = newpath
@@ -316,7 +315,7 @@
 			if("togglemoving")
 				moving = !moving
 				if(moving)
-					spawn() MagnetMove()
+					INVOKE_ASYNC(src, .proc/MagnetMove)
 
 
 	updateUsrDialog()
@@ -327,7 +326,7 @@
 
 	while(moving && rpath.len >= 1)
 
-		if(stat & (BROKEN|NOPOWER))
+		if(machine_stat & (BROKEN|NOPOWER))
 			break
 
 		looping = 1
@@ -353,8 +352,7 @@
 		pathpos++ // increase iterator
 
 		// Broadcast the signal
-		spawn()
-			radio_connection.post_signal(src, signal, filter = RADIO_MAGNETS)
+		INVOKE_ASYNC(radio_connection, /datum/radio_frequency.proc/post_signal, src, signal, RADIO_MAGNETS)
 
 		if(speed == 10)
 			sleep(1)
@@ -368,13 +366,19 @@
 	// Generates the rpath variable using the path string, think of this as "string2list"
 	// Doesn't use params2list() because of the akward way it stacks entities
 	rpath = list() //  clear rpath
-	var/maximum_character = min( 50, length(path) ) // chooses the maximum length of the iterator. 50 max length
+	var/maximum_characters = 50
+	var/lentext = length(path)
+	var/nextchar = ""
+	var/charcount = 0
 
-	for(var/i=1, i<=maximum_character, i++) // iterates through all characters in path
+	for(var/i = 1, i <= lentext, i += length(nextchar)) // iterates through all characters in path
+		nextchar = path[i] // find next character
 
-		var/nextchar = copytext(path, i, i+1) // find next character
+		if(nextchar in list(";", "&", "*", " ")) // if char is a separator, ignore
+			continue
 
-		if(!(nextchar in list(";", "&", "*", " "))) // if char is a separator, ignore
-			rpath += copytext(path, i, i+1) // else, add to list
-
+		rpath += nextchar // else, add to list
 		// there doesn't HAVE to be separators but it makes paths syntatically visible
+		charcount++
+		if(charcount >= maximum_characters)
+			break

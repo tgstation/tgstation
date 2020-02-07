@@ -2,6 +2,7 @@
 /obj/effect/decal/cleanable/food
 	icon = 'icons/effects/tomatodecal.dmi'
 	gender = NEUTER
+	beauty = -100
 
 /obj/effect/decal/cleanable/food/tomato_smudge
 	name = "tomato smudge"
@@ -29,6 +30,16 @@
 	name = "salt pile"
 	desc = "A sizable pile of table salt. Someone must be upset."
 	icon_state = "salt_pile"
+
+/obj/effect/decal/cleanable/food/salt/CanAllowThrough(atom/movable/AM, turf/target)
+	. = ..()
+	if(is_species(AM, /datum/species/snail))
+		return FALSE
+
+/obj/effect/decal/cleanable/food/salt/Bumped(atom/movable/AM)
+	. = ..()
+	if(is_species(AM, /datum/species/snail))
+		to_chat(AM, "<span class='danger'>Your path is obstructed by <span class='phobia'>salt</span>.</span>")
 
 /obj/effect/decal/cleanable/food/flour
 	name = "flour"

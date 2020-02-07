@@ -9,12 +9,11 @@
 /datum/round_event/ghost_role/space_dragon
 	minimum_required = 1
 	role_name = "Space Dragon"
-	fakeable = FALSE
+	announceWhen = 10
 
 /datum/round_event/ghost_role/space_dragon/announce(fake)
 	priority_announce("It appears a lifeform with magical traces is approaching [station_name()], please stand-by.", "Lifesign Alert")
 
-	
 /datum/round_event/ghost_role/space_dragon/spawn_role()
 	var/list/candidates = get_candidates(ROLE_ALIEN, null, ROLE_ALIEN)
 	if(!candidates.len)
@@ -37,7 +36,7 @@
 	player_mind.assigned_role = "Space Dragon"
 	player_mind.special_role = "Space Dragon"
 	player_mind.add_antag_datum(/datum/antagonist/space_dragon)
-	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, 1, -1)
+	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Space Dragon by an event.")
 	log_game("[key_name(S)] was spawned as a Space Dragon by an event.")
 	spawned_mobs += S

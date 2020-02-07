@@ -1,7 +1,7 @@
 <script>
 import { UI_INTERACTIVE, UI_UPDATE, UI_DISABLED } from 'util/constants'
-import { href, winset } from 'util/byond'
-import { drag } from 'util/dragresize'
+import { href, winget, winset, runCommand } from 'util/byond'
+import { drag, lock } from 'util/dragresize'
 
 component.exports = {
   computed: {
@@ -15,12 +15,31 @@ component.exports = {
     }
   },
   oninit () {
+    // Calculate offset between the "browser's screen space" and
+    // "BYOND screen space".
+    // This is necessary, because Windows 10 taskbar decreases the effective
+    // height by about 40px. If taskbar is located at the top and you try
+    // to drag a TGUI window, it rapidly propels itself to the bottom of
+    // the screen and gets stuck.
+    // See: https://github.com/tgstation/tgstation/issues/44038
+    this.set('screenOffsetX', 0);
+    this.set('screenOffsetY', 0);
+    winget(this.get('config.window'), 'pos')
+      .then(pos => {
+        this.set('screenOffsetX', pos.x - window.screenX);
+        this.set('screenOffsetY', pos.y - window.screenY);
+
+        // If the window starts off screen, pull it back.
+        let {x, y} = lock(window.screenLeft, window.screenTop)
+        if (x !== window.screenLeft || y !== window.screenTop) {
+          winset(this.get('config.window'), 'pos', `${x},${y}`);
+        }
+      });
+
     const ondrag = drag.bind(this)
     const onrelease = (event) => this.set({ drag: false, x: null, y: null })
 
     this.observe('config.fancy', (newkey, oldkey, keypath) => {
-      winset(this.get('config.window'), 'titlebar', !newkey && this.get('config.titlebar'))
-
       if (newkey) {
         document.addEventListener('mousemove', ondrag)
         document.addEventListener('mouseup', onrelease)
@@ -36,7 +55,7 @@ component.exports = {
       },
       close () {
         winset(this.get('config.window'), 'is-visible', false)
-        window.location.href = href({command: `uiclose ${this.get('config.ref')}`}, 'winset')
+        runCommand(`uiclose ${this.get('config.ref')}`)
       },
       minimize () {
         winset(this.get('config.window'), 'is-minimized', true)
@@ -46,13 +65,14 @@ component.exports = {
 }
 </script>
 
-{{#if config.titlebar}}
-  <header class='titlebar' on-mousedown='drag'>
-    <i class='statusicon fa fa-eye fa-2x {{visualStatus}}'></i>
-    <span class='title'>{{yield}}</span>
-    {{#if config.fancy}}
-      <i class='minimize fa fa-minus fa-2x' on-click='minimize'></i>
-      <i class='close fa fa-close fa-2x' on-click='close'></i>
-    {{/if}}
-  </header>
-{{/if}}
+<header class='titlebar' on-mousedown='drag'>
+  <i class='statusicon fa fa-eye fa-2x {{visualStatus}}'></i>
+  <span class='title'>{{yield}}</span>
+  {{#if config.fancy}}
+    <i class='minimize fa fa-minus fa-2x' on-click='minimize'></i>
+    <i class='close fa fa-close fa-2x' on-click='close'></i>
+  {{else}}
+    <i class='minimize no-icons' on-click='minimize'></i>
+    <i class='close no-icons' on-click='close'></i>
+  {{/if}}
+</header>

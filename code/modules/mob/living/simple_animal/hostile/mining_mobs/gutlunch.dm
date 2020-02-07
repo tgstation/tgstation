@@ -6,7 +6,7 @@
 	icon_state = "gutlunch"
 	icon_living = "gutlunch"
 	icon_dead = "gutlunch"
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_emote = list("warbles", "quavers")
 	emote_hear = list("trills.")
 	emote_see = list("sniffs.", "burps.")
@@ -18,10 +18,14 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	move_to_delay = 15
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "squishes"
-	friendly = "pinches"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "squishes"
+	response_harm_simple = "squish"
+	friendly_verb_continuous = "pinches"
+	friendly_verb_simple = "pinch"
 	a_intent = INTENT_HELP
 	ventcrawler = VENTCRAWLER_ALWAYS
 	gold_core_spawnable = FRIENDLY_SPAWN
@@ -31,13 +35,13 @@
 	stop_automated_movement_when_pulled = TRUE
 	stat_exclusive = TRUE
 	robust_searching = TRUE
-	search_objects = TRUE
+	search_objects = 3 //Ancient simplemob AI shitcode. This makes them ignore all other mobs.
 	del_on_death = TRUE
 	loot = list(/obj/effect/decal/cleanable/blood/gibs)
 	deathmessage = "is pulped into bugmash."
 
 	animal_species = /mob/living/simple_animal/hostile/asteroid/gutlunch
-	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck = 45, /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen = 55)
+	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch = 100)
 
 	wanted_objects = list(/obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/gibs/, /obj/item/organ)
 	var/obj/item/udder/gutlunch/udder = null
@@ -120,6 +124,38 @@
 		udder.reagents.clear_reagents()
 		regenerate_icons()
 
+/mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch
+	name = "grublunch"
+	wanted_objects = list() //They don't eat.
+	gold_core_spawnable = NO_SPAWN
+	var/growth = 0
+
+//Baby gutlunch
+/mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch/Initialize()
+	. = ..()
+	add_atom_colour("#9E9E9E", FIXED_COLOUR_PRIORITY) //Somewhat hidden
+	resize = 0.45
+	update_transform()
+
+/mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch/Life()
+	..()
+	growth++
+	if(growth > 50) //originally used a timer for this but was more problem that it's worth.
+		growUp()
+
+/mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch/proc/growUp()
+	var/mob/living/L
+	if(prob(45))
+		L = new /mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck(loc)
+	else
+		L = new /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen(loc)
+	mind?.transfer_to(L)
+	L.faction = faction
+	L.setDir(dir)
+	L.Stun(20, ignore_canstun = TRUE)
+	visible_message("<span class='notice'>[src] grows up into [L].</span>")
+	Destroy()
+
 //Gutlunch udder
 /obj/item/udder/gutlunch
 	name = "nutrient sac"
@@ -131,7 +167,6 @@
 
 /obj/item/udder/gutlunch/generateMilk()
 	if(prob(60))
-		reagents.add_reagent("cream", rand(2, 5))
+		reagents.add_reagent(/datum/reagent/consumable/cream, rand(2, 5))
 	if(prob(45))
-		reagents.add_reagent("salglu_solution", rand(2,5))
-
+		reagents.add_reagent(/datum/reagent/medicine/salglu_solution, rand(2,5))

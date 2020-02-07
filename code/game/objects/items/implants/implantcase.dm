@@ -9,18 +9,16 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(MAT_GLASS=500)
+	custom_materials = list(/datum/material/glass=500)
 	var/obj/item/implant/imp = null
 	var/imp_type
 
 
-/obj/item/implantcase/update_icon()
+/obj/item/implantcase/update_icon_state()
 	if(imp)
-		icon_state = "implantcase-[imp.item_color]"
-		reagents = imp.reagents
+		icon_state = "implantcase-[imp.implant_color]"
 	else
 		icon_state = "implantcase-0"
-		reagents = null
 
 
 /obj/item/implantcase/attackby(obj/item/W, mob/user, params)
@@ -46,6 +44,7 @@
 			imp = I.imp
 			I.imp = null
 			update_icon()
+			reagents = imp.reagents
 			I.update_icon()
 		else
 			if(imp)
@@ -54,6 +53,7 @@
 				imp.forceMove(I)
 				I.imp = imp
 				imp = null
+				reagents = null
 				update_icon()
 			I.update_icon()
 
@@ -65,6 +65,7 @@
 	if(imp_type)
 		imp = new imp_type(src)
 	update_icon()
+	reagents = imp.reagents
 
 
 /obj/item/implantcase/tracking

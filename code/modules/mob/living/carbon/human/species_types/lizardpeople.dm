@@ -5,7 +5,7 @@
 	say_mod = "hisses"
 	default_color = "00FF00"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS)
-	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID, MOB_REPTILE)
+	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings", "legs")
 	mutanttongue = /obj/item/organ/tongue/lizard
 	mutanttail = /obj/item/organ/tail/lizard
@@ -23,9 +23,15 @@
 	liked_food = GROSS | MEAT
 	inert_mutation = FIREBREATH
 	deathsound = 'sound/voice/lizard/deathsound.ogg'
+	wings_icon = "Dragon"
+	species_language_holder = /datum/language_holder/lizard
+	// Lizards are coldblooded and can stand a greater temperature range than humans
+	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT + 20) // This puts lizards 10 above lavaland max heat for ash lizards.
+	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 10)
 
-/datum/species/lizard/after_equip_job(datum/job/J, mob/living/carbon/human/H)
-	H.grant_language(/datum/language/draconic)
+/// Lizards are cold blooded and do not stabilize body temperature naturally
+/datum/species/lizard/natural_bodytemperature_stabilization(mob/living/carbon/human/H)
+	return 0
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
@@ -78,4 +84,5 @@
 	id = "ashlizard"
 	limbs_id = "lizard"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
-	inherent_traits = list(TRAIT_NOGUNS,TRAIT_NOBREATH)
+	inherent_traits = list(TRAIT_CHUNKYFINGERS,TRAIT_NOBREATH)
+	species_language_holder = /datum/language_holder/lizard/ash

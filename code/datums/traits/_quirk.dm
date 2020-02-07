@@ -16,12 +16,13 @@
 	..()
 	if(!quirk_mob || (human_only && !ishuman(quirk_mob)) || quirk_mob.has_quirk(type))
 		qdel(src)
+		return
 	quirk_holder = quirk_mob
 	SSquirks.quirk_objects += src
 	to_chat(quirk_holder, gain_text)
 	quirk_holder.roundstart_quirks += src
 	if(mob_trait)
-		quirk_holder.add_trait(mob_trait, ROUNDSTART_TRAIT)
+		ADD_TRAIT(quirk_holder, mob_trait, ROUNDSTART_TRAIT)
 	START_PROCESSING(SSquirks, src)
 	add()
 	if(spawn_effects)
@@ -35,7 +36,7 @@
 		to_chat(quirk_holder, lose_text)
 		quirk_holder.roundstart_quirks -= src
 		if(mob_trait)
-			quirk_holder.remove_trait(mob_trait, ROUNDSTART_TRAIT, TRUE)
+			REMOVE_TRAIT(quirk_holder, mob_trait, ROUNDSTART_TRAIT)
 	SSquirks.quirk_objects -= src
 	return ..()
 
@@ -43,8 +44,8 @@
 	quirk_holder.roundstart_quirks -= src
 	to_mob.roundstart_quirks += src
 	if(mob_trait)
-		quirk_holder.remove_trait(mob_trait, ROUNDSTART_TRAIT)
-		to_mob.add_trait(mob_trait, ROUNDSTART_TRAIT)
+		REMOVE_TRAIT(quirk_holder, mob_trait, ROUNDSTART_TRAIT)
+		ADD_TRAIT(to_mob, mob_trait, ROUNDSTART_TRAIT)
 	quirk_holder = to_mob
 	on_transfer()
 
@@ -54,9 +55,6 @@
 /datum/quirk/proc/on_process() //process() has some special checks, so this is the actual process
 /datum/quirk/proc/post_add() //for text, disclaimers etc. given after you spawn in with the trait
 /datum/quirk/proc/on_transfer() //code called when the trait is transferred to a new mob
-
-/datum/quirk/proc/clone_data() //return additional data that should be remembered by cloning
-/datum/quirk/proc/on_clone(data) //create the quirk from clone data
 
 /datum/quirk/process()
 	if(QDELETED(quirk_holder))
@@ -111,7 +109,7 @@ Use this as a guideline
 
 	mob_trait = TRAIT_NEARSIGHT
 	///This define is in __DEFINES/traits.dm and is the actual "trait" that the game tracks
-	///You'll need to use "has_trait(X, sources)" checks around the code to check this; for instance, the Ageusia trait is checked in taste code
+	///You'll need to use "HAS_TRAIT_FROM(src, X, sources)" checks around the code to check this; for instance, the Ageusia trait is checked in taste code
 	///If you need help finding where to put it, the declaration finder on GitHub is the best way to locate it
 
 	gain_text = "<span class='danger'>Things far away from you start looking blurry.</span>"
@@ -123,7 +121,7 @@ Use this as a guideline
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/regular/glasses = new(get_turf(H))
 	H.put_in_hands(glasses)
-	H.equip_to_slot(glasses, SLOT_GLASSES)
+	H.equip_to_slot(glasses, ITEM_SLOT_EYES)
 	H.regenerate_icons()
 
 //This whole proc is called automatically

@@ -9,11 +9,14 @@ SUBSYSTEM_DEF(mapping)
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
 
+	var/map_voted = FALSE
+
 	var/list/map_templates = list()
 
 	var/list/ruins_templates = list()
 	var/list/space_ruins_templates = list()
 	var/list/lava_ruins_templates = list()
+	var/datum/space_level/isolated_ruins_z //Created on demand during ruin loading.
 
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
@@ -25,6 +28,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/datum/turf_reservations		//list of turf reservations
 	var/list/used_turfs = list()				//list of turf = datum/turf_reservation
 
+	var/list/reservation_ready = list()
 	var/clearing_reserved_turfs = FALSE
 
 	// Z-manager stuff
@@ -67,13 +71,16 @@ SUBSYSTEM_DEF(mapping)
 	for (var/i in 1 to config.space_empty_levels)
 		++space_levels_so_far
 		empty_space = add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
-	// and the transit level
-	transit = add_new_zlevel("Transit/Reserved", list(ZTRAIT_RESERVED = TRUE))
 
 	// Pick a random away mission.
 	if(CONFIG_GET(flag/roundstart_away))
 		createRandomZlevel()
 
+	// Load the virtual reality hub
+	if(CONFIG_GET(flag/virtual_reality))
+		to_chat(world, "<span class='boldannounce'>Loading virtual reality...</span>")
+		load_new_z_level("_maps/RandomZLevels/VR/vrhub.dmm", "Virtual Reality Hub")
+		to_chat(world, "<span class='boldannounce'>Virtual reality loaded.</span>")
 
 	// Generate mining ruins
 	loading_ruins = TRUE
@@ -89,11 +96,13 @@ SUBSYSTEM_DEF(mapping)
 		seedRuins(space_ruins, CONFIG_GET(number/space_budget), /area/space, space_ruins_templates)
 	loading_ruins = FALSE
 #endif
+	// Add the transit level
+	transit = add_new_zlevel("Transit/Reserved", list(ZTRAIT_RESERVED = TRUE))
 	repopulate_sorted_areas()
 	// Set up Z-level transitions.
 	setup_map_transitions()
 	generate_station_area_list()
-	initialize_reserved_level()
+	initialize_reserved_level(transit.z_value)
 	return ..()
 
 /datum/controller/subsystem/mapping/proc/wipe_reservations(wipe_safety_delay = 100)
@@ -252,25 +261,37 @@ SUBSYSTEM_DEF(mapping)
 		INIT_ANNOUNCE(msg)
 #undef INIT_ANNOUNCE
 
+	// Custom maps are removed after station loading so the map files does not persist for no reason.
+	if(config.map_path == "custom")
+		fdel("_maps/custom/[config.map_file]")
+		// And as the file is now removed set the next map to default.
+		next_map_config = load_map_config(default_to_box = TRUE)
+
 GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/generate_station_area_list()
 	var/list/station_areas_blacklist = typecacheof(list(/area/space, /area/mine, /area/ruin, /area/asteroid/nearstation))
 	for(var/area/A in world)
-		var/turf/picked = safepick(get_area_turfs(A.type))
-		if(picked && is_station_level(picked.z))
-			if(!(A.type in GLOB.the_station_areas) && !is_type_in_typecache(A, station_areas_blacklist))
-				GLOB.the_station_areas.Add(A.type)
+		if (is_type_in_typecache(A, station_areas_blacklist))
+			continue
+		if (!A.contents.len || !A.unique)
+			continue
+		var/turf/picked = A.contents[1]
+		if (is_station_level(picked.z))
+			GLOB.the_station_areas += A.type
 
 	if(!GLOB.the_station_areas.len)
 		log_world("ERROR: Station areas list failed to generate!")
 
 /datum/controller/subsystem/mapping/proc/maprotate()
+	if(map_voted || SSmapping.next_map_config) //If voted or set by other means.
+		return
+
 	var/players = GLOB.clients.len
 	var/list/mapvotes = list()
 	//count votes
-	var/amv = CONFIG_GET(flag/allow_map_voting)
-	if(amv)
+	var/pmv = CONFIG_GET(flag/preference_map_voting)
+	if(pmv)
 		for (var/client/c in GLOB.clients)
 			var/vote = c.prefs.preferred_map
 			if (!vote)
@@ -286,7 +307,11 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	for (var/map in mapvotes)
 		if (!map)
 			mapvotes.Remove(map)
+			continue
 		if (!(map in global.config.maplist))
+			mapvotes.Remove(map)
+			continue
+		if(map in SSpersistence.blocked_maps)
 			mapvotes.Remove(map)
 			continue
 		var/datum/map_config/VM = global.config.maplist[map]
@@ -303,7 +328,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			mapvotes.Remove(map)
 			continue
 
-		if(amv)
+		if(pmv)
 			mapvotes[map] = mapvotes[map]*VM.voteweight
 
 	var/pickedmap = pickweight(mapvotes)
@@ -314,6 +339,13 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	. = changemap(VM)
 	if (. && VM.map_name != config.map_name)
 		to_chat(world, "<span class='boldannounce'>Map rotation has chosen [VM.map_name] for next round!</span>")
+
+/datum/controller/subsystem/mapping/proc/mapvote()
+	if(map_voted || SSmapping.next_map_config) //If voted or set by other means.
+		return
+	if(SSvote.mode) //Theres already a vote running, default to rotation.
+		maprotate()
+	SSvote.initiate_vote("map", "automatic map rotation")
 
 /datum/controller/subsystem/mapping/proc/changemap(var/datum/map_config/VM)
 	if(!VM.MakeNextMap())
@@ -385,7 +417,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 //Manual loading of away missions.
 /client/proc/admin_away()
 	set name = "Load Away Mission"
-	set category = "Fun"
+	set category = "Admin - Events"
 
 	if(!holder ||!check_rights(R_FUN))
 		return
@@ -437,7 +469,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		GLOB.the_gateway.wait = world.time
 
 /datum/controller/subsystem/mapping/proc/RequestBlockReservation(width, height, z, type = /datum/turf_reservation, turf_type_override)
-	UNTIL(initialized && !clearing_reserved_turfs)
+	UNTIL((!z || reservation_ready["[z]"]) && !clearing_reserved_turfs)
 	var/datum/turf_reservation/reserve = new type
 	if(turf_type_override)
 		reserve.turf_type = turf_type_override
@@ -447,8 +479,9 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 				return reserve
 		//If we didn't return at this point, theres a good chance we ran out of room on the exisiting reserved z levels, so lets try a new one
 		num_of_res_levels += 1
-		var/newReserved = add_new_zlevel("Transit/Reserved [num_of_res_levels]", list(ZTRAIT_RESERVED = TRUE))
-		if(reserve.Reserve(width, height, newReserved))
+		var/datum/space_level/newReserved = add_new_zlevel("Transit/Reserved [num_of_res_levels]", list(ZTRAIT_RESERVED = TRUE))
+		initialize_reserved_level(newReserved.z_value)
+		if(reserve.Reserve(width, height, newReserved.z_value))
 			return reserve
 	else
 		if(!level_trait(z, ZTRAIT_RESERVED))
@@ -460,19 +493,22 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	QDEL_NULL(reserve)
 
 //This is not for wiping reserved levels, use wipe_reservations() for that.
-/datum/controller/subsystem/mapping/proc/initialize_reserved_level()
+/datum/controller/subsystem/mapping/proc/initialize_reserved_level(z)
 	UNTIL(!clearing_reserved_turfs)				//regardless, lets add a check just in case.
 	clearing_reserved_turfs = TRUE			//This operation will likely clear any existing reservations, so lets make sure nothing tries to make one while we're doing it.
-	for(var/i in levels_by_trait(ZTRAIT_RESERVED))
-		var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,i))
-		var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,i))
-		var/block = block(A, B)
-		for(var/t in block)
-			// No need to empty() these, because it's world init and they're
-			// already /turf/open/space/basic.
-			var/turf/T = t
-			T.flags_1 |= UNUSED_RESERVATION_TURF_1
-		unused_turfs["[i]"] = block
+	if(!level_trait(z,ZTRAIT_RESERVED))
+		clearing_reserved_turfs = FALSE
+		CRASH("Invalid z level prepared for reservations.")
+	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,z))
+	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,z))
+	var/block = block(A, B)
+	for(var/t in block)
+		// No need to empty() these, because it's world init and they're
+		// already /turf/open/space/basic.
+		var/turf/T = t
+		T.flags_1 |= UNUSED_RESERVATION_TURF_1
+	unused_turfs["[z]"] = block
+	reservation_ready["[z]"] = TRUE
 	clearing_reserved_turfs = FALSE
 
 /datum/controller/subsystem/mapping/proc/reserve_turfs(list/turfs)
@@ -508,3 +544,9 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	for(var/B in areas)
 		var/area/A = B
 		A.reg_in_areas_in_z()
+
+/datum/controller/subsystem/mapping/proc/get_isolated_ruin_z()
+	if(!isolated_ruins_z)
+		isolated_ruins_z = add_new_zlevel("Isolated Ruins/Reserved", list(ZTRAIT_RESERVED = TRUE, ZTRAIT_ISOLATED_RUINS = TRUE))
+		initialize_reserved_level(isolated_ruins_z.z_value)
+	return isolated_ruins_z.z_value

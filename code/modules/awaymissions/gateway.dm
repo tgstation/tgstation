@@ -53,11 +53,11 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		ready = TRUE
 	return ready
 
-/obj/machinery/gateway/update_icon()
+/obj/machinery/gateway/update_icon_state()
 	if(active)
 		icon_state = "on"
-		return
-	icon_state = "off"
+	else
+		icon_state = "off"
 
 /obj/machinery/gateway/attack_hand(mob/user)
 	. = ..()
@@ -73,7 +73,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 /obj/machinery/gateway/proc/toggleon(mob/user)
 	return FALSE
 
-/obj/machinery/gateway/safe_throw_at()
+/obj/machinery/gateway/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return
 
 /obj/machinery/gateway/centerstation/Initialize()
@@ -100,14 +100,14 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	var/obj/machinery/gateway/centeraway/awaygate = null
 	can_link = TRUE
 
-/obj/machinery/gateway/centerstation/update_icon()
+/obj/machinery/gateway/centerstation/update_icon_state()
 	if(active)
 		icon_state = "oncenter"
-		return
-	icon_state = "offcenter"
+	else
+		icon_state = "offcenter"
 
 /obj/machinery/gateway/centerstation/process()
-	if((stat & (NOPOWER)) && use_power)
+	if((machine_stat & (NOPOWER)) && use_power)
 		if(active)
 			toggleoff()
 		return
@@ -121,7 +121,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	if(!powered())
 		return
 	if(!awaygate)
-		to_chat(user, "<span class='notice'>Error: No destination found.</span>")
+		to_chat(user, "<span class='alert'>Error: No destination found.</span>")
 		return
 	if(world.time < wait)
 		to_chat(user, "<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [DisplayTimeText(wait - world.time)].</span>")
@@ -160,9 +160,9 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 
 /obj/machinery/gateway/centeraway/multitool_act(mob/living/user, obj/item/I)
 	if(calibrated)
-		to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
+		to_chat(user, "<span class='alert'>The gate is already calibrated, there is no work for you to do here.</span>")
 	else
-		to_chat(user, "<span class='boldnotice'>Recalibration successful!</span>: \black This gate's systems have been fine tuned.  Travel to this gate will now be on target.")
+		to_chat(user, "<span class='boldnotice'>Recalibration successful!</span>: \black This gate's systems have been fine tuned. Travel to this gate will now be on target.")
 		calibrated = TRUE
 	return TRUE
 
@@ -183,11 +183,11 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	stationgate = locate(/obj/machinery/gateway/centerstation)
 
 
-/obj/machinery/gateway/centeraway/update_icon()
+/obj/machinery/gateway/centeraway/update_icon_state()
 	if(active)
 		icon_state = "oncenter"
-		return
-	icon_state = "offcenter"
+	else
+		icon_state = "offcenter"
 
 /obj/machinery/gateway/centeraway/toggleon(mob/user)
 	if(!detect())

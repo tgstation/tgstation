@@ -44,7 +44,7 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 	dna_cost = -1
 
 /datum/action/changeling/hivemind_upload/sting_action(var/mob/living/user)
-	if (user.has_trait(CHANGELING_HIVEMIND_MUTE))
+	if (HAS_TRAIT(user, CHANGELING_HIVEMIND_MUTE))
 		to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
 		return
 	..()
@@ -55,10 +55,10 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 			names += prof.name
 
 	if(names.len <= 0)
-		to_chat(user, "<span class='notice'>The airwaves already have all of our DNA.</span>")
+		to_chat(user, "<span class='warning'>The airwaves already have all of our DNA!</span>")
 		return
 
-	var/chosen_name = input("Select a DNA to channel: ", "Channel DNA", null) as null|anything in names
+	var/chosen_name = input("Select a DNA to channel: ", "Channel DNA", null) as null|anything in sortList(names)
 	if(!chosen_name)
 		return
 
@@ -82,7 +82,7 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 /datum/action/changeling/hivemind_download/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
-	if (user.has_trait(CHANGELING_HIVEMIND_MUTE))
+	if (HAS_TRAIT(user, CHANGELING_HIVEMIND_MUTE))
 		to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
 		return
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -100,10 +100,10 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 			names[prof.name] = prof
 
 	if(names.len <= 0)
-		to_chat(user, "<span class='notice'>There's no new DNA to absorb from the air.</span>")
+		to_chat(user, "<span class='warning'>There's no new DNA to absorb from the air!</span>")
 		return
 
-	var/S = input("Select a DNA absorb from the air: ", "Absorb DNA", null) as null|anything in names
+	var/S = input("Select a DNA absorb from the air: ", "Absorb DNA", null) as null|anything in sortList(names)
 	if(!S)
 		return
 	var/datum/changelingprofile/chosen_prof = names[S]

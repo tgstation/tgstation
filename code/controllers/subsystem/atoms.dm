@@ -114,9 +114,10 @@ SUBSYSTEM_DEF(atoms)
 	for(var/i in 1 to LAZYLEN(mutations))
 		var/path = mutations[i] //byond gets pissy when we do it in one line
 		var/datum/mutation/human/B = new path ()
-		B.alias = "Mutation #[i]"
+		B.alias = "Mutation [i]"
 		GLOB.all_mutations[B.type] = B
 		GLOB.full_sequences[B.type] = generate_gene_sequence(B.blocks)
+		GLOB.alias_mutations[B.alias] = B.type
 		if(B.locked)
 			continue
 		if(B.quality == POSITIVE)

@@ -1,11 +1,11 @@
 /mob/living/carbon
+	blood_volume = BLOOD_VOLUME_NORMAL
 	gender = MALE
 	pressure_resistance = 15
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,GLAND_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD)
 	has_limbs = 1
 	held_items = list(null, null)
-	var/list/stomach_contents		= list()
 	var/list/internal_organs		= list()	//List of /obj/item/organ in the mob. They don't go in the contents for some reason I don't want to know.
 	var/list/internal_organs_slot= list() //Same as above, but stores "slot ID" - "organ" pairs for easy access.
 	var/silent = FALSE 		//Can't talk. Value goes down every life proc. //NOTE TO FUTURE CODERS: DO NOT INITIALIZE NUMERICAL VARS AS NULL OR I WILL MURDER YOU.
@@ -16,7 +16,7 @@
 
 	var/disgust = 0
 
-//inventory slots
+	//inventory slots
 	var/obj/item/back = null
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/clothing/neck/wear_neck = null
@@ -28,7 +28,7 @@
 	var/obj/item/clothing/glasses/glasses = null //only used by humans.
 	var/obj/item/clothing/ears = null //only used by humans.
 
-	var/datum/dna/dna = null//Carbon
+	var/datum/dna/dna = null // Carbon
 	var/datum/mind/last_mind = null //last mind to control this mob, for blood-based cloning
 
 	var/failed_last_breath = 0 //This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
@@ -62,3 +62,10 @@
 	var/damageoverlaytemp = 0
 
 	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects
+	var/stam_regen_start_time = 0 //used to halt stamina regen temporarily
+	var/stam_paralyzed = FALSE //knocks you down
+
+	/// Protection (insulation) from the heat, Value 0-1 corresponding to the percentage of protection
+	var/heat_protection = 0 // No heat protection
+	/// Protection (insulation) from the cold, Value 0-1 corresponding to the percentage of protection
+	var/cold_protection = 0 // No cold protection

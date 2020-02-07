@@ -1,0 +1,5 @@
+author: "peoplearestrange"
+delete-after: True
+changes: 
+  - rscdel: "Removed Special Verbs Tab"
+  - admin: "New admin button Tabs"

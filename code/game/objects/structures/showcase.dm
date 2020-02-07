@@ -82,7 +82,7 @@
 
 /obj/structure/showcase/machinery/cloning_pod
 	name = "cloning pod exhibit"
-	desc = "Signs describe how cloning pods like these ensure that every Nanotrasen employee can carry out their contracts in full, even in the unlikely event of their catastrophic death. Hopefully they aren't all made of cardboard, like this one."
+	desc = "Depicts a prototype from a failed attempt at reliable cloning technology. The technology was scrapped after reports of severe mutations, wiggly ear syndrome and spontaneous tail growth. The date 11.11.2558 is engraved on the base."
 	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "pod_0"
 
@@ -131,12 +131,12 @@
 //Feedback is given in examine because showcases can basically have any sprite assigned to them
 
 /obj/structure/showcase/examine(mob/user)
-	..()
+	. = ..()
 
 	switch(deconstruction_state)
 		if(SHOWCASE_CONSTRUCTED)
-			to_chat(user, "The showcase is fully constructed.")
+			. += "The showcase is fully constructed."
 		if(SHOWCASE_SCREWDRIVERED)
-			to_chat(user, "The showcase has its screws loosened.")
+			. += "The showcase has its screws loosened."
 		else
-			to_chat(user, "If you see this, something is wrong.")
+			. += "If you see this, something is wrong."

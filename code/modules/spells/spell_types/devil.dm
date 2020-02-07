@@ -54,7 +54,7 @@
 					user.put_in_hands(contract)
 			else
 				var/obj/item/paper/contract/infernal/contract  // = new(user.loc, C.mind, contractType, user.mind)
-				var/contractTypeName = input(user, "What type of contract?") in list ("Power", "Wealth", "Prestige", "Magic", "Knowledge", "Friendship")
+				var/contractTypeName = input(user, "What type of contract?") in sortList(list("Power", "Wealth", "Prestige", "Magic", "Knowledge", "Friendship"))
 				switch(contractTypeName)
 					if("Power")
 						contract = new /obj/item/paper/contract/infernal/power(C.loc, C.mind, user.mind)
@@ -70,7 +70,7 @@
 						contract = new /obj/item/paper/contract/infernal/friend(C.loc, C.mind, user.mind)
 				C.put_in_hands(contract)
 		else
-			to_chat(user, "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for [C.p_them()].</span>")
+			to_chat(user, "<span class='warning'>[C] seems to not be sentient. You cannot summon a contract for [C.p_them()].</span>")
 
 
 /obj/effect/proc_holder/spell/aimed/fireball/hellish
@@ -84,7 +84,7 @@
 	invocation_type = "shout"
 	range = 2
 
-	projectile_type = /obj/item/projectile/magic/aoe/fireball/infernal
+	projectile_type = /obj/projectile/magic/aoe/fireball/infernal
 
 	action_background_icon_state = "bg_demon"
 
@@ -144,7 +144,7 @@
 	dust_animation()
 	spawn_dust()
 	visible_message("<span class='warning'>[src] disappears in a flashfire!</span>")
-	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
+	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, TRUE, -1)
 	var/obj/effect/dummy/phased_mob/slaughter/holder = new /obj/effect/dummy/phased_mob/slaughter(loc)
 	ExtinguishMob()
 	forceMove(holder)
@@ -160,7 +160,7 @@
 	forceMove(drop_location())
 	client.eye = src
 	visible_message("<span class='warning'><B>[src] appears in a fiery blaze!</B></span>")
-	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
+	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, TRUE, -1)
 	addtimer(CALLBACK(src, .proc/fakefireextinguish), 15, TIMER_UNIQUE)
 
 /obj/effect/proc_holder/spell/targeted/sintouch
@@ -234,7 +234,7 @@
 		dancefloor_exists = FALSE
 		for(var/i in 1 to dancefloor_turfs.len)
 			var/turf/T = dancefloor_turfs[i]
-			T.ChangeTurf(dancefloor_turfs_types[i])
+			T.ChangeTurf(dancefloor_turfs_types[i], flags = CHANGETURF_INHERIT_AIR)
 	else
 		var/list/funky_turfs = RANGE_TURFS(1, user)
 		for(var/turf/closed/solid in funky_turfs)
@@ -248,7 +248,7 @@
 			var/turf/T = t
 			dancefloor_turfs[i] = T
 			dancefloor_turfs_types[i] = T.type
-			T.ChangeTurf((i % 2 == 0) ? /turf/open/floor/light/colour_cycle/dancefloor_a : /turf/open/floor/light/colour_cycle/dancefloor_b)
+			T.ChangeTurf((i % 2 == 0) ? /turf/open/floor/light/colour_cycle/dancefloor_a : /turf/open/floor/light/colour_cycle/dancefloor_b, flags = CHANGETURF_INHERIT_AIR)
 			i++
 
 /datum/effect_system/smoke_spread/transparent/dancefloor_devil

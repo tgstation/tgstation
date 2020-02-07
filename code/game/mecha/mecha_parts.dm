@@ -13,7 +13,7 @@
 	if(!user.transferItemToLoc(src, M))
 		to_chat(user, "<span class='warning'>\The [src] is stuck to your hand, you cannot put it in \the [M]!</span>")
 		return FALSE
-	user.visible_message("[user] attaches [src] to [M].", "<span class='notice'>You attach [src] to [M].</span>")
+	user.visible_message("<span class='notice'>[user] attaches [src] to [M].</span>", "<span class='notice'>You attach [src] to [M].</span>")
 	return TRUE
 
 /obj/item/mecha_parts/part/try_attach_part(mob/user, obj/mecha/M)

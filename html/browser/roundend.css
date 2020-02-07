@@ -10,9 +10,15 @@
 	color: #ef2f3c;
 	font-weight: bold;
 }
+
+.bluetext {
+	color: #517fff;
+	font-weight: bold;
+}
+
 .neutraltext {
 	font-weight: bold; /* If you feel these should have some color feel free to change */
-} 
+}
 
 .marooned {
 	color: rgb(109, 109, 255); font-weight: bold;

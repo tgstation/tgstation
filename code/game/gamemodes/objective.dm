@@ -35,7 +35,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	if(target && target.current)
 		def_value = target.current
 
-	var/mob/new_target = input(admin,"Select target:", "Objective target", def_value) as null|anything in possible_targets
+	var/mob/new_target = input(admin,"Select target:", "Objective target", def_value) as null|anything in sortNames(possible_targets)
 	if (!new_target)
 		return
 
@@ -50,6 +50,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/proc/considered_escaped(datum/mind/M)
 	if(!considered_alive(M))
+		return FALSE
+	if(considered_exiled(M))
 		return FALSE
 	if(M.force_escaped)
 		return TRUE
@@ -98,7 +100,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 			. += M
 
 //dupe_search_range is a list of antag datums / minds / teams
-/datum/objective/proc/find_target(dupe_search_range)
+/datum/objective/proc/find_target(dupe_search_range, blacklist)
 	var/list/datum/mind/owners = get_owners()
 	if(!dupe_search_range)
 		dupe_search_range = get_owners()
@@ -110,7 +112,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 			try_target_late_joiners = TRUE
 	for(var/datum/mind/possible_target in get_crewmember_minds())
 		if(!(possible_target in owners) && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && is_unique_objective(possible_target,dupe_search_range))
-			possible_targets += possible_target
+			if (!(possible_target in blacklist))
+				possible_targets += possible_target
 	if(try_target_late_joiners)
 		var/list/all_possible_targets = possible_targets.Copy()
 		for(var/I in all_possible_targets)
@@ -159,7 +162,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	if(receiver && receiver.current)
 		if(ishuman(receiver.current))
 			var/mob/living/carbon/human/H = receiver.current
-			var/list/slots = list("backpack" = SLOT_IN_BACKPACK)
+			var/list/slots = list("backpack" = ITEM_SLOT_BACKPACK)
 			for(var/eq_path in special_equipment)
 				var/obj/O = new eq_path
 				H.equip_in_one_of_slots(O, slots)
@@ -175,7 +178,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	..()
 
 /datum/objective/assassinate/check_completion()
-	return completed || (!considered_alive(target) || considered_afk(target))
+	return completed || (!considered_alive(target) || considered_afk(target) || considered_exiled(target))
 
 /datum/objective/assassinate/update_explanation_text()
 	..()
@@ -206,7 +209,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	..()
 
 /datum/objective/mutiny/check_completion()
-	if(!target || !considered_alive(target) || considered_afk(target))
+	if(!target || !considered_alive(target) || considered_afk(target) || considered_exiled(target))
 		return TRUE
 	var/turf/T = get_turf(target.current)
 	return !T || !is_station_level(T.z)
@@ -490,7 +493,9 @@ GLOBAL_LIST_EMPTY(possible_items)
 				if(M.current.mind.assigned_role in possible_item.excludefromjob)
 					continue check_items
 			approved_targets += possible_item
-	return set_target(safepick(approved_targets))
+	if (length(approved_targets))
+		return set_target(pick(approved_targets))
+	return set_target(null)
 
 /datum/objective/steal/proc/set_target(datum/objective_item/item)
 	if(item)
@@ -504,8 +509,8 @@ GLOBAL_LIST_EMPTY(possible_items)
 		return
 
 /datum/objective/steal/admin_edit(mob/admin)
-	var/list/possible_items_all = GLOB.possible_items+"custom"
-	var/new_target = input(admin,"Select target:", "Objective target", steal_target) as null|anything in possible_items_all
+	var/list/possible_items_all = GLOB.possible_items
+	var/new_target = input(admin,"Select target:", "Objective target", steal_target) as null|anything in sortNames(possible_items_all)+"custom"
 	if (!new_target)
 		return
 
@@ -541,7 +546,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 				else if(targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
 					return TRUE
 
-			if(targetinfo && I.type in targetinfo.altitems) //Ok, so you don't have the item. Do you have an alternative, at least?
+			if(targetinfo && (I.type in targetinfo.altitems)) //Ok, so you don't have the item. Do you have an alternative, at least?
 				if(targetinfo.check_special_completion(I))//Yeah, we do! Don't return 0 if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
 					return TRUE
 	return FALSE
@@ -676,6 +681,24 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		target_amount = count
 	update_explanation_text()
 
+/datum/objective/protect_object
+	name = "protect object"
+	var/obj/protect_target
+
+/datum/objective/protect_object/proc/set_target(obj/O)
+	protect_target = O
+	update_explanation_text()
+
+/datum/objective/protect_object/update_explanation_text()
+	. = ..()
+	if(protect_target)
+		explanation_text = "Protect \the [protect_target] at all costs."
+	else
+		explanation_text = "Free objective."
+
+/datum/objective/protect_object/check_completion()
+	return !QDELETED(protect_target)
+
 //Changeling Objectives
 
 /datum/objective/absorb
@@ -686,12 +709,13 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/n_p = 1 //autowin
 	var/list/datum/mind/owners = get_owners()
 	if (SSticker.current_state == GAME_STATE_SETTING_UP)
-		for(var/mob/dead/new_player/P in GLOB.player_list)
-			if(P.client && P.ready == PLAYER_READY_TO_PLAY && !(P.mind in owners))
+		for(var/i in GLOB.new_player_list)
+			var/mob/dead/new_player/P = i
+			if(P.ready == PLAYER_READY_TO_PLAY && !(P.mind in owners))
 				n_p ++
 	else if (SSticker.IsRoundInProgress())
 		for(var/mob/living/carbon/human/P in GLOB.player_list)
-			if(P.client && !(P.mind.has_antag_datum(/datum/antagonist/changeling)) && !(P.mind in owners))
+			if(!(P.mind.has_antag_datum(/datum/antagonist/changeling)) && !(P.mind in owners))
 				n_p ++
 	target_amount = min(target_amount, n_p)
 
@@ -790,10 +814,10 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/destroy/admin_edit(mob/admin)
 	var/list/possible_targets = active_ais(1)
 	if(possible_targets.len)
-		var/mob/new_target = input(admin,"Select target:", "Objective target") as null|anything in possible_targets
+		var/mob/new_target = input(admin,"Select target:", "Objective target") as null|anything in sortNames(possible_targets)
 		target = new_target.mind
 	else
-		to_chat(admin, "No active AIs with minds")
+		to_chat(admin, "<span class='boldwarning'>No active AIs with minds.</span>")
 	update_explanation_text()
 
 /datum/objective/destroy/internal
@@ -1033,7 +1057,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /proc/generate_admin_objective_list()
 	GLOB.admin_objective_list = list()
 
-	var/list/allowed_types = list(
+	var/list/allowed_types = sortList(list(
 		/datum/objective/assassinate,
 		/datum/objective/maroon,
 		/datum/objective/debrain,
@@ -1049,8 +1073,29 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		/datum/objective/capture,
 		/datum/objective/absorb,
 		/datum/objective/custom
-	)
+	),/proc/cmp_typepaths_asc)
 
 	for(var/T in allowed_types)
 		var/datum/objective/X = T
 		GLOB.admin_objective_list[initial(X.name)] = T
+
+/datum/objective/contract
+	var/payout = 0
+	var/payout_bonus = 0
+	var/area/dropoff = null
+
+// Generate a random valid area on the station that the dropoff will happen.
+/datum/objective/contract/proc/generate_dropoff()
+	var/found = FALSE
+	while (!found)
+		var/area/dropoff_area = pick(GLOB.sortedAreas)
+		if(dropoff_area && is_station_level(dropoff_area.z) && !dropoff_area.outdoors)
+			dropoff = dropoff_area
+			found = TRUE
+
+// Check if both the contractor and contract target are at the dropoff point.
+/datum/objective/contract/proc/dropoff_check(mob/user, mob/target)
+	var/area/user_area = get_area(user)
+	var/area/target_area = get_area(target)
+
+	return (istype(user_area, dropoff) && istype(target_area, dropoff))

@@ -5,8 +5,8 @@
 
 /datum/crafting_recipe/food/candiedapple
 	name = "Candied apple"
-	reqs = list(/datum/reagent/water = 5,
-		/datum/reagent/consumable/sugar = 5,
+	reqs = list(
+		/datum/reagent/consumable/caramel = 5,
 		/obj/item/reagent_containers/food/snacks/grown/apple = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/candiedapple
@@ -83,7 +83,7 @@
 	reqs = list(/datum/reagent/consumable/ketchup = 5,
 		/obj/item/reagent_containers/food/snacks/grown/soybeans = 2
 	)
-	result = /obj/item/reagent_containers/food/snacks/beans
+	result = /obj/item/reagent_containers/food/snacks/canned/beans
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/eggplantparm
@@ -123,6 +123,15 @@
 		/obj/item/reagent_containers/food/snacks/breadslice/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/jelliedtoast/cherry
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/butteredtoast
+	name = "Buttered Toast"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/breadslice/plain = 1,
+		/obj/item/reagent_containers/food/snacks/butter = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/butteredtoast
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/twobread
@@ -184,39 +193,6 @@
 		/obj/item/reagent_containers/food/snacks/grown/ambrosia = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/melonfruitbowl
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/spacefreezy
-	name ="Space freezy"
-	reqs = list(
-		/datum/reagent/consumable/bluecherryjelly = 5,
-		/datum/reagent/consumable/spacemountainwind = 15,
-		/obj/item/reagent_containers/food/snacks/icecream = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/spacefreezy
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/sundae
-	name ="Sundae"
-	reqs = list(
-		/datum/reagent/consumable/cream = 5,
-		/obj/item/reagent_containers/food/snacks/grown/cherries = 1,
-		/obj/item/reagent_containers/food/snacks/grown/banana = 1,
-		/obj/item/reagent_containers/food/snacks/icecream = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/sundae
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/honkdae
-	name ="Honkdae"
-	reqs = list(
-		/datum/reagent/consumable/cream = 5,
-		/obj/item/clothing/mask/gas/clown_hat = 1,
-		/obj/item/reagent_containers/food/snacks/grown/cherries = 1,
-		/obj/item/reagent_containers/food/snacks/grown/banana = 2,
-		/obj/item/reagent_containers/food/snacks/icecream = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/honkdae
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/nachos
@@ -281,18 +257,6 @@
 	result = /obj/item/reagent_containers/food/snacks/stuffedlegion
 	subcategory = CAT_MISCFOOD
 
-
-/datum/crafting_recipe/food/lizardwine
-	name = "Lizard wine"
-	time = 40
-	reqs = list(
-		/obj/item/organ/tail/lizard = 1,
-		/datum/reagent/consumable/ethanol = 100
-	)
-	result = /obj/item/reagent_containers/food/drinks/bottle/lizardwine
-	subcategory = CAT_MISCFOOD
-
-
 /datum/crafting_recipe/food/powercrepe
 	name = "Powercrepe"
 	time = 40
@@ -344,4 +308,28 @@
 		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/salad/ricepudding
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/butterbear //ITS ALIVEEEEEE!
+	name = "Living bear/butter hybrid"
+	reqs = list(
+		/obj/item/organ/brain = 1,
+		/obj/item/organ/heart = 1,
+		/obj/item/reagent_containers/food/snacks/butter = 10,
+		/obj/item/reagent_containers/food/snacks/meat/slab = 5,
+		/datum/reagent/blood = 50,
+		/datum/reagent/teslium = 1 //To shock the whole thing into life
+	)
+	result = /mob/living/simple_animal/hostile/bear/butter
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/crab_rangoon
+	name = "Crab Rangoon"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/doughslice = 1,
+		/datum/reagent/consumable/cream = 5,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
+		/obj/item/reagent_containers/food/snacks/meat/rawcrab = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/crab_rangoon
 	subcategory = CAT_MISCFOOD

@@ -3,16 +3,17 @@
 	desc = "Attack the weak point for massive damage."
 	health = 1000
 	maxHealth = 1000
+	spacewalk = TRUE
 	a_intent = INTENT_HARM
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
-	mob_biotypes = list(MOB_ORGANIC, MOB_EPIC)
+	mob_biotypes = MOB_ORGANIC|MOB_EPIC
 	obj_damage = 400
 	light_range = 3
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
 	movement_type = FLYING
-	robust_searching = 1
+	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
 	stat_attack = DEAD
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -24,30 +25,36 @@
 	move_force = MOVE_FORCE_OVERPOWERING
 	move_resist = MOVE_FORCE_OVERPOWERING
 	pull_force = MOVE_FORCE_OVERPOWERING
-	mob_size = MOB_SIZE_LARGE
+	mob_size = MOB_SIZE_HUGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
 	var/list/crusher_loot
-	var/medal_type
-	var/score_type = BOSS_SCORE
+	var/achievement_type
+	var/crusher_achievement_type
+	var/score_achievement_type
 	var/elimination = 0
 	var/anger_modifier = 0
-	var/obj/item/gps/internal
-	var/internal_type
+	var/gps_name = null
 	var/recovery_time = 0
-	var/true_spawn = 1 // if this is a megafauna that should grant achievements, or have a gps signal
+	var/true_spawn = TRUE // if this is a megafauna that should grant achievements, or have a gps signal
 	var/nest_range = 10
+	var/chosen_attack = 1 // chosen attack num
+	var/list/attack_action_types = list()
+	var/small_sprite_type
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
-	if(internal_type && true_spawn)
-		internal = new internal_type(src)
+	if(gps_name && true_spawn)
+		AddComponent(/datum/component/gps, gps_name)
 	apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
-	add_trait(TRAIT_NO_TELEPORT, MEGAFAUNA_TRAIT)
-
-/mob/living/simple_animal/hostile/megafauna/Destroy()
-	QDEL_NULL(internal)
-	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_TELEPORT, MEGAFAUNA_TRAIT)
+	for(var/action_type in attack_action_types)
+		var/datum/action/innate/megafauna_attack/attack_action = new action_type()
+		attack_action.Grant(src)
+	if(small_sprite_type)
+		var/datum/action/small_sprite/small_action = new small_sprite_type()
+		small_action.Grant(src)
 
 /mob/living/simple_animal/hostile/megafauna/Moved()
 	if(nest && nest.parent && get_dist(nest.parent, src) > nest_range)
@@ -59,10 +66,7 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/prevent_content_explosion()
-	return TRUE
-
-/mob/living/simple_animal/hostile/megafauna/death(gibbed, var/list/force_grant)
+/mob/living/simple_animal/hostile/megafauna/death(gibbed, list/force_grant)
 	if(health > 0)
 		return
 	else
@@ -76,7 +80,7 @@
 			if(crusher_kill)
 				tab = "megafauna_kills_crusher"
 			if(!elimination)	//used so the achievment only occurs for the last legion to die.
-				grant_achievement(medal_type, score_type, crusher_kill, force_grant)
+				grant_achievement(achievement_type, score_achievement_type, crusher_kill, force_grant)
 				SSblackbox.record_feedback("tally", tab, 1, "[initial(name)]")
 		..()
 
@@ -109,31 +113,32 @@
 
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L)
-		return
+		return FALSE
 	visible_message(
 		"<span class='danger'>[src] devours [L]!</span>",
 		"<span class='userdanger'>You feast on [L], restoring your health!</span>")
 	if(!is_station_level(z) || client) //NPC monsters won't heal while on station
 		adjustBruteLoss(-L.maxHealth/2)
 	L.gib()
+	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
 	switch (severity)
-		if (1)
+		if (EXPLODE_DEVASTATE)
 			adjustBruteLoss(250)
 
-		if (2)
+		if (EXPLODE_HEAVY)
 			adjustBruteLoss(100)
 
-		if(3)
+		if (EXPLODE_LIGHT)
 			adjustBruteLoss(50)
 
 /mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time)
 	recovery_time = world.time + buffer_time
 	ranged_cooldown = world.time + buffer_time
 
-/mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill, var/list/grant_achievement = list())
-	if(!medal_type || (flags_1 & ADMIN_SPAWNED_1) || !SSmedals.hub_enabled) //Don't award medals if the medal type isn't set
+/mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill, list/grant_achievement = list())
+	if(!achievement_type || (flags_1 & ADMIN_SPAWNED_1) || !SSachievements.achievements_enabled) //Don't award medals if the medal type isn't set
 		return FALSE
 	if(!grant_achievement.len)
 		for(var/mob/living/L in view(7,src))
@@ -141,11 +146,76 @@
 	for(var/mob/living/L in grant_achievement)
 		if(L.stat || !L.client)
 			continue
-		var/client/C = L.client
-		SSmedals.UnlockMedal("Boss [BOSS_KILL_MEDAL]", C)
-		SSmedals.UnlockMedal("[medaltype] [BOSS_KILL_MEDAL]", C)
-		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/twohanded/required/kinetic_crusher))
-			SSmedals.UnlockMedal("[medaltype] [BOSS_KILL_MEDAL_CRUSHER]", C)
-		SSmedals.SetScore(BOSS_SCORE, C, 1)
-		SSmedals.SetScore(score_type, C, 1)
+		L.client.give_award(/datum/award/achievement/boss/boss_killer, L)
+		L.client.give_award(achievement_type, L)
+		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/twohanded/kinetic_crusher))
+			L.client.give_award(crusher_achievement_type, L)
+		L.client.give_award(/datum/award/score/boss_score, L) //Score progression for bosses killed in general
+		L.client.give_award(score_achievement_type, L) //Score progression for specific boss killed
 	return TRUE
+
+/datum/action/innate/megafauna_attack
+	name = "Megafauna Attack"
+	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon_state = ""
+	var/mob/living/simple_animal/hostile/megafauna/M
+	var/chosen_message
+	var/chosen_attack_num = 0
+
+/datum/action/innate/megafauna_attack/Grant(mob/living/L)
+	if(istype(L, /mob/living/simple_animal/hostile/megafauna))
+		M = L
+		return ..()
+	return FALSE
+
+/datum/action/innate/megafauna_attack/Activate()
+	M.chosen_attack = chosen_attack_num
+	to_chat(M, chosen_message)
+
+/mob/living/simple_animal/hostile/megafauna
+	var/list/enemies = list()
+
+/mob/living/simple_animal/hostile/megafauna/Found(atom/A)
+	if(isliving(A))
+		var/mob/living/L = A
+		if(!L.stat)
+			return L
+		else
+			enemies -= L
+	else if(ismecha(A))
+		var/obj/mecha/M = A
+		if(M.occupant)
+			return A
+
+/mob/living/simple_animal/hostile/megafauna/ListTargets()
+	if(!enemies.len)
+		return list()
+	var/list/see = ..()
+	see &= enemies // Remove all entries that aren't in enemies
+	return see
+
+/mob/living/simple_animal/hostile/megafauna/proc/Retaliate()
+	var/list/around = view(src, vision_range)
+
+	for(var/atom/movable/A in around)
+		if(A == src)
+			continue
+		if(isliving(A))
+			var/mob/living/M = A
+			if(faction_check_mob(M) && attack_same || !faction_check_mob(M))
+				enemies |= M
+		else if(ismecha(A))
+			var/obj/mecha/M = A
+			if(M.occupant)
+				enemies |= M
+				enemies |= M.occupant
+
+	for(var/mob/living/simple_animal/hostile/megafauna/H in around)
+		if(faction_check_mob(H) && !attack_same && !H.attack_same)
+			H.enemies |= enemies
+	return 0
+
+/mob/living/simple_animal/hostile/megafauna/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	. = ..()
+	if(. > 0 && stat == CONSCIOUS)
+		Retaliate()

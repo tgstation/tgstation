@@ -55,6 +55,9 @@
 	explosion(src.loc,-1,-1,2, flame_range = 4)	// small explosion, plus a very large fireball.
 	qdel(src)
 
+/obj/item/grenade/iedcasing/change_det_time()
+	return //always be random.
+
 /obj/item/grenade/iedcasing/examine(mob/user)
-	..()
-	to_chat(user, "You can't tell when it will explode!")
+	. = ..()
+	. += "You can't tell when it will explode!"

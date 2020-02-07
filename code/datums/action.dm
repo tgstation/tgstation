@@ -31,6 +31,7 @@
 
 /datum/action/proc/link_to(Target)
 	target = Target
+	RegisterSignal(Target, COMSIG_ATOM_UPDATED_ICON, .proc/OnUpdatedIcon)
 
 /datum/action/Destroy()
 	if(owner)
@@ -90,9 +91,6 @@
 		return FALSE
 	return TRUE
 
-/datum/action/proc/Process()
-	return
-
 /datum/action/proc/IsAvailable()
 	if(!owner)
 		return FALSE
@@ -145,6 +143,8 @@
 		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
 		current_button.button_icon_state = button_icon_state
 
+/datum/action/proc/OnUpdatedIcon()
+	UpdateButtonIcon()
 
 //Presets for item actions
 /datum/action/item_action
@@ -193,16 +193,28 @@
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
 
+/datum/action/item_action/toggle_light/Trigger()
+	if(istype(target, /obj/item/pda))
+		var/obj/item/pda/P = target
+		P.toggle_light(owner)
+		return
+	..()
+
 /datum/action/item_action/toggle_hood
 	name = "Toggle Hood"
 
 /datum/action/item_action/toggle_firemode
 	name = "Toggle Firemode"
 
-/datum/action/item_action/rcl
+/datum/action/item_action/rcl_col
 	name = "Change Cable Color"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "rcl_rainbow"
+
+/datum/action/item_action/rcl_gui
+	name = "Toggle Fast Wiring Gui"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "rcl_gui"
 
 /datum/action/item_action/startchainsaw
 	name = "Pull The Starting Cord"
@@ -252,6 +264,14 @@
 	if(istype(H))
 		H.toggle_welding_screen(owner)
 
+/datum/action/item_action/toggle_welding_screen/plasmaman
+	name = "Toggle Welding Screen"
+
+/datum/action/item_action/toggle_welding_screen/plasmaman/Trigger()
+	var/obj/item/clothing/head/helmet/space/plasmaman/H = target
+	if(istype(H))
+		H.toggle_welding_screen(owner)
+
 /datum/action/item_action/toggle_headphones
 	name = "Toggle Headphones"
 	desc = "UNTZ UNTZ UNTZ"
@@ -289,10 +309,7 @@
 /datum/action/item_action/synthswitch/Trigger()
 	if(istype(target, /obj/item/instrument/piano_synth))
 		var/obj/item/instrument/piano_synth/synth = target
-		var/chosen = input("Choose the type of instrument you want to use", "Instrument Selection", "piano") as null|anything in synth.insTypes
-		if(!synth.insTypes[chosen])
-			return
-		return synth.changeInstrument(chosen)
+		return synth.selectInstrument()
 	return ..()
 
 /datum/action/item_action/vortex_recall
@@ -308,44 +325,14 @@
 			return 0
 	return ..()
 
-/datum/action/item_action/clock
-	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
-	background_icon_state = "bg_clock"
-	buttontooltipstyle = "clockcult"
-
-/datum/action/item_action/clock/IsAvailable()
-	if(!is_servant_of_ratvar(owner))
-		return 0
-	return ..()
-
-/datum/action/item_action/clock/toggle_visor
-	name = "Create Judicial Marker"
-	desc = "Allows you to create a stunning Judicial Marker at any location in view. Click again to disable."
-
-/datum/action/item_action/clock/toggle_visor/IsAvailable()
-	if(!is_servant_of_ratvar(owner))
-		return 0
-	if(istype(target, /obj/item/clothing/glasses/judicial_visor))
-		var/obj/item/clothing/glasses/judicial_visor/V = target
-		if(V.recharging)
-			return 0
-	return ..()
-
-/datum/action/item_action/clock/hierophant
-	name = "Hierophant Network"
-	desc = "Lets you discreetly talk with all other servants. Nearby listeners can hear you whispering, so make sure to do this privately."
-	button_icon_state = "hierophant_slab"
-
-/datum/action/item_action/clock/quickbind
-	name = "Quickbind"
-	desc = "If you're seeing this, file a bug report."
-	var/scripture_index = 0 //the index of the scripture we're associated with
-
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"
 
 /datum/action/item_action/toggle_helmet_mode
 	name = "Toggle Helmet Mode"
+
+/datum/action/item_action/crew_monitor
+	name = "Interface With Crew Monitor"
 
 /datum/action/item_action/toggle
 
@@ -494,7 +481,7 @@
 			H.attack_self(owner)
 			return
 	var/obj/item/I = target
-	if(owner.can_equip(I, SLOT_HANDS))
+	if(owner.can_equip(I, ITEM_SLOT_HANDS))
 		owner.temporarilyRemoveItemFromInventory(I)
 		owner.put_in_hands(I)
 		I.attack_self(owner)
@@ -504,6 +491,7 @@
 		else
 			to_chat(owner, "<span class='warning'>Your hands are full!</span>")
 
+///MGS BOX!
 /datum/action/item_action/agent_box
 	name = "Deploy Box"
 	desc = "Find inner peace, here, in the box."
@@ -511,22 +499,30 @@
 	background_icon_state = "bg_agent"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "deploy_box"
+	///Cooldown between deploys. Uses world.time
 	var/cooldown = 0
-	var/obj/structure/closet/cardboard/agent/box
+	///The type of closet this action spawns.
+	var/boxtype = /obj/structure/closet/cardboard/agent
 
+///Handles opening and closing the box.
 /datum/action/item_action/agent_box/Trigger()
-	if(!..())
+	. = ..()
+	if(!.)
 		return FALSE
-	if(QDELETED(box))
-		if(cooldown < world.time - 100)
-			box = new(owner.drop_location())
-			owner.forceMove(box)
-			cooldown = world.time
-			owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
-	else
-		owner.forceMove(box.drop_location())
+	if(istype(owner.loc, /obj/structure/closet/cardboard/agent))
+		var/obj/structure/closet/cardboard/agent/box = owner.loc
 		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
-		QDEL_NULL(box)
+		box.open()
+		return
+	//Box closing from here on out.
+	if(!isturf(owner.loc)) //Don't let the player use this to escape mechs/welded closets.
+		to_chat(owner, "<span class='warning'>You need more space to activate this implant!</span>")
+		return
+	if(cooldown < world.time - 100)
+		var/box = new boxtype(owner.drop_location())
+		owner.forceMove(box)
+		cooldown = world.time
+		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 
 //Preset for spells
 /datum/action/spell_action
@@ -704,12 +700,26 @@
 	small_icon = 'icons/mob/alien.dmi'
 	small_icon_state = "alienq"
 
-/datum/action/small_sprite/drake
+/datum/action/small_sprite/megafauna
+	icon_icon = 'icons/mob/actions/actions_xeno.dmi'
+	button_icon_state = "smallqueen"
+	background_icon_state = "bg_alien"
 	small_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+
+/datum/action/small_sprite/megafauna/drake
 	small_icon_state = "ash_whelp"
 
-/datum/action/small_sprite/spacedragon
-	small_icon = 'icons/mob/animal.dmi'
+/datum/action/small_sprite/megafauna/colossus
+	small_icon_state = "Basilisk"
+
+/datum/action/small_sprite/megafauna/bubblegum
+	small_icon_state = "goliath2"
+
+/datum/action/small_sprite/megafauna/legion
+	small_icon_state = "mega_legion"
+
+/datum/action/small_sprite/megafauna/spacedragon
+	small_icon = 'icons/mob/carp.dmi'
 	small_icon_state = "carp"
 
 /datum/action/small_sprite/Trigger()

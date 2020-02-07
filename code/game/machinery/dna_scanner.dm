@@ -8,7 +8,7 @@
 	idle_power_usage = 50
 	active_power_usage = 300
 	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/brain)
-	circuit = /obj/item/circuitboard/machine/clonescanner
+	circuit = /obj/item/circuitboard/machine/dnascanner
 	var/locked = FALSE
 	var/damage_coeff
 	var/scan_level
@@ -22,24 +22,23 @@
 	precision_coeff = 0
 	for(var/obj/item/stock_parts/scanning_module/P in component_parts)
 		scan_level += P.rating
-	for(var/obj/item/stock_parts/manipulator/P in component_parts)
-		precision_coeff = P.rating
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
+		precision_coeff = M.rating
 	for(var/obj/item/stock_parts/micro_laser/P in component_parts)
 		damage_coeff = P.rating
 
 /obj/machinery/dna_scannernew/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Radiation pulse accuracy increased by factor <b>[precision_coeff**2]</b>.<br>Radiation pulse damage decreased by factor <b>[damage_coeff**2]</b>.<span>")
+		. += "<span class='notice'>The status display reads: Radiation pulse accuracy increased by factor <b>[precision_coeff**2]</b>.<br>Radiation pulse damage decreased by factor <b>[damage_coeff**2]</b>.</span>"
 
-/obj/machinery/dna_scannernew/update_icon()
-
+/obj/machinery/dna_scannernew/update_icon_state()
 	//no power or maintenance
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		icon_state = initial(icon_state)+ (state_open ? "_open" : "") + "_unpowered"
 		return
 
-	if((stat & MAINT) || panel_open)
+	if((machine_stat & MAINT) || panel_open)
 		icon_state = initial(icon_state)+ (state_open ? "_open" : "") + "_maintenance"
 		return
 
@@ -50,10 +49,6 @@
 
 	//running
 	icon_state = initial(icon_state)+ (state_open ? "_open" : "")
-
-/obj/machinery/dna_scannernew/power_change()
-	..()
-	update_icon()
 
 /obj/machinery/dna_scannernew/proc/toggle_open(mob/user)
 	if(panel_open)
@@ -78,7 +73,7 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='italics'>You hear a metallic creaking from [src].</span>")
+		"<span class='hear'>You hear a metallic creaking from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
 			return
@@ -146,3 +141,26 @@
 	if(user.stat || (isliving(user) && (!(L.mobility_flags & MOBILITY_STAND) || !(L.mobility_flags & MOBILITY_UI))) || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
 		return
 	close_machine(target)
+
+
+//Just for transferring between genetics machines.
+/obj/item/disk/data
+	name = "DNA data disk"
+	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
+	var/list/fields = list()
+	var/list/mutations = list()
+	var/max_mutations = 6
+	var/read_only = FALSE //Well,it's still a floppy disk
+
+/obj/item/disk/data/Initialize()
+	. = ..()
+	icon_state = "datadisk[rand(0,6)]"
+	add_overlay("datadisk_gene")
+
+/obj/item/disk/data/attack_self(mob/user)
+	read_only = !read_only
+	to_chat(user, "<span class='notice'>You flip the write-protect tab to [read_only ? "protected" : "unprotected"].</span>")
+
+/obj/item/disk/data/examine(mob/user)
+	. = ..()
+	. += "The write-protect tab is set to [read_only ? "protected" : "unprotected"]."

@@ -50,7 +50,7 @@ effective or pretty fucking useless.
 		else
 			to_chat(M, "<span class='userdanger'>You feel a sudden, electric jolt travel through your head.</span>")
 
-	playsound(src.loc, 'sound/misc/interference.ogg', 50, 1)
+	playsound(src.loc, 'sound/misc/interference.ogg', 50, TRUE)
 	to_chat(user, "<span class='notice'>You trigger [src].</span>")
 	times_used += 1
 	if(times_used >= max_uses)
@@ -69,7 +69,7 @@ effective or pretty fucking useless.
 */
 
 /obj/item/healthanalyzer/rad_laser
-	materials = list(MAT_METAL=400)
+	custom_materials = list(/datum/material/iron=400)
 	var/irradiate = 1
 	var/intensity = 10 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds
@@ -188,7 +188,7 @@ effective or pretty fucking useless.
 	actions_types = list(/datum/action/item_action/toggle)
 
 /obj/item/shadowcloak/ui_action_click(mob/user)
-	if(user.get_item_by_slot(SLOT_BELT) == src)
+	if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
 		if(!on)
 			Activate(usr)
 		else
@@ -196,7 +196,7 @@ effective or pretty fucking useless.
 	return
 
 /obj/item/shadowcloak/item_action_slot_check(slot, mob/user)
-	if(slot == SLOT_BELT)
+	if(slot == ITEM_SLOT_BELT)
 		return 1
 
 /obj/item/shadowcloak/proc/Activate(mob/living/carbon/human/user)
@@ -218,11 +218,11 @@ effective or pretty fucking useless.
 
 /obj/item/shadowcloak/dropped(mob/user)
 	..()
-	if(user && user.get_item_by_slot(SLOT_BELT) != src)
+	if(user && user.get_item_by_slot(ITEM_SLOT_BELT) != src)
 		Deactivate()
 
 /obj/item/shadowcloak/process()
-	if(user.get_item_by_slot(SLOT_BELT) != src)
+	if(user.get_item_by_slot(ITEM_SLOT_BELT) != src)
 		Deactivate()
 		return
 	var/turf/T = get_turf(src)

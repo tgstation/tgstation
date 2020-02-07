@@ -35,6 +35,7 @@
 #define CLEAN_BOT			(1<<3)	// Cleanbots
 #define MED_BOT				(1<<4)	// Medibots
 #define HONK_BOT			(1<<5)	// Honkbots & ED-Honks
+#define FIRE_BOT			(1<<6)  // Firebots
 
 //AI notification defines
 #define		NEW_BORG     1
@@ -49,3 +50,5 @@
 #define ASSEMBLY_THIRD_STEP     2
 #define ASSEMBLY_FOURTH_STEP    3
 #define ASSEMBLY_FIFTH_STEP     4
+
+#define BORG_LAMP_CD_RESET -1 //special value to reset cyborg's lamp_cooldown

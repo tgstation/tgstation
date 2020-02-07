@@ -4,22 +4,22 @@ import { resize } from 'util/dragresize'
 
 component.exports = {
   oninit () {
-    const onresize = resize.bind(this)
-    const onrelease = () => this.set({ resize: false, x: null, y: null })
+    const onresize = resize.bind(this);
+    const onrelease = () => {
+      this.set({
+        resize: false,
+        x: null,
+        y: null,
+      });
+      document.removeEventListener('mousemove', onresize);
+      document.removeEventListener('mouseup', onrelease);
+    };
 
-    this.observe('config.fancy', (newkey, oldkey, keypath) => {
-      winset(this.get('config.window'), 'can-resize', !newkey)
-
-      if (newkey) {
-        document.addEventListener('mousemove', onresize)
-        document.addEventListener('mouseup', onrelease)
-      } else {
-        document.removeEventListener('mousemove', onresize)
-        document.removeEventListener('mouseup', onrelease)
-      }
-    })
-
-    this.on('resize', () => this.toggle('resize'))
+    this.on('resize', () => {
+      this.toggle('resize');
+      document.addEventListener('mousemove', onresize);
+      document.addEventListener('mouseup', onrelease);
+    });
   }
 }
 </script>

@@ -1,44 +1,22 @@
 //Here are the procs used to modify status effects of a mob.
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, ear damage,
-// eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, TRAIT_NEARSIGHT trait, and TRAIT_HUSK trait.
+//eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, TRAIT_NEARSIGHT trait, and TRAIT_HUSK trait.
 
-/mob/living/carbon/damage_eyes(amount)
-	var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
-	if (!eyes)
-		return
-	if(amount>0)
-		eyes.eye_damage = amount
-		if(eyes.eye_damage > 20)
-			if(eyes.eye_damage > 30)
-				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
-			else
-				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
 
-/mob/living/carbon/set_eye_damage(amount)
-	var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
-	if (!eyes)
-		return
-	eyes.eye_damage = max(amount,0)
-	if(eyes.eye_damage > 20)
-		if(eyes.eye_damage > 30)
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
-		else
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
-	else
-		clear_fullscreen("eye_damage")
+/mob/living/carbon/IsParalyzed(include_stamcrit = TRUE)
+	return ..() || (include_stamcrit && stam_paralyzed)
 
-/mob/living/carbon/adjust_eye_damage(amount)
-	var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
-	if (!eyes)
+/mob/living/carbon/proc/enter_stamcrit()
+	if(!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE))
 		return
-	eyes.eye_damage = max(eyes.eye_damage+amount, 0)
-	if(eyes.eye_damage > 20)
-		if(eyes.eye_damage > 30)
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
-		else
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
-	else
-		clear_fullscreen("eye_damage")
+	if(absorb_stun(0)) //continuous effect, so we don't want it to increment the stuns absorbed.
+		return
+	if(!IsParalyzed())
+		to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
+	var/prev = stam_paralyzed
+	stam_paralyzed = TRUE
+	if(!prev && getStaminaLoss() < 120) // Puts you a little further into the initial stamcrit, makes stamcrit harder to outright counter with chems.
+		adjustStaminaLoss(30, FALSE)
 
 /mob/living/carbon/adjust_drugginess(amount)
 	druggy = max(druggy+amount, 0)

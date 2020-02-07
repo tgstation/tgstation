@@ -28,24 +28,25 @@
 	if (QDELETED(src))
 		return 0
 
-	if(.) //not dead
-		handle_active_genes()
+	if(!IS_IN_STASIS(src))
+		if(.) //not dead
 
-	if(stat != DEAD)
-		//heart attack stuff
-		handle_heart()
+			for(var/datum/mutation/human/HM in dna.mutations) // Handle active genes
+				HM.on_life()
 
-	if(stat != DEAD)
-		//Stuff jammed in your limbs hurts
-		handle_embedded_objects()
+		if(stat != DEAD)
+			//heart attack stuff
+			handle_heart()
+			handle_liver()
 
-	if(stat != DEAD)
-		handle_hygiene()
+		if(stat != DEAD)
+			//Stuff jammed in your limbs hurts
+			handle_embedded_objects()
+
+		dna.species.spec_life(src) // for mutantraces
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
-
-	dna.species.spec_life(src) // for mutantraces
 
 	if(stat != DEAD)
 		return 1
@@ -61,18 +62,11 @@
 
 
 /mob/living/carbon/human/handle_traits()
-	if(eye_blind)			//blindness, heals slowly over time
-		if(has_trait(TRAIT_BLIND, EYES_COVERED)) //covering your eyes heals blurry eyes faster
-			adjust_blindness(-3)
-		else
-			adjust_blindness(-1)
-	else if(eye_blurry)			//blurry eyes heal slowly
-		adjust_blurriness(-1)
-
-	if (getBrainLoss() >= 60)
+	if (getOrganLoss(ORGAN_SLOT_BRAIN) >= 60)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "brain_damage", /datum/mood_event/brain_damage)
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "brain_damage")
+	return ..()
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))
@@ -89,7 +83,7 @@
 	if(!L)
 		if(health >= crit_threshold)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS + 1)
-		else if(!has_trait(TRAIT_NOCRITDAMAGE))
+		else if(!HAS_TRAIT(src, TRAIT_NOCRITDAMAGE))
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 		failed_last_breath = 1
@@ -111,8 +105,15 @@
 			var/obj/item/organ/lungs/lun = L
 			lun.check_breath(breath,src)
 
+/// Environment handlers for species
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
+	// If we are in a cryo bed do not process life functions
+	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+		return
+
 	dna.species.handle_environment(environment, src)
+	dna.species.handle_environment_pressure(environment, src)
+	dna.species.handle_body_temperature(src)
 
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire()
@@ -180,10 +181,11 @@
 
 	return thermal_protection_flags
 
-/mob/living/carbon/human/proc/get_heat_protection(temperature) //Temperature is the temperature you're being exposed to.
+/mob/living/carbon/human/get_heat_protection(temperature)
 	var/thermal_protection_flags = get_heat_protection_flags(temperature)
+	var/thermal_protection = heat_protection
 
-	var/thermal_protection = 0
+	// Apply clothing items protection
 	if(thermal_protection_flags)
 		if(thermal_protection_flags & HEAD)
 			thermal_protection += THERMAL_PROTECTION_HEAD
@@ -207,7 +209,6 @@
 			thermal_protection += THERMAL_PROTECTION_HAND_LEFT
 		if(thermal_protection_flags & HAND_RIGHT)
 			thermal_protection += THERMAL_PROTECTION_HAND_RIGHT
-
 
 	return min(1,thermal_protection)
 
@@ -237,11 +238,15 @@
 
 	return thermal_protection_flags
 
-/mob/living/carbon/human/proc/get_cold_protection(temperature)
-	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
+/mob/living/carbon/human/get_cold_protection(temperature)
+	// There is an occasional bug where the temperature is miscalculated in areas with small amounts of gas.
+	// This is necessary to ensure that does not affect this calculation.
+	// Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
+	temperature = max(temperature, 2.7)
 	var/thermal_protection_flags = get_cold_protection_flags(temperature)
+	var/thermal_protection = cold_protection
 
-	var/thermal_protection = 0
+	// Apply clothing items protection
 	if(thermal_protection_flags)
 		if(thermal_protection_flags & HEAD)
 			thermal_protection += THERMAL_PROTECTION_HEAD
@@ -279,13 +284,13 @@
 
 
 /mob/living/carbon/human/has_smoke_protection()
-	if(wear_mask)
+	if(isclothing(wear_mask))
 		if(wear_mask.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
-	if(glasses)
+	if(isclothing(glasses))
 		if(glasses.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
-	if(head && istype(head, /obj/item/clothing))
+	if(isclothing(head))
 		var/obj/item/clothing/CH = head
 		if(CH.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
@@ -304,17 +309,14 @@
 				BP.receive_damage(I.w_class*I.embedding.embedded_fall_pain_multiplier)
 				BP.embedded_objects -= I
 				I.forceMove(drop_location())
+				I.unembedded()
 				visible_message("<span class='danger'>[I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>[I] falls out of your [BP.name]!</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 					SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
-/mob/living/carbon/human/proc/handle_active_genes()
-	for(var/datum/mutation/human/HM in dna.mutations)
-		HM.on_life()
-
 /mob/living/carbon/human/proc/handle_heart()
-	var/we_breath = !has_trait(TRAIT_NOBREATH, SPECIES_TRAIT)
+	var/we_breath = !HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT)
 
 	if(!undergoing_cardiac_arrest())
 		return
@@ -324,42 +326,6 @@
 		Unconscious(80)
 	// Tissues die without blood circulation
 	adjustBruteLoss(2)
-
-/mob/living/carbon/human/proc/handle_hygiene()
-	if(has_trait(TRAIT_ALWAYS_CLEAN))
-		set_hygiene(HYGIENE_LEVEL_CLEAN)
-		return
-
-	var/hygiene_loss = -HYGIENE_FACTOR * 0.25 //Small loss per life
-
-	//If you're covered in blood, you'll start smelling like shit faster.
-	var/obj/item/head = get_item_by_slot(SLOT_HEAD)
-	if(head)
-		IF_HAS_BLOOD_DNA(head)
-			hygiene_loss -= 1 * HYGIENE_FACTOR
-
-	var/obj/item/mask = get_item_by_slot(SLOT_HEAD)
-	if(mask)
-		IF_HAS_BLOOD_DNA(mask)
-			hygiene_loss -= 1 * HYGIENE_FACTOR
-
-	var/obj/item/uniform = get_item_by_slot(SLOT_W_UNIFORM)
-	if(uniform)
-		IF_HAS_BLOOD_DNA(uniform)
-			hygiene_loss -= 4 * HYGIENE_FACTOR
-
-	var/obj/item/suit = get_item_by_slot(SLOT_WEAR_SUIT)
-	if(suit)
-		IF_HAS_BLOOD_DNA(suit)
-			hygiene_loss -= 3 * HYGIENE_FACTOR
-
-	var/obj/item/feet = get_item_by_slot(SLOT_SHOES)
-	if(feet)
-		IF_HAS_BLOOD_DNA(feet)
-			hygiene_loss -= 0.5 * HYGIENE_FACTOR
-
-	adjust_hygiene(hygiene_loss)
-
 
 #undef THERMAL_PROTECTION_HEAD
 #undef THERMAL_PROTECTION_CHEST

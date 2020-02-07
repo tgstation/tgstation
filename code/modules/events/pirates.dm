@@ -51,10 +51,13 @@
 				priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name)
 	if(!shuttle_spawned)
 		spawn_shuttle()
-
-
+	else
+		priority_announce("Too late to beg for mercy!",sender_override = ship_name)
 
 /datum/round_event/pirates/start()
+	if(threat && !threat.answered)
+		threat.possible_answers = list("Too late")
+		threat.answered = 1
 	if(!paid_off && !shuttle_spawned)
 		spawn_shuttle()
 
@@ -96,14 +99,11 @@
 	icon_state = "dominator"
 	density = TRUE
 	var/active = FALSE
-	var/obj/item/gps/gps
 	var/credits_stored = 0
 	var/siphon_per_tick = 5
 
 /obj/machinery/shuttle_scrambler/Initialize(mapload)
 	. = ..()
-	gps = new/obj/item/gps/internal/pirate(src)
-	gps.tracking = FALSE
 	update_icon()
 
 /obj/machinery/shuttle_scrambler/process()
@@ -122,7 +122,7 @@
 
 /obj/machinery/shuttle_scrambler/proc/toggle_on(mob/user)
 	SSshuttle.registerTradeBlockade(src)
-	gps.tracking = TRUE
+	AddComponent(/datum/component/gps, "Nautical Signal")
 	active = TRUE
 	to_chat(user,"<span class='notice'>You toggle [src] [active ? "on":"off"].</span>")
 	to_chat(user,"<span class='warning'>The scrambling signal can be now tracked by GPS.</span>")
@@ -132,7 +132,7 @@
 	if(!active)
 		if(alert(user, "Turning the scrambler on will make the shuttle trackable by GPS. Are you sure you want to do it?", "Scrambler", "Yes", "Cancel") == "Cancel")
 			return
-		if(active || !user.canUseTopic(src))
+		if(active || !user.canUseTopic(src, BE_CLOSE))
 			return
 		toggle_on(user)
 		update_icon()
@@ -143,26 +143,28 @@
 //interrupt_research
 /obj/machinery/shuttle_scrambler/proc/interrupt_research()
 	for(var/obj/machinery/rnd/server/S in GLOB.machines)
-		if(S.stat & (NOPOWER|BROKEN))
+		if(S.machine_stat & (NOPOWER|BROKEN))
 			continue
 		S.emp_act(1)
 		new /obj/effect/temp_visual/emp(get_turf(S))
 
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
-	new /obj/item/holochip(drop_location(), credits_stored)
-	to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
-	credits_stored = 0
+	if(credits_stored)	// Prevents spamming empty holochips
+		new /obj/item/holochip(drop_location(), credits_stored)
+		to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
+		credits_stored = 0
+	else
+		to_chat(user,"<span class='notice'>There's nothing to withdraw.</span>")
 
 /obj/machinery/shuttle_scrambler/proc/send_notification()
 	priority_announce("Data theft signal detected, source registered on local gps units.")
 
 /obj/machinery/shuttle_scrambler/proc/toggle_off(mob/user)
 	SSshuttle.clearTradeBlockade(src)
-	gps.tracking = FALSE
 	active = FALSE
 	STOP_PROCESSING(SSobj,src)
 
-/obj/machinery/shuttle_scrambler/update_icon()
+/obj/machinery/shuttle_scrambler/update_icon_state()
 	if(active)
 		icon_state = "dominator-blue"
 	else
@@ -170,12 +172,7 @@
 
 /obj/machinery/shuttle_scrambler/Destroy()
 	toggle_off()
-	QDEL_NULL(gps)
 	return ..()
-
-/obj/item/gps/internal/pirate
-	gpstag = "Nautical Signal"
-	desc = "You can hear shanties over the static."
 
 /obj/machinery/computer/shuttle/pirate
 	name = "pirate shuttle console"
@@ -198,27 +195,7 @@
 /obj/docking_port/mobile/pirate
 	name = "pirate shuttle"
 	id = "pirateship"
-	var/engines_cooling = FALSE
-	var/engine_cooldown = 3 MINUTES
-
-/obj/docking_port/mobile/pirate/getStatusText()
-	. = ..()
-	if(engines_cooling)
-		return "[.] - Engines cooling."
-
-/obj/docking_port/mobile/pirate/initiate_docking(obj/docking_port/stationary/new_dock, movement_direction, force=FALSE)
-	. = ..()
-	if(. == DOCKING_SUCCESS && !is_reserved_level(new_dock.z))
-		engines_cooling = TRUE
-		addtimer(CALLBACK(src,.proc/reset_cooldown),engine_cooldown,TIMER_UNIQUE)
-
-/obj/docking_port/mobile/pirate/proc/reset_cooldown()
-	engines_cooling = FALSE
-
-/obj/docking_port/mobile/pirate/canMove()
-	if(engines_cooling)
-		return FALSE
-	return ..()
+	rechargeTime = 3 MINUTES
 
 /obj/machinery/suit_storage_unit/pirate
 	suit_type = /obj/item/clothing/suit/space
@@ -271,6 +248,7 @@
 	var/cargo_hold_id
 
 /obj/machinery/piratepad/multitool_act(mob/living/user, obj/item/multitool/I)
+	. = ..()
 	if (istype(I))
 		to_chat(user, "<span class='notice'>You register [src] in [I]s buffer.</span>")
 		I.buffer = src
@@ -292,6 +270,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
+	. = ..()
 	if (istype(I) && istype(I.buffer,/obj/machinery/piratepad))
 		to_chat(user, "<span class='notice'>You link [src] with [I.buffer] in [I] buffer.</span>")
 		pad = I.buffer

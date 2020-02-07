@@ -8,6 +8,17 @@
 	},
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/survivalpod)
+"c" = (
+/obj/machinery/shower,
+/obj/item/soap/deluxe,
+/obj/structure/curtain{
+	alpha = 240;
+	color = "#454545";
+	icon_state = "bathroom-closed";
+	open = 0
+	},
+/turf/open/floor/pod,
+/area/survivalpod)
 "d" = (
 /obj/structure/sign/mining/survival{
 	dir = 8
@@ -26,17 +37,6 @@
 /obj/item/gps/computer,
 /turf/open/floor/pod,
 /area/survivalpod)
-"h" = (
-/obj/machinery/shower,
-/obj/item/soap/deluxe,
-/obj/structure/curtain{
-	alpha = 240;
-	color = "#454545";
-	icon_state = "closed";
-	open = 0
-	},
-/turf/open/floor/pod,
-/area/survivalpod)
 "i" = (
 /obj/structure/toilet/secret{
 	secret_type = /obj/item/kitchen/knife/combat/survival
@@ -50,7 +50,7 @@
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/survivalpod)
 "k" = (
-/obj/machinery/sleeper/survival_pod,
+/obj/machinery/stasis/survival_pod,
 /turf/open/floor/pod,
 /area/survivalpod)
 "l" = (
@@ -67,8 +67,7 @@
 	layer = 3
 	},
 /obj/machinery/door/window/survival_pod{
-	dir = 1;
-	icon_state = "windoor"
+	dir = 1
 	},
 /turf/open/floor/carpet/black,
 /area/survivalpod)
@@ -133,7 +132,6 @@
 /area/survivalpod)
 "u" = (
 /obj/machinery/door/window/survival_pod{
-	icon_state = "windoor";
 	dir = 1
 	},
 /turf/open/floor/carpet/black,
@@ -169,7 +167,6 @@
 /area/survivalpod)
 "y" = (
 /obj/structure/sink/kitchen{
-	icon_state = "sink_alt";
 	dir = 4;
 	pixel_x = -13
 	},
@@ -240,7 +237,7 @@ D
 "}
 (5,1,1) = {"
 a
-h
+c
 n
 r
 w

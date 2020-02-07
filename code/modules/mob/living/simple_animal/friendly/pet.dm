@@ -1,7 +1,7 @@
 /mob/living/simple_animal/pet
 	icon = 'icons/mob/pets.dmi'
 	mob_size = MOB_SIZE_SMALL
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	blood_volume = BLOOD_VOLUME_NORMAL
 	var/unique_pet = FALSE // if the mob can be renamed
 	var/obj/item/clothing/neck/petcollar/pcollar
@@ -24,17 +24,14 @@
 		fully_replace_character_name(null, "\proper [P.tagname]")
 
 /mob/living/simple_animal/pet/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/clothing/neck/petcollar) && !pcollar && collar_type)
+	if(istype(O, /obj/item/clothing/neck/petcollar) && !pcollar)
 		add_collar(O, user)
 		return
 
 	if(istype(O, /obj/item/newspaper))
 		if(!stat)
-			user.visible_message("[user] baps [name] on the nose with the rolled up [O].")
-			spawn(0)
-				for(var/i in list(1,2,4,8,4,2,1,2))
-					setDir(i)
-					sleep(1)
+			user.visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O].</span>")
+			dance_rotate(src)
 	else
 		..()
 
@@ -48,7 +45,7 @@
 	QDEL_NULL(pcollar)
 	return ..()
 
-/mob/living/simple_animal/pet/revive(full_heal = 0, admin_revive = 0)
+/mob/living/simple_animal/pet/revive(full_heal = FALSE, admin_revive = FALSE)
 	. = ..()
 	if(.)
 		if(collar_type)
@@ -72,4 +69,3 @@
 	if(pcollar && collar_type)
 		add_overlay("[collar_type]collar")
 		add_overlay("[collar_type]tag")
-

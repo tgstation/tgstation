@@ -10,11 +10,11 @@
 	force = 5
 	var/list/grenades = new/list()
 	var/max_grenades = 3
-	materials = list(MAT_METAL=2000)
+	custom_materials = list(/datum/material/iron=2000)
 
 /obj/item/gun/grenadelauncher/examine(mob/user)
-	..()
-	to_chat(user, "[grenades.len] / [max_grenades] grenades loaded.")
+	. = ..()
+	. += "[grenades.len] / [max_grenades] grenades loaded."
 
 /obj/item/gun/grenadelauncher/attackby(obj/item/I, mob/user, params)
 
@@ -26,7 +26,7 @@
 			to_chat(user, "<span class='notice'>You put the grenade in the grenade launcher.</span>")
 			to_chat(user, "<span class='notice'>[grenades.len] / [max_grenades] Grenades.</span>")
 		else
-			to_chat(usr, "<span class='danger'>The grenade launcher cannot hold more grenades.</span>")
+			to_chat(usr, "<span class='warning'>The grenade launcher cannot hold more grenades!</span>")
 
 /obj/item/gun/grenadelauncher/can_shoot()
 	return grenades.len
@@ -42,5 +42,5 @@
 	log_game("[key_name(user)] fired a grenade ([F.name]) with a grenade launcher ([src]) from [AREACOORD(user)] at [target] [AREACOORD(target)].")
 	F.active = 1
 	F.icon_state = initial(F.icon_state) + "_active"
-	playsound(user.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+	playsound(user.loc, 'sound/weapons/armbomb.ogg', 75, TRUE, -3)
 	addtimer(CALLBACK(F, /obj/item/grenade.proc/prime), 15)

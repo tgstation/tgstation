@@ -5,7 +5,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "boris"
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(MAT_METAL = 50, MAT_GLASS = 300)
+	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 300)
 	var/recharging = FALSE
 	var/circuits = 5 //How many circuits the pseudocircuit has left
 	var/static/recycleable_circuits = typecacheof(list(/obj/item/electronics/firelock, /obj/item/electronics/airalarm, /obj/item/electronics/firealarm, \
@@ -16,11 +16,11 @@
 	maptext = "[circuits]"
 
 /obj/item/electroadaptive_pseudocircuit/examine(mob/user)
-	..()
+	. = ..()
 	if(iscyborg(user))
-		to_chat(user, "<span class='notice'>It has material for <b>[circuits]</b> circuit[circuits == 1 ? "" : "s"]. Use the pseudocircuit on existing circuits to gain material.</span>")
-		to_chat(user, "<span class='notice'>Serves as a substitute for <b>fire/air alarm</b>, <b>firelock</b>, and <b>APC</b> electronics.</span>")
-		to_chat(user, "<span class='notice'>It can also be used on an APC with no power cell to <b>fabricate a low-capacity cell</b> at a high power cost.</span>")
+		. += "<span class='notice'>It has material for <b>[circuits]</b> circuit[circuits == 1 ? "" : "s"]. Use the pseudocircuit on existing circuits to gain material.</span>\n"+\
+		"<span class='notice'>Serves as a substitute for <b>fire/air alarm</b>, <b>firelock</b>, and <b>APC</b> electronics.</span>\n"+\
+		"<span class='notice'>It can also be used on an APC with no power cell to <b>fabricate a low-capacity cell</b> at a high power cost.</span>"
 
 /obj/item/electroadaptive_pseudocircuit/proc/adapt_circuit(mob/living/silicon/robot/R, circuit_cost = 0)
 	if(QDELETED(R) || !istype(R))

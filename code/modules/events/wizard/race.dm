@@ -20,7 +20,8 @@
 	if(prob(50))
 		all_the_same = 1
 
-	for(var/mob/living/carbon/human/H in GLOB.carbon_list) //yes, even the dead
+	for(var/i in GLOB.human_list) //yes, even the dead
+		var/mob/living/carbon/human/H = i
 		H.set_species(new_species)
 		H.dna.unique_enzymes = H.dna.generate_unique_enzymes()
 		to_chat(H, "<span class='notice'>You feel somehow... different?</span>")

@@ -14,7 +14,6 @@
 	var/charge_sections = 4
 	ammo_x_offset = 2
 	var/shaded_charge = FALSE //if this gun uses a stateful charge bar for more detail
-	var/old_ratio = 0 // stores the gun's previous ammo "ratio" to see if it needs an updated icon
 	var/selfcharge = 0
 	var/charge_tick = 0
 	var/charge_delay = 4
@@ -46,6 +45,10 @@
 		START_PROCESSING(SSobj, src)
 	update_icon()
 
+/obj/item/gun/energy/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
 /obj/item/gun/energy/proc/update_ammo_types()
 	var/obj/item/ammo_casing/energy/shot
 	for (var/i = 1, i <= ammo_type.len, i++)
@@ -57,8 +60,15 @@
 	fire_delay = shot.delay
 
 /obj/item/gun/energy/Destroy()
-	QDEL_NULL(cell)
+	if (cell)
+		QDEL_NULL(cell)
 	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/gun/energy/handle_atom_del(atom/A)
+	if(A == cell)
+		cell = null
+		update_icon()
 	return ..()
 
 /obj/item/gun/energy/process()
@@ -126,52 +136,55 @@
 		to_chat(user, "<span class='notice'>[src] is now set to [shot.select_name].</span>")
 	chambered = null
 	recharge_newshot(TRUE)
-	update_icon(TRUE)
+	update_icon()
 	return
 
-/obj/item/gun/energy/update_icon(force_update)
-	if(QDELETED(src))
+/obj/item/gun/energy/update_icon_state()
+	if(initial(item_state))
 		return
-	..()
+	var/ratio = get_charge_ratio()
+	var/new_item_state = ""
+	new_item_state = initial(icon_state)
+	if(modifystate)
+		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+		new_item_state += "[shot.select_name]"
+	new_item_state += "[ratio]"
+	item_state = new_item_state
+
+/obj/item/gun/energy/update_overlays()
+	. = ..()
 	if(!automatic_charge_overlays)
 		return
-	var/ratio = CEILING(CLAMP(cell.charge / cell.maxcharge, 0, 1) * charge_sections, 1)
-	if(ratio == old_ratio && !force_update)
-		return
-	old_ratio = ratio
-	cut_overlays()
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	var/iconState = "[icon_state]_charge"
-	var/itemState = null
-	if(!initial(item_state))
-		itemState = icon_state
-	if (modifystate)
-		add_overlay("[icon_state]_[shot.select_name]")
-		iconState += "_[shot.select_name]"
-		if(itemState)
-			itemState += "[shot.select_name]"
-	if(cell.charge < shot.e_cost)
-		add_overlay("[icon_state]_empty")
+	var/overlay_icon_state = "[icon_state]_charge"
+	var/ratio = get_charge_ratio()
+	if(modifystate)
+		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+		overlay_icon_state += "_[shot.select_name]"
+		. += "[icon_state]_[shot.select_name]"
+	if(ratio == 0)
+		. += "[icon_state]_empty"
 	else
 		if(!shaded_charge)
-			var/mutable_appearance/charge_overlay = mutable_appearance(icon, iconState)
+			var/mutable_appearance/charge_overlay = mutable_appearance(icon, overlay_icon_state)
 			for(var/i = ratio, i >= 1, i--)
 				charge_overlay.pixel_x = ammo_x_offset * (i - 1)
 				charge_overlay.pixel_y = ammo_y_offset * (i - 1)
-				add_overlay(charge_overlay)
+				. += new /mutable_appearance(charge_overlay)
 		else
-			add_overlay("[icon_state]_charge[ratio]")
-	if(itemState)
-		itemState += "[ratio]"
-		item_state = itemState
+			. += "[icon_state]_charge[ratio]"
+
+///Used by update_icon_state() and update_overlays()
+/obj/item/gun/energy/proc/get_charge_ratio()
+	return can_shoot() ? CEILING(CLAMP(cell.charge / cell.maxcharge, 0, 1) * charge_sections, 1) : 0
+	// Sets the ratio to 0 if the gun doesn't have enough charge to fire, or if its power cell is removed.
 
 /obj/item/gun/energy/suicide_act(mob/living/user)
 	if (istype(user) && can_shoot() && can_trigger_gun(user) && user.get_bodypart(BODY_ZONE_HEAD))
-		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		sleep(25)
 		if(user.is_holding(src))
 			user.visible_message("<span class='suicide'>[user] melts [user.p_their()] face off with [src]!</span>")
-			playsound(loc, fire_sound, 50, 1, -1)
+			playsound(loc, fire_sound, 50, TRUE, -1)
 			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 			cell.use(shot.e_cost)
 			update_icon()
@@ -201,24 +214,24 @@
 		. = ""
 	else
 		var/obj/item/ammo_casing/energy/E = ammo_type[select]
-		var/obj/item/projectile/energy/BB = E.BB
+		var/obj/projectile/energy/BB = E.BB
 		if(!BB)
 			. = ""
 		else if(BB.nodamage || !BB.damage || BB.damage_type == STAMINA)
 			user.visible_message("<span class='danger'>[user] tries to light [user.p_their()] [A.name] with [src], but it doesn't do anything. Dumbass.</span>")
-			playsound(user, E.fire_sound, 50, 1)
-			playsound(user, BB.hitsound, 50, 1)
+			playsound(user, E.fire_sound, 50, TRUE)
+			playsound(user, BB.hitsound, 50, TRUE)
 			cell.use(E.e_cost)
 			. = ""
 		else if(BB.damage_type != BURN)
 			user.visible_message("<span class='danger'>[user] tries to light [user.p_their()] [A.name] with [src], but only succeeds in utterly destroying it. Dumbass.</span>")
-			playsound(user, E.fire_sound, 50, 1)
-			playsound(user, BB.hitsound, 50, 1)
+			playsound(user, E.fire_sound, 50, TRUE)
+			playsound(user, BB.hitsound, 50, TRUE)
 			cell.use(E.e_cost)
 			qdel(A)
 			. = ""
 		else
-			playsound(user, E.fire_sound, 50, 1)
-			playsound(user, BB.hitsound, 50, 1)
+			playsound(user, E.fire_sound, 50, TRUE)
+			playsound(user, BB.hitsound, 50, TRUE)
 			cell.use(E.e_cost)
 			. = "<span class='danger'>[user] casually lights their [A.name] with [src]. Damn.</span>"

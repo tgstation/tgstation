@@ -239,7 +239,7 @@
 //items that appear only in shuttle loan events
 
 /obj/item/storage/belt/fannypack/yellow/bee_terrorist/PopulateContents()
-	new /obj/item/grenade/plastic/c4 (src)
+	new /obj/item/grenade/c4 (src)
 	new /obj/item/reagent_containers/pill/cyanide(src)
 	new /obj/item/grenade/chem_grenade/facid(src)
 

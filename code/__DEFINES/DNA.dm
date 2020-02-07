@@ -4,7 +4,7 @@
 
 //Defines copying names of mutations in all cases, make sure to change this if you change mutation's type
 #define HULK		/datum/mutation/human/hulk
-#define XRAY		/datum/mutation/human/x_ray
+#define XRAY		/datum/mutation/human/thermal/x_ray
 #define SPACEMUT	/datum/mutation/human/space_adaptation
 #define TK			/datum/mutation/human/telekinesis
 #define NERVOUS		/datum/mutation/human/nervousness
@@ -31,11 +31,16 @@
 #define ELVIS		/datum/mutation/human/elvis
 #define RADIOACTIVE	/datum/mutation/human/radioactive
 #define GLOWY		/datum/mutation/human/glow
+#define ANTIGLOWY	/datum/mutation/human/glow/anti
 #define TELEPATHY	/datum/mutation/human/telepathy
 #define FIREBREATH	/datum/mutation/human/firebreath
 #define VOID		/datum/mutation/human/void
+#define TONGUESPIKE	/datum/mutation/human/tonguespike
+#define TONGUESPIKECHEM		/datum/mutation/human/tongue_spike/chem
 #define STRONG    	/datum/mutation/human/strong
+#define STIMMED		/datum/mutation/human/stimmed
 #define FIRESWEAT	/datum/mutation/human/fire
+#define THERMAL		/datum/mutation/human/thermal
 #define ANTENNA		/datum/mutation/human/antenna
 #define PARANOIA	/datum/mutation/human/paranoia
 #define MINDREAD	/datum/mutation/human/mindreader
@@ -48,6 +53,7 @@
 #define EXTRASTUN	/datum/mutation/human/extrastun
 #define GELADIKINESIS		/datum/mutation/human/geladikinesis
 #define CRYOKINESIS /datum/mutation/human/cryokinesis
+#define SPIDER_WEB	/datum/mutation/human/webbing
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"
@@ -76,8 +82,8 @@
 #define DNA_SKIN_TONE_BLOCK			3
 #define DNA_EYE_COLOR_BLOCK			4
 #define DNA_GENDER_BLOCK			5
-#define DNA_FACIAL_HAIR_STYLE_BLOCK	6
-#define DNA_HAIR_STYLE_BLOCK		7
+#define DNA_FACIAL_HAIRSTYLE_BLOCK	6
+#define DNA_HAIRSTYLE_BLOCK		7
 
 #define DNA_SEQUENCE_LENGTH			4
 #define DNA_MUTATION_BLOCKS			8
@@ -87,15 +93,15 @@
 #define TR_KEEPITEMS	(1<<0)
 #define TR_KEEPVIRUS	(1<<1)
 #define TR_KEEPDAMAGE	(1<<2)
-#define TR_HASHNAME		(1<<3)	// hashing names (e.g. monkey(e34f)) (only in monkeyize)
+/// hashing names (e.g. monkey(e34f)) (only in monkeyize)
+#define TR_HASHNAME		(1<<3)
 #define TR_KEEPIMPLANTS	(1<<4)
-#define TR_KEEPSE		(1<<5)	// changelings shouldn't edit the DNA's SE when turning into a monkey
+/// changelings shouldn't edit the DNA's SE when turning into a monkey
+#define TR_KEEPSE		(1<<5)
 #define TR_DEFAULTMSG	(1<<6)
 #define TR_KEEPORGANS	(1<<8)
-
-
-#define CLONER_FRESH_CLONE "fresh"
-#define CLONER_MATURE_CLONE "mature"
+#define TR_KEEPSTUNS	(1<<9)
+#define TR_KEEPREAGENTS	(1<<10)
 
 //species traits for mutantraces
 #define MUTCOLORS		1
@@ -105,18 +111,22 @@
 #define LIPS			5
 #define NOBLOOD			6
 #define NOTRANSSTING	7
-#define MUTCOLORS_PARTSONLY	8	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
+/// Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
+#define MUTCOLORS_PARTSONLY	8
 #define NOZOMBIE		9
-#define DIGITIGRADE		10	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
+/// Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
+#define DIGITIGRADE		10
 #define NO_UNDERWEAR	11
-#define NOLIVER			12
-#define NOSTOMACH		13
-#define NO_DNA_COPY     14
-#define DRINKSBLOOD		15
-#define NOEYES			16
-#define DYNCOLORS		17 //Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
-#define AGENDER			18
+#define NOSTOMACH		12
+#define NO_DNA_COPY     13
+#define DRINKSBLOOD		14
+/// Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
+#define DYNCOLORS		15
+#define AGENDER			16
+/// Do not draw eyes or eyeless overlay
+#define NOEYESPRITES	17
 
+//organ slots
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"
 #define ORGAN_SLOT_RIGHT_ARM_AUG "r_arm_device"
@@ -139,9 +149,20 @@
 #define ORGAN_SLOT_BRAIN_ANTIDROP "brain_antidrop"
 #define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
 #define ORGAN_SLOT_TAIL "tail"
+#define ORGAN_SLOT_PARASITE_EGG "parasite_egg"
+#define ORGAN_SLOT_REGENERATIVE_CORE "hivecore"
 
+//organ defines
+#define STANDARD_ORGAN_THRESHOLD 	100
+#define STANDARD_ORGAN_HEALING 		0.001
+/// designed to fail organs when left to decay for ~15 minutes
+#define STANDARD_ORGAN_DECAY		0.00222
 
 //used for the can_chromosome var on mutations
 #define CHROMOSOME_NEVER 0
 #define CHROMOSOME_NONE 1
 #define CHROMOSOME_USED 2
+
+#define G_MALE 1
+#define G_FEMALE 2
+#define G_PLURAL 3

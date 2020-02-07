@@ -5,6 +5,7 @@
 	text_gain_indication = "<span class='notice'>Your hand feels cold.</span>"
 	instability = 10
 	difficulty = 10
+	synchronizer_coeff = 1
 	power = /obj/effect/proc_holder/spell/targeted/conjure_item/snow
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/snow
@@ -23,6 +24,7 @@
 	text_gain_indication = "<span class='notice'>Your hand feels cold.</span>"
 	instability = 20
 	difficulty = 12
+	synchronizer_coeff = 1
 	power = /obj/effect/proc_holder/spell/aimed/cryo
 
 /obj/effect/proc_holder/spell/aimed/cryo
@@ -32,7 +34,7 @@
 	cooldown_min = 150
 	clothes_req = FALSE
 	range = 3
-	projectile_type = /obj/item/projectile/temp/cryo
+	projectile_type = /obj/projectile/temp/cryo
 	base_icon_state = "icebeam"
 	action_icon_state = "icebeam"
 	active_msg = "You focus your cryokinesis!"

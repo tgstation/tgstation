@@ -29,34 +29,30 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 /obj/machinery/announcement_system/Initialize()
 	. = ..()
 	GLOB.announcement_systems += src
-	radio = new /obj/item/radio/headset/ai(src)
+	radio = new /obj/item/radio/headset/silicon/ai(src)
 	update_icon()
 
-/obj/machinery/announcement_system/update_icon()
+/obj/machinery/announcement_system/update_icon_state()
 	if(is_operational())
 		icon_state = (panel_open ? "AAS_On_Open" : "AAS_On")
 	else
 		icon_state = (panel_open ? "AAS_Off_Open" : "AAS_Off")
 
-
-	cut_overlays()
+/obj/machinery/announcement_system/update_overlays()
+	. = ..()
 	if(arrivalToggle)
-		add_overlay(greenlight)
+		. += greenlight
 
 	if(newheadToggle)
-		add_overlay(pinklight)
+		. += pinklight
 
-	if(stat & BROKEN)
-		add_overlay(errorlight)
+	if(machine_stat & BROKEN)
+		. += errorlight
 
 /obj/machinery/announcement_system/Destroy()
 	QDEL_NULL(radio)
 	GLOB.announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
 	return ..()
-
-/obj/machinery/announcement_system/power_change()
-	..()
-	update_icon()
 
 /obj/machinery/announcement_system/attackby(obj/item/P, mob/user, params)
 	if(P.tool_behaviour == TOOL_SCREWDRIVER)
@@ -66,9 +62,9 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		update_icon()
 	else if(default_deconstruction_crowbar(P))
 		return
-	else if(P.tool_behaviour == TOOL_MULTITOOL && panel_open && (stat & BROKEN))
+	else if(P.tool_behaviour == TOOL_MULTITOOL && panel_open && (machine_stat & BROKEN))
 		to_chat(user, "<span class='notice'>You reset [src]'s firmware.</span>")
-		stat &= ~BROKEN
+		machine_stat &= ~BROKEN
 		update_icon()
 	else
 		return ..()
@@ -92,10 +88,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		message = "The arrivals shuttle has been damaged. Docking for repairs..."
 
 	if(channels.len == 0)
-		radio.talk_into(src, message, null, list(SPAN_ROBOT), get_default_language())
+		radio.talk_into(src, message, null)
 	else
 		for(var/channel in channels)
-			radio.talk_into(src, message, channel, list(SPAN_ROBOT), get_default_language())
+			radio.talk_into(src, message, channel)
 
 //config stuff
 
@@ -103,9 +99,9 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	. = ..()
 	if(!user.canUseTopic(src, !issilicon(user)))
 		return
-	if(stat & BROKEN)
-		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
-		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
+	if(machine_stat & BROKEN)
+		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='hear'>You hear a faint buzz.</span>")
+		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, TRUE)
 		return
 
 
@@ -121,9 +117,9 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		return
 	if(!usr.canUseTopic(src, !issilicon(usr)))
 		return
-	if(stat & BROKEN)
-		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
-		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
+	if(machine_stat & BROKEN)
+		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='hear'>You hear a faint buzz.</span>")
+		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, TRUE)
 		return
 
 	if(href_list["ArrivalTopic"])
@@ -155,21 +151,21 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 /obj/machinery/announcement_system/attack_ai(mob/user)
 	if(!user.canUseTopic(src, !issilicon(user)))
 		return
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		to_chat(user, "<span class='warning'>[src]'s firmware appears to be malfunctioning!</span>")
 		return
 	interact(user)
 
 /obj/machinery/announcement_system/proc/act_up() //does funny breakage stuff
-	stat |= BROKEN
-	update_icon()
+	if(!obj_break()) // if badmins flag this unbreakable or its already broken
+		return
 
 	arrival = pick("#!@%ERR-34%2 CANNOT LOCAT@# JO# F*LE!", "CRITICAL ERROR 99.", "ERR)#: DA#AB@#E NOT F(*ND!")
 	newhead = pick("OV#RL()D: \[UNKNOWN??\] DET*#CT)D!", "ER)#R - B*@ TEXT F*O(ND!", "AAS.exe is not responding. NanoOS is searching for a solution to the problem.")
 
 /obj/machinery/announcement_system/emp_act(severity)
 	. = ..()
-	if(!(stat & (NOPOWER|BROKEN)) && !(. & EMP_PROTECT_SELF))
+	if(!(machine_stat & (NOPOWER|BROKEN)) && !(. & EMP_PROTECT_SELF))
 		act_up()
 
 /obj/machinery/announcement_system/emag_act()

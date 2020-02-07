@@ -53,14 +53,14 @@
 	max_items = max_storage
 
 /obj/machinery/biogenerator/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.<br>Matter consumption reduced by <b>[(efficiency*25)-25]</b>%.<br>Machine can hold up to <b>[max_items]</b> pieces of produce.<span>")
+		. += "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.<br>Matter consumption reduced by <b>[(efficiency*25)-25]</b>%.<br>Machine can hold up to <b>[max_items]</b> pieces of produce.</span>"
 
 /obj/machinery/biogenerator/on_reagent_change(changetype)			//When the reagents change, change the icon as well.
 	update_icon()
 
-/obj/machinery/biogenerator/update_icon()
+/obj/machinery/biogenerator/update_icon_state()
 	if(panel_open)
 		icon_state = "biogen-empty-o"
 	else if(!src.beaker)
@@ -69,7 +69,6 @@
 		icon_state = "biogen-stand"
 	else
 		icon_state = "biogen-work"
-	return
 
 /obj/machinery/biogenerator/attackby(obj/item/O, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
@@ -138,9 +137,9 @@
 				to_chat(user, "<span class='info'>You put [O.name] in [src.name]</span>")
 		return TRUE //no afterattack
 	else if (istype(O, /obj/item/disk/design_disk))
-		user.visible_message("[user] begins to load \the [O] in \the [src]...",
-			"You begin to load a design from \the [O]...",
-			"You hear the chatter of a floppy drive.")
+		user.visible_message("<span class='notice'>[user] begins to load \the [O] in \the [src]...</span>",
+			"<span class='notice'>You begin to load a design from \the [O]...</span>",
+			"<span class='hear'>You hear the chatter of a floppy drive.</span>")
 		processing = TRUE
 		var/obj/item/disk/design_disk/D = O
 		if(do_after(user, 10, target = src))
@@ -153,7 +152,7 @@
 		to_chat(user, "<span class='warning'>You cannot put this in [src.name]!</span>")
 
 /obj/machinery/biogenerator/ui_interact(mob/user)
-	if(stat & BROKEN || panel_open)
+	if(machine_stat & BROKEN || panel_open)
 		return
 	. = ..()
 	var/dat
@@ -190,12 +189,12 @@
 				dat += "<div class='statusDisplay'>"
 				for(var/V in categories[cat])
 					var/datum/design/D = V
-					dat += "[D.name]: <A href='?src=[REF(src)];create=[REF(D)];amount=1'>Make</A>"
+					dat += "[D.name]: <A href='?src=[REF(src)];create=[D.id];amount=1'>Make</A>"
 					if(cat in timesFiveCategories)
-						dat += "<A href='?src=[REF(src)];create=[REF(D)];amount=5'>x5</A>"
+						dat += "<A href='?src=[REF(src)];create=[D.id];amount=5'>x5</A>"
 					if(ispath(D.build_path, /obj/item/stack))
-						dat += "<A href='?src=[REF(src)];create=[REF(D)];amount=10'>x10</A>"
-					dat += "([D.materials[MAT_BIOMASS]/efficiency])<br>"
+						dat += "<A href='?src=[REF(src)];create=[D.id];amount=10'>x10</A>"
+					dat += "([D.materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]/efficiency])<br>"
 				dat += "</div>"
 		else
 			dat += "<div class='statusDisplay'>No container inside, please insert container.</div>"
@@ -204,10 +203,15 @@
 	popup.set_content(dat)
 	popup.open()
 
+/obj/machinery/biogenerator/AltClick(mob/living/user)
+	. = ..()
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && can_interact(user))
+		detach(user)
+
 /obj/machinery/biogenerator/proc/activate()
 	if (usr.stat != CONSCIOUS)
 		return
-	if (src.stat != NONE) //NOPOWER etc
+	if (src.machine_stat != NONE) //NOPOWER etc
 		return
 	if(processing)
 		to_chat(usr, "<span class='warning'>The biogenerator is in the process of working.</span>")
@@ -215,15 +219,15 @@
 	var/S = 0
 	for(var/obj/item/reagent_containers/food/snacks/grown/I in contents)
 		S += 5
-		if(I.reagents.get_reagent_amount("nutriment") < 0.1)
+		if(I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) < 0.1)
 			points += 1*productivity
-		else points += I.reagents.get_reagent_amount("nutriment")*10*productivity
+		else points += I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)*10*productivity
 		qdel(I)
 	if(S)
 		processing = TRUE
 		update_icon()
 		updateUsrDialog()
-		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+		playsound(src.loc, 'sound/machines/blender.ogg', 50, TRUE)
 		use_power(S*30)
 		sleep(S+15/productivity)
 		processing = FALSE
@@ -231,15 +235,15 @@
 	else
 		menustat = "void"
 
-/obj/machinery/biogenerator/proc/check_cost(list/materials, multiplier = 1, remove_points = 1)
-	if(materials.len != 1 || materials[1] != MAT_BIOMASS)
+/obj/machinery/biogenerator/proc/check_cost(list/materials, multiplier = 1, remove_points = TRUE)
+	if(materials.len != 1 || materials[1] != SSmaterials.GetMaterialRef(/datum/material/biomass))
 		return FALSE
-	if (materials[MAT_BIOMASS]*multiplier/efficiency > points)
+	if (materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]*multiplier/efficiency > points)
 		menustat = "nopoints"
 		return FALSE
 	else
 		if(remove_points)
-			points -= materials[MAT_BIOMASS]*multiplier/efficiency
+			points -= materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]*multiplier/efficiency
 		update_icon()
 		updateUsrDialog()
 		return TRUE
@@ -287,9 +291,9 @@
 	update_icon()
 	return .
 
-/obj/machinery/biogenerator/proc/detach()
+/obj/machinery/biogenerator/proc/detach(mob/living/user)
 	if(beaker)
-		beaker.forceMove(drop_location())
+		user.put_in_hands(beaker)
 		beaker = null
 		update_icon()
 
@@ -304,13 +308,27 @@
 		updateUsrDialog()
 
 	else if(href_list["detach"])
-		detach()
+		detach(usr)
 		updateUsrDialog()
 
 	else if(href_list["create"])
 		var/amount = (text2num(href_list["amount"]))
-		var/datum/design/D = locate(href_list["create"])
-		create_product(D, amount)
+		//Can't be outside these (if you change this keep a sane limit)
+		amount = CLAMP(amount, 1, 10)
+		var/id = href_list["create"]
+		if(!stored_research.researched_designs.Find(id))
+			//naughty naughty
+			stack_trace("ID did not map to a researched datum [id]")
+			return
+
+		//Get design by id (or may return error design)
+		var/datum/design/D = SSresearch.techweb_design_by_id(id)
+		//Valid design datum, amount and the datum is not the error design, lets proceed
+		if(D && amount && !istype(D, /datum/design/error_design))
+			create_product(D, amount)
+		//This shouldnt happen normally but href forgery is real
+		else
+			stack_trace("ID could not be turned into a valid techweb design datum [id]")
 		updateUsrDialog()
 
 	else if(href_list["menu"])
