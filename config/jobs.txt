@@ -10,6 +10,7 @@ Research Director=1,1
 Chief Medical Officer=1,1
 
 Assistant=-1,-1
+Prisoner=0,2
 
 Quartermaster=1,1
 Cargo Technician=3,2

@@ -270,12 +270,6 @@
 	description = "With heated debates over the legality of the catperson and their status in the workforce, there's always a place for the blackmarket to slip in for some cash. Whether the results \
 	are morally sound or not is another issue entirely."
 
-/datum/map_template/ruin/space/cloning_facility
-	id = "cloning_facility"
-	suffix = "cloning_facility.dmm"
-	name = "Ancient Cloning Lab"
-	description = "An experimental cloning lab snapped off from an ancient ship. The cloner model inside lacks many modern functionalities and security measures."
-
 /datum/map_template/ruin/space/hilbertresearchfacility
 	id = "hilbert_facility"
 	suffix = "hilbertshoteltestingsite.dmm"
