@@ -108,9 +108,10 @@
 	var/saddled = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/tamed(whomst)
-	var/mob/living/fren = whomst
-	friends = fren
-	faction = fren.faction.Copy()
+	if(isliving(whomst))
+		var/mob/living/fren = whomst
+		friends = fren
+		faction = fren.faction.Copy()
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/attackby(obj/item/O, mob/user, params)
