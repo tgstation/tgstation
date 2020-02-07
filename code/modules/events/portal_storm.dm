@@ -21,6 +21,26 @@
 	hostile_types = list(/mob/living/simple_animal/hostile/construct/armored/hostile = 8,\
 						/mob/living/simple_animal/hostile/construct/wraith/hostile = 6)
 
+/datum/round_event_control/portal_storm_mesa
+	name = "Test do not mergies"
+	typepath = /datum/round_event/portal_storm/portal_storm_mesa
+	weight = 0
+	max_occurrences = 0
+
+/datum/round_event/portal_storm/portal_storm_mesa
+	boss_types = list(/mob/living/simple_animal/hostile/jungle/leaper = 3, \
+						/mob/living/simple_animal/hostile/jungle/mega_arachnid = 3, \
+						/mob/living/simple_animal/hostile/asteroid/hivelord = 3)
+	hostile_types = list(/mob/living/carbon/alien/larva = 2, \
+						/mob/living/simple_animal/hostile/netherworld = 4, \
+						/mob/living/simple_animal/hostile/asteroid/fugu = 5, \
+						/mob/living/simple_animal/hostile/asteroid/basilisk = 3, \
+						/mob/living/simple_animal/hostile/asteroid/gutlunch = 4, \
+						/mob/living/simple_animal/hostile/statue = 4, \
+						/mob/living/simple_animal/hostile/zombie = 6, \
+						/mob/living/simple_animal/hostile/netherworld/migo = 4, \
+						/mob/living/simple_animal/hostile/netherworld/blankbody = 3)
+
 /datum/round_event/portal_storm
 	startWhen = 7
 	endWhen = 999
