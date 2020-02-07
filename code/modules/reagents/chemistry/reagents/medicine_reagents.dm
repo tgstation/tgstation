@@ -1240,7 +1240,7 @@
 
 /datum/reagent/medicine/rhigoxane
 	name = "Rhigoxane"
-	description = "A second generation burn treatment agent exibiting a cooling effect that is especially pronounced when deployed as a spray. Its high halogen content helps extinguish fires."
+	description = "A second generation burn treatment agent exhibiting a cooling effect that is especially pronounced when deployed as a spray. Its high halogen content helps extinguish fires."
 	reagent_state = LIQUID
 	color = "#F7FFA5"
 	overdose_threshold = 25
