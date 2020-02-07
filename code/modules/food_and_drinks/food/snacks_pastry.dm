@@ -47,6 +47,7 @@
 	..()
 
 /obj/item/reagent_containers/food/snacks/donut/plain
+	value = FOOD_JUNK
 	//Use this donut ingame
 
 /obj/item/reagent_containers/food/snacks/donut/chaos
@@ -56,6 +57,7 @@
 	bitesize = 10
 	tastes = list("donut" = 3, "chaos" = 1)
 	is_decorated = TRUE
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/donut/chaos/Initialize()
 	. = ..()
@@ -71,6 +73,7 @@
 	tastes = list("meat" = 1)
 	foodtype = JUNKFOOD | MEAT | GROSS | FRIED | BREAKFAST
 	is_decorated = TRUE
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/donut/berry
 	name = "pink donut"
@@ -79,6 +82,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/berryjuice = 3, /datum/reagent/consumable/sprinkles = 1) //Extra sprinkles to reward frosting
 	filling_color = "#E57d9A"
 	decorated_icon = "donut_homer"
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/donut/trumpet
 	name = "spaceman's donut"
@@ -88,6 +92,7 @@
 	tastes = list("donut" = 3, "violets" = 1)
 	is_decorated = TRUE
 	filling_color = "#8739BF"
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/donut/apple
 	name = "apple donut"
@@ -97,6 +102,7 @@
 	tastes = list("donut" = 3, "green apples" = 1)
 	is_decorated = TRUE
 	filling_color = "#6ABE30"
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/donut/caramel
 	name = "caramel donut"
@@ -106,6 +112,7 @@
 	tastes = list("donut" = 3, "buttery sweetness" = 1)
 	is_decorated = TRUE
 	filling_color = "#D4AD5B"
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/donut/choco
 	name = "chocolate donut"
@@ -115,6 +122,7 @@
 	tastes = list("donut" = 4, "bitterness" = 1)
 	decorated_icon = "donut_choc_sprinkles"
 	filling_color = "#4F230D"
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/donut/blumpkin
 	name = "blumpkin donut"
@@ -124,6 +132,7 @@
 	tastes = list("donut" = 2, "blumpkin" = 1)
 	is_decorated = TRUE
 	filling_color = "#2788C4"
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/donut/bungo
 	name = "bungo donut"
@@ -133,6 +142,7 @@
 	tastes = list("donut" = 3, "tropical sweetness" = 1)
 	is_decorated = TRUE
 	filling_color = "#DEC128"
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/donut/matcha
 	name = "matcha donut"
@@ -142,6 +152,7 @@
 	tastes = list("donut" = 3, "matcha" = 1)
 	is_decorated = TRUE
 	filling_color = "#879630"
+	value = FOOD_EXOTIC
 
 //////////////////////JELLY DONUTS/////////////////////////
 
@@ -161,6 +172,7 @@
 		reagents.add_reagent(extra_reagent, 3)
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/plain //use this ingame to avoid inheritance related crafting issues.
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/berry
 	name = "pink jelly donut"
@@ -169,6 +181,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/berryjuice = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1) //Extra sprinkles to reward frosting.
 	filling_color = "#E57d9A"
 	decorated_icon = "jelly_homer"
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/trumpet
 	name = "spaceman's jelly donut"
@@ -178,6 +191,7 @@
 	tastes = list("jelly" = 1, "donut" = 3, "violets" = 1)
 	is_decorated = TRUE
 	filling_color = "#8739BF"
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/apple
 	name = "apple jelly donut"
@@ -187,6 +201,7 @@
 	tastes = list("jelly" = 1, "donut" = 3, "green apples" = 1)
 	is_decorated = TRUE
 	filling_color = "#6ABE30"
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/caramel
 	name = "caramel jelly donut"
@@ -196,6 +211,7 @@
 	tastes = list("jelly" = 1, "donut" = 3, "buttery sweetness" = 1)
 	is_decorated = TRUE
 	filling_color = "#D4AD5B"
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/choco
 	name = "chocolate jelly donut"
@@ -205,6 +221,7 @@
 	tastes = list("jelly" = 1, "donut" = 4, "bitterness" = 1)
 	decorated_icon = "jelly_choc_sprinkles"
 	filling_color = "#4F230D"
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/blumpkin
 	name = "blumpkin jelly donut"
@@ -214,6 +231,7 @@
 	tastes = list("jelly" = 1, "donut" = 2, "blumpkin" = 1)
 	is_decorated = TRUE
 	filling_color = "#2788C4"
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/bungo
 	name = "bungo jelly donut"
@@ -223,6 +241,7 @@
 	tastes = list("jelly" = 1, "donut" = 3, "tropical sweetness" = 1)
 	is_decorated = TRUE
 	filling_color = "#DEC128"
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/matcha
 	name = "matcha jelly donut"
@@ -232,6 +251,7 @@
 	tastes = list("jelly" = 1, "donut" = 3, "matcha" = 1)
 	is_decorated = TRUE
 	filling_color = "#879630"
+	value = FOOD_EXOTIC
 
 //////////////////////////SLIME DONUTS/////////////////////////
 
@@ -241,6 +261,7 @@
 	icon_state = "jelly"
 	extra_reagent = /datum/reagent/toxin/slimejelly
 	foodtype = JUNKFOOD | GRAIN | FRIED | TOXIC | SUGAR | BREAKFAST
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain
 
@@ -324,6 +345,7 @@
 	filling_color = "#F4A460"
 	tastes = list("muffin" = 1)
 	foodtype = GRAIN | SUGAR | BREAKFAST
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/muffin/berry
 	name = "berry muffin"
@@ -331,6 +353,7 @@
 	desc = "A delicious and spongy little cake, with berries."
 	tastes = list("muffin" = 3, "berry" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR | BREAKFAST
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/muffin/booberry
 	name = "booberry muffin"
@@ -339,6 +362,7 @@
 	desc = "My stomach is a graveyard! No living being can quench my bloodthirst!"
 	tastes = list("muffin" = 3, "spookiness" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR | BREAKFAST
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/chawanmushi
 	name = "chawanmushi"
@@ -349,6 +373,7 @@
 	filling_color = "#FFE4E1"
 	tastes = list("custard" = 1)
 	foodtype = GRAIN | MEAT | VEGETABLES
+	value = FOOD_EXOTIC
 
 ////////////////////////////////////////////WAFFLES////////////////////////////////////////////
 
@@ -362,6 +387,7 @@
 	filling_color = "#D2691E"
 	tastes = list("waffles" = 1)
 	foodtype = GRAIN | SUGAR | BREAKFAST
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/soylentgreen
 	name = "\improper Soylent Green"
@@ -373,6 +399,7 @@
 	filling_color = "#9ACD32"
 	tastes = list("waffles" = 7, "people" = 1)
 	foodtype = GRAIN | MEAT
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/soylenviridians
 	name = "\improper Soylent Virdians"
@@ -384,6 +411,7 @@
 	filling_color = "#9ACD32"
 	tastes = list("waffles" = 7, "the colour green" = 1)
 	foodtype = GRAIN
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/rofflewaffles
 	name = "roffle waffles"
@@ -396,6 +424,7 @@
 	filling_color = "#00BFFF"
 	tastes = list("waffle" = 1, "mushrooms" = 1)
 	foodtype = GRAIN | VEGETABLES | SUGAR | BREAKFAST
+	value = FOOD_EXOTIC
 ////////////////////////////////////////////DONK POCKETS////////////////////////////////////////////
 
 /obj/item/reagent_containers/food/snacks/donkpocket
@@ -407,6 +436,7 @@
 	filling_color = "#CD853F"
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
 	foodtype = GRAIN
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/donkpocket/warm
 	name = "warm Donk-pocket"
@@ -425,6 +455,7 @@
 	filling_color = "#00FF00"
 	tastes = list("meat" = 2, "dough" = 2)
 	foodtype = GRAIN | VEGETABLES
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/donkpocket/spicy
 	name = "\improper Spicy-pocket"
@@ -547,6 +578,7 @@
 	tastes = list("cookie" = 1)
 	foodtype = GRAIN | SUGAR
 	dunkable = TRUE
+	value = FOOD_WORTHLESS
 
 /obj/item/reagent_containers/food/snacks/fortunecookie
 	name = "fortune cookie"
@@ -557,6 +589,7 @@
 	filling_color = "#F4A460"
 	tastes = list("cookie" = 1)
 	foodtype = GRAIN | SUGAR
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/poppypretzel
 	name = "poppy pretzel"
@@ -567,6 +600,7 @@
 	filling_color = "#F0E68C"
 	tastes = list("pretzel" = 1)
 	foodtype = GRAIN | SUGAR
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/plumphelmetbiscuit
 	name = "plump helmet biscuit"
@@ -577,6 +611,7 @@
 	filling_color = "#F0E68C"
 	tastes = list("mushroom" = 1, "biscuit" = 1)
 	foodtype = GRAIN | VEGETABLES
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/plumphelmetbiscuit/Initialize()
 	var/fey = prob(10)
@@ -598,6 +633,7 @@
 	filling_color = "#F0E68C"
 	tastes = list("cracker" = 1)
 	foodtype = GRAIN
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/hotdog
 	name = "hotdog"
@@ -609,6 +645,7 @@
 	filling_color = "#8B0000"
 	tastes = list("bun" = 3, "meat" = 2)
 	foodtype = GRAIN | MEAT | VEGETABLES
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/meatbun
 	name = "meat bun"
@@ -619,6 +656,7 @@
 	filling_color = "#8B0000"
 	tastes = list("bun" = 3, "meat" = 2)
 	foodtype = GRAIN | MEAT | VEGETABLES
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/khachapuri
 	name = "khachapuri"
@@ -628,6 +666,7 @@
 	filling_color = "#FFFF4D"
 	tastes = list("bread" = 1, "egg" = 1, "cheese" = 1)
 	foodtype = GRAIN | MEAT | DAIRY
+	value = FOOD_RARE
 
 
 /obj/item/reagent_containers/food/snacks/sugarcookie
@@ -640,6 +679,7 @@
 	tastes = list("sweetness" = 1)
 	foodtype = GRAIN | JUNKFOOD | SUGAR
 	dunkable = TRUE
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/chococornet
 	name = "chocolate cornet"
@@ -650,6 +690,7 @@
 	filling_color = "#FFE4C4"
 	tastes = list("biscuit" = 3, "chocolate" = 1)
 	foodtype = GRAIN | JUNKFOOD
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/oatmealcookie
 	name = "oatmeal cookie"
@@ -661,6 +702,7 @@
 	tastes = list("cookie" = 2, "oat" = 1)
 	foodtype = GRAIN
 	dunkable = TRUE
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/raisincookie
 	name = "raisin cookie"
@@ -672,6 +714,7 @@
 	tastes = list("cookie" = 1, "raisins" = 1)
 	foodtype = GRAIN | FRUIT
 	dunkable = TRUE
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/cherrycupcake
 	name = "cherry cupcake"
@@ -682,6 +725,7 @@
 	filling_color = "#F0E68C"
 	tastes = list("cake" = 3, "cherry" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/bluecherrycupcake
 	name = "blue cherry cupcake"
@@ -692,6 +736,7 @@
 	filling_color = "#F0E68C"
 	tastes = list("cake" = 3, "blue cherry" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/honeybun
 	name = "honey bun"
@@ -702,6 +747,7 @@
 	filling_color = "#F2CE91"
 	tastes = list("pastry" = 1, "sweetness" = 1)
 	foodtype = GRAIN | SUGAR
+	value = FOOD_RARE
 
 #define PANCAKE_MAX_STACK 10
 
@@ -715,6 +761,7 @@
 	filling_color = "#D2691E"
 	tastes = list("pancakes" = 1)
 	foodtype = GRAIN | SUGAR | BREAKFAST
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/pancakes/blueberry
 	name = "blueberry pancake"

@@ -12,6 +12,7 @@
 	filling_color = "#D2691E"
 	tastes = list("candy" = 1)
 	foodtype = JUNKFOOD | SUGAR
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/candy/bronx
 	name = "South Bronx Paradise bar"
@@ -26,6 +27,7 @@
 	tastes = list("candy" = 5, "weight loss" = 4, "insect larva" = 1)
 	foodtype = JUNKFOOD | RAW | GROSS
 	var/revelation = FALSE
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/candy/bronx/On_Consume(mob/living/eater)
 	. = ..()
@@ -52,12 +54,14 @@
 	filling_color = "#8B0000"
 	tastes = list("dried meat" = 1)
 	foodtype = JUNKFOOD | MEAT | SUGAR
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/sosjerky/healthy
 	name = "homemade beef jerky"
 	desc = "Homemade beef jerky made from the finest space cows."
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
 	junkiness = 0
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/chips
 	name = "chips"
@@ -70,6 +74,7 @@
 	filling_color = "#FFD700"
 	tastes = list("salt" = 1, "crisps" = 1)
 	foodtype = JUNKFOOD | FRIED
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/no_raisin
 	name = "4no raisins"
@@ -82,6 +87,7 @@
 	tastes = list("dried raisins" = 1)
 	foodtype = JUNKFOOD | FRUIT | SUGAR
 	custom_price = 90
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/no_raisin/healthy
 	name = "homemade raisins"
@@ -89,6 +95,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	junkiness = 0
 	foodtype = FRUIT
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/spacetwinkie
 	name = "space twinkie"
@@ -99,6 +106,7 @@
 	filling_color = "#FFD700"
 	foodtype = JUNKFOOD | GRAIN | SUGAR
 	custom_price = 30
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/candy_trash
 	name = "candy cigarette butt"
@@ -109,6 +117,7 @@
 	junkiness = 10 //powergame trash food by buying candy cigs in bulk and eating them when they extinguish
 	filling_color = "#FFFFFF"
 	foodtype = JUNKFOOD | SUGAR
+	value = FOOD_WORTHLESS
 
 /obj/item/reagent_containers/food/snacks/candy_trash/nicotine
 	desc = "The leftover from a smoked-out candy cigarette. Smells like nicotine..?"
@@ -125,6 +134,7 @@
 	tastes = list("cheese" = 5, "crisps" = 2)
 	foodtype = JUNKFOOD | DAIRY | SUGAR
 	custom_price = 45
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/syndicake
 	name = "syndi-cakes"
@@ -135,6 +145,7 @@
 	filling_color = "#F5F5DC"
 	tastes = list("sweetness" = 3, "cake" = 1)
 	foodtype = GRAIN | FRUIT | VEGETABLES
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/energybar
 	name = "High-power energy bars"
@@ -145,3 +156,4 @@
 	filling_color = "#97ee63"
 	tastes = list("pure electricity" = 3, "fitness" = 2)
 	foodtype = TOXIC
+	value = FOOD_JUNK
