@@ -368,11 +368,19 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/tray
-	name = "Tray"
-	id = "tray"
+	name = "Serving Tray"
+	id = "servingtray"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 3000)
 	build_path = /obj/item/storage/bag/tray
+	category = list("initial","Dinnerware")
+
+/datum/design/tray
+	name = "Cafeteria Tray"
+	id = "foodtray"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 3000)
+	build_path = /obj/item/storage/bag/tray/cafeteria
 	category = list("initial","Dinnerware")
 
 /datum/design/bowl

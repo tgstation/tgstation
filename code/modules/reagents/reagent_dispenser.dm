@@ -183,6 +183,13 @@
 	anchored = TRUE
 	reagent_id = /datum/reagent/consumable/cooking_oil
 
+/obj/structure/reagent_dispensers/servingdish
+	name = "serving dish"
+	desc = "A dish full of food slop for your bowl."
+	icon_state = "serving"
+	anchored = TRUE
+	reagent_id = /datum/reagent/consumable/nutraslop
+
 /obj/structure/reagent_dispensers/plumbed
 	name = "stationairy water tank"
 	anchored = TRUE
