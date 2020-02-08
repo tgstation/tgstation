@@ -28,6 +28,10 @@
 	if(!istype(I) || I.anchored == 1)
 		return
 
+	if(istype(I, /obj/item/storage))
+		to_chat(user, "<span class='warning'>No matter what way you try, you can't get [I] to fit inside [src].</span>")
+		return 1	//begone infinite storage ghosts, begone from me
+
 	if(istype(I, /obj/item/evidencebag))
 		to_chat(user, "<span class='warning'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>")
 		return 1 //now this is podracing
