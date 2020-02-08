@@ -1,6 +1,6 @@
 /obj/item/gun/magic/wand
 	name = "wand of nothing"
-	desc = "It's not just a stick, it's a MAGIC stick!"
+	desc = "It's not just a stick, it's a MAGIC stick! You shouldent have this"
 	ammo_type = /obj/item/ammo_casing/magic
 	icon_state = "nothingwand"
 	item_state = "wand"
