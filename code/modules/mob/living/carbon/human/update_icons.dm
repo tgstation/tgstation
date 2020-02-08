@@ -331,7 +331,7 @@ There are several things that need to be remembered:
 		var/t_state = belt.item_state
 		if(!t_state)
 			t_state = belt.icon_state
-		overlays_standing[BELT_LAYER] = mutable_appearance('icons/mob/clothing/belt.dmi', t_state, -BELT_LAYER)
+		overlays_standing[BELT_LAYER] = mutable_appearance('icons/mob/clothing/belt.dmi', t_state)
 		var/mutable_appearance/belt_overlay = overlays_standing[BELT_LAYER]
 		if(OFFSET_BELT in dna.species.offset_features)
 			belt_overlay.pixel_x += dna.species.offset_features[OFFSET_BELT][1]
