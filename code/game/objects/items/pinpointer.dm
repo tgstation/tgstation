@@ -69,21 +69,21 @@
 	if(here.z != there.z)
 		. += "pinon[alert ? "alert" : ""]null[icon_suffix]"
 		return
-	update_direction_icon(here, there)
+	. += get_direction_icon(here, there)
 
 ///Called by update_icon after sanity. There is a target
-/obj/item/pinpointer/proc/update_direction_icon(here, there)
+/obj/item/pinpointer/proc/get_direction_icon(here, there)
 	if(get_dist_euclidian(here,there) <= minimum_range)
-		. += "pinon[alert ? "alert" : ""]direct[icon_suffix]"
+		return "pinon[alert ? "alert" : ""]direct[icon_suffix]"
 	else
 		setDir(get_dir(here, there))
 		switch(get_dist(here, there))
 			if(1 to 8)
-				. += "pinon[alert ? "alert" : "close"][icon_suffix]"
+				return "pinon[alert ? "alert" : "close"][icon_suffix]"
 			if(9 to 16)
-				. += "pinon[alert ? "alert" : "medium"][icon_suffix]"
+				return "pinon[alert ? "alert" : "medium"][icon_suffix]"
 			if(16 to INFINITY)
-				. += "pinon[alert ? "alert" : "far"][icon_suffix]"
+				return "pinon[alert ? "alert" : "far"][icon_suffix]"
 
 /obj/item/pinpointer/crew // A replacement for the old crew monitoring consoles
 	name = "crew pinpointer"
@@ -169,7 +169,7 @@
 	icon_state = "pinpointer_crewprox"
 	custom_price = 300
 
-/obj/item/pinpointer/crew/prox/update_direction_icon(here, there)
+/obj/item/pinpointer/crew/prox/get_direction_icon(here, there)
 	var/size = ""
 	if(here == there)
 		size = "small"
@@ -182,7 +182,7 @@
 			//17 through 28 use the normal pinion, "pinondirect"
 			if(29 to INFINITY)
 				size = "small"
-	add_overlay("pinondirect[size]")
+	return "pinondirect[size]"
 
 /obj/item/pinpointer/pair
 	name = "pair pinpointer"

@@ -67,7 +67,7 @@
 "n" = (
 /obj/structure/table/abductor,
 /obj/machinery/recharger,
-/obj/item/abductor/baton{
+/obj/item/melee/baton/abductor{
 	desc = "Even aliens can see the use of a good old fashioned beating stick."
 	},
 /turf/open/floor/plating/abductor,
@@ -219,18 +219,6 @@
 /area/shuttle/escape)
 "J" = (
 /obj/machinery/sleeper/survival_pod,
-/turf/open/floor/plating/abductor,
-/area/shuttle/escape)
-"K" = (
-/obj/machinery/dna_scannernew,
-/turf/open/floor/plating/abductor,
-/area/shuttle/escape)
-"L" = (
-/obj/machinery/computer/prototype_cloning,
-/turf/open/floor/plating/abductor,
-/area/shuttle/escape)
-"M" = (
-/obj/machinery/clonepod/experimental,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "N" = (
@@ -591,7 +579,7 @@ l
 l
 l
 c
-K
+l
 l
 l
 Y
@@ -614,7 +602,7 @@ l
 l
 l
 c
-L
+l
 l
 l
 l
@@ -637,7 +625,7 @@ l
 q
 s
 b
-M
+l
 O
 S
 Z

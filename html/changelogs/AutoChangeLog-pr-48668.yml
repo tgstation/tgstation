@@ -1,0 +1,5 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - rscdel: "Removes cloning from the codebase. Cloning rooms have been converted to temporary wards and storage. Experimental cloner and its ruin is also gone."
+  - balance: "Replica pod seed availability reduced. No longer available in megaseed vendors, seed crate contains one seed down from three. Mutate some cabbages if you want these."

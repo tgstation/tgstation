@@ -1,4 +1,0 @@
-author: "WarlockD"
-delete-after: True
-changes: 
-  - bugfix: "Fixed nanite damage sensor, verified it worked in game this time around."

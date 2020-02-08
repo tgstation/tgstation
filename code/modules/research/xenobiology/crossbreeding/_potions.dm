@@ -41,24 +41,24 @@ Slimecrossing Potions
 
 /obj/item/slimepotion/peacepotion/attack(mob/living/M, mob/user)
 	if(!isliving(M) || M.stat == DEAD)
-		to_chat(user, "<span class='warning'>The pacification potion only works on the living.</span>")
+		to_chat(user, "<span class='warning'>[src] only works on the living.</span>")
 		return ..()
 	if(istype(M, /mob/living/simple_animal/hostile/megafauna))
-		to_chat(user, "<span class='warning'>The pacification potion does not work on beings of pure evil!</span>")
+		to_chat(user, "<span class='warning'>[src] does not work on beings of pure evil!</span>")
 		return ..()
 	if(M != user)
-		M.visible_message("<span class='danger'>[user] starts to feed [M] a pacification potion!</span>",
-			"<span class='userdanger'>[user] starts to feed you a pacification!</span>")
+		M.visible_message("<span class='danger'>[user] starts to feed [M] [src]!</span>",
+			"<span class='userdanger'>[user] starts to feed you [src]!</span>")
 	else
-		M.visible_message("<span class='danger'>[user] starts to drink the pacification potion!</span>",
-			"<span class='danger'>You start to drink the pacification potion!</span>")
+		M.visible_message("<span class='danger'>[user] starts to drink [src]!</span>",
+			"<span class='danger'>You start to drink [src]!</span>")
 
 	if(!do_after(user, 100, target = M))
 		return
 	if(M != user)
-		to_chat(user, "<span class='notice'>You feed [M] the pacification potion!</span>")
+		to_chat(user, "<span class='notice'>You feed [M] [src]!</span>")
 	else
-		to_chat(user, "<span class='warning'>You drink the pacification potion!</span>")
+		to_chat(user, "<span class='warning'>You drink [src]!</span>")
 	if(isanimal(M))
 		ADD_TRAIT(M, TRAIT_PACIFISM, MAGIC_TRAIT)
 	else if(iscarbon(M))
@@ -187,7 +187,7 @@ Slimecrossing Potions
 	if(M.maxHealth <= 0)
 		to_chat(user, "<span class='warning'>The slime is too unstable to return!</span>")
 	M.revive(full_heal = TRUE, admin_revive = FALSE)
-	M.stat = CONSCIOUS
+	M.set_stat(CONSCIOUS)
 	M.visible_message("<span class='notice'>[M] is filled with renewed vigor and blinks awake!</span>")
 	M.maxHealth -= 10 //Revival isn't healthy.
 	M.health -= 10

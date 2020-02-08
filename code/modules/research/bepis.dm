@@ -4,6 +4,9 @@
 
 #define MACHINE_OPERATION 100000
 #define MACHINE_OVERLOAD 500000
+#define MAJOR_THRESHOLD 5500
+#define MINOR_THRESHOLD 3500
+#define STANDARD_DEVIATION 1000
 
 /obj/machinery/rnd/bepis
 	name = "\improper B.E.P.I.S. Chamber"
@@ -22,14 +25,18 @@
 	var/account_name					//name of the payer's account.
 	var/error_cause = null
 	//Vars related to probability and chance of success for testing
-	var/major_threshold = 6000
-	var/minor_threshold = 3000
-	var/std = 1000 //That's Standard Deviation, what did you think it was?
+	var/major_threshold = MAJOR_THRESHOLD
+	var/minor_threshold = MINOR_THRESHOLD
+	var/std = STANDARD_DEVIATION //That's Standard Deviation, what did you think it was?
 	//Stock part variables
 	var/power_saver = 1
 	var/inaccuracy_percentage = 1.5
 	var/positive_cash_offset = 0
 	var/negative_cash_offset = 0
+	var/minor_rewards = list(/obj/item/stack/circuit_stack/full,	//To add a new minor reward, add it here.
+					/obj/item/airlock_painter/decal,
+					/obj/item/pen/survival,
+					/obj/item/circuitboard/machine/sleeper/party)
 	var/static/list/item_list = list()
 
 /obj/machinery/rnd/bepis/attackby(obj/item/O, mob/user, params)
@@ -111,11 +118,19 @@
 	return
 
 /obj/machinery/rnd/bepis/proc/calcsuccess()
-	var/turf/dropturf = get_turf(pick(view(1,src)))
+	var/turf/dropturf = null
 	var/gauss_major = 0
 	var/gauss_minor = 0
 	var/gauss_real = 0
-	if(!dropturf) //Check to verify the turf exists and the reward isn't lost somehow.
+	var/list/turfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z))		//NO MORE DISCS IN WINDOWS
+	while(length(turfs))
+		var/turf/T = pick_n_take(turfs)
+		if(is_blocked_turf(T, exclude_mobs=TRUE))
+			continue
+		else
+			dropturf = T
+			break
+	if (!dropturf)
 		dropturf = drop_location()
 	gauss_major = (gaussian(major_threshold, std) - negative_cash_offset)	//This is the randomized profit value that this experiment has to surpass to unlock a tech.
 	gauss_minor = (gaussian(minor_threshold, std) - negative_cash_offset)	//And this is the threshold to instead get a minor prize.
@@ -131,15 +146,9 @@
 			say("Expended all available experimental technology nodes. Resorting to minor rewards.")
 		return
 	if(gauss_real >= gauss_minor) //Minor Success.
-		var/reward_number = 1
+		var/reward = pick(minor_rewards)
+		new reward(dropturf)
 		say("Experiment concluded with partial success. Dispensing compiled research efforts.")
-		reward_number = rand(1,3)
-		if(reward_number == 1)
-			new /obj/item/stack/circuit_stack/full(dropturf)
-		if(reward_number == 2)
-			new /obj/item/airlock_painter/decal(dropturf)
-		if(reward_number == 3)
-			new /obj/item/pen/survival(dropturf)
 		return
 	if(gauss_real <= -1)	//Critical Failure
 		say("ERROR: CRITICAL MACHIME MALFUNCTI- ON. CURRENCY IS NOT CRASH. CANNOT COMPUTE COMMAND: 'make bucks'") //not a typo, for once.
@@ -178,12 +187,36 @@
 /obj/machinery/rnd/bepis/ui_data(mob/user)
 	var/list/data = list()
 	var/powered = FALSE
+	var/zvalue = (banked_cash - (major_threshold - positive_cash_offset - negative_cash_offset))/(std)
+	var/std_success = 0
+	var/prob_success = 0
+	//Admittedly this is messy, but not nearly as messy as the alternative, which is jury-rigging an entire Z-table into the code, or making an adaptive z-table.
+	var/z = abs(zvalue)
+	if(z > 0 && z <= 0.5)
+		std_success = 19.1
+	else if(z > 0.5 && z <= 1.0)
+		std_success = 34.1
+	else if(z > 1.0 && z <= 1.5)
+		std_success = 43.3
+	else if(z > 1.5 && z <= 2.0)
+		std_success = 47.7
+	else if(z > 2.0 && z <= 2.5)
+		std_success = 49.4
+	else
+		std_success = 50
+	if(zvalue > 0)
+		prob_success = 50 + std_success
+	else if(zvalue == 0)
+		prob_success = 50
+	else
+		prob_success = 50 - std_success
+
 	if(use_power == ACTIVE_POWER_USE)
 		powered = TRUE
 	data["account_owner"] = account_name
 	data["amount"] = banking_amount
 	data["stored_cash"] = banked_cash
-	data["mean_value"] = major_threshold
+	data["mean_value"] = (major_threshold - positive_cash_offset - negative_cash_offset)
 	data["error_name"] = error_cause
 	data["power_saver"] = power_saver
 	data["accuracy_percentage"] = inaccuracy_percentage * 100
@@ -191,6 +224,7 @@
 	data["negative_cash_offset"] = negative_cash_offset
 	data["manual_power"] = powered ? FALSE : TRUE
 	data["silicon_check"] = issilicon(user)
+	data["success_estimate"] = prob_success
 	return data
 
 /obj/machinery/rnd/bepis/ui_act(action,params)

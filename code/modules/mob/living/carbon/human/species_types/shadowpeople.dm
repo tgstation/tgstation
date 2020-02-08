@@ -99,6 +99,10 @@
 	decay_factor = 0
 
 
+/obj/item/organ/heart/nightmare/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
+
 /obj/item/organ/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
 		return ..()
@@ -127,9 +131,6 @@
 
 /obj/item/organ/heart/nightmare/Stop()
 	return 0
-
-/obj/item/organ/heart/nightmare/update_icon()
-	return //always beating visually
 
 /obj/item/organ/heart/nightmare/on_death()
 	if(!owner)

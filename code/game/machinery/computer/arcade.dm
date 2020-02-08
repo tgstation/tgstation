@@ -45,7 +45,11 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/card/emagfake = 1,
 		/obj/item/clothing/shoes/wheelys = 2,
 		/obj/item/clothing/shoes/kindleKicks = 2,
-		/obj/item/storage/belt/military/snack = 2))
+		/obj/item/toy/plush/goatplushie/angry/realgoat = 2,
+		/obj/item/storage/belt/military/snack = 2,
+		/obj/item/toy/brokenradio = 2,
+		/obj/item/toy/braintoy = 2,
+		/obj/item/clothing/glasses/trickblindfold = 2))
 
 /obj/machinery/computer/arcade
 	name = "random arcade"
@@ -96,7 +100,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(prize_override)
 		override = TRUE
 
-	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
+	if(machine_stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 
 	var/empprize = null

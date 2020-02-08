@@ -35,9 +35,9 @@
 	wielded = 0
 	if(!isnull(force_unwielded))
 		force = force_unwielded
-	var/sf = findtext(name," (Wielded)")
+	var/sf = findtext(name, " (Wielded)", -10)//10 == length(" (Wielded)")
 	if(sf)
-		name = copytext(name,1,sf)
+		name = copytext(name, 1, sf)
 	else //something wrong
 		name = "[initial(name)]"
 	update_icon()

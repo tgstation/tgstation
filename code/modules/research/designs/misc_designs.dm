@@ -97,6 +97,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_CARGO
 
+/datum/design/mauna_mug
+	name = "Mauna Mug"
+	desc = "This awesome mug will ensure your coffee never stays cold!"
+	id = "mauna_mug"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 100)
+	build_path = /obj/item/reagent_containers/glass/maunamug
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 /datum/design/portaseeder
 	name = "Portable Seed Extractor"
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
@@ -304,6 +314,16 @@
 	build_path = /obj/item/stack/rods/lava
 	category = list("initial", "Stock Parts")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/plasticducky
+	name = "Rubber Ducky"
+	desc = "The classic Nanotrasen design for competitively priced bath based duck toys. No need for fancy Waffle co. rubber, buy Plastic Ducks today!"
+	id = "plasticducky"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = 1000)
+	build_path = /obj/item/bikehorn/rubberducky/plasticducky
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////

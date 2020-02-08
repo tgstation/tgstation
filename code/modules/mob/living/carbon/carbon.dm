@@ -68,11 +68,7 @@
 	. = ..()
 	var/hurt = TRUE
 	if(istype(throwingdatum, /datum/thrownthing))
-		var/datum/thrownthing/D = throwingdatum
-		if(iscyborg(D.thrower))
-			var/mob/living/silicon/robot/R = D.thrower
-			if(!R.emagged)
-				hurt = FALSE
+		hurt = !throwingdatum.gentle
 	if(hit_atom.density && isturf(hit_atom))
 		if(hurt)
 			Paralyze(20)
@@ -141,7 +137,7 @@
 				if(start_T && end_T)
 					log_combat(src, throwable_mob, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
 
-	else if(!CHECK_BITFIELD(I.item_flags, ABSTRACT) && !HAS_TRAIT(I, TRAIT_NODROP))
+	else if(!(I.item_flags & ABSTRACT) && !HAS_TRAIT(I, TRAIT_NODROP))
 		thrown_thing = I
 		dropItemToGround(I, silent = TRUE)
 
@@ -428,7 +424,7 @@
 		return 0
 	return ..()
 
-/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE, harm = TRUE, force = FALSE)
+/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE, harm = TRUE, force = FALSE, purge = FALSE)
 	if((HAS_TRAIT(src, TRAIT_NOHUNGER) || HAS_TRAIT(src, TRAIT_TOXINLOVER)) && !force)
 		return TRUE
 
@@ -471,7 +467,7 @@
 				T.add_vomit_floor(src, VOMIT_PURPLE)
 		else
 			if(T)
-				T.add_vomit_floor(src, VOMIT_TOXIC)//toxic barf looks different
+				T.add_vomit_floor(src, VOMIT_TOXIC, purge)//toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
 		T = get_step(T, dir)
 		if (is_blocked_turf(T))
 			break
@@ -517,7 +513,7 @@
 	staminaloss = round(total_stamina, DAMAGE_PRECISION)
 	update_stat()
 	update_mobility()
-	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD) && stat == DEAD )
+	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD*2) && stat == DEAD )
 		become_husk("burn")
 
 	med_hud_set_health()
@@ -759,7 +755,7 @@
 			cure_blind(UNCONSCIOUS_BLIND)
 			return
 		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (HAS_TRAIT(src, TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !HAS_TRAIT(src, TRAIT_NOHARDCRIT)))
-			stat = UNCONSCIOUS
+			set_stat(UNCONSCIOUS)
 			become_blind(UNCONSCIOUS_BLIND)
 			if(CONFIG_GET(flag/near_death_experience) && health <= HEALTH_THRESHOLD_NEARDEATH && !HAS_TRAIT(src, TRAIT_NODEATH))
 				ADD_TRAIT(src, TRAIT_SIXTHSENSE, "near-death")
@@ -767,9 +763,9 @@
 				REMOVE_TRAIT(src, TRAIT_SIXTHSENSE, "near-death")
 		else
 			if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
-				stat = SOFT_CRIT
+				set_stat(SOFT_CRIT)
 			else
-				stat = CONSCIOUS
+				set_stat(CONSCIOUS)
 			cure_blind(UNCONSCIOUS_BLIND)
 			REMOVE_TRAIT(src, TRAIT_SIXTHSENSE, "near-death")
 		update_mobility()
@@ -800,9 +796,6 @@
 	for(var/O in internal_organs)
 		var/obj/item/organ/organ = O
 		organ.setOrganDamage(0)
-	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
-	if(B)
-		B.brain_death = FALSE
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(D.severity != DISEASE_SEVERITY_POSITIVE)
