@@ -83,6 +83,7 @@
 	RegisterSignal(parent, COMSIG_TRY_STORAGE_HIDE_FROM, .proc/signal_hide_attempt)
 	RegisterSignal(parent, COMSIG_TRY_STORAGE_HIDE_ALL, .proc/close_all)
 	RegisterSignal(parent, COMSIG_TRY_STORAGE_RETURN_INVENTORY, .proc/signal_return_inv)
+	RegisterSignal(parent, COMSIG_RETURN_MAX_COMBINED_W, .proc/return_maxsize)
 
 	RegisterSignal(parent, COMSIG_TOPIC, .proc/topic_handle)
 
@@ -818,3 +819,6 @@
 			to_chat(user, "<span class='notice'>[parent] now picks up all items in a tile at once.</span>")
 		if(COLLECT_ONE)
 			to_chat(user, "<span class='notice'>[parent] now picks up one item at a time.</span>")
+
+/datum/component/storage/proc/return_maxsize()
+	return max_combined_w_class

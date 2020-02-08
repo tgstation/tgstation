@@ -28,9 +28,14 @@
 	if(!istype(I) || I.anchored == 1)
 		return
 
-	if(istype(I, /obj/item/storage))
-		to_chat(user, "<span class='warning'>No matter what way you try, you can't get [I] to fit inside [src].</span>")
-		return 1	//begone infinite storage ghosts, begone from me
+	if(istype(loc, /obj/item/storage))
+		var/obj/item/storage/bigger_bag = loc
+		var/current_weight = 0
+		for (var/obj/item/C in (I.GetAllContents()))
+			current_weight += C.w_class
+		if (current_weight > SEND_SIGNAL(bigger_bag, COMSIG_RETURN_MAX_COMBINED_W))
+			to_chat(user, "<span class='warning'>No matter what way you try, you can't get [I] to fit inside [src].</span>")
+			return 1	//begone infinite storage ghosts, begone from me
 
 	if(istype(I, /obj/item/evidencebag))
 		to_chat(user, "<span class='warning'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>")
