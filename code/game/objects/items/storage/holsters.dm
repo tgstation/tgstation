@@ -1,7 +1,7 @@
 
 /obj/item/storage/belt/holster
 	name = "shoulder holster"
-	desc = "A rather plain but still badass looking holster."
+	desc = "A rather plain but still badass looking holster with a single pouch that can hold a small firearm."
 	icon_state = "holster"
 	item_state = "holster"
 	alternate_worn_layer = UNDER_SUIT_LAYER
@@ -53,7 +53,7 @@
 
 /obj/item/storage/belt/holster/chameleon
 	name = "syndicate holster"
-	desc = "A hip holster that uses chameleon technology to disguise itself and any guns in it."
+	desc = "A two pouched hip holster that uses chameleon technology to disguise itself and any guns in it."
 	icon_state = "syndicate_holster"
 	item_state = "syndicate_holster"
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -80,3 +80,17 @@
 /obj/item/storage/belt/holster/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
+
+/obj/item/storage/belt/holster/chameleon/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 2
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.set_holdable(list(
+		/obj/item/gun/ballistic/automatic/pistol,
+		/obj/item/gun/ballistic/revolver,
+		/obj/item/gun/energy/e_gun/mini,
+		/obj/item/gun/energy/disabler,
+		/obj/item/gun/energy/pulse/carbine,
+		/obj/item/gun/energy/dueling
+		))
