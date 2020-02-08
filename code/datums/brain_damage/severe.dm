@@ -268,7 +268,7 @@
 /datum/brain_trauma/severe/hypnotic_trigger
 	name = "Hypnotic Trigger"
 	desc = "Patient has a trigger phrase set in their subconscious that will trigger a suggestible trance-like state."
-	scan_desc = "latent cerebral loop"
+	scan_desc = "oneiric feedback loop"
 	gain_text = "<span class='warning'>You feel odd, like you just forgot something important.</span>"
 	lose_text = "<span class='notice'>You feel like a weight was lifted from your mind.</span>"
 	random_gain = FALSE
@@ -276,7 +276,8 @@
 
 /datum/brain_trauma/severe/hypnotic_trigger/New(phrase)
 	..()
-	trigger_phrase = phrase
+	if(phrase)
+		trigger_phrase = phrase
 
 /datum/brain_trauma/severe/hypnotic_trigger/on_lose() //hypnosis must be cleared separately, but brain surgery should get rid of both anyway
 	..()
@@ -288,11 +289,11 @@
 	if(owner == hearing_args[HEARING_SPEAKER])
 		return
 
-	var/regex/reg = regex("(\\b|\\A)[REGEX_QUOTE(trigger_phrase)]'?s*(\\b|\\Z)", "i")
+	var/regex/reg = new("(\\b[REGEX_QUOTE(trigger_phrase)]\\b)","ig")
 
 	if(findtext(hearing_args[HEARING_RAW_MESSAGE], reg))
 		addtimer(CALLBACK(src, .proc/hypnotrigger), 10) //to react AFTER the chat message
-		hearing_args[HEARING_RAW_MESSAGE] = reg.Replace(hearing_args[HEARING_RAW_MESSAGE], "<span class='hypnophrase'>$1</span>")
+		hearing_args[HEARING_RAW_MESSAGE] = reg.Replace(hearing_args[HEARING_RAW_MESSAGE], "<span class='hypnophrase'>*********</span>")
 
 /datum/brain_trauma/severe/hypnotic_trigger/proc/hypnotrigger()
 	to_chat(owner, "<span class='warning'>The words trigger something deep within you, and you feel your consciousness slipping away...</span>")

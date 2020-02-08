@@ -54,6 +54,7 @@ import { LanguageMenu } from './interfaces/LanguageMenu';
 import { LaunchpadConsole, LaunchpadRemote } from './interfaces/Launchpad';
 import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
+import { MiningVendor } from './interfaces/MiningVendor';
 import { Mint } from './interfaces/Mint';
 import { Mule } from './interfaces/Mule';
 import { NaniteChamberControl } from './interfaces/NaniteChamberControl';
@@ -64,7 +65,10 @@ import { NaniteRemote } from './interfaces/NaniteRemote';
 import { NotificationPreferences } from './interfaces/NotificationPreferences';
 import { NtnetRelay } from './interfaces/NtnetRelay';
 import { NtosArcade } from './interfaces/NtosArcade';
+import { NtosCard } from './interfaces/NtosCard';
 import { NtosConfiguration } from './interfaces/NtosConfiguration';
+import { NtosCrewManifest } from './interfaces/NtosCrewManifest';
+import { NtosJobManager } from './interfaces/NtosJobManager';
 import { NtosMain } from './interfaces/NtosMain';
 import { NtosNetChat } from './interfaces/NtosNetChat';
 import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
@@ -343,6 +347,10 @@ const ROUTES = {
     component: () => MedicalKiosk,
     scrollable: false,
   },
+  mining_vendor: {
+    component: () => MiningVendor,
+    scrollable: true,
+  },
   mint: {
     component: () => Mint,
     scrollable: false,
@@ -385,8 +393,26 @@ const ROUTES = {
     scrollable: false,
     theme: 'ntos',
   },
+  ntos_card: {
+    component: () => NtosCard,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
   ntos_configuration: {
     component: () => NtosConfiguration,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_crew_manifest: {
+    component: () => NtosCrewManifest,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_job_manager: {
+    component: () => NtosJobManager,
     wrapper: () => NtosWrapper,
     scrollable: true,
     theme: 'ntos',

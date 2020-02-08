@@ -13,13 +13,12 @@
 	///The brain's organ variables are significantly more different than the other organs, with half the decay rate for balance reasons, and twice the maxHealth
 	decay_factor = STANDARD_ORGAN_DECAY	/ 2		//30 minutes of decaying to result in a fully damaged brain, since a fast decay rate would be unfun gameplay-wise
 
-	maxHealth	= BRAIN_DAMAGE_DEATH
+	maxHealth = BRAIN_DAMAGE_DEATH
 	low_threshold = 45
 	high_threshold = 120
 
 	var/suicided = FALSE
 	var/mob/living/brain/brainmob = null
-	var/brain_death = FALSE //if the brainmob was intentionally killed by attacking the brain after removal, or by severe braindamage
 	var/decoy_override = FALSE	//if it's a fake brain with no brainmob assigned. Feedback messages will be faked as if it does have a brainmob. See changelings & dullahans.
 	//two variables necessary for calculating whether we get a brain trauma or not
 	var/damage_delta = 0
@@ -69,10 +68,6 @@
 		transfer_identity(C)
 	C.update_hair()
 
-/obj/item/organ/brain/prepare_eat(mob/living/carbon/human/H)
-	if(iszombie(H))//braaaaaains... otherwise, too important to eat.
-		..()
-
 /obj/item/organ/brain/proc/transfer_identity(mob/living/L)
 	name = "[L.name]'s brain"
 	if(brainmob || decoy_override)
@@ -91,9 +86,6 @@
 		C.dna.copy_dna(brainmob.stored_dna)
 		if(HAS_TRAIT(L, TRAIT_BADDNA))
 			brainmob.status_traits[TRAIT_BADDNA] = L.status_traits[TRAIT_BADDNA]
-		var/obj/item/organ/zombie_infection/ZI = L.getorganslot(ORGAN_SLOT_ZOMBIE)
-		if(ZI)
-			brainmob.set_species(ZI.old_species)	//For if the brain is cloned
 	if(L.mind && L.mind.current)
 		L.mind.transfer_to(brainmob)
 	to_chat(brainmob, "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>")
@@ -106,7 +98,7 @@
 
 	if((organ_flags & ORGAN_FAILING) && O.is_drainable() && O.reagents.has_reagent(/datum/reagent/medicine/mannitol)) //attempt to heal the brain
 		. = TRUE //don't do attack animation.
-		if(brain_death || brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
+		if(brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
 			to_chat(user, "<span class='warning'>[src] is far too damaged, there's nothing else we can do for it!</span>")
 			return
 
@@ -120,41 +112,33 @@
 			return
 
 		user.visible_message("<span class='notice'>[user] pours the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.</span>", "<span class='notice'>You pour the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.</span>")
-		setOrganDamage(damage - (0.05 * maxHealth))	//heals a small amount, and by using "setorgandamage", we clear the failing variable if that was up
+		var/healby = O.reagents.get_reagent_amount(/datum/reagent/medicine/mannitol)
+		setOrganDamage(damage - healby*2)	//heals 2 damage per unit of mannitol, and by using "setorgandamage", we clear the failing variable if that was up
 		O.reagents.clear_reagents()
 		return
 
 	if(brainmob) //if we aren't trying to heal the brain, pass the attack onto the brainmob.
 		O.attack(brainmob, user) //Oh noooeeeee
 
-  if(O.force != 0 && !(O.item_flags & NOBLUDGEON))
-	  setOrganDamage(maxHealth) //fails the brain as the brain was attacked, they're pretty fragile.
+	if(O.force != 0 && !(O.item_flags & NOBLUDGEON))
+		setOrganDamage(maxHealth) //fails the brain as the brain was attacked, they're pretty fragile.
+		visible_message("<span class='danger'>[user] hits [src] with [O]!</span>")
+		to_chat(user, "<span class='danger'>You hit [src] with [O]!</span>")
 
 /obj/item/organ/brain/examine(mob/user)
 	. = ..()
-
 	if(suicided)
 		. += "<span class='info'>It's started turning slightly grey. They must not have been able to handle the stress of it all.</span>"
-	else if(brainmob)
-		if(brainmob.get_ghost(FALSE, TRUE))
-			if(brain_death || brainmob.health <= HEALTH_THRESHOLD_DEAD)
-				. += "<span class='info'>It's lifeless and severely damaged.</span>"
-			else if(organ_flags & ORGAN_FAILING)
-				. += "<span class='info'>It seems to still have a bit of energy within it, but it's rather damaged... You may be able to restore it with some <b>mannitol</b>.</span>"
-			else
-				. += "<span class='info'>You can feel the small spark of life still left in this one.</span>"
-		else if(organ_flags & ORGAN_FAILING)
-			. += "<span class='info'>It seems particularly lifeless and is rather damaged... You may be able to restore it with some <b>mannitol</b> incase it becomes functional again later.</span>"
+		return
+	if((brainmob && (brainmob.client || brainmob.get_ghost())) || decoy_override)
+		if(organ_flags & ORGAN_FAILING)
+			. += "<span class='info'>It seems to still have a bit of energy within it, but it's rather damaged... You may be able to restore it with some <b>mannitol</b>.</span>"
+		else if(damage >= BRAIN_DAMAGE_DEATH*0.5)
+			. += "<span class='info'>You can feel the small spark of life still left in this one, but it's got some bruises. You may be able to restore it with some <b>mannitol</b>.</span>"
 		else
-			. += "<span class='info'>This one seems particularly lifeless. Perhaps it will regain some of its luster later.</span>"
+			. += "<span class='info'>You can feel the small spark of life still left in this one.</span>"
 	else
-		if(decoy_override)
-			if(organ_flags & ORGAN_FAILING)
-				. += "<span class='info'>It seems particularly lifeless and is rather damaged... You may be able to restore it with some <b>mannitol</b> incase it becomes functional again later.</span>"
-			else
-				. += "<span class='info'>This one seems particularly lifeless. Perhaps it will regain some of its luster later.</span>"
-		else
-			. += "<span class='info'>This one is completely devoid of life.</span>"
+		. += "<span class='info'>This one is completely devoid of life.</span>"
 
 /obj/item/organ/brain/attack(mob/living/carbon/C, mob/user)
 	if(!istype(C))
@@ -203,7 +187,6 @@
 	if(damage >= BRAIN_DAMAGE_DEATH) //rip
 		to_chat(owner, "<span class='userdanger'>The last spark of life in your brain fizzles out...</span>")
 		owner.death()
-		brain_death = TRUE
 
 /obj/item/organ/brain/check_damage_thresholds(mob/M)
 	. = ..()

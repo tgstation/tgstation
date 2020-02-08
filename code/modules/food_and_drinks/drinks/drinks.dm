@@ -8,7 +8,7 @@
 	icon_state = null
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	reagent_flags = OPENCONTAINER
+	reagent_flags = OPENCONTAINER | DUNKABLE
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	volume = 50
@@ -474,6 +474,11 @@
 				name = "grape juice box"
 				desc = "Tasty grape juice in a fun little container. Non-alcoholic!"
 				foodtype = FRUIT
+			if(/datum/reagent/consumable/pineapplejuice)
+				icon_state = "pineapplebox"
+				name = "pineapple juice box"
+				desc = "Why would you even want this?"
+				foodtype = FRUIT | PINEAPPLE
 			if(/datum/reagent/consumable/milk/chocolate_milk)
 				icon_state = "chocolatebox"
 				name = "carton of chocolate milk"
@@ -610,7 +615,7 @@
 
 /obj/item/reagent_containers/food/drinks/soda_cans/proc/open_soda(mob/user)
 	to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
-	ENABLE_BITFIELD(reagents.flags, OPENCONTAINER)
+	reagents.flags |= OPENCONTAINER
 	playsound(src, "can_open", 50, TRUE)
 	spillable = TRUE
 
