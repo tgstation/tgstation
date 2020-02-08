@@ -28,11 +28,7 @@
 	var/unwrenchable = TRUE
 	var/recent_bee_visit = FALSE //Have we been visited by a bee recently, so bees dont overpollinate one plant
 	var/using_irrigation = FALSE //If the tray is connected to other trays via irrigation hoses
-	var/self_sufficiency_req = 20 //Required total dose to make a self-sufficient hydro tray. 1:1 with earthsblood.
-	var/self_sufficiency_progress = 0
 	var/self_sustaining = FALSE //If the tray generates nutrients and water on its own
-	var/auto_pilot = FALSE 		//Is self_sustain being provided by earthblood? If yes, then TRUE.
-	var/auto_pilot_timeout = 0	//Stores when the gaia affect will run out, based on world time.
 
 /obj/machinery/hydroponics/constructable
 	name = "hydroponics tray"
@@ -109,27 +105,12 @@
 	if(myseed && (myseed.loc != src))
 		myseed.forceMove(src)
 
-	if(self_sustaining && auto_pilot)
+	if(self_sustaining)
 		adjustNutri(1)
 		adjustWater(rand(3,5))
 		adjustWeeds(-2)
 		adjustPests(-2)
 		adjustToxic(-2)
-
-	else if(self_sustaining) //Powered version isn't fully self-sufficient, but it's enough to double-triple plant lifespan.
-		adjustNutri(1)
-		adjustWater(rand(1,3))
-		adjustWeeds(-1)
-		adjustPests(-1)
-		adjustToxic(-1)
-
-	if(world.time > auto_pilot_timeout && auto_pilot && self_sustaining)	//Checks if Earthsblood has run out.
-		visible_message("<span class='boldnotice'>[world.time] world time. [auto_pilot_timeout] timeout time.</span>")
-		visible_message("<span class='boldnotice'>[src] flickers, and eventually the golden glow fades away.</span>")
-		auto_pilot_timeout = 0
-		self_sustaining = FALSE
-		auto_pilot = FALSE
-		update_icon()
 
 	if(world.time > (lastcycle + cycledelay))
 		lastcycle = world.time
@@ -284,7 +265,7 @@
 	//Refreshes the icon and sets the luminosity
 	cut_overlays()
 
-	if(self_sustaining && !auto_pilot)
+	if(self_sustaining)
 		if(istype(src, /obj/machinery/hydroponics/soil))
 			add_atom_colour(rgb(255, 175, 0), FIXED_COLOUR_PRIORITY)
 		else
@@ -358,9 +339,6 @@
 	if(!self_sustaining)
 		. += "<span class='info'>Water: [waterlevel]/[maxwater].</span>\n"+\
 		"<span class='info'>Nutrient: [nutrilevel]/[maxnutri].</span>"
-		if(self_sufficiency_progress > 0)
-			var/percent_progress = round(self_sufficiency_progress * 100 / self_sufficiency_req)
-			. += "<span class='info'>Treatment for self-sustenance are [percent_progress]% complete.</span>"
 	else
 		. += "<span class='info'>It doesn't require any water or nutrients.</span>"
 
@@ -547,14 +525,6 @@
 		yieldmod = 1.3
 		mutmod = 0
 		adjustNutri(round(S.get_reagent_amount(/datum/reagent/plantnutriment/robustharvestnutriment) *1 ))
-
-	// Ambrosia Gaia produces earthsblood.
-	if(S.has_reagent(/datum/reagent/medicine/earthsblood))
-		self_sufficiency_progress += S.get_reagent_amount(/datum/reagent/medicine/earthsblood)
-		if(self_sufficiency_progress >= self_sufficiency_req)
-			become_self_sufficient()
-		else if(!self_sustaining)
-			to_chat(user, "<span class='notice'>[src] warms as it might on a spring day under a genuine Sun.</span>")
 
 	// Antitoxin binds shit pretty well. So the tox goes significantly down
 	if(S.has_reagent(/datum/reagent/medicine/C2/multiver, 1))
@@ -932,9 +902,6 @@
 
 /obj/machinery/hydroponics/CtrlClick(mob/user)
 	. = ..()
-	if(auto_pilot)
-		to_chat(user, "<span class='notice'>This tray is being sustained by earthblood for now, no reason to activate autogrow.</span>")
-		return
 	self_sustaining = !self_sustaining
 	if(self_sustaining)
 		idle_power_usage = 5000
@@ -991,13 +958,8 @@
 	C.faction = list("plants")
 
 /obj/machinery/hydroponics/proc/become_self_sufficient() // Ambrosia Gaia effect
-	auto_pilot_timeout = (world.time + (self_sufficiency_progress * 150))
 	visible_message("<span class='boldnotice'>[src] begins to glow with a beautiful light!</span>")
-	visible_message("<span class='boldnotice'>[world.time] world time. [auto_pilot_timeout] timeout time. [self_sufficiency_progress]</span>")
 	self_sustaining = TRUE
-	auto_pilot = TRUE
-	self_sufficiency_progress = 0 //No cheesing.
-	idle_power_usage = 0 //In case it was on before.
 	update_icon()
 
 //////////////////////////////////////////////////////////////////////////////////
