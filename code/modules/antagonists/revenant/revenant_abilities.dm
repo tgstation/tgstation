@@ -16,7 +16,7 @@
 
 	else if(istype(A, /obj/effect/decal/cleanable/food/salt))
 		to_chat(src, "<span class='revennotice'>You start dissipating \the [A]...</span>")
-		if(do_after(src, 10, FALSE, target))
+		if(do_after(src, 10, FALSE, A))
 			if(!QDELETED(A))
 				visible_message("<span class='warning'>\The [A] scatters into nothingness...</span>",
 				"<span class='revennotice'>You dissipate \the [A].</span>",
