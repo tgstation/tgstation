@@ -3,7 +3,6 @@
 	name = "personal closet"
 	req_access = list(ACCESS_ALL_PERSONAL_LOCKERS)
 	var/registered_name = null
-	var/original_desc = "It's a secure locker for personnel. The first card swiped gains control." // a hacky fix, to be sure, but it works.
 
 /obj/structure/closet/secure_closet/personal/PopulateContents()
 	..()
@@ -48,7 +47,10 @@
 	close_sound_volume = 50
 	can_weld_shut = FALSE
 	anchored = TRUE
-	original_desc = "Step into the patented Chill-out-Chamber™ to take a break in (relative) safety! (Note: Nanotrasen takes no responsibility for deaths while inside or due to the Chill-out-Chamber™)."
+	dense_when_open = TRUE
+	climbable = TRUE
+	climb_time = 20
+	climb_stun = 0
 
 /obj/structure/closet/secure_closet/personal/sleeper/PopulateContents()
 	new /obj/item/bedsheet/dorms( src )
@@ -75,14 +77,18 @@
 	else
 		return ..()
 
-// This will let you wipe the owner data, for business or pleasure (or just to reset it for the next user, you sick bastard)
+// This will let you wipe the owner data, resetting the pod for the next user.
+// This only works when the locker is uninhabited. If you want to open it while someone's inside, you'll need to do it the old fashioned way. (Might I recommend a fire axe? It does a smashing job.)
 /obj/structure/closet/secure_closet/personal/sleeper/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/multitool))
-		if(registered_name != null)
-			registered_name = null
-			desc = original_desc
-			to_chat(user, "<span class='notice'>You clear the owner data from the [src].</span>")
+		if(!locate(/mob/living/carbon) in contents)
+			if(registered_name)
+				registered_name = null
+				desc = initial(desc)
+				to_chat(user, "<span class='notice'>You clear the owner data from the [src].</span>")
+			else
+				to_chat(user, "<span class='danger'>Nobody owns this [src]!</span>")
 		else
-			to_chat(user, "<span class='danger'>Nobody owns this [src]!</span>")
+			to_chat(user, "<span class='danger'>You cannot clear the owner data while someone is inside!</span>")
 	else
 		return..()
