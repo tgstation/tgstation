@@ -144,6 +144,8 @@
 	if(icon_generated)
 		return
 	var/png_filename = "data/paintings/temp_painting.png"
+	if(!fexists("data/paintings/"))
+		WRITE_FILE(file("data/paintings/"),TRUE)
 	var/result = rustg_dmi_create_png(png_filename,"[width]","[height]",get_data_string())
 	if(result)
 		CRASH("Error generating painting png : [result]")
@@ -342,8 +344,7 @@
 			return
 	var/png_directory = "data/paintings/[persistence_id]/"
 	if(!fexists(png_directory))
-		var/new_directory = file(png_directory)
-		WRITE_FILE(new_directory,TRUE) //Sad really.
+		WRITE_FILE(file(png_directory),TRUE) //Sad really.
 	var/png_path = png_directory + "[md5].png"
 	var/result = rustg_dmi_create_png(png_path,"[C.width]","[C.height]",data)
 	if(result)
