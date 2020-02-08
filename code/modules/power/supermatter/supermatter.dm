@@ -914,7 +914,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	if(target)//If we found something
 		//Do the animation to zap to it from here
-		zapstart.Beam(target, ((power >= CRITICAL_POWER_PENALTY_THRESHOLD && combined_gas > MOLE_PENALTY_THRESHOLD) ? icon_state = "sm_arc_mesa" : icon_state="sm_arc"), time=5)
+		//This is more an example then working code, I'll fix it at a later date before merge. If you see this on master something went to hell
+		var/texture = ((power >= CRITICAL_POWER_PENALTY_THRESHOLD && combined_gas > MOLE_PENALTY_THRESHOLD) ? "sm_arc_mesa" : "sm_arc")
+		zapstart.Beam(target, icon_state=texture, time=5)
 		var/zapdir = get_dir(zapstart, target)
 		if(zapdir)
 			. = zapdir
