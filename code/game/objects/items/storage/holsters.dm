@@ -94,3 +94,25 @@
 		/obj/item/gun/energy/pulse/carbine,
 		/obj/item/gun/energy/dueling
 		))
+
+/obj/item/storage/belt/holster/nukie
+	name = "operative holster"
+	desc = "A deep shoulder holster capable of holding almost any form of ballistic weaponry."
+	icon_state = "syndicate_holster"
+	item_state = "syndicate_holster"
+
+/obj/item/storage/belt/holster/nukie/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 2
+	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.set_holdable(list(
+		/obj/item/gun/ballistic/automatic,
+		/obj/item/gun/ballistic/revolver,
+		/obj/item/gun/energy/e_gun/mini,
+		/obj/item/gun/energy/disabler,
+		/obj/item/gun/energy/pulse/carbine,
+		/obj/item/gun/energy/dueling,
+		/obj/item/gun/ballistic/shotgun,
+		/obj/item/gun/ballistic/rocketlauncher
+		))
