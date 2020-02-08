@@ -1,0 +1,4 @@
+author: "Coconutwarrior97"
+delete-after: True
+changes: 
+  - bugfix: "Fixes meta armory external camera by naming it properly."
