@@ -147,7 +147,6 @@
 	icon_state = "iceboots"
 	item_state = "iceboots"
 	clothing_flags = NOSLIP_ICE
-	slowdown = SHOES_SLOWDOWN+1
 
 /obj/item/clothing/shoes/workboots
 	name = "work boots"

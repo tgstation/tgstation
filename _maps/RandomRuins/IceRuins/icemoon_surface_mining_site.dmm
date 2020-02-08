@@ -13,7 +13,7 @@
 /obj/item/weldingtool/largetank,
 /obj/item/wirecutters,
 /obj/item/radio/off,
-/turf/open/floor/holofloor/wood,
+/turf/open/floor/wood,
 /area/ruin/unpowered)
 "d" = (
 /turf/open/openspace/icemoon,
@@ -27,14 +27,14 @@
 /obj/item/storage/bag/ore,
 /obj/structure/closet,
 /obj/item/clothing/shoes/winterboots/ice_boots,
-/turf/open/floor/holofloor/wood,
+/turf/open/floor/wood,
 /area/ruin/unpowered)
 "f" = (
-/turf/open/floor/holofloor/wood,
+/turf/open/floor/wood,
 /area/ruin/unpowered)
 "g" = (
 /obj/structure/fireplace,
-/turf/open/floor/holofloor/wood,
+/turf/open/floor/wood,
 /area/ruin/unpowered)
 "h" = (
 /obj/structure/flora/rock/icy,
@@ -45,33 +45,33 @@
 /area/template_noop)
 "j" = (
 /obj/structure/sink/kitchen,
-/turf/open/floor/holofloor/wood,
+/turf/open/floor/wood,
 /area/ruin/unpowered)
 "k" = (
 /obj/structure/closet/crate/freezer,
-/turf/open/floor/holofloor/wood,
+/turf/open/floor/wood,
 /area/ruin/unpowered)
 "l" = (
 /obj/machinery/vending/dinnerware,
-/turf/open/floor/holofloor/wood,
+/turf/open/floor/wood,
 /area/ruin/unpowered)
 "m" = (
 /obj/structure/barricade/wooden/crude/snow,
-/turf/open/floor/holofloor/wood,
+/turf/open/floor/wood,
 /area/ruin/unpowered)
 "n" = (
 /obj/structure/mineral_door/wood,
-/turf/open/floor/holofloor/wood,
+/turf/open/floor/wood,
 /area/ruin/unpowered)
 "o" = (
 /obj/item/reagent_containers/food/drinks/beer,
-/turf/open/floor/holofloor/wood,
+/turf/open/floor/wood,
 /area/ruin/unpowered)
 "p" = (
 /obj/machinery/light/broken{
 	dir = 4
 	},
-/turf/open/floor/holofloor/wood,
+/turf/open/floor/wood,
 /area/ruin/unpowered)
 "q" = (
 /obj/structure/table/wood,
@@ -83,22 +83,22 @@
 	info = "that goddamned ice...";
 	text = ""
 	},
-/turf/open/floor/holofloor/wood,
+/turf/open/floor/wood,
 /area/ruin/unpowered)
 "r" = (
 /obj/item/chair/wood,
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/mob_spawn/human/miner/explorer,
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/holofloor/wood,
+/turf/open/floor/wood,
 /area/ruin/unpowered)
 "s" = (
 /obj/effect/decal/cleanable/trail_holder,
-/turf/open/floor/holofloor/wood,
+/turf/open/floor/wood,
 /area/ruin/unpowered)
 "u" = (
 /obj/structure/ladder,
-/turf/open/floor/holofloor/wood,
+/turf/open/floor/wood,
 /area/ruin/unpowered)
 
 (1,1,1) = {"

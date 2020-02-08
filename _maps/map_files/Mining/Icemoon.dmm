@@ -1983,7 +1983,7 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fA" = (
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/explored)
 "fB" = (
 /obj/structure/displaycase,
@@ -2204,7 +2204,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/mine/eva)
 "hz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2221,20 +2221,20 @@
 	piping_layer = 3
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/mine/living_quarters)
 "hC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/mine/living_quarters)
 "hE" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/mine/production)
 "hN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2404,7 +2404,7 @@
 	dir = 4;
 	network = list("labor")
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/explored)
 "ss" = (
 /obj/machinery/button/door{
@@ -2451,7 +2451,7 @@
 	name = "lavaland mine";
 	width = 7
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 "tI" = (
 /obj/machinery/light/small{
@@ -2531,7 +2531,7 @@
 /area/icemoon/surface/outdoors/explored)
 "yI" = (
 /obj/structure/ore_box,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/explored)
 "za" = (
 /obj/effect/turf_decal/tile/red{
@@ -2629,14 +2629,6 @@
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
-"Eb" = (
-/obj/item/bikehorn{
-	color = "#000";
-	desc = "A horn off of a bicycle. This one has been charred to hell and back, yet somehow it still honks.";
-	name = "charred bike horn"
-	},
-/turf/open/floor/plating/asteroid/snow,
-/area/icemoon/surface/outdoors/explored)
 "Es" = (
 /obj/machinery/door/window/southright,
 /obj/machinery/shower{
@@ -2734,7 +2726,7 @@
 	name = "Mining base public dock";
 	width = 7
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 "HO" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply,
@@ -2743,7 +2735,7 @@
 /area/mine/living_quarters)
 "HQ" = (
 /obj/structure/closet/crate,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/explored)
 "Iq" = (
 /obj/structure/cable,
@@ -3056,7 +3048,7 @@
 	name = "labor camp";
 	width = 9
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/explored)
 "Xx" = (
 /obj/structure/sign/poster/official/random{
@@ -3081,7 +3073,7 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "YK" = (
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 "YY" = (
 /obj/machinery/camera{
@@ -6424,7 +6416,7 @@ fA
 LB
 QM
 QM
-Eb
+fA
 QM
 YK
 YK
