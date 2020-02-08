@@ -14,6 +14,15 @@
 		else if(in_range(src, A))
 			Harvest(A)
 
+	else if(istype(A, /obj/effect/decal/cleanable/food/salt))
+		to_chat(src, "<span class='revennotice'>You start dissipating \the [A]...</span>")
+		if(do_after(src, 10, FALSE, target))
+			if(!QDELETED(A))
+				qdel(A)
+				visible_message("<span class='warning'>\The [A] scatters into nothingness...</span>",
+				"<span class='revennotice'>You dissipate \the [A].</span>",
+				"<span class='hear'>You hear something scatter into the wind.</span>")
+
 
 //Harvest; activated by clicking the target, will try to drain their essence.
 /mob/living/simple_animal/revenant/proc/Harvest(mob/living/carbon/human/target)
