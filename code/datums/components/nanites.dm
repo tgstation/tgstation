@@ -200,12 +200,17 @@
 		var/datum/nanite_program/NP = X
 		NP.on_emp(severity)
 
-/datum/component/nanites/proc/on_shock(datum/source, shock_damage)
-	nanite_volume *= (rand(45, 80) * 0.01)		//Lose 20-55% of nanites
-	adjust_nanites(null, -(rand(5, 50)))			//Lose 5-50 flat nanite volume
-	for(var/X in programs)
-		var/datum/nanite_program/NP = X
-		NP.on_shock(shock_damage)
+
+/datum/component/nanites/proc/on_shock(datum/source, shock_damage, siemens_coeff = 1, flags = NONE)
+	if(flags & SHOCK_ILLUSION || shock_damage < 1)
+		return
+
+	if(!HAS_TRAIT_NOT_FROM(host_mob, TRAIT_SHOCKIMMUNE, "nanites"))//Another shock protection must protect nanites too, but nanites protect only host
+		nanite_volume *= (rand(45, 80) * 0.01)		//Lose 20-55% of nanites
+		adjust_nanites(null, -(rand(5, 50)))			//Lose 5-50 flat nanite volume
+		for(var/X in programs)
+			var/datum/nanite_program/NP = X
+			NP.on_shock(shock_damage)
 
 /datum/component/nanites/proc/on_minor_shock(datum/source)
 	adjust_nanites(null, -(rand(5, 15)))			//Lose 5-15 flat nanite volume

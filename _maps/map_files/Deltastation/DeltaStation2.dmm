@@ -13276,7 +13276,7 @@
 /obj/machinery/door/airlock{
 	id_tag = "AuxCabinA";
 	name = "Cabin A";
-	req_access_txt = "25"
+	req_one_access_txt = "22;25;26;28;35;37;38;46"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -16313,7 +16313,8 @@
 "aKq" = (
 /obj/machinery/door/airlock{
 	id_tag = "AuxCabinB";
-	name = "Cabin B"
+	name = "Cabin B";
+	req_one_access_txt = "22;25;26;28;35;37;38;46"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -63491,14 +63492,6 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/engine/engineering)
-"cnF" = (
-/obj/machinery/requests_console{
-	department = "Chapel Office";
-	name = "Chapel RC";
-	pixel_y = -32
-	},
-/turf/closed/wall/r_wall,
 /area/engine/engineering)
 "cnG" = (
 /obj/structure/table/reinforced,
@@ -141363,7 +141356,7 @@ chx
 cjj
 cjn
 clZ
-cnF
+car
 car
 cqw
 car
