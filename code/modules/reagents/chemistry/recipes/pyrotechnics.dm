@@ -212,8 +212,8 @@
 	holder.remove_reagent(/datum/reagent/saltpetre,saltpetre_volume)
 	holder.remove_reagent(/datum/reagent/medicine/C2/multiver,multiver_volume)
 	holder.remove_reagent(/datum/reagent/sulfur,sulfur_volume)
-	if(created_volume < 20) //if the explosion isnt powerful enough blackpowder deflagerates instead of properly exploding
-		var/fire_range = round(created_volume/5)
+	if(created_volume < 10) //if the explosion isnt powerful enough blackpowder deflagerates instead of properly exploding
+		var/fire_range = round(created_volume/2)
 		var/turf/T = get_turf(holder.my_atom)
 		for(var/turf/turf in range(fire_range,T))
 			new /obj/effect/hotspot(turf)
