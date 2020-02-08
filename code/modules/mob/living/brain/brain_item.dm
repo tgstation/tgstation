@@ -14,8 +14,8 @@
 	decay_factor = STANDARD_ORGAN_DECAY	/ 2		//30 minutes of decaying to result in a fully damaged brain, since a fast decay rate would be unfun gameplay-wise
 
 	maxHealth = BRAIN_DAMAGE_DEATH
-	low_threshold = 45
-	high_threshold = 120
+	low_treshold = 45
+	high_treshold = 120
 
 	var/suicided = FALSE
 	var/mob/living/brain/brainmob = null
@@ -98,7 +98,7 @@
 
 	if((organ_flags & ORGAN_FAILING) && O.is_drainable() && O.reagents.has_reagent(/datum/reagent/medicine/mannitol)) //attempt to heal the brain
 		. = TRUE //don't do attack animation.
-		if(brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
+		if(brainmob?.health <= HEALTH_TRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
 			to_chat(user, "<span class='warning'>[src] is far too damaged, there's nothing else we can do for it!</span>")
 			return
 
@@ -188,17 +188,17 @@
 		to_chat(owner, "<span class='userdanger'>The last spark of life in your brain fizzles out...</span>")
 		owner.death()
 
-/obj/item/organ/brain/check_damage_thresholds(mob/M)
+/obj/item/organ/brain/check_damage_tresholds(mob/M)
 	. = ..()
 	//if we're not more injured than before, return without gambling for a trauma
 	if(damage <= prev_damage)
 		return
 	damage_delta = damage - prev_damage
 	if(damage > BRAIN_DAMAGE_MILD)
-		if(prob(damage_delta * (1 + max(0, (damage - BRAIN_DAMAGE_MILD)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
+		if(prob(damage_delta * (1 + max(0, (damage - BRAIN_DAMAGE_MILD)/100)))) //Base chance is the hit damage; for every point of damage past the treshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
 			gain_trauma_type(BRAIN_TRAUMA_MILD)
 	if(damage > BRAIN_DAMAGE_SEVERE)
-		if(prob(damage_delta * (1 + max(0, (damage - BRAIN_DAMAGE_SEVERE)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1%
+		if(prob(damage_delta * (1 + max(0, (damage - BRAIN_DAMAGE_SEVERE)/100)))) //Base chance is the hit damage; for every point of damage past the treshold the chance is increased by 1%
 			if(prob(20))
 				gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
 			else

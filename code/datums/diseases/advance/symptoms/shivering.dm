@@ -26,8 +26,8 @@ Bonus
 	severity = 2
 	symptom_delay_min = 10
 	symptom_delay_max = 30
-	var/unsafe = FALSE //over the cold threshold
-	threshold_descs = list(
+	var/unsafe = FALSE //over the cold treshold
+	treshold_descs = list(
 		"Stage Speed 5" = "Increases cooling speed,; the host can fall below safe temperature levels.",
 		"Stage Speed 10" = "Further increases cooling speed."
 	)

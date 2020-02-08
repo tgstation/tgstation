@@ -129,8 +129,8 @@ SUBSYSTEM_DEF(shuttle)
 	if(emergencyNoEscape || emergencyNoRecall || !emergency || !SSticker.HasRoundStarted())
 		return
 
-	var/threshold = CONFIG_GET(number/emergency_shuttle_autocall_threshold)
-	if(!threshold)
+	var/treshold = CONFIG_GET(number/emergency_shuttle_autocall_treshold)
+	if(!treshold)
 		return
 
 	var/alive = 0
@@ -143,10 +143,10 @@ SUBSYSTEM_DEF(shuttle)
 	if(total <= 0)
 		return //no players no autoevac
 
-	if(alive / total <= threshold)
+	if(alive / total <= treshold)
 		var/msg = "Automatically dispatching emergency shuttle due to crew death."
 		message_admins(msg)
-		log_shuttle("[msg] Alive: [alive], Roundstart: [total], Threshold: [threshold]")
+		log_shuttle("[msg] Alive: [alive], Roundstart: [total], Threshold: [treshold]")
 		emergencyNoRecall = TRUE
 		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
 		if(emergency.timeLeft(1) > emergencyCallTime * 0.4)

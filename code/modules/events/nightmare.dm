@@ -23,7 +23,7 @@
 	for(var/X in GLOB.xeno_spawn)
 		var/turf/T = X
 		var/light_amount = T.get_lumcount()
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
+		if(light_amount < SHADOW_SPECIES_LIGHT_TRESHOLD)
 			spawn_locs += T
 
 	if(!spawn_locs.len)

@@ -29,7 +29,7 @@ Bonus
 	symptom_delay_min = 10
 	symptom_delay_max = 30
 	var/brain_damage = FALSE
-	threshold_descs = list(
+	treshold_descs = list(
 		"Resistance 6" = "Causes brain damage over time.",
 		"Transmission 6" = "Increases confusion duration and strength.",
 		"Stealth 4" = "The symptom remains hidden until active.",

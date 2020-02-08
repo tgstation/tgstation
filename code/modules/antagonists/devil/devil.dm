@@ -1,6 +1,6 @@
-#define BLOOD_THRESHOLD 3 //How many souls are needed per stage.
-#define TRUE_THRESHOLD 7
-#define ARCH_THRESHOLD 12
+#define BLOOD_TRESHOLD 3 //How many souls are needed per stage.
+#define TRUE_TRESHOLD 7
+#define ARCH_TRESHOLD 12
 
 #define BASIC_DEVIL 0
 #define BLOOD_LIZARD 1
@@ -187,11 +187,11 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		if(0)
 			to_chat(owner.current, "<span class='warning'>Your hellish powers have been restored.</span>")
 			give_appropriate_spells()
-		if(BLOOD_THRESHOLD)
+		if(BLOOD_TRESHOLD)
 			increase_blood_lizard()
-		if(TRUE_THRESHOLD)
+		if(TRUE_TRESHOLD)
 			increase_true_devil()
-		if(ARCH_THRESHOLD)
+		if(ARCH_TRESHOLD)
 			increase_arch_devil()
 
 /datum/antagonist/devil/proc/remove_soul(datum/mind/soul)
@@ -204,9 +204,9 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	if(form == ARCH_DEVIL)
 		return //arch devil can't regress
 	//Yes, fallthrough behavior is intended, so I can't use a switch statement.
-	if(form == TRUE_DEVIL && SOULVALUE < TRUE_THRESHOLD)
+	if(form == TRUE_DEVIL && SOULVALUE < TRUE_TRESHOLD)
 		regress_blood_lizard()
-	if(form == BLOOD_LIZARD && SOULVALUE < BLOOD_THRESHOLD)
+	if(form == BLOOD_LIZARD && SOULVALUE < BLOOD_TRESHOLD)
 		regress_humanoid()
 	if(SOULVALUE < 0)
 		give_appropriate_spells()
@@ -331,11 +331,11 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 /datum/antagonist/devil/proc/give_appropriate_spells()
 	remove_spells()
 	give_summon_contract()
-	if(SOULVALUE >= ARCH_THRESHOLD && ascendable)
+	if(SOULVALUE >= ARCH_TRESHOLD && ascendable)
 		give_arch_spells()
-	else if(SOULVALUE >= TRUE_THRESHOLD)
+	else if(SOULVALUE >= TRUE_TRESHOLD)
 		give_true_spells()
-	else if(SOULVALUE >= BLOOD_THRESHOLD)
+	else if(SOULVALUE >= BLOOD_TRESHOLD)
 		give_blood_spells()
 	else if(SOULVALUE >= 0)
 		give_base_spells()
@@ -425,7 +425,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 
 /datum/antagonist/devil/proc/hellish_resurrection(mob/living/body)
 	message_admins("[key_name_admin(owner)] (true name is: [truename]) is resurrecting using hellish energy.</a>")
-	if(SOULVALUE < ARCH_THRESHOLD || !ascendable) // once ascended, arch devils do not go down in power by any means.
+	if(SOULVALUE < ARCH_TRESHOLD || !ascendable) // once ascended, arch devils do not go down in power by any means.
 		reviveNumber += LOSS_PER_DEATH
 		update_hud()
 	if(body)
@@ -460,21 +460,21 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), ITEM_SLOT_FEET)
 		H.equip_to_slot_or_del(new /obj/item/storage/briefcase(H), ITEM_SLOT_HANDS)
 		H.equip_to_slot_or_del(new /obj/item/pen(H), ITEM_SLOT_LPOCKET)
-		if(SOULVALUE >= BLOOD_THRESHOLD)
+		if(SOULVALUE >= BLOOD_TRESHOLD)
 			H.set_species(/datum/species/lizard, 1)
 			H.underwear = "Nude"
 			H.undershirt = "Nude"
 			H.socks = "Nude"
 			H.dna.features["mcolor"] = "511"
 			H.regenerate_icons()
-			if(SOULVALUE >= TRUE_THRESHOLD) //Yes, BOTH this and the above if statement are to run if soulpower is high enough.
+			if(SOULVALUE >= TRUE_TRESHOLD) //Yes, BOTH this and the above if statement are to run if soulpower is high enough.
 				var/mob/living/carbon/true_devil/A = new /mob/living/carbon/true_devil(targetturf)
 				A.faction |= "hell"
 				H.forceMove(A)
 				A.oldform = H
 				owner.transfer_to(A, TRUE)
 				A.set_devil_name()
-				if(SOULVALUE >= ARCH_THRESHOLD && ascendable)
+				if(SOULVALUE >= ARCH_TRESHOLD && ascendable)
 					A.convert_to_archdevil()
 	else
 		CRASH("Unable to find a blobstart landmark for hellish resurrection")

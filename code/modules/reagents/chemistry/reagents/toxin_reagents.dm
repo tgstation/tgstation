@@ -393,7 +393,7 @@
 	reagent_state = LIQUID
 	color = "#FA6464"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	overdose_threshold = 30
+	overdose_treshold = 30
 	toxpwr = 0
 
 /datum/reagent/toxin/histamine/on_mob_life(mob/living/carbon/M)
@@ -660,7 +660,7 @@
 	reagent_state = LIQUID
 	color = "#2f6617" //A sickly green color
 	metabolization_rate = REAGENTS_METABOLISM
-	overdose_threshold = 29
+	overdose_treshold = 29
 	toxpwr = 0
 	taste_description = "vomit"
 
@@ -855,7 +855,7 @@
 	color = "#AAAAAA77" //RGBA: 170, 170, 170, 77
 	toxpwr = 0
 	taste_description = "bone hurting"
-	overdose_threshold = 50
+	overdose_treshold = 50
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/M)
 	M.say("oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)

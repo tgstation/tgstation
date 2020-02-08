@@ -13,7 +13,7 @@
 	internals_req_access = list(ACCESS_CENT_SPECOPS)
 	wreckage = /obj/structure/mecha_wreckage/marauder
 	add_req_access = 0
-	internal_damage_threshold = 25
+	internal_damage_treshold = 25
 	force = 45
 	max_equip = 5
 	bumpsmash = 1
@@ -51,7 +51,7 @@
 	step_in = 3
 	max_integrity = 550
 	wreckage = /obj/structure/mecha_wreckage/seraph
-	internal_damage_threshold = 20
+	internal_damage_treshold = 20
 	force = 55
 	max_equip = 6
 

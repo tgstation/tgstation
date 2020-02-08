@@ -856,7 +856,7 @@
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
 
-		var/new_value = input(usr, "Enter the high-pop override threshold for dynamic mode.", "High pop override") as num
+		var/new_value = input(usr, "Enter the high-pop override treshold for dynamic mode.", "High pop override") as num
 		if (new_value < 0)
 			return alert(usr, "Only positive values allowed!", null, null, null, null)
 		GLOB.dynamic_high_pop_limit = new_value

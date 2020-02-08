@@ -29,7 +29,7 @@ Bonus
 	base_message_chance = 100
 	symptom_delay_min = 15
 	symptom_delay_max = 45
-	threshold_descs = list(
+	treshold_descs = list(
 		"Stealth 4" = "The symptom is less noticeable."
 	)
 

@@ -57,7 +57,7 @@
 /datum/nanite_program/meltdown
 	name = "Meltdown"
 	desc = "Causes an internal meltdown inside the nanites, causing internal burns inside the host as well as rapidly destroying the nanite population.\
-			Sets the nanites' safety threshold to 0 when activated."
+			Sets the nanites' safety treshold to 0 when activated."
 	use_rate = 10
 	rogue_types = list(/datum/nanite_program/glitch)
 
@@ -67,7 +67,7 @@
 /datum/nanite_program/meltdown/enable_passive_effect()
 	. = ..()
 	to_chat(host_mob, "<span class='userdanger'>Your blood is burning!</span>")
-	nanites.safety_threshold = 0
+	nanites.safety_treshold = 0
 
 /datum/nanite_program/meltdown/disable_passive_effect()
 	. = ..()

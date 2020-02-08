@@ -12,7 +12,7 @@
 	infra_luminosity = 6
 	force = 25
 	wreckage = /obj/structure/mecha_wreckage/gygax
-	internal_damage_threshold = 35
+	internal_damage_treshold = 35
 	max_equip = 3
 	step_energy_drain = 3
 

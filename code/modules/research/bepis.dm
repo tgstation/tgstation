@@ -4,8 +4,8 @@
 
 #define MACHINE_OPERATION 100000
 #define MACHINE_OVERLOAD 500000
-#define MAJOR_THRESHOLD 5500
-#define MINOR_THRESHOLD 3500
+#define MAJOR_TRESHOLD 5500
+#define MINOR_TRESHOLD 3500
 #define STANDARD_DEVIATION 1000
 
 /obj/machinery/rnd/bepis
@@ -25,8 +25,8 @@
 	var/account_name					//name of the payer's account.
 	var/error_cause = null
 	//Vars related to probability and chance of success for testing
-	var/major_threshold = MAJOR_THRESHOLD
-	var/minor_threshold = MINOR_THRESHOLD
+	var/major_treshold = MAJOR_TRESHOLD
+	var/minor_treshold = MINOR_TRESHOLD
 	var/std = STANDARD_DEVIATION //That's Standard Deviation, what did you think it was?
 	//Stock part variables
 	var/power_saver = 1
@@ -132,8 +132,8 @@
 			break
 	if (!dropturf)
 		dropturf = drop_location()
-	gauss_major = (gaussian(major_threshold, std) - negative_cash_offset)	//This is the randomized profit value that this experiment has to surpass to unlock a tech.
-	gauss_minor = (gaussian(minor_threshold, std) - negative_cash_offset)	//And this is the threshold to instead get a minor prize.
+	gauss_major = (gaussian(major_treshold, std) - negative_cash_offset)	//This is the randomized profit value that this experiment has to surpass to unlock a tech.
+	gauss_minor = (gaussian(minor_treshold, std) - negative_cash_offset)	//And this is the treshold to instead get a minor prize.
 	gauss_real = (gaussian(banked_cash, std*inaccuracy_percentage) + positive_cash_offset)	//this is the randomized profit value that your experiment expects to give.
 	say("Real: [gauss_real]. Minor: [gauss_minor]. Major: [gauss_major].")
 	flick("chamber_flash",src)
@@ -187,7 +187,7 @@
 /obj/machinery/rnd/bepis/ui_data(mob/user)
 	var/list/data = list()
 	var/powered = FALSE
-	var/zvalue = (banked_cash - (major_threshold - positive_cash_offset - negative_cash_offset))/(std)
+	var/zvalue = (banked_cash - (major_treshold - positive_cash_offset - negative_cash_offset))/(std)
 	var/std_success = 0
 	var/prob_success = 0
 	//Admittedly this is messy, but not nearly as messy as the alternative, which is jury-rigging an entire Z-table into the code, or making an adaptive z-table.
@@ -216,7 +216,7 @@
 	data["account_owner"] = account_name
 	data["amount"] = banking_amount
 	data["stored_cash"] = banked_cash
-	data["mean_value"] = (major_threshold - positive_cash_offset - negative_cash_offset)
+	data["mean_value"] = (major_treshold - positive_cash_offset - negative_cash_offset)
 	data["error_name"] = error_cause
 	data["power_saver"] = power_saver
 	data["accuracy_percentage"] = inaccuracy_percentage * 100

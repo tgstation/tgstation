@@ -35,7 +35,7 @@
 	var/last_found = 0
 	var/last_newpatient_speak = 0 //Don't spam the "HEY I'M COMING" messages
 	var/heal_amount = 2.5 //How much healing do we do at a time?
-	var/heal_threshold = 10 //Start healing when they have this much damage in a category
+	var/heal_treshold = 10 //Start healing when they have this much damage in a category
 	var/declare_crit = 1 //If active, the bot will transmit a critical patient alert to MedHUD users.
 	var/declare_cooldown = 0 //Prevents spam of critical patient alerts.
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
@@ -53,7 +53,7 @@
 	name = "\improper Old Medibot"
 	desc = "Looks like it hasn't been modified since the late 2080s."
 	skin = "bezerk"
-	heal_threshold = 0
+	heal_treshold = 0
 	declare_crit = 0
 	heal_amount = 5
 
@@ -124,11 +124,11 @@
 	dat += "<br>Behaviour controls are [locked ? "locked" : "unlocked"]<hr>"
 	if(!locked || issilicon(user) || IsAdminGhost(user))
 		dat += "<TT>Healing Threshold: "
-		dat += "<a href='?src=[REF(src)];adj_threshold=-10'>--</a> "
-		dat += "<a href='?src=[REF(src)];adj_threshold=-5'>-</a> "
-		dat += "[heal_threshold] "
-		dat += "<a href='?src=[REF(src)];adj_threshold=5'>+</a> "
-		dat += "<a href='?src=[REF(src)];adj_threshold=10'>++</a>"
+		dat += "<a href='?src=[REF(src)];adj_treshold=-10'>--</a> "
+		dat += "<a href='?src=[REF(src)];adj_treshold=-5'>-</a> "
+		dat += "[heal_treshold] "
+		dat += "<a href='?src=[REF(src)];adj_treshold=5'>+</a> "
+		dat += "<a href='?src=[REF(src)];adj_treshold=10'>++</a>"
 		dat += "</TT><br>"
 		dat += "The speaker switch is [shut_up ? "off" : "on"]. <a href='?src=[REF(src)];togglevoice=[1]'>Toggle</a><br>"
 		dat += "Critical Patient Alerts: <a href='?src=[REF(src)];critalerts=1'>[declare_crit ? "Yes" : "No"]</a><br>"
@@ -142,13 +142,13 @@
 	if(..())
 		return 1
 
-	if(href_list["adj_threshold"])
-		var/adjust_num = text2num(href_list["adj_threshold"])
-		heal_threshold += adjust_num
-		if(heal_threshold < 5)
-			heal_threshold = 5
-		if(heal_threshold > 75)
-			heal_threshold = 75
+	if(href_list["adj_treshold"])
+		var/adjust_num = text2num(href_list["adj_treshold"])
+		heal_treshold += adjust_num
+		if(heal_treshold < 5)
+			heal_treshold = 5
+		if(heal_treshold > 75)
+			heal_treshold = 75
 
 	else if(href_list["togglevoice"])
 		shut_up = !shut_up
@@ -316,16 +316,16 @@
 		declare(C)
 
 	//They're injured enough for it!
-	if(C.getBruteLoss() >= heal_threshold)
+	if(C.getBruteLoss() >= heal_treshold)
 		return TRUE //If they're already medicated don't bother!
 
-	if(C.getOxyLoss() >= (5 + heal_threshold))
+	if(C.getOxyLoss() >= (5 + heal_treshold))
 		return TRUE
 
-	if(C.getFireLoss() >= heal_threshold)
+	if(C.getFireLoss() >= heal_treshold)
 		return TRUE
 
-	if(C.getToxLoss() >= heal_threshold)
+	if(C.getToxLoss() >= heal_treshold)
 		return TRUE
 
 /mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
@@ -366,21 +366,21 @@
 	while(tending)
 		var/treatment_method = null
 
-		if(C.getBruteLoss() >= heal_threshold)
+		if(C.getBruteLoss() >= heal_treshold)
 			treatment_method = BRUTE
 
-		else if(C.getFireLoss() >= heal_threshold)
+		else if(C.getFireLoss() >= heal_treshold)
 			treatment_method = BURN
 
-		else if(C.getOxyLoss() >= (5 + heal_threshold))
+		else if(C.getOxyLoss() >= (5 + heal_treshold))
 			treatment_method = OXY
 
-		else if(C.getToxLoss() >= heal_threshold)
+		else if(C.getToxLoss() >= heal_treshold)
 			treatment_method = TOX
 
 		if(!treatment_method && emagged != 2) //If they don't need any of that they're probably cured!
-			if(C.maxHealth - C.health < heal_threshold)
-				to_chat(src, "<span class='notice'>[C] is healthy! Your programming prevents you from injecting anyone without at least [heal_threshold] damage of any one type ([heal_threshold + 5] for oxygen damage.)</span>")
+			if(C.maxHealth - C.health < heal_treshold)
+				to_chat(src, "<span class='notice'>[C] is healthy! Your programming prevents you from injecting anyone without at least [heal_treshold] damage of any one type ([heal_treshold + 5] for oxygen damage.)</span>")
 			var/list/messagevoice = list("All patched up!" = 'sound/voice/medbot/patchedup.ogg',"An apple a day keeps me away." = 'sound/voice/medbot/apple.ogg',"Feel better soon!" = 'sound/voice/medbot/feelbetter.ogg')
 			var/message = pick(messagevoice)
 			speak(message)

@@ -6,7 +6,7 @@
 	spillable = TRUE
 	reagent_flags = OPENCONTAINER
 	fill_icon_state = "maunafilling"
-	fill_icon_thresholds = list(25)
+	fill_icon_tresholds = list(25)
 	var/obj/item/stock_parts/cell/cell
 	var/open = FALSE
 	var/on = FALSE

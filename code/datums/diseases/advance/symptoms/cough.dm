@@ -30,7 +30,7 @@ BONUS
 	symptom_delay_min = 2
 	symptom_delay_max = 15
 	var/spread_range = 1
-	threshold_descs = list(
+	treshold_descs = list(
 		"Resistance 11" = "The host will drop small items when coughing.",
 		"Resistance 15" = "Occasionally causes coughing fits that stun the host. The extra coughs do not spread the virus.",
 		"Stage Speed 6" = "Increases cough frequency.",

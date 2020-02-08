@@ -11,7 +11,7 @@
 	description = "Named after the norse goddess Hel, this medicine heals the patient's bruises the closer they are to death. Burns, toxins, and asphyxition will increase healing but these damages must be maintained while the drug is being metabolized or the drug will react negatively."
 	color = "#9400D3"
 	taste_description = "cold and lifeless"
-	overdose_threshold = 35
+	overdose_treshold = 35
 	reagent_state = SOLID
 	var/helbent = FALSE
 	var/beginning_combo = 0
@@ -134,7 +134,7 @@
 	description = "Restores oxygen deprivation while producing a lesser amount of toxic byproducts. Both scale with exposure to the drug and current amount of oxygen deprivation. Overdose causes toxic byproducts regardless of oxygen deprivation."
 	reagent_state = LIQUID
 	color = "#FF6464"
-	overdose_threshold = 35 // at least 2 full syringes +some, this stuff is nasty if left in for long
+	overdose_treshold = 35 // at least 2 full syringes +some, this stuff is nasty if left in for long
 
 /datum/reagent/medicine/C2/convermol/on_mob_life(mob/living/carbon/human/M)
 	var/oxycalc = 2.5*REM*current_cycle
@@ -250,7 +250,7 @@
 	reagent_state = LIQUID
 	color = "#8CDF24" // heavy saturation to make the color blend better
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
-	overdose_threshold = 6
+	overdose_treshold = 6
 	var/conversion_amount
 
 /datum/reagent/medicine/C2/syriniver/on_transfer(atom/A, method=INJECT, trans_volume)
@@ -291,7 +291,7 @@
 	reagent_state = LIQUID
 	color = "#DFD54E"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	overdose_threshold = 25
+	overdose_treshold = 25
 	var/datum/brain_trauma/mild/muscle_weakness/U
 
 /datum/reagent/medicine/C2/musiver/on_mob_life(mob/living/carbon/M)

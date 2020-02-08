@@ -8,8 +8,8 @@
 	var/locked = FALSE
 	var/obj/item/card/id/my_card
 	var/obj/item/assembly/signaler/signaler //attached signaler, let people attach signalers that get activated if the user's transaction limit is achieved.
-	var/signaler_threshold = 0 //signaler threshold amount
-	var/amount_deposited = 0 //keep track of the amount deposited over time so you can pay multiple times to reach the signaler threshold
+	var/signaler_treshold = 0 //signaler treshold amount
+	var/amount_deposited = 0 //keep track of the amount deposited over time so you can pay multiple times to reach the signaler treshold
 	var/force_fee = 0 //replaces the "pay whatever" functionality with a set amount when non-zero.
 
 /obj/machinery/paystand/attackby(obj/item/W, mob/user, params)
@@ -96,7 +96,7 @@
 			if(cash_limit)
 				S.forceMove(src)
 				signaler = S
-				signaler_threshold = cash_limit
+				signaler_treshold = cash_limit
 				to_chat(user, "You attach the signaler to the paystand.")
 				desc += " A signaler appears to be attached to the scanner."
 		else
@@ -120,7 +120,7 @@
 	my_card.registered_account.adjust_money(price)
 	my_card.registered_account.bank_card_talk("Purchase made at your vendor by [buyer] for [price] credits.")
 	amount_deposited = amount_deposited + price
-	if(signaler && amount_deposited >= signaler_threshold)
+	if(signaler && amount_deposited >= signaler_treshold)
 		signaler.activate()
 		amount_deposited = 0
 

@@ -1,4 +1,4 @@
-#define ALCOHOL_THRESHOLD_MODIFIER 1 //Greater numbers mean that less alcohol has greater intoxication potential
+#define ALCOHOL_TRESHOLD_MODIFIER 1 //Greater numbers mean that less alcohol has greater intoxication potential
 #define ALCOHOL_RATE 0.005 //The rate at which alcohol affects you
 #define ALCOHOL_EXPONENT 1.6 //The exponent applied to boozepwr to make higher volume alcohol at least a little bit damaging to the liver
 
@@ -35,7 +35,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 */
 
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/C)
-	if(C.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER || boozepwr < 0)
+	if(C.drunkenness < volume * boozepwr * ALCOHOL_TRESHOLD_MODIFIER || boozepwr < 0)
 		var/booze_power = boozepwr
 		if(HAS_TRAIT(C, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
 			booze_power *= 0.7
@@ -147,7 +147,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	name = "Kong"
 	description = "Makes You Go Ape!&#174;"
 	color = "#332100" // rgb: 51, 33, 0
-	addiction_threshold = 15
+	addiction_treshold = 15
 	taste_description = "the grip of a giant ape"
 	glass_name = "glass of Kong"
 	glass_desc = "Makes You Go Ape!&#174;"
@@ -200,8 +200,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	boozepwr = 80
 	quality = DRINK_GOOD
-	overdose_threshold = 60
-	addiction_threshold = 30
+	overdose_treshold = 60
+	addiction_treshold = 30
 	taste_description = "jitters and death"
 	glass_icon_state = "thirteen_loko_glass"
 	glass_name = "glass of Thirteen Loko"
@@ -660,7 +660,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "beepskysmashglass"
 	glass_name = "Beepsky Smash"
 	glass_desc = "Heavy, hot and strong. Just like the Iron fist of the LAW."
-	overdose_threshold = 40
+	overdose_treshold = 40
 	var/datum/brain_trauma/special/beepsky/B
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_metabolize(mob/living/carbon/M)

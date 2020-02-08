@@ -274,7 +274,7 @@
 	var/new_colour = pick("red", "orange")
 	var/mob/living/simple_animal/slime/S = new(T, new_colour)
 	S.rabid = TRUE
-	S.amount_grown = SLIME_EVOLUTION_THRESHOLD
+	S.amount_grown = SLIME_EVOLUTION_TRESHOLD
 	S.Evolve()
 
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a pyroclastic anomaly slime?", ROLE_PAI, null, null, 100, S, POLL_IGNORE_PYROSLIME)

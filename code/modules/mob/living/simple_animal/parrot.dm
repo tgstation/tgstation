@@ -74,8 +74,8 @@
 
 	var/parrot_speed = 5 //"Delay in world ticks between movement." according to byond. Yeah, that's BS but it does directly affect movement. Higher number = slower.
 	var/parrot_lastmove = null //Updates/Stores position of the parrot while it's moving
-	var/parrot_stuck = 0	//If parrot_lastmove hasnt changed, this will increment until it reaches parrot_stuck_threshold
-	var/parrot_stuck_threshold = 10 //if this == parrot_stuck, it'll force the parrot back to wandering
+	var/parrot_stuck = 0	//If parrot_lastmove hasnt changed, this will increment until it reaches parrot_stuck_treshold
+	var/parrot_stuck_treshold = 10 //if this == parrot_stuck, it'll force the parrot back to wandering
 
 	var/list/speech_buffer = list()
 	var/speech_shuffle_rate = 20
@@ -604,7 +604,7 @@
 	//Check to see if the parrot is stuck due to things like windows or doors or windowdoors
 	if(parrot_lastmove)
 		if(parrot_lastmove == src.loc)
-			if(parrot_stuck_threshold >= ++parrot_stuck) //If it has been stuck for a while, go back to wander.
+			if(parrot_stuck_treshold >= ++parrot_stuck) //If it has been stuck for a while, go back to wander.
 				parrot_state = PARROT_WANDER
 				parrot_stuck = 0
 				parrot_lastmove = null

@@ -338,33 +338,33 @@
 			data["modes"] += list(list("name" = "Flood - Shuts off scrubbers and opens vents",	"mode" = AALARM_MODE_FLOOD,			"selected" = mode == AALARM_MODE_FLOOD, 		"danger" = 1))
 
 		var/datum/tlv/selected
-		var/list/thresholds = list()
+		var/list/tresholds = list()
 
 		selected = TLV["pressure"]
-		thresholds += list(list("name" = "Pressure", "settings" = list()))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "min2", "selected" = selected.min2))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "min1", "selected" = selected.min1))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "max1", "selected" = selected.max1))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "max2", "selected" = selected.max2))
+		tresholds += list(list("name" = "Pressure", "settings" = list()))
+		tresholds[tresholds.len]["settings"] += list(list("env" = "pressure", "val" = "min2", "selected" = selected.min2))
+		tresholds[tresholds.len]["settings"] += list(list("env" = "pressure", "val" = "min1", "selected" = selected.min1))
+		tresholds[tresholds.len]["settings"] += list(list("env" = "pressure", "val" = "max1", "selected" = selected.max1))
+		tresholds[tresholds.len]["settings"] += list(list("env" = "pressure", "val" = "max2", "selected" = selected.max2))
 
 		selected = TLV["temperature"]
-		thresholds += list(list("name" = "Temperature", "settings" = list()))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "min2", "selected" = selected.min2))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "min1", "selected" = selected.min1))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max1", "selected" = selected.max1))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max2", "selected" = selected.max2))
+		tresholds += list(list("name" = "Temperature", "settings" = list()))
+		tresholds[tresholds.len]["settings"] += list(list("env" = "temperature", "val" = "min2", "selected" = selected.min2))
+		tresholds[tresholds.len]["settings"] += list(list("env" = "temperature", "val" = "min1", "selected" = selected.min1))
+		tresholds[tresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max1", "selected" = selected.max1))
+		tresholds[tresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max2", "selected" = selected.max2))
 
 		for(var/gas_id in GLOB.meta_gas_info)
 			if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
 				continue
 			selected = TLV[gas_id]
-			thresholds += list(list("name" = GLOB.meta_gas_info[gas_id][META_GAS_NAME], "settings" = list()))
-			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min2", "selected" = selected.min2))
-			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min1", "selected" = selected.min1))
-			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "max1", "selected" = selected.max1))
-			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "max2", "selected" = selected.max2))
+			tresholds += list(list("name" = GLOB.meta_gas_info[gas_id][META_GAS_NAME], "settings" = list()))
+			tresholds[tresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min2", "selected" = selected.min2))
+			tresholds[tresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min1", "selected" = selected.min1))
+			tresholds[tresholds.len]["settings"] += list(list("env" = gas_id, "val" = "max1", "selected" = selected.max1))
+			tresholds[tresholds.len]["settings"] += list(list("env" = gas_id, "val" = "max2", "selected" = selected.max2))
 
-		data["thresholds"] = thresholds
+		data["tresholds"] = tresholds
 	return data
 
 /obj/machinery/airalarm/ui_act(action, params)
@@ -398,7 +398,7 @@
 		if("reset_internal_pressure")
 			send_signal(device_id, list("reset_internal_pressure"), usr)
 			. = TRUE
-		if("threshold")
+		if("treshold")
 			var/env = params["env"]
 			if(text2path(env))
 				env = text2path(env)

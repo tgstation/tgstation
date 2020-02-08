@@ -10,7 +10,7 @@
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	var/passive_message = "" //random message to infected but not actively healing people
-	threshold_descs = list(
+	treshold_descs = list(
 		"Stage Speed 6" = "Doubles healing speed.",
 		"Stealth 4" = "Healing will no longer be visible to onlookers.",
 	)
@@ -56,7 +56,7 @@
 	level = 6
 	passive_message = "<span class='notice'>You miss the feeling of starlight on your skin.</span>"
 	var/nearspace_penalty = 0.3
-	threshold_descs = list(
+	treshold_descs = list(
 		"Stage Speed 6" = "Increases healing speed.",
 		"Transmission 6" = "Removes penalty for only being close to space.",
 	)
@@ -109,7 +109,7 @@
 	level = 7
 	var/food_conversion = FALSE
 	desc = "The virus rapidly breaks down any foreign chemicals in the bloodstream."
-	threshold_descs = list(
+	treshold_descs = list(
 		"Resistance 7" = "Increases chem removal speed.",
 		"Stage Speed 6" = "Consumed chemicals nourish the host.",
 	)
@@ -144,7 +144,7 @@
 	var/reduced_hunger = FALSE
 	desc = "The virus causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast,\
 	 but also causing increased hunger."
-	threshold_descs = list(
+	treshold_descs = list(
 		"Stealth 3" = "Reduces hunger rate.",
 		"Stage Speed 10" = "Chemical metabolization is tripled instead of doubled.",
 	)
@@ -179,7 +179,7 @@
 	transmittable = -1
 	level = 6
 	passive_message = "<span class='notice'>You feel tingling on your skin as light passes over it.</span>"
-	threshold_descs = list(
+	treshold_descs = list(
 		"Stage Speed 8" = "Doubles healing speed.",
 	)
 
@@ -195,7 +195,7 @@
 	if(isturf(M.loc)) //else, there's considered to be no light
 		var/turf/T = M.loc
 		light_amount = min(1,T.get_lumcount()) - 0.5
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
+		if(light_amount < SHADOW_SPECIES_LIGHT_TRESHOLD)
 			return power
 
 /datum/symptom/heal/darkness/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
@@ -231,7 +231,7 @@
 	var/deathgasp = FALSE
 	var/stabilize = FALSE
 	var/active_coma = FALSE //to prevent multiple coma procs
-	threshold_descs = list(
+	treshold_descs = list(
 		"Stealth 2" = "Host appears to die when falling into a coma.",
 		"Resistance 4" = "The virus also stabilizes the host while they are in critical condition.",
 		"Stage Speed 7" = "Increases healing speed.",
@@ -322,7 +322,7 @@
 	level = 6
 	passive_message = "<span class='notice'>Your skin feels oddly dry...</span>"
 	var/absorption_coeff = 1
-	threshold_descs = list(
+	treshold_descs = list(
 		"Resistance 5" = "Water is consumed at a much slower rate.",
 		"Stage Speed 7" = "Increases healing speed.",
 	)
@@ -380,7 +380,7 @@
 	level = 8
 	passive_message = "<span class='notice'>You feel an odd attraction to plasma.</span>"
 	var/temp_rate = 1
-	threshold_descs = list(
+	treshold_descs = list(
 		"Transmission 6" = "Increases temperature adjustment rate.",
 		"Stage Speed 7" = "Increases healing speed.",
 	)
@@ -449,7 +449,7 @@
 	symptom_delay_max = 1
 	passive_message = "<span class='notice'>Your skin glows faintly for a moment.</span>"
 	var/cellular_damage = FALSE
-	threshold_descs = list(
+	treshold_descs = list(
 		"Transmission 6" = "Additionally heals cellular damage.",
 		"Resistance 7" = "Increases healing speed.",
 	)
@@ -469,9 +469,9 @@
 			return FALSE
 		if(1 to RAD_MOB_SAFE)
 			return 0.25
-		if(RAD_MOB_SAFE to RAD_BURN_THRESHOLD)
+		if(RAD_MOB_SAFE to RAD_BURN_TRESHOLD)
 			return 0.5
-		if(RAD_BURN_THRESHOLD to RAD_MOB_MUTATE)
+		if(RAD_BURN_TRESHOLD to RAD_MOB_MUTATE)
 			return 0.75
 		if(RAD_MOB_MUTATE to RAD_MOB_KNOCKDOWN)
 			return 1

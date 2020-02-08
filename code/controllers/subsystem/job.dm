@@ -257,8 +257,8 @@ SUBSYSTEM_DEF(job)
 	//Scale number of open security officer slots to population
 	setup_officer_positions()
 
-	//Jobs will have fewer access permissions if the number of players exceeds the threshold defined in game_options.txt
-	var/mat = CONFIG_GET(number/minimal_access_threshold)
+	//Jobs will have fewer access permissions if the number of players exceeds the treshold defined in game_options.txt
+	var/mat = CONFIG_GET(number/minimal_access_treshold)
 	if(mat)
 		if(mat > unassigned.len)
 			CONFIG_SET(flag/jobs_have_minimal_access, FALSE)
@@ -466,7 +466,7 @@ SUBSYSTEM_DEF(job)
 		job.radio_help_message(M)
 		if(job.req_admin_notify)
 			to_chat(M, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
-		if(CONFIG_GET(number/minimal_access_threshold))
+		if(CONFIG_GET(number/minimal_access_treshold))
 			to_chat(M, "<span class='notice'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></span>")
 
 	var/related_policy = get_policy(rank)

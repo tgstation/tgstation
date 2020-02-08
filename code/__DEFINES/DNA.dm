@@ -153,7 +153,7 @@
 #define ORGAN_SLOT_REGENERATIVE_CORE "hivecore"
 
 //organ defines
-#define STANDARD_ORGAN_THRESHOLD 	100
+#define STANDARD_ORGAN_TRESHOLD 	100
 #define STANDARD_ORGAN_HEALING 		0.001
 /// designed to fail organs when left to decay for ~15 minutes
 #define STANDARD_ORGAN_DECAY		0.00222

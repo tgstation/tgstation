@@ -186,8 +186,8 @@
 #define ETHEREAL_CHARGE_OVERLOAD 125
 #define ETHEREAL_CHARGE_DANGEROUS 150
 
-//Slime evolution threshold. Controls how fast slimes can split/grow
-#define SLIME_EVOLUTION_THRESHOLD 10
+//Slime evolution treshold. Controls how fast slimes can split/grow
+#define SLIME_EVOLUTION_TRESHOLD 10
 
 //Slime extract crossing. Controls how many extracts is required to feed to a slime to core-cross.
 #define SLIME_EXTRACT_CROSSING_REQUIRED 10
@@ -256,7 +256,7 @@
 
 #define MEGAFAUNA_DEFAULT_RECOVERY_TIME 5
 
-#define SHADOW_SPECIES_LIGHT_THRESHOLD 0.2
+#define SHADOW_SPECIES_LIGHT_TRESHOLD 0.2
 
 // Offsets defines
 

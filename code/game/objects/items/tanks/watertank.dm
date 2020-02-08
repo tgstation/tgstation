@@ -344,7 +344,7 @@
 	reagent_flags = OPENCONTAINER
 	spillable = FALSE
 	possible_transfer_amounts = list(5,10,15)
-	fill_icon_thresholds = list(0, 15, 60)
+	fill_icon_tresholds = list(0, 15, 60)
 	fill_icon_state = "backpack"
 
 /obj/item/reagent_containers/chemtank/ui_action_click()

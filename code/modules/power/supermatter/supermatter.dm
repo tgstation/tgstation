@@ -24,17 +24,17 @@
 #define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
 #define PLUOXIUM_HEAT_RESISTANCE 3
 
-#define POWERLOSS_INHIBITION_GAS_THRESHOLD 0.20         //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
-#define POWERLOSS_INHIBITION_MOLE_THRESHOLD 20        //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.        //Scales powerloss inhibition down until this amount of moles is reached
-#define POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD 500  //bonus powerloss inhibition boost if this amount of moles is reached
+#define POWERLOSS_INHIBITION_GAS_TRESHOLD 0.20         //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
+#define POWERLOSS_INHIBITION_MOLE_TRESHOLD 20        //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.        //Scales powerloss inhibition down until this amount of moles is reached
+#define POWERLOSS_INHIBITION_MOLE_BOOST_TRESHOLD 500  //bonus powerloss inhibition boost if this amount of moles is reached
 
-#define MOLE_PENALTY_THRESHOLD 1800           //Above this value we can get lord singulo and independent mol damage, below it we can heal damage
+#define MOLE_PENALTY_TRESHOLD 1800           //Above this value we can get lord singulo and independent mol damage, below it we can heal damage
 #define MOLE_HEAT_PENALTY 350                 //Heat damage scales around this. Too hot setups with this amount of moles do regular damage, anything above and below is scaled
 //Along with damage_penalty_point, makes flux anomalies.
-#define POWER_PENALTY_THRESHOLD 5000          //The cutoff on power properly doing damage, pulling shit around, and delamming into a tesla. Low chance of pyro anomalies, +2 bolts of electricity
-#define SEVERE_POWER_PENALTY_THRESHOLD 7000   //+1 bolt of electricity, allows for gravitational anomalies, and higher chances of pyro anomalies
-#define CRITICAL_POWER_PENALTY_THRESHOLD 9000 //+1 bolt of electricity.
-#define HEAT_PENALTY_THRESHOLD 40             //Higher == Crystal safe operational temperature is higher.
+#define POWER_PENALTY_TRESHOLD 5000          //The cutoff on power properly doing damage, pulling shit around, and delamming into a tesla. Low chance of pyro anomalies, +2 bolts of electricity
+#define SEVERE_POWER_PENALTY_TRESHOLD 7000   //+1 bolt of electricity, allows for gravitational anomalies, and higher chances of pyro anomalies
+#define CRITICAL_POWER_PENALTY_TRESHOLD 9000 //+1 bolt of electricity.
+#define HEAT_PENALTY_TRESHOLD 40             //Higher == Crystal safe operational temperature is higher.
 #define DAMAGE_HARDCAP 0.002
 #define DAMAGE_INCREASE_MULTIPLIER 0.25
 
@@ -298,7 +298,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			SEND_SOUND(M, 'sound/magic/charge.ogg')
 			to_chat(M, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "delam", /datum/mood_event/delam)
-	if(combined_gas > MOLE_PENALTY_THRESHOLD)
+	if(combined_gas > MOLE_PENALTY_TRESHOLD)
 		investigate_log("has collapsed into a singularity.", INVESTIGATE_SUPERMATTER)
 		if(T)
 			var/obj/singularity/S = new(T)
@@ -307,7 +307,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	else
 		investigate_log("has exploded.", INVESTIGATE_SUPERMATTER)
 		explosion(get_turf(T), explosion_power * max(gasmix_power_ratio, 0.205) * 0.5 , explosion_power * max(gasmix_power_ratio, 0.205) + 2, explosion_power * max(gasmix_power_ratio, 0.205) + 4 , explosion_power * max(gasmix_power_ratio, 0.205) + 6, 1, 1)
-		if(power > POWER_PENALTY_THRESHOLD)
+		if(power > POWER_PENALTY_TRESHOLD)
 			investigate_log("has spawned additional energy balls.", INVESTIGATE_SUPERMATTER)
 			var/obj/singularity/energy_ball/E = new(T)
 			E.energy = power
@@ -374,17 +374,17 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//((((some value between 0.5 and 1 * temp - ((273.15 + 40) * some values between 1 and 6)) * some number between 0.25 and knock your socks off / 150) * 0.25
 			//Heat and mols account for each other, a lot of hot mols are more damaging then a few
 			//Mols start to have a positive effect on damage after 350
-			damage = max(damage + (max(CLAMP(removed.total_moles() / 200, 0.5, 1) * removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD)*dynamic_heat_resistance), 0) * mole_heat_penalty / 150 ) * DAMAGE_INCREASE_MULTIPLIER, 0)
+			damage = max(damage + (max(CLAMP(removed.total_moles() / 200, 0.5, 1) * removed.temperature - ((T0C + HEAT_PENALTY_TRESHOLD)*dynamic_heat_resistance), 0) * mole_heat_penalty / 150 ) * DAMAGE_INCREASE_MULTIPLIER, 0)
 			//Power only starts affecting damage when it is above 5000
-			damage = max(damage + (max(power - POWER_PENALTY_THRESHOLD, 0)/500) * DAMAGE_INCREASE_MULTIPLIER, 0)
+			damage = max(damage + (max(power - POWER_PENALTY_TRESHOLD, 0)/500) * DAMAGE_INCREASE_MULTIPLIER, 0)
 			//Molar count only starts affecting damage when it is above 1800
-			damage = max(damage + (max(combined_gas - MOLE_PENALTY_THRESHOLD, 0)/80) * DAMAGE_INCREASE_MULTIPLIER, 0)
+			damage = max(damage + (max(combined_gas - MOLE_PENALTY_TRESHOLD, 0)/80) * DAMAGE_INCREASE_MULTIPLIER, 0)
 
 			//There might be a way to integrate healing and hurting via heat
 			//healing damage
-			if(combined_gas < MOLE_PENALTY_THRESHOLD)
+			if(combined_gas < MOLE_PENALTY_TRESHOLD)
 				//Only heals damage when the temp is below 313.15, heals up to 2 damage
-				damage = max(damage + (min(removed.temperature - (T0C + HEAT_PENALTY_THRESHOLD), 0) / 150 ), 0)
+				damage = max(damage + (min(removed.temperature - (T0C + HEAT_PENALTY_TRESHOLD), 0) / 150 ), 0)
 
 			//caps damage rate
 
@@ -433,13 +433,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//Ramps up or down in increments of 0.02 up to the proportion of co2
 		//Given infinite time, powerloss_dynamic_scaling = co2comp
 		//Some value between 0 and 1
-		if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && co2comp > POWERLOSS_INHIBITION_GAS_THRESHOLD) //If there are more then 20 mols, or more then 20% co2
+		if (combined_gas > POWERLOSS_INHIBITION_MOLE_TRESHOLD && co2comp > POWERLOSS_INHIBITION_GAS_TRESHOLD) //If there are more then 20 mols, or more then 20% co2
 			powerloss_dynamic_scaling = CLAMP(powerloss_dynamic_scaling + CLAMP(co2comp - powerloss_dynamic_scaling, -0.02, 0.02), 0, 1)
 		else
 			powerloss_dynamic_scaling = CLAMP(powerloss_dynamic_scaling - 0.05,0, 1)
 		//Ranges from 0 to 1(1-(value between 0 and 1 * ranges from 1 to 1.5(mol / 500)))
 		//We take the mol count, and scale it to be our inhibitor
-		powerloss_inhibitor = CLAMP(1-(powerloss_dynamic_scaling * CLAMP(combined_gas/POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD,1 ,1.5)),0 ,1)
+		powerloss_inhibitor = CLAMP(1-(powerloss_dynamic_scaling * CLAMP(combined_gas/POWERLOSS_INHIBITION_MOLE_BOOST_TRESHOLD,1 ,1.5)),0 ,1)
 
 		//Releases stored power into the general pool
 		//We get this by consuming shit or being scalpeled
@@ -511,7 +511,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	//After this point power is lowered
 	//This wraps around to the begining of the function
 	//Handle high power zaps/anomaly generation
-	if(power > POWER_PENALTY_THRESHOLD || damage > damage_penalty_point) //If the power is above 5000 or if the damage is above 550
+	if(power > POWER_PENALTY_TRESHOLD || damage > damage_penalty_point) //If the power is above 5000 or if the damage is above 550
 		if(removed && removed.temperature)
 			zap_cutoff = CLAMP(3000 - (power * (env.total_moles()) / 10) / env.return_temperature(), 350, 3000)//If the core is cold, it's easier to jump, ditto if there are a lot of mols
 		else
@@ -519,25 +519,25 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//We should always be able to zap our way out of the default enclosure
 		//See supermatter_zap() for more details
 		var/range = CLAMP(power / env.return_pressure() * 10, 2, 8)
-		if(power > POWER_PENALTY_THRESHOLD)
+		if(power > POWER_PENALTY_TRESHOLD)
 			playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
 			supermatter_zap(src, range, min(power*2, 20000))
 			supermatter_zap(src, range, min(power*2, 20000))
-			if(power > SEVERE_POWER_PENALTY_THRESHOLD)
+			if(power > SEVERE_POWER_PENALTY_TRESHOLD)
 				supermatter_zap(src, range, min(power*2, 20000))
-				if(power > CRITICAL_POWER_PENALTY_THRESHOLD)
+				if(power > CRITICAL_POWER_PENALTY_TRESHOLD)
 					supermatter_zap(src, range, min(power*2, 20000))
 		else if (damage > damage_penalty_point && prob(20))
 			playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
 			supermatter_zap(src, range, CLAMP(power*2, 4000, 20000))
 
-		if(prob(15) && power > POWER_PENALTY_THRESHOLD)
+		if(prob(15) && power > POWER_PENALTY_TRESHOLD)
 			supermatter_pull(src, power/750)
 		if(prob(5))
 			supermatter_anomaly_gen(src, FLUX_ANOMALY, rand(5, 10))
-		if(power > SEVERE_POWER_PENALTY_THRESHOLD && prob(5) || prob(1))
+		if(power > SEVERE_POWER_PENALTY_TRESHOLD && prob(5) || prob(1))
 			supermatter_anomaly_gen(src, GRAVITATIONAL_ANOMALY, rand(5, 10))
-		if((power > SEVERE_POWER_PENALTY_THRESHOLD && prob(2)) || (prob(0.3) && power > POWER_PENALTY_THRESHOLD))
+		if((power > SEVERE_POWER_PENALTY_TRESHOLD && prob(2)) || (prob(0.3) && power > POWER_PENALTY_TRESHOLD))
 			supermatter_anomaly_gen(src, PYRO_ANOMALY, rand(5, 10))
 
 	//Tells the engi team to get their butt in gear
@@ -561,12 +561,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				radio.talk_into(src, "[safe_alert] Integrity: [get_integrity()]%", engineering_channel)
 				lastwarning = REALTIMEOFDAY
 
-			if(power > POWER_PENALTY_THRESHOLD)
+			if(power > POWER_PENALTY_TRESHOLD)
 				radio.talk_into(src, "Warning: Hyperstructure has reached dangerous power level.", engineering_channel)
 				if(powerloss_inhibitor < 0.5)
 					radio.talk_into(src, "DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.", engineering_channel)
 
-			if(combined_gas > MOLE_PENALTY_THRESHOLD)
+			if(combined_gas > MOLE_PENALTY_TRESHOLD)
 				radio.talk_into(src, "Warning: Critical coolant mass reached.", engineering_channel)
 		//Boom (Mind blown)
 		if(damage > explosion_point)

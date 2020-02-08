@@ -1,4 +1,4 @@
-#define HEART_RESPAWN_THRESHHOLD 40
+#define HEART_RESPAWN_TRESHHOLD 40
 #define HEART_SPECIAL_SHADOWIFY 2
 
 /datum/species/shadow
@@ -20,9 +20,9 @@
 	if(istype(T))
 		var/light_amount = T.get_lumcount()
 
-		if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD) //if there's enough light, start dying
+		if(light_amount > SHADOW_SPECIES_LIGHT_TRESHOLD) //if there's enough light, start dying
 			H.take_overall_damage(1,1, 0, BODYPART_ORGANIC)
-		else if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
+		else if (light_amount < SHADOW_SPECIES_LIGHT_TRESHOLD) //heal in the dark
 			H.heal_overall_damage(1,1, 0, BODYPART_ORGANIC)
 
 /datum/species/shadow/check_roundstart_eligible()
@@ -55,7 +55,7 @@
 	var/turf/T = H.loc
 	if(istype(T))
 		var/light_amount = T.get_lumcount()
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
+		if(light_amount < SHADOW_SPECIES_LIGHT_TRESHOLD)
 			H.visible_message("<span class='danger'>[H] dances in the shadows, evading [P]!</span>")
 			playsound(T, "bullet_miss", 75, TRUE)
 			return BULLET_ACT_FORCE_PIERCE
@@ -138,10 +138,10 @@
 	var/turf/T = get_turf(owner)
 	if(istype(T))
 		var/light_amount = T.get_lumcount()
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
+		if(light_amount < SHADOW_SPECIES_LIGHT_TRESHOLD)
 			respawn_progress++
 			playsound(owner,'sound/effects/singlebeat.ogg',40,TRUE)
-	if(respawn_progress >= HEART_RESPAWN_THRESHHOLD)
+	if(respawn_progress >= HEART_RESPAWN_TRESHHOLD)
 		owner.revive(full_heal = TRUE, admin_revive = FALSE)
 		if(!(owner.dna.species.id == "shadow" || owner.dna.species.id == "nightmare"))
 			var/mob/living/carbon/old_owner = owner
@@ -215,4 +215,4 @@
 	playsound(src, 'sound/items/welder.ogg', 50, TRUE)
 
 #undef HEART_SPECIAL_SHADOWIFY
-#undef HEART_RESPAWN_THRESHHOLD
+#undef HEART_RESPAWN_TRESHHOLD

@@ -34,7 +34,7 @@
 	 )
 	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
 	var/icon_empty = ""
-	fill_icon_thresholds = list(0, 10, 25, 50, 75, 100)
+	fill_icon_tresholds = list(0, 10, 25, 50, 75, 100)
 
 /obj/item/reagent_containers/food/condiment/Initialize()
 	. = ..()

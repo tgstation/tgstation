@@ -22,7 +22,7 @@
 							"<span class='userdanger'>[M] [response_harm_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, M)
 			to_chat(M, "<span class='danger'>You [response_harm_simple] [src]!</span>")
 			playsound(loc, attacked_sound, 25, TRUE, -1)
-			attack_threshold_check(harm_intent_damage)
+			attack_treshold_check(harm_intent_damage)
 			log_combat(M, src, "attacked")
 			updatehealth()
 			return TRUE
@@ -41,7 +41,7 @@
 	if(..()) //successful monkey bite.
 		if(stat != DEAD)
 			var/damage = rand(1, 3)
-			attack_threshold_check(damage)
+			attack_treshold_check(damage)
 			return 1
 	if (M.a_intent == INTENT_HELP)
 		if (health > 0)
@@ -65,7 +65,7 @@
 							"<span class='userdanger'>You're slashed at by [M]!</span>", null, COMBAT_MESSAGE_RANGE, M)
 			to_chat(M, "<span class='danger'>You slash at [src]!</span>")
 			playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
-			attack_threshold_check(damage)
+			attack_treshold_check(damage)
 			log_combat(M, src, "attacked")
 		return 1
 
@@ -73,7 +73,7 @@
 	. = ..()
 	if(. && stat != DEAD) //successful larva bite
 		var/damage = rand(5, 10)
-		. = attack_threshold_check(damage)
+		. = attack_treshold_check(damage)
 		if(.)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
 
@@ -81,28 +81,28 @@
 	. = ..()
 	if(.)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		return attack_threshold_check(damage, M.melee_damage_type)
+		return attack_treshold_check(damage, M.melee_damage_type)
 
 /mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
 		var/damage = rand(15, 25)
 		if(M.is_adult)
 			damage = rand(20, 35)
-		return attack_threshold_check(damage)
+		return attack_treshold_check(damage)
 
 /mob/living/simple_animal/attack_drone(mob/living/simple_animal/drone/M)
 	if(M.a_intent == INTENT_HARM) //No kicking dogs even as a rogue drone. Use a weapon.
 		return
 	return ..()
 
-/mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE, armorcheck = "melee")
+/mob/living/simple_animal/proc/attack_treshold_check(damage, damagetype = BRUTE, armorcheck = "melee")
 	var/temp_damage = damage
 	if(!damage_coeff[damagetype])
 		temp_damage = 0
 	else
 		temp_damage *= damage_coeff[damagetype]
 
-	if(temp_damage >= 0 && temp_damage <= force_threshold)
+	if(temp_damage >= 0 && temp_damage <= force_treshold)
 		visible_message("<span class='warning'>[src] looks unharmed!</span>")
 		return FALSE
 	else

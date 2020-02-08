@@ -281,7 +281,7 @@
 	force = 2
 	throwforce = 15 //15 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = i didnt do the math
 	throw_speed = 4
-	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 100, "embedded_fall_chance" = 0, "embedded_ignore_throwspeed_threshold" = TRUE)
+	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 100, "embedded_fall_chance" = 0, "embedded_ignore_throwspeed_treshold" = TRUE)
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = IS_SHARP
 	custom_materials = list(/datum/material/biomass = 500)
@@ -331,7 +331,7 @@
 	desc = "Hardened biomass, shaped into... something."
 	icon_state = "tonguespikechem"
 	throwforce = 2 //2 + 2 (WEIGHT_CLASS_SMALL) * 0 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = i didnt do the math again but very low or smthin
-	embedding = list("embedded_pain_multiplier" = 0, "embed_chance" = 100, "embedded_fall_chance" = 0, "embedded_pain_chance" = 0, "embedded_ignore_throwspeed_threshold" = TRUE) //never hurts once it's in you
+	embedding = list("embedded_pain_multiplier" = 0, "embed_chance" = 100, "embedded_fall_chance" = 0, "embedded_pain_chance" = 0, "embedded_ignore_throwspeed_treshold" = TRUE) //never hurts once it's in you
 	var/been_places = FALSE
 	var/datum/action/innate/send_chems/chems
 

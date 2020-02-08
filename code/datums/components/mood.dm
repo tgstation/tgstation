@@ -236,7 +236,7 @@
 	if(newval == insanity_effect)
 		return
 	var/mob/living/master = parent
-	master.crit_threshold = (master.crit_threshold - insanity_effect) + newval
+	master.crit_treshold = (master.crit_treshold - insanity_effect) + newval
 	insanity_effect = newval
 
 /datum/component/mood/proc/add_event(datum/source, category, type, ...) //Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.

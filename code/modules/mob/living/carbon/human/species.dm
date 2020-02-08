@@ -40,7 +40,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/attack_type = BRUTE //Type of damage attack does
 	var/punchdamagelow = 1       //lowest possible punch damage. if this is set to 0, punches will always miss
 	var/punchdamagehigh = 10      //highest possible punch damage
-	var/punchstunthreshold = 10//damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
+	var/punchstuntreshold = 10//damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
 	var/siemens_coeff = 1 //base electrocution coefficient
 	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
@@ -791,7 +791,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.losebreath = 0
 
 		var/takes_crit_damage = (!HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
-		if((H.health < H.crit_threshold) && takes_crit_damage)
+		if((H.health < H.crit_treshold) && takes_crit_damage)
 			H.adjustBruteLoss(1)
 	if(flying_species)
 		HandleFlight(H)
@@ -1009,7 +1009,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.blood_volume = min(H.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 		H.reagents.del_reagent(chem.type)
 		return TRUE
-	if(chem.overdose_threshold && chem.volume >= chem.overdose_threshold)
+	if(chem.overdose_treshold && chem.volume >= chem.overdose_treshold)
 		chem.overdosed = TRUE
 
 /datum/species/proc/check_species_weakness(obj/item, mob/living/attacker)
@@ -1278,7 +1278,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block)
 			log_combat(user, target, "punched")
 
-		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
+		if((target.stat != DEAD) && damage >= user.dna.species.punchstuntreshold)
 			target.visible_message("<span class='danger'>[user] knocks [target] down!</span>", \
 							"<span class='userdanger'>You're knocked down by [user]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, "<span class='danger'>You knock [target] down!</span>")

@@ -15,8 +15,8 @@
 	var/can_install = 1				// Prevents direct installation of removable media.
 	var/damage = 0					// Current damage level
 	var/max_damage = 100			// Maximal damage level.
-	var/damage_malfunction = 20		// "Malfunction" threshold. When damage exceeds this value the hardware piece will semi-randomly fail and do !!FUN!! things
-	var/damage_failure = 50			// "Failure" threshold. When damage exceeds this value the hardware piece will not work at all.
+	var/damage_malfunction = 20		// "Malfunction" treshold. When damage exceeds this value the hardware piece will semi-randomly fail and do !!FUN!! things
+	var/damage_failure = 50			// "Failure" treshold. When damage exceeds this value the hardware piece will not work at all.
 	var/malfunction_probability = 10// Chance of malfunction when the component is damaged
 	var/device_type
 

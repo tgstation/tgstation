@@ -12,7 +12,7 @@
 	operation_req_access = list(ACCESS_THEATRE)
 	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_THEATRE)
 	add_req_access = 0
-	internal_damage_threshold = 25
+	internal_damage_treshold = 25
 	max_equip = 2
 	step_energy_drain = 3
 	color = "#87878715"

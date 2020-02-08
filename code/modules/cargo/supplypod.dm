@@ -289,7 +289,7 @@
 	desc = "A holographic projection designating the landing zone of something. It's probably best to stand back."
 	icon = 'icons/mob/actions/actions_items.dmi'
 	icon_state = "sniper_zoom"
-	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
+	layer = PROJECTILE_HIT_TRESHHOLD_LAYER
 	light_range = 2
 	var/obj/effect/temp_visual/fallingPod //Temporary "falling pod" that we animate
 	var/obj/structure/closet/supplypod/pod //The supplyPod that will be landing ontop of this target

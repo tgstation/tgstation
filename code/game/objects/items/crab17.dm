@@ -196,7 +196,7 @@
 	desc = "A holographic projection designating the landing zone of something. It's probably best to stand back."
 	icon = 'icons/mob/actions/actions_items.dmi'
 	icon_state = "sniper_zoom"
-	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
+	layer = PROJECTILE_HIT_TRESHHOLD_LAYER
 	light_range = 2
 	var/obj/effect/dumpeetFall/DF
 	var/obj/structure/checkoutmachine/dump

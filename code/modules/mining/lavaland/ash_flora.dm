@@ -3,7 +3,7 @@
 
 /obj/structure/flora/ash
 	gender = PLURAL
-	layer = PROJECTILE_HIT_THRESHHOLD_LAYER //sporangiums up don't shoot
+	layer = PROJECTILE_HIT_TRESHHOLD_LAYER //sporangiums up don't shoot
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
 	icon_state = "l_mushroom"
 	name = "large mushrooms"

@@ -56,11 +56,11 @@
 		return FALSE
 	var/datum/gas_mixture/G = OT.return_air()
 	if(G.return_pressure() > (max_ext_kpa - ((spawn_mol*spawn_temp*R_IDEAL_GAS_EQUATION)/(CELL_VOLUME))))
-		broken_message = "<span class='boldwarning'>EXTERNAL PRESSURE OVER THRESHOLD</span>"
+		broken_message = "<span class='boldwarning'>EXTERNAL PRESSURE OVER TRESHOLD</span>"
 		set_broken(TRUE)
 		return FALSE
 	if(G.total_moles() > max_ext_mol)
-		broken_message = "<span class='boldwarning'>EXTERNAL AIR CONCENTRATION OVER THRESHOLD</span>"
+		broken_message = "<span class='boldwarning'>EXTERNAL AIR CONCENTRATION OVER TRESHOLD</span>"
 		set_broken(TRUE)
 		return FALSE
 	if(broken)

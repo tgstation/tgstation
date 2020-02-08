@@ -100,7 +100,7 @@
 	var/datum/nanite_extra_setting/direction = extra_settings[NES_DIRECTION]
 	var/datum/nanite_extra_setting/percent = extra_settings[NES_HEALTH_PERCENT]
 	rule.above = direction.get_value()
-	rule.threshold = percent.get_value()
+	rule.treshold = percent.get_value()
 	return rule
 
 /datum/nanite_program/sensor/crit
@@ -148,7 +148,7 @@
 	extra_settings[NES_DIRECTION] = new /datum/nanite_extra_setting/boolean(TRUE, "Above", "Below")
 
 /datum/nanite_program/sensor/nanite_volume/check_event()
-	var/nanite_percent = (nanites.nanite_volume - nanites.safety_threshold)/(nanites.max_nanites - nanites.safety_threshold)*100
+	var/nanite_percent = (nanites.nanite_volume - nanites.safety_treshold)/(nanites.max_nanites - nanites.safety_treshold)*100
 	var/datum/nanite_extra_setting/percent = extra_settings[NES_NANITE_PERCENT]
 	var/datum/nanite_extra_setting/direction = extra_settings[NES_DIRECTION]
 	var/detected = FALSE
@@ -173,7 +173,7 @@
 	var/datum/nanite_extra_setting/direction = extra_settings[NES_DIRECTION]
 	var/datum/nanite_extra_setting/percent = extra_settings[NES_NANITE_PERCENT]
 	rule.above = direction.get_value()
-	rule.threshold = percent.get_value()
+	rule.treshold = percent.get_value()
 	return rule
 
 /datum/nanite_program/sensor/damage
@@ -189,7 +189,7 @@
 	extra_settings[NES_DIRECTION] = new /datum/nanite_extra_setting/boolean(TRUE, "Above", "Below")
 
 /datum/nanite_program/sensor/damage/check_event()
-	var/reached_threshold = FALSE
+	var/reached_treshold = FALSE
 	var/datum/nanite_extra_setting/type = extra_settings[NES_DAMAGE_TYPE]
 	var/datum/nanite_extra_setting/damage = extra_settings[NES_DAMAGE]
 	var/datum/nanite_extra_setting/direction = extra_settings[NES_DIRECTION]
@@ -209,12 +209,12 @@
 
 	if(check_above)
 		if(damage_amt >= damage.get_value())
-			reached_threshold = TRUE
+			reached_treshold = TRUE
 	else
 		if(damage_amt < damage.get_value())
-			reached_threshold = TRUE
+			reached_treshold = TRUE
 
-	if(reached_threshold)
+	if(reached_treshold)
 		if(!spent)
 			spent = TRUE
 			return TRUE
@@ -229,7 +229,7 @@
 	var/datum/nanite_extra_setting/damage_type = extra_settings[NES_DAMAGE_TYPE]
 	var/datum/nanite_extra_setting/damage = extra_settings[NES_DAMAGE]
 	rule.above  =  direction.get_value()
-	rule.threshold = damage.get_value()
+	rule.treshold = damage.get_value()
 	rule.damage_type = damage_type.get_value()
 	return rule
 

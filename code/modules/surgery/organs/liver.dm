@@ -9,7 +9,7 @@
 	slot = ORGAN_SLOT_LIVER
 	desc = "Pairing suggestion: chianti and fava beans."
 
-	maxHealth = STANDARD_ORGAN_THRESHOLD
+	maxHealth = STANDARD_ORGAN_TRESHOLD
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY
 
@@ -83,7 +83,7 @@
 	organ_flags = ORGAN_SYNTHETIC
 	toxTolerance = 2
 	toxLethality = 0.011
-	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
+	maxHealth = STANDARD_ORGAN_TRESHOLD*0.5
 
 	var/emp_vulnerability = 80	//Chance of permanent effects if emp-ed.
 
@@ -91,7 +91,7 @@
 	name = "cybernetic liver"
 	icon_state = "liver-c-u"
 	desc = "An electronic device designed to mimic the functions of a human liver. Handles toxins slightly better than an organic liver."
-	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
+	maxHealth = 1.5 * STANDARD_ORGAN_TRESHOLD
 	toxTolerance = 5 //can shrug off up to 5u of toxins
 	toxLethality = 0.008 //20% less damage than a normal liver
 	emp_vulnerability = 40
@@ -101,7 +101,7 @@
 	icon_state = "liver-c-u2"
 	desc = "An upgraded version of the cybernetic liver, designed to improve further upon organic livers. It is resistant to alcohol poisoning and is very robust at filtering toxins."
 	alcohol_tolerance = 0.001
-	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
+	maxHealth = 2 * STANDARD_ORGAN_TRESHOLD
 	toxTolerance = 10 //can shrug off up to 10u of toxins
 	toxLethality = 0.008 //20% less damage than a normal liver
 	emp_vulnerability = 20

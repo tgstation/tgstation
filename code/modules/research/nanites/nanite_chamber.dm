@@ -40,10 +40,10 @@
 	busy_icon_state = working_icon
 	update_icon()
 
-/obj/machinery/nanite_chamber/proc/set_safety(threshold)
+/obj/machinery/nanite_chamber/proc/set_safety(treshold)
 	if(!occupant)
 		return
-	SEND_SIGNAL(occupant, COMSIG_NANITE_SET_SAFETY, threshold)
+	SEND_SIGNAL(occupant, COMSIG_NANITE_SET_SAFETY, treshold)
 
 /obj/machinery/nanite_chamber/proc/set_cloud(cloud_id)
 	if(!occupant)

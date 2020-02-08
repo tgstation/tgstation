@@ -15,7 +15,7 @@
 	if(..())
 		var/mob/living/simple_animal/slime/S = owner
 		if(needs_growth == GROWTH_NEEDED)
-			if(S.amount_grown >= SLIME_EVOLUTION_THRESHOLD)
+			if(S.amount_grown >= SLIME_EVOLUTION_TRESHOLD)
 				return 1
 			return 0
 		return 1
@@ -131,7 +131,7 @@
 		to_chat(src, "<i>I must be conscious to do this...</i>")
 		return
 	if(!is_adult)
-		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
+		if(amount_grown >= SLIME_EVOLUTION_TRESHOLD)
 			is_adult = 1
 			maxHealth = 200
 			amount_grown = 0
@@ -165,7 +165,7 @@
 		return
 
 	if(is_adult)
-		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
+		if(amount_grown >= SLIME_EVOLUTION_TRESHOLD)
 			if(stat)
 				to_chat(src, "<i>I must be conscious to do this...</i>")
 				return

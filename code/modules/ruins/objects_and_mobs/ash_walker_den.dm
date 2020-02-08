@@ -1,4 +1,4 @@
-#define ASH_WALKER_SPAWN_THRESHOLD 2
+#define ASH_WALKER_SPAWN_TRESHOLD 2
 //The ash walker den consumes corpses or unconscious mobs to create ash walker eggs. For more info on those, check ghost_role_spawners.dm
 /obj/structure/lavaland/ash_walker
 	name = "necropolis tendril nest"
@@ -56,7 +56,7 @@
 					SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_bad)
 
 /obj/structure/lavaland/ash_walker/proc/spawn_mob()
-	if(meat_counter >= ASH_WALKER_SPAWN_THRESHOLD)
+	if(meat_counter >= ASH_WALKER_SPAWN_TRESHOLD)
 		new /obj/effect/mob_spawn/human/ash_walker(get_step(loc, pick(GLOB.alldirs)), ashies)
 		visible_message("<span class='danger'>One of the eggs swells to an unnatural size and tumbles free. It's ready to hatch!</span>")
-		meat_counter -= ASH_WALKER_SPAWN_THRESHOLD
+		meat_counter -= ASH_WALKER_SPAWN_TRESHOLD

@@ -238,7 +238,7 @@
 
 		if(!docile)
 			stat(null, "Nutrition: [nutrition]/[get_max_nutrition()]")
-		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
+		if(amount_grown >= SLIME_EVOLUTION_TRESHOLD)
 			if(is_adult)
 				stat(null, "You can reproduce!")
 			else

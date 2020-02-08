@@ -55,10 +55,10 @@
 	var/obj/item/organ/lungs/L = getorganslot(ORGAN_SLOT_LUNGS)
 	var/obj/item/organ/heart/H = getorganslot(ORGAN_SLOT_HEART)
 	if(L)
-		if(L.damage > L.high_threshold)
+		if(L.damage > L.high_treshold)
 			next_breath--
 	if(H)
-		if(H.damage > H.high_threshold)
+		if(H.damage > H.high_treshold)
 			next_breath--
 
 	if((times_fired % next_breath) == 0 || failed_last_breath)
@@ -87,10 +87,10 @@
 	var/datum/gas_mixture/breath
 
 	if(!getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL) || HAS_TRAIT(src, TRAIT_MAGIC_CHOKE) || (lungs && lungs.organ_flags & ORGAN_FAILING))
+		if(health <= HEALTH_TRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL) || HAS_TRAIT(src, TRAIT_MAGIC_CHOKE) || (lungs && lungs.organ_flags & ORGAN_FAILING))
 			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
 
-		else if(health <= crit_threshold)
+		else if(health <= crit_treshold)
 			losebreath += 0.25 //You're having trouble breathing in soft crit, so you'll miss a breath one in four times
 
 	//Suffocate
@@ -186,7 +186,7 @@
 
 	else //Enough oxygen
 		failed_last_breath = 0
-		if(health >= crit_threshold)
+		if(health >= crit_treshold)
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]
 		clear_alert("not_enough_oxy")

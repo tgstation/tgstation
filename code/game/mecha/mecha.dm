@@ -52,7 +52,7 @@
 	var/list/trackers = list()
 
 	var/max_temperature = 25000
-	var/internal_damage_threshold = 50 //health percentage below which internal damage is possible
+	var/internal_damage_treshold = 50 //health percentage below which internal damage is possible
 	var/internal_damage = 0 //contains bitflags
 
 	var/list/operation_req_access = list()//required access level for mecha operation
@@ -676,11 +676,11 @@
 ////////  Internal damage  ////////
 ///////////////////////////////////
 
-/obj/mecha/proc/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
+/obj/mecha/proc/check_for_internal_damage(list/possible_int_damage,ignore_treshold=null)
 	if(!islist(possible_int_damage) || !length(possible_int_damage))
 		return
 	if(prob(20))
-		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
+		if(ignore_treshold || obj_integrity*100/max_integrity < internal_damage_treshold)
 			for(var/T in possible_int_damage)
 				if(internal_damage & T)
 					possible_int_damage -= T
@@ -689,7 +689,7 @@
 				if(int_dam_flag)
 					setInternalDamage(int_dam_flag)
 	if(prob(5))
-		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
+		if(ignore_treshold || obj_integrity*100/max_integrity < internal_damage_treshold)
 			if (length(equipment))
 				var/obj/item/mecha_parts/mecha_equipment/ME = pick(equipment)
 				qdel(ME)

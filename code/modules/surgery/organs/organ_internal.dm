@@ -9,22 +9,22 @@
 	var/slot
 	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
 	var/organ_flags = ORGAN_EDIBLE
-	var/maxHealth = STANDARD_ORGAN_THRESHOLD
+	var/maxHealth = STANDARD_ORGAN_TRESHOLD
 	var/damage = 0		//total damage this organ has sustained
 	///Healing factor and decay factor function on % of maxhealth, and do not work by applying a static number per tick
 	var/healing_factor 	= 0										//fraction of maxhealth healed per on_life(), set to 0 for generic organs
 	var/decay_factor 	= 0										//same as above but when without a living owner, set to 0 for generic organs
-	var/high_threshold	= STANDARD_ORGAN_THRESHOLD * 0.45		//when severe organ damage occurs
-	var/low_threshold	= STANDARD_ORGAN_THRESHOLD * 0.1		//when minor organ damage occurs
+	var/high_treshold	= STANDARD_ORGAN_TRESHOLD * 0.45		//when severe organ damage occurs
+	var/low_treshold	= STANDARD_ORGAN_TRESHOLD * 0.1		//when minor organ damage occurs
 	var/severe_cooldown	//cooldown for severe effects, used for synthetic organ emp effects.
-	///Organ variables for determining what we alert the owner with when they pass/clear the damage thresholds
+	///Organ variables for determining what we alert the owner with when they pass/clear the damage tresholds
 	var/prev_damage = 0
-	var/low_threshold_passed
-	var/high_threshold_passed
+	var/low_treshold_passed
+	var/high_treshold_passed
 	var/now_failing
 	var/now_fixed
-	var/high_threshold_cleared
-	var/low_threshold_cleared
+	var/high_treshold_cleared
+	var/low_treshold_cleared
 
 	///When you take a bite you cant jam it in for surgery anymore.
 	var/useable = TRUE
@@ -107,7 +107,7 @@
 			return
 		. += "<span class='warning'>[src] has decayed for too long, and has turned a sickly color. It probably won't work without repairs.</span>"
 		return
-	if(damage > high_threshold)
+	if(damage > high_treshold)
 		. += "<span class='warning'>[src] is starting to look discolored.</span>"
 
 /obj/item/organ/Initialize()
@@ -136,7 +136,7 @@
 	if(maximum < damage)
 		return
 	damage = CLAMP(damage + d, 0, maximum)
-	var/mess = check_damage_thresholds(owner)
+	var/mess = check_damage_tresholds(owner)
 	prev_damage = damage
 	if(mess && owner)
 		to_chat(owner, mess)
@@ -145,13 +145,13 @@
 /obj/item/organ/proc/setOrganDamage(d)	//use mostly for admin heals
 	applyOrganDamage(d - damage)
 
-/** check_damage_thresholds
+/** check_damage_tresholds
   * input: M (a mob, the owner of the organ we call the proc on)
   * output: returns a message should get displayed.
-  * description: By checking our current damage against our previous damage, we can decide whether we've passed an organ threshold.
-  *				 If we have, send the corresponding threshold message to the owner, if such a message exists.
+  * description: By checking our current damage against our previous damage, we can decide whether we've passed an organ treshold.
+  *				 If we have, send the corresponding treshold message to the owner, if such a message exists.
   */
-/obj/item/organ/proc/check_damage_thresholds(M)
+/obj/item/organ/proc/check_damage_tresholds(M)
 	if(damage == prev_damage)
 		return
 	var/delta = damage - prev_damage
@@ -159,16 +159,16 @@
 		if(damage >= maxHealth)
 			organ_flags |= ORGAN_FAILING
 			return now_failing
-		if(damage > high_threshold && prev_damage <= high_threshold)
-			return high_threshold_passed
-		if(damage > low_threshold && prev_damage <= low_threshold)
-			return low_threshold_passed
+		if(damage > high_treshold && prev_damage <= high_treshold)
+			return high_treshold_passed
+		if(damage > low_treshold && prev_damage <= low_treshold)
+			return low_treshold_passed
 	else
 		organ_flags &= ~ORGAN_FAILING
-		if(prev_damage > low_threshold && damage <= low_threshold)
-			return low_threshold_cleared
-		if(prev_damage > high_threshold && damage <= high_threshold)
-			return high_threshold_cleared
+		if(prev_damage > low_treshold && damage <= low_treshold)
+			return low_treshold_cleared
+		if(prev_damage > high_treshold && damage <= high_treshold)
+			return high_treshold_cleared
 		if(prev_damage == maxHealth)
 			return now_fixed
 

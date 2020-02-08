@@ -283,8 +283,8 @@ GENE SCANNER
 			for(var/obj/item/organ/organ in H.internal_organs)
 				var/status = ""
 				if (organ.organ_flags & ORGAN_FAILING) status = "<font color='#E42426'>Non-Functional</font>"
-				else if (organ.damage > organ.high_threshold) status = "<font color='#EC6224'>Severely Damaged</font>"
-				else if (organ.damage > organ.low_threshold) status = "<font color='#F28F1F'>Mildly Damaged</font>"
+				else if (organ.damage > organ.high_treshold) status = "<font color='#EC6224'>Severely Damaged</font>"
+				else if (organ.damage > organ.low_treshold) status = "<font color='#F28F1F'>Mildly Damaged</font>"
 				if (status != "")
 					render = TRUE
 					toReport += "<tr><td><font color='#0000CC'>[organ.name]</font></td>\
@@ -623,7 +623,7 @@ GENE SCANNER
 						  \nGenetic destability: [T.mutation_chance] % chance of mutation on splitting"
 	if (T.cores > 1)
 		to_render += "\nMultiple cores detected"
-	to_render += "\nGrowth progress: [T.amount_grown]/[SLIME_EVOLUTION_THRESHOLD]"
+	to_render += "\nGrowth progress: [T.amount_grown]/[SLIME_EVOLUTION_TRESHOLD]"
 	if(T.effectmod)
 		to_render += "\n<span class='notice'>Core mutation in progress: [T.effectmod]</span>\
 					  \n<span class='notice'>Progress in core mutation: [T.applied] / [SLIME_EXTRACT_CROSSING_REQUIRED]</span>"

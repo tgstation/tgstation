@@ -329,8 +329,8 @@
 
 /datum/reagent/medicine/omnizine/godblood
 	name = "Godblood"
-	description = "Slowly heals all damage types. Has a rather high overdose threshold. Glows with mysterious power."
-	overdose_threshold = 150
+	description = "Slowly heals all damage types. Has a rather high overdose treshold. Glows with mysterious power."
+	overdose_treshold = 150
 
 ///Used for clownery
 /datum/reagent/lube
@@ -357,7 +357,7 @@
 	description = "A substance applied to the skin to darken the skin."
 	color = "#FFC080" // rgb: 255, 196, 128  Bright orange
 	metabolization_rate = 10 * REAGENTS_METABOLISM // very fast, so it can be applied rapidly.  But this changes on an overdose
-	overdose_threshold = 11 //Slightly more than one un-nozzled spraybottle.
+	overdose_treshold = 11 //Slightly more than one un-nozzled spraybottle.
 	taste_description = "sour oranges"
 
 /datum/reagent/spraytan/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
@@ -467,7 +467,7 @@
 									"Your limbs begin to take on a different shape." = MUT_MSG_EXTENDED,
 									"Your appendages begin morphing." = MUT_MSG_EXTENDED,
 									"You feel as though you're about to change at any moment!" = MUT_MSG_ABOUT2TURN)
-	var/cycles_to_turn = 20 //the current_cycle threshold / iterations needed before one can transform
+	var/cycles_to_turn = 20 //the current_cycle treshold / iterations needed before one can transform
 
 /datum/reagent/mutationtoxin/on_mob_life(mob/living/carbon/human/H)
 	. = TRUE

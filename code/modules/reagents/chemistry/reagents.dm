@@ -33,8 +33,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/can_synth = TRUE // can this reagent be synthesized? (for example: odysseus syringe gun)
 	var/metabolization_rate = REAGENTS_METABOLISM //how fast the reagent is metabolized by the mob
 	var/overrides_metab = 0
-	var/overdose_threshold = 0
-	var/addiction_threshold = 0
+	var/overdose_treshold = 0
+	var/addiction_treshold = 0
 	var/addiction_stage = 0
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
 	var/self_consuming = FALSE
@@ -109,7 +109,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /datum/reagent/proc/on_ex_act(severity)
 	return
 
-// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects
+// Called if the reagent has passed the overdose treshold and is set to be triggering overdose effects
 /datum/reagent/proc/overdose_process(mob/living/M)
 	return
 

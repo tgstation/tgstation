@@ -28,26 +28,26 @@
 	name = "Health"
 	desc = "Checks the host's health status."
 
-	var/threshold = 50
+	var/treshold = 50
 	var/above = TRUE
 
 /datum/nanite_rule/health/check_rule()
 	var/health_percent = program.host_mob.health / program.host_mob.maxHealth * 100
 	if(above)
-		if(health_percent >= threshold)
+		if(health_percent >= treshold)
 			return TRUE
 	else
-		if(health_percent < threshold)
+		if(health_percent < treshold)
 			return TRUE
 	return FALSE
 
 /datum/nanite_rule/health/display()
-	return "[name] [above ? ">" : "<"] [threshold]%"
+	return "[name] [above ? ">" : "<"] [treshold]%"
 
 /datum/nanite_rule/health/copy_to(datum/nanite_program/new_program)
 	var/datum/nanite_rule/health/rule = new(new_program)
 	rule.above = above
-	rule.threshold = threshold
+	rule.treshold = treshold
 
 //TODO allow inversion
 /datum/nanite_rule/crit
@@ -90,32 +90,32 @@
 	name = "Nanite Volume"
 	desc = "Checks the host's nanite volume."
 
-	var/threshold = 50
+	var/treshold = 50
 	var/above = TRUE
 
 /datum/nanite_rule/nanites/check_rule()
-	var/nanite_percent = (program.nanites.nanite_volume - program.nanites.safety_threshold)/(program.nanites.max_nanites - program.nanites.safety_threshold)*100
+	var/nanite_percent = (program.nanites.nanite_volume - program.nanites.safety_treshold)/(program.nanites.max_nanites - program.nanites.safety_treshold)*100
 	if(above)
-		if(nanite_percent >= threshold)
+		if(nanite_percent >= treshold)
 			return TRUE
 	else
-		if(nanite_percent < threshold)
+		if(nanite_percent < treshold)
 			return TRUE
 	return FALSE
 
 /datum/nanite_rule/nanites/copy_to(datum/nanite_program/new_program)
 	var/datum/nanite_rule/nanites/rule = new(new_program)
 	rule.above = above
-	rule.threshold = threshold
+	rule.treshold = treshold
 
 /datum/nanite_rule/nanites/display()
-	return "[name] [above ? ">" : "<"] [threshold]%"
+	return "[name] [above ? ">" : "<"] [treshold]%"
 
 /datum/nanite_rule/damage
 	name = "Damage"
 	desc = "Checks the host's damage."
 
-	var/threshold = 50
+	var/treshold = 50
 	var/above = TRUE
 	var/damage_type = BRUTE
 
@@ -134,18 +134,18 @@
 			damage_amt = program.host_mob.getCloneLoss()
 
 	if(above)
-		if(damage_amt >= threshold)
+		if(damage_amt >= treshold)
 			return TRUE
 	else
-		if(damage_amt < threshold)
+		if(damage_amt < treshold)
 			return TRUE
 	return FALSE
 
 /datum/nanite_rule/damage/copy_to(datum/nanite_program/new_program)
 	var/datum/nanite_rule/damage/rule = new(new_program)
 	rule.above = above
-	rule.threshold = threshold
+	rule.treshold = treshold
 	rule.damage_type = damage_type
 
 /datum/nanite_rule/damage/display()
-	return "[damage_type] [above ? ">" : "<"] [threshold]"
+	return "[damage_type] [above ? ">" : "<"] [treshold]"

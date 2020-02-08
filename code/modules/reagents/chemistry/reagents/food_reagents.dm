@@ -160,7 +160,7 @@
 	taste_mult = 1.5 // stop sugar drowning out other flavours
 	nutriment_factor = 10 * REAGENTS_METABOLISM
 	metabolization_rate = 2 * REAGENTS_METABOLISM
-	overdose_threshold = 200 // Hyperglycaemic shock
+	overdose_treshold = 200 // Hyperglycaemic shock
 	taste_description = "sweetness"
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
@@ -696,7 +696,7 @@
 	color = "#FFFFFF" // rgb: 255, 255, 255
 	taste_mult = 8
 	taste_description = "sweetness"
-	overdose_threshold = 17
+	overdose_treshold = 17
 
 /datum/reagent/consumable/astrotame/overdose_process(mob/living/carbon/M)
 	if(M.disgust < 80)
@@ -740,7 +740,7 @@
 	color = "#C8C8C8"
 	taste_mult = 6
 	taste_description = "smoke"
-	overdose_threshold = 15
+	overdose_treshold = 15
 
 /datum/reagent/consumable/char/overdose_process(mob/living/M)
 	if(prob(25))

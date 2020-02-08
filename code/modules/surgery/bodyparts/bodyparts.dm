@@ -221,7 +221,7 @@
 		total = max(total, stamina_dam)
 	return total
 
-//Checks disabled status thresholds
+//Checks disabled status tresholds
 /obj/item/bodypart/proc/update_disabled()
 	set_disabled(is_disabled())
 

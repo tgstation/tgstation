@@ -1,4 +1,4 @@
-#define REVENANT_SPAWN_THRESHOLD 20
+#define REVENANT_SPAWN_TRESHOLD 20
 
 /datum/round_event_control/revenant
 	name = "Spawn Revenant" // Did you mean 'griefghost'?
@@ -21,8 +21,8 @@
 		var/deadMobs = 0
 		for(var/mob/M in GLOB.dead_mob_list)
 			deadMobs++
-		if(deadMobs < REVENANT_SPAWN_THRESHOLD)
-			message_admins("Event attempted to spawn a revenant, but there were only [deadMobs]/[REVENANT_SPAWN_THRESHOLD] dead mobs.")
+		if(deadMobs < REVENANT_SPAWN_TRESHOLD)
+			message_admins("Event attempted to spawn a revenant, but there were only [deadMobs]/[REVENANT_SPAWN_TRESHOLD] dead mobs.")
 			return WAITING_FOR_SOMETHING
 
 	var/list/candidates = get_candidates(ROLE_REVENANT, null, ROLE_REVENANT)

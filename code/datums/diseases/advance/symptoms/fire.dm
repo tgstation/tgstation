@@ -29,7 +29,7 @@ Bonus
 	symptom_delay_min = 20
 	symptom_delay_max = 75
 	var/infective = FALSE
-	threshold_descs = list(
+	treshold_descs = list(
 		"Stage Speed 4" = "Increases the intensity of the flames.",
 		"Stage Speed 8" = "Further increases flame intensity.",
 		"Transmission 8" = "Host will spread the virus through skin flakes when bursting into flame.",
@@ -114,10 +114,10 @@ Bonus
 	symptom_delay_max = 90
 	var/chems = FALSE
 	var/explosion_power = 1
-	threshold_descs = list(
+	treshold_descs = list(
 		"Resistance 9" = "Doubles the intensity of the immolation effect, but reduces the frequency of all of this symptom's effects.",
 		"Stage Speed 8" = "Increases explosion radius and explosion damage to the host when the host is wet.",
-		"Transmission 8" = "Additionally synthesizes chlorine trifluoride and napalm inside the host. More chemicals are synthesized if the resistance 9 threshold has been met."
+		"Transmission 8" = "Additionally synthesizes chlorine trifluoride and napalm inside the host. More chemicals are synthesized if the resistance 9 treshold has been met."
 	)
 
 /datum/symptom/alkali/Start(datum/disease/advance/A)

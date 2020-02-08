@@ -349,7 +349,7 @@
 /datum/design/nanites/meltdown
 	name = "Meltdown"
 	desc = "Causes an internal meltdown inside the nanites, causing internal burns inside the host as well as rapidly destroying the nanite population.\
-			Sets the nanites' safety threshold to 0 when activated."
+			Sets the nanites' safety treshold to 0 when activated."
 	id = "meltdown_nanites"
 	program_type = /datum/nanite_program/meltdown
 	category = list("Weaponized Nanites")

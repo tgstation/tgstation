@@ -293,14 +293,14 @@
 		if(item_type == "pill")
 			var/obj/item/reagent_containers/pill/P
 			var/target_loc = drop_location()
-			var/drop_threshold = INFINITY
+			var/drop_treshold = INFINITY
 			if(bottle)
 				var/datum/component/storage/STRB = bottle.GetComponent(
 					/datum/component/storage)
 				if(STRB)
-					drop_threshold = STRB.max_items - bottle.contents.len
+					drop_treshold = STRB.max_items - bottle.contents.len
 			for(var/i = 0; i < amount; i++)
-				if(i < drop_threshold)
+				if(i < drop_treshold)
 					P = new/obj/item/reagent_containers/pill(target_loc)
 				else
 					P = new/obj/item/reagent_containers/pill(drop_location())
@@ -361,7 +361,7 @@
 				state = "Gas"
 			var/const/P = 3 //The number of seconds between life ticks
 			var/T = initial(R.metabolization_rate) * (60 / P)
-			analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
+			analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_treshold), "addicD" = initial(R.addiction_treshold))
 			screen = "analyze"
 			return TRUE
 

@@ -242,7 +242,7 @@
 	description = "Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant."
 	color = "#482000" // rgb: 72, 32, 0
 	nutriment_factor = 0
-	overdose_threshold = 80
+	overdose_treshold = 80
 	taste_description = "bitterness"
 	glass_icon_state = "glass_brown"
 	glass_name = "glass of coffee"
@@ -539,7 +539,7 @@
 	name = "Monkey Energy"
 	description = "The only drink that will make you unleash the ape."
 	color = "#f39b03" // rgb: 243, 155, 3
-	overdose_threshold = 60
+	overdose_treshold = 60
 	taste_description = "barbecue and nostalgia"
 	glass_icon_state = "monkey_energy_glass"
 	glass_name = "glass of Monkey Energy"

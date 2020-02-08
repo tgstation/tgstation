@@ -218,7 +218,7 @@
 	density = FALSE //allows shuttle airlocks to close, nothing but an approved passenger gets past CanPass
 	locked = TRUE
 	use_power = FALSE
-	var/threshold = 500
+	var/treshold = 500
 	var/static/list/approved_passengers = list()
 	var/static/list/check_times = list()
 	var/list/payees = list()
@@ -262,48 +262,48 @@
 			account = H.get_bank_account()
 
 	if(account)
-		if(account.account_balance < threshold - payees[AM])
+		if(account.account_balance < treshold - payees[AM])
 			account.adjust_money(-account.account_balance)
 			payees[AM] += account.account_balance
 		else
-			var/money_owed = threshold - payees[AM]
+			var/money_owed = treshold - payees[AM]
 			account.adjust_money(-money_owed)
 			payees[AM] += money_owed
 
 	var/list/counted_money = list()
 
 	for(var/obj/item/coin/C in AM.GetAllContents())
-		if(payees[AM] >= threshold)
+		if(payees[AM] >= treshold)
 			break
 		payees[AM] += C.value
 		counted_money += C
 	for(var/obj/item/stack/spacecash/S in AM.GetAllContents())
-		if(payees[AM] >= threshold)
+		if(payees[AM] >= treshold)
 			break
 		payees[AM] += S.value * S.amount
 		counted_money += S
 	for(var/obj/item/holochip/H in AM.GetAllContents())
-		if(payees[AM] >= threshold)
+		if(payees[AM] >= treshold)
 			break
 		payees[AM] += H.credits
 		counted_money += H
 
-	if(payees[AM] < threshold && istype(AM.pulling, /obj/item/coin))
+	if(payees[AM] < treshold && istype(AM.pulling, /obj/item/coin))
 		var/obj/item/coin/C = AM.pulling
 		payees[AM] += C.value
 		counted_money += C
 
-	else if(payees[AM] < threshold && istype(AM.pulling, /obj/item/stack/spacecash))
+	else if(payees[AM] < treshold && istype(AM.pulling, /obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/S = AM.pulling
 		payees[AM] += S.value * S.amount
 		counted_money += S
 
-	else if(payees[AM] < threshold && istype(AM.pulling, /obj/item/holochip))
+	else if(payees[AM] < treshold && istype(AM.pulling, /obj/item/holochip))
 		var/obj/item/holochip/H = AM.pulling
 		payees[AM] += H.credits
 		counted_money += H
 
-	if(payees[AM] < threshold)
+	if(payees[AM] < treshold)
 		var/armless
 		if(!ishuman(AM) && !istype(AM, /mob/living/simple_animal/slime))
 			armless = TRUE
@@ -318,10 +318,10 @@
 					to_chat(AM, "<span class='notice'>Try pulling a valid ID, space cash, holochip or coin into \the [src]!</span>")
 					check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
 
-	if(payees[AM] >= threshold)
+	if(payees[AM] >= treshold)
 		for(var/obj/I in counted_money)
 			qdel(I)
-		payees[AM] -= threshold
+		payees[AM] -= treshold
 
 		var/change = FALSE
 		if(payees[AM] > 0)
@@ -346,7 +346,7 @@
 		for(var/obj/I in counted_money)
 			qdel(I)
 		if(!check_times[AM] || check_times[AM] < world.time) //Let's not spam the message
-			to_chat(AM, "<span class='notice'>[payees[AM]] cr received. You need [threshold-payees[AM]] cr more.</span>")
+			to_chat(AM, "<span class='notice'>[payees[AM]] cr received. You need [treshold-payees[AM]] cr more.</span>")
 			check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
 		alarm_beep()
 		return ..()

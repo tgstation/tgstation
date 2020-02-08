@@ -89,7 +89,7 @@
 	if(prob(20))
 		if(carbon_owner)
 			carbon_owner.handle_dreams()
-		if(prob(10) && owner.health > owner.crit_threshold)
+		if(prob(10) && owner.health > owner.crit_treshold)
 			owner.emote("snore")
 
 /obj/screen/alert/status_effect/asleep
@@ -272,7 +272,7 @@
 	id = "saw_bleed"
 	tick_interval = 6
 	delay_before_decay = 5
-	stack_threshold = 10
+	stack_treshold = 10
 	max_stacks = 10
 	overlay_file = 'icons/effects/bleed.dmi'
 	underlay_file = 'icons/effects/bleed.dmi'
@@ -283,7 +283,7 @@
 /datum/status_effect/stacking/saw_bleed/fadeout_effect()
 	new /obj/effect/temp_visual/bleed(get_turf(owner))
 
-/datum/status_effect/stacking/saw_bleed/threshold_cross_effect()
+/datum/status_effect/stacking/saw_bleed/treshold_cross_effect()
 	owner.adjustBruteLoss(bleed_damage)
 	var/turf/T = get_turf(owner)
 	new /obj/effect/temp_visual/bleed/explode(T)

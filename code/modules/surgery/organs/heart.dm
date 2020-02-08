@@ -8,10 +8,10 @@
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = 3.5 * STANDARD_ORGAN_DECAY		//designed to fail a little under 4 minutes after death
 
-	low_threshold_passed = "<span class='info'>Prickles of pain appear then die out from within your chest...</span>"
-	high_threshold_passed = "<span class='warning'>Something inside your chest hurts, and the pain isn't subsiding. You notice yourself breathing far faster than before.</span>"
+	low_treshold_passed = "<span class='info'>Prickles of pain appear then die out from within your chest...</span>"
+	high_treshold_passed = "<span class='warning'>Something inside your chest hurts, and the pain isn't subsiding. You notice yourself breathing far faster than before.</span>"
 	now_fixed = "<span class='info'>Your heart begins to beat again.</span>"
-	high_threshold_cleared = "<span class='info'>The pain in your chest has died down, and your breathing becomes more relaxed.</span>"
+	high_treshold_cleared = "<span class='info'>The pain in your chest has died down, and your breathing becomes more relaxed.</span>"
 
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = 1
@@ -68,16 +68,16 @@
 		var/mob/living/carbon/H = owner
 
 
-		if(H.health <= H.crit_threshold && beat != BEAT_SLOW)
+		if(H.health <= H.crit_treshold && beat != BEAT_SLOW)
 			beat = BEAT_SLOW
 			H.playsound_local(get_turf(H), slowbeat,40,0, channel = CHANNEL_HEARTBEAT)
 			to_chat(owner, "<span class='notice'>You feel your heart slow down...</span>")
-		if(beat == BEAT_SLOW && H.health > H.crit_threshold)
+		if(beat == BEAT_SLOW && H.health > H.crit_treshold)
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
 		if(H.jitteriness)
-			if(H.health > HEALTH_THRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
+			if(H.health > HEALTH_TRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
 				H.playsound_local(get_turf(H),fastbeat,40,0, channel = CHANNEL_HEARTBEAT)
 				beat = BEAT_FAST
 		else if(beat == BEAT_FAST)
@@ -176,7 +176,7 @@
 	desc = "A basic electronic device designed to mimic the functions of an organic human heart."
 	icon_state = "heart-c"
 	organ_flags = ORGAN_SYNTHETIC
-	maxHealth = STANDARD_ORGAN_THRESHOLD*0.75 //This also hits defib timer, so a bit higher than its less important counterparts
+	maxHealth = STANDARD_ORGAN_TRESHOLD*0.75 //This also hits defib timer, so a bit higher than its less important counterparts
 
 	var/dose_available = FALSE
 	var/rid = /datum/reagent/medicine/epinephrine
@@ -187,7 +187,7 @@
 	name = "cybernetic heart"
 	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma."
 	icon_state = "heart-c-u"
-	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
+	maxHealth = 1.5 * STANDARD_ORGAN_TRESHOLD
 	dose_available = TRUE
 	emp_vulnerability = 40
 
@@ -195,7 +195,7 @@
 	name = "upgraded cybernetic heart"
 	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma. This upgraded model can regenerate its dose after use."
 	icon_state = "heart-c-u2"
-	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
+	maxHealth = 2 * STANDARD_ORGAN_TRESHOLD
 	dose_available = TRUE
 	emp_vulnerability = 20
 
@@ -216,7 +216,7 @@
 
 /obj/item/organ/heart/cybernetic/on_life()
 	. = ..()
-	if(dose_available && owner.health <= owner.crit_threshold && !owner.reagents.has_reagent(rid))
+	if(dose_available && owner.health <= owner.crit_treshold && !owner.reagents.has_reagent(rid))
 		used_dose()
 
 /obj/item/organ/heart/cybernetic/proc/used_dose()

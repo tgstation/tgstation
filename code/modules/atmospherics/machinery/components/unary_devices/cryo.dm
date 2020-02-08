@@ -362,7 +362,7 @@
 				data["occupant"]["statstate"] = "bad"
 		data["occupant"]["health"] = round(mob_occupant.health, 1)
 		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
-		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
+		data["occupant"]["minHealth"] = HEALTH_TRESHOLD_DEAD
 		data["occupant"]["bruteLoss"] = round(mob_occupant.getBruteLoss(), 1)
 		data["occupant"]["oxyLoss"] = round(mob_occupant.getOxyLoss(), 1)
 		data["occupant"]["toxLoss"] = round(mob_occupant.getToxLoss(), 1)

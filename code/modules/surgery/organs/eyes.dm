@@ -8,16 +8,16 @@
 
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY
-	maxHealth = 0.5 * STANDARD_ORGAN_THRESHOLD		//half the normal health max since we go blind at 30, a permanent blindness at 50 therefore makes sense unless medicine is administered
-	high_threshold = 0.3 * STANDARD_ORGAN_THRESHOLD	//threshold at 30
-	low_threshold = 0.2 * STANDARD_ORGAN_THRESHOLD	//threshold at 20
+	maxHealth = 0.5 * STANDARD_ORGAN_TRESHOLD		//half the normal health max since we go blind at 30, a permanent blindness at 50 therefore makes sense unless medicine is administered
+	high_treshold = 0.3 * STANDARD_ORGAN_TRESHOLD	//treshold at 30
+	low_treshold = 0.2 * STANDARD_ORGAN_TRESHOLD	//treshold at 20
 
-	low_threshold_passed = "<span class='info'>Distant objects become somewhat less tangible.</span>"
-	high_threshold_passed = "<span class='info'>Everything starts to look a lot less clear.</span>"
+	low_treshold_passed = "<span class='info'>Distant objects become somewhat less tangible.</span>"
+	high_treshold_passed = "<span class='info'>Everything starts to look a lot less clear.</span>"
 	now_failing = "<span class='warning'>Darkness envelopes you, as your eyes go blind!</span>"
 	now_fixed = "<span class='info'>Color and shapes are once again perceivable.</span>"
-	high_threshold_cleared = "<span class='info'>Your vision functions passably once more.</span>"
-	low_threshold_cleared = "<span class='info'>Your vision is cleared of any ailment.</span>"
+	high_treshold_cleared = "<span class='info'>Your vision functions passably once more.</span>"
+	low_treshold_cleared = "<span class='info'>Your vision is cleared of any ailment.</span>"
 
 	var/sight_flags = 0
 	var/see_in_dark = 2

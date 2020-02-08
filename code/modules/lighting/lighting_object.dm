@@ -100,8 +100,8 @@
 	var/ag = ca.cache_g
 	var/ab = ca.cache_b
 
-	#if LIGHTING_SOFT_THRESHOLD != 0
-	var/set_luminosity = max > LIGHTING_SOFT_THRESHOLD
+	#if LIGHTING_SOFT_TRESHOLD != 0
+	var/set_luminosity = max > LIGHTING_SOFT_TRESHOLD
 	#else
 	// Because of floating points™?, it won't even be a flat 0.
 	// This number is mostly arbitrary.

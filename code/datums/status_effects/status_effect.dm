@@ -144,10 +144,10 @@
 	var/delay_before_decay //deciseconds until ticks start occuring, which removes stacks (first stack will be removed at this time plus tick_interval)
 	tick_interval = 10 //deciseconds between decays once decay starts
 	var/stack_decay = 1 //how many stacks are lost per tick (decay trigger)
-	var/stack_threshold //special effects trigger when stacks reach this amount
+	var/stack_treshold //special effects trigger when stacks reach this amount
 	var/max_stacks //stacks cannot exceed this amount
-	var/consumed_on_threshold = TRUE //if status should be removed once threshold is crossed
-	var/threshold_crossed = FALSE //set to true once the threshold is crossed, false once it falls back below
+	var/consumed_on_treshold = TRUE //if status should be removed once treshold is crossed
+	var/treshold_crossed = FALSE //set to true once the treshold is crossed, false once it falls back below
 	var/overlay_file
 	var/underlay_file
 	var/overlay_state // states in .dmi must be given a name followed by a number which corresponds to a number of stacks. put the state name without the number in these state vars
@@ -155,21 +155,21 @@
 	var/mutable_appearance/status_overlay
 	var/mutable_appearance/status_underlay
 
-/datum/status_effect/stacking/proc/threshold_cross_effect() //what happens when threshold is crossed
+/datum/status_effect/stacking/proc/treshold_cross_effect() //what happens when treshold is crossed
 
-/datum/status_effect/stacking/proc/stacks_consumed_effect() //runs if status is deleted due to threshold being crossed
+/datum/status_effect/stacking/proc/stacks_consumed_effect() //runs if status is deleted due to treshold being crossed
 
 /datum/status_effect/stacking/proc/fadeout_effect() //runs if status is deleted due to being under one stack
 
 /datum/status_effect/stacking/proc/stack_decay_effect() //runs every time tick() causes stacks to decay
 
-/datum/status_effect/stacking/proc/on_threshold_cross()
-	threshold_cross_effect()
-	if(consumed_on_threshold)
+/datum/status_effect/stacking/proc/on_treshold_cross()
+	treshold_cross_effect()
+	if(consumed_on_treshold)
 		stacks_consumed_effect()
 		qdel(src)
 
-/datum/status_effect/stacking/proc/on_threshold_drop()
+/datum/status_effect/stacking/proc/on_treshold_drop()
 
 /datum/status_effect/stacking/proc/can_have_status()
 	return owner.stat != DEAD
@@ -191,14 +191,14 @@
 	owner.underlays -= status_underlay
 	stacks += stacks_added
 	if(stacks > 0)
-		if(stacks >= stack_threshold && !threshold_crossed) //threshold_crossed check prevents threshold effect from occuring if changing from above threshold to still above threshold
-			threshold_crossed = TRUE
-			on_threshold_cross()
-			if(consumed_on_threshold)
+		if(stacks >= stack_treshold && !treshold_crossed) //treshold_crossed check prevents treshold effect from occuring if changing from above treshold to still above treshold
+			treshold_crossed = TRUE
+			on_treshold_cross()
+			if(consumed_on_treshold)
 				return
-		else if(stacks < stack_threshold && threshold_crossed)
-			threshold_crossed = FALSE //resets threshold effect if we fall below threshold so threshold effect can trigger again
-			on_threshold_drop()
+		else if(stacks < stack_treshold && treshold_crossed)
+			treshold_crossed = FALSE //resets treshold effect if we fall below treshold so treshold effect can trigger again
+			on_treshold_drop()
 		if(stacks_added > 0)
 			tick_interval += delay_before_decay //refreshes time until decay
 		stacks = min(stacks, max_stacks)

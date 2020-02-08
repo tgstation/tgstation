@@ -141,7 +141,7 @@
 		skipcatch = TRUE
 		blocked = TRUE
 	else if(I)
-		if(((throwingdatum ? throwingdatum.speed : I.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || I.embedding.embedded_ignore_throwspeed_threshold)
+		if(((throwingdatum ? throwingdatum.speed : I.throw_speed) >= EMBED_THROWSPEED_TRESHOLD) || I.embedding.embedded_ignore_throwspeed_treshold)
 			if(can_embed(I))
 				if(prob(I.embedding.embed_chance) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
 					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
@@ -403,7 +403,7 @@
 
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
-			if(bomb_armor < EXPLODE_GIB_THRESHOLD) //gibs the mob if their bomb armor is lower than EXPLODE_GIB_THRESHOLD
+			if(bomb_armor < EXPLODE_GIB_TRESHOLD) //gibs the mob if their bomb armor is lower than EXPLODE_GIB_TRESHOLD
 				for(var/I in contents)
 					var/atom/A = I
 					if(!QDELETED(A))
@@ -803,7 +803,7 @@
 			if(broken.len)
 				broken += ", "
 			broken += organ.name
-		else if(organ.damage > organ.low_threshold)
+		else if(organ.damage > organ.low_treshold)
 			if(damaged.len)
 				damaged += ", "
 			damaged += organ.name

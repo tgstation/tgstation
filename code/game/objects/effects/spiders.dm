@@ -106,7 +106,7 @@
 	desc = "It never stays still for long."
 	icon_state = "spiderling"
 	anchored = FALSE
-	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
+	layer = PROJECTILE_HIT_TRESHHOLD_LAYER
 	max_integrity = 3
 	var/amount_grown = 0
 	var/grow_as = null

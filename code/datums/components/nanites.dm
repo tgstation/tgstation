@@ -5,7 +5,7 @@
 	var/nanite_volume = 100		//amount of nanites in the system, used as fuel for nanite programs
 	var/max_nanites = 500		//maximum amount of nanites in the system
 	var/regen_rate = 0.5		//nanites generated per second
-	var/safety_threshold = 50	//how low nanites will get before they stop processing/triggering
+	var/safety_treshold = 50	//how low nanites will get before they stop processing/triggering
 	var/cloud_id = 0 			//0 if not connected to the cloud, 1-100 to set a determined cloud backup to draw from
 	var/cloud_active = TRUE		//if false, won't sync to the cloud
 	var/next_sync = 0
@@ -170,7 +170,7 @@
 	return COMPONENT_PROGRAM_INSTALLED
 
 /datum/component/nanites/proc/consume_nanites(amount, force = FALSE)
-	if(!force && safety_threshold && (nanite_volume - amount < safety_threshold))
+	if(!force && safety_treshold && (nanite_volume - amount < safety_treshold))
 		return FALSE
 	adjust_nanites(null, -amount)
 	return (nanite_volume > 0)
@@ -268,7 +268,7 @@
 			cloud_active = TRUE
 
 /datum/component/nanites/proc/set_safety(datum/source, amount)
-	safety_threshold = CLAMP(amount, 0, max_nanites)
+	safety_treshold = CLAMP(amount, 0, max_nanites)
 
 /datum/component/nanites/proc/set_regen(datum/source, amount)
 	regen_rate = amount
@@ -281,7 +281,7 @@
 	nanite_data["max_nanites"] = max_nanites
 	nanite_data["cloud_id"] = cloud_id
 	nanite_data["regen_rate"] = regen_rate
-	nanite_data["safety_threshold"] = safety_threshold
+	nanite_data["safety_treshold"] = safety_treshold
 	nanite_data["stealth"] = stealth
 
 /datum/component/nanites/proc/get_programs(datum/source, list/nanite_programs)
@@ -310,7 +310,7 @@
 		to_chat(user, "<span class='info'>NANITES DETECTED</span>")
 		to_chat(user, "<span class='info'>================</span>")
 		to_chat(user, "<span class='info'>Saturation: [nanite_volume]/[max_nanites]</span>")
-		to_chat(user, "<span class='info'>Safety Threshold: [safety_threshold]</span>")
+		to_chat(user, "<span class='info'>Safety Threshold: [safety_treshold]</span>")
 		to_chat(user, "<span class='info'>Cloud ID: [cloud_id ? cloud_id : "None"]</span>")
 		to_chat(user, "<span class='info'>Cloud Sync: [cloud_active ? "Active" : "Disabled"]</span>")
 		to_chat(user, "<span class='info'>================</span>")
@@ -327,7 +327,7 @@
 	data["has_nanites"] = TRUE
 	data["nanite_volume"] = nanite_volume
 	data["regen_rate"] = regen_rate
-	data["safety_threshold"] = safety_threshold
+	data["safety_treshold"] = safety_treshold
 	data["cloud_id"] = cloud_id
 	data["cloud_active"] = cloud_active
 	var/list/mob_programs = list()

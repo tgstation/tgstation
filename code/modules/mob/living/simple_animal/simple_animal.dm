@@ -48,7 +48,7 @@
 	var/response_harm_simple = "hit"
 	var/harm_intent_damage = 3
 	///Minimum force required to deal any damage.
-	var/force_threshold = 0
+	var/force_treshold = 0
 
 	///Temperature effect.
 	var/minbodytemp = 250

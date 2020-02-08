@@ -11,11 +11,11 @@
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY
 
-	low_threshold_passed = "<span class='warning'>You feel short of breath.</span>"
-	high_threshold_passed = "<span class='warning'>You feel some sort of constriction around your chest as your breathing becomes shallow and rapid.</span>"
+	low_treshold_passed = "<span class='warning'>You feel short of breath.</span>"
+	high_treshold_passed = "<span class='warning'>You feel some sort of constriction around your chest as your breathing becomes shallow and rapid.</span>"
 	now_fixed = "<span class='warning'>Your lungs seem to once again be able to hold air.</span>"
-	low_threshold_cleared = "<span class='info'>You can breathe normally again.</span>"
-	high_threshold_cleared = "<span class='info'>The constriction around your chest loosens as your breathing calms down.</span>"
+	low_treshold_cleared = "<span class='info'>You can breathe normally again.</span>"
+	high_treshold_cleared = "<span class='info'>The constriction around your chest loosens as your breathing calms down.</span>"
 
 
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/medicine/salbutamol = 5)
@@ -49,18 +49,18 @@
 	var/tox_damage_type = TOX
 
 	var/cold_message = "your face freezing and an icicle forming"
-	var/cold_level_1_threshold = 260
-	var/cold_level_2_threshold = 200
-	var/cold_level_3_threshold = 120
+	var/cold_level_1_treshold = 260
+	var/cold_level_2_treshold = 200
+	var/cold_level_3_treshold = 120
 	var/cold_level_1_damage = COLD_GAS_DAMAGE_LEVEL_1 //Keep in mind with gas damage levels, you can set these to be negative, if you want someone to heal, instead.
 	var/cold_level_2_damage = COLD_GAS_DAMAGE_LEVEL_2
 	var/cold_level_3_damage = COLD_GAS_DAMAGE_LEVEL_3
 	var/cold_damage_type = BURN
 
 	var/hot_message = "your face burning and a searing heat"
-	var/heat_level_1_threshold = 360
-	var/heat_level_2_threshold = 400
-	var/heat_level_3_threshold = 1000
+	var/heat_level_1_treshold = 360
+	var/heat_level_2_treshold = 400
+	var/heat_level_3_treshold = 1000
 	var/heat_level_1_damage = HEAT_GAS_DAMAGE_LEVEL_1
 	var/heat_level_2_damage = HEAT_GAS_DAMAGE_LEVEL_2
 	var/heat_level_3_damage = HEAT_GAS_DAMAGE_LEVEL_3
@@ -78,7 +78,7 @@
 	if(!breath || (breath.total_moles() == 0))
 		if(H.reagents.has_reagent(crit_stabilizing_reagent, needs_metabolizing = TRUE))
 			return
-		if(H.health >= H.crit_threshold)
+		if(H.health >= H.crit_treshold)
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 		else if(!HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
 			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
@@ -125,7 +125,7 @@
 			H.throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 		else
 			H.failed_last_breath = FALSE
-			if(H.health >= H.crit_threshold)
+			if(H.health >= H.crit_treshold)
 				H.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/oxygen][MOLES]
 			H.clear_alert("not_enough_oxy")
@@ -153,7 +153,7 @@
 			H.throw_alert("nitro", /obj/screen/alert/not_enough_nitro)
 		else
 			H.failed_last_breath = FALSE
-			if(H.health >= H.crit_threshold)
+			if(H.health >= H.crit_treshold)
 				H.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/nitrogen][MOLES]
 			H.clear_alert("nitro")
@@ -190,7 +190,7 @@
 			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 		else
 			H.failed_last_breath = FALSE
-			if(H.health >= H.crit_threshold)
+			if(H.health >= H.crit_treshold)
 				H.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/carbon_dioxide][MOLES]
 			H.clear_alert("not_enough_co2")
@@ -220,7 +220,7 @@
 			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
 		else
 			H.failed_last_breath = FALSE
-			if(H.health >= H.crit_threshold)
+			if(H.health >= H.crit_treshold)
 				H.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/plasma][MOLES]
 			H.clear_alert("not_enough_tox")
@@ -371,25 +371,25 @@
 
 	if(!HAS_TRAIT(H, TRAIT_RESISTCOLD)) // COLD DAMAGE
 		var/cold_modifier = H.dna.species.coldmod
-		if(breath_temperature < cold_level_3_threshold)
+		if(breath_temperature < cold_level_3_treshold)
 			H.apply_damage_type(cold_level_3_damage*cold_modifier, cold_damage_type)
-		if(breath_temperature > cold_level_3_threshold && breath_temperature < cold_level_2_threshold)
+		if(breath_temperature > cold_level_3_treshold && breath_temperature < cold_level_2_treshold)
 			H.apply_damage_type(cold_level_2_damage*cold_modifier, cold_damage_type)
-		if(breath_temperature > cold_level_2_threshold && breath_temperature < cold_level_1_threshold)
+		if(breath_temperature > cold_level_2_treshold && breath_temperature < cold_level_1_treshold)
 			H.apply_damage_type(cold_level_1_damage*cold_modifier, cold_damage_type)
-		if(breath_temperature < cold_level_1_threshold)
+		if(breath_temperature < cold_level_1_treshold)
 			if(prob(20))
 				to_chat(H, "<span class='warning'>You feel [cold_message] in your [name]!</span>")
 
 	if(!HAS_TRAIT(H, TRAIT_RESISTHEAT)) // HEAT DAMAGE
 		var/heat_modifier = H.dna.species.heatmod
-		if(breath_temperature > heat_level_1_threshold && breath_temperature < heat_level_2_threshold)
+		if(breath_temperature > heat_level_1_treshold && breath_temperature < heat_level_2_treshold)
 			H.apply_damage_type(heat_level_1_damage*heat_modifier, heat_damage_type)
-		if(breath_temperature > heat_level_2_threshold && breath_temperature < heat_level_3_threshold)
+		if(breath_temperature > heat_level_2_treshold && breath_temperature < heat_level_3_treshold)
 			H.apply_damage_type(heat_level_2_damage*heat_modifier, heat_damage_type)
-		if(breath_temperature > heat_level_3_threshold)
+		if(breath_temperature > heat_level_3_treshold)
 			H.apply_damage_type(heat_level_3_damage*heat_modifier, heat_damage_type)
-		if(breath_temperature > heat_level_1_threshold)
+		if(breath_temperature > heat_level_1_treshold)
 			if(prob(20))
 				to_chat(H, "<span class='warning'>You feel [hot_message] in your [name]!</span>")
 
@@ -401,8 +401,8 @@
 	if(failed && !(organ_flags & ORGAN_FAILING))
 		failed = FALSE
 		return
-	if(damage >= low_threshold)
-		var/do_i_cough = damage < high_threshold ? prob(5) : prob(10) // between : past high
+	if(damage >= low_treshold)
+		var/do_i_cough = damage < high_treshold ? prob(5) : prob(10) // between : past high
 		if(do_i_cough)
 			owner.emote("cough")
 	if(organ_flags & ORGAN_FAILING && owner.stat == CONSCIOUS)
@@ -437,7 +437,7 @@
 	icon_state = "lungs-c"
 	organ_flags = ORGAN_SYNTHETIC
 	safe_oxygen_min = 16
-	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
+	maxHealth = STANDARD_ORGAN_TRESHOLD*0.5
 
 	var/emp_vulnerability = 80	//Chance of permanent effects if emp-ed.
 
@@ -446,7 +446,7 @@
 	desc = "A cybernetic version of the lungs found in traditional humanoid entities. Allows for greater intakes of oxygen than organic lungs, requiring slightly less pressure."
 	icon_state = "lungs-c-u"
 	organ_flags = ORGAN_SYNTHETIC
-	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
+	maxHealth = 1.5 * STANDARD_ORGAN_TRESHOLD
 	safe_oxygen_min = 13
 	emp_vulnerability = 40
 
@@ -456,12 +456,12 @@
 	icon_state = "lungs-c-u2"
 	safe_toxins_max = 20
 	safe_co2_max = 20
-	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
+	maxHealth = 2 * STANDARD_ORGAN_TRESHOLD
 	emp_vulnerability = 20
 
-	cold_level_1_threshold = 200
-	cold_level_2_threshold = 140
-	cold_level_3_threshold = 100
+	cold_level_1_treshold = 200
+	cold_level_2_treshold = 140
+	cold_level_3_treshold = 100
 
 /obj/item/organ/lungs/cybernetic/emp_act(severity)
 	. = ..()

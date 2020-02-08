@@ -29,7 +29,7 @@ BONUS
 	base_message_chance = 100
 	symptom_delay_min = 15
 	symptom_delay_max = 30
-	threshold_descs = list(
+	treshold_descs = list(
 		"Stage Speed 6" = "Headaches will cause severe pain, that weakens the host.",
 		"Stage Speed 9" = "Headaches become less frequent but far more intense, preventing any action from the host.",
 		"Stealth 4" = "Reduces headache frequency until later stages.",

@@ -319,9 +319,9 @@ the new instance inside the host to be updated to the template's stats.
 	if(examining_ability)
 		dat += "<a href='byond://?src=[REF(src)];main_menu=1'>Back</a><br>"
 		dat += "<h1>[examining_ability.name]</h1>"
-		dat += "[examining_ability.stat_block][examining_ability.long_desc][examining_ability.threshold_block]"
-		for(var/entry in examining_ability.threshold_block)
-			dat += "<b>[entry]</b>: [examining_ability.threshold_block[entry]]<br>"
+		dat += "[examining_ability.stat_block][examining_ability.long_desc][examining_ability.treshold_block]"
+		for(var/entry in examining_ability.treshold_block)
+			dat += "<b>[entry]</b>: [examining_ability.treshold_block[entry]]<br>"
 	else
 		dat += "<h1>Disease Statistics</h1><br>\
 			Resistance: [DT.totalResistance()]<br>\

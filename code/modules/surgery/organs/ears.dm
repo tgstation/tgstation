@@ -9,10 +9,10 @@
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY
 
-	low_threshold_passed = "<span class='info'>Your ears begin to resonate with an internal ring sometimes.</span>"
+	low_treshold_passed = "<span class='info'>Your ears begin to resonate with an internal ring sometimes.</span>"
 	now_failing = "<span class='warning'>You are unable to hear at all!</span>"
 	now_fixed = "<span class='info'>Noise slowly begins filling your ears once more.</span>"
-	low_threshold_cleared = "<span class='info'>The ringing in your ears has died down.</span>"
+	low_treshold_cleared = "<span class='info'>The ringing in your ears has died down.</span>"
 
 	// `deaf` measures "ticks" of deafness. While > 0, the person is unable
 	// to hear anything.
@@ -39,7 +39,7 @@
 		deaf = max(deaf, 1)
 	else if(!(organ_flags & ORGAN_FAILING)) // if this organ is failing, do not clear deaf stacks.
 		deaf = max(deaf - 1, 0)
-		if(prob(damage / 30) && (damage > low_threshold))
+		if(prob(damage / 30) && (damage > low_treshold))
 			adjustEarDamage(0, 4)
 			SEND_SOUND(C, sound('sound/weapons/flash_ring.ogg'))
 			to_chat(C, "<span class='warning'>The ringing in your ears grows louder, blocking out any external noises for a moment.</span>")

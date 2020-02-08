@@ -182,7 +182,7 @@
 	description = "A powder derived from fish toxin, Rezadone can effectively treat genetic damage as well as restoring minor wounds. Overdose will cause intense nausea and minor toxin damage."
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
-	overdose_threshold = 30
+	overdose_treshold = 30
 	taste_description = "fish"
 
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/carbon/M)
@@ -221,7 +221,7 @@
 	reagent_state = LIQUID
 	color = "#1E8BFF"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	overdose_threshold = 25
+	overdose_treshold = 25
 
 /datum/reagent/medicine/oxandrolone/on_mob_life(mob/living/carbon/M)
 	if(M.getFireLoss() > 25)
@@ -243,7 +243,7 @@
 	reagent_state = LIQUID
 	color = "#DCDCDC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	overdose_threshold = 60
+	overdose_treshold = 60
 	taste_description = "sweetness and salt"
 	var/last_added = 0
 	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10	//So that normal blood regeneration can continue with salglu active
@@ -320,7 +320,7 @@
 	reagent_state = LIQUID
 	color = "#DCDCDC"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	overdose_threshold = 30
+	overdose_treshold = 30
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(-0.5*REM, 0)
@@ -389,7 +389,7 @@
 	reagent_state = LIQUID
 	color = "#D2D2D2"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	overdose_threshold = 25
+	overdose_treshold = 25
 
 /datum/reagent/medicine/sal_acid/on_mob_life(mob/living/carbon/M)
 	if(M.getBruteLoss() > 25)
@@ -425,8 +425,8 @@
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	overdose_threshold = 30
-	addiction_threshold = 25
+	overdose_treshold = 30
+	addiction_treshold = 25
 
 /datum/reagent/medicine/ephedrine/on_mob_metabolize(mob/living/L)
 	..()
@@ -534,8 +534,8 @@
 	reagent_state = LIQUID
 	color = "#A9FBFB"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	overdose_threshold = 30
-	addiction_threshold = 25
+	overdose_treshold = 30
+	addiction_treshold = 25
 
 /datum/reagent/medicine/morphine/on_mob_metabolize(mob/living/L)
 	..()
@@ -642,10 +642,10 @@
 	reagent_state = LIQUID
 	color = "#1D3535" //slightly more blue, like epinephrine
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	overdose_threshold = 35
+	overdose_treshold = 35
 
 /datum/reagent/medicine/atropine/on_mob_life(mob/living/carbon/M)
-	if(M.health <= M.crit_threshold)
+	if(M.health <= M.crit_treshold)
 		M.adjustToxLoss(-2*REM, 0)
 		M.adjustBruteLoss(-2*REM, 0)
 		M.adjustFireLoss(-2*REM, 0)
@@ -670,7 +670,7 @@
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	overdose_threshold = 30
+	overdose_treshold = 30
 
 /datum/reagent/medicine/epinephrine/on_mob_metabolize(mob/living/carbon/M)
 	..()
@@ -681,7 +681,7 @@
 	..()
 
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/carbon/M)
-	if(M.health <= M.crit_threshold)
+	if(M.health <= M.crit_treshold)
 		M.adjustToxLoss(-0.5*REM, 0)
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
@@ -821,7 +821,7 @@
 	description = "Increases stun resistance and movement speed in addition to restoring minor damage and weakness. Overdose causes weakness and toxin damage."
 	color = "#78008C"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	overdose_threshold = 60
+	overdose_treshold = 60
 
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/L)
 	..()
@@ -905,7 +905,7 @@
 	description = "Miniature medical robots that swiftly restore bodily damage."
 	reagent_state = SOLID
 	color = "#555555"
-	overdose_threshold = 30
+	overdose_treshold = 30
 
 /datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-5*REM, 0) //A ton of healing - this is a 50 telecrystal investment.
@@ -929,7 +929,7 @@
 	description = "Ichor from an extremely powerful plant. Great for restoring wounds, but it's a little heavy on the brain. For some strange reason, it also induces temporary pacifism in those who imbibe it and semi-permanent pacifism in those who overdose on it."
 	color = "#FFAF00"
 	metabolization_rate = 0.4 //Math is based on specific metab rate so we want this to be static AKA if define or medicine metab rate changes, we want this to stay until we can rework calculations.
-	overdose_threshold = 25
+	overdose_treshold = 25
 
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/M)
 	if(current_cycle <= 25) //10u has to be processed before u get into THE FUN ZONE
@@ -1000,7 +1000,7 @@
 	name = "Lavaland Extract"
 	description = "An extract of lavaland atmospheric and mineral elements. Heals the user in small doses, but is extremely toxic otherwise."
 	color = "#6B372E" //dark and red like lavaland
-	overdose_threshold = 3 //To prevent people stacking massive amounts of a very strong healing reagent
+	overdose_treshold = 3 //To prevent people stacking massive amounts of a very strong healing reagent
 	can_synth = FALSE
 
 /datum/reagent/medicine/lavaland_extract/on_mob_life(mob/living/carbon/M)
@@ -1020,7 +1020,7 @@
 	name = "Changeling Adrenaline"
 	description = "Reduces the duration of unconciousness, knockdown and stuns. Restores stamina, but deals toxin damage when overdosed."
 	color = "#C1151D"
-	overdose_threshold = 30
+	overdose_treshold = 30
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
 	..()
@@ -1116,7 +1116,7 @@
 	reagent_state = LIQUID
 	color = "#BEF7D8" // palish blue white
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
-	overdose_threshold = 20 // with the random effects this might be awesome or might kill you at less than 10u (extensively tested)
+	overdose_treshold = 20 // with the random effects this might be awesome or might kill you at less than 10u (extensively tested)
 	taste_description = "salt" // it actually does taste salty
 	var/overdose_progress = 0 // to track overdose progress
 
@@ -1130,7 +1130,7 @@
 
 /datum/reagent/medicine/modafinil/on_mob_life(mob/living/carbon/M)
 	if(!overdosed) // We do not want any effects on OD
-		overdose_threshold = overdose_threshold + rand(-10,10)/10 // for extra fun
+		overdose_treshold = overdose_treshold + rand(-10,10)/10 // for extra fun
 		M.AdjustAllImmobility(-5, FALSE)
 		M.adjustStaminaLoss(-0.5*REM, 0)
 		M.Jitter(1)
@@ -1180,7 +1180,7 @@
 	reagent_state = LIQUID
 	color = "#07E79E"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	overdose_threshold = 30
+	overdose_treshold = 30
 
 /datum/reagent/medicine/psicodine/on_mob_metabolize(mob/living/L)
 	..()
@@ -1212,7 +1212,7 @@
 	description = "Orginally developed as fitness supplement, this chemical accelerates wound healing and if ingested turns nutriment into healing peptides"
 	reagent_state = LIQUID
 	color = "#FFFF6B"
-	overdose_threshold = 20
+	overdose_treshold = 20
 
 /datum/reagent/medicine/trophazole/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-1.5*REM, 0.) // heals 3 brute & 0.5 burn if taken with food. compared to 2.5 brute from bicard + nutriment
@@ -1239,7 +1239,7 @@
 	metabolization_rate = 0.0625  * REAGENTS_METABOLISM //slow metabolism rate so the patient can self heal with food even after the troph has metabolized away for amazing reagent efficency.
 	reagent_state = SOLID
 	color = "#FFBE00"
-	overdose_threshold = 10
+	overdose_treshold = 10
 
 /datum/reagent/medicine/metafactor/overdose_start(mob/living/carbon/M)
 	metabolization_rate = 2  * REAGENTS_METABOLISM
@@ -1254,7 +1254,7 @@
 	description = "A second generation burn treatment agent exibiting a cooling effect that is especially pronounced when deployed as a spray. Its high halogen content helps extinguish fires."
 	reagent_state = LIQUID
 	color = "#F7FFA5"
-	overdose_threshold = 25
+	overdose_treshold = 25
 	reagent_weight = 0.6
 
 /datum/reagent/medicine/rhigoxane/on_mob_life(mob/living/carbon/M)
@@ -1297,7 +1297,7 @@
 	reagent_state = SOLID
 	color = "#9423FF"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	overdose_threshold = 50
+	overdose_treshold = 50
 	taste_description = "numbing bitterness"
 
 /datum/reagent/medicine/polypyr/on_mob_life(mob/living/carbon/M) //I wanted a collection of small positive effects, this is as hard to obtain as coniine after all.
@@ -1328,7 +1328,7 @@
 	description = "A mild painkiller useful as an additive alongside more potent medicines. Speeds up the healing of small wounds and burns, but is ineffective at treating severe injuries. Extremely large doses are toxic, and may eventually cause liver failure."
 	color = "#E0E0E0"
 	reagent_state = LIQUID
-	overdose_threshold = 50
+	overdose_treshold = 50
 	metabolization_rate = 0.2 //same as C2s
 
 /datum/reagent/medicine/granibitaluri/on_mob_life(mob/living/carbon/M)

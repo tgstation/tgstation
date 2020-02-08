@@ -39,7 +39,7 @@
 	config_entry_value = 1
 	integer = FALSE
 
-/datum/config_entry/number/minimal_access_threshold	//If the number of players is larger than this threshold, minimal access will be turned on.
+/datum/config_entry/number/minimal_access_treshold	//If the number of players is larger than this treshold, minimal access will be turned on.
 	min_val = 0
 
 /datum/config_entry/flag/jobs_have_minimal_access	//determines whether jobs use minimal access or expanded access.
@@ -356,7 +356,7 @@
 		GLOB.MAX_EX_FLASH_RANGE = config_entry_value
 		GLOB.MAX_EX_FLAME_RANGE = config_entry_value
 
-/datum/config_entry/number/emergency_shuttle_autocall_threshold
+/datum/config_entry/number/emergency_shuttle_autocall_treshold
 	min_val = 0
 	max_val = 1
 	integer = FALSE

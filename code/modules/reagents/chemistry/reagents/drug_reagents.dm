@@ -12,7 +12,7 @@
 	name = "Space drugs"
 	description = "An illegal chemical compound used as drug."
 	color = "#60A584" // rgb: 96, 165, 132
-	overdose_threshold = 30
+	overdose_treshold = 30
 
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(15)
@@ -38,10 +38,10 @@
 	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
-	addiction_threshold = 10
+	addiction_treshold = 10
 	taste_description = "smoke"
 	trippy = FALSE
-	overdose_threshold=15
+	overdose_treshold=15
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/M)
@@ -68,8 +68,8 @@
 	description = "Reduces stun times by about 200%. If overdosed or addicted it will deal significant Toxin, Brute and Brain damage."
 	reagent_state = LIQUID
 	color = "#FA00C8"
-	overdose_threshold = 20
-	addiction_threshold = 10
+	overdose_treshold = 20
+	addiction_treshold = 10
 
 /datum/reagent/drug/crank/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
@@ -117,8 +117,8 @@
 	description = "Cools and calms you down. If overdosed it will deal significant Brain and Toxin damage. If addicted it will begin to deal fatal amounts of Brute damage as the subject's skin falls off."
 	reagent_state = LIQUID
 	color = "#0064B4"
-	overdose_threshold = 20
-	addiction_threshold = 15
+	overdose_treshold = 20
+	addiction_treshold = 15
 
 
 /datum/reagent/drug/krokodil/on_mob_life(mob/living/carbon/M)
@@ -168,8 +168,8 @@
 	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
-	overdose_threshold = 20
-	addiction_threshold = 10
+	overdose_treshold = 20
+	addiction_treshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
@@ -252,8 +252,8 @@
 	description = "Makes you impervious to stuns and grants a stamina regeneration buff, but you will be a nearly uncontrollable tramp-bearded raving lunatic."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
-	overdose_threshold = 20
-	addiction_threshold = 10
+	overdose_treshold = 20
+	addiction_treshold = 10
 	taste_description = "salt" // because they're bathsalts?
 	var/datum/brain_trauma/special/psychotic_brawling/bath_salts/rage
 
@@ -370,8 +370,8 @@
 	description = "Fills you with ecstasic numbness and causes minor brain damage. Highly addictive. If overdosed causes sudden mood swings."
 	reagent_state = LIQUID
 	color = "#FFF378"
-	addiction_threshold = 10
-	overdose_threshold = 20
+	addiction_treshold = 10
+	overdose_treshold = 20
 
 /datum/reagent/drug/happiness/on_mob_metabolize(mob/living/L)
 	..()
@@ -447,7 +447,7 @@
 	reagent_state = LIQUID
 	color = "#e38e44"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
-	overdose_threshold = 30
+	overdose_treshold = 30
 
 /datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/L)
 	..()

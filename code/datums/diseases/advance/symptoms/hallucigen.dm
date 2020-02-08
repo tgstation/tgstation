@@ -28,7 +28,7 @@ Bonus
 	symptom_delay_min = 25
 	symptom_delay_max = 90
 	var/fake_healthy = FALSE
-	threshold_descs = list(
+	treshold_descs = list(
 		"Stage Speed 7" = "Increases the amount of hallucinations.",
 		"Stealth 4" = "The virus mimics positive symptoms.",
 	)

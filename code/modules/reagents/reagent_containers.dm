@@ -12,7 +12,7 @@
 	var/spawned_disease = null
 	var/disease_amount = 20
 	var/spillable = FALSE
-	var/list/fill_icon_thresholds = null
+	var/list/fill_icon_tresholds = null
 	var/fill_icon_state = null // Optional custom name for reagent fill icon_state prefix
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
@@ -129,18 +129,18 @@
 
 /obj/item/reagent_containers/update_overlays()
 	. = ..()
-	if(!fill_icon_thresholds)
+	if(!fill_icon_tresholds)
 		return
 	if(reagents.total_volume)
 		var/fill_name = fill_icon_state? fill_icon_state : icon_state
-		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[fill_name][fill_icon_thresholds[1]]")
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[fill_name][fill_icon_tresholds[1]]")
 
 		var/percent = round((reagents.total_volume / volume) * 100)
-		for(var/i in 1 to fill_icon_thresholds.len)
-			var/threshold = fill_icon_thresholds[i]
-			var/threshold_end = (i == fill_icon_thresholds.len)? INFINITY : fill_icon_thresholds[i+1]
-			if(threshold <= percent && percent < threshold_end)
-				filling.icon_state = "[fill_name][fill_icon_thresholds[i]]"
+		for(var/i in 1 to fill_icon_tresholds.len)
+			var/treshold = fill_icon_tresholds[i]
+			var/treshold_end = (i == fill_icon_tresholds.len)? INFINITY : fill_icon_tresholds[i+1]
+			if(treshold <= percent && percent < treshold_end)
+				filling.icon_state = "[fill_name][fill_icon_tresholds[i]]"
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		. += filling

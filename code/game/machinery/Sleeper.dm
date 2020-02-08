@@ -195,7 +195,7 @@
 				data["occupant"]["statstate"] = "bad"
 		data["occupant"]["health"] = mob_occupant.health
 		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
-		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
+		data["occupant"]["minHealth"] = HEALTH_TRESHOLD_DEAD
 		data["occupant"]["bruteLoss"] = mob_occupant.getBruteLoss()
 		data["occupant"]["oxyLoss"] = mob_occupant.getOxyLoss()
 		data["occupant"]["toxLoss"] = mob_occupant.getToxLoss()

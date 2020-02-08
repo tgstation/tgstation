@@ -23,7 +23,7 @@
 	else
 		var/turf/T = get_turf(user)
 		var/light_amount = T.get_lumcount()
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
+		if(light_amount < SHADOW_SPECIES_LIGHT_TRESHOLD)
 			playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, TRUE, -1)
 			visible_message("<span class='boldwarning'>[user] melts into the shadows!</span>")
 			user.SetAllImmobility(0)

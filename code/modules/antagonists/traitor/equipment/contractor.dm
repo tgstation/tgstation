@@ -62,7 +62,7 @@
 		to_generate.Cut(1, length(GLOB.data_core.locked))
 
 	// We don't want the sum of all the payouts to be under this amount
-	var/lowest_TC_threshold = 30
+	var/lowest_TC_treshold = 30
 
 	var/total = 0
 	var/lowest_paying_sum = 0
@@ -93,9 +93,9 @@
 
 		start_index++
 
-	// If the threshold for TC payouts isn't reached, boost the lowest paying contract
-	if (total < lowest_TC_threshold)
-		lowest_paying_contract.contract.payout_bonus += (lowest_TC_threshold - total)
+	// If the treshold for TC payouts isn't reached, boost the lowest paying contract
+	if (total < lowest_TC_treshold)
+		lowest_paying_contract.contract.payout_bonus += (lowest_TC_treshold - total)
 
 /datum/contractor_item
 	var/name // Name of item

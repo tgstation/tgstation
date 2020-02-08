@@ -11,7 +11,7 @@
 	var/purge_alcohol = FALSE
 	var/trauma_heal_mild = FALSE
 	var/trauma_heal_severe = FALSE
-	threshold_descs = list(
+	treshold_descs = list(
 		"Resistance 6" = "Heals minor brain traumas.",
 		"Resistance 9" = "Heals severe brain traumas.",
 		"Transmission 8" = "Purges alcohol in the bloodstream.",

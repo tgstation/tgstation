@@ -18,7 +18,7 @@
 
 /// If the max of the lighting lumcounts of each spectrum drops below this, disable luminosity on the lighting objects.
 /// Set to zero to disable soft lighting. Luminosity changes then work if it's lit at all.
-#define LIGHTING_SOFT_THRESHOLD 0
+#define LIGHTING_SOFT_TRESHOLD 0
 
 /// If I were you I'd leave this alone.
 #define LIGHTING_BASE_MATRIX \

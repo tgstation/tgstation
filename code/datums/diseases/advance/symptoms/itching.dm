@@ -29,7 +29,7 @@ BONUS
 	symptom_delay_min = 5
 	symptom_delay_max = 25
 	var/scratch = FALSE
-	threshold_descs = list(
+	treshold_descs = list(
 		"Transmission 6" = "Increases frequency of itching.",
 		"Stage Speed 7" = "The host will scrath itself when itching, causing superficial damage.",
 	)

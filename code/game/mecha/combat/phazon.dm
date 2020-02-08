@@ -12,7 +12,7 @@
 	infra_luminosity = 3
 	wreckage = /obj/structure/mecha_wreckage/phazon
 	add_req_access = 1
-	internal_damage_threshold = 25
+	internal_damage_treshold = 25
 	force = 15
 	max_equip = 3
 	phase_state = "phazon-phase"

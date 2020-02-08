@@ -9,7 +9,7 @@
 	obj_flags = UNIQUE_RENAME
 	resistance_flags = ACID_PROOF
 	var/sealed = FALSE
-	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
+	fill_icon_tresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 
 /obj/item/reagent_containers/chem_pack/AltClick(mob/living/user)
 	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) && !sealed)

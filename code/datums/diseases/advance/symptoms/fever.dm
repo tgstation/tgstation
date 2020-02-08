@@ -27,8 +27,8 @@ Bonus
 	base_message_chance = 20
 	symptom_delay_min = 10
 	symptom_delay_max = 30
-	var/unsafe = FALSE //over the heat threshold
-	threshold_descs = list(
+	var/unsafe = FALSE //over the heat treshold
+	treshold_descs = list(
 		"Resistance 5" = "Increases fever intensity, fever can overheat and harm the host.",
 		"Resistance 10" = "Further increases fever intensity.",
 	)

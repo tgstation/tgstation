@@ -6,7 +6,7 @@
 
 #define AUTOZOOM_PIXEL_STEP_FACTOR 48
 
-#define AIMING_BEAM_ANGLE_CHANGE_THRESHOLD 0.1
+#define AIMING_BEAM_ANGLE_CHANGE_TRESHOLD 0.1
 
 /obj/item/gun/energy/beam_rifle
 	name = "particle acceleration rifle"
@@ -33,7 +33,7 @@
 	pin = null
 	var/aiming = FALSE
 	var/aiming_time = 12
-	var/aiming_time_fire_threshold = 5
+	var/aiming_time_fire_treshold = 5
 	var/aiming_time_left = 12
 	var/aiming_time_increase_user_movement = 3
 	var/scoped_slow = 1
@@ -182,7 +182,7 @@
 	var/diff = abs(aiming_lastangle - lastangle)
 	if(!check_user())
 		return
-	if(diff < AIMING_BEAM_ANGLE_CHANGE_THRESHOLD && !force_update)
+	if(diff < AIMING_BEAM_ANGLE_CHANGE_TRESHOLD && !force_update)
 		return
 	aiming_lastangle = lastangle
 	var/obj/projectile/beam/beam_rifle/hitscan/aiming_beam/P = new
@@ -289,7 +289,7 @@
 	if(istype(object, /obj/screen) && !istype(object, /obj/screen/click_catcher))
 		return
 	process_aim()
-	if(aiming_time_left <= aiming_time_fire_threshold && check_user())
+	if(aiming_time_left <= aiming_time_fire_treshold && check_user())
 		sync_ammo()
 		afterattack(M.client.mouseObject, M, FALSE, M.client.mouseParams, passthrough = TRUE)
 	stop_aiming()
@@ -304,7 +304,7 @@
 			return
 		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
 			return
-	if(!passthrough && (aiming_time > aiming_time_fire_threshold))
+	if(!passthrough && (aiming_time > aiming_time_fire_treshold))
 		return
 	if(lastfire > world.time + delay)
 		return

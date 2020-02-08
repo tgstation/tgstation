@@ -28,7 +28,7 @@ Bonus
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	var/regenerate_blood = FALSE
-	threshold_descs = list(
+	treshold_descs = list(
 		"Resistance 8" = "Additionally regenerates lost blood."
 	)
 

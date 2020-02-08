@@ -10,7 +10,7 @@
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	var/reverse_boost = FALSE
-	threshold_descs = list(
+	treshold_descs = list(
 		"Transmission 5" = "Increases the virus' growth rate while nanites are present.",
 		"Stage Speed 7" = "Increases the replication boost."
 	)
@@ -44,7 +44,7 @@
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	var/reverse_boost = FALSE
-	threshold_descs = list(
+	treshold_descs = list(
 		"Stage Speed 5" = "Increases the virus' growth rate while nanites are present.",
 		"Resistance 7" = "Severely increases the rate at which the nanites are destroyed."
 	)

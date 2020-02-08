@@ -27,7 +27,7 @@
 
 	var/totalbeauty = 0 //All beauty in this area combined, only includes indoor area.
 	var/beauty = 0 // Beauty average per open turf in the area
-	var/beauty_threshold = 150 //If a room is too big it doesn't have beauty.
+	var/beauty_treshold = 150 //If a room is too big it doesn't have beauty.
 
 	var/requires_power = TRUE
 	var/always_unpowered = FALSE	// This gets overridden to 1 for space in area/Initialize().
@@ -591,7 +591,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!areasize)
 		beauty = 0
 		return FALSE
-	if(areasize >= beauty_threshold)
+	if(areasize >= beauty_treshold)
 		beauty = 0
 		return FALSE //Too big
 	beauty = totalbeauty / areasize

@@ -138,7 +138,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	icon_state = "sheet-wetleather"
 	item_state = "sheet-wetleather"
 	var/wetness = 30 //Reduced when exposed to high temperautres
-	var/drying_threshold_temperature = 500 //Kelvin to start drying
+	var/drying_treshold_temperature = 500 //Kelvin to start drying
 
 /*
  * Leather SHeet
@@ -234,7 +234,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 //Step three - drying
 /obj/item/stack/sheet/wetleather/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
-	if(exposed_temperature >= drying_threshold_temperature)
+	if(exposed_temperature >= drying_treshold_temperature)
 		wetness--
 		if(wetness == 0)
 			new /obj/item/stack/sheet/leather(drop_location(), 1)

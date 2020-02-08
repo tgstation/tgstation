@@ -70,11 +70,11 @@
 			chamber.update_icon()
 			. = TRUE
 		if("set_safety")
-			var/threshold = text2num(params["value"])
-			if(!isnull(threshold))
-				chamber.set_safety(CLAMP(round(threshold, 1),0,500))
+			var/treshold = text2num(params["value"])
+			if(!isnull(treshold))
+				chamber.set_safety(CLAMP(round(treshold, 1),0,500))
 				playsound(src, "terminal_type", 25, FALSE)
-				chamber.occupant.investigate_log("'s nanites' safety threshold was set to [threshold] by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
+				chamber.occupant.investigate_log("'s nanites' safety treshold was set to [treshold] by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
 			. = TRUE
 		if("set_cloud")
 			var/cloud_id = text2num(params["value"])

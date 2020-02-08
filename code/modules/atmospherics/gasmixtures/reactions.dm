@@ -45,7 +45,7 @@
 	id = "nobstop"
 
 /datum/gas_reaction/nobliumsupression/init_reqs()
-	min_requirements = list(/datum/gas/hypernoblium = REACTION_OPPRESSION_THRESHOLD)
+	min_requirements = list(/datum/gas/hypernoblium = REACTION_OPPRESSION_TRESHOLD)
 
 /datum/gas_reaction/nobliumsupression/react()
 	return STOP_REACTIONS
@@ -199,7 +199,7 @@
 		temperature_scale = (temperature-PLASMA_MINIMUM_BURN_TEMPERATURE)/(PLASMA_UPPER_TEMPERATURE-PLASMA_MINIMUM_BURN_TEMPERATURE)
 	if(temperature_scale > 0)
 		oxygen_burn_rate = OXYGEN_BURN_RATE_BASE - temperature_scale
-		if(cached_gases[/datum/gas/oxygen][MOLES] / cached_gases[/datum/gas/plasma][MOLES] > SUPER_SATURATION_THRESHOLD) //supersaturation. Form Tritium.
+		if(cached_gases[/datum/gas/oxygen][MOLES] / cached_gases[/datum/gas/plasma][MOLES] > SUPER_SATURATION_TRESHOLD) //supersaturation. Form Tritium.
 			super_saturation = TRUE
 		if(cached_gases[/datum/gas/oxygen][MOLES] > cached_gases[/datum/gas/plasma][MOLES]*PLASMA_OXYGEN_FULLBURN)
 			plasma_burn_rate = (cached_gases[/datum/gas/plasma][MOLES]*temperature_scale)/PLASMA_BURN_RATE_DELTA
@@ -250,10 +250,10 @@
 
 /datum/gas_reaction/fusion/init_reqs()
 	min_requirements = list(
-		"TEMP" = FUSION_TEMPERATURE_THRESHOLD,
+		"TEMP" = FUSION_TEMPERATURE_TRESHOLD,
 		/datum/gas/tritium = FUSION_TRITIUM_MOLES_USED,
-		/datum/gas/plasma = FUSION_MOLE_THRESHOLD,
-		/datum/gas/carbon_dioxide = FUSION_MOLE_THRESHOLD)
+		/datum/gas/plasma = FUSION_MOLE_TRESHOLD,
+		/datum/gas/carbon_dioxide = FUSION_MOLE_TRESHOLD)
 
 /datum/gas_reaction/fusion/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
@@ -278,16 +278,16 @@
 	var/instability = MODULUS((gas_power*INSTABILITY_GAS_POWER_FACTOR)**2,toroidal_size) //Instability effects how chaotic the behavior of the reaction is
 	cached_scan_results[id] = instability//used for analyzer feedback
 
-	var/plasma = (initial_plasma-FUSION_MOLE_THRESHOLD)/(scale_factor) //We have to scale the amounts of carbon and plasma down a significant amount in order to show the chaotic dynamics we want
-	var/carbon = (initial_carbon-FUSION_MOLE_THRESHOLD)/(scale_factor) //We also subtract out the threshold amount to make it harder for fusion to burn itself out.
+	var/plasma = (initial_plasma-FUSION_MOLE_TRESHOLD)/(scale_factor) //We have to scale the amounts of carbon and plasma down a significant amount in order to show the chaotic dynamics we want
+	var/carbon = (initial_carbon-FUSION_MOLE_TRESHOLD)/(scale_factor) //We also subtract out the treshold amount to make it harder for fusion to burn itself out.
 
 	//The reaction is a specific form of the Kicked Rotator system, which displays chaotic behavior and can be used to model particle interactions.
 	plasma = MODULUS(plasma - (instability*sin(TODEGREES(carbon))), toroidal_size)
 	carbon = MODULUS(carbon - plasma, toroidal_size)
 
 
-	cached_gases[/datum/gas/plasma][MOLES] = plasma*scale_factor + FUSION_MOLE_THRESHOLD //Scales the gases back up
-	cached_gases[/datum/gas/carbon_dioxide][MOLES] = carbon*scale_factor + FUSION_MOLE_THRESHOLD
+	cached_gases[/datum/gas/plasma][MOLES] = plasma*scale_factor + FUSION_MOLE_TRESHOLD //Scales the gases back up
+	cached_gases[/datum/gas/carbon_dioxide][MOLES] = carbon*scale_factor + FUSION_MOLE_TRESHOLD
 	var/delta_plasma = initial_plasma - cached_gases[/datum/gas/plasma][MOLES]
 
 	reaction_energy += delta_plasma*PLASMA_BINDING_ENERGY //Energy is gained or lost corresponding to the creation or destruction of mass.

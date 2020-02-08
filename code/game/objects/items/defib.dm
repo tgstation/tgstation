@@ -1,5 +1,5 @@
 //backpack item
-#define HALFWAYCRITDEATH ((HEALTH_THRESHOLD_CRIT + HEALTH_THRESHOLD_DEAD) * 0.5)
+#define HALFWAYCRITDEATH ((HEALTH_TRESHOLD_CRIT + HEALTH_TRESHOLD_DEAD) * 0.5)
 
 /obj/item/defibrillator
 	name = "defibrillator"

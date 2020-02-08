@@ -26,8 +26,8 @@
 #define VV_MSG_EDITED "<br><font size='1' color='red'><b>Var Edited</b></font>"
 #define VV_MSG_DELETED "<br><font size='1' color='red'><b>Deleted</b></font>"
 
-#define VV_NORMAL_LIST_NO_EXPAND_THRESHOLD 50
-#define VV_SPECIAL_LIST_NO_EXPAND_THRESHOLD 150
+#define VV_NORMAL_LIST_NO_EXPAND_TRESHOLD 50
+#define VV_SPECIAL_LIST_NO_EXPAND_TRESHOLD 150
 
 //#define IS_VALID_ASSOC_KEY(V) (istext(V) || ispath(V) || isdatum(V) || islist(V))
 #define IS_VALID_ASSOC_KEY(V) (!isnum(V))		//hhmmm..

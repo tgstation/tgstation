@@ -27,7 +27,7 @@
 	armor = 25
 	punchdamagelow = 10
 	punchdamagehigh = 19
-	punchstunthreshold = 14 //about 50% chance to stun
+	punchstuntreshold = 14 //about 50% chance to stun
 	disguise_fail_health = 50
 	changesource_flags = MIRROR_BADMIN | WABBAJACK
 

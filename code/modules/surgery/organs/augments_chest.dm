@@ -10,7 +10,7 @@
 	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
 	icon_state = "chest_implant"
 	implant_color = "#00AA00"
-	var/hunger_threshold = NUTRITION_LEVEL_STARVING
+	var/hunger_treshold = NUTRITION_LEVEL_STARVING
 	var/synthesizing = 0
 	var/poison_amount = 5
 	slot = ORGAN_SLOT_STOMACH_AID
@@ -19,7 +19,7 @@
 	if(synthesizing)
 		return
 
-	if(owner.nutrition <= hunger_threshold)
+	if(owner.nutrition <= hunger_treshold)
 		synthesizing = TRUE
 		to_chat(owner, "<span class='notice'>You feel less hungry...</span>")
 		owner.adjust_nutrition(50)
@@ -41,7 +41,7 @@
 	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
 	icon_state = "chest_implant"
 	implant_color = "#006607"
-	hunger_threshold = NUTRITION_LEVEL_HUNGRY
+	hunger_treshold = NUTRITION_LEVEL_HUNGRY
 	poison_amount = 10
 
 /obj/item/organ/cyberimp/chest/reviver

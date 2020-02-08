@@ -268,7 +268,7 @@
 	custom_materials = list(/datum/material/plastic=1000)
 	volume = 50
 	amount_per_transfer_from_this = 10
-	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
+	fill_icon_tresholds = list(0, 10, 25, 50, 75, 80, 90)
 	isGlass = FALSE
 	// The 2 bottles have separate cap overlay icons because if the bottle falls over while bottle flipping the cap stays fucked on the moved overlay
 	var/cap_icon_state = "bottle_cap_small"

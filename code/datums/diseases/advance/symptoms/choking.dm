@@ -28,7 +28,7 @@ Bonus
 	base_message_chance = 15
 	symptom_delay_min = 10
 	symptom_delay_max = 30
-	threshold_descs = list(
+	treshold_descs = list(
 		"Stage Speed 8" = "Causes choking more frequently.",
 		"Stealth 4" = "The symptom remains hidden until active."
 	)
@@ -101,7 +101,7 @@ Bonus
 	symptom_delay_min = 14
 	symptom_delay_max = 30
 	var/paralysis = FALSE
-	threshold_descs = list(
+	treshold_descs = list(
 		"Stage Speed 8" = "Additionally synthesizes pancuronium and sodium thiopental inside the host.",
 		"Transmission 8" = "Doubles the damage caused by the symptom."
 	)

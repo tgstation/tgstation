@@ -235,12 +235,12 @@
 		if(prob(75))
 			adjustBruteLoss(rand(0,5))
 
-	else if (nutrition >= get_grow_nutrition() && amount_grown < SLIME_EVOLUTION_THRESHOLD)
+	else if (nutrition >= get_grow_nutrition() && amount_grown < SLIME_EVOLUTION_TRESHOLD)
 		adjust_nutrition(-20)
 		amount_grown++
 		update_action_buttons_icon()
 
-	if(amount_grown >= SLIME_EVOLUTION_THRESHOLD && !buckled && !Target && !ckey)
+	if(amount_grown >= SLIME_EVOLUTION_TRESHOLD && !buckled && !Target && !ckey)
 		if(is_adult)
 			Reproduce()
 		else

@@ -3,7 +3,7 @@
 	desc = "A remotely-activatable dispenser for crowd-controlling foam."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "ai-slipper0"
-	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
+	layer = PROJECTILE_HIT_TRESHHOLD_LAYER
 	plane = FLOOR_PLANE
 	max_integrity = 200
 	armor = list("melee" = 50, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)

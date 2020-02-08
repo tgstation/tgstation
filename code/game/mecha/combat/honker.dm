@@ -5,7 +5,7 @@
 	step_in = 3
 	max_integrity = 140
 	deflect_chance = 60
-	internal_damage_threshold = 60
+	internal_damage_treshold = 60
 	armor = list("melee" = -20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	max_temperature = 25000
 	infra_luminosity = 5

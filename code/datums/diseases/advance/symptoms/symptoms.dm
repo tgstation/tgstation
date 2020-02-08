@@ -4,7 +4,7 @@
 	// Buffs/Debuffs the symptom has to the overall engineered disease.
 	var/name = ""
 	var/desc = "If you see this something went very wrong." //Basic symptom description
-	var/threshold_descs = list() //Descriptions of threshold effects
+	var/treshold_descs = list() //Descriptions of treshold effects
 	var/stealth = 0
 	var/resistance = 0
 	var/stage_speed = 0
@@ -27,7 +27,7 @@
 	var/power = 1
 	//A neutered symptom has no effect, and only affects statistics.
 	var/neutered = FALSE
-	var/list/thresholds
+	var/list/tresholds
 	var/naturally_occuring = TRUE //if this symptom can appear from /datum/disease/advance/GenerateSymptoms()
 
 /datum/symptom/New()
@@ -71,7 +71,7 @@
 	new_symp.neutered = neutered
 	return new_symp
 
-/datum/symptom/proc/generate_threshold_desc()
+/datum/symptom/proc/generate_treshold_desc()
 	return
 
 /datum/symptom/proc/OnAdd(datum/disease/advance/A)		//Overload when a symptom needs to be active before processing, like changing biotypes.

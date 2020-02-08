@@ -209,5 +209,5 @@
 		return
 	start_at = 100
 	stop_at = 0
-	to_chat(user, "<span class='notice'>You remove the access restrictions and lower the automatic ejection threshold!</span>")
+	to_chat(user, "<span class='notice'>You remove the access restrictions and lower the automatic ejection treshold!</span>")
 	obj_flags |= EMAGGED

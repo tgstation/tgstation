@@ -20,9 +20,9 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 
 	var/needs_update = FALSE
 
-	var/cache_r  = LIGHTING_SOFT_THRESHOLD
-	var/cache_g  = LIGHTING_SOFT_THRESHOLD
-	var/cache_b  = LIGHTING_SOFT_THRESHOLD
+	var/cache_r  = LIGHTING_SOFT_TRESHOLD
+	var/cache_g  = LIGHTING_SOFT_TRESHOLD
+	var/cache_b  = LIGHTING_SOFT_TRESHOLD
 	var/cache_mx = 0
 
 /datum/lighting_corner/New(turf/new_turf, diagonal)
@@ -108,13 +108,13 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 	if (mx > 1)
 		. = 1 / mx
 
-	#if LIGHTING_SOFT_THRESHOLD != 0
-	else if (mx < LIGHTING_SOFT_THRESHOLD)
+	#if LIGHTING_SOFT_TRESHOLD != 0
+	else if (mx < LIGHTING_SOFT_TRESHOLD)
 		. = 0 // 0 means soft lighting.
 
-	cache_r  = round(lum_r * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_THRESHOLD
-	cache_g  = round(lum_g * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_THRESHOLD
-	cache_b  = round(lum_b * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_THRESHOLD
+	cache_r  = round(lum_r * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_TRESHOLD
+	cache_g  = round(lum_g * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_TRESHOLD
+	cache_b  = round(lum_b * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_TRESHOLD
 	#else
 	cache_r  = round(lum_r * ., LIGHTING_ROUND_VALUE)
 	cache_g  = round(lum_g * ., LIGHTING_ROUND_VALUE)

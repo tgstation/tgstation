@@ -77,7 +77,7 @@
 	return CLAMP01(totallums)
 
 // Returns a boolean whether the turf is on soft lighting.
-// Soft lighting being the threshold at which point the overlay considers
+// Soft lighting being the treshold at which point the overlay considers
 // itself as too dark to allow sight and see_in_dark becomes useful.
 // So basically if this returns true the tile is unlit black.
 /turf/proc/is_softly_lit()
