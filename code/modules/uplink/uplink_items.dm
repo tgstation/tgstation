@@ -632,6 +632,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 10
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/stealthy_weapons/holster
+	name = "Syndicate Holster"
+	desc = "A useful little device that allows for inconspicuous carrying of guns using chameleon technology. It also allows for badass gun-spinning."
+	item = /obj/item/storage/belt/holster/chameleon
+	cost = 1
+
 // Ammunition
 /datum/uplink_item/ammo
 	category = "Ammunition"

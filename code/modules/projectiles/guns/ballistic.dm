@@ -85,6 +85,7 @@
 	var/tac_reloads = TRUE //Snowflake mechanic no more.
 	///Whether the gun can be sawn off by sawing tools
 	var/can_be_sawn_off  = FALSE
+	var/flip_cooldown = 0
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
@@ -339,6 +340,12 @@
 	return ..()
 
 /obj/item/gun/ballistic/attack_self(mob/living/user)
+	if(HAS_TRAIT(user, TRAIT_GUNFLIP))
+		if(flip_cooldown <= world.time)
+			flip_cooldown = (world.time + 30)
+			user.visible_message("<span class='notice'>[user] spins the [src] around their finger by the trigger. That’s pretty badass.</span>")
+			playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
+			return
 	if(!internal_magazine && magazine)
 		if(!magazine.ammo_count())
 			eject_magazine(user)
