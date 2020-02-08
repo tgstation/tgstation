@@ -136,6 +136,7 @@
 	modifier = created_volume == 2100 ? 12 : round(sqrt(created_volume)/4) //formula that increases the potency of the explosion the more chem is used making tatp a top-tier instead of mid-tier
 	. = ..()
 
+
 /datum/chemical_reaction/reagent_explosion/penthrite_explosion
 	name = "Penthrite explosion"
 	id = "penthrite_explosion"
@@ -177,24 +178,47 @@
 				C.IgniteMob()
 	..()
 
-
-/datum/chemical_reaction/gunpowder
-	name = "Gunpowder"
-	id = /datum/reagent/gunpowder
-	results = list(/datum/reagent/gunpowder = 3)
-	required_reagents = list(/datum/reagent/saltpetre = 1, /datum/reagent/medicine/C2/multiver = 1, /datum/reagent/sulfur = 1)
-
 /datum/chemical_reaction/reagent_explosion/gunpowder_explosion
 	name = "Gunpowder Kaboom"
 	id = "gunpowder_explosion"
-	required_reagents = list(/datum/reagent/gunpowder = 1)
+	required_reagents = list(/datum/reagent/saltpetre = 1, /datum/reagent/medicine/C2/multiver = 1, /datum/reagent/sulfur = 1)
 	required_temp = 474
-	strengthdiv = 6
-	modifier = 1
+	strengthdiv = 1
 	mix_message = "<span class='boldannounce'>Sparks start flying around the gunpowder!</span>"
+	var/saltpetre_power = 0.33
+	var/multiver_power = 3
+	var/sulfur_power = 1
+
+	var/multiver_temp = 1
+	var/sulfur_temp = -0.5
+
+	var/saltpetre_volume
+	var/multiver_volume
+	var/sulfur_volume
+	//noone of these values add up nicely because i want people to experiment with diffrent ratios
 
 /datum/chemical_reaction/reagent_explosion/gunpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
-	sleep(rand(50,100))
+	for(var/datum/reagent/R in holder.reagent_list)
+		if(istype(R,/datum/reagent/saltpetre))
+			saltpetre_volume =  R.volume
+		if(istype(R,/datum/reagent/medicine/C2/multiver))
+			multiver_volume = R.volume
+		if(istype(R,/datum/reagent/sulfur))
+			sulfur_volume = R.volume
+	created_volume = min(saltpetre_volume * saltpetre_power, multiver_volume * multiver_power + sulfur_volume * sulfur_power)
+	required_temp = required_temp + multiver_temp * multiver_volume + sulfur_temp * sulfur_volume
+
+	sleep(max(rand(50,100)-saltpetre_volume*saltpetre_power,1 + multiver_volume * multiver_power))
+	holder.remove_reagent(/datum/reagent/saltpetre,saltpetre_volume)
+	holder.remove_reagent(/datum/reagent/medicine/C2/multiver,multiver_volume)
+	holder.remove_reagent(/datum/reagent/sulfur,sulfur_volume)
+	if(created_volume < 20) //if the explosion isnt powerful enough blackpowder deflagerates instead of properly exploding
+		var/fire_range = round(created_volume/5)
+		var/turf/T = get_turf(holder.my_atom)
+		for(var/turf/turf in range(fire_range,T))
+			new /obj/effect/hotspot(turf)
+		holder.chem_temp = 1000
+		return
 	..()
 
 /datum/chemical_reaction/thermite
@@ -504,7 +528,7 @@
 	name = "Teslium"
 	id = /datum/reagent/teslium
 	results = list(/datum/reagent/teslium = 3)
-	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/silver = 1, /datum/reagent/gunpowder = 1)
+	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/silver = 1, /datum/reagent/pentaerythritol = 1)
 	mix_message = "<span class='danger'>A jet of sparks flies from the mixture as it merges into a flickering slurry.</span>"
 	required_temp = 400
 

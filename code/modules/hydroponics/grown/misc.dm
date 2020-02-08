@@ -182,7 +182,7 @@
 	trash = /obj/item/gun/ballistic/revolver
 	bitesize_mod = 2
 	foodtype = FRUIT
-	tastes = list("gunpowder" = 1)
+	tastes = list("sulfur" = 1)
 	wine_power = 90 //It burns going down, too.
 
 //Cherry Bombs
@@ -194,7 +194,7 @@
 	plantname = "Cherry Bomb Tree"
 	product = /obj/item/reagent_containers/food/snacks/grown/cherry_bomb
 	mutatelist = list()
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.1, /datum/reagent/gunpowder = 0.7)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.1, /datum/reagent/rdx = 0.7)
 	rarity = 60 //See above
 
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb
@@ -204,7 +204,7 @@
 	filling_color = rgb(20, 20, 20)
 	seed = /obj/item/seeds/cherry/bomb
 	bitesize_mod = 2
-	volume = 125 //Gives enough room for the gunpowder at max potency
+	volume = 125 //Gives enough room for the rdx at max potency
 	max_integrity = 40
 	wine_power = 80
 
@@ -225,6 +225,7 @@
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime()
 	icon_state = "cherry_bomb_lit"
 	playsound(src, 'sound/effects/fuse.ogg', seed.potency, FALSE)
-	reagents.chem_temp = 1000 //Sets off the gunpowder
+	sleep(500)
+	reagents.chem_temp = 1000 //Sets off the rdx
 	reagents.handle_reactions()
 
