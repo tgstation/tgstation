@@ -26,12 +26,26 @@
 "ah" = (
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
+"ai" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/hydroponics/irrigated,
+/turf/open/floor/plating,
+/area/storage/primary)
 "aj" = (
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "ak" = (
 /turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
+"al" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plating,
+/area/storage/primary)
 "am" = (
 /obj/machinery/atmospherics/components/unary/tank/air,
 /turf/open/floor/plating,
@@ -122,6 +136,14 @@
 /obj/machinery/meter,
 /turf/open/floor/plating,
 /area/engine/atmos)
+"aA" = (
+/obj/machinery/hydroponics/irrigated,
+/turf/open/floor/plating,
+/area/storage/primary)
+"aB" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plating,
+/area/storage/primary)
 "aC" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -157,6 +179,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
+"aH" = (
+/obj/machinery/chem_dispenser/mutagensaltpeter,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "aI" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -174,6 +200,44 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/gravity_generator)
+"aK" = (
+/obj/structure/sign/directions/supply{
+	dir = 4;
+	pixel_x = -32
+	},
+/obj/structure/sign/directions/engineering{
+	dir = 1;
+	pixel_x = -32;
+	pixel_y = 7
+	},
+/obj/structure/sign/directions/evac{
+	pixel_x = -32;
+	pixel_y = -7
+	},
+/obj/machinery/hydroponics/irrigated,
+/turf/open/floor/plating,
+/area/storage/primary)
+"aL" = (
+/obj/structure/sign/directions/supply{
+	dir = 4;
+	pixel_x = 32
+	},
+/obj/structure/sign/directions/engineering{
+	dir = 1;
+	pixel_x = 32;
+	pixel_y = 7
+	},
+/obj/structure/sign/directions/evac{
+	pixel_x = 32;
+	pixel_y = -7
+	},
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plating,
+/area/storage/primary)
+"aM" = (
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/plating,
+/area/storage/primary)
 "aN" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
@@ -194,6 +258,14 @@
 	},
 /turf/open/floor/plating,
 /area/engine/atmos)
+"aQ" = (
+/obj/structure/closet/crate/hydroponics,
+/turf/open/floor/plasteel,
+/area/storage/primary)
+"aR" = (
+/obj/structure/closet/secure_closet/hydroponics,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "aS" = (
 /obj/structure/table,
 /obj/item/flashlight{
@@ -233,6 +305,13 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
+"aW" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/plating,
+/area/storage/primary)
 "aX" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Gravity Generator"
@@ -248,6 +327,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/gravity_generator)
+"aZ" = (
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "ba" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating,
@@ -319,6 +402,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/gravity_generator)
+"bj" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L2"
+	},
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "bk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock,
@@ -338,6 +428,13 @@
 	},
 /turf/open/floor/plating,
 /area/engine/atmos)
+"bn" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L4"
+	},
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "bo" = (
 /obj/structure/table,
 /obj/item/screwdriver/power,
@@ -398,6 +495,13 @@
 "by" = (
 /turf/closed/wall/r_wall,
 /area/medical/medbay)
+"bz" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L12"
+	},
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "bA" = (
 /turf/closed/wall/r_wall,
 /area/science)
@@ -595,6 +699,13 @@
 /obj/machinery/autolathe/hacked,
 /turf/open/floor/plasteel,
 /area/science)
+"cb" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L14"
+	},
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "cd" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
@@ -971,24 +1082,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/construction)
-"dp" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/storage/primary)
-"dq" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "L2"
-	},
-/turf/open/floor/plasteel,
-/area/storage/primary)
-"dr" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "L4"
-	},
-/turf/open/floor/plasteel,
-/area/storage/primary)
 "ds" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L6"
@@ -1004,18 +1097,6 @@
 "du" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L10"
-	},
-/turf/open/floor/plasteel,
-/area/storage/primary)
-"dv" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "L12"
-	},
-/turf/open/floor/plasteel,
-/area/storage/primary)
-"dw" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "L14"
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -1850,22 +1931,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
-"fX" = (
-/obj/structure/sign/directions/supply{
-	dir = 4;
-	pixel_x = -32
-	},
-/obj/structure/sign/directions/engineering{
-	dir = 1;
-	pixel_x = -32;
-	pixel_y = 7
-	},
-/obj/structure/sign/directions/evac{
-	pixel_x = -32;
-	pixel_y = -7
-	},
-/turf/open/floor/plating,
-/area/storage/primary)
 "fY" = (
 /obj/machinery/light{
 	dir = 8
@@ -1907,22 +1972,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
-"gg" = (
-/obj/structure/sign/directions/supply{
-	dir = 4;
-	pixel_x = 32
-	},
-/obj/structure/sign/directions/engineering{
-	dir = 1;
-	pixel_x = 32;
-	pixel_y = 7
-	},
-/obj/structure/sign/directions/evac{
-	pixel_x = 32;
-	pixel_y = -7
-	},
-/turf/open/floor/plating,
-/area/storage/primary)
 "gi" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -7198,16 +7247,16 @@ bE
 bE
 cS
 dd
-dp
-dl
-dl
-fX
+ai
+aA
+aA
+aK
 dE
 dB
-dl
-dl
-dl
-dp
+aM
+aM
+aM
+aW
 dE
 cS
 fO
@@ -7382,7 +7431,7 @@ bN
 bN
 da
 fK
-dJ
+aZ
 dJ
 dJ
 dJ
@@ -7474,7 +7523,7 @@ bE
 bE
 cS
 fx
-dq
+bj
 dJ
 dJ
 dJ
@@ -7566,15 +7615,15 @@ Mh
 Vg
 cS
 fy
-dr
+bn
 dJ
-dJ
+aH
 dJ
 dI
+aZ
+aQ
 dJ
-dJ
-dJ
-dJ
+aR
 dJ
 dO
 cS
@@ -7663,10 +7712,10 @@ dJ
 dJ
 dJ
 dI
+aZ
+aQ
 dJ
-dJ
-dJ
-dJ
+aR
 dJ
 jU
 cS
@@ -7755,10 +7804,10 @@ dJ
 dD
 dJ
 dI
+aZ
+aQ
 dJ
-dJ
-dJ
-dJ
+aR
 dJ
 ea
 cS
@@ -7847,10 +7896,10 @@ dJ
 dJ
 dJ
 dI
+aZ
+aQ
 dJ
-dJ
-dJ
-dJ
+aR
 dJ
 dN
 cS
@@ -7934,7 +7983,7 @@ cx
 by
 by
 fD
-dv
+bz
 dJ
 dJ
 dJ
@@ -8026,7 +8075,7 @@ cu
 cJ
 by
 fE
-dw
+cb
 dJ
 dJ
 dJ
@@ -8118,7 +8167,7 @@ cm
 Sj
 by
 dA
-dJ
+aZ
 dJ
 dJ
 dJ
@@ -8302,10 +8351,10 @@ cm
 cK
 by
 dB
-dx
-dl
-dl
-gg
+al
+aB
+aB
+aL
 ez
 dB
 dl
