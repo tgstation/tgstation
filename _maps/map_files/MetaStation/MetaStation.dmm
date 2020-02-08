@@ -6552,7 +6552,7 @@
 "ank" = (
 /obj/structure/lattice,
 /obj/machinery/camera/motion{
-	c_tag = "E.V.A. Storage";
+	c_tag = "Armory External";
 	dir = 8
 	},
 /turf/open/space/basic,
