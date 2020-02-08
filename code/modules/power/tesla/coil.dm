@@ -13,7 +13,7 @@
 
 	circuit = /obj/item/circuitboard/machine/tesla_coil
 
-	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_IS_TESLA
+	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 	var/power_loss = 2
 	var/input_power_multiplier = 1
 	var/zap_cooldown = 100
@@ -94,9 +94,7 @@
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 		zap_buckle_check(power)
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-		if(!(zap_flags & ZAP_IS_TESLA))
-			return power_produced
-		tesla_zap(src, 5, power_produced, zap_flags, shocked_targets)
+		return power_produced
 	else
 		..()
 
@@ -133,10 +131,7 @@
 			linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, min(power_produced, 3)) // x4 coils with a pulse per second or so = ~720/m point bonus for R&D
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 		zap_buckle_check(power)
-		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-		if(!(zap_flags & ZAP_IS_TESLA))
-			return power_produced
-		tesla_zap(src, 5, power_produced, zap_flags, shocked_targets)
+		return power_produced
 	else
 		..()
 
@@ -193,5 +188,6 @@
 	if(anchored && !panel_open)
 		flick("grounding_rodhit", src)
 		zap_buckle_check(power)
+		return 0
 	else
 		..()

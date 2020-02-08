@@ -64,9 +64,12 @@
 
 		pixel_x = -32
 		pixel_y = -32
+		var/count = 0
 		for (var/ball in orbiting_balls)
-			var/range = rand(1, CLAMP(orbiting_balls.len, 3, 7))
-			tesla_zap(ball, range, TESLA_MINI_POWER/7*range)
+			if(count < 6)
+				var/range = rand(1, CLAMP(orbiting_balls.len, 3, 7))
+				tesla_zap(ball, range, TESLA_MINI_POWER/7*range)
+			count++
 	else
 		energy = 0 // ensure we dont have miniballs of miniballs
 
@@ -169,6 +172,8 @@
 	C.dust()
 
 /proc/tesla_zap(atom/source, zap_range = 3, power, zap_flags = ZAP_DEFAULT_FLAGS, list/shocked_targets)
+	if(source == null)
+		return
 	. = source.dir
 	if(power < 1000)
 		return
@@ -181,7 +186,7 @@
 	var/obj/vehicle/ridden/bicycle/closest_million_dollar_baby
 	var/obj/machinery/power/tesla_coil/closest_tesla_coil
 	var/obj/machinery/power/grounding_rod/closest_grounding_rod
-	var/obj/vehicle/ridden/bicycle/closest_rideable
+	var/obj/vehicle/ridden/closest_rideable
 	var/mob/living/closest_mob
 	var/obj/machinery/closest_machine
 	var/obj/structure/closest_structure
@@ -312,17 +317,19 @@
 			. = zapdir
 
 	//per type stuff:
+	var/range = 3
 	if(!QDELETED(closest_million_dollar_baby))
-		closest_million_dollar_baby.zap_act(power, zap_flags, shocked_targets)
+		power = closest_million_dollar_baby.zap_act(power, zap_flags, shocked_targets)
 
 	else if(!QDELETED(closest_tesla_coil))
-		closest_tesla_coil.zap_act(power, zap_flags, shocked_targets)
+		power = closest_tesla_coil.zap_act(power, zap_flags, shocked_targets)
+		range = 5
 
 	else if(!QDELETED(closest_grounding_rod))
-		closest_grounding_rod.zap_act(power, zap_flags, shocked_targets)
+		power = closest_grounding_rod.zap_act(power, zap_flags, shocked_targets)
 
 	else if(!QDELETED(closest_rideable))
-		closest_rideable.zap_act(power, zap_flags, shocked_targets)
+		power = closest_rideable.zap_act(power, zap_flags, shocked_targets)
 
 	else if(!QDELETED(closest_mob))
 		closest_mob.set_shocked()
@@ -333,15 +340,18 @@
 			var/mob/living/silicon/S = closest_mob
 			if((zap_flags & ZAP_MOB_STUN) && (zap_flags & ZAP_MOB_DAMAGE))
 				S.emp_act(EMP_LIGHT)
-			tesla_zap(S, 7, power / 1.5, zap_flags, shocked_targets) // metallic folks bounce it further
+			range = 7 // metallic folks bounce it further
 		else
-			tesla_zap(closest_mob, 5, power / 1.5, zap_flags, shocked_targets)
+			range = 5
+		power /= 1.5
 
 	else if(!QDELETED(closest_machine))
-		closest_machine.zap_act(power, zap_flags, shocked_targets)
+		power = closest_machine.zap_act(power, zap_flags, shocked_targets)
 
 	else if(!QDELETED(closest_blob))
-		closest_blob.zap_act(power, zap_flags, shocked_targets)
+		power = closest_blob.zap_act(power, zap_flags, shocked_targets)
 
 	else if(!QDELETED(closest_structure))
-		closest_structure.zap_act(power, zap_flags, shocked_targets)
+		power = closest_structure.zap_act(power, zap_flags, shocked_targets)
+
+	tesla_zap(closest_mob, range, power, zap_flags, shocked_targets)
