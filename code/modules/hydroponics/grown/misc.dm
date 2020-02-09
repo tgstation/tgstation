@@ -225,7 +225,7 @@
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime()
 	icon_state = "cherry_bomb_lit"
 	playsound(src, 'sound/effects/fuse.ogg', seed.potency, FALSE)
-	sleep(500)
+	sleep(rand(50,100))
 	reagents.chem_temp = 1000 //Sets off the rdx
 	reagents.handle_reactions()
 
