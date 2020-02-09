@@ -22,9 +22,17 @@
 	if(!C || !S) //Sanity
 		return
 
+	if(!ishuman(C)) //If it's not human, don't bother.
+		return
+
 	var/bot_authenticated = "[S.name]"
 	var/bot_rank = "Security Robot"
 	var/match_found
+	var/assignment = "NO ASSIGNMENT"
+	var/mob/living/carbon/human/H = C
+
+	if(ishuman(H))
+		assignment = H.get_assignment()
 
 	for(var/datum/data/record/R in GLOB.data_core.security)
 		if(!R) //Sanity
@@ -37,7 +45,7 @@
 
 	if(!match_found) //No record match; alert Security.
 		playsound(S, 'sound/machines/engine_alert1.ogg', 100, FALSE) //SOUND ALARM!!
-		S.speak("WARNING!! No security record found for [arrest_type ? "Detained" : "Arrested"] level [threat] scumbag <b>[C]</b> at [location]. Recommend further investigation", S.radio_channel)
+		S.speak("<b>WARNING!!</b> No security record found for [arrest_type ? "Detained" : "Arrested"] level [threat] scumbag <b>[C], [assignment]</b> at <b>[location]</b>. Recommend further investigation.", S.radio_channel)
 		return
 
 	var/counter = 1
@@ -52,7 +60,7 @@
 	if(C.check_unauthorized_weapons(weaponcheck=CALLBACK(S, /mob/living/simple_animal/bot/secbot.proc/check_for_weapons)))
 		weapons = "YES"
 
-	var/t1 = "<b>[bot_authenticated] [arrest_type ? "Detained" : "Arrested"]:</b> [C.name] <b>LOCATION:</b> [location]. <BR>\
+	var/t1 = "<b>[bot_authenticated] [arrest_type ? "Detained" : "Arrested"]:</b> [C.name], [assignment] <b>LOCATION:</b> [location]. <BR>\
 			<b>STATUS:</b> [active2.fields["criminal"]] <b>CONCEALED IDENTITY?:</b> [unknown]. <b>UNAUTHORIZED WEAPONS?:</b> [weapons]. <b>THREAT LEVEL:</b> [threat]."
 
 	active2.fields[text("com_[]", counter)] = text("<b>Made by [] ([]) on [] [], []</b><BR>[]", bot_authenticated, bot_rank, station_time_timestamp(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)

@@ -69,6 +69,9 @@
 /obj/machinery/computer/security
 	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
 
+/mob/living/simple_animal/bot/secbot
+	var/obj/machinery/camera/builtInCamera = null
+
 //******************************************************
 //SEC BODY CAMS by Surrealistik Oct 2019 ENDS
 //******************************************************
