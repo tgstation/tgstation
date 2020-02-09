@@ -11,7 +11,6 @@
 	var/list/temporary_mutations = list() //Temporary changes to the UE
 	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
 	var/mob/living/holder
-	var/delete_species = TRUE //Set to FALSE when a body is scanned by a cloner to fix #38875
 	var/mutation_index[DNA_MUTATION_BLOCKS] //List of which mutations this carbon has and its assigned block
 	var/stability = 100
 	var/scrambled = FALSE //Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
@@ -27,8 +26,7 @@
 			cholder.dna = null
 	holder = null
 
-	if(delete_species)
-		QDEL_NULL(species)
+	QDEL_NULL(species)
 
 	mutations.Cut()					//This only references mutations, just dereference.
 	temporary_mutations.Cut()		//^

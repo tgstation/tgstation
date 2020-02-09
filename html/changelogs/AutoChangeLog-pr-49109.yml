@@ -1,0 +1,5 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - bugfix: "plastic water bottles can now spash"
+  - bugfix: "plastic water bottle caps render properly the first time"

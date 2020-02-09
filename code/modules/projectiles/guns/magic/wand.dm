@@ -140,6 +140,7 @@
 
 /obj/item/gun/magic/wand/polymorph/zap_self(mob/living/user)
 	..() //because the user mob ceases to exists by the time wabbajack fully resolves
+
 	wabbajack(user)
 	charges--
 
@@ -226,3 +227,10 @@
 	..()
 	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
 	charges--
+
+/////////////////////////////////////
+//WAND OF NOTHING
+/////////////////////////////////////
+
+/obj/item/gun/magic/wand/nothing
+	ammo_type = /obj/item/ammo_casing/magic/nothing

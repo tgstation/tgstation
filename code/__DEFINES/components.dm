@@ -84,6 +84,7 @@
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"			        //from base of atom/attackby(): (/obj/item, /mob/living, params)
 	#define COMPONENT_NO_AFTERATTACK 1								//Return this in response if you don't want afterattack to be called
 #define COMSIG_ATOM_HULK_ATTACK "hulk_attack"					//from base of atom/attack_hulk(): (/mob/living/carbon/human)
+#define COMSIG_ATOM_ATTACK_ANIMAL "attack_animal"				//from base of atom/animal_attack(): (/mob/user)
 #define COMSIG_PARENT_EXAMINE "atom_examine"                    //from base of atom/examine(): (/mob)
 #define COMSIG_ATOM_GET_EXAMINE_NAME "atom_examine_name"		//from base of atom/get_examine_name(): (/mob, list/overrides)
 	//Positions for overrides list
@@ -299,6 +300,8 @@
 	#define COMPONENT_BLOCK_MARK_RETRIEVAL 1
 #define COMSIG_ITEM_HIT_REACT "item_hit_react"					//from base of obj/item/hit_reaction(): (list/args)
 #define COMSIG_ITEM_WEARERCROSSED "wearer_crossed"                //called on item when crossed by something (): (/atom/movable, mob/living/crossed)
+#define COMSIG_ITEM_MICROWAVE_ACT "microwave_act"                //called on item when microwaved (): (obj/machinery/microwave/M)
+
 
 // /obj/item/clothing signals
 #define COMSIG_SHOES_STEP_ACTION "shoes_step_action"			//from base of obj/item/clothing/shoes/proc/step_action(): ()
