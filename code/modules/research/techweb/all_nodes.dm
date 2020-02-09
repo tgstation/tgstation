@@ -485,6 +485,15 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 4000
 
+/datum/techweb_node/medical_nanotech
+	id = "medical_nanotech"
+	display_name = "Medical Nanite Technology"
+	description = "Employment of nanites for medical machinery."
+	prereq_ids = list("biotech", "nanite_base")
+	design_ids = list("nanobed")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 1000)
+	export_price = 4000
+
 /datum/techweb_node/subdermal_implants
 	id = "subdermal_implants"
 	display_name = "Subdermal Implants"

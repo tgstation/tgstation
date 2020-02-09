@@ -749,6 +749,15 @@
 		/obj/item/stock_parts/cell = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/nanobed
+	name = "Nanite Bed (Machine Board)"
+	icon_state = "medical"
+	build_path = /obj/machinery/nanobed
+	req_components = list(
+		/obj/item/stock_parts/scanning_module = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/matter_bin = 1)
+
 /obj/item/circuitboard/machine/stasis
 	name = "Lifeform Stasis Unit (Machine Board)"
 	icon_state = "medical"

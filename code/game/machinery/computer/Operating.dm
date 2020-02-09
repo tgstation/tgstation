@@ -13,6 +13,7 @@
 	var/mob/living/carbon/human/patient
 	var/obj/structure/table/optable/table
 	var/obj/machinery/stasis/sbed
+	var/obj/machinery/nanobed/nbed
 	var/list/advanced_surgeries = list()
 	var/datum/techweb/linked_techweb
 	light_color = LIGHT_COLOR_BLUE
@@ -23,14 +24,15 @@
 	find_table()
 
 /obj/machinery/computer/operating/Destroy()
-	for(var/direction in GLOB.cardinals)
-		table = locate(/obj/structure/table/optable, get_step(src, direction))
-		if(table && table.computer == src)
-			table.computer = null
-		else
-			sbed = locate(/obj/machinery/stasis, get_step(src, direction))
-			if(sbed && sbed.op_computer == src)
-				sbed.op_computer = null
+	if(table && table.computer == src)
+		table.computer = null
+		table = null
+	if(sbed && sbed.op_computer == src)
+		sbed.op_computer = null
+		sbed = null
+	if(nbed && nbed.op_computer == src)
+		nbed.op_computer = null
+		nbed = null
 	. = ..()
 
 /obj/machinery/computer/operating/attackby(obj/item/O, mob/user, params)
@@ -57,11 +59,14 @@
 		if(table)
 			table.computer = src
 			break
-		else
-			sbed = locate(/obj/machinery/stasis, get_step(src, direction))
-			if(sbed)
-				sbed.op_computer = src
-				break
+		sbed = locate(/obj/machinery/stasis, get_step(src, direction))
+		if(sbed)
+			sbed.op_computer = src
+			break
+		nbed = locate(/obj/machinery/nanobed, get_step(src, direction))
+		if(nbed)
+			nbed.op_computer = src
+			break
 
 /obj/machinery/computer/operating/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -93,6 +98,12 @@
 				return data
 			data["patient"] = list()
 			patient = sbed.occupant
+		else if(nbed)
+			data["table"] = nbed
+			if(!nbed.check_patient())
+				return data
+			data["patient"] = list()
+			patient = nbed.occupant
 		else
 			data["patient"] = null
 			return data

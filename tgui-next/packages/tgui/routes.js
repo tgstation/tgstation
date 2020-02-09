@@ -61,6 +61,7 @@ import { NaniteCloudControl } from './interfaces/NaniteCloudControl';
 import { NaniteProgramHub } from './interfaces/NaniteProgramHub';
 import { NaniteProgrammer } from './interfaces/NaniteProgrammer';
 import { NaniteRemote } from './interfaces/NaniteRemote';
+import { Nanobed } from './interfaces/Nanobed';
 import { NotificationPreferences } from './interfaces/NotificationPreferences';
 import { NtnetRelay } from './interfaces/NtnetRelay';
 import { NtosArcade } from './interfaces/NtosArcade';
@@ -373,6 +374,10 @@ const ROUTES = {
   nanite_remote: {
     component: () => NaniteRemote,
     scrollable: true,
+  },
+  nanobed: {
+    component: () => Nanobed,
+    scrollable: false,
   },
   notificationpanel: {
     component: () => NotificationPreferences,

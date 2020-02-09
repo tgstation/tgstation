@@ -16,6 +16,7 @@
 	var/start_time = 0 ///Timestamp to when the nanites were first inserted in the host
 	var/stealth = FALSE //if TRUE, does not appear on HUDs and health scans
 	var/diagnostics = TRUE //if TRUE, displays program list when scanned by nanite scanners
+	var/safe_volume = FALSE ///if TRUE, prevents deletion of nanites from lack of volume
 
 /datum/component/nanites/Initialize(amount = 100, cloud = 0)
 	if(!isliving(parent) && !istype(parent, /datum/nanite_cloud_backup))
@@ -23,6 +24,9 @@
 
 	nanite_volume = amount
 	cloud_id = cloud
+
+	if(cloud_id && cloud_active)
+		cloud_sync()
 
 	//Nanites without hosts are non-interactive through normal means
 	if(isliving(parent))
@@ -36,38 +40,45 @@
 		host_mob.hud_set_nanite_indicator()
 		START_PROCESSING(SSnanites, src)
 
-		if(cloud_id && cloud_active)
-			cloud_sync()
-
 /datum/component/nanites/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_HAS_NANITES, .proc/confirm_nanites)
-	RegisterSignal(parent, COMSIG_NANITE_IS_STEALTHY, .proc/check_stealth)
-	RegisterSignal(parent, COMSIG_NANITE_DELETE, .proc/delete_nanites)
-	RegisterSignal(parent, COMSIG_NANITE_UI_DATA, .proc/nanite_ui_data)
-	RegisterSignal(parent, COMSIG_NANITE_GET_PROGRAMS, .proc/get_programs)
-	RegisterSignal(parent, COMSIG_NANITE_SET_VOLUME, .proc/set_volume)
-	RegisterSignal(parent, COMSIG_NANITE_ADJUST_VOLUME, .proc/adjust_nanites)
-	RegisterSignal(parent, COMSIG_NANITE_SET_MAX_VOLUME, .proc/set_max_volume)
-	RegisterSignal(parent, COMSIG_NANITE_SET_CLOUD, .proc/set_cloud)
-	RegisterSignal(parent, COMSIG_NANITE_SET_CLOUD_SYNC, .proc/set_cloud_sync)
-	RegisterSignal(parent, COMSIG_NANITE_SET_SAFETY, .proc/set_safety)
-	RegisterSignal(parent, COMSIG_NANITE_SET_REGEN, .proc/set_regen)
-	RegisterSignal(parent, COMSIG_NANITE_ADD_PROGRAM, .proc/add_program)
-	RegisterSignal(parent, COMSIG_NANITE_SCAN, .proc/nanite_scan)
-	RegisterSignal(parent, COMSIG_NANITE_SYNC, .proc/sync)
-
+	RegisterWithHolder(parent)
 	if(isliving(parent))
-		RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, .proc/on_emp)
-		RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/on_death)
-		RegisterSignal(parent, COMSIG_MOB_ALLOWED, .proc/check_access)
-		RegisterSignal(parent, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_shock)
-		RegisterSignal(parent, COMSIG_LIVING_MINOR_SHOCK, .proc/on_minor_shock)
-		RegisterSignal(parent, COMSIG_SPECIES_GAIN, .proc/check_viable_biotype)
-		RegisterSignal(parent, COMSIG_NANITE_SIGNAL, .proc/receive_signal)
-		RegisterSignal(parent, COMSIG_NANITE_COMM_SIGNAL, .proc/receive_comm_signal)
+		RegisterWithHostMob(parent)
+
+/datum/component/nanites/proc/RegisterWithHolder(holder)
+	RegisterSignal(holder, COMSIG_HAS_NANITES, .proc/confirm_nanites)
+	RegisterSignal(holder, COMSIG_NANITE_IS_STEALTHY, .proc/check_stealth)
+	RegisterSignal(holder, COMSIG_NANITE_DELETE, .proc/delete_nanites)
+	RegisterSignal(holder, COMSIG_NANITE_UI_DATA, .proc/nanite_ui_data)
+	RegisterSignal(holder, COMSIG_NANITE_GET_PROGRAMS, .proc/get_programs)
+	RegisterSignal(holder, COMSIG_NANITE_SET_VOLUME, .proc/set_volume)
+	RegisterSignal(holder, COMSIG_NANITE_ADJUST_VOLUME, .proc/adjust_nanites)
+	RegisterSignal(holder, COMSIG_NANITE_SET_MAX_VOLUME, .proc/set_max_volume)
+	RegisterSignal(holder, COMSIG_NANITE_SET_CLOUD, .proc/set_cloud)
+	RegisterSignal(holder, COMSIG_NANITE_SET_CLOUD_SYNC, .proc/set_cloud_sync)
+	RegisterSignal(holder, COMSIG_NANITE_SET_SAFETY, .proc/set_safety)
+	RegisterSignal(holder, COMSIG_NANITE_SET_REGEN, .proc/set_regen)
+	RegisterSignal(holder, COMSIG_NANITE_ADD_PROGRAM, .proc/add_program)
+	RegisterSignal(holder, COMSIG_NANITE_SYNC, .proc/sync)
+	RegisterSignal(holder, COMSIG_ATOM_EMP_ACT, .proc/on_emp)
+
+/datum/component/nanites/proc/RegisterWithHostMob(host_mob)
+	RegisterSignal(host_mob, COMSIG_MOB_DEATH, .proc/on_death)
+	RegisterSignal(host_mob, COMSIG_NANITE_SCAN, .proc/nanite_scan)
+	RegisterSignal(host_mob, COMSIG_MOB_ALLOWED, .proc/check_access)
+	RegisterSignal(host_mob, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_shock)
+	RegisterSignal(host_mob, COMSIG_LIVING_MINOR_SHOCK, .proc/on_minor_shock)
+	RegisterSignal(host_mob, COMSIG_SPECIES_GAIN, .proc/check_viable_biotype)
+	RegisterSignal(host_mob, COMSIG_NANITE_SIGNAL, .proc/receive_signal)
+	RegisterSignal(host_mob, COMSIG_NANITE_COMM_SIGNAL, .proc/receive_comm_signal)
 
 /datum/component/nanites/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_HAS_NANITES,
+	UnregisterFromHolder(parent)
+	if(host_mob)
+		UnregisterFromHostMob(host_mob)
+
+/datum/component/nanites/proc/UnregisterFromHolder(holder)
+	UnregisterSignal(holder, list(COMSIG_HAS_NANITES,
 								COMSIG_NANITE_IS_STEALTHY,
 								COMSIG_NANITE_DELETE,
 								COMSIG_NANITE_UI_DATA,
@@ -80,10 +91,12 @@
 								COMSIG_NANITE_SET_SAFETY,
 								COMSIG_NANITE_SET_REGEN,
 								COMSIG_NANITE_ADD_PROGRAM,
-								COMSIG_NANITE_SCAN,
 								COMSIG_NANITE_SYNC,
-								COMSIG_ATOM_EMP_ACT,
-								COMSIG_MOB_DEATH,
+								COMSIG_ATOM_EMP_ACT))
+
+/datum/component/nanites/proc/UnregisterFromHostMob(host_mob)
+	UnregisterSignal(host_mob, list(COMSIG_MOB_DEATH,
+								COMSIG_NANITE_SCAN,
 								COMSIG_MOB_ALLOWED,
 								COMSIG_LIVING_ELECTROCUTE_ACT,
 								COMSIG_LIVING_MINOR_SHOCK,
@@ -96,6 +109,7 @@
 	STOP_PROCESSING(SSnanites, src)
 	QDEL_LIST(programs)
 	if(host_mob)
+		UnregisterFromHostMob(host_mob)
 		set_nanite_bar(TRUE)
 		host_mob.hud_set_nanite_indicator()
 	host_mob = null
@@ -178,7 +192,10 @@
 /datum/component/nanites/proc/adjust_nanites(datum/source, amount)
 	nanite_volume = CLAMP(nanite_volume + amount, 0, max_nanites)
 	if(nanite_volume <= 0) //oops we ran out
-		qdel(src)
+		if(!safe_volume)
+			qdel(src)
+		else
+			nanite_volume = 0
 
 /datum/component/nanites/proc/set_nanite_bar(remove = FALSE)
 	var/image/holder = host_mob.hud_list[DIAG_NANITE_FULL_HUD]
@@ -379,3 +396,41 @@
 		id++
 		mob_programs += list(mob_program)
 	data["mob_programs"] = mob_programs
+
+///A subtype of nanites used when they're sitting inside items or machinery, and acting on a guest mob without being inside them
+/datum/component/nanites/guest
+	safe_volume = TRUE
+
+///Unlike normal nanites, guest nanites can sit inside non-living stuff
+/datum/component/nanites/guest/Initialize(amount = 100, cloud = 0)
+	nanite_volume = amount
+	cloud_id = cloud
+
+///Manually set the host mob for the nanites
+/datum/component/nanites/guest/proc/set_host_mob(mob/living/new_host_mob)
+	if(!istype(new_host_mob))
+		return FALSE
+	if(!(new_host_mob.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+		return FALSE
+
+	//Clear any previous host mob
+	if(host_mob)
+		unset_host_mob()
+
+	host_mob = new_host_mob
+	RegisterWithHostMob(host_mob)
+	host_mob.hud_set_nanite_indicator()
+	START_PROCESSING(SSnanites, src)
+	return TRUE
+
+///Manually unset the host mob for the nanites
+/datum/component/nanites/guest/proc/unset_host_mob()
+	STOP_PROCESSING(SSnanites, src)
+	UnregisterFromHostMob(host_mob)
+	set_nanite_bar(TRUE)
+	host_mob.hud_set_nanite_indicator()
+	host_mob = null
+
+///Don't auto-register host signals if it's a mob, this is just a carrier until stated otherwise
+/datum/component/nanites/guest/RegisterWithParent()
+	RegisterWithHolder()

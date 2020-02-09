@@ -579,6 +579,14 @@
 	category = list("Medical Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/board/nanobed
+	name = "Machine Design (Nanite Bed)"
+	desc = "The circuit board for a Nanite Bed."
+	id = "nanobed"
+	build_path = /obj/item/circuitboard/machine/nanobed
+	category = list("Medical Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/board/spaceship_navigation_beacon
 	name = "Machine Design (Bluespace Navigation Gigabeacon)"
 	desc = "The circuit board for a Bluespace Navigation Gigabeacon."
