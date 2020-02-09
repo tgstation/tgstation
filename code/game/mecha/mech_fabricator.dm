@@ -21,20 +21,7 @@
 	var/link_on_init = TRUE
 	var/temp
 	var/datum/component/remote_materials/rmat
-	var/list/part_sets = list(
-								"Cyborg",
-								"Ripley",
-								"Firefighter",
-								"Odysseus",
-								"Gygax",
-								"Durand",
-								"H.O.N.K",
-								"Phazon",
-								"Exosuit Equipment",
-								"Exosuit Ammunition",
-								"Cyborg Upgrade Modules",
-								"Misc"
-								)
+	var/list/part_sets = list("Cyborg")
 
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
 	stored_research = new
@@ -59,6 +46,29 @@
 	//building time adjustment coefficient (1 -> 0.8 -> 0.6)
 	T = -1
 	for(var/obj/item/stock_parts/manipulator/Ml in component_parts)
+		// FULPSTATION: Tiered part sets 
+		
+		part_sets = list(
+								"Cyborg","Misc"
+								)	
+		if( Ml.rating >= 2)
+			part_sets += list(
+								"Ripley","Exosuit Equipment","Exosuit Ammunition","Cyborg Upgrade Modules"
+								)
+		if (Ml.rating >= 3)
+			part_sets += list(
+								"Firefighter","Odysseus"
+								)
+		if (Ml.rating >= 4)
+			part_sets += list(
+								"Durand","H.O.N.K","Gygax"
+								)
+		if (Ml.rating >= 5)
+			part_sets += list(
+								"Phazon"
+								)			
+		// END FULPSTATION: Tiered part sets 
+
 		T += Ml.rating
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 
