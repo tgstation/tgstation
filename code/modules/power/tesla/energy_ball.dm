@@ -60,7 +60,7 @@
 		pixel_x = 0
 		pixel_y = 0
 
-		tesla_zap(src, 7, TESLA_DEFAULT_POWER, TRUE)
+		tesla_zap(src, 7, TESLA_DEFAULT_POWER)
 
 		pixel_x = -32
 		pixel_y = -32
@@ -212,7 +212,6 @@
 										/obj/machinery/gateway,
 										/obj/structure/lattice,
 										/obj/structure/grille,
-										/obj/machinery/the_singularitygen/tesla,
 										/obj/structure/frame/machine))
 
 	for(var/A in typecache_filter_multi_list_exclusion(orange(source, zap_range+2), things_to_shock, blacklisted_tesla_types))
@@ -334,7 +333,7 @@
 	else if(!QDELETED(closest_mob))
 		closest_mob.set_shocked()
 		addtimer(CALLBACK(closest_mob, /mob/living/proc/reset_shocked), 10)
-		var/shock_damage = (zap_flags & ZAP_MOB_DAMAGE)? (min(round(power/600), 90) + rand(-5, 5)) : 0
+		var/shock_damage = (zap_flags & ZAP_MOB_DAMAGE) ? (min(round(power/800), 90) + rand(-5, 5)) : 0
 		closest_mob.electrocute_act(shock_damage, source, 1, SHOCK_TESLA | ((zap_flags & ZAP_MOB_STUN) ? NONE : SHOCK_NOSTUN))
 		if(issilicon(closest_mob))
 			var/mob/living/silicon/S = closest_mob

@@ -533,12 +533,9 @@ Class Procs:
 
 /obj/machinery/zap_act(power, zap_flags, shocked_objects)
 	. = ..()
-	if(prob(40) && (zap_flags & ZAP_MACHINE_EXPLOSIVE) && !(resistance_flags & INDESTRUCTIBLE))
-		explosion(src, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
-	else if(zap_flags & ZAP_OBJ_DAMAGE)
-		take_damage(power/2000, BURN, "energy")
-		if(prob(40))
-			emp_act(EMP_LIGHT)
+	if(zap_flags & ZAP_OBJ_DAMAGE)
+		take_damage(power/500, BURN, "energy")
+		emp_act(EMP_HEAVY)
 
 /obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
