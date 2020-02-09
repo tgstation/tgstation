@@ -405,6 +405,17 @@
 /datum/component/nanites/guest/Initialize(amount = 100, cloud = 0)
 	nanite_volume = amount
 	cloud_id = cloud
+	START_PROCESSING(SSnanites, src)
+
+/datum/component/nanites/guest/process()
+	adjust_nanites(null, regen_rate)
+	if(cloud_id && cloud_active && world.time > next_sync)
+		cloud_sync()
+		next_sync = world.time + NANITE_SYNC_DELAY
+	if(host_mob)
+		for(var/X in programs)
+			var/datum/nanite_program/NP = X
+			NP.on_process()
 
 ///Manually set the host mob for the nanites
 /datum/component/nanites/guest/proc/set_host_mob(mob/living/new_host_mob)
@@ -419,16 +430,11 @@
 
 	host_mob = new_host_mob
 	RegisterWithHostMob(host_mob)
-	host_mob.hud_set_nanite_indicator()
-	START_PROCESSING(SSnanites, src)
 	return TRUE
 
 ///Manually unset the host mob for the nanites
 /datum/component/nanites/guest/proc/unset_host_mob()
-	STOP_PROCESSING(SSnanites, src)
 	UnregisterFromHostMob(host_mob)
-	set_nanite_bar(TRUE)
-	host_mob.hud_set_nanite_indicator()
 	host_mob = null
 
 ///Don't auto-register host signals if it's a mob, this is just a carrier until stated otherwise
