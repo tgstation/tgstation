@@ -460,36 +460,34 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 /atom/proc/GetAllContents(var/T)
 	var/list/processing_list = list(src)
-	var/list/assembled = list()
 	if(T)
-		while(processing_list.len)
-			var/atom/A = processing_list[1]
-			processing_list.Cut(1, 2)
+		. = list()
+		var/i = 0
+		while(i < length(processing_list))
+			var/atom/A = processing_list[++i]
 			//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
 			//This is also why we don't need to check against assembled as we go along
 			processing_list += A.contents
 			if(istype(A,T))
-				assembled += A
+				. += A
 	else
-		while(processing_list.len)
-			var/atom/A = processing_list[1]
-			processing_list.Cut(1, 2)
+		var/i = 0
+		while(i < length(processing_list))
+			var/atom/A = processing_list[++i]
 			processing_list += A.contents
-			assembled += A
-	return assembled
+		return processing_list
 
 /atom/proc/GetAllContentsIgnoring(list/ignore_typecache)
 	if(!length(ignore_typecache))
 		return GetAllContents()
 	var/list/processing = list(src)
-	var/list/assembled = list()
-	while(processing.len)
-		var/atom/A = processing[1]
-		processing.Cut(1,2)
+	. = list()
+	var/i = 0
+	while(i < length(processing))
+		var/atom/A = processing[++i]
 		if(!ignore_typecache[A.type])
 			processing += A.contents
-			assembled += A
-	return assembled
+			. += A
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.

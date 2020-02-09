@@ -1,0 +1,12 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Emitters will now remain anchored when being constructed from an anchored machine frame."
+  - bugfix: "Emitters will now properly turn off and be unwelded if unanchored via varediting."
+  - bugfix: "Unanchored emitters will no longer be pulled towards non-harmful simple animals (ie butterflies, cats, ect) if they click on them."
+  - bugfix: "Fixed a scenario where emitters could start welded and be turned on, but were not properly anchored to the ground."
+  - bugfix: "Fixed a scenario where emitters could start anchored to the ground, but had to be resecured with a wrench to get them to work properly."
+  - code_imp: "Emitters now properly use the anchored var. The state var has been renamed to welded, and only tracks welded status."
+  - code_imp: "The anchored emitter map subtype has been changed to a fully welded one, since all utilized instances were editted to be welded as well anyway."
+  - rscadd: "Added a bit more examine feedback to emitters."
+  - bugfix: "Emitters will now show how often they fire a little more accurately."

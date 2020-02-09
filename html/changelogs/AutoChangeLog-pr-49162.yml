@@ -1,0 +1,4 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - refactor: "Changed custom material output on examine to be on a single line"

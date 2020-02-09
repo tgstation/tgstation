@@ -338,14 +338,12 @@
 /obj/effect/spawner/lootdrop/techstorage/medical
 	name = "medical circuit board spawner"
 	loot = list(
-				/obj/item/circuitboard/computer/cloning,
-				/obj/item/circuitboard/machine/clonepod,
 				/obj/item/circuitboard/machine/chem_dispenser,
 				/obj/item/circuitboard/computer/scan_consolenew,
 				/obj/item/circuitboard/computer/med_data,
 				/obj/item/circuitboard/machine/smoke_machine,
 				/obj/item/circuitboard/machine/chem_master,
-				/obj/item/circuitboard/machine/clonescanner,
+				/obj/item/circuitboard/machine/dnascanner,
 				/obj/item/circuitboard/computer/pandemic
 				)
 
