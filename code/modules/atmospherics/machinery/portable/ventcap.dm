@@ -1,7 +1,8 @@
 #define MODE_OFF 0
 #define MODE_NORMAL 1
-#define MODE_OVERPRESSURE 2
-#define MODE_VENTING 3
+#define MODE_PUMPING 2
+#define MODE_OVERPRESSURE 3
+#define MODE_VENTING 4
 
 /obj/machinery/portable_atmospherics/ventcap
 	icon = 'icons/obj/atmospherics/components/miners.dmi'
@@ -19,10 +20,19 @@
 	ui_x = 300
 	ui_y = 230
 
-	var/icon_state_off = "ventcap_unanchored"
-	var/icon_state_on = "ventcap_anchored"
-	var/icon_state_growing = "ventcap-growing"
+	var/icon_state_retracted = "ventcap_unanchored"
+	var/icon_state_extended = "ventcap_anchored"
+	var/icon_state_overpressure = "ventcap_overpressure"
 	var/icon_state_venting = "ventcap-venting"
+
+	var/anim_extend = "ventcap_extending"
+	var/anim_retract = "ventcap_retracting"
+	var/anim_pump = "ventcap_pumping"
+	var/anim_overpressure_start = "ventcap_overpressure_start"
+	var/anim_overpressure_end = "ventcap_overpressure_end"
+	var/anim_vent_start = "ventcap_venting_start"
+	var/anim_vent_end = "ventcap_venting_end"
+	
 
 	var/on = FALSE // Technically doesn't use power while 'on', only while growing.
 	var/mode = MODE_OFF
@@ -44,8 +54,17 @@
 
 
 /obj/machinery/portable_atmospherics/ventcap/RefreshParts()
-	var/list/part_number = list(bin = 0, capacitor = 0, laser = 0) // Done this way so part numbers can be balanced more easily, as assumed part numbers are not baked in to the code.
-	var/list/part_rating = list(bin = 0, capacitor = 0, laser = 0) // Also it's resistant to bugs/features that add extra parts to machines.
+	var/bin = 0
+	var/capacitor = 0
+	var/laser = 0
+	var/list/part_number = list()	// Done this way so part numbers can be balanced more easily, as assumed part numbers are not baked in to the code.
+	var/list/part_rating = list() // Also it's resistant to bugs/features that add extra parts to machines.
+
+	part_number += bin // Blame Byond
+	part_number += capacitor
+	part_number += laser
+	part_rating += capacitor
+	part_rating += laser
 
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		part_number[bin]++
@@ -76,9 +95,9 @@
 		if(pressure > emergency_vent_pressure)
 			mode = MODE_VENTING
 			emergency_vent()
-		adjust_volume(exponential_percentage*(emergency_venting ? -2 : -1)) // Loses output faster if venting.
+		adjust_volume(exponential_percentage*(mode == MODE_VENTING ? -2 : -1)) // Loses output faster if venting.
 		air_contents.volume = current_volume
-	else if(growing && do_powerstuff(active_power_usage)) // Gains output only if power is supplied
+	else if(mode == MODE_PUMPING && do_powerstuff(active_power_usage)) // Gains output only if power is supplied
 		adjust_volume(exponential_percentage)
 
 	harvest() // What, you thought that giant, billowing geyser of gas would stop just because you asked politely?
@@ -122,7 +141,7 @@
 	return FALSE
 
 /obj/machinery/portable_atmospherics/ventcap/proc/update_power()
-	if(!growing)
+	if(!mode == MODE_PUMPING)
 		active_power_usage = idle_power_usage
 	var/power_multiplier = power_usage_mult * round(sqrt(current_volume/base_volume), 0.1) // Power usage increases as you try to get more gas out, but not linearly.
 	active_power_usage = initial(active_power_usage)*power_multiplier
@@ -168,34 +187,36 @@
 	if(!QDELETED(src))
 		qdel(src)
 
-/obj/machinery/portable_atmospherics/ventcap/iconstuff()
+/obj/machinery/portable_atmospherics/ventcap/proc/iconstuff()
 	switch(icon_mode)
 		if(MODE_VENTING)
 			if(!mode == MODE_VENTING)
-				flick(ventcap_venting_end, src)
+				flick(anim_vent_end, src)
 				icon_mode = MODE_OVERPRESSURE
 		if(MODE_OVERPRESSURE)
 			if(mode == MODE_VENTING)
 				icon_state = icon_state_venting
-				flick(ventcap_venting_start, src)
+				flick(anim_vent_start, src)
 				icon_mode = MODE_VENTING
 			else if(mode == MODE_NORMAL)
 				icon_state = icon_state_venting
-				flick(ventcap_venting_start, src)
+				flick(anim_vent_start, src)
 				icon_mode = MODE_VENTING
 		if(MODE_NORMAL)
-			if(mode == MODE_OVERPRESSURE)
+			if(mode == MODE_PUMPING)
+				flick(anim_pump, src) // Can't just set the icon state without breaking animation synchronization.
+			else if(mode == MODE_OVERPRESSURE)
 				icon_state = icon_state_overpressure
-				flick(ventcap_overpressure_start, src)
+				flick(anim_overpressure_start, src)
 				icon_mode = MODE_OVERPRESSURE
 			else if(mode == MODE_OFF)
 				icon_state = icon_state_retracted
-				flick(ventcap_retracting, src)
+				flick(anim_retract, src)
 				icon_mode = MODE_OFF
 		if(MODE_OFF)
 			if(mode == MODE_NORMAL)
 				icon_state = icon_state_extended
-				flick(ventcap_extending, src)
+				flick(anim_extend, src)
 				icon_mode = MODE_NORMAL
 
 /obj/machinery/portable_atmospherics/ventcap/connect(obj/machinery/atmospherics/components/unary/portables_connector/atmosphere_vent/thevent)
@@ -218,10 +239,10 @@
 /obj/machinery/portable_atmospherics/ventcap/ui_data()
 	var/data = list()
 
-	if(growing)
+	if(mode == MODE_PUMPING)
 		data["status"] = "growing"
 		data["pressurecolor"] = "'teal'"
-	else if(emergency_venting)
+	else if(mode == MODE_VENTING)
 		data["status"] = "emergency pressure release"
 		data["pressurecolor"] = "'red'"
 	else if(on)
@@ -243,6 +264,8 @@
 	if(..())
 		return
 
+#undef MODE_OFF
 #undef MODE_NORMAL
+#undef MODE_GROWING
 #undef MODE_OVERPRESSURE
 #undef MODE_VENTING

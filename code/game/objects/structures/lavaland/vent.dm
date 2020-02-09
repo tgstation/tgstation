@@ -39,7 +39,7 @@
 		if(V.vent_id == vent_id)
 			remaining_gases -= V.gastype
 
-	gastype = pick([remaining_gases.len ? available_gases : possible_gases]) // If we have one of each, just spawn at random now
+	gastype = pick(remaining_gases.len ? remaining_gases : possible_gases) // If we have one of each, just spawn at random now
 
 	GLOB.atmospheric_vents += src
 
