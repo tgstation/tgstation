@@ -25517,7 +25517,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "bqQ" = (
-/obj/structure/bed,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -25531,11 +25530,10 @@
 /obj/machinery/light_switch{
 	pixel_x = -24
 	},
-/obj/item/bedsheet/dorms,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "bqR" = (
-/obj/structure/bed,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -25549,7 +25547,7 @@
 /obj/machinery/light_switch{
 	pixel_x = 24
 	},
-/obj/item/bedsheet/dorms,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "bqS" = (
@@ -36299,7 +36297,6 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "bRG" = (
-/obj/structure/bed,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -36313,8 +36310,8 @@
 /obj/machinery/light_switch{
 	pixel_x = 24
 	},
-/obj/item/bedsheet/dorms,
 /obj/item/toy/figure/assistant,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "bRH" = (
@@ -36345,7 +36342,6 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bRJ" = (
-/obj/structure/bed,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -36359,12 +36355,11 @@
 /obj/machinery/light_switch{
 	pixel_x = -24
 	},
-/obj/item/bedsheet/dorms,
 /obj/effect/landmark/start/assistant,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "bRK" = (
-/obj/structure/bed,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -36378,8 +36373,8 @@
 /obj/machinery/light_switch{
 	pixel_x = 24
 	},
-/obj/item/bedsheet/dorms,
 /obj/effect/landmark/start/assistant,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "bRL" = (
@@ -50246,7 +50241,6 @@
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
 "wtu" = (
-/obj/structure/bed,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -50260,10 +50254,10 @@
 /obj/machinery/light_switch{
 	pixel_x = -24
 	},
-/obj/item/bedsheet/dorms,
 /obj/machinery/airalarm{
 	pixel_y = 25
 	},
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "wvo" = (

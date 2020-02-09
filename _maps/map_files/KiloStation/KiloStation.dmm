@@ -41302,7 +41302,6 @@
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/storage)
 "bkw" = (
-/obj/structure/bed,
 /obj/machinery/button/door{
 	id = "Cabin_3";
 	name = "Cabin 3 Privacy Lock";
@@ -41315,7 +41314,7 @@
 	pixel_x = -23
 	},
 /obj/effect/landmark/start/assistant,
-/obj/item/bedsheet/dorms,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/wood,
 /area/crew_quarters/locker)
 "bkx" = (
@@ -41762,7 +41761,6 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "ble" = (
-/obj/structure/bed,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/button/door{
 	id = "Cabin_2";
@@ -41776,7 +41774,7 @@
 	pixel_x = 24
 	},
 /obj/effect/landmark/start/assistant,
-/obj/item/bedsheet/dorms,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/wood{
 	icon_state = "wood-broken3"
 	},
@@ -41883,9 +41881,8 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "bln" = (
-/obj/structure/bed,
 /obj/effect/landmark/start/assistant,
-/obj/item/bedsheet/dorms,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/wood,
 /area/crew_quarters/locker)
 "blo" = (

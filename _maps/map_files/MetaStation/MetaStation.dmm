@@ -9162,7 +9162,6 @@
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "asV" = (
-/obj/structure/bed,
 /obj/machinery/button/door{
 	id = "Cabin3";
 	name = "Cabin Bolt Control";
@@ -9174,7 +9173,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "asW" = (
@@ -9224,8 +9223,7 @@
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/structure/bed,
-/obj/item/bedsheet/dorms,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "atb" = (
@@ -10625,7 +10623,6 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "awE" = (
-/obj/structure/bed,
 /obj/machinery/button/door{
 	id = "Cabin2";
 	name = "Cabin Bolt Control";
@@ -10636,7 +10633,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "awF" = (
@@ -10651,7 +10648,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "awG" = (
-/obj/structure/bed,
 /obj/machinery/button/door{
 	id = "Cabin5";
 	name = "Dorm Bolt Control";
@@ -10660,7 +10656,7 @@
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/item/bedsheet/dorms,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "awH" = (
@@ -13149,7 +13145,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "aCJ" = (
-/obj/structure/bed,
 /obj/machinery/button/door{
 	id = "Cabin6";
 	name = "Dorm Bolt Control";
@@ -13161,7 +13156,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/item/bedsheet/dorms,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "aCK" = (
@@ -15281,11 +15276,10 @@
 	pixel_x = -25;
 	specialfunctions = 4
 	},
-/obj/structure/bed,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/item/bedsheet/dorms,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "aHT" = (
@@ -26045,13 +26039,12 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
 "bfD" = (
-/obj/structure/bed,
-/obj/item/bedsheet/captain,
 /obj/effect/landmark/start/captain,
 /obj/machinery/camera{
 	c_tag = "Captain's Quarters";
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/personal/sleeper/captain,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
 "bfE" = (
@@ -54320,7 +54313,6 @@
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/machinery/computer/scan_consolenew{
-	icon_state = "computer";
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
@@ -72421,7 +72413,6 @@
 "hFV" = (
 /obj/machinery/door/window/westleft{
 	name = "safety door";
-	req_access_txt = "0";
 	req_one_access_txt = "47"
 	},
 /turf/open/floor/plasteel/white,

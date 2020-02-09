@@ -55,6 +55,55 @@
 /obj/structure/closet/secure_closet/personal/sleeper/PopulateContents()
 	new /obj/item/bedsheet/dorms( src )
 
+/obj/structure/closet/secure_closet/personal/sleeper/captain
+	name = "Captain's Chill-out-Chamber"
+	desc = "The captain's personal Chill-out-Chamber, equipped with extra comfortable padding and two pillows. Perfect for sleeping in style."
+
+/obj/structure/closet/secure_closet/personal/sleeper/captain/PopulateContents()
+	new /obj/item/bedsheet/captain( src )
+
+/obj/structure/closet/secure_closet/personal/sleeper/rd
+	name = "Research Director's Chill-out-Chamber"
+	desc = "The research director's personal Chill-out-Chamber, upgraded with slime resistant plating."
+
+/obj/structure/closet/secure_closet/personal/sleeper/rd/PopulateContents()
+	new /obj/item/bedsheet/rd( src )
+
+/obj/structure/closet/secure_closet/personal/sleeper/cmo
+	name = "Chief Medical Officer's Chill-out-Chamber"
+	desc = "The chief medical officer's personal Chill-out-Chamber, rebuilt from an old sleeper. Has extra space for Runtime to sleep too."
+
+/obj/structure/closet/secure_closet/personal/sleeper/cmo/PopulateContents()
+	new /obj/item/bedsheet/cmo( src )
+
+/obj/structure/closet/secure_closet/personal/sleeper/hos
+	name = "Head of Security's Chill-out-Chamber"
+	desc = "The head of security's personal Chill-out-Chamber. Has kevlar reinforcement and bulletproof glass, for maximum tactical sleep."
+
+/obj/structure/closet/secure_closet/personal/sleeper/hos/PopulateContents()
+	new /obj/item/bedsheet/hos( src )
+
+/obj/structure/closet/secure_closet/personal/sleeper/hop
+	name = "Head of Personnel's Chill-out-Chamber"
+	desc = "The head of personnel's personal Chill-out-Chamber. Comes complete with a cubbyhole for Ian."
+
+/obj/structure/closet/secure_closet/personal/sleeper/hop/PopulateContents()
+	new /obj/item/bedsheet/hop( src )
+
+/obj/structure/closet/secure_closet/personal/sleeper/ce
+	name = "Chief Engineer's Chill-out-Chamber"
+	desc = "The chief engineer's personal Chill-out-Chamber. Resistant to supermatter delaminations... mostly."
+
+/obj/structure/closet/secure_closet/personal/sleeper/ce/PopulateContents()
+	new /obj/item/bedsheet/ce( src )
+
+/obj/structure/closet/secure_closet/personal/sleeper/qm
+	name = "Quartermaster's Chill-out-Chamber"
+	desc = "The quartermaster's personal Chill-out-Chamber. Unfortunately, Cargonia never sleeps."
+
+/obj/structure/closet/secure_closet/personal/sleeper/qm/PopulateContents()
+	new /obj/item/bedsheet/qm( src )
+
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/W, mob/user, params)
 	var/obj/item/card/id/I = W.GetID()
 	if(istype(I))

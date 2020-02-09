@@ -7033,7 +7033,6 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "aqn" = (
-/obj/structure/bed,
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
@@ -7047,7 +7046,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "aqo" = (
@@ -7721,7 +7720,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "asu" = (
-/obj/structure/bed,
 /obj/machinery/button/door{
 	id = "Dorm5";
 	name = "Cabin Bolt Control";
@@ -7730,7 +7728,7 @@
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/item/bedsheet/dorms,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "asv" = (
@@ -7815,7 +7813,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "asL" = (
-/obj/structure/bed,
 /obj/machinery/button/door{
 	id = "Dorm6";
 	name = "Cabin Bolt Control";
@@ -7824,7 +7821,7 @@
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/item/bedsheet/dorms,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "asM" = (
@@ -8406,7 +8403,6 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness)
 "auw" = (
-/obj/structure/bed,
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
@@ -8420,7 +8416,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "aux" = (
@@ -10017,7 +10013,6 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "ayV" = (
-/obj/structure/bed,
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
@@ -10031,7 +10026,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "ayW" = (
@@ -11242,7 +11237,6 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "aCd" = (
-/obj/structure/bed,
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
@@ -11256,7 +11250,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "aCe" = (
@@ -19505,7 +19499,6 @@
 /area/maintenance/port)
 "aYb" = (
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 8
 	},
 /turf/open/floor/engine,
@@ -25624,13 +25617,12 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
 "bnY" = (
-/obj/structure/bed,
-/obj/item/bedsheet/captain,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/closet/secure_closet/personal/sleeper/captain,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
 "bnZ" = (
@@ -33565,7 +33557,6 @@
 "bIO" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/machinery/computer/camera_advanced/xenobio{
-	icon_state = "computer";
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -34336,7 +34327,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 5
 	},
 /turf/open/floor/plasteel,
@@ -35996,8 +35986,7 @@
 	dir = 1
 	},
 /obj/structure/sign/warning/deathsposal{
-	pixel_x = -31;
-	pixel_y = 0
+	pixel_x = -31
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -36032,11 +36021,11 @@
 /obj/structure/table/glass,
 /obj/item/storage/box/monkeycubes,
 /obj/machinery/button/door{
+	id = "xenobiomain";
 	name = "Containment Blast Doors";
 	pixel_x = 1;
 	pixel_y = -26;
-	req_access_txt = "55";
-	id = "xenobiomain"
+	req_access_txt = "55"
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -36093,7 +36082,6 @@
 	},
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -36851,7 +36839,6 @@
 	pressure_checks = 0
 	},
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
@@ -37266,10 +37253,9 @@
 /area/science/xenobiology)
 "bTb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	name = "killroom vent";
-	icon_state = "vent_map_siphon_on-2";
 	dir = 1;
-	external_pressure_bound = 120
+	external_pressure_bound = 120;
+	name = "killroom vent"
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/freezer,
@@ -37661,7 +37647,6 @@
 	dir = 4
 	},
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 8
 	},
 /turf/open/floor/engine,
@@ -40579,8 +40564,7 @@
 "ccQ" = (
 /obj/structure/sink{
 	dir = 4;
-	pixel_x = -12;
-	pixel_y = 0
+	pixel_x = -12
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -49360,7 +49344,6 @@
 	dir = 8
 	},
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 5
 	},
 /turf/open/floor/engine,
@@ -49691,7 +49674,6 @@
 /area/vacant_room/commissary)
 "gGJ" = (
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 5
 	},
 /turf/open/floor/engine,
@@ -49953,7 +49935,6 @@
 	dir = 4
 	},
 /obj/machinery/computer/camera_advanced/xenobio{
-	icon_state = "computer";
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -50272,8 +50253,7 @@
 /area/science/xenobiology)
 "jUW" = (
 /obj/machinery/camera/autoname{
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
@@ -50494,7 +50474,6 @@
 	},
 /obj/machinery/light,
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 1
 	},
 /obj/structure/cable,
@@ -50940,11 +50919,11 @@
 	pixel_y = -2
 	},
 /obj/machinery/button/door{
+	id = "xenobiomain";
 	name = "Containment Blast Doors";
 	pixel_x = 1;
 	pixel_y = -26;
-	req_access_txt = "55";
-	id = "xenobiomain"
+	req_access_txt = "55"
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -51571,10 +51550,9 @@
 /area/security/detectives_office)
 "pvI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	name = "killroom vent";
-	icon_state = "vent_map_siphon_on-2";
 	dir = 1;
-	external_pressure_bound = 120
+	external_pressure_bound = 120;
+	name = "killroom vent"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/science/xenobiology)

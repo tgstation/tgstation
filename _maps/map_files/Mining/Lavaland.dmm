@@ -1896,11 +1896,10 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fe" = (
-/obj/structure/bed,
-/obj/item/bedsheet/brown,
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/carpet,
 /area/mine/living_quarters)
 "ff" = (

@@ -8110,13 +8110,12 @@
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "ave" = (
-/obj/structure/bed,
 /obj/machinery/button/door{
 	id = "Dorm3Shutters";
 	name = "Privacy Shutters Control";
 	pixel_y = 26
 	},
-/obj/item/bedsheet/dorms,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "avf" = (
@@ -9468,13 +9467,12 @@
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "ayj" = (
-/obj/structure/bed,
 /obj/machinery/button/door{
 	id = "Dorm2Shutters";
 	name = "Privacy Shutters Control";
 	pixel_y = 26
 	},
-/obj/item/bedsheet/dorms,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "ayk" = (
@@ -9721,8 +9719,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayS" = (
-/obj/structure/bed,
-/obj/item/bedsheet/captain,
+/obj/structure/closet/secure_closet/personal/sleeper/captain,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/captain)
 "ayT" = (
@@ -10768,13 +10765,12 @@
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "aBM" = (
-/obj/structure/bed,
 /obj/machinery/button/door{
 	id = "Dorm1Shutters";
 	name = "Privacy Shutters Control";
 	pixel_y = 26
 	},
-/obj/item/bedsheet/dorms,
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
 "aBN" = (
@@ -18860,9 +18856,7 @@
 /turf/open/floor/plasteel/dark,
 /area/janitor)
 "aWO" = (
-/obj/structure/bed,
 /obj/effect/landmark/start/janitor,
-/obj/item/bedsheet/purple,
 /obj/machinery/light_switch{
 	pixel_x = 24
 	},
@@ -18876,6 +18870,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/plasteel/dark,
 /area/janitor)
 "aWP" = (
@@ -44250,11 +44245,10 @@
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main/monastery)
 "chM" = (
-/obj/structure/bed,
-/obj/item/bedsheet/green,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
+/obj/structure/closet/secure_closet/personal/sleeper,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main/monastery)
 "chN" = (
@@ -44485,14 +44479,6 @@
 	dir = 4
 	},
 /obj/item/storage/crayons,
-/turf/open/floor/plasteel/grimy,
-/area/chapel/main/monastery)
-"ciY" = (
-/obj/structure/bed,
-/obj/item/bedsheet/yellow,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main/monastery)
 "ciZ" = (
@@ -77949,7 +77935,7 @@ chM
 cfm
 cip
 chs
-ciY
+chM
 cfm
 cfN
 cfN
