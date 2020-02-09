@@ -190,7 +190,7 @@
 	var/sulfur_power = 1
 
 	var/multiver_temp = 1
-	var/sulfur_temp = -0.5
+	var/sulfur_temp = -0.66
 
 	var/saltpetre_volume
 	var/multiver_volume
@@ -208,10 +208,12 @@
 	created_volume = min(saltpetre_volume * saltpetre_power, multiver_volume * multiver_power + sulfur_volume * sulfur_power)
 	required_temp = required_temp + multiver_temp * multiver_volume + sulfur_temp * sulfur_volume
 
-	sleep(max(rand(50,100)-saltpetre_volume*saltpetre_power,1 + multiver_volume * multiver_power))
+	sleep(rand( 50 - (saltpetre_volume*saltpetre_power > 50 ? 50 : saltpetre_volume*saltpetre_power) ,100 + multiver_volume * multiver_power + sulfur_volume * sulfur_power))
+
 	holder.remove_reagent(/datum/reagent/saltpetre,saltpetre_volume)
 	holder.remove_reagent(/datum/reagent/medicine/C2/multiver,multiver_volume)
 	holder.remove_reagent(/datum/reagent/sulfur,sulfur_volume)
+
 	if(created_volume < 10) //if the explosion isnt powerful enough blackpowder deflagerates instead of properly exploding
 		var/fire_range = round(created_volume/2)
 		var/turf/T = get_turf(holder.my_atom)
