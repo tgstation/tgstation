@@ -20,3 +20,4 @@
 
 /datum/round_event/meteor_wave/meaty/meatball
 	wave_name = "meatball"
+	
