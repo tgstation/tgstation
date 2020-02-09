@@ -402,7 +402,7 @@
 /obj/item/storage/box/syndie_kit/chemical/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 14
+	STR.max_items = 15
 
 /obj/item/storage/box/syndie_kit/chemical/PopulateContents()
 	new /obj/item/reagent_containers/glass/bottle/polonium(src)
@@ -418,6 +418,7 @@
 	new /obj/item/reagent_containers/glass/bottle/coniine(src)
 	new /obj/item/reagent_containers/glass/bottle/curare(src)
 	new /obj/item/reagent_containers/glass/bottle/amanitin(src)
+	new /obj/item/reagent_containers/glass/bottle/multiver(src)
 	new /obj/item/reagent_containers/syringe(src)
 
 /obj/item/storage/box/syndie_kit/nuke
