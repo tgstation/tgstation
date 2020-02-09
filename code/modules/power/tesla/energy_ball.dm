@@ -64,7 +64,7 @@
 
 		pixel_x = -32
 		pixel_y = -32
-		for (var/ball in orbiting_balls)|
+		for (var/ball in orbiting_balls)
 			var/range = rand(1, CLAMP(orbiting_balls.len, 3, 7))
 			tesla_zap(ball, range, TESLA_MINI_POWER/7*range)
 	else
