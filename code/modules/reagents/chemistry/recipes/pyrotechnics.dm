@@ -133,7 +133,7 @@
 	required_temp = 550 + rand(-49,49)
 
 /datum/chemical_reaction/reagent_explosion/tatp_explosion/on_reaction(datum/reagents/holder, created_volume)
-	strengthdiv = created_volume == 2100 ? 1 : (created_volume*created_volume)/3000000 //formula that increases the potency of the explosion the more chem is used making tatp a top-tier instead of mid-tier
+	strengthdiv = 3 - (created_volume >= 2100 ? 2 : round(created_volume/1400)) //formula that increases the potency of the explosion the more chem is used making tatp a top-tier instead of mid-tier
 	. = ..()
 
 
@@ -195,7 +195,7 @@
 	var/saltpetre_volume
 	var/multiver_volume
 	var/sulfur_volume
-	//noone of these values add up nicely because i want people to experiment with diffrent ratios
+	//none of these values add up nicely because i want people to experiment with diffrent ratios
 
 /datum/chemical_reaction/reagent_explosion/gunpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
 	for(var/datum/reagent/R in holder.reagent_list)
