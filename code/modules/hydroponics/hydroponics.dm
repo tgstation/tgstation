@@ -176,18 +176,18 @@
 
 			if(pestlevel >= 8)
 				if(!myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
-					//adjustHealth(-2 / rating)
 					if(myseed.potency >=30)
-						myseed.adjust_potency(-rand(4,8)) //Pests eat leaves and nibble on fruit, lowering potency.
+						myseed.adjust_potency(-rand(2,6)) //Pests eat leaves and nibble on fruit, lowering potency.
+						myseed.potency = min((myseed.potency),30,100)
 				else
 					adjustHealth(2 / rating)
 					adjustPests(-1 / rating)
 
 			else if(pestlevel >= 4)
 				if(!myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
-					//adjustHealth(-1 / rating)
-					if(myseed.potency >=10)
+					if(myseed.potency >=30)
 						myseed.adjust_potency(-rand(1,4))
+						myseed.potency = min((myseed.potency),30,100)
 
 				else
 					adjustHealth(1 / rating)
@@ -195,15 +195,14 @@
 						adjustPests(-1 / rating)
 
 			else if(pestlevel < 4 && myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
-				//adjustHealth(-2 / rating)
 				if(prob(5))
 					adjustPests(-1 / rating)
 
 			// If it's a weed, it doesn't stunt the growth
 			if(weedlevel >= 5 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
-				//adjustHealth(-1 / rating)
 				if(myseed.yield >=3)
-					myseed.adjust_yield(-rand(1,2)) //Weeds choke out the plant's ability to bare more fruit.
+					myseed.adjust_yield(-rand(1,2)) //Weeds choke out the plant's ability to bear more fruit.
+					myseed.yield = min((myseed.yield),3,10)
 
 //Health & Age///////////////////////////////////////////////////////////
 
@@ -233,6 +232,7 @@
 		if(weedlevel >= 10 && prob(50) && !self_sustaining) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
 			if(myseed && myseed.yield >= 3)
 				myseed.adjust_yield(-rand(1,2)) //Loses even more yield per tick, quickly dropping to 3 minimum.
+				myseed.yield = min((myseed.yield),3,10)
 			if(!myseed)
 				weedinvasion()
 			needs_update = 1
