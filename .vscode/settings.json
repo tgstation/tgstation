@@ -1,5 +1,8 @@
 {
 	"eslint.workingDirectories": [
         "./tgui-next"
-    ]
+    ],
+    "files.exclude": {
+        "**/.dmm": true
+    }
 }

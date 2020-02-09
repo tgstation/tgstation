@@ -763,6 +763,8 @@
 			coverlocked = FALSE
 			visible_message("<span class='warning'>The APC cover is knocked down!</span>")
 			update_icon()
+		if(terminal == null)//If you're beating on it and it has no wires, it should destroy itself
+			qdel(src)
 
 /obj/machinery/power/apc/emag_act(mob/user)
 	if(!(obj_flags & EMAGGED) && !malfhack)

@@ -215,7 +215,7 @@
 										/obj/machinery/the_singularitygen/tesla,
 										/obj/structure/frame/machine))
 
-	for(var/A in typecache_filter_multi_list_exclusion(oview(source, zap_range+2), things_to_shock, blacklisted_tesla_types))
+	for(var/A in typecache_filter_multi_list_exclusion(orange(source, zap_range+2), things_to_shock, blacklisted_tesla_types))
 		if(!(zap_flags & ZAP_ALLOW_DUPLICATES) && LAZYACCESS(shocked_targets, A))
 			continue
 
@@ -354,4 +354,9 @@
 	else if(!QDELETED(closest_structure))
 		power = closest_structure.zap_act(power, zap_flags, shocked_targets)
 
-	tesla_zap(closest_mob, range, power, zap_flags, shocked_targets)
+
+	var/zap_count = 1
+	if(prob(20))
+		zap_count++
+	for(var/i in 1 to zap_count)
+		tesla_zap(closest_mob, range, power / zap_count, zap_flags, shocked_targets)

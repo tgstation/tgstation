@@ -96,7 +96,7 @@
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 		return power_produced
 	else
-		..()
+		. = ..()
 
 /obj/machinery/power/tesla_coil/proc/zap()
 	if((last_zap + zap_cooldown) > world.time || !powernet)
@@ -190,4 +190,4 @@
 		zap_buckle_check(power)
 		return 0
 	else
-		..()
+		. = ..()
