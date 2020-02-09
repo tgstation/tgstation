@@ -12,7 +12,11 @@ GLOBAL_LIST_INIT(meteors_threatening, list(/obj/effect/meteor/medium=4, /obj/eff
 GLOBAL_LIST_INIT(meteors_catastrophic, list(/obj/effect/meteor/medium=5, /obj/effect/meteor/big=75, \
 						  /obj/effect/meteor/flaming=10, /obj/effect/meteor/irradiated=10, /obj/effect/meteor/tunguska = 1)) //for catastrophic meteor event
 
-GLOBAL_LIST_INIT(meteorsB, list(/obj/effect/meteor/meaty=5, /obj/effect/meteor/meaty/xeno=1)) //for meaty ore event
+GLOBAL_LIST_INIT(meteors_meaty_normal, list(/obj/effect/meteor/meaty=5, /obj/effect/meteor/meaty/xeno=1)) //for meaty ore event
+
+GLOBAL_LIST_INIT(meteors_meaty_ball, list(/obj/effect/meteor/meaty=50, \
+						  /obj/effect/meteor/meaty/xeno=10, /obj/effect/meteor/meaty/mouldy=20, \
+						  /obj/effect/meteor/meaty/bone=20, /obj/effect/meteor/meaty/meatball_man = 5)) //for meatball event
 
 GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
@@ -100,6 +104,8 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	var/timerid = null
 	var/list/meteordrop = list(/obj/item/stack/ore/iron)
 	var/dropamt = 2
+	var/move_delay = 1
+	var/spin = TRUE
 
 /obj/effect/meteor/Move()
 	if(z != z_original || loc == dest)
@@ -128,8 +134,10 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	z_original = z
 	GLOB.meteor_list += src
 	SSaugury.register_doom(src, threat)
-	SpinAnimation()
-	timerid = QDEL_IN(src, lifetime)
+	if(spin)
+		SpinAnimation()
+	if(lifetime)
+		timerid = QDEL_IN(src, lifetime)
 	chase_target(target)
 
 /obj/effect/meteor/Bump(atom/A)
@@ -181,7 +189,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		var/thing_to_spawn = pick(meteordrop)
 		new thing_to_spawn(get_turf(src))
 
-/obj/effect/meteor/proc/chase_target(atom/chasing, delay = 1)
+/obj/effect/meteor/proc/chase_target(atom/chasing, delay = move_delay)
 	set waitfor = FALSE
 	if(chasing)
 		walk_towards(src, chasing, delay)
@@ -268,7 +276,36 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	new /obj/effect/decal/cleanable/greenglow(get_turf(src))
 	radiation_pulse(src, 500)
 
-//Meaty Ore
+//Station buster Tunguska
+/obj/effect/meteor/tunguska
+	name = "tunguska meteor"
+	icon_state = "flaming"
+	desc = "Your life briefly passes before your eyes the moment you lay them on this monstrosity."
+	hits = 30
+	hitpwr = 1
+	heavy = 1
+	meteorsound = 'sound/effects/bamf.ogg'
+	meteordrop = list(/obj/item/stack/ore/plasma)
+	threat = 50
+
+/obj/effect/meteor/tunguska/Move()
+	. = ..()
+	if(.)
+		new /obj/effect/temp_visual/revenant(get_turf(src))
+
+/obj/effect/meteor/tunguska/meteor_effect()
+	..()
+	explosion(src.loc, 5, 10, 15, 20, 0)
+
+/obj/effect/meteor/tunguska/Bump()
+	..()
+	if(prob(20))
+		explosion(src.loc,2,4,6,8)
+
+//////////////////////////
+//Meatyores
+/////////////////////////
+
 /obj/effect/meteor/meaty
 	name = "meaty ore"
 	icon_state = "meateor"
@@ -319,31 +356,102 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	if(!isspaceturf(T))
 		new /obj/effect/decal/cleanable/xenoblood(T)
 
-//Station buster Tunguska
-/obj/effect/meteor/tunguska
-	name = "tunguska meteor"
-	icon_state = "flaming"
-	desc = "Your life briefly passes before your eyes the moment you lay them on this monstrosity."
-	hits = 30
+//Blobby-Meaty Ore
+/obj/effect/meteor/meaty/mouldy
+	name = "mouldy ore"
+	desc = "Ewww."
+	color = "#654321"
+	meteorsound = 'sound/effects/splat.ogg'
+	meteordrop = list(/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie, /obj/item/organ/tongue/zombie)
+	threat = 10
+	var/spawn_max = 4
+	var/blobbo_chance = 25
+
+/obj/effect/meteor/meaty/mouldy/meteor_effect()
+	..()
+	if(prob(blobbo_chance))
+		new /mob/living/simple_animal/hostile/blob/blobbernaut/independent(src.loc, src)
+	else
+		for(var/i in 1 to spawn_max)
+			var/mob/living/simple_animal/hostile/blob/blobspore/BS = new /mob/living/simple_animal/hostile/blob/blobspore(src.loc, src)
+			for(var/j = 1, j <= rand(1, 3), j++)
+				step(BS, pick(NORTH,SOUTH,EAST,WEST))
+
+//Bone-Meaty Ore
+/obj/effect/meteor/meaty/bone
+	name = "boney ore"
+	desc = "This thing sure drank its calcium."
+	icon = 'icons/obj/statuelarge.dmi'
+	icon_state = "skull"
+	meteordrop = list(/obj/item/stack/sheet/bone, /obj/item/organ/tongue/bone, /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton)
+	dropamt = 8 //No bone gib spawner, so lots of bones instead. Besides, bones would survive impact better than meat.
+	hits = 4 // Bone is pretty hard.
+	meteorsound = 'sound/magic/RATTLEMEBONES2.ogg' // ME BONES
+	threat = 5
+	
+/obj/effect/meteor/meaty/bone/make_debris()
+	for(var/throws = dropamt, throws > 0, throws--)
+		var/thing_to_spawn = pick(meteordrop)
+		var/atom/thing = new thing_to_spawn(get_turf(src))
+		for(var/j = 1, j <= rand(1, 3), j++)
+			step(thing, pick(NORTH,SOUTH,EAST,WEST))
+
+//Long ago in a distant fairy land, there was a man known far and wide...
+/obj/effect/meteor/meaty/meatball_man
+	name = "meatball man"
+	icon = 'icons/effects/512x512.dmi'
+	icon_state = "meatball_man"
+	pixel_x = -240
+	pixel_y = -240
+	desc = "Oh, what a feat! He's one with the meat!"
+	hits = INFINITY // You cannot stop the Meatball Man.
+	lifetime = 0 // Meatball Man is eternal.
+	spin = FALSE
 	hitpwr = 1
 	heavy = 1
-	meteorsound = 'sound/effects/bamf.ogg'
-	meteordrop = list(/obj/item/stack/ore/plasma)
-	threat = 50
+	meteorsound = 'sound/effects/blobattack.ogg'
+	threat = 200
+	move_delay = 40 // Meatball Man never rushes, for all will become Meat in time.
+	var/meaty_range = 14
+	var/eaty_range = 7
+	var/meat_spreadiness = 20
+	var/he_is_close = FALSE
 
-/obj/effect/meteor/tunguska/Move()
+/obj/effect/meteor/meaty/meatball_man/Move()
 	. = ..()
-	if(.)
-		new /obj/effect/temp_visual/revenant(get_turf(src))
+	for(var/tile in spiral_range_turfs(eaty_range, src))
+		var/turf/T = tile
+		if(!T || !isturf(loc))
+			continue
+		T.ex_act(hitpwr)
+		for(var/thing in T)
+			if(isturf(loc) && thing != src)
+				thing.ex_act(hitpwr)
+	for(var/i = 1, i <= meat_spreadiness, i++)
+		var/chosen_x = src.x + rand(-1, 1)*(eaty_range + rand(0, (meaty_range - eaty_range)))
+		var/chosen_y = src.y + rand(-1, 1)*(eaty_range + rand(0, (meaty_range - eaty_range)))
+		var/turf/T = locate(chosen_x, chosen_y, src.z)
+		if(T && !isspaceturf(T))
+			new meteorgibs(T)
+			if(!he_is_close)
+				he_is_close = TRUE
+				waltz()
 
-/obj/effect/meteor/tunguska/meteor_effect()
-	..()
-	explosion(src.loc, 5, 10, 15, 20, 0)
+/obj/effect/meteor/meaty/meatball_man/Initialize()
+	for(var/obj/effect/meteor/meaty/meatball_man/M in GLOB.meteor_list)
+		if(M != src)
+			qdel(src) // There is only one Meatball Man.
+			return
+	. = ..()
 
-/obj/effect/meteor/tunguska/Bump()
-	..()
-	if(prob(20))
-		explosion(src.loc,2,4,6,8)
+/obj/effect/meteor/meaty/meatball_man/singularity_act()
+	return // ♫ And he decided to munch, on a singularity for lunch... ♫
+
+/obj/effect/meteor/meaty/meatball_man/proc/waltz()
+	for(var/V in GLOB.player_list)
+		var/mob/M = V
+		if((M.client.prefs.toggles & SOUND_MIDI) && is_station_level(M.z))
+			M.playsound_local(M, 'sound/misc/meaty_waltz.ogg', 20, FALSE, pressure_affected = FALSE)
 
 //////////////////////////
 //Spookoween meteors
