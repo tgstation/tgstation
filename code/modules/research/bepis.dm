@@ -35,7 +35,8 @@
 	var/negative_cash_offset = 0
 	var/minor_rewards = list(/obj/item/stack/circuit_stack/full,	//To add a new minor reward, add it here.
 					/obj/item/airlock_painter/decal,
-					/obj/item/pen/survival)
+					/obj/item/pen/survival,
+					/obj/item/circuitboard/machine/sleeper/party)
 	var/static/list/item_list = list()
 
 /obj/machinery/rnd/bepis/attackby(obj/item/O, mob/user, params)

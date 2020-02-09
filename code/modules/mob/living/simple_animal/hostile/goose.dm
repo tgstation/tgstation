@@ -48,7 +48,7 @@
 	nummies.Cut()
 	nummies += loc.contents
 	if(prob(5) && random_retaliate)
-		Retaliate()		
+		Retaliate()
 
 /mob/living/simple_animal/hostile/retaliate/goose/handle_automated_action()
 	if(length(nummies))
@@ -60,7 +60,7 @@
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/handle_automated_action()
 	if(length(nummies))
 		var/obj/item/E = pick(nummies)
-		if(!(E.custom_materials && E.custom_materials[getmaterialref(/datum/material/plastic)]))
+		if(!(E.custom_materials && E.custom_materials[SSmaterials.GetMaterialRef(/datum/material/plastic)]))
 			nummies -= E // remove non-plastic item from queue
 			E = locate(/obj/item/reagent_containers/food) in nummies // find food
 		if(E && E.loc == loc)
@@ -70,7 +70,7 @@
 /mob/living/simple_animal/hostile/retaliate/goose/proc/feed(obj/item/suffocator)
 	if(stat == DEAD || choking) // plapatin I swear to god
 		return FALSE
-	if(suffocator.custom_materials && suffocator.custom_materials[getmaterialref(/datum/material/plastic)]) // dumb goose'll swallow food or drink with plastic in it
+	if(suffocator.custom_materials && suffocator.custom_materials[SSmaterials.GetMaterialRef(/datum/material/plastic)]) // dumb goose'll swallow food or drink with plastic in it
 		visible_message("<span class='danger'>[src] hungrily gobbles up \the [suffocator]! </span>")
 		visible_message("<span class='boldwarning'>[src] is choking on \the [suffocator]! </span>")
 		suffocator.forceMove(src)
