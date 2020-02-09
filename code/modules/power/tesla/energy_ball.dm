@@ -64,12 +64,8 @@
 
 		pixel_x = -32
 		pixel_y = -32
-		var/count = 0
 		for (var/ball in orbiting_balls)
-			if(count < 6)
-				var/range = rand(1, CLAMP(orbiting_balls.len, 3, 7))
-				tesla_zap(ball, range, TESLA_MINI_POWER/7*range)
-			count++
+			tesla_zap(ball, range, TESLA_MINI_POWER/7*range)
 	else
 		energy = 0 // ensure we dont have miniballs of miniballs
 
@@ -214,7 +210,7 @@
 										/obj/structure/grille,
 										/obj/structure/frame/machine))
 
-	for(var/A in typecache_filter_multi_list_exclusion(orange(source, zap_range+2), things_to_shock, blacklisted_tesla_types))
+	for(var/A in typecache_filter_multi_list_exclusion(oview(source, zap_range+2), things_to_shock, blacklisted_tesla_types))
 		if(!(zap_flags & ZAP_ALLOW_DUPLICATES) && LAZYACCESS(shocked_targets, A))
 			continue
 
@@ -333,7 +329,7 @@
 	else if(!QDELETED(closest_mob))
 		closest_mob.set_shocked()
 		addtimer(CALLBACK(closest_mob, /mob/living/proc/reset_shocked), 10)
-		var/shock_damage = (zap_flags & ZAP_MOB_DAMAGE) ? (min(round(power/800), 90) + rand(-5, 5)) : 0
+		var/shock_damage = (zap_flags & ZAP_MOB_DAMAGE) ? (min(round(power/600), 90) + rand(-5, 5)) : 0
 		closest_mob.electrocute_act(shock_damage, source, 1, SHOCK_TESLA | ((zap_flags & ZAP_MOB_STUN) ? NONE : SHOCK_NOSTUN))
 		if(issilicon(closest_mob))
 			var/mob/living/silicon/S = closest_mob
