@@ -174,9 +174,8 @@
 	if(shell)
 		GLOB.available_ai_shells -= src
 	else
-		if(T && istype(radio) && istype(radio.keyslot))
-			radio.keyslot.forceMove(T)
-			radio.keyslot = null
+		borg_clear_radio() //FULPSTATION Borg Radio PR by Surrealistik Jan 2020; we delete all borg type encryption keys.
+
 	qdel(wires)
 	qdel(module)
 	qdel(eye_lights)
@@ -981,7 +980,7 @@
 
 /mob/living/silicon/robot/proc/ResetModule()
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
-	borg_reset_radio() //FULPSTATION BORG RADIOS by Surrealistik Jan 2020
+	borg_clear_radio() //FULPSTATION BORG RADIOS by Surrealistik Jan 2020
 	uneq_all()
 	shown_robot_modules = FALSE
 	if(hud_used)

@@ -126,43 +126,42 @@
 
 /obj/item/robot_module/medical/do_transform_delay()
 	..()
-	borg_set_radio(/obj/item/encryptionkey/headset_med, FREQ_MEDICAL)
+	borg_set_radio(RADIO_CHANNEL_MEDICAL)
 
 
 /obj/item/robot_module/engineering/do_transform_delay()
 	..()
-	borg_set_radio(/obj/item/encryptionkey/headset_eng, FREQ_ENGINEERING)
+	borg_set_radio(RADIO_CHANNEL_ENGINEERING)
 
 
 /obj/item/robot_module/security/do_transform_delay()
 	..()
-	borg_set_radio(/obj/item/encryptionkey/headset_sec, FREQ_SECURITY)
+	borg_set_radio(RADIO_CHANNEL_SECURITY)
 
 /obj/item/robot_module/peacekeeper/do_transform_delay()
 	..()
-	borg_set_radio(/obj/item/encryptionkey/headset_sec, FREQ_SECURITY)
+	borg_set_radio(RADIO_CHANNEL_SECURITY)
 
 
 /obj/item/robot_module/miner/do_transform_delay()
 	..()
-	borg_set_radio(/obj/item/encryptionkey/headset_mining, FREQ_SUPPLY)
-
+	borg_set_radio(RADIO_CHANNEL_SUPPLY)
 
 /obj/item/robot_module/clown/do_transform_delay()
 	..()
-	borg_set_radio(/obj/item/encryptionkey/headset_service, FREQ_SERVICE)
+	borg_set_radio(RADIO_CHANNEL_SERVICE)
 
 /obj/item/robot_module/standard/do_transform_delay()
 	..()
-	borg_set_radio(/obj/item/encryptionkey/headset_service, FREQ_SERVICE)
+	borg_set_radio(RADIO_CHANNEL_SERVICE)
 
 /obj/item/robot_module/janitor/do_transform_delay()
 	..()
-	borg_set_radio(/obj/item/encryptionkey/headset_service, FREQ_SERVICE)
+	borg_set_radio(RADIO_CHANNEL_SERVICE)
 
 /obj/item/robot_module/butler/do_transform_delay()
 	..()
-	borg_set_radio(/obj/item/encryptionkey/headset_service, FREQ_SERVICE)
+	borg_set_radio(RADIO_CHANNEL_SERVICE)
 
 
 //***********************************************************************

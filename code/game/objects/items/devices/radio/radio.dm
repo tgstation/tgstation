@@ -395,18 +395,20 @@
 				SSradio.remove_object(src, GLOB.radiochannels[ch_name])
 				secure_radio_connections[ch_name] = null
 
+			if(deactivate_integrated_borg_key(user)) //FULPSTATION Borg Radio PR by Surrealistik Jan 2020; we delete all borg type encryption keys.
+				return
 
 			if(keyslot)
 				var/turf/T = get_turf(user)
 				if(T)
 					keyslot.forceMove(T)
 					keyslot = null
+				to_chat(user, "<span class='notice'>You pop out the encryption key in the radio.</span>") //FULPSTATION
 
 			recalculateChannels()
-			to_chat(user, "<span class='notice'>You pop out the encryption key in the radio.</span>")
 
 		else
-			to_chat(user, "<span class='warning'>This radio doesn't have any encryption keys!</span>")
+			reactivate_integrated_borg_key(user) //FULPSTATION Borg Radio PR by Surrealistik Jan 2020; we activate any borg type encryption keys if there are no existing keys.
 
 	else if(istype(W, /obj/item/encryptionkey/))
 		if(keyslot)
