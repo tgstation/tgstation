@@ -361,8 +361,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/sand,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	icon = 'icons/misc/beach.dmi';
+	icon_state = "sand"
+	},
 /area/ruin/powered/beach)
 "hq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -549,7 +551,10 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/sand,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	icon = 'icons/misc/beach.dmi';
+	icon_state = "sand"
+	},
 /area/ruin/powered/beach)
 "qc" = (
 /obj/structure/mirror{
