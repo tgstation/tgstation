@@ -424,7 +424,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		if(!T || !isturf(loc))
 			continue
 		T.ex_act(hitpwr)
-		for(var/thing in T)
+		for(var/atom/thing in T)
 			if(isturf(loc) && thing != src)
 				thing.ex_act(hitpwr)
 	for(var/i = 1, i <= meat_spreadiness, i++)
