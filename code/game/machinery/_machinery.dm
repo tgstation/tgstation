@@ -535,7 +535,7 @@ Class Procs:
 	. = ..()
 	if(prob(85) && (zap_flags & ZAP_MACHINE_EXPLOSIVE) && !(resistance_flags & INDESTRUCTIBLE))
 		explosion(src, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
-	if(zap_flags & ZAP_OBJ_DAMAGE)
+	else if(zap_flags & ZAP_OBJ_DAMAGE)
 		take_damage(power/2000, BURN, "energy")
 		if(prob(40))
 			emp_act(EMP_LIGHT)
