@@ -206,3 +206,16 @@
 //***************************************************************************
 
 
+
+//************************************************************************
+//** Airlock Electroadaptive Psuedo Circuit BEGINS - Surrealistik Oct 2019
+//************************************************************************
+
+/obj/item/electroadaptive_pseudocircuit
+	var/list/accesses = list()
+	var/one_access = 0
+	var/unres_sides = 0 //unrestricted sides, or sides of the airlock that will open regardless of access
+
+//************************************************************************
+//** Airlock Electroadaptive Psuedo Circuit ENDS - Surrealistik Oct 2019
+//************************************************************************

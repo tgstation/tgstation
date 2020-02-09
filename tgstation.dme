@@ -840,6 +840,7 @@
 #include "code\FulpstationCode\halloween_costumes\zombie_rider.dm"
 #include "code\FulpstationCode\improved_record_security\fulp_improved_record_security.dm"
 #include "code\FulpstationCode\medborg_holobed\medborg_holobed.dm"
+#include "code\FulpstationCode\fulp_airlock_electroadaptive\fulp_airlock_electroadaptive_procs.dm"
 #include "code\game\alternate_appearance.dm"
 #include "code\game\atoms.dm"
 #include "code\game\atoms_movable.dm"

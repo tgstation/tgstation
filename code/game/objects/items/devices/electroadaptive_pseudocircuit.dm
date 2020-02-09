@@ -9,7 +9,7 @@
 	var/recharging = FALSE
 	var/circuits = 5 //How many circuits the pseudocircuit has left
 	var/static/recycleable_circuits = typecacheof(list(/obj/item/electronics/firelock, /obj/item/electronics/airalarm, /obj/item/electronics/firealarm, \
-	/obj/item/electronics/apc))//A typecache of circuits consumable for material
+	/obj/item/electronics/airlock, /obj/item/electronics/apc))//A typecache of circuits consumable for material | //FULP ELECTROADAPTIVE PROCS FOR AIRLOCKS PR, Surrealistik Oct 2019
 
 /obj/item/electroadaptive_pseudocircuit/Initialize()
 	. = ..()

@@ -161,6 +161,9 @@
 			name = "near finished airlock assembly"
 			electronics = W
 
+	else if(istype(W, /obj/item/electroadaptive_pseudocircuit) && state == AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS ) //FULP ELECTROADAPTIVE PROCS FOR AIRLOCKS PR, Surrealistik Oct 2019
+		airlock_install_electroadaptive(W, user)
+
 
 	else if((W.tool_behaviour == TOOL_CROWBAR) && state == AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER )
 		user.visible_message("<span class='notice'>[user] removes the electronics from the airlock assembly.</span>", \
