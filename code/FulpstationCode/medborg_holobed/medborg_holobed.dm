@@ -22,9 +22,9 @@
 	if(distance > holo_range)
 		to_chat(user, "<span class='warning'>[src] can't project that far! (<b>[distance - holo_range]</b> tiles beyond the maximum range of <b>[holo_range]</b>)</span>")
 		return
-	if(!isopenturf(target))
+	if(!isopenturf(T))
 		return
-	project_holobed(user, get_turf(target))
+	project_holobed(user, T)
 
 /obj/item/holobed_projector/examine(mob/user)
 	. = ..()
