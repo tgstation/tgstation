@@ -402,9 +402,10 @@
 	safe_volume = TRUE
 
 ///Unlike normal nanites, guest nanites can sit inside non-living stuff
-/datum/component/nanites/guest/Initialize(amount = 100, cloud = 0)
+/datum/component/nanites/guest/Initialize(amount = 100, cloud = 0, regen = 0.5)
 	nanite_volume = amount
 	cloud_id = cloud
+	regen_rate = regen
 	START_PROCESSING(SSnanites, src)
 
 /datum/component/nanites/guest/process()

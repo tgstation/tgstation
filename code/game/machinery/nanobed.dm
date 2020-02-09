@@ -24,7 +24,7 @@ as well as allowing a specific cloud setup for medical purposes, which would be 
 ///Creates the nanite component as well as linking any adjacent operating computer
 /obj/machinery/nanobed/Initialize()
 	. = ..()
-	internal_nanites = AddComponent(/datum/component/nanites/guest, 100, 1)
+	internal_nanites = AddComponent(/datum/component/nanites/guest, 100, 1, 1)
 	for(var/direction in GLOB.cardinals)
 		op_computer = locate(/obj/machinery/computer/operating, get_step(src, direction))
 		if(op_computer)
