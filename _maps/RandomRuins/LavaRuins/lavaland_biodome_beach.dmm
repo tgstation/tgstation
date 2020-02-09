@@ -361,7 +361,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating/beach/sand,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "hq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -538,7 +539,6 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "pS" = (
-/obj/effect/turf_decal/sand,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -548,7 +548,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating/beach/sand,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "qc" = (
 /obj/structure/mirror{
