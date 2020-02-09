@@ -40,6 +40,7 @@ as well as allowing a specific cloud setup for medical purposes, which would be 
 
 /obj/machinery/nanobed/examine(mob/user)
 	. = ..()
+	. += "<span class='notice'>The nanite volume meter indicates <b>[internal_nanites.nanite_volume]/[internal_nanites.max_nanites]</b>.</span>"
 	. += "<span class='notice'>Alt-click to [nanite_active ? "turn off" : "turn on"] the machine.</span>"
 	. += "<span class='notice'>\The [src] is [op_computer ? "linked" : "<b>NOT</b> linked"] to a nearby operating computer.</span>"
 
