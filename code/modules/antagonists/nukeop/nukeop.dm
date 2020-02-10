@@ -179,7 +179,15 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0)
 	to_chat(owner, "<B>You are the Syndicate [title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>")
 	to_chat(owner, "<B>If you feel you are not up to this task, give your ID to another operative.</B>")
-	to_chat(owner, "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>")
+	if(!CONFIG_GET(flag/disable_warops))
+		to_chat(owner, "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>")
+		var/obj/item/nuclear_challenge/dukinuki = new
+		var/mob/living/carbon/human/H = owner.current
+		if(!istype(H))
+			dukinuki.forceMove(get_turf(H))
+		else
+			H.put_in_hands(dukinuki, TRUE)
+			H.update_icons()
 	owner.announce_objectives()
 	addtimer(CALLBACK(src, .proc/nuketeam_name_assign), 1)
 
