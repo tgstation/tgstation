@@ -69548,6 +69548,9 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "djh" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
@@ -72860,12 +72863,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
-"mmh" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/science/xenobiology)
 "mnS" = (
 /obj/item/poster/random_contraband,
 /obj/item/poster/random_contraband,
@@ -73723,12 +73720,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
-"pkB" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plasteel/white,
-/area/science/xenobiology)
 "plI" = (
 /obj/machinery/door/airlock/external{
 	req_access_txt = "13"
@@ -73980,9 +73971,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
-"qfu" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/aft/secondary)
 "qgQ" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -74559,12 +74547,6 @@
 	dir = 1
 	},
 /area/engine/storage_shared)
-"sbT" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/science/xenobiology)
 "sdi" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -74733,9 +74715,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
-"sDP" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/aft)
 "sEG" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -74964,6 +74943,14 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"tCe" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
 "tCB" = (
 /obj/structure/closet/secure_closet/bar{
 	pixel_x = -3;
@@ -75888,6 +75875,17 @@
 /obj/machinery/computer/rdconsole/experiment,
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
+"xgL" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
 "xgQ" = (
 /obj/machinery/chem_heater{
 	pixel_x = 4
@@ -106399,13 +106397,13 @@ cCq
 cLA
 wtq
 wtq
-qfu
 wtq
-qfu
-qfu
-qfu
-cRe
-cRe
+wtq
+wtq
+wtq
+wtq
+wtq
+aaa
 aaa
 aaa
 aaa
@@ -106656,12 +106654,12 @@ cKI
 cQr
 cQR
 cRa
-cSt
-cSt
-mmh
-cSt
-cSt
-cSt
+cRe
+cRe
+cRe
+cRe
+cRe
+cRe
 cRe
 aaa
 aaa
@@ -106913,9 +106911,9 @@ cPX
 cQt
 cQZ
 cRc
+xgL
 cYT
-cYT
-cYT
+tCe
 cYT
 cYT
 djg
@@ -107174,7 +107172,7 @@ cRe
 cRe
 cRe
 cRe
-cSt
+cRe
 uaC
 cRe
 aaa
@@ -107430,8 +107428,8 @@ dvY
 aaa
 aaf
 aaa
+aaa
 cRe
-cSt
 uaC
 cRe
 aaa
@@ -107687,11 +107685,11 @@ dvY
 aaa
 aaf
 aaa
+aaa
 cRe
-pkB
 uaC
 cRe
-aaa
+aaf
 aaa
 aaa
 aaf
@@ -107944,8 +107942,8 @@ dvY
 aaf
 aaf
 aaf
+aaa
 cRe
-cSt
 uaC
 cRe
 cRu
@@ -108201,8 +108199,8 @@ dxk
 aaa
 aaa
 aaf
+aaf
 cRe
-cSt
 uaC
 cRe
 cRi
@@ -108459,7 +108457,7 @@ dvY
 dvY
 dvY
 dvY
-cSt
+cRe
 djh
 cYT
 cRv
@@ -108715,10 +108713,10 @@ cNi
 cgs
 cOB
 cPf
-sDP
-cSt
-sbT
-cSt
+dvY
+cRe
+cRe
+cRe
 cRi
 dbZ
 dci
@@ -108973,9 +108971,9 @@ ciL
 ciL
 cPg
 dvY
-cRe
-cRe
-cRe
+aaa
+aaa
+aaa
 cRw
 cRi
 dcj
