@@ -119,6 +119,22 @@
 						/obj/item/clothing/under/color/yellow,
 						/obj/item/toy/crayon/spraycan)
 
+/datum/antagonist/gang/henchmen
+	name = "Monarch Crew"
+	roundend_category = "Monarch henchmen"
+	gang_name = "Monarch Crew"
+	gang_id = "HENCH"
+	acceptable_clothes = list(/obj/item/clothing/head/soft/yellow,
+							/obj/item/clothing/under/suit/henchmen,
+							/obj/item/clothing/neck/scarf/yellow,
+							/obj/item/clothing/head/beanie/yellow,
+							/obj/item/clothing/mask/bandana/gold,
+							/obj/item/storage/backpack/henchmen)
+	free_clothes = list(/obj/item/storage/backpack/henchmen,
+						/obj/item/clothing/under/suit/henchmen,
+						/obj/item/toy/crayon/spraycan)
+
+
 /datum/team/gang
 	var/points = 0
 	var/gang_id = "LLJK"

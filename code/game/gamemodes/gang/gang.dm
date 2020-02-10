@@ -121,7 +121,7 @@
 
 /datum/game_mode/gang/proc/check_gang_clothes() // TODO: make this grab the sprite itself, average out what the primary color would be, then compare how close it is to the gang color so I don't have to manually fill shit out for 5 years for every gang type
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-		if(!H.mind)
+		if(!H.mind || !H.client)
 			continue
 		var/datum/antagonist/gang/is_gangster = H.mind.has_antag_datum(/datum/antagonist/gang)
 		for(var/clothing in list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.back, H.gloves, H.shoes, H.belt, H.s_store, H.glasses, H.ears, H.wear_id))
@@ -139,7 +139,7 @@
 	for(var/area/A in GLOB.sortedAreas)
 		var/list/gang_members = list()
 		for(var/mob/living/carbon/human/H in A)
-			if(H.stat && H.mind)
+			if(H.stat || !H.mind || !H.client)
 				continue
 			var/datum/antagonist/gang/is_gangster = H.mind.has_antag_datum(/datum/antagonist/gang)
 			if(is_gangster)
