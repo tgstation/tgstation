@@ -190,11 +190,11 @@
 	var/sulfur_power = 1
 
 	var/multiver_temp = 1
-	var/sulfur_temp = -0.66
+	var/sulfur_temp = -3.33
 
-	var/saltpetre_volume
-	var/multiver_volume
-	var/sulfur_volume
+	var/saltpetre_volume = 0
+	var/multiver_volume = 0
+	var/sulfur_volume = 0
 	//none of these values add up nicely because i want people to experiment with diffrent ratios
 
 /datum/chemical_reaction/reagent_explosion/gunpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
@@ -214,9 +214,13 @@
 	holder.remove_reagent(/datum/reagent/medicine/C2/multiver,multiver_volume)
 	holder.remove_reagent(/datum/reagent/sulfur,sulfur_volume)
 
+	sleep(rand( 50 - (saltpetre_volume*saltpetre_power > 50 ? 50 : saltpetre_volume*saltpetre_power + sulfur_volume*sulfur_temp)  ,max(100 + multiver_volume * multiver_temp + sulfur_volume * sulfur_temp,500)))
+	//deflageration
 	if(created_volume < 10) //if the explosion isnt powerful enough blackpowder deflagerates instead of properly exploding
-		var/fire_range = round(created_volume/2)
+		sleep(50)
 		var/turf/T = get_turf(holder.my_atom)
+		for(var/mob/M in viewers(4, T))
+			to_chat(M, "<span class='notice'>The solution violently deflagerates!</span>")
 		for(var/turf/turf in range(fire_range,T))
 			new /obj/effect/hotspot(turf)
 		holder.chem_temp = 1000
