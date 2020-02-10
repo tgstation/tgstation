@@ -34,6 +34,8 @@
 		else
 			. += "There's a [note.name] attached to it..."
 			. += note.examine(user)
+	if(sticker)
+		. += "There's a barcode attached to the side."
 
 /obj/structure/bigDelivery/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/destTagger))
@@ -106,17 +108,17 @@
 			overlaystring = copytext(overlaystring, 5)
 		add_overlay(overlaystring)
 	else if(istype(W, /obj/item/barcode))
-		var/obj/item/barcode/sticker = W
+		var/obj/item/barcode/stickerA = W
 		if(sticker)
 			to_chat(user, "<span class='warning'>This package already has a barcode attached!</span>")
 			return
-		if(!(sticker.payments_acc))
+		if(!(stickerA.payments_acc))
 			to_chat(user, "<span class='warning'>This barcode seems to be invalid. Guess it's trash now.</span>")
 			return
 		if(!user.transferItemToLoc(W, src))
 			to_chat(user, "<span class='warning'>For some reason, you can't attach [W]!</span>")
 			return
-		tag = W
+		sticker = stickerA
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
@@ -200,6 +202,8 @@
 		else
 			. += "There's a [note.name] attached to it..."
 			. += note.examine(user)
+	if(sticker)
+		. += "There's a barcode attached to the side."
 
 /obj/item/smallDelivery/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/destTagger))
@@ -273,17 +277,17 @@
 		add_overlay(overlaystring)
 
 	else if(istype(W, /obj/item/barcode))
-		var/obj/item/barcode/sticker = W
+		var/obj/item/barcode/stickerA = W
 		if(sticker)
 			to_chat(user, "<span class='warning'>This package already has a barcode attached!</span>")
 			return
-		if(!(sticker.payments_acc))
+		if(!(stickerA.payments_acc))
 			to_chat(user, "<span class='warning'>This barcode seems to be invalid. Guess it's trash now.</span>")
 			return
 		if(!user.transferItemToLoc(W, src))
 			to_chat(user, "<span class='warning'>For some reason, you can't attach [W]!</span>")
 			return
-		tag = W
+		sticker = stickerA
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
