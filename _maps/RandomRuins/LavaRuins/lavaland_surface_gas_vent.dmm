@@ -1,11 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"b" = (
+"a" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/atmosphere_vent,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"c" = (
-/obj/structure/atmosphere_vent{
-	naturally_spawned = 1
-	},
+"b" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 
@@ -16,7 +14,7 @@ b
 "}
 (2,1,1) = {"
 b
-c
+a
 b
 "}
 (3,1,1) = {"
