@@ -114,10 +114,6 @@
 /datum/chemical_reaction/reagent_explosion/tatp_explosion/proc/UpdateInfo()
 	required_temp = 550 + rand(-49,49)
 
-/datum/chemical_reaction/reagent_explosion/tatp_explosion/on_reaction(datum/reagents/holder, created_volume)
-	modifier = created_volume == 2100 ? 12 : round(sqrt(created_volume)/4) //formula that increases the potency of the explosion the more chem is used making tatp a top-tier instead of mid-tier
-	. = ..()
-
 /datum/chemical_reaction/reagent_explosion/penthrite_explosion
 	required_reagents = list(/datum/reagent/medicine/C2/penthrite = 1, /datum/reagent/phenol = 1, /datum/reagent/acetone_oxide = 1)
 	required_temp = 315
