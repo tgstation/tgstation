@@ -25,6 +25,8 @@
 	var/potency = 10				// The 'power' of a plant. Generally effects the amount of reagent in a plant, also used in other ways.
 	var/growthstages = 6			// Amount of growth sprites the plant has.
 	var/rarity = 0					// How rare the plant is. Used for giving points to cargo when shipping off to CentCom.
+	var/stability = 5				// Chance that a plant will mutate in each stage of it's life.
+
 	var/list/mutatelist = list()	// The type of plants that this plant can mutate into.
 	var/list/genes = list()			// Plant genes are stored here, see plant_genes.dm for more info.
 	var/list/reagents_add = list()
@@ -60,6 +62,7 @@
 			genes += new /datum/plant_gene/core/production(production)
 		if(potency != -1)
 			genes += new /datum/plant_gene/core/potency(potency)
+			genes += new /datum/plant_gene/core/stability(stability)
 
 		for(var/p in genes)
 			if(ispath(p))
@@ -83,6 +86,7 @@
 	S.production = production
 	S.yield = yield
 	S.potency = potency
+	S.stability = stability
 	S.weed_rate = weed_rate
 	S.weed_chance = weed_chance
 	S.name = name
@@ -290,6 +294,13 @@
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/potency)
 		if(C)
 			C.value = potency
+
+/obj/item/seeds/proc/set_stability(adjustamt)
+	if(stability != -1)
+		stability = CLAMP(adjustamt, 0, 100)
+		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/stability)
+		if(C)
+			C.value = stability
 
 /obj/item/seeds/proc/set_weed_rate(adjustamt)
 	weed_rate = CLAMP(adjustamt, 0, 10)

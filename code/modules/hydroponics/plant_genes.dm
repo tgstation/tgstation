@@ -89,6 +89,12 @@
 /datum/plant_gene/core/potency/apply_stat(obj/item/seeds/S)
 	S.potency = value
 
+/datum/plant_gene/core/stability
+	name = "Stability"
+	value = 10
+
+/datum/plant_gene/core/stability/apply_stat(obj/item/seeds/S)
+	S.stability = value
 
 /datum/plant_gene/core/weed_rate
 	name = "Weed Growth Rate"
