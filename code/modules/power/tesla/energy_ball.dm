@@ -169,7 +169,7 @@
 	C.dust()
 
 /proc/tesla_zap(atom/source, zap_range = 3, power, zap_flags = ZAP_DEFAULT_FLAGS, list/shocked_targets)
-	if(source == null)
+	if(QDELETED(source))
 		return
 	. = source.dir
 	if(power < 1000)
