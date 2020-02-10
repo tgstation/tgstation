@@ -392,5 +392,5 @@
 		return
 	if(owner.buckled || owner.lying || !((owner.mobility_flags & (MOBILITY_STAND | MOBILITY_MOVE)) == (MOBILITY_STAND | MOBILITY_MOVE)) || owner.throwing || owner.movement_type & (VENTCRAWLING | FLYING | FLOATING))
 		return //remove the 'edge' cases
-	to_chat(owner, "You trip over your own feet.")
+	to_chat(owner, "<span class='danger'>You trip over your own feet.</span>")
 	owner.Knockdown(30)
