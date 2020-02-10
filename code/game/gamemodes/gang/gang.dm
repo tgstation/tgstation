@@ -12,7 +12,7 @@
 	var/check_counter = 0
 	var/endtime = null
 	var/fuckingdone = FALSE
-	var/time_to_end = 30 MINUTES
+	var/time_to_end = 60 MINUTES
 	var/gangs_to_generate = 3
 	var/list/gangs_to_use
 	var/list/datum/mind/gangbangers = list()
@@ -52,7 +52,7 @@
 		to_chat(gangbanger.current, "<B><font size=3 color=red>Be sure to be in a public place! Your Signup Point is invincible, and you want to attract as many signups as possible.</font></B>")
 		addtimer(CALLBACK(src, .proc/spawn_gang_point, new_gangster), 2 MINUTES)
 	addtimer(CALLBACK(src, .proc/announce_gang_locations), 130 SECONDS)
-	addtimer(CALLBACK(src, .proc/five_minute_warning), 25 MINUTES)
+	addtimer(CALLBACK(src, .proc/five_minute_warning), time_to_end - 5 MINUTES)
 	gamemode_ready = TRUE
 	SSshuttle.registerHostileEnvironment(src)
 	..()
