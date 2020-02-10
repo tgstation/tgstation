@@ -189,6 +189,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/stack/sheet/mineral/wood/fifty = 1,
 		/obj/item/beacon = 1,
 		/obj/item/weaponcrafting/receiver = 1,
+		/obj/item/paper/fluff/stations/soap =1, //recipes count as crafting.
 		) = 8,
 
 	list(//medical and chemicals
