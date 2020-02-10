@@ -75,12 +75,12 @@
 		var/finalized_gang_names = english_list(readable_gang_names, and_text = " or the ", comma_text = ", the ")
 		if(team_to_use.members.len >= (lowest_gang_count + mode.gang_balance_cap))
 			to_chat(user, "[team_to_use.name] is pretty packed. You should try the [finalized_gang_names] instead.")
-			return ..()
+			return
 
 		var/datum/antagonist/gang/is_gangster = user.mind.has_antag_datum(/datum/antagonist/gang)
 		if(is_gangster)
 			if(is_gangster.my_gang == team_to_use)
-				return ..()
+				return
 			else
 				is_gangster.my_gang.remove_member(user.mind)
 				user.mind.remove_antag_datum(/datum/antagonist/gang)
