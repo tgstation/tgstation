@@ -39,12 +39,11 @@
 
 /obj/effect/decal/cleanable/food/salt/Bumped(atom/movable/AM)
 	. = ..()
+	if(is_species(AM, /datum/species/snail))
+		to_chat(AM, "<span class='danger'>Your path is obstructed by <span class='phobia'>salt</span>.</span>")
 
+/obj/effect/decal/cleanable/food/salt/Crossed(atom/movable/AM)
 	if(isliving(AM))
-
-		if(is_species(AM, /datum/species/snail))
-			to_chat(AM, "<span class='danger'>Your path is obstructed by <span class='phobia'>salt</span>.</span>")
-
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
 			if(C.m_intent == MOVE_INTENT_WALK)
