@@ -219,6 +219,7 @@
 	if(created_volume < 10) //if the explosion isnt powerful enough blackpowder deflagerates instead of properly exploding
 		sleep(50)
 		var/turf/T = get_turf(holder.my_atom)
+		var/fire_range = round(created_volume/2)
 		for(var/mob/M in viewers(4, T))
 			to_chat(M, "<span class='notice'>The solution violently deflagerates!</span>")
 		for(var/turf/turf in range(fire_range,T))
