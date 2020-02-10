@@ -31,6 +31,41 @@
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
 	return ..()
 
+/obj/effect/mob_spawn/human/dwarven_sarcophagus
+	name = "ancient sarcophagus"
+	desc = "An ancient artifact of greater past. Emits fiery energy"
+	mob_name = "a dwarf"
+	icon = 'icons/obj/lavaland/spawners.dmi'
+	icon_state = "sarcophagus"
+	density = TRUE
+	roundstart = FALSE
+	death = FALSE
+	mob_species = /datum/species/human
+	short_desc = "You are an ancient dwarf"
+	flavour_text = "Your masters, benevolent as they were, created uncounted seed vaults and spread them across \
+	the universe to every planet they could chart. You are in one such seed vault. \
+	Your goal is to cultivate and spread life wherever it will go while waiting for contact from your creators. \
+	Estimated time of last contact: Deployment, 5000 millennia ago."
+	assignedrole = "Dwarf"
+
+/obj/effect/mob_spawn/human/dwarven_sarcophagus/special(mob/living/new_spawn)
+	var/dwarven_name = pick("Ognog", "Lorenzo", "Bakarat", "Cercer", "Aluminium", "Iro", "Ido", "Kochko", "Bahr", "Mozz", "Fercer", "Bat", "Rot", "Lavaan", "Gorg", "Philzer", "Lerh", \
+	"Vinth", "Gharo","Logreg", "Stawgar", "Lirko", "Ontksu", "Crakta", "Larka", "Dorgo") + " " +pick("Iron","Mithril","Strong","The ","Root","Void","Blood","Titanium","Uranium", \
+	"Plasma") + pick("Seeker","Hunter","Willed","Shield","Axe","Pickaxe","Bat","Tendril","Death","Lava","Man","Miner","Wised")
+
+	new_spawn.fully_replace_character_name(null,dwarven_name)
+	if(ishuman(new_spawn))
+		var/mob/living/carbon/human/H = new_spawn
+		H.underwear = "Nude"
+		H.dna.add_mutation(DWARVEN)
+		H.dna.add_mutation(DWARFISM) //you are a dwarf man
+		H.update_body()
+
+/obj/effect/mob_spawn/human/dwarven_sarcophagus/Destroy()
+	new/obj/machinery/dwarven_sarcophagus_recharge(get_turf(src))
+	return ..()
+
+
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
 
 /obj/effect/mob_spawn/human/ash_walker

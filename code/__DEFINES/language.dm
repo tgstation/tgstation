@@ -20,4 +20,5 @@
 #define LANGUAGE_MASTER			"master"
 #define LANGUAGE_SOFTWARE		"software"
 #define LANGUAGE_STONER			"stoner"
+#define LANGUAGE_DWARVEN		"dwarven"
 #define LANGUAGE_VOICECHANGE	"voicechange"
