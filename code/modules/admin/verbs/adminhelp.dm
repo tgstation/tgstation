@@ -175,11 +175,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	id = ++ticket_counter
 	opened_at = world.time
 
-	if(length(msg) < 100)
-		name = msg
-	else
-		var/breakmsg = findchar(msg, "#") || 100
-		name = copytext(msg, 1, breakmsg)
+	name = copytext_char(msg, 1, 100)
 
 	initiator = C
 	initiator_ckey = initiator.ckey
