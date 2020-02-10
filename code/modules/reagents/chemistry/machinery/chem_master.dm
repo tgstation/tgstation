@@ -66,14 +66,16 @@
 	else if(A == bottle)
 		bottle = null
 
-/obj/machinery/chem_master/update_icon()
-	cut_overlays()
-	if (stat & BROKEN)
-		add_overlay("waitlight")
+/obj/machinery/chem_master/update_icon_state()
 	if(beaker)
 		icon_state = "mixer1"
 	else
 		icon_state = "mixer0"
+
+/obj/machinery/chem_master/update_overlays()
+	. = ..()
+	if(machine_stat & BROKEN)
+		. += "waitlight"
 
 /obj/machinery/chem_master/blob_act(obj/structure/blob/B)
 	if (prob(50))
@@ -114,20 +116,19 @@
 		return ..()
 
 /obj/machinery/chem_master/AltClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	. = ..()
+	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	replace_beaker(user)
-	return
 
 /obj/machinery/chem_master/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
+	if(!user)
+		return FALSE
 	if(beaker)
-		beaker.forceMove(drop_location())
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(beaker)
+		user.put_in_hands(beaker)
+		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
-	else
-		beaker = null
 	update_icon()
 	return TRUE
 

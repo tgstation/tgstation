@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - bugfix: "Law 0 for emagged borgs is no longer being suppressed."

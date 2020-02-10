@@ -260,7 +260,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	owner.current.forceMove(A)
 	A.oldform = owner.current
 	owner.transfer_to(A)
-	A.set_name()
+	A.set_devil_name()
 	give_appropriate_spells()
 	form = TRUE_DEVIL
 	update_hud()
@@ -473,7 +473,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 				H.forceMove(A)
 				A.oldform = H
 				owner.transfer_to(A, TRUE)
-				A.set_name()
+				A.set_devil_name()
 				if(SOULVALUE >= ARCH_THRESHOLD && ascendable)
 					A.convert_to_archdevil()
 	else

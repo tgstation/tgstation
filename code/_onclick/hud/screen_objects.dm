@@ -59,7 +59,7 @@
 		var/mob/M = usr
 		M.swap_hand()
 	return 1
-	
+
 /obj/screen/skills
 	name = "skills"
 	icon = 'icons/mob/screen_midnight.dmi'
@@ -406,7 +406,7 @@
 	var/mob/living/user = hud?.mymob
 	if(!istype(user))
 		return
-	
+
 	if(!user.resting)
 		icon_state = "act_rest"
 	else
@@ -549,7 +549,7 @@
 	if(choice != hud.mymob.zone_selected)
 		hud.mymob.zone_selected = choice
 		update_icon()
-	
+
 	return TRUE
 
 /obj/screen/zone_sel/update_overlays()
@@ -587,10 +587,6 @@
 	name = "health"
 	icon_state = "health0"
 	screen_loc = ui_health
-
-/obj/screen/healths/living
-	screen_loc = ui_living_health
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healths/alien
 	icon = 'icons/mob/screen_alien.dmi'
@@ -641,7 +637,7 @@
 	icon_state = "slime_health0"
 	screen_loc = ui_slime_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	
+
 /obj/screen/healths/lavaland_elite
 	icon = 'icons/mob/screen_elite.dmi'
 	icon_state = "elite_health0"
@@ -656,6 +652,11 @@
 	if (ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		H.check_self_for_injuries()
+
+/obj/screen/healthdoll/living
+	icon_state = "fullhealth0"
+	screen_loc = ui_living_healthdoll
+	var/filtered = FALSE //so we don't repeatedly create the mask of the mob every update
 
 /obj/screen/mood
 	name = "mood"

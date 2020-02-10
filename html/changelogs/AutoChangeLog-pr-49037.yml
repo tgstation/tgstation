@@ -1,0 +1,5 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - bugfix: "grinder chem not grinding"
+  - bugfix: "dir of grinder chem"
