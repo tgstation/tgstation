@@ -308,9 +308,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/jailbreak
 	name = "jailbreak"
-	martyr_compatible = true //why not?
+	martyr_compatible = TRUE //why not?
 	var/target_role_type=FALSE
-
 
 /datum/objective/jailbreak/find_target_by_role(role, role_type=FALSE,invert=FALSE)
 	if(!invert)
