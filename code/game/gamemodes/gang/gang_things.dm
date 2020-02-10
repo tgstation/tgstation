@@ -82,6 +82,7 @@
 			if(is_gangster.my_gang == team_to_use)
 				return
 			else
+				is_gangster.my_gang.adjust_points(-30)
 				is_gangster.my_gang.remove_member(user.mind)
 				user.mind.remove_antag_datum(/datum/antagonist/gang)
 				add_to_gang(user)

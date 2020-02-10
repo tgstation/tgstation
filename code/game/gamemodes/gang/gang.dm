@@ -3,7 +3,7 @@
 	config_tag = "families"
 	antag_flag = ROLE_TRAITOR
 	false_report_weight = 5
-	required_players = 30
+	required_players = 0
 	required_enemies = 3
 	recommended_enemies = 3
 	announce_span = "danger"
@@ -59,7 +59,7 @@
 
 /datum/game_mode/gang/proc/spawn_gang_point(var/datum/antagonist/gang/new_gangster)
 	if(new_gangster.owner && new_gangster.owner.current)
-		to_chat(new_gangster.owner.current, "Your Gang Sigunp Point has been teleported into your location.<br>Encourage people to sign up with it!<br>You can use drugs/guns on the signup point to export them to the black market for Gang Points.<br>You've also been supplied with a free set of your gang's clothing.")
+		to_chat(new_gangster.owner.current, "Your Gang Sigunp Point has been teleported to your location.<br>Encourage people to sign up with it!<br>You can use drugs/guns on the signup point to export them to the black market for Gang Points.<br>You've also been supplied with a free set of your gang's clothing.")
 		var/obj/gang_signup_point/signup_point = new /obj/gang_signup_point(get_turf(new_gangster.owner.current))
 		signup_point.name = "[new_gangster.name] Signup Point"
 		signup_point.gang_to_use = new_gangster.type
@@ -76,7 +76,7 @@
 		var/area_with_spawner = gang_locations[G.name]
 		readable_gang_names += "[G.name] in the [area_with_spawner]"
 	var/finalized_gang_names = english_list(readable_gang_names)
-	priority_announce("Julio G coming to you live from Radio Los Spess! We've been hearing reports of gang activity on [station_name()], with the [finalized_gang_names] duking it out, looking for fresh territory and drugs to sling! Stay safe out there for the thirty minutes 'till the space cops get there, and keep it cool, yeah? Play music, not gunshots, I say. Peace out!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
+	priority_announce("Julio G coming to you live from Radio Los Spess! We've been hearing reports of gang activity on [station_name()], with the [finalized_gang_names] duking it out, looking for fresh territory and drugs to sling! Stay safe out there for the hour 'till the space cops get there, and keep it cool, yeah? Play music, not gunshots, I say. Peace out!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
 
 
 /datum/game_mode/gang/proc/five_minute_warning()
@@ -139,7 +139,7 @@
 	for(var/area/A in GLOB.sortedAreas)
 		var/list/gang_members = list()
 		for(var/mob/living/carbon/human/H in A)
-			if(H.stat)
+			if(H.stat && H.mind)
 				continue
 			var/datum/antagonist/gang/is_gangster = H.mind.has_antag_datum(/datum/antagonist/gang)
 			if(is_gangster)
@@ -164,13 +164,16 @@
 	var/list/report = list()
 	var/highest_point_value = 0
 	var/highest_gang = "Leet Like Jeff K"
-	report += "<span class='header'>The gangs in the round were:</span>"
+	report += "<span class='header'>The families in the round were:</span>"
 	for(var/datum/team/gang/G in gangs)
 		report += "<span class='header'>[G.name]:</span>"
-		report += "The gangsters were:"
-		report += printplayerlist(G.members)
-		report += "<span class='header'>Points: [G.points]</span>"
-		if(G.points >= highest_point_value)
+		if(G.members.len)
+			report += "The gangsters were:"
+			report += printplayerlist(G.members)
+			report += "<span class='header'>Points: [G.points]</span>"
+		else
+			report += "<span class='redtext'>The family was wiped out!</span>"
+		if(G.points >= highest_point_value && G.members.len)
 			highest_point_value = G.points
 			highest_gang = G.name
 	report += "<span class='header greentext'>[highest_gang] won the round!</span>"
