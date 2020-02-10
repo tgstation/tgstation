@@ -86,7 +86,7 @@
 			var/say_starter = "Say \"" //"
 			if(findtextEx(temp, say_starter, 1, length(say_starter) + 1) && length(temp) > length(say_starter))	//case sensitive means
 
-				temp = trim_left(copytext(temp, length(say_starter + 1)))
+				temp = trim_left(copytext(temp, length(say_starter) + 1))
 				temp = replacetext(temp, ";", "", 1, 2)	//general radio
 				while(trim_left(temp)[1] == ":")	//dept radio again (necessary)
 					temp = copytext_char(trim_left(temp), 3)

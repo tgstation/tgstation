@@ -12,6 +12,8 @@
 	var/list/datum/nanite_program/programs = list()
 	var/max_programs = NANITE_PROGRAM_LIMIT
 
+	var/list/datum/nanite_program/protocol/protocols = list() ///Separate list of protocol programs, to avoid looping through the whole programs list when cheking for conflicts
+	var/start_time = 0 ///Timestamp to when the nanites were first inserted in the host
 	var/stealth = FALSE //if TRUE, does not appear on HUDs and health scans
 	var/diagnostics = TRUE //if TRUE, displays program list when scanned by nanite scanners
 
@@ -28,6 +30,8 @@
 
 		if(!(host_mob.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD))) //Shouldn't happen, but this avoids HUD runtimes in case a silicon gets them somehow.
 			return COMPONENT_INCOMPATIBLE
+
+		start_time = world.time
 
 		host_mob.hud_set_nanite_indicator()
 		START_PROCESSING(SSnanites, src)
@@ -114,7 +118,7 @@
 			cloud_sync()
 			next_sync = world.time + NANITE_SYNC_DELAY
 	set_nanite_bar()
-	
+
 
 /datum/component/nanites/proc/delete_nanites()
 	qdel(src)
@@ -196,12 +200,17 @@
 		var/datum/nanite_program/NP = X
 		NP.on_emp(severity)
 
-/datum/component/nanites/proc/on_shock(datum/source, shock_damage)
-	nanite_volume *= (rand(45, 80) * 0.01)		//Lose 20-55% of nanites
-	adjust_nanites(null, -(rand(5, 50)))			//Lose 5-50 flat nanite volume
-	for(var/X in programs)
-		var/datum/nanite_program/NP = X
-		NP.on_shock(shock_damage)
+
+/datum/component/nanites/proc/on_shock(datum/source, shock_damage, siemens_coeff = 1, flags = NONE)
+	if(flags & SHOCK_ILLUSION || shock_damage < 1)
+		return
+
+	if(!HAS_TRAIT_NOT_FROM(host_mob, TRAIT_SHOCKIMMUNE, "nanites"))//Another shock protection must protect nanites too, but nanites protect only host
+		nanite_volume *= (rand(45, 80) * 0.01)		//Lose 20-55% of nanites
+		adjust_nanites(null, -(rand(5, 50)))			//Lose 5-50 flat nanite volume
+		for(var/X in programs)
+			var/datum/nanite_program/NP = X
+			NP.on_shock(shock_damage)
 
 /datum/component/nanites/proc/on_minor_shock(datum/source)
 	adjust_nanites(null, -(rand(5, 15)))			//Lose 5-15 flat nanite volume
