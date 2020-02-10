@@ -51,7 +51,6 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 			if(!E)
 				continue
 			if(E.applies_to(thing, allowed_categories, apply_elastic))
-				//SEND_SIGNAL(thing, COMSIG_ITEM_SOLD, item_value = E.get_cost(thing, allowed_categories , apply_elastic))
 				sold = E.sell_object(thing, report, dry_run, allowed_categories , apply_elastic, profit_ratio)
 				report.exported_atoms += " [thing.name]"
 				if(!QDELETED(thing))
