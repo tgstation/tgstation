@@ -533,6 +533,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		if(prob(15) && power > POWER_PENALTY_THRESHOLD)
 			supermatter_pull(src, power/750)
+
+		if(power > POWER_PENALTY_THRESHOLD && prob(3) || power > SEVERE_POWER_PENALTY_THRESHOLD && prob(5) || power > CRITICAL_POWER_PENALTY_THRESHOLD && prob(10))
+			supermatter_slime_gen(src, power, rand(5, 10))
+
 		if(prob(5))
 			supermatter_anomaly_gen(src, FLUX_ANOMALY, rand(5, 10))
 		if(power > SEVERE_POWER_PENALTY_THRESHOLD && prob(5) || prob(1))
@@ -842,6 +846,81 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			step_towards(P,center)
 			step_towards(P,center)
 			step_towards(P,center)
+
+/obj/machinery/power/supermatter_crystal/proc/supermatter_slime_gen(turf/slimecenter, sm_power, slimerange = 5)
+	var/turf/L = pick(orange(slimerange, slimecenter))
+	if(L)
+		var/slime_colour="grey"
+		// Gotta go fast! Gotta hardcode those probabilities!
+		switch (sm_power)
+			if (0 to POWER_PENALTY_THRESHOLD)
+				return
+			if (POWER_PENALTY_THRESHOLD to SEVERE_POWER_PENALTY_THRESHOLD)
+				switch (rand(100))
+					if (0 to 40)
+					// Pleb level slime for starting your own farm
+						slime_colour = "grey"
+					// Pretty useless on their own and available via xenobio at 5 minute mark
+					if (41 to 50)
+						slime_colour = "orange"
+					if (51 to 60)
+						slime_colour = "metal"
+					if (61 to 70)
+						slime_colour = "blue"
+					if (71 to 80)
+						slime_colour = "purple"
+					// Can be useful at engineering
+					if (81 to 85)
+						slime_colour = "yellow"
+					if (86 to 90)
+						slime_colour = "dark purple"
+					if (91 to 95)
+						slime_colour = "green"
+					if (96 to 100)
+						slime_colour = "silver"
+			if (SEVERE_POWER_PENALTY_THRESHOLD to CRITICAL_POWER_PENALTY_THRESHOLD)
+				switch (rand(100))
+					// Basically now we get less greys and more T3 stuff
+					if (0 to 10)
+						slime_colour = "grey"
+					if (11 to 20)
+						slime_colour = "orange"
+					if (21 to 30)
+						slime_colour = "metal"
+					if (31 to 40)
+						slime_colour = "blue"
+					if (41 to 50)
+						slime_colour = "purple"
+					if (51 to 60)
+						slime_colour = "yellow"
+					if (61 to 70)
+						slime_colour = "dark purple"
+					if (71 to 80)
+						slime_colour = "green"
+					if (81 to 90)
+						slime_colour = "silver"
+					// You got lucky!
+					if (91 to 98)
+						slime_colour = pick("gold", "bluespace", "light pin", "adamantine", "black", "oil")
+					// Both you and clown got real lucky!
+					if (91 to 98)
+						slime_colour = pick("pyrite", "rainbow")
+			else
+				// Gotta Catch ‘Em All!!!111 For the absolute mad lads who are willing to power delaminate SM for dem slimes
+				if (prob(70))
+					// Not gonna give up top slimes that easy
+					slime_colour = "grey"
+				else
+					slime_colour = pick("orange","metal","grey","blue",
+										"purple","dark purple","dark blue","green",
+										"silver","yellow","gold","red",
+										"pink","cerulean","sepia","bluespace",
+										"pyrite","light pin","oil", "adamantine",
+									  	"black", "rainbow")
+		var/mob/living/simple_animal/slime/S = new(L, slime_colour)
+		S.rabid = TRUE
+		S.amount_grown = SLIME_EVOLUTION_THRESHOLD
+		S.Evolve()
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_anomaly_gen(turf/anomalycenter, type = FLUX_ANOMALY, anomalyrange = 5)
 	var/turf/L = pick(orange(anomalyrange, anomalycenter))
