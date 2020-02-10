@@ -796,9 +796,6 @@
 	for(var/O in internal_organs)
 		var/obj/item/organ/organ = O
 		organ.setOrganDamage(0)
-	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
-	if(B)
-		B.brain_death = FALSE
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(D.severity != DISEASE_SEVERITY_POSITIVE)
@@ -823,6 +820,19 @@
 	. = ..()
 	if(!getorgan(/obj/item/organ/brain) && (!mind || !mind.has_antag_datum(/datum/antagonist/changeling)))
 		return 0
+
+/mob/living/carbon/proc/can_defib()
+	var/obj/item/organ/heart = getorgan(/obj/item/organ/heart)
+	if(suiciding || hellbound || HAS_TRAIT(src, TRAIT_HUSK))
+		return
+	if((getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
+		return
+	if(!heart || (heart.organ_flags & ORGAN_FAILING))
+		return
+	var/obj/item/organ/brain/BR = getorgan(/obj/item/organ/brain)
+	if(QDELETED(BR) || (BR.organ_flags & ORGAN_FAILING) || BR.suicided)
+		return
+	return TRUE
 
 /mob/living/carbon/harvest(mob/living/user)
 	if(QDELETED(src))
