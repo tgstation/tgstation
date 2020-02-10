@@ -901,9 +901,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 						slime_colour = "silver"
 					// You got lucky!
 					if (91 to 98)
-						slime_colour = pick("gold", "bluespace", "light pin", "adamantine", "black", "oil")
+						slime_colour = pick("gold", "bluespace", "light pink", "adamantine", "black", "oil")
 					// Both you and clown got real lucky!
-					if (91 to 98)
+					if (99 to 100)
 						slime_colour = pick("pyrite", "rainbow")
 			else
 				// Gotta Catch ‘Em All!!!111 For the absolute mad lads who are willing to power delaminate SM for dem slimes
@@ -915,7 +915,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 										"purple","dark purple","dark blue","green",
 										"silver","yellow","gold","red",
 										"pink","cerulean","sepia","bluespace",
-										"pyrite","light pin","oil", "adamantine",
+										"pyrite","light pink","oil", "adamantine",
 									  	"black", "rainbow")
 		var/mob/living/simple_animal/slime/S = new(L, slime_colour)
 		S.rabid = TRUE
