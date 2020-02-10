@@ -25,6 +25,7 @@
 #define MUT_MUTE	/datum/mutation/human/mute
 #define SMILE		/datum/mutation/human/smile
 #define STONER		/datum/mutation/human/stoner
+#define DWARVEN		/datum/mutation/human/dwarven
 #define UNINTELLIGIBLE		/datum/mutation/human/unintelligible
 #define SWEDISH		/datum/mutation/human/swedish
 #define CHAV		/datum/mutation/human/chav
