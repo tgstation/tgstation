@@ -114431,7 +114431,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port)
-<<<<<<< HEAD
 "kDh" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
@@ -114447,7 +114446,6 @@
 /obj/structure/displaycase/forsale,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
-=======
 "kzm" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -114456,7 +114454,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
->>>>>>> upstream/master
 "kEN" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall,
