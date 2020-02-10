@@ -87,4 +87,3 @@
 				add_to_gang(user)
 		else
 			add_to_gang(user)
-
