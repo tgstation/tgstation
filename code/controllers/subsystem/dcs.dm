@@ -34,7 +34,9 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 	var/list/named_arguments = list()
 	for(var/i in initial(eletype.id_arg_index) to length(arguments))
 		var/key = arguments[i]
-		var/value = arguments[key]
+		var/value
+		if(istext(key))
+			value = arguments[key]
 		if(!(istext(key) || isnum(key)))
 			key = REF(key)
 		key = "[key]" // Key is stringified so numbers dont break things
