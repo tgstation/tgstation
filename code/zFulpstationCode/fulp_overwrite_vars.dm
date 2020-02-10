@@ -309,8 +309,16 @@
 //*****************************************************************************
 //** Engineer Borg Manipulator Improvement by Surrealistik Oct 2019 ENDS
 //*****************************************************************************
+
+//***************************************************************************
+//** FULPSTATION SITH STARTER KIT by Surrealistik Jan 2020 BEGINS
+//---------------------------------------------------------------------------
+//** Adds Sith Starter Kit traitor bundle for the Chaplain
+//***************************************************************************
+
 /obj/item/melee/transforming/energy/sword
 	var/datum/effect_system/spark_spread/spark_system
+
 //***************************************************************************
 //** FULPSTATION SITH STARTER KIT by Surrealistik Jan 2020 ENDS
 //---------------------------------------------------------------------------
