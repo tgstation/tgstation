@@ -70,7 +70,7 @@
 
 /obj/item/handheld_camera_monitor/cyborg/attack_self(mob/user)
 	for(var/obj/machinery/computer/security/S in GLOB.machines)
-		if(istype(S, /obj/machinery/computer/security/telescreen) || S.stat & (NOPOWER|BROKEN)) //Filter out telescreens and broken/depowered consoles
+		if(istype(S, /obj/machinery/computer/security/telescreen) || S.is_operational()) //Filter out telescreens and broken/depowered consoles
 			continue
 		else
 			playsound(src, sound, get_clamped_volume(), TRUE, -1)
@@ -421,7 +421,7 @@
 
 /obj/item/handheld_sec_record_uplink/cyborg/attack_self(mob/user)
 	for(var/obj/machinery/computer/secure_data/S in GLOB.machines)
-		if(S.stat & (NOPOWER|BROKEN)) //Filter out broken/depowered consoles
+		if(S.is_operational()) //Filter out broken/depowered consoles
 			continue
 		else
 			playsound(src, sound, get_clamped_volume(), TRUE, -1)

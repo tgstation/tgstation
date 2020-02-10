@@ -223,6 +223,13 @@
 //************************************************************************
 //** Airlock Electroadaptive Psuedo Circuit ENDS - Surrealistik Oct 2019
 //************************************************************************
+
+//***************************************************************************
+//** FULPSTATION SECBORG MODULE UPDATE by Surrealistik Jan 2020 BEGINS
+//---------------------------------------------------------------------------
+//** Expands the Secborg's module items and upgrades.
+//***************************************************************************
+
 /obj/item/robot_module/security //Now has a crowbar to allow it to navigate depowered areas, and a default pepperspray.
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
