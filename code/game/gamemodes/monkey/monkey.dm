@@ -13,7 +13,7 @@
 	required_enemies = 1
 	recommended_enemies = 1
 
-	restricted_jobs = list("Cyborg", "AI")
+	restricted_jobs = list("Prisoner", "Cyborg", "AI")
 
 	announce_span = "Monkey"
 	announce_text = "One or more crewmembers have been infected with Jungle Fever! Crew: Contain the outbreak. None of the infected monkeys may escape alive to CentCom. Monkeys: Ensure that your kind lives on! Rise up against your captors!"

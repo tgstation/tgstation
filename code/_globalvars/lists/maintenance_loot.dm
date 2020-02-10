@@ -16,7 +16,6 @@
 
 GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto chemistry items
 	list(//trash
-		/obj/item/trash = 1,
 		/obj/item/trash/can = 1,
 		/obj/item/trash/raisins = 1,
 		/obj/item/trash/candy = 1,
@@ -190,6 +189,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/stack/sheet/mineral/wood/fifty = 1,
 		/obj/item/beacon = 1,
 		/obj/item/weaponcrafting/receiver = 1,
+		/obj/item/paper/fluff/stations/soap =1, //recipes count as crafting.
 		) = 8,
 
 	list(//medical and chemicals

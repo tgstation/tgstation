@@ -1,0 +1,5 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "fixes humanoid xeno numbers being 0"
+  - tweak: "royal xenos also get numbers"

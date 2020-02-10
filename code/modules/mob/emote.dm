@@ -75,7 +75,11 @@
 			var/mob/living/L = user
 			var/datum/component/riding/riding_datum = L.GetComponent(/datum/component/riding)
 			if(riding_datum)
-				for(var/mob/M in L.buckled_mobs)
-					riding_datum.force_dismount(M)
+				if(L.a_intent == INTENT_HELP)
+					for(var/mob/M in L.buckled_mobs)
+						riding_datum.force_dismount(M, TRUE)
+				else
+					for(var/mob/M in L.buckled_mobs)
+						riding_datum.force_dismount(M)
 			else
 				L.unbuckle_all_mobs()

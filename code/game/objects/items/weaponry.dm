@@ -519,7 +519,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/board_item_type = /obj/vehicle/ridden/scooter/skateboard
 
 /obj/item/melee/skateboard/attack_self(mob/user)
-	new board_item_type(get_turf(user))
+	var/obj/vehicle/ridden/scooter/skateboard/S = new board_item_type(get_turf(user))//this probably has fucky interactions with telekinesis but for the record it wasnt my fault
+	S.buckle_mob(user)
 	qdel(src)
 
 /obj/item/melee/skateboard/pro

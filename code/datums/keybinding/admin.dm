@@ -2,6 +2,8 @@
 	category = CATEGORY_ADMIN
 	weight = WEIGHT_ADMIN
 
+/datum/keybinding/admin/can_use(client/user)
+	return user.holder ? TRUE : FALSE
 
 /datum/keybinding/admin/admin_say
 	hotkey_keys = list("F3")

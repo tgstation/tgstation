@@ -163,4 +163,6 @@
 	return posturfs
 
 /proc/get_teleport_turf(turf/center, precision = 0)
-	return safepick(get_teleport_turfs(center, precision))
+	var/list/turfs = get_teleport_turfs(center, precision)
+	if (length(turfs))
+		return pick(turfs)

@@ -46,7 +46,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
 		parent.update_movement_keys(src)
 		to_chat(parent, "<span class='userdanger'>Empty keybindings, setting default to [hotkeys ? "Hotkey" : "Classic"] mode</span>")
-		
+
 	if(current_version < 30)
 		if(clientfps == 0)
 			clientfps = 60
@@ -329,6 +329,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["backpack"]			>> backpack
 	S["jumpsuit_style"]		>> jumpsuit_style
 	S["uplink_loc"]			>> uplink_spawn_loc
+	S["phobia"] >> phobia
 	S["randomise"]	>>  randomise
 	S["feature_mcolor"]					>> features["mcolor"]
 	S["feature_ethcolor"]					>> features["ethcolor"]
@@ -468,6 +469,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["uplink_loc"]			, uplink_spawn_loc)
 	WRITE_FILE(S["randomise"]		, randomise)
 	WRITE_FILE(S["species"]			, pref_species.id)
+	WRITE_FILE(S["phobia"], phobia)
 	WRITE_FILE(S["feature_mcolor"]					, features["mcolor"])
 	WRITE_FILE(S["feature_ethcolor"]					, features["ethcolor"])
 	WRITE_FILE(S["feature_lizard_tail"]			, features["tail_lizard"])

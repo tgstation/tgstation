@@ -330,9 +330,11 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 		qdel(src)
 	return TRUE
 
-/obj/item/shard/Crossed(mob/living/L)
-	if(istype(L) && !(L.is_flying() || L.is_floating() || L.buckled))
-		playsound(src, 'sound/effects/glass_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
+/obj/item/shard/Crossed(atom/movable/AM)
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(!(L.is_flying() || L.is_floating() || L.buckled))
+			playsound(src, 'sound/effects/glass_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
 	return ..()
 
 /obj/item/shard/plasma

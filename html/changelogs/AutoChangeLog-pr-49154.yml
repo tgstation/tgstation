@@ -1,0 +1,4 @@
+author: "Dennok"
+delete-after: True
+changes: 
+  - bugfix: "Now nanites don't die from illusions and placing unpowered cable by bare hands."
