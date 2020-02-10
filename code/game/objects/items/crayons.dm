@@ -385,21 +385,12 @@
 					var/turf/right = locate(target.x+1,target.y,target.z)
 					if(isValidSurface(left) && isValidSurface(right))
 						C = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
-						C.pixel_x = clickx
-						C.pixel_y = clicky
+						affected_turfs += left
+						affected_turfs += right
 						affected_turfs += target
-					if(PAINT_LARGE_HORIZONTAL)
-						var/turf/left = locate(target.x-1,target.y,target.z)
-						var/turf/right = locate(target.x+1,target.y,target.z)
-						if(is_type_in_list(left, validSurfaces) && is_type_in_list(right, validSurfaces))
-							var/obj/effect/decal/cleanable/crayon/C = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
-							C.add_hiddenprint(user)
-							affected_turfs += left
-							affected_turfs += right
-							affected_turfs += target
-						else
-							to_chat(user, "<span class='warning'>There isn't enough space to paint!</span>")
-							return
+					else
+						to_chat(user, "<span class='warning'>There isn't enough space to paint!</span>")
+						return
 			C.add_hiddenprint(user)
 			if(istagger)
 				C.AddComponent(/datum/component/art, GOOD_ART)

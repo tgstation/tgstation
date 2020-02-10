@@ -30,7 +30,7 @@
 							/obj/item/clothing/suit/jacket/letterman_red,
 							/obj/item/clothing/under/color/red,
 							/obj/item/clothing/mask/bandana/red,
-							/obj/item/clothing/under/suit_jacket/red)
+							/obj/item/clothing/under/suit/red)
 	free_clothes = list(/obj/item/clothing/suit/jacket/letterman_red,
 						/obj/item/clothing/under/color/red,
 						/obj/item/toy/crayon/spraycan)
@@ -46,7 +46,7 @@
 							/obj/item/clothing/head/beanie/purple,
 							/obj/item/clothing/suit/apron/purple_bartender,
 							/obj/item/clothing/mask/bandana/skull,
-							/obj/item/clothing/under/suit_jacket/green)
+							/obj/item/clothing/under/suit/green)
 	free_clothes = list(/obj/item/clothing/head/beanie/purple,
 						/obj/item/clothing/under/color/lightpurple,
 						/obj/item/toy/crayon/spraycan)
@@ -73,11 +73,11 @@
 	gang_id = "RM"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/red,
 							/obj/item/clothing/neck/scarf/red,
-							/obj/item/clothing/under/suit_jacket/charcoal,
+							/obj/item/clothing/under/suit/charcoal,
 							/obj/item/clothing/head/beanie/red,
 							/obj/item/clothing/head/ushanka)
 	free_clothes = list(/obj/item/clothing/head/ushanka,
-						/obj/item/clothing/under/suit_jacket/charcoal,
+						/obj/item/clothing/under/suit/charcoal,
 						/obj/item/toy/crayon/spraycan)
 
 /datum/antagonist/gang/italian_mob
@@ -85,12 +85,12 @@
 	roundend_category = "Italian mobsters"
 	gang_name = "Italian Mob"
 	gang_id = "IM"
-	acceptable_clothes = list(/obj/item/clothing/under/suit_jacket/checkered,
+	acceptable_clothes = list(/obj/item/clothing/under/suit/checkered,
 							/obj/item/clothing/head/fedora,
 							/obj/item/clothing/neck/scarf/green,
 							/obj/item/clothing/mask/bandana/green)
 	free_clothes = list(/obj/item/clothing/head/fedora,
-						/obj/item/clothing/under/suit_jacket/checkered,
+						/obj/item/clothing/under/suit/checkered,
 						/obj/item/toy/crayon/spraycan)
 
 /datum/antagonist/gang/tunnel_snakes
