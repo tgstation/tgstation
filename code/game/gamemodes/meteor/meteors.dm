@@ -440,8 +440,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 /obj/effect/meteor/meaty/meatball_man/Initialize()
 	for(var/obj/effect/meteor/meaty/meatball_man/M in GLOB.meteor_list)
 		if(M != src)
-			qdel(src) // There is only one Meatball Man.
-			return INTIALIZE_HINT_QDEL
+			return INITIALIZE_HINT_QDEL // There is only one Meatball Man.
 	. = ..()
 
 /obj/effect/meteor/meaty/meatball_man/singularity_act()
