@@ -190,7 +190,7 @@
 				break
 			turf_is_below = TRUE
 		
-		if(T && ((ai_user && GLOB.cameranet.checkTurfVis(T)) || (T in seen) || turf_is_below))	
+		if(T && ((ai_user && GLOB.cameranet.checkTurfVis(placeholder)) || (placeholder in seen))
 			turfs += T
 			for(var/mob/M in T)
 				mobs += M
