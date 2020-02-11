@@ -13,6 +13,7 @@
 	var/produced_coins = 0 // how many coins the machine has made in it's last cycle
 	var/processing = FALSE
 	var/chosen = /datum/material/iron //which material will be used to make coins
+	needs_item_input = TRUE
 
 
 /obj/machinery/mineral/mint/Initialize()
@@ -34,16 +35,16 @@
 	chosen = SSmaterials.GetMaterialRef(chosen)
 
 
-/obj/machinery/mineral/mint/process()
-	var/turf/T = get_step(src, input_dir)
+/obj/machinery/mineral/mint/pickup_items()
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-
-	for(var/obj/item/stack/O in T)
+	for(var/obj/item/stack/O in input_turf)
 		var/inserted = materials.insert_item(O)
 		if(inserted)
 			qdel(O)
 
+/obj/machinery/mineral/mint/process()
 	if(processing)
+		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		var/datum/material/M = chosen
 
 		if(!M)
@@ -71,6 +72,7 @@
 				if(!found_new)
 					processing = FALSE
 	else
+		end_processing()
 		icon_state = "coinpress0"
 
 /obj/machinery/mineral/mint/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -114,8 +116,10 @@
 			if (!processing)
 				produced_coins = 0
 			processing = TRUE
+			begin_processing()
 		if ("stoppress")
 			processing = FALSE
+			end_processing()
 		if ("changematerial")
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 			for(var/datum/material/mat in materials.materials)

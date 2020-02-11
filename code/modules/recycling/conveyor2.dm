@@ -18,8 +18,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/list/affecting	// the list of all items that will be moved this ptick
 	var/id = ""			// the control ID	- must match controller ID
 	var/verted = 1		// Inverts the direction the conveyor belt moves.
-	speed_process = TRUE
-	var/conveying = FALSE
+	processing_flags = START_PROCESSING_MANUALLY // conveyor belts only process so they can use power
+	use_power = ACTIVE_POWER_USE
+	active_power_usage = 30 // uses 30 power every 2 seconds while switched on
 
 /obj/machinery/conveyor/centcom_auto
 	id = "round_end_belt"
@@ -123,35 +124,43 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		return FALSE
 	return TRUE
 
-	// machine process
-	// move items to the target location
-/obj/machinery/conveyor/process()
-	if(machine_stat & (BROKEN | NOPOWER))
-		return
-	//If the conveyor is broken or already moving items
-	if(!operating || conveying)
-		return
-	use_power(6)
-	//get the first 30 items in contents
+// returns true if there is at least 1 item on the belt that can be moved
+/obj/machinery/conveyor/proc/check_belt_contents()
+	for(var/atom/movable/AM in loc.contents)
+		if(AM && !AM.anchored)
+			return TRUE
+	return FALSE
+
+// populates `affecting` with the first 30 items in the belt's contents
+/obj/machinery/conveyor/proc/get_belt_contents()
 	affecting = list()
 	var/i = 0
-	for(var/item in loc.contents)
-		if(item == src)
-			continue
-		i++ // we're sure it's a real target to move at this point
-		if(i >= MAX_CONVEYOR_ITEMS_MOVE)
-			break
-		affecting.Add(item)
-	conveying = TRUE
-	addtimer(CALLBACK(src, .proc/convey, affecting), 1)
+	for(var/atom/movable/AM in loc.contents)
+		if(AM && !AM.anchored)
+			i += 1
+			if(i >= MAX_CONVEYOR_ITEMS_MOVE)
+				break
+			affecting.Add(AM)
 
+// when some item or mob moves over the conveyor belt
+/obj/machinery/conveyor/Crossed()
+	// if the conveyor isn't switched on or is broken / has no power
+	if(!operating || machine_stat & (BROKEN | NOPOWER))
+		return
+
+	get_belt_contents() // populate affecting with the movable items on the belt
+	addtimer(CALLBACK(src, .proc/convey, affecting), pick(1,2)) // pick(1,2) so players have a bit of trouble walking over belts moving in the opposite direction they are
+
+// pushes the items sitting on the belt in the direction the belt is operating in
 /obj/machinery/conveyor/proc/convey(list/affecting)
 	for(var/atom/movable/A in affecting)
 		if(!QDELETED(A) && (A.loc == loc))
 			A.ConveyorMove(movedir)
 			//Give this a chance to yield if the server is busy
 			stoplag()
-	conveying = FALSE
+
+	if(check_belt_contents())
+		Crossed() // If something is still on the belt, call crossed again
 
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/I, mob/user, params)
@@ -231,15 +240,14 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
-	speed_process = TRUE
 
 	var/position = 0			// 0 off, -1 reverse, 1 forward
 	var/last_pos = -1			// last direction setting
-	var/operated = 1			// true if just operated
 	var/oneway = FALSE			// if the switch only operates the conveyor belts in a single direction.
 	var/invert_icon = FALSE		// If the level points the opposite direction when it's turned on.
 
 	var/id = "" 				// must match conveyor IDs to control them
+	processing_flags = NEVER_PROCESS
 
 /obj/machinery/conveyor_switch/Initialize(mapload, newid)
 	. = ..()
@@ -277,24 +285,28 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	else
 		icon_state = "switch-off"
 
-
-// timed process
 // if the switch changed, update the linked conveyors
-
-/obj/machinery/conveyor_switch/process()
-	if(!operated)
-		return
-	operated = 0
-
+/obj/machinery/conveyor_switch/proc/update_linked_conveyors()
 	for(var/obj/machinery/conveyor/C in GLOB.conveyors_by_id[id])
 		C.operating = position
 		C.update_move_direction()
 		C.update_icon()
+		if(abs(C.operating)) // equals 1 if the conveyor is moving in either direction, 0 if turned off
+			C.Crossed() // if there's items on the belt already, start moving them immediately
+			C.begin_processing()
+		else
+			C.end_processing()
 		CHECK_TICK
 
-// attack with hand, switch position
-/obj/machinery/conveyor_switch/interact(mob/user)
-	add_fingerprint(user)
+// find any switches with same id as this one, and set their positions to match us
+/obj/machinery/conveyor_switch/proc/update_linked_switches()
+	for(var/obj/machinery/conveyor_switch/S in GLOB.conveyors_by_id[id])
+		S.invert_icon = invert_icon
+		S.position = position
+		S.update_icon()
+		CHECK_TICK
+
+/obj/machinery/conveyor_switch/proc/update_position()
 	if(position == 0)
 		if(oneway)   //is it a oneway switch
 			position = oneway
@@ -309,15 +321,14 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		last_pos = position
 		position = 0
 
-	operated = 1
+// attack with hand, switch position
+/obj/machinery/conveyor_switch/interact(mob/user)
+	add_fingerprint(user)
+	update_position()
 	update_icon()
+	update_linked_conveyors()
+	update_linked_switches()
 
-	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in GLOB.conveyors_by_id[id])
-		S.invert_icon = invert_icon
-		S.position = position
-		S.update_icon()
-		CHECK_TICK
 
 /obj/machinery/conveyor_switch/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR)

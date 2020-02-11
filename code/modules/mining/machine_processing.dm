@@ -5,6 +5,33 @@
 /obj/machinery/mineral
 	var/input_dir = NORTH
 	var/output_dir = SOUTH
+	var/turf/input_turf = null // The turf that the machines will be listening to for ores/items
+	var/needs_item_input = FALSE // whether or not the machine needs to pick up items, i.e. the ORM picking up ores
+	processing_flags = START_PROCESSING_MANUALLY
+	subsystem_type = /datum/controller/subsystem/processing/fastprocess
+
+/obj/machinery/mineral/Initialize(mapload)
+	. = ..()
+	if(needs_item_input)
+		register_input_turf()
+
+/obj/machinery/mineral/Destroy()
+	. = ..()
+	if(input_turf)
+		unregister_input_turf()
+
+/obj/machinery/mineral/proc/register_input_turf()
+	input_turf = get_step(src, input_dir) // get the turf that players need to place the ore/items onto, defaults to NORTH at round start
+	if(input_turf && istype(input_turf)) // make sure there is actually a turf
+		// listens for when an atom ENTERS the input_turf, tells the machine to deal with the ores/items
+		RegisterSignal(input_turf, COMSIG_ATOM_ENTERED, .proc/pickup_items, TRUE)
+
+/obj/machinery/mineral/proc/unregister_input_turf()
+	if(input_turf)
+		UnregisterSignal(input_turf, COMSIG_ATOM_ENTERED)
+
+/obj/machinery/mineral/proc/pickup_items()
+	return
 
 /obj/machinery/mineral/proc/unload_mineral(atom/movable/S)
 	S.forceMove(drop_location())
@@ -19,7 +46,6 @@
 	density = TRUE
 	var/obj/machinery/mineral/processing_unit/machine = null
 	var/machinedir = EAST
-	speed_process = TRUE
 
 /obj/machinery/mineral/processing_unit_console/Initialize()
 	. = ..()
@@ -58,6 +84,7 @@
 
 	if(href_list["set_on"])
 		machine.on = (href_list["set_on"] == "on")
+		machine.begin_processing()
 
 	updateUsrDialog()
 	return
@@ -80,6 +107,7 @@
 	var/datum/material/selected_material = null
 	var/selected_alloy = null
 	var/datum/techweb/stored_research
+	needs_item_input = TRUE
 
 /obj/machinery/mineral/processing_unit/Initialize()
 	. = ..()
@@ -92,10 +120,6 @@
 	CONSOLE = null
 	QDEL_NULL(stored_research)
 	return ..()
-
-/obj/machinery/mineral/processing_unit/HasProximity(atom/movable/AM)
-	if(istype(AM, /obj/item/stack/ore) && AM.loc == get_step(src, input_dir))
-		process_ore(AM)
 
 /obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/stack/ore/O)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
@@ -142,8 +166,12 @@
 
 	return dat
 
+/obj/machinery/mineral/processing_unit/pickup_items()
+	for(var/obj/item/stack/ore/O in input_turf)
+		process_ore(O)
+
 /obj/machinery/mineral/processing_unit/process()
-	if (on)
+	if(on)
 		if(selected_material)
 			smelt_ore()
 
@@ -153,6 +181,8 @@
 
 		if(CONSOLE)
 			CONSOLE.updateUsrDialog()
+	else
+		end_processing()
 
 /obj/machinery/mineral/processing_unit/proc/smelt_ore()
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
