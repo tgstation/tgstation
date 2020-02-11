@@ -237,7 +237,6 @@
 	name = "Syndicate Shuttle (Computer Board)"
 	icon_state = "generic"
 	build_path = /obj/machinery/computer/shuttle/syndicate
-	var/challenge = FALSE
 	var/moved = FALSE
 
 /obj/item/circuitboard/computer/syndicate_shuttle/Initialize()
