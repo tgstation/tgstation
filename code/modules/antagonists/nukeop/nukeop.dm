@@ -187,7 +187,6 @@
 			dukinuki.forceMove(H.drop_location())
 		else
 			H.put_in_hands(dukinuki, TRUE)
-			H.update_icons()
 	owner.announce_objectives()
 	addtimer(CALLBACK(src, .proc/nuketeam_name_assign), 1)
 
