@@ -26,7 +26,7 @@
 	if(stored)
 		user.put_in_hands(stored)
 		stored = null
-		to_chat(user, "<span class='notice'>You remove [stored] from [src]. The tapes stop spinning.</span>")
+		to_chat(user, "<span class='notice'>You remove the blackbox from [src]. The tapes stop spinning.</span>")
 		update_icon()
 		return
 	else
@@ -40,7 +40,7 @@
 			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] clicks [I] into [src]!</span>", \
-		"<span class='notice'>You press [I] into [src], and it clicks into place. The tapes begin spinning again.</span>")
+		"<span class='notice'>You press the device into [src], and it clicks into place. The tapes begin spinning again.</span>")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		stored = I
 		update_icon()
