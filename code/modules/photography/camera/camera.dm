@@ -187,7 +187,7 @@
 			if(!T)
 				break
 		
-		if(T && ((ai_user && GLOB.cameranet.checkTurfVis(placeholder)) || (placeholder in seen))
+		if(T && ((ai_user && GLOB.cameranet.checkTurfVis(placeholder)) || (placeholder in seen)))
 			turfs += T
 			for(var/mob/M in T)
 				mobs += M
