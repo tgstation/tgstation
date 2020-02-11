@@ -4,15 +4,15 @@
 /datum/component/construction/mecha
 	var/base_icon
 
-	var/circuit_control = null
-	var/circuit_periph = null
-	var/circuit_weapon = null
+	var/circuit_control
+	var/circuit_periph
+	var/circuit_weapon
 
-	var/inner_plating = null
-	var/inner_plating_amount = 0
+	var/inner_plating
+	var/inner_plating_amount
 
-	var/outer_plating = null
-	var/outer_plating_amount = 0
+	var/outer_plating
+	var/outer_plating_amount
 
 /datum/component/construction/mecha/spawn_result()
 	if(!result)
@@ -183,7 +183,7 @@
 	return list(
 		list(
 			"key" = outer_plating,
-			"amount" = 1,
+			"amount" = outer_plating_amount,
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_WELDER,
 			"desc" = "Internal armor is welded."
@@ -507,7 +507,7 @@
 	inner_plating_amount = 5
 
 	outer_plating = /obj/item/stack/sheet/plasteel
-	outer_plating_amount = 10
+	outer_plating_amount = 5
 
 /datum/component/construction/mecha/firefighter/custom_action(obj/item/I, mob/living/user, diff)
 	if(!..())
@@ -604,7 +604,7 @@
 				user.visible_message("<span class='notice'>[user] cuts the internal armor layer from [parent].</span>", "<span class='notice'>You cut the internal armor layer from [parent].</span>")
 		if(19)
 			if(diff==FORWARD)
-				user.visible_message("<span class='notice'>[user] secures the external armor layer.</span>", "<span class='notice'>You secure the external reinforced armor layer.</span>")
+				user.visible_message("<span class='notice'>[user] secures the external armor layer.</span>", "<span class='notice'>You secure the external armor layer.</span>")
 			else
 				user.visible_message("<span class='notice'>[user] pries external armor layer from [parent].</span>", "<span class='notice'>You pry external armor layer from [parent].</span>")
 		if(20)
