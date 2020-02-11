@@ -3,6 +3,28 @@
 ////////////////////////////////
 /datum/component/construction/mecha
 	var/base_icon
+	var/name = ""
+
+	var/circuit_control = null
+	var/circuit_periph = null
+	var/circuit_weapon = null
+
+	var/inner_plating = null
+	var/inner_plating_amount = 0
+
+	var/outer_plating = null
+	var/outer_plating_amount = 0
+
+/datum/component/construction/mecha/Initialize()
+	. = ..()
+	steps=list()
+	steps+=frame_steps
+	steps+=get_circuit_steps()
+	if(circuit_weapon)
+		steps+=get_circuit_weapon_steps()
+	steps+=get_stockpart_steps()
+	steps+=get_inner_plating_steps()
+	steps+=get_outer_plating_steps()
 
 /datum/component/construction/mecha/spawn_result()
 	if(!result)
@@ -43,6 +65,172 @@
 	parent_atom.cut_overlays()
 	..()
 
+var/frame_steps = list(
+	//1
+	list(
+		"key" = TOOL_WRENCH,
+		"desc" = "The hydraulic systems are disconnected."
+	),
+	//2
+	list(
+		"key" = TOOL_SCREWDRIVER,
+		"back_key" = TOOL_WRENCH,
+		"desc" = "The hydraulic systems are connected."
+	),
+	//3
+	list(
+		"key" = /obj/item/stack/cable_coil,
+		"amount" = 5,
+		"back_key" = TOOL_SCREWDRIVER,
+		"desc" = "The hydraulic systems are active."
+	),
+	//4
+	list(
+		"key" = TOOL_WIRECUTTER,
+		"back_key" = TOOL_SCREWDRIVER,
+		"desc" = "The wiring is added."
+	)
+)
+
+/datum/component/construction/mecha/proc/get_circuit_steps()
+	return list(
+		//5
+		list(
+			"key" = circuit_control,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The wiring is adjusted."
+			),
+		//6
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Central control module is installed."
+		),
+		//7
+		list(
+			"key" = circuit_periph,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Central control module is secured."
+		),
+		//8
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Peripherals control module is installed."
+		)
+	)
+
+/datum/component/construction/mecha/proc/get_circuit_weapon_steps()
+	return list(
+		list(
+			"key" = circuit_weapon,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Peripherals control module is secured."
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Weapons control module is installed"
+		)
+	)
+
+/datum/component/construction/mecha/proc/get_stockpart_steps()
+	return list(
+		//9
+		list(
+			"key" = /obj/item/stock_parts/scanning_module,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Peripherals control module is secured."
+		),
+		//10
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Scanner module is installed."
+		),
+		//11
+		list(
+			"key" = /obj/item/stock_parts/capacitor,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Scanner module is secured."
+		),
+		//12
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Capacitor is installed."
+		),
+		//13
+		list(
+			"key" = /obj/item/stock_parts/cell,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Capacitor is secured."
+		),
+		//14
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The power cell is installed."
+		)
+	)
+
+/datum/component/construction/mecha/proc/get_inner_plating_steps()
+	return list(
+		//15
+		list(
+			"key" = inner_plating,
+			"amount" = inner_plating_amount,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The power cell is secured."
+		),
+
+		//16
+		list(
+			"key" = TOOL_WRENCH,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Inner plating is installed."
+		),
+
+		//17
+		list(
+			"key" = TOOL_WELDER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "Inner Plating is wrenched."
+		)
+	)
+
+/datum/component/construction/mecha/proc/get_outer_plating_steps()
+	return list(
+		//20
+		list(
+			"key" = outer_plating,
+			"amount" = 1,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_WELDER,
+			"desc" = "Internal armor is welded."
+		),
+
+		//21
+		list(
+			"key" = TOOL_WRENCH,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "External armor is installed."
+		),
+
+		//22
+		list(
+			"key" = TOOL_WELDER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "External armor is wrenched."
+		)
+	)
+
 
 /datum/component/construction/unordered/mecha_chassis/ripley
 	result = /datum/component/construction/mecha/ripley
@@ -56,133 +244,20 @@
 
 /datum/component/construction/mecha/ripley
 	result = /obj/mecha/working/ripley
+	name = "Ripley"
+	circuit_control = /obj/item/circuitboard/mecha/ripley/main
+	circuit_periph = /obj/item/circuitboard/mecha/ripley/peripherals
+	circuit_weapon = null
 	base_icon = "ripley"
-	steps = list(
-		//1
-		list(
-			"key" = TOOL_WRENCH,
-			"desc" = "The hydraulic systems are disconnected."
-		),
 
-		//2
-		list(
-			"key" = TOOL_SCREWDRIVER,
-			"back_key" = TOOL_WRENCH,
-			"desc" = "The hydraulic systems are connected."
-		),
+	inner_plating=/obj/item/stack/sheet/metal
+	inner_plating_amount = 5
 
-		//3
-		list(
-			"key" = /obj/item/stack/cable_coil,
-			"amount" = 5,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The hydraulic systems are active."
-		),
+	outer_plating=/obj/item/stack/rods
+	outer_plating_amount = 10
 
-		//4
-		list(
-			"key" = TOOL_WIRECUTTER,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The wiring is added."
-		),
-
-		//5
-		list(
-			"key" = /obj/item/circuitboard/mecha/ripley/main,
-			"action" = ITEM_DELETE,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The wiring is adjusted."
-		),
-
-		//6
-		list(
-			"key" = TOOL_SCREWDRIVER,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "Central control module is installed."
-		),
-
-		//7
-		list(
-			"key" = /obj/item/circuitboard/mecha/ripley/peripherals,
-			"action" = ITEM_DELETE,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Central control module is secured."
-		),
-
-		//8
-		list(
-			"key" = TOOL_SCREWDRIVER,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "Peripherals control module is installed."
-		),
-
-		//9
-		list(
-			"key" = /obj/item/stock_parts/scanning_module,
-			"action" = ITEM_MOVE_INSIDE,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Peripherals control module is secured."
-		),
-
-		//10
-		list(
-			"key" = TOOL_SCREWDRIVER,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "Scanner module is installed."
-		),
-
-		//11
-		list(
-			"key" = /obj/item/stock_parts/capacitor,
-			"action" = ITEM_MOVE_INSIDE,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Scanner module is secured."
-		),
-
-		//12
-		list(
-			"key" = TOOL_SCREWDRIVER,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "Capacitor is installed."
-		),
-
-		//13
-		list(
-			"key" = /obj/item/stock_parts/cell,
-			"action" = ITEM_MOVE_INSIDE,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Capacitor is secured."
-		),
-
-		//14
-		list(
-			"key" = TOOL_SCREWDRIVER,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "The power cell is installed."
-		),
-
-		//15
-		list(
-			"key" = /obj/item/stack/sheet/metal,
-			"amount" = 5,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The power cell is secured."
-		),
-
-		//16
-		list(
-			"key" = TOOL_WRENCH,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "Outer plating is installed."
-		),
-
-		//17
-		list(
-			"key" = TOOL_WELDER,
-			"back_key" = TOOL_WRENCH,
-			"desc" = "Outer Plating is wrenched."
-		),
-
+/datum/component/construction/mecha/ripley/get_outer_plating_steps()
+	return list(
 		//18
 		list(
 			"key" = /obj/item/stack/rods,
@@ -316,7 +391,10 @@
 
 /datum/component/construction/mecha/gygax
 	result = /obj/mecha/combat/gygax
+	name = "Gygax"
 	base_icon = "gygax"
+	outer_plating=/obj/item/mecha_parts/part/gygax_armor
+	outer_plating_amount=1
 	steps = list(
 		//1
 		list(
@@ -456,29 +534,7 @@
 			"key" = TOOL_WELDER,
 			"back_key" = TOOL_WRENCH,
 			"desc" = "Internal armor is wrenched."
-		),
-
-		//20
-		list(
-			"key" = /obj/item/mecha_parts/part/gygax_armor,
-			"action" = ITEM_DELETE,
-			"back_key" = TOOL_WELDER,
-			"desc" = "Internal armor is welded."
-		),
-
-		//21
-		list(
-			"key" = TOOL_WRENCH,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "External armor is installed."
-		),
-
-		//22
-		list(
-			"key" = TOOL_WELDER,
-			"back_key" = TOOL_WRENCH,
-			"desc" = "External armor is wrenched."
-		),
+		)
 
 	)
 
