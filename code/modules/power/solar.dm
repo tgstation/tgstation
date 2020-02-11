@@ -213,6 +213,16 @@
 	anchored = FALSE
 	var/tracker = 0
 	var/glass_type = null
+	var/rndoffsetpxlamt = 6 //how much unwrenched solars have their position altered by to indicate they're unsecured
+
+/obj/item/solar_assembly/Initialize(mapload)
+	. = ..()
+	if(!anchored && !pixel_x && !pixel_y)
+		randomise_offset(rndoffsetpxlamt)
+
+/obj/item/solar_assembly/proc/randomise_offset(amt)
+	pixel_x = rand(-amt,amt)
+	pixel_y = rand(-amt,amt)
 
 // Give back the glass type we were supplied with
 /obj/item/solar_assembly/proc/give_glass(device_broken)
@@ -234,9 +244,12 @@
 		if(anchored)
 			user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>", "<span class='notice'>You wrench the solar assembly into place.</span>")
 			W.play_tool_sound(src, 75)
+			pixel_x = 0
+			pixel_y = 0
 		else
 			user.visible_message("<span class='notice'>[user] unwrenches the solar assembly from its place.</span>", "<span class='notice'>You unwrench the solar assembly from its place.</span>")
 			W.play_tool_sound(src, 75)
+			randomise_offset(rndoffsetpxlamt)
 		return 1
 
 	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
