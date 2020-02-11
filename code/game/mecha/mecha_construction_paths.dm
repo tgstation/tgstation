@@ -30,7 +30,7 @@
 	QDEL_NULL(parent)
 
 /datum/component/construction/mecha/proc/get_steps()
-	return frame_steps + get_circuit_steps() + (circuit_weapon ? get_circuit_weapon_steps() : list()) + get_stockpart_steps() + get_inner_plating_steps() + get_outer_plating_steps()
+	return get_frame_steps() + get_circuit_steps() + (circuit_weapon ? get_circuit_weapon_steps() : list()) + get_stockpart_steps() + get_inner_plating_steps() + get_outer_plating_steps()
 
 /datum/component/construction/mecha/update_parent(step_index)
 	steps = get_steps()
@@ -57,28 +57,29 @@
 	parent_atom.cut_overlays()
 	..()
 
-var/frame_steps = list(
-	list(
-		"key" = TOOL_WRENCH,
-		"desc" = "The hydraulic systems are disconnected."
-	),
-	list(
-		"key" = TOOL_SCREWDRIVER,
-		"back_key" = TOOL_WRENCH,
-		"desc" = "The hydraulic systems are connected."
-	),
-	list(
-		"key" = /obj/item/stack/cable_coil,
-		"amount" = 5,
-		"back_key" = TOOL_SCREWDRIVER,
-		"desc" = "The hydraulic systems are active."
-	),
-	list(
-		"key" = TOOL_WIRECUTTER,
-		"back_key" = TOOL_SCREWDRIVER,
-		"desc" = "The wiring is added."
+/datum/component/construction/mecha/proc/get_frame_steps()
+	return list(
+		list(
+			"key" = TOOL_WRENCH,
+			"desc" = "The hydraulic systems are disconnected."
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "The hydraulic systems are connected."
+		),
+		list(
+			"key" = /obj/item/stack/cable_coil,
+			"amount" = 5,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The hydraulic systems are active."
+		),
+		list(
+			"key" = TOOL_WIRECUTTER,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The wiring is added."
+		)
 	)
-)
 
 /datum/component/construction/mecha/proc/get_circuit_steps()
 	return list(
