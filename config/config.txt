@@ -381,12 +381,6 @@ MAPROTATION
 ## When it's set to zero, the map will be randomly picked each round
 PREFERENCE_MAP_VOTING 1
 
-## Map rotate chance delta
-## This is the chance of map rotation factored to the round length.
-## A value of 1 would mean the map rotation chance is the round length in minutes (hour long round == 60% rotation chance)
-## A value of 0.5 would mean the map rotation chance is half of the round length in minutes (hour long round == 30% rotation chance)
-#MAPROTATECHANCEDELTA 0.75
-
 ## AUTOADMIN
 ## The default admin rank
 AUTOADMIN_RANK Game Master
