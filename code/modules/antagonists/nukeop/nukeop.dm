@@ -184,7 +184,7 @@
 		var/obj/item/nuclear_challenge/dukinuki = new
 		var/mob/living/carbon/human/H = owner.current
 		if(!istype(H))
-			dukinuki.forceMove(get_turf(H))
+			dukinuki.forceMove(H.drop_location())
 		else
 			H.put_in_hands(dukinuki, TRUE)
 			H.update_icons()
