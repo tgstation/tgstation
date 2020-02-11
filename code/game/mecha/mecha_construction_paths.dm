@@ -3,7 +3,6 @@
 ////////////////////////////////
 /datum/component/construction/mecha
 	var/base_icon
-	var/name = ""
 
 	var/circuit_control = null
 	var/circuit_periph = null
@@ -237,11 +236,10 @@ var/frame_steps = list(
 
 /datum/component/construction/mecha/ripley
 	result = /obj/mecha/working/ripley
-	name = "Ripley"
+	base_icon = "ripley"
+
 	circuit_control = /obj/item/circuitboard/mecha/ripley/main
 	circuit_periph = /obj/item/circuitboard/mecha/ripley/peripherals
-	circuit_weapon = null
-	base_icon = "ripley"
 
 	inner_plating=/obj/item/stack/sheet/metal
 	inner_plating_amount = 5
@@ -384,7 +382,6 @@ var/frame_steps = list(
 
 /datum/component/construction/mecha/gygax
 	result = /obj/mecha/combat/gygax
-	name = "Gygax"
 	base_icon = "gygax"
 
 	circuit_control = /obj/item/circuitboard/mecha/gygax/main
@@ -527,7 +524,6 @@ var/frame_steps = list(
 
 /datum/component/construction/mecha/firefighter
 	result = /obj/mecha/working/ripley/firefighter
-	name = "Firefighter"
 	base_icon = "fireripley"
 
 	circuit_control = /obj/item/circuitboard/mecha/ripley/main
@@ -804,7 +800,6 @@ var/frame_steps = list(
 
 /datum/component/construction/mecha/durand
 	result = /obj/mecha/combat/durand
-	name = "Durand"
 	base_icon = "durand"
 
 	circuit_control = /obj/item/circuitboard/mecha/durand/main
@@ -947,7 +942,6 @@ var/frame_steps = list(
 
 /datum/component/construction/mecha/phazon
 	result = /obj/mecha/combat/phazon
-	name = "Phazon"
 	base_icon = "phazon"
 
 	circuit_control = /obj/item/circuitboard/mecha/phazon/main
@@ -1182,7 +1176,6 @@ var/frame_steps = list(
 
 /datum/component/construction/mecha/odysseus
 	result = /obj/mecha/medical/odysseus
-	name = "Odysseus"
 	base_icon = "odysseus"
 
 	circuit_control = /obj/item/circuitboard/mecha/odysseus/main
