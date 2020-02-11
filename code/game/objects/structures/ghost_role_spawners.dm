@@ -602,6 +602,9 @@
 	important_info = "DO NOT let the ship fall into enemy hands."
 	outfit = /datum/outfit/syndicatespace/syndicrew
 
+/datum/outfit/syndicatespace/syndicrew/post_equip(mob/living/carbon/human/H)
+	H.faction |= ROLE_SYNDICATE
+
 /obj/effect/mob_spawn/human/syndicatespace/special(mob/living/new_spawn)
 	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
 
@@ -621,13 +624,6 @@
 	important_info = "DO NOT let the ship fall into enemy hands."
 	outfit = /datum/outfit/syndicatespace/syndicaptain
 
-/obj/effect/mob_spawn/human/syndicatespace/captain/special(mob/living/new_spawn)
-	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
-
-/obj/effect/mob_spawn/human/syndicatespace/captain/Destroy()
-	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
-	..()
-
 /datum/outfit/syndicatespace/syndicrew
 	name = "Syndicate Ship Crew Member"
 	uniform = /obj/item/clothing/under/syndicate/combat
@@ -642,9 +638,6 @@
 	belt = /obj/item/storage/belt/military/assault
 	id = /obj/item/card/id/syndicate_command/crew_id
 	implants = list(/obj/item/implant/weapons_auth)
-
-/datum/outfit/syndicatespace/syndicrew/post_equip(mob/living/carbon/human/H)
-	H.faction |= ROLE_SYNDICATE
 
 /datum/outfit/syndicatespace/syndicaptain
 	name = "Syndicate Ship Captain"
