@@ -674,12 +674,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	ambientsounds = SPOOKY
 
 /area/medical/chemistry
-	name = "Chemistry"
+	name = "Chemistry Lab"
 	icon_state = "chem"
 
-/area/medical/pharmacy
-	name = "Pharmacy"
-	icon_state = "pharmacy"
+/area/medical/chemistry/factory
+	name = "Chemical Factory"
 
 /area/medical/surgery
 	name = "Surgery"

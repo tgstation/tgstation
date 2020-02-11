@@ -41,8 +41,8 @@
 #define ACCESS_RD 30
 #define ACCESS_CARGO 31
 #define ACCESS_CONSTRUCTION 32
-///Allows access to chemistry factory areas on compatible maps
-#define ACCESS_CHEMISTRY 33
+///Allows access to chemical factory on maps that have it
+#define ACCESS_CHEMICAL_FACTORY 33
 #define ACCESS_HYDROPONICS 35
 #define ACCESS_LIBRARY 37
 #define ACCESS_LAWYER 38
@@ -77,8 +77,7 @@
 #define ACCESS_WEAPONS 66
 /// NTnet diagnostics/monitoring software
 #define ACCESS_NETWORK 67
-/// Pharmacy access (Chemistry room in Medbay)
-#define ACCESS_PHARMACY 69 ///Nice.
+#define ACCESS_CHEMISTRY_LAB 69 //Nice.
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
