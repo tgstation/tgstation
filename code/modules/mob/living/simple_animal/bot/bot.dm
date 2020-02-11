@@ -199,7 +199,8 @@
 		bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 		to_chat(src, "<span class='userdanger'>(#$*#$^^( OVERRIDE DETECTED</span>")
-		log_combat(user, src, "emagged")
+		if(user)
+			log_combat(user, src, "emagged")
 		return
 	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver yet.
 		to_chat(user, "<span class='warning'>You need to open maintenance panel first!</span>")
@@ -772,10 +773,10 @@ Pass a positive integer as an argument to override a bot's default speed.
 	else	// no path, so calculate new one
 		calc_summon_path()
 
-/mob/living/simple_animal/bot/Bump(M as mob|obj) //Leave no door unopened!
+/mob/living/simple_animal/bot/Bump(atom/A) //Leave no door unopened!
 	. = ..()
-	if((istype(M, /obj/machinery/door/airlock) ||  istype(M, /obj/machinery/door/window)) && (!isnull(access_card)))
-		var/obj/machinery/door/D = M
+	if((istype(A, /obj/machinery/door/airlock) ||  istype(A, /obj/machinery/door/window)) && (!isnull(access_card)))
+		var/obj/machinery/door/D = A
 		if(D.check_access(access_card))
 			D.open()
 			frustration = 0
@@ -912,7 +913,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 				bot_name = name
 				name = paicard.pai.name
 				faction = user.faction.Copy()
-				language_holder = paicard.pai.language_holder.copy(src)
 				log_combat(user, paicard.pai, "uploaded to [bot_name],")
 				return TRUE
 			else

@@ -101,6 +101,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "firebrand"
 	desc = "An unlit firebrand. It makes you wonder why it's not just called a stick."
 	smoketime = 20 //40 seconds
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
 	grind_results = list(/datum/reagent/carbon = 2)
 
 /obj/item/match/firebrand/Initialize()
@@ -132,6 +133,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/chem_volume = 30
 	var/smoke_all = FALSE /// Should we smoke all of the chems in the cig before it runs out. Splits each puff to take a portion of the overall chems so by the end you'll always have consumed all of the chems inside.
 	var/list/list_reagents = list(/datum/reagent/drug/nicotine = 15)
+	var/lung_harm = 1 //How bad it is for you
 
 /obj/item/clothing/mask/cigarette/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer.</span>")
@@ -199,7 +201,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		qdel(src)
 		return
 	// allowing reagents to react after being lit
-	DISABLE_BITFIELD(reagents.flags, NO_REACT)
+	reagents.flags &= ~(NO_REACT)
 	reagents.handle_reactions()
 	icon_state = icon_on
 	item_state = icon_on
@@ -217,7 +219,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/extinguish()
 	if(!lit)
 		return
-	name = copytext(name,5,length(name)+1)
+	name = copytext_char(name, 5) //5 == length_char("lit ") + 1
 	attack_verb = null
 	hitsound = null
 	damtype = BRUTE
@@ -225,7 +227,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = icon_off
 	item_state = icon_off
 	STOP_PROCESSING(SSobj, src)
-	ENABLE_BITFIELD(reagents.flags, NO_REACT)
+	reagents.flags |= NO_REACT
 	lit = FALSE
 	if(ismob(loc))
 		var/mob/living/M = loc
@@ -248,6 +250,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					to_smoke = reagents.total_volume/((smoketime * 2) / (dragtime / 10))
 
 				reagents.reaction(C, INGEST, fraction)
+				var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
+				if(L && !(L.organ_flags & ORGAN_SYNTHETIC))
+					C.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm)
 				if(!reagents.trans_to(C, to_smoke))
 					reagents.remove_any(to_smoke)
 				return
@@ -578,6 +583,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	resistance_flags = FIRE_PROOF
 	light_color = LIGHT_COLOR_FIRE
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/fuel/oil = 5)
+	custom_price = 55
 
 /obj/item/lighter/Initialize()
 	. = ..()
@@ -599,11 +605,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		user.visible_message("<span class='suicide'>[user] begins whacking [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		return BRUTELOSS
 
-/obj/item/lighter/update_icon()
-	cut_overlays()
-	var/mutable_appearance/lighter_overlay = mutable_appearance(icon,"lighter_overlay_[overlay_state][lit ? "-on" : ""]")
+/obj/item/lighter/update_overlays()
+	. = ..()
+	. += create_lighter_overlay()
+
+/obj/item/lighter/update_icon_state()
 	icon_state = "[initial(icon_state)][lit ? "-on" : ""]"
-	add_overlay(lighter_overlay)
+
+/obj/item/lighter/proc/create_lighter_overlay()
+	return mutable_appearance(icon, "lighter_overlay_[overlay_state][lit ? "-on" : ""]")
 
 /obj/item/lighter/ignition_effect(atom/A, mob/user)
 	if(get_temperature())
@@ -725,12 +735,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		lighter_color = pick(color_list)
 	update_icon()
 
-/obj/item/lighter/greyscale/update_icon()
-	cut_overlays()
-	var/mutable_appearance/lighter_overlay = mutable_appearance(icon,"lighter_overlay_[overlay_state][lit ? "-on" : ""]")
-	icon_state = "[initial(icon_state)][lit ? "-on" : ""]"
+/obj/item/lighter/greyscale/create_lighter_overlay()
+	var/mutable_appearance/lighter_overlay = ..()
 	lighter_overlay.color = lighter_color
-	add_overlay(lighter_overlay)
+	return lighter_overlay
 
 /obj/item/lighter/greyscale/ignition_effect(atom/A, mob/user)
 	if(get_temperature())
@@ -809,7 +817,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(!screw)
 			screw = TRUE
 			to_chat(user, "<span class='notice'>You open the cap on [src].</span>")
-			ENABLE_BITFIELD(reagents.flags, OPENCONTAINER)
+			reagents.flags |= OPENCONTAINER
 			if(obj_flags & EMAGGED)
 				add_overlay("vapeopen_high")
 			else if(super)
@@ -819,7 +827,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		else
 			screw = FALSE
 			to_chat(user, "<span class='notice'>You close the cap on [src].</span>")
-			DISABLE_BITFIELD(reagents.flags, OPENCONTAINER)
+			reagents.flags &= ~(OPENCONTAINER)
 			cut_overlays()
 
 	if(O.tool_behaviour == TOOL_MULTITOOL)
@@ -867,7 +875,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(slot == ITEM_SLOT_MASK)
 		if(!screw)
 			to_chat(user, "<span class='notice'>You start puffing on the vape.</span>")
-			DISABLE_BITFIELD(reagents.flags, NO_REACT)
+			reagents.flags &= ~(NO_REACT)
 			START_PROCESSING(SSobj, src)
 		else //it will not start if the vape is opened.
 			to_chat(user, "<span class='warning'>You need to close the cap first!</span>")
@@ -875,7 +883,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/vape/dropped(mob/user)
 	. = ..()
 	if(user.get_item_by_slot(ITEM_SLOT_MASK) == src)
-		ENABLE_BITFIELD(reagents.flags, NO_REACT)
+		reagents.flags |= NO_REACT
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/mask/vape/proc/hand_reagents()//had to rename to avoid duplicate error

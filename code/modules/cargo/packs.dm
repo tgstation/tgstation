@@ -407,6 +407,17 @@
 					/obj/item/storage/box/wall_flash)
 	crate_name = "wall-mounted flash crate"
 
+/datum/supply_pack/security/constable
+	name = "Traditional Equipment Crate"
+	desc = "Spare equipment found in a warehouse."
+	cost = 1100
+	contraband = TRUE
+	contains = list(/obj/item/clothing/under/rank/security/constable,
+					/obj/item/clothing/head/helmet/constable,
+					/obj/item/clothing/gloves/color/white,
+					/obj/item/clothing/mask/whistle,
+					/obj/item/conversion_kit)
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Armory //////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1486,18 +1497,16 @@
 
 /datum/supply_pack/service/party
 	name = "Party Equipment"
-	desc = "Celebrate both life and death on the station with Nanotrasen's Party Essentials(tm)! Contains seven colored glowsticks, four beers, two ales, and a bottle of patron, goldschlager, and shaker!"
-	cost = 2000
+	desc = "Celebrate both life and death on the station with Nanotrasen's Party Essentials(tm)! Contains seven colored glowsticks, six beers, six sodas, two ales, and a bottle of patron, goldschlager, and shaker!"
+	cost = 2500
 	contains = list(/obj/item/storage/box/drinkingglasses,
 					/obj/item/reagent_containers/food/drinks/shaker,
 					/obj/item/reagent_containers/food/drinks/bottle/patron,
 					/obj/item/reagent_containers/food/drinks/bottle/goldschlager,
 					/obj/item/reagent_containers/food/drinks/ale,
 					/obj/item/reagent_containers/food/drinks/ale,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/reagent_containers/food/drinks/beer,
+					/obj/item/storage/cans/sixbeer,
+					/obj/item/storage/cans/sixsoda,
 					/obj/item/flashlight/glowstick,
 					/obj/item/flashlight/glowstick/red,
 					/obj/item/flashlight/glowstick/blue,
@@ -1633,6 +1642,22 @@
 	contains = list()
 	crate_name = "crate"
 
+/datum/supply_pack/service/randomized/donkpockets
+	name = "Donk Pocket Variety Crate"
+	desc = "Featuring a line up of Donk Co.'s most popular pastry!"
+	cost = 2000
+	contains = list(/obj/item/storage/box/donkpockets/donkpocketspicy,
+	/obj/item/storage/box/donkpockets/donkpocketteriyaki,
+	/obj/item/storage/box/donkpockets/donkpocketpizza,
+	/obj/item/storage/box/donkpockets/donkpocketberry,
+	/obj/item/storage/box/donkpockets/donkpockethonk)
+	crate_name = "donk pocket crate"
+
+/datum/supply_pack/service/randomized/donkpockets/fill(obj/structure/closet/crate/C)
+	for(var/i in 1 to 3)
+		var/item = pick(contains)
+		new item(C)
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Organic /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1690,11 +1715,9 @@
 
 /datum/supply_pack/organic/exoticseeds
 	name = "Exotic Seeds Crate"
-	desc = "Any entrepreneuring botanist's dream. Contains fourteen different seeds, including three replica-pod seeds and two mystery seeds!"
+	desc = "Any entrepreneuring botanist's dream. Contains fourteen different seeds, including one replica-pod seed and two mystery seeds!"
 	cost = 1500
 	contains = list(/obj/item/seeds/nettle,
-					/obj/item/seeds/replicapod,
-					/obj/item/seeds/replicapod,
 					/obj/item/seeds/replicapod,
 					/obj/item/seeds/plump,
 					/obj/item/seeds/liberty,
@@ -2074,6 +2097,7 @@
 					/obj/item/reagent_containers/food/snacks/grown/cannabis,
 					/obj/item/reagent_containers/food/snacks/grown/cannabis/rainbow,
 					/obj/item/reagent_containers/food/snacks/grown/cannabis/white,
+					/obj/item/storage/box/fireworks/dangerous,
 					/obj/item/storage/pill_bottle/zoom,
 					/obj/item/storage/pill_bottle/happy,
 					/obj/item/storage/pill_bottle/lsd,
@@ -2317,19 +2341,19 @@
 
 /datum/supply_pack/costumes_toys/wardrobes/medical
 	name = "Medical Wardrobe Supply Crate"
-	desc = "This crate contains refills for the MediDrobe, ChemDrobe, GeneDrobe, and ViroDrobe."
+	desc = "This crate contains refills for the MediDrobe, ChemDrobe, and ViroDrobe."
 	cost = 3000
 	contains = list(/obj/item/vending_refill/wardrobe/medi_wardrobe,
 					/obj/item/vending_refill/wardrobe/chem_wardrobe,
-					/obj/item/vending_refill/wardrobe/gene_wardrobe,
 					/obj/item/vending_refill/wardrobe/viro_wardrobe)
 	crate_name = "medical department wardrobe supply crate"
 
 /datum/supply_pack/costumes_toys/wardrobes/science
 	name = "Science Wardrobe Supply Crate"
-	desc = "This crate contains refills for the SciDrobe and RoboDrobe."
+	desc = "This crate contains refills for the SciDrobe, GeneDrobe, and RoboDrobe."
 	cost = 1500
 	contains = list(/obj/item/vending_refill/wardrobe/robo_wardrobe,
+					/obj/item/vending_refill/wardrobe/gene_wardrobe,
 					/obj/item/vending_refill/wardrobe/science_wardrobe)
 	crate_name = "science department wardrobe supply crate"
 
@@ -2475,3 +2499,16 @@
 					/obj/item/toner,
 					/obj/item/toner)
 	crate_name = "toner crate"
+
+/datum/supply_pack/misc/blackmarket_telepad
+	name = "Black Market LTSRBT"
+	desc = "Need a faster and better way of transporting your illegal goods from and to the station? Fear not, the Long-To-Short-Range-Bluespace-Transceiver (LTSRBT for short) is here to help. Contains a LTSRBT circuit, two bluespace crystals, and one ansible."
+	cost = 10000
+	contraband = TRUE
+	contains = list(
+		/obj/item/circuitboard/machine/ltsrbt,
+		/obj/item/stack/ore/bluespace_crystal/artificial,
+		/obj/item/stack/ore/bluespace_crystal/artificial,
+		/obj/item/stock_parts/subspace/ansible
+	)
+	crate_name = "crate"

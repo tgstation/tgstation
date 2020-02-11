@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
 
 	//byond bug ID:2256651
-	if (asset_cache_job && asset_cache_job in completed_asset_jobs)
+	if (asset_cache_job && (asset_cache_job in completed_asset_jobs))
 		to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
 		src << browse("...", "window=asset_cache_browser")
 
@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
  * Handles checking for duplicate messages and people sending messages too fast
  *
  * The first checks are if you're sending too fast, this is defined as sending
- * SPAM_TRIGGER_AUTOMUTE messages in 
+ * SPAM_TRIGGER_AUTOMUTE messages in
  * 5 seconds, this will start supressing your messages,
  * if you send 2* that limit, you also get muted
  *
@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(cache >= SPAM_TRIGGER_AUTOMUTE * 2)
 		total_message_count = 0
 		total_count_reset = 0
-		cmd_admin_mute(src, mute_type, 1)	
+		cmd_admin_mute(src, mute_type, 1)
 		return 1
 
 	//Otherwise just supress the message
@@ -330,7 +330,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/cev = CONFIG_GET(number/client_error_version)
 	var/ceb = CONFIG_GET(number/client_error_build)
 	var/cwv = CONFIG_GET(number/client_warn_version)
-	if (byond_version < cev || byond_build < ceb)		//Out of date client.
+	if (byond_version < cev || (byond_version == cev && byond_build < ceb))		//Out of date client.
 		to_chat(src, "<span class='danger'><b>Your version of BYOND is too old:</b></span>")
 		to_chat(src, CONFIG_GET(string/client_error_message))
 		to_chat(src, "Your version: [byond_version].[byond_build]")
@@ -438,7 +438,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			winset(src, "[child]", "[entries[child]]")
 			if (!ispath(child, /datum/verbs/menu))
 				var/procpath/verbpath = child
-				if (copytext(verbpath.name,1,2) != "@")
+				if (verbpath.name[1] != "@")
 					new child(src)
 
 	for (var/thing in prefs.menuoptions)
@@ -453,9 +453,17 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 //////////////
 
 /client/Del()
+	if(!gc_destroyed)
+		Destroy() //Clean up signals and timers.
+	return ..()
+
+/client/Destroy()
+	GLOB.clients -= src
+	GLOB.directory -= ckey
+	log_access("Logout: [key_name(src)]")
+	GLOB.ahelp_tickets.ClientLogout(src)
 	if(credits)
 		QDEL_LIST(credits)
-	log_access("Logout: [key_name(src)]")
 	if(holder)
 		adminGreet(1)
 		holder.owner = null
@@ -477,18 +485,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			)
 
 			send2tgs("Server", "[cheesy_message] (No admins online)")
-
-	GLOB.ahelp_tickets.ClientLogout(src)
-	GLOB.directory -= ckey
-	GLOB.clients -= src
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
 	Master.UpdateTickRate()
-	return ..()
-
-/client/Destroy()
 	. = ..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
 	return QDEL_HINT_HARDDEL_NOW
 
@@ -881,12 +882,13 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	y = CLAMP(y+change, min,max)
 	change_view("[x]x[y]")
 
-/client/proc/update_movement_keys()
-	if(!prefs?.key_bindings)
+/client/proc/update_movement_keys(datum/preferences/direct_prefs)
+	var/datum/preferences/D = prefs || direct_prefs
+	if(!D?.key_bindings)
 		return
 	movement_keys = list()
-	for(var/key in prefs.key_bindings)
-		for(var/kb_name in prefs.key_bindings[key])
+	for(var/key in D.key_bindings)
+		for(var/kb_name in D.key_bindings[key])
 			switch(kb_name)
 				if("North")
 					movement_keys[key] = NORTH

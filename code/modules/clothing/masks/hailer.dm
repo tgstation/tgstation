@@ -49,10 +49,10 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	icon_state = "sechailer"
 	item_state = "sechailer"
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
-	flags_inv = HIDEFACIALHAIR|HIDEFACE
+	flags_inv = HIDEFACIALHAIR | HIDEFACE
 	w_class = WEIGHT_CLASS_SMALL
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
-	visor_flags_inv = HIDEFACE
+	visor_flags_inv = HIDEFACIALHAIR | HIDEFACE
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	var/aggressiveness = AGGR_BAD_COP
@@ -111,8 +111,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()
-
-/obj/item/clothing/mask/gas/sechailer/emag_act(mob/user as mob)
+/obj/item/clothing/mask/gas/sechailer/emag_act(mob/user)
 	if(safety)
 		safety = FALSE
 		to_chat(user, "<span class='warning'>You silently fry [src]'s vocal circuit with the cryptographic sequencer.</span>")
@@ -176,6 +175,21 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 
 /obj/item/clothing/mask/gas/sechailer/proc/reset_overuse_cooldown()
 	overuse_cooldown = FALSE
+
+/obj/item/clothing/mask/whistle
+	name = "police whistle"
+	desc = "A police whistle for when you need to make sure the criminals hear you."
+	icon_state = "whistle"
+	item_state = "whistle"
+	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_NECK
+	custom_price = 150
+	actions_types = list(/datum/action/item_action/halt)
+
+/obj/item/clothing/mask/whistle/ui_action_click(mob/user, action)
+	if(cooldown < world.time - 100)
+		usr.audible_message("<font color='red' size='5'><b>HALT!</b></font>")
+		playsound(src.loc, "sound/misc/whistle.ogg", 100, FALSE, 4)
+		cooldown = world.time
 
 #undef PHRASE_COOLDOWN
 #undef OVERUSE_COOLDOWN

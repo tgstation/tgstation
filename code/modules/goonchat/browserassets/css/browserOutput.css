@@ -274,12 +274,12 @@ em						{font-style: normal;	font-weight: bold;}
 
 .say					{}
 .deadsay				{color: #e2c1ff}
-.binarysay				{color: #20c20e;	background-color: #000000;	display: block;}
+.binarysay				{color: #1e90ff;}
 .binarysay a			{color: #00ff00;}
 .binarysay a:active, .binarysay a:visited {color: #88ff88;}
 .radio					{color: #1ecc43;}
 .sciradio				{color: #c68cfa;}
-.comradio				{color: #5177ff;}
+.comradio				{color: #fcdf03;}
 .secradio				{color: #dd3535;}
 .medradio				{color: #57b8f0;}
 .engradio				{color: #f37746;}
@@ -366,6 +366,7 @@ em						{font-style: normal;	font-weight: bold;}
 .greentext				{color: #059223;	font-size: 185%;}
 .redtext				{color: #c51e1e;	font-size: 185%;}
 .clown					{color: #ff70c1;	font-size: 160%;	font-family: "Comic Sans MS", cursive, sans-serif;	font-weight: bold;}
+.singing				{font-family: "Trebuchet MS", cursive, sans-serif; font-style: italic;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif;	font-style: italic;}
 .hypnophrase			{color: #202020;	font-weight: bold;	animation: hypnocolor 1500ms infinite; animation-direction: alternate;}
 @keyframes hypnocolor {
@@ -405,3 +406,6 @@ em						{font-style: normal;	font-weight: bold;}
 /* HELPER CLASSES */
 .text-normal {font-weight: normal;	font-style: normal;}
 .hidden {display: none;	visibility: hidden;}
+.ml-1 {margin-left: 1em;}
+.ml-2 {margin-left: 2em;}
+.ml-3 {margin-left: 3em;}

@@ -1,6 +1,6 @@
 //conveyor2 is pretty much like the original, except it supports corners, but not diverters.
 //note that corner pieces transfer stuff clockwise when running forward, and anti-clockwise backwards.
-
+#define MAX_CONVEYOR_ITEMS_MOVE 30
 GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/machinery/conveyor
@@ -19,6 +19,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/id = ""			// the control ID	- must match controller ID
 	var/verted = 1		// Inverts the direction the conveyor belt moves.
 	speed_process = TRUE
+	var/conveying = FALSE
 
 /obj/machinery/conveyor/centcom_auto
 	id = "round_end_belt"
@@ -109,14 +110,14 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		movedir = backwards
 	update()
 
-/obj/machinery/conveyor/update_icon()
-	if(stat & BROKEN)
+/obj/machinery/conveyor/update_icon_state()
+	if(machine_stat & BROKEN)
 		icon_state = "conveyor-broken"
 	else
 		icon_state = "conveyor[operating * verted]"
 
 /obj/machinery/conveyor/proc/update()
-	if(stat & BROKEN || !operable || stat & NOPOWER)
+	if(machine_stat & BROKEN || !operable || machine_stat & NOPOWER)
 		operating = FALSE
 		update_icon()
 		return FALSE
@@ -125,18 +126,32 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	// machine process
 	// move items to the target location
 /obj/machinery/conveyor/process()
-	if(stat & (BROKEN | NOPOWER))
+	if(machine_stat & (BROKEN | NOPOWER))
 		return
-	if(!operating)
+	//If the conveyor is broken or already moving items
+	if(!operating || conveying)
 		return
 	use_power(6)
-	affecting = loc.contents - src		// moved items will be all in loc
+	//get the first 30 items in contents
+	affecting = list()
+	var/i = 0
+	for(var/item in loc.contents)
+		if(item == src)
+			continue
+		i++ // we're sure it's a real target to move at this point
+		if(i >= MAX_CONVEYOR_ITEMS_MOVE)
+			break
+		affecting.Add(item)
+	conveying = TRUE
 	addtimer(CALLBACK(src, .proc/convey, affecting), 1)
 
 /obj/machinery/conveyor/proc/convey(list/affecting)
 	for(var/atom/movable/A in affecting)
-		if((A.loc == loc) && A.has_gravity())
+		if(!QDELETED(A) && (A.loc == loc))
 			A.ConveyorMove(movedir)
+			//Give this a chance to yield if the server is busy
+			stoplag()
+	conveying = FALSE
 
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/I, mob/user, params)
@@ -144,21 +159,21 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		user.visible_message("<span class='notice'>[user] struggles to pry up \the [src] with \the [I].</span>", \
 		"<span class='notice'>You struggle to pry up \the [src] with \the [I].</span>")
 		if(I.use_tool(src, user, 40, volume=40))
-			if(!(stat & BROKEN))
+			if(!(machine_stat & BROKEN))
 				var/obj/item/stack/conveyor/C = new /obj/item/stack/conveyor(loc, 1, TRUE, id)
 				transfer_fingerprints_to(C)
 			to_chat(user, "<span class='notice'>You remove the conveyor belt.</span>")
 			qdel(src)
 
 	else if(I.tool_behaviour == TOOL_WRENCH)
-		if(!(stat & BROKEN))
+		if(!(machine_stat & BROKEN))
 			I.play_tool_sound(src)
 			setDir(turn(dir,-45))
 			update_move_direction()
 			to_chat(user, "<span class='notice'>You rotate [src].</span>")
 
 	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(!(stat & BROKEN))
+		if(!(machine_stat & BROKEN))
 			verted = verted * -1
 			update_move_direction()
 			to_chat(user, "<span class='notice'>You reverse [src]'s direction.</span>")
@@ -248,7 +263,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 // update the icon depending on the position
 
-/obj/machinery/conveyor_switch/update_icon()
+/obj/machinery/conveyor_switch/update_icon_state()
 	if(position<0)
 		if(invert_icon)
 			icon_state = "switch-fwd"
@@ -398,3 +413,5 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/item/paper/guides/conveyor
 	name = "paper- 'Nano-it-up U-build series, #9: Build your very own conveyor belt, in SPACE'"
 	info = "<h1>Congratulations!</h1><p>You are now the proud owner of the best conveyor set available for space mail order! We at Nano-it-up know you love to prepare your own structures without wasting time, so we have devised a special streamlined assembly procedure that puts all other mail-order products to shame!</p><p>Firstly, you need to link the conveyor switch assembly to each of the conveyor belt assemblies. After doing so, you simply need to install the belt assemblies onto the floor, et voila, belt built. Our special Nano-it-up smart switch will detected any linked assemblies as far as the eye can see! This convenience, you can only have it when you Nano-it-up. Stay nano!</p>"
+
+#undef MAX_CONVEYOR_ITEMS_MOVE

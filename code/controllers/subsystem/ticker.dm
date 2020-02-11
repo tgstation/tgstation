@@ -43,8 +43,6 @@ SUBSYSTEM_DEF(ticker)
 	var/queue_delay = 0
 	var/list/queued_players = list()		//used for join queues when the server exceeds the hard population cap
 
-	var/maprotatechecked = 0
-
 	var/news_report
 
 	var/late_join_disabled
@@ -109,7 +107,7 @@ SUBSYSTEM_DEF(ticker)
 				continue
 		music -= S
 
-	if(isemptylist(music))
+	if(!length(music))
 		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 		login_music = pick(music)
 	else
@@ -192,13 +190,13 @@ SUBSYSTEM_DEF(ticker)
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
 			check_queue()
-			check_maprotate()
 
 			if(!roundend_check_paused && mode.check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(TRUE) // Turn it on
 				toggle_dooc(TRUE)
 				declare_completion(force_ending)
+				check_maprotate()
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 
 
@@ -449,17 +447,9 @@ SUBSYSTEM_DEF(ticker)
 			queue_delay = 0
 
 /datum/controller/subsystem/ticker/proc/check_maprotate()
-	if (!CONFIG_GET(flag/maprotation))
+	if(!CONFIG_GET(flag/maprotation))
 		return
-	if (SSshuttle.emergency && SSshuttle.emergency.mode != SHUTTLE_ESCAPE || SSshuttle.canRecall())
-		return
-	if (maprotatechecked)
-		return
-
-	maprotatechecked = 1
-
-	//map rotate chance defaults to 75% of the length of the round (in minutes)
-	if (!prob((world.time/600)*CONFIG_GET(number/maprotatechancedelta)))
+	if(world.time - SSticker.round_start_time < 10 MINUTES) //Not forcing map rotation for very short rounds.
 		return
 	INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
 
@@ -493,12 +483,10 @@ SUBSYSTEM_DEF(ticker)
 
 	queue_delay = SSticker.queue_delay
 	queued_players = SSticker.queued_players
-	maprotatechecked = SSticker.maprotatechecked
 	round_start_time = SSticker.round_start_time
 
 	queue_delay = SSticker.queue_delay
 	queued_players = SSticker.queued_players
-	maprotatechecked = SSticker.maprotatechecked
 
 	switch (current_state)
 		if(GAME_STATE_SETTING_UP)

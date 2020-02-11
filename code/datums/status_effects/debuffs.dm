@@ -160,11 +160,13 @@
 
 /obj/screen/alert/status_effect/strandling/Click(location, control, params)
 	. = ..()
-	to_chat(mob_viewer, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
-	if(do_after(mob_viewer, 35, null, mob_viewer))
-		if(isliving(mob_viewer))
-			var/mob/living/L = mob_viewer
-			to_chat(mob_viewer, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
+	if(usr != owner)
+		return
+	to_chat(owner, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
+	if(do_after(owner, 35, null, owner))
+		if(isliving(owner))
+			var/mob/living/L = owner
+			to_chat(owner, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
 			L.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 
 

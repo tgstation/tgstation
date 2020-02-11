@@ -153,6 +153,11 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 10)
 
 /mob/dead/observer/Destroy()
+	// Update our old body's medhud since we're abandoning it
+	if(mind)
+		var/mob/living/carbon/current = mind.current
+		current.med_hud_set_status()
+
 	GLOB.ghost_images_default -= ghostimage_default
 	QDEL_NULL(ghostimage_default)
 
@@ -163,9 +168,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	QDEL_NULL(spawners_menu)
 	return ..()
-
-/mob/dead/CanPass(atom/movable/mover, turf/target)
-	return 1
 
 /*
  * This proc will update the icon of the ghost itself, with hair overlays, as well as the ghost image.
@@ -197,13 +199,13 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		else
 			ghostimage_default.icon_state = new_form
 
-	if(ghost_accs >= GHOST_ACCS_DIR && icon_state in GLOB.ghost_forms_with_directions_list) //if this icon has dirs AND the client wants to show them, we make sure we update the dir on movement
+	if(ghost_accs >= GHOST_ACCS_DIR && (icon_state in GLOB.ghost_forms_with_directions_list)) //if this icon has dirs AND the client wants to show them, we make sure we update the dir on movement
 		updatedir = 1
 	else
 		updatedir = 0	//stop updating the dir in case we want to show accessories with dirs on a ghost sprite without dirs
 		setDir(2 		)//reset the dir to its default so the sprites all properly align up
 
-	if(ghost_accs == GHOST_ACCS_FULL && icon_state in GLOB.ghost_forms_with_accessories_list) //check if this form supports accessories and if the client wants to show them
+	if(ghost_accs == GHOST_ACCS_FULL && (icon_state in GLOB.ghost_forms_with_accessories_list)) //check if this form supports accessories and if the client wants to show them
 		var/datum/sprite_accessory/S
 		if(facial_hairstyle)
 			S = GLOB.facial_hairstyles_list[facial_hairstyle]
@@ -233,14 +235,16 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/b_val
 	var/g_val
 	var/color_format = length(input_color)
+	if(color_format != length_char(input_color))
+		return 0
 	if(color_format == 3)
-		r_val = hex2num(copytext(input_color, 1, 2))*16
-		g_val = hex2num(copytext(input_color, 2, 3))*16
-		b_val = hex2num(copytext(input_color, 3, 0))*16
+		r_val = hex2num(copytext(input_color, 1, 2)) * 16
+		g_val = hex2num(copytext(input_color, 2, 3)) * 16
+		b_val = hex2num(copytext(input_color, 3, 4)) * 16
 	else if(color_format == 6)
 		r_val = hex2num(copytext(input_color, 1, 3))
 		g_val = hex2num(copytext(input_color, 3, 5))
-		b_val = hex2num(copytext(input_color, 5, 0))
+		b_val = hex2num(copytext(input_color, 5, 7))
 	else
 		return 0 //If the color format is not 3 or 6, you're using an unexpected way to represent a color.
 
@@ -254,7 +258,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	if(b_val > 255)
 		b_val = 255
 
-	return num2hex(r_val, 2) + num2hex(g_val, 2) + num2hex(b_val, 2)
+	return copytext(rgb(r_val, g_val, b_val), 2)
 
 /*
 Transfer_mind is there to check if mob is being deleted/not going to have a body.
@@ -263,7 +267,7 @@ Works together with spawning an observer, noted above.
 
 /mob/proc/ghostize(can_reenter_corpse = TRUE)
 	if(key)
-		if(!cmptext(copytext(key,1,2),"@")) // Skip aghosts.
+		if(key[1] != "@") // Skip aghosts.
 			stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
 			var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
 			SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
@@ -334,7 +338,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!can_reenter_corpse)
 		to_chat(src, "<span class='warning'>You cannot re-enter your body.</span>")
 		return
-	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
+	if(mind.current.key && mind.current.key[1] != "@")	//makes sure we don't accidentally kick any clients
 		to_chat(usr, "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>")
 		return
 	client.change_view(CONFIG_GET(string/default_view))
@@ -356,6 +360,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	can_reenter_corpse = FALSE
+	// Update med huds
+	var/mob/living/carbon/current = mind.current
+	current.med_hud_set_status()
 	// Disassociates observer mind from the body mind
 	mind = null
 
@@ -642,7 +649,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/dat
 	dat += "<h4>Crew Manifest</h4>"
-	dat += GLOB.data_core.get_manifest()
+	dat += GLOB.data_core.get_manifest_html()
 
 	src << browse(dat, "window=manifest;size=387x420;can_close=1")
 
@@ -738,7 +745,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set_ghost_appearance()
 	if(client && client.prefs)
 		deadchat_name = client.prefs.real_name
-		mind.ghostname = client.prefs.real_name
+		if(mind)
+			mind.ghostname = client.prefs.real_name
 		name = client.prefs.real_name
 
 /mob/dead/observer/proc/set_ghost_appearance()
@@ -797,7 +805,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/verb/observe()
 	set name = "Observe"
-	set category = "OOC"
+	set category = "Ghost"
 
 	var/list/creatures = getpois()
 

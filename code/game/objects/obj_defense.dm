@@ -55,6 +55,8 @@
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
 	..() //contents explosion
+	if(QDELETED(src))
+		return
 	if(target == src)
 		take_damage(INFINITY, BRUTE, "bomb", 0)
 		return
@@ -106,11 +108,11 @@
 /obj/attack_animal(mob/living/simple_animal/M)
 	if(!M.melee_damage_upper && !M.obj_damage)
 		M.emote("custom", message = "[M.friendly_verb_continuous] [src].")
-		return 0
+		return FALSE
 	else
-		var/play_soundeffect = 1
+		var/play_soundeffect = TRUE
 		if(M.environment_smash)
-			play_soundeffect = 0
+			play_soundeffect = FALSE
 		if(M.obj_damage)
 			. = attack_generic(M, M.obj_damage, M.melee_damage_type, "melee", play_soundeffect, M.armour_penetration)
 		else
@@ -225,17 +227,18 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		SSfire_burning.processing -= src
 
 ///Called when the obj is hit by a tesla bolt.
-/obj/proc/tesla_act(power, tesla_flags, shocked_targets)
+/obj/proc/zap_act(power, zap_flags, shocked_targets)
 	if(QDELETED(src))
 		return
 	obj_flags |= BEING_SHOCKED
-	var/power_bounced = power / 2
-	tesla_zap(src, 3, power_bounced, tesla_flags, shocked_targets)
+	if(zap_flags & ZAP_IS_TESLA)
+		var/power_bounced = power / 2
+		tesla_zap(src, 3, power_bounced, zap_flags, shocked_targets)
 	addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 
 //The surgeon general warns that being buckled to certain objects receiving powerful shocks is greatly hazardous to your health
-///Only tesla coils and grounding rods currently call this because mobs are already targeted over all other objects, but this might be useful for more things later.
-/obj/proc/tesla_buckle_check(var/strength)
+///Only tesla coils, vehicles, and grounding rods currently call this because mobs are already targeted over all other objects, but this might be useful for more things later.
+/obj/proc/zap_buckle_check(var/strength)
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m

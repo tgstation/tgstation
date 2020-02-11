@@ -80,7 +80,7 @@
 /obj/machinery/power/solar/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(stat & BROKEN)
+			if(machine_stat & BROKEN)
 				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 60, TRUE)
 			else
 				playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
@@ -100,7 +100,7 @@
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
 				S.forceMove(loc)
-				S.give_glass(stat & BROKEN)
+				S.give_glass(machine_stat & BROKEN)
 		else
 			playsound(src, "shatter", 70, TRUE)
 			new /obj/item/shard(src.loc)
@@ -112,7 +112,7 @@
 	var/matrix/turner = matrix()
 	turner.Turn(azimuth_current)
 	panel.transform = turner
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		panel.icon_state = "solar_panel-b"
 	else
 		panel.icon_state = "solar_panel"
@@ -173,7 +173,7 @@
 	sunfrac = .
 
 /obj/machinery/power/solar/process()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return
 	if(control && (!powernet || control.powernet != powernet))
 		unset_control()
@@ -331,11 +331,11 @@
 
 /obj/machinery/power/solar_control/update_overlays()
 	. = ..()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		. += mutable_appearance(icon, "[icon_keyboard]_off")
 		return
 	. += mutable_appearance(icon, icon_keyboard)
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		. += mutable_appearance(icon, "[icon_state]_broken")
 	else
 		. += mutable_appearance(icon, icon_screen)
@@ -397,7 +397,7 @@
 /obj/machinery/power/solar_control/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(I.use_tool(src, user, 20, volume=50))
-			if (src.stat & BROKEN)
+			if (src.machine_stat & BROKEN)
 				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
 				new /obj/item/shard( src.loc )
@@ -428,7 +428,7 @@
 /obj/machinery/power/solar_control/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(stat & BROKEN)
+			if(machine_stat & BROKEN)
 				playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
 			else
 				playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)

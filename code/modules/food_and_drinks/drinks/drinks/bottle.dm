@@ -5,6 +5,11 @@
 //Bottles now knockdown and break when smashed on people's heads. - Giacom
 
 /obj/item/reagent_containers/food/drinks/bottle
+	name = "glass bottle"
+	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
+	icon_state = "glassbottle"
+	fill_icon_thresholds = list(0, 10, 20, 30, 40, 50, 60, 70, 80, 90)
+	custom_price = 65
 	amount_per_transfer_from_this = 10
 	volume = 100
 	force = 15 //Smashing bottles over someone's head hurts.
@@ -16,6 +21,16 @@
 	isGlass = TRUE
 	foodtype = ALCOHOL
 
+/obj/item/reagent_containers/food/drinks/bottle/update_overlays()
+	. = ..()
+	. += "[initial(icon_state)]shine"
+
+/obj/item/reagent_containers/food/drinks/bottle/small
+	name = "small glass bottle"
+	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
+	icon_state = "glassbottlesmall"
+	volume = 50
+	custom_price = 55
 
 /obj/item/reagent_containers/food/drinks/bottle/smash(mob/living/target, mob/thrower, ranged = FALSE)
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
@@ -147,6 +162,16 @@
 	desc = "A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES."
 	icon_state = "whiskeybottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/kong
+	name = "Kong"
+	desc = "Makes You Go Ape!&#174;"
+	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey/kong = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/candycornliquor
+	name = "candy corn liquor"
+	desc = "Like they drank in 2D speakeasies."
+	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey/candycorn = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/vodka
 	name = "Tunguska triple distilled"
@@ -329,7 +354,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/orangejuice
 	name = "orange juice"
 	desc = "Full of vitamins and deliciousness!"
-	custom_price = 10
+	custom_price = 100
 	icon_state = "orangejuice"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -341,7 +366,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/cream
 	name = "milk cream"
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
-	custom_price = 10
+	custom_price = 100
 	icon_state = "cream"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -353,7 +378,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "tomato juice"
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
-	custom_price = 10
+	custom_price = 100
 	icon_state = "tomatojuice"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -365,7 +390,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/limejuice
 	name = "lime juice"
 	desc = "Sweet-sour goodness."
-	custom_price = 10
+	custom_price = 100
 	icon_state = "limejuice"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -374,10 +399,22 @@
 	list_reagents = list(/datum/reagent/consumable/limejuice = 100)
 	foodtype = FRUIT
 
+/obj/item/reagent_containers/food/drinks/bottle/pineapplejuice
+	name = "pineapple juice"
+	desc = "Extremely tart, yellow juice."
+	custom_price = 100
+	icon_state = "pineapplejuice"
+	item_state = "carton"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	isGlass = FALSE
+	list_reagents = list(/datum/reagent/consumable/pineapplejuice = 100)
+	foodtype = FRUIT | PINEAPPLE
+
 /obj/item/reagent_containers/food/drinks/bottle/menthol
 	name = "menthol"
 	desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
-	custom_price = 10
+	custom_price = 100
 	icon_state = "mentholbox"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -388,7 +425,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/grenadine
 	name = "Jester Grenadine"
 	desc = "Contains 0% real cherries!"
-	custom_price = 10
+	custom_price = 100
 	icon_state = "grenadine"
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/grenadine = 100)
@@ -397,7 +434,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/applejack
 	name = "Buckin' Bronco's Applejack"
 	desc = "Kicks like a horse, tastes like an apple!"
-	custom_price = 10
+	custom_price = 100
 	icon_state = "applejack_bottle"
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/ethanol/applejack = 100)
@@ -406,7 +443,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/champagne
 	name = "Eau d' Dandy Brut Champagne"
 	desc = "Finely sourced from only the most pretentious French vineyards."
-	custom_premium_price = 200
+	custom_premium_price = 250
 	icon_state = "champagne_bottle"
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/ethanol/champagne = 100)
@@ -420,7 +457,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/trappist
 	name = "Mont de Requin Trappistes Bleu"
 	desc = "Brewed in space-Belgium. Fancy!"
-	custom_premium_price = 50
+	custom_premium_price = 170
 	icon_state = "trappistbottle"
 	volume = 50
 	list_reagents = list(/datum/reagent/consumable/ethanol/trappist = 50)
@@ -436,22 +473,6 @@
 	desc = "It is said that the ancient Applalacians used these stoneware jugs to capture lightning in a bottle."
 	icon_state = "moonshinebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/moonshine = 100)
-
-/obj/item/reagent_containers/food/drinks/bottle/blank //Don't let players print these from a lathe, bottles should be obtained in mass from the bar only.
-	name = "glass bottle"
-	desc = "This blank bottle is unyieldingly anonymous, offering no clues to it's contents."
-	icon_state = "glassbottle"
-	fill_icon_thresholds = list(0, 10, 20, 30, 40, 50, 60, 70, 80, 90)
-
-/obj/item/reagent_containers/food/drinks/bottle/blank/update_icon()
-	..()
-	add_overlay("[initial(icon_state)]shine")
-
-/obj/item/reagent_containers/food/drinks/bottle/blank/small
-	name = "small glass bottle"
-	desc = "This small bottle is unyieldingly anonymous, offering no clues to it's contents."
-	icon_state = "glassbottlesmall"
-	volume = 50
 
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/reagent_containers/food/drinks/bottle/molotov

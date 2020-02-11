@@ -32,6 +32,19 @@
 			loot_spawned++
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/spawner/lootdrop/donkpockets
+	name = "donk pocket box spawner"
+	lootdoubles = FALSE
+
+	loot = list(
+			/obj/item/storage/box/donkpockets/donkpocketspicy = 1,
+			/obj/item/storage/box/donkpockets/donkpocketteriyaki = 1,
+			/obj/item/storage/box/donkpockets/donkpocketpizza = 1,
+			/obj/item/storage/box/donkpockets/donkpocketberry = 1,
+			/obj/item/storage/box/donkpockets/donkpockethonk = 1,
+		)
+
+
 /obj/effect/spawner/lootdrop/armory_contraband
 	name = "armory contraband gun spawner"
 	lootdoubles = FALSE
@@ -326,14 +339,12 @@
 /obj/effect/spawner/lootdrop/techstorage/medical
 	name = "medical circuit board spawner"
 	loot = list(
-				/obj/item/circuitboard/computer/cloning,
-				/obj/item/circuitboard/machine/clonepod,
 				/obj/item/circuitboard/machine/chem_dispenser,
 				/obj/item/circuitboard/computer/scan_consolenew,
 				/obj/item/circuitboard/computer/med_data,
 				/obj/item/circuitboard/machine/smoke_machine,
 				/obj/item/circuitboard/machine/chem_master,
-				/obj/item/circuitboard/machine/clonescanner,
+				/obj/item/circuitboard/machine/dnascanner,
 				/obj/item/circuitboard/computer/pandemic
 				)
 

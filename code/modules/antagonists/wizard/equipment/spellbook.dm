@@ -217,11 +217,11 @@
 
 /datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/spellbook/book) //return TRUE on success
 	. = ..()
-	user.flags_1 |= TESLA_IGNORE_1
+	ADD_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "lightning_bolt_spell")
 
 /datum/spellbook_entry/lightningbolt/Refund(mob/living/carbon/human/user, obj/item/spellbook/book)
 	. = ..()
-	user.flags_1 &= ~TESLA_IGNORE_1
+	REMOVE_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "lightning_bolt_spell")
 
 /datum/spellbook_entry/infinite_guns
 	name = "Lesser Summon Guns"
@@ -660,7 +660,7 @@
 
 /obj/item/spellbook/proc/wrap(content)
 	var/dat = ""
-	dat +="<html><head><title>Spellbook</title></head>"
+	dat +="<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Spellbook</title></head>"
 	dat += {"
 	<head>
 		<style type="text/css">

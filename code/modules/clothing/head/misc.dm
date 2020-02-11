@@ -1,5 +1,4 @@
 
-
 /obj/item/clothing/head/centhat
 	name = "\improper CentCom hat"
 	icon_state = "centcom"
@@ -134,7 +133,7 @@
 	if(!ishuman(user))
 		return
 	if(slot == ITEM_SLOT_HEAD)
-		user.grant_language(/datum/language/piratespeak/)
+		user.grant_language(/datum/language/piratespeak/, TRUE, TRUE, LANGUAGE_HAT)
 		to_chat(user, "<span class='boldnotice'>You suddenly know how to speak like a pirate!</span>")
 
 /obj/item/clothing/head/pirate/dropped(mob/user)
@@ -143,7 +142,7 @@
 		return
 	var/mob/living/carbon/human/H = user
 	if(H.get_item_by_slot(ITEM_SLOT_HEAD) == src)
-		user.remove_language(/datum/language/piratespeak/)
+		user.remove_language(/datum/language/piratespeak/, TRUE, TRUE, LANGUAGE_HAT)
 		to_chat(user, "<span class='boldnotice'>You can no longer speak like a pirate.</span>")
 
 /obj/item/clothing/head/pirate/captain
@@ -291,6 +290,9 @@
 	icon_state = "jester_hat"
 	dynamic_hair_suffix = ""
 
+/obj/item/clothing/head/jester/alt
+	icon_state = "jester2"
+
 /obj/item/clothing/head/rice_hat
 	name = "rice hat"
 	desc = "Welcome to the rice fields, motherfucker."
@@ -349,12 +351,6 @@
 	desc = "Walk like an Egyptian."
 	icon_state = "pharoah_hat"
 	item_state = "pharoah_hat"
-
-/obj/item/clothing/head/jester/alt
-	name = "jester hat"
-	desc = "A hat with bells, to add some merriness to the suit."
-	icon_state = "jester_hat"
-	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/nemes
 	name = "headdress of Nemes"
@@ -445,3 +441,52 @@
 	desc = "A horrifying mix of beanie and softcap in CentCom green. You'd have to be pretty desperate for power over your peers to agree to wear this."
 	icon_state = "intern_hat"
 	item_state = "intern_hat"
+
+/obj/item/clothing/head/coordinator
+	name = "coordinator cap"
+	desc = "A cap for a party ooordinator, stylish!."
+	icon_state = "capcap"
+	item_state = "that"
+	armor = list("melee" = 25, "bullet" = 15, "laser" = 25, "energy" = 35, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+
+/obj/item/clothing/head/goatpelt
+	name = "goat pelt hat"
+	desc = "Fuzzy and Warm!"
+	icon_state = "goatpelt"
+	item_state = "goatpelt"
+
+/obj/item/clothing/head/goatpelt/king
+	name = "king goat pelt hat"
+	desc = "Fuzzy, Warm and Robust!"
+	icon_state = "goatpelt"
+	item_state = "goatpelt"
+	color = "#ffd700"
+	body_parts_covered = HEAD
+	armor = list("melee" = 60, "bullet" = 55, "laser" = 55, "energy" = 45, "bomb" = 100, "bio" = 20, "rad" = 20, "fire" = 100, "acid" = 100)
+	dog_fashion = null
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/head/goatpelt/king/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if (slot == ITEM_SLOT_HEAD)
+		user.faction |= "goat"
+
+/obj/item/clothing/head/goatpelt/king/dropped(mob/living/carbon/human/user)
+	..()
+	if (user.head == src)
+		user.faction -= "goat"
+
+/obj/item/clothing/head/goatpope
+	name = "goat pope hat"
+	desc = "And on the seventh day King Goat said there will be cabbage!"
+	mob_overlay_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	icon_state = "goatpope"
+	item_state = "goatpope"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	resistance_flags = FLAMMABLE
+
+/obj/item/clothing/head/goatpope/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if (slot == ITEM_SLOT_HEAD)
+		user.faction |= "goat"

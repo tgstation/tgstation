@@ -89,6 +89,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sortList(list(
 	"Gondola",
 	"Goon",
 	"Hades",
+	"HAL 9000",
 	"Heartline",
 	"Helios",
 	"House",
@@ -180,7 +181,7 @@ GLOBAL_LIST_INIT(scarySounds, list('sound/weapons/thudswoosh.ogg','sound/weapons
 21 Hydroponics
 22 Janitor
 23 Genetics
-24 Testing Range
+24 Experimentor Lab
 25 Toxins
 26 Dormitories
 27 Virology
@@ -201,7 +202,7 @@ GLOBAL_LIST_INIT(TAGGERLOCATIONS, list("Disposals",
 	"CMO Office", "Chemistry", "Research", "RD Office",
 	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
 	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics",
-	"Testing Range", "Toxins", "Dormitories", "Virology",
+	"Experimentor Lab", "Toxins", "Dormitories", "Virology",
 	"Xenobiology", "Law Office","Detective's Office"))
 
 GLOBAL_LIST_INIT(station_prefixes, world.file2list("strings/station_prefixes.txt") + "")

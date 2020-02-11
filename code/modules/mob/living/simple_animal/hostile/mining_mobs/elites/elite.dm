@@ -24,8 +24,7 @@
 	var/list/attack_action_types = list()
 	var/can_talk = FALSE
 	var/obj/loot_drop = null
-	
-		
+
 //Gives player-controlled variants the ability to swap attacks
 /mob/living/simple_animal/hostile/asteroid/elite/Initialize(mapload)
 	. = ..()
@@ -54,14 +53,14 @@
 	if(ismineralturf(target))
 		var/turf/closed/mineral/M = target
 		M.gets_drilled()
-		
+
 //Elites can't talk (normally)!
 /mob/living/simple_animal/hostile/asteroid/elite/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(can_talk)
 		. = ..()
 		return TRUE
 	return FALSE
-		
+
 /*Basic setup for elite attacks, based on Whoneedspace's megafauna attack setup.
 While using this makes the system rely on OnFire, it still gives options for timers not tied to OnFire, and it makes using attacks consistent accross the board for player-controlled elites.*/
 
@@ -83,11 +82,11 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /datum/action/innate/elite_attack/Activate()
 	M.chosen_attack = chosen_attack_num
 	to_chat(M, chosen_message)
-	
+
 /mob/living/simple_animal/hostile/asteroid/elite/updatehealth()
 	. = ..()
 	update_health_hud()
-		
+
 /mob/living/simple_animal/hostile/asteroid/elite/update_health_hud()
 	if(hud_used)
 		var/severity = 0
@@ -122,6 +121,13 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	desc = "An odd, pulsing tumor sticking out of the ground.  You feel compelled to reach out and touch it..."
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	resistance_flags = INDESTRUCTIBLE
+	icon = 'icons/obj/lavaland/tumor.dmi'
+	icon_state = "tumor"
+	pixel_x = -16
+	light_color = LIGHT_COLOR_RED
+	light_range = 3
+	anchored = TRUE
+	density = FALSE
 	var/activity = TUMOR_INACTIVE
 	var/boosted = FALSE
 	var/times_won = 0
@@ -131,14 +137,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 								/mob/living/simple_animal/hostile/asteroid/elite/pandora,
 								/mob/living/simple_animal/hostile/asteroid/elite/legionnaire,
 								/mob/living/simple_animal/hostile/asteroid/elite/herald)
-	icon = 'icons/obj/lavaland/tumor.dmi'
-	icon_state = "tumor"
-	pixel_x = -16
-	light_color = LIGHT_COLOR_RED
-	light_range = 3
-	anchored = TRUE
-	density = FALSE
-	
+
 /obj/structure/elite_tumor/attack_hand(mob/user)
 	. = ..()
 	if(ishuman(user))
@@ -173,8 +172,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 					activity = TUMOR_INACTIVE
 					activator = null
 
-				
-obj/structure/elite_tumor/proc/spawn_elite(var/mob/dead/observer/elitemind)
+/obj/structure/elite_tumor/proc/spawn_elite(mob/dead/observer/elitemind)
 	var/selectedspawn = pick(potentialspawns)
 	mychild = new selectedspawn(loc)
 	visible_message("<span class='boldwarning'>[mychild] emerges from [src]!</span>")
@@ -182,10 +180,11 @@ obj/structure/elite_tumor/proc/spawn_elite(var/mob/dead/observer/elitemind)
 	if(boosted)
 		mychild.key = elitemind.key
 		mychild.sentience_act()
+		notify_ghosts("\A [mychild] has been awakened in \the [get_area(src)]!", source = mychild, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Lavaland Elite awakened")
 	icon_state = "tumor_popped"
 	INVOKE_ASYNC(src, .proc/arena_checks)
 
-obj/structure/elite_tumor/proc/return_elite()
+/obj/structure/elite_tumor/proc/return_elite()
 	mychild.forceMove(loc)
 	visible_message("<span class='boldwarning'>[mychild] emerges from [src]!</span>")
 	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
@@ -193,18 +192,19 @@ obj/structure/elite_tumor/proc/return_elite()
 	if(boosted)
 		mychild.maxHealth = mychild.maxHealth * 2
 		mychild.health = mychild.maxHealth
-		
+		notify_ghosts("\A [mychild] has been challenged in \the [get_area(src)]!", source = mychild, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Lavaland Elite challenged")
+
 /obj/structure/elite_tumor/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "Menacing Signal")
 	START_PROCESSING(SSobj, src)
-	
+
 /obj/structure/elite_tumor/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	mychild = null
 	activator = null
 	return ..()
-	
+
 /obj/structure/elite_tumor/process()
 	if(isturf(loc))
 		for(var/mob/living/simple_animal/hostile/asteroid/elite/elitehere in loc)
@@ -212,7 +212,7 @@ obj/structure/elite_tumor/proc/return_elite()
 				mychild.adjustHealth(-mychild.maxHealth*0.05)
 				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(mychild))
 				H.color = "#FF0000"
-		
+
 /obj/structure/elite_tumor/attackby(obj/item/I, mob/user, params)
 	. = ..()
 	if(istype(I, /obj/item/organ/regenerative_core) && activity == TUMOR_INACTIVE && !boosted)
@@ -226,21 +226,22 @@ obj/structure/elite_tumor/proc/return_elite()
 		desc = "[desc]  This one seems to glow with a strong intensity."
 		qdel(core)
 		return TRUE
-			
+
 /obj/structure/elite_tumor/proc/arena_checks()
 	if(activity != TUMOR_ACTIVE || QDELETED(src))
 		return
 	INVOKE_ASYNC(src, .proc/fighters_check)  //Checks to see if our fighters died.
 	INVOKE_ASYNC(src, .proc/arena_trap)  //Gets another arena trap queued up for when this one runs out.
 	INVOKE_ASYNC(src, .proc/border_check)  //Checks to see if our fighters got out of the arena somehow.
-	addtimer(CALLBACK(src, .proc/arena_checks), 50)
-			
+	if(!QDELETED(src))
+		addtimer(CALLBACK(src, .proc/arena_checks), 50)
+
 /obj/structure/elite_tumor/proc/fighters_check()
 	if(activator != null && activator.stat == DEAD || activity == TUMOR_ACTIVE && QDELETED(activator))
 		onEliteWon()
 	if(mychild != null && mychild.stat == DEAD || activity == TUMOR_ACTIVE && QDELETED(mychild))
 		onEliteLoss()
-			
+
 /obj/structure/elite_tumor/proc/arena_trap()
 	var/turf/T = get_turf(src)
 	if(loc == null)
@@ -251,7 +252,7 @@ obj/structure/elite_tumor/proc/return_elite()
 			newwall = new /obj/effect/temp_visual/elite_tumor_wall(t, src)
 			newwall.activator = src.activator
 			newwall.ourelite = src.mychild
-		
+
 /obj/structure/elite_tumor/proc/border_check()
 	if(activator != null && get_dist(src, activator) >= 12)
 		activator.forceMove(loc)
@@ -261,8 +262,8 @@ obj/structure/elite_tumor/proc/return_elite()
 		mychild.forceMove(loc)
 		visible_message("<span class='boldwarning'>[mychild] suddenly reappears above [src]!</span>")
 		playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
-	
-obj/structure/elite_tumor/proc/onEliteLoss()
+
+/obj/structure/elite_tumor/proc/onEliteLoss()
 	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, 0, 50, TRUE, TRUE)
 	visible_message("<span class='boldwarning'>[src] begins to convulse violently before beginning to dissipate.</span>")
 	visible_message("<span class='boldwarning'>As [src] closes, something is forced up from down below.</span>")
@@ -280,8 +281,8 @@ obj/structure/elite_tumor/proc/onEliteLoss()
 	mychild = null
 	activator = null
 	qdel(src)
-	
-obj/structure/elite_tumor/proc/onEliteWon()
+
+/obj/structure/elite_tumor/proc/onEliteWon()
 	activity = TUMOR_PASSIVE
 	activator = null
 	mychild.revive(full_heal = TRUE, admin_revive = TRUE)
@@ -294,7 +295,7 @@ obj/structure/elite_tumor/proc/onEliteWon()
 		to_chat(mychild, "<span class='boldwarning'>As the life in the activator's eyes fade, the forcefield around you dies out and you feel your power subside.\nDespite this inferno being your home, you feel as if you aren't welcome here anymore.\nWithout any guidance, your purpose is now for you to decide.</span>")
 		to_chat(mychild, "<b>Your max health has been halved, but can now heal by standing on your tumor.  Note, it's your only way to heal.\nBear in mind, if anyone interacts with your tumor, you'll be resummoned here to carry out another fight.  In such a case, you will regain your full max health.\nAlso, be weary of your fellow inhabitants, they likely won't be happy to see you!</b>")
 		to_chat(mychild, "<span class='big bold'>Note that you are a lavaland monster, and thus not allied to the station.  You should not cooperate or act friendly with any station crew unless under extreme circumstances!</span>")
-			
+
 /obj/item/tumor_shard
 	name = "tumor shard"
 	desc = "A strange, sharp, crystal shard from an odd tumor on Lavaland.  Stabbing the corpse of a lavaland elite with this will revive them, assuming their soul still lingers.  Revived lavaland elites only have half their max health, but are completely loyal to their reviver."
@@ -307,7 +308,7 @@ obj/structure/elite_tumor/proc/onEliteWon()
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	
+
 /obj/item/tumor_shard/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite) && proximity_flag)
@@ -328,7 +329,7 @@ obj/structure/elite_tumor/proc/onEliteWon()
 		qdel(src)
 	else
 		to_chat(user, "<span class='info'>[src] only works on the corpse of a sentient lavaland elite.</span>")
-		
+
 /obj/effect/temp_visual/elite_tumor_wall
 	name = "magic wall"
 	icon = 'icons/turf/walls/hierophant_wall_temp.dmi'
@@ -336,12 +337,12 @@ obj/structure/elite_tumor/proc/onEliteWon()
 	duration = 50
 	smooth = SMOOTH_TRUE
 	layer = BELOW_MOB_LAYER
-	var/mob/living/carbon/human/activator = null
-	var/mob/living/simple_animal/hostile/asteroid/elite/ourelite = null
 	color = rgb(255,0,0)
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	light_color = LIGHT_COLOR_RED
-	
+	var/mob/living/carbon/human/activator = null
+	var/mob/living/simple_animal/hostile/asteroid/elite/ourelite = null
+
 /obj/effect/temp_visual/elite_tumor_wall/Initialize(mapload, new_caster)
 	. = ..()
 	queue_smooth_neighbors(src)
@@ -353,8 +354,7 @@ obj/structure/elite_tumor/proc/onEliteWon()
 	ourelite = null
 	return ..()
 
-/obj/effect/temp_visual/elite_tumor_wall/CanPass(atom/movable/mover, turf/target)
+/obj/effect/temp_visual/elite_tumor_wall/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(mover == ourelite || mover == activator)
 		return FALSE
-	else
-		return TRUE

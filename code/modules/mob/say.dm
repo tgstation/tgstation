@@ -32,7 +32,7 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	usr.emote("me",1,message,TRUE)
 
@@ -84,9 +84,9 @@
 
 ///Check if this message is an emote
 /mob/proc/check_emote(message, forced)
-	if(copytext(message, 1, 2) == "*")
-		emote(copytext(message, 2), intentional = !forced)
-		return 1
+	if(message[1] == "*")
+		emote(copytext(message, length(message[1]) + 1), intentional = !forced)
+		return TRUE
 
 ///Check if the mob has a hivemind channel
 /mob/proc/hivecheck()
@@ -101,15 +101,18 @@
   *
   * Result can be
   * * MODE_WHISPER (Quiet speech)
+  * * MODE_SING (Singing)
   * * MODE_HEADSET (Common radio channel)
   * * A department radio (lots of values here)
   */
 /mob/proc/get_message_mode(message)
-	var/key = copytext(message, 1, 2)
+	var/key = message[1]
 	if(key == "#")
 		return MODE_WHISPER
+	else if(key == "%")
+		return MODE_SING
 	else if(key == ";")
 		return MODE_HEADSET
-	else if(length(message) > 2 && (key in GLOB.department_radio_prefixes))
-		var/key_symbol = lowertext(copytext(message, 2, 3))
+	else if((length(message) > (length(key) + 1)) && (key in GLOB.department_radio_prefixes))
+		var/key_symbol = lowertext(message[length(key) + 1])
 		return GLOB.department_radio_keys[key_symbol]

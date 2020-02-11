@@ -341,7 +341,7 @@ GLOBAL_LIST_EMPTY(species_list)
 				drifting = 0
 				user_loc = user.loc
 
-			if(L && !CHECK_MULTIPLE_BITFIELDS(L.mobility_flags, required_mobility_flags))
+			if(L && !((L.mobility_flags & required_mobility_flags) == required_mobility_flags))
 				. = 0
 				break
 
@@ -431,7 +431,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			continue
 		if(M.stat != DEAD && !override)
 			continue
-		if(speaker_key && speaker_key in ignoring)
+		if(speaker_key && (speaker_key in ignoring))
 			continue
 
 		switch(message_type)
@@ -440,6 +440,9 @@ GLOBAL_LIST_EMPTY(species_list)
 					continue
 			if(DEADCHAT_ARRIVALRATTLE)
 				if(toggles & DISABLE_ARRIVALRATTLE)
+					continue
+			if(DEADCHAT_LAWCHANGE)
+				if(!(chat_toggles & CHAT_GHOSTLAWS))
 					continue
 
 		if(isobserver(M))

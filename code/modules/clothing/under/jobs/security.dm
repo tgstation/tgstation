@@ -53,6 +53,14 @@
 	item_state = "officerblueclothes"
 	alt_covers_chest = TRUE
 
+/obj/item/clothing/under/rank/security/constable
+	name = "constable outfit"
+	desc = "A british looking outfit."
+	icon_state = "constable"
+	item_state = "constable"
+	can_adjust = FALSE
+	custom_price = 200
+
 /obj/item/clothing/under/rank/security/warden
 	name = "security suit"
 	desc = "A formal security suit for officers complete with Nanotrasen belt buckle."

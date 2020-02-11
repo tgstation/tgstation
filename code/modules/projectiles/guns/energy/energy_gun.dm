@@ -108,7 +108,7 @@
 		fail_tick--
 	..()
 
-/obj/item/gun/energy/e_gun/nuclear/shoot_live_shot()
+/obj/item/gun/energy/e_gun/nuclear/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
 	failcheck()
 	update_icon()
 	..()
@@ -133,15 +133,15 @@
 		return
 	fail_chance = min(fail_chance + round(15/severity), 100)
 
-/obj/item/gun/energy/e_gun/nuclear/update_icon()
-	..()
+/obj/item/gun/energy/e_gun/nuclear/update_overlays()
+	. = ..()
 	if(reactor_overloaded)
-		add_overlay("[icon_state]_fail_3")
+		. += "[icon_state]_fail_3"
 	else
 		switch(fail_tick)
 			if(0)
-				add_overlay("[icon_state]_fail_0")
+				. += "[icon_state]_fail_0"
 			if(1 to 150)
-				add_overlay("[icon_state]_fail_1")
+				. += "[icon_state]_fail_1"
 			if(151 to INFINITY)
-				add_overlay("[icon_state]_fail_2")
+				. += "[icon_state]_fail_2"

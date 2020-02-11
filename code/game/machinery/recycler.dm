@@ -42,7 +42,7 @@
 /obj/machinery/recycler/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Reclaiming <b>[amount_produced]%</b> of materials salvaged.</span>"
-	. += {"The power light is [(stat & NOPOWER) ? "off" : "on"].
+	. += {"The power light is [(machine_stat & NOPOWER) ? "off" : "on"].
 	The safety-mode light is [safety_mode ? "on" : "off"].
 	The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"]."}
 
@@ -73,12 +73,12 @@
 
 /obj/machinery/recycler/update_icon_state()
 	..()
-	var/is_powered = !(stat & (BROKEN|NOPOWER))
+	var/is_powered = !(machine_stat & (BROKEN|NOPOWER))
 	if(safety_mode)
 		is_powered = FALSE
 	icon_state = icon_name + "[is_powered]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
 
-/obj/machinery/recycler/CanPass(atom/movable/AM)
+/obj/machinery/recycler/CanAllowThrough(atom/movable/AM)
 	. = ..()
 	if(!anchored)
 		return
@@ -91,7 +91,7 @@
 	. = ..()
 
 /obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
-	if(stat & (BROKEN|NOPOWER))
+	if(machine_stat & (BROKEN|NOPOWER))
 		return
 	if(safety_mode)
 		return
@@ -108,7 +108,7 @@
 		var/atom/movable/AM = i
 		var/obj/item/bodypart/head/as_head = AM
 		var/obj/item/mmi/as_mmi = AM
-		if(istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /mob/living/brain))
+		if(istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || isbrain(AM) || istype(AM, /obj/item/dullahan_relay))
 			emergency_stop(AM)
 		else if(isliving(AM))
 			if(obj_flags & EMAGGED)

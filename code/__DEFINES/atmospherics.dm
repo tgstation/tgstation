@@ -39,10 +39,12 @@
 #define MOLES_N2STANDARD		(MOLES_CELLSTANDARD*N2STANDARD)
 /// liters in a cell
 #define CELL_VOLUME				2500
+
 /// liters in a normal breath
 #define BREATH_VOLUME			0.5
 /// Amount of air to take a from a tile
 #define BREATH_PERCENTAGE		(BREATH_VOLUME/CELL_VOLUME)
+
 
 //EXCITED GROUPS
 /// number of FULL air controller ticks before an excited group breaks down (averages gas contents across turfs)
@@ -129,12 +131,14 @@
 #define BODYTEMP_COOLING_MAX				-100
 /// The maximum number of degrees that your body can heat up in 1 tick, due to the environment, when in a hot area.
 #define BODYTEMP_HEATING_MAX				30
-
-/// The limit the human body can take before it starts taking damage from heat.
-#define BODYTEMP_HEAT_DAMAGE_LIMIT			(BODYTEMP_NORMAL + 50)
-/// The limit the human body can take before it starts taking damage from coldness.
-#define BODYTEMP_COLD_DAMAGE_LIMIT			(BODYTEMP_NORMAL - 50)
-
+/// The body temperature limit the human body can take before it starts taking damage from heat.
+/// This also affects how fast the body normalises it's temperature when hot.
+/// 340k is about 66c, and rather high for a human.
+#define BODYTEMP_HEAT_DAMAGE_LIMIT			(BODYTEMP_NORMAL + 30)
+/// The body temperature limit the human body can take before it starts taking damage from cold.
+/// This also affects how fast the body normalises it's temperature when cold.
+/// 270k is about -3c, that is below freezing and would hurt over time.
+#define BODYTEMP_COLD_DAMAGE_LIMIT			(BODYTEMP_NORMAL - 40)
 
 /// what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
 #define SPACE_HELM_MIN_TEMP_PROTECT			2.0

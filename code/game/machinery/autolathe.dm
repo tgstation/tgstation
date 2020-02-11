@@ -62,7 +62,8 @@
 	/datum/material/runite,
 	/datum/material/plastic,
 	/datum/material/adamantine,
-	/datum/material/mythril
+	/datum/material/mythril,
+	/datum/material/wood
 	), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
@@ -79,7 +80,7 @@
 	if(!is_operational())
 		return
 
-	if(shocked && !(stat & NOPOWER))
+	if(shocked && !(machine_stat & NOPOWER))
 		shock(user,50)
 
 	var/dat
@@ -119,7 +120,7 @@
 	if(user.a_intent == INTENT_HARM) //so we can hit the machine
 		return ..()
 
-	if(stat)
+	if(machine_stat)
 		return TRUE
 
 	if(istype(O, /obj/item/disk/design_disk))
@@ -141,12 +142,12 @@
 /obj/machinery/autolathe/proc/AfterMaterialInsert(item_inserted, id_inserted, amount_inserted)
 	if(istype(item_inserted, /obj/item/stack/ore/bluespace_crystal))
 		use_power(MINERAL_MATERIAL_AMOUNT / 10)
-	else if(custom_materials && custom_materials.len && custom_materials[getmaterialref(/datum/material/glass)])
+	else if(custom_materials && custom_materials.len && custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)])
 		flick("autolathe_r",src)//plays glass insertion animation by default otherwise
 	else
 		flick("autolathe_o",src)//plays metal insertion animation
-			
-				
+
+
 		use_power(min(1000, amount_inserted / 100))
 	updateUsrDialog()
 
@@ -416,7 +417,7 @@
 				disabled = FALSE
 
 /obj/machinery/autolathe/proc/shock(mob/user, prb)
-	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
+	if(machine_stat & (BROKEN|NOPOWER))		// unpowered, no shock
 		return FALSE
 	if(!prob(prb))
 		return FALSE

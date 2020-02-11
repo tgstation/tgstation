@@ -53,11 +53,11 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		ready = TRUE
 	return ready
 
-/obj/machinery/gateway/update_icon()
+/obj/machinery/gateway/update_icon_state()
 	if(active)
 		icon_state = "on"
-		return
-	icon_state = "off"
+	else
+		icon_state = "off"
 
 /obj/machinery/gateway/attack_hand(mob/user)
 	. = ..()
@@ -73,7 +73,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 /obj/machinery/gateway/proc/toggleon(mob/user)
 	return FALSE
 
-/obj/machinery/gateway/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG)
+/obj/machinery/gateway/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return
 
 /obj/machinery/gateway/centerstation/Initialize()
@@ -100,14 +100,14 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	var/obj/machinery/gateway/centeraway/awaygate = null
 	can_link = TRUE
 
-/obj/machinery/gateway/centerstation/update_icon()
+/obj/machinery/gateway/centerstation/update_icon_state()
 	if(active)
 		icon_state = "oncenter"
-		return
-	icon_state = "offcenter"
+	else
+		icon_state = "offcenter"
 
 /obj/machinery/gateway/centerstation/process()
-	if((stat & (NOPOWER)) && use_power)
+	if((machine_stat & (NOPOWER)) && use_power)
 		if(active)
 			toggleoff()
 		return
@@ -183,11 +183,11 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	stationgate = locate(/obj/machinery/gateway/centerstation)
 
 
-/obj/machinery/gateway/centeraway/update_icon()
+/obj/machinery/gateway/centeraway/update_icon_state()
 	if(active)
 		icon_state = "oncenter"
-		return
-	icon_state = "offcenter"
+	else
+		icon_state = "offcenter"
 
 /obj/machinery/gateway/centeraway/toggleon(mob/user)
 	if(!detect())

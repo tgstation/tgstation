@@ -1,7 +1,7 @@
 /obj/item/flashlight
 	name = "flashlight"
 	desc = "A hand-held emergency light."
-	custom_price = 10
+	custom_price = 100
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	item_state = "flashlight"
@@ -50,7 +50,7 @@
 
 /obj/item/flashlight/attack(mob/living/carbon/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if(istype(M) && on && user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH))
+	if(istype(M) && on && (user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH)))
 
 		if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
@@ -388,7 +388,7 @@
 	return TRUE
 
 /obj/item/flashlight/emp/attack(mob/living/M, mob/living/user)
-	if(on && user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH)) // call original attack when examining organs
+	if(on && (user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH))) // call original attack when examining organs
 		..()
 	return
 
@@ -423,7 +423,7 @@
 /obj/item/flashlight/glowstick
 	name = "glowstick"
 	desc = "A military-grade glowstick."
-	custom_price = 10
+	custom_price = 50
 	w_class = WEIGHT_CLASS_SMALL
 	brightness_on = 4
 	color = LIGHT_COLOR_GREEN
