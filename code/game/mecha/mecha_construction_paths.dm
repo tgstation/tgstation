@@ -118,17 +118,18 @@
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Weapons control module is installed"
+			"desc" = "Weapons control module is installed."
 		)
 	)
 
 /datum/component/construction/mecha/proc/get_stockpart_steps()
+	var/prevstep_text = circuit_weapon ? "Weapons control module is secured." : "Peripherals control module is secured."
 	return list(
 		list(
 			"key" = /obj/item/stock_parts/scanning_module,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Peripherals control module is secured."
+			"desc" = prevstep_text
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
