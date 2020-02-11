@@ -43,6 +43,7 @@
 		to_chat(AM, "<span class='danger'>Your path is obstructed by <span class='phobia'>salt</span>.</span>")
 
 /obj/effect/decal/cleanable/food/salt/Crossed(atom/movable/AM)
+	..()
 	if(isliving(AM))
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
