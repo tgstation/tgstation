@@ -1,5 +1,6 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
+	vis_flags = VIS_INHERIT_PLANE
 	level = 1
 
 	var/intact = 1

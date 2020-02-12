@@ -1,5 +1,6 @@
 
 /obj
+	vis_flags = VIS_INHERIT_PLANE
 	animate_movement = SLIDE_STEPS
 	speech_span = SPAN_ROBOT
 	var/obj_flags = CAN_BE_HIT
