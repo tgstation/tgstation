@@ -328,10 +328,7 @@ There are several things that need to be remembered:
 		if(client && hud_used && hud_used.hud_shown)
 			client.screen += belt
 		update_observer_view(belt)
-		var/t_state = belt.item_state
-		if(!t_state)
-			t_state = belt.icon_state
-		overlays_standing[BELT_LAYER] = belt.build_worn_icon(state = t_state, default_layer = BELT_LAYER,default_icon_file = 'icons/mob/clothing/belt.dmi')
+		overlays_standing[BELT_LAYER] = belt.build_worn_icon(default_layer = BELT_LAYER,default_icon_file = 'icons/mob/clothing/belt.dmi')
 		var/mutable_appearance/belt_overlay = overlays_standing[BELT_LAYER]
 		if(OFFSET_BELT in dna.species.offset_features)
 			belt_overlay.pixel_x += dna.species.offset_features[OFFSET_BELT][1]
@@ -502,7 +499,7 @@ generate/load female uniform sprites matching all previously decided variables
 	if(override_state)
 		t_state = override_state
 	else
-		if(isinhands && item_state)
+		if(isinhands && item_state || ITEM_SLOT_BELT)
 			t_state = item_state
 		else
 			t_state = icon_state
