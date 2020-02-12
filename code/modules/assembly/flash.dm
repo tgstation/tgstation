@@ -143,6 +143,8 @@
 		return FALSE
 	if(iscarbon(M))
 		flash_carbon(M, user, 5, 1)
+		if HAS_TRAIT(M, TRAIT_FLASHBURN)
+			M.adjustFireLoss (20)
 		return TRUE
 	else if(issilicon(M))
 		var/mob/living/silicon/robot/R = M
