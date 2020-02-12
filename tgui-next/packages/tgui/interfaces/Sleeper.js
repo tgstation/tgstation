@@ -109,7 +109,7 @@ export const Sleeper = props => {
             icon="flask"
             content={chem.name}
             disabled={!(occupied && chem.allowed)}
-            width="110px"
+            width="140px"
             onClick={() => act('inject', {
               chem: chem.id,
             })}

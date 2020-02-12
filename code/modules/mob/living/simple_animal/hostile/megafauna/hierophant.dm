@@ -44,6 +44,7 @@ Difficulty: Hard
 	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	icon_state = "hierophant"
 	icon_living = "hierophant"
+	health_doll_icon = "hierophant"
 	friendly_verb_continuous = "stares down"
 	friendly_verb_simple = "stare down"
 	icon = 'icons/mob/lavaland/hierophant_new.dmi'

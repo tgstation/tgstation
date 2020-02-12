@@ -132,6 +132,7 @@
 	icon_state = "alienq"
 	icon_living = "alienq"
 	icon_dead = "alienq_dead"
+	health_doll_icon = "alienq"
 	bubble_icon = "alienroyal"
 	move_to_delay = 4
 	maxHealth = 400
