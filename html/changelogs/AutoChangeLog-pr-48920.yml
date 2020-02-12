@@ -1,0 +1,6 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - rscadd: "Hugs are warm now"
+  - refactor: "natural_bodytemperature_stabilization is now self contained."
+  - refactor: "adjust_bodytemperature to allow the use of insulation and change steps"
