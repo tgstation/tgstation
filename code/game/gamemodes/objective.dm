@@ -329,6 +329,29 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/jailbreak/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
 
+/datum/objective/detain
+	name = "detain"
+	martyr_compatible = TRUE
+	var/target_role_type=FALSE
+
+/datum/objective/detain/find_target_by_role(role, role_type=FALSE,invert=FALSE)
+	if(!invert)
+		target_role_type = role_type
+	..()
+
+/datum/objective/detain/check_completion()
+	return completed || (!considered_escaped(target) && (considered_alive(target) && target.current.onCentCom()))
+
+/datum/objective/detain/update_explanation_text()
+	..()
+	if(target && target.current)
+		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role : target.special_role] is delivered to nanotrasen alive and in custody."
+	else
+		explanation_text = "Free Objective"
+
+/datum/objective/detain/admin_edit(mob/admin)
+	admin_simple_target_pick(admin)
+
 /datum/objective/hijack
 	name = "hijack"
 	explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody."
@@ -1086,6 +1109,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		/datum/objective/debrain,
 		/datum/objective/protect,
 		/datum/objective/jailbreak,
+		/datum/objective/detain,
 		/datum/objective/destroy,
 		/datum/objective/hijack,
 		/datum/objective/escape,
