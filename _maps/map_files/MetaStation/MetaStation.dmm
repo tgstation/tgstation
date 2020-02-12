@@ -56372,17 +56372,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"cxn" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+"cxo" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/chemistry)
-"cxo" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "cxp" = (
@@ -57191,7 +57184,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
 "czW" = (
-/obj/structure/disposalpipe/junction,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
@@ -57199,6 +57191,7 @@
 	dir = 8;
 	pixel_x = 28
 	},
+/obj/structure/disposalpipe/junction,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
 "czX" = (
@@ -74001,12 +73994,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/hydroponics)
-"qnE" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/chemistry)
 "qom" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/cable,
@@ -74275,7 +74262,7 @@
 /area/medical/medbay/aft)
 "rig" = (
 /turf/open/floor/plasteel,
-/area/maintenance/aft)
+/area/maintenance/port/aft)
 "riD" = (
 /turf/closed/wall/r_wall,
 /area/hallway/primary/aft)
@@ -76037,6 +76024,12 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/aft/secondary)
+"xNX" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/chemistry)
 "xVl" = (
 /turf/closed/wall,
 /area/hallway/secondary/service)
@@ -99953,8 +99946,8 @@ csy
 cty
 cmu
 cvv
-qnE
-cxn
+cmB
+flJ
 gcr
 cmB
 pej
@@ -100210,9 +100203,9 @@ csz
 ctz
 cmu
 cus
-cwx
-cxo
 cmB
+cxo
+xNX
 cmB
 cmB
 cmB
