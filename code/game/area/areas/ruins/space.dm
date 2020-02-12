@@ -419,13 +419,3 @@
 /area/ruin/space/has_grav/powered/ancient_shuttle
 	name = "Ancient Shuttle"
 	icon_state = "yellow"
-	
-//SYNDICATE SPACE SHIP
-
-/area/ruin/space/has_grav/syndicate_forgotten_ship
-	name = "Syndicate Forgotten Ship"
-	icon_state = "syndie-ship"
-
-/area/ruin/space/has_grav/syndicate_forgotten_cargopod
-    name = "Syndicate Forgotten Cargo pod"
-    icon_state = "syndie-ship"

@@ -27,7 +27,7 @@
 "aA" = (/obj/machinery/light{dir = 1},/obj/item/aiModule/reset/purge,/obj/structure/table/reinforced,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aB" = (/obj/structure/chair/comfy/black,/turf/open/floor/carpet/royalblack,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aC" = (/obj/machinery/light,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
-"aD" = (/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer1,/obj/machinery/portable_atmospherics/scrubber,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aD" = (/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer1,/obj/machinery/portable_atmospherics/scrubber{anchored = 1},/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aE" = (/obj/structure/closet/syndicate{anchored = 1; armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60); desc = "A basic closet for all your villainous needs."; locked = 1; name = "Closet"; req_one_access_txt = "150"; secure = 1},/obj/effect/spawner/lootdrop/armory_contraband/metastation,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aF" = (/obj/machinery/light{dir = 4},/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aG" = (/obj/machinery/turretid{control_area = "/area/ruin/space/has_grav/syndicate_forgotten_ship"; enabled = 0; icon_state = "control_kill"; lethal = 1; name = "Ship turret control panel"; req_access = null; req_one_access_txt = "150"; step_y = 32},/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -49,11 +49,11 @@
 "aW" = (/obj/structure/table/reinforced,/obj/item/toy/plush/nukeplushie,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aX" = (/obj/machinery/light{dir = 1},/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "aY" = (/turf/closed/mineral/random,/area/space)
-"aZ" = (/turf/closed/mineral/uranium,/area/space)
+"aZ" = (/turf/closed/indestructible/syndicate,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "ba" = (/obj/structure/lattice/catwalk,/obj/structure/cable,/turf/open/space/basic,/area/space)
 "bb" = (/turf/closed/wall/r_wall/syndicate,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bc" = (/obj/machinery/light,/mob/living/simple_animal/hostile/nanotrasen/ranged/assault,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
-"bd" = (/obj/structure/closet/crate/secure/gear{req_one_access_txt = "150"},/obj/item/codespeak_manual/unlimited,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"bd" = (/obj/structure/closet/crate/secure/gear{req_one_access_txt = "150"},/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/plasteel/twenty,/obj/item/stack/sheet/mineral/plastitanium{amount = 50},/obj/item/stack/sheet/glass/fifty,/obj/item/stack/rods/fifty,/turf/open/floor/pod/dark,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "be" = (/obj/structure/cable,/obj/machinery/door/airlock/external{name = "Syndicate ship airlock"; req_one_access_txt = "150"},/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bf" = (/obj/machinery/power/apc/syndicate{dir = 1; name = "Syndicate Cargo Pod APC"; pixel_y = 32; start_charge = 0; step_y = 0},/obj/structure/cable,/obj/structure/closet/crate/secure/gear{req_one_access_txt = "150"},/obj/item/circuitboard/machine/circuit_imprinter,/obj/item/circuitboard/machine/protolathe,/obj/item/stack/sheet/metal/twenty,/obj/item/stack/sheet/glass{amount = 10},/obj/item/stack/cable_coil,/obj/item/circuitboard/computer/rdconsole,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bg" = (/obj/structure/sign/poster/contraband/syndicate_pistol,/turf/closed/wall/r_wall/syndicate,/area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -76,6 +76,8 @@
 "bx" = (/obj/machinery/door/airlock/grunge{name = "Captain's room"; req_one_access_txt = "150"},/obj/machinery/door/poddoor{id = "fscaproom"; name = "Captain's blast door"; state_open = 1},/turf/open/floor/carpet/royalblack,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "by" = (/obj/machinery/door/airlock/grunge{name = "Syndicate Ship Airlock"; req_one_access_txt = "150"},/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bz" = (/obj/structure/table/reinforced,/obj/item/assembly/prox_sensor,/obj/item/assembly/prox_sensor,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bA" = (/obj/structure/closet/crate/secure/gear{req_one_access_txt = "150"},/obj/item/clothing/suit/space/hardsuit/cybersun,/turf/open/floor/pod/dark,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
+"bB" = (/obj/structure/closet/crate/secure/gear{req_one_access_txt = "150"},/obj/item/melee/transforming/energy/sword/saber/red,/turf/open/floor/pod/dark,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "bC" = (/obj/structure/closet/crate/medical,/obj/item/stack/medical/bruise_pack{amount = 12},/obj/item/stack/medical/ointment{amount = 12},/obj/item/healthanalyzer/advanced,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bD" = (/obj/structure/chair/comfy{dir = 1},/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bE" = (/obj/effect/mob_spawn/human/syndicatespace,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -155,52 +157,56 @@
 "da" = (/obj/structure/table/reinforced,/obj/item/ammo_box/c10mm,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "db" = (/obj/structure/toilet{dir = 1},/obj/machinery/light,/turf/open/floor/plasteel,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dc" = (/obj/machinery/shower{icon_state = "shower"; dir = 1},/obj/machinery/light,/turf/open/floor/plasteel,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"dd" = (/obj/structure/closet/crate/secure/gear{req_one_access_txt = "150"},/obj/item/codespeak_manual/unlimited,/turf/open/floor/pod/dark,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
+"de" = (/turf/open/floor/pod/dark,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "df" = (/obj/structure/closet/syndicate{anchored = 1; armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60); desc = "A basic closet for all your villainous needs."; locked = 1; name = "Closet"; req_one_access_txt = "150"; secure = 1},/obj/item/clothing/under/syndicate/combat,/obj/item/clothing/gloves/combat,/obj/item/clothing/shoes/combat,/obj/item/clothing/mask/gas/syndicate,/obj/item/clothing/under/syndicate/skirt,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dg" = (/obj/structure/closet/syndicate{anchored = 1; armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60); desc = "A basic closet for all your villainous needs."; locked = 1; name = "Closet"; req_one_access_txt = "150"; secure = 1},/obj/item/clothing/head/HoS/beret/syndicate,/obj/item/clothing/suit/armor/vest/capcarapace/syndicate,/obj/item/clothing/mask/gas/syndicate,/obj/item/clothing/under/syndicate,/obj/item/clothing/under/syndicate/skirt,/obj/item/clothing/gloves/combat,/obj/item/clothing/shoes/combat,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dh" = (/obj/machinery/camera/xray{c_tag = "Cargo pod"; dir = 6; icon_state = "xraycamera"; name = "security camera"; network = list("fsci"); screen_loc = ""},/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "di" = (/obj/structure/cable,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dj" = (/obj/structure/chair/comfy/shuttle{icon_state = "shuttle_chair"; dir = 1},/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dk" = (/obj/machinery/door/airlock/grunge{name = "Syndicate Ship Airlock"; req_one_access_txt = "150"},/obj/structure/cable,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"dl" = (/obj/machinery/door/password/voice/sfc,/obj/structure/fans/tiny,/obj/machinery/door/airlock/grunge{armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 90); desc = "Vault airlock preventing air from going out."; name = "Syndicate Vault Airlock"; req_one_access_txt = "150"},/turf/open/floor/pod/dark,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
+"dm" = (/obj/structure/closet/crate/secure/gear{req_one_access_txt = "150"},/turf/open/floor/pod/dark,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "dn" = (/obj/machinery/door/airlock/grunge{name = "Syndicate Ship Airlock"; req_one_access_txt = "150"},/turf/open/floor/plating,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dv" = (/obj/structure/closet/crate/secure/gear{req_one_access_txt = "150"},/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaabababababababababababaaaaabababababababababababababababaaaaaa
-aaaaabababciadadadadadadadacababababciadadaeadadacababadadadacababaaaa
-abababafadadaladadaAcfaycladadadadadadbOaialaicnadadabadaGbradadababaa
-abapapapaddvaladawawawawawcoadajakaradbSalalalalahadabadawawawadadabab
-abapapapadalaladadadchadadadadawbvbPadadadaUanadadadaqadadcpadadadacab
-abasapapadalaladagaoaoaoaBaIadcjbVdiadalalalalalcradaEawawawawawbVauab
-abababafadalaladbwaOaoaobncmadawdjdiadalalatatalaladceawawaVcuawbVauab
-abababafaddvaladadadbxbxadbgadadaddkadamaxahahalaFadbWawawawawawaWauab
-abapapapadalaladavaNaHaScyaDadcvaJczadalaxaMcAahaladawawcBaVaTawbVauab
-abapapapadalaldnaRcCcDcxcEcFcGcHcIcWcKcHcNcOcPcQcRcqcScScTcLawawbkauab
-abasapapaddvaladazbccUaScVcMadalaCaladaPaxahahahcXadawawawaVcaawbVauab
-abababafaddvaladadadbybyadadadadadaQadaKaxahahalaFadbWawawawawawbTauab
-abababafadalaladbzbYalalbYahadbGbHbIadaPaPbQaLalaladcgawawaVcbawbVauab
-abapapapadalaldnbDbEalalbEbDadbIcdbIadalalaPalalctadceawawawawawbVauab
-abapapapadalaladalalalalalaladcZadcZadadadbeanadadadadadadcJadadbZacab
-abasapapaddvaladbYalccccalbYaddbaddcadalalaPalalahadabaddfawdgadadabab
-abababafadadaladalcYahdacYadadadadadadbJbKaPbKbLadadabaddfbtadadababaa
-aaaaabababciadadadadadadadacababababciadadbMadadacababadadadacababaaaa
-aaaaaaaaabababababababababababaaaaababababbNababababababababababaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaYaYaYaYaaaaaaaabaaaaaaYaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaYaYaYbqbqbqabaaabbNabbqbqaYaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaYaYaZbqbqbbbXbbbbbRbFckbbbqbqaYaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaYaYaYaYbqbbbbaXdhbfbdbhbibbbbbqaYaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaYaYaYaZbqbbbjbjbjbhbhbhbjcsbbbqaYaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaYaYaYaYbqbbblbjbmbjbjbjbjcwbbbqaYaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaYaYaYaYbqbbbbbobjbpbCbubUbbbbbqaYaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaYaZaYbqbqbbbbbbbbbbbbbbbbbqbqaYaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaYaYaYaYbqbqbqabbsbqbqbqbqbqaYaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaYaYaYaZaYaYaaaYaYaYaYaYaYaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaYaYaYaYaaaaaYaYaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabababababababababababaaaaabababababababababababababababaaaaaaaa
+aaaaaaaaaaaaaaaaaaabababciadadadadadadadacababababciadadaeadadacababadadadacababaaaaaa
+aaaaaaaaaaaaaaabababafadadaladadaAcfaycladadadadadadbOaialaicnadadabadaGbradadababaaaa
+aaaaaaaaaaaaaaabapapapaddvaladbVawawawawcoadajakaradbSalalalalahadabadawawawadadababaa
+aaaaaaaaaaaaaaabapapapadalaladadadchadadadadawbvbPadadadaUanadadadaqadadcpadadadacabaa
+aaaaaaaaaaaaaaabasapapadalaladagaoaoaoaBaIadcjbVdiadalalalalalcradaEawawawawawbVauabaa
+aaaaaaaaaaaaaaabababafadalaladbwaOaoaobncmadawdjdiadalalatatalaladceawawaVcuawbVauabaa
+aaaaaaaaaaaaaaabababafaddvaladadadbxbxadbgadadaddkadamaxahahalaFadbWawawawawawaWauabaa
+aaaaaaaaaaaaaaabapapapadalaladavaNaHaScyaDadcvaJczadalaxaMcAahaladawawcBaVaTawbVauabaa
+aaaaaaaaaaaaaaabapapapadalaldnaRcCcDcxcEcFcGcHcIcWcKcHcNcOcPcQcRcqcScScTcLawawbkauabaa
+aaaaaaaaaaaaaaabasapapaddvaladazbccUaScVcMadalaCaladaPaxahahahcXadawawawaVcaawbVauabaa
+aaaaaaaaaaaaaaabababafaddvaladadadbybyadadadadadaQadaKaxahahalaFadbWawawawawawbTauabaa
+aaaaaaaaaaaaaaabababafadalaladbzbYalalbYahadbGbHbIadaPaPbQaLalaladcgawawaVcbawbVauabaa
+aaaaaaaaaaaaaaabapapapadalaldnbDbEalalbEbDadbIcdbIadalalaPalalctadceawawawawawbVauabaa
+aaaaaaaaaaaaaaabapapapadalaladalalalalalaladcZadcZadadadbeanadadadadadadcJadadbZacabaa
+aaaaaaaaaaaaaaabasapapaddvaladbYalccccalbYaddbaddcadalalaPalalahadabaddfawdgadadababaa
+aaaaaaaaaaaaaaabababafadadaladalcYahdacYadadadadadadbJbKaPbKbLadadabaddfbtadadababaaaa
+aaaaaaaaaaaaaaaaaaabababciadadadadadadadacababababciadadbMadadacababadadadacababaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabababababababababababaaaaababababbNababababababababababaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaYaYaaaYaYaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaYaYaYaYaYaYaYaYaaaabaaaaaaYaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabqbqbqbqbqbqbqbqbqaYabbNabbqbqaYaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabqbqaZaZaZaZaZbbbXbbbbbRbFckbbbqbqaYaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabqaZaZbdbBddaZbbaXdhbfbjbhbibbbbbqaYaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaYbqaZbAdedededlbjbjbjbhbhbhbjcsbbbqaYaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaYbqaZbAdededeaZblbjbmbjbjbjbjcwbbbqaYaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaYbqaZaZdmdmdmaZbbbobjbpbCbubUbbbbbqaYaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabqbqaZaZaZaZaZbbbbbbbbbbbbbbbbbqbqaYaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabqbqbqbqbqbqbqbqbqbsbqbqbqbqbqaYaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaYaYaYaYaYaaaYaYaYaYaYaYaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaYaYaaaaaYaYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaYaaaaaYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}

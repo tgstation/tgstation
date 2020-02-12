@@ -31,6 +31,11 @@
 	dodging = TRUE
 	footstep_type = FOOTSTEP_MOB_SHOE
 
+/mob/living/simple_animal/hostile/nanotrasen/Aggro()
+	..()
+	summon_backup(15)
+	say("411 in progress, requesting backup!")
+
 
 /mob/living/simple_animal/hostile/nanotrasen/ranged
 	icon_state = "nanotrasenranged"
@@ -64,6 +69,9 @@
 	casingtype = /obj/item/ammo_casing/c46x30mm
 	projectilesound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
 	loot = list(/obj/effect/mob_spawn/human/corpse/nanotrasenassaultsoldier)
+
+/mob/living/simple_animal/hostile/nanotrasen/Aggro()
+	..()
 
 /mob/living/simple_animal/hostile/nanotrasen/elite
 	name = "Nanotrasen Elite Assault Officer"
@@ -104,4 +112,6 @@
 	status_flags = CANPUSH
 	del_on_death = 1
 	dodging = TRUE
-	footstep_type = FOOTSTEP_MOB_SHOE
+
+/mob/living/simple_animal/hostile/nanotrasen/Aggro()
+	..()
