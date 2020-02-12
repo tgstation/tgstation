@@ -283,6 +283,10 @@
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/chosen = pick(candidates)
 		S.key = chosen.key
+		S.mind.special_role = ROLE_PYROCLASTIC_SLIME
+		var/policy = get_policy(ROLE_PYROCLASTIC_SLIME)
+		if (policy)
+			to_chat(S, policy)
 		log_game("[key_name(S.key)] was made into a slime by pyroclastic anomaly at [AREACOORD(T)].")
 
 /////////////////////
