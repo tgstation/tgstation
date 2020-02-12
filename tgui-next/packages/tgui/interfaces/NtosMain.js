@@ -13,6 +13,8 @@ const PROGRAM_ICONS = {
   ntnrc_client: 'comment-alt',
   nttransfer: 'exchange-alt',
   powermonitor: 'plug',
+  job_manage: 'address-book',
+  crewmani: 'clipboard-list',
 };
 
 export const NtosMain = props => {

@@ -107,6 +107,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
+/datum/design/rolling_table
+	name = "Rolly poly"
+	desc = "We duct-taped some wheels to the bottom of a table. It's goddamn science alright?"
+	id = "rolling_table"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 4000)
+	build_path = /obj/structure/table/rolling
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 /datum/design/portaseeder
 	name = "Portable Seed Extractor"
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
@@ -315,6 +325,15 @@
 	category = list("initial", "Stock Parts")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/plasticducky
+	name = "Rubber Ducky"
+	desc = "The classic Nanotrasen design for competitively priced bath based duck toys. No need for fancy Waffle co. rubber, buy Plastic Ducks today!"
+	id = "plasticducky"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = 1000)
+	build_path = /obj/item/bikehorn/rubberducky/plasticducky
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////

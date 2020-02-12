@@ -93,7 +93,8 @@
 	return TRUE
 
 /obj/machinery/portable_atmospherics/AltClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, !ismonkey(user)))
+	. = ..()
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, !ismonkey(user)) || !can_interact(user))
 		return
 	if(holding)
 		to_chat(user, "<span class='notice'>You remove [holding] from [src].</span>")
@@ -106,14 +107,13 @@
 			"<span class='notice'>Click [src] with another gas tank to hot swap [holding].</span>"
 
 /obj/machinery/portable_atmospherics/proc/replace_tank(mob/living/user, close_valve, obj/item/tank/new_tank)
+	if(!user)
+		return FALSE
 	if(holding)
-		holding.forceMove(drop_location())
-		if(Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(holding)
+		user.put_in_hands(holding)
+		holding = null
 	if(new_tank)
 		holding = new_tank
-	else
-		holding = null
 	update_icon()
 	return TRUE
 

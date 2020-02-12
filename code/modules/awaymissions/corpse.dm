@@ -43,9 +43,8 @@
 		return
 	if(QDELETED(src) || QDELETED(user))
 		return
-	if(!allow_spawn(user)) //Allows for spawners to place restrictions such as limited uses
-		return
-	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
+	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be revived!)",,"Yes","No")
+
 	if(ghost_role == "No" || !loc)
 		return
 	log_game("[key_name(user)] became [mob_name]")
