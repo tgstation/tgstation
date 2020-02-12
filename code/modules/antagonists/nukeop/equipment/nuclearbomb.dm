@@ -7,13 +7,12 @@
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-	ui_style = "nanotrasen"
 	ui_x = 350
 	ui_y = 442
 
 	var/timer_set = 90
-	var/minimum_timer_set = 90
-	var/maximum_timer_set = 3600
+	var/minimum_timer_set = 5 MINUTES
+	var/maximum_timer_set = 60 MINUTES
 
 	var/numeric_input = ""
 	var/ui_mode = NUKEUI_AWAIT_DISK
@@ -381,10 +380,13 @@
 				playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
 		if("arm")
 			if(auth && yes_code && !safety && !exploded)
-				playsound(src, 'sound/machines/nuke/confirm_beep.ogg', 50, FALSE)
-				set_active()
-				update_ui_mode()
-				. = TRUE
+				if(check_nuke_position(usr))
+					playsound(src, 'sound/machines/nuke/confirm_beep.ogg', 50, FALSE)
+					set_active()
+					update_ui_mode()
+					. = TRUE
+				else
+					to_chat(usr, "<span class='danger'>Planting here wouldn't ensure destruction of the station!</span>")
 			else
 				playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
 		if("anchor")
@@ -393,6 +395,21 @@
 				set_anchor()
 			else
 				playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
+
+//Override on non-positional children
+/obj/machinery/nuclearbomb/proc/check_nuke_position(mob/living/L)
+	if(!is_station_level(z))
+		return FALSE
+	if(!L)
+		return FALSE
+	var/datum/antagonist/nukeop/user_antag = user.mind.has_antag_datum(/datum/antagonist/nukeop, TRUE)
+	if(!user_antag)
+		return FALSE
+	var/datum/objective/nuketarget/target_objective = locate() in user_antag.nuke_team.objectives
+	var/area/place = get_area(src)
+	if(!(place in target_objective.target_list))
+		return FALSE
+	return TRUE
 
 /obj/machinery/nuclearbomb/proc/set_anchor()
 	if(isinspace() && !anchored)
@@ -436,9 +453,9 @@
 
 /obj/machinery/nuclearbomb/proc/get_time_left()
 	if(timing)
-		. = round(max(0, detonation_timer - world.time) / 10, 1)
+		return round(max(0, detonation_timer - world.time) / 10, 1)
 	else
-		. = timer_set
+		return timer_set
 
 /obj/machinery/nuclearbomb/blob_act(obj/structure/blob/B)
 	if(exploding)
@@ -524,6 +541,9 @@
 	else
 		to_chat(user, "<span class='danger'>It's empty.</span>")
 
+/obj/machinery/nuclearbomb/beer/check_nuke_position(mob/living/L)
+	return TRUE
+
 /obj/machinery/nuclearbomb/beer/attackby(obj/item/W, mob/user, params)
 	if(W.is_refillable())
 		W.afterattack(keg, user, TRUE) 	// redirect refillable containers to the keg, allowing them to be filled
@@ -580,13 +600,15 @@
 		if(M.stat != DEAD && M.z == z)
 			M.gib()
 
-/*
-This is here to make the tiles around the station mininuke change when it's armed.
-*/
+/obj/machinery/nuclearbomb/selfdestruct/check_nuke_position(mob/living/L)
+	return TRUE
 
 /obj/machinery/nuclearbomb/selfdestruct/set_anchor()
 	return
 
+/*
+This is here to make the tiles around the station mininuke change when it's armed.
+*/
 /obj/machinery/nuclearbomb/selfdestruct/set_active()
 	..()
 	if(timing)

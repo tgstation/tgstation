@@ -1,3 +1,5 @@
+#define NUKEOP_PLANT_POSSIBILITIES 3
+
 /datum/antagonist/nukeop
 	name = "Nuclear Operative"
 	roundend_category = "syndicate operatives" //just in case
@@ -400,3 +402,22 @@
 
 /datum/team/nuclear/is_gamemode_hero()
 	return SSticker.mode.name == "nuclear emergency"
+
+/datum/objective/nuketarget
+	var/list/target_list = list()
+	var/set = FALSE
+	var/detonated = FALSE
+
+/datum/objective/nuketarget/New()
+	. = ..()
+	var/sanity = 0
+	while(length(target_list) <= NUKEOP_PLANT_POSSIBILITIES && sanity < 100)
+		var/area/plant = pick(GLOB.sortedAreas - target_list)
+		if(plant && is_station_level(plant) && plant.valid_territory)
+			target_list += plant
+		sanity++
+	update_explanation_text()
+
+/datum/objective/nuketarget/update_explanation_text()
+	explanation_text = "Scans of your target have indicated that planting the device in [english_list(target_list)] will be suitable to ensure no recovery."
+
