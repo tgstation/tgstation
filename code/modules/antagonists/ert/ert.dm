@@ -189,3 +189,45 @@
 
 	missiondesc += "<BR><B>Your Mission</B> : [ert_team.mission.explanation_text]"
 	to_chat(owner,missiondesc)
+
+
+/datum/antagonist/ert/families
+	name = "Space Police Responder"
+
+/datum/antagonist/ert/families/greet()
+	to_chat(owner, "<B><font size=3 color=red>You are the [name].</font></B>")
+
+	var/missiondesc = "After an uptick in gang violence on [station_name()], you are responding to 911 calls from the station for immediate police assistance!\n"
+	missiondesc += "Avoid civilian casualties when possible.\n"
+	missiondesc += "Put the boots to any and all gang activity on board the station.\n"
+	missiondesc += "Safely evacuate the station."
+	to_chat(owner,missiondesc)
+
+/datum/antagonist/ert/families/beatcop
+	name = "Beat Cop"
+	role = "Police Officer"
+	outfit = /datum/outfit/families_police/beatcop
+
+/datum/antagonist/ert/families/beatcop/armored
+	name = "Armored Beat Cop"
+	role = "Police Officer"
+	outfit = /datum/outfit/families_police/beatcop/armored
+
+/datum/antagonist/ert/families/beatcop/swat
+	name = "S.W.A.T. Member"
+	role = "S.W.A.T. Officer"
+	outfit = /datum/outfit/families_police/beatcop/swat
+
+/datum/antagonist/ert/families/beatcop/fbi
+	name = "FBI Agent"
+	role = "FBI Agent"
+	outfit = /datum/outfit/families_police/beatcop/fbi
+
+/datum/antagonist/ert/families/beatcop/military
+	name = "Space Military"
+	role = "Sergeant"
+	outfit = /datum/outfit/families_police/beatcop/military
+
+/datum/antagonist/ert/families/beatcop/military/New()
+	. = ..()
+	name_source = GLOB.commando_names

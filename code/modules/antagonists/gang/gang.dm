@@ -6,6 +6,18 @@
 	var/datum/team/gang/my_gang
 	var/list/acceptable_clothes = list()
 	var/list/free_clothes = list()
+	var/datum/action/cooldown/spawn_induction_package/SIP = new()
+
+/datum/antagonist/gang/apply_innate_effects(mob/living/mob_override)
+	..()
+	SIP.Grant(owner.current)
+	SIP.my_gang_datum = src
+
+
+/datum/antagonist/gang/remove_innate_effects(mob/living/mob_override)
+	SIP.Remove(owner.current)
+	..()
+
 
 /datum/antagonist/gang/get_team()
 	return my_gang
@@ -73,11 +85,11 @@
 	gang_id = "RM"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/red,
 							/obj/item/clothing/neck/scarf/red,
-							/obj/item/clothing/under/suit/charcoal,
+							/obj/item/clothing/under/suit/white,
 							/obj/item/clothing/head/beanie/red,
 							/obj/item/clothing/head/ushanka)
 	free_clothes = list(/obj/item/clothing/head/ushanka,
-						/obj/item/clothing/under/suit/charcoal,
+						/obj/item/clothing/under/suit/white,
 						/obj/item/toy/crayon/spraycan)
 
 /datum/antagonist/gang/italian_mob
@@ -146,3 +158,32 @@
 
 /datum/team/gang/roundend_report()
 	return "<div class='panel redborder'><br></div>"
+
+/datum/action/cooldown/spawn_induction_package
+	name = "Create Induction Package"
+	desc = "Generate an induction package for your family."
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "recruit"
+	icon_icon = 'icons/obj/gang/actions.dmi'
+	cooldown_time = 300
+	var/datum/antagonist/gang/my_gang_datum
+
+/datum/action/cooldown/spawn_induction_package/Trigger()
+	if(!..())
+		return FALSE
+	if(!IsAvailable())
+		return FALSE
+	if(!my_gang_datum)
+		return FALSE
+	if(!istype(owner, /mob/living/carbon/human))
+		return FALSE
+	var/mob/living/carbon/human/H = owner
+	if(H.stat)
+		return FALSE
+	to_chat(H, "You pull an induction package from your pockets and place it on the ground.")
+	var/obj/item/gang_induction_package/GP = new(get_turf(H))
+	GP.name = "[my_gang_datum.name] Signup Package"
+	GP.gang_to_use = my_gang_datum.type
+	GP.team_to_use = my_gang_datum.my_gang
+	StartCooldown()
+	return TRUE

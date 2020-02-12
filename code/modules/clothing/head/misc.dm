@@ -8,6 +8,12 @@
 	armor = list("melee" = 30, "bullet" = 15, "laser" = 30, "energy" = 40, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	strip_delay = 80
 
+/obj/item/clothing/head/spacepolice
+	name = "space police cap"
+	desc = "A blue cap for patrolling the daily beat."
+	icon_state = "policecap_families"
+	item_state = "policecap_families"
+
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
 	desc = "A powdered wig."
