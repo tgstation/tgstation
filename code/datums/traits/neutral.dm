@@ -168,3 +168,16 @@
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
 	to_chat(quirk_holder, "<span class='notice'>There is a pinpointer [where], which can help you find your way around. Click in-hand to activate.</span>")
+
+// fluff/desc/implementation/everything is WIP
+/datum/quirk/assistant_hater
+	name = "Aporophobe"
+	desc = "You have such a deep seated aversion to assistants that you had an illegal neural blocker installed so that you couldn't see them anymore."
+	value = 0
+	medical_record_text = "Patient displays a visceral disgust when confronted with Staff Assistants."
+
+	var/obj/item/implant/blocker/B
+
+/datum/quirk/assistant_hater/on_spawn()
+	B = new/obj/item/implant/blocker(quirk_holder)
+	B.implant(quirk_holder, null, TRUE)
