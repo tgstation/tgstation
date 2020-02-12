@@ -35,18 +35,25 @@
 	name = "ancient sarcophagus"
 	desc = "An ancient artifact of greater past. Emits fiery energy"
 	mob_name = "a dwarf"
-	icon = 'icons/obj/lavaland/spawners.dmi'
+	icon = 'icons/obj/dwarven.dmi'
 	icon_state = "sarcophagus"
 	density = TRUE
 	roundstart = FALSE
 	death = FALSE
 	mob_species = /datum/species/human
-	short_desc = "You are an ancient dwarf"
-	flavour_text = "Your masters, benevolent as they were, created uncounted seed vaults and spread them across \
-	the universe to every planet they could chart. You are in one such seed vault. \
-	Your goal is to cultivate and spread life wherever it will go while waiting for contact from your creators. \
-	Estimated time of last contact: Deployment, 5000 millennia ago."
+	outfit = /datum/outfit/dwarven
+	short_desc = "You are an ancient dwarf awakened from your slumber to regrow your once grand empire."
+	flavour_text = "Milennia have passed since your grand civilization last stood. \
+	You remember the prophecies of a great disaster, in fear of death you volountereed for you blood to be sealed within the lava sarcophagus. \
+	Last thing you remember is a bright light before you awakened from slumber, even tough the sarcophagus is damaged it can still revive your dead brotheren. \
+	Now you are filled with the desire to expand and regrow your civilization once more. Expand, sell artifacts and hunt local fauna while becoming new kings of this ashen land. Strike the earth!"
 	assignedrole = "Dwarf"
+
+/obj/effect/mob_spawn/human/dwarven_sarcophagus/Initialize(mapload)
+	. = ..()
+	var/area/A = get_area(src)
+	notify_ghosts("A Dwarf is ready to awaken at [A.name]", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_DWARF)
+
 
 /obj/effect/mob_spawn/human/dwarven_sarcophagus/special(mob/living/new_spawn)
 	var/dwarven_name = pick("Ognog", "Lorenzo", "Bakarat", "Cercer", "Aluminium", "Iro", "Ido", "Kochko", "Bahr", "Mozz", "Fercer", "Bat", "Rot", "Lavaan", "Gorg", "Philzer", "Lerh", \
@@ -62,8 +69,14 @@
 		H.update_body()
 
 /obj/effect/mob_spawn/human/dwarven_sarcophagus/Destroy()
-	new/obj/machinery/dwarven_sarcophagus_recharge(get_turf(src))
+	new/obj/structure/destructible/dwarven/dwarven_sarcophagus(get_turf(src))
 	return ..()
+
+/datum/outfit/dwarven
+	name ="Ashwalker"
+	uniform = /obj/item/clothing/under/misc/gambison
+	shoes = /obj/item/clothing/shoes/sandal
+	back = /obj/item/pickaxe/silver
 
 
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
