@@ -43,7 +43,7 @@
 	outfit = /datum/outfit/ashwalker
 	roundstart = FALSE
 	death = FALSE
-	anchored = FALSE
+	anchored = TRUE
 	move_resist = MOVE_FORCE_NORMAL
 	density = FALSE
 	short_desc = "You are an ash walker. Your tribe worships the Necropolis."
@@ -53,9 +53,15 @@
 	assignedrole = "Ash Walker"
 	var/datum/team/ashwalkers/team
 
+/obj/effect/mob_spawn/human/ash_walker/allow_spawn(mob/user)
+	if(user.key in team.players_spawned)//if player is on exaust list
+		to_chat(user, "<span class='warning'><b>You have exausted your usefulness to the Nechopolis</b>.</span>")
+		return FALSE
+	return TRUE
+
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.fully_replace_character_name(null,random_unique_lizard_name(gender))
-	to_chat(new_spawn, "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Don't leave your nest undefended, protect it with your life. Glory to the Necropolis!</b>")
+	to_chat(new_spawn, "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Invade the strange structure of the outsiders if you must. Do not cause unnecessary destruction, as littering the wastes with ugly wreckage is certain to not gain you favor. Glory to the Necropolis!</b>")
 
 	new_spawn.mind.add_antag_datum(/datum/antagonist/ashwalker, team)
 
@@ -63,6 +69,7 @@
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
 		H.update_body()
+	team.players_spawned += (new_spawn.key)
 
 /obj/effect/mob_spawn/human/ash_walker/Initialize(mapload, datum/team/ashwalkers/ashteam)
 	. = ..()

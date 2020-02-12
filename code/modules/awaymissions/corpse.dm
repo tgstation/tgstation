@@ -43,6 +43,8 @@
 		return
 	if(QDELETED(src) || QDELETED(user))
 		return
+	if(!allow_spawn(user)) //Allows for spawners to place restrictions such as limited uses
+		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
 		return
@@ -64,6 +66,9 @@
 	if(!LAZYLEN(spawners))
 		GLOB.mob_spawners -= name
 	return ..()
+
+/obj/effect/mob_spawn/proc/allow_spawn(mob/user) //Override this to add spawn limits to a ghost role
+	return TRUE
 
 /obj/effect/mob_spawn/proc/special(mob/M)
 	return
