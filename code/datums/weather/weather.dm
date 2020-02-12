@@ -59,7 +59,7 @@
 		if(A.z in impacted_z_levels)
 			impacted_areas |= A
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
-	SSweather.processing += src
+	START_PROCESSING(SSweather, src)
 	update_areas()
 	for(var/M in GLOB.player_list)
 		var/turf/mob_turf = get_turf(M)
@@ -98,11 +98,19 @@
 				SEND_SOUND(M, sound(end_sound))
 	addtimer(CALLBACK(src, .proc/end), end_duration)
 
+/datum/weather/process()
+	if(aesthetic || (stage != MAIN_STAGE))
+		return
+	for(var/i in GLOB.mob_living_list)
+		var/mob/living/L = i
+		if(can_weather_act(L))
+			weather_act(L)
+
 /datum/weather/proc/end()
 	if(stage == END_STAGE)
 		return 1
 	stage = END_STAGE
-	SSweather.processing -= src
+	STOP_PROCESSING(SSweather, src)
 	update_areas()
 
 /datum/weather/proc/can_weather_act(mob/living/L) //Can this weather impact a mob?

@@ -14,15 +14,7 @@ SUBSYSTEM_DEF(weather)
 	var/list/next_hit_by_zlevel = list() //Used by barometers to know when the next storm is coming
 
 /datum/controller/subsystem/weather/fire()
-	// process active weather
-	for(var/V in processing)
-		var/datum/weather/W = V
-		if(W.aesthetic || W.stage != MAIN_STAGE)
-			continue
-		for(var/i in GLOB.mob_living_list)
-			var/mob/living/L = i
-			if(W.can_weather_act(L))
-				W.weather_act(L)
+	. = ..()		//Active weather is handled by . = ..() processing subsystem base fire().
 
 	// start random weather on relevant levels
 	for(var/z in eligible_zlevels)
@@ -34,7 +26,7 @@ SUBSYSTEM_DEF(weather)
 		addtimer(CALLBACK(src, .proc/make_eligible, z, possible_weather), randTime + initial(W.weather_duration_upper), TIMER_UNIQUE) //Around 5-10 minutes between weathers
 		next_hit_by_zlevel["[z]"] = world.time + randTime + initial(W.telegraph_duration)
 
-/datum/controller/subsystem/weather/Initialize(start_timeofday)
+/datum/controller/subsystem/processing/weather/Initialize(start_timeofday)
 	for(var/V in subtypesof(/datum/weather))
 		var/datum/weather/W = V
 		var/probability = initial(W.probability)
@@ -47,7 +39,7 @@ SUBSYSTEM_DEF(weather)
 				eligible_zlevels["[z]"][W] = probability
 	return ..()
 
-/datum/controller/subsystem/weather/proc/run_weather(datum/weather/weather_datum_type, z_levels)
+/datum/controller/subsystem/processing/weather/proc/run_weather(datum/weather/weather_datum_type, z_levels)
 	if (istext(weather_datum_type))
 		for (var/V in subtypesof(/datum/weather))
 			var/datum/weather/W = V
@@ -67,11 +59,11 @@ SUBSYSTEM_DEF(weather)
 	var/datum/weather/W = new weather_datum_type(z_levels)
 	W.telegraph()
 
-/datum/controller/subsystem/weather/proc/make_eligible(z, possible_weather)
+/datum/controller/subsystem/processing/weather/proc/make_eligible(z, possible_weather)
 	eligible_zlevels[z] = possible_weather
 	next_hit_by_zlevel["[z]"] = null
 
-/datum/controller/subsystem/weather/proc/get_weather(z, area/active_area)
+/datum/controller/subsystem/processing/weather/proc/get_weather(z, area/active_area)
     var/datum/weather/A
     for(var/V in processing)
         var/datum/weather/W = V
