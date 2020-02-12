@@ -5,7 +5,7 @@
 	ask_verb = "scuffs"
 	exclaim_verb = "growls"
 	sing_verb = "roars"
-	key = "t"
+	key = "8"
 	space_chance = 30
 	default_priority = 90
 	syllables = list("agh", "rhg", "fgh", "ahg", "lha", "dra", "lav",
