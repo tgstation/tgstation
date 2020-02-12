@@ -436,6 +436,7 @@ Contains:
 	item_state = "hardsuit0-combatmedic"
 	armor = list("melee" = 35, "bullet" = 10, "laser" = 20, "energy" = 30, "bomb" = 5, "bio" = 100, "rad" = 50, "fire" = 65, "acid" = 75)
 	hardsuit_type = "combatmedic"
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
 
 /obj/item/clothing/suit/space/hardsuit/combatmedic
 	name = "endemic combat medic hardsuit"
@@ -444,6 +445,5 @@ Contains:
 	item_state = "combatmedic"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/combatmedic
 	armor = list("melee" = 35, "bullet" = 10, "laser" = 20, "energy" = 30, "bomb" = 5, "bio" = 100, "rad" = 50, "fire" = 65, "acid" = 75)
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
 	allowed = list(/obj/item/gun, /obj/item/melee/baton, /obj/item/circular_saw, /obj/item/tank/internals, /obj/item/storage/box/pillbottles,\
 	/obj/item/storage/firstaid, /obj/item/stack/medical/gauze, /obj/item/stack/medical/suture, /obj/item/stack/medical/mesh, /obj/item/storage/bag/chemistry)
