@@ -4,10 +4,20 @@
 /datum/component/construction/mecha
 	var/base_icon
 
+	// Component typepaths.
+	// most must be defined unless
+	// get_steps is overriden.
+
+	// Circuit board typepaths.
+	// circuit_control and circuit_periph must be defined
+	// unless get_circuit_steps is overriden.
 	var/circuit_control
 	var/circuit_periph
 	var/circuit_weapon
 
+	// Armor plating typepaths. both must be defined
+	// unless relevant step procs are overriden. amounts
+	// must be defined if using /obj/item/stack/sheet types
 	var/inner_plating
 	var/inner_plating_amount
 
@@ -29,6 +39,9 @@
 	SSblackbox.record_feedback("tally", "mechas_created", 1, M.name)
 	QDEL_NULL(parent)
 
+// Default proc to generate mech steps.
+// Override if the mech needs an entirely custom process (See HONK mech)
+// Otherwise override specific steps as needed (Ripley, firefighter, Phazon)
 /datum/component/construction/mecha/proc/get_steps()
 	return get_frame_steps() + get_circuit_steps() + (circuit_weapon ? get_circuit_weapon_steps() : list()) + get_stockpart_steps() + get_inner_plating_steps() + get_outer_plating_steps()
 
@@ -57,6 +70,7 @@
 	parent_atom.cut_overlays()
 	..()
 
+// Default proc for the first steps of mech construction.
 /datum/component/construction/mecha/proc/get_frame_steps()
 	return list(
 		list(
@@ -81,6 +95,8 @@
 		)
 	)
 
+// Default proc for the circuit board steps of a mech.
+// Second set of steps by default.
 /datum/component/construction/mecha/proc/get_circuit_steps()
 	return list(
 		list(
@@ -107,6 +123,8 @@
 		)
 	)
 
+// Default proc for weapon circuitboard steps
+// Used by combat mechs
 /datum/component/construction/mecha/proc/get_circuit_weapon_steps()
 	return list(
 		list(
@@ -122,6 +140,8 @@
 		)
 	)
 
+// Default proc for stock part installation
+// Third set of steps by default
 /datum/component/construction/mecha/proc/get_stockpart_steps()
 	var/prevstep_text = circuit_weapon ? "Weapons control module is secured." : "Peripherals control module is secured."
 	return list(
@@ -160,14 +180,30 @@
 		)
 	)
 
+// Default proc for inner armor plating
+// Fourth set of steps by default
 /datum/component/construction/mecha/proc/get_inner_plating_steps()
-	return list(
-		list(
-			"key" = inner_plating,
-			"amount" = inner_plating_amount,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The power cell is secured."
-		),
+	var/list/first_step
+	if(ispath(inner_plating, /obj/item/stack/sheet))
+		first_step = list(
+			list(
+				"key" = inner_plating,
+				"amount" = inner_plating_amount,
+				"back_key" = TOOL_SCREWDRIVER,
+				"desc" = "The power cell is secured."
+			)
+		)
+	else
+		first_step = list(
+			list(
+				"key" = inner_plating,
+				"action" = ITEM_DELETE,
+				"back_key" = TOOL_SCREWDRIVER,
+				"desc" = "The power cell is secured."
+			)
+		)
+
+	return first_step + list(
 		list(
 			"key" = TOOL_WRENCH,
 			"back_key" = TOOL_CROWBAR,
@@ -180,15 +216,30 @@
 		)
 	)
 
+// Default proc for outer armor plating
+// Fifth set of steps by default
 /datum/component/construction/mecha/proc/get_outer_plating_steps()
-	return list(
-		list(
-			"key" = outer_plating,
-			"amount" = outer_plating_amount,
-			"action" = ITEM_DELETE,
-			"back_key" = TOOL_WELDER,
-			"desc" = "Internal armor is welded."
-		),
+	var/list/first_step
+	if(ispath(outer_plating, /obj/item/stack/sheet))
+		first_step = list(
+			list(
+				"key" = outer_plating,
+				"amount" = outer_plating_amount,
+				"back_key" = TOOL_WELDER,
+				"desc" = "Inner plating is welded."
+			)
+		)
+	else
+		first_step = list(
+			list(
+				"key" = outer_plating,
+				"action" = ITEM_DELETE,
+				"back_key" = TOOL_WELDER,
+				"desc" = "Inner plating is welded."
+			)
+		)
+
+	return first_step + list(
 		list(
 			"key" = TOOL_WRENCH,
 			"back_key" = TOOL_CROWBAR,
@@ -507,8 +558,31 @@
 	inner_plating = /obj/item/stack/sheet/plasteel
 	inner_plating_amount = 5
 
-	outer_plating = /obj/item/stack/sheet/plasteel
-	outer_plating_amount = 5
+/datum/component/construction/mecha/firefighter/get_outer_plating_steps()
+	return list(
+		list(
+			"key" = /obj/item/stack/sheet/plasteel,
+			"amount" = 5,
+			"back_key" = TOOL_WELDER,
+			"desc" = "Internal armor is welded."
+		),
+		list(
+			"key" = /obj/item/stack/sheet/plasteel,
+			"amount" = 5,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "External armor is being installed."
+		),
+		list(
+			"key" = TOOL_WRENCH,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "External armor is installed."
+		),
+		list(
+			"key" = TOOL_WELDER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "External armor is wrenched."
+		),
+	)
 
 /datum/component/construction/mecha/firefighter/custom_action(obj/item/I, mob/living/user, diff)
 	if(!..())
@@ -605,10 +679,15 @@
 				user.visible_message("<span class='notice'>[user] cuts the internal armor layer from [parent].</span>", "<span class='notice'>You cut the internal armor layer from [parent].</span>")
 		if(19)
 			if(diff==FORWARD)
-				user.visible_message("<span class='notice'>[user] secures the external armor layer.</span>", "<span class='notice'>You secure the external armor layer.</span>")
+				user.visible_message("<span class='notice'>[user] installs the external reinforced armor layer to [parent].</span>", "<span class='notice'>You install the external reinforced armor layer to [parent].</span>")
+			else
+				user.visible_message("<span class='notice'>[user] removes the external armor from [parent].</span>", "<span class='notice'>You remove the external armor from [parent].</span>")
+		if(20)
+			if(diff==FORWARD)
+				user.visible_message("<span class='notice'>[user] secures the external armor layer.</span>", "<span class='notice'>You secure the external reinforced armor layer.</span>")
 			else
 				user.visible_message("<span class='notice'>[user] pries external armor layer from [parent].</span>", "<span class='notice'>You pry external armor layer from [parent].</span>")
-		if(20)
+		if(21)
 			if(diff==FORWARD)
 				user.visible_message("<span class='notice'>[user] welds the external armor layer to [parent].</span>", "<span class='notice'>You weld the external armor layer to [parent].</span>")
 			else
