@@ -89,11 +89,7 @@
 			user.update_spacesuit_hud_icon("empty")
 
 		if(thermal_on && cell.charge >= THERMAL_REGULATOR_COST)
-			// TODO: use_steps=TRUE capped=FALSE when #48920 merged and remove this mess
-			if(user.bodytemperature < temperature_setting)
-				user.adjust_bodytemperature((temperature_setting - user.bodytemperature) / BODYTEMP_HEAT_DIVISOR)
-			else
-				user.adjust_bodytemperature((temperature_setting - user.bodytemperature) / BODYTEMP_COLD_DIVISOR)
+			user.adjust_bodytemperature((temperature_setting - user.bodytemperature), use_steps=TRUE, capped=FALSE)
 			cell.charge -= THERMAL_REGULATOR_COST
 
 // Clean up the cell on destroy
