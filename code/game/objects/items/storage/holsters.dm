@@ -100,6 +100,7 @@
 	desc = "A deep shoulder holster capable of holding almost any form of ballistic weaponry."
 	icon_state = "syndicate_holster"
 	item_state = "syndicate_holster"
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/storage/belt/holster/nukie/ComponentInitialize()
 	. = ..()
