@@ -55,7 +55,7 @@
 
 /obj/effect/mob_spawn/human/ash_walker/allow_spawn(mob/user)
 	if(user.key in team.players_spawned)//if player is on exaust list
-		to_chat(user, "<span class='warning'><b>You have exausted your usefulness to the Nechopolis</b>.</span>")
+		to_chat(user, "<span class='warning'><b>You have exausted your usefulness to the Necropolis</b>.</span>")
 		return FALSE
 	return TRUE
 
