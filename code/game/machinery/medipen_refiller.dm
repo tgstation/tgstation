@@ -52,7 +52,7 @@
 		if(!(LAZYFIND(allowed, P.type)))
 			to_chat(user, "<span class='danger'>Error! Unknown schematics.</span>")
 			return
-		if(P.reagents && P.reagents.reagent_list.len)
+		if(P.reagents?.reagent_list.len)
 			to_chat(user, "<span class='notice'>The medipen is already filled.</span>")
 			return
 		if(reagents.has_reagent(allowed[P.type], 10))
