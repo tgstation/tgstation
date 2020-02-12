@@ -28,7 +28,7 @@
 
 /datum/antagonist/gang/greet()
 	to_chat(owner.current, "<B><font size=3 color=red>[gang_name] for life!</font></B>")
-	to_chat(owner.current, "<B><font size=2 color=red>You're a member of the [gang_name] now!<br>Tag turf with a spraycan, wear your group's colors, and sell anything exportable on the Black Market at the Gang Signup Point!</font></B>")
+	to_chat(owner.current, "<B><font size=2 color=red>You're a member of the [gang_name] now!<br>Tag turf with a spraycan, wear your group's colors, and recruit more gangsters with the Induction Packages!</font></B>")
 	to_chat(owner.current, "<B><font size=4 color=red>Don't fuck with non-gangsters unless they fuck with you first.</font></B>")
 	to_chat(owner.current, "<B><font size=4 color=red>Don't blow shit up or make the station uninhabitable.</font></B>")
 
