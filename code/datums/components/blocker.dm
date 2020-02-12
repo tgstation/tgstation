@@ -97,6 +97,7 @@
 			for(var/mob/living/carbon/human/H in GLOB.human_list)
 				if(H.wear_id)
 					var/obj/item/card/id/id_card = H.wear_id.GetID()
+					testing(id_card.assignment)
 					if(id_card.assignment in blocked_jobs)
 						block_list += H
 						continue
@@ -104,7 +105,7 @@
 					var/shown_name = H.get_face_name()
 					if(shown_name && GLOB.data_core)
 						var/datum/data/record/R = find_record("name", shown_name, GLOB.data_core)
-						if(R.fields["rank"] && R.fields["rank"] in blocked_jobs)
+						if(R && (R.fields["rank"]) && (R.fields["rank"] in blocked_jobs))
 							block_list += H
 							continue
 
@@ -119,7 +120,7 @@
 					var/shown_name = H.get_face_name()
 					if(shown_name && SSeconomy.bank_accounts)
 						for(var/datum/bank_account/B in SSeconomy.bank_accounts)
-							if(B.account_holder == H && !B.has_money(min_cash))
+							if(B && B.account_holder == H && !B.has_money(min_cash))
 								block_list += H
 								continue
 
