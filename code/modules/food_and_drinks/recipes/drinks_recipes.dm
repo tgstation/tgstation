@@ -241,6 +241,12 @@
 	results = list(/datum/reagent/consumable/ethanol/black_russian = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 3, /datum/reagent/consumable/ethanol/kahlua = 2)
 
+/datum/chemical_reaction/hiveminderaser
+	name = "Hivemind Eraser"
+	id = /datum/reagent/consumable/ethanol/hiveminderaser
+	results = list(/datum/reagent/consumable/ethanol/hiveminderaser = 4)
+	required_reagents = list(/datum/reagent/consumable/ethanol/black_russian = 2, /datum/reagent/consumable/ethanol/thirteenloko = 1, /datum/reagent/consumable/grenadine = 1)
+
 /datum/chemical_reaction/manhattan
 	name = "Manhattan"
 	id = /datum/reagent/consumable/ethanol/manhattan
