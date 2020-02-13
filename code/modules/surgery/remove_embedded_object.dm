@@ -8,6 +8,7 @@
 	name = "remove embedded objects"
 	time = 32
 	accept_hand = 1
+	implements = list(/obj/item/borg/medhand = 100)
 	experience_given = 5
 	var/obj/item/bodypart/L = null
 

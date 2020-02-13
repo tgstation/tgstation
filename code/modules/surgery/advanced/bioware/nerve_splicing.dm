@@ -14,6 +14,7 @@
 /datum/surgery_step/splice_nerves
 	name = "splice nerves"
 	accept_hand = TRUE
+	implements = list(/obj/item/borg/medhand = 100)
 	time = 155
 	experience_given = 5
 

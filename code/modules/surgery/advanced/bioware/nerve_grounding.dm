@@ -14,6 +14,7 @@
 /datum/surgery_step/ground_nerves
 	name = "ground nerves"
 	accept_hand = TRUE
+	implements = list(/obj/item/borg/medhand = 100)
 	time = 155
 	experience_given = 5
 

@@ -26,6 +26,7 @@
 /datum/surgery_step/stomach_pump
 	name = "Pump Stomach"
 	accept_hand = TRUE
+	implements = list(/obj/item/borg/medhand = 100)
 	repeatable = TRUE
 	time = 20
 

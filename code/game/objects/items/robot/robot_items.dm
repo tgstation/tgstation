@@ -930,3 +930,9 @@
 	. = ..()
 	if(istype(A, /obj/item/aiModule) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
 		to_chat(user, "<span class='warning'>This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up.</span>")
+
+//robot hand
+/obj/item/borg/medhand
+	name = "Advanced Robotic Manipulator"
+	desc = "The Advanced Robotic Manipulator, or ARM, is an advanced robotic arm perfect for surgery. In fact, due to programming restrictions, that's all it's good for."
+	icon_state = "robohand"

@@ -15,6 +15,7 @@
 /datum/surgery_step/reinforce_ligaments
 	name = "reinforce ligaments"
 	accept_hand = TRUE
+	implements = list(/obj/item/borg/medhand = 100)
 	time = 125
 	experience_given = 5
 

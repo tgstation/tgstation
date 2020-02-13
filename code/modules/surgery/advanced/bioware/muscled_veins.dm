@@ -14,6 +14,7 @@
 /datum/surgery_step/muscled_veins
 	name = "shape vein muscles"
 	accept_hand = TRUE
+	implements = list(/obj/item/borg/medhand = 100)
 	time = 125
 	experience_given = 5
 
