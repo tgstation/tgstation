@@ -404,14 +404,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//Can cause an overestimation of mol count, should stabalize things though.
 		//Prevents huge bursts of gas/heat when a large amount of something is introduced
 		//They range between 0 and 1
-		plasmacomp += CLAMP(max(removed.gases[/datum/gas/plasma][MOLES]/combined_gas, 0) - plasmacomp, -gas_change_rate, gas_change_rate)
-		o2comp += CLAMP(max(removed.gases[/datum/gas/oxygen][MOLES]/combined_gas, 0) - o2comp, -gas_change_rate, gas_change_rate)
-		co2comp += CLAMP(max(removed.gases[/datum/gas/carbon_dioxide][MOLES]/combined_gas, 0) - co2comp, -gas_change_rate, gas_change_rate)
-		pluoxiumcomp += CLAMP(max(removed.gases[/datum/gas/pluoxium][MOLES]/combined_gas, 0) - pluoxiumcomp, -gas_change_rate, gas_change_rate)
-		tritiumcomp += CLAMP(max(removed.gases[/datum/gas/tritium][MOLES]/combined_gas, 0) - tritiumcomp, -gas_change_rate, gas_change_rate)
-		bzcomp += CLAMP(max(removed.gases[/datum/gas/bz][MOLES]/combined_gas, 0) - bzcomp, -gas_change_rate, gas_change_rate)
-		n2ocomp += CLAMP(max(removed.gases[/datum/gas/nitrous_oxide][MOLES]/combined_gas, 0) - n2ocomp, -gas_change_rate, gas_change_rate)
-		n2comp += CLAMP(max(removed.gases[/datum/gas/nitrogen][MOLES]/combined_gas, 0) - n2comp, -gas_change_rate, gas_change_rate)
+		plasmacomp += CLAMP(max(removed.gases[/datum/gas/plasma][MOLES]/combined_gas, 0) - plasmacomp, -1, gas_change_rate)
+		o2comp += CLAMP(max(removed.gases[/datum/gas/oxygen][MOLES]/combined_gas, 0) - o2comp, -1, gas_change_rate)
+		co2comp += CLAMP(max(removed.gases[/datum/gas/carbon_dioxide][MOLES]/combined_gas, 0) - co2comp, -1, gas_change_rate)
+		pluoxiumcomp += CLAMP(max(removed.gases[/datum/gas/pluoxium][MOLES]/combined_gas, 0) - pluoxiumcomp, -1, gas_change_rate)
+		tritiumcomp += CLAMP(max(removed.gases[/datum/gas/tritium][MOLES]/combined_gas, 0) - tritiumcomp, -1, gas_change_rate)
+		bzcomp += CLAMP(max(removed.gases[/datum/gas/bz][MOLES]/combined_gas, 0) - bzcomp, -1, gas_change_rate)
+		n2ocomp += CLAMP(max(removed.gases[/datum/gas/nitrous_oxide][MOLES]/combined_gas, 0) - n2ocomp, -1, gas_change_rate)
+		n2comp += CLAMP(max(removed.gases[/datum/gas/nitrogen][MOLES]/combined_gas, 0) - n2comp, -1, gas_change_rate)
 
 		//We're concerned about pluoxium being too easy to abuse at low percents, so we make sure there's a substantial amount.
 		if(pluoxiumcomp >= 0.15)
