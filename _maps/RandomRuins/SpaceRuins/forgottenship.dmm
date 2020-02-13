@@ -126,7 +126,7 @@
 "cv" = (/obj/machinery/computer/security/telescreen/interrogation{network = list("fsci"); pixel_y = 32; req_one_access_txt = "150"; screen_loc = ""},/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cw" = (/obj/structure/closet/crate/secure/gear{req_one_access_txt = "150"},/obj/item/switchblade,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "cx" = (/obj/structure/cable,/obj/machinery/atmospherics/components/unary/vent_scrubber/layer1{icon_state = "scrub_map-1"; dir = 4},/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
-"cy" = (/obj/machinery/light{dir = 1},/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{icon_state = "pipe11-2"; dir = 10},/mob/living/simple_animal/hostile/nanotrasen/ranged/assault,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cy" = (/obj/machinery/light{dir = 1},/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{icon_state = "pipe11-2"; dir = 10},/obj/item/wrench,/mob/living/simple_animal/hostile/nanotrasen/ranged/assault,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cz" = (/obj/structure/cable,/obj/machinery/atmospherics/components/unary/vent_pump,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cA" = (/obj/structure/table/reinforced,/obj/machinery/atmospherics/components/unary/vent_pump,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cB" = (/obj/machinery/atmospherics/components/unary/vent_pump,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)

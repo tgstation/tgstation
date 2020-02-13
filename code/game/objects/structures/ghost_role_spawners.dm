@@ -625,17 +625,20 @@
 	mob_gender = "male"
 	outfit = /datum/outfit/syndicatespace/syndicaptain
 
+/datum/outfit/syndicatespace/syndicaptain/post_equip(mob/living/carbon/human/H)
+	H.faction |= ROLE_SYNDICATE
+
 /datum/outfit/syndicatespace/syndicrew
 	name = "Syndicate Ship Crew Member"
 	uniform = /obj/item/clothing/under/syndicate/combat
 	glasses = /obj/item/clothing/glasses/night
 	mask = /obj/item/clothing/mask/gas/syndicate
-	r_hand = /obj/item/kitchen/knife/combat/survival
 	ears = /obj/item/radio/headset/syndicate/alt
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	back = /obj/item/storage/backpack
 	l_pocket = /obj/item/gun/ballistic/automatic/pistol
+	r_pocket = /obj/item/kitchen/knife/combat/survival
 	belt = /obj/item/storage/belt/military/assault
 	id = /obj/item/card/id/syndicate_command/crew_id
 	implants = list(/obj/item/implant/weapons_auth)
@@ -646,13 +649,13 @@
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
 	glasses = /obj/item/clothing/glasses/night
 	mask = /obj/item/clothing/mask/gas/syndicate
-	r_hand = /obj/item/kitchen/knife/combat/survival
 	head = /obj/item/clothing/head/HoS/beret/syndicate
 	ears = /obj/item/radio/headset/syndicate/alt
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	back = /obj/item/storage/backpack
 	l_pocket = /obj/item/gun/ballistic/automatic/pistol/APS
+	r_pocket = /obj/item/kitchen/knife/combat/survival
 	belt = /obj/item/storage/belt/military/assault
 	id = /obj/item/card/id/syndicate_command/captain_id
 	backpack_contents = list(/obj/item/documents/syndicate/red, /obj/item/paper/fluff/ruins/forgottenship/password)
