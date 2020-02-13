@@ -45,14 +45,12 @@
 		return TRUE
 
 	if(istype(W, /obj/item/reagent_containers/food/snacks/grown/banana))
-		if(!user.transferItemToLoc(W, src))
-			return
 		// ignore the occupants because they're presumably too distracted to notice the guy stuffing fruit into their vehicle's exhaust. do segways have exhausts? they do now!
 		user.visible_message("<span class='warning'>[user] begins stuffing [W] into [src]'s tailpipe.</span>", "<span class='warning'>You begin stuffing [W] into [src]'s tailpipe...</span>", ignored_mobs = occupants)
-		if(do_after(user, 30, TRUE, target = src))
-			user.visible_message("<span class='warning'>[user] stuffs [W] into [src]'s tailpipe.</span>", "<span class='warning'>You stuff [W] into [src]'s tailpipe.</span>", ignored_mobs = occupants)
-			eddie_murphy = W
-			W.forceMove(src)
+		if(do_after(user, 30, TRUE, src))
+			if(user.transferItemToLoc(W, src))
+				user.visible_message("<span class='warning'>[user] stuffs [W] into [src]'s tailpipe.</span>", "<span class='warning'>You stuff [W] into [src]'s tailpipe.</span>", ignored_mobs = occupants)
+				eddie_murphy = W
 		return TRUE
 	return ..()
 
