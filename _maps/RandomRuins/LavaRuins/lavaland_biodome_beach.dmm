@@ -159,7 +159,24 @@
 	},
 /obj/structure/chair/stool,
 /obj/item/storage/backpack/duffelbag,
+/obj/item/clothing/under/shorts/red,
+/obj/item/clothing/glasses/sunglasses,
 /turf/open/floor/wood,
+/area/ruin/powered/beach)
+"bC" = (
+/obj/item/reagent_containers/food/drinks/colocup{
+	pixel_x = -7;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/colocup{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/bottle/rum{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/turf/open/floor/carpet/red,
 /area/ruin/powered/beach)
 "bG" = (
 /obj/structure/window/reinforced{
@@ -309,6 +326,9 @@
 	},
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
+"fB" = (
+/turf/open/floor/plasteel/stairs/medium,
+/area/ruin/powered/beach)
 "fL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -434,6 +454,7 @@
 "kd" = (
 /obj/structure/table/wood,
 /obj/item/storage/bag/tray,
+/obj/item/reagent_containers/food/drinks/colocup,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "kg" = (
@@ -511,9 +532,7 @@
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
 "oQ" = (
-/obj/effect/mob_spawn/human/bartender/alive{
-	dir = 4
-	},
+/obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "oU" = (
@@ -624,10 +643,21 @@
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/powered/beach)
 "sM" = (
-/obj/structure/reagent_dispensers/beerkeg,
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet{
+	icon_state = "cabinet";
+	name = "bartender's closet";
+	req_access = list(25)
+	},
+/obj/item/clothing/shoes/sandal{
+	desc = "A very fashionable pair of flip-flops.";
+	name = "flip-flops"
+	},
+/obj/item/clothing/neck/beads,
+/obj/item/clothing/glasses/sunglasses/reagent,
+/obj/item/clothing/suit/hawaiian,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "sV" = (
@@ -662,6 +692,30 @@
 /obj/item/disk/plantgene,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/powered/beach)
+"tg" = (
+/obj/structure/closet/crate/freezer{
+	name = "Cooler"
+	},
+/obj/item/reagent_containers/food/drinks/ice,
+/obj/item/reagent_containers/food/drinks/colocup,
+/obj/item/reagent_containers/food/drinks/colocup,
+/obj/item/reagent_containers/food/drinks/beer{
+	desc = "Beer advertised to be the best in space.";
+	name = "Masterbrand Beer"
+	},
+/obj/item/reagent_containers/food/drinks/beer{
+	desc = "Beer advertised to be the best in space.";
+	name = "Masterbrand Beer"
+	},
+/obj/item/reagent_containers/food/drinks/beer{
+	desc = "Beer advertised to be the best in space.";
+	name = "Masterbrand Beer"
+	},
+/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/beer/light,
+/turf/open/floor/plating/beach/sand,
+/area/ruin/powered/beach)
 "tn" = (
 /obj/structure/chair/sofa/right,
 /turf/open/floor/wood,
@@ -689,6 +743,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/table/wood/poker,
 /obj/item/storage/pill_bottle/dice,
+/obj/item/stack/spacecash/c1000,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "vi" = (
@@ -943,7 +998,6 @@
 /area/ruin/powered/beach)
 "EE" = (
 /obj/structure/dresser,
-/obj/item/storage/backpack/duffelbag,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "EF" = (
@@ -1003,6 +1057,8 @@
 "Ga" = (
 /obj/structure/table/wood,
 /obj/item/book/manual/wiki/cooking_to_serve_man,
+/obj/item/clothing/suit/apron/chef,
+/obj/item/clothing/head/chefhat,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "GB" = (
@@ -1029,7 +1085,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/stairs/old,
+/turf/open/floor/plasteel/stairs/left,
 /area/ruin/powered/beach)
 "HV" = (
 /turf/open/floor/plating/beach/coastline_b{
@@ -1041,10 +1097,30 @@
 /obj/item/reagent_containers/food/drinks/beer/light,
 /obj/item/reagent_containers/food/drinks/beer/light,
 /obj/item/reagent_containers/food/drinks/beer/light,
-/obj/structure/closet/secure_closet/bar,
 /obj/item/vending_refill/cigarette,
 /obj/item/vending_refill/boozeomat,
+/obj/structure/closet/secure_closet{
+	icon_state = "cabinet";
+	name = "booze storage";
+	req_access = list(25)
+	},
 /obj/item/storage/backpack/duffelbag,
+/obj/item/etherealballdeployer,
+/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/colocup,
+/obj/item/reagent_containers/food/drinks/colocup,
+/obj/item/reagent_containers/food/drinks/colocup,
+/obj/item/reagent_containers/food/drinks/colocup,
+/obj/item/reagent_containers/food/drinks/colocup,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Il" = (
@@ -1064,6 +1140,9 @@
 	dir = 4
 	},
 /turf/closed/wall/mineral/sandstone,
+/area/ruin/powered/beach)
+"Iv" = (
+/turf/open/floor/plasteel/stairs/right,
 /area/ruin/powered/beach)
 "IG" = (
 /turf/open/floor/carpet/royalblue,
@@ -1152,11 +1231,6 @@
 	},
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
-"Mz" = (
-/obj/effect/turf_decal/sand,
-/obj/effect/turf_decal/sand,
-/turf/open/floor/sepia,
-/area/ruin/powered/beach)
 "MO" = (
 /obj/machinery/light{
 	dir = 4
@@ -1231,7 +1305,8 @@
 /area/ruin/powered/beach)
 "PN" = (
 /obj/effect/turf_decal/sand,
-/obj/machinery/jukebox/disco,
+/obj/machinery/jukebox,
+/obj/item/coin/gold,
 /turf/open/floor/sepia,
 /area/ruin/powered/beach)
 "PY" = (
@@ -1261,11 +1336,16 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "RB" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/beer{
-	desc = "Beer advertised to be the best in space.";
-	name = "Masterbrand Beer"
+/obj/structure/closet/cabinet,
+/obj/item/storage/backpack/duffelbag,
+/obj/item/clothing/under/shorts/blue,
+/obj/item/clothing/suit/ianshirt,
+/obj/item/clothing/shoes/sandal{
+	desc = "A very fashionable pair of flip-flops.";
+	name = "flip-flops"
 	},
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/neck/beads,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "RE" = (
@@ -1302,6 +1382,10 @@
 /area/ruin/powered/beach)
 "SZ" = (
 /obj/item/storage/crayons,
+/obj/structure/closet/crate/wooden,
+/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythreeXtwentythree,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "Ti" = (
@@ -1398,10 +1482,14 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "VL" = (
-/obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/structure/closet/crate{
+	name = "fuel crate"
+	},
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/stack/sheet/mineral/coal/ten,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "VN" = (
@@ -1427,6 +1515,19 @@
 /area/ruin/powered/beach)
 "Wf" = (
 /obj/machinery/computer/arcade/battle,
+/turf/open/floor/wood,
+/area/ruin/powered/beach)
+"Wy" = (
+/obj/structure/closet/cabinet,
+/obj/item/storage/backpack/duffelbag,
+/obj/item/clothing/under/shorts/purple,
+/obj/item/clothing/suit/vapeshirt,
+/obj/item/clothing/shoes/cookflops{
+	desc = "A very fashionable pair of flip flops.";
+	name = "flip-flops"
+	},
+/obj/item/clothing/glasses/sunglasses/big,
+/obj/item/clothing/neck/beads,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "WF" = (
@@ -1475,6 +1576,9 @@
 "Zq" = (
 /obj/structure/sign/poster/official/high_class_martini{
 	pixel_x = -32
+	},
+/obj/effect/mob_spawn/human/bartender/alive{
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
@@ -1717,7 +1821,7 @@ xE
 zT
 ap
 ar
-bM
+fB
 lq
 uz
 uz
@@ -1749,7 +1853,7 @@ ap
 ar
 ar
 ar
-bM
+fB
 lq
 uz
 uz
@@ -1781,7 +1885,7 @@ ar
 ar
 ar
 ar
-bM
+fB
 lq
 uz
 uz
@@ -1813,12 +1917,12 @@ ar
 ar
 ar
 DK
-bM
+Iv
 lq
 lq
 lq
 lq
-Mz
+lq
 Fr
 yc
 "}
@@ -1842,7 +1946,7 @@ QS
 ar
 ar
 ER
-ar
+tg
 ar
 bR
 vi
@@ -1873,7 +1977,7 @@ RE
 Uk
 ar
 ar
-Ti
+bC
 Ti
 ar
 bR
@@ -2317,7 +2421,7 @@ aj
 aj
 EE
 aC
-RB
+Wy
 MZ
 Ut
 aA

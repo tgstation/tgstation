@@ -1,0 +1,6 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - rscadd: "A mech support bag."
+  - rscadd: "Combat wrench."
+  - balance: "Made the dark gygax significantly better by adjusting equipment and stats."

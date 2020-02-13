@@ -1,0 +1,5 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - rscadd: "Infrared emitter now uses tgui-next."
+  - rscadd: "Proximity sensor now uses tgui-next."
