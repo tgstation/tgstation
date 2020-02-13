@@ -31,7 +31,9 @@
 	layer = OPENSPACE_LAYER
 	plane = OPENSPACE_PLANE
 
-	vis_contents += new /atom/movable/openspace_backdrop()
+	#if DM_VERSION >= 513
+		vis_contents += new /atom/movable/openspace_backdrop()
+	#endif
 
 	return INITIALIZE_HINT_LATELOAD
 

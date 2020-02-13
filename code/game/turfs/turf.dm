@@ -1,6 +1,5 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
-	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID
 	level = 1
 
 	var/intact = 1
@@ -82,7 +81,9 @@
 		has_opaque_atom = TRUE
 
 	ComponentInitialize()
-
+	#if DM_VERSION >= 513
+		vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID
+	#endif
 	return INITIALIZE_HINT_NORMAL
 
 /turf/proc/Initalize_Atmos(times_fired)

@@ -1,6 +1,5 @@
 
 /obj
-	vis_flags = VIS_INHERIT_PLANE
 	animate_movement = SLIDE_STEPS
 	speech_span = SPAN_ROBOT
 	var/obj_flags = CAN_BE_HIT
@@ -72,6 +71,10 @@
 	if((obj_flags & ON_BLUEPRINTS) && isturf(loc))
 		var/turf/T = loc
 		T.add_blueprints_preround(src)
+
+	#if DM_VERSION >= 513
+		vis_flags = VIS_INHERIT_PLANE
+	#endif
 
 
 /obj/Destroy(force=FALSE)
