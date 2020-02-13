@@ -197,7 +197,7 @@
 /datum/antagonist/ert/families/greet()
 	to_chat(owner, "<B><font size=3 color=red>You are the [name].</font></B>")
 
-	var/missiondesc = "After an uptick in gang violence on [station_name()], you are responding to 911 calls from the station for immediate police assistance!\n"
+	var/missiondesc = "After an uptick in gang violence on [station_name()], you are responding to emergency calls from the station for immediate SSC Police assistance!\n"
 	missiondesc += "Avoid civilian casualties when possible.\n"
 	missiondesc += "Put the boots to any and all gang activity on board the station.\n"
 	missiondesc += "Safely evacuate the station."

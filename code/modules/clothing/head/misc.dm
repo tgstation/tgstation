@@ -496,3 +496,10 @@
 	..()
 	if (slot == ITEM_SLOT_HEAD)
 		user.faction |= "goat"
+
+/obj/item/clothing/head/jackbros
+	name = "frosty hat"
+	desc = "Hee-ho!"
+	icon_state = "JackFrostHat"
+	item_state = "JackFrostHat"
+

@@ -253,3 +253,17 @@
 	strip_delay = 50
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
+
+/obj/item/clothing/under/costume/jackbros
+	name = "jack bros outfit"
+	desc = "For when it's time to hee some hos."
+	icon_state = "JackFrostUniform"
+	item_state = "JackFrostUniform"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/yakuza
+	name = "tojo clan pants"
+	desc = "For those long nights under the traffic cone."
+	icon_state = "MajimaPants"
+	item_state = "MajimaPants"
+	can_adjust = FALSE

@@ -146,6 +146,42 @@
 						/obj/item/clothing/under/suit/henchmen,
 						/obj/item/toy/crayon/spraycan)
 
+/datum/antagonist/gang/yakuza
+	name = "Tojo Clan"
+	roundend_category = "Yakuza"
+	gang_name = "Tojo Clan"
+	gang_id = "YAK"
+	acceptable_clothes = list(/obj/item/clothing/head/soft/yellow,
+							/obj/item/clothing/under/costume/yakuza,
+							/obj/item/clothing/shoes/yakuza,
+							/obj/item/clothing/neck/scarf/yellow,
+							/obj/item/clothing/head/beanie/yellow,
+							/obj/item/clothing/mask/bandana/gold,
+							/obj/item/clothing/head/hardhat,
+							/obj/item/clothing/suit/yakuza)
+	free_clothes = list(/obj/item/clothing/under/costume/yakuza,
+						/obj/item/clothing/shoes/yakuza,
+						/obj/item/clothing/suit/yakuza,
+						/obj/item/clothing/head/hardhat,
+						/obj/item/toy/crayon/spraycan)
+
+/datum/antagonist/gang/jackbros
+	name = "Jack Bros"
+	roundend_category = "Hee-hos"
+	gang_name = "Jack Bros"
+	gang_id = "JB"
+	acceptable_clothes = list(/obj/item/clothing/head/soft/blue,
+							/obj/item/clothing/under/costume/jackbros,
+							/obj/item/clothing/shoes/jackbros,
+							/obj/item/clothing/head/jackbros,
+							/obj/item/clothing/mask/bandana/blue)
+	free_clothes = list(/obj/item/clothing/under/costume/jackbros,
+						/obj/item/clothing/shoes/jackbros,
+						/obj/item/clothing/head/jackbros,
+						/obj/item/toy/crayon/spraycan)
+
+
+
 
 /datum/team/gang
 	var/points = 0

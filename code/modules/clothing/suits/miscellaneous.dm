@@ -766,3 +766,10 @@
 	icon_state = "capformal"
 	item_state = "capspacesuit"
 	armor = list("melee" = 25, "bullet" = 15, "laser" = 25, "energy" = 35, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+
+/obj/item/clothing/suit/yakuza
+	name = "tojo clan jacket"
+	desc = "The jacket of a mad dog."
+	icon_state = "MajimaJacket"
+	item_state = "MajimaJacket_worn"
+	body_parts_covered = ARMS
