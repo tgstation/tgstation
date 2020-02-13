@@ -36,7 +36,7 @@
 /obj/item/gun/energy/goatgun
 	name = "goat gun"
 	desc = "Whoever you fire this at is gonna be in for a baaaaaaad surprise." //ha ha I am funny man please laugh HAHAHAHAHAHAHAHA
-	icon_state = "meteor_gun"
+	icon_state = "goat_gun"
 	item_state = "c20r"
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/goat)
