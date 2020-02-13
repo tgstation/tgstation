@@ -28,6 +28,10 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	name = "Power issues"
 	info = "Welcome to battle cruiser SCSBC-12!<br>Our most advanced systems allow you to fly in space and never worry about power issues!<br>However, emergencies occur, and in case of power loss, <b>you must</b> enable emergency generator using uranium as fuel and enable turrets in bridge afterwards.<br><br><b>REMEMBER! CYBERSUN INDUSTRIES ARE NOT RESPONSIBLE FOR YOUR DEATH OR SHIP LOSS WHEN TURRETS ARE DISABLED!</b><br><br>Cyber Sun Industries (C) 2484."
 
+obj/item/paper/fluff/ruins/forgottenship/missionobj
+	name = "Mission objectives"
+	info = "Greetings, operatives. You are assigned to SCSBC-12(Syndicate Cyber Sun Battle Cruiser 12) to protect our high-ranking officer while he is on his way to next outpost. While you are travelling, he is the captain of this ship and <b>you must</b> obey his orders.<br><br>Remember, disobeying high-ranking officer orders is a reason for termination."
+
 ///////////	forgottenship areas
 
 /area/ruin/space/has_grav/syndicate_forgotten_ship
@@ -66,3 +70,45 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cybersun
 	actions_types = list(/datum/action/item_action/toggle_helmet)
 	jetpack = /obj/item/tank/jetpack/suit
+
+//Special NT NPCs
+
+/mob/living/simple_animal/hostile/nanotrasen/ranged/assault
+	name = "Nanotrasen Assault Officer"
+	desc = "Nanotrasen Assault Officer. Contact CentCom if you saw him on your station. Prepare to die, if you've been found near Syndicate property."
+	icon_state = "nanotrasenrangedassault"
+	icon_living = "nanotrasenrangedassault"
+	icon_dead = null
+	icon_gib = "syndicate_gib"
+	ranged = 1
+	rapid = 4
+	rapid_fire_delay = 1
+	rapid_melee = 1
+	retreat_distance = 2
+	minimum_distance = 4
+	casingtype = /obj/item/ammo_casing/c46x30mm
+	projectilesound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
+	loot = list(/obj/effect/mob_spawn/human/corpse/nanotrasenassaultsoldier)
+
+/mob/living/simple_animal/hostile/nanotrasen/elite
+	name = "Nanotrasen Elite Assault Officer"
+	desc = "Pray for your life, syndicate. Run while you can."
+	icon = 'icons/mob/simple_human.dmi'
+	icon_state = "nanotrasen_ert"
+	icon_living = "nanotrasen_ert"
+	maxHealth = 150
+	health = 150
+	melee_damage_lower = 13
+	melee_damage_upper = 18
+	ranged = 1
+	rapid = 3
+	rapid_fire_delay = 5
+	rapid_melee = 3
+	retreat_distance = 0
+	minimum_distance = 1
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+	projectiletype = /obj/projectile/beam/laser
+	projectilesound = 'sound/weapons/pulse.ogg'
+	loot = list(/obj/effect/mob_spawn/human/corpse/nanotrasenassaultsoldier)
+	faction = list(ROLE_DEATHSQUAD)
