@@ -81,6 +81,7 @@
 		data["overload"] = target.dos_overload
 		data["capacity"] = target.dos_capacity
 	else
+		data["target"] = FALSE
 		data["relays"] = list()
 		for(var/obj/machinery/ntnet_relay/R in SSnetworks.station_network.relays)
 			data["relays"] += list(list("id" = R.uid))

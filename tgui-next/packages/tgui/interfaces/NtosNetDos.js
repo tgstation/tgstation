@@ -39,9 +39,9 @@ export const NtosNetDos = props => {
     const factor = (overload / capacity);
     while (outString.length < length) {
       if (Math.random() > factor) {
-        outString += "1";
-      } else {
         outString += "0";
+      } else {
+        outString += "1";
       }
     }
     return outString;
