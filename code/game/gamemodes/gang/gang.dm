@@ -23,6 +23,8 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	announce_span = "danger"
 	announce_text = "Grove For Lyfe!"
 	reroll_friendly = FALSE
+	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
+	protected_jobs = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	var/check_counter = 0
 	var/endtime = null
 	var/fuckingdone = FALSE
@@ -37,6 +39,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	var/list/gang_locations = list()
 	var/lock_stars = FALSE
 	var/cops_arrived = FALSE
+	var/gang_balance_cap = 3
 	var/current_stars = "wanted_0"
 
 /datum/game_mode/gang/pre_setup()

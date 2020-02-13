@@ -8,6 +8,9 @@
 
 /obj/item/gang_induction_package/attack_self(mob/living/user)
 	..()
+	if(HAS_TRAIT(user, TRAIT_MINDSHIELD))
+		to_chat(user, "You attended a seminar on not signing up for a gang, and are not interested.")
+		return
 	attempt_join_gang(user)
 
 /obj/item/gang_induction_package/proc/add_to_gang(var/mob/living/user)
