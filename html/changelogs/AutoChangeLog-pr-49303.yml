@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - tweak: "Unanchored solar assemblies go off-centre to indicate they need securing. Secured ones centre themselves"

@@ -227,3 +227,10 @@
 	..()
 	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
 	charges--
+
+/////////////////////////////////////
+//WAND OF NOTHING
+/////////////////////////////////////
+
+/obj/item/gun/magic/wand/nothing
+	ammo_type = /obj/item/ammo_casing/magic/nothing
