@@ -18,9 +18,7 @@
 	data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC // show jobs
 	path_image_color = "#2cac12"
 
-	var/TurnedOn = FALSE
 	var/current_color
-	var/TimerID
 	var/range = 7
 	var/power = 3
 
@@ -28,7 +26,7 @@
 	. = ..()
 	update_icon()
 	auto_patrol = TRUE
-	Vibe()
+	on = TRUE
 
 /mob/living/simple_animal/bot/vibebot/get_controls(mob/user)
 	var/dat
@@ -49,19 +47,15 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	return	dat
 /mob/living/simple_animal/bot/vibebot/turn_on()
 	. = ..()
-	TurnedOn = TRUE //Mood
+	on = TRUE
 	update_icon()
 	Vibe()
 
 /mob/living/simple_animal/bot/vibebot/turn_off()
 	. = ..()
-	TurnedOn = FALSE
-	update_icon()
-	set_light(0)
+	on = FALSE
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	update_icon()
-	if(TimerID)
-		deltimer(TimerID)
 
 /mob/living/simple_animal/bot/vibebot/proc/Vibe()
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
@@ -69,7 +63,6 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	set_light(range, power, current_color)
 	add_atom_colour("#[current_color]", FIXED_COLOUR_PRIORITY)
 	update_icon()
-	TimerID = addtimer(CALLBACK(src, .proc/Vibe), 5, TIMER_STOPPABLE)  //Call ourselves every 0.5 seconds to change colors
 
 /mob/living/simple_animal/bot/vibebot/proc/retaliate(mob/living/carbon/human/H)
 
@@ -86,5 +79,8 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		if(mode == BOT_PATROL)
 			bot_patrol()
 
-///obj/structure/vibebot/update_icon_state()
-//	icon_state = "vibebot_head_[TurnedOn]"
+	if(on == TRUE)
+		Vibe()
+
+	if(on == FALSE)
+		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
