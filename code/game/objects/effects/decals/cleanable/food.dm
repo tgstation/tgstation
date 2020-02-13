@@ -44,14 +44,15 @@
 
 /obj/effect/decal/cleanable/food/salt/Crossed(atom/movable/AM)
 	..()
-	if(isliving(AM))
-		if(iscarbon(AM))
-			var/mob/living/carbon/C = AM
-			if(C.m_intent == MOVE_INTENT_WALK)
-				return
-		safepasses--
-		if(safepasses <= 0 && !QDELETED(src))
-			qdel(src)
+	if(!isliving(AM))
+		return
+	if(iscarbon(AM))
+		var/mob/living/carbon/C = AM
+		if(C.m_intent == MOVE_INTENT_WALK)
+			return
+	safepasses--
+	if(safepasses <= 0 && !QDELETED(src))
+		qdel(src)
 
 /obj/effect/decal/cleanable/food/flour
 	name = "flour"
