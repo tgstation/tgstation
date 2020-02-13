@@ -54,7 +54,7 @@
 	var/datum/team/ashwalkers/team
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
-	new_spawn.fully_replace_character_name(null,random_unique_lizard_name(gender))
+	new_spawn.fully_replace_character_name(null,lizard_name(gender))
 	to_chat(new_spawn, "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Don't leave your nest undefended, protect it with your life. Glory to the Necropolis!</b>")
 
 	new_spawn.mind.add_antag_datum(/datum/antagonist/ashwalker, team)
@@ -164,7 +164,7 @@
 			if(has_owner)
 				H.fully_replace_character_name(null, "[initial(X.prefix)] Golem ([rand(1,999)])")
 			else
-				H.fully_replace_character_name(null, H.dna.species.random_name())
+				H.fully_replace_character_name(null, H.dna.species.random_unique_name())
 		else
 			H.fully_replace_character_name(null, name)
 	if(has_owner)

@@ -29,15 +29,15 @@
 	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT + 20) // This puts lizards 10 above lavaland max heat for ash lizards.
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 10)
 
+	var/verbs_the_noun_chance = 50
+
 /// Lizards are cold blooded and do not stabilize body temperature naturally
 /datum/species/lizard/natural_bodytemperature_stabilization(mob/living/carbon/human/H)
 	return 0
 
 /datum/species/lizard/random_name(gender,unique,lastname)
-	if(unique)
-		return random_unique_lizard_name(gender)
 
-	var/randname = lizard_name(gender)
+	var/randname = prob(verbs_the_noun_chance) ? lizard_verb_name() : lizard_name(gender)
 
 	if(lastname)
 		randname += " [lastname]"
@@ -86,3 +86,4 @@
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
 	inherent_traits = list(TRAIT_CHUNKYFINGERS,TRAIT_NOBREATH)
 	species_language_holder = /datum/language_holder/lizard/ash
+	verbs_the_noun_chance = 0

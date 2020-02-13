@@ -4,6 +4,9 @@
 	else
 		return "[pick(GLOB.lizard_names_female)]-[pick(GLOB.lizard_names_female)]"
 
+/proc/lizard_verb_name()
+	return "[pick(GLOB.lizard_name_verbs)]-The-[pick(GLOB.lizard_name_nouns)]"
+
 /proc/ethereal_name()
 	var/tempname = "[pick(GLOB.ethereal_names)] [random_capital_letter()]"
 	if(prob(65))

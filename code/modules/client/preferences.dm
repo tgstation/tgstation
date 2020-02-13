@@ -130,7 +130,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
 	C?.update_movement_keys(src)
-	real_name = pref_species.random_name(gender,1)
+	real_name = pref_species.random_unique_name(gender)
 	if(!loaded_preferences_successfully)
 		save_preferences()
 	save_character()		//let's save this new random character so it doesn't keep generating new ones.
@@ -1118,7 +1118,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if("random")
 			switch(href_list["preference"])
 				if("name")
-					real_name = pref_species.random_name(gender,1)
+					real_name = pref_species.random_unique_name(gender)
 				if("age")
 					age = rand(AGE_MIN, AGE_MAX)
 				if("hair")
@@ -1316,7 +1316,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3]))
 							features["mcolor"] = pref_species.default_color
 						if(randomise[RANDOM_NAME])
-							real_name = pref_species.random_name(gender)
+							real_name = pref_species.random_unique_name(gender)
 
 				if("mutant_color")
 					var/new_mutantcolor = input(user, "Choose your character's alien/mutant color:", "Character Preference","#"+features["mcolor"]) as color|null
@@ -1701,7 +1701,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("changeslot")
 					if(!load_character(text2num(href_list["num"])))
 						random_character()
-						real_name = random_unique_name(gender)
+						real_name = random_unique_human_name(gender)
 						save_character()
 
 				if("tab")
@@ -1722,7 +1722,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	if((randomise[RANDOM_NAME] || randomise[RANDOM_NAME_ANTAG] && antagonist) && !character_setup)
 		slot_randomized = TRUE
-		real_name = pref_species.random_name(gender)
+		real_name = pref_species.random_unique_name(gender)
 
 	if(roundstart_checks)
 		if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == "human"))
@@ -1782,7 +1782,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/get_default_name(name_id)
 	switch(name_id)
 		if("human")
-			return random_unique_name()
+			return random_unique_human_name()
 		if("ai")
 			return pick(GLOB.ai_names)
 		if("cyborg")
@@ -1795,7 +1795,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return DEFAULT_RELIGION
 		if("deity")
 			return DEFAULT_DEITY
-	return random_unique_name()
+	return random_unique_human_name()
 
 /datum/preferences/proc/ask_for_custom_name(mob/user,name_id)
 	var/namedata = GLOB.preferences_custom_names[name_id]

@@ -92,7 +92,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 			if(body.real_name)
 				name = body.real_name
 			else
-				name = random_unique_name(gender)
+				name = random_unique_human_name(gender)
 
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
 
@@ -119,7 +119,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	forceMove(T)
 
 	if(!name)							//To prevent nameless ghosts
-		name = random_unique_name(gender)
+		name = random_unique_human_name(gender)
 	real_name = name
 
 	if(!fun_verbs)
@@ -754,7 +754,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	if(client.prefs.randomise[RANDOM_NAME])
-		client.prefs.real_name = random_unique_name(gender)
+		client.prefs.real_name = random_unique_human_name(gender)
 	if(client.prefs.randomise[RANDOM_BODY])
 		client.prefs.random_character(gender)
 

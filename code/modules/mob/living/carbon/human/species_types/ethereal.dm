@@ -54,9 +54,7 @@
 	UnregisterSignal(C, COMSIG_ATOM_EMAG_ACT)
 	UnregisterSignal(C, COMSIG_ATOM_EMP_ACT)
 
-/datum/species/ethereal/random_name(gender,unique,lastname)
-	if(unique)
-		return random_unique_ethereal_name()
+/datum/species/ethereal/random_name(gender,lastname)
 
 	var/randname = ethereal_name()
 
