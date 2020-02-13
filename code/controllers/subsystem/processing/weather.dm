@@ -4,7 +4,7 @@
 #define END_STAGE 4
 
 //Used for all kinds of weather, ex. lavaland ash storms.
-SUBSYSTEM_DEF(weather)
+PROCESSING_SUBSYSTEM_DEF(weather)
 	name = "Weather"
 	flags = SS_BACKGROUND
 	wait = 10
@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(weather)
 	var/list/eligible_zlevels = list()
 	var/list/next_hit_by_zlevel = list() //Used by barometers to know when the next storm is coming
 
-/datum/controller/subsystem/weather/fire()
+/datum/controller/subsystem/processing/weather/fire()
 	. = ..()		//Active weather is handled by . = ..() processing subsystem base fire().
 
 	// start random weather on relevant levels
