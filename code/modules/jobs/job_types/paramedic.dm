@@ -32,7 +32,7 @@
 	id = /obj/item/card/id
 	l_pocket = /obj/item/pda/medical
 	suit_store = /obj/item/flashlight/pen
-	backpack_contents = list(/obj/item/storage/bag/bio=1, /obj/item/roller=1)
+	backpack_contents = list(/obj/item/roller=1)
 	pda_slot = ITEM_SLOT_LPOCKET
 
 	backpack = /obj/item/storage/backpack/medic
