@@ -49,7 +49,7 @@ obj/item/paper/fluff/ruins/forgottenship/missionobj
 	//Cybersun hardsuit
 
 /obj/item/clothing/head/helmet/space/hardsuit/cybersun
-	name = "cybersun hardsuit helmet"
+	name = "Cybersun hardsuit helmet"
 	desc = "Prototype hardsuit helmet with experimental armor plates, protecting from laser-based weapons very well, while giving limited protection against anything else."
 	icon_state = "cybersun"
 	item_state = "cybersun"
@@ -63,7 +63,7 @@ obj/item/paper/fluff/ruins/forgottenship/missionobj
 	icon_state = "cybersun"
 	item_state = "cybersun"
 	hardsuit_type = "cybersun"
-	name = "cybersun hardsuit"
+	name = "Cybersun hardsuit"
 	desc = "Prototype hardsuit with experimental armor plates, protecting from laser-based weapons very well, while giving limited protection against anything else. Requires the user to activate the inner mechanism in order to unequip it, making it nearly impossible to take it off from somebody else."
 	armor = list("melee" = 35, "bullet" = 35, "laser" = 70, "energy" = 50, "bomb" = 15, "bio" = 100, "rad" = 50, "fire" = 95, "acid" = 95)
 	strip_delay = 600
@@ -110,5 +110,5 @@ obj/item/paper/fluff/ruins/forgottenship/missionobj
 	minbodytemp = 0
 	projectiletype = /obj/projectile/beam/laser
 	projectilesound = 'sound/weapons/pulse.ogg'
-	loot = list(/obj/effect/mob_spawn/human/corpse/nanotrasenassaultsoldier)
+	loot = list(/obj/effect/gibspawner/human)
 	faction = list(ROLE_DEATHSQUAD)
