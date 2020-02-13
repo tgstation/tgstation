@@ -126,8 +126,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	guardiancolor = input(src,"What would you like your color to be?","Choose Your Color","#ffffff") as color|null
 	if(!recolorentiresprite)
 		cooloverlay.color = guardiancolor
+		cut_overlay(cooloverlay)
+		add_overlay(cooloverlay)
 	else
-		color = guardiancolor
+		add_atom_colour(guardiancolor, FIXED_COLOUR_PRIORITY)
 	var/new_name = stripped_input(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN)
 	if(new_name)
 		visible_message("<span class='notice'>Your new name <span class='name'>[new_name]</span> anchors itself in your mind.</span>")
