@@ -11,21 +11,11 @@
 	needs_item_input = TRUE
 	processing_flags = NEVER_PROCESS
 
-/obj/machinery/mineral/unloading_machine/pickup_items()
-	if(input_turf)
-		var/limit
-		for(var/obj/structure/ore_box/B in input_turf)
-			for(var/obj/item/stack/ore/O in B)
-				B.contents -= O
-				unload_mineral(O)
-				limit++
-				if (limit>=10)
-					return
-				CHECK_TICK
-			CHECK_TICK
-		for(var/obj/item/I in input_turf)
-			unload_mineral(I)
-			limit++
-			if (limit>=10)
-				return
-			CHECK_TICK
+/obj/machinery/mineral/unloading_machine/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
+	if(istype(target, /obj/structure/ore_box))
+		var/obj/structure/ore_box/box = target
+		for(var/obj/item/stack/ore/O in box)
+			unload_mineral(O)
+	else if(istype(target, /obj/item/stack/ore))
+		var/obj/item/stack/ore/O = target
+		unload_mineral(O)

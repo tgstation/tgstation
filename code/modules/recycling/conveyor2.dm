@@ -56,6 +56,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if(newid)
 		id = newid
 	update_move_direction()
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .Crossed) // For receiving signals from newly created items. These do not call Crossed() so it needs a signal
 	LAZYADD(GLOB.conveyors_by_id[id], src)
 
 /obj/machinery/conveyor/Destroy()
@@ -143,7 +144,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 			affecting.Add(AM)
 
 // when some item or mob moves over the conveyor belt
-/obj/machinery/conveyor/Crossed()
+/obj/machinery/conveyor/Crossed(atom/movable/AM, atom/oldLoc)
 	// if the conveyor isn't switched on or is broken / has no power
 	if(!operating || machine_stat & (BROKEN | NOPOWER))
 		return

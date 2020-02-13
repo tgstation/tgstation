@@ -24,13 +24,13 @@
 	input_turf = get_step(src, input_dir) // get the turf that players need to place the ore/items onto, defaults to NORTH at round start
 	if(input_turf && istype(input_turf)) // make sure there is actually a turf
 		// listens for when an atom ENTERS the input_turf, tells the machine to deal with the ores/items
-		RegisterSignal(input_turf, COMSIG_ATOM_ENTERED, .proc/pickup_items, TRUE)
+		RegisterSignal(input_turf, COMSIG_ATOM_ENTERED, .proc/pickup_item)
 
 /obj/machinery/mineral/proc/unregister_input_turf()
 	if(input_turf)
 		UnregisterSignal(input_turf, COMSIG_ATOM_ENTERED)
 
-/obj/machinery/mineral/proc/pickup_items()
+/obj/machinery/mineral/proc/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
 	return
 
 /obj/machinery/mineral/proc/unload_mineral(atom/movable/S)
@@ -166,9 +166,12 @@
 
 	return dat
 
-/obj/machinery/mineral/processing_unit/pickup_items()
-	for(var/obj/item/stack/ore/O in input_turf)
-		process_ore(O)
+/obj/machinery/mineral/processing_unit/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
+	if(!istype(target, /obj/item/stack/ore))
+		return
+
+	var/obj/item/stack/ore/O = target
+	process_ore(O)
 
 /obj/machinery/mineral/processing_unit/process()
 	if(on)

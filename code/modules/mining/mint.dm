@@ -35,12 +35,15 @@
 	chosen = SSmaterials.GetMaterialRef(chosen)
 
 
-/obj/machinery/mineral/mint/pickup_items()
+/obj/machinery/mineral/mint/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
+	if(!istype(target, /obj/item/stack))
+		return
+
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	for(var/obj/item/stack/O in input_turf)
-		var/inserted = materials.insert_item(O)
-		if(inserted)
-			qdel(O)
+	var/obj/item/stack/S = target
+
+	if(materials.insert_item(S))
+		qdel(S)
 
 /obj/machinery/mineral/mint/process()
 	if(processing)

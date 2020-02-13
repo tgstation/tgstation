@@ -146,7 +146,7 @@ Class Procs:
 
 	return INITIALIZE_HINT_LATELOAD
 
-// helper procs for starting and stoppping the appropriate subsystem that a machine uses. Uses their `subsystem_type` var to choose
+/// helper procs for starting and stoppping the appropriate subsystem that a machine uses. Uses their `subsystem_type` var to choose
 /obj/machinery/proc/begin_processing()
 	var/datum/controller/subsystem/processing/subsystem = locate(subsystem_type) in Master.subsystems
 	START_PROCESSING(subsystem, src)

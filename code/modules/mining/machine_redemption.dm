@@ -16,12 +16,10 @@
 	ui_y = 550
 
 	var/points = 0
-	var/ore_pickup_rate = 15
 	var/ore_multiplier = 1
 	var/point_upgrade = 1
 	var/list/ore_values = list(/datum/material/iron = 1, /datum/material/glass = 1,  /datum/material/plasma = 15,  /datum/material/silver = 16, /datum/material/gold = 18, /datum/material/titanium = 30, /datum/material/uranium = 30, /datum/material/diamond = 50, /datum/material/bluespace = 50, /datum/material/bananium = 60)
 	var/console_notify_timer // timer used for callbacks to send_console_message(). Used for preventing multiple calls to the proc while the ORM is eating a stack of ores
-	var/list/ore_buffer = list()
 	var/datum/techweb/stored_research
 	var/obj/item/disk/design_disk/inserted_disk
 	var/datum/component/remote_materials/materials
@@ -39,23 +37,19 @@
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/RefreshParts()
-	var/ore_pickup_rate_temp = 15
 	var/point_upgrade_temp = 1
 	var/ore_multiplier_temp = 1
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		ore_multiplier_temp = 0.65 + (0.35 * B.rating)
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		ore_pickup_rate_temp = 15 * M.rating
 	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
 		point_upgrade_temp = 0.65 + (0.35 * L.rating)
-	ore_pickup_rate = ore_pickup_rate_temp
 	point_upgrade = point_upgrade_temp
 	ore_multiplier = round(ore_multiplier_temp, 0.01)
 
 /obj/machinery/mineral/ore_redemption/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Smelting <b>[ore_multiplier]</b> sheet(s) per piece of ore.<br>Reward point generation at <b>[point_upgrade*100]%</b>.<br>Ore pickup speed at <b>[ore_pickup_rate]</b>.</span>"
+		. += "<span class='notice'>The status display reads: Smelting <b>[ore_multiplier]</b> sheet(s) per piece of ore.<br>Reward point generation at <b>[point_upgrade*100]%</b>.</span>"
 	if(panel_open)
 		. += "<span class='notice'>Alt-click to rotate the input and output direction.</span>"
 
@@ -66,8 +60,6 @@
 
 	if(O.refined_type == null)
 		return
-
-	ore_buffer -= O
 
 	if(O && O.refined_type)
 		points += O.points * point_upgrade * O.amount
@@ -114,10 +106,7 @@
 	return build_amount
 
 /obj/machinery/mineral/ore_redemption/proc/process_ores(list/ores_to_process)
-	var/current_amount = 0
 	for(var/ore in ores_to_process)
-		if(current_amount >= ore_pickup_rate)
-			break
 		smelt_ore(ore)
 
 /obj/machinery/mineral/ore_redemption/proc/send_console_message()
@@ -151,33 +140,27 @@
 	))
 	signal.send_to_receivers()
 
-/obj/machinery/mineral/ore_redemption/pickup_items()
+/obj/machinery/mineral/ore_redemption/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
 	if(!materials.mat_container || panel_open || !powered())
 		return
 
-	var/atom/input = input_turf
-	var/obj/structure/ore_box/OB = locate() in input
-	if(OB)
-		input = OB
+	if(istype(target, /obj/structure/ore_box))
+		var/obj/structure/ore_box/box = target
+		process_ores(box.contents)
+	else if(istype(target, /obj/item/stack/ore))
+		var/obj/item/stack/ore/O = target
+		smelt_ore(O)
+	else
+		return
 
-	for(var/obj/item/stack/ore/O in input)
-		if(QDELETED(O))
-			continue
-		ore_buffer |= O
-		O.forceMove(src)
-		CHECK_TICK
-
-	if(LAZYLEN(ore_buffer))
-		process_ores(ore_buffer)
-		if(!console_notify_timer)
-			// gives 5 seconds for a load of ores to be sucked up by the ORM before it sends out request console notifications. This should be enough time for most deposits that people make
-			console_notify_timer = addtimer(CALLBACK(src, .proc/send_console_message), 50)
+	if(!console_notify_timer)
+		// gives 5 seconds for a load of ores to be sucked up by the ORM before it sends out request console notifications. This should be enough time for most deposits that people make
+		console_notify_timer = addtimer(CALLBACK(src, .proc/send_console_message), 50)
 
 /obj/machinery/mineral/ore_redemption/attackby(obj/item/W, mob/user, params)
 	if(default_unfasten_wrench(user, W))
 		if(anchored)
 			register_input_turf() // someone just wrenched us down, re-register the turf
-			pickup_items() // in case there's any ore already sitting on the input_turf when we wrench the ORM down, we want to pick up the ores immediately
 		else
 			unregister_input_turf() // someone just un-wrenched us, unregister the turf
 		return
