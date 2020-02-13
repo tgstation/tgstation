@@ -560,6 +560,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		used = FALSE
 		return
 	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user, theme)
+	G.name = mob_name
 	G.summoner = user
 	G.key = key
 	G.mind.enslave_mind_to_creator(user)
