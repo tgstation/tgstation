@@ -367,7 +367,7 @@
 	name = "vend-a-tray"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "laserbox0"
-	desc = "A display case with an ID-card swipe, to purchase the contents. Ctrl-Click to purchase the contained item."
+	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents."
 	density = FALSE
 	max_integrity = 100
 	req_access = list(ACCESS_KITCHEN)
@@ -396,28 +396,55 @@
 
 /obj/structure/displaycase/forsale/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/card/id))
+		//Card Registration
 		var/obj/item/card/id/potential_acc = I
+		if(!potential_acc.registered_account)
+			to_chat(user, "<span class='warning'>This ID card has no account registered!</span>")
+			return
+		if(payments_acc != potential_acc.registered_account && payments_acc)
+			to_chat(user, "<span class='warning'>This Vend-a-tray is already registered!</span>")
+			return
 		if(!payments_acc && potential_acc.registered_account)
 			payments_acc = potential_acc.registered_account
 			playsound(src, 'sound/machines/click.ogg', 20, TRUE)
-			to_chat(user, "<span class='notice'>Vend-a-tray registered. Use a PDA with your ID inside to change the sale price.</span>")
-		else if(!potential_acc.registered_account)
-			to_chat(user, "<span class='warning'>This ID card has no account registered!</span>")
+			to_chat(user, "<span class='notice'>Vend-a-tray registered. Use your ID on grab intent to change the sale price, or disarm intent to open the tray.</span>")
 			return
-		else if(payments_acc != potential_acc.registered_account)
-			to_chat(user, "<span class='warning'>This Vend-a-tray is already registered!</span>")
-			return
-	if(istype(I, /obj/item/pda))
-		var/obj/item/pda/pda = I
-		if(pda.id.registered_account != payments_acc)
-			to_chat(user, "<span class='notice'>You don't own [src].</span>")
-			return
-		var/new_price = input("Set the sale price for this vend-a-tray.","new price") as num|null
-		if(!new_price || (get_dist(src,user) > 1))
-			return
-		sale_price = CLAMP(round(new_price, 1), 10, 1000)
-		to_chat(user, "<span class='notice'>The cost is now set to [sale_price].</span>")
-		return 1
+		//Buying the contained item with the ID.
+		if(user.a_intent == INTENT_HELP)
+			if(!showpiece)
+				to_chat(user, "<span class='notice'>There's nothing for sale.</span>")
+				return 1
+			if(broken)
+				to_chat(user, "<span class='notice'>[src] appears to be broken.</span>")
+				return 1
+			var/confirm = alert(user, "Purchase [showpiece] for [sale_price]?", "Purchase?", "Confirm", "Cancel")
+			if(confirm == "Cancel")
+				return 1
+			var/datum/bank_account/account = potential_acc.registered_account
+			if(!account.has_money(sale_price))
+				to_chat(user, "<span class='notice'>You do not possess the funds to purchase this.</span>")
+				return 1
+			else
+				account.adjust_money(-sale_price)
+				if(payments_acc)
+					payments_acc.adjust_money(sale_price)
+				user.put_in_hands(showpiece)
+				to_chat(user, "<span class='notice'>You purchase [showpiece] for [sale_price] credits.</span>")
+				playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
+				icon = 'icons/obj/stationobjs.dmi'
+				flick("laserbox_vend", src)
+				showpiece = null
+				update_icon()
+				return 1
+		//Setting the object's price.
+		if(user.a_intent == INTENT_GRAB)
+			var/new_price_input = input(user,"Set the sale price for this vend-a-tray.","new price",0) as num|null
+			if(isnull(new_price_input) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+				return
+			new_price_input = CLAMP(round(new_price_input, 1), 10, 1000)
+			sale_price = new_price_input
+			to_chat(user, "<span class='notice'>The cost is now set to [sale_price].</span>")
+			return 1
 	if(I.tool_behaviour == TOOL_WRENCH && open && user.a_intent == INTENT_HELP )
 		if(anchored)
 			to_chat(user, "<span class='notice'>You start unsecuring [src]...</span>")
@@ -435,6 +462,8 @@
 	else if(I.tool_behaviour == TOOL_WRENCH && !open && user.a_intent == INTENT_HELP)
 		to_chat(user, "<span class='notice'>[src] must be open to move it.</span>")
 		return
+	if(istype(I, /obj/item/pda))
+		return 1
 	. = ..()
 
 /obj/structure/displaycase/forsale/multitool_act(mob/living/user, obj/item/I)
@@ -459,37 +488,6 @@
 		. += "<span class='notice'>[showpiece] is for sale for [sale_price] credits.</span>"
 	if(broken)
 		. += "<span class='notice'>[src] is sparking and the hover field generator seems to be overloaded. Use a multitool to fix it.</span>"
-
-/obj/structure/displaycase/forsale/CtrlClick(mob/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/customer = user
-		if(!showpiece)
-			to_chat(user, "<span class='notice'>There's nothing for sale.</span>")
-			return
-		if(broken)
-			to_chat(user, "<span class='notice'>[src] appears to be broken.</span>")
-			return
-		if(customer.get_idcard(TRUE))
-			var/obj/item/card/id/C = customer.get_idcard(TRUE)
-			var/confirm = alert(user, "Purchase [showpiece] for [sale_price]?", "Purchase?", "Confirm", "Cancel")
-			if(confirm == "Cancel")
-				return
-			if(C.registered_account)
-				var/datum/bank_account/account = C.registered_account
-				if(!account.has_money(sale_price))
-					to_chat(user, "<span class='notice'>You do not possess the funds to purchase this.</span>")
-					return
-				else
-					account.adjust_money(-sale_price)
-					if(payments_acc)
-						payments_acc.adjust_money(sale_price)
-					customer.put_in_hands(showpiece)
-					to_chat(user, "<span class='notice'>You purchase [showpiece] for [sale_price] credits.</span>")
-					playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
-					icon = 'icons/obj/stationobjs.dmi'
-					flick("laserbox_vend", src)
-					showpiece = null
-					update_icon()
 
 /obj/structure/displaycase/forsale/obj_break(damage_flag)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
