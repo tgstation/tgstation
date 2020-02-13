@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 "aa" = (/turf/open/space/basic,/area/space)
 "ab" = (/turf/open/space/basic,/area/space/nearstation)
 "ac" = (/obj/machinery/porta_turret/syndicate/energy{armor = list("melee" = 80, "bullet" = 30, "laser" = 50, "energy" = 50, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100); dir = 4; name = "Syndicate Ship Turret"; on = 0; req_one_access_txt = "0"; throw_speed = 4; use_power = 1},/turf/closed/wall/r_wall/syndicate/nodiagonal,/area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -211,3 +212,218 @@ aaaaaaaaaaaaaaaaaaaaaaaaaadpaYaYaYaYaaaYaYaYaYaYdpaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaYaYaaaaaYaYaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaYaaaaaYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
+=======
+"aa" = (/turf/open/space/basic,/area/space)
+"ab" = (/turf/open/space/basic,/area/space/nearstation)
+"ac" = (,/turf/closed/wall/r_wall/syndicate,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ad" = (/turf/closed/wall/r_wall/syndicate,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ae" = (,/turf/closed/wall/r_wall/syndicate/nodiagonal,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"af" = (/obj/structure/fans/tiny,,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ag" = (,/turf/open/space/basic,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ah" = (/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ai" = (/obj/machinery/light{dir = 1},/obj/item/aiModule/reset/purge,/obj/structure/table/reinforced,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aj" = (,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ak" = (,/obj/item/coin/antagtoken,/obj/item/coin/gold,/obj/item/coin/gold,/obj/item/coin/gold,/obj/item/coin/gold,/obj/item/dnainjector/thermal,/obj/item/firing_pin/implant/pindicate,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"al" = (/obj/machinery/light{dir = 1},/obj/item/aiModule/core/freeformcore,/obj/structure/table/reinforced,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"am" = (,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"an" = (/obj/machinery/light{dir = 1},/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ao" = (/obj/machinery/recharge_station,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ap" = (,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aq" = (/obj/machinery/light{dir = 1},/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ar" = (/turf/open/space/basic,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"as" = (,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"at" = (/obj/structure/table/reinforced,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"au" = (/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"av" = (/obj/structure/filingcabinet,,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aw" = (,/mob/living/simple_animal/hostile/nanotrasen/ranged/assault,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ax" = (/obj/structure/chair/comfy/shuttle,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ay" = (,/obj/structure/cable,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"az" = (,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aA" = (/obj/structure/table/reinforced,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aB" = (,,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aC" = (/obj/structure/table/reinforced,/obj/item/restraints/handcuffs,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aD" = (/obj/structure/cable,,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aE" = (,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aF" = (/obj/structure/sign/warning/vacuum/external,/turf/closed/wall/r_wall/syndicate,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aG" = (/obj/structure/sign/poster/contraband/syndicate_recruitment,/turf/closed/wall/r_wall/syndicate,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aH" = (,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aI" = (,/turf/open/space/basic,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aJ" = (/obj/effect/mob_spawn/human/syndicatespace/captain,/turf/open/floor/carpet/royalblack,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aK" = (/turf/open/floor/carpet/royalblack,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aL" = (/obj/structure/chair/comfy/black,/turf/open/floor/carpet/royalblack,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aM" = (/obj/structure/table/reinforced,,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aN" = (/obj/structure/table/reinforced,/obj/item/flashlight/lamp,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aO" = (/obj/structure/cable,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aP" = (/obj/machinery/vending/cigarette/syndicate,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aQ" = (,/obj/effect/spawner/lootdrop/armory_contraband/metastation,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aR" = (/obj/structure/window/plasma/reinforced/plastitanium,,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aS" = (,/obj/item/crowbar/red,/obj/item/ammo_box/magazine/pistolm9mm,/obj/item/ammo_box/magazine/pistolm9mm,/turf/open/floor/carpet/royalblack,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aT" = (/obj/machinery/light,/turf/open/floor/carpet/royalblack,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aU" = (/obj/structure/table/reinforced,/obj/item/paper,/obj/item/pen,/obj/machinery/light,/turf/open/floor/carpet/royalblack,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aV" = (/obj/structure/table/reinforced,,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aW" = (,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aX" = (/obj/structure/chair/comfy/shuttle,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aY" = (,/obj/item/ammo_box/c10mm,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"aZ" = (,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ba" = (,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bb" = (,,/turf/open/floor/carpet/royalblack,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bc" = (/obj/structure/sign/poster/contraband/syndicate_pistol,/turf/closed/wall/r_wall/syndicate,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bd" = (,/obj/structure/cable,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"be" = (/obj/machinery/light{dir = 8},/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bf" = (,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bg" = (/obj/machinery/light{dir = 4},/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bh" = (/obj/machinery/light{dir = 8},/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bi" = (/obj/structure/table/reinforced,/obj/item/toy/plush/nukeplushie,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bj" = (/obj/machinery/power/smes,/obj/structure/cable,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bk" = (,/obj/structure/cable,/obj/machinery/light{dir = 1},/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bl" = (/obj/structure/cable,,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bm" = (,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bn" = (/obj/machinery/light{dir = 1},,/obj/item/wrench,/mob/living/simple_animal/hostile/nanotrasen/ranged/assault,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bo" = (/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer1,,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bp" = (,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bq" = (/obj/machinery/light{dir = 1},/obj/machinery/atmospherics/components/unary/vent_scrubber/layer1,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"br" = (/obj/structure/cable,/obj/machinery/atmospherics/components/unary/vent_pump,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bs" = (/obj/structure/table/reinforced,/obj/machinery/atmospherics/components/unary/vent_scrubber/layer1,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bt" = (/obj/structure/table/reinforced,/obj/machinery/atmospherics/components/unary/vent_pump,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bu" = (/obj/machinery/atmospherics/components/unary/vent_pump,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bv" = (,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bw" = (,/turf/open/floor/plating,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bx" = (,/obj/structure/cable,/obj/item/paper/fluff/ruins/forgottenship/powerissues,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"by" = (,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bz" = (/obj/structure/cable,,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bA" = (/obj/structure/cable,,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bB" = (/obj/structure/cable,,,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bC" = (/obj/structure/cable,/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1,,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bD" = (,/obj/structure/cable,,,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bE" = (/obj/structure/cable,,,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bF" = (/obj/structure/cable,/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1,,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bG" = (/obj/structure/cable,,/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bH" = (,/obj/structure/cable,,,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bI" = (,,,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bJ" = (/obj/structure/table/reinforced,/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1,,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bK" = (/obj/structure/table/reinforced,,/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bL" = (,,,/mob/living/simple_animal/hostile/nanotrasen/elite,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bM" = (,,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bN" = (,,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bO" = (,,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bP" = (,,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bQ" = (,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bR" = (/obj/structure/table/reinforced,,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bS" = (,/obj/structure/cable,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bT" = (/obj/machinery/light,/mob/living/simple_animal/hostile/nanotrasen/ranged/assault,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bU" = (,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bV" = (/obj/machinery/light,,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bW" = (,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bX" = (/obj/machinery/light,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bY" = (/obj/structure/cable,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bZ" = (,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ca" = (,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cb" = (,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cc" = (,/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cd" = (/obj/machinery/light{dir = 8},/obj/structure/cable,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ce" = (/obj/structure/table/reinforced,/obj/item/twohanded/binoculars,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cf" = (/obj/structure/table/reinforced,/obj/item/assembly/prox_sensor,/obj/item/assembly/prox_sensor,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cg" = (,/obj/item/crowbar/red,/obj/item/ammo_box/magazine/m10mm,/obj/item/ammo_box/magazine/m10mm,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ch" = (,,/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ci" = (,/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cj" = (/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ck" = (,/obj/structure/cable,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cl" = (,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cm" = (,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cn" = (/obj/machinery/computer/atmos_alert{dir = 8},/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"co" = (/obj/structure/chair/comfy{dir = 1},/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cp" = (/obj/effect/mob_spawn/human/syndicatespace,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cq" = (/obj/machinery/light,/mob/living/simple_animal/hostile/nanotrasen/ranged/assault,/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cr" = (/obj/machinery/vending/medical/syndicate_access,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cs" = (,,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ct" = (/obj/structure/cable,,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cu" = (,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cv" = (/obj/structure/table/reinforced,/turf/closed/wall/r_wall/syndicate,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cw" = (/obj/structure/chair/comfy,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cx" = (/obj/structure/toilet{dir = 1},/obj/machinery/light,/turf/open/floor/plasteel,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cy" = (,/obj/machinery/light,/turf/open/floor/plasteel,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cz" = (,/obj/item/clothing/under/syndicate/combat,/obj/item/clothing/gloves/combat,/obj/item/clothing/shoes/combat,/obj/item/clothing/mask/gas/syndicate,/obj/item/clothing/under/syndicate/skirt,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cA" = (,/obj/item/clothing/head/HoS/beret/syndicate,/obj/item/clothing/suit/armor/vest/capcarapace/syndicate,/obj/item/clothing/mask/gas/syndicate,/obj/item/clothing/under/syndicate,/obj/item/clothing/under/syndicate/skirt,/obj/item/clothing/gloves/combat,/obj/item/clothing/shoes/combat,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cB" = (/obj/effect/mob_spawn/human/syndicatespace,/obj/machinery/light,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cC" = (/obj/structure/table/reinforced,/obj/item/paper/fluff/ruins/forgottenship/missionobj,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cD" = (/obj/structure/table/reinforced,/obj/item/ammo_box/c10mm,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cE" = (,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cF" = (,/obj/machinery/light,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cG" = (/obj/structure/tank_dispenser/oxygen,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cH" = (/obj/machinery/light,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cI" = (/obj/structure/cable,/obj/structure/fans/tiny,,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"cJ" = (/obj/structure/lattice/catwalk,/obj/structure/cable,/turf/open/space/basic,/area/space/nearstation)
+"cK" = (/obj/structure/lattice/catwalk,/obj/structure/cable,/turf/open/space/basic,/area/space)
+"cL" = (/turf/closed/mineral/random,/area/space)
+"cM" = (/turf/closed/mineral/random/high_chance,/area/space)
+"cN" = (/turf/closed/mineral/random,/area/space/nearstation)
+"cO" = (/turf/closed/mineral/random/high_chance,/area/space/nearstation)
+"cP" = (/turf/closed/indestructible/syndicate,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
+"cQ" = (/turf/closed/wall/r_wall/syndicate,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"cR" = (/obj/structure/sign/poster/contraband/c20r,/turf/closed/wall/r_wall/syndicate,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"cS" = (/obj/structure/sign/poster/contraband/tools,/turf/closed/wall/r_wall/syndicate,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"cT" = (,/obj/structure/cable,/obj/structure/fans/tiny,/turf/open/floor/plating,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"cU" = (/obj/structure/sign/departments/cargo,/turf/closed/wall/r_wall/syndicate,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"cV" = (,/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/plasteel/twenty,,/obj/item/stack/sheet/glass/fifty,/obj/item/stack/rods/fifty,/turf/open/floor/pod/dark,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
+"cW" = (,/obj/item/melee/transforming/energy/sword/saber/red,/obj/machinery/light{dir = 1},/turf/open/floor/pod/dark,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
+"cX" = (,/obj/item/codespeak_manual/unlimited,/turf/open/floor/pod/dark,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
+"cY" = (/obj/machinery/light{dir = 1},/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"cZ" = (,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"da" = (,/obj/structure/cable,,/obj/item/circuitboard/machine/circuit_imprinter,/obj/item/circuitboard/machine/protolathe,/obj/item/stack/sheet/metal/twenty,,/obj/item/stack/cable_coil,/obj/item/circuitboard/computer/rdconsole,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"db" = (,/obj/item/mining_scanner,/obj/item/pickaxe/drill,/obj/item/storage/bag/ore,/obj/item/storage/bag/ore,/obj/item/pickaxe/drill,/obj/item/mining_scanner,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"dc" = (/obj/structure/cable,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"dd" = (/obj/machinery/light{dir = 1},/obj/item/multitool,/obj/item/screwdriver/nuke,/obj/item/wrench,/obj/item/weldingtool/hugetank,/obj/item/wirecutters,/obj/item/clothing/glasses/welding,,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"de" = (,/obj/item/clothing/suit/space/hardsuit/cybersun,/turf/open/floor/pod/dark,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
+"df" = (/turf/open/floor/pod/dark,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
+"dg" = (,/obj/structure/fans/tiny,,/turf/open/floor/pod/dark,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
+"dh" = (/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"di" = (,/obj/item/toy/sword,/obj/item/toy/balloon/syndicate,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"dj" = (/obj/machinery/ore_silo,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"dk" = (,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"dl" = (,/obj/item/switchblade,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"dm" = (,/turf/open/floor/pod/dark,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
+"dn" = (,/obj/machinery/light,/turf/open/floor/pod/dark,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
+"do" = (/obj/machinery/light,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"dp" = (/obj/structure/closet/crate/medical,,,/obj/item/healthanalyzer/advanced,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"dq" = (,/obj/item/twohanded/dualsaber/toy,/obj/item/toy/nuke,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"dr" = (/obj/machinery/light,/obj/structure/closet/crate/solarpanel_small,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"ds" = (/turf/closed/mineral,/area/space/nearstation)
+
+(1,1,1) = {"
+aaaaaaaaabababababababababababaaaaabababababababababababababababaaaaaa
+aaaaabababacadadadadadadadaeababababacadadafadadaeababadadadaeababaaaa
+abababagadadahadadaiajakaladadadadadadamanahanaoadadabadapaqadadababaa
+abarararadasahadatauauauauavadawaxayadazahahahahaAadabadauauauadadabab
+abarararadahahadadadaBadadadadauaCaDadadadaEaFadadadaGadadaHadadadaeab
+abaIararadahahadaJaKaKaKaLaMadaNataOadahahahahahaPadaQauauauauauataRab
+abababagadahahadaSaTaKaKaUaVadauaWaOadahahaXaXahahadaYauauaZbaauataRab
+abababagadasahadadadbbbbadbcadadadbdadbebfaAaAahbgadbhauauauauaubiaRab
+abarararadahahadbjbkblbmbnboadbpbqbradahbfbsbtaAahadauaubuaZbvauataRab
+abarararadahahbwbxbybzbAbBbCbDbEbFbGbHbEbIbJbKbLbMbNbObObPbQauaubRaRab
+abaIararadasahadbSbTbUbmbVbWadahbXahadbYbfaAaAaAbZadauauauaZcaauataRab
+abababagadasahadadadcbcbadadadadadccadcdbfaAaAahbgadbhauauauauauceaRab
+abababagadahahadcfcgahahcgaAadchcicjadbYbYckclahahadcmauauaZcnauataRab
+abarararadahahbwcocpahahcpcoadcjcqcjadahahbYahahcradaYauauauauauataRab
+abarararadahahadahahahahahahadcsadcsadadadctaFadadadadadadcuadadcvaeab
+abaIararadasahadcgahcwcwahcgadcxadcyadahahbYahahaAadabadczaucAadadabab
+abababagadadahadahcBcCcDcBadadadadadadcEcFbYcFcGadadabadczcHadadababaa
+aaaaabababacadadadadadadadaeababababacadadcIadadaeababadadadaeababaaaa
+aaaaaaaaabababababababababababaaaaababababcJababababababababababaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacKaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacKaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacKaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaacLcLaacLcLaaaaaaaacKaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaacLcLcMcLcLcLcLcLaaaacKaaaacLaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaacNcNcNcNcNcNcOcNcNcLabcJabcNcNcLaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaacNcNcPcPcPcPcPcQcRcQcQcScTcUcQcNcNcMaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaacNcPcPcVcWcXcPcQcYcZdadbdcddcQcQcNcLaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaacLcNcPdedfdfdfdgdhdhdhdcdcdcdhdicQcNcLaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaacMcNcPdedfdfdfcPdjdhdkdhdhdhdhdlcQcOcLaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaacLcNcPcPdmdndmcPcQdodhdhdpdqdrcQcQcNcLaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaacNcNcPcPcPcPcPcQcQcQcQcQcQcQcQcNcNcLaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaacNcNcNcNcNcNcNcNcNdscOcNcNcNcNcLaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaacMcLcLcLcLaacLcLcLcLcLcMaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaacLcLaaaacLcLaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacLaaaacLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}
+>>>>>>> Stashed changes
