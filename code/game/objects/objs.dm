@@ -72,9 +72,9 @@
 		var/turf/T = loc
 		T.add_blueprints_preround(src)
 
-	#if DM_VERSION >= 513
-		vis_flags = VIS_INHERIT_PLANE
-	#endif
+#if DM_VERSION >= 513
+	vis_flags = VIS_INHERIT_PLANE
+#endif
 
 
 /obj/Destroy(force=FALSE)

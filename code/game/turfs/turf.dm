@@ -40,9 +40,6 @@
 	. = ..()
 
 /turf/Initialize(mapload)
-	#if DM_VERSION >= 513
-		vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID
-	#endif
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
@@ -84,6 +81,10 @@
 		has_opaque_atom = TRUE
 
 	ComponentInitialize()
+
+#if DM_VERSION >= 513
+	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID
+#endif
 
 	return INITIALIZE_HINT_NORMAL
 

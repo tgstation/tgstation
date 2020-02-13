@@ -78,9 +78,9 @@
 	update_config_movespeed()
 	update_movespeed(TRUE)
 
-	#if DM_VERSION >= 513
-		vis_flags = VIS_INHERIT_PLANE
-	#endif
+#if DM_VERSION >= 513
+	vis_flags = VIS_INHERIT_PLANE
+#endif
 
 /**
   * Generate the tag for this mob
