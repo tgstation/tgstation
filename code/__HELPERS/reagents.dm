@@ -55,7 +55,7 @@
 		return
 	for(var/reagent in GLOB.chemical_reactions_list)
 		for(var/R in GLOB.chemical_reactions_list[reagent])
-			var/datum/reac
+			var/datum/reac = R
 			if(reac.type == id)
 				return R
 

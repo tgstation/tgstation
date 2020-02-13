@@ -462,6 +462,7 @@
 	..()
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/heat
+	required_temp = 474
 	required_reagents = list(/datum/reagent/teslium = 1)
 
 /datum/chemical_reaction/reagent_explosion/nitrous_oxide
