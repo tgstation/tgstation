@@ -1,0 +1,4 @@
+author: "Putnam and ninjanomnom"
+delete-after: True
+changes: 
+  - balance: "Radioactive contamination now has a limited amount of material to be used to contaminate things."

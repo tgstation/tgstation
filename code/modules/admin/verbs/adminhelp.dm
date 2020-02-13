@@ -113,10 +113,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //Dissasociate ticket
 /datum/admin_help_tickets/proc/ClientLogout(client/C)
 	if(C.current_ticket)
-		C.current_ticket.AddInteraction("Client disconnected.")
-		SSblackbox.LogAhelp(C.current_ticket.id, "Disconnected", "Client disconnected", C.ckey)
-		C.current_ticket.initiator = null
-		C.current_ticket = null
+		var/datum/admin_help/T = C.current_ticket
+		T.AddInteraction("Client disconnected.")
+		SSblackbox.LogAhelp(T, "Disconnected", "Client disconnected", C.ckey)
+		T.initiator = null
 
 //Get a ticket given a ckey
 /datum/admin_help_tickets/proc/CKey2ActiveTicket(ckey)
@@ -175,7 +175,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	id = ++ticket_counter
 	opened_at = world.time
 
-	name = msg
+	name = copytext_char(msg, 1, 100)
 
 	initiator = C
 	initiator_ckey = initiator.ckey
@@ -484,10 +484,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 // Used for methods where input via arg doesn't work
 /client/proc/get_adminhelp()
-	var/msg = input(src, "Please describe your problem concisely and an admin will help as soon as they're able.", "Adminhelp contents") as text|null
+	var/msg = input(src, "Please describe your problem concisely and an admin will help as soon as they're able.", "Adminhelp contents") as message|null
 	adminhelp(msg)
 
-/client/verb/adminhelp(msg as text)
+/client/verb/adminhelp(msg as message)
 	set category = "Admin"
 	set name = "Adminhelp"
 

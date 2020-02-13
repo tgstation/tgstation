@@ -594,3 +594,11 @@
 	build_path = /obj/item/circuitboard/machine/medical_kiosk
 	category = list ("Medical Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/board/medipen_refiller
+	name = "Machine Design (Medipen Refiller)"
+	desc = "The circuit board for a Medipen Refiller."
+	id = "medipen_refiller"
+	build_path = /obj/item/circuitboard/machine/medipen_refiller
+	category = list ("Medical Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL

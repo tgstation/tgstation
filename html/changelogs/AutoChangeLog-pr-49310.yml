@@ -1,0 +1,5 @@
+author: "EOBGames"
+delete-after: True
+changes: 
+  - rscadd: "A hawaiian shirt, currently only in the beach bum ruin."
+  - tweak: "Fixed a couple of issues with the beach bum ruin."
