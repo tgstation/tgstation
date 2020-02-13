@@ -90,6 +90,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	critical_machine = TRUE
 
+	//If we ever start to care about all gasses, make this based on type and apply it as a for loop
 	var/list/gas_trans = list("PL" = PLASMA_TRANSMIT_MODIFIER, "O2" = OXYGEN_TRANSMIT_MODIFIER, "TRIT" = TRITIUM_TRANSMIT_MODIFIER, "PLX" = PLUOXIUM_TRANSMIT_MODIFIER, "BZ" = BZ_TRANSMIT_MODIFIER)
 	var/gasefficency = 0.15
 
