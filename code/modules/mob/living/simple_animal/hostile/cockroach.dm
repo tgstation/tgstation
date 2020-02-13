@@ -30,7 +30,7 @@
 	verb_yell = "chitters loudly"
 	del_on_death = TRUE
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	AIStatus = AI_OFF
+	faction = list("neutral")
 	var/squish_chance = 50
 
 /obj/projectile/glockroachbullet
@@ -53,8 +53,8 @@
 	projectilesound = 'sound/weapons/gun/pistol/shot.ogg'
 	projectiletype = /obj/projectile/glockroachbullet
 	casingtype = /obj/item/ammo_casing/glockroach
-	ranged = 1
-	AIStatus = AI_ON
+	ranged = TRUE
+	faction = list("hostile")
 
 /mob/living/simple_animal/hostile/cockroach/death(gibbed)
 	if(SSticker.mode && SSticker.mode.station_was_nuked) //If the nuke is going off, then cockroaches are invincible. Keeps the nuke from killing them, cause cockroaches are immune to nukes.
