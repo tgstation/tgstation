@@ -258,11 +258,11 @@ This prevents nesting levels from getting deeper then they need to be.
 	* Areas should not be var-edited on a map to change it's name or attributes. All areas of a single type and it's altered instances are considered the same area within the code, and editing their variables on a map can lead to issues with powernets and event subsystems which are difficult to debug.
 
 ### User Interfaces
-* All new player-facing user interfaces must use TGUI-next; TGUI is deprecated. 
+* All new player-facing user interfaces must use TGUI.
 * Raw HTML is permitted for admin and debug UIs.
-* Documentation for TGUI-next can be found at: 
-	* [tgui-next/README.md](../tgui-next/README.md)
-	* [tgui-next/tutorial-and-examples.md](../tgui-next/docs/tutorial-and-examples.md)
+* Documentation for TGUI-next can be found at:
+	* [tgui/README.md](../tgui/README.md)
+	* [tgui/tutorial-and-examples.md](../tgui/docs/tutorial-and-examples.md)
 
 ### Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
@@ -343,7 +343,7 @@ for(var/obj/item/sword/S in bag_of_swords)
 	if(!best_sword || S.damage > best_sword.damage)
 		best_sword = S
 ```
-specifies a type for DM to filter by. 
+specifies a type for DM to filter by.
 
 With the previous example that's perfectly fine, we only want swords, but here the bag only contains swords? Is DM still going to try to filter because we gave it a type to filter by? YES, and here comes the inefficiency. Wherever a list (or other container, such as an atom (in which case you're technically accessing their special contents list, but that's irrelevant)) contains datums of the same datatype or subtypes of the datatype you require for your loop's body,
 you can circumvent DM's filtering and automatic ```istype()``` checks by writing the loop as such:
@@ -380,7 +380,7 @@ mob
 ```
 This does NOT mean that you can access it everywhere like a global var. Instead, it means that that var will only exist once for all instances of its type, in this case that var will only exist once for all mobs - it's shared across everything in its type. (Much more like the keyword `static` in other languages like PHP/C++/C#/Java)
 
-Isn't that confusing? 
+Isn't that confusing?
 
 There is also an undocumented keyword called `static` that has the same behaviour as global but more correctly describes BYOND's behaviour. Therefore, we always use static instead of global where we need it, as it reduces suprise when reading BYOND code.
 
