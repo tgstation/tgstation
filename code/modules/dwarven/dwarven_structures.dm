@@ -98,11 +98,11 @@
 		choice = alert(user,"You study the schematics etched into the stone...",,"Blitz rune","Air rune","Earth rune")
 		switch(choice)
 			if("Blitz rune")
-				new /obj/item/gun/magic/wand/rune/blitz(get_turf(src))
+				new /obj/item/dwarven/rune_stone/blitz(get_turf(src))
 			if("Air rune")
-				new /obj/item/gun/magic/wand/rune/air(get_turf(src))
+				new /obj/item/dwarven/rune_stone/air(get_turf(src))
 			if("Earth rune")
-				new /obj/item/gun/magic/wand/rune/earth(get_turf(src))
+				new /obj/item/dwarven/rune_stone/earth(get_turf(src))
 		to_chat(H, "<span class='notice'>You hear a whisper telling you you have chosen wisely.</span>")
 		charge_amount -= 20
 		return
