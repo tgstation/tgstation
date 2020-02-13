@@ -76,45 +76,90 @@
 	desc = "Dwarven magical artifact, looks fragile."
 	icon = 'icons/obj/dwarven.dmi'
 	icon_state = "runestone"
-
-/obj/item/gun/magic/wand/rune
-	desc = "Dwarven magical artifact, looks fragile."
-	icon = 'icons/obj/dwarven.dmi'
-	icon_state = "runestone"
-	max_charges = 1
-	no_den_usage = TRUE
-	var/overlay_state = "blitz_rune"
+	var/overlay_state
 	var/mutable_appearance/overlay
 
-/obj/item/gun/magic/wand/rune/Initialize()
+/obj/item/dwarven/rune_stone/Initialize()
 	. = ..()
-	overlay = mutable_appearance(icon, overlay_state)
-	overlay.appearance_flags = RESET_COLOR
-	add_overlay(overlay)
-	max_charges = 1
+	if(overlay_state != null)
+		overlay = mutable_appearance(icon, overlay_state)
+		overlay.appearance_flags = RESET_COLOR
+		add_overlay(overlay)
 
-/obj/item/gun/magic/wand/rune/process_fire(atom/target, mob/living/user)
+/obj/item/dwarven/rune_stone/proc/apply(atom/target, mob/user)
+
+	return
+
+/obj/item/dwarven/rune_stone/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
-	new /obj/effect/decal/cleanable/ash(get_turf(user))
-	qdel(src)
+	if(overlay_state == null)
+		user.visible_message("<span class='warning'>The runestone is out of charge!</span>")
+		return
+	if(proximity_flag)
+		apply(target, user)
+		overlay_state = null
+		cut_overlays()
 
-/obj/item/gun/magic/wand/rune/blitz
-	name = "blitz rune"
-	ammo_type = /obj/item/ammo_casing/magic/lightning
-	fire_sound = 'sound/magic/fireball.ogg'
+/obj/item/dwarven/rune_stone/attack_self(mob/user)
+	if(overlay_state == null)
+		user.visible_message("<span class='warning'>The runestone is out of charge!</span>")
+		return
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		apply(user, user)
+		overlay_state = null
+		cut_overlays()
+
+/obj/item/dwarven/rune_stone/blitz
+	name = "blitz runestone"
 	overlay_state = "blitz_rune"
+	var/wall_type = /obj/effect/forcefield
 
-/obj/item/gun/magic/wand/rune/earth
-	name = "earth rune"
-	ammo_type = /obj/item/ammo_casing/magic/arcane_barrage
-	fire_sound = 'sound/magic/fireball.ogg'
+/obj/item/dwarven/rune_stone/blitz/apply(atom/target, mob/user)
+	new wall_type(get_turf(user),user)
+	if(user.dir == SOUTH || user.dir == NORTH)
+		new wall_type(get_step(user, EAST),user)
+		new wall_type(get_step(user, WEST),user)
+	else
+		new wall_type(get_step(user, NORTH),user)
+		new wall_type(get_step(user, SOUTH),user)
+	..()
+
+
+/obj/item/dwarven/rune_stone/earth
+	name = "earth runestone"
 	overlay_state = "earth_rune"
 
-/obj/item/gun/magic/wand/rune/air
-	name = "air rune"
-	ammo_type = /obj/item/ammo_casing/magic/teleport
-	fire_sound = 'sound/magic/wand_teleport.ogg'
+/obj/item/dwarven/rune_stone/earth/apply(atom/target, mob/user)
+	var/turf/T = get_turf(target)
+	new /obj/item/pickaxe(T)
+	..()
+
+/obj/item/dwarven/rune_stone/air
+	name = "air runestone"
 	overlay_state = "air_rune"
+
+/obj/item/dwarven/rune_stone/air/apply(atom/target, mob/user)
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] fizzles on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
+		var/teleammount = 0
+		var/teleloc = target
+		if(!isturf(target))
+			teleloc = target.loc
+		for(var/atom/movable/stuff in teleloc)
+			if(!stuff.anchored && stuff.loc && !isobserver(stuff))
+				if(do_teleport(stuff, stuff, 10, channel = TELEPORT_CHANNEL_MAGIC))
+					teleammount++
+					var/datum/effect_system/smoke_spread/smoke = new
+					smoke.set_up(max(round(4 - teleammount),0), stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
+					smoke.start()
+	..()
+
+
+
+
 
 
 
