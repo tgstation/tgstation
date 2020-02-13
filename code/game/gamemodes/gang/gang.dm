@@ -251,12 +251,15 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			log_game("[key_name(cop)] has been selected as an [ert_antag.name]")
 			numagents--
 		cops_arrived = TRUE
-		SSshuttle.clearHostileEnvironment(src)
+		addtimer(CALLBACK(src, .proc/end_hostile_sit), 10 MINUTES)
 		return TRUE
 	else
 		cops_arrived = TRUE
-		SSshuttle.clearHostileEnvironment(src)
+		addtimer(CALLBACK(src, .proc/end_hostile_sit), 10 MINUTES)
 		return FALSE
+
+/datum/game_mode/gang/proc/end_hostile_sit()
+	SSshuttle.clearHostileEnvironment(src)
 
 /datum/game_mode/gang/proc/check_tagged_turfs()
 	for(var/obj/effect/decal/cleanable/crayon/gang/tag in GLOB.gang_tags)
