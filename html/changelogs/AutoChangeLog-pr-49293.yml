@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Contractor tablet should now properly let you shop for rep."

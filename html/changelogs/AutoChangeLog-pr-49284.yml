@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - admin: "Moved duplicate CID/IP logging from log_access to log_admin_private."
