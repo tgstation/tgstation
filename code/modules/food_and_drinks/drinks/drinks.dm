@@ -634,8 +634,8 @@
 	return ..()
 
 /obj/item/reagent_containers/food/drinks/soda_cans/cola
-	name = "Space Cola"
-	desc = "Cola. in space."
+	name = "Bepis Cola"
+	desc = "Live for the joy of Bepis. ...Damn, this stuff's EXPENSIVE."
 	icon_state = "cola"
 	list_reagents = list(/datum/reagent/consumable/space_cola = 30)
 	foodtype = SUGAR
