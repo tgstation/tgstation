@@ -56,6 +56,13 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 
 /datum/game_mode/gang/post_setup()
 	for(var/datum/mind/gangbanger in gangbangers)
+		var/datum/mind/G = gangbanger
+		if(!ishuman(G.current))
+			while(antag_candidates.len) // FIND A REPLACEMENT GANGSTER
+				G = antag_pick(antag_candidates)
+				if(ishuman(G.current))
+					break
+				antag_candidates.Remove(G)
 		var/gang_to_use = pick_n_take(gangs_to_use)
 		var/datum/antagonist/gang/new_gangster = new gang_to_use()
 		var/datum/team/gang/ballas = new /datum/team/gang()
