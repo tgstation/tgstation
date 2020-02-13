@@ -64,6 +64,7 @@
 
 /code/controllers/subsystem/shuttle.dm @ninjanomnom
 /code/modules/shuttle/ @ninjanomnom
+/code/modules/food_and_drinks/food/snacks/butterdog.dm @ninjanomnom
 
 # ShizCalev
 
