@@ -36,8 +36,8 @@
 		C.adjustOxyLoss(-5)
 		C.adjustToxLoss(-5)
 		var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(C))
-		if(namedatum)
-			H.color = namedatum.colour
+		if(guardiancolor)
+			H.color = guardiancolor
 		if(C == summoner)
 			update_health_hud()
 			med_hud_set_health()
@@ -100,8 +100,8 @@
 
 /obj/structure/receiving_pad/New(loc, mob/living/simple_animal/hostile/guardian/healer/G)
 	. = ..()
-	if(G.namedatum)
-		add_atom_colour(G.namedatum.colour, FIXED_COLOUR_PRIORITY)
+	if(G.guardiancolor)
+		add_atom_colour(G.guardiancolor, FIXED_COLOUR_PRIORITY)
 
 /obj/structure/receiving_pad/proc/disappear()
 	visible_message("<span class='notice'>[src] vanishes!</span>")

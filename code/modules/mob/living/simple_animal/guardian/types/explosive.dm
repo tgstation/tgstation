@@ -71,6 +71,6 @@
 	UNREGISTER_BOMB_SIGNALS(A)
 
 /mob/living/simple_animal/hostile/guardian/bomb/proc/display_examine(datum/source, mob/user, text)
-	text += "<span class='holoparasite'>It glows with a strange <font color=\"[namedatum.colour]\">light</font>!</span>"
+	text += "<span class='holoparasite'>It glows with a strange <font color=\"[guardiancolor]\">light</font>!</span>"
 
 #undef UNREGISTER_BOMB_SIGNALS

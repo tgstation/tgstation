@@ -25,8 +25,8 @@
 	. = ..()
 	if(. > 0 && toggle)
 		var/image/I = new('icons/effects/effects.dmi', src, "shield-flash", MOB_LAYER+0.01, dir = pick(GLOB.cardinals))
-		if(namedatum)
-			I.color = namedatum.colour
+		if(guardiancolor)
+			I.color = guardiancolor
 		flick_overlay_view(I, src, 5)
 
 /mob/living/simple_animal/hostile/guardian/protector/ToggleMode()
@@ -43,8 +43,8 @@
 		toggle = FALSE
 	else
 		var/mutable_appearance/shield_overlay = mutable_appearance('icons/effects/effects.dmi', "shield-grey")
-		if(namedatum)
-			shield_overlay.color = namedatum.colour
+		if(guardiancolor)
+			shield_overlay.color = guardiancolor
 		add_overlay(shield_overlay)
 		melee_damage_lower = 2
 		melee_damage_upper = 2
@@ -63,7 +63,7 @@
 				visible_message("<span class='danger'>\The [src] jumps back to its user.</span>")
 				Recall(TRUE)
 			else
-				to_chat(summoner, "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from <font color=\"[namedatum.colour]\"><b>[real_name]</b></font>!</span>")
+				to_chat(summoner, "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from <font color=\"[guardiancolor]\"><b>[real_name]</b></font>!</span>")
 				summoner.visible_message("<span class='danger'>\The [summoner] jumps back to [summoner.p_their()] protector.</span>")
 				new /obj/effect/temp_visual/guardian/phase/out(get_turf(summoner))
 				summoner.forceMove(get_turf(src))
