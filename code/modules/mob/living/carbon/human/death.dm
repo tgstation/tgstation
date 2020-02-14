@@ -28,7 +28,7 @@
 
 	dizziness = 0
 	jitteriness = 0
-	if(client)
+	if(client && !suiciding)
 		GLOB.deaths_during_shift++
 	if(ismecha(loc))
 		var/obj/mecha/M = loc
