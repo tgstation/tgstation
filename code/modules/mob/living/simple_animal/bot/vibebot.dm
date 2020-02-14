@@ -21,12 +21,11 @@
 	var/current_color
 	var/range = 7
 	var/power = 3
+	auto_patrol = TRUE
 
 /mob/living/simple_animal/bot/vibebot/Initialize()
 	. = ..()
 	update_icon()
-	auto_patrol = TRUE
-	on = TRUE
 
 /mob/living/simple_animal/bot/vibebot/get_controls(mob/user)
 	var/dat
@@ -45,15 +44,9 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 "<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 	return	dat
-/mob/living/simple_animal/bot/vibebot/turn_on()
-	. = ..()
-	on = TRUE
-	update_icon()
-	Vibe()
 
 /mob/living/simple_animal/bot/vibebot/turn_off()
 	. = ..()
-	on = FALSE
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	update_icon()
 
@@ -79,8 +72,8 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		if(mode == BOT_PATROL)
 			bot_patrol()
 
-	if(on == TRUE)
+	if(on)
 		Vibe()
 
-	if(on == FALSE)
+	else
 		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
