@@ -107,7 +107,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	for(var/datum/team/gang/G in gangs)
 		readable_gang_names += "[G.name]"
 	var/finalized_gang_names = english_list(readable_gang_names)
-	priority_announce("Julio G coming to you live from Radio Los Spess! We've been hearing reports of gang activity on [station_name()], with the [finalized_gang_names] duking it out, looking for fresh territory and drugs to sling! Stay safe out there for the hour 'till the space cops get there, and keep it cool, yeah? Play music, not gunshots, I say. Peace out!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
+	priority_announce("Julio G coming to you live from Radio Los Spess! We've been hearing reports of gang activity on [station_name()], with the [finalized_gang_names] duking it out, looking for fresh territory and drugs to sling! Stay safe out there for the hour 'till the space cops get there, and keep it cool, yeah? 'Cuz the local warp gates are shut down for the next hour, so nobody is gonna be able to leave until those are operational again. Play music, not gunshots, I say. Peace out!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
 	sent_announcement = TRUE
 
 /datum/game_mode/gang/proc/five_minute_warning()
@@ -196,42 +196,66 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 /datum/game_mode/gang/proc/send_in_the_fuzz()
 	var/team_size
 	var/cops_to_send
+	var/announcement_message = "PUNK ASS BALLA BITCH"
+	var/announcer = "Spinward Stellar Coalition"
 	if(GLOB.joined_player_list.len > LOWPOP_FAMILIES_COUNT)
 		switch(GLOB.deaths_during_shift)
 			if(0 to TWO_STARS_HIGHPOP-1)
 				team_size = 8
 				cops_to_send = /datum/antagonist/ert/families/beatcop
+				announcement_message = "Hello, crewmembers of [station_name()]! We've received a few calls about some potential violent gang activity on board your station, so we're sending some beat cops to check things out. Nothing extreme, just a courtesy call. However, while they check things out for about 10 minutes, we're going to have to ask that you keep your escape shuttle parked.\n\nHave a pleasant day!"
+				announcer = "Spinward Stellar Coalition Police Department"
 			if(TWO_STARS_HIGHPOP to THREE_STARS_HIGHPOP-1)
 				team_size = 9
 				cops_to_send = /datum/antagonist/ert/families/beatcop/armored
+				announcement_message = "Crewmembers of [station_name()]. We have received confirmed reports of violent gang activity from your station. We are dispatching some armed officers to help keep the peace and investigate matters. Do not get in their way, and comply with any and all requests from them. We have blockaded the local warp gate, and your shuttle cannot depart for another 10 minutes.\n\nHave a secure day."
+				announcer = "Spinward Stellar Coalition Police Department"
 			if(THREE_STARS_HIGHPOP to FOUR_STARS_HIGHPOP-1)
 				team_size = 10
 				cops_to_send = /datum/antagonist/ert/families/beatcop/swat
+				announcement_message = "Crewmembers of [station_name()]. We have received confirmed reports of extreme gang activity from your station resulting in heavy civilian casualties. The Spinward Stellar Coalition does not tolerate abuse towards our citizens, and we will be responding in force to keep the peace and reduce civilian casualties. We have your station surrounded, and all gangsters must drop their weapons and surrender peacefully.\n\nHave a secure day."
+				announcer = "Spinward Stellar Coalition Police Department"
 			if(FOUR_STARS_HIGHPOP to FIVE_STARS_HIGHPOP-1)
 				team_size = 11
 				cops_to_send = /datum/antagonist/ert/families/beatcop/fbi
+				announcement_message = "We are dispatching our top agents to [station_name()] at the request of the Spinward Stellar Coalition government due to an extreme terrorist level threat against this Nanotrasen owned station. All gangsters must surrender IMMEDIATELY. Failure to comply can and will result in death. We have blockaded your warp gates and will not allow any escape until the situation is resolved within our standard response time of 10 minutes.\n\nSurrender now or face the consequences of your actions."
+				announcer = "Federal Bureau of Investigation"
 			if(FIVE_STARS_HIGHPOP to INFINITY)
 				team_size = 12
 				cops_to_send = /datum/antagonist/ert/families/beatcop/military
+				announcement_message = "Due to an insane level of civilian casualties aboard [station_name()], we have dispatched the National Guard to curb any and all gang activity on board the station. We have heavy cruisers watching the shuttle. Attempt to leave before we allow you to, and we will obliterate your station and your escape shuttle.\n\nYou brought this on yourselves by murdering so many civilians."
+				announcer = "Spinward Stellar Coalition National Guard"
 	else
 		switch(GLOB.deaths_during_shift)
 			if(0 to TWO_STARS_LOW-1)
 				team_size = 5
 				cops_to_send = /datum/antagonist/ert/families/beatcop
+				announcement_message = "Hello, crewmembers of [station_name()]! We've received a few calls about some potential violent gang activity on board your station, so we're sending some beat cops to check things out. Nothing extreme, just a courtesy call. However, while they check things out for about 10 minutes, we're going to have to ask that you keep your escape shuttle parked.\n\nHave a pleasant day!"
+				announcer = "Spinward Stellar Coalition Police Department"
 			if(TWO_STARS_LOW to THREE_STARS_LOW-1)
 				team_size = 6
 				cops_to_send = /datum/antagonist/ert/families/beatcop/armored
+				announcement_message = "Crewmembers of [station_name()]. We have received confirmed reports of violent gang activity from your station. We are dispatching some armed officers to help keep the peace and investigate matters. Do not get in their way, and comply with any and all requests from them. We have blockaded the local warp gate, and your shuttle cannot depart for another 10 minutes.\n\nHave a secure day."
+				announcer = "Spinward Stellar Coalition Police Department"
 			if(THREE_STARS_LOW to FOUR_STARS_LOW-1)
 				team_size = 7
 				cops_to_send = /datum/antagonist/ert/families/beatcop/swat
+				announcement_message = "Crewmembers of [station_name()]. We have received confirmed reports of extreme gang activity from your station resulting in heavy civilian casualties. The Spinward Stellar Coalition does not tolerate abuse towards our citizens, and we will be responding in force to keep the peace and reduce civilian casualties. We have your station surrounded, and all gangsters must drop their weapons and surrender peacefully.\n\nHave a secure day."
+				announcer = "Spinward Stellar Coalition Police Department"
 			if(FOUR_STARS_LOW to FIVE_STARS_LOW-1)
 				team_size = 8
 				cops_to_send = /datum/antagonist/ert/families/beatcop/fbi
+				announcement_message = "We are dispatching our top agents to [station_name()] at the request of the Spinward Stellar Coalition government due to an extreme terrorist level threat against this Nanotrasen owned station. All gangsters must surrender IMMEDIATELY. Failure to comply can and will result in death. We have blockaded your warp gates and will not allow any escape until the situation is resolved within our standard response time of 10 minutes.\n\nSurrender now or face the consequences of your actions."
+				announcer = "Federal Bureau of Investigation"
 			if(FIVE_STARS_LOW to INFINITY)
 				team_size = 10
 				cops_to_send = /datum/antagonist/ert/families/beatcop/military
+				announcement_message = "Due to an insane level of civilian casualties aboard [station_name()], we have dispatched the National Guard to curb any and all gang activity on board the station. We have heavy cruisers watching the shuttle. Attempt to leave before we allow you to, and we will obliterate your station and your escape shuttle.\n\nYou brought this on yourselves by murdering so many civilians."
+				announcer = "Spinward Stellar Coalition National Guard"
 
+	priority_announce(announcement_message, announcer, 'sound/effects/families_police.ogg')
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to help clean up crime on this station?", "deathsquad", null)
+
 
 	if(candidates.len > 0)
 		//Pick the (un)lucky players
