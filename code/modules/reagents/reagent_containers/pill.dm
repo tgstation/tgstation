@@ -246,11 +246,11 @@
 	list_reagents = list(/datum/reagent/medicine/potass_iodide = 15)
 	rename_with_volume = TRUE
 
-/obj/item/reagent_containers/pill/trophazole
-	name = "trophazole pill"
-	desc = "Used to treat brute damage of minor and moderate severity.The carving in the pill says 'Eat before ingesting'."
+/obj/item/reagent_containers/pill/C2/probital
+	name = "Probital pill"
+	desc = "Used to treat brute damage of minor and moderate severity.The carving in the pill says 'Eat before ingesting'. Causes fatigue and diluted with granibitaluri."
 	icon_state = "pill12"
-	list_reagents = list(/datum/reagent/medicine/trophazole = 15)
+	list_reagents = list(/datum/reagent/medicine/C2/probital = 5, /datum/reagent/medicine/granibitaluri = 10)
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/iron
