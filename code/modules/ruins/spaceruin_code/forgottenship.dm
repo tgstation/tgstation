@@ -45,6 +45,7 @@ obj/item/paper/fluff/ruins/forgottenship/missionobj
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault
 	name = "Syndicate Forgotten Vault"
 	icon_state = "syndie-ship"
+	noteleport = TRUE
 
 	//Cybersun hardsuit
 
