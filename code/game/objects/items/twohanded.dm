@@ -496,7 +496,7 @@
 	if(explosive)
 		QDEL_NULL(explosive)
 	G.forceMove(src)
-	explosive =  G
+	explosive = G
 	desc = "A makeshift spear with [G] attached to it"
 
 /obj/item/twohanded/spear/explosive/CheckParts(list/parts_list)
