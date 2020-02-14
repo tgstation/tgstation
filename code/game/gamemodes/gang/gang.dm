@@ -10,6 +10,9 @@
 #define FOUR_STARS_LOW 12
 #define FIVE_STARS_LOW 15
 
+#define CREW_SIZE_MIN 4
+#define CREW_SIZE_MAX 8
+
 
 GLOBAL_VAR_INIT(deaths_during_shift, 0)
 /datum/game_mode/gang
@@ -59,11 +62,12 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	for(var/datum/mind/gangbanger in gangbangers)
 		if(!ishuman(gangbanger.current))
 			gangbangers.Remove(gangbanger)
+			log_game("[gangbanger] was not a human, and thus has lost their gangster role.")
 			replacement_gangsters++
 	if(replacement_gangsters)
 		for(var/j = 0, j < replacement_gangsters, j++)
 			if(!antag_candidates.len)
-				log_game("RAN OUT OF REPLACMENT GANGSTERS!!! SHIT GOING TO BE FUCKED!!!")
+				log_game("Unable to find more replacement gangsters. Not all of the gangs will spawn.")
 				break
 			var/datum/mind/gangbanger = antag_pick(antag_candidates)
 			gangbangers += gangbanger
@@ -94,7 +98,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 				qdel(O)
 
 		gangbanger.add_antag_datum(new_gangster)
-		gangbanger.current.playsound_local(get_turf(gangbanger.current), 'sound/ambience/antag/thatshowfamiliesworks.ogg', 100, FALSE, pressure_affected = FALSE)
+		gangbanger.current.playsound_local(gangbanger.current, 'sound/ambience/antag/thatshowfamiliesworks.ogg', 100, FALSE, pressure_affected = FALSE)
 		to_chat(gangbanger.current, "<B>As you're the first gangster, your uniform and spraycan are in your inventory!</B>")
 	addtimer(CALLBACK(src, .proc/announce_gang_locations), 5 MINUTES)
 	addtimer(CALLBACK(src, .proc/five_minute_warning), time_to_end - 5 MINUTES)
@@ -104,7 +108,8 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 
 /datum/game_mode/gang/proc/announce_gang_locations()
 	var/list/readable_gang_names = list()
-	for(var/datum/team/gang/G in gangs)
+	for(var/GG in gangs)
+		var/datum/team/gang/G = GG
 		readable_gang_names += "[G.name]"
 	var/finalized_gang_names = english_list(readable_gang_names)
 	priority_announce("Julio G coming to you live from Radio Los Spess! We've been hearing reports of gang activity on [station_name()], with the [finalized_gang_names] duking it out, looking for fresh territory and drugs to sling! Stay safe out there for the hour 'till the space cops get there, and keep it cool, yeah? 'Cuz the local warp gates are shut down for the next hour, so nobody is gonna be able to leave until those are operational again. Play music, not gunshots, I say. Peace out!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
@@ -117,69 +122,65 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	var/alive_gangsters = 0
 	var/alive_cops = 0
 	for(var/datum/mind/gangbanger in gangbangers)
-		if(gangbanger.current)
-			if(!ishuman(gangbanger.current))
-				continue
-			var/mob/living/carbon/human/H = gangbanger.current
-			if(H.stat)
-				continue
-			alive_gangsters++
+		if(!ishuman(gangbanger.current))
+			continue
+		var/mob/living/carbon/human/H = gangbanger.current
+		if(H.stat)
+			continue
+		alive_gangsters++
 	for(var/datum/mind/bacon in pigs)
-		if(bacon.current)
-			if(!ishuman(bacon.current)) // always returns false
-				continue
-			var/mob/living/carbon/human/H = bacon.current
-			if(H.stat)
-				continue
-			alive_cops++
+		if(!ishuman(bacon.current)) // always returns false
+			continue
+		var/mob/living/carbon/human/H = bacon.current
+		if(H.stat)
+			continue
+		alive_cops++
 	if(alive_gangsters > alive_cops)
 		SSticker.mode_result = "win - gangs survived"
 		SSticker.news_report = GANG_OPERATING
 		return TRUE
-	else
-		SSticker.mode_result = "loss - police destroyed the gangs"
-		SSticker.news_report = GANG_DESTROYED
-		return FALSE
+	SSticker.mode_result = "loss - police destroyed the gangs"
+	SSticker.news_report = GANG_DESTROYED
+	return FALSE
 
 /datum/game_mode/gang/process()
 	if(sent_announcement)
-		for(var/mob/M in GLOB.mob_list)
-			if(M.client)
-				if(M.hud_used)
-					var/datum/hud/H = M.hud_used
-					var/icon_state_to_use = "wanted_1"
-					if(lock_stars)
-						H.wanted_lvl.icon_state = current_stars
-					else
-						if(GLOB.joined_player_list.len > LOWPOP_FAMILIES_COUNT)
-							switch(GLOB.deaths_during_shift)
-								if(0 to TWO_STARS_HIGHPOP-1)
-									icon_state_to_use = "wanted_1"
-								if(TWO_STARS_HIGHPOP to THREE_STARS_HIGHPOP-1)
-									icon_state_to_use = "wanted_2"
-								if(THREE_STARS_HIGHPOP to FOUR_STARS_HIGHPOP-1)
-									icon_state_to_use = "wanted_3"
-								if(FOUR_STARS_HIGHPOP to FIVE_STARS_HIGHPOP-1)
-									icon_state_to_use = "wanted_4"
-								if(FIVE_STARS_HIGHPOP to INFINITY)
-									icon_state_to_use = "wanted_5"
-						else
-							switch(GLOB.deaths_during_shift)
-								if(0 to TWO_STARS_LOW-1)
-									icon_state_to_use = "wanted_1"
-								if(TWO_STARS_LOW to THREE_STARS_LOW-1)
-									icon_state_to_use = "wanted_2"
-								if(THREE_STARS_LOW to FOUR_STARS_LOW-1)
-									icon_state_to_use = "wanted_3"
-								if(FOUR_STARS_LOW to FIVE_STARS_LOW-1)
-									icon_state_to_use = "wanted_4"
-								if(FIVE_STARS_LOW to INFINITY)
-									icon_state_to_use = "wanted_5"
-						if(cops_arrived)
-							icon_state_to_use += "_active"
-							lock_stars = TRUE
-						current_stars = icon_state_to_use
-						H.wanted_lvl.icon_state = icon_state_to_use
+		for(var/mob/M in GLOB.player_list)
+			if(M.hud_used && !istype(M, /mob/dead/new_player))
+				var/datum/hud/H = M.hud_used
+				var/icon_state_to_use = "wanted_1"
+				if(lock_stars)
+					H.wanted_lvl.icon_state = current_stars
+					continue
+				if(GLOB.joined_player_list.len > LOWPOP_FAMILIES_COUNT)
+					switch(GLOB.deaths_during_shift)
+						if(0 to TWO_STARS_HIGHPOP-1)
+							icon_state_to_use = "wanted_1"
+						if(TWO_STARS_HIGHPOP to THREE_STARS_HIGHPOP-1)
+							icon_state_to_use = "wanted_2"
+						if(THREE_STARS_HIGHPOP to FOUR_STARS_HIGHPOP-1)
+							icon_state_to_use = "wanted_3"
+						if(FOUR_STARS_HIGHPOP to FIVE_STARS_HIGHPOP-1)
+							icon_state_to_use = "wanted_4"
+						if(FIVE_STARS_HIGHPOP to INFINITY)
+							icon_state_to_use = "wanted_5"
+				else
+					switch(GLOB.deaths_during_shift)
+						if(0 to TWO_STARS_LOW-1)
+							icon_state_to_use = "wanted_1"
+						if(TWO_STARS_LOW to THREE_STARS_LOW-1)
+							icon_state_to_use = "wanted_2"
+						if(THREE_STARS_LOW to FOUR_STARS_LOW-1)
+							icon_state_to_use = "wanted_3"
+						if(FOUR_STARS_LOW to FIVE_STARS_LOW-1)
+							icon_state_to_use = "wanted_4"
+						if(FIVE_STARS_LOW to INFINITY)
+							icon_state_to_use = "wanted_5"
+				if(cops_arrived)
+					icon_state_to_use += "_active"
+					lock_stars = TRUE
+				current_stars = icon_state_to_use
+				H.wanted_lvl.icon_state = icon_state_to_use
 
 	check_counter++
 	if(check_counter >= 5)
@@ -257,7 +258,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to help clean up crime on this station?", "deathsquad", null)
 
 
-	if(candidates.len > 0)
+	if(candidates.len)
 		//Pick the (un)lucky players
 		var/numagents = min(team_size,candidates.len)
 
@@ -287,25 +288,23 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			//Logging and cleanup
 			log_game("[key_name(cop)] has been selected as an [ert_antag.name]")
 			numagents--
-		cops_arrived = TRUE
-		addtimer(CALLBACK(src, .proc/end_hostile_sit), 10 MINUTES)
-		return TRUE
-	else
-		cops_arrived = TRUE
-		addtimer(CALLBACK(src, .proc/end_hostile_sit), 10 MINUTES)
-		return FALSE
+	cops_arrived = TRUE
+	addtimer(CALLBACK(src, .proc/end_hostile_sit), 10 MINUTES)
+	return TRUE
 
 /datum/game_mode/gang/proc/end_hostile_sit()
 	SSshuttle.clearHostileEnvironment(src)
 
+
 /datum/game_mode/gang/proc/check_tagged_turfs()
-	for(var/obj/effect/decal/cleanable/crayon/gang/tag in GLOB.gang_tags)
+	for(var/T in GLOB.gang_tags)
+		var/obj/effect/decal/cleanable/crayon/gang/tag = T
 		if(tag.my_gang)
 			tag.my_gang.adjust_points(50)
 		CHECK_TICK
 
 /datum/game_mode/gang/proc/check_gang_clothes() // TODO: make this grab the sprite itself, average out what the primary color would be, then compare how close it is to the gang color so I don't have to manually fill shit out for 5 years for every gang type
-	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(!H.mind || !H.client)
 			continue
 		var/datum/antagonist/gang/is_gangster = H.mind.has_antag_datum(/datum/antagonist/gang)
@@ -314,14 +313,20 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 				if(is_type_in_list(clothing, is_gangster.acceptable_clothes))
 					is_gangster.add_gang_points(10)
 			else
-				for(var/datum/team/gang/gang_clothes in gangs)
+				for(var/G in gangs)
+					var/datum/team/gang/gang_clothes = G
 					if(is_type_in_list(clothing, gang_clothes.acceptable_clothes))
 						gang_clothes.adjust_points(5)
 
 		CHECK_TICK
 
 /datum/game_mode/gang/proc/check_rollin_with_crews()
-	for(var/area/A in GLOB.sortedAreas)
+	var/list/areas_to_check = list()
+	for(var/G in gangbangers)
+		var/datum/mind/gangster = G
+		areas_to_check += get_area(gangster.current)
+	for(var/AA in areas_to_check)
+		var/area/A = AA
 		var/list/gang_members = list()
 		for(var/mob/living/carbon/human/H in A)
 			if(H.stat || !H.mind || !H.client)
@@ -332,8 +337,8 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			CHECK_TICK
 		if(gang_members.len)
 			for(var/datum/team/gang/gangsters in gang_members)
-				if(gang_members[gangsters] >= 4)
-					if(gang_members[gangsters] >= 8)
+				if(gang_members[gangsters] >= CREW_SIZE_MIN)
+					if(gang_members[gangsters] >= CREW_SIZE_MAX)
 						gangsters.adjust_points(5) // Discourage larger clumps, spread ur people out
 					else
 						gangsters.adjust_points(10)
