@@ -39,7 +39,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	var/list/gang_locations = list()
 	var/lock_stars = FALSE
 	var/cops_arrived = FALSE
-	var/gang_balance_cap = 3
+	var/gang_balance_cap = 5
 	var/current_stars = "wanted_0"
 
 /datum/game_mode/gang/pre_setup()
