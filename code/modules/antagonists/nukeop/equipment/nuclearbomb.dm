@@ -419,7 +419,7 @@
 			else
 				playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
 		if("anchor")
-			if(auth && yes_code)
+			if(auth && yes_code && !timing)
 				playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
 				set_anchor()
 			else
