@@ -122,6 +122,19 @@
 				if (params["material_name"] == mat.name)
 					chosen = mat
 
+obj/machinery/mineral/mint/RefreshParts()
+
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts) // Better matter bins increases the output of coins per cycle.
+	
+	for(var/obj/item/stock_parts/micro_laser/L in component_parts) // Better microlasers increase reduce the delay between production cycles.
+	
+	for(var/obj/item/stock_parts/manipulator/M in component_parts) // Better manipulators increase amount of coins produced per sheet.
+
+obj/machinery/mineral/mint/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads:</span>"
+
 /obj/machinery/mineral/mint/proc/create_coins()
 	var/turf/T = get_step(src,output_dir)
 	var/temp_list = list()
@@ -134,3 +147,4 @@
 			B = new /obj/item/storage/bag/money(src)
 			unload_mineral(B)
 		O.forceMove(B)
+
