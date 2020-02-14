@@ -263,11 +263,6 @@
 	jetpack = /obj/item/tank/jetpack/suit
 	cell = /obj/item/stock_parts/cell/super
 
-// CE suit gets EMP Protection
-/obj/item/clothing/suit/space/hardsuit/engine/elite/Initialize()
-	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_CONTENTS)
-
 	//Mining hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/mining
 	name = "mining hardsuit helmet"
@@ -425,11 +420,6 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	cell = /obj/item/stock_parts/cell/bluespace
-
-// The Elite Sundi suit gets EMP Protection
-/obj/item/clothing/suit/space/hardsuit/syndi/elite/Initialize()
-	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_CONTENTS)
 
 /obj/item/clothing/suit/space/hardsuit/syndi/elite/debug
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/debug
@@ -599,11 +589,6 @@
 	jetpack = /obj/item/tank/jetpack/suit
 	cell = /obj/item/stock_parts/cell/super
 
-// HOS gets some EMP protection
-/obj/item/clothing/suit/space/hardsuit/security/hos/Initialize()
-	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_CONTENTS)
-
 	//SWAT MKII
 /obj/item/clothing/head/helmet/space/hardsuit/swat
 	name = "\improper MK.II SWAT Helmet"
@@ -634,7 +619,6 @@
 /obj/item/clothing/suit/space/hardsuit/swat/Initialize()
 	. = ..()
 	allowed = GLOB.security_hardsuit_allowed
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_CONTENTS)
 
 	//Captain
 /obj/item/clothing/head/helmet/space/hardsuit/swat/captain
