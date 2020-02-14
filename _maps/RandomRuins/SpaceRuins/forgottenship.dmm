@@ -1,5 +1,5 @@
 "aa" = (/turf/open/space/basic,/area/space)
-"ab" = (/turf/open/space/basic,/area/space/nearstation)
+"ab" = (/obj/structure/lattice/catwalk,/obj/structure/cable,/turf/open/space/basic,/area/ruin/unpowered/no_grav)
 "ac" = (/obj/machinery/porta_turret/syndicate/energy{armor = list("melee" = 80, "bullet" = 30, "laser" = 50, "energy" = 50, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100); dir = 4; name = "Syndicate Ship Turret"; on = 0; req_one_access_txt = "0"; throw_speed = 4; use_power = 1},/turf/closed/wall/r_wall/syndicate/nodiagonal,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ad" = (/turf/closed/wall/r_wall/syndicate,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ae" = (/obj/structure/fans/tiny,/obj/machinery/door/airlock/external{name = "Syndicate ship airlock"; req_one_access_txt = "150"},/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -48,9 +48,9 @@
 "aV" = (/obj/structure/chair/comfy/shuttle{icon_state = "shuttle_chair"; dir = 4},/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aW" = (/obj/structure/table/reinforced,/obj/item/toy/plush/nukeplushie,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aX" = (/obj/machinery/light{dir = 1},/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"aY" = (/turf/closed/mineral/random,/area/space)
+"aY" = (/turf/template_noop,/area/ruin/unpowered/no_grav)
 "aZ" = (/turf/closed/indestructible/syndicate,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
-"ba" = (/obj/structure/lattice/catwalk,/obj/structure/cable,/turf/open/space/basic,/area/space)
+"ba" = (/turf/closed/mineral/random,/area/ruin/unpowered/no_grav)
 "bb" = (/turf/closed/wall/r_wall/syndicate,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bc" = (/obj/machinery/light,/mob/living/simple_animal/hostile/nanotrasen/ranged/assault,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bd" = (/obj/structure/closet/crate/secure/gear{req_one_access_txt = "150"},/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/plasteel/twenty,/obj/item/stack/sheet/mineral/plastitanium{amount = 50},/obj/item/stack/sheet/glass/fifty,/obj/item/stack/rods/fifty,/turf/open/floor/pod/dark,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
@@ -66,9 +66,9 @@
 "bn" = (/obj/structure/table/reinforced,/obj/item/paper,/obj/item/pen,/obj/machinery/light,/turf/open/floor/carpet/royalblack,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bo" = (/obj/machinery/light,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bp" = (/obj/structure/closet/crate/secure/gear{req_one_access_txt = "150"},/obj/item/mining_scanner,/obj/item/pickaxe/drill,/obj/item/storage/bag/ore,/obj/item/storage/bag/ore,/obj/item/pickaxe/drill,/obj/item/mining_scanner,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"bq" = (/turf/closed/mineral/random,/area/space/nearstation)
+"bq" = (/turf/closed/mineral/random/high_chance,/area/ruin/unpowered/no_grav)
 "br" = (/obj/machinery/light{dir = 1},/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
-"bs" = (/turf/closed/mineral,/area/space/nearstation)
+"bs" = (/turf/closed/mineral,/area/ruin/unpowered/no_grav)
 "bt" = (/obj/machinery/light,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bu" = (/obj/structure/closet/crate/secure/gear{req_one_access_txt = "150"},/obj/item/twohanded/dualsaber/toy,/obj/item/toy/nuke,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bv" = (/obj/structure/table/reinforced,/obj/item/restraints/handcuffs,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -169,45 +169,53 @@
 "dm" = (/obj/structure/closet/crate/secure/gear{req_one_access_txt = "150"},/turf/open/floor/pod/dark,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "dn" = (/obj/machinery/door/airlock/grunge{name = "Syndicate Ship Airlock"; req_one_access_txt = "150"},/turf/open/floor/plating,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "do" = (/obj/structure/closet/crate/secure/gear{req_one_access_txt = "150"},/obj/machinery/light,/turf/open/floor/pod/dark,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
-"dp" = (/turf/closed/mineral/random/high_chance,/area/space)
-"dq" = (/turf/closed/mineral/random/high_chance,/area/space/nearstation)
 "dr" = (/obj/structure/table/reinforced,/obj/item/paper/fluff/ruins/forgottenship/missionobj,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dv" = (/obj/structure/closet/crate/secure/gear{req_one_access_txt = "150"},/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 
 (1,1,1) = {"
-aaaaaaaaabababababababababababaaaaabababababababababababababababaaaaaa
-aaaaabababciadadadadadadadacababababciadadaeadadacababadadadacababaaaa
-abababafadadaladadaAcfaycladadadadadadbOaialaicnadadabadaGbradadababaa
-abapapapaddvaladbVawawawawcoadajakaradbSalalalalahadabadawawawadadabab
-abapapapadalaladadadchadadadadawbvbPadadadaUanadadadaqadadcpadadadacab
-abasapapadalaladagaoaoaoaBaIadcjbVdiadalalalalalcradaEawawawawawbVauab
-abababafadalaladbwaOaoaobncmadawdjdiadalalatatalaladceawawaVcuawbVauab
-abababafaddvaladadadbxbxadbgadadaddkadamaxahahalaFadbWawawawawawaWauab
-abapapapadalaladavaNaHaScyaDadcvaJczadalaxaMcAahaladawawcBaVaTawbVauab
-abapapapadalaldnaRcCcDcxcEcFcGcHcIcWcKcHcNcOcPcQcRcqcScScTcLawawbkauab
-abasapapaddvaladazbccUaScVcMadalaCaladaPaxahahahcXadawawawaVcaawbVauab
-abababafaddvaladadadbybyadadadadadaQadaKaxahahalaFadbWawawawawawbTauab
-abababafadalaladbzbYalalbYahadbGbHbIadaPaPbQaLalaladcgawawaVcbawbVauab
-abapapapadalaldnbDbEalalbEbDadbIcdbIadalalaPalalctadceawawawawawbVauab
-abapapapadalaladalalalalalaladcZadcZadadadbeanadadadadadadcJadadbZacab
-abasapapaddvaladbYalccccalbYaddbaddcadalalaPalalahadabaddfawdgadadabab
-abababafadadaladalcYdrdacYadadadadadadbJbKaPbKbLadadabaddfbtadadababaa
-aaaaabababciadadadadadadadacababababciadadbMadadacababadadadacababaaaa
-aaaaaaaaabababababababababababaaaaababababbNababababababababababaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaYaYaaaYaYaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaYaYdpaYaYaYaYaYaaaabaaaaaaYaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaabqbqbqbqbqbqdqbqbqaYabbNabbqbqaYaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaabqbqaZaZaZaZaZbbbXbbbbbRbFckbbbqbqdpaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaabqaZaZbdbBddaZbbaXdhbfbpbhbibbbbbqaYaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaYbqaZbAdedededlbjbjbjbhbhbhbjcsbbbqaYaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaadpbqaZbAdededeaZblbjbmbjbjbjbjcwbbdqaYaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaYbqaZaZdmdodmaZbbbobjbjbCbubUbbbbbqaYaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaabqbqaZaZaZaZaZbbbbbbbbbbbbbbbbbqbqaYaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaabqbqbqbqbqbqbqbqbqbsdqbqbqbqbqaYaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaadpaYaYaYaYaaaYaYaYaYaYdpaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaYaYaaaaaYaYaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaYaaaaaYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaciadadadadadadadacaaaaaaaaciadadaeadadacaaaaadadadacaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaafadadaladadaAcfaycladadadadadadbOaialaicnadadaaadaGbradadaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaapapapaddvaladbVawawawawcoadajakaradbSalalalalahadaaadawawawadadaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaapapapadalaladadadchadadadadawbvbPadadadaUanadadadaqadadcpadadadacaaaaaaaaaaaaaa
+aaaaaaaaaaaaasapapadalaladagaoaoaoaBaIadcjbVdiadalalalalalcradaEawawawawawbVauaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaafadalaladbwaOaoaobncmadawdjdiadalalatatalaladceawawaVcuawbVauaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaafaddvaladadadbxbxadbgadadaddkadamaxahahalaFadbWawawawawawaWauaaaaaaaaaaaaaa
+aaaaaaaaaaaaapapapadalaladavaNaHaScyaDadcvaJczadalaxaMcAahaladawawcBaVaTawbVauaaaaaaaaaaaaaa
+aaaaaaaaaaaaapapapadalaldnaRcCcDcxcEcFcGcHcIcWcKcHcNcOcPcQcRcqcScScTcLawawbkauaaaaaaaaaaaaaa
+aaaaaaaaaaaaasapapaddvaladazbccUaScVcMadalaCaladaPaxahahahcXadawawawaVcaawbVauaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaafaddvaladadadbybyadadadadadaQadaKaxahahalaFadbWawawawawawbTauaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaafadalaladbzbYalalbYahadbGbHbIadaPaPbQaLalaladcgawawaVcbawbVauaaaaaaaaaaaaaa
+aaaaaaaaaaaaapapapadalaldnbDbEalalbEbDadbIcdbIadalalaPalalctadceawawawawawbVauaaaaaaaaaaaaaa
+aaaaaaaaaaaaapapapadalaladalalalalalaladcZadcZadadadbeanadadadadadadcJadadbZacaaaaaaaaaaaaaa
+aaaaaaaaaaaaasapapaddvaladbYalccccalbYaddbaddcadalalaPalalahadaaaddfawdgadadaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaafadadaladalcYdrdacYadadadadadadbJbKaPbKbLadadaaaddfbtadadaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaciadadadadadadadacaaaaaaaaciadadbMadadacaaaaadadadacaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaYaYaYaYaYaYaYaaaaaabNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaYaYbabaaYbabaaYaYaYaabNaaaYaYaYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaYaYbababqbababababaaYaYabaYaYbaaYaYaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaYaYbababababababqbababaaYabaYbababaaYaYaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaYbabaaZaZaZaZaZbbbXbbbbbRbFckbbbababqaYaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaYaYbaaZaZbdbBddaZbbaXdhbfbpbhbibbbbbabaaYaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaYbabaaZbAdedededlbjbjbjbhbhbhbjcsbbbabaaYaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaYbqbaaZbAdededeaZblbjbmbjbjbjbjcwbbbqbaaYaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaYbabaaZaZdmdodmaZbbbobjbjbCbubUbbbbbabaaYaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaYaYbabaaZaZaZaZaZbbbbbbbbbbbbbbbbbababaaYaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaYaYbabababababababababsbqbababababaaYaYaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaYaYaYaYbqbabababaaYbabababababqaYaYaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaYaYaYbabaaYaYbabaaYaYaYaYaYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaYaYbaaYaYbaaYaYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaYaYaYaYaYaYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
