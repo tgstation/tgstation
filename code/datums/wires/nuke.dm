@@ -81,7 +81,7 @@
 
 /datum/wires/nuke/proc/defuse(source, mend)
 	if(mend)
-		(!(source in defused))
+		if(!(source in defused))
 			return
 		defused -= source
 	else
