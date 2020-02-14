@@ -1667,7 +1667,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			to create a few of the same type of spiders we found on the planets over there. They're a bit tame until you \
 			also give them a bit of sentience though."
 	item = /obj/item/reagent_containers/syringe/spider_extract
-	cost = 10
+	cost = 20
 	restricted_roles = list("Research Director", "Scientist", "Roboticist")
 
 /datum/uplink_item/role_restricted/clowncar
