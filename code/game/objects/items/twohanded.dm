@@ -487,15 +487,17 @@
 	name = "explosive lance"
 	var/obj/item/grenade/explosive = null
 
-/obj/item/twohanded/spear/explosive/Initialize(mapload, obj/item/grenade/G)
+/obj/item/twohanded/spear/explosive/Initialize(mapload)
 	. = ..()
-	if (!G)
-		G = new /obj/item/grenade/iedcasing() //For admin-spawned explosive lances
+	set_explosive(new /obj/item/grenade/iedcasing()) //For admin-spawned explosive lances
+	
+	
+/obj/item/twohanded/spear/explosive/proc/set_explosive(obj/item/grenade/G)
+	if(explosive)
+		QDEL_NULL(explosive)
 	G.forceMove(src)
-	explosive = G
+	explosive =  G
 	desc = "A makeshift spear with [G] attached to it"
-	update_icon()
-
 
 /obj/item/twohanded/spear/explosive/CheckParts(list/parts_list)
 	var/obj/item/grenade/G = locate() in parts_list
@@ -507,7 +509,7 @@
 		icon_prefix = lancePart.icon_prefix
 		parts_list -= G
 		parts_list -= lancePart
-		Initialize(src.loc, G)
+		set_explosive(G)
 		qdel(lancePart)
 	..()
 
