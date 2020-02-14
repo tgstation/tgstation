@@ -104,7 +104,7 @@
 				pai.can_transmit = !pai.can_transmit
 			else //receiving
 				pai.can_receive = !pai.can_receive
-			pai.radio.wires.cut(transmit_holder)//wires.cut toggles cut and uncut states
+			pai.radio.wires.cut(transmit_holder, usr)//wires.cut toggles cut and uncut states
 			transmit_holder = (transmitting ? pai.can_transmit : pai.can_receive) //recycling can be fun!
 			to_chat(usr,"<span class='warning'>You [transmit_holder ? "enable" : "disable"] your pAI's [transmitting ? "outgoing" : "incoming"] radio transmissions!</span>")
 			to_chat(pai,"<span class='warning'>Your owner has [transmit_holder ? "enabled" : "disabled"] your [transmitting ? "outgoing" : "incoming"] radio transmissions!</span>")

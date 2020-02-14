@@ -11,8 +11,8 @@
 	ui_y = 442
 
 	var/timer_set = 90
-	var/minimum_timer_set = 5 MINUTES
-	var/maximum_timer_set = 60 MINUTES
+	var/minimum_timer_set = 300
+	var/maximum_timer_set = 3600
 
 	var/numeric_input = ""
 	var/ui_mode = NUKEUI_AWAIT_DISK
@@ -32,10 +32,15 @@
 	var/lights = ""
 	var/interior = ""
 	var/proper_bomb = TRUE //Please
+	/// Whether this nuke teleports away when being singuloed or otherwise.
+	var/singulo_teleport = TRUE
+	var/defusable = TRUE
+	var/opening_tool = /obj/item/screwdriver
 	var/obj/effect/countdown/nuclearbomb/countdown
 
 /obj/machinery/nuclearbomb/Initialize()
 	. = ..()
+	wires = new /datum/wires/nuke(src)
 	countdown = new(src)
 	GLOB.nuke_list += src
 	core = new /obj/item/nuke_core(src)
@@ -53,6 +58,7 @@
 	GLOB.nuke_list -= src
 	QDEL_NULL(countdown)
 	QDEL_NULL(core)
+	QDEL_NULL(wires)
 	. = ..()
 
 /obj/machinery/nuclearbomb/examine(mob/user)
@@ -68,6 +74,9 @@
 	icon = 'icons/obj/machines/nuke_terminal.dmi'
 	icon_state = "nuclearbomb_base"
 	anchored = TRUE //stops it being moved
+	singulo_teleport = FALSE
+	defusable = FALSE
+	opening_tool = /obj/item/screwdriver/nuke
 
 /obj/machinery/nuclearbomb/syndicate
 	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
@@ -105,16 +114,24 @@
 		add_fingerprint(user)
 		return
 
+	var/datum/antagonist/nukeop/user_antag = user.mind.has_antag_datum(/datum/antagonist/nukeop, TRUE)
+	if(user_antag)
+		to_chat(user, "<span class='danger'>Tampering with the device could jepordize the mission!</span>")
+		return
+
+	if(defusable && deconstruction_state == NUKESTATE_UNSCREWED && is_wire_tool(I))
+		wires.interact(user)
+		return
+
 	switch(deconstruction_state)
 		if(NUKESTATE_INTACT)
-			if(istype(I, /obj/item/screwdriver/nuke))
+			if(istype(I, opening_tool))
 				to_chat(user, "<span class='notice'>You start removing [src]'s front panel's screws...</span>")
 				if(I.use_tool(src, user, 60, volume=100))
 					deconstruction_state = NUKESTATE_UNSCREWED
 					to_chat(user, "<span class='notice'>You remove the screws from [src]'s front panel.</span>")
 					update_icon()
 				return
-
 		if(NUKESTATE_PANEL_REMOVED)
 			if(I.tool_behaviour == TOOL_WELDER)
 				if(!I.tool_start_check(user, amount=1))
@@ -126,6 +143,9 @@
 					update_icon()
 				return
 		if(NUKESTATE_CORE_EXPOSED)
+			if(timing)
+				to_chat(user, "<span class='warning'>The core has been locked in!</span>")
+				return
 			if(istype(I, /obj/item/nuke_core_container))
 				var/obj/item/nuke_core_container/core_box = I
 				to_chat(user, "<span class='notice'>You start loading the plutonium core into [core_box]...</span>")
@@ -229,12 +249,21 @@
 			lights = "lights-exploding"
 	add_overlay(lights)
 
+/obj/machinery/nuclearbomb/singularity_act()
+	if(singulo_teleport)
+		do_teleport(src, find_safe_turf(), 5)
+		set_active()
+		minimum_timer_set = 90 SECONDS
+	else
+		. = ..()
+
+
 /obj/machinery/nuclearbomb/process()
 	if(timing && !exploding)
 		if(detonation_timer < world.time)
 			explode()
 		else
-			var/volume = (get_time_left() <= 20 ? 30 : 5)
+			var/volume = (get_time_left() <= 60 ? 50 : 5)
 			playsound(loc, 'sound/items/timer.ogg', volume, FALSE)
 
 /obj/machinery/nuclearbomb/proc/update_ui_mode()
@@ -260,7 +289,7 @@
 
 	ui_mode = NUKEUI_AWAIT_TIMER
 
-/obj/machinery/nuclearbomb/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=0, datum/tgui/master_ui=null, datum/ui_state/state=GLOB.default_state)
+/obj/machinery/nuclearbomb/ui_interact(mob/user, ui_key="main", datum/tgui/ui, force_open = FALSE, datum/tgui/master_ui, datum/ui_state/state=GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "nuclear_bomb", name, ui_x, ui_y, master_ui, state)
@@ -379,14 +408,14 @@
 			else
 				playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
 		if("arm")
-			if(auth && yes_code && !safety && !exploded)
-				if(check_nuke_position(usr))
+			if(anchored && auth && yes_code && !safety && !exploded)
+				if(check_nuke_position(usr) || timing)
 					playsound(src, 'sound/machines/nuke/confirm_beep.ogg', 50, FALSE)
 					set_active()
 					update_ui_mode()
 					. = TRUE
 				else
-					to_chat(usr, "<span class='danger'>Planting here wouldn't ensure destruction of the station!</span>")
+					to_chat(usr, "<span class='userdanger'>Planting here wouldn't ensure destruction of the station!</span>")
 			else
 				playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
 		if("anchor")
@@ -397,10 +426,10 @@
 				playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
 
 //Override on non-positional children
-/obj/machinery/nuclearbomb/proc/check_nuke_position(mob/living/L)
+/obj/machinery/nuclearbomb/proc/check_nuke_position(mob/living/user)
 	if(!is_station_level(z))
 		return FALSE
-	if(!L)
+	if(!user)
 		return FALSE
 	var/datum/antagonist/nukeop/user_antag = user.mind.has_antag_datum(/datum/antagonist/nukeop, TRUE)
 	if(!user_antag)
@@ -416,6 +445,10 @@
 		to_chat(usr, "<span class='warning'>There is nothing to anchor to!</span>")
 	else
 		anchored = !anchored
+		if(anchored)
+			playsound(src, 'sound/machines/boltsdown.ogg', 50)
+		else
+			playsound(src, 'sound/machines/boltsup.ogg', 50)
 
 /obj/machinery/nuclearbomb/proc/set_safety()
 	safety = !safety
@@ -430,7 +463,10 @@
 		countdown.stop()
 	update_icon()
 
-/obj/machinery/nuclearbomb/proc/set_active()
+/obj/machinery/nuclearbomb/proc/set_active(defuse = FALSE)
+	if(defuse && !timing)
+		SSticker.mode.nuke_defused = TRUE
+		return
 	if(safety)
 		to_chat(usr, "<span class='danger'>The safety is still on.</span>")
 		return
@@ -441,7 +477,7 @@
 		for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
 			S.switch_mode_to(TRACK_INFILTRATOR)
 		countdown.start()
-		set_security_level("delta")
+		set_security_level("delta", " A nuclear device has been armed in [get_area(src)]. Please remain calm and stand by for further instruction.")
 	else
 		detonation_timer = null
 		set_security_level(previous_level)
@@ -449,6 +485,8 @@
 			S.switch_mode_to(initial(S.mode))
 			S.alert = FALSE
 		countdown.stop()
+		if(defuse)
+			SSticker.mode.nuke_defused = TRUE
 	update_icon()
 
 /obj/machinery/nuclearbomb/proc/get_time_left()
@@ -527,6 +565,8 @@
 	name = "Nanotrasen-brand nuclear fission explosive"
 	desc = "One of the more successful achievements of the Nanotrasen Corporate Warfare Division, their nuclear fission explosives are renowned for being cheap to produce and devastatingly effective. Signs explain that though this particular device has been decommissioned, every Nanotrasen station is equipped with an equivalent one, just in case. All Captains carefully guard the disk needed to detonate them - at least, the sign says they do. There seems to be a tap on the back."
 	proper_bomb = FALSE
+	singulo_teleport = FALSE
+	defusable = FALSE
 	var/obj/structure/reagent_dispensers/beerkeg/keg
 
 /obj/machinery/nuclearbomb/beer/Initialize()

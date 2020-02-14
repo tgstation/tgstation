@@ -1,4 +1,4 @@
-#define NUKEOP_PLANT_POSSIBILITIES 3
+#define NUKEOP_PLANT_POSSIBILITIES 1
 
 /datum/antagonist/nukeop
 	name = "Nuclear Operative"
@@ -182,14 +182,6 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0)
 	to_chat(owner, "<B>You are the Syndicate [title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>")
 	to_chat(owner, "<B>If you feel you are not up to this task, give your ID to another operative.</B>")
-	if(!CONFIG_GET(flag/disable_warops))
-		to_chat(owner, "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>")
-		var/obj/item/dukinuki = new challengeitem
-		var/mob/living/carbon/human/H = owner.current
-		if(!istype(H))
-			dukinuki.forceMove(H.drop_location())
-		else
-			H.put_in_hands(dukinuki, TRUE)
 	owner.announce_objectives()
 	addtimer(CALLBACK(src, .proc/nuketeam_name_assign), 1)
 
@@ -249,7 +241,7 @@
 /datum/team/nuclear
 	var/syndicate_name
 	var/obj/machinery/nuclearbomb/tracked_nuke
-	var/core_objective = /datum/objective/nuclear
+	var/core_objective = /datum/objective/nuketarget
 	var/memorized_code
 	var/list/team_discounts
 
@@ -297,9 +289,12 @@
 	var/syndies_didnt_escape = !syndies_escaped()
 	var/station_was_nuked = SSticker.mode.station_was_nuked
 	var/nuke_off_station = SSticker.mode.nuke_off_station
+	var/nuke_defused = SSticker.mode.nuke_defused
 
 	if(nuke_off_station == NUKE_SYNDICATE_BASE)
 		return NUKE_RESULT_FLUKE
+	else if(nuke_defused)
+		return NUKE_RESULT_CREW_DEFUSE
 	else if(station_was_nuked && !syndies_didnt_escape)
 		return NUKE_RESULT_NUKE_WIN
 	else if (station_was_nuked && syndies_didnt_escape)
@@ -343,7 +338,7 @@
 			parts += "<span class='redtext big'>Crew Major Victory!</span>"
 			parts += "<B>The Research Staff has saved the disk and killed the [syndicate_name] Operatives</B>"
 		if(NUKE_RESULT_CREW_WIN)
-			parts += "<span class='redtext big'>Crew Major Victory</span>"
+			parts += "<span class='redtext big'>Crew Major Victory!</span>"
 			parts += "<B>The Research Staff has saved the disk and stopped the [syndicate_name] Operatives!</B>"
 		if(NUKE_RESULT_DISK_LOST)
 			parts += "<span class='neutraltext big'>Neutral Victory!</span>"
@@ -351,6 +346,9 @@
 		if(NUKE_RESULT_DISK_STOLEN)
 			parts += "<span class='greentext big'>Syndicate Minor Victory!</span>"
 			parts += "<B>[syndicate_name] operatives survived the assault but did not achieve the destruction of [station_name()].</B> Next time, don't lose the disk!"
+		if(NUKE_RESULT_CREW_DEFUSE)
+			parts += "<span class='redtext big'>Crew Major Victory!</span>"
+			parts += "<B>Station crew successfully managed to defuse the nuclear device after it was armed, rendering it inert!</B>"
 		else
 			parts += "<span class='neutraltext big'>Neutral Victory</span>"
 			parts += "<B>Mission aborted!</B>"
@@ -405,19 +403,21 @@
 
 /datum/objective/nuketarget
 	var/list/target_list = list()
-	var/set = FALSE
-	var/detonated = FALSE
 
 /datum/objective/nuketarget/New()
 	. = ..()
 	var/sanity = 0
-	while(length(target_list) <= NUKEOP_PLANT_POSSIBILITIES && sanity < 100)
+	while(length(target_list) < NUKEOP_PLANT_POSSIBILITIES && sanity < 100)
 		var/area/plant = pick(GLOB.sortedAreas - target_list)
-		if(plant && is_station_level(plant) && plant.valid_territory)
+		if(plant && is_station_level(plant.z) && plant.valid_territory)
 			target_list += plant
 		sanity++
 	update_explanation_text()
 
 /datum/objective/nuketarget/update_explanation_text()
-	explanation_text = "Scans of your target have indicated that planting the device in [english_list(target_list)] will be suitable to ensure no recovery."
+	explanation_text = "Ensure delivery and activation of the nuclear device. Scans of your target have indicated that planting the device in [english_list(target_list)] will be suitable to ensure no recovery."
 
+/datum/objective/nuketarget/check_completion()
+	if(SSticker && SSticker.mode && SSticker.mode.station_was_nuked)
+		return TRUE
+	return FALSE

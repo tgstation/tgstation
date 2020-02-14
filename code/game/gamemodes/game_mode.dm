@@ -21,6 +21,7 @@
 	var/report_type = "invalid" //gamemodes with the same report type will not show up in the command report together.
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/nuke_off_station = 0 //Used for tracking where the nuke hit
+	var/nuke_defused = 0 //Used for tracking if the nuke was defused
 	var/round_ends_with_antag_death = 0 //flags the "one verse the station" antags as such
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
@@ -216,6 +217,8 @@
 	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
 		return TRUE
 	if(station_was_nuked)
+		return TRUE
+	if(nuke_defused)
 		return TRUE
 	var/list/continuous = CONFIG_GET(keyed_list/continuous)
 	var/list/midround_antag = CONFIG_GET(keyed_list/midround_antag)

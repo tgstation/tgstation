@@ -540,6 +540,8 @@ SUBSYSTEM_DEF(ticker)
 			news_message = "The burst of energy released near [station_name()] has been confirmed as merely a test of a new weapon. However, due to an unexpected mechanical error, their communications system has been knocked offline."
 		if(SHUTTLE_HIJACK)
 			news_message = "During routine evacuation procedures, the emergency shuttle of [station_name()] had its navigation protocols corrupted and went off course, but was recovered shortly after."
+		if(NUKE_DEFUSED)
+			news_message = "A station self-destruct device was recently accidentally activated aboard [station_name()]. A crisis was successfully averted by the station crew when they managed to disarm the device before any damage could befall the station."
 
 	if(news_message)
 		send2otherserver(news_source, news_message,"News_Report")

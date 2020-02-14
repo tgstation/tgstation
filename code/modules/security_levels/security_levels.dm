@@ -6,7 +6,7 @@ GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
 
 //config.alert_desc_blue_downto
 
-/proc/set_security_level(level)
+/proc/set_security_level(level, message_append = "")
 	switch(level)
 		if("green")
 			level = SEC_LEVEL_GREEN
@@ -21,7 +21,7 @@ GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
 	if(level >= SEC_LEVEL_GREEN && level <= SEC_LEVEL_DELTA && level != GLOB.security_level)
 		switch(level)
 			if(SEC_LEVEL_GREEN)
-				minor_announce(CONFIG_GET(string/alert_green), "Attention! Security level lowered to green:")
+				minor_announce("[CONFIG_GET(string/alert_green)][message_append]", "Attention! Security level lowered to green:")
 				if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
 					if(GLOB.security_level >= SEC_LEVEL_RED)
 						SSshuttle.emergency.modTimer(4)
@@ -33,11 +33,11 @@ GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
 						FA.update_icon()
 			if(SEC_LEVEL_BLUE)
 				if(GLOB.security_level < SEC_LEVEL_BLUE)
-					minor_announce(CONFIG_GET(string/alert_blue_upto), "Attention! Security level elevated to blue:",1)
+					minor_announce("[CONFIG_GET(string/alert_blue_upto)][message_append]", "Attention! Security level elevated to blue:", TRUE)
 					if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
 						SSshuttle.emergency.modTimer(0.5)
 				else
-					minor_announce(CONFIG_GET(string/alert_blue_downto), "Attention! Security level lowered to blue:")
+					minor_announce("[CONFIG_GET(string/alert_blue_downto)][message_append]", "Attention! Security level lowered to blue:")
 					if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
 						SSshuttle.emergency.modTimer(2)
 				GLOB.security_level = SEC_LEVEL_BLUE
@@ -46,14 +46,14 @@ GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
 						FA.update_icon()
 			if(SEC_LEVEL_RED)
 				if(GLOB.security_level < SEC_LEVEL_RED)
-					minor_announce(CONFIG_GET(string/alert_red_upto), "Attention! Code red!",1)
+					minor_announce("[CONFIG_GET(string/alert_red_upto)][message_append]", "Attention! Code red!", TRUE)
 					if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
 						if(GLOB.security_level == SEC_LEVEL_GREEN)
 							SSshuttle.emergency.modTimer(0.25)
 						else
 							SSshuttle.emergency.modTimer(0.5)
 				else
-					minor_announce(CONFIG_GET(string/alert_red_downto), "Attention! Code red!")
+					minor_announce("[CONFIG_GET(string/alert_red_downto)][message_append]", "Attention! Code red!")
 				GLOB.security_level = SEC_LEVEL_RED
 
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
@@ -62,7 +62,7 @@ GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
 				for(var/obj/machinery/computer/shuttle/pod/pod in GLOB.machines)
 					pod.admin_controlled = 0
 			if(SEC_LEVEL_DELTA)
-				minor_announce(CONFIG_GET(string/alert_delta), "Attention! Delta security level reached!",1)
+				minor_announce("[CONFIG_GET(string/alert_delta)][message_append]", "Attention! Delta security level reached!", TRUE)
 				if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
 					if(GLOB.security_level == SEC_LEVEL_GREEN)
 						SSshuttle.emergency.modTimer(0.25)

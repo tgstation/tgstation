@@ -92,6 +92,9 @@
 		if(NUKE_RESULT_CREW_WIN)
 			SSticker.mode_result = "loss - evacuation - disk secured"
 			SSticker.news_report = OPERATIVES_KILLED
+		if(NUKE_RESULT_CREW_DEFUSE)
+			SSticker.mode_result = "loss - nuke defused"
+			SSticker.news_report = NUKE_DEFUSED
 		if(NUKE_RESULT_DISK_LOST)
 			SSticker.mode_result = "halfwin - evacuation - disk not secured"
 			SSticker.news_report = OPERATIVE_SKIRMISH
@@ -124,7 +127,7 @@
 	backpack_contents = list(/obj/item/storage/box/survival/syndie=1,\
 		/obj/item/kitchen/knife/combat/survival)
 
-	var/tc = 25
+	var/tc = 50
 	var/command_radio = FALSE
 	var/uplink_type = /obj/item/uplink/nuclear
 

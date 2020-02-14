@@ -125,23 +125,23 @@
 /datum/wires/proc/is_dud_color(color)
 	return is_dud(get_wire(color))
 
-/datum/wires/proc/cut(wire)
+/datum/wires/proc/cut(wire, mob/user)
 	if(is_cut(wire))
 		cut_wires -= wire
-		on_cut(wire, mend = TRUE)
+		on_cut(wire, mend = TRUE, user)
 	else
 		cut_wires += wire
-		on_cut(wire, mend = FALSE)
+		on_cut(wire, mend = FALSE, user)
 
-/datum/wires/proc/cut_color(color)
-	cut(get_wire(color))
+/datum/wires/proc/cut_color(color, user)
+	cut(get_wire(color), user)
 
-/datum/wires/proc/cut_random()
-	cut(wires[rand(1, wires.len)])
+/datum/wires/proc/cut_random(user)
+	cut(wires[rand(1, wires.len)], user = user)
 
-/datum/wires/proc/cut_all()
+/datum/wires/proc/cut_all(user)
 	for(var/wire in wires)
-		cut(wire)
+		cut(wire, user)
 
 /datum/wires/proc/pulse(wire, user)
 	if(is_cut(wire))
@@ -190,7 +190,7 @@
 /datum/wires/proc/get_status()
 	return list()
 
-/datum/wires/proc/on_cut(wire, mend = FALSE)
+/datum/wires/proc/on_cut(wire, mend = FALSE, mob/user)
 	return
 
 /datum/wires/proc/on_pulse(wire, user)
@@ -261,7 +261,7 @@
 			if(I || IsAdminGhost(usr))
 				if(I && holder)
 					I.play_tool_sound(holder, 20)
-				cut_color(target_wire)
+				cut_color(target_wire, L)
 				. = TRUE
 			else
 				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
