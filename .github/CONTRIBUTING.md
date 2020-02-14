@@ -260,7 +260,7 @@ This prevents nesting levels from getting deeper then they need to be.
 ### User Interfaces
 * All new player-facing user interfaces must use TGUI.
 * Raw HTML is permitted for admin and debug UIs.
-* Documentation for TGUI-next can be found at:
+* Documentation for TGUI can be found at:
 	* [tgui/README.md](../tgui/README.md)
 	* [tgui/tutorial-and-examples.md](../tgui/docs/tutorial-and-examples.md)
 
