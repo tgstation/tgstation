@@ -33,6 +33,44 @@
 
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
 
+/obj/structure/ash_walker_eggshell
+	name = "ash walker egg"
+	desc = "A man-sized yellow egg, spawned from some unfathomable creature. A humanoid silhouette lurks within. The egg shell looks resistant to temperature but otherwise rather brittle."
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_state = "large_egg"
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | FREEZE_PROOF
+	max_integrity = 80
+	var/obj/effect/mob_spawn/human/ash_walker/egg
+
+/obj/structure/ash_walker_eggshell/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0) //lifted from xeno eggs
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(loc, 'sound/effects/attackblob.ogg', 100, TRUE)
+			else
+				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+		if(BURN)
+			if(damage_amount)
+				playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+
+/obj/structure/ash_walker_eggshell/attack_ghost(mob/user) //Pass on ghost clicks to the mob spawner
+	if(egg)
+		egg.attack_ghost(user)
+	. = ..()
+
+/obj/structure/ash_walker_eggshell/Destroy()
+	if(egg)
+		var/mob/living/carbon/human/yolk = new /mob/living/carbon/human/(get_turf(src))
+		yolk.fully_replace_character_name(null,random_unique_lizard_name(gender))
+		yolk.set_species(/datum/species/lizard/ashwalker)
+		yolk.underwear = "Nude"
+		yolk.equipOutfit(/datum/outfit/ashwalker)//this is an authentic mess we're making
+		yolk.update_body()
+		yolk.gib()
+		qdel(egg)
+	. = ..()
+
+
 /obj/effect/mob_spawn/human/ash_walker
 	name = "ash walker egg"
 	desc = "A man-sized yellow egg, spawned from some unfathomable creature. A humanoid silhouette lurks within."
@@ -43,7 +81,6 @@
 	outfit = /datum/outfit/ashwalker
 	roundstart = FALSE
 	death = FALSE
-	anchored = TRUE
 	move_resist = MOVE_FORCE_NORMAL
 	density = FALSE
 	short_desc = "You are an ash walker. Your tribe worships the Necropolis."
@@ -52,10 +89,11 @@
 	Fresh sacrifices for your nest."
 	assignedrole = "Ash Walker"
 	var/datum/team/ashwalkers/team
+	var/obj/structure/ash_walker_eggshell/eggshell
 
 /obj/effect/mob_spawn/human/ash_walker/allow_spawn(mob/user)
-	if(user.key in team.players_spawned)//if player is on exaust list
-		to_chat(user, "<span class='warning'><b>You have exausted your usefulness to the Necropolis</b>.</span>")
+	if(user.key in team.players_spawned)//one per person unless you get a bonus spawn
+		to_chat(user, "<span class='warning'><b>You have exhausted your usefulness to the Necropolis</b>.</span>")
 		return FALSE
 	return TRUE
 
@@ -69,12 +107,18 @@
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
 		H.update_body()
+		ADD_TRAIT(H, TRAIT_PRIMITIVE, ROUNDSTART_TRAIT)
 	team.players_spawned += (new_spawn.key)
+	eggshell.egg = null
+	qdel(eggshell)
 
 /obj/effect/mob_spawn/human/ash_walker/Initialize(mapload, datum/team/ashwalkers/ashteam)
 	. = ..()
 	var/area/A = get_area(src)
 	team = ashteam
+	eggshell = new /obj/structure/ash_walker_eggshell(get_turf(loc))
+	eggshell.egg = src
+	src.forceMove(eggshell)
 	if(A)
 		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_ASHWALKER)
 
