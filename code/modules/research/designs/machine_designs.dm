@@ -434,6 +434,14 @@
 	build_path = /obj/item/circuitboard/machine/ore_redemption
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING
+	
+/datum/design/board/mint_press
+	name = "Machine Design (Coin Press)"
+	desc = "The circuit board for a Coin Press machine."
+	id = "mint_press"
+	build_path = /obj/item/circuitboard/machine/mint_press
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/board/mining_equipment_vendor
 	name = "Machine Design (Mining Rewards Vendor Board)"
