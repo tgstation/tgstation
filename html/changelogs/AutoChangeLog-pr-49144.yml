@@ -1,4 +1,0 @@
-author: "nightred"
-delete-after: True
-changes: 
-  - bugfix: "Polymorph kicks AI's out of shells"

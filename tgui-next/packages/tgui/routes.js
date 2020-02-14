@@ -46,6 +46,7 @@ import { GulagTeleporterConsole } from './interfaces/GulagTeleporterConsole';
 import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
 import { Holodeck } from './interfaces/Holodeck';
 import { ImplantChair } from './interfaces/ImplantChair';
+import { InfraredEmitter } from './interfaces/InfraredEmitter';
 import { Intellicard } from './interfaces/Intellicard';
 import { KeycardAuth } from './interfaces/KeycardAuth';
 import { LaborClaimConsole } from './interfaces/LaborClaimConsole';
@@ -82,6 +83,7 @@ import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { PortableGenerator } from './interfaces/PortableGenerator';
 import { PortablePump, PortableScrubber } from './interfaces/PortableAtmos';
 import { PowerMonitor } from './interfaces/PowerMonitor';
+import { ProximitySensor } from './interfaces/ProximitySensor';
 import { Radio } from './interfaces/Radio';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { Roulette } from './interfaces/Roulette';
@@ -309,6 +311,10 @@ const ROUTES = {
     component: () => ImplantChair,
     scrollable: false,
   },
+  infrared_emitter: {
+    component: () => InfraredEmitter,
+    scrollable: false,
+  },
   intellicard: {
     component: () => Intellicard,
     scrollable: true,
@@ -488,6 +494,10 @@ const ROUTES = {
   power_monitor: {
     component: () => PowerMonitor,
     scrollable: true,
+  },
+  proximity_sensor: {
+    component: () => ProximitySensor,
+    scrollable: false,
   },
   radio: {
     component: () => Radio,
