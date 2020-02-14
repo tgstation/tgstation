@@ -14845,6 +14845,14 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
+/obj/item/stock_parts/cell/emproof{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/stock_parts/cell/emproof{
+	pixel_x = 4;
+	pixel_y = 6
+	},
 /turf/open/floor/plasteel{
 	dir = 1
 	},
@@ -14868,6 +14876,10 @@
 	},
 /obj/effect/turf_decal/bot{
 	dir = 1
+	},
+/obj/item/stock_parts/cell/emproof{
+	pixel_x = -4;
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel{
 	dir = 1
