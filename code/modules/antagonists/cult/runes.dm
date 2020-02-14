@@ -257,7 +257,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		H.stuttering = 0
 		H.cultslurring = 0
 		if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
-			H.say("You son of a bitch! I'm in.")
+			H.say("You son of a bitch! I'm in.", forced = TRUE)
 	return 1
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)

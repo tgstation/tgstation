@@ -47,7 +47,7 @@
 		target.sec_hud_set_implants()
 		if(deconverted)
 			if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
-				target.say("I'm out! I quit! Whose kidneys are these?")
+				target.say("I'm out! I quit! Whose kidneys are these?", forced = TRUE)
 		return TRUE
 	return FALSE
 

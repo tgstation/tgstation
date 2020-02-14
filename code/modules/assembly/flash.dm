@@ -192,7 +192,7 @@
 				return
 			if(converter.add_revolutionary(H.mind))
 				if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
-					H.say("You son of a bitch! I'm in.")
+					H.say("You son of a bitch! I'm in.", forced = TRUE)
 				times_used -- //Flashes less likely to burn out for headrevs when used for conversion
 			else
 				to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
