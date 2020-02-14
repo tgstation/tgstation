@@ -17,8 +17,8 @@ export const RadioactiveMicrolaser = props => {
     <Fragment>
       <Section>
         <LabeledList.Item label="Laser Status">
-          <Box color={on_cooldown ? "bad" : "average"}>
-            {on_cooldown ? "Ready" : "Recharging"}
+          <Box color={on_cooldown ? "average" : "good"}>
+            {on_cooldown ? "Recharging" : "Ready"}
           </Box>
         </LabeledList.Item>
       </Section>
