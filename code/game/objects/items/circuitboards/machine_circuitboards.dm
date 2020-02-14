@@ -1146,14 +1146,14 @@
 	build_path = /obj/machinery/ore_silo
 	req_components = list()
 	
-/obj/item/circuitboard/machine/coin_press
+/obj/item/circuitboard/machine/mint_press
 	name = "Coin Press (Machine Board)"
 	icon_state = "supply"
 	build_path = /obj/machinery/mineral/mint
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/micro_laser = 2,
-		/obj/item/stock_parts/manipulator = 2)
+		/obj/item/stock_parts/manipulator = 1)
 	needs_anchored = TRUE
 
 /obj/item/circuitboard/machine/protolathe/department/cargo
