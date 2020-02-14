@@ -1,4 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - bugfix: "Traitor Uplink buy buttons properly disable when you don't have enough TC again"
