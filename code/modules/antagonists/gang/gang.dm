@@ -222,7 +222,7 @@
 	for(var/datum/team/gang/TT in mode.gangs)
 		var/alive_gangsters = 0
 		for(var/datum/mind/gangers in TT.members)
-			if(ishuman(gangers) && gangers.current.client && !gangers.current.stat)
+			if(ishuman(gangers.current) && gangers.current.client && !gangers.current.stat)
 				alive_gangsters++
 		if(alive_gangsters)
 			if(TT != my_gang_datum.my_gang)
