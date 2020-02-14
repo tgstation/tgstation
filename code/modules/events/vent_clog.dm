@@ -95,7 +95,7 @@
 			R.my_atom = vent
 			R.add_reagent(/datum/reagent/consumable/ethanol/beer, reagentsAmount)
 
-			R.create_foam(200)
+			R.create_foam(/datum/effect_system/foam_spread,200)
 		CHECK_TICK
 
 /datum/round_event/vent_clog/plasma_decon/announce()

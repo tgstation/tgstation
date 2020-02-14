@@ -138,12 +138,12 @@
 	else
 		death()
 
-/mob/living/simple_animal/hostile/swarmer/CanPass(atom/movable/O)
+/mob/living/simple_animal/hostile/swarmer/CanAllowThrough(atom/movable/O)
+	. = ..()
 	if(istype(O, /obj/projectile/beam/disabler))//Allows for swarmers to fight as a group without wasting their shots hitting each other
 		return TRUE
 	if(isswarmer(O))
 		return TRUE
-	..()
 
 ////CTRL CLICK FOR SWARMERS AND SWARMER_ACT()'S////
 /mob/living/simple_animal/hostile/swarmer/AttackingTarget()
@@ -193,7 +193,7 @@
 
 /obj/item/IntegrateAmount() //returns the amount of resources gained when eating this item
 	if(custom_materials)
-		if(custom_materials[getmaterialref(/datum/material/iron)] || custom_materials[getmaterialref(/datum/material/glass)])
+		if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)] || custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)])
 			return 1
 	return ..()
 
@@ -613,7 +613,8 @@
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	max_integrity = 50
 
-/obj/structure/swarmer/blockade/CanPass(atom/movable/O)
+/obj/structure/swarmer/blockade/CanAllowThrough(atom/movable/O)
+	. = ..()
 	if(isswarmer(O))
 		return TRUE
 	if(istype(O, /obj/projectile/beam/disabler))

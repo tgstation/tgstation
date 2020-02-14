@@ -13,7 +13,7 @@
 			"<span class='notice'>[user] begins to wedge \the [tool] in [target]'s [parse_zone(target_zone)].</span>",
 			"<span class='notice'>[user] begins to wedge something in [target]'s [parse_zone(target_zone)].</span>")
 
-/datum/surgery_step/insert_pill/success(mob/user, mob/living/carbon/target, target_zone, obj/item/reagent_containers/pill/tool, datum/surgery/surgery)
+/datum/surgery_step/insert_pill/success(mob/user, mob/living/carbon/target, target_zone, obj/item/reagent_containers/pill/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(!istype(tool))
 		return 0
 
@@ -27,7 +27,7 @@
 	display_results(user, target, "<span class='notice'>You wedge [tool] into [target]'s [parse_zone(target_zone)].</span>",
 			"<span class='notice'>[user] wedges \the [tool] into [target]'s [parse_zone(target_zone)]!</span>",
 			"<span class='notice'>[user] wedges something into [target]'s [parse_zone(target_zone)]!</span>")
-	return ..(default_display_results = FALSE)
+	return ..()
 
 /datum/action/item_action/hands_free/activate_pill
 	name = "Activate Pill"

@@ -1,6 +1,8 @@
 #define FILE_ANTAG_REP "data/AntagReputation.json"
 #define FILE_RECENT_MAPS "data/RecentMaps.json"
 
+#define KEEP_ROUNDS_MAP 3
+
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
 	init_order = INIT_ORDER_PERSISTENCE
@@ -9,7 +11,8 @@ SUBSYSTEM_DEF(persistence)
 	var/list/obj/structure/chisel_message/chisel_messages = list()
 	var/list/saved_messages = list()
 	var/list/saved_modes = list(1,2,3)
-	var/list/saved_maps = list(1,2)
+	var/list/saved_maps = list()
+	var/list/blocked_maps = list()
 	var/list/saved_trophies = list()
 	var/list/antag_rep = list()
 	var/list/antag_rep_change = list()
@@ -116,6 +119,18 @@ SUBSYSTEM_DEF(persistence)
 		return
 	saved_maps = json["data"]
 
+	//Convert the mapping data to a shared blocking list, saves us doing this in several places later.
+	for(var/map in config.maplist)
+		var/datum/map_config/VM = config.maplist[map]
+		var/run = 0
+		if(VM.map_name == SSmapping.config.map_name)
+			run++
+		for(var/name in SSpersistence.saved_maps)
+			if(VM.map_name == name)
+				run++
+		if(run >= 2) //If run twice in the last KEEP_ROUNDS_MAP + 1 (including current) rounds, disable map for voting and rotation.
+			blocked_maps += VM.map_name
+
 /datum/controller/subsystem/persistence/proc/LoadAntagReputation()
 	var/json = file2text(FILE_ANTAG_REP)
 	if(!json)
@@ -140,7 +155,7 @@ SUBSYSTEM_DEF(persistence)
 
 		var/list/chosen_trophy = trophy_data
 
-		if(!chosen_trophy || isemptylist(chosen_trophy)) //Malformed
+		if(!length(chosen_trophy)) //Malformed
 			continue
 
 		var/path = text2path(chosen_trophy["path"]) //If the item no longer exist, this returns null
@@ -284,7 +299,13 @@ SUBSYSTEM_DEF(persistence)
 	WRITE_FILE(json_file, json_encode(file_data))
 
 /datum/controller/subsystem/persistence/proc/CollectMaps()
-	saved_maps[2] = saved_maps[1]
+	if(length(saved_maps) > KEEP_ROUNDS_MAP) //Get rid of extras from old configs.
+		saved_maps.Cut(KEEP_ROUNDS_MAP+1)
+	var/mapstosave = min(length(saved_maps)+1, KEEP_ROUNDS_MAP)
+	if(length(saved_maps) < mapstosave) //Add extras if too short, one per round.
+		saved_maps += mapstosave
+	for(var/i = mapstosave; i > 1; i--)
+		saved_maps[i] = saved_maps[i-1]
 	saved_maps[1] = SSmapping.config.map_name
 	var/json_file = file(FILE_RECENT_MAPS)
 	var/list/file_data = list()

@@ -1299,7 +1299,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_socks)
 						socks = new_socks
 
-				if(BODY_ZONE_PRECISE_EYES)
+				if("eyes")
 					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference","#"+eye_color) as color|null
 					if(new_eyes)
 						eye_color = sanitize_hexcolor(new_eyes)
@@ -1467,7 +1467,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						preferred_map = maplist[pickedmap]
 
 				if ("clientfps")
-					var/desiredfps = input(user, "Choose your desired fps. (0 = synced with server tickrate (currently:[world.fps]))", "Character Preference", clientfps)  as null|num
+					var/desiredfps = input(user, "Choose your desired fps. (0 = synced with server tick rate (currently:[world.fps]))", "Character Preference", clientfps)  as null|num
 					if (!isnull(desiredfps))
 						clientfps = desiredfps
 						parent.fps = desiredfps

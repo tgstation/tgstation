@@ -6,7 +6,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "navbeacon0-f"
 	name = "navigation beacon"
-	desc = "A radio beacon used for bot navigation."
+	desc = "A radio beacon used for bot navigation and crew wayfinding."
 	level = 1		// underfloor
 	layer = LOW_OBJ_LAYER
 	max_integrity = 500
@@ -18,28 +18,31 @@
 	var/location = ""	// location response text
 	var/list/codes		// assoc. list of transponder codes
 	var/codes_txt = ""	// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
+	var/wayfinding = FALSE
 
 	req_one_access = list(ACCESS_ENGINE, ACCESS_ROBOTICS)
 
 /obj/machinery/navbeacon/Initialize()
 	. = ..()
 
+	if(wayfinding)
+		if(!location)
+			var/obj/machinery/door/airlock/A = locate(/obj/machinery/door/airlock) in loc
+			if(A)
+				location = A.name
+			else
+				location = get_area(src)
+		codes_txt += "wayfinding=[location]"
+
 	set_codes()
 
 	var/turf/T = loc
 	hide(T.intact)
-	if(codes["patrol"])
-		if(!GLOB.navbeacons["[z]"])
-			GLOB.navbeacons["[z]"] = list()
-		GLOB.navbeacons["[z]"] += src //Register with the patrol list!
-	if(codes["delivery"])
-		GLOB.deliverybeacons += src
-		GLOB.deliverybeacontags += location
+
+	glob_lists_register(init=TRUE)
 
 /obj/machinery/navbeacon/Destroy()
-	if (GLOB.navbeacons["[z]"])
-		GLOB.navbeacons["[z]"] -= src //Remove from beacon list, if in one.
-	GLOB.deliverybeacons -= src
+	glob_lists_deregister()
 	return ..()
 
 /obj/machinery/navbeacon/onTransitZ(old_z, new_z)
@@ -62,11 +65,30 @@
 		var/index = findtext(e, "=")		// format is "key=value"
 		if(index)
 			var/key = copytext(e, 1, index)
-			var/val = copytext(e, index+1)
+			var/val = copytext(e, index + length(e[index]))
 			codes[key] = val
 		else
 			codes[e] = "1"
 
+/obj/machinery/navbeacon/proc/glob_lists_deregister()
+	if (GLOB.navbeacons["[z]"])
+		GLOB.navbeacons["[z]"] -= src //Remove from beacon list, if in one.
+	GLOB.deliverybeacons -= src
+	GLOB.deliverybeacontags -= location
+	GLOB.wayfindingbeacons -= src
+
+/obj/machinery/navbeacon/proc/glob_lists_register(var/init=FALSE)
+	if(!init)
+		glob_lists_deregister()
+	if(codes["patrol"])
+		if(!GLOB.navbeacons["[z]"])
+			GLOB.navbeacons["[z]"] = list()
+		GLOB.navbeacons["[z]"] += src //Register with the patrol list!
+	if(codes["delivery"])
+		GLOB.deliverybeacons += src
+		GLOB.deliverybeacontags += location
+	if(codes["wayfinding"])
+		GLOB.wayfindingbeacons += src
 
 // called when turf state changes
 // hide the object if turf is intact
@@ -167,9 +189,10 @@ Transponder Codes:<UL>"}
 		usr.set_machine(src)
 
 		if(href_list["locedit"])
-			var/newloc = copytext(sanitize(input("Enter New Location", "Navigation Beacon", location) as text|null),1,MAX_MESSAGE_LEN)
+			var/newloc = stripped_input(usr, "Enter New Location", "Navigation Beacon", location, MAX_MESSAGE_LEN)
 			if(newloc)
 				location = newloc
+				glob_lists_register()
 				updateDialog()
 
 		else if(href_list["edit"])
@@ -187,12 +210,14 @@ Transponder Codes:<UL>"}
 
 			codes.Remove(codekey)
 			codes[newkey] = newval
+			glob_lists_register()
 
 			updateDialog()
 
 		else if(href_list["delete"])
 			var/codekey = href_list["code"]
 			codes.Remove(codekey)
+			glob_lists_register()
 			updateDialog()
 
 		else if(href_list["add"])
@@ -210,5 +235,6 @@ Transponder Codes:<UL>"}
 				codes = new()
 
 			codes[newkey] = newval
+			glob_lists_register()
 
 			updateDialog()

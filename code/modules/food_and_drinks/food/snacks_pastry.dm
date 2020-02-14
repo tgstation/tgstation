@@ -13,7 +13,6 @@
 	filling_color = "#D2691E"
 	tastes = list("donut" = 1)
 	foodtype = JUNKFOOD | GRAIN | FRIED | SUGAR | BREAKFAST
-	dunkable = TRUE
 	var/decorated_icon = "donut_homer"
 	var/is_decorated = FALSE
 	var/extra_reagent = null
@@ -23,6 +22,10 @@
 	. = ..()
 	if(prob(30))
 		decorate_donut()
+
+/obj/item/reagent_containers/food/snacks/donut/Initialize()
+	. = ..()
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/donut/proc/decorate_donut()
 	if(is_decorated || !decorated_icon)
@@ -546,7 +549,10 @@
 	filling_color = "#F0E68C"
 	tastes = list("cookie" = 1)
 	foodtype = GRAIN | SUGAR
-	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/cookie/Initialize()
+	. = ..()
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/fortunecookie
 	name = "fortune cookie"
@@ -639,7 +645,10 @@
 	filling_color = "#CD853F"
 	tastes = list("sweetness" = 1)
 	foodtype = GRAIN | JUNKFOOD | SUGAR
-	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/sugarcookie/Initialize()
+	. = ..()
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/chococornet
 	name = "chocolate cornet"
@@ -660,7 +669,10 @@
 	filling_color = "#D2691E"
 	tastes = list("cookie" = 2, "oat" = 1)
 	foodtype = GRAIN
-	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/oatmealcookie/Initialize()
+	. = ..()
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/raisincookie
 	name = "raisin cookie"
@@ -671,7 +683,10 @@
 	filling_color = "#F0E68C"
 	tastes = list("cookie" = 1, "raisins" = 1)
 	foodtype = GRAIN | FRUIT
-	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/raisincookie/Initialize()
+	. = ..()
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/cherrycupcake
 	name = "cherry cupcake"
@@ -790,7 +805,7 @@
 					contents += P
 					update_snack_overlays(P)
 			P = I
-			clearlist(P.contents)
+			P.contents.Cut()
 		return
 	else if(contents.len)
 		var/obj/O = contents[contents.len]

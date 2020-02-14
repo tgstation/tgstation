@@ -97,9 +97,10 @@ SUBSYSTEM_DEF(events)
 //aka Badmin Central
 // > Not in modules/admin
 // REEEEEEEEE
+// Why the heck is this here! Took me so damn long to find!
 /client/proc/forceEvent()
 	set name = "Trigger Event"
-	set category = "Fun"
+	set category = "Admin - Events"
 
 	if(!holder ||!check_rights(R_FUN))
 		return

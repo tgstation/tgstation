@@ -13,9 +13,12 @@
 	// Default keys to the master "hotkey_keys"
 	if(LAZYLEN(hotkey_keys) && !LAZYLEN(classic_keys))
 		classic_keys = hotkey_keys.Copy()
-	
+
 /datum/keybinding/proc/down(client/user)
     return FALSE
 
 /datum/keybinding/proc/up(client/user)
-    return FALSE
+	return FALSE
+
+/datum/keybinding/proc/can_use(client/user)
+	return TRUE

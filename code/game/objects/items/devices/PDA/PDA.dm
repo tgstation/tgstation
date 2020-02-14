@@ -164,26 +164,26 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return TRUE
 	return FALSE
 
-/obj/item/pda/update_icon()
-	cut_overlays()
-	var/mutable_appearance/overlay = new()
+/obj/item/pda/update_overlays()
+	. = ..()
+	var/mutable_appearance/overlay = new(icon)
 	overlay.pixel_x = overlays_x_offset
 	if(id)
 		overlay.icon_state = "id_overlay"
-		add_overlay(new /mutable_appearance(overlay))
+		. += new /mutable_appearance(overlay)
 	if(inserted_item)
 		overlay.icon_state = "insert_overlay"
-		add_overlay(new /mutable_appearance(overlay))
+		. += new /mutable_appearance(overlay)
 	if(fon)
 		overlay.icon_state = "light_overlay"
-		add_overlay(new /mutable_appearance(overlay))
+		. += new /mutable_appearance(overlay)
 	if(pai)
 		if(pai.pai)
 			overlay.icon_state = "pai_overlay"
-			add_overlay(new /mutable_appearance(overlay))
+			. += new /mutable_appearance(overlay)
 		else
 			overlay.icon_state = "pai_off_overlay"
-			add_overlay(new /mutable_appearance(overlay))
+			. += new /mutable_appearance(overlay)
 
 /obj/item/pda/MouseDrop(mob/over, src_location, over_location)
 	var/mob/M = usr
@@ -210,7 +210,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	user.set_machine(src)
 
-	var/dat = "<!DOCTYPE html><html><head><title>Personal Data Assistant</title><link href=\"https://fonts.googleapis.com/css?family=Orbitron|Share+Tech+Mono|VT323\" rel=\"stylesheet\"></head><body bgcolor=\"" + background_color + "\"><style>body{" + font_mode + "}ul,ol{list-style-type: none;}a, a:link, a:visited, a:active, a:hover { color: #000000;text-decoration:none; }img {border-style:none;}a img{padding-right: 9px;}</style>"
+	var/dat = "<!DOCTYPE html><html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Personal Data Assistant</title><link href=\"https://fonts.googleapis.com/css?family=Orbitron|Share+Tech+Mono|VT323\" rel=\"stylesheet\"></head><body bgcolor=\"" + background_color + "\"><style>body{" + font_mode + "}ul,ol{list-style-type: none;}a, a:link, a:visited, a:active, a:hover { color: #000000;text-decoration:none; }img {border-style:none;}a img{padding-right: 9px;}</style>"
 	dat += assets.css_tag()
 	dat += emoji_s.css_tag()
 
@@ -533,13 +533,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("Clear")//Clears messages
 				tnote = null
 			if("Ringtone")
-				var/t = input(U, "Please enter new ringtone", name, ttone) as text|null
+				var/t = stripped_input(U, "Please enter new ringtone", name, ttone, 20)
 				if(in_range(src, U) && loc == U && t)
 					if(SEND_SIGNAL(src, COMSIG_PDA_CHANGE_RINGTONE, U, t) & COMPONENT_STOP_RINGTONE_CHANGE)
 						U << browse(null, "window=pda")
 						return
 					else
-						ttone = copytext(sanitize(t), 1, 20)
+						ttone = t
 				else
 					U << browse(null, "window=pda")
 					return
@@ -605,10 +605,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 		U << browse(null, "window=pda")
 	return
 
-/obj/item/pda/proc/remove_id()
-	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+/obj/item/pda/proc/remove_id(mob/user)
+	if(issilicon(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	do_remove_id(usr)
+	do_remove_id(user)
 
 
 /obj/item/pda/proc/do_remove_id(mob/user)
@@ -743,13 +743,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/proc/create_message(mob/living/U, obj/item/pda/P)
 	send_message(U,list(P))
 
-/obj/item/pda/AltClick()
+/obj/item/pda/AltClick(mob/user)
 	..()
 
 	if(id)
-		remove_id()
+		remove_id(user)
 	else
-		remove_pen()
+		remove_pen(user)
 
 /obj/item/pda/CtrlClick(mob/user)
 	..()
@@ -776,7 +776,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	set src in usr
 
 	if(id)
-		remove_id()
+		remove_id(usr)
 	else
 		to_chat(usr, "<span class='warning'>This PDA does not have an ID in it!</span>")
 
@@ -837,7 +837,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/proc/id_check(mob/user, obj/item/card/id/I)
 	if(!I)
 		if(id && (src in user.contents))
-			remove_id()
+			remove_id(user)
 			return TRUE
 		else
 			var/obj/item/card/id/C = user.get_active_held_item()
@@ -1069,7 +1069,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(incapacitated())
 		return
 	if(!isnull(aiPDA))
-		var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"
+		var/HTML = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"
 		user << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 	else
 		to_chat(user, "<span class='warning'>You do not have a PDA! You should make an issue report about this.</span>")

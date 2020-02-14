@@ -172,6 +172,9 @@
 
 	if(iscyborg(M))
 		var/mob/living/silicon/robot/Robot = M
+		// Disconnect AI's in shells
+		if(Robot.connected_ai)
+			Robot.connected_ai.disconnect_shell()
 		if(Robot.mmi)
 			qdel(Robot.mmi)
 		Robot.notify_ai(NEW_BORG)
@@ -625,9 +628,9 @@
 	speed = 0.3
 	flag = "magic"
 
-	var/tesla_power = 20000
-	var/tesla_range = 15
-	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_MOB_STUN | TESLA_OBJ_DAMAGE
+	var/zap_power = 20000
+	var/zap_range = 15
+	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_MOB_STUN | ZAP_OBJ_DAMAGE | ZAP_IS_TESLA
 	var/chain
 	var/mob/living/caster
 
@@ -644,7 +647,7 @@
 			visible_message("<span class='warning'>[src] fizzles on contact with [target]!</span>")
 			qdel(src)
 			return BULLET_ACT_BLOCK
-	tesla_zap(src, tesla_range, tesla_power, tesla_flags)
+	tesla_zap(src, zap_range, zap_power, zap_flags)
 	qdel(src)
 
 /obj/projectile/magic/aoe/lightning/Destroy()
@@ -701,5 +704,8 @@
 	damage_type = BURN
 	nodamage = FALSE
 	armour_penetration = 100
-	temperature = 50
+	temperature = -200 // Cools you down greatly per hit
 	flag = "magic"
+
+/obj/projectile/magic/nothing
+	name = "bolt of nothing"

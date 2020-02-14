@@ -128,16 +128,16 @@
 	update_icon()
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 
-/obj/machinery/computer/pandemic/update_icon()
-	if(stat & BROKEN)
+/obj/machinery/computer/pandemic/update_icon_state()
+	if(machine_stat & BROKEN)
 		icon_state = (beaker ? "mixer1_b" : "mixer0_b")
-		return
-
-	icon_state = "mixer[(beaker) ? "1" : "0"][powered() ? "" : "_nopower"]"
-	if(wait)
-		add_overlay("waitlight")
 	else
-		cut_overlays()
+		icon_state = "mixer[(beaker) ? "1" : "0"][powered() ? "" : "_nopower"]"
+
+/obj/machinery/computer/pandemic/update_overlays()
+	. = ..()
+	if(wait)
+		. += "waitlight"
 
 /obj/machinery/computer/pandemic/proc/eject_beaker()
 	if(beaker)
@@ -237,7 +237,7 @@
 /obj/machinery/computer/pandemic/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		. = TRUE //no afterattack
-		if(stat & (NOPOWER|BROKEN))
+		if(machine_stat & (NOPOWER|BROKEN))
 			return
 		if(beaker)
 			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")

@@ -31,6 +31,7 @@
 
 /datum/action/proc/link_to(Target)
 	target = Target
+	RegisterSignal(Target, COMSIG_ATOM_UPDATED_ICON, .proc/OnUpdatedIcon)
 
 /datum/action/Destroy()
 	if(owner)
@@ -142,6 +143,8 @@
 		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
 		current_button.button_icon_state = button_icon_state
 
+/datum/action/proc/OnUpdatedIcon()
+	UpdateButtonIcon()
 
 //Presets for item actions
 /datum/action/item_action
@@ -268,15 +271,6 @@
 	var/obj/item/clothing/head/helmet/space/plasmaman/H = target
 	if(istype(H))
 		H.toggle_welding_screen(owner)
-
-/datum/action/item_action/toggle_headphones
-	name = "Toggle Headphones"
-	desc = "UNTZ UNTZ UNTZ"
-
-/datum/action/item_action/toggle_headphones/Trigger()
-	var/obj/item/clothing/ears/headphones/H = target
-	if(istype(H))
-		H.toggle(owner)
 
 /datum/action/item_action/toggle_unfriendly_fire
 	name = "Toggle Friendly Fire \[ON\]"

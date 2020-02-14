@@ -9,11 +9,13 @@ import { AtmosFilter } from './interfaces/AtmosFilter';
 import { AtmosMixer } from './interfaces/AtmosMixer';
 import { AtmosPump } from './interfaces/AtmosPump';
 import { BankMachine } from './interfaces/BankMachine';
+import { BlackmarketUplink } from './interfaces/BlackmarketUplink';
 import { BluespaceArtillery } from './interfaces/BluespaceArtillery';
 import { Bepis } from './interfaces/Bepis';
 import { BorgPanel } from './interfaces/BorgPanel';
 import { BrigTimer } from './interfaces/BrigTimer';
 import { Canister } from './interfaces/Canister';
+import { Canvas } from './interfaces/Canvas';
 import { Cargo, CargoExpress } from './interfaces/Cargo';
 import { CellularEmporium } from './interfaces/CellularEmporium';
 import { CentcomPodLauncher } from './interfaces/CentcomPodLauncher';
@@ -35,25 +37,40 @@ import { Cryo } from './interfaces/Cryo';
 import { DecalPainter } from './interfaces/DecalPainter';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { DnaVault } from './interfaces/DnaVault';
+import { EightBallVote } from './interfaces/EightBallVote';
+import { EmergencyShuttleConsole } from './interfaces/EmergencyShuttleConsole';
 import { EngravedMessage } from './interfaces/EngravedMessage';
 import { Gps } from './interfaces/Gps';
 import { GravityGenerator } from './interfaces/GravityGenerator';
+import { GulagTeleporterConsole } from './interfaces/GulagTeleporterConsole';
 import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
 import { Holodeck } from './interfaces/Holodeck';
 import { ImplantChair } from './interfaces/ImplantChair';
+import { InfraredEmitter } from './interfaces/InfraredEmitter';
+import { Intellicard } from './interfaces/Intellicard';
 import { KeycardAuth } from './interfaces/KeycardAuth';
 import { LaborClaimConsole } from './interfaces/LaborClaimConsole';
 import { LanguageMenu } from './interfaces/LanguageMenu';
+import { LaunchpadConsole, LaunchpadRemote } from './interfaces/Launchpad';
 import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
+import { MiningVendor } from './interfaces/MiningVendor';
 import { Mint } from './interfaces/Mint';
+import { Mule } from './interfaces/Mule';
 import { NaniteChamberControl } from './interfaces/NaniteChamberControl';
 import { NaniteCloudControl } from './interfaces/NaniteCloudControl';
 import { NaniteProgramHub } from './interfaces/NaniteProgramHub';
 import { NaniteProgrammer } from './interfaces/NaniteProgrammer';
 import { NaniteRemote } from './interfaces/NaniteRemote';
+import { NotificationPreferences } from './interfaces/NotificationPreferences';
+import { NtnetRelay } from './interfaces/NtnetRelay';
 import { NtosArcade } from './interfaces/NtosArcade';
+import { NtosCard } from './interfaces/NtosCard';
+import { NtosConfiguration } from './interfaces/NtosConfiguration';
+import { NtosCrewManifest } from './interfaces/NtosCrewManifest';
+import { NtosJobManager } from './interfaces/NtosJobManager';
 import { NtosMain } from './interfaces/NtosMain';
+import { NtosNetChat } from './interfaces/NtosNetChat';
 import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
 import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
 import { NtosWrapper } from './interfaces/NtosWrapper';
@@ -66,11 +83,16 @@ import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { PortableGenerator } from './interfaces/PortableGenerator';
 import { PortablePump, PortableScrubber } from './interfaces/PortableAtmos';
 import { PowerMonitor } from './interfaces/PowerMonitor';
+import { ProximitySensor } from './interfaces/ProximitySensor';
 import { Radio } from './interfaces/Radio';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
+import { Roulette } from './interfaces/Roulette';
 import { SatelliteControl } from './interfaces/SatelliteControl';
 import { ScannerGate } from './interfaces/ScannerGate';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
+import { Signaler } from './interfaces/Signaler';
+import { Sleeper } from './interfaces/Sleeper';
+import { SlimeBodySwapper } from './interfaces/SlimeBodySwapper';
 import { SmartVend } from './interfaces/SmartVend';
 import { Smes } from './interfaces/Smes';
 import { SmokeMachine } from './interfaces/SmokeMachine';
@@ -81,12 +103,15 @@ import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
 import { Tank } from './interfaces/Tank';
 import { TankDispenser } from './interfaces/TankDispenser';
+import { Teleporter } from './interfaces/Teleporter';
 import { ThermoMachine } from './interfaces/ThermoMachine';
+import { Timer } from './interfaces/Timer';
 import { TurbineComputer } from './interfaces/TurbineComputer';
 import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
 import { Vending } from './interfaces/Vending';
 import { Wires } from './interfaces/Wires';
+import { SyndContractor } from './interfaces/SyndContractor';
 
 const ROUTES = {
   achievements: {
@@ -137,6 +162,11 @@ const ROUTES = {
     component: () => BankMachine,
     scrollable: false,
   },
+  blackmarket_uplink: {
+    component: () => BlackmarketUplink,
+    scrollable: true,
+    theme: 'hackerman',
+  },
   borgopanel: {
     component: () => BorgPanel,
     scrollable: true,
@@ -151,6 +181,10 @@ const ROUTES = {
   },
   canister: {
     component: () => Canister,
+    scrollable: false,
+  },
+  canvas: {
+    component: () => Canvas,
     scrollable: false,
   },
   cargo: {
@@ -241,6 +275,14 @@ const ROUTES = {
     component: () => DnaVault,
     scrollable: false,
   },
+  eightball: {
+    component: () => EightBallVote,
+    scrollable: false,
+  },
+  emergency_shuttle_console: {
+    component: () => EmergencyShuttleConsole,
+    scrollable: false,
+  },
   engraved_message: {
     component: () => EngravedMessage,
     scrollable: false,
@@ -251,6 +293,10 @@ const ROUTES = {
   },
   gravity_generator: {
     component: () => GravityGenerator,
+    scrollable: false,
+  },
+  gulag_console: {
+    component: () => GulagTeleporterConsole,
     scrollable: false,
   },
   gulag_item_reclaimer: {
@@ -265,6 +311,14 @@ const ROUTES = {
     component: () => ImplantChair,
     scrollable: false,
   },
+  infrared_emitter: {
+    component: () => InfraredEmitter,
+    scrollable: false,
+  },
+  intellicard: {
+    component: () => Intellicard,
+    scrollable: true,
+  },
   keycard_auth: {
     component: () => KeycardAuth,
     scrollable: false,
@@ -277,6 +331,15 @@ const ROUTES = {
     component: () => LanguageMenu,
     scrollable: true,
   },
+  launchpad_console: {
+    component: () => LaunchpadConsole,
+    scrollable: true,
+  },
+  launchpad_remote: {
+    component: () => LaunchpadRemote,
+    scrollable: false,
+    theme: 'syndicate',
+  },
   mech_bay_power_console: {
     component: () => MechBayPowerConsole,
     scrollable: false,
@@ -285,8 +348,16 @@ const ROUTES = {
     component: () => MedicalKiosk,
     scrollable: false,
   },
+  mining_vendor: {
+    component: () => MiningVendor,
+    scrollable: true,
+  },
   mint: {
     component: () => Mint,
+    scrollable: false,
+  },
+  mulebot: {
+    component: () => Mule,
     scrollable: false,
   },
   nanite_chamber_control: {
@@ -309,10 +380,54 @@ const ROUTES = {
     component: () => NaniteRemote,
     scrollable: true,
   },
+  notificationpanel: {
+    component: () => NotificationPreferences,
+    scrollable: true,
+  },
+  ntnet_relay: {
+    component: () => NtnetRelay,
+    scrollable: false,
+  },
+  ntos_arcade: {
+    component: () => NtosArcade,
+    wrapper: () => NtosWrapper,
+    scrollable: false,
+    theme: 'ntos',
+  },
+  ntos_card: {
+    component: () => NtosCard,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_configuration: {
+    component: () => NtosConfiguration,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_crew_manifest: {
+    component: () => NtosCrewManifest,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_job_manager: {
+    component: () => NtosJobManager,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
   ntos_main: {
     component: () => NtosMain,
     wrapper: () => NtosWrapper,
     scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_net_chat: {
+    component: () => NtosNetChat,
+    wrapper: () => NtosWrapper,
+    scrollable: false,
     theme: 'ntos',
   },
   ntos_net_downloader: {
@@ -321,14 +436,14 @@ const ROUTES = {
     scrollable: true,
     theme: 'ntos',
   },
-  ntos_arcade: {
-    component: () => NtosArcade,
-    wrapper: () => NtosWrapper,
-    scrollable: false,
-    theme: 'ntos',
-  },
   ntos_power_monitor: {
     component: () => PowerMonitor,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_station_alert: {
+    component: () => StationAlertConsole,
     wrapper: () => NtosWrapper,
     scrollable: true,
     theme: 'ntos',
@@ -380,9 +495,18 @@ const ROUTES = {
     component: () => PowerMonitor,
     scrollable: true,
   },
+  proximity_sensor: {
+    component: () => ProximitySensor,
+    scrollable: false,
+  },
   radio: {
     component: () => Radio,
     scrollable: false,
+  },
+  roulette: {
+    component: () => Roulette,
+    scrollable: false,
+    theme: 'cardtable',
   },
   rpd: {
     component: () => RapidPipeDispenser,
@@ -398,6 +522,18 @@ const ROUTES = {
   },
   shuttle_manipulator: {
     component: () => ShuttleManipulator,
+    scrollable: true,
+  },
+  signaler: {
+    component: () => Signaler,
+    scrollable: false,
+  },
+  sleeper: {
+    component: () => Sleeper,
+    scrollable: false,
+  },
+  slime_swap_body: {
+    component: () => SlimeBodySwapper,
     scrollable: true,
   },
   smartvend: {
@@ -432,6 +568,12 @@ const ROUTES = {
     component: () => SuitStorageUnit,
     scrollable: false,
   },
+  synd_contract: {
+    component: () => SyndContractor,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'syndicate',
+  },
   tanks: {
     component: () => Tank,
     scrollable: false,
@@ -440,8 +582,16 @@ const ROUTES = {
     component: () => TankDispenser,
     scrollable: false,
   },
+  teleporter: {
+    component: () => Teleporter,
+    scrollable: false,
+  },
   thermomachine: {
     component: () => ThermoMachine,
+    scrollable: false,
+  },
+  timer: {
+    component: () => Timer,
     scrollable: false,
   },
   turbine_computer: {

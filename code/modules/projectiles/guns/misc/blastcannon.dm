@@ -41,18 +41,16 @@
 		user.put_in_hands(bomb)
 		user.visible_message("<span class='warning'>[user] detaches [bomb] from [src].</span>")
 		bomb = null
+		name = initial(name)
+		desc = initial(desc)
 	update_icon()
 	return ..()
 
-/obj/item/gun/blastcannon/update_icon()
+/obj/item/gun/blastcannon/update_icon_state()
 	if(bomb)
 		icon_state = icon_state_loaded
-		name = "blast cannon"
-		desc = "A makeshift device used to concentrate a bomb's blast energy to a narrow wave."
 	else
 		icon_state = initial(icon_state)
-		name = initial(name)
-		desc = initial(desc)
 
 /obj/item/gun/blastcannon/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/transfer_valve))
@@ -65,6 +63,8 @@
 			return FALSE
 		user.visible_message("<span class='warning'>[user] attaches [T] to [src]!</span>")
 		bomb = T
+		name = "blast cannon"
+		desc = "A makeshift device used to concentrate a bomb's blast energy to a narrow wave."
 		update_icon()
 		return TRUE
 	return ..()
@@ -108,6 +108,8 @@
 	BW.hugbox = hugbox
 	BW.preparePixelProjectile(target, get_turf(src), params, 0)
 	BW.fire()
+	name = initial(name)
+	desc = initial(desc)
 
 /obj/projectile/blastwave
 	name = "blast wave"

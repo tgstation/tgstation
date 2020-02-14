@@ -98,7 +98,10 @@
 	filling_color = "#FFD700"
 	tastes = list("fries" = 3, "salt" = 1)
 	foodtype = VEGETABLES | GRAIN | FRIED
-	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/fries/Initialize()
+	. = ..()
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/tatortot
 	name = "tator tot"
@@ -108,7 +111,10 @@
 	filling_color = "FFD700"
 	tastes = list("potato" = 3, "valids" = 1)
 	foodtype = FRIED | VEGETABLES
-	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/tatortot/Initialize()
+	. = ..()
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/soydope
 	name = "soy dope"
@@ -130,7 +136,10 @@
 	filling_color = "#FFD700"
 	tastes = list("fries" = 3, "cheese" = 1)
 	foodtype = VEGETABLES | GRAIN | DAIRY
-	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/cheesyfries/Initialize()
+	. = ..()
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/badrecipe
 	name = "burned mess"
@@ -149,7 +158,10 @@
 	filling_color = "#FFA500"
 	tastes = list("carrots" = 3, "salt" = 1)
 	foodtype = VEGETABLES
-	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/carrotfries/Initialize()
+	. = ..()
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/candiedapple
 	name = "candied apple"
@@ -593,6 +605,7 @@
 	desc = "A sliced piece of juicy pineapple."
 	icon_state = "pineapple_slice"
 	filling_color = "#F6CB0B"
+	juice_results = list(/datum/reagent/consumable/pineapplejuice = 3)
 	tastes = list("pineapple" = 1)
 	foodtype = FRUIT | PINEAPPLE
 
@@ -619,7 +632,7 @@
 /obj/item/reagent_containers/food/snacks/canned/proc/open_can(mob/user)
 	to_chat(user, "<span class='notice'>You pull back the tab of \the [src].</span>")
 	playsound(user.loc, 'sound/items/foodcanopen.ogg', 50)
-	ENABLE_BITFIELD(reagents.flags, OPENCONTAINER)
+	reagents.flags |= OPENCONTAINER
 	spillable = TRUE
 
 /obj/item/reagent_containers/food/snacks/canned/attack_self(mob/user)
