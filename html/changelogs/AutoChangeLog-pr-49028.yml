@@ -1,0 +1,9 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - rscadd: "Space Suits warm the wearer, and use Cells"
+  - rscadd: "Suit Storage charges Space Suits"
+  - rscadd: "EMP's cause Hard Suit's to burn the wearer"
+  - rscadd: "Engineering now has emp proof cells with the suits"
+  - rscadd: "Hud status for space suit power level"
+  - rscadd: "ERT hardsuits get EMP protection AND ONLY THEM"
