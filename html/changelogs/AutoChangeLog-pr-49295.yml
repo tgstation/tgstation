@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - spellcheck: "Unhusking someone with synthflesh will no longer tell everyone they were the one to fix the corpse."

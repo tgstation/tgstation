@@ -105,10 +105,6 @@
 #define TR_KEEPSTUNS	(1<<9)
 #define TR_KEEPREAGENTS	(1<<10)
 
-
-#define CLONER_FRESH_CLONE "fresh"
-#define CLONER_MATURE_CLONE "mature"
-
 //species traits for mutantraces
 #define MUTCOLORS		1
 #define HAIR			2

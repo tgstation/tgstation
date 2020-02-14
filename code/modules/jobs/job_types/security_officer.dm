@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 			accessory = /obj/item/clothing/accessory/armband/engine
 		if(SEC_DEPT_MEDICAL)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/med
-			dep_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CLONING)
+			dep_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY)
 			destination = /area/security/checkpoint/medical
 			spawn_point = locate(/obj/effect/landmark/start/depsec/medical) in GLOB.department_security_spawns
 			accessory =  /obj/item/clothing/accessory/armband/medblue
@@ -94,14 +94,13 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 			T = get_turf(spawn_point)
 			H.Move(T)
 		else
-			var/safety = 0
-			while(safety < 25)
-				T = safepick(get_area_turfs(destination))
-				if(T && !H.Move(T))
-					safety += 1
-					continue
-				else
+			var/list/possible_turfs = get_area_turfs(destination)
+			while (length(possible_turfs))
+				var/I = rand(1, possible_turfs.len)
+				var/turf/target = possible_turfs[I]
+				if (H.Move(target))
 					break
+				possible_turfs.Cut(I,I+1)
 	if(department)
 		to_chat(M, "<b>You have been assigned to [department]!</b>")
 	else

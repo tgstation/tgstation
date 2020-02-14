@@ -73,7 +73,7 @@ FLOOR SAFES
 		num = 0
 	return num
 
-/obj/structure/safe/update_icon()
+/obj/structure/safe/update_icon_state()
 	if(open)
 		icon_state = "[initial(icon_state)]-open"
 	else
@@ -89,7 +89,7 @@ FLOOR SAFES
 			var/obj/item/P = contents[i]
 			dat += "<tr><td><a href='?src=[REF(src)];retrieve=[REF(P)]'>[P.name]</a></td></tr>"
 		dat += "</table></center>"
-	user << browse("<html><head><title>[name]</title></head><body>[dat]</body></html>", "window=safe;size=350x300")
+	user << browse("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[name]</title></head><body>[dat]</body></html>", "window=safe;size=350x300")
 
 /obj/structure/safe/Topic(href, href_list)
 	if(!ishuman(usr))

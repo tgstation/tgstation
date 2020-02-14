@@ -41,8 +41,8 @@
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.</span>"
 
-/obj/machinery/smartfridge/update_icon()
-	if(!stat)
+/obj/machinery/smartfridge/update_icon_state()
+	if(!machine_stat)
 		if (visible_contents)
 			switch(contents.len)
 				if(0)
@@ -83,7 +83,7 @@
 		updateUsrDialog()
 		return
 
-	if(!stat)
+	if(!machine_stat)
 
 		if(contents.len >= max_n_of_items)
 			to_chat(user, "<span class='warning'>\The [src] is full!</span>")
@@ -294,13 +294,12 @@
 	..()
 	update_icon()
 
-/obj/machinery/smartfridge/drying_rack/update_icon()
-	..()
-	cut_overlays()
+/obj/machinery/smartfridge/drying_rack/update_overlays()
+	. = ..()
 	if(drying)
-		add_overlay("drying_rack_drying")
+		. += "drying_rack_drying"
 	if(contents.len)
-		add_overlay("drying_rack_filled")
+		. += "drying_rack_filled"
 
 /obj/machinery/smartfridge/drying_rack/process()
 	..()
@@ -426,10 +425,11 @@
 			return
 		O.applyOrganDamage(-repair_rate)
 
-/obj/machinery/smartfridge/organ/Exited(obj/item/organ/AM, atom/newLoc)
+/obj/machinery/smartfridge/organ/Exited(atom/movable/AM, atom/newLoc)
 	. = ..()
-	if(istype(AM))
-		AM.organ_flags &= ~ORGAN_FROZEN
+	if(isorgan(AM))
+		var/obj/item/organ/O = AM
+		O.organ_flags &= ~ORGAN_FROZEN
 
 // -----------------------------
 // Chemistry Medical Smartfridge

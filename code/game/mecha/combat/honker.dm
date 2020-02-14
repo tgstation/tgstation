@@ -42,7 +42,9 @@
 
 /obj/mecha/combat/honker/get_stats_html()
 	var/output = {"<html>
-						<head><title>[src.name] data</title>
+						<head>
+						<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+						<title>[src.name] data</title>
 						<style>
 						body {color: #00ff00; background: #32CD32; font-family:"Courier",monospace; font-size: 12px;}
 						hr {border: 1px solid #0f0; color: #fff; background-color: #000;}

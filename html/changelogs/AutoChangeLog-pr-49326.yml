@@ -1,0 +1,6 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - rscadd: "tgui-next for NTOS: AI restorer, File Manager, NetDOS, Net Monitor, and Revelation"
+  - rscdel: "Creation of TXT Files on modular computer has been indefinitely removed"
+  - rscdel: "Due to architecture concerns, NTNet Transfer has been indefinitely removed from NTOS hardware."

@@ -21,9 +21,9 @@
 	isGlass = TRUE
 	foodtype = ALCOHOL
 
-/obj/item/reagent_containers/food/drinks/bottle/update_icon()
-	..()
-	add_overlay("[initial(icon_state)]shine")
+/obj/item/reagent_containers/food/drinks/bottle/update_overlays()
+	. = ..()
+	. += "[initial(icon_state)]shine"
 
 /obj/item/reagent_containers/food/drinks/bottle/small
 	name = "small glass bottle"
@@ -398,6 +398,18 @@
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/limejuice = 100)
 	foodtype = FRUIT
+
+/obj/item/reagent_containers/food/drinks/bottle/pineapplejuice
+	name = "pineapple juice"
+	desc = "Extremely tart, yellow juice."
+	custom_price = 100
+	icon_state = "pineapplejuice"
+	item_state = "carton"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	isGlass = FALSE
+	list_reagents = list(/datum/reagent/consumable/pineapplejuice = 100)
+	foodtype = FRUIT | PINEAPPLE
 
 /obj/item/reagent_containers/food/drinks/bottle/menthol
 	name = "menthol"

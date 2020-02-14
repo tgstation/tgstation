@@ -21,7 +21,7 @@
 	var/failed = FALSE		//to prevent constantly running failing code
 	var/operated = FALSE	//whether the heart's been operated on to fix some of its damages
 
-/obj/item/organ/heart/update_icon()
+/obj/item/organ/heart/update_icon_state()
 	if(beating)
 		icon_state = "[icon_base]-on"
 	else
@@ -54,10 +54,10 @@
 	update_icon()
 	return 1
 
-/obj/item/organ/heart/prepare_eat()
-	var/obj/S = ..()
-	S.icon_state = "heart-off"
-	return S
+/obj/item/organ/heart/OnEatFrom(eater, feeder)
+	. = ..()
+	beating = FALSE
+	update_icon()
 
 /obj/item/organ/heart/on_life()
 	..()

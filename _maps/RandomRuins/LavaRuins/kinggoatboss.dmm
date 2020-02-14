@@ -1,0 +1,268 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
+"b" = (
+/turf/closed/wall/mineral/silver,
+/area/ruin/powered)
+"c" = (
+/turf/closed/wall/mineral/gold,
+/area/ruin/powered)
+"d" = (
+/obj/structure/mineral_door/transparent/diamond{
+	sheetAmount = 1
+	},
+/turf/open/floor/mineral/silver,
+/area/ruin/powered)
+"e" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/gold,
+/area/ruin/powered)
+"f" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/gold,
+/area/ruin/powered)
+"g" = (
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered)
+"k" = (
+/obj/structure/ladder/unbreakable{
+	desc = "This seems to be the ladder to the King of Goats lair. Looks to be a one way trip...";
+	id = "goatlayer";
+	name = "Ladder to the King of Goats Lair"
+	},
+/turf/open/floor/mineral/gold,
+/area/ruin/powered)
+"q" = (
+/obj/effect/mob_spawn/human/miner{
+	assignedrole = "null";
+	desc = "Seems this miner tried to cheese the arena using bluespace crystals. Did not turn out well";
+	mob_gender = "female";
+	mob_name = "Lyna Lavas";
+	name = "Lyna Lavas"
+	},
+/obj/item/stack/ore/bluespace_crystal,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/mineral/gold,
+/area/ruin/powered)
+"r" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/gold,
+/area/ruin/powered)
+"s" = (
+/obj/item/paper/crumpled{
+	info = "Lest ye be prepared, abandon all hope ye who enter here.";
+	name = "Wise Man's Warning."
+	},
+/obj/effect/decal/remains/human,
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered)
+"t" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/gold,
+/area/ruin/powered)
+"H" = (
+/turf/open/floor/mineral/gold,
+/area/ruin/powered)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+b
+b
+c
+d
+c
+b
+b
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+b
+q
+f
+H
+f
+H
+b
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+c
+e
+g
+g
+g
+t
+c
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+d
+H
+g
+k
+s
+H
+d
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+c
+e
+g
+g
+g
+t
+c
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+b
+H
+r
+H
+r
+H
+b
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+b
+b
+c
+d
+c
+b
+b
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

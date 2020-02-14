@@ -38,6 +38,7 @@ Difficulty: Hard
 	icon_state = "bubblegum"
 	icon_living = "bubblegum"
 	icon_dead = ""
+	health_doll_icon = "bubblegum"
 	friendly_verb_continuous = "stares down"
 	friendly_verb_simple = "stare down"
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'

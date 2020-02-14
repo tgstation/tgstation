@@ -23,7 +23,7 @@
 									   "<span class='userdanger'>You were protected against \the [src]!</span>")
 
 	..(target, blocked)
-	DISABLE_BITFIELD(reagents.flags, NO_REACT)
+	reagents.flags &= ~(NO_REACT)
 	reagents.handle_reactions()
 	return BULLET_ACT_HIT
 

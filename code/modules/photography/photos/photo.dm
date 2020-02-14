@@ -32,7 +32,7 @@
 	if(setdesc && P.picture_desc)
 		desc = P.picture_desc
 
-/obj/item/photo/update_icon()
+/obj/item/photo/update_icon_state()
 	if(!istype(picture) || !picture.picture_image)
 		return
 	var/icon/I = picture.get_small_icon(initial(icon_state))
@@ -73,7 +73,7 @@
 		to_chat(user, "<span class='warning'>[src] seems to be blank...</span>")
 		return
 	user << browse_rsc(picture.picture_image, "tmp_photo.png")
-	user << browse("<html><head><title>[name]</title></head>" \
+	user << browse("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[name]</title></head>" \
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
 		+ "<img src='tmp_photo.png' width='480' style='-ms-interpolation-mode:nearest-neighbor' />" \
 		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]"\

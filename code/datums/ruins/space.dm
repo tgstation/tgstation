@@ -270,12 +270,6 @@
 	description = "With heated debates over the legality of the catperson and their status in the workforce, there's always a place for the blackmarket to slip in for some cash. Whether the results \
 	are morally sound or not is another issue entirely."
 
-/datum/map_template/ruin/space/cloning_facility
-	id = "cloning_facility"
-	suffix = "cloning_facility.dmm"
-	name = "Ancient Cloning Lab"
-	description = "An experimental cloning lab snapped off from an ancient ship. The cloner model inside lacks many modern functionalities and security measures."
-
 /datum/map_template/ruin/space/hilbertresearchfacility
 	id = "hilbert_facility"
 	suffix = "hilbertshoteltestingsite.dmm"
@@ -293,3 +287,11 @@
 	suffix = "clericden.dmm"
 	name = "Cleric's Den"
 	description = "Once part of a larger monastery, this holy order of long dead clerics practiced far less non-violence than they preached. Appears to have been untouched by looters, however. Odd."
+
+/datum/map_template/ruin/space/kinggoatarena
+	id = "kinggoatarena"
+	suffix = "kinggoatarena.dmm"
+	name = "King Goat Arena"
+	description = "Well wish you luck."
+	allow_duplicates = FALSE
+	unpickable = TRUE
