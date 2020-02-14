@@ -48,7 +48,7 @@
 "aV" = (/obj/structure/chair/comfy/shuttle{icon_state = "shuttle_chair"; dir = 4},/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aW" = (/obj/structure/table/reinforced,/obj/item/toy/plush/nukeplushie,/turf/open/floor/mineral/plastitanium/red,/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aX" = (/obj/machinery/light{dir = 1},/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"aY" = (/turf/template_noop,/area/ruin/unpowered/no_grav)
+"aY" = (/turf/open/space/basic,/area/ruin/unpowered/no_grav)
 "aZ" = (/turf/closed/indestructible/syndicate,/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "ba" = (/turf/closed/mineral/random,/area/ruin/unpowered/no_grav)
 "bb" = (/turf/closed/wall/r_wall/syndicate,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
