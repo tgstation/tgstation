@@ -5,7 +5,7 @@
 	show_in_antagpanel = TRUE
 	show_name_in_check_antagonists = TRUE
 	var/list/datum/mind/carp = list()
-
+	
 /datum/antagonist/space_dragon/greet()
 	to_chat(owner, "<b>Endless time and space we have moved through.  We do not remember from where we came, we do not know where we will go.  All space belongs to us.\n\
 					Space is an empty void, of which our kind is the apex predator, and there was little to rival our claim to this title.\n\
@@ -23,11 +23,11 @@
 /datum/antagonist/space_dragon/on_gain()
 	forge_objectives()
 	. = ..()
-	
+
 /datum/objective/summon_carp
 	var/datum/antagonist/space_dragon/dragon
 	explanation_text = "Summon and protect the rift to flood the station with carp."
-	
+
 /datum/antagonist/space_dragon/roundend_report()
 	var/list/parts = list()
 	var/datum/objective/summon_carp/S = locate() in objectives
