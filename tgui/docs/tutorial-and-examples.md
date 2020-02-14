@@ -80,13 +80,12 @@ input. The input's `action` and `params` are passed to the proc.
 /obj/machinery/my_machine/ui_act(action, params)
   if(..())
     return
-  switch(action)
-    if("change_color")
-      var/new_color = params["color"]
-      if(!(color in allowed_coors))
-        return
-      color = new_color
-      . = TRUE
+  if(action == "change_color")
+    var/new_color = params["color"]
+    if(!(color in allowed_coors))
+      return FALSE
+    color = new_color
+    return TRUE
   update_icon()
 ```
 
@@ -120,12 +119,11 @@ This object contains a few special values:
 - `data` is the data returned from `ui_data`
 
 ```jsx
+import { useBackend } from '../backend';
 import { Section, LabeledList } from '../components';
 
-const SampleInterface = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+export const SampleInterface = props => {
+  const { act, data } = useBackend(props);
   return (
     <Section title="Health status">
       <LabeledList>
@@ -178,7 +176,7 @@ Looping over the array to make an element for each item:
 
 ### Routing table
 
-Once you finished creating your interface, you need to add a route entry to
+Once you finished creating your interface, you must add a route entry to
 the large `ROUTES` object, otherwise tgui won't know when and how to render
 your interface. Key of this `ROUTES` object corresponds to the interface
 name you use in DM code.
@@ -226,12 +224,11 @@ upon code review):
 And the template:
 
 ```jsx
+import { useBackend } from '../backend';
 import { Section, LabeledList } from '../components';
 
-const SampleInterface = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+export const SampleInterface = props => {
+  const { act, data } = useBackend(props);
   return (
     <Section title="Section name">
       <LabeledList>
