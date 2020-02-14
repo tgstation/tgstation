@@ -1,4 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - bugfix: "Now MultiZ Debug map has open space under floor instead of space."

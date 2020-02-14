@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "Fixed nanite shutdown timer not properly shutting down nanites."
