@@ -124,6 +124,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/proc/guardiancustomize()
 	guardiancolor = input(src,"What would you like your color to be?","Choose Your Color","#ffffff") as color|null
+	if(!guardiancolor) //uh oh stinky cancel!
+		guardiancolor = "#ffffff"
 	if(!recolorentiresprite)
 		cooloverlay.color = guardiancolor
 		cut_overlay(cooloverlay)
