@@ -72,7 +72,7 @@ Difficulty: Very Hard
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire()
 	projectile_speed_multiplier = 1 + 1 * (maxHealth - health) / maxHealth // ranges from normal to double speed
-	SetRecoveryTime(100)
+	SetRecoveryTime(50, 30)
 
 	if(client)
 		switch(chosen_attack)
@@ -97,11 +97,11 @@ Difficulty: Very Hard
 	else
 		switch(chosen_attack)
 			if(1)
-				INVOKE_ASYNC(src, .proc/frost_orbs, GLOB.alldirs)
+				frost_orbs(2, list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 			if(2)
-				snowball_machine_gun()
+				snowball_machine_gun(60)
 			if(3)
-				ice_shotgun()
+				ice_shotgun(5, list(list(0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330), list(-20, -10, 0, 10, 20)))
 
 /obj/projectile/frost_orb
 	name = "frost orb"
@@ -148,7 +148,6 @@ Difficulty: Very Hard
 	return
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/frost_orbs(added_delay = 0, list/shoot_dirs = pick(GLOB.cardinals, GLOB.diagonals))
-	var/extra_delay = 0
 	for(var/dir in shoot_dirs)
 		var/turf/startloc = get_turf(src)
 		var/turf/endloc = get_turf(target)
@@ -160,10 +159,9 @@ Difficulty: Very Hard
 		if(target)
 			P.original = target
 		P.fire(dir2angle(dir))
-		addtimer(CALLBACK(src, .proc/set_orbs_homing, P), 10 + extra_delay) // make the orbs home in after a second
-		extra_delay += added_delay
+		addtimer(CALLBACK(src, .proc/set_orbs_homing, P), 10) // make the orbs home in after a second
 		SLEEP_CHECK_DEATH(added_delay)
-	SetRecoveryTime(20)
+	SetRecoveryTime(25, 10)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/set_orbs_homing(obj/projectile/P)
 	var/turf/endloc = get_turf(target)
@@ -186,7 +184,7 @@ Difficulty: Very Hard
 			P.original = target
 		P.fire()
 		SLEEP_CHECK_DEATH(1)
-	SetRecoveryTime(20)
+	SetRecoveryTime(25, 10)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/ice_shotgun(shots = 5, list/patterns = list(list(-40, -20, 0, 20, 40), list(-30, -10, 10, 30)))
 	for(var/i in 1 to shots)
@@ -204,4 +202,4 @@ Difficulty: Very Hard
 				P.original = target
 			P.fire()
 		SLEEP_CHECK_DEATH(8)
-	SetRecoveryTime(40)
+	SetRecoveryTime(40, 20)

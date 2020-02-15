@@ -133,9 +133,11 @@
 		if (EXPLODE_LIGHT)
 			adjustBruteLoss(50)
 
-/mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time)
+/mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time, melee_buffer_time)
 	recovery_time = world.time + buffer_time
 	ranged_cooldown = world.time + buffer_time
+	if(melee_buffer_time)
+		recovery_time = world.time + melee_buffer_time
 
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill, list/grant_achievement = list())
 	if(!achievement_type || (flags_1 & ADMIN_SPAWNED_1) || !SSachievements.achievements_enabled) //Don't award medals if the medal type isn't set
