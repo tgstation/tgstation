@@ -80,7 +80,14 @@ require only minor tweaks.
     ZTRAIT_LAVA_RUINS = TRUE, \
     ZTRAIT_BOMBCAP_MULTIPLIER = 2)
 
-#define ZTRAITS_LAVALAND list(\
+#define ZTRAITS_LAVAWORLD list(\
+	ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface, \
+	ZTRAIT_THEMATIC_PLATING = /turf/open/floor/plating/asteroid/basalt/lava_land_surface, \
+	ZTRAIT_THEMATIC_LAVA = /turf/open/lava/smooth/lava_land_surface, \
+	ZTRAIT_WEATHER_ASHSTORM = TRUE )
+	//ZTRAIT_MINERAL_ICON = not included because lavaworld uses the default
+
+#define ZTRAITS_SNOWWORLD list(\
 	ZTRAIT_BASETURF = /turf/open/lava/plasma/lava_land_surface, \
 	ZTRAIT_THEMATIC_PLATING = /turf/open/floor/plating/asteroid/snow/lava_land_surface, \
 	ZTRAIT_THEMATIC_LAVA = /turf/open/lava/plasma/lava_land_surface, \

@@ -248,12 +248,17 @@ SUBSYSTEM_DEF(mapping)
 	// load mining
 	var/list/mining_ztraits = ZTRAITS_MININGBASIC
 	if(config.minetype == "lavaland")
-		mining_ztraits += ZTRAITS_LAVALAND
-		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = mining_ztraits)
-	if(config.minetype == "themed")
-		INIT_ANNOUNCE("WARNING: uh oh stinky")
-	else if (!isnull(config.minetype))
-		INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
+		mining_ztraits += ZTRAITS_LAVAWORLD
+	else if(config.minetype == "themed")
+		switch(rand(1,2))
+			if(1)
+				mining_ztraits += ZTRAITS_LAVAWORLD
+			if(2)
+				mining_ztraits += ZTRAITS_SNOWWORLD
+	else
+		INIT_ANNOUNCE("WARNING: An unknown minetype (or no minetype) '[config.minetype]' was set! This will SERIOUSLY break mining, so setting it to default!")
+		mining_ztraits += ZTRAITS_LAVAWORLD
+	LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = mining_ztraits)
 #endif
 
 	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
