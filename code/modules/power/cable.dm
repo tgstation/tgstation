@@ -121,7 +121,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		invisibility = i ? INVISIBILITY_MAXIMUM : 0
 	update_icon()
 
-/obj/structure/cable/update_icon()
+/obj/structure/cable/update_icon_state()
 	if(!linked_dirs)
 		icon_state = "[cable_layer]-noconnection"
 	else
@@ -381,7 +381,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
-	custom_price = 30
+	custom_price = 75
 	gender = NEUTER //That's a cable coil sounds better than that's some cable coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
@@ -580,6 +580,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 /obj/structure/cable_bridge/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
 	qdel(src)
+	return TRUE
 
 #undef UNDER_SMES
 #undef UNDER_TERMINAL

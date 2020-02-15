@@ -64,7 +64,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	custom_materials = list(/datum/material/plastic=80)
-	custom_price = 5
+	custom_price = 50
 	var/break_chance = 25
 
 /obj/item/kitchen/fork/plastic/afterattack(mob/living/carbon/user)
@@ -90,7 +90,7 @@
 	sharpness = IS_SHARP_ACCURATE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	var/bayonet = FALSE	//Can this be attached to a gun?
-	custom_price = 30
+	custom_price = 250
 
 /obj/item/kitchen/knife/Initialize()
 	. = ..()
@@ -122,7 +122,7 @@
 	custom_materials = list(/datum/material/plastic = 100)
 	attack_verb = list("prodded", "whiffed","scratched", "poked")
 	sharpness = IS_SHARP
-	custom_price = 5
+	custom_price = 50
 	var/break_chance = 25
 
 /obj/item/kitchen/knife/plastic/afterattack(mob/living/carbon/user)
@@ -151,7 +151,7 @@
 	custom_materials = list(/datum/material/iron=18000)
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_price = 60
+	custom_price = 600
 
 /obj/item/kitchen/knife/combat
 	name = "combat knife"
@@ -215,9 +215,10 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 7
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1.5)
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
-	custom_price = 20
+	custom_price = 200
 
 /obj/item/kitchen/rollingpin/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins flattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -232,7 +233,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	custom_materials = list(/datum/material/plastic=120)
-	custom_price = 5
+	custom_price = 50
 	var/break_chance = 25
 
 /obj/item/kitchen/knife/plastic/afterattack(mob/living/carbon/user)

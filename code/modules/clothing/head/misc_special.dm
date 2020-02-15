@@ -233,7 +233,7 @@
 	. = ..()
 	update_icon()
 
-/obj/item/clothing/head/wig/update_icon()
+/obj/item/clothing/head/wig/update_icon_state()
 	var/datum/sprite_accessory/S = GLOB.hairstyles_list[hairstyle]
 	if(!S)
 		icon = 'icons/obj/clothing/hats.dmi'
@@ -274,7 +274,7 @@
 	desc = "A bunch of hair without a head attached. This one changes color to match the hair of the wearer. Nothing natural about that."
 	color = "#FFF"
 	adjustablecolor = FALSE
-	custom_price = 25
+	custom_price = 100
 
 /obj/item/clothing/head/wig/natural/Initialize(mapload)
 	hairstyle = pick(GLOB.hairstyles_list - "Bald")
@@ -321,7 +321,6 @@
 	if(paranoia)
 		QDEL_NULL(paranoia)
 	paranoia = new()
-	paranoia.clonable = FALSE
 
 	user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC)
 	to_chat(user, "<span class='warning'>As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. </span>")

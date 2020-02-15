@@ -99,6 +99,7 @@
 #define CRAYON_FONT "Comic Sans MS"
 #define PRINTER_FONT "Times New Roman"
 #define SIGNFONT "Times New Roman"
+#define CHARCOAL_FONT "Candara"
 
 #define RESIZE_DEFAULT_SIZE 1
 
@@ -261,16 +262,13 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define MAP_MAXY 5
 #define MAP_MAXZ 6
 
-// Defib stats
-#define DEFIB_TIME_LIMIT 900
-#define DEFIB_TIME_LOSS 60
-
 // Diagonal movement
 #define FIRST_DIAG_STEP 1
 #define SECOND_DIAG_STEP 2
 
 #define DEADCHAT_ARRIVALRATTLE "arrivalrattle"
 #define DEADCHAT_DEATHRATTLE "deathrattle"
+#define DEADCHAT_LAWCHANGE "lawchange"
 #define DEADCHAT_REGULAR "regular-deadchat"
 
 // Bluespace shelter deploy checks
@@ -394,6 +392,10 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define PIRATE_NAMES_FILE "pirates.json"
 #define REDPILL_FILE "redpill.json"
 #define ARCADE_FILE "arcade.json"
+#define BOOMER_FILE "boomer.json"
+#define LOCATIONS_FILE "locations.json"
+#define WANTED_FILE "wanted_message.json"
+#define VISTA_FILE "steve.json"
 
 //Fullscreen overlay resolution in tiles.
 #define FULLSCREEN_OVERLAY_RESOLUTION_X 15

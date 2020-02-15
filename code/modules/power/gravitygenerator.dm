@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/sprite_number = 0
 
-/obj/machinery/gravity_generator/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG)
+/obj/machinery/gravity_generator/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return FALSE
 
 /obj/machinery/gravity_generator/ex_act(severity, target)
@@ -39,13 +39,12 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	if(prob(20))
 		set_broken()
 
-/obj/machinery/gravity_generator/tesla_act(power, tesla_flags)
+/obj/machinery/gravity_generator/zap_act(power, zap_flags)
 	..()
-	if(tesla_flags & TESLA_MACHINE_EXPLOSIVE)
+	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
 		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
-/obj/machinery/gravity_generator/update_icon()
-	..()
+/obj/machinery/gravity_generator/update_icon_state()
 	icon_state = "[get_status()]_[sprite_number]"
 
 /obj/machinery/gravity_generator/proc/get_status()
@@ -60,7 +59,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	obj_break()
 
 /obj/machinery/gravity_generator/proc/set_fix()
-	stat &= ~BROKEN
+	machine_stat &= ~BROKEN
 
 /obj/machinery/gravity_generator/part/Destroy()
 	if(main_part)
@@ -79,14 +78,14 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	return main_part.attackby(I, user)
 
 /obj/machinery/gravity_generator/part/get_status()
-	return main_part.get_status()
+	return main_part?.get_status()
 
 /obj/machinery/gravity_generator/part/attack_hand(mob/user)
 	return main_part.attack_hand(user)
 
 /obj/machinery/gravity_generator/part/set_broken()
 	..()
-	if(main_part && !(main_part.stat & BROKEN))
+	if(main_part && !(main_part.machine_stat & BROKEN))
 		main_part.set_broken()
 
 //
@@ -118,7 +117,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	use_power = IDLE_POWER_USE
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
 	ui_x = 400
-	ui_y = 200
+	ui_y = 165
 	var/on = TRUE
 	var/breaker = TRUE
 	var/list/parts = list()
@@ -158,6 +157,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		part.main_part = src
 		parts += part
 		part.update_icon()
+		part.RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, /atom/proc/update_icon)
 
 /obj/machinery/gravity_generator/main/proc/connected_parts()
 	return parts.len == 8
@@ -165,7 +165,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 /obj/machinery/gravity_generator/main/set_broken()
 	..()
 	for(var/obj/machinery/gravity_generator/M in parts)
-		if(!(M.stat & BROKEN))
+		if(!(M.machine_stat & BROKEN))
 			M.set_broken()
 	middle.cut_overlays()
 	charge_count = 0
@@ -177,7 +177,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 /obj/machinery/gravity_generator/main/set_fix()
 	..()
 	for(var/obj/machinery/gravity_generator/M in parts)
-		if(M.stat & BROKEN)
+		if(M.machine_stat & BROKEN)
 			M.set_fix()
 	broken_state = FALSE
 	update_icon()
@@ -236,7 +236,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	data["charge_count"] = charge_count
 	data["charging_state"] = charging_state
 	data["on"] = on
-	data["operational"] = (stat & BROKEN) ? FALSE : TRUE
+	data["operational"] = (machine_stat & BROKEN) ? FALSE : TRUE
 
 	return data
 
@@ -249,28 +249,24 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 			breaker = !breaker
 			investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [key_name(usr)].", INVESTIGATE_GRAVITY)
 			set_power()
+			. = TRUE
 
 // Power and Icon States
 
 /obj/machinery/gravity_generator/main/power_change()
 	. = ..()
-	investigate_log("has [stat & NOPOWER ? "lost" : "regained"] power.", INVESTIGATE_GRAVITY)
+	investigate_log("has [machine_stat & NOPOWER ? "lost" : "regained"] power.", INVESTIGATE_GRAVITY)
 	set_power()
 
 /obj/machinery/gravity_generator/main/get_status()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return "fix[min(broken_state, 3)]"
 	return on || charging_state != POWER_IDLE ? "on" : "off"
-
-/obj/machinery/gravity_generator/main/update_icon()
-	..()
-	for(var/obj/O in parts)
-		O.update_icon()
 
 // Set the charging state based on power/breaker.
 /obj/machinery/gravity_generator/main/proc/set_power()
 	var/new_state = FALSE
-	if(stat & (NOPOWER|BROKEN) || !breaker)
+	if(machine_stat & (NOPOWER|BROKEN) || !breaker)
 		new_state = FALSE
 	else if(breaker)
 		new_state = TRUE
@@ -307,7 +303,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 // Charge/Discharge and turn on/off gravity when you reach 0/100 percent.
 // Also emit radiation and handle the overlays.
 /obj/machinery/gravity_generator/main/process()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return
 	if(charging_state != POWER_IDLE)
 		if(charging_state == POWER_UP && charge_count >= 100)

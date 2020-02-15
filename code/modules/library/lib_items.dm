@@ -139,20 +139,11 @@
 	qdel(src)
 
 
-/obj/structure/bookcase/update_icon()
+/obj/structure/bookcase/update_icon_state()
 	if(contents.len < 5)
 		icon_state = "book-[contents.len]"
 	else
 		icon_state = "book-5"
-
-
-/obj/structure/bookcase/manuals/medical
-	name = "medical manuals bookcase"
-
-/obj/structure/bookcase/manuals/medical/Initialize()
-	. = ..()
-	new /obj/item/book/manual/wiki/medical_cloning(src)
-	update_icon()
 
 
 /obj/structure/bookcase/manuals/engineering

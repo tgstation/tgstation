@@ -61,7 +61,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 		return
 
 	var/datum/mind/TM = target.mind
-	if((target.anti_magic_check(TRUE, FALSE) || TM.has_antag_datum(/datum/antagonist/wizard) || TM.has_antag_datum(/datum/antagonist/cult) || TM.has_antag_datum(/datum/antagonist/changeling) || TM.has_antag_datum(/datum/antagonist/rev)) || cmptext(copytext(target.key,1,2),"@"))
+	if(target.anti_magic_check(TRUE, FALSE) || TM.has_antag_datum(/datum/antagonist/wizard) || TM.has_antag_datum(/datum/antagonist/cult) || TM.has_antag_datum(/datum/antagonist/changeling) || TM.has_antag_datum(/datum/antagonist/rev) || target.key[1] == "@")
 		if(!silent)
 			to_chat(user, "<span class='warning'>[target.p_their(TRUE)] mind is resisting your spell!</span>")
 		return

@@ -81,7 +81,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/list/third_rule_req = list(100, 100, 100, 90, 80, 70, 60, 50, 40, 30)
 	/// The probability for a third ruleset with index being every ten threat.
 	var/list/third_rule_prob = list(0,0,0,0,60,60,80,90,100,100)
-	/// Threat requirement for a second ruleset when high pop override is in effect. 
+	/// Threat requirement for a second ruleset when high pop override is in effect.
 	var/high_pop_second_rule_req = 40
 	/// Threat requirement for a third ruleset when high pop override is in effect.
 	var/high_pop_third_rule_req = 60
@@ -119,7 +119,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/antags_rolled = 0
 
 /datum/game_mode/dynamic/admin_panel()
-	var/list/dat = list("<html><head><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
+	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
 	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</A><a href='?src=\ref[src];[HrefToken()]'>\[Refresh\]</A><BR>"
 	dat += "Threat Level: <b>[threat_level]</b><br/>"
 
@@ -163,8 +163,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			return
 		if(threatadd > 0)
 			create_threat(threatadd)
+			threat_log += "[worldtime2text()]: [key_name(usr)] increased threat by [threatadd] threat."
 		else
 			spend_threat(-threatadd)
+			threat_log += "[worldtime2text()]: [key_name(usr)] decreased threat by [-threatadd] threat."
 	else if (href_list["injectlate"])
 		latejoin_injection_cooldown = 0
 		forced_injection = TRUE
@@ -301,7 +303,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if(fexists(json_file))
 			configuration = json_decode(file2text(json_file))
 			if(configuration["Dynamic"])
-				for(var/variable in configuration["Dynamic"]) 
+				for(var/variable in configuration["Dynamic"])
 					if(!vars[variable])
 						stack_trace("Invalid dynamic configuration variable [variable] in game mode variable changes.")
 						continue
@@ -472,7 +474,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/added_threat = starting_rule.scale_up(extra_rulesets_amount, threat)
 	if(starting_rule.pre_execute())
 		spend_threat(starting_rule.cost + added_threat)
-		threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost]"
+		threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost + added_threat]. [starting_rule.scaling_cost ? "Scaled up[starting_rule.scaled_times]/3 times." : ""]"
 		if(starting_rule.flags & HIGHLANDER_RULESET)
 			highlander_executed = TRUE
 		else if(starting_rule.flags & ONLY_RULESET)
@@ -585,10 +587,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /// Mainly here to facilitate delayed rulesets. All midround/latejoin rulesets are executed with a timered callback to this proc.
 /datum/game_mode/dynamic/proc/execute_midround_latejoin_rule(sent_rule)
 	var/datum/dynamic_ruleset/rule = sent_rule
+	spend_threat(rule.cost)
+	threat_log += "[worldtime2text()]: [rule.ruletype] [rule.name] spent [rule.cost]"
 	if (rule.execute())
 		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
-		spend_threat(rule.cost)
-		threat_log += "[worldtime2text()]: [rule.ruletype] [rule.name] spent [rule.cost]"
 		if(rule.flags & HIGHLANDER_RULESET)
 			highlander_executed = TRUE
 		else if(rule.flags & ONLY_RULESET)

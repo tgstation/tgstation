@@ -8,6 +8,7 @@
 	name = "remove embedded objects"
 	time = 32
 	accept_hand = 1
+	experience_given = MEDICAL_SKILL_MEDIUM
 	var/obj/item/bodypart/L = null
 
 
@@ -22,7 +23,7 @@
 		user.visible_message("<span class='notice'>[user] looks for [target]'s [parse_zone(user.zone_selected)].</span>", "<span class='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
 
 
-/datum/surgery_step/remove_object/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+/datum/surgery_step/remove_object/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(L)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
@@ -39,10 +40,11 @@
 				display_results(user, target, "<span class='notice'>You successfully remove [objects] objects from [H]'s [L.name].</span>",
 					"<span class='notice'>[user] successfully removes [objects] objects from [H]'s [L]!</span>",
 					"<span class='notice'>[user] successfully removes [objects] objects from [H]'s [L]!</span>")
+				experience_given = MEDICAL_SKILL_MEDIUM*(objects*0.75)
 			else
 				to_chat(user, "<span class='warning'>You find no objects embedded in [H]'s [L]!</span>")
 
 	else
 		to_chat(user, "<span class='warning'>You can't find [target]'s [parse_zone(user.zone_selected)], let alone any objects embedded in it!</span>")
 
-	return ..(default_display_results = FALSE)
+	return ..()

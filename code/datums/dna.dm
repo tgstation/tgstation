@@ -11,7 +11,6 @@
 	var/list/temporary_mutations = list() //Temporary changes to the UE
 	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
 	var/mob/living/holder
-	var/delete_species = TRUE //Set to FALSE when a body is scanned by a cloner to fix #38875
 	var/mutation_index[DNA_MUTATION_BLOCKS] //List of which mutations this carbon has and its assigned block
 	var/stability = 100
 	var/scrambled = FALSE //Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
@@ -27,8 +26,7 @@
 			cholder.dna = null
 	holder = null
 
-	if(delete_species)
-		QDEL_NULL(species)
+	QDEL_NULL(species)
 
 	mutations.Cut()					//This only references mutations, just dereference.
 	temporary_mutations.Cut()		//^
@@ -156,8 +154,8 @@
 	if(active)
 		return sequence
 	while(difficulty)
-		var/randnum = rand(1, length(sequence))
-		sequence = copytext(sequence, 1, randnum) + "X" + copytext(sequence, randnum+1, length(sequence)+1)
+		var/randnum = rand(1, length_char(sequence))
+		sequence = copytext_char(sequence, 1, randnum) + "X" + copytext_char(sequence, randnum + 1)
 		difficulty--
 	return sequence
 
@@ -305,6 +303,11 @@
 		var/datum/species/old_species = dna.species
 		dna.species = new_race
 		dna.species.on_species_gain(src, old_species, pref_load)
+		if(ishuman(src))
+			qdel(language_holder)
+			var/species_holder = initial(mrace.species_language_holder)
+			language_holder = new species_holder(src)
+		update_atom_languages()
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()
@@ -333,7 +336,7 @@
 		set_species(newrace, icon_update=0)
 
 	if(newreal_name)
-		real_name = newreal_name
+		dna.real_name = newreal_name
 		dna.generate_unique_enzymes()
 
 	if(newblood_type)
@@ -456,14 +459,14 @@
 
 /proc/getleftblocks(input,blocknumber,blocksize)
 	if(blocknumber > 1)
-		return copytext(input,1,((blocksize*blocknumber)-(blocksize-1)))
+		return copytext_char(input,1,((blocksize*blocknumber)-(blocksize-1)))
 
 /proc/getrightblocks(input,blocknumber,blocksize)
 	if(blocknumber < (length(input)/blocksize))
-		return copytext(input,blocksize*blocknumber+1,length(input)+1)
+		return copytext_char(input,blocksize*blocknumber+1,length(input)+1)
 
 /proc/getblock(input, blocknumber, blocksize=DNA_BLOCK_SIZE)
-	return copytext(input, blocksize*(blocknumber-1)+1, (blocksize*blocknumber)+1)
+	return copytext_char(input, blocksize*(blocknumber-1)+1, (blocksize*blocknumber)+1)
 
 /proc/setblock(istring, blocknumber, replacement, blocksize=DNA_BLOCK_SIZE)
 	if(!istring || !blocknumber || !replacement || !blocksize)
@@ -510,7 +513,7 @@
 			var/datum/mutation/human/HM = dna.get_mutation(mutation)
 			if(HM)
 				HM.scrambled = TRUE
-				if(HM.quality & resilient) 
+				if(HM.quality & resilient)
 					HM.mutadone_proof = TRUE
 		return TRUE
 

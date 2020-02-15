@@ -47,7 +47,7 @@
 	var/linglink
 	var/datum/martial_art/martial_art
 	var/static/default_martial_art = new/datum/martial_art
-	var/miming = 0 // Mime's vow of silence
+	var/miming = FALSE // Mime's vow of silence
 	var/list/antag_datums
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
@@ -85,9 +85,7 @@
 
 /datum/mind/proc/get_language_holder()
 	if(!language_holder)
-		var/datum/language_holder/L = current.get_language_holder(shadow=FALSE)
-		language_holder = L.copy(src)
-
+		language_holder = new (src)
 	return language_holder
 
 /datum/mind/proc/transfer_to(mob/new_character, force_key_move = 0)
@@ -95,10 +93,6 @@
 		current.mind = null
 		UnregisterSignal(current, COMSIG_MOB_DEATH)
 		SStgui.on_transfer(current, new_character)
-
-	if(!language_holder)
-		var/datum/language_holder/mob_holder = new_character.get_language_holder(shadow = FALSE)
-		language_holder = mob_holder.copy(src)
 
 	if(key)
 		if(new_character.key != key)					//if we're transferring into a body with a key associated which is not ours
@@ -127,9 +121,10 @@
 	RegisterSignal(new_character, COMSIG_MOB_DEATH, .proc/set_death_time)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
+	current.update_atom_languages()
 
 
-	///Adjust experience of a specific skill
+///Adjust experience of a specific skill
 /datum/mind/proc/adjust_experience(skill, amt, silent = FALSE)
 	var/datum/skill/S = GetSkillRef(skill)
 	skill_experience[S] = max(0, skill_experience[S] + amt) //Prevent going below 0
@@ -158,10 +153,10 @@
 	else
 		to_chat(current, "<span class='warning'>I feel like I've become worse at [S.name]!</span>")
 
-///Gets the skill's singleton and returns the result of its get_skill_speed_modifier
-/datum/mind/proc/get_skill_speed_modifier(skill)
+///Gets the skill's singleton and returns the result of its get_skill_modifier
+/datum/mind/proc/get_skill_modifier(skill, modifier)
 	var/datum/skill/S = GetSkillRef(skill)
-	return S.get_skill_speed_modifier(known_skills[S] || SKILL_LEVEL_NONE)
+	return S.get_skill_modifier(modifier, known_skills[S] || SKILL_LEVEL_NONE)
 
 /datum/mind/proc/get_skill_level(skill)
 	var/datum/skill/S = GetSkillRef(skill)
@@ -188,9 +183,9 @@
 	last_death = world.time
 
 /datum/mind/proc/store_memory(new_text)
-	var/newlength = length(memory) + length(new_text)
+	var/newlength = length_char(memory) + length_char(new_text)
 	if (newlength > MAX_MESSAGE_LEN * 100)
-		memory = copytext(memory, -newlength-MAX_MESSAGE_LEN * 100)
+		memory = copytext_char(memory, -newlength-MAX_MESSAGE_LEN * 100)
 	memory += "[new_text]<BR>"
 
 /datum/mind/proc/wipe_memory()
@@ -322,14 +317,6 @@
 		P = locate() in PDA
 	if (!P) // If we couldn't find a pen in the PDA, or we didn't even have a PDA, do it the old way
 		P = locate() in all_contents
-		if(!P) // I do not have a pen.
-			var/obj/item/pen/inowhaveapen
-			if(istype(traitor_mob.back,/obj/item/storage)) //ok buddy you better have a backpack!
-				inowhaveapen = new /obj/item/pen(traitor_mob.back)
-			else
-				inowhaveapen = new /obj/item/pen(traitor_mob.loc)
-				traitor_mob.put_in_hands(inowhaveapen) // I hope you don't have arms and your traitor pen gets stolen for all this trouble you've caused.
-			P = inowhaveapen
 
 	var/obj/item/uplink_loc
 
@@ -349,10 +336,14 @@
 					uplink_loc = P
 			if(UPLINK_PEN)
 				uplink_loc = P
-				if(!uplink_loc)
-					uplink_loc = PDA
-				if(!uplink_loc)
-					uplink_loc = R
+
+	if(!uplink_loc) // We've looked everywhere, let's just give you a pen
+		if(istype(traitor_mob.back,/obj/item/storage)) //ok buddy you better have a backpack!
+			P = new /obj/item/pen(traitor_mob.back)
+		else
+			P = new /obj/item/pen(traitor_mob.loc)
+			traitor_mob.put_in_hands(P) // I hope you don't have arms and your traitor pen gets stolen for all this trouble you've caused.
+		uplink_loc = P
 
 	if (!uplink_loc)
 		if(!silent)
@@ -403,7 +394,7 @@
 
 	if(creator.mind.special_role)
 		message_admins("[ADMIN_LOOKUPFLW(current)] has been created by [ADMIN_LOOKUPFLW(creator)], an antagonist.")
-		to_chat(current, "<span class='userdanger'>Despite your creators current allegiances, your true master remains [creator.real_name]. If their loyalties change, so do yours. This will never change unless your creator's body is destroyed.</span>")
+		to_chat(current, "<span class='userdanger'>Despite your creator's current allegiances, your true master remains [creator.real_name]. If their loyalties change, so do yours. This will never change unless your creator's body is destroyed.</span>")
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
 	if(!recipient)
@@ -456,7 +447,7 @@
 		assigned_role = new_role
 
 	else if (href_list["memory_edit"])
-		var/new_memo = copytext(sanitize(input("Write new memory", "Memory", memory) as null|message),1,MAX_MESSAGE_LEN)
+		var/new_memo = stripped_multiline_input(usr, "Write new memory", "Memory", memory, MAX_MESSAGE_LEN)
 		if (isnull(new_memo))
 			return
 		memory = new_memo

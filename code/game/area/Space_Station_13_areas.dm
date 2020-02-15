@@ -479,7 +479,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/atmos
 	name = "Atmospherics"
 	icon_state = "atmos"
-	flags_1 = NONE
+	flags_1 = CULT_PERMITTED_1
 
 /area/engine/atmospherics_engine
 	name = "Atmospherics Engine"
@@ -666,7 +666,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/virology
 	name = "Virology"
 	icon_state = "virology"
-	flags_1 = NONE
+	flags_1 = CULT_PERMITTED_1
 
 /area/medical/morgue
 	name = "Morgue"
@@ -677,9 +677,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Chemistry"
 	icon_state = "chem"
 
-/area/medical/apothecary
-	name = "Apothecary"
-	icon_state = "apothecary"
+/area/medical/pharmacy
+	name = "Pharmacy"
+	icon_state = "pharmacy"
 
 /area/medical/surgery
 	name = "Surgery"
@@ -700,10 +700,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/genetics
 	name = "Genetics Lab"
 	icon_state = "genetics"
-
-/area/medical/genetics/cloning
-	name = "Cloning Lab"
-	icon_state = "cloning"
 
 /area/medical/sleeper
 	name = "Medbay Treatment Center"
@@ -731,6 +727,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/security/prison
 	name = "Prison Wing"
+	icon_state = "sec_prison"
+
+/area/security/prison/toilet
+	name = "Prison Toilet"
 	icon_state = "sec_prison"
 
 /area/security/processing
@@ -850,7 +850,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/janitor
 	name = "Custodial Closet"
 	icon_state = "janitor"
-	flags_1 = NONE
+	flags_1 = CULT_PERMITTED_1
 
 /area/hydroponics
 	name = "Hydroponics"
@@ -900,6 +900,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Toxins Mixing Chamber"
 	icon_state = "toxmix"
 	valid_territory = FALSE
+
+/area/science/genetics
+	name = "Genetics Lab"
+	icon_state = "geneticssci"
 
 /area/science/misc_lab
 	name = "Testing Lab"

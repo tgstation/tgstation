@@ -231,6 +231,7 @@
 	icon_state = "legion"
 	icon_living = "legion"
 	icon_dead = "legion"
+	health_doll_icon = "legion"
 	health = 450
 	maxHealth = 450
 	melee_damage_lower = 20

@@ -42,7 +42,9 @@
 
 /obj/mecha/combat/honker/get_stats_html()
 	var/output = {"<html>
-						<head><title>[src.name] data</title>
+						<head>
+						<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+						<title>[src.name] data</title>
 						<style>
 						body {color: #00ff00; background: #32CD32; font-family:"Courier",monospace; font-size: 12px;}
 						hr {border: 1px solid #0f0; color: #fff; background-color: #000;}
@@ -164,12 +166,3 @@
 			if("explosionfar")
 				playsound(src, 'sound/effects/explosionfar.ogg', 50)
 	return
-
-/proc/rand_hex_color()
-	var/list/colors = list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f")
-	var/color=""
-	for (var/i=0;i<6;i++)
-		color = color+pick(colors)
-	return color
-
-

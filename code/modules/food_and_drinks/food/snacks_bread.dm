@@ -5,7 +5,10 @@
 	slices_num = 5
 	tastes = list("bread" = 10)
 	foodtype = GRAIN
-	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/store/bread/Initialize()
+	. = ..()
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/breadslice
 	icon = 'icons/obj/food/burgerbread.dmi'
@@ -16,7 +19,10 @@
 	slot_flags = ITEM_SLOT_HEAD
 	customfoodfilling = 0 //to avoid infinite bread-ception
 	foodtype = GRAIN
-	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/breadslice/Initialize()
+	. = ..()
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/store/bread/plain
 	name = "bread"
@@ -178,6 +184,7 @@
 	bitesize = 3
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
+	attack_verb = list("touche'd")
 	tastes = list("bread" = 1)
 	foodtype = GRAIN
 

@@ -12,7 +12,7 @@
 
 /obj/item/book/granter/proc/turn_page(mob/user)
 	playsound(user, pick('sound/effects/pageturn1.ogg','sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg'), 30, TRUE)
-	if(do_after(user,50, user))
+	if(do_after(user, 50, TRUE, src))
 		if(remarks.len)
 			to_chat(user, "<span class='notice'>[pick(remarks)]</span>")
 		else
@@ -57,9 +57,9 @@
 			on_reading_stopped()
 			reading = FALSE
 			return
-	if(do_after(user,50, user))
+	if(do_after(user, 50, TRUE, src))
 		on_reading_finished(user)
-		reading = FALSE
+	reading = FALSE
 	return TRUE
 
 ///ACTION BUTTONS///
@@ -394,6 +394,9 @@
 		desc = "It's completely blank."
 		name = "empty scroll"
 		icon_state = "blankscroll"
+
+/obj/item/book/granter/martial/plasma_fist/nobomb
+	martial = /datum/martial_art/plasma_fist/nobomb
 
 // I did not include mushpunch's grant, it is not a book and the item does it just fine.
 

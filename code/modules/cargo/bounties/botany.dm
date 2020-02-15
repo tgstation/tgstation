@@ -99,7 +99,7 @@
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/chili)
 
 /datum/bounty/item/botany/ice_chili
-	name = "Ice Chili Peppers"
+	name = "Chilly Peppers"
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/icepepper)
 	multiplier = 2
 

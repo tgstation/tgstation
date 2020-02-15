@@ -70,13 +70,9 @@
 /obj/item/clothing/suit/space/hostile_environment/Initialize()
 	. = ..()
 	AddComponent(/datum/component/spraycan_paintable)
-	START_PROCESSING(SSobj, src)
-
-/obj/item/clothing/suit/space/hostile_environment/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
 
 /obj/item/clothing/suit/space/hostile_environment/process()
+	. = ..()
 	var/mob/living/carbon/C = loc
 	if(istype(C) && prob(2)) //cursed by bubblegum
 		if(prob(15))
@@ -101,12 +97,11 @@
 	AddComponent(/datum/component/spraycan_paintable)
 	update_icon()
 
-/obj/item/clothing/head/helmet/space/hostile_environment/update_icon()
-	..()
-	cut_overlays()
+/obj/item/clothing/head/helmet/space/hostile_environment/update_overlays()
+	. = ..()
 	var/mutable_appearance/glass_overlay = mutable_appearance(icon, "hostile_env_glass")
 	glass_overlay.appearance_flags = RESET_COLOR
-	add_overlay(glass_overlay)
+	. += glass_overlay
 
 /obj/item/clothing/head/helmet/space/hostile_environment/worn_overlays(isinhands)
 	. = ..()

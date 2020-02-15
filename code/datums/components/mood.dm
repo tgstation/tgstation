@@ -192,15 +192,12 @@
 
 ///Sets sanity to the specified amount and applies effects.
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT, override = FALSE)
-	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.5
+	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.7
 	// If the new amount would move towards the acceptable range faster then use it instead
 	if(amount < minimum)
-		amount += CLAMP(minimum - sanity, 0, 0.7)
-	else
-		if(!override && HAS_TRAIT(parent, TRAIT_UNSTABLE))
-			maximum = sanity
-		if(amount > maximum)
-			amount = max(maximum, sanity)
+		amount += clamp(minimum - amount, 0, 0.7)
+	if((!override && HAS_TRAIT(parent, TRAIT_UNSTABLE)) || amount > maximum)
+		amount = min(sanity, amount)
 	if(amount == sanity) //Prevents stuff from flicking around.
 		return
 	sanity = amount
@@ -340,6 +337,10 @@
 			clear_event(null, "charge")
 		if(ETHEREAL_CHARGE_ALMOSTFULL to ETHEREAL_CHARGE_FULL)
 			add_event(null, "charge", /datum/mood_event/charged)
+		if(ETHEREAL_CHARGE_FULL to ETHEREAL_CHARGE_OVERLOAD)
+			add_event(null, "charge", /datum/mood_event/overcharged)
+		if(ETHEREAL_CHARGE_OVERLOAD to ETHEREAL_CHARGE_DANGEROUS)
+			add_event(null, "charge", /datum/mood_event/supercharged)
 
 /datum/component/mood/proc/check_area_mood(datum/source, area/A)
 	update_beauty(A)

@@ -192,7 +192,7 @@
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
-	mutatelist = list(/obj/item/seeds/chanterelle/jupitercup)
+	mutatelist = list(/obj/item/seeds/chanter/jupitercup)
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle
 	seed = /obj/item/seeds/chanter
@@ -202,7 +202,7 @@
 	filling_color = "#FFA500"
 
 //Jupiter Cup
-/obj/item/seeds/chanterelle/jupitercup
+/obj/item/seeds/chanter/jupitercup
 	name = "pack of jupiter cup mycelium"
 	desc = "This mycelium grows into jupiter cups. Zeus would be envious at the power at your fingertips."
 	icon_state = "mycelium-jupitercup"
@@ -218,14 +218,14 @@
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
 
-/obj/item/seeds/chanterelle/jupitercup/Initialize(mapload,nogenes)
+/obj/item/seeds/chanter/jupitercup/Initialize(mapload,nogenes)
 	. = ..()
 	if(!nogenes)
 		unset_mutability(/datum/plant_gene/reagent/liquidelectricity, PLANT_GENE_EXTRACTABLE)
 		unset_mutability(/datum/plant_gene/trait/plant_type/carnivory, PLANT_GENE_REMOVABLE)
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/jupitercup
-	seed = /obj/item/seeds/chanterelle/jupitercup
+	seed = /obj/item/seeds/chanter/jupitercup
 	name = "jupiter cup"
 	desc = "A strange red mushroom, its surface is moist and slick. You wonder how many tiny worms have met their fate inside."
 	icon_state = "jupitercup"

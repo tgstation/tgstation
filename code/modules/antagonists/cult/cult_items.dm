@@ -247,7 +247,7 @@
 	breakouttime = 60
 	knockdown = 30
 
-/obj/item/restraints/legcuffs/bola/cult/pickup(mob/living/user)
+/obj/item/restraints/legcuffs/bola/cult/attack_hand(mob/living/user)
 	. = ..()
 	if(!iscultist(user))
 		to_chat(user, "<span class='warning'>The bola seems to take on a life of its own!</span>")
@@ -355,7 +355,7 @@
 	max = 40
 	prefix = "darkened"
 
-/obj/item/sharpener/cult/update_icon()
+/obj/item/sharpener/cult/update_icon_state()
 	icon_state = "cult_sharpener[used ? "_used" : ""]"
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield
@@ -635,7 +635,7 @@
 		qdel(spear_act)
 	..()
 
-/obj/item/twohanded/cult_spear/update_icon()
+/obj/item/twohanded/cult_spear/update_icon_state()
 	icon_state = "bloodspear[wielded]"
 
 /obj/item/twohanded/cult_spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

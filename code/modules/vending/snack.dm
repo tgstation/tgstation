@@ -12,11 +12,12 @@
 					/obj/item/reagent_containers/food/snacks/no_raisin = 6,
 					/obj/item/reagent_containers/food/drinks/dry_ramen = 3,
 					/obj/item/reagent_containers/food/snacks/energybar = 6)
-	contraband = list(/obj/item/reagent_containers/food/snacks/syndicake = 6)
+	contraband = list(/obj/item/reagent_containers/food/snacks/syndicake = 6,
+					/obj/item/reagent_containers/food/snacks/candy/bronx = 1)
 	refill_canister = /obj/item/vending_refill/snack
 	canload_access_list = list(ACCESS_KITCHEN)
-	default_price = 20
-	extra_price = 30
+	default_price = 60
+	extra_price = 160
 	payment_department = ACCOUNT_SRV
 	input_display_header = "Chef's Food Selection"
 

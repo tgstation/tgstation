@@ -9,7 +9,7 @@
 
 /obj/machinery/computer/mecha/ui_interact(mob/user)
 	. = ..()
-	var/dat = {"<html><head><title>[src.name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body><br>
+	var/dat = {"<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[src.name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body><br>
 				<h3>Tracking beacons data</h3>"}
 	var/list/trackerlist = list()
 	for(var/obj/mecha/MC in GLOB.mechas_list)
@@ -41,8 +41,10 @@
 		return
 	if(href_list["shock"])
 		var/obj/item/mecha_parts/mecha_tracking/MT = locate(href_list["shock"])
-		if (istype(MT))
+		if (istype(MT) && MT.chassis)
 			MT.shock()
+			log_game("[key_name(usr)] has activated remote EMP on exosuit [MT.chassis], located at [loc_name(MT.chassis)], which is currently [MT.chassis.occupant? "being piloted by [key_name(MT.chassis.occupant)]." : "without a pilot."] ")
+			message_admins("[key_name_admin(usr)][ADMIN_FLW(usr)] has activated remote EMP on exosuit [MT.chassis][ADMIN_JMP(MT.chassis)], which is currently [MT.chassis.occupant? "being piloted by [key_name_admin(MT.chassis.occupant)][ADMIN_FLW(MT.chassis.occupant)]." : "without a pilot."] ")
 
 	updateUsrDialog()
 	return
@@ -55,6 +57,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/ai_beacon = FALSE //If this beacon allows for AI control. Exists to avoid using istype() on checking.
 	var/recharging = 0
+	var/obj/mecha/chassis
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
 	if(!in_mecha())
@@ -84,6 +87,7 @@
 		var/obj/mecha/M = loc
 		if(src in M.trackers)
 			M.trackers -= src
+	chassis = null
 	return ..()
 
 /obj/item/mecha_parts/mecha_tracking/try_attach_part(mob/user, obj/mecha/M)
@@ -91,6 +95,7 @@
 		return
 	M.trackers += src
 	M.diag_hud_set_mechtracking()
+	chassis = M
 
 /obj/item/mecha_parts/mecha_tracking/proc/in_mecha()
 	if(ismecha(loc))

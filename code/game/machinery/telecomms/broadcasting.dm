@@ -100,7 +100,7 @@
 	obj/source,  // the originating radio
 	frequency,  // the frequency the signal is taking place on
 	atom/movable/virtualspeaker/speaker,  // representation of the method's speaker
-	datum/language/language,  // the langauge of the message
+	datum/language/language,  // the language of the message
 	message,  // the text content of the message
 	spans  // the list of spans applied to the message
 )
@@ -132,7 +132,7 @@
 	set waitfor = FALSE
 
 	// Perform final composition steps on the message.
-	var/message = copytext(data["message"], 1, MAX_BROADCAST_LEN)
+	var/message = copytext_char(data["message"], 1, MAX_BROADCAST_LEN)
 	if(!message)
 		return
 	var/compression = data["compression"]
