@@ -37,7 +37,7 @@
 					/obj/item/airlock_painter/decal,
 					/obj/item/pen/survival,
 					/obj/item/circuitboard/machine/sleeper/party,
-          /obj/item/toy/sprayoncan)
+					/obj/item/toy/sprayoncan)
 	var/static/list/item_list = list()
 
 /obj/machinery/rnd/bepis/attackby(obj/item/O, mob/user, params)
