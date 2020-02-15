@@ -13,7 +13,7 @@
 	custom_premium_price = 1200
 
 /obj/item/toy/sprayoncan
-	name = "spray-on insuls applicator"
+	name = "spray-on insulation applicator"
 	desc = "What is the number one problem facing our station today?"
 	icon = 'icons/obj/clothing/gloves.dmi'
 	icon_state = "sprayoncan"
