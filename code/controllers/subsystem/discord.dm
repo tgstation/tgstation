@@ -119,6 +119,7 @@ SUBSYSTEM_DEF(discord)
 	if(!CONFIG_GET(flag/enable_discord_autorole))
 		return
 
+	var/url = "https://discordapp.com/api/guilds/[CONFIG_GET(string/discord_guildid)]/members/[id]/roles/[CONFIG_GET(string/discord_roleid)]"
 	// Make the request
-	var/response = rustg_http_request_blocking(RUSTG_HTTP_METHOD_PUT, "https://discordapp.com/api/guilds/[CONFIG_GET(string/discord_guildid)]/members/[id]/roles/[CONFIG_GET(string/discord_roleid)]", "",  "{\"Authorization\":\"Bot [CONFIG_GET(string/discord_token)]\"}")
-	WRITE_LOG(GLOB.discord_api_log, "DISCORD API: [response]")
+	var/response = rustg_http_request_blocking(RUSTG_HTTP_METHOD_PUT, url, "",  "{\"Authorization\":\"Bot [CONFIG_GET(string/discord_token)]\"}")
+	WRITE_LOG(GLOB.discord_api_log, "PUT [url] returned [response]")
