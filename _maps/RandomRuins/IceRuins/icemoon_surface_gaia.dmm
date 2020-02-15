@@ -1,0 +1,514 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/mineral/random/snow/no_caves,
+/area/ruin/unpowered/gaia)
+"c" = (
+/obj/structure/flora/grass/jungle/b,
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"d" = (
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"e" = (
+/obj/structure/flora/grass/jungle,
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"f" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"g" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"h" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"i" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"j" = (
+/obj/machinery/hydroponics/soil{
+	self_sustaining = 1
+	},
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"k" = (
+/obj/item/reagent_containers/food/snacks/grown/mushroom/angel,
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"l" = (
+/obj/item/reagent_containers/food/snacks/grown/mushroom/libertycap,
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"m" = (
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"n" = (
+/mob/living/simple_animal/hostile/lightgeist{
+	AIStatus = 1;
+	light_color = "#42ECFF"
+	},
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"o" = (
+/obj/structure/flora/tree/jungle/small,
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"p" = (
+/mob/living/simple_animal/butterfly{
+	atmos_requirements = list()
+	},
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"q" = (
+/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/ausbushes/sparsegrass,
+/mob/living/simple_animal/butterfly{
+	atmos_requirements = list()
+	},
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"r" = (
+/obj/item/reagent_containers/food/snacks/grown/mushroom/amanita,
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"s" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"t" = (
+/obj/structure/flora/tree/jungle,
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"u" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"v" = (
+/obj/structure/flora/grass/jungle,
+/mob/living/simple_animal/hostile/lightgeist{
+	AIStatus = 1;
+	light_color = "#42ECFF"
+	},
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"w" = (
+/obj/structure/flora/ausbushes/fernybush,
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+"x" = (
+/obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle,
+/turf/open/floor/plating/grass/lavaland{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/gaia)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+b
+b
+d
+c
+d
+c
+d
+b
+b
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+b
+b
+d
+h
+e
+g
+d
+e
+d
+b
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+b
+b
+d
+e
+d
+j
+e
+w
+m
+d
+b
+b
+b
+a
+"}
+(5,1,1) = {"
+a
+a
+b
+d
+d
+d
+d
+n
+p
+r
+c
+i
+d
+c
+b
+a
+"}
+(6,1,1) = {"
+a
+b
+b
+h
+e
+d
+d
+d
+t
+e
+d
+d
+i
+b
+b
+a
+"}
+(7,1,1) = {"
+b
+b
+c
+d
+l
+q
+d
+d
+u
+m
+w
+c
+h
+d
+b
+b
+"}
+(8,1,1) = {"
+b
+c
+d
+e
+d
+m
+d
+c
+v
+d
+e
+l
+e
+i
+d
+b
+"}
+(9,1,1) = {"
+b
+d
+e
+d
+g
+e
+d
+e
+i
+d
+g
+p
+d
+c
+g
+b
+"}
+(10,1,1) = {"
+b
+d
+d
+i
+c
+d
+d
+o
+s
+c
+e
+d
+u
+c
+d
+b
+"}
+(11,1,1) = {"
+b
+e
+f
+j
+m
+e
+d
+s
+d
+d
+m
+d
+d
+o
+d
+b
+"}
+(12,1,1) = {"
+b
+d
+c
+d
+n
+h
+r
+d
+c
+p
+i
+e
+m
+d
+c
+b
+"}
+(13,1,1) = {"
+b
+c
+d
+e
+o
+e
+c
+d
+d
+m
+d
+d
+c
+x
+w
+b
+"}
+(14,1,1) = {"
+b
+b
+g
+d
+m
+d
+d
+c
+d
+c
+d
+i
+j
+w
+e
+b
+"}
+(15,1,1) = {"
+a
+b
+b
+k
+p
+d
+m
+d
+d
+h
+d
+p
+d
+d
+b
+b
+"}
+(16,1,1) = {"
+a
+a
+b
+d
+c
+d
+d
+h
+d
+d
+d
+m
+d
+b
+b
+a
+"}
+(17,1,1) = {"
+a
+a
+b
+e
+h
+d
+n
+i
+s
+i
+f
+d
+i
+b
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+b
+b
+d
+c
+m
+d
+d
+p
+h
+d
+d
+b
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+a
+b
+b
+d
+i
+d
+m
+d
+d
+b
+b
+b
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+"}

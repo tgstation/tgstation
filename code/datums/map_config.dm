@@ -3,7 +3,7 @@
 //defaults to box
 //  -Cyberboss
 
-GLOBAL_LIST_INIT(mining_maps, list("lavaland" = 0, "icemoon" = 1, "random" = 0))
+GLOBAL_LIST_INIT(mining_maps, list("lavaland" = 1, "icemoon" = 1, "random" = 0))
 GLOBAL_VAR_INIT(next_mining_map, "random")
 
 /datum/map_config
@@ -152,4 +152,3 @@ GLOBAL_VAR_INIT(next_mining_map, "random")
 	fdel("data/next_map.json")
 	json = text2file(json, "data/next_map.json")
 	return success
-

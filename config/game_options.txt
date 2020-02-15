@@ -522,7 +522,7 @@ BOMBCAP 20
 LAVALAND_BUDGET 60
 
 ## Ice Moon Budget
-ICEMOON_BUDGET 60
+ICEMOON_BUDGET 90
 
 ## Space Ruin Budget
 Space_Budget 16

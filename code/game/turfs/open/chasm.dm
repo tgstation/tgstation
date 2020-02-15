@@ -88,7 +88,7 @@
 // Chasms for Ice moon, with planetary atmos and glow
 /turf/open/chasm/icemoon
 	icon = 'icons/turf/floors/icechasms.dmi'
-	initial_gas_mix = FROZEN_ATMOS
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/chasm/icemoon
 	light_range = 1.9

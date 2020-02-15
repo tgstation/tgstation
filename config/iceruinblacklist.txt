@@ -5,7 +5,25 @@
 
 ##RESPAWN
 #_maps/RandomRuins/IceRuins/icemoon_surface_seed_vault.dmm
+#_maps/RandomRuins/IceRuins/icemoon_surface_ash_walker1.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_golem_ship.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_hermit.dmm
 
 ##MISC
+#_maps/RandomRuins/IceRuins/icemoon_biodome_beach.dmm
+#_maps/RandomRuins/IceRuins/icemoon_biodome_clown_planet.dmm
+#_maps/RandomRuins/IceRuins/icemoon_surface_cultaltar.dmm
+#_maps/RandomRuins/IceRuins/icemoon_surface_elite_tumor.dmm
+#_maps/RandomRuins/IceRuins/icemoon_surface_fountain_hall.dmm
+#_maps/RandomRuins/IceRuins/icemoon_surface_gaia.dmm
+#_maps/RandomRuins/IceRuins/icemoon_surface_hierophant.dmm
+#_maps/RandomRuins/IceRuins/icemoon_surface_mining_site.dmm
+#_maps/RandomRuins/IceRuins/icemoon_surface_puzzle.dmm
+#_maps/RandomRuins/IceRuins/icemoon_surface_random_ripley.dmm
 #_maps/RandomRuins/IceRuins/icemoon_surface_ufo_crash.dmm
-#_maps/RandomRuins/IceRuins/icemoon_surface_survivalpod.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_abandoned_village.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_golem_ship.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_hermit.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_mining_site.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_survivalpod.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_syndicate_base1.dmm

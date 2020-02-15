@@ -190,13 +190,23 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 						  /mob/living/simple_animal/hostile/asteroid/polarbear = 30, /obj/structure/spawner/ice_moon/polarbear = 3, \
 		SPAWN_MEGAFAUNA = 6, /mob/living/simple_animal/hostile/asteroid/goldgrub = 10)
 
-	megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/dragon = 4)
-
 	flora_spawn_list = list(/obj/structure/flora/tree/pine = 2, /obj/structure/flora/rock/icy = 2, /obj/structure/flora/rock/pile/icy = 2, /obj/structure/flora/grass/both = 12)
 	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/snow/has_data
 	turf_type = /turf/open/floor/plating/asteroid/snow/icemoon
 
+/turf/open/floor/plating/asteroid/airless/cave/snow/underground
+	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast/random = 50, /obj/structure/spawner/lavaland/goliath = 3, \
+		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random = 10, /obj/structure/spawner/lavaland/icewatcher = 2, \
+		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/icewing = 30, \
+		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/random = 30, /obj/structure/spawner/lavaland/legion = 3, \
+		SPAWN_MEGAFAUNA = 4, /mob/living/simple_animal/hostile/asteroid/goldgrub = 10)
+
+	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/snow/underground/has_data
+
 /turf/open/floor/plating/asteroid/airless/cave/snow/has_data //subtype for producing a tunnel with given data
+	has_data = TRUE
+
+/turf/open/floor/plating/asteroid/airless/cave/snow/underground/has_data //subtype for producing a tunnel with given data
 	has_data = TRUE
 
 /turf/open/floor/plating/asteroid/airless/cave/snow/make_tunnel(dir, pick_tunnel_width)
