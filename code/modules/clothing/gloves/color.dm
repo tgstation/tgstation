@@ -43,7 +43,7 @@
 
 /obj/item/clothing/gloves/color/yellow/sprayon/Initialize()
 	.=..()
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT) //Cursed with the power of science, or something
+	ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
 
 /obj/item/clothing/gloves/color/yellow/sprayon/equipped(mob/user, slot)
 	. = ..()
