@@ -29,7 +29,8 @@
 			else
 				C.visible_message("<span class='warning'>[U] sprays glittery rubber on the hands of [C]!</span>")
 		else
-			C.visible_message("<span class='warning'>The rubber fails to stick to [C]'s hands!")
+			C.visible_message("<span class='warning'>The rubber fails to stick to [C]'s hands!</span>")
+
 		qdel(src)
 
 /obj/item/clothing/gloves/color/yellow/sprayon
