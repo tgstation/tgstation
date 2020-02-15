@@ -24701,6 +24701,10 @@
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/stock_parts/cell/emproof{
+	pixel_x = 4;
+	pixel_y = 2
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "aYk" = (
@@ -69601,6 +69605,10 @@
 	pixel_x = 26
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/stock_parts/cell/emproof{
+	pixel_x = -3;
+	pixel_y = 5
+	},
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "czA" = (
@@ -73268,6 +73276,10 @@
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/stock_parts/cell/emproof{
+	pixel_x = 1;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "cFZ" = (

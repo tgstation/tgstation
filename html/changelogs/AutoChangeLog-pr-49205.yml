@@ -1,0 +1,4 @@
+author: "Buggy123"
+delete-after: True
+changes: 
+  - tweak: "Random mineral turfs no longer cause large amounts of turf changes on initialization."

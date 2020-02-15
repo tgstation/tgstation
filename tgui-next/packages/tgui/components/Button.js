@@ -138,8 +138,10 @@ export class ButtonConfirm extends Component {
 
   render() {
     const {
-      confirmMessage = "Confirm?",
+      confirmContent = "Confirm?",
       confirmColor = "bad",
+      confirmIcon,
+      icon,
       color,
       content,
       onClick,
@@ -147,7 +149,8 @@ export class ButtonConfirm extends Component {
     } = this.props;
     return (
       <Button
-        content={this.state.clickedOnce ? confirmMessage : content}
+        content={this.state.clickedOnce ? confirmContent : content}
+        icon={this.state.clickedOnce ? confirmIcon : icon}
         color={this.state.clickedOnce ? confirmColor : color}
         onClick={() => this.state.clickedOnce
           ? onClick()
@@ -206,6 +209,11 @@ export class ButtonInput extends Component {
     const {
       fluid,
       content,
+      icon,
+      iconRotation,
+      iconSpin,
+      tooltip,
+      tooltipPosition,
       color = 'default',
       placeholder,
       maxLength,
@@ -221,6 +229,9 @@ export class ButtonInput extends Component {
         ])}
         {...rest}
         onClick={() => this.setInInput(true)}>
+        {icon && (
+          <Icon name={icon} rotation={iconRotation} spin={iconSpin} />
+        )}
         <div>
           {content}
         </div>
@@ -249,6 +260,12 @@ export class ButtonInput extends Component {
             }
           }}
         />
+        {tooltip && (
+          <Tooltip
+            content={tooltip}
+            position={tooltipPosition}
+          />
+        )}
       </Box>
     );
   }

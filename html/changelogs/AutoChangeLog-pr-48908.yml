@@ -1,6 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - tweak: "Headphones can now play custom music"
-  - tweak: "Moved headphones to the games vendor in the library"
-  - code_imp: "Added support for instruments with custom effects triggered by playing"
