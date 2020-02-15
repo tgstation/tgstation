@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 			affecting.Add(AM)
 
 // when some item or mob moves over the conveyor belt
-/obj/machinery/conveyor/proc/conveyorCrossed(datum/source, atom/movable/AM, atom/oldLoc)//
+/obj/machinery/conveyor/proc/conveyorCrossed(datum/source, atom/movable/AM, atom/oldLoc)
 	// if the conveyor isn't switched on or is broken / has no power
 	if(!operating || machine_stat & (BROKEN | NOPOWER))
 		return
@@ -161,7 +161,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 			stoplag()
 
 	if(check_belt_contents())
-		Crossed() // If something is still on the belt, call crossed again
+		conveyorCrossed() // If something is still on the belt, call conveyorCrossed again
 
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/I, mob/user, params)
@@ -293,7 +293,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		C.update_move_direction()
 		C.update_icon()
 		if(abs(C.operating)) // equals 1 if the conveyor is moving in either direction, 0 if turned off
-			C.Crossed() // if there's items on the belt already, start moving them immediately
+			C.conveyorCrossed() // if there's items on the belt already, start moving them immediately
 			C.begin_processing()
 		else
 			C.end_processing()
