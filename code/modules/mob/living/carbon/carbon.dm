@@ -1056,5 +1056,5 @@
 	if(wear_neck && !(ITEM_SLOT_NECK in obscured) && wear_neck.washed(washer))
 		update_inv_neck()
 
-	if(shoes && !(HIDESHOES in obscured) && shoes.washhed(washer))
+	if(shoes && !(HIDESHOES in obscured) && shoes.washed(washer))
 		update_inv_shoes()
