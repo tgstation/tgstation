@@ -7,7 +7,7 @@
 /*Suffix: -bital*/
 
 /datum/reagent/medicine/C2/helbital //only REALLY a C2 if you heal the other damages but not being able to outright heal the other guys is close enough to damaging
-	name = "Helbital"
+	name = "Emergencitol"
 	description = "Named after the norse goddess Hel, this medicine heals the patient's bruises the closer they are to death. Burns, toxins, and asphyxition will increase healing but these damages must be maintained while the drug is being metabolized or the drug will react negatively."
 	color = "#9400D3"
 	taste_description = "cold and lifeless"
@@ -92,7 +92,7 @@
 /******BURN******/
 /*Suffix: -uri*/
 /datum/reagent/medicine/C2/lenturi
-	name = "Lenturi"
+	name = "Disgutirri"
 	description = "Used to treat burns. Makes you move slower while it is in your system. Applies stomach damage when it leaves your system."
 	reagent_state = LIQUID
 	color = "#6171FF"
@@ -112,7 +112,7 @@
 
 	. = ..()
 /datum/reagent/medicine/C2/aiuri
-	name = "Aiuri"
+	name = "Myeyesuri"
 	description = "Used to treat burns. Does minor eye damage."
 	reagent_state = LIQUID
 	color = "#8C93FF"
@@ -130,7 +130,7 @@
 #define	CONVERMOL_RATIO 5		//# Oxygen damage to result in 1 tox
 
 /datum/reagent/medicine/C2/convermol
-	name = "Convermol"
+	name = "Tridimoff"
 	description = "Restores oxygen deprivation while producing a lesser amount of toxic byproducts. Both scale with exposure to the drug and current amount of oxygen deprivation. Overdose causes toxic byproducts regardless of oxygen deprivation."
 	reagent_state = LIQUID
 	color = "#FF6464"
@@ -155,7 +155,7 @@
 #undef	CONVERMOL_RATIO
 
 /datum/reagent/medicine/C2/tirimol
-	name = "Tirimol"
+	name = "Napitoff"
 	description = "An oxygen deprivation medication that causes fatigue. Prolonged exposure causes the patient to fall asleep once the medicine metabolizes."
 	color = "#FF6464"
 	var/drowsycd = 0
@@ -180,7 +180,7 @@
 /*Suffix: -iver*/
 
 /datum/reagent/medicine/C2/seiver //a bit of a gray joke
-	name = "Seiver"
+	name = "Poxirim"
 	description = "A medicine that shifts functionality based on temperature. Colder temperatures incurs radiation removal while hotter temperatures promote antitoxicity. Damages the heart." //CHEM HOLDER TEMPS, NOT AIR TEMPS
 	var/radbonustemp = (T0C - 100) //being below this number gives you 10% off rads.
 
@@ -218,7 +218,7 @@
 	return TRUE
 
 /datum/reagent/medicine/C2/multiver //enhanced with MULTIple medicines
-	name = "Multiver"
+	name = "Multiver" //If I leave this one alone, they won't believe me.
 	description = "A chem-purger that becomes more effective the more unique medicines present. Slightly heals toxicity but causes lung damage (mitigatable by unique medicines)."
 
 /datum/reagent/medicine/C2/multiver/on_mob_life(mob/living/carbon/human/M)
@@ -245,7 +245,7 @@
 #define issyrinormusc(A)	(istype(A,/datum/reagent/medicine/C2/syriniver) || istype(A,/datum/reagent/medicine/C2/musiver)) //musc is metab of syrin so let's make sure we're not purging either
 
 /datum/reagent/medicine/C2/syriniver //Inject >> SYRINge
-	name = "Syriniver"
+	name = "Syriniver" //Same here.
 	description = "A potent antidote for intravenous use with a narrow therapeutic index, it is considered an active prodrug of musiver."
 	reagent_state = LIQUID
 	color = "#8CDF24" // heavy saturation to make the color blend better
@@ -286,7 +286,7 @@
 	. = 1
 
 /datum/reagent/medicine/C2/musiver //MUScles
-	name = "Musiver"
+	name = "Babitol"
 	description = "The active metabolite of syriniver. Causes muscle weakness on overdose"
 	reagent_state = LIQUID
 	color = "#DFD54E"
@@ -324,7 +324,7 @@
 /******COMBOS******/
 /*Suffix: Combo of healing, prob gonna get wack REAL fast*/
 /datum/reagent/medicine/C2/instabitaluri
-	name = "Synthflesh (Instabitaluri)"
+	name = "Synthflesh (No catch I swear)"
 	description = "Has a 100% chance of instantly healing brute and burn damage at the cost of toxicity (75% of damage healed). Touch application only."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
@@ -351,7 +351,7 @@
 /******ORGAN HEALING******/
 /*Suffix: -rite*/
 /datum/reagent/medicine/C2/penthrite
-	name = "Penthrite"
+	name = "Pendragonite"
 	description = "An explosive compound used to stabilize heart conditions. May interfere with stomach acid!"
 	color = "#F5F5F5"
 	self_consuming = TRUE

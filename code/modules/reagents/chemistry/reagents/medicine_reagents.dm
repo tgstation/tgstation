@@ -15,7 +15,7 @@
 	holder.remove_reagent(type, metabolization_rate / M.metabolism_efficiency) //medicine reagents stay longer if you have a better metabolism
 
 /datum/reagent/medicine/leporazine
-	name = "Leporazine"
+	name = "kekzipram"
 	description = "Leporazine will effectively regulate a patient's body temperature, ensuring it never leaves safe levels."
 	color = "#DB90C6"
 
@@ -79,7 +79,7 @@
 	taste_description = "science"
 
 /datum/reagent/medicine/synaptizine
-	name = "Synaptizine"
+	name = "Bisontapram"
 	description = "Increases resistance to stuns as well as reducing drowsiness and hallucinations."
 	color = "#FF00FF"
 
@@ -99,7 +99,7 @@
 	..()
 
 /datum/reagent/medicine/synaphydramine
-	name = "Diphen-Synaptizine"
+	name = "Siporafil"
 	description = "Reduces drowsiness, hallucinations, and Histamine from body."
 	color = "#EC536D" // rgb: 236, 83, 109
 
@@ -116,7 +116,7 @@
 	..()
 
 /datum/reagent/medicine/cryoxadone
-	name = "Cryoxadone"
+	name = "Dentramine"
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the patient's body temperature must be under 270K for it to metabolise correctly."
 	color = "#0000C8"
 	taste_description = "sludge"
@@ -135,7 +135,7 @@
 	..()
 
 /datum/reagent/medicine/clonexadone
-	name = "Clonexadone"
+	name = "Non Existant Chemical."
 	description = "A chemical that derives from Cryoxadone. It specializes in healing clone damage, but nothing else. Requires very cold temperatures to properly metabolize, and metabolizes quicker than cryoxadone."
 	color = "#3D3DC6"
 	taste_description = "muscle"
@@ -150,7 +150,7 @@
 	..()
 
 /datum/reagent/medicine/pyroxadone
-	name = "Pyroxadone"
+	name = "Frozadone"
 	description = "A mixture of cryoxadone and slime jelly, that apparently inverses the requirement for its activation."
 	color = "#f7832a"
 	taste_description = "spicy jelly"
@@ -178,7 +178,7 @@
 	..()
 
 /datum/reagent/medicine/rezadone
-	name = "Rezadone"
+	name = "Gidabohl"
 	description = "A powder derived from fish toxin, Rezadone can effectively treat genetic damage as well as restoring minor wounds. Overdose will cause intense nausea and minor toxin damage."
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
@@ -208,7 +208,7 @@
 			patient.visible_message("<span class='nicegreen'>[patient]'s body rapidly absorbs moisture from the enviroment, taking on a more healthy appearance.")
 
 /datum/reagent/medicine/spaceacillin
-	name = "Spaceacillin"
+	name = "Speckzaprilin"
 	description = "Spaceacillin will prevent a patient from conventionally spreading any diseases they are currently infected with."
 	color = "#E1F2E6"
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
@@ -216,7 +216,7 @@
 //Goon Chems. Ported mainly from Goonstation. Easily mixable (or not so easily) and provide a variety of effects.
 
 /datum/reagent/medicine/oxandrolone
-	name = "Oxandrolone"
+	name = "Kelotane"
 	description = "Stimulates the healing of severe burns. Extremely rapidly heals severe burns and slowly heals minor ones. Overdose will worsen existing burns."
 	reagent_state = LIQUID
 	color = "#1E8BFF"
@@ -238,7 +238,7 @@
 	..()
 
 /datum/reagent/medicine/salglu_solution
-	name = "Saline-Glucose Solution"
+	name = "Cyctaminic Acid"
 	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage. Can be used as a temporary blood substitute."
 	reagent_state = LIQUID
 	color = "#DCDCDC"
@@ -279,7 +279,7 @@
 	..()
 
 /datum/reagent/medicine/mine_salve
-	name = "Miner's Salve"
+	name = "Grolzabine"
 	description = "A powerful painkiller. Restores bruising and burns in addition to making the patient believe they are fully healed."
 	reagent_state = LIQUID
 	color = "#6D6374"
@@ -315,7 +315,7 @@
 	..()
 
 /datum/reagent/medicine/omnizine
-	name = "Omnizine"
+	name = "Hugboxapram"
 	description = "Slowly heals all damage types. Overdose will cause damage in all types instead."
 	reagent_state = LIQUID
 	color = "#DCDCDC"
@@ -339,7 +339,7 @@
 	. = 1
 
 /datum/reagent/medicine/calomel
-	name = "Calomel"
+	name = "Tolpramol"
 	description = "Quickly purges the body of all chemicals. Toxin damage is dealt if the patient is in good condition."
 	reagent_state = LIQUID
 	color = "#19C832"
@@ -356,7 +356,7 @@
 	..()
 
 /datum/reagent/medicine/potass_iodide
-	name = "Potassium Iodide"
+	name = "Fizzibril"
 	description = "Efficiently restores low radiation damage."
 	reagent_state = LIQUID
 	color = "#BAA15D"
@@ -368,7 +368,7 @@
 	..()
 
 /datum/reagent/medicine/pen_acid
-	name = "Pentetic Acid"
+	name = "Golbatilamic Acid"
 	description = "Reduces massive amounts of radiation and toxin damage while purging other chemicals from the body."
 	reagent_state = LIQUID
 	color = "#E6FFF0"
@@ -384,7 +384,7 @@
 	. = 1
 
 /datum/reagent/medicine/sal_acid
-	name = "Salicylic Acid"
+	name = "Bicardine"
 	description = "Stimulates the healing of severe bruises. Extremely rapidly heals severe bruising and slowly heals minor ones. Overdose will worsen existing bruising."
 	reagent_state = LIQUID
 	color = "#D2D2D2"
@@ -406,7 +406,7 @@
 	..()
 
 /datum/reagent/medicine/salbutamol
-	name = "Salbutamol"
+	name = "Resportamine"
 	description = "Rapidly restores oxygen deprivation as well as preventing more of it to an extent."
 	reagent_state = LIQUID
 	color = "#00FFFF"
@@ -420,7 +420,7 @@
 	. = 1
 
 /datum/reagent/medicine/ephedrine
-	name = "Ephedrine"
+	name = "Elkahorl"
 	description = "Increases stun resistance and movement speed, giving you hand cramps. Overdose deals toxin damage and inhibits breathing."
 	reagent_state = LIQUID
 	color = "#D2FFFA"
@@ -515,7 +515,7 @@
 	..()
 
 /datum/reagent/medicine/diphenhydramine
-	name = "Diphenhydramine"
+	name = "Justamine"
 	description = "Rapidly purges the body of Histamine and reduces jitteriness. Slight chance of causing drowsiness."
 	reagent_state = LIQUID
 	color = "#64FFE6"
@@ -529,7 +529,7 @@
 	..()
 
 /datum/reagent/medicine/morphine
-	name = "Morphine"
+	name = "Wake-up juice"
 	description = "A painkiller that allows the patient to move at full speed even in bulky objects. Causes drowsiness and eventually unconsciousness in high doses. Overdose will cause a variety of effects, ranging from minor to lethal."
 	reagent_state = LIQUID
 	color = "#A9FBFB"
@@ -599,7 +599,7 @@
 	..()
 
 /datum/reagent/medicine/oculine
-	name = "Oculine"
+	name = "Seesaprol"
 	description = "Quickly restores eye damage, cures nearsightedness, and has a chance to restore vision to the blind."
 	reagent_state = LIQUID
 	color = "#404040" //oculine is dark grey, inacusiate is light grey
@@ -628,7 +628,7 @@
 	..()
 
 /datum/reagent/medicine/inacusiate
-	name = "Inacusiate"
+	name = "Forzaprol"
 	description = "Instantly restores all hearing to the patient, but does not cure deafness."
 	color = "#606060" // ditto
 
@@ -637,7 +637,7 @@
 	..()
 
 /datum/reagent/medicine/atropine
-	name = "Atropine"
+	name = "Ohfunhkapram"
 	description = "If a patient is in critical condition, rapidly heals all damage types as well as regulating oxygen in the body. Excellent for stabilizing wounded patients."
 	reagent_state = LIQUID
 	color = "#1D3535" //slightly more blue, like epinephrine
@@ -665,7 +665,7 @@
 	..()
 
 /datum/reagent/medicine/epinephrine
-	name = "Epinephrine"
+	name = "Exdeezapram"
 	description = "Very minor boost to stun resistance. Slowly heals damage if a patient is in critical condition, as well as regulating oxygen loss. Overdose causes weakness and toxin damage."
 	reagent_state = LIQUID
 	color = "#D2FFFA"
@@ -705,7 +705,7 @@
 	..()
 
 /datum/reagent/medicine/strange_reagent
-	name = "Strange Reagent"
+	name = "Shockzamol"
 	description = "A miracle drug capable of bringing the dead back to life. Works topically unless anotamically complex, in which case works orally. Only works if the target has less than 200 total brute and burn damage and hasn't been husked and requires more reagent depending on damage inflicted. Causes damage to the living."
 	reagent_state = LIQUID
 	color = "#A0E85E"
@@ -764,7 +764,7 @@
 	. = TRUE
 
 /datum/reagent/medicine/mannitol
-	name = "Mannitol"
+	name = "Grayzapram"
 	description = "Efficiently restores brain damage."
 	color = "#A0A0A0" //mannitol is light grey, neurine is lighter grey
 
@@ -773,7 +773,7 @@
 	..()
 
 /datum/reagent/medicine/neurine
-	name = "Neurine"
+	name = "Delpriva"
 	description = "Reacts with neural tissue, helping reform damaged connections. Can cure minor traumas."
 	color = "#C0C0C0" //ditto
 
@@ -785,7 +785,7 @@
 	..()
 
 /datum/reagent/medicine/mutadone
-	name = "Mutadone"
+	name = "Mutahol"
 	description = "Removes jitteriness and restores genetic defects."
 	color = "#5096C8"
 	taste_description = "acid"
@@ -798,7 +798,7 @@
 		..()
 
 /datum/reagent/medicine/antihol
-	name = "Antihol"
+	name = "Antigen"
 	description = "Purges alcoholic substance from the patient's body and eliminates its side effects."
 	color = "#00B4C8"
 	taste_description = "raw egg"
@@ -817,7 +817,7 @@
 	. = 1
 
 /datum/reagent/medicine/stimulants
-	name = "Stimulants"
+	name = "Stimuloric Acid"
 	description = "Increases stun resistance and movement speed in addition to restoring minor damage and weakness. Overdose causes weakness and toxin damage."
 	color = "#78008C"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -853,7 +853,7 @@
 	..()
 
 /datum/reagent/medicine/insulin
-	name = "Insulin"
+	name = "Diabetafil"
 	description = "Increases sugar depletion rates."
 	reagent_state = LIQUID
 	color = "#FFFFF0"
@@ -868,7 +868,7 @@
 //Trek Chems, used primarily by medibots. Only heals a specific damage type, but is very efficient.
 
 /datum/reagent/medicine/inaprovaline //is this used anywhere?
-	name = "Inaprovaline"
+	name = "Medzamil"
 	description = "Stabilizes the breathing of patients. Good for those in critical condition."
 	reagent_state = LIQUID
 	color = "#A4D8D8"
@@ -879,7 +879,7 @@
 	..()
 
 /datum/reagent/medicine/regen_jelly
-	name = "Regenerative Jelly"
+	name = "Regenerative Jelly" //If I leave this one alone nobody will notice
 	description = "Gradually regenerates all types of damage, without harming slime anatomy."
 	reagent_state = LIQUID
 	color = "#CC23FF"
@@ -901,7 +901,7 @@
 	. = 1
 
 /datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
-	name = "Restorative Nanites"
+	name = "Self-loathing Nanites"
 	description = "Miniature medical robots that swiftly restore bodily damage."
 	reagent_state = SOLID
 	color = "#555555"
@@ -925,7 +925,7 @@
 	. = 1
 
 /datum/reagent/medicine/earthsblood //Created by ambrosia gaia plants
-	name = "Earthsblood"
+	name = "Cheeseblood"
 	description = "Ichor from an extremely powerful plant. Great for restoring wounds, but it's a little heavy on the brain. For some strange reason, it also induces temporary pacifism in those who imbibe it and semi-permanent pacifism in those who overdose on it."
 	color = "#FFAF00"
 	metabolization_rate = 0.4 //Math is based on specific metab rate so we want this to be static AKA if define or medicine metab rate changes, we want this to stay until we can rework calculations.
@@ -976,7 +976,7 @@
 	. = 1
 
 /datum/reagent/medicine/haloperidol
-	name = "Haloperidol"
+	name = "Halochargeadol"
 	description = "Increases depletion rates for most stimulating/hallucinogenic drugs. Reduces druggy effects and jitteriness. Severe stamina regeneration penalty, causes drowsiness. Small chance of brain damage."
 	reagent_state = LIQUID
 	color = "#27870a"
@@ -997,7 +997,7 @@
 	return TRUE
 
 /datum/reagent/medicine/lavaland_extract
-	name = "Lavaland Extract"
+	name = "Rock Juice"
 	description = "An extract of lavaland atmospheric and mineral elements. Heals the user in small doses, but is extremely toxic otherwise."
 	color = "#6B372E" //dark and red like lavaland
 	overdose_threshold = 3 //To prevent people stacking massive amounts of a very strong healing reagent
@@ -1017,7 +1017,7 @@
 
 //used for changeling's adrenaline power
 /datum/reagent/medicine/changelingadrenaline
-	name = "Changeling Adrenaline"
+	name = "Changeling Juice"
 	description = "Reduces the duration of unconciousness, knockdown and stuns. Restores stamina, but deals toxin damage when overdosed."
 	color = "#C1151D"
 	overdose_threshold = 30
@@ -1050,7 +1050,7 @@
 	return TRUE
 
 /datum/reagent/medicine/changelinghaste
-	name = "Changeling Haste"
+	name = "Changeling meth"
 	description = "Drastically increases movement speed, but deals toxin damage."
 	color = "#AE151D"
 	metabolization_rate = 1
@@ -1069,7 +1069,7 @@
 	return TRUE
 
 /datum/reagent/medicine/higadrite
-	name = "Higadrite"
+	name = "Heartstopper"
 	description = "A medication utilized to treat ailing livers."
 	color = "#FF3542"
 	self_consuming = TRUE
@@ -1083,7 +1083,7 @@
 	REMOVE_TRAIT(M, TRAIT_STABLELIVER, type)
 
 /datum/reagent/medicine/cordiolis_hepatico
-	name = "Cordiolis Hepatico"
+	name = "Edgelord Sauce"
 	description = "A strange, pitch-black reagent that seems to absorb all light. Effects unknown."
 	color = "#000000"
 	self_consuming = TRUE
@@ -1111,7 +1111,7 @@
 	M.unignore_slowdown(type)
 
 /datum/reagent/medicine/modafinil
-	name = "Modafinil"
+	name = "ModafinnaStunyil"
 	description = "Long-lasting sleep suppressant that very slightly reduces stun and knockdown times. Overdosing has horrendous side effects and deals lethal oxygen damage, will knock you unconscious if not dealt with."
 	reagent_state = LIQUID
 	color = "#BEF7D8" // palish blue white
@@ -1175,7 +1175,7 @@
 	return TRUE
 
 /datum/reagent/medicine/psicodine
-	name = "Psicodine"
+	name = "Remove Hivemind"//wait
 	description = "Suppresses anxiety and other various forms of mental distress. Overdose causes hallucinations and minor toxin damage."
 	reagent_state = LIQUID
 	color = "#07E79E"
@@ -1208,7 +1208,7 @@
 	. = 1
 
 /datum/reagent/medicine/trophazole
-	name = "Trophazole"
+	name = "Chewitol"
 	description = "Orginally developed as fitness supplement, this chemical accelerates wound healing and if ingested turns nutriment into healing peptides"
 	reagent_state = LIQUID
 	color = "#FFFF6B"
@@ -1250,7 +1250,7 @@
 	..()
 
 /datum/reagent/medicine/rhigoxane
-	name = "Rhigoxane"
+	name = "Freezitol"
 	description = "A second generation burn treatment agent exhibiting a cooling effect that is especially pronounced when deployed as a spray. Its high halogen content helps extinguish fires."
 	reagent_state = LIQUID
 	color = "#F7FFA5"
@@ -1280,7 +1280,7 @@
 	..()
 
 /datum/reagent/medicine/silibinin
-	name = "Silibinin"
+	name = "Stolmikidnite"
 	description = "A thistle derrived hepatoprotective flavolignan mixture that help reverse damage to the liver."
 	reagent_state = SOLID
 	color = "#FFFFD0"
@@ -1292,7 +1292,7 @@
 	. = 1
 
 /datum/reagent/medicine/polypyr  //This is intended to be an ingredient in advanced chems.
-	name = "Polypyrylium Oligomers"
+	name = "Purple Drank"
 	description = "A purple mixture of short polyelectrolyte chains not easily synthesized in the laboratory. It is valued as an intermediate in the synthesis of the cutting edge pharmaceuticals."
 	reagent_state = SOLID
 	color = "#9423FF"
@@ -1324,7 +1324,7 @@
 	. = 1
 
 /datum/reagent/medicine/granibitaluri
-	name = "Granibitaluri" //achieve "GRANular" amounts of C2
+	name = "Pack Filler" //achieve "GRANular" amounts of C2
 	description = "A mild painkiller useful as an additive alongside more potent medicines. Speeds up the healing of small wounds and burns, but is ineffective at treating severe injuries. Extremely large doses are toxic, and may eventually cause liver failure."
 	color = "#E0E0E0"
 	reagent_state = LIQUID

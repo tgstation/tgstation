@@ -39,7 +39,7 @@
 	return ..()
 
 /datum/reagent/consumable/nutriment
-	name = "Nutriment"
+	name = "Liquid meat"
 	description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
 	reagent_state = SOLID
 	nutriment_factor = 15 * REAGENTS_METABOLISM
@@ -89,7 +89,7 @@
 	data = taste_amounts
 
 /datum/reagent/consumable/nutriment/vitamin
-	name = "Vitamin"
+	name = "Condensed flintstone vitamins"
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
 
 	brute_heal = 1
@@ -101,7 +101,7 @@
 	. = ..()
 
 /datum/reagent/consumable/cooking_oil
-	name = "Cooking Oil"
+	name = "American lifeblood"
 	description = "A variety of cooking oil derived from fat or plants. Used in food preparation and frying."
 	color = "#EADD6B" //RGB: 234, 221, 107 (based off of canola oil)
 	taste_mult = 0.8
@@ -153,7 +153,7 @@
 		T.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
 
 /datum/reagent/consumable/sugar
-	name = "Sugar"
+	name = "happy salt"
 	description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255, 255, 255
@@ -174,21 +174,21 @@
 	. = 1
 
 /datum/reagent/consumable/virus_food
-	name = "Virus Food"
+	name = "nasty juice"
 	description = "A mixture of water and milk. Virus cells can use this mixture to reproduce."
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#899613" // rgb: 137, 150, 19
 	taste_description = "watery milk"
 
 /datum/reagent/consumable/soysauce
-	name = "Soysauce"
+	name = "Soy boy sauce"
 	description = "A salty sauce made from the soy plant."
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#792300" // rgb: 121, 35, 0
 	taste_description = "umami"
 
 /datum/reagent/consumable/ketchup
-	name = "Ketchup"
+	name = "tomato blood"
 	description = "Ketchup, catsup, whatever. It's tomato paste."
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#731008" // rgb: 115, 16, 8
@@ -196,7 +196,7 @@
 
 
 /datum/reagent/consumable/capsaicin
-	name = "Capsaicin Oil"
+	name = "tasty juice"
 	description = "This is what makes chilis hot."
 	color = "#B31008" // rgb: 179, 16, 8
 	taste_description = "hot peppers"
@@ -227,7 +227,7 @@
 	..()
 
 /datum/reagent/consumable/frostoil
-	name = "Frost Oil"
+	name = "Frodent juice"
 	description = "A special oil that noticeably chills the body. Extracted from chilly peppers and slimes."
 	color = "#8BA6E9" // rgb: 139, 166, 233
 	taste_description = "mint"
@@ -271,7 +271,7 @@
 			OT.air.temperature -= MOLES_CELLSTANDARD*100*reac_volume/OT.air.heat_capacity() // reduces environment temperature by 5K per unit.
 
 /datum/reagent/consumable/condensedcapsaicin
-	name = "Condensed Capsaicin"
+	name = "Condensed Sugar"
 	description = "A chemical agent used for self-defense and in police work."
 	color = "#B31008" // rgb: 179, 16, 8
 	taste_description = "scorching agony"
@@ -314,7 +314,7 @@
 	..()
 
 /datum/reagent/consumable/sodiumchloride
-	name = "Table Salt"
+	name = "Deadchat"
 	description = "A salt made of sodium chloride. Commonly used to season food."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255,255,255
@@ -334,14 +334,14 @@
 	new/obj/effect/decal/cleanable/food/salt(T)
 
 /datum/reagent/consumable/blackpepper
-	name = "Black Pepper"
+	name = "white repellant"
 	description = "A powder ground from peppercorns. *AAAACHOOO*"
 	reagent_state = SOLID
 	// no color (ie, black)
 	taste_description = "pepper"
 
 /datum/reagent/consumable/coco
-	name = "Coco Powder"
+	name = "The Powder"
 	description = "A fatty, bitter paste made from coco beans."
 	reagent_state = SOLID
 	nutriment_factor = 5 * REAGENTS_METABOLISM
@@ -349,7 +349,7 @@
 	taste_description = "bitterness"
 
 /datum/reagent/drug/mushroomhallucinogen
-	name = "Mushroom Hallucinogen"
+	name = "Reality Lens"
 	description = "A strong hallucinogenic drug derived from certain species of mushroom."
 	color = "#E700E7" // rgb: 231, 0, 231
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
@@ -379,7 +379,7 @@
 	..()
 
 /datum/reagent/consumable/garlic //NOTE: having garlic in your blood stops vampires from biting you.
-	name = "Garlic Juice"
+	name = "Italian superspice"
 	description = "Crushed garlic. Chefs love it, but it can make you smell bad."
 	color = "#FEFEFE"
 	taste_description = "garlic"
@@ -400,7 +400,7 @@
 	..()
 
 /datum/reagent/consumable/sprinkles
-	name = "Sprinkles"
+	name = "Jimmies"
 	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
 	color = "#FF00FF" // rgb: 255, 0, 255
 	taste_description = "childhood whimsy"
@@ -412,7 +412,7 @@
 	..()
 
 /datum/reagent/consumable/cornoil
-	name = "Corn Oil"
+	name = "Corn blood"
 	description = "An oil derived from various types of corn."
 	nutriment_factor = 20 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
@@ -431,20 +431,20 @@
 		qdel(hotspot)
 
 /datum/reagent/consumable/enzyme
-	name = "Universal Enzyme"
+	name = "Secret Sauce"
 	description = "A universal enzyme used in the preparation of certain chemicals and foods."
 	color = "#365E30" // rgb: 54, 94, 48
 	taste_description = "sweetness"
 
 /datum/reagent/consumable/dry_ramen
-	name = "Dry Ramen"
+	name = "College Budget"
 	description = "Space age food, since August 25, 1958. Contains dried noodles, vegetables, and chemicals that boil in contact with water."
 	reagent_state = SOLID
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "dry and cheap noodles"
 
 /datum/reagent/consumable/hot_ramen
-	name = "Hot Ramen"
+	name = "Gamer Food"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
@@ -455,7 +455,7 @@
 	..()
 
 /datum/reagent/consumable/hell_ramen
-	name = "Hell Ramen"
+	name = "Mild Ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
@@ -466,7 +466,7 @@
 	..()
 
 /datum/reagent/consumable/flour
-	name = "Flour"
+	name = "Wheat blood" //Alright running out of ideas
 	description = "This is what you rub all over yourself to pretend to be a ghost."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 0, 0, 0
