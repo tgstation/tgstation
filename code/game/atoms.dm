@@ -148,8 +148,6 @@
 
 	if(loc)
 		SEND_SIGNAL(loc, COMSIG_ATOM_ENTERED, src) // if the new item is created over a turf, send a signal that it entered that turf, `loc` in this case
-		for(var/atom/A in loc) // send a signal for every item on the `loc` turf to let them know a new item just crossed it
-			SEND_SIGNAL(A, COMSIG_MOVABLE_CROSSED, src)
 
 	//atom color stuff
 	if(color)

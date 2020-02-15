@@ -56,7 +56,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if(newid)
 		id = newid
 	update_move_direction()
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/conveyorCrossed) // For receiving signals from newly created items. These do not call Crossed() so it needs a signal
+	RegisterSignal(loc, COMSIG_ATOM_ENTERED, .proc/conveyorCrossed) // For receiving signals from newly created items.
 	LAZYADD(GLOB.conveyors_by_id[id], src)
 
 /obj/machinery/conveyor/Destroy()
