@@ -364,7 +364,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	for(var/datum/team/gang/G in gangs)
 		report += "<span class='header'>[G.name]:</span>"
 		if(G.members.len)
-			report += "The gangsters were:"
+			report += "[GG.my_gang_datum.roundend_category] were:"
 			report += printplayerlist(G.members)
 			report += "<span class='header'>Points: [G.points]</span>"
 			report += "<span class='header'>Objective: [G.my_gang_datum.gang_objective]</span>"
@@ -401,7 +401,10 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 				continue
 			alive_cops++
 	if(alive_gangsters > alive_cops)
-		report += "<span class='header greentext'>[highest_gang] won the round!</span>"
+		if(!objective_failures)
+			report += "<span class='header greentext'>[highest_gang] won the round by completing their objective and having the most points!</span>"
+		else
+			report += "<span class='header greentext'>[highest_gang] won the round by having the most points!</span>"
 	else if(alive_gangsters == alive_cops)
 		report += "<span class='header redtext'>Legend has it the police and the families are still duking it out to this day!</span>"
 	else

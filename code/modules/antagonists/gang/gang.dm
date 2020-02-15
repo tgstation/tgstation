@@ -39,7 +39,7 @@
 
 /datum/antagonist/gang/red
 	name = "San Fierro Triad"
-	roundend_category = "San Fierro Triad gangsters"
+	roundend_category = "The San Fierro Triad gangsters"
 	gang_name = "San Fierro Triad"
 	gang_id = "SFT"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/red,
@@ -63,7 +63,7 @@
 
 /datum/antagonist/gang/purple
 	name = "Ballas"
-	roundend_category = "Ballas gangsters"
+	roundend_category = "The Ballas gangsters"
 	gang_name = "Ballas"
 	gang_id = "B"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/purple,
@@ -82,13 +82,13 @@
 /datum/antagonist/gang/purple/check_gang_objective()
 	for(var/mob/M in GLOB.player_list)
 		if(M.mind.assigned_role in cop_roles)
-			if(!considered_alive(M))
+			if(!considered_alive(M) && !suiciding)
 				return FALSE
 	return TRUE
 
 /datum/antagonist/gang/green
 	name = "Grove Street Families"
-	roundend_category = "Grove Street Families gangsters"
+	roundend_category = "The Grove Street Families gangsters"
 	gang_name = "Grove Street Families"
 	gang_id = "GSF"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/green,
@@ -115,7 +115,7 @@
 
 /datum/antagonist/gang/russian_mafia
 	name = "Russian Mafia"
-	roundend_category = "Russian mafiosos"
+	roundend_category = "The Russian mafiosos"
 	gang_name = "Russian Mafia"
 	gang_id = "RM"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/red,
@@ -146,7 +146,7 @@
 
 /datum/antagonist/gang/italian_mob
 	name = "Italian Mob"
-	roundend_category = "Italian mobsters"
+	roundend_category = "The Italian mobsters"
 	gang_name = "Italian Mob"
 	gang_id = "IM"
 	acceptable_clothes = list(/obj/item/clothing/under/suit/checkered,
@@ -170,13 +170,13 @@
 			return FALSE
 	for(var/mob/M in GLOB.player_list)
 		if(M.mind.assigned_role == "Chaplain")
-			if(!considered_alive(M))
+			if(!considered_alive(M) && !M.suiciding)
 				return FALSE
 	return TRUE
 
 /datum/antagonist/gang/tunnel_snakes
 	name = "Tunnel Snakes"
-	roundend_category = "Tunnel snakes"
+	roundend_category = "The Tunnel Snakes"
 	gang_name = "Tunnel Snakes"
 	gang_id = "TS"
 	acceptable_clothes = list(/obj/item/clothing/under/pants/classicjeans,
@@ -205,7 +205,7 @@
 
 /datum/antagonist/gang/vagos
 	name = "Los Santos Vagos"
-	roundend_category = "Los Santos Vagos gangsters"
+	roundend_category = "The Los Santos Vagos gangsters"
 	gang_name = "Los Santos Vagos"
 	gang_id = "LSV"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/yellow,
@@ -237,7 +237,7 @@
 
 /datum/antagonist/gang/henchmen
 	name = "Monarch Crew"
-	roundend_category = "Monarch henchmen"
+	roundend_category = "The Monarch henchmen"
 	gang_name = "Monarch Crew"
 	gang_id = "HENCH"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/yellow,
@@ -260,7 +260,7 @@
 
 /datum/antagonist/gang/yakuza
 	name = "Tojo Clan"
-	roundend_category = "Yakuza"
+	roundend_category = "The Yakuza"
 	gang_name = "Tojo Clan"
 	gang_id = "YAK"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/yellow,
@@ -288,7 +288,7 @@
 
 /datum/antagonist/gang/jackbros
 	name = "Jack Bros"
-	roundend_category = "Hee-hos"
+	roundend_category = "The Hee-hos"
 	gang_name = "Jack Bros"
 	gang_id = "JB"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/blue,
