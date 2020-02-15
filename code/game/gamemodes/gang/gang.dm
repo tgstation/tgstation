@@ -364,7 +364,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	for(var/datum/team/gang/G in gangs)
 		report += "<span class='header'>[G.name]:</span>"
 		if(G.members.len)
-			report += "[GG.my_gang_datum.roundend_category] were:"
+			report += "[G.my_gang_datum.roundend_category] were:"
 			report += printplayerlist(G.members)
 			report += "<span class='header'>Points: [G.points]</span>"
 			report += "<span class='header'>Objective: [G.my_gang_datum.gang_objective]</span>"
