@@ -26,3 +26,6 @@
 /datum/weather/snow_storm/weather_act(mob/living/L)
 	L.adjust_bodytemperature(-rand(5,15))
 
+/datum/weather/snow_storm/mining
+	area_type = /area/lavaland/surface/outdoors
+	target_trait = ZTRAIT_WEATHER_SNOWSTORM

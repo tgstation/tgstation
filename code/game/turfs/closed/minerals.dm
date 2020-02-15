@@ -24,6 +24,9 @@
 /turf/closed/mineral/Initialize()
 	if (!canSmoothWith)
 		canSmoothWith = list(/turf/closed/mineral, /turf/closed/indestructible)
+	var/ztrait = SSmapping.level_trait(z, ZTRAIT_MINERAL_ICON)
+	if(ztrait)
+		smooth_icon = ztrait
 	var/matrix/M = new
 	M.Translate(-4, -4)
 	transform = M

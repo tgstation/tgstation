@@ -17,7 +17,7 @@
 	end_overlay = "light_ash"
 
 	area_type = /area/lavaland/surface/outdoors
-	target_trait = ZTRAIT_MINING
+	target_trait = ZTRAIT_WEATHER_ASHSTORM
 
 	immunity_type = "ash"
 

@@ -1214,6 +1214,7 @@
 #include "code\game\turfs\open\floor\plating\asteroid.dm"
 #include "code\game\turfs\open\floor\plating\dirt.dm"
 #include "code\game\turfs\open\floor\plating\misc_plating.dm"
+#include "code\game\turfs\open\floor\plating\thematic.dm"
 #include "code\game\turfs\open\space\space.dm"
 #include "code\game\turfs\open\space\transit.dm"
 #include "code\modules\admin\admin.dm"

@@ -246,8 +246,12 @@ SUBSYSTEM_DEF(mapping)
 		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
 
 	// load mining
+	var/list/mining_ztraits = ZTRAITS_MININGBASIC
 	if(config.minetype == "lavaland")
-		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
+		mining_ztraits += ZTRAITS_LAVALAND
+		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = mining_ztraits)
+	if(config.minetype == "themed")
+		INIT_ANNOUNCE("WARNING: uh oh stinky")
 	else if (!isnull(config.minetype))
 		INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
 #endif

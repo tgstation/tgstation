@@ -38,6 +38,17 @@ require only minor tweaks.
 #define ZTRAIT_LAVA_RUINS "Lava Ruins"
 #define ZTRAIT_ISOLATED_RUINS "Isolated Ruins" //Placing ruins on z levels with this trait will use turf reservation instead of usual placement.
 
+//these should be types, thematic turfs change into these depending on what type they get from the ztrait. lavaland uses the plating ztrait to change the ground into snow, for example
+#define ZTRAIT_THEMATIC_LAVA "Lava"
+#define ZTRAIT_THEMATIC_PLATING "Plating"
+
+//these should be set to a file (the icon minerals use)
+#define ZTRAIT_MINERAL_ICON "Mineral Icon"
+
+//weather ztraits for lavaland
+#define ZTRAIT_WEATHER_ASHSTORM "Ashstorm"
+#define ZTRAIT_WEATHER_SNOWSTORM "Snowstorm"
+
 // number - bombcap is multiplied by this before being applied to bombs
 #define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
 
@@ -64,11 +75,17 @@ require only minor tweaks.
 #define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE)
 #define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE)
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
-#define ZTRAITS_LAVALAND list(\
+#define ZTRAITS_MININGBASIC list(\
     ZTRAIT_MINING = TRUE, \
     ZTRAIT_LAVA_RUINS = TRUE, \
-    ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
-    ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface)
+    ZTRAIT_BOMBCAP_MULTIPLIER = 2)
+
+#define ZTRAITS_LAVALAND list(\
+	ZTRAIT_BASETURF = /turf/open/lava/plasma/lava_land_surface, \
+	ZTRAIT_THEMATIC_PLATING = /turf/open/floor/plating/asteroid/snow/lava_land_surface, \
+	ZTRAIT_THEMATIC_LAVA = /turf/open/lava/plasma/lava_land_surface, \
+	ZTRAIT_MINERAL_ICON = 'icons/turf/walls/icerock_wall.dmi', \
+	ZTRAIT_WEATHER_SNOWSTORM = TRUE )
 
 #define DL_NAME "name"
 #define DL_TRAITS "traits"
