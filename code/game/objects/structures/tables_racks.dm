@@ -237,8 +237,18 @@
 	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 
 /obj/structure/table/rolling/Moved(atom/OldLoc, Dir)
+
 	for(var/mob/M in OldLoc.contents)//Kidnap everyone on top
+		var/atom/movable/pulled = M.pulling
+
 		M.forceMove(loc)
+		if(pulled)
+			pulled.moving_from_pull = M
+			pulled.Move(OldLoc, get_dir(pulling, OldLoc)) //the pullee tries to reach our previous position
+			pulled.moving_from_pull = null
+			M.pulling = pulled // dont kill me idk a better way to do this, i dont wanna do start_pulling every time the table moves
+			M.check_pulling()
+
 	for(var/x in attached_items)
 		var/atom/movable/AM = x
 		if(!AM.Move(loc))
