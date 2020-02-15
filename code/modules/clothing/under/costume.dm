@@ -267,3 +267,10 @@
 	icon_state = "MajimaPants"
 	item_state = "MajimaPants"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/dutch
+	name = "dutch's suit"
+	desc = "You can feel a <b>god damn plan</b> coming on."
+	icon_state = "DutchUniform"
+	item_state = "DutchUniform"
+	can_adjust = FALSE

@@ -6,16 +6,17 @@
 	var/datum/team/gang/my_gang
 	var/list/acceptable_clothes = list()
 	var/list/free_clothes = list()
-	var/datum/action/cooldown/spawn_induction_package/SIP = new()
+	var/datum/action/cooldown/spawn_induction_package/package_spawner = new()
+	var/gang_objective = "Be super cool and stuff."
 
 /datum/antagonist/gang/apply_innate_effects(mob/living/mob_override)
 	..()
-	SIP.Grant(owner.current)
-	SIP.my_gang_datum = src
+	package_spawner.Grant(owner.current)
+	package_spawner.my_gang_datum = src
 
 
 /datum/antagonist/gang/remove_innate_effects(mob/living/mob_override)
-	SIP.Remove(owner.current)
+	package_spawner.Remove(owner.current)
 	..()
 
 
@@ -26,11 +27,15 @@
 	if(my_gang)
 		my_gang.adjust_points(points_to_add)
 
+/datum/antagonist/gang/proc/check_gang_objective() // used to determine if a gang has completed their special objective
+	return TRUE
+
 /datum/antagonist/gang/greet()
 	to_chat(owner.current, "<B><font size=3 color=red>[gang_name] for life!</font></B>")
 	to_chat(owner.current, "<B><font size=2 color=red>You're a member of the [gang_name] now!<br>Tag turf with a spraycan, wear your group's colors, and recruit more gangsters with the Induction Packages!</font></B>")
 	to_chat(owner.current, "<B><font size=4 color=red>Don't fuck with non-gangsters unless they fuck with you first.</font></B>")
 	to_chat(owner.current, "<B><font size=4 color=red>Don't blow shit up or make the station uninhabitable.</font></B>")
+	to_chat(owner.current, "<B><font size=4 color=black>Family's Objective:</B> [gang_objective]</font>")
 
 /datum/antagonist/gang/red
 	name = "San Fierro Triad"
@@ -46,6 +51,15 @@
 	free_clothes = list(/obj/item/clothing/suit/jacket/letterman_red,
 						/obj/item/clothing/under/color/red,
 						/obj/item/toy/crayon/spraycan)
+	gang_objective = "The Spinward Stellar Coalition police intend to interfere with our operations. Slaughter them to the last if and when they arrive."
+
+/datum/antagonist/gang/red/check_gang_objective()
+	var/datum/game_mode/gang/F = SSticker.mode
+	for(var/M in F.pigs)
+		var/datum/mind/MI = M
+		if(considered_alive(MI.current))
+			return FALSE
+	return TRUE
 
 /datum/antagonist/gang/purple
 	name = "Ballas"
@@ -62,6 +76,15 @@
 	free_clothes = list(/obj/item/clothing/head/beanie/purple,
 						/obj/item/clothing/under/color/lightpurple,
 						/obj/item/toy/crayon/spraycan)
+	var/list/cop_roles = list("Security Officer", "Warden", "Detective", "Head of Security")
+	gang_objective = "We got a deal with the security pigs on this station. We scratch their back, they scratch ours. You feel me? Keep all of security safe from any trouble, and make sure they get out alive."
+
+/datum/antagonist/gang/purple/check_gang_objective()
+	for(var/mob/M in GLOB.player_list)
+		if(M.mind.assigned_role in cop_roles)
+			if(!considered_alive(M))
+				return FALSE
+	return TRUE
 
 /datum/antagonist/gang/green
 	name = "Grove Street Families"
@@ -77,6 +100,18 @@
 	free_clothes = list(/obj/item/clothing/mask/bandana/green,
 						/obj/item/clothing/under/color/darkgreen,
 						/obj/item/toy/crayon/spraycan)
+	gang_objective = "We lost a lot of territory recently. We gotta get that shit back. Make sure 45 rooms are tagged for Grove Street."
+
+/datum/antagonist/gang/green/check_gang_objective()
+	var/tag_amount = 0
+	for(var/T in GLOB.gang_tags)
+		var/obj/effect/decal/cleanable/crayon/gang/tag = T
+		if(tag.my_gang.gang_id == gang_id)
+			tag_amount++
+	if(tag_amount >= 45)
+		return TRUE
+	return FALSE
+
 
 /datum/antagonist/gang/russian_mafia
 	name = "Russian Mafia"
@@ -91,6 +126,23 @@
 	free_clothes = list(/obj/item/clothing/head/ushanka,
 						/obj/item/clothing/under/suit/white,
 						/obj/item/toy/crayon/spraycan)
+	gang_objective = "We are starting to run low on supplies at the home base, my friend. Make sure every comrade has a bottle of some kind of booze on them, friend."
+
+/datum/antagonist/gang/russian_mafia/check_gang_objective()
+	var/datum/game_mode/gang/F = SSticker.mode
+	for(var/M in F.gangbangers)
+		var/datum/mind/MI = M
+		if(MI.has_antag_datum(src.type))
+			if(!considered_alive(MI.current))
+				continue // dead people cant really do the objective lol
+			var/list/items_to_check = MI.current.GetAllContents()
+			for(var/I in items_to_check)
+				var/obj/IT = I
+				if(istype(IT, /obj/item/reagent_containers/food/drinks/bottle))
+					continue
+			return FALSE // didnt pass the bottle check, no point in continuing to loop
+	return TRUE
+
 
 /datum/antagonist/gang/italian_mob
 	name = "Italian Mob"
@@ -104,6 +156,23 @@
 	free_clothes = list(/obj/item/clothing/head/fedora,
 						/obj/item/clothing/under/suit/checkered,
 						/obj/item/toy/crayon/spraycan)
+	gang_objective = "The boss wants it made very clear that all our esteemed members are to be held with respect. If a friend falls, ensure they are properly buried with a coffin. And keep the Chaplain alive, to ensure the corpses are properly taken care of."
+
+/datum/antagonist/gang/italian_mob/check_gang_objective()
+	var/datum/game_mode/gang/F = SSticker.mode
+	for(var/M in F.gangbangers)
+		var/datum/mind/MI = M
+		if(MI.has_antag_datum(src.type))
+			if(considered_alive(MI.current))
+				continue
+			if(istype(MI.current.loc, /obj/structure/closet/crate/coffin))
+				continue
+			return FALSE
+	for(var/mob/M in GLOB.player_list)
+		if(M.mind.assigned_role == "Chaplain")
+			if(!considered_alive(M))
+				return FALSE
+	return TRUE
 
 /datum/antagonist/gang/tunnel_snakes
 	name = "Tunnel Snakes"
@@ -116,6 +185,23 @@
 	free_clothes = list(/obj/item/clothing/suit/jacket,
 						/obj/item/clothing/under/pants/classicjeans,
 						/obj/item/toy/crayon/spraycan)
+	gang_objective = "TUNNEL SNAKES RULE!!! Make sure that everyone knows that, by getting 50% of people on station to wear any part of our uniform! TUNNEL SNAKES RULE!!!"
+
+/datum/antagonist/gang/tunnel_snakes/check_gang_objective()
+	var/people_on_station = 0
+	var/people_reppin_tunnel_snakes = 0
+	for(var/mob/M in GLOB.player_list)
+		if(!considered_alive(M))
+			continue
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			people_on_station++
+			for(var/clothing in list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.back, H.gloves, H.shoes, H.belt, H.s_store, H.glasses, H.ears, H.wear_id))
+				if(is_type_in_list(clothing, acceptable_clothes))
+					people_reppin_tunnel_snakes++
+	if(0.5*people_on_station > people_reppin_tunnel_snakes)
+		return FALSE
+	return TRUE
 
 /datum/antagonist/gang/vagos
 	name = "Los Santos Vagos"
@@ -130,6 +216,24 @@
 	free_clothes = list(/obj/item/clothing/mask/bandana/gold,
 						/obj/item/clothing/under/color/yellow,
 						/obj/item/toy/crayon/spraycan)
+	gang_objective = "Orders from up high. We need to up our drug operation. Ensure that at least 25% of the station is addicted to Crank."
+
+/datum/antagonist/gang/vagos/check_gang_objective()
+	var/people_on_station = 0
+	var/people_on_crack = 0
+	for(var/mob/M in GLOB.player_list)
+		if(!considered_alive(M))
+			continue
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			people_on_station++
+			for(var/R in H.reagents.addiction_list)
+				if(istype(R, /datum/reagent/drug/crank))
+					people_on_crack++
+	if(0.5*people_on_station > people_on_crack)
+		return FALSE
+	return TRUE
+
 
 /datum/antagonist/gang/henchmen
 	name = "Monarch Crew"
@@ -145,6 +249,14 @@
 	free_clothes = list(/obj/item/storage/backpack/henchmen,
 						/obj/item/clothing/under/suit/henchmen,
 						/obj/item/toy/crayon/spraycan)
+	gang_objective = "I have it on VERY GOOD AUTHORITY that the Research Director on this station helped Venture on a science project back in college! ENSURE THAT HE DOES NOT LEAVE THIS STATION ALIVE, HENCHMEN! THE MIGHTY MONARCH DEMANDS IT!!!"
+
+/datum/antagonist/gang/henchmen/check_gang_objective() // gotta arch dr. venture indirectly
+	for(var/mob/M in GLOB.player_list)
+		if(M.mind.assigned_role == "Research Director")
+			if(considered_alive(M))
+				return FALSE
+	return TRUE
 
 /datum/antagonist/gang/yakuza
 	name = "Tojo Clan"
@@ -164,6 +276,15 @@
 						/obj/item/clothing/suit/yakuza,
 						/obj/item/clothing/head/hardhat,
 						/obj/item/toy/crayon/spraycan)
+	gang_objective = "The boss is thrilled about this new construction opportunity we've all been given, yadda yadda, look, he knows we're here to expand our business ventures for the clan, but Majima wanted it made VERY clear that we do NOT fuck this station's infrastructure up. If more than 85% of this station is busted when we get the hell out of here, it's your ass on the line."
+
+/datum/antagonist/gang/yakuza/check_gang_objective()
+	var/datum/station_state/current_state = new /datum/station_state()
+	current_state.count()
+	var/station_integrity = min(PERCENT(GLOB.start_state.score(current_state)), 100)
+	if(station_integrity < 85)
+		return FALSE
+	return TRUE
 
 /datum/antagonist/gang/jackbros
 	name = "Jack Bros"
@@ -179,8 +300,56 @@
 						/obj/item/clothing/shoes/jackbros,
 						/obj/item/clothing/head/jackbros,
 						/obj/item/toy/crayon/spraycan)
+	gang_objective = "Hee-hello friends! We need to expand our influence, ho! Get a King Frost in as the Captain of this joint! Either get the original Captain on board with the program, or Hee-ho a fellow Jack Frost into the position yourselves!"
+
+/datum/antagonist/gang/jackbros/check_gang_objective()
+	var/datum/game_mode/gang/F = SSticker.mode
+	for(var/M in F.gangbangers)
+		var/datum/mind/MI = M
+		if(MI.has_antag_datum(src.type))
+			if(!considered_alive(MI.current))
+				continue // dead people cant really do the objective lol
+			if(ishuman(MI.current))
+				var/mob/living/carbon/human/H = MI.current
+				if(H.get_assignment() == "Captain")
+					return TRUE
+	return FALSE
 
 
+/datum/antagonist/gang/dutch
+	name = "Dutch van der Linde's Gang"
+	roundend_category = "Dutch's outlaws"
+	gang_name = "Dutch van der Linde's Gang"
+	gang_id = "VDL"
+	acceptable_clothes = list(/obj/item/clothing/head/soft/black,
+							/obj/item/clothing/under/costume/dutch,
+							/obj/item/clothing/suit/dutch,
+							/obj/item/clothing/head/bowler,
+							/obj/item/clothing/mask/bandana/black)
+	free_clothes = list(/obj/item/clothing/under/costume/dutch,
+						/obj/item/clothing/head/bowler,
+						/obj/item/clothing/suit/dutch,
+						/obj/item/toy/crayon/spraycan)
+	gang_objective = "Listen here, fellas. I have a plan. Just one more score on this crappy little po-dunk station. Gold bars, friends. Get all the gold out of the silos, and leave nothing behind! Spread the gold amongst yourselves for the escape plan, make sure everyone has at least 1 bar. After this, it'll be space mangos at Tahiti. You just gotta have a little faith."
+
+/datum/antagonist/gang/dutch/check_gang_objective()
+	var/datum/game_mode/gang/F = SSticker.mode
+	for(var/M in F.gangbangers)
+		var/datum/mind/MI = M
+		if(MI.has_antag_datum(src.type))
+			if(!considered_alive(MI.current))
+				continue // dead people cant really do the objective lol
+			var/list/items_to_check = MI.current.GetAllContents()
+			for(var/I in items_to_check)
+				var/obj/IT = I
+				if(istype(IT, /obj/item/stack/sheet/mineral/gold))
+					continue
+			return FALSE // didnt pass the bar check, no point in continuing to loop
+	var/obj/machinery/ore_silo/S = GLOB.ore_silo_default
+	var/datum/component/material_container/mat_container = S.GetComponent(/datum/component/material_container)
+	if(mat_container.materials[SSmaterials.GetMaterialRef(/datum/material/gold)] >= 2000) // if theres at least 1 bar of gold left in the silo, they've failed to heist all of it
+		return FALSE
+	return TRUE
 
 
 /datum/team/gang
@@ -188,6 +357,7 @@
 	var/gang_id = "LLJK"
 	var/list/acceptable_clothes = list()
 	var/list/free_clothes = list()
+	var/datum/antagonist/gang/my_gang_datum
 
 /datum/team/gang/proc/adjust_points(var/points_to_adjust)
 	points += points_to_adjust

@@ -777,5 +777,13 @@
 	name = "tojo clan jacket"
 	desc = "The jacket of a mad dog."
 	icon_state = "MajimaJacket"
-	item_state = "MajimaJacket_worn"
+	item_state = "MajimaJacket"
 	body_parts_covered = ARMS
+
+/obj/item/clothing/suit/dutch
+	name = "dutch's jacket"
+	desc = "For those long nights on the beach in Tahiti."
+	icon_state = "DutchJacket"
+	item_state = "DutchJacket"
+	body_parts_covered = ARMS
+

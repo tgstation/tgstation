@@ -83,6 +83,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 
 		ballas.acceptable_clothes = new_gangster.acceptable_clothes.Copy()
 		ballas.free_clothes = new_gangster.free_clothes.Copy()
+		ballas.my_gang_datum = new_gangster
 
 		for(var/C in ballas.free_clothes)
 			var/obj/O = new C(gangbanger.current)
@@ -355,17 +356,32 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	var/highest_point_value = 0
 	var/highest_gang = "Leet Like Jeff K"
 	report += "<span class='header'>The families in the round were:</span>"
+	var/objective_failures = TRUE
+	for(var/datum/team/gang/GG in gangs)
+		if(GG.my_gang_datum.check_gang_objective())
+			objective_failures = FALSE
+			break
 	for(var/datum/team/gang/G in gangs)
 		report += "<span class='header'>[G.name]:</span>"
 		if(G.members.len)
 			report += "The gangsters were:"
 			report += printplayerlist(G.members)
 			report += "<span class='header'>Points: [G.points]</span>"
+			report += "<span class='header'>Objective: [G.my_gang_datum.gang_objective]</span>"
+			if(G.my_gang_datum.check_gang_objective())
+				report += "<span class='greentext'>The family completed their objective!</span>"
+			else
+				report += "<span class='redtext'>The family failed their objective!</span>"
 		else
 			report += "<span class='redtext'>The family was wiped out!</span>"
-		if(G.points >= highest_point_value && G.members.len)
-			highest_point_value = G.points
-			highest_gang = G.name
+		if(!objective_failures)
+			if(G.points >= highest_point_value && G.members.len && G.my_gang_datum.check_gang_objective())
+				highest_point_value = G.points
+				highest_gang = G.name
+		else
+			if(G.points >= highest_point_value && G.members.len)
+				highest_point_value = G.points
+				highest_gang = G.name
 	var/alive_gangsters = 0
 	var/alive_cops = 0
 	for(var/datum/mind/gangbanger in gangbangers)
