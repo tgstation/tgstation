@@ -1059,18 +1059,18 @@
 	. = ..()
 	if(wear_suit)
 		update_inv_wear_suit()
-	else if(w_uniform)
+	else if(w_uniform && w_uniform.washed(washer))
 		update_inv_w_uniform()
 
 	if(!is_mouth_covered())
 		lip_style = null
 		update_body()
-	if(belt)
+	if(belt && belt.washed(washer))
 		update_inv_belt()
 
 	var/list/obscured = check_obscured_slots()
 
-	if(gloves && !(HIDEGLOVES in obscured))
+	if(gloves && !(HIDEGLOVES in obscured) && gloves.washed(washer))
 		SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /mob/living/carbon/human/adjust_nutrition(var/change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks

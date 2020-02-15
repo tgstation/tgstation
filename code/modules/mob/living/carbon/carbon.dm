@@ -1041,20 +1041,20 @@
 
 	var/list/obscured = check_obscured_slots()
 
-	if(head)
+	if(head && head.washed(washer))
 		update_inv_head()
 
-	if(glasses && !(ITEM_SLOT_EYES in obscured))
+	if(glasses && !(ITEM_SLOT_EYES in obscured) && glasses.washed(washer))
 		update_inv_glasses()
 
-	if(wear_mask && !(ITEM_SLOT_MASK in obscured))
+	if(wear_mask && !(ITEM_SLOT_MASK in obscured && wear_mask.washed(washer)))
 		update_inv_wear_mask()
 
-	if(ears && !(HIDEEARS in obscured))
+	if(ears && !(HIDEEARS in obscured) && ears.washed(washer))
 		update_inv_ears()
 
-	if(wear_neck && !(ITEM_SLOT_NECK in obscured))
+	if(wear_neck && !(ITEM_SLOT_NECK in obscured) && wear_neck.washed(washer))
 		update_inv_neck()
 
-	if(shoes && !(HIDESHOES in obscured))
+	if(shoes && !(HIDESHOES in obscured) && shoes.washhed(washer))
 		update_inv_shoes()
