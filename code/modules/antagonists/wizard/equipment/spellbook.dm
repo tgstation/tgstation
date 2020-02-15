@@ -526,6 +526,7 @@
 /datum/spellbook_entry/summon/events
 	name = "Summon Events"
 	desc = "Give Murphy's law a little push and replace all events with special wizard ones that will confound and confuse everyone. Multiple castings increase the rate of these events."
+	cost = 0
 	var/times = 0
 
 /datum/spellbook_entry/summon/events/IsAvailible()
