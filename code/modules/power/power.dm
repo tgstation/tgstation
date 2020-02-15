@@ -291,7 +291,8 @@
 		var/mob/living/carbon/human/H = M
 		if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves
-			if(G.siemens_coefficient == 0 && !istype(G, /obj/item/clothing/gloves/color/yellow/sprayon)) //sorry for snowflake
+			if(G.siemens_coefficient == 0)
+				SEND_SIGNAL(M, COMSIG_LIVING_SHOCK_PREVENTED, power_source, source, siemens_coeff, dist_check)
 				return 0		//to avoid spamming with insulated glvoes on
 
 	var/area/source_area
