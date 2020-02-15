@@ -75,6 +75,9 @@
 	var/mob/living/carbon/human/user = src.loc
 	if(!user || !ishuman(user) || !(user.wear_suit == src))
 		return
+	if(!cell && thermal_on)
+		thermal_on = FALSE
+		min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
 	if(!cell)
 		user.update_spacesuit_hud_icon("missing")
 	else
