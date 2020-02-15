@@ -432,6 +432,7 @@
 		if(iscarbon(loc))
 			var/mob/living/carbon/C = loc
 			if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
+				to_chat(world, "<span class='notice'>handle_reagents</span>")
 				var/fraction = min(REAGENTS_METABOLISM/reagents.total_volume, 1)
 				reagents.reaction(C, INGEST, fraction)
 				if(!reagents.trans_to(C, REAGENTS_METABOLISM))
@@ -456,7 +457,7 @@
 	else
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/reagent_containers/food/snacks/chewable/lollipop/Destroy()
+/obj/item/reagent_containers/food/snacks/chewable/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
@@ -506,17 +507,16 @@
 	if(spamchecking)
 		qdel(src)
 
-/obj/item/reagent_containers/food/snacks/chewable/chewinggum
-	name = "chewing gum"
+/obj/item/reagent_containers/food/snacks/chewable/bubblegum
+	name = "bubblegum gum"
 	desc = "A rubbery strip of gum. Not exactly filling, but it keeps you busy."
-	icon = 'icons/obj/lollipop.dmi'
-	icon_state = "chewinggum"
-	item_state = "chewinggum"
-	color = "#FFFFFF" // craftable custom gums someday, maybe?
+	icon_state = "bubblegum"
+	item_state = "bubblegum"
+	color = "#FFFFFF" // craftable custom gums someday?
 	list_reagents = list(/datum/reagent/consumable/sugar = 5)
 	tastes = list("candy" = 1)
 
-/obj/item/reagent_containers/food/snacks/chewable/chewinggum/happiness
+/obj/item/reagent_containers/food/snacks/chewable/bubblegum/happiness
 	name = "smile! gum"
 	desc = "A rubbery strip of gum. The color and smell isn't very inviting."
 	list_reagents = list(/datum/reagent/drug/happiness = 15, /datum/reagent/consumable/sugar = 5)
