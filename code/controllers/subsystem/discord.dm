@@ -38,7 +38,6 @@ SUBSYSTEM_DEF(discord)
 	var/enabled = 0 // Is TGS enabled (If not we wont fire because otherwise this is useless)
 
 /datum/controller/subsystem/discord/Initialize(start_timeofday)
-	grant_role("200631029675982858")
 	// Check for if we are using TGS, otherwise return and disabless firing
 	if(world.TgsAvailable())
 		enabled = 1 // Allows other procs to use this (Account linking, etc)
