@@ -541,9 +541,9 @@ SUBSYSTEM_DEF(ticker)
 		if(SHUTTLE_HIJACK)
 			news_message = "During routine evacuation procedures, the emergency shuttle of [station_name()] had its navigation protocols corrupted and went off course, but was recovered shortly after."
 		if(GANG_OPERATING)
-			news_message = "[station_name()] has found itself controlled entirely by gangs!"
+			news_message = "The company would like to state that any rumors of criminal organizing on board stations such as [station_name()] are falsehoods, and not to be emulated."
 		if(GANG_DESTROYED)
-			news_message = "[station_name()] has cleared out all the gangsters infesting the ship!"
+			news_message = "The crew of [station_name()] would like to thank the Spinward Stellar Coalition Police Department for quickly resolving a minor terror threat to the station."
 
 	if(news_message)
 		send2otherserver(news_source, news_message,"News_Report")
