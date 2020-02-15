@@ -649,7 +649,7 @@
 /*
 This is here to make the tiles around the station mininuke change when it's armed.
 */
-/obj/machinery/nuclearbomb/selfdestruct/set_active()
+/obj/machinery/nuclearbomb/selfdestruct/set_active(defuse = FALSE)
 	..()
 	if(timing)
 		SSmapping.add_nuke_threat(src)
