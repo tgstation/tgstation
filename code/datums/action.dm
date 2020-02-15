@@ -285,10 +285,6 @@
 	button_icon_state = "thermal_[suit.thermal_on ? "on" : "off"]"
 	UpdateButtonIcon()
 
-/datum/action/item_action/toggle_spacesuit/proc/set_off()
-	button_icon_state = "thermal_off"
-	UpdateButtonIcon()
-
 /datum/action/item_action/toggle_unfriendly_fire
 	name = "Toggle Friendly Fire \[ON\]"
 	desc = "Toggles if the club's blasts cause friendly fire."
