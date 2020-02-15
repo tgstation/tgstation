@@ -1,9 +1,9 @@
 // rust_g.dm - DM API for rust_g extension library
 #define RUST_G "rust_g"
 
-#define RUSTG_JOB_NO_RESULTS_YET "NO_RESULTS_YET"
-#define RUSTG_JOB_NO_SUCH_JOB "NO_SUCH_JOB"
-#define RUSTG_JOB_ERROR "JOB_PANICKED"
+#define RUSTG_JOB_NO_RESULTS_YET "NO RESULTS YET"
+#define RUSTG_JOB_NO_SUCH_JOB "NO SUCH JOB"
+#define RUSTG_JOB_ERROR "JOB PANICKED"
 
 #define rustg_dmi_strip_metadata(fname) call(RUST_G, "dmi_strip_metadata")(fname)
 
