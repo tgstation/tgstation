@@ -53,6 +53,7 @@ import { LanguageMenu } from './interfaces/LanguageMenu';
 import { LaunchpadConsole, LaunchpadRemote } from './interfaces/Launchpad';
 import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
+import { MiningVendor } from './interfaces/MiningVendor';
 import { Mint } from './interfaces/Mint';
 import { Mule } from './interfaces/Mule';
 import { NaniteChamberControl } from './interfaces/NaniteChamberControl';
@@ -340,6 +341,10 @@ const ROUTES = {
   medical_kiosk: {
     component: () => MedicalKiosk,
     scrollable: false,
+  },
+  mining_vendor: {
+    component: () => MiningVendor,
+    scrollable: true,
   },
   mint: {
     component: () => Mint,

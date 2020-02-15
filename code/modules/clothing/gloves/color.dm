@@ -30,7 +30,6 @@
 				C.visible_message("<span class='warning'>[U] sprays glittery rubber on the hands of [C]!</span>")
 		else
 			C.visible_message("<span class='warning'>The rubber fails to stick to [C]'s hands!")
-		//C.equip_to_slot_if_possible(new /obj/item/clothing/gloves/color/yellow/sprayon, ITEM_SLOT_GLOVES, TRUE, TRUE) //we're gonna pretend that the rubber can't stick to gloves.
 		qdel(src)
 
 /obj/item/clothing/gloves/color/yellow/sprayon
