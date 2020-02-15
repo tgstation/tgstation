@@ -8,6 +8,13 @@
 	key_type = /obj/item/key/security
 	integrity_failure = 0.5
 
+
+
+	///This stores a banana that, when used on the secway, prevents the vehicle from moving until it is removed.
+	var/obj/item/reagent_containers/food/snacks/grown/banana/eddie_murphy
+	///When jammed with a banana, the secway will make a stalling sound. This stores the last time it made a sound to prevent spam.
+	var/stall_cooldown
+
 /obj/vehicle/ridden/secway/Initialize()
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
@@ -36,7 +43,41 @@
 				if(obj_integrity == max_integrity)
 					to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
 		return TRUE
+
+	if(istype(W, /obj/item/reagent_containers/food/snacks/grown/banana))
+		// ignore the occupants because they're presumably too distracted to notice the guy stuffing fruit into their vehicle's exhaust. do segways have exhausts? they do now!
+		user.visible_message("<span class='warning'>[user] begins stuffing [W] into [src]'s tailpipe.</span>", "<span class='warning'>You begin stuffing [W] into [src]'s tailpipe...</span>", ignored_mobs = occupants)
+		if(do_after(user, 30, TRUE, src))
+			if(user.transferItemToLoc(W, src))
+				user.visible_message("<span class='warning'>[user] stuffs [W] into [src]'s tailpipe.</span>", "<span class='warning'>You stuff [W] into [src]'s tailpipe.</span>", ignored_mobs = occupants)
+				eddie_murphy = W
+		return TRUE
 	return ..()
+
+/obj/vehicle/ridden/secway/attack_hand(mob/living/user)
+	if(eddie_murphy)                                                       // v lol
+		user.visible_message("<span class='warning'>[user] begins cleaning [eddie_murphy] out of [src].</span>", "<span class='warning'>You begin cleaning [eddie_murphy] out of [src]...</span>")
+		if(do_after(user, 60, target = src))
+			user.visible_message("<span class='warning'>[user] cleans [eddie_murphy] out of [src].</span>", "<span class='warning'>You manage to get [eddie_murphy] out of [src].</span>")
+			eddie_murphy.forceMove(drop_location())
+			eddie_murphy = null
+		return
+	return ..()
+
+/obj/vehicle/ridden/secway/driver_move(mob/user, direction)
+	if(is_key(inserted_key) && eddie_murphy)
+		if(stall_cooldown + 10 < world.time)
+			visible_message("<span class='warning'>[src] sputters and refuses to move!</span>")
+			playsound(src, "sound/effects/stall.ogg", 70)
+			stall_cooldown = world.time
+		return FALSE
+	return ..()
+
+/obj/vehicle/ridden/secway/examine(mob/user)
+	. = ..()
+
+	if(eddie_murphy)
+		. += "<span class='warning'>Something appears to be stuck in its exhaust...</span>"
 
 /obj/vehicle/ridden/secway/obj_destruction()
 	explosion(src, -1, 0, 2, 4, flame_range = 3)

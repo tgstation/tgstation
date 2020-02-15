@@ -1,0 +1,7 @@
+author: "Krysonism"
+delete-after: True
+changes: 
+  - rscadd: "The Cosa Nostra starter pack  has been added to cargo as a contraband crate."
+  - rscadd: "Added pictures of the virgin mary, burning one of these will let you pick a mafia nickname."
+  - rscadd: "The beige suit, beige fedora and white fedora clothing items have been added to the game."
+  - imageadd: "The non-job fedoras and the white suit have been resprited."

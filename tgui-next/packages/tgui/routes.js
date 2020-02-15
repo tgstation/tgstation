@@ -15,6 +15,7 @@ import { Bepis } from './interfaces/Bepis';
 import { BorgPanel } from './interfaces/BorgPanel';
 import { BrigTimer } from './interfaces/BrigTimer';
 import { Canister } from './interfaces/Canister';
+import { Canvas } from './interfaces/Canvas';
 import { Cargo, CargoExpress } from './interfaces/Cargo';
 import { CellularEmporium } from './interfaces/CellularEmporium';
 import { CentcomPodLauncher } from './interfaces/CentcomPodLauncher';
@@ -45,6 +46,7 @@ import { GulagTeleporterConsole } from './interfaces/GulagTeleporterConsole';
 import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
 import { Holodeck } from './interfaces/Holodeck';
 import { ImplantChair } from './interfaces/ImplantChair';
+import { InfraredEmitter } from './interfaces/InfraredEmitter';
 import { Intellicard } from './interfaces/Intellicard';
 import { KeycardAuth } from './interfaces/KeycardAuth';
 import { LaborClaimConsole } from './interfaces/LaborClaimConsole';
@@ -52,6 +54,7 @@ import { LanguageMenu } from './interfaces/LanguageMenu';
 import { LaunchpadConsole, LaunchpadRemote } from './interfaces/Launchpad';
 import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
+import { MiningVendor } from './interfaces/MiningVendor';
 import { Mint } from './interfaces/Mint';
 import { Mule } from './interfaces/Mule';
 import { NaniteChamberControl } from './interfaces/NaniteChamberControl';
@@ -61,11 +64,19 @@ import { NaniteProgrammer } from './interfaces/NaniteProgrammer';
 import { NaniteRemote } from './interfaces/NaniteRemote';
 import { NotificationPreferences } from './interfaces/NotificationPreferences';
 import { NtnetRelay } from './interfaces/NtnetRelay';
+import { NtosAiRestorer } from './interfaces/NtosAiRestorer';
 import { NtosArcade } from './interfaces/NtosArcade';
+import { NtosCard } from './interfaces/NtosCard';
 import { NtosConfiguration } from './interfaces/NtosConfiguration';
+import { NtosCrewManifest } from './interfaces/NtosCrewManifest';
+import { NtosFileManager } from './interfaces/NtosFileManager';
+import { NtosJobManager } from './interfaces/NtosJobManager';
 import { NtosMain } from './interfaces/NtosMain';
 import { NtosNetChat } from './interfaces/NtosNetChat';
+import { NtosNetDos } from './interfaces/NtosNetDos';
 import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
+import { NtosNetMonitor } from './interfaces/NtosNetMonitor';
+import { NtosRevelation } from './interfaces/NtosRevelation';
 import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
 import { NtosWrapper } from './interfaces/NtosWrapper';
 import { NuclearBomb } from './interfaces/NuclearBomb';
@@ -77,6 +88,7 @@ import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { PortableGenerator } from './interfaces/PortableGenerator';
 import { PortablePump, PortableScrubber } from './interfaces/PortableAtmos';
 import { PowerMonitor } from './interfaces/PowerMonitor';
+import { ProximitySensor } from './interfaces/ProximitySensor';
 import { Radio } from './interfaces/Radio';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { Roulette } from './interfaces/Roulette';
@@ -96,7 +108,9 @@ import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
 import { Tank } from './interfaces/Tank';
 import { TankDispenser } from './interfaces/TankDispenser';
+import { Teleporter } from './interfaces/Teleporter';
 import { ThermoMachine } from './interfaces/ThermoMachine';
+import { Timer } from './interfaces/Timer';
 import { TurbineComputer } from './interfaces/TurbineComputer';
 import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
@@ -172,6 +186,10 @@ const ROUTES = {
   },
   canister: {
     component: () => Canister,
+    scrollable: false,
+  },
+  canvas: {
+    component: () => Canvas,
     scrollable: false,
   },
   cargo: {
@@ -298,6 +316,10 @@ const ROUTES = {
     component: () => ImplantChair,
     scrollable: false,
   },
+  infrared_emitter: {
+    component: () => InfraredEmitter,
+    scrollable: false,
+  },
   intellicard: {
     component: () => Intellicard,
     scrollable: true,
@@ -330,6 +352,10 @@ const ROUTES = {
   medical_kiosk: {
     component: () => MedicalKiosk,
     scrollable: false,
+  },
+  mining_vendor: {
+    component: () => MiningVendor,
+    scrollable: true,
   },
   mint: {
     component: () => Mint,
@@ -367,14 +393,44 @@ const ROUTES = {
     component: () => NtnetRelay,
     scrollable: false,
   },
+  ntos_ai_restorer: {
+    component: () => NtosAiRestorer,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
   ntos_arcade: {
     component: () => NtosArcade,
     wrapper: () => NtosWrapper,
     scrollable: false,
     theme: 'ntos',
   },
+  ntos_card: {
+    component: () => NtosCard,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
   ntos_configuration: {
     component: () => NtosConfiguration,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_crew_manifest: {
+    component: () => NtosCrewManifest,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_file_manager: {
+    component: () => NtosFileManager,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_job_manager: {
+    component: () => NtosJobManager,
     wrapper: () => NtosWrapper,
     scrollable: true,
     theme: 'ntos',
@@ -391,8 +447,20 @@ const ROUTES = {
     scrollable: false,
     theme: 'ntos',
   },
+  ntos_net_dos: {
+    component: () => NtosNetDos,
+    wrapper: () => NtosWrapper,
+    scrollable: false,
+    theme: 'syndicate',
+  },
   ntos_net_downloader: {
     component: () => NtosNetDownloader,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_net_monitor: {
+    component: () => NtosNetMonitor,
     wrapper: () => NtosWrapper,
     scrollable: true,
     theme: 'ntos',
@@ -402,6 +470,12 @@ const ROUTES = {
     wrapper: () => NtosWrapper,
     scrollable: true,
     theme: 'ntos',
+  },
+  ntos_revelation: {
+    component: () => NtosRevelation,
+    wrapper: () => NtosWrapper,
+    scrollable: false,
+    theme: 'syndicate',
   },
   ntos_station_alert: {
     component: () => StationAlertConsole,
@@ -455,6 +529,10 @@ const ROUTES = {
   power_monitor: {
     component: () => PowerMonitor,
     scrollable: true,
+  },
+  proximity_sensor: {
+    component: () => ProximitySensor,
+    scrollable: false,
   },
   radio: {
     component: () => Radio,
@@ -539,8 +617,16 @@ const ROUTES = {
     component: () => TankDispenser,
     scrollable: false,
   },
+  teleporter: {
+    component: () => Teleporter,
+    scrollable: false,
+  },
   thermomachine: {
     component: () => ThermoMachine,
+    scrollable: false,
+  },
+  timer: {
+    component: () => Timer,
     scrollable: false,
   },
   turbine_computer: {

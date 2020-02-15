@@ -22,3 +22,12 @@
 
 // Gets the reference for the skill type that was given
 #define GetSkillRef(A) (SSskills.all_skills[A])
+
+//number defines
+#define CLEAN_SKILL_BEAUTY_ADJUSTMENT	15//It's a denominator so no 0. Higher number = less cleaning xp per cleanable
+#define CLEAN_SKILL_GENERIC_WASH_XP	1.5//Value. Higher number = more XP when cleaning non-cleanables (walls/floors/lips)
+
+#define MEDICAL_SKILL_EASY 3 //Cannot be 0
+#define MEDICAL_SKILL_MEDIUM (MEDICAL_SKILL_EASY*5)
+#define MEDICAL_SKILL_ORGAN_FIX (MEDICAL_SKILL_MEDIUM*1.75)
+#define MEDICAL_SKILL_ADVANCED (MEDICAL_SKILL_MEDIUM*2.5)

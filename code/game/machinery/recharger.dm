@@ -32,7 +32,7 @@
 		. += {"<span class='notice'>\The [src] contains:</span>
 		<span class='notice'>- \A [charging].</span>"}
 
-	if(!(stat & (NOPOWER|BROKEN)))
+	if(!(machine_stat & (NOPOWER|BROKEN)))
 		. += "<span class='notice'>The status display reads:</span>"
 		. += "<span class='notice'>- Recharging <b>[recharge_coeff*10]%</b> cell charge per cycle.</span>"
 		if(charging)
@@ -119,7 +119,7 @@
 		setCharging(null)
 
 /obj/machinery/recharger/process()
-	if(stat & (NOPOWER|BROKEN) || !anchored)
+	if(machine_stat & (NOPOWER|BROKEN) || !anchored)
 		return PROCESS_KILL
 
 	using_power = FALSE
@@ -147,7 +147,7 @@
 	. = ..()
 	if (. & EMP_PROTECT_CONTENTS)
 		return
-	if(!(stat & (NOPOWER|BROKEN)) && anchored)
+	if(!(machine_stat & (NOPOWER|BROKEN)) && anchored)
 		if(istype(charging,  /obj/item/gun/energy))
 			var/obj/item/gun/energy/E = charging
 			if(E.cell)
@@ -160,7 +160,7 @@
 
 
 /obj/machinery/recharger/update_icon_state()
-	if(stat & (NOPOWER|BROKEN) || !anchored)
+	if(machine_stat & (NOPOWER|BROKEN) || !anchored)
 		icon_state = "rechargeroff"
 	else if(panel_open)
 		icon_state = "rechargeropen"

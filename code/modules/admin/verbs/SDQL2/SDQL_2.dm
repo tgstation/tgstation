@@ -99,6 +99,10 @@
 
 	Don't crash the server, OK?
 
+	"UPDATE /mob/living/carbon/monkey SET #null = forceMove(usr.loc)"
+
+	Writing "#null" in front of the "=" will call the proc and discard the return value.
+
 	A quick recommendation: before you run something like a DELETE or another query.. Run it through SELECT
 	first.
 	You'd rather not gib every player on accident.
@@ -282,7 +286,7 @@
 					selectors_used |= query.where_switched
 					combined_refs |= query.select_refs
 					running -= query
-					if(!CHECK_BITFIELD(query.options, SDQL2_OPTION_DO_NOT_AUTOGC))
+					if(!(query.options & SDQL2_OPTION_DO_NOT_AUTOGC))
 						QDEL_IN(query, 50)
 					if(sequential && waiting_queue.len)
 						finished = FALSE
@@ -469,23 +473,23 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 		if("select")
 			switch(value)
 				if("force_nulls")
-					DISABLE_BITFIELD(options, SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS)
+					options &= ~(SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS)
 		if("proccall")
 			switch(value)
 				if("blocking")
-					ENABLE_BITFIELD(options, SDQL2_OPTION_BLOCKING_CALLS)
+					options |= SDQL2_OPTION_BLOCKING_CALLS
 		if("priority")
 			switch(value)
 				if("high")
-					ENABLE_BITFIELD(options, SDQL2_OPTION_HIGH_PRIORITY)
+					options |= SDQL2_OPTION_HIGH_PRIORITY
 		if("autogc")
 			switch(value)
 				if("keep_alive")
-					ENABLE_BITFIELD(options, SDQL2_OPTION_DO_NOT_AUTOGC)
+					options |= SDQL2_OPTION_DO_NOT_AUTOGC
 		if("sequential")
 			switch(value)
 				if("true")
-					ENABLE_BITFIELD(options,SDQL2_OPTION_SEQUENTIAL)
+					options |= SDQL2_OPTION_SEQUENTIAL
 
 /datum/SDQL2_query/proc/ARun()
 	INVOKE_ASYNC(src, .proc/Run)
@@ -777,6 +781,9 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 		var/datum/temp = d
 		var/i = 0
 		for(var/v in sets)
+			if(v == "#null")
+				SDQL_expression(d, set_list[sets])
+				break
 			if(++i == sets.len)
 				if(superuser)
 					if(temp.vars.Find(v))
@@ -899,8 +906,8 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	else if(ispath(expression[i]))
 		val = expression[i]
 
-	else if(copytext(expression[i], 1, 2) in list("'", "\""))
-		val = copytext(expression[i], 2, length(expression[i]))
+	else if(expression[i][1] in list("'", "\""))
+		val = copytext_char(expression[i], 2, -1)
 
 	else if(expression[i] == "\[")
 		var/list/expressions_list = expression[++i]
@@ -1007,12 +1014,12 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	if(is_proper_datum(object))
 		D = object
 
-	if (object == world && (!long || expression[start + 1] == ".") && !(expression[start] in exclude) && copytext(expression[start], 1, 3) != "SS")
+	if (object == world && (!long || expression[start + 1] == ".") && !(expression[start] in exclude) && copytext(expression[start], 1, 3) != "SS") //3 == length("SS") + 1
 		to_chat(usr, "<span class='danger'>World variables are not allowed to be accessed. Use global.</span>")
 		return null
 
 	else if(expression [start] == "{" && long)
-		if(lowertext(copytext(expression[start + 1], 1, 3)) != "0x")
+		if(lowertext(copytext(expression[start + 1], 1, 3)) != "0x") //3 == length("0x") + 1
 			to_chat(usr, "<span class='danger'>Invalid pointer syntax: [expression[start + 1]]</span>")
 			return null
 		v = locate("\[[expression[start + 1]]]")
@@ -1054,8 +1061,8 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 			if("CFG")
 				v = config
 			else
-				if(copytext(expression[start], 1, 3) == "SS") //Subsystem
-					var/SSname = copytext(expression[start], 3)
+				if(copytext(expression[start], 1, 3) == "SS") //Subsystem //3 == length("SS") + 1
+					var/SSname = copytext_char(expression[start], 3)
 					var/SSlength = length(SSname)
 					var/datum/controller/subsystem/SS
 					var/SSmatch
@@ -1099,9 +1106,10 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	var/word = ""
 	var/list/query_list = list()
 	var/len = length(query_text)
+	var/char = ""
 
-	for(var/i = 1, i <= len, i++)
-		var/char = copytext(query_text, i, i + 1)
+	for(var/i = 1, i <= len, i += length(char))
+		char = query_text[i]
 
 		if(char in whitespace)
 			if(word != "")
@@ -1120,7 +1128,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 				query_list += word
 				word = ""
 
-			var/char2 = copytext(query_text, i + 1, i + 2)
+			var/char2 = query_text[i + length(char)]
 
 			if(char2 in multi[char])
 				query_list += "[char][char2]"
@@ -1136,13 +1144,13 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 
 			word = "'"
 
-			for(i++, i <= len, i++)
-				char = copytext(query_text, i, i + 1)
+			for(i += length(char), i <= len, i += length(char))
+				char = query_text[i]
 
 				if(char == "'")
-					if(copytext(query_text, i + 1, i + 2) == "'")
+					if(query_text[i + length(char)] == "'")
 						word += "'"
-						i++
+						i += length(query_text[i + length(char)])
 
 					else
 						break
@@ -1164,13 +1172,13 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 
 			word = "\""
 
-			for(i++, i <= len, i++)
-				char = copytext(query_text, i, i + 1)
+			for(i += length(char), i <= len, i += length(char))
+				char = query_text[i]
 
 				if(char == "\"")
-					if(copytext(query_text, i + 1, i + 2) == "'")
+					if((i + length(char) <= len) && query_text[i + length(char)] == "'")
 						word += "\""
-						i++
+						i += length(query_text[i + length(char)])
 
 					else
 						break

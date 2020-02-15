@@ -228,13 +228,17 @@
 	icon_state = "urinalcake_squish"
 	addtimer(VARSET_CALLBACK(src, icon_state, "urinalcake"), 8)
 
+/obj/item/bikehorn/rubberducky/plasticducky
+	name = "plastic ducky"
+	desc = "It's a cheap plastic knockoff of a loveable bathtime toy."
+	custom_materials = list(/datum/material/plastic = 1000)
+
 /obj/item/bikehorn/rubberducky
 	name = "rubber ducky"
 	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~"	//thanks doohl
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "rubberducky"
 	item_state = "rubberducky"
-
 
 /obj/structure/sink
 	name = "sink"
@@ -305,17 +309,15 @@
 
 	if(istype(O, /obj/item/melee/baton))
 		var/obj/item/melee/baton/B = O
-		if(B.cell)
-			if(B.cell.charge > 0 && B.turned_on)
-				flick("baton_active", src)
-				var/stunforce = B.stunforce
-				user.Paralyze(stunforce)
-				user.stuttering = stunforce/20
-				B.deductcharge(B.hitcost)
-				user.visible_message("<span class='warning'>[user] shocks [user.p_them()]self while attempting to wash the active [B.name]!</span>", \
-									"<span class='userdanger'>You unwisely attempt to wash [B] while it's still on.</span>")
-				playsound(src, "sparks", 50, TRUE)
-				return
+		if(B.cell && B.cell.charge && B.turned_on)
+			flick("baton_active", src)
+			user.Paralyze(B.stun_time)
+			user.stuttering = B.stun_time/20
+			B.deductcharge(B.cell_hit_cost)
+			user.visible_message("<span class='warning'>[user] shocks [user.p_them()]self while attempting to wash the active [B.name]!</span>", \
+								"<span class='userdanger'>You unwisely attempt to wash [B] while it's still on.</span>")
+			playsound(src, B.stun_sound, 50, TRUE)
+			return
 
 	if(istype(O, /obj/item/mop))
 		O.reagents.add_reagent(dispensedreagent, 5)

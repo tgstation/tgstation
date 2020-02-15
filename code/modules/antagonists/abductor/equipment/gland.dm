@@ -4,6 +4,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "gland"
 	status = ORGAN_ROBOTIC
+	organ_flags = NONE
 	beating = TRUE
 	var/true_name = "baseline placebo referencer"
 	var/cooldown_low = 300

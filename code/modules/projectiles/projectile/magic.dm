@@ -172,6 +172,9 @@
 
 	if(iscyborg(M))
 		var/mob/living/silicon/robot/Robot = M
+		// Disconnect AI's in shells
+		if(Robot.connected_ai)
+			Robot.connected_ai.disconnect_shell()
 		if(Robot.mmi)
 			qdel(Robot.mmi)
 		Robot.notify_ai(NEW_BORG)
@@ -701,5 +704,8 @@
 	damage_type = BURN
 	nodamage = FALSE
 	armour_penetration = 100
-	temperature = 50
+	temperature = -200 // Cools you down greatly per hit
 	flag = "magic"
+
+/obj/projectile/magic/nothing
+	name = "bolt of nothing"

@@ -22,7 +22,7 @@
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/T = pick(turfs)
-		new /datum/spacevine_controller(T, event = src) //spawn a controller at turf
+		new /datum/spacevine_controller(T, pick(subtypesof(/datum/spacevine_mutation)), rand(10,100), rand(5,10), src) //spawn a controller at turf with randomized stats and a single random mutation
 
 
 /datum/spacevine_mutation
@@ -251,7 +251,7 @@
 	holder.obj_integrity = holder.max_integrity
 
 /datum/spacevine_mutation/woodening/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
-	if(I.get_sharpness())
+	if(I && I.get_sharpness())
 		. = expected_damage * 0.5
 	else
 		. = expected_damage
@@ -350,10 +350,11 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/spacevine/Crossed(mob/crosser)
-	if(isliving(crosser))
-		for(var/datum/spacevine_mutation/SM in mutations)
-			SM.on_cross(src, crosser)
+/obj/structure/spacevine/Crossed(atom/movable/AM)
+	if(!isliving(AM))
+		return
+	for(var/datum/spacevine_mutation/SM in mutations)
+		SM.on_cross(src, AM)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/spacevine/attack_hand(mob/user)
