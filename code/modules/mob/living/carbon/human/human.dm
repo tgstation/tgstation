@@ -1068,6 +1068,11 @@
 	if(belt)
 		update_inv_belt()
 
+	var/list/obscured = check_obscured_slots()
+
+	if(gloves && !(HIDEGLOVES in obscured))
+		SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+
 /mob/living/carbon/human/adjust_nutrition(var/change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
 		return FALSE

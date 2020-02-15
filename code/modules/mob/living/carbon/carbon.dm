@@ -1058,7 +1058,3 @@
 
 	if(shoes && !(HIDESHOES in obscured))
 		update_inv_shoes()
-
-	var/washgloves = FALSE
-	if(gloves && !(HIDEGLOVES in obscured))
-		washgloves = TRUE

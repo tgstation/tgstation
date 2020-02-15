@@ -1121,7 +1121,7 @@
 //Washing
 /mob/living/washed(var/atom/washer)
 	. = ..()
-	SEND_SIGNAL(M, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 // used by secbot and monkeys Crossed
 /mob/living/proc/knockOver(var/mob/living/carbon/C)
