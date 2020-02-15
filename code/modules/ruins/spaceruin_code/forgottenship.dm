@@ -65,7 +65,7 @@ obj/item/paper/fluff/ruins/forgottenship/missionobj
 	item_state = "cybersun"
 	hardsuit_type = "cybersun"
 	name = "Cybersun hardsuit"
-	desc = "Prototype hardsuit with experimental armor plates, protecting from laser-based weapons very well, while giving limited protection against anything else. Requires the user to activate the inner mechanism in order to unequip it, making it nearly impossible to take it off from somebody else."
+	desc = "Prototype hardsuit with experimental armor plates, protecting from laser-based weapons very well, while giving limited protection against anything else. Requires the user to activate the inner mechanism in order to unequip it, making it really difficult to take it off from somebody else."
 	armor = list("melee" = 25, "bullet" = 25, "laser" = 70, "energy" = 50, "bomb" = 15, "bio" = 100, "rad" = 50, "fire" = 60, "acid" = 60)
 	strip_delay = 600
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cybersun
