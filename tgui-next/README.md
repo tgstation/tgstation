@@ -811,6 +811,8 @@ Props:
 
 - `vertical: boolean` - Use a vertical configuration, where tabs will appear
 stacked on the left side of the container.
+- `altSelection` - Whether the tab buttons select via standard select (color change) or by adding a white indicator to the selected tab.
+  Intended for usage on interfaces where tab color has relevance.
 - `children: Tab[]` - This component only accepts tabs as its children.
 
 ### `Tabs.Tab`

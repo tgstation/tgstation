@@ -144,7 +144,9 @@
 
 /obj/machinery/space_heater/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if(istype(I, /obj/item/stock_parts/cell))
+	if(default_unfasten_wrench(user, I))
+		return
+	else if(istype(I, /obj/item/stock_parts/cell))
 		if(panel_open)
 			if(cell)
 				to_chat(user, "<span class='warning'>There is already a power cell inside!</span>")

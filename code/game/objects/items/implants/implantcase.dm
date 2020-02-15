@@ -64,6 +64,7 @@
 	. = ..()
 	if(imp_type)
 		imp = new imp_type(src)
+	update_icon()
 	reagents = imp.reagents
 
 

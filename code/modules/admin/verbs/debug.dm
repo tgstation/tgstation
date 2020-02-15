@@ -185,7 +185,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make Powernets") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_grantfullaccess(mob/M in GLOB.mob_list)
-	set category = "Admin"
+	set category = "Debug"
 	set name = "Grant Full Access"
 
 	if(!SSticker.HasRoundStarted())
@@ -227,7 +227,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has granted [M.key] full access.</span>")
 
 /client/proc/cmd_assume_direct_control(mob/M in GLOB.mob_list)
-	set category = "Admin"
+	set category = "Admin - Game"
 	set name = "Assume direct control"
 	set desc = "Direct intervention"
 
@@ -248,7 +248,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Assume Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_give_direct_control(mob/M in GLOB.mob_list)
-	set category = "Admin"
+	set category = "Admin - Game"
 	set name = "Give direct control"
 
 	if(!M)
@@ -341,8 +341,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	for(var/area/A in world)
 		if(on_station)
-			var/turf/picked = safepick(get_area_turfs(A.type))
-			if(picked && is_station_level(picked.z))
+			var/list/area_turfs = get_area_turfs(A.type)
+			if (!length(area_turfs))
+				continue
+			var/turf/picked = pick(area_turfs)
+			if(is_station_level(picked.z))
 				if(!(A.type in areas_all) && !is_type_in_typecache(A, station_areas_blacklist))
 					areas_all.Add(A.type)
 		else if(!(A.type in areas_all))
@@ -489,7 +492,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	cmd_admin_areatest(FALSE)
 
 /client/proc/cmd_admin_dress(mob/M in GLOB.mob_list)
-	set category = "Fun"
+	set category = "Admin - Events"
 	set name = "Select equipment"
 	if(!(ishuman(M) || isobserver(M)))
 		alert("Invalid mob")

@@ -158,10 +158,11 @@
 	var/leng = length(phrase)
 	. = ""
 	var/newletter = ""
-	var/rawchar
+	var/rawchar = ""
+	var/static/regex/nostutter = regex(@@[aeiouAEIOU "'()[\]{}.!?,:;_`~-]@)
 	for(var/i = 1, i <= leng, i += length(rawchar))
 		rawchar = newletter = phrase[i]
-		if(prob(80) && !(lowertext(newletter) in list("a", "e", "i", "o", "u", " ")))
+		if(prob(80) && !nostutter.Find(rawchar))
 			if(prob(10))
 				newletter = "[newletter]-[newletter]-[newletter]-[newletter]"
 			else if(prob(20))

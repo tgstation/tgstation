@@ -203,6 +203,8 @@
 	if(!islist(sig_type_or_types))
 		sig_type_or_types = list(sig_type_or_types)
 	for(var/sig in sig_type_or_types)
+		if(!signal_procs[target][sig])
+			continue
 		switch(length(lookup[sig]))
 			if(2)
 				lookup[sig] = (lookup[sig]-src)[1]
