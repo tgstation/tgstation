@@ -13,7 +13,7 @@
 	var/starting_organ
 
 /obj/item/autosurgeon/syndicate
-	name = "suspicous autosurgeon"
+	name = "suspicious autosurgeon"
 	icon_state = "syndicate_autoimplanter"
 
 /obj/item/autosurgeon/Initialize(mapload)
