@@ -410,41 +410,42 @@
 			to_chat(user, "<span class='notice'>Vend-a-tray registered. Use your ID on grab intent to change the sale price, or disarm intent to open the tray.</span>")
 			return
 		//Buying the contained item with the ID.
-		if(user.a_intent == INTENT_HELP)
-			if(!showpiece)
-				to_chat(user, "<span class='notice'>There's nothing for sale.</span>")
+		switch(user.a_intent)
+			if(INTENT_HELP)
+				if(!showpiece)
+					to_chat(user, "<span class='notice'>There's nothing for sale.</span>")
+					return TRUE
+				if(broken)
+					to_chat(user, "<span class='notice'>[src] appears to be broken.</span>")
+					return TRUE
+				var/confirm = alert(user, "Purchase [showpiece] for [sale_price]?", "Purchase?", "Confirm", "Cancel")
+				if(confirm == "Cancel")
+					return TRUE
+				var/datum/bank_account/account = potential_acc.registered_account
+				if(!account.has_money(sale_price))
+					to_chat(user, "<span class='notice'>You do not possess the funds to purchase this.</span>")
+					return TRUE
+				else
+					account.adjust_money(-sale_price)
+					if(payments_acc)
+						payments_acc.adjust_money(sale_price)
+					user.put_in_hands(showpiece)
+					to_chat(user, "<span class='notice'>You purchase [showpiece] for [sale_price] credits.</span>")
+					playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
+					icon = 'icons/obj/stationobjs.dmi'
+					flick("laserbox_vend", src)
+					showpiece = null
+					update_icon()
+					return TRUE
+			//Setting the object's price.
+			if(INTENT_GRAB)
+				var/new_price_input = input(user,"Set the sale price for this vend-a-tray.","new price",0) as num|null
+				if(isnull(new_price_input) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+					return
+				new_price_input = CLAMP(round(new_price_input, 1), 10, 1000)
+				sale_price = new_price_input
+				to_chat(user, "<span class='notice'>The cost is now set to [sale_price].</span>")
 				return TRUE
-			if(broken)
-				to_chat(user, "<span class='notice'>[src] appears to be broken.</span>")
-				return TRUE
-			var/confirm = alert(user, "Purchase [showpiece] for [sale_price]?", "Purchase?", "Confirm", "Cancel")
-			if(confirm == "Cancel")
-				return TRUE
-			var/datum/bank_account/account = potential_acc.registered_account
-			if(!account.has_money(sale_price))
-				to_chat(user, "<span class='notice'>You do not possess the funds to purchase this.</span>")
-				return TRUE
-			else
-				account.adjust_money(-sale_price)
-				if(payments_acc)
-					payments_acc.adjust_money(sale_price)
-				user.put_in_hands(showpiece)
-				to_chat(user, "<span class='notice'>You purchase [showpiece] for [sale_price] credits.</span>")
-				playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
-				icon = 'icons/obj/stationobjs.dmi'
-				flick("laserbox_vend", src)
-				showpiece = null
-				update_icon()
-				return TRUE
-		//Setting the object's price.
-		if(user.a_intent == INTENT_GRAB)
-			var/new_price_input = input(user,"Set the sale price for this vend-a-tray.","new price",0) as num|null
-			if(isnull(new_price_input) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-				return
-			new_price_input = CLAMP(round(new_price_input, 1), 10, 1000)
-			sale_price = new_price_input
-			to_chat(user, "<span class='notice'>The cost is now set to [sale_price].</span>")
-			return TRUE
 	if(I.tool_behaviour == TOOL_WRENCH && open && user.a_intent == INTENT_HELP )
 		if(anchored)
 			to_chat(user, "<span class='notice'>You start unsecuring [src]...</span>")
