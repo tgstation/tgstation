@@ -9,7 +9,8 @@
 	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
 	plane = FLOOR_PLANE
-	var/number_of_rods = 1
+	var/number_of_mats = 1
+	var/build_material = /obj/item/stack/rods
 	canSmoothWith = list(/obj/structure/lattice,
 	/turf/open/floor,
 	/turf/closed/wall,
@@ -45,7 +46,7 @@
 
 /obj/structure/lattice/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/rods(get_turf(src), number_of_rods)
+		new build_material(get_turf(src), number_of_mats)
 	qdel(src)
 
 /obj/structure/lattice/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -71,7 +72,7 @@
 	desc = "A catwalk for easier EVA maneuvering and cable placement."
 	icon = 'icons/obj/smooth_structures/catwalk.dmi'
 	icon_state = "catwalk"
-	number_of_rods = 2
+	number_of_mats = 2
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	obj_flags = CAN_BE_HIT | BLOCK_Z_FALL
@@ -96,7 +97,7 @@
 	desc = "A specialized support beam for building across lava. Watch your step."
 	icon = 'icons/obj/smooth_structures/catwalk.dmi'
 	icon_state = "catwalk"
-	number_of_rods = 1
+	number_of_mats = 1
 	color = "#5286b9ff"
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null

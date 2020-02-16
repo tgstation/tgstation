@@ -7,11 +7,10 @@
 	temperature = TCMB
 
 /turf/open/floor/engine/hull/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode) //no rcd destroying this flooring
-	if(passed_mode == RCD_FLOORWALL)
-		to_chat(user, "<span class='notice'>You build a wall.</span>")
-		PlaceOnTop(/turf/closed/wall)
-		return TRUE
-	return FALSE
+	if(passed_mode == RCD_DECONSTRUCT)
+		to_chat(user, "<span class='warning'>The flooring is too thick to be regularly deconstructed!</span>")
+		return FALSE
+	return ..()
 
 /turf/open/floor/engine/hull/reinforced
 	name = "exterior reinforced hull plating"

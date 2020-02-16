@@ -13,6 +13,7 @@
 	climbable = FALSE
 
 /obj/structure/railing/attackby(obj/item/I, mob/living/user, params)
+	..()
 	add_fingerprint(user)
 
 	if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP)

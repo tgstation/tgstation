@@ -786,8 +786,38 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/prison/toilet
 	name = "Prison Toilet"
 	icon_state = "sec_prison"
+
 /area/security/prison/upper
-	name = "Prison Overlook"
+	name = "Upper Prison Wing"
+	icon_state = "prison_upper"
+
+/area/security/prison/visit
+	name = "Prison Visitation Area"
+	icon_state = "prison_visit"
+
+/area/security/prison/rec
+	name = "Prison Rec Room"
+	icon_state = "prison_rec"
+
+/area/security/prison/mess
+	name = "Prison Mess Hall"
+	icon_state = "prison_mess"
+
+/area/security/prison/work
+	name = "Prison Work Room"
+	icon_state = "prison_work"
+
+/area/security/prison/shower
+	name = "Prison Shower"
+	icon_state = "prison_shower"
+
+/area/security/prison/workout
+	name = "Prison Gym"
+	icon_state = "prison_workout"
+
+/area/security/prison/garden
+	name = "Prison Garden"
+	icon_state = "prison_garden"
 
 /area/security/processing
 	name = "Labor Shuttle Dock"
