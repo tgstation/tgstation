@@ -95,6 +95,7 @@
 	new /obj/item/pinpointer/nuke(src)
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
 	new /obj/item/storage/photo_album/HoS(src)
+	new	/obj/item/clothing/suit/armor/hos/trenchcoat/doublebreasted(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"

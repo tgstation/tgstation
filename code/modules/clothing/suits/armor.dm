@@ -62,6 +62,12 @@
 	flags_inv = 0
 	strip_delay = 80
 
+/obj/item/clothing/suit/armor/hos/trenchcoat/doublebreasted
+	name = "Double-Breasted Coat"
+	desc = "A coat"
+	icon_state = "double_breasted"
+	item_state = "double_breasted"
+
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
 	desc = "A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets."
