@@ -34,11 +34,11 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "at" = (
-/mob/living/simple_animal/crab{
-	name = "Eddie"
-	},
 /obj/machinery/light{
 	dir = 1
+	},
+/mob/living/simple_animal/crab{
+	name = "Eddie"
 	},
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
@@ -474,7 +474,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "kn" = (
-/obj/structure/fluff/railing/corner{
+/obj/structure/railing/corner{
 	dir = 1
 	},
 /obj/machinery/light,
@@ -747,7 +747,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "vi" = (
-/obj/structure/fluff/railing{
+/obj/structure/railing{
 	dir = 8
 	},
 /turf/open/floor/plating/beach/coastline_b{
@@ -764,7 +764,7 @@
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/powered/beach)
 "wW" = (
-/obj/structure/fluff/railing{
+/obj/structure/railing{
 	dir = 8
 	},
 /turf/open/floor/plating/beach/coastline_b{
