@@ -454,6 +454,8 @@
 /obj/structure/firelock_frame/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if((constructionStep == CONSTRUCTION_NOCIRCUIT) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
 		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)
+	else if(the_rcd.mode == RCD_DECONSTRUCT)
+		return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 16)
 	return FALSE
 
 /obj/structure/firelock_frame/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
@@ -463,6 +465,10 @@
 			"<span class='notice'>You adapt a firelock circuit and slot it into the assembly.</span>")
 			constructionStep = CONSTRUCTION_GUTTED
 			update_icon()
+			return TRUE
+		else if(RCD_DECONSTRUCT)
+			to_chat(user, "<span class='notice'>You deconstruct [src].</span>")
+			qdel(src)
 			return TRUE
 	return FALSE
 
