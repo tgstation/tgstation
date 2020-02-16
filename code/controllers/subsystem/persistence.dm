@@ -155,7 +155,7 @@ SUBSYSTEM_DEF(persistence)
 
 		var/list/chosen_trophy = trophy_data
 
-		if(!chosen_trophy || isemptylist(chosen_trophy)) //Malformed
+		if(!length(chosen_trophy)) //Malformed
 			continue
 
 		var/path = text2path(chosen_trophy["path"]) //If the item no longer exist, this returns null

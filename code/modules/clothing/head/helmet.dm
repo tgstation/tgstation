@@ -163,6 +163,16 @@
 	icon_state = "policehelm"
 	dynamic_hair_suffix = ""
 
+/obj/item/clothing/head/helmet/constable
+	name = "constable helmet"
+	desc = "A british looking helmet."
+	mob_overlay_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	icon_state = "constable"
+	item_state = "constable"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	custom_price = 350
+
 /obj/item/clothing/head/helmet/swat/nanotrasen
 	name = "\improper SWAT helmet"
 	desc = "An extremely robust, space-worthy helmet with the Nanotrasen logo emblazoned on the top."
@@ -309,7 +319,7 @@
 	item_state = "rus_ushanka"
 	body_parts_covered = HEAD
 	cold_protection = HEAD
-	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	armor = list("melee" = 25, "bullet" = 20, "laser" = 20, "energy" = 30, "bomb" = 20, "bio" = 50, "rad" = 20, "fire" = -10, "acid" = 50)
 
 //LightToggle
