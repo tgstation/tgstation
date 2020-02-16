@@ -64,7 +64,7 @@
 
 /obj/item/clothing/suit/armor/hos/trenchcoat/doublebreasted
 	name = "Double-Breasted Coat"
-	desc = "A coat"
+	desc = "A double-breasted coat for when you need to dual wield even larger buttons."
 	icon_state = "double_breasted"
 	item_state = "double_breasted"
 
