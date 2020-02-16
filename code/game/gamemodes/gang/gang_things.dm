@@ -21,7 +21,7 @@
 	team_to_use.add_member(user.mind)
 	for(var/threads in team_to_use.free_clothes)
 		new threads(get_turf(user))
-	if(!user.mind in F.gangbangers)
+	if !(user.mind in F.gangbangers)
 		F.gangbangers += user.mind
 	team_to_use.adjust_points(30)
 
