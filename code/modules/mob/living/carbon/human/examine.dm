@@ -284,7 +284,7 @@
 
 			msg += "</span>"
 
-			if(HAS_TRAIT(user, TRAIT_SPIRITUAL) && mind?.isholy)
+			if(HAS_TRAIT(user, TRAIT_SPIRITUAL) && mind?.holy_role)
 				msg += "[t_He] [t_has] a holy aura about [t_him].\n"
 				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "religious_comfort", /datum/mood_event/religiously_comforted)
 

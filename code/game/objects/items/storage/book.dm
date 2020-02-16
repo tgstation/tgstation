@@ -43,11 +43,17 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 
 /obj/item/storage/book/bible/Initialize()
 	. = ..()
+	GLOB.bibles_in_play += src
 	AddComponent(/datum/component/anti_magic, FALSE, TRUE)
 
 /obj/item/storage/book/bible/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is offering [user.p_them()]self to [deity_name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
+
+/obj/item/storage/book/bible/Destroy()
+	GLOB.bibles_in_play -= src
+	..()
+
 
 /obj/item/storage/book/bible/attack_self(mob/living/carbon/human/H)
 	if(!istype(H))
@@ -91,7 +97,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		SSblackbox.record_feedback("text", "religion_book", 1, "[biblename]")
 		usr << browse(null, "window=editicon")
 
-/obj/item/storage/book/bible/proc/bless(mob/living/carbon/human/H, mob/living/user)
+/obj/item/storage/book/bible/proc/bless(mob/living/L, mob/living/user)
+	if(GLOB.religious_sect)
+		return GLOB.religious_sect.sect_bless(L,user)
+	if(!ishuman(L))
+		return
+	var/mob/living/carbon/human/H = L
 	for(var/X in H.bodyparts)
 		var/obj/item/bodypart/BP = X
 		if(BP.status == BODYPART_ROBOTIC)
@@ -125,7 +136,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		return
 
 	var/chaplain = 0
-	if(user.mind && (user.mind.isholy))
+	if(user.mind && (user.mind.holy_role))
 		chaplain = 1
 
 	if(!chaplain)
@@ -143,7 +154,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			to_chat(user, "<span class='warning'>You can't heal yourself!</span>")
 			return
 
-		if(ishuman(M) && prob(60) && bless(M, user))
+		if(prob(60) && bless(M, user))
 			smack = 0
 		else if(iscarbon(M))
 			var/mob/living/carbon/C = M
@@ -167,10 +178,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		return
 	if(isfloorturf(A))
 		to_chat(user, "<span class='notice'>You hit the floor with the bible.</span>")
-		if(user.mind && (user.mind.isholy))
+		if(user.mind && (user.mind.holy_role))
 			for(var/obj/effect/rune/R in orange(2,user))
 				R.invisibility = 0
-	if(user.mind && (user.mind.isholy))
+	if(user.mind && (user.mind.holy_role))
 		if(A.reagents && A.reagents.has_reagent(/datum/reagent/water)) // blesses all the water in the holder
 			to_chat(user, "<span class='notice'>You bless [A].</span>")
 			var/water2holy = A.reagents.get_reagent_amount(/datum/reagent/water)
@@ -260,7 +271,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 
 /obj/item/storage/book/bible/syndicate/attack_self(mob/living/carbon/human/H)
 	if (uses)
-		H.mind.isholy = TRUE
+		H.mind.holy_role = HOLY_ROLE_PRIEST
 		uses -= 1
 		to_chat(H, "<span class='userdanger'>You try to open the book AND IT BITES YOU!</span>")
 		playsound(src.loc, 'sound/effects/snap.ogg', 50, TRUE)
