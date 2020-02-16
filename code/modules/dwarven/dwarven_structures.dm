@@ -50,14 +50,13 @@
 
 
 /obj/structure/destructible/dwarven/lava_forge/attackby(obj/item/I, mob/living/user, params)
-	if(!istype(src, /obj/item/stack/ore))
+	if(!istype(I, /obj/item/stack/ore))
 		return ..()
-	var/obj/item/stack/ore/O = src
+	var/obj/item/stack/ore/O = I
 	var/obj/item/refined = O.refined_type
 	if(isnull(refined))
 		return
 	try_forge(user, O, refined)
-	. = ..()
 
 /obj/structure/destructible/dwarven/lava_forge/proc/try_forge(mob/user, obj/item/stack/ore/O, obj/item/refined_result, recursive = FALSE)
 	if(!recursive) //Only say this the first time
@@ -70,13 +69,13 @@
 		O.use(1)
 		new refined_result(drop_location())
 		user?.mind.adjust_experience(/datum/skill/furnacing, O.mine_experience * 2) //Get double because smelting is more effort than mining in my honest opinion ok? ok.
-		if(O) //Only try going recursive if we still have ore
+		if(O.amount > 0) //Only try going recursive if we still have ore
 			try_forge(user, O, refined_result, TRUE)
 	else
 		O.use(1)
 		user?.mind.adjust_experience(/datum/skill/furnacing, O.mine_experience * 0.5)
 		to_chat(user, "<span class='warning'>You fail smelting [O] and destroy it!</span>")
-		if(O) //Only try going recursive if we still have ore
+		if(O.amount > 0) //Only try going recursive if we still have ore
 			try_forge(user, O, refined_result, TRUE)
 
 
