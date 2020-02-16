@@ -38,7 +38,7 @@
 		target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 	target.setOrganLoss(ORGAN_SLOT_BRAIN, target.getOrganLoss(ORGAN_SLOT_BRAIN) - 50)	//we set damage in this case in order to clear the "failing" flag
 	var/cured_num = target.cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
-	experience_given = 2*cured_num
+	experience_given = (MEDICAL_SKILL_EASY*2*cured_num)
 	if(target.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
 		to_chat(user, "[target]'s brain looks like it could be fixed further.")
 	return ..()

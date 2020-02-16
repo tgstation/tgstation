@@ -10,7 +10,6 @@
 /obj/effect/spawner/lootdrop/Initialize(mapload)
 	..()
 	if(loot && loot.len)
-		var/turf/T = get_turf(src)
 		var/loot_spawned = 0
 		while((lootcount-loot_spawned) && loot.len)
 			var/lootspawn = pickweight(loot)
@@ -20,7 +19,7 @@
 				loot.Remove(lootspawn)
 
 			if(lootspawn)
-				var/atom/movable/spawned_loot = new lootspawn(T)
+				var/atom/movable/spawned_loot = new lootspawn(loc)
 				if (!fan_out_items)
 					if (pixel_x != 0)
 						spawned_loot.pixel_x = pixel_x
@@ -371,6 +370,15 @@
 				/obj/item/circuitboard/computer/mecha_control,
 				/obj/item/circuitboard/computer/apc_control,
 				/obj/item/circuitboard/computer/robotics
+				)
+
+/obj/effect/spawner/lootdrop/mafia_outfit
+	name = "mafia outfit spawner"
+	loot = list(
+				/obj/effect/spawner/bundle/costume/mafia = 20,
+				/obj/effect/spawner/bundle/costume/mafia/white = 5,
+				/obj/effect/spawner/bundle/costume/mafia/checkered = 2,
+				/obj/effect/spawner/bundle/costume/mafia/beige = 5
 				)
 
 //finds the probabilities of items spawning from a loot spawner's loot pool
