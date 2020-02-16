@@ -124,54 +124,51 @@
 
 	. = ..()
 
-obj/structure/destructible/dwarven/mythril_press
+/obj/structure/destructible/dwarven/mythril_press
 	name = "Ancient Mythril Press"
 	icon_state = "mythril_press"
-	var/list/obj/item/stack/sheet/mineral/loaded_mats = list()
-	var/list/obj/item/stack/sheet/mineral/needed_mats = list("diamond","uranium")
 
-obj/structure/destructible/dwarven/mythril_press/attacked_by(obj/item/I, mob/living/user)
-	if(istype(I,/obj/item/stack/sheet/mineral))
-		var/obj/item/stack/sheet/mineral/M = I
-		var/list/obj/item/stack/sheet/mineral/mat_list = list()
-		mat_list = loaded_mats & needed_mats
-		if(!(M in mat_list))
-			loaded_mats += "[M.name]"
-			M.amount--
-			to_chat(user, "<span class='notice'>You load [M.name] deep into the machine. There is no getting that sheet back.</span>")
-			if(M.amount == 0)
-				qdel(M)
-			return
-		to_chat(user, "<span class='notice'>[M.name] is already loaded into the machine!</span>")
-		return
+/obj/structure/destructible/dwarven/mythril_press/Initialize()
+	AddComponent(/datum/component/material_container,
+	list(
+	/datum/material/diamond,
+	/datum/material/uranium,
+	/datum/material/mythril,
+	), 20000, TRUE, /obj/item/stack/sheet/mineral, null,  null, FALSE)
 	. = ..()
 
-obj/structure/destructible/dwarven/mythril_press/attack_hand(mob/user)
-	var/list/obj/item/stack/sheet/mineral/mat_list = list()
-	mat_list = needed_mats & needed_mats
-	if(mat_list ~= needed_mats)
-		new /obj/item/stack/sheet/mineral/mythril(get_turf(src), 1)
-		loaded_mats = list()
-		return
-	to_chat(user, "<span class='notice'>There aren't enough materials loaded into the mythril press!</span>")
+/obj/structure/destructible/dwarven/mythril_press/attack_hand(mob/user)
+	press_mythril(user)
 	. = ..()
 
-obj/structure/destructible/dwarven/mythril_anvil
+/obj/structure/destructible/dwarven/mythril_press/proc/press_mythril(mob/user)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	if(materials.has_materials(list(/datum/material/diamond = 1000, /datum/material/uranium = 1000)))
+		materials.use_materials(list(/datum/material/diamond = 1000, /datum/material/uranium = 1000))
+		materials.insert_amount_mat(materials.sheet2amount(1),/datum/material/mythril)
+		materials.retrieve_all(get_turf(src))
+		to_chat(user, "<span class='notice'>You hear a loud crank as materials are compressed into mythril!</span>")
+		return
+	materials.retrieve_all(get_turf(src))
+	to_chat(user, "<span class='notice'>The machine makes a loud crank sound, but no mythril falls out!</span>")
+
+/obj/structure/destructible/dwarven/mythril_anvil
 	name = "Ancient Mythril Anvil"
 	icon_state = "mythril_anvil"
 	var/loaded_mold
 
 
-obj/structure/destructible/dwarven/mythril_anvil/examine(mob/user)
+/obj/structure/destructible/dwarven/mythril_anvil/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Load with iron to create a mold</span>"
 	. += "<span class='notice'>Use with mold and another material to create armor</span>"
-
-obj/structure/destructible/dwarven/mythril_anvil/attacked_by(obj/item/I, mob/living/user)
-	if(loaded_mold == null && istype(obj/item/I,/obj/item/stack/sheet/metal))
+/*
+/obj/structure/destructible/dwarven/mythril_anvil/attacked_by(obj/item/I, mob/living/user)
+	if(loaded_mold == null && istype(I,/obj/item/stack/sheet/metal))
 		var/choice
 		choice = alert(user,"Choose the mold",,"Platemail mold","Chainmail mold","Helmet mold","Warhammer mold","Waraxe mold","Javelin mold")
 		switch(choice)
 			if("Platemail mold")
 
 	. = ..()
+*/
