@@ -14,12 +14,15 @@
 	attempt_join_gang(user)
 
 /obj/item/gang_induction_package/proc/add_to_gang(var/mob/living/user)
+	var/datum/game_mode/gang/F = SSticker.mode
 	var/datum/antagonist/gang/swappin_sides = new gang_to_use()
 	user.mind.add_antag_datum(swappin_sides)
 	swappin_sides.my_gang = team_to_use
 	team_to_use.add_member(user.mind)
 	for(var/threads in team_to_use.free_clothes)
 		new threads(get_turf(user))
+	if(!user.mind in F.gangbangers)
+		F.gangbangers += user.mind
 	team_to_use.adjust_points(30)
 
 
