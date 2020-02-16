@@ -23,6 +23,7 @@
 	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 0
 	var/trueabsorbs = 0//dna gained using absorb, not dna sting
+	var/lingabsorbs = 0 //how many lings they've absorbed
 	var/chem_charges = 20
 	var/chem_storage = 75
 	var/chem_recharge_rate = 1

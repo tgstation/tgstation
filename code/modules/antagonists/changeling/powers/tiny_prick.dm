@@ -72,6 +72,7 @@
 	chemical_cost = 50
 	dna_cost = 3
 	var/datum/changelingprofile/selected_dna = null
+	var/used = 3
 
 /datum/action/changeling/sting/transformation/Trigger()
 	var/mob/user = usr
@@ -88,16 +89,21 @@
 	..()
 
 /datum/action/changeling/sting/transformation/can_sting(mob/user, mob/living/carbon/target)
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(!..())
 		return
 	if((HAS_TRAIT(target, TRAIT_HUSK)) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
+		return 0
+	if((used + changeling.lingabsorbs) <= 0)
+		to_chat(user, "<span class='warning'>We can't transform any more people!</span>")
 		return 0
 	return 1
 
 /datum/action/changeling/sting/transformation/sting_action(mob/user, mob/target)
 	log_combat(user, target, "stung", "transformation sting", " new identity is '[selected_dna.dna.real_name]'")
 	var/datum/dna/NewDNA = selected_dna.dna
+	used--
 	if(ismonkey(target))
 		to_chat(user, "<span class='notice'>Our genes cry out as we sting [target.name]!</span>")
 
