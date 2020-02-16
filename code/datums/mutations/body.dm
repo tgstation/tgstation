@@ -373,7 +373,7 @@
 	text_gain_indication = "<span class='warning'>Your right foot feels... left.</span>"
 	text_lose_indication = "<span class'notice'>Your right foot feels alright.</span>"
 	difficulty = 16
- 
+
 /datum/mutation/human/extrastun/on_acquiring()
 	. = ..()
 	if(.)
@@ -415,7 +415,7 @@
 	var/list/organs = owner.getorganszone(BODY_ZONE_HEAD, 1)
 
 	for(var/obj/item/organ/I in organs)
-		I.Remove(owner, 1)
+		I.Remove(owner, TRUE)
 
 	explosion(get_turf(owner), 0, 0, 2, 0, TRUE)
 	for(var/mob/living/carbon/human/H in range(2,owner))
