@@ -80,10 +80,3 @@
 /obj/machinery/computer/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	if(port && (shuttleId == initial(shuttleId) || override))
 		shuttleId = port.id
-
-//station-specific shuttle consoles
-/obj/machinery/computer/shuttle/donut_elevator
-	name = "elevator console"
-	desc = "A console that controls one of the station's elevators."
-	shuttleId = "donut_elevator"
-	possible_destinations = "donut_top;donut_bottom"
