@@ -179,7 +179,7 @@
 		return
 
 	to_chat(joe, "<span class='notice'>As you burn the picture, a nickname comes to mind...</span>")
-	var/nickname = input(joe, "Pick a nickname", "Mafioso Nicknames") as text|null
+	var/nickname = stripped_input(joe, "Pick a nickname", "Mafioso Nicknames", null, MAX_NAME_LEN, TRUE) as text|null
 	if(!nickname)
 		return
 	var/new_name
