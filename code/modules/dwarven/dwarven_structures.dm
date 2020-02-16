@@ -49,20 +49,36 @@
 	icon_state = "dwarven_forge"
 
 
-/obj/structure/destructible/dwarven/lava_forge/attackby(obj/item/stack/ore/I, mob/living/user, params)
-	var/refined = I.refined_type
+/obj/structure/destructible/dwarven/lava_forge/attackby(obj/item/I, mob/living/user, params)
+	if(!istype(src, /obj/item/stack/ore))
+		return ..()
+	var/obj/item/stack/ore/O = src
+	var/obj/item/refined = O.refined_type
 	if(isnull(refined))
 		return
-	else
-		var/probability = (rand(100,200)/100)
-		var/burn_value = probability*I.amount
-		var/amountrefined = round(burn_value, 1)
-		if(amountrefined < 1)
-			qdel(I)
-		else
-			new refined(drop_location(),amountrefined)
-			qdel(I)
+	try_forge(user, O, refined)
 	. = ..()
+
+/obj/structure/destructible/dwarven/lava_forge/proc/try_forge(mob/user, obj/item/stack/ore/O, obj/item/refined_result, recursive = FALSE)
+	if(!recursive) //Only say this the first time
+		to_chat(user, "<span class='notice'>You start smelting [O] into [initial(refined_result.name)].</span>")
+	if(!do_after(user, 30, target = src))
+		return FALSE
+	var/efficiency = user?.mind.get_skill_modifier(/datum/skill/furnacing, SKILL_EFFICIENCY_MODIFIER)
+	if(prob(efficiency))
+		to_chat(user, "<span class='nicegreen'>You succeed in smelting [O]!</span>")
+		O.use(1)
+		new refined_result(drop_location())
+		user?.mind.adjust_experience(/datum/skill/furnacing, O.mine_experience * 2) //Get double because smelting is more effort than mining in my honest opinion ok? ok.
+		if(O) //Only try going recursive if we still have ore
+			try_forge(user, O, refined_result, TRUE)
+	else
+		O.use(1)
+		user?.mind.adjust_experience(/datum/skill/furnacing, O.mine_experience * 0.5)
+		to_chat(user, "<span class='warning'>You fail smelting [O] and destroy it!</span>")
+		if(O) //Only try going recursive if we still have ore
+			try_forge(user, O, refined_result, TRUE)
+
 
 /obj/structure/destructible/dwarven/blood_pool
 	name = "Blood infuser"

@@ -18,6 +18,7 @@
 
 //Skill modifier types
 #define SKILL_SPEED_MODIFIER "skill_speed_modifier"
+#define SKILL_EFFICIENCY_MODIFIER "skill_efficiency_modifier"
 
 
 // Gets the reference for the skill type that was given
