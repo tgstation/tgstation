@@ -43,6 +43,7 @@ Contains:
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/deathsquad
 	dog_fashion = /datum/dog_fashion/back/deathsquad
+	cell = /obj/item/stock_parts/cell/bluespace
 
 	//NEW SWAT suit
 /obj/item/clothing/suit/space/swat
@@ -187,6 +188,12 @@ Contains:
 	strip_delay = 130
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	cell = /obj/item/stock_parts/cell/bluespace
+
+// ERT suit's gets EMP Protection
+/obj/item/clothing/suit/space/hardsuit/ert/Initialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_CONTENTS)
 
 	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
@@ -427,6 +434,7 @@ Contains:
 	armor = list("melee" = 60, "bullet" = 40, "laser" = 40, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	strip_delay = 130
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+<<<<<<< HEAD
 
 //We can either be alive monsters or dead monsters. You choose.
 /obj/item/clothing/head/helmet/space/hardsuit/combatmedic
@@ -447,3 +455,6 @@ Contains:
 	armor = list("melee" = 35, "bullet" = 10, "laser" = 20, "energy" = 30, "bomb" = 5, "bio" = 100, "rad" = 50, "fire" = 65, "acid" = 75)
 	allowed = list(/obj/item/gun, /obj/item/melee/baton, /obj/item/circular_saw, /obj/item/tank/internals, /obj/item/storage/box/pillbottles,\
 	/obj/item/storage/firstaid, /obj/item/stack/medical/gauze, /obj/item/stack/medical/suture, /obj/item/stack/medical/mesh, /obj/item/storage/bag/chemistry)
+=======
+	cell = /obj/item/stock_parts/cell/hyper
+>>>>>>> upstream/master

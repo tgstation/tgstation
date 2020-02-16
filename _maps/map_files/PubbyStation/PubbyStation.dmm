@@ -40857,6 +40857,14 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/item/stock_parts/cell/emproof{
+	pixel_x = -4;
+	pixel_y = -2
+	},
+/obj/item/stock_parts/cell/emproof{
+	pixel_x = 4;
+	pixel_y = 6
+	},
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_smes)
 "bWA" = (
