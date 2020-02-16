@@ -473,8 +473,8 @@
 	tag.my_gang = user_gang.my_gang
 	tag.icon_state = "[user_gang.gang_id]_tag"
 	tag.name = "[tag.my_gang.name] gang tag"
-	tag.desc = "Looks like someone's claimed this area for [tag.my_gang.name]"
-	to_chat(user, "<span class='notice'>You tagged [territory] for the [tag.my_gang.name]!</span>")
+	tag.desc = "Looks like someone's claimed this area for [tag.my_gang.name]."
+	to_chat(user, "<span class='notice'>You tagged [territory] for [tag.my_gang.name]!</span>")
 
 /obj/item/toy/crayon/proc/territory_claimed(area/territory, mob/user)
 	for(var/obj/effect/decal/cleanable/crayon/gang/G in GLOB.gang_tags)

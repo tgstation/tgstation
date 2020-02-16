@@ -77,6 +77,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		var/datum/antagonist/gang/new_gangster = new gang_to_use()
 		var/datum/team/gang/ballas = new /datum/team/gang()
 		new_gangster.my_gang = ballas
+		new_gangster.starter_gangster = TRUE
 		gangs += ballas
 		ballas.add_member(gangbanger)
 		ballas.name = new_gangster.gang_name
