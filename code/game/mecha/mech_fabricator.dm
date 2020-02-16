@@ -212,13 +212,13 @@
 			return
 	temp = null
 	while(D)
-		if(stat&(NOPOWER|BROKEN))
+		if(machine_stat&(NOPOWER|BROKEN))
 			return FALSE
 		if(build_part(D))
 			remove_from_queue(1)
 		else
 			return FALSE
-		D = listgetindex(queue, 1)
+		D = LAZYACCESS(queue, 1)
 	say("Queue processing finished successfully.")
 
 /obj/machinery/mecha_part_fabricator/proc/list_queue()
@@ -242,16 +242,8 @@
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/sync()
-	temp = "Updating local R&D database..."
-	updateUsrDialog()
-	sleep(30) //only sleep if called by user
-
 	for(var/obj/machinery/computer/rdconsole/RDC in oview(7,src))
 		RDC.stored_research.copy_research_to(stored_research)
-		temp = "Processed equipment designs.<br>"
-		//check if the tech coefficients have changed
-		temp += "<a href='?src=[REF(src)];clear_temp=1'>Return</a>"
-
 		updateUsrDialog()
 		say("Successfully synchronized with R&D server.")
 		return
@@ -291,8 +283,9 @@
 				left_part += output_parts_list(part_set)
 				left_part += "<hr><a href='?src=[REF(src)];screen=main'>Return</a>"
 	dat = {"<html>
-			  <head>
-			  <title>[name]</title>
+			<head>
+			<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+			<title>[name]</title>
 				<style>
 				.res_name {font-weight: bold; text-transform: capitalize;}
 				.red {color: #f00;}
@@ -399,11 +392,11 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/mecha_part_fabricator/proc/do_process_queue()		
-	if(processing_queue || being_built)		
-		return FALSE		
+/obj/machinery/mecha_part_fabricator/proc/do_process_queue()
+	if(processing_queue || being_built)
+		return FALSE
 	processing_queue = 1
-	process_queue()		
+	process_queue()
 	processing_queue = 0
 
 /obj/machinery/mecha_part_fabricator/proc/eject_sheets(eject_sheet, eject_amt)

@@ -350,7 +350,7 @@ export const SyndPane = props => {
                       )}
                       <Button
                         content="Purchase"
-                        disabled={data.redeemable_tc < item.cost
+                        disabled={data.contract_rep < item.cost
                           || (limited && item.limited <= 0)}
                         onClick={() => act('buy_hub', {
                           item: item.name,

@@ -75,3 +75,13 @@
 	)
 
 #define TECHWEB_BOMB_POINTCAP		50000 //Adjust as needed; Stops toxins from nullifying RND progression mechanics. Current Value Cap Radius: 100
+
+//research point values for slime extracts
+
+#define SLIME_RESEARCH_TIER_0 100
+#define SLIME_RESEARCH_TIER_1 500
+#define SLIME_RESEARCH_TIER_2 1000
+#define SLIME_RESEARCH_TIER_3 1500
+#define SLIME_RESEARCH_TIER_4 2000
+#define SLIME_RESEARCH_TIER_5 2500
+#define SLIME_RESEARCH_TIER_RAINBOW 5000

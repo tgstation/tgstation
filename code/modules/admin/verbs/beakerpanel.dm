@@ -61,7 +61,7 @@
 	return container
 
 /datum/admins/proc/beaker_panel()
-	set category = "Debug"
+	set category = "Admin - Events"
 	set name = "Spawn reagent container"
 	if(!check_rights())
 		return
@@ -69,9 +69,9 @@
 	var/dat = {"
 		<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		<html>
-			<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-			<meta http-equiv="X-UA-Compatible" content="IE=edge">
 			<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+				<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 				<link rel='stylesheet' type='text/css' href='common.css'>
 				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.full.min.js"></script>

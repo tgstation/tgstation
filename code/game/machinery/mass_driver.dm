@@ -15,7 +15,7 @@
 	id = "[idnum][id]"
 
 /obj/machinery/mass_driver/proc/drive(amount)
-	if(stat & (BROKEN|NOPOWER))
+	if(machine_stat & (BROKEN|NOPOWER))
 		return
 	use_power(500)
 	var/O_limit
@@ -37,6 +37,6 @@
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
 		return
-	if(stat & (BROKEN|NOPOWER))
+	if(machine_stat & (BROKEN|NOPOWER))
 		return
 	drive()
