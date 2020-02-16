@@ -80,6 +80,13 @@
 	if (opacity)
 		has_opaque_atom = TRUE
 
+	var/temp_list = list()
+	for(var/i in custom_materials)
+		temp_list[SSmaterials.GetMaterialRef(i)] = custom_materials[i] //Get the proper instanced version
+
+	custom_materials = null //Null the list to prepare for applying the materials properly
+	set_custom_materials(temp_list)
+
 	ComponentInitialize()
 
 	return INITIALIZE_HINT_NORMAL

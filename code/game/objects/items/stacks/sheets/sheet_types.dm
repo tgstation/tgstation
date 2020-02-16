@@ -667,3 +667,10 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	desc = "A source of raw socialism, capable of bringing forth the prophesized Soviet Golem."
 	icon_state = "sheet-stalinium"
 	merge_type = /obj/item/stack/sheet/stalinium
+
+/obj/item/stack/sheet/meat
+	name = "someone's meat sheet"
+	desc = "Something's bloody meat compressed into a nice solid sheet"
+	icon_state = "sheet-meat"
+	material_flags = MATERIAL_COLOR
+	merge_type = /obj/item/stack/sheet/meat

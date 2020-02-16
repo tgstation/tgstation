@@ -1182,7 +1182,13 @@
 		/obj/item/stock_parts/matter_bin = 2)
 
 //Misc
-
+/obj/item/circuitboard/machine/sheetifier
+	name = "Sheet-meister 2000 (Machine Board)"
+	icon_state = "supply"
+	build_path = /obj/machinery/sheetifier
+	req_components = list(
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/matter_bin = 2)
 
 /obj/item/circuitboard/machine/abductor
 	name = "alien board (Report This)"

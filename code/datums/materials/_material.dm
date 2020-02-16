@@ -46,8 +46,11 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(istype(source, /obj)) //objs
 		on_applied_obj(source, amount, material_flags)
 
+	if(istype(source, /turf)) //objs
+		on_applied_turf(source, amount, material_flags)
+
 ///This proc is called when the material is added to an object specifically.
-/datum/material/proc/on_applied_obj(var/obj/o, amount, material_flags)
+/datum/material/proc/on_applied_obj(obj/o, amount, material_flags)
 	if(material_flags & MATERIAL_AFFECT_STATISTICS)
 		var/new_max_integrity = CEILING(o.max_integrity * integrity_modifier, 1)
 		o.modify_max_integrity(new_max_integrity)
@@ -64,6 +67,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 			temp_armor_list[i] = current_armor[i] * armor_modifiers[i]
 		o.armor = getArmor(arglist(temp_armor_list))
 
+/datum/material/proc/on_applied_turf(var/turf/T, amount, material_flags)
+	return
+
 ///This proc is called when the material is removed from an object.
 /datum/material/proc/on_removed(atom/source, material_flags)
 	if(material_flags & MATERIAL_COLOR) //Prevent changing things with pre-set colors, to keep colored toolboxes their looks for example
@@ -77,10 +83,16 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(istype(source, /obj)) //objs
 		on_removed_obj(source, material_flags)
 
+	if(istype(source, /turf)) //turfs
+		on_applied_turf(source, material_flags)
+
 ///This proc is called when the material is removed from an object specifically.
-/datum/material/proc/on_removed_obj(var/obj/o, amount, material_flags)
+/datum/material/proc/on_removed_obj(var/turf/o, material_flags)
 	if(material_flags & MATERIAL_AFFECT_STATISTICS)
 		var/new_max_integrity = initial(o.max_integrity)
 		o.modify_max_integrity(new_max_integrity)
 		o.force = initial(o.force)
 		o.throwforce = initial(o.throwforce)
+
+/datum/material/proc/on_removed_turf(turf/T, material_flags)
+	return
