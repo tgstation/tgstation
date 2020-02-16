@@ -157,8 +157,11 @@
 					smoke.start()
 	..()
 
-
-
+/obj/item/dwarven/mold
+	name = "dwarven mold"
+	desc = "Dwarven mold, one of their great achievments. Allows for casting of very complex tools and armors"
+	icon_state = "mold"
+	var/mold_type
 
 
 
