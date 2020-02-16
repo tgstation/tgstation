@@ -10,8 +10,7 @@
 	max_integrity = 200
 	integrity_failure = 0.25
 	var/obj/item/showpiece = null
-	//var/obj/item/showpiece_type = null //This allows for showpieces that can only hold items if they're the same istype as this.
-	var/list/compatible_items_typecache
+	var/obj/item/showpiece_type = null //This allows for showpieces that can only hold items if they're the same istype as this.
 	var/alert = TRUE
 	var/open = FALSE
 	var/openable = TRUE
@@ -134,7 +133,7 @@
 				to_chat(user,  "<span class='notice'>You [open ? "close":"open"] [src].</span>")
 				toggle_lock(user)
 	else if(open && !showpiece)
-		if(compatible_items_typecache && !is_type_in_typecache(W, compatible_items_typecache))
+		if(showpiece_type && !istype(W, showpiece_type))
 			to_chat(user, "<span class='notice'>This doesn't belong in this kind of display.</span>")
 			return TRUE
 		if(user.transferItemToLoc(W, src))
@@ -251,22 +250,12 @@
 /obj/structure/displaycase/captain
 	start_showpiece_type = /obj/item/gun/energy/laser/captain
 	req_access = list(ACCESS_CENT_SPECOPS) //this was intentional, presumably to make it slightly harder for caps to grab their gun roundstart
-	var/static/list/captain_typecache = typecacheof(/obj/item/gun/energy/laser/captain)
-
-/obj/structure/displaycase/captain/Initialize()
-	. = ..()
-	compatible_items_typecache = captain_typecache
 
 /obj/structure/displaycase/labcage
 	name = "lab cage"
 	desc = "A glass lab container for storing interesting creatures."
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
 	req_access = list(ACCESS_RD)
-	var/static/list/rd_typecache = typecacheof(/obj/item/clothing/mask/facehugger)
-
-/obj/structure/displaycase/labcage/Initialize()
-	. = ..()
-	compatible_items_typecache = rd_typecache
 
 /obj/structure/displaycase/noalert
 	alert = FALSE
@@ -279,11 +268,9 @@
 	var/is_locked = TRUE
 	integrity_failure = 0
 	openable = FALSE
-	var/static/list/trophy_typecache = typecacheof(/obj/item)
 
 /obj/structure/displaycase/trophy/Initialize()
 	. = ..()
-	compatible_items_typecache = trophy_typecache
 	GLOB.trophy_cases += src
 
 /obj/structure/displaycase/trophy/Destroy()
@@ -384,16 +371,11 @@
 	density = FALSE
 	max_integrity = 100
 	req_access = list(ACCESS_KITCHEN)
-	var/static/list/kitchen_typecache = typecacheof(/obj/item/reagent_containers/food)
-	//showpiece_type = /obj/item/reagent_containers/food
+	showpiece_type = /obj/item/reagent_containers/food
 	alert = FALSE //No, we're not calling the fire department because someone stole your cookie.
 	glass_fix = FALSE //Fixable with tools instead.
 	var/sale_price = 20
 	var/datum/bank_account/payments_acc = null
-
-/obj/structure/displaycase/forsale/Initialize()
-	. = ..()
-	compatible_items_typecache = kitchen_typecache
 
 /obj/structure/displaycase/forsale/update_icon()	//remind me to fix my shitcode later
 	var/icon/I
@@ -428,42 +410,41 @@
 			to_chat(user, "<span class='notice'>Vend-a-tray registered. Use your ID on grab intent to change the sale price, or disarm intent to open the tray.</span>")
 			return
 		//Buying the contained item with the ID.
-		switch(user.a_intent)
-			if(INTENT_HELP)
-				if(!showpiece)
-					to_chat(user, "<span class='notice'>There's nothing for sale.</span>")
-					return TRUE
-				if(broken)
-					to_chat(user, "<span class='notice'>[src] appears to be broken.</span>")
-					return TRUE
-				var/confirm = alert(user, "Purchase [showpiece] for [sale_price]?", "Purchase?", "Confirm", "Cancel")
-				if(confirm == "Cancel")
-					return TRUE
-				var/datum/bank_account/account = potential_acc.registered_account
-				if(!account.has_money(sale_price))
-					to_chat(user, "<span class='notice'>You do not possess the funds to purchase this.</span>")
-					return TRUE
-				else
-					account.adjust_money(-sale_price)
-					if(payments_acc)
-						payments_acc.adjust_money(sale_price)
-					user.put_in_hands(showpiece)
-					to_chat(user, "<span class='notice'>You purchase [showpiece] for [sale_price] credits.</span>")
-					playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
-					icon = 'icons/obj/stationobjs.dmi'
-					flick("laserbox_vend", src)
-					showpiece = null
-					update_icon()
-					return TRUE
-			//Setting the object's price.
-			if(INTENT_GRAB)
-				var/new_price_input = input(user,"Set the sale price for this vend-a-tray.","new price",0) as num|null
-				if(isnull(new_price_input) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-					return
-				new_price_input = CLAMP(round(new_price_input, 1), 10, 1000)
-				sale_price = new_price_input
-				to_chat(user, "<span class='notice'>The cost is now set to [sale_price].</span>")
+		if(user.a_intent == INTENT_HELP)
+			if(!showpiece)
+				to_chat(user, "<span class='notice'>There's nothing for sale.</span>")
 				return TRUE
+			if(broken)
+				to_chat(user, "<span class='notice'>[src] appears to be broken.</span>")
+				return TRUE
+			var/confirm = alert(user, "Purchase [showpiece] for [sale_price]?", "Purchase?", "Confirm", "Cancel")
+			if(confirm == "Cancel")
+				return TRUE
+			var/datum/bank_account/account = potential_acc.registered_account
+			if(!account.has_money(sale_price))
+				to_chat(user, "<span class='notice'>You do not possess the funds to purchase this.</span>")
+				return TRUE
+			else
+				account.adjust_money(-sale_price)
+				if(payments_acc)
+					payments_acc.adjust_money(sale_price)
+				user.put_in_hands(showpiece)
+				to_chat(user, "<span class='notice'>You purchase [showpiece] for [sale_price] credits.</span>")
+				playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
+				icon = 'icons/obj/stationobjs.dmi'
+				flick("laserbox_vend", src)
+				showpiece = null
+				update_icon()
+				return TRUE
+		//Setting the object's price.
+		if(user.a_intent == INTENT_GRAB)
+			var/new_price_input = input(user,"Set the sale price for this vend-a-tray.","new price",0) as num|null
+			if(isnull(new_price_input) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+				return
+			new_price_input = CLAMP(round(new_price_input, 1), 10, 1000)
+			sale_price = new_price_input
+			to_chat(user, "<span class='notice'>The cost is now set to [sale_price].</span>")
+			return TRUE
 	if(I.tool_behaviour == TOOL_WRENCH && open && user.a_intent == INTENT_HELP )
 		if(anchored)
 			to_chat(user, "<span class='notice'>You start unsecuring [src]...</span>")
@@ -487,7 +468,7 @@
 
 /obj/structure/displaycase/forsale/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(broken)
+	if(obj_integrity <= (integrity_failure *  max_integrity))
 		to_chat(user, "<span class='notice'>You start recalibrating [src]'s hover field...</span>")
 		if(do_after(user, 20, target = src))
 			broken = 0
