@@ -11,7 +11,7 @@
 	description = "<span class='warning'>I hate that brand of cigarettes.</span>\n"
 	mood_change = -2
 	timeout = 6 MINUTES
-	
+
 /datum/mood_event/overdose
 	mood_change = -8
 	timeout = 5 MINUTES
@@ -44,7 +44,7 @@
 	description = "<span class='boldwarning'>[drug_name]! [drug_name]! [drug_name]!</span>\n"
 
 /datum/mood_event/happiness_drug
-	description = "<span class='nicegreen'>I can't feel anything and I never want this to end.</span>\n"
+	description = "<span class='nicegreen'>Can't feel a thing...</span>\n"
 	mood_change = 50
 
 /datum/mood_event/happiness_drug_good_od

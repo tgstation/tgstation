@@ -1266,3 +1266,25 @@
 /obj/item/storage/box/sparklers/PopulateContents()
 	for(var/i in 1 to 7)
 		new/obj/item/sparkler(src)
+
+/obj/item/storage/box/gum
+	name = "bubblegum packet"
+	desc = "The packaging is entirely in japanese, apparently. You can't make out a single word of it."
+	icon_state = "bubblegum_generic"
+	illustration = null
+	foldable = null
+
+/obj/item/storage/box/gum/nicotine
+	name = "nicotine gum packet"
+	desc = "Designed to help with nicotine addiction and oral fixation all at once without destroying your lungs in the process. Mint flavored!"
+	icon_state = "bubblegum_nicotine"
+
+/obj/item/storage/box/gum/happiness
+	name = "HP+ gum packet"
+	desc = "A seemingly homemade packaging with an odd smell. It has a weird drawing of a smiling face sticking out its tongue."
+	icon_state = "bubblegum_happiness"
+
+/obj/item/storage/box/gum/happiness/Initialize()
+	. = ..()
+	if (prob(50))
+		desc += "You can faintly make out the word 'Hemopagopril' was once scribbled on the faded packaging."
