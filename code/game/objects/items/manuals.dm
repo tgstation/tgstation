@@ -199,6 +199,15 @@
 				</html>
 			"}
 
+/obj/item/book/manual/chef_recipes/double_fry
+	desc = "Has a note on the side about frying things, but twice."
+/obj/item/book/manual/chef_recipes/double_fry/attack_self(mob/user)
+	if(!HAS_TRAIT(user, TRAIT_DOUBLE_FRIED))
+		to_chat(user,"You have unlocked the abillity to fry, but twice.")
+		ADD_TRAIT(user, TRAIT_DOUBLE_FRIED, TRAIT_GENERIC)
+		return
+	. = ..()
+
 /obj/item/book/manual/nuclear
 	name = "Fission Mailed: Nuclear Sabotage 101"
 	icon_state ="bookNuclear"

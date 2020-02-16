@@ -1720,6 +1720,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 0
 	restricted_roles = list("Cook", "Botanist", "Clown", "Mime")
 
+/datum/uplink_item/role_restricted/doublefry
+	name = "Secrets of the Double Fry, By Paula Deen"
+	desc = "Holy arts channeled straight from the Space Texas Fair, right onto a barely stable tome."
+	item = /obj/item/book/manual/chef_recipes/double_fry
+	cost = 2
+	surplus = 20
+	restricted_roles = list("Cook")
+
 /datum/uplink_item/role_restricted/ez_clean_bundle
 	name = "EZ Clean Grenade Bundle"
 	desc = "A box with three cleaner grenades using the trademark Waffle Co. formula. Serves as a cleaner and causes acid damage to anyone standing nearby. \
