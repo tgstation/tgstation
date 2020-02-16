@@ -390,14 +390,10 @@
 	var/datum/game_mode/gang/mode = SSticker.mode
 	var/lowest_gang_count = my_gang_datum.my_gang.members.len
 	for(var/datum/team/gang/TT in mode.gangs)
-		var/alive_gangsters = 0
 		for(var/datum/mind/gangers in TT.members)
-			if(ishuman(gangers.current) && gangers.current.client && !gangers.current.stat)
-				alive_gangsters++
-		if(alive_gangsters)
 			if(TT != my_gang_datum.my_gang)
-				if(alive_gangsters < lowest_gang_count)
-					lowest_gang_count = alive_gangsters
+				if(TT.members.len < lowest_gang_count)
+					lowest_gang_count = TT.members.len
 	if(my_gang_datum.my_gang.members.len >= (lowest_gang_count + mode.gang_balance_cap))
 		to_chat(H, "Your gang is pretty packed right now. You don't need more members just yet.")
 		return FALSE
