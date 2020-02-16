@@ -19,32 +19,33 @@ datum/component/quality
 	var/originalName
 	var/list/affixes
 	var/list/appliedComponents
-
+	var/obj/item/parent_item
 	var/static/list/affixListing
 	var/list/quality_list = list("0" = 1, "1" = 2 , "2" = 2 , "3" = 1)
 	//Skill of our choosing, it can be whatever we want
 	//Mind - Mind of the creator
 	//Modifier - flat bonus towards quality
 
-/datum/component/quality/Initialize(datum/skill,datum/mind,modifier)
+/datum/component/quality/Initialize(datum/skill/S,datum/mind/M,modifier)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	generate_quality(skill,mind,modifier)
+	parent_item = parent
+	generate_quality(S,M,modifier)
 	apply_quality()
 
-/datum/component/quality/generate_quality(datum/skill,datum/mind,modifier)
-	quality_level = clamp(pickweight(quality_list) + mind.known_skills[skill] + modifier,0,9)
+/datum/component/quality/proc/generate_quality(datum/skill/S,datum/mind/M,modifier)
+	quality_level = clamp(pickweight(quality_list) + M.known_skills[S] + modifier,0,9)
 	return quality_level
 
-/datum/component/quality/apply_quality()
+/datum/component/quality/proc/apply_quality()
 	var/quality = quality_level2quality_val(quality_level)
-	parent.force *= quality
-	parent.throwforce *= quality
-	parent.max_integrity += quality
+	parent_item.force *= quality
+	parent_item.throwforce *= quality
+	parent_item.max_integrity += quality
 	var/armor_qual = (quality - 1)*20
-	parent.armor.modifyRating(armor_qual,armor_qual,armor_qual,armor_qual,armor_qual,armor_qual,armor_qual,armor_qual,armor_qual,armor_qual) // modifies all armor ratings
+	parent_item.armor.modifyRating(armor_qual,armor_qual,armor_qual,armor_qual,armor_qual,armor_qual,armor_qual,armor_qual,armor_qual,armor_qual) // modifies all armor ratings
 
-/datum/component/quality/quality_level2quality_val(quality_level)
+/datum/component/quality/proc/quality_level2quality_val(quality_level)
 	switch(quality_level)
 		if(0)
 			return UNUSABLE_QUALITY
@@ -67,7 +68,7 @@ datum/component/quality
 		if(9)
 			return ARTIFACT_QUALITY
 
-/datum/component/quality/quality_val2quality_level(quality_val)
+/datum/component/quality/proc/quality_val2quality_level(quality_val)
 	switch(quality_val)
 		if(UNUSABLE_QUALITY)
 			return 0
