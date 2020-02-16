@@ -46,7 +46,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(istype(source, /obj)) //objs
 		on_applied_obj(source, amount, material_flags)
 
-	if(istype(source, /turf)) //objs
+	if(istype(source, /turf)) //turfs
 		on_applied_turf(source, amount, material_flags)
 
 ///This proc is called when the material is added to an object specifically.
@@ -84,10 +84,10 @@ Simple datum which is instanced once per type and is used for every object of sa
 		on_removed_obj(source, material_flags)
 
 	if(istype(source, /turf)) //turfs
-		on_applied_turf(source, material_flags)
+		on_removed_turf(source, material_flags)
 
 ///This proc is called when the material is removed from an object specifically.
-/datum/material/proc/on_removed_obj(var/turf/o, material_flags)
+/datum/material/proc/on_removed_obj(obj/o, material_flags)
 	if(material_flags & MATERIAL_AFFECT_STATISTICS)
 		var/new_max_integrity = initial(o.max_integrity)
 		o.modify_max_integrity(new_max_integrity)

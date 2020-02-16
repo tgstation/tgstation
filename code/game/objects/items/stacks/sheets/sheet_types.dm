@@ -669,8 +669,11 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	merge_type = /obj/item/stack/sheet/stalinium
 
 /obj/item/stack/sheet/meat
-	name = "someone's meat sheet"
+	name = "meat sheet"
 	desc = "Something's bloody meat compressed into a nice solid sheet"
 	icon_state = "sheet-meat"
 	material_flags = MATERIAL_COLOR
+	custom_materials = list(/datum/material/meat = MINERAL_MATERIAL_AMOUNT * 4)
 	merge_type = /obj/item/stack/sheet/meat
+	material_type = /datum/material/meat
+	material_modifier = 1 //None of that wussy stuff

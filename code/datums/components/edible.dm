@@ -92,7 +92,11 @@ Behavior that's still missing from this component that original food items had t
 		return
 	if(!owner.reagents.total_volume)//Shouldn't be needed but it checks to see if it has anything left in it.
 		to_chat(feeder, "<span class='warning'>None of [owner] left, oh no!</span>")
-		qdel(parent)
+		if(isturf(parent))
+			var/turf/T = parent
+			T.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
+		else
+			qdel(parent)
 		return
 	if(!CanConsume(eater, feeder))
 		return

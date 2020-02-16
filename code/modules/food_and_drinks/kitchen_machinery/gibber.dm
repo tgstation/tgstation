@@ -193,10 +193,6 @@
 				newmeat.subjectjob = sourcejob
 		allmeat[i] = newmeat
 
-		var/list/meat_mats = list(getmaterialref(/datum/material/meat) = MINERAL_MATERIAL_AMOUNT) //One sheet
-
-		newmeat.set_custom_materials(meat_mats)
-
 	if(typeofskin)
 		skin = new typeofskin
 

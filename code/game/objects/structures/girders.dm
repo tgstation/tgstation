@@ -163,7 +163,7 @@
 						qdel(src)
 					return
 
-		if(S.sheettype && S.sheettype != "runed")
+		if(S.sheettype != "runed")
 			var/M = S.sheettype
 			if(state == GIRDER_DISPLACED)
 				if(S.get_amount() < 2)
@@ -196,9 +196,9 @@
 						var/turf/newturf = T.PlaceOnTop(/turf/closed/wall/material)
 						var/list/material_list = list()
 						if(S.material_type)
-							material_list[S.material_type] = MINERAL_MATERIAL_AMOUNT
+							material_list[SSmaterials.GetMaterialRef(S.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
 						if(material_list)
-							new_turf.set_custom_materials(material_list)
+							newturf.set_custom_materials(material_list)
 
 					transfer_fingerprints_to(T)
 					qdel(src)
