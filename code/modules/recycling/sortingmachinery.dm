@@ -11,6 +11,9 @@
 	var/obj/item/barcode/sticker
 
 /obj/structure/bigDelivery/interact(mob/user)
+	to_chat(user, "<span class='notice'>You start to unwrap the package...</span>")
+	if(!do_after(user, 15, target = user))
+		return
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	unwrap_contents()
@@ -169,6 +172,9 @@
 		AM.ex_act()
 
 /obj/item/smallDelivery/attack_self(mob/user)
+	to_chat(user, "<span class='notice'>You start to unwrap the package...</span>")
+	if(!do_after(user, 15, target = user))
+		return
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	unwrap_contents()
 	for(var/X in contents)
