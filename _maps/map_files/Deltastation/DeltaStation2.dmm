@@ -20293,19 +20293,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
-"aRB" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 "aRC" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
@@ -98386,7 +98373,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/grunge{
 	name = "Morgue";
-	req_access_txt = "9"
+	req_access_txt = "5;6"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line,
@@ -143177,7 +143164,7 @@ aLu
 aMG
 aOm
 aPR
-aRB
+aRw
 aTc
 aUV
 aWM
