@@ -5,38 +5,66 @@
 	var/alignment = ALIGNMENT_GOOD
 	var/starter = TRUE // Does this require something to unlock?
 	var/favor = 0 //MANA!
+	var/max_favor = 1000
 	var/default_item_favor = 5
 	var/list/desired_items //turned to typecache
 	var/list/desired_items_typecache
+	var/list/rites_list
+// If these are set, changes the Altar of God
+	var/altar_icon
+	var/altar_icon_state
 
 /datum/religion_sect/New()
 	if(desired_items)
 		desired_items_typecache = typecacheof(desired_items)
+	if(rites_list)
+		var/listylist = generate_rites_list()
+		rites_list = listylist
 	on_select()
+
+///Generates a list of rites with 'name' = 'type'
+/datum/religion_sect/proc/generate_rites_list()
+	. = list()
+	for(var/i in rites_list)
+		if(!ispath(i))
+			continue
+		var/datum/religion_rites/RI = i
+		. += list("[initial(RI.name)] ([initial(RI.favor_cost)] favor)" = i)
 
 /// Activates once selected
 /datum/religion_sect/proc/on_select()
+
 /// Activates once selected and on newjoins, oriented around people who become holy.
 /datum/religion_sect/proc/on_conversion(mob/living/L)
 	to_chat(L, "<span class='notice'>[convert_opener]</span")
+
 /// Returns TRUE if the item can be sacrificed. Can be modified to fit item being tested as well as person offering.
 /datum/religion_sect/proc/can_sacrifice(obj/item/I, mob/living/L)
 	. = TRUE
 	if(!is_type_in_typecache(I,desired_items_typecache))
 		return FALSE
+
 /// Activates when the sect sacrifices an item. Can provide additional benefits to the sacrificer, which can also be dependent on their holy role! If the item is suppose to be eaten, here is where to do it. NOTE INHER WILL NOT DELETE ITEM FOR YOU!!!!
 /datum/religion_sect/proc/on_sacrifice(obj/item/I, mob/living/L)
 	return adjust_favor(default_item_favor,L)
-/// Adjust Favor by a certain amount. Can provide optional features based on a user.
+
+/// Adjust Favor by a certain amount. Can provide optional features based on a user. Returns actual amount added/removed
 /datum/religion_sect/proc/adjust_favor(amount = 0, mob/living/L)
-	favor += amount
-	return TRUE
+	. = amount
+	if(favor + amount < 0)
+		. = favor //if favor = 5 and we want to subtract 10, we'll only be able to subtract 5
+	if((favor + amount > max_favor))
+		. = (max_favor-favor) //if favor = 5 and we want to add 10 with a max of 10, we'll only be able to add 5
+	favor = clamp(0,max_favor, favor+amount)
+
 /// Sets favor to a specific amount. Can provide optional features based on a user.
 /datum/religion_sect/proc/set_favor(amount = 0, mob/living/L)
-	favor = amount
-	return TRUE
+	favor = clamp(0,max_favor,amount)
+	return favor
+
 /// Activates when an individual uses a rite. Can provide different/additional benefits depending on the user.
 /datum/religion_sect/proc/on_riteuse(mob/living/user)
+
 /// Replaces the bible's bless mechanic. Return TRUE if you want to not do the brain hit.
 /datum/religion_sect/proc/sect_bless(mob/living/L, mob/living/user)
 	if(!ishuman(L))
@@ -63,9 +91,18 @@
 	return TRUE
 
 /datum/religion_sect/puritanism
-	name = "Puritanism"
+	name = "Puritanism (Default)"
 	desc = "Nothing special."
 	convert_opener = "Your run-of-the-mill sect, there are no benefits or boons associated. Praise normalcy!"
+
+/datum/religion_sect/debuganite
+	name = "Debuganites"
+	desc = "Look up, there's no ceiling."
+	convert_opener = "You have transcended the world and can see with your fourth eye... or is third? Ah whatever."
+	desired_items = list(/obj/item/bikehorn)
+	rites_list = list(/datum/religion_rites/tester,/datum/religion_rites/tester2)
+	altar_icon_state = "convertaltar-red"
+
 
 /// SECT_TECH
 /datum/religion_sect/technology
@@ -73,7 +110,7 @@
 	desc = "A sect oriented around technology."
 	convert_opener = "May you find peace in a metal shell, acolyte.<br>Bibles now recharge cyborgs and heal robotic limbs if targeted, but does not heal organic ones."
 	alignment = ALIGNMENT_NEUT
-	desired_items = list(/obj/item/stock_parts/cell, /obj/item/research_notes)
+	altar_icon_state = "convertaltar-blue"
 
 /datum/religion_sect/technology/sect_bless(mob/living/L, mob/living/user)
 	if(iscyborg(L))

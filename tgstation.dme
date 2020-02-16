@@ -2667,6 +2667,7 @@
 #include "code\modules\recycling\disposal\pipe_sorting.dm"
 #include "code\modules\religion\religion_sects.dm"
 #include "code\modules\religion\religion_structures.dm"
+#include "code\modules\religion\rites.dm"
 #include "code\modules\research\bepis.dm"
 #include "code\modules\research\designs.dm"
 #include "code\modules\research\destructive_analyzer.dm"

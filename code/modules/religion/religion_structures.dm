@@ -6,22 +6,46 @@
 	density = TRUE
 	anchored = TRUE
 	var/datum/religion_sect/sect_to_altar // easy access!
+	var/datum/religion_rites/performing_rite
 
 /obj/structure/altar_of_gods/Initialize(mapload)
 	. = ..()
 	if(GLOB.religious_sect)
 		sect_to_altar = GLOB.religious_sect
+		if(sect_to_altar.altar_icon)
+			icon = sect_to_altar.altar_icon
+		if(sect_to_altar.altar_icon_state)
+			icon_state = sect_to_altar.altar_icon_state
 
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
 	. = ..()
+	//sacc
 	if(sect_to_altar?.can_sacrifice(C,user))
 		sect_to_altar.on_sacrifice(C,user)
 		return
+	//everything below is assumed you're bibling it up
 	if(!istype(C, /obj/item/storage/book/bible))
-		return //everything below is assumed you're bibling it up
-	if(GLOB.religious_sect)
-		to_chat(user, "<span class='notice'>There is already a selected sect for your religion.")
 		return
+	if(sect_to_altar)
+		if(!sect_to_altar.rites_list)
+			to_chat(user, "<span class='notice'>Your sect doesn't have any rites to perform!")
+			return
+		var/rite_select = input(user,"Select a rite to perform!","Select a rite",null) in sect_to_altar.rites_list
+		if(!rite_select || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+			to_chat(user,"<span class ='warning'>You cannot perform the rite at this time.</span>")
+			return
+		var/selection2type = sect_to_altar.rites_list[rite_select]
+		performing_rite = new selection2type(src, src)
+		if(!performing_rite.perform_rite(user, src))
+			qdel(performing_rite)
+			performing_rite = null
+		else
+			performing_rite.InvokeEffect(user, src)
+			sect_to_altar.adjust_favor(performing_rite.favor_cost*-1)
+			qdel(performing_rite)
+			performing_rite = null
+		return
+
 	if(user.mind.holy_role != HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='warning'>You are not the high priest, and therefore cannot select a religious sect.")
 		return
@@ -44,6 +68,10 @@
 			continue
 		GLOB.religious_sect.on_conversion(am_i_holy_living)
 	sect_to_altar = GLOB.religious_sect
+	if(sect_to_altar.altar_icon)
+		icon = sect_to_altar.altar_icon
+	if(sect_to_altar.altar_icon_state)
+		icon_state = sect_to_altar.altar_icon_state
 
 
 
