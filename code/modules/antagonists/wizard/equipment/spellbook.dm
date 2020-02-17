@@ -191,6 +191,12 @@
 	category = "Mobility"
 	cost = 1
 
+/datum/spellbook_entry/lock
+	name = "Lock"
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/lock
+	category = "Mobility"
+	cost = 1
+
 /datum/spellbook_entry/fleshtostone
 	name = "Flesh to Stone"
 	spell_type = /obj/effect/proc_holder/spell/targeted/touch/flesh_to_stone
