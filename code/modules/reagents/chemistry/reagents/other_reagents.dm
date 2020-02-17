@@ -2086,7 +2086,7 @@
 /datum/reagent/gravitum/reaction_obj(obj/O, volume)
 	O.AddElement(/datum/element/forced_gravity, 0)
 
-	addtimer(CALLBACK(O, .proc/_RemoveElement, /datum/element/forced_gravity, 0), volume * time_multiplier)
+	addtimer(CALLBACK(O, .proc/_RemoveElement, list(/datum/element/forced_gravity, 0)), volume * time_multiplier)
 
 /datum/reagent/gravitum/on_mob_add(mob/living/L)
 	L.AddElement(/datum/element/forced_gravity, 0) //0 is the gravity, and in this case weightless
