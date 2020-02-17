@@ -242,16 +242,8 @@
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/sync()
-	temp = "Updating local R&D database..."
-	updateUsrDialog()
-	sleep(30) //only sleep if called by user
-
 	for(var/obj/machinery/computer/rdconsole/RDC in oview(7,src))
 		RDC.stored_research.copy_research_to(stored_research)
-		temp = "Processed equipment designs.<br>"
-		//check if the tech coefficients have changed
-		temp += "<a href='?src=[REF(src)];clear_temp=1'>Return</a>"
-
 		updateUsrDialog()
 		say("Successfully synchronized with R&D server.")
 		return
@@ -291,8 +283,9 @@
 				left_part += output_parts_list(part_set)
 				left_part += "<hr><a href='?src=[REF(src)];screen=main'>Return</a>"
 	dat = {"<html>
-			  <head>
-			  <title>[name]</title>
+			<head>
+			<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+			<title>[name]</title>
 				<style>
 				.res_name {font-weight: bold; text-transform: capitalize;}
 				.red {color: #f00;}

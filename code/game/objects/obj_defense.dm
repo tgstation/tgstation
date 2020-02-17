@@ -108,11 +108,11 @@
 /obj/attack_animal(mob/living/simple_animal/M)
 	if(!M.melee_damage_upper && !M.obj_damage)
 		M.emote("custom", message = "[M.friendly_verb_continuous] [src].")
-		return 0
+		return FALSE
 	else
-		var/play_soundeffect = 1
+		var/play_soundeffect = TRUE
 		if(M.environment_smash)
-			play_soundeffect = 0
+			play_soundeffect = FALSE
 		if(M.obj_damage)
 			. = attack_generic(M, M.obj_damage, M.melee_damage_type, "melee", play_soundeffect, M.armour_penetration)
 		else

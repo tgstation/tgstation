@@ -419,3 +419,13 @@
 /area/ruin/space/has_grav/powered/ancient_shuttle
 	name = "Ancient Shuttle"
 	icon_state = "yellow"
+
+//HELL'S FACTORY OPERATING FACILITY
+/area/ruin/space/has_grav/hellfactory
+	name = "Hell Factory"
+	icon_state = "yellow"
+
+/area/ruin/space/has_grav/hellfactoryoffice
+	name = "Hell Factory Office"
+	icon_state = "red"
+	noteleport = TRUE
