@@ -129,6 +129,24 @@
 	projectile_var_overrides = list("range" = range)
 	return ..()
 
+/obj/effect/proc_holder/spell/aimed/grease
+	name = "Grease"
+	desc = "This spell launches a blob of grease at a target, slipping everyone in a 5 tile area around the landing point."
+	school = "evocation"
+	charge_max = 60
+	clothes_req = FALSE
+	invocation = "DUB'YA DII FOR-TEE"
+	invocation_type = "shout"
+	range = 20
+	cooldown_min = 15
+	projectile_type = /obj/projectile/magic/aoe/grease
+	base_icon_state = "grease"
+	action_icon_state = "grease0"
+	sound = 'sound/magic/fireball.ogg'
+	active_msg = "You prepare to cast your grease spell!"
+	deactive_msg = "You vanish your grease...for now."
+	active = FALSE
+
 /obj/effect/proc_holder/spell/aimed/spell_cards
 	name = "Spell Cards"
 	desc = "Blazing hot rapid-fire homing cards. Send your foes to the shadow realm with their mystical power!"

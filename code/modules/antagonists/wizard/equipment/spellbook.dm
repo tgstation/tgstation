@@ -106,6 +106,10 @@
 	name = "Fireball"
 	spell_type = /obj/effect/proc_holder/spell/aimed/fireball
 
+/datum/spellbook_entry/grease
+	name = "Grease"
+	spell_type = /obj/effect/proc_holder/spell/aimed/grease
+
 /datum/spellbook_entry/spell_cards
 	name = "Spell Cards"
 	spell_type = /obj/effect/proc_holder/spell/aimed/spell_cards

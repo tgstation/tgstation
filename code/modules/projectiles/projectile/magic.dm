@@ -678,6 +678,25 @@
 	var/turf/T = get_turf(target)
 	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire)
 
+/obj/projectile/magic/aoe/grease
+	name = "blob of grease"
+	icon_state = "grease"
+	damage = 0
+	damage_type = BRUTE
+	nodamage = TRUE
+
+/obj/projectile/magic/aoe/grease/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/living/M = target
+		if(M.anti_magic_check())
+			visible_message("<span class='warning'>[src] vanishes into smoke on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
+	var/turf/T = get_turf(target)
+	for(var/turf/open/OT in range(T, 5))
+		OT.MakeSlippery(TURF_WET_LUBE, 100)
+
+
 /obj/projectile/magic/aoe/fireball/infernal
 	name = "infernal fireball"
 	exp_heavy = -1
