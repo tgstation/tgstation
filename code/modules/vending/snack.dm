@@ -11,6 +11,7 @@
 		            /obj/item/reagent_containers/food/snacks/sosjerky = 6,
 					/obj/item/reagent_containers/food/snacks/no_raisin = 6,
 					/obj/item/reagent_containers/food/drinks/dry_ramen = 3,
+					/obj/item/storage/box/gum = 3,
 					/obj/item/reagent_containers/food/snacks/energybar = 6)
 	contraband = list(/obj/item/reagent_containers/food/snacks/syndicake = 6,
 					/obj/item/reagent_containers/food/snacks/candy/bronx = 1)
