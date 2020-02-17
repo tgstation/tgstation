@@ -45,10 +45,17 @@
 				H.gib()
 				visible_message("<span class='notice'>Serrated tendrils eagerly pull [H] apart, but find nothing of interest.</span>")
 				return
-			if(H.mind?.has_antag_datum(/datum/antagonist/ashwalker) && H.get_ghost(FALSE, TRUE)) //special interactions for dead lava lizards with ghosts attached
+
+			if(H.mind?.has_antag_datum(/datum/antagonist/ashwalker) && (H.key || H.get_ghost(FALSE, TRUE))) //special interactions for dead lava lizards with ghosts attached
 				visible_message("<span class='warning'>Serrated tendrils carefully pull [H] to [src], absorbing the body and creating it anew.</span>")
-				H.notify_ghost_cloning(message = "Your body has been returned to the nest. You are being remade anew!", sound = 'sound/magic/enter_blood.ogg')
-				addtimer(CALLBACK(src, .proc/remake_walker, H.mind, H.real_name), 5 SECONDS)
+				var/datum/mind/deadmind
+				if(H.key)
+					deadmind = H
+				else
+					deadmind = H.get_ghost(FALSE, TRUE)
+				to_chat(deadmind, "Your body has been returned to the nest. You are being remade anew, and will awaken shortly. </br><b>Your memories will remain intact in your new body, as your soul is being salvaged</b>")
+				SEND_SOUND(deadmind, sound('sound/magic/enter_blood.ogg',volume=100))
+				addtimer(CALLBACK(src, .proc/remake_walker, H.mind, H.real_name), 20 SECONDS)
 				new /obj/effect/gibspawner/generic(get_turf(H))
 				qdel(H)
 				return
