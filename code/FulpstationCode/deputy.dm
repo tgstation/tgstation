@@ -148,7 +148,7 @@ GLOBAL_LIST_INIT(available_deputy_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MED
 			ears = /obj/item/radio/headset/headset_sec/department/med
 			head = /obj/item/clothing/head/beret/sec/medical
 			head_p = /obj/item/clothing/head/helmet/space/plasmaman/medical
-			dep_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CLONING, ACCESS_MECH_MEDICAL, ACCESS_GENETICS, ACCESS_CHEMISTRY)
+			dep_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_MECH_MEDICAL, ACCESS_GENETICS, ACCESS_CHEMISTRY) // ACCESS_CLONING
 			destination = /area/security/checkpoint/medical
 			spawn_point = get_fulp_spawn(destination)
 		if(SEC_DEPT_SCIENCE)

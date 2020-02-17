@@ -45,9 +45,9 @@
 	beating = 0
 	var/fakingit = 0
 
-/obj/item/organ/heart/vampheart/prepare_eat()
-	..()
-	// Do cool stuff for eating vamp heart?
+///obj/item/organ/heart/vampheart/prepare_eat()
+//	..()
+//	// Do cool stuff for eating vamp heart?
 
 /obj/item/organ/heart/vampheart/Restart()
 	beating = 0	// DONT run ..(). We don't want to start beating again.
