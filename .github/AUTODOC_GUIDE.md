@@ -1,0 +1,99 @@
+# dmdoc
+
+**dmdoc** is a documentation generator for DreamMaker, the scripting language
+of the [BYOND] game engine. It produces simple static HTML files based on
+documented files, macros, types, procs, and vars.
+
+We use **dmdoc** to generate documentation for our code, and the documentation
+automatically generated and built on every new commit to the master branch
+
+This gives new developers a clickable reference they can browse to better help
+gain understanding of the /tg/station codebase structure and api reference.
+
+[DOCUMENTATION]: http://codedocs.tgstation13.org
+
+[BYOND]: https://secure.byond.com/
+
+[releases of dmdoc]: https://github.com/SpaceManiac/SpacemanDMM/releases
+
+## Documenting code on /tg/station
+We use block comments to document procs and classes, and we use three `///` comments
+when documenting individual variables
+
+*Proposed:* We require that when you touch older code, you must document the functions you have used
+
+### Required
+A class *must* always be autodocumented, and all public functions *must* be documented
+
+All class level defined variables *must* be documented
+
+internal functions *should* be documented, but may not be
+
+
+### Documenting a proc
+When documenting a proc, we give a short one line description (as this is shown
+next to the proc definition in the list of all procs for a type or global
+namespace), then a longer paragraph which will be shown when the user clicks on
+the proc to jump to it's definition
+```
+/**
+  * Short description of the proc
+  *
+  * Longer detailed paragraph about the proc
+  * including any relevant detail
+  * Arguments:
+  * * arg1 - Relevance of this argument
+  * * arg2 - Relevance of this argument
+  */
+```
+
+### Documenting a class
+We first give the name of the class as a header, otherwise dmdoc uses the `.name` var
+of the class
+
+Then we give a short oneline description of the class
+
+Finally we give a longer multi paragraph description of the class and it's details
+```
+/**
+  * # Classname
+  *
+  * The short overview
+  *
+  * A longer
+  * paragraph of functionality about the class
+  * including any assumptions/special cases
+  *
+  */
+```
+
+### Documenting a variable
+Give a short explanation of what the variable is in the context of the class.
+```
+/// Type path of item to go in suit slot
+var/suit = null
+```
+
+## Module level description of code
+Modules are the best way to describe the structure/intent of a package of code
+where you don't want to be tied to the formal layout of the class structure.
+
+On /tg/station we do this by adding markdown files inside the `code` directory
+that will also be rendered and added to the modules tree. The structure for
+these is deliberately not defined, so you can be as freeform and as wheeling as
+you would like.
+
+[Here is a representative example of what you might write]: http://codedocs.tgstation13.org/code/modules/keybindings/readme.html
+
+## Special variables
+You can use certain special template variables in DM DOC comments and they will be expanded
+```
+    [DEFINE_NAME] - Expands to a link to the define definition if documented
+    [/mob] - Expands to a link to the docs for the /mob class
+    [/mob/proc/Dizzy] - Expands to a link that will take you to the /mob class and anchor you to the dizzy proc docs
+    [/mob/var/stat] - Expands to a link that will take you to the /mob class and anchor you to the stat var docs
+```
+
+You can customise the link name by using `[link name][link shorthand].`
+
+eg. `[see more about dizzy here] [/mob/proc/Dizzy]`
