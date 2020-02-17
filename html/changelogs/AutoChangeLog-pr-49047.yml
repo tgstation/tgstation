@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Added the Enhanced Interrogation Chamber as a BEPIS researchable tech."
+  - rscadd: "The EIC can be used to implant trigger phrases in subjects that cause an instant hypnotic trance."
