@@ -42,7 +42,7 @@
 	to_chat(owner.current, "<B><font size=2 color=red>You're a member of the [gang_name] now!<br>Tag turf with a spraycan, wear your group's colors, and recruit more gangsters with the Induction Packages!</font></B>")
 	to_chat(owner.current, "<B><font size=4 color=red>Don't fuck with non-gangsters unless they fuck with you first.</font></B>")
 	to_chat(owner.current, "<B><font size=4 color=red>Don't blow shit up or make the station uninhabitable.</font></B>")
-	to_chat(owner.current, "<B><font size=4 color=black>Family's Objective:</B> [gang_objective]</font>")
+	to_chat(owner.current, "<B><font size=4 color=red>Family's Objective:</B> [gang_objective]</font>")
 
 /datum/antagonist/gang/red
 	name = "San Fierro Triad"
@@ -59,6 +59,7 @@
 						/obj/item/clothing/under/color/red,
 						/obj/item/toy/crayon/spraycan)
 	gang_objective = "The Spinward Stellar Coalition police intend to interfere with our operations, by sending an undercover cop. Find him and eliminate him."
+	antag_hud_name = "Triad"
 
 /datum/antagonist/gang/red/check_gang_objective()
 	var/datum/game_mode/gang/F = SSticker.mode
@@ -84,6 +85,7 @@
 						/obj/item/toy/crayon/spraycan)
 	var/list/cop_roles = list("Security Officer", "Warden", "Detective", "Head of Security")
 	gang_objective = "We got a deal with the security pigs on this station. We scratch their back, they scratch ours. You feel me? Keep all of security safe from any trouble, and make sure they get out alive."
+	antag_hud_name = "Ballas"
 
 /datum/antagonist/gang/purple/check_gang_objective()
 	for(var/mob/M in GLOB.player_list)
@@ -107,7 +109,7 @@
 						/obj/item/clothing/under/color/darkgreen,
 						/obj/item/toy/crayon/spraycan)
 	gang_objective = "We lost a lot of territory recently. We gotta get that shit back. Make sure 45 rooms are tagged for Grove Street."
-
+	antag_hud_name = "Grove"
 /datum/antagonist/gang/green/check_gang_objective()
 	var/tag_amount = 0
 	for(var/T in GLOB.gang_tags)
@@ -133,6 +135,7 @@
 						/obj/item/clothing/under/suit/white,
 						/obj/item/toy/crayon/spraycan)
 	gang_objective = "We are starting to run low on supplies at the home base, my friend. Make sure every comrade has a bottle of some kind of booze on them, friend."
+	antag_hud_name = "Russian"
 
 /datum/antagonist/gang/russian_mafia/check_gang_objective()
 	var/datum/game_mode/gang/F = SSticker.mode
@@ -163,6 +166,7 @@
 						/obj/item/clothing/under/suit/checkered,
 						/obj/item/toy/crayon/spraycan)
 	gang_objective = "The boss wants it made very clear that all our esteemed members are to be held with respect. If a friend falls, ensure they are properly buried with a coffin. And keep the Chaplain alive, to ensure the corpses are properly taken care of."
+	antag_hud_name = "Italian"
 
 /datum/antagonist/gang/italian_mob/check_gang_objective()
 	var/datum/game_mode/gang/F = SSticker.mode
@@ -192,6 +196,7 @@
 						/obj/item/clothing/under/pants/classicjeans,
 						/obj/item/toy/crayon/spraycan)
 	gang_objective = "TUNNEL SNAKES RULE!!! Make sure that everyone knows that, by getting 50% of people on station to wear any part of our uniform! TUNNEL SNAKES RULE!!!"
+	antag_hud_name = "Snakes"
 
 /datum/antagonist/gang/tunnel_snakes/check_gang_objective()
 	var/people_on_station = 0
@@ -223,6 +228,8 @@
 						/obj/item/clothing/under/color/yellow,
 						/obj/item/toy/crayon/spraycan)
 	gang_objective = "Orders from up high. We need to up our drug operation. Ensure that at least 25% of the station is addicted to Crank."
+	antag_hud_name = "Vagos"
+
 
 /datum/antagonist/gang/vagos/check_gang_objective()
 	var/people_on_station = 0
@@ -256,6 +263,7 @@
 						/obj/item/clothing/under/suit/henchmen,
 						/obj/item/toy/crayon/spraycan)
 	gang_objective = "I have it on VERY GOOD AUTHORITY that the Research Director on this station helped Venture on a science project back in college! ENSURE THAT HE DOES NOT LEAVE THIS STATION ALIVE, HENCHMEN! THE MIGHTY MONARCH DEMANDS IT!!!"
+	antag_hud_name = "Monarch"
 
 /datum/antagonist/gang/henchmen/check_gang_objective() // gotta arch dr. venture indirectly
 	for(var/mob/M in GLOB.player_list)
@@ -283,6 +291,7 @@
 						/obj/item/clothing/head/hardhat,
 						/obj/item/toy/crayon/spraycan)
 	gang_objective = "The boss is thrilled about this new construction opportunity we've all been given, yadda yadda, look, he knows we're here to expand our business ventures for the clan, but Majima wanted it made VERY clear that we do NOT fuck this station's infrastructure up. If more than 85% of this station is busted when we get the hell out of here, it's your ass on the line."
+	antag_hud_name = "Tojo"
 
 /datum/antagonist/gang/yakuza/check_gang_objective()
 	var/datum/station_state/current_state = new /datum/station_state()
@@ -307,6 +316,7 @@
 						/obj/item/clothing/head/jackbros,
 						/obj/item/toy/crayon/spraycan)
 	gang_objective = "Hee-hello friends! We need to expand our influence, ho! Get a King Frost in as the Captain of this joint! Either get the original Captain on board with the program, or Hee-ho a fellow Jack Frost into the position yourselves!"
+	antag_hud_name = "JackFrost"
 
 /datum/antagonist/gang/jackbros/check_gang_objective()
 	var/datum/game_mode/gang/F = SSticker.mode
@@ -337,6 +347,7 @@
 						/obj/item/clothing/suit/dutch,
 						/obj/item/toy/crayon/spraycan)
 	gang_objective = "Listen here, fellas. I have a plan. Just one more score on this crappy little po-dunk station. Gold bars, friends. Get all the gold out of the silos, and leave nothing behind! Spread the gold amongst yourselves for the escape plan, make sure everyone has at least 1 bar. After this, it'll be space mangos at Tahiti. You just gotta have a little faith."
+	antag_hud_name = "Dutch"
 
 /datum/antagonist/gang/dutch/check_gang_objective()
 	var/datum/game_mode/gang/F = SSticker.mode

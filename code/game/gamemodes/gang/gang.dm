@@ -26,8 +26,8 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	announce_span = "danger"
 	announce_text = "Grove For Lyfe!"
 	reroll_friendly = FALSE
-	restricted_jobs = list("Cyborg", "AI")//They are part of the AI if he is traitor so are they, they use to get double chances
-	protected_jobs = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
+	restricted_jobs = list("Cyborg", "AI", "Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")//N O
+	protected_jobs = list()
 	var/check_counter = 0
 	var/endtime = null
 	var/fuckingdone = FALSE
@@ -45,6 +45,16 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	var/cops_arrived = FALSE
 	var/gang_balance_cap = 5
 	var/current_stars = "wanted_0"
+
+/datum/game_mode/gang/warriors
+	name = "Warriors"
+	announce_text = "Can you survive this onslaught?"
+	gang_balance_cap = 3
+
+/datum/game_mode/gang/warriors/pre_setup()
+	gangs_to_use = subtypesof(/datum/antagonist/gang)
+	gangs_to_generate = gangs_to_use.len
+	. = ..()
 
 /datum/game_mode/gang/pre_setup()
 	gangs_to_use = subtypesof(/datum/antagonist/gang)
