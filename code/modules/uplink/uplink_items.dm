@@ -1788,7 +1788,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/role_restricted/laser_arm
 	name = "Laser Arm Implant"
-	desc = "A laser arm implant which grants you with a functionally antique lasergun technology inside of your arm, Keep away from emps. Comes with a autosurgeon."
+	desc = "An implant that grants you a recharging laser gun inside your arm. Weak to EMPs. Comes with a syndicate autosurgeon for immediate self-application."
 	cost = 10
 	item = /obj/item/autosurgeon/syndicate/laser_arm
 	restricted_roles = list("Roboticist")
