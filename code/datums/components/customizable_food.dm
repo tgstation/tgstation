@@ -6,7 +6,8 @@
 
 ///Customizable food component, lets you insert items with the edible component into it to make big food
 /datum/component/customizable_food
-	//var/ingredients_placement	// sprite placement of toppings on the main sprite of the parent food item
+	/// sprite placement of toppings on the main sprite of the parent food item
+	var/ingredients_placement
 	/// the max allowed ingredients you can place onto this cusotmizable food
 	var/max_ingredients
 	/// List of ingredients or toppings the customizable food currently has on it
@@ -38,8 +39,8 @@
 	for(var/obj/O in original_item.contents)
 		parent.contents += O
 
-	if(catalyst_item && user)
-		parent.attackby(catalyst_item, user)
+	if(catalyst_item && creator)
+		parent.attackby(catalyst_item, creator)
 
 ///Destroy all of the ingredients inside.
 /datum/component/customizable_food/Destroy()
@@ -47,7 +48,7 @@
 		qdel(I)
 
 ///Add all of the ingredient names together and show a length.
-/datum/component/customizable_food/examine(datum/source, mob/user)
+/datum/component/customizable_food/proc/examine(datum/source, mob/user)
 	. = ..()
 	var/ingredients_listed = ""
 	for(var/obj/item/ING in ingredients)
@@ -59,23 +60,24 @@
 		size = "big"
 	if(ingredients.len>8)
 		size = "monster"
-	. += "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(name)]."
+	. += "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(parent.name)]."
 
 
 ///This comes from the edible component, source is the edible component. This proc puts the food into the customizable food
 /datum/component/customizable_food/proc/AddFoodTo(datum/source, mob/user)
 
 	var/datum/component/edible/usedfood = source //We know this because this is only called from food.
-	var/obj/item/I = food.parent //We know this because only items send this signal.
+	var/obj/item/I = usedfood.parent //We know this because only items send this signal.
+	var/obj/item/owner = parent
 
-	if(!food.customizable_food_ingredient) //Can not be used in customizable food, go back.
+	if(!usedfood.customizable_food_ingredient) //Can not be used in customizable food, go back.
 		return NONE
 
 	if(I.w_class > WEIGHT_CLASS_SMALL)
 		to_chat(user, "<span class='warning'>The ingredient is too big for [src]!</span>")
 		return COMPONENT_NO_ATTACK
 
-	if((ingredients.len >= ingMax) || (parent.reagents.total_volume >= volume))
+	if((ingredients.len >= max_ingredients))
 		to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
 		return COMPONENT_NO_ATTACK
 
@@ -84,12 +86,12 @@
 	if(usedfood.trash)
 		usedfood.generate_trash(get_turf(user))
 	ingredients += I
-	mix_filling_color(I) todo
+	mix_filling_color(I)
 	I.reagents.trans_to(parent,min(I.reagents.total_volume, 15), transfered_by = user) //limit of 15, we don't want our custom food to be completely filled by just one ingredient with large reagent volume.
 	ourfood |= usedfood.foodtypes
 	set_filling(usedfood.filling_color)
 	to_chat(user, "<span class='notice'>You add the [I.name] to the [parent.name].</span>")
-	//update_name(S) todo
+	update_name(I)
 
 ///Mixes together the color of the new ingredient. This is the combined color of all ingredients
 /datum/component/customizable_food/proc/mix_filling_color(color)
@@ -97,7 +99,7 @@
 		ourfood.filling_color = color
 	else
 		var/list/rgbcolor = list(0,0,0,0)
-		var/customcolor = GetColors(filling_color)
+		var/customcolor = GetColors(ourfood.filling_color)
 		var/ingcolor =  GetColors(color)
 		rgbcolor[1] = (customcolor[1]+ingcolor[1])/2
 		rgbcolor[2] = (customcolor[2]+ingcolor[2])/2
@@ -107,7 +109,7 @@
 
 ///This either gives the custom food a filling with the color of the used food, or makes it use the color made in mix filling colors.
 /datum/component/customizable_food/proc/set_filling(color)
-	var/mutable_appearance/filling = mutable_appearance(icon, "[initial(parent.icon_state)]_filling")
+	var/mutable_appearance/filling = mutable_appearance(parent.icon, "[initial(parent.icon_state)]_filling")
 	if(color == "#FFFFFF")
 		filling.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
 	else
@@ -122,20 +124,20 @@
 			filling.pixel_y = 2 * ingredients.len - 1
 		if(INGREDIENTS_STACKPLUSTOP)
 			filling.pixel_x = rand(-1,1)
-			filling.pixel_y = 2 * ingredients.len - 1
-			if(overlays && overlays.len >= ingredients.len) //remove the old top if it exists
-				overlays -= overlays[ingredients.len]
-			var/mutable_appearance/TOP = mutable_appearance(icon, "[parent.icon_state]_top")
+			filling.pixel_y = 2 * parent.ingredients.len - 1
+			if(parent.overlays && overlays.len >= ingredients.len) //remove the old top if it exists
+				parent.overlays -= parent.overlays[ingredients.len]
+			var/mutable_appearance/TOP = mutable_appearance(parent.icon, "[parent.icon_state]_top")
 			TOP.pixel_y = 2 * ingredients.len + 3
-			add_overlay(filling)
-			add_overlay(TOP)
+			parent.add_overlay(filling)
+			parent.add_overlay(TOP)
 			return
 		if(INGREDIENTS_FILL)
-			cut_overlays()
+			parent.cut_overlays()
 			filling.color = filling_color
 		if(INGREDIENTS_LINE)
 			filling.pixel_x = filling.pixel_y = rand(-8,3)
-	add_overlay(filling)
+	parent.	add_overlay(filling)
 
 ///Updates the name of the parent item by pre-fixing the food's name, (or just making it say custom in the case of multiple ingredients)
 /datum/component/customizable_food/proc/update_name(obj/item/food)
