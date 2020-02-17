@@ -62,7 +62,11 @@
 
 # ninjanomnom
 
+/code/__DEFINES/dcs/ @ninjanomnom
+/code/controllers/subsystem/dcs.dm @ninjanomnom
 /code/controllers/subsystem/shuttle.dm @ninjanomnom
+/code/datums/components/ @ninjanomnom
+/code/datums/elements/ @ninjanomnom
 /code/modules/shuttle/ @ninjanomnom
 
 # ShizCalev
@@ -74,7 +78,6 @@
 # stylemistake
 
 /tgui @stylemistake
-/tgui-next @stylemistake
 
 # Qustinnus
 /code/datums/components/mood.dm @Qustinnus
@@ -83,10 +86,7 @@
 
 # Multiple Owners
 
-/code/__DEFINES/components.dm @Cyberboss @ninjanomnom
 /code/controllers/subsystem/air.dm @duncathan @MrStonedOne
-/code/datums/components/ @Cyberboss @ninjanomnom
-
 
 #SIC SEMPER TYRANNIS
 /code/modules/hydroponics/grown/citrus.dm @optimumtact
