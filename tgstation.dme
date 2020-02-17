@@ -397,6 +397,7 @@
 #include "code\datums\components\heirloom.dm"
 #include "code\datums\components\igniter.dm"
 #include "code\datums\components\infective.dm"
+#include "code\datums\components\item_two_handed.dm"
 #include "code\datums\components\jousting.dm"
 #include "code\datums\components\knockback.dm"
 #include "code\datums\components\knockoff.dm"
