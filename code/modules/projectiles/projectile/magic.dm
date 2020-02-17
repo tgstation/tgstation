@@ -693,7 +693,7 @@
 			visible_message("<span class='warning'>[src] vanishes into smoke on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
 	var/turf/T = get_turf(target)
-	for(var/turf/open/OT in range(T, 5))
+	for(var/turf/open/OT in view(T, 5))
 		OT.MakeSlippery(TURF_WET_LUBE, 100)
 
 
