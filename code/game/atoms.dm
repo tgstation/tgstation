@@ -864,6 +864,7 @@
 ///Proc for being washed by a shower
 /atom/proc/washed(var/atom/washer)
 	. = SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+	remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 
 	var/datum/component/radioactive/healthy_green_glow = GetComponent(/datum/component/radioactive)
 	if(!healthy_green_glow || QDELETED(healthy_green_glow))
