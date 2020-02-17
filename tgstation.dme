@@ -2986,8 +2986,4 @@
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
-<<<<<<< HEAD
 // END_INCLUDE
-=======
-// END_INCLUDE
->>>>>>> parent of ec4760215c... fix line endings
