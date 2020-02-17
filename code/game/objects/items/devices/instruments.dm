@@ -117,7 +117,6 @@
 /obj/item/instrument/piano_synth/headphones/spacepods
 	name = "nanotrasen space pods"
 	desc = "Flex your money, AND ignore what everyone else says, all at once!"
-	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "spacepods"
 	item_state = "spacepods"
 	slot_flags = ITEM_SLOT_EARS
