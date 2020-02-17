@@ -315,6 +315,10 @@
 	internals.hud = src
 	infodisplay += internals
 
+	spacesuit = new /obj/screen/spacesuit
+	spacesuit.hud = src
+	infodisplay += spacesuit
+
 	healths = new /obj/screen/healths()
 	healths.hud = src
 	infodisplay += healths

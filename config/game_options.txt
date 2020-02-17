@@ -253,6 +253,9 @@ MAX_TICKETS_PER_ROLL 100
 ## Uncomment to allow players to see the set odds of different rounds in secret/random in the get server revision screen. This will NOT tell the current roundtype.
 #SHOW_GAME_TYPE_ODDS
 
+## Uncomment to prevent the nuclear operative leader from getting the war declaration item
+#DISABLE_WAROPS
+
 ## Uncomment to enable dynamic ruleset config file.
 #DYNAMIC_CONFIG_ENABLED
 
@@ -567,6 +570,9 @@ MONKEYCAP 64
 
 ## A cap on how many mice can be bred via cheese wedges
 RATCAP 64
+
+## Maximum fine for a citation
+MAXFINE 2000
 
 ## Enable the capitalist agenda on your server.
 ECONOMY

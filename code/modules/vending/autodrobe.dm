@@ -114,7 +114,6 @@
 					/obj/item/clothing/head/cueball = 1,
 					/obj/item/clothing/under/suit/white_on_white = 1,
 					/obj/item/clothing/under/costume/sailor = 1,
-					/obj/item/clothing/ears/headphones = 2,
 					/obj/item/clothing/head/delinquent = 1,
 					/obj/item/clothing/head/wig/random = 3,
 					/obj/item/clothing/head/zepellihat = 1, //fulp

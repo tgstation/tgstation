@@ -74,10 +74,6 @@
 		if(ITEM_SLOT_BACKPACK)
 			if(!back || !SEND_SIGNAL(back, COMSIG_TRY_STORAGE_INSERT, I, src, TRUE))
 				not_handled = TRUE
-		if(ITEM_SLOT_LHANDSTORE)
-			var/obj/item/held_left = get_held_items_for_side(LEFT_HANDS)
-			if(!held_left || !SEND_SIGNAL(held_left, COMSIG_TRY_STORAGE_INSERT, I, src, TRUE))
-				not_handled = TRUE
 		else
 			not_handled = TRUE
 

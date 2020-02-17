@@ -1,8 +1,7 @@
 /mob/living/Initialize()
 	. = ..()
 	if(unique_name)
-		name = "[name] ([rand(1, 1000)])"
-		real_name = name
+		set_name()
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
@@ -502,30 +501,26 @@
 		var/obj/screen/healthdoll/living/livingdoll = hud_used.healthdoll
 		switch(healthpercent)
 			if(100 to INFINITY)
-				livingdoll.icon_state = "living0"
+				severity = 0
 			if(80 to 100)
-				livingdoll.icon_state = "living1"
 				severity = 1
 			if(60 to 80)
-				livingdoll.icon_state = "living2"
 				severity = 2
 			if(40 to 60)
-				livingdoll.icon_state = "living3"
 				severity = 3
 			if(20 to 40)
-				livingdoll.icon_state = "living4"
 				severity = 4
 			if(1 to 20)
-				livingdoll.icon_state = "living5"
 				severity = 5
 			else
-				livingdoll.icon_state = "living6"
 				severity = 6
+		livingdoll.icon_state = "living[severity]"
 		if(!livingdoll.filtered)
 			livingdoll.filtered = TRUE
 			var/icon/mob_mask = icon(icon, icon_state)
 			if(mob_mask.Height() > world.icon_size || mob_mask.Width() > world.icon_size)
-				mob_mask = icon('icons/mob/screen_gen.dmi', "megasprite") //swap to something that fits if they wont
+				var/health_doll_icon_state = health_doll_icon ? health_doll_icon : "megasprite"
+				mob_mask = icon('icons/mob/screen_gen.dmi', health_doll_icon_state) //swap to something generic if they have no special doll
 			UNLINT(livingdoll.filters += filter(type="alpha", icon = mob_mask))
 			livingdoll.filters += filter(type="drop_shadow", size = -1)
 	if(severity > 0)
@@ -1013,7 +1008,7 @@
 		return TRUE
 	return FALSE
 
-/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
+/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE)
 	stop_pulling()
 	. = ..()
 
@@ -1298,6 +1293,11 @@
 
 /mob/living/proc/mob_pickup(mob/living/L)
 	return
+
+/mob/living/proc/set_name()
+	numba = rand(1, 1000)
+	name = "[name] ([numba])"
+	real_name = name
 
 /mob/living/proc/mob_try_pickup(mob/living/user)
 	if(!ishuman(user))

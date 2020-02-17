@@ -169,6 +169,7 @@
 	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
+	D.drive_verb = "ride"
 
 /mob/living/simple_animal/cow/Life()
 	. = ..()

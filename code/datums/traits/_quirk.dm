@@ -56,9 +56,6 @@
 /datum/quirk/proc/post_add() //for text, disclaimers etc. given after you spawn in with the trait
 /datum/quirk/proc/on_transfer() //code called when the trait is transferred to a new mob
 
-/datum/quirk/proc/clone_data() //return additional data that should be remembered by cloning
-/datum/quirk/proc/on_clone(data) //create the quirk from clone data
-
 /datum/quirk/process()
 	if(QDELETED(quirk_holder))
 		quirk_holder = null
