@@ -16,7 +16,7 @@ This gives new developers a clickable reference [DOCUMENTATION] they can browse 
 gain understanding of the /tg/station codebase structure and api reference.
 
 ## Documenting code on /tg/station
-We use block comments to document procs and classes, and we use three `///` comments
+We use block comments to document procs and classes, and we use `///` line comments
 when documenting individual variables.
 
 It is required that all new code be covered with DMdoc code, according to the [Requirements](#Required)
