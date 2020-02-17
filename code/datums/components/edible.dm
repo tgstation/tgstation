@@ -86,6 +86,8 @@ Behavior that's still missing from this component that original food items had t
 ///All the checks for the act of eating itself and
 /datum/component/edible/proc/TryToEat(mob/living/eater, mob/living/feeder)
 
+	set waitfor = FALSE
+
 	var/atom/owner = parent
 
 	if(feeder.a_intent == INTENT_HARM)
@@ -149,7 +151,7 @@ Behavior that's still missing from this component that original food items had t
 
 	var/atom/owner = parent
 
-	if(!owner.reagents)
+	if(!owner?.reagents)
 		return FALSE
 	if(eater.satiety > -200)
 		eater.satiety -= junkiness
@@ -219,7 +221,11 @@ Behavior that's still missing from this component that original food items had t
 	if(!eater)
 		return
 	if(!owner.reagents.total_volume)
-		qdel(parent)
+		if(isturf(parent))
+			var/turf/T = parent
+			T.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
+		else
+			qdel(parent)
 
 ///Ability to feed food to puppers
 /datum/component/edible/proc/UseByAnimal(datum/source, mob/user)

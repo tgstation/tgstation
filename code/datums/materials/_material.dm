@@ -28,6 +28,10 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/armor_modifiers = list("melee" = 1, "bullet" = 1, "laser" = 1, "energy" = 1, "bomb" = 1, "bio" = 1, "rad" = 1, "fire" = 1, "acid" = 1)
 	///How beautiful is this material per unit
 	var/beauty_modifier = 0
+	///Can be used to override the sound items make, lets add some SLOSHing.
+	var/item_sound_override
+	///Can be used to override the stepsound a turf makes. MORE SLOOOSH
+	var/turf_sound_override
 
 ///This proc is called when the material is added to an object.
 /datum/material/proc/on_applied(atom/source, amount, material_flags)
@@ -66,8 +70,27 @@ Simple datum which is instanced once per type and is used for every object of sa
 		for(var/i in current_armor)
 			temp_armor_list[i] = current_armor[i] * armor_modifiers[i]
 		o.armor = getArmor(arglist(temp_armor_list))
+	if(!isitem(o))
+		return
+	var/obj/item/I = o
+	if(!item_sound_override)
+		return
+	I.hitsound = item_sound_override
+	I.usesound = item_sound_override
+	I.mob_throw_hit_sound = item_sound_override
+	I.equip_sound = item_sound_override
+	I.pickup_sound = item_sound_override
+	I.drop_sound = item_sound_override
 
 /datum/material/proc/on_applied_turf(var/turf/T, amount, material_flags)
+	if(isopenturf(T))
+		if(!turf_sound_override)
+			return
+		var/turf/open/O = T
+		O.footstep = turf_sound_override
+		O.barefootstep = turf_sound_override
+		O.clawfootstep = turf_sound_override
+		O.heavyfootstep = turf_sound_override
 	return
 
 ///This proc is called when the material is removed from an object.

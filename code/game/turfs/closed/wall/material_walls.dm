@@ -1,9 +1,9 @@
 /turf/closed/wall/material
 	name = "wall"
 	desc = "A solid wall made out of a certain material"
-	icon = 'icons/turf/walls/wall.dmi'
+	icon = 'icons/turf/walls/materialwall.dmi'
 	icon_state = "wall"
-	canSmoothWith = /turf/closed/wall/material
+	canSmoothWith = list(/turf/closed/wall/material)
 	smooth = SMOOTH_TRUE
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
