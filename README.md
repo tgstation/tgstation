@@ -16,8 +16,7 @@ This is the codebase for the /tg/station flavoured fork of SpaceStation 13.
 
 Space Station 13 is a paranoia-laden round-based roleplaying game set against the backdrop of a nonsensical, metal death trap masquerading as a space station, with charming spritework designed to represent the sci-fi setting and its dangerous undertones. Have fun, and survive!
 
-## Running a /tg/station server
-
+## DOWNLOADING
 [Downloading](.github/CONTRIBUTING.md)
 
 [Running on the server](.github/RUNNING_A_SERVER.md)
