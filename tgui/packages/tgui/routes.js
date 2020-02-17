@@ -45,6 +45,7 @@ import { GravityGenerator } from './interfaces/GravityGenerator';
 import { GulagTeleporterConsole } from './interfaces/GulagTeleporterConsole';
 import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
 import { Holodeck } from './interfaces/Holodeck';
+import { HypnoChair } from './interfaces/HypnoChair';
 import { ImplantChair } from './interfaces/ImplantChair';
 import { InfraredEmitter } from './interfaces/InfraredEmitter';
 import { Intellicard } from './interfaces/Intellicard';
@@ -312,6 +313,10 @@ const ROUTES = {
   holodeck: {
     component: () => Holodeck,
     scrollable: true,
+  },
+  hypnochair: {
+    component: () => HypnoChair,
+    scrollable: false,
   },
   implantchair: {
     component: () => ImplantChair,
