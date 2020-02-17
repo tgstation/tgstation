@@ -1,8 +1,11 @@
 # CONTRIBUTING
 
 ## Reporting Issues
+If you ever encounter a bug in-game, the best way to let a coder know about it is with our GitHub Issue Tracker. Please make sure you use the supplied issue template, and include the round ID for the server.
 
-See [this page](http://tgstation13.org/wiki/Reporting_Issues) for a guide and format to issue reports.
+(If you don't have an account, making a new one takes only one minute.)
+
+If you have difficulty, ask for help in the #coding-general channel on our discord.
 
 ## Introduction
 

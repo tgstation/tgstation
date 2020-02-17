@@ -8,7 +8,8 @@
 * **Code:** https://github.com/tgstation/tgstation
 * **Wiki** https://tgstation13.org/wiki/Main_Page
 * **Codedocs:** https://codedocs.tgstation13.org/
-* **Discord:** https://discord.gg/Vh8TJp9
+* **/tg/station discord:** https://tgstation13.org/phpBB/viewforum.php?f=60
+* **Coderbus Discord:** https://discord.gg/Vh8TJp9
 * **IRC:** irc://irc.rizon.net/coderbus (dead)
 
 This is the codebase for the /tg/station flavoured fork of SpaceStation 13.
