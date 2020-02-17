@@ -40,7 +40,7 @@
 	density = TRUE
 	roundstart = FALSE
 	death = FALSE
-	mob_species = /datum/species/human
+	mob_species = /datum/species/human/dwarf
 	outfit = /datum/outfit/dwarven
 	short_desc = "You are an ancient dwarf awakened from your slumber to regrow your once grand empire."
 	flavour_text = "Milennia have passed since your grand civilization last stood. \
@@ -64,7 +64,6 @@
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
-		H.dna.add_mutation(DWARVEN)
 		H.dna.add_mutation(DWARFISM) //you are a dwarf man
 		H.update_body()
 
@@ -73,7 +72,7 @@
 	return ..()
 
 /datum/outfit/dwarven
-	name ="Ashwalker"
+	name ="Dwarf"
 	uniform = /obj/item/clothing/under/misc/gambison
 	shoes = /obj/item/clothing/shoes/sandal
 	back = /obj/item/pickaxe/silver

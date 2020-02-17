@@ -172,3 +172,18 @@
 
 	. = ..()
 */
+
+/obj/structure/destructible/dwarven/mythril_anvil/debug/attack_hand(mob/user)
+	var/choice
+	choice = alert(user,"Choose an item",,"Warhammer","Waraxe","Javelin")
+	switch(choice)
+		if("Warhammer")
+			var/obj/item/twohanded/war_hammer/debug = new /obj/item/twohanded/war_hammer(get_turf(src))
+			debug.add_creator(user)
+		if("Waraxe")
+			var/obj/item/hatchet/dwarven/axe/debug = new /obj/item/hatchet/dwarven/axe(get_turf(src))
+			debug.add_creator(user)
+		if("Javelin")
+			var/obj/item/hatchet/dwarven/javelin/debug = new /obj/item/hatchet/dwarven/javelin(get_turf(src))
+			debug.add_creator(user)
+
