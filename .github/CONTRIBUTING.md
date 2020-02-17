@@ -251,19 +251,11 @@ This prevents nesting levels from getting deeper then they need to be.
 	* Areas should not be var-edited on a map to change it's name or attributes. All areas of a single type and it's altered instances are considered the same area within the code, and editing their variables on a map can lead to issues with powernets and event subsystems which are difficult to debug.
 
 ### User Interfaces
-<<<<<<< HEAD
 * All new player-facing user interfaces must use TGUI.
 * Raw HTML is permitted for admin and debug UIs.
 * Documentation for TGUI can be found at:
 	* [tgui/README.md](../tgui/README.md)
 	* [tgui/tutorial-and-examples.md](../tgui/docs/tutorial-and-examples.md)
-=======
-* All new player-facing user interfaces must use TGUI-next; TGUI is deprecated.
-* Raw HTML is permitted for admin and debug UIs.
-* Documentation for TGUI-next can be found at:
-	* [tgui-next/README.md](../tgui-next/README.md)
-	* [tgui-next/tutorial-and-examples.md](../tgui-next/docs/tutorial-and-examples.md)
->>>>>>> Light pass for truthyness
 
 ### Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
