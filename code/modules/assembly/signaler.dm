@@ -8,7 +8,10 @@
 	custom_materials = list(/datum/material/iron=400, /datum/material/glass=120)
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 	attachable = TRUE
-
+	drop_sound = 'sound/items/handling/component_drop.ogg'
+	pickup_sound =  'sound/items/handling/component_pickup.ogg'
+	var/ui_x = 280
+	var/ui_y = 132
 	var/code = DEFAULT_SIGNALER_CODE
 	var/frequency = FREQ_SIGNALER
 	var/datum/radio_frequency/radio_connection
@@ -17,8 +20,6 @@
 	///Holds a reference string to the mob, decides how much of a gamer you are.
 	var/suicide_mob
 	var/hearing_range = 1
-	drop_sound = 'sound/items/handling/component_drop.ogg'
-	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 
 /obj/item/assembly/signaler/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] eats \the [src]! If it is signaled, [user.p_they()] will die!</span>")
@@ -47,7 +48,6 @@
 	. = ..()
 	set_frequency(frequency)
 
-
 /obj/item/assembly/signaler/Destroy()
 	SSradio.remove_object(src,frequency)
 	suicider = null
@@ -64,14 +64,16 @@
 		holder.update_icon()
 	return
 
-/obj/item/assembly/signaler/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	if(!is_secured(user))
-		return
+/obj/item/assembly/signaler/ui_status(mob/user)
+	if(is_secured(user))
+		return ..()
+	return UI_CLOSE
+
+/obj/item/assembly/signaler/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		var/ui_width = 280
-		var/ui_height = 132
-		ui = new(user, src, ui_key, "signaler", name, ui_width, ui_height, master_ui, state)
+		ui = new(user, src, ui_key, "signaler", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/item/assembly/signaler/ui_data(mob/user)
@@ -80,7 +82,6 @@
 	data["code"] = code
 	data["minFrequency"] = MIN_FREE_FREQ
 	data["maxFrequency"] = MAX_FREE_FREQ
-
 	return data
 
 /obj/item/assembly/signaler/ui_act(action, params)
@@ -109,7 +110,6 @@
 
 	update_icon()
 
-
 /obj/item/assembly/signaler/attackby(obj/item/W, mob/user, params)
 	if(issignaler(W))
 		var/obj/item/assembly/signaler/signaler2 = W
@@ -131,9 +131,6 @@
 	if(usr)
 		GLOB.lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
 
-
-	return
-
 /obj/item/assembly/signaler/receive_signal(datum/signal/signal)
 	. = FALSE
 	if(!signal)
@@ -152,7 +149,6 @@
 			var/mob/LM = CHM
 			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	return TRUE
-
 
 /obj/item/assembly/signaler/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
@@ -181,7 +177,6 @@
 	if(!on)
 		return
 	return ..(signal)
-
 
 // Embedded signaller used in anomalies.
 /obj/item/assembly/signaler/anomaly
