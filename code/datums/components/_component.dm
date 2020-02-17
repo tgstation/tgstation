@@ -13,15 +13,15 @@
 	/// Defines how duplicate existing components are handled when added to a datum
 	/// See `COMPONENT_DUPE_*` definitions for available options
 	var/dupe_mode = COMPONENT_DUPE_HIGHLANDER
-	
+
 	/// The type to check for duplication
 	/// `null` means exact match on `type` (default)
 	/// Any other type means that and all subtypes
 	var/dupe_type
-	
+
 	/// The datum this components belongs to
 	var/datum/parent
-	
+
 	/// Only set to true if you are able to properly transfer this component
 	/// At a minimum RegisterWithParent and UnregisterFromParent should be used
 	/// Make sure you also implement PostTransfer for any post transfer handling
@@ -34,14 +34,14 @@
   * Arguments:
   * * datum/P the parent datum this component reacts to signals from
   */
-/datum/component/New(datum/P, ...)
-	parent = P
-	var/list/arguments = args.Copy(2)
+/datum/component/New(list/raw_args)
+	parent = raw_args[1]
+	var/list/arguments = raw_args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
 		qdel(src, TRUE, TRUE)
-		CRASH("Incompatible [type] assigned to a [P.type]! args: [json_encode(arguments)]")
+		CRASH("Incompatible [type] assigned to a [parent.type]! args: [json_encode(arguments)]")
 
-	_JoinParent(P)
+	_JoinParent(parent)
 
 /**
   * Called during component creation with the same arguments as in new excluding parent.
@@ -203,6 +203,8 @@
 	if(!islist(sig_type_or_types))
 		sig_type_or_types = list(sig_type_or_types)
 	for(var/sig in sig_type_or_types)
+		if(!signal_procs[target][sig])
+			continue
 		switch(length(lookup[sig]))
 			if(2)
 				lookup[sig] = (lookup[sig]-src)[1]
@@ -359,7 +361,8 @@
   * If this tries to add an component to an incompatible type, the component will be deleted and the result will be `null`. This is very unperformant, try not to do it
   * Properly handles duplicate situations based on the `dupe_mode` var
   */
-/datum/proc/AddComponent(new_type, ...)
+/datum/proc/_AddComponent(list/raw_args)
+	var/new_type = raw_args[1]
 	var/datum/component/nt = new_type
 	var/dm = initial(nt.dupe_mode)
 	var/dt = initial(nt.dupe_type)
@@ -374,7 +377,7 @@
 		new_comp = nt
 		nt = new_comp.type
 
-	args[1] = src
+	raw_args[1] = src
 
 	if(dm != COMPONENT_DUPE_ALLOWED)
 		if(!dt)
@@ -385,24 +388,25 @@
 			switch(dm)
 				if(COMPONENT_DUPE_UNIQUE)
 					if(!new_comp)
-						new_comp = new nt(arglist(args))
+						new_comp = new nt(raw_args)
 					if(!QDELETED(new_comp))
 						old_comp.InheritComponent(new_comp, TRUE)
 						QDEL_NULL(new_comp)
 				if(COMPONENT_DUPE_HIGHLANDER)
 					if(!new_comp)
-						new_comp = new nt(arglist(args))
+						new_comp = new nt(raw_args)
 					if(!QDELETED(new_comp))
 						new_comp.InheritComponent(old_comp, FALSE)
 						QDEL_NULL(old_comp)
 				if(COMPONENT_DUPE_UNIQUE_PASSARGS)
 					if(!new_comp)
-						var/list/arguments = args.Copy(2)
-						old_comp.InheritComponent(null, TRUE, arguments)
+						var/list/arguments = raw_args.Copy(2)
+						arguments.Insert(1, null, TRUE)
+						old_comp.InheritComponent(arglist(arguments))
 					else
 						old_comp.InheritComponent(new_comp, TRUE)
 				if(COMPONENT_DUPE_SELECTIVE)
-					var/list/arguments = args.Copy()
+					var/list/arguments = raw_args.Copy()
 					arguments[1] = new_comp
 					var/make_new_component = TRUE
 					for(var/i in GetComponents(new_type))
@@ -412,11 +416,11 @@
 							QDEL_NULL(new_comp)
 							break
 					if(!new_comp && make_new_component)
-						new_comp = new nt(arglist(args))
+						new_comp = new nt(raw_args)
 		else if(!new_comp)
-			new_comp = new nt(arglist(args)) // There's a valid dupe mode but there's no old component, act like normal
+			new_comp = new nt(raw_args) // There's a valid dupe mode but there's no old component, act like normal
 	else if(!new_comp)
-		new_comp = new nt(arglist(args)) // Dupes are allowed, act like normal
+		new_comp = new nt(raw_args) // Dupes are allowed, act like normal
 
 	if(!old_comp && !QDELETED(new_comp)) // Nothing related to duplicate components happened and the new component is healthy
 		SEND_SIGNAL(src, COMSIG_COMPONENT_ADDED, new_comp)
@@ -435,7 +439,7 @@
 /datum/proc/LoadComponent(component_type, ...)
 	. = GetComponent(component_type)
 	if(!.)
-		return AddComponent(arglist(args))
+		return _AddComponent(args)
 
 /**
   * Removes the component from parent, ends up with a null parent

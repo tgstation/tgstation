@@ -321,12 +321,13 @@
 	color = "#DCDCDC"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
+	var/healing = 0.5
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/carbon/M)
-	M.adjustToxLoss(-0.5*REM, 0)
-	M.adjustOxyLoss(-0.5*REM, 0)
-	M.adjustBruteLoss(-0.5*REM, 0)
-	M.adjustFireLoss(-0.5*REM, 0)
+	M.adjustToxLoss(-healing*REM, 0)
+	M.adjustOxyLoss(-healing*REM, 0)
+	M.adjustBruteLoss(-healing*REM, 0)
+	M.adjustFireLoss(-healing*REM, 0)
 	..()
 	. = 1
 
@@ -337,6 +338,12 @@
 	M.adjustFireLoss(1.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
+
+/datum/reagent/medicine/omnizine/protozine
+	name = "Protozine"
+	description = "A less environmentally friendly and somewhat weaker variant of omnizine."
+	color = "#d8c7b7"
+	healing = 0.2
 
 /datum/reagent/medicine/calomel
 	name = "Calomel"
@@ -706,51 +713,62 @@
 
 /datum/reagent/medicine/strange_reagent
 	name = "Strange Reagent"
-	description = "A miracle drug capable of bringing the dead back to life. Only functions when applied by patch or spray, if the target has less than 100 brute and burn damage (independent of one another) and hasn't been husked. Causes slight damage to the living."
+	description = "A miracle drug capable of bringing the dead back to life. Works topically unless anotamically complex, in which case works orally. Only works if the target has less than 200 total brute and burn damage and hasn't been husked and requires more reagent depending on damage inflicted. Causes damage to the living."
 	reagent_state = LIQUID
 	color = "#A0E85E"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 1.25 * REAGENTS_METABOLISM
 	taste_description = "magnets"
+	harmful = TRUE
 
 /datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(M.stat == DEAD)
-		if(M.suiciding || M.hellbound) //they are never coming back
-			M.visible_message("<span class='warning'>[M]'s body does not react...</span>")
-			return
-		if(M.getBruteLoss() >= 100 || M.getFireLoss() >= 100 || HAS_TRAIT(M, TRAIT_HUSK)) //body is too damaged to be revived
-			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
-			M.do_jitter_animation(10)
-			return
-		else
-			M.visible_message("<span class='warning'>[M]'s body starts convulsing!</span>")
-			M.notify_ghost_cloning(source = M)
-			M.do_jitter_animation(10)
-			addtimer(CALLBACK(M, /mob/living/carbon.proc/do_jitter_animation, 10), 40) //jitter immediately, then again after 4 and 8 seconds
-			addtimer(CALLBACK(M, /mob/living/carbon.proc/do_jitter_animation, 10), 80)
-			sleep(100) //so the ghost has time to re-enter
-
-
-			if(iscarbon(M))
-				var/mob/living/carbon/C = M
-				if(!(C.dna && C.dna.species && (NOBLOOD in C.dna.species.species_traits)))
-					C.blood_volume = max(C.blood_volume, BLOOD_VOLUME_NORMAL) //so you don't instantly re-die from a lack of blood
-				for(var/organ in C.internal_organs)
-					var/obj/item/organ/O = organ
-					O.setOrganDamage(0) //so you don't near-instantly re-die because your heart has decayed to the point of complete failure
-
-			M.adjustOxyLoss(-20, 0)
-			M.adjustToxLoss(-20, 0)
-			M.updatehealth()
-			if(M.revive(full_heal = FALSE, admin_revive = FALSE))
-				M.emote("gasp")
-				log_combat(M, M, "revived", src)
+	if(M.stat != DEAD)
+		return ..()
+	if(M.suiciding || M.hellbound) //they are never coming back
+		M.visible_message("<span class='warning'>[M]'s body does not react...</span>")
+		return
+	if(iscarbon(M) && method != INGEST) //simplemobs can still be splashed
+		return ..()
+	var/amount_to_revive = round((M.getBruteLoss()+M.getFireLoss())/20)
+	if(M.getBruteLoss()+M.getFireLoss() >= 200 || HAS_TRAIT(M, TRAIT_HUSK) || reac_volume < amount_to_revive) //body will die from brute+burn on revive or you haven't provided enough to revive.
+		M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
+		M.do_jitter_animation(10)
+		return
+	M.visible_message("<span class='warning'>[M]'s body starts convulsing!</span>")
+	M.notify_ghost_cloning("Your body is being revived with Strange Reagent!")
+	M.do_jitter_animation(10)
+	addtimer(CALLBACK(M, /mob/living/carbon.proc/do_jitter_animation, 10), 40) //jitter immediately, then again after 4 and 8 seconds
+	addtimer(CALLBACK(M, /mob/living/carbon.proc/do_jitter_animation, 10), 80)
+	addtimer(CALLBACK(src, .proc/do_strange_revive,M,reac_volume,amount_to_revive), 79) //timing is everything!
 	..()
+
+/datum/reagent/medicine/strange_reagent/proc/do_strange_revive(mob/living/M,reac_volume,revive_requirement) //we store revive_requirement because if we calculate it now we might have changed our damage numbers.
+	var/excess_healing = 5*(reac_volume-revive_requirement) //excess reagent will heal blood and organs across the board
+	if(iscarbon(M) && excess_healing)
+		var/mob/living/carbon/C = M
+		if(!(C.dna?.species && (NOBLOOD in C.dna.species.species_traits)))
+			C.blood_volume += (excess_healing*2)//1 excess = 10 blood
+
+		for(var/i in C.internal_organs)
+			var/obj/item/organ/O = i
+			if(O.organ_flags & ORGAN_SYNTHETIC)
+				continue
+			O.applyOrganDamage(excess_healing*-1)//1 excess = 5 organ damage healed
+
+	M.adjustOxyLoss(-20, TRUE)
+	M.adjustToxLoss(-20, TRUE) //slime friendly
+	M.updatehealth()
+	M.grab_ghost()
+	if(M.revive(full_heal = FALSE, admin_revive = FALSE))
+		M.emote("gasp")
+		log_combat(M, M, "revived", src)
+
 
 /datum/reagent/medicine/strange_reagent/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(0.5*REM, 0)
-	M.adjustFireLoss(0.5*REM, 0)
+	var/damage_at_random = rand(0,250)/100 //0 to 2.5
+	M.adjustBruteLoss(damage_at_random*REM, FALSE)
+	M.adjustFireLoss(damage_at_random*REM, FALSE)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/mannitol
 	name = "Mannitol"
@@ -1240,7 +1258,7 @@
 
 /datum/reagent/medicine/rhigoxane
 	name = "Rhigoxane"
-	description = "A second generation burn treatment agent exibiting a cooling effect that is especially pronounced when deployed as a spray. Its high halogen content helps extinguish fires."
+	description = "A second generation burn treatment agent exhibiting a cooling effect that is especially pronounced when deployed as a spray. Its high halogen content helps extinguish fires."
 	reagent_state = LIQUID
 	color = "#F7FFA5"
 	overdose_threshold = 25
@@ -1345,9 +1363,6 @@
 		var/obj/item/I = M.get_active_held_item()
 		if(I && M.dropItemToGround(I))
 			to_chat(M, "<span class='notice'>Your hands spaz out and you drop what you were holding!</span>")
-	if(prob(33))
-		M.losebreath++
-		M.adjustOxyLoss(1, 0)
 	M.adjustStaminaLoss(-10, 0)
 	M.Jitter(10)
 	M.Dizzy(15)
@@ -1356,7 +1371,7 @@
 	..()
 	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
-	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.35, blacklisted_movetypes=(FLYING|FLOATING))
+	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.45, blacklisted_movetypes=(FLYING|FLOATING))
 	L.ignore_slowdown(type)
 
 /datum/reagent/medicine/badstims/on_mob_end_metabolize(mob/living/L)
