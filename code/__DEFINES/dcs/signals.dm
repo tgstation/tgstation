@@ -309,6 +309,8 @@
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY "human_melee_unarmed_attackby"		//from mob/living/carbon/human/UnarmedAttack(): (mob/living/carbon/human/attacker)
 #define COMSIG_HUMAN_DISARM_HIT	"human_disarm_hit"	//Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
 #define COMSIG_JOB_RECEIVED "job_received"										//Whenever EquipRanked is called, called after job is set
+#define COMSIG_HUMAN_EMBED_RIP "item_embed_removing"		// called on human when said human tries to rip out this embedded item (mob/living/carbon/human/target, /obj/item, /obj/item/bodypart/L)
+#define COMSIG_HUMAN_EMBED_REMOVAL "item_embed_remove_surgery"	// called on human from /datum/surgery_step/remove_object/success (mob/living/carbon/human/target, /obj/item, /obj/item/bodypart/L)
 
 // /datum/species signals
 #define COMSIG_SPECIES_GAIN "species_gain"						//from datum/species/on_species_gain(): (datum/species/new_species, datum/species/old_species)

@@ -69,7 +69,11 @@
 		var/obj/item/I = AM
 		var/zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
-		SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, zone)
+		var/nosell_hit = SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, throwingdatum) // TODO: find a better way to handle hitpush and skipcatch for humans
+		if(nosell_hit)
+			skipcatch = TRUE
+			hitpush = FALSE
+
 		dtype = I.damtype
 		if(!blocked)
 			visible_message("<span class='danger'>[src] is hit by [I]!</span>", \

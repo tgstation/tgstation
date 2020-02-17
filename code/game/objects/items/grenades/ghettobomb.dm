@@ -45,7 +45,7 @@
 
 /obj/item/grenade/iedcasing/attack_self(mob/user) //
 	if(!active)
-		if(clown_check(user))
+		if(!botch_check(user))
 			to_chat(user, "<span class='warning'>You light the [name]!</span>")
 			cut_overlay("improvised_grenade_filled")
 			preprime(user, null, FALSE)

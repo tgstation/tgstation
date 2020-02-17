@@ -4,6 +4,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // if true, everyone item when created will have its name changed to be
 // more... RPG-like.
 
+GLOBAL_VAR_INIT(stickpocalypse, FALSE) // if true, all non-embeddable items will be able to harmlessly stick to people when thrown
+GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to embed in people, takes precedence over stickpocalypse
+
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
@@ -149,12 +152,23 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(damtype == "brute")
 			hitsound = "swing_hit"
 
-	if (!embedding)
-		embedding = getEmbeddingBehavior()
-	else if (islist(embedding))
-		embedding = getEmbeddingBehavior(arglist(embedding))
-	else if (!istype(embedding, /datum/embedding_behavior))
-		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
+	if(embedding)
+		var/list/temp = embedding
+		temp.Insert(0, /datum/element/embed) // i dunno about this
+		AddElement(arglist(temp))
+	else if(GLOB.embedpocalypse)
+		embedding = EMBED_POINTY
+		var/list/temp = embedding
+		temp.Insert(0, /datum/element/embed)
+		AddElement(arglist(temp))
+		name = "pointy [name]"
+	else if(GLOB.stickpocalypse)
+		embedding = EMBED_HARMLESS
+		var/list/temp = embedding
+		temp.Insert(0, /datum/element/embed)
+		AddElement(arglist(temp))
+		name = "sticky [name]"
+
 
 	if(sharpness) //give sharp objects butchering functionality, for consistency
 		AddComponent(/datum/component/butchering, 80 * toolspeed)
@@ -221,6 +235,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			. += "[src] is made of cold-resistant materials."
 		if(resistance_flags & FIRE_PROOF)
 			. += "[src] is made of fire-retardant materials."
+
+	if(embedding)
+		if(is_embed_harmless())
+			. += "[src] feels sticky, and could probably get stuck to someone if thrown properly!"
+		else
+			. += "[src] has a fine point, and could probably get caught in someone if thrown properly!"
 
 	if(!user.research_scanner)
 		return
@@ -863,3 +883,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/doStrip(mob/stripper, mob/owner)
 	return owner.dropItemToGround(src)
+
+/obj/item/proc/is_embed_harmless()
+	if(embedding)
+		return (embedding.pain_mult == 0 && embedding.jostle_pain_mult == 0)

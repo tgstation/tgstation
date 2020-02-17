@@ -140,21 +140,6 @@
 		hitpush = FALSE
 		skipcatch = TRUE
 		blocked = TRUE
-	else if(I)
-		if(((throwingdatum ? throwingdatum.speed : I.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || I.embedding.embedded_ignore_throwspeed_threshold)
-			if(can_embed(I))
-				if(prob(I.embedding.embed_chance) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
-					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
-					var/obj/item/bodypart/L = pick(bodyparts)
-					L.embedded_objects |= I
-					I.add_mob_blood(src)//it embedded itself in you, of course it's bloody!
-					I.forceMove(src)
-					I.embedded(src)
-					L.receive_damage(I.w_class*I.embedding.embedded_impact_pain_multiplier)
-					visible_message("<span class='danger'>[I] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>[I] embeds itself in your [L.name]!</span>")
-					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
-					hitpush = FALSE
-					skipcatch = TRUE //can't catch the now embedded item
 
 	return ..()
 
@@ -746,7 +731,10 @@
 		to_chat(src, "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name][isdisabled][self_aware ? " has " : " is "][status].</span>")
 
 		for(var/obj/item/I in LB.embedded_objects)
-			to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
+			if(I.is_embed_harmless())
+				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] stuck to your [LB.name]!</a>")
+			else
+				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
 
 	for(var/t in missing)
 		to_chat(src, "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")

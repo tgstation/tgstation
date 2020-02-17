@@ -253,6 +253,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	sharpness = IS_SHARP
 	var/icon_prefix
 	var/obj/item/stack/sheet/weld_material = /obj/item/stack/sheet/glass
+	embedding = list("embed_chance" = 65)
 
 
 /obj/item/shard/suicide_act(mob/user)
