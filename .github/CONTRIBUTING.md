@@ -20,23 +20,13 @@ We have a [list of guides on the wiki](http://www.tgstation13.org/wiki/index.php
 
 There is an open list of approachable issues for [your inspiration here](https://github.com/tgstation/-tg-station/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%22).
 
-You can of course, as always, ask for help at [#coderbus](irc://irc.rizon.net/coderbus) on irc.rizon.net. We're just here to have fun and help out, so please don't expect professional support.
+You can of course, as always, ask for help on the discord channels, or the forums, We're just here to have fun and help out, so please don't expect professional support.
 
 ## Meet the Team
-
-**Design Lead**
-
-The Design Lead has the final say on what gameplay changes get into and out of the game. He or she has full veto power on any feature or balance additions, changes, or removals, and establishes a general, personally-preferred direction for the game.
 
 **Headcoder**
 
 The Headcoder is responsible for controlling, adding, and removing maintainers from the project. In addition to filling the role of a normal maintainer, they have sole authority on who becomes a maintainer, as well as who remains a maintainer and who does not.
-
-**Art Director**
-
-The Art Director controls sprites and aesthetic that get into the game. While sprites for brand-new additions are generally accepted regardless of quality, modified current art assets fall to the Art Director, who can decide whether or not a sprite tweak is both merited and a suitable replacement.
-
-They also control the general "perspective" of the game - how sprites should generally look, especially the angle from which they're viewed. An example of this is the [3/4 perspective](http://static.tvtropes.org/pmwiki/pub/images/kakarikovillage.gif), which is a bird's eye view from above the object being viewed.
 
 **Maintainers**
 
@@ -258,11 +248,19 @@ This prevents nesting levels from getting deeper then they need to be.
 	* Areas should not be var-edited on a map to change it's name or attributes. All areas of a single type and it's altered instances are considered the same area within the code, and editing their variables on a map can lead to issues with powernets and event subsystems which are difficult to debug.
 
 ### User Interfaces
+<<<<<<< HEAD
 * All new player-facing user interfaces must use TGUI.
 * Raw HTML is permitted for admin and debug UIs.
 * Documentation for TGUI can be found at:
 	* [tgui/README.md](../tgui/README.md)
 	* [tgui/tutorial-and-examples.md](../tgui/docs/tutorial-and-examples.md)
+=======
+* All new player-facing user interfaces must use TGUI-next; TGUI is deprecated.
+* Raw HTML is permitted for admin and debug UIs.
+* Documentation for TGUI-next can be found at:
+	* [tgui-next/README.md](../tgui-next/README.md)
+	* [tgui-next/tutorial-and-examples.md](../tgui-next/docs/tutorial-and-examples.md)
+>>>>>>> Light pass for truthyness
 
 ### Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
@@ -388,7 +386,7 @@ There is also an undocumented keyword called `static` that has the same behaviou
 
 There is no strict process when it comes to merging pull requests. Pull requests will sometimes take a while before they are looked at by a maintainer; the bigger the change, the more time it will take before they are accepted into the code. Every team member is a volunteer who is giving up their own time to help maintain and contribute, so please be courteous and respectful. Here are some helpful ways to make it easier for you and for the maintainers when making a pull request.
 
-* Make sure your pull request complies to the requirements outlined in [this guide](http://tgstation13.org/wiki/Getting_Your_Pull_Accepted)
+* Make sure your pull request complies to the requirements outlined here
 
 * You are going to be expected to document all your changes in the pull request. Failing to do so will mean delaying it as we will have to question why you made the change. On the other hand, you can speed up the process by making the pull request readable and easy to understand, with diagrams or before/after data.
 
