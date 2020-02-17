@@ -87,24 +87,34 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/proc/updatetheme(theme) //update the guardian's theme
 	if(!theme)
 		theme = pick("magic", "tech", "carp")
-	if(theme == "tech")
-		bubble_icon = "holo"
-		icon_state = "techbase"
-		icon_living = "techbase"
-		icon_dead = "techbase"
-	else
-		bubble_icon = "guardian"
-	//Special case holocarp, because #snowflake code
-	if(theme == "carp")
-		speak_emote = list("gnashes")
-		desc = "A mysterious fish that stands by its charge, ever vigilant."
-		icon_state = "holocarp"
-		icon_living = "holocarp"
-		icon_dead = "holocarp"
-		attack_verb_continuous = "bites"
-		attack_verb_simple = "bite"
-		attack_sound = 'sound/weapons/bite.ogg'
-		recolorentiresprite = TRUE
+	switch(theme)//should make it easier to create new stand designs in the future if anyone likes that
+		if("magic")
+			name = "Guardian Spirit"
+			real_name = "Guardian Spirit"
+			bubble_icon = "guardian"
+			icon_state = "magicbase"
+			icon_living = "magicbase"
+			icon_dead = "magicbase"
+		if("tech")
+			name = "Holoparasite"
+			real_name = "Holoparasite"
+			bubble_icon = "holo"
+			icon_state = "techbase"
+			icon_living = "techbase"
+			icon_dead = "techbase"
+		if("carp")
+			name = "Holocarp"
+			real_name = "Holocarp"
+			bubble_icon = "holo"
+			icon_state = "holocarp"
+			icon_living = "holocarp"
+			icon_dead = "holocarp"
+			speak_emote = list("gnashes")
+			desc = "A mysterious fish that stands by its charge, ever vigilant."
+			attack_verb_continuous = "bites"
+			attack_verb_simple = "bite"
+			attack_sound = 'sound/weapons/bite.ogg'
+			recolorentiresprite = TRUE
 	if(!recolorentiresprite) //we want this to proc before stand logs in, so the overlay isnt gone for some reason
 		cooloverlay = mutable_appearance(icon, theme)
 		add_overlay(cooloverlay)
