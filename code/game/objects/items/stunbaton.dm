@@ -170,7 +170,7 @@
 		playsound(src, stun_sound, 75, TRUE, -1)
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Knockdown(stun_time*3) //should be an equivalent to attack(user,user)
+		user.Knockdown(stun_time*3) //should really be an equivalent to attack(user,user)
 		deductcharge(cell_hit_cost)
 		return TRUE
 	return FALSE
