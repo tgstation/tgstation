@@ -1,20 +1,19 @@
 # dmdoc
-
-**dmdoc** is a documentation generator for DreamMaker, the scripting language
-of the [BYOND] game engine. It produces simple static HTML files based on
-documented files, macros, types, procs, and vars.
-
-We use **dmdoc** to generate documentation for our code, and the documentation
-automatically generated and built on every new commit to the master branch
-
-This gives new developers a clickable reference they can browse to better help
-gain understanding of the /tg/station codebase structure and api reference.
-
 [DOCUMENTATION]: http://codedocs.tgstation13.org
 
 [BYOND]: https://secure.byond.com/
 
-[releases of dmdoc]: https://github.com/SpaceManiac/SpacemanDMM/releases
+[DMDOC]: https://github.com/SpaceManiac/SpacemanDMM/releases
+
+[DMDOC] is a documentation generator for DreamMaker, the scripting language
+of the [BYOND] game engine. It produces simple static HTML files based on
+documented files, macros, types, procs, and vars.
+
+We use **dmdoc** to generate [DOCUMENTATION] for our code, and that documentation
+is automatically generated and built on every new commit to the master branch
+
+This gives new developers a clickable reference [DOCUMENTATION] they can browse to better help
+gain understanding of the /tg/station codebase structure and api reference.
 
 ## Documenting code on /tg/station
 We use block comments to document procs and classes, and we use three `///` comments
