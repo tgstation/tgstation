@@ -1634,7 +1634,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
 	var/areatemp = H.get_temperature(environment)
 
-	if(H.stat != DEAD) // If you are dead your body does not stabilize naturally
+	if(H.stat != DEAD && !HAS_TRAIT(H, TRAIT_COLDBLOODED)) // If you are dead your body does not stabilize naturally // FULPSTATION: Or if you're cold blooded
 		natural_bodytemperature_stabilization(environment, H)
 
 	if(!H.on_fire || areatemp > H.bodytemperature) // If we are not on fire or the area is hotter
