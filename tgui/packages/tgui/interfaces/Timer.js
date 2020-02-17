@@ -29,9 +29,11 @@ export const Timer = props => {
       )}>
       <Button
         icon="fast-backward"
+        disabled={timing}
         onClick={() => act('input', { adjust: -30 })} />
       <Button
         icon="backward"
+        disabled={timing}
         onClick={() => act('input', { adjust: -1 })} />
       {' '}
       {String(minutes).padStart(2, '0')}:
@@ -39,9 +41,11 @@ export const Timer = props => {
       {' '}
       <Button
         icon="forward"
+        disabled={timing}
         onClick={() => act('input', { adjust: 1 })} />
       <Button
         icon="fast-forward"
+        disabled={timing}
         onClick={() => act('input', { adjust: 30 })} />
     </Section>
   );
