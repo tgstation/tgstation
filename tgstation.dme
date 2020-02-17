@@ -414,6 +414,7 @@
 #include "code\datums\components\paintable.dm"
 #include "code\datums\components\pricetag.dm"
 #include "code\datums\components\punchcooldown.dm"
+#include "code\datums\components\quality.dm"
 #include "code\datums\components\rad_insulation.dm"
 #include "code\datums\components\radioactive.dm"
 #include "code\datums\components\remote_materials.dm"

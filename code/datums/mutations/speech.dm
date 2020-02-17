@@ -274,21 +274,4 @@
 	owner.remove_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_STONER)
 	owner.remove_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)
 
-/datum/mutation/human/dwarven
-	name = "Ancient Dwarven"
-	desc = "A rare mutation that gives the subject ability to communicate with ancient dwarves. Side effects include inability to communicate with anyone else."
-	quality = NEGATIVE
-	locked = TRUE
-	text_gain_indication = "<span class='notice'>You feel... your tongue fill with lava, you feel one with the earth.</span>"
-	text_lose_indication = "<span class='notice'>You feel the sensation of unity with stone disappear</span>"
-
-/datum/mutation/human/dwarven/on_acquiring(mob/living/carbon/human/owner)
-	..()
-	owner.grant_language(/datum/language/dwarven, TRUE, TRUE, LANGUAGE_DWARVEN)
-	owner.add_blocked_language(subtypesof(/datum/language) - /datum/language/dwarven, LANGUAGE_DWARVEN)
-
-/datum/mutation/human/dwarven/on_losing(mob/living/carbon/human/owner)
-	..()
-	owner.remove_language(/datum/language/dwarven, TRUE, TRUE, LANGUAGE_DWARVEN)
-	owner.remove_blocked_language(subtypesof(/datum/language) - /datum/language/dwarven, LANGUAGE_DWARVEN)
 
