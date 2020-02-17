@@ -41,6 +41,14 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/reagent_weight = 1 //affects how far it travels when sprayed
 	var/metabolizing = FALSE
 	var/harmful = FALSE //is it bad for you? Currently only used for borghypo. C2s and Toxins have it TRUE by default.
+	//Are we from a material? We might wanna know that for special stuff. Like metalgen. Is replaced with a ref of the material on New()
+	var/datum/material/material
+
+/datum/reagent/New()
+	. = ..()
+
+	if(material)
+		material = getmaterialref(material)
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
