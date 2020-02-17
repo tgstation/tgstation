@@ -516,6 +516,7 @@
 	new /obj/item/clothing/mask/chameleon/broken(src)
 	new /obj/item/clothing/neck/chameleon/broken(src)
 	new /obj/item/storage/backpack/chameleon/broken(src)
+	new /obj/item/storage/belt/chameleon/broken(src)
 	new /obj/item/radio/headset/chameleon/broken(src)
 	new /obj/item/stamp/chameleon/broken(src)
 	new /obj/item/pda/chameleon/broken(src)
