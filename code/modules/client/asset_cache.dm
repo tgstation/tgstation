@@ -388,18 +388,12 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset/simple/tgui
 	assets = list(
-		// tgui
-		"tgui.css" = 'tgui/assets/tgui.css',
-		"tgui.js" = 'tgui/assets/tgui.js',
-		// tgui-next
-		"tgui-main.html" = 'tgui-next/packages/tgui/public/tgui-main.html',
-		"tgui-fallback.html" = 'tgui-next/packages/tgui/public/tgui-fallback.html',
-		"tgui.bundle.js" = 'tgui-next/packages/tgui/public/tgui.bundle.js',
-		"tgui.bundle.css" = 'tgui-next/packages/tgui/public/tgui.bundle.css',
-		"shim-html5shiv.js" = 'tgui-next/packages/tgui/public/shim-html5shiv.js',
-		"shim-ie8.js" = 'tgui-next/packages/tgui/public/shim-ie8.js',
-		"shim-dom4.js" = 'tgui-next/packages/tgui/public/shim-dom4.js',
-		"shim-css-om.js" = 'tgui-next/packages/tgui/public/shim-css-om.js',
+		"tgui.bundle.js" = 'tgui/packages/tgui/public/tgui.bundle.js',
+		"tgui.bundle.css" = 'tgui/packages/tgui/public/tgui.bundle.css',
+		"shim-html5shiv.js" = 'tgui/packages/tgui/public/shim-html5shiv.js',
+		"shim-ie8.js" = 'tgui/packages/tgui/public/shim-ie8.js',
+		"shim-dom4.js" = 'tgui/packages/tgui/public/shim-dom4.js',
+		"shim-css-om.js" = 'tgui/packages/tgui/public/shim-css-om.js',
 	)
 
 /datum/asset/group/tgui
