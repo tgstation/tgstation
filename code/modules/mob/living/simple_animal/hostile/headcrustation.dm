@@ -1,8 +1,7 @@
-
 /mob/living/simple_animal/hostile/headcrustation
 	name = "Headcrab"
 	desc = "It looks confused, and somewhat lost."
-	icon_state = "crabby_inactive"
+	icon_state = "crabby"
 	icon_living = "crabby"
 	icon_dead = "crabby_rip"
 	gender = NEUTER
