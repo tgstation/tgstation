@@ -114,7 +114,7 @@
 		if(do_after(user, clean_speedies, target = target))
 			to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
 			var/obj/effect/decal/cleanable/cleanies = target
-			user?.mind.adjust_experience(/datum/skill/cleaning, max(round((cleanies.beauty*(-1))/CLEAN_SKILL_BEAUTY_ADJUSTMENT),0)) //again, intentional that this does NOT round but mops do.
+			user?.mind.adjust_experience(/datum/skill/cleaning, max(round(cleanies.beauty/CLEAN_SKILL_BEAUTY_ADJUSTMENT),0)) //again, intentional that this does NOT round but mops do.
 			qdel(target)
 			decreaseUses(user)
 
