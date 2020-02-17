@@ -46,7 +46,6 @@
 		            /obj/item/storage/belt/fannypack = 3,
 		            /obj/item/storage/belt/fannypack/blue = 3,
 		            /obj/item/storage/belt/fannypack/red = 3,
-		            /obj/item/clothing/ears/headphones = 2,
 		            /obj/item/clothing/under/misc/overalls = 2,
 		            /obj/item/clothing/under/pants/jeans = 2,
 		            /obj/item/clothing/under/pants/classicjeans = 2,

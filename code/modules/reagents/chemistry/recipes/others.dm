@@ -87,6 +87,18 @@
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/soap/homemade(location)
 
+/datum/chemical_reaction/omegasoapification
+	name = "Omega Soap"
+	id = "omegasoap"
+	required_reagents = list(/datum/reagent/consumable/potato_juice = 10, /datum/reagent/consumable/ethanol/lizardwine = 10, /datum/reagent/monkey_powder = 10, /datum/reagent/drug/krokodil = 10, /datum/reagent/toxin/acid/nitracid = 10, /datum/reagent/baldium = 10, /datum/reagent/consumable/ethanol/hooch = 10, /datum/reagent/bluespace = 10, /datum/reagent/drug/pumpup = 10, /datum/reagent/consumable/space_cola = 10)
+	required_temp = 999
+	mob_react = FALSE
+
+/datum/chemical_reaction/omegasoapification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/soap/omega(location)
+
 /datum/chemical_reaction/candlefication
 	name = "Candlefication"
 	id = "candlefication"
@@ -708,6 +720,31 @@
 	var/location = get_turf(holder.my_atom)
 	new /obj/item/slime_extract/grey(location)
 
+/datum/chemical_reaction/metalgen
+	name = "metalgen"
+	id = /datum/reagent/metalgen
+	required_reagents = list(/datum/reagent/wittel = 1, /datum/reagent/bluespace = 1, /datum/reagent/toxin/mutagen = 1)
+	results = list(/datum/reagent/metalgen = 1)
+
+/datum/chemical_reaction/metalgen_imprint
+	name = "metalgen imprint"
+	id = /datum/reagent/metalgen
+	required_reagents = list(/datum/reagent/metalgen = 1, /datum/reagent/liquid_dark_matter = 1)
+	results = list(/datum/reagent/metalgen = 1)
+
+/datum/chemical_reaction/metalgen_imprint/on_reaction(datum/reagents/holder, created_volume)
+	var/datum/reagent/metalgen/MM = holder.get_reagent(/datum/reagent/metalgen)
+	for(var/datum/reagent/R in holder.reagent_list)
+		if(R.material && R.volume >= 40)
+			MM.data["material"] = R.material
+			holder.remove_reagent(R.type, 40)
+
+/datum/chemical_reaction/gravitum
+	name = "gravitum"
+	id = /datum/reagent/gravitum
+	required_reagents = list(/datum/reagent/wittel = 1, /datum/reagent/sorium = 10)
+	results = list(/datum/reagent/gravitum = 10)
+
 /datum/chemical_reaction/cellulose_carbonization
 	name = "Cellulose_Carbonization"
 	id = /datum/reagent/carbon
@@ -740,3 +777,9 @@
 	required_reagents = list(/datum/reagent/acetone = 1, /datum/reagent/toxin/formaldehyde = 1, /datum/reagent/water = 1)
 	required_temp = 450
 
+/datum/chemical_reaction/holywater
+	name = "Holy Water"
+	id = /datum/reagent/water/holywater
+	results = list(/datum/reagent/water/holywater = 1)
+	required_reagents = list(/datum/reagent/water/hollowwater = 1)
+	required_catalysts = list(/datum/reagent/water/holywater = 1)

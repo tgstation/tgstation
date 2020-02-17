@@ -272,14 +272,18 @@
 	if(istype(H))
 		H.toggle_welding_screen(owner)
 
-/datum/action/item_action/toggle_headphones
-	name = "Toggle Headphones"
-	desc = "UNTZ UNTZ UNTZ"
+/datum/action/item_action/toggle_spacesuit
+	name = "Toggle Suit Thermal Regulator"
+	icon_icon = 'icons/mob/actions/actions_spacesuit.dmi'
+	button_icon_state = "thermal_off"
 
-/datum/action/item_action/toggle_headphones/Trigger()
-	var/obj/item/clothing/ears/headphones/H = target
-	if(istype(H))
-		H.toggle(owner)
+/datum/action/item_action/toggle_spacesuit/Trigger()
+	var/obj/item/clothing/suit/space/suit = target
+	if(!istype(suit))
+		return
+	suit.toggle_spacesuit()
+	button_icon_state = "thermal_[suit.thermal_on ? "on" : "off"]"
+	UpdateButtonIcon()
 
 /datum/action/item_action/toggle_unfriendly_fire
 	name = "Toggle Friendly Fire \[ON\]"
