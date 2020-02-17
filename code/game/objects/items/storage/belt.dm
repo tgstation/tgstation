@@ -111,6 +111,15 @@
 	new /obj/item/t_scanner(src)
 	new /obj/item/extinguisher/mini(src)
 
+/obj/item/storage/belt/utility/syndicate/PopulateContents()
+	new /obj/item/screwdriver/nuke(src)
+	new /obj/item/wrench/combat(src)
+	new /obj/item/weldingtool/largetank(src)
+	new /obj/item/crowbar(src)
+	new /obj/item/wirecutters(src)
+	new /obj/item/multitool(src)
+	new /obj/item/inducer/syndicate(src)
+
 /obj/item/storage/belt/medical
 	name = "medical belt"
 	desc = "Can hold various medical equipment."
@@ -288,7 +297,8 @@
 		/obj/item/organ/regenerative_core,
 		/obj/item/wormhole_jaunter,
 		/obj/item/storage/bag/plants,
-		/obj/item/stack/marker_beacon
+		/obj/item/stack/marker_beacon,
+		/obj/item/key/lasso
 		))
 
 
@@ -528,7 +538,8 @@
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
 		/obj/item/assembly/mousetrap,
-		/obj/item/paint/paint_remover
+		/obj/item/paint/paint_remover,
+		/obj/item/twohanded/broom
 		))
 
 /obj/item/storage/belt/janitor/full/PopulateContents()

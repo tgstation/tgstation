@@ -340,7 +340,7 @@
 
 	// attack with weapon if we have one
 	if(Weapon)
-		L.attackby(Weapon, src)
+		Weapon.melee_attack_chain(src, L)
 	else
 		L.attack_paw(src)
 

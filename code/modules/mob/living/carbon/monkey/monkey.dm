@@ -77,7 +77,7 @@
 			slow += (health_deficiency / 25)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/monkey_health_speedmod, TRUE, slow)
 
-/mob/living/carbon/monkey/adjust_bodytemperature(amount)
+/mob/living/carbon/monkey/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY, use_insulation=FALSE, use_steps=FALSE)
 	. = ..()
 	var/slow = 0
 	if (bodytemperature < 283.222)
