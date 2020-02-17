@@ -89,7 +89,7 @@ that will also be rendered and added to the modules tree. The structure for
 these is deliberately not defined, so you can be as freeform and as wheeling as
 you would like.
 
-[Here is a representative example of what you might write]: http://codedocs.tgstation13.org/code/modules/keybindings/readme.html
+[Here is a representative example of what you might write](http://codedocs.tgstation13.org/code/modules/keybindings/readme.html)
 
 ## Special variables
 You can use certain special template variables in DM DOC comments and they will be expanded
