@@ -217,12 +217,15 @@
 //HOOKS
 
 /mob/living/carbon/human/proc/sec_hud_set_ID()
+	var/jobName
 	var/image/holder = hud_list[ID_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = "hudno_id"
 	if(wear_id?.GetID())
-		holder.icon_state = "hud[ckey(wear_id.GetJobName())]"
+		jobName = wear_id.GetJobName()
+		holder.icon_state = "hud[ckey(jobName)]"
+	SEND_SIGNAL(src, COMSIG_UPDATE_VISIBLE_JOB, jobName)
 	sec_hud_set_security_status()
 
 /mob/living/proc/sec_hud_set_implants()

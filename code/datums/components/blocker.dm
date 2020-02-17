@@ -23,7 +23,8 @@
 	var/list/image/staticOverlays = list()
 
 	var/min_cash = 100
-	var/list/blocked_arg_list
+	var/list/blocked_info = list()
+	var/list/block_list = list()
 	var/mode = BLOCK_JOBS
 	var/last_update = 0
 
