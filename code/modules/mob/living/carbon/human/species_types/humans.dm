@@ -17,5 +17,10 @@
 /datum/species/human/dwarf
 	name = "Dwarf"
 	id = "dwarf"
+	default_color = "FFFFFF"
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	default_features = list("mcolor" = "FFF", "wings" = "None")
+	limbs_id = "human"
+	use_skintones = 1
 	inherent_traits = list(TRAIT_NOBREATH)
 	species_language_holder = /datum/language_holder/dwarf
