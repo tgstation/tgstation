@@ -163,7 +163,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		add_atom_colour(guardiancolor, FIXED_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/hostile/guardian/proc/guardianrename()
-	var/new_name = sanitize_name(stripped_input(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN))
+	var/new_name = sanitize_name(reject_bad_text(stripped_input(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN)))
 	if(!new_name) //redo proc until we get a good name
 		to_chat(src, "<span class='warning'>Not a valid name, please try again.</span>")
 		guardianrename()
@@ -606,16 +606,16 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	switch(theme)
 		if("tech")
 			to_chat(user, "[G.tech_fluff_string]")
-			to_chat(user, "<span class='holoparasite'><font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> is now online!</span>")
+			to_chat(user, "<span class='holoparasite'><b>[G.real_name]</b> is now online!</span>")
 		if("magic")
 			to_chat(user, "[G.magic_fluff_string]")
-			to_chat(user, "<span class='holoparasite'><font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> has been summoned!</span>")
+			to_chat(user, "<span class='holoparasite'><b>[G.real_name]</b> has been summoned!</span>")
 		if("carp")
 			to_chat(user, "[G.carp_fluff_string]")
-			to_chat(user, "<span class='holoparasite'><font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> has been caught!</span>")
+			to_chat(user, "<span class='holoparasite'><b>[G.real_name]</b> has been caught!</span>")
 		if("hive")
 			to_chat(user, "[G.hive_fluff_string]")
-			to_chat(user, "<span class='holoparasite'><font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> has been created from the core!</span>")
+			to_chat(user, "<span class='holoparasite'><b>[G.real_name]</b> has been created from the core!</span>")
 	user.verbs += /mob/living/proc/guardian_comm
 	user.verbs += /mob/living/proc/guardian_recall
 	user.verbs += /mob/living/proc/guardian_reset
