@@ -129,12 +129,7 @@
 	icon_state = "mythril_press"
 
 /obj/structure/destructible/dwarven/mythril_press/Initialize()
-	AddComponent(/datum/component/material_container,
-	list(
-	/datum/material/diamond,
-	/datum/material/uranium,
-	/datum/material/mythril,
-	), 20000, TRUE, /obj/item/stack/sheet/mineral, null,  null, FALSE)
+	AddComponent(/datum/component/material_container,list(/datum/material/diamond,/datum/material/uranium,/datum/material/mythril,), 20000, TRUE, /obj/item/stack/sheet/mineral, null,  null, FALSE)
 	. = ..()
 
 /obj/structure/destructible/dwarven/mythril_press/attack_hand(mob/user)
