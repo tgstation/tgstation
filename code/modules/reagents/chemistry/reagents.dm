@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	. = ..()
 
 	if(material)
-		material = getmaterialref(material)
+		material = SSmaterials.GetMaterialRef(material)
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
