@@ -36,11 +36,13 @@
 
 	original_item.reagents.trans_to(parent,original_item.reagents.total_volume, transferred_by = creator)
 
+	var/obj/item/I = parent
+
 	for(var/obj/O in original_item.contents)
-		parent.contents += O
+		I.contents += O
 
 	if(catalyst_item && creator)
-		parent.attackby(catalyst_item, creator)
+		I.attackby(catalyst_item, creator)
 
 ///Destroy all of the ingredients inside.
 /datum/component/customizable_food/Destroy()
@@ -50,6 +52,9 @@
 ///Add all of the ingredient names together and show a length.
 /datum/component/customizable_food/proc/examine(datum/source, mob/user)
 	. = ..()
+
+	var/atom/A = parent
+
 	var/ingredients_listed = ""
 	for(var/obj/item/ING in ingredients)
 		ingredients_listed += "[ING.name], "
@@ -60,7 +65,7 @@
 		size = "big"
 	if(ingredients.len>8)
 		size = "monster"
-	. += "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(parent.name)]."
+	. += "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(A.name)]."
 
 
 ///This comes from the edible component, source is the edible component. This proc puts the food into the customizable food
@@ -83,14 +88,13 @@
 
 	if(!user.transferItemToLoc(I, src))
 		return
-	if(usedfood.trash)
-		usedfood.generate_trash(get_turf(user))
+	//add trash spawning here
 	ingredients += I
 	mix_filling_color(I)
-	I.reagents.trans_to(parent,min(I.reagents.total_volume, 15), transfered_by = user) //limit of 15, we don't want our custom food to be completely filled by just one ingredient with large reagent volume.
+	I.reagents.trans_to(owner,min(I.reagents.total_volume, 15), transfered_by = user) //limit of 15, we don't want our custom food to be completely filled by just one ingredient with large reagent volume.
 	ourfood |= usedfood.foodtypes
 	set_filling(usedfood.filling_color)
-	to_chat(user, "<span class='notice'>You add the [I.name] to the [parent.name].</span>")
+	to_chat(user, "<span class='notice'>You add the [I.name] to the [owner.name].</span>")
 	update_name(I)
 
 ///Mixes together the color of the new ingredient. This is the combined color of all ingredients
@@ -109,7 +113,10 @@
 
 ///This either gives the custom food a filling with the color of the used food, or makes it use the color made in mix filling colors.
 /datum/component/customizable_food/proc/set_filling(color)
-	var/mutable_appearance/filling = mutable_appearance(parent.icon, "[initial(parent.icon_state)]_filling")
+
+	var/atom/A = parent
+
+	var/mutable_appearance/filling = mutable_appearance(A.icon, "[initial(A.icon_state)]_filling")
 	if(color == "#FFFFFF")
 		filling.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
 	else
@@ -124,30 +131,32 @@
 			filling.pixel_y = 2 * ingredients.len - 1
 		if(INGREDIENTS_STACKPLUSTOP)
 			filling.pixel_x = rand(-1,1)
-			filling.pixel_y = 2 * parent.ingredients.len - 1
-			if(parent.overlays && overlays.len >= ingredients.len) //remove the old top if it exists
-				parent.overlays -= parent.overlays[ingredients.len]
-			var/mutable_appearance/TOP = mutable_appearance(parent.icon, "[parent.icon_state]_top")
+			filling.pixel_y = 2 * ingredients.len - 1
+			if(A.overlays && A.overlays.len >= ingredients.len) //remove the old top if it exists
+				A.overlays -= A.overlays[ingredients.len]
+			var/mutable_appearance/TOP = mutable_appearance(A.icon, "[A.icon_state]_top")
 			TOP.pixel_y = 2 * ingredients.len + 3
-			parent.add_overlay(filling)
-			parent.add_overlay(TOP)
+			A.add_overlay(filling)
+			A.add_overlay(TOP)
 			return
 		if(INGREDIENTS_FILL)
-			parent.cut_overlays()
-			filling.color = filling_color
+			A.cut_overlays()
+			filling.color = ourcolor
 		if(INGREDIENTS_LINE)
 			filling.pixel_x = filling.pixel_y = rand(-8,3)
-	parent.	add_overlay(filling)
+	A.add_overlay(filling)
 
 ///Updates the name of the parent item by pre-fixing the food's name, (or just making it say custom in the case of multiple ingredients)
 /datum/component/customizable_food/proc/update_name(obj/item/food)
+	var/atom/A = parent
+
 	for(var/obj/item/I in ingredients)
 		if(!istype(food, I.type))
 			customname = "custom"
 			break
 	if(ingredients.len == 1) //first ingredient
-		customname = S.name
-	name = "[customname] [initial(parent.name)]"
+		customname = food.name
+	A.name = "[customname] [initial(A.name)]"
 
 #undef INGREDIENTS_FILL
 #undef INGREDIENTS_SCATTER

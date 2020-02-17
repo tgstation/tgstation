@@ -8,7 +8,7 @@ Behavior that's still missing from this component that original food items had t
 	Drying component (jerky etc)
 	Customizable component (custom pizzas etc)
 	Processable component (Slicing and cooking behavior essentialy, making it go from item A to B when conditions are met.)
-	Dunkable component (Dunking things into reagent containers to absorb a specific amount of reagents)
+	Trash spawning component
 
 	Misc:
 	Something for cakes (You can store things inside)
@@ -256,12 +256,14 @@ Behavior that's still missing from this component that original food items had t
 
 ///Lets you set the color of the filling of the food.
 /datum/component/edible/proc/set_filling(datum/source, color)
-	cut_overlays()
-	var/mutable_appearance/filling = mutable_appearance(icon, "[initial(parent.icon_state)]_filling")
+	var/atom/A = parent
+
+	A.cut_overlays()
+	var/mutable_appearance/filling = mutable_appearance(A.icon, "[initial(A.icon_state)]_filling")
 	if(color == "#FFFFFF")
 		filling.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
 	else
 		filling.color = color
 
-	add_overlay(filling)
+	A.add_overlay(filling)
 
