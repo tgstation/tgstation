@@ -84,7 +84,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	GLOB.parasites -= src
 	return ..()
 
-/mob/living/simple_animal/hostile/guardian/proc/updatetheme(theme) //update the guardian's theme to whatever its datum is; proc for adminfuckery
+/mob/living/simple_animal/hostile/guardian/proc/updatetheme(theme) //update the guardian's theme
 	if(!theme)
 		theme = pick("magic", "tech", "carp")
 	if(theme == "tech")
@@ -105,7 +105,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		attack_verb_simple = "bite"
 		attack_sound = 'sound/weapons/bite.ogg'
 		recolorentiresprite = TRUE
-	if(!recolorentiresprite)
+	if(!recolorentiresprite) //we want this to proc before stand logs in, so the overlay isnt gone for some reason
 		cooloverlay = mutable_appearance(icon, theme)
 		add_overlay(cooloverlay)
 
@@ -123,19 +123,30 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	guardiancustomize()
 
 /mob/living/simple_animal/hostile/guardian/proc/guardiancustomize()
+	guardianrecolor()
+	guardianrename()
+
+/mob/living/simple_animal/hostile/guardian/proc/guardianrecolor()
 	guardiancolor = input(src,"What would you like your color to be?","Choose Your Color","#ffffff") as color|null
-	if(!guardiancolor) //uh oh stinky cancel!
-		guardiancolor = "#ffffff"
+	if(!guardiancolor) //redo proc until we get a color
+		to_chat(src, "<span class='warning'>Not a valid color, please try again.</span>")
+		guardianrecolor()
+		return
 	if(!recolorentiresprite)
 		cooloverlay.color = guardiancolor
-		cut_overlay(cooloverlay)
+		cut_overlay(cooloverlay) //we need to get our new color
 		add_overlay(cooloverlay)
 	else
 		add_atom_colour(guardiancolor, FIXED_COLOUR_PRIORITY)
-	var/new_name = stripped_input(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN)
-	if(new_name)
-		visible_message("<span class='notice'>Your new name <span class='name'>[new_name]</span> anchors itself in your mind.</span>")
-		fully_replace_character_name(null, new_name)
+
+/mob/living/simple_animal/hostile/guardian/proc/guardianrename()
+	var/new_name = sanitize_name(stripped_input(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN))
+	if(!new_name) //redo proc until we get a good name
+		to_chat(src, "<span class='warning'>Not a valid name, please try again.</span>")
+		guardianrename()
+		return
+	visible_message("<span class='notice'>Your new name <span class='name'>[new_name]</span> anchors itself in your mind.</span>")
+	fully_replace_character_name(null, new_name)
 
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
 	. = ..()
