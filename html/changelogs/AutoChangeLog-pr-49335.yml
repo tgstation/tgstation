@@ -1,0 +1,4 @@
+author: "Bokkiewokkie"
+delete-after: True
+changes: 
+  - bugfix: "Fixes writing being on paper bags and some ammo boxes"

@@ -1633,7 +1633,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		natural_bodytemperature_stabilization(environment, H)
 
 	if(!H.on_fire || areatemp > H.bodytemperature) // If we are not on fire or the area is hotter
-		H.adjust_bodytemperature((areatemp - H.bodytemperature), use_insulation=TRUE, use_steps=TRUE, hardsuit_fix=bodytemp_normal - H.bodytemperature)
+		H.adjust_bodytemperature((areatemp - H.bodytemperature), use_insulation=TRUE, use_steps=TRUE)
 
 /// Handle the body temperature status effects for the species
 /// Traits for resitance to heat or cold are handled here.
