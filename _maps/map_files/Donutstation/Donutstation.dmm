@@ -18035,8 +18035,8 @@
 	},
 /area/medical/genetics)
 "aYg" = (
-/mob/living/carbon/monkey,
 /obj/effect/landmark/start/geneticist,
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel,
 /area/medical/genetics)
 "aYh" = (
@@ -38797,7 +38797,7 @@
 	dir = 8
 	},
 /obj/item/toy/figure/mime,
-/obj/item/gun/magic/wand,
+/obj/item/gun/magic/wand/nothing,
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
 "cad" = (
