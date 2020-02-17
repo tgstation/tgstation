@@ -22,11 +22,11 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	false_report_weight = 5
 	required_players = 0
 	required_enemies = 1
-	recommended_enemies = 3
+	recommended_enemies = 4
 	announce_span = "danger"
 	announce_text = "Grove For Lyfe!"
 	reroll_friendly = FALSE
-	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
+	restricted_jobs = list("Cyborg", "AI")//They are part of the AI if he is traitor so are they, they use to get double chances
 	protected_jobs = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	var/check_counter = 0
 	var/endtime = null
@@ -36,6 +36,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	var/list/gangs_to_use
 	var/list/datum/mind/gangbangers = list()
 	var/list/datum/mind/pigs = list()
+	var/datum/mind/undercover_cop
 	var/list/gangs = list()
 	var/gangs_still_alive = 0
 	var/sent_announcement = FALSE
@@ -54,6 +55,12 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		gangbangers += gangbanger
 		log_game("[key_name(gangbanger)] has been selected as a starting gangster!")
 		antag_candidates.Remove(gangbanger)
+	if(antag_candidates.len)
+		var/datum/mind/one_eight_seven_on_an_undercover_cop = antag_pick(antag_candidates)
+		pigs += one_eight_seven_on_an_undercover_cop
+		undercover_cop = one_eight_seven_on_an_undercover_cop
+		log_game("[key_name(one_eight_seven_on_an_undercover_cop)] has been selected as a starting undercover cop!")
+		antag_candidates.Remove(one_eight_seven_on_an_undercover_cop)
 	endtime = world.time + time_to_end
 	return TRUE
 
@@ -72,6 +79,19 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			var/datum/mind/gangbanger = antag_pick(antag_candidates)
 			gangbangers += gangbanger
 			log_game("[key_name(gangbanger)] has been selected as a replacement gangster!")
+	if(!ishuman(undercover_cop.current))
+		pigs.Remove(undercover_cop)
+		log_game("[undercover_cop] was not a human, and thus has lost their undercover cop role.")
+		if(!antag_candidates.len)
+			var/datum/mind/one_eight_seven_on_an_undercover_cop = antag_pick(antag_candidates)
+			pigs += one_eight_seven_on_an_undercover_cop
+			undercover_cop = one_eight_seven_on_an_undercover_cop
+		else
+			log_game("Unable to find a replacement undercover cop.")
+	var/datum/antagonist/ert/families/undercover_cop/one_eight_seven_on_an_undercover_cop = new()
+	undercover_cop.add_antag_datum(one_eight_seven_on_an_undercover_cop)
+	undercover_cop.current.playsound_local(undercover_cop.current, 'sound/effects/families_police.ogg', 100, FALSE, pressure_affected = FALSE)
+
 	for(var/datum/mind/gangbanger in gangbangers)
 		var/gang_to_use = pick_n_take(gangs_to_use)
 		var/datum/antagonist/gang/new_gangster = new gang_to_use()

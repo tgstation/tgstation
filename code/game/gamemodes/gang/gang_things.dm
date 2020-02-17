@@ -12,7 +12,7 @@
 		to_chat(user, "You attended a seminar on not signing up for a gang, and are not interested.")
 		return
 	var/datum/antagonist/gang/is_gangster = user.mind.has_antag_datum(/datum/antagonist/gang)
-	if(is_gangster.starter_gangster)
+	if(is_gangster && is_gangster.starter_gangster)
 		to_chat(user, "You started your family. You can't turn your back on it now.")
 		return
 	attempt_join_gang(user)

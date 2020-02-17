@@ -16,12 +16,13 @@
 	suit = null
 	shoes = /obj/item/clothing/shoes/combat/swat
 	gloves = null
-	glasses = /obj/item/clothing/glasses/sunglasses
+	glasses = /obj/item/clothing/glasses/hud/spacecop
 	ears = /obj/item/radio/headset/headset_sec
 	mask = null
 	head = /obj/item/clothing/head/spacepolice
 	belt = /obj/item/gun/energy/e_gun/mini
 	r_pocket = /obj/item/lighter
+	l_pocket = /obj/item/restraints/handcuffs
 	back = /obj/item/storage/backpack/satchel/leather
 	id = /obj/item/card/id
 

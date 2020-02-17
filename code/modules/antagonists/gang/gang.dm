@@ -9,15 +9,21 @@
 	var/datum/action/cooldown/spawn_induction_package/package_spawner = new()
 	var/gang_objective = "Be super cool and stuff."
 	var/starter_gangster = FALSE
+	antag_hud_type = ANTAG_HUD_GANGSTER
+	antag_hud_name = "hud_gangster"
 
 /datum/antagonist/gang/apply_innate_effects(mob/living/mob_override)
 	..()
 	package_spawner.Grant(owner.current)
 	package_spawner.my_gang_datum = src
+	var/mob/living/M = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
 
 
 /datum/antagonist/gang/remove_innate_effects(mob/living/mob_override)
 	package_spawner.Remove(owner.current)
+	var/mob/living/M = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, M)
 	..()
 
 
@@ -52,14 +58,13 @@
 	free_clothes = list(/obj/item/clothing/suit/jacket/letterman_red,
 						/obj/item/clothing/under/color/red,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective = "The Spinward Stellar Coalition police intend to interfere with our operations. Slaughter them to the last if and when they arrive."
+	gang_objective = "The Spinward Stellar Coalition police intend to interfere with our operations, by sending an undercover cop. Find him and eliminate him."
 
 /datum/antagonist/gang/red/check_gang_objective()
 	var/datum/game_mode/gang/F = SSticker.mode
-	for(var/M in F.pigs)
-		var/datum/mind/MI = M
-		if(considered_alive(MI.current))
-			return FALSE
+	var/mob/living/carbon/human/H = F.undercover_cop.current
+	if(considered_alive(H))
+		return FALSE
 	return TRUE
 
 /datum/antagonist/gang/purple
