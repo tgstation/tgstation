@@ -278,7 +278,7 @@
 	button_icon_state = "thermal_off"
 
 /datum/action/item_action/toggle_spacesuit/New(Target)
-	..()
+	. = ..()
 	RegisterSignal(target, COMSIG_SUIT_SPACE_TOGGLE, .proc/toggle)
 
 /datum/action/item_action/toggle_spacesuit/Destroy()
