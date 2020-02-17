@@ -18,16 +18,19 @@ gain understanding of the /tg/station codebase structure and api reference.
 
 ## Documenting code on /tg/station
 We use block comments to document procs and classes, and we use three `///` comments
-when documenting individual variables
+when documenting individual variables.
 
-*Proposed:* We require that when you touch older code, you must document the functions you have used
+It is required that all new code be covered with DMdoc code, according to the [Requirements](#Required)
+
+We also require that when you touch older code, you must document the functions that you
+have touched in the process of updating that code
 
 ### Required
 A class *must* always be autodocumented, and all public functions *must* be documented
 
 All class level defined variables *must* be documented
 
-internal functions *should* be documented, but may not be
+Internal functions *should* be documented, but may not be
 
 
 ### Documenting a proc
