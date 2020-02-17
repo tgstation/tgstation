@@ -32,6 +32,10 @@ All class level defined variables *must* be documented
 
 Internal functions *should* be documented, but may not be
 
+A public function is any function that a developer might reasonably call while using
+or interating with your object. Internal functions are helper functions that your
+public functions rely on to implement logic
+
 
 ### Documenting a proc
 When documenting a proc, we give a short one line description (as this is shown
@@ -51,15 +55,15 @@ the proc to jump to it's definition
 ```
 
 ### Documenting a class
-We first give the name of the class as a header, otherwise dmdoc uses the `.name` var
-of the class
+We first give the name of the class as a header, this can be omitted if the name is
+just going to be the typepath of the class, as dmdoc uses that by default
 
 Then we give a short oneline description of the class
 
 Finally we give a longer multi paragraph description of the class and it's details
 ```
 /**
-  * # Classname
+  * # Classname (Can be omitted if it's just going to be the typepath)
   *
   * The short overview
   *
@@ -100,3 +104,6 @@ You can use certain special template variables in DM DOC comments and they will 
 You can customise the link name by using `[link name][link shorthand].`
 
 eg. `[see more about dizzy here] [/mob/proc/Dizzy]`
+
+This is very useful to quickly link to other parts of the autodoc code to expand
+upon a comment made, or reasoning about code
