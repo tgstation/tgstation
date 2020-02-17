@@ -8,7 +8,7 @@
 
 /obj/item/storage/belt/holster/equipped(mob/user, slot)
 	. = ..()
-	if(ishuman(user) && slot == ITEM_SLOT_BELT)
+	if(slot == ITEM_SLOT_BELT)
 		ADD_TRAIT(user, TRAIT_GUNFLIP, CLOTHING_TRAIT)
 
 /obj/item/storage/belt/holster/dropped(mob/user)

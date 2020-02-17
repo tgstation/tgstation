@@ -342,6 +342,12 @@
 /obj/item/gun/ballistic/attack_self(mob/living/user)
 	if(HAS_TRAIT(user, TRAIT_GUNFLIP))
 		if(flip_cooldown <= world.time)
+			if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
+				to_chat(user, "<span class='userdanger'>While trying to flip the [src] you pull the trigger and accidently shoot yourself!</span>")
+				var/flip_mistake = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_CHEST)
+				process_fire(user, user, FALSE, flip_mistake)
+				user.dropItemToGround(src, TRUE)
+				return
 			flip_cooldown = (world.time + 30)
 			user.visible_message("<span class='notice'>[user] spins the [src] around their finger by the trigger. That’s pretty badass.</span>")
 			playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
