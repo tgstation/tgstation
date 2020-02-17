@@ -29,19 +29,26 @@ Behavior that's still missing from this component that original food items had t
 	var/junkiness = 0
 	///Message to send when eating
 	var/list/eatverbs
+	///Can we be used in customizable food? This is usually FALSE for customizable food
+	var/customizable_food_ingredient = TRUE
+	///What color do we give as filling in customizable food?
+	var/filling_color = "#000000"
 	///Callback to be ran for when you take a bite of something
 	var/datum/callback/after_eat
 	///Last time we checked for food likes
 	var/last_check_time
 
-/datum/component/edible/Initialize(list/initial_reagents, food_flags = NONE, foodtypes = NONE, volume = 50, eat_time = 30, list/tastes, list/eatverbs = list("bite","chew","nibble","gnaw","gobble","chomp"), bite_consumption = 2, datum/callback/after_eat)
+///Set up all the main variables of the edible component and ensure the initial reagents on the parent are set up.
+/datum/component/edible/Initialize(list/initial_reagents, food_flags = NONE, foodtypes = NONE, volume = 50, eat_time = 30, list/tastes, list/eatverbs = list("bite","chew","nibble","gnaw","gobble","chomp"), bite_consumption = 2, customizable_food_ingredient = TRUE, filling_color = "#000000", datum/callback/after_eat)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ANIMAL, .proc/UseByAnimal)
+	RegisterSignal(parent, COMSIG_APPLY_FOOD_FILLING, .proc/set_filling)
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
+		RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/UseOnItem)
 	else if(isturf(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/TryToEatTurf)
 
@@ -52,6 +59,8 @@ Behavior that's still missing from this component that original food items had t
 	src.eatverbs = eatverbs
 	src.junkiness = junkiness
 	src.after_eat = after_eat
+	src.customizable_food_ingredient = customizable_food_ingredient
+	src.filling_color = filling_color
 
 	var/atom/owner = parent
 
@@ -65,6 +74,7 @@ Behavior that's still missing from this component that original food items had t
 			else
 				owner.reagents.add_reagent(rid, amount)
 
+///Show how much bites have been taken out
 /datum/component/edible/proc/examine(datum/source, mob/user, list/examine_list)
 	if(!food_flags & FOOD_IN_CONTAINER)
 		switch (bitecount)
@@ -77,9 +87,11 @@ Behavior that's still missing from this component that original food items had t
 			else
 				examine_list += "[parent] was bitten multiple times!"
 
+///Tries to eat from hand (Or feed from hand)
 /datum/component/edible/proc/UseFromHand(obj/item/source, mob/living/M, mob/living/user)
 	return TryToEat(M, user)
 
+///Tries to eat a turf
 /datum/component/edible/proc/TryToEatTurf(datum/source, mob/user)
 	return TryToEat(user, user)
 
@@ -235,3 +247,21 @@ Behavior that's still missing from this component that original food items had t
 		if(sattisfaction_text)
 			L.emote("me", 1, "[sattisfaction_text]")
 		qdel(parent)
+
+///Tries to send a signal of type COMSIG_USE_FOOD_ON, prevents the item from attacking if a message was received (and returned COMPONENT_NO_ATTACK too)
+/datum/component/edible/proc/UseOnItem(datum/source, obj/O, mob/M, params)
+	if(SEND_SIGNAL(O, COMSIG_USE_FOOD_ON), M)
+		return COMPONENT_NO_ATTACK
+	return
+
+///Lets you set the color of the filling of the food.
+/datum/component/edible/proc/set_filling(datum/source, color)
+	cut_overlays()
+	var/mutable_appearance/filling = mutable_appearance(icon, "[initial(parent.icon_state)]_filling")
+	if(color == "#FFFFFF")
+		filling.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
+	else
+		filling.color = color
+
+	add_overlay(filling)
+
