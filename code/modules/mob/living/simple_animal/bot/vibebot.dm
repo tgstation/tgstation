@@ -28,7 +28,7 @@
 	update_icon()
 
 /mob/living/simple_animal/bot/vibebot/get_controls(mob/user)
-	var/list/dat
+	var/list/dat = list()
 	dat += hack(user)
 	dat += showpai(user)
 	dat += "<TT><B>DiscoMatic Vibebot v1.0</B></TT><BR><BR>"
