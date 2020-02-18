@@ -28,7 +28,7 @@
 	update_icon()
 
 /mob/living/simple_animal/bot/vibebot/get_controls(mob/user)
-	var/dat
+	var/list/dat
 	dat += hack(user)
 	dat += showpai(user)
 	dat += "<TT><B>DiscoMatic Vibebot v1.0</B></TT><BR><BR>"
@@ -39,7 +39,7 @@
 	if(!locked || issilicon(user) || IsAdminGhost(user))
 		dat += "Patrol Station: <A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A><BR>"
 
-	return dat
+	return dat.Join("")
 
 /mob/living/simple_animal/bot/vibebot/turn_off()
 	. = ..()
