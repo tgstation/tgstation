@@ -7,8 +7,11 @@
 	damage = 8
 	damage_type = BURN
 	nodamage = FALSE
+	tracer_type = /obj/effect/projectile/tracer/laser/blue
+	muzzle_type = /obj/effect/projectile/muzzle/laser/blue
+	impact_type = /obj/effect/projectile/impact/laser/blue
 
-/obj/projectile/ray/frost/on_hit(atom/target, blocked = 0)
+/obj/projectile/magic/ray/frost/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/L = target
