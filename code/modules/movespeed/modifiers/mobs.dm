@@ -49,6 +49,7 @@
 
 /datum/movespeed_modifier/config_walk_run
 	multiplicative_slowdown = 1
+	id = MOVESPEED_ID_MOB_WALK_RUN
 
 /datum/movespeed_modifier/config_walk_run/proc/sync()
 
