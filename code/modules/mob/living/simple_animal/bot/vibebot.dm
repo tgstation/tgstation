@@ -31,19 +31,15 @@
 	var/dat
 	dat += hack(user)
 	dat += showpai(user)
-	dat += text({"
-<TT><B>Discomatic Vibe Bot v1.05 controls</B></TT><BR><BR>
-Status: []<BR>
-Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-Maintenance panel panel is [open ? "opened" : "closed"]"},
+	dat += "<TT><B>DiscoMatic Vibebot v1.0</B></TT><BR><BR>"
+	dat += "Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>"
+	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
 
-"<A href='?src=[REF(src)];power=[TRUE]'>[on ? "On" : "Off"]</A>" )
-
+	dat += "Behaviour controls are [locked ? "locked" : "unlocked"]<BR>"
 	if(!locked || issilicon(user) || IsAdminGhost(user))
-		dat += text({"<BR> Auto Patrol: []"},
+		dat += "Patrol Station: <A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A><BR>"
 
-"<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
-	return	dat
+	return dat
 
 /mob/living/simple_animal/bot/vibebot/turn_off()
 	. = ..()
