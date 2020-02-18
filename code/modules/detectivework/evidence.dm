@@ -28,18 +28,18 @@
 	if(!istype(I) || I.anchored == 1)
 		return
 
-	if(istype(loc, /obj/item/storage))
+	if(SEND_SIGNAL(loc, COMSIG_CONTAINS_STORAGE))
 		var/obj/item/storage/bigger_bag = loc
 		var/current_weight = 0
 		for (var/obj/item/C in (I.GetAllContents()))
 			current_weight += C.w_class
 		if (current_weight > SEND_SIGNAL(bigger_bag, COMSIG_RETURN_MAX_COMBINED_W))
 			to_chat(user, "<span class='warning'>No matter what way you try, you can't get [I] to fit inside [src].</span>")
-			return 1	//begone infinite storage ghosts, begone from me
+			return TRUE	//begone infinite storage ghosts, begone from me
 
 	if(istype(I, /obj/item/evidencebag))
 		to_chat(user, "<span class='warning'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>")
-		return 1 //now this is podracing
+		return TRUE //now this is podracing
 
 	if(loc in I.GetAllContents()) // fixes tg #39452, evidence bags could store their own location, causing I to be stored in the bag while being present inworld still, and able to be teleported when removed.
 		to_chat(user, "<span class='warning'>You find putting [I] in [src] while it's still inside it quite difficult!</span>")
