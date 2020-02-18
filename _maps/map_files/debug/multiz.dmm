@@ -1167,6 +1167,10 @@
 	},
 /turf/open/floor/plating,
 /area/engine/storage)
+"hY" = (
+/obj/structure/railing/corner,
+/turf/open/floor/plating,
+/area/hallway/secondary/service)
 "ij" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -1186,6 +1190,14 @@
 "iu" = (
 /turf/open/openspace,
 /area/hallway/secondary/service)
+"iH" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/structure/railing/corner{
+	icon_state = "railing_corner";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/engine/storage)
 "iK" = (
 /turf/open/floor/plasteel{
 	dir = 8
@@ -1203,6 +1215,12 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engine/storage)
+"jD" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/construction)
 "jT" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
@@ -1293,10 +1311,20 @@
 "qo" = (
 /turf/open/openspace,
 /area/engine/storage)
+"qx" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/construction)
 "qR" = (
 /obj/effect/turf_decal/stripes/white/line{
 	icon_state = "warningline_white";
 	dir = 9
+	},
+/obj/structure/railing/corner{
+	icon_state = "railing_corner";
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/engine/storage)
@@ -1451,6 +1479,13 @@
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/plating,
 /area/engine/storage)
+"Ai" = (
+/obj/structure/railing/corner{
+	icon_state = "railing_corner";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/service)
 "AG" = (
 /turf/closed/wall/r_wall,
 /area/engine/storage)
@@ -1502,7 +1537,6 @@
 /area/hallway/secondary/service)
 "CP" = (
 /obj/structure/railing{
-	icon_state = "railing";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -1579,13 +1613,20 @@
 /area/storage/primary)
 "In" = (
 /obj/structure/railing{
-	icon_state = "railing";
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/construction)
 "IC" = (
 /obj/machinery/atmospherics/components/binary/valve,
+/turf/open/floor/plating,
+/area/hallway/secondary/service)
+"IL" = (
+/obj/structure/railing/corner,
+/obj/structure/railing/corner{
+	icon_state = "railing_corner";
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "IN" = (
@@ -1660,6 +1701,12 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
 /area/engine/storage)
+"Pm" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/construction)
 "Pu" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -1700,7 +1747,6 @@
 /area/construction)
 "Tf" = (
 /obj/structure/railing{
-	icon_state = "railing";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1764,6 +1810,10 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
+"Zv" = (
+/obj/structure/railing/corner,
+/turf/open/floor/plating,
+/area/construction)
 "ZH" = (
 /obj/structure/disposalpipe/trunk/multiz,
 /turf/open/floor/plating,
@@ -2839,9 +2889,9 @@ dn
 dn
 dn
 dn
-dn
+Zv
 In
-dn
+jD
 dL
 cN
 af
@@ -2947,9 +2997,9 @@ dn
 dn
 dn
 dn
-dn
+qx
 CP
-dn
+Pm
 ij
 cN
 af
@@ -5648,7 +5698,7 @@ Gb
 Gb
 Gb
 Gb
-Gb
+hY
 Lu
 Gb
 eL
@@ -5756,7 +5806,7 @@ Zc
 Gb
 Gb
 Gb
-Gb
+IL
 zd
 Gb
 eL
@@ -5864,7 +5914,7 @@ Gb
 Gb
 Gb
 Gb
-Gb
+Ai
 su
 Gb
 Kw
@@ -8567,7 +8617,7 @@ TH
 Pu
 TH
 eQ
-Af
+iH
 qo
 qo
 qo
