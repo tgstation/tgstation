@@ -100,7 +100,8 @@
 				/obj/item/grenade/smokebomb = 1,
 				/obj/item/flashlight/seclite = 1,
 				/obj/item/tailclub = 1, //want to buy makeshift wooden club sprite
-				/obj/item/kitchen/knife/carrotshiv = 4, //no normal shivs, need sprites
+				/obj/item/kitchen/knife/shiv = 4,
+				/obj/item/kitchen/knife/shiv/carrot = 1,
 				/obj/item/kitchen/knife = 1,
 				/obj/item/storage/wallet/random = 1,
 				/obj/item/pda = 1

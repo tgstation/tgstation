@@ -190,20 +190,29 @@
 	icon_state = "knife_cyborg"
 	desc = "A cyborg-mounted plasteel knife. Extremely sharp and durable."
 
-/obj/item/kitchen/knife/carrotshiv
+/obj/item/kitchen/knife/shiv
+	name = "glass shiv"
+	icon = 'icons/obj/shards.dmi'
+	icon_state = "shiv"
+	item_state = "shiv"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	desc = "A makeshift glass shiv."
+	force = 8
+	throwforce = 12
+	attack_verb = list("shanked", "shivved")
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	custom_materials = list(/datum/material/glass=400)
+
+/obj/item/kitchen/knife/shiv/carrot
 	name = "carrot shiv"
 	icon_state = "carrotshiv"
 	item_state = "carrotshiv"
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	icon = 'icons/obj/kitchen.dmi'
 	desc = "Unlike other carrots, you should probably keep this far away from your eyes."
-	force = 8
-	throwforce = 12//fuck git
 	custom_materials = null
-	attack_verb = list("shanked", "shivved")
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
-/obj/item/kitchen/knife/carrotshiv/suicide_act(mob/living/carbon/user)
+/obj/item/kitchen/knife/shiv/carrot/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] forcefully drives \the [src] into [user.p_their()] eye! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
