@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/aoe_turf/lock
-	name = "Lock"
+	name = "Arcane Lock"
 	desc = "This spell locks nearby doors and closets."
 
 	school = "transmutation"

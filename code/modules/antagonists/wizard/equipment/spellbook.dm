@@ -109,6 +109,12 @@
 /datum/spellbook_entry/grease
 	name = "Grease"
 	spell_type = /obj/effect/proc_holder/spell/aimed/grease
+	cost = 1
+
+/datum/spellbook_entry/grease
+	name = "Cone of Cold"
+	spell_type = /obj/effect/proc_holder/spell/cone/cold
+	cost = 1
 
 /datum/spellbook_entry/spell_cards
 	name = "Spell Cards"
