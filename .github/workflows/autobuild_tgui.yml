@@ -5,8 +5,8 @@ on:
     branches:
       - 'master'
     paths:
-      - 'tgui-next/**.js'
-      - 'tgui-next/**.scss'
+      - 'tgui/**.js'
+      - 'tgui/**.scss'
 
 jobs:
   build:
@@ -23,7 +23,7 @@ jobs:
           node-version: '>=12.13'
       - name: Build TGUI
         run: bin/tgui --ci
-        working-directory: ./tgui-next
+        working-directory: ./tgui
       - name: Commit Artifacts
         run: |
           git config --local user.email "action@github.com"

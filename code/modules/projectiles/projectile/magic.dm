@@ -706,3 +706,6 @@
 	armour_penetration = 100
 	temperature = -200 // Cools you down greatly per hit
 	flag = "magic"
+
+/obj/projectile/magic/nothing
+	name = "bolt of nothing"
