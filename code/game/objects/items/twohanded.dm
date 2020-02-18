@@ -490,8 +490,8 @@
 /obj/item/twohanded/spear/explosive/Initialize(mapload)
 	. = ..()
 	set_explosive(new /obj/item/grenade/iedcasing()) //For admin-spawned explosive lances
-	
-	
+
+
 /obj/item/twohanded/spear/explosive/proc/set_explosive(obj/item/grenade/G)
 	if(explosive)
 		QDEL_NULL(explosive)
@@ -902,13 +902,21 @@
 	if (locate(/obj/structure/table) in target.contents)
 		return
 	var/i = 0
+	var/turf/target_turf = get_step(target, user.dir)
+	var/obj/machinery/disposal/bin/target_bin = locate(/obj/machinery/disposal/bin) in target_turf.contents
 	for(var/obj/item/garbage in target.contents)
 		if(!garbage.anchored)
-			garbage.Move(get_step(target, user.dir), user.dir)
-		i++
-		if(i >= 20)
+			if (target_bin)
+				garbage.forceMove(target_bin)
+			else
+				garbage.Move(target_turf, user.dir)
+			i++
+		if(i > 19)
 			break
-	if(i >= 1)
+	if(i > 0)
+		if (target_bin)
+			target_bin.update_icon()
+			to_chat(user, "<span class='notice'>You sweep the pile of garbage into the [target_bin].</span>")
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
 
 /obj/item/twohanded/broom/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J) //bless you whoever fixes this copypasta
