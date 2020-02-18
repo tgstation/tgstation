@@ -88,7 +88,7 @@
 	/// Internals box. Will be inserted at the start of backpack_contents
 	var/box
 
-	/**
+	/** 
 	  * Any implants the mob should start implanted with
 	  *
 	  * Format of this list is (typepath, typepath, typepath)
