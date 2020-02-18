@@ -157,7 +157,7 @@
 	to_chat(usr, "<span class='notice'>Keelhaul</span>: Harm Grab. Kick opponents to the floor. Against prone targets, deal additional stamina damage and disarm them.")
 	to_chat(usr, "<span class='notice'>In addition, your body has become incredibly resilient to most forms of attack. Weapons cannot readily pierce your hardened skin, and you are highly resistant to stuns and knockdowns, and can block all projectiles in Throw Mode. However, you are not invincible, and sustained damage will take it's toll.</span>")
 
-/obj/item/twohanded/bostaff
+/obj/item/staff/bostaff
 	name = "bo staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts. Can be wielded to both kill and incapacitate."
 	force = 10
@@ -172,14 +172,14 @@
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	block_chance = 50
 
-/obj/item/twohanded/bostaff/Initialize()
+/obj/item/staff/bostaff/Initialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=24)
 
-/obj/item/twohanded/bostaff/update_icon_state()
+/obj/item/staff/bostaff/update_icon_state()
 	icon_state = "bostaff[SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)]"
 
-/obj/item/twohanded/bostaff/attack(mob/target, mob/living/user)
+/obj/item/staff/bostaff/attack(mob/target, mob/living/user)
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class='warning'>You club yourself over the head with [src].</span>")
@@ -225,7 +225,7 @@
 	else
 		return ..()
 
-/obj/item/twohanded/bostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/staff/bostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
 		return ..()
 	return FALSE

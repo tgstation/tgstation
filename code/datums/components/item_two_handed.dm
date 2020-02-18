@@ -107,7 +107,7 @@
 		playsound(parent_item.loc, wieldsound, 50, TRUE)
 
 	// Let's reserve the other hand
-	var/obj/item/twohanded/offhand/offhand_item = new(user)
+	var/obj/item/offhand/offhand_item = new(user)
 	offhand_item.name = "[parent_item.name] - offhand"
 	offhand_item.desc = "Your second grip on [parent_item]."
 	offhand_item.wielded = TRUE
@@ -157,7 +157,7 @@
 		playsound(parent_item.loc, unwieldsound, 50, TRUE)
 
 	// Remove the object in the offhand
-	var/obj/item/twohanded/offhand/offhand_item = user.get_inactive_held_item()
+	var/obj/item/offhand/offhand_item = user.get_inactive_held_item()
 	if(offhand_item && istype(offhand_item))
 		offhand_item.unwield()
 
@@ -231,7 +231,7 @@
  * The offhand dummy item for two handed items
  *
  */
-/obj/item/twohanded/offhand
+/obj/item/offhand
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
@@ -239,12 +239,12 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/wielded = FALSE // Off Hand tracking of wielded status
 
-/obj/item/twohanded/offhand/Destroy()
+/obj/item/offhand/Destroy()
 	wielded = FALSE
 	return ..()
 
 // Only utilized by dismemberment since you can't normally switch to the offhand to drop it.
-/obj/item/twohanded/offhand/dropped(mob/living/user, show_message=TRUE)
+/obj/item/offhand/dropped(mob/living/user, show_message=TRUE)
 	SHOULD_CALL_PARENT(0)
 
 	// Call the held object
@@ -259,23 +259,23 @@
 	if(!QDELETED(src))
 		qdel(src)
 
-/obj/item/twohanded/offhand/equipped(mob/user, slot)
+/obj/item/offhand/equipped(mob/user, slot)
 	..()
-	if(wielded && !user.is_holding(src) && !istype(src, /obj/item/twohanded/required))
+	if(wielded && !user.is_holding(src) && !SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_REQUIRED))
 		unwield(user)
 
-/obj/item/twohanded/offhand/proc/unwield()
+/obj/item/offhand/proc/unwield()
 	if(wielded)
 		wielded = FALSE
 		qdel(src)
 
 // You should never be able to do this in standard use of two handed items. This is a backup for lingering offhands.
-/obj/item/twohanded/offhand/attack_self(mob/living/carbon/user)
+/obj/item/offhand/attack_self(mob/living/carbon/user)
 	if (QDELETED(src))
 		return
 	// If you have a proper item in your other hand that the offhand is for, do nothing. This should never happen.
 	var/obj/item/item = user.get_inactive_held_item()
-	if (item && !istype(item, /obj/item/twohanded/offhand/))
+	if (item && !istype(item, /obj/item/offhand/))
 		if(SEND_SIGNAL(item, COMSIG_IS_TWOHANDED))
 			return
 	// If it's another offhand, or literally anything else, qdel.

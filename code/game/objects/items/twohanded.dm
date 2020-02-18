@@ -619,7 +619,7 @@
 
 /obj/item/twohanded/fireaxe/boneaxe/Initialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_wielded=23)
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23)
 
 /obj/item/twohanded/fireaxe/boneaxe/update_icon_state()
 	icon_state = "bone_axe[SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)]"

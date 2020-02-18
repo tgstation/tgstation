@@ -16,11 +16,11 @@
 	actions_types = list(/datum/action/item_action/toggle_paddles)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 
-	var/obj/item/twohanded/shockpaddles/paddle_type = /obj/item/twohanded/shockpaddles
+	var/obj/item/shockpaddles/paddle_type = /obj/item/shockpaddles
 	var/on = FALSE //if the paddles are equipped (1) or on the defib (0)
 	var/safety = TRUE //if you can zap people with the defibs on harm mode
 	var/powered = FALSE //if there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
-	var/obj/item/twohanded/shockpaddles/paddles
+	var/obj/item/shockpaddles/paddles
 	var/obj/item/stock_parts/cell/high/cell
 	var/combat = FALSE //if true, revive through hardsuits, allow for combat shocking
 	var/cooldown_duration = 5 SECONDS//how long does it take to recharge
@@ -262,7 +262,7 @@
 	combat = TRUE
 	safety = FALSE
 	cooldown_duration = 2.5 SECONDS
-	paddle_type = /obj/item/twohanded/shockpaddles/syndicate
+	paddle_type = /obj/item/shockpaddles/syndicate
 
 /obj/item/defibrillator/compact/combat/loaded/Initialize()
 	. = ..()
@@ -279,11 +279,11 @@
 	desc = "A belt-equipped state-of-the-art defibrillator. Can revive through spacesuits, has an experimental self-recharging battery, and can be utilized in combat via applying the paddles in a disarming or agressive manner."
 	icon_state = "defibnt" //needs defib inhand sprites
 	item_state = "defibnt"
-	paddle_type = /obj/item/twohanded/shockpaddles/syndicate/nanotrasen
+	paddle_type = /obj/item/shockpaddles/syndicate/nanotrasen
 
 //paddles
 
-/obj/item/twohanded/shockpaddles
+/obj/item/shockpaddles
 	name = "defibrillator paddles"
 	desc = "A pair of plastic-gripped paddles with flat metal surfaces that are used to deliver powerful electric shocks."
 	icon = 'icons/obj/defib.dmi'
@@ -305,31 +305,32 @@
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
 	var/base_icon_state = "defibpaddles"
 
-/obj/item/twohanded/shockpaddles/ComponentInitialize()
+/obj/item/shockpaddles/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
+	AddComponent(/datum/component/two_handed)
 
-/obj/item/twohanded/shockpaddles/Destroy()
+/obj/item/shockpaddles/Destroy()
 	defib = null
 	return ..()
 
-/obj/item/twohanded/shockpaddles/equipped(mob/user, slot)
+/obj/item/shockpaddles/equipped(mob/user, slot)
 	. = ..()
 	if(!req_defib)
 		return
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/check_range)
 
-/obj/item/twohanded/shockpaddles/Moved()
+/obj/item/shockpaddles/Moved()
 	. = ..()
 	check_range()
 
 
-/obj/item/twohanded/shockpaddles/fire_act(exposed_temperature, exposed_volume)
+/obj/item/shockpaddles/fire_act(exposed_temperature, exposed_volume)
 	. = ..()
 	if((req_defib && defib) && loc != defib)
 		defib.fire_act(exposed_temperature, exposed_volume)
 
-/obj/item/twohanded/shockpaddles/proc/check_range()
+/obj/item/shockpaddles/proc/check_range()
 	if(!req_defib || !defib)
 		return
 	if(!in_range(src,defib))
@@ -340,7 +341,7 @@
 			visible_message("<span class='notice'>[src] snap back into [defib].</span>")
 		snap_back()
 
-/obj/item/twohanded/shockpaddles/proc/recharge(var/time)
+/obj/item/shockpaddles/proc/recharge(var/time)
 	if(req_defib || !time)
 		return
 	cooldown = TRUE
@@ -352,7 +353,7 @@
 	cooldown = FALSE
 	update_icon()
 
-/obj/item/twohanded/shockpaddles/Initialize()
+/obj/item/shockpaddles/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_STORAGE_INSERT, GENERIC_ITEM_TRAIT) //stops shockpaddles from being inserted in BoH
 	if(!req_defib)
@@ -363,25 +364,25 @@
 	busy = FALSE
 	update_icon()
 
-/obj/item/twohanded/shockpaddles/update_icon_state()
+/obj/item/shockpaddles/update_icon_state()
 	icon_state = "[base_icon_state][SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)]"
 	item_state = icon_state
 	if(cooldown)
 		icon_state = "[base_icon_state][SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)]_cooldown"
 
-/obj/item/twohanded/shockpaddles/suicide_act(mob/user)
+/obj/item/shockpaddles/suicide_act(mob/user)
 	user.visible_message("<span class='danger'>[user] is putting the live paddles on [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(req_defib)
 		defib.deductcharge(revivecost)
 	playsound(src, 'sound/machines/defib_zap.ogg', 50, TRUE, -1)
 	return (OXYLOSS)
 
-/obj/item/twohanded/shockpaddles/dropped(mob/user)
+/obj/item/shockpaddles/dropped(mob/user)
 	if(!req_defib)
 		return ..()
 	if(user)
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-		var/obj/item/twohanded/offhand/O = user.get_inactive_held_item()
+		var/obj/item/offhand/O = user.get_inactive_held_item()
 		if(istype(O))
 			O.unwield()
 		if(user != loc)
@@ -389,14 +390,14 @@
 			snap_back()
 	return
 
-/obj/item/twohanded/shockpaddles/proc/snap_back()
+/obj/item/shockpaddles/proc/snap_back()
 	if(!defib)
 		return
 	defib.on = FALSE
 	forceMove(defib)
 	defib.update_power()
 
-/obj/item/twohanded/shockpaddles/attack(mob/M, mob/user)
+/obj/item/shockpaddles/attack(mob/M, mob/user)
 	if(busy)
 		return
 	if(req_defib && !defib.powered)
@@ -443,14 +444,14 @@
 
 	do_help(H, user)
 
-/obj/item/twohanded/shockpaddles/proc/shock_touching(dmg, mob/H)
+/obj/item/shockpaddles/proc/shock_touching(dmg, mob/H)
 	if(isliving(H.pulledby))		//CLEAR!
 		var/mob/living/M = H.pulledby
 		if(M.electrocute_act(30, H))
 			M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")
 			M.emote("scream")
 
-/obj/item/twohanded/shockpaddles/proc/do_disarm(mob/living/M, mob/living/user)
+/obj/item/shockpaddles/proc/do_disarm(mob/living/M, mob/living/user)
 	if(req_defib && defib.safety)
 		return
 	if(!req_defib && !combat)
@@ -476,7 +477,7 @@
 	else
 		recharge(60)
 
-/obj/item/twohanded/shockpaddles/proc/do_harm(mob/living/carbon/H, mob/living/user)
+/obj/item/shockpaddles/proc/do_harm(mob/living/carbon/H, mob/living/user)
 	if(req_defib && defib.safety)
 		return
 	if(!req_defib && !combat)
@@ -531,7 +532,7 @@
 	busy = FALSE
 	update_icon()
 
-/obj/item/twohanded/shockpaddles/proc/do_help(mob/living/carbon/H, mob/living/user)
+/obj/item/shockpaddles/proc/do_help(mob/living/carbon/H, mob/living/user)
 	user.visible_message("<span class='warning'>[user] begins to place [src] on [H]'s chest.</span>", "<span class='warning'>You begin to place [src] on [H]'s chest...</span>")
 	busy = TRUE
 	update_icon()
@@ -628,14 +629,14 @@
 	busy = FALSE
 	update_icon()
 
-/obj/item/twohanded/shockpaddles/cyborg
+/obj/item/shockpaddles/cyborg
 	name = "cyborg defibrillator paddles"
 	icon = 'icons/obj/defib.dmi'
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
 	req_defib = FALSE
 
-/obj/item/twohanded/shockpaddles/cyborg/attack(mob/M, mob/user)
+/obj/item/shockpaddles/cyborg/attack(mob/M, mob/user)
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		if(R.emagged)
@@ -647,7 +648,7 @@
 
 	. = ..()
 
-/obj/item/twohanded/shockpaddles/syndicate
+/obj/item/shockpaddles/syndicate
 	name = "syndicate defibrillator paddles"
 	desc = "A pair of paddles used to revive deceased operatives. They possess both the ability to penetrate armor and to deliver powerful or disabling shocks offensively."
 	combat = TRUE
@@ -656,14 +657,14 @@
 	item_state = "syndiepaddles0"
 	base_icon_state = "syndiepaddles"
 
-/obj/item/twohanded/shockpaddles/syndicate/nanotrasen
-	name = "elite Nanotrasen defibrillator paddles"
+/obj/item/shockpaddles/syndicate/nanotrasen
+	name = "elite nanotrasen defibrillator paddles"
 	desc = "A pair of paddles used to revive deceased ERT members. They possess both the ability to penetrate armor and to deliver powerful or disabling shocks offensively."
 	icon_state = "ntpaddles0"
 	item_state = "ntpaddles0"
 	base_icon_state = "ntpaddles"
 
-/obj/item/twohanded/shockpaddles/syndicate/cyborg
+/obj/item/shockpaddles/syndicate/cyborg
 	req_defib = FALSE
 
 #undef HALFWAYCRITDEATH
