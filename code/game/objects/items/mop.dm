@@ -18,11 +18,39 @@
 	var/mopspeed = 15
 	force_string = "robust... against germs"
 	var/insertable = TRUE
+	var/braced = FALSE
 
 /obj/item/mop/Initialize()
 	. = ..()
 	create_reagents(mopcap)
 
+/obj/item/mop/attack_self(mob/user)
+	if(user.mind.get_skill_level(/datum/skill/cleaning) >= SKILL_LEVEL_JOURNEYMAN)
+		if (!braced)
+			braced = TRUE
+			RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/moving_clean)
+			if(user.mind.get_skill_level(/datum/skill/cleaning) >= SKILL_EXP_MASTER)
+				to_chat(user, "<span class='notice'>You masterfully brace [src]! You are one with the mop, and can clean floors while running at full speed!</span>")
+			else
+				to_chat(user, "<span class='notice'>You skillfully brace [src]! You'll be able to clean floors while walking.</span>")
+		else
+			braced = FALSE
+			UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+			to_chat(user, "<span class='notice'>You loosen your grip on [src].</span>")
+	else
+		to_chat(user, "<span class='warning'>You brace [src]... One day you'll be skilled enough to unlock its true potential, but not today...</span>")
+
+/obj/item/mop/proc/moving_clean(mob/user)
+	if(user.m_intent == MOVE_INTENT_WALK || user.mind.get_skill_level(/datum/skill/cleaning) >= SKILL_EXP_MASTER)
+		var/turf/target
+		target = user.loc
+		clean(target, user)
+
+/obj/item/mop/dropped(mob/user)
+	. = ..()
+	if (braced)
+		braced = FALSE
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 
 /obj/item/mop/proc/clean(turf/A, mob/living/cleaner)
 	if(reagents.has_reagent(/datum/reagent/water, 1) || reagents.has_reagent(/datum/reagent/water/holywater, 1) || reagents.has_reagent(/datum/reagent/consumable/ethanol/vodka, 1) || reagents.has_reagent(/datum/reagent/space_cleaner, 1))
@@ -37,7 +65,6 @@
 	if(cleaner?.mind)
 		val2remove = round(cleaner.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER),0.1)
 	reagents.remove_any(val2remove)			//reaction() doesn't use up the reagents
-
 
 /obj/item/mop/afterattack(atom/A, mob/user, proximity)
 	. = ..()
@@ -100,7 +127,7 @@
 	..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/mop/advanced/attack_self(mob/user)
+/obj/item/mop/advanced/AltClick(mob/user)
 	refill_enabled = !refill_enabled
 	if(refill_enabled)
 		START_PROCESSING(SSobj, src)
