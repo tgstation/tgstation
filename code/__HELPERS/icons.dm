@@ -1080,7 +1080,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	dir = newdir
 
 GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0,0,0)))
-GLOBAL_VAR_INIT(freon_icon, new /icon('icons/effects/freeze.dmi', "ice_cube"))
+GLOBAL_VAR_INIT(freon_icon, new /icon('icons/effects/freeze.dmi', "icesolid"))
 GLOBAL_VAR(freon_filter)
 
 /obj/proc/make_frozen_visual()
