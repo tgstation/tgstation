@@ -50,7 +50,7 @@ for user in usersToProcess:
     print("Processing "+str(user[0])+" (Discord ID: " + str(user[1]) + ") | User "+str(count)+"/"+str(total))
     url = "https://discordapp.com/api/guilds/"+str(guildID)+"/members/"+str(user[1])+"/roles/"+str(roleID)
     response = requests.put(url, headers={"Authorization": "Bot "+str(botToken)})
-    # Adding a role returns a code 204, not a code 204. Dont ask
+    # Adding a role returns a code 204, not a code 200. Dont ask
     if response.status_code != 204:
         print("WARNING: Returned non-204 status code. Request used: PUT "+str(url))
 
