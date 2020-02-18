@@ -512,21 +512,20 @@
 	desc = "A rubbery strip of gum. Not exactly filling, but it keeps you busy."
 	icon_state = "bubblegum"
 	item_state = "bubblegum"
-	color = "#FFFFFF" // craftable custom gums someday?
+	color = "#E48AB5" // craftable custom gums someday?
 	list_reagents = list(/datum/reagent/consumable/sugar = 5)
 	tastes = list("candy" = 1)
 
 /obj/item/reagent_containers/food/snacks/chewable/bubblegum/nicotine
-	name = "smile! gum"
-	desc = "A rubbery strip of gum. The color and smell isn't very inviting."
-	list_reagents = list(/datum/reagent/drug/nicotine = 5, /datum/reagent/consumable/menthol = 5, /datum/reagent/consumable/sugar = 5)
+	name = "HP+ gum"
+	list_reagents = list(/datum/reagent/drug/nicotine = 10, /datum/reagent/consumable/menthol = 5)
 	tastes = list("mint" = 1)
 	color = "#60A584"
 
 /obj/item/reagent_containers/food/snacks/chewable/bubblegum/happiness
 	name = "smile! gum"
 	desc = "A rubbery strip of gum. It smells funny."
-	list_reagents = list(/datum/reagent/drug/happiness = 15, /datum/reagent/consumable/sugar = 5)
+	list_reagents = list(/datum/reagent/drug/happiness = 15)
 	tastes = list("paint thinner" = 1)
 	color = "#EE35FF"
 

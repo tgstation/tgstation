@@ -1273,13 +1273,27 @@
 	icon_state = "bubblegum_generic"
 	illustration = null
 	foldable = null
-	custom_price = 150
+	custom_price = 120
+
+/obj/item/storage/box/gum/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.set_holdable(list(/obj/item/storage/box/gum))
+	STR.max_items = 4
+
+/obj/item/storage/box/gum/PopulateContents()
+	for(var/i in 1 to 4)
+		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum(src)
 
 /obj/item/storage/box/gum/nicotine
 	name = "nicotine gum packet"
 	desc = "Designed to help with nicotine addiction and oral fixation all at once without destroying your lungs in the process. Mint flavored!"
 	icon_state = "bubblegum_nicotine"
 	custom_premium_price = 275
+
+/obj/item/storage/box/gum/nicotine/PopulateContents()
+	for(var/i in 1 to 4)
+		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum/nicotine(src)
 
 /obj/item/storage/box/gum/happiness
 	name = "HP+ gum packet"
@@ -1292,3 +1306,7 @@
 	. = ..()
 	if (prob(50))
 		desc += "You can faintly make out the word 'Hemopagopril' was once scribbled under the new packaging."
+
+/obj/item/storage/box/gum/happiness/PopulateContents()
+	for(var/i in 1 to 4)
+		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum/happiness(src)
