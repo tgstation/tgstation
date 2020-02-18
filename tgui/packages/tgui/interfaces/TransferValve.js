@@ -44,7 +44,7 @@ export const TransferValve = props => {
             </LabeledList.Item>
           ) : (
             <NoticeBox textAlign="center">
-            Insert Attachment
+            Insert Assembly
             </NoticeBox>
           )}
         </LabeledList>

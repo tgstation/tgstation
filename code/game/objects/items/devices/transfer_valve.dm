@@ -8,7 +8,7 @@
 	desc = "Regulates the transfer of air between two tanks."
 	w_class = WEIGHT_CLASS_BULKY
 	var/ui_x = 310
-	var/ui_y = 310
+	var/ui_y = 320
 	var/obj/item/tank/tank_one
 	var/obj/item/tank/tank_two
 	var/obj/item/assembly/attached_device
