@@ -1,2 +1,7 @@
-npm-debug.log
-node_modules/
+node_modules
+*.log
+package-lock.json
+
+/packages/tgui/public/.tmp/**/*
+/packages/tgui/public/**/*.hot-update.*
+/packages/tgui/public/**/*.map

@@ -78,7 +78,6 @@
 # stylemistake
 
 /tgui @stylemistake
-/tgui-next @stylemistake
 
 # Qustinnus
 /code/datums/components/mood.dm @Qustinnus

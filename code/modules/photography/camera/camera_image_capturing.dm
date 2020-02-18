@@ -5,7 +5,7 @@
 	if(istype(A))
 		appearance = A.appearance
 		dir = A.dir
-		if(ismovableatom(A))
+		if(ismovable(A))
 			var/atom/movable/AM = A
 			step_x = AM.step_x
 			step_y = AM.step_y
@@ -72,7 +72,7 @@
 		for(var/atom/A in sorted)
 			var/xo = (A.x - center.x) * world.icon_size + A.pixel_x + xcomp
 			var/yo = (A.y - center.y) * world.icon_size + A.pixel_y + ycomp
-			if(ismovableatom(A))
+			if(ismovable(A))
 				var/atom/movable/AM = A
 				xo += AM.step_x
 				yo += AM.step_y

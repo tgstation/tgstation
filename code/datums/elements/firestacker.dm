@@ -10,7 +10,7 @@
 /datum/element/firestacker/Attach(datum/target, amount)
 	. = ..()
 	
-	if(!ismovableatom(target))
+	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
 	
 	src.amount = amount
