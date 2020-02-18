@@ -1020,8 +1020,7 @@
 	if(!operating)
 		if(istype(I, /obj/item/twohanded/fireaxe)) //being fireaxe'd
 			var/obj/item/twohanded/fireaxe/axe = I
-			var/datum/component/two_handed/comp_twohand = axe.GetComponent(/datum/component/two_handed)
-			if(comp_twohand && !comp_twohand.wielded)
+			if(!SEND_SIGNAL(axe, COMSIG_IS_TWOHANDED_WIELDED))
 				to_chat(user, "<span class='warning'>You need to be wielding \the [axe] to do that!</span>")
 				return
 		INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)

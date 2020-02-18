@@ -600,8 +600,7 @@
 	if(held_item)
 		if(istype(held_item, /obj/item/twohanded))
 			var/obj/item/twohanded/T = held_item
-			var/datum/component/two_handed/comp_twohand = T.GetComponent(/datum/component/two_handed)
-			if(comp_twohand.wielded)
+			if(SEND_SIGNAL(T, COMSIG_IS_TWOHANDED_WIELDED))
 				to_chat(usr, "<span class='warning'>Your other hand is too busy holding [T].</span>")
 				return
 	var/oindex = active_hand_index

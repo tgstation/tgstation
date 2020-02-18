@@ -392,6 +392,19 @@
 #define COMSIG_TRY_STORAGE_RETURN_INVENTORY "storage_return_inventory"	//(list/list_to_inject_results_into, recursively_search_inside_storages = TRUE)
 #define COMSIG_TRY_STORAGE_CAN_INSERT "storage_can_equip"				//(obj/item/insertion_candidate, mob/user, silent) - returns bool
 
+// /datum/component/two_handed signals
+#define COMSIG_TWOHANDED_WIELD "twohanded_wield"						//from base of datum/component/two_handed/proc/wield(mob/living/carbon/user): (/mob/user)
+#define COMSIG_TWOHANDED_UNWIELD "twohanded_unwield"					//from base of datum/component/two_handed/proc/unwield(mob/living/carbon/user): (/mob/user)
+#define COMSIG_IS_TWOHANDED "twohanded_is_check"						//() - returns bool
+#define COMSIG_IS_TWOHANDED_WIELDED "twohanded_get_wielded"				//() - returns bool
+#define COMSIG_IS_TWOHANDED_REQUIRED "twohanded_get_required"			//() - returns bool
+#define COMSIG_TRY_TWOHANDED_WIELD "twohanded_try_wield"				//(mob/user) - returns wield status as bool
+#define COMSIG_TRY_TWOHANDED_UNWIELD "twohanded_try_unwield"			//(mob/user, show_message) - returns wield status as bool
+#define COMSIG_TWOHANDED_GET_FORCEWIELDED "twohanded_get_forcewielded"	//() - returns int What force_wielded is set to
+#define COMSIG_TWOHANDED_SET_FORCEWIELDED "twohanded_set_forcewielded"	//(force:int) sets the force_wielded
+#define COMSIG_TWOHANDED_GET_FORCEUNWIELD "twohanded_get_forceunwield"	//() - returns int What force_unwielded is set to
+#define COMSIG_TWOHANDED_SET_FORCEUNWIELD "twohanded_set_forceunwield"	//(force:int) sets the force_unwielded
+
 // /datum/action signals
 #define COMSIG_ACTION_TRIGGER "action_trigger"						//from base of datum/action/proc/Trigger(): (datum/action)
 	#define COMPONENT_ACTION_BLOCK_TRIGGER 1

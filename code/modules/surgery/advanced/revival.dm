@@ -36,8 +36,7 @@
 	. = TRUE
 	if(istype(tool, /obj/item/twohanded/shockpaddles))
 		var/obj/item/twohanded/shockpaddles/S = tool
-		var/datum/component/two_handed/comp_twohand = S.GetComponent(/datum/component/two_handed)
-		if((S.req_defib && !S.defib.powered) || !comp_twohand.wielded || S.cooldown || S.busy)
+		if((S.req_defib && !S.defib.powered) || !SEND_SIGNAL(S, COMSIG_IS_TWOHANDED_WIELDED) || S.cooldown || S.busy)
 			to_chat(user, "<span class='warning'>You need to wield both paddles, and [S.defib] must be powered!</span>")
 			return FALSE
 	if(istype(tool, /obj/item/melee/baton))

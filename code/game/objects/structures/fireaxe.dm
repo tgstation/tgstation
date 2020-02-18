@@ -49,10 +49,9 @@
 			obj_integrity = max_integrity
 			update_icon()
 	else if(open || broken)
-		if(istype(I, /obj/item/twohanded/fireaxe) && !fireaxe)
+		if(istype(I, /obj/item/twohanded/fireaxe) && !fireaxe) // Fireaxe snowflake
 			var/obj/item/twohanded/fireaxe/F = I
-			var/datum/component/two_handed/comp_twohand = F.GetComponent(/datum/component/two_handed)
-			if(comp_twohand && comp_twohand.wielded)
+			if(SEND_SIGNAL(F, COMSIG_IS_TWOHANDED_WIELDED))
 				to_chat(user, "<span class='warning'>Unwield the [F.name] first.</span>")
 				return
 			if(!user.transferItemToLoc(F, src))

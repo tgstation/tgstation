@@ -316,7 +316,7 @@
 	. = ..()
 	AddComponent(/datum/component/tactical)
 	addtimer(CALLBACK(src, /datum.proc/_AddComponent, list(/datum/component/beauty, 500)), 0)
-	comp_twohand = AddComponent(/datum/component/two_handed, force_wielded=10)
+	AddComponent(/datum/component/two_handed, force_wielded=10)
 
 /obj/item/twohanded/required/kirbyplants/random
 	icon = 'icons/obj/flora/_flora.dmi'

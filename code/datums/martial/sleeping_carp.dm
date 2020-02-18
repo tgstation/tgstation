@@ -174,11 +174,10 @@
 
 /obj/item/twohanded/bostaff/Initialize()
 	. = ..()
-	comp_twohand = AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=24)
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=24)
 
 /obj/item/twohanded/bostaff/update_icon_state()
-	if(comp_twohand)
-		icon_state = "bostaff[comp_twohand.icon_state()]"
+	icon_state = "bostaff[SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)]"
 
 /obj/item/twohanded/bostaff/attack(mob/target, mob/living/user)
 	add_fingerprint(user)
@@ -200,7 +199,7 @@
 		to_chat(user, "<span class='warning'>It would be dishonorable to attack a foe while they cannot retaliate.</span>")
 		return
 	if(user.a_intent == INTENT_DISARM)
-		if(comp_twohand && !comp_twohand.wielded)
+		if(!SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
 			return ..()
 		if(!ishuman(target))
 			return ..()
@@ -227,6 +226,6 @@
 		return ..()
 
 /obj/item/twohanded/bostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(comp_twohand && !comp_twohand.wielded)
+	if(!SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
 		return ..()
 	return FALSE

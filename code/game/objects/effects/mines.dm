@@ -139,9 +139,6 @@
 	victim.drop_all_held_items()
 	victim.put_in_hands(chainsaw, forced = TRUE)
 	chainsaw.attack_self(victim)
-	var/datum/component/two_handed/comp_twohand = chainsaw.GetComponent(/datum/component/two_handed)
-	if(comp_twohand)
-		comp_twohand.wield(victim)
 	victim.reagents.add_reagent(/datum/reagent/medicine/adminordrazine,25)
 	to_chat(victim, "<span class='warning'>KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!</span>")
 

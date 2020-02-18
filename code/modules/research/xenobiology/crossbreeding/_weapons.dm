@@ -66,7 +66,7 @@ Slimecrossing Weapons
 
 /obj/item/twohanded/required/adamantineshield/Initialize()
 	. = ..()
-	comp_twohand = AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_wielded=15)
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_wielded=15)
 
 //Bloodchiller - Chilling Green
 /obj/item/gun/magic/bloodchill

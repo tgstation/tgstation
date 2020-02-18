@@ -6,8 +6,8 @@
  */
 /datum/component/two_handed
 	var/wielded = FALSE 			/// Are we holding the two handed item properly
-	var/force_wielded = 0	 		/// Forces the item to be weilded
-	var/force_unwielded = 0		 	/// Forces the item to be unweilded
+	var/force_wielded = 0	 		/// The force of the item when weilded
+	var/force_unwielded = 0		 	/// The force of the item when unweilded
 	var/wieldsound = FALSE 			/// Play sound when wielded
 	var/unwieldsound = FALSE 		/// Play sound when unwielded
 	var/require_twohands = FALSE	/// Does it have to be held in both hands
@@ -19,8 +19,8 @@
  * * require_twohands (optional) Does the item need both hands to be carried
  * * wieldsound (optional) The sound to play when wielded
  * * unwieldsound (optional) The sound to play when unwielded
- * * force_wielded (optional)
- * * force_unwielded (optional)
+ * * force_wielded (optional) The force setting when the item is wielded
+ * * force_unwielded (optional) The force setting when the item is unwielded
  */
 /datum/component/two_handed/Initialize(require_twohands=FALSE, wieldsound=FALSE, unwieldsound=FALSE, force_wielded=0, force_unwielded=0)
 	src.require_twohands = require_twohands
@@ -33,6 +33,15 @@
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
+		RegisterSignal(parent, COMSIG_IS_TWOHANDED, .proc/on_check)
+		RegisterSignal(parent, COMSIG_IS_TWOHANDED_WIELDED, .proc/is_wielded)
+		RegisterSignal(parent, COMSIG_IS_TWOHANDED_REQUIRED, .proc/is_required)
+		RegisterSignal(parent, COMSIG_TRY_TWOHANDED_WIELD, .proc/try_wield)
+		RegisterSignal(parent, COMSIG_TRY_TWOHANDED_UNWIELD, .proc/try_unwield)
+		RegisterSignal(parent, COMSIG_TWOHANDED_GET_FORCEWIELDED, .proc/get_force_wielded)
+		RegisterSignal(parent, COMSIG_TWOHANDED_SET_FORCEWIELDED, .proc/set_force_wielded)
+		RegisterSignal(parent, COMSIG_TWOHANDED_GET_FORCEUNWIELD, .proc/get_force_unwielded)
+		RegisterSignal(parent, COMSIG_TWOHANDED_SET_FORCEUNWIELD, .proc/set_force_unwielded)
 
 /// Triggered on equip of the item containing the component
 /datum/component/two_handed/proc/on_equip(datum/source, mob/user, slot)
@@ -82,6 +91,7 @@
 
 	var/obj/item/parent_item = parent
 	wielded = TRUE
+	SEND_SIGNAL(src, COMSIG_TWOHANDED_WIELD, user)
 	if(force_wielded)
 		parent_item.force = force_wielded
 	parent_item.name = "[parent_item.name] (Wielded)"
@@ -104,14 +114,6 @@
 	user.put_in_inactive_hand(offhand_item)
 
 /**
- * icon_state support for icons using 0-1 for on off
- *
- * returns 0 or 1 Based on wielded state
- */
-/datum/component/two_handed/proc/icon_state()
-	return wielded ? 1 : 0
-
-/**
  * Unwield the two handed item
  *
  * vars:
@@ -124,6 +126,7 @@
 
 	var/obj/item/parent_item = parent
 	wielded = FALSE
+	SEND_SIGNAL(src, COMSIG_TWOHANDED_UNWIELD, user)
 	if(!force_unwielded)
 		parent_item.force = force_unwielded
 
@@ -159,6 +162,72 @@
 		offhand_item.unwield()
 
 /**
+ * is_wielded gets the current wield status of the component
+ *
+ * returns 0 or 1 Based on wielded state
+ */
+/datum/component/two_handed/proc/is_wielded(datum/source)
+	return wielded
+
+/**
+ * on_check validates that the item has the component
+ */
+/datum/component/two_handed/proc/on_check(datum/source)
+	return TRUE
+
+/**
+ * on_check validates that the item has the component
+ */
+/datum/component/two_handed/proc/is_required(datum/source)
+	return require_twohands
+
+/**
+ * try_wield tries to wield the item
+ */
+/datum/component/two_handed/proc/try_wield(datum/source, mob/user)
+	wield(user)
+	return wielded
+
+/**
+ * try_unwield attempts to unwield the item
+ */
+/datum/component/two_handed/proc/try_unwield(datum/source, mob/user, show_message=TRUE)
+	unwield(user, show_message)
+	return wielded
+
+/**
+ * get_force_wielded returns int of the force_wielded
+ */
+/datum/component/two_handed/proc/get_force_wielded(datum/source)
+	return force_wielded
+
+/**
+ * set_force_wielded Sets the value of force_wielded
+ *
+ * vars:
+ * * force int The value to set force_wielded to
+ */
+/datum/component/two_handed/proc/set_force_wielded(datum/source, force)
+	if(isnum(force))
+		force_wielded = force
+
+/**
+ * get_force_unwielded returns int of the force_unwielded
+ */
+/datum/component/two_handed/proc/get_force_unwielded(datum/source)
+	return force_unwielded
+
+/**
+ * set_force_unwielded Sets the value of force_unwielded
+ *
+ * vars:
+ * * force int The value to set force_unwielded to
+ */
+/datum/component/two_handed/proc/set_force_unwielded(datum/source, force)
+	if(isnum(force))
+		force_unwielded = force
+
+/**
  * The offhand dummy item for two handed items
  *
  */
@@ -180,12 +249,11 @@
 
 	// Call the held object
 	var/obj/item = user.get_active_held_item()
-	if(item)
-		if(comp_twohand)
-			comp_twohand.unwield(user, show_message)
-			// Drop item if off hand is dropped and the item requies both hands
-			if(comp_twohand.require_twohands)
-				user.dropItemToGround(item)
+	if(item && SEND_SIGNAL(item, COMSIG_IS_TWOHANDED))
+		SEND_SIGNAL(item, COMSIG_TRY_TWOHANDED_UNWIELD, user, show_message)
+		// Drop item if off hand is dropped and the item requies both hands
+		if(SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_REQUIRED))
+			user.dropItemToGround(item)
 
 	// delete on drop
 	if(!QDELETED(src))
@@ -208,7 +276,7 @@
 	// If you have a proper item in your other hand that the offhand is for, do nothing. This should never happen.
 	var/obj/item/item = user.get_inactive_held_item()
 	if (item && !istype(item, /obj/item/twohanded/offhand/))
-		if(comp_twohand)
+		if(SEND_SIGNAL(item, COMSIG_IS_TWOHANDED))
 			return
 	// If it's another offhand, or literally anything else, qdel.
 	qdel(src)
