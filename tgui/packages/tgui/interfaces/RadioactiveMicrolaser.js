@@ -16,11 +16,13 @@ export const RadioactiveMicrolaser = props => {
   return (
     <Fragment>
       <Section>
-        <LabeledList.Item label="Laser Status">
-          <Box color={on_cooldown ? "average" : "good"}>
-            {on_cooldown ? "Recharging" : "Ready"}
-          </Box>
-        </LabeledList.Item>
+        <LabeledList>
+          <LabeledList.Item label="Laser Status">
+            <Box color={on_cooldown ? "average" : "good"}>
+              {on_cooldown ? "Recharging" : "Ready"}
+            </Box>
+          </LabeledList.Item>
+        </LabeledList>
       </Section>
       <Section title="Scanner Controls">
         <LabeledList>
