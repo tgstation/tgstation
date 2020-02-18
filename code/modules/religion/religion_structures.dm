@@ -5,8 +5,26 @@
 	icon_state = "convertaltar"
 	density = TRUE
 	anchored = TRUE
+	layer = TABLE_LAYER
+	climbable = TRUE
+	pass_flags = LETPASSTHROW
+	can_buckle = TRUE
+	buckle_lying = 90 //we turn to you!
 	var/datum/religion_sect/sect_to_altar // easy access!
 	var/datum/religion_rites/performing_rite
+
+/obj/structure/altar_of_gods/examine(mob/user)
+	. = ..()
+	if(!isliving(user))
+		return
+	var/mob/living/L = user
+	if(L.mind?.holy_role && sect_to_altar)
+		. += "<span class='notice'>The sect currently has [round(sect_to_altar.favor)] with [GLOB.deity].</span>"
+		if(!sect_to_altar.rites_list)
+			return
+		. += "List of available Rites:"
+		. += sect_to_altar.rites_list
+
 
 /obj/structure/altar_of_gods/Initialize(mapload)
 	. = ..()
@@ -18,11 +36,11 @@
 			icon_state = sect_to_altar.altar_icon_state
 
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
-	. = ..()
-	//sacc
+	//If we can sac, we do nothing but the sacrifice instead of typical attackby behavior (IE damage the structure)
 	if(sect_to_altar?.can_sacrifice(C,user))
 		sect_to_altar.on_sacrifice(C,user)
-		return
+		return TRUE
+	. = ..()
 	//everything below is assumed you're bibling it up
 	if(!istype(C, /obj/item/storage/book/bible))
 		return
@@ -40,7 +58,7 @@
 			qdel(performing_rite)
 			performing_rite = null
 		else
-			performing_rite.InvokeEffect(user, src)
+			performing_rite.invoke_effect(user, src)
 			sect_to_altar.adjust_favor(performing_rite.favor_cost*-1)
 			qdel(performing_rite)
 			performing_rite = null

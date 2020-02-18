@@ -29,7 +29,13 @@
 		if(!ispath(i))
 			continue
 		var/datum/religion_rites/RI = i
-		. += list("[initial(RI.name)] ([initial(RI.favor_cost)] favor)" = i)
+		var/name_entry = "[initial(RI.name)]"
+		if(initial(RI.desc))
+			name_entry += " - [initial(RI.desc)]"
+		if(initial(RI.favor_cost))
+			name_entry += " ([initial(RI.favor_cost)] favor)"
+
+		. += list(name_entry = i)
 
 /// Activates once selected
 /datum/religion_sect/proc/on_select()
@@ -63,7 +69,7 @@
 	return favor
 
 /// Activates when an individual uses a rite. Can provide different/additional benefits depending on the user.
-/datum/religion_sect/proc/on_riteuse(mob/living/user)
+/datum/religion_sect/proc/on_riteuse(mob/living/user, obj/structure/altar_of_gods/AOG)
 
 /// Replaces the bible's bless mechanic. Return TRUE if you want to not do the brain hit.
 /datum/religion_sect/proc/sect_bless(mob/living/L, mob/living/user)
@@ -95,27 +101,23 @@
 	desc = "Nothing special."
 	convert_opener = "Your run-of-the-mill sect, there are no benefits or boons associated. Praise normalcy!"
 
-/datum/religion_sect/debuganite
-	name = "Debuganites"
-	desc = "Look up, there's no ceiling."
-	convert_opener = "You have transcended the world and can see with your fourth eye... or is third? Ah whatever."
-	desired_items = list(/obj/item/bikehorn)
-	rites_list = list(/datum/religion_rites/tester,/datum/religion_rites/tester2)
-	altar_icon_state = "convertaltar-red"
-
-
 /// SECT_TECH
-/datum/religion_sect/technology
+/datum/religion_sect/technophile
 	name = "Technophile"
 	desc = "A sect oriented around technology."
-	convert_opener = "May you find peace in a metal shell, acolyte.<br>Bibles now recharge cyborgs and heal robotic limbs if targeted, but does not heal organic ones."
+	convert_opener = "May you find peace in a metal shell, acolyte.<br>Bibles now recharge cyborgs and heal robotic limbs if targeted, but they do not heal organic limbs. You can now sacrifice cells, with favor depending on their charge."
 	alignment = ALIGNMENT_NEUT
+	desired_items = list(/obj/item/stock_parts/cell)
+	rites_list = list(/datum/religion_rites/synthconversion)
 	altar_icon_state = "convertaltar-blue"
 
-/datum/religion_sect/technology/sect_bless(mob/living/L, mob/living/user)
+/datum/religion_sect/technophile/sect_bless(mob/living/L, mob/living/user)
 	if(iscyborg(L))
 		var/mob/living/silicon/robot/R = L
-		R.cell?.charge += 50
+		var/charge_amt = 50
+		if(L.mind?.holy_role == HOLY_ROLE_HIGHPRIEST)
+			charge_amt *= 2
+		R.cell?.charge += charge_amt
 		R.visible_message("<span class='notice'>[user] charges [R] with the power of [GLOB.deity]!</span>")
 		to_chat(R, "<span class='boldnotice'>You are charged by the power of [GLOB.deity]!</span>")
 		SEND_SIGNAL(R, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
@@ -136,7 +138,18 @@
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE
 
-/datum/religion_sect/technology/on_sacrifice(obj/item/I, mob/living/L)
-	. = ..()
-	if(..())
+/datum/religion_sect/technophile/can_sacrifice(obj/item/I, mob/living/L)
+	if(istype(I,/obj/item/stock_parts/cell))
+		var/obj/item/stock_parts/cell/the_cell = I
+		if(the_cell.charge <= 3000)
+			to_chat("<span class='notice'>[GLOB.deity] does not accept pity amounts of power.</span>")
+			return FALSE
+		return TRUE
+
+
+/datum/religion_sect/technophile/on_sacrifice(obj/item/I, mob/living/L)
+	if(istype(I,/obj/item/stock_parts/cell))
+		var/obj/item/stock_parts/cell/the_cell = I
+		adjust_favor(round(the_cell.charge/3000), L)
+		to_chat(L, "<span class='notice'>You offer [the_cell]'s power to [GLOB.deity], pleasing them.</span>")
 		qdel(I)

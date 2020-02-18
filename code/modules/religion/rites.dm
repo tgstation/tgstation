@@ -6,13 +6,6 @@
 	var/favor_cost = 0
 	var/datum/religion_sect/owned_sect
 
-/datum/religion_rites/New(obj/structure/altar_of_gods/AOG)
-	if(!istype(AOG,/obj/structure/altar_of_gods))
-		return
-	owned_sect = AOG.sect_to_altar
-
-
-
 ///Called to perform the invocation of the rite, with args being the performer and the altar where it's being performed. Maybe you want it to check for something else?
 /datum/religion_rites/proc/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(AOG && istype(AOG, /obj/structure/altar_of_gods))
@@ -20,6 +13,7 @@
 	if(owned_sect?.favor < favor_cost)
 		to_chat(user, "<span class='warning'>This rite requires more favor!</span>")
 		return FALSE
+	to_chat(user, "<span class='notice'>You begin to perform the rite of [name]...</span>")
 	if(!ritual_invocations)
 		if(do_after(user, target = user, delay = ritual_length))
 			return TRUE
@@ -32,26 +26,33 @@
 		return TRUE
 
 ///Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
-/datum/religion_rites/proc/InvokeEffect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/proc/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	on_riteuse(user,AOG)
 	return TRUE
 
-/datum/religion_rites/tester
-	name = "aheal rite"
-	desc = "aheals the user"
-	ritual_length = (10 SECONDS)
-	ritual_invocations = list("hey babe", "what's your number", "got kik?", "winky face!")
-	favor_cost = 1
 
-/datum/religion_rites/tester/InvokeEffect(mob/living/user)
-	return user.fully_heal(admin_revive = TRUE)
+/*********Technophiles**********/
 
-/datum/religion_rites/tester2
-	name = "color rite"
-	desc = "aheals the user"
-	ritual_length = (10 SECONDS)
-	ritual_invocations = list("hey babe", "what's your number", "got kik?", "winky face!")
-	favor_cost = 1
+/datum/religion_rites/synthconversion
+	name = "Synthetic Conversion"
+	desc = "Convert a human-esque individual into a (superior) Android."
+	ritual_length = 1 MINUTES
+	ritual_invocations = list("By the inner workings of our god...",
+						"... We call upon you, in the face of adversary...",
+						"... to complete us, removing that which is undesirable...",
+						"... Arise, our champion! Become that which your soul craves, live in the world as your true form!!")
+	favor_cost = 500
 
-/datum/religion_rites/tester2/InvokeEffect(mob/living/user)
-	. = ..()
-	user.color = COLOR_RED
+/datum/religion_rites/synthconversion/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(!AOG?.buckled_mobs?.len)
+		return FALSE
+	var/mob/living/carbon/human/vict_i_mean_willing_participant
+	for(var/i in AOG.buckled_mobs)
+		if(istype(i,/mob/living/carbon/human))
+			vict_i_mean_willing_participant = i
+			break
+	if(!vict_i_mean_willing_participant)
+		return FALSE
+	vict_i_mean_willing_participant.set_species(/datum/species/android)
+	vict_i_mean_willing_participant.visible_message("<span class='notice'>[vict_i_mean_willing_participant] has been converted by the rite of [name]!</span>")
+	return TRUE
