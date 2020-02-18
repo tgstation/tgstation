@@ -48,6 +48,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 
 /datum/game_mode/gang/warriors
 	name = "Warriors"
+	config_tag = "warriors"
 	announce_text = "Can you survive this onslaught?"
 	gang_balance_cap = 3
 
@@ -63,12 +64,14 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			break
 		var/datum/mind/gangbanger = antag_pick(antag_candidates)
 		gangbangers += gangbanger
+		gangbangers.restricted_roles = restricted_jobs
 		log_game("[key_name(gangbanger)] has been selected as a starting gangster!")
 		antag_candidates.Remove(gangbanger)
 	if(antag_candidates.len)
 		var/datum/mind/one_eight_seven_on_an_undercover_cop = antag_pick(antag_candidates)
 		pigs += one_eight_seven_on_an_undercover_cop
 		undercover_cop = one_eight_seven_on_an_undercover_cop
+		undercover_cop.restricted_roles = restricted_jobs
 		log_game("[key_name(one_eight_seven_on_an_undercover_cop)] has been selected as a starting undercover cop!")
 		antag_candidates.Remove(one_eight_seven_on_an_undercover_cop)
 	endtime = world.time + time_to_end
