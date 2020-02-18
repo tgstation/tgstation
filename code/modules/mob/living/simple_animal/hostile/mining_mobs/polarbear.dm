@@ -25,7 +25,6 @@
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/bear = 5, /obj/item/clothing/head/bearpelt = 1)
-	guaranteed_butcher_results = list(/obj/item/clothing/head/bearpelt = 1)
 	loot = list()
 	stat_attack = UNCONSCIOUS
 	robust_searching = TRUE

@@ -25,8 +25,7 @@
 	move_force = MOVE_FORCE_WEAK
 	move_resist = MOVE_FORCE_WEAK
 	pull_force = MOVE_FORCE_WEAK
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/corgi = 2, /obj/item/stack/sheet/bone = 2)
-	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/corgi = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2, /obj/item/stack/sheet/bone = 2)
 	loot = list()
 	stat_attack = UNCONSCIOUS
 	robust_searching = TRUE
