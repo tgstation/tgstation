@@ -50,7 +50,7 @@
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	current_color = random_color()
 	set_light(range, power, current_color)
-	add_atom_colour("#[current_color]", FIXED_COLOUR_PRIORITY)
+	add_atom_colour("#[current_color]", TEMPORARY_COLOUR_PRIORITY)
 	update_icon()
 
 /mob/living/simple_animal/bot/vibebot/proc/retaliate(mob/living/carbon/human/H)
