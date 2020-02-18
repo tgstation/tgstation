@@ -183,7 +183,7 @@
 	burn_dam += burn
 
 	//We've dealt the physical damages, if there's room lets apply the stamina damage.
-	stamina_dam += round(CLAMP(stamina, 0, max_stamina_damage - stamina_dam), DAMAGE_PRECISION)
+	stamina_dam += round(clamp(stamina, 0, max_stamina_damage - stamina_dam), DAMAGE_PRECISION)
 
 
 	if(owner && updating_health)
@@ -288,7 +288,7 @@
 		C = source
 		if(!original_owner)
 			original_owner = source
-	else 
+	else
 		C = owner
 		if(original_owner && owner != original_owner) //Foreign limb
 			no_update = TRUE
