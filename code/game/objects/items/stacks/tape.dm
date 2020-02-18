@@ -13,19 +13,21 @@
 	resistance_flags = FLAMMABLE
 	grind_results = list(/datum/reagent/cellulose = 5)
 
-	var/datum/embedding_behavior/conferred_embed = EMBED_HARMLESS
+	var/list/conferred_embed = EMBED_HARMLESS
 	var/overwrite_existing = FALSE
 
 /obj/item/stack/sticky_tape/afterattack(obj/item/I, mob/living/user)
-	if(I.embedding && I.embedding == getEmbeddingBehavior(arglist(conferred_embed)))
+	if(I.embedding && I.embedding == conferred_embed)
 		to_chat(user, "<span class='warning'>[I] is already coated in [src]!</span>")
 		return
 
 	user.visible_message("<span class='notice'>[user] begins wrapping [I] with [src].</span>", "<span class='notice'>You begin wrapping [I] with [src].</span>")
 
 	if(do_after(user, 30, target=I))
-		I.embedding = getEmbeddingBehavior(arglist(conferred_embed))
-		I.AddElement(/datum/element/embed)
+		I.embedding = conferred_embed
+		var/list/temp = I.embedding
+		temp.Insert(0, /datum/element/embed)
+		I._AddElement(temp)
 		to_chat(user, "<span class='notice'>You finish wrapping [I] with [src].</span>")
 		use(1)
 		I.name = "[prefix] [I.name]"

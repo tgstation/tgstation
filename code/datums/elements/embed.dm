@@ -21,43 +21,16 @@
 	var/pain_chance
 	var/pain_mult
 	var/remove_pain_mult
-	//src.impact_pain_mult
-	//src.rip_pain_mult
+	var/impact_pain_mult
 	var/rip_time
 	var/ignore_throwspeed_threshold
 	var/jostle_chance
 	var/jostle_pain_mult
 	var/pain_stam_pct
 
-/datum/element/embed/Attach(datum/target,
-			embed_chance = EMBED_CHANCE,
-			fall_chance = EMBEDDED_ITEM_FALLOUT,
-			pain_chance = EMBEDDED_PAIN_CHANCE,
-			pain_mult = EMBEDDED_PAIN_MULTIPLIER,
-			remove_pain_mult = EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER,
-			//also fall pain
-			//impact_pain_mult = EMBEDDED_IMPACT_PAIN_MULTIPLIER,
-			//rip_pain_mult = EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER,
-			rip_time = EMBEDDED_UNSAFE_REMOVAL_TIME,
-			ignore_throwspeed_threshold = FALSE,
-			jostle_chance = EMBEDDED_JOSTLE_CHANCE,
-			jostle_pain_mult = EMBEDDED_JOSTLE_PAIN_MULTIPLIER,
-			pain_stam_pct = EMBEDDED_PAIN_STAM_PCT)
-
-	src.embed_chance = embed_chance
-	src.fall_chance = fall_chance
-	src.pain_chance = pain_chance
-	src.pain_mult = pain_mult
-	src.remove_pain_mult = remove_pain_mult
-	//src.impact_pain_mult = impact_pain_mult
-	//src.rip_pain_mult = rip_pain_mult
-	src.rip_time = rip_time
-	src.ignore_throwspeed_threshold = ignore_throwspeed_threshold
-	src.jostle_chance = jostle_chance
-	src.jostle_pain_mult = jostle_pain_mult
-	src.pain_stam_pct = pain_stam_pct
-
+/datum/element/embed/Attach(datum/target, list/embedArgs)
 	. = ..()
+	parseArgs(arglist(embedArgs))
 
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
@@ -78,19 +51,18 @@
 
 	if(((throwingdatum ? throwingdatum.speed : weapon.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || ignore_throwspeed_threshold)
 		if(prob(embed_chance) && !HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
-			victim.AddComponent(/datum/component/embedded,
-				weapon,
-				throwingdatum,
-				embed_chance = embed_chance,
-				fall_chance = fall_chance,
-				pain_chance = pain_chance,
-				pain_mult = pain_mult,
-				remove_pain_mult = remove_pain_mult,
-				//rip_pain_mult = rip_pain_mult,
-				rip_time = rip_time,
-				ignore_throwspeed_threshold = ignore_throwspeed_threshold,
-				jostle_chance = jostle_chance,
-				jostle_pain_mult = jostle_pain_mult,
+			victim.AddComponent(/datum/component/embedded,\
+				weapon,\
+				throwingdatum,\
+				embed_chance = embed_chance,\
+				fall_chance = fall_chance,\
+				pain_chance = pain_chance,\
+				pain_mult = pain_mult,\
+				remove_pain_mult = remove_pain_mult,\
+				rip_time = rip_time,\
+				ignore_throwspeed_threshold = ignore_throwspeed_threshold,\
+				jostle_chance = jostle_chance,\
+				jostle_pain_mult = jostle_pain_mult,\
 				pain_stam_pct = pain_stam_pct)
 
 
@@ -101,17 +73,41 @@
 
 	if(((throwingdatum ? throwingdatum.speed : weapon.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || ignore_throwspeed_threshold)
 		if(prob(embed_chance))
-			hit.AddComponent(/datum/component/embedded,
-				weapon,
-				throwingdatum,
-				embed_chance = embed_chance,
-				fall_chance = fall_chance,
-				pain_chance = pain_chance,
-				pain_mult = pain_mult,
-				remove_pain_mult = remove_pain_mult,
-				//rip_pain_mult = rip_pain_mult,
-				rip_time = rip_time,
-				ignore_throwspeed_threshold = ignore_throwspeed_threshold,
-				jostle_chance = jostle_chance,
-				jostle_pain_mult = jostle_pain_mult,
+			hit.AddComponent(/datum/component/embedded,\
+				weapon,\
+				throwingdatum,\
+				embed_chance = embed_chance,\
+				fall_chance = fall_chance,\
+				pain_chance = pain_chance,\
+				pain_mult = pain_mult,\
+				remove_pain_mult = remove_pain_mult,\
+				rip_time = rip_time,\
+				ignore_throwspeed_threshold = ignore_throwspeed_threshold,\
+				jostle_chance = jostle_chance,\
+				jostle_pain_mult = jostle_pain_mult,\
 				pain_stam_pct = pain_stam_pct)
+
+/datum/element/embed/proc/parseArgs(embed_chance = EMBED_CHANCE,
+			fall_chance = EMBEDDED_ITEM_FALLOUT,
+			pain_chance = EMBEDDED_PAIN_CHANCE,
+			pain_mult = EMBEDDED_PAIN_MULTIPLIER,
+			remove_pain_mult = EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER,
+			rip_time = EMBEDDED_UNSAFE_REMOVAL_TIME,
+			impact_pain_mult = EMBEDDED_IMPACT_PAIN_MULTIPLIER,
+			ignore_throwspeed_threshold = FALSE,
+			jostle_chance = EMBEDDED_JOSTLE_CHANCE,
+			jostle_pain_mult = EMBEDDED_JOSTLE_PAIN_MULTIPLIER,
+			pain_stam_pct = EMBEDDED_PAIN_STAM_PCT)
+
+	src.embed_chance = embed_chance
+	src.fall_chance = fall_chance
+	src.pain_chance = pain_chance
+	src.pain_mult = pain_mult
+	src.remove_pain_mult = remove_pain_mult
+	src.impact_pain_mult = impact_pain_mult
+	//src.rip_pain_mult = rip_pain_mult
+	src.rip_time = rip_time
+	src.ignore_throwspeed_threshold = ignore_throwspeed_threshold
+	src.jostle_chance = jostle_chance
+	src.jostle_pain_mult = jostle_pain_mult
+	src.pain_stam_pct = pain_stam_pct

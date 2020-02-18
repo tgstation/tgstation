@@ -3,7 +3,7 @@
 	and when it impacts and meets the requirements to stick into something, it instantiates an embedded component. Once the item falls out, the component is destroyed, while the
 	element survives to embed another day.
 
-	There are 2 different things that can be embedded presently: humans, and turfs (walls)
+	There are 2 different things that can be embedded presently: humans, and closed turfs (see: walls)
 
 		- Human embedding has all the classical embedding behavior, and tracks more events and signals. The main behaviors and hooks to look for are:
 			-- Every process tick, there is a chance to randomly proc pain, controlled by pain_chance. There may also be a chance for the object to fall out randomly, per fall_chance
@@ -19,7 +19,7 @@
 		- Embedding involves harmful and dangerous embeds, whether they cause brute damage, stamina damage, or a mix. This is the default behavior for embeddings, for when something is "pointy"
 
 		- Sticking occurs when an item should not cause any harm while embedding (imagine throwing a sticky ball of tape at someone, rather than a shuriken). An item is considered "sticky"
-			when it has 0 random pain chance and 0 jostling chance. It's a bit arbitrary, but fairly straightforward. See /obj/item/is_embed_harmless()
+			when it has 0 random pain chance and 0 jostling chance. It's a bit arbitrary, but fairly straightforward.
 
 		Stickables differ from embeds in the following ways:
 			-- Text descriptors use phrasing like "X is stuck to Y" rather than "X is embedded in Y"
@@ -39,6 +39,7 @@
 	var/fall_chance
 	var/pain_chance
 	var/pain_mult
+	var/impact_pain_mult
 	var/remove_pain_mult
 	var/rip_time
 	var/ignore_throwspeed_threshold
@@ -50,8 +51,7 @@
 	var/mutable_appearance/overlay
 
 // figure out if im gonna drop args
-/datum/component/embedded/Initialize(datum/parent,
-			obj/item/I,
+/datum/component/embedded/Initialize(obj/item/I,
 			datum/thrownthing/throwingdatum,
 			embed_chance = EMBED_CHANCE,
 			fall_chance = EMBEDDED_ITEM_FALLOUT,
@@ -67,10 +67,9 @@
 			jostle_pain_mult = EMBEDDED_JOSTLE_PAIN_MULTIPLIER,
 			pain_stam_pct = EMBEDDED_PAIN_STAM_PCT)
 
-
 	. = ..()
 
-	if((!ishuman(parent) && !isturf(parent)) || !isitem(weapon))
+	if((!ishuman(parent) && !isclosedturf(parent)) || !isitem(I))
 		return COMPONENT_INCOMPATIBLE
 
 	src.embed_chance = embed_chance
@@ -94,7 +93,6 @@
 	else if(isturf(parent))
 		initTurf(throwingdatum)
 
-
 /datum/component/embedded/RegisterWithParent()
 	if(ishuman(parent))
 		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/jostleCheck)
@@ -115,12 +113,19 @@
 		UnregisterSignal(parent, COMSIG_TOPIC)
 		UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
 
-
 /datum/component/embedded/process()
 	if(ishuman(parent))
 		processHuman()
 	//else
 		//processTurf()
+
+	return ..()
+
+/datum/component/embedded/Destroy()
+	if(overlay)
+		var/atom/A = parent
+		A.cut_overlay(overlay, TRUE)
+		qdel(overlay)
 
 	return ..()
 
@@ -130,6 +135,7 @@
 
 /// Harmful embeds have some extra behavior over harmless sticks, like creating blood, playing a slice, and dealing damage.
 /datum/component/embedded/proc/initHuman()
+	START_PROCESSING(SSdcs, src)
 	var/mob/living/carbon/human/victim = parent
 	L = pick(victim.bodyparts)
 	L.embedded_objects |= weapon // on the inside... on the inside...
@@ -140,8 +146,8 @@
 		victim.throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
 		playsound(victim,'sound/weapons/bladeslice.ogg', 40)
 		weapon.add_mob_blood(victim)//it embedded itself in you, of course it's bloody!
-		//var/damage = weapon.w_class * impact_pain_mult
-		//L.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage)
+		var/damage = weapon.w_class * impact_pain_mult
+		L.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage)
 		SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
 	else
 		victim.visible_message("<span class='danger'>[weapon] sticks itself to [victim]'s [L.name]!</span>","<span class='userdanger'>[weapon] sticks itself to your [L.name]!</span>")
@@ -197,6 +203,7 @@
 
 
 /// This proc handles the final step and actual removal of an embedded/stuck item from a human, whether or not it was actually removed safely.
+/// Pass TRUE for to_hands if we want it to go to the victim's hands when they pull it out
 /datum/component/embedded/proc/safeRemoveHuman(to_hands)
 	var/mob/living/carbon/human/victim = parent
 	L.embedded_objects -= weapon
@@ -247,30 +254,30 @@
 	weapon.invisibility = INVISIBILITY_ABSTRACT
 	RegisterSignal(weapon, COMSIG_MOVABLE_MOVED, .proc/itemMoved)
 
-	var/pixelX = rand(-6, 6)
-	var/pixelY = rand(-6, 6)
+	// bias these upwards since in-hands are usually on the lower end of the sprite
+	var/pixelX = rand(-1, 3)
+	var/pixelY = rand(-1, 3)
 
 	// can probably do this with a ? :
 	switch(throwingdatum.init_dir)
 		if(NORTH)
-			pixelY -= 4
+			pixelY -= 2
 		if(SOUTH)
-			pixelY += 4
+			pixelY += 2
 		if(WEST)
-			pixelX -= 4
+			pixelX -= 2
 		if(EAST)
-			pixelX += 4
+			pixelX += 2
 
 	if(throwingdatum.init_dir in list(NORTH,  WEST, NORTHWEST, SOUTHWEST))
-		overlay = mutable_appearance(icon=weapon.lefthand_file,icon_state=weapon.item_state)
-	else
 		overlay = mutable_appearance(icon=weapon.righthand_file,icon_state=weapon.item_state)
+	else
+		overlay = mutable_appearance(icon=weapon.lefthand_file,icon_state=weapon.item_state)
 
-	hit.add_overlay(overlay)
 	var/matrix/M = matrix()
 	M.Translate(pixelX, pixelY)
-	M.Scale(2.5)
 	overlay.transform = M
+	hit.add_overlay(overlay, TRUE)
 
 	if(harmful)
 		hit.visible_message("<span class='danger'>[weapon] embeds itself in [hit]!</span>")
@@ -294,7 +301,7 @@
 /// Someone is ripping out the item from the turf by hand
 /datum/component/embedded/proc/ripOutTurf(datum/source, user, href_list)
 	var/mob/living/us = user
-	if(locate(href_list["embedded_object"]) == weapon)
+	if(in_range(us, parent) && locate(href_list["embedded_object"]) == weapon)
 		us.visible_message("<span class='notice'>[us] begins unwedging [weapon] from [parent].</span>", "<span class='notice'>You begin unwedging [weapon] from [parent]...</span>")
 		if(do_after(us, 30, target = parent))
 			us.put_in_hands(weapon)

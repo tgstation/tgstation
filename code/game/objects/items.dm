@@ -88,7 +88,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
 
-	var/datum/embedding_behavior/embedding
+	var/list/embedding = NONE
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
@@ -153,22 +153,15 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			hitsound = "swing_hit"
 
 	if(embedding)
-		var/list/temp = embedding
-		temp.Insert(0, /datum/element/embed) // i dunno about this
-		AddElement(arglist(temp))
+		AddElement(/datum/element/embed, embedding)
 	else if(GLOB.embedpocalypse)
 		embedding = EMBED_POINTY
-		var/list/temp = embedding
-		temp.Insert(0, /datum/element/embed)
-		AddElement(arglist(temp))
+		AddElement(/datum/element/embed, embedding)
 		name = "pointy [name]"
 	else if(GLOB.stickpocalypse)
 		embedding = EMBED_HARMLESS
-		var/list/temp = embedding
-		temp.Insert(0, /datum/element/embed)
-		AddElement(arglist(temp))
+		AddElement(/datum/element/embed, embedding)
 		name = "sticky [name]"
-
 
 	if(sharpness) //give sharp objects butchering functionality, for consistency
 		AddComponent(/datum/component/butchering, 80 * toolspeed)
@@ -885,5 +878,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	return owner.dropItemToGround(src)
 
 /obj/item/proc/is_embed_harmless()
-	if(embedding)
-		return (embedding.pain_mult == 0 && embedding.jostle_pain_mult == 0)
+	return
+	//if(embedding)
+		//return (!embedding.pain_mult && !embedding.jostle_pain_mult)
