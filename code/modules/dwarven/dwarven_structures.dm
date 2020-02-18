@@ -4,6 +4,7 @@
 	icon = 'icons/obj/dwarven.dmi'
 	light_power = 1
 	var/cooldowntime = 0
+	custom_materials = list()
 	//break_sound = 'sound/hallucinations/veryfar_noise.ogg' //to do: find a suitable noise
 	//debris = list(/obj/item/stack/sheet/runed_metal = 1) //to do : make a dwarven metal datum
 
@@ -47,7 +48,7 @@
 /obj/structure/destructible/dwarven/lava_forge
 	name = "Ancient Forge"
 	icon_state = "dwarven_forge"
-
+	custom_materials = list(/datum/material/iron = 20000)
 
 /obj/structure/destructible/dwarven/lava_forge/attackby(obj/item/I, mob/living/user, params)
 	if(!istype(I, /obj/item/stack/ore))
@@ -63,17 +64,17 @@
 		to_chat(user, "<span class='notice'>You start smelting [O] into [initial(refined_result.name)].</span>")
 	if(!do_after(user, 30, target = src))
 		return FALSE
-	var/efficiency = user?.mind.get_skill_modifier(/datum/skill/furnacing, SKILL_EFFICIENCY_MODIFIER)
+	var/efficiency = user?.mind.get_skill_modifier(/datum/skill/operating, SKILL_EFFICIENCY_MODIFIER)
 	if(prob(efficiency))
 		to_chat(user, "<span class='nicegreen'>You succeed in smelting [O]!</span>")
 		O.use(1)
 		new refined_result(drop_location())
-		user?.mind.adjust_experience(/datum/skill/furnacing, O.mine_experience * 2) //Get double because smelting is more effort than mining in my honest opinion ok? ok.
+		user?.mind.adjust_experience(/datum/skill/operating, O.mine_experience * 2) //Get double because smelting is more effort than mining in my honest opinion ok? ok.
 		if(O.amount > 0) //Only try going recursive if we still have ore
 			try_forge(user, O, refined_result, TRUE)
 	else
 		O.use(1)
-		user?.mind.adjust_experience(/datum/skill/furnacing, O.mine_experience * 0.5)
+		user?.mind.adjust_experience(/datum/skill/operating, O.mine_experience * 0.5)
 		to_chat(user, "<span class='warning'>You fail smelting [O] and destroy it!</span>")
 		if(O.amount > 0) //Only try going recursive if we still have ore
 			try_forge(user, O, refined_result, TRUE)
@@ -83,7 +84,7 @@
 	name = "Blood infuser"
 	icon_state = "blood_fountain"
 	var/charge_amount = 30
-
+	custom_materials  = list(/datum/material/gold = 20000)
 
 /obj/structure/destructible/dwarven/blood_pool/attacked_by(obj/item/I, mob/living/user)
 	if(!istype(user,/mob/living/carbon/human))
@@ -127,6 +128,7 @@
 /obj/structure/destructible/dwarven/mythril_press
 	name = "Ancient Mythril Press"
 	icon_state = "mythril_press"
+	custom_materials  = list(/datum/material/silver = 20000)
 
 /obj/structure/destructible/dwarven/mythril_press/Initialize()
 	AddComponent(/datum/component/material_container,list(/datum/material/diamond,/datum/material/uranium,/datum/material/mythril,), 20000, TRUE, /obj/item/stack/sheet/mineral, null,  null, FALSE)
@@ -147,28 +149,129 @@
 	materials.retrieve_all(get_turf(src))
 	to_chat(user, "<span class='notice'>The machine makes a loud crank sound, but no mythril falls out!</span>")
 
-/obj/structure/destructible/dwarven/mythril_anvil
-	name = "Ancient Mythril Anvil"
-	icon_state = "mythril_anvil"
-	var/loaded_mold
+/obj/structure/destructible/dwarven/workshop
+	name = "Dwarven workshop"
+	icon_state = "workshop"
+	var/state = 0
+	custom_materials = list(/datum/material/wood = 20000)
 
-
-/obj/structure/destructible/dwarven/mythril_anvil/examine(mob/user)
+/obj/structure/destructible/dwarven/workshop/Initialize()
 	. = ..()
-	. += "<span class='notice'>Load with iron to create a mold</span>"
-	. += "<span class='notice'>Use with mold and another material to create armor</span>"
+	AddComponent(/datum/component/material_container,
+	list(/datum/material/iron,
+	/datum/material/glass,
+	/datum/material/gold,
+	/datum/material/silver,
+	/datum/material/diamond,
+	/datum/material/uranium,
+	/datum/material/plasma,
+	/datum/material/bluespace,
+	/datum/material/bananium,
+	/datum/material/titanium,
+	/datum/material/runite,
+	/datum/material/plastic,
+	/datum/material/adamantine,
+	/datum/material/mythril,
+	/datum/material/wood
+	), 20000, TRUE, /obj/item/stack, null, null)
+
+/obj/structure/destructible/dwarven/workshop/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Alt click to change the function</span>"
+	. += "<span class='notice'>Click with mats to put them inside of the workshop</span>"
+	. += "<span class='notice'>Click with a hand to retrieve all mats</span>"
+	. += "<span class='notice'>Click with a mallet to activate the function</span>"
+	. += "<span class='notice'>Current function is : [state]</span>"
+
+
+/obj/structure/destructible/dwarven/workshop/AltClick(mob/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+		return
+
+	if(state == 2)
+		state = 0
+	else
+		state++
+
+/obj/structure/destructible/dwarven/workshop/attack_hand(mob/user)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	materials.retrieve_all()
+	. = ..()
+
+
+/obj/structure/destructible/dwarven/workshop/attacked_by(obj/item/I, mob/living/user)
+	if(istype(I,/obj/item/dwarven/mallet))
+		handle_mallet(user)
+		return
+	. = ..()
+
+/obj/structure/destructible/dwarven/workshop/proc/handle_mallet(mob/user)
+	var/efficiency = user?.mind.get_skill_modifier(/datum/skill/operating, SKILL_EFFICIENCY_MODIFIER)
+	to_chat(user,"<span class='notice'>You start looking through design notes...</span>")
+	if(!do_after(user, 15, target = src))
+		return FALSE
+	if(!prob(efficiency))
+		user?.mind.adjust_experience(/datum/skill/operating, 1)
+		to_chat(user,"<span class='notice'>You cannot find anything of value.</span>")
+		return
+
+	to_chat(user,"<span class='notice'>You find something useful!</span>")
+	switch(state)
+		if(1)
+			handle_create_blueprints(user)
+		if(2)
+			handle_create_pickaxe(user)
+		//if(3) //upgrades this will require dwarven metal datum
+		//	handle_create_pickaxe(user)
+	return
+
+/obj/structure/destructible/dwarven/workshop/proc/handle_create_blueprints(mob/user)
+	var/obj/structure/destructible/dwarven/wanted_structure
+	var/choice
+	choice = alert("What structure do you wish to design?",,"Lava forge","Workbench","Dwarven Anvil","Dwarven Gringer")
+	switch(choice)
+		if("Lava forge")
+			wanted_structure = /obj/structure/destructible/dwarven/lava_forge
+		if("Workbench")
+			wanted_structure = /obj/structure/destructible/dwarven/workshop
+		if("Dwarven Anvil")
+			wanted_structure = /obj/structure/destructible/dwarven/workshop //todo
+		if("Dwarven Gringer")
+			wanted_structure = /obj/structure/destructible/dwarven/workshop // todo
+
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	for(var/i in initial(wanted_structure.custom_materials))
+		var/datum/material/M = i
+		if(!materials.has_enough_of_material(M,initial(wanted_structure.custom_materials[M])))
+			return
+	materials.use_materials(initial(wanted_structure.custom_materials))
+	new /obj/item/dwarven/blueprint(drop_location(),wanted_structure)
+	user?.mind.adjust_experience(/datum/skill/operating, 4)
+
+/obj/structure/destructible/dwarven/workshop/proc/handle_create_pickaxe(mob/user)
+	var/obj/item/pickaxe/wanted_pickaxe
+	var/choice
+	choice = alert("What pickaxe do you wish to create?",,"Iron","Silver","Diamond")
+	switch(choice)
+		if("Iron")
+			wanted_pickaxe = /obj/item/pickaxe
+		if("Silver")
+			wanted_pickaxe = /obj/item/pickaxe/silver
+		if("Diamond")
+			wanted_pickaxe = /obj/item/pickaxe/diamond
+
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	for(var/i in initial(wanted_pickaxe.custom_materials))
+		var/datum/material/M = i
+		if(!materials.has_enough_of_material(M,initial(wanted_pickaxe.custom_materials[M])))
+			return
+	materials.use_materials(initial(wanted_pickaxe.custom_materials))
+	new wanted_pickaxe(drop_location())
+	user?.mind.adjust_experience(/datum/skill/operating, 2)
+
+
 /*
-/obj/structure/destructible/dwarven/mythril_anvil/attacked_by(obj/item/I, mob/living/user)
-	if(loaded_mold == null && istype(I,/obj/item/stack/sheet/metal))
-		var/choice
-		choice = alert(user,"Choose the mold",,"Platemail mold","Chainmail mold","Helmet mold","Warhammer mold","Waraxe mold","Javelin mold")
-		switch(choice)
-			if("Platemail mold")
-
-	. = ..()
-*/
-
-/obj/structure/destructible/dwarven/mythril_anvil/debug/attack_hand(mob/user)
+/obj/structure/destructible/dwarven/workbench/debug/attack_hand(mob/user)
 	var/choice
 	choice = alert(user,"Choose an item",,"Warhammer","Waraxe","Javelin")
 	switch(choice)
@@ -181,4 +284,4 @@
 		if("Javelin")
 			var/obj/item/hatchet/dwarven/javelin/debug = new /obj/item/hatchet/dwarven/javelin(get_turf(src))
 			debug.add_creator(user)
-
+*/

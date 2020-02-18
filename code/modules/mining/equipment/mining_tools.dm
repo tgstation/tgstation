@@ -40,6 +40,7 @@
 	item_state = "spickaxe"
 	toolspeed = 0.5 //mines faster than a normal pickaxe, bought from mining vendor
 	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
+	custom_materials = list(/datum/material/silver=2000)
 	force = 17
 
 /obj/item/pickaxe/diamond
@@ -48,6 +49,7 @@
 	item_state = "dpickaxe"
 	toolspeed = 0.3
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
+	custom_materials = list(/datum/material/diamond=2000)
 	force = 19
 
 /obj/item/pickaxe/drill

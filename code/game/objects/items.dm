@@ -864,6 +864,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return
 	return ..()
 
+
 /obj/item/proc/embedded(mob/living/carbon/human/embedded_mob)
 	return
 
@@ -875,6 +876,9 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/proc/doStrip(mob/stripper, mob/owner)
 	return owner.dropItemToGround(src)
+
+/obj/item/proc/add_creator(mob/living/carbon/human/C)
+	AddComponent(/datum/component/quality, C , /datum/skill/operating)
 
 /**
   * Does the current embedding var meet the criteria for being harmless? Namely, does it have a pain multiplier and jostle pain mult of 0? If so, return true.

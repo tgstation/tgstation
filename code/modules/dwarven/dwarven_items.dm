@@ -38,12 +38,6 @@
 /obj/item/twohanded/war_hammer/update_icon_state()
 	icon_state = "greyscale_dwarven_warhammer[wielded]"
 
-/obj/item/twohanded/war_hammer/proc/add_creator(mob/living/carbon/human/C)
-	AddComponent(/datum/component/quality, C , /datum/skill/furnacing)
-
-/obj/item/hatchet/dwarven/proc/add_creator(mob/living/carbon/human/C)
-	AddComponent(/datum/component/quality, C , /datum/skill/furnacing)
-
 /obj/item/hatchet/dwarven/axe
 	name = "dwarven hand axe"
 	desc = "A very sharp axe blade made of greatest dwarven metal."
@@ -52,6 +46,7 @@
 	item_state = "greyscale_dwarven_axe"
 	lefthand_file = 'icons/mob/inhands/weapons/axes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/axes_righthand.dmi'
+	custom_materials = list(/datum/material/iron = 10000)
 	flags_1 = CONDUCT_1
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	force = 15
@@ -70,6 +65,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+	custom_materials = list(/datum/material/iron = 5000)
 	flags_1 = CONDUCT_1
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	force = 7
@@ -77,6 +73,11 @@
 	throw_speed = 4
 	throw_range = 5
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 80, "embedded_fall_chance" = 20)
+
+/obj/item/dwarven
+	name = "dorf"
+	desc = "am a manly dorf"
+	icon = 'icons/obj/dwarven.dmi'
 
 /obj/item/dwarven/rune_stone
 	name = "rune stone"
@@ -168,7 +169,37 @@
 	name = "dwarven mold"
 	desc = "Dwarven mold, one of their great achievments. Allows for casting of very complex tools and armors"
 	icon_state = "mold"
+	w_class = WEIGHT_CLASS_SMALL
 	var/mold_type
+
+/obj/item/dwarven/mallet
+	name = "dwarven mallet"
+	desc = "Dwarven mallet, easy to make , easy to use, other than the fact it is absolutely tiny"
+	icon_state = "mallet"
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/dwarven/blueprint
+	name = "dwarven structure print"
+	desc = "Dwarven instructions on how to build a dwarven structure, includes materials how neat."
+	icon_state = "structure_print"
+	w_class = WEIGHT_CLASS_SMALL
+	var/obj/structure/destructible/dwarven/structure
+
+/obj/item/dwarven/blueprint/New(loc,_structure)
+	structure = _structure
+	. = ..()
+
+/obj/item/dwarven/blueprint/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	if(!proximity_flag)
+		return
+	if(isclosedturf(target) ||  isgroundlessturf(target))
+		return FALSE
+	if(!do_after(user, 60, TRUE, user))
+		return FALSE
+	var/turf/place = isopenturf(target) ? target : get_turf(target)
+	new structure(place)
+	qdel(src)
+	. = ..()
 
 
 
