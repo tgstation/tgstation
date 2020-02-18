@@ -218,6 +218,11 @@
 				else
 					W.forceMove(drop_location())
 
+			//Electroadaptive Psuedocircuit can now install electronics - FULP ELECTROADAPTIVE PROCS FOR AIRLOCKS UPDATE PR, Surrealistik Feb 2020
+			else if(istype(W, /obj/item/electroadaptive_pseudocircuit) && !electronics ) //FULP ELECTROADAPTIVE PROCS FOR AIRLOCKS UPDATE PR, Surrealistik Feb 2020
+				windoor_install_electroadaptive(W, user) //FULP ELECTROADAPTIVE PROCS FOR AIRLOCKS UPDATE PR, Surrealistik Feb 2020
+
+
 			//Screwdriver to remove airlock electronics. Step 6 undone.
 			else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 				if(!electronics)
