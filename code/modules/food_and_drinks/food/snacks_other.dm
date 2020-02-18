@@ -508,7 +508,7 @@
 		qdel(src)
 
 /obj/item/reagent_containers/food/snacks/chewable/bubblegum
-	name = "bubblegum gum"
+	name = "bubblegum"
 	desc = "A rubbery strip of gum. Not exactly filling, but it keeps you busy."
 	icon_state = "bubblegum"
 	item_state = "bubblegum"
@@ -517,7 +517,7 @@
 	tastes = list("candy" = 1)
 
 /obj/item/reagent_containers/food/snacks/chewable/bubblegum/nicotine
-	name = "HP+ gum"
+	name = "nicotine gum"
 	list_reagents = list(/datum/reagent/drug/nicotine = 10, /datum/reagent/consumable/menthol = 5)
 	tastes = list("mint" = 1)
 	color = "#60A584"
