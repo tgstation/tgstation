@@ -33,10 +33,11 @@
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
-		RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/on_pickup)
 
 /// Triggered on equip of the item containing the component
 /datum/component/two_handed/proc/on_equip(datum/source, mob/user, slot)
+	if(require_twohands && slot == ITEM_SLOT_HANDS) // force equip the item
+		wield(user)
 	if(!user.is_holding(parent) && wielded && !require_twohands)
 		unwield(user)
 
@@ -54,13 +55,6 @@
 	else
 		wield(user)
 
-/// Triggered on pickup of the item containing the component
-/datum/component/two_handed/proc/on_pickup(datum/source, mob/living/carbon/user)
-	if(require_twohands) // force equip the item
-		var/obj/item/parent_item = parent
-		if(parent_item && parent_item.loc != user)
-			wield(user)
-
 /**
  * Wield the two handed item in both hands
  *
@@ -76,13 +70,13 @@
 	if(user.get_inactive_held_item())
 		if(require_twohands)
 			to_chat(user, "<span class='notice'>[parent] is too cumbersome to carry in one hand!</span>")
-			user.dropItemToGround(user.get_active_held_item())
+			user.dropItemToGround(parent, force=TRUE)
 		else
 			to_chat(user, "<span class='warning'>You need your other hand to be empty!</span>")
 		return
 	if(user.get_num_arms() < 2)
 		if(require_twohands)
-			user.dropItemToGround(user.get_active_held_item())
+			user.dropItemToGround(parent, force=TRUE)
 		to_chat(user, "<span class='warning'>You don't have enough intact hands.</span>")
 		return
 
