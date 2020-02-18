@@ -3,12 +3,12 @@
 	export_category = EXPORT_CONTRABAND
 
 /datum/export/organ/heart
-	cost = 20 //For the man who has everything and nothing.
+	cost = 10 //For the man who has everything and nothing.
 	unit_name = "humanoid heart"
 	export_types = list(/obj/item/organ/heart)
 
 /datum/export/organ/eyes
-	cost = 10
+	cost = 5
 	unit_name = "humanoid eyes"
 	export_types = list(/obj/item/organ/eyes)
 
@@ -18,12 +18,12 @@
 	export_types = list(/obj/item/organ/ears)
 
 /datum/export/organ/liver
-	cost = 15
+	cost = 5
 	unit_name = "humanoid liver"
 	export_types = list(/obj/item/organ/liver)
 
 /datum/export/organ/lungs
-	cost = 10
+	cost = 5
 	unit_name = "humanoid lungs"
 	export_types = list(/obj/item/organ/lungs)
 
