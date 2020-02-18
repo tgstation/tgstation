@@ -758,6 +758,13 @@
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stock_parts/capacitor = 1)
 
+/obj/item/circuitboard/machine/medipen_refiller
+	name = "Medipen Refiller (Machine Board)"
+	icon_state = "medical"
+	build_path = /obj/machinery/medipen_refiller
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 1)
+
 /obj/item/circuitboard/machine/techfab/department/medical
 	name = "\improper Departmental Techfab (Machine Board) - Medical"
 	icon_state = "medical"
@@ -1165,15 +1172,6 @@
 	icon_state = "supply"
 	build_path = /obj/machinery/rnd/production/techfab/department/cargo
 
-/obj/item/circuitboard/machine/pump
-	name = "Portable Liquid Pump (Machine Board)"
-	icon_state = "supply"
-	build_path = /obj/machinery/power/liquid_pump
-	needs_anchored = FALSE
-	req_components = list(
-		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/stock_parts/matter_bin = 2)
-
 //Misc
 
 
@@ -1200,3 +1198,12 @@
 		/obj/item/stock_parts/manipulator = /obj/item/stock_parts/manipulator/femto,
 		/obj/item/stock_parts/micro_laser = /obj/item/stock_parts/micro_laser/quadultra,
 		/obj/item/stock_parts/scanning_module = /obj/item/stock_parts/scanning_module/triphasic)
+
+/obj/item/circuitboard/machine/hypnochair
+	name = "Enhanced Interrogation Chamber (Machine Board)"
+	icon_state = "security"
+	build_path = /obj/machinery/hypnochair
+	req_components = list(
+		/obj/item/stock_parts/micro_laser = 2,
+		/obj/item/stock_parts/scanning_module = 2
+	)

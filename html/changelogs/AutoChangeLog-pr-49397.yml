@@ -1,0 +1,4 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - bugfix: "Cleaning messes with the mop and soap now correctly awards cleaning experience"
