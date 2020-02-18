@@ -7,6 +7,7 @@
 	movetypes = GROUND
 
 /datum/movespeed_modifier/sanity
+	id = MOVESPEED_ID_SANITY
 	movetypes = (~FLYING)
 
 /datum/movespeed_modifier/sanity/insane

@@ -34,7 +34,7 @@
 	parent_atom.opacity = oldopac
 	if(isliving(parent_atom))
 		var/mob/living/L = parent_atom
-		L.remove_movespeed_modifier(MOVESPEED_ID_SHRINK_RAY)
+		L.remove_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			H.physiology.damage_resistance += 100

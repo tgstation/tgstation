@@ -29,6 +29,7 @@
 	blacklisted_movetypes = FLOATING
 
 /datum/movespeed_modifier/grab_slowdown
+	id = MOVESPEED_ID_MOB_GRAB_STATE
 	blacklisted_movetypes = FLOATING
 
 /datum/movespeed_modifier/grab_slowdown/aggressive

@@ -6,3 +6,6 @@
 #define MOVE_CONFLICT_JETPACK							"JETPACK"
 
 //ids
+#define MOVESPEED_ID_SANITY					"sanity_component"
+
+#define MOVESPEED_ID_MOB_GRAB_STATE			"mob_grab_state"

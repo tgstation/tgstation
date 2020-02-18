@@ -118,7 +118,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		if(!initial(type_id_datum.variable))
 			CRASH("Not a variable modifier")
 		var/id = initial(type_id_datum.id)
-		final = LAZYACCESS(movespeed_modification, id || type_or_datum)
+		final = LAZYACCESS(movespeed_modification, id || type_id_datum)
 		if(!final)
 			final = new type_id_datum
 			inject = TRUE
