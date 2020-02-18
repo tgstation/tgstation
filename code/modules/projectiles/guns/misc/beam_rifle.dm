@@ -464,7 +464,7 @@
 				else
 					target.ex_act(EXPLODE_HEAVY)
 			return TRUE
-	if(ismovableatom(target))
+	if(ismovable(target))
 		var/atom/movable/AM = target
 		if(AM.density && !AM.CanPass(src, get_turf(target)) && !ismob(AM))
 			if(structure_pierce < structure_pierce_amount)
