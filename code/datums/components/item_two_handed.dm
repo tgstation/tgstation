@@ -6,10 +6,10 @@
  */
 /datum/component/two_handed
 	var/wielded = FALSE 			/// Are we holding the two handed item properly
-	var/force_wielded = FALSE 		/// Forces the item to be weilded
-	var/force_unwielded = FALSE 	/// Forces the item to be unweilded
-	var/wieldsound = null 			/// Play sound when wielded
-	var/unwieldsound = null 		/// Play sound when unwielded
+	var/force_wielded = 0	 		/// Forces the item to be weilded
+	var/force_unwielded = 0		 	/// Forces the item to be unweilded
+	var/wieldsound = FALSE 			/// Play sound when wielded
+	var/unwieldsound = FALSE 		/// Play sound when unwielded
 	var/require_twohands = FALSE	/// Does it have to be held in both hands
 
 /**
@@ -17,9 +17,17 @@
  *
  * vars:
  * * require_twohands (optional) Does the item need both hands to be carried
+ * * wieldsound (optional) The sound to play when wielded
+ * * unwieldsound (optional) The sound to play when unwielded
+ * * force_wielded (optional)
+ * * force_unwielded (optional)
  */
-/datum/component/two_handed/Initialize(require_twohands=FALSE)
+/datum/component/two_handed/Initialize(require_twohands=FALSE, wieldsound=FALSE, unwieldsound=FALSE, force_wielded=0, force_unwielded=0)
 	src.require_twohands = require_twohands
+	src.wieldsound = wieldsound
+	src.unwieldsound = unwieldsound
+	src.force_wielded = force_wielded
+	src.force_unwielded = force_unwielded
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
@@ -40,7 +48,7 @@
 		unwield(user)
 
 /// Triggered on attack self of the item containing the component
-/datum/component/two_handed/proc/on_attack_self(datum/source, mob/user, slot)
+/datum/component/two_handed/proc/on_attack_self(datum/source, mob/user)
 	if(wielded)
 		unwield(user)
 	else
@@ -81,7 +89,7 @@
 	var/obj/item/parent_item = parent
 	wielded = TRUE
 	if(force_wielded)
-		parent_item.force = force_wielded ? 1 : 0
+		parent_item.force = force_wielded
 	parent_item.name = "[parent_item.name] (Wielded)"
 	parent_item.update_icon()
 
@@ -102,6 +110,14 @@
 	user.put_in_inactive_hand(offhand_item)
 
 /**
+ * icon_state support for icons using 0-1 for on off
+ *
+ * returns 0 or 1 Based on wielded state
+ */
+/datum/component/two_handed/proc/icon_state()
+	return wielded ? 1 : 0
+
+/**
  * Unwield the two handed item
  *
  * vars:
@@ -115,7 +131,7 @@
 	var/obj/item/parent_item = parent
 	wielded = FALSE
 	if(!force_unwielded)
-		parent_item.force = force_unwielded ? 1 : 0
+		parent_item.force = force_unwielded
 
 	var/sf = findtext(parent_item.name, " (Wielded)", -10) // 10 == length(" (Wielded)")
 	if(sf)
@@ -158,6 +174,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	var/wielded = FALSE // Off Hand tracking of wielded status
 
 /obj/item/twohanded/offhand/Destroy()
 	wielded = FALSE
@@ -170,11 +187,10 @@
 	// Call the held object
 	var/obj/item = user.get_active_held_item()
 	if(item)
-		var/datum/component/two_handed/twohand_comp = item.GetComponent(/datum/component/two_handed)
-		if(twohand_comp)
-			twohand_comp.unwield(user, show_message)
+		if(comp_twohand)
+			comp_twohand.unwield(user, show_message)
 			// Drop item if off hand is dropped and the item requies both hands
-			if(twohand_comp.require_twohands)
+			if(comp_twohand.require_twohands)
 				user.dropItemToGround(item)
 
 	// delete on drop
@@ -186,7 +202,7 @@
 	if(wielded && !user.is_holding(src) && !istype(src, /obj/item/twohanded/required))
 		unwield(user)
 
-/obj/item/twohanded/offhand/unwield(mob/living/carbon/user, show_message=TRUE)
+/obj/item/twohanded/offhand/proc/unwield()
 	if(wielded)
 		wielded = FALSE
 		qdel(src)
@@ -198,8 +214,7 @@
 	// If you have a proper item in your other hand that the offhand is for, do nothing. This should never happen.
 	var/obj/item/item = user.get_inactive_held_item()
 	if (item && !istype(item, /obj/item/twohanded/offhand/))
-		var/datum/component/two_handed/twohand_comp = item.GetComponent(/datum/component/two_handed)
-		if(twohand_comp)
+		if(comp_twohand)
 			return
 	// If it's another offhand, or literally anything else, qdel.
 	qdel(src)

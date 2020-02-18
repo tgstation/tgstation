@@ -308,7 +308,6 @@
 	layer = ABOVE_MOB_LAYER
 	w_class = WEIGHT_CLASS_HUGE
 	force = 10
-	force_wielded = 10
 	throwforce = 13
 	throw_speed = 2
 	throw_range = 4
@@ -317,6 +316,7 @@
 	. = ..()
 	AddComponent(/datum/component/tactical)
 	addtimer(CALLBACK(src, /datum.proc/_AddComponent, list(/datum/component/beauty, 500)), 0)
+	comp_twohand = AddComponent(/datum/component/two_handed, force_wielded=10)
 
 /obj/item/twohanded/required/kirbyplants/random
 	icon = 'icons/obj/flora/_flora.dmi'

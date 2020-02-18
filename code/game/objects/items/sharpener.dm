@@ -24,18 +24,20 @@
 	if(istype(I, /obj/item/melee/transforming/energy))
 		to_chat(user, "<span class='warning'>You don't think \the [I] will be the thing getting modified if you use it on \the [src]!</span>")
 		return
-	if(istype(I, /obj/item/twohanded))//some twohanded items should still be sharpenable, but handle force differently. therefore i need this stuff
-		var/obj/item/twohanded/TH = I
-		if(TH.force_wielded >= max)
-			to_chat(user, "<span class='warning'>[TH] is much too powerful to sharpen further!</span>")
+	// some two handed items should still be sharpenable, but handle force differently. therefore this stuff is needed
+
+	var/datum/component/two_handed/comp_twohand = I.GetComponent(/datum/component/two_handed)
+	if(comp_twohand)
+		if(comp_twohand.force_wielded >= max)
+			to_chat(user, "<span class='warning'>[I] is much too powerful to sharpen further!</span>")
 			return
-		if(TH.wielded)
-			to_chat(user, "<span class='warning'>[TH] must be unwielded before it can be sharpened!</span>")
+		if(comp_twohand.wielded)
+			to_chat(user, "<span class='warning'>[I] must be unwielded before it can be sharpened!</span>")
 			return
-		if(TH.force_wielded > initial(TH.force_wielded))
-			to_chat(user, "<span class='warning'>[TH] has already been refined before. It cannot be sharpened further!</span>")
+		if(comp_twohand.force_wielded > initial(comp_twohand.force_wielded))
+			to_chat(user, "<span class='warning'>[I] has already been refined before. It cannot be sharpened further!</span>")
 			return
-		TH.force_wielded = clamp(TH.force_wielded + increment, 0, max)//wieldforce is increased since normal force wont stay
+		comp_twohand.force_wielded = CLAMP(comp_twohand.force_wielded + increment, 0, max)//wieldforce is increased since normal force wont stay
 	if(I.force > initial(I.force))
 		to_chat(user, "<span class='warning'>[I] has already been refined before. It cannot be sharpened further!</span>")
 		return

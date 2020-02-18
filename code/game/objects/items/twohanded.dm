@@ -16,32 +16,15 @@
 //This rewrite means we don't have two variables for EVERY item which are used only by a few weapons.
 //It also tidies stuff up elsewhere.
 
-
-
-
 /*
  * Twohanded
  */
 /obj/item/twohanded
-	var/wielded = 0
-	var/force_unwielded = 0
-	var/force_wielded = 0
-	var/wieldsound = null
-	var/unwieldsound = null
+	var/datum/component/two_handed/comp_twohand = null /// The two handed component of the item
 
 /obj/item/twohanded/Initialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed)
-
-/obj/item/twohanded/proc/unwield(mob/living/carbon/user)
-	var/datum/component/two_handed/twohand_comp = GetComponent(/datum/component/two_handed)
-	if(twohand_comp && twohand_comp.wielded)
-		twohand_comp.unwield(user)
-
-/obj/item/twohanded/proc/wield(mob/living/carbon/user)
-	var/datum/component/two_handed/twohand_comp = GetComponent(/datum/component/two_handed)
-	if(twohand_comp && !twohand_comp.wielded)
-		twohand_comp.wield(user)
+	comp_twohand = AddComponent(/datum/component/two_handed)
 
 ///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
@@ -50,7 +33,7 @@
 
 /obj/item/twohanded/required/Initialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+	comp_twohand = AddComponent(/datum/component/two_handed, require_twohands=TRUE)
 
 /obj/item/twohanded/required/attack_self()
 	return
@@ -68,8 +51,6 @@
 	throwforce = 15
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	force_unwielded = 5
-	force_wielded = 24
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
@@ -80,9 +61,10 @@
 /obj/item/twohanded/fireaxe/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
+	comp_twohand = AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=24)
 
 /obj/item/twohanded/fireaxe/update_icon_state()  //Currently only here to fuck with the on-mob icons.
-	icon_state = "fireaxe[wielded]"
+	icon_state = "fireaxe[comp_twohand.icon_state()]"
 
 /obj/item/twohanded/fireaxe/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -92,7 +74,7 @@
 	. = ..()
 	if(!proximity)
 		return
-	if(wielded) //destroys windows and grilles in one hit
+	if(comp_twohand.wielded) //destroys windows and grilles in one hit
 		if(istype(A, /obj/structure/window) || istype(A, /obj/structure/grille))
 			var/obj/structure/W = A
 			W.obj_destruction("fireaxe")
@@ -114,10 +96,6 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
 	var/w_class_on = WEIGHT_CLASS_BULKY
-	force_unwielded = 3
-	force_wielded = 34
-	wieldsound = 'sound/weapons/saberon.ogg'
-	unwieldsound = 'sound/weapons/saberoff.ogg'
 	hitsound = "swing_hit"
 	armour_penetration = 35
 	var/saber_color = "green"
@@ -131,8 +109,12 @@
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	var/list/possible_colors = list("red", "blue", "green", "purple")
 
+/obj/item/twohanded/dualsaber/Initialize()
+	. = ..()
+	comp_twohand = AddComponent(/datum/component/two_handed, force_unwielded=3, force_wielded=34, wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
+
 /obj/item/twohanded/dualsaber/suicide_act(mob/living/carbon/user)
-	if(wielded)
+	if(comp_twohand && comp_twohand.wielded)
 		user.visible_message("<span class='suicide'>[user] begins spinning way too fast! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)//stole from chainsaw code
@@ -175,8 +157,8 @@
 	. = ..()
 
 /obj/item/twohanded/dualsaber/update_icon_state()
-	if(wielded)
-		icon_state = "dualsaber[saber_color][wielded]"
+	if(comp_twohand && comp_twohand.wielded)
+		icon_state = "dualsaber[saber_color][comp_twohand.icon_state()]"
 	else
 		icon_state = "dualsaber0"
 
@@ -184,15 +166,14 @@
 	if(user.has_dna())
 		if(user.dna.check_mutation(HULK))
 			to_chat(user, "<span class='warning'>You grip the blade too hard and accidentally close it!</span>")
-			var/datum/component/two_handed/twohand_comp = GetComponent(/datum/component/two_handed)
-			if(twohand_comp && twohand_comp.wielded)
-				twohand_comp.unwield()
+			if(comp_twohand && comp_twohand.wielded)
+				comp_twohand.unwield()
 				return
 	..()
-	if(HAS_TRAIT(user, TRAIT_CLUMSY) && (wielded) && prob(40))
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && (comp_twohand.wielded) && prob(40))
 		impale(user)
 		return
-	if((wielded) && prob(50))
+	if((comp_twohand.wielded) && prob(50))
 		INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
 /obj/item/twohanded/dualsaber/proc/jedi_spin(mob/living/user)
@@ -200,39 +181,51 @@
 
 /obj/item/twohanded/dualsaber/proc/impale(mob/living/user)
 	to_chat(user, "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on [src].</span>")
-	if (force_wielded)
+	if(comp_twohand.force_wielded)
 		user.take_bodypart_damage(20,25,check_armor = TRUE)
 	else
 		user.adjustStaminaLoss(25)
 
 /obj/item/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(wielded)
+	if(comp_twohand.wielded)
 		return ..()
 	return 0
 
-/obj/item/twohanded/dualsaber/wield(mob/living/carbon/M) //Specific wield () hulk checks due to reflection chance for balance issues and switches hitsounds.
-	if(M.has_dna())
-		if(M.dna.check_mutation(HULK))
-			to_chat(M, "<span class='warning'>You lack the grace to wield this!</span>")
+// Specific hulk checks due to reflection chance for balance issues and switches hitsounds.
+/obj/item/twohanded/dualsaber/attack_self(mob/living/carbon/user)
+	if(user && user.has_dna())
+		if(user.dna.check_mutation(HULK))
+			to_chat(user, "<span class='warning'>You lack the grace to wield this!</span>")
 			return
 	..()
-	if(wielded)
+	if(comp_twohand.wielded)
 		sharpness = IS_SHARP
 		w_class = w_class_on
 		hitsound = 'sound/weapons/blade1.ogg'
 		START_PROCESSING(SSobj, src)
 		set_light(brightness_on)
+	else
+		unwield()
 
-/obj/item/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
+/obj/item/twohanded/dualsaber/equipped(mob/user, slot)
+	. = ..()
+	if(!comp_twohand.wielded)
+		unwield()
+
+/obj/item/twohanded/dualsaber/dropped(mob/user)
+	. = ..()
+	unwield()
+
+// switch hitsounds
+/obj/item/twohanded/dualsaber/proc/unwield()
 	sharpness = initial(sharpness)
 	w_class = initial(w_class)
-	..()
 	hitsound = "swing_hit"
 	STOP_PROCESSING(SSobj, src)
 	set_light(0)
 
 /obj/item/twohanded/dualsaber/process()
-	if(wielded)
+	if(comp_twohand.wielded)
 		if(hacked)
 			light_color = pick(LIGHT_COLOR_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER)
 		open_flame()
@@ -240,12 +233,12 @@
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/twohanded/dualsaber/IsReflect()
-	if(wielded)
+	if(comp_twohand.wielded)
 		return 1
 
 /obj/item/twohanded/dualsaber/ignition_effect(atom/A, mob/user)
 	// same as /obj/item/melee/transforming/energy, mostly
-	if(!wielded)
+	if(!comp_twohand.wielded)
 		return ""
 	var/in_mouth = ""
 	if(iscarbon(user))
@@ -292,8 +285,6 @@
 	force = 10
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	force_unwielded = 10
-	force_wielded = 18
 	throwforce = 20
 	throw_speed = 4
 	embedding = list("impact_pain_mult" = 3)
@@ -311,19 +302,20 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
 	AddComponent(/datum/component/jousting)
+	comp_twohand = AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18)
 
 /obj/item/twohanded/spear/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
 /obj/item/twohanded/spear/update_icon_state()
-	icon_state = "[icon_prefix][wielded]"
+	icon_state = "[icon_prefix][comp_twohand.icon_state()]"
 
 /obj/item/twohanded/spear/CheckParts(list/parts_list)
 	var/obj/item/shard/tip = locate() in parts_list
 	if (istype(tip, /obj/item/shard/plasma))
-		force_wielded = 19
-		force_unwielded = 11
+		comp_twohand.force_wielded = 19
+		comp_twohand.force_unwielded = 11
 		throwforce = 21
 		icon_prefix = "spearplasma"
 	update_icon()
@@ -351,8 +343,9 @@
 	var/obj/item/grenade/G = locate() in parts_list
 	if(G)
 		var/obj/item/twohanded/spear/lancePart = locate() in parts_list
-		force_wielded = lancePart.force_wielded
-		force_unwielded = lancePart.force_unwielded
+		var/datum/component/two_handed/lance_comp_twohand = lancePart.comp_twohand
+		comp_twohand.force_wielded = lance_comp_twohand.force_wielded
+		comp_twohand.force_unwielded = lance_comp_twohand.force_unwielded
 		throwforce = lancePart.throwforce
 		icon_prefix = lancePart.icon_prefix
 		parts_list -= G
@@ -375,7 +368,7 @@
 	. += "<span class='notice'>Alt-click to set your war cry.</span>"
 
 /obj/item/twohanded/spear/explosive/update_icon_state()
-	icon_state = "spearbomb[wielded]"
+	icon_state = "spearbomb[comp_twohand.icon_state()]"
 
 /obj/item/twohanded/spear/explosive/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
@@ -389,7 +382,7 @@
 	. = ..()
 	if(!proximity)
 		return
-	if(wielded)
+	if(comp_twohand.wielded)
 		user.say("[war_cry]", forced="spear warcry")
 		explosive.forceMove(AM)
 		explosive.prime()
@@ -455,7 +448,7 @@
 		A.UpdateButtonIcon()
 
 /obj/item/twohanded/required/chainsaw/get_dismemberment_chance()
-	if(wielded)
+	if(comp_twohand.wielded)
 		. = ..()
 
 /obj/item/twohanded/required/chainsaw/doomslayer
@@ -475,9 +468,11 @@
 /obj/item/twohanded/spear/grey_tide
 	name = "\improper Grey Tide"
 	desc = "Recovered from the aftermath of a revolt aboard Defense Outpost Theta Aegis, in which a seemingly endless tide of Assistants caused heavy casualities among Nanotrasen military forces."
-	force_unwielded = 15
-	force_wielded = 25
 	attack_verb = list("gored")
+
+/obj/item/twohanded/spear/grey_tide/Initialize()
+	. = ..()
+	comp_twohand = AddComponent(/datum/component/two_handed, force_unwielded=15, force_wielded=25)
 
 /obj/item/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	. = ..()
@@ -503,8 +498,6 @@
 	force = 7
 	throwforce = 15
 	w_class = WEIGHT_CLASS_BULKY
-	force_unwielded = 7
-	force_wielded = 15
 	attack_verb = list("attacked", "impaled", "pierced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
@@ -512,32 +505,39 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
 
+/obj/item/twohanded/pitchfork/Initialize()
+	. = ..()
+	comp_twohand = AddComponent(/datum/component/two_handed, force_unwielded=7, force_wielded=15)
+
 /obj/item/twohanded/pitchfork/demonic
 	name = "demonic pitchfork"
 	desc = "A red pitchfork, it looks like the work of the devil."
 	force = 19
 	throwforce = 24
-	force_unwielded = 19
-	force_wielded = 25
 
 /obj/item/twohanded/pitchfork/demonic/Initialize()
 	. = ..()
 	set_light(3,6,LIGHT_COLOR_RED)
+	comp_twohand = AddComponent(/datum/component/two_handed, force_unwielded=19, force_wielded=25)
 
 /obj/item/twohanded/pitchfork/demonic/greater
 	force = 24
 	throwforce = 50
-	force_unwielded = 24
-	force_wielded = 34
+
+/obj/item/twohanded/pitchfork/demonic/greater/Initialize()
+	. = ..()
+	comp_twohand = AddComponent(/datum/component/two_handed, force_unwielded=24, force_wielded=34)
 
 /obj/item/twohanded/pitchfork/demonic/ascended
 	force = 100
 	throwforce = 100
-	force_unwielded = 100
-	force_wielded = 500000 // Kills you DEAD.
+
+/obj/item/twohanded/pitchfork/demonic/ascended/Initialize()
+	. = ..()
+	comp_twohand = AddComponent(/datum/component/two_handed, force_unwielded=100, force_wielded=500000) // Kills you DEAD
 
 /obj/item/twohanded/pitchfork/update_icon_state()
-	icon_state = "pitchfork[wielded]"
+	icon_state = "pitchfork[comp_twohand.icon_state()]"
 
 /obj/item/twohanded/pitchfork/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] impales [user.p_them()]self in [user.p_their()] abdomen with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -563,7 +563,7 @@
 
 /obj/item/twohanded/pitchfork/demonic/ascended/afterattack(atom/target, mob/user, proximity)
 	. = ..()
-	if(!proximity || !wielded)
+	if(!proximity || !comp_twohand.wielded)
 		return
 	if(iswallturf(target))
 		var/turf/closed/wall/W = target
@@ -581,8 +581,6 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "vibro sword"
 	desc = "A potent weapon capable of cutting through nearly anything. Wielding it in two hands will allow you to deflect gunfire."
-	force_unwielded = 20
-	force_wielded = 40
 	armour_penetration = 100
 	block_chance = 40
 	throwforce = 20
@@ -596,11 +594,12 @@
 /obj/item/twohanded/vibro_weapon/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 20, 105)
+	comp_twohand = AddComponent(/datum/component/two_handed, force_unwielded=20, force_wielded=40)
 
 /obj/item/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(wielded)
+	if(comp_twohand.wielded)
 		final_block_chance *= 2
-	if(wielded || attack_type != PROJECTILE_ATTACK)
+	if(comp_twohand.wielded || attack_type != PROJECTILE_ATTACK)
 		if(prob(final_block_chance))
 			if(attack_type == PROJECTILE_ATTACK)
 				owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
@@ -612,7 +611,7 @@
 	return 0
 
 /obj/item/twohanded/vibro_weapon/update_icon_state()
-	icon_state = "hfrequency[wielded]"
+	icon_state = "hfrequency[comp_twohand.icon_state()]"
 
 /*
  * Bone Axe
@@ -621,10 +620,13 @@
 	icon_state = "bone_axe0"
 	name = "bone axe"
 	desc = "A large, vicious axe crafted out of several sharpened bone plates and crudely tied together. Made of monsters, by killing monsters, for killing monsters."
-	force_wielded = 23
+
+/obj/item/twohanded/fireaxe/boneaxe/Initialize()
+	. = ..()
+	comp_twohand = AddComponent(/datum/component/two_handed, force_wielded=23)
 
 /obj/item/twohanded/fireaxe/boneaxe/update_icon_state()
-	icon_state = "bone_axe[wielded]"
+	icon_state = "bone_axe[comp_twohand.icon_state()]"
 
 /*
  * Bone Spear
@@ -634,13 +636,15 @@
 	name = "bone spear"
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
 	force = 12
-	force_unwielded = 12
-	force_wielded = 20
 	throwforce = 22
 	armour_penetration = 15				//Enhanced armor piercing
 
+/obj/item/twohanded/spear/bonespear/Initialize()
+	. = ..()
+	comp_twohand = AddComponent(/datum/component/two_handed, force_unwielded=12, force_wielded=20)
+
 /obj/item/twohanded/spear/bonespear/update_icon_state()
-	icon_state = "bone_spear[wielded]"
+	icon_state = "bone_spear[comp_twohand.icon_state()]"
 
 /obj/item/twohanded/binoculars
 	name = "binoculars"
@@ -661,10 +665,8 @@
 
 /obj/item/twohanded/binoculars/attack_self(mob/user)
 	. = ..()
-	var/datum/component/two_handed/twohand_comp = GetComponent(/datum/component/two_handed)
-	if(twohand_comp && !twohand_comp.wielded)
+	if(comp_twohand && !comp_twohand.wielded)
 		return
-
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/unwield)
 	listeningTo = user
 	user.visible_message("<span class='notice'>[user] holds [src] up to [user.p_their()] eyes.</span>", "<span class='notice'>You hold [src] up to your eyes.</span>")
@@ -688,7 +690,7 @@
 	C.pixel_x = world.icon_size*_x
 	C.pixel_y = world.icon_size*_y
 
-/obj/item/twohanded/binoculars/unwield(mob/user)
+/obj/item/twohanded/binoculars/proc/unwield(mob/user)
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 		listeningTo = null
@@ -714,13 +716,15 @@
 	throw_speed = 3
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
-	force_unwielded = 8
-	force_wielded = 12
 	attack_verb = list("swept", "brushed off", "bludgeoned", "whacked")
 	resistance_flags = FLAMMABLE
 
+/obj/item/twohanded/broom/Initialize()
+	. = ..()
+	comp_twohand = AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12)
+
 /obj/item/twohanded/broom/update_icon_state()
-	icon_state = "broom[wielded]"
+	icon_state = "broom[comp_twohand.icon_state()]"
 
 /obj/item/twohanded/broom/equipped(mob/user)
 	. = ..()
@@ -737,8 +741,7 @@
 	sweep(user, A, FALSE)
 
 /obj/item/twohanded/broom/proc/sweep(mob/user, atom/A, moving = TRUE)
-	var/datum/component/two_handed/twohand_comp = GetComponent(/datum/component/two_handed)
-	if(twohand_comp && !twohand_comp.wielded)
+	if(comp_twohand && !comp_twohand.wielded)
 		return
 	var/turf/target
 	if (!moving)

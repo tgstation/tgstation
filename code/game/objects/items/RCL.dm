@@ -122,8 +122,9 @@
 			QDEL_NULL(loaded)
 			loaded = null
 		QDEL_NULL(wiring_gui_menu)
-		unwield(user)
-		active = wielded
+		if(comp_twohand)
+			comp_twohand.unwield(user)
+			active = comp_twohand.wielded
 		return TRUE
 	return FALSE
 
@@ -141,7 +142,8 @@
 
 /obj/item/twohanded/rcl/attack_self(mob/user)
 	..()
-	active = wielded
+	if(comp_twohand)
+		active = comp_twohand.wielded
 	if(!active)
 		last = null
 	else if(!last)

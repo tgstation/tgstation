@@ -11,8 +11,6 @@
 	force = 0 //You can't hit stuff unless wielded
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	force_unwielded = 0
-	force_wielded = 20
 	throwforce = 5
 	throw_speed = 4
 	armour_penetration = 10
@@ -32,6 +30,7 @@
 /obj/item/twohanded/kinetic_crusher/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 60, 110) //technically it's huge and bulky, but this provides an incentive to use it
+	comp_twohand = AddComponent(/datum/component/two_handed, force_wielded=20)
 
 /obj/item/twohanded/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
@@ -62,7 +61,7 @@
 		return ..()
 
 /obj/item/twohanded/kinetic_crusher/attack(mob/living/target, mob/living/carbon/user)
-	if(!wielded)
+	if(!comp_twohand.wielded)
 		to_chat(user, "<span class='warning'>[src] is too heavy to use with one hand! You fumble and drop everything.</span>")
 		user.drop_all_held_items()
 		return
@@ -78,7 +77,7 @@
 
 /obj/item/twohanded/kinetic_crusher/afterattack(atom/target, mob/living/user, proximity_flag, clickparams)
 	. = ..()
-	if(!wielded)
+	if(!comp_twohand.wielded)
 		return
 	if(!proximity_flag && charged)//Mark a target, or mine a tile.
 		var/turf/proj_turf = user.loc
@@ -142,7 +141,7 @@
 		set_light(0)
 
 /obj/item/twohanded/kinetic_crusher/update_icon_state()
-	item_state = "crusher[wielded]"
+	item_state = "crusher[comp_twohand.icon_state()]"
 
 /obj/item/twohanded/kinetic_crusher/update_overlays()
 	. = ..()
@@ -366,17 +365,22 @@
 	. = ..()
 	if(.)
 		H.force += bonus_value * 0.2
-		H.force_unwielded += bonus_value * 0.2
-		H.force_wielded += bonus_value * 0.2
 		H.detonation_damage += bonus_value * 0.8
+		var/datum/component/two_handed/comp_twohand = H.comp_twohand
+		if(comp_twohand)
+			comp_twohand.force_unwielded += bonus_value * 0.2
+			comp_twohand.force_wielded += bonus_value * 0.2
+
 
 /obj/item/crusher_trophy/demon_claws/remove_from(obj/item/twohanded/kinetic_crusher/H, mob/living/user)
 	. = ..()
 	if(.)
 		H.force -= bonus_value * 0.2
-		H.force_unwielded -= bonus_value * 0.2
-		H.force_wielded -= bonus_value * 0.2
 		H.detonation_damage -= bonus_value * 0.8
+		var/datum/component/two_handed/comp_twohand = H.comp_twohand
+		if(comp_twohand)
+			comp_twohand.force_unwielded -= bonus_value * 0.2
+			comp_twohand.force_wielded -= bonus_value * 0.2
 
 /obj/item/crusher_trophy/demon_claws/on_melee_hit(mob/living/target, mob/living/user)
 	user.heal_ordered_damage(bonus_value * 0.1, damage_heal_order)
@@ -457,10 +461,14 @@
 	. = ..()
 	if(.)
 		H.charge_time = 3
-		H.force_wielded = 5
+		var/datum/component/two_handed/comp_twohand = H.comp_twohand
+		if(comp_twohand)
+			comp_twohand.force_wielded = 5
 
 /obj/item/crusher_trophy/king_goat/remove_from(obj/item/twohanded/kinetic_crusher/H, mob/living/user)
 	. = ..()
 	if(.)
 		H.charge_time = 15
-		H.force_wielded = 20
+		var/datum/component/two_handed/comp_twohand = H.comp_twohand
+		if(comp_twohand)
+			comp_twohand.force_wielded = 20

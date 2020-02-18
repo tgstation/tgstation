@@ -51,7 +51,8 @@
 	else if(open || broken)
 		if(istype(I, /obj/item/twohanded/fireaxe) && !fireaxe)
 			var/obj/item/twohanded/fireaxe/F = I
-			if(F.wielded)
+			var/datum/component/two_handed/comp_twohand = F.GetComponent(/datum/component/two_handed)
+			if(comp_twohand && comp_twohand.wielded)
 				to_chat(user, "<span class='warning'>Unwield the [F.name] first.</span>")
 				return
 			if(!user.transferItemToLoc(F, src))

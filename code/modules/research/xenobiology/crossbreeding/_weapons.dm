@@ -61,9 +61,12 @@ Slimecrossing Weapons
 	block_chance = 75
 	throw_range = 1 //How far do you think you're gonna throw a solid crystalline shield...?
 	throw_speed = 2
-	force_wielded = 15 //Heavy, but hard to wield.
 	attack_verb = list("bashed","pounded","slammed")
 	item_flags = SLOWS_WHILE_IN_HAND
+
+/obj/item/twohanded/required/adamantineshield/Initialize()
+	. = ..()
+	comp_twohand = AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_wielded=15)
 
 //Bloodchiller - Chilling Green
 /obj/item/gun/magic/bloodchill

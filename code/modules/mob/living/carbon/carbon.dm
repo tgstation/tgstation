@@ -24,8 +24,8 @@
 	// Checks if the item in your hand is has the two_handed component
 	var/obj/item/item_in_hand = src.get_active_held_item()
 	if(item_in_hand)
-		var/datum/component/two_handed/twohand_comp = item_in_hand.GetComponent(/datum/component/two_handed)
-		if(twohand_comp && twohand_comp.wielded)
+		var/datum/component/two_handed/comp_twohand = item_in_hand.GetComponent(/datum/component/two_handed)
+		if(comp_twohand && comp_twohand.wielded)
 			to_chat(usr, "<span class='warning'>Your other hand is too busy holding [item_in_hand].</span>")
 			return
 	var/oindex = active_hand_index

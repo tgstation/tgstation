@@ -113,7 +113,9 @@
 
 /obj/item/defibrillator/attackby(obj/item/W, mob/user, params)
 	if(W == paddles)
-		paddles.unwield()
+		var/datum/component/two_handed/comp_twohand = paddles.GetComponent(/datum/component/two_handed)
+		if(comp_twohand)
+			comp_twohand.unwield()
 		toggle_paddles()
 	else if(istype(W, /obj/item/stock_parts/cell))
 		var/obj/item/stock_parts/cell/C = W
@@ -178,7 +180,9 @@
 			return
 	else
 		//Remove from their hands and back onto the defib unit
-		paddles.unwield()
+		var/datum/component/two_handed/comp_twohand = paddles.GetComponent(/datum/component/two_handed)
+		if(comp_twohand)
+			comp_twohand.unwield()
 		remove_paddles(user)
 
 	update_power()
@@ -271,7 +275,9 @@
 
 /obj/item/defibrillator/compact/combat/loaded/attackby(obj/item/W, mob/user, params)
 	if(W == paddles)
-		paddles.unwield()
+		var/datum/component/two_handed/comp_twohand = paddles.GetComponent(/datum/component/two_handed)
+		if(comp_twohand)
+			comp_twohand.unwield()
 		toggle_paddles()
 		return
 
@@ -365,10 +371,12 @@
 	update_icon()
 
 /obj/item/twohanded/shockpaddles/update_icon_state()
-	icon_state = "[base_icon_state][wielded]"
+	if(!comp_twohand)
+		return
+	icon_state = "[base_icon_state][comp_twohand.icon_state()]"
 	item_state = icon_state
 	if(cooldown)
-		icon_state = "[base_icon_state][wielded]_cooldown"
+		icon_state = "[base_icon_state][comp_twohand.icon_state()]_cooldown"
 
 /obj/item/twohanded/shockpaddles/suicide_act(mob/user)
 	user.visible_message("<span class='danger'>[user] is putting the live paddles on [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -388,7 +396,7 @@
 		if(user != loc)
 			to_chat(user, "<span class='notice'>The paddles snap back into the main unit.</span>")
 			snap_back()
-	return unwield(user)
+	return comp_twohand.unwield(user)
 
 /obj/item/twohanded/shockpaddles/proc/snap_back()
 	if(!defib)
@@ -398,14 +406,13 @@
 	defib.update_power()
 
 /obj/item/twohanded/shockpaddles/attack(mob/M, mob/user)
-
 	if(busy)
 		return
 	if(req_defib && !defib.powered)
 		user.visible_message("<span class='notice'>[defib] beeps: Unit is unpowered.</span>")
 		playsound(src, 'sound/machines/defib_failed.ogg', 50, FALSE)
 		return
-	if(!wielded)
+	if(comp_twohand && !comp_twohand.wielded)
 		if(iscyborg(user))
 			to_chat(user, "<span class='warning'>You must activate the paddles in your active module before you can use them on someone!</span>")
 		else

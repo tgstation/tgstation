@@ -617,7 +617,6 @@
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	slot_flags = 0
 	force = 17
-	force_wielded = 24
 	throwforce = 40
 	throw_speed = 2
 	armour_penetration = 30
@@ -630,6 +629,7 @@
 /obj/item/twohanded/cult_spear/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 90)
+	comp_twohand = AddComponent(/datum/component/two_handed, force_wielded=24)
 
 /obj/item/twohanded/cult_spear/Destroy()
 	if(spear_act)
@@ -637,7 +637,7 @@
 	..()
 
 /obj/item/twohanded/cult_spear/update_icon_state()
-	icon_state = "bloodspear[wielded]"
+	icon_state = "bloodspear[comp_twohand.icon_state()]"
 
 /obj/item/twohanded/cult_spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/turf/T = get_turf(hit_atom)
@@ -668,7 +668,7 @@
 	qdel(src)
 
 /obj/item/twohanded/cult_spear/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(wielded)
+	if(comp_twohand.wielded)
 		final_block_chance *= 2
 	if(prob(final_block_chance))
 		if(attack_type == PROJECTILE_ATTACK)
