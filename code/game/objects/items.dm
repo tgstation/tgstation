@@ -852,6 +852,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return
 	return ..()
 
+
 /obj/item/proc/embedded(mob/living/carbon/human/embedded_mob)
 	return
 
@@ -863,3 +864,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/doStrip(mob/stripper, mob/owner)
 	return owner.dropItemToGround(src)
+
+/obj/item/proc/add_creator(mob/living/carbon/human/C)
+	AddComponent(/datum/component/quality, C , /datum/skill/operating)
