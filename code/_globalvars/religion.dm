@@ -3,7 +3,6 @@ GLOBAL_VAR(religion)
 GLOBAL_VAR(deity)
 GLOBAL_DATUM(religious_sect, /datum/religion_sect)
 GLOBAL_VAR(favor)
-GLOBAL_LIST_EMPTY(bibles_in_play)
 
 //bible
 GLOBAL_VAR(bible_name)
