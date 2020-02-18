@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Button, Box, Section, LabeledList } from '../components';
+import { Button, Box, NumberInput, Section, LabeledList } from '../components';
 
 export const RadioactiveMicrolaser = props => {
   const { act, data } = useBackend(props);
@@ -53,43 +53,53 @@ export const RadioactiveMicrolaser = props => {
           <LabeledList.Item label="Radiation Intensity">
             <Button
               icon="fast-backward"
-              disabled={on_cooldown}
               onClick={() => act('radintensity', { adjust: -5 })} />
             <Button
               icon="backward"
-              disabled={on_cooldown}
               onClick={() => act('radintensity', { adjust: -1 })} />
             {' '}
-            {String(intensity).padStart(2, '0')}
+            <NumberInput
+              value={Math.round(intensity)}
+              width="40px"
+              minValue={1}
+              maxValue={20}
+              onChange={(e, value) => {
+                return act('radintensity', {
+                  target: value,
+                });
+              }} />
             {' '}
             <Button
               icon="forward"
-              disabled={on_cooldown}
               onClick={() => act('radintensity', { adjust: 1 })} />
             <Button
               icon="fast-forward"
-              disabled={on_cooldown}
               onClick={() => act('radintensity', { adjust: 5 })} />
           </LabeledList.Item>
           <LabeledList.Item label="Radiation Wavelength">
             <Button
               icon="fast-backward"
-              disabled={on_cooldown}
               onClick={() => act('radwavelength', { adjust: -5 })} />
             <Button
               icon="backward"
-              disabled={on_cooldown}
               onClick={() => act('radwavelength', { adjust: -1 })} />
             {' '}
-            {String(wavelength).padStart(3, '0')}
+            <NumberInput
+              value={Math.round(wavelength)}
+              width="40px"
+              minValue={0}
+              maxValue={120}
+              onChange={(e, value) => {
+                return act('radwavelength', {
+                  target: value,
+                });
+              }} />
             {' '}
             <Button
               icon="forward"
-              disabled={on_cooldown}
               onClick={() => act('radwavelength', { adjust: 1 })} />
             <Button
               icon="fast-forward"
-              disabled={on_cooldown}
               onClick={() => act('radwavelength', { adjust: 5 })} />
           </LabeledList.Item>
           <LabeledList.Item label="Laser Cooldown">

@@ -70,7 +70,7 @@ effective or pretty fucking useless.
 
 /obj/item/healthanalyzer/rad_laser
 	custom_materials = list(/datum/material/iron=400)
-	var/ui_x = 300
+	var/ui_x = 320
 	var/ui_y = 335
 	var/irradiate = TRUE
 	var/stealth = FALSE
@@ -103,11 +103,11 @@ effective or pretty fucking useless.
 		used = FALSE
 		icon_state = "health"
 
-/obj/item/healthanalyzer/rad_laser/attack_self(mob/user)
-	interact(user)
-
 /obj/item/healthanalyzer/rad_laser/proc/get_cooldown()
 	return round(max(10, (stealth*30 + intensity*5 - wavelength/4)))
+
+/obj/item/healthanalyzer/rad_laser/attack_self(mob/user)
+	interact(user)
 
 /obj/item/healthanalyzer/rad_laser/interact(mob/user)
 	ui_interact(user)
@@ -116,7 +116,7 @@ effective or pretty fucking useless.
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "radioactive_microlaser", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "radioactive_microlaser", "Radioactive Microlaser", ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/item/healthanalyzer/rad_laser/ui_data(mob/user)
@@ -145,17 +145,49 @@ effective or pretty fucking useless.
 			scanmode = !scanmode
 			. = TRUE
 		if("radintensity")
-			var/value = text2num(params["adjust"])
-			if(value)
-				value += intensity
-				intensity = CLAMP(value, 1, 20)
+			var/target = params["target"]
+			var/adjust = text2num(params["adjust"])
+			if(target == "input")
+				target = input("New output target (1-20):", name, intensity) as num|null
+				if(!isnull(target) && !..())
+					. = TRUE
+			else if(target == "min")
+				target = 1
 				. = TRUE
+			else if(target == "max")
+				target = 20
+				. = TRUE
+			else if(adjust)
+				target = intensity + adjust
+				. = TRUE
+			else if(text2num(target) != null)
+				target = text2num(target)
+				. = TRUE
+			if(.)
+				target = round(target)
+				intensity = clamp(target, 1, 20)
 		if("radwavelength")
-			var/value = text2num(params["adjust"])
-			if(value)
-				value += wavelength
-				wavelength = CLAMP(value, 0, 120)
+			var/target = params["target"]
+			var/adjust = text2num(params["adjust"])
+			if(target == "input")
+				target = input("New output target (0-120):", name, wavelength) as num|null
+				if(!isnull(target) && !..())
+					. = TRUE
+			else if(target == "min")
+				target = 0
 				. = TRUE
+			else if(target == "max")
+				target = 120
+				. = TRUE
+			else if(adjust)
+				target = wavelength + adjust
+				. = TRUE
+			else if(text2num(target) != null)
+				target = text2num(target)
+				. = TRUE
+			if(.)
+				target = round(target)
+				wavelength = clamp(target, 0, 120)
 
 /obj/item/shadowcloak
 	name = "cloaker belt"
