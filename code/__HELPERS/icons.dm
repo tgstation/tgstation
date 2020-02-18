@@ -1091,9 +1091,13 @@ GLOBAL_VAR(freon_filter)
 		return
 	if(!(obj_flags & FROZEN))
 		name = "frozen [name]"
-		filters += GLOB.freon_filter
 		alpha -= 25
 		obj_flags |= FROZEN
+		if(appearance_flags & KEEP_TOGETHER)
+			ADD_TRAIT(src, TRAIT_KEEPTOGETHER, TRAIT_GENERIC)
+		else
+			appearance_flags |= KEEP_TOGETHER
+		filters += GLOB.freon_filter
 
 //Assumes already frozed
 /obj/proc/make_unfrozen()
@@ -1104,6 +1108,8 @@ GLOBAL_VAR(freon_filter)
 		filters -= GLOB.freon_filter
 		alpha += 25
 		obj_flags &= ~FROZEN
+		if (!(HAS_TRAIT(src, TRAIT_KEEPTOGETHER)))
+			appearance_flags &= ~KEEP_TOGETHER
 
 
 //Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
