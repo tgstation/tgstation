@@ -318,11 +318,11 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 		to_chat(user, "<span class='notice'>You begin to wrap the [C] around the [src]...</span>")
 		if(do_after(user, 35, target = src))
 			var/obj/item/kitchen/knife/shiv/S = new /obj/item/kitchen/knife/shiv
-			user.put_in_hands(S)
 			C.use(1)
 			to_chat(user, "<span class='notice'>You wrap the [C] around the [src] forming a makeshift weapon.</span>")
 			remove_item_from_storage(src)
 			qdel(src)
+			user.put_in_hands(S)
 
 	else
 		return ..()

@@ -101,7 +101,7 @@
 /obj/structure/closet/crate/trashcart/laundry
 	name = "laundry cart"
 	desc = "A large cart for hauling around large amounts of laundry."
-	icon_state = "laundrycart"
+	icon_state = "laundry"
 
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."
