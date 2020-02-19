@@ -64,7 +64,7 @@
 	/datum/material/adamantine,
 	/datum/material/mythril,
 	/datum/material/wood,
-	/datum/material/meat
+    /datum/material/meat
 	), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 

@@ -338,7 +338,7 @@ SUBSYSTEM_DEF(persistence)
 		var/datum/chemical_reaction/randomized/R = new randomized_type
 		var/loaded = FALSE
 		if(R.persistent && json)
-			var/list/recipe_data = json[R.id]
+			var/list/recipe_data = json[R.type]
 			if(recipe_data)
 				if(R.LoadOldRecipe(recipe_data) && (daysSince(R.created) <= R.persistence_period))
 					loaded = TRUE
@@ -354,9 +354,8 @@ SUBSYSTEM_DEF(persistence)
 
 	//asert globchems done
 	for(var/randomized_type in subtypesof(/datum/chemical_reaction/randomized))
-		var/datum/chemical_reaction/randomized/R = randomized_type
-		R = get_chemical_reaction(initial(R.id)) //ew, would be nice to add some simple tracking
-		if(R && R.persistent && R.id)
+		var/datum/chemical_reaction/randomized/R = get_chemical_reaction(randomized_type) //ew, would be nice to add some simple tracking
+		if(R && R.persistent)
 			var/recipe_data = list()
 			recipe_data["timestamp"] = R.created
 			recipe_data["required_reagents"] = R.required_reagents
@@ -365,7 +364,7 @@ SUBSYSTEM_DEF(persistence)
 			recipe_data["is_cold_recipe"] = R.is_cold_recipe
 			recipe_data["results"] = R.results
 			recipe_data["required_container"] = "[R.required_container]"
-			file_data["[R.id]"] = recipe_data
+			file_data["[R.type]"] = recipe_data
 
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))

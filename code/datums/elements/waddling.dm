@@ -2,7 +2,7 @@
 
 /datum/element/waddling/Attach(datum/target)
 	. = ..()
-	if(!ismovableatom(target))
+	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
 	if(isliving(target))
 		RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/LivingWaddle)
