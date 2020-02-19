@@ -35,7 +35,6 @@
 	new /obj/item/instrument/piano_synth(src)
 	new /obj/item/radio/headset( src )
 
-// Plapatin owes me 3 TF2 keys for this, don't let him forget it
 /obj/structure/closet/secure_closet/personal/sleeper
 	name = "Chill-out-Chamber"
 	desc = "Step into the patented Chill-out-Chamber™ to take a break in (relative) safety! (Note: Nanotrasen takes no responsibility for deaths while inside or due to the Chill-out-Chamber™)."
