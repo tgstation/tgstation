@@ -78,6 +78,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
 	var/breakouttime = 0
 
+	var/slicetime = 1 //Multiplier for how long it takes to slit a neck with the item. Note that there is a min of 3 second and max of 10 second limit. An item with a force of 17 or more already exeded this limit.
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 

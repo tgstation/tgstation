@@ -954,6 +954,7 @@
 #include "code\game\objects\items\signs.dm"
 #include "code\game\objects\items\singularityhammer.dm"
 #include "code\game\objects\items\stunbaton.dm"
+#include "code\game\objects\items\syndiejunk.dm"
 #include "code\game\objects\items\taster.dm"
 #include "code\game\objects\items\teleportation.dm"
 #include "code\game\objects\items\teleprod.dm"
