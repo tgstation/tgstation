@@ -25,14 +25,12 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
 	AddComponent(/datum/component/jousting)
-	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18)
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, \
+					iconstate_wielded="[icon_prefix]1", iconstate_unwielded="[icon_prefix]0")
 
 /obj/item/spear/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
-
-/obj/item/spear/update_icon_state()
-	icon_state = "[icon_prefix][SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)]"
 
 /obj/item/spear/CheckParts(list/parts_list)
 	var/obj/item/shard/tip = locate() in parts_list
@@ -53,6 +51,10 @@
 	. = ..()
 	set_explosive(new /obj/item/grenade/iedcasing()) //For admin-spawned explosive lances
 
+/obj/item/spear/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, \
+					iconstate_wielded="spearbomb1", iconstate_unwielded="spearbomb0")
 
 /obj/item/spear/explosive/proc/set_explosive(obj/item/grenade/G)
 	if(explosive)
@@ -87,9 +89,6 @@
 /obj/item/spear/explosive/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Alt-click to set your war cry.</span>"
-
-/obj/item/spear/explosive/update_icon_state()
-	icon_state = "spearbomb[SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)]"
 
 /obj/item/spear/explosive/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
@@ -147,7 +146,5 @@
 
 /obj/item/spear/bonespear/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=12, force_wielded=20)
-
-/obj/item/spear/bonespear/update_icon_state()
-	icon_state = "bone_spear[SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)]"
+	AddComponent(/datum/component/two_handed, force_unwielded=12, force_wielded=20, \
+					iconstate_wielded="bone_spear1", iconstate_unwielded="bone_spear0")

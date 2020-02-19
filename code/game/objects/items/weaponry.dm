@@ -759,7 +759,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/vibro_weapon/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 20, 105)
-	AddComponent(/datum/component/two_handed, force_unwielded=20, force_wielded=40)
+	AddComponent(/datum/component/two_handed, force_unwielded=20, force_wielded=40, \
+					iconstate_wielded="hfrequency1", iconstate_unwielded="hfrequency0")
 
 /obj/item/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
@@ -774,6 +775,3 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
 				return 1
 	return 0
-
-/obj/item/vibro_weapon/update_icon_state()
-	icon_state = "hfrequency[SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)]"

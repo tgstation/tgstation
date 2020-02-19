@@ -30,7 +30,8 @@
 /obj/item/kinetic_crusher/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 60, 110) //technically it's huge and bulky, but this provides an incentive to use it
-	AddComponent(/datum/component/two_handed, force_wielded=20)
+	AddComponent(/datum/component/two_handed, force_wielded=20, \
+					iconstate_wielded="crusher1", iconstate_unwielded="crusher0")
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
@@ -139,9 +140,6 @@
 		set_light(brightness_on)
 	else
 		set_light(0)
-
-/obj/item/kinetic_crusher/update_icon_state()
-	item_state = "crusher[SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)]"
 
 /obj/item/kinetic_crusher/update_overlays()
 	. = ..()

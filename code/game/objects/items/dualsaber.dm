@@ -29,7 +29,12 @@
 
 /obj/item/dualsaber/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=3, force_wielded=34, wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
+	add_twohanded_comp()
+
+/obj/item/dualsaber/proc/add_twohanded_comp()
+	AddComponent(/datum/component/two_handed, force_unwielded=3, force_wielded=34, , \
+					iconstate_wielded="dualsaber[saber_color]1", iconstate_unwielded="dualsaber0", \
+					wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
 
 /obj/item/dualsaber/suicide_act(mob/living/carbon/user)
 	if(SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
@@ -72,12 +77,6 @@
 /obj/item/dualsaber/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
-
-/obj/item/dualsaber/update_icon_state()
-	if(SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
-		icon_state = "dualsaber[saber_color][SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)]"
-	else
-		icon_state = "dualsaber0"
 
 /obj/item/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
@@ -186,6 +185,7 @@
 			hacked = TRUE
 			to_chat(user, "<span class='warning'>2XRNBW_ENGAGE</span>")
 			saber_color = "rainbow"
+			add_twohanded_comp()
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")

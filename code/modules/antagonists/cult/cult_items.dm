@@ -630,15 +630,13 @@
 /obj/item/cult_spear/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 90)
-	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24)
+	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24, \
+					iconstate_wielded="bloodspear1", iconstate_unwielded="bloodspear0")
 
 /obj/item/cult_spear/Destroy()
 	if(spear_act)
 		qdel(spear_act)
 	..()
-
-/obj/item/cult_spear/update_icon_state()
-	icon_state = "bloodspear[SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)]"
 
 /obj/item/cult_spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/turf/T = get_turf(hit_atom)

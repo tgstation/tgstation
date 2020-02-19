@@ -312,10 +312,10 @@
 	set_icon_off_cooldown()
 
 /obj/item/shockpaddles/proc/set_icon_on_cooldown()
-	AddComponent(/datum/component/two_handed, iconstate_wielded="[base_icon_state]0_cooldown", iconstate_unwielded="[base_icon_state]1_cooldown")
+	AddComponent(/datum/component/two_handed, iconstate_wielded="[base_icon_state]1_cooldown", iconstate_unwielded="[base_icon_state]0_cooldown")
 
 /obj/item/shockpaddles/proc/set_icon_off_cooldown()
-	AddComponent(/datum/component/two_handed, iconstate_wielded="[base_icon_state]0", iconstate_unwielded="[base_icon_state]1")
+	AddComponent(/datum/component/two_handed, iconstate_wielded="[base_icon_state]1", iconstate_unwielded="[base_icon_state]0")
 
 /obj/item/shockpaddles/Destroy()
 	defib = null

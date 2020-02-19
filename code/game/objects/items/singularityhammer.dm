@@ -22,7 +22,8 @@
 
 /obj/item/singularityhammer/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=20)
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=20, \
+					iconstate_wielded="mjollnir1", iconstate_unwielded="mjollnir0")
 
 /obj/item/singularityhammer/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -31,9 +32,6 @@
 /obj/item/singularityhammer/process()
 	if(charged < 5)
 		charged++
-
-/obj/item/singularityhammer/update_icon_state()  //Currently only here to fuck with the on-mob icons.
-	icon_state = "mjollnir[SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)]"
 
 /obj/item/singularityhammer/proc/vortex(turf/pull, mob/wielder)
 	for(var/atom/X in orange(5,pull))
@@ -85,7 +83,8 @@
 
 /obj/item/mjollnir/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=25)
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=25, \
+					iconstate_wielded="mjollnir1", iconstate_unwielded="mjollnir0")
 
 /obj/item/mjollnir/proc/shock(mob/living/target)
 	target.Stun(60)
@@ -109,6 +108,3 @@
 	. = ..()
 	if(isliving(hit_atom))
 		shock(hit_atom)
-
-/obj/item/mjollnir/update_icon_state()  //Currently only here to fuck with the on-mob icons.
-	icon_state = "mjollnir[SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)]"

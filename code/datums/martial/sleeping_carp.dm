@@ -175,7 +175,7 @@
 /obj/item/staff/bostaff/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=24, \
-					iconstate_wielded="bostaff0", iconstate_unwielded="bostaff1")
+					iconstate_wielded="bostaff1", iconstate_unwielded="bostaff0")
 
 /obj/item/staff/bostaff/attack(mob/target, mob/living/user)
 	add_fingerprint(user)
