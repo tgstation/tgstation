@@ -49,7 +49,7 @@
 		if(15)
 			new /obj/item/nullrod/armblade(src)
 		if(16)
-			new /obj/item/guardiancreator(src)
+			new /obj/item/guardiancreator/hive(src)
 		if(17)
 			if(prob(50))
 				new /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe(src)
@@ -429,7 +429,7 @@
 
 /obj/projectile/hook/on_hit(atom/target)
 	. = ..()
-	if(ismovableatom(target))
+	if(ismovable(target))
 		var/atom/movable/A = target
 		if(A.anchored)
 			return

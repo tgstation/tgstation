@@ -3139,7 +3139,7 @@
 /area/awaymission/academy/academyengine)
 "mn" = (
 /obj/structure/rack,
-/obj/item/gun/magic/wand,
+/obj/item/gun/magic/wand/nothing,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "mo" = (

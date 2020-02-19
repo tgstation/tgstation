@@ -3,7 +3,6 @@
 	icon = 'icons/mob/alienqueen.dmi'
 	status_flags = 0
 	ventcrawler = VENTCRAWLER_NONE //pull over that ass too fat
-	unique_name = 0
 	pixel_x = -16
 	bubble_icon = "alienroyal"
 	mob_size = MOB_SIZE_LARGE

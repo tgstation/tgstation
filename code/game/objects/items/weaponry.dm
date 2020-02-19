@@ -196,7 +196,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			"<span class='userdanger'>YOU FEEL THE POWER OF VALHALLA FLOWING THROUGH YOU! <i>THERE CAN BE ONLY ONE!!!</i></span>")
 			user.update_icons()
 			new_name = "GORE-DRENCHED CLAYMORE OF [pick("THE WHIMSICAL SLAUGHTER", "A THOUSAND SLAUGHTERED CATTLE", "GLORY AND VALHALLA", "ANNIHILATION", "OBLITERATION")]"
-			icon_state = "claymore_valhalla"
+			icon_state = "claymore_gold"
 			item_state = "cultblade"
 			remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 
@@ -475,7 +475,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/statuebust/Initialize()
 	. = ..()
 	AddComponent(/datum/component/art, impressiveness)
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 1000), 0)
+	addtimer(CALLBACK(src, /datum.proc/_AddComponent, list(/datum/component/beauty, 1000)), 0)
 
 /obj/item/statuebust/hippocratic
 	name = "hippocrates bust"
@@ -519,7 +519,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/board_item_type = /obj/vehicle/ridden/scooter/skateboard
 
 /obj/item/melee/skateboard/attack_self(mob/user)
-	new board_item_type(get_turf(user))
+	var/obj/vehicle/ridden/scooter/skateboard/S = new board_item_type(get_turf(user))//this probably has fucky interactions with telekinesis but for the record it wasnt my fault
+	S.buckle_mob(user)
 	qdel(src)
 
 /obj/item/melee/skateboard/pro
@@ -632,7 +633,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	strong_against = typecacheof(list(
 					/mob/living/simple_animal/hostile/poison/bees/,
 					/mob/living/simple_animal/butterfly,
-					/mob/living/simple_animal/cockroach,
+					/mob/living/simple_animal/hostile/cockroach,
 					/obj/item/queen_bee
 	))
 
