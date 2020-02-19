@@ -462,3 +462,12 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 
 /obj/item/stack/sheet/mineral/coal/ten
 	amount = 10
+
+/obj/item/stack/sheet/mineral/dwarven
+	name = "dwarven alloy"
+	icon_state = "sheet-mythril"
+	item_state = "sheet-dwarven"
+	singular_name = "dwarven alloy sheet"
+	novariants = TRUE
+	custom_materials = list(/datum/material/dwarven=MINERAL_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/sheet/mineral/dwarven
