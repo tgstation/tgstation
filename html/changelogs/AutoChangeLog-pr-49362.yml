@@ -1,0 +1,7 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - bugfix: "space suit turns off properly when there is no cell inserted"
+  - bugfix: "space ninja can now turn on the heater in the suit"
+  - bugfix: "space ninja can recharge properly"
+  - bugfix: "space suit now uses the cell as intended"
