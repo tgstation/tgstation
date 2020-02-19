@@ -5,7 +5,6 @@
 	desc = "Yell at coderbrush."
 	icon = null
 	icon_state = ""
-	item_flags = DROPDEL
 	var/mob/living/held_mob
 	var/can_head = TRUE
 	var/destroying = FALSE
@@ -44,6 +43,11 @@
 
 /obj/item/clothing/head/mob_holder/proc/update_visuals(mob/living/L)
 	appearance = L.appearance
+
+/obj/item/clothing/head/mob_holder/dropped()//if this shit is called outside of when an item is moved from your hand please tell me before its too late
+	..()
+	if(held_mob && !isliving(loc))
+		release()
 
 /obj/item/clothing/head/mob_holder/proc/release(del_on_release = TRUE)
 	if(!held_mob)
