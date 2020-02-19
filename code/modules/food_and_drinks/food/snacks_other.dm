@@ -422,8 +422,11 @@
 
 /obj/item/reagent_containers/food/snacks/chewable
 	slot_flags = ITEM_SLOT_MASK
+	///How long it lasts before being deleted
 	var/succ_dur = 180
+	///The delay between each time it will handle reagents
 	var/succ_int = 100
+	///Stores the time set for the next handle_reagents
 	var/next_succ = 0
 
 	//makes snacks actually wearable as masks and still edible the old fashioned way.
