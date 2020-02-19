@@ -41,6 +41,15 @@
 	var/state = weHit(hit)
 	if(state != HAT)
 		shed(state)
+
+/obj/item/clothing/head/headcrab
+	name = "Headcrab"
+	desc = "WIP, god is in pain"
+	icon_state = "headcrab"
+	item_state = "headcrab"
+	clothing_flags = SNUG_FIT
+	flags_inv = HIDEEARS|HIDEHAIR
+
 #undef HAT
 #undef LIVE
 #undef NOTLIVE

@@ -21,10 +21,8 @@
 	ventcrawler = VENTCRAWLER_ALWAYS
 	ranged = TRUE
 	ranged_message = "Leaps"
+	projectiletype = /obj/projectile/crab
 	var/datum/mind/origin
-
-/mob/living/simple_animal/hostile/headcrustation/Initialize()
-	. = ..()
 
 /mob/living/simple_animal/hostile/headcrustation/Shoot(atom/targeted_atom)
 	. = ..()
