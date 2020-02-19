@@ -301,7 +301,8 @@
 
 /obj/item/stack/medical/aloe
 	name = "aloe cream"
-	desc = "An healing paste you can apply on wounds."
+	desc = "A healing paste you can apply on wounds."
+
 	icon_state = "aloe_paste"
 	self_delay = 20
 	other_delay = 10
