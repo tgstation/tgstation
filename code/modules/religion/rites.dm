@@ -4,13 +4,10 @@
 	var/ritual_length = (10 SECONDS) //total length it'll take
 	var/list/ritual_invocations //strings that are by default said evenly throughout the rite
 	var/favor_cost = 0
-	var/datum/religion_sect/owned_sect
 
 ///Called to perform the invocation of the rite, with args being the performer and the altar where it's being performed. Maybe you want it to check for something else?
 /datum/religion_rites/proc/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(AOG && istype(AOG, /obj/structure/altar_of_gods))
-		owned_sect = AOG.sect_to_altar
-	if(owned_sect?.favor < favor_cost)
+	if(GLOB.sect?.favor < favor_cost)
 		to_chat(user, "<span class='warning'>This rite requires more favor!</span>")
 		return FALSE
 	to_chat(user, "<span class='notice'>You begin to perform the rite of [name]...</span>")
@@ -27,8 +24,7 @@
 
 ///Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
 /datum/religion_rites/proc/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(owned_sect)
-		owned_sect.on_riteuse(user,AOG)
+	GLOB.sect.on_riteuse(user,AOG)
 	return TRUE
 
 
@@ -47,13 +43,13 @@
 /datum/religion_rites/synthconversion/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!AOG?.buckled_mobs?.len)
 		return FALSE
-	var/mob/living/carbon/human/vict_i_mean_willing_participant
+	var/mob/living/carbon/human/human2borg
 	for(var/i in AOG.buckled_mobs)
 		if(istype(i,/mob/living/carbon/human))
-			vict_i_mean_willing_participant = i
+			human2borg = i
 			break
-	if(!vict_i_mean_willing_participant)
+	if(!human2borg)
 		return FALSE
-	vict_i_mean_willing_participant.set_species(/datum/species/android)
-	vict_i_mean_willing_participant.visible_message("<span class='notice'>[vict_i_mean_willing_participant] has been converted by the rite of [name]!</span>")
+	human2borg.set_species(/datum/species/android)
+	human2borg.visible_message("<span class='notice'>[human2borg] has been converted by the rite of [name]!</span>")
 	return TRUE

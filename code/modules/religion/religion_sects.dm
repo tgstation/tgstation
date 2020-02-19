@@ -139,17 +139,19 @@
 	return TRUE
 
 /datum/religion_sect/technophile/can_sacrifice(obj/item/I, mob/living/L)
-	if(istype(I,/obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/the_cell = I
-		if(the_cell.charge <= 3000)
-			to_chat("<span class='notice'>[GLOB.deity] does not accept pity amounts of power.</span>")
-			return FALSE
-		return TRUE
+	if(!..())
+		return FALSE
+	var/obj/item/stock_parts/cell/the_cell = I
+	if(the_cell.charge <= 3000)
+		to_chat("<span class='notice'>[GLOB.deity] does not accept pity amounts of power.</span>")
+		return FALSE
+	return TRUE
 
 
 /datum/religion_sect/technophile/on_sacrifice(obj/item/I, mob/living/L)
-	if(istype(I,/obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/the_cell = I
-		adjust_favor(round(the_cell.charge/3000), L)
-		to_chat(L, "<span class='notice'>You offer [the_cell]'s power to [GLOB.deity], pleasing them.</span>")
-		qdel(I)
+	if(!is_type_in_typecachetype(I, desired_items_typecache))
+		return
+	var/obj/item/stock_parts/cell/the_cell = I
+	adjust_favor(round(the_cell.charge/3000), L)
+	to_chat(L, "<span class='notice'>You offer [the_cell]'s power to [GLOB.deity], pleasing them.</span>")
+	qdel(I)

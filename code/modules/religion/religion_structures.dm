@@ -55,13 +55,11 @@
 		var/selection2type = sect_to_altar.rites_list[rite_select]
 		performing_rite = new selection2type(src, src)
 		if(!performing_rite.perform_rite(user, src))
-			qdel(performing_rite)
-			performing_rite = null
+			QDEL_NULL(performing_rite)
 		else
 			performing_rite.invoke_effect(user, src)
 			sect_to_altar.adjust_favor(performing_rite.favor_cost*-1)
-			qdel(performing_rite)
-			performing_rite = null
+			QDEL_NULL(performing_rite)
 		return
 
 	if(user.mind.holy_role != HOLY_ROLE_HIGHPRIEST)
