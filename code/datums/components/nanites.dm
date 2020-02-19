@@ -101,11 +101,11 @@
 	host_mob = null
 	return ..()
 
-/datum/component/nanites/InheritComponent(datum/component/nanites/new_nanites, i_am_original, list/arguments)
+/datum/component/nanites/InheritComponent(datum/component/nanites/new_nanites, i_am_original, amount, cloud)
 	if(new_nanites)
 		adjust_nanites(null, new_nanites.nanite_volume)
 	else
-		adjust_nanites(null, arguments[1]) //just add to the nanite volume
+		adjust_nanites(null, amount) //just add to the nanite volume
 
 /datum/component/nanites/process()
 	if(!IS_IN_STASIS(host_mob))

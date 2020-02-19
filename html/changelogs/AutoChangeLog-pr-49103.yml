@@ -1,6 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - balance: "Removes the stun from Krav Maga and makes it a high duration knockdown with stamina damage (20-30), respecting chest armor for the damage."
-  - rscadd: "Disarm intent is now a nonlethal jab that does (5-10) stamina damage. If used on people who are prone, it does (10-15) stamina damage. It also has a chance to completely disarm someone based on the amount of stamina damage they have."
-  - balance: "Krav Maga harm stomps/punches now respect armor and have a variance of (5-10) for punches and (5-10+5) for stomps."
