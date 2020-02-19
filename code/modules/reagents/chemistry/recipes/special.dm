@@ -24,7 +24,6 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 #define RNGCHEM_OUTPUT "output"
 
 /datum/chemical_reaction/randomized
-	name = "semi randomized reaction"
 
 	var/persistent = FALSE
 	var/persistence_period = 7 //Will reset every x days
@@ -147,8 +146,6 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 	return TRUE
 
 /datum/chemical_reaction/randomized/secret_sauce
-	name = "secret sauce creation"
-	id = "secretsauce"
 	persistent = TRUE
 	persistence_period = 7 //Reset every week
 	randomize_container = TRUE
