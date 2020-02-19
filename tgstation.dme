@@ -699,6 +699,7 @@
 #include "code\game\machinery\gulag_teleporter.dm"
 #include "code\game\machinery\harvester.dm"
 #include "code\game\machinery\hologram.dm"
+#include "code\game\machinery\hypnochair.dm"
 #include "code\game\machinery\igniter.dm"
 #include "code\game\machinery\iv_drip.dm"
 #include "code\game\machinery\launch_pad.dm"
