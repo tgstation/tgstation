@@ -45,9 +45,11 @@
 			to_chat(user, "<span class='warning'>You brace [src]... One day you'll be skilled enough to unlock its true potential, but not today...</span>")
 	else
 		braced = FALSE
+		braced_exp = 0
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 		to_chat(user, "<span class='notice'>You loosen your grip on [src].</span>")
 
+///Mopping while moving. Checks requirements, sets the target and fires the clean proc
 /obj/item/mop/proc/moving_clean(mob/user)
 	if(user.m_intent == MOVE_INTENT_WALK || braced_exp >= braced_skillreq_run)
 		var/atom/target = user.loc
