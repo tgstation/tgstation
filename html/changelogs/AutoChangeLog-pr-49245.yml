@@ -1,0 +1,6 @@
+author: "itseasytosee"
+delete-after: True
+changes: 
+  - rscadd: "Having a holster now allows you to flip a gun on your fingers. Use in hand. If you want to eject your bullets repeat"
+  - rscadd: "The syndicate chameleon holster. Costs 1 tc and can be made to look like any belt. Stores all your fun shooty sticks"
+  - rscadd: "Operative holster, a free alternative to tactical webbing for storing two guns in a belt slot instead of alot of small items."
