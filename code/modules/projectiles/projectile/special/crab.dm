@@ -32,7 +32,7 @@
 	return NOTLIVE
 
 /obj/projectile/crab/proc/shed(kill)
-	/var/mob/living/simple_animal/hostile/headcrustation/creb = new()
+	var/mob/living/simple_animal/hostile/headcrustation/creb = new()
 	if(kill)
 		creb.death(FALSE)
 
