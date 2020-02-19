@@ -94,6 +94,7 @@
 		overlay.appearance_flags = RESET_COLOR
 		add_overlay(overlay)
 
+/// Proc that does something when you attack with the item
 /obj/item/dwarven/rune_stone/proc/apply(atom/target, mob/user)
 
 	return
@@ -201,8 +202,22 @@
 	qdel(src)
 	. = ..()
 
+/obj/item/dwarven/upgrade_kit
+	name = "dwarven modification kit"
+	desc = "Dwarven instructions on how to modify a weapon."
+	icon_state = "structure_print"
+	w_class = WEIGHT_CLASS_SMALL
+	var/used = TRUE
 
-
+/obj/item/dwarven/upgrade_kit/attackby(obj/item/I, mob/living/user, params)
+	if(I.GetComponent(/datum/component/quality) != null)
+		return
+	if(istype(user,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		I.add_creator(H)
+		new /obj/effect/decal/cleanable/ash(get_turf(user))
+	qdel(src)
+	. = ..()
 
 
 
