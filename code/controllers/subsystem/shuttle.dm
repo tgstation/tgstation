@@ -235,7 +235,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/area/A = get_area(user)
 
 	log_shuttle("[key_name(user)] has called the emergency shuttle.")
-	deadchat_broadcast(" has called the shuttle at <span class='name'>[A.name]</span>.", "<span class='name'>[user.real_name]</span>", user)
+	deadchat_broadcast(" has called the shuttle at <span class='name'>[A.name]</span>.", "<span class='name'>[user.real_name]</span>", user, message_type=DEADCHAT_ANNOUNCEMENT)
 	if(call_reason)
 		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_shuttle("Shuttle call reason: [call_reason]")
@@ -273,7 +273,7 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.cancel(get_area(user))
 		log_shuttle("[key_name(user)] has recalled the shuttle.")
 		message_admins("[ADMIN_LOOKUPFLW(user)] has recalled the shuttle.")
-		deadchat_broadcast(" has recalled the shuttle from <span class='name'>[get_area_name(user, TRUE)]</span>.", "<span class='name'>[user.real_name]</span>", user)
+		deadchat_broadcast(" has recalled the shuttle from <span class='name'>[get_area_name(user, TRUE)]</span>.", "<span class='name'>[user.real_name]</span>", user, message_type=DEADCHAT_ANNOUNCEMENT)
 		return 1
 
 /datum/controller/subsystem/shuttle/proc/canRecall()

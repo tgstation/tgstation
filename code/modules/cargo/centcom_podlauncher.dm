@@ -476,7 +476,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			else
 				return //if target is null and we don't have a specific target, cancel
 			if (effectAnnounce)
-				deadchat_broadcast("A special package is being launched at the station!", turf_target = target)
+				deadchat_broadcast("A special package is being launched at the station!", turf_target = target, message_type=DEADCHAT_ANNOUNCEMENT)
 			var/list/bouttaDie = list()
 			for (var/mob/living/M in target)
 				bouttaDie.Add(M)
