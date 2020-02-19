@@ -243,7 +243,7 @@
 
 /obj/item/stack/medical/mesh/update_icon_state()
 	if(!is_open)
-		icon_state = "regenerative_mesh_closed"
+		icon_state = "regen_mesh_closed"
 	else
 		return ..()
 
