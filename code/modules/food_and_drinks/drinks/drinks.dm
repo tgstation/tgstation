@@ -15,10 +15,6 @@
 	resistance_flags = NONE
 	var/isGlass = TRUE //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 
-/obj/item/reagent_containers/food/drinks/on_reagent_change(changetype)
-	. = ..()
-	gulp_size = max(round(reagents.total_volume / 5), 5)
-
 /obj/item/reagent_containers/food/drinks/attack(mob/living/M, mob/user, def_zone)
 
 	if(!reagents || !reagents.total_volume)
@@ -284,6 +280,7 @@
 	if(cap_on)
 		spillable = FALSE
 		add_overlay(cap_overlay, TRUE)
+		update_icon()
 
 /obj/item/reagent_containers/food/drinks/waterbottle/examine(mob/user)
 	. = ..()
@@ -328,11 +325,19 @@
 		return FALSE
 	. = ..()
 
-/obj/item/reagent_containers/food/drinks/waterbottle/attack(mob/M, mob/user, obj/target)
-	if(cap_on && reagents.total_volume && istype(M))
-		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
+/obj/item/reagent_containers/food/drinks/waterbottle/attack(mob/target, mob/user, def_zone)
+	if(!target)
 		return
-	. = ..()
+
+	if(user.a_intent != INTENT_HARM)
+		if(cap_on && reagents.total_volume && istype(target))
+			to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
+			return
+
+		return ..()
+
+	if(!cap_on)
+		SplashReagents(target)
 
 /obj/item/reagent_containers/food/drinks/waterbottle/afterattack(obj/target, mob/user, proximity)
 	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && user.a_intent == INTENT_HARM)))
@@ -658,7 +663,7 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/sol_dry
 	name = "Sol Dry"
 	desc = "Maybe this will help your tummy feel better. Maybe not."
-	icon_state = "ginger_ale"
+	icon_state = "sol_dry"
 	list_reagents = list(/datum/reagent/consumable/sol_dry = 30)
 	foodtype = SUGAR
 

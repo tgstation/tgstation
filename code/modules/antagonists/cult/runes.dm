@@ -256,6 +256,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 		H.uncuff()
 		H.stuttering = 0
 		H.cultslurring = 0
+		if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+			H.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
 	return 1
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
@@ -520,7 +522,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	icon_state = "1"
 	color = RUNE_COLOR_MEDIUMRED
 	var/static/sacrifices_used = -SOULS_TO_REVIVE // Cultists get one "free" revive
-	
+
 /obj/effect/rune/raise_dead/examine(mob/user)
 	. = ..()
 	if(iscultist(user) || user.stat == DEAD)

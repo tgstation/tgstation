@@ -1,4 +1,0 @@
-author: "Cloneby"
-delete-after: True
-changes: 
-  - balance: "Strange Reagent now requires a set amount to revive dependent on patient wellbeing and requires an excess to heal blood and organs. Does more damage on life. Basically loses one-click wonder status UNLESS you give a considerable amount and deal with the consequences."

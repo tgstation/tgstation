@@ -31,12 +31,11 @@
 		var/datum/chemical_reaction/D = new path()
 		var/list/reaction_ids = list()
 
-		if(!D.id)
+		if(!D.required_reagents || !D.required_reagents.len) //Skip impossible reactions
 			continue
 
-		if(D.required_reagents && D.required_reagents.len)
-			for(var/reaction in D.required_reagents)
-				reaction_ids += reaction
+		for(var/reaction in D.required_reagents)
+			reaction_ids += reaction
 
 		// Create filters based on each reagent id in the required reagents list
 		for(var/id in reaction_ids)
