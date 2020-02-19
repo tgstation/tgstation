@@ -170,7 +170,9 @@
 		/datum/material/adamantine,
 		/datum/material/mythril,
 		/datum/material/wood,
+		/datum/material/dwarven,
 		)
+	var/obj/item/loaded_item
 
 /obj/structure/destructible/dwarven/workshop/Initialize()
 	. = ..()
@@ -222,10 +224,12 @@
 			handle_create_blueprints(user)
 		if(2)
 			handle_create_pickaxe(user)
+		if(0)
+			handle_upgrades(user)
 		//if(3) //upgrades this will require dwarven metal datum
 		//	handle_create_pickaxe(user)
 	return
-
+///Handles the choosing and creation of dwarven blueprints
 /obj/structure/destructible/dwarven/workshop/proc/handle_create_blueprints(mob/user)
 	var/obj/structure/destructible/dwarven/wanted_structure
 	var/choice
@@ -235,9 +239,9 @@
 			wanted_structure = /obj/structure/destructible/dwarven/lava_forge
 		if("Workbench")
 			wanted_structure = /obj/structure/destructible/dwarven/workshop
-		if("Dwarven Anvil")
-			wanted_structure = /obj/structure/destructible/dwarven/workshop //todo
-		if("Dwarven Gringer")
+		if("Dwarven press")
+			wanted_structure = /obj/structure/destructible/dwarven/mythril_press //todo
+		if("Dwarven anvil")
 			wanted_structure = /obj/structure/destructible/dwarven/workshop // todo
 
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
@@ -249,6 +253,7 @@
 	new /obj/item/dwarven/blueprint(drop_location(),wanted_structure)
 	user?.mind.adjust_experience(/datum/skill/operating, 4)
 
+///Handles the choosing and creation of pickaxes
 /obj/structure/destructible/dwarven/workshop/proc/handle_create_pickaxe(mob/user)
 	var/obj/item/pickaxe/wanted_pickaxe
 	var/choice
@@ -268,6 +273,16 @@
 			return
 	materials.use_materials(initial(wanted_pickaxe.custom_materials))
 	new wanted_pickaxe(drop_location())
+	user?.mind.adjust_experience(/datum/skill/operating, 2)
+
+///Handles the choosing and creation of upgrade kits
+/obj/structure/destructible/dwarven/workshop/proc/handle_upgrades(mob/user)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+
+	if(!materials.has_enough_of_material(10000,/datum/material/dwarven))
+		return
+	materials.use_materials(list(/datum/material/dwarven = 10000))
+	new /obj/item/dwarven/upgrade_kit(drop_location())
 	user?.mind.adjust_experience(/datum/skill/operating, 2)
 
 

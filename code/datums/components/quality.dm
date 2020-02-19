@@ -6,10 +6,13 @@
 #define FINE_QUALITY 1.1
 #define SUPERIOR_QUALITY 1.2
 #define EXCEPTIONAL_QUALITY 1.3
-#define MASTERFUL_QUALITY 1.5
-#define ARTIFACT_QUALITY 1.75 // big upgrade coz it is so rare
+#define MASTERFUL_QUALITY 1.4
+#define ARTIFACT_QUALITY 1.4
 
-datum/component/quality
+
+
+///This Componenet handles adding quality to items
+/datum/component/quality
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
 	var/list/quality_levels = list(UNUSABLE_QUALITY,SHODDY_QUALITY,POOR_QUALITY,NORMAL_QUALITY,GOOD_QUALITY,FINE_QUALITY,SUPERIOR_QUALITY,EXCEPTIONAL_QUALITY,MASTERFUL_QUALITY,ARTIFACT_QUALITY )
@@ -20,27 +23,26 @@ datum/component/quality
 
 	var/mob/living/carbon/human/creator
 	var/datum/mind/creator_mind
-	var/skill_level
 
-	var/list/quality_list = list(0,1,1,2,2,3)
-
-/datum/component/quality/Initialize(mob/living/carbon/human/_creator,datum/skill/_skill,modifier)
+///_Creator - mob that is the owner of the item, _skill - skill that the quality should be based off of, modifier- flat bonus towards quality.
+/datum/component/quality/Initialize(mob/living/carbon/human/_creator,datum/skill/_skill)
 	if(!isitem(parent) || !_creator)
 		return COMPONENT_INCOMPATIBLE
 	creator = _creator
-	skill_level =  creator?.mind.get_skill_level(_skill)
+	var/list/quality_bracket = creator.mind.get_skill_modifier(_skill, SKILL_QUALITY_MODIFIER)
 	creator_mind =  creator?.mind
 	parent_item = parent
 	old_name = parent_item.name
-	generate_quality(skill_level,modifier)
+	generate_quality(quality_bracket)
 	apply_quality()
 
-
-/datum/component/quality/proc/generate_quality(skill_level,modifier = 0 )
-	quality_level = clamp(pick(quality_list) + skill_level + modifier,0,9)
+///Generates quality based off of skill level of the given skill
+/datum/component/quality/proc/generate_quality(quality_bracket)
+	quality_level = quality_levels[pickweight(quality_bracket)]
 	message_admins(quality_level)
 	return quality_level
 
+///Applies quality to the item
 /datum/component/quality/proc/apply_quality()
 	var/quality = quality_levels[quality_level+1] //lists start with 1
 	parent_item.force *= quality
