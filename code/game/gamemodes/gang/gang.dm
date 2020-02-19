@@ -64,7 +64,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			break
 		var/datum/mind/gangbanger = antag_pick(antag_candidates)
 		gangbangers += gangbanger
-		gangbangers.restricted_roles = restricted_jobs
+		gangbanger.restricted_roles = restricted_jobs
 		log_game("[key_name(gangbanger)] has been selected as a starting gangster!")
 		antag_candidates.Remove(gangbanger)
 	if(antag_candidates.len)
