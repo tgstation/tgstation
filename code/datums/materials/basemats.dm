@@ -247,3 +247,15 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	. = ..()
 	if(istype(source, /obj/item))
 		qdel(source.GetComponent(/datum/component/fantasy))
+
+/datum/material/dwarven
+	name = "dwarven alloy"
+	id = "dwarven"
+	desc = "Millenia ago cities of stone and metal were built with this"
+	color = "f4f0c3"
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	sheet_type = /obj/item/stack/sheet/mineral/dwarven
+	value_per_unit = 0.1
+	strength_modifier = 1.2
+	armor_modifiers = list("melee" = 1.5, "bullet" = 1, "laser" = 1, "energy" = 1.1, "bomb" = 1.75, "bio" = 1, "rad" = 1, "fire" = 1.5, "acid" = 1)
+	beauty_modifier = 0.2
