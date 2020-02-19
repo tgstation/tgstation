@@ -314,7 +314,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/jailbreak/find_target_by_role(role, role_type=FALSE,invert=FALSE)
 	if(!invert)
 		target_role_type = role_type
-	..()
+	return ..()
 
 /datum/objective/jailbreak/check_completion()
 	return completed || (considered_escaped(target))
@@ -337,7 +337,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/detain/find_target_by_role(role, role_type=FALSE,invert=FALSE)
 	if(!invert)
 		target_role_type = role_type
-	..()
+	return ..()
 
 /datum/objective/detain/check_completion()
 	return completed || (!considered_escaped(target) && (considered_alive(target) && target.current.onCentCom()))
