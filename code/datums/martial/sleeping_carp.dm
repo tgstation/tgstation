@@ -43,11 +43,30 @@
 	return
 
 /datum/martial_art/the_sleeping_carp/proc/launchKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	
+	A.do_attack_animation(D, ATTACK_EFFECT_KICK)
+	D.visible_message("<span class='warning'>[A] kicks [D] square in the chest, sending them flying!</span>", \
+					"<span class='userdanger'>You are kicked square in the chest by [A], sending you flying!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
+	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
+	var/atom/throw_target = get_edge_target_turf(D, A.dir)
+	D.throw_at(throw_target, rand(5,6), 7, user)
+	D.apply_damage(25, A.dna.species.attack_type)
+	log_combat(A, D, "launch kicked (Sleeping Carp)")
 	return
 
 /datum/martial_art/the_sleeping_carp/proc/dropKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
-
+	A.do_attack_animation(D, ATTACK_EFFECT_KICK)
+	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
+	if((D.mobility_flags & MOBILITY_STAND))
+		D.apply_damage(20, A.dna.species.attack_type)
+		D.Knockdown(60)
+		D.visible_message("<span class='warning'>[A] kicks [D] in the head, sending them face first into the floor!</span>", \
+					"<span class='userdanger'>You are kicked in the head by [A], sending you crashing to the floor!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
+	if(!(D.mobility_flags & MOBILITY_STAND))
+		D.apply_damage(20, A.dna.species.attack_type)
+		D.adjustStaminaLoss(40)
+		D.drop_all_held_items()
+		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \
+					"<span class='userdanger'>You are kicked in the head by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 	return
 
 /datum/martial_art/the_sleeping_carp/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -132,7 +151,7 @@
 	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>")
 
 	to_chat(usr, "<span class='notice'>Gnashing Teeth</span>: Harm Harm. Gathering moment of punches means that every second punch deals additional damage, with a chance of even more damage.")
-	to_chat(usr, "<span class='notice'>Crashing Wave Kick</span>: Harm Disarm. Launch people brutally across rooms and away from you. On opponents on the floor, this deals additional stamina damage.")
+	to_chat(usr, "<span class='notice'>Crashing Wave Kick</span>: Harm Disarm. Launch people brutally across rooms, and away from you.")
 	to_chat(usr, "<span class='notice'>Keelhaul</span>: Harm Grab. With a powerful kick, send opponents face first into the floor, knocking them down and disarming them of weapons. On opponents on the floor, this deals considerable stamina damage and disarms.")
 	to_chat(usr, "<span class='notice'>Slipstream</span>: Move more quickly into combat, gaining additional movement speed. This is obvious to anyone who can see you, however.")
 	to_chat(usr, "<span class='notice'>Roused Anger</span>: While on low health, you unleash your latent inner strength to continue fighting beyond the limitations of your failing body, removing damage slowdown and becoming more resistant to disabling effects while close to death.")
