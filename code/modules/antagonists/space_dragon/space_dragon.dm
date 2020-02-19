@@ -26,7 +26,7 @@
 
 /datum/objective/summon_carp
 	var/datum/antagonist/space_dragon/dragon
-	explanation_text = "Summon and protect the rift to flood the station with carp."
+	explanation_text = "Summon and protect the rifts to flood the station with carp."
 
 /datum/antagonist/space_dragon/roundend_report()
 	var/list/parts = list()
