@@ -22,7 +22,8 @@
 		/area/engine,
 		/area/solar,
 		/area/holodeck,
-		/area/shuttle)
+		/area/shuttle,
+		/area/maintenance)
 		)
 
 		//Subtypes from the above that actually should explode.
