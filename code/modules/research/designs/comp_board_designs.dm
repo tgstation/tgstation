@@ -303,7 +303,7 @@
 	build_path = /obj/item/circuitboard/computer/nanite_cloud_controller
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-	
+
 /datum/design/board/advanced_camera
 	name = "Computer Design (Advanced Camera Console)"
 	desc = "Allows for the construction of circuit boards used to build advanced camera consoles."
@@ -311,3 +311,11 @@
 	build_path = /obj/item/circuitboard/computer/advanced_camera
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/board/advanced_camera
+	name = "Computer Design (Advanced Camera Console)"
+	desc = "Allows for the construction of circuit boards used to build advanced camera consoles."
+	id = "advanced_camera"
+	build_path = /obj/item/circuitboard/computer/advanced_camera
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
