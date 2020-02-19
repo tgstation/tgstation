@@ -2,8 +2,8 @@
 	name = "Spawn Space Dragon"
 	typepath = /datum/round_event/ghost_role/space_dragon
 	max_occurrences = 1
-	weight = 8
-	earliest_start = 70 MINUTES
+	weight = 10
+	earliest_start = 35 MINUTES
 	min_players = 20
 
 /datum/round_event/ghost_role/space_dragon
@@ -41,4 +41,3 @@
 	log_game("[key_name(S)] was spawned as a Space Dragon by an event.")
 	spawned_mobs += S
 	return SUCCESSFUL_SPAWN
-
