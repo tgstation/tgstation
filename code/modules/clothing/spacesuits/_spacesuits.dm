@@ -92,7 +92,7 @@
 
 		if(thermal_on && cell.charge >= THERMAL_REGULATOR_COST)
 			user.adjust_bodytemperature((temperature_setting - user.bodytemperature), use_steps=TRUE, capped=FALSE)
-			cell.charge -= THERMAL_REGULATOR_COST
+			cell.use(THERMAL_REGULATOR_COST)
 
 // Clean up the cell on destroy
 /obj/item/clothing/suit/space/Destroy()
