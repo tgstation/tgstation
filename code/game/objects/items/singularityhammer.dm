@@ -1,4 +1,4 @@
-/obj/item/twohanded/singularityhammer
+/obj/item/singularityhammer
 	name = "singularity hammer"
 	desc = "The pinnacle of close combat technology, the hammer harnesses the power of a miniaturized singularity to deal crushing blows."
 	icon_state = "mjollnir0"
@@ -16,24 +16,26 @@
 	force_string = "LORD SINGULOTH HIMSELF"
 	var/charged = 5
 
-/obj/item/twohanded/singularityhammer/Initialize()
+/obj/item/singularityhammer/Initialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=20)
 	START_PROCESSING(SSobj, src)
 
-/obj/item/twohanded/singularityhammer/Destroy()
-	STOP_PROCESSING(SSobj, src)
+/obj/item/singularityhammer/ComponentInitialize()
 	. = ..()
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=20)
 
-/obj/item/twohanded/singularityhammer/process()
+/obj/item/singularityhammer/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/singularityhammer/process()
 	if(charged < 5)
 		charged++
-	return
 
-/obj/item/twohanded/singularityhammer/update_icon_state()  //Currently only here to fuck with the on-mob icons.
+/obj/item/singularityhammer/update_icon_state()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "mjollnir[SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)]"
 
-/obj/item/twohanded/singularityhammer/proc/vortex(turf/pull, mob/wielder)
+/obj/item/singularityhammer/proc/vortex(turf/pull, mob/wielder)
 	for(var/atom/X in orange(5,pull))
 		if(ismovable(X))
 			var/atom/movable/A = X
@@ -53,9 +55,8 @@
 				step_towards(H,pull)
 				step_towards(H,pull)
 				step_towards(H,pull)
-	return
 
-/obj/item/twohanded/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
+/obj/item/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
@@ -69,7 +70,7 @@
 			var/turf/target = get_turf(A)
 			vortex(target,user)
 
-/obj/item/twohanded/mjollnir
+/obj/item/mjollnir
 	name = "Mjolnir"
 	desc = "A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy."
 	icon_state = "mjollnir0"
@@ -82,11 +83,11 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
 
-/obj/item/twohanded/mjollnir/Initialize()
+/obj/item/mjollnir/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=25)
 
-/obj/item/twohanded/mjollnir/proc/shock(mob/living/target)
+/obj/item/mjollnir/proc/shock(mob/living/target)
 	target.Stun(60)
 	var/datum/effect_system/lightning_spread/s = new /datum/effect_system/lightning_spread
 	s.set_up(5, 1, target.loc)
@@ -98,16 +99,16 @@
 	target.throw_at(throw_target, 200, 4)
 	return
 
-/obj/item/twohanded/mjollnir/attack(mob/living/M, mob/user)
+/obj/item/mjollnir/attack(mob/living/M, mob/user)
 	..()
 	if(SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
 		playsound(src.loc, "sparks", 50, TRUE)
 		shock(M)
 
-/obj/item/twohanded/mjollnir/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/mjollnir/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(isliving(hit_atom))
 		shock(hit_atom)
 
-/obj/item/twohanded/mjollnir/update_icon_state()  //Currently only here to fuck with the on-mob icons.
+/obj/item/mjollnir/update_icon_state()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "mjollnir[SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)]"

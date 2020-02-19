@@ -1018,8 +1018,8 @@
 		return
 
 	if(!operating)
-		if(istype(I, /obj/item/twohanded/fireaxe)) //being fireaxe'd
-			var/obj/item/twohanded/fireaxe/axe = I
+		if(istype(I, /obj/item/fireaxe)) //being fireaxe'd
+			var/obj/item/fireaxe/axe = I
 			if(!SEND_SIGNAL(axe, COMSIG_IS_TWOHANDED_WIELDED))
 				to_chat(user, "<span class='warning'>You need to be wielding \the [axe] to do that!</span>")
 				return

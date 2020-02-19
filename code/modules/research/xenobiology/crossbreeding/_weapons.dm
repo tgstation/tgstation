@@ -65,7 +65,7 @@ Slimecrossing Weapons
 	attack_verb = list("bashed","pounded","slammed")
 	item_flags = SLOWS_WHILE_IN_HAND
 
-/obj/item/shield/adamantineshield/Initialize()
+/obj/item/shield/adamantineshield/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_wielded=15)
 

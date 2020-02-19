@@ -132,7 +132,7 @@
 
 	INVOKE_ASYNC(src, .proc/blood_delusion, victim)
 
-	var/obj/item/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
+	var/obj/item/chainsaw/doomslayer/chainsaw = new(victim.loc)
 	victim.log_message("entered a blood frenzy", LOG_ATTACK)
 
 	ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)

@@ -103,7 +103,7 @@
 		to_chat(user, "<span class='notice'>You grab [parent] with both hands.</span>")
 
 	// Play sound if one is set
-	if (wieldsound)
+	if(wieldsound)
 		playsound(parent_item.loc, wieldsound, 50, TRUE)
 
 	// Let's reserve the other hand

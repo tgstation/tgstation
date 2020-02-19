@@ -1044,7 +1044,7 @@
 	id = "plastic_trees"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic = 8000)
-	build_path = /obj/item/twohanded/required/kirbyplants/fullysynthetic
+	build_path = /obj/item/kirbyplants/fullysynthetic
 	category = list("initial", "Misc")
 
 /datum/design/beads

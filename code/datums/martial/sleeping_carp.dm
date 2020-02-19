@@ -172,7 +172,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	block_chance = 50
 
-/obj/item/staff/bostaff/Initialize()
+/obj/item/staff/bostaff/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=24)
 
