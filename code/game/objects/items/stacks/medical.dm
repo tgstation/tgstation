@@ -286,7 +286,8 @@
 
 /obj/item/stack/medical/mesh/advanced
 	name = "advanced regenerative mesh"
-	desc = "An advanced mesh made with aloe extracts and sterilizing chemicals, used to threat burns."
+	desc = "An advanced mesh made with aloe extracts and sterilizing chemicals, used to treat burns."
+
 	gender = PLURAL
 	singular_name = "advanced regenerative mesh"
 	icon_state = "aloe_mesh"
