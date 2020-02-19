@@ -9,7 +9,7 @@
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 	var/obj/item/storage/bag/trash/mybag
 	var/obj/item/mop/mymop
-	var/obj/item/twohanded/broom/mybroom
+	var/obj/item/twohanded/pushbroom/mybroom
 	var/obj/item/reagent_containers/spray/cleaner/myspray
 	var/obj/item/lightreplacer/myreplacer
 	var/signs = 0
@@ -51,9 +51,9 @@
 			m.janicart_insert(user, src)
 		else
 			to_chat(user, fail_msg)
-	else if(istype(I, /obj/item/twohanded/broom))
+	else if(istype(I, /obj/item/twohanded/pushbroom))
 		if(!mybroom)
-			var/obj/item/twohanded/broom/b=I
+			var/obj/item/twohanded/pushbroom/b=I
 			b.janicart_insert(user,src)
 		else
 			to_chat(user, fail_msg)
