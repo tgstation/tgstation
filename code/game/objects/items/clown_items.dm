@@ -81,7 +81,7 @@
 	uses = 301
 
 /obj/item/soap/omega/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is using [src] to clean themselves from the timeline! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] is using [src] to scrub themselves from the timeline! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	new /obj/structure/chrono_field(user.loc, user)
 	return MANUAL_SUICIDE
 
