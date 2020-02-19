@@ -7,7 +7,7 @@
 
 ///Called to perform the invocation of the rite, with args being the performer and the altar where it's being performed. Maybe you want it to check for something else?
 /datum/religion_rites/proc/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(GLOB.sect?.favor < favor_cost)
+	if(GLOB.religious_sect?.favor < favor_cost)
 		to_chat(user, "<span class='warning'>This rite requires more favor!</span>")
 		return FALSE
 	to_chat(user, "<span class='notice'>You begin to perform the rite of [name]...</span>")
@@ -24,7 +24,7 @@
 
 ///Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
 /datum/religion_rites/proc/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	GLOB.sect.on_riteuse(user,AOG)
+	GLOB.religious_sect.on_riteuse(user,AOG)
 	return TRUE
 
 
