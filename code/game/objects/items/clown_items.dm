@@ -80,6 +80,11 @@
 	cleanspeed = 3 //Only the truest of mind soul and body get one of these
 	uses = 301
 
+/obj/item/soap/omega/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is using [src] to scrub themselves from the timeline! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	new /obj/structure/chrono_field(user.loc, user)
+	return MANUAL_SUICIDE
+
 /obj/item/paper/fluff/stations/soap
 	name = "ancient janitorial poem"
 	desc = "An old paper that has passed many hands."
