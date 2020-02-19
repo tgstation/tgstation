@@ -20,6 +20,8 @@
 	var/insertable = TRUE
 	///If the mop is braced to use special moves
 	var/braced = FALSE
+	///Cleaning experience of the user, used when bracing
+	var/braced_exp = 0
 	///Skill requirement for mopping while walking
 	var/braced_skillreq_walk = SKILL_LEVEL_JOURNEYMAN
 	///Skill requirement for mopping while running
@@ -30,23 +32,24 @@
 	create_reagents(mopcap)
 
 /obj/item/mop/attack_self(mob/user)
-	if(user.mind.get_skill_level(/datum/skill/cleaning) >= braced_skillreq_walk)
-		if (!braced)
+	if (!braced)
+		braced_exp = user.mind.get_skill_level(/datum/skill/cleaning)
+		if(braced_exp >= braced_skillreq_walk)
 			braced = TRUE
 			RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/moving_clean)
-			if(user.mind.get_skill_level(/datum/skill/cleaning) >= braced_skillreq_run)
+			if(braced_exp >= braced_skillreq_run)
 				to_chat(user, "<span class='notice'>You masterfully brace [src]! You are one with the mop, and can clean floors while running at full speed!</span>")
 			else
 				to_chat(user, "<span class='notice'>You skillfully brace [src]! You'll be able to clean floors while walking.</span>")
 		else
-			braced = FALSE
-			UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-			to_chat(user, "<span class='notice'>You loosen your grip on [src].</span>")
+			to_chat(user, "<span class='warning'>You brace [src]... One day you'll be skilled enough to unlock its true potential, but not today...</span>")
 	else
-		to_chat(user, "<span class='warning'>You brace [src]... One day you'll be skilled enough to unlock its true potential, but not today...</span>")
+		braced = FALSE
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+		to_chat(user, "<span class='notice'>You loosen your grip on [src].</span>")
 
 /obj/item/mop/proc/moving_clean(mob/user)
-	if(user.m_intent == MOVE_INTENT_WALK || user.mind.get_skill_level(/datum/skill/cleaning) >= braced_skillreq_run)
+	if(user.m_intent == MOVE_INTENT_WALK || braced_exp >= braced_skillreq_run)
 		var/atom/target = user.loc
 		if(isturf(target))
 			clean(target, user)
@@ -55,6 +58,7 @@
 	. = ..()
 	if (braced)
 		braced = FALSE
+		braced_exp = 0
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 		to_chat(user, "<span class='notice'>You loosen your grip on [src].</span>")
 
