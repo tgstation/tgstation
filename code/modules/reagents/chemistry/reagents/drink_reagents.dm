@@ -903,7 +903,7 @@
 /datum/reagent/consumable/aloejuice
 	name = "Aloe Juice"
 	color = "#A3C48B"
-	description = "An healthy and refreshing juice."
+	description = "A healthy and refreshing juice."
 	taste_description = "vegetable"
 	glass_icon_state = "glass_yellow"
 	glass_name = "glass of aloe juice"
