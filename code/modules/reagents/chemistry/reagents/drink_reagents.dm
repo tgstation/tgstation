@@ -907,7 +907,7 @@
 	taste_description = "vegetable"
 	glass_icon_state = "glass_yellow"
 	glass_name = "glass of aloe juice"
-	glass_desc = "An healthy and refreshing juice."
+	glass_desc = "A healthy and refreshing juice."
 
 /datum/reagent/consumable/aloejuice/on_mob_life(mob/living/M)
 	if(M.getToxLoss() && prob(30))
