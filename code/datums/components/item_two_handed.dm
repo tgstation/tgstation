@@ -23,25 +23,27 @@
  * * force_unwielded (optional) The force setting when the item is unwielded
  */
 /datum/component/two_handed/Initialize(require_twohands=FALSE, wieldsound=FALSE, unwieldsound=FALSE, force_wielded=0, force_unwielded=0)
+	if(!isitem(parent))
+		return COMPONENT_INCOMPATIBLE
+
 	src.require_twohands = require_twohands
 	src.wieldsound = wieldsound
 	src.unwieldsound = unwieldsound
 	src.force_wielded = force_wielded
 	src.force_unwielded = force_unwielded
 
-	if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
-		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
-		RegisterSignal(parent, COMSIG_IS_TWOHANDED, .proc/on_check)
-		RegisterSignal(parent, COMSIG_IS_TWOHANDED_WIELDED, .proc/is_wielded)
-		RegisterSignal(parent, COMSIG_IS_TWOHANDED_REQUIRED, .proc/is_required)
-		RegisterSignal(parent, COMSIG_TRY_TWOHANDED_WIELD, .proc/try_wield)
-		RegisterSignal(parent, COMSIG_TRY_TWOHANDED_UNWIELD, .proc/try_unwield)
-		RegisterSignal(parent, COMSIG_TWOHANDED_GET_FORCEWIELDED, .proc/get_force_wielded)
-		RegisterSignal(parent, COMSIG_TWOHANDED_SET_FORCEWIELDED, .proc/set_force_wielded)
-		RegisterSignal(parent, COMSIG_TWOHANDED_GET_FORCEUNWIELD, .proc/get_force_unwielded)
-		RegisterSignal(parent, COMSIG_TWOHANDED_SET_FORCEUNWIELD, .proc/set_force_unwielded)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
+	RegisterSignal(parent, COMSIG_IS_TWOHANDED, .proc/on_check)
+	RegisterSignal(parent, COMSIG_IS_TWOHANDED_WIELDED, .proc/is_wielded)
+	RegisterSignal(parent, COMSIG_IS_TWOHANDED_REQUIRED, .proc/is_required)
+	RegisterSignal(parent, COMSIG_TRY_TWOHANDED_WIELD, .proc/try_wield)
+	RegisterSignal(parent, COMSIG_TRY_TWOHANDED_UNWIELD, .proc/try_unwield)
+	RegisterSignal(parent, COMSIG_TWOHANDED_GET_FORCEWIELDED, .proc/get_force_wielded)
+	RegisterSignal(parent, COMSIG_TWOHANDED_SET_FORCEWIELDED, .proc/set_force_wielded)
+	RegisterSignal(parent, COMSIG_TWOHANDED_GET_FORCEUNWIELD, .proc/get_force_unwielded)
+	RegisterSignal(parent, COMSIG_TWOHANDED_SET_FORCEUNWIELD, .proc/set_force_unwielded)
 
 /// Triggered on equip of the item containing the component
 /datum/component/two_handed/proc/on_equip(datum/source, mob/user, slot)
@@ -91,7 +93,7 @@
 
 	var/obj/item/parent_item = parent
 	wielded = TRUE
-	SEND_SIGNAL(src, COMSIG_TWOHANDED_WIELD, user)
+	SEND_SIGNAL(parent, COMSIG_TWOHANDED_WIELD, user)
 	if(force_wielded)
 		parent_item.force = force_wielded
 	parent_item.name = "[parent_item.name] (Wielded)"
@@ -126,7 +128,7 @@
 
 	var/obj/item/parent_item = parent
 	wielded = FALSE
-	SEND_SIGNAL(src, COMSIG_TWOHANDED_UNWIELD, user)
+	SEND_SIGNAL(parent, COMSIG_TWOHANDED_UNWIELD, user)
 	if(!force_unwielded)
 		parent_item.force = force_unwielded
 
