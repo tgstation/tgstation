@@ -18,18 +18,23 @@
 	var/mopspeed = 15
 	force_string = "robust... against germs"
 	var/insertable = TRUE
+	///If the mop is braced to use special moves
 	var/braced = FALSE
+	///Skill requirement for mopping while walking
+	var/braced_skillreq_walk = SKILL_LEVEL_JOURNEYMAN
+	///Skill requirement for mopping while running
+	var/braced_skillreq_run = SKILL_LEVEL_MASTER
 
 /obj/item/mop/Initialize()
 	. = ..()
 	create_reagents(mopcap)
 
 /obj/item/mop/attack_self(mob/user)
-	if(user.mind.get_skill_level(/datum/skill/cleaning) >= SKILL_LEVEL_JOURNEYMAN)
+	if(user.mind.get_skill_level(/datum/skill/cleaning) >= braced_skillreq_walk)
 		if (!braced)
 			braced = TRUE
 			RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/moving_clean)
-			if(user.mind.get_skill_level(/datum/skill/cleaning) >= SKILL_EXP_MASTER)
+			if(user.mind.get_skill_level(/datum/skill/cleaning) >= braced_skillreq_run)
 				to_chat(user, "<span class='notice'>You masterfully brace [src]! You are one with the mop, and can clean floors while running at full speed!</span>")
 			else
 				to_chat(user, "<span class='notice'>You skillfully brace [src]! You'll be able to clean floors while walking.</span>")
@@ -41,16 +46,17 @@
 		to_chat(user, "<span class='warning'>You brace [src]... One day you'll be skilled enough to unlock its true potential, but not today...</span>")
 
 /obj/item/mop/proc/moving_clean(mob/user)
-	if(user.m_intent == MOVE_INTENT_WALK || user.mind.get_skill_level(/datum/skill/cleaning) >= SKILL_EXP_MASTER)
-		var/turf/target
-		target = user.loc
-		clean(target, user)
+	if(user.m_intent == MOVE_INTENT_WALK || user.mind.get_skill_level(/datum/skill/cleaning) >= braced_skillreq_run)
+		var/atom/target = user.loc
+		if(isturf(target))
+			clean(target, user)
 
 /obj/item/mop/dropped(mob/user)
 	. = ..()
 	if (braced)
 		braced = FALSE
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+		to_chat(user, "<span class='notice'>You loosen your grip on [src].</span>")
 
 /obj/item/mop/proc/clean(turf/A, mob/living/cleaner)
 	if(reagents.has_reagent(/datum/reagent/water, 1) || reagents.has_reagent(/datum/reagent/water/holywater, 1) || reagents.has_reagent(/datum/reagent/consumable/ethanol/vodka, 1) || reagents.has_reagent(/datum/reagent/space_cleaner, 1))
@@ -107,8 +113,11 @@
 /obj/item/mop/cyborg
 	insertable = FALSE
 
+/obj/item/mop/cyborg/attack_self(mob/user)
+	return
+
 /obj/item/mop/advanced
-	desc = "The most advanced tool in a custodian's arsenal, complete with a condenser for self-wetting! Just think of all the viscera you will clean up with this!"
+	desc = "The most advanced tool in a custodian's arsenal, complete with a condenser for self-wetting! Just think of all the viscera you will clean up with this! Alt-click to toggle the condenser."
 	name = "advanced mop"
 	mopcap = 10
 	icon_state = "advmop"
@@ -152,3 +161,6 @@
 
 /obj/item/mop/advanced/cyborg
 	insertable = FALSE
+
+/obj/item/mop/advanced/cyborg/attack_self(mob/user)
+	return
