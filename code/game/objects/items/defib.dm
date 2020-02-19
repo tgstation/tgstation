@@ -234,6 +234,7 @@
 			visible_message("<span class='notice'>[src] beeps: Charge depleted.</span>")
 			playsound(src, 'sound/machines/defib_failed.ogg', 50, FALSE)
 	paddles.cooldown = FALSE
+	paddles.set_icon_off_cooldown()
 	paddles.update_icon()
 	update_power()
 
@@ -308,7 +309,13 @@
 /obj/item/shockpaddles/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	AddComponent(/datum/component/two_handed)
+	set_icon_off_cooldown()
+
+/obj/item/shockpaddles/proc/set_icon_on_cooldown()
+	AddComponent(/datum/component/two_handed, iconstate_wielded="[base_icon_state]0_cooldown", iconstate_unwielded="[base_icon_state]1_cooldown")
+
+/obj/item/shockpaddles/proc/set_icon_off_cooldown()
+	AddComponent(/datum/component/two_handed, iconstate_wielded="[base_icon_state]0", iconstate_unwielded="[base_icon_state]1")
 
 /obj/item/shockpaddles/Destroy()
 	defib = null
@@ -345,12 +352,14 @@
 	if(req_defib || !time)
 		return
 	cooldown = TRUE
+	set_icon_on_cooldown()
 	update_icon()
 	sleep(time)
 	var/turf/T = get_turf(src)
 	T.audible_message("<span class='notice'>[src] beeps: Unit is recharged.</span>")
 	playsound(src, 'sound/machines/defib_ready.ogg', 50, FALSE)
 	cooldown = FALSE
+	set_icon_off_cooldown()
 	update_icon()
 
 /obj/item/shockpaddles/Initialize()
@@ -363,12 +372,6 @@
 	defib = loc
 	busy = FALSE
 	update_icon()
-
-/obj/item/shockpaddles/update_icon_state()
-	icon_state = "[base_icon_state][SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)]"
-	item_state = icon_state
-	if(cooldown)
-		icon_state = "[base_icon_state][SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)]_cooldown"
 
 /obj/item/shockpaddles/suicide_act(mob/user)
 	user.visible_message("<span class='danger'>[user] is putting the live paddles on [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -470,6 +473,7 @@
 	if(req_defib)
 		defib.deductcharge(revivecost)
 		cooldown = TRUE
+		set_icon_on_cooldown()
 	busy = FALSE
 	update_icon()
 	if(req_defib)
@@ -523,6 +527,7 @@
 			if(req_defib)
 				defib.deductcharge(revivecost)
 				cooldown = TRUE
+				set_icon_on_cooldown()
 			busy = FALSE
 			update_icon()
 			if(!req_defib)
@@ -607,6 +612,7 @@
 				if(req_defib)
 					defib.deductcharge(revivecost)
 					cooldown = 1
+					set_icon_on_cooldown()
 				update_icon()
 				if(req_defib)
 					defib.cooldowncheck(user)

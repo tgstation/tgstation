@@ -5,12 +5,16 @@
  *
  */
 /datum/component/two_handed
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS // Only one of the component can exist on an item
+
 	var/wielded = FALSE 			/// Are we holding the two handed item properly
 	var/force_wielded = 0	 		/// The force of the item when weilded
 	var/force_unwielded = 0		 	/// The force of the item when unweilded
 	var/wieldsound = FALSE 			/// Play sound when wielded
 	var/unwieldsound = FALSE 		/// Play sound when unwielded
 	var/require_twohands = FALSE	/// Does it have to be held in both hands
+	var/iconstate_wielded = FALSE	/// The items icon when wielded
+	var/iconstate_unwielded = FALSE	/// The items icon when unwielded
 
 /**
  * Two Handed component
@@ -22,7 +26,8 @@
  * * force_wielded (optional) The force setting when the item is wielded
  * * force_unwielded (optional) The force setting when the item is unwielded
  */
-/datum/component/two_handed/Initialize(require_twohands=FALSE, wieldsound=FALSE, unwieldsound=FALSE, force_wielded=0, force_unwielded=0)
+/datum/component/two_handed/Initialize(require_twohands=FALSE, wieldsound=FALSE, unwieldsound=FALSE, force_wielded=0, force_unwielded=0, \
+										iconstate_wielded=FALSE, iconstate_unwielded=FALSE)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -31,10 +36,38 @@
 	src.unwieldsound = unwieldsound
 	src.force_wielded = force_wielded
 	src.force_unwielded = force_unwielded
+	src.iconstate_wielded = iconstate_wielded
+	src.iconstate_unwielded = iconstate_unwielded
 
+// Inherit the new values passed to the component
+/datum/component/two_handed/InheritComponent(datum/component/two_handed/new_comp, original, require_twohands=FALSE, \
+												wieldsound=FALSE, unwieldsound=FALSE, force_wielded=0, force_unwielded=0, \
+												iconstate_wielded=FALSE, iconstate_unwielded=FALSE)
+	if(!original)
+		return
+	if(new_comp)
+		src.require_twohands = new_comp.require_twohands
+		src.wieldsound = new_comp.wieldsound
+		src.unwieldsound = new_comp.unwieldsound
+		src.force_wielded = new_comp.force_wielded
+		src.force_unwielded = new_comp.force_unwielded
+		src.iconstate_wielded = new_comp.iconstate_wielded
+		src.iconstate_unwielded = new_comp.iconstate_unwielded
+	else
+		src.require_twohands = require_twohands
+		src.wieldsound = wieldsound
+		src.unwieldsound = unwieldsound
+		src.force_wielded = force_wielded
+		src.force_unwielded = force_unwielded
+		src.iconstate_wielded = iconstate_wielded
+		src.iconstate_unwielded = iconstate_unwielded
+
+// register signals withthe parent item
+/datum/component/two_handed/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, .proc/on_update_icon)
 	RegisterSignal(parent, COMSIG_IS_TWOHANDED, .proc/on_check)
 	RegisterSignal(parent, COMSIG_IS_TWOHANDED_WIELDED, .proc/is_wielded)
 	RegisterSignal(parent, COMSIG_IS_TWOHANDED_REQUIRED, .proc/is_required)
@@ -44,6 +77,22 @@
 	RegisterSignal(parent, COMSIG_TWOHANDED_SET_FORCEWIELDED, .proc/set_force_wielded)
 	RegisterSignal(parent, COMSIG_TWOHANDED_GET_FORCEUNWIELD, .proc/get_force_unwielded)
 	RegisterSignal(parent, COMSIG_TWOHANDED_SET_FORCEUNWIELD, .proc/set_force_unwielded)
+
+// Remove all siginals registered to the parent item
+/datum/component/two_handed/UnregisterFromParent()
+	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED,
+								COMSIG_ITEM_DROPPED,
+								COMSIG_ITEM_ATTACK_SELF,
+								COMSIG_ATOM_UPDATE_ICON,
+								COMSIG_IS_TWOHANDED,
+								COMSIG_IS_TWOHANDED_WIELDED,
+								COMSIG_IS_TWOHANDED_REQUIRED,
+								COMSIG_TRY_TWOHANDED_WIELD,
+								COMSIG_TRY_TWOHANDED_UNWIELD,
+								COMSIG_TWOHANDED_GET_FORCEWIELDED,
+								COMSIG_TWOHANDED_SET_FORCEWIELDED,
+								COMSIG_TWOHANDED_GET_FORCEUNWIELD,
+								COMSIG_TWOHANDED_SET_FORCEUNWIELD))
 
 /// Triggered on equip of the item containing the component
 /datum/component/two_handed/proc/on_equip(datum/source, mob/user, slot)
@@ -162,6 +211,20 @@
 	var/obj/item/offhand/offhand_item = user.get_inactive_held_item()
 	if(offhand_item && istype(offhand_item))
 		offhand_item.unwield()
+
+/**
+ * on_update_icon triggers on call to update parent items icon
+ *
+ * returns 0 or 1 Based on wielded state
+ */
+/datum/component/two_handed/proc/on_update_icon(datum/source)
+	var/obj/item/parent_item = parent
+	if(!parent)
+		return
+	if(wielded && iconstate_wielded)
+		parent_item.icon_state = iconstate_wielded
+	else if(!wielded && iconstate_unwielded)
+		parent_item.icon_state = iconstate_unwielded
 
 /**
  * is_wielded gets the current wield status of the component

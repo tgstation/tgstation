@@ -15,10 +15,8 @@
 
 /obj/item/broom/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12)
-
-/obj/item/broom/update_icon_state()
-	icon_state = "broom[SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)]"
+	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, \
+					iconstate_wielded="broom0", iconstate_unwielded="broom1")
 
 /obj/item/broom/equipped(mob/user)
 	. = ..()
