@@ -1,5 +1,6 @@
 GLOBAL_LIST_INIT(basic_engiborg_manipulator_allowed, typecacheof(list(
 				/obj/item/wallframe,
+				/obj/item/tank,
 				/obj/item/electronics)))
 
 
@@ -16,11 +17,12 @@ GLOBAL_LIST_INIT(basic_engiborg_manipulator_allowed, typecacheof(list(
 
 	C.upgraded = TRUE
 	C.name = "advanced component manipulation apparatus"
-	C.desc = "A special apparatus for carrying and manipulating engineering components like electronics and wall mounted frames. This has been upgraded to also manipulate circuitboards, stock parts, gas tanks and vendor refills. Alt-Z or right-click to drop the stored object."
+	C.desc = "A special apparatus for carrying and manipulating engineering components like electronics and wall mounted frames. This has been upgraded to also manipulate circuitboards, assemblies, stock parts, gas tanks and vendor refills. Alt-Z or right-click to drop the stored object."
 	C.storable = list(/obj/item/wallframe,
 					/obj/item/electronics,
 					/obj/item/circuitboard,
 					/obj/item/stock_parts,
+					/obj/item/assembly,
 					/obj/item/tank,
 					/obj/item/vending_refill)
 
@@ -33,6 +35,7 @@ GLOBAL_LIST_INIT(basic_engiborg_manipulator_allowed, typecacheof(list(
 		C.name = initial(C.name)
 		C.desc = initial(C.desc)
 		C.storable = list(/obj/item/wallframe,
+					/obj/item/tank,
 					/obj/item/electronics)
 		var/obj/item/stored_item = C.stored
 		if(is_type_in_typecache(stored_item, GLOB.basic_engiborg_manipulator_allowed)) //Drop stuff we can no longer hold.
