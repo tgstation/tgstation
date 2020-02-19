@@ -154,26 +154,27 @@
 	icon_state = "workshop"
 	var/state = 0
 	custom_materials = list(/datum/material/wood = 20000)
+	var/static/list/allowed_types = list(
+		/datum/material/iron,
+		/datum/material/glass,
+		/datum/material/gold,
+		/datum/material/silver,
+		/datum/material/diamond,
+		/datum/material/uranium,
+		/datum/material/plasma,
+		/datum/material/bluespace,
+		/datum/material/bananium,
+		/datum/material/titanium,
+		/datum/material/runite,
+		/datum/material/plastic,
+		/datum/material/adamantine,
+		/datum/material/mythril,
+		/datum/material/wood,
+		)
 
 /obj/structure/destructible/dwarven/workshop/Initialize()
 	. = ..()
-	AddComponent(/datum/component/material_container,
-	list(/datum/material/iron,
-	/datum/material/glass,
-	/datum/material/gold,
-	/datum/material/silver,
-	/datum/material/diamond,
-	/datum/material/uranium,
-	/datum/material/plasma,
-	/datum/material/bluespace,
-	/datum/material/bananium,
-	/datum/material/titanium,
-	/datum/material/runite,
-	/datum/material/plastic,
-	/datum/material/adamantine,
-	/datum/material/mythril,
-	/datum/material/wood
-	), 20000, TRUE, /obj/item/stack, null, null)
+	AddComponent(/datum/component/material_container,allowed_types, 20000, TRUE, /obj/item/stack, null, null)
 
 /obj/structure/destructible/dwarven/workshop/examine(mob/user)
 	. = ..()
