@@ -916,7 +916,7 @@
 	if(i > 0)
 		if (target_bin)
 			target_bin.update_icon()
-			to_chat(user, "<span class='notice'>You sweep the pile of garbage into the [target_bin].</span>")
+			to_chat(user, "<span class='notice'>You sweep the pile of garbage into [target_bin].</span>")
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
 
 /obj/item/twohanded/pushbroom/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J) //bless you whoever fixes this copypasta
