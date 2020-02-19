@@ -1,6 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - rscadd: "You can now choose your name and color as a holoparasite/guardian/holocarp!"
-  - rscadd: "Miner holoparasites are now hivelords!"
-  - bugfix: "fixes lings being able to get mechanical holoparasites"

@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Forced a basic keybind reset for everyone to fix some inconsistencies from various savefiles, as well as making the hotkey/classic toggle in game options work. Your emote keybinds should be untouched."
