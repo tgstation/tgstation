@@ -132,8 +132,8 @@
 	var/datum/component/storage/active_storage
 	/// Active hud
 	var/datum/hud/hud_used = null
-	/// I have no idea tbh
-	var/research_scanner = FALSE
+	/// Whether or not you have activated science goggles. lmao old code. dont mind if i hook into this.
+	var/research_scanner = 0
 
 	/// Is the mob throw intent on
 	var/in_throw_mode = 0
