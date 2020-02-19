@@ -1,4 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - bugfix: "Fixed an edge case where the mining vendor wouldn't vend your gamer gear."

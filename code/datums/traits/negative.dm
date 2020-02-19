@@ -133,6 +133,8 @@
 				heirloom_type = /obj/item/reagent_containers/food/drinks/bottle/whiskey
 			if("Lawyer")
 				heirloom_type = pick(/obj/item/gavelhammer, /obj/item/book/manual/wiki/security_space_law)
+			if("Prisoner")
+				heirloom_type = /obj/item/pen/blue
 			//RnD
 			if("Research Director")
 				heirloom_type = /obj/item/toy/plush/slimeplushie
@@ -200,12 +202,6 @@
 	else
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
-
-/datum/quirk/family_heirloom/clone_data()
-	return heirloom
-
-/datum/quirk/family_heirloom/on_clone(data)
-	heirloom = data
 
 /datum/quirk/frail
 	name = "Frail"
@@ -501,7 +497,7 @@
 	if(world.time > next_process)
 		next_process = world.time + process_interval
 		if(!H.reagents.addiction_list.Find(reagent_instance))
-			if(!reagent_instance)
+			if(QDELETED(reagent_instance))
 				reagent_instance = new reagent_type()
 			else
 				reagent_instance.addiction_stage = 0

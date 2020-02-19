@@ -196,6 +196,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("dog bed", /obj/structure/bed/dogbed, 10, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("dresser", /obj/structure/dresser, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("picture frame", /obj/item/wallframe/picture, 1, time = 10),\
+	new/datum/stack_recipe("painting frame", /obj/item/wallframe/painting, 1, time = 10),\
 	new/datum/stack_recipe("display case chassis", /obj/structure/displaycase_chassis, 5, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("wooden buckler", /obj/item/shield/riot/buckler, 20, time = 40), \
 	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 50),\
@@ -225,11 +226,13 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	icon_state = "sheet-wood"
 	item_state = "sheet-wood"
 	icon = 'icons/obj/stack_objects.dmi'
+	custom_materials = list(/datum/material/wood=MINERAL_MATERIAL_AMOUNT)
 	sheettype = "wood"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/wood
 	novariants = TRUE
+	material_type = /datum/material/wood
 	grind_results = list(/datum/reagent/cellulose = 20) //no lignocellulose or lignin reagents yet,
 
 /obj/item/stack/sheet/mineral/wood/get_main_recipes()
@@ -295,6 +298,10 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	new/datum/stack_recipe("white beanie", /obj/item/clothing/head/beanie, 2), \
 	null, \
 	new/datum/stack_recipe("blindfold", /obj/item/clothing/glasses/blindfold, 2), \
+	null, \
+	new/datum/stack_recipe("19x19 canvas", /obj/item/canvas/nineteenXnineteen, 3), \
+	new/datum/stack_recipe("23x19 canvas", /obj/item/canvas/twentythreeXnineteen, 4), \
+	new/datum/stack_recipe("23x23 canvas", /obj/item/canvas/twentythreeXtwentythree, 5), \
 	))
 
 /obj/item/stack/sheet/cloth

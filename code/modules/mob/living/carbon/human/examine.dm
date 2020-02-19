@@ -108,18 +108,25 @@
 		if(100 to 200)
 			. += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>"
 
-	var/appears_dead = 0
+	var/appears_dead = FALSE
+	var/just_sleeping = FALSE
+
 	if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
-		appears_dead = 1
-		if(suiciding)
-			. += "<span class='warning'>[t_He] appear[p_s()] to have committed suicide... there is no hope of recovery.</span>"
-		if(hellbound)
-			. += "<span class='warning'>[t_His] soul seems to have been ripped out of [t_his] body. Revival is impossible.</span>"
-		. += ""
-		if(getorgan(/obj/item/organ/brain) && !key && !get_ghost(FALSE, TRUE))
-			. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...</span>"
-		else
-			. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life...</span>"
+		appears_dead = TRUE
+
+		if(isliving(user) && HAS_TRAIT(user, TRAIT_NAIVE))
+			just_sleeping = TRUE
+
+		if(!just_sleeping)
+			if(suiciding)
+				. += "<span class='warning'>[t_He] appear[p_s()] to have committed suicide... there is no hope of recovery.</span>"
+			if(hellbound)
+				. += "<span class='warning'>[t_His] soul seems to have been ripped out of [t_his] body. Revival is impossible.</span>"
+			. += ""
+			if(getorgan(/obj/item/organ/brain) && !key && !get_ghost(FALSE, TRUE))
+				. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...</span>"
+			else
+				. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life...</span>"
 
 	if(get_bodypart(BODY_ZONE_HEAD) && !getorgan(/obj/item/organ/brain))
 		. += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>"
@@ -239,6 +246,9 @@
 			if(stun_absorption[i]["end_time"] > world.time && stun_absorption[i]["examine_message"])
 				msg += "[t_He] [t_is][stun_absorption[i]["examine_message"]]\n"
 
+	if(just_sleeping)
+		msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
+
 	if(!appears_dead)
 		if(drunkenness && !skipface) //Drunkenness
 			switch(drunkenness)
@@ -309,10 +319,10 @@
 			var/cyberimp_detect
 			for(var/obj/item/organ/cyberimp/CI in internal_organs)
 				if(CI.status == ORGAN_ROBOTIC && !CI.syndicate_implant)
-					cyberimp_detect += "[name] is modified with a [CI.name]."
+					cyberimp_detect += "[!cyberimp_detect ? "[CI.get_examine_string(user)]" : ", [CI.get_examine_string(user)]"]"
 			if(cyberimp_detect)
-				. += "Detected cybernetic modifications:"
-				. += cyberimp_detect
+				. += "<span class='notice ml-1'>Detected cybernetic modifications:</span>"
+				. += "<span class='notice ml-2'>[cyberimp_detect]</span>"
 			if(R)
 				var/health_r = R.fields["p_stat"]
 				. += "<a href='?src=[REF(src)];hud=m;p_stat=1'>\[[health_r]\]</a>"
@@ -322,7 +332,8 @@
 			if(R)
 				. += "<a href='?src=[REF(src)];hud=m;evaluation=1'>\[Medical evaluation\]</a><br>"
 			if(traitstring)
-				. += "<span class='info'>Detected physiological traits:\n[traitstring]"
+				. += "<span class='notice ml-1'>Detected physiological traits:</span>"
+				. += "<span class='notice ml-2'>[traitstring]</span>"
 
 		if(HAS_TRAIT(user, TRAIT_SECURITY_HUD))
 			if(!user.stat && user != src)

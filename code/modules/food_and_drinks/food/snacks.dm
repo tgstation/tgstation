@@ -45,7 +45,6 @@ All foods are distributed among various categories. Use common sense.
 	var/eatverb
 	var/dried_type = null
 	var/dry = 0
-	var/dunkable = FALSE // for dunkable food, make true
 	var/dunk_amount = 10 // how much reagent is transferred per dunk
 	var/cooked_type = null  //for microwave cooking. path of the resulting item after microwaving
 	var/filling_color = "#FFFFFF" //color to use when added to custom food.
@@ -332,21 +331,6 @@ All foods are distributed among various categories. Use common sense.
 					M.emote("me", 1, "[sattisfaction_text]")
 				qdel(src)
 
-/obj/item/reagent_containers/food/snacks/afterattack(obj/item/reagent_containers/M, mob/user, proximity)
-	. = ..()
-	if(!dunkable || !proximity)
-		return
-	if(istype(M, /obj/item/reagent_containers/glass) || istype(M, /obj/item/reagent_containers/food/drinks))	//you can dunk dunkable snacks into beakers or drinks
-		if(!M.is_drainable())
-			to_chat(user, "<span class='warning'>[M] is unable to be dunked in!</span>")
-			return
-		if(M.reagents.trans_to(src, dunk_amount, transfered_by = user))	//if reagents were transfered, show the message
-			to_chat(user, "<span class='notice'>You dunk \the [src] into \the [M].</span>")
-			return
-		if(!M.reagents.total_volume)
-			to_chat(user, "<span class='warning'>[M] is empty!</span>")
-		else
-			to_chat(user, "<span class='warning'>[src] is full!</span>")
 
 // //////////////////////////////////////////////Store////////////////////////////////////////
 /// All the food items that can store an item inside itself, like bread or cake.

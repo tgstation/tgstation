@@ -1,0 +1,5 @@
+author: "Krysonism"
+delete-after: True
+changes: 
+  - rscadd: "4 new ice creams created using the crafting menu,"
+  - rscadd: "You can now make popsicle sticks by sticking logs in the processor."

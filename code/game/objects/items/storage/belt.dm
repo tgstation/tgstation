@@ -170,7 +170,9 @@
 		/obj/item/pinpointer/crew,
 		/obj/item/holosign_creator/medical,
 		/obj/item/construction/plumbing,
-		/obj/item/plunger
+		/obj/item/plunger,
+		/obj/item/reagent_containers/spray,
+		/obj/item/shears
 		))
 
 /obj/item/storage/belt/medical/paramedic/PopulateContents()
@@ -286,7 +288,8 @@
 		/obj/item/organ/regenerative_core,
 		/obj/item/wormhole_jaunter,
 		/obj/item/storage/bag/plants,
-		/obj/item/stack/marker_beacon
+		/obj/item/stack/marker_beacon,
+		/obj/item/key/lasso
 		))
 
 
