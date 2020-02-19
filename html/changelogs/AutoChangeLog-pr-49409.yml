@@ -1,0 +1,5 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - bugfix: "Stun batons now respect shields again (e.g. riot shields, the wizard's shielded hardsuit)"
+  - bugfix: "Stun baton attacks that should've been stopped by clumsiness no longer go through"
