@@ -16,6 +16,7 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Tesla, a shocking, lethal source of power.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Lightning modules active. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's a lightning carp! Everyone else goes zap zap.</span>"
+	hive_fluff_string = "<span class='holoparasite'>The mass seems to cause lots of thunder strikes around itself.</span>"
 	var/datum/beam/summonerchain
 	var/list/enemychains = list()
 	var/successfulshocks = 0
