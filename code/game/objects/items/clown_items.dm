@@ -83,7 +83,7 @@
 /obj/item/soap/omega/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is using [src] to clean themselves from the timeline! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	new /obj/structure/chrono_field(user.loc, user)
-	return
+	return MANUAL_SUICIDE
 
 /obj/item/paper/fluff/stations/soap
 	name = "ancient janitorial poem"
