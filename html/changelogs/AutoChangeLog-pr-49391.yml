@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - rscadd: "RCD can now deconstruct airlock assemblies and firelock frames"
