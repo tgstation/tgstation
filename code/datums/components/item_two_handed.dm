@@ -7,6 +7,7 @@
 /datum/component/two_handed
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS 		// Only one of the component can exist on an item
 	var/wielded = FALSE 							/// Are we holding the two handed item properly
+	var/force_multiplier = 0						/// The multiplier applied to force when wielded, does not work with force_wielded, and force_unwielded
 	var/force_wielded = 0	 						/// The force of the item when weilded
 	var/force_unwielded = 0		 					/// The force of the item when unweilded
 	var/wieldsound = FALSE 							/// Play sound when wielded
@@ -23,13 +24,14 @@
  * * require_twohands (optional) Does the item need both hands to be carried
  * * wieldsound (optional) The sound to play when wielded
  * * unwieldsound (optional) The sound to play when unwielded
- * * force_wielded (optional) The force setting when the item is wielded
- * * force_unwielded (optional) The force setting when the item is unwielded
+ * * force_multiplier (optional) The force multiplier when wielded, do not use with force_wielded, and force_unwielded
+ * * force_wielded (optional) The force setting when the item is wielded, do not use with force_multiplier
+ * * force_unwielded (optional) The force setting when the item is unwielded, do not use with force_multiplier
  * * icon_update_callback (optional) proc (wielded) Callback with wielded status
  * * on_wield_callback (optional) proc (user) Callback on wield of the item
  * * on_unwield_callback (optional) proc (user) Callback on unwield of the item
  */
-/datum/component/two_handed/Initialize(require_twohands=FALSE, wieldsound=FALSE, unwieldsound=FALSE, force_wielded=0, force_unwielded=0, \
+/datum/component/two_handed/Initialize(require_twohands=FALSE, wieldsound=FALSE, unwieldsound=FALSE, force_multiplier=0, force_wielded=0, force_unwielded=0, \
 										datum/callback/icon_update_callback=null, datum/callback/on_wield_callback=null, datum/callback/on_unwield_callback=null)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -37,6 +39,7 @@
 	src.require_twohands = require_twohands
 	src.wieldsound = wieldsound
 	src.unwieldsound = unwieldsound
+	src.force_multiplier = force_multiplier
 	src.force_wielded = force_wielded
 	src.force_unwielded = force_unwielded
 	src.icon_update_callback = icon_update_callback
@@ -53,6 +56,7 @@
 		src.require_twohands = new_comp.require_twohands
 		src.wieldsound = new_comp.wieldsound
 		src.unwieldsound = new_comp.unwieldsound
+		src.force_multiplier = new_comp.force_multiplier
 		src.force_wielded = new_comp.force_wielded
 		src.force_unwielded = new_comp.force_unwielded
 		src.icon_update_callback = new_comp.icon_update_callback
@@ -62,6 +66,7 @@
 		src.require_twohands = require_twohands
 		src.wieldsound = wieldsound
 		src.unwieldsound = unwieldsound
+		src.force_multiplier = force_multiplier
 		src.force_wielded = force_wielded
 		src.force_unwielded = force_unwielded
 		src.icon_update_callback = icon_update_callback
@@ -136,7 +141,9 @@
 	wielded = TRUE
 	if(on_wield_callback)
 		on_wield_callback.Invoke(user)
-	if(force_wielded)
+	if(force_multiplier)
+		parent_item.force *= force_multiplier
+	else if(force_wielded)
 		parent_item.force = force_wielded
 	parent_item.name = "[parent_item.name] (Wielded)"
 	parent_item.update_icon()
@@ -172,9 +179,12 @@
 	wielded = FALSE
 	if(on_unwield_callback)
 		on_unwield_callback.Invoke(user)
-	if(!force_unwielded)
+	if(force_multiplier)
+		parent_item.force /= force_multiplier
+	else if(force_unwielded)
 		parent_item.force = force_unwielded
 
+	// update the items name to remove the wielded status
 	var/sf = findtext(parent_item.name, " (Wielded)", -10) // 10 == length(" (Wielded)")
 	if(sf)
 		parent_item.name = copytext(parent_item.name, 1, sf)
