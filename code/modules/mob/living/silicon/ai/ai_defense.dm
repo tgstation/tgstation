@@ -1,6 +1,6 @@
 
 /mob/living/silicon/ai/attackby(obj/item/W, mob/user, params)
-if(istype(W, /obj/item/aiModule))
+	if(istype(W, /obj/item/aiModule))
 		var/obj/item/aiModule/MOD = W
 		if(!mind) //A player mind is required for law procs to run antag checks.
 			to_chat(user, "<span class='warning'>[src] is entirely unresponsive!</span>")
