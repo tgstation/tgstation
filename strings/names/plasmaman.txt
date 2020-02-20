@@ -39,6 +39,7 @@ Gallium
 Germanium
 Gold
 Hafnium
+Halogen
 Hassium
 Helium
 Holmium
