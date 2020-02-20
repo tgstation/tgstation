@@ -431,7 +431,7 @@
 	var/potential_cut = input("How much would you like to payout to the registered card?","Percentage Profit") as num|null
 	if(!potential_cut)
 		percent_cut = 50
-	percent_cut = CLAMP(round(potential_cut, 1), 1, 50)
+	percent_cut = clamp(round(potential_cut, 1), 1, 50)
 	to_chat(user, "<span class='notice'>[percent_cut]% profit will be recieved if a package with a barcode is sold.</span>")
 
 /obj/item/barcode
