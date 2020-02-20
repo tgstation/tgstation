@@ -356,9 +356,24 @@
 	return
 
 /obj/item/gun/energy/gravity_gun
-	name = "one-point bluespace-gravitational manipulator"
-	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity."
+	name = "one-point gravitational manipulator"
+	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity. Requires a gravitational anomaly core to function."
 	ammo_type = list(/obj/item/ammo_casing/energy/gravity/repulse, /obj/item/ammo_casing/energy/gravity/attract, /obj/item/ammo_casing/energy/gravity/chaos)
 	item_state = "gravity_gun"
 	icon_state = "gravity_gun"
 	var/power = 4
+	var/firing_core = FALSE
+
+/obj/item/gun/energy/gravity_gun/attackby(obj/item/C, mob/user)
+	if(istype(C, /obj/item/assembly/signaler/anomaly/grav))
+		to_chat(user, "<span class='notice'>You insert [C] into the gravitational manipulator and the weapon gently hums to life.</span>")
+		firing_core = TRUE
+		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+		qdel(C)
+
+/obj/item/gun/energy/gravity_gun/can_shoot()
+	. = ..()
+	if(!firing_core)
+		return FALSE
+	return ..()
+
