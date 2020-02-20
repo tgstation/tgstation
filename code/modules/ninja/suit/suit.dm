@@ -71,8 +71,7 @@ Contents:
 
 	//Cell Init
 	cell = new/obj/item/stock_parts/cell/high
-	cell.charge = 9000 // larger as it now heats
-	cell.maxcharge = 9000
+	cell.charge = 9000
 	cell.name = "black power cell"
 	cell.icon_state = "bscell"
 
