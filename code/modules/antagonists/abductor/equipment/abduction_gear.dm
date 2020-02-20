@@ -373,10 +373,8 @@
 /obj/item/firing_pin/abductor
 	name = "alien firing pin"
 	icon_state = "firing_pin_ayy"
-	desc = "This firing pin is slimy and warm; you can swear you feel it \
-		constantly trying to mentally probe you."
-	fail_message = "<span class='abductor'>\
-		Firing error, please contact Command.</span>"
+	desc = "This firing pin is slimy and warm; you can swear you feel it constantly trying to mentally probe you."
+	fail_message = "<span class='abductor'>Firing error, please contact Command.</span>"
 
 /obj/item/firing_pin/abductor/pin_auth(mob/living/user)
 	. = isabductor(user)
