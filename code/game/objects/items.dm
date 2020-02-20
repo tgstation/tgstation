@@ -72,6 +72,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
 	var/armour_penetration = 0 //percentage of armour effectiveness to remove
+	var/eyestab_overide = 0
 	var/list/allowed = null //suit storage stuff.
 	var/equip_delay_self = 0 //In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
@@ -484,7 +485,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			return
 		is_human_victim = TRUE
 
-	if(M.is_eyes_covered())
+	if((M.is_eyes_covered()) && (src.eyestab_overide != 1))
 		// you can't stab someone in the eyes wearing a mask!
 		to_chat(user, "<span class='warning'>You're going to need to remove [M.p_their()] eye protection first!</span>")
 		return

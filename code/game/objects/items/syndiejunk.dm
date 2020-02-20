@@ -58,6 +58,19 @@
 	desc = "A fork made of plastitanium."
 	throwforce = 10
 	armour_penetration = 100
+	eyestab_overide = 1
+
+/obj/item/kitchen/fork/plastitanium/attack(mob/living/carbon/M, mob/living/carbon/user)
+	if(!istype(M))
+		return ..()
+	if(user.zone_selected != BODY_ZONE_PRECISE_EYES && user.zone_selected != BODY_ZONE_HEAD)
+		return ..()
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You don't want to harm [M]!</span>")
+		return
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
+		M = user
+	return eyestab(M,user)
 
 /obj/item/paper/fluff/stations/junk/snackkit
 	info = "Enjoy this collection of old food left out in decrepit venders and on mess hall tables. Enjoy with this fancy plastitanium fork that has been made to piece even the hardest outer shells and armors of food and people alike."
