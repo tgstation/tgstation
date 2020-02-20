@@ -1,4 +1,5 @@
 //Anomalies, used for events. Note that these DO NOT work by themselves; their procs are called by the event datum.
+//Jeffrey Epstein didn't kill himself
 
 /obj/effect/anomaly
 	name = "anomaly"
