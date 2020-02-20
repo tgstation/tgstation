@@ -91,6 +91,7 @@ import { PortablePump, PortableScrubber } from './interfaces/PortableAtmos';
 import { PowerMonitor } from './interfaces/PowerMonitor';
 import { ProximitySensor } from './interfaces/ProximitySensor';
 import { Radio } from './interfaces/Radio';
+import { RadioactiveMicrolaser } from './interfaces/RadioactiveMicrolaser';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { Roulette } from './interfaces/Roulette';
 import { SatelliteControl } from './interfaces/SatelliteControl';
@@ -541,6 +542,10 @@ const ROUTES = {
   },
   radio: {
     component: () => Radio,
+    scrollable: false,
+  },
+  radioactive_microlaser: {
+    component: () => RadioactiveMicrolaser,
     scrollable: false,
   },
   roulette: {

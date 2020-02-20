@@ -510,7 +510,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/melee/baton/abductor/attack(mob/target, mob/living/user)
 	if(!AbductorCheck(user))
-		return
+		return FALSE
 
 	if(!deductcharge(cell_hit_cost))
 		to_chat(user, "<span class='warning'>[src] [cell ? "is out of charge" : "does not have a power source installed"].</span>")
@@ -522,16 +522,20 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	if(iscyborg(target))
 		if(BATON_STUN)
 			..()
-		return
+		return FALSE
 
 	if(!isliving(target))
-		return
+		return FALSE
+
+	if(clumsy_check(user))
+		return FALSE
 
 	var/mob/living/L = target
 
 	user.do_attack_animation(L)
 
-	check_shields(L, user)
+	if(shields_blocked(L, user))
+		return FALSE
 
 	switch (mode)
 		if(BATON_STUN)

@@ -1,6 +1,0 @@
-author: "stylemistake"
-delete-after: True
-changes: 
-  - rscdel: "Removed tgui"
-  - refactor: "tgui-next is now the new tgui"
-  - code_imp: "Updated \"interface not found\" screen."
