@@ -120,6 +120,13 @@ SUBSYSTEM_DEF(discord)
 		return
 
 	var/url = "https://discordapp.com/api/guilds/[CONFIG_GET(string/discord_guildid)]/members/[id]/roles/[CONFIG_GET(string/discord_roleid)]"
+
 	// Make the request
-	var/response = rustg_http_request_blocking(RUSTG_HTTP_METHOD_PUT, url, "",  "{\"Authorization\":\"Bot [CONFIG_GET(string/discord_token)]\"}")
-	WRITE_LOG(GLOB.discord_api_log, "PUT [url] returned [response]")
+
+	var/datum/http_request/req = new()
+	req.prepare(RUSTG_HTTP_METHOD_PUT, url, "", list("Authorization" = "Bot [CONFIG_GET(string/discord_token)]"))
+	req.begin_async()
+	UNTIL(req.is_complete())
+	var/datum/http_response/res = req.into_response()
+
+	WRITE_LOG(GLOB.discord_api_log, "PUT [url] returned [res.status_code] [res.body]")
