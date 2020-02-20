@@ -18931,8 +18931,8 @@
 /area/hydroponics)
 "aWT" = (
 /obj/machinery/light_switch{
-	pixel_x = -4;
-	pixel_y = 30
+	pixel_x = -6;
+	pixel_y = 38
 	},
 /obj/structure/sink/kitchen{
 	name = "utility sink";
@@ -27978,7 +27978,7 @@
 	},
 /obj/machinery/door/airlock/research{
 	name = "Xenobiology Lab";
-	req_one_access_txt = "55, 9"
+	req_one_access_txt = "9;55"
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
@@ -34644,7 +34644,6 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/reagent_containers/spray/cleaner,
 /obj/machinery/light_switch{
 	pixel_y = -24
 	},
@@ -34652,6 +34651,11 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bIh" = (

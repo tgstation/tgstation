@@ -14,6 +14,7 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Scientist, master of explosive death.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Explosive modules active. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's an explosive carp! Boom goes the fishy.</span>"
+	hive_fluff_string = "<span class='holoparasite'>The mass seems to generate explosive energy, destroying everything in its' path.</span>"
 	var/bomb_cooldown = 0
 	var/static/list/boom_signals = list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_BUMPED, COMSIG_ATOM_ATTACK_HAND)
 
@@ -71,6 +72,6 @@
 	UNREGISTER_BOMB_SIGNALS(A)
 
 /mob/living/simple_animal/hostile/guardian/bomb/proc/display_examine(datum/source, mob/user, text)
-	text += "<span class='holoparasite'>It glows with a strange <font color=\"[namedatum.colour]\">light</font>!</span>"
+	text += "<span class='holoparasite'>It glows with a strange <font color=\"[guardiancolor]\">light</font>!</span>"
 
 #undef UNREGISTER_BOMB_SIGNALS

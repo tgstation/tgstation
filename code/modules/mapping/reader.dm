@@ -93,7 +93,7 @@
 			gridSet.ycrd = text2num(dmmRegex.group[4])
 			gridSet.zcrd = text2num(dmmRegex.group[5])
 
-			bounds[MAP_MINX] = min(bounds[MAP_MINX], CLAMP(gridSet.xcrd, x_lower, x_upper))
+			bounds[MAP_MINX] = min(bounds[MAP_MINX], clamp(gridSet.xcrd, x_lower, x_upper))
 			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], gridSet.zcrd)
 			bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], gridSet.zcrd)
 
@@ -113,15 +113,15 @@
 			if(gridLines.len && gridLines[gridLines.len] == "")
 				gridLines.Cut(gridLines.len) // Remove only one blank line at the end.
 
-			bounds[MAP_MINY] = min(bounds[MAP_MINY], CLAMP(gridSet.ycrd, y_lower, y_upper))
+			bounds[MAP_MINY] = min(bounds[MAP_MINY], clamp(gridSet.ycrd, y_lower, y_upper))
 			gridSet.ycrd += gridLines.len - 1 // Start at the top and work down
-			bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(gridSet.ycrd, y_lower, y_upper))
+			bounds[MAP_MAXY] = max(bounds[MAP_MAXY], clamp(gridSet.ycrd, y_lower, y_upper))
 
 			var/maxx = gridSet.xcrd
 			if(gridLines.len) //Not an empty map
 				maxx = max(maxx, gridSet.xcrd + length(gridLines[1]) / key_len - 1)
 
-			bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], maxx), x_lower, x_upper)
+			bounds[MAP_MAXX] = clamp(max(bounds[MAP_MAXX], maxx), x_lower, x_upper)
 		CHECK_TICK
 
 	// Indicate failure to parse any coordinates by nulling bounds
