@@ -1841,6 +1841,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 1
 	surplus = 40
 
+/datum/uplink_item/badass/junk
+	name = "Random Syndicate Junk"
+	desc = "A box containing a unique item, something we were planning on getting rid of. \
+			An assortment of items is possible, it would be extremely cheap to get them to you."
+	item = /obj/item/storage/box/syndicate/junk
+	cost = 1
+	limited_stock = 2
+
 /datum/uplink_item/badass/syndiecigs
 	name = "Syndicate Smokes"
 	desc = "Strong flavor, dense smoke, infused with omnizine."

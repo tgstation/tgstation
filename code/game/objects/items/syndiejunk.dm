@@ -4,7 +4,7 @@
 	illustration = "writing_syndie"
 
 /obj/item/storage/box/syndicate/junk/PopulateContents()
-	switch (pick(list("bastard", "fakeshield")))
+	switch (pickweight(list("bastard" = 2, "fakeshield" = 2, "bedding" = 2, "snackkit" =1)))
 		if ("bastard")
 			new /obj/item/melee/bastardknife(src)
 			new /obj/item/paper/fluff/stations/junk/bastardknife(src)
@@ -12,6 +12,18 @@
 		if ("fakeshield")
 			new /obj/item/implanter/fakeshieldshield(src)
 			new /obj/item/paper/fluff/stations/junk/fakeshield(src)
+
+		if ("bedding")
+			new /obj/item/clothing/under/misc/syndiepjs(src)
+			new /obj/item/bedsheet/syndie(src)
+			new /obj/item/paper/fluff/stations/junk/syndiepjs(src)
+
+		if ("snackkit")
+			new /obj/item/reagent_containers/food/snacks/syndicake(src)
+			new /obj/item/reagent_containers/food/snacks/tatortot(src)
+			new /obj/item/reagent_containers/food/snacks/sosjerky/healthy(src)
+			new /obj/item/kitchen/fork/plastitanium(src)
+			new /obj/item/paper/fluff/stations/junk/snackkit(src)
 
 /obj/item/paper/fluff/stations/junk
 	name = "junk receipt"
@@ -61,3 +73,22 @@
 
 /obj/item/paper/fluff/stations/junk/fakeshield
 	info = "After many months of investigation and decryption, the eggheads over at Cybersun Industries managed to perfectly replicate a signal cast by a mindshield implant. Unfortunately for them, the signal’s only purpose was to be read by security HUDs and was ineffective in blocking any sort of mind alerting effects."
+
+/obj/item/clothing/under/misc/syndiepjs
+	name = "syndie PJs"
+	desc = "A suspicious set of sleepwear, for taking naps or being lazy instead of working."
+	can_adjust = FALSE
+	icon_state = "syndie_pyjamas"
+	armor = list("laser" = 10, "acid" = 10)
+
+/obj/item/paper/fluff/stations/junk/syndiepjs
+	info = "We needed to get rid of these old pajamas and bedsheets after our resent dormitory renovation. The pajamas allow the wearer to recover from more grievous wounds by sleeping than normal and are minorly resistant against lasers. The new PJs we ordered are made with 100% organic gondola hide, unlike that cheap synth-thread one we gave you."
+
+/obj/item/kitchen/fork/plastitanium
+	name = "plastitanium fork"
+	desc = "A fork made of plastitanium."
+	throwforce = 10
+	armour_penetration = 100
+
+/obj/item/paper/fluff/stations/junk/snackkit
+	info = "Enjoy this collection of old food left out in decrepit venders and on mess hall tables. Enjoy with this fancy plastitanium fork that has been made to piece even the hardest outer shells and armors of food and people alike."

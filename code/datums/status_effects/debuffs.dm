@@ -68,6 +68,7 @@
 
 /datum/status_effect/incapacitating/sleeping/tick()
 	if(owner.maxHealth)
+		var/obj/item/I = owner.get_item_by_slot(ITEM_SLOT_ICLOTHING)
 		var/health_ratio = owner.health / owner.maxHealth
 		var/healing = -0.2
 		if((locate(/obj/structure/bed) in owner.loc))
@@ -79,7 +80,13 @@
 				continue
 			healing -= 0.1
 			break //Only count the first bedsheet
-		if(health_ratio > 0.8)
+		if (istype(I, /obj/item/clothing/under/misc/syndiepjs))
+			healing -= 0.3
+		if((health_ratio > 0.8))
+			owner.adjustBruteLoss(healing)
+			owner.adjustFireLoss(healing)
+			owner.adjustToxLoss(healing * 	0.5, TRUE, TRUE)
+		if((health_ratio > 0.5) && (istype(I, /obj/item/clothing/under/misc/syndiepjs)))
 			owner.adjustBruteLoss(healing)
 			owner.adjustFireLoss(healing)
 			owner.adjustToxLoss(healing * 0.5, TRUE, TRUE)
