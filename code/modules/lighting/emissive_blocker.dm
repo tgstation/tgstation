@@ -16,3 +16,23 @@
 	verbs.Cut() //Cargo culting from lighting object, this maybe affects memory usage?
 
 	render_source = source
+
+/atom/movable/emissive_blocker/ex_act(severity)
+	return FALSE
+
+/atom/movable/emissive_blocker/singularity_act()
+	return
+
+/atom/movable/emissive_blocker/singularity_pull()
+	return
+
+/atom/movable/emissive_blocker/blob_act()
+	return
+
+/atom/movable/emissive_blocker/onTransitZ()
+	return
+
+//Prevents people from moving these after creation, because they shouldn't be.
+/atom/movable/emissive_blocker/forceMove(atom/destination, no_tp=FALSE, harderforce = FALSE)
+	if(harderforce)
+		. = ..()
