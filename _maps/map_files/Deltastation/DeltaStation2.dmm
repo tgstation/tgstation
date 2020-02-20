@@ -2139,7 +2139,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aiE" = (
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aiF" = (
@@ -4303,7 +4303,7 @@
 /area/vacant_room/office)
 "and" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/wood,
 /area/vacant_room/office)
 "ane" = (
@@ -5291,7 +5291,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/vacant_room/office)
 "apa" = (
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/plasteel/grimy,
 /area/vacant_room/office)
 "apb" = (
@@ -9117,7 +9117,7 @@
 	},
 /area/maintenance/port/fore)
 "awu" = (
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/wood,
 /area/maintenance/port/fore)
 "awv" = (
@@ -9854,7 +9854,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "axU" = (
@@ -20293,19 +20293,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
-"aRB" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 "aRC" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
@@ -20369,7 +20356,7 @@
 "aRK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
 	},
@@ -24701,6 +24688,10 @@
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/stock_parts/cell/emproof{
+	pixel_x = 4;
+	pixel_y = 2
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "aYk" = (
@@ -27444,7 +27435,7 @@
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
 "bdo" = (
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "bdp" = (
@@ -63181,7 +63172,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "cnh" = (
@@ -69601,6 +69592,10 @@
 	pixel_x = 26
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/stock_parts/cell/emproof{
+	pixel_x = -3;
+	pixel_y = 5
+	},
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "czA" = (
@@ -73268,6 +73263,10 @@
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/stock_parts/cell/emproof{
+	pixel_x = 1;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "cFZ" = (
@@ -76973,7 +76972,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "cMV" = (
@@ -82289,10 +82288,6 @@
 /obj/item/clothing/neck/stethoscope,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_x = -3;
-	pixel_y = 2
-	},
 /obj/machinery/status_display/evac{
 	pixel_x = 32
 	},
@@ -82305,6 +82300,15 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -3;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -88525,7 +88529,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
 "dhN" = (
@@ -91471,7 +91475,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/aft)
 "dnN" = (
@@ -92513,7 +92517,7 @@
 "dpQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/wood,
 /area/crew_quarters/abandoned_gambling_den)
 "dpR" = (
@@ -96194,7 +96198,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
 "dxH" = (
@@ -98374,7 +98378,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/grunge{
 	name = "Morgue";
-	req_access_txt = "9"
+	req_access_txt = "5;6"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line,
@@ -102139,7 +102143,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre/abandoned)
 "dJu" = (
@@ -102222,7 +102226,7 @@
 /turf/open/floor/wood,
 /area/security/detectives_office/private_investigators_office)
 "dJE" = (
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/wood,
 /area/security/detectives_office/private_investigators_office)
 "dJF" = (
@@ -106513,7 +106517,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "dRH" = (
@@ -107564,7 +107568,7 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/virology)
 "dUc" = (
-/mob/living/simple_animal/cockroach,
+/mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/wood,
 /area/library/abandoned)
 "dUd" = (
@@ -143191,7 +143195,7 @@ aLu
 aMG
 aOm
 aPR
-aRB
+aRw
 aTc
 aUV
 aWM
