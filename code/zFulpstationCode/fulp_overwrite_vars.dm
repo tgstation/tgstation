@@ -219,6 +219,7 @@
 	var/list/accesses = list()
 	var/one_access = 0
 	var/unres_sides = 0 //unrestricted sides, or sides of the airlock that will open regardless of access
+	var/recharge_mod = 3 //allows for faster use of electroadaptive psuedocircuit; higher is slower; no idea why they made this cooldown so slow.
 
 //************************************************************************
 //** Airlock Electroadaptive Psuedo Circuit ENDS - Surrealistik Oct 2019

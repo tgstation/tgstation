@@ -1,3 +1,23 @@
+/obj/structure/windoor_assembly/proc/windoor_install_electroadaptive(obj/item/electroadaptive_pseudocircuit/W, mob/user)
+	if(!W.adapt_circuit(user, 15))
+		return
+
+	W.play_tool_sound(src, 100)
+	user.visible_message("<span class='notice'>[user] installs [W] into the airlock assembly.</span>", \
+						"<span class='notice'>You start to install [W] into the airlock assembly...</span>")
+
+	if(do_after(user, 40, target = src))
+		if(!src || electronics )
+			return
+
+		to_chat(user, "<span class='notice'>You install the [W].</span>")
+
+		electronics = new /obj/item/electronics/airlock
+
+		electronics.accesses = W.accesses //Port over pseudocircuit data
+		electronics.one_access = W.one_access
+		electronics.unres_sides = W.unres_sides
+
 
 
 /obj/structure/door_assembly/proc/airlock_install_electroadaptive(obj/item/electroadaptive_pseudocircuit/W, mob/user)
@@ -17,7 +37,7 @@
 		name = "near finished airlock assembly"
 		electronics = new /obj/item/electronics/airlock
 
-		electronics.accesses = W.accesses //Copy over pseudocircuit data
+		electronics.accesses = W.accesses //Port over pseudocircuit data
 		electronics.one_access = W.one_access
 		electronics.unres_sides = W.unres_sides
 
@@ -55,9 +75,12 @@
 	if(..())
 		return
 	switch(action)
-		if("clear")
+		if("clear_all")
 			accesses = list()
 			one_access = 0
+			. = TRUE
+		if("grant_all")
+			accesses = get_all_accesses()
 			. = TRUE
 		if("one_access")
 			one_access = !one_access
@@ -73,3 +96,25 @@
 			var/unres_direction = text2num(params["unres_direction"])
 			unres_sides ^= unres_direction //XOR, toggles only the bit that was clicked
 			. = TRUE
+
+/obj/item/electroadaptive_pseudocircuit/proc/restock_circuit() //When the pseudocircuit recharges, attempts to produce an additional circuit
+	if(!istype(loc, /mob/living/silicon/robot))
+		return
+	if(circuits > 4)
+		return
+
+	var/mob/living/silicon/robot/R = loc
+
+	var/obj/item/stack/sheet/glass/cyborg/G = locate(/obj/item/stack/sheet/glass/cyborg) in R.module
+	if(!G)
+		return
+	if(!G.source.use_charge(50))
+		return
+
+	var/obj/item/stack/sheet/metal/cyborg/M = locate(/obj/item/stack/sheet/metal/cyborg) in R.module
+	if(!M)
+		return
+	if(!M.source.use_charge(50))
+		return
+
+	circuits = min(circuits + 1, 5)
