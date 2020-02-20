@@ -16,15 +16,17 @@
 
 	var/instrumentDir = "piano"		// the folder with the sounds
 	var/instrumentExt = "ogg"		// the file extension
+	var/instrumentRange = 15		// how far the sound can be heard
 	var/obj/instrumentObj = null	// the associated obj playing the sound
 	var/last_hearcheck = 0
 	var/list/hearing_mobs
 
-/datum/song/New(dir, obj, ext = "ogg")
+/datum/song/New(dir, obj, ext = "ogg", range)
 	tempo = sanitize_tempo(tempo)
 	instrumentDir = dir
 	instrumentObj = obj
 	instrumentExt = ext
+	instrumentRange = range
 
 /datum/song/Destroy()
 	instrumentObj = null
@@ -66,7 +68,7 @@
 	var/turf/source = get_turf(instrumentObj)
 	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
 		LAZYCLEARLIST(hearing_mobs)
-		for(var/mob/M in get_hearers_in_view(15, source))
+		for(var/mob/M in get_hearers_in_view(instrumentRange, source))
 			LAZYADD(hearing_mobs, M)
 		last_hearcheck = world.time
 
@@ -104,8 +106,7 @@
 				var/list/notes = splittext(beat, "/")
 				for(var/note in splittext(notes[1], "-"))
 					if(!playing || shouldStopPlaying(user))//If the instrument is playing, or special case
-						playing = FALSE
-						hearing_mobs = null
+						toggle_playing(user, FALSE)
 						return
 					if(!length(note))
 						continue
@@ -124,7 +125,7 @@
 						else
 							cur_oct[cur_note] = text2num(ni)
 					if(user.dizziness > 0 && prob(user.dizziness / 2))
-						cur_note = CLAMP(cur_note + rand(round(-user.dizziness / 10), round(user.dizziness / 10)), 1, 7)
+						cur_note = clamp(cur_note + rand(round(-user.dizziness / 10), round(user.dizziness / 10)), 1, 7)
 					if(user.dizziness > 0 && prob(user.dizziness / 5))
 						if(prob(30))
 							cur_acc[cur_note] = "#"
@@ -138,8 +139,7 @@
 				else
 					sleep(tempo)
 		repeat--
-	hearing_mobs = null
-	playing = FALSE
+	toggle_playing(user, FALSE)
 	repeat = 0
 	updateDialog(user)
 
@@ -270,8 +270,7 @@
 		tempo = sanitize_tempo(tempo + text2num(href_list["tempo"]))
 
 	else if(href_list["play"])
-		playing = TRUE
-		INVOKE_ASYNC(src, .proc/playsong, usr)
+		toggle_playing(usr, TRUE)
 
 	else if(href_list["newline"])
 		var/newline = html_encode(input("Enter your line: ", instrumentObj.name) as text|null)
@@ -299,8 +298,7 @@
 		lines[num] = content
 
 	else if(href_list["stop"])
-		playing = FALSE
-		hearing_mobs = null
+		toggle_playing(usr, FALSE)
 
 	updateDialog(usr)
 	return
@@ -308,6 +306,15 @@
 /datum/song/proc/sanitize_tempo(new_tempo)
 	new_tempo = abs(new_tempo)
 	return max(round(new_tempo, world.tick_lag), world.tick_lag)
+
+/datum/song/proc/toggle_playing(user, new_play_state)
+	playing = new_play_state
+	if(playing)
+		INVOKE_ASYNC(src, .proc/playsong, user)
+		SEND_SIGNAL(instrumentObj, COMSIG_SONG_START)
+	else
+		hearing_mobs = null
+		SEND_SIGNAL(instrumentObj, COMSIG_SONG_END)
 
 // subclass for handheld instruments, like violin
 /datum/song/handheld
@@ -320,7 +327,6 @@
 		return !isliving(instrumentObj.loc)
 	else
 		return TRUE
-
 
 //////////////////////////////////////////////////////////////////////////
 

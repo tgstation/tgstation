@@ -36,7 +36,8 @@
 	var/minor_rewards = list(/obj/item/stack/circuit_stack/full,	//To add a new minor reward, add it here.
 					/obj/item/airlock_painter/decal,
 					/obj/item/pen/survival,
-					/obj/item/circuitboard/machine/sleeper/party)
+					/obj/item/circuitboard/machine/sleeper/party,
+					/obj/item/toy/sprayoncan)
 	var/static/list/item_list = list()
 
 /obj/machinery/rnd/bepis/attackby(obj/item/O, mob/user, params)
@@ -91,7 +92,7 @@
 		update_icon_state()
 		say("Attempting to deposit 0 credits. Aborting.")
 		return
-	deposit_value = CLAMP(round(deposit_value, 1), 1, 15000)
+	deposit_value = clamp(round(deposit_value, 1), 1, 15000)
 	if(!account)
 		say("Cannot find user account. Please swipe a valid ID.")
 		return

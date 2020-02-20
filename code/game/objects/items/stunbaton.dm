@@ -170,12 +170,14 @@
 		playsound(src, stun_sound, 75, TRUE, -1)
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Knockdown(stun_time*3)
+		user.Knockdown(stun_time*3) //should really be an equivalent to attack(user,user)
 		deductcharge(cell_hit_cost)
-		return
+		return TRUE
+	return FALSE
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
-	clumsy_check(user)
+	if(clumsy_check(user))
+		return FALSE
 
 	if(iscyborg(M))
 		..()
@@ -206,7 +208,8 @@
 
 
 /obj/item/melee/baton/proc/baton_effect(mob/living/L, mob/user)
-	check_shields(L, user)
+	if(shields_blocked(L, user))
+		return FALSE
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
 		if(!R || !R.cell || !R.cell.use(cell_hit_cost))
@@ -257,12 +260,13 @@
 	if (!(. & EMP_PROTECT_SELF))
 		deductcharge(1000 / severity)
 
-/obj/item/melee/baton/proc/check_shields(mob/living/L, mob/user)
+/obj/item/melee/baton/proc/shields_blocked(mob/living/L, mob/user)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
-			playsound(L, 'sound/weapons/genhit.ogg', 50, TRUE)
-			return FALSE
+			playsound(H, 'sound/weapons/genhit.ogg', 50, TRUE)
+			return TRUE
+	return FALSE
 
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/cattleprod

@@ -18,7 +18,7 @@
 	hl3_release_date = _half_life
 	can_contaminate = _can_contaminate
 
-	if(istype(parent, /atom)) 
+	if(istype(parent, /atom))
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/rad_examine)
 		if(istype(parent, /obj/item))
 			RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/rad_attack)
@@ -47,7 +47,7 @@
 		qdel(src)
 		return PROCESS_KILL
 
-/datum/component/radioactive/InheritComponent(datum/component/C, i_am_original, list/arguments)
+/datum/component/radioactive/InheritComponent(datum/component/C, i_am_original, _strength, _source, _half_life, _can_contaminate)
 	if(!i_am_original)
 		return
 	if(!hl3_release_date) // Permanently radioactive things don't get to grow stronger
@@ -56,7 +56,7 @@
 		var/datum/component/radioactive/other = C
 		strength = max(strength, other.strength)
 	else
-		strength = max(strength, arguments[1])
+		strength = max(strength, _strength)
 
 /datum/component/radioactive/proc/rad_examine(datum/source, mob/user, atom/thing)
 	var/atom/master = parent

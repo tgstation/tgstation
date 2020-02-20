@@ -102,8 +102,8 @@
 		add_overlay(standard_background)
 
 /obj/screen/movable/pic_in_pic/proc/set_view_size(width, height, do_refresh = TRUE)
-	width = CLAMP(width, 0, max_dimensions)
-	height = CLAMP(height, 0, max_dimensions)
+	width = clamp(width, 0, max_dimensions)
+	height = clamp(height, 0, max_dimensions)
 	src.width = width
 	src.height = height
 
