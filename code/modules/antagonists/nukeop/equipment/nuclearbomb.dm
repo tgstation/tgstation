@@ -69,6 +69,7 @@
 	icon = 'icons/obj/machines/nuke_terminal.dmi'
 	icon_state = "nuclearbomb_base"
 	anchored = TRUE //stops it being moved
+	move_resist = INFINITY //I SAID STOP
 
 /obj/machinery/nuclearbomb/syndicate
 	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
