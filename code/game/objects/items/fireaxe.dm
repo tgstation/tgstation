@@ -17,13 +17,23 @@
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
+	var/wielded = FALSE // track wielded status on item
 
 /obj/item/fireaxe/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=24, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=24, \
+				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
 
-/obj/item/fireaxe/proc/icon_update_callback(wielded)
+/// Callback triggered on wield of two handed item
+/obj/item/fireaxe/proc/on_wield(mob/user)
+	wielded = TRUE
+
+/// Callback triggered on unwield of two handed item
+/obj/item/fireaxe/proc/on_unwield(mob/user)
+	wielded = FALSE
+
+/obj/item/fireaxe/update_icon_state()
 	icon_state = "fireaxe[wielded]"
 
 /obj/item/fireaxe/suicide_act(mob/user)
@@ -34,7 +44,7 @@
 	. = ..()
 	if(!proximity)
 		return
-	if(SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)) //destroys windows and grilles in one hit
+	if(wielded) //destroys windows and grilles in one hit
 		if(istype(A, /obj/structure/window) || istype(A, /obj/structure/grille))
 			var/obj/structure/W = A
 			W.obj_destruction("fireaxe")
@@ -49,7 +59,8 @@
 
 /obj/item/fireaxe/boneaxe/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23, \
+				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
 
-/obj/item/fireaxe/boneaxe/icon_update_callback(wielded)
+/obj/item/fireaxe/boneaxe/update_icon_state()
 	icon_state = "bone_axe[wielded]"

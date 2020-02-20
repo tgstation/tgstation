@@ -25,16 +25,18 @@
 		to_chat(user, "<span class='warning'>You don't think \the [I] will be the thing getting modified if you use it on \the [src]!</span>")
 		return
 
-	// some two handed items should still be sharpenable, but handle force differently. therefore this stuff is needed
-	if(SEND_SIGNAL(I, COMSIG_IS_TWOHANDED))
-		var/force_wielded = SEND_SIGNAL(src, COMSIG_TWOHANDED_GET_FORCEWIELDED)
+	// Some two handed items should still be sharpenable, but they handle force differently.
+	// Therefore this stuff is needed
+	var/datum/component/two_handed/comp_twohand = I.GetComponent(/datum/component/two_handed)
+	if(comp_twohand)
+		var/force_wielded = comp_twohand.force_wielded
 		if(force_wielded >= max)
 			to_chat(user, "<span class='warning'>[I] is much too powerful to sharpen further!</span>")
 			return
-		if(SEND_SIGNAL(I, COMSIG_IS_TWOHANDED_WIELDED))
+		if(comp_twohand.wielded)
 			to_chat(user, "<span class='warning'>[I] must be unwielded before it can be sharpened!</span>")
 			return
-		SEND_SIGNAL(src, COMSIG_TWOHANDED_SET_FORCEWIELDED, CLAMP(force_wielded + increment, 0, max)) //wieldforce is increased since normal force wont stay
+		comp_twohand.force_wielded = CLAMP(force_wielded + increment, 0, max) // wieldforce is increased since normal force wont stay
 	if(I.force > initial(I.force))
 		to_chat(user, "<span class='warning'>[I] has already been refined before. It cannot be sharpened further!</span>")
 		return

@@ -626,13 +626,23 @@
 	sharpness = IS_SHARP
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/datum/action/innate/cult/spear/spear_act
+	var/wielded = FALSE // track wielded status on item
 
 /obj/item/cult_spear/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 90)
-	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24, \
+				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
 
-/obj/item/cult_spear/proc/icon_update_callback(wielded)
+/// Callback triggered on wield of two handed item
+/obj/item/cult_spear/proc/on_wield(mob/user)
+	wielded = TRUE
+
+/// Callback triggered on unwield of two handed item
+/obj/item/cult_spear/proc/on_unwield(mob/user)
+	wielded = FALSE
+
+/obj/item/cult_spear/update_icon_state()
 	icon_state = "bloodspear[wielded]"
 
 /obj/item/cult_spear/Destroy()
@@ -669,7 +679,7 @@
 	qdel(src)
 
 /obj/item/cult_spear/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
+	if(wielded)
 		final_block_chance *= 2
 	if(prob(final_block_chance))
 		if(attack_type == PROJECTILE_ATTACK)

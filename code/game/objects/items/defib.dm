@@ -177,8 +177,7 @@
 			return
 	else
 		//Remove from their hands and back onto the defib unit
-		if(SEND_SIGNAL(paddles, COMSIG_IS_TWOHANDED))
-			SEND_SIGNAL(paddles, COMSIG_TRY_TWOHANDED_UNWIELD, user)
+		SEND_SIGNAL(paddles, COMSIG_TRY_TWOHANDED_UNWIELD, user)
 		remove_paddles(user)
 
 	update_power()
@@ -304,17 +303,21 @@
 	var/req_defib = TRUE
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
 	var/base_icon_state = "defibpaddles"
+	var/wielded = FALSE // track wielded status on item
 
 /obj/item/shockpaddles/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, \
+				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
 
-/obj/item/shockpaddles/proc/icon_update_callback(wielded)
-	icon_state = "[base_icon_state][wielded]"
-	item_state = icon_state
-	if(cooldown)
-		icon_state = "[base_icon_state][wielded]_cooldown"
+/// Callback triggered on wield of two handed item
+/obj/item/shockpaddles/proc/on_wield(mob/user)
+	wielded = TRUE
+
+/// Callback triggered on unwield of two handed item
+/obj/item/shockpaddles/proc/on_unwield(mob/user)
+	wielded = FALSE
 
 /obj/item/shockpaddles/Destroy()
 	defib = null
@@ -377,6 +380,12 @@
 	playsound(src, 'sound/machines/defib_zap.ogg', 50, TRUE, -1)
 	return (OXYLOSS)
 
+/obj/item/shockpaddles/update_icon_state()
+	icon_state = "[base_icon_state][wielded]"
+	item_state = icon_state
+	if(cooldown)
+		icon_state = "[base_icon_state][wielded]_cooldown"
+
 /obj/item/shockpaddles/dropped(mob/user)
 	if(!req_defib)
 		return ..()
@@ -404,7 +413,7 @@
 		user.visible_message("<span class='notice'>[defib] beeps: Unit is unpowered.</span>")
 		playsound(src, 'sound/machines/defib_failed.ogg', 50, FALSE)
 		return
-	if(!SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
+	if(!wielded)
 		if(iscyborg(user))
 			to_chat(user, "<span class='warning'>You must activate the paddles in your active module before you can use them on someone!</span>")
 		else

@@ -22,11 +22,21 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	var/datum/radial_menu/persistent/wiring_gui_menu
 	var/mob/listeningTo
+	var/wielded = FALSE // track wielded status on item
 
 /obj/item/rcl/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	AddComponent(/datum/component/two_handed)
+	AddComponent(/datum/component/two_handed, \
+				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
+
+/// Callback triggered on wield of two handed item
+/obj/item/rcl/proc/on_wield(mob/user)
+	wielded = TRUE
+
+/// Callback triggered on unwield of two handed item
+/obj/item/rcl/proc/on_unwield(mob/user)
+	wielded = FALSE
 
 /obj/item/rcl/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/pipe_cleaner_coil))
@@ -141,7 +151,7 @@
 
 /obj/item/rcl/attack_self(mob/user)
 	..()
-	active = SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED)
+	active = wielded
 	if(!active)
 		last = null
 	else if(!last)

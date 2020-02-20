@@ -171,13 +171,23 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	block_chance = 50
+	var/wielded = FALSE // track wielded status on item
 
 /obj/item/staff/bostaff/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=24, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=24, \
+				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
 
-/obj/item/staff/bostaff/proc/icon_update_callback(wielded)
+/obj/item/staff/bostaff/update_icon_state()
 	icon_state = "bostaff[wielded]"
+
+/// Callback triggered on wield of two handed item
+/obj/item/staff/bostaff/proc/on_wield(mob/user)
+	wielded = TRUE
+
+/// Callback triggered on unwield of two handed item
+/obj/item/staff/bostaff/proc/on_unwield(mob/user)
+	wielded = FALSE
 
 /obj/item/staff/bostaff/attack(mob/target, mob/living/user)
 	add_fingerprint(user)
@@ -199,7 +209,7 @@
 		to_chat(user, "<span class='warning'>It would be dishonorable to attack a foe while they cannot retaliate.</span>")
 		return
 	if(user.a_intent == INTENT_DISARM)
-		if(!SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
+		if(!wielded)
 			return ..()
 		if(!ishuman(target))
 			return ..()
@@ -226,6 +236,6 @@
 		return ..()
 
 /obj/item/staff/bostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
+	if(!wielded)
 		return ..()
 	return FALSE

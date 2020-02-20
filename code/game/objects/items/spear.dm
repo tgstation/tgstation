@@ -47,6 +47,7 @@
 /obj/item/spear/explosive
 	name = "explosive lance"
 	var/obj/item/grenade/explosive = null
+	var/wielded = FALSE // track wielded status on item
 
 /obj/item/spear/explosive/Initialize(mapload)
 	. = ..()
@@ -54,9 +55,18 @@
 
 /obj/item/spear/explosive/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, \
+				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
 
-/obj/item/spear/explosive/icon_update_callback(wielded)
+/// Callback triggered on wield of two handed item
+/obj/item/spear/explosive/proc/on_wield(mob/user)
+	wielded = TRUE
+
+/// Callback triggered on unwield of two handed item
+/obj/item/spear/explosive/proc/on_unwield(mob/user)
+	wielded = FALSE
+
+/obj/item/spear/explosive/update_icon_state()
 	icon_state = "spearbomb[wielded]"
 
 /obj/item/spear/explosive/proc/set_explosive(obj/item/grenade/G)
@@ -70,11 +80,14 @@
 	var/obj/item/grenade/G = locate() in parts_list
 	if(G)
 		var/obj/item/spear/lancePart = locate() in parts_list
-		var/lance_wielded = SEND_SIGNAL(lancePart, COMSIG_TWOHANDED_GET_FORCEWIELDED)
-		var/lance_unwielded = SEND_SIGNAL(lancePart, COMSIG_TWOHANDED_GET_FORCEUNWIELD)
+		var/datum/component/two_handed/comp_twohand = lancePart.GetComponent(/datum/component/two_handed)
+		if(comp_twohand)
+			var/lance_wielded = comp_twohand.force_wielded
+			var/lance_unwielded = comp_twohand.force_unwielded
+			AddComponent(/datum/component/two_handed, force_unwielded=lance_unwielded, force_wielded=lance_wielded, \
+				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
 		throwforce = lancePart.throwforce
 		icon_prefix = lancePart.icon_prefix
-		AddComponent(/datum/component/two_handed, force_unwielded=lance_unwielded, force_wielded=lance_wielded, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
 		parts_list -= G
 		parts_list -= lancePart
 		set_explosive(G)
@@ -106,7 +119,7 @@
 	. = ..()
 	if(!proximity)
 		return
-	if(SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
+	if(wielded)
 		user.say("[war_cry]", forced="spear warcry")
 		explosive.forceMove(AM)
 		explosive.prime()
@@ -120,7 +133,7 @@
 
 /obj/item/spear/grey_tide/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=15, force_wielded=25)
+	AddComponent(/datum/component/two_handed, force_unwielded=15, force_wielded=25, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
 
 /obj/item/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	. = ..()
@@ -150,7 +163,7 @@
 
 /obj/item/spear/bonespear/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=12, force_wielded=20, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+	AddComponent(/datum/component/two_handed, force_unwielded=12, force_wielded=20, , icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
 
 /obj/item/spear/bonespear/icon_update_callback(wielded)
 	icon_state = "bone_spear[wielded]"

@@ -26,24 +26,49 @@
 	var/hacked = FALSE
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	var/list/possible_colors = list("red", "blue", "green", "purple")
+	var/wielded = FALSE // track wielded status on item
 
 /obj/item/dualsaber/ComponentInitialize()
 	. = ..()
 	add_twohanded_comp()
 
 /obj/item/dualsaber/proc/add_twohanded_comp()
-	AddComponent(/datum/component/two_handed, force_unwielded=3, force_wielded=34, , \
-					icon_update_callback=CALLBACK(src, .proc/icon_update_callback), \
-					wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
+	AddComponent(/datum/component/two_handed, force_unwielded=3, force_wielded=34, \
+					wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg', \
+					on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
 
-/obj/item/dualsaber/proc/icon_update_callback(wielded)
+/// Callback triggered on wield of two handed item
+/// Specific hulk checks due to reflection chance for balance issues and switches hitsounds.
+/obj/item/dualsaber/proc/on_wield(mob/living/carbon/user)
+	wielded = TRUE
+	if(user && user.has_dna())
+		if(user.dna.check_mutation(HULK))
+			to_chat(user, "<span class='warning'>You lack the grace to wield this!</span>")
+			return
+	sharpness = IS_SHARP
+	w_class = w_class_on
+	hitsound = 'sound/weapons/blade1.ogg'
+	START_PROCESSING(SSobj, src)
+	set_light(brightness_on)
+
+/// Callback triggered on unwield of two handed item
+/// switch hitsounds
+/obj/item/dualsaber/proc/on_unwield(mob/user)
+	wielded = FALSE
+	sharpness = initial(sharpness)
+	w_class = initial(w_class)
+	hitsound = "swing_hit"
+	STOP_PROCESSING(SSobj, src)
+	set_light(0)
+
+/obj/item/dualsaber/update_icon_state()
 	if(wielded)
 		icon_state = "dualsaber[saber_color][wielded]"
 	else
 		icon_state = "dualsaber0"
 
 /obj/item/dualsaber/suicide_act(mob/living/carbon/user)
-	if(SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
+	if(wielded)
 		user.visible_message("<span class='suicide'>[user] begins spinning way too fast! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)//stole from chainsaw code
@@ -88,14 +113,14 @@
 	if(user.has_dna())
 		if(user.dna.check_mutation(HULK))
 			to_chat(user, "<span class='warning'>You grip the blade too hard and accidentally close it!</span>")
-			if(SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
+			if(wielded)
 				SEND_SIGNAL(src, COMSIG_TRY_TWOHANDED_UNWIELD, user)
 				return
 	..()
-	if(HAS_TRAIT(user, TRAIT_CLUMSY) && SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED) && prob(40))
+	if(wielded && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
 		impale(user)
 		return
-	if(SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED) && prob(50))
+	if(wielded && prob(50))
 		INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
 /obj/item/dualsaber/proc/jedi_spin(mob/living/user)
@@ -103,51 +128,18 @@
 
 /obj/item/dualsaber/proc/impale(mob/living/user)
 	to_chat(user, "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on [src].</span>")
-	if(SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
+	if(wielded)
 		user.take_bodypart_damage(20,25,check_armor = TRUE)
 	else
 		user.adjustStaminaLoss(25)
 
 /obj/item/dualsaber/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
+	if(wielded)
 		return ..()
 	return 0
 
-// Specific hulk checks due to reflection chance for balance issues and switches hitsounds.
-/obj/item/dualsaber/attack_self(mob/living/carbon/user)
-	if(user && user.has_dna())
-		if(user.dna.check_mutation(HULK))
-			to_chat(user, "<span class='warning'>You lack the grace to wield this!</span>")
-			return
-	..()
-	if(SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
-		sharpness = IS_SHARP
-		w_class = w_class_on
-		hitsound = 'sound/weapons/blade1.ogg'
-		START_PROCESSING(SSobj, src)
-		set_light(brightness_on)
-	else
-		unwield()
-
-/obj/item/dualsaber/equipped(mob/user, slot)
-	. = ..()
-	if(!SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
-		unwield()
-
-/obj/item/dualsaber/dropped(mob/user)
-	. = ..()
-	unwield()
-
-// switch hitsounds
-/obj/item/dualsaber/proc/unwield()
-	sharpness = initial(sharpness)
-	w_class = initial(w_class)
-	hitsound = "swing_hit"
-	STOP_PROCESSING(SSobj, src)
-	set_light(0)
-
 /obj/item/dualsaber/process()
-	if(SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
+	if(wielded)
 		if(hacked)
 			light_color = pick(LIGHT_COLOR_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER)
 		open_flame()
@@ -155,12 +147,12 @@
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/dualsaber/IsReflect()
-	if(SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
+	if(wielded)
 		return 1
 
 /obj/item/dualsaber/ignition_effect(atom/A, mob/user)
 	// same as /obj/item/melee/transforming/energy, mostly
-	if(!SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
+	if(!wielded)
 		return ""
 	var/in_mouth = ""
 	if(iscarbon(user))
