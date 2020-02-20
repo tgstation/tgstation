@@ -12,25 +12,24 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("swept", "brushed off", "bludgeoned", "whacked")
 	resistance_flags = FLAMMABLE
-	var/wielded = FALSE // track wielded status on item
 
 /obj/item/broom/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, \
-				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
+				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield), \
+				icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
 
 /// Callback triggered on wield of two handed item
 /obj/item/broom/proc/on_wield(mob/user)
-	wielded = TRUE
 	to_chat(user, "<span class='notice'>You brace the [src] against the ground in a firm sweeping stance.</span>")
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/sweep)
 
 /// Callback triggered on unwield of two handed item
 /obj/item/broom/proc/on_unwield(mob/user)
-	wielded = FALSE
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 
-/obj/item/broom/update_icon_state()
+/// Callback triggered on icon update
+/obj/item/broom/proc/icon_update_callback(wielded)
 	icon_state = "broom[wielded]"
 
 /obj/item/broom/afterattack(atom/A, mob/user, proximity)
