@@ -4,14 +4,10 @@
 	illustration = "writing_syndie"
 
 /obj/item/storage/box/syndicate/junk/PopulateContents()
-	switch (pickweight(list("bastard" = 2, "fakeshield" = 2, "bedding" = 2, "snackkit" =1)))
+	switch (pickweight(list("bastard" = 2, "bedding" = 2, "snackkit" =1)))
 		if ("bastard")
 			new /obj/item/melee/bastardknife(src)
 			new /obj/item/paper/fluff/stations/junk/bastardknife(src)
-
-		if ("fakeshield")
-			new /obj/item/implanter/fakeshieldshield(src)
-			new /obj/item/paper/fluff/stations/junk/fakeshield(src)
 
 		if ("bedding")
 			new /obj/item/clothing/under/misc/syndiepjs(src)
@@ -46,33 +42,6 @@
 
 /obj/item/paper/fluff/stations/junk/bastardknife
 	info = "This was an old weapon of choice of a field agent retrieved from an evidence locker several years after his capture. Its a lot duller than it used to be but has a nice edge for slicing incapacitated targets. We were going to throw it out, but maybe you can make some use of it."
-
-/obj/item/implant/fakeshield
-	name = "fake mindshield implant"
-	desc = "Pretends to protect against brainwashing."
-	activated = 0
-
-/obj/item/implant/fakeshield/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
-	if(..())
-		ADD_TRAIT(target, TRAIT_FAKE_MIND_SHIELD, "implant")
-		target.sec_hud_set_implants()
-		return TRUE
-
-/obj/item/implant/fakeshield/removed(mob/target, silent = FALSE, special = 0)
-	if(..())
-		if(isliving(target))
-			var/mob/living/L = target
-			REMOVE_TRAIT(L, TRAIT_FAKE_MIND_SHIELD, "implant")
-			L.sec_hud_set_implants()
-		return TRUE
-	return FALSE
-
-/obj/item/implanter/fakeshieldshield
-	name = "implanter (fake mindshield)"
-	imp_type = /obj/item/implant/fakeshield
-
-/obj/item/paper/fluff/stations/junk/fakeshield
-	info = "After many months of investigation and decryption, the eggheads over at Cybersun Industries managed to perfectly replicate a signal cast by a mindshield implant. Unfortunately for them, the signal�s only purpose was to be read by security HUDs and was ineffective in blocking any sort of mind alerting effects."
 
 /obj/item/clothing/under/misc/syndiepjs
 	name = "syndie PJs"

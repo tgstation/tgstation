@@ -70,3 +70,27 @@
 	name = "implant case - 'Mindshield'"
 	desc = "A glass case containing a mindshield implant."
 	imp_type = /obj/item/implant/mindshield
+
+/obj/item/implant/fakeshield
+	name = "fake mindshield implant"
+	desc = "Pretends to protect against brainwashing."
+	activated = 0
+
+/obj/item/implant/fakeshield/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
+	if(..())
+		ADD_TRAIT(target, TRAIT_FAKE_MIND_SHIELD, "implant")
+		target.sec_hud_set_implants()
+		return TRUE
+
+/obj/item/implant/fakeshield/removed(mob/target, silent = FALSE, special = 0)
+	if(..())
+		if(isliving(target))
+			var/mob/living/L = target
+			REMOVE_TRAIT(L, TRAIT_FAKE_MIND_SHIELD, "implant")
+			L.sec_hud_set_implants()
+		return TRUE
+	return FALSE
+
+/obj/item/implanter/fakemindshield
+	name = "implanter (fake mindshield)"
+	imp_type = /obj/item/implant/fakeshield

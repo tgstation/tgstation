@@ -1187,6 +1187,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	exclude_modes = list()
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/stealthy_tools/fakemindshield
+	name = "Fake Mindshield Implant"
+	desc = "After many months of investigation and decryption, the eggheads over at Cybersun Industries managed \
+	to perfectly replicate a signal cast by a mindshield implant. Unfortunately for them, the signals only purpose \
+	was to be read by security HUDs and was ineffective in blocking any sort of mind alerting effects."
+	item = /obj/item/implanter/fakemindshield
+	cost = 3
+
 /datum/uplink_item/stealthy_tools/jammer
 	name = "Radio Jammer"
 	desc = "This device will disrupt any nearby outgoing radio communication when activated. Does not affect binary chat."
