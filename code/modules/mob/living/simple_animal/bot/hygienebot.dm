@@ -68,12 +68,12 @@
 	. = ..()
 	if(on)
 		var/mutable_appearance/fire_overlay = mutable_appearance(icon,"flame")
-		add_overlay(fire_overlay)
+		. +=fire_overlay
 
 
 	if(washing)
 		var/mutable_appearance/water_overlay = mutable_appearance(icon, emagged ? "dronefire" : "dronewater")
-		add_overlay(water_overlay)
+		. += water_overlay
 
 
 /mob/living/simple_animal/bot/hygienebot/turn_off()
