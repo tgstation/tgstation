@@ -103,7 +103,7 @@
 	if(time != null)
 		if(time < 3)
 			time = 3
-		det_time = round(CLAMP(time * 10, 0, 50))
+		det_time = round(clamp(time * 10, 0, 50))
 	else
 		var/previous_time = det_time
 		switch(det_time)

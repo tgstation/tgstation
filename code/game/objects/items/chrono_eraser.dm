@@ -172,9 +172,12 @@
 	var/mutable_appearance/mob_underlay
 	var/preloaded = 0
 	var/RPpos = null
+	var/attached = TRUE //if the gun arg isn't included initially, then the chronofield will work without one
 
 /obj/structure/chrono_field/Initialize(mapload, mob/living/target, obj/item/gun/energy/chrono_gun/G)
-	if(target && isliving(target) && G)
+	if(target && isliving(target))
+		if(!G)
+			attached = FALSE
 		target.forceMove(src)
 		captured = target
 		var/icon/mob_snapshot = getFlatIcon(target)
@@ -200,7 +203,7 @@
 
 /obj/structure/chrono_field/update_icon()
 	var/ttk_frame = 1 - (tickstokill / initial(tickstokill))
-	ttk_frame = CLAMP(CEILING(ttk_frame * CHRONO_FRAME_COUNT, 1), 1, CHRONO_FRAME_COUNT)
+	ttk_frame = clamp(CEILING(ttk_frame * CHRONO_FRAME_COUNT, 1), 1, CHRONO_FRAME_COUNT)
 	if(ttk_frame != RPpos)
 		RPpos = ttk_frame
 		mob_underlay.icon_state = "frame[RPpos]"
@@ -234,6 +237,8 @@
 				else
 					gun = null
 					return .()
+			else if(!attached)
+				tickstokill--
 			else
 				tickstokill++
 	else

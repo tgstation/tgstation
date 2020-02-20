@@ -1,6 +1,0 @@
-author: "JAremko"
-delete-after: True
-changes: 
-  - rscadd: "Added pyroclastic anomaly slime policy key"
-  - bugfix: "Fixed anomaly slime role"
-  - bugfix: "Now anomaly slimes can reproduce like other slimes do"

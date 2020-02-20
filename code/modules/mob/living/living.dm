@@ -1085,7 +1085,7 @@
 		update_fire()
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-	fire_stacks = CLAMP(fire_stacks + add_fire_stacks, -20, 20)
+	fire_stacks = clamp(fire_stacks + add_fire_stacks, -20, 20)
 	if(on_fire && fire_stacks <= 0)
 		ExtinguishMob()
 
