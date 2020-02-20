@@ -213,7 +213,7 @@
 		timer += pick(-600, 0)
 	var/datum/antagonist/creep/creeper = owner.has_antag_datum(/datum/antagonist/creep)
 	if(target && target.current && creeper)
-		creeper.trauma.attachedobsessedobj = src
+		creeper.trauma.attachedcreepobj = src
 		explanation_text = "Spend [DisplayTimeText(timer)] around [target.name] while they're alive."
 	else
 		explanation_text = "Free Objective"

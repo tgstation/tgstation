@@ -9,7 +9,7 @@
 
 /datum/round_event/creep/start()
 	for(var/mob/living/carbon/human/H in shuffle(GLOB.player_list))
-		if(!H.client || !(ROLE_OBSESSED in H.client.prefs.be_special))
+		if(!H.client || !(ROLE_CREEP in H.client.prefs.be_special))
 			continue
 		if(H.stat == DEAD)
 			continue
