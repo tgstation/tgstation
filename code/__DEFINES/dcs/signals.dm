@@ -393,8 +393,6 @@
 #define COMSIG_TRY_STORAGE_CAN_INSERT "storage_can_equip"				//(obj/item/insertion_candidate, mob/user, silent) - returns bool
 
 // /datum/component/two_handed signals
-#define COMSIG_TWOHANDED_WIELD "twohanded_wield"						//from base of datum/component/two_handed/proc/wield(mob/living/carbon/user): (/mob/user)
-#define COMSIG_TWOHANDED_UNWIELD "twohanded_unwield"					//from base of datum/component/two_handed/proc/unwield(mob/living/carbon/user): (/mob/user)
 #define COMSIG_IS_TWOHANDED "twohanded_is_check"						//() - returns bool
 #define COMSIG_IS_TWOHANDED_WIELDED "twohanded_get_wielded"				//() - returns bool
 #define COMSIG_IS_TWOHANDED_REQUIRED "twohanded_get_required"			//() - returns bool

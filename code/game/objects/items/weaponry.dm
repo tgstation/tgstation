@@ -759,8 +759,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/vibro_weapon/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 20, 105)
-	AddComponent(/datum/component/two_handed, force_unwielded=20, force_wielded=40, \
-					iconstate_wielded="hfrequency1", iconstate_unwielded="hfrequency0")
+	AddComponent(/datum/component/two_handed, force_unwielded=20, force_wielded=40, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+
+/obj/item/vibro_weapon/proc/icon_update_callback(wielded)
+	icon_state = "hfrequency[wielded]"
 
 /obj/item/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))

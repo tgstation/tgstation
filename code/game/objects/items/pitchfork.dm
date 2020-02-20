@@ -46,8 +46,10 @@
 
 /obj/item/pitchfork/demonic/ascended/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=100, force_wielded=500000, \
-					iconstate_wielded="pitchfork1", iconstate_unwielded="pitchfork0") // Kills you DEAD
+	AddComponent(/datum/component/two_handed, force_unwielded=100, force_wielded=500000, icon_update_callback=CALLBACK(src, .proc/icon_update_callback)) // Kills you DEAD
+
+/obj/item/pitchfork/demonic/proc/icon_update_callback(wielded)
+	icon_state = "pitchfork[wielded]"
 
 /obj/item/pitchfork/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] impales [user.p_them()]self in [user.p_their()] abdomen with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")

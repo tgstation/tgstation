@@ -33,8 +33,14 @@
 
 /obj/item/dualsaber/proc/add_twohanded_comp()
 	AddComponent(/datum/component/two_handed, force_unwielded=3, force_wielded=34, , \
-					iconstate_wielded="dualsaber[saber_color]1", iconstate_unwielded="dualsaber0", \
+					icon_update_callback=CALLBACK(src, .proc/icon_update_callback), \
 					wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
+
+/obj/item/dualsaber/proc/icon_update_callback(wielded)
+	if(wielded)
+		icon_state = "dualsaber[saber_color][wielded]"
+	else
+		icon_state = "dualsaber0"
 
 /obj/item/dualsaber/suicide_act(mob/living/carbon/user)
 	if(SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))

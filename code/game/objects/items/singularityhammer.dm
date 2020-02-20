@@ -22,8 +22,10 @@
 
 /obj/item/singularityhammer/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=20, \
-					iconstate_wielded="mjollnir1", iconstate_unwielded="mjollnir0")
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=20, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+
+/obj/item/singularityhammer/proc/icon_update_callback(wielded)
+	icon_state = "mjollnir[wielded]"
 
 /obj/item/singularityhammer/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -83,8 +85,10 @@
 
 /obj/item/mjollnir/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=25, \
-					iconstate_wielded="mjollnir1", iconstate_unwielded="mjollnir0")
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=25, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+
+/obj/item/mjollnir/proc/icon_update_callback(wielded)
+	icon_state = "mjollnir[wielded]"
 
 /obj/item/mjollnir/proc/shock(mob/living/target)
 	target.Stun(60)

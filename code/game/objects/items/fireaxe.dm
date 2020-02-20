@@ -21,8 +21,10 @@
 /obj/item/fireaxe/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=24, \
-					iconstate_wielded="fireaxe1", iconstate_unwielded="fireaxe0")
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=24, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+
+/obj/item/fireaxe/proc/icon_update_callback(wielded)
+	icon_state = "fireaxe[wielded]"
 
 /obj/item/fireaxe/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -47,5 +49,7 @@
 
 /obj/item/fireaxe/boneaxe/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23, \
-					iconstate_wielded="bone_axe1", iconstate_unwielded="bone_axe0")
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+
+/obj/item/fireaxe/boneaxe/icon_update_callback(wielded)
+	icon_state = "bone_axe[wielded]"

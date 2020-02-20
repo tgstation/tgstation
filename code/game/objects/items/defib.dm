@@ -234,7 +234,6 @@
 			visible_message("<span class='notice'>[src] beeps: Charge depleted.</span>")
 			playsound(src, 'sound/machines/defib_failed.ogg', 50, FALSE)
 	paddles.cooldown = FALSE
-	paddles.set_icon_off_cooldown()
 	paddles.update_icon()
 	update_power()
 
@@ -309,13 +308,13 @@
 /obj/item/shockpaddles/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	set_icon_off_cooldown()
+	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
 
-/obj/item/shockpaddles/proc/set_icon_on_cooldown()
-	AddComponent(/datum/component/two_handed, iconstate_wielded="[base_icon_state]1_cooldown", iconstate_unwielded="[base_icon_state]0_cooldown")
-
-/obj/item/shockpaddles/proc/set_icon_off_cooldown()
-	AddComponent(/datum/component/two_handed, iconstate_wielded="[base_icon_state]1", iconstate_unwielded="[base_icon_state]0")
+/obj/item/shockpaddles/proc/icon_update_callback(wielded)
+	icon_state = "[base_icon_state][wielded]"
+	item_state = icon_state
+	if(cooldown)
+		icon_state = "[base_icon_state][wielded]_cooldown"
 
 /obj/item/shockpaddles/Destroy()
 	defib = null
@@ -352,14 +351,12 @@
 	if(req_defib || !time)
 		return
 	cooldown = TRUE
-	set_icon_on_cooldown()
 	update_icon()
 	sleep(time)
 	var/turf/T = get_turf(src)
 	T.audible_message("<span class='notice'>[src] beeps: Unit is recharged.</span>")
 	playsound(src, 'sound/machines/defib_ready.ogg', 50, FALSE)
 	cooldown = FALSE
-	set_icon_off_cooldown()
 	update_icon()
 
 /obj/item/shockpaddles/Initialize()
@@ -473,7 +470,6 @@
 	if(req_defib)
 		defib.deductcharge(revivecost)
 		cooldown = TRUE
-		set_icon_on_cooldown()
 	busy = FALSE
 	update_icon()
 	if(req_defib)
@@ -527,7 +523,6 @@
 			if(req_defib)
 				defib.deductcharge(revivecost)
 				cooldown = TRUE
-				set_icon_on_cooldown()
 			busy = FALSE
 			update_icon()
 			if(!req_defib)
@@ -612,7 +607,6 @@
 				if(req_defib)
 					defib.deductcharge(revivecost)
 					cooldown = 1
-					set_icon_on_cooldown()
 				update_icon()
 				if(req_defib)
 					defib.cooldowncheck(user)

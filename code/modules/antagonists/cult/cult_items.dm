@@ -630,8 +630,10 @@
 /obj/item/cult_spear/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 90)
-	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24, \
-					iconstate_wielded="bloodspear1", iconstate_unwielded="bloodspear0")
+	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+
+/obj/item/cult_spear/proc/icon_update_callback(wielded)
+	icon_state = "bloodspear[wielded]"
 
 /obj/item/cult_spear/Destroy()
 	if(spear_act)

@@ -174,8 +174,10 @@
 
 /obj/item/staff/bostaff/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=24, \
-					iconstate_wielded="bostaff1", iconstate_unwielded="bostaff0")
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=24, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+
+/obj/item/staff/bostaff/proc/icon_update_callback(wielded)
+	icon_state = "bostaff[wielded]"
 
 /obj/item/staff/bostaff/attack(mob/target, mob/living/user)
 	add_fingerprint(user)

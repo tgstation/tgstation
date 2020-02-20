@@ -32,9 +32,8 @@
 	AddComponent(/datum/component/butchering, 60, 110) //technically it's huge and bulky, but this provides an incentive to use it
 	add_twohanded_comp()
 
-/obj/item/kinetic_crusher/proc/add_twohanded_comp(force_unwielded=0, force_wielded=20, iconstate_wielded="crusher1", iconstate_unwielded="crusher0")
-	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, \
-					iconstate_wielded=iconstate_wielded, iconstate_unwielded=iconstate_unwielded)
+/obj/item/kinetic_crusher/proc/add_twohanded_comp(force_unwielded=0, force_wielded=20, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_update_callback=icon_update_callback)
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
@@ -143,6 +142,9 @@
 		set_light(brightness_on)
 	else
 		set_light(0)
+
+/obj/item/kinetic_crusher/proc/icon_update_callback(wielded)
+	item_state = "crusher[wielded]"
 
 /obj/item/kinetic_crusher/update_overlays()
 	. = ..()
@@ -368,9 +370,8 @@
 		H.force += bonus_value * 0.2
 		H.detonation_damage += bonus_value * 0.8
 		if(SEND_SIGNAL(H, COMSIG_IS_TWOHANDED))
-			var/force_wielded = SEND_SIGNAL(H, COMSIG_TWOHANDED_GET_FORCEWIELDED) + bonus_value * 0.2
-			var/force_unwielded = SEND_SIGNAL(H, COMSIG_TWOHANDED_GET_FORCEUNWIELD) + bonus_value * 0.2
-			H.add_twohanded_comp(force_unwielded=force_unwielded, force_wielded=force_wielded)
+			H.add_twohanded_comp(force_unwielded=(SEND_SIGNAL(H, COMSIG_TWOHANDED_GET_FORCEUNWIELD) + bonus_value * 0.2), \
+								force_wielded=SEND_SIGNAL(H, COMSIG_TWOHANDED_GET_FORCEWIELDED) + bonus_value * 0.2)
 
 /obj/item/crusher_trophy/demon_claws/remove_from(obj/item/kinetic_crusher/H, mob/living/user)
 	. = ..()
@@ -378,9 +379,8 @@
 		H.force -= bonus_value * 0.2
 		H.detonation_damage -= bonus_value * 0.8
 		if(SEND_SIGNAL(H, COMSIG_IS_TWOHANDED))
-			var/force_wielded = SEND_SIGNAL(H, COMSIG_TWOHANDED_GET_FORCEWIELDED) - bonus_value * 0.2
-			var/force_unwielded = SEND_SIGNAL(H, COMSIG_TWOHANDED_GET_FORCEUNWIELD) - bonus_value * 0.2
-			H.add_twohanded_comp(force_unwielded=force_unwielded, force_wielded=force_wielded)
+			H.add_twohanded_comp(force_unwielded=(SEND_SIGNAL(H, COMSIG_TWOHANDED_GET_FORCEUNWIELD) - bonus_value * 0.2), \
+								force_wielded=(SEND_SIGNAL(H, COMSIG_TWOHANDED_GET_FORCEWIELDED) - bonus_value * 0.2))
 
 /obj/item/crusher_trophy/demon_claws/on_melee_hit(mob/living/target, mob/living/user)
 	user.heal_ordered_damage(bonus_value * 0.1, damage_heal_order)

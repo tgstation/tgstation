@@ -25,8 +25,10 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
 	AddComponent(/datum/component/jousting)
-	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, \
-					iconstate_wielded="[icon_prefix]1", iconstate_unwielded="[icon_prefix]0")
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+
+/obj/item/spear/proc/icon_update_callback(wielded)
+	icon_state = "[icon_prefix][wielded]"
 
 /obj/item/spear/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -37,8 +39,7 @@
 	if (istype(tip, /obj/item/shard/plasma))
 		throwforce = 21
 		icon_prefix = "spearplasma"
-		AddComponent(/datum/component/two_handed, force_unwielded=11, force_wielded=19, \
-					iconstate_wielded="[icon_prefix]1", iconstate_unwielded="[icon_prefix]0")
+		AddComponent(/datum/component/two_handed, force_unwielded=11, force_wielded=19, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
 	update_icon()
 	qdel(tip)
 	..()
@@ -53,8 +54,10 @@
 
 /obj/item/spear/explosive/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, \
-					iconstate_wielded="spearbomb1", iconstate_unwielded="spearbomb0")
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+
+/obj/item/spear/explosive/icon_update_callback(wielded)
+	icon_state = "spearbomb[wielded]"
 
 /obj/item/spear/explosive/proc/set_explosive(obj/item/grenade/G)
 	if(explosive)
@@ -71,8 +74,7 @@
 		var/lance_unwielded = SEND_SIGNAL(lancePart, COMSIG_TWOHANDED_GET_FORCEUNWIELD)
 		throwforce = lancePart.throwforce
 		icon_prefix = lancePart.icon_prefix
-		AddComponent(/datum/component/two_handed, force_unwielded=lance_unwielded, force_wielded=lance_wielded, \
-					iconstate_wielded="[icon_prefix]1", iconstate_unwielded="[icon_prefix]0")
+		AddComponent(/datum/component/two_handed, force_unwielded=lance_unwielded, force_wielded=lance_wielded, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
 		parts_list -= G
 		parts_list -= lancePart
 		set_explosive(G)
@@ -148,5 +150,7 @@
 
 /obj/item/spear/bonespear/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=12, force_wielded=20, \
-					iconstate_wielded="bone_spear1", iconstate_unwielded="bone_spear0")
+	AddComponent(/datum/component/two_handed, force_unwielded=12, force_wielded=20, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+
+/obj/item/spear/bonespear/icon_update_callback(wielded)
+	icon_state = "bone_spear[wielded]"

@@ -15,8 +15,10 @@
 
 /obj/item/broom/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, \
-					iconstate_wielded="broom0", iconstate_unwielded="broom1")
+	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+
+/obj/item/broom/proc/icon_update_callback(wielded)
+	icon_state = "broom[wielded]"
 
 /obj/item/broom/equipped(mob/user)
 	. = ..()
