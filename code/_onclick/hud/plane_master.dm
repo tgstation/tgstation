@@ -16,6 +16,7 @@
 //Trust me, you need one. Period. If you don't think you do, you're doing something extremely wrong.
 /obj/screen/plane_master/proc/backdrop(mob/mymob)
 
+///Things rendered on "openspace"; holes in multi-z
 /obj/screen/plane_master/openspace
 	name = "open space plane master"
 	plane = FLOOR_OPENSPACE_PLANE
@@ -38,6 +39,7 @@
 /obj/screen/plane_master/proc/clear_filters()
 	filters = list()
 
+///Contains just the floor
 /obj/screen/plane_master/floor
 	name = "floor plane master"
 	plane = FLOOR_PLANE
@@ -49,6 +51,7 @@
 	if(istype(mymob) && mymob.eye_blurry)
 		filters += GAUSSIAN_BLUR(clamp(mymob.eye_blurry*0.1,0.6,3))
 
+///Contains most things in the game world
 /obj/screen/plane_master/game_world
 	name = "game world plane master"
 	plane = GAME_PLANE
@@ -62,6 +65,8 @@
 	if(istype(mymob) && mymob.eye_blurry)
 		filters += GAUSSIAN_BLUR(clamp(mymob.eye_blurry*0.1,0.6,3))
 
+
+///Contains all lighting objects
 /obj/screen/plane_master/lighting
 	name = "lighting plane master"
 	plane = LIGHTING_PLANE
@@ -73,9 +78,13 @@
 	filters += filter(type="alpha", render_source=EMISSIVE_RENDER_TARGET, flags=MASK_INVERSE)
 	filters += filter(type="alpha", render_source=EMISSIVE_UNBLOCK_RENDER_TARGET, flags=MASK_INVERSE)
 
+/// Doesn't render; things placed on this place mask out the lighting plane
+/// Gets masked out by mobs as well, which allows them to "block" the effect
+/// Use this one for things on objects that you want blocked out by mobs
+/// Limitations: does not get blocked by objects
 /obj/screen/plane_master/emissive
-	name = "emissive plane master"
-	plane = EMISSIVE_PLANE
+	name = "emissive obj plane master"
+	plane = EMISSIVE_OBJ_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = EMISSIVE_RENDER_TARGET
 
@@ -89,12 +98,16 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = EMISSIVE_UNBLOCK_RENDER_TARGET
 
-/obj/screen/plane_master/emissive_blocker
-	name = "emissive blocker plane master"
-	plane = EMISSIVE_BLOCKER_PLANE
+/// Doesn't render; things placed on this place mask out the lighting plane
+/// Use this one for things on mobs
+/// Limitations: always cuts out lighting whether or not it's blocked
+/obj/screen/plane_master/emissive_unblockable
+	name = "emissive mob plane master"
+	plane = EMISSIVE_MOB_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = EMISSIVE_BLOCKER_RENDER_TARGET
 
+///Contains space parallax
 /obj/screen/plane_master/parallax
 	name = "parallax plane master"
 	plane = PLANE_SPACE_PARALLAX
