@@ -33,3 +33,21 @@
 	active_msg = "You prepare to cast Acid Splash!"
 	deactive_msg = "You vanish your Acid splash...for now."
 	active = FALSE
+
+/obj/effect/proc_holder/spell/aimed/chill_touch
+	name = "Chill Touch"
+	desc = "Make a ranged spell attack against the creature to assail it with the chill of the grave. It won't be able to heal for 60 seconds as a result!"
+	school = "evocation"
+	charge_max = 60
+	clothes_req = FALSE
+	invocation = "MEELTAN LUV"
+	invocation_type = "shout"
+	range = 20
+	cooldown_min = 15
+	projectile_type = /obj/projectile/magic/projectile/acid
+	base_icon_state = "grease"
+	action_icon_state = "grease0"
+	sound = 'sound/magic/fireball.ogg'
+	active_msg = "You prepare to cast Acid Splash!"
+	deactive_msg = "You vanish your Acid splash...for now."
+	active = FALSE
