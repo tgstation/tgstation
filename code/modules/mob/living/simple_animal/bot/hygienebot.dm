@@ -56,18 +56,25 @@
 	if(washing)
 		do_wash(AM)
 
-/mob/living/simple_animal/bot/hygienebot/update_icon()
-	cut_overlays()
-
+/mob/living/simple_animal/bot/hygienebot/update_icon_state()
+	. = ..()
 	if(on)
-		var/mutable_appearance/fire_overlay = mutable_appearance(icon,"flame")
-		add_overlay(fire_overlay)
 		icon_state = "drone-on"
 	else
 		icon_state = "drone"
+
+
+/mob/living/simple_animal/bot/hygienebot/update_overlays()
+	. = ..()
+	if(on)
+		var/mutable_appearance/fire_overlay = mutable_appearance(icon,"flame")
+		add_overlay(fire_overlay)
+
+
 	if(washing)
 		var/mutable_appearance/water_overlay = mutable_appearance(icon, emagged ? "dronefire" : "dronewater")
 		add_overlay(water_overlay)
+
 
 /mob/living/simple_animal/bot/hygienebot/turn_off()
 	..()
@@ -209,51 +216,30 @@
 
 
 /mob/living/simple_animal/bot/hygienebot/get_controls(mob/user)
-	var/dat
+	var/list/dat = list()
 	dat += hack(user)
 	dat += showpai(user)
-	dat += text({"
+	dat += {"
 <TT><B>Hygienebot X2 controls</B></TT><BR><BR>
-Status: []<BR>
+Status: ["<A href='?src=[REF(src)];power=[TRUE]'>[on ? "On" : "Off"]</A>"]<BR>
 Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-Maintenance panel is [open ? "opened" : "closed"]"},
-
-"<A href='?src=[REF(src)];power=[TRUE]'>[on ? "On" : "Off"]</A>" )
+Maintenance panel is [open ? "opened" : "closed"]"}
 
 	if(!locked || issilicon(user) || IsAdminGhost(user))
-		dat += text({"<BR> Auto Patrol: []"},
+		dat += {"<BR> Auto Patrol: ["<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>"]"}
 
-"<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
-	return	dat
+	return	dat.Join("")
 
 /mob/living/simple_animal/bot/hygienebot/proc/check_purity(mob/living/L)
 	if(emagged && L.stat != DEAD)
 		return FALSE
 
-	var/obj/item/head = L.get_item_by_slot(ITEM_SLOT_HEAD)
-	if(head)
-		if(HAS_BLOOD_DNA(head))
-			return FALSE
+	for(var/X in list(ITEM_SLOT_HEAD, ITEM_SLOT_MASK, ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING, ITEM_SLOT_FEET))
 
-	var/obj/item/mask = L.get_item_by_slot(ITEM_SLOT_MASK)
-	if(mask)
-		if(HAS_BLOOD_DNA(mask))
-			return FALSE
-
-	var/obj/item/uniform = L.get_item_by_slot(ITEM_SLOT_ICLOTHING)
-	if(uniform)
-		if(HAS_BLOOD_DNA(uniform))
-			return FALSE
-
-	var/obj/item/suit = L.get_item_by_slot(ITEM_SLOT_OCLOTHING)
-	if(suit)
-		if(HAS_BLOOD_DNA(suit))
-			return FALSE
-
-	var/obj/item/feet = L.get_item_by_slot(ITEM_SLOT_FEET)
-	if(feet)
-		if(HAS_BLOOD_DNA(feet))
-			return FALSE
+		var/obj/item/I = L.get_item_by_slot(X)
+		if(I)
+			if(HAS_BLOOD_DNA(I))
+				return FALSE
 	return TRUE
 
 /mob/living/simple_animal/bot/hygienebot/proc/do_wash(atom/A)

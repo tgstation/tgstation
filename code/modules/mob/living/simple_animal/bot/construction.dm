@@ -483,6 +483,8 @@
 						D.use(1)
 						to_chat(user, "<span class='notice'>You pipe up [src].</span>")
 						build_step++
+					else
+						return
 				var/mob/living/simple_animal/bot/hygienebot/H = new(drop_location())
 				H.name = created_name
 				qdel(I)
