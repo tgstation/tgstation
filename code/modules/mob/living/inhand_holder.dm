@@ -5,23 +5,23 @@
 	desc = "Yell at coderbrush."
 	icon = null
 	icon_state = ""
+	slot_flags = NONE
 	var/mob/living/held_mob
-	var/can_head = TRUE
+	var/can_head = FALSE
 	var/destroying = FALSE
 
-/obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/M, _worn_state, head_icon, lh_icon, rh_icon, _can_head = TRUE)
+/obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/M, _worn_state, head_icon, lh_icon, rh_icon)
 	. = ..()
-	can_head = _can_head
 	if(head_icon)
 		mob_overlay_icon = head_icon
+		can_head = TRUE
+		slot_flags = HEAD
 	if(_worn_state)
 		item_state = _worn_state
 	if(lh_icon)
 		lefthand_file = lh_icon
 	if(rh_icon)
 		righthand_file = rh_icon
-	if(!can_head)
-		slot_flags = NONE
 	deposit(M)
 
 /obj/item/clothing/head/mob_holder/Destroy()

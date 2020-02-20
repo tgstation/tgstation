@@ -123,3 +123,8 @@
 
 	var/list/ownedSoullinks //soullinks we are the owner of
 	var/list/sharedSoullinks //soullinks we are a/the sharer of
+
+	var/icon/held_lh = 'icons/mob/pets_held_lh.dmi'//icons for holding mobs
+	var/icon/held_rh = 'icons/mob/pets_held_rh.dmi'
+	var/icon/head_icon//what it looks like on your head
+	var/held_state = ""//icon state for the above
