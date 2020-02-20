@@ -8,7 +8,7 @@
 
 /obj/item/stack/license_plates/empty
 	name = "empty license plate"
-	desc = "Instead of a license plate number, this could contain a quote like \"Live laugh love\.""
+	desc = "Instead of a license plate number, this could contain a quote like \"Live laugh love\"."
 
 /obj/item/stack/license_plates/empty/fifty
 	amount = 50
