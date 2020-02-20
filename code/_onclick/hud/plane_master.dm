@@ -78,9 +78,12 @@
 	filters += filter(type="alpha", render_source=EMISSIVE_RENDER_TARGET, flags=MASK_INVERSE)
 	filters += filter(type="alpha", render_source=EMISSIVE_UNBLOCKABLE_RENDER_TARGET, flags=MASK_INVERSE)
 
-/// Doesn't render; things placed on this place mask out the lighting plane
-/// Gets masked out by "blockers"
-/// Use this one for things on objects that you want blocked out by mobs, items, etc.
+/**
+  * Things placed on this mask the lighting plane. Doesn't render directly.
+  *
+  * Gets masked by blocking plane. Use for things that you want blocked by
+  * mobs, items, etc.
+  */
 /obj/screen/plane_master/emissive
 	name = "emissive plane master"
 	plane = EMISSIVE_PLANE
@@ -91,17 +94,24 @@
 	. = ..()
 	filters += filter(type="alpha", render_source=EMISSIVE_BLOCKER_RENDER_TARGET, flags=MASK_INVERSE)
 
-/// Doesn't render; things placed on this place mask out the lighting plane
-/// Use this one for things on mobs that should generally never be blocked
-/// always cuts out lighting whether or not it's blocked
+/**
+  * Things placed on this always mask the lighting plane. Doesn't render directly.
+  *
+  * Always masks the light plane, isn't blocked by anything. Use for on mob glows,
+  * magic stuff, etc.
+  */
+
 /obj/screen/plane_master/emissive_unblockable
 	name = "unblockable emissive plane master"
 	plane = EMISSIVE_UNBLOCKABLE_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = EMISSIVE_UNBLOCKABLE_RENDER_TARGET
 
-/// Doesn't render; things placed on this place mask out the emissive layer
-/// You shouldn't generally be directly using this
+/**
+  * Things placed on this layer mask the emissive layer. Doesn't render directly
+  *
+  * You really shouldn't be directly using this, use atom helpers instead
+  */
 /obj/screen/plane_master/emissive_unblockable
 	name = "emissive mob plane master"
 	plane = EMISSIVE_BLOCKER_PLANE
