@@ -22,3 +22,4 @@
 /obj/projectile/energy/tesla/cannon
 	name = "tesla orb"
 	power = 20000
+	damage = 15 //Mech man big
