@@ -24,3 +24,9 @@
 	use_skintones = 1
 	inherent_traits = list(TRAIT_NOBREATH)
 	species_language_holder = /datum/language_holder/dwarf
+
+/datum/species/human/dwarf/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	owner.transform = owner.transform.Scale(1, 0.8)
+	passtable_on(owner, INNATE_TRAIT)
+	. = ..()
+
