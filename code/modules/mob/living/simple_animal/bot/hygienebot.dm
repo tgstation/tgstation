@@ -238,7 +238,7 @@ Maintenance panel is [open ? "opened" : "closed"]"}
 
 		var/obj/item/I = L.get_item_by_slot(X)
 		if(I && HAS_BLOOD_DNA(I))
-				return FALSE
+			return FALSE
 	return TRUE
 
 /mob/living/simple_animal/bot/hygienebot/proc/do_wash(atom/A)
