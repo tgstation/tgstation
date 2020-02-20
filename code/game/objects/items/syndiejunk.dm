@@ -92,4 +92,3 @@
 
 /obj/item/paper/fluff/stations/junk/snackkit
 	info = "Enjoy this collection of old food left out in decrepit venders and on mess hall tables. Enjoy with this fancy plastitanium fork that has been made to piece even the hardest outer shells and armors of food and people alike."
-	
