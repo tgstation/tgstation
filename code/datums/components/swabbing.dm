@@ -4,9 +4,8 @@ This component is used in vat growing to swab for microbiological samples which 
 
 */
 /datum/component/swabbing
-	///The current sample on the swab
+	///The current datums on the swab
 	var/list/swabbed_items = list()
-	var/
 
 /datum/component/swabbing/Initialize(CanSwabObj = TRUE, CanSwabTurf = TRUE, CanSwabMob = FALSE, swab_time = 10, max_items = 3)
 	if(!isitem(parent))
@@ -26,6 +25,24 @@ This component is used in vat growing to swab for microbiological samples which 
 ///Ran when you attack an object, tries to get a swab of the object. if a swabbable surface is found it will run behavior and hopefully
 /datum/component/swabbing/proc/TryToSwab(datum/source, atom/target, mob/user, params)
 	set waitfor FALSE //This prevents do_after() from making this proc not return it's value.
+
+	if(istype(target, /obj/item/petri_dish))
+		var/obj/item/petri_dish/dish = target
+		if(dish.sample)
+			return
+
+		var/datum/biological_sample/deposited_sample
+
+		for(var/datum/biological_sample/sample/S in swabbed_items) //Typed in case there is a non sample on the swabbing tool because someone was fucking with swabbable element
+			//Collapse the samples into one sample; one gooey mess essentialy.
+			if(!deposited_sample)
+				deposited_sample = S
+			else
+				deposited_sample.Merge(S)
+
+		dish.deposit_sample(user, deposited_sample)
+
+		return COMPONENT_NO_ATTACK
 	if(!can_swab(target))
 		return NONE //Just do the normal attack.
 

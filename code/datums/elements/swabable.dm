@@ -4,8 +4,6 @@ This element is used in vat growing to allow for swabable behavior. This swabbin
 
 */
 /datum/element/swabable
-	///The results found on the swabbed objects.
-	var/list/swab_results
 
 /datum/element/swabable/Attach(datum/target, list/swab_results)
 	if(!isatom(target) || isarea(target))
@@ -19,5 +17,5 @@ This element is used in vat growing to allow for swabable behavior. This swabbin
 /datum/element/swabable/proc/GetSwabbed(datum/source, list/mutable_results)
 	 . = COMPONENT_SWAB_FOUND //Return this so the swabbing component knows hes a good boy and found something that needs swabbing.
 
-	mutable_results += swab_results
+	mutable_results += new
 	swab_results = null //Results have been "taken".
