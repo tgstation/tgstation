@@ -146,6 +146,8 @@
 #define SPACE_HELM_MAX_TEMP_PROTECT			1500
 /// what min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits. MUST NOT BE 0.
 #define SPACE_SUIT_MIN_TEMP_PROTECT			2.0
+/// The min cold protection of a space suit without the heater active
+#define SPACE_SUIT_MIN_TEMP_PROTECT_OFF		72
 #define SPACE_SUIT_MAX_TEMP_PROTECT			1500
 
 /// Cold protection for firesuits

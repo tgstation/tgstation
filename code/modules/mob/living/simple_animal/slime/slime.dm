@@ -167,34 +167,31 @@
 	update_health_hud()
 
 /mob/living/simple_animal/slime/update_health_hud()
-	if(hud_used)
-		var/severity = 0
-		var/healthpercent = (health/maxHealth) * 100
+	var/severity = 0
+	var/healthpercent = (health/maxHealth) * 100
+	if(hud_used?.healthdoll)
 		switch(healthpercent)
 			if(100 to INFINITY)
-				hud_used.healths.icon_state = "slime_health0"
+				severity = 0
 			if(80 to 100)
-				hud_used.healths.icon_state = "slime_health1"
 				severity = 1
 			if(60 to 80)
-				hud_used.healths.icon_state = "slime_health2"
 				severity = 2
 			if(40 to 60)
-				hud_used.healths.icon_state = "slime_health3"
 				severity = 3
 			if(20 to 40)
-				hud_used.healths.icon_state = "slime_health4"
 				severity = 4
-			if(1 to 20)
-				hud_used.healths.icon_state = "slime_health5"
+			if(10 to 20)
 				severity = 5
-			else
-				hud_used.healths.icon_state = "slime_health7"
+			if(1 to 20)
 				severity = 6
-		if(severity > 0)
-			overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
-		else
-			clear_fullscreen("brute")
+			else
+				severity = 7
+		hud_used.healthdoll.icon_state = "slime_health[severity]"
+	if(severity > 0)
+		overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
+	else
+		clear_fullscreen("brute")
 
 /mob/living/simple_animal/slime/adjust_bodytemperature()
 	. = ..()

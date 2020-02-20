@@ -7,29 +7,21 @@
 	rcd_cost = 30
 	rcd_delay = 30
 	buffer = 400
-	var/eat_dir = NORTH
+	var/eat_dir = SOUTH
 
 /obj/machinery/plumbing/grinder_chemical/Initialize(mapload, bolt)
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply, bolt)
 
-/obj/machinery/plumbing/grinder_chemical/can_be_rotated(mob/user,rotation_type)
+/obj/machinery/plumbing/grinder_chemical/can_be_rotated(mob/user, rotation_type)
 	if(anchored)
 		to_chat(user, "<span class='warning'>It is fastened to the floor!</span>")
 		return FALSE
-	switch(eat_dir)
-		if(WEST)
-			eat_dir = NORTH
-			return TRUE
-		if(EAST)
-			eat_dir = SOUTH
-			return TRUE
-		if(NORTH)
-			eat_dir = EAST
-			return TRUE
-		if(SOUTH)
-			eat_dir = WEST
-			return TRUE
+	return TRUE
+
+/obj/machinery/plumbing/grinder_chemical/setDir(newdir)
+	. = ..()
+	eat_dir = newdir
 
 /obj/machinery/plumbing/grinder_chemical/CanAllowThrough(atom/movable/AM)
 	. = ..()
@@ -61,5 +53,7 @@
 			return
 		I.on_grind()
 		reagents.add_reagent_list(I.grind_results)
+		if(I.reagents)
+			I.reagents.trans_to(src, I.reagents.total_volume, transfered_by = src)
 		qdel(I)
 

@@ -746,6 +746,10 @@
 	if(hud_used && hud_used.internals)
 		hud_used.internals.icon_state = "internal[internal_state]"
 
+/mob/living/carbon/proc/update_spacesuit_hud_icon(cell_state = "empty")
+	if(hud_used && hud_used.spacesuit)
+		hud_used.spacesuit.icon_state = "spacesuit_[cell_state]"
+
 /mob/living/carbon/update_stat()
 	if(status_flags & GODMODE)
 		return
@@ -820,6 +824,19 @@
 	. = ..()
 	if(!getorgan(/obj/item/organ/brain) && (!mind || !mind.has_antag_datum(/datum/antagonist/changeling)))
 		return 0
+
+/mob/living/carbon/proc/can_defib()
+	var/obj/item/organ/heart = getorgan(/obj/item/organ/heart)
+	if(suiciding || hellbound || HAS_TRAIT(src, TRAIT_HUSK))
+		return
+	if((getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
+		return
+	if(!heart || (heart.organ_flags & ORGAN_FAILING))
+		return
+	var/obj/item/organ/brain/BR = getorgan(/obj/item/organ/brain)
+	if(QDELETED(BR) || (BR.organ_flags & ORGAN_FAILING) || BR.suicided)
+		return
+	return TRUE
 
 /mob/living/carbon/harvest(mob/living/user)
 	if(QDELETED(src))

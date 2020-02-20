@@ -65,3 +65,7 @@
 
 /obj/item/ammo_casing/magic/wipe
 	projectile_type = /obj/projectile/magic/wipe
+
+/obj/item/ammo_casing/magic/nothing
+	/obj/projectile/magic/nothing
+	harmful = FALSE

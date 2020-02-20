@@ -1,4 +1,0 @@
-author: "Qustinnus"
-delete-after: True
-changes: 
-  - code_imp: "there is now an edible component which will allow us to deprecate our hacky methods of making things such as organs edible"

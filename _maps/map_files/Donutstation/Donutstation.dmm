@@ -2493,13 +2493,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
-"agb" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "aishuttersexternal";
-	name = "AI privacy shutters"
-	},
-/turf/open/space/basic,
-/area/space)
 "agc" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate{
@@ -2795,7 +2788,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "agI" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/requests_console{
 	announcementConsole = 1;
 	department = "Research Director's Desk";
@@ -2805,6 +2797,7 @@
 	pixel_y = 30;
 	receive_ore_updates = 1
 	},
+/obj/machinery/computer/aifixer,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "agJ" = (
@@ -4189,13 +4182,13 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "akI" = (
-/obj/item/twohanded/required/kirbyplants/dead,
 /obj/machinery/button/door{
 	id = "rdprivacy";
 	name = "Privacy Shutters Control";
 	pixel_x = 26;
 	pixel_y = -26
 	},
+/obj/item/twohanded/required/kirbyplants/dead,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "akK" = (
@@ -11778,11 +11771,15 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/reagent_containers/spray/cleaner,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "aFN" = (
@@ -18042,8 +18039,8 @@
 	},
 /area/medical/genetics)
 "aYg" = (
-/mob/living/carbon/monkey,
 /obj/effect/landmark/start/geneticist,
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel,
 /area/medical/genetics)
 "aYh" = (
@@ -19695,9 +19692,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/nuke_storage)
 "bcm" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/engine,
 /area/science/explab)
@@ -20372,6 +20366,9 @@
 /area/medical/virology)
 "bef" = (
 /obj/effect/landmark/blobstart,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/science/explab)
 "beg" = (
@@ -38804,7 +38801,7 @@
 	dir = 8
 	},
 /obj/item/toy/figure/mime,
-/obj/item/gun/magic/wand,
+/obj/item/gun/magic/wand/nothing,
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
 "cad" = (
@@ -41869,13 +41866,11 @@
 /obj/item/radio/intercom{
 	pixel_y = 29
 	},
-/obj/machinery/computer/aifixer{
-	dir = 4
-	},
 /obj/machinery/camera{
 	c_tag = "Research - Research Director's Office";
 	network = list("ss13","Research")
 	},
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "eRe" = (
@@ -90212,7 +90207,7 @@ aaa
 aaa
 aaa
 avP
-agb
+aaa
 bMO
 aug
 bMO
