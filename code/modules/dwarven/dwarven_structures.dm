@@ -6,7 +6,6 @@
 	var/cooldowntime = 0
 	custom_materials = list()
 	//break_sound = 'sound/hallucinations/veryfar_noise.ogg' //to do: find a suitable noise
-	//debris = list(/obj/item/stack/sheet/runed_metal = 1) //to do : make a dwarven metal datum
 
 /obj/structure/destructible/dwarven/New()
 	START_PROCESSING(SSfastprocess, src)
@@ -126,12 +125,12 @@
 	. = ..()
 
 /obj/structure/destructible/dwarven/mythril_press
-	name = "Ancient Mythril Press"
+	name = "Ancient Alloy Press"
 	icon_state = "mythril_press"
 	custom_materials  = list(/datum/material/silver = 20000)
 
 /obj/structure/destructible/dwarven/mythril_press/Initialize()
-	AddComponent(/datum/component/material_container,list(/datum/material/diamond,/datum/material/uranium,/datum/material/mythril,), 20000, TRUE, /obj/item/stack/sheet/mineral, null,  null, FALSE)
+	AddComponent(/datum/component/material_container,list(/datum/material/gold,/datum/material/silver,/datum/material/titanium,/datum/material/dwarven,), 20000, TRUE, /obj/item/stack/sheet/mineral, null,  null, FALSE)
 	. = ..()
 
 /obj/structure/destructible/dwarven/mythril_press/attack_hand(mob/user)
@@ -140,14 +139,14 @@
 
 /obj/structure/destructible/dwarven/mythril_press/proc/press_mythril(mob/user)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	if(materials.has_materials(list(/datum/material/diamond = 1000, /datum/material/uranium = 1000)))
-		materials.use_materials(list(/datum/material/diamond = 1000, /datum/material/uranium = 1000))
-		materials.insert_amount_mat(materials.sheet2amount(1),/datum/material/mythril)
+	if(materials.has_materials(list(/datum/material/gold= 1000, /datum/material/silver = 1000, /datum/material/titanium = 1000)))
+		materials.use_materials(list(/datum/material/gold= 1000, /datum/material/silver = 1000, /datum/material/titanium = 1000))
+		materials.insert_amount_mat(materials.sheet2amount(1),/datum/material/dwarven)
 		materials.retrieve_all(get_turf(src))
-		to_chat(user, "<span class='notice'>You hear a loud crank as materials are compressed into mythril!</span>")
+		to_chat(user, "<span class='notice'>You hear a loud crank as materials are compressed into dwarven alloy!</span>")
 		return
 	materials.retrieve_all(get_turf(src))
-	to_chat(user, "<span class='notice'>The machine makes a loud crank sound, but no mythril falls out!</span>")
+	to_chat(user, "<span class='notice'>The machine makes a loud crank sound, but no alloy falls out!</span>")
 
 /obj/structure/destructible/dwarven/workshop
 	name = "Dwarven workshop"
@@ -184,7 +183,13 @@
 	. += "<span class='notice'>Click with mats to put them inside of the workshop</span>"
 	. += "<span class='notice'>Click with a hand to retrieve all mats</span>"
 	. += "<span class='notice'>Click with a mallet to activate the function</span>"
-	. += "<span class='notice'>Current function is : [state]</span>"
+	switch(state)
+		if(0)
+			. += "<span class='notice'>Currently it can produce upgrade kits. </span>"
+		if(1)
+			. += "<span class='notice'>Currently it can produce structure prints for creation of new structures. </span>"
+		if(2)
+			. += "<span class='notice'>Current it can produce quality pickaxes </span>"
 
 
 /obj/structure/destructible/dwarven/workshop/AltClick(mob/user)
@@ -226,8 +231,7 @@
 			handle_create_pickaxe(user)
 		if(0)
 			handle_upgrades(user)
-		//if(3) //upgrades this will require dwarven metal datum
-		//	handle_create_pickaxe(user)
+
 	return
 ///Handles the choosing and creation of dwarven blueprints
 /obj/structure/destructible/dwarven/workshop/proc/handle_create_blueprints(mob/user)
@@ -273,7 +277,7 @@
 			return
 	materials.use_materials(initial(wanted_pickaxe.custom_materials))
 	new wanted_pickaxe(drop_location())
-	user?.mind.adjust_experience(/datum/skill/operating, 2)
+	user?.mind.adjust_experience(/datum/skill/operating, 4)
 
 ///Handles the choosing and creation of upgrade kits
 /obj/structure/destructible/dwarven/workshop/proc/handle_upgrades(mob/user)
@@ -283,7 +287,7 @@
 		return
 	materials.use_materials(list(/datum/material/dwarven = 10000))
 	new /obj/item/dwarven/upgrade_kit(drop_location())
-	user?.mind.adjust_experience(/datum/skill/operating, 2)
+	user?.mind.adjust_experience(/datum/skill/operating, 4)
 
 
 /*

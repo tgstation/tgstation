@@ -257,5 +257,5 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	sheet_type = /obj/item/stack/sheet/mineral/dwarven
 	value_per_unit = 0.1
 	strength_modifier = 1.2
-	armor_modifiers = list("melee" = 1.5, "bullet" = 1, "laser" = 1, "energy" = 1.1, "bomb" = 1.75, "bio" = 1, "rad" = 1, "fire" = 1.5, "acid" = 1)
+	armor_modifiers = list("melee" = 1.35, "bullet" = 1.1, "laser" = 1, "energy" = 1.1, "bomb" = 1.75, "bio" = 1, "rad" = 1, "fire" = 1.35, "acid" = 1)
 	beauty_modifier = 0.2
