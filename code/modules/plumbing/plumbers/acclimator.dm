@@ -91,15 +91,15 @@
 	switch(action)
 		if("set_target_temperature")
 			var/target = text2num(params["temperature"])
-			target_temperature = CLAMP(target, 0, 1000)
+			target_temperature = clamp(target, 0, 1000)
 		if("set_allowed_temperature_difference")
 			var/target = text2num(params["temperature"])
-			allowed_temperature_difference = CLAMP(target, 0, 1000)
+			allowed_temperature_difference = clamp(target, 0, 1000)
 		if("toggle_power")
 			enabled = !enabled
 		if("change_volume")
 			var/target = text2num(params["volume"])
-			reagents.maximum_volume = CLAMP(round(target), 1, buffer)
+			reagents.maximum_volume = clamp(round(target), 1, buffer)
 
 #undef COOLING
 #undef HEATING

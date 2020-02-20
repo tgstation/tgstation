@@ -152,5 +152,5 @@
 			var/value = text2num(params["adjust"])
 			if(value)
 				value = round(time + value)
-				time = CLAMP(value, 0, 600)
+				time = clamp(value, 0, 600)
 				. = TRUE

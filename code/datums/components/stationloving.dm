@@ -5,7 +5,7 @@
 	var/allow_death = FALSE
 
 /datum/component/stationloving/Initialize(inform_admins = FALSE, allow_death = FALSE)
-	if(!ismovableatom(parent))
+	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, list(COMSIG_MOVABLE_Z_CHANGED), .proc/check_in_bounds)
 	RegisterSignal(parent, list(COMSIG_MOVABLE_SECLUDED_LOCATION), .proc/relocate)

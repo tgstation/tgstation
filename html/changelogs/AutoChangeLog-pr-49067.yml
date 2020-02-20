@@ -1,7 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes: 
-  - rscadd: "Adds geysers to lavaland! They can be activated by using a reinforced plunger found in the medical vendor. They can be harvested by using a new plumbing device, magically powered liquid pumps!"
-  - rscadd: "Adds Hollow Water to geysers, wich can be combined with Holy Water as catalyst for more Holy Water"
-  - rscadd: "Adds Protozine to geyers, a very weak version of Omnizine. Can be used in Strange Reagent mixing"
-  - rscadd: "Adds Wittel, a very rare geyser chem. Can be processed into gravitum, wich removes gravity. Can also be processed into metalgen, wich has a strange tendency to transform objects into the imprinted material."
