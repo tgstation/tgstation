@@ -36,7 +36,7 @@
 		if(comp_twohand.wielded)
 			to_chat(user, "<span class='warning'>[I] must be unwielded before it can be sharpened!</span>")
 			return
-		comp_twohand.force_wielded = CLAMP(force_wielded + increment, 0, max) // wieldforce is increased since normal force wont stay
+		comp_twohand.force_wielded = clamp(force_wielded + increment, 0, max) // wieldforce is increased since normal force wont stay
 	if(I.force > initial(I.force))
 		to_chat(user, "<span class='warning'>[I] has already been refined before. It cannot be sharpened further!</span>")
 		return
