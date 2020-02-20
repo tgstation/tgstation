@@ -4,11 +4,11 @@ This component is used in vat growing to swab for microbiological samples which 
 
 */
 /datum/component/swabbing
-	///The current sample on the swab.
-	var/datum/biological_sample/our_sample
+	///The current sample on the swab
+	var/list/swabbed_items = list()
+	var/
 
-
-/datum/component/swabbing/Initialize(CanSwabObj = TRUE, CanSwabTurf = TRUE, CanSwabMob = FALSE, swab_time = 10)
+/datum/component/swabbing/Initialize(CanSwabObj = TRUE, CanSwabTurf = TRUE, CanSwabMob = FALSE, swab_time = 10, max_items = 3)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -35,10 +35,20 @@ This component is used in vat growing to swab for microbiological samples which 
 	if(!do_after(user, eat_time, TRUE, target)) // Start swabbing boi
 		return
 
-	if(SEND_SIGNAL(src, COMSIG_SWAB_FOR_SAMPLES, src, user)) //If we found something to swab now we let the swabbed thing handle what it would do, we just sit back and relax now.
+	if(swabbed_items.len >= 3)
+		to_chat(user, "<span class='warning'>You cannot collect another sample on the swabber!</span>")
 		return
 
-	to_chat(user, "<span class='warning'>You do not manage to find a anything on [target]!</span>")
+	if(!SEND_SIGNAL(src, COMSIG_SWAB_FOR_SAMPLES, src, swabbed_items)) //If we found something to swab now we let the swabbed thing handle what it would do, we just sit back and relax now.
+		to_chat(user, "<span class='warning'>You do not manage to find a anything on [target]!</span>")
+		return
+
+	if(!swabbed_items.len)
+		to_chat(user, "<span class='nicegreen'>You manage to collect a microbiological sample from [target]!</span>")
+		return
+	else
+		to_chat(user, "<span class='warning'>You manage to collect a microbiological sample from [target]...But there was already one there!</span>")
+
 
 ///Checks if the swabbing component can swab the specific object or not
 /datum/component/swabbing/proc/can_swab(atom/target)
