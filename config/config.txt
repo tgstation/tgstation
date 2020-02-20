@@ -500,3 +500,19 @@ DEFAULT_VIEW_SQUARE 15x15
 
 ## Enable automatic profiling - Byond 513.1506 and newer only.
 #AUTO_PROFILE
+
+#### DISCORD STUFFS ####
+## MAKE SURE ALL SECTIONS OF THIS ARE FILLED OUT BEFORE ENABLING
+## Discord IDs can be obtained by following this guide: https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-
+
+## Uncomment to enable discord auto-roling when users link their BYOND and Discord accounts
+#ENABLE_DISCORD_AUTOROLE
+
+## Add your discord bot token here. Make sure it has the ability to manage roles
+#DISCORD_TOKEN someDiscordToken
+
+## Add the ID of your guild (server) here
+#DISCORD_GUILDID 000000000000000000
+
+## Add the ID of the role you want assigning here
+#DISCORD_ROLEID 000000000000000000

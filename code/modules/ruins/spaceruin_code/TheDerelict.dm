@@ -76,7 +76,7 @@
 
 ///Tries to charge from powernet excess, no upper limit except max charge.
 /obj/machinery/computer/vaultcontroller/proc/attempt_siphon()
-	var/surpluspower = CLAMP(attached_cable.surplus(), 0, (siphon_max - siphoned_power))
+	var/surpluspower = clamp(attached_cable.surplus(), 0, (siphon_max - siphoned_power))
 	if(surpluspower)
 		attached_cable.add_load(surpluspower)
 		siphoned_power += surpluspower

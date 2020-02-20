@@ -1,4 +1,4 @@
-/* 
+/*
 NOTES:
 There is a DB table to track ckeys and associated discord IDs.
 This system REQUIRES TGS, and will auto-disable if TGS is not present.
@@ -15,7 +15,7 @@ ROUNDSTART:
 2] A ping is sent to the discord with the IDs of people who wished to be notified
 3] The file is emptied
 
-MIDROUND: 
+MIDROUND:
 1] Someone usees the notify verb, it adds their discord ID to the list.
 2] On fire, it will write that to the disk, as long as conditions above are correct
 
@@ -43,7 +43,7 @@ SUBSYSTEM_DEF(discord)
 		enabled = 1 // Allows other procs to use this (Account linking, etc)
 	else
 		can_fire = 0 // We dont want excess firing
-		return ..() // Cancel 
+		return ..() // Cancel
 
 	try
 		people_to_notify = json_decode(file2text(notify_file))
@@ -57,18 +57,18 @@ SUBSYSTEM_DEF(discord)
 		send2chat("[notifymsg]", CONFIG_GET(string/chat_announce_new_game)) // Sends the message to the discord, using same config option as the roundstart notification
 	fdel(notify_file) // Deletes the file
 	return ..()
-	
+
 /datum/controller/subsystem/discord/fire()
 	if(!enabled)
 		return // Dont do shit if its disabled
 	if(notify_members == notify_members_cache)
-		return // Dont re-write the file 
+		return // Dont re-write the file
 	// If we are all clear
 	write_notify_file()
-	
+
 /datum/controller/subsystem/discord/Shutdown()
 	write_notify_file() // Guaranteed force-write on server close
-	
+
 /datum/controller/subsystem/discord/proc/write_notify_file()
 	if(!enabled) // Dont do shit if its disabled
 		return
@@ -113,3 +113,20 @@ SUBSYSTEM_DEF(discord)
 /datum/controller/subsystem/discord/proc/id_clean(input)
 	var/regex/num_only = regex("\[^0-9\]", "g")
 	return num_only.Replace(input, "")
+
+/datum/controller/subsystem/discord/proc/grant_role(id)
+	// Ignore this shit if config isnt enabled for it
+	if(!CONFIG_GET(flag/enable_discord_autorole))
+		return
+
+	var/url = "https://discordapp.com/api/guilds/[CONFIG_GET(string/discord_guildid)]/members/[id]/roles/[CONFIG_GET(string/discord_roleid)]"
+
+	// Make the request
+
+	var/datum/http_request/req = new()
+	req.prepare(RUSTG_HTTP_METHOD_PUT, url, "", list("Authorization" = "Bot [CONFIG_GET(string/discord_token)]"))
+	req.begin_async()
+	UNTIL(req.is_complete())
+	var/datum/http_response/res = req.into_response()
+
+	WRITE_LOG(GLOB.discord_api_log, "PUT [url] returned [res.status_code] [res.body]")

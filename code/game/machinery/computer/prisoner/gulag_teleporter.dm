@@ -97,7 +97,7 @@
 				return
 			if(!new_goal)
 				new_goal = default_goal
-			contained_id.goal = CLAMP(new_goal, 0, 1000) //maximum 1000 points
+			contained_id.goal = clamp(new_goal, 0, 1000) //maximum 1000 points
 			return TRUE
 		if("toggle_open")
 			if(teleporter.locked)

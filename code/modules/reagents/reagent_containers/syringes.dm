@@ -179,7 +179,7 @@
 ///Used by update_icon() and update_overlays()
 /obj/item/reagent_containers/syringe/proc/get_rounded_vol()
 	if(reagents && reagents.total_volume)
-		return CLAMP(round((reagents.total_volume / volume * 15),5), 1, 15)
+		return clamp(round((reagents.total_volume / volume * 15),5), 1, 15)
 	else
 		return 0
 

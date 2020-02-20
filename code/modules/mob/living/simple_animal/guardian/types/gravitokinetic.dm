@@ -7,6 +7,7 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Singularity, an anomalous force of terror.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Gravitokinetic modules loaded. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's a gravitokinetic carp! Now do you understand the gravity of the situation?</span>"
+	hive_fluff_string = "<span class='holoparasite'>The mass seems to be extremely heavy, and able to relay the heaviness to others.</span>"
 	var/list/gravito_targets = list()
 	var/gravity_power_range = 10 //how close the stand must stay to the target to keep the heavy gravity
 

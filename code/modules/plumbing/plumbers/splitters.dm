@@ -14,7 +14,7 @@
 	var/transfer_side = 5
 	//the maximum you can set the transfer to
 	var/max_transfer = 9
-	
+
 	ui_x = 220
 	ui_y = 105
 
@@ -42,7 +42,7 @@
 	switch(action)
 		if("set_amount")
 			var/direction = params["target"]
-			var/value = CLAMP(text2num(params["amount"]), 1, max_transfer)
+			var/value = clamp(text2num(params["amount"]), 1, max_transfer)
 			switch(direction)
 				if("straight")
 					transfer_straight = value
