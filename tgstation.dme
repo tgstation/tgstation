@@ -808,6 +808,7 @@
 #include "code\FulpstationCode\borg_radio_files\borg_radio.dm"
 #include "code\FulpstationCode\fulp_airlock_electroadaptive\fulp_airlock_electroadaptive_procs.dm"
 #include "code\FulpstationCode\fulp_mech_firingpins\fulp_mech_firingpins.dm"
+#include "code\FulpstationCode\sec_borg_files\fulp_sec_borg.dm"
 #include "code\FulpstationCode\halloween_costumes\_event.dm"
 #include "code\FulpstationCode\halloween_costumes\alien_green.dm"
 #include "code\FulpstationCode\halloween_costumes\alien_grey.dm"

@@ -209,7 +209,7 @@
 		return
 
 	module.transform_to(modulelist[input_module])
-
+	fulp_emag_features() //FULPSTATION Sec Borg Upgrades by Surrealistik Feb 2020
 
 /mob/living/silicon/robot/proc/updatename(client/C)
 	if(shell)
@@ -485,6 +485,7 @@
 	emagged = new_state
 	module.rebuild_modules()
 	update_icons()
+	fulp_emag_features() //FULPSTATION Sec Borg Upgrades by Surrealistik Feb 2020
 	if(emagged)
 		throw_alert("hacked", /obj/screen/alert/hacked)
 	else

@@ -205,6 +205,11 @@
 //***************************************************************************
 
 
+//***************************************************************************
+//** FULPSTATION SECBORG MODULE UPDATE by Surrealistik Jan 2020 BEGINS
+//---------------------------------------------------------------------------
+//** Expands the Secborg's module items and upgrades.
+//***************************************************************************
 
 //************************************************************************
 //** Airlock Electroadaptive Psuedo Circuit BEGINS - Surrealistik Oct 2019
@@ -218,3 +223,36 @@
 //************************************************************************
 //** Airlock Electroadaptive Psuedo Circuit ENDS - Surrealistik Oct 2019
 //************************************************************************
+
+//***************************************************************************
+//** FULPSTATION SECBORG MODULE UPDATE by Surrealistik Jan 2020 BEGINS
+//---------------------------------------------------------------------------
+//** Expands the Secborg's module items and upgrades.
+//***************************************************************************
+
+/obj/item/robot_module/security //Now has a crowbar to allow it to navigate depowered areas, and a default pepperspray.
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/restraints/handcuffs/cable/zipties,
+		/obj/item/melee/baton/loaded,
+		/obj/item/gun/energy/e_gun/cyborg,
+		/obj/item/reagent_containers/spray/pepper/cyborg,
+		/obj/item/clothing/mask/gas/sechailer/cyborg,
+		/obj/item/crowbar/cyborg,
+		/obj/item/extinguisher/mini,
+		/obj/item/handheld_sec_record_uplink/cyborg
+		)
+	emag_modules = list() //Instead we unlock lethals for the integrated e_gun
+
+
+/obj/item/borg/upgrade/pinpointer //Sec borg can now install the crew monitor/pinpointer module.
+	module_type = list(/obj/item/robot_module/medical, /obj/item/robot_module/syndicate_medical, /obj/item/robot_module/security)
+
+/datum/techweb_node/cyborg_upg_combat
+	design_ids = list("borg_upgrade_e_gun_cooler", "borg_upgrade_e_gun_kill")
+
+//***************************************************************************
+//** FULPSTATION SECBORG MODULE UPDATE by Surrealistik Jan 2020 BEGINS
+//---------------------------------------------------------------------------
+//** Expands the Secborg's module items and upgrades.
+//***************************************************************************
