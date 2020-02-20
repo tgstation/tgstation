@@ -1,0 +1,180 @@
+"aa" = (/turf/open/space/basic,/area/space)
+"ab" = (/turf/closed/indestructible/riveted,/area/wizard_station)
+"ac" = (/turf/closed/wall/mineral/wood,/area/wizard_station)
+"ad" = (/obj/machinery/light{dir = 1},/obj/item/banner/command/mundane,/turf/open/floor/mineral/gold,/area/wizard_station)
+"ae" = (/obj/structure/chair/comfy/black,/turf/open/floor/mineral/gold,/area/wizard_station)
+"af" = (/obj/structure/chair/comfy/black,/obj/structure/chair/comfy/black,/turf/open/floor/mineral/gold,/area/wizard_station)
+"ag" = (/turf/open/floor/mineral/gold,/area/wizard_station)
+"ah" = (/obj/structure/table/wood/fancy/black,/turf/open/floor/mineral/gold,/area/wizard_station)
+"ai" = (/obj/structure/chair/comfy/black{dir = 1},/turf/open/floor/mineral/gold,/area/wizard_station)
+"aj" = (/turf/closed/wall/mineral/titanium/nodiagonal,/area/wizard_station)
+"ak" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/closed/wall/mineral/wood,/area/wizard_station)
+"al" = (/obj/structure/bookcase/random/adult,/turf/open/floor/carpet,/area/wizard_station)
+"am" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/wood/glass,/turf/open/floor/carpet/green,/area/wizard_station)
+"an" = (/turf/open/floor/carpet,/area/wizard_station)
+"ao" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/wood,/turf/open/floor/carpet/green,/area/wizard_station)
+"ap" = (/obj/structure/table/wood/fancy/royalblue,/obj/machinery/light{dir = 8},/turf/open/floor/carpet,/area/wizard_station)
+"aq" = (/obj/structure/chair/comfy/teal{dir = 8},/turf/open/floor/carpet,/area/wizard_station)
+"ar" = (/obj/machinery/chem_heater,/turf/open/floor/mineral/silver,/area/wizard_station)
+"as" = (/obj/machinery/fat_sucker,/turf/open/floor/mineral/silver,/area/wizard_station)
+"at" = (/obj/structure/chair/comfy/black{dir = 1},/obj/machinery/light,/turf/open/floor/mineral/gold,/area/wizard_station)
+"au" = (/obj/machinery/light{dir = 4},/obj/structure/disposalpipe/trunk{dir = 4},/obj/structure/disposaloutlet{dir = 8},/turf/open/floor/carpet,/area/wizard_station)
+"av" = (/obj/structure/bookcase/random/fiction,/turf/open/floor/carpet,/area/wizard_station)
+"aw" = (/obj/structure/bookcase/random/fiction,/obj/machinery/light{dir = 8},/turf/open/floor/carpet,/area/wizard_station)
+"ax" = (/turf/open/floor/mineral/silver,/area/wizard_station)
+"ay" = (/obj/machinery/computer/cloning{dir = 8},/turf/open/floor/mineral/silver,/area/wizard_station)
+"az" = (/obj/structure/bookcase/random/fiction,/obj/machinery/light{dir = 4},/turf/open/floor/carpet,/area/wizard_station)
+"aA" = (/obj/item/banner/medical/mundane,/obj/machinery/light{dir = 4},/turf/open/floor/mineral/silver,/area/wizard_station)
+"aB" = (/obj/machinery/dna_scannernew,/turf/open/floor/mineral/silver,/area/wizard_station)
+"aC" = (/obj/machinery/light,/obj/effect/mob_spawn/human/DnDMaster,/turf/open/floor/carpet/royalblue,/area/wizard_station)
+"aD" = (/obj/machinery/chem_dispenser/fullupgrade,/turf/open/floor/mineral/silver,/area/wizard_station)
+"aE" = (/obj/machinery/sleeper,/turf/open/floor/mineral/silver,/area/wizard_station)
+"aF" = (/obj/machinery/smartfridge/chemistry,/turf/open/floor/mineral/silver,/area/wizard_station)
+"aG" = (/obj/machinery/clonepod,/turf/open/floor/mineral/silver,/area/wizard_station)
+"aH" = (/obj/machinery/chem_master,/turf/open/floor/mineral/silver,/area/wizard_station)
+"aI" = (/obj/structure/disposalpipe/segment{dir = 10},/turf/closed/wall/mineral/wood,/area/wizard_station)
+"aJ" = (/obj/structure/sign/departments/medbay,/turf/closed/wall/mineral/wood,/area/wizard_station)
+"aK" = (/obj/machinery/light{dir = 8},/obj/structure/bookcase/random/nonfiction,/turf/open/floor/carpet,/area/wizard_station)
+"aL" = (/obj/structure/bookcase/random/nonfiction,/turf/open/floor/carpet,/area/wizard_station)
+"aM" = (/obj/machinery/computer/operating{dir = 4},/turf/open/floor/mineral/silver,/area/wizard_station)
+"aN" = (/obj/machinery/light{dir = 4},/obj/structure/bookcase/random/nonfiction,/turf/open/floor/carpet,/area/wizard_station)
+"aO" = (/obj/structure/table/optable,/obj/machinery/light{dir = 8},/turf/open/floor/mineral/silver,/area/wizard_station)
+"aP" = (/turf/open/floor/mineral/abductor,/area/wizard_station)
+"aQ" = (/obj/item/greentext,/obj/item/greentext,/obj/item/greentext,/obj/item/greentext,/obj/item/greentext,/obj/item/greentext,/obj/item/greentext,/obj/item/greentext,/obj/item/greentext,/obj/item/greentext,/obj/item/megaphone/cargo,/obj/structure/closet,/obj/item/card/id/captains_spare,/turf/open/floor/carpet/royalblue,/area/wizard_station)
+"aR" = (/obj/structure/disposalpipe/segment{dir = 1},/turf/closed/wall/mineral/wood,/area/wizard_station)
+"aS" = (/obj/machinery/door/airlock/wood/glass,/turf/open/floor/carpet/green,/area/wizard_station)
+"aT" = (/obj/structure/chair/comfy/teal{dir = 4},/turf/open/floor/carpet/royalblue,/area/wizard_station)
+"aU" = (/obj/structure/table/greyscale,/turf/open/floor/carpet/royalblue,/area/wizard_station)
+"aV" = (/obj/structure/disposalpipe/segment,/turf/closed/wall/r_wall,/area/wizard_station)
+"aW" = (/turf/open/floor/carpet/royalblue,/area/wizard_station)
+"aX" = (/obj/structure/disposalpipe/trunk{dir = 8},/obj/machinery/disposal/bin,/turf/open/floor/mineral/abductor,/area/wizard_station)
+"aY" = (/obj/machinery/light{dir = 4},/turf/open/floor/mineral/abductor,/area/wizard_station)
+"aZ" = (/obj/structure/table/wood/fancy/royalblue,/turf/open/floor/carpet,/area/wizard_station)
+"ba" = (/obj/item/storage/firstaid/advanced,/obj/item/storage/firstaid/brute,/obj/item/storage/firstaid/brute,/obj/structure/table/reinforced,/turf/open/floor/mineral/silver,/area/wizard_station)
+"bb" = (/obj/structure/chair/comfy/teal{dir = 4},/turf/open/floor/carpet,/area/wizard_station)
+"bc" = (/obj/structure/chair/comfy/teal{dir = 8},/turf/open/floor/carpet/royalblue,/area/wizard_station)
+"bd" = (/obj/structure/disposalpipe/trunk,/obj/structure/disposaloutlet{dir = 1},/turf/open/floor/mineral/abductor,/area/wizard_station)
+"be" = (/obj/item/storage/firstaid/advanced,/obj/item/storage/firstaid/fire,/obj/item/storage/firstaid/fire,/obj/structure/table/reinforced,/turf/open/floor/mineral/silver,/area/wizard_station)
+"bf" = (/obj/structure/table/wood/fancy/red,/obj/item/pizzabox/infinite,/turf/open/floor/carpet/blue,/area/wizard_station)
+"bg" = (/obj/structure/table/wood/fancy/royalblue,/obj/machinery/light{dir = 8},/obj/item/paper_bin,/obj/item/pen/fourcolor,/turf/open/floor/carpet,/area/wizard_station)
+"bh" = (/obj/structure/closet/crate,/obj/item/claymore,/obj/item/megaphone/cargo,/obj/item/reagent_containers/hypospray/medipen/survival,/obj/item/reagent_containers/hypospray/medipen/survival,/obj/item/reagent_containers/hypospray/medipen/survival,/turf/open/floor/mineral/plastitanium,/area/wizard_station)
+"bi" = (/obj/item/banner/cargo/mundane,/turf/open/floor/mineral/plastitanium,/area/wizard_station)
+"bj" = (/obj/structure/curtain,/obj/machinery/shower,/obj/item/grenade/clusterbuster/soap,/obj/machinery/light{dir = 4},/turf/open/floor/mineral/diamond,/area/wizard_station)
+"bk" = (/obj/structure/table/glass,/obj/item/storage/backpack/duffelbag/med/surgery,/turf/open/floor/mineral/silver,/area/wizard_station)
+"bl" = (/obj/structure/table/reinforced,/obj/item/reagent_containers/glass/beaker/bluespace,/obj/item/reagent_containers/glass/beaker/bluespace,/turf/open/floor/mineral/silver,/area/wizard_station)
+"bm" = (/obj/structure/bookcase/random/reference,/turf/open/floor/carpet,/area/wizard_station)
+"bn" = (/obj/item/banner/science/mundane,/turf/open/floor/carpet/green,/area/wizard_station)
+"bo" = (/obj/effect/mob_spawn/human/Dndplayer,/turf/open/floor/carpet/green,/area/wizard_station)
+"bp" = (/obj/machinery/light{dir = 8},/turf/open/floor/carpet,/area/wizard_station)
+"bq" = (/obj/item/storage/firstaid/advanced,/obj/item/storage/firstaid/o2,/obj/item/storage/firstaid/o2,/obj/structure/table/reinforced,/obj/machinery/light{dir = 4},/turf/open/floor/mineral/silver,/area/wizard_station)
+"br" = (/obj/structure/chair/comfy/teal,/turf/open/floor/carpet/blue,/area/wizard_station)
+"bs" = (/turf/open/floor/carpet/blue,/area/wizard_station)
+"bt" = (/obj/machinery/light{dir = 4},/turf/open/floor/carpet,/area/wizard_station)
+"bu" = (/obj/structure/disposalpipe/segment,/obj/machinery/light{dir = 1},/turf/open/floor/carpet/blue,/area/wizard_station)
+"bv" = (/obj/structure/statue/plasma/scientist,/turf/open/floor/carpet/green,/area/wizard_station)
+"bw" = (/obj/structure/disposalpipe/segment,/obj/structure/chair/comfy/teal{dir = 4},/turf/open/floor/carpet/blue,/area/wizard_station)
+"bx" = (/obj/structure/table/wood/poker{icon_state = "1-i"},/obj/structure/table/wood/poker{icon_state = "3-s"},/obj/structure/table/wood/poker{icon_state = "2-e"},/obj/structure/table/wood/poker{icon_state = "4-f"},/turf/open/floor/carpet/blue,/area/wizard_station)
+"by" = (/obj/structure/table/wood/poker{icon_state = "2-i"},/obj/structure/table/wood/poker{icon_state = "3-f"},/obj/structure/table/wood/poker{icon_state = "1-w"},/obj/structure/table/wood/poker{icon_state = "4-s"},/obj/item/toy/cards/deck,/turf/open/floor/carpet/blue,/area/wizard_station)
+"bz" = (/obj/structure/chair/comfy/teal{dir = 8},/turf/open/floor/carpet/blue,/area/wizard_station)
+"bA" = (/obj/structure/chair/comfy/teal{dir = 4},/turf/open/floor/carpet/blue,/area/wizard_station)
+"bB" = (/obj/structure/table/wood/fancy/red,/obj/structure/table/wood/fancy/red,/obj/item/pen/fourcolor,/obj/item/storage/fancy/cigarettes,/obj/item/paper_bin,/obj/item/storage/pill_bottle/dice,/turf/open/floor/carpet/blue,/area/wizard_station)
+"bC" = (/obj/machinery/door/unpowered/shuttle,/obj/machinery/door/firedoor,/turf/open/floor/carpet/purple,/area/wizard_station)
+"bD" = (/obj/structure/table/wood/fancy/red,/obj/item/pen/fourcolor,/obj/item/lighter/greyscale,/obj/item/storage/pill_bottle/dice,/turf/open/floor/carpet/blue,/area/wizard_station)
+"bE" = (/turf/closed/wall/r_wall,/area/wizard_station)
+"bF" = (/obj/machinery/vending/assist{default_price = 0; extra_price = 0; fair_market_price = 0; name = "Vendomat"; products = list(/obj/item/assembly/prox_sensor = 10, /obj/item/assembly/igniter = 10, /obj/item/assembly/signaler = 10, /obj/item/wirecutters = 10, /obj/item/cartridge/signal = 10, /obj/item/assembly/timer = 10, /obj/item/assembly/voice = 10, /obj/item/assembly/health = 10, /obj/item/clothing/gloves/color/yellow)},/turf/open/floor/mineral/plastitanium,/area/wizard_station)
+"bG" = (/obj/structure/table/wood/fancy/red,/obj/item/pen/fourcolor,/obj/item/lighter/greyscale,/obj/item/storage/pill_bottle/dice,/turf/open/floor/circuit/airless,/area/wizard_station)
+"bH" = (/turf/open/floor/carpet/green,/area/wizard_station)
+"bI" = (/obj/structure/table/wood/poker{icon_state = "1-n"},/obj/structure/table/wood/poker{icon_state = "3-i"},/obj/structure/table/wood/poker{icon_state = "4-e"},/obj/structure/table/wood/poker{icon_state = "2-f"},/turf/open/floor/carpet/blue,/area/wizard_station)
+"bJ" = (/obj/structure/table/wood/poker{icon_state = "3-w"},/obj/structure/table/wood/poker{icon_state = "4-i"},/obj/structure/table/wood/poker{icon_state = "2-n"},/obj/structure/table/wood/poker{icon_state = "1-f"},/turf/open/floor/carpet/blue,/area/wizard_station)
+"bK" = (/obj/structure/table/wood/fancy/red,/obj/item/pen/fourcolor,/obj/item/storage/pill_bottle/dice,/turf/open/floor/carpet/blue,/area/wizard_station)
+"bL" = (/obj/structure/table/wood/fancy/royalblue,/obj/item/lighter/slime,/turf/open/floor/carpet/blue,/area/wizard_station)
+"bM" = (/obj/structure/table/wood/fancy/royalblue,/obj/item/storage/fancy/donut_box,/turf/open/floor/carpet/blue,/area/wizard_station)
+"bN" = (/obj/structure/shuttle/engine/propulsion,/turf/open/space/basic,/area/wizard_station)
+"bO" = (/obj/structure/table/wood/fancy/royalblue,/obj/item/storage/fancy/cigarettes/cigars/cohiba,/obj/item/reagent_containers/food/drinks/shaker,/turf/open/floor/carpet/blue,/area/wizard_station)
+"bP" = (/obj/machinery/light{dir = 4},/obj/machinery/suit_storage_unit/ert/command,/turf/open/floor/mineral/plastitanium,/area/wizard_station)
+"bQ" = (/obj/structure/bookcase/random/religion,/turf/open/floor/carpet,/area/wizard_station)
+"bR" = (/obj/structure/table/wood/fancy/royalblue,/obj/machinery/light{dir = 4},/obj/item/paper_bin,/obj/item/pen/fourcolor,/turf/open/floor/carpet,/area/wizard_station)
+"bS" = (/obj/machinery/light{dir = 4},/turf/open/floor/carpet/green,/area/wizard_station)
+"bT" = (/obj/structure/disposalpipe/segment{dir = 6},/turf/closed/wall/mineral/wood,/area/wizard_station)
+"bU" = (/obj/machinery/door/firedoor,/obj/machinery/door/unpowered/shuttle,/turf/open/floor/mineral/gold,/area/wizard_station)
+"bV" = (/obj/structure/sign/warning/nosmoking,/turf/closed/wall/mineral/wood,/area/wizard_station)
+"bW" = (/obj/structure/disposalpipe/segment{dir = 5},/turf/closed/wall/mineral/wood,/area/wizard_station)
+"bX" = (/obj/structure/disposalpipe/segment{dir = 5},/turf/open/floor/carpet/blue,/area/wizard_station)
+"bY" = (/obj/structure/dresser,/obj/structure/dresser,/turf/open/floor/carpet/royalblue,/area/wizard_station)
+"bZ" = (/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{dir = 8},/turf/open/floor/carpet/blue,/area/wizard_station)
+"ca" = (/obj/structure/bed,/turf/open/floor/carpet/royalblue,/area/wizard_station)
+"cb" = (/obj/machinery/chem_dispenser/drinks/fullupgrade{dir = 8},/turf/open/floor/carpet/blue,/area/wizard_station)
+"cc" = (/obj/structure/table/reinforced,/turf/open/floor/carpet/blue,/area/wizard_station)
+"cd" = (/turf/open/floor/mineral/diamond,/area/wizard_station)
+"ce" = (/obj/structure/table/wood/fancy/royalblue,/obj/item/storage/fancy/cigarettes/cigars/havana,/turf/open/floor/carpet/blue,/area/wizard_station)
+"cf" = (/obj/structure/disposalpipe/segment,/obj/structure/chair/comfy/teal{dir = 4},/obj/machinery/light{dir = 8},/turf/open/floor/carpet/blue,/area/wizard_station)
+"cg" = (/obj/machinery/chem_master,/obj/machinery/light{dir = 4},/turf/open/floor/carpet/blue,/area/wizard_station)
+"ch" = (/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{dir = 4},/turf/open/floor/carpet/blue,/area/wizard_station)
+"ci" = (/obj/machinery/chem_dispenser/drinks/fullupgrade{dir = 4},/turf/open/floor/carpet/blue,/area/wizard_station)
+"cj" = (/obj/structure/table/wood/fancy/red,/obj/item/pen/fourcolor,/obj/item/storage/fancy/cigarettes,/obj/item/paper_bin,/obj/item/storage/pill_bottle/dice,/turf/open/floor/carpet/blue,/area/wizard_station)
+"ck" = (/obj/machinery/door/airlock/wood,/obj/machinery/door/firedoor,/turf/open/floor/carpet,/area/wizard_station)
+"cl" = (/obj/structure/rack,/obj/item/circuitboard/machine/autolathe,/turf/open/floor/mineral/plastitanium,/area/wizard_station)
+"cm" = (/obj/machinery/light,/obj/machinery/portable_atmospherics/canister/air,/obj/structure/statue/diamond/ai2,/turf/open/floor/carpet,/area/wizard_station)
+"cn" = (/mob/living/simple_animal/hostile/alien/maid/barmaid{health = 10000},/turf/open/floor/carpet/blue,/area/wizard_station)
+"co" = (/obj/structure/table/reinforced,/obj/item/reagent_containers/food/drinks/shaker,/turf/open/floor/carpet/blue,/area/wizard_station)
+"cp" = (/obj/structure/chair/comfy/teal{dir = 1},/turf/open/floor/carpet/blue,/area/wizard_station)
+"cq" = (/obj/structure/table/wood/fancy/red,/obj/item/paper_bin,/turf/open/floor/carpet/blue,/area/wizard_station)
+"cr" = (/obj/structure/table/reinforced,/obj/machinery/light{dir = 8},/turf/open/floor/carpet/blue,/area/wizard_station)
+"cs" = (/obj/machinery/vending/tool{default_price = 0; extra_price = 0; fair_market_price = 0},/turf/open/floor/mineral/plastitanium,/area/wizard_station)
+"ct" = (/obj/machinery/light,/turf/open/floor/carpet/blue,/area/wizard_station)
+"cu" = (/obj/item/slimepotion/slime/sentience,/obj/item/slimepotion/slime/sentience,/obj/structure/closet/crate,/turf/open/floor/mineral/plastitanium,/area/wizard_station)
+"cv" = (/obj/item/reagent_containers/food/drinks/beer,/obj/item/reagent_containers/food/drinks/beer,/obj/item/reagent_containers/food/drinks/beer,/obj/item/reagent_containers/food/snacks/chocolatebar,/obj/item/reagent_containers/food/snacks/chocolatebar,/obj/item/reagent_containers/food/snacks/chocolatebar,/obj/item/reagent_containers/food/snacks/chocolatebar,/obj/item/reagent_containers/food/snacks/chocolatebar,/obj/structure/closet/crate/freezer,/turf/open/floor/mineral/plastitanium,/area/wizard_station)
+"cw" = (/turf/open/floor/mineral/plastitanium,/area/wizard_station)
+"cx" = (/obj/structure/closet/crate,/obj/item/stock_parts/capacitor/quadratic,/obj/item/stock_parts/capacitor/quadratic,/obj/item/stock_parts/capacitor/quadratic,/obj/item/stock_parts/capacitor/quadratic,/obj/item/stock_parts/capacitor/quadratic,/obj/item/stock_parts/cell/bluespace,/obj/item/stock_parts/cell/bluespace,/obj/item/stock_parts/cell/bluespace,/obj/item/stock_parts/cell/bluespace,/obj/item/stock_parts/cell/bluespace,/obj/item/stock_parts/manipulator/pico,/obj/item/stock_parts/manipulator/pico,/obj/item/stock_parts/manipulator/pico,/obj/item/stock_parts/manipulator/pico,/obj/item/stock_parts/manipulator/pico,/obj/item/storage/part_replacer/bluespace,/turf/open/floor/mineral/plastitanium,/area/wizard_station)
+"cy" = (/obj/machinery/light{dir = 8},/mob/living/simple_animal/pet/penguin/emperor,/turf/open/floor/mineral/plastitanium,/area/wizard_station)
+"cz" = (/obj/machinery/vending/games{default_price = 0; extra_price = 0; fair_market_price = 0},/turf/open/floor/mineral/plastitanium,/area/wizard_station)
+"cC" = (/obj/item/storage/belt,/obj/item/storage/toolbox/mechanical,/obj/structure/closet/crate,/turf/open/floor/mineral/plastitanium,/area/wizard_station)
+"cD" = (/obj/structure/disposalpipe/segment,/turf/closed/indestructible/riveted,/area/wizard_station)
+"cE" = (/obj/machinery/disposal/bin,/obj/structure/disposalpipe/trunk,/turf/open/floor/carpet/blue,/area/wizard_station)
+"cF" = (/obj/structure/disposalpipe/segment,/obj/structure/chair/comfy/teal{dir = 8},/turf/open/floor/carpet/blue,/area/wizard_station)
+"cG" = (/obj/structure/disposalpipe/segment{dir = 9},/turf/closed/wall/mineral/wood,/area/wizard_station)
+"cH" = (/obj/structure/disposalpipe/segment,/turf/closed/wall/mineral/wood,/area/wizard_station)
+"cI" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/open/floor/carpet/blue,/area/wizard_station)
+"cL" = (/obj/item/stack/sheet/glass/fifty,/obj/item/stack/sheet/glass/fifty,/obj/item/stack/sheet/glass/fifty,/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/plasteel/twenty,/obj/item/stack/sheet/mineral/titanium,/obj/item/stack/sheet/mineral/titanium,/obj/item/stack/sheet/plasmarglass,/obj/item/stack/sheet/plasmarglass,/obj/structure/closet/crate,/turf/open/floor/mineral/plastitanium,/area/wizard_station)
+"cP" = (/obj/machinery/chem_master,/obj/machinery/light,/turf/open/floor/carpet/blue,/area/wizard_station)
+"cR" = (/obj/item/pizzabox/infinite,/obj/structure/closet/crate,/turf/open/floor/mineral/plastitanium,/area/wizard_station)
+"cS" = (/obj/structure/closet/crate,/obj/item/stock_parts/matter_bin/bluespace,/obj/item/stock_parts/matter_bin/bluespace,/obj/item/stock_parts/matter_bin/bluespace,/obj/item/stock_parts/matter_bin/bluespace,/obj/item/stock_parts/matter_bin/bluespace,/obj/item/stock_parts/micro_laser/quadultra,/obj/item/stock_parts/micro_laser/quadultra,/obj/item/stock_parts/micro_laser/quadultra,/obj/item/stock_parts/micro_laser/quadultra,/obj/item/stock_parts/micro_laser/quadultra,/obj/item/stock_parts/scanning_module/triphasic,/obj/item/stock_parts/scanning_module/triphasic,/obj/item/stock_parts/scanning_module/triphasic,/obj/item/stock_parts/scanning_module/triphasic,/obj/item/stock_parts/scanning_module/triphasic,/turf/open/floor/mineral/plastitanium,/area/wizard_station)
+"dd" = (/obj/structure/disposalpipe/segment{dir = 9},/turf/open/floor/carpet/blue,/area/wizard_station)
+"de" = (/obj/structure/table/wood/fancy/royalblue,/obj/item/paper_bin,/obj/item/pen/fountain/captain,/turf/open/floor/carpet/blue,/area/wizard_station)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaabababababababababababaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaababajajajajajajajajajababaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabajajadaeaeaeafaeadajajabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabajagaeahahahahahaeagajabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabajagahahahahahahahagajabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabajagahahahahahahahagajabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabajagaiataiaiaiataiagajabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabajajajajajbUajajajajajabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaababajajajacagacajajajababaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaabacacacacckacacacacababababababaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaabacapaqananananauakakakakakaIabaaaaaaaaaaaaaa
+ababababababababacavavavanavavavacaraDaHaAaRabaaaaaaaaaaaaaa
+abacacacacacacacacawavavanavavazacaEaxaxayaRabaaaaaaaaaaaaaa
+abacbYaTaUaUbcaWamanananananananaoaxaxaxaBaRabababaaaaaaaaaa
+abacaWaWaWaWaWaWacaKaLaLanaLaLaNaJaFaxaxaGaRabaPabaaaaaaaaaa
+abacaWaWaWacaSacacaLaLaLanaLaLaLacaMaxaxbabWaXaYabaaaaaaaaaa
+abacaCcaaQaccdbjacaZaqanananbbaZacaOaxaxbeacabbdabaaaaaaaaaa
+abacacacacacacacacbgaqanananbbbRacbkasblbqacabcDabaaaaaaaaaa
+ababababababababacaZaqanananbbaZacbTakakakakakcGabaaaaaaaaaa
+aaaaababababababacbmbmbmanbmbmbmacaVbEbEbEbEbEacabababababaa
+aaaaabacacacacacacbmbmbmanbmbmbmaccHacacacacacacacacacacabaa
+aaaaabacbnboboboacbpanananananbtacbubrbrcEbsbrbrbrbrbfacabab
+aaaaabacbvbHbHbSacbQbQbQanbQbQbQacbwbxbycFbAbBbDbGbDcqacacab
+aaaaabacbobHbHbHacbQbQbQanbQbQbQaccfbIbJcFbAbKbLbMbObzcgacab
+aaaaabacbobHbHbHbVbpanaZanaZaqanaobXcIcIddbAbDdebzbsbsbZacab
+aaaaabacbobHbHbHaoanananananananaccrccccbzbAbKbLbMcebzcbacab
+aaaaabacbvbHbHbSaccmanalalalancmacchcnccbzbAcjbDbGbDcqacacab
+aaaaabacbnboboboacacacacacacbCacaccibscobzctcpcpcpcpbfacabab
+aaaaabacacacacacaccucCcLcvcscwbhaccccPacacacacacacacacacabbN
+aaaaababababababaccycwcwcwcwcwbPacacacacabababababababababaa
+aaaabNbNbNabababacbiczcRcScxclbFacababababbNbNbNbNbNbNbNbNaa
+aaaaaaaaaabNababacacacacacacacacacababbNbNaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaabNabababababababababababbNaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaabNbNbNbNbNbNbNbNbNbNbNaaaaaaaaaaaaaaaaaaaaaaaa
+"}

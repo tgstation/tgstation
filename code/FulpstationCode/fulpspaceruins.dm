@@ -108,6 +108,7 @@ There is no point for a testament, but maybe a confession is appropriate. I've n
 				</html>
 				"}
 
+
 /obj/effect/mob_spawn/human/syndicate_engineer
 	name = "Syndicate Engineer Corps"
 	roundstart = FALSE
@@ -116,9 +117,13 @@ There is no point for a testament, but maybe a confession is appropriate. I've n
 	mob_name = "Syndicate engineer"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
-	flavour_text = "<span class='big bold'>Welcome, syndicate engineer,</span><b> You have been charged by your superiors to repair a derelict station and ensure it can support human life. You're pretty sure nobody will disturb you here, yet you can't shake the feeling this job will be like no other <b>Your superiors are watching you closely, <font size=4>DO NOT</font> leave the station lest you disappoint your employer!</b>"
+
+	short_desc = "Syndicate engineer, You have been charged by your superiors to repair a derelict station."
+	flavour_text = "You must ensure that the station can support human life. You're pretty sure nobody will disturb you here, yet you can't shake the feeling this job will be like no other."
+	important_info = "Leaving the station is forbidden."
 	outfit = /datum/outfit/syndicate_engineer
 	assignedrole = "Syndicate Engineer"
+
 
 /datum/outfit/syndicate_engineer
 	name = "Syndicate Engineer"
@@ -141,6 +146,61 @@ There is no point for a testament, but maybe a confession is appropriate. I've n
 
 /datum/outfit/syndicate_engineer/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
+
+/obj/effect/mob_spawn/human/syndicate_engineer/Destroy()
+	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
+	return ..()
+
+/obj/effect/mob_spawn/human/Dndplayer
+    name = "DnD player"
+    roundstart = FALSE
+    death = FALSE
+    random = TRUE
+    icon = 'icons/obj/machines/sleeper.dmi'
+    icon_state = "sleeper_s"
+    short_desc = "You are a very avid DnD player."
+    flavour_text = "You volunteered to go around in a specialised ship, playing DnD until you die."
+    important_info = "It is forbidden to attack other players."
+    outfit = /datum/outfit/spacebartender
+
+/datum/outfit/spacebartender
+	name = "DnD player"
+	head = /obj/item/clothing/head/chameleon
+	mask = /obj/item/clothing/mask/chameleon
+	uniform = /obj/item/clothing/under/chameleon
+	suit = /obj/item/clothing/suit/chameleon
+	shoes = /obj/item/clothing/shoes/chameleon
+	gloves = /obj/item/clothing/gloves/chameleon
+	ears = /obj/item/radio/headset/chameleon
+	back = /obj/item/storage/backpack/chameleon
+	belt = /obj/item/storage/belt/chameleon
+	id = /obj/item/card/id/syndicate/anyone
+
+/obj/effect/mob_spawn/human/DnDMaster
+    name = "DnD Master"
+    roundstart = FALSE
+    death = FALSE
+    random = TRUE
+    icon = 'icons/obj/machines/sleeper.dmi'
+    icon_state = "sleeper_s"
+    short_desc = "You are a very avid DnD Master"
+    flavour_text = "You volunteered to go around in a specialised ship, animating DnD sessions until you die."
+    important_info = "It is forbidden to attack other players."
+    outfit = /datum/outfit/spacebartenderDm
+
+/datum/outfit/spacebartenderDm
+	name = "DnD Master"
+	head = /obj/item/clothing/head/chameleon
+	mask = /obj/item/clothing/mask/chameleon
+	neck = /obj/item/clothing/neck/cloak/cap
+	uniform = /obj/item/clothing/under/chameleon
+	suit = /obj/item/clothing/suit/chameleon
+	shoes = /obj/item/clothing/shoes/chameleon
+	gloves = /obj/item/clothing/gloves/chameleon
+	ears = /obj/item/radio/headset/chameleon
+	back = /obj/item/storage/backpack/chameleon
+	belt = /obj/item/storage/belt/chameleon
+	id = /obj/item/card/id/syndicate/anyone
 
 //DATU
 
@@ -168,3 +228,10 @@ There is no point for a testament, but maybe a confession is appropriate. I've n
 	name = "Prototype SS13"
 	placement_weight = 3 //Fun spawners in space are rare. Might be toned down in the future.
 	description = "Apparently, the first station built by NanoStrasen, but the Syndicates may want to reclaim it."
+
+/datum/map_template/ruin/space/dndmansion
+	id = "dndmansion"
+	suffix = "DnDmansion.dmm"
+	name = "dndmansion"
+	placement_weight = 3 //Fun spawners in space are rare. Might be toned down in the future.
+	description = "A rich guy hired a bunch of nerds so he can watch you play dnd. That nerd is you. have fun."
