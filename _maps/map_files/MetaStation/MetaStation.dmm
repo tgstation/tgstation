@@ -14845,6 +14845,14 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
+/obj/item/stock_parts/cell/emproof{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/stock_parts/cell/emproof{
+	pixel_x = 4;
+	pixel_y = 6
+	},
 /turf/open/floor/plasteel{
 	dir = 1
 	},
@@ -14868,6 +14876,10 @@
 	},
 /obj/effect/turf_decal/bot{
 	dir = 1
+	},
+/obj/item/stock_parts/cell/emproof{
+	pixel_x = -4;
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel{
 	dir = 1
@@ -47693,12 +47705,10 @@
 	pixel_x = 1;
 	pixel_y = 1
 	},
-/obj/item/reagent_containers/spray/cleaner,
 /obj/structure/table/glass,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/gun/syringe,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -47711,6 +47721,12 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/gun/syringe,
+/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "cds" = (

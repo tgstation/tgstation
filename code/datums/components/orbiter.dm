@@ -21,7 +21,7 @@
 	var/atom/target = parent
 
 	target.orbiters = src
-	if(ismovableatom(target))
+	if(ismovable(target))
 		tracker = new(target, CALLBACK(src, .proc/move_react))
 
 /datum/component/orbiter/UnregisterFromParent()
@@ -37,9 +37,9 @@
 	orbiters = null
 	return ..()
 
-/datum/component/orbiter/InheritComponent(datum/component/orbiter/newcomp, original, list/arguments)
-	if(arguments)
-		begin_orbit(arglist(arguments))
+/datum/component/orbiter/InheritComponent(datum/component/orbiter/newcomp, original, atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
+	if(!newcomp)
+		begin_orbit(arglist(args.Copy(3)))
 		return
 	// The following only happens on component transfers
 	orbiters += newcomp.orbiters
