@@ -2,6 +2,7 @@
 	name = "tesla bolt"
 	icon_state = "tesla_projectile"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
+	damage = 10 //A worse lasergun
 	var/zap_flags = ZAP_MOB_STUN | ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_IS_TESLA
 	var/zap_range = 3
 	var/power = 10000
