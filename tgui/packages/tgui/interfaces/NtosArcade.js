@@ -50,7 +50,7 @@ export const NtosArcade = props => {
           </Grid.Column>
           <Grid.Column>
             <ProgressBar
-              value={data.Hitpoints / 45}
+              value={data.Hitpoints}
               minValue={0}
               maxValue={45}
               ranges={{
