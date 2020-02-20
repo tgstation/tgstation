@@ -6,40 +6,50 @@
 #define FINE_QUALITY 1.1
 #define SUPERIOR_QUALITY 1.2
 #define EXCEPTIONAL_QUALITY 1.3
-#define MASTERFUL_QUALITY 1.4
-#define ARTIFACT_QUALITY 1.4
+#define ARTISAN_QUALITY 1.35
+#define MASTERWORK_QUALITY 1.4
 
+#define ARTIFACT_QUALITY 1.4
 
 
 ///This Componenet handles adding quality to items
 /datum/component/quality
-	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-
-	var/list/quality_levels = list(UNUSABLE_QUALITY,SHODDY_QUALITY,POOR_QUALITY,NORMAL_QUALITY,GOOD_QUALITY,FINE_QUALITY,SUPERIOR_QUALITY,EXCEPTIONAL_QUALITY,MASTERFUL_QUALITY,ARTIFACT_QUALITY )
+	dupe_mode = COMPONENT_DUPE_UNIQUE
+	var/list/quality_levels = list(UNUSABLE_QUALITY,SHODDY_QUALITY,POOR_QUALITY,NORMAL_QUALITY,GOOD_QUALITY,FINE_QUALITY,SUPERIOR_QUALITY,EXCEPTIONAL_QUALITY,ARTISAN_QUALITY,MASTERWORK_QUALITY,ARTIFACT_QUALITY )
+	///Normal distribution
 	var/quality_level
 	var/old_name
 
 	var/obj/item/parent_item
+	var/obj/item/old_parent_item
 
 	var/mob/living/carbon/human/creator
 	var/datum/mind/creator_mind
 
-///_Creator - mob that is the owner of the item, _skill - skill that the quality should be based off of, modifier- flat bonus towards quality.
-/datum/component/quality/Initialize(mob/living/carbon/human/_creator,datum/skill/_skill)
+///_Creator - mob that is the owner of the item, _skill - skill that the quality should be based off of,_quality_list - custom distribution optional, defaults to normal distribution
+/datum/component/quality/Initialize(mob/living/carbon/human/_creator,datum/skill/_skill,_quality_val)
 	if(!isitem(parent) || !_creator)
 		return COMPONENT_INCOMPATIBLE
+	var/quality_val = pick(0;2 ,1;4 ,2;6 ,3;4 ,4;2) //normal distribution
+	if(_quality_val != null)
+		quality_val = _quality_val
+
 	creator = _creator
-	var/list/quality_bracket = creator.mind.get_skill_modifier(_skill, SKILL_QUALITY_MODIFIER)
+	var/quality_bracket = creator.mind.get_skill_modifier(_skill, SKILL_QUALITY_MODIFIER)
 	creator_mind =  creator?.mind
 	parent_item = parent
+	old_parent_item = parent_item
 	old_name = parent_item.name
-	generate_quality(quality_bracket)
+	generate_quality(quality_val,quality_bracket)
 	apply_quality()
 
-///Generates quality based off of skill level of the given skill
-/datum/component/quality/proc/generate_quality(quality_bracket)
-	quality_level = quality_levels[pickweight(quality_bracket)]
-	message_admins(quality_level)
+///Generates quality based off passed distribution/ normal distribution and skill. Returns the result
+/datum/component/quality/proc/generate_quality(quality_val,quality_bracket)
+	quality_level = clamp(quality_val + quality_bracket ,0,9)
+
+	if(quality_level == 9 && prob(0.01)) //Artifact roll
+		quality_level = 10
+
 	return quality_level
 
 ///Applies quality to the item
@@ -53,10 +63,21 @@
 		twohanded_item.force_unwielded *= quality // we dont know if it posses that var but it is still essential
 		twohanded_item.force_wielded *= quality
 	var/armor_qual = (quality - 1)*20
-	parent_item.armor.modifyRating(armor_qual,armor_qual,armor_qual,armor_qual,armor_qual,armor_qual,armor_qual,armor_qual,armor_qual,armor_qual) // modifies all armor ratings
-	parent_item.name = generate_name(old_name)
+	parent_item.armor?.modifyAllRatings(armor_qual) // modifies all armor ratings
+	if(quality_level == 10)
+		parent_item.AddComponent(/datum/component/fantasy,10)
+	parent_item.name = handle_name(old_name)
 
-/datum/component/quality/proc/generate_name(var/oldname)
+///Returns the item to the state it was before the modification
+/datum/component/quality/proc/unmodify()
+	parent_item = old_parent_item
+	parent_item.name = old_name
+
+/datum/component/quality/Destroy()
+	unmodify()
+	return ..()
+
+/datum/component/quality/proc/handle_name(var/oldname)
 	switch(quality_level)
 		if(0)
 			return "Unusable [oldname]"
@@ -75,6 +96,8 @@
 		if(7)
 			return "Exceptional [oldname]"
 		if(8)
-			return "Masterful [oldname]"
+			return "Artisan [oldname]"
 		if(9)
+			return "Masterwork [oldname]"
+		if(10)
 			return "Legendary [oldname]"
