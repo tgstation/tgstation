@@ -7,7 +7,7 @@
 
 	beauty = beautyamount
 
-	if(ismovableatom(parent))
+	if(ismovable(parent))
 		RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/enter_area)
 		RegisterSignal(parent, COMSIG_EXIT_AREA, .proc/exit_area)
 
