@@ -43,16 +43,18 @@
 
 	var/zfalling = FALSE
 
+	/// Either FALSE, EMISSIVE_BLOCK_GENERIC, or EMISSIVE_BLOCK_UNIQUE
 	var/blocks_emissive = FALSE
+	///Internal holder for emissive blocker object, do not use directly use blocks_emissive
 	var/atom/movable/emissive_blocker/em_block
 
 
 /atom/movable/Initialize(mapload)
 	. = ..()
 	switch(blocks_emissive)
-		if(EMISSIVE_GENERIC)
+		if(EMISSIVE_BLOCK_GENERIC)
 			SSvis_overlays.add_vis_overlay(src, icon, icon_state, EMISSIVE_BLOCKER_LAYER, EMISSIVE_BLOCKER_PLANE)
-		if(EMISSIVE_UNIQUE)
+		if(EMISSIVE_BLOCK_UNIQUE)
 			render_target = ref(src)
 			em_block = new(src, render_target)
 			vis_contents += em_block
