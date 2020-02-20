@@ -546,8 +546,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 		throw_at(get_turf(fatty), 1, 1, spin=FALSE)
 
 /obj/machinery/vending/proc/untilt(mob/user)
-	user.visible_message("<span class='notice'>[user] rights [src].", \
-		"<span class='notice'>You right [src].")
+	user.visible_message("<span class='notice'>[user] rights [src].</span>", \
+		"<span class='notice'>You right [src].</span>")
 
 	unbuckle_all_mobs(TRUE)
 
@@ -638,7 +638,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			return
 
 	if(tilted && !user.buckled && !isAI(user))
-		to_chat(user, "<span class='notice'>You begin righting [src].")
+		to_chat(user, "<span class='notice'>You begin righting [src].</span>")
 		if(do_after(user, 50, target=src))
 			untilt(user)
 		return
