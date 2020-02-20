@@ -78,6 +78,9 @@
 
 /obj/item/implant/fakeshield/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	if(..())
+		if((target.mind.has_antag_datum(/datum/antagonist/rev/head)) || (target.mind.has_antag_datum(/datum/antagonist/rev)))
+			to_chat(target, "<span class='boldnotice'>Your body naturally resists the implant.</span>")
+			return TRUE
 		ADD_TRAIT(target, TRAIT_FAKE_MIND_SHIELD, "implant")
 		target.sec_hud_set_implants()
 		return TRUE
