@@ -26,10 +26,8 @@
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 	panel = new()
-#if DM_VERSION >= 513
 	panel.vis_flags = VIS_INHERIT_ID|VIS_INHERIT_ICON|VIS_INHERIT_PLANE
 	vis_contents += panel
-#endif
 	panel.icon = icon
 	panel.icon_state = "solar_panel"
 	panel.layer = FLY_LAYER
@@ -116,9 +114,6 @@
 		panel.icon_state = "solar_panel-b"
 	else
 		panel.icon_state = "solar_panel"
-#if DM_VERSION <= 512
-	. += new /mutable_appearance(panel)
-#endif
 
 /obj/machinery/power/solar/proc/queue_turn(azimuth)
 	needs_to_turn = TRUE
@@ -169,7 +164,7 @@
 	else
 		//dot product of sun and panel -- Lambert's Cosine Law
 		. = cos(azimuth_current - sun_azimuth)
-		. = CLAMP(round(., 0.01), 0, 1)
+		. = clamp(round(., 0.01), 0, 1)
 	sunfrac = .
 
 /obj/machinery/power/solar/process()
@@ -213,6 +208,16 @@
 	anchored = FALSE
 	var/tracker = 0
 	var/glass_type = null
+	var/random_offset = 6 //amount in pixels an unanchored assembly may be offset by
+
+/obj/item/solar_assembly/Initialize(mapload)
+	. = ..()
+	if(!anchored && !pixel_x && !pixel_y)
+		randomise_offset(random_offset)
+
+/obj/item/solar_assembly/proc/randomise_offset(amount)
+	pixel_x = rand(-amount,amount)
+	pixel_y = rand(-amount,amount)
 
 // Give back the glass type we were supplied with
 /obj/item/solar_assembly/proc/give_glass(device_broken)
@@ -234,9 +239,12 @@
 		if(anchored)
 			user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>", "<span class='notice'>You wrench the solar assembly into place.</span>")
 			W.play_tool_sound(src, 75)
+			pixel_x = 0
+			pixel_y = 0
 		else
 			user.visible_message("<span class='notice'>[user] unwrenches the solar assembly from its place.</span>", "<span class='notice'>You unwrench the solar assembly from its place.</span>")
 			W.play_tool_sound(src, 75)
+			randomise_offset(random_offset)
 		return 1
 
 	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
@@ -377,7 +385,7 @@
 		if(adjust)
 			value = azimuth_rate + adjust
 		if(value != null)
-			azimuth_rate = round(CLAMP(value, -2 * SSsun.base_rotation, 2 * SSsun.base_rotation), 0.01)
+			azimuth_rate = round(clamp(value, -2 * SSsun.base_rotation, 2 * SSsun.base_rotation), 0.01)
 			return TRUE
 		return FALSE
 	if(action == "tracking")
@@ -455,7 +463,7 @@
 
 ///Rotates the panel to the passed angles
 /obj/machinery/power/solar_control/proc/set_panels(azimuth)
-	azimuth = CLAMP(round(azimuth, 0.01), -360, 719.99)
+	azimuth = clamp(round(azimuth, 0.01), -360, 719.99)
 	if(azimuth >= 360)
 		azimuth -= 360
 	if(azimuth < 0)

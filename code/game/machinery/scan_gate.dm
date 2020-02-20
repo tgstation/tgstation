@@ -216,7 +216,7 @@
 			. = TRUE
 		if("set_nanite_cloud")
 			var/new_cloud = text2num(params["new_cloud"])
-			nanite_cloud = CLAMP(round(new_cloud, 1), 1, 100)
+			nanite_cloud = clamp(round(new_cloud, 1), 1, 100)
 			. = TRUE
 		//Some species are not scannable, like abductors (too unknown), androids (too artificial) or skeletons (too magic)
 		if("set_target_species")

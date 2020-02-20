@@ -1,6 +1,4 @@
 /datum/chemical_reaction
-	var/name = null
-	var/id = null
 	var/list/results = new/list()
 	var/list/required_reagents = new/list()
 	var/list/required_catalysts = new/list()
@@ -24,7 +22,7 @@
 	if(holder && holder.my_atom)
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
-		var/message = "A [reaction_name] reaction has occurred in [ADMIN_VERBOSEJMP(T)]"
+		var/message = "Mobs have been spawned in [ADMIN_VERBOSEJMP(T)] by a [reaction_name] reaction."
 		message += " (<A HREF='?_src_=vars;Vars=[REF(A)]'>VV</A>)"
 
 		var/mob/M = get(A, /mob)

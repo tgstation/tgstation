@@ -10,7 +10,7 @@
 	for(var/obj/item/I in world)
 		CHECK_TICK
 
-		if(!(I.flags_1 & INITIALIZED_1))
+		if(!(I.flags_1 & INITIALIZED_1) || QDELETED(I))
 			continue
 
 		I.AddComponent(/datum/component/fantasy)
