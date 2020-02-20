@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - rscadd: "A new space ruin has been located in your sector. The previous owners have dubbed the place \"The Hell Factory\", despite the region being designated as an alcohol bottling facility."
-  - bugfix: "Fixes accidentally reverting the puzzles/trapmaking tools PR."
