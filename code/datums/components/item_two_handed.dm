@@ -144,6 +144,7 @@
 
 	var/obj/item/parent_item = parent
 	wielded = TRUE
+	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, .proc/on_swap_hands)
 	if(on_wield_callback)
 		on_wield_callback.Invoke(user)
 	if(force_multiplier)
@@ -182,6 +183,7 @@
 
 	var/obj/item/parent_item = parent
 	wielded = FALSE
+	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
 	if(on_unwield_callback)
 		on_unwield_callback.Invoke(user)
 	if(force_multiplier)
@@ -245,6 +247,16 @@
  */
 /datum/component/two_handed/proc/try_unwield(datum/source, mob/user, show_message=TRUE)
 	unwield(user, show_message)
+
+/**
+ * on_swap_hands Triggers on swapping hands, blocks swap if the other hand is busy
+ */
+/datum/component/two_handed/proc/on_swap_hands(mob/user, obj/item/held_item)
+	if(!held_item)
+		return
+	var/datum/component/two_handed/comp_twohand = held_item.GetComponent(/datum/component/two_handed)
+	if(comp_twohand && comp_twohand.wielded)
+		return COMPONENT_BLOCK_SWAP
 
 /**
  * The offhand dummy item for two handed items

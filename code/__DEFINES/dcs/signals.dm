@@ -204,6 +204,8 @@
 #define COMSIG_MOB_DEADSAY "mob_deadsay" // from /mob/say_dead(): (mob/speaker, message)
 	#define MOB_DEADSAY_SIGNAL_INTERCEPT 1
 #define COMSIG_MOB_EMOTE "mob_emote" // from /mob/living/emote(): ()
+#define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"					//from base of mob/swap_hand(): (obj/item)
+	#define COMPONENT_BLOCK_SWAP 1
 
 // /mob/living signals
 #define COMSIG_LIVING_RESIST "living_resist"					//from base of mob/living/resist() (/mob/living)
