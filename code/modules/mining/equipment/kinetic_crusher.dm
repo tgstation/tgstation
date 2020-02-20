@@ -30,8 +30,11 @@
 /obj/item/kinetic_crusher/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 60, 110) //technically it's huge and bulky, but this provides an incentive to use it
-	AddComponent(/datum/component/two_handed, force_wielded=20, \
-					iconstate_wielded="crusher1", iconstate_unwielded="crusher0")
+	add_twohanded_comp()
+
+/obj/item/kinetic_crusher/proc/add_twohanded_comp(force_unwielded=0, force_wielded=20, iconstate_wielded="crusher1", iconstate_unwielded="crusher0")
+	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, \
+					iconstate_wielded=iconstate_wielded, iconstate_unwielded=iconstate_unwielded)
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
@@ -367,8 +370,7 @@
 		if(SEND_SIGNAL(H, COMSIG_IS_TWOHANDED))
 			var/force_wielded = SEND_SIGNAL(H, COMSIG_TWOHANDED_GET_FORCEWIELDED) + bonus_value * 0.2
 			var/force_unwielded = SEND_SIGNAL(H, COMSIG_TWOHANDED_GET_FORCEUNWIELD) + bonus_value * 0.2
-			SEND_SIGNAL(H, COMSIG_TWOHANDED_SET_FORCEWIELDED, force_wielded)
-			SEND_SIGNAL(H, COMSIG_TWOHANDED_SET_FORCEUNWIELD, force_unwielded)
+			H.add_twohanded_comp(force_unwielded=force_unwielded, force_wielded=force_wielded)
 
 /obj/item/crusher_trophy/demon_claws/remove_from(obj/item/kinetic_crusher/H, mob/living/user)
 	. = ..()
@@ -378,8 +380,7 @@
 		if(SEND_SIGNAL(H, COMSIG_IS_TWOHANDED))
 			var/force_wielded = SEND_SIGNAL(H, COMSIG_TWOHANDED_GET_FORCEWIELDED) - bonus_value * 0.2
 			var/force_unwielded = SEND_SIGNAL(H, COMSIG_TWOHANDED_GET_FORCEUNWIELD) - bonus_value * 0.2
-			SEND_SIGNAL(H, COMSIG_TWOHANDED_SET_FORCEWIELDED, force_wielded)
-			SEND_SIGNAL(H, COMSIG_TWOHANDED_SET_FORCEUNWIELD, force_unwielded)
+			H.add_twohanded_comp(force_unwielded=force_unwielded, force_wielded=force_wielded)
 
 /obj/item/crusher_trophy/demon_claws/on_melee_hit(mob/living/target, mob/living/user)
 	user.heal_ordered_damage(bonus_value * 0.1, damage_heal_order)
@@ -461,11 +462,11 @@
 	if(.)
 		H.charge_time = 3
 		if(SEND_SIGNAL(H, COMSIG_IS_TWOHANDED))
-			SEND_SIGNAL(H, COMSIG_TWOHANDED_SET_FORCEWIELDED, 5)
+			H.add_twohanded_comp(force_wielded=5)
 
 /obj/item/crusher_trophy/king_goat/remove_from(obj/item/kinetic_crusher/H, mob/living/user)
 	. = ..()
 	if(.)
 		H.charge_time = 15
 		if(SEND_SIGNAL(H, COMSIG_IS_TWOHANDED))
-			SEND_SIGNAL(H, COMSIG_TWOHANDED_SET_FORCEWIELDED, 20)
+			H.add_twohanded_comp(force_wielded=20)

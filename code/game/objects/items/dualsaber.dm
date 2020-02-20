@@ -97,7 +97,7 @@
 
 /obj/item/dualsaber/proc/impale(mob/living/user)
 	to_chat(user, "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on [src].</span>")
-	if(SEND_SIGNAL(src, COMSIG_TWOHANDED_GET_FORCEWIELDED))
+	if(SEND_SIGNAL(src, COMSIG_IS_TWOHANDED_WIELDED))
 		user.take_bodypart_damage(20,25,check_armor = TRUE)
 	else
 		user.adjustStaminaLoss(25)

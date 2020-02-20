@@ -35,10 +35,10 @@
 /obj/item/spear/CheckParts(list/parts_list)
 	var/obj/item/shard/tip = locate() in parts_list
 	if (istype(tip, /obj/item/shard/plasma))
-		SEND_SIGNAL(src, COMSIG_TWOHANDED_GET_FORCEWIELDED, 19)
-		SEND_SIGNAL(src, COMSIG_TWOHANDED_GET_FORCEUNWIELD, 11)
 		throwforce = 21
 		icon_prefix = "spearplasma"
+		AddComponent(/datum/component/two_handed, force_unwielded=11, force_wielded=19, \
+					iconstate_wielded="[icon_prefix]1", iconstate_unwielded="[icon_prefix]0")
 	update_icon()
 	qdel(tip)
 	..()
@@ -51,7 +51,7 @@
 	. = ..()
 	set_explosive(new /obj/item/grenade/iedcasing()) //For admin-spawned explosive lances
 
-/obj/item/spear/ComponentInitialize()
+/obj/item/spear/explosive/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, \
 					iconstate_wielded="spearbomb1", iconstate_unwielded="spearbomb0")
@@ -67,10 +67,12 @@
 	var/obj/item/grenade/G = locate() in parts_list
 	if(G)
 		var/obj/item/spear/lancePart = locate() in parts_list
-		SEND_SIGNAL(src, COMSIG_TWOHANDED_SET_FORCEWIELDED, SEND_SIGNAL(lancePart, COMSIG_TWOHANDED_GET_FORCEWIELDED))
-		SEND_SIGNAL(src, COMSIG_TWOHANDED_SET_FORCEUNWIELD, SEND_SIGNAL(lancePart, COMSIG_TWOHANDED_GET_FORCEUNWIELD))
+		var/lance_wielded = SEND_SIGNAL(lancePart, COMSIG_TWOHANDED_GET_FORCEWIELDED)
+		var/lance_unwielded = SEND_SIGNAL(lancePart, COMSIG_TWOHANDED_GET_FORCEUNWIELD)
 		throwforce = lancePart.throwforce
 		icon_prefix = lancePart.icon_prefix
+		AddComponent(/datum/component/two_handed, force_unwielded=lance_unwielded, force_wielded=lance_wielded, \
+					iconstate_wielded="[icon_prefix]1", iconstate_unwielded="[icon_prefix]0")
 		parts_list -= G
 		parts_list -= lancePart
 		set_explosive(G)

@@ -34,7 +34,7 @@
 		if(SEND_SIGNAL(I, COMSIG_IS_TWOHANDED_WIELDED))
 			to_chat(user, "<span class='warning'>[I] must be unwielded before it can be sharpened!</span>")
 			return
-		SEND_SIGNAL(src, COMSIG_TWOHANDED_SET_FORCEWIELDED, CLAMP(force_wielded + increment, 0, max))//wieldforce is increased since normal force wont stay
+		SEND_SIGNAL(src, COMSIG_TWOHANDED_SET_FORCEWIELDED, CLAMP(force_wielded + increment, 0, max)) //wieldforce is increased since normal force wont stay
 	if(I.force > initial(I.force))
 		to_chat(user, "<span class='warning'>[I] has already been refined before. It cannot be sharpened further!</span>")
 		return
