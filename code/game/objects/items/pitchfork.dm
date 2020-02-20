@@ -17,7 +17,7 @@
 
 /obj/item/pitchfork/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=7, force_wielded=15, \
+	AddComponent(/datum/component/two_handed, force_unwielded=7, force_wielded=15, icon_prefix="pitchfork", \
 				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
 
 /// Callback triggered on wield of two handed item
@@ -27,9 +27,6 @@
 /// Callback triggered on unwield of two handed item
 /obj/item/pitchfork/proc/on_unwield(mob/user)
 	wielded = FALSE
-
-/obj/item/pitchfork/update_icon_state()
-	icon_state = "pitchfork[wielded]"
 
 /obj/item/pitchfork/demonic
 	name = "demonic pitchfork"

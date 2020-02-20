@@ -23,7 +23,7 @@
 
 /obj/item/singularityhammer/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=20, \
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=20, icon_prefix="mjollnir", \
 				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
 
 /// Callback triggered on wield of two handed item
@@ -33,9 +33,6 @@
 /// Callback triggered on unwield of two handed item
 /obj/item/singularityhammer/proc/on_unwield(mob/user)
 	wielded = FALSE
-
-/obj/item/singularityhammer/update_icon_state()
-	icon_state = "mjollnir[wielded]"
 
 /obj/item/singularityhammer/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -96,7 +93,7 @@
 
 /obj/item/mjollnir/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=25, \
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=25, icon_prefix="mjollnir", \
 				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
 
 /// Callback triggered on wield of two handed item
@@ -106,9 +103,6 @@
 /// Callback triggered on unwield of two handed item
 /obj/item/mjollnir/proc/on_unwield(mob/user)
 	wielded = FALSE
-
-/obj/item/mjollnir/update_icon_state()
-	icon_state = "mjollnir[wielded]"
 
 /obj/item/mjollnir/proc/shock(mob/living/target)
 	target.Stun(60)

@@ -22,7 +22,7 @@
 /obj/item/fireaxe/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=24, \
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=24, icon_prefix="fireaxe", \
 				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
 
 /// Callback triggered on wield of two handed item
@@ -32,9 +32,6 @@
 /// Callback triggered on unwield of two handed item
 /obj/item/fireaxe/proc/on_unwield(mob/user)
 	wielded = FALSE
-
-/obj/item/fireaxe/update_icon_state()
-	icon_state = "fireaxe[wielded]"
 
 /obj/item/fireaxe/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -59,8 +56,5 @@
 
 /obj/item/fireaxe/boneaxe/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23, \
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23, icon_prefix="bone_axe", \
 				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
-
-/obj/item/fireaxe/boneaxe/update_icon_state()
-	icon_state = "bone_axe[wielded]"

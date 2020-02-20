@@ -631,7 +631,7 @@
 /obj/item/cult_spear/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 90)
-	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24, \
+	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24, icon_prefix="bloodspear", \
 				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
 
 /// Callback triggered on wield of two handed item
@@ -641,9 +641,6 @@
 /// Callback triggered on unwield of two handed item
 /obj/item/cult_spear/proc/on_unwield(mob/user)
 	wielded = FALSE
-
-/obj/item/cult_spear/update_icon_state()
-	icon_state = "bloodspear[wielded]"
 
 /obj/item/cult_spear/Destroy()
 	if(spear_act)

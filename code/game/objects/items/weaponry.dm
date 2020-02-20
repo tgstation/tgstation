@@ -760,7 +760,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/vibro_weapon/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 20, 105)
-	AddComponent(/datum/component/two_handed, force_unwielded=20, force_wielded=40, \
+	AddComponent(/datum/component/two_handed, force_unwielded=20, force_wielded=40, icon_prefix="hfrequency", \
 				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
 
 /// Callback triggered on wield of two handed item
@@ -770,9 +770,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /// Callback triggered on unwield of two handed item
 /obj/item/vibro_weapon/proc/on_unwield(mob/user)
 	wielded = FALSE
-
-/obj/item/vibro_weapon/update_icon_state()
-	icon_state = "hfrequency[wielded]"
 
 /obj/item/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)

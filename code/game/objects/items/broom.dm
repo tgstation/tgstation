@@ -17,7 +17,7 @@
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, \
 				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield), \
-				icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+				icon_prefix="broom")
 
 /// Callback triggered on wield of two handed item
 /obj/item/broom/proc/on_wield(mob/user)
@@ -27,10 +27,6 @@
 /// Callback triggered on unwield of two handed item
 /obj/item/broom/proc/on_unwield(mob/user)
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-
-/// Callback triggered on icon update
-/obj/item/broom/proc/icon_update_callback(wielded)
-	icon_state = "broom[wielded]"
 
 /obj/item/broom/afterattack(atom/A, mob/user, proximity)
 	. = ..()

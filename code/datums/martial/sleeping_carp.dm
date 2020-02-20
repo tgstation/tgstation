@@ -175,11 +175,8 @@
 
 /obj/item/staff/bostaff/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=24, \
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=24, icon_prefix="bostaff", \
 				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
-
-/obj/item/staff/bostaff/update_icon_state()
-	icon_state = "bostaff[wielded]"
 
 /// Callback triggered on wield of two handed item
 /obj/item/staff/bostaff/proc/on_wield(mob/user)

@@ -13,6 +13,7 @@
 	var/wieldsound = FALSE 							/// Play sound when wielded
 	var/unwieldsound = FALSE 						/// Play sound when unwielded
 	var/require_twohands = FALSE					/// Does it have to be held in both hands
+	var/icon_prefix = FALSE							/// The icon prefix that will be used with the wielded status
 	var/datum/callback/icon_update_callback = null 	/// The proc to call on updating the icon
 	var/datum/callback/on_wield_callback = null 	/// The proc to call on weld of the item
 	var/datum/callback/on_unwield_callback = null 	/// The proc to call on unweld of the item
@@ -27,11 +28,12 @@
  * * force_multiplier (optional) The force multiplier when wielded, do not use with force_wielded, and force_unwielded
  * * force_wielded (optional) The force setting when the item is wielded, do not use with force_multiplier
  * * force_unwielded (optional) The force setting when the item is unwielded, do not use with force_multiplier
+ * * icon_prefix (optional) The prefix of the items icon to be used with wielded status
  * * icon_update_callback (optional) proc (wielded) Callback with wielded status
  * * on_wield_callback (optional) proc (user) Callback on wield of the item
  * * on_unwield_callback (optional) proc (user) Callback on unwield of the item
  */
-/datum/component/two_handed/Initialize(require_twohands=FALSE, wieldsound=FALSE, unwieldsound=FALSE, force_multiplier=0, force_wielded=0, force_unwielded=0, \
+/datum/component/two_handed/Initialize(require_twohands=FALSE, wieldsound=FALSE, unwieldsound=FALSE, force_multiplier=0, force_wielded=0, force_unwielded=0, icon_prefix=FALSE, \
 										datum/callback/icon_update_callback=null, datum/callback/on_wield_callback=null, datum/callback/on_unwield_callback=null)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -42,13 +44,14 @@
 	src.force_multiplier = force_multiplier
 	src.force_wielded = force_wielded
 	src.force_unwielded = force_unwielded
+	src.icon_prefix = icon_prefix
 	src.icon_update_callback = icon_update_callback
 	src.on_wield_callback = on_wield_callback
 	src.on_unwield_callback = on_unwield_callback
 
 // Inherit the new values passed to the component
 /datum/component/two_handed/InheritComponent(datum/component/two_handed/new_comp, original, require_twohands=FALSE, \
-												wieldsound=FALSE, unwieldsound=FALSE, force_wielded=0, force_unwielded=0, \
+												wieldsound=FALSE, unwieldsound=FALSE, force_wielded=0, force_unwielded=0, icon_prefix=FALSE, \
 												datum/callback/icon_update_callback=null, datum/callback/on_wield_callback=null, datum/callback/on_unwield_callback=null)
 	if(!original)
 		return
@@ -59,6 +62,7 @@
 		src.force_multiplier = new_comp.force_multiplier
 		src.force_wielded = new_comp.force_wielded
 		src.force_unwielded = new_comp.force_unwielded
+		src.icon_prefix = new_comp.icon_prefix
 		src.icon_update_callback = new_comp.icon_update_callback
 		src.on_wield_callback = new_comp.on_wield_callback
 		src.on_unwield_callback = new_comp.on_unwield_callback
@@ -69,6 +73,7 @@
 		src.force_multiplier = force_multiplier
 		src.force_wielded = force_wielded
 		src.force_unwielded = force_unwielded
+		src.icon_prefix = icon_prefix
 		src.icon_update_callback = icon_update_callback
 		src.on_wield_callback = on_wield_callback
 		src.on_unwield_callback = on_unwield_callback
@@ -224,6 +229,10 @@
 /datum/component/two_handed/proc/on_update_icon(datum/source)
 	if(icon_update_callback)
 		icon_update_callback.Invoke(wielded)
+	else if(icon_prefix)
+		var/obj/item/parent_item = parent
+		if(parent_item)
+			parent_item.icon_state = "[icon_prefix][wielded]"
 
 /**
  * try_wield tries to wield the item

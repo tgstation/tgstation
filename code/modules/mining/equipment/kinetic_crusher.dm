@@ -155,7 +155,7 @@
 		set_light(0)
 
 /obj/item/kinetic_crusher/update_icon_state()
-	item_state = "crusher[wielded]"
+	item_state = "crusher[wielded]" // this is not icon_state and not supported by 2hcomponent
 
 /obj/item/kinetic_crusher/update_overlays()
 	. = ..()

@@ -25,10 +25,7 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
 	AddComponent(/datum/component/jousting)
-	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
-
-/obj/item/spear/proc/icon_update_callback(wielded)
-	icon_state = "[icon_prefix][wielded]"
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_prefix="[icon_prefix]")
 
 /obj/item/spear/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -39,7 +36,7 @@
 	if (istype(tip, /obj/item/shard/plasma))
 		throwforce = 21
 		icon_prefix = "spearplasma"
-		AddComponent(/datum/component/two_handed, force_unwielded=11, force_wielded=19, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+		AddComponent(/datum/component/two_handed, force_unwielded=11, force_wielded=19, icon_prefix="[icon_prefix]")
 	update_icon()
 	qdel(tip)
 	..()
@@ -56,7 +53,7 @@
 /obj/item/spear/explosive/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, \
-				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
+				on_wield_callback=CALLBACK(src, .proc/on_wield), icon_prefix="spearbomb")
 
 /// Callback triggered on wield of two handed item
 /obj/item/spear/explosive/proc/on_wield(mob/user)
@@ -65,9 +62,6 @@
 /// Callback triggered on unwield of two handed item
 /obj/item/spear/explosive/proc/on_unwield(mob/user)
 	wielded = FALSE
-
-/obj/item/spear/explosive/update_icon_state()
-	icon_state = "spearbomb[wielded]"
 
 /obj/item/spear/explosive/proc/set_explosive(obj/item/grenade/G)
 	if(explosive)
@@ -133,7 +127,7 @@
 
 /obj/item/spear/grey_tide/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=15, force_wielded=25, icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
+	AddComponent(/datum/component/two_handed, force_unwielded=15, force_wielded=25, icon_prefix="[icon_prefix]")
 
 /obj/item/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	. = ..()
@@ -163,7 +157,4 @@
 
 /obj/item/spear/bonespear/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=12, force_wielded=20, , icon_update_callback=CALLBACK(src, .proc/icon_update_callback))
-
-/obj/item/spear/bonespear/icon_update_callback(wielded)
-	icon_state = "bone_spear[wielded]"
+	AddComponent(/datum/component/two_handed, force_unwielded=12, force_wielded=20, icon_prefix="bone_spear")
