@@ -221,7 +221,7 @@
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
 	var/atmos_link = FALSE
-	var/firing_core
+	var/firing_core = FALSE
 
 /obj/item/gun/energy/wormhole_projector/attackby(obj/item/C, mob/user)
 	if(istype(C, /obj/item/assembly/signaler/anomaly/bluespace))
@@ -229,15 +229,12 @@
 		firing_core = TRUE
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 		qdel(C)
-	else
-		firing_core = FALSE
 
 /obj/item/gun/energy/wormhole_projector/can_shoot()
 	. = ..()
-	if(firing_core == TRUE)
-		return TRUE
-	else
+	if(!firing_core)
 		return FALSE
+	return ..()
 
 /obj/item/gun/energy/wormhole_projector/shoot_with_empty_chamber(mob/living/user)
 	. = ..()
