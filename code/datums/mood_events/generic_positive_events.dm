@@ -86,7 +86,7 @@
 	special_screen_replace = FALSE
 
 /datum/mood_event/creeping
-	description = "<span class='greentext'>The voices have released their hooks on my mind! I feel free again!</span>\n" //creeps get it when they are around their obsession
+	description = "<span class='greentext'>I'm so close to my obsession!</span>\n" //creeps get it when they are around their obsession
 	mood_change = 18
 	timeout = 3 SECONDS
 	hidden = TRUE

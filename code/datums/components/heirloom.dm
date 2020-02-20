@@ -17,6 +17,6 @@
 	else if(isobserver(user))
 		examine_list += "<span class='notice'>It is the [family_name] family heirloom, belonging to [owner].</span>"
 	else
-		var/datum/antagonist/obsessed/creeper = user.mind.has_antag_datum(/datum/antagonist/obsessed)
+		var/datum/antagonist/creep/creeper = user.mind.has_antag_datum(/datum/antagonist/creep)
 		if(creeper && creeper.trauma.obsession == owner)
 			examine_list += "<span class='nicegreen'>This must be [owner]'s family heirloom! It smells just like them...</span>"

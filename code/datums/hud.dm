@@ -26,7 +26,7 @@ GLOBAL_LIST_INIT(huds, list(
 	ANTAG_HUD_SINTOUCHED = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_SOULLESS = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_BROTHER = new/datum/atom_hud/antag/hidden(),
-	ANTAG_HUD_OBSESSED = new/datum/atom_hud/antag/hidden(),
+	ANTAG_HUD_CREEP = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_FUGITIVE = new/datum/atom_hud/antag()
 	))
 
