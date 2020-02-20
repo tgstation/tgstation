@@ -212,7 +212,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		I.add_creator(H)
-		new /obj/effect/decal/cleanable/ash(get_turf(user))
+		new /obj/effect/decal/cleanable/ash(get_turf(src))
 	qdel(src)
 	. = ..()
 
