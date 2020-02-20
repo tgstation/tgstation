@@ -68,7 +68,7 @@
 		H.update_body()
 
 /obj/effect/mob_spawn/human/dwarven_sarcophagus/Destroy()
-	new/obj/structure/destructible/dwarven/dwarven_sarcophagus(get_turf(src))
+	new /obj/structure/destructible/dwarven/dwarven_sarcophagus(get_turf(src))
 	return ..()
 
 /datum/outfit/dwarven
