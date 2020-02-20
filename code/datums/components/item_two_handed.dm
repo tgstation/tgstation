@@ -220,14 +220,12 @@
  */
 /datum/component/two_handed/proc/try_wield(datum/source, mob/user)
 	wield(user)
-	return wielded
 
 /**
  * try_unwield attempts to unwield the item
  */
 /datum/component/two_handed/proc/try_unwield(datum/source, mob/user, show_message=TRUE)
 	unwield(user, show_message)
-	return wielded
 
 /**
  * The offhand dummy item for two handed items

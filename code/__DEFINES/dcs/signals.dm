@@ -393,8 +393,8 @@
 #define COMSIG_TRY_STORAGE_CAN_INSERT "storage_can_equip"				//(obj/item/insertion_candidate, mob/user, silent) - returns bool
 
 // /datum/component/two_handed signals
-#define COMSIG_TRY_TWOHANDED_WIELD "twohanded_try_wield"				//(mob/user) - returns wield status as bool
-#define COMSIG_TRY_TWOHANDED_UNWIELD "twohanded_try_unwield"			//(mob/user, show_message) - returns wield status as bool
+#define COMSIG_TRY_TWOHANDED_WIELD "twohanded_try_wield"				//(mob/user)
+#define COMSIG_TRY_TWOHANDED_UNWIELD "twohanded_try_unwield"			//(mob/user, show_message)
 
 // /datum/action signals
 #define COMSIG_ACTION_TRIGGER "action_trigger"						//from base of datum/action/proc/Trigger(): (datum/action)

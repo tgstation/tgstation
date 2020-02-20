@@ -133,7 +133,8 @@
 			QDEL_NULL(loaded)
 			loaded = null
 		QDEL_NULL(wiring_gui_menu)
-		active = SEND_SIGNAL(src, COMSIG_TRY_TWOHANDED_UNWIELD, user)
+		SEND_SIGNAL(src, COMSIG_TRY_TWOHANDED_UNWIELD, user)
+		active = wielded
 		return TRUE
 	return FALSE
 
