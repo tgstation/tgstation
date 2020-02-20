@@ -194,8 +194,6 @@
 	resistance_flags = FIRE_PROOF
 	var/anomaly_type = /obj/effect/anomaly
 
-
-
 /obj/item/assembly/signaler/anomaly/receive_signal(datum/signal/signal)
 	if(!signal)
 		return FALSE
@@ -218,6 +216,8 @@
 		to_chat(user, "<span class='notice'>Analyzing... [src]'s stabilized field is fluctuating along frequency [format_frequency(frequency)], code [code].</span>")
 	..()
 
+//Anomaly cores
+//Jeffrey Epstein didn't kill himself
 /obj/item/assembly/signaler/anomaly/pyro
 	name = "Pyroclastic anomaly core"
 	desc = "The neutralized core of a pyroclastic anomaly. It feels warm to the touch. It'd probably be valuable for research."
