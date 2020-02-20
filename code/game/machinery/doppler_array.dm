@@ -4,11 +4,14 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
 	density = TRUE
+	verb_say = "states coldly"
+	ui_x = 525
+	ui_y = 350
 	var/cooldown = 10
 	var/next_announce = 0
 	var/max_dist = 150
-	verb_say = "states coldly"
-	var/list/message_log = list()
+	var/record_number = 1
+	var/list/records = list()
 
 /obj/machinery/doppler_array/Initialize()
 	. = ..()
@@ -18,33 +21,51 @@
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE,null,null,CALLBACK(src,.proc/rot_message))
 
-/obj/machinery/doppler_array/ui_interact(mob/user)
-	. = ..()
-	if(machine_stat)
-		return FALSE
+/datum/data/tachyon_record
+	name = "Log Recording"
+	var/timestamp
+	var/coordinates = ""
+	var/displacement = 0
+	var/factual_radius = list()
+	var/theoretical_radius = list()
 
-	var/list/dat = list()
-	for(var/i in 1 to message_log.len)
-		dat += "Log recording #[i]: [message_log[i]]<br/><br>"
-	dat += "<A href='?src=[REF(src)];delete_log=1'>Delete logs</A><br>"
-	dat += "<hr>"
-	dat += "<A href='?src=[REF(src)];refresh=1'>(Refresh)</A><br>"
-	dat += "</body></html>"
-	var/datum/browser/popup = new(user, "computer", name, 400, 500)
-	popup.set_content(dat.Join(" "))
-	popup.open()
-	return
+/obj/machinery/doppler_array/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "tachyon_array", name, ui_x, ui_y, master_ui, state)
+		ui.open()
 
-/obj/machinery/doppler_array/Topic(href, href_list)
+/obj/machinery/doppler_array/ui_data(mob/user)
+	var/list/data = list()
+	data["records"] = list()
+
+	for(var/datum/data/tachyon_record/R in records)
+		var/list/record_data = list(
+			name = R.name,
+			timestamp = R.timestamp,
+			coordinates = R.coordinates,
+			displacement = R.displacement,
+			factual_epicenter_radius = R.factual_radius["epicenter_radius"],
+			factual_outer_radius = R.factual_radius["outer_radius"],
+			factual_outer_radius = R.factual_radius["shockwave_radius"],
+			theoretical_epicenter_radius = R.theoretical_radius["epicenter_radius"],
+			theoretical_outer_radius = R.theoretical_radius["outer_radius"],
+			theoretical_shockwave_radius = R.theoretical_radius["shockwave_radius"],
+			ref = REF(R)
+		)
+		data["records"] += list(record_data)
+	return data
+
+/obj/machinery/doppler_array/ui_act(action, list/params)
 	if(..())
 		return
-	if(href_list["delete_log"])
-		message_log.Cut()
-	if(href_list["refresh"])
-		updateUsrDialog()
 
-	updateUsrDialog()
-	return
+	switch(action)
+		if("delete_log")
+			. = TRUE
+		if("print")
+			. = TRUE
 
 /obj/machinery/doppler_array/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH)
@@ -84,6 +105,15 @@
 	if(!(direct & dir))
 		return FALSE
 
+	var/datum/data/tachyon_record/R = new /datum/data/tachyon_record()
+	R.name = "Log Recording #[record_number]"
+	R.timestamp = station_time_timestamp()
+	R.coordinates = "[epicenter.x],[epicenter.y]"
+	R.displacement = took
+	R.factual_radius["epicenter_radius"] = devastation_range
+	R.factual_radius["outer_radius"] = heavy_impact_range
+	R.factual_radius["shockwave_radius"] = light_impact_range
+
 	var/list/messages = list("Explosive disturbance detected.",
 							 "Epicenter at: grid ([epicenter.x],[epicenter.y]). Temporal displacement of tachyons: [took] seconds.",
 							 "Factual: Epicenter radius: [devastation_range]. Outer radius: [heavy_impact_range]. Shockwave radius: [light_impact_range].")
@@ -91,10 +121,15 @@
 	// If the bomb was capped, say its theoretical size.
 	if(devastation_range < orig_dev_range || heavy_impact_range < orig_heavy_range || light_impact_range < orig_light_range)
 		messages += "Theoretical: Epicenter radius: [orig_dev_range]. Outer radius: [orig_heavy_range]. Shockwave radius: [orig_light_range]."
+		R.theoretical_radius["epicenter_radius"] = orig_dev_range
+		R.theoretical_radius["outer_radius"] = orig_heavy_range
+		R.theoretical_radius["shockwave_radius"] = orig_light_range
 
 	for(var/message in messages)
 		say(message)
-	LAZYADD(message_log, messages.Join(" "))
+
+	record_number++
+	records += R
 	return TRUE
 
 /obj/machinery/doppler_array/powered()
@@ -155,7 +190,6 @@
 	else //you've made smaller bombs
 		say("Data already captured. Aborting.")
 		return
-
 
 /obj/machinery/doppler_array/research/science/Initialize()
 	. = ..()

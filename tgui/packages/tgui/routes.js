@@ -108,6 +108,7 @@ import { SpaceHeater } from './interfaces/SpaceHeater';
 import { SpawnersMenu } from './interfaces/SpawnersMenu';
 import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
+import { TachyonArray } from './interfaces/TachyonArray';
 import { Tank } from './interfaces/Tank';
 import { TankDispenser } from './interfaces/TankDispenser';
 import { Teleporter } from './interfaces/Teleporter';
@@ -618,6 +619,10 @@ const ROUTES = {
     wrapper: () => NtosWrapper,
     scrollable: true,
     theme: 'syndicate',
+  },
+  tachyon_array: {
+    component: () => TachyonArray,
+    scrollable: true,
   },
   tanks: {
     component: () => Tank,
