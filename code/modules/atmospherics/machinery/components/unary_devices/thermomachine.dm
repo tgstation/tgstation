@@ -166,7 +166,7 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				target_temperature = CLAMP(target, min_temperature, max_temperature)
+				target_temperature = clamp(target, min_temperature, max_temperature)
 				investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
 
 	update_icon()

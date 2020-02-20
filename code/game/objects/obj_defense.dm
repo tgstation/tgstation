@@ -33,7 +33,7 @@
 	if(damage_flag)
 		armor_protection = armor.getRating(damage_flag)
 	if(armor_protection)		//Only apply weak-against-armor/hollowpoint effects if there actually IS armor.
-		armor_protection = CLAMP(armor_protection - armour_penetration, min(armor_protection, 0), 100)
+		armor_protection = clamp(armor_protection - armour_penetration, min(armor_protection, 0), 100)
 	return round(damage_amount * (100 - armor_protection)*0.01, DAMAGE_PRECISION)
 
 ///the sound played when the obj is damaged.
@@ -206,7 +206,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		if(T.intact && level == 1) //fire can't damage things hidden below the floor.
 			return
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
-		take_damage(CLAMP(0.02 * exposed_temperature, 0, 20), BURN, "fire", 0)
+		take_damage(clamp(0.02 * exposed_temperature, 0, 20), BURN, "fire", 0)
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE) && !(resistance_flags & FIRE_PROOF))
 		resistance_flags |= ON_FIRE
 		SSfire_burning.processing[src] = src
@@ -242,7 +242,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
-			buckled_mob.electrocute_act((CLAMP(round(strength/400), 10, 90) + rand(-5, 5)), src, flags = SHOCK_TESLA)
+			buckled_mob.electrocute_act((clamp(round(strength/400), 10, 90) + rand(-5, 5)), src, flags = SHOCK_TESLA)
 
 /obj/proc/reset_shocked()
 	obj_flags &= ~BEING_SHOCKED
