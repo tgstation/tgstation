@@ -12,7 +12,7 @@
 	///This var defines how much % the organism grows per process(), without modifiers, if you have all required reagents
 	var/growth_rate = 4
 	///Our petri dish, we check our reagents in this if we can
-	var/obj/item/petri_dish
+	var/obj/item/petri_dish/petri_dish
 
 ///Handles growth of the micro_organism. This only runs if the micro organism is in a petri dish in the growing vat.
 /datum/micro_organism/process()
