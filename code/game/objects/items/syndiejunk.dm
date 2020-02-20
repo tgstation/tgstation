@@ -72,7 +72,7 @@
 	imp_type = /obj/item/implant/fakeshield
 
 /obj/item/paper/fluff/stations/junk/fakeshield
-	info = "After many months of investigation and decryption, the eggheads over at Cybersun Industries managed to perfectly replicate a signal cast by a mindshield implant. Unfortunately for them, the signal’s only purpose was to be read by security HUDs and was ineffective in blocking any sort of mind alerting effects."
+	info = "After many months of investigation and decryption, the eggheads over at Cybersun Industries managed to perfectly replicate a signal cast by a mindshield implant. Unfortunately for them, the signalï¿½s only purpose was to be read by security HUDs and was ineffective in blocking any sort of mind alerting effects."
 
 /obj/item/clothing/under/misc/syndiepjs
 	name = "syndie PJs"
@@ -92,3 +92,4 @@
 
 /obj/item/paper/fluff/stations/junk/snackkit
 	info = "Enjoy this collection of old food left out in decrepit venders and on mess hall tables. Enjoy with this fancy plastitanium fork that has been made to piece even the hardest outer shells and armors of food and people alike."
+	
