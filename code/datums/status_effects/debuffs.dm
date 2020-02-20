@@ -635,3 +635,45 @@
 		to_chat(owner, fake_msg)
 
 	msg_stage++
+
+//imagine trying to heal LOL
+/datum/status_effect/chill_touch
+	id = "chill_touch"
+	duration = 600
+	tick_interval = 1
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = /obj/screen/alert/status_effect/chill_touch
+	var/list/maximum_health_allowed = list("brute" = 0, "burn" = 0, "tox" = 0, "oxy" = 0)
+
+/datum/status_effect/grouped/chill_touch/on_creation(mob/living/new_owner, set_duration, updating_canmove)
+	. = ..()
+	if(.)
+		maximum_health_allowed["brute"] = new_owner.getBruteLoss()
+		maximum_health_allowed["burn"] = new_owner.getFireLoss()
+		maximum_health_allowed["tox"] = new_owner.getToxLoss()
+		maximum_health_allowed["oxy"] = new_owner.getOxyLoss()
+
+/datum/status_effect/grouped/chill_touch/tick()
+	if(owner.getBruteLoss() > maximum_health_allowed["brute"])
+		maximum_health_allowed["brute"] = owner.getBruteLoss()
+	if(owner.getFireLoss() > maximum_health_allowed["burn"])
+		maximum_health_allowed["burn"] = owner.getFireLoss()
+	if(owner.getToxLoss() > maximum_health_allowed["tox"])
+		maximum_health_allowed["tox"] = owner.getToxLoss()
+	if(owner.getOxyLoss() > maximum_health_allowed["oxy"])
+		maximum_health_allowed["oxy"] = owner.getOxyLoss()
+
+	if(owner.getBruteLoss() < maximum_health_allowed["brute"])
+		owner.setBruteLoss(maximum_health_allowed["brute"])
+	if(owner.getFireLoss() < maximum_health_allowed["burn"])
+		owner.setFireLoss(maximum_health_allowed["burn"])
+	if(owner.getToxLoss() < maximum_health_allowed["tox"])
+		owner.setToxLoss(maximum_health_allowed["tox"])
+	if(owner.getOxyLoss() < maximum_health_allowed["oxy"])
+		owner.setOxyLoss(maximum_health_allowed["oxy"])
+
+
+/obj/screen/alert/status_effect/chill_touch
+	name = "Chill Touch"
+	desc = "You feel the chill of the grave, and cannot heal any damage taken until it wears off!"
+	icon_state = "chill_touch"
