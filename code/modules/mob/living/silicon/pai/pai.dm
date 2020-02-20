@@ -135,7 +135,7 @@
 
 /mob/living/silicon/pai/proc/process_hack()
 	if(cable && cable.machine && istype(cable.machine, /obj/machinery/door) && cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
-		hackprogress = CLAMP(hackprogress + 4, 0, 100)
+		hackprogress = clamp(hackprogress + 4, 0, 100)
 	else
 		temp = "Door Jack: Connection to airlock has been lost. Hack aborted."
 		hackprogress = 0
@@ -283,7 +283,7 @@
 	update_stat()
 
 /mob/living/silicon/pai/process()
-	emitterhealth = CLAMP((emitterhealth + emitterregen), -50, emittermaxhealth)
+	emitterhealth = clamp((emitterhealth + emitterregen), -50, emittermaxhealth)
 
 /obj/item/paicard/attackby(obj/item/W, mob/user, params)
 	..()

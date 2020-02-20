@@ -92,9 +92,9 @@
 	. = TRUE
 	switch(action)
 		if("change_pill_style")
-			pill_number = CLAMP(text2num(params["id"]), 1 , PILL_STYLE_COUNT)
+			pill_number = clamp(text2num(params["id"]), 1 , PILL_STYLE_COUNT)
 		if("change_pill_size")
-			pill_size = CLAMP(text2num(params["volume"]), minimum_pill, maximum_pill)
+			pill_size = clamp(text2num(params["volume"]), minimum_pill, maximum_pill)
 		if("change_pill_name")
 			var/new_name = html_encode(params["name"])
 			if(findtext(new_name, "pill")) //names like pillatron and Pilliam are thus valid

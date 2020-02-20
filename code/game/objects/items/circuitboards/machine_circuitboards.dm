@@ -702,7 +702,7 @@
 	if(!new_cost || (loc != user))
 		to_chat(user, "<span class='warning'>You must hold the circuitboard to change its cost!</span>")
 		return
-	custom_cost = CLAMP(round(new_cost, 1), 10, 1000)
+	custom_cost = clamp(round(new_cost, 1), 10, 1000)
 	to_chat(user, "<span class='notice'>The cost is now set to [custom_cost].</span>")
 
 /obj/item/circuitboard/machine/medical_kiosk/examine(mob/user)
@@ -883,7 +883,7 @@
 	if(!new_cloud || (loc != user))
 		to_chat(user, "<span class='warning'>You must hold the circuitboard to change its Cloud ID!</span>")
 		return
-	cloud_id = CLAMP(round(new_cloud, 1), 1, 100)
+	cloud_id = clamp(round(new_cloud, 1), 1, 100)
 
 /obj/item/circuitboard/machine/public_nanite_chamber/examine(mob/user)
 	. = ..()
