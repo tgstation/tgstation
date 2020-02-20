@@ -18,7 +18,7 @@
 /obj/structure/holosign/Initialize()
 	. = ..()
 	alpha = 0
-	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, plane, dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
+	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MOB_PLANE, dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
 
 /obj/structure/holosign/Destroy()
 	if(projector)

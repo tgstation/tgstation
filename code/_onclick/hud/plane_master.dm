@@ -62,11 +62,44 @@
 	if(istype(mymob) && mymob.eye_blurry)
 		filters += GAUSSIAN_BLUR(clamp(mymob.eye_blurry*0.1,0.6,3))
 
+/obj/screen/plane_master/mobs
+	name = "mob plane master"
+	plane = MOB_PLANE
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_OVERLAY
+	render_target = MOB_RENDER_TARGET
+
+/obj/screen/plane_master/mobs/backdrop(mob/mymob)
+	filters = list()
+	if(istype(mymob) && mymob.eye_blurry)
+		filters += GAUSSIAN_BLUR(CLAMP(mymob.eye_blurry * 0.1, 0.6,3))
+
 /obj/screen/plane_master/lighting
 	name = "lighting plane master"
 	plane = LIGHTING_PLANE
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/screen/plane_master/lighting/Initialize()
+	. = ..()
+	filters += filter(type="alpha", render_source=EMISSIVE_OBJ_RENDER_TARGET, flags=MASK_INVERSE)
+	filters += filter(type="alpha", render_source=EMISSIVE_MOB_RENDER_TARGET, flags=MASK_INVERSE)
+
+/obj/screen/plane_master/emissive_obj
+	name = "emissive obj plane master"
+	plane = EMISSIVE_OBJ_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_target = EMISSIVE_OBJ_RENDER_TARGET
+
+/obj/screen/plane_master/emissive_obj/Initialize()
+	. = ..()
+	filters += filter(type="alpha", render_source=MOB_RENDER_TARGET, flags=MASK_INVERSE)
+
+/obj/screen/plane_master/emissive_mob
+	name = "emissive mob plane master"
+	plane = EMISSIVE_MOB_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_target = EMISSIVE_MOB_RENDER_TARGET
 
 /obj/screen/plane_master/parallax
 	name = "parallax plane master"
