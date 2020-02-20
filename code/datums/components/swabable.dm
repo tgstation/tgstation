@@ -21,7 +21,7 @@ This component is used in vat growing to allow for swabable behavior. This swabb
 	 . = COMPONENT_SWAB_FOUND //Return this so the swabbing component knows hes a good boy and found something that needs swabbing.
 
 
-	var/datum/component/swabbing/swabber = source //We know for a fact this is a swabber. If it's not we have an omega retard touching the code.
+	var/datum/component/swabbing/swabber = source //We know for a fact this is a swabber. If it's not we have an omega *redacted* touching the code.
 
 	if(!swabber.our_sample)
 		swabber.our_sample = our_sample
@@ -30,6 +30,10 @@ This component is used in vat growing to allow for swabable behavior. This swabb
 		qdel(src)
 		return
 
-	to_chat(user, "<span class='warning'>You manage to collect a microbiological sample from [target]...But there was already one there!</span>")
+	if(swabber.our_sample.Merge())
+		to_chat(user, "<span class='warning'>You manage to collect a microbiological sample from [target]...But there was already one there!</span>")
+	else
+		to_chat(user, "<span class='warning'>You cannot collect another sample on the swabber!</span>")
+
 
 
