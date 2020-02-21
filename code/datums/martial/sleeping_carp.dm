@@ -8,7 +8,6 @@
 	allow_temp_override = FALSE
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
 	var/datum/action/slipstream/slipstream = new/datum/action/slipstream()
-	var/datum/action/roused_anger/rousedanger = new/datum/action/roused_anger()
 	
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,STRONG_PUNCH_COMBO))
@@ -49,7 +48,7 @@
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	var/atom/throw_target = get_edge_target_turf(D, A.dir)
 	D.throw_at(throw_target, rand(5,6), 7, user)
-	D.apply_damage(25, A.dna.species.attack_type)
+	D.apply_damage(15, A.dna.species.attack_type)
 	log_combat(A, D, "launch kicked (Sleeping Carp)")
 	return
 
@@ -57,12 +56,12 @@
 	A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	if((D.mobility_flags & MOBILITY_STAND))
-		D.apply_damage(20, A.dna.species.attack_type)
-		D.Knockdown(60)
+		D.apply_damage(10, A.dna.species.attack_type)
+		D.Knockdown(40)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head, sending them face first into the floor!</span>", \
 					"<span class='userdanger'>You are kicked in the head by [A], sending you crashing to the floor!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 	if(!(D.mobility_flags & MOBILITY_STAND))
-		D.apply_damage(20, A.dna.species.attack_type)
+		D.apply_damage(5, A.dna.species.attack_type)
 		D.adjustStaminaLoss(40)
 		D.drop_all_held_items()
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \
@@ -96,6 +95,24 @@
 		return TRUE
 	return ..()
 
+/datum/martial_art/the_sleeping_carp/on_hit(mob/living/carbon/human/A)
+	. = ..()
+	var/old_health = A.health
+	var/taken_damage = FALSE
+	if((A.health<old_health) & !(A.health=old_health))
+		A.taken_damage = TRUE
+	if(A.taken_damage(TRUE))	
+		if(prob((A.getBruteLoss + A.getBurnLoss + A.getStaminaLoss)/2))
+			A.apply_status_effect(/datum/status_effect/roused)
+			A.taken_damage = FALSE
+			return
+		else
+			A.taken_damage = FALSE
+			return
+	if(A.taken_damage(FALSE))
+		return
+	return
+	
 /datum/martial_art/the_sleeping_carp/teach(mob/living/carbon/human/H, make_temporary = FALSE)
 	. = ..()
 	if(!.)
@@ -154,7 +171,7 @@
 	to_chat(usr, "<span class='notice'>Crashing Wave Kick</span>: Harm Disarm. Launch people brutally across rooms, and away from you.")
 	to_chat(usr, "<span class='notice'>Keelhaul</span>: Harm Grab. With a powerful kick, send opponents face first into the floor, knocking them down and disarming them of weapons. On opponents on the floor, this deals considerable stamina damage and disarms.")
 	to_chat(usr, "<span class='notice'>Slipstream</span>: Move more quickly into combat, gaining additional movement speed. This is obvious to anyone who can see you, however.")
-	to_chat(usr, "<span class='notice'>Roused Anger</span>: While on low health, you unleash your latent inner strength to continue fighting beyond the limitations of your failing body, removing damage slowdown and becoming more resistant to disabling effects while close to death.")
+	to_chat(usr, "<span class='notice'>Roused Anger</span>: When hit, you can potentially unleash your latent inner strength to continue fighting beyond the limitations of your failing body, removing damage slowdown and becoming more resistant to disabling effects.")
 	
 	to_chat(usr, "<span class='notice'>In addition, your body has become incredibly durable to most forms of attack. Weapons cannot readily pierce your hardened skin, and you are highly resistant to stuns and stamina damage, and quickly recover from stamina damage. However, you are not invincible, and sustained damage will take it's toll.")
 
