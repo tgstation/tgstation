@@ -25,12 +25,10 @@
 
 /turf/open/openspace/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
-	layer = OPENSPACE_LAYER
 	plane = OPENSPACE_PLANE
+	layer = OPENSPACE_LAYER
 
-#if DM_VERSION >= 513
-	vis_contents += new /atom/movable/openspace_backdrop()
-#endif
+	vis_contents += new /atom/movable/openspace_backdrop() //Special grey square for projecting backdrop darkness filter on it.
 
 	return INITIALIZE_HINT_LATELOAD
 
