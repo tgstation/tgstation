@@ -229,9 +229,9 @@
 		firing_core = TRUE
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 		qdel(C)
+		return
 
 /obj/item/gun/energy/wormhole_projector/can_shoot()
-	. = ..()
 	if(!firing_core)
 		return FALSE
 	return ..()
@@ -370,9 +370,10 @@
 		firing_core = TRUE
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 		qdel(C)
+		return
+	return ..()
 
 /obj/item/gun/energy/gravity_gun/can_shoot()
-	. = ..()
 	if(!firing_core)
 		return FALSE
 	return ..()
