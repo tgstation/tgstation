@@ -266,6 +266,7 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define FIRST_DIAG_STEP 1
 #define SECOND_DIAG_STEP 2
 
+#define DEADCHAT_ANNOUNCEMENT "announcement"
 #define DEADCHAT_ARRIVALRATTLE "arrivalrattle"
 #define DEADCHAT_DEATHRATTLE "deathrattle"
 #define DEADCHAT_LAWCHANGE "lawchange"
