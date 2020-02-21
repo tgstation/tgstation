@@ -30,9 +30,6 @@
 
 /obj/item/dualsaber/ComponentInitialize()
 	. = ..()
-	add_twohanded_comp()
-
-/obj/item/dualsaber/proc/add_twohanded_comp()
 	AddComponent(/datum/component/two_handed, force_unwielded=3, force_wielded=34, \
 					wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg', \
 					on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
@@ -183,7 +180,6 @@
 			hacked = TRUE
 			to_chat(user, "<span class='warning'>2XRNBW_ENGAGE</span>")
 			saber_color = "rainbow"
-			add_twohanded_comp()
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")

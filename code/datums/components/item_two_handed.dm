@@ -50,32 +50,30 @@
 	src.on_unwield_callback = on_unwield_callback
 
 // Inherit the new values passed to the component
-/datum/component/two_handed/InheritComponent(datum/component/two_handed/new_comp, original, require_twohands=FALSE, \
-												wieldsound=FALSE, unwieldsound=FALSE, force_wielded=0, force_unwielded=0, icon_prefix=FALSE, \
-												datum/callback/icon_update_callback=null, datum/callback/on_wield_callback=null, datum/callback/on_unwield_callback=null)
+/datum/component/two_handed/InheritComponent(datum/component/two_handed/new_comp, original, require_twohands, \
+												wieldsound, unwieldsound, force_wielded, force_unwielded, icon_prefix, \
+												datum/callback/icon_update_callback, datum/callback/on_wield_callback, datum/callback/on_unwield_callback)
 	if(!original)
 		return
-	if(new_comp)
-		src.require_twohands = new_comp.require_twohands
-		src.wieldsound = new_comp.wieldsound
-		src.unwieldsound = new_comp.unwieldsound
-		src.force_multiplier = new_comp.force_multiplier
-		src.force_wielded = new_comp.force_wielded
-		src.force_unwielded = new_comp.force_unwielded
-		src.icon_prefix = new_comp.icon_prefix
-		src.icon_update_callback = new_comp.icon_update_callback
-		src.on_wield_callback = new_comp.on_wield_callback
-		src.on_unwield_callback = new_comp.on_unwield_callback
-	else
+	if(require_twohands)
 		src.require_twohands = require_twohands
+	if(wieldsound)
 		src.wieldsound = wieldsound
+	if(unwieldsound)
 		src.unwieldsound = unwieldsound
+	if(force_multiplier)
 		src.force_multiplier = force_multiplier
+	if(force_wielded)
 		src.force_wielded = force_wielded
+	if(force_unwielded)
 		src.force_unwielded = force_unwielded
+	if(icon_prefix)
 		src.icon_prefix = icon_prefix
+	if(icon_update_callback)
 		src.icon_update_callback = icon_update_callback
+	if(on_wield_callback)
 		src.on_wield_callback = on_wield_callback
+	if(on_unwield_callback)
 		src.on_unwield_callback = on_unwield_callback
 
 // register signals withthe parent item
@@ -142,11 +140,15 @@
 		to_chat(user, "<span class='warning'>You don't have enough intact hands.</span>")
 		return
 
-	var/obj/item/parent_item = parent
+	// wield update status
 	wielded = TRUE
 	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, .proc/on_swap_hands)
+	SEND_SIGNAL(parent, COMSIG_TWOHANDED_WIELD, user)
 	if(on_wield_callback)
 		on_wield_callback.Invoke(user)
+
+	// update item stats and name
+	var/obj/item/parent_item = parent
 	if(force_multiplier)
 		parent_item.force *= force_multiplier
 	else if(force_wielded)
@@ -181,11 +183,15 @@
 	if(!wielded || !user)
 		return
 
-	var/obj/item/parent_item = parent
+	// wield update status
 	wielded = FALSE
 	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
+	SEND_SIGNAL(parent, COMSIG_TWOHANDED_UNWIELD, user)
 	if(on_unwield_callback)
 		on_unwield_callback.Invoke(user)
+
+	// update item stats
+	var/obj/item/parent_item = parent
 	if(force_multiplier)
 		parent_item.force /= force_multiplier
 	else if(force_unwielded)
@@ -195,11 +201,11 @@
 	var/sf = findtext(parent_item.name, " (Wielded)", -10) // 10 == length(" (Wielded)")
 	if(sf)
 		parent_item.name = copytext(parent_item.name, 1, sf)
-	else // somethings wrong
+	else
 		parent_item.name = "[initial(parent_item.name)]"
-	parent_item.update_icon()
 
 	// Update icons
+	parent_item.update_icon()
 	if(user.get_item_by_slot(ITEM_SLOT_BACK) == parent)
 		user.update_inv_back()
 	else
@@ -226,7 +232,9 @@
 /**
  * on_update_icon triggers on call to update parent items icon
  *
- * Invoikes the Icon Update Callback with wield status
+ * Checked in the order listed, first found is used
+ * Invokes the Icon Update Callback with wield status
+ * Updates the icon using icon_prefix if set
  */
 /datum/component/two_handed/proc/on_update_icon(datum/source)
 	if(icon_update_callback)

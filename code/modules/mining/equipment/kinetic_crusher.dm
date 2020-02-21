@@ -31,10 +31,6 @@
 /obj/item/kinetic_crusher/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 60, 110) //technically it's huge and bulky, but this provides an incentive to use it
-	add_twohanded_comp()
-
-/obj/item/kinetic_crusher/proc/add_twohanded_comp(force_unwielded=0, force_wielded=20, \
-				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
 	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, \
 				on_wield_callback=on_wield_callback, on_unwield_callback=on_unwield_callback)
 
@@ -476,10 +472,10 @@
 	. = ..()
 	if(.)
 		H.charge_time = 3
-		H.add_twohanded_comp(force_wielded=5)
+		H.AddComponent(/datum/component/two_handed, force_wielded=5)
 
 /obj/item/crusher_trophy/king_goat/remove_from(obj/item/kinetic_crusher/H, mob/living/user)
 	. = ..()
 	if(.)
 		H.charge_time = 15
-		H.add_twohanded_comp(force_wielded=20)
+		H.AddComponent(/datum/component/two_handed, force_wielded=20)
