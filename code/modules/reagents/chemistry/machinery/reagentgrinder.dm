@@ -78,8 +78,9 @@
 
 /obj/machinery/reagentgrinder/AltClick(mob/user)
 	. = ..()
-	if(istype(user) && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		replace_beaker(user)
+	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	replace_beaker(user)
 
 /obj/machinery/reagentgrinder/handle_atom_del(atom/A)
 	. = ..()
@@ -102,13 +103,13 @@
 		icon_state = "juicer0"
 
 /obj/machinery/reagentgrinder/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
+	if(!user)
+		return FALSE
 	if(beaker)
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(beaker)
+		user.put_in_hands(beaker)
+		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
-	else
-		beaker = null
 	update_icon()
 	return TRUE
 

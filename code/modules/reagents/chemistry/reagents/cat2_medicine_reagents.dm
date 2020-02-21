@@ -344,7 +344,7 @@
 			//Has to be at less than TRESHOLD_UNHUSK burn damage and have 100 isntabitaluri before unhusking. Corpses dont metabolize.
 			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && Carbies.getFireLoss() < TRESHOLD_UNHUSK && Carbies.reagents.has_reagent(/datum/reagent/medicine/C2/instabitaluri, 100))
 				Carbies.cure_husk("burn")
-				Carbies.visible_message("<span class='nicegreen'>You successfully replace most of the burnt off flesh of [Carbies].")
+				Carbies.visible_message("<span class='nicegreen'>With most of the burnt off flesh replaced, [Carbies] looks a lot healthier.</span>")
 	..()
 	return TRUE
 

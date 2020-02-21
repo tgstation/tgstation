@@ -186,7 +186,10 @@
 	if(HAS_TRAIT(src, TRAIT_XENO_HOST))
 		holder.icon_state = "hudxeno"
 	else if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
-		holder.icon_state = "huddead"
+		if(key || get_ghost(FALSE, TRUE))
+			holder.icon_state = "huddefib"
+		else
+			holder.icon_state = "huddead"
 	else
 		switch(virus_threat)
 			if(DISEASE_SEVERITY_BIOHAZARD)

@@ -22,6 +22,8 @@
  *		Snowballs
  *		Clockwork Watches
  *		Toy Daggers
+ *		Squeaky Brain
+ *		Broken Radio
  */
 
 
@@ -1489,3 +1491,34 @@
 	icon_state = "shell[rand(1,3)]"
 	color = pickweight(possible_colors)
 	setDir(pick(GLOB.cardinals))
+
+/obj/item/toy/brokenradio
+	name = "broken radio"
+	desc = "An old radio that produces nothing but static when turned on."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "broken_radio"
+	w_class = WEIGHT_CLASS_SMALL
+	var/cooldown = 0
+
+/obj/item/toy/brokenradio/attack_self(mob/user)
+	if(cooldown <= world.time)
+		cooldown = (world.time + 300)
+		user.visible_message("<span class='notice'>[user] adjusts the dial on [src].</span>")
+		sleep(5)
+		playsound(src, 'sound/items/radiostatic.ogg', 50, FALSE)
+	else
+		to_chat(user, "<span class='warning'>The dial on [src] jams up</span>")
+		return
+
+/obj/item/toy/braintoy
+	name = "squeaky brain"
+	desc = "A Mr. Monstrous brand toy made to imitate a human brain in smell and texture."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "brain-old"
+	var/cooldown = 0
+
+/obj/item/toy/braintoy/attack_self(mob/user)
+	if(cooldown <= world.time)
+		cooldown = (world.time + 10)
+		sleep(5)
+		playsound(src, 'sound/effects/blobattack.ogg', 50, FALSE)

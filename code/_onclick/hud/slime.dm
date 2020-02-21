@@ -11,6 +11,6 @@
 	pull_icon.hud = src
 	static_inventory += pull_icon
 
-	healths = new /obj/screen/healths/slime()
-	healths.hud = src
-	infodisplay += healths
+	healthdoll = new /obj/screen/healthdoll/slime()
+	healthdoll.hud = src
+	infodisplay += healthdoll

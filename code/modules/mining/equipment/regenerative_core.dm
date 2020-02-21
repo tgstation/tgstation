@@ -110,9 +110,6 @@
 		go_inert()
 	return ..()
 
-/obj/item/organ/regenerative_core/prepare_eat()
-	return null
-
 /*************************Legion core********************/
 /obj/item/organ/regenerative_core/legion
 	desc = "A strange rock that crackles with power. It can be used to heal completely, but it will rapidly decay into uselessness."

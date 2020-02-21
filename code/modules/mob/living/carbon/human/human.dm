@@ -431,6 +431,38 @@
 				to_chat(usr, "<b>Notes:</b> [R.fields["notes"]]")
 				return
 
+			if(href_list["add_citation"])
+				var/maxFine = CONFIG_GET(number/maxfine)
+				var/t1 = stripped_input("Please input citation crime:", "Security HUD", "", null)
+				var/fine = FLOOR(input("Please input citation fine, up to [maxFine]:", "Security HUD", 50) as num|null, 1)
+				if(!R || !t1 || !fine || !allowed_access)
+					return
+				if(!H.canUseHUD())
+					return
+				if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
+					return
+				if(fine < 0)
+					to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
+					return
+				fine = min(fine, maxFine)
+
+				var/crime = GLOB.data_core.createCrimeEntry(t1, "", allowed_access, station_time_timestamp(), fine)
+				for (var/obj/item/pda/P in GLOB.PDAs)
+					if(P.owner == R.fields["name"])
+						var/message = "You have been fined [fine] credits for '[t1]'. Fines may be paid at security."
+						var/datum/signal/subspace/messaging/pda/signal = new(src, list(
+							"name" = "Security Citation",
+							"job" = "Citation Server",
+							"message" = message,
+							"targets" = list("[P.owner] ([P.ownjob])"),
+							"automated" = 1
+						))
+						signal.send_to_receivers()
+						usr.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
+				GLOB.data_core.addCitation(R.fields["id"], crime)
+				investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [R.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
+				return
+
 			if(href_list["add_crime"])
 				switch(alert("What crime would you like to add?","Security HUD","Minor Crime","Major Crime","Cancel"))
 					if("Minor Crime")
@@ -1054,6 +1086,24 @@
 		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
 		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN_FLYING)
 
+
+/mob/living/carbon/human/washed(var/atom/washer)
+	. = ..()
+	if(wear_suit)
+		update_inv_wear_suit()
+	else if(w_uniform && w_uniform.washed(washer))
+		update_inv_w_uniform()
+
+	if(!is_mouth_covered())
+		lip_style = null
+		update_body()
+	if(belt && belt.washed(washer))
+		update_inv_belt()
+
+	var/list/obscured = check_obscured_slots()
+
+	if(gloves && !(HIDEGLOVES in obscured) && gloves.washed(washer))
+		SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /mob/living/carbon/human/adjust_nutrition(var/change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))

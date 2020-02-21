@@ -52,7 +52,7 @@
 		mats_per_unit = list()
 		var/in_process_mat_list = custom_materials.Copy()
 		for(var/i in custom_materials)
-			mats_per_unit[getmaterialref(i)] = in_process_mat_list[i]
+			mats_per_unit[SSmaterials.GetMaterialRef(i)] = in_process_mat_list[i]
 			custom_materials[i] *= amount
 	. = ..()
 	if(merge)
@@ -62,7 +62,7 @@
 	var/list/temp_recipes = get_main_recipes()
 	recipes = temp_recipes.Copy()
 	if(material_type)
-		var/datum/material/M = getmaterialref(material_type) //First/main material
+		var/datum/material/M = SSmaterials.GetMaterialRef(material_type) //First/main material
 		for(var/i in M.categories)
 			switch(i)
 				if(MAT_CATEGORY_RIGID)
@@ -77,9 +77,9 @@
 
 /obj/item/stack/proc/update_weight()
 	if(amount <= (max_amount * (1/3)))
-		w_class = CLAMP(full_w_class-2, WEIGHT_CLASS_TINY, full_w_class)
+		w_class = clamp(full_w_class-2, WEIGHT_CLASS_TINY, full_w_class)
 	else if (amount <= (max_amount * (2/3)))
-		w_class = CLAMP(full_w_class-1, WEIGHT_CLASS_TINY, full_w_class)
+		w_class = clamp(full_w_class-1, WEIGHT_CLASS_TINY, full_w_class)
 	else
 		w_class = full_w_class
 
@@ -236,7 +236,7 @@
 		if(R.applies_mats && custom_materials && custom_materials.len)
 			var/list/used_materials = list()
 			for(var/i in custom_materials)
-				used_materials[getmaterialref(i)] = R.req_amount / R.res_amount * (MINERAL_MATERIAL_AMOUNT / custom_materials.len)
+				used_materials[SSmaterials.GetMaterialRef(i)] = R.req_amount / R.res_amount * (MINERAL_MATERIAL_AMOUNT / custom_materials.len)
 			O.set_custom_materials(used_materials)
 
 		//START: oh fuck i'm so sorry

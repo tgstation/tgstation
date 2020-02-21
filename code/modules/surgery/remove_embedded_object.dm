@@ -8,7 +8,7 @@
 	name = "remove embedded objects"
 	time = 32
 	accept_hand = 1
-	experience_given = 5
+	experience_given = MEDICAL_SKILL_MEDIUM
 	var/obj/item/bodypart/L = null
 
 
@@ -40,6 +40,7 @@
 				display_results(user, target, "<span class='notice'>You successfully remove [objects] objects from [H]'s [L.name].</span>",
 					"<span class='notice'>[user] successfully removes [objects] objects from [H]'s [L]!</span>",
 					"<span class='notice'>[user] successfully removes [objects] objects from [H]'s [L]!</span>")
+				experience_given = MEDICAL_SKILL_MEDIUM*(objects*0.75)
 			else
 				to_chat(user, "<span class='warning'>You find no objects embedded in [H]'s [L]!</span>")
 

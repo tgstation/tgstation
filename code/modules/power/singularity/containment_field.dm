@@ -62,7 +62,7 @@
 		FG1.calc_power(INFINITY) //rip that 'containment' field
 		M.adjustHealth(-M.obj_damage)
 	else
-		..()
+		return ..()
 
 /obj/machinery/field/containment/Crossed(atom/movable/AM)
 	if(isliving(AM))
