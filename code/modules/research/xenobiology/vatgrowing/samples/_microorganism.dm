@@ -24,7 +24,6 @@
 	if(!can_grow())
 		return
 
-
 /datum/micro_organism/cell_line/proc/can_grow()
 	if(!petri_dish)
 		return FALSE

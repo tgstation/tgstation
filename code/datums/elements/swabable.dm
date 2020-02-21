@@ -6,23 +6,23 @@ This element is used in vat growing to allow for swabable behavior. This swabbin
 /datum/element/swabable
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
-	///Weighted list of /datum/micro_organism/cell_line || spawn weight
-	var/list/cell_line_weightlist
-	///Weighted list of /datum/micro_organism/virus || spawn weight
-	var/list/virus_weightlist
+	///The define of the cell_line list to use
+	var/cell_line_define
+	///The define of the cell_virus list to use
+	var/virus_define
 	///Amount of cell lines on a single sample
 	var/cell_line_amount
 	///Amount of viruses on a single sample
 	var/virus_chance
 
-/datum/element/swabable/Attach(datum/target, list/cell_line_weightlist = list(), list/virus_weightlist = list(), var/cell_line_amount, var/virus_chance)
+/datum/element/swabable/Attach(datum/target, cell_line_list_define, virus_define = list(), cell_line_amount,virus_chance)
 	if(!isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE
 
 	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK, .proc/UseOnObj)
 
-	src.cell_line_weightlist = cell_line_weightlist
-	src.virus_weightlist = virus_weightlist
+	src.cell_line_define = cell_line_define
+	src.virus_define = virus_define
 	src.cell_line_amount = cell_line_amount
 	src.virus_chance = virus_chance
 
@@ -36,5 +36,5 @@ This element is used in vat growing to allow for swabable behavior. This swabbin
 ///Generates a /datum/biological_sample
 /datum/element/swabable/proc/GenerateSample()
 	var/datum/biological_sample/generated_sample = new
-	generated_sample.GenerateSample(micro_organism_weightlist, cell_line_amount, virus_chance)
+	generated_sample.GenerateSample(cell_line_define, virus_define, cell_line_amount, virus_chance)
 	return generated_sample
