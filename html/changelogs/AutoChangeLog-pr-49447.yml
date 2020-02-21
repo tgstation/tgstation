@@ -1,0 +1,4 @@
+author: "trollbreeder"
+delete-after: True
+changes: 
+  - bugfix: "Fixes an issue where Smite and Flesh to Stone were invisible in item form."
