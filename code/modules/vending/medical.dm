@@ -28,6 +28,7 @@
 	contraband = list(/obj/item/reagent_containers/pill/tox = 3,
 						/obj/item/reagent_containers/pill/morphine = 4,
 						/obj/item/reagent_containers/pill/multiver = 6,
+						/obj/item/storage/box/gum/happiness = 3,
 						/obj/item/storage/box/hug/medical = 1)
 	premium = list(/obj/item/reagent_containers/medigel/instabitaluri = 2,
 					/obj/item/storage/pill_bottle/psicodine = 2,
