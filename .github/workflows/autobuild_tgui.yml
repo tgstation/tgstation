@@ -32,5 +32,7 @@ jobs:
           git commit -m "Automatic TGUI Rebuild [ci skip]" -a || true
       - name: Push Artifacts
         uses: ad-m/github-push-action@master
+        env:
+          GITHUB_ACTOR: comfyorange
         with:
           github_token: ${{ secrets.GITHUB_MASTER_KEY }}
