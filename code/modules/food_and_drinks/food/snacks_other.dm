@@ -420,29 +420,17 @@
 	tastes = list("cherry" = 1, "crepe" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
 
-/obj/item/reagent_containers/food/snacks/lollipop
-	name = "lollipop"
-	desc = "A delicious lollipop. Makes for a great Valentine's present."
-	icon = 'icons/obj/lollipop.dmi'
-	icon_state = "lollipop_stick"
-	item_state = "lollipop_stick"
+/obj/item/reagent_containers/food/snacks/chewable
 	slot_flags = ITEM_SLOT_MASK
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2)	//Honk
-	var/mutable_appearance/head
-	var/headcolor = rgb(0, 0, 0)
+	///How long it lasts before being deleted
 	var/succ_dur = 180
+	///The delay between each time it will handle reagents
 	var/succ_int = 100
+	///Stores the time set for the next handle_reagents
 	var/next_succ = 0
-	tastes = list("candy" = 1)
-	foodtype = JUNKFOOD | SUGAR
 
-/obj/item/reagent_containers/food/snacks/lollipop/Initialize()
-	. = ..()
-	head = mutable_appearance('icons/obj/lollipop.dmi', "lollipop_head")
-	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
-
-	//makes lollipops actually wearable as masks and still edible the old fashioned way.
-/obj/item/reagent_containers/food/snacks/lollipop/proc/handle_reagents()
+	//makes snacks actually wearable as masks and still edible the old fashioned way.
+/obj/item/reagent_containers/food/snacks/chewable/proc/handle_reagents()
 	if(reagents.total_volume)
 		if(iscarbon(loc))
 			var/mob/living/carbon/C = loc
@@ -454,7 +442,7 @@
 				return
 		reagents.remove_any(REAGENTS_METABOLISM)
 
-/obj/item/reagent_containers/food/snacks/lollipop/process()
+/obj/item/reagent_containers/food/snacks/chewable/process()
 	if(iscarbon(loc))
 		if(succ_dur < 1)
 			qdel(src)
@@ -464,42 +452,84 @@
 			handle_reagents()
 			next_succ = world.time + succ_int
 
-/obj/item/reagent_containers/food/snacks/lollipop/equipped(mob/user, slot)
+/obj/item/reagent_containers/food/snacks/chewable/equipped(mob/user, slot)
 	. = ..()
 	if(slot == ITEM_SLOT_MASK)
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/reagent_containers/food/snacks/lollipop/Destroy()
+/obj/item/reagent_containers/food/snacks/chewable/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/reagent_containers/food/snacks/lollipop/proc/change_head_color(C)
+/obj/item/reagent_containers/food/snacks/chewable/lollipop
+	name = "lollipop"
+	desc = "A delicious lollipop. Makes for a great Valentine's present."
+	icon = 'icons/obj/lollipop.dmi'
+	icon_state = "lollipop_stick"
+	item_state = "lollipop_stick"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2)	//Honk
+	var/mutable_appearance/head
+	var/headcolor = rgb(0, 0, 0)
+	succ_dur = 180
+	succ_int = 100
+	next_succ = 0
+	tastes = list("candy" = 1)
+	foodtype = JUNKFOOD | SUGAR
+
+/obj/item/reagent_containers/food/snacks/chewable/lollipop/Initialize()
+	. = ..()
+	head = mutable_appearance('icons/obj/lollipop.dmi', "lollipop_head")
+	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
+
+/obj/item/reagent_containers/food/snacks/chewable/lollipop/proc/change_head_color(C)
 	headcolor = C
 	cut_overlay(head)
 	head.color = C
 	add_overlay(head)
 
-/obj/item/reagent_containers/food/snacks/lollipop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/reagent_containers/food/snacks/chewable/lollipop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..(hit_atom)
 	throw_speed = 1
 	throwforce = 0
 
-/obj/item/reagent_containers/food/snacks/lollipop/cyborg
+/obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg
 	var/spamchecking = TRUE
 
-/obj/item/reagent_containers/food/snacks/lollipop/cyborg/Initialize()
+/obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
 
-/obj/item/reagent_containers/food/snacks/lollipop/cyborg/equipped(mob/living/user, slot)
+/obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg/equipped(mob/living/user, slot)
 	. = ..(user, slot)
 	spamchecking = FALSE
 
-/obj/item/reagent_containers/food/snacks/lollipop/cyborg/proc/spamcheck()
+/obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg/proc/spamcheck()
 	if(spamchecking)
 		qdel(src)
+
+/obj/item/reagent_containers/food/snacks/chewable/bubblegum
+	name = "bubblegum"
+	desc = "A rubbery strip of gum. Not exactly filling, but it keeps you busy."
+	icon_state = "bubblegum"
+	item_state = "bubblegum"
+	color = "#E48AB5" // craftable custom gums someday?
+	list_reagents = list(/datum/reagent/consumable/sugar = 5)
+	tastes = list("candy" = 1)
+
+/obj/item/reagent_containers/food/snacks/chewable/bubblegum/nicotine
+	name = "nicotine gum"
+	list_reagents = list(/datum/reagent/drug/nicotine = 10, /datum/reagent/consumable/menthol = 5)
+	tastes = list("mint" = 1)
+	color = "#60A584"
+
+/obj/item/reagent_containers/food/snacks/chewable/bubblegum/happiness
+	name = "HP+ gum"
+	desc = "A rubbery strip of gum. It smells funny."
+	list_reagents = list(/datum/reagent/drug/happiness = 15)
+	tastes = list("paint thinner" = 1)
+	color = "#EE35FF"
 
 /obj/item/reagent_containers/food/snacks/gumball
 	name = "gumball"
