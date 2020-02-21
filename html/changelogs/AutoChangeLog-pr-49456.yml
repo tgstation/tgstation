@@ -1,0 +1,5 @@
+author: "Anonmare"
+delete-after: True
+changes: 
+  - rscadd: "AIs can now have their laws manually adjusted"
+  - bugfix: "AIs now spark when hit, like they always should've done."

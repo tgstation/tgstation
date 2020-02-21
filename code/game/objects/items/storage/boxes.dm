@@ -1270,3 +1270,47 @@
 /obj/item/storage/box/sparklers/PopulateContents()
 	for(var/i in 1 to 7)
 		new/obj/item/sparkler(src)
+
+/obj/item/storage/box/gum
+	name = "bubblegum packet"
+	desc = "The packaging is entirely in japanese, apparently. You can't make out a single word of it."
+	icon_state = "bubblegum_generic"
+	illustration = null
+	foldable = null
+	custom_price = 120
+
+/obj/item/storage/box/gum/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.set_holdable(list(/obj/item/storage/box/gum))
+	STR.max_items = 4
+
+/obj/item/storage/box/gum/PopulateContents()
+	for(var/i in 1 to 4)
+		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum(src)
+
+/obj/item/storage/box/gum/nicotine
+	name = "nicotine gum packet"
+	desc = "Designed to help with nicotine addiction and oral fixation all at once without destroying your lungs in the process. Mint flavored!"
+	icon_state = "bubblegum_nicotine"
+	custom_premium_price = 275
+
+/obj/item/storage/box/gum/nicotine/PopulateContents()
+	for(var/i in 1 to 4)
+		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum/nicotine(src)
+
+/obj/item/storage/box/gum/happiness
+	name = "HP+ gum packet"
+	desc = "A seemingly homemade packaging with an odd smell. It has a weird drawing of a smiling face sticking out its tongue."
+	icon_state = "bubblegum_happiness"
+	custom_price = 300
+	custom_premium_price = 300
+
+/obj/item/storage/box/gum/happiness/Initialize()
+	. = ..()
+	if (prob(25))
+		desc += "You can faintly make out the word 'Hemopagopril' was once scribbled on it."
+
+/obj/item/storage/box/gum/happiness/PopulateContents()
+	for(var/i in 1 to 4)
+		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum/happiness(src)
