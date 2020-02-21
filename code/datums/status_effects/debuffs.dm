@@ -637,7 +637,7 @@
 	msg_stage++
 
 //imagine trying to heal LOL
-/datum/status_effect/chill_touch
+/datum/status_effect/grouped/chill_touch
 	id = "chill_touch"
 	duration = 600
 	tick_interval = 1
