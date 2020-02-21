@@ -15,18 +15,25 @@
 	resistance_flags = FIRE_PROOF
 	var/wielded = FALSE // track wielded status on item
 
+/obj/item/pitchfork/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+
 /obj/item/pitchfork/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=7, force_wielded=15, icon_prefix="pitchfork", \
-				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
+	AddComponent(/datum/component/two_handed, force_unwielded=7, force_wielded=15, icon_wielded="pitchfork1")
 
-/// Callback triggered on wield of two handed item
-/obj/item/pitchfork/proc/on_wield(mob/user)
+/// triggered on wield of two handed item
+/obj/item/pitchfork/proc/on_wield(obj/item/source, mob/user)
 	wielded = TRUE
 
-/// Callback triggered on unwield of two handed item
-/obj/item/pitchfork/proc/on_unwield(mob/user)
+/// triggered on unwield of two handed item
+/obj/item/pitchfork/proc/on_unwield(obj/item/source, mob/user)
 	wielded = FALSE
+
+/obj/item/pitchfork/update_icon_state()
+	icon_state = "pitchfork0"
 
 /obj/item/pitchfork/demonic
 	name = "demonic pitchfork"
@@ -40,8 +47,7 @@
 
 /obj/item/pitchfork/demonic/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=19, force_wielded=25, \
-				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
+	AddComponent(/datum/component/two_handed, force_unwielded=19, force_wielded=25)
 
 /obj/item/pitchfork/demonic/greater
 	force = 24
@@ -49,8 +55,7 @@
 
 /obj/item/pitchfork/demonic/greater/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=24, force_wielded=34, \
-				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
+	AddComponent(/datum/component/two_handed, force_unwielded=24, force_wielded=34)
 
 /obj/item/pitchfork/demonic/ascended
 	force = 100
@@ -58,8 +63,7 @@
 
 /obj/item/pitchfork/demonic/ascended/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=100, force_wielded=500000, \
-				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield)) // Kills you DEAD
+	AddComponent(/datum/component/two_handed, force_unwielded=100, force_wielded=500000) // Kills you DEAD
 
 /obj/item/pitchfork/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] impales [user.p_them()]self in [user.p_their()] abdomen with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")

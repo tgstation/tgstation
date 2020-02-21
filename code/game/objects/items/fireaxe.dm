@@ -19,19 +19,26 @@
 	resistance_flags = FIRE_PROOF
 	var/wielded = FALSE // track wielded status on item
 
+/obj/item/fireaxe/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+
 /obj/item/fireaxe/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=24, icon_prefix="fireaxe", \
-				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=24, icon_wielded="fireaxe1")
 
-/// Callback triggered on wield of two handed item
-/obj/item/fireaxe/proc/on_wield(mob/user)
+/// triggered on wield of two handed item
+/obj/item/fireaxe/proc/on_wield(obj/item/source, mob/user)
 	wielded = TRUE
 
-/// Callback triggered on unwield of two handed item
-/obj/item/fireaxe/proc/on_unwield(mob/user)
+/// triggered on unwield of two handed item
+/obj/item/fireaxe/proc/on_unwield(obj/item/source, mob/user)
 	wielded = FALSE
+
+/obj/item/fireaxe/update_icon_state()
+	icon_state = "fireaxe0"
 
 /obj/item/fireaxe/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -56,5 +63,7 @@
 
 /obj/item/fireaxe/boneaxe/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23, icon_prefix="bone_axe", \
-				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23, icon_wielded="bone_axe1")
+
+/obj/item/fireaxe/boneaxe/update_icon_state()
+	icon_state = "bone_axe0"

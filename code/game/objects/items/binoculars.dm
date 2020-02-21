@@ -11,16 +11,20 @@
 	var/zoom_out_amt = 6
 	var/zoom_amt = 10
 
+/obj/item/binoculars/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+
 /obj/item/binoculars/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, \
-				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/unwield))
+	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12)
 
 /obj/item/binoculars/Destroy()
 	listeningTo = null
 	return ..()
 
-/obj/item/binoculars/proc/on_wield(mob/user)
+/obj/item/binoculars/proc/on_wield(obj/item/source, mob/user)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/unwield)
 	listeningTo = user
 	user.visible_message("<span class='notice'>[user] holds [src] up to [user.p_their()] eyes.</span>", "<span class='notice'>You hold [src] up to your eyes.</span>")
@@ -43,6 +47,8 @@
 	C.change_view(world.view + zoom_out_amt)
 	C.pixel_x = world.icon_size*_x
 	C.pixel_y = world.icon_size*_y
+/obj/item/binoculars/proc/on_unwield(obj/item/source, mob/user)
+	unwield(user)
 
 /obj/item/binoculars/proc/unwield(mob/user)
 	if(listeningTo)

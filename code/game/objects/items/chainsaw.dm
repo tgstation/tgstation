@@ -25,16 +25,20 @@
 
 /obj/item/chainsaw/Initialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 30, 100, 0, 'sound/weapons/chainsawhit.ogg', TRUE)
-	AddComponent(/datum/component/two_handed, require_twohands=TRUE, \
-				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 
-/// Callback triggered on wield of two handed item
-/obj/item/chainsaw/proc/on_wield(mob/user)
+/obj/item/chainsaw/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 30, 100, 0, 'sound/weapons/chainsawhit.ogg', TRUE)
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+
+/// triggered on wield of two handed item
+/obj/item/chainsaw/proc/on_wield(obj/item/source, mob/user)
 	wielded = TRUE
 
-/// Callback triggered on unwield of two handed item
-/obj/item/chainsaw/proc/on_unwield(mob/user)
+/// triggered on unwield of two handed item
+/obj/item/chainsaw/proc/on_unwield(obj/item/source, mob/user)
 	wielded = FALSE
 
 /obj/item/chainsaw/suicide_act(mob/living/carbon/user)

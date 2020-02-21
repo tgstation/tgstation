@@ -31,26 +31,25 @@
 /obj/item/dualsaber/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=3, force_wielded=34, \
-					wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg', \
-					on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
+					wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
 
-/// Callback triggered on wield of two handed item
+/// Triggered on wield of two handed item
 /// Specific hulk checks due to reflection chance for balance issues and switches hitsounds.
-/obj/item/dualsaber/proc/on_wield(mob/living/carbon/user)
-	wielded = TRUE
+/obj/item/dualsaber/proc/on_wield(obj/item/source, mob/living/carbon/user)
 	if(user && user.has_dna())
 		if(user.dna.check_mutation(HULK))
 			to_chat(user, "<span class='warning'>You lack the grace to wield this!</span>")
-			return
+			return COMPONENT_TWOHANDED_BLOCK_WIELD
+	wielded = TRUE
 	sharpness = IS_SHARP
 	w_class = w_class_on
 	hitsound = 'sound/weapons/blade1.ogg'
 	START_PROCESSING(SSobj, src)
 	set_light(brightness_on)
 
-/// Callback triggered on unwield of two handed item
+/// Triggered on unwield of two handed item
 /// switch hitsounds
-/obj/item/dualsaber/proc/on_unwield(mob/user)
+/obj/item/dualsaber/proc/on_unwield(obj/item/source, mob/living/carbon/user)
 	wielded = FALSE
 	sharpness = initial(sharpness)
 	w_class = initial(w_class)
@@ -90,6 +89,8 @@
 
 /obj/item/dualsaber/Initialize()
 	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	if(LAZYLEN(possible_colors))
 		saber_color = pick(possible_colors)
 		switch(saber_color)
@@ -109,9 +110,9 @@
 /obj/item/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
 		if(user.dna.check_mutation(HULK))
-			to_chat(user, "<span class='warning'>You grip the blade too hard and accidentally close it!</span>")
+			to_chat(user, "<span class='warning'>You grip the blade too hard and accidentally drop it!</span>")
 			if(wielded)
-				SEND_SIGNAL(src, COMSIG_TRY_TWOHANDED_UNWIELD, user)
+				user.dropItemToGround(src, force=TRUE)
 				return
 	..()
 	if(wielded && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))

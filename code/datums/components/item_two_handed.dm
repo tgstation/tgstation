@@ -14,10 +14,8 @@
 	var/unwieldsound = FALSE 						/// Play sound when unwielded
 	var/attacksound = FALSE							/// Play sound on attack when wielded
 	var/require_twohands = FALSE					/// Does it have to be held in both hands
-	var/icon_prefix = FALSE							/// The icon prefix that will be used with the wielded status
-	var/datum/callback/icon_update_callback = null 	/// The proc to call on updating the icon
-	var/datum/callback/on_wield_callback = null 	/// The proc to call on weld of the item
-	var/datum/callback/on_unwield_callback = null 	/// The proc to call on unweld of the item
+	var/icon_wielded = FALSE						/// The icon that will be used when wielded
+	var/obj/item/offhand/offhand_item = null		/// Reference to the offhand created for the item
 
 /**
  * Two Handed component
@@ -30,14 +28,10 @@
  * * force_multiplier (optional) The force multiplier when wielded, do not use with force_wielded, and force_unwielded
  * * force_wielded (optional) The force setting when the item is wielded, do not use with force_multiplier
  * * force_unwielded (optional) The force setting when the item is unwielded, do not use with force_multiplier
- * * icon_prefix (optional) The prefix of the items icon to be used with wielded status
- * * icon_update_callback (optional) proc (wielded) Callback with wielded status
- * * on_wield_callback (optional) proc (user) Callback on wield of the item
- * * on_unwield_callback (optional) proc (user) Callback on unwield of the item
+ * * icon_wielded (optional) The icon to be used when wielded
  */
 /datum/component/two_handed/Initialize(require_twohands=FALSE, wieldsound=FALSE, unwieldsound=FALSE, attacksound=FALSE, \
-										force_multiplier=0, force_wielded=0, force_unwielded=0, icon_prefix=FALSE, \
-										datum/callback/icon_update_callback=null, datum/callback/on_wield_callback=null, datum/callback/on_unwield_callback=null)
+										force_multiplier=0, force_wielded=0, force_unwielded=0, icon_wielded=FALSE)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -48,15 +42,11 @@
 	src.force_multiplier = force_multiplier
 	src.force_wielded = force_wielded
 	src.force_unwielded = force_unwielded
-	src.icon_prefix = icon_prefix
-	src.icon_update_callback = icon_update_callback
-	src.on_wield_callback = on_wield_callback
-	src.on_unwield_callback = on_unwield_callback
+	src.icon_wielded = icon_wielded
 
 // Inherit the new values passed to the component
 /datum/component/two_handed/InheritComponent(datum/component/two_handed/new_comp, original, require_twohands, \
-												wieldsound, unwieldsound, force_wielded, force_unwielded, icon_prefix, \
-												datum/callback/icon_update_callback, datum/callback/on_wield_callback, datum/callback/on_unwield_callback)
+												wieldsound, unwieldsound, force_wielded, force_unwielded, icon_wielded)
 	if(!original)
 		return
 	if(require_twohands)
@@ -73,14 +63,8 @@
 		src.force_wielded = force_wielded
 	if(force_unwielded)
 		src.force_unwielded = force_unwielded
-	if(icon_prefix)
-		src.icon_prefix = icon_prefix
-	if(icon_update_callback)
-		src.icon_update_callback = icon_update_callback
-	if(on_wield_callback)
-		src.on_wield_callback = on_wield_callback
-	if(on_unwield_callback)
-		src.on_unwield_callback = on_unwield_callback
+	if(icon_wielded)
+		src.icon_wielded = icon_wielded
 
 // register signals withthe parent item
 /datum/component/two_handed/RegisterWithParent()
@@ -89,17 +73,16 @@
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/on_attack)
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, .proc/on_update_icon)
-	RegisterSignal(parent, COMSIG_TRY_TWOHANDED_WIELD, .proc/try_wield)
-	RegisterSignal(parent, COMSIG_TRY_TWOHANDED_UNWIELD, .proc/try_unwield)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 
 // Remove all siginals registered to the parent item
 /datum/component/two_handed/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED,
 								COMSIG_ITEM_DROPPED,
 								COMSIG_ITEM_ATTACK_SELF,
+								COMSIG_ITEM_ATTACK,
 								COMSIG_ATOM_UPDATE_ICON,
-								COMSIG_TRY_TWOHANDED_WIELD,
-								COMSIG_TRY_TWOHANDED_UNWIELD))
+								COMSIG_MOVABLE_MOVED))
 
 /// Triggered on equip of the item containing the component
 /datum/component/two_handed/proc/on_equip(datum/source, mob/user, slot)
@@ -114,6 +97,8 @@
 		unwield(user, show_message=TRUE)
 	if(wielded)
 		unwield(user)
+	if(source == offhand_item && !QDELETED(src))
+		qdel(src)
 
 /// Triggered on attack self of the item containing the component
 /datum/component/two_handed/proc/on_attack_self(datum/source, mob/user)
@@ -148,11 +133,10 @@
 		return
 
 	// wield update status
+	if(SEND_SIGNAL(parent, COMSIG_TWOHANDED_WIELD, user) & COMPONENT_TWOHANDED_BLOCK_WIELD)
+		return // blocked wield from item
 	wielded = TRUE
 	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, .proc/on_swap_hands)
-	SEND_SIGNAL(parent, COMSIG_TWOHANDED_WIELD, user)
-	if(on_wield_callback)
-		on_wield_callback.Invoke(user)
 
 	// update item stats and name
 	var/obj/item/parent_item = parent
@@ -173,10 +157,11 @@
 		playsound(parent_item.loc, wieldsound, 50, TRUE)
 
 	// Let's reserve the other hand
-	var/obj/item/offhand/offhand_item = new(user)
+	offhand_item = new(user)
 	offhand_item.name = "[parent_item.name] - offhand"
 	offhand_item.desc = "Your second grip on [parent_item]."
 	offhand_item.wielded = TRUE
+	RegisterSignal(offhand_item, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	user.put_in_inactive_hand(offhand_item)
 
 /**
@@ -194,8 +179,6 @@
 	wielded = FALSE
 	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
 	SEND_SIGNAL(parent, COMSIG_TWOHANDED_UNWIELD, user)
-	if(on_unwield_callback)
-		on_unwield_callback.Invoke(user)
 
 	// update item stats
 	var/obj/item/parent_item = parent
@@ -218,6 +201,10 @@
 	else
 		user.update_inv_hands()
 
+	// if the item requires two handed drop the item on unwield
+	if(require_twohands)
+			user.dropItemToGround(parent, force=TRUE)
+
 	// Show message if requested
 	if(show_message)
 		if(iscyborg(user))
@@ -232,9 +219,11 @@
 		playsound(parent_item.loc, unwieldsound, 50, TRUE)
 
 	// Remove the object in the offhand
-	var/obj/item/offhand/offhand_item = user.get_inactive_held_item()
-	if(offhand_item && istype(offhand_item))
-		offhand_item.unwield()
+	if(offhand_item)
+		UnregisterSignal(offhand_item, COMSIG_ITEM_DROPPED)
+		qdel(offhand_item)
+	// Clear any old refrence to an item that should be gone now
+	offhand_item = null
 
 /**
  * on_attack triggers on attack with the parent item
@@ -247,29 +236,20 @@
 /**
  * on_update_icon triggers on call to update parent items icon
  *
- * Checked in the order listed, first found is used
- * Invokes the Icon Update Callback with wield status
- * Updates the icon using icon_prefix if set
+ * Updates the icon using icon_wielded if set
  */
 /datum/component/two_handed/proc/on_update_icon(datum/source)
-	if(icon_update_callback)
-		icon_update_callback.Invoke(wielded)
-	else if(icon_prefix)
+	if(icon_wielded && wielded)
 		var/obj/item/parent_item = parent
 		if(parent_item)
-			parent_item.icon_state = "[icon_prefix][wielded]"
+			parent_item.icon_state = icon_wielded
+			return COMSIG_ATOM_NO_UPDATE_ICON_STATE
 
 /**
- * try_wield tries to wield the item
+ * on_moved Triggers on item moved
  */
-/datum/component/two_handed/proc/try_wield(datum/source, mob/user)
-	wield(user)
-
-/**
- * try_unwield attempts to unwield the item
- */
-/datum/component/two_handed/proc/try_unwield(datum/source, mob/user, show_message=TRUE)
-	unwield(user, show_message)
+/datum/component/two_handed/proc/on_moved(datum/source, mob/user, dir)
+	unwield(user)
 
 /**
  * on_swap_hands Triggers on swapping hands, blocks swap if the other hand is busy
@@ -277,8 +257,7 @@
 /datum/component/two_handed/proc/on_swap_hands(mob/user, obj/item/held_item)
 	if(!held_item)
 		return
-	var/datum/component/two_handed/comp_twohand = held_item.GetComponent(/datum/component/two_handed)
-	if(comp_twohand && comp_twohand.wielded)
+	if(held_item == parent)
 		return COMPONENT_BLOCK_SWAP
 
 /**
@@ -297,43 +276,7 @@
 	wielded = FALSE
 	return ..()
 
-// Only utilized by dismemberment since you can't normally switch to the offhand to drop it.
-/obj/item/offhand/dropped(mob/living/user, show_message=TRUE)
-	SHOULD_CALL_PARENT(0)
-
-	// Call the held object
-	var/obj/item = user.get_active_held_item()
-	if(item)
-		var/datum/component/two_handed/comp_twohand = item.GetComponent(/datum/component/two_handed)
-		if(comp_twohand)
-			SEND_SIGNAL(item, COMSIG_TRY_TWOHANDED_UNWIELD, user, show_message)
-			// Drop item if off hand is dropped and the item requies both hands
-			if(comp_twohand.require_twohands)
-				user.dropItemToGround(item)
-
-	// delete on drop
-	if(!QDELETED(src))
-		qdel(src)
-
 /obj/item/offhand/equipped(mob/user, slot)
-	..()
-	if(wielded && !user.is_holding(src))
-		unwield(user)
-
-/obj/item/offhand/proc/unwield()
-	if(wielded)
-		wielded = FALSE
+	. = ..()
+	if(wielded && !user.is_holding(src) && !QDELETED(src))
 		qdel(src)
-
-// You should never be able to do this in standard use of two handed items. This is a backup for lingering offhands.
-/obj/item/offhand/attack_self(mob/living/carbon/user)
-	if (QDELETED(src))
-		return
-	// If you have a proper item in your other hand that the offhand is for, do nothing. This should never happen.
-	var/obj/item/item = user.get_inactive_held_item()
-	if (item && !istype(item, /obj/item/offhand/))
-		var/datum/component/two_handed/comp_twohand = item.GetComponent(/datum/component/two_handed)
-		if(comp_twohand)
-			return
-	// If it's another offhand, or literally anything else, qdel.
-	qdel(src)

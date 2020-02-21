@@ -19,20 +19,24 @@
 
 /obj/item/singularityhammer/Initialize()
 	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/singularityhammer/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=20, icon_prefix="mjollnir", \
-				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=20, icon_wielded="mjollnir1")
 
-/// Callback triggered on wield of two handed item
-/obj/item/singularityhammer/proc/on_wield(mob/user)
+/// triggered on wield of two handed item
+/obj/item/singularityhammer/proc/on_wield(obj/item/source, mob/user)
 	wielded = TRUE
 
-/// Callback triggered on unwield of two handed item
-/obj/item/singularityhammer/proc/on_unwield(mob/user)
+/// triggered on unwield of two handed item
+/obj/item/singularityhammer/proc/on_unwield(obj/item/source, mob/user)
 	wielded = FALSE
+
+/obj/item/singularityhammer/update_icon_state()
+	icon_state = "mjollnir0"
 
 /obj/item/singularityhammer/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -91,18 +95,25 @@
 	w_class = WEIGHT_CLASS_HUGE
 	var/wielded = FALSE // track wielded status on item
 
+/obj/item/mjollnir/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+
 /obj/item/mjollnir/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=25, icon_prefix="mjollnir", attacksound="sparks", \
-				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=25, icon_wielded="mjollnir1", attacksound="sparks")
 
-/// Callback triggered on wield of two handed item
-/obj/item/mjollnir/proc/on_wield(mob/user)
+/// triggered on wield of two handed item
+/obj/item/mjollnir/proc/on_wield(obj/item/source, mob/user)
 	wielded = TRUE
 
-/// Callback triggered on unwield of two handed item
-/obj/item/mjollnir/proc/on_unwield(mob/user)
+/// triggered on unwield of two handed item
+/obj/item/mjollnir/proc/on_unwield(obj/item/source, mob/user)
 	wielded = FALSE
+
+/obj/item/mjollnir/update_icon_state()
+	icon_state = "mjollnir0"
 
 /obj/item/mjollnir/proc/shock(mob/living/target)
 	target.Stun(60)

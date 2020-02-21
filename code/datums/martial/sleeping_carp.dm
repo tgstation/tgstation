@@ -173,18 +173,25 @@
 	block_chance = 50
 	var/wielded = FALSE // track wielded status on item
 
+/obj/item/staff/bostaff/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+
 /obj/item/staff/bostaff/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=24, icon_prefix="bostaff", \
-				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=24, icon_wielded="bostaff1")
 
-/// Callback triggered on wield of two handed item
-/obj/item/staff/bostaff/proc/on_wield(mob/user)
+/// triggered on wield of two handed item
+/obj/item/staff/bostaff/proc/on_wield(obj/item/source, mob/user)
 	wielded = TRUE
 
-/// Callback triggered on unwield of two handed item
-/obj/item/staff/bostaff/proc/on_unwield(mob/user)
+/// triggered on unwield of two handed item
+/obj/item/staff/bostaff/proc/on_unwield(obj/item/source, mob/user)
 	wielded = FALSE
+
+/obj/item/staff/bostaff/update_icon_state()
+	icon_state = "bostaff0"
 
 /obj/item/staff/bostaff/attack(mob/target, mob/living/user)
 	add_fingerprint(user)

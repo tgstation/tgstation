@@ -28,22 +28,26 @@
 	var/brightness_on = 5
 	var/wielded = FALSE // track wielded status on item
 
+/obj/item/kinetic_crusher/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+
 /obj/item/kinetic_crusher/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 60, 110) //technically it's huge and bulky, but this provides an incentive to use it
-	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=20, \
-				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
+	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=20)
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
 	return ..()
 
-/// Callback triggered on wield of two handed item
-/obj/item/kinetic_crusher/proc/on_wield(mob/user)
+/// triggered on wield of two handed item
+/obj/item/kinetic_crusher/proc/on_wield(obj/item/source, mob/user)
 	wielded = TRUE
 
-/// Callback triggered on unwield of two handed item
-/obj/item/kinetic_crusher/proc/on_unwield(mob/user)
+/// triggered on unwield of two handed item
+/obj/item/kinetic_crusher/proc/on_unwield(obj/item/source, mob/user)
 	wielded = FALSE
 
 /obj/item/kinetic_crusher/examine(mob/living/user)

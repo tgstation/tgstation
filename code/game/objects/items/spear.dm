@@ -25,7 +25,10 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
 	AddComponent(/datum/component/jousting)
-	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_prefix="[icon_prefix]")
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="[icon_prefix]1")
+
+/obj/item/spear/update_icon_state()
+	icon_state = "[icon_prefix]0"
 
 /obj/item/spear/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -36,7 +39,7 @@
 	if (istype(tip, /obj/item/shard/plasma))
 		throwforce = 21
 		icon_prefix = "spearplasma"
-		AddComponent(/datum/component/two_handed, force_unwielded=11, force_wielded=19, icon_prefix="[icon_prefix]")
+		AddComponent(/datum/component/two_handed, force_unwielded=11, force_wielded=19, icon_wielded="[icon_prefix]1")
 	update_icon()
 	qdel(tip)
 	..()
@@ -48,20 +51,24 @@
 
 /obj/item/spear/explosive/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	set_explosive(new /obj/item/grenade/iedcasing()) //For admin-spawned explosive lances
 
 /obj/item/spear/explosive/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, \
-				on_wield_callback=CALLBACK(src, .proc/on_wield), icon_prefix="spearbomb")
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="spearbomb1")
 
-/// Callback triggered on wield of two handed item
-/obj/item/spear/explosive/proc/on_wield(mob/user)
+/// triggered on wield of two handed item
+/obj/item/spear/explosive/proc/on_wield(obj/item/source, mob/user)
 	wielded = TRUE
 
-/// Callback triggered on unwield of two handed item
-/obj/item/spear/explosive/proc/on_unwield(mob/user)
+/// triggered on unwield of two handed item
+/obj/item/spear/explosive/proc/on_unwield(obj/item/source, mob/user)
 	wielded = FALSE
+
+/obj/item/spear/explosive/update_icon_state()
+	icon_state = "spearbomb0"
 
 /obj/item/spear/explosive/proc/set_explosive(obj/item/grenade/G)
 	if(explosive)
@@ -78,8 +85,7 @@
 		if(comp_twohand)
 			var/lance_wielded = comp_twohand.force_wielded
 			var/lance_unwielded = comp_twohand.force_unwielded
-			AddComponent(/datum/component/two_handed, force_unwielded=lance_unwielded, force_wielded=lance_wielded, \
-				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
+			AddComponent(/datum/component/two_handed, force_unwielded=lance_unwielded, force_wielded=lance_wielded)
 		throwforce = lancePart.throwforce
 		icon_prefix = lancePart.icon_prefix
 		parts_list -= G
@@ -127,7 +133,7 @@
 
 /obj/item/spear/grey_tide/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=15, force_wielded=25, icon_prefix="[icon_prefix]")
+	AddComponent(/datum/component/two_handed, force_unwielded=15, force_wielded=25, icon_wielded="[icon_prefix]1")
 
 /obj/item/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	. = ..()
@@ -157,4 +163,7 @@
 
 /obj/item/spear/bonespear/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=12, force_wielded=20, icon_prefix="bone_spear")
+	AddComponent(/datum/component/two_handed, force_unwielded=12, force_wielded=20, icon_wielded="bone_spear1")
+
+/obj/item/spear/bonespear/update_icon_state()
+	icon_state = "bone_spear0"

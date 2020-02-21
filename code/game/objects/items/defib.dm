@@ -177,7 +177,7 @@
 			return
 	else
 		//Remove from their hands and back onto the defib unit
-		SEND_SIGNAL(paddles, COMSIG_TRY_TWOHANDED_UNWIELD, user)
+		//SEND_SIGNAL(paddles, COMSIG_TRY_TWOHANDED_UNWIELD, user)
 		remove_paddles(user)
 
 	update_power()
@@ -308,15 +308,14 @@
 /obj/item/shockpaddles/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, \
-				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
+	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12)
 
-/// Callback triggered on wield of two handed item
-/obj/item/shockpaddles/proc/on_wield(mob/user)
+/// triggered on wield of two handed item
+/obj/item/shockpaddles/proc/on_wield(obj/item/source, mob/user)
 	wielded = TRUE
 
-/// Callback triggered on unwield of two handed item
-/obj/item/shockpaddles/proc/on_unwield(mob/user)
+/// triggered on unwield of two handed item
+/obj/item/shockpaddles/proc/on_unwield(obj/item/source, mob/user)
 	wielded = FALSE
 
 /obj/item/shockpaddles/Destroy()
@@ -365,6 +364,8 @@
 /obj/item/shockpaddles/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_STORAGE_INSERT, GENERIC_ITEM_TRAIT) //stops shockpaddles from being inserted in BoH
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	if(!req_defib)
 		return //If it doesn't need a defib, just say it exists
 	if (!loc || !istype(loc, /obj/item/defibrillator)) //To avoid weird issues from admin spawns
@@ -391,9 +392,9 @@
 		return ..()
 	if(user)
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-		var/obj/item/offhand/O = user.get_inactive_held_item()
-		if(istype(O))
-			O.unwield()
+		//var/obj/item/offhand/O = user.get_inactive_held_item()
+		//if(istype(O) && !QDELETED(O))
+		//	qdel(O)
 		if(user != loc)
 			to_chat(user, "<span class='notice'>The paddles snap back into the main unit.</span>")
 			snap_back()
