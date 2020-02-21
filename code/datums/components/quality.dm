@@ -30,10 +30,11 @@
 /datum/component/quality/Initialize(mob/living/carbon/human/_creator,datum/skill/_skill,_quality_val)
 	if(!isitem(parent) || !_creator)
 		return COMPONENT_INCOMPATIBLE
-	var/quality_val = pick(0;2 ,1;4 ,2;6 ,3;4 ,4;2) //normal distribution
+	var/quality_val //normal distribution
 	if(_quality_val != null)
 		quality_val = _quality_val
-
+	else
+		quality_val = pick(2;0 ,4;1 ,6;2 ,4;3 ,2;4) // mormal distribution
 	creator = _creator
 	var/quality_bracket = creator.mind.get_skill_modifier(_skill, SKILL_QUALITY_MODIFIER)
 	creator_mind =  creator?.mind
