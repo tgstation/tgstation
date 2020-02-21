@@ -92,7 +92,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			var/datum/mind/gangbanger = antag_pick(antag_candidates)
 			gangbangers += gangbanger
 			log_game("[key_name(gangbanger)] has been selected as a replacement gangster!")
-	if(!ishuman(undercover_cop.current))
+	if(undercover_cop && !ishuman(undercover_cop.current))
 		pigs.Remove(undercover_cop)
 		log_game("[undercover_cop] was not a human, and thus has lost their undercover cop role.")
 		if(!antag_candidates.len)
@@ -101,9 +101,10 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			undercover_cop = one_eight_seven_on_an_undercover_cop
 		else
 			log_game("Unable to find a replacement undercover cop.")
-	var/datum/antagonist/ert/families/undercover_cop/one_eight_seven_on_an_undercover_cop = new()
-	undercover_cop.add_antag_datum(one_eight_seven_on_an_undercover_cop)
-	undercover_cop.current.playsound_local(undercover_cop.current, 'sound/effects/families_police.ogg', 100, FALSE, pressure_affected = FALSE)
+	if(undercover_cop)
+		var/datum/antagonist/ert/families/undercover_cop/one_eight_seven_on_an_undercover_cop = new()
+		undercover_cop.add_antag_datum(one_eight_seven_on_an_undercover_cop)
+		undercover_cop.current.playsound_local(undercover_cop.current, 'sound/effects/families_police.ogg', 100, FALSE, pressure_affected = FALSE)
 
 	for(var/datum/mind/gangbanger in gangbangers)
 		var/gang_to_use = pick_n_take(gangs_to_use)
@@ -321,6 +322,10 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 
 			//Logging and cleanup
 			log_game("[key_name(cop)] has been selected as an [ert_antag.name]")
+			if(numagents == 1 && GLOB.deaths_during_shift >= FIVE_STARS_LOW)
+				cop.buckled.user_unbuckle_mob(cop,cop)
+				var/obj/mecha/combat/five_stars/tank = new(get_turf(cop))
+				tank.moved_inside(cop)
 			numagents--
 	cops_arrived = TRUE
 	SSshuttle.registerHostileEnvironment(src)
