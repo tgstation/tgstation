@@ -103,7 +103,7 @@
 /datum/surgery_step/saw
 	name = "saw bone"
 	implements = list(TOOL_SAW = 100,/obj/item/melee/arm_blade = 75,
-	/obj/item/twohanded/fireaxe = 50, /obj/item/hatchet = 35, /obj/item/kitchen/knife/butcher = 25)
+	/obj/item/twohanded/fireaxe = 50, /obj/item/hatchet = 35, /obj/item/kitchen/knife/butcher = 25, /obj/item = 20) //20% success (sort of) with any sharp item with a force>=10
 	time = 54
 
 /datum/surgery_step/saw/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -111,7 +111,12 @@
 		"<span class='notice'>[user] begins to saw through the bone in [target]'s [parse_zone(target_zone)].</span>",
 		"<span class='notice'>[user] begins to saw through the bone in [target]'s [parse_zone(target_zone)].</span>")
 
-/datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+/datum/surgery_step/saw/tool_check(mob/user, obj/item/tool)
+	if(implement_type == /obj/item && !(tool.get_sharpness() && (tool.force >= 10)))
+		return FALSE
+	return TRUE
+
+/datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	target.apply_damage(50, BRUTE, "[target_zone]")
 	display_results(user, target, "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open.</span>",
 		"<span class='notice'>[user] saws [target]'s [parse_zone(target_zone)] open!</span>",
