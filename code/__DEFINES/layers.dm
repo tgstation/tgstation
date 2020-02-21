@@ -7,15 +7,10 @@
 #define PLANE_SPACE_PARALLAX -90
 
 
-#define OPENSPACE_LAYER 17
+#define OPENSPACE_LAYER 17 //Openspace layer over all
+#define OPENSPACE_PLANE -4 //Openspace plane below all turfs
+#define OPENSPACE_BACKDROP_PLANE -3 //Black square just over openspace plane to guaranteed cover all in openspace turf
 
-#if DM_VERSION >= 513
-#define OPENSPACE_PLANE -4 
-#define OPENSPACE_BACKDROP_PLANE -3
-#else
-#define OPENSPACE_PLANE 17
-#define OPENSPACE_BACKDROP_PLANE 17
-#endif
 
 #define FLOOR_PLANE -2
 #define GAME_PLANE -1
