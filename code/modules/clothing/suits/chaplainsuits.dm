@@ -48,8 +48,8 @@
 /obj/item/clothing/suit/hooded/chaplainsuit/monkhabit
 	name = "monk's habit"
 	desc = "A few steps above rended sackcloth."
-	icon_state = "monkhabit"
-	item_state = "monkhabit"
+	icon_state = "monkfrock"
+	item_state = "monkfrock"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/monkhabit
 
