@@ -203,7 +203,7 @@
 
 	// if the item requires two handed drop the item on unwield
 	if(require_twohands)
-			user.dropItemToGround(parent, force=TRUE)
+		user.dropItemToGround(parent, force=TRUE)
 
 	// Show message if requested
 	if(show_message)
