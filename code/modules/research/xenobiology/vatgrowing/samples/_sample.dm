@@ -14,10 +14,14 @@
 	return info
 
 ///Generate a sample from a specific weighted list, and a specific amount of cell line with a chance for a virus
-/datum/biological_sample/proc/GenerateSample(list/micro_organism_weightlist = list(), var/cell_line_amount, var/virus_chance)
+/datum/biological_sample/proc/GenerateSample(list/micro_organism_weightlist = list(), list/virus_weightlist = list(), var/cell_line_amount, var/virus_chance)
 	//Temp list to prevent double picking
 	var/list/temp_weight_list = micro_organism_weightlist
-	for(var/i in temp_weight_list)
+	for(var/i in cell_line_amount)
+		var/datum/micro_organism/chosen_type = pickweight(temp_weight_list)
+		temp_weight_list -= chosen_type
+		chosen_type = new
+
 
 /datum/biological_sample/proc/Merge(/datum/biological_sample/other_sample)
 	if(sample_layers >= 3)//No more than 3 layers, at that point you're entering danger zone.

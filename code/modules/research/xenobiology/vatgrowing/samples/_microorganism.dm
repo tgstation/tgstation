@@ -5,6 +5,7 @@
 	///Our petri dish. This lets us be interacted with after the swabbing process
 	var/obj/item/petri_dish/petri_dish
 
+///A "mob" cell. Can grow into a mob in a growing vat.
 /datum/micro_organism/cell_line
 	///All the reagents required for letting this organism grow into whatever it should become
 	var/list/required_reagents
@@ -27,8 +28,6 @@
 /datum/micro_organism/cell_line/proc/can_grow()
 	if(!petri_dish)
 		return FALSE
-
-
 
 /datum/micro_organism/cell_line/proc/calculate_growth()
 	. = growth_rate
