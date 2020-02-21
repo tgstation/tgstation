@@ -10,15 +10,19 @@
 	ui_x = 450
 	ui_y = 350
 
-	var/game_active = TRUE //Checks to see if a game is in progress.
-	var/pause_state = FALSE //This disables buttons in order to prevent multiple actions before the opponent's actions.
+	///Returns TRUE if the game is being played.
+	var/game_active = TRUE
+	///This disables buttom actions from having any impact if TRUE. Resets to FALSE when the player is allowed to make an action again.
+	var/pause_state = FALSE
 	var/boss_hp = 45
 	var/boss_mp = 15
 	var/player_hp = 30
 	var/player_mp = 10
 	var/ticket_count = 0
-	var/heads_up = "Nanotrasen says, winners make us money."//Shows the active display text for the app
+	///Shows what text is shown on the app, usually showing the log of combat actions taken by the player.
+	var/heads_up = "Nanotrasen says, winners make us money."
 	var/boss_name = "Cuban Pete's Minion"
+	///Determines which boss image to use on the UI.
 	var/boss_id = 1
 
 /datum/computer_file/program/arcade/proc/game_check(mob/user)

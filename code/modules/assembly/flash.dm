@@ -191,6 +191,8 @@
 				to_chat(user, "<span class='warning'>They must be conscious before you can convert [H.p_them()]!</span>")
 				return
 			if(converter.add_revolutionary(H.mind))
+				if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+					H.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
 				times_used -- //Flashes less likely to burn out for headrevs when used for conversion
 			else
 				to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")

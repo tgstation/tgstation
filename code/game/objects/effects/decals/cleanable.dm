@@ -100,6 +100,9 @@
 			S.blood_state = blood_state
 			update_icon()
 			H.update_inv_shoes()
+/atom/effect/decal/cleanable/washed(atom/washer)
+	. = ..()
+	qdel(src)
 
 /obj/effect/decal/cleanable/proc/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))

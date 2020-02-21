@@ -91,6 +91,7 @@ import { PortablePump, PortableScrubber } from './interfaces/PortableAtmos';
 import { PowerMonitor } from './interfaces/PowerMonitor';
 import { ProximitySensor } from './interfaces/ProximitySensor';
 import { Radio } from './interfaces/Radio';
+import { RadioactiveMicrolaser } from './interfaces/RadioactiveMicrolaser';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { Roulette } from './interfaces/Roulette';
 import { SatelliteControl } from './interfaces/SatelliteControl';
@@ -112,6 +113,7 @@ import { TankDispenser } from './interfaces/TankDispenser';
 import { Teleporter } from './interfaces/Teleporter';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { Timer } from './interfaces/Timer';
+import { TransferValve } from './interfaces/TransferValve';
 import { TurbineComputer } from './interfaces/TurbineComputer';
 import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
@@ -543,6 +545,10 @@ const ROUTES = {
     component: () => Radio,
     scrollable: false,
   },
+  radioactive_microlaser: {
+    component: () => RadioactiveMicrolaser,
+    scrollable: false,
+  },
   roulette: {
     component: () => Roulette,
     scrollable: false,
@@ -632,6 +638,10 @@ const ROUTES = {
   },
   timer: {
     component: () => Timer,
+    scrollable: false,
+  },
+  transfer_valve: {
+    component: () => TransferValve,
     scrollable: false,
   },
   turbine_computer: {
