@@ -179,7 +179,10 @@
 		assignment = H.get_assignment()
 
 	speak("[arrest_type ? "Detaining" : "Arresting"] level [threat] scumbag <b>[C], [assignment]</b> in <b>[location]</b>.", radio_channel)
+	if(weapons_violation || id_violation || record_violation || harm_violation) //Report arrest criteria if we have any violations.
+		speak("Reasons for arrest:[weapons_violation][harm_violation][id_violation][record_violation]", radio_channel)
 	arrest_security_record(C, arrest_type, threat, location, assignment) //FULPSTATION IMPROVED RECORD SECURITY PR -Surrealistik Oct 2019; this makes a record of the arrest, including timestamp and location.
+
 
 /mob/living/simple_animal/bot/secbot/proc/secbot_declare_arrest_attempt(mob/living/carbon/C, threatlevel)
 	if(!C) //sanity
@@ -192,7 +195,9 @@
 	if(ishuman(H))
 		assignment = H.get_assignment()
 
-	speak("Level [threatlevel] scumbag <b>[C], [assignment]</b> detected at <b>[location]</b>. Attempting to [arrest_type ? "detain" : "arrest"].", radio_channel)
+	speak("Level [threatlevel] scumbag <b>[C], [assignment]</b> detected at <b>[get_area(C)]</b>. Attempting to [arrest_type ? "detain" : "arrest"]. Current location is <b>[location]</b>", radio_channel)
+	if(weapons_violation || id_violation || record_violation || harm_violation) //Report arrest criteria if we have any violations.
+		speak("Reasons for arrest:[weapons_violation][harm_violation][id_violation][record_violation]", radio_channel)
 
 /mob/living/simple_animal/bot/proc/bot_responding(mob/user)
 	if(!user) //Sanity
@@ -205,3 +210,82 @@
 		assignment = H.get_assignment()
 
 	speak("Responding to <b>[user.name], [assignment]</b> summon at <b>[get_area(user)]</b>. Currently at <b>[get_area(src)]</b>. En route.", radio_channel)
+
+
+/mob/living/carbon/human/proc/assess_threat_fulp(judgement_criteria, mob/living/simple_animal/bot/secbot/S, harm_bot = FALSE, lasercolor = "", datum/callback/weaponcheck=null)
+	if(judgement_criteria & JUDGE_EMAGGED)
+		return 10 //Everyone is a criminal!
+
+	var/threatcount = 0
+
+	//Lasertag bullshit
+	if(lasercolor)
+		if(lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
+			if(istype(wear_suit, /obj/item/clothing/suit/redtag))
+				threatcount += 4
+			if(is_holding_item_of_type(/obj/item/gun/energy/laser/redtag))
+				threatcount += 4
+			if(istype(belt, /obj/item/gun/energy/laser/redtag))
+				threatcount += 2
+
+		if(lasercolor == "r")
+			if(istype(wear_suit, /obj/item/clothing/suit/bluetag))
+				threatcount += 4
+			if(is_holding_item_of_type(/obj/item/gun/energy/laser/bluetag))
+				threatcount += 4
+			if(istype(belt, /obj/item/gun/energy/laser/bluetag))
+				threatcount += 2
+
+		return threatcount
+
+	//Check for ID
+	var/obj/item/card/id/idcard = get_idcard(FALSE)
+	if( (judgement_criteria & JUDGE_IDCHECK) && !idcard && name=="Unknown")
+		threatcount += 4
+		S.id_violation = " Lack of identification."
+
+	if(harm_bot)
+		S.harm_violation = " <b>[S.name]</b> retaliated against suspect."
+
+	//Check for weapons
+	if( (judgement_criteria & JUDGE_WEAPONCHECK) && weaponcheck)
+		if(!idcard || !(ACCESS_WEAPONS in idcard.access))
+			for(var/obj/item/I in held_items) //if they're holding a gun
+				if(weaponcheck.Invoke(I))
+					threatcount += 4
+					S.weapons_violation = " Suspect in possession of <b>[I.name]</b>."
+			if(weaponcheck.Invoke(belt) || weaponcheck.Invoke(back)) //if a weapon is present in the belt or back slot
+				threatcount += 2 //not enough to trigger look_for_perp() on it's own unless they also have criminal status.
+
+	//Check for arrest warrant
+	if(judgement_criteria & JUDGE_RECORDCHECK)
+		var/perpname = get_face_name(get_id_name())
+		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
+		if(R && R.fields["criminal"] && (R.fields["criminal"] != "None") )
+			var/record_status = R.fields["criminal"]
+			S.record_violation = " Status: <b>[record_status]</b>."
+			switch(R.fields["criminal"])
+				if("*Arrest*")
+					threatcount += 5
+				if("Incarcerated")
+					threatcount += 2
+				if("Paroled")
+					threatcount += 2
+
+	//Check for dresscode violations
+	if(istype(head, /obj/item/clothing/head/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/wizard))
+		threatcount += 2
+
+	//Check for nonhuman scum
+	if(dna && dna.species.id && dna.species.id != "human")
+		threatcount += 1
+
+	//mindshield implants imply trustworthyness
+	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
+		threatcount -= 1
+
+	//Agent cards lower threatlevel.
+	if(istype(idcard, /obj/item/card/id/syndicate))
+		threatcount -= 5
+
+	return threatcount
