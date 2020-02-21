@@ -133,17 +133,21 @@
 	blobpwrdisplay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blobpwrdisplay.layer = ABOVE_HUD_LAYER
 	blobpwrdisplay.plane = ABOVE_HUD_PLANE
+	blobpwrdisplay.hud = src
 	infodisplay += blobpwrdisplay
 
 	healths = new /obj/screen/healths/blob()
+	healths.hud = src
 	infodisplay += healths
 
 	using = new /obj/screen/blob/BlobHelp()
 	using.screen_loc = "WEST:6,NORTH:-3"
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/blob/JumpToNode()
 	using.screen_loc = ui_inventory
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/blob/JumpToCore()
@@ -153,18 +157,22 @@
 
 	using = new /obj/screen/blob/Blobbernaut()
 	using.screen_loc = ui_belt
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/blob/ResourceBlob()
 	using.screen_loc = ui_back
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/blob/NodeBlob()
 	using.screen_loc = ui_hand_position(2)
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/blob/FactoryBlob()
 	using.screen_loc = ui_hand_position(1)
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/blob/ReadaptStrain()
@@ -174,4 +182,5 @@
 
 	using = new /obj/screen/blob/RelocateCore()
 	using.screen_loc = ui_storage2
+	using.hud = src
 	static_inventory += using

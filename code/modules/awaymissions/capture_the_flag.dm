@@ -325,7 +325,7 @@
 
 	dead_barricades.Cut()
 
-	notify_ghosts("[name] has been activated!", enter_link="<a href=?src=[REF(src)];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, action=NOTIFY_ATTACK)
+	notify_ghosts("[name] has been activated!", enter_link="<a href=?src=[REF(src)];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, action=NOTIFY_ATTACK, header = "CTF has been activated")
 
 	if(!arena_reset)
 		reset_the_arena()
@@ -389,12 +389,12 @@
 	ammo_type = /obj/item/ammo_casing/a50/ctf
 
 /obj/item/ammo_casing/a50/ctf
-	projectile_type = /obj/item/projectile/bullet/ctf
+	projectile_type = /obj/projectile/bullet/ctf
 
-/obj/item/projectile/bullet/ctf
+/obj/projectile/bullet/ctf
 	damage = 0
 
-/obj/item/projectile/bullet/ctf/prehit(atom/target)
+/obj/projectile/bullet/ctf/prehit(atom/target)
 	if(is_ctf_target(target))
 		damage = 60
 	. = ..()
@@ -424,13 +424,13 @@
 		qdel(src)
 
 /obj/item/ammo_casing/caseless/laser/ctf
-	projectile_type = /obj/item/projectile/beam/ctf
+	projectile_type = /obj/projectile/beam/ctf
 
-/obj/item/projectile/beam/ctf
+/obj/projectile/beam/ctf
 	damage = 0
 	icon_state = "omnilaser"
 
-/obj/item/projectile/beam/ctf/prehit(atom/target)
+/obj/projectile/beam/ctf/prehit(atom/target)
 	if(is_ctf_target(target))
 		damage = 150
 	. = ..()
@@ -453,9 +453,9 @@
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/red
 
 /obj/item/ammo_casing/caseless/laser/ctf/red
-	projectile_type = /obj/item/projectile/beam/ctf/red
+	projectile_type = /obj/projectile/beam/ctf/red
 
-/obj/item/projectile/beam/ctf/red
+/obj/projectile/beam/ctf/red
 	icon_state = "laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 
@@ -468,9 +468,9 @@
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/blue
 
 /obj/item/ammo_casing/caseless/laser/ctf/blue
-	projectile_type = /obj/item/projectile/beam/ctf/blue
+	projectile_type = /obj/projectile/beam/ctf/blue
 
-/obj/item/projectile/beam/ctf/blue
+/obj/projectile/beam/ctf/blue
 	icon_state = "bluelaser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 
@@ -497,11 +497,11 @@
 	W.registered_name = H.real_name
 	W.update_label()
 
-	no_drops += H.get_item_by_slot(SLOT_WEAR_SUIT)
-	no_drops += H.get_item_by_slot(SLOT_GLOVES)
-	no_drops += H.get_item_by_slot(SLOT_SHOES)
-	no_drops += H.get_item_by_slot(SLOT_W_UNIFORM)
-	no_drops += H.get_item_by_slot(SLOT_EARS)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_GLOVES)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_FEET)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_ICLOTHING)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_EARS)
 	for(var/i in no_drops)
 		var/obj/item/I = i
 		ADD_TRAIT(I, TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)
@@ -611,8 +611,8 @@
 /obj/effect/ctf/ammo/Crossed(atom/movable/AM)
 	reload(AM)
 
-/obj/effect/ctf/ammo/Bump(atom/movable/AM)
-	reload(AM)
+/obj/effect/ctf/ammo/Bump(atom/A)
+	reload(A)
 
 /obj/effect/ctf/ammo/Bumped(atom/movable/AM)
 	reload(AM)
@@ -628,7 +628,7 @@
 				qdel(G)
 			O.equip(M)
 			to_chat(M, "<span class='notice'>Ammunition reloaded!</span>")
-			playsound(get_turf(M), 'sound/weapons/shotgunpump.ogg', 50, 1, -1)
+			playsound(get_turf(M), 'sound/weapons/gun/shotgun/rack.ogg', 50, TRUE, -1)
 			qdel(src)
 			break
 

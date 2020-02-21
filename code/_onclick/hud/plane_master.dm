@@ -25,15 +25,15 @@
 
 /obj/screen/plane_master/openspace/backdrop(mob/mymob)
 	filters = list()
-	filters += filter(type = "drop_shadow", color = "#04080FAA", border = 5, size = -10)
-	filters += filter(type = "drop_shadow", color = "#04080FAA", border = 5, size = -15)
-	filters += filter(type = "drop_shadow", color = "#04080FAA", border = 5, size = -20)
+	filters += filter(type = "drop_shadow", color = "#04080FAA", size = -10)
+	filters += filter(type = "drop_shadow", color = "#04080FAA", size = -15)
+	filters += filter(type = "drop_shadow", color = "#04080FAA", size = -20)
 
 /obj/screen/plane_master/proc/outline(_size, _color)
 	filters += filter(type = "outline", size = _size, color = _color)
 
 /obj/screen/plane_master/proc/shadow(_size, _border, _offset = 0, _x = 0, _y = 0, _color = "#04080FAA")
-	filters += filter(type = "drop_shadow", x = _x, y = _y, color = _color, size = _size, offset = _offset, border = _border)
+	filters += filter(type = "drop_shadow", x = _x, y = _y, color = _color, size = _size, offset = _offset)
 
 /obj/screen/plane_master/proc/clear_filters()
 	filters = list()
@@ -47,7 +47,7 @@
 /obj/screen/plane_master/floor/backdrop(mob/mymob)
 	filters = list()
 	if(istype(mymob) && mymob.eye_blurry)
-		filters += GAUSSIAN_BLUR(CLAMP(mymob.eye_blurry*0.1,0.6,3))
+		filters += GAUSSIAN_BLUR(clamp(mymob.eye_blurry*0.1,0.6,3))
 
 /obj/screen/plane_master/game_world
 	name = "game world plane master"
@@ -60,7 +60,7 @@
 	if(istype(mymob) && mymob.client && mymob.client.prefs && mymob.client.prefs.ambientocclusion)
 		filters += AMBIENT_OCCLUSION
 	if(istype(mymob) && mymob.eye_blurry)
-		filters += GAUSSIAN_BLUR(CLAMP(mymob.eye_blurry*0.1,0.6,3))
+		filters += GAUSSIAN_BLUR(clamp(mymob.eye_blurry*0.1,0.6,3))
 
 /obj/screen/plane_master/lighting
 	name = "lighting plane master"

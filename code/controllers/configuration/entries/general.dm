@@ -83,6 +83,8 @@
 
 /datum/config_entry/flag/log_job_debug	// log roundstart divide occupations debug information to a file
 
+/datum/config_entry/flag/log_shuttle // log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
+
 /datum/config_entry/flag/allow_admin_ooccolor	// Allows admins with relevant permissions to have their own ooc colour
 
 /datum/config_entry/flag/allow_admin_asaycolor //Allows admins with relevant permissions to have a personalized asay color
@@ -281,12 +283,6 @@
 	integer = FALSE
 
 /datum/config_entry/flag/maprotation
-
-/datum/config_entry/number/maprotatechancedelta
-	config_entry_value = 0.75
-	min_val = 0
-	max_val = 1
-	integer = FALSE
 
 /datum/config_entry/number/soft_popcap
 	config_entry_value = null
@@ -487,3 +483,14 @@
 
 /datum/config_entry/flag/reopen_roundstart_suicide_roles_command_report
 
+/datum/config_entry/flag/auto_profile
+
+// DISCORD ROLE STUFFS
+// Using strings for everything because BYOND does not like numbers this big
+/datum/config_entry/flag/enable_discord_autorole
+
+/datum/config_entry/string/discord_token
+
+/datum/config_entry/string/discord_guildid
+
+/datum/config_entry/string/discord_roleid

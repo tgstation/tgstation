@@ -3,11 +3,14 @@
 	real_name = "Construct"
 	desc = ""
 	gender = NEUTER
-	mob_biotypes = list(MOB_INORGANIC)
+	mob_biotypes = NONE
 	speak_emote = list("hisses")
-	response_help  = "thinks better of touching"
-	response_disarm = "flails at"
-	response_harm   = "punches"
+	response_help_continuous = "thinks better of touching"
+	response_help_simple = "think better of touching"
+	response_disarm_continuous = "flails at"
+	response_disarm_simple = "flail at"
+	response_harm_continuous = "punches"
+	response_harm_simple = "punch"
 	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
 	speed = 0
@@ -105,7 +108,7 @@
 /mob/living/simple_animal/hostile/construct/narsie_act()
 	return
 
-/mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	return 0
 
 /mob/living/simple_animal/hostile/construct/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -122,12 +125,14 @@
 	icon_living = "behemoth"
 	maxHealth = 150
 	health = 150
-	response_harm = "harmlessly punches"
+	response_harm_continuous = "harmlessly punches"
+	response_harm_simple = "harmlessly punch"
 	harm_intent_damage = 0
 	obj_damage = 90
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	attacktext = "smashes their armored gauntlet into"
+	attack_verb_continuous = "smashes their armored gauntlet into"
+	attack_verb_simple = "smash your armored gauntlet into"
 	speed = 2.5
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attack_sound = 'sound/weapons/punch3.ogg'
@@ -144,8 +149,8 @@
 	AIStatus = AI_ON
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //only token destruction, don't smash the cult wall NO STOP
 
-/mob/living/simple_animal/hostile/construct/armored/bullet_act(obj/item/projectile/P)
-	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
+/mob/living/simple_animal/hostile/construct/armored/bullet_act(obj/projectile/P)
+	if(istype(P, /obj/projectile/energy) || istype(P, /obj/projectile/beam))
 		var/reflectchance = 40 - round(P.damage/3)
 		if(prob(reflectchance))
 			apply_damage(P.damage * 0.5, P.damage_type)
@@ -177,7 +182,7 @@
 /mob/living/simple_animal/hostile/construct/armored/angelic
 	icon_state = "behemoth_angelic"
 	icon_living = "behemoth_angelic"
-	holy = TRUE	
+	holy = TRUE
 	loot = list(/obj/item/ectoplasm/angelic)
 
 /mob/living/simple_animal/hostile/construct/armored/noncult
@@ -194,7 +199,8 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	retreat_distance = 2 //AI wraiths will move in and out of combat
-	attacktext = "slashes"
+	attack_verb_continuous = "slashes"
+	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
 	runetype = /datum/action/innate/cult/create_rune/tele
@@ -245,14 +251,16 @@
 	icon_living = "artificer"
 	maxHealth = 50
 	health = 50
-	response_harm = "viciously beats"
+	response_harm_continuous = "viciously beats"
+	response_harm_simple = "viciously beat"
 	harm_intent_damage = 5
 	obj_damage = 60
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	retreat_distance = 10
 	minimum_distance = 10 //AI artificers will flee like fuck
-	attacktext = "rams"
+	attack_verb_continuous = "rams"
+	attack_verb_simple = "ram"
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attack_sound = 'sound/weapons/punch2.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
@@ -313,6 +321,7 @@
 
 /////////////////////////////Angelic Artificer/////////////////////////
 /mob/living/simple_animal/hostile/construct/builder/angelic
+	desc = "A bulbous construct dedicated to building and maintaining holy armies."
 	icon_state = "artificer_angelic"
 	icon_living = "artificer_angelic"
 	holy = TRUE
@@ -340,7 +349,8 @@
 	sight = SEE_MOBS
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	attacktext = "butchers"
+	attack_verb_continuous = "butchers"
+	attack_verb_simple = "butcher"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/area_conversion,
 							/obj/effect/proc_holder/spell/targeted/forcewall/cult)

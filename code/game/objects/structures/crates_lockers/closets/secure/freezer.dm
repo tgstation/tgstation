@@ -7,7 +7,7 @@
 	..()
 
 /obj/structure/closet/secure_closet/freezer/Initialize()
-	..()
+	. = ..()
 	recursive_organ_check(src)
 
 /obj/structure/closet/secure_closet/freezer/open(mob/living/user)

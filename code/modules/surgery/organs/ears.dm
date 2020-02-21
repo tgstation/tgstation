@@ -39,7 +39,7 @@
 		deaf = max(deaf, 1)
 	else if(!(organ_flags & ORGAN_FAILING)) // if this organ is failing, do not clear deaf stacks.
 		deaf = max(deaf - 1, 0)
-		if(prob(damage / 20) && (damage > low_threshold))
+		if(prob(damage / 30) && (damage > low_threshold))
 			adjustEarDamage(0, 4)
 			SEND_SOUND(C, sound('sound/weapons/flash_ring.ogg'))
 			to_chat(C, "<span class='warning'>The ringing in your ears grows louder, blocking out any external noises for a moment.</span>")
@@ -114,22 +114,40 @@
 /obj/item/organ/ears/penguin
 	name = "penguin ears"
 	desc = "The source of a penguin's happy feet."
-	var/datum/component/waddle
 
 /obj/item/organ/ears/penguin/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
 	. = ..()
 	if(istype(H))
 		to_chat(H, "<span class='notice'>You suddenly feel like you've lost your balance.</span>")
-		waddle = H.AddComponent(/datum/component/waddling)
+		H.AddElement(/datum/element/waddling)
 
 /obj/item/organ/ears/penguin/Remove(mob/living/carbon/human/H,  special = 0)
 	. = ..()
 	if(istype(H))
 		to_chat(H, "<span class='notice'>Your sense of balance comes back to you.</span>")
-		QDEL_NULL(waddle)
+		H.RemoveElement(/datum/element/waddling)
 
 /obj/item/organ/ears/bronze
 	name = "tin ears"
 	desc = "The robust ears of a bronze golem. "
 	damage_multiplier = 0.1 //STRONK
 	bang_protect = 1 //Fear me weaklings.
+
+/obj/item/organ/ears/cybernetic
+	name = "cybernetic ears"
+	icon_state = "ears-c"
+	desc = "a basic cybernetic designed to mimic the operation of ears."
+	damage_multiplier = 0.9
+	organ_flags = ORGAN_SYNTHETIC
+
+/obj/item/organ/ears/cybernetic/upgraded
+	name = "upgraded cybernetic ears"
+	icon_state = "ears-c-u"
+	desc = "an advanced cybernetic ear, surpassing the performance of organic ears"
+	damage_multiplier = 0.5
+
+/obj/item/organ/ears/cybernetic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	damage += 40/severity

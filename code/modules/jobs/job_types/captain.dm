@@ -60,6 +60,6 @@
 /datum/outfit/job/captain/hardsuit
 	name = "Captain (Hardsuit)"
 
-	mask = /obj/item/clothing/mask/gas/sechailer
+	mask = /obj/item/clothing/mask/gas/atmos/captain
 	suit = /obj/item/clothing/suit/space/hardsuit/swat/captain
 	suit_store = /obj/item/tank/internals/oxygen

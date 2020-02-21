@@ -191,3 +191,40 @@
 			owner.say("Thank you for the fun ride, [clown.name]!")
 			last_thank_time = world.time
 			C.ThanksCounter()
+
+/datum/action/vehicle/ridden/scooter/skateboard/ollie
+	name = "Ollie"
+	desc = "Get some air! Land on a table to do a gnarly grind."
+	button_icon_state = "skateboard_ollie"
+	///Cooldown to next jump
+	var/next_ollie
+
+/datum/action/vehicle/ridden/scooter/skateboard/ollie/Trigger()
+	if(world.time > next_ollie)
+		var/obj/vehicle/ridden/scooter/skateboard/V = vehicle_target
+		if (V.grinding)
+			return
+		var/mob/living/L = owner
+		var/turf/landing_turf = get_step(V.loc, V.dir)
+		L.adjustStaminaLoss(V.instability*2)
+		if (L.getStaminaLoss() >= 100)
+			playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
+			V.unbuckle_mob(L)
+			L.throw_at(landing_turf, 2, 2)
+			L.Paralyze(40)
+			V.visible_message("<span class='danger'>[L] misses the landing and falls on [L.p_their()] face!</span>")
+		else
+			L.spin(4, 1)
+			animate(L, pixel_y = -6, time = 4)
+			animate(V, pixel_y = -6, time = 3)
+			playsound(V, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
+			passtable_on(L, VEHICLE_TRAIT)
+			V.pass_flags |= PASSTABLE
+			L.Move(landing_turf, vehicle_target.dir)
+			passtable_off(L, VEHICLE_TRAIT)
+			V.pass_flags &= ~PASSTABLE
+		if(locate(/obj/structure/table) in V.loc.contents)
+			V.grinding = TRUE
+			V.icon_state = "[V.board_icon]-grind"
+			addtimer(CALLBACK(V, /obj/vehicle/ridden/scooter/skateboard/.proc/grind), 2)
+		next_ollie = world.time + 5

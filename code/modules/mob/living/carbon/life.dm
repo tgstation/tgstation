@@ -10,8 +10,8 @@
 
 	if(!IS_IN_STASIS(src))
 
-		if(stat != DEAD) //Reagent processing needs to come before breathing, to prevent edge cases.
-			handle_organs()
+		//Reagent processing needs to come before breathing, to prevent edge cases.
+		handle_organs()
 
 		. = ..()
 
@@ -87,7 +87,7 @@
 	var/datum/gas_mixture/breath
 
 	if(!getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL) || HAS_TRAIT(src, TRAIT_MAGIC_CHOKE) || lungs.organ_flags & ORGAN_FAILING)
+		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL) || HAS_TRAIT(src, TRAIT_MAGIC_CHOKE) || (lungs && lungs.organ_flags & ORGAN_FAILING))
 			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
 
 		else if(health <= crit_threshold)
@@ -212,7 +212,7 @@
 	//TOXINS/PLASMA
 	if(Toxins_partialpressure > safe_tox_max)
 		var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_tox_max) * 10
-		adjustToxLoss(CLAMP(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
+		adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
 		throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 	else
 		clear_alert("too_much_tox")
@@ -285,13 +285,9 @@
 			else
 				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
 
-
 	//Clear all moods if no miasma at all
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
-
-
-
 
 	breath.garbage_collect()
 
@@ -302,7 +298,8 @@
 
 //Fourth and final link in a breath chain
 /mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)
-	return
+	// The air you breathe out should match your body temperature
+	breath.temperature = bodytemperature
 
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	if(internal)
@@ -333,9 +330,17 @@
 			. |= BP.on_life(stam_regen)
 
 /mob/living/carbon/proc/handle_organs()
-	for(var/V in internal_organs)
-		var/obj/item/organ/O = V
-		O.on_life()
+	if(stat != DEAD)
+		for(var/V in internal_organs)
+			var/obj/item/organ/O = V
+			if(O.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
+				O.on_life()
+	else
+		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1)) // No organ decay if the body contains formaldehyde.
+			return
+		for(var/V in internal_organs)
+			var/obj/item/organ/O = V
+			O.on_death() //Needed so organs decay while inside the body.
 
 /mob/living/carbon/handle_diseases()
 	for(var/thing in diseases)
@@ -410,18 +415,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 91-100: Dangerously toxic - swift death
 */
 #define BALLMER_POINTS 5
-GLOBAL_LIST_INIT(ballmer_good_msg, list("Hey guys, what if we rolled out a bluespace wiring system so mice can't destroy the powergrid anymore?",
-										"Hear me out here. What if, and this is just a theory, we made R&D controllable from our PDAs?",
-										"I'm thinking we should roll out a git repository for our research under the AGPLv3 license so that we can share it among the other stations freely.",
-										"I dunno about you guys, but IDs and PDAs being separate is clunky as fuck. Maybe we should merge them into a chip in our arms? That way they can't be stolen easily.",
-										"Why the fuck aren't we just making every pair of shoes into galoshes? We have the technology."))
-GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put a webserver that's automatically turned on with default admin passwords into every PDA?",
-												"So like, you know how we separate our codebase from the master copy that runs on our consumer boxes? What if we merged the two and undid the separation between codebase and server?",
-												"Dude, radical idea: H.O.N.K mechs but with no bananium required.",
-												"Best idea ever: Disposal pipes instead of hallways.",
-												"We should store bank records in a webscale datastore, like /dev/null.",
-												"You ever wonder if /dev/null supports sharding?",
-												"What if we use a language that was written on a napkin and created over 1 weekend for all of our servers?"))
 
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
@@ -467,8 +460,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		drowsyness = max(drowsyness - restingpwr, 0)
 		blur_eyes(2)
 		if(prob(5))
-			AdjustSleeping(20)
-			Unconscious(100)
+			AdjustSleeping(100)
 
 	//Jitteriness
 	if(jitteriness)
@@ -503,9 +495,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			if(prob(25))
 				slurring += 2
 			jitteriness = max(jitteriness - 3, 0)
-			if(HAS_TRAIT(src, TRAIT_DRUNK_HEALING))
-				adjustBruteLoss(-0.12, FALSE)
-				adjustFireLoss(-0.06, FALSE)
 		else
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
 
@@ -522,20 +511,17 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 					else
 						ballmer_percent = (-abs(drunkenness - 13.35) / 0.9) + 1
 					if(prob(5))
-						say(pick(GLOB.ballmer_good_msg), forced = "ballmer")
+						say(pick_list_replacements(VISTA_FILE, "ballmer_good_msg"), forced = "ballmer")
 					SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = BALLMER_POINTS * ballmer_percent))
 				if(drunkenness > 26) // by this point you're into windows ME territory
 					if(prob(5))
 						SSresearch.science_tech.remove_point_list(list(TECHWEB_POINT_TYPE_GENERIC = BALLMER_POINTS))
-						say(pick(GLOB.ballmer_windows_me_msg), forced = "ballmer")
+						say(pick_list_replacements(VISTA_FILE, "ballmer_windows_me_msg"), forced = "ballmer")
 
 		if(drunkenness >= 41)
 			if(prob(25))
 				confused += 2
 			Dizzy(10)
-			if(HAS_TRAIT(src, TRAIT_DRUNK_HEALING)) // effects stack with lower tiers
-				adjustBruteLoss(-0.3, FALSE)
-				adjustFireLoss(-0.15, FALSE)
 
 		if(drunkenness >= 51)
 			if(prob(3))
@@ -546,9 +532,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		if(drunkenness >= 61)
 			if(prob(50))
 				blur_eyes(5)
-			if(HAS_TRAIT(src, TRAIT_DRUNK_HEALING))
-				adjustBruteLoss(-0.4, FALSE)
-				adjustFireLoss(-0.2, FALSE)
 
 		if(drunkenness >= 71)
 			blur_eyes(5)
@@ -571,18 +554,135 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		if(drunkenness >= 101)
 			adjustToxLoss(2) //Let's be honest you shouldn't be alive by now
 
-//used in human and monkey handle_environment()
-/mob/living/carbon/proc/natural_bodytemperature_stabilization()
+/// Base carbon environment handler, adds natural stabilization
+/mob/living/carbon/handle_environment(datum/gas_mixture/environment)
+	var/areatemp = get_temperature(environment)
+
+	if(stat != DEAD) // If you are dead your body does not stabilize naturally
+		natural_bodytemperature_stabilization(environment)
+
+	if(!on_fire || areatemp > bodytemperature) // If we are not on fire or the area is hotter
+		adjust_bodytemperature((areatemp - bodytemperature), use_insulation=TRUE, use_steps=TRUE)
+
+/**
+ * Used to stabilize the body temperature back to normal on living mobs
+ *
+ * vars:
+ * * environment The environment gas mix
+ */
+/mob/living/carbon/proc/natural_bodytemperature_stabilization(datum/gas_mixture/environment)
+	var/areatemp = get_temperature(environment)
 	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature
-	switch(bodytemperature)
-		if(-INFINITY to BODYTEMP_COLD_DAMAGE_LIMIT) //Cold damage limit is 50 below the default, the temperature where you start to feel effects.
-			return max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
-		if(BODYTEMP_COLD_DAMAGE_LIMIT to BODYTEMP_NORMAL)
-			return max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM/4))
-		if(BODYTEMP_NORMAL to BODYTEMP_HEAT_DAMAGE_LIMIT) // Heat damage limit is 50 above the default, the temperature where you start to feel effects.
-			return min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM/4))
-		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
-			return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
+	var/natural_change = 0
+
+	// We are very cold, increate body temperature
+	if(bodytemperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
+		natural_change = max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), \
+			BODYTEMP_AUTORECOVERY_MINIMUM)
+
+	// we are cold, reduce the minimum increment and do not jump over the difference
+	else if(bodytemperature > BODYTEMP_COLD_DAMAGE_LIMIT && bodytemperature < BODYTEMP_NORMAL)
+		natural_change = max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
+			min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM / 4))
+
+	// We are hot, reduce the minimum increment and do not jump below the difference
+	else if(bodytemperature > BODYTEMP_NORMAL && bodytemperature <= BODYTEMP_HEAT_DAMAGE_LIMIT)
+		natural_change = min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
+			max(body_temperature_difference, -(BODYTEMP_AUTORECOVERY_MINIMUM / 4)))
+
+	// We are very hot, reduce the body temperature
+	else if(bodytemperature >= BODYTEMP_HEAT_DAMAGE_LIMIT)
+		natural_change = min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)
+
+	var/thermal_protection = 1 - get_insulation_protection(areatemp) // invert the protection
+	if(areatemp > bodytemperature) // It is hot here
+		if(bodytemperature < BODYTEMP_NORMAL)
+			// Our bodytemp is below normal we are cold, insulation helps us retain body heat
+			// and will reduce the heat we lose to the environment
+			natural_change = (thermal_protection + 1) * natural_change
+		else
+			// Our bodytemp is above normal and sweating, insulation hinders out ability to reduce heat
+			// but will reduce the amount of heat we get from the environment
+			natural_change = (1 / (thermal_protection + 1)) * natural_change
+	else // It is cold here
+		if(!on_fire) // If on fire ignore ignore local temperature in cold areas
+			if(bodytemperature < BODYTEMP_NORMAL)
+				// Our bodytemp is below normal, insulation helps us retain body heat
+				// and will reduce the heat we lose to the environment
+				natural_change = (thermal_protection + 1) * natural_change
+			else
+				// Our bodytemp is above normal and sweating, insulation hinders out ability to reduce heat
+				// but will reduce the amount of heat we get from the environment
+				natural_change = (1 / (thermal_protection + 1)) * natural_change
+
+	// Apply the natural stabilization changes
+	adjust_bodytemperature(natural_change)
+
+/**
+ * Get the insulation that is appropriate to the temperature you're being exposed to.
+ * All clothing, natural insulation, and traits are combined returning a single value.
+ *
+ * required temperature The Temperature that you're being exposed to
+ *
+ * return the percentage of protection as a value from 0 - 1
+**/
+/mob/living/carbon/proc/get_insulation_protection(temperature)
+	return (temperature > bodytemperature) ? get_heat_protection(temperature) : get_cold_protection(temperature)
+
+/// This returns the percentage of protection from heat as a value from 0 - 1
+/// temperature is the temperature you're being exposed to
+/mob/living/carbon/proc/get_heat_protection(temperature)
+	return heat_protection
+
+/// This returns the percentage of protection from cold as a value from 0 - 1
+/// temperature is the temperature you're being exposed to
+/mob/living/carbon/proc/get_cold_protection(temperature)
+	return cold_protection
+
+/**
+ * Have two mobs share body heat between each other.
+ * Account for the insulation and max temperature change range for the mob
+ *
+ * vars:
+ * * M The mob/living/carbon that is sharing body heat
+ */
+/mob/living/carbon/proc/share_bodytemperature(mob/living/carbon/M)
+	var/temp_diff = bodytemperature - M.bodytemperature
+	if(temp_diff > 0) // you are warm share the heat of life
+		M.adjust_bodytemperature(temp_diff, use_insulation=TRUE, use_steps=TRUE) // warm up the giver
+		adjust_bodytemperature((temp_diff * -1), use_insulation=TRUE, use_steps=TRUE) // cool down the reciver
+
+	else // they are warmer leech from them
+		adjust_bodytemperature(temp_diff, use_insulation=TRUE, use_steps=TRUE) // warm up the reciver
+		M.adjust_bodytemperature((temp_diff * -1), use_insulation=TRUE, use_steps=TRUE) // cool down the giver
+
+/**
+ * Adjust the body temperature of a mob
+ * expanded for carbon mobs allowing the use of insulation and change steps
+ *
+ * vars:
+ * * amount The amount of degrees to change body temperature by
+ * * min_temp (optional) The minimum body temperature after adjustment
+ * * max_temp (optional) The maximum body temperature after adjustment
+ * * use_insulation (optional) modifies the amount based on the amount of insulation the mob has
+ * * use_steps (optional) Use the body temp divisors and max change rates
+ * * capped (optional) default True used to cap step mode
+ */
+/mob/living/carbon/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY, use_insulation=FALSE, use_steps=FALSE, capped=TRUE)
+	// apply insulation to the amount of change
+	if(use_insulation)
+		amount *= (1 - get_insulation_protection(bodytemperature + amount))
+
+	// Use the bodytemp divisors to get the change step, with max step size
+	if(use_steps)
+		amount = (amount > 0) ? (amount / BODYTEMP_HEAT_DIVISOR) : (amount / BODYTEMP_COLD_DIVISOR)
+		// Clamp the results to the min and max step size
+		if(capped)
+			amount = (amount > 0) ? min(amount, BODYTEMP_HEATING_MAX) : max(amount, BODYTEMP_COOLING_MAX)
+
+	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
+		bodytemperature = clamp(bodytemperature + amount,min_temp,max_temp)
+
 
 /////////
 //LIVER//
@@ -593,11 +693,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(!dna)
 		return
 	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if(liver)
-		if(liver.damage < liver.maxHealth)
-			return
-		liver.organ_flags |= ORGAN_FAILING
-	liver_failure()
+	if(!liver)
+		liver_failure()
 
 /mob/living/carbon/proc/undergoing_liver_failure()
 	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)

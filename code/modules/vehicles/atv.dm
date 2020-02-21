@@ -6,7 +6,7 @@
 	max_integrity = 150
 	armor = list("melee" = 50, "bullet" = 25, "laser" = 20, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
 	key_type = /obj/item/key
-	integrity_failure = 70
+	integrity_failure = 0.5
 	var/static/mutable_appearance/atvcover
 
 /obj/vehicle/ridden/atv/Initialize()
@@ -80,7 +80,7 @@
 	return ..()
 
 /obj/vehicle/ridden/atv/process()
-	if(obj_integrity >= integrity_failure)
+	if(obj_integrity >= integrity_failure * max_integrity)
 		return PROCESS_KILL
 	if(prob(20))
 		return
@@ -88,7 +88,7 @@
 	smoke.set_up(0, src)
 	smoke.start()
 
-/obj/vehicle/ridden/atv/bullet_act(obj/item/projectile/P)
+/obj/vehicle/ridden/atv/bullet_act(obj/projectile/P)
 	if(prob(50) && buckled_mobs)
 		for(var/mob/M in buckled_mobs)
 			M.bullet_act(P)

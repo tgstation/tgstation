@@ -3,7 +3,7 @@
 	Lets you read PDA and request console messages.
 */
 
-#define LINKED_SERVER_NONRESPONSIVE  (!linkedServer || (linkedServer.stat & (NOPOWER|BROKEN)))
+#define LINKED_SERVER_NONRESPONSIVE  (!linkedServer || (linkedServer.machine_stat & (NOPOWER|BROKEN)))
 
 #define MSG_MON_SCREEN_MAIN 		0
 #define MSG_MON_SCREEN_LOGS 		1
@@ -330,7 +330,7 @@
 				var/dkey = stripped_input(usr, "Please enter the decryption key.")
 				if(dkey && dkey != "")
 					if(linkedServer.decryptkey == dkey)
-						var/newkey = trim(input(usr,"Please enter the new key (3 - 16 characters max):"))
+						var/newkey = stripped_input(usr,"Please enter the new key (3 - 16 characters max):")
 						if(length(newkey) <= 3)
 							message = "<span class='notice'>NOTICE: Decryption key too short!</span>"
 						else if(length(newkey) > 16)
@@ -396,7 +396,7 @@
 						//Get out list of viable PDAs
 						var/list/obj/item/pda/sendPDAs = get_viewable_pdas()
 						if(GLOB.PDAs && GLOB.PDAs.len > 0)
-							customrecepient = input(usr, "Select a PDA from the list.") as null|anything in sortNames(sendPDAs)
+							customrecepient = input(usr, "Select a PDA from the list.") as null|anything in sendPDAs
 						else
 							customrecepient = null
 

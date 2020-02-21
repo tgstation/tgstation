@@ -19,8 +19,8 @@ Burning extracts:
 		return
 	reagents.remove_reagent(/datum/reagent/toxin/plasma,10)
 	to_chat(user, "<span class='notice'>You squeeze the extract, and it absorbs the plasma!</span>")
-	playsound(src, 'sound/effects/bubbles.ogg', 50, 1)
-	playsound(src, 'sound/magic/fireball.ogg', 50, 1)
+	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
+	playsound(src, 'sound/magic/fireball.ogg', 50, TRUE)
 	do_effect(user)
 
 /obj/item/slimecross/burning/proc/do_effect(mob/user) //If, for whatever reason, you don't want to delete the extract, don't do ..()
@@ -83,7 +83,7 @@ Burning extracts:
 /obj/item/slimecross/burning/metal/do_effect(mob/user)
 	for(var/turf/closed/wall/W in range(1,get_turf(user)))
 		W.dismantle_wall(1)
-		playsound(W, 'sound/effects/break_stone.ogg', 50, 1)
+		playsound(W, 'sound/effects/break_stone.ogg', 50, TRUE)
 	user.visible_message("<span class='danger'>[src] pulses violently, and shatters the walls around it!</span>")
 	..()
 
@@ -93,7 +93,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/yellow/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] explodes into an electrical field!</span>")
-	playsound(get_turf(src), 'sound/weapons/zapbang.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/weapons/zapbang.ogg', 50, TRUE)
 	for(var/mob/living/M in range(4,get_turf(user)))
 		if(M != user)
 			var/mob/living/carbon/C = M
@@ -156,7 +156,7 @@ Burning extracts:
 		if(L != user)
 			do_teleport(L, get_turf(L), 6, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE) //Somewhere between the effectiveness of fake and real BS crystal
 			new /obj/effect/particle_effect/sparks(get_turf(L))
-			playsound(get_turf(L), "sparks", 50, 1)
+			playsound(get_turf(L), "sparks", 50, TRUE)
 	..()
 
 /obj/item/slimecross/burning/sepia
@@ -264,7 +264,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/oil/proc/boom()
 	var/turf/T = get_turf(src)
-	playsound(T, 'sound/effects/explosion2.ogg', 200, 1)
+	playsound(T, 'sound/effects/explosion2.ogg', 200, TRUE)
 	for(var/mob/living/M in range(2, T))
 		new /obj/effect/temp_visual/explosion(get_turf(M))
 		M.ex_act(EXPLODE_HEAVY)

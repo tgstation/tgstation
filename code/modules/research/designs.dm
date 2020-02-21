@@ -49,17 +49,15 @@ other types of metals and chemistry for reagents).
 	return ..()
 
 /datum/design/proc/InitializeMaterials()
-	var/list/temp_list = list() 
+	var/list/temp_list = list()
 	for(var/i in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
 		var/amount = materials[i]
 		if(!istext(i)) //Not a category, so get the ref the normal way
-			var/datum/material/M =  getmaterialref(i)
+			var/datum/material/M =  SSmaterials.GetMaterialRef(i)
 			temp_list[M] = amount
 		else
 			temp_list[i] = amount
 	materials = temp_list
-	for(var/i in materials)
-		to_chat("[i] [materials[i]]")
 
 /datum/design/proc/icon_html(client/user)
 	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
@@ -74,7 +72,7 @@ other types of metals and chemistry for reagents).
 	name = "Component Design Disk"
 	desc = "A disk for storing device design data for construction in lathes."
 	icon_state = "datadisk1"
-	materials = list(/datum/material/iron =300, /datum/material/glass =100)
+	custom_materials = list(/datum/material/iron =300, /datum/material/glass =100)
 	var/list/blueprints = list()
 	var/max_blueprints = 1
 
@@ -88,5 +86,5 @@ other types of metals and chemistry for reagents).
 /obj/item/disk/design_disk/adv
 	name = "Advanced Component Design Disk"
 	desc = "A disk for storing device design data for construction in lathes. This one has extra storage space."
-	materials = list(/datum/material/iron =300, /datum/material/glass = 100, /datum/material/silver = 50)
+	custom_materials = list(/datum/material/iron =300, /datum/material/glass = 100, /datum/material/silver = 50)
 	max_blueprints = 5

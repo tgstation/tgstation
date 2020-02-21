@@ -58,7 +58,7 @@
 	harvested = FALSE
 
 /obj/structure/flora/ash/attackby(obj/item/W, mob/user, params)
-	if(!harvested && needs_sharp_harvest && W.is_sharp())
+	if(!harvested && needs_sharp_harvest && W.get_sharpness())
 		user.visible_message("<span class='notice'>[user] starts to harvest from [src] with [W].</span>","<span class='notice'>You begin to harvest from [src] with [W].</span>")
 		if(do_after(user, harvest_time, target = src))
 			harvest(user)
@@ -209,6 +209,7 @@
 	rarity = 20
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
 	resistance_flags = FIRE_PROOF
+	species = "polypore" // silence unit test
 
 /obj/item/seeds/lavaland/cactus
 	name = "pack of fruiting cactus seeds"
@@ -294,13 +295,15 @@
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
 	icon_state = "mushroom_bowl"
 
-/obj/item/reagent_containers/glass/bowl/mushroom_bowl/update_icon()
-	cut_overlays()
+/obj/item/reagent_containers/glass/bowl/mushroom_bowl/update_overlays()
+	. = ..()
 	if(reagents && reagents.total_volume)
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/lavaland/ash_flora.dmi', "fullbowl")
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling)
-	else
+		. += filling
+
+/obj/item/reagent_containers/glass/bowl/mushroom_bowl/update_icon_state()
+	if(!reagents || !reagents.total_volume)
 		icon_state = "mushroom_bowl"
 
 /obj/item/reagent_containers/glass/bowl/mushroom_bowl/attackby(obj/item/I,mob/user, params)

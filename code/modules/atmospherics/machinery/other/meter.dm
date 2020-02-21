@@ -59,7 +59,7 @@
 		icon_state = "meterX"
 		return 0
 
-	if(stat & (BROKEN|NOPOWER))
+	if(machine_stat & (BROKEN|NOPOWER))
 		icon_state = "meter0"
 		return 0
 
@@ -114,12 +114,13 @@
 	. += status()
 
 /obj/machinery/meter/wrench_act(mob/user, obj/item/I)
+	..()
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 	if (I.use_tool(src, user, 40, volume=50))
 		user.visible_message(
 			"[user] unfastens \the [src].",
 			"<span class='notice'>You unfasten \the [src].</span>",
-			"<span class='italics'>You hear ratchet.</span>")
+			"<span class='hear'>You hear ratchet.</span>")
 		deconstruct()
 	return TRUE
 
@@ -129,7 +130,7 @@
 	qdel(src)
 
 /obj/machinery/meter/interact(mob/user)
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	else
 		to_chat(user, status())

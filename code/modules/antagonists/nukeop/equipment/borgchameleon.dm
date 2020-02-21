@@ -54,7 +54,7 @@
 
 /obj/item/borg_chameleon/proc/toggle(mob/living/silicon/robot/user)
 	if(active)
-		playsound(src, 'sound/effects/pop.ogg', 100, 1, -6)
+		playsound(src, 'sound/effects/pop.ogg', 100, TRUE, -6)
 		to_chat(user, "<span class='notice'>You deactivate \the [src].</span>")
 		deactivate(user)
 	else
@@ -63,7 +63,7 @@
 			return
 		animation_playing = TRUE
 		to_chat(user, "<span class='notice'>You activate \the [src].</span>")
-		playsound(src, 'sound/effects/seedling_chargeup.ogg', 100, 1, -6)
+		playsound(src, 'sound/effects/seedling_chargeup.ogg', 100, TRUE, -6)
 		var/start = user.filters.len
 		var/X,Y,rsq,i,f
 		for(i=1, i<=7, ++i)
@@ -78,7 +78,7 @@
 			animate(f, offset=f:offset, time=0, loop=3, flags=ANIMATION_PARALLEL)
 			animate(offset=f:offset-1, time=rand()*20+10)
 		if (do_after(user, 50, target=user) && user.cell.use(activationCost))
-			playsound(src, 'sound/effects/bamf.ogg', 100, 1, -6)
+			playsound(src, 'sound/effects/bamf.ogg', 100, TRUE, -6)
 			to_chat(user, "<span class='notice'>You are now disguised as the Nanotrasen engineering borg \"[friendlyName]\".</span>")
 			activate(user)
 		else

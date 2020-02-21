@@ -18,7 +18,7 @@
 			jobs_to_revolt = list("Assistant")
 			nation_name = pick("Assa", "Mainte", "Tunnel", "Gris", "Grey", "Liath", "Grigio", "Ass", "Assi")
 		if("white")
-			jobs_to_revolt = list("Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist")
+			jobs_to_revolt = list("Chief Medical Officer", "Medical Doctor", "Paramedic", "Chemist", "Geneticist", "Virologist")
 			nation_name = pick("Mede", "Healtha", "Recova", "Chemi", "Geneti", "Viro", "Psych")
 		if("yellow")
 			jobs_to_revolt = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
@@ -38,7 +38,8 @@
 	var/datum/team/nation/nation = new
 	nation.name = nation_name
 
-	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+	for(var/i in GLOB.human_list)
+		var/mob/living/carbon/human/H = i
 		if(H.mind)
 			var/datum/mind/M = H.mind
 			if(M.assigned_role && !(M.has_antag_datum(/datum/antagonist)))

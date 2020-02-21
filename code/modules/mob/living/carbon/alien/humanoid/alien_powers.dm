@@ -76,7 +76,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/plant/fire(mob/living/carbon/user)
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(user))
-		to_chat(user, "There's already a weed node here.")
+		to_chat(user, "<span class='warning'>There's already a weed node here!</span>")
 		return 0
 	user.visible_message("<span class='alertalien'>[user] has planted some alien weeds!</span>")
 	new/obj/structure/alien/weeds/node(user.loc)
@@ -92,7 +92,7 @@ Doesn't work on other aliens/AI.*/
 	var/list/options = list()
 	for(var/mob/living/Ms in oview(user))
 		options += Ms
-	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as null|mob in options
+	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as null|mob in sortNames(options)
 	if(!M)
 		return 0
 	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
@@ -127,17 +127,17 @@ Doesn't work on other aliens/AI.*/
 	for(var/mob/living/carbon/A  in oview(user))
 		if(A.getorgan(/obj/item/organ/alien/plasmavessel))
 			aliens_around.Add(A)
-	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null) as mob in aliens_around
+	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null) as mob in sortNames(aliens_around)
 	if(!M)
 		return 0
-	var/amount = input("Amount:", "Transfer Plasma to [M]") as num
+	var/amount = input("Amount:", "Transfer Plasma to [M]") as num|null
 	if (amount)
 		amount = min(abs(round(amount)), user.getPlasma())
 		if (get_dist(user,M) <= 1)
 			M.adjustPlasma(amount)
 			user.adjustPlasma(-amount)
 			to_chat(M, "<span class='noticealien'>[user] has transferred [amount] plasma to you.</span>")
-			to_chat(user, "<span class='noticealien'>You transfer [amount] plasma to [M]</span>")
+			to_chat(user, "<span class='noticealien'>You transfer [amount] plasma to [M].</span>")
 		else
 			to_chat(user, "<span class='noticealien'>You need to be closer!</span>")
 	return
@@ -227,8 +227,8 @@ Doesn't work on other aliens/AI.*/
 	if(!isturf(U) || !isturf(T))
 		return FALSE
 
-	user.visible_message("<span class='danger'>[user] spits neurotoxin!", "<span class='alertalien'>You spit neurotoxin.</span>")
-	var/obj/item/projectile/bullet/neurotoxin/A = new /obj/item/projectile/bullet/neurotoxin(user.loc)
+	user.visible_message("<span class='danger'>[user] spits neurotoxin!</span>", "<span class='alertalien'>You spit neurotoxin.</span>")
+	var/obj/projectile/bullet/neurotoxin/A = new /obj/projectile/bullet/neurotoxin(user.loc)
 	A.preparePixelProjectile(target, user, params)
 	A.fire()
 	user.newtonian_move(get_dir(U, T))
@@ -267,7 +267,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/resin/fire(mob/living/carbon/user)
 	if(locate(/obj/structure/alien/resin) in user.loc)
-		to_chat(user, "<span class='danger'>There is already a resin structure there.</span>")
+		to_chat(user, "<span class='warning'>There is already a resin structure there!</span>")
 		return FALSE
 
 	if(!check_vent_block(user))

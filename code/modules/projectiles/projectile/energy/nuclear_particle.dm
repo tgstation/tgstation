@@ -1,5 +1,5 @@
 //Nuclear particle projectile - a deadly side effect of fusion
-/obj/item/projectile/energy/nuclear_particle
+/obj/projectile/energy/nuclear_particle
 	name = "nuclear particle"
 	icon_state = "nuclear_particle"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
@@ -17,7 +17,7 @@
 		"purple" = "#FF00FF"
 	)
 
-/obj/item/projectile/energy/nuclear_particle/Initialize()
+/obj/projectile/energy/nuclear_particle/Initialize()
 	. = ..()
 	//Random color time!
 	var/our_color = pick(particle_colors)
@@ -25,5 +25,5 @@
 	set_light(4, 3, particle_colors[our_color]) //Range of 4, brightness of 3 - Same range as a flashlight
 
 /atom/proc/fire_nuclear_particle(angle = rand(0,360)) //used by fusion to fire random nuclear particles. Fires one particle in a random direction.
-	var/obj/item/projectile/energy/nuclear_particle/P = new /obj/item/projectile/energy/nuclear_particle(src)
+	var/obj/projectile/energy/nuclear_particle/P = new /obj/projectile/energy/nuclear_particle(src)
 	P.fire(angle)

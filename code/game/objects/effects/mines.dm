@@ -78,12 +78,17 @@
 	gas_type = "n2o"
 
 
+/obj/effect/mine/gas/water_vapor
+	name = "chilled vapor mine"
+	gas_amount = 500
+	gas_type = "water_vapor"
+
 /obj/effect/mine/sound
 	name = "honkblaster 1000"
 	var/sound = 'sound/items/bikehorn.ogg'
 
 /obj/effect/mine/sound/mineEffect(mob/victim)
-	playsound(loc, sound, 100, 1)
+	playsound(loc, sound, 100, TRUE)
 
 
 /obj/effect/mine/sound/bwoink
@@ -125,8 +130,7 @@
 	var/static/list/red_splash = list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0)
 	var/static/list/pure_red = list(0,0,0,0,0,0,0,0,0,1,0,0)
 
-	spawn(0)
-		new /datum/hallucination/delusion(victim, TRUE, "demon",duration,0)
+	INVOKE_ASYNC(src, .proc/blood_delusion, victim)
 
 	var/obj/item/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
 	victim.log_message("entered a blood frenzy", LOG_ATTACK)
@@ -149,6 +153,9 @@
 	victim.log_message("exited a blood frenzy", LOG_ATTACK)
 	qdel(src)
 
+/obj/effect/mine/pickup/bloodbath/proc/blood_delusion(mob/living/carbon/victim)
+	new /datum/hallucination/delusion(victim, TRUE, "demon", duration, 0)
+
 /obj/effect/mine/pickup/healing
 	name = "Blue Orb"
 	desc = "You feel better just looking at it."
@@ -158,7 +165,7 @@
 	if(!victim.client || !istype(victim))
 		return
 	to_chat(victim, "<span class='notice'>You feel great!</span>")
-	victim.revive(full_heal = 1, admin_revive = 1)
+	victim.revive(full_heal = TRUE, admin_revive = TRUE)
 
 /obj/effect/mine/pickup/speed
 	name = "Yellow Orb"

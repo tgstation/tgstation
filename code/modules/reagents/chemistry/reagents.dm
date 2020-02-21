@@ -40,6 +40,15 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/self_consuming = FALSE
 	var/reagent_weight = 1 //affects how far it travels when sprayed
 	var/metabolizing = FALSE
+	var/harmful = FALSE //is it bad for you? Currently only used for borghypo. C2s and Toxins have it TRUE by default.
+	//Are we from a material? We might wanna know that for special stuff. Like metalgen. Is replaced with a ref of the material on New()
+	var/datum/material/material
+
+/datum/reagent/New()
+	. = ..()
+
+	if(material)
+		material = SSmaterials.GetMaterialRef(material)
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -50,7 +59,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		return 0
 	if(method == VAPOR) //smoke, foam, spray
 		if(M.reagents)
-			var/modifier = CLAMP((1 - touch_protection), 0, 1)
+			var/modifier = clamp((1 - touch_protection), 0, 1)
 			var/amount = round(reac_volume*modifier, 0.1)
 			if(amount >= 0.5)
 				M.reagents.add_reagent(type, amount)
@@ -67,7 +76,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 	return
 
-datum/reagent/proc/on_transfer(atom/A, method=TOUCH, volume) //Called after a reagent is transfered
+/datum/reagent/proc/on_transfer(atom/A, method=TOUCH, trans_volume) //Called after a reagent is transfered
 	return
 
 
@@ -101,6 +110,9 @@ datum/reagent/proc/on_transfer(atom/A, method=TOUCH, volume) //Called after a re
 /datum/reagent/proc/on_update(atom/A)
 	return
 
+//called on expose_temperature
+/datum/reagent/proc/on_temp_change()
+	return
 // Called when the reagent container is hit by an explosion
 /datum/reagent/proc/on_ex_act(severity)
 	return

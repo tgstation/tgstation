@@ -51,16 +51,6 @@
 	..()
 	update_icon()
 
-/obj/mecha/working/ripley/update_icon()
-	..()
-	var/datum/component/armor_plate/C = GetComponent(/datum/component/armor_plate)
-	if (C.amount)
-		cut_overlays()
-		if(C.amount < 3)
-			add_overlay(occupant ? "ripley-g" : "ripley-g-open")
-		else
-			add_overlay(occupant ? "ripley-g-full" : "ripley-g-full-open")
-
 /obj/mecha/working/ripley/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
 	if (!enclosed)
 		possible_int_damage -= (MECHA_INT_TEMP_CONTROL + MECHA_INT_TANK_BREACH) //if we don't even have an air tank, these two doesn't make a ton of sense.
@@ -111,10 +101,8 @@
 	name = "\improper DEATH-RIPLEY"
 	icon_state = "deathripley"
 	fast_pressure_step_in = 2 //step_in while in low pressure conditions
-	slow_pressure_step_in = 4 //step_in while in normal pressure conditions
+	slow_pressure_step_in = 3 //step_in while in normal pressure conditions
 	step_in = 4
-	slow_pressure_step_in = 3
-	opacity=0
 	lights_power = 7
 	wreckage = /obj/structure/mecha_wreckage/ripley/deathripley
 	step_energy_drain = 0

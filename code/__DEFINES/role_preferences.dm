@@ -23,13 +23,13 @@
 #define ROLE_ABDUCTOR			"Abductor"
 #define ROLE_REVENANT			"Revenant"
 #define ROLE_DEVIL				"Devil"
-#define ROLE_SERVANT_OF_RATVAR	"Servant of Ratvar"
 #define ROLE_BROTHER			"Blood Brother"
 #define ROLE_BRAINWASHED		"Brainwashed Victim"
 #define ROLE_OVERTHROW			"Syndicate Mutineer"		//Role removed, left here for safety.
 #define ROLE_HIVE				"Hivemind Host"				//Role removed, left here for safety.
 #define ROLE_OBSESSED				"Obsessed"
 #define ROLE_SENTIENCE			"Sentience Potion Spawn"
+#define ROLE_PYROCLASTIC_SLIME 	"Pyroclastic Anomaly Slime"
 #define ROLE_MIND_TRANSFER		"Mind Transfer Potion"
 #define ROLE_POSIBRAIN			"Posibrain"
 #define ROLE_DRONE				"Drone"
@@ -58,7 +58,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_REVENANT,
 	ROLE_ABDUCTOR,
 	ROLE_DEVIL = /datum/game_mode/devil,
-	ROLE_SERVANT_OF_RATVAR = /datum/game_mode/clockwork_cult,
 	ROLE_INTERNAL_AFFAIRS = /datum/game_mode/traitor/internal_affairs,
 	ROLE_SENTIENCE
 ))

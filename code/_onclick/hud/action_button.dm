@@ -72,6 +72,23 @@
 	var/hide_icon = 'icons/mob/actions.dmi'
 	var/hide_state = "hide"
 	var/show_state = "show"
+	var/mutable_appearance/hide_appearance
+	var/mutable_appearance/show_appearance
+
+/obj/screen/movable/action_button/hide_toggle/Initialize()
+	. = ..()
+	var/static/list/icon_cache = list()
+	
+	var/cache_key = "[hide_icon][hide_state]"
+	hide_appearance = icon_cache[cache_key]
+	if(!hide_appearance)
+		hide_appearance = icon_cache[cache_key] = mutable_appearance(hide_icon, hide_state)
+
+	cache_key = "[hide_icon][show_state]"
+	show_appearance = icon_cache[cache_key]
+	if(!show_appearance)
+		show_appearance = icon_cache[cache_key] = mutable_appearance(hide_icon, show_state)
+
 
 /obj/screen/movable/action_button/hide_toggle/Click(location,control,params)
 	if (!can_use(usr))
@@ -136,10 +153,12 @@
 	show_state = settings["toggle_show"]
 	update_icon()
 
-/obj/screen/movable/action_button/hide_toggle/update_icon()
-	cut_overlays()
-	add_overlay(mutable_appearance(hide_icon, hidden ? show_state : hide_state))
-
+/obj/screen/movable/action_button/hide_toggle/update_overlays()
+	. = ..()
+	if(hidden)
+		. += show_appearance
+	else
+		. += hide_appearance
 
 /obj/screen/movable/action_button/MouseEntered(location,control,params)
 	if(!QDELETED(src))

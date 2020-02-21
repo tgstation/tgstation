@@ -210,6 +210,8 @@ tools/MapAtmosFixer/MapAtmosFixer/bin/*
 /_maps/**/backup/
 /_maps/templates.dm
 
+#dmdoc default folder
+/dmdoc
 # Ignore custom music and title screens (amend as appropriate)
 /config/jukebox_music/sounds/*
 !/config/jukebox_music/sounds/exclude

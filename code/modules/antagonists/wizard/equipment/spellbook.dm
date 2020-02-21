@@ -120,7 +120,7 @@
 	category = "Defensive"
 
 /datum/spellbook_entry/disintegrate
-	name = "Disintegrate"
+	name = "Smite"
 	spell_type = /obj/effect/proc_holder/spell/targeted/touch/disintegrate
 
 /datum/spellbook_entry/disabletech
@@ -141,7 +141,7 @@
 
 /datum/spellbook_entry/timestop
 	name = "Time Stop"
-	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/timestop
 	category = "Defensive"
 
 /datum/spellbook_entry/smoke
@@ -217,7 +217,11 @@
 
 /datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/spellbook/book) //return TRUE on success
 	. = ..()
-	user.flags_1 |= TESLA_IGNORE_1
+	ADD_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "lightning_bolt_spell")
+
+/datum/spellbook_entry/lightningbolt/Refund(mob/living/carbon/human/user, obj/item/spellbook/book)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "lightning_bolt_spell")
 
 /datum/spellbook_entry/infinite_guns
 	name = "Lesser Summon Guns"
@@ -251,7 +255,7 @@
 	name = "Soul Tap"
 	spell_type = /obj/effect/proc_holder/spell/self/tap
 	category = "Assistance"
-	cost = 3
+	cost = 1
 
 /datum/spellbook_entry/spacetime_dist
 	name = "Spacetime Distortion"
@@ -478,7 +482,7 @@
 	new /datum/round_event/wizard/ghost()
 	active = TRUE
 	to_chat(user, "<span class='notice'>You have cast summon ghosts!</span>")
-	playsound(get_turf(user), 'sound/effects/ghost2.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/effects/ghost2.ogg', 50, TRUE)
 	return TRUE
 
 /datum/spellbook_entry/summon/guns
@@ -488,13 +492,15 @@
 /datum/spellbook_entry/summon/guns/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return FALSE
+	if(istype(SSticker.mode, /datum/game_mode/dynamic)) // Disable events on dynamic
+		return FALSE
 	return !CONFIG_GET(flag/no_summon_guns)
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	rightandwrong(SUMMON_GUNS, user, 10)
 	active = TRUE
-	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, TRUE)
 	to_chat(user, "<span class='notice'>You have cast summon guns!</span>")
 	return TRUE
 
@@ -505,13 +511,15 @@
 /datum/spellbook_entry/summon/magic/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return FALSE
+	if(istype(SSticker.mode, /datum/game_mode/dynamic)) // Disable events on dynamic
+		return FALSE
 	return !CONFIG_GET(flag/no_summon_magic)
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	rightandwrong(SUMMON_MAGIC, user, 10)
 	active = TRUE
-	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, TRUE)
 	to_chat(user, "<span class='notice'>You have cast summon magic!</span>")
 	return TRUE
 
@@ -523,13 +531,15 @@
 /datum/spellbook_entry/summon/events/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return FALSE
+	if(istype(SSticker.mode, /datum/game_mode/dynamic)) // Disable events on dynamic
+		return FALSE
 	return !CONFIG_GET(flag/no_summon_events)
 
 /datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	summonevents()
 	times++
-	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, TRUE)
 	to_chat(user, "<span class='notice'>You have cast summon events.</span>")
 	return TRUE
 
@@ -552,7 +562,7 @@
 		return FALSE
 	curse_of_madness(user, message)
 	to_chat(user, "<span class='notice'>You have cast the curse of insanity!</span>")
-	playsound(user, 'sound/magic/mandswap.ogg', 50, 1)
+	playsound(user, 'sound/magic/mandswap.ogg', 50, TRUE)
 	return TRUE
 
 /obj/item/spellbook
@@ -650,7 +660,7 @@
 
 /obj/item/spellbook/proc/wrap(content)
 	var/dat = ""
-	dat +="<html><head><title>Spellbook</title></head>"
+	dat +="<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Spellbook</title></head>"
 	dat += {"
 	<head>
 		<style type="text/css">

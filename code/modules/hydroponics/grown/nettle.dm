@@ -73,7 +73,7 @@
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1) // When you whack someone with it, leaves fall off
 	else
-		to_chat(usr, "All the leaves have fallen off the nettle from violent whacking.")
+		to_chat(usr, "<span class='warning'>All the leaves have fallen off the nettle from violent whacking.</span>")
 		qdel(src)
 
 /obj/item/reagent_containers/food/snacks/grown/nettle/basic
@@ -99,13 +99,13 @@
 	if(..())
 		if(prob(50))
 			user.Paralyze(100)
-			to_chat(user, "<span class='userdanger'>You are stunned by the Deathnettle as you try picking it up!</span>")
+			to_chat(user, "<span class='userdanger'>You are stunned by [src] as you try picking it up!</span>")
 
 /obj/item/reagent_containers/food/snacks/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
 	if(!..())
 		return
 	if(isliving(M))
-		to_chat(M, "<span class='danger'>You are stunned by the powerful acid of the Deathnettle!</span>")
+		to_chat(M, "<span class='danger'>You are stunned by the powerful acid of [src]!</span>")
 		log_combat(user, M, "attacked", src)
 
 		M.adjust_blurriness(force/7)

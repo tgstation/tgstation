@@ -118,7 +118,7 @@
   * outputs:
   * description: If an organ exists in the slot requested, and we are capable of taking damage (we don't have GODMODE on), call the damage proc on that organ.
   */
-/mob/living/carbon/adjustOrganLoss(slot, amount, maximum = 500)
+/mob/living/carbon/adjustOrganLoss(slot, amount, maximum)
 	var/obj/item/organ/O = getorganslot(slot)
 	if(O && !(status_flags & GODMODE))
 		O.applyOrganDamage(amount, maximum)
@@ -176,8 +176,11 @@
 	if(!parts.len)
 		return
 	var/obj/item/bodypart/picked = pick(parts)
+	var/damage_calculator = picked.get_damage(TRUE) //heal_damage returns update status T/F instead of amount healed so we dance gracefully around this
 	if(picked.heal_damage(brute, burn, stamina, required_status))
 		update_damage_overlays()
+	return max(damage_calculator - picked.get_damage(TRUE), 0)
+
 
 //Damages ONE bodypart randomly selected from damagable ones.
 //It automatically updates damage overlays if necessary

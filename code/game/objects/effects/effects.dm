@@ -22,8 +22,8 @@
 /obj/effect/blob_act(obj/structure/blob/B)
 	return
 
-/obj/effect/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	return 0
+/obj/effect/attack_hulk(mob/living/carbon/human/user)
+	return FALSE
 
 /obj/effect/experience_pressure_difference()
 	return

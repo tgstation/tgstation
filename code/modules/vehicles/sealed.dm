@@ -79,7 +79,7 @@
 
 /obj/vehicle/sealed/proc/remove_key(mob/user)
 	if(!inserted_key)
-		to_chat(user, "<span class='notice'>There is no key in [src]!</span>")
+		to_chat(user, "<span class='warning'>There is no key in [src]!</span>")
 		return
 	if(!is_occupant(user) || !(occupants[user] & VEHICLE_CONTROL_DRIVE))
 		to_chat(user, "<span class='warning'>You must be driving [src] to remove [src]'s key!</span>")

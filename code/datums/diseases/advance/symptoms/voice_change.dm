@@ -30,11 +30,11 @@ Bonus
 	symptom_delay_max = 120
 	var/scramble_language = FALSE
 	var/datum/language/current_language
-	var/datum/language_holder/original_language
-	var/datum/language_holder/mob_language
-	threshold_desc = "<b>Transmission 14:</b> The host's language center of the brain is damaged, leading to complete inability to speak or understand any language.<br>\
-					  <b>Stage Speed 7:</b> Changes voice more often.<br>\
-					  <b>Stealth 3:</b> The symptom remains hidden until active."
+	threshold_descs = list(
+		"Transmission 14" = "The host's language center of the brain is damaged, leading to complete inability to speak or understand any language.",
+		"Stage Speed 7" = "Changes voice more often.",
+		"Stealth 3" = "The symptom remains hidden until active."
+	)
 
 /datum/symptom/voice_change/Start(datum/disease/advance/A)
 	if(!..())
@@ -47,9 +47,6 @@ Bonus
 		symptom_delay_max = 85
 	if(A.properties["transmittable"] >= 14) //random language
 		scramble_language = TRUE
-		var/mob/living/M = A.affected_mob
-		mob_language = M.get_language_holder()
-		original_language = mob_language.copy()
 
 /datum/symptom/voice_change/Activate(datum/disease/advance/A)
 	if(!..())
@@ -63,12 +60,10 @@ Bonus
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.SetSpecialVoice(H.dna.species.random_name(H.gender))
-				if(scramble_language)
-					H.remove_language(current_language)
+				if(scramble_language && !current_language)	// Last part prevents rerolling language with small amounts of cure.
 					current_language = pick(subtypesof(/datum/language) - /datum/language/common)
-					H.grant_language(current_language)
-					mob_language = H.get_language_holder()
-					mob_language.only_speaks_language = current_language
+					H.add_blocked_language(subtypesof(/datum/language) - current_language, LANGUAGE_VOICECHANGE)
+					H.grant_language(current_language, TRUE, TRUE, LANGUAGE_VOICECHANGE)
 
 /datum/symptom/voice_change/End(datum/disease/advance/A)
 	..()
@@ -76,10 +71,5 @@ Bonus
 		var/mob/living/carbon/human/H = A.affected_mob
 		H.UnsetSpecialVoice()
 	if(scramble_language)
-		var/mob/living/M = A.affected_mob
-		M.copy_known_languages_from(original_language, TRUE)
-		mob_language = M.get_language_holder()
-		mob_language.only_speaks_language = null
-		M.selected_default_language = original_language
-		current_language = null
-		QDEL_NULL(original_language)
+		A.affected_mob.remove_blocked_language(subtypesof(/datum/language), LANGUAGE_VOICECHANGE)
+		A.affected_mob.remove_all_languages(LANGUAGE_VOICECHANGE)	// In case someone managed to get more than one anyway.

@@ -31,6 +31,7 @@
 
 /datum/action/proc/link_to(Target)
 	target = Target
+	RegisterSignal(Target, COMSIG_ATOM_UPDATED_ICON, .proc/OnUpdatedIcon)
 
 /datum/action/Destroy()
 	if(owner)
@@ -90,9 +91,6 @@
 		return FALSE
 	return TRUE
 
-/datum/action/proc/Process()
-	return
-
 /datum/action/proc/IsAvailable()
 	if(!owner)
 		return FALSE
@@ -145,6 +143,8 @@
 		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
 		current_button.button_icon_state = button_icon_state
 
+/datum/action/proc/OnUpdatedIcon()
+	UpdateButtonIcon()
 
 //Presets for item actions
 /datum/action/item_action
@@ -192,6 +192,13 @@
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
+
+/datum/action/item_action/toggle_light/Trigger()
+	if(istype(target, /obj/item/pda))
+		var/obj/item/pda/P = target
+		P.toggle_light(owner)
+		return
+	..()
 
 /datum/action/item_action/toggle_hood
 	name = "Toggle Hood"
@@ -257,14 +264,37 @@
 	if(istype(H))
 		H.toggle_welding_screen(owner)
 
-/datum/action/item_action/toggle_headphones
-	name = "Toggle Headphones"
-	desc = "UNTZ UNTZ UNTZ"
+/datum/action/item_action/toggle_welding_screen/plasmaman
+	name = "Toggle Welding Screen"
 
-/datum/action/item_action/toggle_headphones/Trigger()
-	var/obj/item/clothing/ears/headphones/H = target
+/datum/action/item_action/toggle_welding_screen/plasmaman/Trigger()
+	var/obj/item/clothing/head/helmet/space/plasmaman/H = target
 	if(istype(H))
-		H.toggle(owner)
+		H.toggle_welding_screen(owner)
+
+/datum/action/item_action/toggle_spacesuit
+	name = "Toggle Suit Thermal Regulator"
+	icon_icon = 'icons/mob/actions/actions_spacesuit.dmi'
+	button_icon_state = "thermal_off"
+
+/datum/action/item_action/toggle_spacesuit/New(Target)
+	. = ..()
+	RegisterSignal(target, COMSIG_SUIT_SPACE_TOGGLE, .proc/toggle)
+
+/datum/action/item_action/toggle_spacesuit/Destroy()
+	UnregisterSignal(target, COMSIG_SUIT_SPACE_TOGGLE)
+	return ..()
+
+/datum/action/item_action/toggle_spacesuit/Trigger()
+	var/obj/item/clothing/suit/space/suit = target
+	if(!istype(suit))
+		return
+	suit.toggle_spacesuit()
+
+/// Toggle the action icon for the space suit thermal regulator
+/datum/action/item_action/toggle_spacesuit/proc/toggle(obj/item/clothing/suit/space/suit)
+	button_icon_state = "thermal_[suit.thermal_on ? "on" : "off"]"
+	UpdateButtonIcon()
 
 /datum/action/item_action/toggle_unfriendly_fire
 	name = "Toggle Friendly Fire \[ON\]"
@@ -310,44 +340,14 @@
 			return 0
 	return ..()
 
-/datum/action/item_action/clock
-	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
-	background_icon_state = "bg_clock"
-	buttontooltipstyle = "clockcult"
-
-/datum/action/item_action/clock/IsAvailable()
-	if(!is_servant_of_ratvar(owner))
-		return 0
-	return ..()
-
-/datum/action/item_action/clock/toggle_visor
-	name = "Create Judicial Marker"
-	desc = "Allows you to create a stunning Judicial Marker at any location in view. Click again to disable."
-
-/datum/action/item_action/clock/toggle_visor/IsAvailable()
-	if(!is_servant_of_ratvar(owner))
-		return 0
-	if(istype(target, /obj/item/clothing/glasses/judicial_visor))
-		var/obj/item/clothing/glasses/judicial_visor/V = target
-		if(V.recharging)
-			return 0
-	return ..()
-
-/datum/action/item_action/clock/hierophant
-	name = "Hierophant Network"
-	desc = "Lets you discreetly talk with all other servants. Nearby listeners can hear you whispering, so make sure to do this privately."
-	button_icon_state = "hierophant_slab"
-
-/datum/action/item_action/clock/quickbind
-	name = "Quickbind"
-	desc = "If you're seeing this, file a bug report."
-	var/scripture_index = 0 //the index of the scripture we're associated with
-
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"
 
 /datum/action/item_action/toggle_helmet_mode
 	name = "Toggle Helmet Mode"
+
+/datum/action/item_action/crew_monitor
+	name = "Interface With Crew Monitor"
 
 /datum/action/item_action/toggle
 
@@ -496,7 +496,7 @@
 			H.attack_self(owner)
 			return
 	var/obj/item/I = target
-	if(owner.can_equip(I, SLOT_HANDS))
+	if(owner.can_equip(I, ITEM_SLOT_HANDS))
 		owner.temporarilyRemoveItemFromInventory(I)
 		owner.put_in_hands(I)
 		I.attack_self(owner)
@@ -531,7 +531,7 @@
 		return
 	//Box closing from here on out.
 	if(!isturf(owner.loc)) //Don't let the player use this to escape mechs/welded closets.
-		to_chat(owner, "<span class = 'notice'>You need more space to activate this implant.</span>")
+		to_chat(owner, "<span class='warning'>You need more space to activate this implant!</span>")
 		return
 	if(cooldown < world.time - 100)
 		var/box = new boxtype(owner.drop_location())

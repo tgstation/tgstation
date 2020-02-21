@@ -29,7 +29,7 @@
 /mob/living/carbon/true_devil/Initialize()
 	create_bodyparts() //initialize bodyparts
 	create_internal_organs()
-	grant_all_languages(omnitongue=TRUE)
+	grant_all_languages()
 	..()
 
 /mob/living/carbon/true_devil/create_internal_organs()
@@ -45,7 +45,7 @@
 	health = maxHealth
 	icon_state = "arch_devil"
 
-/mob/living/carbon/true_devil/proc/set_name()
+/mob/living/carbon/true_devil/proc/set_devil_name()
 	var/datum/antagonist/devil/devilinfo = mind.has_antag_datum(/datum/antagonist/devil)
 	name = devilinfo.truename
 	real_name = name
@@ -57,7 +57,7 @@
 	mind.announce_objectives()
 
 /mob/living/carbon/true_devil/death(gibbed)
-	stat = DEAD
+	set_stat(DEAD)
 	..(gibbed)
 	drop_all_held_items()
 	INVOKE_ASYNC(mind.has_antag_datum(/datum/antagonist/devil), /datum/antagonist/devil/proc/beginResurrectionCheck, src)
@@ -93,7 +93,7 @@
 		visible_message("<span class='warning'>[src] easily breaks out of [p_their()] handcuffs!</span>", \
 					"<span class='notice'>With just a thought your handcuffs fall off.</span>")
 
-/mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
+/mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 	if(incapacitated())
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
@@ -164,9 +164,9 @@
 		switch(M.a_intent)
 			if ("harm")
 				var/damage = rand(1, 5)
-				playsound(loc, "punch", 25, 1, -1)
-				visible_message("<span class='danger'>[M] has punched [src]!</span>", \
-						"<span class='userdanger'>[M] has punched [src]!</span>")
+				playsound(loc, "punch", 25, TRUE, -1)
+				visible_message("<span class='danger'>[M] punches [src]!</span>", \
+						"<span class='userdanger'>[M] punches you!</span>")
 				adjustBruteLoss(damage)
 				log_combat(M, src, "attacked")
 				updatehealth()
@@ -174,19 +174,20 @@
 				if (!(mobility_flags & MOBILITY_STAND) && !ascended) //No stealing the arch devil's pitchfork.
 					if (prob(5))
 						Unconscious(40)
-						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 						log_combat(M, src, "pushed")
-						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
-							"<span class='userdanger'>[M] has pushed down [src]!</span>")
+						visible_message("<span class='danger'>[M] pushes [src] down!</span>", \
+							"<span class='userdanger'>[M] pushes you down!</span>")
 					else
 						if (prob(25))
 							dropItemToGround(get_active_held_item())
-							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-							visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
-							"<span class='userdanger'>[M] has disarmed [src]!</span>")
+							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+							visible_message("<span class='danger'>[M] disarms [src]!</span>", \
+							"<span class='userdanger'>[M] disarms you!</span>")
 						else
-							playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-							visible_message("<span class='danger'>[M] has attempted to disarm [src]!</span>")
+							playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+							visible_message("<span class='danger'>[M] fails to disarm [src]!</span>", \
+							"<span class='userdanger'>[M] fails to disarm you!</span>")
 
 /mob/living/carbon/true_devil/handle_breathing()
 	// devils do not need to breathe
@@ -198,11 +199,11 @@
 	if(!ascended)
 		var/b_loss
 		switch (severity)
-			if (1)
+			if (EXPLODE_DEVASTATE)
 				b_loss = 500
-			if (2)
+			if (EXPLODE_HEAVY)
 				b_loss = 150
-			if(3)
+			if (EXPLODE_LIGHT)
 				b_loss = 30
 		if(has_bane(BANE_LIGHT))
 			b_loss *=2

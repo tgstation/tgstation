@@ -158,10 +158,10 @@ again.
 
 //plastitanium window
 
-/obj/effect/spawner/structure/window/plastitanium
+/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium
 	name = "plastitanium window spawner"
 	icon_state = "plastitaniumwindow_spawner"
-	spawn_list = list(/obj/structure/grille, /obj/structure/window/plastitanium)
+	spawn_list = list(/obj/structure/grille, /obj/structure/window/plasma/reinforced/plastitanium)
 
 
 //ice window

@@ -54,7 +54,7 @@
 	name = "pack of rice seeds"
 	desc = "These may, or may not, grow into rice."
 	icon_state = "seed-rice"
-	species = /datum/reagent/consumable/rice
+	species = "rice"
 	plantname = "Rice Stalks"
 	product = /obj/item/reagent_containers/food/snacks/grown/rice
 	mutatelist = list()
@@ -98,7 +98,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/meatwheat/attack_self(mob/living/user)
 	user.visible_message("<span class='notice'>[user] crushes [src] into meat.</span>", "<span class='notice'>You crush [src] into something that resembles meat.</span>")
-	playsound(user, 'sound/effects/blobattack.ogg', 50, 1)
+	playsound(user, 'sound/effects/blobattack.ogg', 50, TRUE)
 	var/obj/item/reagent_containers/food/snacks/meat/slab/meatwheat/M = new
 	qdel(src)
 	user.put_in_hands(M)

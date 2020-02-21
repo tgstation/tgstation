@@ -38,18 +38,18 @@
 			if(M.rating >= 2)
 				. += "<span class='notice'>Gibber has been upgraded to process inorganic materials.</span>"
 
-/obj/machinery/gibber/update_icon()
-	cut_overlays()
+/obj/machinery/gibber/update_overlays()
+	. = ..()
 	if (dirty)
-		add_overlay("grbloody")
-	if(stat & (NOPOWER|BROKEN))
+		. +="grbloody"
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if (!occupant)
-		add_overlay("grjam")
+		. += "grjam"
 	else if (operating)
-		add_overlay("gruse")
+		. += "gruse"
 	else
-		add_overlay("gridle")
+		. += "gridle"
 
 /obj/machinery/gibber/attack_paw(mob/user)
 	return attack_hand(user)
@@ -64,7 +64,7 @@
 	. = ..()
 	if(.)
 		return
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(operating)
 		to_chat(user, "<span class='danger'>It's locked and running.</span>")
@@ -139,11 +139,11 @@
 	if(src.operating)
 		return
 	if(!src.occupant)
-		audible_message("<span class='italics'>You hear a loud metallic grinding sound.</span>")
+		audible_message("<span class='hear'>You hear a loud metallic grinding sound.</span>")
 		return
 	use_power(1000)
-	audible_message("<span class='italics'>You hear a loud squelchy grinding sound.</span>")
-	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
+	audible_message("<span class='hear'>You hear a loud squelchy grinding sound.</span>")
+	playsound(src.loc, 'sound/machines/juicer.ogg', 50, TRUE)
 	operating = TRUE
 	update_icon()
 
@@ -203,7 +203,7 @@
 	addtimer(CALLBACK(src, .proc/make_meat, skin, allmeat, meat_produced, gibtype, diseases), gibtime)
 
 /obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/obj/item/reagent_containers/food/snacks/meat/slab/allmeat, meat_produced, gibtype, list/datum/disease/diseases)
-	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)
 	operating = FALSE
 	var/turf/T = get_turf(src)
 	var/list/turf/nearby_turfs = RANGE_TURFS(3,T) - T
@@ -216,7 +216,7 @@
 		meatslab.throw_at(pick(nearby_turfs),i,3)
 		for (var/turfs=1 to meat_produced)
 			var/turf/gibturf = pick(nearby_turfs)
-			if (!gibturf.density && src in view(gibturf))
+			if (!gibturf.density && (src in view(gibturf)))
 				new gibtype(gibturf,i,diseases)
 
 	pixel_x = initial(pixel_x) //return to its spot after shaking

@@ -6,41 +6,41 @@
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/cultaltar)
 "c" = (
 /turf/open/lava/smooth/lava_land_surface,
-/area/ruin/unpowered)
+/area/ruin/unpowered/cultaltar)
 "d" = (
 /turf/closed/wall/mineral/cult,
-/area/ruin/unpowered)
+/area/ruin/unpowered/cultaltar)
 "e" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered)
+/area/ruin/unpowered/cultaltar)
 "f" = (
 /obj/structure/destructible/cult/pylon,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered)
+/area/ruin/unpowered/cultaltar)
 "g" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/cultaltar)
 "i" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/cultaltar)
 "k" = (
 /obj/effect/decal/remains/human,
 /obj/item/melee/cultblade,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/cultaltar)
 "l" = (
 /obj/effect/decal/remains/human,
 /obj/item/clothing/shoes/cult,
@@ -48,13 +48,13 @@
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/cultaltar)
 "m" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/cultaltar)
 "o" = (
 /obj/effect/rune/narsie{
 	color = "#ff0000";
@@ -76,7 +76,7 @@
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/cultaltar)
 "q" = (
 /obj/effect/decal/remains/human,
 /obj/item/clothing/shoes/cult,
@@ -85,10 +85,10 @@
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/cultaltar)
 "s" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered)
+/area/ruin/unpowered/cultaltar)
 
 (1,1,1) = {"
 a

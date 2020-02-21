@@ -10,13 +10,6 @@
 	desc = "It smells faintly of plasma."
 	icon_state = "petehat"
 
-/obj/item/clothing/head/collectable/slime
-	name = "collectable slime cap!"
-	desc = "It just latches right in place!"
-	clothing_flags = SNUG_FIT
-	icon_state = "slime"
-	dynamic_hair_suffix = ""
-
 /obj/item/clothing/head/collectable/xenom
 	name = "collectable xenomorph helmet!"
 	desc = "Hiss hiss hiss!"
@@ -81,6 +74,7 @@
 	icon_state = "headslime"
 	item_state = "headslime"
 	clothing_flags = SNUG_FIT
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/collectable/flatcap
 	name = "collectable flat cap"

@@ -295,7 +295,7 @@
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/glass/bottle/charcoal,
+/obj/item/reagent_containers/glass/bottle/multiver,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "aU" = (

@@ -69,8 +69,8 @@ GLOBAL_LIST_EMPTY(menulist)
 	if (!verbpath || !(verbpath in typesof("[type]/verb")))
 		return
 
-	if (copytext(verbpath.name,1,2) == "@")
-		winset(C, null, list2params(list("command" = copytext(verbpath.name,2))))
+	if(verbpath.name[1] == "@")
+		winset(C, null, list2params(list("command" = copytext(verbpath.name, length(verbpath.name[1]) + 1))))
 	else
 		winset(C, null, list2params(list("command" = replacetext(verbpath.name, " ", "-"))))
 
