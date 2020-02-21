@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - tweak: "Sixth sense (hearing deadchat while alive) will now only show player chat and not the dead-only announcements."
