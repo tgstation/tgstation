@@ -58,6 +58,7 @@
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/prisoner
 	uniform = /obj/item/clothing/under/plasmaman/prisoner
+	shoes = /obj/item/clothing/shoes/sneakers/black
 
 /datum/outfit/plasmaman/cargo
 	name = "Cargo Plasmaman"
