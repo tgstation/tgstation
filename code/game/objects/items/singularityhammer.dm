@@ -93,7 +93,7 @@
 
 /obj/item/mjollnir/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=25, icon_prefix="mjollnir", \
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=25, icon_prefix="mjollnir", attacksound="sparks", \
 				on_wield_callback=CALLBACK(src, .proc/on_wield), on_unwield_callback=CALLBACK(src, .proc/on_unwield))
 
 /// Callback triggered on wield of two handed item
@@ -119,7 +119,6 @@
 /obj/item/mjollnir/attack(mob/living/M, mob/user)
 	..()
 	if(wielded)
-		playsound(src.loc, "sparks", 50, TRUE)
 		shock(M)
 
 /obj/item/mjollnir/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

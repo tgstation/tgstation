@@ -12,6 +12,7 @@
 	var/force_unwielded = 0		 					/// The force of the item when unweilded
 	var/wieldsound = FALSE 							/// Play sound when wielded
 	var/unwieldsound = FALSE 						/// Play sound when unwielded
+	var/attacksound = FALSE							/// Play sound on attack when wielded
 	var/require_twohands = FALSE					/// Does it have to be held in both hands
 	var/icon_prefix = FALSE							/// The icon prefix that will be used with the wielded status
 	var/datum/callback/icon_update_callback = null 	/// The proc to call on updating the icon
@@ -25,6 +26,7 @@
  * * require_twohands (optional) Does the item need both hands to be carried
  * * wieldsound (optional) The sound to play when wielded
  * * unwieldsound (optional) The sound to play when unwielded
+ * * attacksound (optional) The sound to play when wielded and attacking
  * * force_multiplier (optional) The force multiplier when wielded, do not use with force_wielded, and force_unwielded
  * * force_wielded (optional) The force setting when the item is wielded, do not use with force_multiplier
  * * force_unwielded (optional) The force setting when the item is unwielded, do not use with force_multiplier
@@ -33,7 +35,8 @@
  * * on_wield_callback (optional) proc (user) Callback on wield of the item
  * * on_unwield_callback (optional) proc (user) Callback on unwield of the item
  */
-/datum/component/two_handed/Initialize(require_twohands=FALSE, wieldsound=FALSE, unwieldsound=FALSE, force_multiplier=0, force_wielded=0, force_unwielded=0, icon_prefix=FALSE, \
+/datum/component/two_handed/Initialize(require_twohands=FALSE, wieldsound=FALSE, unwieldsound=FALSE, attacksound=FALSE, \
+										force_multiplier=0, force_wielded=0, force_unwielded=0, icon_prefix=FALSE, \
 										datum/callback/icon_update_callback=null, datum/callback/on_wield_callback=null, datum/callback/on_unwield_callback=null)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -41,6 +44,7 @@
 	src.require_twohands = require_twohands
 	src.wieldsound = wieldsound
 	src.unwieldsound = unwieldsound
+	src.attacksound = attacksound
 	src.force_multiplier = force_multiplier
 	src.force_wielded = force_wielded
 	src.force_unwielded = force_unwielded
@@ -61,6 +65,8 @@
 		src.wieldsound = wieldsound
 	if(unwieldsound)
 		src.unwieldsound = unwieldsound
+	if(attacksound)
+		src.attacksound = attacksound
 	if(force_multiplier)
 		src.force_multiplier = force_multiplier
 	if(force_wielded)
@@ -81,6 +87,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/on_attack)
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, .proc/on_update_icon)
 	RegisterSignal(parent, COMSIG_TRY_TWOHANDED_WIELD, .proc/try_wield)
 	RegisterSignal(parent, COMSIG_TRY_TWOHANDED_UNWIELD, .proc/try_unwield)
@@ -228,6 +235,14 @@
 	var/obj/item/offhand/offhand_item = user.get_inactive_held_item()
 	if(offhand_item && istype(offhand_item))
 		offhand_item.unwield()
+
+/**
+ * on_attack triggers on attack with the parent item
+ */
+/datum/component/two_handed/proc/on_attack(obj/item/source, mob/living/target, mob/living/user)
+	if(wielded && attacksound)
+		var/obj/item/parent_item = parent
+		playsound(parent_item.loc, attacksound, 50, TRUE)
 
 /**
  * on_update_icon triggers on call to update parent items icon
