@@ -10,9 +10,9 @@
 	var/can_head = FALSE
 	var/destroying = FALSE
 
-/obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/M, _worn_state, head_icon, lh_icon, rh_icon)
+/obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/M, _worn_state, head_icon, lh_icon, rh_icon, _can_head = FALSE)
 	. = ..()
-	if(head_icon)
+	if(head_icon && _can_head)
 		mob_overlay_icon = head_icon
 		can_head = TRUE
 		slot_flags = HEAD

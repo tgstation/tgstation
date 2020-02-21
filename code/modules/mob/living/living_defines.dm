@@ -124,7 +124,8 @@
 	var/list/ownedSoullinks //soullinks we are the owner of
 	var/list/sharedSoullinks //soullinks we are a/the sharer of
 
+	//this stuff is here to make it simple for admins to mess with custom held sprites
 	var/icon/held_lh = 'icons/mob/pets_held_lh.dmi'//icons for holding mobs
 	var/icon/held_rh = 'icons/mob/pets_held_rh.dmi'
-	var/icon/head_icon//what it looks like on your head
+	var/icon/head_icon = 'icons/mob/pets_held.dmi'//what it looks like on your head
 	var/held_state = ""//icon state for the above
