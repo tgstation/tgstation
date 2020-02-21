@@ -1271,22 +1271,6 @@
 	for(var/i in 1 to 7)
 		new/obj/item/sparkler(src)
 
-<<<<<<< HEAD
-/obj/item/storage/box/shipping
-	name = "box of shipping supplies"
-	desc = "Contains several scanners and labelers for shipping things. Wrapping Paper not included."
-	illustration = "shipping"
-
-/obj/item/storage/box/shipping/PopulateContents()
-	var/static/items_inside = list(
-		/obj/item/destTagger=1,\
-		/obj/item/sales_tagger=1,\
-		/obj/item/export_scanner=1,\
-		/obj/item/stack/packageWrap/small=2,\
-		/obj/item/stack/wrapping_paper/small=1
-		)
-	generate_items_inside(items_inside,src)
-=======
 /obj/item/storage/box/gum
 	name = "bubblegum packet"
 	desc = "The packaging is entirely in japanese, apparently. You can't make out a single word of it."
@@ -1330,4 +1314,18 @@
 /obj/item/storage/box/gum/happiness/PopulateContents()
 	for(var/i in 1 to 4)
 		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum/happiness(src)
->>>>>>> upstream/master
+
+/obj/item/storage/box/shipping
+	name = "box of shipping supplies"
+	desc = "Contains several scanners and labelers for shipping things. Wrapping Paper not included."
+	illustration = "shipping"
+
+/obj/item/storage/box/shipping/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/destTagger=1,\
+		/obj/item/sales_tagger=1,\
+		/obj/item/export_scanner=1,\
+		/obj/item/stack/packageWrap/small=2,\
+		/obj/item/stack/wrapping_paper/small=1
+		)
+	generate_items_inside(items_inside,src)
