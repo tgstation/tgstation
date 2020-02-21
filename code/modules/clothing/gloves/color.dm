@@ -91,23 +91,6 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	var/can_be_cut = TRUE
-	var/datum/component/tackler
-
-/obj/item/clothing/gloves/color/black/equipped(mob/user, slot)
-	. = ..()
-	if(!ishuman(user))
-		return
-	if(slot == ITEM_SLOT_GLOVES)
-		var/mob/living/carbon/human/H = user
-		tackler = H.AddComponent(/datum/component/tackler)
-
-/obj/item/clothing/gloves/color/black/dropped(mob/user)
-	. = ..()
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
-	if(H.get_item_by_slot(ITEM_SLOT_GLOVES) == src)
-		qdel(tackler)
 
 /obj/item/clothing/gloves/color/black/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER)
