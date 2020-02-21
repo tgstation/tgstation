@@ -87,3 +87,4 @@
 #define SLIME_RESEARCH_TIER_RAINBOW 5000
 
 #define CELL_LINE_TABLE_DUMPSTER "dumpster_table"
+#define CELL_VIRUS_TABLE_DUMPSTER "dumpster_table"
