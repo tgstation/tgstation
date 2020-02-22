@@ -150,37 +150,6 @@
 	desc = "Fake handcuffs meant for gag purposes."
 	breakouttime = 1 SECONDS
 
-/obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
-	..()
-	if(istype(I, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = I
-		if (R.use(1))
-			var/obj/item/wirerod/W = new /obj/item/wirerod
-			remove_item_from_storage(user)
-			user.put_in_hands(W)
-			to_chat(user, "<span class='notice'>You wrap [src] around the top of [I].</span>")
-			qdel(src)
-		else
-			to_chat(user, "<span class='warning'>You need one rod to make a wired rod!</span>")
-			return
-	else if(istype(I, /obj/item/stack/sheet/metal))
-		var/obj/item/stack/sheet/metal/M = I
-		if(M.get_amount() < 6)
-			to_chat(user, "<span class='warning'>You need at least six metal sheets to make good enough weights!</span>")
-			return
-		to_chat(user, "<span class='notice'>You begin to apply [I] to [src]...</span>")
-		if(do_after(user, 35, target = src))
-			if(M.get_amount() < 6 || !M)
-				return
-			var/obj/item/restraints/legcuffs/bola/S = new /obj/item/restraints/legcuffs/bola
-			M.use(6)
-			user.put_in_hands(S)
-			to_chat(user, "<span class='notice'>You make some weights out of [I] and tie them to [src].</span>")
-			remove_item_from_storage(user)
-			qdel(src)
-	else
-		return ..()
-
 /obj/item/restraints/handcuffs/cable/zipties
 	name = "zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
