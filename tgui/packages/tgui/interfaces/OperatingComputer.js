@@ -105,7 +105,7 @@ export const OperatingComputer = props => {
                         {procedure.alt_chems_needed && (
                           <Fragment>
                             <b>
-                             Required Chemicals:
+                              Required Chemicals:
                             </b>
                             <br />
                             {procedure.alt_chems_needed}
