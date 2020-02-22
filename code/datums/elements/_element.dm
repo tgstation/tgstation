@@ -9,7 +9,9 @@
 	var/element_flags = NONE
 	/**
 	  * The index of the first attach argument to consider for duplicate elements
-	  * Is only used when flags contains ELEMENT_BESPOKE
+	  *
+	  * Is only used when flags contains [ELEMENT_BESPOKE]
+	  *
 	  * This is infinity so you must explicitly set this
 	  */
 	var/id_arg_index = INFINITY
@@ -44,7 +46,7 @@
 
 /**
   * Finds the singleton for the element type given and detaches it from src
-  * You only need additional arguments beyond the type if you're using ELEMENT_BESPOKE
+  * You only need additional arguments beyond the type if you're using [ELEMENT_BESPOKE]
   */
 /datum/proc/_RemoveElement(list/arguments)
 	var/datum/element/ele = SSdcs.GetElement(arguments)
