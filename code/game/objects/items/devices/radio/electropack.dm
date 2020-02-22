@@ -10,8 +10,8 @@
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
 	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=2500)
-	var/ui_x = 200
-	var/ui_y = 200
+	var/ui_x = 260
+	var/ui_y = 137
 	var/on = TRUE
 	var/code = 2
 	var/frequency = FREQ_ELECTROPACK
@@ -85,6 +85,12 @@
 	frequency = new_frequency
 	SSradio.add_object(src, frequency, RADIO_SIGNALER)
 
+/obj/item/electropack/ui_status(mob/user)
+	var/mob/living/carbon/C = user
+	if(C?.back == src)
+		return UI_CLOSE
+	return ..()
+
 /obj/item/electropack/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -105,6 +111,10 @@
 	if(..())
 		return
 
+	var/mob/living/carbon/C = usr
+	if(C?.back == src)
+		return
+
 	switch(action)
 		if("power")
 			on = !on
@@ -121,4 +131,11 @@
 			if(value)
 				value = round(value)
 				code = clamp(value, 1, 100)
+				. = TRUE
+		if("reset")
+			if(params["reset"] == "freq")
+				frequency = initial(frequency)
+				. = TRUE
+			else if(params["reset"] == "code")
+				code = initial(code)
 				. = TRUE

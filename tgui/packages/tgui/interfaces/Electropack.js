@@ -1,4 +1,4 @@
-import { Grid, NumberInput, Button, Section, LabeledList } from '../components';
+import { NumberInput, Button, Section, LabeledList } from '../components';
 import { useBackend } from '../backend';
 import { toFixed } from 'common/math';
 
@@ -22,12 +22,16 @@ export const Electropack = props => {
             selected={power}
             onClick={() => act('power')} />
         </LabeledList.Item>
-      </LabeledList>
-      <Grid>
-        <Grid.Column size={1.4} color="label">
-          Frequency:
-        </Grid.Column>
-        <Grid.Column>
+        <LabeledList.Item
+          label="Frequency"
+          buttons={(
+            <Button
+              icon="sync"
+              content="Reset"
+              onClick={() => act('reset', {
+                reset: "freq",
+              })} />
+          )}>
           <NumberInput
             animate
             unit="kHz"
@@ -41,13 +45,17 @@ export const Electropack = props => {
             onDrag={(e, value) => act('freq', {
               freq: value,
             })} />
-        </Grid.Column>
-      </Grid>
-      <Grid mt={0.6}>
-        <Grid.Column size={1.4} color="label">
-          Code:
-        </Grid.Column>
-        <Grid.Column>
+        </LabeledList.Item>
+        <LabeledList.Item
+          label="Code"
+          buttons={(
+            <Button
+              icon="sync"
+              content="Reset"
+              onClick={() => act('reset', {
+                reset: "code",
+              })} />
+          )}>
           <NumberInput
             animate
             step={1}
@@ -59,8 +67,8 @@ export const Electropack = props => {
             onDrag={(e, value) => act('code', {
               code: value,
             })} />
-        </Grid.Column>
-      </Grid>
+        </LabeledList.Item>
+      </LabeledList>
     </Section>
   );
 };
