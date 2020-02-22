@@ -1,11 +1,3 @@
-/datum/uplink_item/device_tools/budget_emag
-	name = "Budget Cryptographic Sequencer"
-	desc = "The cryptographic sequencer, electromagnetic card, or emag, is a small card that unlocks hidden functions \
-			in electronic devices, subverts intended functions, and easily breaks security mechanisms.  \
-			This is an affordable budget version that holds 2 uses, and recharges 1 use every 30 seconds."
-	item = /obj/item/card/emag/budget
-	cost = 6
-
 /obj/item/card/emag/budget
 	desc = "It's a card with a magnetic strip attached to some circuitry. This one appears to be a crude knockoff with a digital counter on closer inspection."
 	name = "budget cryptographic sequencer"
