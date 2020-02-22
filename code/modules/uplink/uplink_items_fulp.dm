@@ -38,10 +38,10 @@
 /datum/uplink_item/role_restricted/sith_starter_kit
 	name = "Sith Starter Kit"
 	desc = "Has everything you need to get started with the Dark Side! \
-			Includes genuine Sith sacred texts describing the secrets of saber fighting, \
-			force lightning, force push and a snazzy red light saber."
+			Includes smelly old man robes, snazzy red light saber and genuine Sith sacred texts \
+			describing the secrets of saber fighting, force lightning and force push."
 	item = /obj/item/storage/box/syndicate/bundle_sith
-	cost = 20
+	cost = 19
 	restricted_roles = list("Chaplain", "Curator")
 
 /datum/uplink_item/role_restricted/laser_tag_kit_red
