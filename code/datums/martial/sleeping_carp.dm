@@ -70,7 +70,7 @@
 /datum/martial_art/the_sleeping_carp/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("G",D)
 	if(check_streak(A,D))
-			return TRUE
+		return TRUE
 	return ..()
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -98,7 +98,10 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(H, TRAIT_NOGUNS, TRAIT_PIERCEIMMUNE, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
+	ADD_TRAIT(H, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
+	ADD_TRAIT(H, TRAIT_PIERCEIMMUNE, SLEEPING_CARP_TRAIT)
+	ADD_TRAIT(H, TRAIT_STUNRESISTANCE, SLEEPING_CARP_TRAIT)
+	ADD_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
 	H.physiology.brute_mod *= 0.3
 	H.physiology.burn_mod *= 0.3
 	H.physiology.stamina_mod *= 0.3
@@ -110,7 +113,10 @@
 
 /datum/martial_art/the_sleeping_carp/on_remove(mob/living/carbon/human/H)
 	. = ..()
-	REMOVE_TRAIT(H, TRAIT_NOGUNS, TRAIT_PIERCEIMMUNE, TRAIT_STUNRESISTANCE, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
+	REMOVE_TRAIT(H, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
+	REMOVE_TRAIT(H, TRAIT_PIERCEIMMUNE, SLEEPING_CARP_TRAIT)
+	REMOVE_TRAIT(H, TRAIT_STUNRESISTANCE, SLEEPING_CARP_TRAIT)
+	REMOVE_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
 	H.physiology.brute_mod *= 2
 	H.physiology.burn_mod *= 2
 	H.physiology.stamina_mod *= 2
@@ -131,7 +137,7 @@
 	to_chat(usr, "<span class='notice'>Crashing Wave Kick</span>: Harm Disarm. Launch people brutally across rooms, and away from you.")
 	to_chat(usr, "<span class='notice'>Keelhaul</span>: Harm Grab. With a powerful kick, send opponents face first into the floor, knocking them down and disarming them of weapons. On opponents on the floor, this deals considerable stamina damage and disarms.")
 	
-	to_chat(usr, "<span class='notice'>In addition, your body has become incredibly durable to most forms of attack. Weapons cannot readily pierce your hardened skin, and you are highly resistant to stuns and stamina damage, and quickly recover from stamina damage. However, you are not invincible, and sustained damage will take it's toll.")
+	to_chat(usr, "<span class='notice'>In addition, your body has become incredibly resilient to most forms of attack. Weapons cannot readily pierce your hardened skin, and you are highly resistant to stuns and stamina damage, and quickly recover from stamina damage. However, you are not invincible, and sustained damage will take it's toll.")
 
 /obj/item/twohanded/bostaff
 	name = "bo staff"
