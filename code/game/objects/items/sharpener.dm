@@ -35,15 +35,15 @@
 		if(TH.force_wielded > initial(TH.force_wielded))
 			to_chat(user, "<span class='warning'>[TH] has already been refined before. It cannot be sharpened further!</span>")
 			return
-		TH.force_wielded = CLAMP(TH.force_wielded + increment, 0, max)//wieldforce is increased since normal force wont stay
+		TH.force_wielded = clamp(TH.force_wielded + increment, 0, max)//wieldforce is increased since normal force wont stay
 	if(I.force > initial(I.force))
 		to_chat(user, "<span class='warning'>[I] has already been refined before. It cannot be sharpened further!</span>")
 		return
 	user.visible_message("<span class='notice'>[user] sharpens [I] with [src]!</span>", "<span class='notice'>You sharpen [I], making it much more deadly than before.</span>")
 	playsound(src, 'sound/items/unsheath.ogg', 25, TRUE)
 	I.sharpness = IS_SHARP_ACCURATE
-	I.force = CLAMP(I.force + increment, 0, max)
-	I.throwforce = CLAMP(I.throwforce + increment, 0, max)
+	I.force = clamp(I.force + increment, 0, max)
+	I.throwforce = clamp(I.throwforce + increment, 0, max)
 	I.name = "[prefix] [I.name]"
 	name = "worn out [name]"
 	desc = "[desc] At least, it used to."

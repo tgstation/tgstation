@@ -47,7 +47,7 @@
 /obj/screen/plane_master/floor/backdrop(mob/mymob)
 	filters = list()
 	if(istype(mymob) && mymob.eye_blurry)
-		filters += GAUSSIAN_BLUR(CLAMP(mymob.eye_blurry*0.1,0.6,3))
+		filters += GAUSSIAN_BLUR(clamp(mymob.eye_blurry*0.1,0.6,3))
 
 /obj/screen/plane_master/game_world
 	name = "game world plane master"
@@ -60,7 +60,7 @@
 	if(istype(mymob) && mymob.client && mymob.client.prefs && mymob.client.prefs.ambientocclusion)
 		filters += AMBIENT_OCCLUSION
 	if(istype(mymob) && mymob.eye_blurry)
-		filters += GAUSSIAN_BLUR(CLAMP(mymob.eye_blurry*0.1,0.6,3))
+		filters += GAUSSIAN_BLUR(clamp(mymob.eye_blurry*0.1,0.6,3))
 
 /obj/screen/plane_master/lighting
 	name = "lighting plane master"
