@@ -61,7 +61,8 @@
 
 /atom/movable/Destroy()
 	QDEL_NULL(em_block)
-	. = ..()
+	return ..()
+
 
 
 /atom/movable/proc/can_zFall(turf/source, levels = 1, turf/target, direction)
