@@ -176,7 +176,7 @@
 //***********************************************************************
 
 //***************************************************************************
-//** FULPSTATION HOLOBEDS by Surrealistik Nov 2019 BEGINS
+//** FULPSTATION MEDBORG CHANGES by Surrealistik Nov 2019-Feb 2020 BEGINS
 //---------------------------------------------------------------------------
 //** Adds no-collision holobeds to the medborg. Support for handheld versions
 //***************************************************************************
@@ -196,15 +196,20 @@
 		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
 		/obj/item/circular_saw,
+		/obj/item/twohanded/shockpaddles/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/holobed_projector/robot,
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/organ_storage,
+		/obj/item/soap/nanotrasen,
 		/obj/item/borg/lollipop)
 
+/datum/techweb_node/cyborg_upg_med //Adds the heal beam upgrade to the list, removes the defib as it's unnecessary now.
+	design_ids = list("borg_upgrade_piercinghypospray", "borg_upgrade_expandedsynthesiser", "borg_upgrade_pinpointer", "borg_upgrade_surgicalprocessor", "borg_upgrade_beakerapp", "borg_upgrade_medbeam")
+
 //***************************************************************************
-//** FULPSTATION HOLOBEDS by Surrealistik Nov 2019 ENDS
+//** FULPSTATION MEDBORG CHANGES by Surrealistik Nov 2019-Feb 2020 ENDS
 //---------------------------------------------------------------------------
 //** Adds no-collision holobeds to the medborg. Support for handheld versions
 //***************************************************************************
