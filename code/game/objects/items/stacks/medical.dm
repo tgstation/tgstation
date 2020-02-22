@@ -292,7 +292,7 @@
 	singular_name = "advanced regenerative mesh"
 	icon_state = "aloe_mesh"
 	heal_burn = 15
-	grind_results = list(/datum/reagent/medicine/aloejuice = 1)
+	grind_results = list(/datum/reagent/consumable/aloejuice = 1)
 
 /obj/item/stack/medical/mesh/advanced/update_icon_state()
 	if(!is_open)
