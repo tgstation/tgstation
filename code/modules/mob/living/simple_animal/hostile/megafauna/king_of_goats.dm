@@ -56,9 +56,6 @@ Difficulty: Insanely Hard
 	move_to_delay = 3
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-
-
-
 	var/stun_chance = 5 //chance per attack to Weaken target
 
 /mob/living/simple_animal/hostile/megafauna/king/ex_act(severity, target)
@@ -88,12 +85,11 @@ Difficulty: Insanely Hard
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
 	pixel_y = 5
 	crusher_loot = list(/obj/item/crusher_trophy/king_goat)
-
-	var/spellscast = 0
+	var/spellscast = 0 //how many spells king goat can cast pr phase
 	var/phase3 = FALSE
 	var/sound_id = "goat"
-	var/special_attacks = 0
-	var/list/rangers = list()
+	var/special_attacks = 0 //How many special attacks it can cast before he looses them which are passive attack buffs
+	var/list/rangers = list() //People in range of epic goat boss music
 	var/current_song = 'sound/ambience/Visager-Battle.ogg'
 	var/current_song_length = 1200
 	stun_chance = 7
