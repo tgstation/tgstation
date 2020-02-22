@@ -7,7 +7,6 @@
 	id = MARTIALART_SLEEPINGCARP
 	allow_temp_override = FALSE
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
-	var/datum/action/slipstream/slipstream = new/datum/action/slipstream()
 	
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,STRONG_PUNCH_COMBO))
@@ -94,24 +93,6 @@
 	if(check_streak(A,D))
 		return TRUE
 	return ..()
-
-/datum/martial_art/the_sleeping_carp/on_hit(mob/living/carbon/human/A)
-	. = ..()
-	var/old_health = A.health
-	var/taken_damage = FALSE
-	if((A.health<old_health) & !(A.health=old_health))
-		A.taken_damage = TRUE
-	if(A.taken_damage(TRUE))	
-		if(prob((A.getBruteLoss + A.getBurnLoss + A.getStaminaLoss)/2))
-			A.apply_status_effect(/datum/status_effect/roused)
-			A.taken_damage = FALSE
-			return
-		else
-			A.taken_damage = FALSE
-			return
-	if(A.taken_damage(FALSE))
-		return
-	return
 	
 /datum/martial_art/the_sleeping_carp/teach(mob/living/carbon/human/H, make_temporary = FALSE)
 	. = ..()
@@ -129,7 +110,7 @@
 
 /datum/martial_art/the_sleeping_carp/on_remove(mob/living/carbon/human/H)
 	. = ..()
-	REMOVE_TRAIT(H, TRAIT_NOGUNS, TRAIT_PIERCEIMMUNE, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
+	REMOVE_TRAIT(H, TRAIT_NOGUNS, TRAIT_PIERCEIMMUNE, TRAIT_STUNRESISTANCE, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
 	H.physiology.brute_mod *= 2
 	H.physiology.burn_mod *= 2
 	H.physiology.stamina_mod *= 2
@@ -138,27 +119,6 @@
 	H.physiology.cold_mod *= 2
 	
 	H.faction -= "carp" //:(
-
-/datum/action/slipstream
-	name = "Slipstream"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "neckchop"
-	
-/datum/action/slipstream/Click()
-	var/mob/living/carbon/human/A = owner
-	A.toggleslipstream
-
-/datum/action/slipstream/proc/toggleslipstream()
-	active = !active
-	if(active(FALSE))
-		active = TRUE
-		A.apply_status_effect(/datum/status_effect/slipstream)
-		A.visible_message("<span class='danger'>[A] assumes a more streamlined posture!", "<b><i>You active the Slipstream.</i></b>")
-	if(active(TRUE))
-		active = FALSE
-		A.remove_status_effect(/datum/status_effect/slipstream)
-		A.visible_message("<span class='danger'>[A] assumes a neutral posture!", "<b><i>You deactive the Slipstream.</i></b>")
-	return
 
 /mob/living/carbon/human/proc/sleeping_carp_help()
 	set name = "Recall Teachings"
@@ -170,8 +130,6 @@
 	to_chat(usr, "<span class='notice'>Gnashing Teeth</span>: Harm Harm. Gathering moment of punches means that every second punch deals additional damage, with a chance of even more damage.")
 	to_chat(usr, "<span class='notice'>Crashing Wave Kick</span>: Harm Disarm. Launch people brutally across rooms, and away from you.")
 	to_chat(usr, "<span class='notice'>Keelhaul</span>: Harm Grab. With a powerful kick, send opponents face first into the floor, knocking them down and disarming them of weapons. On opponents on the floor, this deals considerable stamina damage and disarms.")
-	to_chat(usr, "<span class='notice'>Slipstream</span>: Move more quickly into combat, gaining additional movement speed. This is obvious to anyone who can see you, however.")
-	to_chat(usr, "<span class='notice'>Roused Anger</span>: When hit, you can potentially unleash your latent inner strength to continue fighting beyond the limitations of your failing body, removing damage slowdown and becoming more resistant to disabling effects.")
 	
 	to_chat(usr, "<span class='notice'>In addition, your body has become incredibly durable to most forms of attack. Weapons cannot readily pierce your hardened skin, and you are highly resistant to stuns and stamina damage, and quickly recover from stamina damage. However, you are not invincible, and sustained damage will take it's toll.")
 
