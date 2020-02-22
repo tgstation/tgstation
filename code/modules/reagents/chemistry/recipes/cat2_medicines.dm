@@ -11,6 +11,10 @@
 	results = list(/datum/reagent/medicine/C2/libital = 3)
 	required_reagents = list(/datum/reagent/phenol = 1, /datum/reagent/oxygen = 1, /datum/reagent/nitrogen = 1)
 
+/datum/chemical_reaction/probital
+	results = list(/datum/reagent/medicine/C2/probital = 4)
+	required_reagents = list(/datum/reagent/copper = 1, /datum/reagent/acetone = 2,  /datum/reagent/phosphorus = 1)
+
 /*****BURN*****/
 
 /datum/chemical_reaction/lenturi
@@ -20,6 +24,12 @@
 /datum/chemical_reaction/aiuri
 	results = list(/datum/reagent/medicine/C2/aiuri = 4)
 	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/toxin/acid = 1, /datum/reagent/hydrogen = 2)
+
+/datum/chemical_reaction/hercuri
+	results = list(/datum/reagent/medicine/C2/hercuri = 5)
+	required_reagents = list(/datum/reagent/cryostylane = 3, /datum/reagent/bromine = 1, /datum/reagent/lye = 1)
+	required_temp = 47
+	is_cold_recipe = TRUE
 
 /*****OXY*****/
 
