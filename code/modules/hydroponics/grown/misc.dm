@@ -257,5 +257,5 @@
 	distill_reagent = /datum/reagent/consumable/ethanol/tequila
 
 /obj/item/reagent_containers/food/snacks/grown/aloe/microwave_act(obj/machinery/microwave/M)
-	new /obj/item/stack/medical/aloe(drop_location(), 1)
+	new /obj/item/stack/medical/aloe(drop_location(), 2)
 	qdel(src)
