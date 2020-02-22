@@ -267,3 +267,26 @@
 /obj/item/clothing/neck/beads/Initialize()
 	. = ..()
 	color = color = pick("#ff0077","#d400ff","#2600ff","#00ccff","#00ff2a","#e5ff00","#ffae00","#ff0000", "#ffffff")
+
+/obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
+	if(ishuman(M))
+		return FALSE
+	return ..()
+/obj/item/clothing/neck/petcollar_human
+	name = "pet collar (human)"
+	desc = "It's for people who act like pets."
+	icon_state = "petcollar"
+	item_color = "petcollar"
+	locked_string = "is stuck."
+/obj/item/clothing/neck/petcollar_human/equipped(mob/user, slot)
+	if(slot==SLOT_NECK)
+		ADD_TRAIT(src,TRAIT_NODROP,CLOTHING_TRAIT)
+		ADD_TRAIT(user,TRAIT_MONKEYLIKE,CLOTHING_TRAIT)
+		ADD_TRAIT(user,TRAIT_DUMB,CLOTHING_TRAIT)
+		ADD_TRAIT(user,TRAIT_PACIFISM,CLOTHING_TRAIT)
+		ADD_TRAIT(user,TRAIT_TRAPPED,CLOTHING_TRAIT)
+		to_chat(user,"<span class='danger'>You feel pretty helpless...</span>")
+
+/obj/item/clothing/neck/petcollar/attack_self(mob/user)
+	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
+	name = "[initial(name)] - [tagname]"
