@@ -26321,7 +26321,7 @@
 	},
 /obj/machinery/door/airlock/medical/glass{
 	name = "Chemistry";
-	req_access_txt = "33"
+	req_access_txt = "5; 33"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -90717,7 +90717,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Chemistry";
-	req_access_txt = "33"
+	req_access_txt = "69; 33"
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -91172,7 +91172,7 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Plumbing - Fore";
+	c_tag = "Chemistry - Fore";
 	name = "medbay camera";
 	network = list("ss13","medbay")
 	},
@@ -92185,9 +92185,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow,
-/obj/structure/sign/poster/official/bless_this_spess{
-	pixel_y = -32
-	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
@@ -96961,7 +96958,7 @@
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/camera{
-	c_tag = "Plumbing - Center";
+	c_tag = "Chemistry - Center";
 	dir = 1;
 	name = "medbay camera";
 	network = list("ss13","medbay")
@@ -98831,7 +98828,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/medical/morgue)
 "dEY" = (
 /obj/effect/decal/cleanable/dirt,
@@ -98853,21 +98850,6 @@
 /area/medical/morgue)
 "dEZ" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/medical/morgue)
-"dFa" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/medical/morgue)
 "dFb" = (
@@ -98905,7 +98887,7 @@
 /area/medical/morgue)
 "dFd" = (
 /obj/structure/closet/secure_closet/personal/patient,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/medical/morgue)
 "dFe" = (
 /turf/closed/wall,
@@ -99622,7 +99604,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel,
 /area/medical/morgue)
 "dGw" = (
 /obj/structure/closet/secure_closet/CMO,
@@ -100228,7 +100210,7 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/bodybags,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel,
 /area/medical/morgue)
 "dHR" = (
 /obj/machinery/light{
@@ -113112,7 +113094,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Chemistry Maintenance";
-	req_access_txt = "5; 33"
+	req_access_txt = "33"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -114818,7 +114800,7 @@
 /obj/structure/mirror{
 	pixel_x = -28
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/medical/morgue)
 "pXY" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -115388,6 +115370,16 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"sLr" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/chemistry)
 "sOi" = (
 /obj/structure/plasticflaps/opaque,
 /obj/machinery/navbeacon{
@@ -115475,7 +115467,7 @@
 /obj/machinery/newscaster{
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel,
 /area/medical/morgue)
 "tse" = (
 /obj/structure/lattice/catwalk,
@@ -115765,7 +115757,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel,
 /area/medical/morgue)
 "uMN" = (
 /obj/structure/table,
@@ -158253,7 +158245,7 @@ tcO
 nOl
 dcO
 dpi
-dAR
+sLr
 dCy
 gRN
 sWF
@@ -159543,7 +159535,7 @@ dCy
 dDS
 mUS
 dGs
-dFa
+oCS
 dJd
 dCy
 dLe
