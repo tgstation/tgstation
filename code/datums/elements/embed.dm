@@ -12,10 +12,13 @@
 
 */
 
+#define STANDARD_WALL_HARDNESS 40
+
 /datum/element/embed
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 
+	// all of this stuff is explained in _DEFINES/combat.dm
 	var/embed_chance
 	var/fall_chance
 	var/pain_chance
@@ -45,61 +48,63 @@
 	UnregisterSignal(target, list(COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_ELEMENT_ATTACH, COMSIG_MOVABLE_IMPACT))
 
 
-
 /// Checking to see if we're gonna embed into a human
 /datum/element/embed/proc/checkEmbedMob(obj/item/weapon, mob/living/carbon/human/victim, hit_zone, datum/thrownthing/throwingdatum)
 	if(!istype(victim))
 		return
 
-	if(((throwingdatum ? throwingdatum.speed : weapon.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || ignore_throwspeed_threshold)
-		if(prob(embed_chance) && !HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
-			victim.AddComponent(/datum/component/embedded,\
-				weapon,\
-				throwingdatum,\
-				embed_chance = embed_chance,\
-				fall_chance = fall_chance,\
-				pain_chance = pain_chance,\
-				pain_mult = pain_mult,\
-				remove_pain_mult = remove_pain_mult,\
-				rip_time = rip_time,\
-				ignore_throwspeed_threshold = ignore_throwspeed_threshold,\
-				jostle_chance = jostle_chance,\
-				jostle_pain_mult = jostle_pain_mult,\
-				pain_stam_pct = pain_stam_pct)
+	if((((throwingdatum ? throwingdatum.speed : weapon.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || ignore_throwspeed_threshold) && prob(embed_chance) && !HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
+		victim.AddComponent(/datum/component/embedded,\
+			weapon,\
+			throwingdatum,\
+			embed_chance = embed_chance,\
+			fall_chance = fall_chance,\
+			pain_chance = pain_chance,\
+			pain_mult = pain_mult,\
+			remove_pain_mult = remove_pain_mult,\
+			rip_time = rip_time,\
+			ignore_throwspeed_threshold = ignore_throwspeed_threshold,\
+			jostle_chance = jostle_chance,\
+			jostle_pain_mult = jostle_pain_mult,\
+			pain_stam_pct = pain_stam_pct)
 
 
 /// We need the hit_zone if we're embedding into a human, so this proc only handled if we're embedding into a turf
-/datum/element/embed/proc/checkEmbedOther(obj/item/weapon, turf/hit, datum/thrownthing/throwingdatum)
+/datum/element/embed/proc/checkEmbedOther(obj/item/weapon, turf/closed/hit, datum/thrownthing/throwingdatum)
 	if(!istype(hit))
 		return
 
-	if(((throwingdatum ? throwingdatum.speed : weapon.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || ignore_throwspeed_threshold)
-		if(prob(embed_chance))
-			hit.AddComponent(/datum/component/embedded,\
-				weapon,\
-				throwingdatum,\
-				embed_chance = embed_chance,\
-				fall_chance = fall_chance,\
-				pain_chance = pain_chance,\
-				pain_mult = pain_mult,\
-				remove_pain_mult = remove_pain_mult,\
-				rip_time = rip_time,\
-				ignore_throwspeed_threshold = ignore_throwspeed_threshold,\
-				jostle_chance = jostle_chance,\
-				jostle_pain_mult = jostle_pain_mult,\
-				pain_stam_pct = pain_stam_pct)
+	var/chance = embed_chance
+	if(!iswallturf(hit))
+		var/turf/closed/wall/W = hit
+		chance += 2 * (W.hardness - STANDARD_WALL_HARDNESS)
+
+	if((((throwingdatum ? throwingdatum.speed : weapon.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || ignore_throwspeed_threshold) && prob(chance))
+		hit.AddComponent(/datum/component/embedded,\
+			weapon,\
+			throwingdatum,\
+			embed_chance = embed_chance,\
+			fall_chance = fall_chance,\
+			pain_chance = pain_chance,\
+			pain_mult = pain_mult,\
+			remove_pain_mult = remove_pain_mult,\
+			rip_time = rip_time,\
+			ignore_throwspeed_threshold = ignore_throwspeed_threshold,\
+			jostle_chance = jostle_chance,\
+			jostle_pain_mult = jostle_pain_mult,\
+			pain_stam_pct = pain_stam_pct)
 
 /datum/element/embed/proc/parseArgs(embed_chance = EMBED_CHANCE,
-			fall_chance = EMBEDDED_ITEM_FALLOUT,
-			pain_chance = EMBEDDED_PAIN_CHANCE,
-			pain_mult = EMBEDDED_PAIN_MULTIPLIER,
-			remove_pain_mult = EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER,
-			rip_time = EMBEDDED_UNSAFE_REMOVAL_TIME,
-			impact_pain_mult = EMBEDDED_IMPACT_PAIN_MULTIPLIER,
-			ignore_throwspeed_threshold = FALSE,
-			jostle_chance = EMBEDDED_JOSTLE_CHANCE,
-			jostle_pain_mult = EMBEDDED_JOSTLE_PAIN_MULTIPLIER,
-			pain_stam_pct = EMBEDDED_PAIN_STAM_PCT)
+		fall_chance = EMBEDDED_ITEM_FALLOUT,
+		pain_chance = EMBEDDED_PAIN_CHANCE,
+		pain_mult = EMBEDDED_PAIN_MULTIPLIER,
+		remove_pain_mult = EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER,
+		rip_time = EMBEDDED_UNSAFE_REMOVAL_TIME,
+		impact_pain_mult = EMBEDDED_IMPACT_PAIN_MULTIPLIER,
+		ignore_throwspeed_threshold = FALSE,
+		jostle_chance = EMBEDDED_JOSTLE_CHANCE,
+		jostle_pain_mult = EMBEDDED_JOSTLE_PAIN_MULTIPLIER,
+		pain_stam_pct = EMBEDDED_PAIN_STAM_PCT)
 
 	src.embed_chance = embed_chance
 	src.fall_chance = fall_chance
@@ -117,5 +122,4 @@
 ///A different embed element has been attached, so we'll detach and let them handle things
 /datum/element/embed/proc/severancePackage(obj/item/weapon, datum/element/E)
 	if(istype(E, /datum/element/embed))
-		testing("We outie")
 		Detach(weapon)
