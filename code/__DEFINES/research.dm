@@ -89,6 +89,5 @@
 ///All cell line types
 #define CELL_LINE_TABLE_DUMPSTER "cell_line_dumpster_table"
 
-
 ///All cell virus types
 #define CELL_VIRUS_TABLE_DUMPSTER "cell_virus_dumpster_table"

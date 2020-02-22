@@ -7,7 +7,7 @@
 	///The sample stored on the dish
 	var/datum/biological_sample/sample
 
-/obj/item/petri_dish/deposit_sample(user, /datum/biological_sample/sample)
+/obj/item/petri_dish/proc/deposit_sample(user, /datum/biological_sample/sample)
 	src.sample = sample
 	to_chat(user, "<span class='notice'>You deposit [sample] into [src].</span>")
 	update_icon()

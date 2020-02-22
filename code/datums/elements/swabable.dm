@@ -15,11 +15,11 @@ This element is used in vat growing to allow for swabable behavior. This swabbin
 	///Amount of viruses on a single sample
 	var/virus_chance
 
-/datum/element/swabable/Attach(datum/target, cell_line_list_define, virus_define = list(), cell_line_amount,virus_chance)
+/datum/element/swabable/Attach(datum/target, cell_line_list_define, virus_define, cell_line_amount = 3, virus_chance = 50)
 	if(!isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK, .proc/UseOnObj)
+	RegisterSignal(target, COMSIG_SWAB_FOR_SAMPLES, .proc/GetSwabbed)
 
 	src.cell_line_define = cell_line_define
 	src.virus_define = virus_define
@@ -30,8 +30,7 @@ This element is used in vat growing to allow for swabable behavior. This swabbin
 /datum/element/swabable/proc/GetSwabbed(datum/source, list/mutable_results)
 	. = COMPONENT_SWAB_FOUND //Return this so the swabbing component knows hes a good boy and found something that needs swabbing.
 
-	mutable_results += new GenerateSample()
-	swab_results = null //Results have been "taken".
+	mutable_results += GenerateSample()
 
 ///Generates a /datum/biological_sample
 /datum/element/swabable/proc/GenerateSample()
