@@ -40,6 +40,11 @@
 
 	if(istype(A, /obj))
 		var/obj/O = A
+		if(istype(O, /obj/structure/closet))
+			var/obj/structure/closet/C = O
+			if(C.broken) //Because closets don't directly alter their emag status
+				return TRUE
+
 		if(O.obj_flags & EMAGGED)
 			return TRUE
 
