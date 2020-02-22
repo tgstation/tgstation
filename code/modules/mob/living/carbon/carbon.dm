@@ -236,8 +236,10 @@
 		return FALSE
 
 /mob/living/carbon/resist_buckle()
-	if (HAS_TRAIT(owner,TRAIT_TRAPPED))
-		to_chat(owner,"<span class='warning'>You're trapped and can't get out!</span>")
+	if (HAS_TRAIT(src,TRAIT_TRAPPED))
+
+		to_chat(src,"<span class='warning'>You're trapped and can't get out!</span>")
+
 		return
 	if(restrained())
 		changeNext_move(CLICK_CD_BREAKOUT)
