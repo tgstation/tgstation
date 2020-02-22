@@ -276,16 +276,15 @@
 	name = "pet collar (human)"
 	desc = "It's for people who act like pets."
 	icon_state = "petcollar"
-	item_color = "petcollar"
-	locked_string = "is stuck."
 /obj/item/clothing/neck/petcollar_human/equipped(mob/user, slot)
-	if(slot==SLOT_NECK)
+	if(slot==ITEM_SLOT_NECK)
 		ADD_TRAIT(src,TRAIT_NODROP,CLOTHING_TRAIT)
 		ADD_TRAIT(user,TRAIT_MONKEYLIKE,CLOTHING_TRAIT)
 		ADD_TRAIT(user,TRAIT_DUMB,CLOTHING_TRAIT)
 		ADD_TRAIT(user,TRAIT_PACIFISM,CLOTHING_TRAIT)
 		ADD_TRAIT(user,TRAIT_TRAPPED,CLOTHING_TRAIT)
 		to_chat(user,"<span class='danger'>You feel pretty helpless...</span>")
+	return ..()
 
 /obj/item/clothing/neck/petcollar/attack_self(mob/user)
 	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
