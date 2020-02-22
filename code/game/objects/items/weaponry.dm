@@ -748,6 +748,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A potent weapon capable of cutting through nearly anything. Wielding it in two hands will allow you to deflect gunfire."
 	armour_penetration = 100
 	block_chance = 40
+	force = 20
 	throwforce = 20
 	throw_speed = 4
 	sharpness = IS_SHARP
@@ -765,7 +766,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/vibro_weapon/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 20, 105)
-	AddComponent(/datum/component/two_handed, force_unwielded=20, force_wielded=40, icon_wielded="hfrequency1")
+	AddComponent(/datum/component/two_handed, force_multiplier=2, icon_wielded="hfrequency1")
 
 /// triggered on wield of two handed item
 /obj/item/vibro_weapon/proc/on_wield(obj/item/source, mob/user)

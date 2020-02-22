@@ -270,6 +270,11 @@
 #define COMSIG_ITEM_HIT_REACT "item_hit_react"					//from base of obj/item/hit_reaction(): (list/args)
 #define COMSIG_ITEM_WEARERCROSSED "wearer_crossed"                //called on item when crossed by something (): (/atom/movable, mob/living/crossed)
 #define COMSIG_ITEM_MICROWAVE_ACT "microwave_act"                //called on item when microwaved (): (obj/machinery/microwave/M)
+#define COMSIG_ITEM_SHARPEN_ACT "sharpen_act"                	//from base of item/sharpener/attackby(): (amount, max)
+	#define COMPONENT_BLOCK_SHARPEN_APPLIED 1
+	#define COMPONENT_BLOCK_SHARPEN_BLOCKED 2
+	#define COMPONENT_BLOCK_SHARPEN_ALREADY 4
+	#define COMPONENT_BLOCK_SHARPEN_MAXED 8
 
 // /obj/item signals for economy
 #define COMSIG_ITEM_SOLD "item_sold"							//called when an item is sold by the exports subsystem
@@ -277,6 +282,7 @@
 #define COMSIG_ITEM_UNWRAPPED "item_unwrapped"					//called when a wrapped up item is opened by hand
 	#define COMSIG_ITEM_SPLIT_VALUE  1
 #define COMSIG_ITEM_SPLIT_PROFIT "item_split_profits"			//Called when getting the item's exact ratio for cargo's profit.
+
 
 // /obj/item/clothing signals
 #define COMSIG_SHOES_STEP_ACTION "shoes_step_action"			//from base of obj/item/clothing/shoes/proc/step_action(): ()

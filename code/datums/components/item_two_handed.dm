@@ -16,6 +16,7 @@
 	var/require_twohands = FALSE					/// Does it have to be held in both hands
 	var/icon_wielded = FALSE						/// The icon that will be used when wielded
 	var/obj/item/offhand/offhand_item = null		/// Reference to the offhand created for the item
+	var/sharpened_increase = 0						/// The amount of increase recived from sharpening the item
 
 /**
  * Two Handed component
@@ -45,8 +46,8 @@
 	src.icon_wielded = icon_wielded
 
 // Inherit the new values passed to the component
-/datum/component/two_handed/InheritComponent(datum/component/two_handed/new_comp, original, require_twohands, \
-												wieldsound, unwieldsound, force_wielded, force_unwielded, icon_wielded)
+/datum/component/two_handed/InheritComponent(datum/component/two_handed/new_comp, original, require_twohands, wieldsound, unwieldsound, \
+											force_multiplier, force_wielded, force_unwielded, icon_wielded)
 	if(!original)
 		return
 	if(require_twohands)
@@ -74,6 +75,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/on_attack)
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, .proc/on_update_icon)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	RegisterSignal(parent, COMSIG_ITEM_SHARPEN_ACT, .proc/on_sharpen)
 
 // Remove all siginals registered to the parent item
 /datum/component/two_handed/UnregisterFromParent()
@@ -82,7 +84,8 @@
 								COMSIG_ITEM_ATTACK_SELF,
 								COMSIG_ITEM_ATTACK,
 								COMSIG_ATOM_UPDATE_ICON,
-								COMSIG_MOVABLE_MOVED))
+								COMSIG_MOVABLE_MOVED,
+								COMSIG_ITEM_SHARPEN_ACT))
 
 /// Triggered on equip of the item containing the component
 /datum/component/two_handed/proc/on_equip(datum/source, mob/user, slot)
@@ -144,6 +147,8 @@
 		parent_item.force *= force_multiplier
 	else if(force_wielded)
 		parent_item.force = force_wielded
+	if(sharpened_increase)
+		parent_item.force += sharpened_increase
 	parent_item.name = "[parent_item.name] (Wielded)"
 	parent_item.update_icon()
 
@@ -182,6 +187,8 @@
 
 	// update item stats
 	var/obj/item/parent_item = parent
+	if(sharpened_increase)
+		parent_item.force -= sharpened_increase
 	if(force_multiplier)
 		parent_item.force /= force_multiplier
 	else if(force_unwielded)
@@ -259,6 +266,28 @@
 		return
 	if(held_item == parent)
 		return COMPONENT_BLOCK_SWAP
+
+/**
+ * on_sharpen Triggers on usage of a sharpening stone on the item
+ */
+/datum/component/two_handed/proc/on_sharpen(obj/item/item, amount, max_amount)
+	if(!item)
+		return COMPONENT_BLOCK_SHARPEN_BLOCKED
+	if(sharpened_increase)
+		return COMPONENT_BLOCK_SHARPEN_ALREADY
+	var/wielded_val = 0
+	if(force_multiplier)
+		var/obj/item/parent_item = parent
+		if(wielded)
+			wielded_val = parent_item.force
+		else
+			wielded_val = parent_item.force * force_multiplier
+	else
+		wielded_val = force_wielded
+	if(wielded_val > max_amount)
+		return COMPONENT_BLOCK_SHARPEN_MAXED
+	sharpened_increase = min(amount, (max_amount - wielded_val))
+	return COMPONENT_BLOCK_SHARPEN_APPLIED
 
 /**
  * The offhand dummy item for two handed items

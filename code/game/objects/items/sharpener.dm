@@ -25,25 +25,21 @@
 		to_chat(user, "<span class='warning'>You don't think \the [I] will be the thing getting modified if you use it on \the [src]!</span>")
 		return
 
-	// Some two handed items should still be sharpenable, but they handle force differently.
-	// Therefore this stuff is needed
-	var/datum/component/two_handed/comp_twohand = I.GetComponent(/datum/component/two_handed)
-	if(comp_twohand)
-		var/force_wielded = comp_twohand.force_wielded
-		if(force_wielded >= max)
-			to_chat(user, "<span class='warning'>[I] is much too powerful to sharpen further!</span>")
-			return
-		if(comp_twohand.wielded)
-			to_chat(user, "<span class='warning'>[I] must be unwielded before it can be sharpened!</span>")
-			return
-		comp_twohand.force_wielded = clamp(force_wielded + increment, 0, max) // wieldforce is increased since normal force wont stay
-	if(I.force > initial(I.force))
+	var/signal_out = SEND_SIGNAL(I, COMSIG_ITEM_SHARPEN_ACT, increment, max)
+	if(signal_out & COMPONENT_BLOCK_SHARPEN_MAXED)
+		to_chat(user, "<span class='warning'>[I] is much too powerful to sharpen further!</span>")
+		return
+	if(signal_out & COMPONENT_BLOCK_SHARPEN_BLOCKED)
+		to_chat(user, "<span class='warning'>[I] is not able to be sharpened right now!</span>")
+		return
+	if((signal_out & COMPONENT_BLOCK_SHARPEN_ALREADY) || (I.force > initial(I.force) && !signal_out))
 		to_chat(user, "<span class='warning'>[I] has already been refined before. It cannot be sharpened further!</span>")
 		return
+	if(!(signal_out & COMPONENT_BLOCK_SHARPEN_APPLIED))
+		I.force = clamp(I.force + increment, 0, max)
 	user.visible_message("<span class='notice'>[user] sharpens [I] with [src]!</span>", "<span class='notice'>You sharpen [I], making it much more deadly than before.</span>")
 	playsound(src, 'sound/items/unsheath.ogg', 25, TRUE)
 	I.sharpness = IS_SHARP_ACCURATE
-	I.force = clamp(I.force + increment, 0, max)
 	I.throwforce = clamp(I.throwforce + increment, 0, max)
 	I.name = "[prefix] [I.name]"
 	name = "worn out [name]"

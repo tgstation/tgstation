@@ -130,6 +130,7 @@
 	name = "\improper Grey Tide"
 	desc = "Recovered from the aftermath of a revolt aboard Defense Outpost Theta Aegis, in which a seemingly endless tide of Assistants caused heavy casualities among Nanotrasen military forces."
 	attack_verb = list("gored")
+	force=15
 
 /obj/item/spear/grey_tide/ComponentInitialize()
 	. = ..()

@@ -177,7 +177,6 @@
 			return
 	else
 		//Remove from their hands and back onto the defib unit
-		//SEND_SIGNAL(paddles, COMSIG_TRY_TWOHANDED_UNWIELD, user)
 		remove_paddles(user)
 
 	update_power()
@@ -392,9 +391,6 @@
 		return ..()
 	if(user)
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-		//var/obj/item/offhand/O = user.get_inactive_held_item()
-		//if(istype(O) && !QDELETED(O))
-		//	qdel(O)
 		if(user != loc)
 			to_chat(user, "<span class='notice'>The paddles snap back into the main unit.</span>")
 			snap_back()
