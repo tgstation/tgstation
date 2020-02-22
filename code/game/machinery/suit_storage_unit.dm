@@ -4,6 +4,9 @@
 	desc = "An industrial unit made to hold and decontaminate irradiated equipment. It comes with a built-in UV cauterization mechanism. A small warning label advises that organic matter should not be placed into the unit."
 	icon = 'icons/obj/machines/suit_storage.dmi'
 	icon_state = "close"
+	use_power = ACTIVE_POWER_USE
+	active_power_usage = 60
+	power_channel = EQUIP
 	density = TRUE
 	max_integrity = 250
 	ui_x = 400
@@ -46,6 +49,8 @@
 	var/message_cooldown
 	/// How long it takes to break out of the SSU.
 	var/breakout_time = 300
+	/// How fast it charges cells in a suit
+	var/charge_rate = 500
 
 /obj/machinery/suit_storage_unit/standard_unit
 	suit_type = /obj/item/clothing/suit/space/eva
@@ -301,6 +306,18 @@
 		open_machine(FALSE)
 		if(occupant)
 			dump_contents()
+
+/obj/machinery/suit_storage_unit/process()
+	if(!suit)
+		return
+	if(!istype(suit, /obj/item/clothing/suit/space))
+		return
+	if(!suit.cell)
+		return
+
+	var/obj/item/stock_parts/cell/C = suit.cell
+	use_power(charge_rate)
+	C.give(charge_rate)
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
 	if(!prob(prb))

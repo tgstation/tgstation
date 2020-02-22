@@ -78,6 +78,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/geiger_counter = 1,
 		/obj/item/analyzer = 1,
 		/obj/item/mop = 1,
+		/obj/item/twohanded/broom = 1,
 		/obj/item/reagent_containers/glass/bucket = 1,
 		/obj/item/toy/crayon/spraycan = 1,
 		) = 1,
@@ -215,6 +216,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 
 	list(//food
 		/obj/item/reagent_containers/food/snacks/canned/peaches/maint = 1,
+		/obj/item/storage/box/gum/happiness = 1,
 		/obj/item/storage/box/donkpockets = 1,
 		list(//Donk Varieties
 			/obj/item/storage/box/donkpockets/donkpocketspicy = 1,
