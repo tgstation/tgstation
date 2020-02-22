@@ -2281,7 +2281,7 @@
 		if(prob(50))
 			the_toy = pickweight(GLOB.arcade_prize_pool)
 		else
-			the_toy = pick(subtypesof(/obj/item/toy/plush))
+			the_toy = pick(subtypesof(/obj/item/toy/plush) - subtypesof(/obj/item/toy/plush/goatplushie))
 		new the_toy(.)
 
 /datum/supply_pack/costumes_toys/wizard
