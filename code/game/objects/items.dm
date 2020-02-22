@@ -132,16 +132,13 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/Initialize()
 
-	if (attack_verb)
+	if(attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
 
 	. = ..()
 	for(var/path in actions_types)
 		new path(src)
 	actions_types = null
-
-	if(GLOB.rpg_loot_items)
-		AddComponent(/datum/component/fantasy)
 
 	if(force_string)
 		item_flags |= FORCE_STRING_OVERRIDE
@@ -151,20 +148,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			hitsound = 'sound/items/welder.ogg'
 		if(damtype == "brute")
 			hitsound = "swing_hit"
-
-	if(embedding)
-		AddElement(/datum/element/embed, embedding)
-	else if(GLOB.embedpocalypse)
-		embedding = EMBED_POINTY
-		AddElement(/datum/element/embed, embedding)
-		name = "pointy [name]"
-	else if(GLOB.stickpocalypse)
-		embedding = EMBED_HARMLESS
-		AddElement(/datum/element/embed, embedding)
-		name = "sticky [name]"
-
-	if(sharpness) //give sharp objects butchering functionality, for consistency
-		AddComponent(/datum/component/butchering, 80 * toolspeed)
 
 /obj/item/Destroy()
 	item_flags &= ~DROPDEL	//prevent reqdels
@@ -184,6 +167,28 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		qdel(src)
+
+/obj/item/ComponentInitialize()
+	. = ..()
+
+	// this proc says it's for initializing components, but we're initializing elements too because it's you and me against the world >:)
+	if(embedding)
+		AddElement(/datum/element/embed, embedding)
+	else if(GLOB.embedpocalypse)
+		embedding = EMBED_POINTY
+		AddElement(/datum/element/embed, embedding)
+		name = "pointy [name]"
+	else if(GLOB.stickpocalypse)
+		embedding = EMBED_HARMLESS
+		AddElement(/datum/element/embed, embedding)
+		name = "sticky [name]"
+
+	if(GLOB.rpg_loot_items)
+		AddComponent(/datum/component/fantasy)
+
+	if(sharpness) //give sharp objects butchering functionality, for consistency
+		AddComponent(/datum/component/butchering, 80 * toolspeed)
+
 
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
@@ -878,6 +883,5 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	return owner.dropItemToGround(src)
 
 /obj/item/proc/is_embed_harmless()
-	return
-	//if(embedding)
-		//return (!embedding.pain_mult && !embedding.jostle_pain_mult)
+	if(embedding)
+		return (!embedding["pain_mult"] && !embedding["jostle_pain_mult"])

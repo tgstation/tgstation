@@ -35,6 +35,7 @@
 	var/obj/item/bodypart/L
 	var/obj/item/weapon
 
+	// all of this stuff is explained in _DEFINES/combat.dm
 	var/embed_chance // not like we really need it once we're already stuck in but hey
 	var/fall_chance
 	var/pain_chance
@@ -50,7 +51,6 @@
 	var/harmful
 	var/mutable_appearance/overlay
 
-// figure out if im gonna drop args
 /datum/component/embedded/Initialize(obj/item/I,
 			datum/thrownthing/throwingdatum,
 			embed_chance = EMBED_CHANCE,
@@ -58,9 +58,7 @@
 			pain_chance = EMBEDDED_PAIN_CHANCE,
 			pain_mult = EMBEDDED_PAIN_MULTIPLIER,
 			remove_pain_mult = EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER,
-			//also fall pain
 			impact_pain_mult = EMBEDDED_IMPACT_PAIN_MULTIPLIER,
-			//rip_pain_mult = EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER,
 			rip_time = EMBEDDED_UNSAFE_REMOVAL_TIME,
 			ignore_throwspeed_threshold = FALSE,
 			jostle_chance = EMBEDDED_JOSTLE_CHANCE,
@@ -78,6 +76,7 @@
 	src.pain_mult = pain_mult
 	src.remove_pain_mult = remove_pain_mult
 	src.rip_time = rip_time
+	src.impact_pain_mult = impact_pain_mult
 	src.ignore_throwspeed_threshold = ignore_throwspeed_threshold
 	src.jostle_chance = jostle_chance
 	src.jostle_pain_mult = jostle_pain_mult
@@ -85,7 +84,7 @@
 
 	src.weapon = I
 
-	if(src.pain_chance || src.jostle_chance)
+	if(src.pain_mult || src.jostle_pain_mult)
 		harmful = TRUE
 
 	if(ishuman(parent))
@@ -101,7 +100,6 @@
 	else if(isturf(parent))
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examineTurf)
 		RegisterSignal(parent, COMSIG_TOPIC, .proc/ripOutTurf)
-		//RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/destroyedTurf)
 
 /datum/component/embedded/UnregisterFromParent()
 	if(ishuman(parent))
@@ -111,15 +109,10 @@
 	else if(isturf(parent))
 		UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
 		UnregisterSignal(parent, COMSIG_TOPIC)
-		UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
 
 /datum/component/embedded/process()
 	if(ishuman(parent))
 		processHuman()
-	//else
-		//processTurf()
-
-	return ..()
 
 /datum/component/embedded/Destroy()
 	if(overlay)
@@ -133,7 +126,7 @@
 /////////////HUMAN PROCS////////////////
 ////////////////////////////////////////
 
-/// Harmful embeds have some extra behavior over harmless sticks, like creating blood, playing a slice, and dealing damage.
+/// Set up an instance of embedding for a human. This is basically an extension of Initialize() so not much to say
 /datum/component/embedded/proc/initHuman()
 	START_PROCESSING(SSdcs, src)
 	var/mob/living/carbon/human/victim = parent
@@ -254,20 +247,18 @@
 	weapon.invisibility = INVISIBILITY_ABSTRACT
 	RegisterSignal(weapon, COMSIG_MOVABLE_MOVED, .proc/itemMoved)
 
-	// bias these upwards since in-hands are usually on the lower end of the sprite
-	var/pixelX = rand(-1, 3)
-	var/pixelY = rand(-1, 3)
+	var/pixelX = rand(-2, 2)
+	var/pixelY = rand(-1, 3) // bias this upwards since in-hands are usually on the lower end of the sprite
 
-	// can probably do this with a ? :
 	switch(throwingdatum.init_dir)
 		if(NORTH)
 			pixelY -= 2
 		if(SOUTH)
 			pixelY += 2
 		if(WEST)
-			pixelX -= 2
-		if(EAST)
 			pixelX += 2
+		if(EAST)
+			pixelX -= 2
 
 	if(throwingdatum.init_dir in list(NORTH,  WEST, NORTHWEST, SOUTHWEST))
 		overlay = mutable_appearance(icon=weapon.righthand_file,icon_state=weapon.item_state)

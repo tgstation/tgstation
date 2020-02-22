@@ -37,11 +37,13 @@
 
 	RegisterSignal(target, COMSIG_MOVABLE_IMPACT_ZONE, .proc/checkEmbedMob)
 	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, .proc/checkEmbedOther)
+	RegisterSignal(target, COMSIG_ELEMENT_ATTACH, .proc/severancePackage)
 
 
 /datum/element/embed/Detach(obj/item/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_MOVABLE_IMPACT_ZONE)
+	UnregisterSignal(target, list(COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_ELEMENT_ATTACH, COMSIG_MOVABLE_IMPACT))
+
 
 
 /// Checking to see if we're gonna embed into a human
@@ -111,3 +113,9 @@
 	src.jostle_chance = jostle_chance
 	src.jostle_pain_mult = jostle_pain_mult
 	src.pain_stam_pct = pain_stam_pct
+
+///A different embed element has been attached, so we'll detach and let them handle things
+/datum/element/embed/proc/severancePackage(obj/item/weapon, datum/element/E)
+	if(istype(E, /datum/element/embed))
+		testing("We outie")
+		Detach(weapon)

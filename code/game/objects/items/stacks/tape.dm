@@ -25,9 +25,7 @@
 
 	if(do_after(user, 30, target=I))
 		I.embedding = conferred_embed
-		var/list/temp = I.embedding
-		temp.Insert(0, /datum/element/embed)
-		I._AddElement(temp)
+		I.AddElement(/datum/element/embed, I.embedding)
 		to_chat(user, "<span class='notice'>You finish wrapping [I] with [src].</span>")
 		use(1)
 		I.name = "[prefix] [I.name]"
