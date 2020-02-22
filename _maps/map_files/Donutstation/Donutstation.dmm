@@ -8104,14 +8104,6 @@
 /obj/machinery/atmospherics/pipe/simple/multiz,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"asv" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/vending/cola/random,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "asw" = (
 /obj/machinery/vending/snack/random,
 /obj/effect/turf_decal/trimline/white/filled/line{
@@ -8132,7 +8124,10 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/machinery/vending/snack/random,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Public Mining Dock";
+	name = "navigation beacon (Public Mining Dock)"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "asz" = (
@@ -8157,14 +8152,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"asC" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/vending/coffee,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "asD" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -10012,8 +9999,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/structure/sign/poster/official/random{
-	pixel_y = -32
+/obj/machinery/vending/cigarette,
+/obj/item/radio/intercom{
+	pixel_y = -28
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -13132,9 +13120,11 @@
 	icon_state = "railing";
 	dir = 8
 	},
-/obj/machinery/newscaster{
-	pixel_y = -30
+/obj/machinery/vending/cola/random,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
+/obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aDS" = (
@@ -13144,9 +13134,11 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/item/radio/intercom{
-	pixel_y = -28
+/obj/machinery/vending/coffee,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
+/obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aDT" = (
@@ -13157,9 +13149,11 @@
 /turf/open/floor/plasteel/stairs,
 /area/hallway/primary/central)
 "aDU" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/airlock/external{
+	name = "Common Mining Dock"
+	},
 /turf/open/floor/plating,
-/area/maintenance/fore)
+/area/hallway/primary/central)
 "aDV" = (
 /turf/closed/wall,
 /area/security/main)
@@ -34058,7 +34052,7 @@
 /area/hallway/primary/central)
 "bwC" = (
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=RIGHTTOP";
+	codes_txt = "patrol;next_patrol=ANTIGARDEN";
 	location = "TOPRIGHT";
 	name = "navigation beacon (TOPRIGHT)"
 	},
@@ -46869,7 +46863,7 @@
 	height = 22;
 	id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Port";
-	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
+	roundstart_template = null;
 	width = 35
 	},
 /turf/open/space/basic,
@@ -47974,6 +47968,24 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"iZK" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=RIGHTMID";
+	location = "ANTIGARDEN";
+	name = "navigation beacon (ANTIGARDEN)"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "jaf" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album/Captain,
@@ -48236,6 +48248,17 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"jUK" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/vending/snack/random,
+/obj/machinery/newscaster{
+	pixel_y = -28
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "jVA" = (
 /obj/structure/closet/secure_closet/engineering_welding,
 /turf/open/floor/plasteel,
@@ -49361,6 +49384,9 @@
 /obj/item/clipboard,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"ovM" = (
+/turf/open/floor/plating,
+/area/hallway/primary/central)
 "ovO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -49469,6 +49495,12 @@
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
+"oDV" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/hallway/primary/central)
 "oIm" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
 	dir = 1
@@ -50283,6 +50315,12 @@
 /obj/machinery/cell_charger,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"rAG" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/closed/wall,
+/area/hallway/primary/central)
 "rBq" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
@@ -50422,6 +50460,12 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
+"seH" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/closed/wall,
+/area/hallway/primary/central)
 "sfa" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -50679,6 +50723,12 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
+"sNj" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/closed/wall,
+/area/hallway/primary/central)
 "sPB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 4
@@ -50864,6 +50914,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"twJ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/primary/central)
 "tyI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -51335,6 +51392,18 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"vaS" = (
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 3;
+	height = 5;
+	id = "commonmining_home";
+	name = "SS13: Common Mining Dock";
+	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
+	width = 7
+	},
+/turf/open/floor/plating,
+/area/hallway/primary/central)
 "vbf" = (
 /obj/item/trash/candy,
 /turf/open/floor/plating,
@@ -51623,6 +51692,12 @@
 	pixel_y = -8
 	},
 /turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"vOl" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/closed/wall,
 /area/hallway/primary/central)
 "vPF" = (
 /obj/structure/lattice/catwalk,
@@ -52022,6 +52097,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/main)
+"xoS" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall,
+/area/hallway/primary/central)
 "xtN" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -87808,13 +87887,13 @@ avA
 aCk
 azX
 azY
-aaT
-bqC
-aaT
-aaa
-aaa
-aaa
-aaa
+axc
+rAG
+xoS
+xoS
+xoS
+xoS
+vOl
 aaa
 aaa
 aug
@@ -88065,13 +88144,13 @@ bug
 aja
 arn
 aDR
-aaT
-bqC
-aaT
-aaa
-aaa
-aaa
-aaa
+axc
+ovM
+ovM
+ovM
+ovM
+ovM
+oDV
 aaa
 aaa
 aug
@@ -88322,14 +88401,14 @@ bui
 buI
 ark
 awX
-aaT
-bqC
-aDU
+axc
+ovM
+ovM
+ovM
+ovM
+ovM
+twJ
 aal
-aaa
-aaa
-aaa
-aaa
 aaa
 aug
 uwV
@@ -88578,15 +88657,15 @@ aJa
 buk
 buJ
 ark
-asv
-aDU
-bqC
-aDU
+awV
+boz
+ovM
+ovM
+ovM
+ovM
+ovM
+twJ
 aal
-aaa
-aaa
-aaa
-aaa
 aaa
 aug
 uwV
@@ -88837,13 +88916,13 @@ buK
 ark
 asy
 aDU
-bqC
-aDU
+vaS
+ovM
+ovM
+ovM
+ovM
+oDV
 aal
-aal
-aaa
-aaa
-aaa
 aaa
 aug
 uwV
@@ -89092,15 +89171,15 @@ qYP
 buo
 buL
 ark
-asC
-aDU
-bqC
-aDU
+awV
+boz
+ovM
+ovM
+ovM
+ovM
+ovM
+twJ
 aal
-aaa
-aaa
-aaa
-aaa
 aaa
 aug
 uwV
@@ -89349,15 +89428,15 @@ auI
 but
 buQ
 ark
-awX
-aaT
-bqC
-aDU
+jUK
+axc
+ovM
+ovM
+ovM
+ovM
+ovM
+twJ
 aal
-aal
-aal
-aaa
-aaa
 aaa
 aug
 uwV
@@ -89607,13 +89686,13 @@ buD
 aBV
 asp
 aDS
-aaT
-bqC
-aaT
-aaa
-aaa
-aaa
-aaa
+axc
+ovM
+ovM
+ovM
+ovM
+ovM
+oDV
 aaa
 aaa
 aug
@@ -89864,13 +89943,13 @@ dNx
 aCk
 azX
 azY
-aaT
-bqC
-aaT
-aaa
-aaa
-aaa
-aaa
+axc
+sNj
+xoS
+xoS
+xoS
+xoS
+seH
 aaa
 aaa
 aug
@@ -90124,9 +90203,9 @@ aDT
 aaT
 bqC
 aaT
-aaa
-aaa
-aaa
+aal
+aal
+aal
 aaa
 aaa
 aaa
@@ -94491,7 +94570,7 @@ bsv
 aaZ
 aaZ
 act
-bsZ
+iZK
 qYP
 bte
 ray

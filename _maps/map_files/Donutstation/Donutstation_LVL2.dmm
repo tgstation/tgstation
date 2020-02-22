@@ -3526,7 +3526,7 @@
 	areastring = "/area/quartermaster/sorting";
 	dir = 8;
 	name = "Delivery Office APC";
-	pixel_x = -25;
+	pixel_x = -25
 	},
 /obj/structure/cable,
 /obj/machinery/light{
@@ -10879,7 +10879,7 @@
 	areastring = "/area/security/brig/upper";
 	dir = 8;
 	name = "Brig Overlook APC";
-	pixel_x = -28;
+	pixel_x = -28
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
@@ -12945,6 +12945,9 @@
 /obj/structure/sign/poster/official/random{
 	pixel_y = -32
 	},
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-10"
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "Aa" = (
@@ -14968,7 +14971,7 @@
 	areastring = "/area/ai_monitored/turret_protected/ai_upload_foyer";
 	dir = 8;
 	name = "AI Upload Access APC";
-	pixel_x = -25;
+	pixel_x = -25
 	},
 /obj/structure/cable,
 /obj/machinery/airalarm{
@@ -20433,33 +20436,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/solars/port/fore)
-"Qf" = (
-/obj/effect/turf_decal/trimline/yellow/line{
-	dir = 10
-	},
-/obj/structure/railing{
-	dir = 10
-	},
-/obj/effect/baseturf_helper/space{
-	baseturf = /turf/open/openspace;
-	name = "openspace baseturf editor"
-	},
-/turf/open/floor/engine/hull/reinforced,
-/area/space/nearstation)
-"Qg" = (
-/obj/structure/lattice,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/yellow/line{
-	dir = 8
-	},
-/obj/effect/baseturf_helper/space{
-	baseturf = /turf/open/openspace;
-	name = "openspace baseturf editor"
-	},
-/turf/open/floor/engine/hull,
-/area/space/nearstation)
 "Qh" = (
 /obj/effect/baseturf_helper/space{
 	baseturf = /turf/open/openspace;
@@ -20896,6 +20872,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/upper)
+"SP" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-21"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
 
 (1,1,1) = {"
 ac
@@ -46683,7 +46668,7 @@ bd
 bd
 bd
 Qc
-bR
+SP
 xo
 cm
 yi
@@ -56979,7 +56964,7 @@ bd
 bv
 iq
 lI
-fY
+bd
 fY
 fY
 fY
@@ -57236,7 +57221,7 @@ bd
 ix
 iq
 vs
-Km
+jP
 Km
 Km
 Km
@@ -57493,7 +57478,7 @@ bd
 ix
 iq
 vs
-ac
+bd
 ac
 ac
 ac
@@ -57750,7 +57735,7 @@ bd
 ix
 iq
 vs
-ac
+bd
 ac
 ac
 ac
@@ -58007,7 +57992,7 @@ bd
 bv
 iq
 lI
-ac
+bd
 ac
 ac
 ac
@@ -58264,7 +58249,7 @@ bv
 bv
 iq
 lI
-Eh
+FB
 Eh
 Eh
 Eh
@@ -58521,7 +58506,7 @@ lH
 iq
 iq
 lI
-fY
+bd
 fY
 fY
 fY
@@ -58778,7 +58763,7 @@ bv
 iq
 lI
 lI
-Km
+jP
 Km
 Km
 Km
@@ -66475,7 +66460,7 @@ CE
 CE
 tw
 Cf
-Qf
+Cu
 Bj
 at
 nr
@@ -67762,7 +67747,7 @@ Ds
 ac
 FC
 CE
-Qg
+uR
 It
 It
 It
