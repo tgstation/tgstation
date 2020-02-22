@@ -275,7 +275,7 @@ Difficulty: Insanely Hard
 			L.stop_sound_channel(CHANNEL_JUKEBOX)
 	if(move_to_delay < 3)
 		move_to_delay += 0.2
-	if((health <= 150 && !phase3 && spellscast == 5) || (stat == DEAD && !phase3)) //begin phase 3, reset spell limit and heal
+	if(!phase3 && ((health <= 150 && spellscast == 5) || stat == DEAD)) //begin phase 3, reset spell limit and heal
 		phase3_transition()
 	if(!.)
 		return FALSE
