@@ -136,7 +136,7 @@
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
-	thrownatoms += get_turf(target))
+	thrownatoms += get_turf(target)
 
 	for(var/am in thrownatoms)
 		var/atom/movable/AM = am
