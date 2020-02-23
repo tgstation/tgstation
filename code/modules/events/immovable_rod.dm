@@ -127,8 +127,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		penetrate(clong)
 	else if(istype(clong, type))
 		var/obj/effect/immovablerod/other = clong
-		visible_message("<span class='danger'>[src] collides with [other]!\
-			</span>")
+		visible_message("<span class='danger'>[src] collides with [other]!</span>")
 		var/datum/effect_system/smoke_spread/smoke = new
 		smoke.set_up(2, get_turf(src))
 		smoke.start()

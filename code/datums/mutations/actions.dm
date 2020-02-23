@@ -342,11 +342,11 @@
 	chems = new
 	chems.transfered = embedded_mob
 	chems.spikey = src
-	to_chat(fired_by, "<span class='notice'>Link established! Use the \"Transfer Chemicals\" ability to send your chemicals to the linked target!")
+	to_chat(fired_by, "<span class='notice'>Link established! Use the \"Transfer Chemicals\" ability to send your chemicals to the linked target!</span>")
 	chems.Grant(fired_by)
 
 /obj/item/hardened_spike/chem/unembedded()
-	to_chat(fired_by, "<span class='warning'>Link lost!")
+	to_chat(fired_by, "<span class='warning'>Link lost!</span>")
 	QDEL_NULL(chems)
 	..()
 

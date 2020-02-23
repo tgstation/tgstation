@@ -1,0 +1,4 @@
+author: "Yenwodyah"
+delete-after: True
+changes: 
+  - bugfix: "Recycler doesn't delete people in mechs, cardboard boxes, spells, etc. anymore"
