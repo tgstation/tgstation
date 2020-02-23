@@ -89,7 +89,7 @@
 
 	if(ishuman(parent))
 		initHuman()
-	else if(isturf(parent))
+	else if(isclosedturf(parent))
 		initTurf(throwingdatum)
 
 /datum/component/embedded/RegisterWithParent()
@@ -97,18 +97,18 @@
 		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/jostleCheck)
 		RegisterSignal(parent, COMSIG_HUMAN_EMBED_RIP, .proc/ripOutHuman)
 		RegisterSignal(parent, COMSIG_HUMAN_EMBED_REMOVAL, .proc/safeRemoveHuman)
-	else if(isturf(parent))
+	else if(isclosedturf(parent))
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examineTurf)
-		RegisterSignal(parent, COMSIG_TOPIC, .proc/ripOutTurf)
+		//RegisterSignal(parent, COMSIG_TOPIC, .proc/ripOutTurf)
 
 /datum/component/embedded/UnregisterFromParent()
 	if(ishuman(parent))
 		UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 		UnregisterSignal(parent, COMSIG_HUMAN_EMBED_RIP)
 		UnregisterSignal(parent, COMSIG_HUMAN_EMBED_REMOVAL)
-	else if(isturf(parent))
+	else if(isclosedturf(parent))
 		UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
-		UnregisterSignal(parent, COMSIG_TOPIC)
+		//UnregisterSignal(parent, COMSIG_TOPIC)
 
 /datum/component/embedded/process()
 	if(ishuman(parent))
@@ -209,7 +209,7 @@
 	if(!victim.has_embedded_objects())
 		victim.clear_alert("embeddedobject")
 		SEND_SIGNAL(victim, COMSIG_CLEAR_MOOD_EVENT, "embedded")
-
+	qdel(src)
 
 /// Items embedded/stuck to humans both check whether they randomly fall out (if applicable), as well as if the target mob and limb still exists.
 /// Items harmfully embedded in humans have an additional check for random pain (if applicable)
@@ -230,7 +230,6 @@
 
 	if(prob(fall_chance))
 		fallOutHuman()
-
 
 
 ////////////////////////////////////////
@@ -284,16 +283,18 @@
 
 /datum/component/embedded/proc/examineTurf(datum/source, mob/user, list/examine_list)
 	if(harmful)
-		examine_list += "\t <a href='?src=[REF(parent)];embedded_object=[REF(weapon)]' class='warning'>There is \a [weapon] embedded in [parent]!</a>"
+		examine_list += "\t <a href='?src=[REF(src)];embedded_object=[REF(weapon)]' class='warning'>There is \a [weapon] embedded in [parent]!</a>"
 	else
-		examine_list += "\t <a href='?src=[REF(parent)];embedded_object=[REF(weapon)]' class='warning'>There is \a [weapon] stuck to [parent]!</a>"
-
+		examine_list += "\t <a href='?src=[REF(src)];embedded_object=[REF(weapon)]' class='warning'>There is \a [weapon] stuck to [parent]!</a>"
 
 /// Someone is ripping out the item from the turf by hand
-/datum/component/embedded/proc/ripOutTurf(datum/source, user, href_list)
-	var/mob/living/us = user
+/datum/component/embedded/Topic(datum/source, href_list)
+	var/mob/living/us = usr
 	if(in_range(us, parent) && locate(href_list["embedded_object"]) == weapon)
-		us.visible_message("<span class='notice'>[us] begins unwedging [weapon] from [parent].</span>", "<span class='notice'>You begin unwedging [weapon] from [parent]...</span>")
+		if(harmful)
+			us.visible_message("<span class='notice'>[us] begins unwedging [weapon] from [parent].</span>", "<span class='notice'>You begin unwedging [weapon] from [parent]...</span>")
+		else
+			us.visible_message("<span class='notice'>[us] begins unsticking [weapon] from [parent].</span>", "<span class='notice'>You begin unsticking [weapon] from [parent]...</span>")
 		if(do_after(us, 30, target = parent))
 			us.put_in_hands(weapon)
 			qdel(src)

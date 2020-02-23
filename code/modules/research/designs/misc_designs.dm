@@ -590,6 +590,6 @@
 	id = "pointy_tape"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 1500, /datum/material/plastic = 1000)
-	build_path = /obj/item/stack/sticky_tape
+	build_path = /obj/item/stack/sticky_tape/pointy
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE

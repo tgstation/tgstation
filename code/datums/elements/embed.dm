@@ -41,11 +41,12 @@
 	RegisterSignal(target, COMSIG_MOVABLE_IMPACT_ZONE, .proc/checkEmbedMob)
 	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, .proc/checkEmbedOther)
 	RegisterSignal(target, COMSIG_ELEMENT_ATTACH, .proc/severancePackage)
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examined)
 
 
 /datum/element/embed/Detach(obj/item/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_ELEMENT_ATTACH, COMSIG_MOVABLE_IMPACT))
+	UnregisterSignal(target, list(COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_ELEMENT_ATTACH, COMSIG_MOVABLE_IMPACT, COMSIG_PARENT_EXAMINE))
 
 
 /// Checking to see if we're gonna embed into a human
@@ -112,7 +113,6 @@
 	src.pain_mult = pain_mult
 	src.remove_pain_mult = remove_pain_mult
 	src.impact_pain_mult = impact_pain_mult
-	//src.rip_pain_mult = rip_pain_mult
 	src.rip_time = rip_time
 	src.ignore_throwspeed_threshold = ignore_throwspeed_threshold
 	src.jostle_chance = jostle_chance
@@ -123,3 +123,9 @@
 /datum/element/embed/proc/severancePackage(obj/item/weapon, datum/element/E)
 	if(istype(E, /datum/element/embed))
 		Detach(weapon)
+
+/datum/element/embed/proc/examined(obj/item/I, mob/user, list/examine_list)
+	if(!pain_mult && !jostle_pain_mult)
+		examine_list += "[I] feels sticky, and could probably get stuck to someone if thrown properly!"
+	else
+		examine_list += "[I] has a fine point, and could probably embed in someone if thrown properly!"
