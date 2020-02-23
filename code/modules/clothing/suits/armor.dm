@@ -277,3 +277,22 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	armor = list("melee" = 25, "bullet" = 20, "laser" = 20, "energy" = 30, "bomb" = 20, "bio" = 50, "rad" = 20, "fire" = -10, "acid" = 50)
+
+/obj/item/clothing/suit/armor/vest/dwarven_platemail
+	name = "dwarven plate armour"
+	desc = "A suit of armor of ancient design."
+	icon_state = "dwarven_platemail_greyscale"
+	item_state = "dwarven_platemail_greyscale"
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
+	slowdown = 1
+	armor = list("melee" = 45, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 50, "bio" = 10, "rad" = 10, "fire" = 10, "acid" = 10)
+	custom_materials = list(/datum/material/iron = 20000)
+
+/obj/item/clothing/suit/armor/vest/dwarven_chainmail
+	name = "dwarven chain armour"
+	desc = "A suit of armor of ancient design."
+	icon_state = "dwarven_chainmail_greyscale"
+	item_state = "dwarven_chainmail_greyscale"
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
+	armor = list("melee" = 25, "bullet" = 5, "laser" = 5, "energy" = 10, "bomb" = 30, "bio" = 10, "rad" = 10, "fire" = 10, "acid" = 10)
+	custom_materials = list(/datum/material/iron= 15000)

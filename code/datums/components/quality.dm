@@ -14,17 +14,21 @@
 
 ///This Componenet handles adding quality to items
 /datum/component/quality
-	dupe_mode = COMPONENT_DUPE_UNIQUE
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/list/quality_levels = list(UNUSABLE_QUALITY,SHODDY_QUALITY,POOR_QUALITY,NORMAL_QUALITY,GOOD_QUALITY,FINE_QUALITY,SUPERIOR_QUALITY,EXCEPTIONAL_QUALITY,ARTISAN_QUALITY,MASTERWORK_QUALITY,ARTIFACT_QUALITY )
 	///Normal distribution
 	var/quality_level
-	var/old_name
+
 
 	var/obj/item/parent_item
-	var/obj/item/old_parent_item
+
 
 	var/mob/living/carbon/human/creator
 	var/datum/mind/creator_mind
+
+	var/old_name
+	var/obj/item/old_parent_item
+
 
 ///_Creator - mob that is the owner of the item, _skill - skill that the quality should be based off of,_quality_list - custom distribution optional, defaults to normal distribution
 /datum/component/quality/Initialize(mob/living/carbon/human/_creator,datum/skill/_skill,_quality_val)
@@ -53,7 +57,7 @@
 
 	return quality_level
 
-///Applies quality to the item
+///Applies quality to the item2
 /datum/component/quality/proc/apply_quality()
 	var/quality = quality_levels[quality_level+1] //lists start with 1
 	parent_item.force *= quality
@@ -71,8 +75,18 @@
 
 ///Returns the item to the state it was before the modification
 /datum/component/quality/proc/unmodify()
+	var/quality = quality_levels[quality_level+1] //lists start with 1
 	parent_item = old_parent_item
 	parent_item.name = old_name
+	parent_item.force /= quality
+	parent_item.throwforce  /= quality
+	var/armor_qual = (quality - 1)*20
+	parent_item.armor = parent_item.armor?.modifyAllRatings(-armor_qual)
+	if(istype(parent_item,/obj/item/twohanded))
+		var/obj/item/twohanded/twohanded_item = parent_item
+		twohanded_item.force_unwielded /= quality // we dont know if it posses that var but it is still essential
+		twohanded_item.force_wielded /= quality
+
 
 /datum/component/quality/Destroy()
 	unmodify()
