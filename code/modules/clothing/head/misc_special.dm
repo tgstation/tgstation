@@ -261,12 +261,14 @@
 		hairstyle = new_style
 		user.visible_message("<span class='notice'>[user] changes \the [src]'s hairstyle to [new_style].</span>", "<span class='notice'>You change \the [src]'s hairstyle to [new_style].</span>")
 	if(adjustablecolor)
-		color = input(usr,"","Choose Color",color) as color|null
+		var/newcolor = input(usr,"","Choose Color",color) as color|null
+		if (newcolor != color)
+			add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	update_icon()
 
 /obj/item/clothing/head/wig/random/Initialize(mapload)
 	hairstyle = pick(GLOB.hairstyles_list - "Bald") //Don't want invisible wig
-	color = "#[random_short_color()]"
+	add_atom_colour("#[random_short_color()]", FIXED_COLOUR_PRIORITY)
 	. = ..()
 
 /obj/item/clothing/head/wig/natural
@@ -283,8 +285,9 @@
 /obj/item/clothing/head/wig/natural/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
-		color = "#[user.hair_color]"
-		update_icon()
+		if (color != "#[user.hair_color]")
+			add_atom_colour("#[user.hair_color]", FIXED_COLOUR_PRIORITY)
+			update_icon()
 		user.update_inv_head()
 
 /obj/item/clothing/head/bronze
