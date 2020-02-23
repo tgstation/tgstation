@@ -2107,6 +2107,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
+"iO" = (
+/obj/structure/sign/warning,
+/turf/closed/wall,
+/area/mine/eva)
 "je" = (
 /obj/structure/bed,
 /obj/effect/decal/cleanable/dirt,
@@ -2496,6 +2500,13 @@
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/plasteel,
 /area/mine/production)
+"so" = (
+/obj/structure/ladder,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/mine/eva)
 "sp" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -3388,6 +3399,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"Mp" = (
+/obj/structure/sign/warning,
+/turf/closed/wall,
+/area/mine/production)
 "Mt" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/tile/green{
@@ -3600,7 +3615,7 @@
 	dwidth = 3;
 	height = 10;
 	id = "mining_away";
-	name = "lavaland mine";
+	name = "icemoon mine";
 	width = 7
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
@@ -21022,7 +21037,7 @@ bI
 bW
 aV
 bf
-LB
+so
 bq
 dc
 bP
@@ -21279,7 +21294,7 @@ bg
 bX
 bg
 bf
-LB
+fA
 bq
 dd
 bP
@@ -21536,7 +21551,7 @@ bJ
 bY
 cs
 bf
-LB
+fA
 bq
 de
 dv
@@ -21793,7 +21808,7 @@ bK
 bW
 ct
 bf
-LB
+fA
 bq
 df
 dw
@@ -22049,9 +22064,9 @@ bf
 bg
 WD
 bg
-bf
-LB
-bq
+iO
+fA
+Mp
 bq
 bq
 bq
@@ -22307,8 +22322,8 @@ fA
 fA
 fA
 hu
-LB
-LB
+fA
+fA
 fA
 fA
 aa

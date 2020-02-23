@@ -90,8 +90,7 @@ Difficulty: Very Hard
 			if(1)
 				frost_orbs()
 			if(2)
-				INVOKE_ASYNC(src, .proc/ice_shotgun, 5, list(list(-180, -140, -100, -60, -20, 20, 60, 100, 140), list(-160, -120, -80, -40, 0, 40, 80, 120, 160)))
-				snowball_machine_gun(5 * 8, 5)
+				snowball_machine_gun(60)
 			if(3)
 				ice_shotgun()
 	else
@@ -99,16 +98,18 @@ Difficulty: Very Hard
 			if(1)
 				frost_orbs(2, list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 			if(2)
-				snowball_machine_gun(60)
+				INVOKE_ASYNC(src, .proc/ice_shotgun, 5, list(list(-180, -140, -100, -60, -20, 20, 60, 100, 140), list(-160, -120, -80, -40, 0, 40, 80, 120, 160)))
+				snowball_machine_gun(5 * 8, 5)
 			if(3)
-				ice_shotgun(5, list(list(0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330), list(-20, -10, 0, 10, 20)))
+				ice_shotgun(5, list(list(0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330), list(-30, -15, 0, 15, 30)))
 
 /obj/projectile/frost_orb
 	name = "frost orb"
 	icon_state = "ice_1"
-	damage = 30
+	damage = 20
 	armour_penetration = 100
 	speed = 10
+	homing_turn_speed = 90
 	damage_type = BURN
 
 /obj/projectile/frost_orb/on_hit(atom/target, blocked = FALSE)
@@ -124,15 +125,10 @@ Difficulty: Very Hard
 	speed = 4
 	damage_type = BRUTE
 
-/obj/projectile/snowball/on_hit(atom/target, blocked = FALSE)
-	. = ..()
-	if(isturf(target) || isobj(target))
-		target.ex_act(EXPLODE_HEAVY)
-
 /obj/projectile/ice_blast
 	name = "ice blast"
 	icon_state = "ice_2"
-	damage = 20
+	damage = 15
 	armour_penetration = 100
 	speed = 4
 	damage_type = BRUTE
@@ -147,7 +143,7 @@ Difficulty: Very Hard
 	visible_message("<span class='danger'>[src] absorbs the explosion!</span>", "<span class='userdanger'>You absorb the explosion!</span>")
 	return
 
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/frost_orbs(added_delay = 0, list/shoot_dirs = pick(GLOB.cardinals, GLOB.diagonals))
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/frost_orbs(added_delay = 2, list/shoot_dirs = pick(GLOB.cardinals, GLOB.diagonals))
 	for(var/dir in shoot_dirs)
 		var/turf/startloc = get_turf(src)
 		var/turf/endloc = get_turf(target)
@@ -158,17 +154,27 @@ Difficulty: Very Hard
 		P.firer = src
 		if(target)
 			P.original = target
+		P.set_homing_target(target)
 		P.fire(dir2angle(dir))
-		addtimer(CALLBACK(src, .proc/set_orbs_homing, P), 10) // make the orbs home in after a second
+		addtimer(CALLBACK(src, .proc/orb_explosion, P), 20) // make the orbs home in after a second
 		SLEEP_CHECK_DEATH(added_delay)
-	SetRecoveryTime(25, 10)
+	SetRecoveryTime(15, 40)
 
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/set_orbs_homing(obj/projectile/P)
-	var/turf/endloc = get_turf(target)
-	if(!endloc)
-		return
-	P.speed = 4 / projectile_speed_multiplier
-	P.fire(Get_Angle(P, get_turf(endloc)))
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/orb_explosion(obj/projectile/orb)
+	var/spread = 5
+	for(var/i in 1 to 10)
+		var/turf/startloc = get_turf(orb)
+		var/turf/endloc = get_turf(target)
+		if(!startloc || !endloc)
+			break
+		var/obj/projectile/P = new /obj/projectile/snowball(startloc)
+		P.speed /= projectile_speed_multiplier
+		P.preparePixelProjectile(endloc, startloc, null, rand(-spread, spread))
+		P.firer = src
+		if(target)
+			P.original = target
+		P.fire()
+	qdel(orb)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/snowball_machine_gun(shots = 30, spread = 10)
 	for(var/i in 1 to shots)
@@ -184,7 +190,7 @@ Difficulty: Very Hard
 			P.original = target
 		P.fire()
 		SLEEP_CHECK_DEATH(1)
-	SetRecoveryTime(25, 10)
+	SetRecoveryTime(15, shots + 10)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/ice_shotgun(shots = 5, list/patterns = list(list(-40, -20, 0, 20, 40), list(-30, -10, 10, 30)))
 	for(var/i in 1 to shots)
@@ -202,4 +208,4 @@ Difficulty: Very Hard
 				P.original = target
 			P.fire()
 		SLEEP_CHECK_DEATH(8)
-	SetRecoveryTime(40, 20)
+	SetRecoveryTime(15, 20)

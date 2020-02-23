@@ -267,6 +267,8 @@ SUBSYSTEM_DEF(mapping)
 	if (config.minetype == "random")
 		config.minetype = pickweightAllowZero(GLOB.mining_maps)
 
+	GLOB.current_mining_map = config.minetype
+
 	if(config.minetype == "lavaland")
 		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
 	else if (config.minetype == "icemoon")

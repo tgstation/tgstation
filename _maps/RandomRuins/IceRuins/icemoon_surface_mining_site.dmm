@@ -80,7 +80,7 @@
 	dir = 8
 	},
 /obj/item/paper/crumpled/bloody{
-	info = "that goddamned ice...";
+	info = "help...";
 	text = ""
 	},
 /turf/open/floor/wood,
