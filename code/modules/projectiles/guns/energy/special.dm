@@ -214,13 +214,31 @@
 
 /obj/item/gun/energy/wormhole_projector
 	name = "bluespace wormhole projector"
-	desc = "A projector that emits high density quantum-coupled bluespace beams."
+	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires a bluespace anomaly core to function."
 	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
 	item_state = null
 	icon_state = "wormhole_projector"
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
 	var/atmos_link = FALSE
+	var/firing_core = FALSE
+
+/obj/item/gun/energy/wormhole_projector/attackby(obj/item/C, mob/user)
+	if(istype(C, /obj/item/assembly/signaler/anomaly/bluespace))
+		to_chat(user, "<span class='notice'>You insert [C] into the wormhole projector and the weapon gently hums to life.</span>")
+		firing_core = TRUE
+		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+		qdel(C)
+		return
+
+/obj/item/gun/energy/wormhole_projector/can_shoot()
+	if(!firing_core)
+		return FALSE
+	return ..()
+
+/obj/item/gun/energy/wormhole_projector/shoot_with_empty_chamber(mob/living/user)
+	. = ..()
+	to_chat(user, "<span class='danger'>The display says, 'NO CORE INSTALLED'.</span>")
 
 /obj/item/gun/energy/wormhole_projector/update_icon_state()
 	icon_state = item_state = "[initial(icon_state)][select]"
@@ -338,9 +356,25 @@
 	return
 
 /obj/item/gun/energy/gravity_gun
-	name = "one-point bluespace-gravitational manipulator"
-	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity."
+	name = "one-point gravitational manipulator"
+	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity. Requires a gravitational anomaly core to function."
 	ammo_type = list(/obj/item/ammo_casing/energy/gravity/repulse, /obj/item/ammo_casing/energy/gravity/attract, /obj/item/ammo_casing/energy/gravity/chaos)
 	item_state = "gravity_gun"
 	icon_state = "gravity_gun"
 	var/power = 4
+	var/firing_core = FALSE
+
+/obj/item/gun/energy/gravity_gun/attackby(obj/item/C, mob/user)
+	if(istype(C, /obj/item/assembly/signaler/anomaly/grav))
+		to_chat(user, "<span class='notice'>You insert [C] into the gravitational manipulator and the weapon gently hums to life.</span>")
+		firing_core = TRUE
+		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+		qdel(C)
+		return
+	return ..()
+
+/obj/item/gun/energy/gravity_gun/can_shoot()
+	if(!firing_core)
+		return FALSE
+	return ..()
+

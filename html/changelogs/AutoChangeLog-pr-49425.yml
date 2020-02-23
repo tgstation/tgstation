@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "The boss's health bar on the NTOS Arcade app now properly shows the right value."
