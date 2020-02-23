@@ -354,15 +354,15 @@
 
 
 //Regenerates all limbs. Returns amount of limbs regenerated
-/mob/living/proc/regenerate_limbs(noheal = FALSE, list/excluded_limbs = list())
-	SEND_SIGNAL(src, COMSIG_LIVING_REGENERATE_LIMBS, noheal, excluded_limbs)
+/mob/living/proc/regenerate_limbs(noheal = FALSE, list/excluded_zones = list())
+	SEND_SIGNAL(src, COMSIG_LIVING_REGENERATE_LIMBS, noheal, excluded_zones)
 
-/mob/living/carbon/regenerate_limbs(noheal = FALSE, list/excluded_limbs = list())
+/mob/living/carbon/regenerate_limbs(noheal = FALSE, list/excluded_zones = list())
 	. = ..()
-	var/list/limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
-	if(length(excluded_limbs))
-		limb_list -= excluded_limbs
-	for(var/Z in limb_list)
+	var/list/zone_list = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+	if(length(excluded_zones))
+		zone_list -= excluded_zones
+	for(var/Z in zone_list)
 		. += regenerate_limb(Z, noheal)
 
 /mob/living/proc/regenerate_limb(limb_zone, noheal)
@@ -371,7 +371,7 @@
 /mob/living/carbon/regenerate_limb(limb_zone, noheal)
 	var/obj/item/bodypart/L
 	if(get_bodypart(limb_zone))
-		return 0
+		return FALSE
 	L = newBodyPart(limb_zone, 0, 0)
 	if(L)
 		if(!noheal)
@@ -381,4 +381,4 @@
 			L.burnstate = 0
 
 		L.attach_limb(src, 1)
-		return 1
+		return TRUE
