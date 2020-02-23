@@ -154,7 +154,7 @@
 	var/list/savedcontents = contents.Copy()
 	var/saveddir = dir
 	var/turf/destination = get_edge_target_turf(src,saveddir)
-	visible_message("<span class='warning'>[src] ejects it's insides out!</span>")
+	visible_message("<span class='warning'>[src] ejects its insides out!</span>")
 	deconstruct(FALSE)//we automatically deconstruct the pod
 	for(var/i in savedcontents)
 		var/atom/movable/AM = i
