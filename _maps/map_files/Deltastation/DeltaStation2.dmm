@@ -57339,18 +57339,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library)
-"cct" = (
-/obj/structure/sign/painting/library2{
-	pixel_y = 32
-	},
-/turf/open/floor/wood,
-/area/library)
-"ccu" = (
-/obj/structure/sign/painting/library3{
-	pixel_y = 32
-	},
-/turf/open/floor/wood,
-/area/library)
 "ccv" = (
 /obj/machinery/camera{
 	c_tag = "Art Gallery";
@@ -58415,7 +58403,7 @@
 /obj/structure/chair/sofa/right{
 	dir = 8
 	},
-/obj/structure/sign/painting/library8{
+/obj/structure/sign/painting/library{
 	pixel_x = 32
 	},
 /turf/open/floor/wood,
@@ -59339,13 +59327,7 @@
 /obj/item/radio/intercom{
 	pixel_x = -26
 	},
-/obj/structure/sign/painting/library4{
-	pixel_y = -32
-	},
-/turf/open/floor/wood,
-/area/library)
-"cga" = (
-/obj/structure/sign/painting/library7{
+/obj/structure/sign/painting/library{
 	pixel_y = -32
 	},
 /turf/open/floor/wood,
@@ -114244,9 +114226,6 @@
 /turf/open/space,
 /area/maintenance/solars/port/fore)
 "kli" = (
-/obj/structure/sign/painting/library9{
-	pixel_x = 32
-	},
 /obj/item/twohanded/required/kirbyplants/random,
 /obj/machinery/light{
 	dir = 1
@@ -114557,7 +114536,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "lAW" = (
-/obj/structure/sign/painting/library5{
+/obj/structure/sign/painting/library{
 	pixel_y = -32
 	},
 /turf/open/floor/wood,
@@ -115169,7 +115148,7 @@
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
 "oME" = (
-/obj/structure/sign/painting/library1{
+/obj/structure/sign/painting/library{
 	pixel_y = 32
 	},
 /turf/open/floor/wood,
@@ -115596,10 +115575,10 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/obj/structure/sign/painting/library_secure2{
+/obj/structure/table/wood/fancy,
+/obj/structure/sign/painting/library_secure{
 	pixel_y = 32
 	},
-/obj/structure/table/wood/fancy,
 /turf/open/floor/carpet,
 /area/library)
 "qUc" = (
@@ -116760,12 +116739,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"xJI" = (
-/obj/structure/sign/painting/library6{
-	pixel_y = -32
-	},
-/turf/open/floor/wood,
-/area/library)
 "xKH" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
@@ -116802,10 +116775,10 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/sign/painting/library_secure3{
+/obj/structure/table/wood/fancy,
+/obj/structure/sign/painting/library_secure{
 	pixel_y = 32
 	},
-/obj/structure/table/wood/fancy,
 /turf/open/floor/carpet,
 /area/library)
 "xXn" = (
@@ -116832,10 +116805,10 @@
 	dir = 2;
 	name = "Secure Art Exhibition"
 	},
-/obj/structure/sign/painting/library_secure1{
+/obj/structure/table/wood/fancy,
+/obj/structure/sign/painting/library_secure{
 	pixel_y = 32
 	},
-/obj/structure/table/wood/fancy,
 /turf/open/floor/carpet,
 /area/library)
 "yfv" = (
@@ -148869,9 +148842,9 @@ bUn
 bWI
 bYM
 caG
-cct
+oME
 cxV
-xJI
+lAW
 caG
 cjt
 ckR
@@ -149126,9 +149099,9 @@ bUn
 bWD
 bYM
 caG
-ccu
+oME
 cxV
-cga
+lAW
 caG
 cju
 ckR

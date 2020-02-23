@@ -356,41 +356,11 @@
 			grid[x][y] = I.GetPixel(w-x,h-y)
 
 //Presets for art gallery mapping, for paintings to be shared across stations
-/obj/structure/sign/painting/library1
-	persistence_id = "library1"
+/obj/structure/sign/painting/library
+	persistence_id = "library"
 
-/obj/structure/sign/painting/library2
-	persistence_id = "library2"
-
-/obj/structure/sign/painting/library3
-	persistence_id = "library3"
-
-/obj/structure/sign/painting/library4
-	persistence_id = "library4"
-
-/obj/structure/sign/painting/library5
-	persistence_id = "library5"
-
-/obj/structure/sign/painting/library6
-	persistence_id = "library6"
-
-/obj/structure/sign/painting/library7
-	persistence_id = "library7"
-
-/obj/structure/sign/painting/library8
-	persistence_id = "library8"
-
-/obj/structure/sign/painting/library9
-	persistence_id = "library9"
-
-/obj/structure/sign/painting/library_secure1
-	persistence_id = "library_secure1"
-
-/obj/structure/sign/painting/library_secure2
-	persistence_id = "library_secure2"
-
-/obj/structure/sign/painting/library_secure3
-	persistence_id = "library_secure3"
+/obj/structure/sign/painting/library_secure
+	persistence_id = "library_secure"
 
 /obj/structure/sign/painting/library_private // keep your smut away from prying eyes, or non-librarians at least
 	persistence_id = "library_private"
