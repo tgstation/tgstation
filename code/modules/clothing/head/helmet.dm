@@ -295,6 +295,16 @@
 	item_state = "skull"
 	strip_delay = 100
 
+/obj/item/clothing/head/helmet/dwarven_helmet
+	name = "dwarven helmet"
+	desc = "An intimidating horned dwarven helmet, it doesn't look very comfortable."
+	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE
+	armor = list("melee" = 30, "bullet" = 25, "laser" = 25, "energy" = 35, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
+	icon_state = "dwarven_helmet_greyscale"
+	item_state = "dwarven_helmet_greyscale"
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
+	custom_materials = list(/datum/material/iron = 10000)
+
 /obj/item/clothing/head/helmet/durathread
 	name = "durathread helmet"
 	desc = "A helmet made from durathread and leather."

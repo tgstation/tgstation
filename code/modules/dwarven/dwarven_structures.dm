@@ -130,7 +130,7 @@
 	custom_materials  = list(/datum/material/silver = 20000)
 
 /obj/structure/destructible/dwarven/mythril_press/Initialize()
-	AddComponent(/datum/component/material_container,list(/datum/material/gold,/datum/material/silver,/datum/material/titanium,/datum/material/dwarven,), 20000, TRUE, /obj/item/stack/sheet/mineral, null,  null, FALSE)
+	AddComponent(/datum/component/material_container,list(/datum/material/gold,/datum/material/silver,/datum/material/titanium,/datum/material/dwarven,), 20000, TRUE, /obj/item/stack/sheet/mineral)
 	. = ..()
 
 /obj/structure/destructible/dwarven/mythril_press/attack_hand(mob/user)
@@ -175,7 +175,7 @@
 
 /obj/structure/destructible/dwarven/workshop/Initialize()
 	. = ..()
-	AddComponent(/datum/component/material_container,allowed_types, 20000, TRUE, /obj/item/stack, null, null)
+	AddComponent(/datum/component/material_container,allowed_types, 20000, TRUE, /obj/item/stack)
 
 /obj/structure/destructible/dwarven/workshop/examine(mob/user)
 	. = ..()
@@ -290,18 +290,109 @@
 	user?.mind.adjust_experience(/datum/skill/operating, 4)
 
 
-/*
-/obj/structure/destructible/dwarven/workbench/debug/attack_hand(mob/user)
-	var/choice
-	choice = alert(user,"Choose an item",,"Warhammer","Waraxe","Javelin")
-	switch(choice)
-		if("Warhammer")
-			var/obj/item/twohanded/war_hammer/debug = new /obj/item/twohanded/war_hammer(get_turf(src))
-			debug.add_creator(user)
-		if("Waraxe")
-			var/obj/item/hatchet/dwarven/axe/debug = new /obj/item/hatchet/dwarven/axe(get_turf(src))
-			debug.add_creator(user)
-		if("Javelin")
-			var/obj/item/hatchet/dwarven/javelin/debug = new /obj/item/hatchet/dwarven/javelin(get_turf(src))
-			debug.add_creator(user)
-*/
+/obj/structure/destructible/dwarven/anvil
+	name = "Dwarven anvil"
+	icon_state = "anvil"
+	var/state = 0
+	var/list/obj/item/crafting_list = list(
+		/obj/item/clothing/suit/armor/vest/dwarven_platemail = 20000,
+		/obj/item/clothing/suit/armor/vest/dwarven_chainmail  = 10000,
+		/obj/item/clothing/head/helmet/dwarven_helmet  = 10000,
+		/obj/item/twohanded/war_hammer = 20000,
+		/obj/item/hatchet/dwarven/axe = 10000,
+		/obj/item/hatchet/dwarven/javelin = 10000
+		)
+	custom_materials = list(/datum/material/dwarven = 20000)
+	var/static/list/allowed_types = list(
+		/datum/material/iron,
+		/datum/material/glass,
+		/datum/material/gold,
+		/datum/material/silver,
+		/datum/material/diamond,
+		/datum/material/uranium,
+		/datum/material/plasma,
+		/datum/material/bluespace,
+		/datum/material/bananium,
+		/datum/material/titanium,
+		/datum/material/runite,
+		/datum/material/plastic,
+		/datum/material/adamantine,
+		/datum/material/mythril,
+		/datum/material/wood,
+		/datum/material/dwarven,
+		)
+	//temporary solution til alloys become its own datum.
+	var/static/list/banned_alloys = list(
+		/obj/item/stack/sheet/mineral/plastitanium,
+		/obj/item/stack/sheet/plasteel,
+		/obj/item/stack/sheet/plasmaglass,
+		/obj/item/stack/sheet/rglass,
+		/obj/item/stack/sheet/plasmarglass,
+		/obj/item/stack/sheet/titaniumglass,
+		/obj/item/stack/sheet/plastitaniumglass
+		)
+	var/datum/material/current_mat
+
+/obj/structure/destructible/dwarven/anvil/Initialize()
+	. = ..()
+	AddComponent(/datum/component/material_container,allowed_types, 200000, TRUE, /obj/item/stack, banned_alloys ,null, _after_insert=CALLBACK(src, .proc/AfterMaterialInsert))
+
+/obj/structure/destructible/dwarven/anvil/AltClick(mob/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+		return
+	if(state == 5)
+		state = 0
+	else
+		state++
+
+/obj/structure/destructible/dwarven/anvil/proc/AfterMaterialInsert(_item_inserted, id_inserted, amount_inserted)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	for(var/datum/material/M in materials.materials)
+		if(M != id_inserted)
+			materials.retrieve_sheets(materials.materials[M],M,drop_location())
+
+	current_mat = id_inserted
+
+/obj/structure/destructible/dwarven/anvil/attack_hand(mob/user)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	materials.retrieve_all()
+
+	. = ..()
+
+
+/obj/structure/destructible/dwarven/anvil/attacked_by(obj/item/I, mob/living/user)
+	if(istype(I,/obj/item/dwarven/mallet) && current_mat != null)
+		handle_mallet(user,current_mat)
+		return
+	. = ..()
+
+/obj/structure/destructible/dwarven/anvil/proc/handle_mallet(mob/living/user,datum/material/S)
+	var/list/materials_used = list()
+
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+
+	if(!do_after(user, 60, target = src))
+		return
+
+	var/obj/item/item_built = crafting_list[state+1]
+	if(!materials.has_enough_of_material(S,crafting_list[item_built]))
+		to_chat(user, "<span class='alert'>Not enough materials for this operation.</span>")
+		return
+
+	materials_used[S] += crafting_list[item_built]
+	var/efficiency = user?.mind.get_skill_modifier(/datum/skill/operating, SKILL_EFFICIENCY_MODIFIER)*2 //*2 because it is hard as fuck to get it and even then the result is most often shoddy
+
+	if(!prob(efficiency))
+		materials.use_materials(materials_used,0.2)
+		user?.mind.adjust_experience(/datum/skill/operating, 2)
+		to_chat(user,"<span class='notice'>You fail to create anything of value</span>")
+		return
+
+	user?.mind.adjust_experience(/datum/skill/operating, 20)
+	materials.use_materials(materials_used)
+	var/obj/item/new_item = new item_built(drop_location())
+	new_item.set_custom_materials(materials_used)
+	new_item.add_creator(user)
+
+
+
