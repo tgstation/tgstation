@@ -69624,6 +69624,11 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
+"eMU" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/beebox/premade/random,
+/turf/open/floor/grass,
+/area/maintenance/port/aft)
 "eNA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -69899,10 +69904,10 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "fuY" = (
-/obj/effect/turf_decal/box/white{
-	color = "#52B4E9"
-	},
 /obj/machinery/holopad,
+/obj/effect/turf_decal/box/white{
+	color = "#EFB341"
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
 "fvl" = (
@@ -71517,6 +71522,15 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"jvy" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/item/flashlight/pen{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "jwJ" = (
 /mob/living/carbon/monkey,
 /turf/open/floor/grass,
@@ -72977,6 +72991,14 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"mCu" = (
+/obj/item/toy/plush/beeplushie,
+/obj/item/clothing/suit/hooded/bee_costume,
+/obj/item/clothing/mask/rat/bee,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/grass,
+/area/maintenance/port/aft)
 "mCX" = (
 /obj/machinery/biogenerator,
 /obj/machinery/door/firedoor,
@@ -73244,6 +73266,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"nsN" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/beebox/premade/random,
+/turf/open/floor/grass,
+/area/maintenance/port/aft)
 "nuZ" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
@@ -73436,6 +73463,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"nQm" = (
+/obj/machinery/holopad,
+/obj/effect/turf_decal/box/white{
+	color = "#EFB341"
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/chemistry)
 "nRJ" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -73924,17 +73958,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/warden)
-"oXP" = (
-/obj/structure/closet/crate,
-/obj/item/flashlight/pen{
-	pixel_x = 4;
-	pixel_y = 3
-	},
-/obj/effect/spawner/lootdrop/maintenance/three,
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/maintenance/port/aft)
 "oYS" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -94661,7 +94684,7 @@ dux
 hdX
 cdg
 dux
-lMJ
+dux
 cBR
 cBR
 gxH
@@ -94918,7 +94941,7 @@ mqo
 duH
 cdg
 dux
-lMJ
+nsN
 cBR
 vrI
 aRm
@@ -95175,7 +95198,7 @@ mqo
 duH
 cdg
 dux
-lMJ
+mCu
 cBR
 hDr
 ryi
@@ -95432,7 +95455,7 @@ mqo
 jqA
 cdg
 dux
-dux
+eMU
 cBR
 bwp
 cWN
@@ -95688,8 +95711,8 @@ dux
 dux
 ceu
 cdg
-bXE
-oXP
+dux
+dux
 sYH
 sYH
 jtY
@@ -96466,7 +96489,7 @@ fha
 vNJ
 sYH
 sYH
-jNL
+jvy
 jNL
 jNL
 bTs
@@ -101864,7 +101887,7 @@ cmB
 cmB
 gnW
 svh
-cmB
+nQm
 fMy
 jBH
 oqv
