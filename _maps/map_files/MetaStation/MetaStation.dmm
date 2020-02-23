@@ -46037,6 +46037,9 @@
 /obj/structure/sign/warning/coldtemp{
 	pixel_x = -32
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "bZZ" = (
@@ -47729,9 +47732,6 @@
 "cdp" = (
 /obj/machinery/light_switch{
 	pixel_x = -26
-	},
-/obj/machinery/light/small{
-	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -54386,6 +54386,7 @@
 /obj/structure/chair/office/light{
 	dir = 1
 	},
+/obj/effect/landmark/start/chief_medical_officer,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "csz" = (
@@ -55708,6 +55709,9 @@
 	pixel_x = -32
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -58685,6 +58689,9 @@
 "cFy" = (
 /obj/structure/flora/junglebush/b,
 /obj/structure/flora/ausbushes/ppflowers,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/grass,
 /area/medical/virology)
 "cFI" = (
@@ -61157,6 +61164,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
@@ -68412,6 +68422,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
 "dzc" = (
@@ -70364,6 +70377,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/effect/landmark/start/virologist,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "grA" = (
@@ -70854,6 +70868,7 @@
 /obj/structure/chair/office/light{
 	dir = 8
 	},
+/obj/effect/landmark/start/virologist,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "hAu" = (
@@ -71618,6 +71633,9 @@
 /obj/machinery/light_switch{
 	pixel_x = -26;
 	pixel_y = 5
+	},
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_c)
@@ -74545,6 +74563,14 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/hydroponics)
+"qmy" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/landmark/start/chief_medical_officer,
+/turf/open/floor/plasteel/white,
+/area/crew_quarters/heads/cmo)
 "qom" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/cable,
@@ -75100,6 +75126,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/effect/landmark/start/virologist,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "ryn" = (
@@ -75561,6 +75588,9 @@
 	c_tag = "Chemistry West";
 	dir = 4;
 	network = list("ss13","medbay")
+	},
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
@@ -76220,9 +76250,6 @@
 /mob/living/carbon/monkey,
 /obj/machinery/airalarm{
 	pixel_y = 22
-	},
-/obj/machinery/light{
-	dir = 1
 	},
 /turf/open/floor/grass,
 /area/medical/virology)
@@ -77383,6 +77410,9 @@
 /area/engine/engineering)
 "wHj" = (
 /obj/structure/flora/junglebush/c,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/grass,
 /area/medical/virology)
 "wIh" = (
@@ -102354,7 +102384,7 @@ cdx
 cfP
 cmv
 cnF
-coR
+qmy
 cqo
 coR
 csA
