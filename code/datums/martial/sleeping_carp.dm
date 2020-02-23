@@ -32,8 +32,8 @@
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
 	if(prob(10))
 		crit_damage += 20
-		playsound(get_turf(D), 'sound/weapons/bite.ogg', 25, TRUE, -)
-		D.visible_message("<span class='warning'>[D] sputters blood as the blow strikes them with inhuman force!</span>", "<span class='userdanger'>You reel from the pain of the blow! [A] has struck you with inhuman strength and speed!</span>")
+		playsound(get_turf(D), 'sound/weapons/bite.ogg', 50, TRUE, -1)
+		D.visible_message("<span class='warning'>[D] sputters blood as the blow strikes them with inhuman force!</span>", "<span class='userdanger'>You are struck with incredible precision by [A]!</span>")
 	else
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	D.apply_damage(20 + crit_damage, A.dna.species.attack_type)
@@ -46,7 +46,7 @@
 					"<span class='userdanger'>You are kicked square in the chest by [A], sending you flying!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	var/atom/throw_target = get_edge_target_turf(D, A.dir)
-	D.throw_at(throw_target, rand(5,6), 7, user)
+	D.throw_at(throw_target, 7, 14, A)
 	D.apply_damage(15, A.dna.species.attack_type)
 	log_combat(A, D, "launch kicked (Sleeping Carp)")
 	return
@@ -86,7 +86,6 @@
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(A, D, "[atk_verb] (Sleeping Carp)")
 	return TRUE
-
 
 /datum/martial_art/the_sleeping_carp/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("D",D)
@@ -133,11 +132,11 @@
 
 	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>")
 
-	to_chat(usr, "<span class='notice'>Gnashing Teeth</span>: Harm Harm. Gathering moment of punches means that every second punch deals additional damage, with a chance of even more damage.")
+	to_chat(usr, "<span class='notice'>Gnashing Teeth</span>: Harm Harm. Deal additional damage ever second punch, with a chance for even more damage!")
 	to_chat(usr, "<span class='notice'>Crashing Wave Kick</span>: Harm Disarm. Launch people brutally across rooms, and away from you.")
-	to_chat(usr, "<span class='notice'>Keelhaul</span>: Harm Grab. With a powerful kick, send opponents face first into the floor, knocking them down and disarming them of weapons. On opponents on the floor, this deals considerable stamina damage and disarms.")
+	to_chat(usr, "<span class='notice'>Keelhaul</span>: Harm Grab. Kick opponents to the floor. Against prone targets, deal additional stamina damage and disarm them.")
 	
-	to_chat(usr, "<span class='notice'>In addition, your body has become incredibly resilient to most forms of attack. Weapons cannot readily pierce your hardened skin, and you are highly resistant to stuns and stamina damage, and quickly recover from stamina damage. However, you are not invincible, and sustained damage will take it's toll.")
+	to_chat(usr, "<span class='notice'>In addition, your body has become incredibly resilient to most forms of attack. Weapons cannot readily pierce your hardened skin, and you are highly resistant to stuns and stamina damage, and quickly recover from stamina damage. However, you are not invincible, and sustained damage will take it's toll."</span>)
 
 /obj/item/twohanded/bostaff
 	name = "bo staff"
