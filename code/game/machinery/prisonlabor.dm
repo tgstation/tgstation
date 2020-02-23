@@ -11,7 +11,7 @@
 
 /obj/machinery/plate_press/update_icon()
 	. = ..()
-	if(machine_stat & (BROKEN|NOPOWER))
+	if(!is_operational())
 		icon_state = "offline"
 	else if(pressing)
 		icon_state = "loop"
@@ -59,5 +59,4 @@
 	update_icon()
 
 	new /obj/item/stack/license_plates/filled(drop_location(), 1)
-
 
