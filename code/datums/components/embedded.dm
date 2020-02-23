@@ -19,7 +19,7 @@
 		- Embedding involves harmful and dangerous embeds, whether they cause brute damage, stamina damage, or a mix. This is the default behavior for embeddings, for when something is "pointy"
 
 		- Sticking occurs when an item should not cause any harm while embedding (imagine throwing a sticky ball of tape at someone, rather than a shuriken). An item is considered "sticky"
-			when it has 0 random pain chance and 0 jostling chance. It's a bit arbitrary, but fairly straightforward.
+			when it has 0 for both pain multiplier and jostle pain multiplier. It's a bit arbitrary, but fairly straightforward.
 
 		Stickables differ from embeds in the following ways:
 			-- Text descriptors use phrasing like "X is stuck to Y" rather than "X is embedded in Y"
@@ -48,6 +48,7 @@
 	var/jostle_pain_mult
 	var/pain_stam_pct
 
+	///if both our pain multiplier and jostle pain multiplier are 0, we're harmless and can omit most of the damage related stuff
 	var/harmful
 	var/mutable_appearance/overlay
 
@@ -64,8 +65,6 @@
 			jostle_chance = EMBEDDED_JOSTLE_CHANCE,
 			jostle_pain_mult = EMBEDDED_JOSTLE_PAIN_MULTIPLIER,
 			pain_stam_pct = EMBEDDED_PAIN_STAM_PCT)
-
-	. = ..()
 
 	if((!ishuman(parent) && !isclosedturf(parent)) || !isitem(I))
 		return COMPONENT_INCOMPATIBLE
@@ -99,16 +98,12 @@
 		RegisterSignal(parent, COMSIG_HUMAN_EMBED_REMOVAL, .proc/safeRemoveHuman)
 	else if(isclosedturf(parent))
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examineTurf)
-		//RegisterSignal(parent, COMSIG_TOPIC, .proc/ripOutTurf)
 
 /datum/component/embedded/UnregisterFromParent()
 	if(ishuman(parent))
-		UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
-		UnregisterSignal(parent, COMSIG_HUMAN_EMBED_RIP)
-		UnregisterSignal(parent, COMSIG_HUMAN_EMBED_REMOVAL)
+		UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_EMBED_RIP, COMSIG_HUMAN_EMBED_REMOVAL))
 	else if(isclosedturf(parent))
 		UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
-		//UnregisterSignal(parent, COMSIG_TOPIC)
 
 /datum/component/embedded/process()
 	if(ishuman(parent))
@@ -211,6 +206,7 @@
 		SEND_SIGNAL(victim, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 	qdel(src)
 
+
 /// Items embedded/stuck to humans both check whether they randomly fall out (if applicable), as well as if the target mob and limb still exists.
 /// Items harmfully embedded in humans have an additional check for random pain (if applicable)
 /datum/component/embedded/proc/processHuman()
@@ -287,6 +283,7 @@
 	else
 		examine_list += "\t <a href='?src=[REF(src)];embedded_object=[REF(weapon)]' class='warning'>There is \a [weapon] stuck to [parent]!</a>"
 
+
 /// Someone is ripping out the item from the turf by hand
 /datum/component/embedded/Topic(datum/source, href_list)
 	var/mob/living/us = usr
@@ -295,6 +292,7 @@
 			us.visible_message("<span class='notice'>[us] begins unwedging [weapon] from [parent].</span>", "<span class='notice'>You begin unwedging [weapon] from [parent]...</span>")
 		else
 			us.visible_message("<span class='notice'>[us] begins unsticking [weapon] from [parent].</span>", "<span class='notice'>You begin unsticking [weapon] from [parent]...</span>")
+
 		if(do_after(us, 30, target = parent))
 			us.put_in_hands(weapon)
 			qdel(src)
