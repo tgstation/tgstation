@@ -341,3 +341,35 @@
 	//Damaging the turf
 	if( T && prob(turf_removal_chance) )
 		T.ex_act(ex_act_force)
+
+////////////////////////////////////////
+/obj/effect/anomaly/fluid
+	name = "liquescent anomaly"
+	icon_state = "wetball"
+	density = FALSE
+
+	var/slip_time = 50
+	var/blood_drain = 50
+
+	var/smoke_chance = 10
+	var/smoke_range = 5
+	var/smoke_volume = 10
+
+
+/obj/effect/anomaly/fluid/Initialize()
+	. = ..()
+	create_reagents(10)
+
+/obj/effect/anomaly/fluid/anomalyEffect()
+	..()
+	for(var/turf/open/OT in range(4, src))
+		MakeSlippery(TURF_WET_LUBE, min_wet_time = slip_time)
+
+	for(var/mob/living/carbon/C in range(2, src))
+		C.blood_volume = max(0, blood_volume - blood_drain)
+
+	if(prob(smoke_chance))
+		reagents.add_reagent(get_random_reagent_id(), smoke_volume)
+		var/datum/effect_system/smoke_spread/chem/smoke = new()
+		smoke.set_up(reagents, smoke_range, get_turf(src), TRUE)
+		smoke.start()
