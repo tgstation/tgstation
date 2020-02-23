@@ -59321,7 +59321,6 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/wood,
 /area/library)
 "cfW" = (
@@ -60318,13 +60317,11 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "chM" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin,
-/obj/item/pen,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -22
 	},
+/obj/machinery/photocopier,
 /turf/open/floor/wood,
 /area/library)
 "chN" = (
@@ -114364,6 +114361,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"kWa" = (
+/obj/machinery/bookbinder,
+/turf/open/floor/plasteel/dark,
+/area/library)
 "kZq" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -147339,7 +147340,7 @@ cqN
 cmt
 ctJ
 caH
-cwq
+kWa
 cxV
 czD
 cBb
