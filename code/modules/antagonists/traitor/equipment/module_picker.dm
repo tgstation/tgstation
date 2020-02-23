@@ -2,18 +2,14 @@
 /datum/module_picker
 	var/name = "Malf Module Menu"
 	var/ui_x = 620
-	var/ui_y = 505
+	var/ui_y = 525
 	var/selected_cat
 	var/compact_mode = FALSE
 	var/processing_time = 50
 	var/list/possible_modules
 
 /datum/module_picker/New()
-	possible_modules = list()
-	for(var/type in typesof(/datum/AI_Module))
-		var/datum/AI_Module/AM = new type
-		if((AM.power_type && AM.power_type != /datum/action/innate/ai) || AM.upgrade)
-			possible_modules += AM
+	possible_modules = get_malf_modules()
 
 /// Removes all malfunction-related abilities from the target AI.
 /datum/module_picker/proc/remove_malf_verbs(mob/living/silicon/ai/AI)
@@ -21,6 +17,9 @@
 		for(var/datum/action/A in AI.actions)
 			if(istype(A, initial(AM.power_type)))
 				qdel(A)
+
+/proc/cmp_malfmodules_priority(datum/AI_Module/A, datum/AI_Module/B)
+	return B.cost - A.cost
 
 /proc/get_malf_modules()
 	var/list/filtered_modules = list()
@@ -31,7 +30,10 @@
 			continue
 		if(!filtered_modules[AM.category])
 			filtered_modules[AM.category] = list()
-		filtered_modules[AM.category][AM.name] = AM
+		filtered_modules[AM.category][AM] = AM
+
+	for(var/category in filtered_modules)
+		filtered_modules[category] = sortTim(filtered_modules[category], /proc/cmp_malfmodules_priority)
 
 	return filtered_modules
 
@@ -40,7 +42,6 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "module_picker", name, ui_x, ui_y, master_ui, state)
-		ui.set_style("syndicate")
 		ui.open()
 
 /datum/module_picker/ui_data(mob/user)
@@ -53,17 +54,17 @@
 	var/list/data = list()
 
 	data["categories"] = list()
-	var/list/modules = get_malf_modules()
-	for(var/category in modules)
+	for(var/category in possible_modules)
 		var/list/cat = list(
 			"name" = category,
 			"items" = (category == selected_cat ? list() : null))
-		for(var/module in modules[category])
-			var/datum/AI_Module/AM = modules[category][module]
+		for(var/module in possible_modules[category])
+			var/datum/AI_Module/AM = possible_modules[category][module]
 			cat["items"] += list(list(
 				"name" = AM.name,
 				"cost" = AM.cost,
 				"desc" = AM.description,
+				"ref" = REF(AM),
 			))
 		data["categories"] += list(cat)
 
@@ -75,24 +76,17 @@
 	if(!isAI(usr))
 		return
 
-	var/mob/living/silicon/ai/A = usr
-	if(A.stat == DEAD)
-		to_chat(A, "<span class='warning'>You are already dead!</span>")
-		return
-
 	switch(action)
 		if("buy")
-			var/module = params["item"]
-			var/list/modules = get_malf_modules()
 			var/list/buyable_modules = list()
-
-			for(var/category in modules)
-				buyable_modules += modules[category]
-
-			if(module in buyable_modules)
-				var/datum/AI_Module/AM = buyable_modules[module]
-				purchase_module(usr, AM)
-				. = TRUE
+			for(var/category in possible_modules)
+				buyable_modules += possible_modules[category]
+			var/module = locate(params["item"]) in buyable_modules
+			if(!module || !(module in buyable_modules))
+				return
+			var/datum/AI_Module/AM = module
+			purchase_module(usr, AM)
+			. = TRUE
 		if("select")
 			selected_cat = params["category"]
 			. = TRUE
@@ -100,29 +94,35 @@
 			compact_mode = !compact_mode
 			. = TRUE
 
-/datum/module_picker/proc/purchase_module(mob/living/silicon/ai/A, datum/AI_Module/AM)
-	// Cost check
+/datum/module_picker/proc/purchase_module(mob/living/silicon/ai/AI, datum/AI_Module/AM)
+	if(!istype(AM))
+		return
+	if(!AI || AI.stat == DEAD)
+		return
 	if(AM.cost > processing_time)
 		return
-	var/datum/action/innate/ai/action = locate(AM.power_type) in A.actions
+
+	var/datum/action/innate/ai/action = locate(AM.power_type) in AI.actions
 	// Give the power and take away the money.
 	if(AM.upgrade) //upgrade and upgrade() are separate, be careful!
-		AM.upgrade(A)
-		possible_modules -= AM
-		to_chat(A, AM.unlock_text)
-		A.playsound_local(A, AM.unlock_sound, 50, 0)
+		AM.upgrade(AI)
+		possible_modules[AM.category] -= AM
+		to_chat(AI, AM.unlock_text)
+		AI.playsound_local(AI, AM.unlock_sound, 50, 0)
+		update_static_data(AI)
 	else
 		if(AM.power_type)
 			if(!action) //Unlocking for the first time
 				var/datum/action/AC = new AM.power_type
-				AC.Grant(A)
-				A.current_modules += new AM.type
+				AC.Grant(AI)
+				AI.current_modules += new AM.type
 				if(AM.one_purchase)
-					possible_modules -= AM
+					possible_modules[AM.category] -= AM
+					update_static_data(AI)
 				if(AM.unlock_text)
-					to_chat(A, AM.unlock_text)
+					to_chat(AI, AM.unlock_text)
 				if(AM.unlock_sound)
-					A.playsound_local(A, AM.unlock_sound, 50, 0)
+					AI.playsound_local(AI, AM.unlock_sound, 50, 0)
 			else //Adding uses to an existing module
 				action.uses += initial(action.uses)
 				action.desc = "[initial(action.desc)] It has [action.uses] use\s remaining."

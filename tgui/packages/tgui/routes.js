@@ -372,7 +372,7 @@ const ROUTES = {
   module_picker: {
     component: () => ModulePicker,
     scrollable: true,
-    theme: 'syndicate',
+    theme: 'malfunction',
   },
   mulebot: {
     component: () => Mule,

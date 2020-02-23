@@ -77,7 +77,7 @@ export class ModulePicker extends Component {
               onBuyMouseOver={item => this.setHoveredItem(item)}
               onBuyMouseOut={item => this.setHoveredItem({})}
               onBuy={item => act(ref, 'buy', {
-                item: item.name,
+                item: item.ref,
               })} />
           </table>
         ) : (
@@ -100,7 +100,7 @@ export class ModulePicker extends Component {
                       onBuyMouseOver={item => this.setHoveredItem(item)}
                       onBuyMouseOut={item => this.setHoveredItem({})}
                       onBuy={item => act(ref, 'buy', {
-                        item: item.name,
+                        item: item.ref,
                       })} />
                   )}
                 </Tabs.Tab>
