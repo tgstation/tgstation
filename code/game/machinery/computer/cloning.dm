@@ -33,11 +33,12 @@
 	pod.linked_consoles -= src
 
 /obj/machinery/computer/cloning/proc/start_clone(datum/dna/dna_to_clone, pod_index)
-	if(QDELETED(pods[pod_index]))
-		return
 	if(!(dna_to_clone.species.inherent_biotypes | (MOB_ORGANIC|MOB_MINERAL)))
 		return
-	pods[pod_index].grow_clone(dna_to_clone)
+	var/obj/machinery/cloning_pod/cloner = pods[pod_index]
+	if(QDELETED(cloner))
+		return
+	cloner.grow_clone(dna_to_clone)
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/disk/cloning))
@@ -191,8 +192,9 @@
 			var/pod_index = text2num(params["index"])
 			if(length(pods) < pod_index)
 				return TRUE
-			pods[pod_index].reset()
-			pods[pod_index].update_icon()
+			var/obj/machinery/cloning_pod/cloner = pods[pod_index]
+			cloner.reset()
+			cloner.update_icon()
 			. = TRUE
 		if("unlink_pod")
 			var/pod_index = text2num(params["index"])
