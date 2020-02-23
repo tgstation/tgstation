@@ -129,15 +129,14 @@
 /obj/item/dwarven/rune_stone/earth
 	name = "earth runestone"
 	overlay_state = "earth_rune"
+	var/maxthrow = 5
 
 /obj/item/dwarven/rune_stone/earth/apply(atom/target, mob/user)
 	var/stun_amt = 40
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
-	for(var/turf/T in targets) //Done this way so things don't get thrown all around hilariously.
-		for(var/atom/movable/AM in T)
-			thrownatoms += AM
+	thrownatoms += get_turf(target))
 
 	for(var/am in thrownatoms)
 		var/atom/movable/AM = am
@@ -146,7 +145,7 @@
 
 		if(ismob(AM))
 			var/mob/M = AM
-			if(M.anti_magic_check(anti_magic_check, FALSE))
+			if(M.anti_magic_check())
 				continue
 
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
@@ -158,12 +157,11 @@
 				M.adjustBruteLoss(5)
 				to_chat(M, "<span class='userdanger'>You're slammed into the floor by [user]!</span>")
 		else
-			new sparkle_path(get_turf(AM), get_dir(user, AM)) //created sparkles will disappear on their own
 			if(isliving(AM))
 				var/mob/living/M = AM
 				M.Paralyze(stun_amt)
 				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
-			AM.safe_throw_at(throwtarget, ((clamp((maxthrow - (clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user, force = repulse_force)//So stuff gets tossed around at the same time.
+			AM.safe_throw_at(throwtarget, ((clamp((maxthrow - (clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user, force = MOVE_FORCE_EXTREMELY_STRONG)//So stuff gets tossed around at the same time.
 	..()
 
 /obj/item/dwarven/rune_stone/air
