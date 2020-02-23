@@ -262,12 +262,12 @@
 
 // Radio signal responses
 
-/datum/component/uplink/proc/new_frequency(datum/source, list/arguments, mob/user)
+/datum/component/uplink/proc/new_frequency(datum/source, list/arguments)
 	var/obj/item/radio/master = parent
 	var/frequency = arguments[1]
 	if(frequency != unlock_code)
 		if(frequency == failsafe_code)
-			failsafe(user)
+			failsafe(master.loc)
 		return
 	locked = FALSE
 	if(ismob(master.loc))
