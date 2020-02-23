@@ -1,24 +1,20 @@
-/obj/item/dwarven_guide
+/obj/item/book_of_babel/dwarven_guide
 	name = "Brokering 101: Dwarven guide"
 	desc = "An ancient tome written dwarven"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "book1"
 	w_class = 2
 
-/obj/item/dwarven_guide/attack_self(mob/living/carbon/human/user)
-	if(!user.can_read(src) || !user.has_language(/datum/language/dwarven))
+/obj/item/book_of_babel/dwarven_guide/attack_self(mob/living/carbon/human/user)
+	if(!user.has_language(/datum/language/dwarven))
 		return FALSE
-	to_chat(user, "<span class='notice'>You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops.</span>")
-	user.grant_all_languages()
-	new /obj/effect/decal/cleanable/ash(get_turf(user))
-	qdel(src)
+	. = ..()
 
 /obj/item/twohanded/war_hammer
 	name = "dwarven warhammer"
 	desc = "A very heavy warhammer, used to dent skulls unless they are already dented."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "greyscale_dwarven_warhammer0"
-	//item_state = "greyscale_dwarven_warhammer0"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -30,44 +26,40 @@
 	w_class = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron = 20000)
 	attack_verb = list("smashed", "dented", "bludeoned")
-	hitsound = 'sound/weapons/slam.ogg'
+	hitsound = 'sound/weapons/smash.ogg'
 	sharpness = IS_BLUNT
-	var/mob/living/carbon/human/creator
 
 
 /obj/item/twohanded/war_hammer/update_icon_state()
 	icon_state = "greyscale_dwarven_warhammer[wielded]"
 
+/obj/item/hatchet/dwarven
+	name = "dwarven "
+	desc = "Dwarf dwarf dwarf dwarf dwarf dwarf? DWARF!"
+	icon = 'icons/obj/items_and_weapons.dmi'
+	flags_1 = CONDUCT_1
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+
 /obj/item/hatchet/dwarven/axe
 	name = "dwarven hand axe"
 	desc = "A very sharp axe blade made of greatest dwarven metal."
-	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "greyscale_dwarven_axe"
 	item_state = "greyscale_dwarven_axe"
 	lefthand_file = 'icons/mob/inhands/weapons/axes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/axes_righthand.dmi'
 	custom_materials = list(/datum/material/iron = 10000)
-	flags_1 = CONDUCT_1
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	force = 15
 	throwforce = 16
-
-/obj/item/hatchet/dwarven/axe/Initialize()
-	. = ..()
-	AddComponent(/datum/component/butchering, 60, 80)
 
 /obj/item/hatchet/dwarven/javelin
 	name = "dwarven javelin"
 	desc = "A very sharp javelin made of greatest dwarven metal."
-	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "greyscale_dwarven_javelin"
 	item_state = "greyscale_dwarven_javelin"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
-	custom_materials = list(/datum/material/iron = 5000)
-	flags_1 = CONDUCT_1
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	custom_materials = list(/datum/material/iron = 10000)
 	force = 7
 	throwforce = 18
 	throw_speed = 4
@@ -139,8 +131,39 @@
 	overlay_state = "earth_rune"
 
 /obj/item/dwarven/rune_stone/earth/apply(atom/target, mob/user)
-	var/turf/T = get_turf(target)
-	new /obj/item/pickaxe(T)
+	var/stun_amt = 40
+	var/list/thrownatoms = list()
+	var/atom/throwtarget
+	var/distfromcaster
+	for(var/turf/T in targets) //Done this way so things don't get thrown all around hilariously.
+		for(var/atom/movable/AM in T)
+			thrownatoms += AM
+
+	for(var/am in thrownatoms)
+		var/atom/movable/AM = am
+		if(AM == user || AM.anchored)
+			continue
+
+		if(ismob(AM))
+			var/mob/M = AM
+			if(M.anti_magic_check(anti_magic_check, FALSE))
+				continue
+
+		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
+		distfromcaster = get_dist(user, AM)
+		if(distfromcaster == 0)
+			if(isliving(AM))
+				var/mob/living/M = AM
+				M.Paralyze(100)
+				M.adjustBruteLoss(5)
+				to_chat(M, "<span class='userdanger'>You're slammed into the floor by [user]!</span>")
+		else
+			new sparkle_path(get_turf(AM), get_dir(user, AM)) //created sparkles will disappear on their own
+			if(isliving(AM))
+				var/mob/living/M = AM
+				M.Paralyze(stun_amt)
+				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
+			AM.safe_throw_at(throwtarget, ((clamp((maxthrow - (clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user, force = repulse_force)//So stuff gets tossed around at the same time.
 	..()
 
 /obj/item/dwarven/rune_stone/air
