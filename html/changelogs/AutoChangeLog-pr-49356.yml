@@ -1,0 +1,6 @@
+author: "ExcessiveUseOfCobblestone"
+delete-after: True
+changes: 
+  - balance: "Helbital now is more simple to use and is based off not crit/softcrit/hardcrit. You want to be in hardcrit for the best brute healing."
+  - tweak: "Troph has now been converted into a C2 with tweaks, now named Probital. Same recipe. Downside is stamina damage"
+  - tweak: "Rhig has now been converted into a C2 with tweaks, now named Hercuri. Same Recipe. Downside is it can cool to dangerous levels."

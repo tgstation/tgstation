@@ -149,14 +149,14 @@
 	results = list(/datum/reagent/medicine/psicodine = 5)
 	required_reagents = list( /datum/reagent/medicine/mannitol = 2, /datum/reagent/water = 2, /datum/reagent/impedrezene = 1)
 
-/datum/chemical_reaction/rhigoxane
-	results = list(/datum/reagent/medicine/rhigoxane/ = 5)
+/datum/chemical_reaction/hercuri
+	results = list(/datum/reagent/medicine/C2/hercuri = 5)
 	required_reagents = list(/datum/reagent/cryostylane = 3, /datum/reagent/bromine = 1, /datum/reagent/lye = 1)
 	required_temp = 47
 	is_cold_recipe = TRUE
 
-/datum/chemical_reaction/trophazole
-	results = list(/datum/reagent/medicine/trophazole = 4)
+/datum/chemical_reaction/C2/probital
+	results = list(/datum/reagent/medicine/C2/probital = 4)
 	required_reagents = list(/datum/reagent/copper = 1, /datum/reagent/acetone = 2,  /datum/reagent/phosphorus = 1)
 
 /datum/chemical_reaction/granibitaluri
@@ -172,6 +172,3 @@
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/medical/suture/medicated(location)
 	return
-
-
-
