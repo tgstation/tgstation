@@ -55079,7 +55079,6 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/structure/chair/sofa/right,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
@@ -55095,7 +55094,6 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/structure/chair/sofa/left,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -55103,6 +55101,7 @@
 	c_tag = "Medbay Break Room";
 	network = list("ss13","medbay")
 	},
+/obj/structure/chair/comfy,
 /turf/open/floor/plasteel/white/side,
 /area/medical/break_room)
 "cum" = (
@@ -58788,7 +58787,9 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "cFW" = (
-/obj/structure/table/reinforced,
+/obj/structure/bodycontainer/morgue{
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "cFY" = (
@@ -59241,7 +59242,7 @@
 "cHw" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/organ_spawner,
+/obj/effect/spawner/lootdrop/memeorgans,
 /turf/open/floor/plasteel/white,
 /area/medical/abandoned)
 "cHy" = (
@@ -69186,6 +69187,12 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
+"dJr" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/mask/surgical,
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
 "dJv" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -72560,7 +72567,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/closed/wall,
+/obj/machinery/door/airlock/maintenance{
+	name = "Break Room Maintenance";
+	req_access_txt = "5"
+	},
+/turf/open/floor/plating,
 /area/medical/break_room)
 "lMz" = (
 /obj/structure/falsewall,
@@ -76657,11 +76668,11 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "vkR" = (
-/obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/preopen{
 	id = "medbreakroom";
 	name = "privacy shutter"
 	},
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
 /area/medical/break_room)
 "vlx" = (
@@ -104429,7 +104440,7 @@ vDg
 oOy
 mNW
 oMO
-cFW
+dJr
 cCe
 cxL
 bTs
