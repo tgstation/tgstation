@@ -440,7 +440,7 @@
 	icon_state = "poster1_legit"
 
 /obj/structure/sign/poster/official/nanotrasen_logo
-	name = "Nanotrasen Logo"
+	name = "\improper Nanotrasen logo"
 	desc = "A poster depicting the Nanotrasen logo."
 	icon_state = "poster2_legit"
 
