@@ -151,7 +151,13 @@
 		outside_tube()
 
 /obj/structure/transit_tube_pod/proc/outside_tube()
+	var/list/savedcontents = contents
+	var/saveddir = dir
+	var/turf/destination = get_edge_target_turf(src,saveddir)
+	visible_message("<span class='warning'>[src] ejects it's insides out!</span>")
 	deconstruct(FALSE)//we automatically deconstruct the pod
+	for(var/i in savedcontents)
+		i.throw_at(destination,rand(1,3),5)
 
 /obj/structure/transit_tube_pod/return_air()
 	return air_contents
