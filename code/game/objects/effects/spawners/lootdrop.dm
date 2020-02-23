@@ -48,10 +48,10 @@
 	name = "armory contraband gun spawner"
 	lootcount = 3
 	lootdoubles = FALSE
-
-	loot = list(/obj/item/grenade/iedcasing,
+	loot = list(
+				/obj/item/grenade/iedcasing,
 				/obj/item/grenade/smokebomb,
-				/obj/item/poster/random_contraband
+				/obj/item/poster/random_contraband,
 				/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
 				/obj/item/storage/fancy/cigarettes/cigpack_mindbreaker,
 				/obj/item/melee/baton/cattleprod,
