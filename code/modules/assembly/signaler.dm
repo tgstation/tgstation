@@ -242,6 +242,14 @@
 	icon_state = "vortex core"
 	anomaly_type = /obj/effect/anomaly/bhole
 
+/obj/item/assembly/signaler/anomaly/fluid
+	name = "\improper fluescent anomaly core"
+	desc = "The neutralized core of a fluescent anomaly. It is invaluable for reagent production."
+	icon_state = "fluid core"
+	anomaly_type = /obj/effect/anomaly/fluid
+
+	var/reagent_type
+
 /obj/item/assembly/signaler/anomaly/attack_self()
 	return
 

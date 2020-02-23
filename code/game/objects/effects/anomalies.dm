@@ -352,6 +352,10 @@
 	icon_state = "wetball"
 	density = FALSE
 
+	aSignal = /obj/item/assembly/signaler/anomaly/fluid
+
+	var/reagent_type
+
 	var/slip_time = 50
 	var/blood_drain = 50
 
@@ -359,10 +363,12 @@
 	var/smoke_range = 5
 	var/smoke_volume = 10
 
-
 /obj/effect/anomaly/fluid/Initialize()
 	. = ..()
+
 	create_reagents(10)
+	reagent_type = get_random_reagent_id()
+	aSignal.reagent_type = reagent_type
 
 /obj/effect/anomaly/fluid/anomalyEffect()
 	..()
@@ -373,7 +379,7 @@
 		C.blood_volume = max(0, blood_volume - blood_drain)
 
 	if(prob(smoke_chance))
-		reagents.add_reagent(get_random_reagent_id(), smoke_volume)
+		reagents.add_reagent(reagent_type, smoke_volume)
 		var/datum/effect_system/smoke_spread/chem/smoke = new()
 		smoke.set_up(reagents, smoke_range, get_turf(src), TRUE)
 		smoke.start()
