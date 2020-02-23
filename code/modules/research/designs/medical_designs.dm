@@ -91,6 +91,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/clone_disk
+	name = "DNA Cloning Scan-disk"
+	desc = "A disk with an inbuilt DNA scanner. It can be placed onto an organism to store its genetic sequence, and then used to clone said organism."
+	id = "clone_disk"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 300, /datum/material/glass = 100, /datum/material/silver = 50)
+	build_path = /obj/item/disk/cloning
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/noreactsyringe
 	name = "Cryo Syringe"
 	desc = "An advanced syringe that stops reagents inside from reacting. It can hold up to 20 units."

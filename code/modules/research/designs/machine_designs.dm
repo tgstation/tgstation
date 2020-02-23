@@ -587,6 +587,14 @@
 	category = list("Medical Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/board/cloning_pod
+	name = "Machine Design (Cloning Pod)"
+	desc = "The circuit board for a cloning pod."
+	id = "cloning_pod"
+	build_path = /obj/item/circuitboard/machine/cloning_pod
+	category = list("Medical Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/board/spaceship_navigation_beacon
 	name = "Machine Design (Bluespace Navigation Gigabeacon)"
 	desc = "The circuit board for a Bluespace Navigation Gigabeacon."

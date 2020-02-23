@@ -665,6 +665,16 @@
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stack/cable_coil = 2)
 
+/obj/item/circuitboard/machine/cloning_pod
+	name = "Cloning Pod (Computer Board)"
+	icon_state = "medical"
+	build_path = /obj/machinery/cloning_pod
+	req_components = list(
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/matter_bin = 2,
+		/obj/item/stock_parts/micro_laser = 1,
+		/obj/item/stack/sheet/glass = 1)
+
 /obj/item/circuitboard/machine/cryo_tube
 	name = "Cryotube (Machine Board)"
 	icon_state = "medical"

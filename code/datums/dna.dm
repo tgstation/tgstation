@@ -34,7 +34,7 @@
 
 	return ..()
 
-/datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = 0)
+/datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = FALSE)
 	if(!istype(destination))
 		return
 	destination.dna.unique_enzymes = unique_enzymes

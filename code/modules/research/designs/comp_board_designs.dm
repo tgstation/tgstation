@@ -80,6 +80,14 @@
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/board/cloning
+	name = "Machine Design (Cloning Console)"
+	desc = "The circuit board for a cloning console."
+	id = "cloning_console"
+	build_path = /obj/item/circuitboard/computer/cloning
+	category = list("Medical Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/board/pandemic
 	name = "Computer Design (PanD.E.M.I.C. 2200)"
 	desc = "Allows for the construction of circuit boards used to build a PanD.E.M.I.C. 2200 console."
@@ -303,7 +311,7 @@
 	build_path = /obj/item/circuitboard/computer/nanite_cloud_controller
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-	
+
 /datum/design/board/advanced_camera
 	name = "Computer Design (Advanced Camera Console)"
 	desc = "Allows for the construction of circuit boards used to build advanced camera consoles."

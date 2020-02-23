@@ -29,6 +29,7 @@ import { ChemPress } from './interfaces/ChemPress';
 import { ChemReactionChamber } from './interfaces/ChemReactionChamber';
 import { ChemSplitter } from './interfaces/ChemSplitter';
 import { ChemSynthesizer } from './interfaces/ChemSynthesizer';
+import { Cloning } from './interfaces/Cloning';
 import { CodexGigas } from './interfaces/CodexGigas';
 import { ComputerFabricator } from './interfaces/ComputerFabricator';
 import { Crayon } from './interfaces/Crayon';
@@ -253,6 +254,10 @@ const ROUTES = {
   codex_gigas: {
     component: () => CodexGigas,
     scrollable: false,
+  },
+  cloning: {
+    component: () => Cloning,
+    scrollable: true,
   },
   computer_fabricator: {
     component: () => ComputerFabricator,

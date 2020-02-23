@@ -293,6 +293,11 @@
 	icon_state = "medical"
 	build_path = /obj/machinery/computer/scan_consolenew
 
+/obj/item/circuitboard/computer/cloning
+	name = "Cloning Console (Computer Board)"
+	icon_state = "medical"
+	build_path = /obj/machinery/computer/cloning
+
 //Science
 
 /obj/item/circuitboard/computer/aifixer
