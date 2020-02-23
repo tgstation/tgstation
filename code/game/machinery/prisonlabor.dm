@@ -20,6 +20,10 @@
 	else
 		icon_state = "online"
 
+/obj/machinery/plate_press/Destroy()
+	QDEL_NULL(current_plate)
+	. = ..()
+
 /obj/machinery/plate_press/attackby(obj/item/I, mob/living/user, params)
 	if(machine_stat & (BROKEN|NOPOWER))
 		to_chat(user, "<span class='warning'>[src] has to be on to do this!</span>")
@@ -40,6 +44,7 @@
 	if(!pressing && current_plate)
 		work_press(user)
 
+///This proc attempts to create a plate. User cannot move during this process.
 /obj/machinery/plate_press/proc/work_press(mob/living/user)
 
 	pressing = TRUE
