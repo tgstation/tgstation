@@ -46,3 +46,5 @@ The TGS3 API is licensed as a subproject under the MIT license.
 See the footers of code/\_\_DEFINES/server\_tools.dm, code/modules/server\_tools/st\_commands.dm, and code/modules/server\_tools/st\_inteface.dm for the MIT license.
 
 All assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
+
+IF you read this, you are the big dum dum :P
