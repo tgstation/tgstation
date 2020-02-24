@@ -113,6 +113,16 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/beer/green/on_mob_end_metabolize(mob/living/M)
 	M.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, color)
 
+/datum/reagent/consumable/ethanol/beer/dwarven
+	name = "Dwarven beer"
+	description = "An alcoholic beverage brewed by the most ancient of the dwarves. Recipe was lost to time... or was it?"
+	color = "#664300" // rgb: 102, 67, 0
+	nutriment_factor = 1 * REAGENTS_METABOLISM
+	boozepwr = 50
+	taste_description = "rock water"
+	glass_name = "glass of dwarven beer"
+	glass_desc = "A freezing pint of dwarven beer."
+
 /datum/reagent/consumable/ethanol/kahlua
 	name = "Kahlua"
 	description = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936!"
@@ -355,6 +365,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "wineglass"
 	glass_name = "glass of wine"
 	glass_desc = "A very classy looking drink."
+	shot_glass_icon_state = "shotglassred"
+
+/datum/reagent/consumable/ethanol/rock
+	name = "Rock wine"
+	description = "Pioneers are said to have drunk this. Or was it ashwalkers? dwarves? anyways..."
+	color = "#7E4043" // rgb: 126, 64, 67
+	boozepwr = 50
+	taste_description = "bitter sweetness"
+	glass_icon_state = "wineglass"
+	glass_name = "glass of rock wine"
+	glass_desc = "A very rocky looking drink."
 	shot_glass_icon_state = "shotglassred"
 
 /datum/reagent/consumable/ethanol/lizardwine
@@ -717,7 +738,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/manly_dorf/on_mob_metabolize(mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.dna.check_mutation(DWARFISM) || HAS_TRAIT(H, TRAIT_ALCOHOL_TOLERANCE))
+		if(H.dna.check_mutation(DWARFISM) || HAS_TRAIT(H, TRAIT_ALCOHOL_TOLERANCE) || isdwarf(H))
 			to_chat(H, "<span class='notice'>Now THAT is MANLY!</span>")
 			boozepwr = 5 //We've had worse in the mines
 			dorf_mode = TRUE
@@ -727,6 +748,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		M.adjustBruteLoss(-2)
 		M.adjustFireLoss(-2)
 	return ..()
+
+/datum/reagent/consumable/ethanol/manly_dorf/ancient
+	name = "The Manliest Dorf"
+	description = "Secret recipe held by dwarves. They sold the old one so they had to make one for armok's sake!"
+	boozepwr = 150
+	glass_name = "The Manliest Dorf"
+
+/datum/reagent/consumable/ethanol/manly_dorf/ancient/on_mob_life(mob/living/carbon/M)
+	if(dorf_mode)
+		M.adjustBruteLoss(-M.drunkenness/50) //Manliest of dwarves
+		M.adjustToxLoss(-1) //Dorf dorf dorf dorf
 
 /datum/reagent/consumable/ethanol/longislandicedtea
 	name = "Long Island Iced Tea"
