@@ -558,7 +558,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment)
 	var/areatemp = get_temperature(environment)
 
-	if(stat != DEAD) // If you are dead your body does not stabilize naturally
+	if(!on_fire && stat != DEAD) // If you are dead or on fire your body does not stabilize naturally
 		natural_bodytemperature_stabilization(environment)
 
 	if(!on_fire || areatemp > bodytemperature) // If we are not on fire or the area is hotter
