@@ -81,6 +81,9 @@
 
 	var/list/alternate_appearances
 
+	///counts how many things are applying KEEP_TOGETHER to our appearance_flags, remove KEEP_TOGETHER when this reaches 0
+	var/keep_together_counter = 0
+
 /**
   * Called when an atom is created in byond (built in engine proc)
   *
@@ -144,6 +147,10 @@
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
+
+	//make sure starting value of keep_together is respected
+	if(appearance_flags & KEEP_TOGETHER)
+		keep_together_counter = 1
 
 	//atom color stuff
 	if(color)

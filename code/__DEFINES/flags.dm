@@ -129,3 +129,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 //alternate appearance flags
 #define AA_TARGET_SEE_APPEARANCE (1<<0)
 #define AA_MATCH_TARGET_OVERLAYS (1<<1)
+
+//setter for KEEP_TOGETHER to allow for multiple sources to set and unset it
+#define ADD_KEEP_TOGETHER(x) do {x.keep_together_counter++; x.appearance_flags |= KEEP_TOGETHER} while(0)
+//Do not call unless ADD_KEEP_TOGETHER already called!
+#define REMOVE_KEEP_TOGETHER(x) do {x.keep_together_counter--; if(!x.keep_together_counter) x.appearance_flags &= ~KEEP_TOGETHER} while(0)

@@ -32,6 +32,18 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/item_sound_override
 	///Can be used to override the stepsound a turf makes. MORE SLOOOSH
 	var/turf_sound_override
+	///what icon state to overlay
+	var/composite_layer_icon_state
+	///a cached filter for the composite
+	var/cached_composite_filter
+
+/datum/material/New()
+	. = ..()
+	if(composite_layer_icon_state)
+		var/texture_icon = icon('icons/materials/composite.dmi', composite_layer_icon_state)
+		cached_composite_filter = filter(type="layer", icon=texture_icon, blend_mode = BLEND_INSET_OVERLAY)
+
+
 
 ///This proc is called when the material is added to an object.
 /datum/material/proc/on_applied(atom/source, amount, material_flags)
@@ -40,6 +52,10 @@ Simple datum which is instanced once per type and is used for every object of sa
 			source.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		if(alpha)
 			source.alpha = alpha
+		if(composite_layer_icon_state)
+			//if applied repeatedly, like in a stack, transparent textures will become darker. Needs a fix.
+			ADD_KEEP_TOGETHER(source)
+			source.filters += cached_composite_filter
 
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		source.name = "[name] [source.name]"
@@ -98,6 +114,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(material_flags & MATERIAL_COLOR) //Prevent changing things with pre-set colors, to keep colored toolboxes their looks for example
 		if(color)
 			source.remove_atom_colour(FIXED_COLOUR_PRIORITY, color)
+		if(composite_layer_icon_state)
+			source.filters -= cached_composite_filter
+			REMOVE_KEEP_TOGETHER(source)
 		source.alpha = initial(source.alpha)
 
 	if(material_flags & MATERIAL_ADD_PREFIX)
