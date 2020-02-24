@@ -12,6 +12,7 @@
 
 
 /obj/item/biopsy_tool/proc/update_swab_icon(list/swabbed_items)
+	message_admins("biopsy tool thingies [swabbed_items.len]")
 	if(swabbed_items.len)
 		icon_state = "biopsy_full"
 	else

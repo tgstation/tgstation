@@ -17,6 +17,8 @@
 	var/virus_suspectibility = 1
 	///This var defines how much % the organism grows per process(), without modifiers, if you have all required reagents
 	var/growth_rate = 4
+	///Resulting mobs from growing this cell line
+	var/list/resulting_mobs = list()
 
 ///Handles growth of the micro_organism. This only runs if the micro organism is in a petri dish in the growing vat.
 /datum/micro_organism/cell_line/proc/HandleGrowth(var/datum/reagents/reagents)
