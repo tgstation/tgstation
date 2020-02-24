@@ -25,7 +25,7 @@
 	. = ..()
 
 /obj/machinery/plate_press/attackby(obj/item/I, mob/living/user, params)
-	if(machine_stat & (BROKEN|NOPOWER))
+	if(!is_operational())
 		to_chat(user, "<span class='warning'>[src] has to be on to do this!</span>")
 		return FALSE
 	if(pressing)
@@ -64,4 +64,3 @@
 	update_icon()
 
 	new /obj/item/stack/license_plates/filled(drop_location(), 1)
-
