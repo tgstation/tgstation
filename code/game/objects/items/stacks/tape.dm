@@ -17,6 +17,9 @@
 	var/overwrite_existing = FALSE
 
 /obj/item/stack/sticky_tape/afterattack(obj/item/I, mob/living/user)
+	if(!istype(I))
+		return
+
 	if(I.embedding && I.embedding == conferred_embed)
 		to_chat(user, "<span class='warning'>[I] is already coated in [src]!</span>")
 		return

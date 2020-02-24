@@ -196,6 +196,10 @@
 	var/mob/living/carbon/human/victim = parent
 	L.embedded_objects -= weapon
 
+	if(!victim)
+		weapon.forceMove(get_turf(weapon))
+		qdel(src)
+
 	if(to_hands)
 		victim.put_in_hands(weapon)
 	else
@@ -219,7 +223,7 @@
 	if(victim.stat == DEAD)
 		return
 
-	if(prob(pain_chance))
+	if(harmful  && prob(pain_chance))
 		var/damage = weapon.w_class * pain_mult
 		L.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage)
 		to_chat(victim, "<span class='userdanger'>[weapon] embedded in your [L.name] hurts!</span>")

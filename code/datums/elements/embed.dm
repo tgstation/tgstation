@@ -76,7 +76,7 @@
 		return
 
 	var/chance = embed_chance
-	if(!iswallturf(hit))
+	if(iswallturf(hit))
 		var/turf/closed/wall/W = hit
 		chance += 2 * (W.hardness - STANDARD_WALL_HARDNESS)
 
