@@ -103,3 +103,30 @@
 	qdel(src)
 	user.put_in_hands(M)
 	return 1
+
+/obj/item/seeds/wheat/cave
+	name = "pack of cavewheat seeds"
+	desc = "An ancient relative to todays wheat"
+	icon_state = "seed-cavewheat"
+	species = "cavewheat"
+	plantname = "Wheat Stalks"
+	product = /obj/item/reagent_containers/food/snacks/grown/cavewheat
+	production = 1
+	yield = 4
+	potency = 15
+	icon_dead = "cavewheat-dead"
+	mutatelist = list(/obj/item/seeds/wheat/oat, /obj/item/seeds/wheat/meat,/obj/item/seeds/wheat)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04)
+
+/obj/item/reagent_containers/food/snacks/grown/cavewheat
+	seed = /obj/item/seeds/wheat/cave
+	name = "cave wheat"
+	desc = "caveman's primary diet"
+	gender = PLURAL
+	icon_state = "cavewheat"
+	filling_color = "#F0E68C"
+	bitesize_mod = 2
+	foodtype = GRAIN
+	grind_results = list(/datum/reagent/consumable/flour = 0)
+	tastes = list("rock" = 1)
+	distill_reagent = /datum/reagent/consumable/ethanol/beer/dwarven
