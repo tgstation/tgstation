@@ -69,7 +69,7 @@
 				if(ishuman(A))
 					var/mob/living/carbon/human/H = A
 					if(HAS_TRAIT(H, TRAIT_PACIFISM))
-						H.visible_message("<span class='notice'>[src] avoids getting crushed.</span>", "<span class='warning'>You avoid crushing [src]!</span>")
+						H.visible_message("<span class='notice'>[H] carefully steps over [src].</span>", "<span class='notice'>You carefully step over [src] to avoid hurting it.</span>")
 						return
 				if(prob(squish_chance))
 					A.visible_message("<span class='notice'>[A] squashed [src].</span>", "<span class='notice'>You squashed [src].</span>")
