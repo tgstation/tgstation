@@ -50,6 +50,10 @@
 	custom_materials = list(/datum/material/iron = 20000)
 
 /obj/structure/destructible/dwarven/lava_forge/attackby(obj/item/I, mob/living/user, params)
+	var/mob/living/carbon/human/H = user
+	if(!H.has_language(/datum/language/dwarven))
+		to_chat(H, "<span class='notice'>You don't understand how to operate this ancient machinery!</span>")
+		return
 	if(!istype(I, /obj/item/stack/ore))
 		return ..()
 	var/obj/item/stack/ore/O = I
@@ -90,7 +94,7 @@
 		return
 	var/mob/living/carbon/human/H = user
 	if(!H.has_language(/datum/language/dwarven))
-		to_chat(H, "<span class='notice'>You don't understand the instructions written in that ancient tongue</span>")
+		to_chat(H, "<span class='notice'>You don't understand how to operate this ancient machinery!</span>")
 		return
 	if(isbodypart(I))
 		to_chat(H, "<span class='notice'>The [I.name] turns to ash as you impale it on the bone. Infuser brightly flashes and blood pool swells.</span>")
@@ -134,6 +138,10 @@
 	. = ..()
 
 /obj/structure/destructible/dwarven/mythril_press/attack_hand(mob/user)
+	var/mob/living/carbon/human/H = user
+	if(!H.has_language(/datum/language/dwarven))
+		to_chat(H, "<span class='notice'>You don't understand how to operate this ancient machinery!</span>")
+		return
 	press_mythril(user)
 	. = ..()
 
@@ -193,6 +201,10 @@
 
 
 /obj/structure/destructible/dwarven/workshop/AltClick(mob/user)
+	var/mob/living/carbon/human/H = user
+	if(!H.has_language(/datum/language/dwarven))
+		to_chat(H, "<span class='notice'>You don't understand how to operate this ancient machinery!</span>")
+		return
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 
@@ -202,12 +214,20 @@
 		state++
 
 /obj/structure/destructible/dwarven/workshop/attack_hand(mob/user)
+	var/mob/living/carbon/human/H = user
+	if(!H.has_language(/datum/language/dwarven))
+		to_chat(H, "<span class='notice'>You don't understand how to operate this ancient machinery!</span>")
+		return
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all()
 	. = ..()
 
 
 /obj/structure/destructible/dwarven/workshop/attacked_by(obj/item/I, mob/living/user)
+	var/mob/living/carbon/human/H = user
+	if(!H.has_language(/datum/language/dwarven))
+		to_chat(H, "<span class='notice'>You don't understand how to operate this ancient machinery!</span>")
+		return
 	if(istype(I,/obj/item/dwarven/mallet))
 		handle_mallet(user)
 		return
@@ -361,6 +381,10 @@
 
 
 /obj/structure/destructible/dwarven/anvil/attacked_by(obj/item/I, mob/living/user)
+	var/mob/living/carbon/human/H = user
+	if(!H.has_language(/datum/language/dwarven))
+		to_chat(H, "<span class='notice'>You don't understand how to operate this ancient machinery!</span>")
+		return
 	if(istype(I,/obj/item/dwarven/mallet) && current_mat != null)
 		handle_mallet(user,current_mat)
 		return
