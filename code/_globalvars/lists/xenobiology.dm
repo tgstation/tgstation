@@ -9,3 +9,6 @@ GLOBAL_LIST_INIT(cell_line_tables, list(
 GLOBAL_LIST_INIT(cell_virus_tables, list(
 	CELL_VIRUS_TABLE_DUMPSTER = list(/datum/micro_organism/virus = 1)
 	))
+
+///List of all possible sample colors
+GLOBAL_LIST_INIT(xeno_sample_colors, list(SAMPLE_YELLOW, SAMPLE_PURPLE, SAMPLE_GREEN, SAMPLE_BROWN, SAMPLE_GRAY))

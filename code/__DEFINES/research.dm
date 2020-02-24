@@ -91,3 +91,11 @@
 
 ///All cell virus types
 #define CELL_VIRUS_TABLE_DUMPSTER "cell_virus_dumpster_table"
+
+
+///All color defines for samples
+#define SAMPLE_YELLOW "#c0b823"
+#define SAMPLE_PURPLE "#342941"
+#define SAMPLE_GREEN "#98b944"
+#define SAMPLE_BROWN "#91542d"
+#define SAMPLE_GRAY "#5e5856"

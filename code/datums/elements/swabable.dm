@@ -15,7 +15,7 @@ This element is used in vat growing to allow for swabable behavior. This swabbin
 	///Amount of viruses on a single sample
 	var/virus_chance
 
-/datum/element/swabable/Attach(datum/target, cell_line_list_define, virus_define, cell_line_amount = 3, virus_chance = 50)
+/datum/element/swabable/Attach(datum/target, cell_line_define, virus_define, cell_line_amount = 3, virus_chance = 50)
 	if(!isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE
 

@@ -19,15 +19,18 @@
 	var/growth_rate = 4
 
 ///Handles growth of the micro_organism. This only runs if the micro organism is in a petri dish in the growing vat.
-/datum/micro_organism/cell_line/process()
+/datum/micro_organism/cell_line/HandleGrowth(var/datum/reagents/reagents)
 	. = ..()
-	if(!can_grow())
+	if(!can_grow(reagents))
 		return
 
-/datum/micro_organism/cell_line/proc/can_grow()
+/datum/micro_organism/cell_line/proc/can_grow(var/datum/reagents/reagents)
 	if(!petri_dish)
 		return FALSE
+	for(var/i in required_reagents)
+		if(!has_reagent())
+			return FALSE
 
-/datum/micro_organism/cell_line/proc/calculate_growth()
+/datum/micro_organism/cell_line/proc/calculate_growth(var/datum/reagents/reagents)
 	. = growth_rate
 

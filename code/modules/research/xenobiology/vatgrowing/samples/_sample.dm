@@ -4,6 +4,8 @@
 	var/list/micro_organisms = list()
 	///Prevents someone from stacking too many layers onto a swabber
 	var/sample_layers = 1
+	///Picked from a specific group of colors, limited to a specific group.
+	var/sample_color = SAMPLE_YELLOW
 
 ///Gets info from each of it's micro_organisms.
 /datum/biological_sample/proc/GetAllDetails()
@@ -22,7 +24,8 @@
 		temp_weight_list -= chosen_type
 		micro_organisms += new chosen_type
 	if(virus_chance)
-		micro_organisms += pickweight(GLOB.cell_virus_tables[virus_define])
+		micro_organisms += new pickweight(GLOB.cell_virus_tables[virus_define])
+	sample_color = pick(GLOB.xeno_sample_colors)
 
 
 /datum/biological_sample/proc/Merge(var/datum/biological_sample/other_sample)
@@ -31,3 +34,9 @@
 	micro_organisms += other_sample.micro_organisms
 	qdel(other_sample)
 	return TRUE
+
+
+/datum/biological_sample/proc/HandleGrowth(reagents)
+	for(var/i in micro_organisms)
+		var/datum/micro_organism/organism = I
+		organism.HandleGrowth(reagents)
