@@ -671,6 +671,7 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 /obj/item/stack/sheet/meat
 	name = "meat sheet"
 	desc = "Something's bloody meat compressed into a nice solid sheet"
+	singular_name = "meat sheet"
 	icon_state = "sheet-meat"
 	material_flags = MATERIAL_COLOR
 	custom_materials = list(/datum/material/meat = MINERAL_MATERIAL_AMOUNT)

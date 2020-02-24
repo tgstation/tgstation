@@ -7,7 +7,6 @@
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/metal
 	value_per_unit = 0.0025
-	composite_layer_icon_state = "meat"
 
 ///Breaks extremely easily but is transparent.
 /datum/material/glass
