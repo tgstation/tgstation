@@ -53,6 +53,14 @@
 	cost = 20
 	allow_duplicates = FALSE
 
+/datum/map_template/ruin/lavaland/dwarven_slumber
+	name = "Dwarven Awakening Spot"
+	id = "dwarf"
+	description = "Millenia ago dwarves ruled lavaland till a cataclysm came. Lucky ones sealed themselves inside a magical sarcophagus. First of the dwarves have awakened even tough the sarcophagus is damaged."
+	suffix = "lavaland_surface_dwarves.dmm"
+	cost = 20
+	allow_duplicates = FALSE
+
 /datum/map_template/ruin/lavaland/syndicate_base
 	name = "Syndicate Lava Base"
 	id = "lava-base"
