@@ -253,13 +253,14 @@
 	icon_state = "fluid core"
 	anomaly_type = /obj/effect/anomaly/fluid
 
-	var/reagent_type
+	///store our anomalies reagent type. water as default in-case the core was adminspawned
+	var/reagent_type = /datum/reagent/water
 
 /obj/item/assembly/signaler/anomaly/fluid/ReviveAnomaly(turf/T)
 	. = ..()
+
 	var/obj/effect/anomaly/fluid/F = .
-	if(reagent_type)
-		F.reagent_type = reagent_type
+	F.reagent_type = reagent_type
 
 
 /obj/item/assembly/signaler/anomaly/attack_self()

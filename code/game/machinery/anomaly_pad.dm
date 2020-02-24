@@ -25,7 +25,6 @@
 		idle_power_usage = active_power_usage * 0.1
 
 /obj/machinery/anomaly_pad/attackby(obj/item/I, mob/living/user, params)
-	. = ..()
 
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 		update_icon_state()
@@ -37,6 +36,9 @@
 	if(!anomaly && istype(I, /obj/item/assembly/signaler/anomaly) && user.dropItemToGround(I) && IsAnomalyApplicable(I, user))
 		CaptureAnomaly(I)
 		playsound(loc, 'sound/machines/click.ogg', 15, TRUE)
+		return
+
+	. = ..()
 
 /obj/machinery/anomaly_pad/process()
 	if(anomaly && (!is_operational() || get_turf(src) != get_turf(anomaly)))
