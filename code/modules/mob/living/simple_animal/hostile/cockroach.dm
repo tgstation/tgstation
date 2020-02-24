@@ -66,6 +66,11 @@
 		if(isliving(AM))
 			var/mob/living/A = AM
 			if(A.mob_size > MOB_SIZE_SMALL && !(A.movement_type & FLYING))
+				if(ishuman(A))
+					var/mob/living/carbon/human/H = A
+					if(HAS_TRAIT(H, TRAIT_PACIFISM))
+						H.visible_message("<span class='notice'>[src] avoids getting crushed.</span>", "<span class='warning'>You avoid crushing [src]!</span>")
+						return
 				if(prob(squish_chance))
 					A.visible_message("<span class='notice'>[A] squashed [src].</span>", "<span class='notice'>You squashed [src].</span>")
 					adjustBruteLoss(1) //kills a normal cockroach
