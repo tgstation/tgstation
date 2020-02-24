@@ -543,8 +543,6 @@
 		/obj/item/mecha_parts/part/clarke_torso,
 		/obj/item/mecha_parts/part/clarke_left_arm,
 		/obj/item/mecha_parts/part/clarke_right_arm,
-		/obj/item/mecha_parts/part/clarke_left_leg,
-		/obj/item/mecha_parts/part/clarke_right_leg,
 		/obj/item/mecha_parts/part/clarke_head
 	)
 

@@ -72,16 +72,6 @@
 	construction_time = 100
 	category = list("Ripley")
 
-//firefighter subtype
-/datum/design/firefighter_chassis
-	name = "Exosuit Chassis (APLU \"Firefighter\")"
-	id = "firefighter_chassis"
-	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/chassis/firefighter
-	materials = list(/datum/material/iron=20000)
-	construction_time = 100
-	category = list("Firefighter")
-
 /datum/design/ripley_torso
 	name = "Exosuit Torso (APLU \"Ripley\")"
 	id = "ripley_torso"
@@ -490,7 +480,7 @@
 	id = "clarke_torso"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/clarke_torso
-	materials = materials = list(/datum/material/iron=20000,/datum/material/glass = 7500)
+	materials = list(/datum/material/iron=20000,/datum/material/glass = 7500)
 	construction_time = 200
 	category = list("Clarke")
 
