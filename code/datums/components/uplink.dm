@@ -247,7 +247,7 @@
 	var/obj/item/pda/master = parent
 	if(trim(lowertext(new_ring_text)) != trim(lowertext(unlock_code)))
 		if(trim(lowertext(new_ring_text)) == trim(lowertext(failsafe_code)))
-			failsafe()
+			failsafe(user)
 			return COMPONENT_STOP_RINGTONE_CHANGE
 		return
 	locked = FALSE
@@ -267,7 +267,7 @@
 	var/frequency = arguments[1]
 	if(frequency != unlock_code)
 		if(frequency == failsafe_code)
-			failsafe()
+			failsafe(master.loc)
 		return
 	locked = FALSE
 	if(ismob(master.loc))
@@ -289,7 +289,7 @@
 		to_chat(user, "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>")
 
 	else if(compare_list(previous_attempts, failsafe_code))
-		failsafe()
+		failsafe(user)
 
 /datum/component/uplink/proc/setup_unlock_code()
 	unlock_code = generate_code()
@@ -312,11 +312,13 @@
 			L += rand(1, 360)
 		return L
 
-/datum/component/uplink/proc/failsafe()
+/datum/component/uplink/proc/failsafe(mob/living/carbon/user)
 	if(!parent)
 		return
 	var/turf/T = get_turf(parent)
 	if(!T)
 		return
+	message_admins("[ADMIN_LOOKUPFLW(user)] has triggered an uplink failsafe explosion at [AREACOORD(T)] The owner of the uplink was [ADMIN_LOOKUPFLW(owner)].")
+	log_game("[key_name(user)] triggered an uplink failsafe explosion. The owner of the uplink was [key_name(owner)].")
 	explosion(T,1,2,3)
 	qdel(parent) //Alternatively could brick the uplink.
