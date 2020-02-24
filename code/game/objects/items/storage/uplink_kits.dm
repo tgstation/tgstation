@@ -530,6 +530,16 @@
 	for(var/i in 1 to 3)
 		new /obj/item/grenade/spawnergrenade/buzzkill(src)
 
+/obj/item/storage/box/syndie_kit/clothes
+	name = "box of clothing"
+	desc = "This clothes are...really red."
+
+/obj/item/storage/box/syndie_kit/clothes/PopulateContents()
+	new /obj/item/clothing/under/syndicate/suspicious(src)
+	new /obj/item/clothing/mask/balaclava(src)
+	new /obj/item/clothing/shoes/jackboots(src)
+	new /obj/item/clothing/gloves/color/black(src)
+
 ///Subtype for the sabotage bundle. Contains three C4, two X4 and 6 signalers
 /obj/item/storage/backpack/duffelbag/syndie/sabotage
 

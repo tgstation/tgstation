@@ -20,6 +20,22 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
+/obj/item/clothing/under/syndicate/suspicious
+	name = "suspicious turtleneck"
+	desc = "Gee, you think the person wearing this might be a member of a clandestine terrorist organization?"
+	icon_state = "suspicious"
+	item_state = "bl_suit"
+	has_sensor = NO_SENSORS
+
+/obj/item/clothing/under/syndicate/suspicious/skirt
+	name = "suspicious skirtleneck"
+	desc = "Gee, you think the person wearing this might be a member of a clandestine terrorist organization?"
+	icon_state = "suspicious_skirt"
+	item_state = "bl_suit"
+	has_sensor = NO_SENSORS
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
 /obj/item/clothing/under/syndicate/tacticool
 	name = "tacticool turtleneck"
 	desc = "Just looking at it makes you want to buy an SKS, go into the woods, and -operate-."
