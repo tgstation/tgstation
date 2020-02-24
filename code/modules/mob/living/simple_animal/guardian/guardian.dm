@@ -54,11 +54,11 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/mob/living/summoner
 	var/range = 10 //how far from the user the spirit can be
 	var/toggle_button_type = /obj/screen/guardian/ToggleMode/Inactive //what sort of toggle button the hud uses
-	var/playstyle_string = "<span class='holoparasite bold'>You are a standard Guardian. You shouldn't exist!</span>"
+	var/playstyle_string = "<span class='holoparasite bold'>You are a Guardian without any type. You shouldn't exist!</span>"
 	var/magic_fluff_string = "<span class='holoparasite'>You draw the Coder, symbolizing bugs and errors. This shouldn't happen! Submit a bug report!</span>"
 	var/tech_fluff_string = "<span class='holoparasite'>BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!</span>"
 	var/carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP SOME SORT OF HORRIFIC BUG BLAME THE CODERS CARP CARP CARP</span>"
-	var/hive_fluff_string = "<span class='holoparasite'>The mass seems to be an anomaly, it shouldn't exist... Submit a bug report!</span>"
+	var/miner_fluff_string = "<span class='holoparasite'>You encounter... Mythril, it shouldn't exist... Submit a bug report!</span>"
 
 /mob/living/simple_animal/hostile/guardian/Initialize(mapload, theme)
 	GLOB.parasites += src
@@ -469,8 +469,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 						to_chat(src, "<span class='holoparasite'><font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> has been summoned!</span>")
 					if("carp")
 						to_chat(src, "<span class='holoparasite'><font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> has been caught!</span>")
-					if("hive")
-						to_chat(src, "<span class='holoparasite'><font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> has been created from the core!</span>")
+					if("miner")
+						to_chat(src, "<span class='holoparasite'><font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> has appeared!</span>")
 				guardians -= G
 				if(!guardians.len)
 					verbs -= /mob/living/proc/guardian_reset
@@ -607,9 +607,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		if("carp")
 			to_chat(user, "[G.carp_fluff_string]")
 			to_chat(user, "<span class='holoparasite'><b>[G.real_name]</b> has been caught!</span>")
-		if("hive")
-			to_chat(user, "[G.hive_fluff_string]")
-			to_chat(user, "<span class='holoparasite'><b>[G.real_name]</b> has been created from the core!</span>")
+		if("miner")
+			to_chat(user, "[G.miner_fluff_string]")
+			to_chat(user, "<span class='holoparasite'><b>[G.real_name]</b> has appeared!</span>")
 	user.verbs += /mob/living/proc/guardian_comm
 	user.verbs += /mob/living/proc/guardian_recall
 	user.verbs += /mob/living/proc/guardian_reset
@@ -721,23 +721,23 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	use_message = "<span class='holoparasite'>You put the fishsticks in your mouth...</span>"
 	used_message = "<span class='holoparasite'>Someone's already taken a bite out of these fishsticks! Ew.</span>"
 	failure_message = "<span class='holoparasite bold'>You couldn't catch any carp spirits from the seas of Lake Carp. Maybe there are none, maybe you fucked up.</span>"
-	ling_failure = "<span class='holoparasite bold'>Carp'sie is fine with changelings, so you shouldn't be seeing this message.</span>"
+	ling_failure = "<span class='holoparasite bold'>Carp'sie seems to not have taken you as the chosen one. Maybe it's because of your horrifying origin.</span>"
 	allowmultiple = TRUE
 
 /obj/item/guardiancreator/carp/choose
 	random = FALSE
 
 /obj/item/guardiancreator/miner
-	name = "power core"
-	desc = "Seems to be a very potent power core, may have originated from a strange meteor."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "roro core 2"
+	name = "dusty shard"
+	desc = "Seems to be a very old rock, may have originated from a strange meteor."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "dustyshard"
 	theme = "miner"
 	mob_name = "Power Miner"
-	use_message = "<span class='holoparasite'>You place the core near your heart...</span>"
-	used_message = "<span class='holoparasite'>This core seems to have decayed and doesn't work anymore...</span>"
-	failure_message = "<span class='holoparasite bold'>You couldn't gather any mass with the core, maybe try again later.</span>"
-	ling_failure = "<span class='holoparasite bold'>Even the dark energies seem to not want to be near your horrific body.</span>"
+	use_message = "<span class='holoparasite'>You pierce your skin with the shard...</span>"
+	used_message = "<span class='holoparasite'>This shard seems to have lost all its' power...</span>"
+	failure_message = "<span class='holoparasite bold'>The shard hasn't reacted at all. Maybe try again later...</span>"
+	ling_failure = "<span class='holoparasite bold'>The power of the shard seems to not react with your horrifying, mutated body.</span>"
 
 /obj/item/guardiancreator/miner/choose
 	random = FALSE
