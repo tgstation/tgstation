@@ -12,21 +12,16 @@
 #define ARTIFACT_QUALITY 1.4
 
 
-///This Componenet handles adding quality to items
+///This Component handles adding quality to items
 /datum/component/quality
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/list/quality_levels = list(UNUSABLE_QUALITY,SHODDY_QUALITY,POOR_QUALITY,NORMAL_QUALITY,GOOD_QUALITY,FINE_QUALITY,SUPERIOR_QUALITY,EXCEPTIONAL_QUALITY,ARTISAN_QUALITY,MASTERWORK_QUALITY,ARTIFACT_QUALITY )
 	///Normal distribution
 	var/quality_level
 
-
-	var/obj/item/parent_item
-
-
 	var/mob/living/carbon/human/creator
 	var/datum/mind/creator_mind
 
-	var/old_name
 	var/obj/item/old_parent_item
 
 
@@ -34,17 +29,22 @@
 /datum/component/quality/Initialize(mob/living/carbon/human/_creator,datum/skill/_skill,_quality_val)
 	if(!isitem(parent) || !_creator)
 		return COMPONENT_INCOMPATIBLE
-	var/quality_val //normal distribution
+	var/quality_val
+
 	if(_quality_val != null)
 		quality_val = _quality_val
 	else
 		quality_val = pick(2;0 ,4;1 ,6;2 ,4;3 ,2;4) // mormal distribution
 	creator = _creator
+
 	var/quality_bracket = creator.mind.get_skill_modifier(_skill, SKILL_QUALITY_MODIFIER)
 	creator_mind =  creator?.mind
-	parent_item = parent
+	var/obj/item/parent_item = parent
+
+	parent_item.has_quality = TRUE
+
 	old_parent_item = parent_item
-	old_name = parent_item.name
+
 	generate_quality(quality_val,quality_bracket)
 	apply_quality()
 
@@ -59,6 +59,7 @@
 
 ///Applies quality to the item2
 /datum/component/quality/proc/apply_quality()
+	var/obj/item/parent_item = parent
 	var/quality = quality_levels[quality_level+1] //lists start with 1
 	parent_item.force *= quality
 	parent_item.throwforce *= quality
@@ -71,22 +72,26 @@
 	parent_item.armor?.modifyAllRatings(armor_qual) // modifies all armor ratings
 	if(quality_level == 10)
 		parent_item.AddComponent(/datum/component/fantasy,10)
-	parent_item.name = handle_name(old_name)
+	parent_item.name = handle_name(old_parent_item.name)
 
 ///Returns the item to the state it was before the modification
 /datum/component/quality/proc/unmodify()
+	var/obj/item/parent_item = parent
 	var/quality = quality_levels[quality_level+1] //lists start with 1
 	parent_item = old_parent_item
-	parent_item.name = old_name
+	parent_item.name = old_parent_item.name
 	parent_item.force /= quality
 	parent_item.throwforce  /= quality
+
 	var/armor_qual = (quality - 1)*20
 	parent_item.armor = parent_item.armor?.modifyAllRatings(-armor_qual)
+
 	if(istype(parent_item,/obj/item/twohanded))
 		var/obj/item/twohanded/twohanded_item = parent_item
 		twohanded_item.force_unwielded /= quality // we dont know if it posses that var but it is still essential
 		twohanded_item.force_wielded /= quality
 
+	parent_item.has_quality = FALSE
 
 /datum/component/quality/Destroy()
 	unmodify()
