@@ -102,6 +102,10 @@
 /area/ruin/unpowered/ash_walkers
 	icon_state = "red"
 
+//dwarven sarcophagus
+/area/ruin/unpowered/dwarves
+	icon_state = "red"
+
 /area/ruin/powered/kinggoat_arena
 	name = "King Goat Arena"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
