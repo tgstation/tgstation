@@ -27,7 +27,7 @@
 		micro_organisms += new pickweight(GLOB.cell_virus_tables[virus_define])
 	sample_color = pick(GLOB.xeno_sample_colors)
 
-
+///Takes another sample and merges it into use. This can cause one very big sample but we limit it to 3 layers.
 /datum/biological_sample/proc/Merge(var/datum/biological_sample/other_sample)
 	if(sample_layers >= 3)//No more than 3 layers, at that point you're entering danger zone.
 		return FALSE
@@ -35,8 +35,7 @@
 	qdel(other_sample)
 	return TRUE
 
-
+///Call HandleGrowth on all our microorganisms.
 /datum/biological_sample/proc/HandleGrowth(reagents)
-	for(var/i in micro_organisms)
-		var/datum/micro_organism/organism = I
+	for(var/datum/micro_organism/cell_line/organism in micro_organisms) //Types because we don't grow viruses.
 		organism.HandleGrowth(reagents)
