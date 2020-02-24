@@ -340,7 +340,7 @@
 /obj/item/seeds/rocknut
 	name = "pack of rocknut mycelium"
 	desc = "This mycelium grows into rocks or nuts"
-	icon_state = "rocknut"
+	icon_state = "mycelium-rocknut"
 	species = "rocknut"
 	plantname = "Rock Nut Truffles"
 	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/rocknut
