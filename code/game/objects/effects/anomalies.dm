@@ -7,6 +7,8 @@
 	density = FALSE
 	anchored = TRUE
 	light_range = 3
+
+	var/suspended = FALSE //true for no move and no magic lightning fire explosions. used by anomaly pads
 	var/movechance = 70
 	var/obj/item/assembly/signaler/anomaly/aSignal = /obj/item/assembly/signaler/anomaly
 	var/area/impact_area
@@ -44,6 +46,8 @@
 	countdown.start()
 
 /obj/effect/anomaly/process()
+	if(suspended)
+		return
 	anomalyEffect()
 	if(death_time < world.time)
 		if(loc)
@@ -79,6 +83,14 @@
 /obj/effect/anomaly/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_ANALYZER)
 		to_chat(user, "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code].</span>")
+
+/obj/effect/anomaly/proc/Suspend()
+	suspended = TRUE
+	countdown.stop()
+
+/obj/effect/anomaly/proc/Unsuspend()
+	suspended = FALSE
+	countdown.start()
 
 ///////////////////////
 
@@ -357,7 +369,7 @@
 	var/reagent_type
 
 	var/slip_time = 50
-	var/blood_drain = 50
+	var/blood_drain = 20
 
 	var/smoke_chance = 10
 	var/smoke_range = 5
@@ -368,15 +380,18 @@
 
 	create_reagents(10)
 	reagent_type = get_random_reagent_id()
-	aSignal.reagent_type = reagent_type
+	var/obj/item/assembly/signaler/anomaly/fluid/F = aSignal
+	F.reagent_type = reagent_type
 
 /obj/effect/anomaly/fluid/anomalyEffect()
 	..()
 	for(var/turf/open/OT in range(4, src))
-		MakeSlippery(TURF_WET_LUBE, min_wet_time = slip_time)
+		OT.MakeSlippery(TURF_WET_LUBE, min_wet_time = slip_time)
 
 	for(var/mob/living/carbon/C in range(2, src))
-		C.blood_volume = max(0, blood_volume - blood_drain)
+		C.blood_volume = max(0, C.blood_volume - blood_drain)
+		to_chat(C, "<span class='boldwarning'>You feel drained!</span>")
+		playsound(C, 'sound/effects/splat.ogg', 50, TRUE)
 
 	if(prob(smoke_chance))
 		reagents.add_reagent(reagent_type, smoke_volume)

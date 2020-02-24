@@ -211,6 +211,11 @@
 		to_chat(user, "<span class='notice'>Analyzing... [src]'s stabilized field is fluctuating along frequency [format_frequency(frequency)], code [code].</span>")
 	..()
 
+///so we can properly override this in-case we need some special stuff passed along with it, like the reagent type with fluescent anomalies. also pass turf because qdel and
+/obj/item/assembly/signaler/anomaly/proc/ReviveAnomaly(turf/T)
+	qdel(src)
+	return new anomaly_type(T)
+
 //Anomaly cores
 /obj/item/assembly/signaler/anomaly/pyro
 	name = "\improper pyroclastic anomaly core"
@@ -249,6 +254,13 @@
 	anomaly_type = /obj/effect/anomaly/fluid
 
 	var/reagent_type
+
+/obj/item/assembly/signaler/anomaly/fluid/ReviveAnomaly(turf/T)
+	. = ..()
+	var/obj/effect/anomaly/fluid/F = .
+	if(reagent_type)
+		F.reagent_type = reagent_type
+
 
 /obj/item/assembly/signaler/anomaly/attack_self()
 	return

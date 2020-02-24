@@ -770,6 +770,15 @@
 	icon_state = "medical"
 	build_path = /obj/machinery/rnd/production/techfab/department/medical
 
+/obj/item/circuitboard/machine/anomaly_pad_liquid
+	name = "Chemical Anomaly Pad (Machine Board)"
+	icon_state = "medical"
+	build_path = /obj/machinery/anomaly_pad/liquid
+	req_components = list(
+		/obj/item/stock_parts/micro_laser = 1,
+		/obj/item/anomaly_neutralizer = 1,
+	)
+
 //Science
 
 /obj/item/circuitboard/machine/circuit_imprinter/department/science
@@ -942,6 +951,15 @@
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stock_parts/scanning_module = 1)
+
+/obj/item/circuitboard/machine/anomaly_pad
+	name = "Anomaly Pad (Machine Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/anomaly_pad
+	req_components = list(
+		/obj/item/stock_parts/micro_laser = 1,
+		/obj/item/anomaly_neutralizer = 1
+	)
 
 //Security
 
@@ -1207,3 +1225,4 @@
 		/obj/item/stock_parts/micro_laser = 2,
 		/obj/item/stock_parts/scanning_module = 2
 	)
+

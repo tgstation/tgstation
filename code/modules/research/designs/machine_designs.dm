@@ -610,3 +610,19 @@
 	build_path = /obj/item/circuitboard/machine/medipen_refiller
 	category = list ("Medical Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/board/anomaly_pad
+	name = "Machine Design (Anomaly Pad)"
+	desc = "The circuit board for an Anomaly Pad."
+	id = "anomaly_pad"
+	build_path = /obj/item/circuitboard/machine/anomaly_pad
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
+/datum/design/board/anomaly_pad_liquid
+	name = "Machine Design (Chemical Anomaly Pad)"
+	desc = "The circuit board for a Chemical Anomaly Pad."
+	id = "anomaly_pad_liquid"
+	build_path = /obj/item/circuitboard/machine/anomaly_pad_liquid
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
