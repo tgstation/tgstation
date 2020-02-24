@@ -31,7 +31,7 @@
 		else //no convert
 			thou_shall_heal = round(death_is_coming/45,0.1)
 			good_kind_of_healing = TRUE
-	M.adjustBruteLoss(thou_shall_heal, FALSE)
+	M.adjustBruteLoss(-thou_shall_heal, FALSE)
 
 	if(good_kind_of_healing && !reaping && prob(0.0001)) //janken with the grim reaper!
 		reaping = TRUE
