@@ -55,7 +55,7 @@
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF
-	visor_flags_inv = HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	visor_flags_inv = HIDEEYES|HIDEFACE
 
 /obj/item/clothing/head/helmet/space/plasmaman/Initialize()
 	. = ..()
