@@ -72630,7 +72630,7 @@
 "lfv" = (
 /obj/effect/mob_spawn/human/corpse/assistant{
 	belt = null;
-	husk = TRUE;
+	husk = 1;
 	id = null;
 	l_pocket = /obj/item/pen
 	},
