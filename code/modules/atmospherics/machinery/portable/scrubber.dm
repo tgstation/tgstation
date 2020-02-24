@@ -165,6 +165,41 @@
 			scrub(AT.return_air())
 
 /obj/machinery/portable_atmospherics/scrubber/huge/attackby(obj/item/W, mob/user)
+	if((W.tool_behaviour == TOOL_WRENCH) && !(machine_stat & BROKEN))
+		if(anchored)
+			user.visible_message( \
+				"[user] unanchors [src].", \
+				"<span class='notice'>You unanchor [src] [connected_port ? "and unfasten it from the port underneath it." : "."]</span>", \
+				"<span class='hear'>You hear a ratchet.</span>")
+			investigate_log("was unanchored [connected_port ? "and disconnected from [connected_port] " : NULL]by [key_name(user)].", INVESTIGATE_ATMOS)
+			W.play_tool_sound(src)
+			if(connected_port)
+				disconnect()
+			else
+				anchored = FALSE
+			update_icon()
+			if(!movable && on)
+				on = FALSE
+				to_chat(user, "<span class='notice'>[src] automatically deactivates.</span>")
+			return
+		else if(!anchored)
+			user.visible_message( \
+				"[user] anchors [src].", \
+				"<span class='notice'>You anchor [src].</span>", \
+				"<span class='hear'>You hear a ratchet.</span>")
+			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
+			W.play_tool_sound(src)
+			if(possible_port && connect(possible_port))
+				to_chat(user, "<span class='notice'>[name] automatically connects to the port underneath it.</span>")
+				investigate_log("was anchored and connected to [possible_port] by [key_name(user)].", INVESTIGATE_ATMOS)
+			else
+				anchored = TRUE
+				investigate_log("was anchored by [key_name(user)].", INVESTIGATE_ATMOS)
+			update_icon()
+	else
+		return ..()
+
+/obj/machinery/portable_atmospherics/scrubber/huge/attackby(obj/item/W, mob/user)
 	if(default_unfasten_wrench(user, W))
 		if(!movable)
 			on = FALSE
