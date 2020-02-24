@@ -198,10 +198,3 @@
 			update_icon()
 	else
 		return ..()
-
-/obj/machinery/portable_atmospherics/scrubber/huge/attackby(obj/item/W, mob/user)
-	if(default_unfasten_wrench(user, W))
-		if(!movable)
-			on = FALSE
-	else
-		return ..()
