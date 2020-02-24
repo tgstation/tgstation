@@ -256,7 +256,7 @@ GENE SCANNER
 		message = "\n<span class='alert ml-2'>Subject does not have eyes.</span>"
 		if(istype(eyes))
 			message = ""
-			if(HAS_TRAIT(C, TRAIT_BLIND))
+			if(C.is_blind())
 				message += "\n<span class='alert ml-2'>Subject is blind.</span>"
 			if(HAS_TRAIT(C, TRAIT_NEARSIGHT))
 				message += "\n<span class='alert ml-2'>Subject is nearsighted.</span>"
