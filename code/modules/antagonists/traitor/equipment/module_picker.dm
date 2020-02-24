@@ -1,6 +1,6 @@
 /// The datum and interface for the malf unlock menu, which lets them choose actions to unlock.
 /datum/module_picker
-	var/name = "Malf Module Menu"
+	var/name = "Malfunction Modules Menu"
 	var/ui_x = 620
 	var/ui_y = 525
 	var/selected_cat
@@ -41,17 +41,20 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "module_picker", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "uplink", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /datum/module_picker/ui_data(mob/user)
 	var/list/data = list()
-	data["processing_time"] = processing_time
+	data["points"] = processing_time
 	data["compact_mode"] = compact_mode
 	return data
 
 /datum/module_picker/ui_static_data(mob/user)
 	var/list/data = list()
+	data["lockable"] = FALSE
+	data["currency"] = "Processing Time"
+	data["currency_short"] = "PT"
 
 	data["categories"] = list()
 	for(var/category in possible_modules)
@@ -81,7 +84,7 @@
 			var/list/buyable_modules = list()
 			for(var/category in possible_modules)
 				buyable_modules += possible_modules[category]
-			var/module = locate(params["item"]) in buyable_modules
+			var/module = locate(params["ref"]) in buyable_modules
 			if(!module || !(module in buyable_modules))
 				return
 			var/datum/AI_Module/AM = module

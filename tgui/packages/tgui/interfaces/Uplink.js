@@ -33,7 +33,9 @@ export class Uplink extends Component {
     const {
       compact_mode,
       lockable,
-      telecrystals,
+      points,
+      currency,
+      currency_short,
       categories = [],
     } = data;
     const { hoveredItem, currentSearch } = this.state;
@@ -42,8 +44,8 @@ export class Uplink extends Component {
         title={(
           <Box
             inline
-            color={telecrystals > 0 ? 'good' : 'bad'}>
-            {telecrystals} TC
+            color={points > 0 ? 'good' : 'bad'}>
+            {points} {currency}
           </Box>
         )}
         buttons={(
@@ -85,6 +87,7 @@ export class Uplink extends Component {
               onBuyMouseOut={item => this.setHoveredItem({})}
               onBuy={item => act(ref, 'buy', {
                 item: item.name,
+                ref: item.ref,
               })} />
           </table>
         ) : (
@@ -103,11 +106,13 @@ export class Uplink extends Component {
                       compact={compact_mode}
                       items={items}
                       hoveredItem={hoveredItem}
-                      telecrystals={telecrystals}
+                      points={points}
+                      currency_short={currency_short}
                       onBuyMouseOver={item => this.setHoveredItem(item)}
                       onBuyMouseOut={item => this.setHoveredItem({})}
                       onBuy={item => act(ref, 'buy', {
                         item: item.name,
+                        ref: item.ref,
                       })} />
                   )}
                 </Tabs.Tab>
@@ -124,8 +129,9 @@ const ItemList = props => {
   const {
     items,
     hoveredItem,
-    telecrystals,
+    points,
     compact,
+    currency_short,
     onBuy,
     onBuyMouseOver,
     onBuyMouseOut,
@@ -136,7 +142,7 @@ const ItemList = props => {
       <Table>
         {items.map(item => {
           const notSameItem = hoveredItem && hoveredItem.name !== item.name;
-          const notEnoughHovered = telecrystals - hoveredCost < item.cost;
+          const notEnoughHovered = points - hoveredCost < item.cost;
           const disabledDueToHovered = notSameItem && notEnoughHovered;
           return (
             <Table.Row
@@ -148,8 +154,8 @@ const ItemList = props => {
               <Table.Cell collapsing textAlign="right">
                 <Button
                   fluid
-                  content={item.cost + " TC"}
-                  disabled={telecrystals < item.cost || disabledDueToHovered}
+                  content={item.cost + " " + currency_short}
+                  disabled={points < item.cost || disabledDueToHovered}
                   tooltip={item.desc}
                   tooltipPosition="left"
                   onmouseover={() => onBuyMouseOver(item)}
@@ -164,7 +170,7 @@ const ItemList = props => {
   }
   return items.map(item => {
     const notSameItem = hoveredItem && hoveredItem.name !== item.name;
-    const notEnoughHovered = telecrystals - hoveredCost < item.cost;
+    const notEnoughHovered = points - hoveredCost < item.cost;
     const disabledDueToHovered = notSameItem && notEnoughHovered;
     return (
       <Section
@@ -173,8 +179,8 @@ const ItemList = props => {
         level={2}
         buttons={(
           <Button
-            content={item.cost + ' TC'}
-            disabled={telecrystals < item.cost || disabledDueToHovered}
+            content={item.cost + " " + currency_short}
+            disabled={points < item.cost || disabledDueToHovered}
             onmouseover={() => onBuyMouseOver(item)}
             onmouseout={() => onBuyMouseOut(item)}
             onClick={() => onBuy(item)} />
