@@ -136,6 +136,7 @@
 /obj/projectile/proc/prehit(atom/target)
 	return TRUE
 
+/// Called when the projectile hits something
 /obj/projectile/proc/on_hit(atom/target, blocked = FALSE)
 	if(fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle)
