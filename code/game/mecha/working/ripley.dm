@@ -14,8 +14,6 @@
 	max_equip = 6
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)
-	var/list/cargo = new
-	var/cargo_capacity = 15
 	var/hides = 0
 	enclosed = FALSE //Normal ripley has an open cockpit design
 	enter_delay = 10 //can enter in a quarter of the time of other mechs
@@ -24,24 +22,7 @@
 
 /obj/mecha/working/ripley/Move()
 	. = ..()
-	if(.)
-		collect_ore()
 	update_pressure()
-
-/obj/mecha/working/ripley/proc/collect_ore()
-	if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in equipment)
-		var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in cargo
-		if(ore_box)
-			for(var/obj/item/stack/ore/ore in range(1, src))
-				if(ore.Adjacent(src) && ((get_dir(src, ore) & dir) || ore.loc == loc)) //we can reach it and it's in front of us? grab it!
-					ore.forceMove(ore_box)
-
-/obj/mecha/working/ripley/Destroy()
-	for(var/atom/movable/A in cargo)
-		A.forceMove(drop_location())
-		step_rand(A)
-	cargo.Cut()
-	return ..()
 
 /obj/mecha/working/ripley/go_out()
 	..()
@@ -71,25 +52,6 @@
 	step_in = 4
 	armor = list("melee" = 40, "bullet" = 20, "laser" = 10, "energy" = 20, "bomb" = 40, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	wreckage = /obj/structure/mecha_wreckage/ripley/mkii
-	enclosed = TRUE
-	enter_delay = 40
-	silicon_icon_state = null
-	opacity = TRUE
-
-/obj/mecha/working/ripley/firefighter
-	desc = "Autonomous Power Loader Unit MK-III. This model is refitted with a pressurized cabin and additional thermal protection."
-	name = "\improper APLU MK-III \"Firefighter\""
-	icon_state = "firefighter"
-	max_temperature = 65000
-	max_integrity = 250
-	fast_pressure_step_in = 2 //step_in while in low pressure conditions
-	slow_pressure_step_in = 4 //step_in while in normal pressure conditions
-	step_in = 4
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	lights_power = 7
-	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 60, "bio" = 0, "rad" = 70, "fire" = 100, "acid" = 100)
-	max_equip = 5 // More armor, less tools
-	wreckage = /obj/structure/mecha_wreckage/ripley/firefighter
 	enclosed = TRUE
 	enter_delay = 40
 	silicon_icon_state = null
