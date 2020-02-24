@@ -272,7 +272,7 @@
 
 	var/list/departments = target_dept
 	if(is_centcom)
-		departments = list("Centcom" = get_all_centcom_jobs())
+		departments = list("CentCom" = get_all_centcom_jobs())
 	else if(isnull(departments))
 		departments = list(
 			CARDCON_DEPARTMENT_COMMAND = list("Captain"),//lol
