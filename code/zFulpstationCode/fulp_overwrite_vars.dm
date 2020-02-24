@@ -186,7 +186,7 @@
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/healthanalyzer,
 		/obj/item/reagent_containers/borghypo,
-		/obj/item/borg/apparatus/beaker,
+		/obj/item/borg/apparatus/beaker/medical,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/surgical_drapes,
@@ -207,6 +207,11 @@
 
 /datum/techweb_node/cyborg_upg_med //Adds the heal beam upgrade to the list, removes the defib as it's unnecessary now.
 	design_ids = list("borg_upgrade_piercinghypospray", "borg_upgrade_expandedsynthesiser", "borg_upgrade_pinpointer", "borg_upgrade_surgicalprocessor", "borg_upgrade_beakerapp", "borg_upgrade_medbeam")
+
+/obj/item/borg/upgrade/beaker_app
+	name = "secondary medicine storage apparatus"
+	desc = "A supplementary medicine storage apparatus for medical cyborgs."
+
 
 //***************************************************************************
 //** FULPSTATION MEDBORG CHANGES by Surrealistik Nov 2019-Feb 2020 ENDS

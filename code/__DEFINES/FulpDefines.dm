@@ -59,3 +59,7 @@ GLOBAL_LIST_EMPTY(mouths_beefman)//, list( "Smile1", "Smile2", "Frown1", "Frown2
 #define FORCETRAINING_BLOCKCHANCE	30
 
 #define MARTIALART_STARTERSITH "starter sith"
+
+//MEDBORG UPDATE -Surrealistik Feb 2020
+
+#define SYNTHFLESH_HUSKFIX_THRESHOLD 40 //For instabitaluri/synthflesh; allows maxed patches to heal burn husking.

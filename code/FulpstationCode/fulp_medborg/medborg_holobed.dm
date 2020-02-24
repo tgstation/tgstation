@@ -149,10 +149,6 @@
 		return
 	visible_message("<span class='warning'>[src] suddenly flickers and vanishes!</span>")
 	qdel(src)
-
-
-
-
 /obj/structure/bed/holobed/proc/validate_location()
 	if(!projector) //nothing projecting the bed so auto-fail
 		return FALSE
@@ -161,4 +157,3 @@
 		return TRUE
 	else
 		return FALSE*/
-
