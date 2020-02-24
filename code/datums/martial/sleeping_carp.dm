@@ -5,6 +5,7 @@
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
 	id = MARTIALART_SLEEPINGCARP
+	block_chance = 40
 	allow_temp_override = FALSE
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
 	
@@ -93,6 +94,24 @@
 		return TRUE
 	return ..()
 	
+/datum/martial_art/the_sleeping_carp/on_projectile_hit(mob/living/carbon/human/A, obj/projectile/P, def_zone)
+	. = ..()
+	if(A.incapacitated(FALSE, TRUE)) //NO STUN
+		return BULLET_ACT_HIT
+	if(!(A.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
+		return BULLET_ACT_HIT
+	if(A.dna && A.dna.check_mutation(HULK)) //NO HULK
+		return BULLET_ACT_HIT
+	if(!isturf(A.loc)) //NO MOTHERFLIPPIN MECHS!
+		return BULLET_ACT_HIT
+	if(A.in_throw_mode)	
+		A.visible_message("<span class='danger'>[A] effortlessly swats the projectile aside! They can block bullets with their bare hands!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+		playsound(get_turf(A), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
+		P.firer = A
+		P.setAngle(rand(0, 360))//SHING
+		return BULLET_ACT_FORCE_PIERCE
+	return BULLET_ACT_HIT
+	
 /datum/martial_art/the_sleeping_carp/teach(mob/living/carbon/human/H, make_temporary = FALSE)
 	. = ..()
 	if(!.)
@@ -132,10 +151,10 @@
 
 	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>")
 
-	to_chat(usr, "<span class='notice'>Gnashing Teeth</span>: Harm Harm. Deal additional damage ever second punch, with a chance for even more damage!")
+	to_chat(usr, "<span class='notice'>Gnashing Teeth</span>: Harm Harm. Deal additional damage every second punch, with a chance for even more damage!")
 	to_chat(usr, "<span class='notice'>Crashing Wave Kick</span>: Harm Disarm. Launch people brutally across rooms, and away from you.")
 	to_chat(usr, "<span class='notice'>Keelhaul</span>: Harm Grab. Kick opponents to the floor. Against prone targets, deal additional stamina damage and disarm them.")
-	to_chat(usr, "<span class='notice'>In addition, your body has become incredibly resilient to most forms of attack. Weapons cannot readily pierce your hardened skin, and you are highly resistant to stuns and knockdowns, and quickly recover from stamina damage. However, you are not invincible, and sustained damage will take it's toll.</span>")
+	to_chat(usr, "<span class='notice'>In addition, your body has become incredibly resilient to most forms of attack. Weapons cannot readily pierce your hardened skin, and you are highly resistant to stuns and knockdowns, and can block melee attacks and all projectiles in Throw Mode. However, you are not invincible, and sustained damage will take it's toll.</span>")
 
 /obj/item/twohanded/bostaff
 	name = "bo staff"
