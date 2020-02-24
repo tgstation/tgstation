@@ -123,42 +123,6 @@
 	var/obj/item/mecha_parts/mecha_equipment/mining_scanner/scanner = new
 	scanner.attach(src)
 
-/obj/mecha/working/ripley/Exit(atom/movable/O)
-	if(O in cargo)
-		return 0
-	return ..()
-
-/obj/mecha/working/ripley/Topic(href, href_list)
-	..()
-	if(href_list["drop_from_cargo"])
-		var/obj/O = locate(href_list["drop_from_cargo"]) in cargo
-		if(O)
-			occupant_message("<span class='notice'>You unload [O].</span>")
-			O.forceMove(drop_location())
-			cargo -= O
-			log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]", LOG_MECHA)
-	return
-
-
-/obj/mecha/working/ripley/contents_explosion(severity, target)
-	for(var/X in cargo)
-		var/obj/O = X
-		if(prob(30/severity))
-			cargo -= O
-			O.forceMove(drop_location())
-	. = ..()
-
-/obj/mecha/working/ripley/get_stats_part()
-	var/output = ..()
-	output += "<b>Cargo Compartment Contents:</b><div style=\"margin-left: 15px;\">"
-	if(cargo.len)
-		for(var/obj/O in cargo)
-			output += "<a href='?src=[REF(src)];drop_from_cargo=[REF(O)]'>Unload</a> : [O]<br>"
-	else
-		output += "Nothing"
-	output += "</div>"
-	return output
-
 /obj/mecha/working/ripley/proc/update_pressure()
 	var/turf/T = get_turf(loc)
 
@@ -170,15 +134,3 @@
 		step_in = slow_pressure_step_in
 		for(var/obj/item/mecha_parts/mecha_equipment/drill/drill in equipment)
 			drill.equip_cooldown = initial(drill.equip_cooldown)
-
-/obj/mecha/working/ripley/relay_container_resist(mob/living/user, obj/O)
-	to_chat(user, "<span class='notice'>You lean on the back of [O] and start pushing so it falls out of [src].</span>")
-	if(do_after(user, 300, target = O))
-		if(!user || user.stat != CONSCIOUS || user.loc != src || O.loc != src )
-			return
-		to_chat(user, "<span class='notice'>You successfully pushed [O] out of [src]!</span>")
-		O.forceMove(drop_location())
-		cargo -= O
-	else
-		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
-			to_chat(user, "<span class='warning'>You fail to push [O] out of [src]!</span>")
