@@ -42,7 +42,7 @@
 		RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT_RND, .proc/add_event) //Mood events that are only for RnD members
 
 /datum/component/mood/proc/print_mood(mob/user)
-	var/msg = "<span class='info'>*---------*\n<EM>Your current mood</EM></span>\n"
+	var/msg = "<span class='info'>*---------*\n<EM>My current mental status:</EM></span>\n"
 	msg += "<span class='notice'>My current sanity: </span>" //Long term
 	switch(sanity)
 		if(SANITY_GREAT to INFINITY)
