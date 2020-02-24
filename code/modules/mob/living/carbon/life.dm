@@ -36,6 +36,7 @@
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 		LoadComponent(/datum/component/rot/corpse)
+		med_hud_set_status()
 
 	check_cremation()
 
