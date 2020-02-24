@@ -201,7 +201,7 @@
 
 	for(var/thing in C.parallax_layers)
 		var/obj/screen/parallax_layer/L = thing
-		L.update_status(mymob)
+		L.update_status(posobj)
 		if (L.view_sized != C.view)
 			L.update_o(C.view)
 
@@ -283,7 +283,7 @@
 	add_overlay(new_overlays)
 	view_sized = view
 
-/obj/screen/parallax_layer/proc/update_status(mob/M)
+/obj/screen/parallax_layer/proc/update_status(turf/posobj)
 	return
 
 /obj/screen/parallax_layer/layer_1
@@ -323,12 +323,8 @@
 	speed = 3
 	layer = 30
 
-/obj/screen/parallax_layer/planet/update_status(mob/M)
-	var/turf/T = get_turf(M)
-	if(is_station_level(T.z))
-		invisibility = 0
-	else
-		invisibility = INVISIBILITY_ABSTRACT
+/obj/screen/parallax_layer/planet/update_status(turf/posobj)
+	invisibility = is_station_level(posobj.z) ? 0 : INVISIBILITY_ABSTRACT
 
 /obj/screen/parallax_layer/planet/update_o()
 	return //Shit wont move
