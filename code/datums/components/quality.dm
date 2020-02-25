@@ -56,7 +56,6 @@ Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead bec
 	var/obj/item/parent_item = parent
 	old_name = parent_item.name
 	//we set the has_quality to true so no more quality components can be added
-	parent_item.has_quality = TRUE
 
 	generate_quality(quality_val,quality_skill_modifier)
 	apply_quality()
@@ -113,7 +112,6 @@ Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead bec
 		twohanded_item.force_unwielded /= quality // we dont know if it posses that var but it is still essential
 		twohanded_item.force_wielded /= quality
 
-	parent_item.has_quality = FALSE
 
 /datum/component/quality/Destroy()
 	unmodify()
