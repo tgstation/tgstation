@@ -7,8 +7,8 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner
 	name = "demonic-frost miner"
 	desc = "An extremely geared miner, driven crazy or possessed by the demonic forces here, either way a terrifying enemy."
-	health = 2500
-	maxHealth = 2500
+	health = 1250
+	maxHealth = 1250
 	icon_state = "demonic_miner"
 	icon_living = "demonic_miner"
 	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
@@ -33,6 +33,8 @@ Difficulty: Very Hard
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
 	var/projectile_speed_multiplier = 1
+	var/enraged = FALSE
+	var/enraging = FALSE
 	gps_name = "Demonic Signal"
 	achievement_type = /datum/award/achievement/boss/demonic_miner_kill
 	crusher_achievement_type = /datum/award/achievement/boss/demonic_miner_crusher
@@ -71,8 +73,9 @@ Difficulty: Very Hard
 	chosen_attack_num = 3
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire()
-	projectile_speed_multiplier = 1 + 1 * (maxHealth - health) / maxHealth // ranges from normal to double speed
-	SetRecoveryTime(50, 30)
+	check_enraged()
+	projectile_speed_multiplier = 1 + enraged // ranges from normal to 2x speed
+	SetRecoveryTime(80, 80)
 
 	if(client)
 		switch(chosen_attack)
@@ -84,24 +87,30 @@ Difficulty: Very Hard
 				ice_shotgun()
 		return
 
-	chosen_attack = rand(1, 3)
-	if(health >= maxHealth * 0.5)
+	if(!enraged || prob(50))
+		chosen_attack = rand(1, 3)
 		switch(chosen_attack)
 			if(1)
-				frost_orbs()
+				if(prob(70))
+					frost_orbs()
+				else
+					frost_orbs(3, list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 			if(2)
-				snowball_machine_gun(60)
+				if(prob(70))
+					snowball_machine_gun(60)
+				else
+					INVOKE_ASYNC(src, .proc/ice_shotgun, 5, list(list(-180, -140, -100, -60, -20, 20, 60, 100, 140), list(-160, -120, -80, -40, 0, 40, 80, 120, 160)))
+					snowball_machine_gun(5 * 8, 5)
 			if(3)
-				ice_shotgun()
+				if(prob(70))
+					ice_shotgun()
+				else
+					ice_shotgun(5, list(list(0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330), list(-30, -15, 0, 15, 30)))
 	else
+		chosen_attack = rand(1, 1)
 		switch(chosen_attack)
 			if(1)
-				frost_orbs(2, list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
-			if(2)
-				INVOKE_ASYNC(src, .proc/ice_shotgun, 5, list(list(-180, -140, -100, -60, -20, 20, 60, 100, 140), list(-160, -120, -80, -40, 0, 40, 80, 120, 160)))
-				snowball_machine_gun(5 * 8, 5)
-			if(3)
-				ice_shotgun(5, list(list(0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330), list(-30, -15, 0, 15, 30)))
+				aoe_stomp()
 
 /obj/projectile/frost_orb
 	name = "frost orb"
@@ -143,7 +152,19 @@ Difficulty: Very Hard
 	visible_message("<span class='danger'>[src] absorbs the explosion!</span>", "<span class='userdanger'>You absorb the explosion!</span>")
 	return
 
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/frost_orbs(added_delay = 2, list/shoot_dirs = pick(GLOB.cardinals, GLOB.diagonals))
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Goto(target, delay, minimum_distance)
+	if(!enraging)
+		. = ..()
+
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/MoveToTarget(list/possible_targets)
+	if(!enraging)
+		. = ..()
+
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Move()
+	if(!enraging)
+		. = ..()
+
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/frost_orbs(added_delay = 6, list/shoot_dirs = pick(GLOB.cardinals, GLOB.diagonals))
 	for(var/dir in shoot_dirs)
 		var/turf/startloc = get_turf(src)
 		var/turf/endloc = get_turf(target)
@@ -158,11 +179,11 @@ Difficulty: Very Hard
 		P.fire(dir2angle(dir))
 		addtimer(CALLBACK(src, .proc/orb_explosion, P), 20) // make the orbs home in after a second
 		SLEEP_CHECK_DEATH(added_delay)
-	SetRecoveryTime(15, 40)
+	SetRecoveryTime(20, 40)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/orb_explosion(obj/projectile/orb)
 	var/spread = 5
-	for(var/i in 1 to 10)
+	for(var/i in 1 to 6)
 		var/turf/startloc = get_turf(orb)
 		var/turf/endloc = get_turf(target)
 		if(!startloc || !endloc)
@@ -190,7 +211,7 @@ Difficulty: Very Hard
 			P.original = target
 		P.fire()
 		SLEEP_CHECK_DEATH(1)
-	SetRecoveryTime(15, shots + 10)
+	SetRecoveryTime(15, 15)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/ice_shotgun(shots = 5, list/patterns = list(list(-40, -20, 0, 20, 40), list(-30, -10, 10, 30)))
 	for(var/i in 1 to shots)
@@ -209,3 +230,37 @@ Difficulty: Very Hard
 			P.fire()
 		SLEEP_CHECK_DEATH(8)
 	SetRecoveryTime(15, 20)
+
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/aoe_stomp()
+	var/max_dist = 1
+	for(var/turf/T in RANGE_TURFS(5, src))
+		var/dist = get_dist(src, T)
+		if(dist > max_dist)
+			max_dist = dist
+			sleep(2)
+		for(var/mob/living/L in T)
+			shake_camera(L, 4, 3)
+			L.adjustBruteLoss(20)
+			var/turf/throw_at = get_ranged_target_turf(L, get_dir(src, L), 5)
+			L.throw_at(throw_at, 6, EXPLOSION_THROW_SPEED)
+		var/x_diff = T.x - src.x
+		var/y_diff = T.y - src.y
+		animate(T, pixel_x = x_diff * 1/8, pixel_y = y_diff * 1/8, time = 1, loop = 4, easing = ELASTIC_EASING)
+
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/check_enraged()
+	if(health <= maxHealth*0.25 && !enraged)
+		SetRecoveryTime(80, 80)
+		adjustHealth(-maxHealth)
+		enraged = TRUE
+		enraging = TRUE
+		animate(src, pixel_y = pixel_y + 96, time = 100, easing = ELASTIC_EASING)
+		spin(100, 10)
+		SLEEP_CHECK_DEATH(80)
+		playsound(src, 'sound/effects/explosion3.ogg', 100, TRUE)
+		overlays += mutable_appearance('icons/effects/effects.dmi', "curse")
+		animate(src, pixel_y = pixel_y - 96, time = 8, flags = ANIMATION_END_NOW)
+		spin(8, 2)
+		SLEEP_CHECK_DEATH(8)
+		setMovetype(movement_type | FLYING)
+		enraging = FALSE
+		adjustHealth(-maxHealth)

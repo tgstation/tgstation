@@ -14,8 +14,8 @@
 			if(check.flags_1 & NO_RUINS_1)
 				valid = FALSE
 			else
+				valid = FALSE // set to false before we check
 				for(var/type in allowed_areas)
-					valid = FALSE // set to false before we check
 					if(istype(new_area, type)) // it's at least one of our types so it's whitelisted
 						valid = TRUE
 						break

@@ -525,16 +525,8 @@
 /turf/open/floor/mech_bay_recharge_floor,
 /area/mine/eva)
 "cs" = (
-/obj/structure/closet/emcloset,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"ct" = (
-/obj/structure/ore_box,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/mine/eva)
@@ -2107,10 +2099,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
-"iO" = (
-/obj/structure/sign/warning,
-/turf/closed/wall,
-/area/mine/eva)
 "je" = (
 /obj/structure/bed,
 /obj/effect/decal/cleanable/dirt,
@@ -2333,6 +2321,15 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
+"op" = (
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "Mining External Airlock";
+	opacity = 0;
+	req_access_txt = "54"
+	},
+/turf/open/floor/plasteel,
+/area/mine/eva)
 "oB" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/blue{
@@ -2502,10 +2499,7 @@
 /area/mine/production)
 "so" = (
 /obj/structure/ladder,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/floor/plasteel,
 /area/mine/eva)
 "sp" = (
 /obj/effect/turf_decal/tile/green{
@@ -2842,6 +2836,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"Al" = (
+/obj/structure/ore_box,
+/turf/open/floor/plasteel,
+/area/mine/eva)
 "Aw" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -2939,7 +2937,8 @@
 /area/mine/laborcamp)
 "Co" = (
 /obj/machinery/computer/shuttle/mining/common{
-	dir = 4
+	dir = 4;
+	name = "mining shuttle console"
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
@@ -3399,10 +3398,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
-"Mp" = (
-/obj/structure/sign/warning,
-/turf/closed/wall,
-/area/mine/production)
 "Mt" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/tile/green{
@@ -3668,6 +3663,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"Rf" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/machinery/light/small,
+/turf/open/floor/plasteel,
+/area/mine/eva)
 "Rx" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -3811,6 +3816,10 @@
 /obj/machinery/light/small,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/mine/laborcamp)
+"Ur" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plasteel,
+/area/mine/eva)
 "UE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -21294,7 +21303,7 @@ bg
 bX
 bg
 bf
-fA
+op
 bq
 dd
 bP
@@ -21550,8 +21559,8 @@ bf
 bJ
 bY
 cs
-bf
-fA
+bt
+Rf
 bq
 de
 dv
@@ -21806,9 +21815,9 @@ fA
 bf
 bK
 bW
-ct
-bf
-fA
+bt
+Ur
+Al
 bq
 df
 dw
@@ -22064,9 +22073,9 @@ bf
 bg
 WD
 bg
-iO
-fA
-Mp
+bf
+bf
+bq
 bq
 bq
 bq
