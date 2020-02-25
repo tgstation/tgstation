@@ -115,7 +115,7 @@
 	update_icon()
 
 /obj/item/instrument/piano_synth/headphones/spacepods
-	name = "nanotrasen space pods"
+	name = "\improper Nanotrasen space pods"
 	desc = "Flex your money, AND ignore what everyone else says, all at once!"
 	icon_state = "spacepods"
 	item_state = "spacepods"

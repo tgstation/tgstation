@@ -1,0 +1,5 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - tweak: "Nanotrasen is now manufacturing wigs with waterproof dye -- shower with new-found confidence!"
+  - bugfix: "Wigs can no longer have their color changed when not being held."
