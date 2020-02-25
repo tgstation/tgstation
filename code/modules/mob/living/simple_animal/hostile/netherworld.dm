@@ -153,23 +153,31 @@
 	attack_verb_simple = "smack"
 	projectiletype = /obj/projectile/magic/locker
 	projectilesound = 'sound/weapons/emitter.ogg'
-	deathmessage = "retreats into a locker!"
 	maxHealth = 50
 	health = 50
 	var/lockerspell_charged = TRUE
 	var//datum/action/innate/lockerscape/escape
 
+/mob/living/simple_animal/hostile/netherworld/locker/Initialize()
+	. = ..()
+	escape = new
+	escape.Grant(src)
+
+/mob/living/simple_animal/hostile/netherworld/locker/Destroy()
+	QDEL_NULL(escape)
+	return ..()
+
 /mob/living/simple_animal/hostile/netherworld/locker/adjustHealth(amount, updating_health, forced) //ai will use the locker escape when hit
 	. = ..()
 	if(!amount || AIStatus != AI_ON || !lockerspell_charged || stat == DEAD)
 		return
-	visible_message("[src] retreats into a locker!")
+
 	lockerspell_charged = FALSE
 	escape.Activate()
+	addtimer(VARSET_CALLBACK(src, lockerspell_charged, TRUE), 1 MINUTES)
 
 /mob/living/simple_animal/hostile/netherworld/locker/death(gibbed)
-	var/obj/structure/closet/decay/deathlocker = new(get_turf(src))
-	forceMove(deathlocker)
+	escape.Activate(deadnow = TRUE)
 	. = ..()
 
 /datum/action/innate/lockerscape
@@ -180,9 +188,17 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "escape"
 
-/datum/action/innate/lockerscape/Activate()
+/datum/action/innate/lockerscape/Activate(deadnow = FALSE)
+	visible_message("[owner] retreats into a locker!")
 	var/obj/structure/closet/escapelocker = new(get_turf(owner))
-	forceMove(deathlocker)
+	var/go_away = deadnow ? FALSE : rand()
+
+	if(!go_away)
+		forceMove(escapelocker)
+	else
+		do_teleport(owner, get_turf(owner), 20, channel = null) //null channel to not give away what happened
+		var/obj/item/grenade/iedcasing/bomb = new(escapelocker)
+		bomb.preprime(null, null, FALSE, volume = 0)
 
 /mob/living/simple_animal/hostile/netherworld/blankbody
 	name = "blank body"
