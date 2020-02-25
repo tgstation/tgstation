@@ -43,7 +43,7 @@ Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead bec
 
 	if(!_quality_val)
 		// This returns normal distributuion
-		quality_val = pick(2;0 ,4;1 ,6;2 ,4;3 ,2;4)
+		quality_val = pick(2;0 ,4;1 ,6;2 ,8;3 ,6;4 ,4;5 ,2;6)
 
 
 	if(!_creator || !_skill) //no runtimes
