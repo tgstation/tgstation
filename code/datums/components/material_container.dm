@@ -21,17 +21,14 @@
 	var/precise_insertion = FALSE
 	var/datum/callback/precondition
 	var/datum/callback/after_insert
-	var/list/blacklist
 
 /// Sets up the proper signals and fills the list of materials with the appropriate references.
-/datum/component/material_container/Initialize(list/mat_list, max_amt = 0, _show_on_examine = FALSE, list/allowed_types, list/_blacklisted_types, datum/callback/_precondition, datum/callback/_after_insert, _disable_attackby)
+/datum/component/material_container/Initialize(list/mat_list, max_amt = 0, _show_on_examine = FALSE, list/allowed_types, datum/callback/_precondition, datum/callback/_after_insert, _disable_attackby)
 	materials = list()
 	max_amount = max(0, max_amt)
 	show_on_examine = _show_on_examine
 	disable_attackby = _disable_attackby
 
-	if(_blacklisted_types)
-		blacklist = typecacheof(_blacklisted_types)
 
 	if(allowed_types)
 		if(ispath(allowed_types) && allowed_types == /obj/item/stack)
@@ -65,8 +62,6 @@
 	if(user.a_intent != INTENT_HELP)
 		return
 	if(I.item_flags & ABSTRACT)
-		return
-	if(is_type_in_typecache(I, blacklist))
 		return
 	if((I.flags_1 & HOLOGRAM_1) || (I.item_flags & NO_MAT_REDEMPTION) || (tc && !is_type_in_typecache(I, tc)))
 		to_chat(user, "<span class='warning'>[parent] won't accept [I]!</span>")
