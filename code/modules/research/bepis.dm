@@ -92,7 +92,7 @@
 		update_icon_state()
 		say("Attempting to deposit 0 credits. Aborting.")
 		return
-	deposit_value = CLAMP(round(deposit_value, 1), 1, 15000)
+	deposit_value = clamp(round(deposit_value, 1), 1, 15000)
 	if(!account)
 		say("Cannot find user account. Please swipe a valid ID.")
 		return
