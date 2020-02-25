@@ -28,30 +28,37 @@ Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead bec
 
 	var/mob/living/carbon/human/creator
 
+	var/old_name
+
 	//we keep this one in case the creator is somehow deleted
 	var/creator_name
 
 ///_Creator - mob that is the owner of the item, _skill - skill that the quality should be based off of,_quality_list - custom distribution optional, defaults to normal distribution
 /datum/component/quality/Initialize(mob/living/carbon/human/_creator,datum/skill/_skill,_quality_val)
-	if(!isitem(parent) || !_creator)
+	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/quality_val
 
-	if(_quality_val != null)
-		quality_val = _quality_val
-	else
-		quality_val = pick(2;0 ,4;1 ,6;2 ,4;3 ,2;4) // This returns normal distributuion
+	quality_val = _quality_val
+
+	if(!_quality_val)
+		// This returns normal distributuion
+		quality_val = pick(2;0 ,4;1 ,6;2 ,4;3 ,2;4)
+
+
+	if(!_creator || !_skill) //no runtimes
+		return
 	creator = _creator
 
-	var/quality_bracket = creator.mind.get_skill_modifier(_skill, SKILL_QUALITY_MODIFIER)
+	var/quality_skill_modifier = creator.mind.get_skill_modifier(_skill, SKILL_QUALITY_MODIFIER)
 	creator_name = creator.name
 
 	var/obj/item/parent_item = parent
-
+	old_name = parent_item.name
 	//we set the has_quality to true so no more quality components can be added
 	parent_item.has_quality = TRUE
 
-	generate_quality(quality_val,quality_bracket)
+	generate_quality(quality_val,quality_skill_modifier)
 	apply_quality()
 
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
@@ -61,8 +68,8 @@ Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead bec
 	to_chat(user, "<span class='notice'>It is a [parent_item.name] created by [creator_name]</span>")
 
 ///Generates quality based off passed distribution/ normal distribution and skill. Returns the result
-/datum/component/quality/proc/generate_quality(quality_val,quality_bracket)
-	quality_level = clamp(quality_val + quality_bracket ,0,9) +1 // +1 because lists start with 1
+/datum/component/quality/proc/generate_quality(quality_val,quality_skill_modifier)
+	quality_level = clamp(quality_val + quality_skill_modifier ,0,9) +1 // +1 because lists start with 1
 
 	if(quality_level == 10 && prob(0.01)) //Artifact roll
 		quality_level = 11
@@ -74,7 +81,6 @@ Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead bec
 ///Applies quality to the item2
 /datum/component/quality/proc/apply_quality()
 	var/obj/item/parent_item = parent
-	var/
 	parent_item.force *= quality
 	parent_item.throwforce *= quality
 	parent_item.max_integrity += quality
@@ -94,7 +100,7 @@ Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead bec
 ///Returns the item to the state it was before the modification
 /datum/component/quality/proc/unmodify()
 	var/obj/item/parent_item = parent
-	parent_item.name = initial(parent_item.name)
+	parent_item.name = old_name
 	parent_item.force /= quality
 	parent_item.throwforce  /= quality
 	parent_item.max_integrity -= quality
