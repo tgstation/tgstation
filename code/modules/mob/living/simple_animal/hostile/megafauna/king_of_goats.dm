@@ -85,6 +85,7 @@ Difficulty: Insanely Hard
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
 	pixel_y = 5
 	crusher_loot = list(/obj/item/crusher_trophy/king_goat)
+	stun_chance = 7
 	var/spellscast = 0 //how many spells king goat can cast pr phase
 	var/phase3 = FALSE
 	var/sound_id = "goat"
@@ -92,7 +93,6 @@ Difficulty: Insanely Hard
 	var/list/rangers = list() //People in range of epic goat boss music
 	var/current_song = 'sound/ambience/Visager-Battle.ogg'
 	var/current_song_length = 1200
-	stun_chance = 7
 
 /mob/living/simple_animal/hostile/megafauna/king/phase2/Initialize()
 	. = ..()
