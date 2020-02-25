@@ -129,10 +129,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	var/canMouseDown = FALSE
 
-	///Used to keep track if the item has quality without using get_component
-	var/has_quality
-
-
 /obj/item/Initialize()
 
 	if(attack_verb)
