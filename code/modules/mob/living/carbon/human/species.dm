@@ -1629,7 +1629,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
 	var/areatemp = H.get_temperature(environment)
 
-	if(!H.on_fire && H.stat != DEAD) // If you are dead or on fire your body does not stabilize naturally
+	if(H.stat != DEAD) // If you are dead your body does not stabilize naturally
 		natural_bodytemperature_stabilization(environment, H)
 
 	if(!H.on_fire || areatemp > H.bodytemperature) // If we are not on fire or the area is hotter
