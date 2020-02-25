@@ -35,7 +35,7 @@
 	..()
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
-	if(is_blind(owner))
+	if(owner.is_blind())
 		return
 	if(world.time > next_check && world.time > next_scare)
 		next_check = world.time + 50
