@@ -51,6 +51,8 @@
 
 
 /obj/item/tank/jetpack/proc/turn_on(mob/user)
+	if(!allow_thrust(0.01))
+		return
 	on = TRUE
 	icon_state = "[initial(icon_state)]-on"
 	ion_trail.start()
@@ -67,7 +69,20 @@
 	user.remove_movespeed_modifier(MOVESPEED_ID_JETPACK)
 
 /obj/item/tank/jetpack/proc/move_react(mob/user)
-	allow_thrust(0.01, user)
+	if(!on)//If jet dont work, it dont work
+		return
+	if(!user)//Don't allow jet self using
+		return
+	if(!isturf(user.loc)//You can't use jet in nowhere
+		return
+	if(has_gravity(user))//You don't want use jet in gravity
+		return
+	if(user.pulledby)//You don't must use jet if someone pull you
+		return
+	if(user.throwing)//You don't must use jet if you thrown
+		return
+	if(length(user.client.keys_held & user.client.movement_keys))//You use jet when press keys. yes.
+		allow_thrust(0.01, user)
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, mob/living/user)
 	if(!on)
