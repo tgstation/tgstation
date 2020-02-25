@@ -175,7 +175,7 @@
 		return
 	if(!owner)//Don't allow jet self using
 		return
-	if(!isturf(owner.loc)//You can't use jet in nowhere
+	if(!isturf(owner.loc))//You can't use jet in nowhere or in mecha/closet
 		return
 	if(has_gravity(owner))//You don't want use jet in gravity
 		return
