@@ -1120,6 +1120,9 @@
 /mob/living/carbon/human/species/dullahan
 	race = /datum/species/dullahan
 
+/mob/living/carbon/human/species/dwarf
+	race = /datum/species/dwarf
+
 /mob/living/carbon/human/species/felinid
 	race = /datum/species/human/felinid
 
@@ -1227,9 +1230,6 @@
 
 /mob/living/carbon/human/species/ethereal
 	race = /datum/species/ethereal
-
-/mob/living/carbon/human/species/lizard/ashwalker
-	race = /datum/species/lizard/ashwalker
 
 /mob/living/carbon/human/species/moth
 	race = /datum/species/moth

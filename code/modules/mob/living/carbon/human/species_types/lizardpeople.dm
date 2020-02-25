@@ -75,14 +75,3 @@
 		mutant_bodyparts |= "tail_lizard"
 		mutant_bodyparts |= "spines"
 	H.update_body()
-
-/*
- Lizard subspecies: ASHWALKERS
-*/
-/datum/species/lizard/ashwalker
-	name = "Ash Walker"
-	id = "ashlizard"
-	limbs_id = "lizard"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
-	inherent_traits = list(TRAIT_CHUNKYFINGERS,TRAIT_NOBREATH)
-	species_language_holder = /datum/language_holder/lizard/ash

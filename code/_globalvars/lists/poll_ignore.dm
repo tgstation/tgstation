@@ -9,7 +9,6 @@
 #define POLL_IGNORE_SPECTRAL_BLADE "spectral_blade"
 #define POLL_IGNORE_CONSTRUCT "construct"
 #define POLL_IGNORE_SPIDER "spider"
-#define POLL_IGNORE_ASHWALKER "ashwalker"
 #define POLL_IGNORE_DWARF "dwarf"
 #define POLL_IGNORE_GOLEM "golem"
 #define POLL_IGNORE_SWARMER "swarmer"
@@ -33,7 +32,6 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_SPECTRAL_BLADE = "Spectral blade",
 	POLL_IGNORE_CONSTRUCT = "Construct",
 	POLL_IGNORE_SPIDER = "Spiders",
-	POLL_IGNORE_ASHWALKER = "Ashwalker eggs",
 	POLL_IGNORE_DWARF = "Dwarven Sarcophagus",
 	POLL_IGNORE_GOLEM = "Golems",
 	POLL_IGNORE_SWARMER = "Swarmer shells",

@@ -602,12 +602,12 @@
 	race = /datum/species/zombie //Not the infectious kind. The days of xenobio zombie outbreaks are long past.
 	taste_description = "brai...nothing in particular"
 
-/datum/reagent/mutationtoxin/ash
-	name = "Ash Mutation Toxin"
-	description = "An ashen toxin."
+/datum/reagent/mutationtoxin/dorf
+	name = "Dorf Mutation Toxin"
+	description = "An dorvish toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/lizard/ashwalker
-	taste_description = "savagery"
+	race = /datum/species/human/dwarf
+	taste_description = "dorf"
 
 //DANGEROUS RACES
 /datum/reagent/mutationtoxin/shadow
