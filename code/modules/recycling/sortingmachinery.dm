@@ -369,9 +369,11 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
+	///The account which is recieving the split profits.
 	var/datum/bank_account/payments_acc = null
 	var/paper_count = 10
 	var/max_paper_count = 20
+	///Details the percentage the scanned account recieves off the final sale.
 	var/percent_cut = 20
 
 /obj/item/sales_tagger/examine(mob/user)
