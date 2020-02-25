@@ -1,4 +1,4 @@
-/datum/species/human/dwarf
+/datum/species/dwarf
 	name = "Dwarf"
 	id = "dwarf"
 	default_color = "FFFFFF"
@@ -9,7 +9,7 @@
 	inherent_traits = list(TRAIT_CHUNKYFINGERS,TRAIT_NOBREATH)
 	species_language_holder = /datum/language_holder/dwarf
 
-/datum/species/human/dwarf/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+/datum/species/dwarf/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	C.transform = C.transform.Scale(1, 0.8)
 	passtable_on(C, INNATE_TRAIT)
 	. = ..()

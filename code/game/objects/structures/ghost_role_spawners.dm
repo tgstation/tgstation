@@ -40,7 +40,7 @@
 	density = TRUE
 	roundstart = FALSE
 	death = FALSE
-	mob_species = /datum/species/human/dwarf
+	mob_species = /datum/species/dwarf
 	outfit = /datum/outfit/dwarven
 	short_desc = "You are an ancient dwarf awakened from your slumber to regrow your once grand empire."
 	flavour_text = "Milennia have passed since your grand civilization last stood. \

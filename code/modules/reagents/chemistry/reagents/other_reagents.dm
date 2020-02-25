@@ -606,7 +606,7 @@
 	name = "Dorf Mutation Toxin"
 	description = "An dorvish toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/human/dwarf
+	race = /datum/species/dwarf
 	taste_description = "dorf"
 
 //DANGEROUS RACES
