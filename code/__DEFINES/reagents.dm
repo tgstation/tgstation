@@ -29,7 +29,6 @@
 #define ADD_REAGENT		2	// reagent added
 #define REM_REAGENT		3	// reagent removed (may still exist)
 #define CLEAR_REAGENTS	4	// all reagents were cleared
-#define REACT_REAGENTS	5	// a reaction occured
 
 #define MIMEDRINK_SILENCE_DURATION 30  //ends up being 60 seconds given 1 tick every 2 seconds
 #define TRESHOLD_UNHUSK 50 //Health treshold for instabitaluri and rezadone to unhusk someone

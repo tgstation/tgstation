@@ -679,7 +679,7 @@
 	var/path = preparsed[1]
 	var/amount = 1
 	if(preparsed.len > 1)
-		amount = CLAMP(text2num(preparsed[2]),1,ADMIN_SPAWN_CAP)
+		amount = clamp(text2num(preparsed[2]),1,ADMIN_SPAWN_CAP)
 
 	var/chosen = pick_closest_path(path)
 	if(!chosen)
