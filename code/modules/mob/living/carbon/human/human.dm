@@ -1121,7 +1121,7 @@
 	race = /datum/species/dullahan
 
 /mob/living/carbon/human/species/dwarf
-	race = /datum/species/dwarf
+	race = /datum/species/human/dwarf
 
 /mob/living/carbon/human/species/felinid
 	race = /datum/species/human/felinid
