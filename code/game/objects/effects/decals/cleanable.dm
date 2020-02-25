@@ -26,7 +26,7 @@
 		if(LAZYLEN(diseases_to_add))
 			AddComponent(/datum/component/infective, diseases_to_add)
 
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, beauty), 0)
+	addtimer(CALLBACK(src, /datum.proc/_AddComponent, list(/datum/component/beauty, beauty)), 0)
 
 	var/turf/T = get_turf(src)
 	if(T && is_station_level(T.z))
@@ -100,6 +100,9 @@
 			S.blood_state = blood_state
 			update_icon()
 			H.update_inv_shoes()
+/atom/effect/decal/cleanable/washed(atom/washer)
+	. = ..()
+	qdel(src)
 
 /obj/effect/decal/cleanable/proc/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))

@@ -154,9 +154,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 /mob/dead/observer/Destroy()
 	// Update our old body's medhud since we're abandoning it
-	if(mind)
-		var/mob/living/carbon/current = mind.current
-		current.med_hud_set_status()
+	if(mind && mind.current)
+		mind.current.med_hud_set_status()
 
 	GLOB.ghost_images_default -= ghostimage_default
 	QDEL_NULL(ghostimage_default)
@@ -504,7 +503,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			views |= i
 		var/new_view = input("Choose your new view", "Modify view range", 7) as null|anything in views
 		if(new_view)
-			client.change_view(CLAMP(new_view, 7, max_view))
+			client.change_view(clamp(new_view, 7, max_view))
 	else
 		client.change_view(CONFIG_GET(string/default_view))
 

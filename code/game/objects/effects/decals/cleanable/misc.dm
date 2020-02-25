@@ -231,3 +231,9 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shards"
 	color = "#c6f4ff"
+
+/obj/effect/decal/cleanable/wrapping
+	name = "wrapping shreds"
+	desc = "Torn pieces of cardboard and paper, left over from a package."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "paper_shreds"

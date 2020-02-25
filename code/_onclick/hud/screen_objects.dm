@@ -342,6 +342,11 @@
 			return
 	C.update_action_buttons_icon()
 
+/obj/screen/spacesuit
+	name = "Space suit cell status"
+	icon_state = "spacesuit_0"
+	screen_loc = ui_spacesuit
+
 /obj/screen/mov_intent
 	name = "run/walk toggle"
 	icon = 'icons/mob/screen_midnight.dmi'
@@ -406,7 +411,6 @@
 	var/mob/living/user = hud?.mymob
 	if(!istype(user))
 		return
-
 	if(!user.resting)
 		icon_state = "act_rest"
 	else

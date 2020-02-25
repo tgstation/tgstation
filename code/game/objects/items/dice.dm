@@ -189,7 +189,7 @@ obj/item/dice/d6/ebony
 /obj/item/dice/proc/diceroll(mob/user)
 	result = roll(sides)
 	if(rigged != DICE_NOT_RIGGED && result != rigged_value)
-		if(rigged == DICE_BASICALLY_RIGGED && prob(CLAMP(1/(sides - 1) * 100, 25, 80)))
+		if(rigged == DICE_BASICALLY_RIGGED && prob(clamp(1/(sides - 1) * 100, 25, 80)))
 			result = rigged_value
 		else if(rigged == DICE_TOTALLY_RIGGED)
 			result = rigged_value

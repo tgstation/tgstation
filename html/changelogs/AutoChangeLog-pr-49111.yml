@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "The Nanotrasen Deliveries and Handling League (NDHL) have been noticing a decrease in station export profits, and the crate recycling program just isn't cutting it. New Sales Taggers have been deployed in all station cargo setups."
+  - rscadd: "Wrapped items can be zapped with Sales Taggers in order to give the account holder a portion of the profit on a sale."

@@ -107,6 +107,9 @@
 	if(istype(A, /obj/item/gun/energy))
 		to_chat(user, "<span class='alert'>Error unable to interface with device.</span>")
 		return FALSE
+	if(istype(A, /obj/item/clothing/suit/space))
+		to_chat(user, "<span class='alert'>Error unable to interface with device.</span>")
+		return FALSE
 	if(istype(A, /obj))
 		O = A
 	if(C)

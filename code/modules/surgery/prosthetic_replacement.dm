@@ -19,7 +19,7 @@
 	name = "add prosthetic"
 	implements = list(/obj/item/bodypart = 100, /obj/item/organ_storage = 100, /obj/item/twohanded/required/chainsaw = 100, /obj/item/melee/synthetic_arm_blade = 100)
 	time = 32
-	experience_given = 5 //won't get full XP if rejected
+	experience_given = MEDICAL_SKILL_ORGAN_FIX //won't get full XP if rejected
 	var/organ_rejection_dam = 0
 
 /datum/surgery_step/add_prosthetic/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
