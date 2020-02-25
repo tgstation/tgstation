@@ -1,7 +1,7 @@
 /datum/disease/gastrolosis
 	name = "Invasive Gastrolosis"
 	max_stages = 4
-	spread_text = "Degenerative Virus"
+	spread_text = "Unknown"
 	spread_flags = DISEASE_SPREAD_SPECIAL
 	cure_text = "Salt and mutadone"
 	agent = "Agent S and DNA restructuring"
@@ -69,7 +69,7 @@
 
 /datum/disease/gastrolosis/cure()
 	. = ..()
-	if(!is_species(affected_mob, /datum/species/snail)) //undo all the snail fuckening
+	if(affected_mob && !is_species(affected_mob, /datum/species/snail)) //undo all the snail fuckening
 		var/mob/living/carbon/human/H = affected_mob
 		var/obj/item/organ/tongue/tongue = locate(/obj/item/organ/tongue/snail) in H.internal_organs
 		if(tongue)
