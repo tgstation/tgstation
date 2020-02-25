@@ -9,7 +9,7 @@
 	input_dir = WEST
 	output_dir = EAST
 	needs_item_input = TRUE
-	processing_flags = NEVER_PROCESS
+	processing_flags = START_PROCESSING_MANUALLY
 
 /obj/machinery/mineral/unloading_machine/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
 	if(istype(target, /obj/structure/ore_box))

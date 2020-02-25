@@ -15,7 +15,6 @@
 // bitflags for a machine's preferences on when it should start processing
 #define START_PROCESSING_ON_INIT	(1<<0)	// if the machine should start processing on Initialize()
 #define START_PROCESSING_MANUALLY	(1<<1)	// if the machine will start processing in the future, after Initialize(), such as when a certain condition is met
-#define NEVER_PROCESS				(1<<2)	// if the machine has no reason to process
 
 //bitflags for door switches.
 #define OPEN	(1<<0)

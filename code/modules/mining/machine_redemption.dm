@@ -24,7 +24,7 @@
 	var/obj/item/disk/design_disk/inserted_disk
 	var/datum/component/remote_materials/materials
 	needs_item_input = TRUE
-	processing_flags = NEVER_PROCESS
+	processing_flags = START_PROCESSING_MANUALLY
 
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
@@ -155,14 +155,17 @@
 
 	if(!console_notify_timer)
 		// gives 5 seconds for a load of ores to be sucked up by the ORM before it sends out request console notifications. This should be enough time for most deposits that people make
-		console_notify_timer = addtimer(CALLBACK(src, .proc/send_console_message), 50)
+		console_notify_timer = addtimer(CALLBACK(src, .proc/send_console_message), 5 SECONDS)
+
+/obj/machinery/mineral/ore_redemption/default_unfasten_wrench(mob/user, obj/item/I)
+	. = ..()
+	if(anchored)
+		register_input_turf() // someone just wrenched us down, re-register the turf
+	else
+		unregister_input_turf() // someone just un-wrenched us, unregister the turf
 
 /obj/machinery/mineral/ore_redemption/attackby(obj/item/W, mob/user, params)
 	if(default_unfasten_wrench(user, W))
-		if(anchored)
-			register_input_turf() // someone just wrenched us down, re-register the turf
-		else
-			unregister_input_turf() // someone just un-wrenched us, unregister the turf
 		return
 	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
 		updateUsrDialog()

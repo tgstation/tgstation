@@ -248,7 +248,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/invert_icon = FALSE		// If the level points the opposite direction when it's turned on.
 
 	var/id = "" 				// must match conveyor IDs to control them
-	processing_flags = NEVER_PROCESS
+	processing_flags = START_PROCESSING_MANUALLY
 
 /obj/machinery/conveyor_switch/Initialize(mapload, newid)
 	. = ..()
