@@ -38,6 +38,7 @@ import { DecalPainter } from './interfaces/DecalPainter';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { DnaVault } from './interfaces/DnaVault';
 import { EightBallVote } from './interfaces/EightBallVote';
+import { Electropack } from './interfaces/Electropack';
 import { EmergencyShuttleConsole } from './interfaces/EmergencyShuttleConsole';
 import { EngravedMessage } from './interfaces/EngravedMessage';
 import { Gps } from './interfaces/Gps';
@@ -285,6 +286,10 @@ const ROUTES = {
   },
   eightball: {
     component: () => EightBallVote,
+    scrollable: false,
+  },
+  electropack: {
+    component: () => Electropack,
     scrollable: false,
   },
   emergency_shuttle_console: {

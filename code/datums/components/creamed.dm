@@ -5,7 +5,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	/mob/living/silicon/ai)))
 
 /**
-  * # Creamed component
+  * Creamed component
   *
   * For when you have pie on your face
   */

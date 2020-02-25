@@ -211,6 +211,37 @@
 		to_chat(user, "<span class='notice'>Analyzing... [src]'s stabilized field is fluctuating along frequency [format_frequency(frequency)], code [code].</span>")
 	..()
 
+//Anomaly cores
+/obj/item/assembly/signaler/anomaly/pyro
+	name = "\improper pyroclastic anomaly core"
+	desc = "The neutralized core of a pyroclastic anomaly. It feels warm to the touch. It'd probably be valuable for research."
+	icon_state = "pyro core"
+	anomaly_type = /obj/effect/anomaly/pyro
+
+/obj/item/assembly/signaler/anomaly/grav
+	name = "\improper gravitational anomaly core"
+	desc = "The neutralized core of a gravitational anomaly. It feels much heavier than it looks. It'd probably be valuable for research."
+	icon_state = "grav core"
+	anomaly_type = /obj/effect/anomaly/grav
+
+/obj/item/assembly/signaler/anomaly/flux
+	name = "\improper flux anomaly core"
+	desc = "The neutralized core of a flux anomaly. Touching it makes your skin tingle. It'd probably be valuable for research."
+	icon_state = "flux core"
+	anomaly_type = /obj/effect/anomaly/flux
+
+/obj/item/assembly/signaler/anomaly/bluespace
+	name = "\improper bluespace anomaly core"
+	desc = "The neutralized core of a bluespace anomaly. It keeps phasing in and out of view. It'd probably be valuable for research."
+	icon_state = "anomaly core"
+	anomaly_type = /obj/effect/anomaly/bluespace
+
+/obj/item/assembly/signaler/anomaly/vortex
+	name = "\improper vortex anomaly core"
+	desc = "The neutralized core of a vortex anomaly. It won't sit still, as if some invisible force is acting on it. It'd probably be valuable for research."
+	icon_state = "vortex core"
+	anomaly_type = /obj/effect/anomaly/bhole
+
 /obj/item/assembly/signaler/anomaly/attack_self()
 	return
 
