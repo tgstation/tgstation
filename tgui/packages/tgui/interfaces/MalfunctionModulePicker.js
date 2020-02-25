@@ -5,7 +5,7 @@ import { Box, Button, Input, Section, Table, Tabs } from '../components';
 
 // It's a class because we need to store state in the form of the current
 // hovered item, and current search terms
-export class ModulePicker extends Component {
+export class MalfunctionModulePicker extends Component {
   constructor() {
     super();
     this.state = {
@@ -42,7 +42,7 @@ export class ModulePicker extends Component {
           <Box
             inline
             color={processing_time > 0 ? 'good' : 'bad'}>
-            {processing_time} PT
+            {processing_time} Processing Time
           </Box>
         )}
         buttons={(
@@ -77,7 +77,7 @@ export class ModulePicker extends Component {
               onBuyMouseOver={item => this.setHoveredItem(item)}
               onBuyMouseOut={item => this.setHoveredItem({})}
               onBuy={item => act(ref, 'buy', {
-                item: item.ref,
+                ref: item.ref,
               })} />
           </table>
         ) : (
@@ -100,7 +100,7 @@ export class ModulePicker extends Component {
                       onBuyMouseOver={item => this.setHoveredItem(item)}
                       onBuyMouseOut={item => this.setHoveredItem({})}
                       onBuy={item => act(ref, 'buy', {
-                        item: item.ref,
+                        ref: item.ref,
                       })} />
                   )}
                 </Tabs.Tab>

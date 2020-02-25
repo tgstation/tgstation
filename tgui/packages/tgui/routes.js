@@ -58,7 +58,7 @@ import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { MiningVendor } from './interfaces/MiningVendor';
 import { Mint } from './interfaces/Mint';
-import { ModulePicker } from './interfaces/ModulePicker';
+import { MalfunctionModulePicker } from './interfaces/MalfunctionModulePicker';
 import { Mule } from './interfaces/Mule';
 import { NaniteChamberControl } from './interfaces/NaniteChamberControl';
 import { NaniteCloudControl } from './interfaces/NaniteCloudControl';
@@ -374,8 +374,8 @@ const ROUTES = {
     component: () => Mint,
     scrollable: false,
   },
-  module_picker: {
-    component: () => ModulePicker,
+  malfunction_module_picker: {
+    component: () => MalfunctionModulePicker,
     scrollable: true,
     theme: 'malfunction',
   },
