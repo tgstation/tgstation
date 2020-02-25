@@ -442,5 +442,6 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "barcode"
 	w_class = WEIGHT_CLASS_TINY
+	///All values inheirited from the sales tagger it came from.
 	var/datum/bank_account/payments_acc = null
 	var/percent_cut = 5
