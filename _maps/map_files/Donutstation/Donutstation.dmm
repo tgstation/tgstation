@@ -5174,6 +5174,7 @@
 /area/security/warden)
 "aod" = (
 /obj/structure/table,
+/obj/item/storage/box/shipping,
 /turf/open/floor/plating,
 /area/storage/tech)
 "aoe" = (
@@ -11771,11 +11772,15 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/reagent_containers/spray/cleaner,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "aFN" = (
@@ -18035,8 +18040,8 @@
 	},
 /area/medical/genetics)
 "aYg" = (
-/mob/living/carbon/monkey,
 /obj/effect/landmark/start/geneticist,
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel,
 /area/medical/genetics)
 "aYh" = (
@@ -29709,7 +29714,6 @@
 /obj/structure/table,
 /obj/item/hand_labeler,
 /obj/item/stack/packageWrap,
-/obj/item/destTagger,
 /obj/item/destTagger{
 	pixel_x = 2;
 	pixel_y = 2
@@ -29717,6 +29721,7 @@
 /obj/item/radio/intercom{
 	pixel_x = 30
 	},
+/obj/item/storage/box/shipping,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bAQ" = (
@@ -38797,7 +38802,7 @@
 	dir = 8
 	},
 /obj/item/toy/figure/mime,
-/obj/item/gun/magic/wand,
+/obj/item/gun/magic/wand/nothing,
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
 "cad" = (
@@ -47392,7 +47397,6 @@
 /obj/structure/table,
 /obj/item/storage/box,
 /obj/item/storage/box,
-/obj/item/storage/box,
 /obj/item/stack/wrapping_paper,
 /obj/item/stack/wrapping_paper,
 /obj/item/stack/wrapping_paper,
@@ -47400,6 +47404,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/item/storage/box/shipping,
 /turf/open/floor/plasteel,
 /area/storage/tools)
 "qxm" = (

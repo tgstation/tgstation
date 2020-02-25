@@ -146,7 +146,7 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/aiuri = 3,
-		/obj/item/reagent_containers/spray/rhigoxane = 1,
+		/obj/item/reagent_containers/spray/hercuri = 1,
 		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
 		/obj/item/reagent_containers/pill/patch/silversulfadiazine = 3,	//FULP
 		/obj/item/reagent_containers/hypospray/medipen = 1)
@@ -223,9 +223,9 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/libital = 3,
-		/obj/item/stack/medical/gauze = 1,
-		/obj/item/storage/pill_bottle/trophazole = 1,
 		/obj/item/reagent_containers/pill/patch/stypticpowder = 3,	//FULP
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/storage/pill_bottle/C2/probital = 1,
 		/obj/item/reagent_containers/hypospray/medipen/salacid = 1)
 	generate_items_inside(items_inside,src)
 
@@ -241,10 +241,10 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/instabitaluri = 3,
-		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
-		/obj/item/stack/medical/gauze = 1,
 		/obj/item/reagent_containers/medigel/stypticpowder = 2,	//FULP
 		/obj/item/reagent_containers/medigel/silversulfadiazine = 2,	//FULP
+		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
+		/obj/item/stack/medical/gauze = 1,
 		/obj/item/storage/pill_bottle/penacid = 1)
 	generate_items_inside(items_inside,src)
 
@@ -359,13 +359,13 @@
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/pill/potassiodide(src)
 
-/obj/item/storage/pill_bottle/trophazole
-	name = "bottle of trophazole pills"
-	desc = "Contains pills used to treat brute damage.The tag in the bottle states 'Eat before ingesting'."
+/obj/item/storage/pill_bottle/C2/probital
+	name = "bottle of probital pills"
+	desc = "Contains pills used to treat brute damage.The tag in the bottle states 'Eat before ingesting, may cause fatigue'."
 
-/obj/item/storage/pill_bottle/trophazole/PopulateContents()
+/obj/item/storage/pill_bottle/C2/probital/PopulateContents()
 	for(var/i in 1 to 4)
-		new /obj/item/reagent_containers/pill/trophazole(src)
+		new /obj/item/reagent_containers/pill/C2/probital(src)
 
 /obj/item/storage/pill_bottle/iron
 	name = "bottle of iron pills"
@@ -439,14 +439,6 @@
 /obj/item/storage/pill_bottle/psicodine/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/psicodine(src)
-
-/obj/item/storage/pill_bottle/happiness
-	name = "happiness pill bottle"
-	desc = "The label is long gone, in its place an 'H' written with a marker."
-
-/obj/item/storage/pill_bottle/happiness/PopulateContents()
-	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/pill/happiness(src)
 
 /obj/item/storage/pill_bottle/penacid
 	name = "bottle of pentetic acid pills"

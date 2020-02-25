@@ -22,12 +22,12 @@
 			ADD_TRAIT(target, TRAIT_MINDSHIELD, "implant")
 			target.sec_hud_set_implants()
 			return TRUE
-
 		if(target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)) // FULPSTATION: Remove Vassal if Loyalty implant
 			SSticker.mode.remove_vassal(target.mind)
-
+		var/deconverted = FALSE
 		if(target.mind.has_antag_datum(/datum/antagonist/brainwashed))
 			target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
+			deconverted = TRUE
 
 		if(target.mind.has_antag_datum(/datum/antagonist/rev/head)|| target.mind.unconvertable)
 			if(!silent)
@@ -38,6 +38,7 @@
 
 		var/datum/antagonist/rev/rev = target.mind.has_antag_datum(/datum/antagonist/rev)
 		if(rev)
+			deconverted = TRUE
 			rev.remove_revolutionary(FALSE, user)
 		if(!silent)
 			if(target.mind in SSticker.mode.cult)
@@ -46,6 +47,9 @@
 				to_chat(target, "<span class='notice'>You feel a sense of peace and security. You are now protected from brainwashing.</span>")
 		ADD_TRAIT(target, TRAIT_MINDSHIELD, "implant")
 		target.sec_hud_set_implants()
+		if(deconverted)
+			if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+				target.say("I'm out! I quit! Whose kidneys are these?", forced = "They're out! They quit! Whose kidneys do they have?")
 		return TRUE
 	return FALSE
 
