@@ -83,7 +83,7 @@
 
 /datum/micro_organism/cell_line/proc/succeed_growing(var/obj/machinery/plumbing/growing_vat/vat)
 	for(var/created_thing in resulting_atoms)
-		for(var/1 in 1 to resulting_atoms[created_thing])
-		var/atom/A = new created_thing(get_turf(vat))
-		vat.visible_message("<span class='nicegreen'>[A] pops out of [vat]!</span>")
+		for(var/x in 1 to resulting_atoms[created_thing])
+			var/atom/A = new created_thing(get_turf(vat))
+			vat.visible_message("<span class='nicegreen'>[A] pops out of [vat]!</span>")
 	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
