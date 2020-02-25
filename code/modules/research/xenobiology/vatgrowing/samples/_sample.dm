@@ -8,11 +8,11 @@
 	var/sample_color = SAMPLE_YELLOW
 
 ///Gets info from each of it's micro_organisms.
-/datum/biological_sample/proc/GetAllDetails()
+/datum/biological_sample/proc/GetAllDetails(show_needs)
 	var/info
 	for(var/i in micro_organisms)
 		var/datum/micro_organism/MO = i
-		info += "<span class='notice'>[MO.desc]</span>\n"
+		info += MO.GetDetails(show_needs)
 	return info
 
 ///Generate a sample from a specific weighted list, and a specific amount of cell line with a chance for a virus

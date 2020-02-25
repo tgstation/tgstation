@@ -34918,6 +34918,9 @@
 /obj/item/slime_scanner,
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/glasses/science,
+/obj/item/biopsy_tool,
+/obj/item/swab,
+/obj/item/petri_dish,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bMr" = (
@@ -36151,6 +36154,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
+/obj/item/wrench,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPJ" = (
@@ -50835,6 +50839,11 @@
 /obj/machinery/vending/wardrobe/bar_wardrobe,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
+"mkD" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/plumbing/growing_vat,
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
 "mtK" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/starboard/aft)
@@ -51310,6 +51319,11 @@
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
+"oKI" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/plumbing/input,
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
 "oMN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -97387,8 +97401,8 @@ bQL
 cBG
 bTc
 ccP
-ccP
-ccP
+oKI
+mkD
 ccP
 ccP
 ccP

@@ -18,6 +18,7 @@
 	if(biological_sample)
 		biological_sample.HandleGrowth(src)
 		if(prob(30))
+			playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 			audible_message(pick(list("<span class='notice'>[src] grumbles!</span>", "<span class='notice'>[src] makes a splashing noise!</span>", "<span class='notice'>[src] sloshes!</span>")))
 
 ///Handles the petri dish depositing into the vat.
@@ -38,6 +39,7 @@
 	petri.sample = null
 	petri.update_icon()
 	to_chat(user, "<span class='warning'>You put the sample in the vat!</span>")
+	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 	update_icon()
 
 ///Adds text for when there is a sample in the vat

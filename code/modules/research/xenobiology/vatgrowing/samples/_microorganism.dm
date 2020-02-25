@@ -20,6 +20,11 @@
 	///Resulting atoms from growing this cell line. List is assoc atom || amount
 	var/list/resulting_atoms = list()
 
+
+///Returns a short description of the cell line
+/datum/micro_organism/proc/GetDetails(show_needs)
+	return "<span class='notice'>[desc]</span>\n"
+
 ///Handles growth of the micro_organism. This only runs if the micro organism is in the growing vat. Reagents is the growing vats reagents
 /datum/micro_organism/cell_line/proc/HandleGrowth(var/obj/machinery/plumbing/growing_vat/vat)
 	if(!try_eat(vat.reagents))
@@ -71,6 +76,7 @@
 			continue
 		if(cell_line.growth >= VATGROWING_DANGER_MINIMUM)
 			risk += cell_line.growth * 0.6 //60% per cell_line potentially. Kryson should probably tweak this
+	playsound(vat, 'sound/effects/splat.ogg', 50, TRUE)
 	if(rand(1, 100) < risk) //Fail roll!
 		fuck_up_growing(vat)
 		return FALSE
@@ -85,13 +91,30 @@
 
 
 /datum/micro_organism/cell_line/proc/succeed_growing(var/obj/machinery/plumbing/growing_vat/vat)
-	var/datum/effect_system/smoke_spread/s = new
-	s.set_up(4, 1, vat, 0)
-	s.start()
-
+	var/datum/effect_system/smoke_spread/smoke = new
+	smoke.set_up(3, vat.loc)
+	smoke.start()
 	for(var/created_thing in resulting_atoms)
 		for(var/x in 1 to resulting_atoms[created_thing])
 			var/atom/A = new created_thing(get_turf(vat))
 			vat.visible_message("<span class='nicegreen'>[A] pops out of [vat]!</span>")
 
 	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
+
+///Overriden to show more info like needs, supplementary and supressive reagents
+/datum/micro_organism/cell_line/GetDetails(show_needs)
+	. = ..()
+	if(show_needs)
+		. += ReturnReagentText("It requires:", required_reagents)
+		. += ReturnReagentText("It likes:", supplementary_reagents)
+		. += ReturnReagentText("It hates:", surpressive_reagents)
+
+///Return a nice list of all the reagents in a specific category with a specific prefix. This needs to be reworked because the formatting sucks ass.
+/datum/micro_organism/cell_line/proc/ReturnReagentText(var/prefix_text = "It requires:", var/list/reagentlist)
+	if(!reagentlist.len)
+		return
+	var/all_reagents_text
+	for(var/i in reagentlist)
+		var/datum/reagent/R = i
+		all_reagents_text += " - [initial(R.name)]\n"
+	return "<span class='notice'>[prefix_text]\n[all_reagents_text]</span>"

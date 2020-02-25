@@ -15,6 +15,6 @@
 		var/datum/biological_sample/sample = swabbed_items[1] //Use the first one as our target
 		var/mutable_appearance/swab_overlay = mutable_appearance(icon, "swab_[sample.sample_color]")
 		swab_overlay.appearance_flags = RESET_COLOR
-		. += swab_overlay
+		overlays += swab_overlay
 
 

@@ -8,7 +8,7 @@
 	resulting_atoms = list(/mob/living/simple_animal/mouse = 2)
 
 /datum/micro_organism/cell_line/chicken
-	desc = "Some cube shaped gelatines."
+	desc = "Some feather micro-particles."
 	required_reagents = list(/datum/reagent/consumable/nutriment, /datum/reagent/consumable/sugar)
 	supplementary_reagents = list(/datum/reagent/water = 1)
 	surpressive_reagents = list(/datum/reagent/fuel/oil = -2)
