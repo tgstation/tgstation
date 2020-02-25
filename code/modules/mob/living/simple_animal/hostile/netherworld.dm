@@ -21,20 +21,20 @@
 	var/phaser = TRUE
 	var/datum/action/innate/creature/teleport/teleport
 	var/is_phased = FALSE
-	
+
 /mob/living/simple_animal/hostile/netherworld/Initialize()
 	. = ..()
 	if(phaser)
 		teleport = new
 		teleport.Grant(src)
-	
+
 /datum/action/innate/creature
 	background_icon_state = "bg_default"
-	
+
 /datum/action/innate/creature/teleport
 	name = "Teleport"
 	desc = "Teleport to wherever you want, as long as you aren't seen."
-	
+
 /obj/effect/dummy/phased_mob/creature
 	name = "water"
 	icon = 'icons/effects/effects.dmi'
@@ -44,7 +44,7 @@
 	invisibility = 60
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/canmove = TRUE
-	
+
 /obj/effect/dummy/phased_mob/creature/relaymove(mob/user, direction)
 	forceMove(get_step(src,direction))
 
@@ -56,7 +56,7 @@
 
 /obj/effect/dummy/phased_mob/creature/singularity_act()
 	return
-	
+
 /datum/action/innate/creature/teleport/Activate()
 	var/mob/living/simple_animal/hostile/netherworld/N = owner
 	var/obj/effect/dummy/phased_mob/creature/holder = null
@@ -80,7 +80,7 @@
 		holder = new /obj/effect/dummy/phased_mob/creature(T)
 		N.forceMove(holder)
 		N.is_phased = TRUE
-		
+
 /mob/living/simple_animal/hostile/netherworld/proc/can_be_seen(turf/location)
 	// Check for darkness
 	if(location && location.lighting_object)
@@ -103,7 +103,7 @@
 				if(!M.occupant.eye_blind)
 					return M.occupant
 	return null
-	
+
 /mob/living/simple_animal/hostile/netherworld/migo
 	name = "mi-go"
 	desc = "A pinkish, fungoid crustacean-like creature with numerous pairs of clawed appendages and a head covered with waving antennae."
@@ -140,6 +140,50 @@
 		var/chosen_sound = pick(migo_sounds)
 		playsound(src, chosen_sound, 50, TRUE)
 
+/mob/living/simple_animal/hostile/netherworld/locker //xenobio's replacement for magicarp in xenobio.
+	name = "locker zip edi do dah"
+	desc = "an anomalous trickster from the netherworld, it uses its locker magic to annoy other residents and escape danger."
+	icon_state = "zipedi"
+	icon_living = "zipedi"
+	ranged = TRUE
+	del_on_death = TRUE
+	retreat_distance = 2
+	minimum_distance = 0 //Between shots they can and will close in to bash
+	attack_verb_continuous = "smacks"
+	attack_verb_simple = "smack"
+	projectiletype = /obj/projectile/magic/locker
+	projectilesound = 'sound/weapons/emitter.ogg'
+	deathmessage = "retreats into a locker!"
+	maxHealth = 50
+	health = 50
+	var/lockerspell_charged = TRUE
+	var//datum/action/innate/lockerscape/escape
+
+/mob/living/simple_animal/hostile/netherworld/locker/adjustHealth(amount, updating_health, forced) //ai will use the locker escape when hit
+	. = ..()
+	if(!amount || AIStatus != AI_ON || !lockerspell_charged || stat == DEAD)
+		return
+	visible_message("[src] retreats into a locker!")
+	lockerspell_charged = FALSE
+	escape.Activate()
+
+/mob/living/simple_animal/hostile/netherworld/locker/death(gibbed)
+	var/obj/structure/closet/decay/deathlocker = new(get_turf(src))
+	forceMove(deathlocker)
+	. = ..()
+
+/datum/action/innate/lockerscape
+	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	background_icon_state = "bg_mime"
+	name = "Locker Fakeout"
+	desc = "Escape into a locker. Half of the time, you will be teleported away and the locker will be trapped to explode. The other half, you'll just be in the locker."
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "escape"
+
+/datum/action/innate/lockerscape/Activate()
+	var/obj/structure/closet/escapelocker = new(get_turf(owner))
+	forceMove(deathlocker)
+
 /mob/living/simple_animal/hostile/netherworld/blankbody
 	name = "blank body"
 	desc = "This looks human enough, but its flesh has an ashy texture, and it's face is featureless save an eerie smile."
@@ -165,7 +209,7 @@
 	max_mobs = 15
 	icon = 'icons/mob/nest.dmi'
 	spawn_text = "crawls through"
-	mob_types = list(/mob/living/simple_animal/hostile/netherworld/migo, /mob/living/simple_animal/hostile/netherworld, /mob/living/simple_animal/hostile/netherworld/blankbody)
+	mob_types = list(/mob/living/simple_animal/hostile/netherworld/migo, /mob/living/simple_animal/hostile/netherworld, /mob/living/simple_animal/hostile/netherworld/blankbody, /mob/living/simple_animal/hostile/netherworld/locker)
 	faction = list("nether")
 
 /obj/structure/spawner/nether/Initialize()
