@@ -6,8 +6,6 @@
 	return loc.handle_slip(src, knockdown_amount, O, lube, paralyze, force_drop)
 
 /mob/living/carbon/Process_Spacemove(movement_dir = 0)
-	if(..())
-		return 1
 	if(!isturf(loc))
 		return 0
 
@@ -18,6 +16,9 @@
 
 	var/obj/item/tank/jetpack/J = get_jetpack()
 	if(istype(J) && (movement_dir || J.stabilizers) && J.on)
+		return 1
+
+	if(..())
 		return 1
 
 /mob/living/carbon/Move(NewLoc, direct)
