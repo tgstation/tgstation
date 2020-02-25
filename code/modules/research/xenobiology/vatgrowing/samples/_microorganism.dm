@@ -22,15 +22,11 @@
 
 ///Handles growth of the micro_organism. This only runs if the micro organism is in the growing vat. Reagents is the growing vats reagents
 /datum/micro_organism/cell_line/proc/HandleGrowth(var/obj/machinery/plumbing/growing_vat/vat)
-	. = ..()
 	if(!try_eat(vat.reagents))
 		return
-	var/temp = calculate_growth(vat.reagents)
-	message_admins("growth rate [temp]")
-	growth += temp
+	growth += calculate_growth(vat.reagents, vat.biological_sample)
 	if(growth >= 100)
 		finish_growing(vat)
-
 
 ///Tries to consume the required reagents. Can only do this if all of them are available. Reagents is the growing vats reagents
 /datum/micro_organism/cell_line/proc/try_eat(var/datum/reagents/reagents)
@@ -42,22 +38,29 @@
 	return TRUE
 
 ///Apply modifiers on growth_rate based on supplementary and supressive reagents. Reagents is the growing vats reagents
-/datum/micro_organism/cell_line/proc/calculate_growth(var/datum/reagents/reagents)
+/datum/micro_organism/cell_line/proc/calculate_growth(var/datum/reagents/reagents, var/datum/biological_sample/biological_sample)
 	. = growth_rate
 
 	//Handle growth based on supplementary reagents here.
 	for(var/i in supplementary_reagents)
-		if(!reagents.has_reagent(i))
+		if(!reagents.has_reagent(i, REAGENTS_METABOLISM))
 			continue
 		. += supplementary_reagents[i]
 		reagents.remove_reagent(i, REAGENTS_METABOLISM)
 
 	//Handle degrowth based on supressive reagents here.
 	for(var/i in surpressive_reagents)
-		if(!reagents.has_reagent(i))
+		if(!reagents.has_reagent(i, REAGENTS_METABOLISM))
 			continue
 		. += surpressive_reagents[i]
 		reagents.remove_reagent(i, REAGENTS_METABOLISM)
+
+	//Handle debuffing growth based on viruses here.
+	for(var/datum/micro_organism/cell_line/virus in biological_sample)
+		if(reagents.has_reagent(/datum/reagent/medicine/spaceacillin, REAGENTS_METABOLISM))
+			reagents.remove_reagent(i, REAGENTS_METABOLISM)
+			continue //This virus is stopped, We have antiviral stuff
+		. += virus_suspectibility
 
 ///Called once a cell line reaches 100 growth. Then we check if any cell_line is too far so we can perform an epic fail roll
 /datum/micro_organism/cell_line/proc/finish_growing(var/obj/machinery/plumbing/growing_vat/vat)

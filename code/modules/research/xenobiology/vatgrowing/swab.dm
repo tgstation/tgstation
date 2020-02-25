@@ -8,7 +8,7 @@
 ///Adds the swabbing component to the biopsy tool
 /obj/item/swab/Initialize()
 	. = ..()
-	AddComponent(/datum/component/swabbing, TRUE, TRUE, TRUE, CALLBACK(src, .proc/update_swab_icon), max_items = 1)
+	AddComponent(/datum/component/swabbing, TRUE, TRUE, TRUE, null, CALLBACK(src, .proc/update_swab_icon), max_items = 1)
 
 /obj/item/swab/proc/update_swab_icon(overlays, var/list/swabbed_items)
 	if(swabbed_items.len)

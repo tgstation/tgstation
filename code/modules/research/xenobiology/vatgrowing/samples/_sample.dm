@@ -12,7 +12,7 @@
 	var/info
 	for(var/i in micro_organisms)
 		var/datum/micro_organism/MO = i
-		info += "<span class='notice'>[MO.desc]</span>"
+		info += "<span class='notice'>[MO.desc]</span>\n"
 	return info
 
 ///Generate a sample from a specific weighted list, and a specific amount of cell line with a chance for a virus
