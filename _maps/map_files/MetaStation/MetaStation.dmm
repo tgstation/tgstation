@@ -72335,30 +72335,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
-<<<<<<< master
-"lcm" = (
-/obj/structure/cable,
-/obj/machinery/door/airlock/engineering{
-	name = "Port Quarter Solar Access";
-	req_access_txt = "10"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/solars/port/aft)
-"lfv" = (
-/obj/effect/mob_spawn/human/corpse/assistant{
-	belt = null;
-	husk = 1;
-	id = null;
-	l_pocket = /obj/item/pen
-	},
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-=======
->>>>>>> metamed
 "lfx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
