@@ -108,6 +108,8 @@
 	var/phasing_energy_drain = 200
 	var/phase_state = "" //icon_state when phasing
 	var/strafe = FALSE //If we are strafing
+	var/canstrafe = TRUE //if we can turn on strafing
+	var/haslights = TRUE //if we can turn on lights
 
 	var/nextsmash = 0
 	var/smashcooldown = 3	//deciseconds

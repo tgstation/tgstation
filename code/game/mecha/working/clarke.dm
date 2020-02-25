@@ -14,6 +14,7 @@
 	wreckage = /obj/structure/mecha_wreckage/clarke
 	enter_delay = 40
 	cargo_capacity = 20
+	canstrafe = FALSE
 
 /obj/mecha/working/clarke/moved_inside(mob/living/carbon/human/H)
 	. = ..()
