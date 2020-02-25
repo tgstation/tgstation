@@ -881,9 +881,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 
 /obj/item/proc/add_creator(mob/living/carbon/human/C)
-	if(!has_quality)
-
-		AddComponent(/datum/component/quality, C , /datum/skill/operating)
+	AddComponent(/datum/component/quality, C , /datum/skill/operating)
 
 /**
   * Does the current embedding var meet the criteria for being harmless? Namely, does it have a pain multiplier and jostle pain mult of 0? If so, return true.
