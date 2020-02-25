@@ -42,6 +42,7 @@ Difficulty: Medium
 	icon_state = "dragon"
 	icon_living = "dragon"
 	icon_dead = "dragon_dead"
+	health_doll_icon = "dragon"
 	friendly_verb_continuous = "stares down"
 	friendly_verb_simple = "stare down"
 	speak_emote = list("roars")
@@ -144,10 +145,12 @@ Difficulty: Medium
 	if(!target)
 		return
 	target.visible_message("<span class='boldwarning'>Lava starts to pool up around you!</span>")
+
 	while(amount > 0)
 		if(QDELETED(target))
 			break
-		var/turf/T = pick(RANGE_TURFS(1, target))
+		var/turf/TT = get_turf(target)
+		var/turf/T = pick(RANGE_TURFS(1,TT))
 		new /obj/effect/temp_visual/lava_warning(T, 60) // longer reset time for the lava
 		amount--
 		SLEEP_CHECK_DEATH(delay)
@@ -605,6 +608,7 @@ obj/effect/temp_visual/fireball
 	icon_state = "spacedragon"
 	icon_living = "spacedragon"
 	icon_dead = "spacedragon_dead"
+	health_doll_icon = "spacedragon"
 	obj_damage = 80
 	melee_damage_upper = 35
 	melee_damage_lower = 35

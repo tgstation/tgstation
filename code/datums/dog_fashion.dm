@@ -174,3 +174,8 @@
 /datum/dog_fashion/back/deathsquad
 	name = "Trooper REAL_NAME"
 	desc = "That's not red paint. That's real corgi blood."
+
+/datum/dog_fashion/head/festive
+	name = "Festive REAL_NAME"
+	desc = "Ready to party!"
+	obj_icon_state = "festive"

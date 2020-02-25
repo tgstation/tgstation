@@ -1,4 +1,0 @@
-author: "Robotby"
-delete-after: True
-changes: 
-  - rscadd: "borgs can now unbuckle users safely by clicking on themselves with help intent and no selected module OR by using the resist verb in the command bar/IC tab."

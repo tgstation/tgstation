@@ -66,11 +66,10 @@
 	return TRUE
 
 
-/obj/machinery/shower/update_icon()
-	cut_overlays()
-
+/obj/machinery/shower/update_overlays()
+	. = ..()
 	if(on)
-		add_overlay(mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER))
+		. += mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
 
 /obj/machinery/shower/proc/handle_mist()
 	// If there is no mist, and the shower was turned on (on a non-freezing temp): make mist in 5 seconds

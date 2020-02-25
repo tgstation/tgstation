@@ -165,7 +165,7 @@
 	icon_state = "milosoup"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("milo" = 1) // wtf is milo
-	foodtype = GROSS | VEGETABLES
+	foodtype = VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/soup/mushroom
 	name = "chantrelle soup"

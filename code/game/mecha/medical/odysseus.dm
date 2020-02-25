@@ -23,9 +23,9 @@
 		hud.remove_hud_from(L)
 	..()
 
-/obj/mecha/medical/odysseus/mmi_moved_inside(obj/item/mmi/mmi_as_oc, mob/user)
+/obj/mecha/medical/odysseus/mmi_moved_inside(obj/item/mmi/M, mob/user)
 	. = ..()
 	if(.)
 		var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-		var/mob/living/brain/B = mmi_as_oc.brainmob
+		var/mob/living/brain/B = M.brainmob
 		hud.add_hud_to(B)

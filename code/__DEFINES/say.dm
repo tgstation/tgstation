@@ -15,6 +15,7 @@
 
 #define MODE_INTERCOM "intercom"
 #define MODE_KEY_INTERCOM "i"
+#define MODE_TOKEN_INTERCOM ":i"
 
 #define MODE_BINARY "binary"
 #define MODE_KEY_BINARY "b"
@@ -45,6 +46,8 @@
 
 #define MODE_MONKEY "monkeyhive"
 
+#define MODE_SING "%"
+
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"
 #define SPAN_YELL "yell"
@@ -54,6 +57,7 @@
 #define SPAN_REALLYBIG "reallybig"
 #define SPAN_COMMAND "command_headset"
 #define SPAN_CLOWN "clown"
+#define SPAN_SINGING "singing"
 
 //bitflag #defines for return value of the radio() proc.
 #define ITALICS 1
@@ -62,6 +66,9 @@
 
 //Eavesdropping
 #define EAVESDROP_EXTRA_RANGE 1 //how much past the specified message_range does the message get starred, whispering only
+
+/// How close intercoms can be for radio code use
+#define MODE_RANGE_INTERCOM 1
 
 // A link given to ghost alice to follow bob
 #define FOLLOW_LINK(alice, bob) "<a href=?src=[REF(alice)];follow=[REF(bob)]>(F)</a>"

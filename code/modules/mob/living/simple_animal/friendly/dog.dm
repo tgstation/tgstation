@@ -48,13 +48,16 @@
 				step_to(src,movement_target,1)
 
 				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
-					if (movement_target.loc.x < src.x)
+					var/turf/T = get_turf(movement_target)
+					if(!T)
+						return
+					if (T.x < src.x)
 						setDir(WEST)
-					else if (movement_target.loc.x > src.x)
+					else if (T.x > src.x)
 						setDir(EAST)
-					else if (movement_target.loc.y < src.y)
+					else if (T.y < src.y)
 						setDir(SOUTH)
-					else if (movement_target.loc.y > src.y)
+					else if (T.y > src.y)
 						setDir(NORTH)
 					else
 						setDir(SOUTH)
@@ -62,7 +65,7 @@
 					if(!Adjacent(movement_target)) //can't reach food through windows.
 						return
 
-					if(isturf(movement_target.loc) )
+					if(isturf(movement_target.loc))
 						movement_target.attack_animal(src)
 					else if(ishuman(movement_target.loc) )
 						if(prob(20))
@@ -257,7 +260,11 @@
 
 		switch(add_to)
 			if("collar")
-				add_collar(usr.get_active_held_item(), usr)
+				var/obj/item/clothing/neck/petcollar/P = usr.get_active_held_item()
+				if(!istype(P))
+					to_chat(usr,"<span class='warning'>That's not a collar.</span>")
+					return
+				add_collar(P, usr)
 				update_corgi_fluff()
 
 			if(BODY_ZONE_HEAD)

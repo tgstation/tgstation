@@ -2887,7 +2887,7 @@
 /area/awaymission/snowdin/post/hydro)
 "gL" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -4212,7 +4212,7 @@
 	pixel_y = 5
 	},
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/effect/turf_decal/tile/green,
@@ -4646,7 +4646,7 @@
 /area/awaymission/snowdin/post/dorm)
 "kC" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -5583,7 +5583,7 @@
 /area/awaymission/snowdin/post/hydro)
 "mv" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plating{
@@ -8235,7 +8235,7 @@
 /area/awaymission/snowdin/post/cavern2)
 "tc" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -8901,7 +8901,7 @@
 /area/awaymission/snowdin/post/cavern1)
 "vw" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/showroomfloor,

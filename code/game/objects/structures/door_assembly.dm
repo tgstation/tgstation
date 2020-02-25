@@ -161,6 +161,9 @@
 			name = "near finished airlock assembly"
 			electronics = W
 
+	else if(istype(W, /obj/item/electroadaptive_pseudocircuit) && state == AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS ) //FULP ELECTROADAPTIVE PROCS FOR AIRLOCKS PR, Surrealistik Oct 2019
+		airlock_install_electroadaptive(W, user)
+
 
 	else if((W.tool_behaviour == TOOL_CROWBAR) && state == AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER )
 		user.visible_message("<span class='notice'>[user] removes the electronics from the airlock assembly.</span>", \
@@ -216,6 +219,17 @@
 									G.use(2)
 									var/mineralassembly = text2path("/obj/structure/door_assembly/door_assembly_[M]")
 									var/obj/structure/door_assembly/MA = new mineralassembly(loc)
+
+									if(MA.noglass && glass) //in case the new door doesn't support glass. prevents the new one from reverting to a normal airlock after being constructed.
+										var/obj/item/stack/sheet/dropped_glass
+										if(heat_proof_finished)
+											dropped_glass = new /obj/item/stack/sheet/rglass(drop_location())
+											heat_proof_finished = FALSE
+										else
+											dropped_glass = new /obj/item/stack/sheet/glass(drop_location())
+										glass = FALSE
+										to_chat(user, "<span class='notice'>As you finish, a [dropped_glass.singular_name] falls out of [MA]'s frame.</span>")
+
 									transfer_assembly_vars(src, MA, TRUE)
 							else
 								to_chat(user, "<span class='warning'>You need at least two sheets add a mineral cover!</span>")
@@ -259,13 +273,13 @@
 	update_name()
 	update_icon()
 
-/obj/structure/door_assembly/update_icon()
-	cut_overlays()
+/obj/structure/door_assembly/update_overlays()
+	. = ..()
 	if(!glass)
-		add_overlay(get_airlock_overlay("fill_construction", icon))
-	else if(glass)
-		add_overlay(get_airlock_overlay("glass_construction", overlays_file))
-	add_overlay(get_airlock_overlay("panel_c[state+1]", overlays_file))
+		. += get_airlock_overlay("fill_construction", icon)
+	else
+		. += get_airlock_overlay("glass_construction", overlays_file)
+	. += get_airlock_overlay("panel_c[state+1]", overlays_file)
 
 /obj/structure/door_assembly/proc/update_name()
 	name = ""

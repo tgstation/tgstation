@@ -78,10 +78,10 @@ const CFScreen = props => {
         minHeight={47}
         buttons={(
           <Box bold color="good">
-            ${data.totalprice}
+            {data.totalprice} cr
           </Box>
         )}>
-        <Table width="100%">
+        <Table>
           <Table.Row>
             <Table.Cell
               bold
@@ -347,7 +347,7 @@ const CFScreen = props => {
           </Box>
           {' '}
           <Box inline color="good">
-            ${data.totalprice}
+            {data.totalprice} cr
           </Box>
         </Box>
         <Box
@@ -363,7 +363,7 @@ const CFScreen = props => {
           textAlign="center"
           fontSize="18px"
           color={data.credits >= data.totalprice ? "good" : "bad"}>
-          ${data.credits}
+          {data.credits} cr
         </Box>
         <Button
           fluid

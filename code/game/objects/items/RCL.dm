@@ -23,6 +23,10 @@
 	var/datum/radial_menu/persistent/wiring_gui_menu
 	var/mob/listeningTo
 
+/obj/item/twohanded/rcl/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
 /obj/item/twohanded/rcl/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/pipe_cleaner_coil))
 		var/obj/item/stack/pipe_cleaner_coil/C = W
@@ -90,7 +94,7 @@
 	QDEL_NULL(wiring_gui_menu)
 	return ..()
 
-/obj/item/twohanded/rcl/update_icon()
+/obj/item/twohanded/rcl/update_icon_state()
 	if(!loaded)
 		icon_state = "rcl-0"
 		item_state = "rcl-0"
@@ -314,7 +318,7 @@
 	name = "makeshift rapid pipe cleaner layer"
 	ghetto = TRUE
 
-/obj/item/twohanded/rcl/ghetto/update_icon()
+/obj/item/twohanded/rcl/ghetto/update_icon_state()
 	if(!loaded)
 		icon_state = "rclg-0"
 		item_state = "rclg-0"

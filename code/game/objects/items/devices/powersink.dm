@@ -26,7 +26,7 @@
 
 	var/obj/structure/cable/attached		// the attached cable
 
-/obj/item/powersink/update_icon()
+/obj/item/powersink/update_icon_state()
 	icon_state = "powersink[mode == OPERATING]"
 
 /obj/item/powersink/proc/set_mode(value)

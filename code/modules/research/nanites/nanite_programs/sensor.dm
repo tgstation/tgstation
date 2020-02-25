@@ -181,9 +181,6 @@
 	desc = "The nanites receive a signal when a host's specific damage type is above/below a target value."
 	can_rule = TRUE
 	var/spent = FALSE
-	var/damage_type = BRUTE
-	var/damage = 50
-	var/direction = "Above"
 
 /datum/nanite_program/sensor/damage/register_extra_settings()
 	. = ..()
@@ -196,7 +193,7 @@
 	var/datum/nanite_extra_setting/type = extra_settings[NES_DAMAGE_TYPE]
 	var/datum/nanite_extra_setting/damage = extra_settings[NES_DAMAGE]
 	var/datum/nanite_extra_setting/direction = extra_settings[NES_DIRECTION]
-	var/check_above = (direction == "Above")
+	var/check_above =  direction.get_value()
 	var/damage_amt = 0
 	switch(type.get_value())
 		if(BRUTE)
@@ -210,11 +207,12 @@
 		if(CLONE)
 			damage_amt = host_mob.getCloneLoss()
 
-	if(damage_amt >= damage.get_value())
-		if(check_above)
+	if(check_above)
+		if(damage_amt >= damage.get_value())
 			reached_threshold = TRUE
-	else if(!check_above)
-		reached_threshold = TRUE
+	else
+		if(damage_amt < damage.get_value())
+			reached_threshold = TRUE
 
 	if(reached_threshold)
 		if(!spent)
@@ -228,9 +226,11 @@
 /datum/nanite_program/sensor/damage/make_rule(datum/nanite_program/target)
 	var/datum/nanite_rule/damage/rule = new(target)
 	var/datum/nanite_extra_setting/direction = extra_settings[NES_DIRECTION]
-	rule.above = direction.get_value()
-	rule.threshold = damage
-	rule.damage_type = damage_type
+	var/datum/nanite_extra_setting/damage_type = extra_settings[NES_DAMAGE_TYPE]
+	var/datum/nanite_extra_setting/damage = extra_settings[NES_DAMAGE]
+	rule.above  =  direction.get_value()
+	rule.threshold = damage.get_value()
+	rule.damage_type = damage_type.get_value()
 	return rule
 
 /datum/nanite_program/sensor/voice

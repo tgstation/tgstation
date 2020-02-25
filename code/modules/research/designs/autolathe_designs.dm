@@ -279,6 +279,7 @@
 	materials = list(/datum/material/iron = 1000)
 	build_path = /obj/item/tank/internals/generic
 	category = list("initial","Misc","Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/metal
 	name = "Metal"
@@ -535,7 +536,7 @@
 	name = "Pill Bottle"
 	id = "pillbottle"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 20, /datum/material/glass = 100)
+	materials = list(/datum/material/plastic = 20, /datum/material/glass = 100)
 	build_path = /obj/item/storage/pill_bottle
 	category = list("initial", "Medical", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
@@ -690,6 +691,15 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/iron = 10, /datum/material/glass = 20)
 	build_path = /obj/item/reagent_containers/syringe
+	category = list("initial", "Medical", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/dropper
+	name = "Dropper"
+	id = "dropper"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/glass = 10, /datum/material/plastic = 30)
+	build_path = /obj/item/reagent_containers/dropper
 	category = list("initial", "Medical", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
@@ -1027,3 +1037,35 @@
 	materials = list(/datum/material/iron = 20, /datum/material/glass = 5)
 	build_path = /obj/item/toy/ammo/gun
 	category = list("hacked", "Misc")
+
+/datum/design/plastic_tree
+	name = "Plastic Potted Plant"
+	id = "plastic_trees"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/plastic = 8000)
+	build_path = /obj/item/twohanded/required/kirbyplants/fullysynthetic
+	category = list("initial", "Misc")
+
+/datum/design/beads
+	name = "Plastic Bead Necklace"
+	id = "plastic_necklace"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/plastic = 500)
+	build_path = /obj/item/clothing/neck/beads
+	category = list("initial", "Misc")
+
+/datum/design/plastic_ring
+	name = "Plastic Can Rings"
+	id = "ring_holder"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/plastic = 1200)
+	build_path = /obj/item/storage/cans
+	category = list("initial", "Dinnerware")
+
+/datum/design/plastic_box
+	name = "Plastic Box"
+	id = "plastic_box"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/plastic = 1000)
+	build_path = /obj/item/storage/box/plastic
+	category = list("initial", "Misc")

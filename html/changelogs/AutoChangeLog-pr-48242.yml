@@ -1,4 +1,0 @@
-author: "PKPenguin321"
-delete-after: True
-changes: 
-  - code_imp: "Cleaned some very confusing code in subsystem/job.dm"

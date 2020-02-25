@@ -31,8 +31,8 @@
 			return
 
 	reagents.flags &= ~NO_REACT
-	reagents.handle_reactions()
 	RC.emptying = TRUE
+	reagents.handle_reactions()
 
 /datum/component/plumbing/reaction_chamber/can_give(amount, reagent, datum/ductnet/net)
 	. = ..()

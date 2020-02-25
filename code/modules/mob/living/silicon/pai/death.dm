@@ -1,7 +1,7 @@
 /mob/living/silicon/pai/death(gibbed)
 	if(stat == DEAD)
 		return
-	stat = DEAD
+	set_stat(DEAD)
 	mobility_flags = NONE
 	update_sight()
 	clear_fullscreens()

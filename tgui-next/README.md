@@ -65,6 +65,9 @@ Run one of the following:
   hot module replacement and logging facilities in all running instances
   of tgui. In short, this means that you will instantly see changes in the
   game as you code it. Very useful, highly recommended.
+  In order to use, you should start the game server first, connect to it so dreamseeker is
+  open, then start the dev server. You'll know if it's hooked correctly if data gets dumped
+  to the log when tgui windows are opened.
 - `bin/tgui --dev --reload` - reload byond cache once.
 - `bin/tgui --dev --debug` - run server with debug logging enabled.
 - `bin/tgui --dev --no-hot` - disable hot module replacement (helps when
@@ -312,6 +315,27 @@ Props:
 - See inherited props: [Button](#button)
 - `checked: boolean` - Boolean value, which marks the checkbox as checked.
 
+### `Button.Confirm`
+
+A button with a an extra confirmation step, using native button component.
+
+Props:
+
+- See inherited props: [Button](#button)
+- `confirmMessage: string` - Text to display after first click; defaults to "Confirm?"
+- `confirmColor: string` - Color to display after first click; default to "bad"
+
+### `Button.Input`
+
+A button that turns into an input box after the first click. Turns back into a button after the user hits enter, defocuses, or hits escape. Enter and defocus commit, while escape cancels.
+
+Props:
+ - See inherited props: [Box](#box)
+ - `fluid`: fill availible horizontal space
+ - `onCommit: (e, value) => void`: function that is called after the user defocuses the input or presses enter
+ - `currentValue: string`: default string to display when the input is shown
+ - `defaultValue: string`: default value emitted if the user leaves the box blank when hitting enter or defocusing. If left undefined, will cancel the change on a blank defocus/enter
+
 ### `Collapsible`
 
 Displays contents when open, acts as a fluid button when closed. Click to toggle, closed by default.
@@ -357,7 +381,7 @@ Props:
   - `over: boolean` - dropdown renders over instead of below
   - `color: string` - color of dropdown button
   - `onClick: (e) => void` - Called when dropdown button is clicked
-  - `onSet: (e, value) => void` - Called when a value is picked from the list, `value` is the value that was picked
+  - `onSelected: (value) => void` - Called when a value is picked from the list, `value` is the value that was picked
 
 ### `Flex`
 
@@ -516,6 +540,7 @@ Props:
 - `value: string` - Value of an input.
 - `placeholder: string` - Text placed into Input box when value is otherwise nothing. Clears automatically when focused.
 - `fluid: boolean` - Fill all available horizontal space.
+- `selfClear: boolean` - Clear after hitting enter, as well as remain focused when this happens. Useful for things like chat inputs
 - `onChange: (e, value) => void` - An event, which fires when you commit
 the text by either unfocusing the input box, or by pressing the Enter key.
 - `onInput: (e, value) => void` - An event, which fires on every keypress.
@@ -607,6 +632,9 @@ dragging the input.
 - `stepPixelSize: number` (default: 1) - Screen distance mouse needs
 to travel to adjust value by one `step`.
 - `width: string|number` - Width of the element, in `Box` units or pixels.
+- `height: string|numer` - Height of the element, in `Box` units or pixels.
+- `lineHeight: string|number` - lineHeight of the element, in `Box` units or pixels.
+- `fontSize: string|number` - fontSize of the element, in `Box` units or pixels.
 - `format: value => value` - Format value using this function before
 displaying it.
 - `suppressFlicker: number` - A number in milliseconds, for which the input
@@ -783,6 +811,8 @@ Props:
 
 - `vertical: boolean` - Use a vertical configuration, where tabs will appear
 stacked on the left side of the container.
+- `altSelection` - Whether the tab buttons select via standard select (color change) or by adding a white indicator to the selected tab.
+  Intended for usage on interfaces where tab color has relevance.
 - `children: Tab[]` - This component only accepts tabs as its children.
 
 ### `Tabs.Tab`

@@ -826,7 +826,6 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/medical/medbay)
 "cK" = (
-/obj/machinery/dna_scannernew,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -1278,7 +1277,6 @@
 /area/hallway/secondary/entry)
 "es" = (
 /obj/machinery/light,
-/obj/machinery/clonepod,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -1934,9 +1932,7 @@
 	pixel_x = 32
 	},
 /obj/structure/cable,
-/obj/machinery/computer/shuttle/mining{
-	dir = 2
-	},
+/obj/machinery/computer/shuttle/mining,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "gk" = (
@@ -2356,15 +2352,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science)
-"BB" = (
-/obj/machinery/computer/cloning{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white/corner,
-/area/medical/medbay)
 "BD" = (
 /obj/structure/closet/secure_closet/CMO{
 	locked = 0
@@ -2471,8 +2458,8 @@
 	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	width = 7;
-	roundstart_template = /datum/map_template/shuttle/mining/box
+	roundstart_template = /datum/map_template/shuttle/mining/box;
+	width = 7
 	},
 /turf/open/floor/engine,
 /area/quartermaster/miningoffice)
@@ -8404,7 +8391,7 @@ by
 Qt
 by
 cm
-BB
+cK
 by
 cS
 cS

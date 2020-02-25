@@ -19,6 +19,11 @@
 #define MEDAL_SELFOUCH			"Hands???"
 #define MEDAL_SANDMAN			"Mister Sandman"
 #define MEDAL_CLEANBOSS			"Cleanboss"
+#define MEDAL_RULE8				"Rule 8"
+#define MEDAL_LONGSHIFT			"longshift"
+
+//Skill medal hub IDs
+#define MEDAL_LEGENDARY_MINER		"Legendary Miner"
 
 
 //Boss medals

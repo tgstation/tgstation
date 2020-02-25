@@ -39,7 +39,7 @@
 	. = ..()
 	if(!isliving(user))
 		return
-	if(user.mind && user.mind in immune_minds)
+	if(user.mind && (user.mind in immune_minds))
 		return
 	if(get_dist(user, src) <= 1)
 		. += "<span class='notice'>You reveal [src]!</span>"

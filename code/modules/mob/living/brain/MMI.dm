@@ -14,20 +14,23 @@
 	var/force_replace_ai_name = FALSE
 	var/overrides_aicore_laws = FALSE // Whether the laws on the MMI, if any, override possible pre-existing laws loaded on the AI core.
 
-/obj/item/mmi/update_icon()
+/obj/item/mmi/update_icon_state()
 	if(!brain)
 		icon_state = "mmi_off"
-		return
-	if(istype(brain, /obj/item/organ/brain/alien))
+	else if(istype(brain, /obj/item/organ/brain/alien))
 		icon_state = "mmi_brain_alien"
-		braintype = "Xenoborg" //HISS....Beep.
 	else
 		icon_state = "mmi_brain"
-		braintype = "Cyborg"
+
+/obj/item/mmi/update_overlays()
+	. = ..()
+	. += add_mmi_overlay()
+
+/obj/item/mmi/proc/add_mmi_overlay()
 	if(brainmob && brainmob.stat != DEAD)
-		add_overlay("mmi_alive")
-	else
-		add_overlay("mmi_dead")
+		. += "mmi_alive"
+	else if(brain)
+		. += "mmi_dead"
 
 /obj/item/mmi/Initialize()
 	. = ..()
@@ -57,9 +60,9 @@
 		newbrain.brainmob = null
 		brainmob.forceMove(src)
 		brainmob.container = src
-		var/fubar_brain = newbrain.brain_death && newbrain.suicided && brainmob.suiciding //brain is damaged beyond repair or from a suicider
+		var/fubar_brain = newbrain.suicided || brainmob.suiciding //brain is from a suicider
 		if(!fubar_brain && !(newbrain.organ_flags & ORGAN_FAILING)) // the brain organ hasn't been beaten to death, nor was from a suicider.
-			brainmob.stat = CONSCIOUS //we manually revive the brain mob
+			brainmob.set_stat(CONSCIOUS) //we manually revive the brain mob
 			GLOB.dead_mob_list -= brainmob
 			GLOB.alive_mob_list += brainmob
 		else if(!fubar_brain && newbrain.organ_flags & ORGAN_FAILING) // the brain is damaged, but not from a suicider
@@ -75,6 +78,10 @@
 
 		name = "[initial(name)]: [brainmob.real_name]"
 		update_icon()
+		if(istype(brain, /obj/item/organ/brain/alien))
+			braintype = "Xenoborg" //HISS....Beep.
+		else
+			braintype = "Cyborg"
 
 		SSblackbox.record_feedback("amount", "mmis_filled", 1)
 
@@ -84,7 +91,6 @@
 		O.attack(brainmob, user) //Oh noooeeeee
 	else
 		return ..()
-
 
 /obj/item/mmi/attack_self(mob/user)
 	if(!brain)
@@ -99,7 +105,7 @@
 /obj/item/mmi/proc/eject_brain(mob/user)
 	brainmob.container = null //Reset brainmob mmi var.
 	brainmob.forceMove(brain) //Throw mob into brain.
-	brainmob.stat = DEAD
+	brainmob.set_stat(DEAD)
 	brainmob.emp_damage = 0
 	brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
 	GLOB.alive_mob_list -= brainmob //Get outta here
@@ -138,7 +144,10 @@
 
 	name = "[initial(name)]: [brainmob.real_name]"
 	update_icon()
-	return
+	if(istype(brain, /obj/item/organ/brain/alien))
+		braintype = "Xenoborg" //HISS....Beep.
+	else
+		braintype = "Cyborg"
 
 /obj/item/mmi/proc/replacement_ai_name()
 	return brainmob.name
@@ -204,16 +213,42 @@
 	if(brainmob)
 		var/mob/living/brain/B = brainmob
 		if(!B.key || !B.mind || B.stat == DEAD)
-			. += "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>"
-
+			. += "<span class='warning'>\The [src] indicates that the brain is completely unresponsive.</span>"
 		else if(!B.client)
-			. += "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>"
-
+			. += "<span class='warning'>\The [src] indicates that the brain is currently inactive; it might change.</span>"
 		else
-			. += "<span class='notice'>The MMI indicates the brain is active.</span>"
+			. += "<span class='notice'>\The [src] indicates that the brain is active.</span>"
 
 /obj/item/mmi/relaymove(mob/user)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move
+
+/obj/item/mmi/proc/brain_check(mob/user)
+	var/mob/living/brain/B = brainmob
+	if(!B)
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] indicates that there is no brain present!</span>")
+		return FALSE
+	if(!B.key || !B.mind)
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] indicates that their mind is completely unresponsive!</span>")
+		return FALSE
+	if(!B.client)
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] indicates that their mind is currently inactive.</span>")
+		return FALSE
+	if(B.suiciding || brain?.suicided)
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] indicates that their mind has no will to live!</span>")
+		return FALSE
+	if(B.stat == DEAD)
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] indicates that the brain is dead!</span>")
+		return FALSE
+	if(brain?.organ_flags & ORGAN_FAILING)
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] indicates that the brain is damaged!</span>")
+		return FALSE
+	return TRUE
 
 /obj/item/mmi/syndie
 	name = "\improper Syndicate Man-Machine Interface"

@@ -4696,7 +4696,7 @@
 /area/abductor_ship)
 "lG" = (
 /obj/structure/table/abductor,
-/obj/item/storage/box/alienhandcuffs,
+/obj/machinery/recharger,
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "lH" = (
@@ -5620,7 +5620,7 @@
 /area/centcom/ferry)
 "nC" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -7671,7 +7671,7 @@
 	pixel_x = 28
 	},
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/freezer,
@@ -7883,11 +7883,12 @@
 "rB" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/fueltank,
+/obj/item/weldingtool/experimental,
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/fueltank,
-/obj/item/weldingtool/experimental,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "rC" = (
@@ -14697,7 +14698,7 @@
 /area/centcom/ferry)
 "Hb" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/structure/mirror{
@@ -14751,7 +14752,7 @@
 /area/tdome/tdomeobserve)
 "Hh" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -14774,7 +14775,7 @@
 /area/centcom/holding)
 "Hn" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/structure/mirror{
@@ -14905,7 +14906,7 @@
 /area/tdome/tdomeobserve)
 "Hx" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -14915,7 +14916,7 @@
 /area/tdome/tdomeobserve)
 "HA" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/structure/mirror{
@@ -14946,7 +14947,7 @@
 /area/tdome/tdomeobserve)
 "HC" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/effect/turf_decal/tile/red{
@@ -14963,7 +14964,7 @@
 /area/tdome/tdomeobserve)
 "HD" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -14974,7 +14975,7 @@
 /area/tdome/tdomeobserve)
 "HF" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -14996,7 +14997,7 @@
 /area/centcom/holding)
 "HI" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12
 	},
 /obj/structure/mirror{
@@ -15120,7 +15121,7 @@
 /area/centcom/holding)
 "HR" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -17217,7 +17218,7 @@
 /area/centcom/control)
 "Op" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -17614,6 +17615,11 @@
 	},
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
+"RQ" = (
+/obj/structure/closet/abductor,
+/obj/item/storage/box/alienhandcuffs,
+/turf/open/floor/plating/abductor,
+/area/abductor_ship)
 "RS" = (
 /obj/machinery/light{
 	dir = 8
@@ -20355,7 +20361,7 @@ aa
 aa
 ks
 kP
-lj
+RQ
 lG
 lj
 mw
@@ -20382,7 +20388,7 @@ aa
 aa
 ks
 kP
-lj
+RQ
 lG
 lj
 mw
@@ -20412,7 +20418,7 @@ aa
 aa
 ks
 kP
-lj
+RQ
 lG
 lj
 mw
@@ -20439,7 +20445,7 @@ aa
 aa
 ks
 kP
-lj
+RQ
 lG
 lj
 mw

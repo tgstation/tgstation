@@ -1,0 +1,6 @@
+author: "with thanks to HugBug and Buggy for helping with bug-squashing"
+delete-after: True
+changes: 
+  - balance: "The effect of gas comp will now spin up and down, rather then jumping. Play around, don't break anything."
+  - bugfix: "Fixed low pressure hell SMs"
+  - admin: "Allows var editing of SM gas rad effects"

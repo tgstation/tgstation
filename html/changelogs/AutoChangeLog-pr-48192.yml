@@ -1,4 +1,0 @@
-author: "Yenwodyah"
-delete-after: True
-changes: 
-  - bugfix: "Blood-red hardsuits now properly update their slowdown when you toggle helmet modes"

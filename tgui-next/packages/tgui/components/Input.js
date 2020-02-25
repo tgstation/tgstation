@@ -43,7 +43,7 @@ export class Input extends Component {
       }
     };
     this.handleKeyDown = e => {
-      const { onInput, onChange } = this.props;
+      const { onInput, onChange, onEnter } = this.props;
       if (e.keyCode === 13) {
         this.setEditing(false);
         if (onChange) {
@@ -52,7 +52,14 @@ export class Input extends Component {
         if (onInput) {
           onInput(e, e.target.value);
         }
-        e.target.blur();
+        if (onEnter) {
+          onEnter(e, e.target.value);
+        }
+        if (this.props.selfClear) {
+          e.target.value = '';
+        } else {
+          e.target.blur();
+        }
         return;
       }
       if (e.keyCode === 27) {
@@ -90,8 +97,10 @@ export class Input extends Component {
     const { props } = this;
     // Input only props
     const {
+      selfClear,
       onInput,
       onChange,
+      onEnter,
       value,
       maxLength,
       placeholder,
