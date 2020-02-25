@@ -174,13 +174,13 @@
 	switch (number)
 		if (1 to 20)
 			. = "Low"
-		if (20 to 40)
+		if (21 to 40)
 			. = "Medium"
-		if (40 to 60)
+		if (41 to 60)
 			. = "High"
-		if (60 to 80)
+		if (61 to 80)
 			. = "Very high"
-		if (80 to 100)
+		if (81 to 99)
 			. = "Superb"
 		if (100 to INFINITY)
 			. = "Complete"
