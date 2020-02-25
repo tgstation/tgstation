@@ -57797,7 +57797,21 @@
 /area/medical/virology)
 "cCM" = (
 /obj/structure/lattice/catwalk,
-/obj/item/grown/bananapeel,
+/obj/item/reagent_containers/food/drinks/bottle/rum{
+	pixel_x = -7;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/drinks/colocup{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/colocup{
+	pixel_x = 6;
+	pixel_y = -4
+	},
+/obj/item/clothing/mask/cigarette/rollie/cannabis{
+	pixel_y = -3
+	},
 /turf/open/space/basic,
 /area/space/nearstation)
 "cCN" = (
@@ -58064,7 +58078,7 @@
 /area/science/test_area)
 "cDD" = (
 /obj/structure/lattice/catwalk,
-/obj/effect/mob_spawn/human/clown/corpse,
+/obj/item/instrument/guitar,
 /turf/open/space/basic,
 /area/space/nearstation)
 "cDJ" = (
@@ -69664,9 +69678,8 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "eMU" = (
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/beebox/premade/random,
-/turf/open/floor/grass,
+/obj/machinery/smoke_machine,
+/turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/maintenance/port/aft)
 "eNA" = (
 /obj/structure/disposalpipe/segment{
@@ -73044,12 +73057,8 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "mCu" = (
-/obj/item/toy/plush/beeplushie,
-/obj/item/clothing/suit/hooded/bee_costume,
-/obj/item/clothing/mask/rat/bee,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/turf/open/floor/grass,
+/mob/living/simple_animal/bot/vibebot,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/maintenance/port/aft)
 "mCX" = (
 /obj/machinery/biogenerator,
@@ -73331,9 +73340,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "nsN" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/beebox/premade/random,
-/turf/open/floor/grass,
+/obj/machinery/jukebox,
+/turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/maintenance/port/aft)
 "nuZ" = (
 /obj/structure/cable,
