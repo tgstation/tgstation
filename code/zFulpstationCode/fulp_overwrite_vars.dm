@@ -31,7 +31,7 @@
 
 	//The time for Cobby is Over//	-Love, Sal
 
-/datum/reagent/medicine/C2/multiver = /datum/reagent/medicine/CF/charcoal
+/*/datum/reagent/medicine/C2/multiver = /datum/reagent/medicine/CF/charcoal
 
 /datum/chemical_reaction/multiver
 	results = list(/datum/reagent/medicine/CF/charcoal = 2)
@@ -40,7 +40,7 @@
 	results = list(/datum/reagent/medicine/CF/silver_sulfadiazine = 5)
 
 /datum/chemical_reaction/libital
-	results = list(/datum/reagent/medicine/CF/styptic = 3)
+	results = list(/datum/reagent/medicine/CF/styptic = 3)*/
 
 
 /obj/item/clothing/accessory
