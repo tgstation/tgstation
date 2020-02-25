@@ -46,7 +46,7 @@
 	flavour_text = "Milennia have passed since your grand civilization last stood. \
 	You remember the prophecies of a great disaster, in fear of death you volountereed for you blood to be sealed within the lava sarcophagus. \
 	Last thing you remember is a bright light before you awakened from slumber, even tough the sarcophagus is damaged it can still revive your dead brotheren. \
-	Now you are filled with the desire to expand and regrow your civilization once more. Expand, sell artifacts and hunt local fauna while becoming new kings of this ashen land. Strike the earth!"
+	Now you are filled with the desire to expand and regrow your civilization once more. Expand and crush whoever steps on your path, but remember Gold is worth more than blood!"
 	assignedrole = "Dwarf"
 
 /obj/effect/mob_spawn/human/dwarven_sarcophagus/Initialize(mapload)
