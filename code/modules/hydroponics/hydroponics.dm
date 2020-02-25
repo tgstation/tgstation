@@ -821,6 +821,34 @@
 		else
 			to_chat(user, "<span class='warning'>This plot is completely devoid of weeds! It doesn't need uprooting.</span>")
 
+	else if(istype(O, /obj/item/secateurs))
+		if(!myseed)
+			to_chat(user, "<span class='notice'>This plot is empty.</span>")
+			return
+		else if(harvest == FALSE)
+			to_chat(user, "<span class='notice'>This plant must be harvestable in order to be grafted.</span>")
+			return
+		else if(myseed && myseed.grafted == TRUE)
+			to_chat(user, "<span class='notice'>This plant has already been grafted.</span>")
+			return
+		else if(myseed && myseed.grafted == FALSE)
+			user.visible_message("<span class='notice'>[user] grafts off a limb from [src].</span>", "<span class='notice'>You carefully graft off a portion of [src].</span>")
+			var/obj/item/graft/snip = new /obj/item/graft(loc)
+			myseed.grafted = TRUE
+
+	else if(istype(O, /obj/item/graft))
+		var/obj/item/graft/snip = O
+		if(!myseed)
+			to_chat(user, "<span class='notice'>The tray is empty.</span>")
+			return
+		if(!snip.stored_trait.can_add(myseed))
+			to_chat(user, "<span class='warning'>[myseed.plantname] rejects [snip]!</span>")
+			return
+		myseed.genes += snip.stored_trait
+		qdel(snip)
+		to_chat(user, "<span class='notice'>You carefully integrate the grafted plant limb onto [myseed.plantname].</span>")
+		return
+
 	else if(istype(O, /obj/item/storage/bag/plants))
 		attack_hand(user)
 		for(var/obj/item/reagent_containers/food/snacks/grown/G in locate(user.x,user.y,user.z))

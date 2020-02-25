@@ -167,6 +167,23 @@
 	swiping = FALSE
 	return TRUE
 
+/obj/item/secateurs
+	name = "secateurs"
+	desc = "It's a tool for cutting grafts off plants."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "secateurs"
+	item_state = "secateurs"
+	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
+	flags_1 = CONDUCT_1
+	force = 5
+	throwforce = 6
+	w_class = WEIGHT_CLASS_SMALL
+	slot_flags = ITEM_SLOT_BELT
+	custom_materials = list(/datum/material/iron=300)
+	attack_verb = list("slashed", "sliced", "cut", "clawed")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+
 // *************************************
 // Nutrient defines for hydroponics
 // *************************************
