@@ -8,19 +8,26 @@
 #define EXCEPTIONAL_QUALITY 1.3
 #define ARTISAN_QUALITY 1.35
 #define MASTERWORK_QUALITY 1.4
-
 #define ARTIFACT_QUALITY 1.4
 
-
-///This Component handles adding quality to items
+/*
+This code handles quality. Whats quality? Quality is an overall state of an item.
+Qualities below NORMAL_QUALITY result in worse items , less force , less integrity etc.database
+Qualittes above NORMAL_QUALITY result in better items with more force
+Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead becoming ARTIFACT_QUALITY which adds fantasy component of 10 quality(very powerful)
+*/
+///This Component handles adding quality to items.
 /datum/component/quality
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+	///List containing values used in adding force to items
 	var/list/quality_levels = list(UNUSABLE_QUALITY,SHODDY_QUALITY,POOR_QUALITY,NORMAL_QUALITY,GOOD_QUALITY,FINE_QUALITY,SUPERIOR_QUALITY,EXCEPTIONAL_QUALITY,ARTISAN_QUALITY,MASTERWORK_QUALITY,ARTIFACT_QUALITY )
-	///Normal distribution
+
 	var/quality_level
+	var/quality
+
 
 	var/mob/living/carbon/human/creator
-	var/datum/mind/creator_mind
+
 	//we keep this one in case the creator is somehow deleted
 	var/creator_name
 
@@ -33,15 +40,15 @@
 	if(_quality_val != null)
 		quality_val = _quality_val
 	else
-		quality_val = pick(2;0 ,4;1 ,6;2 ,4;3 ,2;4) // mormal distribution
+		quality_val = pick(2;0 ,4;1 ,6;2 ,4;3 ,2;4) // This returns normal distributuion
 	creator = _creator
 
 	var/quality_bracket = creator.mind.get_skill_modifier(_skill, SKILL_QUALITY_MODIFIER)
-	creator_mind =  creator?.mind
 	creator_name = creator.name
 
 	var/obj/item/parent_item = parent
 
+	//we set the has_quality to true so no more quality components can be added
 	parent_item.has_quality = TRUE
 
 	generate_quality(quality_val,quality_bracket)
@@ -55,26 +62,31 @@
 
 ///Generates quality based off passed distribution/ normal distribution and skill. Returns the result
 /datum/component/quality/proc/generate_quality(quality_val,quality_bracket)
-	quality_level = clamp(quality_val + quality_bracket ,0,9)
+	quality_level = clamp(quality_val + quality_bracket ,0,9) +1 // +1 because lists start with 1
 
-	if(quality_level == 9 && prob(0.01)) //Artifact roll
-		quality_level = 10
+	if(quality_level == 10 && prob(0.01)) //Artifact roll
+		quality_level = 11
+
+	quality = quality_levels[quality_level]
 
 	return quality_level
 
 ///Applies quality to the item2
 /datum/component/quality/proc/apply_quality()
 	var/obj/item/parent_item = parent
-	var/quality = quality_levels[quality_level+1] //lists start with 1
+	var/
 	parent_item.force *= quality
 	parent_item.throwforce *= quality
 	parent_item.max_integrity += quality
+
 	if(istype(parent_item,/obj/item/twohanded))
 		var/obj/item/twohanded/twohanded_item = parent_item
 		twohanded_item.force_unwielded *= quality // we dont know if it posses that var but it is still essential
 		twohanded_item.force_wielded *= quality
+
 	var/armor_qual = (quality - 1)*20
 	parent_item.armor?.modifyAllRatings(armor_qual) // modifies all armor ratings
+
 	if(quality_level == 10)
 		parent_item.AddComponent(/datum/component/fantasy,10)
 	parent_item.name = handle_name(parent_item.name)
@@ -82,10 +94,10 @@
 ///Returns the item to the state it was before the modification
 /datum/component/quality/proc/unmodify()
 	var/obj/item/parent_item = parent
-	var/quality = quality_levels[quality_level+1] //lists start with 1
 	parent_item.name = initial(parent_item.name)
 	parent_item.force /= quality
 	parent_item.throwforce  /= quality
+	parent_item.max_integrity -= quality
 
 	var/armor_qual = (quality - 1)*20
 	parent_item.armor = parent_item.armor?.modifyAllRatings(-armor_qual)

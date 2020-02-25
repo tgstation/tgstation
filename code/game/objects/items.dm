@@ -240,6 +240,9 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(!user.research_scanner)
 		return
 
+
+
+
 	// Research prospects, including boostable nodes and point values.
 	// Deliver to a console to know whether the boosts have already been used.
 	var/list/research_msg = list("<font color='purple'>Research prospects:</font> ")
@@ -882,6 +885,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/proc/add_creator(mob/living/carbon/human/C)
 	if(!has_quality)
+
 		AddComponent(/datum/component/quality, C , /datum/skill/operating)
 
 /**
