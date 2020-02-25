@@ -61293,10 +61293,6 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/library)
-"cju" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel/grimy,
-/area/library)
 "cjv" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Library Access"
@@ -112595,6 +112591,10 @@
 /obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
+"fXU" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/wood,
+/area/library)
 "fYL" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
@@ -112797,6 +112797,10 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
+"gUL" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/wood,
+/area/library)
 "gWD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -148230,8 +148234,8 @@ caG
 abm
 ckR
 cmt
-cmt
-cpu
+fXU
+gUL
 cqO
 cmt
 ctK
@@ -148741,7 +148745,7 @@ aaL
 cxV
 aaZ
 caG
-cju
+cjt
 ckR
 cms
 cnQ
@@ -149769,7 +149773,7 @@ aaR
 cmt
 cmt
 ccr
-cju
+cjt
 ckR
 cmt
 cnU
