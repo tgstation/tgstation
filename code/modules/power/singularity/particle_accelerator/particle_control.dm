@@ -57,7 +57,7 @@
 		active = FALSE
 		connected_parts.Cut()
 
-/obj/machinery/particle_accelerator/control_box/update_icon()
+/obj/machinery/particle_accelerator/control_box/update_icon_state()
 	if(active)
 		icon_state = "control_boxp1"
 	else
@@ -133,10 +133,10 @@
 
 /obj/machinery/particle_accelerator/control_box/power_change()
 	. = ..()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		active = FALSE
 		use_power = NO_POWER_USE
-	else if(!stat && construction_state == PA_CONSTRUCTION_COMPLETE)
+	else if(!machine_stat && construction_state == PA_CONSTRUCTION_COMPLETE)
 		use_power = IDLE_POWER_USE
 
 /obj/machinery/particle_accelerator/control_box/process()
@@ -232,7 +232,7 @@
 	if(construction_state != PA_CONSTRUCTION_COMPLETE)
 		return
 
-	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
+	if((get_dist(src, user) > 1) || (machine_stat & (BROKEN|NOPOWER)))
 		if(!issilicon(user))
 			user.unset_machine()
 			user << browse(null, "window=pacontrol")

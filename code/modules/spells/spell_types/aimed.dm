@@ -101,7 +101,7 @@
 	action_icon_state = "lightning0"
 	sound = 'sound/magic/lightningbolt.ogg'
 	active = FALSE
-	projectile_var_overrides = list("tesla_range" = 15, "tesla_power" = 20000, "tesla_flags" = TESLA_MOB_DAMAGE)
+	projectile_var_overrides = list("zap_range" = 15, "zap_power" = 20000, "zap_flags" = ZAP_MOB_DAMAGE | ZAP_IS_TESLA)
 	active_msg = "You energize your hand with arcane lightning!"
 	deactive_msg = "You let the energy flow out of your hands back into yourself..."
 	projectile_type = /obj/projectile/magic/aoe/lightning

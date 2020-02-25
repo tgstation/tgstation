@@ -118,6 +118,8 @@
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return
 	..()
+	if(QDELETED(src))
+		return
 	var/bomb_armor = getarmor(null, "bomb")
 	switch (severity)
 		if (EXPLODE_DEVASTATE)

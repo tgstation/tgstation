@@ -9,7 +9,7 @@
 	var/recharging = FALSE
 	var/circuits = 5 //How many circuits the pseudocircuit has left
 	var/static/recycleable_circuits = typecacheof(list(/obj/item/electronics/firelock, /obj/item/electronics/airalarm, /obj/item/electronics/firealarm, \
-	/obj/item/electronics/apc))//A typecache of circuits consumable for material
+	/obj/item/electronics/airlock, /obj/item/electronics/apc))//A typecache of circuits consumable for material | //FULP ELECTROADAPTIVE PROCS FOR AIRLOCKS PR, Surrealistik Oct 2019
 
 /obj/item/electroadaptive_pseudocircuit/Initialize()
 	. = ..()
@@ -34,6 +34,7 @@
 	if(recharging)
 		to_chat(R, "<span class='warning'>[src] needs some time to recharge first.</span>")
 		return
+	restock_circuit() //FULPSTATION PSEUDOCIRCUIT TWEAK Surrealistik Feb 2020
 	if(!circuits)
 		to_chat(R, "<span class='warning'>You need more material. Use [src] on existing simple circuits to break them down.</span>")
 		return
@@ -42,7 +43,7 @@
 	circuits--
 	maptext = "[circuits]"
 	icon_state = "[initial(icon_state)]_recharging"
-	var/recharge_time = min(600, circuit_cost * 5)  //40W of cost for one fabrication = 20 seconds of recharge time; this is to prevent spamming
+	var/recharge_time = min(600, circuit_cost * recharge_mod)  //40W of cost for one fabrication = 20 seconds of recharge time; this is to prevent spamming //FULPSTATION PSEUDOCIRCUIT TWEAK Surrealistik Feb 2020
 	addtimer(CALLBACK(src, .proc/recharge), recharge_time)
 	return TRUE //The actual circuit magic itself is done on a per-object basis
 

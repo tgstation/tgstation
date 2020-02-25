@@ -17,7 +17,7 @@
 
 	return TRUE
 
-/datum/surgery_step/incise/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+/datum/surgery_step/incise/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if ishuman(target)
 		var/mob/living/carbon/human/H = target
 		if (!(NOBLOOD in H.dna.species.species_traits))
@@ -25,9 +25,10 @@
 				"<span class='notice'>Blood pools around the incision in [H]'s [parse_zone(target_zone)].</span>",
 				"")
 			H.bleed_rate += 3
-	return ..(default_display_results = FALSE)
+	return ..()
 
 /datum/surgery_step/incise/nobleed //silly friendly!
+	experience_given = 1 //safer so not as much XP
 
 /datum/surgery_step/incise/nobleed/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to <i>carefully</i> make an incision in [target]'s [parse_zone(target_zone)]...</span>",
@@ -110,12 +111,12 @@
 		"<span class='notice'>[user] begins to saw through the bone in [target]'s [parse_zone(target_zone)].</span>",
 		"<span class='notice'>[user] begins to saw through the bone in [target]'s [parse_zone(target_zone)].</span>")
 
-/datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+/datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	target.apply_damage(50, BRUTE, "[target_zone]")
 	display_results(user, target, "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open.</span>",
 		"<span class='notice'>[user] saws [target]'s [parse_zone(target_zone)] open!</span>",
 		"<span class='notice'>[user] saws [target]'s [parse_zone(target_zone)] open!</span>")
-	return ..(default_display_results = FALSE)
+	return ..()
 
 //drill bone
 /datum/surgery_step/drill
@@ -128,8 +129,8 @@
 		"<span class='notice'>[user] begins to drill into the bone in [target]'s [parse_zone(target_zone)].</span>",
 		"<span class='notice'>[user] begins to drill into the bone in [target]'s [parse_zone(target_zone)].</span>")
 
-/datum/surgery_step/drill/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+/datum/surgery_step/drill/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	display_results(user, target, "<span class='notice'>You drill into [target]'s [parse_zone(target_zone)].</span>",
 		"<span class='notice'>[user] drills into [target]'s [parse_zone(target_zone)]!</span>",
 		"<span class='notice'>[user] drills into [target]'s [parse_zone(target_zone)]!</span>")
-	return ..(default_display_results = FALSE)
+	return ..()

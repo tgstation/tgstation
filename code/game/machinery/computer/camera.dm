@@ -23,7 +23,7 @@
 		network += "[idnum][i]"
 
 /obj/machinery/computer/security/check_eye(mob/user)
-	if( (stat & (NOPOWER|BROKEN)) || user.incapacitated() || user.eye_blind )
+	if( (machine_stat & (NOPOWER|BROKEN)) || user.incapacitated() || user.eye_blind )
 		user.unset_machine()
 		return
 	if(!(user in watchers))
@@ -36,7 +36,7 @@
 	if(!C.can_use())
 		user.unset_machine()
 		return
-	if(iscyborg(user) || long_ranged)
+	if( (iscyborg(user) || long_ranged) && !check_handheld_camera_monitor(user)) //FULPSTATION SEC BORG UPGRADE PR by Surrealistik Feb 2020; allows sec borgs to remotely access.
 		var/list/viewing = viewers(src)
 		if(!viewing.Find(user))
 			user.unset_machine()
@@ -56,7 +56,7 @@
 	return ..()
 
 /obj/machinery/computer/security/interact(mob/user)
-	if (stat)
+	if (machine_stat)
 		return
 	if (ismob(user) && !isliving(user)) // ghosts don't need cameras
 		return
@@ -70,6 +70,7 @@
 		user.unset_machine()
 		return
 
+	check_bodycamera_unlock(user) ///Fulpstation Sec Bodycamera PR - Surrealistik Oct 2019; allows access to the body camera network with Sec access.
 	var/list/camera_list = get_available_cameras()
 	if(!(user in watchers))
 		for(var/Num in camera_list)
@@ -85,6 +86,7 @@
 	use_camera_console(user)
 
 /obj/machinery/computer/security/proc/use_camera_console(mob/user)
+	check_bodycamera_unlock(user) ///Fulpstation Sec Bodycamera PR - Surrealistik Oct 2019; allows access to the body camera network with Sec access.
 	var/list/camera_list = get_available_cameras()
 	var/t = input(user, "Which camera should you change to?") as null|anything in camera_list
 	if(user.machine != src) //while we were choosing we got disconnected from our computer or are using another machine.
@@ -104,7 +106,7 @@
 		var/camera_fail = 0
 		if(!C.can_use() || user.machine != src || user.eye_blind || user.incapacitated())
 			camera_fail = 1
-		else if(iscyborg(user) || long_ranged)
+		else if( (iscyborg(user) || long_ranged) && !check_handheld_camera_monitor(user)) //FULPSTATION SEC BORG UPGRADE PR by Surrealistik Feb 2020; allows sec borgs to remotely access.
 			var/list/viewing = viewers(src)
 			if(!viewing.Find(user))
 				camera_fail = 1
@@ -211,7 +213,7 @@
 
 /obj/machinery/computer/security/telescreen/update_icon_state()
 	icon_state = initial(icon_state)
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		icon_state += "b"
 
 /obj/machinery/computer/security/telescreen/entertainment

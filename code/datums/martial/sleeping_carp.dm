@@ -40,7 +40,7 @@
 		log_combat(A, D, "wrist wrenched (Sleeping Carp)")
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='danger'>[A] grabs [D]'s wrist and wrenches it sideways!</span>", \
-						"<span class='userdanger'>Your wrist is grabbed by [A] while simultaneously wrenched it to the side!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, A)
+						"<span class='userdanger'>Your wrist is grabbed and simultaneously wrenched to the side by [A]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, A)
 		to_chat(A, "<span class='danger'>You grab [D]'s wrist and wrench it sideways!</span>")
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		D.emote("scream")

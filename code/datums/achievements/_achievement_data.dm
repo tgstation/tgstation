@@ -30,7 +30,7 @@
 
 /datum/achievement_data/proc/load_all_achievements()
 	set waitfor = FALSE
-	
+
 	var/list/kv = list()
 	var/datum/DBQuery/Query = SSdbcore.NewQuery("SELECT achievement_key,value FROM [format_table_name("achievements")] WHERE ckey = '[sanitizeSQL(owner_ckey)]'")
 	if(!Query.Execute())
@@ -61,6 +61,8 @@
 
 ///Unlocks an achievement of a specific type.
 /datum/achievement_data/proc/unlock(achievement_type, mob/user)
+	if(!SSachievements.achievements_enabled)
+		return
 	var/datum/award/A = SSachievements.awards[achievement_type]
 	get_data(achievement_type) //Get the current status first if necessary
 	if(istype(A, /datum/award/achievement))
@@ -75,6 +77,8 @@
 
 ///Resets an achievement to default values.
 /datum/achievement_data/proc/reset(achievement_type)
+	if(!SSachievements.achievements_enabled)
+		return
 	var/datum/award/A = SSachievements.awards[achievement_type]
 	get_data(achievement_type)
 	if(istype(A, /datum/award/achievement))

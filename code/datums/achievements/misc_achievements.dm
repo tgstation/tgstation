@@ -1,41 +1,49 @@
 /datum/award/achievement/misc
 	category = "Misc"
+	icon = "basemisc"
 
 /datum/award/achievement/misc/meteor_examine
 	name = "Your Life Before Your Eyes"
 	desc = "Take a close look at hurtling space debris"
 	database_id = MEDAL_METEOR
+	icon = "meteors"
 
 /datum/award/achievement/misc/pulse
 	name = "Jackpot"
 	desc = "Win a pulse rifle from an arcade machine"
 	database_id = MEDAL_PULSE
+	icon = "jackpot"
 
 /datum/award/achievement/misc/time_waste
 	name = "Time waster"
 	desc = "Speak no evil, hear no evil, see just errors"
 	database_id = MEDAL_TIMEWASTE
+	icon = "timewaste"
 
 /datum/award/achievement/misc/feat_of_strength
 	name = "Feat of Strength"
 	desc = "If the rod is immovable, is it passing you or are you passing it?"
 	database_id = MEDAL_RODSUPLEX
+	icon = "featofstrength"
 
 /datum/award/achievement/misc/round_and_full
 	name = "Round and Full"
 	desc = "Well at least you aren't down the river, I hear they eat people there."
 	database_id = MEDAL_CLOWNCARKING
+	icon = "clownking"
 
 /datum/award/achievement/misc/the_best_driver
 	name = "The Best Driver"
 	desc = "100 honks later"
 	database_id = MEDAL_THANKSALOT
+	icon = "clownthanks"
 
 /datum/award/achievement/misc/helbitaljanken
 	name = "Helbitaljanken"
 	desc = "You janked hard"
 	database_id = MEDAL_HELBITALJANKEN
-
+	icon = "helbital"
+    
 /datum/award/achievement/misc/getting_an_upgrade
 	name = "Getting an upgrade"
 	desc = "Make your first unique material item!"
@@ -75,3 +83,15 @@
 	name = "One Lean, Mean, Cleaning Machine"
 	desc = "How does it feel to know that your workplace values a mop bucket on wheels more than you?" // i can do better than this give me time
 	database_id = MEDAL_CLEANBOSS
+
+/datum/award/achievement/misc/rule8
+	name = "Rule 8"
+	desc = "Call an admin this is ILLEGAL!!"
+	database_id = MEDAL_RULE8
+	icon = "rule8"
+
+/datum/award/achievement/misc/speed_round
+	name = "Long shift"
+	desc = "Well, that didn't take long."
+	database_id = MEDAL_LONGSHIFT
+	icon = "longshift"

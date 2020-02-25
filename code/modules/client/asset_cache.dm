@@ -600,7 +600,27 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/spritesheet/simple/achievements
 	name ="achievements"
 	assets = list(
-		"default" = 'icons/UI_Icons/Achievements/default.png'
+		"default" = 'icons/UI_Icons/Achievements/default.png',
+		"basemisc" = 'icons/UI_Icons/Achievements/basemisc.png',
+		"baseboss" = 'icons/UI_Icons/Achievements/baseboss.png',
+		"baseskill" = 'icons/UI_Icons/Achievements/baseskill.png',
+		"bbgum" = 'icons/UI_Icons/Achievements/Boss/bbgum.png',
+		"colossus" = 'icons/UI_Icons/Achievements/Boss/colossus.png',
+		"hierophant" = 'icons/UI_Icons/Achievements/Boss/hierophant.png',
+		"legion" = 'icons/UI_Icons/Achievements/Boss/legion.png',
+		"miner" = 'icons/UI_Icons/Achievements/Boss/miner.png',
+		"swarmer" = 'icons/UI_Icons/Achievements/Boss/swarmer.png',
+		"tendril" = 'icons/UI_Icons/Achievements/Boss/tendril.png',
+		"featofstrength" = 'icons/UI_Icons/Achievements/Misc/featofstrength.png',
+		"helbital" = 'icons/UI_Icons/Achievements/Misc/helbital.png',
+		"jackpot" = 'icons/UI_Icons/Achievements/Misc/jackpot.png',
+		"meteors" = 'icons/UI_Icons/Achievements/Misc/meteors.png',
+		"timewaste" = 'icons/UI_Icons/Achievements/Misc/timewaste.png',
+		"upgrade" = 'icons/UI_Icons/Achievements/Misc/upgrade.png',
+		"clownking" = 'icons/UI_Icons/Achievements/Misc/clownking.png',
+		"clownthanks" = 'icons/UI_Icons/Achievements/Misc/clownthanks.png',
+		"rule8" = 'icons/UI_Icons/Achievements/Misc/rule8.png',
+		"mining" = 'icons/UI_Icons/Achievements/Skills/mining.png',
 	)
 
 /datum/asset/spritesheet/simple/pills
@@ -629,22 +649,6 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"pill21" = 'icons/UI_Icons/Pills/pill21.png',
 		"pill22" = 'icons/UI_Icons/Pills/pill22.png',
 	)
-
-
-/datum/asset/spritesheet/simple/roulette
-	name = "roulette"
-	assets = list(
-		"black" = 'icons/UI_Icons/Roulette/black.png',
-		"red" = 'icons/UI_Icons/Roulette/red.png',
-		"odd" = 'icons/UI_Icons/Roulette/odd.png',
-		"even" = 'icons/UI_Icons/Roulette/even.png',
-		"low" = 'icons/UI_Icons/Roulette/1-18.png',
-		"high" = 'icons/UI_Icons/Roulette/19-36.png',
-		"nano" = 'icons/UI_Icons/Roulette/nano.png',
-		"zero" = 'icons/UI_Icons/Roulette/0.png'
-
-	)
-
 
 //this exists purely to avoid meta by pre-loading all language icons.
 /datum/asset/language/register()

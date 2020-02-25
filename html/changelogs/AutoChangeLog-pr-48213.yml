@@ -1,4 +1,0 @@
-author: "stylemistake"
-delete-after: True
-changes: 
-  - rscadd: "Fancy tgui mode now works on IE8 (not perfect. but certainly usable)."

@@ -24,10 +24,10 @@
 
 	// Heart
 	var/obj/item/organ/heart/H = new
-		H.Insert(owner.current)
+	H.Insert(owner.current)
 	// Eyes
 	var/obj/item/organ/eyes/E = new
-		E.Insert(owner.current)
+	E.Insert(owner.current)
 
 
 
@@ -45,9 +45,9 @@
 	beating = 0
 	var/fakingit = 0
 
-/obj/item/organ/heart/vampheart/prepare_eat()
-	..()
-	// Do cool stuff for eating vamp heart?
+///obj/item/organ/heart/vampheart/prepare_eat()
+//	..()
+//	// Do cool stuff for eating vamp heart?
 
 /obj/item/organ/heart/vampheart/Restart()
 	beating = 0	// DONT run ..(). We don't want to start beating again.

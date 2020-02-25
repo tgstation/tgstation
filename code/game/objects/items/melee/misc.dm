@@ -310,6 +310,13 @@
 			if (wait_desc)
 				to_chat(user, wait_desc)
 
+/obj/item/conversion_kit
+	name = "conversion kit"
+	desc = "A strange box containing wood working tools and an instruction paper to turn stun batons into something else."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "uk"
+	custom_price = 450
+
 /obj/item/melee/classic_baton/telescopic
 	name = "telescopic baton"
 	desc = "A compact yet robust personal defense weapon. Can be concealed when folded."
@@ -579,12 +586,10 @@
 		held_sausage = null
 	update_icon()
 
-/obj/item/melee/roastingstick/update_icon()
+/obj/item/melee/roastingstick/update_overlays()
 	. = ..()
-	cut_overlays()
 	if (held_sausage)
-		var/mutable_appearance/sausage = mutable_appearance(icon, "roastingstick_sausage")
-		add_overlay(sausage)
+		. += mutable_appearance(icon, "roastingstick_sausage")
 
 /obj/item/melee/roastingstick/proc/extend(user)
 	to_chat(user, "<span class='warning'>You extend [src].</span>")

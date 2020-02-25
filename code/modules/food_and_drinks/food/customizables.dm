@@ -316,14 +316,16 @@
 	..()
 	update_icon()
 
-/obj/item/reagent_containers/glass/bowl/update_icon()
-	cut_overlays()
+/obj/item/reagent_containers/glass/bowl/update_icon_state()
+	if(!reagents || !reagents.total_volume)
+		icon_state = "bowl"
+
+/obj/item/reagent_containers/glass/bowl/update_overlays()
+	. = ..()
 	if(reagents && reagents.total_volume)
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/food/soupsalad.dmi', "fullbowl")
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling)
-	else
-		icon_state = "bowl"
+		. += filling
 
 #undef INGREDIENTS_FILL
 #undef INGREDIENTS_SCATTER

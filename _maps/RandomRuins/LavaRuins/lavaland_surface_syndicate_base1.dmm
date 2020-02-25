@@ -2035,7 +2035,7 @@
 	pixel_x = -24
 	},
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -2607,7 +2607,7 @@
 	pixel_y = 18
 	},
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/machinery/light/small{
@@ -4634,7 +4634,7 @@
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "mf" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/machinery/airalarm/syndicate{

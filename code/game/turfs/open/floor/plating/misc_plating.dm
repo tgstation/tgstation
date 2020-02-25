@@ -3,6 +3,10 @@
 	icon_state = "plating"
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/plating/lowpressure
+	initial_gas_mix = OPENTURF_LOW_PRESSURE
+	baseturfs = /turf/open/floor/plating/lowpressure
+
 /turf/open/floor/plating/abductor
 	name = "alien floor"
 	icon_state = "alienpod1"

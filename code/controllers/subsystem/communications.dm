@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(communications)
 
 /datum/controller/subsystem/communications/proc/send_message(datum/comm_message/sending,print = TRUE,unique = FALSE)
 	for(var/obj/machinery/computer/communications/C in GLOB.machines)
-		if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
+		if(!(C.machine_stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
 			if(unique)
 				C.add_message(sending)
 			else //We copy the message for each console, answers and deletions won't be shared

@@ -25,6 +25,11 @@ map metastation
 	votable
 endmap
 
+map kilostation
+	minplayers 25
+	votable
+endmap
+
 map pubbystation
 	votable
 endmap

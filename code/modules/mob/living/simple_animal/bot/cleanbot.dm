@@ -381,6 +381,11 @@
 	do_sparks(3, TRUE, src)
 	..()
 
+/mob/living/simple_animal/bot/cleanbot/medbay
+	name = "Scrubs, MD"
+	bot_core_type = /obj/machinery/bot_core/cleanbot/medbay
+	on = FALSE
+
 /obj/machinery/bot_core/cleanbot
 	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS)
 
@@ -415,3 +420,6 @@ Maintenance panel panel is [open ? "opened" : "closed"]"})
 				drawn = !drawn
 		get_targets()
 		update_controls()
+
+/obj/machinery/bot_core/cleanbot/medbay
+	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS, ACCESS_MEDICAL)

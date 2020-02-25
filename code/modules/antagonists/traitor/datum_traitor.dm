@@ -27,7 +27,6 @@
 	if(give_objectives)
 		forge_traitor_objectives()
 	finalize_traitor()
-	RegisterSignal(owner.current, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 	return ..()
 
 /datum/antagonist/traitor/on_removal()
@@ -38,7 +37,6 @@
 		A.verbs -= /mob/living/silicon/ai/proc/choose_modules
 		A.malf_picker.remove_malf_verbs(A)
 		qdel(A.malf_picker)
-	UnregisterSignal(owner.current, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 	SSticker.mode.traitors -= owner
 	if(!silent && owner.current)
 		to_chat(owner.current,"<span class='userdanger'>You are no longer the [special_role]!</span>")
@@ -46,10 +44,10 @@
 	return ..()
 
 /datum/antagonist/traitor/proc/handle_hearing(datum/source, list/hearing_args)
-	var/message = hearing_args[HEARING_MESSAGE]
+	var/message = hearing_args[HEARING_RAW_MESSAGE]
 	message = GLOB.syndicate_code_phrase_regex.Replace(message, "<span class='blue'>$1</span>")
 	message = GLOB.syndicate_code_response_regex.Replace(message, "<span class='red'>$1</span>")
-	hearing_args[HEARING_MESSAGE] = message
+	hearing_args[HEARING_RAW_MESSAGE] = message
 
 /datum/antagonist/traitor/proc/add_objective(datum/objective/O)
 	objectives += O
@@ -203,7 +201,7 @@
 		if(TRAITOR_AI)
 			add_law_zero()
 			owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/malf.ogg', 100, FALSE, pressure_affected = FALSE)
-			owner.current.grant_language(/datum/language/codespeak)
+			owner.current.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MALF)
 		if(TRAITOR_HUMAN)
 			if(should_equip)
 				equip(silent)
@@ -217,6 +215,7 @@
 	var/mob/living/silicon/ai/A = M
 	if(istype(A) && traitor_kind == TRAITOR_AI)
 		A.hack_software = TRUE
+	RegisterSignal(M, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 
 /datum/antagonist/traitor/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -226,6 +225,7 @@
 	var/mob/living/silicon/ai/A = M
 	if(istype(A)  && traitor_kind == TRAITOR_AI)
 		A.hack_software = FALSE
+	UnregisterSignal(M, COMSIG_MOVABLE_HEAR)
 
 /datum/antagonist/traitor/proc/give_codewords()
 	if(!owner.current)
@@ -355,11 +355,8 @@
 	var result = ""
 	var total_spent_rep = 0
 
-	var/completed_contracts = 0
+	var/completed_contracts = contractor_hub.contracts_completed
 	var/tc_total = contractor_hub.contract_TC_payed_out + contractor_hub.contract_TC_to_redeem
-	for (var/datum/syndicate_contract/contract in contractor_hub.assigned_contracts)
-		if (contract.status == CONTRACT_STATUS_COMPLETE)
-			completed_contracts++
 
 	var/contractor_item_icons = "" // Icons of purchases
 	var/contractor_support_unit = "" // Set if they had a support unit - and shows appended to their contracts completed

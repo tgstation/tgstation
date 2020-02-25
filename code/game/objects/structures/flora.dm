@@ -21,14 +21,12 @@
 			if(do_after(user, 1000/W.force, target = src)) //5 seconds with 20 force, 8 seconds with a hatchet, 20 seconds with a shard.
 				user.visible_message("<span class='notice'>[user] fells [src] with the [W].</span>","<span class='notice'>You fell [src] with the [W].</span>", "<span class='hear'>You hear the sound of a tree falling.</span>")
 				playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 100 , FALSE, FALSE)
+				user.log_message("cut down [src] at [AREACOORD(src)]", LOG_ATTACK)
 				for(var/i=1 to log_amount)
 					new /obj/item/grown/log/tree(get_turf(src))
-
 				var/obj/structure/flora/stump/S = new(loc)
 				S.name = "[name] stump"
-
 				qdel(src)
-
 	else
 		return ..()
 
@@ -58,6 +56,7 @@
 	desc = "A wondrous decorated Christmas tree."
 	icon_state = "pine_c"
 	icon_states = null
+	flags_1 = NODECONSTRUCT_1 //protected by the christmas spirit
 
 /obj/structure/flora/tree/pine/xmas/presents
 	icon_state = "pinepresents"
@@ -355,6 +354,15 @@
 	light_color = "#2cb2e8"
 	light_range = 3
 
+/obj/item/twohanded/required/kirbyplants/fullysynthetic
+	name = "plastic potted plant"
+	desc = "A fake, cheap looking, plastic tree. Perfect for people who kill every plant they touch."
+	icon_state = "plant-26"
+	custom_materials = (list(/datum/material/plastic = 8000))
+
+/obj/item/twohanded/required/kirbyplants/fullysynthetic/Initialize()
+	. = ..()
+	icon_state = "plant-[rand(26, 29)]"
 
 //a rock is flora according to where the icon file is
 //and now these defines
@@ -439,3 +447,4 @@
 /obj/structure/flora/rock/pile/largejungle/Initialize()
 	. = ..()
 	icon_state = "[initial(icon_state)][rand(1,3)]"
+

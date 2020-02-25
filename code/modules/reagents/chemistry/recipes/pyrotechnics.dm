@@ -5,22 +5,24 @@
 	var/modifier = 0
 
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, created_volume)
-	var/turf/T = get_turf(holder.my_atom)
-	var/inside_msg
-	if(ismob(holder.my_atom))
-		var/mob/M = holder.my_atom
-		inside_msg = " inside [ADMIN_LOOKUPFLW(M)]"
-	var/lastkey = holder.my_atom.fingerprintslast
-	var/touch_msg = "N/A"
-	if(lastkey)
-		var/mob/toucher = get_mob_by_key(lastkey)
-		touch_msg = "[ADMIN_LOOKUPFLW(toucher)]"
-	if(!istype(holder.my_atom, /obj/machinery/plumbing)) //excludes standard plumbing equipment from spamming admins with this shit
-		message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
-	log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
-	var/datum/effect_system/reagents_explosion/e = new()
-	e.set_up(modifier + round(created_volume/strengthdiv, 1), T, 0, 0)
-	e.start()
+	var/power = modifier + round(created_volume/strengthdiv, 1)
+	if(power > 0)
+		var/turf/T = get_turf(holder.my_atom)
+		var/inside_msg
+		if(ismob(holder.my_atom))
+			var/mob/M = holder.my_atom
+			inside_msg = " inside [ADMIN_LOOKUPFLW(M)]"
+		var/lastkey = holder.my_atom.fingerprintslast
+		var/touch_msg = "N/A"
+		if(lastkey)
+			var/mob/toucher = get_mob_by_key(lastkey)
+			touch_msg = "[ADMIN_LOOKUPFLW(toucher)]"
+		if(!istype(holder.my_atom, /obj/machinery/plumbing)) //excludes standard plumbing equipment from spamming admins with this shit
+			message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
+		log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
+		var/datum/effect_system/reagents_explosion/e = new()
+		e.set_up(power , T, 0, 0)
+		e.start()
 	holder.clear_reagents()
 
 
@@ -518,7 +520,7 @@
 	modifier = -100
 	mix_message = "<span class='boldannounce'>The teslium starts to spark as electricity arcs away from it!</span>"
 	mix_sound = 'sound/machines/defib_zap.ogg'
-	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE | TESLA_MOB_STUN
+	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_IS_TESLA
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/on_reaction(datum/reagents/holder, created_volume)
 	var/T1 = created_volume * 20		//100 units : Zap 3 times, with powers 2000/5000/12000. Tesla revolvers have a power of 10000 for comparison.
@@ -526,15 +528,15 @@
 	var/T3 = created_volume * 120
 	sleep(5)
 	if(created_volume >= 75)
-		tesla_zap(holder.my_atom, 7, T1, tesla_flags)
+		tesla_zap(holder.my_atom, 7, T1, zap_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
 		sleep(15)
 	if(created_volume >= 40)
-		tesla_zap(holder.my_atom, 7, T2, tesla_flags)
+		tesla_zap(holder.my_atom, 7, T2, zap_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
 		sleep(15)
 	if(created_volume >= 10)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
-		tesla_zap(holder.my_atom, 7, T3, tesla_flags)
+		tesla_zap(holder.my_atom, 7, T3, zap_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
 	..()
 

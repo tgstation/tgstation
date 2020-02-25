@@ -141,18 +141,15 @@
 	else
 		set_light(0)
 
-/obj/item/twohanded/kinetic_crusher/update_icon()
-	..()
-	cut_overlays()
-	if(!charged)
-		add_overlay("[icon_state]_uncharged")
-	if(light_on)
-		add_overlay("[icon_state]_lit")
-	spawn(1)
-		for(var/X in actions)
-			var/datum/action/A = X
-			A.UpdateButtonIcon()
+/obj/item/twohanded/kinetic_crusher/update_icon_state()
 	item_state = "crusher[wielded]"
+
+/obj/item/twohanded/kinetic_crusher/update_overlays()
+	. = ..()
+	if(!charged)
+		. += "[icon_state]_uncharged"
+	if(light_on)
+		. += "[icon_state]_lit"
 
 //destablizing force
 /obj/projectile/destabilizer
@@ -427,6 +424,11 @@
 	return "mark detonation to create a barrier you can pass"
 
 /obj/item/crusher_trophy/vortex_talisman/on_mark_detonation(mob/living/target, mob/living/user)
+	var/turf/current_location = get_turf(user)
+	var/area/current_area = current_location.loc
+	if(current_area.noteleport)
+		to_chat(user, "[src] fizzles uselessly.")
+		return
 	var/turf/T = get_turf(user)
 	new /obj/effect/temp_visual/hierophant/wall/crusher(T, user) //a wall only you can pass!
 	var/turf/otherT = get_step(T, turn(user.dir, 90))
@@ -438,3 +440,27 @@
 
 /obj/effect/temp_visual/hierophant/wall/crusher
 	duration = 75
+
+/obj/item/crusher_trophy/king_goat
+	name = "king goat hoof"
+	desc = "A hoof from the king of all goats, it still glows with a fraction of its original power... Suitable as a trophy for a kinetic crusher."
+	icon_state = "goat_hoof" //needs a better sprite but I cant sprite .
+	denied_type = /obj/item/crusher_trophy/king_goat
+
+/obj/item/crusher_trophy/king_goat/effect_desc()
+	return "you to passivily recharge markers 5x as fast while equipped and do a decent amount of damage at the cost of dulling the blade"
+
+/obj/item/crusher_trophy/king_goat/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user)
+	marker.damage = 10 //in my testing only does damage to simple mobs so should be fine to have it high
+
+/obj/item/crusher_trophy/king_goat/add_to(obj/item/twohanded/kinetic_crusher/H, mob/living/user)
+	. = ..()
+	if(.)
+		H.charge_time = 3
+		H.force_wielded = 5
+
+/obj/item/crusher_trophy/king_goat/remove_from(obj/item/twohanded/kinetic_crusher/H, mob/living/user)
+	. = ..()
+	if(.)
+		H.charge_time = 15
+		H.force_wielded = 20

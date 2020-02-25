@@ -22,6 +22,10 @@
 		mode = SYRINGE_INJECT
 		update_icon()
 
+/obj/item/reagent_containers/syringe/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
 /obj/item/reagent_containers/syringe/on_reagent_change(changetype)
 	update_icon()
 
@@ -151,29 +155,33 @@
 				mode = SYRINGE_DRAW
 				update_icon()
 
-
-/obj/item/reagent_containers/syringe/update_icon()
-	cut_overlays()
-	var/rounded_vol
-	if(reagents && reagents.total_volume)
-		rounded_vol = CLAMP(round((reagents.total_volume / volume * 15),5), 1, 15)
-		var/image/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[rounded_vol]")
-		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling_overlay)
-	else
-		rounded_vol = 0
+/obj/item/reagent_containers/syringe/update_icon_state()
+	var/rounded_vol = get_rounded_vol()
 	icon_state = "[rounded_vol]"
 	item_state = "syringe_[rounded_vol]"
+
+/obj/item/reagent_containers/syringe/update_overlays()
+	. = ..()
+	var/rounded_vol = get_rounded_vol()
+	if(reagents && reagents.total_volume)
+		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[rounded_vol]")
+		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+		. += filling_overlay
 	if(ismob(loc))
-		var/mob/M = loc
 		var/injoverlay
 		switch(mode)
 			if (SYRINGE_DRAW)
 				injoverlay = "draw"
 			if (SYRINGE_INJECT)
 				injoverlay = "inject"
-		add_overlay(injoverlay)
-		M.update_inv_hands()
+		. += injoverlay
+
+///Used by update_icon() and update_overlays()
+/obj/item/reagent_containers/syringe/proc/get_rounded_vol()
+	if(reagents && reagents.total_volume)
+		return CLAMP(round((reagents.total_volume / volume * 15),5), 1, 15)
+	else
+		return 0
 
 /obj/item/reagent_containers/syringe/epinephrine
 	name = "syringe (epinephrine)"

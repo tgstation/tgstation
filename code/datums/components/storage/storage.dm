@@ -606,7 +606,7 @@
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 			return FALSE
-	if(is_type_in_typecache(I, cant_hold)) //Check for specific items which this container can't hold.
+	if(is_type_in_typecache(I, cant_hold) || HAS_TRAIT(I, TRAIT_NO_STORAGE_INSERT)) //Items which this container can't hold.
 		if(!stop_messages)
 			to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 		return FALSE
@@ -764,11 +764,9 @@
 			show_to(user)
 
 /datum/component/storage/proc/signal_on_pickup(datum/source, mob/user)
-	var/atom/A = parent
 	update_actions()
-	for(var/mob/M in range(1, A))
-		if(M.active_storage == src)
-			close(M)
+	for(var/mob/M in can_see_contents() - user)
+		close(M)
 
 /datum/component/storage/proc/signal_take_obj(datum/source, atom/movable/AM, new_loc, force = FALSE)
 	if(!(AM in real_location()))

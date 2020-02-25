@@ -164,12 +164,12 @@
 	. = ..()
 	StartBurning()
 
-/obj/structure/bonfire/CanPass(atom/movable/mover, turf/target)
+/obj/structure/bonfire/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
 		return TRUE
 	if(mover.throwing)
 		return TRUE
-	return ..()
 
 /obj/structure/bonfire/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/rods) && !can_buckle && !grill)
@@ -216,8 +216,8 @@
 		to_chat(user, "<span class='warning'>You need to extinguish [src] before removing the logs!</span>")
 		return
 	if(!has_buckled_mobs() && do_after(user, 50, target = src))
-		for(var/I in 1 to 5)
-			var/obj/item/grown/log/L = new /obj/item/grown/log(src.loc)
+		for(var/obj/item/grown/log/L in contents)
+			L.forceMove(drop_location())
 			L.pixel_x += rand(1,4)
 			L.pixel_y += rand(1,4)
 		if(can_buckle || grill)
@@ -230,7 +230,7 @@
 		var/turf/open/O = loc
 		if(O.air)
 			var/loc_gases = O.air.gases
-			if(loc_gases[/datum/gas/oxygen][MOLES] >= 5)
+			if(loc_gases[/datum/gas/oxygen] && loc_gases[/datum/gas/oxygen][MOLES] >= 5)
 				return TRUE
 	return FALSE
 

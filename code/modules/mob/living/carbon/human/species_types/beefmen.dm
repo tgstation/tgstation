@@ -88,7 +88,6 @@
 
 	// Speak Russian
 	C.grant_language(/datum/language/russian) // Don't remove on loss. You simply know it.
-	C.selected_default_language = /datum/language/russian
 
 	// Be Spooked but Educated
 	//C.gain_trauma(pick(startTraumas))
@@ -498,10 +497,10 @@
 /obj/item/bodypart/proc/drop_meat(mob/inOwner)
 
 	//Checks tile for cloning pod, if found then limb stays limb. Stops cloner from breaking beefmen making them useless after being cloned.
-	var/turf/T = get_turf(src)
-	for(var/obj/machinery/M in T)
-		if(istype(M,/obj/machinery/clonepod))
-			return FALSE
+	//var/turf/T = get_turf(src)
+	//for(var/obj/machinery/M in T)
+	//	if(istype(M,/obj/machinery/clonepod))
+	//		return FALSE
 
 	// Not Organic? ABORT! Robotic stays robotic, desnt delete and turn to meat.
 	if (status != BODYPART_ORGANIC)

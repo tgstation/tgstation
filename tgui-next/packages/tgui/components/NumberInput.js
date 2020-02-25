@@ -144,7 +144,10 @@ export class NumberInput extends Component {
       unit,
       minValue,
       maxValue,
+      height,
       width,
+      lineHeight,
+      fontSize,
       format,
       onChange,
       onDrag,
@@ -178,6 +181,9 @@ export class NumberInput extends Component {
           className,
         ])}
         minWidth={width}
+        minHeight={height}
+        lineHeight={lineHeight}
+        fontSize={fontSize}
         onMouseDown={this.handleDragStart}>
         <div className="NumberInput__barContainer">
           <div
@@ -194,6 +200,9 @@ export class NumberInput extends Component {
           className="NumberInput__input"
           style={{
             display: !editing ? 'none' : undefined,
+            height: height,
+            'line-height': lineHeight,
+            'font-size': fontSize,
           }}
           onBlur={e => {
             if (!editing) {

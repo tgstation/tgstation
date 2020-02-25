@@ -21,7 +21,7 @@
 	. = ..()
 	pump = new(src, FALSE)
 	pump.on = TRUE
-	pump.stat = 0
+	pump.machine_stat = 0
 	pump.build_network()
 
 /obj/machinery/portable_atmospherics/pump/Destroy()
@@ -31,14 +31,15 @@
 	QDEL_NULL(pump)
 	return ..()
 
-/obj/machinery/portable_atmospherics/pump/update_icon()
+/obj/machinery/portable_atmospherics/pump/update_icon_state()
 	icon_state = "psiphon:[on]"
 
-	cut_overlays()
+/obj/machinery/portable_atmospherics/pump/update_overlays()
+	. = ..()
 	if(holding)
-		add_overlay("siphon-open")
+		. += "siphon-open"
 	if(connected_port)
-		add_overlay("siphon-connector")
+		. += "siphon-connector"
 
 /obj/machinery/portable_atmospherics/pump/process_atmos()
 	..()
@@ -79,7 +80,7 @@
 				on = FALSE
 				update_icon()
 		else if(on && holding && direction == PUMP_OUT)
-			investigate_log("[key_name(user)] started a transfer into [holding].<br>", INVESTIGATE_ATMOS)
+			investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 
 /obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -121,14 +122,14 @@
 					message_admins("[ADMIN_LOOKUPFLW(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [ADMIN_VERBOSEJMP(src)]")
 					log_admin("[key_name(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [AREACOORD(src)]")
 			else if(on && direction == PUMP_OUT)
-				investigate_log("[key_name(usr)] started a transfer into [holding].<br>", INVESTIGATE_ATMOS)
+				investigate_log("[key_name(usr)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("direction")
 			if(direction == PUMP_OUT)
 				direction = PUMP_IN
 			else
 				if(on && holding)
-					investigate_log("[key_name(usr)] started a transfer into [holding].<br>", INVESTIGATE_ATMOS)
+					investigate_log("[key_name(usr)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 				direction = PUMP_OUT
 			. = TRUE
 		if("pressure")

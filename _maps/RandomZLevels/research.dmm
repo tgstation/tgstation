@@ -2891,7 +2891,7 @@
 	name = "Geneticist";
 	oxy_damage = 55;
 	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
-	uniform = /obj/item/clothing/under/rank/medical/geneticist
+	uniform = /obj/item/clothing/under/rank/rnd/geneticist
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/purple{
@@ -3870,7 +3870,7 @@
 	name = "Geneticist";
 	oxy_damage = 55;
 	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
-	uniform = /obj/item/clothing/under/rank/medical/geneticist
+	uniform = /obj/item/clothing/under/rank/rnd/geneticist
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/purple{
@@ -3890,7 +3890,7 @@
 	pixel_x = -32
 	},
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -4208,7 +4208,7 @@
 /area/awaymission/research/interior/medbay)
 "jg" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -4709,7 +4709,7 @@
 	name = "Geneticist";
 	oxy_damage = 55;
 	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
-	uniform = /obj/item/clothing/under/rank/medical/geneticist
+	uniform = /obj/item/clothing/under/rank/rnd/geneticist
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/blue{
@@ -5585,7 +5585,7 @@
 	name = "Geneticist";
 	oxy_damage = 55;
 	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
-	uniform = /obj/item/clothing/under/rank/medical/geneticist
+	uniform = /obj/item/clothing/under/rank/rnd/geneticist
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/research/exterior)

@@ -1,4 +1,0 @@
-author: "TheVekter"
-delete-after: True
-changes: 
-  - bugfix: "The Cult should now actually be able to draw runes in the Library."

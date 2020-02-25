@@ -17,7 +17,7 @@
 	name = "Moonshine Jug"
 	time = 30
 	reqs = list(
-		/obj/item/reagent_containers/food/drinks/bottle/blank = 1,
+		/obj/item/reagent_containers/food/drinks/bottle = 1,
 		/datum/reagent/consumable/ethanol/moonshine = 100
 	)
 	result = /obj/item/reagent_containers/food/drinks/bottle/moonshine
@@ -27,7 +27,7 @@
 	name = "Hooch Bottle"
 	time = 30
 	reqs = list(
-		/obj/item/reagent_containers/food/drinks/bottle/blank = 1,
+		/obj/item/reagent_containers/food/drinks/bottle = 1,
 		/obj/item/storage/box/papersack = 1,
 		/datum/reagent/consumable/ethanol/hooch = 100
 	)
@@ -38,7 +38,7 @@
 	name = "Blazaam Bottle"
 	time = 20
 	reqs = list(
-		/obj/item/reagent_containers/food/drinks/bottle/blank = 1,
+		/obj/item/reagent_containers/food/drinks/bottle = 1,
 		/datum/reagent/consumable/ethanol/blazaam = 100
 	)
 	result = /obj/item/reagent_containers/food/drinks/bottle/blazaam
@@ -48,7 +48,7 @@
 	name = "Champagne Bottle"
 	time = 30
 	reqs = list(
-		/obj/item/reagent_containers/food/drinks/bottle/blank = 1,
+		/obj/item/reagent_containers/food/drinks/bottle = 1,
 		/datum/reagent/consumable/ethanol/champagne = 100
 	)
 	result = /obj/item/reagent_containers/food/drinks/bottle/champagne
@@ -58,7 +58,7 @@
 	name = "Trappist Bottle"
 	time = 15
 	reqs = list(
-		/obj/item/reagent_containers/food/drinks/bottle/blank/small = 1,
+		/obj/item/reagent_containers/food/drinks/bottle/small = 1,
 		/datum/reagent/consumable/ethanol/trappist = 50
 	)
 	result = /obj/item/reagent_containers/food/drinks/bottle/trappist
@@ -68,7 +68,7 @@
 	name = "Goldschlager Bottle"
 	time = 30
 	reqs = list(
-		/obj/item/reagent_containers/food/drinks/bottle/blank = 1,
+		/obj/item/reagent_containers/food/drinks/bottle = 1,
 		/datum/reagent/consumable/ethanol/goldschlager = 100
 	)
 	result = /obj/item/reagent_containers/food/drinks/bottle/goldschlager
@@ -78,7 +78,7 @@
 	name = "Patron Bottle"
 	time = 30
 	reqs = list(
-		/obj/item/reagent_containers/food/drinks/bottle/blank = 1,
+		/obj/item/reagent_containers/food/drinks/bottle = 1,
 		/datum/reagent/consumable/ethanol/patron = 100
 	)
 	result = /obj/item/reagent_containers/food/drinks/bottle/patron
@@ -90,7 +90,7 @@
 	name = "Holy Water Flask"
 	time = 30
 	reqs = list(
-		/obj/item/reagent_containers/food/drinks/bottle/blank = 1,
+		/obj/item/reagent_containers/food/drinks/bottle = 1,
 		/datum/reagent/water/holywater = 100
 	)
 	result = /obj/item/reagent_containers/food/drinks/bottle/holywater
@@ -102,7 +102,7 @@
 	name = "Nothing Bottle"
 	time = 30
 	reqs = list(
-		/obj/item/reagent_containers/food/drinks/bottle/blank = 1,
+		/obj/item/reagent_containers/food/drinks/bottle = 1,
 		/datum/reagent/consumable/nothing = 100
 	)
 	result = /obj/item/reagent_containers/food/drinks/bottle/bottleofnothing
@@ -114,3 +114,22 @@
 	time = 10
 	reqs = list(/obj/item/stack/sheet/cardboard = 1)
 	category = CAT_DRINK
+
+/datum/crafting_recipe/candycornliquor
+	name = "candy corn liquor"
+	result = /obj/item/reagent_containers/food/drinks/bottle/candycornliquor
+	time = 30
+	reqs = list(/datum/reagent/consumable/ethanol/whiskey = 100,
+				/obj/item/reagent_containers/food/snacks/candy_corn = 1,
+				/obj/item/reagent_containers/food/drinks/bottle = 1)
+	category = CAT_DRINK
+
+/datum/crafting_recipe/kong
+	name = "Kong"
+	result = /obj/item/reagent_containers/food/drinks/bottle/kong
+	time = 30
+	reqs = list(/datum/reagent/consumable/ethanol/whiskey = 100,
+				/obj/item/reagent_containers/food/snacks/monkeycube = 1,
+				/obj/item/reagent_containers/food/drinks/bottle = 1)
+	category = CAT_DRINK
+

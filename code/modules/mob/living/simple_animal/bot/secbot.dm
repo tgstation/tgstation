@@ -85,6 +85,9 @@
 	var/datum/atom_hud/secsensor = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	secsensor.add_hud_to(src)
 
+	//FULPSTATION BODY CAM NETWORK
+	secbot_register_body_camera()
+
 /mob/living/simple_animal/bot/secbot/Destroy()
 	QDEL_NULL(weapon)
 	return ..()
@@ -289,8 +292,8 @@ Auto Patrol: []"},
 
 	log_combat(src,C,"stunned")
 	if(declare_arrests)
-		var/area/location = get_area(src)
-		speak("[arrest_type ? "Detaining" : "Arresting"] level [threat] scumbag <b>[C]</b> in [location].", radio_channel)
+		secbot_declare_arrest_completion(C, threat) //FULPSTATION IMPROVED RECORD SECURITY PR -Surrealistik Oct 2019; this makes a record of the arrest, including timestamp and location.
+
 	C.visible_message("<span class='danger'>[src] has stunned [C]!</span>",\
 							"<span class='userdanger'>[src] has stunned you!</span>")
 
@@ -422,6 +425,9 @@ Auto Patrol: []"},
 			target = C
 			oldtarget_name = C.name
 			speak("Level [threatlevel] infraction alert!")
+			if(declare_arrests) //FULPSTATION IMPROVED RECORD SECURITY PR -Surrealistik Jan 2020
+				secbot_declare_arrest_attempt(C, threatlevel) //FULPSTATION IMPROVED RECORD SECURITY PR -Surrealistik Jan 2020
+
 			if(ranged)
 				playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
 			else

@@ -1,13 +1,14 @@
-
 /obj/item/pressure_plate
 	name = "pressure plate"
-	desc = "An electronic device that triggers when stepped on."
-	icon = 'icons/obj/device.dmi'
+	desc = "An electronic device that triggers when stepped on. Ctrl-Click to toggle the pressure plate off and on."
+	icon = 'icons/obj/puzzle_small.dmi'
 	item_state = "flash"
 	icon_state = "pressureplate"
 	level = 1
+	layer = LOW_OBJ_LAYER
 	var/trigger_mob = TRUE
 	var/trigger_item = FALSE
+	var/specific_item = null
 	var/trigger_silent = FALSE
 	var/sound/trigger_sound = 'sound/effects/pressureplate.ogg'
 	var/obj/item/assembly/signaler/sigdev = null
@@ -20,6 +21,7 @@
 	var/image/tile_overlay = null
 	var/can_trigger = TRUE
 	var/trigger_delay = 10
+	var/protected = FALSE
 
 /obj/item/pressure_plate/Initialize()
 	. = ..()
@@ -34,6 +36,8 @@
 /obj/item/pressure_plate/Crossed(atom/movable/AM)
 	. = ..()
 	if(!can_trigger || !active)
+		return
+	if(trigger_item && !istype(AM, specific_item))
 		return
 	if(trigger_mob && isliving(AM))
 		var/mob/living/L = AM
@@ -61,6 +65,16 @@
 			sigdev.forceMove(get_turf(src))
 		sigdev = null
 	return ..()
+
+/obj/item/pressure_plate/CtrlClick(mob/user)
+	if(protected)
+		to_chat(user, "<span class='warning'>You can't quite seem to turn this pressure plate off...</span>")
+		return
+	active = !active
+	if (active == TRUE)
+		to_chat(user, "<span class='notice'>You turn [src] on.</span>")
+	else
+		to_chat(user, "<span class='notice'>You turn [src] off.</span>")
 
 /obj/item/pressure_plate/hide(yes)
 	if(yes)

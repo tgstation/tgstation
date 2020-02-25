@@ -98,10 +98,10 @@
 	generator = null
 	return ..()
 
-/obj/structure/projected_forcefield/CanPass(atom/movable/mover, turf/target)
+/obj/structure/projected_forcefield/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
-	return !density
+		return TRUE
 
 /obj/structure/projected_forcefield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)

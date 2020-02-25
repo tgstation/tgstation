@@ -64,12 +64,11 @@
 	. = ..()
 	if(.)
 		date = love_interest
-	linked_alert.desc = "You're in love with [date.real_name]! How lovely."
+		linked_alert.desc = "You're in love with [date.real_name]! How lovely."
 
 /datum/status_effect/in_love/tick()
 	if(date)
-		new /obj/effect/temp_visual/love_heart/invisible(get_turf(date.loc), owner)
-
+		new /obj/effect/temp_visual/love_heart/invisible(date.drop_location(), owner)
 
 /datum/status_effect/throat_soothed
 	id = "throat_soothed"

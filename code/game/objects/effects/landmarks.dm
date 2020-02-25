@@ -61,11 +61,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 // you are refactoring shitty landmark code.
 /obj/effect/landmark/start/assistant
 	name = "Assistant"
-	icon_state = "Assistant"
+	icon_state = "Assistant" //icon_state is case sensitive. why are all of these capitalized? because fuck you that's why
 
 /obj/effect/landmark/start/assistant/override
 	jobspawn_override = TRUE
 	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/prisoner
+	name = "Prisoner"
+	icon_state = "Prisoner"
 
 /obj/effect/landmark/start/janitor
 	name = "Janitor"
@@ -150,6 +154,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/medical_doctor
 	name = "Medical Doctor"
 	icon_state = "Medical Doctor"
+
+/obj/effect/landmark/start/paramedic
+	name = "Paramedic"
+	icon_state = "Paramedic"
 
 /obj/effect/landmark/start/scientist
 	name = "Scientist"

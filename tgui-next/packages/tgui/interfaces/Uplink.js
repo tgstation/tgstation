@@ -103,6 +103,7 @@ export class Uplink extends Component {
                       compact={compact_mode}
                       items={items}
                       hoveredItem={hoveredItem}
+                      telecrystals={telecrystals}
                       onBuyMouseOver={item => this.setHoveredItem(item)}
                       onBuyMouseOut={item => this.setHoveredItem({})}
                       onBuy={item => act(ref, 'buy', {

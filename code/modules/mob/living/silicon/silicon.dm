@@ -210,6 +210,9 @@
 	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
 		statelaws()
 
+	if (href_list["printlawtext"]) // this is kinda backwards
+		to_chat(usr, href_list["printlawtext"])
+
 	return
 
 
@@ -328,7 +331,7 @@
 
 /mob/living/silicon/proc/ai_roster()
 	var/datum/browser/popup = new(src, "airoster", "Crew Manifest", 387, 420)
-	popup.set_content(GLOB.data_core.get_manifest())
+	popup.set_content(GLOB.data_core.get_manifest_html())
 	popup.open()
 
 /mob/living/silicon/proc/set_autosay() //For allowing the AI and borgs to set the radio behavior of auto announcements (state laws, arrivals).

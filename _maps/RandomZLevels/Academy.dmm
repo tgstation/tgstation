@@ -2136,7 +2136,7 @@
 /area/awaymission/academy/academyaft)
 "iv" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -2168,7 +2168,7 @@
 /area/awaymission/academy/academyaft)
 "iA" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/cafeteria,

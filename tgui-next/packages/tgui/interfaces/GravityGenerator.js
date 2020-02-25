@@ -15,23 +15,18 @@ export const GravityGenerator = props => {
     <Fragment>
       <Section>
         {!operational && (
-          <NoticeBox>No data available</NoticeBox>
+          <NoticeBox textAlign="center">
+            No data available
+          </NoticeBox>
         ) || (
           <LabeledList>
-            <LabeledList.Item
-              label="Status"
-              buttons={(
-                <Button
-                  icon={breaker ? 'power-off' : 'times'}
-                  content={breaker ? 'Online' : 'Offline'}
-                  selected={breaker}
-                  disabled={!operational}
-                  onClick={() => act('gentoggle')} />
-              )}>
-              <Box
-                color={on ? 'good' : 'bad'}>
-                {on ? 'Powered' : 'Unpowered'}
-              </Box>
+            <LabeledList.Item label="Breaker">
+              <Button
+                icon={breaker ? 'power-off' : 'times'}
+                content={breaker ? 'On' : 'Off'}
+                selected={breaker}
+                disabled={!operational}
+                onClick={() => act('gentoggle')} />
             </LabeledList.Item>
             <LabeledList.Item label="Gravity Charge">
               <ProgressBar
@@ -42,26 +37,40 @@ export const GravityGenerator = props => {
                   bad: [-Infinity, 0.3],
                 }} />
             </LabeledList.Item>
-            {charging_state !== 0 && (
-              <LabeledList.Item label="Charge Mode">
-                {charging_state === 1 && (
-                  <NoticeBox>Charging...</NoticeBox>
-                ) || charging_state === 2 && (
-                  <NoticeBox>Discharging...</NoticeBox>
-                )}
-              </LabeledList.Item>
-            )}
+            <LabeledList.Item label="Charge Mode">
+              {charging_state === 0 && (
+                on && (
+                  <Box color="good">
+                    Fully Charged
+                  </Box>
+                ) || (
+                  <Box color="bad">
+                    Not Charging
+                  </Box>
+                ))}
+              {charging_state === 1 && (
+                <Box color="average">
+                  Charging
+                </Box>
+              )}
+              {charging_state === 2 && (
+                <Box color="average">
+                Discharging
+                </Box>
+              )}
+            </LabeledList.Item>
           </LabeledList>
         )}
       </Section>
       {operational && charging_state !== 0 && (
-        <Section>
-          <NoticeBox textAlign="center">
-            WARNING - Radiation detected
-          </NoticeBox>
-        </Section>
-      ) || (
-        ""
+        <NoticeBox textAlign="center">
+          WARNING - Radiation detected
+        </NoticeBox>
+      )}
+      {operational && charging_state === 0 && (
+        <NoticeBox textAlign="center">
+          No radiation detected
+        </NoticeBox>
       )}
     </Fragment>
   );

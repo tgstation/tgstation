@@ -14,7 +14,7 @@
 	var/imp_type = null
 
 
-/obj/item/implanter/update_icon()
+/obj/item/implanter/update_icon_state()
 	if(imp)
 		icon_state = "implanter1"
 	else

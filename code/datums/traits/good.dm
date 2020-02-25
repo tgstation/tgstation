@@ -61,12 +61,12 @@
 
 datum/quirk/fan_clown
 	name = "Clown Fan"
-	desc = "You enjoy the clown's antics and get a mood boost when you see them."
+	desc = "You enjoy clown antics and get a mood boost from wearing your clown pin."
 	value = 1
 	mob_trait = TRAIT_FAN_CLOWN
-	gain_text = "<span class='notice'>You are a big fan of the Clown.</span>"
+	gain_text = "<span class='notice'>You are a big fan of clowns.</span>"
 	lose_text = "<span class='danger'>The clown doesn't seem so great.</span>"
-	medical_record_text = "Patient reports being a big fan of the Clown."
+	medical_record_text = "Patient reports being a big fan of clowns."
 
 /datum/quirk/fan_clown/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -79,12 +79,12 @@ datum/quirk/fan_clown
 
 datum/quirk/fan_mime
 	name = "Mime Fan"
-	desc = "You enjoy the Mime's antics and get a mood boost when you see them."
+	desc = "You enjoy mime antics and get a mood boost from wearing your mime pin."
 	value = 1
 	mob_trait = TRAIT_FAN_MIME
 	gain_text = "<span class='notice'>You are a big fan of the Mime.</span>"
 	lose_text = "<span class='danger'>The mime doesn't seem so great.</span>"
-	medical_record_text = "Patient reports being a big fan of the Mime."
+	medical_record_text = "Patient reports being a big fan of mimes."
 
 /datum/quirk/fan_mime/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -128,12 +128,18 @@ datum/quirk/fan_mime
 
 /datum/quirk/light_step
 	name = "Light Step"
-	desc = "You walk with a gentle step; stepping on sharp objects is quieter, less painful and you won't leave footprints behind you."
+	desc = "You walk with a gentle step; footsteps and stepping on sharp objects is quieter and less painful."
 	value = 1
 	mob_trait = TRAIT_LIGHT_STEP
 	gain_text = "<span class='notice'>You walk with a little more litheness.</span>"
 	lose_text = "<span class='danger'>You start tromping around like a barbarian.</span>"
 	medical_record_text = "Patient's dexterity belies a strong capacity for stealth."
+
+/datum/quirk/light_step/on_spawn()
+	var/datum/component/footstep/C = quirk_holder.GetComponent(/datum/component/footstep)
+	if(C)
+		C.volume *= 0.6
+		C.e_range -= 2
 
 /datum/quirk/musician
 	name = "Musician"

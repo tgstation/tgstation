@@ -11,7 +11,6 @@
 
 	var/code = DEFAULT_SIGNALER_CODE
 	var/frequency = FREQ_SIGNALER
-	var/delay = 0
 	var/datum/radio_frequency/radio_connection
 	///Holds the mind that commited suicide.
 	var/datum/mind/suicider
@@ -65,62 +64,51 @@
 		holder.update_icon()
 	return
 
-/obj/item/assembly/signaler/ui_interact(mob/user, flag1)
-	. = ..()
-	if(is_secured(user))
-		var/t1 = "-------"
-		var/dat = {"
-<TT>
+/obj/item/assembly/signaler/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	if(!is_secured(user))
+		return
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		var/ui_width = 280
+		var/ui_height = 132
+		ui = new(user, src, ui_key, "signaler", name, ui_width, ui_height, master_ui, state)
+		ui.open()
 
-<A href='byond://?src=[REF(src)];send=1'>Send Signal</A><BR>
-<B>Frequency/Code</B> for signaler:<BR>
-Frequency:
-[format_frequency(src.frequency)]
-<A href='byond://?src=[REF(src)];set=freq'>Set</A><BR>
+/obj/item/assembly/signaler/ui_data(mob/user)
+	var/list/data = list()
+	data["frequency"] = frequency
+	data["code"] = code
+	data["minFrequency"] = MIN_FREE_FREQ
+	data["maxFrequency"] = MAX_FREE_FREQ
 
-Code:
-[src.code]
-<A href='byond://?src=[REF(src)];set=code'>Set</A><BR>
-[t1]
-</TT>"}
-		user << browse(dat, "window=radio")
-		onclose(user, "radio")
+	return data
+
+/obj/item/assembly/signaler/ui_act(action, params)
+	if(..())
 		return
 
+	switch(action)
+		if("signal")
+			INVOKE_ASYNC(src, .proc/signal)
+			. = TRUE
+		if("freq")
+			frequency = unformat_frequency(params["freq"])
+			frequency = sanitize_frequency(frequency, TRUE)
+			set_frequency(frequency)
+			. = TRUE
+		if("code")
+			code = text2num(params["code"])
+			code = round(code)
+			. = TRUE
+		if("reset")
+			if(params["reset"] == "freq")
+				frequency = initial(frequency)
+			else
+				code = initial(code)
+			. = TRUE
 
-/obj/item/assembly/signaler/Topic(href, href_list)
-	..()
+	update_icon()
 
-	if(!usr.canUseTopic(src, BE_CLOSE))
-		usr << browse(null, "window=radio")
-		onclose(usr, "radio")
-		return
-
-	if (href_list["set"])
-
-		if(href_list["set"] == "freq")
-			var/new_freq = input(usr, "Input a new signalling frequency", "Remote Signaller Frequency", format_frequency(frequency)) as num|null
-			if(!usr.canUseTopic(src, BE_CLOSE))
-				return
-			new_freq = unformat_frequency(new_freq)
-			new_freq = sanitize_frequency(new_freq, TRUE)
-			set_frequency(new_freq)
-
-		if(href_list["set"] == "code")
-			var/new_code = input(usr, "Input a new signalling code", "Remote Signaller Code", code) as num|null
-			if(!usr.canUseTopic(src, BE_CLOSE))
-				return
-			new_code = round(new_code)
-			new_code = CLAMP(new_code, 1, 100)
-			code = new_code
-
-	if(href_list["send"])
-		INVOKE_ASYNC(src, .proc/signal)
-
-	if(usr)
-		attack_self(usr)
-
-	return
 
 /obj/item/assembly/signaler/attackby(obj/item/W, mob/user, params)
 	if(issignaler(W))
