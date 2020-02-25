@@ -11,8 +11,10 @@
 	. = ..()
 	if(!user.research_scanner) //For some reason a mob var
 		return
+	if(!sample)
+		return
 	. += "<span class='notice'>You can see the following micro-organisms:</span>"
-	. += samp.GetAllDetails() //Get just the names nicely parsed.
+	. += sample.GetAllDetails() //Get just the names nicely parsed.
 
 /obj/item/petri_dish/update_overlays()
 	. = ..()

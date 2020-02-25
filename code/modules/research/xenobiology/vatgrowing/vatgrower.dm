@@ -15,7 +15,10 @@
 /obj/machinery/plumbing/growing_vat/process()
 	if(!is_operational() && !biological_sample)
 		return
-	biological_sample.HandleGrowth(reagents)
+	if(biological_sample)
+		biological_sample.HandleGrowth(src)
+		if(prob(30))
+			audible_message(pick(list("<span class='notice'>[src] grumbles!</span>", "<span class='notice'>[src] makes a splashing noise!</span>", "<span class='notice'>[src] sloshes!</span>")))
 
 ///Handles the petri dish depositing into the vat.
 /obj/machinery/plumbing/growing_vat/attacked_by(obj/item/I, mob/living/user)

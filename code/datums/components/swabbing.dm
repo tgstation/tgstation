@@ -65,6 +65,9 @@ This component is used in vat growing to swab for microbiological samples which 
 		dish.deposit_sample(user, deposited_sample)
 		swabbed_items = list()
 
+		var/obj/item/I = parent
+		I.update_icon()
+
 		return COMPONENT_NO_ATTACK
 	if(!can_swab(target))
 		return NONE //Just do the normal attack.
@@ -76,7 +79,7 @@ This component is used in vat growing to swab for microbiological samples which 
 		to_chat(user, "<span class='warning'>You cannot collect another sample on [target]!</span>")
 		return
 
-	to_chat(user, "<span class='notice'>You start collecting samples from the [target] for samples!</span>")
+	to_chat(user, "<span class='notice'>You start swabbing [target] for samples!</span>")
 	if(!do_after(user, 30, TRUE, target)) // Start swabbing boi
 		return
 
@@ -87,6 +90,9 @@ This component is used in vat growing to swab for microbiological samples which 
 	to_chat(user, "<span class='nicegreen'>You manage to collect a microbiological sample from [target]!</span>")
 
 	target.RemoveElement(/datum/element/swabable)
+
+	var/obj/item/I = parent
+	I.update_icon()
 
 ///Checks if the swabbing component can swab the specific object or nots
 /datum/component/swabbing/proc/can_swab(atom/target)

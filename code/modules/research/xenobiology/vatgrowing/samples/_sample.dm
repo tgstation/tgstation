@@ -17,15 +17,16 @@
 
 ///Generate a sample from a specific weighted list, and a specific amount of cell line with a chance for a virus
 /datum/biological_sample/proc/GenerateSample(cell_line_define, virus_define, cell_line_amount, virus_chance)
-	//Temp list to prevent double picking
-	var/list/temp_weight_list = GLOB.cell_line_tables[cell_line_define]
-	for(var/i in cell_line_amount)
+	sample_color = pick(GLOB.xeno_sample_colors)
+
+	var/list/temp_weight_list = GLOB.cell_line_tables[cell_line_define].Copy() //Temp list to prevent double picking
+	for(var/i in 1 to cell_line_amount)
 		var/datum/micro_organism/chosen_type = pickweight(temp_weight_list)
 		temp_weight_list -= chosen_type
 		micro_organisms += new chosen_type
 	if(virus_chance)
-		micro_organisms += new pickweight(GLOB.cell_virus_tables[virus_define])
-	sample_color = pick(GLOB.xeno_sample_colors)
+		var/datum/micro_organism/chosen_type = pickweight(GLOB.cell_virus_tables[virus_define])
+		micro_organisms += new chosen_type
 
 ///Takes another sample and merges it into use. This can cause one very big sample but we limit it to 3 layers.
 /datum/biological_sample/proc/Merge(var/datum/biological_sample/other_sample)
@@ -36,6 +37,6 @@
 	return TRUE
 
 ///Call HandleGrowth on all our microorganisms.
-/datum/biological_sample/proc/HandleGrowth(reagents)
+/datum/biological_sample/proc/HandleGrowth(var/obj/machinery/plumbing/growing_vat/vat)
 	for(var/datum/micro_organism/cell_line/organism in micro_organisms) //Types because we don't grow viruses.
-		organism.HandleGrowth(reagents)
+		organism.HandleGrowth(vat)
