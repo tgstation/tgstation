@@ -833,15 +833,16 @@
 			return
 		else if(myseed && myseed.grafted == FALSE)
 			user.visible_message("<span class='notice'>[user] grafts off a limb from [src].</span>", "<span class='notice'>You carefully graft off a portion of [src].</span>")
-			var/obj/item/graft/snip = new /obj/item/graft(loc)
+			//var/obj/item/graft/snip = new /obj/item/graft(loc)
 			myseed.grafted = TRUE
 
 	else if(istype(O, /obj/item/graft))
 		var/obj/item/graft/snip = O
+		var/datum/plant_gene/trait/new_trait = snip.stored_trait
 		if(!myseed)
 			to_chat(user, "<span class='notice'>The tray is empty.</span>")
 			return
-		if(!snip.stored_trait.can_add(myseed))
+		if(!new_trait.can_add(myseed))
 			to_chat(user, "<span class='warning'>[myseed.plantname] rejects [snip]!</span>")
 			return
 		myseed.genes += snip.stored_trait
