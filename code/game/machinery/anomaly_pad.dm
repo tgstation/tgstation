@@ -103,7 +103,7 @@
 
 /obj/machinery/anomaly_pad/liquid/process()
 	. = ..()
-	if(!.)
+	if(!. || !anomaly)
 		return
 
 	reagents.add_reagent(reagent_type, speed)

@@ -260,8 +260,7 @@
 	. = ..()
 
 	var/obj/effect/anomaly/fluid/F = .
-	F.reagent_type = reagent_type
-
+	F.SetReagent(reagent_type)
 
 /obj/item/assembly/signaler/anomaly/attack_self()
 	return

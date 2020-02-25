@@ -367,6 +367,7 @@
 	aSignal = /obj/item/assembly/signaler/anomaly/fluid
 
 	var/reagent_type
+	var/volume = 10
 
 	var/slip_time = 50
 	var/blood_drain = 20
@@ -378,10 +379,9 @@
 /obj/effect/anomaly/fluid/Initialize()
 	. = ..()
 
-	create_reagents(10)
-	reagent_type = get_random_reagent_id()
-	var/obj/item/assembly/signaler/anomaly/fluid/F = aSignal
-	F.reagent_type = reagent_type
+	create_reagents(volume)
+
+	SetReagent(get_random_reagent_id())
 
 /obj/effect/anomaly/fluid/anomalyEffect()
 	..()
@@ -398,3 +398,16 @@
 		var/datum/effect_system/smoke_spread/chem/smoke = new()
 		smoke.set_up(reagents, smoke_range, get_turf(src), TRUE)
 		smoke.start()
+
+/obj/effect/anomaly/fluid/proc/SetReagent(datum/reagent/R)
+	reagent_type = R
+
+	var/obj/item/assembly/signaler/anomaly/fluid/F = aSignal
+	F.reagent_type = reagent_type
+
+	reagents.clear_reagents()
+	reagents.add_reagent(reagent_type, volume)
+	add_atom_colour(mix_color_from_reagents(reagents.reagent_list), FIXED_COLOUR_PRIORITY)
+
+
+
