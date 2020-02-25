@@ -76,6 +76,7 @@
 	uniform = /obj/item/clothing/under/misc/gambison
 	shoes = /obj/item/clothing/shoes/sandal
 	back = /obj/item/pickaxe/silver
+	l_pocket = /obj/item/dwarven/mallet
 
 //Timeless prisons: Spawns in Wish Granter prisons in lavaland. Ghosts become age-old users of the Wish Granter and are advised to seek repentance for their past.
 /obj/effect/mob_spawn/human/exile
