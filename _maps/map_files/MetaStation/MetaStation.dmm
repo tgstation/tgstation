@@ -27534,16 +27534,13 @@
 /area/quartermaster/sorting)
 "biJ" = (
 /obj/structure/table,
-/obj/item/destTagger{
-	pixel_x = 4;
-	pixel_y = 3
-	},
 /obj/machinery/light_switch{
 	pixel_x = 27
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/item/storage/box/shipping,
 /turf/open/floor/plasteel/white/corner,
 /area/quartermaster/sorting)
 "biK" = (
@@ -68926,6 +68923,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/item/storage/box/shipping,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "dhM" = (
@@ -72630,7 +72628,7 @@
 "lfv" = (
 /obj/effect/mob_spawn/human/corpse/assistant{
 	belt = null;
-	husk = TRUE;
+	husk = 1;
 	id = null;
 	l_pocket = /obj/item/pen
 	},

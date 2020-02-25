@@ -864,6 +864,15 @@
 	build_path = /obj/item/destTagger
 	category = list("initial", "Electronics")
 
+/datum/design/salestagger
+	name = "Sales Tagger"
+	id = "salestagger"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 700, /datum/material/glass = 200)
+	build_path = /obj/item/sales_tagger
+	category = list("initial", "Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/handlabeler
 	name = "Hand Labeler"
 	id = "handlabel"
