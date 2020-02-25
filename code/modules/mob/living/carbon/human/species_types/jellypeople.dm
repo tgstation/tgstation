@@ -432,7 +432,7 @@
 	extract_major = new(src)
 	extract_major.Grant(C)
 
-/datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
+/datum/species/jelly/luminescent/spec_life(mob/living/carbon/human/H)
 	if(extract_minor)
 		extract_minor.UpdateButtonIcon(TRUE) //status_only
 	if(extract_major)
