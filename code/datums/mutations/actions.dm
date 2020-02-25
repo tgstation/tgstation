@@ -54,9 +54,10 @@
 		var/old_target = tracking_target
 		possible = list()
 		var/list/prints = sniffed.return_fingerprints()
-		for(var/mob/living/carbon/C in GLOB.carbon_list)
-			if(prints[md5(C.dna.uni_identity)])
-				possible |= C
+		if(prints)
+			for(var/mob/living/carbon/C in GLOB.carbon_list)
+				if(prints[md5(C.dna.uni_identity)])
+					possible |= C
 		if(!length(possible))
 			to_chat(user,"<span class='warning'>Despite your best efforts, there are no scents to be found on [sniffed]...</span>")
 			return
