@@ -58,9 +58,9 @@
 	//Handle debuffing growth based on viruses here.
 	for(var/datum/micro_organism/cell_line/virus in biological_sample)
 		if(reagents.has_reagent(/datum/reagent/medicine/spaceacillin, REAGENTS_METABOLISM))
-			reagents.remove_reagent(i, REAGENTS_METABOLISM)
+			reagents.remove_reagent(/datum/reagent/medicine/spaceacillin, REAGENTS_METABOLISM)
 			continue //This virus is stopped, We have antiviral stuff
-		. += virus_suspectibility
+		. -= virus_suspectibility
 
 ///Called once a cell line reaches 100 growth. Then we check if any cell_line is too far so we can perform an epic fail roll
 /datum/micro_organism/cell_line/proc/finish_growing(var/obj/machinery/plumbing/growing_vat/vat)
@@ -85,8 +85,13 @@
 
 
 /datum/micro_organism/cell_line/proc/succeed_growing(var/obj/machinery/plumbing/growing_vat/vat)
+	var/datum/effect_system/smoke_spread/s = new
+	s.set_up(4, 1, vat, 0)
+	s.start()
+
 	for(var/created_thing in resulting_atoms)
 		for(var/x in 1 to resulting_atoms[created_thing])
 			var/atom/A = new created_thing(get_turf(vat))
 			vat.visible_message("<span class='nicegreen'>[A] pops out of [vat]!</span>")
+
 	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
