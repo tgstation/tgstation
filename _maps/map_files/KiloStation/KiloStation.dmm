@@ -22713,6 +22713,10 @@
 	},
 /obj/item/stack/packageWrap,
 /obj/item/hand_labeler,
+/obj/item/storage/box/shipping{
+	pixel_x = -4;
+	pixel_y = -4
+	},
 /turf/open/floor/plasteel/dark,
 /area/storage/primary)
 "aKb" = (
@@ -42745,6 +42749,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/storage/box/shipping,
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/storage)
 "bmv" = (
