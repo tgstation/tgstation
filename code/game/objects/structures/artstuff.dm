@@ -354,3 +354,13 @@
 	for(var/x in 1 to width)
 		for(var/y in 1 to height)
 			grid[x][y] = I.GetPixel(w-x,h-y)
+
+//Presets for art gallery mapping, for paintings to be shared across stations
+/obj/structure/sign/painting/library
+	persistence_id = "library"
+
+/obj/structure/sign/painting/library_secure
+	persistence_id = "library_secure"
+
+/obj/structure/sign/painting/library_private // keep your smut away from prying eyes, or non-librarians at least
+	persistence_id = "library_private"
