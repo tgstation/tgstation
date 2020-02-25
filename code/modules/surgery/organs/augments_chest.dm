@@ -171,7 +171,20 @@
 		icon_state = "imp_jetpack"
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/move_react()
-	allow_thrust(0.01)
+	if(!on)//If jet dont work, it dont work
+		return
+	if(!owner)//Don't allow jet self using
+		return
+	if(!isturf(owner.loc)//You can't use jet in nowhere
+		return
+	if(has_gravity(owner))//You don't want use jet in gravity
+		return
+	if(owner.pulledby)//You don't must use jet if someone pull you
+		return
+	if(owner.throwing)//You don't must use jet if you thrown
+		return
+	if(length(owner.client.keys_held & owner.client.movement_keys))//You use jet when press keys. yes.
+		allow_thrust(0.01)
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/allow_thrust(num)
 	if(!on || !owner)
