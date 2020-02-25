@@ -19841,10 +19841,13 @@
 "aQC" = (
 /obj/structure/table,
 /obj/item/folder/yellow,
-/obj/item/destTagger,
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
+	},
+/obj/item/storage/box/shipping{
+	pixel_x = 4;
+	pixel_z = 4
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
@@ -44500,6 +44503,7 @@
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/storage/box/shipping,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "bGH" = (

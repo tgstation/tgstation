@@ -17896,6 +17896,7 @@
 "aTE" = (
 /obj/structure/table,
 /obj/item/hand_labeler,
+/obj/item/storage/box/shipping,
 /turf/open/floor/plasteel,
 /area/storage/art)
 "aTF" = (
@@ -23887,6 +23888,9 @@
 /obj/structure/table,
 /obj/item/clothing/head/soft,
 /obj/item/clothing/head/soft,
+/obj/item/storage/box/shipping{
+	pixel_x = 6
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bjo" = (
