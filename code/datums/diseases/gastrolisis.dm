@@ -56,6 +56,7 @@
 				return
 			if(shell && eyes && tongue && prob(5))
 				affected_mob.set_species(/datum/species/snail)
+				affected_mob.client?.give_award(/datum/award/achievement/misc/snail, affected_mob)
 				affected_mob.visible_message("<span class='warning'>[affected_mob] turns into a snail!</span>", \
 				"<span class='boldnotice'>You turned into a snail person! You feel an urge to cccrrraaawwwlll...</span>")
 				cure()
