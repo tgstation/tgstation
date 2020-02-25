@@ -83,7 +83,7 @@ Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead bec
 	var/obj/item/parent_item = parent
 	parent_item.force *= quality
 	parent_item.throwforce *= quality
-	parent_item.max_integrity += quality
+	parent_item.modify_max_integrity(parent_item*quality)
 
 	if(istype(parent_item,/obj/item/twohanded))
 		var/obj/item/twohanded/twohanded_item = parent_item
@@ -103,7 +103,7 @@ Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead bec
 	parent_item.name = old_name
 	parent_item.force /= quality
 	parent_item.throwforce  /= quality
-	parent_item.max_integrity -= quality
+	parent_item.modify_max_integrity(parent_item/quality)
 
 	var/armor_qual = (quality - 1)*20
 	parent_item.armor = parent_item.armor?.modifyAllRatings(-armor_qual)
