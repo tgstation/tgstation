@@ -63,3 +63,4 @@ GLOBAL_LIST_EMPTY(mouths_beefman)//, list( "Smile1", "Smile2", "Frown1", "Frown2
 //MEDBORG UPDATE -Surrealistik Feb 2020
 
 #define SYNTHFLESH_HUSKFIX_THRESHOLD 40 //For instabitaluri/synthflesh; allows maxed patches to heal burn husking.
+#define FULP_SURGERY_SPEED_MULTIPLIER 0.5 //Used to adjust surgery speed; this roughly cuts the time of most surgical steps in half.
