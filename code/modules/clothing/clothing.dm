@@ -140,6 +140,52 @@
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
 
+	var/list/armor_list = list()
+	if(armor.acid)
+		armor_list += list("Acid" = armor.acid)
+	if(armor.bio)
+		armor_list += list("Toxin" = armor.bio)
+	if(armor.bomb)
+		armor_list += list("Bomb" = armor.bomb)
+	if(armor.bullet)
+		armor_list += list("Bullet" = armor.bullet)
+	if(armor.energy)
+		armor_list += list("Energy" = armor.energy)
+	if(armor.fire)
+		armor_list += list("Fire" = armor.fire)
+	if(armor.laser)
+		armor_list += list("Laser" = armor.laser)
+	if(armor.magic)
+		armor_list += list("Magic" = armor.magic)
+	if(armor.melee)
+		armor_list += list("Melee" = armor.melee)
+	if(armor.rad)
+		armor_list += list("Radiation" = armor.rad)
+
+	if(LAZYLEN(armor_list))
+		var/list/readout = list("<span class='notice'>[src] [gender == "plural" ? "have" : "has"] the following armor:")
+		for(var/dam_type in armor_list)
+			var/armor_amount = armor_list[dam_type]
+			readout += "\n[dam_type]: [number_to_robustness(armor_amount)]" //e.g. Bomb: Very high
+		readout += "</span>"
+		. += readout.Join()
+
+/obj/item/clothing/proc/number_to_robustness(var/number)
+	switch (number)
+		if (1 to 20)
+			. = "Low"
+		if (20 to 40)
+			. = "Medium"
+		if (40 to 60)
+			. = "High"
+		if (60 to 80)
+			. = "Very high"
+		if (80 to 100)
+			. = "Superb"
+		if (100 to INFINITY)
+			. = "Complete"
+	return .
+
 /obj/item/clothing/obj_break(damage_flag)
 	if(!damaged_clothes)
 		update_clothes_damaged_state(TRUE)
