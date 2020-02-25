@@ -134,16 +134,14 @@
 	if(!user.mind)
 		return
 	var/list/data = list()
-	data["points"] = telecrystals
+	data["telecrystals"] = telecrystals
 	data["lockable"] = lockable
 	data["compact_mode"] = compact_mode
+
 	return data
 
 /datum/component/uplink/ui_static_data(mob/user)
 	var/list/data = list()
-	data["currency"] = "Telecrystals"
-	data["currency_short"] = "TC"
-
 	data["categories"] = list()
 	for(var/category in uplink_items)
 		var/list/cat = list(
@@ -174,7 +172,6 @@
 				"name" = I.name,
 				"cost" = I.cost,
 				"desc" = I.desc,
-				"ref" = REF(I),
 			))
 		data["categories"] += list(cat)
 	return data

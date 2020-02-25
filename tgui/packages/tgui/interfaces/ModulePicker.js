@@ -5,7 +5,7 @@ import { Box, Button, Input, Section, Table, Tabs } from '../components';
 
 // It's a class because we need to store state in the form of the current
 // hovered item, and current search terms
-export class Uplink extends Component {
+export class ModulePicker extends Component {
   constructor() {
     super();
     this.state = {
@@ -32,8 +32,7 @@ export class Uplink extends Component {
     const { ref } = config;
     const {
       compact_mode,
-      lockable,
-      telecrystals,
+      processing_time,
       categories = [],
     } = data;
     const { hoveredItem, currentSearch } = this.state;
@@ -42,8 +41,8 @@ export class Uplink extends Component {
         title={(
           <Box
             inline
-            color={telecrystals > 0 ? 'good' : 'bad'}>
-            {telecrystals} TC
+            color={processing_time > 0 ? 'good' : 'bad'}>
+            {processing_time} PT
           </Box>
         )}
         buttons={(
@@ -58,12 +57,6 @@ export class Uplink extends Component {
               icon={compact_mode ? 'list' : 'info'}
               content={compact_mode ? 'Compact' : 'Detailed'}
               onClick={() => act(ref, 'compact_toggle')} />
-            {!!lockable && (
-              <Button
-                icon="lock"
-                content="Lock"
-                onClick={() => act(ref, 'lock')} />
-            )}
           </Fragment>
         )}>
         {currentSearch.length > 0 ? (
@@ -84,7 +77,7 @@ export class Uplink extends Component {
               onBuyMouseOver={item => this.setHoveredItem(item)}
               onBuyMouseOut={item => this.setHoveredItem({})}
               onBuy={item => act(ref, 'buy', {
-                item: item.name,
+                item: item.ref,
               })} />
           </table>
         ) : (
@@ -103,11 +96,11 @@ export class Uplink extends Component {
                       compact={compact_mode}
                       items={items}
                       hoveredItem={hoveredItem}
-                      telecrystals={telecrystals}
+                      processing_time={processing_time}
                       onBuyMouseOver={item => this.setHoveredItem(item)}
                       onBuyMouseOut={item => this.setHoveredItem({})}
                       onBuy={item => act(ref, 'buy', {
-                        item: item.name,
+                        item: item.ref,
                       })} />
                   )}
                 </Tabs.Tab>
@@ -124,7 +117,7 @@ const ItemList = props => {
   const {
     items,
     hoveredItem,
-    telecrystals,
+    processing_time,
     compact,
     onBuy,
     onBuyMouseOver,
@@ -136,7 +129,7 @@ const ItemList = props => {
       <Table>
         {items.map(item => {
           const notSameItem = hoveredItem && hoveredItem.name !== item.name;
-          const notEnoughHovered = telecrystals - hoveredCost < item.cost;
+          const notEnoughHovered = processing_time - hoveredCost < item.cost;
           const disabledDueToHovered = notSameItem && notEnoughHovered;
           return (
             <Table.Row
@@ -148,8 +141,8 @@ const ItemList = props => {
               <Table.Cell collapsing textAlign="right">
                 <Button
                   fluid
-                  content={item.cost + " TC"}
-                  disabled={telecrystals < item.cost || disabledDueToHovered}
+                  content={item.cost + " PT"}
+                  disabled={processing_time < item.cost || disabledDueToHovered}
                   tooltip={item.desc}
                   tooltipPosition="left"
                   onmouseover={() => onBuyMouseOver(item)}
@@ -164,7 +157,7 @@ const ItemList = props => {
   }
   return items.map(item => {
     const notSameItem = hoveredItem && hoveredItem.name !== item.name;
-    const notEnoughHovered = telecrystals - hoveredCost < item.cost;
+    const notEnoughHovered = processing_time - hoveredCost < item.cost;
     const disabledDueToHovered = notSameItem && notEnoughHovered;
     return (
       <Section
@@ -173,8 +166,8 @@ const ItemList = props => {
         level={2}
         buttons={(
           <Button
-            content={item.cost + ' TC'}
-            disabled={telecrystals < item.cost || disabledDueToHovered}
+            content={item.cost + ' PT'}
+            disabled={processing_time < item.cost || disabledDueToHovered}
             onmouseover={() => onBuyMouseOver(item)}
             onmouseout={() => onBuyMouseOut(item)}
             onClick={() => onBuy(item)} />
