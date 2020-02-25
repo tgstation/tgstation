@@ -52089,6 +52089,11 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/machinery/camera{
+	c_tag = "Medbay Main Hallway- CMO";
+	dir = 8;
+	network = list("ss13","medbay")
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cnC" = (
@@ -57176,6 +57181,11 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/sign/departments/chemistry{
 	pixel_x = 32
+	},
+/obj/machinery/camera{
+	c_tag = "Medbay Main Hallway- Surgical Junction";
+	dir = 8;
+	network = list("ss13","medbay")
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -68256,11 +68266,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "dwf" = (
-/obj/machinery/camera{
-	c_tag = "Medbay Hallway Central";
-	dir = 4;
-	network = list("ss13","medbay")
-	},
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 1
 	},
@@ -69451,6 +69456,11 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/green,
+/obj/machinery/camera{
+	c_tag = "Virology Airlock";
+	dir = 8;
+	network = list("ss13","medbay")
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "enV" = (
@@ -69790,6 +69800,10 @@
 	pixel_y = 4
 	},
 /obj/item/pen/red,
+/obj/machinery/camera{
+	c_tag = "Virology Isolation A";
+	network = list("ss13","medbay")
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "fee" = (
@@ -70459,16 +70473,24 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/virology/glass{
+	autoclose = 0;
+	frequency = 3653;
+	id_tag = "viro_airlock_interior";
 	name = "Virology Access";
 	req_access_txt = "39"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/doorButtons/access_button{
+	idDoor = "viro_airlock_interior";
+	idSelf = "viro_airlock_control";
+	name = "Access Button";
+	pixel_y = -24;
+	req_access_txt = "39"
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "gyL" = (
@@ -70650,6 +70672,11 @@
 	},
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Virology Central Hallway";
+	dir = 4;
+	network = list("ss13","medbay")
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -71536,11 +71563,11 @@
 "jtY" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/virology/glass{
+	autoclose = 0;
+	frequency = 3653;
+	id_tag = "viro_airlock_exterior";
 	name = "Virology Access";
 	req_access_txt = "39"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -71549,6 +71576,14 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/doorButtons/access_button{
+	idDoor = "viro_airlock_exterior";
+	idSelf = "viro_airlock_control";
+	name = "Access Button";
+	pixel_y = -24;
+	req_access_txt = "39"
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "jvy" = (
@@ -71954,6 +71989,11 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/green,
+/obj/machinery/camera{
+	c_tag = "Virology Lab";
+	dir = 8;
+	network = list("ss13","medbay")
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "kqz" = (
@@ -73272,6 +73312,10 @@
 /area/security/warden)
 "nrc" = (
 /obj/structure/flora/ausbushes/sunnybush,
+/obj/machinery/camera{
+	c_tag = "Virology Test Subject Chamber";
+	network = list("ss13","medbay")
+	},
 /turf/open/floor/grass,
 /area/medical/virology)
 "nrB" = (
@@ -75242,6 +75286,18 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"rJm" = (
+/obj/structure/cable,
+/obj/structure/table/glass,
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/syringe,
+/obj/item/reagent_containers/dropper,
+/obj/machinery/camera{
+	c_tag = "Virology Isolation B";
+	network = list("ss13","medbay")
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/virology)
 "rJv" = (
 /turf/open/floor/plating,
 /area/hallway/primary/port)
@@ -77687,6 +77743,15 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
+"xfo" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/camera{
+	c_tag = "Medbay Main Hallway- South";
+	dir = 4;
+	network = list("ss13","medbay")
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "xfr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -92170,7 +92235,7 @@ cBR
 fdX
 maC
 hRK
-maC
+rJm
 lbd
 cBR
 lMJ
@@ -100651,7 +100716,7 @@ mUz
 jpq
 cEO
 sfI
-sfI
+xfo
 oTW
 hFP
 cqi
