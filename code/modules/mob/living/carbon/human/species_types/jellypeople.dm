@@ -48,7 +48,7 @@
 	if(H.blood_volume < BLOOD_VOLUME_BAD)
 		Cannibalize_Body(H)
 	if(regenerate_limbs)
-		regenerate_limbs.UpdateButtonIcon()
+		regenerate_limbs.UpdateButtonIcon(TRUE) //status_only
 
 /datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
 	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()
@@ -102,6 +102,7 @@
 		to_chat(H, "<span class='warning'>...but there is not enough of you to fix everything! You must attain more mass to heal completely!</span>")
 		return
 	to_chat(H, "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to heal!</span>")
+	UpdateButtonIcon(TRUE) //status_only
 
 ////////////////////////////////////////////////////////SLIMEPEOPLE///////////////////////////////////////////////////////////////////
 
@@ -170,6 +171,8 @@
 		H.blood_volume += 3
 		H.adjust_nutrition(-2.5)
 
+	if(slime_split)
+		slime_split.UpdateButtonIcon(TRUE) //status_only
 	..()
 
 /datum/action/innate/split_body
@@ -207,6 +210,8 @@
 		to_chat(H, "<span class='warning'>...but fail to stand perfectly still!</span>")
 
 	H.notransform = FALSE
+
+	UpdateButtonIcon(TRUE) //status_only
 
 /datum/action/innate/split_body/proc/make_dupe()
 	var/mob/living/carbon/human/H = owner
@@ -427,6 +432,13 @@
 	extract_major = new(src)
 	extract_major.Grant(C)
 
+/datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
+	if(extract_minor)
+		extract_minor.UpdateButtonIcon(TRUE) //status_only
+	if(extract_major)
+		extract_major.UpdateButtonIcon(TRUE) //status_only
+	..()
+
 /datum/species/jelly/luminescent/proc/update_slime_actions()
 	integrate_extract.update_name()
 	integrate_extract.UpdateButtonIcon()
@@ -547,6 +559,8 @@
 		species.extract_cooldown = world.time + 100
 		var/cooldown = species.current_extract.activate(H, species, activation_type)
 		species.extract_cooldown = world.time + cooldown
+	
+	UpdateButtonIcon(TRUE) //status_only
 
 /datum/action/innate/use_extract/major
 	name = "Extract Major Activation"
