@@ -11,6 +11,29 @@
 /obj/item/clothing/mask/balaclava/attack_self(mob/user)
 	adjustmask(user)
 
+/obj/item/clothing/mask/balaclava/syndicate
+	name = "perfectly generic balaclava"
+	desc = "It makes you feel safe in your anonymity. It seems to have a built in heads-up display."
+	clothing_flags = MASKINTERNALS
+	armor = list("melee" = 10, "bullet" = 5, "laser" = 0,"energy" = 5, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 100, "acid" = 40)
+	resistance_flags = FIRE_PROOF
+	
+/obj/item/clothing/mask/balaclava/syndicate/equipped(mob/living/carbon/human/user, slot)
+	..()
+	to_chat(user, "You roll the balaclava over your face, and a data display appears before your eyes.")
+	ADD_TRAIT(user, TRAIT_DIAGNOSTIC_HUD, MASK_TRAIT)
+	ADD_TRAIT(user, TRAIT_DISFIGURED, MASK_TRAIT) //this is so they always speak as unknown
+	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+	H.add_hud_to(user)
+
+/obj/item/clothing/mask/balaclava/syndicate/dropped(mob/living/carbon/human/user)
+	..()
+	to_chat(user, "You pull off the balaclava, and the mask's internal hud system switches off quietly.")
+	REMOVE_TRAIT(user, TRAIT_DIAGNOSTIC_HUD, MASK_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_DISFIGURED, MASK_TRAIT)
+	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+	H.remove_hud_from(user)
+
 /obj/item/clothing/mask/luchador
 	name = "Luchador Mask"
 	desc = "Worn by robust fighters, flying high to defeat their foes!"

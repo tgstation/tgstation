@@ -532,11 +532,11 @@
 
 /obj/item/storage/box/syndie_kit/clothes
 	name = "box of clothing"
-	desc = "This clothes are...really red."
+	desc = "These clothes... kinda stand out, don't they?"
 
 /obj/item/storage/box/syndie_kit/clothes/PopulateContents()
 	new /obj/item/clothing/under/syndicate/suspicious(src)
-	new /obj/item/clothing/mask/balaclava(src)
+	new /obj/item/clothing/mask/balaclava/syndicate(src)
 	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/gloves/color/black(src)
 

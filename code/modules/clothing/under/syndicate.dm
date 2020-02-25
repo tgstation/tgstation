@@ -25,16 +25,14 @@
 	desc = "Gee, you think the person wearing this might be a member of a clandestine terrorist organization?"
 	icon_state = "suspicious"
 	item_state = "bl_suit"
-	has_sensor = NO_SENSORS
-
-/obj/item/clothing/under/syndicate/suspicious/skirt
+	armor = list("melee" = 10, "bullet" = 10, "laser" = 0,"energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 50, "acid" = 40)
+	
+/obj/item/clothing/under/syndicate/skirt/suspicious
 	name = "suspicious skirtleneck"
 	desc = "Gee, you think the person wearing this might be a member of a clandestine terrorist organization?"
 	icon_state = "suspicious_skirt"
 	item_state = "bl_suit"
-	has_sensor = NO_SENSORS
-	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = FALSE
+	armor = list("melee" = 10, "bullet" = 10, "laser" = 0,"energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 50, "acid" = 40)
 
 /obj/item/clothing/under/syndicate/tacticool
 	name = "tacticool turtleneck"

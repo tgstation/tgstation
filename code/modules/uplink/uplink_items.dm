@@ -1870,8 +1870,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/bundles_TC/suspicious_clothes
 	name = "Clothing Box"
-	desc = "Some totally not suspicious clothing! Comes with an armored turtleneck, jackboots, some black gloves and a balaclava!"
+	desc = "Some totally not suspicious clothing! Comes with an armored turtleneck, jackboots, some black gloves and a techno-balaclava!"
 	item = /obj/item/storage/box/syndie_kit/clothes
-	cost = 0
+	cost = 1
 	limited_stock = 1
 	exclude_modes = list(/datum/game_mode/nuclear)
