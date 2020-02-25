@@ -18,7 +18,7 @@ Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead bec
 */
 ///This Component handles adding quality to items.
 /datum/component/quality
-	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+	dupe_mode = COMPONENT_DUPE_UNIQUE
 	///List containing values used in adding force to items
 	var/list/quality_levels = list(UNUSABLE_QUALITY,SHODDY_QUALITY,POOR_QUALITY,NORMAL_QUALITY,GOOD_QUALITY,FINE_QUALITY,SUPERIOR_QUALITY,EXCEPTIONAL_QUALITY,ARTISAN_QUALITY,MASTERWORK_QUALITY,ARTIFACT_QUALITY )
 
