@@ -14,7 +14,7 @@
 
 /obj/item/choice_beacon
 	name = "choice beacon"
-	desc = "Hey, why are you viewing this?!! Please let Centcom know about this odd occurance."
+	desc = "Hey, why are you viewing this?!! Please let CentCom know about this odd occurrence."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-blue"
 	item_state = "radio"
@@ -157,7 +157,7 @@
 	///List of mobs that have already been mobbed.
 	var/static/list/mob_mobs = list()
 
-
+#define NICKNAME_CAP	(MAX_NAME_LEN/2)
 /obj/item/virgin_mary/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	var/ignition_msg = W.ignition_effect(src, user)
@@ -179,7 +179,8 @@
 		return
 
 	to_chat(joe, "<span class='notice'>As you burn the picture, a nickname comes to mind...</span>")
-	var/nickname = input(joe, "Pick a nickname", "Mafioso Nicknames") as text|null
+	var/nickname = stripped_input(joe, "Pick a nickname", "Mafioso Nicknames", null, NICKNAME_CAP, TRUE)
+	nickname = reject_bad_name(nickname, allow_numbers = FALSE, max_length = NICKNAME_CAP, ascii_only = TRUE)
 	if(!nickname)
 		return
 	var/new_name
@@ -193,6 +194,8 @@
 	mob_mobs += joe
 	joe.say("My soul will burn like this saint if I betray my familiy. I enter alive and I will have to get out dead.", forced = /obj/item/virgin_mary)
 	to_chat(joe, "<span class='userdanger'>Being inducted into the mafia does not grant antagonist status.</span>")
+
+#undef NICKNAME_CAP
 
 /obj/item/virgin_mary/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] starts saying their Hail Mary's at a terrifying pace! It looks like [user.p_theyre()] trying to enter the afterlife!</span>")

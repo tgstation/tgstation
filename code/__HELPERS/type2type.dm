@@ -120,27 +120,8 @@
 	return
 
 //Converts an angle (degrees) into an ss13 direction
-/proc/angle2dir(degree)
-	degree = SIMPLIFY_DEGREES(degree)
-	switch(degree)
-		if(0 to 22.5) //north requires two angle ranges
-			return NORTH
-		if(22.5 to 67.5) //each range covers 45 degrees
-			return NORTHEAST
-		if(67.5 to 112.5)
-			return EAST
-		if(112.5 to 157.5)
-			return SOUTHEAST
-		if(157.5 to 202.5)
-			return SOUTH
-		if(202.5 to 247.5)
-			return SOUTHWEST
-		if(247.5 to 292.5)
-			return WEST
-		if(292.5 to 337.5)
-			return NORTHWEST
-		if(337.5 to 360)
-			return NORTH
+GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST))
+#define angle2dir(X) (GLOB.modulo_angle_to_dir[round((((X%360)+382.5)%360)/45)+1])
 
 /proc/angle2dir_cardinal(degree)
 	degree = SIMPLIFY_DEGREES(degree)
@@ -548,4 +529,3 @@
 			return "turf"
 		else //regex everything else (works for /proc too)
 			return lowertext(replacetext("[the_type]", "[type2parent(the_type)]/", ""))
-
