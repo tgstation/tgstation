@@ -444,7 +444,6 @@ Contains:
 	item_state = "hardsuit0-combatmedic"
 	armor = list("melee" = 35, "bullet" = 10, "laser" = 20, "energy" = 30, "bomb" = 5, "bio" = 100, "rad" = 50, "fire" = 65, "acid" = 75)
 	hardsuit_type = "combatmedic"
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
 
 /obj/item/clothing/suit/space/hardsuit/combatmedic
 	name = "endemic combat medic hardsuit"
