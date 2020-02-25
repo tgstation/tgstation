@@ -9,7 +9,7 @@
 
 /datum/micro_organism/cell_line/chicken
 	desc = "Some feather micro-particles."
-	required_reagents = list(/datum/reagent/consumable/nutriment, /datum/reagent/consumable/sugar)
+	required_reagents = list(/datum/reagent/consumable/nutriment)
 	supplementary_reagents = list(/datum/reagent/water = 1)
 	surpressive_reagents = list(/datum/reagent/fuel/oil = -2)
 	virus_suspectibility = 1
