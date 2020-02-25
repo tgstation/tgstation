@@ -535,10 +535,16 @@
 	desc = "These clothes... kinda stand out, don't they?"
 
 /obj/item/storage/box/syndie_kit/clothes/PopulateContents()
-	new /obj/item/clothing/under/syndicate/suspicious(src)
-	new /obj/item/clothing/mask/balaclava/syndicate(src)
+	new /obj/item/clothing/under/syndicate/bloodred(src)
+	new /obj/item/clothing/mask/syndicate_balaclava(src)
 	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/gloves/color/black(src)
+
+/obj/item/storage/box/syndie_kit/sleepytime/PopulateContents()
+	new /obj/item/clothing/under/syndicate/bloodred/sleepytime(src)
+	new /obj/item/reagent_containers/food/drinks/mug/coco(src)
+	new /obj/item/toy/plush/carpplushie(src)
+	new /obj/item/bedsheet/syndie(src)
 
 ///Subtype for the sabotage bundle. Contains three C4, two X4 and 6 signalers
 /obj/item/storage/backpack/duffelbag/syndie/sabotage

@@ -11,12 +11,17 @@
 /obj/item/clothing/mask/balaclava/attack_self(mob/user)
 	adjustmask(user)
 
-/obj/item/clothing/mask/balaclava/syndicate
-	name = "perfectly generic balaclava"
-	desc = "It makes you feel safe in your anonymity. It seems to have a built in heads-up display."
+/obj/item/clothing/mask/syndicate_balaclava
+	name = "infiltrator balaclava"
+	desc = "It makes you feel safe in your anonymity, but for a stealth outfit you sure do look obvious that you're up to no good. It seems to have a built in heads-up display."
+	icon_state = "balaclava"
+	item_state = "syndicate_balaclava"
 	clothing_flags = MASKINTERNALS
-	armor = list("melee" = 10, "bullet" = 5, "laser" = 0,"energy" = 5, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 100, "acid" = 40)
-	resistance_flags = FIRE_PROOF
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_SMALL
+	armor = list("melee" = 10, "bullet" = 5, "laser" = 5,"energy" = 5, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 100, "acid" = 40)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	
 /obj/item/clothing/mask/balaclava/syndicate/equipped(mob/living/carbon/human/user, slot)
 	..()

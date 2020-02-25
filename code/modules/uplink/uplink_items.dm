@@ -1868,10 +1868,18 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 2
 	illegal_tech = FALSE
 
-/datum/uplink_item/bundles_TC/suspicious_clothes
-	name = "Clothing Box"
-	desc = "Some totally not suspicious clothing! Comes with an armored turtleneck, jackboots, some black gloves and a techno-balaclava!"
+/datum/uplink_item/badass/infiltrator_bundle
+	name = "Infiltrator Clothing Bundle"
+	desc = "Some totally not suspicious clothing! Comes with an blood-red tactical suit, jackboots, some black gloves and a techno-balaclava!"
 	item = /obj/item/storage/box/syndie_kit/clothes
 	cost = 1
 	limited_stock = 1
 	exclude_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/badass/tactical_naptime
+	name = "Sleepy Time Pajama Bundle"
+	desc = "Even soldiers need to get a good nights rest. Comes with blood-red pajamas, a blankie, a hot mug of cocoa and a fuzzy friend."
+	item = /obj/item/storage/box/syndie_kit/sleepytime
+	cost = 4
+	limited_stock = 1
+	include_modes = list(/datum/game_mode/nuclear)
