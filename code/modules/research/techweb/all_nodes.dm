@@ -727,7 +727,7 @@
 	id = "mecha_odysseus"
 	display_name = "EXOSUIT: Odysseus"
 	description = "Odysseus exosuit designs"
-	prereq_ids = list("biotech")
+	prereq_ids = list("base")
 	design_ids = list("odysseus_chassis", "odysseus_torso", "odysseus_head", "odysseus_left_arm", "odysseus_right_arm" ,"odysseus_left_leg", "odysseus_right_leg",
 	"odysseus_main", "odysseus_peri")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)

@@ -3,17 +3,17 @@
 	name = "\improper Clarke"
 	icon_state = "clarke"
 	max_temperature = 65000
-	max_integrity = 250
-	step_in = 1.5
+	max_integrity = 200
+	step_in = 1.25
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	lights_power = 7
 	deflect_chance = 10
 	step_energy_drain = 15 //slightly higher energy drain since you movin those wheels FAST
-	armor = list("melee" = 20, "bullet" = 10, "laser" = 30, "energy" = 30, "bomb" = 60, "bio" = 0, "rad" = 70, "fire" = 100, "acid" = 100) //low bullet/melee armor to compensate for fire protection and speed
+	armor = list("melee" = 20, "bullet" = 10, "laser" = 20, "energy" = 10, "bomb" = 60, "bio" = 0, "rad" = 70, "fire" = 100, "acid" = 100) //low armor to compensate for fire protection and speed
 	max_equip = 6
 	wreckage = /obj/structure/mecha_wreckage/clarke
 	enter_delay = 40
-	cargo_capacity = 20
+	cargo_capacity = 10
 	canstrafe = FALSE
 
 /obj/mecha/working/clarke/moved_inside(mob/living/carbon/human/H)

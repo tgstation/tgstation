@@ -20,12 +20,12 @@
 
 /datum/bounty/item/mech/clarke
 	name = "Clarke"
-	reward = 20000
+	reward = 16000
 	wanted_types = list(/obj/mecha/working/clarke)
 
 /datum/bounty/item/mech/odysseus
 	name = "Odysseus"
-	reward = 13000
+	reward = 11000
 	wanted_types = list(/obj/mecha/medical/odysseus)
 
 /datum/bounty/item/mech/gygax
@@ -35,7 +35,7 @@
 
 /datum/bounty/item/mech/durand
 	name = "Durand"
-	reward = 25000
+	reward = 20000
 	wanted_types = list(/obj/mecha/combat/durand)
 
 /datum/bounty/item/mech/phazon

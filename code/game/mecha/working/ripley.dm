@@ -5,7 +5,7 @@
 	silicon_icon_state = "ripley-empty"
 	step_in = 1.5 //Move speed, lower is faster.
 	var/fast_pressure_step_in = 1.5 //step_in while in low pressure conditions
-	var/slow_pressure_step_in = 2.0 //step_in while in normal pressure conditions
+	var/slow_pressure_step_in = 2 //step_in while in normal pressure conditions
 	max_temperature = 20000
 	max_integrity = 200
 	lights_power = 7
@@ -44,13 +44,15 @@
 
 
 /obj/mecha/working/ripley/mkii
-	desc = "Autonomous Power Loader Unit MK-II. This prototype Ripley is refitted with a pressurized cabin, trading its prior speed for atmospheric protection"
+	desc = "Autonomous Power Loader Unit MK-II. This prototype Ripley is refitted with a pressurized cabin, trading its prior speed for atmospheric protection and armor."
 	name = "\improper APLU MK-II \"Ripley\""
 	icon_state = "ripleymkii"
 	fast_pressure_step_in = 2 //step_in while in low pressure conditions
 	slow_pressure_step_in = 4 //step_in while in normal pressure conditions
 	step_in = 4
-	armor = list("melee" = 40, "bullet" = 20, "laser" = 10, "energy" = 20, "bomb" = 40, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	max_temperature = 30000
+	max_integrity = 250
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 60, "bio" = 0, "rad" = 70, "fire" = 100, "acid" = 100)
 	wreckage = /obj/structure/mecha_wreckage/ripley/mkii
 	enclosed = TRUE
 	enter_delay = 40
