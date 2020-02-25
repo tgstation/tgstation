@@ -8,7 +8,7 @@
 	display_name = "Basic Research Technology"
 	description = "NT default research technologies."
 	// Default research tech, prevents bricking
-	design_ids = list("basic_matter_bin", "basic_cell", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani", "desttagger", "handlabel", "packagewrap",
+	design_ids = list("basic_matter_bin", "basic_cell", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani", "desttagger", "salestagger", "handlabel", "packagewrap",
 					"destructive_analyzer", "circuit_imprinter", "experimentor", "rdconsole", "bepis", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab",
 					"paystand", "space_heater", "bucket", "sec_rshot", "sec_beanbag_slug", "sec_bshot", "sec_slug", "sec_Islug", "sec_dart", "sec_38", "rglass", "plasteel",
 					"plastitanium", "plasmaglass", "plasmareinforcedglass", "titaniumglass", "plastitaniumglass", "plastic_knife", "plastic_fork", "plastic_spoon")
@@ -65,7 +65,7 @@
 	display_name = "Biological Technology"
 	description = "What makes us tick."	//the MC, silly!
 	prereq_ids = list("base")
-	design_ids = list("chem_heater", "chem_master", "chem_dispenser", "pandemic", "defibrillator", "defibmount", "operating", "soda_dispenser", "beer_dispenser", "healthanalyzer", "medigel","genescanner", "med_spray_bottle", "chem_pack", "blood_pack", "medical_kiosk", "crewpinpointerprox")
+	design_ids = list("chem_heater", "chem_master", "chem_dispenser", "pandemic", "defibrillator", "defibmount", "operating", "soda_dispenser", "beer_dispenser", "healthanalyzer", "medigel","genescanner", "med_spray_bottle", "chem_pack", "blood_pack", "medical_kiosk", "crewpinpointerprox", "medipen_refiller")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -153,7 +153,7 @@
 	display_name = "Advanced Engineering"
 	description = "Pushing the boundaries of physics, one chainsaw-fist at a time."
 	prereq_ids = list("engineering", "emp_basic")
-	design_ids = list("engine_goggles", "magboots", "forcefield_projector", "weldingmask", "rcd_loaded")
+	design_ids = list("engine_goggles", "magboots", "forcefield_projector", "weldingmask", "rcd_loaded", "rpd_loaded")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -1131,6 +1131,43 @@
 	export_price = 2500
 	hidden = TRUE
 	experimental = TRUE
+
+/datum/techweb_node/interrogation
+	id = "interrogation"
+	display_name = "Enhanced Interrogation Technology"
+	description = "By cross-referencing several declassified documents from past dictatorial regimes, we were able to develop an incredibly effective interrogation device. \
+	Ethical concerns about loss of free will do not apply to criminals, according to galactic law."
+	prereq_ids = list("base")
+	design_ids = list("hypnochair")
+
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
+	export_price = 3500
+	hidden = TRUE
+	experimental = TRUE
+
+/datum/techweb_node/sticky_basic
+	id = "sticky_basic"
+	display_name = "Basic Sticky Technology"
+	description = "The only thing left to do after researching this tech is to start printing out a bunch of 'kick me' signs."
+	prereq_ids = list("base")
+	design_ids = list("sticky_tape")
+
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 2500
+	hidden = TRUE
+	experimental = TRUE
+
+// Can be researched after getting the basic sticky technology from the BEPIS major reward
+/datum/techweb_node/sticky_advanced
+	id = "sticky_advanced"
+	display_name = "Advanced Sticky Technology"
+	description = "Taking a good joke too far? Nonsense!"
+	prereq_ids = list("sticky_basic")
+	design_ids = list("super_sticky_tape", "pointy_tape")
+
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	export_price = 2500
+	hidden = TRUE
 
 //Helpers for debugging/balancing the techweb in its entirety!
 /proc/total_techweb_exports()

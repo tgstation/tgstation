@@ -1,0 +1,4 @@
+author: "improvedname"
+delete-after: True
+changes: 
+  - rscdel: "Removes magicarp bolt of change"

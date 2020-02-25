@@ -95,7 +95,7 @@
 			anchored = !anchored
 			. = TRUE
 		if("ChangeBetAmount")
-			chosen_bet_amount = CLAMP(text2num(params["amount"]), 10, 500)
+			chosen_bet_amount = clamp(text2num(params["amount"]), 10, 500)
 			. = TRUE
 		if("ChangeBetType")
 			chosen_bet_type = params["type"]

@@ -205,7 +205,7 @@
 		var/mob/living/carbon/patient = M
 		if(reac_volume >= 5 && HAS_TRAIT_FROM(patient, TRAIT_HUSK, "burn") && patient.getFireLoss() < TRESHOLD_UNHUSK) //One carp yields 12u rezadone.
 			patient.cure_husk("burn")
-			patient.visible_message("<span class='nicegreen'>[patient]'s body rapidly absorbs moisture from the enviroment, taking on a more healthy appearance.")
+			patient.visible_message("<span class='nicegreen'>[patient]'s body rapidly absorbs moisture from the enviroment, taking on a more healthy appearance.</span>")
 
 /datum/reagent/medicine/spaceacillin
 	name = "Spaceacillin"
@@ -321,12 +321,13 @@
 	color = "#DCDCDC"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
+	var/healing = 0.5
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/carbon/M)
-	M.adjustToxLoss(-0.5*REM, 0)
-	M.adjustOxyLoss(-0.5*REM, 0)
-	M.adjustBruteLoss(-0.5*REM, 0)
-	M.adjustFireLoss(-0.5*REM, 0)
+	M.adjustToxLoss(-healing*REM, 0)
+	M.adjustOxyLoss(-healing*REM, 0)
+	M.adjustBruteLoss(-healing*REM, 0)
+	M.adjustFireLoss(-healing*REM, 0)
 	..()
 	. = 1
 
@@ -337,6 +338,12 @@
 	M.adjustFireLoss(1.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
+
+/datum/reagent/medicine/omnizine/protozine
+	name = "Protozine"
+	description = "A less environmentally friendly and somewhat weaker variant of omnizine."
+	color = "#d8c7b7"
+	healing = 0.2
 
 /datum/reagent/medicine/calomel
 	name = "Calomel"
@@ -1207,32 +1214,6 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/trophazole
-	name = "Trophazole"
-	description = "Orginally developed as fitness supplement, this chemical accelerates wound healing and if ingested turns nutriment into healing peptides"
-	reagent_state = LIQUID
-	color = "#FFFF6B"
-	overdose_threshold = 20
-
-/datum/reagent/medicine/trophazole/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-1.5*REM, 0.) // heals 3 brute & 0.5 burn if taken with food. compared to 2.5 brute from bicard + nutriment
-	..()
-	. = 1
-
-/datum/reagent/medicine/trophazole/overdose_process(mob/living/M)
-	M.adjustBruteLoss(3*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/medicine/trophazole/on_transfer(atom/A, method=INGEST, trans_volume)
-	if(method != INGEST || !iscarbon(A))
-		return
-
-	A.reagents.remove_reagent(/datum/reagent/medicine/trophazole, trans_volume * 0.05)
-	A.reagents.add_reagent(/datum/reagent/medicine/metafactor, trans_volume * 0.25)
-
-	..()
-
 /datum/reagent/medicine/metafactor
 	name = "Mitogen Metabolism Factor"
 	description = "This enzyme catalyzes the conversion of nutricious food into healing peptides."
@@ -1247,36 +1228,6 @@
 /datum/reagent/medicine/metafactor/overdose_process(mob/living/carbon/M)
 	if(prob(25))
 		M.vomit()
-	..()
-
-/datum/reagent/medicine/rhigoxane
-	name = "Rhigoxane"
-	description = "A second generation burn treatment agent exhibiting a cooling effect that is especially pronounced when deployed as a spray. Its high halogen content helps extinguish fires."
-	reagent_state = LIQUID
-	color = "#F7FFA5"
-	overdose_threshold = 25
-	reagent_weight = 0.6
-
-/datum/reagent/medicine/rhigoxane/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(-2*REM, 0.)
-	M.adjust_bodytemperature(-20 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
-	..()
-	. = 1
-
-/datum/reagent/medicine/rhigoxane/reaction_mob(mob/living/carbon/M, method=VAPOR, reac_volume)
-	if(method != VAPOR)
-		return
-
-	M.adjust_bodytemperature(-reac_volume * TEMPERATURE_DAMAGE_COEFFICIENT * 20, 200)
-	M.adjust_fire_stacks(-reac_volume / 2)
-	if(reac_volume >= metabolization_rate)
-		M.ExtinguishMob()
-
-	..()
-
-/datum/reagent/medicine/rhigoxane/overdose_process(mob/living/carbon/M)
-	M.adjustFireLoss(3*REM, 0.)
-	M.adjust_bodytemperature(-35 * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
 	..()
 
 /datum/reagent/medicine/silibinin

@@ -70,7 +70,7 @@
 		var/obj/O = A
 		if(ObjBump(O))
 			return
-	if(ismovableatom(A))
+	if(ismovable(A))
 		var/atom/movable/AM = A
 		if(PushAM(AM, move_force))
 			return
@@ -501,25 +501,20 @@
 		var/obj/screen/healthdoll/living/livingdoll = hud_used.healthdoll
 		switch(healthpercent)
 			if(100 to INFINITY)
-				livingdoll.icon_state = "living0"
+				severity = 0
 			if(80 to 100)
-				livingdoll.icon_state = "living1"
 				severity = 1
 			if(60 to 80)
-				livingdoll.icon_state = "living2"
 				severity = 2
 			if(40 to 60)
-				livingdoll.icon_state = "living3"
 				severity = 3
 			if(20 to 40)
-				livingdoll.icon_state = "living4"
 				severity = 4
 			if(1 to 20)
-				livingdoll.icon_state = "living5"
 				severity = 5
 			else
-				livingdoll.icon_state = "living6"
 				severity = 6
+		livingdoll.icon_state = "living[severity]"
 		if(!livingdoll.filtered)
 			livingdoll.filtered = TRUE
 			var/icon/mob_mask = icon(icon, icon_state)
@@ -1090,7 +1085,7 @@
 		update_fire()
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-	fire_stacks = CLAMP(fire_stacks + add_fire_stacks, -20, 20)
+	fire_stacks = clamp(fire_stacks + add_fire_stacks, -20, 20)
 	if(on_fire && fire_stacks <= 0)
 		ExtinguishMob()
 
@@ -1117,6 +1112,11 @@
 		IgniteMob() // Ignite us
 
 //Mobs on Fire end
+
+//Washing
+/mob/living/washed(var/atom/washer)
+	. = ..()
+	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 // used by secbot and monkeys Crossed
 /mob/living/proc/knockOver(var/mob/living/carbon/C)

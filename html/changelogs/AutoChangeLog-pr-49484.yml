@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - tweak: "Wooden Fermenting barrels now cost 8 wooden planks to craft, down from 30."
+  - balance: "Wooden Fermenting barrels can now be made in the stack crafting menu, in addition to the crafting menu."
