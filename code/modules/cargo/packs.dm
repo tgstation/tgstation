@@ -187,7 +187,9 @@
 					/obj/item/tank/internals/plasmaman/belt/full,
 					/obj/item/tank/internals/plasmaman/belt/full,
 					/obj/item/clothing/head/helmet/space/plasmaman,
-					/obj/item/clothing/head/helmet/space/plasmaman)
+					/obj/item/clothing/head/helmet/space/plasmaman,
+					/obj/item/clothing/gloves/color/plasmaman,
+					/obj/item/clothing/gloves/color/plasmaman)
 	crate_name = "plasmaman supply kit"
 
 /datum/supply_pack/emergency/radiation
@@ -2280,7 +2282,7 @@
 		if(prob(50))
 			the_toy = pickweight(GLOB.arcade_prize_pool)
 		else
-			the_toy = pick(subtypesof(/obj/item/toy/plush))
+			the_toy = pick(subtypesof(/obj/item/toy/plush) - typesof(/obj/item/toy/plush/goatplushie/angry/kinggoat))
 		new the_toy(.)
 
 /datum/supply_pack/costumes_toys/wizard
