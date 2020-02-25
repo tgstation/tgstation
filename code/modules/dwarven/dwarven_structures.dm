@@ -232,7 +232,7 @@
 		handle_mallet(user)
 		return
 	. = ..()
-
+///This proc contains everything that happens when you hit the parent with mallet hence the name handle_mallet
 /obj/structure/destructible/dwarven/workshop/proc/handle_mallet(mob/user)
 	var/efficiency = user?.mind.get_skill_modifier(/datum/skill/operating, SKILL_EFFICIENCY_MODIFIER)
 	to_chat(user,"<span class='notice'>You start looking through design notes...</span>")
@@ -355,7 +355,13 @@
 
 /obj/structure/destructible/dwarven/anvil/Initialize()
 	. = ..()
-	AddComponent(/datum/component/material_container,allowed_types, 200000, TRUE, /obj/item/stack, banned_alloys ,null, _after_insert=CALLBACK(src, .proc/AfterMaterialInsert))
+	//temporary solution til alloys become its own datum.
+	var/list/allowed_materials = list()
+	for(var/i in typecacheof(/obj/item/stack))
+		if(!(i in banned_alloys))
+			allowed_materials += i
+
+	AddComponent(/datum/component/material_container,allowed_types, 200000, TRUE, allowed_materials ,null, _after_insert=CALLBACK(src, .proc/AfterMaterialInsert))
 
 /obj/structure/destructible/dwarven/anvil/AltClick(mob/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
@@ -389,7 +395,7 @@
 		handle_mallet(user,current_mat)
 		return
 	. = ..()
-
+///This proc contains everything that happens when you hit the parent with mallet hence the name handle_mallet
 /obj/structure/destructible/dwarven/anvil/proc/handle_mallet(mob/living/user,datum/material/S)
 	var/list/materials_used = list()
 

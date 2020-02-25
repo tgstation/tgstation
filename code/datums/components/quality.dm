@@ -21,9 +21,8 @@
 
 	var/mob/living/carbon/human/creator
 	var/datum/mind/creator_mind
-
-	var/obj/item/old_parent_item
-
+	//we keep this one in case the creator is somehow deleted
+	var/creator_name
 
 ///_Creator - mob that is the owner of the item, _skill - skill that the quality should be based off of,_quality_list - custom distribution optional, defaults to normal distribution
 /datum/component/quality/Initialize(mob/living/carbon/human/_creator,datum/skill/_skill,_quality_val)
@@ -39,14 +38,20 @@
 
 	var/quality_bracket = creator.mind.get_skill_modifier(_skill, SKILL_QUALITY_MODIFIER)
 	creator_mind =  creator?.mind
+	creator_name = creator.name
+
 	var/obj/item/parent_item = parent
 
 	parent_item.has_quality = TRUE
 
-	old_parent_item = parent_item
-
 	generate_quality(quality_val,quality_bracket)
 	apply_quality()
+
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
+
+/datum/component/quality/proc/OnExamine(datum/source, mob/user)
+	var/obj/item/parent_item = parent
+	to_chat(user, "<span class='notice'>It is a [parent_item.name] created by [creator_name]</span>")
 
 ///Generates quality based off passed distribution/ normal distribution and skill. Returns the result
 /datum/component/quality/proc/generate_quality(quality_val,quality_bracket)
@@ -72,14 +77,13 @@
 	parent_item.armor?.modifyAllRatings(armor_qual) // modifies all armor ratings
 	if(quality_level == 10)
 		parent_item.AddComponent(/datum/component/fantasy,10)
-	parent_item.name = handle_name(old_parent_item.name)
+	parent_item.name = handle_name(parent_item.name)
 
 ///Returns the item to the state it was before the modification
 /datum/component/quality/proc/unmodify()
 	var/obj/item/parent_item = parent
 	var/quality = quality_levels[quality_level+1] //lists start with 1
-	parent_item = old_parent_item
-	parent_item.name = old_parent_item.name
+	parent_item.name = initial(parent_item.name)
 	parent_item.force /= quality
 	parent_item.throwforce  /= quality
 
