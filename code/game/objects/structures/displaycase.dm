@@ -442,7 +442,7 @@
 				var/new_price_input = input(user,"Set the sale price for this vend-a-tray.","new price",0) as num|null
 				if(isnull(new_price_input) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
-				new_price_input = CLAMP(round(new_price_input, 1), 10, 1000)
+				new_price_input = clamp(round(new_price_input, 1), 10, 1000)
 				sale_price = new_price_input
 				to_chat(user, "<span class='notice'>The cost is now set to [sale_price].</span>")
 				return TRUE
