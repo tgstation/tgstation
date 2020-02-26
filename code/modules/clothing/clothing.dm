@@ -37,7 +37,7 @@
 	var/dynamic_hair_suffix = ""//head > mask for head hair
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
 
-
+	var/list/armor_list = list()
 
 /obj/item/clothing/Initialize()
 	if((clothing_flags & VOICEBOX_TOGGLABLE))
@@ -140,50 +140,58 @@
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
 
-	var/list/armor_list = list()
+	if(LAZYLEN(armor_list))
+		armor_list.Cut()
 	if(armor.acid)
-		armor_list += list("Acid" = armor.acid)
+		armor_list += list("ACID" = armor.acid)
 	if(armor.bio)
-		armor_list += list("Toxin" = armor.bio)
+		armor_list += list("TOXIN" = armor.bio)
 	if(armor.bomb)
-		armor_list += list("Bomb" = armor.bomb)
+		armor_list += list("EXPLOSIVE" = armor.bomb)
 	if(armor.bullet)
-		armor_list += list("Bullet" = armor.bullet)
+		armor_list += list("BULLET" = armor.bullet)
 	if(armor.energy)
-		armor_list += list("Energy" = armor.energy)
+		armor_list += list("ENERGY" = armor.energy)
 	if(armor.fire)
-		armor_list += list("Fire" = armor.fire)
+		armor_list += list("FIRE" = armor.fire)
 	if(armor.laser)
-		armor_list += list("Laser" = armor.laser)
+		armor_list += list("LASER" = armor.laser)
 	if(armor.magic)
-		armor_list += list("Magic" = armor.magic)
+		armor_list += list("MAGIC" = armor.magic)
 	if(armor.melee)
-		armor_list += list("Melee" = armor.melee)
+		armor_list += list("MELEE" = armor.melee)
 	if(armor.rad)
-		armor_list += list("Radiation" = armor.rad)
+		armor_list += list("RADIATION" = armor.rad)
 
 	if(LAZYLEN(armor_list))
-		var/list/readout = list("<span class='notice'>[src] [gender == "plural" ? "have" : "has"] the following armor:")
+		. += "<span class='notice'>It has a <a href='?src=[REF(src)];list_armor=1'>tag</a> listing its protection levels.</span>"
+
+/obj/item/clothing/Topic(href, href_list)
+	. = ..()
+
+	if(href_list["list_armor"])
+		var/list/readout = list("<span class='notice'><b>PROTECTION CLASSES</b>")
 		for(var/dam_type in armor_list)
 			var/armor_amount = armor_list[dam_type]
-			readout += "\n[dam_type]: [number_to_robustness(armor_amount)]" //e.g. Bomb: Very high
+			readout += "\n[dam_type] [number_to_level(armor_amount)]" //e.g. BOMB IV
 		readout += "</span>"
-		. += readout.Join()
 
-/obj/item/clothing/proc/number_to_robustness(var/number)
+		to_chat(usr, "[readout.Join()]")
+
+/obj/item/clothing/proc/number_to_level(number)
 	switch (number)
 		if (1 to 20)
-			. = "Low"
+			. = "I"
 		if (21 to 40)
-			. = "Medium"
+			. = "II"
 		if (41 to 60)
-			. = "High"
+			. = "III"
 		if (61 to 80)
-			. = "Very high"
+			. = "IV"
 		if (81 to 99)
-			. = "Superb"
+			. = "V"
 		if (100 to INFINITY)
-			. = "Complete"
+			. = "∞"
 	return .
 
 /obj/item/clothing/obj_break(damage_flag)
