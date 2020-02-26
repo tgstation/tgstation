@@ -1,0 +1,5 @@
+author: "pireamaineach"
+delete-after: True
+changes: 
+  - imageadd: "Resprites several plasmaman items.
+add:Adds plasmagloves and fixes clipping on the plasmaman suit."
