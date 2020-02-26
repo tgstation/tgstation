@@ -23,6 +23,10 @@
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/orebox_manager(src)
 	ME.attach(src)
 
+/obj/mecha/working/clarke/Destroy()
+	box.dump_box_contents()
+	return ..()
+
 /obj/mecha/working/clarke/moved_inside(mob/living/carbon/human/H)
 	. = ..()
 	if(.)
