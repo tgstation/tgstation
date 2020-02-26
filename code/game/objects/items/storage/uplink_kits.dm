@@ -530,15 +530,15 @@
 	for(var/i in 1 to 3)
 		new /obj/item/grenade/spawnergrenade/buzzkill(src)
 
-/obj/item/storage/box/syndie_kit/clothes
-	name = "box of clothing"
+/obj/item/storage/box/syndie_kit/infiltrator_bundle
+	name = "infiltrator kit"
 	desc = "These clothes... kinda stand out, don't they?"
 
-/obj/item/storage/box/syndie_kit/clothes/PopulateContents()
+/obj/item/storage/box/syndie_kit/infiltrator_bundle/PopulateContents()
 	new /obj/item/clothing/under/syndicate/bloodred(src)
-	new /obj/item/clothing/mask/syndicate_balaclava(src)
-	new /obj/item/clothing/shoes/jackboots(src)
-	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/clothing/mask/infiltrator(src)
+	new /obj/item/clothing/shoes/combat/sneakboots(src)
+	new /obj/item/clothing/gloves/color/latex/nitrile/infiltrator(src)
 
 /obj/item/storage/box/syndie_kit/sleepytime/PopulateContents()
 	new /obj/item/clothing/under/syndicate/bloodred/sleepytime(src)

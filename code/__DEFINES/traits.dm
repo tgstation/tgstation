@@ -159,6 +159,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_XENO_IMMUNE		"xeno_immune"//prevents xeno huggies implanting skeletons
 #define TRAIT_NAIVE				"naive"
 #define TRAIT_GUNFLIP			"gunflip"
+#define TRAIT_SILENT_FOOTSTEPS	"silent_footsteps" //makes your footsteps completely silent
 
 //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
@@ -218,6 +219,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CLOTHING_TRAIT "clothing"
 #define HELMET_TRAIT "helmet"
 #define MASK_TRAIT "mask" //inherited from the mask
+#define SHOES_TRAIT "shoes" //inherited from your sweet kicks
 #define GLASSES_TRAIT "glasses"
 #define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
 #define INNATE_TRAIT "innate"

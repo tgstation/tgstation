@@ -16,6 +16,10 @@
 				return real_name
 		else
 			return real_name
+	if(istype(wear_mask, /obj/item/clothing/mask/infiltrator))
+		var/obj/item/clothing/mask/infiltrator/V = wear_mask
+		if(V.vunknown)
+			return ("Unknown")
 	if(mind)
 		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling && changeling.mimicing )

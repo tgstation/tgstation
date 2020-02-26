@@ -1869,9 +1869,9 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	illegal_tech = FALSE
 
 /datum/uplink_item/badass/infiltrator_bundle
-	name = "Infiltrator Clothing Bundle"
-	desc = "Some totally not suspicious clothing! Comes with an blood-red tactical suit, jackboots, some black gloves and a techno-balaclava!"
-	item = /obj/item/storage/box/syndie_kit/clothes
+	name = "Infiltrator Bundle"
+	desc = "Some totally not suspicious clothing! Comes with an blood-red sneaksuit, sneakboots, infiltrator gloves and a infiltrator balaclava!"
+	item = /obj/item/storage/box/syndie_kit/infiltrator_bundle
 	cost = 1
 	limited_stock = 1
 	exclude_modes = list(/datum/game_mode/nuclear)
@@ -1882,4 +1882,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/syndie_kit/sleepytime
 	cost = 4
 	limited_stock = 1
+	cant_discount = TRUE
 	include_modes = list(/datum/game_mode/nuclear)
+	

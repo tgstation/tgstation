@@ -18,6 +18,24 @@
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 
+/obj/item/clothing/shoes/combat/sneakboots
+	name = "combat boots"
+	desc = "High speed, low drag combat boots."
+	icon_state = "sneakboots"
+	item_state = "sneakboots"
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
+
+/obj/item/clothing/shoes/combat/sneakboots/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(slot != ITEM_SLOT_FEET)
+		return
+	if(slot == ITEM_SLOT_FEET)
+		ADD_TRAIT(user, TRAIT_SILENT_FOOTSTEPS, SHOES_TRAIT)
+
+/obj/item/clothing/shoes/combat/sneakboots/dropped(mob/living/carbon/human/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_SILENT_FOOTSTEPS, SHOES_TRAIT)
+	
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
 	desc = "High speed, no drag combat boots."
