@@ -22,9 +22,6 @@
 	var/datum/mind/mind
 	var/static/next_mob_id = 0
 
-	///traits this mob will get on creation, LAZYLIST
-	var/list/innate_traits
-
 	/// List of movement speed modifiers applying to this mob
 	var/list/movespeed_modification				//Lazy list, see mob_movespeed.dm
 	/// The calculated mob speed slowdown based on the modifiers list

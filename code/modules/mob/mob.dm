@@ -66,10 +66,6 @@
 		GLOB.dead_mob_list += src
 	else
 		GLOB.alive_mob_list += src
-
-	for(var/trait in innate_traits)
-		ADD_TRAIT(src, trait, INNATE_TRAIT)
-
 	set_focus(src)
 	prepare_huds()
 	for(var/v in GLOB.active_alternate_appearances)

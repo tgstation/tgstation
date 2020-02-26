@@ -23,7 +23,6 @@
 	maxHealth = 60
 	health = 60
 	speed = 0
-	innate_traits = list(TRAIT_SPACEWALK)
 
 	obj_damage = 60
 	melee_damage_lower = 20
@@ -45,6 +44,10 @@
 
 	var/armored = FALSE
 	var/rideable = FALSE
+
+/mob/living/simple_animal/hostile/bear/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/bear/Life()
 	. = ..()
