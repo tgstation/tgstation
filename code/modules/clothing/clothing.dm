@@ -37,6 +37,7 @@
 	var/dynamic_hair_suffix = ""//head > mask for head hair
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
 
+	///This is its armor values in list form. List populates and updates on examine as it's currently only used to print armor ratings to chat in Topic()
 	var/list/armor_list = list()
 
 /obj/item/clothing/Initialize()
