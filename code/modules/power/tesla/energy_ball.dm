@@ -350,5 +350,5 @@
 	else if(!QDELETED(closest_structure))
 		power = closest_structure.zap_act(power, zap_flags, shocked_targets)
 
-	for(var/i in 1 to pick(1, 2; 20))
+	for(var/i in 1 to pick(1, 20; 2))//God why
 		tesla_zap(closest_mob, range, power / i, zap_flags, shocked_targets)
