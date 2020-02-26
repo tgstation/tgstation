@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - spellcheck: "Renamed \"My mental status\" to \"My current sanity\" in the mood printout."
