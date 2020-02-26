@@ -27,13 +27,3 @@
 	to_chat(owner.current, "<span class='warning'>3.Expand your emprire and crush anyone who resists!</span><br>")
 	to_chat(owner.current, "<span class='warning'>4.Non dwarves are to be killed unless they are traders</span><br>")
 	to_chat(owner.current, "<span class='warning'>5.You may never leave this ashen land for it is your homeland!</span><br>")
-
-/datum/antagonist/dwarf/on_body_transfer(mob/living/old_body, mob/living/new_body)
-	UnregisterSignal(old_body, COMSIG_MOB_EXAMINATE)
-	RegisterSignal(new_body, COMSIG_MOB_EXAMINATE, .proc/on_examinate)
-
-/datum/antagonist/dwarf/on_gain()
-	RegisterSignal(owner.current, COMSIG_MOB_EXAMINATE, .proc/on_examinate)
-
-/datum/antagonist/dwarf/on_removal()
-	UnregisterSignal(owner.current, COMSIG_MOB_EXAMINATE)

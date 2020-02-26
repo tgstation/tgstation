@@ -1415,6 +1415,7 @@
 #include "code\modules\antagonists\disease\disease_disease.dm"
 #include "code\modules\antagonists\disease\disease_event.dm"
 #include "code\modules\antagonists\disease\disease_mob.dm"
+#include "code\modules\antagonists\dwarves\dwarves.dm"
 #include "code\modules\antagonists\ert\ert.dm"
 #include "code\modules\antagonists\fugitive\fugitive.dm"
 #include "code\modules\antagonists\fugitive\fugitive_outfits.dm"
