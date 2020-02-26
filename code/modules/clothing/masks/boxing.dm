@@ -25,18 +25,22 @@
 
 /obj/item/clothing/mask/syndicate_balaclava/equipped(mob/living/carbon/human/user, slot)
 	..()
+	if(slot != ITEM_SLOT_MASK)
+		return
 	to_chat(user, "You roll the balaclava over your face, and a data display appears before your eyes.")
 	ADD_TRAIT(user, TRAIT_DIAGNOSTIC_HUD, MASK_TRAIT)
 	ADD_TRAIT(user, TRAIT_DISFIGURED, MASK_TRAIT) //this is so they always speak as unknown
-	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
 	H.add_hud_to(user)
 
-/obj/item/clothing/mask/syndicate_balaclava/dropped(mob/living/carbon/human/user)
+/obj/item/clothing/mask/syndicate_balaclava/dropped(mob/living/carbon/human/user, slot)
 	..()
+	if(!istype(user) || user.mask != src)
+		return
 	to_chat(user, "You pull off the balaclava, and the mask's internal hud system switches off quietly.")
 	REMOVE_TRAIT(user, TRAIT_DIAGNOSTIC_HUD, MASK_TRAIT)
 	REMOVE_TRAIT(user, TRAIT_DISFIGURED, MASK_TRAIT)
-	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
 	H.remove_hud_from(user)
 
 /obj/item/clothing/mask/luchador
