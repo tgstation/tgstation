@@ -27,7 +27,6 @@
 #define RDSCREEN_NOBREAK "<NO_HTML_BREAK>"
 
 ///Sanity check defines for when these devices aren't connected or no disk is inserted
-
 #define RDSCREEN_TEXT_NO_PROTOLATHE "<div><h3>No Protolathe Linked!</h3></div><br>"
 #define RDSCREEN_TEXT_NO_IMPRINTER "<div><h3>No Circuit Imprinter Linked!</h3></div><br>"
 #define RDSCREEN_TEXT_NO_DECONSTRUCT "<div><h3>No Destructive Analyzer Linked!</h3></div><br>"
@@ -45,7 +44,6 @@
 #define RDSCREEN_UI_SDESIGN_CHECK if(!selected_design) { return RDSCREEN_TEXT_NO_SDESIGN }
 
 ///Defines for the Protolathe screens, see: [/modules/research/machinery/protolathe][Protolathe]
-
 #define RESEARCH_FABRICATOR_SCREEN_MAIN 1
 #define RESEARCH_FABRICATOR_SCREEN_CHEMICALS 2
 #define RESEARCH_FABRICATOR_SCREEN_MATERIALS 3
@@ -53,7 +51,6 @@
 #define RESEARCH_FABRICATOR_SCREEN_CATEGORYVIEW 5
 
 ///Department flags for techwebs. Defines which department can print what from each protolathe so Cargo can't print guns, etc.
-
 #define DEPARTMENTAL_FLAG_SECURITY		(1<<0)
 #define DEPARTMENTAL_FLAG_MEDICAL		(1<<1)
 #define DEPARTMENTAL_FLAG_CARGO			(1<<2)
