@@ -8,6 +8,7 @@
 	use_skintones = 1
 	inherent_traits = list(TRAIT_CHUNKYFINGERS,TRAIT_NOBREATH)
 	species_language_holder = /datum/language_holder/dwarf
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 
 /datum/species/dwarf/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	C.transform = C.transform.Scale(1, 0.8)
