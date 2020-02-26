@@ -26,7 +26,7 @@
 	to_chat(owner.current, "<span class='warning'>2.Fortune is worth more than spilt blood!</span><br>")
 	to_chat(owner.current, "<span class='warning'>3.Expand your emprire and crush anyone who resists!</span><br>")
 	to_chat(owner.current, "<span class='warning'>4.Non dwarves are to be killed unless they are traders</span><br>")
-	to_chat(owner.current, "<span class='warning'>5.Live , kill and die for the glorious dwarven empire!</span><br>")
+	to_chat(owner.current, "<span class='warning'>5.You may never leave this ashen land for it is your homeland!</span><br>")
 
 /datum/antagonist/dwarf/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	UnregisterSignal(old_body, COMSIG_MOB_EXAMINATE)
