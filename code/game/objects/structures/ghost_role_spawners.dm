@@ -67,7 +67,6 @@
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
-		H.dna.add_mutation(DWARFISM) //you are a dwarf man
 		H.update_body()
 
 /obj/effect/mob_spawn/human/dwarven_sarcophagus/Destroy()
