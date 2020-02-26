@@ -140,8 +140,10 @@
 		var/chosen_sound = pick(migo_sounds)
 		playsound(src, chosen_sound, 50, TRUE)
 
+#define LOCKERSCAPE_COOLDOWN 1 MINUTES
+
 /mob/living/simple_animal/hostile/netherworld/locker //xenobio's replacement for magicarp in xenobio.
-	name = "locker zip edi do dah"
+	name = "zip-edi"
 	desc = "an anomalous trickster from the netherworld, it uses its locker magic to annoy other residents and escape danger."
 	icon_state = "zipedi"
 	icon_living = "zipedi"
@@ -155,8 +157,7 @@
 	projectilesound = 'sound/weapons/emitter.ogg'
 	maxHealth = 50
 	health = 50
-	var/lockerspell_charged = TRUE
-	var//datum/action/innate/lockerscape/escape
+	var/datum/action/cooldown/lockerscape/escape
 
 /mob/living/simple_animal/hostile/netherworld/locker/Initialize()
 	. = ..()
@@ -169,36 +170,39 @@
 
 /mob/living/simple_animal/hostile/netherworld/locker/adjustHealth(amount, updating_health, forced) //ai will use the locker escape when hit
 	. = ..()
-	if(!amount || AIStatus != AI_ON || !lockerspell_charged || stat == DEAD)
+	if(!amount || AIStatus != AI_ON || escape.IsAvailable() || stat == DEAD)
 		return
 
 	lockerspell_charged = FALSE
-	escape.Activate()
-	addtimer(VARSET_CALLBACK(src, lockerspell_charged, TRUE), 1 MINUTES)
+	escape.Activate(deadnow = FALSE)
 
 /mob/living/simple_animal/hostile/netherworld/locker/death(gibbed)
 	escape.Activate(deadnow = TRUE)
 	. = ..()
 
-/datum/action/innate/lockerscape
+/datum/action/cooldown/lockerscape
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
-	background_icon_state = "bg_mime"
+	background_icon_state = "bg_alien"
 	name = "Locker Fakeout"
 	desc = "Escape into a locker. Half of the time, you will be teleported away and the locker will be trapped to explode. The other half, you'll just be in the locker."
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "escape"
+	cooldown_time = 1 MINUTES
 
-/datum/action/innate/lockerscape/Activate(deadnow = FALSE)
-	visible_message("[owner] retreats into a locker!")
+/datum/action/cooldown/lockerscape/Activate(deadnow = FALSE)
+	owner.visible_message("[owner] retreats into a locker!")
 	var/obj/structure/closet/escapelocker = new(get_turf(owner))
-	var/go_away = deadnow ? FALSE : rand()
-
+	var/go_away = FALSE
+	if(deadnow == FALSE)
+		go_away = rand()
 	if(!go_away)
-		forceMove(escapelocker)
+		owner.forceMove(escapelocker)
 	else
 		do_teleport(owner, get_turf(owner), 20, channel = null) //null channel to not give away what happened
 		var/obj/item/grenade/iedcasing/bomb = new(escapelocker)
 		bomb.preprime(null, null, FALSE, volume = 0)
+
+#undef LOCKERSCAPE_COOLDOWN
 
 /mob/living/simple_animal/hostile/netherworld/blankbody
 	name = "blank body"
