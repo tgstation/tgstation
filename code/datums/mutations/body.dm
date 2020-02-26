@@ -227,6 +227,13 @@
 	text_gain_indication = "<span class='notice'>You feel strong.</span>"
 	difficulty = 16
 
+/datum/mutation/human/stimmed
+	name = "Stimmed"
+	desc = "The user's chemical balance is more robust."
+	quality = POSITIVE
+	text_gain_indication = "<span class='notice'>You feel stimmed.</span>"
+	difficulty = 16
+
 /datum/mutation/human/insulated
 	name = "Insulated"
 	desc = "The affected person does not conduct electricity."
@@ -361,17 +368,29 @@
 
 /datum/mutation/human/extrastun
 	name = "Two Left Feet"
-	desc = "A mutation that replaces the right foot with another left foot. It makes standing up after getting knocked down very difficult."
+	desc = "A mutation that replaces the right foot with another left foot. Symptoms include kissing the floor when taking a step."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>Your right foot feels... left.</span>"
 	text_lose_indication = "<span class'notice'>Your right foot feels alright.</span>"
 	difficulty = 16
-	var/stun_cooldown = 0
 
-/datum/mutation/human/extrastun/on_life()
-	if(world.time > stun_cooldown)
-		if(owner.AmountKnockdown() || owner.AmountStun())
-			owner.SetKnockdown(owner.AmountKnockdown()*2)
-			owner.SetStun(owner.AmountStun()*2)
-			owner.visible_message("<span class='danger'>[owner] tries to stand up, but trips!</span>", "<span class='userdanger'>You trip over your own feet!</span>")
-			stun_cooldown = world.time + 300
+/datum/mutation/human/extrastun/on_acquiring()
+	. = ..()
+	if(.)
+		return
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
+
+/datum/mutation/human/extrastun/on_losing()
+	. = ..()
+	if(.)
+		return
+	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+
+///Triggers on moved(). Randomly makes the owner trip
+/datum/mutation/human/extrastun/proc/on_move()
+	if(prob(99.5)) //The brawl mutation
+		return
+	if(owner.buckled || owner.lying || !((owner.mobility_flags & (MOBILITY_STAND | MOBILITY_MOVE)) == (MOBILITY_STAND | MOBILITY_MOVE)) || owner.throwing || owner.movement_type & (VENTCRAWLING | FLYING | FLOATING))
+		return //remove the 'edge' cases
+	to_chat(owner, "<span class='danger'>You trip over your own feet.</span>")
+	owner.Knockdown(30)

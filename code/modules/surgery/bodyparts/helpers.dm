@@ -146,15 +146,18 @@
 		for(var/obj/item/I in L.embedded_objects)
 			L.embedded_objects -= I
 			I.forceMove(T)
+			I.unembedded()
 
 	clear_alert("embeddedobject")
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
-/mob/living/carbon/proc/has_embedded_objects()
+/mob/living/carbon/proc/has_embedded_objects(include_harmless=FALSE)
 	. = 0
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/L = X
 		for(var/obj/item/I in L.embedded_objects)
+			if(!include_harmless && I.is_embed_harmless())
+				continue
 			return 1
 
 

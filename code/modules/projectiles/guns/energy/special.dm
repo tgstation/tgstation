@@ -33,11 +33,11 @@
 	pin = null
 	ammo_x_offset = 1
 
-/obj/item/gun/energy/decloner/update_icon()
-	..()
+/obj/item/gun/energy/decloner/update_overlays()
+	. = ..()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
-		add_overlay("decloner_spin")
+		. += "decloner_spin"
 
 /obj/item/gun/energy/decloner/unrestricted
 	pin = /obj/item/firing_pin
@@ -137,9 +137,10 @@
 	var/light_intensity = 1
 	var/charge_weld = 25 //amount of charge used up to start action (multiplied by amount) and per progress_flash_divisor ticks of welding
 
-/obj/item/gun/energy/plasmacutter/Initialize()
+/obj/item/gun/energy/plasmacutter/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 25, 105, 0, 'sound/weapons/plasma_cutter.ogg')
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/gun/energy/plasmacutter/examine(mob/user)
 	. = ..()
@@ -204,10 +205,6 @@
 	else
 		. = ..(amount=1)
 
-
-/obj/item/gun/energy/plasmacutter/update_icon()
-	return
-
 /obj/item/gun/energy/plasmacutter/adv
 	name = "advanced plasma cutter"
 	icon_state = "adv_plasmacutter"
@@ -217,17 +214,34 @@
 
 /obj/item/gun/energy/wormhole_projector
 	name = "bluespace wormhole projector"
-	desc = "A projector that emits high density quantum-coupled bluespace beams."
+	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires a bluespace anomaly core to function."
 	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
 	item_state = null
 	icon_state = "wormhole_projector"
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
 	var/atmos_link = FALSE
+	var/firing_core = FALSE
 
-/obj/item/gun/energy/wormhole_projector/update_icon()
-	icon_state = "[initial(icon_state)][select]"
-	item_state = icon_state
+/obj/item/gun/energy/wormhole_projector/attackby(obj/item/C, mob/user)
+	if(istype(C, /obj/item/assembly/signaler/anomaly/bluespace))
+		to_chat(user, "<span class='notice'>You insert [C] into the wormhole projector and the weapon gently hums to life.</span>")
+		firing_core = TRUE
+		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+		qdel(C)
+		return
+
+/obj/item/gun/energy/wormhole_projector/can_shoot()
+	if(!firing_core)
+		return FALSE
+	return ..()
+
+/obj/item/gun/energy/wormhole_projector/shoot_with_empty_chamber(mob/living/user)
+	. = ..()
+	to_chat(user, "<span class='danger'>The display says, 'NO CORE INSTALLED'.</span>")
+
+/obj/item/gun/energy/wormhole_projector/update_icon_state()
+	icon_state = item_state = "[initial(icon_state)][select]"
 
 /obj/item/gun/energy/wormhole_projector/update_ammo_types()
 	. = ..()
@@ -295,8 +309,9 @@
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
 
-/obj/item/gun/energy/printer/update_icon()
-	return
+/obj/item/gun/energy/printer/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/gun/energy/printer/emp_act()
 	return
@@ -341,9 +356,25 @@
 	return
 
 /obj/item/gun/energy/gravity_gun
-	name = "one-point bluespace-gravitational manipulator"
-	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity."
+	name = "one-point gravitational manipulator"
+	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity. Requires a gravitational anomaly core to function."
 	ammo_type = list(/obj/item/ammo_casing/energy/gravity/repulse, /obj/item/ammo_casing/energy/gravity/attract, /obj/item/ammo_casing/energy/gravity/chaos)
 	item_state = "gravity_gun"
 	icon_state = "gravity_gun"
 	var/power = 4
+	var/firing_core = FALSE
+
+/obj/item/gun/energy/gravity_gun/attackby(obj/item/C, mob/user)
+	if(istype(C, /obj/item/assembly/signaler/anomaly/grav))
+		to_chat(user, "<span class='notice'>You insert [C] into the gravitational manipulator and the weapon gently hums to life.</span>")
+		firing_core = TRUE
+		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+		qdel(C)
+		return
+	return ..()
+
+/obj/item/gun/energy/gravity_gun/can_shoot()
+	if(!firing_core)
+		return FALSE
+	return ..()
+

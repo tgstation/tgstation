@@ -276,26 +276,14 @@
 	desc = "The nanites synthesize serotonin inside the host's brain, creating an artificial sense of happiness."
 	use_rate = 0.1
 	rogue_types = list(/datum/nanite_program/brain_decay)
-	extra_settings = list(NES_MOOD_MESSAGE)
-	var/message = "HAPPINESS ENHANCEMENT"
 
-/datum/nanite_program/good_mood/set_extra_setting(user, setting)
-	if(setting == NES_MOOD_MESSAGE)
-		var/new_message = stripped_input(user, "Choose the message visible on the mood effect.", NES_MESSAGE, message, MAX_NAME_LEN)
-		if(!new_message)
-			return
-		message = new_message
-
-/datum/nanite_program/good_mood/get_extra_setting_value(setting)
-	if(setting == NES_MOOD_MESSAGE)
-		return message
-
-/datum/nanite_program/good_mood/copy_extra_settings_to(datum/nanite_program/good_mood/target)
-	target.message = message
+/datum/nanite_program/good_mood/register_extra_settings()
+	. = ..()
+	extra_settings[NES_MOOD_MESSAGE] = new /datum/nanite_extra_setting/text("HAPPINESS ENHANCEMENT")
 
 /datum/nanite_program/good_mood/enable_passive_effect()
 	. = ..()
-	SEND_SIGNAL(host_mob, COMSIG_ADD_MOOD_EVENT, "nanite_happy", /datum/mood_event/nanite_happiness, message)
+	SEND_SIGNAL(host_mob, COMSIG_ADD_MOOD_EVENT, "nanite_happy", /datum/mood_event/nanite_happiness, get_extra_setting_value(NES_MOOD_MESSAGE))
 
 /datum/nanite_program/good_mood/disable_passive_effect()
 	. = ..()
@@ -306,26 +294,14 @@
 	desc = "The nanites suppress the production of serotonin inside the host's brain, creating an artificial state of depression."
 	use_rate = 0.1
 	rogue_types = list(/datum/nanite_program/brain_decay)
-	extra_settings = list(NES_MOOD_MESSAGE)
-	var/message = "HAPPINESS SUPPRESSION"
 
-/datum/nanite_program/bad_mood/set_extra_setting(user, setting)
-	if(setting == NES_MOOD_MESSAGE)
-		var/new_message = stripped_input(user, "Choose the message visible on the mood effect.", NES_MESSAGE, message, MAX_NAME_LEN)
-		if(!new_message)
-			return
-		message = new_message
-
-/datum/nanite_program/bad_mood/get_extra_setting_value(setting)
-	if(setting == NES_MOOD_MESSAGE)
-		return message
-
-/datum/nanite_program/bad_mood/copy_extra_settings_to(datum/nanite_program/bad_mood/target)
-	target.message = message
+/datum/nanite_program/bad_mood/register_extra_settings()
+	. = ..()
+	extra_settings[NES_MOOD_MESSAGE] = new /datum/nanite_extra_setting/text("HAPPINESS SUPPRESSION")
 
 /datum/nanite_program/bad_mood/enable_passive_effect()
 	. = ..()
-	SEND_SIGNAL(host_mob, COMSIG_ADD_MOOD_EVENT, "nanite_sadness", /datum/mood_event/nanite_sadness, message)
+	SEND_SIGNAL(host_mob, COMSIG_ADD_MOOD_EVENT, "nanite_sadness", /datum/mood_event/nanite_sadness, get_extra_setting_value(NES_MOOD_MESSAGE))
 
 /datum/nanite_program/bad_mood/disable_passive_effect()
 	. = ..()

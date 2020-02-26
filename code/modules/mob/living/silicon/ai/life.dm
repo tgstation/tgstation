@@ -75,7 +75,7 @@
 			death()
 			return
 		else if(stat == UNCONSCIOUS)
-			stat = CONSCIOUS
+			set_stat(CONSCIOUS)
 	diag_hud_set_status()
 
 /mob/living/silicon/ai/update_sight()
@@ -122,7 +122,7 @@
 		AIarea = get_area(src)
 		if(AIarea)
 			for (var/obj/machinery/power/apc/APC in AIarea)
-				if (!(APC.stat & BROKEN))
+				if (!(APC.machine_stat & BROKEN))
 					theAPC = APC
 					break
 		if (!theAPC)

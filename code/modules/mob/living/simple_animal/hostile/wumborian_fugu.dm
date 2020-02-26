@@ -8,6 +8,7 @@
 	icon_aggro = "Fugu0"
 	icon_dead = "Fugu_dead"
 	icon_gib = "syndicate_gib"
+	health_doll_icon = "Fugu0"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	move_to_delay = 5
@@ -63,6 +64,7 @@
 
 /datum/action/innate/fugu
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	background_icon_state = "bg_fugu"
 
 /datum/action/innate/fugu/expand
 	name = "Inflate"

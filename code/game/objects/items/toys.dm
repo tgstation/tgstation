@@ -22,6 +22,8 @@
  *		Snowballs
  *		Clockwork Watches
  *		Toy Daggers
+ *		Squeaky Brain
+ *		Broken Radio
  */
 
 
@@ -46,6 +48,10 @@
 /obj/item/toy/waterballoon/Initialize()
 	. = ..()
 	create_reagents(10)
+
+/obj/item/toy/waterballoon/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/toy/waterballoon/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -101,7 +107,7 @@
 		icon_state = "burst"
 		qdel(src)
 
-/obj/item/toy/waterballoon/update_icon()
+/obj/item/toy/waterballoon/update_icon_state()
 	if(src.reagents.total_volume >= 1)
 		icon_state = "waterballoon"
 		item_state = "balloon"
@@ -245,8 +251,8 @@
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
 	var/amount_left = 7
 
-/obj/item/toy/ammo/gun/update_icon()
-	src.icon_state = text("357OLD-[]", src.amount_left)
+/obj/item/toy/ammo/gun/update_icon_state()
+	icon_state = "357OLD-[amount_left]"
 
 /obj/item/toy/ammo/gun/examine(mob/user)
 	. = ..()
@@ -741,15 +747,16 @@
 	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
 	update_icon()
 
-/obj/item/toy/cards/deck/update_icon()
-	if(cards.len > 26)
-		icon_state = "deck_[deckstyle]_full"
-	else if(cards.len > 10)
-		icon_state = "deck_[deckstyle]_half"
-	else if(cards.len > 0)
-		icon_state = "deck_[deckstyle]_low"
-	else if(cards.len == 0)
-		icon_state = "deck_[deckstyle]_empty"
+/obj/item/toy/cards/deck/update_icon_state()
+	switch(cards.len)
+		if(27 to INFINITY)
+			icon_state = "deck_[deckstyle]_full"
+		if(11 to 27)
+			icon_state = "deck_[deckstyle]_half"
+		if(1 to 11)
+			icon_state = "deck_[deckstyle]_low"
+		else
+			icon_state = "deck_[deckstyle]_empty"
 
 /obj/item/toy/cards/deck/attack_self(mob/user)
 	if(cooldown < world.time - 50)
@@ -1484,3 +1491,34 @@
 	icon_state = "shell[rand(1,3)]"
 	color = pickweight(possible_colors)
 	setDir(pick(GLOB.cardinals))
+
+/obj/item/toy/brokenradio
+	name = "broken radio"
+	desc = "An old radio that produces nothing but static when turned on."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "broken_radio"
+	w_class = WEIGHT_CLASS_SMALL
+	var/cooldown = 0
+
+/obj/item/toy/brokenradio/attack_self(mob/user)
+	if(cooldown <= world.time)
+		cooldown = (world.time + 300)
+		user.visible_message("<span class='notice'>[user] adjusts the dial on [src].</span>")
+		sleep(5)
+		playsound(src, 'sound/items/radiostatic.ogg', 50, FALSE)
+	else
+		to_chat(user, "<span class='warning'>The dial on [src] jams up</span>")
+		return
+
+/obj/item/toy/braintoy
+	name = "squeaky brain"
+	desc = "A Mr. Monstrous brand toy made to imitate a human brain in smell and texture."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "brain-old"
+	var/cooldown = 0
+
+/obj/item/toy/braintoy/attack_self(mob/user)
+	if(cooldown <= world.time)
+		cooldown = (world.time + 10)
+		sleep(5)
+		playsound(src, 'sound/effects/blobattack.ogg', 50, FALSE)

@@ -16,13 +16,11 @@
 	user.visible_message("<span class='suicide'>[user] begins belting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
-/obj/item/storage/belt/update_icon()
-	cut_overlays()
+/obj/item/storage/belt/update_overlays()
+	. = ..()
 	if(content_overlays)
 		for(var/obj/item/I in contents)
-			var/mutable_appearance/M = I.get_belt_overlay()
-			add_overlay(M)
-	..()
+			. += I.get_belt_overlay()
 
 /obj/item/storage/belt/Initialize()
 	. = ..()
@@ -113,6 +111,15 @@
 	new /obj/item/t_scanner(src)
 	new /obj/item/extinguisher/mini(src)
 
+/obj/item/storage/belt/utility/syndicate/PopulateContents()
+	new /obj/item/screwdriver/nuke(src)
+	new /obj/item/wrench/combat(src)
+	new /obj/item/weldingtool/largetank(src)
+	new /obj/item/crowbar(src)
+	new /obj/item/wirecutters(src)
+	new /obj/item/multitool(src)
+	new /obj/item/inducer/syndicate(src)
+
 /obj/item/storage/belt/medical
 	name = "medical belt"
 	desc = "Can hold various medical equipment."
@@ -172,12 +179,14 @@
 		/obj/item/pinpointer/crew,
 		/obj/item/holosign_creator/medical,
 		/obj/item/construction/plumbing,
-		/obj/item/plunger
+		/obj/item/plunger,
+		/obj/item/reagent_containers/spray,
+		/obj/item/shears
 		))
 
 /obj/item/storage/belt/medical/paramedic/PopulateContents()
 	new /obj/item/sensor_device(src)
-	new /obj/item/flashlight/pen(src)
+	new /obj/item/pinpointer/crew/prox(src)
 	new /obj/item/stack/medical/gauze/twelve(src)
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/reagent_containers/glass/bottle/epinephrine(src)
@@ -288,7 +297,8 @@
 		/obj/item/organ/regenerative_core,
 		/obj/item/wormhole_jaunter,
 		/obj/item/storage/bag/plants,
-		/obj/item/stack/marker_beacon
+		/obj/item/stack/marker_beacon,
+		/obj/item/key/lasso
 		))
 
 
@@ -336,7 +346,7 @@
 	name = "championship belt"
 	desc = "Proves to the world that you are the strongest!"
 	icon_state = "championbelt"
-	item_state = "champion"
+	item_state = "championbelt"
 	custom_materials = list(/datum/material/gold=400)
 
 /obj/item/storage/belt/champion/ComponentInitialize()
@@ -528,7 +538,8 @@
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
 		/obj/item/assembly/mousetrap,
-		/obj/item/paint/paint_remover
+		/obj/item/paint/paint_remover,
+		/obj/item/twohanded/broom
 		))
 
 /obj/item/storage/belt/janitor/full/PopulateContents()
@@ -552,31 +563,6 @@
 	STR.set_holdable(list(
 		/obj/item/ammo_casing/shotgun
 		))
-
-/obj/item/storage/belt/holster
-	name = "shoulder holster"
-	desc = "A holster to carry a handgun and ammo. WARNING: Badasses only."
-	icon_state = "holster"
-	item_state = "holster"
-	alternate_worn_layer = UNDER_SUIT_LAYER
-
-/obj/item/storage/belt/holster/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 3
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.set_holdable(list(
-		/obj/item/gun/ballistic/automatic/pistol,
-		/obj/item/gun/ballistic/revolver,
-		/obj/item/ammo_box,
-		/obj/item/gun/energy/e_gun/mini
-		))
-
-/obj/item/storage/belt/holster/full/PopulateContents()
-	var/static/items_inside = list(
-		/obj/item/gun/ballistic/revolver/detective = 1,
-		/obj/item/ammo_box/c38 = 2)
-	generate_items_inside(items_inside,src)
 
 /obj/item/storage/belt/fannypack
 	name = "fannypack"
@@ -651,6 +637,7 @@
 
 /obj/item/storage/belt/sabre/ComponentInitialize()
 	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 1
 	STR.rustle_sound = FALSE
@@ -675,16 +662,12 @@
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
-/obj/item/storage/belt/sabre/update_icon()
+/obj/item/storage/belt/sabre/update_icon_state()
 	icon_state = "sheath"
 	item_state = "sheath"
 	if(contents.len)
 		icon_state += "-sabre"
 		item_state += "-sabre"
-	if(loc && isliving(loc))
-		var/mob/living/L = loc
-		L.regenerate_icons()
-	..()
 
 /obj/item/storage/belt/sabre/PopulateContents()
 	new /obj/item/melee/sabre(src)

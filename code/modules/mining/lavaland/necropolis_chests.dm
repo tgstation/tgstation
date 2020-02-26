@@ -49,7 +49,7 @@
 		if(15)
 			new /obj/item/nullrod/armblade(src)
 		if(16)
-			new /obj/item/guardiancreator(src)
+			new /obj/item/guardiancreator/hive(src)
 		if(17)
 			if(prob(50))
 				new /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe(src)
@@ -333,7 +333,9 @@
 	var/teleporting = FALSE
 
 /obj/item/warp_cube/attack_self(mob/user)
-	if(!linked)
+	var/turf/current_location = get_turf(user)
+	var/area/current_area = current_location.loc
+	if(!linked || current_area.noteleport)
 		to_chat(user, "<span class='warning'>[src] fizzles uselessly.</span>")
 		return
 	if(teleporting)
@@ -411,12 +413,13 @@
 	icon_state = "hook"
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	pass_flags = PASSTABLE
-	damage = 25
-	armour_penetration = 100
+	damage = 20
+	stamina = 20
+	armour_penetration = 60
 	damage_type = BRUTE
 	hitsound = 'sound/effects/splat.ogg'
-	paralyze = 30
 	var/chain
+	var/knockdown_time = (0.5 SECONDS)
 
 /obj/projectile/hook/fire(setAngle)
 	if(firer)
@@ -426,12 +429,16 @@
 
 /obj/projectile/hook/on_hit(atom/target)
 	. = ..()
-	if(ismovableatom(target))
+	if(ismovable(target))
 		var/atom/movable/A = target
 		if(A.anchored)
 			return
 		A.visible_message("<span class='danger'>[A] is snagged by [firer]'s hook!</span>")
 		new /datum/forced_movement(A, get_turf(firer), 5, TRUE)
+		if (isliving(target))
+			var/mob/living/fresh_meat = target
+			fresh_meat.Knockdown(knockdown_time)
+			return
 		//TODO: keep the chain beamed to A
 		//TODO: needs a callback to delete the chain
 
@@ -452,7 +459,7 @@
 
 /obj/projectile/hook/bounty
 	damage = 0
-	paralyze = 20
+	stamina = 40
 
 //Immortality Talisman
 /obj/item/immortality_talisman
@@ -592,7 +599,7 @@
 	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says: 'erqo'hyy tvi'rf lbh jv'atf'."
 	list_reagents = list(/datum/reagent/flightpotion = 5)
 
-/obj/item/reagent_containers/glass/bottle/potion/update_icon()
+/obj/item/reagent_containers/glass/bottle/potion/update_icon_state()
 	if(reagents.total_volume)
 		icon_state = "potionflask"
 	else
@@ -849,13 +856,13 @@
 	force = 0
 	var/ghost_counter = ghost_check()
 
-	force = CLAMP((ghost_counter * 4), 0, 75)
+	force = clamp((ghost_counter * 4), 0, 75)
 	user.visible_message("<span class='danger'>[user] strikes with the force of [ghost_counter] vengeful spirits!</span>")
 	..()
 
 /obj/item/melee/ghost_sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	var/ghost_counter = ghost_check()
-	final_block_chance += CLAMP((ghost_counter * 5), 0, 75)
+	final_block_chance += clamp((ghost_counter * 5), 0, 75)
 	owner.visible_message("<span class='danger'>[owner] is protected by a ring of [ghost_counter] ghosts!</span>")
 	return ..()
 
@@ -1034,8 +1041,6 @@
 	var/list/da_list = list()
 	for(var/I in GLOB.alive_mob_list & GLOB.player_list)
 		var/mob/living/L = I
-		if(is_centcom_level(L.z))
-			continue
 		da_list[L.real_name] = L
 
 	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in sortList(da_list)
@@ -1113,6 +1118,10 @@
 	var/teleporting = FALSE //if we ARE teleporting
 	var/friendly_fire_check = FALSE //if the blasts we make will consider our faction against the faction of hit targets
 
+/obj/item/hierophant_club/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
 /obj/item/hierophant_club/examine(mob/user)
 	. = ..()
 	. += "<span class='hierophant_warning'>The[beacon ? " beacon is not currently":"re is a beacon"] attached.</span>"
@@ -1175,13 +1184,8 @@
 		chaser_speed = max(chaser_speed + health_percent, 0.5) //one tenth of a second faster for each missing 10% of health
 		blast_range -= round(health_percent * 10) //one additional range for each missing 10% of health
 
-/obj/item/hierophant_club/update_icon()
-	icon_state = "hierophant_club[timer <= world.time ? "_ready":""][(beacon && !QDELETED(beacon)) ? "":"_beacon"]"
-	item_state = icon_state
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_hands()
-		M.update_inv_back()
+/obj/item/hierophant_club/update_icon_state()
+	icon_state = item_state = "hierophant_club[timer <= world.time ? "_ready":""][(beacon && !QDELETED(beacon)) ? "":"_beacon"]"
 
 /obj/item/hierophant_club/proc/prepare_icon_update()
 	update_icon()

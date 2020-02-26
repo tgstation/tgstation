@@ -164,14 +164,11 @@
 		on = FALSE
 	update_icon()
 
-/obj/item/organ/cyberimp/chest/thrusters/update_icon()
+/obj/item/organ/cyberimp/chest/thrusters/update_icon_state()
 	if(on)
 		icon_state = "imp_jetpack-on"
 	else
 		icon_state = "imp_jetpack"
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/move_react()
 	allow_thrust(0.01)

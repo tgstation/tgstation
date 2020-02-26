@@ -70,7 +70,8 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	set desc= "Jump to the other server"
 	if(notransform)
 		return
-	var/list/csa = CONFIG_GET(keyed_list/cross_server)
+	var/list/our_id = CONFIG_GET(string/cross_comms_name)
+	var/list/csa = CONFIG_GET(keyed_list/cross_server) - our_id
 	var/pick
 	switch(csa.len)
 		if(0)

@@ -579,12 +579,11 @@ RLD
 	explosion(src, 0, 0, 3, 1, flame_range = 1)
 	qdel(src)
 
-/obj/item/construction/rcd/update_icon()
-	..()
+/obj/item/construction/rcd/update_overlays()
+	. = ..()
 	if(has_ammobar)
 		var/ratio = CEILING((matter / max_matter) * ammo_sections, 1)
-		cut_overlays()	//To prevent infinite stacking of overlays
-		add_overlay("[icon_state]_charge[ratio]")
+		. += "[icon_state]_charge[ratio]"
 
 /obj/item/construction/rcd/Initialize()
 	. = ..()
@@ -723,10 +722,8 @@ RLD
 	else
 		..()
 
-/obj/item/construction/rld/update_icon()
+/obj/item/construction/rld/update_icon_state()
 	icon_state = "rld-[round(matter/matter_divisor)]"
-	..()
-
 
 /obj/item/construction/rld/attack_self(mob/user)
 	..()

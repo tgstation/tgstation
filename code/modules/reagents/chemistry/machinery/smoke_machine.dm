@@ -38,7 +38,7 @@
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		reagents.maximum_volume += REAGENTS_BASE_VOLUME * B.rating
 
-/obj/machinery/smoke_machine/update_icon()
+/obj/machinery/smoke_machine/update_icon_state()
 	if((!is_operational()) || (!on) || (reagents.total_volume == 0))
 		if (panel_open)
 			icon_state = "smoke0-o"
@@ -46,7 +46,6 @@
 			icon_state = "smoke0"
 	else
 		icon_state = "smoke1"
-	return ..()
 
 /obj/machinery/smoke_machine/RefreshParts()
 	var/new_volume = REAGENTS_BASE_VOLUME

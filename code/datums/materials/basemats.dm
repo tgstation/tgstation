@@ -98,13 +98,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/plasma/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	if(ismovableatom(source))
-		source.AddElement(/datum/element/firestacker, 1)
+	if(ismovable(source))
+		source.AddElement(/datum/element/firestacker, amount=1)
 		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, amount / 1250)
 
 /datum/material/plasma/on_removed(atom/source, material_flags)
 	. = ..()
-	source.RemoveElement(/datum/element/firestacker, 1)
+	source.RemoveElement(/datum/element/firestacker, amount=1)
 	qdel(source.GetComponent(/datum/component/explodable))
 
 ///Can cause bluespace effects on use. (Teleportation) (Not yet implemented)
@@ -188,6 +188,29 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	color = "#735b4d"
 	strength_modifier = 0.8
 	value_per_unit = 0.025
+
+/datum/material/wood
+	name = "wood"
+	id = "wood"
+	desc = "Flexible, durable, but flamable. Hard to come across in space."
+	color = "#bb8e53"
+	strength_modifier = 0.5
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	value_per_unit = 0.06
+	beauty_modifier = 0.1
+	armor_modifiers = list("melee" = 1.1, "bullet" = 1.1, "laser" = 0.4, "energy" = 0.4, "bomb" = 1, "bio" = 0.2, "rad" = 0, "fire" = 0, "acid" = 0.3)
+
+/datum/material/wood/on_applied_obj(obj/source, amount, material_flags)
+	. = ..()
+	if(material_flags & MATERIAL_AFFECT_STATISTICS)
+		var/obj/wooden = source
+		wooden.resistance_flags |= FLAMMABLE
+
+/datum/material/wood/on_removed_obj(obj/source, material_flags)
+	. = ..()
+	if(material_flags & MATERIAL_AFFECT_STATISTICS)
+		var/obj/wooden = source
+		wooden.resistance_flags &= ~FLAMMABLE
 
 ///Stronk force increase
 /datum/material/adamantine

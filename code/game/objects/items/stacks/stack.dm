@@ -52,7 +52,7 @@
 		mats_per_unit = list()
 		var/in_process_mat_list = custom_materials.Copy()
 		for(var/i in custom_materials)
-			mats_per_unit[getmaterialref(i)] = in_process_mat_list[i]
+			mats_per_unit[SSmaterials.GetMaterialRef(i)] = in_process_mat_list[i]
 			custom_materials[i] *= amount
 	. = ..()
 	if(merge)
@@ -62,7 +62,7 @@
 	var/list/temp_recipes = get_main_recipes()
 	recipes = temp_recipes.Copy()
 	if(material_type)
-		var/datum/material/M = getmaterialref(material_type) //First/main material
+		var/datum/material/M = SSmaterials.GetMaterialRef(material_type) //First/main material
 		for(var/i in M.categories)
 			switch(i)
 				if(MAT_CATEGORY_RIGID)
@@ -77,23 +77,22 @@
 
 /obj/item/stack/proc/update_weight()
 	if(amount <= (max_amount * (1/3)))
-		w_class = CLAMP(full_w_class-2, WEIGHT_CLASS_TINY, full_w_class)
+		w_class = clamp(full_w_class-2, WEIGHT_CLASS_TINY, full_w_class)
 	else if (amount <= (max_amount * (2/3)))
-		w_class = CLAMP(full_w_class-1, WEIGHT_CLASS_TINY, full_w_class)
+		w_class = clamp(full_w_class-1, WEIGHT_CLASS_TINY, full_w_class)
 	else
 		w_class = full_w_class
 
 
-/obj/item/stack/update_icon()
+/obj/item/stack/update_icon_state()
 	if(novariants)
-		return ..()
+		return
 	if(amount <= (max_amount * (1/3)))
 		icon_state = initial(icon_state)
 	else if (amount <= (max_amount * (2/3)))
 		icon_state = "[initial(icon_state)]_2"
 	else
 		icon_state = "[initial(icon_state)]_3"
-	..()
 
 
 /obj/item/stack/Destroy()
@@ -209,8 +208,13 @@
 		if(!building_checks(R, multiplier))
 			return
 		if (R.time)
+			var/adjusted_time = 0
 			usr.visible_message("<span class='notice'>[usr] starts building \a [R.title].</span>", "<span class='notice'>You start building \a [R.title]...</span>")
-			if (!do_after(usr, R.time, target = usr))
+			if(HAS_TRAIT(usr, R.trait_booster))
+				adjusted_time = (R.time * R.trait_modifier)
+			else
+				adjusted_time = R.time
+			if (!do_after(usr, adjusted_time, target = usr))
 				return
 			if(!building_checks(R, multiplier))
 				return
@@ -232,7 +236,7 @@
 		if(R.applies_mats && custom_materials && custom_materials.len)
 			var/list/used_materials = list()
 			for(var/i in custom_materials)
-				used_materials[getmaterialref(i)] = R.req_amount / R.res_amount * (MINERAL_MATERIAL_AMOUNT / custom_materials.len)
+				used_materials[SSmaterials.GetMaterialRef(i)] = R.req_amount / R.res_amount * (MINERAL_MATERIAL_AMOUNT / custom_materials.len)
 			O.set_custom_materials(used_materials)
 
 		//START: oh fuck i'm so sorry
@@ -373,9 +377,9 @@
 	S.add(transfer)
 	return transfer
 
-/obj/item/stack/Crossed(obj/o)
-	if(istype(o, merge_type) && !o.throwing)
-		merge(o)
+/obj/item/stack/Crossed(atom/movable/AM)
+	if(istype(AM, merge_type) && !AM.throwing)
+		merge(AM)
 	. = ..()
 
 /obj/item/stack/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
@@ -461,8 +465,10 @@
 	var/window_checks = FALSE
 	var/placement_checks = FALSE
 	var/applies_mats = FALSE
+	var/trait_booster = null
+	var/trait_modifier = 1
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE, applies_mats = FALSE)
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE, applies_mats = FALSE, trait_booster = null, trait_modifier = 1)
 
 
 	src.title = title
@@ -476,6 +482,8 @@
 	src.window_checks = window_checks
 	src.placement_checks = placement_checks
 	src.applies_mats = applies_mats
+	src.trait_booster = trait_booster
+	src.trait_modifier = trait_modifier
 /*
  * Recipe list datum
  */

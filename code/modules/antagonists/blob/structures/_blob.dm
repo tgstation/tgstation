@@ -69,15 +69,15 @@
 
 /obj/structure/blob/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-	if(istype(mover) && (mover.pass_flags & PASSBLOB))
-		return TRUE
+	if(!(mover.pass_flags & PASSBLOB))
+		return FALSE
 
 /obj/structure/blob/CanAtmosPass(turf/T)
 	return !atmosblock
 
 /obj/structure/blob/CanAStarPass(ID, dir, caller)
 	. = 0
-	if(ismovableatom(caller))
+	if(ismovable(caller))
 		var/atom/movable/mover = caller
 		. = . || (mover.pass_flags & PASSBLOB)
 

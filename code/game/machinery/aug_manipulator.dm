@@ -20,7 +20,7 @@
     return ..()
 
 /obj/machinery/aug_manipulator/update_icon_state()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		icon_state = "[initial_icon_state]-broken"
 		return
 
@@ -83,10 +83,10 @@
 				"<span class='hear'>You hear welding.</span>")
 
 			if(O.use_tool(src, user, 40, volume=50))
-				if(!(stat & BROKEN))
+				if(!(machine_stat & BROKEN))
 					return
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
-				stat &= ~BROKEN
+				machine_stat &= ~BROKEN
 				obj_integrity = max(obj_integrity, max_integrity)
 				update_icon()
 		else

@@ -16,9 +16,8 @@
 
 /obj/item/assembly_holder/ComponentInitialize()
 	. = ..()
-	AddComponent(
-		/datum/component/simple_rotation,
-		ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_FLIP | ROTATION_VERBS)
+	var/static/rotation_flags = ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_FLIP | ROTATION_VERBS
+	AddComponent(/datum/component/simple_rotation, rotation_flags)
 
 /obj/item/assembly_holder/IsAssemblyHolder()
 	return TRUE

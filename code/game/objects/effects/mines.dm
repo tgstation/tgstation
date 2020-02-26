@@ -78,6 +78,11 @@
 	gas_type = "n2o"
 
 
+/obj/effect/mine/gas/water_vapor
+	name = "chilled vapor mine"
+	gas_amount = 500
+	gas_type = "water_vapor"
+
 /obj/effect/mine/sound
 	name = "honkblaster 1000"
 	var/sound = 'sound/items/bikehorn.ogg'

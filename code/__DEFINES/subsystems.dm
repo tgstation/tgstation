@@ -20,7 +20,7 @@
   *
   * make sure you add an update to the schema_version stable in the db changelog
   */
-#define DB_MINOR_VERSION 6
+#define DB_MINOR_VERSION 7
 
 
 //! ## Timing subsystem
@@ -107,7 +107,6 @@
 #define INIT_ORDER_INPUT			85
 #define INIT_ORDER_VIS				80
 #define INIT_ORDER_ACHIEVEMENTS		77
-#define INIT_ORDER_MATERIALS		76
 #define INIT_ORDER_RESEARCH			75
 #define INIT_ORDER_EVENTS			70
 #define INIT_ORDER_JOBS				65
@@ -207,3 +206,12 @@
 		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
 	}
+
+// Air subsystem subtasks
+#define SSAIR_PIPENETS 1
+#define SSAIR_ATMOSMACHINERY 2
+#define SSAIR_ACTIVETURFS 3
+#define SSAIR_EXCITEDGROUPS 4
+#define SSAIR_HIGHPRESSURE 5
+#define SSAIR_HOTSPOTS 6
+#define SSAIR_SUPERCONDUCTIVITY 7

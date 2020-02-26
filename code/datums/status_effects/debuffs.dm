@@ -98,43 +98,42 @@
 	icon_state = "asleep"
 
 //STASIS
-/datum/status_effect/incapacitating/stasis
-        id = "stasis"
-        duration = -1
-        tick_interval = 10
-        alert_type = /obj/screen/alert/status_effect/stasis
-        var/last_dead_time
+/datum/status_effect/grouped/stasis
+	id = "stasis"
+	duration = -1
+	tick_interval = 10
+	alert_type = /obj/screen/alert/status_effect/stasis
+	var/last_dead_time
 
-/datum/status_effect/incapacitating/stasis/proc/update_time_of_death()
-        if(last_dead_time)
-                var/delta = world.time - last_dead_time
-                var/new_timeofdeath = owner.timeofdeath + delta
-                owner.timeofdeath = new_timeofdeath
-                owner.tod = station_time_timestamp(wtime=new_timeofdeath)
-                last_dead_time = null
-        if(owner.stat == DEAD)
-                last_dead_time = world.time
+/datum/status_effect/grouped/stasis/proc/update_time_of_death()
+	if(last_dead_time)
+		var/delta = world.time - last_dead_time
+		var/new_timeofdeath = owner.timeofdeath + delta
+		owner.timeofdeath = new_timeofdeath
+		owner.tod = station_time_timestamp(wtime=new_timeofdeath)
+		last_dead_time = null
+	if(owner.stat == DEAD)
+		last_dead_time = world.time
 
-/datum/status_effect/incapacitating/stasis/on_creation(mob/living/new_owner, set_duration, updating_canmove)
-        . = ..()
-        update_time_of_death()
-        owner.reagents?.end_metabolization(owner, FALSE)
+/datum/status_effect/grouped/stasis/on_creation(mob/living/new_owner, set_duration, updating_canmove)
+	. = ..()
+	if(.)
+		update_time_of_death()
+		owner.reagents?.end_metabolization(owner, FALSE)
+		owner.update_mobility()
 
-/datum/status_effect/incapacitating/stasis/tick()
-        update_time_of_death()
+/datum/status_effect/grouped/stasis/tick()
+	update_time_of_death()
 
-/datum/status_effect/incapacitating/stasis/on_remove()
-        update_time_of_death()
-        return ..()
-
-/datum/status_effect/incapacitating/stasis/be_replaced()
-        update_time_of_death()
-        return ..()
+/datum/status_effect/grouped/stasis/on_remove()
+	owner.update_mobility()
+	update_time_of_death()
+	return ..()
 
 /obj/screen/alert/status_effect/stasis
-        name = "Stasis"
-        desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
-        icon_state = "stasis"
+	name = "Stasis"
+	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
+	icon_state = "stasis"
 
 //GOLEM GANG
 
@@ -160,11 +159,13 @@
 
 /obj/screen/alert/status_effect/strandling/Click(location, control, params)
 	. = ..()
-	to_chat(mob_viewer, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
-	if(do_after(mob_viewer, 35, null, mob_viewer))
-		if(isliving(mob_viewer))
-			var/mob/living/L = mob_viewer
-			to_chat(mob_viewer, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
+	if(usr != owner)
+		return
+	to_chat(owner, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
+	if(do_after(owner, 35, null, owner))
+		if(isliving(owner))
+			var/mob/living/L = owner
+			to_chat(owner, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
 			L.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 
 

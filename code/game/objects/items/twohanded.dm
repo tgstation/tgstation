@@ -35,9 +35,9 @@
 	wielded = 0
 	if(!isnull(force_unwielded))
 		force = force_unwielded
-	var/sf = findtext(name," (Wielded)")
+	var/sf = findtext(name, " (Wielded)", -10)//10 == length(" (Wielded)")
 	if(sf)
-		name = copytext(name,1,sf)
+		name = copytext(name, 1, sf)
 	else //something wrong
 		name = "[initial(name)]"
 	update_icon()
@@ -93,9 +93,6 @@
 	if(!wielded)
 		return
 	unwield(user)
-
-/obj/item/twohanded/update_icon()
-	return
 
 /obj/item/twohanded/attack_self(mob/user)
 	. = ..()
@@ -238,9 +235,8 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
 
-/obj/item/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
+/obj/item/twohanded/fireaxe/update_icon_state()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
-	return
 
 /obj/item/twohanded/fireaxe/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -332,12 +328,11 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/twohanded/dualsaber/update_icon()
+/obj/item/twohanded/dualsaber/update_icon_state()
 	if(wielded)
 		icon_state = "dualsaber[saber_color][wielded]"
 	else
 		icon_state = "dualsaber0"
-	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /obj/item/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
@@ -453,7 +448,7 @@
 	force_wielded = 18
 	throwforce = 20
 	throw_speed = 4
-	embedding = list("embedded_impact_pain_multiplier" = 3)
+	embedding = list("impact_pain_mult" = 3)
 	armour_penetration = 10
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -473,7 +468,7 @@
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
-/obj/item/twohanded/spear/update_icon()
+/obj/item/twohanded/spear/update_icon_state()
 	icon_state = "[icon_prefix][wielded]"
 
 /obj/item/twohanded/spear/CheckParts(list/parts_list)
@@ -492,15 +487,17 @@
 	name = "explosive lance"
 	var/obj/item/grenade/explosive = null
 
-/obj/item/twohanded/spear/explosive/Initialize(mapload, obj/item/grenade/G)
+/obj/item/twohanded/spear/explosive/Initialize(mapload)
 	. = ..()
-	if (!G)
-		G = new /obj/item/grenade/iedcasing() //For admin-spawned explosive lances
+	set_explosive(new /obj/item/grenade/iedcasing()) //For admin-spawned explosive lances
+	
+	
+/obj/item/twohanded/spear/explosive/proc/set_explosive(obj/item/grenade/G)
+	if(explosive)
+		QDEL_NULL(explosive)
 	G.forceMove(src)
 	explosive = G
 	desc = "A makeshift spear with [G] attached to it"
-	update_icon()
-
 
 /obj/item/twohanded/spear/explosive/CheckParts(list/parts_list)
 	var/obj/item/grenade/G = locate() in parts_list
@@ -512,7 +509,7 @@
 		icon_prefix = lancePart.icon_prefix
 		parts_list -= G
 		parts_list -= lancePart
-		Initialize(src.loc, G)
+		set_explosive(G)
 		qdel(lancePart)
 	..()
 
@@ -529,7 +526,7 @@
 	. = ..()
 	. += "<span class='notice'>Alt-click to set your war cry.</span>"
 
-/obj/item/twohanded/spear/explosive/update_icon()
+/obj/item/twohanded/spear/explosive/update_icon_state()
 	icon_state = "spearbomb[wielded]"
 
 /obj/item/twohanded/spear/explosive/AltClick(mob/user)
@@ -691,7 +688,7 @@
 	force_unwielded = 100
 	force_wielded = 500000 // Kills you DEAD.
 
-/obj/item/twohanded/pitchfork/update_icon()
+/obj/item/twohanded/pitchfork/update_icon_state()
 	icon_state = "pitchfork[wielded]"
 
 /obj/item/twohanded/pitchfork/suicide_act(mob/user)
@@ -766,7 +763,7 @@
 				return 1
 	return 0
 
-/obj/item/twohanded/vibro_weapon/update_icon()
+/obj/item/twohanded/vibro_weapon/update_icon_state()
 	icon_state = "hfrequency[wielded]"
 
 /*
@@ -778,7 +775,7 @@
 	desc = "A large, vicious axe crafted out of several sharpened bone plates and crudely tied together. Made of monsters, by killing monsters, for killing monsters."
 	force_wielded = 23
 
-/obj/item/twohanded/fireaxe/boneaxe/update_icon()
+/obj/item/twohanded/fireaxe/boneaxe/update_icon_state()
 	icon_state = "bone_axe[wielded]"
 
 /*
@@ -794,7 +791,7 @@
 	throwforce = 22
 	armour_penetration = 15				//Enhanced armor piercing
 
-/obj/item/twohanded/spear/bonespear/update_icon()
+/obj/item/twohanded/spear/bonespear/update_icon_state()
 	icon_state = "bone_spear[wielded]"
 
 /obj/item/twohanded/binoculars
@@ -855,3 +852,66 @@
 		C.change_view(CONFIG_GET(string/default_view))
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
+
+/obj/item/twohanded/broom
+	name = "broom"
+	desc = "This is my BROOMSTICK! It can be used manually or braced with two hands to sweep items as you move. It has a telescopic handle for compact storage."
+	icon = 'icons/obj/janitor.dmi'
+	icon_state = "broom0"
+	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
+	force = 8
+	throwforce = 10
+	throw_speed = 3
+	throw_range = 7
+	w_class = WEIGHT_CLASS_NORMAL
+	force_unwielded = 8
+	force_wielded = 12
+	attack_verb = list("swept", "brushed off", "bludgeoned", "whacked")
+	resistance_flags = FLAMMABLE
+
+/obj/item/twohanded/broom/update_icon_state()
+	icon_state = "broom[wielded]"
+
+/obj/item/twohanded/broom/wield(mob/user)
+	. = ..()
+	if(!wielded)
+		return
+	to_chat(user, "<span class='notice'>You brace the [src] against the ground in a firm sweeping stance.</span>")
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/sweep)
+
+/obj/item/twohanded/broom/unwield(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+
+/obj/item/twohanded/broom/afterattack(atom/A, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	sweep(user, A, FALSE)
+
+/obj/item/twohanded/broom/proc/sweep(mob/user, atom/A, moving = TRUE)
+	var/turf/target
+	if (!moving)
+		if (isturf(A))
+			target = A
+		else
+			target = A.loc
+	else
+		target = user.loc
+	if (locate(/obj/structure/table) in target.contents)
+		return
+	var/i = 0
+	for(var/obj/item/garbage in target.contents)
+		if(!garbage.anchored)
+			garbage.Move(get_step(target, user.dir), user.dir)
+		i++
+		if(i >= 20)
+			break
+	if(i >= 1)
+		playsound(loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
+
+/obj/item/twohanded/broom/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J) //bless you whoever fixes this copypasta
+	J.put_in_cart(src, user)
+	J.mybroom=src
+	J.update_icon()

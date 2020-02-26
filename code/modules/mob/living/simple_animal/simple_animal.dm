@@ -184,12 +184,12 @@
 			return
 		if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
 			tame = TRUE
-			tamed()
+			tamed(user)
 		else
 			tame_chance += bonus_tame_chance
 
 ///Extra effects to add when the mob is tamed, such as adding a riding component
-/mob/living/simple_animal/proc/tamed()
+/mob/living/simple_animal/proc/tamed(whomst)
 	return
 
 /mob/living/simple_animal/examine(mob/user)
@@ -199,7 +199,7 @@
 
 /mob/living/simple_animal/updatehealth()
 	..()
-	health = CLAMP(health, 0, maxHealth)
+	health = clamp(health, 0, maxHealth)
 
 /mob/living/simple_animal/update_stat()
 	if(status_flags & GODMODE)
@@ -208,7 +208,7 @@
 		if(health <= 0)
 			death()
 		else
-			stat = CONSCIOUS
+			set_stat(CONSCIOUS)
 	med_hud_set_status()
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)

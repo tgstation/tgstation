@@ -686,7 +686,7 @@
 		if("Animal")
 			var/list/icon_list = list(
 			"bear" = 'icons/mob/animal.dmi',
-			"carp" = 'icons/mob/animal.dmi',
+			"carp" = 'icons/mob/carp.dmi',
 			"chicken" = 'icons/mob/animal.dmi',
 			"corgi" = 'icons/mob/pets.dmi',
 			"cow" = 'icons/mob/animal.dmi',
@@ -901,7 +901,7 @@
 	if(istype(A, /obj/machinery/camera))
 		current = A
 	if(client)
-		if(ismovableatom(A))
+		if(ismovable(A))
 			if(A != GLOB.ai_camera_room_landmark)
 				end_multicam()
 			client.perspective = EYE_PERSPECTIVE
@@ -936,7 +936,7 @@
 	malfhacking = 0
 	clear_alert("hackingapc")
 
-	if(!istype(apc) || QDELETED(apc) || apc.stat & BROKEN)
+	if(!istype(apc) || QDELETED(apc) || apc.machine_stat & BROKEN)
 		to_chat(src, "<span class='danger'>Hack aborted. The designated APC no longer exists on the power network.</span>")
 		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, TRUE, ignore_walls = FALSE)
 	else if(apc.aidisabled)

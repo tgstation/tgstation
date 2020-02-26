@@ -1,3 +1,5 @@
+#define TRAY_NAME_UPDATE name = myseed ? "[initial(name)] ([myseed.plantname])" : initial(name)
+
 /obj/machinery/hydroponics
 	name = "hydroponics tray"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
@@ -89,7 +91,6 @@
 		connected += a
 
 	return connected
-
 
 /obj/machinery/hydroponics/bullet_act(obj/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(!myseed)
@@ -388,12 +389,7 @@
 	pestlevel = 0 // Reset
 	update_icon()
 	visible_message("<span class='warning'>The [oldPlantName] is overtaken by some [myseed.plantname]!</span>")
-	name = "hydroponics tray ([myseed.plantname])"
-	if(myseed.product)
-		desc = initial(myseed.product.desc)
-	else
-		desc = initial(desc)
-
+	TRAY_NAME_UPDATE
 
 /obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0) // Mutates the current seed
 	if(!myseed)
@@ -427,12 +423,7 @@
 	sleep(5) // Wait a while
 	update_icon()
 	visible_message("<span class='warning'>[oldPlantName] suddenly mutates into [myseed.plantname]!</span>")
-	name = "hydroponics tray ([myseed.plantname])"
-	if(myseed.product)
-		desc = initial(myseed.product.desc)
-	else
-		desc = initial(desc)
-
+	TRAY_NAME_UPDATE
 
 /obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
 	if( weedlevel > 5 )
@@ -452,6 +443,7 @@
 		sleep(5) // Wait a while
 		update_icon()
 		visible_message("<span class='warning'>The mutated weeds in [src] spawn some [myseed.plantname]!</span>")
+		TRAY_NAME_UPDATE
 	else
 		to_chat(usr, "<span class='warning'>The few weeds in [src] seem to react, but only for a moment...</span>")
 
@@ -797,15 +789,7 @@
 			to_chat(user, "<span class='notice'>You plant [O].</span>")
 			dead = 0
 			myseed = O
-			name = "hydroponics tray ([myseed.plantname])"
-			if(!myseed.productdesc) //we haven't changed our produce's description
-				if(myseed.product)
-					myseed.productdesc = initial(myseed.product.desc)
-				else if(myseed.desc)
-					myseed.productdesc = myseed.desc
-				else
-					myseed.productdesc = "A fascinating specimen."
-			desc = myseed.productdesc
+			TRAY_NAME_UPDATE
 			age = 1
 			plant_health = myseed.endurance
 			lastcycle = world.time
@@ -907,8 +891,7 @@
 		qdel(myseed)
 		myseed = null
 		update_icon()
-		name = initial(name)
-		desc = initial(desc)
+		TRAY_NAME_UPDATE
 	else
 		if(user)
 			examine(user)
@@ -926,32 +909,31 @@
 		qdel(myseed)
 		myseed = null
 		dead = 0
-		name = initial(name)
-		desc = initial(desc)
+		TRAY_NAME_UPDATE
 	update_icon()
 
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.///
 /obj/machinery/hydroponics/proc/adjustNutri(adjustamt)
-	nutrilevel = CLAMP(nutrilevel + adjustamt, 0, maxnutri)
+	nutrilevel = clamp(nutrilevel + adjustamt, 0, maxnutri)
 
 /obj/machinery/hydroponics/proc/adjustWater(adjustamt)
-	waterlevel = CLAMP(waterlevel + adjustamt, 0, maxwater)
+	waterlevel = clamp(waterlevel + adjustamt, 0, maxwater)
 
 	if(adjustamt>0)
 		adjustToxic(-round(adjustamt/4))//Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
 
 /obj/machinery/hydroponics/proc/adjustHealth(adjustamt)
 	if(myseed && !dead)
-		plant_health = CLAMP(plant_health + adjustamt, 0, myseed.endurance)
+		plant_health = clamp(plant_health + adjustamt, 0, myseed.endurance)
 
 /obj/machinery/hydroponics/proc/adjustToxic(adjustamt)
-	toxic = CLAMP(toxic + adjustamt, 0, 100)
+	toxic = clamp(toxic + adjustamt, 0, 100)
 
 /obj/machinery/hydroponics/proc/adjustPests(adjustamt)
-	pestlevel = CLAMP(pestlevel + adjustamt, 0, 10)
+	pestlevel = clamp(pestlevel + adjustamt, 0, 10)
 
 /obj/machinery/hydroponics/proc/adjustWeeds(adjustamt)
-	weedlevel = CLAMP(weedlevel + adjustamt, 0, 10)
+	weedlevel = clamp(weedlevel + adjustamt, 0, 10)
 
 /obj/machinery/hydroponics/proc/spawnplant() // why would you put strange reagent in a hydro tray you monster I bet you also feed them blood
 	var/list/livingplants = list(/mob/living/simple_animal/hostile/tree, /mob/living/simple_animal/hostile/killertomato)
@@ -970,6 +952,7 @@
 	desc = "A patch of dirt."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "soil"
+	gender = PLURAL
 	circuit = null
 	density = FALSE
 	use_power = NO_POWER_USE

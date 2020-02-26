@@ -16,6 +16,7 @@
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
 	var/verb_whisper = "whispers"
+	var/verb_sing = "sings"
 	var/verb_yell = "yells"
 	var/speech_span
 	var/inertia_dir = 0
@@ -24,7 +25,7 @@
 	var/inertia_next_move = 0
 	var/inertia_move_delay = 5
 	var/pass_flags = NONE
-	/// If false makes CanPass call CanPassThrough on this type instead of using default behaviour
+	/// If false makes [CanPass][/atom/proc/CanPass] call [CanPassThrough][/atom/movable/proc/CanPassThrough] on this type instead of using default behaviour
 	var/generic_canpass = TRUE
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
 	var/atom/movable/moving_from_pull		//attempt to resume grab after moving instead of before.
@@ -486,11 +487,17 @@
 /atom/movable/proc/setMovetype(newval)
 	movement_type = newval
 
-//Called whenever an object moves and by mobs when they attempt to move themselves through space
-//And when an object or action applies a force on src, see newtonian_move() below
-//Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
-//Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
-//movement_dir == 0 when stopping or any dir when trying to move
+/**
+  * Called whenever an object moves and by mobs when they attempt to move themselves through space
+  * And when an object or action applies a force on src, see [newtonian_move][/atom/movable/proc/newtonian_move]
+  *
+  * Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
+  *
+  * Mobs should return 1 if they should be able to move of their own volition, see [/client/Move]
+  *
+  * Arguments:
+  * * movement_dir - 0 when stopping or any dir when trying to move
+  */
 /atom/movable/proc/Process_Spacemove(movement_dir = 0)
 	if(has_gravity(src))
 		return 1
@@ -510,7 +517,8 @@
 	return 0
 
 
-/atom/movable/proc/newtonian_move(direction) //Only moves the object if it's under no gravity
+/// Only moves the object if it's under no gravity
+/atom/movable/proc/newtonian_move(direction)
 	if(!loc || Process_Spacemove(0))
 		inertia_dir = 0
 		return 0
@@ -532,12 +540,13 @@
 		step(src, AM.dir)
 	..()
 
-/atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG)
+/atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	if((force < (move_resist * MOVE_FORCE_THROW_RATIO)) || (move_resist == INFINITY))
 		return
-	return throw_at(target, range, speed, thrower, spin, diagonals_first, callback, force)
+	return throw_at(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle)
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG) //If this returns FALSE then callback will not be called.
+///If this returns FALSE then callback will not be called.
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	. = FALSE
 	if (!target || speed <= 0)
 		return
@@ -584,6 +593,7 @@
 	TT.thrower = thrower
 	TT.diagonals_first = diagonals_first
 	TT.force = force
+	TT.gentle = gentle
 	TT.callback = callback
 	if(!QDELETED(thrower))
 		TT.target_zone = thrower.zone_selected
@@ -660,11 +670,11 @@
 	SHOULD_CALL_PARENT(TRUE)
 	return blocker_opinion
 
-// called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
+/// called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /atom/movable/proc/on_exit_storage(datum/component/storage/concrete/S)
 	return
 
-// called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
+/// called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
 /atom/movable/proc/on_enter_storage(datum/component/storage/concrete/S)
 	return
 
@@ -687,7 +697,7 @@
 				break
 	. = dense_object_backup
 
-//called when a mob resists while inside a container that is itself inside something.
+///called when a mob resists while inside a container that is itself inside something.
 /atom/movable/proc/relay_container_resist(mob/living/user, obj/O)
 	return
 
@@ -884,8 +894,11 @@
 		return FALSE
 	return TRUE
 
-/// Updates the grab state of the movable
-/// This exists to act as a hook for behaviour
+/**
+  * Updates the grab state of the movable
+  *
+  * This exists to act as a hook for behaviour
+  */
 /atom/movable/proc/setGrabState(newstate)
 	grab_state = newstate
 

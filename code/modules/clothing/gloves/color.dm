@@ -12,6 +12,53 @@
 	custom_price = 1200
 	custom_premium_price = 1200
 
+/obj/item/toy/sprayoncan
+	name = "spray-on insulation applicator"
+	desc = "What is the number one problem facing our station today?"
+	icon = 'icons/obj/clothing/gloves.dmi'
+	icon_state = "sprayoncan"
+
+/obj/item/toy/sprayoncan/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(iscarbon(target) && proximity)
+		var/mob/living/carbon/C = target
+		var/mob/living/carbon/U = user
+		var/success = C.equip_to_slot_if_possible(new /obj/item/clothing/gloves/color/yellow/sprayon, ITEM_SLOT_GLOVES, TRUE, TRUE)
+		if(success)
+			if(C == user)
+				C.visible_message("<span class='notice'>[U] sprays their hands with glittery rubber!</span>")
+			else
+				C.visible_message("<span class='warning'>[U] sprays glittery rubber on the hands of [C]!</span>")
+		else
+			C.visible_message("<span class='warning'>The rubber fails to stick to [C]'s hands!</span>")
+
+		qdel(src)
+
+/obj/item/clothing/gloves/color/yellow/sprayon
+	desc = "How're you gonna get 'em off, nerd?"
+	name = "spray-on insulated gloves"
+	icon_state = "sprayon"
+	item_state = "sprayon"
+	permeability_coefficient = 0
+	resistance_flags = ACID_PROOF
+	var/shocks_remaining = 10
+
+/obj/item/clothing/gloves/color/yellow/sprayon/Initialize()
+	.=..()
+	ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
+
+/obj/item/clothing/gloves/color/yellow/sprayon/equipped(mob/user, slot)
+	. = ..()
+	RegisterSignal(user, COMSIG_LIVING_SHOCK_PREVENTED, .proc/Shocked)
+
+/obj/item/clothing/gloves/color/yellow/sprayon/proc/Shocked()
+	shocks_remaining--
+	if(shocks_remaining < 0)
+		qdel(src) //if we run out of uses, the gloves crumble away into nothing, just like my dreams after working with .dm
+
+/obj/item/clothing/gloves/color/yellow/sprayon/dropped()
+	.=..()
+	qdel(src) //loose nodrop items bad
+
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap knockoffs of the coveted ones - no way this can end badly."
 	name = "budget insulated gloves"
@@ -158,11 +205,23 @@
 	transfer_prints = FALSE
 	carrytrait = TRAIT_QUICKER_CARRY
 
+/obj/item/clothing/gloves/color/latex/engineering
+	name = "tinker's gloves"
+	desc = "Overdesigned engineering gloves that have automated construction subrutines dialed in, allowing for faster construction while worn."
+	icon = 'icons/obj/clothing/clockwork_garb.dmi'
+	icon_state = "clockwork_gauntlets"
+	item_state = "clockwork_gauntlets"
+	siemens_coefficient = 0.8
+	permeability_coefficient = 0.3
+	carrytrait = TRAIT_QUICK_BUILD
+	custom_materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
+
 /obj/item/clothing/gloves/color/white
 	name = "white gloves"
 	desc = "These look pretty fancy."
 	icon_state = "white"
 	item_state = "wgloves"
+	custom_price = 200
 
 /obj/effect/spawner/lootdrop/gloves
 	name = "random gloves"

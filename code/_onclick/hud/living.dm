@@ -11,6 +11,7 @@
 	pull_icon.hud = src
 	static_inventory += pull_icon
 
-	healths = new /obj/screen/healths/living()
-	healths.hud = src
-	infodisplay += healths
+	//mob health doll! assumes whatever sprite the mob is
+	healthdoll = new /obj/screen/healthdoll/living()
+	healthdoll.hud = src
+	infodisplay += healthdoll

@@ -139,20 +139,11 @@
 	qdel(src)
 
 
-/obj/structure/bookcase/update_icon()
+/obj/structure/bookcase/update_icon_state()
 	if(contents.len < 5)
 		icon_state = "book-[contents.len]"
 	else
 		icon_state = "book-5"
-
-
-/obj/structure/bookcase/manuals/medical
-	name = "medical manuals bookcase"
-
-/obj/structure/bookcase/manuals/medical/Initialize()
-	. = ..()
-	new /obj/item/book/manual/wiki/medical_cloning(src)
-	update_icon()
 
 
 /obj/structure/bookcase/manuals/engineering
@@ -214,7 +205,7 @@
 
 /obj/item/book/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/pen))
-		if(is_blind(user))
+		if(user.is_blind())
 			to_chat(user, "<span class='warning'>As you are trying to write on the book, you suddenly feel very stupid!</span>")
 			return
 		if(unique)

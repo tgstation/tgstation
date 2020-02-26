@@ -128,7 +128,7 @@
 
 /datum/quirk/phobia/post_add()
 	var/mob/living/carbon/human/H = quirk_holder
-	H.gain_trauma(new /datum/brain_trauma/mild/phobia(H.client.prefs.phobia), TRAUMA_RESILIENCE_ABSOLUTE)
+	H.gain_trauma(new /datum/brain_trauma/mild/phobia(H.client?.prefs.phobia), TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/phobia/remove()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -150,6 +150,9 @@
 	var/mob/living/carbon/human/H = quirk_holder
 
 	wayfinder = new /obj/item/pinpointer/wayfinding
+	wayfinder.owner = H.real_name
+	wayfinder.roundstart = TRUE
+
 	var/list/slots = list(
 		"in your left pocket" = ITEM_SLOT_LPOCKET,
 		"in your right pocket" = ITEM_SLOT_RPOCKET,
