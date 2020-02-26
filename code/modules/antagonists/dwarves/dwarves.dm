@@ -25,5 +25,5 @@
 	to_chat(owner.current, "<span class='warning'>1.You may never kill or maim another dwarf intentionally outside of a duel!</span><br>")
 	to_chat(owner.current, "<span class='warning'>2.Fortune is worth more than spilt blood!</span><br>")
 	to_chat(owner.current, "<span class='warning'>3.Expand your emprire and crush anyone who resists!</span><br>")
-	to_chat(owner.current, "<span class='warning'>4.Non dwarves are to be killed unless they are traders</span><br>")
+	to_chat(owner.current, "<span class='warning'>4.Trade and barter with foreigners, force shall be applied only when they provoke you!</span><br>")
 	to_chat(owner.current, "<span class='warning'>5.You may never leave this ashen land for it is your homeland!</span><br>")
