@@ -143,7 +143,7 @@
   * If an organ exists in the slot requested, return the amount of damage that organ has
   *
   * Arguments:
-  * * inputs - slot (organ slot, like [ORGAN_SLOT_HEART])
+  * * slot - organ slot, like [ORGAN_SLOT_HEART]
   */
 /mob/living/carbon/getOrganLoss(slot)
 	var/obj/item/organ/O = getorganslot(slot)
