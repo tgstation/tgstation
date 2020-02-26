@@ -416,14 +416,7 @@
 				if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
 					return
 				to_chat(usr, "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["criminal"]]")
-				to_chat(usr, "<b>Minor Crimes:</b>")
-				for(var/datum/data/crime/c in R.fields["mi_crim"])
-					to_chat(usr, "<b>Crime:</b> [c.crimeName]")
-					to_chat(usr, "<b>Details:</b> [c.crimeDetails]")
-					to_chat(usr, "Added by [c.author] at [c.time]")
-					to_chat(usr, "----------")
-					to_chat(usr, "<b>Major Crimes:</b>")
-				for(var/datum/data/crime/c in R.fields["ma_crim"])
+				for(var/datum/data/crime/c in R.fields["crim"])
 					to_chat(usr, "<b>Crime:</b> [c.crimeName]")
 					to_chat(usr, "<b>Details:</b> [c.crimeDetails]")
 					to_chat(usr, "Added by [c.author] at [c.time]")
@@ -464,34 +457,18 @@
 				return
 
 			if(href_list["add_crime"])
-				switch(alert("What crime would you like to add?","Security HUD","Minor Crime","Major Crime","Cancel"))
-					if("Minor Crime")
-						var/t1 = stripped_input("Please input minor crime names:", "Security HUD", "", null)
-						var/t2 = stripped_multiline_input("Please input minor crime details:", "Security HUD", "", null)
-						if(!R || !t1 || !t2 || !allowed_access)
-							return
-						if(!H.canUseHUD())
-							return
-						if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
-							return
-						var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, station_time_timestamp())
-						GLOB.data_core.addMinorCrime(R.fields["id"], crime)
-						investigate_log("New Minor Crime: <strong>[t1]</strong>: [t2] | Added to [R.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
-						to_chat(usr, "<span class='notice'>Successfully added a minor crime.</span>")
-						return
-					if("Major Crime")
-						var/t1 = stripped_input("Please input major crime names:", "Security HUD", "", null)
-						var/t2 = stripped_multiline_input("Please input major crime details:", "Security HUD", "", null)
-						if(!R || !t1 || !t2 || !allowed_access)
-							return
-						if(!H.canUseHUD())
-							return
-						if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
-							return
-						var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, station_time_timestamp())
-						GLOB.data_core.addMajorCrime(R.fields["id"], crime)
-						investigate_log("New Major Crime: <strong>[t1]</strong>: [t2] | Added to [R.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
-						to_chat(usr, "<span class='notice'>Successfully added a major crime.</span>")
+				var/t1 = stripped_input("Please input crime names:", "Security HUD", "", null)
+				var/t2 = stripped_multiline_input("Please input crime details:", "Security HUD", "", null)
+				if(!R || !t1 || !t2 || !allowed_access)
+					return
+				if(!H.canUseHUD())
+					return
+				if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
+					return
+				var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, station_time_timestamp())
+				GLOB.data_core.addCrime(R.fields["id"], crime)
+				investigate_log("New Crime: <strong>[t1]</strong>: [t2] | Added to [R.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
+				to_chat(usr, "<span class='notice'>Successfully added a crime.</span>")
 				return
 
 			if(href_list["view_comment"])
