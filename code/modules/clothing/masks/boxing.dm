@@ -33,10 +33,8 @@
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
 	H.add_hud_to(user)
 
-/obj/item/clothing/mask/syndicate_balaclava/dropped(mob/living/carbon/human/user, slot)
+/obj/item/clothing/mask/syndicate_balaclava/dropped(mob/living/carbon/human/user)
 	..()
-	if(!istype(user) || user.mask != src)
-		return
 	to_chat(user, "You pull off the balaclava, and the mask's internal hud system switches off quietly.")
 	REMOVE_TRAIT(user, TRAIT_DIAGNOSTIC_HUD, MASK_TRAIT)
 	REMOVE_TRAIT(user, TRAIT_DISFIGURED, MASK_TRAIT)
