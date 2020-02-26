@@ -18,16 +18,20 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 
-//The malf AI action subtype. All malf actions are subtypes of this.
+/// The malf AI action subtype. All malf actions are subtypes of this.
 /datum/action/innate/ai
 	name = "AI Action"
 	desc = "You aren't entirely sure what this does, but it's very beepy and boopy."
 	background_icon_state = "bg_tech_blue"
 	icon_icon = 'icons/mob/actions/actions_AI.dmi'
-	var/mob/living/silicon/ai/owner_AI //The owner AI, so we don't have to typecast every time
-	var/uses //If we have multiple uses of the same power
-	var/auto_use_uses = TRUE //If we automatically use up uses on each activation
-	var/cooldown_period //If applicable, the time in deciseconds we have to wait before using any more modules
+	/// The owner AI, so we don't have to typecast every time
+	var/mob/living/silicon/ai/owner_AI
+	/// If we have multiple uses of the same power
+	var/uses
+	/// If we automatically use up uses on each activation
+	var/auto_use_uses = TRUE
+	/// If applicable, the time in deciseconds we have to wait before using any more modules
+	var/cooldown_period
 
 /datum/action/innate/ai/Grant(mob/living/L)
 	. = ..()
@@ -58,12 +62,14 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 			to_chat(owner, "<span class='warning'>[name] has run out of uses!</span>")
 		qdel(src)
 
-//Framework for ranged abilities that can have different effects by left-clicking stuff.
+/// Framework for ranged abilities that can have different effects by left-clicking stuff.
 /datum/action/innate/ai/ranged
 	name = "Ranged AI Action"
 	auto_use_uses = FALSE //This is so we can do the thing and disable/enable freely without having to constantly add uses
-	var/obj/effect/proc_holder/ranged_ai/linked_ability //The linked proc holder that contains the actual ability code
-	var/linked_ability_type //The path of our linked ability
+	/// The linked proc holder that contains the actual ability code
+	var/obj/effect/proc_holder/ranged_ai/linked_ability
+	/// The path of our linked ability
+	var/linked_ability_type
 
 /datum/action/innate/ai/ranged/New()
 	if(!linked_ability_type)
@@ -92,10 +98,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 	linked_ability.toggle(owner)
 	return TRUE
 
-//The actual ranged proc holder.
+/// The actual ranged proc holder.
 /obj/effect/proc_holder/ranged_ai
-	var/enable_text = "<span class='notice'>Hello World!</span>" //Appears when the user activates the ability
-	var/disable_text = "<span class='danger'>Goodbye Cruel World!</span>" //Context clues!
+ 	/// Appears when the user activates the ability
+	var/enable_text = "<span class='notice'>Hello World!</span>"
+	/// Appears when the user deactivates the ability
+	var/disable_text = "<span class='danger'>Goodbye Cruel World!</span>"
 	var/datum/action/innate/ai/ranged/attached_action
 
 /obj/effect/proc_holder/ranged_ai/Destroy()
@@ -114,11 +122,16 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 	var/category = "generic category"
 	var/description = "generic description"
 	var/cost = 5
-	var/one_purchase = FALSE //If this module can only be purchased once. This always applies to upgrades, even if the variable is set to false.
-	var/power_type = /datum/action/innate/ai //If the module gives an active ability, use this. Mutually exclusive with upgrade.
-	var/upgrade = FALSE //If the module gives a passive upgrade, use this. Mutually exclusive with power_type.
-	var/unlock_text = "<span class='notice'>Hello World!</span>" //Text shown when an ability is unlocked
-	var/unlock_sound //Sound played when an ability is unlocked
+	/// If this module can only be purchased once. This always applies to upgrades, even if the variable is set to false.
+	var/one_purchase = FALSE
+	/// If the module gives an active ability, use this. Mutually exclusive with upgrade.
+	var/power_type = /datum/action/innate/ai
+	/// If the module gives a passive upgrade, use this. Mutually exclusive with power_type.
+	var/upgrade = FALSE
+	/// Text shown when an ability is unlocked
+	var/unlock_text = "<span class='notice'>Hello World!</span>"
+	/// Sound played when an ability is unlocked
+	var/unlock_sound
 
  /// Applies upgrades
 /datum/AI_Module/proc/upgrade(mob/living/silicon/ai/AI)
@@ -132,11 +145,9 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 /datum/AI_Module/utility
 	category = "Utility Modules"
 
-/// One time upgrades, applied instantly upon purchase and various AI abilities and assets.
+/// Modules that are improving AI abilities and assets
 /datum/AI_Module/upgrade
 	category = "Upgrade Modules"
-	one_purchase = TRUE
-	upgrade = TRUE
 
 /// Doomsday Device: Starts the self-destruct timer. It can only be stopped by killing the AI completely.
 /datum/AI_Module/destructive/nuke_station
@@ -711,6 +722,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 	description = "Install broad-spectrum scanning and electrical redundancy firmware to the camera network, enabling EMP-proofing and light-amplified X-ray vision. Upgrade is done immediately upon purchase." //I <3 pointless technobabble
 	//This used to have motion sensing as well, but testing quickly revealed that giving it to the whole cameranet is PURE HORROR.
 	cost = 35 //Decent price for omniscience!
+	upgrade = TRUE
 	unlock_text = "<span class='notice'>OTA firmware distribution complete! Cameras upgraded: CAMSUPGRADED. Light amplification system online.</span>"
 	unlock_sound = 'sound/items/rped.ogg'
 
@@ -744,6 +756,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 	name = "AI Turret Upgrade"
 	description = "Improves the power and health of all AI turrets. This effect is permanent. Upgrade is done immediately upon purchase."
 	cost = 30
+	upgrade = TRUE
 	unlock_text = "<span class='notice'>You establish a power diversion to your turrets, upgrading their health and damage.</span>"
 	unlock_sound = 'sound/items/rped.ogg'
 
@@ -753,10 +766,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 		turret.lethal_projectile = /obj/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
 		turret.lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 
+/// Enhanced Surveillance: Enables AI to hear conversations going on near its active vision.
 /datum/AI_Module/upgrade/eavesdrop
 	name = "Enhanced Surveillance"
 	description = "Via a combination of hidden microphones and lip reading software, you are able to use your cameras to listen in on conversations. Upgrade is done immediately upon purchase."
 	cost = 30
+	upgrade = TRUE
 	unlock_text = "<span class='notice'>OTA firmware distribution complete! Cameras upgraded: Enhanced surveillance package online.</span>"
 	unlock_sound = 'sound/items/rped.ogg'
 
@@ -770,6 +785,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 	description = "Allows you to hack into a mech's onboard computer, shunting all processes into it and ejecting any occupants. Once uploaded to the mech, it is impossible to leave.\
 	Do not allow the mech to leave the station's vicinity or allow it to be destroyed. Upgrade is done immediately upon purchase."
 	cost = 30
+	upgrade = TRUE
 	unlock_text = "<span class='notice'>Virus package compiled. Select a target mech at any time. <b>You must remain on the station at all times. Loss of signal will result in total system lockout.</b></span>"
 	unlock_sound = 'sound/mecha/nominal.ogg'
 

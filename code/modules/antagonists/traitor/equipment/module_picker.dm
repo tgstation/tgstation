@@ -26,7 +26,7 @@
 
 	for(var/path in GLOB.malf_modules)
 		var/datum/AI_Module/AM = new path
-		if(AM.name == "generic module")
+		if((AM.power_type == /datum/action/innate/ai) && !AM.upgrade)
 			continue
 		if(!filtered_modules[AM.category])
 			filtered_modules[AM.category] = list()
@@ -107,8 +107,10 @@
 	if(AM.upgrade) //upgrade and upgrade() are separate, be careful!
 		AM.upgrade(AI)
 		possible_modules[AM.category] -= AM
-		to_chat(AI, AM.unlock_text)
-		AI.playsound_local(AI, AM.unlock_sound, 50, 0)
+		if(AM.unlock_text)
+			to_chat(AI, AM.unlock_text)
+		if(AM.unlock_sound)
+			AI.playsound_local(AI, AM.unlock_sound, 50, 0)
 		update_static_data(AI)
 	else
 		if(AM.power_type)
