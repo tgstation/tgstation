@@ -82,6 +82,7 @@
 				/obj/item/reagent_containers/medigel,
 				/obj/item/reagent_containers/pill,
 				/obj/item/reagent_containers/chem_pack,
+				/obj/item/reagent_containers/hypospray/medipen,
 				/obj/item/reagent_containers/blood)
 
 /obj/item/borg/apparatus/beaker/medical/extra
