@@ -139,4 +139,3 @@
 	name = "clown envirogloves"
 	icon_state = "clownplasma"
 	item_state = "clownplasma"
-
