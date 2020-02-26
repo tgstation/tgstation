@@ -19,7 +19,7 @@ export const MiningVendor = props => {
             {' '}
             <b>{data.user.job || "Unemployed"}</b>!
             <br />
-          Your balance is <b>{data.user.points} mining points</b>.
+          Your account balance is <b>{data.user.credits || 0} credits</b>.
           </Box>
         ) || (
           <Box color="light-gray">
