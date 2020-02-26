@@ -20,10 +20,10 @@
 	color = "#DB90C6"
 
 /datum/reagent/medicine/leporazine/on_mob_life(mob/living/carbon/M)
-	if(M.bodytemperature > BODYTEMP_NORMAL)
-		M.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
-	else if(M.bodytemperature < (BODYTEMP_NORMAL + 1))
-		M.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	if(M.bodytemperature > M.get_body_temp_normal(apply_change=FALSE))
+		M.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal(apply_change=FALSE))
+	else if(M.bodytemperature < (M.get_body_temp_normal(apply_change=FALSE) + 1))
+		M.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal(apply_change=FALSE))
 	..()
 
 /datum/reagent/medicine/adminordrazine //An OP chemical for admins
