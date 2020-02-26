@@ -19,8 +19,8 @@
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 
 /obj/item/clothing/shoes/combat/sneakboots
-	name = "combat boots"
-	desc = "High speed, low drag combat boots."
+	name = "sneakboots"
+	desc = "These boots have special noise cancelling soles. Perfect for stealth, if it wasn't for the color scheme."
 	icon_state = "sneakboots"
 	item_state = "sneakboots"
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
