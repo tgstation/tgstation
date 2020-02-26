@@ -170,7 +170,7 @@
 	. = ..()
 
 	if(href_list["list_armor"])
-		var/list/readout = list("<span class='notice'><b>PROTECTION CLASSES</b>")
+		var/list/readout = list("<span class='notice'><b>PROTECTION CLASSES (I-V)</b>")
 		for(var/dam_type in armor_list)
 			var/armor_amount = armor_list[dam_type]
 			readout += "\n[dam_type] [number_to_level(armor_amount)]" //e.g. BOMB IV
