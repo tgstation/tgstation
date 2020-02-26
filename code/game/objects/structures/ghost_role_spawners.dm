@@ -61,6 +61,8 @@
 	"Plasma") + pick("Seeker","Hunter","Willed","Shield","Axe","Pickaxe","Bat","Tendril","Death","Lava","Man","Miner","Wised")
 
 	new_spawn.fully_replace_character_name(null,dwarven_name)
+	new_spawn.mind.add_antag_datum(/datum/antagonist/dwarf, team)
+
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
