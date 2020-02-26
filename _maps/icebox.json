@@ -1,0 +1,22 @@
+{
+   "map_name":"Ice BoxStation",
+   "map_path":"map_files/IceBox",
+   "map_file":"IceBox.dmm",
+   "space_ruin_levels":0,
+   "space_empty_levels":0,
+   "shuttles":{
+      "cargo":"cargo_box",
+      "ferry":"ferry_fancy",
+      "whiteship":"whiteship_box",
+      "emergency":"emergency_box"
+   },
+   "traits":[
+      {
+         "Down":1,
+         "Baseturf":"/turf/open/openspace",
+         "Linkage":null,
+         "Weather_Snowstorm":true
+      }
+   ],
+   "minetype":"icemoon"
+}

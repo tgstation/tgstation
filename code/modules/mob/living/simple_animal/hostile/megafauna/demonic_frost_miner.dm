@@ -110,7 +110,7 @@ Difficulty: Very Hard
 		chosen_attack = rand(1, 1)
 		switch(chosen_attack)
 			if(1)
-				aoe_stomp()
+				to_chat(src, "dab")
 
 /obj/projectile/frost_orb
 	name = "frost orb"
@@ -230,22 +230,6 @@ Difficulty: Very Hard
 			P.fire()
 		SLEEP_CHECK_DEATH(8)
 	SetRecoveryTime(15, 20)
-
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/aoe_stomp()
-	var/max_dist = 1
-	for(var/turf/T in RANGE_TURFS(5, src))
-		var/dist = get_dist(src, T)
-		if(dist > max_dist)
-			max_dist = dist
-			sleep(2)
-		for(var/mob/living/L in T)
-			shake_camera(L, 4, 3)
-			L.adjustBruteLoss(20)
-			var/turf/throw_at = get_ranged_target_turf(L, get_dir(src, L), 5)
-			L.throw_at(throw_at, 6, EXPLOSION_THROW_SPEED)
-		var/x_diff = T.x - src.x
-		var/y_diff = T.y - src.y
-		animate(T, pixel_x = x_diff * 1/8, pixel_y = y_diff * 1/8, time = 1, loop = 4, easing = ELASTIC_EASING)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/check_enraged()
 	if(health <= maxHealth*0.25 && !enraged)

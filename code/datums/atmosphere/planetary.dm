@@ -48,6 +48,6 @@
 	minimum_pressure = HAZARD_LOW_PRESSURE + 10
 	maximum_pressure = LAVALAND_EQUIPMENT_EFFECT_PRESSURE - 1
 
-	minimum_temp = BODYTEMP_COLD_DAMAGE_LIMIT + 1
-	maximum_temp = BODYTEMP_COLD_DAMAGE_LIMIT + 20
+	minimum_temp = FIRE_SUIT_MIN_TEMP_PROTECT + 1
+	maximum_temp = FIRE_SUIT_MIN_TEMP_PROTECT + 5
 
