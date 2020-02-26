@@ -267,6 +267,6 @@
 /datum/map_template/ruin/lavaland/library
 	name = "Buried Library"
 	id = "buriedlibrary"
-	description = "A once grand library, now lost in the confines of the Ice Moon."
-	always_place = TRUE
+	description = "A once grand library, now lost to the confines of the Ice Moon."
 	allow_duplicates = FALSE
+	cost = 10

@@ -79,9 +79,8 @@
 /turf/closed/mineral/snowmountain,
 /area/lavaland/surface/outdoors/explored)
 "at" = (
-/obj/item/feather,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating/asteroid/snow,
+/obj/structure/fluff/paper,
+/turf/open/floor/wood,
 /area/ruin/unpowered/buried_library)
 "au" = (
 /turf/closed/mineral/snowmountain,
@@ -123,9 +122,8 @@
 /turf/open/floor/carpet/black,
 /area/ruin/unpowered/buried_library)
 "aE" = (
-/mob/living/simple_animal/pet/fox{
-	health = 0
-	},
+/obj/item/stack/sheet/mineral/wood,
+/obj/item/book/manual/random,
 /turf/open/floor/wood,
 /area/ruin/unpowered/buried_library)
 "aF" = (
@@ -162,22 +160,15 @@
 /turf/open/floor/wood,
 /area/ruin/unpowered/buried_library)
 "aM" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/mob/living/simple_animal/pet/fox{
-	health = 0
-	},
-/turf/open/floor/wood,
+/obj/item/feather,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/unpowered/buried_library)
 "aN" = (
 /obj/structure/statue/sandstone/venus,
 /turf/open/floor/carpet/black,
 /area/ruin/unpowered/buried_library)
 "aO" = (
-/obj/structure/fluff/paper,
-/obj/structure/fluff/paper{
-	icon_state = "paper";
-	dir = 1
-	},
+/mob/living/simple_animal/pet/fox,
 /turf/open/floor/wood,
 /area/ruin/unpowered/buried_library)
 "aP" = (
@@ -279,10 +270,8 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/ruin/unpowered/buried_library)
 "bh" = (
-/obj/structure/fluff/paper{
-	icon_state = "paper";
-	dir = 4
-	},
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/simple_animal/pet/fox,
 /turf/open/floor/wood,
 /area/ruin/unpowered/buried_library)
 "bi" = (
@@ -291,15 +280,8 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/ruin/unpowered/buried_library)
 "bj" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/paper{
-	icon_state = "paper";
-	dir = 1
-	},
-/mob/living/simple_animal/pet/fox{
-	health = 0
-	},
-/turf/open/floor/wood,
+/obj/item/stack/sheet/mineral/wood,
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/unpowered/buried_library)
 "bk" = (
 /obj/structure/fluff/paper{
@@ -372,6 +354,23 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/unpowered/buried_library)
+"bA" = (
+/obj/structure/fluff/paper/stack,
+/turf/open/floor/plating,
+/area/ruin/unpowered/buried_library)
+"bB" = (
+/obj/structure/fluff/paper/stack,
+/turf/open/floor/carpet/black,
+/area/ruin/unpowered/buried_library)
+"bC" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper{
+	icon_state = "paper";
+	dir = 1
+	},
+/mob/living/simple_animal/pet/fox,
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
 
 (1,1,1) = {"
 aa
@@ -384,10 +383,10 @@ aa
 aa
 aa
 aa
-au
-au
-au
-au
+aa
+aa
+aa
+aa
 as
 as
 as
@@ -407,12 +406,12 @@ aa
 aa
 aa
 aa
+aa
+aa
 au
 au
 au
-ad
-ad
-ad
+au
 au
 ac
 ba
@@ -433,15 +432,15 @@ aa
 aa
 au
 au
-ad
 au
-ad
+au
+bj
 au
 au
 ad
 aU
 ae
-ao
+af
 bk
 ac
 as
@@ -457,15 +456,15 @@ aa
 aa
 au
 au
+aR
 ad
 ad
-au
-ad
+ae
 aP
 av
 au
 ah
-ao
+aL
 ah
 aT
 ac
@@ -482,7 +481,7 @@ aa
 au
 au
 ad
-at
+aM
 ae
 aQ
 ah
@@ -506,10 +505,10 @@ aa
 as
 ac
 ad
-au
+ae
 ad
 aC
-aE
+aO
 ah
 aU
 ah
@@ -531,7 +530,7 @@ aa
 as
 ac
 au
-ad
+aU
 au
 ao
 aR
@@ -542,7 +541,7 @@ ae
 ah
 aZ
 ah
-bj
+bC
 ac
 as
 as
@@ -565,9 +564,9 @@ aX
 ad
 ao
 ae
-aT
+ao
 ah
-aq
+ae
 ac
 bv
 bu
@@ -587,7 +586,7 @@ aD
 aD
 bz
 aD
-aD
+bB
 au
 ae
 ao
@@ -616,7 +615,7 @@ aw
 au
 ao
 af
-ae
+aR
 ae
 bq
 ae
@@ -632,7 +631,7 @@ al
 al
 ae
 ah
-ae
+aR
 aD
 ad
 aD
@@ -655,12 +654,12 @@ ab
 aI
 ar
 al
-aq
-aV
+aR
+aE
 af
 aD
 aH
-aw
+bA
 aY
 aD
 au
@@ -680,7 +679,7 @@ am
 aJ
 aW
 ay
-aq
+ae
 ah
 ao
 ae
@@ -705,11 +704,11 @@ aS
 aW
 aK
 al
-aO
+at
 ah
 ad
 ah
-aM
+bh
 aj
 az
 ah
@@ -782,7 +781,7 @@ as
 ac
 be
 bf
-bh
+ae
 aF
 ae
 aR
