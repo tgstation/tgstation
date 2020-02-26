@@ -21,7 +21,7 @@
 	speed = 0
 	maxHealth = 25
 	health = 25
-	spacewalk = TRUE
+	innate_traits = list(TRAIT_SPACEWALK)
 	search_objects = 1
 	wanted_objects = list(/obj/item/storage/cans)
 

@@ -9,7 +9,7 @@
 	mob_biotypes = MOB_SPIRIT
 	maxHealth = 40
 	health = 40
-	spacewalk = TRUE
+	innate_traits = list(TRAIT_SPACEWALK)
 	healable = 0
 	speak_emote = list("hisses")
 	emote_hear = list("wails.","screeches.")

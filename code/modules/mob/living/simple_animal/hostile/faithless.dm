@@ -15,7 +15,7 @@
 	speed = 0
 	maxHealth = 80
 	health = 80
-	spacewalk = TRUE
+	innate_traits = list(TRAIT_SPACEWALK)
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 

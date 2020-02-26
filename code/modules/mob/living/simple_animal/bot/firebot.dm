@@ -13,7 +13,7 @@
 	anchored = FALSE
 	health = 25
 	maxHealth = 25
-	spacewalk = TRUE
+	innate_traits = list(TRAIT_SPACEWALK)
 
 	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING

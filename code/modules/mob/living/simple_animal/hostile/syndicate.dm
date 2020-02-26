@@ -59,7 +59,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
-	spacewalk = TRUE
+	innate_traits = list(TRAIT_SPACEWALK)
 
 /mob/living/simple_animal/hostile/syndicate/space/Initialize()
 	. = ..()
@@ -93,7 +93,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
-	spacewalk = TRUE
+	innate_traits = list(TRAIT_SPACEWALK)
 	projectile_deflect_chance = 50
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/Initialize()
@@ -145,7 +145,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
-	spacewalk = TRUE
+	innate_traits = list(TRAIT_SPACEWALK)
 	projectile_deflect_chance = 50
 
 /mob/living/simple_animal/hostile/syndicate/melee/sword/space/Initialize()
@@ -192,7 +192,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
-	spacewalk = TRUE
+	innate_traits = list(TRAIT_SPACEWALK)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Initialize()
 	. = ..()
@@ -225,7 +225,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
-	spacewalk = TRUE
+	innate_traits = list(TRAIT_SPACEWALK)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/space/Initialize()
 	. = ..()
@@ -255,7 +255,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
-	spacewalk = TRUE
+	innate_traits = list(TRAIT_SPACEWALK)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/shotgun/space/Initialize()
 	. = ..()

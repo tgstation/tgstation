@@ -32,7 +32,7 @@
 	response_harm_simple = "squash"
 	maxHealth = 10
 	health = 10
-	spacewalk = TRUE
+	innate_traits = list(TRAIT_SPACEWALK)
 	faction = list("hostile")
 	move_to_delay = 0
 	obj_damage = 0

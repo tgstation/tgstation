@@ -22,6 +22,9 @@
 	var/datum/mind/mind
 	var/static/next_mob_id = 0
 
+	///traits this mob will get on creation, LAZYLIST
+	var/list/innate_traits
+
 	/// List of movement speed modifiers applying to this mob
 	var/list/movespeed_modification				//Lazy list, see mob_movespeed.dm
 	/// The calculated mob speed slowdown based on the modifiers list
@@ -67,9 +70,6 @@
 	var/eye_blurry = 0		//Carbon
 	/// What is the mobs real name (name is overridden for disguises etc)
 	var/real_name = null
-
-	/// can this mob move freely in space (should be a trait)
-	var/spacewalk = FALSE
 
 	/**
 	  * back up of the real name during admin possession

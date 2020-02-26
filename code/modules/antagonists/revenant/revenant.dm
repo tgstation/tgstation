@@ -23,7 +23,7 @@
 	maxHealth = INFINITY
 	layer = GHOST_LAYER
 	healable = FALSE
-	spacewalk = TRUE
+	innate_traits = list(TRAIT_SPACEWALK)
 	sight = SEE_SELF
 	throwforce = 0
 

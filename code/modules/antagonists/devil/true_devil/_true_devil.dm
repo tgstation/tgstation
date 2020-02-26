@@ -16,7 +16,7 @@
 	pass_flags =  0
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = CANPUSH
-	spacewalk = TRUE
+	innate_traits = list(TRAIT_SPACEWALK)
 	mob_size = MOB_SIZE_LARGE
 	held_items = list(null, null)
 	bodyparts = list(/obj/item/bodypart/chest/devil, /obj/item/bodypart/head/devil, /obj/item/bodypart/l_arm/devil,

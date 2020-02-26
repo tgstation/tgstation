@@ -14,7 +14,7 @@
 	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
 	speed = 0
-	spacewalk = TRUE
+	innate_traits = list(TRAIT_SPACEWALK)
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
 	status_flags = CANPUSH
