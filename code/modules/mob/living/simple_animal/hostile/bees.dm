@@ -160,10 +160,9 @@
 				L.reagents.add_reagent(beegent.type, rand(1,5))
 
 /mob/living/simple_animal/hostile/poison/bees/inject_poison(mob/living/L)
-	if(beegent && istype(L))
-		if(L.reagents)
-			beegent.reaction_mob(L, INJECT)
-			L.reagents.add_reagent(beegent.type, rand(1,5))
+	if(beegent && istype(L) && L.reagents)
+		beegent.reaction_mob(L, INJECT)
+		L.reagents.add_reagent(beegent.type, rand(1,5))
 
 /mob/living/simple_animal/hostile/poison/bees/proc/assign_reagent(datum/reagent/R)
 	if(istype(R))
