@@ -48,6 +48,7 @@
 	Last thing you remember is a bright light before you awakened from slumber, even tough the sarcophagus is damaged it can still revive your dead brotheren. \
 	Now you are filled with the desire to expand and regrow your civilization once more. Expand and crush whoever steps on your path, but remember Gold is worth more than blood!"
 	assignedrole = "Dwarf"
+	var/datum/team/dwarves/team
 
 /obj/effect/mob_spawn/human/dwarven_sarcophagus/Initialize(mapload)
 	. = ..()
