@@ -263,3 +263,10 @@
 	always_place = TRUE
 	allow_duplicates = FALSE
 	always_spawn_with = list(/datum/map_template/ruin/space/kinggoatarena = PLACE_ISOLATED)
+
+/datum/map_template/ruin/lavaland/library
+	name = "Buried Library"
+	id = "buriedlibrary"
+	description = "A once grand library, now lost in the confines of the Ice Moon."
+	always_place = TRUE
+	allow_duplicates = FALSE

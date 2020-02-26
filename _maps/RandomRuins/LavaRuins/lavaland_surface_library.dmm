@@ -1,0 +1,850 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/template_noop,
+/area/template_noop)
+"ab" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/documents/syndicate/mining,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plasteel/cult,
+/area/ruin/unpowered/buried_library)
+"ac" = (
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered/buried_library)
+"ad" = (
+/turf/open/floor/plating/asteroid/snow,
+/area/ruin/unpowered/buried_library)
+"ae" = (
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"af" = (
+/obj/item/stack/sheet/mineral/wood,
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"ag" = (
+/obj/item/feather,
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"ah" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"ai" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/paper/crumpled/fluff/stations/lavaland/library/diary2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plasteel/cult,
+/area/ruin/unpowered/buried_library)
+"aj" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/buried_library)
+"ak" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/paper/fluff/ruins/oldstation/protosing,
+/turf/open/floor/plating/asteroid/snow,
+/area/ruin/unpowered/buried_library)
+"al" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/unpowered/buried_library)
+"am" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/book_of_babel,
+/turf/open/floor/plasteel/cult,
+/area/ruin/unpowered/buried_library)
+"an" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/asteroid/snow,
+/area/ruin/unpowered/buried_library)
+"ao" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"ap" = (
+/obj/item/stack/sheet/mineral/wood,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"aq" = (
+/obj/structure/fluff/paper{
+	icon_state = "paper";
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"ar" = (
+/turf/open/floor/plasteel/cult,
+/area/ruin/unpowered/buried_library)
+"as" = (
+/turf/closed/mineral/snowmountain,
+/area/lavaland/surface/outdoors/explored)
+"at" = (
+/obj/item/feather,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/asteroid/snow,
+/area/ruin/unpowered/buried_library)
+"au" = (
+/turf/closed/mineral/snowmountain,
+/area/ruin/unpowered/buried_library)
+"av" = (
+/obj/structure/bookcase/random,
+/turf/closed/mineral/snowmountain,
+/area/ruin/unpowered/buried_library)
+"aw" = (
+/turf/open/floor/plating,
+/area/ruin/unpowered/buried_library)
+"ax" = (
+/obj/item/book/manual/random,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/asteroid/snow,
+/area/ruin/unpowered/buried_library)
+"ay" = (
+/obj/machinery/door/keycard/library,
+/turf/open/floor/plasteel/cult,
+/area/ruin/unpowered/buried_library)
+"az" = (
+/obj/item/paper/crumpled/fluff/stations/lavaland/library/diary,
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"aA" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/unpowered/buried_library)
+"aB" = (
+/obj/structure/girder,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/buried_library)
+"aC" = (
+/obj/item/stack/sheet/mineral/wood,
+/obj/item/book/manual/random,
+/turf/open/floor/plating/asteroid/snow,
+/area/ruin/unpowered/buried_library)
+"aD" = (
+/turf/open/floor/carpet/black,
+/area/ruin/unpowered/buried_library)
+"aE" = (
+/mob/living/simple_animal/pet/fox{
+	health = 0
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"aF" = (
+/obj/item/keycard/library,
+/turf/closed/mineral/snowmountain,
+/area/ruin/unpowered/buried_library)
+"aG" = (
+/obj/structure/table/bronze,
+/obj/item/stack/ore/slag,
+/turf/open/floor/carpet/black,
+/area/ruin/unpowered/buried_library)
+"aH" = (
+/obj/structure/table/bronze,
+/obj/item/statuebust/hippocratic,
+/turf/open/floor/carpet/black,
+/area/ruin/unpowered/buried_library)
+"aI" = (
+/obj/effect/mob_spawn/human/skeleton,
+/obj/item/clothing/head/rice_hat,
+/turf/open/floor/plasteel/cult,
+/area/ruin/unpowered/buried_library)
+"aJ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plasteel/cult,
+/area/ruin/unpowered/buried_library)
+"aK" = (
+/obj/item/feather,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plasteel/cult,
+/area/ruin/unpowered/buried_library)
+"aL" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper/stack,
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"aM" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/simple_animal/pet/fox{
+	health = 0
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"aN" = (
+/obj/structure/statue/sandstone/venus,
+/turf/open/floor/carpet/black,
+/area/ruin/unpowered/buried_library)
+"aO" = (
+/obj/structure/fluff/paper,
+/obj/structure/fluff/paper{
+	icon_state = "paper";
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"aP" = (
+/obj/item/book/manual/random,
+/turf/open/floor/plating/asteroid/snow,
+/area/ruin/unpowered/buried_library)
+"aQ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/paper/fluff/awaymissions/moonoutpost19/research/larva_autopsy,
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"aR" = (
+/obj/structure/fluff/paper/stack,
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"aS" = (
+/obj/structure/table/wood/fancy/black,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/paper/secretrecipe,
+/obj/item/flashlight/lantern/jade{
+	on = 1
+	},
+/turf/open/floor/plasteel/cult,
+/area/ruin/unpowered/buried_library)
+"aT" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper,
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"aU" = (
+/obj/structure/fluff/paper/stack,
+/turf/open/floor/plating/asteroid/snow,
+/area/ruin/unpowered/buried_library)
+"aV" = (
+/obj/item/stack/sheet/mineral/wood,
+/obj/structure/fluff/paper/stack,
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"aW" = (
+/obj/structure/fluff/paper/stack,
+/turf/open/floor/plasteel/cult,
+/area/ruin/unpowered/buried_library)
+"aX" = (
+/obj/structure/table/bronze,
+/obj/item/statuebust,
+/turf/open/floor/plating,
+/area/ruin/unpowered/buried_library)
+"aY" = (
+/obj/structure/table_frame/wood,
+/turf/open/floor/plating,
+/area/ruin/unpowered/buried_library)
+"aZ" = (
+/obj/structure/fluff/paper/stack,
+/obj/structure/fluff/paper,
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"ba" = (
+/obj/structure/barricade/wooden/snowed,
+/turf/open/floor/plating/asteroid/snow,
+/area/ruin/unpowered/buried_library)
+"bb" = (
+/obj/item/paper/fluff/ruins/oldstation/protogun,
+/turf/open/floor/plating/asteroid/snow,
+/area/ruin/unpowered/buried_library)
+"bc" = (
+/obj/item/feather,
+/obj/structure/fluff/paper,
+/obj/structure/fluff/paper{
+	icon_state = "paper";
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"bd" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper{
+	icon_state = "paper";
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"be" = (
+/obj/structure/fluff/paper{
+	icon_state = "paper";
+	dir = 5
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"bf" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper{
+	icon_state = "paper";
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"bg" = (
+/obj/structure/fluff/paper,
+/turf/open/floor/plating/asteroid/snow,
+/area/ruin/unpowered/buried_library)
+"bh" = (
+/obj/structure/fluff/paper{
+	icon_state = "paper";
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"bi" = (
+/obj/item/book/manual/random,
+/obj/item/stack/sheet/mineral/wood,
+/turf/open/floor/plating/asteroid/snow,
+/area/ruin/unpowered/buried_library)
+"bj" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper{
+	icon_state = "paper";
+	dir = 1
+	},
+/mob/living/simple_animal/pet/fox{
+	health = 0
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"bk" = (
+/obj/structure/fluff/paper{
+	icon_state = "paper";
+	dir = 10
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"bl" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper,
+/turf/open/floor/plating/asteroid/snow,
+/area/ruin/unpowered/buried_library)
+"bm" = (
+/obj/structure/fluff/paper/stack,
+/turf/closed/mineral/snowmountain,
+/area/ruin/unpowered/buried_library)
+"bn" = (
+/obj/item/book/manual/random,
+/turf/closed/mineral/snowmountain,
+/area/ruin/unpowered/buried_library)
+"bo" = (
+/obj/item/storage/box/fountainpens,
+/turf/closed/mineral/snowmountain,
+/area/ruin/unpowered/buried_library)
+"bp" = (
+/obj/item/stack/sheet/mineral/wood,
+/turf/closed/mineral/snowmountain,
+/area/ruin/unpowered/buried_library)
+"bq" = (
+/obj/structure/mineral_door/wood,
+/obj/structure/barricade/wooden/crude/snow,
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"br" = (
+/obj/structure/girder,
+/turf/closed/mineral/snowmountain,
+/area/ruin/unpowered/buried_library)
+"bs" = (
+/obj/item/stack/sheet/mineral/wood,
+/turf/closed/mineral/snowmountain,
+/area/lavaland/surface/outdoors/explored)
+"bt" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/template_noop,
+/area/template_noop)
+"bu" = (
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/floor/plating/asteroid/snow,
+/area/lavaland/surface/outdoors/explored)
+"bv" = (
+/obj/structure/girder,
+/turf/open/floor/plating/asteroid/snow,
+/area/ruin/unpowered/buried_library)
+"bw" = (
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/floor/wood,
+/area/lavaland/surface/outdoors/explored)
+"bx" = (
+/obj/item/stack/sheet/mineral/wood,
+/turf/open/floor/plating/asteroid/snow,
+/area/lavaland/surface/outdoors/explored)
+"by" = (
+/obj/structure/statue/bronze/marx,
+/turf/open/floor/carpet/black,
+/area/ruin/unpowered/buried_library)
+"bz" = (
+/obj/item/flashlight/lantern/jade{
+	on = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered/buried_library)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+au
+au
+au
+au
+as
+as
+as
+as
+as
+as
+as
+bt
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+au
+au
+au
+ad
+ad
+ad
+au
+ac
+ba
+ac
+ac
+ac
+as
+as
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+au
+au
+ad
+au
+ad
+au
+au
+ad
+aU
+ae
+ao
+bk
+ac
+as
+as
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+au
+au
+ad
+ad
+au
+ad
+aP
+av
+au
+ah
+ao
+ah
+aT
+ac
+as
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+au
+au
+ad
+at
+ae
+aQ
+ah
+au
+av
+bb
+ah
+aT
+ah
+au
+ac
+as
+as
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+aa
+aa
+as
+ac
+ad
+au
+ad
+aC
+aE
+ah
+aU
+ah
+aA
+ah
+ao
+ah
+aq
+ac
+as
+as
+as
+"}
+(7,1,1) = {"
+aa
+aa
+aa
+aa
+as
+ac
+au
+ad
+au
+ao
+aR
+ao
+aA
+ao
+ae
+ah
+aZ
+ah
+bj
+ac
+as
+as
+as
+"}
+(8,1,1) = {"
+aa
+aa
+aa
+aa
+as
+au
+au
+av
+aA
+ad
+aG
+aD
+aX
+ad
+ao
+ae
+aT
+ah
+aq
+ac
+bv
+bu
+as
+"}
+(9,1,1) = {"
+aa
+aa
+aa
+aa
+as
+ac
+ak
+av
+ax
+aD
+aD
+bz
+aD
+aD
+au
+ae
+ao
+ae
+ao
+ac
+an
+bw
+bu
+"}
+(10,1,1) = {"
+aa
+aa
+aa
+as
+as
+ac
+ap
+an
+au
+aD
+aD
+aN
+ad
+aw
+au
+ao
+af
+ae
+ae
+bq
+ae
+bx
+as
+"}
+(11,1,1) = {"
+aa
+al
+al
+al
+al
+al
+ae
+ah
+ae
+aD
+ad
+aD
+aD
+by
+ao
+aw
+ao
+ae
+bm
+ac
+ae
+bu
+as
+"}
+(12,1,1) = {"
+as
+al
+ab
+aI
+ar
+al
+aq
+aV
+af
+aD
+aH
+aw
+aY
+aD
+au
+ae
+aU
+ah
+ag
+br
+ac
+as
+as
+"}
+(13,1,1) = {"
+as
+al
+am
+aJ
+aW
+ay
+aq
+ah
+ao
+ae
+ao
+ae
+af
+an
+bg
+ah
+au
+ah
+bl
+ac
+as
+as
+as
+"}
+(14,1,1) = {"
+as
+al
+aS
+aW
+aK
+al
+aO
+ah
+ad
+ah
+aM
+aj
+az
+ah
+au
+ah
+au
+bi
+aT
+ac
+as
+aa
+aa
+"}
+(15,1,1) = {"
+as
+al
+al
+ai
+ar
+al
+bc
+aj
+aL
+ah
+aA
+ah
+ao
+ah
+au
+au
+bo
+au
+au
+au
+as
+aa
+aa
+"}
+(16,1,1) = {"
+as
+as
+al
+al
+al
+al
+bd
+ah
+ao
+ah
+ao
+aV
+au
+ah
+an
+au
+bm
+bp
+au
+br
+bs
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+as
+as
+as
+as
+ac
+be
+bf
+bh
+aF
+ae
+aR
+ae
+an
+au
+bn
+au
+as
+as
+as
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aa
+aa
+as
+ac
+ac
+ac
+ac
+ac
+ac
+ba
+ac
+ac
+aB
+as
+aa
+as
+aa
+aa
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+as
+as
+as
+as
+as
+as
+aa
+as
+as
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

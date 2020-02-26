@@ -350,6 +350,12 @@
 	item_state = "syndilantern"
 	brightness_on = 10
 
+/obj/item/flashlight/lantern/jade
+	name = "jade lantern"
+	desc = "An ornate, green lantern."
+	color = LIGHT_COLOR_GREEN
+	light_color = LIGHT_COLOR_GREEN
+
 /obj/item/flashlight/slime
 	gender = PLURAL
 	name = "glowing slime extract"
