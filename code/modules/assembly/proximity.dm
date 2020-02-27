@@ -124,9 +124,8 @@
 
 /obj/item/assembly/prox_sensor/ui_data(mob/user)
 	var/list/data = list()
-	var/time_left = time
-	data["seconds"] = round(time_left % 60)
-	data["minutes"] = round((time_left - data["seconds"]) / 60)
+	data["seconds"] = round(time % 60)
+	data["minutes"] = round((time - data["seconds"]) / 60)
 	data["timing"] = timing
 	data["scanning"] = scanning
 	data["sensitivity"] = sensitivity
@@ -152,6 +151,6 @@
 		if("input")
 			var/value = text2num(params["adjust"])
 			if(value)
-				var/newtime = round(time+value)
-				time = CLAMP(newtime, 0, 600)
+				value = round(time + value)
+				time = clamp(value, 0, 600)
 				. = TRUE

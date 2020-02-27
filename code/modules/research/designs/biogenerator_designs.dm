@@ -10,6 +10,14 @@
 	make_reagents = list(/datum/reagent/consumable/milk = 10)
 	category = list("initial","Food")
 
+/datum/design/soymilk
+	name = "10u Soy Milk"
+	id = "soymilk"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass= 20)
+	make_reagents = list(/datum/reagent/consumable/soymilk = 10)
+	category = list("initial","Food")
+
 /datum/design/ethanol
 	name = "10u Ethanol"
 	id = "ethanol"
@@ -56,7 +64,7 @@
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass= 250)
 	build_path = /obj/item/reagent_containers/food/snacks/monkeycube
-	category = list("initial", "Food")
+	category = list("initial","Food")
 
 /datum/design/ez_nut   //easy nut :)
 	name = "30u E-Z Nutrient"

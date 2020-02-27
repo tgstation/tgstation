@@ -1,0 +1,7 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - rscadd: "Tesla zaps will now turn tesla generators into teslas."
+  - bugfix: "Explosions might be a little less common, I've fixed the thing where machines would explode with no visible arc to the object."
+  - bugfix: "Fixes a whole bunch of issues, teslas make more sense now"
+  - code_imp: "Makes my shitcode better"

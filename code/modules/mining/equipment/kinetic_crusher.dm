@@ -448,7 +448,7 @@
 	denied_type = /obj/item/crusher_trophy/king_goat
 
 /obj/item/crusher_trophy/king_goat/effect_desc()
-	return "you to passivily recharge markers 5x as fast while equipped and do a decent amount of damage at the cost of dulling the blade"
+	return "you also passively recharge markers 5x as fast while equipped and do a decent amount of damage at the cost of dulling the blade"
 
 /obj/item/crusher_trophy/king_goat/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user)
 	marker.damage = 10 //in my testing only does damage to simple mobs so should be fine to have it high

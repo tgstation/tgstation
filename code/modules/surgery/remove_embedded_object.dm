@@ -30,11 +30,7 @@
 			var/objects = 0
 			for(var/obj/item/I in L.embedded_objects)
 				objects++
-				I.forceMove(get_turf(H))
-				L.embedded_objects -= I
-			if(!H.has_embedded_objects())
-				H.clear_alert("embeddedobject")
-				SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+				SEND_SIGNAL(H, COMSIG_HUMAN_EMBED_REMOVAL, I, L)
 
 			if(objects > 0)
 				display_results(user, target, "<span class='notice'>You successfully remove [objects] objects from [H]'s [L.name].</span>",

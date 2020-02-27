@@ -36,7 +36,7 @@
 
 /obj/item/twohanded/singularityhammer/proc/vortex(turf/pull, mob/wielder)
 	for(var/atom/X in orange(5,pull))
-		if(ismovableatom(X))
+		if(ismovable(X))
 			var/atom/movable/A = X
 			if(A == wielder)
 				continue

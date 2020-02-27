@@ -104,8 +104,6 @@
 		var/turf/B = new world.turf(src)
 		for(var/A in B.contents)
 			qdel(A)
-		for(var/I in B.vars)
-			B.vars[I] = null
 		return
 	SSair.remove_from_active(src)
 	visibilityChanged()
@@ -424,7 +422,7 @@
 	for(var/V in contents)
 		var/atom/A = V
 		if(!QDELETED(A) && A.level >= affecting_level)
-			if(ismovableatom(A))
+			if(ismovable(A))
 				var/atom/movable/AM = A
 				if(!AM.ex_check(explosion_id))
 					continue

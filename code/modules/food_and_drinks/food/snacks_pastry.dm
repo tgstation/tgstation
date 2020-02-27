@@ -434,14 +434,15 @@
 	desc = "The classic snack food, now with a heat-activated spicy flair."
 	icon_state = "donkpocketspicy"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/capsaicin = 2)
-	cooked_type = /obj/item/reagent_containers/food/snacks/donkpocket/spicy/warm
+	cooked_type = /obj/item/reagent_containers/food/snacks/donkpocket/warm/spicy
 	filling_color = "#CD853F"
 	tastes = list("meat" = 2, "dough" = 2, "spice" = 1)
 	foodtype = GRAIN
 
-/obj/item/reagent_containers/food/snacks/donkpocket/spicy/warm
+/obj/item/reagent_containers/food/snacks/donkpocket/warm/spicy
 	name = "warm Spicy-pocket"
 	desc = "The classic snack food, now maybe a bit too spicy."
+	icon_state = "donkpocketspicy"
 	bonus_reagents = list(/datum/reagent/medicine/omnizine = 1, /datum/reagent/consumable/capsaicin = 3)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/medicine/omnizine = 1, /datum/reagent/consumable/capsaicin = 2)
 	tastes = list("meat" = 2, "dough" = 2, "weird spices" = 2)
@@ -452,14 +453,15 @@
 	desc = "An east-asian take on the classic stationside snack."
 	icon_state = "donkpocketteriyaki"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/soysauce = 2)
-	cooked_type = /obj/item/reagent_containers/food/snacks/donkpocket/teriyaki/warm
+	cooked_type = /obj/item/reagent_containers/food/snacks/donkpocket/warm/teriyaki
 	filling_color = "#CD853F"
 	tastes = list("meat" = 2, "dough" = 2, "soy sauce" = 2)
 	foodtype = GRAIN
 
-/obj/item/reagent_containers/food/snacks/donkpocket/teriyaki/warm
+/obj/item/reagent_containers/food/snacks/donkpocket/warm/teriyaki
 	name = "warm Teriyaki-pocket"
 	desc = "An east-asian take on the classic stationside snack, now steamy and warm."
+	icon_state = "donkpocketteriyaki"
 	bonus_reagents = list(/datum/reagent/medicine/omnizine = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/medicine/omnizine = 1, /datum/reagent/consumable/soysauce = 2)
 	tastes = list("meat" = 2, "dough" = 2, "soy sauce" = 2)
@@ -470,14 +472,15 @@
 	desc = "Delicious, cheesy and surprisingly filling."
 	icon_state = "donkpocketpizza"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/tomatojuice = 2)
-	cooked_type = /obj/item/reagent_containers/food/snacks/donkpocket/pizza/warm
+	cooked_type = /obj/item/reagent_containers/food/snacks/donkpocket/warm/pizza
 	filling_color = "#CD853F"
 	tastes = list("meat" = 2, "dough" = 2, "cheese"= 2)
 	foodtype = GRAIN
 
-/obj/item/reagent_containers/food/snacks/donkpocket/pizza/warm
+/obj/item/reagent_containers/food/snacks/donkpocket/warm/pizza
 	name = "warm Pizza-pocket"
 	desc = "Delicious, cheesy, and even better when hot."
+	icon_state = "donkpocketpizza"
 	bonus_reagents = list(/datum/reagent/medicine/omnizine = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/medicine/omnizine = 1, /datum/reagent/consumable/tomatojuice = 2)
 	tastes = list("meat" = 2, "dough" = 2, "melty cheese"= 2)
@@ -488,14 +491,15 @@
 	desc = "The award-winning donk-pocket that won the hearts of clowns and humans alike."
 	icon_state = "donkpocketbanana"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/banana = 4)
-	cooked_type = /obj/item/reagent_containers/food/snacks/donkpocket/honk/warm
+	cooked_type = /obj/item/reagent_containers/food/snacks/donkpocket/warm/honk
 	filling_color = "#XXXXXX"
 	tastes = list("banana" = 2, "dough" = 2, "children's antibiotics" = 1)
 	foodtype = GRAIN
 
-/obj/item/reagent_containers/food/snacks/donkpocket/honk/warm
+/obj/item/reagent_containers/food/snacks/donkpocket/warm/honk
 	name = "warm Honk-pocket"
 	desc = "The award-winning donk-pocket, now warm and toasty."
+	icon_state = "donkpocketbanana"
 	bonus_reagents = list(/datum/reagent/medicine/omnizine = 1, /datum/reagent/consumable/laughter = 3)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/medicine/omnizine = 1, /datum/reagent/consumable/banana = 4, /datum/reagent/consumable/laughter = 3)
 	tastes = list("dough" = 2, "children's antibiotics" = 1)
@@ -506,14 +510,15 @@
 	desc = "A relentlessly sweet donk-pocket first created for use in Operation Dessert Storm."
 	icon_state = "donkpocketberry"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/berryjuice = 3)
-	cooked_type = /obj/item/reagent_containers/food/snacks/donkpocket/berry/warm
+	cooked_type = /obj/item/reagent_containers/food/snacks/donkpocket/warm/berry
 	filling_color = "#CD853F"
 	tastes = list("dough" = 2, "jam" = 2)
 	foodtype = GRAIN
 
-/obj/item/reagent_containers/food/snacks/donkpocket/berry/warm
+/obj/item/reagent_containers/food/snacks/donkpocket/warm/berry
 	name = "warm Berry-pocket"
 	desc = "A relentlessly sweet donk-pocket, now warm and delicious."
+	icon_state = "donkpocketberry"
 	bonus_reagents = list(/datum/reagent/medicine/omnizine = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/medicine/omnizine = 1, /datum/reagent/consumable/berryjuice = 3)
 	tastes = list("dough" = 2, "warm jam" = 2)
@@ -524,14 +529,15 @@
 	desc = "The choice to use real gondola meat in the recipe is controversial, to say the least." //Only a monster would craft this.
 	icon_state = "donkpocketgondola"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/tranquility = 5)
-	cooked_type = /obj/item/reagent_containers/food/snacks/donkpocket/gondola/warm
+	cooked_type = /obj/item/reagent_containers/food/snacks/donkpocket/warm/gondola
 	filling_color = "#CD853F"
 	tastes = list("meat" = 2, "dough" = 2, "inner peace" = 1)
 	foodtype = GRAIN
 
-/obj/item/reagent_containers/food/snacks/donkpocket/gondola/warm
+/obj/item/reagent_containers/food/snacks/donkpocket/warm/gondola
 	name = "warm Gondola-pocket"
 	desc = "The choice to use real gondola meat in the recipe is controversial, to say the least."
+	icon_state = "donkpocketgondola"
 	bonus_reagents = list(/datum/reagent/medicine/omnizine = 1, /datum/reagent/tranquility = 5)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/medicine/omnizine = 1, /datum/reagent/tranquility = 5)
 	tastes = list("meat" = 2, "dough" = 2, "inner peace" = 1)
