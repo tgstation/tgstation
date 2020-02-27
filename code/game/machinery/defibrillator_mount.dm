@@ -3,12 +3,12 @@
 //Not being adjacent will cause the paddles to snap back
 /obj/machinery/defibrillator_mount
 	name = "defibrillator mount"
-	desc = "Holds and recharges defibrillators. You can grab the paddles if one is mounted."
+	desc = "Holds defibrillators. You can grab the paddles if one is mounted."
 	icon = 'icons/obj/machines/defib_mount.dmi'
 	icon_state = "defibrillator_mount"
 	density = FALSE
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 1
+	idle_power_usage = 0
 	power_channel = EQUIP
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_HEADS, ACCESS_SECURITY) //used to control clamps
 	var/obj/item/defibrillator/defib //this mount's defibrillator
@@ -32,26 +32,20 @@
 		else
 			. += "<span class='notice'>Its locking clamps can be [clamps_locked ? "dis" : ""]engaged by swiping an ID with access.</span>"
 
-/obj/machinery/defibrillator_mount/process()
-	if(defib && defib.cell && defib.cell.charge < defib.cell.maxcharge && is_operational())
-		use_power(200)
-		defib.cell.give(180) //90% efficiency, slightly better than the cell charger's 87.5%
-		update_icon()
-
 /obj/machinery/defibrillator_mount/update_overlays()
 	. = ..()
-	
+
 	if(!defib)
 		return
-	
+
 	. += "defib"
-	
+
 	if(defib.powered)
 		. += (defib.safety ? "online" : "emagged")
 		var/ratio = defib.cell.charge / defib.cell.maxcharge
 		ratio = CEILING(ratio * 4, 1) * 25
 		. += "charge[ratio]"
-	
+
 	if(clamps_locked)
 		. += "clamps"
 
@@ -138,6 +132,19 @@
 	defib = null
 	update_icon()
 
+/obj/machinery/defibrillator_mount/charging
+	name = "PENLITE defibrillator mount"
+	desc = "Holds defibrillators. You can grab the paddles if one is mounted. This PENLITE variant also allows for slow, passive recharging of the defibrillator."
+	icon_state = "penlite_mount"
+	idle_power_usage = 1
+
+/obj/machinery/defibrillator_mount/charging/process()
+	if(defib?.cell?.charge < defib.cell.maxcharge && is_operational())
+		use_power(100)
+		defib.cell.give(80)
+		update_icon()
+
+
 //wallframe, for attaching the mounts easily
 /obj/item/wallframe/defib_mount
 	name = "unhooked defibrillator mount"
@@ -148,3 +155,10 @@
 	w_class = WEIGHT_CLASS_BULKY
 	result_path = /obj/machinery/defibrillator_mount
 	pixel_shift = -28
+
+/obj/item/wallframe/defib_mount/charging
+	name = "unhooked PENLITE defibrillator mount"
+	desc = "A frame for a PENLITE defibrillator mount. It can't be removed once it's placed."
+	icon_state = "penlite_mount"
+	custom_materials = list(/datum/material/iron = 300, /datum/material/glass = 100, /datum/material/silver = 50)
+	result_path = /obj/machinery/defibrillator_mount/charging
