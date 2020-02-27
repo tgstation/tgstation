@@ -637,21 +637,25 @@
 /obj/item/borg/upgrade/circuit_app/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
+		upgrade_engiborg_manipulator(R, user) //Engineer Borg Manipulator Improvement by Surrealistik Oct 2019
+		/*
 		var/obj/item/borg/apparatus/circuit/C = locate() in R.module.modules
 		if(C)
-			to_chat(user, "<span class='warning'>This unit is already equipped with a circuit apparatus!</span>")
+			to_chat(user, "<span class='warning'>This unit is already equipped with a [C].</span>")
 			return FALSE
 
 		C = new(R.module)
 		R.module.basic_modules += C
-		R.module.add_module(C, FALSE, TRUE)
+		R.module.add_module(C, FALSE, TRUE)*/
 
 /obj/item/borg/upgrade/circuit_app/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
+		remove_engiborg_manipulator_upgrade(R, user) //Engineer Borg Manipulator Improvement by Surrealistik Oct 2019
+		/*
 		var/obj/item/borg/apparatus/circuit/C = locate() in R.module.modules
 		if (C)
-			R.module.remove_module(C, TRUE)
+			R.module.remove_module(C, TRUE)*/
 
 /obj/item/borg/upgrade/beaker_app
 	name = "beaker storage apparatus"
