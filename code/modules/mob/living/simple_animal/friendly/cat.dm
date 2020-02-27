@@ -193,6 +193,13 @@
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
+				if(istype(M, /mob/living/simple_animal/mouse/brown/Tom) && (name == "Jerry")) //Turns out there's no jerry subtype.
+					var/mob/living/simple_animal/mouse/brown/Tom/tom = M
+					var/CD = 0
+					if (CD < (world.time - 200))
+						visible_message("<span class='warning'>[src] chases [tom] around, to no avail!</span>")
+						CD = world.time
+					break
 				if(!M.stat && Adjacent(M))
 					emote("me", 1, "splats \the [M]!")
 					M.splat()
