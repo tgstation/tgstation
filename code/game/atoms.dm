@@ -147,7 +147,7 @@
 	flags_1 |= INITIALIZED_1
 
 	if(loc)
-		SEND_SIGNAL(loc, COMSIG_ATOM_ENTERED, src) // if the new item is created over a turf, send a signal that it entered that turf, `loc` in this case
+		SEND_SIGNAL(loc, COMSIG_ATOM_CREATED, src) /// Sends a signal that the new atom `src`, has been created at `loc`
 
 	//atom color stuff
 	if(color)

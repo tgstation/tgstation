@@ -56,7 +56,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if(newid)
 		id = newid
 	update_move_direction()
-	RegisterSignal(loc, COMSIG_ATOM_ENTERED, .proc/conveyorCrossed) // For receiving signals from newly created items.
+	RegisterSignal(loc, COMSIG_ATOM_CREATED, .proc/conveyorCrossed) // For receiving signals from newly created items.
+	RegisterSignal(loc, COMSIG_ATOM_ENTERED, .proc/conveyorCrossed) // When any atom moves onto the location of this belt
 	LAZYADD(GLOB.conveyors_by_id[id], src)
 
 /obj/machinery/conveyor/Destroy()
