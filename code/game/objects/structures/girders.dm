@@ -190,7 +190,7 @@
 					to_chat(user, "<span class='notice'>You add the plating.</span>")
 					var/turf/T = get_turf(src)
 					if(S.walltype)
-						T.PlaceOnTop(walltype)
+						T.PlaceOnTop(S.walltype)
 					else
 						var/turf/newturf = T.PlaceOnTop(/turf/closed/wall/material)
 						var/list/material_list = list()
