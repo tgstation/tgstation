@@ -74,7 +74,7 @@ Difficulty: Very Hard
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire()
 	check_enraged()
-	projectile_speed_multiplier = 1 + enraged // ranges from normal to 2x speed
+	projectile_speed_multiplier = 1 + enraged / 2 // ranges from normal to 2x speed
 	SetRecoveryTime(80, 80)
 
 	if(client)
@@ -87,21 +87,22 @@ Difficulty: Very Hard
 				ice_shotgun()
 		return
 
+	var/easy_attack = prob(80 - enraged * 40)
 	chosen_attack = rand(1, 3)
 	switch(chosen_attack)
 		if(1)
-			if(prob(70))
+			if(easy_attack)
 				frost_orbs()
 			else
 				frost_orbs(3, list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 		if(2)
-			if(prob(70))
+			if(easy_attack)
 				snowball_machine_gun(60)
 			else
 				INVOKE_ASYNC(src, .proc/ice_shotgun, 5, list(list(-180, -140, -100, -60, -20, 20, 60, 100, 140), list(-160, -120, -80, -40, 0, 40, 80, 120, 160)))
 				snowball_machine_gun(5 * 8, 5)
 		if(3)
-			if(prob(70))
+			if(easy_attack)
 				ice_shotgun()
 			else
 				ice_shotgun(5, list(list(0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330), list(-30, -15, 0, 15, 30)))
@@ -171,21 +172,21 @@ Difficulty: Very Hard
 			P.original = target
 		P.set_homing_target(target)
 		P.fire(dir2angle(dir))
-		addtimer(CALLBACK(src, .proc/orb_explosion, P), 20) // make the orbs home in after a second
+		addtimer(CALLBACK(P, .proc/orb_explosion, src, target), 20) // make the orbs home in after a second
 		SLEEP_CHECK_DEATH(added_delay)
 	SetRecoveryTime(20, 40)
 
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/orb_explosion(obj/projectile/orb)
+/obj/projectile/frost_orb/proc/orb_explosion(mob/living/firer, atom/target)
 	var/spread = 5
 	for(var/i in 1 to 6)
-		var/turf/startloc = get_turf(orb)
+		var/turf/startloc = get_turf(src)
 		var/turf/endloc = get_turf(target)
 		if(!startloc || !endloc)
 			break
 		var/obj/projectile/P = new /obj/projectile/snowball(startloc)
 		P.speed /= projectile_speed_multiplier
 		P.preparePixelProjectile(endloc, startloc, null, rand(-spread, spread))
-		P.firer = src
+		P.firer = firer
 		if(target)
 			P.original = target
 		P.fire()
@@ -233,12 +234,15 @@ Difficulty: Very Hard
 		enraging = TRUE
 		animate(src, pixel_y = pixel_y + 96, time = 100, easing = ELASTIC_EASING)
 		spin(100, 10)
-		SLEEP_CHECK_DEATH(80)
+		SLEEP_CHECK_DEATH(60)
 		playsound(src, 'sound/effects/explosion3.ogg', 100, TRUE)
 		overlays += mutable_appearance('icons/effects/effects.dmi', "curse")
 		animate(src, pixel_y = pixel_y - 96, time = 8, flags = ANIMATION_END_NOW)
 		spin(8, 2)
 		SLEEP_CHECK_DEATH(8)
+		for(var/mob/living/L in viewers(src))
+			shake_camera(L, 3, 2)
+		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 		setMovetype(movement_type | FLYING)
 		enraging = FALSE
 		adjustHealth(-maxHealth)

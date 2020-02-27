@@ -41,3 +41,10 @@
 	description = "Who knows what lies within?"
 	suffix = "icemoon_underground_abandoned_village.dmm"
 	cost = 5
+
+/datum/map_template/ruin/icemoon/underground/library
+	name = "Buried Library"
+	id = "buriedlibrary"
+	description = "A once grand library, now lost to the confines of the Ice Moon."
+	suffix = "icemoon_underground_library.dmm"
+	cost = 5

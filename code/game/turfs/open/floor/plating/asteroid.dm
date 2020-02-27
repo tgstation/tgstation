@@ -195,7 +195,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	terrain_spawn_list = list()
 	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/snow/has_data
 	turf_type = /turf/open/floor/plating/asteroid/snow/icemoon
-	pick_tunnel_width = list(1 = 6, 2 = 1)
+	pick_tunnel_width = list("1" = 6, "2" = 1)
 
 /turf/open/floor/plating/asteroid/airless/cave/snow/underground
 	flora_spawn_list = list(/obj/structure/flora/rock/icy = 6, /obj/structure/flora/rock/pile/icy = 6)
@@ -253,7 +253,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 
 	var/tunnel_width = 1
 	if(pick_tunnel_width)
-		tunnel_width = pickweight(pick_tunnel_width)
+		tunnel_width = text2num(pickweight(pick_tunnel_width))
 
 	for(var/i = 0; i < length; i++)
 		if(!sanity)

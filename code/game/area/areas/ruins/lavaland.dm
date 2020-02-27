@@ -107,7 +107,3 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	noteleport = TRUE
 	icon_state = "dk_yellow"
-
-/area/ruin/unpowered/buried_library
-	name = "Buried Library"
-	icon_state = "dk_yellow"
