@@ -172,6 +172,7 @@
 		S.forceMove(holder.drop_location())
 		return S
 
+/// Called from [/atom/proc/emp_act]
 /datum/wires/proc/emp_pulse()
 	var/list/possible_wires = shuffle(wires)
 	var/remaining_pulses = MAXIMUM_EMP_WIRES
