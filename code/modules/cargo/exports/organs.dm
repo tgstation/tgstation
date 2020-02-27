@@ -1,5 +1,5 @@
 /datum/export/organ
-	include_subtypes = FALSE	//Centcom doesn't need organs from non-humans.
+	include_subtypes = FALSE	//CentCom doesn't need organs from non-humans.
 	export_category = EXPORT_CONTRABAND
 
 /datum/export/organ/heart

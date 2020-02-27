@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/nanotrasen
-	name = "Nanotrasen Private Security Officer"
+	name = "\improper Nanotrasen Private Security Officer"
 	desc = "An officer part of Nanotrasen's private security force, he seems rather unpleased to meet you."
 	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "nanotrasen"

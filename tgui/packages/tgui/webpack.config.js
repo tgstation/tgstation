@@ -21,6 +21,7 @@ module.exports = (env = {}, argv) => {
       tgui: [
         path.resolve(__dirname, './styles/main.scss'),
         path.resolve(__dirname, './styles/themes/cardtable.scss'),
+        path.resolve(__dirname, './styles/themes/malfunction.scss'),
         path.resolve(__dirname, './styles/themes/ntos.scss'),
         path.resolve(__dirname, './styles/themes/hackerman.scss'),
         path.resolve(__dirname, './styles/themes/retro.scss'),
