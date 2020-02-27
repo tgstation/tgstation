@@ -37,8 +37,10 @@
 	var/dynamic_hair_suffix = ""//head > mask for head hair
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
 
-	///This is its armor values in list form. List populates and updates on examine as it's currently only used to print armor ratings to chat in Topic()
+	///These are its armor values that affect the wearer from its armor datum converted to an associative list. List populates and updates on examine as it's currently only used to print armor ratings to chat in Topic()
 	var/list/armor_list = list()
+	///These are its armor values that affect the item's durability from its armor datum converted to an associative list. List populates and updates on examine as it's currently only used to print armor ratings to chat in Topic()
+	var/list/durability_list = list()
 
 /obj/item/clothing/Initialize()
 	if((clothing_flags & VOICEBOX_TOGGLABLE))
@@ -143,8 +145,6 @@
 
 	if(LAZYLEN(armor_list))
 		armor_list.Cut()
-	if(armor.acid)
-		armor_list += list("ACID" = armor.acid)
 	if(armor.bio)
 		armor_list += list("TOXIN" = armor.bio)
 	if(armor.bomb)
@@ -153,8 +153,6 @@
 		armor_list += list("BULLET" = armor.bullet)
 	if(armor.energy)
 		armor_list += list("ENERGY" = armor.energy)
-	if(armor.fire)
-		armor_list += list("FIRE" = armor.fire)
 	if(armor.laser)
 		armor_list += list("LASER" = armor.laser)
 	if(armor.magic)
@@ -164,17 +162,31 @@
 	if(armor.rad)
 		armor_list += list("RADIATION" = armor.rad)
 
-	if(LAZYLEN(armor_list))
-		. += "<span class='notice'>It has a <a href='?src=[REF(src)];list_armor=1'>tag</a> listing its protection levels.</span>"
+	if(LAZYLEN(durability_list))
+		durability_list.Cut()
+	if(armor.fire)
+		durability_list += list("FIRE" = armor.fire)
+	if(armor.acid)
+		durability_list += list("ACID" = armor.acid)
+
+	if(LAZYLEN(armor_list) || LAZYLEN(durability_list))
+		. += "<span class='notice'>It has a <a href='?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.</span>"
 
 /obj/item/clothing/Topic(href, href_list)
 	. = ..()
 
 	if(href_list["list_armor"])
 		var/list/readout = list("<span class='notice'><b>PROTECTION CLASSES (I-V)</b>")
-		for(var/dam_type in armor_list)
-			var/armor_amount = armor_list[dam_type]
-			readout += "\n[dam_type] [number_to_level(armor_amount)]" //e.g. BOMB IV
+		if(LAZYLEN(armor_list))
+			readout += "\n<b>ARMOR</b>"
+			for(var/dam_type in armor_list)
+				var/armor_amount = armor_list[dam_type]
+				readout += "\n[dam_type] [number_to_level(armor_amount)]" //e.g. BOMB IV
+		if(LAZYLEN(durability_list))
+			readout += "\n<b>DURABILITY</b>"
+			for(var/dam_type in durability_list)
+				var/durability_amount = durability_list[dam_type]
+				readout += "\n[dam_type] [number_to_level(durability_amount)]" //e.g. FIRE II
 		readout += "</span>"
 
 		to_chat(usr, "[readout.Join()]")
