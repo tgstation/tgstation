@@ -206,9 +206,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		return
 
 	if (!blocked && !gameover)
+		var/gamerSkill = usr.mind.get_skill_level(/datum/skill/gaming)
 		if (href_list["attack"])
 			blocked = TRUE
-			var/attackamt = rand(2,6)
+			var/attackamt = rand(2,6) + rand(0, gamerSkill)
 			var/weapon = pick(weapons)
 			temp = "You attack with a [weapon] for [attackamt] damage!"
 			playsound(loc, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3, falloff = 10)
@@ -222,8 +223,11 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 		else if (href_list["heal"])
 			blocked = TRUE
-			var/pointamt = rand(1,3)
-			var/healamt = rand(6,8)
+			var/maxPointCost = 3
+			if(gamerSkill > SKILL_LEVEL_JOURNEYMAN)
+				maxPointCost = 2
+			var/pointamt = rand(1, maxPointCost)
+			var/healamt = rand(6,8) + rand(0, gamerSkill)
 			temp = "You use [pointamt] magic to heal for [healamt] damage!"
 			playsound(loc, 'sound/arcade/heal.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 			updateUsrDialog()
@@ -238,7 +242,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 		else if (href_list["charge"])
 			blocked = TRUE
-			var/chargeamt = rand(4,7)
+			var/chargeamt = rand(4,7) + rand(0, gamerSkill)
 			temp = "You regain [chargeamt] points."
 			playsound(loc, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 			player_mp += chargeamt
@@ -271,6 +275,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	return
 
 /obj/machinery/computer/arcade/battle/proc/arcade_action(mob/user)
+	var/xp_gained = 0
 	if ((enemy_mp <= 0) || (enemy_hp <= 0))
 		if(!gameover)
 			gameover = TRUE
@@ -284,8 +289,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				log_game("[key_name(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				Reset()
 				obj_flags &= ~EMAGGED
+				xp_gained += 100
 			else
 				prizevend(user)
+				xp_gained += 50
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
 
 
@@ -327,10 +334,12 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		gameover = TRUE
 		temp = "You have been crushed! GAME OVER"
 		playsound(loc, 'sound/arcade/lose.ogg', 50, TRUE, extrarange = -3, falloff = 10)
+		xp_gained += 10//pity points
 		if(obj_flags & EMAGGED)
 			usr.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
 
+	user?.mind.adjust_experience(/datum/skill/gaming, xp_gained+1)//always gain at least 1 point of XP
 	blocked = FALSE
 	return
 
@@ -512,6 +521,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		gamers[gamer] = -1
 
 		gamer.client.give_award(/datum/award/achievement/misc/gamer, gamer) // PSYCH REPORT NOTE: patient kept rambling about how they did it for an "achievement", recommend continued holding for observation
+		user?.mind.adjust_experience(/datum/skill/gaming, 50) // cheevos make u better
 
 		if(!isnull(GLOB.data_core.general))
 			for(var/datum/data/record/R in GLOB.data_core.general)
@@ -553,6 +563,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 
 		dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];menu=1'>May They Rest In Peace</a></P>"
+		user?.mind.adjust_experience(/datum/skill/gaming, 10)//learning from your mistakes is the first rule of roguelikes
+
 	else if(event)
 		dat = eventdat
 	else if(gameStatus == ORION_STATUS_NORMAL)
@@ -592,20 +604,24 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		return
 	busy = TRUE
 
+	var/gamerMind = usr.mind
+	var/gamerSkill = gamerMind.get_skill_level(/datum/skill/gaming)
+	var/xp_gained = 0
 	if (href_list["continue"]) //Continue your travels
 		if(gameStatus == ORION_STATUS_NORMAL && !event && turns != 7)
 			if(turns >= ORION_TRAIL_WINTURN)
 				win(usr)
+				xp_gained += 34
 			else
 				food -= (alive+lings_aboard)*2
 				fuel -= 5
-				if(turns == 2 && prob(30))
+				if(turns == 2 && prob(30-(gamerSkill*3)))
 					event = ORION_TRAIL_COLLISION
 					event()
-				else if(prob(75))
+				else if(prob(75-(gamerSkill*3)))
 					event = pickweight(events)
 					if(lings_aboard)
-						if(event == ORION_TRAIL_LING || prob(55))
+						if(event == ORION_TRAIL_LING || prob(55-(gamerSkill*3)))
 							event = ORION_TRAIL_LING_ATTACK
 					event()
 				turns += 1
@@ -613,7 +629,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				var/mob/living/carbon/M = usr //for some vars
 				switch(event)
 					if(ORION_TRAIL_RAIDERS)
-						if(prob(50))
+						if(prob(50-(gamerSkill*3)))
 							to_chat(usr, "<span class='userdanger'>You hear battle shouts. The tramping of boots on cold metal. Screams of agony. The rush of venting air. Are you going insane?</span>")
 							M.hallucination += 30
 						else
@@ -621,7 +637,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 							M.take_bodypart_damage(30)
 							playsound(loc, 'sound/weapons/genhit2.ogg', 100, TRUE)
 					if(ORION_TRAIL_ILLNESS)
-						var/severity = rand(1,3) //pray to RNGesus. PRAY, PIGS
+						var/maxSeverity = 3
+						if(gamerSkill >= SKILL_LEVEL_EXPERT)
+							maxSeverity = 2 //part of gitting gud is rng mitigation
+						var/severity = rand(1,maxSeverity) //pray to RNGesus. PRAY, PIGS
 						if(severity == 1)
 							to_chat(M, "<span class='userdanger'>You suddenly feel slightly nauseated.</span>" )
 						if(severity == 2)
@@ -633,7 +652,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 							sleep(30)
 							M.vomit(10, distance = 5)
 					if(ORION_TRAIL_FLUX)
-						if(prob(75))
+						if(prob(75-(gamerSkill*3)))
 							M.Paralyze(60)
 							say("A sudden gust of powerful wind slams [M] into the floor!")
 							M.take_bodypart_damage(25)
@@ -641,7 +660,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 						else
 							to_chat(M, "<span class='userdanger'>A violent gale blows past you, and you barely manage to stay standing!</span>")
 					if(ORION_TRAIL_COLLISION) //by far the most damaging event
-						if(prob(90))
+						if(prob(90-(gamerSkill*3)))
 							playsound(loc, 'sound/effects/bang.ogg', 100, TRUE)
 							var/turf/open/floor/F
 							for(F in orange(1, src))
@@ -724,7 +743,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				event = null
 	else if(href_list["blackhole"]) //keep speed past a black hole
 		if(turns == 7)
-			if(prob(75))
+			if(prob(75-(gamerSkill*3)))
 				event = ORION_TRAIL_BLACKHOLE
 				event()
 				if(obj_flags & EMAGGED)
@@ -805,15 +824,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	else if(href_list["raid_spaceport"])
 		if(gameStatus == ORION_STATUS_MARKET)
 			if(!spaceport_raided)
-				var/success = min(15 * alive,100) //default crew (4) have a 60% chance
+				var/success = min(15 * alive + (gamerSkill*3),100) //default crew (4) have a 60% chance
 				spaceport_raided = 1
 
 				var/FU = 0
 				var/FO = 0
 				if(prob(success))
-					FU = rand(5,15)
-					FO = rand(5,15)
+					FU = rand(5 + gamerSkill,15 + gamerSkill)
+					FO = rand(5 + gamerSkill,15 + gamerSkill)
 					last_spaceport_action = "You successfully raided the spaceport! You gained [FU] Fuel and [FO] Food! (+[FU]FU,+[FO]FO)"
+					xp_gained += 10
 				else
 					FU = rand(-5,-15)
 					FO = rand(-5,-15)
@@ -872,6 +892,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	add_fingerprint(usr)
 	updateUsrDialog()
 	busy = FALSE
+	gamerMind.adjust_experience(/datum/skill/gaming, xp_gained+1)
 	return
 
 
@@ -1273,6 +1294,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		var/obj/item/bodypart/chopchop = c_user.get_bodypart(which_hand)
 		chopchop.dismember()
 		qdel(chopchop)
+		user?.mind.adjust_experience(/datum/skill/gaming, 100)
 		playsound(loc, 'sound/arcade/win.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 		for(var/i=1; i<=rand(3,5); i++)
 			prizevend(user)
