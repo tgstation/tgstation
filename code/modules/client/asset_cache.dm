@@ -614,6 +614,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"clownking" = 'icons/UI_Icons/Achievements/Misc/clownking.png',
 		"clownthanks" = 'icons/UI_Icons/Achievements/Misc/clownthanks.png',
 		"rule8" = 'icons/UI_Icons/Achievements/Misc/rule8.png',
+		"snail" = 'icons/UI_Icons/Achievements/Misc/snail.png',
 		"mining" = 'icons/UI_Icons/Achievements/Skills/mining.png',
 	)
 

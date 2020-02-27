@@ -104,8 +104,6 @@
 		var/turf/B = new world.turf(src)
 		for(var/A in B.contents)
 			qdel(A)
-		for(var/I in B.vars)
-			B.vars[I] = null
 		return
 	SSair.remove_from_active(src)
 	visibilityChanged()

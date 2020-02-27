@@ -322,10 +322,6 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 
 			//Logging and cleanup
 			log_game("[key_name(cop)] has been selected as an [ert_antag.name]")
-			if(numagents == 1 && GLOB.deaths_during_shift >= FIVE_STARS_LOW)
-				cop.buckled.user_unbuckle_mob(cop,cop)
-				var/obj/mecha/combat/five_stars/tank = new(get_turf(cop))
-				tank.moved_inside(cop)
 			numagents--
 	cops_arrived = TRUE
 	SSshuttle.registerHostileEnvironment(src)
