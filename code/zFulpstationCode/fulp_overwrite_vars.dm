@@ -242,9 +242,6 @@
 		/obj/item/crowbar/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/handheld_sec_record_uplink/cyborg,
-		/obj/item/holosign_creator/security/cyborg,
-		/obj/item/gun/energy/e_gun/e_bola/cyborg,
-		/obj/item/handheld_camera_monitor/cyborg
 		)
 	emag_modules = list() //Instead we unlock lethals for the integrated e_gun
 
