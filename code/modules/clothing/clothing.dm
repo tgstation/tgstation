@@ -176,7 +176,7 @@
 	. = ..()
 
 	if(href_list["list_armor"])
-		var/list/readout = list("<span class='notice'><b>PROTECTION CLASSES (I-V)</b>")
+		var/list/readout = list("<span class='notice'><b>PROTECTION CLASSES (I-X)</b>")
 		if(LAZYLEN(armor_list))
 			readout += "\n<b>ARMOR</b>"
 			for(var/dam_type in armor_list)
@@ -193,18 +193,26 @@
 
 /obj/item/clothing/proc/number_to_level(number)
 	switch (number)
-		if (1 to 20)
+		if (1 to 19)
 			. = "I"
-		if (21 to 40)
+		if (20 to 29)
 			. = "II"
-		if (41 to 60)
+		if (30 to 39)
 			. = "III"
-		if (61 to 80)
+		if (40 to 49)
 			. = "IV"
-		if (81 to 99)
+		if (50 to 59)
 			. = "V"
+		if (60 to 69)
+			. = "VI"
+		if (70 to 79)
+			. = "VII"
+		if (80 to 89)
+			. = "VIII"
+		if (90 to 99)
+			. = "IX"
 		if (100 to INFINITY)
-			. = "∞"
+			. = "X"
 	return .
 
 /obj/item/clothing/obj_break(damage_flag)
