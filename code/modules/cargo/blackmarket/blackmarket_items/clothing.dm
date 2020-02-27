@@ -13,7 +13,7 @@
 
 /datum/blackmarket_item/clothing/durathread_vest
 	name = "Durathread Vest"
-	desc = "Dont let them tell you this stuff is \"Like asbestos\" or \"Pulled from the market for safety concerns\". It could be the difference between a robusting and a retaliation."
+	desc = "Don't let them tell you this stuff is \"Like asbestos\" or \"Pulled from the market for safety concerns\". It could be the difference between a robusting and a retaliation."
 	item = /obj/item/clothing/suit/armor/vest/durathread
 
 	price_min = 200
@@ -32,7 +32,7 @@
 	availability_prob = 50
 
 /datum/blackmarket_item/clothing/full_spacesuit_set
-	name = "Nanotrasen Branded Spacesuit Box"
+	name = "\improper Nanotrasen Branded Spacesuit Box"
 	desc = "A few boxes of \"Old Style\" space suits fell off the back of a space truck."
 	item = /obj/item/storage/box
 
