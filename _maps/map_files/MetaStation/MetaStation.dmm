@@ -27534,16 +27534,13 @@
 /area/quartermaster/sorting)
 "biJ" = (
 /obj/structure/table,
-/obj/item/destTagger{
-	pixel_x = 4;
-	pixel_y = 3
-	},
 /obj/machinery/light_switch{
 	pixel_x = 27
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/item/storage/box/shipping,
 /turf/open/floor/plasteel/white/corner,
 /area/quartermaster/sorting)
 "biK" = (
@@ -41192,7 +41189,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	areastring = "/area/bridge/showroom/corporate";
 	dir = 4;
-	name = "Nanotrasen Corporate Showroom APC";
+	name = "\improper Nanotrasen Corporate Showroom APC";
 	pixel_x = 24
 	},
 /obj/item/cigbutt,
@@ -41906,7 +41903,7 @@
 /obj/structure/table/wood,
 /obj/item/toy/plush/carpplushie{
 	color = "red";
-	name = "Nanotrasen wildlife department space carp plushie"
+	name = "\improper Nanotrasen wildlife department space carp plushie"
 	},
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
@@ -42297,7 +42294,7 @@
 /obj/structure/table/wood,
 /obj/item/storage/secure/briefcase{
 	desc = "A large briefcase with a digital locking system, and the Nanotrasen logo emblazoned on the sides.";
-	name = "Nanotrasen-brand secure briefcase exhibit";
+	name = "\improper Nanotrasen-brand secure briefcase exhibit";
 	pixel_y = 2
 	},
 /turf/open/floor/carpet,
@@ -42317,7 +42314,7 @@
 "bRA" = (
 /obj/item/toy/beach_ball{
 	desc = "The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen";
-	name = "Nanotrasen-brand beach ball";
+	name = "\improper Nanotrasen-brand beach ball";
 	pixel_y = 7
 	},
 /obj/structure/table/wood,
@@ -42378,7 +42375,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/toy/talking/AI{
-	name = "Nanotrasen-brand toy AI";
+	name = "\improper Nanotrasen-brand toy AI";
 	pixel_y = 6
 	},
 /turf/open/floor/carpet,
@@ -68926,6 +68923,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/item/storage/box/shipping,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "dhM" = (
@@ -69204,7 +69202,7 @@
 /obj/item/poster/random_official,
 /obj/item/paicard{
 	desc = "A real Nanotrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
-	name = "Nanotrasen-brand personal AI device exhibit"
+	name = "\improper Nanotrasen-brand personal AI device exhibit"
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet,
@@ -72630,7 +72628,7 @@
 "lfv" = (
 /obj/effect/mob_spawn/human/corpse/assistant{
 	belt = null;
-	husk = TRUE;
+	husk = 1;
 	id = null;
 	l_pocket = /obj/item/pen
 	},

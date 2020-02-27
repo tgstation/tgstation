@@ -54,9 +54,10 @@
 		var/old_target = tracking_target
 		possible = list()
 		var/list/prints = sniffed.return_fingerprints()
-		for(var/mob/living/carbon/C in GLOB.carbon_list)
-			if(prints[md5(C.dna.uni_identity)])
-				possible |= C
+		if(prints)
+			for(var/mob/living/carbon/C in GLOB.carbon_list)
+				if(prints[md5(C.dna.uni_identity)])
+					possible |= C
 		if(!length(possible))
 			to_chat(user,"<span class='warning'>Despite your best efforts, there are no scents to be found on [sniffed]...</span>")
 			return
@@ -342,11 +343,11 @@
 	chems = new
 	chems.transfered = embedded_mob
 	chems.spikey = src
-	to_chat(fired_by, "<span class='notice'>Link established! Use the \"Transfer Chemicals\" ability to send your chemicals to the linked target!")
+	to_chat(fired_by, "<span class='notice'>Link established! Use the \"Transfer Chemicals\" ability to send your chemicals to the linked target!</span>")
 	chems.Grant(fired_by)
 
 /obj/item/hardened_spike/chem/unembedded()
-	to_chat(fired_by, "<span class='warning'>Link lost!")
+	to_chat(fired_by, "<span class='warning'>Link lost!</span>")
 	QDEL_NULL(chems)
 	..()
 
