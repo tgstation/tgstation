@@ -68,8 +68,8 @@
 	name = "beary pie"
 	desc = "No brown bears, this is a good sign."
 	icon_state = "bearypie"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("pie" = 1, "meat" = 1, "salmon" = 1)
 	foodtype = GRAIN | SUGAR | MEAT | FRUIT
 
@@ -77,7 +77,7 @@
 	name = "meat-pie"
 	icon_state = "meatpie"
 	desc = "An old barber recipe, very delicious!"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 5)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("pie" = 1, "meat" = 1)
 	foodtype = GRAIN | MEAT
 
@@ -85,7 +85,7 @@
 	name = "tofu-pie"
 	icon_state = "meatpie"
 	desc = "A delicious tofu pie."
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("pie" = 1, "tofu" = 1)
 	foodtype = GRAIN
 
@@ -122,7 +122,7 @@
 	icon_state = "xenomeatpie"
 	desc = "A delicious meatpie. Probably heretical."
 	trash = /obj/item/trash/plate
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 5)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("pie" = 1, "meat" = 1, "acid" = 1)
 	foodtype = GRAIN | MEAT
 

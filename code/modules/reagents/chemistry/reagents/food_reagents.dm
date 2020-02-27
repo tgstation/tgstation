@@ -92,13 +92,19 @@
 	name = "Vitamin"
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
 
-	brute_heal = 1
+
 	burn_heal = 1
 
 /datum/reagent/consumable/nutriment/vitamin/on_mob_life(mob/living/carbon/M)
 	if(M.satiety < 600)
 		M.satiety += 30
 	. = ..()
+
+/datum/reagent/consumable/nutriment/protein // The basic resource of vat growing.
+	name = "Protein"
+	description = "A natural polyamide made up of amino acids. An essential constituent of mosts known forms of life."
+	brute_heal = 0.8 //Rewards the player for eating a balanced diet.
+	nutriment_factor = 9 * REAGENTS_METABOLISM //45% as calorie dense as corn oil.
 
 /datum/reagent/consumable/cooking_oil
 	name = "Cooking Oil"

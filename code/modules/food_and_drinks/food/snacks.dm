@@ -287,7 +287,7 @@ All foods are distributed among various categories. Use common sense.
 	if(S.bonus_reagents && S.bonus_reagents.len)
 		for(var/r_id in S.bonus_reagents)
 			var/amount = S.bonus_reagents[r_id] * cooking_efficiency
-			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin)
+			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin || r_id == /datum/reagent/consumable/nutriment/protein)
 				S.reagents.add_reagent(r_id, amount, tastes)
 			else
 				S.reagents.add_reagent(r_id, amount)
