@@ -37,9 +37,9 @@
 	var/dynamic_hair_suffix = ""//head > mask for head hair
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
 
-	///These are its armor values that affect the wearer from its armor datum converted to an associative list. List populates and updates on examine as it's currently only used to print armor ratings to chat in Topic()
+	///These are armor values that protect the wearer, taken from the clothing's armor datum. List updates on examine because it's currently only used to print armor ratings to chat in Topic().
 	var/list/armor_list = list()
-	///These are its armor values that affect the item's durability from its armor datum converted to an associative list. List populates and updates on examine as it's currently only used to print armor ratings to chat in Topic()
+	///These are armor values that protect the clothing, taken from its armor datum. List updates on examine because it's currently only used to print armor ratings to chat in Topic().
 	var/list/durability_list = list()
 
 /obj/item/clothing/Initialize()
