@@ -189,9 +189,8 @@
 					S.use(2)
 					to_chat(user, "<span class='notice'>You add the plating.</span>")
 					var/turf/T = get_turf(src)
-					var/testpath = text2path("/turf/closed/wall/mineral/[M]")
-					if(ispath(testpath))
-						T.PlaceOnTop(testpath)
+					if(S.walltype)
+						T.PlaceOnTop(walltype)
 					else
 						var/turf/newturf = T.PlaceOnTop(/turf/closed/wall/material)
 						var/list/material_list = list()

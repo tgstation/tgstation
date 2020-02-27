@@ -234,6 +234,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	novariants = TRUE
 	material_type = /datum/material/wood
 	grind_results = list(/datum/reagent/cellulose = 20) //no lignocellulose or lignin reagents yet,
+	walltype = /turf/closed/wall/mineral/wood
 
 /obj/item/stack/sheet/mineral/wood/get_main_recipes()
 	. = ..()

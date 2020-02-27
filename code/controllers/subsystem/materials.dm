@@ -12,6 +12,8 @@ SUBSYSTEM_DEF(materials)
 	var/list/materials
 	///Dictionary of category || list of material refs
 	var/list/materials_by_category
+	///Dictionary of category || list of material types, mostly used by rnd machines like autolathes.
+	var/list/materialtypes_by_category
 	///List of stackcrafting recipes for materials using rigid materials
 	var/list/rigid_stack_recipes = list(
 		new /datum/stack_recipe("Chair", /obj/structure/chair/greyscale, one_per_turf = TRUE, on_floor = TRUE, applies_mats = TRUE),
@@ -24,11 +26,13 @@ SUBSYSTEM_DEF(materials)
 /datum/controller/subsystem/materials/proc/InitializeMaterials()
 	materials = list()
 	materials_by_category = list()
+	materialtypes_by_category = list()
 	for(var/type in subtypesof(/datum/material))
 		var/datum/material/ref = new type
 		materials[type] = ref
 		for(var/c in ref.categories)
 			materials_by_category[c] += list(ref)
+			materialtypes_by_category[c] += list(type)
 
 /datum/controller/subsystem/materials/proc/GetMaterialRef(datum/material/fakemat)
 	if(!materials)
