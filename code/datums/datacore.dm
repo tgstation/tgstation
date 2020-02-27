@@ -91,6 +91,15 @@
 					crimes -= crime
 					return
 
+/datum/datacore/proc/addCrimeDetails(id, cDataId, details)
+	for(var/datum/data/record/R in security)
+		if(R.fields["id"] == id)
+			var/list/crimes = R.fields["crim"]
+			for(var/datum/data/crime/crime in crimes)
+				if(crime.dataId == text2num(cDataId))
+					crime.crimeDetails = details
+					return
+
 /datum/datacore/proc/manifest()
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/N = i

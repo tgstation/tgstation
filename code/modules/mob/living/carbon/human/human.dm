@@ -443,9 +443,9 @@
 				return
 
 			if(href_list["add_crime"])
-				var/t1 = stripped_input("Please input crime names:", "Security HUD", "", null)
-				var/t2 = stripped_multiline_input("Please input crime details:", "Security HUD", "", null)
-				if(!R || !t1 || !t2 || !allowed_access)
+				var/t1 = stripped_input("Please input crime name:", "Security HUD", "", null)
+				var/t2 = null
+				if(!R || !t1 || !allowed_access)
 					return
 				if(!H.canUseHUD())
 					return

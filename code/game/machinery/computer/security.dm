@@ -228,9 +228,13 @@
 						</tr>"}
 						for(var/datum/data/crime/c in active2.fields["crim"])
 							dat += "<tr><td>[c.crimeName]</td>"
-							dat += "<td>[c.crimeDetails]</td>"
+							if(!c.crimeDetails)
+								dat += "<td><A href='?src=[REF(src)];choice=Edit Field;field=add_details;cdataid=[c.dataId]'>\[+\]</A></td>"
+							else
+								dat += "<td>[c.crimeDetails]</td>"
 							dat += "<td>[c.author]</td>"
 							dat += "<td>[c.time]</td>"
+							//dat += "<td><A href='?src=[REF(src)];choice=Edit Field;field=add_details;cdataid=[c.dataId]'>\[X\]</A></td>"
 							dat += "<td><A href='?src=[REF(src)];choice=Edit Field;field=crim_delete;cdataid=[c.dataId]'>\[X\]</A></td>"
 							dat += "</tr>"
 						dat += "</table>"
@@ -665,6 +669,14 @@ What a mess.*/
 								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
 									return
 								GLOB.data_core.removeCrime(active1.fields["id"],href_list["cdataid"])
+					if("add_details")
+						if(istype(active1, /datum/data/record))
+							if(href_list["cdataid"])
+								var/t1 = stripped_input(usr, "Please input crime details:", "Secure. records", "", null)
+								if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
+									return
+								GLOB.data_core.addCrimeDetails(active1.fields["id"], href_list["cdataid"], t1)
+								investigate_log("New Crime details: [t1] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 					if("citation_add")
 						if(istype(active1, /datum/data/record))
 							var/maxFine = CONFIG_GET(number/maxfine)
