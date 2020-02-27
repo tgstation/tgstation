@@ -1,8 +1,14 @@
 /datum/religion_rites
+/// name of the religious rite
 	var/name = "religious rite"
+/// Description of the religious rite
 	var/desc = "immm gonna rooon"
+/// length it takes to complete the ritual
 	var/ritual_length = (10 SECONDS) //total length it'll take
+/// list of invocations said (strings) throughout the rite
 	var/list/ritual_invocations //strings that are by default said evenly throughout the rite
+/// message when you invoke
+	var/invoke_msg
 	var/favor_cost = 0
 
 ///Called to perform the invocation of the rite, with args being the performer and the altar where it's being performed. Maybe you want it to check for something else?
@@ -15,12 +21,23 @@
 		if(do_after(user, target = user, delay = ritual_length))
 			return TRUE
 		return FALSE
-	var/c_c_combo = 0
+	var/first_invoke = TRUE
 	for(var/i in ritual_invocations)
-		addtimer(CALLBACK(user, /atom/movable/proc/say, i), (ritual_length/ritual_invocations.len)*c_c_combo) //first one is instant
-		c_c_combo++
-	if(do_after(user, target = user, delay = ritual_length))
-		return TRUE
+		if(first_invoke) //instant invoke
+			user.say(i)
+			first_invoke = FALSE
+			continue
+		if(!ritual_invocations.len) //we divide so we gotta protect
+			return FALSE
+		if(!do_after(user, target = user, delay = ritual_length/ritual_invocations.len))
+			return FALSE
+		user.say(i)
+	if(!do_after(user, target = user, delay = ritual_length/ritual_invocations.len)) //because we start at 0 and not the first fraction in invocations, we still have another fraction of ritual_length to complete
+		return FALSE
+	if(invoke_msg)
+		user.say(invoke_msg)
+	return TRUE
+
 
 ///Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
 /datum/religion_rites/proc/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
@@ -35,10 +52,15 @@
 	desc = "Convert a human-esque individual into a (superior) Android."
 	ritual_length = 1 MINUTES
 	ritual_invocations = list("By the inner workings of our god...",
-						"... We call upon you, in the face of adversary...",
-						"... to complete us, removing that which is undesirable...",
-						"... Arise, our champion! Become that which your soul craves, live in the world as your true form!!")
+						"... We call upon you, in the face of adversity...",
+						"... to complete us, removing that which is undesirable...")
+	invoke_msg = "... Arise, our champion! Become that which your soul craves, live in the world as your true form!!"
 	favor_cost = 500
+
+/datum/religion_rites/synthconversion/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(!AOG?.buckled_mobs?.len)
+		return FALSE
+	return ..()
 
 /datum/religion_rites/synthconversion/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!AOG?.buckled_mobs?.len)

@@ -35,6 +35,21 @@
 		if(sect_to_altar.altar_icon_state)
 			icon_state = sect_to_altar.altar_icon_state
 
+/obj/structure/altar_of_gods/attack_hand(mob/living/user)
+	if(!Adjacent(user) || !user.pulling)
+		return ..()
+	if(!isliving(user.pulling))
+		return ..()
+	var/mob/living/pushed_mob = user.pulling
+	if(pushed_mob.buckled)
+		to_chat(user, "<span class='warning'>[pushed_mob] is buckled to [pushed_mob.buckled]!</span>")
+		return ..()
+	to_chat(user,"<span class='notice>You try to coax [pushed_mob] onto [src]...</span>")
+	if(!do_after(user,(5 SECONDS),target = pushed_mob))
+		return ..()
+	pushed_mob.forceMove(loc)
+	return ..()
+
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
 	//If we can sac, we do nothing but the sacrifice instead of typical attackby behavior (IE damage the structure)
 	if(sect_to_altar?.can_sacrifice(C,user))

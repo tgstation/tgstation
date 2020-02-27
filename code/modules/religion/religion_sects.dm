@@ -1,17 +1,39 @@
+/**
+  * # Religious Sects
+  *
+  * Religious Sects are a way to convert the fun of having an active 'god' (admin) to code-mechanics so you aren't having to press adminwho.
+  *
+  * Sects are not meant to overwrite the fun of choosing a custom god/religion, but meant to enhance it.
+  * The idea is that Space Jesus (or whoever you worship) can be an evil bloodgod who takes the lifeforce out of people, a nature lover, or all things righteous and good. You decide!
+  *
+  */
+
 /datum/religion_sect
-	var/name = "Religious Sect Base Type" // Name of your sect, duh!
-	var/desc = "Oh My! What Do We Have Here?!!?!?!?" // brief description of the sect. Keep it small!
-	var/convert_opener //opening message when someone gets converted
+/// Name of the religious sect
+	var/name = "Religious Sect Base Type"
+/// Description of the religious sect, Presents itself in the selection menu (AKA be brief)
+	var/desc = "Oh My! What Do We Have Here?!!?!?!?"
+/// Opening message when someone gets converted
+	var/convert_opener
+/// holder for alignments.
 	var/alignment = ALIGNMENT_GOOD
-	var/starter = TRUE // Does this require something to unlock?
+/// Does this require something before being available as an option?
+	var/starter = TRUE
+/// The Sect's 'Mana'
 	var/favor = 0 //MANA!
+/// The max amount of favor the sect can have
 	var/max_favor = 1000
+/// The default value for an item that can be sacrificed
 	var/default_item_favor = 5
-	var/list/desired_items //turned to typecache
+/// Turns into 'desired_items_typecache', lists the types that can be sacrificed barring optional features in can_sacrifice()
+	var/list/desired_items
+/// Autopopulated by `desired_items`
 	var/list/desired_items_typecache
+/// Lists of rites by type. Converts itself into a list of rites with "name - desc (favor_cost)" = type
 	var/list/rites_list
-// If these are set, changes the Altar of God
+/// Changes the Altar of Gods icon
 	var/altar_icon
+/// Changes the Altar of Gods icon_state
 	var/altar_icon_state
 
 /datum/religion_sect/New()
@@ -101,7 +123,6 @@
 	desc = "Nothing special."
 	convert_opener = "Your run-of-the-mill sect, there are no benefits or boons associated. Praise normalcy!"
 
-/// SECT_TECH
 /datum/religion_sect/technophile
 	name = "Technophile"
 	desc = "A sect oriented around technology."
@@ -126,14 +147,32 @@
 	if(!ishuman(L))
 		return
 	var/mob/living/carbon/human/H = L
+
+	//first we determine if we can charge them
+	var/did_we_charge = FALSE
+	var/obj/item/organ/stomach/ethereal/eth_stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+	if(istype(eth_stomach))
+		eth_stomach.adjust_charge(3)
+		did_we_charge = TRUE
+
+	//if we're not targetting a robot part we stop early
 	var/obj/item/bodypart/BP = H.get_bodypart(user.zone_selected)
 	if(BP.status != BODYPART_ROBOTIC)
-		to_chat(user, "<span class='warning'>[GLOB.deity] scoffs at the idea of healing such fleshy matter!</span>")
+		if(!did_we_charge)
+			to_chat(user, "<span class='warning'>[GLOB.deity] scoffs at the idea of healing such fleshy matter!</span>")
+		else
+			H.visible_message("<span class='notice'>[user] charges [H] with the power of [GLOB.deity]!</span>")
+			to_chat(H, "<span class='boldnotice'>You feel charged by the power of [GLOB.deity]!</span>")
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+			playsound(user, 'sound/machines/synth_yes.ogg', 25, TRUE, -1)
 		return TRUE
+
+	//charge(?) and go
 	if(BP.heal_damage(5,5,null,BODYPART_ROBOTIC))
 		H.update_damage_overlays()
-	H.visible_message("<span class='notice'>[user] heals [H] with the power of [GLOB.deity]!</span>")
-	to_chat(H, "<span class='boldnotice'>May the power of [GLOB.deity] compel you to be healed!</span>")
+
+	H.visible_message("<span class='notice'>[user] [did_we_charge ? "repairs" : "repairs and charges"] [H] with the power of [GLOB.deity]!</span>")
+	to_chat(H, "<span class='boldnotice'>The inner machinations of [GLOB.deity] [did_we_charge ? "repairs" : "repairs and charges"] you!</span>")
 	playsound(user, 'sound/effects/bang.ogg', 25, TRUE, -1)
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE
@@ -142,7 +181,7 @@
 	if(!..())
 		return FALSE
 	var/obj/item/stock_parts/cell/the_cell = I
-	if(the_cell.charge <= 3000)
+	if(the_cell.charge < 3000)
 		to_chat("<span class='notice'>[GLOB.deity] does not accept pity amounts of power.</span>")
 		return FALSE
 	return TRUE
