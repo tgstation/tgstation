@@ -43,7 +43,7 @@
 		restricted_jobs += "Assistant"
 
 	// Set number of Vamps
-	recommended_enemies = CLAMP(round(num_players()/10), 1, 6);
+	recommended_enemies = clamp(round(num_players()/10), 1, 6);
 
 	// Select Antags
 	for(var/i = 0, i < recommended_enemies, i++)

@@ -66,7 +66,7 @@
 
 
 /datum/antagonist/bloodsucker/proc/AddBloodVolume(value)
-	owner.current.blood_volume = CLAMP(owner.current.blood_volume + value, 0, maxBloodVolume)
+	owner.current.blood_volume = clamp(owner.current.blood_volume + value, 0, maxBloodVolume)
 	update_hud()
 
 

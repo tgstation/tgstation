@@ -78,7 +78,7 @@
 		// Find Animals in Area
 		if (rand(0,2) == 0)
 			var/mobCount = 0
-			var/mobMax = CLAMP(area_turfs.len / 25, 1, 4)
+			var/mobMax = clamp(area_turfs.len / 25, 1, 4)
 			for (var/turf/T in area_turfs)
 				if (!T) continue
 				var/mob/living/simple_animal/SA = locate() in T

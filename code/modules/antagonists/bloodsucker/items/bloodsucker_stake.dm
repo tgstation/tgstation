@@ -111,7 +111,7 @@
 	B.embedded_objects |= src
 	add_mob_blood(target)//Place blood on the stake
 	loc = C // Put INSIDE the character
-	B.receive_damage(w_class * embedding.embedded_impact_pain_multiplier)
+	B.receive_damage(w_class * EMBEDDED_IMPACT_PAIN_MULTIPLIER) // embedding.embedded_impact_pain_multiplier)
 
 	if (C.mind)
 		var/datum/antagonist/bloodsucker/bloodsucker = C.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)

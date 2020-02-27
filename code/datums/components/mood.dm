@@ -195,7 +195,7 @@
 	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.7
 	// If the new amount would move towards the acceptable range faster then use it instead
 	if(amount < minimum)
-		amount += CLAMP(minimum - amount, 0, 0.7)
+		amount += clamp(minimum - amount, 0, 0.7)
 	if((!override && HAS_TRAIT(parent, TRAIT_UNSTABLE)) || amount > maximum)
 		amount = min(sanity, amount)
 	if(amount == sanity) //Prevents stuff from flicking around.

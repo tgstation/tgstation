@@ -335,7 +335,7 @@
 				var/firstReagent = reagents.get_master_reagent_id()	//FULP
 				if(text2num(many))	//FULP
 					amount_full = round((reagents.get_reagent_amount(reagents.get_master_reagent_id())) / 10)	//FULP
-					amount = CLAMP(round(input(usr, "Medipens only contain 10u", "How many medipens?", amount) as num|null), 0, 10)	//FULP
+					amount = clamp(round(input(usr, "Medipens only contain 10u", "How many medipens?", amount) as num|null), 0, 10)	//FULP
 					if(amount > amount_full)	//FULP
 						to_chat(usr, "<span class='notice'>You have selected an amount larger than the possible maximum of [amount_full], creating [amount_full] instead...")	//FULP
 						amount = amount_full	//FULP
