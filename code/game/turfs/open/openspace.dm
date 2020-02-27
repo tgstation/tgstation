@@ -1,3 +1,5 @@
+GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdrop, new)
+
 /atom/movable/openspace_backdrop
 	name			= "openspace_backdrop"
 
@@ -28,7 +30,7 @@
 	plane = OPENSPACE_PLANE
 	layer = OPENSPACE_LAYER
 
-	vis_contents += new /atom/movable/openspace_backdrop() //Special grey square for projecting backdrop darkness filter on it.
+	vis_contents += GLOB.openspace_backdrop_one_for_all //Special grey square for projecting backdrop darkness filter on it.
 
 	return INITIALIZE_HINT_LATELOAD
 
