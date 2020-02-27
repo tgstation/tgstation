@@ -60,7 +60,7 @@
 
 /obj/structure/ash_walker_eggshell/Destroy()
 	if(!egg)
-	    return ..()
+		return ..()
 	var/mob/living/carbon/human/yolk = new /mob/living/carbon/human/(get_turf(src))
 	yolk.fully_replace_character_name(null,random_unique_lizard_name(gender))
 	yolk.set_species(/datum/species/lizard/ashwalker)
@@ -94,7 +94,7 @@
 
 /obj/effect/mob_spawn/human/ash_walker/allow_spawn(mob/user)
 	if(!(user.key in team.players_spawned))//one per person unless you get a bonus spawn
-	    return TRUE
+		return TRUE
 	to_chat(user, "<span class='warning'><b>You have exhausted your usefulness to the Necropolis</b>.</span>")
 	return FALSE
 
