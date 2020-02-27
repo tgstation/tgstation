@@ -149,6 +149,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	var/going_backwards = TRUE
 	var/has_data = FALSE
 	var/data_having_type = /turf/open/floor/plating/asteroid/airless/cave/has_data
+	var/list/pick_tunnel_width
 	turf_type = /turf/open/floor/plating/asteroid/airless
 
 /turf/open/floor/plating/asteroid/airless/cave/has_data //subtype for producing a tunnel with given data
@@ -194,6 +195,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	terrain_spawn_list = list()
 	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/snow/has_data
 	turf_type = /turf/open/floor/plating/asteroid/snow/icemoon
+	pick_tunnel_width = list(1 = 6, 2 = 1)
 
 /turf/open/floor/plating/asteroid/airless/cave/snow/underground
 	flora_spawn_list = list(/obj/structure/flora/rock/icy = 6, /obj/structure/flora/rock/pile/icy = 6)
@@ -210,10 +212,6 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 
 /turf/open/floor/plating/asteroid/airless/cave/snow/underground/has_data //subtype for producing a tunnel with given data
 	has_data = TRUE
-
-/turf/open/floor/plating/asteroid/airless/cave/snow/make_tunnel(dir, pick_tunnel_width)
-	pick_tunnel_width = list("1" = 6, "2" = 1) // tunnel with 6/7 chance to be 1 tile wide and 1/7 chance to be 2 tiles wide
-	..()
 
 /turf/open/floor/plating/asteroid/airless/cave/Initialize()
 	if (!mob_spawn_list)
@@ -249,13 +247,13 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	// Kill ourselves by replacing ourselves with a normal floor.
 	SpawnFloor(src)
 
-/turf/open/floor/plating/asteroid/airless/cave/proc/make_tunnel(dir, pick_tunnel_width)
+/turf/open/floor/plating/asteroid/airless/cave/proc/make_tunnel(dir)
 	var/turf/closed/mineral/tunnel = src
 	var/next_angle = pick(45, -45)
 
 	var/tunnel_width = 1
 	if(pick_tunnel_width)
-		tunnel_width = text2num(pickweight(pick_tunnel_width))
+		tunnel_width = pickweight(pick_tunnel_width)
 
 	for(var/i = 0; i < length; i++)
 		if(!sanity)

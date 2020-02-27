@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aab" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -58,8 +58,8 @@
 	name = "northeast of station";
 	width = 23
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aaf" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -74,14 +74,14 @@
 /area/quartermaster/miningdock)
 "aag" = (
 /obj/structure/lattice/catwalk,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aah" = (
 /obj/structure/sign/warning/securearea{
 	pixel_y = -32
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aai" = (
 /turf/closed/wall/r_wall,
 /area/security/prison)
@@ -280,7 +280,7 @@
 /area/security/prison)
 "aaH" = (
 /turf/open/floor/plating/airless,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/unexplored)
 "aaI" = (
 /obj/structure/bookcase,
 /obj/effect/decal/cleanable/dirt,
@@ -359,20 +359,20 @@
 /area/security/prison)
 "aaR" = (
 /obj/structure/lattice,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aaS" = (
 /obj/structure/lattice,
 /obj/structure/sign/warning/securearea{
 	pixel_y = -32
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aaT" = (
 /obj/structure/grille,
 /obj/structure/lattice,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aaU" = (
 /obj/machinery/computer/arcade,
 /obj/effect/decal/cleanable/dirt,
@@ -420,8 +420,8 @@
 "aba" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "abb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -897,12 +897,12 @@
 "abY" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "abZ" = (
 /obj/structure/grille,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aca" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1063,19 +1063,19 @@
 /area/ai_monitored/security/armory)
 "acw" = (
 /obj/structure/lattice/catwalk,
-/turf/open/openspace/icemoon,
+/turf/closed/mineral/random/snow,
 /area/solar/port/fore)
 "acx" = (
 /obj/structure/lattice/catwalk,
-/turf/open/openspace/icemoon,
+/turf/closed/mineral/random/snow,
 /area/solar/starboard/fore)
 "acy" = (
 /obj/structure/sign/warning/securearea{
 	pixel_y = -32
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "acz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/stripes/line{
@@ -1518,8 +1518,8 @@
 	c_tag = "Armory - External";
 	dir = 1
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "adv" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -1559,8 +1559,8 @@
 "ady" = (
 /obj/structure/lattice,
 /obj/item/stack/cable_coil,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "adz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/yellow{
@@ -1586,8 +1586,8 @@
 /obj/structure/sign/warning/securearea{
 	pixel_x = 32
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "adC" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1744,7 +1744,7 @@
 "adT" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
-/turf/open/openspace/icemoon,
+/turf/closed/mineral/random/snow,
 /area/solar/port/fore)
 "adU" = (
 /obj/structure/cable,
@@ -2334,7 +2334,7 @@
 "afa" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
-/turf/open/openspace/icemoon,
+/turf/closed/mineral/random/snow,
 /area/solar/starboard/fore)
 "afb" = (
 /obj/machinery/recharger,
@@ -2472,8 +2472,8 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "afq" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -3433,8 +3433,8 @@
 	roundstart_template = /datum/map_template/shuttle/labour/box;
 	width = 9
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "ahx" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "Engineering";
@@ -4178,8 +4178,8 @@
 	id = "pod_lavaland3";
 	name = "lavaland"
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aiT" = (
 /turf/closed/wall,
 /area/security/processing)
@@ -5129,8 +5129,8 @@
 /area/security/brig)
 "akP" = (
 /obj/item/stack/rods,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "akQ" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "engsm";
@@ -5784,8 +5784,8 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "amq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -6367,8 +6367,8 @@
 	roundstart_template = /datum/map_template/shuttle/arrival/box;
 	width = 7
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "anN" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -6388,8 +6388,8 @@
 	name = "BoxStation emergency evac bay";
 	width = 32
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "anP" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
@@ -6443,8 +6443,8 @@
 	name = "port bay 2";
 	width = 5
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "anX" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 5;
@@ -6497,8 +6497,8 @@
 	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
 	width = 7
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aod" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -6516,7 +6516,7 @@
 /area/maintenance/solars/starboard/fore)
 "aog" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/openspace/icemoon,
+/turf/closed/mineral/random/snow,
 /area/hallway/secondary/entry)
 "aoh" = (
 /obj/machinery/power/solar_control{
@@ -6579,8 +6579,8 @@
 	name = "SS13: Auxiliary Dock, Station-Port";
 	width = 35
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aoq" = (
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = -32
@@ -6716,8 +6716,8 @@
 	name = "Cargo Bay";
 	width = 12
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aoF" = (
 /obj/machinery/vending/snack/random,
 /obj/effect/turf_decal/tile/red,
@@ -6728,8 +6728,8 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 10
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aoH" = (
 /obj/structure/table,
 /obj/item/book/manual/wiki/security_space_law{
@@ -6832,7 +6832,7 @@
 /area/maintenance/port/fore)
 "aoV" = (
 /turf/open/floor/plasteel/airless,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/unexplored)
 "aoW" = (
 /obj/structure/table,
 /obj/item/stamp,
@@ -6845,7 +6845,7 @@
 /area/maintenance/port/fore)
 "aoY" = (
 /turf/closed/wall,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/unexplored)
 "aoZ" = (
 /obj/machinery/atmospherics/components/binary/valve/digital{
 	name = "Waste Release"
@@ -6878,11 +6878,11 @@
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/unexplored)
 "apf" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
-/turf/open/openspace/icemoon,
+/turf/closed/mineral/random/snow,
 /area/solar/port/aft)
 "apg" = (
 /obj/machinery/door/airlock/maintenance{
@@ -6899,7 +6899,7 @@
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/unexplored)
 "apj" = (
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
@@ -7041,7 +7041,7 @@
 "apz" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
-/turf/open/openspace/icemoon,
+/turf/closed/mineral/random/snow,
 /area/solar/starboard/aft)
 "apA" = (
 /obj/machinery/power/apc{
@@ -7088,13 +7088,13 @@
 /obj/item/airlock_painter,
 /obj/structure/lattice,
 /obj/structure/closet,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "apI" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/unexplored)
 "apJ" = (
 /turf/closed/wall,
 /area/construction/mining/aux_base)
@@ -7104,8 +7104,8 @@
 	id = "pod_lavaland2";
 	name = "lavaland"
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "apL" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance/two,
@@ -7137,8 +7137,8 @@
 "apQ" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "apR" = (
 /obj/item/paper/fluff/jobs/security/beepsky_mom,
 /turf/open/floor/plating,
@@ -7150,8 +7150,8 @@
 "apT" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "apU" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Law Office Maintenance";
@@ -7172,8 +7172,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "apX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
@@ -7190,8 +7190,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aqa" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -7312,8 +7312,8 @@
 	id = "pod_lavaland1";
 	name = "lavaland"
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aqn" = (
 /obj/structure/bed,
 /obj/machinery/airalarm{
@@ -7378,8 +7378,8 @@
 "aqt" = (
 /obj/structure/lattice,
 /obj/structure/lattice,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aqu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -7450,27 +7450,27 @@
 /obj/structure/sign/warning/docking{
 	pixel_y = 32
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aqG" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 4
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aqH" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aqI" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aqJ" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
@@ -7505,7 +7505,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/unexplored)
 "aqO" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance/two,
@@ -7555,14 +7555,14 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/unexplored)
 "aqV" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 10
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aqW" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -7588,8 +7588,8 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aqY" = (
 /obj/machinery/light{
 	dir = 8
@@ -7612,8 +7612,8 @@
 "ara" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "arb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/grimy,
@@ -7644,8 +7644,8 @@
 /area/crew_quarters/dorms)
 "arg" = (
 /obj/item/stack/tile/plasteel,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "arh" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Dormitories Maintenance";
@@ -7797,12 +7797,12 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "arD" = (
 /obj/item/weldingtool,
 /turf/open/floor/plating/airless,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/unexplored)
 "arE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/tile/yellow{
@@ -7830,8 +7830,8 @@
 	dir = 5
 	},
 /obj/structure/lattice,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "arI" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
@@ -7842,7 +7842,7 @@
 "arJ" = (
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating/airless,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/unexplored)
 "arK" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 9
@@ -7853,7 +7853,7 @@
 /area/maintenance/port/fore)
 "arL" = (
 /obj/structure/lattice/catwalk,
-/turf/open/openspace/icemoon,
+/turf/closed/mineral/random/snow,
 /area/solar/port/aft)
 "arM" = (
 /obj/structure/closet/crate{
@@ -7880,7 +7880,7 @@
 	amount = 5
 	},
 /turf/open/floor/plating/airless,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/unexplored)
 "arR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -7892,7 +7892,7 @@
 	dir = 1
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/openspace/icemoon,
+/turf/closed/mineral/random/snow,
 /area/engine/atmos)
 "arT" = (
 /obj/structure/rack,
@@ -7931,7 +7931,7 @@
 "arY" = (
 /obj/item/clothing/head/hardhat,
 /turf/open/floor/plating/airless,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/unexplored)
 "arZ" = (
 /obj/structure/filingcabinet,
 /obj/structure/disposalpipe/segment,
@@ -8023,15 +8023,15 @@
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 5
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "asj" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/components/binary/pump/on{
 	name = "Incinerator Output Pump";
 	target_pressure = 4500
 	},
-/turf/open/openspace/icemoon,
+/turf/closed/mineral/random/snow,
 /area/maintenance/disposal/incinerator)
 "ask" = (
 /obj/structure/dresser,
@@ -8061,7 +8061,7 @@
 "aso" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
-/turf/open/openspace/icemoon,
+/turf/closed/mineral/random/snow,
 /area/maintenance/disposal/incinerator)
 "asp" = (
 /obj/structure/table/wood,
@@ -8150,8 +8150,8 @@
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "asx" = (
 /obj/structure/door_assembly/door_assembly_mai,
 /turf/open/floor/plating,
@@ -8180,15 +8180,15 @@
 "asC" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
 /obj/structure/lattice,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "asD" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 6
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "asE" = (
 /turf/closed/wall,
 /area/hallway/secondary/entry)
@@ -8198,7 +8198,7 @@
 /area/construction/mining/aux_base)
 "asG" = (
 /obj/structure/lattice/catwalk,
-/turf/open/openspace/icemoon,
+/turf/closed/mineral/random/snow,
 /area/solar/starboard/aft)
 "asH" = (
 /obj/structure/closet/toolcloset,
@@ -8303,8 +8303,8 @@
 "asU" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/green/visible,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "asV" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -8315,8 +8315,8 @@
 "asW" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "asX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -8437,14 +8437,14 @@
 "atk" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating/airless,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/unexplored)
 "atl" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 5
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "atm" = (
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
@@ -8487,8 +8487,8 @@
 	id = "pod_lavaland4";
 	name = "lavaland"
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "att" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
@@ -8498,8 +8498,8 @@
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 9
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "atv" = (
 /obj/structure/table,
 /obj/item/shard,
@@ -8536,7 +8536,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/unexplored)
 "atA" = (
 /obj/structure/table,
 /turf/open/floor/plating,
@@ -8657,15 +8657,15 @@
 	dir = 6
 	},
 /obj/structure/lattice,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "atS" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "atT" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -8702,14 +8702,14 @@
 	dir = 4
 	},
 /obj/structure/lattice,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "atY" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "atZ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -8748,8 +8748,8 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 5
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "aue" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
@@ -8977,15 +8977,15 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "auF" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 10
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "auG" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -8996,7 +8996,7 @@
 /area/maintenance/starboard/fore)
 "auH" = (
 /turf/closed/wall/r_wall,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/unexplored)
 "auI" = (
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
@@ -9009,8 +9009,8 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 9
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "auL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -9028,8 +9028,8 @@
 /obj/structure/transit_tube/curved/flipped{
 	dir = 1
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "auO" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
@@ -9075,8 +9075,8 @@
 "auT" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/structure/lattice,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "auU" = (
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -9143,8 +9143,8 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 6
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "avc" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance/four,
@@ -9195,8 +9195,8 @@
 	dir = 10
 	},
 /obj/structure/lattice,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "avj" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -9492,13 +9492,13 @@
 /obj/structure/transit_tube/curved{
 	dir = 4
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "avU" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube/crossing/horizontal,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "avV" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
@@ -9583,8 +9583,8 @@
 /area/maintenance/fore)
 "awg" = (
 /obj/structure/transit_tube/horizontal,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "awh" = (
 /obj/effect/landmark/blobstart,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -9602,8 +9602,8 @@
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /obj/structure/transit_tube/crossing/horizontal,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "awj" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -9831,8 +9831,8 @@
 "awO" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "awP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -9855,8 +9855,8 @@
 "awR" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "awS" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
@@ -9902,8 +9902,8 @@
 "awX" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "awY" = (
 /obj/machinery/light{
 	dir = 1
@@ -9967,8 +9967,8 @@
 	dir = 5
 	},
 /obj/structure/lattice,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "axe" = (
 /obj/structure/frame/machine,
 /turf/open/floor/plating,
@@ -10065,12 +10065,12 @@
 	dir = 10
 	},
 /obj/structure/lattice,
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "axs" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/unexplored)
 "axt" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -10100,8 +10100,8 @@
 	network = list("minisat");
 	start_active = 1
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "axw" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -10210,8 +10210,8 @@
 	network = list("minisat");
 	start_active = 1
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "axK" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -10341,8 +10341,8 @@
 	network = list("minisat");
 	start_active = 1
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "ayd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
@@ -10475,8 +10475,8 @@
 	network = list("minisat");
 	start_active = 1
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "ayx" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
@@ -10487,8 +10487,8 @@
 	network = list("minisat");
 	start_active = 1
 	},
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
 "ayz" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/port/fore)

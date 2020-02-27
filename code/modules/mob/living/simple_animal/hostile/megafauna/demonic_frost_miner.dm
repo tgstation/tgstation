@@ -87,30 +87,24 @@ Difficulty: Very Hard
 				ice_shotgun()
 		return
 
-	if(!enraged || prob(50))
-		chosen_attack = rand(1, 3)
-		switch(chosen_attack)
-			if(1)
-				if(prob(70))
-					frost_orbs()
-				else
-					frost_orbs(3, list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
-			if(2)
-				if(prob(70))
-					snowball_machine_gun(60)
-				else
-					INVOKE_ASYNC(src, .proc/ice_shotgun, 5, list(list(-180, -140, -100, -60, -20, 20, 60, 100, 140), list(-160, -120, -80, -40, 0, 40, 80, 120, 160)))
-					snowball_machine_gun(5 * 8, 5)
-			if(3)
-				if(prob(70))
-					ice_shotgun()
-				else
-					ice_shotgun(5, list(list(0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330), list(-30, -15, 0, 15, 30)))
-	else
-		chosen_attack = rand(1, 1)
-		switch(chosen_attack)
-			if(1)
-				to_chat(src, "dab")
+	chosen_attack = rand(1, 3)
+	switch(chosen_attack)
+		if(1)
+			if(prob(70))
+				frost_orbs()
+			else
+				frost_orbs(3, list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
+		if(2)
+			if(prob(70))
+				snowball_machine_gun(60)
+			else
+				INVOKE_ASYNC(src, .proc/ice_shotgun, 5, list(list(-180, -140, -100, -60, -20, 20, 60, 100, 140), list(-160, -120, -80, -40, 0, 40, 80, 120, 160)))
+				snowball_machine_gun(5 * 8, 5)
+		if(3)
+			if(prob(70))
+				ice_shotgun()
+			else
+				ice_shotgun(5, list(list(0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330), list(-30, -15, 0, 15, 30)))
 
 /obj/projectile/frost_orb
 	name = "frost orb"
