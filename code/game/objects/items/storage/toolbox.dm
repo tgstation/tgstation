@@ -235,14 +235,6 @@
 	throwforce =18
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/storage/toolbox/ammo/PopulateContents()
-	new /obj/item/clothing/head/helmet/infiltrator(src)
-	new /obj/item/clothing/suit/armor/vest/infiltrator(src)
-	new /obj/item/clothing/under/syndicate/bloodred(src)
-	new /obj/item/clothing/gloves/color/latex/nitrile/infiltrator(src)
-	new /obj/item/clothing/mask/infiltrator(src)
-	new /obj/item/clothing/shoes/combat/sneakboots(src)
-
 /obj/item/storage/toolbox/infiltrator/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
@@ -259,6 +251,14 @@
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/ammo_box
 		))
+
+/obj/item/storage/toolbox/infiltrator/PopulateContents()
+	new /obj/item/clothing/head/helmet/infiltrator(src)
+	new /obj/item/clothing/suit/armor/vest/infiltrator(src)
+	new /obj/item/clothing/under/syndicate/bloodred(src)
+	new /obj/item/clothing/gloves/color/latex/nitrile/infiltrator(src)
+	new /obj/item/clothing/mask/infiltrator(src)
+	new /obj/item/clothing/shoes/combat/sneakboots(src)
 
 //floorbot assembly
 /obj/item/storage/toolbox/attackby(obj/item/stack/tile/plasteel/T, mob/user, params)
