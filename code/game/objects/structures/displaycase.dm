@@ -419,7 +419,7 @@
 					to_chat(user, "<span class='notice'>[src] appears to be broken.</span>")
 					return TRUE
 				var/confirm = alert(user, "Purchase [showpiece] for [sale_price]?", "Purchase?", "Confirm", "Cancel")
-				if(confirm == "Cancel")
+				if(confirm == "Cancel" || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return TRUE
 				var/datum/bank_account/account = potential_acc.registered_account
 				if(!account.has_money(sale_price))
