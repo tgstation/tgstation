@@ -720,8 +720,9 @@
 
 /datum/action/innate/core_return
 	name = "Return to Main Core"
+	desc = "Leave the APC and resume normal core operations."
 	icon_icon = 'icons/mob/actions/actions_AI.dmi'
-	button_icon_state = "lockdown"
+	button_icon_state = "ai_malf_core"
 
 /datum/action/innate/core_return/Activate()
 	var/obj/machinery/power/apc/apc = owner.loc
@@ -880,7 +881,7 @@
 	name = "Malfunction Modules"
 	desc = "Choose from a variety of insidious modules to aid you."
 	icon_icon = 'icons/mob/actions/actions_AI.dmi'
-	button_icon_state = "lockdown"
+	button_icon_state = "modules_menu"
 	var/datum/module_picker/module_picker
 
 /datum/action/innate/choose_modules/New(picker)
