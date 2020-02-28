@@ -487,13 +487,17 @@
 	glass_name = "glass of Pwr Game"
 	glass_desc = "Goes well with a Vlad's salad."
 
+/datum/reagent/consumable/pwr_game/on_mob_metabolize(mob/living/carbon/C)
+	..()
+	if(C?.mind.get_skill_level(/datum/skill/gaming) >= SKILL_EXP_LEGENDARY && !HAS_TRAIT(C, GAMER_GOD))
+		ADD_TRAIT(C, GAMER_GOD, "pwr_game")
+		to_chat(C, "<span class='nicegreen'>As you imbibe the Pwr Game, your gamer third eye opens... \
+		You feel as though a great secret of the universe has been made known to you...</span>")
+
 /datum/reagent/consumable/pwr_game/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(-8 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
-	if(prob(10))
+	if(prob(5))
 		M?.mind.adjust_experience(/datum/skill/gaming, 1)
-	if(user?.mind.get_skill_level(/datum/skill/gaming) >= SKILL_EXP_LEGENDARY && !HAS_TRAIT(user, GAMER_GOD)))
-		ADD_TRAIT(user, GAMER_GOD, "pwr_game")
-		to_chat(mind.current, "<span class='nicegreen'>The Pwr Game opens the third eye of your mind. You learn a secret code...</span>")
 	..()
 
 /datum/reagent/consumable/shamblers

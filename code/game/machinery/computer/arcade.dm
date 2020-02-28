@@ -77,22 +77,25 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		return INITIALIZE_HINT_QDEL
 	Reset()
 
-/obj/machinery/computer/arcade/proc/prizevend(mob/user)
-	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
-	if(prob(0.0001)) //1 in a million
-		new /obj/item/gun/energy/pulse/prize(src)
-		visible_message("<span class='notice'>[src] dispenses.. woah, a gun! Way past cool.</span>", "<span class='notice'>You hear a chime and a shot.</span>")
-		user.client.give_award(/datum/award/achievement/misc/pulse, user)
-		return
+/obj/machinery/computer/arcade/proc/prizevend(mob/user, prizes = 1)
+	if(user.mind.get_skill_level(/datum/skill/gaming) >= SKILL_EXP_LEGENDARY && HAS_TRAIT(user, GAMER_GOD))
+		prizes++
+	for(var/i = 0, i < prizes, i++)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
+		if(prob(0.0001)) //1 in a million
+			new /obj/item/gun/energy/pulse/prize(src)
+			visible_message("<span class='notice'>[src] dispenses.. woah, a gun! Way past cool.</span>", "<span class='notice'>You hear a chime and a shot.</span>")
+			user.client.give_award(/datum/award/achievement/misc/pulse, user)
+			return
 
-	var/prizeselect
-	if(prize_override)
-		prizeselect = pickweight(prize_override)
-	else
-		prizeselect = pickweight(GLOB.arcade_prize_pool)
-	var/atom/movable/the_prize = new prizeselect(get_turf(src))
-	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
-	visible_message("<span class='notice'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
+		var/prizeselect
+		if(prize_override)
+			prizeselect = pickweight(prize_override)
+		else
+			prizeselect = pickweight(GLOB.arcade_prize_pool)
+		var/atom/movable/the_prize = new prizeselect(get_turf(src))
+		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
+		visible_message("<span class='notice'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
 
 /obj/machinery/computer/arcade/emp_act(severity)
 	. = ..()
@@ -1296,8 +1299,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		qdel(chopchop)
 		user?.mind.adjust_experience(/datum/skill/gaming, 100)
 		playsound(loc, 'sound/arcade/win.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-		for(var/i=1; i<=rand(3,5); i++)
-			prizevend(user)
+		prizevend(user, rand(3,5))
 	else
 		to_chat(c_user, "<span class='notice'>You (wisely) decide against putting your hand in the machine.</span>")
 
