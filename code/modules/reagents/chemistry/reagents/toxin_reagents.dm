@@ -169,8 +169,9 @@
 	..()
 	ADD_TRAIT(L, TRAIT_FAKEDEATH, type)
 
-/datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/L)
+/datum/reagent/toxin/zombiepowder/on_mob_delete(mob/living/L)
 	L.cure_fakedeath(type)
+	fakedeath_active = FALSE
 	..()
 
 /datum/reagent/toxin/zombiepowder/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
