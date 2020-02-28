@@ -434,7 +434,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		if(h2ocomp >= 0.15 && h2ocomp <= 0.55) //the engine will stop producing power from 15% to 55% h2o (slow down the o2 and plasma generation too)
 			h2omalus = 0.1
-		else if (h2ocomp< 0.15 || h2ocomp > 55) //above or below these 2 values the engine will start to freak out (may need test on the amount of freak out)
+		else if (h2ocomp > 0.07 && h2ocomp< 0.15 || h2ocomp > 55) //above or below these 2 values the engine will start to freak out (may need test on the amount of freak out)
 			h2omalus = 2
 		else
 			h2omalus = 1
