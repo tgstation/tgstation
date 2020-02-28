@@ -27,7 +27,7 @@
 		ui.open()
 
 /datum/robot_control/ui_data(mob/user)
-	if(!owner)
+	if(!owner || user != owner)
 		return
 	var/list/data = list()
 	var/turf/ai_current_turf = get_turf(owner)
