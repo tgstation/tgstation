@@ -47,7 +47,7 @@
 /datum/map_template/ruin/lavaland/dwarven_slumber
 	name = "Dwarven Awakening Spot"
 	id = "dwarf"
-	description = "Millenia ago dwarves ruled lavaland till a cataclysm came. Lucky ones sealed themselves inside a magical sarcophagus. First of the dwarves have awakened even tough the sarcophagus is damaged."
+	description = "Millennia ago, dwarves ruled the lavalands, till a cataclysm came. The lucky ones sealed themselves inside a magical sarcophagus, and slept for thousands upon thousands of years. The first dwarves have now awakened from their slumber, even if the sarcophagus had been damaged due to time."
 	suffix = "lavaland_surface_dwarves.dmm"
 	cost = 20
 	allow_duplicates = FALSE
