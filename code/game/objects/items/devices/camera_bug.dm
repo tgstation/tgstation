@@ -60,7 +60,7 @@
 	interact(user)
 
 /obj/item/camera_bug/check_eye(mob/user)
-	if ( loc != user || user.incapacitated() || user.eye_blind || !current )
+	if ( loc != user || user.incapacitated() || user.is_blind() || !current )
 		user.unset_machine()
 		return 0
 	var/turf/T_user = get_turf(user.loc)

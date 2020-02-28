@@ -95,3 +95,9 @@
 	desc = "Well, that didn't take long."
 	database_id = MEDAL_LONGSHIFT
 	icon = "longshift"
+
+/datum/award/achievement/misc/snail
+	name = "KKKiiilll mmmeee"
+	desc = "You were a little too ambitious, but hey, I guess you're still alive?"
+	database_id = MEDAL_SNAIL
+	icon = "snail"

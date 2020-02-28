@@ -63,6 +63,9 @@
 	owner = null
 	qdel(src)
 
+/datum/status_effect/proc/before_remove() //! Called before being removed; returning FALSE will cancel removal
+	return TRUE
+
 /datum/status_effect/proc/refresh()
 	var/original_duration = initial(duration)
 	if(original_duration == -1)
@@ -107,12 +110,13 @@
 	S1 = new effect(arguments)
 	. = S1
 
-/mob/living/proc/remove_status_effect(effect) //removes all of a given status effect from this mob, returning TRUE if at least one was removed
+/mob/living/proc/remove_status_effect(effect, ...) //removes all of a given status effect from this mob, returning TRUE if at least one was removed
 	. = FALSE
+	var/list/arguments = args.Copy(2)
 	if(status_effects)
 		var/datum/status_effect/S1 = effect
 		for(var/datum/status_effect/S in status_effects)
-			if(initial(S1.id) == S.id)
+			if(initial(S1.id) == S.id && S.before_remove(arguments))
 				qdel(S)
 				. = TRUE
 
@@ -238,3 +242,22 @@
 		owner.underlays -= status_underlay
 	QDEL_NULL(status_overlay)
 	return ..()
+
+/// Status effect from multiple sources, when all sources are removed, so is the effect
+/datum/status_effect/grouped
+	status_type = STATUS_EFFECT_MULTIPLE //! Adds itself to sources and destroys itself if one exists already, there are never multiple
+	var/list/sources = list()
+
+/datum/status_effect/grouped/on_creation(mob/living/new_owner, source)
+	var/datum/status_effect/grouped/existing = new_owner.has_status_effect(type)
+	if(existing)
+		existing.sources |= source
+		qdel(src)
+		return FALSE
+	else
+		sources |= source
+		return ..()
+
+/datum/status_effect/grouped/before_remove(source)
+	sources -= source
+	return !length(sources)
