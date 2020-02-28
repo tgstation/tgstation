@@ -201,8 +201,6 @@
 	var/is_boosted = (owner && HAS_TRAIT(owner, TRAIT_SPECIAL_TRAUMA_BOOST))
 	if(damage > BRAIN_DAMAGE_SEVERE)
 		if(prob(damage_delta * (1 + max(0, (damage - BRAIN_DAMAGE_SEVERE)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1%
-			if(prob(20))
-				gain_trauma_type(BRAIN_TRAUMA_SPECIAL, natural_gain = TRUE)
 			if(prob(20 + (is_boosted * 30)))
 				gain_trauma_type(BRAIN_TRAUMA_SPECIAL, is_boosted ? TRAUMA_RESILIENCE_SURGERY : null, natural_gain = TRUE)
 			else
