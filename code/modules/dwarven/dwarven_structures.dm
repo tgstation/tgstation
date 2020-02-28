@@ -30,7 +30,6 @@
 	if(team)
 		dorfteam = team
 
-
 /obj/structure/destructible/dwarven/dwarven_sarcophagus/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>It is [(recharge_points*100)/recharge_points_max]% powered </span>"
