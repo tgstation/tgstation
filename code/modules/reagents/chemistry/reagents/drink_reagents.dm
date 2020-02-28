@@ -489,7 +489,7 @@
 
 /datum/reagent/consumable/pwr_game/on_mob_metabolize(mob/living/carbon/C)
 	..()
-	if(C?.mind.get_skill_level(/datum/skill/gaming) >= SKILL_EXP_LEGENDARY && !HAS_TRAIT(C, GAMER_GOD))
+	if(C?.mind.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && !HAS_TRAIT(C, GAMER_GOD))
 		ADD_TRAIT(C, GAMER_GOD, "pwr_game")
 		to_chat(C, "<span class='nicegreen'>As you imbibe the Pwr Game, your gamer third eye opens... \
 		You feel as though a great secret of the universe has been made known to you...</span>")

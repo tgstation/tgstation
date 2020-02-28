@@ -78,7 +78,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	Reset()
 
 /obj/machinery/computer/arcade/proc/prizevend(mob/user, prizes = 1)
-	if(user.mind.get_skill_level(/datum/skill/gaming) >= SKILL_EXP_LEGENDARY && HAS_TRAIT(user, GAMER_GOD))
+	if(user.mind.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && HAS_TRAIT(user, GAMER_GOD))
+		visible_message("<span class='notice'>[user] inputs an intense cheat code! [src] beeps, \"CODE ACTIVE: EXTRA PRIZE.\"</span>",\
+		 "<span class='notice'>You hear thousands of buttons being pressed, followed by a robotic voice saying \"CODE ACTIVE: EXTRA PRIZE.\".</span>")
 		prizes++
 	for(var/i = 0, i < prizes, i++)
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
@@ -227,7 +229,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		else if (href_list["heal"])
 			blocked = TRUE
 			var/maxPointCost = 3
-			if(gamerSkill > SKILL_LEVEL_JOURNEYMAN)
+			if(gamerSkill >= SKILL_LEVEL_JOURNEYMAN)
 				maxPointCost = 2
 			var/pointamt = rand(1, maxPointCost)
 			var/healamt = rand(6,8) + rand(0, gamerSkill)
@@ -524,7 +526,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		gamers[gamer] = -1
 
 		gamer.client.give_award(/datum/award/achievement/misc/gamer, gamer) // PSYCH REPORT NOTE: patient kept rambling about how they did it for an "achievement", recommend continued holding for observation
-		user?.mind.adjust_experience(/datum/skill/gaming, 50) // cheevos make u better
+		gamer?.mind.adjust_experience(/datum/skill/gaming, 50) // cheevos make u better
 
 		if(!isnull(GLOB.data_core.general))
 			for(var/datum/data/record/R in GLOB.data_core.general)
@@ -607,8 +609,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		return
 	busy = TRUE
 
-	var/gamerMind = usr.mind
-	var/gamerSkill = gamerMind.get_skill_level(/datum/skill/gaming)
+	var/gamerSkill = usr.mind.get_skill_level(/datum/skill/gaming)
 	var/xp_gained = 0
 	if (href_list["continue"]) //Continue your travels
 		if(gameStatus == ORION_STATUS_NORMAL && !event && turns != 7)
@@ -895,8 +896,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	add_fingerprint(usr)
 	updateUsrDialog()
 	busy = FALSE
-	gamerMind.adjust_experience(/datum/skill/gaming, xp_gained+1)
-	return
+	usr?.mind.adjust_experience(/datum/skill/gaming, xp_gained+1)
 
 
 /obj/machinery/computer/arcade/orion_trail/proc/event()
