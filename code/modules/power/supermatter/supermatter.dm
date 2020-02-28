@@ -9,6 +9,7 @@
 #define CO2_HEAT_PENALTY 0.1
 #define NITROGEN_HEAT_PENALTY -1.5
 #define BZ_HEAT_PENALTY 5
+#define H2O_HEAT_PENALTY 13
 
 
 //All of these get divided by 10-bzcomp * 5 before having 1 added and being multiplied with power to determine rads
@@ -18,11 +19,13 @@
 #define BZ_TRANSMIT_MODIFIER -2
 #define TRITIUM_TRANSMIT_MODIFIER 30 //We divide by 10, so this works out to 3
 #define PLUOXIUM_TRANSMIT_MODIFIER -5 //Should halve the power output
+#define H2O_TRANSMIT_MODIFIER -9
 
 #define BZ_RADIOACTIVITY_MODIFIER 5 //Improves the effect of transmit modifiers
 
 #define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
 #define PLUOXIUM_HEAT_RESISTANCE 3
+#define H2O_HEAT_RESISTANCE 10
 
 #define POWERLOSS_INHIBITION_GAS_THRESHOLD 0.20         //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
 #define POWERLOSS_INHIBITION_MOLE_THRESHOLD 20        //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.        //Scales powerloss inhibition down until this amount of moles is reached
@@ -91,7 +94,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	critical_machine = TRUE
 
 	//If we ever start to care about all gasses, make this based on type and apply it as a for loop
-	var/list/gas_trans = list("PL" = PLASMA_TRANSMIT_MODIFIER, "O2" = OXYGEN_TRANSMIT_MODIFIER, "TRIT" = TRITIUM_TRANSMIT_MODIFIER, "PLX" = PLUOXIUM_TRANSMIT_MODIFIER, "BZ" = BZ_TRANSMIT_MODIFIER)
+	var/list/gas_trans = list("PL" = PLASMA_TRANSMIT_MODIFIER, "WV" = H2O_TRANSMIT_MODIFIER, "O2" = OXYGEN_TRANSMIT_MODIFIER, "TRIT" = TRITIUM_TRANSMIT_MODIFIER, "PLX" = PLUOXIUM_TRANSMIT_MODIFIER, "BZ" = BZ_TRANSMIT_MODIFIER)
 	var/gasefficency = 0.15
 
 	var/base_icon_state = "darkmatter"
@@ -125,8 +128,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/tritiumcomp = 0
 	var/bzcomp = 0
 	var/pluoxiumcomp = 0
+	var/h2ocomp = 0
 
 	var/pluoxiumbonus = 0
+	var/h2obonus = 0
+	var/h2omalus = 1
 
 	var/combined_gas = 0
 	var/gasmix_power_ratio = 0
@@ -393,7 +399,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//This means we can only deal 1.8 damage per function call
 			damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage)
 
-		removed.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/nitrogen, /datum/gas/pluoxium, /datum/gas/tritium, /datum/gas/bz)
+		removed.assert_gases(/datum/gas/oxygen, /datum/gas/water_vapor, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/nitrogen, /datum/gas/pluoxium, /datum/gas/tritium, /datum/gas/bz)
 		//calculating gas related values
 		//Wanna know a secret? See that max() to zero? it's used for error checking. If we get a mol count in the negative, we'll get a divide by zero error
 		combined_gas = max(removed.total_moles(), 0)
@@ -413,6 +419,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		bzcomp += clamp(max(removed.gases[/datum/gas/bz][MOLES]/combined_gas, 0) - bzcomp, -1, gas_change_rate)
 		n2ocomp += clamp(max(removed.gases[/datum/gas/nitrous_oxide][MOLES]/combined_gas, 0) - n2ocomp, -1, gas_change_rate)
 		n2comp += clamp(max(removed.gases[/datum/gas/nitrogen][MOLES]/combined_gas, 0) - n2comp, -1, gas_change_rate)
+		h2ocomp += clamp(max(removed.gases[/datum/gas/water_vapor][MOLES]/combined_gas, 0) - h2ocomp, -1, gas_change_rate)
 
 		//We're concerned about pluoxium being too easy to abuse at low percents, so we make sure there's a substantial amount.
 		if(pluoxiumcomp >= 0.15)
@@ -420,14 +427,26 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		else
 			pluoxiumbonus = 0
 
+		if(h2ocomp >= 0.45 && h2ocomp <= 0.55) //heat protection from h2o only works when it's between 45 and 55%
+			h2obonus = 1
+		else
+			h2obonus = 0
+
+		if(h2ocomp >= 0.15 && h2ocomp <= 0.55) //the engine will stop producing power from 15% to 55% h2o (slow down the o2 and plasma generation too)
+			h2omalus = 0.1
+		else if (h2ocomp< 0.15 || h2ocomp > 55) //above or below these 2 values the engine will start to freak out (may need test on the amount of freak out)
+			h2omalus = 2
+		else
+			h2omalus = 1
+
 		//No less then zero, and no greater then one, we use this to do explosions and heat to power transfer
-		gasmix_power_ratio = min(max(plasmacomp + o2comp + co2comp + tritiumcomp + bzcomp - pluoxiumcomp - n2comp, 0), 1)
+		gasmix_power_ratio = min(max(((plasmacomp + o2comp + co2comp + h2ocomp + tritiumcomp + bzcomp - pluoxiumcomp - n2comp) / h2omalus), 0), 1)
 		//Minimum value of 1.5, maximum value of 15
-		dynamic_heat_modifier = max((plasmacomp * PLASMA_HEAT_PENALTY) + (o2comp * OXYGEN_HEAT_PENALTY) + (co2comp * CO2_HEAT_PENALTY) + (tritiumcomp * TRITIUM_HEAT_PENALTY) + ((pluoxiumcomp * PLUOXIUM_HEAT_PENALTY) * pluoxiumbonus) + (n2comp * NITROGEN_HEAT_PENALTY) + (bzcomp * BZ_HEAT_PENALTY), 0.5)
+		dynamic_heat_modifier = max(((plasmacomp * PLASMA_HEAT_PENALTY) + (h2ocomp * H2O_HEAT_PENALTY) + (o2comp * OXYGEN_HEAT_PENALTY)) * h2omalus + (co2comp * CO2_HEAT_PENALTY) + (tritiumcomp * TRITIUM_HEAT_PENALTY) + ((pluoxiumcomp * PLUOXIUM_HEAT_PENALTY) * pluoxiumbonus) + (n2comp * NITROGEN_HEAT_PENALTY) + (bzcomp * BZ_HEAT_PENALTY), 0.5)
 		//Value between 6 and 1
-		dynamic_heat_resistance = max((n2ocomp * N2O_HEAT_RESISTANCE) + ((pluoxiumcomp * PLUOXIUM_HEAT_RESISTANCE) * pluoxiumbonus), 1)
+		dynamic_heat_resistance = max((n2ocomp * N2O_HEAT_RESISTANCE) + ((h2ocomp * H2O_HEAT_RESISTANCE) * h2obonus) + ((pluoxiumcomp * PLUOXIUM_HEAT_RESISTANCE) * pluoxiumbonus), 1)
 		//Value between 30 and -5, used to determine radiation output as it concerns things like collecters
-		power_transmission_bonus = (plasmacomp * gas_trans["PL"]) + (o2comp * gas_trans["O2"]) + (bzcomp * gas_trans["BZ"]) + (tritiumcomp * gas_trans["TRIT"]) + ((pluoxiumcomp * gas_trans["PLX"]) * pluoxiumbonus)
+		power_transmission_bonus = (plasmacomp * gas_trans["PL"]) + ((h2ocomp * gas_trans["WV"])*h2obonus) + (o2comp * gas_trans["O2"]) + (bzcomp * gas_trans["BZ"]) + (tritiumcomp * gas_trans["TRIT"]) + ((pluoxiumcomp * gas_trans["PLX"]) * pluoxiumbonus)
 
 		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
 		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
