@@ -431,14 +431,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			h2obonus = 1
 		else
 			h2obonus = 0
-
 		if(h2ocomp >= 0.15 && h2ocomp <= 0.55) //the engine will stop producing power from 15% to 55% h2o (slow down the o2 and plasma generation too)
 			h2omalus = 0.1
-		else if (h2ocomp > 0.07 && h2ocomp< 0.15 || h2ocomp > 55) //above or below these 2 values the engine will start to freak out (may need test on the amount of freak out)
-			h2omalus = 2
-		else
+		else if (h2ocomp < 0.07)
 			h2omalus = 1
-
+		else
+			h2omalus = 2  //when gas comp is above 0.55 or between 0.15 and 0.07, the engine will start to freak out (may need test on the amount of freak out)
 		//No less then zero, and no greater then one, we use this to do explosions and heat to power transfer
 		gasmix_power_ratio = min(max(((plasmacomp + o2comp + co2comp + h2ocomp + tritiumcomp + bzcomp - pluoxiumcomp - n2comp) / h2omalus), 0), 1)
 		//Minimum value of 1.5, maximum value of 15
