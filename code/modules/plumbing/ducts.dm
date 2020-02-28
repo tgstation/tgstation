@@ -289,7 +289,7 @@ All the important duct code:
 	if(!T)
 		T = get_turf(src)
 	for(var/obj/machinery/duct/D in T)
-		if(!anchored)
+		if(!anchored || D == src)
 			continue
 		for(var/A in GLOB.cardinals)
 			if(A & connects && A & D.connects)
