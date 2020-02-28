@@ -227,13 +227,14 @@
 	new /obj/item/ammo_box/a762(src)
 
 /obj/item/storage/toolbox/infiltrator
-	name = "toolbox"
+	name = "insidious case"
 	desc = "Bearing the emblem of the Syndicate, this case contains a full infiltrator stealth suit, and has enough room to fit weaponry if necessary."
 	icon_state = "infiltrator_case"
 	item_state = "infiltrator_case"
 	force = 15
-	throwforce =18
+	throwforce = 18
 	w_class = WEIGHT_CLASS_NORMAL
+	has_latches = FALSE
 
 /obj/item/storage/toolbox/infiltrator/ComponentInitialize()
 	. = ..()
