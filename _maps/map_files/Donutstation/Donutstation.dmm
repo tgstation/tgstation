@@ -5174,6 +5174,7 @@
 /area/security/warden)
 "aod" = (
 /obj/structure/table,
+/obj/item/storage/box/shipping,
 /turf/open/floor/plating,
 /area/storage/tech)
 "aoe" = (
@@ -29713,7 +29714,6 @@
 /obj/structure/table,
 /obj/item/hand_labeler,
 /obj/item/stack/packageWrap,
-/obj/item/destTagger,
 /obj/item/destTagger{
 	pixel_x = 2;
 	pixel_y = 2
@@ -29721,6 +29721,7 @@
 /obj/item/radio/intercom{
 	pixel_x = 30
 	},
+/obj/item/storage/box/shipping,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bAQ" = (
@@ -47396,7 +47397,6 @@
 /obj/structure/table,
 /obj/item/storage/box,
 /obj/item/storage/box,
-/obj/item/storage/box,
 /obj/item/stack/wrapping_paper,
 /obj/item/stack/wrapping_paper,
 /obj/item/stack/wrapping_paper,
@@ -47404,6 +47404,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/item/storage/box/shipping,
 /turf/open/floor/plasteel,
 /area/storage/tools)
 "qxm" = (

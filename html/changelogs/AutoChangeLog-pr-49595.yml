@@ -1,0 +1,4 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - bugfix: "Deltastation's disposal system will no longer accidentally dump garbage into the morgue"

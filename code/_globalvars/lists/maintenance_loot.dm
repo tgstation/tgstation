@@ -140,6 +140,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/bodybag = 1,
 		/obj/item/grenade/smokebomb = 1,
 		/obj/item/stack/spacecash/c10 = 1,
+		/obj/item/stack/sticky_tape = 1,
 
 		//light sources
 		/obj/item/flashlight = 1,
@@ -216,6 +217,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 
 	list(//food
 		/obj/item/reagent_containers/food/snacks/canned/peaches/maint = 1,
+		/obj/item/storage/box/gum/happiness = 1,
 		/obj/item/storage/box/donkpockets = 1,
 		list(//Donk Varieties
 			/obj/item/storage/box/donkpockets/donkpocketspicy = 1,
