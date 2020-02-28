@@ -178,12 +178,12 @@
 	if(href_list["list_armor"])
 		var/list/readout = list("<span class='notice'><b>PROTECTION CLASSES (I-X)</b>")
 		if(LAZYLEN(armor_list))
-			readout += "\n\n<b>ARMOR</b>"
+			readout += "\n<u>ARMOR</u>"
 			for(var/dam_type in armor_list)
 				var/armor_amount = armor_list[dam_type]
 				readout += "\n[dam_type] [number_to_level(armor_amount)]" //e.g. BOMB IV
 		if(LAZYLEN(durability_list))
-			readout += "\n\n<b>DURABILITY</b>"
+			readout += "\n<u>DURABILITY</u>"
 			for(var/dam_type in durability_list)
 				var/durability_amount = durability_list[dam_type]
 				readout += "\n[dam_type] [number_to_level(durability_amount)]" //e.g. FIRE II
