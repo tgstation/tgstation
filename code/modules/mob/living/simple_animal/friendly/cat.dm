@@ -33,7 +33,7 @@
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
 	///Limits how often cats can spam chasing mice.
-	var/CD == 0
+	var/CD = 0
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "cat"
 
