@@ -48,13 +48,16 @@
 	Last thing you remember is a bright light before you awakened from slumber, even tough the sarcophagus is damaged it can still revive your dead brotheren. \
 	Now you are filled with the desire to expand and regrow your civilization once more. Expand and crush whoever steps on your path, but remember Gold is worth more than blood!"
 	assignedrole = "Dwarf"
-	var/datum/team/dwarves/team
+	var/datum/team/dwarves/dorfteam
 
-/obj/effect/mob_spawn/human/dwarven_sarcophagus/Initialize(mapload)
+/obj/effect/mob_spawn/human/dwarven_sarcophagus/Initialize(mapload,datum/team/dwarves/team)
 	. = ..()
-	var/area/A = get_area(src)
-	notify_ghosts("A Dwarf is ready to awaken at [A.name]", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_DWARF)
+	if(team)
+		dorfteam = team
 
+	var/area/A = get_area(src)
+
+	notify_ghosts("A Dwarf is ready to awaken at [A.name]", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_DWARF)
 
 /obj/effect/mob_spawn/human/dwarven_sarcophagus/special(mob/living/new_spawn)
 	var/dwarven_name = pick("Ognog", "Lorenzo", "Bakarat", "Cercer", "Aluminium", "Iro", "Ido", "Kochko", "Bahr", "Mozz", "Fercer", "Bat", "Rot", "Lavaan", "Gorg", "Philzer", "Lerh", \
@@ -62,7 +65,7 @@
 	"Plasma") + pick("Seeker","Hunter","Willed","Shield","Axe","Pickaxe","Bat","Tendril","Death","Lava","Man","Miner","Wised")
 
 	new_spawn.fully_replace_character_name(null,dwarven_name)
-	new_spawn.mind.add_antag_datum(/datum/antagonist/dwarf, team)
+	new_spawn.mind.add_antag_datum(/datum/antagonist/dwarf, dorfteam)
 
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
@@ -70,7 +73,7 @@
 		H.update_body()
 
 /obj/effect/mob_spawn/human/dwarven_sarcophagus/Destroy()
-	new /obj/structure/destructible/dwarven/dwarven_sarcophagus(get_turf(src))
+	new /obj/structure/destructible/dwarven/dwarven_sarcophagus(get_turf(src),dorfteam)
 	return ..()
 
 /datum/outfit/dwarven
@@ -79,6 +82,12 @@
 	shoes = /obj/item/clothing/shoes/sandal
 	back = /obj/item/pickaxe/silver
 	l_pocket = /obj/item/dwarven/mallet
+	var/datum/team/dwarves/dorfteam
+
+/obj/effect/mob_spawn/human/dwarven_sarcophagus/firstborn/Initialize(mapload)
+	dorfteam = new /datum/team/dwarves()
+	. = ..()
+
 
 //Timeless prisons: Spawns in Wish Granter prisons in lavaland. Ghosts become age-old users of the Wish Granter and are advised to seek repentance for their past.
 /obj/effect/mob_spawn/human/exile

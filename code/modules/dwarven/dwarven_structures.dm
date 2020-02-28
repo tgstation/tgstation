@@ -23,10 +23,18 @@
 	var/recharge = TRUE
 	var/recharge_points = 0
 	var/recharge_points_max = 500
+	var/datum/team/dwarves/dorfteam
+
+/obj/structure/destructible/dwarven/dwarven_sarcophagus/Initialize(datum/team/dwarves/team)
+	. = ..()
+	if(team)
+		dorfteam = team
+
 
 /obj/structure/destructible/dwarven/dwarven_sarcophagus/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>It is [(recharge_points*100)/recharge_points_max]% powered </span>"
+	. += "<span class='notice'>Use ores to recharge!</span>"
 
 /obj/structure/destructible/dwarven/dwarven_sarcophagus/attackby(obj/item/stack/ore/I, mob/living/user, params)
 	recharge_points += I.amount * I.points
@@ -38,7 +46,7 @@
 	if(recharge_points_max <= recharge_points)
 		for(var/mob/M in viewers(src,5))
 			to_chat(M, "<span class='notice'>The sarcophagus reignites with ancient fire, ready to birth another dwarf!</span>")
-			new  /obj/effect/mob_spawn/human/dwarven_sarcophagus(get_turf(src))
+			new  /obj/effect/mob_spawn/human/dwarven_sarcophagus(get_turf(src),dorfteam)
 			qdel(src)
 	else
 		for(var/mob/M in viewers(src,5))
@@ -86,8 +94,14 @@
 /obj/structure/destructible/dwarven/blood_pool
 	name = "Blood infuser"
 	icon_state = "blood_fountain"
+	desc = "A small tendril in pool of blood. It hungers..."
 	var/charge_amount = 30
 	custom_materials  = list(/datum/material/gold = 20000)
+
+/obj/structure/destructible/dwarven/blood_pool/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Currently it is [charge_amount*100/30]% charged</span>"
+	. += "<span class='notice'>Use limbs ont it to recharge</span>"
 
 /obj/structure/destructible/dwarven/blood_pool/attacked_by(obj/item/I, mob/living/user)
 	if(!istype(user,/mob/living/carbon/human))
@@ -134,8 +148,15 @@
 	custom_materials  = list(/datum/material/silver = 20000)
 
 /obj/structure/destructible/dwarven/mythril_press/Initialize()
-	AddComponent(/datum/component/material_container,list(/datum/material/gold,/datum/material/silver,/datum/material/titanium,/datum/material/dwarven,), 20000, TRUE, /obj/item/stack/sheet/mineral)
+	AddComponent(/datum/component/material_container,list(/datum/material/gold,/datum/material/silver,/datum/material/titanium,/datum/material/dwarven,), 30000, TRUE, /obj/item/stack/sheet/mineral)
 	. = ..()
+
+/obj/structure/destructible/dwarven/mythril_press/examine(mob/user)
+	. = ..()
+	var/mob/living/carbon/human/H = user
+	if(H.has_language(/datum/language/dwarven))
+		. += "<span class='notice'>It requires equal amounts of gold , silver and titanium to properly create the dwarven alloy.</span>"
+		. += "<span class='notice'>If the machine is stuck try activating it, it will dispense all unnecessary materials as well as dwarven alloy it created,</span>"
 
 /obj/structure/destructible/dwarven/mythril_press/attack_hand(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -191,10 +212,9 @@
 
 /obj/structure/destructible/dwarven/workshop/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Alt click to change the function</span>"
 	. += "<span class='notice'>Click with mats to put them inside of the workshop</span>"
 	. += "<span class='notice'>Click with a hand to retrieve all mats</span>"
-	. += "<span class='notice'>Click with a mallet to activate the function</span>"
+	. += "<span class='notice'>Click with a mallet to activate the machinery</span>"
 	//for(var/datum/design/D in available_recipes)
 	//	. += "<span class='notice'>This machine can build [D.name] and it costs [D.materials[D.materials[1]]] [D.materials[1] </span> "
 

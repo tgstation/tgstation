@@ -1,6 +1,6 @@
 /datum/team/dwarves
 	name = "Dwarven Empire"
-	show_roundend_report = TRUE
+	show_roundend_report = FALSE // FALSE until i figure out the multiple dwarven empires bug
 
 /datum/antagonist/dwarf
 	name = "Ash Walker"

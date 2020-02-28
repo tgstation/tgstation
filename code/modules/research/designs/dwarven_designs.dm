@@ -104,3 +104,11 @@
 	build_type = DWARVEN_WORKSHOP
 	materials = list(/datum/material/iron = 20000)
 	build_path = /obj/item/dwarven/blueprint/forge
+
+/datum/design/dwarven/dwarven_upgrade_kit
+	name = "Upgrade kit"
+	desc = "You can smelt in one of these."
+	id = "upgrade_kit"
+	build_type = DWARVEN_WORKSHOP
+	materials = list(/datum/material/dwarven = 2000)
+	build_path = /obj/item/dwarven/upgrade_kit
