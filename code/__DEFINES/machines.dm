@@ -30,6 +30,8 @@
 #define LIMBGROWER		(1<<6) 	//Uses synthetic flesh
 #define SMELTER			(1<<7) 	//uses various minerals
 #define NANITE_COMPILER  (1<<8) //Prints nanite disks
+#define DWARVEN_WORKSHOP  (1<<9) //Used in dwarven workshop
+#define DWARVEN_ANVIL  (1<<10) //Usually weaponry or armors
 //Note: More than one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 //Modular computer/NTNet defines

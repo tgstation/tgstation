@@ -37,6 +37,10 @@ Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead bec
 /datum/component/quality/Initialize(mob/living/carbon/human/_creator,datum/skill/_skill,_quality_val)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
+
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
+	RegisterSignal(parent, COMSIG_ITEM_QUALITY_STATE, .proc/check_state)
+
 	var/quality_val
 
 	quality_val = _quality_val
@@ -46,8 +50,6 @@ Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead bec
 		quality_val = pick(2;0 ,4;1 ,6;2 ,8;3 ,6;4 ,4;5 ,2;6)
 
 
-	if(!_creator || !_skill) //no runtimes
-		return
 	creator = _creator
 
 	var/quality_skill_modifier = creator.mind.get_skill_modifier(_skill, SKILL_QUALITY_MODIFIER)
@@ -55,16 +57,14 @@ Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead bec
 
 	var/obj/item/parent_item = parent
 	old_name = parent_item.name
-	//we set the has_quality to true so no more quality components can be added
 
 	generate_quality(quality_val,quality_skill_modifier)
 	apply_quality()
 
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
+
 
 /datum/component/quality/proc/OnExamine(datum/source, mob/user)
-	var/obj/item/parent_item = parent
-	to_chat(user, "<span class='notice'>It is a [parent_item.name] created by [creator_name]</span>")
+	to_chat(user, "<span class='notice'>The item was created by [creator_name] </span>")
 
 ///Generates quality based off passed distribution/ normal distribution and skill. Returns the result
 /datum/component/quality/proc/generate_quality(quality_val,quality_skill_modifier)
@@ -82,7 +82,7 @@ Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead bec
 	var/obj/item/parent_item = parent
 	parent_item.force *= quality
 	parent_item.throwforce *= quality
-	parent_item.modify_max_integrity(parent_item*quality)
+	parent_item.modify_max_integrity(parent_item.max_integrity*quality)
 
 	if(istype(parent_item,/obj/item/twohanded))
 		var/obj/item/twohanded/twohanded_item = parent_item
@@ -94,12 +94,14 @@ Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead bec
 
 	if(quality_level == 10)
 		parent_item.AddComponent(/datum/component/fantasy,10)
-	parent_item.name = handle_name(parent_item.name)
+	parent_item.name = handle_name()
 
 ///Returns the item to the state it was before the modification
 /datum/component/quality/proc/unmodify()
 	var/obj/item/parent_item = parent
+
 	parent_item.name = old_name
+
 	parent_item.force /= quality
 	parent_item.throwforce  /= quality
 	parent_item.modify_max_integrity(parent_item/quality)
@@ -112,32 +114,34 @@ Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead bec
 		twohanded_item.force_unwielded /= quality // we dont know if it posses that var but it is still essential
 		twohanded_item.force_wielded /= quality
 
+/datum/component/quality/proc/check_state()
+	return TRUE
 
 /datum/component/quality/Destroy()
-	unmodify()
+	//unmodify()
 	return ..()
 
-/datum/component/quality/proc/handle_name(var/oldname)
+/datum/component/quality/proc/handle_name()
 	switch(quality_level)
 		if(0)
-			return "Unusable [oldname]"
+			return "Unusable [old_name]"
 		if(1)
-			return "Shoddy [oldname]"
+			return "Shoddy [old_name]"
 		if(2)
-			return "Poor [oldname]"
+			return "Poor [old_name]"
 		if(3)
-			return "Normal [oldname]"
+			return "Normal [old_name]"
 		if(4)
-			return "Well-done [oldname]"
+			return "Well-done [old_name]"
 		if(5)
-			return "Finely-crafted [oldname]"
+			return "Finely-crafted [old_name]"
 		if(6)
-			return "Superior [oldname]"
+			return "Superior [old_name]"
 		if(7)
-			return "Exceptional [oldname]"
+			return "Exceptional [old_name]"
 		if(8)
-			return "Artisan [oldname]"
+			return "Artisan [old_name]"
 		if(9)
-			return "Masterwork [oldname]"
+			return "Masterwork [old_name]"
 		if(10)
-			return "Legendary [oldname]"
+			return "Legendary [old_name]"

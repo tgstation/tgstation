@@ -48,7 +48,6 @@
 	Last thing you remember is a bright light before you awakened from slumber, even tough the sarcophagus is damaged it can still revive your dead brotheren. \
 	Now you are filled with the desire to expand and regrow your civilization once more. Expand and crush whoever steps on your path, but remember Gold is worth more than blood!"
 	assignedrole = "Dwarf"
-	var/datum/team/dwarves/team
 
 /obj/effect/mob_spawn/human/dwarven_sarcophagus/Initialize(mapload)
 	. = ..()
@@ -60,9 +59,9 @@
 	var/dwarven_name = pick("Ognog", "Lorenzo", "Bakarat", "Cercer", "Aluminium", "Iro", "Ido", "Kochko", "Bahr", "Mozz", "Fercer", "Bat", "Rot", "Lavaan", "Gorg", "Philzer", "Lerh", \
 	"Vinth", "Gharo","Logreg", "Stawgar", "Lirko", "Ontksu", "Crakta", "Larka", "Dorgo") + " " +pick("Iron","Mithril","Strong","The ","Root","Void","Blood","Titanium","Uranium", \
 	"Plasma") + pick("Seeker","Hunter","Willed","Shield","Axe","Pickaxe","Bat","Tendril","Death","Lava","Man","Miner","Wised")
-
 	new_spawn.fully_replace_character_name(null,dwarven_name)
-	new_spawn.mind.add_antag_datum(/datum/antagonist/dwarf, team)
+	var/datum/antagonist/dwarf
+	new_spawn.mind.add_antag_datum(,initial() //all dwarves are on the same team
 
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
@@ -75,7 +74,7 @@
 
 /datum/outfit/dwarven
 	name ="Dwarf"
-	uniform = /obj/item/clothing/under/misc/gambison
+	uniform = /obj/item/clothing/under/misc/gambeson
 	shoes = /obj/item/clothing/shoes/sandal
 	back = /obj/item/pickaxe/silver
 	l_pocket = /obj/item/dwarven/mallet

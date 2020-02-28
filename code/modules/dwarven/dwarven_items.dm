@@ -187,41 +187,49 @@
 					smoke.start()
 	..()
 
-/obj/item/dwarven/mold
-	name = "dwarven mold"
-	desc = "Dwarven mold, one of their great achievments. Allows for casting of very complex tools and armors"
-	icon_state = "mold"
-	w_class = WEIGHT_CLASS_SMALL
-	var/mold_type
-
 /obj/item/dwarven/mallet
 	name = "dwarven mallet"
-	desc = "Dwarven mallet, easy to make , easy to use, other than the fact it is absolutely tiny"
+	desc = "Dwarven mallet, easy to make , easy to use, other than the fact it is absolutely tiny."
 	icon_state = "mallet"
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/dwarven/blueprint
-	name = "dwarven structure print"
-	desc = "Dwarven instructions on how to build a dwarven structure, includes materials how neat."
+	name = "structure print"
+	desc = "Dwarven instructions on how to build a dwarven structure, includes materials how neat. Click with it on an adjacent turf to build the structure"
 	icon_state = "structure_print"
 	w_class = WEIGHT_CLASS_SMALL
 	var/obj/structure/destructible/dwarven/structure
 
 /obj/item/dwarven/blueprint/New(loc,_structure)
-	structure = _structure
+	if(_structure)
+		structure = _structure
+	name = name + "of" + initial(structure.name)
 	. = ..()
 
 /obj/item/dwarven/blueprint/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+
 	if(!proximity_flag)
 		return
 	if(isclosedturf(target) ||  isgroundlessturf(target))
 		return FALSE
-	if(!do_after(user, 60, TRUE, user))
+	if(!do_after(user, 15, TRUE, user))
 		return FALSE
 	var/turf/place = isopenturf(target) ? target : get_turf(target)
 	new structure(place)
 	qdel(src)
 	. = ..()
+
+/obj/item/dwarven/blueprint/anvil
+	structure = /obj/structure/destructible/dwarven/workshop/anvil
+
+/obj/item/dwarven/blueprint/workshop
+	structure = /obj/structure/destructible/dwarven/workshop
+
+/obj/item/dwarven/blueprint/forge
+	structure = /obj/structure/destructible/dwarven/lava_forge
+
+/obj/item/dwarven/blueprint/press
+	structure = /obj/structure/destructible/dwarven/mythril_press
 
 /obj/item/dwarven/upgrade_kit
 	name = "dwarven modification kit"
@@ -230,15 +238,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/dwarven/upgrade_kit/attackby(obj/item/I, mob/living/user, params)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		I.add_creator(H)
-		new /obj/effect/decal/cleanable/ash(get_turf(src))
+	var/mob/living/carbon/human/H = user
+	I.add_creator(H)
+	new /obj/effect/decal/cleanable/ash(get_turf(src))
 	qdel(src)
-	. = ..()
-
-/obj/item/dwarven/upgrade_kit/debug/attackby(obj/item/I, mob/living/user, params)
-	user?.mind.adjust_experience(/datum/skill/operating,100)
 	. = ..()
 
 

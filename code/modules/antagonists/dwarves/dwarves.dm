@@ -13,7 +13,6 @@
 /datum/antagonist/dwarf/create_team(datum/team/team)
 	if(team)
 		dwarf_team = team
-		objectives |= dwarf_team.objectives
 	else
 		dwarf_team = new
 
