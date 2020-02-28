@@ -1,20 +1,30 @@
 import { decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Button, Section, LabeledList } from '../components';
+import { Box, Button, NoticeBox, Section, LabeledList } from '../components';
 
 export const RemoteRobotControl = props => {
   const { act, data } = useBackend(props);
   const {
     robots = [],
   } = data;
+
+  if (!robots.length) {
+    return (
+      <Section>
+        <NoticeBox textAlign="center">
+          No robots detected
+        </NoticeBox>
+      </Section>
+    );
+  }
+
   return (
-    <Fragment>
+    <Section>
       {robots.map(robot => (
         <Section
           key={robot.ref}
           title={robot.name + " (" + robot.model + ")"}
-          level="1"
           buttons={(
             <Fragment>
               <Button
@@ -33,7 +43,19 @@ export const RemoteRobotControl = props => {
           )}>
           <LabeledList>
             <LabeledList.Item label="Status">
-            {decodeHtmlEntities(robot.mode)}
+              <Box inline color={decodeHtmlEntities(robot.mode) === "Inactive"
+                ? 'bad'
+                : decodeHtmlEntities(robot.mode) === "Idle"
+                  ? 'average'
+                  : 'good'}>
+                {decodeHtmlEntities(robot.mode)}
+              </Box>
+              {' '}
+              {robot.hacked && (
+                <Box inline color="bad">
+                  (HACKED)
+                </Box>
+              ) || "" }
             </LabeledList.Item>
             <LabeledList.Item label="Location">
               {robot.location}
@@ -41,6 +63,6 @@ export const RemoteRobotControl = props => {
           </LabeledList>
         </Section>
       ))}
-</Fragment>
+    </Section>
   );
 };
