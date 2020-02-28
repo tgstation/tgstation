@@ -94,6 +94,7 @@ import { PowerMonitor } from './interfaces/PowerMonitor';
 import { ProximitySensor } from './interfaces/ProximitySensor';
 import { Radio } from './interfaces/Radio';
 import { RadioactiveMicrolaser } from './interfaces/RadioactiveMicrolaser';
+import { RemoteRobotControl } from './interfaces/RemoteRobotControl';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { Roulette } from './interfaces/Roulette';
 import { SatelliteControl } from './interfaces/SatelliteControl';
@@ -559,6 +560,10 @@ const ROUTES = {
   radioactive_microlaser: {
     component: () => RadioactiveMicrolaser,
     scrollable: false,
+  },
+  remote_robot_control: {
+    component: () => RemoteRobotControl,
+    scrollable: true,
   },
   roulette: {
     component: () => Roulette,
