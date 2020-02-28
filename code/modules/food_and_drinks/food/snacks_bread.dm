@@ -47,6 +47,7 @@
 	desc = "Entire stations have been ripped apart over arguing whether this is still good to eat."
 	icon_state = "moldybreadslice"
 	customfoodfilling = 0
+	bonus_reagents = list(/datum/reagent/consumable/mold = 10)
 	tastes = list("decaying fungus" = 1)
 	foodtype = GROSS
 

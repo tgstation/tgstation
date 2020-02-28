@@ -573,7 +573,7 @@
 		reagents.add_reagent(/datum/reagent/consumable/ethanol/pruno, 50)
 	name = "bag of pruno"
 	desc = "Fermented prison wine made from fruit, sugar, and despair. You probably shouldn't drink this around Security."
-	icon_state = "trashbag1"
+	icon_state = "trashbag1" // pruno releases air as it ferments
 	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
 		to_chat(M, "<span class='info'>A pungent smell emanates from [src], like fruit puking out its guts.</span>")
 		playsound(get_turf(src), 'sound/effects/bubbles2.ogg', 25, TRUE)
