@@ -52301,6 +52301,7 @@
 	dir = 8
 	},
 /mob/living/simple_animal/mouse/brown/Tom,
+/obj/item/storage/bag/trash,
 /turf/open/floor/plating,
 /area/security/prison/safe)
 "pfj" = (
@@ -52757,11 +52758,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
-"pZG" = (
-/obj/structure/table/reinforced,
-/obj/structure/reagent_dispensers/servingdish,
-/turf/open/floor/plasteel,
-/area/security/prison)
 "pZL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/radiation,
@@ -83712,8 +83708,8 @@ iEj
 aat
 tQw
 aaR
-pZG
-pZG
+aaR
+aaR
 aaR
 aai
 aaZ
