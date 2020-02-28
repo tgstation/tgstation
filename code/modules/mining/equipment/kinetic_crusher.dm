@@ -380,22 +380,14 @@
 	if(.)
 		H.force += bonus_value * 0.2
 		H.detonation_damage += bonus_value * 0.8
-		// Tweaking values after the fact with calls to the value not a simple update
-		var/datum/component/two_handed/comp_twohand = H.GetComponent(/datum/component/two_handed)
-		if(comp_twohand)
-			comp_twohand.force_wielded += bonus_value * 0.2
-			comp_twohand.force_unwielded += bonus_value * 0.2
+		AddComponent(/datum/component/two_handed, force_wielded=(20 + bonus_value * 0.2))
 
 /obj/item/crusher_trophy/demon_claws/remove_from(obj/item/kinetic_crusher/H, mob/living/user)
 	. = ..()
 	if(.)
 		H.force -= bonus_value * 0.2
 		H.detonation_damage -= bonus_value * 0.8
-		// Tweaking values after the fact with calls to the value not a simple update
-		var/datum/component/two_handed/comp_twohand = H.GetComponent(/datum/component/two_handed)
-		if(comp_twohand)
-			comp_twohand.force_wielded -= bonus_value * 0.2
-			comp_twohand.force_unwielded -= bonus_value * 0.2
+		AddComponent(/datum/component/two_handed, force_wielded=20)
 
 /obj/item/crusher_trophy/demon_claws/on_melee_hit(mob/living/target, mob/living/user)
 	user.heal_ordered_damage(bonus_value * 0.1, damage_heal_order)
