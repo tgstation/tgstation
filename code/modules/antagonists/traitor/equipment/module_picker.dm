@@ -13,7 +13,8 @@
 
 /// Removes all malfunction-related abilities from the target AI.
 /datum/module_picker/proc/remove_malf_verbs(mob/living/silicon/ai/AI)
-	for(var/datum/AI_Module/AM in possible_modules)
+	QDEL_NULL(AI.modules_action)
+	for(var/datum/AI_Module/AM in AI.current_modules)
 		for(var/datum/action/A in AI.actions)
 			if(istype(A, initial(AM.power_type)))
 				qdel(A)
