@@ -195,8 +195,9 @@
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
 				if(istype(M, /mob/living/simple_animal/mouse/brown/Tom) && (name == "Jerry")) //Turns out there's no jerry subtype.
 					var/CD
-					if (CD < (world.time - 200))
+					if (CD < (world.time - 600))
 						visible_message("<span class='warning'>[src] chases [M] around, to no avail!</span>")
+						step(M, pick(GLOB.cardinals))
 						CD = world.time
 					break
 				if(!M.stat && Adjacent(M))
