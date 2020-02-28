@@ -9,7 +9,7 @@
 #define CO2_HEAT_PENALTY 0.1
 #define NITROGEN_HEAT_PENALTY -1.5
 #define BZ_HEAT_PENALTY 5
-#define H2O_HEAT_PENALTY 13
+#define H2O_HEAT_PENALTY 13  //still under testing, but should be enough to make a lot of heat
 
 
 //All of these get divided by 10-bzcomp * 5 before having 1 added and being multiplied with power to determine rads
@@ -131,8 +131,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/h2ocomp = 0
 
 	var/pluoxiumbonus = 0
-	var/h2obonus = 0
-	var/h2omalus = 1
+	var/h2obonus = 0 //used when calculating if the heat resitance from h2o is applied
+	var/h2omalus = 1 //used when calculating if the h2o "malus" is applied, the malus is an increase in power, waste gases and heat (wich is bad if not ready)
 
 	var/combined_gas = 0
 	var/gasmix_power_ratio = 0
@@ -431,17 +431,16 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			h2obonus = 1
 		else
 			h2obonus = 0
-
 		if(h2ocomp >= 0.15 && h2ocomp <= 0.55) //the engine will stop producing power from 15% to 55% h2o (slow down the o2 and plasma generation too)
 			h2omalus = 0.1
-		else if (h2ocomp > 0.07 && h2ocomp< 0.15 || h2ocomp > 55) //above or below these 2 values the engine will start to freak out (may need test on the amount of freak out)
-			h2omalus = 2
-		else
+		else if (h2ocomp < 0.07)
 			h2omalus = 1
+		else
+			h2omalus = 2  //when gas comp is above 0.55 or between 0.15 and 0.07, the engine will start to freak out (may need test on the amount of freak out)
 
 		//No less then zero, and no greater then one, we use this to do explosions and heat to power transfer
 		gasmix_power_ratio = min(max(((plasmacomp + o2comp + co2comp + h2ocomp + tritiumcomp + bzcomp - pluoxiumcomp - n2comp) / h2omalus), 0), 1)
-		//Minimum value of 1.5, maximum value of 15
+		//Minimum value of 1.5, maximum value of 27.8
 		dynamic_heat_modifier = max(((plasmacomp * PLASMA_HEAT_PENALTY) + (h2ocomp * H2O_HEAT_PENALTY) + (o2comp * OXYGEN_HEAT_PENALTY)) * h2omalus + (co2comp * CO2_HEAT_PENALTY) + (tritiumcomp * TRITIUM_HEAT_PENALTY) + ((pluoxiumcomp * PLUOXIUM_HEAT_PENALTY) * pluoxiumbonus) + (n2comp * NITROGEN_HEAT_PENALTY) + (bzcomp * BZ_HEAT_PENALTY), 0.5)
 		//Value between 6 and 1
 		dynamic_heat_resistance = max((n2ocomp * N2O_HEAT_RESISTANCE) + ((h2ocomp * H2O_HEAT_RESISTANCE) * h2obonus) + ((pluoxiumcomp * PLUOXIUM_HEAT_RESISTANCE) * pluoxiumbonus), 1)
@@ -500,9 +499,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		//Also keep in mind we are only adding this temperature to (efficiency)% of the one tile the rock
 		//is on. An increase of 4*C @ 25% efficiency here results in an increase of 1*C / (#tilesincore) overall.
-		//Power * 0.55 * (some value between 1.5 and 15) / 5
+		//Power * 0.55 * (some value between 1.5 and 27.8) / 5
 		removed.temperature += ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_MODIFIER)
-		//We can only emit so much heat, that being 37500
+		//We can only emit so much heat, that being 2500*27.8
 		removed.temperature = max(0, min(removed.temperature, 2500 * dynamic_heat_modifier))
 
 		//Calculate how much gas to release
