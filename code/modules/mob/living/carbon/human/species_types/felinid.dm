@@ -2,7 +2,7 @@
 /datum/species/human/felinid
 	name = "Felinid"
 	id = "felinid"
-	say_mod = "blithers"
+	say_mod = "meows"
 	limbs_id = "human"
 
 	mutant_bodyparts = list("ears", "tail_human")
