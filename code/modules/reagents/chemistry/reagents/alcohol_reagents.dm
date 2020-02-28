@@ -2205,3 +2205,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "pina_colada"
 	glass_name = "Pina Colada"
 	glass_desc = "If you like pina coladas, and getting caught in the rain... well, you'll like this drink."
+
+
+/datum/reagent/consumable/ethanol/pruno // pruno mix is in drink_reagents
+	name = "pruno"
+	color = "#E78108"
+	description = "Fermented prison wine made from fruit, sugar, and despair. Security loves to confiscate this, which is the only kind thing Security has ever done."
+	boozepwr = 75
+	taste_description = "your tastebuds being individually shanked"
+	glass_icon_state = "glass_orange"
+	glass_name = "glass of pruno"
+	glass_desc = "Fermented prison wine made from fruit, sugar, and despair. Security loves to confiscate this, which is the only kind thing Security has ever done."

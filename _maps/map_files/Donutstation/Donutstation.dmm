@@ -10880,7 +10880,10 @@
 /turf/open/floor/plasteel/freezer,
 /area/security/prison/toilet)
 "aDS" = (
-/obj/structure/toilet,
+/obj/structure/toilet{
+	cistern = 1;
+	icon_state = "toilet01"
+	},
 /turf/open/floor/plasteel/freezer,
 /area/security/prison/toilet)
 "aDT" = (
@@ -45524,6 +45527,10 @@
 /obj/item/flashlight/lamp,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"mPc" = (
+/obj/item/storage/bag/trash,
+/turf/open/floor/plasteel/freezer,
+/area/security/prison/toilet)
 "mSf" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/item/radio/intercom{
@@ -102982,7 +102989,7 @@ afq
 aiN
 aiN
 rrH
-rrH
+mPc
 aij
 bDI
 aNZ

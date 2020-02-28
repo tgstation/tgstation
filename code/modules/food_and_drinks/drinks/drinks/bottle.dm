@@ -537,3 +537,43 @@
 		to_chat(user, "<span class='info'>You snuff out the flame on [src].</span>")
 		cut_overlay(GLOB.fire_overlay)
 		active = 0
+
+/obj/item/reagent_containers/food/drinks/bottle/pruno
+	name = "pruno mix"
+	desc = "A trash bag filled with fruit, sugar, yeast, and water, pulped together into a pungent slurry to be fermented in an enclosed space, traditionally the toilet. Security would love to confiscate this, one of the many things wrong with them."
+	icon = 'icons/obj/janitor.dmi'
+	icon_state = "trashbag"
+	list_reagents = list(/datum/reagent/consumable/prunomix = 50)
+	var/fermentation_time = 15 SECONDS
+
+/obj/item/reagent_containers/food/drinks/bottle/pruno/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/check_fermentation), fermentation_time)
+
+// Checks to see if the pruno can ferment, i.e. is it inside a structure (toilet), or a machine (washer)?
+// TODO: make it so the washer spills reagents if a reagent container is in there, for now, you can wash pruno
+
+/obj/item/reagent_containers/food/drinks/bottle/pruno/proc/check_fermentation()
+	if (!(istype(loc, /obj/machinery) || istype(loc, /obj/structure)))
+		addtimer(CALLBACK(src, .proc/check_fermentation), fermentation_time)
+		return
+	addtimer(CALLBACK(src, .proc/do_fermentation), fermentation_time)
+
+// actually ferment
+
+/obj/item/reagent_containers/food/drinks/bottle/pruno/proc/do_fermentation()
+	if (!(istype(loc, /obj/machinery) || istype(loc, /obj/structure))) // did someone take it out of the structure? start all over
+		addtimer(CALLBACK(src, .proc/check_fermentation), fermentation_time)
+		return
+	reagents.remove_all(50)
+	if(prob(10))
+		reagents.add_reagent(/datum/reagent/toxin/bad_food, 15)
+		reagents.add_reagent(/datum/reagent/consumable/ethanol/pruno, 35)
+	else
+		reagents.add_reagent(/datum/reagent/consumable/ethanol/pruno, 50)
+	name = "bag of pruno"
+	desc = "Fermented prison wine made from fruit, sugar, and despair. You probably shouldn't drink this around Security."
+	icon_state = "trashbag1"
+	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
+		to_chat(M, "<span class='info'>A pungent smell emanates from [src], like fruit puking out its guts.</span>")
+		playsound(get_turf(src), 'sound/effects/bubbles2.ogg', 25, TRUE)

@@ -454,6 +454,7 @@
 	name = "old sink";
 	pixel_y = 28
 	},
+/obj/item/storage/bag/trash,
 /turf/open/floor/plasteel/freezer,
 /area/security/prison)
 "abj" = (
@@ -965,7 +966,9 @@
 	dir = 4
 	},
 /obj/structure/toilet{
-	dir = 4
+	cistern = 1;
+	dir = 4;
+	icon_state = "toilet01"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/security/prison/toilet)
@@ -72626,7 +72629,7 @@
 "lfv" = (
 /obj/effect/mob_spawn/human/corpse/assistant{
 	belt = null;
-	husk = TRUE;
+	husk = 1;
 	id = null;
 	l_pocket = /obj/item/pen
 	},

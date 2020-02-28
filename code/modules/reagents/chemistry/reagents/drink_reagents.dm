@@ -881,3 +881,12 @@
 	glass_icon_state = "glass_yellow"
 	glass_name = "glass of bungo juice"
 	glass_desc = "Exotic! You feel like you are on vactation already."
+
+/datum/reagent/consumable/prunomix
+	name = "pruno mixture"
+	color = "#E78108"
+	description = "Fruit, sugar, yeast, and water pulped together into a pungent slurry."
+	taste_description = "garbage"
+	glass_icon_state = "glass_orange"
+	glass_name = "glass of pruno mixture"
+	glass_desc = "Fruit, sugar, yeast, and water pulped together into a pungent slurry."
