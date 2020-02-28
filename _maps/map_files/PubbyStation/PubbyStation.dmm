@@ -52948,12 +52948,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
-"lpU" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/closed/mineral,
-/area/chapel/asteroid/monastery)
 "lqc" = (
 /obj/item/toy/gun,
 /obj/effect/decal/cleanable/oil,
@@ -53868,6 +53862,9 @@
 /area/science/xenobiology)
 "nrg" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/library/artgallery)
 "nsy" = (
@@ -57647,6 +57644,9 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/library/artgallery)
 "vxp" = (
@@ -58714,13 +58714,6 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/department/security/brig)
-"xyJ" = (
-/obj/structure/sign/painting/library{
-	pixel_x = -32
-	},
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/plasteel/dark,
-/area/library/artgallery)
 "xzp" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -78478,7 +78471,7 @@ niN
 njB
 kFP
 whJ
-xyJ
+elH
 dbI
 nBO
 dbI
@@ -79750,8 +79743,8 @@ crO
 crO
 crO
 crO
-lpU
-lpU
+cfN
+cfN
 whJ
 gtl
 tBb
