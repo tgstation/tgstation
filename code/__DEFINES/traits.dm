@@ -158,6 +158,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_XENO_IMMUNE		"xeno_immune"//prevents xeno huggies implanting skeletons
 #define TRAIT_NAIVE				"naive"
 #define TRAIT_GUNFLIP			"gunflip"
+#define TRAIT_SPECIAL_TRAUMA_BOOST	"special_trauma_boost" ///Increases chance of getting special traumas, makes them harder to cure
 
 //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
