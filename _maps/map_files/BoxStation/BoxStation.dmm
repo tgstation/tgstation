@@ -381,6 +381,12 @@
 	pixel_y = 25;
 	req_access_txt = "2"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "abk" = (
@@ -511,15 +517,6 @@
 "abF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
-	},
-/turf/open/floor/plasteel,
-/area/security/prison)
-"abG" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/structure/chair/office{
-	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -793,13 +790,6 @@
 	id = "visitation";
 	name = "Visitation Shutters"
 	},
-/turf/open/floor/plasteel,
-/area/security/prison)
-"ach" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aci" = (
@@ -2053,6 +2043,7 @@
 	dir = 8
 	},
 /obj/item/clothing/gloves/color/orange,
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "afz" = (
@@ -2065,6 +2056,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "afA" = (
@@ -2107,6 +2099,7 @@
 	dir = 8;
 	network = list("ss13","prison")
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "afE" = (
@@ -42752,7 +42745,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/mimic/crate,
+/obj/structure/closet/crate,
 /turf/open/floor/plating,
 /area/security/prison)
 "cmC" = (
@@ -47659,7 +47652,7 @@
 	dir = 5
 	},
 /obj/effect/spawner/lootdrop/prison_contraband,
-/mob/living/simple_animal/hostile/mimic/crate,
+/obj/structure/closet/crate,
 /turf/open/floor/plating,
 /area/security/prison)
 "cGR" = (
@@ -48068,6 +48061,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "cNE" = (
@@ -49563,6 +49559,13 @@
 	},
 /turf/closed/wall,
 /area/maintenance/starboard)
+"gyd" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "gys" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -49740,6 +49743,10 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
+"gXJ" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "gYE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/line{
@@ -50162,6 +50169,7 @@
 	dir = 1
 	},
 /obj/item/reagent_containers/spray/pepper,
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "iMP" = (
@@ -50589,8 +50597,10 @@
 /turf/open/floor/plasteel,
 /area/security/courtroom)
 "kdJ" = (
-/obj/structure/table,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "kdR" = (
@@ -50845,6 +50855,10 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
+/area/security/prison/safe)
+"kJs" = (
+/obj/item/storage/bag/trash,
+/turf/open/floor/plating,
 /area/security/prison/safe)
 "kKK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -51182,18 +51196,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
-/area/security/prison)
-"lIg" = (
-/obj/structure/table,
-/obj/structure/window/reinforced,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/door/poddoor/shutters{
-	id = "visitation";
-	name = "Visitation Shutters"
-	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "lJI" = (
@@ -51620,6 +51622,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -52181,13 +52186,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"oUJ" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/structure/chair/office{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/security/prison)
 "oUU" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -52207,6 +52205,15 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
+"oWJ" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "oXE" = (
 /obj/machinery/door/airlock/maintenance{
 	id_tag = "commissarydoor";
@@ -52301,7 +52308,6 @@
 	dir = 8
 	},
 /mob/living/simple_animal/mouse/brown/Tom,
-/obj/item/storage/bag/trash,
 /turf/open/floor/plating,
 /area/security/prison/safe)
 "pfj" = (
@@ -81906,7 +81912,7 @@ nLn
 qJg
 xUZ
 peZ
-hqA
+kJs
 xUZ
 pBa
 aaE
@@ -81915,7 +81921,7 @@ acd
 acd
 rMu
 aaG
-lIg
+acg
 abL
 adb
 jjc
@@ -82170,11 +82176,11 @@ aaF
 nhE
 aaJ
 acd
-aaG
+fxe
 abD
 rgf
 abD
-aaG
+gXJ
 aai
 aen
 gys
@@ -82943,7 +82949,7 @@ aaP
 acd
 abA
 abA
-abA
+acd
 abA
 abA
 aai
@@ -83198,10 +83204,10 @@ aat
 add
 add
 acd
+oWJ
 aaK
-abG
 aaK
-oUJ
+aaK
 kdJ
 eBc
 aeP
@@ -83456,10 +83462,10 @@ aaG
 aat
 acd
 abi
-abF
-ach
 acK
 acK
+acK
+gyd
 cHl
 aer
 afB
