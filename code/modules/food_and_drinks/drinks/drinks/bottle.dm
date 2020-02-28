@@ -544,7 +544,7 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "trashbag"
 	list_reagents = list(/datum/reagent/consumable/prunomix = 50)
-	var/fermentation_time = 15 SECONDS
+	var/fermentation_time = 30 SECONDS
 
 /obj/item/reagent_containers/food/drinks/bottle/pruno/Initialize()
 	. = ..()
