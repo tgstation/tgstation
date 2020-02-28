@@ -27,6 +27,8 @@
 		ui.open()
 
 /datum/robot_control/ui_data(mob/user)
+	if(!owner)
+		return
 	var/list/data = list()
 	var/turf/ai_current_turf = get_turf(owner)
 	var/ai_zlevel = ai_current_turf.z
