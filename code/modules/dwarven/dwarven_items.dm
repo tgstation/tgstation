@@ -59,7 +59,7 @@
 	item_state = "greyscale_dwarven_javelin"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
-	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+	attack_verb = list("attacked", "poked", "jabbed", "tore", "gored")
 	custom_materials = list(/datum/material/iron = 10000)
 	force = 7
 	throwforce = 18

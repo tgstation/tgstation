@@ -12,7 +12,7 @@
 
 /*
 This code handles quality. Whats quality? Quality is an overall state of an item.
-Qualities below NORMAL_QUALITY result in worse items , less force , less integrity etc.database
+Qualities below NORMAL_QUALITY result in worse items , less force , less integrity , you get the point.
 Qualittes above NORMAL_QUALITY result in better items with more force
 Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead becoming ARTIFACT_QUALITY which adds fantasy component of 10 quality(very powerful)
 */
