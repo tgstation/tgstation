@@ -243,6 +243,11 @@
 	status = LIGHT_BROKEN
 	icon_state = "tube-broken"
 
+/obj/machinery/light/dim
+	nightshift_allowed = FALSE
+	bulb_colour = "#FFDDCC"
+	bulb_power = 0.8
+
 // the smaller bulb light fixture
 
 /obj/machinery/light/small
