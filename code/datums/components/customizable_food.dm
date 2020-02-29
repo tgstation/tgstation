@@ -34,7 +34,7 @@
 	src.ourfood = ourfood
 	src.ourcolor = ourcolor
 
-	original_item.reagents.trans_to(parent,original_item.reagents.total_volume, transferred_by = creator)
+	original_item.reagents.trans_to(parent,original_item.reagents.total_volume, transfered_by = creator)
 
 	var/obj/item/I = parent
 
