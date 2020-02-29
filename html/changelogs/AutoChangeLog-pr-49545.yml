@@ -1,0 +1,6 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - bugfix: "Synthflesh now unhusks a burn husked corpse on reaching 100u instead of on the next application. Still requires <50 burn damage after application."
+  - bugfix: "Splashing synthflesh on a burn husked corpse will unhusk it if the total of synthflesh in the body and synthflesh being splashed is 100 or more. Still requires <50 burn damage after application."
+  - bugfix: "Updates the description of synthflesh to reflect what it actually does more accurately. The amount of tox damage dealt is 66% of the amount of brute and burn damage healed, not 75%."
