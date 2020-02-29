@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - tweak: "transit tube pods will now throw you when they leave the transit tube"

@@ -73,7 +73,7 @@ class PaintCanvas extends Component {
         height={y_size || 300}
         {...rest}
         onClick={e => this.clickwrapper(e)}>
-          Canvas failed to render.
+        Canvas failed to render.
       </canvas>
     );
   }
