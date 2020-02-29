@@ -46,7 +46,7 @@
 	flavour_text = "Milennia have passed since your grand civilization last stood. \
 	You remember the prophecies of a great disaster, in fear of death you volountereed for your blood to be sealed within the lava sarcophagus. \
 	Last thing you remember is a bright light before you awakened from slumber, even though the sarcophagus is damaged it can still revive your dead brotheren. \
-	Now you are filled with the desire to expand and regrow your civilization once more. Expand and crush whoever steps on your path, but remember Gold is worth more than blood!
+	Now you are filled with the desire to expand and regrow your civilization once more. Expand and crush whoever steps on your path, but remember Gold is worth more than blood!\
 	For more information regarding dwarves check out the wiki article: https://tgstation13.org/wiki/Dwarf "
 	assignedrole = "Dwarf"
 
