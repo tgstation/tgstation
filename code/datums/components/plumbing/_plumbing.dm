@@ -29,7 +29,9 @@
 	RegisterSignal(parent, list(COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH), .proc/toggle_active)
 
 	if(start)
-		enable()
+		//timer 0 so it can finish returning initialize, after which we're added to the parent.
+		//Only then can we tell the duct next to us they can connect, because only then is the component really added. this was a fun one
+		addtimer(CALLBACK(src, .proc/enable), 0)
 
 	if(use_overlays)
 		create_overlays()
