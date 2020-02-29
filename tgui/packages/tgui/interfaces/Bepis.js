@@ -87,10 +87,10 @@ export const Bepis = props => {
         <Grid.Column>
           <Section title="Market Data and Analysis">
             <Box>
-                Average technology cost: {data.mean_value}
+              Average technology cost: {data.mean_value}
             </Box>
             <Box>
-                Current chance of Success: Est. {data.success_estimate}%
+              Current chance of Success: Est. {data.success_estimate}%
             </Box>
             {data.error_name && (
               <Box color="bad">
