@@ -250,7 +250,7 @@ Behavior that's still missing from this component that original food items had t
 
 ///Tries to send a signal of type COMSIG_USE_FOOD_ON, prevents the item from attacking if a message was received (and returned COMPONENT_NO_ATTACK too)
 /datum/component/edible/proc/UseOnItem(datum/source, obj/O, mob/M, params)
-	if(SEND_SIGNAL(O, COMSIG_USE_FOOD_ON), M)
+	if(SEND_SIGNAL(O, COMSIG_USE_FOOD_ON, M))
 		return COMPONENT_NO_ATTACK
 	return
 
@@ -266,4 +266,3 @@ Behavior that's still missing from this component that original food items had t
 		filling.color = color
 
 	A.add_overlay(filling)
-
