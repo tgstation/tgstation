@@ -136,12 +136,12 @@
 	REMOVE_TRAIT(H, TRAIT_PIERCEIMMUNE, SLEEPING_CARP_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_STUNRESISTANCE, SLEEPING_CARP_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
-	H.physiology.brute_mod *= 2
-	H.physiology.burn_mod *= 2
-	H.physiology.stamina_mod *= 2
-	H.physiology.stun_mod *= 2
-	H.physiology.pressure_mod *= 2 //no more carpies
-	H.physiology.cold_mod *= 2
+	H.physiology.brute_mod = initial(H.physiology.brute_mod)
+	H.physiology.burn_mod = initial(H.physiology.burn_mod)
+	H.physiology.stamina_mod = initial(H.physiology.stamina_mod)
+	H.physiology.stun_mod = initial(H.physiology.stun_mod)
+	H.physiology.pressure_mod = initial(H.physiology.pressure_mod) //no more carpies
+	H.physiology.cold_mod = initial(H.physiology.cold_mod)
 
 	H.faction -= "carp" //:(
 
