@@ -891,11 +891,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/target_type = (LOWEST)
 	var/list/arctargets = list()
 	//Making a new copy so additons further down the recursion do not mess with other arcs
-	var/list/targets_copy = targets_hit.Copy()
 	//Lets put this ourself into the do not hit list, so we don't curve back to hit the same thing twice with one arc
-	targets_copy += zapstart
-	for(var/datum/test in oview(zapstart, range))
-		if(test in targets_hit || QDELETED(test))
+	for(var/test in oview(zapstart, range))
+		if(!(zap_flags & ZAP_ALLOW_DUPLICATES) && LAZYACCESS(targets_hit, test))
 			continue
 
 		if(istype(test, /obj/vehicle/ridden/bicycle/))
@@ -967,6 +965,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	if(!QDELETED(target))//If we found something
 		//Do the animation to zap to it from here
+		if(!(zap_flags & ZAP_ALLOW_DUPLICATES))
+			LAZYSET(targets_hit, target, TRUE)
 		zapstart.Beam(target, icon_state=zap_icon, time=5)
 		var/zapdir = get_dir(zapstart, target)
 		if(zapdir)
@@ -1002,18 +1002,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			zap_str = 0
 		//This gotdamn variable is a boomer and keeps giving me problems
 		var/turf/T = get_turf(target)
-		var/pressure = T.return_air().return_pressure()
+		var/pressure = max(1,T.return_air().return_pressure())
 		//We get our range with the strength of the zap and the pressure, the lower the former and the higher the latter the better
-		var/new_range = 4
-		if(pressure > 0)
-			new_range = clamp(zap_str / pressure * 10, 2, 7)
-		var/zap_count = 0
+		var/new_range = new_range = clamp(zap_str / pressure * 10, 2, 7)
+		var/zap_count = 1
 		if(prob(5))
 			zap_str = zap_str - (zap_str/10)
 			zap_count += 1
-		zap_count += 1
 		for(var/j in 1 to zap_count)
-			supermatter_zap(target, new_range, zap_str, targets_copy, zap_flags)
+			supermatter_zap(target, new_range, zap_str, targets_hit, zap_flags)
 
 #undef HALLUCINATION_RANGE
 #undef GRAVITATIONAL_ANOMALY
