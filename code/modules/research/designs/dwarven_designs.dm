@@ -53,7 +53,7 @@
 	id = "dwarven_ironpick"
 	build_type = DWARVEN_ANVIL
 	materials = list(/datum/material/iron = 5000)
-	build_path = /obj/item/clothing/head/helmet/dwarven_helmet
+	build_path = /obj/item/pickaxe
 
 /datum/design/dwarven/silver_pickaxe
 	name = "Silver pickaxe"
@@ -61,7 +61,7 @@
 	id = "dwarven_silverpick"
 	build_type = DWARVEN_ANVIL
 	materials = list(/datum/material/silver = 5000)
-	build_path = /obj/item/clothing/head/helmet/dwarven_helmet
+	build_path = /obj/item/pickaxe/silver
 
 /datum/design/dwarven/diamond_pickaxe
 	name = "Diamond pickaxe"
@@ -69,7 +69,7 @@
 	id = "dwarven_diamondpick"
 	build_type = DWARVEN_ANVIL
 	materials = list(/datum/material/diamond = 5000)
-	build_path = /obj/item/clothing/head/helmet/dwarven_helmet
+	build_path = /obj/item/pickaxe/diamond
 
 //workshop now
 
