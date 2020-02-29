@@ -1004,7 +1004,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		var/turf/T = get_turf(target)
 		var/pressure = max(1,T.return_air().return_pressure())
 		//We get our range with the strength of the zap and the pressure, the lower the former and the higher the latter the better
-		var/new_range = new_range = clamp(zap_str / pressure * 10, 2, 7)
+		var/new_range = clamp(zap_str / pressure * 10, 2, 7)
 		var/zap_count = 1
 		if(prob(5))
 			zap_str = zap_str - (zap_str/10)
