@@ -1,4 +1,0 @@
-author: "Arkatos1"
-delete-after: True
-changes: 
-  - rscadd: "Particle Accelerator now uses tgui."

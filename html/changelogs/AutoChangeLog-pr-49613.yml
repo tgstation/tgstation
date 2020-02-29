@@ -1,6 +1,0 @@
-author: "SteelSlayer"
-delete-after: True
-changes: 
-  - bugfix: "Fixes some mixed up in-hand sprites for the airlock painter"
-  - code_imp: "Gives the airlock painter's paint selection popup menu a cancel button"
-  - code_imp: "Improves airlock painter code. Makes it easier to add new paintjob options and cuts down on duplicate code."
