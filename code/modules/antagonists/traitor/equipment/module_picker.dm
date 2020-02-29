@@ -11,14 +11,6 @@
 /datum/module_picker/New()
 	possible_modules = get_malf_modules()
 
-/// Removes all malfunction-related abilities from the target AI.
-/datum/module_picker/proc/remove_malf_verbs(mob/living/silicon/ai/AI)
-	QDEL_NULL(AI.modules_action)
-	for(var/datum/AI_Module/AM in AI.current_modules)
-		for(var/datum/action/A in AI.actions)
-			if(istype(A, initial(AM.power_type)))
-				qdel(A)
-
 /proc/cmp_malfmodules_priority(datum/AI_Module/A, datum/AI_Module/B)
 	return B.cost - A.cost
 

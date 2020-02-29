@@ -196,6 +196,14 @@
 
 	. = ..()
 
+/// Removes all malfunction-related abilities from the AI
+/mob/living/silicon/ai/proc/remove_malf_abilities()
+	QDEL_NULL(modules_action)
+	for(var/datum/AI_Module/AM in current_modules)
+		for(var/datum/action/A in actions)
+			if(istype(A, initial(AM.power_type)))
+				qdel(A)
+
 /mob/living/silicon/ai/IgniteMob()
 	fire_stacks = 0
 	. = ..()
