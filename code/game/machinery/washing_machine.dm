@@ -301,13 +301,6 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		update_icon()
 
 	else
-		if(istype(W, /obj/item/clothing/head/mob_holder))
-			var/obj/item/clothing/head/mob_holder/MH = W
-			var/mob/living/L = MH.held_mob
-			if(istype(L, /mob/living/simple_animal/pet))
-				MH.release()
-				L.forceMove(src)
-				return
 		return ..()
 
 /obj/machinery/washing_machine/attack_hand(mob/user)
