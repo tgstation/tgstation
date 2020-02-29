@@ -27,6 +27,7 @@
 
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED,COMSIG_PARENT_PREQDELETED), .proc/disable)
 	RegisterSignal(parent, list(COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH), .proc/toggle_active)
+	RegisterSignal(parent, list(COMSIG_OBJ_HIDE), .proc/hide)
 
 	if(start)
 		//timer 0 so it can finish returning initialize, after which we're added to the parent.
@@ -205,6 +206,11 @@
 		var/datum/ductnet/net = new()
 		net.add_plumber(src, dir)
 		net.add_plumber(P, opposite_dir)
+
+/datum/component/plumbing/proc/hide(intact)
+	for(var/A in ducterlays)
+		var/image/M = A
+		M.alpha = intact ? 255 : 0
 
 ///has one pipe input that only takes, example is manual output pipe
 /datum/component/plumbing/simple_demand

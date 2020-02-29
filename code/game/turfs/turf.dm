@@ -327,7 +327,8 @@
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
 		if(O.level == 1 && (O.flags_1 & INITIALIZED_1))
-			O.hide(src.intact)
+			SEND_SIGNAL(O, COMSIG_OBJ_HIDE, intact)
+			O.hide(intact)
 
 // override for space turfs, since they should never hide anything
 /turf/open/space/levelupdate()
