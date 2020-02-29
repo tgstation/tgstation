@@ -121,7 +121,7 @@
 		2 to 4: expert tackle, takcler has sizeable advantage and is only knocked down for one second, target is paralyzed for half a second and knocked down for three seconds as well as 40 stam damage
 		5 to inf: MONSTER tackle, tackler gets up immediately and gets a free aggressive grab, target takes sizeable stamina damage from the hit and is paralyzed for one and a half seconds and knocked down for three seconds
 
-	Finally, we return a bitflag to COMSIG_MOVABLE_IMPACT that forces the thrownthing datum to be gentle so that we don't proc the standard thrown-into-mob reactions.
+	Finally, we return a bitflag to COMSIG_MOVABLE_IMPACT that forces the hitpush to false so that we don't knock them away.
 */
 /datum/component/tackler/proc/sack(mob/living/carbon/user, atom/hit)
 	if(!tackling || !tackle)
@@ -303,7 +303,7 @@
 		to_chat(user, "<span class='usernotice'>You're really glad you're wearing a helmet!</span>")
 	oopsie += oopsie_mod
 
-	var/squish_time = 7 SECONDS
+	var/squish_time
 	switch(oopsie)
 		if(99 to 100)
 			// can you imagine standing around minding your own business when all of the sudden some guy fucking launches himself into a wall at full speed and irreparably paralyzes himself?
@@ -316,6 +316,7 @@
 			shake_camera(user, 7, 7)
 			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
 			user.clear_fullscreen("flash", 4.5)
+			squish_time = 3 SECONDS
 
 		if(94 to 98)
 			user.visible_message("<span class='danger'>[user] slams face-first into [hit] with a concerning squish, immediately going limp!</span>", "<span class='userdanger'>You slam face-first into [hit], and immediately lose consciousness!</span>")
@@ -328,6 +329,7 @@
 			shake_camera(user, 6, 6)
 			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
 			user.clear_fullscreen("flash", 3.5)
+			squish_time = 3 SECONDS
 
 		if(84 to 93)
 			user.visible_message("<span class='danger'>[user] slams head-first into [hit], suffering major cranial trauma!</span>", "<span class='userdanger'>You slam head-first into [hit], and the world explodes around you!</span>")
@@ -338,6 +340,7 @@
 			shake_camera(user, 5, 5)
 			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
 			user.clear_fullscreen("flash", 2.5)
+			squish_time = 2 SECONDS
 
 		if(64 to 83)
 			user.visible_message("<span class='danger'>[user] slams hard into [hit], knocking [user.p_them()] senseless!</span>", "<span class='userdanger'>You slam hard into [hit], knocking yourself senseless!</span>")
@@ -351,13 +354,13 @@
 			user.take_bodypart_damage(stamina=15, brute=5)
 			user.Knockdown(30)
 			shake_camera(user, 2, 2)
-			squish_time = 4 SECONDS
 
-	var/sideways = FALSE
-	if(tackle.init_dir in list(EAST, WEST))
-		sideways = TRUE
+	if(squish_time)
+		var/sideways = FALSE
+		if(tackle.init_dir in list(EAST, WEST))
+			sideways = TRUE
 
-	user.AddElement(/datum/element/squish, squish_time, reverse=sideways)
+		user.AddElement(/datum/element/squish, squish_time, reverse=sideways)
 	playsound(user, 'sound/weapons/smash.ogg', 70, TRUE)
 
 
