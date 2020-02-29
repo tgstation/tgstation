@@ -14,6 +14,7 @@
 	var/min_distance = 0
 	var/tackle_speed = 1
 	var/skill_mod = 0
+	custom_premium_price = 400
 
 /obj/item/clothing/gloves/tackler/equipped(mob/user, slot)
 	. = ..()
@@ -21,7 +22,7 @@
 		return
 	if(slot == ITEM_SLOT_GLOVES)
 		var/mob/living/carbon/human/H = user
-		tackler = H.AddComponent(/datum/component/tackler, stam=tackle_stam_cost, base_knockdown = base_knockdown, range = tackle_range, speed = tackle_speed, skill_mod = skill_mod, min_distance = min_distance)
+		tackler = H.AddComponent(/datum/component/tackler, stamina_cost=tackle_stam_cost, base_knockdown = base_knockdown, range = tackle_range, speed = tackle_speed, skill_mod = skill_mod, min_distance = min_distance)
 
 /obj/item/clothing/gloves/tackler/dropped(mob/user)
 	. = ..()

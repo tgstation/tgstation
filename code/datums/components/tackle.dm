@@ -3,12 +3,14 @@
 
 	This component is made for carbon mobs (really, humans), and allows its parent to throw themselves and perform tackles. This is done by enabling throw mode, then clicking on your
 		intended target with an empty hand. You will then launch toward your target. If you hit a carbon, you'll roll to see how hard you hit them. If you hit a solid non-mob, you'll
-		roll to see how badly you just messed yourself up.
+		roll to see how badly you just messed yourself up. If, along your journey, you hit a table, you'll slam onto it and send up to MAX_TABLE_MESSES (8) /obj/items on the table flying,
+		and take a bit of extra damage and stun for each thing launched.
 
-	still wip, all the other comments below explain everything thoroughly
+	There are 2 """skill rolls""" involved here, which are handled and explained in sack() and rollTackle() (for roll 1, carbons), and splat() (for roll 2, walls and solid objects)
 
 */
 
+#define MAX_TABLE_MESSES 8 // how many things can we knock off a table at once?
 
 /datum/component/tackler
 	dupe_mode = COMPONENT_DUPE_UNIQUE
@@ -27,6 +29,8 @@
 	var/skill_mod
 	///Some gloves, generally ones that increase mobility, may have a minimum distance to fly. Rocket gloves are especially dangerous with this, be sure you'll hit your target or have a clear background if you miss, or else!
 	var/min_distance
+	///The throwdatum we're currently dealing with, if we need it
+	var/datum/thrownthing/tackle
 
 /datum/component/tackler/Initialize(stamina_cost = 25, base_knockdown = 1 SECONDS, range = 4, speed = 1, skill_mod = 0, min_distance = min_distance)
 	if(!iscarbon(parent))
@@ -42,7 +46,7 @@
 	var/mob/P = parent
 	to_chat(P, "<span class='notice'>You can now tackle!</span>")
 
-	addtimer(VARSET_CALLBACK(src, tackling, FALSE), base_knockdown)
+	addtimer(CALLBACK(src, .proc/resetTackle), base_knockdown, TIMER_STOPPABLE)
 
 /datum/component/tackler/Destroy()
 	var/mob/P = parent
@@ -52,10 +56,16 @@
 /datum/component/tackler/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOB_CLICKON, .proc/checkTackle)
 	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, .proc/sack)
+	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, .proc/registerTackle)
 
 /datum/component/tackler/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_MOVABLE_IMPACT))
 
+///Store the thrownthing datum for later use
+/datum/component/tackler/proc/registerTackle(mob/living/carbon/user, datum/thrownthing/TT)
+	tackle = TT
+
+///See if we can tackle or not. If we can, leap!
 /datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/A, params)
 	if(!user.in_throw_mode || user.get_active_held_item() || user.pulling)
 		return
@@ -79,6 +89,8 @@
 		return
 
 	tackling = TRUE
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/checkObstacle)
+
 	if(can_see(user, A, 7))
 		user.visible_message("<span class='warning'>[user] leaps at [A]!</span>", "<span class='danger'>You leap at [A]!</span>")
 	else
@@ -90,7 +102,7 @@
 	user.Knockdown(base_knockdown, TRUE, TRUE)
 	user.take_bodypart_damage(stamina=stamina_cost)
 	user.throw_at(A, range, speed, user, FALSE)
-	addtimer(VARSET_CALLBACK(src, tackling, FALSE), base_knockdown)
+	addtimer(CALLBACK(src, .proc/resetTackle), base_knockdown, TIMER_STOPPABLE)
 	return(COMSIG_MOB_CANCEL_CLICKON)
 
 /*
@@ -111,13 +123,13 @@
 
 	Finally, we return a bitflag to COMSIG_MOVABLE_IMPACT that forces the thrownthing datum to be gentle so that we don't proc the standard thrown-into-mob reactions.
 */
-/datum/component/tackler/proc/sack(mob/living/carbon/user, atom/hit, datum/thrownthing/throwingdatum)
-	if(!tackling || !throwingdatum)
+/datum/component/tackler/proc/sack(mob/living/carbon/user, atom/hit)
+	if(!tackling || !tackle)
 		return
 
 	if(!iscarbon(hit))
 		if(hit.density)
-			splat(user, hit, throwingdatum)
+			splat(user, hit)
 		return
 
 	var/mob/living/carbon/target = hit
@@ -126,6 +138,7 @@
 
 	var/roll = rollTackle(target)
 	tackling = FALSE
+	tackle.gentle = TRUE
 
 	switch(roll)
 		if(-INFINITY to -5)
@@ -187,7 +200,7 @@
 				target.Paralyze(15)
 				target.Knockdown(30)
 
-	return COMPONENT_MOVABLE_IMPACT_FLIP_GENTLE
+	return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
 
 
 /*
@@ -271,7 +284,7 @@
 
 */
 
-/datum/component/tackler/proc/splat(mob/living/carbon/user, atom/hit, datum/thrownthing/throwingdatum)
+/datum/component/tackler/proc/splat(mob/living/carbon/user, atom/hit)
 	var/oopsie_mod = 0
 	var/danger_zone = (speed - 1) * 15 // for every extra speed we have over 1, take away 10 of the safest chance
 	danger_zone = max(min(danger_zone, 100), 1)
@@ -286,7 +299,11 @@
 		oopsie_mod += 6 //honk!
 
 	var/oopsie = rand(danger_zone, 100)
+	if(oopsie >= 99 && oopsie_mod < 0) // good job avoiding getting paralyzed! gold star!
+		to_chat(user, "<span class='usernotice'>You're really glad you're wearing a helmet!</span>")
+	oopsie += oopsie_mod
 
+	var/squish_time = 7 SECONDS
 	switch(oopsie)
 		if(99 to 100)
 			// can you imagine standing around minding your own business when all of the sudden some guy fucking launches himself into a wall at full speed and irreparably paralyzes himself?
@@ -298,7 +315,7 @@
 			user.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic) // oopsie indeed!
 			shake_camera(user, 7, 7)
 			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
-			user.clear_fullscreen("flash", 3.5)
+			user.clear_fullscreen("flash", 4.5)
 
 		if(94 to 98)
 			user.visible_message("<span class='danger'>[user] slams face-first into [hit] with a concerning squish, immediately going limp!</span>", "<span class='userdanger'>You slam face-first into [hit], and immediately lose consciousness!</span>")
@@ -310,7 +327,7 @@
 			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
 			shake_camera(user, 6, 6)
 			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
-			user.clear_fullscreen("flash", 2.5)
+			user.clear_fullscreen("flash", 3.5)
 
 		if(84 to 93)
 			user.visible_message("<span class='danger'>[user] slams head-first into [hit], suffering major cranial trauma!</span>", "<span class='userdanger'>You slam head-first into [hit], and the world explodes around you!</span>")
@@ -334,5 +351,69 @@
 			user.take_bodypart_damage(stamina=15, brute=5)
 			user.Knockdown(30)
 			shake_camera(user, 2, 2)
+			squish_time = 4 SECONDS
 
+	var/sideways = FALSE
+	if(tackle.init_dir in list(EAST, WEST))
+		sideways = TRUE
+
+	user.AddElement(/datum/element/squish, squish_time, reverse=sideways)
 	playsound(user, 'sound/weapons/smash.ogg', 70, TRUE)
+
+
+/datum/component/tackler/proc/resetTackle()
+	tackling = FALSE
+	QDEL_NULL(tackle)
+	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
+
+
+///Check to see if we hit a table, and if so, make a big mess!
+/datum/component/tackler/proc/checkObstacle(mob/living/carbon/owner)
+	if(!tackling)
+		return
+
+	var/turf/T = get_turf(owner)
+	var/obj/structure/table/kevved = locate(/obj/structure/table) in T.contents
+	if(!kevved)
+		return
+
+	var/list/messes = list()
+
+	// we split the mess-making into two parts (check what we're gonna send flying, intermission for dealing with the tackler, then actually send stuff flying) for the benefit of making sure the face-slam text
+	// comes before the list of stuff that goes flying, but can still adjust text + damage to how much of a mess it made
+	for(var/obj/item/I in T.contents)
+		if(!I.anchored)
+			messes += I
+			if(messes.len >= MAX_TABLE_MESSES)
+				break
+
+	/// for telling HOW big of a mess we just made
+	var/HOW_big_of_a_miss_did_we_just_make = ""
+	if(messes.len)
+		if(messes.len < MAX_TABLE_MESSES / 4)
+			HOW_big_of_a_miss_did_we_just_make = ", making a mess"
+		else if(messes.len < MAX_TABLE_MESSES / 2)
+			HOW_big_of_a_miss_did_we_just_make = ", making a big mess"
+		else if(messes.len < MAX_TABLE_MESSES)
+			HOW_big_of_a_miss_did_we_just_make = ", making a giant mess"
+		else
+			HOW_big_of_a_miss_did_we_just_make = ", making a ginormous mess!" // an extra exclamation point!! for emphasis!!!
+
+	owner.visible_message("<span class='danger'>[owner] trips over [kevved] and slams into it face-first[HOW_big_of_a_miss_did_we_just_make]!</span>", "<span class='userdanger'>You trip over [kevved] and slam into it face-first[HOW_big_of_a_miss_did_we_just_make]!</span>")
+	owner.take_bodypart_damage(brute = 10 + messes.len, stamina = 20 + messes.len * 2)
+	owner.Paralyze(5 * messes.len) // half a second of paralyze for each thing you knock around
+	owner.Knockdown(20 + 5 * messes.len) // 2 seconds of knockdown after the paralyze
+
+	for(var/obj/item/I in messes)
+		var/dist = rand(1, 3)
+		var/sp = 2
+		if(prob(25 * (src.speed - 1))) // if our tackle speed is higher than 1, with chance (speed - 1 * 15%), throw the thing at our tackle speed
+			sp = speed
+		I.throw_at(get_ranged_target_turf(I, pick(GLOB.alldirs), range = dist), range = dist, speed = sp)
+		I.visible_message("<span class='danger'>[I] goes flying[sp > 3 ? " dangerously fast" : ""]!</span>") // standard embed speed
+
+	playsound(owner, 'sound/weapons/smash.ogg', 70, TRUE)
+	tackle.finalize(hit=TRUE)
+	resetTackle()
+
+#undef MAX_TABLE_MESSES
