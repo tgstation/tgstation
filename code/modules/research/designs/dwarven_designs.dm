@@ -107,7 +107,7 @@
 
 /datum/design/dwarven/dwarven_upgrade_kit
 	name = "Upgrade kit"
-	desc = "You can smelt in one of these."
+	desc = "You can upgrade stuff with these"
 	id = "upgrade_kit"
 	build_type = DWARVEN_WORKSHOP
 	materials = list(/datum/material/dwarven = 2000)
