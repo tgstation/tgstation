@@ -29,10 +29,13 @@ export const broadcastMessage = (link, msg) => {
   }
 };
 
-const deserializeObject = obj => {
-  return JSON.parse(obj, (key, value) => {
+const deserializeObject = str => {
+  return JSON.parse(str, (key, value) => {
     if (typeof value === 'object' && value !== null) {
       if (value.__error__) {
+        if (!value.stack) {
+          return value.string;
+        }
         return retrace(value.stack);
       }
       if (value.__number__) {
@@ -102,7 +105,7 @@ const setupHttpLink = () => {
         body += chunk.toString();
       });
       req.on('end', () => {
-        const msg = JSON.parse(body);
+        const msg = deserializeObject(body);
         handleLinkMessage(msg);
         res.end();
       });

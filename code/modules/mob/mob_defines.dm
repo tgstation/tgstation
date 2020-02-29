@@ -122,7 +122,7 @@
 	  * NB: contains nulls!
 	  *
 	  * held_items[active_hand_index] is the actively held item, but please use
-	  * get_active_held_item() instead, because OOP
+	  * [get_active_held_item()][/mob/proc/get_active_held_item] instead, because OOP
 	  */
 	var/list/held_items = list()
 
@@ -195,7 +195,7 @@
 
 	var/memory_throttle_time = 0
 
-	var/list/alerts = list() // contains /obj/screen/alert only // On /mob so clientless mobs will throw alerts properly
+	var/list/alerts = list() /// contains [/obj/screen/alert only] // On /mob so clientless mobs will throw alerts properly
 	var/list/screens = list()
 	var/list/client_colours = list()
 	var/hud_type = /datum/hud

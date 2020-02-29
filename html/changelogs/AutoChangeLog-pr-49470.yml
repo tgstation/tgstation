@@ -1,0 +1,5 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - tweak: "The tesla revolver/cannon's projectiles now arc while in flight."
+  - balance: "The projectiles now deal light burn damage on hit."
