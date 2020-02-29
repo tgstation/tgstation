@@ -23,12 +23,7 @@
 	var/recharge = TRUE
 	var/recharge_points = 0
 	var/recharge_points_max = 500
-	var/datum/team/dwarves/dorfteam
 
-/obj/structure/destructible/dwarven/dwarven_sarcophagus/Initialize(datum/team/dwarves/team)
-	. = ..()
-	if(team)
-		dorfteam = team
 
 /obj/structure/destructible/dwarven/dwarven_sarcophagus/examine(mob/user)
 	. = ..()
@@ -45,8 +40,8 @@
 	if(recharge_points_max <= recharge_points)
 		for(var/mob/M in viewers(src,5))
 			to_chat(M, "<span class='notice'>The sarcophagus reignites with ancient fire, ready to birth another dwarf!</span>")
-			new  /obj/effect/mob_spawn/human/dwarven_sarcophagus(get_turf(src),dorfteam)
-			qdel(src)
+		new  /obj/effect/mob_spawn/human/dwarven_sarcophagus(get_turf(src))
+		qdel(src)
 	else
 		for(var/mob/M in viewers(src,5))
 			to_chat(M, "<span class='notice'>The sarcophagus is set ablaze for a second, but ancient powers die down. It requires more minerals!</span>")
@@ -136,7 +131,7 @@
 			if("Earth rune")
 				new /obj/item/dwarven/rune_stone/earth(get_turf(src))
 		to_chat(H, "<span class='notice'>You hear a whisper telling you you have chosen wisely.</span>")
-		charge_amount -= 20
+		charge_amount = 0
 		return
 
 	. = ..()
@@ -168,8 +163,9 @@
 /obj/structure/destructible/dwarven/mythril_press/proc/press_mythril(mob/user)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	if(materials.has_materials(list(/datum/material/gold= 1000, /datum/material/silver = 1000, /datum/material/titanium = 1000)))
-		materials.use_materials(list(/datum/material/gold= 1000, /datum/material/silver = 1000, /datum/material/titanium = 1000))
-		materials.insert_amount_mat(materials.sheet2amount(1),/datum/material/dwarven)
+		var/amount = min(materials.materials[/datum/material/gold],materials.materials[/datum/material/silver],materials.materials[/datum/material/titanium])
+		materials.use_materials(list(/datum/material/gold= amount, /datum/material/silver = amount, /datum/material/titanium = amount))
+		materials.insert_amount_mat(materials.sheet2amount(amount),/datum/material/dwarven)
 		materials.retrieve_all(get_turf(src))
 		to_chat(user, "<span class='notice'>You hear a loud crank as materials are compressed into dwarven alloy!</span>")
 		return
@@ -206,7 +202,7 @@
 		var/datum/design/dwarven/D = i
 		if(initial(D.build_type) == flag)
 			available_recipes += D
-	AddComponent(/datum/component/material_container,allowed_types, 20000, TRUE, /obj/item/stack)
+	AddComponent(/datum/component/material_container,allowed_types, 200000, TRUE, /obj/item/stack/sheet)
 	. = ..()
 
 /obj/structure/destructible/dwarven/workshop/examine(mob/user)

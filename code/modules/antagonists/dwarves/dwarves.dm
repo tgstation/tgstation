@@ -1,9 +1,11 @@
+GLOBAL_DATUM_INIT(dwarven_empire,/datum/team/dwarves,new) //All dorfs are one big family
+
 /datum/team/dwarves
 	name = "Dwarven Empire"
-	show_roundend_report = FALSE // FALSE until i figure out the multiple dwarven empires bug
+	show_roundend_report = TRUE // FALSE until i figure out the multiple dwarven empires bug
 
 /datum/antagonist/dwarf
-	name = "Ash Walker"
+	name = "Dwarf"
 	job_rank = ROLE_LAVALAND
 	show_in_antagpanel = FALSE
 	prevent_roundtype_conversion = FALSE
