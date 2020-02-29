@@ -148,10 +148,6 @@
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
 
-	//make sure starting value of keep_together is respected
-	if(appearance_flags & KEEP_TOGETHER)
-		keep_together_counter = 1
-
 	//atom color stuff
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)

@@ -80,7 +80,7 @@
 	if (opacity)
 		has_opaque_atom = TRUE
 
-	if(custom_materials.len)
+	if(custom_materials)
 
 		var/temp_list = list()
 		for(var/i in custom_materials)
