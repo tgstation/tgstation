@@ -1,0 +1,7 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - balance: "natural body temp stabilization is more in line with expected results"
+  - bugfix: "fever/chills now cause your body temp to be changed based on the severity of the illness"
+  - bugfix: "mob code now uses the species proper body temp instead of the default body temp"
+  - refactor: "added new interface for body temp changes"
