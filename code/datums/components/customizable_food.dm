@@ -52,7 +52,6 @@
 
 ///Add all of the ingredient names together and show a length.
 /datum/component/customizable_food/proc/examine(datum/source, mob/user)
-	. = ..()
 
 	var/atom/A = parent
 
