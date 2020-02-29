@@ -128,13 +128,14 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 			return
 		if(NewMessage)
 			arrival = NewMessage
+			log_game("The arrivals announcement was updated: [NewMessage] by:[key_name(usr)]")
 	else if(href_list["NewheadTopic"])
 		var/NewMessage = stripped_input(usr, "Enter in the departmental head announcement configuration.", "Head Departmental Announcement Config", newhead)
 		if(!usr.canUseTopic(src, !issilicon(usr)))
 			return
 		if(NewMessage)
 			newhead = NewMessage
-
+			log_game("The head announcement was updated: [NewMessage] by:[key_name(usr)]")
 	else if(href_list["NewheadT-Topic"])
 		newheadToggle = !newheadToggle
 		update_icon()

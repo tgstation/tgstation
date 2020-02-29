@@ -38,6 +38,7 @@ import { DecalPainter } from './interfaces/DecalPainter';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { DnaVault } from './interfaces/DnaVault';
 import { EightBallVote } from './interfaces/EightBallVote';
+import { Electropack } from './interfaces/Electropack';
 import { EmergencyShuttleConsole } from './interfaces/EmergencyShuttleConsole';
 import { EngravedMessage } from './interfaces/EngravedMessage';
 import { Gps } from './interfaces/Gps';
@@ -57,6 +58,7 @@ import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { MiningVendor } from './interfaces/MiningVendor';
 import { Mint } from './interfaces/Mint';
+import { MalfunctionModulePicker } from './interfaces/MalfunctionModulePicker';
 import { Mule } from './interfaces/Mule';
 import { NaniteChamberControl } from './interfaces/NaniteChamberControl';
 import { NaniteCloudControl } from './interfaces/NaniteCloudControl';
@@ -91,6 +93,7 @@ import { PortablePump, PortableScrubber } from './interfaces/PortableAtmos';
 import { PowerMonitor } from './interfaces/PowerMonitor';
 import { ProximitySensor } from './interfaces/ProximitySensor';
 import { Radio } from './interfaces/Radio';
+import { RadioactiveMicrolaser } from './interfaces/RadioactiveMicrolaser';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { Roulette } from './interfaces/Roulette';
 import { SatelliteControl } from './interfaces/SatelliteControl';
@@ -112,6 +115,7 @@ import { TankDispenser } from './interfaces/TankDispenser';
 import { Teleporter } from './interfaces/Teleporter';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { Timer } from './interfaces/Timer';
+import { TransferValve } from './interfaces/TransferValve';
 import { TurbineComputer } from './interfaces/TurbineComputer';
 import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
@@ -285,6 +289,10 @@ const ROUTES = {
     component: () => EightBallVote,
     scrollable: false,
   },
+  electropack: {
+    component: () => Electropack,
+    scrollable: false,
+  },
   emergency_shuttle_console: {
     component: () => EmergencyShuttleConsole,
     scrollable: false,
@@ -365,6 +373,11 @@ const ROUTES = {
   mint: {
     component: () => Mint,
     scrollable: false,
+  },
+  malfunction_module_picker: {
+    component: () => MalfunctionModulePicker,
+    scrollable: true,
+    theme: 'malfunction',
   },
   mulebot: {
     component: () => Mule,
@@ -543,6 +556,10 @@ const ROUTES = {
     component: () => Radio,
     scrollable: false,
   },
+  radioactive_microlaser: {
+    component: () => RadioactiveMicrolaser,
+    scrollable: false,
+  },
   roulette: {
     component: () => Roulette,
     scrollable: false,
@@ -632,6 +649,10 @@ const ROUTES = {
   },
   timer: {
     component: () => Timer,
+    scrollable: false,
+  },
+  transfer_valve: {
+    component: () => TransferValve,
     scrollable: false,
   },
   turbine_computer: {

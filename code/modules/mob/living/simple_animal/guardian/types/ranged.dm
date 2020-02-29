@@ -22,6 +22,7 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Sentinel, an alien master of ranged combat.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Ranged combat modules active. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one, it's a ranged carp. This fishy can watch people pee in the ocean.</span>"
+	hive_fluff_string = "<span class='holoparasite'>The mass seems to be able to create more mass and also hide at will.</span>"
 	see_invisible = SEE_INVISIBLE_LIVING
 	see_in_dark = 8
 	toggle_button_type = /obj/screen/guardian/ToggleMode
@@ -57,8 +58,8 @@
 	. = ..()
 	if(istype(., /obj/projectile))
 		var/obj/projectile/P = .
-		if(namedatum)
-			P.color = namedatum.colour
+		if(guardiancolor)
+			P.color = guardiancolor
 
 /mob/living/simple_animal/hostile/guardian/ranged/ToggleLight()
 	var/msg
