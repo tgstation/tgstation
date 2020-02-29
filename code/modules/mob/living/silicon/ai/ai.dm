@@ -634,7 +634,7 @@
 	set category = "Malfunction"
 	set name = "Choose Module"
 
-	malf_picker.use(src)
+	malf_picker.ui_interact(src)
 
 /mob/living/silicon/ai/proc/ai_statuschange()
 	set category = "AI Commands"

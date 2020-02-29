@@ -8,7 +8,7 @@
 	anchored = TRUE
 	light_range = 3
 	var/movechance = 70
-	var/obj/item/assembly/signaler/anomaly/aSignal
+	var/obj/item/assembly/signaler/anomaly/aSignal = /obj/item/assembly/signaler/anomaly
 	var/area/impact_area
 
 	var/lifespan = 990
@@ -26,8 +26,7 @@
 	if (!impact_area)
 		return INITIALIZE_HINT_QDEL
 
-	aSignal = new(src)
-	aSignal.name = "[name] core"
+	aSignal = new aSignal(src)
 	aSignal.code = rand(1,100)
 	aSignal.anomaly_type = type
 
@@ -88,6 +87,7 @@
 	icon_state = "shield2"
 	density = FALSE
 	var/boing = 0
+	aSignal = /obj/item/assembly/signaler/anomaly/grav
 
 /obj/effect/anomaly/grav/anomalyEffect()
 	..()
@@ -142,6 +142,7 @@
 	name = "flux wave anomaly"
 	icon_state = "electricity2"
 	density = TRUE
+	aSignal = /obj/item/assembly/signaler/anomaly/flux
 	var/canshock = FALSE
 	var/shockdamage = 20
 	var/explosive = TRUE
@@ -180,6 +181,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bluespace"
 	density = TRUE
+	aSignal = /obj/item/assembly/signaler/anomaly/bluespace
 
 /obj/effect/anomaly/bluespace/anomalyEffect()
 	..()
@@ -252,6 +254,7 @@
 	name = "pyroclastic anomaly"
 	icon_state = "mustard"
 	var/ticks = 0
+	aSignal = /obj/item/assembly/signaler/anomaly/pyro
 
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()
@@ -295,6 +298,7 @@
 	name = "vortex anomaly"
 	icon_state = "bhole3"
 	desc = "That's a nice station you have there. It'd be a shame if something happened to it."
+	aSignal = /obj/item/assembly/signaler/anomaly/vortex
 
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()

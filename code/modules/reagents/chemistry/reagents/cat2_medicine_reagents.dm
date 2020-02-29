@@ -6,32 +6,34 @@
 /******BRUTE******/
 /*Suffix: -bital*/
 
-/datum/reagent/medicine/C2/helbital //only REALLY a C2 if you heal the other damages but not being able to outright heal the other guys is close enough to damaging
+/datum/reagent/medicine/C2/helbital //kinda a C2 only if you're not in hardcrit.
 	name = "Helbital"
-	description = "Named after the norse goddess Hel, this medicine heals the patient's bruises the closer they are to death. Burns, toxins, and asphyxition will increase healing but these damages must be maintained while the drug is being metabolized or the drug will react negatively."
+	description = "Named after the norse goddess Hel, this medicine heals the patient's bruises the closer they are to death. Patients will find the medicine 'aids' their healing if not near death by causing asphyxiation."
 	color = "#9400D3"
 	taste_description = "cold and lifeless"
 	overdose_threshold = 35
 	reagent_state = SOLID
 	var/helbent = FALSE
-	var/beginning_combo = 0
 	var/reaping = FALSE
-
-/datum/reagent/medicine/C2/helbital/on_mob_metabolize(mob/living/carbon/M)
-	beginning_combo = M.getToxLoss() + M.getOxyLoss() + M.getFireLoss() //This DOES mean you can cure Tox/Oxy and then do burn to maintain the brute healing that way.
-	return ..()
 
 /datum/reagent/medicine/C2/helbital/on_mob_life(mob/living/carbon/M)
 	. = TRUE
-	var/cccombo = M.getToxLoss() + M.getOxyLoss() + M.getFireLoss()
-	var/healed_this_iteration = FALSE
-	if(cccombo >= beginning_combo)
-		M.adjustBruteLoss(FLOOR(cccombo/-15,0.1)) //every 15 damage adds 1 per tick
-		healed_this_iteration = TRUE
-	else
-		M.adjustToxLoss((beginning_combo-cccombo)*0.1) //If you are just healing instead of converting the damage we'll KINDLY do it for you AND make it the most difficult!
+	var/death_is_coming = (M.getToxLoss() + M.getOxyLoss() + M.getFireLoss() + M.getBruteLoss())
+	var/thou_shall_heal = 0
+	var/good_kind_of_healing = FALSE
+	switch(M.stat)
+		if(CONSCIOUS) //bad
+			thou_shall_heal = death_is_coming/50
+			M.adjustOxyLoss(2, TRUE)
+		if(SOFT_CRIT) //meh convert
+			thou_shall_heal = round(death_is_coming/47,0.1)
+			M.adjustOxyLoss(1, TRUE)
+		else //no convert
+			thou_shall_heal = round(death_is_coming/45,0.1)
+			good_kind_of_healing = TRUE
+	M.adjustBruteLoss(-thou_shall_heal, FALSE)
 
-	if(healed_this_iteration && !reaping && prob(0.0001)) //janken with the grim reaper!
+	if(good_kind_of_healing && !reaping && prob(0.0001)) //janken with the grim reaper!
 		reaping = TRUE
 		var/list/RockPaperScissors = list("rock" = "paper", "paper" = "scissors", "scissors" = "rock") //choice = loses to
 		if(M.apply_status_effect(/datum/status_effect/necropolis_curse,CURSE_BLINDING))
@@ -89,6 +91,47 @@
 	..()
 	return TRUE
 
+/datum/reagent/medicine/C2/probital
+	name = "Probital"
+	description = "Originally developed as a prototype-gym supliment for those looking for quick workout turnover, this oral medication quickly repairs broken muscle tissue but causes lactic acid buildup, tiring the patient. Overdosing can cause extreme drowsiness. An Influx of nutrients promotes the muscle repair even further."
+	reagent_state = SOLID
+	color = "#FFFF6B"
+	overdose_threshold = 20
+
+/datum/reagent/medicine/C2/probital/on_mob_life(mob/living/carbon/M)
+	M.adjustBruteLoss(-2.25*REM, FALSE)
+	var/ooo_youaregettingsleepy = 3.5
+	switch(round(M.getStaminaLoss()))
+		if(10 to 40)
+			ooo_youaregettingsleepy = 3
+		if(41 to 60)
+			ooo_youaregettingsleepy = 2.5
+		if(61 to 200) //you really can only go to 120
+			ooo_youaregettingsleepy = 2
+	M.adjustStaminaLoss(ooo_youaregettingsleepy*REM, FALSE)
+	..()
+	. = TRUE
+
+/datum/reagent/medicine/C2/probital/overdose_process(mob/living/M)
+	M.adjustStaminaLoss(3*REM, 0)
+	if(M.getStaminaLoss() >= 80)
+		M.drowsyness++
+	if(M.getStaminaLoss() >= 100)
+		to_chat(M,"<span class='warning'>You feel more tired than you usually do, perhaps if you rest your eyes for a bit...</span>")
+		M.adjustStaminaLoss(-100, TRUE)
+		M.Sleeping(10 SECONDS)
+	..()
+	. = TRUE
+
+/datum/reagent/medicine/C2/probital/on_transfer(atom/A, method=INGEST, trans_volume)
+	if(method != INGEST || !iscarbon(A))
+		return
+
+	A.reagents.remove_reagent(/datum/reagent/medicine/C2/probital, trans_volume * 0.05)
+	A.reagents.add_reagent(/datum/reagent/medicine/metafactor, trans_volume * 0.25)
+
+	..()
+
 /******BURN******/
 /*Suffix: -uri*/
 /datum/reagent/medicine/C2/lenturi
@@ -124,6 +167,41 @@
 	M.adjustOrganLoss(ORGAN_SLOT_EYES,0.25*REM)
 	..()
 	return TRUE
+
+/datum/reagent/medicine/C2/hercuri
+	name = "Hercuri"
+	description = "Not to be confused with element Mercury, this medicine excels in reverting effects of dangerous high-temperature environments. Prolonged exposure can cause hypothermia."
+	reagent_state = LIQUID
+	color = "#F7FFA5"
+	overdose_threshold = 25
+	reagent_weight = 0.6
+
+/datum/reagent/medicine/C2/hercuri/on_mob_life(mob/living/carbon/M)
+	if(M.getFireLoss() > 50)
+		M.adjustFireLoss(-2*REM, FALSE)
+	else
+		M.adjustFireLoss(-1.25*REM, FALSE)
+	M.adjust_bodytemperature(rand(-25,-5)*(TEMPERATURE_DAMAGE_COEFFICIENT*REM), 50)
+	M.reagents?.chem_temp +=(-10*REM)
+	M.adjust_fire_stacks(-1)
+	..()
+	. = TRUE
+
+/datum/reagent/medicine/C2/hercuri/reaction_mob(mob/living/carbon/M, method=VAPOR, reac_volume)
+	if(method != VAPOR)
+		return
+
+	M.adjust_bodytemperature(-reac_volume * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
+	M.adjust_fire_stacks(-reac_volume / 2)
+	if(reac_volume >= metabolization_rate)
+		M.ExtinguishMob()
+
+	..()
+
+/datum/reagent/medicine/C2/hercuri/overdose_process(mob/living/carbon/M)
+	M.adjust_bodytemperature(-10*TEMPERATURE_DAMAGE_COEFFICIENT*REM,50) //chilly chilly
+	..()
+
 
 /******OXY******/
 /*Suffix: -mol*/
@@ -344,7 +422,7 @@
 			//Has to be at less than TRESHOLD_UNHUSK burn damage and have 100 isntabitaluri before unhusking. Corpses dont metabolize.
 			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && Carbies.getFireLoss() < TRESHOLD_UNHUSK && Carbies.reagents.has_reagent(/datum/reagent/medicine/C2/instabitaluri, 100))
 				Carbies.cure_husk("burn")
-				Carbies.visible_message("<span class='nicegreen'>With most of the burnt off flesh replaced, [Carbies] looks a lot healthier.")
+				Carbies.visible_message("<span class='nicegreen'>With most of the burnt off flesh replaced, [Carbies] looks a lot healthier.</span>")
 	..()
 	return TRUE
 

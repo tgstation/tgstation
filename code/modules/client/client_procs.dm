@@ -878,8 +878,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/viewscale = getviewsize(view)
 	var/x = viewscale[1]
 	var/y = viewscale[2]
-	x = CLAMP(x+change, min, max)
-	y = CLAMP(y+change, min,max)
+	x = clamp(x+change, min, max)
+	y = clamp(y+change, min,max)
 	change_view("[x]x[y]")
 
 /client/proc/update_movement_keys(datum/preferences/direct_prefs)

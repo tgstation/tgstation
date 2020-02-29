@@ -244,7 +244,7 @@
 		return
 	holder.remove_reagent(/datum/reagent/sorium, created_volume*4)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = CLAMP(sqrt(created_volume*4), 1, 6)
+	var/range = clamp(sqrt(created_volume*4), 1, 6)
 	goonchem_vortex(T, 1, range)
 
 /datum/chemical_reaction/sorium_vortex
@@ -253,7 +253,7 @@
 
 /datum/chemical_reaction/sorium_vortex/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = CLAMP(sqrt(created_volume), 1, 6)
+	var/range = clamp(sqrt(created_volume), 1, 6)
 	goonchem_vortex(T, 1, range)
 
 /datum/chemical_reaction/liquid_dark_matter
@@ -265,7 +265,7 @@
 		return
 	holder.remove_reagent(/datum/reagent/liquid_dark_matter, created_volume*3)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = CLAMP(sqrt(created_volume*3), 1, 6)
+	var/range = clamp(sqrt(created_volume*3), 1, 6)
 	goonchem_vortex(T, 0, range)
 
 /datum/chemical_reaction/ldm_vortex
@@ -274,7 +274,7 @@
 
 /datum/chemical_reaction/ldm_vortex/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = CLAMP(sqrt(created_volume/2), 1, 6)
+	var/range = clamp(sqrt(created_volume/2), 1, 6)
 	goonchem_vortex(T, 0, range)
 
 /datum/chemical_reaction/flash_powder
@@ -441,7 +441,7 @@
 	modifier = -100
 	mix_message = "<span class='boldannounce'>The teslium starts to spark as electricity arcs away from it!</span>"
 	mix_sound = 'sound/machines/defib_zap.ogg'
-	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_IS_TESLA
+	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/on_reaction(datum/reagents/holder, created_volume)
 	var/T1 = created_volume * 20		//100 units : Zap 3 times, with powers 2000/5000/12000. Tesla revolvers have a power of 10000 for comparison.
