@@ -251,7 +251,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/dwarven
 	name = "dwarven alloy"
 	id = "dwarven"
-	desc = "Millenia ago cities of stone and metal were built with this"
+	desc = "Millenia ago cities of stone and metal were built with this."
 	color = "f4f0c3"
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/dwarven

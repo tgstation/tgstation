@@ -369,7 +369,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/rock
 	name = "Rock wine"
-	description = "Pioneers are said to have drunk this. Or was it ashwalkers? dwarves? anyways..."
+	description = "Pioneers are said to have drunk this. Or was it ashwalkers? Dwarves? Anyways..."
 	color = "#7E4043" // rgb: 126, 64, 67
 	boozepwr = 50
 	taste_description = "bitter sweetness"

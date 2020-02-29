@@ -339,7 +339,7 @@
 
 /obj/item/seeds/rocknut
 	name = "pack of rocknut mycelium"
-	desc = "This mycelium grows into rocks or nuts"
+	desc = "This mycelium grows into rocks or nuts."
 	icon_state = "mycelium-rocknut"
 	species = "rocknut"
 	plantname = "Rock Nut Truffles"
@@ -356,7 +356,7 @@
 /obj/item/reagent_containers/food/snacks/grown/mushroom/rocknut
 	seed = /obj/item/seeds/rocknut
 	name = "rocknut"
-	desc = "Looks like rock tastes like nut, a perfect combination"
+	desc = "Looks like rock tastes like nut, a perfect combination."
 	icon_state = "rocknut"
 	filling_color = "#9370DB"
 	distill_reagent = /datum/reagent/consumable/ethanol/rock

@@ -8,11 +8,12 @@
 /obj/item/book_of_babel/dwarven_guide/attack_self(mob/living/carbon/human/user)
 	if(!user.has_language(/datum/language/dwarven))
 		return FALSE
+	user.remove_blocked_language(/datum/language/common)
 	. = ..()
 
 /obj/item/twohanded/war_hammer
 	name = "dwarven warhammer"
-	desc = "A very heavy warhammer, used to dent skulls unless they are already dented."
+	desc = "A heavy hammer. Apply to skull."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "greyscale_dwarven_warhammer0"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
@@ -34,15 +35,15 @@
 	icon_state = "greyscale_dwarven_warhammer[wielded]"
 
 /obj/item/hatchet/dwarven
-	name = "dwarven "
-	desc = "Dwarf dwarf dwarf dwarf dwarf dwarf? DWARF!"
+	name = "dwarven"
+	desc = "What am i looking at?"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	flags_1 = CONDUCT_1
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 
 /obj/item/hatchet/dwarven/axe
 	name = "dwarven hand axe"
-	desc = "A very sharp axe blade made of greatest dwarven metal."
+	desc = "A very sharp axe blade made with finest dwarven metallurgy."
 	icon_state = "greyscale_dwarven_axe"
 	item_state = "greyscale_dwarven_axe"
 	lefthand_file = 'icons/mob/inhands/weapons/axes_lefthand.dmi'
@@ -53,7 +54,7 @@
 
 /obj/item/hatchet/dwarven/javelin
 	name = "dwarven javelin"
-	desc = "A very sharp javelin made of greatest dwarven metal."
+	desc = "A very sharp javelin"
 	icon_state = "greyscale_dwarven_javelin"
 	item_state = "greyscale_dwarven_javelin"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
@@ -68,7 +69,7 @@
 
 /obj/item/dwarven
 	name = "dorf"
-	desc = "am a manly dorf"
+	desc = "am a manly dorf."
 	icon = 'icons/obj/dwarven.dmi'
 
 /obj/item/dwarven/rune_stone
@@ -112,6 +113,7 @@
 
 /obj/item/dwarven/rune_stone/blitz
 	name = "blitz runestone"
+	desc = "Dwarven magical artifact, looks fragile. This one creates a 3x1 forcewall"
 	overlay_state = "blitz_rune"
 	var/wall_type = /obj/effect/forcefield
 
@@ -129,6 +131,7 @@
 /obj/item/dwarven/rune_stone/earth
 	name = "earth runestone"
 	overlay_state = "earth_rune"
+	desc = "Dwarven magical artifact, looks fragile. This one throws away anything on targeted turf"
 	var/maxthrow = 5
 
 /obj/item/dwarven/rune_stone/earth/apply(atom/target, mob/user)
@@ -169,6 +172,7 @@
 /obj/item/dwarven/rune_stone/air
 	name = "air runestone"
 	overlay_state = "air_rune"
+	desc = "Dwarven magical artifact, looks fragile. This one teleports to a random nearby location"
 
 /obj/item/dwarven/rune_stone/air/apply(atom/target, mob/user)
 	if(ismob(target))
@@ -205,7 +209,7 @@
 /obj/item/dwarven/blueprint/New(loc,_structure)
 	if(_structure)
 		structure = _structure
-	name = name + "of" + initial(structure.name)
+	name = "structure print of" + initial(structure.name)
 	. = ..()
 
 /obj/item/dwarven/blueprint/afterattack(atom/target, mob/user, proximity_flag, click_parameters)

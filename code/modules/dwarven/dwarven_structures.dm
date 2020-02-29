@@ -5,7 +5,7 @@
 	light_power = 1
 	var/cooldowntime = 0
 	custom_materials = list()
-	//break_sound = 'sound/hallucinations/veryfar_noise.ogg' //to do: find a suitable noise
+	break_sound = 'sound/magic/clockwork/invoke_general.ogg'
 
 /obj/structure/destructible/dwarven/New()
 	START_PROCESSING(SSprocessing, src)
@@ -27,7 +27,7 @@
 
 /obj/structure/destructible/dwarven/dwarven_sarcophagus/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>It is [(recharge_points*100)/recharge_points_max]% powered </span>"
+	. += "<span class='notice'>It is [(recharge_points*100)/recharge_points_max]% powered.</span>"
 	. += "<span class='notice'>Use ores to recharge!</span>"
 
 /obj/structure/destructible/dwarven/dwarven_sarcophagus/attackby(obj/item/stack/ore/I, mob/living/user, params)
@@ -116,7 +116,7 @@
 		return
 	var/mob/living/carbon/human/H = user
 	if(!H.has_language(/datum/language/dwarven))
-		to_chat(H, "<span class='notice'>You don't understand the instructions written in that ancient tongue</span>")
+		to_chat(H, "<span class='notice'>You don't understand the instructions written in that ancient tongue.</span>")
 		return
 
 	if(charge_amount >= 30)
@@ -162,15 +162,18 @@
 
 /obj/structure/destructible/dwarven/mythril_press/proc/press_mythril(mob/user)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	if(materials.has_materials(list(/datum/material/gold= 1000, /datum/material/silver = 1000, /datum/material/titanium = 1000)))
-		var/amount = min(materials.materials[/datum/material/gold],materials.materials[/datum/material/silver],materials.materials[/datum/material/titanium])
-		materials.use_materials(list(/datum/material/gold= amount, /datum/material/silver = amount, /datum/material/titanium = amount))
-		materials.insert_amount_mat(materials.sheet2amount(amount),/datum/material/dwarven)
+	if(!materials.has_materials(list(/datum/material/gold= 1000, /datum/material/silver = 1000, /datum/material/titanium = 1000)))
+		to_chat(user, "<span class='notice'>The machine makes a loud crank sound, but no alloy falls out!</span>")
 		materials.retrieve_all(get_turf(src))
-		to_chat(user, "<span class='notice'>You hear a loud crank as materials are compressed into dwarven alloy!</span>")
 		return
+	var/amount = min(materials.materials[/datum/material/gold],materials.materials[/datum/material/silver],materials.materials[/datum/material/titanium])
+	materials.use_materials(list(/datum/material/gold= amount, /datum/material/silver = amount, /datum/material/titanium = amount))
+	materials.insert_amount_mat(materials.sheet2amount(amount),/datum/material/dwarven)
 	materials.retrieve_all(get_turf(src))
-	to_chat(user, "<span class='notice'>The machine makes a loud crank sound, but no alloy falls out!</span>")
+	to_chat(user, "<span class='notice'>You hear a loud crank as materials are compressed into dwarven alloy!</span>")
+	return
+
+
 
 /obj/structure/destructible/dwarven/workshop
 	name = "Dwarven workshop"

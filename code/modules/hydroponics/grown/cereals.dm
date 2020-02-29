@@ -106,7 +106,7 @@
 
 /obj/item/seeds/wheat/cave
 	name = "pack of cavewheat seeds"
-	desc = "An ancient relative to todays wheat"
+	desc = "An ancient relative to todays wheat."
 	icon_state = "seed-cavewheat"
 	species = "cavewheat"
 	plantname = "Wheat Stalks"

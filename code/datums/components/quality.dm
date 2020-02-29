@@ -64,7 +64,7 @@ Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead bec
 
 
 /datum/component/quality/proc/OnExamine(datum/source, mob/user)
-	to_chat(user, "<span class='notice'>The item was created by [creator_name] </span>")
+	to_chat(user, "<span class='notice'>The item was created by [creator_name].</span>")
 
 ///Generates quality based off passed distribution/ normal distribution and skill. Returns the result
 /datum/component/quality/proc/generate_quality(quality_val,quality_skill_modifier)

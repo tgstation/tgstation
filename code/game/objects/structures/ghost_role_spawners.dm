@@ -33,7 +33,7 @@
 
 /obj/effect/mob_spawn/human/dwarven_sarcophagus
 	name = "ancient sarcophagus"
-	desc = "An ancient artifact of greater past. Emits fiery energy"
+	desc = "An ancient artifact from times long past. Emits fiery energy."
 	mob_name = "a dwarf"
 	icon = 'icons/obj/dwarven.dmi'
 	icon_state = "sarcophagus"

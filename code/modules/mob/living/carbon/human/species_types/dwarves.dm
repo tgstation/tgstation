@@ -15,3 +15,8 @@
 	passtable_on(C, INNATE_TRAIT)
 	. = ..()
 
+/datum/species/dwarf/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	C.transform = C.transform.Scale(1, 1.25)
+	passtable_off(C, INNATE_TRAIT)
+	. = ..()
+
