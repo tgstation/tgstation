@@ -380,7 +380,6 @@
 /area/hallway/secondary/entry)
 "aaQ" = (
 /obj/machinery/door/window{
-	dir = 2;
 	name = "Secure Art Exhibition"
 	},
 /obj/structure/table/wood/fancy,
@@ -6921,13 +6920,13 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "arO" = (
-/obj/machinery/vending/cola/random,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
 	c_tag = "Arrivals - Aft";
 	name = "arrivals camera"
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/vending/custom,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "arP" = (
@@ -26396,7 +26395,6 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "baK" = (
-/obj/item/twohanded/required/kirbyplants/random,
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -83883,8 +83881,13 @@
 /area/medical/medbay/central)
 "cZw" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall,
+/obj/machinery/vending/custom,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "chemisttop";
+	name = "Chemistry Lobby Shutters"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
 /area/medical/medbay/central)
 "cZx" = (
 /obj/structure/table/reinforced,
@@ -109630,9 +109633,8 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "ebm" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/regular,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/vending/custom,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "ebs" = (
@@ -110270,8 +110272,8 @@
 /area/hallway/secondary/exit/departure_lounge)
 "ecH" = (
 /obj/structure/table,
-/obj/item/storage/pill_bottle/dice,
 /obj/effect/turf_decal/delivery,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "ecJ" = (
@@ -112635,6 +112637,21 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/closed/wall,
 /area/medical/chemistry)
+"gur" = (
+/obj/machinery/vending/custom,
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/quartermaster/office)
 "gvO" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -113598,6 +113615,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port)
+"kzm" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "kDh" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
@@ -113613,14 +113638,6 @@
 /obj/structure/displaycase/forsale,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
-"kzm" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
 "kEN" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall,
@@ -114338,8 +114355,7 @@
 	dir = 8
 	},
 /obj/structure/sign/departments/chemistry{
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -115474,6 +115490,13 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"tfv" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "tkj" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -115664,8 +115687,7 @@
 	dir = 8
 	},
 /obj/structure/sign/poster/official/report_crimes{
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -153573,7 +153595,7 @@ aee
 aaO
 aeX
 afx
-afx
+tfv
 agl
 aaO
 aee
@@ -156961,7 +156983,7 @@ aVB
 aXj
 aYN
 baK
-aYJ
+gur
 bdR
 bfo
 bgB

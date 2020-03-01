@@ -22700,6 +22700,7 @@
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/vending/custom,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aYH" = (
@@ -29194,9 +29195,10 @@
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/office)
 "bmi" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
+/obj/machinery/vending/custom,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/dark,
 /area/quartermaster/office)
 "bmj" = (
 /obj/structure/sign/directions/supply{
@@ -48861,15 +48863,11 @@
 	name = "Pharmacy Desk";
 	req_access_txt = "5; 69"
 	},
-/obj/machinery/door/firedoor,
 /obj/item/folder/white{
 	pixel_x = 4;
 	pixel_y = -3
 	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "pharmacy_shutters";
-	name = "pharmacy shutters"
-	},
+/obj/machinery/door/poddoor/shutters/preopen,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -48880,6 +48878,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
 "cga" = (
@@ -72022,6 +72021,25 @@
 /obj/machinery/chem_master,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"iws" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/machinery/vending/custom,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/preopen,
+/turf/open/floor/plasteel/white,
+/area/medical/pharmacy)
 "ixj" = (
 /obj/machinery/flasher/portable,
 /obj/effect/turf_decal/tile/blue{
@@ -73400,6 +73418,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/misc_lab/range)
+"odx" = (
+/obj/machinery/vending/custom,
+/turf/open/floor/plasteel/dark,
+/area/hallway/primary/aft)
 "odU" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -102307,7 +102329,7 @@ can
 cbY
 dDo
 ceI
-cfY
+iws
 chd
 ciy
 cjU
@@ -103101,7 +103123,7 @@ cIH
 cCl
 cCZ
 cEf
-cFY
+odx
 cFY
 riD
 vQD

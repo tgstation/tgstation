@@ -29298,12 +29298,12 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
 /obj/structure/sink{
 	dir = 4;
 	pixel_x = -12
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
@@ -30652,6 +30652,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/vending/custom,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bzU" = (
@@ -49571,6 +49572,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
+"eiS" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "chemistry_shutters";
+	name = "chemistry shutters"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/vending/custom,
+/turf/open/floor/plating,
+/area/medical/chemistry)
 "eiX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -50815,7 +50825,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "gLF" = (
-/obj/machinery/vending/snack/random,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -50826,6 +50835,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/vending/custom,
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/exit/departure_lounge)
 "gMm" = (
@@ -51478,7 +51488,6 @@
 "iiJ" = (
 /obj/machinery/door/window/northright{
 	base_state = "left";
-	dir = 1;
 	icon_state = "left";
 	name = "Secure Art Exhibit";
 	req_access_txt = "37"
@@ -52579,6 +52588,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library/artgallery)
+"kEI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/vending/cola/random,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "kEL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -54894,6 +54910,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
+"pht" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/vending/custom,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "phJ" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -56452,6 +56475,10 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"sPS" = (
+/obj/machinery/vending/custom,
+/turf/closed/wall,
+/area/medical/sleeper)
 "sQt" = (
 /obj/machinery/door/airlock/external{
 	name = "Supply Dock Airlock";
@@ -56697,7 +56724,6 @@
 /area/engine/engineering)
 "tqW" = (
 /obj/machinery/door/window/northright{
-	dir = 1;
 	name = "Secure Art Exhibit";
 	req_access_txt = "37"
 	},
@@ -57656,6 +57682,11 @@
 "vtT" = (
 /turf/open/floor/plating,
 /area/maintenance/solars/port)
+"vuo" = (
+/obj/machinery/vending/custom,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/dark,
+/area/quartermaster/office)
 "vuP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -79993,8 +80024,8 @@ bbR
 bbR
 bnp
 baK
-bbR
-bbR
+pht
+kEI
 aZx
 bcX
 aZx
@@ -86681,7 +86712,7 @@ bsE
 bue
 tix
 cSJ
-bsA
+sPS
 bzT
 bBc
 bCm
@@ -90273,7 +90304,7 @@ bke
 bkh
 cqf
 boN
-bpV
+eiS
 brl
 bsL
 bul
@@ -96422,7 +96453,7 @@ aTc
 aOT
 aVp
 aWu
-aPW
+vuo
 aYr
 aOV
 baw

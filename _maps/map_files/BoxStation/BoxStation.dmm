@@ -16408,6 +16408,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/machinery/vending/custom,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aPu" = (
@@ -22582,12 +22583,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/pen,
-/obj/structure/table/reinforced,
+/obj/machinery/vending/custom,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bgc" = (
@@ -22937,10 +22933,10 @@
 "bhb" = (
 /obj/machinery/chem_dispenser,
 /obj/effect/turf_decal/tile/yellow{
-	dir = 1
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
@@ -24075,8 +24071,23 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "bjQ" = (
-/obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall,
+/obj/machinery/vending/custom,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/preopen{
+	id = "chemistry_shutters";
+	name = "Chemistry shutters"
+	},
+/turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
 "bjR" = (
 /obj/structure/table/glass,
@@ -27946,7 +27957,6 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/obj/structure/closet/crate,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bue" = (
@@ -49970,12 +49980,11 @@
 /turf/open/floor/engine,
 /area/science/misc_lab)
 "izT" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
 	},
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plasteel,
-/area/quartermaster/office)
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "iBZ" = (
 /obj/machinery/power/smes,
 /obj/structure/cable,
@@ -51862,6 +51871,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/nanite)
+"qjo" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/vending/custom,
+/turf/open/floor/plating,
+/area/quartermaster/office)
 "qrH" = (
 /obj/machinery/door/window/westleft{
 	base_state = "right";
@@ -51891,6 +51905,15 @@
 /obj/structure/grille/broken,
 /turf/open/space/basic,
 /area/space/nearstation)
+"qwr" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "qyN" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
@@ -51931,6 +51954,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/security/detectives_office)
+"qIz" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "qQC" = (
 /obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/bot,
@@ -76569,7 +76598,7 @@ bfm
 bNK
 bkN
 nEm
-bfm
+qjo
 bwe
 bwd
 bwY
@@ -76826,7 +76855,7 @@ bqs
 bbR
 bkM
 nro
-izT
+bbR
 bwd
 bvL
 byI
@@ -88895,9 +88924,9 @@ aYV
 bet
 bfH
 bhf
-bhh
-bhh
-bhh
+izT
+qwr
+qIz
 bmJ
 bof
 bpu
