@@ -277,11 +277,22 @@
 	icon_icon = 'icons/mob/actions/actions_spacesuit.dmi'
 	button_icon_state = "thermal_off"
 
+/datum/action/item_action/toggle_spacesuit/New(Target)
+	. = ..()
+	RegisterSignal(target, COMSIG_SUIT_SPACE_TOGGLE, .proc/toggle)
+
+/datum/action/item_action/toggle_spacesuit/Destroy()
+	UnregisterSignal(target, COMSIG_SUIT_SPACE_TOGGLE)
+	return ..()
+
 /datum/action/item_action/toggle_spacesuit/Trigger()
 	var/obj/item/clothing/suit/space/suit = target
 	if(!istype(suit))
 		return
 	suit.toggle_spacesuit()
+
+/// Toggle the action icon for the space suit thermal regulator
+/datum/action/item_action/toggle_spacesuit/proc/toggle(obj/item/clothing/suit/space/suit)
 	button_icon_state = "thermal_[suit.thermal_on ? "on" : "off"]"
 	UpdateButtonIcon()
 
@@ -323,6 +334,11 @@
 	button_icon_state = "vortex_recall"
 
 /datum/action/item_action/vortex_recall/IsAvailable()
+	var/turf/current_location = get_turf(target)
+	var/area/current_area = current_location.loc
+	if(current_area.noteleport)
+		to_chat(target, "[src] fizzles uselessly.")
+		return
 	if(istype(target, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = target
 		if(H.teleporting)

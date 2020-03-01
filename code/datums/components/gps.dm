@@ -88,7 +88,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	if(!ui)
 		// Variable window height, depending on how many GPS units there are
 		// to show, clamped to relatively safe range.
-		var/gps_window_height = CLAMP(325 + GLOB.GPS_list.len * 14, 325, 700)
+		var/gps_window_height = clamp(325 + GLOB.GPS_list.len * 14, 325, 700)
 		ui = new(user, src, ui_key, "gps", "Global Positioning System", 470, gps_window_height, master_ui, state) //width, height
 		ui.open()
 
