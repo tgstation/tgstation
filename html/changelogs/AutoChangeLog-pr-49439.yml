@@ -1,0 +1,8 @@
+author: "and Twaticus"
+delete-after: True
+changes: 
+  - bugfix: "you can now hold corgis and pAI's again. pull them, and then drag their sprite to yours."
+  - rscadd: "you can now hold all of the stations pets, and more!"
+  - rscadd: "(b)admins can now make mobs holdable"
+  - rscadd: "you can now wash all of the stations pets in washing machines"
+  - rscadd: "pets can be put directly into washing machines from your hand"
