@@ -1,4 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - bugfix: "Brooms no longer cause your inventory to occasionally be dropped on the ground"

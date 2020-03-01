@@ -1,5 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - tweak: "Basic sticky tape is now available in the autolathe by default, with advanced variants still able to be researched through the BEPIS major reward!"
-  - bugfix: "Harmless sticky embeds no longer print jostling messages"
