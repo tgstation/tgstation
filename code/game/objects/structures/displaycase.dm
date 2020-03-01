@@ -403,9 +403,6 @@
 		if(!potential_acc.registered_account)
 			to_chat(user, "<span class='warning'>This ID card has no account registered!</span>")
 			return
-		/*if(payments_acc && payments_acc != potential_acc.registered_account)
-			to_chat(user, "<span class='warning'>This Vend-a-tray is already registered!</span>")
-			return*/
 		if(!payments_acc && potential_acc.registered_account)
 			payments_acc = potential_acc.registered_account
 			playsound(src, 'sound/machines/click.ogg', 20, TRUE)
