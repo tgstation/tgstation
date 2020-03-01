@@ -684,12 +684,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 			premium = TRUE
 		)
 		.["coin_records"] += list(data)
-	.["hidden_records"] += list()
+	.["hidden_records"] = list()
 	for (var/datum/data/vending_product/R in hidden_records)
 		var/list/data = list(
 			path = replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-"),
 			name = R.name,
-			price = R.custom_premium_price || extra_price,
+			price = R.custom_price || default_price,
 			max_amount = R.max_amount,
 			ref = REF(R),
 			premium = TRUE
