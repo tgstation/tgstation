@@ -268,7 +268,7 @@ export class RouletteBetTable extends Component {
               'Roulette__lowertable--cell',
               'Roulette__lowertable--header',
             ])}>
-          Last Spun:
+            Last Spun:
           </th>
           <th
             className={classes([
@@ -276,7 +276,7 @@ export class RouletteBetTable extends Component {
               'Roulette__lowertable--cell',
               'Roulette__lowertable--header',
             ])}>
-          Current Bet:
+            Current Bet:
           </th>
         </tr>
         <tr>
@@ -362,14 +362,14 @@ export class RouletteBetTable extends Component {
               m={1}
               fontSize="14px"
               textAlign="center">
-            Swipe an ID card with a connected account to spin!
+              Swipe an ID card with a connected account to spin!
             </Box>
           </td>
         </tr>
         <tr>
           <td className="Roulette__lowertable--cell">
             <Box inline bold mr={1}>
-            House Balance:
+              House Balance:
             </Box>
             <Box inline>
               {data.HouseBalance ? data.HouseBalance + ' cr': "None"}

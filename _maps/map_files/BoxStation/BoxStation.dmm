@@ -52558,6 +52558,16 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"tXW" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen";
+	name = "kitchen shutters"
+	},
+/obj/structure/displaycase/forsale,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 "tYi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment{
@@ -53073,6 +53083,15 @@
 	},
 /turf/open/floor/plating,
 /area/science/nanite)
+"wlq" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/displaycase/forsale,
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
 "wph" = (
 /obj/docking_port/stationary{
 	dheight = 4;
@@ -89895,7 +89914,7 @@ aXj
 aVy
 aSY
 aVy
-aVy
+wlq
 aYI
 bah
 aJC
@@ -92467,7 +92486,7 @@ aTO
 cCq
 aVz
 aVz
-bak
+tXW
 bbz
 aYV
 bdp
