@@ -22474,7 +22474,8 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "bfO" = (
-/obj/machinery/vending/custom,
+/obj/structure/table,
+/obj/item/storage/toolbox/emergency,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bfP" = (
@@ -49969,9 +49970,11 @@
 /turf/open/floor/engine,
 /area/science/misc_lab)
 "izT" = (
-/obj/machinery/vending/custom,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plasteel/dark,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plasteel,
 /area/quartermaster/office)
 "iBZ" = (
 /obj/machinery/power/smes,
@@ -51889,7 +51892,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "qyN" = (
-/obj/machinery/vending/custom,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "qyX" = (
@@ -76566,7 +76569,7 @@ bfm
 bNK
 bkN
 nEm
-izT
+bfm
 bwe
 bwd
 bwY
@@ -76823,7 +76826,7 @@ bqs
 bbR
 bkM
 nro
-bbR
+izT
 bwd
 bvL
 byI

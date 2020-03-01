@@ -29214,10 +29214,9 @@
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/office)
 "bmi" = (
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/vending/custom,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plating,
 /area/quartermaster/office)
 "bmj" = (
 /obj/structure/sign/directions/supply{
@@ -46162,7 +46161,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner,
-/obj/machinery/vending/custom,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cal" = (
@@ -68204,7 +68202,6 @@
 /area/medical/medbay/central)
 "dtM" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/custom,
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "dtS" = (
