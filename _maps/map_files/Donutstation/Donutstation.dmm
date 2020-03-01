@@ -46298,6 +46298,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"oqD" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/vending/custom,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "oqE" = (
 /obj/structure/girder,
 /turf/open/floor/plasteel/dark,
@@ -50862,6 +50875,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
+"xBK" = (
+/obj/machinery/vending/custom,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "xCz" = (
 /obj/machinery/requests_console{
 	department = "Chemistry";
@@ -50916,6 +50933,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
+"xGm" = (
+/obj/machinery/vending/custom,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "xGM" = (
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/stripes/line{
@@ -83935,7 +83957,7 @@ acf
 acf
 acf
 acf
-acP
+oqD
 boo
 bmV
 aaQ
@@ -87526,7 +87548,7 @@ bEj
 bEt
 bAo
 bAo
-bFi
+xGm
 bzh
 bIv
 bAo
@@ -92983,7 +93005,7 @@ btG
 qYP
 aVO
 aWi
-ark
+xBK
 aOq
 aOt
 aOt

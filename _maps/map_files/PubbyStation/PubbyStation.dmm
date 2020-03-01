@@ -22963,12 +22963,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "bgv" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-14"
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
+/obj/machinery/vending/custom,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bgw" = (
@@ -49535,15 +49530,10 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "eeF" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/structure/sign/poster/official/random{
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/machinery/vending/custom,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "efu" = (
@@ -49837,6 +49827,11 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/engine,
 /area/science/explab)
+"eXP" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/vending/custom,
+/turf/open/floor/plasteel/dark,
+/area/space)
 "eYr" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -51478,7 +51473,6 @@
 "iiJ" = (
 /obj/machinery/door/window/northright{
 	base_state = "left";
-	dir = 1;
 	icon_state = "left";
 	name = "Secure Art Exhibit";
 	req_access_txt = "37"
@@ -56697,7 +56691,6 @@
 /area/engine/engineering)
 "tqW" = (
 /obj/machinery/door/window/northright{
-	dir = 1;
 	name = "Secure Art Exhibit";
 	req_access_txt = "37"
 	},
@@ -92319,7 +92312,7 @@ bbp
 bah
 beD
 cpC
-bgv
+bdo
 aJI
 cpM
 cpS
@@ -94090,7 +94083,7 @@ awd
 aAI
 aBH
 aCW
-aDZ
+bgv
 aAN
 aFC
 aGz
@@ -96422,7 +96415,7 @@ aTc
 aOT
 aVp
 aWu
-aPW
+eXP
 aYr
 aOV
 baw
