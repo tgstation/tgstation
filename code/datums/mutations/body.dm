@@ -431,8 +431,9 @@
 	owner.gib()
 
 /datum/mutation/human/headless
-	name = "H.A.D.S."
-	desc = "A mutation that makes the body reject the head. Stands for Head All Depleted Syndrome. Warning: Removing this mutation is very dangerous."
+	name = "H.A.R.S."
+	desc = "A mutation that makes the body reject the head. Stands for Head Allergic Rejection Syndrome. Warning: Removing this mutation is very dangerous, though it will regenerate head organs."
+	difficulty = 12 //pretty good for traitors
 	quality = NEGATIVE //holy shit no eyes or tongue or ears
 	text_gain_indication = "<span class='warning'>Something feels off.</span>" //heh
 
@@ -457,8 +458,6 @@
 
 /datum/mutation/human/headless/on_losing()
 	. = ..()
-	if(.)//cant remove
-		return TRUE
 	var/successful = owner.regenerate_limb(BODY_ZONE_HEAD, noheal = TRUE) //noheal needs to be TRUE to prevent weird adding and removing mutation healing
 	if(!successful)
 		stack_trace("HADS mutation head regeneration failed! (usually caused by headless syndrome having a head)")
