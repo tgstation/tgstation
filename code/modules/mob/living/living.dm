@@ -1285,18 +1285,19 @@
 	..()
 	update_z(new_z)
 
-/mob/living/MouseDrop(mob/over)
+/mob/living/MouseDrop_T(atom/dropping, atom/user)
+	var/mob/living/U = user
+	if(isliving(dropping))
+		var/mob/living/M = dropping
+		if(M.can_be_held && U.pulling == M)
+			M.mob_try_pickup(U)//blame kevinz
+			return//dont open the mobs inventory if you are picking them up
 	. = ..()
-	var/mob/living/user = usr
-	if(!istype(over) || !istype(user))
-		return
-	if(!over.Adjacent(src) || (user != src) || !canUseTopic(over))
-		return
-	if(can_be_held)
-		mob_try_pickup(over)
 
 /mob/living/proc/mob_pickup(mob/living/L)
-	return
+	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	L.visible_message("<span class='warning'>[L] scoops up [src]!</span>")
+	L.put_in_hands(holder)
 
 /mob/living/proc/set_name()
 	numba = rand(1, 1000)
