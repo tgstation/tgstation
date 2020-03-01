@@ -11,3 +11,4 @@
 #_maps/RandomRuins/IceRuins/icemoon_underground_abandoned_village.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_mining_site.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_library.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_bathhouse.dmm

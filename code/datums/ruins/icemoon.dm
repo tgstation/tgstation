@@ -48,3 +48,10 @@
 	description = "A once grand library, now lost to the confines of the Ice Moon."
 	suffix = "icemoon_underground_library.dmm"
 	cost = 5
+
+/datum/map_template/ruin/icemoon/underground/bathhouse
+	name = "Bath House"
+	id = "bathhouse"
+	description = "A taste of paradise, locked in the hell of the Ice Moon."
+	suffix = "icemoon_underground_bathhouse.dmm"
+	cost = 5
