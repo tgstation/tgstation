@@ -38,8 +38,8 @@
 
 /obj/structure/destructible/dwarven/dwarven_sarcophagus/proc/try_to_activate()
 	if(recharge_points_max <= recharge_points)
-		for(var/mob/M in viewers(src,5))
-			to_chat(M, "<span class='notice'>The sarcophagus reignites with ancient fire, ready to birth another dwarf!</span>")
+		var/turf/T = get_turf(src)
+		T.visible_message("<span class='notice'>The sarcophagus reignites with ancient fire, ready to birth another dwarf!</span>")
 		new  /obj/effect/mob_spawn/human/dwarven_sarcophagus(get_turf(src))
 		qdel(src)
 	else
@@ -166,9 +166,9 @@
 		to_chat(user, "<span class='notice'>The machine makes a loud crank sound, but no alloy falls out!</span>")
 		materials.retrieve_all(get_turf(src))
 		return
-	var/amount = min(materials.materials[/datum/material/gold],materials.materials[/datum/material/silver],materials.materials[/datum/material/titanium])
-	materials.use_materials(list(/datum/material/gold= amount, /datum/material/silver = amount, /datum/material/titanium = amount))
-	materials.insert_amount_mat(materials.sheet2amount(amount),/datum/material/dwarven)
+	var/amount = min(materials.get_material_amount(/datum/material/gold),materials.get_material_amount(/datum/material/silver),materials.get_material_amount(/datum/material/titanium))
+	materials.use_materials(list(/datum/material/gold = amount, /datum/material/silver = amount, /datum/material/titanium = amount))
+	materials.insert_amount_mat(amount,/datum/material/dwarven)
 	materials.retrieve_all(get_turf(src))
 	to_chat(user, "<span class='notice'>You hear a loud crank as materials are compressed into dwarven alloy!</span>")
 	return

@@ -465,7 +465,7 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 
 /obj/item/stack/sheet/mineral/dwarven
 	name = "dwarven alloy"
-	icon_state = "sheet-mythril"
+	icon_state = "sheet-dwarven"
 	item_state = "sheet-dwarven"
 	singular_name = "dwarven alloy sheet"
 	novariants = TRUE
