@@ -148,7 +148,10 @@
 		return //same level or we just started earning xp towards the first level.
 	if(silent)
 		return
-	S.level_changed(src, known_skills[S], old_level)
+	if(known_skills[S] >= old_level)
+		S.level_gained(src, known_skills[S], old_level)
+	else
+		S.level_lost(src, known_skills[S], old_level)
 
 ///Gets the skill's singleton and returns the result of its get_skill_modifier
 /datum/mind/proc/get_skill_modifier(skill, modifier)

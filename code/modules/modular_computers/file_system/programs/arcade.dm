@@ -101,7 +101,8 @@
 	if(computer)
 		printer = computer.all_components[MC_PRINT]
 
-	var/gamerSkill = user.mind.get_skill_level(/datum/skill/gaming)
+	var/gamerSkillLevel = user.mind.get_skill_level(/datum/skill/gaming)
+	var/gamerSkill = usr.mind.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
 	switch(action)
 		if("Attack")
 			var/attackamt = 0 //Spam prevention.
@@ -121,7 +122,7 @@
 			if(pause_state == FALSE)
 				healamt = rand(6,8) + rand(0, gamerSkill)
 				var/maxPointCost = 3
-				if(gamerSkill >= SKILL_LEVEL_JOURNEYMAN)
+				if(gamerSkillLevel >= SKILL_LEVEL_JOURNEYMAN)
 					maxPointCost = 2
 				healcost = rand(1, maxPointCost)
 			pause_state = TRUE

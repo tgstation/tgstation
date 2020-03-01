@@ -81,7 +81,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(user.mind.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && HAS_TRAIT(user, GAMER_GOD))
 		visible_message("<span class='notice'>[user] inputs an intense cheat code! [src] beeps, \"CODE ACTIVE: EXTRA PRIZE.\"</span>",\
 		 "<span class='notice'>You hear thousands of buttons being pressed, followed by a robotic voice saying \"CODE ACTIVE: EXTRA PRIZE.\".</span>")
-		prizes++
+		prizes *= 2
 	for(var/i = 0, i < prizes, i++)
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
 		if(prob(0.0001)) //1 in a million
@@ -211,7 +211,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		return
 
 	if (!blocked && !gameover)
-		var/gamerSkill = usr.mind.get_skill_level(/datum/skill/gaming)
+		var/gamerSkillLevel = usr.mind.get_skill_level(/datum/skill/gaming)
+		var/gamerSkill = usr.mind.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
 		if (href_list["attack"])
 			blocked = TRUE
 			var/attackamt = rand(2,6) + rand(0, gamerSkill)
@@ -229,7 +230,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		else if (href_list["heal"])
 			blocked = TRUE
 			var/maxPointCost = 3
-			if(gamerSkill >= SKILL_LEVEL_JOURNEYMAN)
+			if(gamerSkillLevel >= SKILL_LEVEL_JOURNEYMAN)
 				maxPointCost = 2
 			var/pointamt = rand(1, maxPointCost)
 			var/healamt = rand(6,8) + rand(0, gamerSkill)
@@ -609,7 +610,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		return
 	busy = TRUE
 
-	var/gamerSkill = usr.mind.get_skill_level(/datum/skill/gaming)
+	var/gamerSkillLevel = usr.mind.get_skill_level(/datum/skill/gaming)
+	var/gamerSkill = usr.mind.get_skill_modifier(/datum/skill/gaming, SKILL_PROBS_MODIFIER)
+	var/gamerSkillRands = usr.mind.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
 	var/xp_gained = 0
 	if (href_list["continue"]) //Continue your travels
 		if(gameStatus == ORION_STATUS_NORMAL && !event && turns != 7)
@@ -619,13 +622,13 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			else
 				food -= (alive+lings_aboard)*2
 				fuel -= 5
-				if(turns == 2 && prob(30-(gamerSkill*3)))
+				if(turns == 2 && prob(30-gamerSkill))
 					event = ORION_TRAIL_COLLISION
 					event()
-				else if(prob(75-(gamerSkill*3)))
+				else if(prob(75-gamerSkill))
 					event = pickweight(events)
 					if(lings_aboard)
-						if(event == ORION_TRAIL_LING || prob(55-(gamerSkill*3)))
+						if(event == ORION_TRAIL_LING || prob(55-gamerSkill))
 							event = ORION_TRAIL_LING_ATTACK
 					event()
 				turns += 1
@@ -633,7 +636,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				var/mob/living/carbon/M = usr //for some vars
 				switch(event)
 					if(ORION_TRAIL_RAIDERS)
-						if(prob(50-(gamerSkill*3)))
+						if(prob(50-gamerSkill))
 							to_chat(usr, "<span class='userdanger'>You hear battle shouts. The tramping of boots on cold metal. Screams of agony. The rush of venting air. Are you going insane?</span>")
 							M.hallucination += 30
 						else
@@ -642,7 +645,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 							playsound(loc, 'sound/weapons/genhit2.ogg', 100, TRUE)
 					if(ORION_TRAIL_ILLNESS)
 						var/maxSeverity = 3
-						if(gamerSkill >= SKILL_LEVEL_EXPERT)
+						if(gamerSkillLevel >= SKILL_LEVEL_EXPERT)
 							maxSeverity = 2 //part of gitting gud is rng mitigation
 						var/severity = rand(1,maxSeverity) //pray to RNGesus. PRAY, PIGS
 						if(severity == 1)
@@ -656,7 +659,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 							sleep(30)
 							M.vomit(10, distance = 5)
 					if(ORION_TRAIL_FLUX)
-						if(prob(75-(gamerSkill*3)))
+						if(prob(75-gamerSkill))
 							M.Paralyze(60)
 							say("A sudden gust of powerful wind slams [M] into the floor!")
 							M.take_bodypart_damage(25)
@@ -664,7 +667,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 						else
 							to_chat(M, "<span class='userdanger'>A violent gale blows past you, and you barely manage to stay standing!</span>")
 					if(ORION_TRAIL_COLLISION) //by far the most damaging event
-						if(prob(90-(gamerSkill*3)))
+						if(prob(90-gamerSkill))
 							playsound(loc, 'sound/effects/bang.ogg', 100, TRUE)
 							var/turf/open/floor/F
 							for(F in orange(1, src))
@@ -747,7 +750,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				event = null
 	else if(href_list["blackhole"]) //keep speed past a black hole
 		if(turns == 7)
-			if(prob(75-(gamerSkill*3)))
+			if(prob(75-gamerSkill))
 				event = ORION_TRAIL_BLACKHOLE
 				event()
 				if(obj_flags & EMAGGED)
@@ -828,14 +831,14 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	else if(href_list["raid_spaceport"])
 		if(gameStatus == ORION_STATUS_MARKET)
 			if(!spaceport_raided)
-				var/success = min(15 * alive + (gamerSkill*3),100) //default crew (4) have a 60% chance
+				var/success = min(15 * alive + gamerSkill,100) //default crew (4) have a 60% chance
 				spaceport_raided = 1
 
 				var/FU = 0
 				var/FO = 0
 				if(prob(success))
-					FU = rand(5 + gamerSkill,15 + gamerSkill)
-					FO = rand(5 + gamerSkill,15 + gamerSkill)
+					FU = rand(5 + gamerSkillRands,15 + gamerSkillRands)
+					FO = rand(5 + gamerSkillRands,15 + gamerSkillRands)
 					last_spaceport_action = "You successfully raided the spaceport! You gained [FU] Fuel and [FO] Food! (+[FU]FU,+[FO]FO)"
 					xp_gained += 10
 				else
