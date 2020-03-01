@@ -128,7 +128,10 @@
 
 	var/list/ownedSoullinks //soullinks we are the owner of
 	var/list/sharedSoullinks //soullinks we are a/the sharer of
-
+	
+	/// List of changes to body temperature, used by desease symtoms like fever
+	var/list/body_temp_changes = list()
+	
 	//this stuff is here to make it simple for admins to mess with custom held sprites
 	var/icon/held_lh = 'icons/mob/pets_held_lh.dmi'//icons for holding mobs
 	var/icon/held_rh = 'icons/mob/pets_held_rh.dmi'
