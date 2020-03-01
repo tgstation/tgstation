@@ -1,0 +1,11 @@
+author: "NecromancerAnne"
+delete-after: True
+changes: 
+  - tweak: "Completely reworked Sleeping Carp"
+  - balance: "Sleeping Carp now costs 15TC."
+  - balance: "Sleeping Carp users are really goddamn durable."
+  - balance: "Sleeping Carp users have less moves but shorter combos and more ultraviolence."
+  - balance: "Carp faction. Space walking-lite."
+  - balance: "Sleeping Carp users need to be in throw mode to deflect ranged attacks."
+  - balance: "Sleeping Carp users are immune to objects that puncture the skin."
+  - balance: "Stun batons are now apply_damage instead of applyStaminaLoss. This might change some things."
