@@ -709,6 +709,29 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Medbay Treatment Center"
 	icon_state = "exam_room"
 
+/area/medical/paramedic
+	name = "Paramedic Dispatch"
+	icon_state = "medbay2"
+
+/area/medical/office
+	name = "Medical Office"
+	icon_state = "medoffice"
+
+/area/medical/surgery/room_c
+	name = "Surgery C"
+	icon_state = "surgery"
+
+/area/medical/surgery/room_d
+	name = "Surgery D"
+	icon_state = "surgery"
+
+/area/medical/break_room
+	name = "Medical Break Room"
+	icon_state = "medbay2"
+
+/area/medical/coldroom
+	name = "Medical Cold Room"
+	icon_state = "kitchen_cold"
 
 //Security
 
