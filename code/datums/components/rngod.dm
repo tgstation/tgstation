@@ -17,12 +17,10 @@
   */
 /datum/component/rngod
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-
 	/// when did we last bless someone?
 	var/lastBless
 	/// when did we last curse someone?
 	var/lastCurse
-
 	/// how long do we have to wait between bless attempts?
 	var/blessCooldown = 60 SECONDS
 	/// how long do we have to wait between curse attempts?
@@ -30,6 +28,7 @@
 
 
 /datum/component/rngod/Initialize()
+
 
 /datum/component/rngod/Destroy(force, silent)
 	return ..()
@@ -50,8 +49,7 @@
 		if(!target)
 			target = pick(viewers(parent)) || parent // if we can't curse anyone else, at least we can curse ourself!
 
-		if(target.mind && target.mind.fate)
-			target.mind.fate.curse(parent, 10)
+		target.add_fate(-10)
 
 	else if(findtext(message, "bless") && world.time > lastBless + blessCooldown)
 		lastBless = world.time // even if we don't get someone, still charge the card
@@ -62,8 +60,8 @@
 		if(target == parent) // in case we tried explicitly naming ourself
 			return
 
-		if(target && target.mind && target.mind.fate) // check if there's a target again in case we couldn't find someone in our random nearby person check
-			target.mind.fate.bless(parent, 10)
+		if(target) // check if there's a target again in case we couldn't find someone in our random nearby person check
+			target.add_fate(10)
 
 /**
   * Find a mob in view and a specified radius based on the words in our message. If we name someone specifically along with our bless/curse word, they'll be who we return.
@@ -81,7 +79,7 @@
 
 	for(var/mob/M in view(radius, parent)) // look through all the mobs nearby
 		var/list/nameWords = list()
-		if(!M.mind || !M.mind.fate)
+		if(!M.mind)
 			continue
 
 		for(var/string in splittext(lowertext(M.real_name), " "))

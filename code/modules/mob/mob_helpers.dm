@@ -555,3 +555,17 @@
 ///Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()
 	return stat == DEAD || has_unlimited_silicon_privilege //Dead guys and silicons can always see reagents
+
+///Central proc to interface with applying modifiers stored in the fate component
+/mob/proc/apply_fate(roll)
+	roll = SEND_SIGNAL(src, COMSIG_FATE_CHECK, roll) || roll
+	return roll
+
+///Queue a new fate modifier
+/mob/proc/add_fate(mod)
+	SEND_SIGNAL(src, COMSIG_FATE_ADD, mod)
+
+///Reset the mob's fate queue
+/mob/proc/reset_fate(roll)
+	SEND_SIGNAL(src, COMSIG_FATE_RESET)
+

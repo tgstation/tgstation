@@ -315,6 +315,11 @@
 // /obj/mecha signals
 #define COMSIG_MECHA_ACTION_ACTIVATE "mecha_action_activate"	//sent from mecha action buttons to the mecha they're linked to
 
+// fate
+#define COMSIG_FATE_CHECK "fate_check"	// from /mob/apply_fate(roll), applies the next queued modifier to your roll if one exists
+#define COMSIG_FATE_ADD "fate_add"	// from /mob/add_fate(mod), adds the passed modifier to the mob's fate queue
+#define COMSIG_FATE_RESET "fate_reset"	// from /mob/reset_fate(), resets the mob's fate queue to empty
+
 // /mob/living/carbon/human signals
 #define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"			//from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"			//from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)

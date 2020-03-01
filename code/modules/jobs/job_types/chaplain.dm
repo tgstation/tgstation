@@ -24,7 +24,7 @@
 	if(H.mind)
 		H.mind.isholy = TRUE
 
-	AddComponent(/datum/component/rngod)
+	H.AddComponent(/datum/component/rngod)
 
 	var/obj/item/storage/book/bible/booze/B = new
 
