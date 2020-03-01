@@ -1,0 +1,4 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - bugfix: "Decreased the size of bubblegum boxes so that they correctly fit in pockets"

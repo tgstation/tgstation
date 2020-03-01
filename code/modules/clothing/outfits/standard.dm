@@ -371,6 +371,8 @@
 	uniform = /obj/item/clothing/under/plasmaman
 	r_hand= /obj/item/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
+	gloves = /obj/item/clothing/gloves/color/plasmaman
+
 
 /datum/outfit/centcom/death_commando
 	name = "Death Commando"

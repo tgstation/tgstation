@@ -460,6 +460,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Library Lounge"
 	icon_state = "library"
 
+/area/library/artgallery
+	name = " Art Gallery"
+	icon_state = "library"
+
 /area/library/private
 	name = "Library Private Study"
 	icon_state = "library"

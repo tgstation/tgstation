@@ -124,3 +124,6 @@
 
 // misc
 #define VV_HK_SPACEVINE_PURGE "spacevine_purge"
+
+// paintings
+#define VV_HK_REMOVE_PAINTING "remove_painting"

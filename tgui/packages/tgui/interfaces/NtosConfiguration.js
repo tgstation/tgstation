@@ -23,7 +23,7 @@ export const NtosConfiguration = props => {
             inline
             bold
             mr={1}>
-          Power Draw: {power_usage}W
+            Power Draw: {power_usage}W
           </Box>
         )}>
         <LabeledList>

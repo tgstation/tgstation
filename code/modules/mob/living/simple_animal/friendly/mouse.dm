@@ -28,6 +28,8 @@
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/chew_probability = 1
+	can_be_held = TRUE
+	held_state = "mouse_gray"
 
 /mob/living/simple_animal/mouse/Initialize()
 	. = ..()
@@ -99,6 +101,7 @@
 /mob/living/simple_animal/mouse/white
 	body_color = "white"
 	icon_state = "mouse_white"
+	held_state = "mouse_white"
 
 /mob/living/simple_animal/mouse/gray
 	body_color = "gray"
@@ -107,6 +110,7 @@
 /mob/living/simple_animal/mouse/brown
 	body_color = "brown"
 	icon_state = "mouse_brown"
+	held_state = "mouse_brown"
 
 /mob/living/simple_animal/mouse/Destroy()
 	SSmobs.cheeserats -= src

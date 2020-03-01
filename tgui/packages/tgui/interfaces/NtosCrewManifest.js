@@ -34,7 +34,7 @@ export const NtosCrewManifest = props => {
                   {entry.name}
                 </Table.Cell>
                 <Table.Cell>
-              ({entry.rank})
+                  ({entry.rank})
                 </Table.Cell>
               </Table.Row>
             ))}

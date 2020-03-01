@@ -448,7 +448,7 @@
 	force_wielded = 18
 	throwforce = 20
 	throw_speed = 4
-	embedding = list("embedded_impact_pain_multiplier" = 3)
+	embedding = list("impact_pain_mult" = 3)
 	armour_penetration = 10
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -490,8 +490,8 @@
 /obj/item/twohanded/spear/explosive/Initialize(mapload)
 	. = ..()
 	set_explosive(new /obj/item/grenade/iedcasing()) //For admin-spawned explosive lances
-	
-	
+
+
 /obj/item/twohanded/spear/explosive/proc/set_explosive(obj/item/grenade/G)
 	if(explosive)
 		QDEL_NULL(explosive)
@@ -896,7 +896,10 @@
 		if (isturf(A))
 			target = A
 		else
-			target = A.loc
+			if (isturf(A.loc))
+				target = A.loc
+			else
+				return
 	else
 		target = user.loc
 	if (locate(/obj/structure/table) in target.contents)

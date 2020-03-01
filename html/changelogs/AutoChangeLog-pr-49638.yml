@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "Fixed Zombie Powder sometimes stunning people permanently."

@@ -45,7 +45,7 @@
 
 	///vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays
 	var/list/managed_vis_overlays
-	///overlays managed by update_overlays() to prevent removing overlays that weren't added by the same proc
+	///overlays managed by [update_overlays][/atom/proc/update_overlays] to prevent removing overlays that weren't added by the same proc
 	var/list/managed_overlays
 
 	///Proximity monitor associated with this atom
@@ -85,8 +85,8 @@
   * Called when an atom is created in byond (built in engine proc)
   *
   * Not a lot happens here in SS13 code, as we offload most of the work to the
-  * [Intialization](atom.html#proc/Initialize) proc, mostly we run the preloader
-  * if the preloader is being used and then call InitAtom of which the ultimate
+  * [Intialization][/atom/proc/Initialize] proc, mostly we run the preloader
+  * if the preloader is being used and then call [InitAtom][/datum/controller/subsystem/atoms/proc/InitAtom] of which the ultimate
   * result is that the Intialize proc is called.
   *
   * We also generate a tag here if the DF_USE_TAG flag is set on the atom
@@ -134,11 +134,11 @@
   * Any parameters from new are passed through (excluding loc), naturally if you're loading from a map
   * there are no other arguments
   *
-  * Must return an [initialization hint](code/__DEFINES/subsystems.html) or a runtime will occur.
+  * Must return an [initialization hint][INITIALIZE_HINT_NORMAL] or a runtime will occur.
   *
   * Note: the following functions don't call the base for optimization and must copypasta handling:
-  * * /turf/Initialize
-  * * /turf/open/space/Initialize
+  * * [/turf/Initialize]
+  * * [/turf/open/space/Initialize]
   */
 /atom/proc/Initialize(mapload, ...)
 	if(flags_1 & INITIALIZED_1)
@@ -173,10 +173,9 @@
 /**
   * Late Intialization, for code that should run after all atoms have run Intialization
   *
-  * To have your LateIntialize proc be called, your atoms [Initalization](atom.html#proc/Initialize)
+  * To have your LateIntialize proc be called, your atoms [Initalization][/atom/proc/Initialize]
   *  proc must return the hint
-  * [INITIALIZE_HINT_LATELOAD](code/__DEFINES/subsystems.html#define/INITIALIZE_HINT_LATELOAD)
-  * otherwise you will never be called.
+  * [INITIALIZE_HINT_LATELOAD] otherwise you will never be called.
   *
   * useful for doing things like finding other machines on GLOB.machines because you can guarantee
   * that all atoms will actually exist in the "WORLD" at this time and that all their Intialization
@@ -185,7 +184,7 @@
 /atom/proc/LateInitialize()
 	set waitfor = FALSE
 
-/// Put your AddComponent() calls here
+/// Put your [AddComponent] calls here
 /atom/proc/ComponentInitialize()
 	return
 
@@ -337,7 +336,7 @@
 				reagents = new()
 			reagents.reagent_list.Add(A)
 			reagents.conditional_update()
-		else if(ismovableatom(A))
+		else if(ismovable(A))
 			var/atom/movable/M = A
 			if(isliving(M.loc))
 				var/mob/living/L = M.loc
@@ -411,10 +410,10 @@
 /**
   * React to an EMP of the given severity
   *
-  * Default behaviour is to send the COMSIG_ATOM_EMP_ACT signal
+  * Default behaviour is to send the [COMSIG_ATOM_EMP_ACT] signal
   *
   * If the signal does not return protection, and there are attached wires then we call
-  * emp_pulse() on the wires
+  * [emp_pulse][/datum/wires/proc/emp_pulse] on the wires
   *
   * We then return the protection value
   */
@@ -427,7 +426,7 @@
 /**
   * React to a hit by a projectile object
   *
-  * Default behaviour is to send the COMSIG_ATOM_BULLET_ACT and then call on_hit() on the projectile
+  * Default behaviour is to send the [COMSIG_ATOM_BULLET_ACT] and then call [on_hit][/obj/projectile/proc/on_hit] on the projectile
   */
 /atom/proc/bullet_act(obj/projectile/P, def_zone)
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone)
@@ -446,7 +445,7 @@
   * Get the name of this object for examine
   *
   * You can override what is returned from this proc by registering to listen for the
-  * COMSIG_ATOM_GET_EXAMINE_NAME signal
+  * [COMSIG_ATOM_GET_EXAMINE_NAME] signal
   */
 /atom/proc/get_examine_name(mob/user)
 	. = "\a [src]"
@@ -465,9 +464,9 @@
   * Called when a mob examines (shift click or verb) this atom
   *
   * Default behaviour is to get the name and icon of the object and it's reagents where
-  * the TRANSPARENT flag is set on the reagents holder
+  * the [TRANSPARENT] flag is set on the reagents holder
   *
-  * Produces a signal COMSIG_PARENT_EXAMINE
+  * Produces a signal [COMSIG_PARENT_EXAMINE]
   */
 /atom/proc/examine(mob/user)
 	. = list("[get_examine_string(user, TRUE)].")
@@ -537,7 +536,7 @@
   * An atom we are buckled or is contained within us has tried to move
   *
   * Default behaviour is to send a warning that the user can't move while buckled as long
-  * as the buckle_message_cooldown has expired (50 ticks)
+  * as the [buckle_message_cooldown][/atom/var/buckle_message_cooldown] has expired (50 ticks)
   */
 /atom/proc/relaymove(mob/user)
 	if(buckle_message_cooldown <= world.time)
@@ -552,7 +551,7 @@
 /**
   * React to being hit by an explosion
   *
-  * Default behaviour is to call contents_explosion() and send the COMSIG_ATOM_EX_ACT signal
+  * Default behaviour is to call [contents_explosion][/atom/proc/contents_explosion] and send the [COMSIG_ATOM_EX_ACT] signal
   */
 /atom/proc/ex_act(severity, target)
 	set waitfor = FALSE
@@ -562,7 +561,7 @@
 /**
   * React to a hit by a blob objecd
   *
-  * default behaviour is to send the COMSIG_ATOM_BLOB_ACT signal
+  * default behaviour is to send the [COMSIG_ATOM_BLOB_ACT] signal
   */
 /atom/proc/blob_act(obj/structure/blob/B)
 	SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)
@@ -575,7 +574,7 @@
 /**
   * React to being hit by a thrown object
   *
-  * Default behaviour is to call hitby_react() on ourselves after 2 seconds if we are dense
+  * Default behaviour is to call [hitby_react][/atom/proc/hitby_react] on ourselves after 2 seconds if we are dense
   * and under normal gravity.
   *
   * Im not sure why this the case, maybe to prevent lots of hitby's if the thrown object is
@@ -659,7 +658,7 @@
 /**
   * Respond to the singularity pulling on us
   *
-  * Default behaviour is to send COMSIG_ATOM_SING_PULL and return
+  * Default behaviour is to send [COMSIG_ATOM_SING_PULL] and return
   */
 /atom/proc/singularity_pull(obj/singularity/S, current_size)
 	SEND_SIGNAL(src, COMSIG_ATOM_SING_PULL, S, current_size)
@@ -668,7 +667,7 @@
 /**
   * Respond to acid being used on our atom
   *
-  * Default behaviour is to send COMSIG_ATOM_ACID_ACT and return
+  * Default behaviour is to send [COMSIG_ATOM_ACID_ACT] and return
   */
 /atom/proc/acid_act(acidpwr, acid_volume)
 	SEND_SIGNAL(src, COMSIG_ATOM_ACID_ACT, acidpwr, acid_volume)
@@ -676,7 +675,7 @@
 /**
   * Respond to an emag being used on our atom
   *
-  * Default behaviour is to send COMSIG_ATOM_EMAG_ACT and return
+  * Default behaviour is to send [COMSIG_ATOM_EMAG_ACT] and return
   */
 /atom/proc/emag_act(mob/user)
 	SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT, user)
@@ -684,7 +683,7 @@
 /**
   * Respond to a radioactive wave hitting this atom
   *
-  * Default behaviour is to send COMSIG_ATOM_RAD_ACT and return
+  * Default behaviour is to send [COMSIG_ATOM_RAD_ACT] and return
   */
 /atom/proc/rad_act(strength)
 	SEND_SIGNAL(src, COMSIG_ATOM_RAD_ACT, strength)
@@ -692,7 +691,7 @@
 /**
   * Respond to narsie eating our atom
   *
-  * Default behaviour is to send COMSIG_ATOM_NARSIE_ACT and return
+  * Default behaviour is to send [COMSIG_ATOM_NARSIE_ACT] and return
   */
 /atom/proc/narsie_act()
 	SEND_SIGNAL(src, COMSIG_ATOM_NARSIE_ACT)
@@ -706,7 +705,7 @@
 /**
   * Respond to an RCD acting on our item
   *
-  * Default behaviour is to send COMSIG_ATOM_RCD_ACT and return FALSE
+  * Default behaviour is to send [COMSIG_ATOM_RCD_ACT] and return FALSE
   */
 /atom/proc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	SEND_SIGNAL(src, COMSIG_ATOM_RCD_ACT, user, the_rcd, passed_mode)
@@ -755,9 +754,9 @@
 	return null
 
 /**
-  * This proc is called when an atom in our contents has it's Destroy() called
+  * This proc is called when an atom in our contents has it's [Destroy][/atom/Destroy] called
   *
-  * Default behaviour is to simply send COMSIG_ATOM_CONTENTS_DEL
+  * Default behaviour is to simply send [COMSIG_ATOM_CONTENTS_DEL]
   */
 /atom/proc/handle_atom_del(atom/A)
 	SEND_SIGNAL(src, COMSIG_ATOM_CONTENTS_DEL, A)
@@ -792,7 +791,7 @@
 /**
   * Hook for running code when a dir change occurs
   *
-  * Not recommended to use, listen for the COMSIG_ATOM_DIR_CHANGE signal instead (sent by this proc)
+  * Not recommended to use, listen for the [COMSIG_ATOM_DIR_CHANGE] signal instead (sent by this proc)
   */
 /atom/proc/setDir(newdir)
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
@@ -862,6 +861,22 @@
 			color = C
 			return
 
+
+///Proc for being washed by a shower
+/atom/proc/washed(var/atom/washer)
+	. = SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+	remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+
+	var/datum/component/radioactive/healthy_green_glow = GetComponent(/datum/component/radioactive)
+	if(!healthy_green_glow || QDELETED(healthy_green_glow))
+		return
+	var/strength = healthy_green_glow.strength
+	if(strength <= RAD_BACKGROUND_RADIATION)
+		qdel(healthy_green_glow)
+		return
+	healthy_green_glow.strength -= max(0, (healthy_green_glow.strength - (RAD_BACKGROUND_RADIATION * 2)) * 0.2)
+
+
 /**
   * call back when a var is edited on this atom
   *
@@ -870,7 +885,7 @@
   * At the atom level, if you edit a var named "color" it will add the atom colour with
   * admin level priority to the atom colours list
   *
-  * Also, if GLOB.Debug2 is FALSE, it sets the ADMIN_SPAWNED_1 flag on flags_1, which signifies
+  * Also, if GLOB.Debug2 is FALSE, it sets the [ADMIN_SPAWNED_1] flag on [flags_1][/atom/var/flags_1], which signifies
   * the object has been admin edited
   */
 /atom/vv_edit_var(var_name, var_value)
@@ -889,7 +904,7 @@
 /atom/vv_get_dropdown()
 	. = ..()
 	VV_DROPDOWN_OPTION("", "---------")
-	if(!ismovableatom(src))
+	if(!ismovable(src))
 		var/turf/curturf = get_turf(src)
 		if(curturf)
 			. += "<option value='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]'>Jump To</option>"
@@ -979,7 +994,7 @@
 /**
   * An atom has entered this atom's contents
   *
-  * Default behaviour is to send the COMSIG_ATOM_ENTERED
+  * Default behaviour is to send the [COMSIG_ATOM_ENTERED]
   */
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
@@ -987,7 +1002,7 @@
 /**
   * An atom is attempting to exit this atom's contents
   *
-  * Default behaviour is to send the COMSIG_ATOM_EXIT
+  * Default behaviour is to send the [COMSIG_ATOM_EXIT]
   *
   * Return value should be set to FALSE if the moving atom is unable to leave,
   * otherwise leave value the result of the parent call
@@ -1000,7 +1015,7 @@
 /**
   * An atom has exited this atom's contents
   *
-  * Default behaviour is to send the COMSIG_ATOM_EXITED
+  * Default behaviour is to send the [COMSIG_ATOM_EXITED]
   */
 /atom/Exited(atom/movable/AM, atom/newLoc)
 	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, AM, newLoc)
@@ -1146,11 +1161,12 @@
 /**
   * Log a combat message in the attack log
   *
-  * 1 argument is the actor performing the action
-  * 2 argument is the target of the action
-  * 3 is a verb describing the action (e.g. punched, throwed, kicked, etc.)
-  * 4 is a tool with which the action was made (usually an item)
-  * 5 is any additional text, which will be appended to the rest of the log line
+  * Arguments:
+  * * atom/user - argument is the actor performing the action
+  * * atom/target - argument is the target of the action
+  * * what_done - is a verb describing the action (e.g. punched, throwed, kicked, etc.)
+  * * atom/object - is a tool with which the action was made (usually an item)
+  * * addition - is any additional text, which will be appended to the rest of the log line
   */
 /proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null)
 	var/ssource = key_name(user)
@@ -1224,7 +1240,7 @@
 /**
   * Returns true if this atom has gravity for the passed in turf
   *
-  * Sends signals COMSIG_ATOM_HAS_GRAVITY and COMSIG_TURF_HAS_GRAVITY, both can force gravity with
+  * Sends signals [COMSIG_ATOM_HAS_GRAVITY] and [COMSIG_TURF_HAS_GRAVITY], both can force gravity with
   * the forced gravity var
   *
   * Gravity situations:
