@@ -77,3 +77,9 @@
 	description = "Mystery to be solved."
 	suffix = "icemoon_underground_puzzle.dmm"
 
+/datum/map_template/ruin/icemoon/underground/bathhouse
+	name = "Bath House"
+	id = "bathhouse"
+	description = "A taste of paradise, locked in the hell of the Ice Moon."
+	suffix = "icemoon_underground_bathhouse.dmm"
+

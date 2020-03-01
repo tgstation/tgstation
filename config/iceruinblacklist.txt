@@ -14,3 +14,4 @@
 #_maps/RandomRuins/IceRuins/icemoon_underground_library.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_wrath.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_lavaland.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_bathhouse.dmm
