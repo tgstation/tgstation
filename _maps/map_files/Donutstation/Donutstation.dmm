@@ -12422,8 +12422,13 @@
 /turf/closed/wall,
 /area/medical/chemistry)
 "aHY" = (
-/obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "chemistryshutter";
+	name = "Pharmacy Privacy Shutters"
+	},
+/obj/machinery/vending/custom,
+/turf/open/floor/plating,
 /area/medical/pharmacy)
 "aHZ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
@@ -13977,9 +13982,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aMn" = (
-/obj/structure/chair{
-	dir = 8
-	},
+/obj/machinery/vending/custom,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aMo" = (
@@ -42450,6 +42453,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
+"fTw" = (
+/obj/machinery/vending/custom,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "fTO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
@@ -87526,7 +87534,7 @@ bEj
 bEt
 bAo
 bAo
-bFi
+fTw
 bzh
 bIv
 bAo
