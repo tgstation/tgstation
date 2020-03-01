@@ -711,7 +711,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/medical/office
 	name = "Medical Office"
-	icon_state = "vacant_office"
+	icon_state = "medoffice"
 
 /area/medical/surgery/room_c
 	name = "Surgery C"
