@@ -490,8 +490,8 @@
 /obj/item/twohanded/spear/explosive/Initialize(mapload)
 	. = ..()
 	set_explosive(new /obj/item/grenade/iedcasing()) //For admin-spawned explosive lances
-	
-	
+
+
 /obj/item/twohanded/spear/explosive/proc/set_explosive(obj/item/grenade/G)
 	if(explosive)
 		QDEL_NULL(explosive)
@@ -896,7 +896,10 @@
 		if (isturf(A))
 			target = A
 		else
-			target = A.loc
+			if (isturf(A.loc))
+				target = A.loc
+			else
+				return
 	else
 		target = user.loc
 	if (locate(/obj/structure/table) in target.contents)
