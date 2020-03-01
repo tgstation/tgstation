@@ -275,8 +275,13 @@
 			O.drop_limb(1)
 	attach_limb(C, special)
 
-/obj/item/bodypart/proc/attach_limb(mob/living/carbon/C, special)
+/obj/item/bodypart/proc/attach_limb(mob/living/carbon/C, special, abort = FALSE)
 	moveToNullspace()
+	SEND_SIGNAL(C, COMSIG_LIVING_ATTACHED_LIMB, C, special, abort, limb = src)
+	if(abort)//living rejected the attached limb, drop all this
+		forceMove(C.loc)
+		return FALSE
+	. = TRUE
 	owner = C
 	C.bodyparts += src
 	if(held_index)
@@ -312,7 +317,10 @@
 	C.update_mobility()
 
 
-/obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special)
+/obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special = FALSE, abort = FALSE)
+	. = ..()
+	if(!.)
+		return .
 	//Transfer some head appearance vars over
 	if(brain)
 		if(brainmob)
@@ -350,8 +358,11 @@
 			AP.Grant(C)
 			break
 
-	..()
-
+	C.updatehealth()
+	C.update_body()
+	C.update_hair()
+	C.update_damage_overlays()
+	C.update_mobility()
 
 //Regenerates all limbs. Returns amount of limbs regenerated
 /mob/living/proc/regenerate_limbs(noheal = FALSE, list/excluded_zones = list())
