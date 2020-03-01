@@ -1651,7 +1651,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			firemodifier = min(firemodifier, 0)
 
 		// this can go below 5 at log 2.5
-		burn_damage = max(log(2 - firemodifier, (H.bodytemperature - bodytemp_normal)) - 5,0)
+		burn_damage = max(log(2 - firemodifier, (H.bodytemperature - H.get_body_temp_normal())) - 5,0)
 
 		// Display alerts based on the amount of fire damage being taken
 		if (burn_damage)
@@ -1752,7 +1752,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/natural_bodytemperature_stabilization(datum/gas_mixture/environment, mob/living/carbon/human/H)
 	var/areatemp = H.get_temperature(environment)
 	var/body_temp = H.bodytemperature // Get current body temperature
-	var/body_temperature_difference = bodytemp_normal - body_temp
+	var/body_temperature_difference = H.get_body_temp_normal() - body_temp
 	var/natural_change = 0
 
 	// We are very cold, increate body temperature
@@ -1761,12 +1761,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			bodytemp_autorecovery_min)
 
 	// we are cold, reduce the minimum increment and do not jump over the difference
-	else if(body_temp > bodytemp_cold_damage_limit && body_temp < bodytemp_normal)
+	else if(body_temp > bodytemp_cold_damage_limit && body_temp < H.get_body_temp_normal())
 		natural_change = max(body_temperature_difference * H.metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
 			min(body_temperature_difference, bodytemp_autorecovery_min / 4))
 
 	// We are hot, reduce the minimum increment and do not jump below the difference
-	else if(body_temp > bodytemp_normal && body_temp <= bodytemp_heat_damage_limit)
+	else if(body_temp > H.get_body_temp_normal() && body_temp <= bodytemp_heat_damage_limit)
 		natural_change = min(body_temperature_difference * H.metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
 			max(body_temperature_difference, -(bodytemp_autorecovery_min / 4)))
 
@@ -1776,7 +1776,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/thermal_protection = H.get_insulation_protection(body_temp + natural_change)
 	if(areatemp > body_temp) // It is hot here
-		if(body_temp < bodytemp_normal)
+		if(body_temp < H.get_body_temp_normal())
 			// Our bodytemp is below normal we are cold, insulation helps us retain body heat
 			// and will reduce the heat we lose to the environment
 			natural_change = (thermal_protection + 1) * natural_change
@@ -1786,7 +1786,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			natural_change = (1 / (thermal_protection + 1)) * natural_change
 	else // It is cold here
 		if(!H.on_fire) // If on fire ignore ignore local temperature in cold areas
-			if(body_temp < bodytemp_normal)
+			if(body_temp < H.get_body_temp_normal())
 				// Our bodytemp is below normal, insulation helps us retain body heat
 				// and will reduce the heat we lose to the environment
 				natural_change = (thermal_protection + 1) * natural_change

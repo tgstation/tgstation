@@ -569,9 +569,9 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/stealthy_weapons/martialarts
 	name = "Martial Arts Scroll"
 	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat, \
-			deflecting all ranged weapon fire, but you also refuse to use dishonorable ranged weaponry."
+			gain skin as hard as steel and swat bullets from the air, but you also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/book/granter/martial/carp
-	cost = 17
+	cost = 15
 	surplus = 0
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
@@ -1368,6 +1368,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A modified flash able to hypnotize targets. If the target is not in a mentally vulnerable state, it will only confuse and pacify them temporarily."
 	item = /obj/item/assembly/flash/hypnotic
 	cost = 7
+
+/datum/uplink_item/device_tools/hypnotic_grenade
+	name = "Hypnotic Grenade"
+	desc = "A modified flashbang grenade able to hypnotize targets. The sound portion of the flashbang causes hallucinations, and will allow the flash to induce a hypnotic trance to viewers."
+	item = /obj/item/grenade/hypnotic
+	cost = 12
 
 /datum/uplink_item/device_tools/medgun
 	name = "Medbeam Gun"

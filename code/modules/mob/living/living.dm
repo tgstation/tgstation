@@ -580,7 +580,7 @@
 	losebreath = 0
 	radiation = 0
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
-	bodytemperature = BODYTEMP_NORMAL
+	bodytemperature = get_body_temp_normal(apply_change=FALSE)
 	set_blindness(0)
 	set_blurriness(0)
 	set_dizziness(0)
@@ -1285,18 +1285,19 @@
 	..()
 	update_z(new_z)
 
-/mob/living/MouseDrop(mob/over)
+/mob/living/MouseDrop_T(atom/dropping, atom/user)
+	var/mob/living/U = user
+	if(isliving(dropping))
+		var/mob/living/M = dropping
+		if(M.can_be_held && U.pulling == M)
+			M.mob_try_pickup(U)//blame kevinz
+			return//dont open the mobs inventory if you are picking them up
 	. = ..()
-	var/mob/living/user = usr
-	if(!istype(over) || !istype(user))
-		return
-	if(!over.Adjacent(src) || (user != src) || !canUseTopic(over))
-		return
-	if(can_be_held)
-		mob_try_pickup(over)
 
 /mob/living/proc/mob_pickup(mob/living/L)
-	return
+	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	L.visible_message("<span class='warning'>[L] scoops up [src]!</span>")
+	L.put_in_hands(holder)
 
 /mob/living/proc/set_name()
 	numba = rand(1, 1000)
@@ -1408,3 +1409,52 @@
 		var/ERROR_ERROR_LANDMARK_ERROR = "ERROR-ERROR: ERROR landmark missing!"
 		log_mapping(ERROR_ERROR_LANDMARK_ERROR)
 		CRASH(ERROR_ERROR_LANDMARK_ERROR)
+
+/**
+ * add_body_temperature_change Adds modifications to the body temperature
+ *
+ * This collects all body temperature changes that the mob is experiencing to the list body_temp_changes
+ * the aggrogate result is used to derive the new body temperature for the mob
+ *
+ * arguments:
+ * * key_name (str) The unique key for this change, if it already exist it will be overridden
+ * * amount (int) The amount of change from the base body temperature
+ */
+/mob/living/proc/add_body_temperature_change(key_name, amount)
+	body_temp_changes["[key_name]"] = amount
+
+/**
+ * remove_body_temperature_change Removes the modifications to the body temperature
+ *
+ * This removes the recorded change to body temperature from the body_temp_changes list
+ *
+ * arguments:
+ * * key_name (str) The unique key for this change that will be removed
+ */
+/mob/living/proc/remove_body_temperature_change(key_name)
+	body_temp_changes -= key_name
+
+/**
+ * get_body_temp_normal_change Returns the aggregate change to body temperature
+ *
+ * This aggregates all the changes in the body_temp_changes list and returns the result
+ */
+/mob/living/proc/get_body_temp_normal_change()
+	var/total_change = 0
+	if(body_temp_changes.len)
+		for(var/change in body_temp_changes)
+			total_change += body_temp_changes["[change]"]
+	return total_change
+
+/**
+ * get_body_temp_normal Returns the mobs normal body temperature with any modifications applied
+ *
+ * This applies the result from proc/get_body_temp_normal_change() against the BODYTEMP_NORMAL and returns the result
+ *
+ * arguments:
+ * * apply_change (optional) Default True This applies the changes to body temperature normal
+ */
+/mob/living/proc/get_body_temp_normal(apply_change=TRUE)
+	if(!apply_change)
+		return BODYTEMP_NORMAL
+	return BODYTEMP_NORMAL + get_body_temp_normal_change()

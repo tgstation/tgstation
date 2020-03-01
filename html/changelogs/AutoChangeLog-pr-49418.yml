@@ -1,7 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - rscadd: "Tank Transfer Valve now uses tgui."
-  - bugfix: "Fixed an issue where TTV assemblies could not be activated. Sorry gamers!"
-  - bugfix: "Fixed an issue where remote signaller would not close upon securing."
-  - bugfix: "Added sanity checks to proximity sensor and timer to prevent timers from being modified while assembly is active."

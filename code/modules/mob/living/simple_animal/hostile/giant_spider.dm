@@ -10,10 +10,13 @@
 
 /mob/living/simple_animal/hostile/poison/AttackingTarget()
 	. = ..()
-	if(. && isliving(target))
-		var/mob/living/L = target
-		if(L.reagents)
-			L.reagents.add_reagent(poison_type, poison_per_bite)
+	if(.)
+		inject_poison(target)
+
+/// Handles injecting the poison after successful attack
+/mob/living/simple_animal/hostile/poison/proc/inject_poison(mob/living/L)
+	if(poison_type && istype(L) && L.reagents)
+		L.reagents.add_reagent(poison_type, poison_per_bite)
 
 //basic spider mob, these generally guard nests
 /mob/living/simple_animal/hostile/poison/giant_spider
