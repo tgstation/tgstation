@@ -544,13 +544,14 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "trashbag"
 	list_reagents = list(/datum/reagent/consumable/prunomix = 50)
-	var/fermentation_time = 30 SECONDS
+	var/fermentation_time = 30 SECONDS // time between fermentation checks, see below
 
 /obj/item/reagent_containers/food/drinks/bottle/pruno/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/check_fermentation), fermentation_time)
 
-// Checks to see if the pruno can ferment, i.e. is it inside a structure (toilet), or a machine (washer)?
+// Checks to see if the pruno can ferment, i.e. is it inside a structure (e.g. toilet), or a machine (e.g. washer)?
+// if so, start countdown to ferment, if not, check again in fermentation_time seconds
 // TODO: make it so the washer spills reagents if a reagent container is in there, for now, you can wash pruno
 
 /obj/item/reagent_containers/food/drinks/bottle/pruno/proc/check_fermentation()
@@ -566,14 +567,14 @@
 		addtimer(CALLBACK(src, .proc/check_fermentation), fermentation_time)
 		return
 	reagents.remove_all(50)
-	if(prob(10))
+	if(prob(10)) // closest thing we have to botulism
 		reagents.add_reagent(/datum/reagent/toxin/bad_food, 15)
 		reagents.add_reagent(/datum/reagent/consumable/ethanol/pruno, 35)
 	else
 		reagents.add_reagent(/datum/reagent/consumable/ethanol/pruno, 50)
 	name = "bag of pruno"
 	desc = "Fermented prison wine made from fruit, sugar, and despair. You probably shouldn't drink this around Security."
-	icon_state = "trashbag1" // pruno releases air as it ferments
+	icon_state = "trashbag1" // pruno releases air as it ferments, we don't want to simulate this in atmos, but we can make it look like it did
 	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
 		to_chat(M, "<span class='info'>A pungent smell emanates from [src], like fruit puking out its guts.</span>")
 		playsound(get_turf(src), 'sound/effects/bubbles2.ogg', 25, TRUE)

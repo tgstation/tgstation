@@ -2218,5 +2218,5 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Fermented prison wine made from fruit, sugar, and despair. Security loves to confiscate this, which is the only kind thing Security has ever done."
 
 /datum/reagent/consumable/ethanol/pruno/on_mob_life(mob/living/carbon/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/verygross)
+	M.adjust_disgust(5)
 	..()
