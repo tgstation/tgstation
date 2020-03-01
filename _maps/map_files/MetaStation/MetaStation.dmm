@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <<<<<<< 0e4249c599dbc86d4ca9269a98c86334b4b45f0e
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
@@ -143836,6 +143837,8 @@ aaa
 aaa
 "}
 =======
+=======
+>>>>>>> venderbender
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
@@ -285596,4 +285599,7 @@ aaa
 aaa
 aaa
 "}
+<<<<<<< HEAD
 >>>>>>> Adds Vendies for your Tendies
+=======
+>>>>>>> venderbender
