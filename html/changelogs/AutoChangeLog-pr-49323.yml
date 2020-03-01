@@ -1,0 +1,6 @@
+author: "Dennok"
+delete-after: True
+changes: 
+  - bugfix: "on 513 Openspace dark no more covers all on openspace turf."
+  - bugfix: "on 513 You now can build on openspace that above openspace."
+  - bugfix: "on 513 While vis flags used and transfer obj icon to openspace plan that placed below all turfs, any things that out of turf bounds now shown correctly below."
