@@ -217,6 +217,8 @@
 		data = list("misc" = 1)
 	data["misc"]++
 	M.jitteriness = min(M.jitteriness+4,10)
+	if(M.mind && M.mind.fate)
+		M.mind.fate.clearQueue() // nothing like delicious holy water to free yourself of past baggage!
 	if(iscultist(M))
 		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
 			to_chat(M, "<span class='cultlarge'>Your blood rites falter as holy water scours your body!</span>")

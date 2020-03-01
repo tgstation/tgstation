@@ -12,7 +12,7 @@
   *	Currently blessing and jinxing only affects your rolls for hitting a vending machine and getting loot/killed, but if there's interest, rolls with degrees of success can be added
   *		in other places as well. It's something I'd like to do!
   *
-  * Arguments:
+  * Arguments: none. why, are we really gonna fight over this right now in front of our guests?
   * *
   */
 /datum/component/holy
@@ -43,32 +43,25 @@
 /datum/component/holy/proc/checkSpeech(mob/O, list/speech_args)
 	var/message = lowertext(speech_args[SPEECH_MESSAGE])
 	var/mob/target
-	testing("Message: [message]")
+
 	if(findtext(message, "damn") && world.time > lastCurse + curseCooldown)
 		target = findTarget(message)
 		if(!target)
-			target = pick(viewers(parent)) || parent
-			testing("No target found: cursing [target]")
-		else
-			testing("Target found: cursing [target]")
+			target = pick(viewers(parent)) || parent // if we can't curse anyone else, at least we can curse ourself!
+
 		if(target.mind && target.mind.fate)
 			target.mind.fate.curse(parent, 10)
-			testing("Cursed [target]")
 
 	else if(findtext(message, "bless") && world.time > lastBless + blessCooldown)
 		target = findTarget(message)
 		if(!target)
 			target = pick(oviewers(parent)) // can't bless yourself like you can damn yourself!
-			if(target)
-				testing("No target found: blessing [target]")
-			else
-				testing("No target found: no blessing")
-				return
-		else
-			testing("Target found: blessing [target]")
-		if(target.mind && target.mind.fate)
+
+		if(target == parent) // in case we tried explicitly naming ourself
+			return
+
+		if(target && target.mind && target.mind.fate) // check if there's a target again in case we couldn't find someone in our random nearby person check
 			target.mind.fate.bless(parent, 10)
-			testing("Blessed [target]")
 
 /datum/component/holy/proc/findTarget(msg, radius=3)
 	//explode the input msg into a list
@@ -78,7 +71,7 @@
 		var/list/nameWords = list()
 		//if(!M.mind || !M.mind.fate)
 			//continue
-			//indexing += M.mind.name
+
 		for(var/string in splittext(lowertext(M.real_name), " "))
 			nameWords += string
 		for(var/string in splittext(lowertext(M.name), " "))

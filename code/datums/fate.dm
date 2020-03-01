@@ -27,7 +27,6 @@
 /**
   * Here you can add a blessing to someone's fate queue, which will give them a plus modifier to whatever roll this ends up being called for
   *
-  *
   * Arguments:
   * * mob/caster: Who blessed us?
   * * amount: How much will we add to the roll this is called for?
@@ -38,7 +37,6 @@
 
 /**
   * Here you can add a blessing to someone's fate queue, which will give them a plus modifier to whatever roll this ends up being called for
-  *
   *
   * Arguments:
   * * mob/caster: Who cursed us?
@@ -51,8 +49,6 @@
 /**
   * Here you can add a blessing to someone's fate queue, which will give them a plus modifier to whatever roll this ends up being called for
   *
-  *
-  *
   * Arguments:
   * * mob/caster: Who blessed us?
   * * amount: How much will we add to the roll this is called for?
@@ -62,8 +58,13 @@
   */
 /datum/fate/proc/getModifier()
 	var/datum/modifier/M = queue[1]
-	testing("[M]: [M.getCaster()] | [M.getValue()]")
 	if(M)
 		queue.Remove(M)
 		return M
+
+/**
+  * Call this to clear this fate's queue
+  */
+/datum/fate/proc/clearQueue()
+	queue = list()
 
