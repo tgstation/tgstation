@@ -436,7 +436,7 @@ Contains:
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	cell = /obj/item/stock_parts/cell/hyper
 
-//We can either be alive monsters or dead monsters. You choose.
+//We can either be alive monsters or dead monsters, you choose.
 /obj/item/clothing/head/helmet/space/hardsuit/combatmedic
 	name = "endemic combat medic helmet"
 	desc = "The integrated helmet of the combat medic hardsuit, this has a bright, glowing facemask."
