@@ -3,15 +3,27 @@
 /datum/map_template/ruin/icemoon
 	prefix = "_maps/RandomRuins/IceRuins/"
 	allow_duplicates = FALSE
+	cost = 5
 
 // above ground only
 
-/datum/map_template/ruin/icemoon/puzzle
-	name = "Ancient Puzzle"
-	id = "puzzle"
-	description = "Mystery to be solved."
-	suffix = "icemoon_surface_puzzle.dmm"
-	cost = 5
+/datum/map_template/ruin/icemoon/lust
+	name = "Ruin of Lust"
+	id = "lust"
+	description = "Not exactly what you expected."
+	suffix = "icemoon_surface_lust.dmm"
+
+/datum/map_template/ruin/icemoon/asteroid
+	name = "Asteroid Site"
+	id = "asteroidsite"
+	description = "Surprised to see us here?"
+	suffix = "icemoon_surface_asteroid.dmm"
+
+/datum/map_template/ruin/icemoon/hotsprings
+	name = "Hot Springs"
+	id = "hotsprings"
+	description = "Just relax and take a dip, nothing will go wrong, I swear!"
+	suffix = "icemoon_surface_hotsprings.dmm"
 
 // above and below ground together
 
@@ -40,11 +52,28 @@
 	id = "abandonedvillage"
 	description = "Who knows what lies within?"
 	suffix = "icemoon_underground_abandoned_village.dmm"
-	cost = 5
 
 /datum/map_template/ruin/icemoon/underground/library
 	name = "Buried Library"
 	id = "buriedlibrary"
 	description = "A once grand library, now lost to the confines of the Ice Moon."
 	suffix = "icemoon_underground_library.dmm"
-	cost = 5
+
+/datum/map_template/ruin/icemoon/underground/wrath
+	name = "Ruin of Wrath"
+	id = "wrath"
+	description = "You'll fight and fight and just keep fighting."
+	suffix = "icemoon_underground_wrath.dmm"
+
+/datum/map_template/ruin/icemoon/underground/lavaland
+	name = "Lavaland Site"
+	id = "lavalandsite"
+	description = "I guess we never really left you huh?"
+	suffix = "icemoon_underground_lavaland.dmm"
+
+/datum/map_template/ruin/icemoon/underground/puzzle
+	name = "Ancient Puzzle"
+	id = "puzzle"
+	description = "Mystery to be solved."
+	suffix = "icemoon_underground_puzzle.dmm"
+

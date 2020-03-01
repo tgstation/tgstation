@@ -2,10 +2,6 @@
 "a" = (
 /turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
-"b" = (
-/obj/structure/flora/rock/icy,
-/turf/open/floor/plating/ice/icemoon,
-/area/icemoon/underground/explored)
 "c" = (
 /obj/structure/ladder,
 /turf/open/floor/plating/ice/icemoon,
@@ -104,7 +100,7 @@ a
 a
 a
 a
-b
+a
 a
 a
 a
@@ -154,7 +150,6 @@ a
 a
 a
 a
-b
 a
 a
 a
@@ -162,7 +157,8 @@ a
 a
 a
 a
-b
+a
+a
 a
 a
 a
@@ -213,13 +209,13 @@ a
 a
 a
 a
-b
 a
 a
 a
 a
 a
-b
+a
+a
 a
 a
 a
@@ -230,7 +226,7 @@ d
 d
 a
 a
-b
+a
 a
 a
 a
@@ -262,7 +258,6 @@ a
 a
 a
 a
-b
 a
 a
 a
@@ -271,12 +266,13 @@ a
 a
 a
 a
-b
 a
 a
 a
 a
-b
+a
+a
+a
 a
 d
 "}
@@ -345,7 +341,7 @@ a
 a
 a
 a
-b
+a
 a
 a
 a
@@ -366,7 +362,6 @@ d
 a
 a
 a
-b
 a
 a
 a
@@ -382,7 +377,8 @@ a
 a
 a
 a
-b
+a
+a
 a
 a
 a
@@ -431,7 +427,7 @@ a
 a
 a
 a
-b
+a
 a
 a
 a
@@ -453,7 +449,7 @@ a
 a
 a
 a
-b
+a
 a
 a
 a
@@ -499,12 +495,12 @@ d
 (18,1,1) = {"
 d
 a
-b
 a
 a
 a
 a
-b
+a
+a
 a
 a
 a
@@ -517,7 +513,7 @@ a
 a
 a
 a
-b
+a
 a
 a
 a
@@ -565,7 +561,7 @@ a
 a
 a
 a
-b
+a
 a
 a
 a
@@ -615,7 +611,7 @@ a
 a
 a
 a
-b
+a
 a
 a
 a
@@ -636,7 +632,6 @@ d
 a
 a
 a
-b
 a
 a
 a
@@ -650,7 +645,8 @@ a
 a
 a
 a
-b
+a
+a
 a
 a
 a
@@ -722,12 +718,12 @@ a
 a
 h
 a
-b
 a
 a
 a
 a
-b
+a
+a
 a
 a
 a

@@ -79,12 +79,12 @@ require only minor tweaks.
     ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface)
 #define ZTRAITS_ICEMOON list(\
     ZTRAIT_MINING = TRUE, \
-    ZTRAIT_SNOWSTORM = TRUE, \
     ZTRAIT_ICE_RUINS = TRUE, \
+    ZTRAIT_SNOWSTORM = TRUE, \
     ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
     ZTRAIT_UP = -1, \
     ZTRAIT_DOWN = 1, \
-    ZTRAIT_BASETURF = /turf/open/floor/plating/asteroid/snow/ice)
+    ZTRAIT_BASETURF = /turf/open/floor/plating/asteroid/snow/icemoon)
 #define ZTRAITS_ICEMOON_UNDERGROUND list(\
     ZTRAIT_MINING = TRUE, \
     ZTRAIT_ICE_RUINS_UNDERGROUND = TRUE, \

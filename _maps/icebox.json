@@ -16,7 +16,8 @@
          "Baseturf":"/turf/open/floor/plating/asteroid/snow/ice",
          "Linkage":null,
          "Weather_Snowstorm":true,
-		 "Ice Ruins":true
+		 "Ice Ruins":true,
+		 "Mining":true
       }
    ],
    "minetype":"icemoon"

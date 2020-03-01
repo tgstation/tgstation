@@ -199,11 +199,6 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 
 /turf/open/floor/plating/asteroid/airless/cave/snow/underground
 	flora_spawn_list = list(/obj/structure/flora/rock/icy = 6, /obj/structure/flora/rock/pile/icy = 6)
-	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast/random = 50, /obj/structure/spawner/lavaland/goliath = 3, \
-		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random = 10, /obj/structure/spawner/lavaland/icewatcher = 2, \
-		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/icewing = 30, \
-		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/random = 30, /obj/structure/spawner/lavaland/legion = 3, \
-		SPAWN_MEGAFAUNA = 4, /mob/living/simple_animal/hostile/asteroid/goldgrub = 10)
 
 	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/snow/underground/has_data
 
@@ -301,16 +296,14 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnFloor(turf/T)
-	for(var/S in RANGE_TURFS(1, src))
-		var/turf/NT = S
-		if(!NT)
+	if(!T)
+		sanity = 0
+		return
+	if(isarea(T.loc))
+		var/area/A = T.loc
+		if(!A.tunnel_allowed)
 			sanity = 0
 			return
-		if(isarea(NT.loc))
-			var/area/A = NT.loc
-			if(!A.tunnel_allowed)
-				sanity = 0
-				return
 	if(is_mining_level(z))
 		SpawnFlora(T)	//No space mushrooms, cacti.
 	SpawnTerrain(T)
