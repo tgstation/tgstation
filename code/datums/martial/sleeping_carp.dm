@@ -130,8 +130,8 @@
 	H.physiology.stamina_mod *= 0.5 //stun batons prove to be one of the few ways to fight them. They have stun resistance already, so I think doubling down too hard on this resistance is a bit much.
 	H.physiology.stun_mod *= 0.3 //for those rare stuns
 	H.physiology.pressure_mod *= 0.3 //go hang out with carp
-	H.physiology.cold_mod *= 0.3 //cold mods are different to burn mods, they don't interact even though they both do burn damage
-	H.physiology.heat_mod *= 1.5 //this is mostly so sleeping carp has a viable weakness. Cooking them alive. Setting them on fire and heating them will be their biggest weakness. The reason for this is....filet jokes.
+	H.physiology.cold_mod *= 0.3 //cold mods are different to burn mods, they do stack however
+	H.physiology.heat_mod *= 2 //this is mostly so sleeping carp has a viable weakness. Cooking them alive. Setting them on fire and heating them will be their biggest weakness. The reason for this is....filet jokes.
 
 	H.faction |= "carp" //:D
 
