@@ -98,7 +98,7 @@
 	step_to(living_parent, brightest.source_turf)
 
 	if(next_message < world.time)
-		to_chat(living_parent, "<span class='narsie'>...LÄMP...</span>")
+		to_chat(living_parent, "<span class='hypnophrase'>...LÄMP...</span>")
 		next_message = world.time + 8 SECONDS
 
 	next_move = world.time + move_delay
