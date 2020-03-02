@@ -44,10 +44,7 @@
 /obj/item/weldingtool/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	add_welder_flash()
-
-/obj/item/weldingtool/proc/add_welder_flash()
-	AddElement(/datum/element/tool_flash, 2)
+	AddElement(/datum/element/tool_flash, light_intensity)
 
 /obj/item/weldingtool/update_icon_state()
 	if(welding)
@@ -338,9 +335,6 @@
 	light_intensity = 0
 	change_icons = 0
 
-/obj/item/weldingtool/abductor/add_welder_flash()
-	AddElement(/datum/element/tool_flash, 0)
-
 /obj/item/weldingtool/abductor/process()
 	if(get_fuel() <= max_fuel)
 		reagents.add_reagent(/datum/reagent/fuel, 1)
@@ -367,9 +361,6 @@
 	light_intensity = 1
 	toolspeed = 0.5
 	var/nextrefueltick = 0
-
-/obj/item/weldingtool/abductor/add_welder_flash()
-	AddElement(/datum/element/tool_flash, 1)
 
 /obj/item/weldingtool/experimental/process()
 	..()
