@@ -214,7 +214,8 @@
 #define COMSIG_LIVING_MINOR_SHOCK "living_minor_shock"			//sent by stuff like stunbatons and tasers: ()
 #define COMSIG_LIVING_REVIVE "living_revive"					//from base of mob/living/revive() (full_heal, admin_revive)
 #define COMSIG_LIVING_REGENERATE_LIMBS "living_regen_limbs"		//from base of /mob/living/regenerate_limbs(): (noheal, excluded_limbs)
-#define COMSIG_LIVING_ATTACHED_LIMB "living_attached_limb"		//from base of /obj/item/bodypart/proc/attach_limb(): (C, special, abort, limb = src) we need limb arg because the bodypart proc is signalled from the mob we're attaching
+#define COMSIG_LIVING_ATTACH_LIMB "living_attach_limb"		//from base of /obj/item/bodypart/proc/attach_limb(): (new_limb, special) allows you to abort limb attachment, dropping it
+	#define COMPONENT_NO_ATTACH 1
 #define COMSIG_PROCESS_BORGCHARGER_OCCUPANT "living_charge"		//sent from borg recharge stations: (amount, repairs)
 #define COMSIG_MOB_CLIENT_LOGIN "comsig_mob_client_login"		//sent when a mob/login() finishes: (client)
 #define COMSIG_BORG_SAFE_DECONSTRUCT "borg_safe_decon"			//sent from borg mobs to itself, for tools to catch an upcoming destroy() due to safe decon (rather than detonation)

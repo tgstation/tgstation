@@ -275,10 +275,9 @@
 			O.drop_limb(1)
 	attach_limb(C, special)
 
-/obj/item/bodypart/proc/attach_limb(mob/living/carbon/C, special, abort = FALSE)
+/obj/item/bodypart/proc/attach_limb(mob/living/carbon/C, special)
 	moveToNullspace()
-	SEND_SIGNAL(C, COMSIG_LIVING_ATTACHED_LIMB, C, special, abort, limb = src)
-	if(abort)//living rejected the attached limb, drop all this
+	if(SEND_SIGNAL(C, COMSIG_LIVING_ATTACH_LIMB, src, special) & COMPONENT_NO_ATTACH)
 		forceMove(C.loc)
 		return FALSE
 	. = TRUE

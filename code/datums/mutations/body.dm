@@ -454,7 +454,7 @@
 		head.drop_organs()
 		qdel(head)
 		owner.regenerate_icons()
-	RegisterSignal(owner, COMSIG_LIVING_ATTACHED_LIMB, .proc/abortattachment)
+	RegisterSignal(owner, COMSIG_LIVING_ATTACH_LIMB, .proc/abortattachment)
 	RegisterSignal(owner, COMSIG_LIVING_REGENERATE_LIMBS, .proc/rejecthead)//"hey why not just have abort attachment signal, regen attaches limbs" well, tinnitus, it's because aborting an attached limb drops it and we want this to not happen for created limbs which regen does
 
 /datum/mutation/human/headless/on_losing()
@@ -464,16 +464,16 @@
 		stack_trace("HADS mutation head regeneration failed! (usually caused by headless syndrome having a head)")
 		return TRUE // trouble
 	UnregisterSignal(owner, COMSIG_LIVING_REGENERATE_LIMBS)
-	UnregisterSignal(owner, COMSIG_LIVING_ATTACHED_LIMB)
+	UnregisterSignal(owner, COMSIG_LIVING_ATTACH_LIMB)
 	owner.dna.species.regenerate_organs(owner, excluded_limbs = list(BODY_ZONE_CHEST)) //only regenerate head
 	owner.apply_damage(damage = 50, damagetype = BRUTE, def_zone = BODY_ZONE_HEAD) //and this to really prevent it
 	owner.visible_message("<span class='warning'>[owner]'s head returns with a sickening crunch!</span>", "<span class='warning'>Your head regrows with a sickening crack! Ouch.</span>")
 	new /obj/effect/gibspawner/generic(get_turf(owner), owner)
 
 
-/datum/mutation/human/headless/proc/abortattachment(C, special, abort = FALSE, limb) //you aren't getting your head back
-	if(istype(limb, /obj/item/bodypart/head))
-		abort = TRUE
+/datum/mutation/human/headless/proc/abortattachment(datum/source, obj/item/bodypart/new_limb, special) //you aren't getting your head back
+	if(istype(new_limb, /obj/item/bodypart/head))
+		return COMPONENT_NO_ATTACH
 
 /datum/mutation/human/headless/proc/rejecthead(datum/source, noheal = FALSE, list/excluded_zones) //seriously you aren't getting your head back
 	excluded_zones |= BODY_ZONE_HEAD
