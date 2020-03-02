@@ -326,7 +326,7 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
   * Triggers when Space Dragon completes his objective.
   * Calls the shuttle with a coefficient of 3, making it impossible to recall.
   * Sets all of his rifts to allow for infinite sentient carp spawns
-  * Also plays appropiate sounds and Centcomm messages.
+  * Also plays appropiate sounds and CENTCOM messages.
   */
 
 /mob/living/simple_animal/hostile/space_dragon/proc/victory()
@@ -464,7 +464,7 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
   *
   * Performs a number of checks based on the current charge of the portal, and triggers various effects accordingly.
   * If the current charge is a multiple of 40, add an extra carp spawn.
-  * If we're halfway charged, announce to the crew our location in a centcomm announcement.
+  * If we're halfway charged, announce to the crew our location in a CENTCOM announcement.
   * If we're fully charged, tell the crew we are, change our color to yellow, become invulnerable, and give Space Dragon the ability to make another rift, if he hasn't summoned 3 total.
   */
 
