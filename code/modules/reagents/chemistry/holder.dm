@@ -577,7 +577,6 @@
 							ME2.name = "used slime extract"
 							ME2.desc = "This extract has been used up."
 
-			my_atom?.on_reagent_change(REACT_REAGENTS)
 			selected_reaction.on_reaction(src, multiplier)
 			reaction_occurred = 1
 

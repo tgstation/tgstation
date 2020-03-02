@@ -269,6 +269,12 @@
 #define COMSIG_ITEM_WEARERCROSSED "wearer_crossed"                //called on item when crossed by something (): (/atom/movable, mob/living/crossed)
 #define COMSIG_ITEM_MICROWAVE_ACT "microwave_act"                //called on item when microwaved (): (obj/machinery/microwave/M)
 
+// /obj/item signals for economy
+#define COMSIG_ITEM_SOLD "item_sold"							//called when an item is sold by the exports subsystem
+#define COMSIG_STRUCTURE_UNWRAPPED "structure_unwrapped"		//called when a wrapped up structure is opened by hand
+#define COMSIG_ITEM_UNWRAPPED "item_unwrapped"					//called when a wrapped up item is opened by hand
+	#define COMSIG_ITEM_SPLIT_VALUE  1
+#define COMSIG_ITEM_SPLIT_PROFIT "item_split_profits"			//Called when getting the item's exact ratio for cargo's profit.
 
 // /obj/item/clothing signals
 #define COMSIG_SHOES_STEP_ACTION "shoes_step_action"			//from base of obj/item/clothing/shoes/proc/step_action(): ()
