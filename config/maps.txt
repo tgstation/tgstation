@@ -45,7 +45,7 @@ map kilostation
 endmap
 
 map icebox
-	minplayers 50
+	minplayers 25
 	votable
 endmap
 
