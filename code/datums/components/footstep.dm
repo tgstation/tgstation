@@ -87,6 +87,8 @@
 	playsound(T, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2] * volume, TRUE, footstep_sounds[turf_footstep][3] + e_range)
 
 /datum/component/footstep/proc/play_humanstep()
+	if(HAS_TRAIT(parent, TRAIT_SILENT_FOOTSTEPS))
+		return
 	var/turf/open/T = prepare_step()
 	if(!T)
 		return
@@ -94,15 +96,11 @@
 	var/feetCover = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) || (H.w_uniform && (H.w_uniform.body_parts_covered & FEET))
 
 	if(H.shoes || feetCover) //are we wearing shoes
-		if(HAS_TRAIT(H, TRAIT_SILENT_FOOTSTEPS))
-			return
 		playsound(T, pick(GLOB.footstep[T.footstep][1]),
 			GLOB.footstep[T.footstep][2] * volume,
 			TRUE,
 			GLOB.footstep[T.footstep][3] + e_range)
 	else
-		if(HAS_TRAIT(H, TRAIT_SILENT_FOOTSTEPS))
-			return
 		if(H.dna.species.special_step_sounds)
 			playsound(T, pick(H.dna.species.special_step_sounds), 50, TRUE)
 		else
