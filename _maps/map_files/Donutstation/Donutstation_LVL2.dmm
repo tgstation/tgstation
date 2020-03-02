@@ -324,11 +324,11 @@
 /area/quartermaster/qm/perch)
 "aK" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/cable/layer1,
 /obj/machinery/power/tracker{
 	id = "portbow"
 	},
-/turf/open/floor/engine/hull,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "aL" = (
 /obj/structure/girder,
@@ -486,9 +486,9 @@
 /turf/open/floor/engine/hull/reinforced,
 /area/space/nearstation)
 "bf" = (
-/obj/structure/cable/layer1,
 /obj/machinery/power/solar,
-/turf/open/floor/plasteel/airless/solarpanel,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "bg" = (
 /obj/structure/rack,
@@ -2534,8 +2534,8 @@
 /area/maintenance/central)
 "fN" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/cable/layer1,
-/turf/open/floor/engine/hull,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "fO" = (
 /obj/structure/chair/stool,
@@ -4628,19 +4628,23 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 6
 	},
-/turf/closed/wall/r_wall,
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "jW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 10
 	},
-/obj/machinery/recharge_station,
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "jX" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/structure/cable,
 /obj/machinery/light{
 	dir = 1
@@ -4671,6 +4675,7 @@
 /area/library/upper)
 "kb" = (
 /obj/machinery/atmospherics/pipe/layer_manifold,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "kc" = (
@@ -4686,16 +4691,12 @@
 /turf/open/floor/wood,
 /area/library/upper)
 "ke" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 10
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "kf" = (
@@ -4726,6 +4727,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "kk" = (
@@ -13548,7 +13550,7 @@
 "Bt" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "Bu" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -13716,11 +13718,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft/upper)
-"BO" = (
-/obj/structure/cable/layer1,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/solars/port/fore)
 "BP" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
@@ -13798,7 +13795,8 @@
 /area/space)
 "Ca" = (
 /obj/structure/lattice/catwalk,
-/turf/open/openspace,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
 /area/space)
 "Cb" = (
 /obj/structure/railing{
@@ -14061,22 +14059,17 @@
 	},
 /turf/open/openspace,
 /area/space)
-"CK" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable/layer1,
-/turf/open/openspace,
-/area/space)
 "CL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
 "CM" = (
-/obj/structure/cable/layer1,
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
 	req_access_txt = "10; 13"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
 "CN" = (
@@ -20881,6 +20874,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
+"VZ" = (
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"Wn" = (
+/obj/machinery/atmospherics/pipe/simple/multiz,
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
+"ZA" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
 
 (1,1,1) = {"
 ac
@@ -41265,7 +41271,7 @@ Cl
 bd
 bd
 Ci
-mT
+fN
 Cl
 bd
 bd
@@ -41781,9 +41787,9 @@ ac
 BZ
 Ca
 Ca
-CK
+Ca
 CM
-BO
+BR
 BP
 BR
 BR
@@ -42545,7 +42551,7 @@ bd
 bd
 bd
 Ci
-mT
+fN
 Cl
 ac
 ac
@@ -42802,7 +42808,7 @@ bd
 bd
 bd
 Ci
-mT
+fN
 Cl
 ac
 ac
@@ -43059,7 +43065,7 @@ bd
 bd
 bd
 Ci
-mT
+VZ
 Cl
 ac
 ac
@@ -43316,7 +43322,7 @@ bd
 bd
 CG
 FG
-mT
+VZ
 FH
 nk
 ac
@@ -43573,7 +43579,7 @@ CU
 nk
 CH
 bf
-mT
+VZ
 bf
 Dk
 ac
@@ -43825,12 +43831,12 @@ CU
 nk
 CH
 bf
-mT
+VZ
 bf
 Dk
 CH
 bf
-mT
+VZ
 bf
 Dk
 ac
@@ -44077,17 +44083,17 @@ CU
 nk
 CH
 bf
-mT
+VZ
 bf
 Dk
 CH
 bf
-mT
+fN
 bf
 Dk
 CH
 bf
-mT
+VZ
 bf
 Dk
 ac
@@ -44329,22 +44335,22 @@ CU
 nk
 CH
 bf
-mT
+VZ
 bf
 Dk
 CH
 bf
-mT
+fN
 bf
 Dk
 CH
 bf
-mT
+VZ
 bf
 Dk
 CH
 bf
-mT
+VZ
 bf
 Dk
 ac
@@ -44581,27 +44587,27 @@ mt
 ac
 CH
 bf
-mT
+fN
 bf
 Dk
 CH
 bf
-mT
+fN
 bf
 Dk
 CH
 bf
-mT
+fN
 bf
 Dk
 CH
 bf
-mT
+VZ
 bf
 Dk
 CH
 bf
-mT
+fN
 bf
 Dk
 ac
@@ -44838,27 +44844,27 @@ mt
 cn
 CH
 bf
-mT
+fN
 bf
 Dk
 CH
 bf
-mT
+fN
 bf
 Dk
 CH
 bf
-mT
+fN
 bf
 Dk
 CH
 bf
-mT
+VZ
 bf
 Dk
 aY
 CX
-mT
+fN
 CX
 nc
 ac
@@ -45095,28 +45101,28 @@ mt
 ac
 CH
 bf
-mT
+VZ
 bf
 Dk
 CH
 bf
-mT
+fN
 bf
 Dk
 CH
 bf
-mT
+VZ
 bf
 Dk
 aY
 CX
-mT
+VZ
 CX
 nc
+VZ
+VZ
 fN
-fN
-fN
-mT
+VZ
 ac
 ac
 ac
@@ -45352,27 +45358,27 @@ cn
 ac
 CH
 bf
-mT
+VZ
 bf
 Dk
 CH
 bf
-mT
+VZ
 bf
 Dk
 aY
 CX
-mT
+VZ
 CX
 nc
-mT
-mT
-mT
-fN
-fN
-mT
+VZ
+VZ
+VZ
+VZ
+VZ
+VZ
 CU
-mT
+VZ
 CU
 nk
 ac
@@ -45609,27 +45615,27 @@ mt
 ac
 CH
 bf
-mT
+VZ
 bf
 Dk
 aY
 CX
-mT
+VZ
 CX
 nc
-mT
+VZ
+VZ
 fN
-fN
-fN
-fN
-mT
+VZ
+VZ
+VZ
 CU
-mT
+VZ
 CU
 nk
 CH
 bf
-mT
+fN
 bf
 Dk
 ac
@@ -45866,27 +45872,27 @@ mt
 cn
 aY
 CX
-mT
+VZ
 CX
 nc
-mT
-mT
-mT
+VZ
+VZ
 fN
 fN
-mT
+fN
+VZ
 CU
-mT
+VZ
 CU
 nk
 CH
 bf
-mT
+VZ
 bf
 Dk
 CH
 bf
-mT
+fN
 bf
 Dk
 bd
@@ -46123,27 +46129,27 @@ mt
 ac
 aK
 fN
-mT
+VZ
 fN
 fN
-mT
+VZ
 CU
-mT
+VZ
 CU
 nk
 CH
 bf
-mT
+VZ
 bf
 Dk
 CH
 bf
-mT
+VZ
 bf
 Dk
 CH
 bf
-mT
+fN
 bf
 Dk
 bd
@@ -46380,27 +46386,27 @@ ac
 ac
 CG
 CU
-mT
+VZ
 CU
 nk
 CH
 bf
-mT
+fN
 bf
 Dk
 CH
 bf
-mT
+VZ
 bf
 Dk
 CH
 bf
-mT
+fN
 bf
 Dk
 CH
 bf
-mT
+fN
 bf
 Dk
 bd
@@ -46637,27 +46643,27 @@ ac
 ac
 CH
 bf
-mT
+VZ
 bf
 Dk
 CH
 bf
-mT
+fN
 bf
 Dk
 CH
 bf
-mT
+VZ
 bf
 Dk
 CH
 bf
-mT
+VZ
 bf
 Dk
 CH
 bf
-mT
+fN
 bf
 Dk
 bd
@@ -46894,22 +46900,22 @@ bd
 bd
 CH
 bf
-mT
+VZ
 bf
 Dk
 CH
 bf
-mT
+fN
 bf
 Dk
 CH
 bf
-mT
+VZ
 bf
 Dk
 CH
 bf
-mT
+VZ
 bf
 Dk
 aY
@@ -47151,17 +47157,17 @@ bd
 bd
 CH
 bf
-mT
+VZ
 bf
 Dk
 CH
 bf
-mT
+fN
 bf
 Dk
 CH
 bf
-mT
+VZ
 bf
 Dk
 aY
@@ -47408,12 +47414,12 @@ bd
 bd
 CH
 bf
-mT
+VZ
 bf
 Dk
 CH
 bf
-mT
+fN
 bf
 Dk
 aY
@@ -47665,7 +47671,7 @@ bd
 bd
 CH
 bf
-mT
+VZ
 bf
 Dk
 aY
@@ -55009,7 +55015,7 @@ ac
 ac
 be
 be
-be
+jQ
 jQ
 jQ
 jQ
@@ -55270,7 +55276,7 @@ jQ
 jQ
 jV
 kb
-ki
+Wn
 jQ
 ko
 kq
@@ -56296,7 +56302,7 @@ be
 be
 jQ
 jQ
-jQ
+ZA
 kh
 ki
 jQ
@@ -56551,7 +56557,7 @@ ac
 ac
 be
 be
-be
+jQ
 jQ
 jQ
 jQ
