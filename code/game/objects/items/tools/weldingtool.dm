@@ -30,7 +30,6 @@
 	var/change_icons = 1
 	var/can_off_process = 0
 	var/light_intensity = 2 //how powerful the emitted light is when used.
-	var/progress_flash_divisor = 10
 	var/burned_fuel_for = 0	//when fuel was last removed
 	heat = 3800
 	tool_behaviour = TOOL_WELDER
@@ -45,6 +44,10 @@
 /obj/item/weldingtool/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
+	add_welder_flash()
+
+/obj/item/weldingtool/proc/add_welder_flash()
+	AddElement(/datum/element/tool_flash, 2)
 
 /obj/item/weldingtool/update_icon_state()
 	if(welding)
@@ -245,22 +248,6 @@
 /obj/item/weldingtool/proc/isOn()
 	return welding
 
-// When welding is about to start, run a normal tool_use_check, then flash a mob if it succeeds.
-/obj/item/weldingtool/tool_start_check(mob/living/user, amount=0)
-	. = tool_use_check(user, amount)
-	if(. && user && get_dist(get_turf(src), get_turf(user)) <= 1)
-		user.flash_act(light_intensity)
-
-// Flash the user during welding progress
-/obj/item/weldingtool/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
-	. = ..()
-	if(. && user && get_dist(get_turf(src), get_turf(user)) <= 1)
-		if (progress_flash_divisor == 0)
-			user.flash_act(min(light_intensity,1))
-			progress_flash_divisor = initial(progress_flash_divisor)
-		else
-			progress_flash_divisor--
-
 // If welding tool ran out of fuel during a construction task, construction fails.
 /obj/item/weldingtool/tool_use_check(mob/living/user, amount)
 	if(!isOn() || !check_fuel())
@@ -351,6 +338,9 @@
 	light_intensity = 0
 	change_icons = 0
 
+/obj/item/weldingtool/abductor/add_welder_flash()
+	AddElement(/datum/element/tool_flash, 0)
+
 /obj/item/weldingtool/abductor/process()
 	if(get_fuel() <= max_fuel)
 		reagents.add_reagent(/datum/reagent/fuel, 1)
@@ -377,6 +367,9 @@
 	light_intensity = 1
 	toolspeed = 0.5
 	var/nextrefueltick = 0
+
+/obj/item/weldingtool/abductor/add_welder_flash()
+	AddElement(/datum/element/tool_flash, 1)
 
 /obj/item/weldingtool/experimental/process()
 	..()
