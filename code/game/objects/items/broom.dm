@@ -46,7 +46,10 @@
 		if (isturf(A))
 			target = A
 		else
-			target = A.loc
+			if (isturf(A.loc))
+				target = A.loc
+			else
+				return
 	else
 		target = user.loc
 	if (locate(/obj/structure/table) in target.contents)
