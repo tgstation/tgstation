@@ -173,6 +173,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/should_have_stomach = !(NOSTOMACH in species_traits)
 	var/should_have_tail = mutanttail
 
+	for(var/)
 	if(!(BODY_ZONE_CHEST in excluded_limbs))
 
 		if(heart && (!should_have_heart || replace_current))

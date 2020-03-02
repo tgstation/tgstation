@@ -91,7 +91,7 @@
 			display_results(user, target, "<span class='warning'>You fail in attaching [target]'s [parse_zone(target_zone)]! Their body has rejected [L]!</span>",
 				"<span class='warning'>[user] fails to attach [target]'s [parse_zone(target_zone)]!</span>",
 				"<span class='warning'>[user] fails to attach [target]'s [parse_zone(target_zone)]!</span>")
-			L.forcemove(target.loc)
+			L.forceMove(target.loc)
 			return
 		user.visible_message("<span class='notice'>[user] finishes attaching [tool]!</span>", "<span class='notice'>You attach [tool].</span>")
 		display_results(user, target, "<span class='notice'>You attach [tool].</span>",
