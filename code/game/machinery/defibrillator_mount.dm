@@ -11,8 +11,12 @@
 	idle_power_usage = 0
 	power_channel = EQUIP
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_HEADS, ACCESS_SECURITY) //used to control clamps
-	var/obj/item/defibrillator/defib //this mount's defibrillator
-	var/clamps_locked = FALSE //if true, and a defib is loaded, it can't be removed without unlocking the clamps
+/// The mount's defib
+	var/obj/item/defibrillator/defib
+/// if true, and a defib is loaded, it can't be removed without unlocking the clamps
+	var/clamps_locked = FALSE
+/// the type of wallframe it 'disassembles' into
+	var/wallframe_type = /obj/item/wallframe/defib_mount
 
 /obj/machinery/defibrillator_mount/loaded/Initialize() //loaded subtype for mapping use
 	. = ..()
@@ -114,6 +118,15 @@
 	update_icon()
 	return TRUE
 
+/obj/machinery/defibrillator_mount/wrench_act(mob/living/user, obj/item/wrench/W)
+	if(!wallframe_type)
+		return ..()
+	new wallframe_type(get_turf(src))
+	qdel(src)
+	W.play_tool_sound(user)
+	to_chat(user, "<span class='notice'>You remove [src] from the wall.</span>")
+
+
 /obj/machinery/defibrillator_mount/AltClick(mob/living/carbon/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
@@ -137,6 +150,7 @@
 	desc = "Holds defibrillators. You can grab the paddles if one is mounted. This PENLITE variant also allows for slow, passive recharging of the defibrillator."
 	icon_state = "penlite_mount"
 	idle_power_usage = 1
+	wallframe_type = /obj/item/wallframe/defib_mount/charging
 
 /obj/machinery/defibrillator_mount/charging/process()
 	if(defib?.cell?.charge < defib.cell.maxcharge && is_operational())
