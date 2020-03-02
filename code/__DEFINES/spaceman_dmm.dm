@@ -6,10 +6,14 @@
 	#define RETURN_TYPE(X) set SpacemanDMM_return_type = X
 	#define SHOULD_CALL_PARENT(X) set SpacemanDMM_should_call_parent = X
 	#define UNLINT(X) SpacemanDMM_unlint(X)
+	#define SHOULD_NOT_OVERRIDE(X) set SpacemanDMM_should_not_override = X
+	#define VAR_FINAL var/SpacemanDMM_final
 #else
 	#define RETURN_TYPE(X)
 	#define SHOULD_CALL_PARENT(X)
 	#define UNLINT(X) X
+	#define SHOULD_NOT_OVERRIDE(X)
+	#define VAR_FINAL var
 #endif
 
 /world/proc/enable_debugger()
