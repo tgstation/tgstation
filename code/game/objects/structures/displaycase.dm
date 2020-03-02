@@ -374,7 +374,9 @@
 	showpiece_type = /obj/item/reagent_containers/food
 	alert = FALSE //No, we're not calling the fire department because someone stole your cookie.
 	glass_fix = FALSE //Fixable with tools instead.
+	///The price of the item being sold. Altered by grab intent ID use.
 	var/sale_price = 20
+	///The Account which will recieve payment for purchases. Set by the first ID to swipe the tray.
 	var/datum/bank_account/payments_acc = null
 
 /obj/structure/displaycase/forsale/update_icon()	//remind me to fix my shitcode later
@@ -400,9 +402,6 @@
 		var/obj/item/card/id/potential_acc = I
 		if(!potential_acc.registered_account)
 			to_chat(user, "<span class='warning'>This ID card has no account registered!</span>")
-			return
-		if(payments_acc && payments_acc != potential_acc.registered_account)
-			to_chat(user, "<span class='warning'>This Vend-a-tray is already registered!</span>")
 			return
 		if(!payments_acc && potential_acc.registered_account)
 			payments_acc = potential_acc.registered_account
@@ -440,12 +439,16 @@
 			//Setting the object's price.
 			if(INTENT_GRAB)
 				var/new_price_input = input(user,"Set the sale price for this vend-a-tray.","new price",0) as num|null
-				if(isnull(new_price_input) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+				if(isnull(new_price_input) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || (payments_acc != potential_acc.registered_account))
 					return
 				new_price_input = clamp(round(new_price_input, 1), 10, 1000)
 				sale_price = new_price_input
 				to_chat(user, "<span class='notice'>The cost is now set to [sale_price].</span>")
 				return TRUE
+			if(INTENT_DISARM || INTENT_HARM)
+				if(payments_acc && payments_acc != potential_acc.registered_account)
+					to_chat(user, "<span class='warning'>This Vend-a-tray is already registered!</span>")
+					return
 	if(I.tool_behaviour == TOOL_WRENCH && open && user.a_intent == INTENT_HELP )
 		if(anchored)
 			to_chat(user, "<span class='notice'>You start unsecuring [src]...</span>")
