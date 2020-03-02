@@ -1,18 +1,20 @@
 /**
   * # Space Dragon
   *
+  * A space-faring leviathan-esque monster which breathes fire and summons carp.  Spawned during its respective midround antagonist event.
+  *
   * A space-faring monstrosity who has the ability to breathe dangerous fire breath and uses its powerful wings to knock foes away.
-  * Normally spawned as an antagonist during the Space Dragon event, Space Dragon's main goal is to open a rift from which to pull a great tide of carp onto the station.
-  * Space Dragon can summon only one rift, and can do so anywhere a blob is allowed to spawn.  In order to trigger his victory condition, Space Dragon must summon and defend 3 rifts while they charge.
-  * Space Dragon, when spawned, has 5 minutes to summon the first rift.  Failing to do so will cause Space Dragon to return from whence he came.
-  * When the rift spawns, ghosts can interact with it to spawn in as space carp to help complete the mission.  1 carp are granted when the rift is first summoned, with an extra one every 40 seconds.
+  * Normally spawned as an antagonist during the Space Dragon event, Space Dragon's main goal is to open three rifts from which to pull a great tide of carp onto the station.
+  * Space Dragon can summon only one rift at a time, and can do so anywhere a blob is allowed to spawn.  In order to trigger his victory condition, Space Dragon must summon and defend three rifts while they charge.
+  * Space Dragon, when spawned, has five minutes to summon the first rift.  Failing to do so will cause Space Dragon to return from whence he came.
+  * When the rift spawns, ghosts can interact with it to spawn in as space carp to help complete the mission.  One carp is granted when the rift is first summoned, with an extra one every 40 seconds.
   * Once the victory condition is met, the shuttle is called and all current rifts are allowed to spawn infinite sentient space carp.
   * If a charging rift is destroyed, Space Dragon will be incredibly slowed, and the endlag on his gust attack is greatly increased on each use.
-  * Space Dragon has the following abilities to assist him in the objective:
+  * Space Dragon has the following abilities to assist him with his objective:
   * - Can shoot fire in straight line, dealing 30 burn damage and setting those suseptible on fire.
   * - Can use his wings to temporarily stun and knock back any nearby mobs.  This attack has no cooldown, but instead has endlag after the attack where Space Dragon cannot act.  This endlag's time decreases over time, but is added to every time he uses the move.
   * - Can swallow mob corpses to heal for half their max health.  Any corpses swallowed are stored within him, and will be regurgitated on death.
-  * - Can tear through any type of wall.  This takes 6 seconds for most walls, and 30 seconds for reinforced walls.
+  * - Can tear through any type of wall.  This takes 4 seconds for most walls, and 12 seconds for reinforced walls.
   */
 
 /mob/living/simple_animal/hostile/space_dragon
@@ -49,16 +51,27 @@
 	maxbodytemp = 1500
 	faction = list("carp")
 	pressure_resistance = 200
+	/// Current time since the the last rift was activated.  If set to -1, does not increment.
 	var/riftTimer = 0
+	/// Maximum amount of time which can pass without a rift before Space Dragon despawns.
 	var/maxRiftTimer = 300
+	/// How much endlag using Wing Gust should apply.  Each use of wing gust increments this, and it decreases over time.
 	var/tiredness = 0
+	/// A multiplier to how much each use of wing gust should add to the tiredness variable.  Set to 5 if the current rift is destroyed.
 	var/tiredness_mult = 1
+	/// Determines whether or not Space Dragon is in the middle of using wing guat.  If set to true, prevents him from moving and doing certain actions.
 	var/using_special = FALSE
+	/// A list of all of the rifts created by Space Dragon.  Used for setting them all to infinite carp spawn when Space Dragon wins, and removing them when Space Dragon dies.
 	var/list/obj/structure/carp_rift/rift_list = list()
+	/// How many rifts have been successfully charged
 	var/rifts_charged = 0
+	/// Whether or not Space Dragon has completed their objective, and thus triggered the ending sequence.
 	var/objective_complete = FALSE
+	/// The togglable small sprite action
 	var/small_sprite_type = /datum/action/small_sprite/megafauna/spacedragon
+	/// The innate ability to use wing gust
 	var/datum/action/innate/space_dragon/gustAttack/gust
+	/// The innate ability to summon rifts
 	var/datum/action/innate/space_dragon/summonRift/rift
 
 /mob/living/simple_animal/hostile/space_dragon/Initialize(mapload)
@@ -136,7 +149,17 @@
 	empty_contents()
 	. = ..()
 
-//Calculates a line of paths from the mob to the target, going out a variable distance
+/**
+  * Determines a line of turfs from sources's position to the target with length range.
+  *
+  * Determines a line of turfs from the source's position to the target with length range.
+  * The line will extend on past the target if the range is large enough, and not reach the target if range is small enough.
+  * Arguments:
+  * * offset - whether or not to aim slightly to the left or right of the target
+  * * range - how many turfs should we go out for
+  * * atom/at - The target
+  */
+
 /mob/living/simple_animal/hostile/space_dragon/proc/line_target(offset, range, atom/at = target)
 	if(!at)
 		return
@@ -149,7 +172,16 @@
 		T = check
 	return (getline(src, T) - get_turf(src))
 
-//Handles spawning the fire on each of the tiles when fire breath is used
+/**
+  * Spawns fire at each position in a line from the source to the target.
+  *
+  * Spawns fire at each position in a line from the source to the target.
+  * Stops if it comes into contact with a solid wall, a window, or a door.
+  * Delays the spawning of each fire by 1.5 deciseconds.
+  * Arguments:
+  * * atom/at - The target
+  */
+
 /mob/living/simple_animal/hostile/space_dragon/proc/fire_stream(var/atom/at = target)
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
 	var/range = 20
@@ -166,7 +198,16 @@
 		delayFire += 1.5
 		addtimer(CALLBACK(src, .proc/dragon_fire_line, T), delayFire)
 
-//The proc used on each tile to damage enemies on the tile and create a hotspot there as well.  Very effective against mechs.
+/**
+  * What occurs on each tile to actually create the fire.
+  *
+  * Creates a fire on the given turf.
+  * It creates a hotspot on the given turf, damages any living mob with 30 burn damage, and damages mechs by 50.
+  * It can only hit any given target once.
+  * Arguments:
+  * * turf/T - The turf to trigger the effects on.
+  */
+
 mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 	var/list/hit_list = list()
 	hit_list += src
@@ -185,7 +226,15 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 		hit_list += M
 		M.take_damage(50, BRUTE, "melee", 1)
 
-//Handles storing the entity inside Space Dragon after they've been consumed
+/**
+  * Handles consuming and storing consumed things inside Space Dragon
+  *
+  * Plays a sound and then stores the consumed thing inside Space Dragon.
+  * Used in AttackingTarget(), paired with a heal should it succeed.
+  * Arguments:
+  * * atom/movable/A - The thing being consumed
+  */
+
 /mob/living/simple_animal/hostile/space_dragon/proc/eat(atom/movable/A)
 	if(A && A.loc != src)
 		playsound(src, 'sound/magic/demon_attack1.ogg', 100, TRUE)
@@ -194,20 +243,40 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 		return TRUE
 	return FALSE
 
-//Randomly disperses consumed objects in an area around the mob
+/**
+  * Disperses the contents of the mob on the surrounding tiles.
+  *
+  * Randomly places the contents of the mob onto surrounding tiles.
+  * Has a 10% chance to place on the same tile as the mob.
+  */
+
 /mob/living/simple_animal/hostile/space_dragon/proc/empty_contents()
 	for(var/atom/movable/AM in src)
 		AM.forceMove(loc)
 		if(prob(90))
 			step(AM, pick(GLOB.alldirs))
 
-//Resets Space Dragon to a normal stance after using a special
+/**
+  * Resets Space Dragon's status after using wing gust.
+  *
+  * Resets Space Dragon's status after using wing gust.
+  * If it isn't dead by the time it calls this method, reset the sprite back to the normal living sprite.
+  * Also sets the using_special variable to FALSE, allowing Space Dragon to move and attack freely again.
+  */
+
 /mob/living/simple_animal/hostile/space_dragon/proc/reset_status()
 	if(stat != DEAD)
 		icon_state = "spacedragon"
 	using_special = FALSE
 
-//Destroys all the currently spawned rifts.  Used on death or when a rift is destroyed.
+/**
+  * Destroys all of Space Dragon's current rifts.
+  *
+  * QDeletes all the current rifts after removing their references to other objects.
+  * Currently, the only reference they have is to the Dragon which created them, so we clear that before deleting them.
+  * Currently used when Space Dragon dies.
+  */	
+
 /mob/living/simple_animal/hostile/space_dragon/proc/destroy_rifts()
 	for(var/obj/structure/carp_rift/rift in rift_list)
 		rift.dragon = null
@@ -216,7 +285,17 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 			QDEL_NULL(rift)
 	rifts_charged = 0
 
-//Handles the windup to using gust, gust itself, and the delay to returning to normal after using it.
+/**
+  * Handles wing gust from the windup all the way to the endlag at the end.
+  *
+  * Handles the wing gust attack from start to finish, based on the timer.
+  * When intially triggered, starts at 0.  Until the timer reaches 10, increase Space Dragon's y position by 2 and call back to the function in 1.5 deciseconds.
+  * When the timer is at 10, trigger the attack.  Change Space Dragon's sprite. reset his y position, and push all living creatures back in a 3 tile radius and stun them for 5 seconds.
+  * Stay in the ending state for how much our tiredness dictates and add to our tiredness.
+  * Arguments:
+  * * timer - The timer used for the windup.
+  */
+
 /mob/living/simple_animal/hostile/space_dragon/proc/useGust(timer)
 	if(timer != 10)
 		pixel_y = pixel_y + 2;
@@ -241,7 +320,15 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 	addtimer(CALLBACK(src, .proc/reset_status), 4 + ((tiredness * tiredness_mult) / 10))
 	tiredness = tiredness + (30 * tiredness_mult)
 
-//Method used when Space Dragon wins.  Sets his rifts to spawn infinite carp, and irrevokably calls the shuttle, along with setting Space Dragon's objective to be complete.
+/**
+  * Sets up Space Dragon's victory for completing the objectives.
+  *
+  * Triggers when Space Dragon completes his objective.
+  * Calls the shuttle with a coefficient of 3, making it impossible to recall.
+  * Sets all of his rifts to allow for infinite sentient carp spawns
+  * Also plays appropiate sounds and Centcomm messages.
+  */
+
 /mob/living/simple_animal/hostile/space_dragon/proc/victory()
 	objective_complete = TRUE
 	var/datum/antagonist/space_dragon/S = mind.has_antag_datum(/datum/antagonist/space_dragon)
@@ -303,6 +390,16 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 		notify_ghosts("\[S] has opened a rift!", source = CR, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Rift Opened")
 		QDEL_NULL(src)
 
+/**
+  * # Carp Rift
+  *
+  * The portals Space Dragon summons to bring carp onto the station.
+  *
+  * The portals Space Dragon summons to bring carp onto the station.  His main objective is to summon 3 of them and protect them from being destroyed.
+  * The portals can summon sentient space carp in limited amounts.  The portal also changes color based on whether or not a carp spawn is available.
+  * Once it is fully charged, it becomes indestructible, and intermitently spawns non-sentient carp.  It is still destroyed if Space Dragon dies.
+  */
+
 /obj/structure/carp_rift
 	name = "carp rift"
 	desc = "A rift akin to the ones space carp use to travel long distances."
@@ -314,9 +411,13 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 	light_range = 10
 	anchored = TRUE
 	density = FALSE
+	/// The amount of time the rift has charged for.
 	var/time_charged = 0
+	/// The maximum charge the rift can have.  It actually goes to max_charge + 1, as to prevent constantly retriggering the effects on full charge.
 	var/max_charge = 240
+	/// How many carp spawns it has available.
 	var/carp_stored = 0
+	/// A reference to the Space Dragon that created it.
 	var/mob/living/simple_animal/hostile/space_dragon/dragon
 
 /obj/structure/carp_rift/Initialize(mapload)
@@ -354,7 +455,19 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 		if(spawncarp == 1)
 			new /mob/living/simple_animal/hostile/carp(loc)
 
-//Checks to see if the rift is done charging, if it's time to announce the location or add another space carp spawn.
+/obj/structure/carp_rift/attack_ghost(mob/user)
+	. = ..()
+	summon_carp(user)
+
+/**
+  * Does a series of checks based on the portal's status.
+  *
+  * Performs a number of checks based on the current charge of the portal, and triggers various effects accordingly.
+  * If the current charge is a multiple of 40, add an extra carp spawn.
+  * If we're halfway charged, announce to the crew our location in a centcomm announcement.
+  * If we're fully charged, tell the crew we are, change our color to yellow, become invulnerable, and give Space Dragon the ability to make another rift, if he hasn't summoned 3 total.
+  */
+
 /obj/structure/carp_rift/proc/update_check()
 	if(time_charged % 40 == 0 && time_charged != max_charge)
 		carp_stored++
@@ -376,11 +489,16 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 			dragon.rift.Grant(dragon)
 			dragon.riftTimer = 0
 
-/obj/structure/carp_rift/attack_ghost(mob/user)
-	. = ..()
-	summon_carp(user)
+/**
+  * Used to create carp controlled by ghosts when the option is available.
+  *
+  * Creates a carp for the ghost to control if we have a carp spawn available.
+  * Gives them prompt to control a carp, and if our circumstances still allow if when they hit yes, spawn them in as a carp.
+  * Also add them to the list of carps in Space Dragon's antgonist datum, so they'll be displayed as having assisted him on round end.
+  * Arguments:
+  * * mob/user - The ghost which will take control of the carp.
+  */
 
-//Triggers when a ghost interacts with the portal.  If a carp spawn is available, give them the option to spawn in.
 /obj/structure/carp_rift/proc/summon_carp(mob/user)
 	if(carp_stored == 0)//Not enough carp points
 		return FALSE
