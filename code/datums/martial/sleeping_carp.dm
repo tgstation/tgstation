@@ -23,11 +23,14 @@
 		return TRUE
 	return FALSE
 
+///Gnashing Teeth: Harm Harm, consistent 20 force punch on every second harm punch, has a chance to crit
 /datum/martial_art/the_sleeping_carp/proc/strongPunch(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))///this var is so that the strong punch is always aiming for the body part the user is targeting and not trying to apply to the chest before deviating
+	///this var is so that the strong punch is always aiming for the body part the user is targeting and not trying to apply to the chest before deviating
+	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 	var/atk_verb = pick("kick", "chop", "hit", "slam")
-	var/crit_damage = 0///this is the critical hit damage added to the attack if it rolls, it starts at 0 because it'll be changed when rolled
+	///this is the critical hit damage added to the attack if it rolls, it starts at 0 because it'll be changed when rolled
+	var/crit_damage = 0
 	D.visible_message("<span class='danger'>[A] [atk_verb]s [D]!</span>", \
 					"<span class='userdanger'>[A] [atk_verb]s you!</span>", null, null, A)
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
@@ -42,6 +45,7 @@
 	D.apply_damage(20 + crit_damage, A.dna.species.attack_type, affecting)
 	return
 
+///Crashing Wave Kick: Harm Disarm combo, throws people seven tiles backwards
 /datum/martial_art/the_sleeping_carp/proc/launchKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 	D.visible_message("<span class='warning'>[A] kicks [D] square in the chest, sending them flying!</span>", \
@@ -53,6 +57,7 @@
 	log_combat(A, D, "launchkicked (Sleeping Carp)")
 	return
 
+///Keelhaul: Harm Grab combo, knocks people down, deals stamina damage while they're on the floor
 /datum/martial_art/the_sleeping_carp/proc/dropKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
@@ -83,7 +88,7 @@
 		return TRUE
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-	var/atk_verb = pick("kicks", "chops", "hits", "slams")//picks one of the verbs, mostly for flavour, cool karate moves and stuff
+	var/atk_verb = pick("kicks", "chops", "hits", "slams")
 	D.visible_message("<span class='danger'>[A] [atk_verb] [D]!</span>", \
 					"<span class='userdanger'>[A] [atk_verb]s you!</span>", null, null, A)
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
@@ -161,7 +166,7 @@
 	to_chat(usr, "<span class='notice'>Gnashing Teeth</span>: Harm Harm. Deal additional damage every second punch, with a chance for even more damage!")
 	to_chat(usr, "<span class='notice'>Crashing Wave Kick</span>: Harm Disarm. Launch people brutally across rooms, and away from you.")
 	to_chat(usr, "<span class='notice'>Keelhaul</span>: Harm Grab. Kick opponents to the floor. Against prone targets, deal additional stamina damage and disarm them.")
-	to_chat(usr, "<span class='notice'>In addition, your body has become incredibly resilient to most forms of attack. Weapons cannot readily pierce your hardened skin, and you are highly resistant to stuns and knockdowns, and can block all projectiles in Throw Mode. However, you are not invincible, and sustained damage will take it's toll.</span>")
+	to_chat(usr, "<span class='notice'>In addition, your body has become incredibly resilient to most forms of attack. Weapons cannot readily pierce your hardened skin, and you are highly resistant to stuns and knockdowns, and can block all projectiles in Throw Mode. However, you are not invincible, and sustained damage will take it's toll. Avoid heat at all costs!</span>")
 
 /obj/item/twohanded/bostaff
 	name = "bo staff"
