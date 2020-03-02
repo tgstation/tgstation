@@ -24,10 +24,10 @@
 	return FALSE
 
 /datum/martial_art/the_sleeping_carp/proc/strongPunch(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))//this var is so that the strong punch is always aiming for the body part the user is targeting and not trying to apply to the chest before deviating
+	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))///this var is so that the strong punch is always aiming for the body part the user is targeting and not trying to apply to the chest before deviating
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 	var/atk_verb = pick("kick", "chop", "hit", "slam")
-	var/crit_damage = 0//this is the critical hit damage added to the attack if it rolls, it starts at 0 because it'll be changed when rolled
+	var/crit_damage = 0///this is the critical hit damage added to the attack if it rolls, it starts at 0 because it'll be changed when rolled
 	D.visible_message("<span class='danger'>[A] [atk_verb]s [D]!</span>", \
 					"<span class='userdanger'>[A] [atk_verb]s you!</span>", null, null, A)
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
@@ -125,7 +125,7 @@
 	ADD_TRAIT(H, TRAIT_PIERCEIMMUNE, SLEEPING_CARP_TRAIT)
 	ADD_TRAIT(H, TRAIT_STUNRESISTANCE, SLEEPING_CARP_TRAIT)
 	ADD_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
-	H.physiology.brute_mod *= 0.2 //brute is borderline useless
+	H.physiology.brute_mod *= 0.4 //brute is really not gonna cut it
 	H.physiology.burn_mod *= 0.7 //burn is distinctly more useful against them than brute but they're still resistant
 	H.physiology.stamina_mod *= 0.5 //stun batons prove to be one of the few ways to fight them. They have stun resistance already, so I think doubling down too hard on this resistance is a bit much.
 	H.physiology.stun_mod *= 0.3 //for those rare stuns
