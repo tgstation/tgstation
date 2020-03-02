@@ -609,6 +609,7 @@
 	QDEL_IN(src, AMMO_DROP_LIFETIME)
 
 /obj/effect/ctf/ammo/Crossed(atom/movable/AM)
+	. = ..()
 	reload(AM)
 
 /obj/effect/ctf/ammo/Bump(atom/A)
