@@ -44720,6 +44720,10 @@
 /obj/structure/weightmachine/stacklifter,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"cbl" = (
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/engine/supermatter)
 "cbn" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Research Excess Storage";
@@ -45878,6 +45882,13 @@
 /obj/structure/grille/broken,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"cIn" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/engine/engine_room)
 "cLi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
@@ -46599,13 +46610,6 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
-"eQZ" = (
-/obj/structure/cable,
-/obj/machinery/power/emitter{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/engine/engine_room)
 "eRe" = (
 /obj/effect/turf_decal/bot{
 	dir = 1
@@ -47461,6 +47465,13 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
+"hDN" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/engine/engine_room)
 "hDU" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -47931,10 +47942,6 @@
 /obj/item/camera,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
-"jcH" = (
-/obj/structure/cable,
-/turf/open/floor/engine,
-/area/engine/supermatter)
 "jdu" = (
 /obj/structure/closet/radiation,
 /turf/open/floor/plasteel/dark,
@@ -48018,6 +48025,13 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
+"jqG" = (
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/space)
 "jsv" = (
 /obj/machinery/light,
 /obj/machinery/firealarm{
@@ -48463,6 +48477,16 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
+"lkM" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "engsm"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/engine/supermatter)
 "llp" = (
 /obj/structure/grille,
 /turf/open/floor/plating,
@@ -48571,6 +48595,13 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hos)
+"lGL" = (
+/obj/structure/cable,
+/obj/machinery/power/emitter{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/engine/engine_room)
 "lGY" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -48887,13 +48918,6 @@
 /obj/item/flashlight/lamp,
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"mQD" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/engine/engine_room)
 "mUn" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -49201,6 +49225,13 @@
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"nUD" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/engine/engine_room)
 "nVf" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/two,
@@ -49469,16 +49500,6 @@
 /obj/item/grown/bananapeel,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
-"oIO" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm"
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/engine/supermatter)
 "oJi" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -49508,6 +49529,12 @@
 /obj/machinery/computer/atmos_control/toxinsmix,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"oMB" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/engine/engine_room)
 "oPn" = (
 /obj/machinery/door/window/eastleft{
 	name = "Supermatter External Access";
@@ -49546,13 +49573,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_room/external)
-"oVn" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/engine/engine_room)
 "oWa" = (
 /obj/effect/turf_decal/bot{
 	dir = 1
@@ -51296,13 +51316,6 @@
 /obj/effect/turf_decal/stripes/end,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"uRT" = (
-/obj/machinery/power/solar{
-	id = "starboardsolar";
-	name = "Starboard Solar Array"
-	},
-/turf/open/floor/plasteel/airless/solarpanel,
-/area/space)
 "uTy" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 9
@@ -51514,13 +51527,6 @@
 /obj/structure/cable,
 /turf/open/floor/holofloor/wood,
 /area/crew_quarters/heads/captain/private)
-"vtZ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/engine/engine_room)
 "vuh" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -51749,12 +51755,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/fore)
-"wgH" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/engine/engine_room)
 "wll" = (
 /obj/effect/turf_decal/bot{
 	dir = 1
@@ -82085,7 +82085,7 @@ avP
 aal
 aLF
 aMs
-uRT
+jqG
 aCI
 aLF
 aMs
@@ -82342,7 +82342,7 @@ avP
 aaa
 aLF
 aMp
-uRT
+jqG
 aCI
 aLF
 aMp
@@ -82599,7 +82599,7 @@ avP
 aaa
 aLF
 aMp
-uRT
+jqG
 aCI
 aLF
 aMp
@@ -82856,7 +82856,7 @@ avP
 aal
 aLF
 aNm
-uRT
+jqG
 aCI
 aLF
 aMs
@@ -88149,7 +88149,7 @@ aug
 uwV
 vAo
 vbr
-eQZ
+lGL
 amH
 uwV
 uwV
@@ -88165,7 +88165,7 @@ jvP
 cZN
 vjt
 bjh
-oVn
+hDN
 feu
 etL
 hLL
@@ -88415,7 +88415,7 @@ bfA
 bfQ
 dZW
 bha
-jcH
+cbl
 nNJ
 dZW
 dEx
@@ -89957,7 +89957,7 @@ bfA
 bga
 dZW
 bhd
-jcH
+cbl
 nNJ
 dZW
 sKR
@@ -90214,7 +90214,7 @@ abY
 bgd
 tlY
 skG
-oIO
+lkM
 skG
 tlY
 hTF
@@ -90726,11 +90726,11 @@ uwV
 bfn
 bfB
 vQd
-mQD
+nUD
 bhn
 bmy
 bmC
-wgH
+oMB
 bmE
 aaf
 bju
@@ -90987,7 +90987,7 @@ bgU
 knv
 bmz
 knv
-vtZ
+cIn
 mNC
 mpx
 nPz
