@@ -58,4 +58,5 @@
 	updatehealth()
 
 /mob/living/silicon/ai/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+	SHOULD_CALL_PARENT(FALSE)
 	return // no eyes, no flashing
