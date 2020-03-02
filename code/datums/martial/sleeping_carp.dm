@@ -32,7 +32,7 @@
 					"<span class='userdanger'>[A] [atk_verb]s you!</span>", null, null, A)
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
 	if(prob(10))
-		crit_damage += 20//here is where the critical damage is adjusted
+		crit_damage += 20
 		playsound(get_turf(D), 'sound/weapons/bite.ogg', 50, TRUE, -1)
 		D.visible_message("<span class='warning'>[D] sputters blood as the blow strikes them with inhuman force!</span>", "<span class='userdanger'>You are struck with incredible precision by [A]!</span>")
 		log_combat(A, D, "critcal strong punched (Sleeping Carp)")//log it here because a critical can swing for 40 force and it's important for the sake of how hard they hit
@@ -98,24 +98,6 @@
 		return TRUE
 	log_combat(A, D, "disarmed (Sleeping Carp)")
 	return ..()
-
-//datum/martial_art/the_sleeping_carp/on_projectile_hit(mob/living/carbon/human/A, obj/projectile/P, def_zone)
-	//. = ..()
-	//if(A.incapacitated(FALSE, TRUE)) //NO STUN
-		//return BULLET_ACT_HIT
-	//if(!(A.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
-		//return BULLET_ACT_HIT
-	//if(A.dna && A.dna.check_mutation(HULK)) //NO HULK
-		//return BULLET_ACT_HIT
-	//if(!isturf(A.loc)) //NO MOTHERFLIPPIN MECHS!
-		//return BULLET_ACT_HIT
-	//if(A.in_throw_mode)
-		//A.visible_message("<span class='danger'>[A] effortlessly swats the projectile aside! They can block bullets with their bare hands!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
-		//playsound(get_turf(A), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
-		//P.firer = A
-		//P.setAngle(rand(0, 360))//SHING
-		//return BULLET_ACT_FORCE_PIERCE
-	//return BULLET_ACT_HIT
 
 /datum/martial_art/the_sleeping_carp/teach(mob/living/carbon/human/H, make_temporary = FALSE)
 	. = ..()
