@@ -23003,7 +23003,8 @@
 /area/security/checkpoint/medical)
 "bhj" = (
 /obj/machinery/camera{
-	c_tag = "Security Post - Medbay"
+	c_tag = "Security Post - Medbay";
+	network = list("ss13","medbay")
 	},
 /obj/machinery/requests_console{
 	department = "Security";
