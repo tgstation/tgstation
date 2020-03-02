@@ -40,7 +40,8 @@
 			bump_chain = 0
 
 /// When crate bumped by something called Bumped(AM)
-/obj/structure/closet/crate/Bumped(AM as mob|obj)
+/obj/structure/closet/crate/Bumped(atom/movable/AM)
+
 	..()
 	///check, that crate bumbed by crate and can move.
 	if(istype(AM, /obj/structure/closet/crate) && !anchored)
