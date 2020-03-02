@@ -213,7 +213,7 @@
 #define COMSIG_LIVING_SHOCK_PREVENTED "living_shock_prevented"  //sent when items with siemen coeff. of 0 block a shock: (power_source, source, siemens_coeff, dist_check)
 #define COMSIG_LIVING_MINOR_SHOCK "living_minor_shock"			//sent by stuff like stunbatons and tasers: ()
 #define COMSIG_LIVING_REVIVE "living_revive"					//from base of mob/living/revive() (full_heal, admin_revive)
-#define COMSIG_LIVING_REGENERATE_LIMBS "living_regen_limbs"		//from base of /mob/living/regenerate_limbs(): (noheal, excluded_limbs)
+#define COMSIG_LIVING_REGENERATE_LIMBS "living_regen_limbs"		//from base of /mob/living/regenerate_limbs(): (noheal, excluded_zones)
 #define COMSIG_LIVING_ATTACH_LIMB "living_attach_limb"			//from base of /obj/item/bodypart/proc/attach_limb(): (new_limb, special) allows you to abort limb attachment, dropping it
 	#define COMPONENT_NO_ATTACH 1
 #define COMSIG_PROCESS_BORGCHARGER_OCCUPANT "living_charge"		//sent from borg recharge stations: (amount, repairs)

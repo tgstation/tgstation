@@ -142,8 +142,8 @@
 		hearers += owner
 
 //Stops dullahans from gibbing when regenerating limbs
-/obj/item/dullahan_relay/proc/unlist_head(datum/source, noheal = FALSE, list/excluded_limbs)
-	excluded_limbs |= BODY_ZONE_HEAD
+/obj/item/dullahan_relay/proc/unlist_head(datum/source, noheal = FALSE, list/excluded_zones)
+	excluded_zones |= BODY_ZONE_HEAD
 
 //Retrieving the owner's head for better ahealing.
 /obj/item/dullahan_relay/proc/retrieve_head(datum/source, full_heal, admin_revive)

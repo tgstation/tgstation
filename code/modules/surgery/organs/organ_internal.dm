@@ -203,3 +203,21 @@
 		if(!getorganslot(ORGAN_SLOT_EARS))
 			var/obj/item/organ/ears/ears = new()
 			ears.Insert(src)
+
+
+/** get_availability
+  * input: S (the species of a human we're regenerating organs in)
+  * output: returns whether the species should innately have this organ.
+  * description: As the species code regenerates organs, each organ has special traits to be rejected from spawning.
+  *				 We call get_availability() to let the organ return back to the species which trait that is, and if the species has it.
+  */
+/obj/item/organ/proc/get_availability(datum/species/S)
+	return TRUE
+
+/** get_mutantorgan
+  * input: S (the species of a human we're regenerating organs in as above)
+  * output: returns the variable species have that hold the species mutant organ of this type
+  * description: Similar to get_availability() but this time we need to point to the species' mutant organs instead of special trait
+  */
+/obj/item/organ/proc/get_mutantorgan(datum/species/S)
+	return null

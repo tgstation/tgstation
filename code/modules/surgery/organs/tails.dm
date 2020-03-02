@@ -8,6 +8,12 @@
 	slot = ORGAN_SLOT_TAIL
 	var/tail_type = "None"
 
+/obj/item/organ/tail/get_availability(datum/species/S)//stupid shitty implementation of mutanttail whatever not my problem triumphant emoji
+	return S.mutanttail
+
+/obj/item/organ/tail/get_mutantorgan(datum/species/S)
+	return S.mutanttail
+
 /obj/item/organ/tail/Remove(mob/living/carbon/human/H,  special = 0)
 	..()
 	if(H && H.dna && H.dna.species)

@@ -46,6 +46,9 @@
 	else if((organ_flags & ORGAN_FAILING) && (deaf == 0))
 		deaf = 1	//stop being not deaf you deaf idiot
 
+/obj/item/organ/ears/get_mutantorgan(datum/species/S)
+	return S.mutantears
+
 /obj/item/organ/ears/proc/restoreEars()
 	deaf = 0
 	damage = 0

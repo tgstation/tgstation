@@ -83,6 +83,8 @@
 		C.clear_fullscreen("eye_damage")
 	return
 
+/obj/item/organ/eyes/get_mutantorgan(datum/species/S)
+	return S.mutanteyes
 
 /obj/item/organ/eyes/night_vision
 	name = "shadow eyes"

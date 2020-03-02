@@ -188,6 +188,9 @@
 		to_chat(owner, "<span class='userdanger'>The last spark of life in your brain fizzles out...</span>")
 		owner.death()
 
+/obj/item/organ/brain/get_mutantorgan(datum/species/S)
+	return S.mutant_brain
+
 /obj/item/organ/brain/check_damage_thresholds(mob/M)
 	. = ..()
 	//if we're not more injured than before, return without gambling for a trauma

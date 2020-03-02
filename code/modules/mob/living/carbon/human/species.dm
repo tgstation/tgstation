@@ -150,112 +150,35 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	return 1
 
 //Will regenerate missing organs
-/datum/species/proc/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE,list/excluded_limbs)
-	var/obj/item/organ/brain/brain = C.getorganslot(ORGAN_SLOT_BRAIN)
-	var/obj/item/organ/heart/heart = C.getorganslot(ORGAN_SLOT_HEART)
-	var/obj/item/organ/lungs/lungs = C.getorganslot(ORGAN_SLOT_LUNGS)
-	var/obj/item/organ/appendix/appendix = C.getorganslot(ORGAN_SLOT_APPENDIX)
-	var/obj/item/organ/eyes/eyes = C.getorganslot(ORGAN_SLOT_EYES)
-	var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
-	var/obj/item/organ/tongue/tongue = C.getorganslot(ORGAN_SLOT_TONGUE)
-	var/obj/item/organ/liver/liver = C.getorganslot(ORGAN_SLOT_LIVER)
-	var/obj/item/organ/stomach/stomach = C.getorganslot(ORGAN_SLOT_STOMACH)
-	var/obj/item/organ/tail/tail = C.getorganslot(ORGAN_SLOT_TAIL)
+/datum/species/proc/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE,list/excluded_zones)
 
-	var/should_have_brain = TRUE
-	var/should_have_heart = !(NOBLOOD in species_traits)
-	var/should_have_lungs = !(TRAIT_NOBREATH in inherent_traits)
-	var/should_have_appendix = !(TRAIT_NOHUNGER in inherent_traits)
-	var/should_have_eyes = TRUE
-	var/should_have_ears = TRUE
-	var/should_have_tongue = TRUE
-	var/should_have_liver = !(TRAIT_NOMETABOLISM in inherent_traits)
-	var/should_have_stomach = !(NOSTOMACH in species_traits)
-	var/should_have_tail = mutanttail
+	//what should be put in if there is no mutantorgan (no tail because... yeah... mutanttail is just coded all wrong and i just redid this entire proc)
+	var/static/list/slot_defaults = list(ORGAN_SLOT_BRAIN = /obj/item/organ/brain, ORGAN_SLOT_HEART = /obj/item/organ/heart, ORGAN_SLOT_LUNGS = /obj/item/organ/lungs, ORGAN_SLOT_APPENDIX = /obj/item/organ/appendix, \
+	ORGAN_SLOT_EYES = /obj/item/organ/eyes, ORGAN_SLOT_EARS = /obj/item/organ/ears, ORGAN_SLOT_TONGUE = /obj/item/organ/tongue, ORGAN_SLOT_LIVER = /obj/item/organ/liver, ORGAN_SLOT_STOMACH = /obj/item/organ/stomach, ORGAN_SLOT_TAIL = null)
 
-	for(var/)
-	if(!(BODY_ZONE_CHEST in excluded_limbs))
+	for(var/slot in list(ORGAN_SLOT_BRAIN, ORGAN_SLOT_HEART, ORGAN_SLOT_LUNGS, ORGAN_SLOT_APPENDIX, \
+	ORGAN_SLOT_EYES, ORGAN_SLOT_EARS, ORGAN_SLOT_TONGUE, ORGAN_SLOT_LIVER, ORGAN_SLOT_STOMACH, ORGAN_SLOT_TAIL))
 
-		if(heart && (!should_have_heart || replace_current))
-			heart.Remove(C,TRUE)
-			QDEL_NULL(heart)
-		if(should_have_heart && !heart)
-			heart = new mutant_heart()
-			heart.Insert(C)
+		var/obj/item/organ/organ = C.getorganslot(slot)
+		if(organ && organ.zone in excluded_zones)
+			continue
+		to_chat(world, "organ = [organ]")
+		var/should_have = organ.get_availability(src)
+		to_chat(world, "should_have = [should_have]")
+		var/defaultorgan = slot_defaults[organ.slot]
+		to_chat(world, "defaultorgan = [defaultorgan]")
+		var/mutantorgan = organ.get_mutantorgan(src)
+		to_chat(world, "mutantorgan = [mutantorgan]")
 
-		if(lungs && (!should_have_lungs || replace_current))
-			lungs.Remove(C,TRUE)
-			QDEL_NULL(lungs)
-		if(should_have_lungs && !lungs)
-			if(mutantlungs)
-				lungs = new mutantlungs()
+		if(organ && (!should_have || replace_current))
+			organ.Remove(C,TRUE)
+			QDEL_NULL(organ)
+		if(should_have && !organ)
+			if(mutantorgan)
+				organ = new mutantorgan()
 			else
-				lungs = new()
-			lungs.Insert(C)
-
-		if(liver && (!should_have_liver || replace_current))
-			liver.Remove(C,1)
-			QDEL_NULL(liver)
-		if(should_have_liver && !liver)
-			if(mutantliver)
-				liver = new mutantliver()
-			else
-				liver = new()
-			liver.Insert(C)
-
-		if(stomach && (!should_have_stomach || replace_current))
-			stomach.Remove(C,1)
-			QDEL_NULL(stomach)
-		if(should_have_stomach && !stomach)
-			if(mutantstomach)
-				stomach = new mutantstomach()
-			else
-				stomach = new()
-			stomach.Insert(C)
-
-		if(appendix && (!should_have_appendix || replace_current))
-			appendix.Remove(C,1)
-			QDEL_NULL(appendix)
-		if(should_have_appendix && !appendix)
-			appendix = new()
-			appendix.Insert(C)
-
-		if(tail && (!should_have_tail || replace_current))
-			tail.Remove(C,1)
-			QDEL_NULL(tail)
-		if(should_have_tail && !tail)
-			tail = new mutanttail()
-			tail.Insert(C)
-
-	if(C.get_bodypart(BODY_ZONE_HEAD) && (!(BODY_ZONE_HEAD in excluded_limbs)))
-		if(brain && (replace_current || !should_have_brain))
-			if(!brain.decoy_override)//Just keep it if it's fake
-				brain.Remove(C,TRUE,TRUE)
-				QDEL_NULL(brain)
-		if(should_have_brain && !brain)
-			brain = new mutant_brain()
-			brain.Insert(C, TRUE, TRUE)
-
-		if(eyes && (replace_current || !should_have_eyes))
-			eyes.Remove(C,1)
-			QDEL_NULL(eyes)
-		if(should_have_eyes && !eyes)
-			eyes = new mutanteyes
-			eyes.Insert(C)
-
-		if(ears && (replace_current || !should_have_ears))
-			ears.Remove(C,1)
-			QDEL_NULL(ears)
-		if(should_have_ears && !ears)
-			ears = new mutantears
-			ears.Insert(C)
-
-		if(tongue && (replace_current || !should_have_tongue))
-			tongue.Remove(C,1)
-			QDEL_NULL(tongue)
-		if(should_have_tongue && !tongue)
-			tongue = new mutanttongue
-			tongue.Insert(C)
+				organ = new defaultorgan()
+			organ.Insert(C)
 
 	if(old_species)
 		for(var/mutantorgan in old_species.mutant_organs)
