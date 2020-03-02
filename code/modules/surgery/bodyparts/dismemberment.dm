@@ -259,28 +259,26 @@
 /obj/item/bodypart/proc/replace_limb(mob/living/carbon/C, special)
 	if(!istype(C))
 		return
-	var/obj/item/bodypart/O = C.get_bodypart(body_zone)
+	var/obj/item/bodypart/O = C.get_bodypart(body_zone) //needs to happen before attach because multiple limbs in same zone breaks helpers
+	if(!attach_limb(C, special))//we can attach this limb and drop the old after because of our robust bodyparts system. you know, just for a sec.
+		return
 	if(O)
 		O.drop_limb(1)
-	attach_limb(C, special)
 
 /obj/item/bodypart/head/replace_limb(mob/living/carbon/C, special)
 	if(!istype(C))
 		return
 	var/obj/item/bodypart/head/O = C.get_bodypart(body_zone)
+	if(!attach_limb(C, special))
+		return
 	if(O)
-		if(!special)
-			return
-		else
-			O.drop_limb(1)
-	attach_limb(C, special)
+		O.drop_limb(1)
 
 /obj/item/bodypart/proc/attach_limb(mob/living/carbon/C, special)
-	moveToNullspace()
 	if(SEND_SIGNAL(C, COMSIG_LIVING_ATTACH_LIMB, src, special) & COMPONENT_NO_ATTACH)
-		forceMove(C.loc)
 		return FALSE
 	. = TRUE
+	moveToNullspace()
 	owner = C
 	C.bodyparts += src
 	if(held_index)
@@ -390,5 +388,7 @@
 			L.brutestate = 0
 			L.burnstate = 0
 
-		L.attach_limb(src, 1)
+		if(!L.attach_limb(src, 1))
+			qdel(L)
+			return FALSE
 		return TRUE
