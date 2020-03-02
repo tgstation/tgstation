@@ -34,11 +34,11 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "at" = (
-/mob/living/simple_animal/crab{
-	name = "Eddie"
-	},
 /obj/machinery/light{
 	dir = 1
+	},
+/mob/living/simple_animal/crab{
+	name = "Eddie"
 	},
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)

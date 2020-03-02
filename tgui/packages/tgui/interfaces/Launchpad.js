@@ -154,7 +154,7 @@ export const LaunchpadControl = props => {
                   inline
                   bold
                   mr={1}>
-                Y:
+                  Y:
                 </Box>
                 <NumberInput
                   value={y}
