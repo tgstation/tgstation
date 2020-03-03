@@ -201,7 +201,7 @@
 
 	for(var/thing in C.parallax_layers)
 		var/obj/screen/parallax_layer/L = thing
-		L.update_status(posobj)
+		L.update_status(mymob)
 		if (L.view_sized != C.view)
 			L.update_o(C.view)
 
@@ -283,7 +283,7 @@
 	add_overlay(new_overlays)
 	view_sized = view
 
-/obj/screen/parallax_layer/proc/update_status(turf/posobj)
+/obj/screen/parallax_layer/proc/update_status(mob/M)
 	return
 
 /obj/screen/parallax_layer/layer_1
@@ -323,7 +323,11 @@
 	speed = 3
 	layer = 30
 
-/obj/screen/parallax_layer/planet/update_status(turf/posobj)
+/obj/screen/parallax_layer/planet/update_status(mob/M)
+	var/client/C = mymob.client
+	var/turf/posobj = get_turf(C.eye)
+	if(!posobj)
+		return
 	invisibility = is_station_level(posobj.z) ? 0 : INVISIBILITY_ABSTRACT
 
 /obj/screen/parallax_layer/planet/update_o()
