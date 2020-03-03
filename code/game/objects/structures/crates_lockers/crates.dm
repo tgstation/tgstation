@@ -23,7 +23,7 @@
 	drag_slowdown = 0
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 
-	///counter for crates that push this one. Start from 1 and increment when Bumped.
+	///counter for crates that push this one. Start from 1 and increment when Bumped and can move.
 	var/bump_chain = 1
 
 
@@ -49,7 +49,6 @@
 		var/d = get_dir(AM, src)
 		
 		if(step(src, d))
-			///move to follow
 			step(AM, d)
 	bump_chain = 1
 
