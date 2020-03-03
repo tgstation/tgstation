@@ -151,7 +151,6 @@
 	breakouttime = 1 SECONDS
 
 /obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
-	..()
 	if(istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I
 		if (R.use(1))
