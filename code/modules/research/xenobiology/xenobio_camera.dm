@@ -210,12 +210,12 @@
 			visible_message("<span class='notice'>[src] buzzes and displays a message: Slime extract already researched!</span>")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 3, -1)
 			return
-	else if(istype(W, /obj/item/xeno_console_upgrade))
-		var/obj/item/xeno_console_upgrade/xeno_up = W
+	else if(istype(O, /obj/item/xeno_console_upgrade))
+		var/obj/item/xeno_console_upgrade/xeno_up = O
 		if(!(upgrade & xeno_up.upgrade))
 			upgrade |= xeno_up.upgrade
 			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-			qdel(W)
+			qdel(O)
 	..()
 
 /obj/machinery/computer/camera_advanced/xenobio/multitool_act(mob/living/user, obj/item/multitool/I)
