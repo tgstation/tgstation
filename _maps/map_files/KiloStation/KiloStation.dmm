@@ -48855,7 +48855,7 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement{
+/obj/machinery/computer/bookmanagement{
 	pixel_y = 5
 	},
 /obj/machinery/light{
@@ -58121,7 +58121,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "bJz" = (
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/bookmanagement,
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red,
@@ -87942,7 +87942,7 @@
 /area/engine/engineering)
 "cEr" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement{
+/obj/machinery/computer/bookmanagement{
 	pixel_y = 5
 	},
 /obj/effect/turf_decal/tile/neutral,

@@ -17538,7 +17538,7 @@
 /area/security/prison)
 "aMe" = (
 /obj/structure/table,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/bookmanagement,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/security/prison)
@@ -64426,7 +64426,7 @@
 /area/library)
 "cpz" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/bookmanagement,
 /obj/machinery/newscaster{
 	pixel_x = 32
 	},
@@ -113598,6 +113598,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port)
+"kzm" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "kDh" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
@@ -113613,14 +113621,6 @@
 /obj/structure/displaycase/forsale,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
-"kzm" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
 "kEN" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall,

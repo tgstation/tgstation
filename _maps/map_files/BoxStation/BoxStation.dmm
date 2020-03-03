@@ -302,7 +302,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison)
 "aaM" = (
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/bookmanagement,
 /obj/structure/table,
 /obj/machinery/newscaster{
 	pixel_x = -32
@@ -17731,7 +17731,7 @@
 /area/library)
 "aTd" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/bookmanagement,
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
