@@ -342,7 +342,7 @@
 					become_nearsighted(EYE_DAMAGE)
 
 				else if(prob(eyes.damage - 25))
-					if(!HAS_TRAIT(src, TRAIT_BLIND))
+					if(!is_blind())
 						to_chat(src, "<span class='warning'>You can't see anything!</span>")
 					eyes.applyOrganDamage(eyes.maxHealth)
 

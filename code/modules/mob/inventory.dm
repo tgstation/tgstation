@@ -1,7 +1,7 @@
 //These procs handle putting s tuff in your hands
 //as they handle all relevant stuff like adding it to the player's screen and updating their overlays.
 
-//Returns the thing we're currently holding
+///Returns the thing we're currently holding
 /mob/proc/get_active_held_item()
 	return get_item_for_held_index(active_hand_index)
 

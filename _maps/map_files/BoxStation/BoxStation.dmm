@@ -2097,6 +2097,7 @@
 	dir = 5
 	},
 /obj/machinery/power/terminal,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aeG" = (
@@ -10766,6 +10767,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "aAz" = (
@@ -10780,6 +10782,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "aAC" = (
@@ -17896,6 +17899,7 @@
 "aTE" = (
 /obj/structure/table,
 /obj/item/hand_labeler,
+/obj/item/storage/box/shipping,
 /turf/open/floor/plasteel,
 /area/storage/art)
 "aTF" = (
@@ -18098,14 +18102,18 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "aUh" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/eastleft{
-	name = "Hydroponics Desk";
-	req_access_txt = "35"
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchenhydro";
+	name = "Service Shutter"
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Service Door";
+	req_one_access_txt = "35;28"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
 /area/crew_quarters/kitchen)
 "aUi" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -18644,9 +18652,12 @@
 /area/crew_quarters/kitchen)
 "aVH" = (
 /obj/machinery/processor,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 24
+/obj/machinery/button/door{
+	id = "kitchenhydro";
+	name = "Service Shutter Control";
+	pixel_x = 24;
+	pixel_y = 7;
+	req_access_txt = "28"
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
@@ -19944,6 +19955,10 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aYO" = (
@@ -21102,6 +21117,7 @@
 /obj/structure/table,
 /obj/item/aiModule/supplied/quarantine,
 /obj/machinery/camera/motion{
+	c_tag = "AI Upload West";
 	dir = 4;
 	network = list("aiupload")
 	},
@@ -21119,6 +21135,7 @@
 	pixel_x = 32
 	},
 /obj/machinery/camera/motion{
+	c_tag = "AI Upload East";
 	dir = 8;
 	network = list("aiupload")
 	},
@@ -23887,6 +23904,9 @@
 /obj/structure/table,
 /obj/item/clothing/head/soft,
 /obj/item/clothing/head/soft,
+/obj/item/storage/box/shipping{
+	pixel_x = 6
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bjo" = (
@@ -24719,7 +24739,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	areastring = "/area/medical/morgue";
+	areastring = "/area/maintenance/department/medical/morgue";
 	dir = 4;
 	name = "Morgue Maintenance APC";
 	pixel_x = 24
@@ -29674,6 +29694,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "byP" = (
@@ -30217,7 +30238,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bAi" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -33327,6 +33347,10 @@
 /obj/structure/table,
 /obj/machinery/light,
 /obj/item/book/manual/wiki/medicine,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
@@ -42254,18 +42278,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"cjd" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/engine/engine_smes)
 "cjf" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
 "cjg" = (
@@ -42951,7 +42967,7 @@
 /area/medical/chemistry)
 "clp" = (
 /obj/machinery/camera{
-	c_tag = "Xenobiology Test Chamber";
+	c_tag = "Chemistry Lab Northeast";
 	network = list("xeno","rd")
 	},
 /turf/open/floor/plasteel/white,
@@ -43451,7 +43467,6 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/structure/table,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/gloves/color/yellow,
@@ -43462,6 +43477,7 @@
 	pixel_x = -4;
 	pixel_y = -1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_smes)
 "cnB" = (
@@ -46770,10 +46786,6 @@
 	},
 /turf/open/space,
 /area/space/nearstation)
-"cAY" = (
-/obj/structure/cable,
-/turf/closed/wall,
-/area/ai_monitored/turret_protected/ai)
 "cAZ" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
@@ -46790,6 +46802,7 @@
 	c_tag = "MiniSat AI Chamber South";
 	network = list("aicore")
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cBc" = (
@@ -46799,6 +46812,7 @@
 /obj/machinery/ai_slipper{
 	uses = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cBd" = (
@@ -47270,10 +47284,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
 "cDg" = (
@@ -48665,6 +48679,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
 "cSG" = (
@@ -48772,7 +48787,6 @@
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
 	},
-/obj/structure/cable,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -50099,7 +50113,7 @@
 "jox" = (
 /obj/machinery/chem_dispenser,
 /obj/machinery/camera{
-	c_tag = "Engineering Storage";
+	c_tag = "Chemistry Lab West";
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
@@ -50267,6 +50281,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
+"jYm" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/white,
+/area/medical/chemistry)
 "jYO" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -50990,6 +51008,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
+"nsn" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
+/area/engine/engine_smes)
 "nsK" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -51378,8 +51400,11 @@
 /area/medical/medbay/zone2)
 "oZc" = (
 /obj/machinery/camera{
-	c_tag = "Chapel South";
+	c_tag = "Chemistry Lab East";
 	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
@@ -52544,6 +52569,16 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"tXW" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen";
+	name = "kitchen shutters"
+	},
+/obj/structure/displaycase/forsale,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 "tYi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment{
@@ -53059,6 +53094,15 @@
 	},
 /turf/open/floor/plating,
 /area/science/nanite)
+"wlq" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/displaycase/forsale,
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
 "wph" = (
 /obj/docking_port/stationary{
 	dheight = 4;
@@ -53383,6 +53427,10 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Chemistry Lab North";
+	network = list("xeno","rd")
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
@@ -81968,7 +82016,7 @@ bZB
 caC
 cjJ
 cSM
-cjd
+cSN
 cSW
 ckI
 rdP
@@ -82222,8 +82270,8 @@ bVf
 bGN
 bYE
 bCq
-bHE
-cjJ
+bUt
+nsn
 cij
 cjf
 cSX
@@ -89881,7 +89929,7 @@ aXj
 aVy
 aSY
 aVy
-aVy
+wlq
 aYI
 bah
 aJC
@@ -91528,7 +91576,7 @@ cwj
 cwu
 cAV
 cAZ
-cvl
+cAZ
 cvl
 cva
 cva
@@ -91784,7 +91832,7 @@ cww
 cwD
 cvv
 cvv
-cAY
+cvv
 cBb
 cBd
 cva
@@ -92453,7 +92501,7 @@ aTO
 cCq
 aVz
 aVz
-bak
+tXW
 bbz
 aYV
 bdp
@@ -92772,7 +92820,7 @@ nEk
 djq
 bip
 bip
-bip
+jYm
 hTU
 aoV
 aaa

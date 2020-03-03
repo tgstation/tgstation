@@ -8,7 +8,7 @@
 	var/vol = input(usr, "What volume would you like the sound to play at?",, 100) as null|num
 	if(!vol)
 		return
-	vol = CLAMP(vol, 1, 100)
+	vol = clamp(vol, 1, 100)
 
 	var/sound/admin_sound = new()
 	admin_sound.file = S

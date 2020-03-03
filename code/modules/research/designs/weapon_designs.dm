@@ -248,7 +248,7 @@
 
 /datum/design/wormhole_projector
 	name = "Bluespace Wormhole Projector"
-	desc = "A projector that emits high density quantum-coupled bluespace beams."
+	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires a bluespace anomaly core to function."
 	id = "wormholeprojector"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/silver = 2000, /datum/material/iron = 5000, /datum/material/diamond = 2000, /datum/material/bluespace = 3000)
@@ -315,8 +315,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/gravitygun
-	name = "One-point Bluespace-gravitational Manipulator"
-	desc = "A multi-mode device that blasts one-point bluespace-gravitational bolts that locally distort gravity."
+	name = "One-point Gravitational Manipulator"
+	desc = "A multi-mode device that blasts one-point bluespace-gravitational bolts that locally distort gravity. Requires a gravitational anomaly core to function."
 	id = "gravitygun"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/silver = 8000, /datum/material/uranium = 8000, /datum/material/glass = 12000, /datum/material/iron = 12000, /datum/material/diamond = 3000, /datum/material/bluespace = 3000)

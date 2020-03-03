@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "You can once again use another ID on help intent to purchase an item contained within a vend-a-tray, as intended."
