@@ -21,7 +21,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/upper)
 "ac" = (
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space)
 "ad" = (
 /turf/closed/wall,
@@ -289,7 +289,7 @@
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
 "aG" = (
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space/nearstation)
 "aH" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -319,6 +319,10 @@
 	},
 /obj/structure/railing{
 	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Cargo Upper Quartermaster's Pearch";
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm/perch)
@@ -1030,7 +1034,7 @@
 /area/crew_quarters/dorms)
 "cn" = (
 /obj/structure/lattice,
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space/nearstation)
 "co" = (
 /turf/closed/wall,
@@ -2624,7 +2628,7 @@
 /area/maintenance/department/security/upper)
 "fY" = (
 /obj/structure/lattice/catwalk,
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space/nearstation)
 "fZ" = (
 /obj/structure/sign/warning/vacuum/external{
@@ -2751,7 +2755,7 @@
 	dir = 8
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/openspace,
+/turf/open/space/basic,
 /area/maintenance/central)
 "gp" = (
 /obj/effect/turf_decal/trimline/white/filled/corner{
@@ -2877,6 +2881,10 @@
 	dir = 8
 	},
 /obj/structure/closet/secure_closet/quartermaster,
+/obj/machinery/camera{
+	c_tag = "Cargo Upper Quartermaster Office";
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm/perch)
 "gD" = (
@@ -4763,7 +4771,7 @@
 /turf/open/floor/plasteel,
 /area/hydroponics/upper)
 "ko" = (
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/ai_monitored/turret_protected/ai)
 "kp" = (
 /obj/machinery/light{
@@ -4775,7 +4783,7 @@
 	dir = 2;
 	network = list("AISat")
 	},
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/ai_monitored/turret_protected/ai)
 "kq" = (
 /obj/structure/cable,
@@ -4806,7 +4814,7 @@
 	pixel_x = -32
 	},
 /obj/structure/lattice,
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/ai_monitored/turret_protected/ai)
 "kt" = (
 /obj/machinery/porta_turret/ai,
@@ -4884,7 +4892,7 @@
 	pixel_x = 32
 	},
 /obj/structure/lattice,
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/ai_monitored/turret_protected/ai)
 "kC" = (
 /obj/structure/cable,
@@ -4905,7 +4913,7 @@
 /area/ai_monitored/turret_protected/ai)
 "kE" = (
 /obj/structure/lattice/catwalk,
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/ai_monitored/turret_protected/ai)
 "kF" = (
 /turf/open/floor/circuit,
@@ -5243,7 +5251,7 @@
 	pixel_x = -32
 	},
 /obj/structure/lattice,
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/ai_monitored/turret_protected/ai)
 "lj" = (
 /obj/machinery/porta_turret/ai,
@@ -5298,7 +5306,7 @@
 	pixel_x = 32
 	},
 /obj/structure/lattice,
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/ai_monitored/turret_protected/ai)
 "lm" = (
 /obj/machinery/light{
@@ -5310,7 +5318,7 @@
 	dir = 2;
 	network = list("AISat")
 	},
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/ai_monitored/turret_protected/ai)
 "ln" = (
 /obj/machinery/airalarm{
@@ -5333,7 +5341,7 @@
 	dir = 1;
 	network = list("AISat")
 	},
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/ai_monitored/turret_protected/ai)
 "lq" = (
 /obj/machinery/light,
@@ -5343,7 +5351,7 @@
 	dir = 1;
 	network = list("AISat")
 	},
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/ai_monitored/turret_protected/ai)
 "lr" = (
 /obj/machinery/camera/motion{
@@ -5360,7 +5368,7 @@
 	dir = 8;
 	network = list("AISat")
 	},
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space/nearstation)
 "lt" = (
 /obj/structure/lattice,
@@ -5369,7 +5377,7 @@
 	dir = 4;
 	network = list("AISat")
 	},
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space/nearstation)
 "lu" = (
 /obj/machinery/camera/motion{
@@ -5394,7 +5402,7 @@
 	dir = 8;
 	network = list("AISat")
 	},
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space/nearstation)
 "lx" = (
 /obj/structure/lattice,
@@ -5403,7 +5411,7 @@
 	dir = 2;
 	network = list("AISat")
 	},
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space/nearstation)
 "ly" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -5726,7 +5734,7 @@
 	dir = 8
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/openspace,
+/turf/open/space/basic,
 /area/maintenance/central)
 "mn" = (
 /obj/structure/chair/stool,
@@ -5882,7 +5890,7 @@
 	dir = 8
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/openspace,
+/turf/open/space/basic,
 /area/maintenance/central)
 "mH" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -6109,7 +6117,7 @@
 	dir = 8
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/openspace,
+/turf/open/space/basic,
 /area/maintenance/central)
 "nf" = (
 /obj/effect/turf_decal/tile/red{
@@ -7916,7 +7924,7 @@
 	dir = 8;
 	network = list("ss13","Secure")
 	},
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space)
 "rf" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -13550,7 +13558,7 @@
 "Bt" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/structure/cable,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/space/nearstation)
 "Bu" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -13791,7 +13799,7 @@
 /area/maintenance/central)
 "BZ" = (
 /obj/structure/railing,
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space)
 "Ca" = (
 /obj/structure/lattice/catwalk,
@@ -13802,7 +13810,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space)
 "Cc" = (
 /obj/effect/turf_decal/trimline/yellow/corner,
@@ -14032,7 +14040,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space)
 "CF" = (
 /obj/structure/girder,
@@ -14051,13 +14059,13 @@
 /obj/structure/railing{
 	dir = 5
 	},
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space)
 "CJ" = (
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space)
 "CL" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -14340,7 +14348,7 @@
 /area/engine/atmos/upper)
 "Ds" = (
 /obj/structure/lattice,
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space)
 "Dt" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -14741,14 +14749,14 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space/nearstation)
 "Eh" = (
 /obj/structure/lattice,
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space/nearstation)
 "Ei" = (
 /obj/structure/railing/corner{
@@ -15018,6 +15026,10 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -28
 	},
+/obj/machinery/camera{
+	c_tag = "Cargo Upper Request Lobby";
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm/perch)
 "ET" = (
@@ -15283,7 +15295,7 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space)
 "FD" = (
 /obj/structure/railing/corner{
@@ -17255,14 +17267,14 @@
 	dir = 4
 	},
 /obj/structure/lattice,
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space/nearstation)
 "Kl" = (
 /obj/structure/railing{
 	dir = 8
 	},
 /obj/structure/lattice,
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space/nearstation)
 "Km" = (
 /obj/structure/lattice,
@@ -17270,7 +17282,7 @@
 	icon_state = "railing";
 	dir = 8
 	},
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space/nearstation)
 "Kn" = (
 /turf/open/floor/plasteel/dark,
@@ -18724,7 +18736,7 @@
 "Nk" = (
 /obj/structure/lattice,
 /obj/structure/railing,
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space/nearstation)
 "Nl" = (
 /obj/effect/turf_decal/trimline/white/line{
@@ -18740,7 +18752,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space/nearstation)
 "Nn" = (
 /obj/effect/turf_decal/trimline/white/line{
@@ -18873,7 +18885,7 @@
 	dir = 8;
 	network = list("ss13","Secure")
 	},
-/turf/open/openspace,
+/turf/open/openspace/airless,
 /area/space)
 "NE" = (
 /obj/machinery/camera/motion{
@@ -20865,6 +20877,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/upper)
+"Rk" = (
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "SP" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -20874,19 +20890,29 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
-"Vl" = (
-/obj/machinery/recharge_station,
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai)
-"Wa" = (
+"Ug" = (
+/obj/machinery/door/firedoor,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace/airless,
+/area/hallway/primary/upper)
+"UI" = (
 /obj/machinery/atmospherics/pipe/simple/multiz,
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
-"Xo" = (
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
+"Vy" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/openspace/airless,
+/area/hallway/primary/upper)
+"YH" = (
+/turf/open/openspace/airless,
+/area/hallway/primary/upper)
+"ZS" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
 
 (1,1,1) = {"
 ac
@@ -43065,7 +43091,7 @@ bd
 bd
 bd
 Ci
-Xo
+Rk
 Cl
 ac
 ac
@@ -43322,7 +43348,7 @@ bd
 bd
 CG
 FG
-Xo
+Rk
 FH
 nk
 ac
@@ -43579,7 +43605,7 @@ CU
 nk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 ac
@@ -43831,12 +43857,12 @@ CU
 nk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 ac
@@ -44083,7 +44109,7 @@ CU
 nk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 CH
@@ -44093,7 +44119,7 @@ bf
 Dk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 ac
@@ -44335,7 +44361,7 @@ CU
 nk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 CH
@@ -44345,12 +44371,12 @@ bf
 Dk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 ac
@@ -44602,7 +44628,7 @@ bf
 Dk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 CH
@@ -44859,7 +44885,7 @@ bf
 Dk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 aY
@@ -45101,7 +45127,7 @@ mt
 ac
 CH
 bf
-Xo
+Rk
 bf
 Dk
 CH
@@ -45111,18 +45137,18 @@ bf
 Dk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 aY
 CX
-Xo
+Rk
 CX
 nc
-Xo
-Xo
+Rk
+Rk
 fN
-Xo
+Rk
 ac
 ac
 ac
@@ -45358,27 +45384,27 @@ cn
 ac
 CH
 bf
-Xo
+Rk
 bf
 Dk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 aY
 CX
-Xo
+Rk
 CX
 nc
-Xo
-Xo
-Xo
-Xo
-Xo
-Xo
+Rk
+Rk
+Rk
+Rk
+Rk
+Rk
 CU
-Xo
+Rk
 CU
 nk
 ac
@@ -45615,22 +45641,22 @@ mt
 ac
 CH
 bf
-Xo
+Rk
 bf
 Dk
 aY
 CX
-Xo
+Rk
 CX
 nc
-Xo
-Xo
+Rk
+Rk
 fN
-Xo
-Xo
-Xo
+Rk
+Rk
+Rk
 CU
-Xo
+Rk
 CU
 nk
 CH
@@ -45872,22 +45898,22 @@ mt
 cn
 aY
 CX
-Xo
+Rk
 CX
 nc
-Xo
-Xo
+Rk
+Rk
 fN
 fN
 fN
-Xo
+Rk
 CU
-Xo
+Rk
 CU
 nk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 CH
@@ -46129,22 +46155,22 @@ mt
 ac
 aK
 fN
-Xo
+Rk
 fN
 fN
-Xo
+Rk
 CU
-Xo
+Rk
 CU
 nk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 CH
@@ -46386,7 +46412,7 @@ ac
 ac
 CG
 CU
-Xo
+Rk
 CU
 nk
 CH
@@ -46396,7 +46422,7 @@ bf
 Dk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 CH
@@ -46643,7 +46669,7 @@ ac
 ac
 CH
 bf
-Xo
+Rk
 bf
 Dk
 CH
@@ -46653,12 +46679,12 @@ bf
 Dk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 CH
@@ -46900,7 +46926,7 @@ bd
 bd
 CH
 bf
-Xo
+Rk
 bf
 Dk
 CH
@@ -46910,12 +46936,12 @@ bf
 Dk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 aY
@@ -47157,7 +47183,7 @@ bd
 bd
 CH
 bf
-Xo
+Rk
 bf
 Dk
 CH
@@ -47167,7 +47193,7 @@ bf
 Dk
 CH
 bf
-Xo
+Rk
 bf
 Dk
 aY
@@ -47414,7 +47440,7 @@ bd
 bd
 CH
 bf
-Xo
+Rk
 bf
 Dk
 CH
@@ -47671,7 +47697,7 @@ bd
 bd
 CH
 bf
-Xo
+Rk
 bf
 Dk
 aY
@@ -55276,7 +55302,7 @@ jQ
 jQ
 jV
 kb
-Wa
+UI
 jQ
 ko
 kq
@@ -56302,7 +56328,7 @@ be
 be
 jQ
 jQ
-Vl
+ZS
 kh
 ki
 jQ
@@ -61380,10 +61406,10 @@ lC
 lC
 bv
 bv
-hy
-hy
-fm
-fm
+Ug
+Ug
+YH
+YH
 tt
 dA
 fm
@@ -61636,10 +61662,10 @@ bd
 bd
 bd
 bv
-fm
-fm
-hy
-hy
+YH
+YH
+Ug
+Ug
 tj
 tN
 Hz
@@ -61893,10 +61919,10 @@ bd
 bd
 bd
 bv
-fm
-fm
-fm
-fm
+YH
+YH
+YH
+YH
 sm
 xF
 Rg
@@ -62150,10 +62176,10 @@ bd
 bv
 bv
 bv
-fm
-fm
-fm
-fm
+YH
+YH
+YH
+YH
 sm
 Hv
 bv
@@ -62405,12 +62431,12 @@ bd
 bd
 bd
 bv
-fm
-fm
-fm
-fm
-fm
-fm
+YH
+YH
+YH
+YH
+YH
+YH
 sm
 Hv
 bv
@@ -62662,12 +62688,12 @@ bd
 bd
 bv
 bv
-fm
-fm
-fm
-fm
-fm
-fm
+YH
+YH
+YH
+YH
+YH
+YH
 sm
 Hy
 bv
@@ -62918,11 +62944,11 @@ bd
 bd
 bv
 bv
-fm
-fm
-fm
-fm
-fm
+YH
+YH
+YH
+YH
+YH
 rX
 tc
 so
@@ -63174,12 +63200,12 @@ rF
 bv
 bv
 bv
-lU
-fm
-fm
-fm
-fm
-fm
+Vy
+YH
+YH
+YH
+YH
+YH
 sm
 xF
 Eb
@@ -63431,11 +63457,11 @@ aM
 fm
 fm
 fm
-fm
-fm
-fm
-fm
-fm
+YH
+YH
+YH
+YH
+YH
 rX
 so
 Hv
@@ -63688,10 +63714,10 @@ fm
 fm
 fm
 fm
-fm
-fm
-fm
-fm
+YH
+YH
+YH
+YH
 ry
 si
 Hs
@@ -63945,8 +63971,8 @@ fm
 fm
 fm
 fm
-fm
-fm
+YH
+YH
 ry
 qY
 rE

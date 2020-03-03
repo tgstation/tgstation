@@ -21,6 +21,9 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
 
+/turf/open/openspace/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/openspace/debug/update_multiz()
 	..()
 	return TRUE
