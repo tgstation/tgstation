@@ -28,11 +28,11 @@
 
 	if(do_after(user, 30, target=I))
 		use(1)
-		if(istype(target, /obj/item/clothing/gloves/fingerless))
+		if(istype(I, /obj/item/clothing/gloves/fingerless))
 			var/obj/item/clothing/gloves/tackler/offbrand/O = new /obj/item/clothing/gloves/tackler/offbrand
 			to_chat(user, "<span class='notice'>You turn [I] into [O] with [src].</span>")
 			QDEL_NULL(I)
-			O.put_in_hands(user)
+			user.put_in_hands(O)
 			return
 
 		I.embedding = conferred_embed

@@ -243,7 +243,11 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/T = target
 		if(isnull(T.wear_suit) && isnull(T.w_uniform)) // who honestly puts all of their effort into tackling a naked guy?
-			defense_mod + 2
+			defense_mod += 2
+		if(T.is_shove_knockdown_blocked()) // riot armor and such
+			defense_mod += 5
+		if(T.is_holding_item_of_type(/obj/item/shield))
+			defense_mod += 2
 
 
 	// OF-FENSE
@@ -260,6 +264,13 @@
 	if(HAS_TRAIT(sacker, TRAIT_GIANT))
 		attack_mod += 2
 
+	if(ishuman(target))
+		var/mob/living/carbon/human/S = sacker
+
+		var/suit_slot = S.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+		if(suit_slot && (istype(suit_slot,/obj/item/clothing/suit/armor/riot))) // tackling in riot armor is more effective, but tiring
+			attack_mod += 3
+			sacker.adjustStaminaLoss(10)
 
 	var/r = rand(-3, 3) - defense_mod + attack_mod + skill_mod
 	return r
@@ -278,6 +289,7 @@
 			wearing a helmet should be enough to remove any chance of permanently paralyzing yourself and dramatically lessen knocking yourself unconscious, even with rocket gloves. Will expand on maybe
 
 		Wearing a helmet: -8
+		Wearing riot armor: -8
 		Clumsy: +6
 
 	Effects: Below are the outcomes based off your roll, in order of increasing severity
@@ -297,15 +309,18 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/S = user
 		var/head_slot = S.get_item_by_slot(ITEM_SLOT_HEAD)
+		var/suit_slot = S.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 		if(head_slot && (istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
+			oopsie_mod -= 8
+		if(suit_slot && (istype(suit_slot,/obj/item/clothing/suit/armor/riot)))
 			oopsie_mod -= 8
 
 	if(HAS_TRAIT(user, TRAIT_CLUMSY))
 		oopsie_mod += 6 //honk!
 
 	var/oopsie = rand(danger_zone, 100)
-	if(oopsie >= 99 && oopsie_mod < 0) // good job avoiding getting paralyzed! gold star!
-		to_chat(user, "<span class='usernotice'>You're really glad you're wearing a helmet!</span>")
+	if(oopsie >= 94 && oopsie_mod < 0) // good job avoiding getting paralyzed! gold star!
+		to_chat(user, "<span class='usernotice'>You're really glad you're wearing protection!</span>")
 	oopsie += oopsie_mod
 
 	var/squish_time
