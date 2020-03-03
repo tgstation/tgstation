@@ -493,3 +493,22 @@
 		X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
 		qdel(M)
 		to_chat(C, "<span class='notice'>[X] now has [X.monkeys] monkeys available.</span>")
+
+//auto pick up monkey
+/obj/machinery/computer/camera_advanced/xenobio/proc/redemption(mob/living/carbon/monkey/M)
+	if(!connected_recycler)
+		visible_message("<span class='warning'>Error in monkey redemption system. There is no connected monkey recycler. Use a multitool to link one.</span>")
+		return
+	if(!isturf(M.loc) || !GLOB.cameranet.checkTurfVis(M.loc))
+		visible_message("<span class='warning'>Target [M] is not near a camera. Cannot proceed.</span>")
+		return
+	if(mobarea.xenobiology_compatible)
+		if(!M.stat)
+			visible_message("<span class='notice'>Error in stat scan system, [M] don't valid target to reclaim for recycling!</span>")
+			return
+		M.visible_message("<span class='notice'>[M] vanishes as [p_theyre()] reclaimed for recycling!</span>")
+		connected_recycler.use_power(500)
+		monkeys += connected_recycler.cube_production
+		monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
+		qdel(M)
+		visible_message("<span class='notice'>[src] now has [monkeys] monkeys available.</span>")
