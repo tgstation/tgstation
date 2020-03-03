@@ -125,3 +125,49 @@
 
 /obj/item/organ/stomach/ethereal/proc/adjust_charge(amount)
 	crystal_charge = CLAMP(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_DANGEROUS)
+
+/obj/item/organ/stomach/nutriment
+	name = "Nutriment pump"
+	desc = "This is a stomach replacement. Vulnerable to electromagnetic interference."
+	icon_state = "stomach-nutri"
+	var/poison_amount = 2.5
+	slot = ORGAN_SLOT_STOMACH
+	organ_flags = ORGAN_SYNTHETIC
+	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
+
+/obj/item/organ/stomach/nutriment/plus
+	name = "Nutriment pump PLUS"
+	desc = "This stomach replacement will synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
+	icon_state = "stomach-nutri-plus"
+	var/hunger_threshold = NUTRITION_LEVEL_STARVING
+	var/synthesizing = 0
+	poison_amount = 5
+	maxHealth = STANDARD_ORGAN_THRESHOLD*1.5
+
+/obj/item/organ/stomach/nutriment/plus/on_life()
+	if(synthesizing)
+		return
+
+	if(owner.nutrition <= hunger_threshold)
+		synthesizing = TRUE
+		to_chat(owner, "<span class='notice'>You feel less hungry...</span>")
+		owner.adjust_nutrition(50)
+		addtimer(CALLBACK(src, .proc/synth_cool), 50)
+
+/obj/item/organ/stomach/nutriment/plus/proc/synth_cool()
+	synthesizing = FALSE
+
+/obj/item/organ/stomach/nutriment/emp_act(severity)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
+		return
+	owner.reagents.add_reagent(/datum/reagent/toxin/bad_food, poison_amount / severity)
+	to_chat(owner, "<span class='warning'>You feel like your insides are burning.</span>")
+
+/obj/item/organ/stomach/nutriment/plus/omega
+	name = "Nutriment pump OMEGA"
+	desc = "This stomach replacement will synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
+	icon_state = "stomach-nutri-omega"
+	hunger_threshold = NUTRITION_LEVEL_HUNGRY
+	poison_amount = 10
+	maxHealth = STANDARD_ORGAN_THRESHOLD*2
