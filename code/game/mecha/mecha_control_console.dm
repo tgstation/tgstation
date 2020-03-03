@@ -5,8 +5,8 @@
 	icon_keyboard = "tech_key"
 	req_access = list(ACCESS_ROBOTICS)
 	circuit = /obj/item/circuitboard/computer/mecha_control
-	ui_x = 550
-	ui_y = 400
+	ui_x = 500
+	ui_y = 500
 
 /obj/machinery/computer/mecha/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -30,8 +30,8 @@
 		var/list/mech_data = list(
 			name = M.name,
 			integrity = round((M.obj_integrity / M.max_integrity) * 100),
-			charge = M.cell.percent(),
-			airtank = M.return_air(),
+			charge = round(M?.cell.percent()),
+			airtank = M.internal_tank ? round(M.return_pressure()) : null,
 			pilot = M.occupant,
 			location = get_area_name(M, TRUE),
 			active_equipment = M.selected,
@@ -41,7 +41,7 @@
 		if(istype(M, /obj/mecha/working/ripley))
 			var/obj/mecha/working/ripley/RM = M
 			mech_data += list(
-				cargo_space = 100 - round((RM.cargo.len / RM.cargo_capacity) * 100)
+				cargo_space = round((RM.cargo.len / RM.cargo_capacity) * 100)
 		)
 
 		data["mechs"] += list(mech_data)
@@ -61,6 +61,7 @@
 			var/obj/mecha/M = MT.chassis
 			if(trim(message) && M)
 				M.occupant_message(message)
+				to_chat(usr, "<span class='notice'>Message sent.</span>")
 				. = TRUE
 		if("shock")
 			var/obj/item/mecha_parts/mecha_tracking/MT = locate(params["tracker_ref"])
@@ -79,10 +80,16 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion2"
 	w_class = WEIGHT_CLASS_SMALL
-	var/ai_beacon = FALSE //If this beacon allows for AI control. Exists to avoid using istype() on checking.
+	/// If this beacon allows for AI control. Exists to avoid using istype() on checking
+	var/ai_beacon = FALSE
+	/// Cooldown variable for EMP pulsing
 	var/recharging = FALSE
+	/// The Mecha that this tracking beacon is attached to
 	var/obj/mecha/chassis
 
+/**
+  * Returns a html formatted string describing attached mech status
+  */
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
 	if(!chassis)
 		return FALSE
@@ -93,7 +100,7 @@
 				<b>Cell Charge:</b> [isnull(cell_charge) ? "Not Found":"[chassis.cell.percent()]%"]<br>
 				<b>Airtank:</b> [chassis.internal_tank ? "[round(chassis.return_pressure(), 0.01)]" : "Not Equipped"] kPa<br>
 				<b>Pilot:</b> [chassis.occupant || "None"]<br>
-				<b>Location:</b> [get_area_name(chassis, TRUE)||"Unknown"]<br>
+				<b>Location:</b> [get_area_name(chassis, TRUE) || "Unknown"]<br>
 				<b>Active Equipment:</b> [chassis.selected || "None"]"}
 	if(istype(chassis, /obj/mecha/working/ripley))
 		var/obj/mecha/working/ripley/RM = chassis
@@ -120,6 +127,9 @@
 	M.diag_hud_set_mechtracking()
 	chassis = M
 
+/**
+  * Attempts to EMP mech that the tracker is attached to, if there is one and tracker is not on cooldown
+  */
 /obj/item/mecha_parts/mecha_tracking/proc/shock()
 	if(recharging)
 		return
@@ -128,6 +138,9 @@
 		addtimer(CALLBACK(src, /obj/item/mecha_parts/mecha_tracking/proc/recharge), 5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 		recharging = TRUE
 
+/**
+  * Resets recharge variable, allowing tracker to be EMP pulsed again
+  */
 /obj/item/mecha_parts/mecha_tracking/proc/recharge()
 	recharging = FALSE
 
