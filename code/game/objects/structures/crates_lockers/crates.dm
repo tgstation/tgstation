@@ -26,39 +26,31 @@
 	///counter for crates that push this one. Start from 1 and increment when Bumped.
 	var/bump_chain = 1
 
-/// When crate fail move to another place it call Bump(atom/A)
+
 /obj/structure/closet/crate/Bump(atom/A)
 	..()
-	///check that the crate can push the obstacle that is blocking it or not.
 	if(!istype(A, /obj/structure/closet/crate))
-		///hit an obstacle, previous crate must not try to move or it'll loop
 		bump_chain = 0
 	else
 		var/obj/structure/closet/crate/C = A
 		if(C.anchored)
-			///an anchored crate is an obstacle
 			bump_chain = 0
 
 /// When crate bumped by something called Bumped(AM)
 /obj/structure/closet/crate/Bumped(atom/movable/AM)
 
 	..()
-	///check, that crate bumbed by crate and can move.
 	if(istype(AM, /obj/structure/closet/crate) && !anchored)
 		var/obj/structure/closet/crate/previous_crate = AM
 		bump_chain = previous_crate.bump_chain + 1
-		///check for limit of bumped chain.
 		if(bump_chain > MAX_CRATE_BUMP_CHAIN)
-			///when reached, reset self and do nothing.
 			bump_chain = 1
 			return
 		var/d = get_dir(AM, src)
 		
-		/// Try to move next crate ,did it hit an obstacle?
 		if(step(src, d))
 			///move to follow
 			step(AM, d)
-	///reset of chain counter
 	bump_chain = 1
 
 /obj/structure/closet/crate/Initialize()
