@@ -415,10 +415,10 @@ Difficulty: Very Hard
 		. += observer_desc
 		. += "It is activated by [activation_method]."
 
-/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
+/obj/machinery/anomalous_crystal/Hear(datum/spoken_info/info)
 	..()
-	if(isliving(speaker))
-		ActivationReaction(speaker, ACTIVATE_SPEECH)
+	if(isliving(info.source))
+		ActivationReaction(info.source, ACTIVATE_SPEECH)
 
 /obj/machinery/anomalous_crystal/attack_hand(mob/user)
 	. = ..()

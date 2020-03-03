@@ -22,11 +22,11 @@
 	if(voice_activated)
 		flags_1 |= HEAR_1
 
-/obj/machinery/door/password/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/machinery/door/password/Hear(datum/spoken_info/info)
 	. = ..()
 	if(!density || !voice_activated || radio_freq)
 		return
-	if(findtext(raw_message,password))
+	if(findtext(info.raw_message, password))
 		open()
 
 /obj/machinery/door/password/Bumped(atom/movable/AM)

@@ -94,11 +94,12 @@
 		icon_state = "taperecorder_idle"
 
 
-/obj/item/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
+/obj/item/taperecorder/Hear(datum/spoken_info/info)
 	. = ..()
 	if(mytape && recording)
+		// Taperecorder did this weird thing even before, that it heard whatever, and however the one recording did o_o.
 		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [message]"
+		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [info.getMsg()]"
 
 /obj/item/taperecorder/verb/record()
 	set name = "Start Recording"

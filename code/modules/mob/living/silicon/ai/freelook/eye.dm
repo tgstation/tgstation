@@ -192,9 +192,9 @@
 	acceleration = !acceleration
 	to_chat(usr, "Camera acceleration has been toggled [acceleration ? "on" : "off"].")
 
-/mob/camera/aiEye/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+/mob/camera/aiEye/Hear(datum/spoken_info/info)
 	. = ..()
-	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && near_camera(speaker))
+	if(relay_speech && info.source && ai && !info.radio_freq && info.source != ai && near_camera(info.source))
 		ai.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
 
 /obj/effect/overlay/ai_detect_hud

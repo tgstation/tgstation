@@ -280,9 +280,9 @@
 	signal.levels = list(T.z)
 	signal.broadcast()
 
-/obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/item/radio/Hear(datum/spoken_info/info)
 	. = ..()
-	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range)
+	if(info.radio_freq || !broadcasting || get_dist(src, info.source) > canhear_range)
 		return
 
 	if(message_mode == MODE_WHISPER || message_mode == MODE_WHISPER_CRIT)

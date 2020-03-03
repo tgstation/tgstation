@@ -449,9 +449,9 @@
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
 	return
 
-/obj/mecha/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/mecha/Hear(datum/spoken_info/info)
 	. = ..()
-	if(speaker == occupant)
+	if(info.source == occupant)
 		if(radio?.broadcasting)
 			radio.talk_into(speaker, text, , spans, message_language)
 		//flick speech bubble

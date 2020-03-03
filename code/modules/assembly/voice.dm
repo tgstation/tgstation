@@ -27,12 +27,12 @@
 	. = ..()
 	. += "<span class='notice'>Use a multitool to swap between \"inclusive\", \"exclusive\", \"recognizer\", and \"voice sensor\" mode.</span>"
 
-/obj/item/assembly/voice/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/item/assembly/voice/Hear(datum/spoken_info/info)
 	. = ..()
-	if(speaker == src)
+	if(info.source == src)
 		return
 
-	if(listening && !radio_freq)
+	if(listening && !info.radio_freq)
 		record_speech(speaker, raw_message, message_language)
 	else
 		if(check_activation(speaker, raw_message))

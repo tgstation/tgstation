@@ -153,9 +153,9 @@
 	interact(user)
 	return ..()
 
-/obj/item/toy/eightball/haunted/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
+/obj/item/toy/eightball/haunted/Hear(datum/spoken_info/info)
 	. = ..()
-	last_message = raw_message
+	last_message = info.raw_message
 
 /obj/item/toy/eightball/haunted/start_shaking(mob/user)
 	// notify ghosts that someone's shaking a haunted eightball

@@ -230,26 +230,22 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	return 1
 
-/mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+/mob/living/Hear(datum/spoken_info/info)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 	if(!client)
 		return
 
 	var/deaf_message
 	var/deaf_type
-	if(speaker != src)
-		if(!radio_freq) //These checks have to be seperate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
-			deaf_message = "<span class='name'>[speaker]</span> [speaker.verb_say] something but you cannot hear [speaker.p_them()]."
+	if(info.source != src)
+		if(!info.radio_freq) //These checks have to be seperate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
+			deaf_message = "<span class='name'>[info.source]</span> [info.source.verb_say] something but you cannot hear [info.source.p_them()]."
 			deaf_type = 1
 	else
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
 		deaf_type = 2 // Since you should be able to hear yourself without looking
 
-	// Recompose message for AI hrefs, language incomprehension.
-	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
-
-	show_message(message, MSG_AUDIBLE, deaf_message, deaf_type)
-	return message
+	show_message(info.getMsg(), MSG_AUDIBLE, deaf_message, deaf_type)
 
 /mob/living/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, message_mode)
 	var/static/list/eavesdropping_modes = list(MODE_WHISPER = TRUE, MODE_WHISPER_CRIT = TRUE)

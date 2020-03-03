@@ -115,21 +115,19 @@ the new instance inside the host to be updated to the template's stats.
 			follow_next(Dir & NORTHWEST)
 			last_move_tick = world.time
 
-/mob/camera/disease/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/mob/camera/disease/Hear(datum/spoken_info/info)
 	. = ..()
-	var/atom/movable/to_follow = speaker
-	if(radio_freq)
-		var/atom/movable/virtualspeaker/V = speaker
+	var/atom/movable/to_follow = info.source
+	if(info.radio_freq)
+		var/atom/movable/virtualspeaker/V = info.source
 		to_follow = V.source
 	var/link
 	if(to_follow in hosts)
 		link = FOLLOW_LINK(src, to_follow)
 	else
 		link = ""
-	// Recompose the message, because it's scrambled by default
-	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
-	to_chat(src, "[link] [message]")
 
+	to_chat(src, "[link] [info.getMsg()]")
 
 /mob/camera/disease/mind_initialize()
 	. = ..()

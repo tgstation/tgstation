@@ -131,8 +131,8 @@
 				program.timer_trigger_delay = timer
 			. = TRUE
 
-/obj/machinery/nanite_programmer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/machinery/nanite_programmer/Hear(datum/spoken_info/info)
 	. = ..()
 	var/static/regex/when = regex("(?:^\\W*when|when\\W*$)", "i") //starts or ends with when
-	if(findtext(raw_message, when) && !istype(speaker, /obj/machinery/nanite_programmer))
+	if(findtext(info.raw_message, when) && !istype(info.source, /obj/machinery/nanite_programmer))
 		say("When you code it!!")
