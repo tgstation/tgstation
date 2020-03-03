@@ -469,6 +469,7 @@
 				X.monkeys--
 				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
 				to_chat(C, "<span class='notice'>[X] now has [X.monkeys] monkeys stored.</span>")
+				RegisterSignal(food, COMSIG_MOB_DEATH, .proc/redemption)
 		else
 			to_chat(C, "<span class='warning'>[X] needs to have at least 1 monkey stored. Currently has [X.monkeys] monkeys stored.</span>")
 
@@ -495,7 +496,11 @@
 		to_chat(C, "<span class='notice'>[X] now has [X.monkeys] monkeys available.</span>")
 
 //auto pick up monkey
-/obj/machinery/computer/camera_advanced/xenobio/proc/redemption(mob/living/carbon/monkey/M)
+/obj/machinery/computer/camera_advanced/xenobio/proc/redemption(mob/living/carbon/monkey/M, gibbed)
+	UnregisterSignal(M, COMSIG_MOB_DEATH)
+	if(gibbed)
+		visible_message("<span class='warning'>[M] gibbed. End of observation.</span>")
+		return	
 	if(!connected_recycler)
 		visible_message("<span class='warning'>Error in monkey redemption system. There is no connected monkey recycler. Use a multitool to link one.</span>")
 		return
@@ -509,6 +514,6 @@
 		M.visible_message("<span class='notice'>[M] vanishes as [p_theyre()] reclaimed for recycling!</span>")
 		connected_recycler.use_power(500)
 		monkeys += connected_recycler.cube_production
-		monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
+		monkeys = round(monkeys, 0.1)		//Prevents rounding errors
 		qdel(M)
 		visible_message("<span class='notice'>[src] now has [monkeys] monkeys available.</span>")
