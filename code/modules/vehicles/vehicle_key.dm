@@ -9,6 +9,12 @@
 	desc = "A keyring with a small steel key, and a rubber stun baton accessory."
 	icon_state = "keysec"
 
+/obj/item/key/security/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is putting \the [src] in [user.p_their()] ear and begins spinning! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.emote("spin")
+	addtimer(CALLBACK(user, /mob/living/.proc/gib), 20)
+	return BRUTE
+
 /obj/item/key/janitor
 	desc = "A keyring with a small steel key, and a pink fob reading \"Pussy Wagon\"."
 	icon_state = "keyjanitor"
