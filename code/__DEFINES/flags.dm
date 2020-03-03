@@ -137,7 +137,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 	if ((x.appearance_flags & KEEP_TOGETHER) && !HAS_TRAIT(x, TRAIT_KEEP_TOGETHER)) ADD_TRAIT(x, TRAIT_KEEP_TOGETHER, KEEP_TOGETHER_ORIGINAL); \
 	ADD_TRAIT(x, TRAIT_KEEP_TOGETHER, source);\
 	x.appearance_flags |= KEEP_TOGETHER} while(0)
-//Do not call unless ADD_KEEP_TOGETHER already called!
+
 #define REMOVE_KEEP_TOGETHER(x, source) do {\
 	REMOVE_TRAIT(x, TRAIT_KEEP_TOGETHER, source);\
 	if(HAS_TRAIT_FROM_ONLY(x, TRAIT_KEEP_TOGETHER, KEEP_TOGETHER_ORIGINAL))\
