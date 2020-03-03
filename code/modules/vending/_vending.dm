@@ -507,7 +507,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 							shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=1, pain_chance=5)
 							shard.AddElement(/datum/element/embed, shard.embedding)
 							C.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-							shard.embedding = initial(shard.embedding)
+							shard.embedding = list()
 							shard.AddElement(/datum/element/embed, shard.embedding)
 					if(4) // paralyze this binch
 						// the new paraplegic gets like 4 lines of losing their legs so skip them
@@ -524,7 +524,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 							new /obj/effect/gibspawner/human/bodypartless(get_turf(C))
 
 				C.apply_damage(max(0, squish_damage - crit_rebate), forced=TRUE, spread_damage=TRUE)
-				C.AddElement(/datum/element/squish, 18 SECONDS)
+				C.AddElement(/datum/element/squish, 80 SECONDS)
 			else
 				L.visible_message("<span class='danger'>[L] is crushed by [src]!</span>", \
 				"<span class='userdanger'>You are crushed by [src]!</span>")
@@ -684,6 +684,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			premium = TRUE
 		)
 		.["coin_records"] += list(data)
+	.["hidden_records"] = list()
 	for (var/datum/data/vending_product/R in hidden_records)
 		var/list/data = list(
 			path = replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-"),

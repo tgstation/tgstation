@@ -73,6 +73,7 @@
 /area/shuttle/auxillary_base)
 "X" = (
 /obj/machinery/camera{
+	c_tag = "Auxiliary Base";
 	dir = 1;
 	network = list("auxbase")
 	},

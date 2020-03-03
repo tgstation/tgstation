@@ -567,15 +567,6 @@
 /////////////////Tape////////////////////
 /////////////////////////////////////////
 
-/datum/design/sticky_tape
-	name = "Sticky Tape"
-	id = "sticky_tape"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/plastic = 500)
-	build_path = /obj/item/stack/sticky_tape
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
-
 /datum/design/super_sticky_tape
 	name = "Super Sticky Tape"
 	id = "super_sticky_tape"

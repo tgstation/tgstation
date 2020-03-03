@@ -132,11 +132,11 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "aR" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/plastitanium,
 /obj/machinery/atmospherics/pipe/layer_manifold/visible{
 	dir = 4
 	},
+/obj/structure/grille,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "aW" = (
@@ -4106,10 +4106,6 @@
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible{
 	dir = 6;
 	name = "N2 to Mix"
-	},
-/obj/machinery/atmospherics/pipe/simple/supplymain/visible/layer1{
-	dir = 4;
-	name = "N2"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
