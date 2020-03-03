@@ -526,7 +526,12 @@
 				temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
 			temp_html += "</tr><tr>"
 			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
-				temp_html += "<td><div class='statusLine'>|</div></td>"
+				var/above = 1+(i-1)*2
+				var/below = i*2
+				if(sequence[above] == "X" || sequence[below] == "X")
+					temp_html += "<td><div class='statusLine'><span class='incompleteBlock'>|</span></div></td>"
+				else
+					temp_html += "<td><div class='statusLine'>|</div></td>"
 			temp_html += "</tr><tr>"
 			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
 				var/num = i*2
