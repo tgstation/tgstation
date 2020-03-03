@@ -14,9 +14,14 @@
 	font-family: Fixed, monospace;
 	float: left;
 }
-.incompleteBlock
+a.incompleteBlock
 {
-	color: #ff0000;
+	background: #8a4040;
+}
+a.incompleteBlock:hover
+{
+	color: #40628a;
+	background: #ffffff;
 }
 img.selected
 {

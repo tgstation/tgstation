@@ -523,20 +523,22 @@
 			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
 				var/num = 1+(i-1)*2
 				var/genenum = num+(DNA_SEQUENCE_LENGTH*2*(block-1))
-				temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
+				if(sequence[num] == "X")
+					temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a class='incompleteBlock' href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
+				else
+					temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
 			temp_html += "</tr><tr>"
 			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
-				var/above = 1+(i-1)*2
-				var/below = i*2
-				if(sequence[above] == "X" || sequence[below] == "X")
-					temp_html += "<td><div class='statusLine'><span class='incompleteBlock'>|</span></div></td>"
-				else
-					temp_html += "<td><div class='statusLine'>|</div></td>"
+				temp_html += "<td><div class='statusLine'>|</div></td>"
 			temp_html += "</tr><tr>"
 			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
 				var/num = i*2
 				var/genenum = num+(DNA_SEQUENCE_LENGTH*2*(block-1))
-				temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
+
+				if(sequence[num] == "X")
+					temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a class='incompleteBlock' href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
+				else
+					temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
 			temp_html += "</tr></table></div>"
 		temp_html += "<br><br><br><br><br>"
 	else
