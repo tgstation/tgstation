@@ -53,8 +53,8 @@
 /obj/effect/mob_spawn/human/dwarven_sarcophagus/Initialize(mapload)
 	. = ..()
 	var/area/A = get_area(src)
-
-	notify_ghosts("A Dwarf is ready to awaken at [A.name]", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_DWARF)
+	if(A)
+		notify_ghosts("A Dwarf is ready to awaken at [A.name]", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_DWARF)
 
 /obj/effect/mob_spawn/human/dwarven_sarcophagus/special(mob/living/new_spawn)
 
