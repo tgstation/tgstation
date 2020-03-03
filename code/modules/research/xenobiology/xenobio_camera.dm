@@ -1,3 +1,19 @@
+///Slime management console upgrade state define
+#define XENO_UPGRADE_REDEPTION	1
+
+///Slime management console upgrade
+/obj/item/xeno_console_upgrade
+	name = "Slime management console upgrade disk"
+	desc = "It seems to be empty."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "datadisk3"
+	var/upgrade
+
+///Slime management console redemption upgrade
+/obj/item/xeno_console_upgrade/redemption
+	desc = "Set of micro sensors and beacons allow automatised monkey recycling."
+	upgrade = XENO_UPGRADE_REDEPTION
+
 //Xenobio control console
 /mob/camera/aiEye/remote/xenobio
 	visible_icon = TRUE
@@ -40,6 +56,9 @@
 	icon_keyboard = "rd_key"
 
 	light_color = LIGHT_COLOR_PINK
+
+	///Hold upgrades
+	var/upgrade = FALSE 
 
 /obj/machinery/computer/camera_advanced/xenobio/Initialize(mapload)
 	. = ..()
@@ -191,6 +210,12 @@
 			visible_message("<span class='notice'>[src] buzzes and displays a message: Slime extract already researched!</span>")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 3, -1)
 			return
+	else if(istype(W, /obj/item/xeno_console_upgrade))
+		var/obj/item/xeno_console_upgrade/xeno_up = W
+		if(!(upgrade & xeno_up.upgrade))
+			upgrade |= xeno_up.upgrade
+			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+			qdel(W)
 	..()
 
 /obj/machinery/computer/camera_advanced/xenobio/multitool_act(mob/living/user, obj/item/multitool/I)
@@ -469,7 +494,8 @@
 				X.monkeys--
 				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
 				to_chat(C, "<span class='notice'>[X] now has [X.monkeys] monkeys stored.</span>")
-				X.RegisterSignal(food, COMSIG_MOB_DEATH, .proc/redemption)
+				if(upgrade & XENO_UPGRADE_REDEPTION)
+					X.RegisterSignal(food, COMSIG_MOB_DEATH, .proc/redemption)
 		else
 			to_chat(C, "<span class='warning'>[X] needs to have at least 1 monkey stored. Currently has [X.monkeys] monkeys stored.</span>")
 

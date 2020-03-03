@@ -73,3 +73,13 @@
 	build_path = /obj/item/swapper
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/xeno_up_redemption
+	name = "Automatised Monkey Recycling"
+	desc = "Slime management console upgrade disk. Contain set of micro sensors and beacons allow automatised monkey recycling."
+	id = "xeno_up_redemption"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/gold = 500, /datum/material/silver = 500)
+	build_path = /obj/item/xeno_console_upgrade/redemption
+	category = list("Bluespace Travel")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
