@@ -24,12 +24,12 @@
 	var/atom/owner = parent
 	owner.name += " ([label_name])"
 
+/datum/component/label/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/RemoveLabel)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/Examine)
 
-/datum/component/label/Destroy()
+/datum/component/label/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_EXAMINE))
-	return ..()
 
 /datum/component/label/proc/RemoveLabel(datum/source, obj/item/attacker, mob/user, params)
 	// If the attacking object is not a hand labeler or its mode is 1 (has a label ready to apply), return.
