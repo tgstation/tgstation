@@ -29,18 +29,19 @@
 		var/obj/mecha/M = MT.chassis
 		var/list/mech_data = list(
 			name = M.name,
-			integrity = round((M.obj_integrity / M.max_integrity * 100), 0.01),
+			integrity = round((M.obj_integrity / M.max_integrity) * 100),
 			charge = M.cell.percent(),
-			airtank = round(M.return_pressure(), 0.01),
+			airtank = M.return_air(),
 			pilot = M.occupant,
 			location = get_area_name(M, TRUE),
 			active_equipment = M.selected,
+			emp_recharging = MT.recharging,
 			tracker_ref = REF(MT)
 		)
 		if(istype(M, /obj/mecha/working/ripley))
 			var/obj/mecha/working/ripley/RM = M
 			mech_data += list(
-				cargo_space = round((RM.cargo.len / RM.cargo_capacity * 100), 0.01)
+				cargo_space = 100 - round((RM.cargo.len / RM.cargo_capacity) * 100)
 		)
 
 		data["mechs"] += list(mech_data)

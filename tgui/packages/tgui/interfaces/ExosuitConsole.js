@@ -1,6 +1,7 @@
+import { toFixed } from 'common/math';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, Grid, NoticeBox, Section, LabeledList } from '../components';
+import { AnimatedNumber, Box, Button, Grid, NoticeBox, Section, LabeledList } from '../components';
 
 export const ExosuitConsole = props => {
   const { act, data } = useBackend(props);
@@ -34,8 +35,9 @@ export const ExosuitConsole = props => {
                 })} />
               <Button
                 icon="wifi"
-                content="EMP Pulse"
+                content={mech.emp_recharging ? "EMP Pulse" : "Recharging..."}
                 color="bad"
+                disabled={mech.emp_recharging}
                 onClick={() => act('shock', {
                   tracker_ref: mech.tracker_ref,
                 })} />
@@ -62,20 +64,12 @@ export const ExosuitConsole = props => {
                     {mech.charge}%
                   </Box>
                 </LabeledList.Item>
-                <LabeledList.Item label="Airtank">
-                  {mech.airtank} kPA
+                <LabeledList.Item label="Air">
+                  <AnimatedNumber
+                    value={mech.airtank}
+                    format={value => toFixed(value, 2)} />
+                {' kPa'}
                 </LabeledList.Item>
-                {!!mech.cargo_space && (
-                  <LabeledList.Item label="Used Cargo Space">
-                    <Box color={mech.cargo_space <= 30
-                      ? 'bad'
-                      : mech.cargo_space <= 70
-                        ? 'average'
-                        : 'good'}>
-                      {mech.cargo_space}%
-                    </Box>
-                  </LabeledList.Item>
-                )}
               </LabeledList>
             </Grid.Column>
             <Grid.Column>
@@ -89,6 +83,17 @@ export const ExosuitConsole = props => {
                 <LabeledList.Item label="Active Equipment">
                   {mech.active_equipment ? mech.active_equipment : "None"}
                 </LabeledList.Item>
+                {!!mech.cargo_space && (
+                  <LabeledList.Item label="Cargo Load">
+                    <Box color={mech.cargo_space <= 30
+                      ? 'good'
+                      : mech.cargo_space <= 70
+                        ? 'average'
+                        : 'bad'}>
+                      {mech.cargo_space}%
+                    </Box>
+                  </LabeledList.Item>
+                )}
               </LabeledList>
             </Grid.Column>
           </Grid>
