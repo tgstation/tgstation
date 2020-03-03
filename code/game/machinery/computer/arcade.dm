@@ -78,9 +78,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	Reset()
 
 /obj/machinery/computer/arcade/proc/prizevend(mob/user, prizes = 1)
-	if(user.mind.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && HAS_TRAIT(user, GAMER_GOD))
-		visible_message("<span class='notice'>[user] inputs an intense cheat code! [src] beeps, \"CODE ACTIVE: EXTRA PRIZE.\"</span>",\
-		 "<span class='notice'>You hear thousands of buttons being pressed, followed by a robotic voice saying \"CODE ACTIVE: EXTRA PRIZE.\".</span>")
+	if(user.mind.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && HAS_TRAIT(user, TRAIT_GAMERGOD))
+		visible_message("<span class='notice'>[user] inputs an intense cheat code!",\
+		"<span class='notice'>You hear a flurry of buttons being pressed.</span>")
+		say("CODE ACTIVATED: EXTRA PRIZES.")
 		prizes *= 2
 	for(var/i = 0, i < prizes, i++)
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
