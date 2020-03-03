@@ -10,9 +10,12 @@
 	icon_state = "keysec"
 
 /obj/item/key/security/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] is putting \the [src] in [user.p_their()] ear and starts their motor! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	user.say("Vroom vroom!", forced="secway key suicide")
-	user.emote("spin")
+	if(!user.emote("spin")) //In the off chance that someone attempts this suicide while under the effects of mime's bane they deserve the silliness.
+		user.visible_message("<span class='suicide'>[user] is putting \the [src] in [user.p_their()] ear and starts [user.p_their()] motor! It looks like [user.p_theyre()] trying to commit suicide... But [user.p_they()] sputters and stalls out! </span>")
+		playsound(src, 'sound/misc/sadtrombone.ogg', 50, TRUE, -1)
+		return SHAME
+	user.visible_message("<span class='suicide'>[user] is putting \the [src] in [user.p_their()] ear and starts [user.p_their()] motor! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.say("Vroom vroom!!", forced="secway key suicide") //Not doing a shamestate here, because even if they fail to speak they're spinning.
 	addtimer(CALLBACK(user, /mob/living/.proc/gib), 20)
 	return MANUAL_SUICIDE
 
