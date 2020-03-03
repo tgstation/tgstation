@@ -57,7 +57,7 @@
 	display_name = "Basic Medical Equipment"
 	description = "Basic medical tools and equipment."
 	design_ids = list("cybernetic_liver", "cybernetic_heart", "cybernetic_lungs", "scalpel", "circular_saw", "surgicaldrill", "retractor", "cautery", "hemostat",
-					"surgical_drapes", "syringe", "plumbing_rcd", "beaker", "large_beaker", "xlarge_beaker", "dropper")
+					"surgical_drapes", "syringe", "plumbing_rcd", "beaker", "large_beaker", "xlarge_beaker", "dropper", "defibmountdefault")
 
 /////////////////////////Biotech/////////////////////////
 /datum/techweb_node/biotech
@@ -1145,29 +1145,19 @@
 	hidden = TRUE
 	experimental = TRUE
 
-/datum/techweb_node/sticky_basic
-	id = "sticky_basic"
-	display_name = "Basic Sticky Technology"
-	description = "The only thing left to do after researching this tech is to start printing out a bunch of 'kick me' signs."
-	prereq_ids = list("base")
-	design_ids = list("sticky_tape")
 
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	export_price = 2500
-	hidden = TRUE
-	experimental = TRUE
 
 // Can be researched after getting the basic sticky technology from the BEPIS major reward
 /datum/techweb_node/sticky_advanced
 	id = "sticky_advanced"
 	display_name = "Advanced Sticky Technology"
 	description = "Taking a good joke too far? Nonsense!"
-	prereq_ids = list("sticky_basic")
 	design_ids = list("super_sticky_tape", "pointy_tape")
 
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 2500
 	hidden = TRUE
+	experimental = TRUE
 
 //Helpers for debugging/balancing the techweb in its entirety!
 /proc/total_techweb_exports()
