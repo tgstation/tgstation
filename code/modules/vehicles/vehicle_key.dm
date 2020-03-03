@@ -10,10 +10,11 @@
 	icon_state = "keysec"
 
 /obj/item/key/security/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] is putting \the [src] in [user.p_their()] ear and begins spinning! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] is putting \the [src] in [user.p_their()] ear and starts their motor! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.say("Vroom vroom!", forced="secway key suicide")
 	user.emote("spin")
 	addtimer(CALLBACK(user, /mob/living/.proc/gib), 20)
-	return BRUTE
+	return MANUAL_SUICIDE
 
 /obj/item/key/janitor
 	desc = "A keyring with a small steel key, and a pink fob reading \"Pussy Wagon\"."
