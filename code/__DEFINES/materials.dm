@@ -10,3 +10,4 @@
 #define MATERIAL_NO_EFFECTS (1<<2)
 #define MATERIAL_AFFECT_STATISTICS (1<<3)
 
+#define MATERIAL_SOURCE(mat) "[mat.name]_material"

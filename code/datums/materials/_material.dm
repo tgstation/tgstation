@@ -53,8 +53,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		if(alpha)
 			source.alpha = alpha
 		if(texture_layer_icon_state)
-			//if applied repeatedly, like in a stack, transparent textures will become darker. Needs a fix.
-			ADD_KEEP_TOGETHER(source)
+			ADD_KEEP_TOGETHER(source, MATERIAL_SOURCE(src))
 			source.filters += cached_texture_filter
 
 	if(material_flags & MATERIAL_ADD_PREFIX)
@@ -116,7 +115,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 			source.remove_atom_colour(FIXED_COLOUR_PRIORITY, color)
 		if(texture_layer_icon_state)
 			source.filters -= cached_texture_filter
-			REMOVE_KEEP_TOGETHER(source)
+			REMOVE_KEEP_TOGETHER(source, MATERIAL_SOURCE(src))
 		source.alpha = initial(source.alpha)
 
 	if(material_flags & MATERIAL_ADD_PREFIX)

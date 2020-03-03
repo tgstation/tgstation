@@ -81,9 +81,6 @@
 
 	var/list/alternate_appearances
 
-	///counts how many things are applying KEEP_TOGETHER to our appearance_flags, remove KEEP_TOGETHER when this reaches 0
-	var/keep_together_counter = 0
-
 /**
   * Called when an atom is created in byond (built in engine proc)
   *
