@@ -1583,7 +1583,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/security/brig)
+/area/security/prison)
 "aem" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -1613,7 +1613,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel,
-/area/security/brig)
+/area/security/prison)
 "aeo" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 30
@@ -1622,11 +1622,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/security/brig)
-"aep" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/security/brig)
+/area/security/prison)
 "aeq" = (
 /obj/machinery/light{
 	dir = 1
@@ -1636,7 +1632,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/security/brig)
+/area/security/prison)
 "aer" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
@@ -1649,7 +1645,7 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/plasteel,
-/area/security/brig)
+/area/security/prison)
 "aes" = (
 /obj/machinery/suit_storage_unit/security,
 /obj/effect/turf_decal/tile/red,
@@ -1784,12 +1780,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/prison)
-"aeP" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/security/brig)
 "aeQ" = (
 /obj/machinery/light{
 	dir = 4
@@ -1815,11 +1805,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"aeV" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel,
-/area/security/brig)
 "aeW" = (
 /obj/machinery/requests_console{
 	department = "Security";
@@ -2043,15 +2028,22 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/item/clothing/gloves/color/orange,
 /obj/machinery/light,
+/obj/item/storage/box/prisoner{
+	pixel_y = 8
+	},
+/obj/item/storage/box/prisoner,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "afz" = (
 /obj/structure/table,
-/obj/item/storage/box/hug,
+/obj/item/storage/box/hug{
+	pixel_x = 4;
+	pixel_y = 3
+	},
 /obj/item/razor{
-	pixel_x = -6
+	pixel_x = -8;
+	pixel_y = 3
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -2081,7 +2073,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/security/brig)
+/area/security/prison)
 "afC" = (
 /obj/machinery/computer/arcade,
 /obj/structure/cable,
@@ -2128,7 +2120,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/security/brig)
+/area/security/prison)
 "afI" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -2311,7 +2303,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/security/brig)
+/area/security/prison)
 "agj" = (
 /turf/closed/wall,
 /area/security/brig)
@@ -2322,7 +2314,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/security/brig)
+/area/security/prison)
 "agl" = (
 /obj/machinery/door/airlock/security{
 	name = "Interrogation";
@@ -4223,10 +4215,10 @@
 /turf/open/floor/plasteel,
 /area/security/processing)
 "akc" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/processing)
 "akd" = (
@@ -4554,11 +4546,11 @@
 /turf/open/floor/plasteel,
 /area/security/processing)
 "akK" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/processing)
 "akL" = (
@@ -48015,7 +48007,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/security/brig)
+/area/security/prison)
 "cLe" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -49201,7 +49193,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/security/brig)
+/area/security/prison)
 "fqQ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -49570,13 +49562,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
-"gys" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/security/brig)
 "gBr" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/manifold/general/hidden,
@@ -50067,6 +50052,16 @@
 /obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
+"imI" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen";
+	name = "kitchen shutters"
+	},
+/obj/structure/displaycase/forsale,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 "ink" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
@@ -50164,7 +50159,6 @@
 /area/medical/chemistry)
 "iLI" = (
 /obj/structure/table,
-/obj/item/restraints/handcuffs,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -50172,8 +50166,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/item/reagent_containers/spray/pepper,
 /obj/machinery/light,
+/obj/item/clothing/gloves/color/orange,
+/obj/item/restraints/handcuffs,
+/obj/item/reagent_containers/spray/pepper,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "iMP" = (
@@ -51172,6 +51168,15 @@
 	},
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
+"lCl" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/displaycase/forsale,
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
 "lEW" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /obj/machinery/meter,
@@ -51461,6 +51466,14 @@
 "mtK" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/starboard/aft)
+"mtO" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "muM" = (
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
@@ -53044,11 +53057,6 @@
 	},
 /turf/open/floor/plating,
 /area/security/execution/transfer)
-"rcw" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/security/processing)
 "rcD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -53116,7 +53124,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel,
-/area/security/brig)
+/area/security/prison)
 "ryv" = (
 /obj/structure/bed,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -53457,7 +53465,7 @@
 /obj/structure/table,
 /obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel,
-/area/security/brig)
+/area/security/prison)
 "sAk" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -53498,7 +53506,7 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel,
-/area/security/brig)
+/area/security/prison)
 "sHd" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -80151,9 +80159,9 @@ gXs
 aaa
 aiU
 aju
-rcw
+akd
 akK
-rcw
+akd
 ame
 amM
 anv
@@ -81942,7 +81950,7 @@ adb
 jjc
 ael
 rtu
-agj
+acd
 agj
 agj
 agj
@@ -82198,7 +82206,7 @@ abD
 gXJ
 aai
 aen
-gys
+abh
 afH
 agj
 agM
@@ -82711,8 +82719,8 @@ acg
 abL
 ade
 adJ
-aep
-gys
+aaU
+abh
 cJX
 agj
 ahs
@@ -82969,7 +82977,7 @@ abA
 abA
 aai
 aeq
-aeV
+tcB
 sAf
 agj
 ahm
@@ -83225,8 +83233,8 @@ aaK
 aaK
 kdJ
 eBc
-aeP
-akv
+til
+mtO
 agk
 agF
 agP
@@ -92008,7 +92016,7 @@ aXj
 aVy
 aSY
 aVy
-aVy
+lCl
 aYI
 bah
 aJC
@@ -94580,7 +94588,7 @@ aTO
 cCq
 aVz
 aVz
-bak
+imI
 bbz
 aYV
 bdp
