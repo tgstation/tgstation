@@ -38,7 +38,6 @@
 
 /// When crate bumped by something called Bumped(AM)
 /obj/structure/closet/crate/Bumped(atom/movable/AM)
-
 	..()
 	if(istype(AM, /obj/structure/closet/crate) && !anchored)
 		var/obj/structure/closet/crate/previous_crate = AM
