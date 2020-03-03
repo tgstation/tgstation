@@ -495,7 +495,7 @@
 		qdel(M)
 		to_chat(C, "<span class='notice'>[X] now has [X.monkeys] monkeys available.</span>")
 
-//auto pick up monkey
+///Auto monkey return, called on spawned monkey death
 /obj/machinery/computer/camera_advanced/xenobio/proc/redemption(mob/living/carbon/monkey/M, gibbed)
 	UnregisterSignal(M, COMSIG_MOB_DEATH)
 	if(gibbed)
