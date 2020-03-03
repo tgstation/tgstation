@@ -168,6 +168,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
+
+///Used for managing KEEP_TOGETHER in [appearance_flags]
 #define TRAIT_KEEP_TOGETHER 	"keep-together"
 
 // item traits
