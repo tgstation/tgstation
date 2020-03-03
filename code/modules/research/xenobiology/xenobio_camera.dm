@@ -510,3 +510,4 @@
 	monkeys = round(monkeys, 0.1)		//Prevents rounding errors
 	qdel(M)
 	visible_message("<span class='notice'>[src] now has [monkeys] monkeys available.</span>")
+
