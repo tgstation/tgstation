@@ -854,6 +854,12 @@
 	new_hat.forceMove(src)
 	update_icons()
 
+/mob/living/silicon/robot/Exited(atom/A)
+	if(hat && hat == A)
+		hat = null
+	update_icons()
+	. = ..()
+
 /mob/living/silicon/robot/proc/make_shell(var/obj/item/borg/upgrade/ai/board)
 	if(!board)
 		upgrades |= new /obj/item/borg/upgrade/ai(src)
