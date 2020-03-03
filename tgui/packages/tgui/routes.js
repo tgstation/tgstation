@@ -41,6 +41,7 @@ import { EightBallVote } from './interfaces/EightBallVote';
 import { Electropack } from './interfaces/Electropack';
 import { EmergencyShuttleConsole } from './interfaces/EmergencyShuttleConsole';
 import { EngravedMessage } from './interfaces/EngravedMessage';
+import { ExosuitConsole } from './interfaces/ExosuitConsole';
 import { Gps } from './interfaces/Gps';
 import { GravityGenerator } from './interfaces/GravityGenerator';
 import { GulagTeleporterConsole } from './interfaces/GulagTeleporterConsole';
@@ -302,6 +303,10 @@ const ROUTES = {
   engraved_message: {
     component: () => EngravedMessage,
     scrollable: false,
+  },
+  exosuit_console: {
+    component: () => ExosuitConsole,
+    scrollable: true,
   },
   gps: {
     component: () => Gps,
