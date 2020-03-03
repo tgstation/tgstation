@@ -37,19 +37,34 @@
 	if(!T)
 		return
 
+	var/mob/living/living_parent = parent
+
 	var/tint_factor = 1
+	var/brightness_mult = 1
 
 	if(iscarbon(parent))
 		var/mob/living/carbon/C = parent
-		if(C?.glasses?.tint)
-			tint_factor = 1/(1 + C.glasses.tint)
+		var/totaltint = 0
+		if(C?.glasses)
+			totaltint += C.glasses.tint
+			brightness_mult = min(1, (2 - C.glasses.darkness_view) * 0.33)
+		var/obj/item/organ/eyes/eye = C.getorganslot(ORGAN_SLOT_EYES)
+		if(eye?.tint)
+			totaltint += eye.tint
+		tint_factor = 1/(1 + totaltint)
+
+	var/apparent_brightness = T.lighting_object.cached_max * tint_factor * brightness_mult
 
 	// update their mood
-	var/change = (((T.lighting_object.cached_max * tint_factor) - light_level_threshold) ** 2)*10
-	if((T.lighting_object.cached_max * tint_factor) < light_level_threshold)
-		light_mood -= change
+	if(living_parent.loc != T) // inside something
+		light_mood -= 4
 	else
-		light_mood += change
+		var/change = ((apparent_brightness - light_level_threshold) ** 2)*10
+
+		if(apparent_brightness < light_level_threshold)
+			light_mood -= change
+		else
+			light_mood += change
 
 	light_mood = clamp(light_mood, 0, 100)
 	switch(light_mood)
@@ -58,7 +73,6 @@
 		if(light_mood_threshold/2 to light_mood_threshold)
 			SEND_SIGNAL(parent, COMSIG_ADD_MOOD_EVENT, "missing_the_light", /datum/mood_event/missing_the_light)
 
-	var/mob/living/living_parent = parent
 	if(light_mood >= light_mood_threshold)
 		if(mesmerised)
 			living_parent.clear_fullscreen("mesmerised")
@@ -66,7 +80,7 @@
 			mesmerised = FALSE
 		return	// mood is okay, done here
 
-	if((T.lighting_object.cached_max * tint_factor) < light_level_threshold)
+	if(apparent_brightness < light_level_threshold)
 		return  // not bright enough, done here
 
 	living_parent.Stun(2 SECONDS)
