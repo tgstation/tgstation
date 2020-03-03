@@ -30,8 +30,8 @@
 		var/list/mech_data = list(
 			name = M.name,
 			integrity = round((M.obj_integrity / M.max_integrity) * 100),
-			charge = round(M?.cell.percent()),
-			airtank = M.internal_tank ? round(M.return_pressure()) : null,
+			charge = round(M.cell?.percent()),
+			airtank = M.internal_tank ? M.return_pressure() : null,
 			pilot = M.occupant,
 			location = get_area_name(M, TRUE),
 			active_equipment = M.selected,

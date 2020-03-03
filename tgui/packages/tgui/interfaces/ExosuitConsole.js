@@ -67,8 +67,7 @@ export const ExosuitConsole = props => {
               {mech.airtank
                 ? <AnimatedNumber
                   value={mech.airtank}
-                  format={value => toFixed(value, 2)} />
-                + ' kPa'
+                  format={value => toFixed(value, 2) + ' kPa'} />
                 : "Not Equipped"}
             </LabeledList.Item>
             <LabeledList.Item label="Pilot">
@@ -80,7 +79,7 @@ export const ExosuitConsole = props => {
             <LabeledList.Item label="Active Equipment">
               {mech.active_equipment ? mech.active_equipment : "None"}
             </LabeledList.Item>
-            {!!mech.cargo_space && (
+            {mech.cargo_space >= 0 && (
               <LabeledList.Item label="Used Cargo Space">
                 <Box color={mech.cargo_space <= 30
                   ? 'good'
