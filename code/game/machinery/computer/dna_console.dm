@@ -923,7 +923,7 @@
 
 		if("add_advinjector")
 			if(LAZYLEN(injector_selection) < max_injector_selections)
-				var/new_selection = input(usr, "Enter Adv. Injector name", "Advanced Injectors") as text|null
+				var/new_selection = stripped_input(usr, "Enter Adv. Injector name", "Advanced Injectors")
 				if(new_selection && !(new_selection in injector_selection))
 					injector_selection[new_selection] = list()
 

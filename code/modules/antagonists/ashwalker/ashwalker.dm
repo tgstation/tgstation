@@ -1,6 +1,7 @@
 /datum/team/ashwalkers
 	name = "Ashwalkers"
 	show_roundend_report = FALSE
+	var/list/players_spawned = new
 
 /datum/antagonist/ashwalker
 	name = "Ash Walker"

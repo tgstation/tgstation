@@ -38,6 +38,7 @@ import { DecalPainter } from './interfaces/DecalPainter';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { DnaVault } from './interfaces/DnaVault';
 import { EightBallVote } from './interfaces/EightBallVote';
+import { Electropack } from './interfaces/Electropack';
 import { EmergencyShuttleConsole } from './interfaces/EmergencyShuttleConsole';
 import { EngravedMessage } from './interfaces/EngravedMessage';
 import { Gps } from './interfaces/Gps';
@@ -57,6 +58,7 @@ import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { MiningVendor } from './interfaces/MiningVendor';
 import { Mint } from './interfaces/Mint';
+import { MalfunctionModulePicker } from './interfaces/MalfunctionModulePicker';
 import { Mule } from './interfaces/Mule';
 import { NaniteChamberControl } from './interfaces/NaniteChamberControl';
 import { NaniteCloudControl } from './interfaces/NaniteCloudControl';
@@ -85,6 +87,7 @@ import { OperatingComputer } from './interfaces/OperatingComputer';
 import { OreBox } from './interfaces/OreBox';
 import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
 import { Pandemic } from './interfaces/Pandemic';
+import { ParticleAccelerator } from './interfaces/ParticleAccelerator';
 import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { PortableGenerator } from './interfaces/PortableGenerator';
 import { PortablePump, PortableScrubber } from './interfaces/PortableAtmos';
@@ -92,6 +95,7 @@ import { PowerMonitor } from './interfaces/PowerMonitor';
 import { ProximitySensor } from './interfaces/ProximitySensor';
 import { Radio } from './interfaces/Radio';
 import { RadioactiveMicrolaser } from './interfaces/RadioactiveMicrolaser';
+import { RemoteRobotControl } from './interfaces/RemoteRobotControl';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { Roulette } from './interfaces/Roulette';
 import { SatelliteControl } from './interfaces/SatelliteControl';
@@ -287,6 +291,10 @@ const ROUTES = {
     component: () => EightBallVote,
     scrollable: false,
   },
+  electropack: {
+    component: () => Electropack,
+    scrollable: false,
+  },
   emergency_shuttle_console: {
     component: () => EmergencyShuttleConsole,
     scrollable: false,
@@ -367,6 +375,11 @@ const ROUTES = {
   mint: {
     component: () => Mint,
     scrollable: false,
+  },
+  malfunction_module_picker: {
+    component: () => MalfunctionModulePicker,
+    scrollable: true,
+    theme: 'malfunction',
   },
   mulebot: {
     component: () => Mule,
@@ -517,6 +530,10 @@ const ROUTES = {
     component: () => Pandemic,
     scrollable: true,
   },
+  particle_accelerator: {
+    component: () => ParticleAccelerator,
+    scrollable: false,
+  },
   personal_crafting: {
     component: () => PersonalCrafting,
     scrollable: true,
@@ -548,6 +565,10 @@ const ROUTES = {
   radioactive_microlaser: {
     component: () => RadioactiveMicrolaser,
     scrollable: false,
+  },
+  remote_robot_control: {
+    component: () => RemoteRobotControl,
+    scrollable: true,
   },
   roulette: {
     component: () => Roulette,
