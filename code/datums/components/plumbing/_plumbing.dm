@@ -3,10 +3,10 @@
 	var/list/datum/ductnet/ducts = list()
 	///shortcut to our parents' reagent holder
 	var/datum/reagents/reagents
-	///TRUE if we wanna add proper pipe outless under our parent object. this is pretty good if i may so so myself
+	///TRUE if we wanna add proper pipe overlays under our parent object. this is pretty good if i may so so myself
 	var/use_overlays = TRUE
-	///We can't just cut all of the parents' overlays, so we'll track them here
-	var/list/ducterlays
+	///Whether our tile is covered and we should hide our ducts
+	var/tile_covered = FALSE
 	///directions in wich we act as a supplier
 	var/supply_connects
 	///direction in wich we act as a demander
@@ -28,6 +28,7 @@
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED,COMSIG_PARENT_PREQDELETED), .proc/disable)
 	RegisterSignal(parent, list(COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH), .proc/toggle_active)
 	RegisterSignal(parent, list(COMSIG_OBJ_HIDE), .proc/hide)
+	RegisterSignal(parent, list(COMSIG_ATOM_UPDATE_OVERLAYS), .proc/create_overlays)
 
 	if(start)
 		//timer 0 so it can finish returning initialize, after which we're added to the parent.
@@ -99,9 +100,9 @@
 		reagents.trans_to(target.parent, amount, round_robin = TRUE)//we deal with alot of precise calculations so we round_robin=TRUE. Otherwise we get floating point errors, 1 != 1 and 2.5 + 2.5 = 6
 
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
-/datum/component/plumbing/proc/create_overlays()
-	var/atom/movable/AM = parent
-	remove_overlays()
+/datum/component/plumbing/proc/create_overlays(atom/A, list/overlays)
+	if(tile_covered || !use_overlays)
+		return
 
 	for(var/D in GLOB.cardinals)
 		var/color
@@ -124,12 +125,11 @@
 					direction = "east"
 				if(WEST)
 					direction = "west"
-			I = image('icons/obj/plumbing/plumbers.dmi', "[direction]-[color]", layer = AM.layer - 1)
+			I = image('icons/obj/plumbing/plumbers.dmi', "[direction]-[color]", layer = A.layer - 1)
 		else
-			I = image('icons/obj/plumbing/plumbers.dmi', color, layer = AM.layer - 1) //color is not color as in the var, it's just the name
+			I = image('icons/obj/plumbing/plumbers.dmi', color, layer = A.layer - 1) //color is not color as in the var, it's just the name
 			I.dir = D
-		AM.add_overlay(I)
-		ducterlays += I
+		overlays += I
 
 ///we stop acting like a plumbing thing and disconnect if we are, so we can safely be moved and stuff
 /datum/component/plumbing/proc/disable()
@@ -226,19 +226,9 @@
 		net.add_plumber(src, dir)
 		net.add_plumber(P, opposite_dir)
 
-/datum/component/plumbing/proc/hide(intact)
-	if(intact)
-		remove_overlays()
-	else
-		create_overlays()
-
-/datum/component/plumbing/proc/remove_overlays()
-	var/atom/movable/AM = parent
-	for(var/I in ducterlays)
-		to_chat(world, "[I]")
-		AM.overlays -= I
-
-	ducterlays = list()
+/datum/component/plumbing/proc/hide(atom/movable/AM, intact)
+	tile_covered = intact
+	AM.update_icon()
 
 ///has one pipe input that only takes, example is manual output pipe
 /datum/component/plumbing/simple_demand
