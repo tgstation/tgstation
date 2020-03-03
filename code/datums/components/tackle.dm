@@ -44,7 +44,7 @@
 	src.min_distance = min_distance
 
 	var/mob/P = parent
-	to_chat(P, "<span class='notice'>You can now tackle!</span>")
+	to_chat(P, "<span class='notice'>You are now able to launch tackles! You can do so by activating throw intent, and clicking on your target with an empty hand.</span>")
 
 	addtimer(CALLBACK(src, .proc/resetTackle), base_knockdown, TIMER_STOPPABLE)
 
@@ -100,7 +100,7 @@
 		A = get_ranged_target_turf(user, get_dir(user, A), min_distance) //TODO: this only works in cardinals/diagonals, make it work with in-betweens too!
 
 	user.Knockdown(base_knockdown, TRUE, TRUE)
-	user.take_bodypart_damage(stamina=stamina_cost)
+	user.adjustStaminaLoss(stamina_cost)
 	user.throw_at(A, range, speed, user, FALSE)
 	addtimer(CALLBACK(src, .proc/resetTackle), base_knockdown, TIMER_STOPPABLE)
 	return(COMSIG_MOB_CANCEL_CLICKON)
@@ -116,9 +116,9 @@
 	Then, we figure out what effect we want, and we get to work! Note that with standard gripper gloves and no modifiers, the range of rolls is (-3, 3). The results are as follows, based on what we rolled:
 		-inf to -5: Seriously botched tackle, tackler suffers a concussion, brute damage, and a 3 second paralyze, target suffers nothing
 		-4 to -2: weak tackle, tackler gets 3 second knockdown, target gets shove slowdown but is otherwise fine
-		-1 to 0: decent tackle, both parties are inconvenienced equally, each get paralyzed half a second and knocked down for 3 seconds, and the target suffers the same stamina damage the tackler paid to tackle
-		1: solid tackle, tackler has a bit of an advantage and is only knocked down for one second, target is paralyzed for half a second and knocked down for two seconds
-		2 to 4: expert tackle, takcler has sizeable advantage and is only knocked down for one second, target is paralyzed for half a second and knocked down for three seconds as well as 40 stam damage
+		-1 to 0: decent tackle, tackler gets up a bit quicker than the target
+		1: solid tackle, tackler has more of an advantage getting up quicker
+		2 to 4: expert tackle, tackler has sizeable advantage and lands on their feet with a free passive grab
 		5 to inf: MONSTER tackle, tackler gets up immediately and gets a free aggressive grab, target takes sizeable stamina damage from the hit and is paralyzed for one and a half seconds and knocked down for three seconds
 
 	Finally, we return a bitflag to COMSIG_MOVABLE_IMPACT that forces the hitpush to false so that we don't knock them away.
@@ -164,36 +164,42 @@
 			user.visible_message("<span class='warning'>[user] lands a passable tackle on [target], sending them both tumbling!</span>", "<span class='userdanger'>You land a passable tackle on [target], sending you both tumbling!</span>", target)
 			to_chat(target, "<span class='userdanger'>[user] lands a passable tackle on you, sending you both tumbling!</span>")
 
-			target.take_bodypart_damage(stamina=stamina_cost)
-			user.Paralyze(5)
+			target.adjustStaminaLoss(stamina_cost)
 			target.Paralyze(5)
-			user.Knockdown(25)
+			user.Knockdown(20)
 			target.Knockdown(25)
 
 		if(1 to 2) // solid hit, tackler has a slight advantage
 			user.visible_message("<span class='warning'>[user] lands a solid tackle on [target], knocking them both down hard!</span>", "<span class='userdanger'>You land a solid tackle on [target], knocking you both down hard!</span>", target)
 			to_chat(target, "<span class='userdanger'>[user] lands a solid tackle on you, knocking you both down hard!</span>")
 
-			target.take_bodypart_damage(stamina=30)
+			target.adjustStaminaLoss(30)
 			target.Paralyze(5)
 			user.Knockdown(10)
 			target.Knockdown(20)
 
 		if(3 to 4) // really good hit, the target is definitely worse off here. Without positive modifiers, this is as good a tackle as you can land
-			user.visible_message("<span class='warning'>[user] lands an expert tackle on [target], knocking [target.p_them()] down hard!</span>", "<span class='userdanger'>You land an expert tackle on [target], knocking [target.p_them()] down hard!</span>", target)
-			to_chat(target, "<span class='userdanger'>[user] lands an expert tackle on you, knocking you down hard!</span>")
+			user.visible_message("<span class='warning'>[user] lands an expert tackle on [target], knocking [target.p_them()] down hard while landing on [user.p_their()] feet with a passive grip!</span>", "<span class='userdanger'>You land an expert tackle on [target], knocking [target.p_them()] down hard while landing on your feet with a passive grip!</span>", target)
+			to_chat(target, "<span class='userdanger'>[user] lands an expert tackle on you, knocking you down hard and maintaining a passive grab!</span>")
 
-			target.take_bodypart_damage(stamina=40)
+			user.SetKnockdown(0)
+			user.forceMove(get_turf(target))
+			target.adjustStaminaLoss(40)
 			target.Paralyze(5)
-			user.Knockdown(10)
 			target.Knockdown(30)
+			if(ishuman(target) && ishuman(user))
+				S.dna.species.grab(S, T)
+				S.setGrabState(GRAB_PASSIVE)
+				target.Paralyze(15)
+				target.Knockdown(30)
 
 		if(5 to INFINITY) // absolutely BODIED
 			user.visible_message("<span class='warning'>[user] lands a monster tackle on [target], knocking [target.p_them()] senseless and applying an aggressive pin!</span>", "<span class='userdanger'>You land a monster tackle on [target], knocking [target.p_them()] senseless and applying an aggressive pin!</span>", target)
 			to_chat(target, "<span class='userdanger'>[user] lands a monster tackle on you, knocking you senseless and aggressively pinning you!</span>")
 
 			user.SetKnockdown(0)
-			target.take_bodypart_damage(stamina=40)
+			user.forceMove(get_turf(target))
+			target.adjustStaminaLoss(40)
 			if(ishuman(target) && ishuman(user))
 				S.dna.species.grab(S, T)
 				S.setGrabState(GRAB_AGGRESSIVE)
@@ -229,13 +235,15 @@
 		defense_mod += 1
 	if(HAS_TRAIT(target, TRAIT_GRABWEAKNESS))
 		defense_mod -= 2
+	if(HAS_TRAIT(target, TRAIT_DWARF))
+		defense_mod -= 2
+	if(HAS_TRAIT(target, TRAIT_GIANT))
+		defense_mod += 2
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/T = target
-		if(T.dna.check_mutation(DWARFISM))
-			defense_mod -= 2
-		if(T.dna.check_mutation(GIGANTISM))
-			defense_mod += 2
+		if(isnull(T.wear_suit) && isnull(T.w_uniform)) // who honestly puts all of their effort into tackling a naked guy?
+			defense_mod + 2
 
 
 	// OF-FENSE
@@ -247,13 +255,11 @@
 		attack_mod -= 1
 	if(HAS_TRAIT(sacker, TRAIT_CLUMSY))
 		attack_mod -= 2
+	if(HAS_TRAIT(sacker, TRAIT_DWARF))
+		attack_mod -= 2
+	if(HAS_TRAIT(sacker, TRAIT_GIANT))
+		attack_mod += 2
 
-	if(ishuman(sacker))
-		var/mob/living/carbon/human/S = sacker
-		if(S.dna.check_mutation(DWARFISM))
-			attack_mod -= 2
-		if(S.dna.check_mutation(GIGANTISM))
-			attack_mod += 2
 
 	var/r = rand(-3, 3) - defense_mod + attack_mod + skill_mod
 	return r
@@ -271,19 +277,18 @@
 		-Flat modifiers, these take whatever you rolled and add/subtract to it, with the end result capped between the minimum from Mod 1 and 100. Note that since we can't roll higher than 100 to start with,
 			wearing a helmet should be enough to remove any chance of permanently paralyzing yourself and dramatically lessen knocking yourself unconscious, even with rocket gloves. Will expand on maybe
 
-		Wearing a helmet: -5
+		Wearing a helmet: -8
 		Clumsy: +6
 
 	Effects: Below are the outcomes based off your roll, in order of increasing severity
 
 		1-63: Knocked down for a few seconds and a bit of brute and stamina damage
 		64-83: Knocked silly, gain some confusion as well as the above
-		84-93: Cranial trauma, get a concussion and go deaf for a bit, plus more damage
-		94-98: Knocked unconscious, get a concussion and a random mild brain trauma, as well as medium deafness and a fair amount of damage
+		84-93: Cranial trauma, get a concussion and more confusion, plus more damage
+		94-98: Knocked unconscious, significant chance to get a random mild brain trauma, as well as a fair amount of damage
 		99-100: Break your spinal cord, get paralyzed, take a bunch of damage too. Very unlucky!
 
 */
-
 /datum/component/tackler/proc/splat(mob/living/carbon/user, atom/hit)
 	var/oopsie_mod = 0
 	var/danger_zone = (speed - 1) * 15 // for every extra speed we have over 1, take away 10 of the safest chance
@@ -293,7 +298,7 @@
 		var/mob/living/carbon/human/S = user
 		var/head_slot = S.get_item_by_slot(ITEM_SLOT_HEAD)
 		if(head_slot && (istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
-			oopsie_mod -= 5
+			oopsie_mod -= 8
 
 	if(HAS_TRAIT(user, TRAIT_CLUMSY))
 		oopsie_mod += 6 //honk!
@@ -308,7 +313,8 @@
 		if(99 to 100)
 			// can you imagine standing around minding your own business when all of the sudden some guy fucking launches himself into a wall at full speed and irreparably paralyzes himself?
 			user.visible_message("<span class='danger'>[user] slams face-first into [hit] at an awkward angle, severing [user.p_their()] spinal column with a sickening crack! Holy shit!</span>", "<span class='userdanger'>You slam face-first into [hit] at an awkward angle, severing your spinal column with a sickening crack! Holy shit!</span>")
-			user.take_bodypart_damage(stamina=30, brute=40)
+			user.adjustStaminaLoss(30)
+			user.adjustBruteLoss(30)
 			playsound(user, 'sound/effects/blobattack.ogg', 60, TRUE)
 			playsound(user, 'sound/effects/splat.ogg', 70, TRUE)
 			user.emote("scream")
@@ -320,11 +326,10 @@
 
 		if(94 to 98)
 			user.visible_message("<span class='danger'>[user] slams face-first into [hit] with a concerning squish, immediately going limp!</span>", "<span class='userdanger'>You slam face-first into [hit], and immediately lose consciousness!</span>")
-			user.take_bodypart_damage(stamina=30, brute=30)
+			user.adjustStaminaLoss(30)
+			user.adjustBruteLoss(30)
 			user.Unconscious(100)
-			user.gain_trauma(/datum/brain_trauma/mild/concussion)
 			user.gain_trauma_type(BRAIN_TRAUMA_MILD)
-			user.adjustEarDamage(15, 60)
 			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
 			shake_camera(user, 6, 6)
 			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
@@ -333,10 +338,13 @@
 
 		if(84 to 93)
 			user.visible_message("<span class='danger'>[user] slams head-first into [hit], suffering major cranial trauma!</span>", "<span class='userdanger'>You slam head-first into [hit], and the world explodes around you!</span>")
-			user.take_bodypart_damage(stamina=30, brute=20)
-			user.gain_trauma(/datum/brain_trauma/mild/concussion)
-			user.adjustEarDamage(7, 30)
+			user.adjustStaminaLoss(30)
+			user.adjustBruteLoss(30)
+			user.confused += 15
+			if(prob(80))
+				user.gain_trauma(/datum/brain_trauma/mild/concussion)
 			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
+			user.Knockdown(40)
 			shake_camera(user, 5, 5)
 			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
 			user.clear_fullscreen("flash", 2.5)
@@ -344,14 +352,16 @@
 
 		if(64 to 83)
 			user.visible_message("<span class='danger'>[user] slams hard into [hit], knocking [user.p_them()] senseless!</span>", "<span class='userdanger'>You slam hard into [hit], knocking yourself senseless!</span>")
-			user.take_bodypart_damage(stamina=30, brute=10)
+			user.adjustStaminaLoss(30)
+			user.adjustBruteLoss(10)
 			user.confused += 10
 			user.Knockdown(30)
 			shake_camera(user, 3, 4)
 
 		if(1 to 63)
 			user.visible_message("<span class='danger'>[user] slams into [hit]!</span>", "<span class='userdanger'>You slam into [hit]!</span>")
-			user.take_bodypart_damage(stamina=15, brute=5)
+			user.adjustStaminaLoss(20)
+			user.adjustBruteLoss(10)
 			user.Knockdown(30)
 			shake_camera(user, 2, 2)
 
@@ -403,7 +413,8 @@
 			HOW_big_of_a_miss_did_we_just_make = ", making a ginormous mess!" // an extra exclamation point!! for emphasis!!!
 
 	owner.visible_message("<span class='danger'>[owner] trips over [kevved] and slams into it face-first[HOW_big_of_a_miss_did_we_just_make]!</span>", "<span class='userdanger'>You trip over [kevved] and slam into it face-first[HOW_big_of_a_miss_did_we_just_make]!</span>")
-	owner.take_bodypart_damage(brute = 10 + messes.len, stamina = 20 + messes.len * 2)
+	owner.adjustStaminaLoss(20 + messes.len * 2)
+	owner.adjustBruteLoss(10 + messes.len)
 	owner.Paralyze(5 * messes.len) // half a second of paralyze for each thing you knock around
 	owner.Knockdown(20 + 5 * messes.len) // 2 seconds of knockdown after the paralyze
 
