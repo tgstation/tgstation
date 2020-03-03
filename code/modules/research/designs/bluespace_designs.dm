@@ -83,3 +83,4 @@
 	build_path = /obj/item/xeno_console_upgrade/redemption
 	category = list("Bluespace Travel")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	
