@@ -1,11 +1,11 @@
-//**
+/**
 	* # Subsystem base class
 	* 
 	* Defines a subsystem to be managed by the [Master Controller][/datum/controller/master]
 	*
 	* Simply define a child of this subsystem, using the [SUBSYSTEM_DEF] macro, and the MC will handle registration. 
 	* Changing the name is required
-**//
+**/
  
 /datum/controller/subsystem
 	// Metadata; you should define these.
@@ -264,4 +264,3 @@
 		if ("queued_priority") //editing this breaks things.
 			return 0
 	. = ..()
-
