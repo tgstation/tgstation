@@ -17,6 +17,8 @@
 	melee_damage_lower = 7.5
 	melee_damage_upper = 7.5
 	rapid_melee = 2 // every second attack
+	dodging = TRUE
+	dodge_prob = 50
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
@@ -25,7 +27,7 @@
 	move_force = MOVE_FORCE_WEAK
 	move_resist = MOVE_FORCE_WEAK
 	pull_force = MOVE_FORCE_WEAK
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2, /obj/item/stack/sheet/bone = 2)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2, /obj/item/stack/sheet/sinew/wolf = 2, /obj/item/stack/sheet/bone = 2)
 	loot = list()
 	stat_attack = UNCONSCIOUS
 	robust_searching = TRUE

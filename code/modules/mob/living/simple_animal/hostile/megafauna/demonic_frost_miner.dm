@@ -28,7 +28,7 @@ Difficulty: Extremely Hard
 	speed = 20
 	move_to_delay = 20
 	ranged = TRUE
-	crusher_loot = list(/obj/effect/decal/remains/plasma, /obj/item/crusher_trophy/miner_eye)
+	crusher_loot = list(/obj/effect/decal/remains/plasma, /obj/item/crusher_trophy/ice_block_talisman)
 	loot = list(/obj/effect/decal/remains/plasma)
 	wander = FALSE
 	del_on_death = TRUE
@@ -36,7 +36,6 @@ Difficulty: Extremely Hard
 	var/projectile_speed_multiplier = 1
 	var/enraged = FALSE
 	var/enraging = FALSE
-	gps_name = "Demonic Signal"
 	achievement_type = /datum/award/achievement/boss/demonic_miner_kill
 	crusher_achievement_type = /datum/award/achievement/boss/demonic_miner_crusher
 	score_achievement_type = /datum/award/score/demonic_miner_score
@@ -299,5 +298,48 @@ Difficulty: Extremely Hard
 
 /obj/item/pickaxe/drill/jackhammer/demonic/Initialize()
 	..()
-	AddComponent(/datum/component/knockback, 4, TRUE)
+	AddComponent(/datum/component/knockback, 4, FALSE)
 	AddComponent(/datum/component/lifesteal, 5)
+
+/obj/item/crusher_trophy/ice_block_talisman
+	name = "ice block talisman"
+	desc = "A glowing trinket that a demonic miner had on him, it seems he couldn't utilize it for whatever reason."
+	icon_state = "ice_trap_talisman"
+	denied_type = /obj/item/crusher_trophy/ice_block_talisman
+
+/obj/item/crusher_trophy/ice_block_talisman/effect_desc()
+	return "mark detonation to freeze a creature in a block of ice for a period, preventing them from moving"
+
+/obj/item/crusher_trophy/ice_block_talisman/on_mark_detonation(mob/living/target, mob/living/user)
+	target.apply_status_effect(/datum/status_effect/ice_block_talisman)
+
+/datum/status_effect/ice_block_talisman
+	id = "ice_block_talisman"
+	duration = 25
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = /obj/screen/alert/status_effect/ice_block_talisman
+	var/icon/cube
+
+/obj/screen/alert/status_effect/ice_block_talisman
+	name = "Frozen Solid"
+	desc = "You're frozen inside an ice cube, and cannot move!"
+	icon_state = "frozen"
+
+/datum/status_effect/ice_block_talisman/on_apply()
+	RegisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE, .proc/owner_moved)
+	if(!owner.stat)
+		to_chat(owner, "<span class='userdanger'>You become frozen in a cube!</span>")
+	cube = icon('icons/effects/freeze.dmi', "ice_cube")
+	var/icon/size_check = icon(owner.icon, owner.icon_state)
+	cube.Scale(size_check.Width(), size_check.Height())
+	owner.add_overlay(cube)
+	return ..()
+
+/datum/status_effect/ice_block_talisman/proc/owner_moved()
+	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+
+/datum/status_effect/ice_block_talisman/on_remove()
+	if(!owner.stat)
+		to_chat(owner, "<span class='notice'>The cube melts!</span>")
+	owner.cut_overlay(cube)
+	UnregisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE)

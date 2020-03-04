@@ -36,3 +36,6 @@
 		if(ismineralturf(F))
 			var/turf/closed/mineral/M = F
 			M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
+
+/obj/structure/spawner/ice_moon/snowlegion
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow)

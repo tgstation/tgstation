@@ -10,7 +10,7 @@
 	friendly_verb_continuous = "growls at"
 	friendly_verb_simple = "growl at"
 	speak_emote = list("growls")
-	speed = 3
+	speed = 5
 	maxHealth = 300
 	health = 300
 	obj_damage = 40
@@ -19,12 +19,13 @@
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	vision_range = 2
+	vision_range = 2 // don't aggro unless you basically antagonize it, though they will kill you worse than a goliath will
 	aggro_vision_range = 9
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/bear = 5, /obj/item/clothing/head/bearpelt = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/bear = 3, /obj/item/stack/sheet/bone = 2)
+	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide = 1)
 	loot = list()
 	stat_attack = UNCONSCIOUS
 	robust_searching = TRUE
