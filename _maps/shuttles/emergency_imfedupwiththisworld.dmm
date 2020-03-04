@@ -163,7 +163,7 @@
 /area/shuttle/escape)
 "A" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/bookmanagement,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "B" = (
