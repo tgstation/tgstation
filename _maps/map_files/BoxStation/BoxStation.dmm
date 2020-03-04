@@ -2097,6 +2097,7 @@
 	dir = 5
 	},
 /obj/machinery/power/terminal,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aeG" = (
@@ -10766,6 +10767,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "aAz" = (
@@ -10780,6 +10782,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "aAC" = (
@@ -16915,7 +16918,7 @@
 /area/crew_quarters/locker)
 "aQY" = (
 /obj/structure/table,
-/obj/item/twohanded/rcl/pre_loaded,
+/obj/item/rcl/pre_loaded,
 /obj/item/stack/pipe_cleaner_coil/random,
 /obj/item/stack/pipe_cleaner_coil/random,
 /obj/item/stack/pipe_cleaner_coil/random,
@@ -21114,6 +21117,7 @@
 /obj/structure/table,
 /obj/item/aiModule/supplied/quarantine,
 /obj/machinery/camera/motion{
+	c_tag = "AI Upload West";
 	dir = 4;
 	network = list("aiupload")
 	},
@@ -21131,6 +21135,7 @@
 	pixel_x = 32
 	},
 /obj/machinery/camera/motion{
+	c_tag = "AI Upload East";
 	dir = 8;
 	network = list("aiupload")
 	},
@@ -24734,7 +24739,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	areastring = "/area/medical/morgue";
+	areastring = "/area/maintenance/department/medical/morgue";
 	dir = 4;
 	name = "Morgue Maintenance APC";
 	pixel_x = 24
@@ -28381,7 +28386,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bvn" = (
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -28435,7 +28440,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/item/kirbyplants/random,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "bvz" = (
@@ -29689,6 +29694,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "byP" = (
@@ -30232,7 +30238,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bAi" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -31057,7 +31062,7 @@
 /obj/machinery/light_switch{
 	pixel_y = -23
 	},
-/obj/item/twohanded/required/kirbyplants/dead,
+/obj/item/kirbyplants/dead,
 /obj/structure/cable,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
@@ -42962,7 +42967,7 @@
 /area/medical/chemistry)
 "clp" = (
 /obj/machinery/camera{
-	c_tag = "Xenobiology Test Chamber";
+	c_tag = "Chemistry Lab Northeast";
 	network = list("xeno","rd")
 	},
 /turf/open/floor/plasteel/white,
@@ -46781,10 +46786,6 @@
 	},
 /turf/open/space,
 /area/space/nearstation)
-"cAY" = (
-/obj/structure/cable,
-/turf/closed/wall,
-/area/ai_monitored/turret_protected/ai)
 "cAZ" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
@@ -46801,6 +46802,7 @@
 	c_tag = "MiniSat AI Chamber South";
 	network = list("aicore")
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cBc" = (
@@ -46810,6 +46812,7 @@
 /obj/machinery/ai_slipper{
 	uses = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cBd" = (
@@ -47026,7 +47029,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high/plus,
-/obj/item/twohanded/rcl/pre_loaded,
+/obj/item/rcl/pre_loaded,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/chief)
 "cBN" = (
@@ -48676,6 +48679,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
 "cSG" = (
@@ -50109,7 +50113,7 @@
 "jox" = (
 /obj/machinery/chem_dispenser,
 /obj/machinery/camera{
-	c_tag = "Engineering Storage";
+	c_tag = "Chemistry Lab West";
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
@@ -50277,6 +50281,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
+"jYm" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/white,
+/area/medical/chemistry)
 "jYO" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -51392,8 +51400,11 @@
 /area/medical/medbay/zone2)
 "oZc" = (
 /obj/machinery/camera{
-	c_tag = "Chapel South";
+	c_tag = "Chemistry Lab East";
 	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
@@ -52437,7 +52448,7 @@
 /area/hallway/primary/port)
 "tsM" = (
 /obj/effect/turf_decal/tile/blue,
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/item/kirbyplants/random,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "tti" = (
@@ -53416,6 +53427,10 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Chemistry Lab North";
+	network = list("xeno","rd")
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
@@ -91561,7 +91576,7 @@ cwj
 cwu
 cAV
 cAZ
-cvl
+cAZ
 cvl
 cva
 cva
@@ -91817,7 +91832,7 @@ cww
 cwD
 cvv
 cvv
-cAY
+cvv
 cBb
 cBd
 cva
@@ -92805,7 +92820,7 @@ nEk
 djq
 bip
 bip
-bip
+jYm
 hTU
 aoV
 aaa

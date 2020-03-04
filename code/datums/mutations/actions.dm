@@ -398,19 +398,19 @@
 	action_icon = 'icons/mob/actions/actions_genetic.dmi'
 	action_icon_state = "lay_web"
 
-/obj/effect/proc_holder/spell/self/lay_genetic_web/cast_check(skipcharge = 0,mob/user = usr)
-	. = ..()
+/obj/effect/proc_holder/spell/self/lay_genetic_web/cast(list/targets, mob/user = usr)
+	var/failed = FALSE
 	if(!isturf(user.loc))
 		to_chat(user, "<span class='warning'>You can't lay webs here!</span>")
-		return FALSE
+		failed = TRUE
 	var/turf/T = get_turf(user)
 	var/obj/structure/spider/stickyweb/genetic/W = locate() in T
 	if(W)
 		to_chat(user, "<span class='warning'>There's already a web here!</span>")
+		failed = TRUE
+	if(failed)
+		revert_cast(user)
 		return FALSE
-
-/obj/effect/proc_holder/spell/self/lay_genetic_web/cast(list/targets, mob/user = usr)
-	var/turf/T = get_turf(user)
 
 	user.visible_message("<span class='notice'>[user] begins to secrete a sticky substance.</span>","<span class='notice'>You begin to lay a web.</span>")
 	if(!do_after(user, 4 SECONDS, target = T))
