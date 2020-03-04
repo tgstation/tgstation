@@ -213,8 +213,11 @@
 
 /mob/living/simple_animal/cow/wisdom/attack_hand(mob/living/carbon/M)
 	if(!stat && M.a_intent == INTENT_HELP && icon_state != icon_dead)
-		to_chat(src, "<span class='nicegreen'>[src] whispers you some intense wisdoms and then dissapears!</span>")
+		to_chat(M, "<span class='nicegreen'>[src] whispers you some intense wisdoms and then dissapears!</span>")
 		M.mind?.adjust_experience(pick(subtypesof(/datum/skill)), 500)
+		var/datum/effect_system/smoke_spread/smoke = new
+		smoke.set_up(1, get_turf(src))
+		smoke.start()
 		qdel(src)
 		return
 	..()
