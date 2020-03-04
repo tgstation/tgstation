@@ -1,4 +1,6 @@
-/*
+#define MAX_TABLE_MESSES 8 // how many things can we knock off a table at once?
+
+/**
 	tackle.dm
 
 	This component is made for carbon mobs (really, humans), and allows its parent to throw themselves and perform tackles. This is done by enabling throw mode, then clicking on your
@@ -9,9 +11,6 @@
 	There are 2 """skill rolls""" involved here, which are handled and explained in sack() and rollTackle() (for roll 1, carbons), and splat() (for roll 2, walls and solid objects)
 
 */
-
-#define MAX_TABLE_MESSES 8 // how many things can we knock off a table at once?
-
 /datum/component/tackler
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
@@ -25,7 +24,7 @@
 	var/range
 	///How fast you sail through the air. Standard tackles are 1 speed, but gloves that throw you faster come at a cost: higher speeds make it more likely you'll be badly injured if you fly into a non-mob obstacle.
 	var/speed
-	///A flat modifier to your roll against your target, as described in rollTackle(). Slightly misleading, skills aren't relevant here, this is a matter of what type of gloves (or whatever) is granting you the ability to tackle.
+	///A flat modifier to your roll against your target, as described in [rollTackle()][/datum/component/tackler/proc/rollTackle]. Slightly misleading, skills aren't relevant here, this is a matter of what type of gloves (or whatever) is granting you the ability to tackle.
 	var/skill_mod
 	///Some gloves, generally ones that increase mobility, may have a minimum distance to fly. Rocket gloves are especially dangerous with this, be sure you'll hit your target or have a clear background if you miss, or else!
 	var/min_distance
@@ -105,23 +104,25 @@
 	addtimer(CALLBACK(src, .proc/resetTackle), base_knockdown, TIMER_STOPPABLE)
 	return(COMSIG_MOB_CANCEL_CLICKON)
 
-/*
+/**
+	sack()
+
 	sack() is called when you actually smack into something, assuming we're mid-tackle. First it deals with smacking into non-carbons, in two cases:
 		If it's a non-carbon mob, we don't care, get out of here and do normal thrown-into-mob stuff
 		Else, if it's something dense (walls, machinery, structures, most things other than the floor), go to splat() and get ready for some high grade shit
 
 	If it's a carbon we hit, we'll call rollTackle() which rolls a die and calculates modifiers for both the tackler and target, then gives us a number. Negatives favor the target, while positives favor the tackler.
-		Check rollTackle() for a more thorough explanation on the modifiers at play.
+		Check [rollTackle()][/datum/component/tackler/proc/rollTackle] for a more thorough explanation on the modifiers at play.
 
 	Then, we figure out what effect we want, and we get to work! Note that with standard gripper gloves and no modifiers, the range of rolls is (-3, 3). The results are as follows, based on what we rolled:
-		-inf to -5: Seriously botched tackle, tackler suffers a concussion, brute damage, and a 3 second paralyze, target suffers nothing
-		-4 to -2: weak tackle, tackler gets 3 second knockdown, target gets shove slowdown but is otherwise fine
-		-1 to 0: decent tackle, tackler gets up a bit quicker than the target
-		1: solid tackle, tackler has more of an advantage getting up quicker
-		2 to 4: expert tackle, tackler has sizeable advantage and lands on their feet with a free passive grab
-		5 to inf: MONSTER tackle, tackler gets up immediately and gets a free aggressive grab, target takes sizeable stamina damage from the hit and is paralyzed for one and a half seconds and knocked down for three seconds
+	* * -inf to -5: Seriously botched tackle, tackler suffers a concussion, brute damage, and a 3 second paralyze, target suffers nothing
+	* * -4 to -2: weak tackle, tackler gets 3 second knockdown, target gets shove slowdown but is otherwise fine
+	* * -1 to 0: decent tackle, tackler gets up a bit quicker than the target
+	* * 1: solid tackle, tackler has more of an advantage getting up quicker
+	* * 2 to 4: expert tackle, tackler has sizeable advantage and lands on their feet with a free passive grab
+	* * 5 to inf: MONSTER tackle, tackler gets up immediately and gets a free aggressive grab, target takes sizeable stamina damage from the hit and is paralyzed for one and a half seconds and knocked down for three seconds
 
-	Finally, we return a bitflag to COMSIG_MOVABLE_IMPACT that forces the hitpush to false so that we don't knock them away.
+	Finally, we return a bitflag to [COMSIG_MOVABLE_IMPACT] that forces the hitpush to false so that we don't knock them away.
 */
 /datum/component/tackler/proc/sack(mob/living/carbon/user, atom/hit)
 	if(!tackling || !tackle)
@@ -190,8 +191,6 @@
 			if(ishuman(target) && ishuman(user))
 				S.dna.species.grab(S, T)
 				S.setGrabState(GRAB_PASSIVE)
-				target.Paralyze(15)
-				target.Knockdown(30)
 
 		if(5 to INFINITY) // absolutely BODIED
 			user.visible_message("<span class='warning'>[user] lands a monster tackle on [target], knocking [target.p_them()] senseless and applying an aggressive pin!</span>", "<span class='userdanger'>You land a monster tackle on [target], knocking [target.p_them()] senseless and applying an aggressive pin!</span>", target)
@@ -200,17 +199,20 @@
 			user.SetKnockdown(0)
 			user.forceMove(get_turf(target))
 			target.adjustStaminaLoss(40)
+			target.Paralyze(5)
+			target.Knockdown(30)
 			if(ishuman(target) && ishuman(user))
 				S.dna.species.grab(S, T)
 				S.setGrabState(GRAB_AGGRESSIVE)
-				target.Paralyze(15)
-				target.Knockdown(30)
+
 
 	return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
 
 
-/*
-	rollTackle() handles all of the modifiers for the actual carbon-on-carbon tackling, and gets its own proc because of how many there are (with plenty more in mind!)
+/**
+	rollTackle()
+
+	This handles all of the modifiers for the actual carbon-on-carbon tackling, and gets its own proc because of how many there are (with plenty more in mind!)
 
 	The base roll is between (-3, 3), with negative numbers favoring the target, and positive numbers favoring the tackler. The target and the tackler are both assessed for
 		how easy they are to knock over, with clumsiness and dwarfiness being strong maluses for each, and gigantism giving a bonus for each. These numbers and ideas
@@ -276,29 +278,31 @@
 	return r
 
 
-/*
-	splat() is where we handle diving into dense atoms, generally with effects ranging from bad to REALLY bad. This works as a percentile roll that is modified in two steps as detailed below. The higher
-	the roll, the more severe the result.
+/**
+	splat()
+
+	This is where we handle diving into dense atoms, generally with effects ranging from bad to REALLY bad. This works as a percentile roll that is modified in two steps as detailed below. The higher
+		the roll, the more severe the result.
 
 	Mod 1: Speed
-		-Base tackle speed is 1, which is what normal gripper gloves use. For other sources with higher speed tackles, like dolphin and ESPECIALLY rocket gloves, we obey Newton's laws and hit things harder.
-		-For every unit of speed above 1, move the lower bound of the roll up by 15. Unlike Mod 2, this only serves to raise the lower bound, so it can't be directly counteracted by anything you can control.
+		* * Base tackle speed is 1, which is what normal gripper gloves use. For other sources with higher speed tackles, like dolphin and ESPECIALLY rocket gloves, we obey Newton's laws and hit things harder.
+		* * For every unit of speed above 1, move the lower bound of the roll up by 15. Unlike Mod 2, this only serves to raise the lower bound, so it can't be directly counteracted by anything you can control.
 
 	Mod 2: Misc
 		-Flat modifiers, these take whatever you rolled and add/subtract to it, with the end result capped between the minimum from Mod 1 and 100. Note that since we can't roll higher than 100 to start with,
 			wearing a helmet should be enough to remove any chance of permanently paralyzing yourself and dramatically lessen knocking yourself unconscious, even with rocket gloves. Will expand on maybe
 
-		Wearing a helmet: -8
-		Wearing riot armor: -8
-		Clumsy: +6
+		* * Wearing a helmet: -6
+		* * Wearing riot armor: -6
+		* * Clumsy: +6
 
 	Effects: Below are the outcomes based off your roll, in order of increasing severity
 
-		1-63: Knocked down for a few seconds and a bit of brute and stamina damage
-		64-83: Knocked silly, gain some confusion as well as the above
-		84-93: Cranial trauma, get a concussion and more confusion, plus more damage
-		94-98: Knocked unconscious, significant chance to get a random mild brain trauma, as well as a fair amount of damage
-		99-100: Break your spinal cord, get paralyzed, take a bunch of damage too. Very unlucky!
+		* * 1-63: Knocked down for a few seconds and a bit of brute and stamina damage
+		* * 64-83: Knocked silly, gain some confusion as well as the above
+		* * 84-93: Cranial trauma, get a concussion and more confusion, plus more damage
+		* * 94-98: Knocked unconscious, significant chance to get a random mild brain trauma, as well as a fair amount of damage
+		* * 99-100: Break your spinal cord, get paralyzed, take a bunch of damage too. Very unlucky!
 
 */
 /datum/component/tackler/proc/splat(mob/living/carbon/user, atom/hit)
@@ -311,9 +315,9 @@
 		var/head_slot = S.get_item_by_slot(ITEM_SLOT_HEAD)
 		var/suit_slot = S.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 		if(head_slot && (istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
-			oopsie_mod -= 8
+			oopsie_mod -= 6
 		if(suit_slot && (istype(suit_slot,/obj/item/clothing/suit/armor/riot)))
-			oopsie_mod -= 8
+			oopsie_mod -= 6
 
 	if(HAS_TRAIT(user, TRAIT_CLUMSY))
 		oopsie_mod += 6 //honk!
@@ -323,7 +327,6 @@
 		to_chat(user, "<span class='usernotice'>You're really glad you're wearing protection!</span>")
 	oopsie += oopsie_mod
 
-	var/squish_time
 	switch(oopsie)
 		if(99 to 100)
 			// can you imagine standing around minding your own business when all of the sudden some guy fucking launches himself into a wall at full speed and irreparably paralyzes himself?
@@ -337,7 +340,6 @@
 			shake_camera(user, 7, 7)
 			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
 			user.clear_fullscreen("flash", 4.5)
-			squish_time = 3 SECONDS
 
 		if(94 to 98)
 			user.visible_message("<span class='danger'>[user] slams face-first into [hit] with a concerning squish, immediately going limp!</span>", "<span class='userdanger'>You slam face-first into [hit], and immediately lose consciousness!</span>")
@@ -349,7 +351,6 @@
 			shake_camera(user, 6, 6)
 			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
 			user.clear_fullscreen("flash", 3.5)
-			squish_time = 3 SECONDS
 
 		if(84 to 93)
 			user.visible_message("<span class='danger'>[user] slams head-first into [hit], suffering major cranial trauma!</span>", "<span class='userdanger'>You slam head-first into [hit], and the world explodes around you!</span>")
@@ -363,7 +364,6 @@
 			shake_camera(user, 5, 5)
 			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
 			user.clear_fullscreen("flash", 2.5)
-			squish_time = 2 SECONDS
 
 		if(64 to 83)
 			user.visible_message("<span class='danger'>[user] slams hard into [hit], knocking [user.p_them()] senseless!</span>", "<span class='userdanger'>You slam hard into [hit], knocking yourself senseless!</span>")
@@ -380,12 +380,6 @@
 			user.Knockdown(30)
 			shake_camera(user, 2, 2)
 
-	if(squish_time)
-		var/sideways = FALSE
-		if(tackle.init_dir in list(EAST, WEST))
-			sideways = TRUE
-
-		user.AddElement(/datum/element/squish, squish_time, reverse=sideways)
 	playsound(user, 'sound/weapons/smash.ogg', 70, TRUE)
 
 

@@ -7,21 +7,21 @@
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	resistance_flags = NONE
-	var/datum/component/tackler
-	// I already covered these vars in components/tackle.dm, but I'll be nice and give you the rundown here too
-	/// How much stamina does it cost to tackle?
-	var/tackle_stam_cost = 25
-	/// How long does the tackle put us down for if we don't hit anything (like a cooldown)
-	var/base_knockdown = 1 SECONDS
-	/// How far do we fly?
-	var/tackle_range = 4
-	/// How far do we have to fly?
-	var/min_distance = 0
-	/// How fast do we throw ourselves? For each increment above 1, you put yourself in more danger when slamming into obstacles
-	var/tackle_speed = 1
-	/// How good at tackling does this make us? Higher values give us better modifiers for tackles, negatives make us worse
-	var/skill_mod = 0
 	custom_premium_price = 350
+	/// For storing our tackler datum so we can remove it after
+	var/datum/component/tackler
+	/// See: [/datum/component/tackler/var/stamina_cost]
+	var/tackle_stam_cost = 25
+	/// See: [/datum/component/tackler/var/base_knockdown]
+	var/base_knockdown = 1 SECONDS
+	/// See: [/datum/component/tackler/var/range]
+	var/tackle_range = 4
+	/// See: [/datum/component/tackler/var/min_distance]
+	var/min_distance = 0
+	/// See: [/datum/component/tackler/var/speed]
+	var/tackle_speed = 1
+	/// See: [/datum/component/tackler/var/skill_mod]
+	var/skill_mod = 0
 
 /obj/item/clothing/gloves/tackler/equipped(mob/user, slot)
 	. = ..()

@@ -148,14 +148,14 @@
 #define COMSIG_MOVABLE_CROSSED "movable_crossed"                ///from base of atom/movable/Crossed(): (/atom/movable)
 #define COMSIG_MOVABLE_UNCROSS "movable_uncross"				///from base of atom/movable/Uncross(): (/atom/movable)
 	#define COMPONENT_MOVABLE_BLOCK_UNCROSS 1
-#define COMSIG_MOVABLE_UNCROSSED "movable_uncrossed"            //from base of atom/movable/Uncrossed(): (/atom/movable)
-#define COMSIG_MOVABLE_BUMP "movable_bump"						//from base of atom/movable/Bump(): (/atom)
-#define COMSIG_MOVABLE_IMPACT "movable_impact"					//from base of atom/movable/throw_impact(): (/atom/hit_atom, /datum/thrownthing/throwingdatum)
-	#define COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH 1				//if true, flip if the impact will push what it hits
-#define COMSIG_MOVABLE_IMPACT_ZONE "item_impact_zone"			//from base of mob/living/hitby(): (mob/living/target, hit_zone)
-#define COMSIG_MOVABLE_BUCKLE "buckle"							//from base of atom/movable/buckle_mob(): (mob, force)
-#define COMSIG_MOVABLE_UNBUCKLE "unbuckle"						//from base of atom/movable/unbuckle_mob(): (mob, force)
-#define COMSIG_MOVABLE_PRE_THROW "movable_pre_throw"			//from base of atom/movable/throw_at(): (list/args)
+#define COMSIG_MOVABLE_UNCROSSED "movable_uncrossed"           	///from base of atom/movable/Uncrossed(): (/atom/movable)
+#define COMSIG_MOVABLE_BUMP "movable_bump"						///from base of atom/movable/Bump(): (/atom)
+#define COMSIG_MOVABLE_IMPACT "movable_impact"					///from base of atom/movable/throw_impact(): (/atom/hit_atom, /datum/thrownthing/throwingdatum)
+	#define COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH 1				///if true, flip if the impact will push what it hits
+#define COMSIG_MOVABLE_IMPACT_ZONE "item_impact_zone"			///from base of mob/living/hitby(): (mob/living/target, hit_zone)
+#define COMSIG_MOVABLE_BUCKLE "buckle"							///from base of atom/movable/buckle_mob(): (mob, force)
+#define COMSIG_MOVABLE_UNBUCKLE "unbuckle"						///from base of atom/movable/unbuckle_mob(): (mob, force)
+#define COMSIG_MOVABLE_PRE_THROW "movable_pre_throw"			///from base of atom/movable/throw_at(): (list/args)
 	#define COMPONENT_CANCEL_THROW 1
 #define COMSIG_MOVABLE_POST_THROW "movable_post_throw"			///from base of atom/movable/throw_at(): (datum/thrownthing, spin)
 #define COMSIG_MOVABLE_Z_CHANGED "movable_ztransit" 			///from base of atom/movable/onTransitZ(): (old_z, new_z)
