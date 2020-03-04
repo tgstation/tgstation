@@ -232,6 +232,13 @@
 	name = "\improper Phazon chassis"
 	construct_type = /datum/component/construction/unordered/mecha_chassis/phazon
 
+/obj/item/mecha_parts/chassis/phazon/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	if(!istype(I, /obj/item/assembly/signaler/anomaly/bluespace) && !istype(I, /obj/item/circuitboard/))
+		to_chat(user, "\The [I.name] doesn't fit in the anomaly core socket. Make sure you're using a Bluespace core.")
+	else
+		return
+
 /obj/item/mecha_parts/part/phazon_torso
 	name="\improper Phazon torso"
 	desc="A Phazon torso part. The socket for the bluespace core that powers the exosuit's unique phase drives is located in the middle."
