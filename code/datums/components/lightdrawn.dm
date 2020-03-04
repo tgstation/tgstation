@@ -57,6 +57,7 @@
 
 	// update their mood
 	if(living_parent.loc != T) // inside something
+		apparent_brightness = 0 // its dark inside things
 		light_mood -= 4
 	else
 		var/change = ((apparent_brightness - light_level_threshold) ** 2)*10
@@ -83,7 +84,7 @@
 	if(apparent_brightness < light_level_threshold)
 		return  // not bright enough, done here
 
-	living_parent.Stun(2 SECONDS)
+	living_parent.Stun(1 SECONDS)
 
 	if(!mesmerised)
 		living_parent.overlay_fullscreen("mesmerised", /obj/screen/fullscreen/high)
