@@ -1,6 +1,0 @@
-author: "nightred"
-delete-after: True
-changes: 
-  - bugfix: "fixed vendor hacking related tgui issue"
-  - bugfix: "random 0 in the tgui on the off station vending machines"
-  - bugfix: "the captains pirate hat is now named properly"

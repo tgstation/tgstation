@@ -592,17 +592,13 @@
 		mode()
 
 /mob/living/simple_animal/swap_hand(hand_index)
+	. = ..()
+	if(!.)
+		return
 	if(!dextrous)
-		return ..()
+		return
 	if(!hand_index)
 		hand_index = (active_hand_index % held_items.len)+1
-	var/obj/item/held_item = get_active_held_item()
-	if(held_item)
-		if(istype(held_item, /obj/item/twohanded))
-			var/obj/item/twohanded/T = held_item
-			if(T.wielded == 1)
-				to_chat(usr, "<span class='warning'>Your other hand is too busy holding [T].</span>")
-				return
 	var/oindex = active_hand_index
 	active_hand_index = hand_index
 	if(hud_used)
