@@ -75,7 +75,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/xeno_up_redemption
-	name = "Automatised Monkey Recycling"
+	name = "Automated Monkey Recycling"
+
 	desc = "Upgrade disk for the Slime Management Console. Contains a set of micro sensors and beacons that allow the console to automatically retrieve and recycle dead monkeys."
 
 	id = "xeno_up_redemption"
