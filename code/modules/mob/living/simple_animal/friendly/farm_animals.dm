@@ -202,6 +202,23 @@
 	else
 		..()
 
+/mob/living/simple_animal/cow/wisdom
+	name = "wisdom cow"
+	desc = "Known for its wisdom, shares it with all"
+	gold_core_spawnable = FALSE
+	tame_chance = 0
+	bonus_tame_chance = 0
+	speak = list("Do not overtax your powers.","Do not sleep in a eucalyptus tree tonight.","Domestic happiness and faithful friends.","Don't feed the bats tonight.",\
+	"Fine day to work off excess energy. Steal something heavy.","Future looks spotty. You will spill soup in late evening.")
+
+/mob/living/simple_animal/cow/wisdom/attack_hand(mob/living/carbon/M)
+	if(!stat && M.a_intent == INTENT_HELP && icon_state != icon_dead)
+		to_chat(src, "<span class='nicegreen'>[src] whispers you some intense wisdoms and then dissapears!</span>")
+		M.mind?.adjust_experience(pick(subtypesof(/datum/skill)), 500)
+		qdel(src)
+		return
+	..()
+
 /mob/living/simple_animal/chick
 	name = "\improper chick"
 	desc = "Adorable! They make such a racket though."
