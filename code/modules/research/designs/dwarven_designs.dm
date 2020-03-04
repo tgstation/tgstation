@@ -5,7 +5,7 @@
 	id = "dwarven_warhammer"
 	build_type = DWARVEN_ANVIL
 	materials = list(MAT_CATEGORY_RIGID = 20000)
-	build_path = /obj/item/twohanded/war_hammer
+	build_path = /obj/item/war_hammer
 
 /datum/design/dwarven/waraxe
 	name = "Dwarven waraxe"
@@ -48,7 +48,7 @@
 	build_path = /obj/item/clothing/head/helmet/dwarven_helmet
 
 /datum/design/dwarven/iron_pickaxe
-	name = "iron pickaxe"
+	name = "Iron pickaxe"
 	desc = "self explanatory."
 	id = "dwarven_ironpick"
 	build_type = DWARVEN_ANVIL

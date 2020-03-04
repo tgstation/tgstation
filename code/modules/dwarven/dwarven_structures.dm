@@ -142,7 +142,7 @@
 	custom_materials  = list(/datum/material/silver = 20000)
 
 /obj/structure/destructible/dwarven/mythril_press/Initialize()
-	AddComponent(/datum/component/material_container,list(/datum/material/gold,/datum/material/silver,/datum/material/titanium,/datum/material/dwarven,), 30000, TRUE, /obj/item/stack/sheet/mineral)
+	AddComponent(/datum/component/material_container,list(/datum/material/gold,/datum/material/silver,/datum/material/titanium,/datum/material/dwarven,), 3000000, TRUE, /obj/item/stack/sheet/mineral)
 	. = ..()
 
 /obj/structure/destructible/dwarven/mythril_press/examine(mob/user)

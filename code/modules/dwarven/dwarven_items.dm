@@ -11,7 +11,7 @@
 	user.remove_blocked_language(/datum/language/common)
 	. = ..()
 
-/obj/item/twohanded/war_hammer
+/obj/item/war_hammer
 	name = "dwarven warhammer"
 	desc = "A heavy hammer. Apply to skull."
 	icon = 'icons/obj/items_and_weapons.dmi'
@@ -20,19 +20,33 @@
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	flags_1 = CONDUCT_1
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
-	force = 14
-	force_unwielded = 14
-	force_wielded = 20
-	armour_penetration = 20
+	force = 15
 	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	slot_flags = BOD
 	custom_materials = list(/datum/material/iron = 20000)
 	attack_verb = list("smashed", "dented", "bludeoned")
 	hitsound = 'sound/weapons/smash.ogg'
 	sharpness = IS_BLUNT
+	var/wielded = FALSE
+
+/obj/item/war_hammer/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 
 
-/obj/item/twohanded/war_hammer/update_icon_state()
-	icon_state = "greyscale_dwarven_warhammer[wielded]"
+/obj/item/war_hammer/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed, force_multiplier=1.25, icon_wielded="greyscale_dwarven_warhammer1")
+
+/// triggered on wield of two handed item
+/obj/item/war_hammer/proc/on_wield(obj/item/source, mob/user)
+	wielded = TRUE
+
+/// triggered on unwield of two handed item
+/obj/item/war_hammer/proc/on_unwield(obj/item/source, mob/user)
+	wielded = FALSE
 
 /obj/item/hatchet/dwarven
 	name = "dwarven"
