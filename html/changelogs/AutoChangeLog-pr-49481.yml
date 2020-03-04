@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - tweak: "nanotrasen private officers now have nanotrasen hud icons"
