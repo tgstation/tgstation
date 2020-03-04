@@ -75,20 +75,23 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/sound/attack_sound = 'sound/weapons/punch1.ogg'
 	var/sound/miss_sound = 'sound/weapons/punchmiss.ogg'
 
-	//Breathing!
-	var/obj/item/organ/lungs/mutantlungs = null
+	//Breathing! Most changes are in mutantlungs, though
 	var/breathid = "o2"
 
-	var/obj/item/organ/brain/mutant_brain = /obj/item/organ/brain
-	var/obj/item/organ/heart/mutant_heart = /obj/item/organ/heart
+
+	//Do NOT remove by setting to null. use OR make a RESPECTIVE TRAIT (removing stomach? add the NOSTOMACH trait to your species)
+	//why does it work this way? because traits also disable the downsides of not having an organ, removing organs but not having the trait will make your species die
+	var/obj/item/organ/brain/mutantbrain = /obj/item/organ/brain
+	var/obj/item/organ/heart/mutantheart = /obj/item/organ/heart
+	var/obj/item/organ/lungs/mutantlungs = /obj/item/organ/lungs
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
-	var/obj/item/mutanthands
 	var/obj/item/organ/tongue/mutanttongue = /obj/item/organ/tongue
-	var/obj/item/organ/tail/mutanttail = null
-
-	var/obj/item/organ/liver/mutantliver
-	var/obj/item/organ/stomach/mutantstomach
+	var/obj/item/organ/liver/mutantliver = /obj/item/organ/liver
+	var/obj/item/organ/stomach/mutantstomach = /obj/item/organ/stomach
+	var/obj/item/organ/appendix/mutantappendix = /obj/item/organ/appendix
+	//only an honorary mutantthing because not an organ and not loaded in the same way, you've been warned to do your research
+	var/obj/item/mutanthands
 	var/override_float = FALSE
 
 	//Bitflag that controls what in game ways can select this species as a spawnable source
@@ -149,36 +152,47 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return 0
 	return 1
 
-//Will regenerate missing organs
-/datum/species/proc/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE,list/excluded_zones)
 
-	//what should be put in if there is no mutantorgan (no tail because... yeah... mutanttail is just coded all wrong and i just redid this entire proc)
-	var/static/list/slot_defaults = list(ORGAN_SLOT_BRAIN = /obj/item/organ/brain, ORGAN_SLOT_HEART = /obj/item/organ/heart, ORGAN_SLOT_LUNGS = /obj/item/organ/lungs, ORGAN_SLOT_APPENDIX = /obj/item/organ/appendix, \
-	ORGAN_SLOT_EYES = /obj/item/organ/eyes, ORGAN_SLOT_EARS = /obj/item/organ/ears, ORGAN_SLOT_TONGUE = /obj/item/organ/tongue, ORGAN_SLOT_LIVER = /obj/item/organ/liver, ORGAN_SLOT_STOMACH = /obj/item/organ/stomach, ORGAN_SLOT_TAIL = null)
+/** regenerate_organs
+  * Corrects organs in a carbon, removing ones it doesn't need and adding ones it does
+  *
+  * takes all organ slots, removes organs a species should not have, adds organs a species should have.
+  * can use replace_current to refresh all organs, creating an entirely new set.
+  * Arguments:
+  * C - carbon, the owner of the species datum AKA whoever we're regenerating organs in
+  * old_species - datum, used when regenerate organs is called in a switching species to remove old mutant organs.
+  * replace_current - boolean, forces all old organs to get deleted whether or not they pass the species' ability to keep that organ
+  * excluded_zones - list, add zone defines to block organs inside of the zones from getting handled. see headless mutation for an example
+  */
+/datum/species/proc/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE,list/excluded_zones)
+	//what should be put in if there is no mutantorgan (brains handled seperately)
+	var/list/slot_mutantorgans = list(ORGAN_SLOT_BRAIN = mutantbrain, ORGAN_SLOT_HEART = mutantheart, ORGAN_SLOT_LUNGS = mutantlungs, ORGAN_SLOT_APPENDIX = mutantappendix, \
+	ORGAN_SLOT_EYES = mutanteyes, ORGAN_SLOT_EARS = mutantears, ORGAN_SLOT_TONGUE = mutanttongue, ORGAN_SLOT_LIVER = mutantliver, ORGAN_SLOT_STOMACH = mutantstomach)
 
 	for(var/slot in list(ORGAN_SLOT_BRAIN, ORGAN_SLOT_HEART, ORGAN_SLOT_LUNGS, ORGAN_SLOT_APPENDIX, \
-	ORGAN_SLOT_EYES, ORGAN_SLOT_EARS, ORGAN_SLOT_TONGUE, ORGAN_SLOT_LIVER, ORGAN_SLOT_STOMACH, ORGAN_SLOT_TAIL))
+	ORGAN_SLOT_EYES, ORGAN_SLOT_EARS, ORGAN_SLOT_TONGUE, ORGAN_SLOT_LIVER, ORGAN_SLOT_STOMACH))
 
-		var/obj/item/organ/organ = C.getorganslot(slot)
-		if(organ && organ.zone in excluded_zones)
-			continue
-		to_chat(world, "organ = [organ]")
-		var/should_have = organ.get_availability(src)
-		to_chat(world, "should_have = [should_have]")
-		var/defaultorgan = slot_defaults[organ.slot]
-		to_chat(world, "defaultorgan = [defaultorgan]")
-		var/mutantorgan = organ.get_mutantorgan(src)
-		to_chat(world, "mutantorgan = [mutantorgan]")
+		var/obj/item/organ/oldorgan = C.getorganslot(slot) //used in removing
+		var/obj/item/organ/neworgan = slot_mutantorgans[slot] //used in adding
+		var/used_neworgan = FALSE
+		neworgan = new neworgan()
+		var/should_have = neworgan.get_availability(src) //organ proc that points back to a species trait (so if the species is supposed to have this organ)
 
-		if(organ && (!should_have || replace_current))
-			organ.Remove(C,TRUE)
-			QDEL_NULL(organ)
-		if(should_have && !organ)
-			if(mutantorgan)
-				organ = new mutantorgan()
-			else
-				organ = new defaultorgan()
-			organ.Insert(C)
+		if(oldorgan && (!should_have || replace_current) && !(oldorgan.zone in excluded_zones))
+			if(slot == ORGAN_SLOT_BRAIN)
+				var/obj/item/organ/brain/brain = oldorgan
+				if(!brain.decoy_override)//"Just keep it if it's fake" - confucius, probably
+					brain.Remove(C,TRUE, TRUE) //brain argument used so it doesn't cause any... sudden death.
+					QDEL_NULL(brain)
+			oldorgan.Remove(C,TRUE)
+			QDEL_NULL(oldorgan)
+
+		if(!oldorgan && should_have && !(initial(neworgan.zone) in excluded_zones))
+			used_neworgan = TRUE
+			neworgan.Insert(C)
+
+		if(!used_neworgan)
+			qdel(neworgan)
 
 	if(old_species)
 		for(var/mutantorgan in old_species.mutant_organs)

@@ -45,9 +45,6 @@
 /obj/item/organ/stomach/get_availability(datum/species/S)
 	return !(NOSTOMACH in S.species_traits)
 
-/obj/item/organ/stomach/get_mutantorgan(datum/species/S)
-	return S.mutantstomach
-
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)
 	if(H.disgust)
 		var/pukeprob = 5 + 0.05 * H.disgust

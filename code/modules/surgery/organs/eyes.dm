@@ -83,9 +83,6 @@
 		C.clear_fullscreen("eye_damage")
 	return
 
-/obj/item/organ/eyes/get_mutantorgan(datum/species/S)
-	return S.mutanteyes
-
 /obj/item/organ/eyes/night_vision
 	name = "shadow eyes"
 	desc = "A spooky set of eyes that can see in the dark."

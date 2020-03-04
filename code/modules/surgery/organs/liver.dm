@@ -61,9 +61,6 @@
 /obj/item/organ/liver/get_availability(datum/species/S)
 	return !(TRAIT_NOMETABOLISM in S.species_traits)
 
-/obj/item/organ/liver/get_mutantorgan(datum/species/S)
-	return S.mutantliver
-
 /obj/item/organ/liver/fly
 	name = "insectoid liver"
 	icon_state = "liver-x" //xenomorph liver? It's just a black liver so it fits.
