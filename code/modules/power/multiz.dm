@@ -29,8 +29,8 @@
 		if(!anchored && broken_status == RELAY_OK)
 			break_connections()
 			return
-		return FALSE
 		. = ..()
+		return FALSE
 	if(istype(I, /obj/item/stack/cable_coil) && broken_status == RELAY_ADD_CABLE)
 		var/obj/item/stack/C = I
 		if(C.use(15))
