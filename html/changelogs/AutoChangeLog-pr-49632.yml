@@ -1,0 +1,5 @@
+author: "ArcaneDefence for the fucking bughunting/brainstorming"
+delete-after: True
+changes: 
+  - bugfix: "Fixes slime wizards being able to reset their spells from anywhere"
+  - rscdel: "Removes slime people from the wizard mirror."

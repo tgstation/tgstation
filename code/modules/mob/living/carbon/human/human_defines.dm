@@ -11,6 +11,7 @@
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hairstyle = "Bald"

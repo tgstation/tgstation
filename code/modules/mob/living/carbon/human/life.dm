@@ -111,6 +111,20 @@
 	dna.species.handle_environment_pressure(environment, src)
 	dna.species.handle_body_temperature(src)
 
+/**
+ * get_body_temperature Returns the body temperature with any modifications applied
+ *
+ * This applies the result from proc/get_body_temp_normal_change() against the bodytemp_normal
+ * for the species and returns the result
+ *
+ * arguments:
+ * * apply_change (optional) Default True This applies the changes to body temperature normal
+ */
+/mob/living/carbon/human/get_body_temp_normal(apply_change=TRUE)
+	if(!apply_change)
+		return dna.species.bodytemp_normal
+	return dna.species.bodytemp_normal + get_body_temp_normal_change()
+
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire()
 	. = ..()

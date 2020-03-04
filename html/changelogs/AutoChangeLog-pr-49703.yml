@@ -1,0 +1,4 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - bugfix: "Random icons won't inexplicably duplicate everywhere, as vis overlays won't inherit the plane of their parent anymore."

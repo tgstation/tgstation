@@ -1044,7 +1044,7 @@
 	id = "plastic_trees"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic = 8000)
-	build_path = /obj/item/twohanded/required/kirbyplants/fullysynthetic
+	build_path = /obj/item/kirbyplants/fullysynthetic
 	category = list("initial", "Misc")
 
 /datum/design/beads
@@ -1069,4 +1069,12 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic = 1000)
 	build_path = /obj/item/storage/box/plastic
+	category = list("initial", "Misc")
+
+/datum/design/sticky_tape
+	name = "Sticky Tape"
+	id = "sticky_tape"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/plastic = 500)
+	build_path = /obj/item/stack/sticky_tape
 	category = list("initial", "Misc")

@@ -3,16 +3,6 @@ const path = require('path');
 const BuildNotifierPlugin = require('webpack-build-notifier');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 
-const SASS_FUNCTIONS = {
-  // Power function polyfill
-  'math-pow($number, $exp)': (number, exp) => {
-    const sass = require('sass');
-    return new sass.types.Number(Math.pow(
-      number.getValue(),
-      exp.getValue()));
-  },
-};
-
 module.exports = (env = {}, argv) => {
   const config = {
     mode: argv.mode === 'production' ? 'production' : 'development',
@@ -85,11 +75,7 @@ module.exports = (env = {}, argv) => {
             },
             {
               loader: 'sass-loader',
-              options: {
-                sassOptions: {
-                  functions: SASS_FUNCTIONS,
-                },
-              },
+              options: {},
             },
           ],
         },
