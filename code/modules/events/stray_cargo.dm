@@ -10,7 +10,7 @@
 /datum/round_event/stray_cargo
 	var/area/impact_area ///Randomly picked area
 	announceChance = 75
-	announceWhen
+	var/list/possible_pack_types = list() ///List of possible supply packs dropped in the pod, if empty picks from the cargo list
 
 /datum/round_event/stray_cargo/announce(fake)
 	priority_announce("Stray cargo pod detected on long-range scanners. Expected location of impact: [impact_area.name].", "Collision Alert")
@@ -31,7 +31,12 @@
 ///Spawns a random supply pack, puts it in a pod, and spawns it on a random tile of the selected area
 /datum/round_event/stray_cargo/start()
 	var/turf/LZ = pick(get_area_turfs(impact_area))
-	var/datum/supply_pack/SP = pick(SSshuttle.supply_packs)
+	var/pack_type
+	if(possible_pack_types.len)
+		pack_type = pick(possible_pack_types)
+	else
+		pack_type = pick(SSshuttle.supply_packs)
+	var/datum/supply_pack/SP = new pack_type
 	var/obj/structure/closet/crate/C = SP.generate(null)
 	new /obj/effect/DPtarget(LZ, /obj/structure/closet/supplypod, C)
 
@@ -53,3 +58,14 @@
 	var/list/possible_areas = typecache_filter_list(GLOB.sortedAreas,allowed_areas)
 	if (length(possible_areas))
 		return pick(possible_areas)
+
+///A rare variant that drops a crate containing syndicate uplink items
+/datum/round_event_control/stray_cargo/syndicate
+	name = "Stray Syndicate Cargo Pod"
+	typepath = /datum/round_event/stray_cargo/syndicate
+	weight = 6
+	max_occurrences = 1
+	earliest_start = 30 MINUTES
+
+/datum/round_event/stray_cargo/syndicate
+	possible_pack_types = list(/datum/supply_pack/misc/syndicate)
