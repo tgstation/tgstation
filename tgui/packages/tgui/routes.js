@@ -41,7 +41,7 @@ import { EightBallVote } from './interfaces/EightBallVote';
 import { Electropack } from './interfaces/Electropack';
 import { EmergencyShuttleConsole } from './interfaces/EmergencyShuttleConsole';
 import { EngravedMessage } from './interfaces/EngravedMessage';
-import { ExosuitConsole } from './interfaces/ExosuitConsole';
+import { ExosuitControlConsole } from './interfaces/ExosuitControlConsole';
 import { Gps } from './interfaces/Gps';
 import { GravityGenerator } from './interfaces/GravityGenerator';
 import { GulagTeleporterConsole } from './interfaces/GulagTeleporterConsole';
@@ -304,8 +304,8 @@ const ROUTES = {
     component: () => EngravedMessage,
     scrollable: false,
   },
-  exosuit_console: {
-    component: () => ExosuitConsole,
+  exosuit_control_console: {
+    component: () => ExosuitControlConsole,
     scrollable: true,
   },
   gps: {

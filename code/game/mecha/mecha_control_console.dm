@@ -12,7 +12,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "exosuit_console", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "exosuit_control_console", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/mecha/ui_data(mob/user)
@@ -30,7 +30,7 @@
 		var/list/mech_data = list(
 			name = M.name,
 			integrity = round((M.obj_integrity / M.max_integrity) * 100),
-			charge = round(M.cell?.percent()),
+			charge = M.cell ? round(M.cell.percent()) : null,
 			airtank = M.internal_tank ? M.return_pressure() : null,
 			pilot = M.occupant,
 			location = get_area_name(M, TRUE),
