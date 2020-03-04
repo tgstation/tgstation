@@ -23,7 +23,6 @@
 	force = 15
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	slot_flags = BOD
 	custom_materials = list(/datum/material/iron = 20000)
 	attack_verb = list("smashed", "dented", "bludeoned")
 	hitsound = 'sound/weapons/smash.ogg'
