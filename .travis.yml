@@ -20,7 +20,8 @@ matrix:
             - rustc
             - cargo
       cache:
-        - SpacemanDMM
+        directories:
+          - $HOME/SpacemanDMM
       install:
         - tools/travis/install_build_tools.sh
         - tools/travis/build_spaceman_dmm.sh dreamchecker
