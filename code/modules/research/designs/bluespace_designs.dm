@@ -76,7 +76,8 @@
 
 /datum/design/xeno_up_redemption
 	name = "Automatised Monkey Recycling"
-	desc = "Slime management console upgrade disk. Contain set of micro sensors and beacons allow automatised monkey recycling."
+	desc = "Upgrade disk for the Slime Management Console. Contains a set of micro sensors and beacons that allow the console to automatically retrieve and recycle dead monkeys."
+
 	id = "xeno_up_redemption"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/gold = 500, /datum/material/silver = 500)
