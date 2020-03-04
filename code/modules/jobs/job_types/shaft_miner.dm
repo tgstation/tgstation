@@ -17,6 +17,8 @@
 	paycheck_department = ACCOUNT_CAR
 
 	display_order = JOB_DISPLAY_ORDER_SHAFT_MINER
+	/// Miners start with Journeyman level skill in mining.
+	roundstart_experience = list(SKILL_MINING = SKILL_EXP_JOURNEYMAN)
 
 /datum/outfit/job/miner
 	name = "Shaft Miner"
