@@ -11,7 +11,7 @@
 
 ///Slime management console redemption upgrade
 /obj/item/xeno_console_upgrade/redemption
-	desc = "Set of micro sensors and beacons allow automatised monkey recycling."
+	desc = "Upgrade disk for the Slime Management Console. Contains a set of micro sensors and beacons that allow the console to automatically retrieve and recycle dead monkeys."
 	upgrade = XENO_UPGRADE_REDEPTION
 
 //Xenobio control console
@@ -536,4 +536,3 @@
 	monkeys = round(monkeys, 0.1)		//Prevents rounding errors
 	qdel(M)
 	visible_message("<span class='notice'>[src] now has [monkeys] monkeys available.</span>")
-
