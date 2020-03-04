@@ -534,6 +534,6 @@
 	connected_recycler.use_power(500)
 	monkeys += connected_recycler.cube_production
 	monkeys = round(monkeys, 0.1)		//Prevents rounding errors
-	qdel(M)
+	addtimer(qdel(M), 10) //Prevent some edges
 	visible_message("<span class='notice'>[src] now has [monkeys] monkeys available.</span>")
 
