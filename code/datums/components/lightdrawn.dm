@@ -102,7 +102,8 @@
 			continue
 		var/brightness = light.light_power * light.light_range
 		var/distance = max(1, get_dist(living_parent, light.source_turf))
-		var/thislightsrelativebrightness = brightness/brightness*sqrt(distance)^2/distance
+		var/thislightsrelativebrightness = brightness/brightness*sqrt(distance)**2/distance
+
 		if(thislightsrelativebrightness > brightestest)
 			brightest = light
 			brightestest = thislightsrelativebrightness
