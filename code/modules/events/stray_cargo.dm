@@ -21,7 +21,7 @@
 */
 /datum/round_event/stray_cargo/setup()
 	startWhen = rand(20, 40)
-	impact_area = findEventArea()
+	impact_area = find_event_area()
 	if(!impact_area)
 		CRASH("No valid areas for cargo pod found.")
 	var/list/turf_test = get_area_turfs(impact_area)
