@@ -11,6 +11,7 @@
 	var/area/impact_area ///Randomly picked area
 	announceChance = 75
 	var/list/possible_pack_types = list() ///List of possible supply packs dropped in the pod, if empty picks from the cargo list
+	var/static/list/stray_spawnable_supply_packs = list() ///List of default spawnable supply packs, filtered from the cargo list
 
 /datum/round_event/stray_cargo/announce(fake)
 	priority_announce("Stray cargo pod detected on long-range scanners. Expected location of impact: [impact_area.name].", "Collision Alert")
@@ -28,6 +29,13 @@
 	if(!turf_test.len)
 		CRASH("Stray Cargo Pod : No valid turfs found for [impact_area] - [impact_area.type]")
 
+	if(!stray_spawnable_supply_packs.len)
+		stray_spawnable_supply_packs = SSshuttle.supply_packs.Copy()
+		for(var/pack in stray_spawnable_supply_packs)
+			var/datum/supply_pack/pack_type = pack
+			if(initial(pack_type.special))
+				stray_spawnable_supply_packs -= pack
+
 ///Spawns a random supply pack, puts it in a pod, and spawns it on a random tile of the selected area
 /datum/round_event/stray_cargo/start()
 	var/turf/LZ = pick(get_area_turfs(impact_area))
@@ -35,7 +43,7 @@
 	if(possible_pack_types.len)
 		pack_type = pick(possible_pack_types)
 	else
-		pack_type = pick(SSshuttle.supply_packs)
+		pack_type = pick(stray_spawnable_supply_packs)
 	var/datum/supply_pack/SP = new pack_type
 	var/obj/structure/closet/crate/C = SP.generate(null)
 	new /obj/effect/DPtarget(LZ, /obj/structure/closet/supplypod, C)
