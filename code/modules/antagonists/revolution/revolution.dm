@@ -240,7 +240,7 @@
 		return
 
 	if(give_flash)
-		var/obj/item/assembly/flash/T = new(C)
+		var/obj/item/assembly/flash/handheld/T = new(C)
 		var/list/slots = list (
 			"backpack" = ITEM_SLOT_BACKPACK,
 			"left pocket" = ITEM_SLOT_LPOCKET,
