@@ -158,7 +158,7 @@
 	. = ..()
 	if (prob(mineralChance))
 		var/path = pickweight(mineralSpawnChanceList)
-		if(isturf(path))
+		if(ispath(path, /turf))
 			var/turf/T = ChangeTurf(path,null,CHANGETURF_IGNORE_AIR)
 
 			T.baseturfs = src.baseturfs
@@ -499,7 +499,7 @@
 		stage = GIBTONITE_DETONATE
 		explosion(bombturf,1,2,5, adminlog = 0)
 	if(stage == GIBTONITE_STABLE) //Gibtonite deposit is now benign and extractable. Depending on how close you were to it blowing up before defusing, you get better quality ore.
-		var/obj/item/twohanded/required/gibtonite/G = new (src)
+		var/obj/item/gibtonite/G = new (src)
 		if(det_time <= 0)
 			G.quality = 3
 			G.icon_state = "Gibtonite ore 3"

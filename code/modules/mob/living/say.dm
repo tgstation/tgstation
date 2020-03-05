@@ -328,7 +328,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/proc/get_key(message)
 	var/key = message[1]
-	if(key in GLOB.department_radio_prefixes)
+	if((key in GLOB.department_radio_prefixes) && length(message) > length(key) + 1)
 		return lowertext(message[1 + length(key)])
 
 /mob/living/proc/get_message_language(message)
