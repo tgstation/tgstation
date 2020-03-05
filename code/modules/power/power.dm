@@ -359,7 +359,7 @@
 		return null
 	var/obj/structure/cable_bridge/B = locate() in src
 	for(var/obj/structure/cable/C in src)
-		if(B || C.cable_layer & check_layer)
+		if(C.cable_layer & check_layer || B)
 			C.update_icon()
 			return C
 	return null
