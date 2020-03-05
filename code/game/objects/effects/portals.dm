@@ -28,6 +28,7 @@
 	var/allow_anchored = FALSE
 	var/innate_accuracy_penalty = 0
 	var/last_effect = 0
+	var/force_teleport = FALSE
 
 /obj/effect/portal/anom
 	name = "wormhole"
@@ -160,7 +161,7 @@
 		no_effect = TRUE
 	else
 		last_effect = world.time
-	if(do_teleport(M, real_target, innate_accuracy_penalty, no_effects = no_effect, channel = teleport_channel))
+	if(do_teleport(M, real_target, innate_accuracy_penalty, no_effects = no_effect, channel = teleport_channel, forced = force_teleport))
 		if(istype(M, /obj/projectile))
 			var/obj/projectile/P = M
 			P.ignore_source_check = TRUE
@@ -185,74 +186,43 @@
 /obj/effect/portal/permanent
 	name = "permanent portal"
 	desc = "An unwavering portal that will never fade."
-	var/id // var edit or set id in map editor
 	hardlinked = FALSE // dont qdel my portal nerd
-
-/obj/effect/portal/permanent/Initialize(mapload, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
-	. = ..()
-	set_linked()
-
-/obj/effect/portal/permanent/proc/get_linked()
-	if(!id)
-		return
-	var/list/possible = list()
-	for(var/obj/effect/portal/permanent/P in GLOB.portals - src)
-		if(P.id && P.id == id) // gets portals with the same id, there should only be two permanent portals with the same id
-			possible += P
-	return possible
+	force_teleport = TRUE // force teleports because they're a mapmaker tool
+	var/id // var edit or set id in map editor
 
 /obj/effect/portal/permanent/proc/set_linked()
-	var/list/possible = get_linked()
-	if(!possible || !possible.len)
+	if(!id)
 		return
-	for(var/obj/effect/portal/permanent/other in possible)
-		other.linked = src
-	linked = pick(possible)
+	for(var/obj/effect/portal/permanent/P in GLOB.portals - src)
+		if(P.id == id)
+			P.linked = src
+			linked = P
+			break
 
-/obj/effect/portal/permanent/teleport(atom/movable/M, force = FALSE) // Made perma portals always teleport even in noteleport areas since they are mapmaker only
-	if(!force && (!istype(M) || iseffect(M) || (ismecha(M) && !mech_sized) || (isobj(M) && !ismob(M)))) //Things that shouldn't teleport.
-		return
-	var/turf/real_target = get_link_target_turf()
-	if(!istype(real_target))
-		return FALSE
-	if(!force && (!ismecha(M) && !istype(M, /obj/projectile) && M.anchored && !allow_anchored))
-		return
-	if(ismegafauna(M))
-		message_admins("[M] has used a portal at [ADMIN_VERBOSEJMP(src)] made by [usr].")
-	var/no_effect = FALSE
-	if(last_effect == world.time)
-		no_effect = TRUE
-	else
-		last_effect = world.time
-	if(do_teleport(M, real_target, innate_accuracy_penalty, no_effects = no_effect, channel = teleport_channel, forced = TRUE))
-		if(istype(M, /obj/projectile))
-			var/obj/projectile/P = M
-			P.ignore_source_check = TRUE
-		return TRUE
-	return FALSE
-	// try to search for a new one if something was var edited etc
-	set_linked()
+/obj/effect/portal/permanent/teleport(atom/movable/M, force = FALSE)
+	set_linked() // update portal links
 	. = ..()
 
-/obj/effect/portal/permanent/one_way // doesn't have a return portal
+/obj/effect/portal/permanent/one_way // doesn't have a return portal, can have multiple exits, /obj/effect/landmark/portal_exit to mark them
 	name = "one-way portal"
 	desc = "You get the feeling that this might not be the safest thing you've ever done."
-	var/list/possible_exits = list()
-	var/keep // if this is a portal that should be kept
 
 /obj/effect/portal/permanent/one_way/set_linked()
-	if(!keep) // wait for a keep portal to set
+	if(!id)
 		return
-	var/list/possible_temp = get_linked()
-	if(possible_temp && possible_temp.len)
-		for(var/obj/effect/portal/permanent/other in possible_temp)
-			possible_exits += get_turf(other)
-			qdel(other)
-	if(possible_exits && possible_exits.len)
-		hard_target = pick(possible_exits)
+	var/list/possible_turfs = list()
+	for(var/obj/effect/landmark/portal_exit/PE in GLOB.landmarks_list)
+		if(PE.id == id)
+			var/turf/T = get_turf(PE)
+			if(T)
+				possible_turfs |= T
+	if(possible_turfs.len)
+		hard_target = pick(possible_turfs)
 
-/obj/effect/portal/permanent/one_way/keep // because its nice to be able to tell which is which on the map
-	keep = TRUE
+/obj/effect/portal/permanent/one_way/one_use
+	name = "one-use portal"
+	desc = "This is probably the worst decision you'll ever make in your life."
 
-/obj/effect/portal/permanent/one_way/destroy
-	keep = FALSE
+/obj/effect/portal/permanent/one_way/one_use/teleport(atom/movable/M, force = FALSE)
+	. = ..()
+	qdel(src)
