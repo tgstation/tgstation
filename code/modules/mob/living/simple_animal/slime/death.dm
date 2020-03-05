@@ -3,7 +3,7 @@
 		return
 	if(!gibbed)
 		if(is_adult)
-			var/mob/living/simple_animal/slime/M = new(loc, colour)
+			var/mob/living/simple_animal/slime/M = new(get_turf(src), colour)
 			M.rabid = TRUE
 			M.regenerate_icons()
 
