@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(persistence)
 	var/list/picture_logging_information = list()
 	var/list/obj/structure/sign/picture_frame/photo_frames
 	var/list/obj/item/storage/photo_album/photo_albums
-	var/list/obj/structure/sign/painting/painting_frames
+	var/list/obj/structure/sign/painting/painting_frames = list()
 	var/list/paintings = list()
 
 /datum/controller/subsystem/persistence/Initialize()
