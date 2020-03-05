@@ -61,7 +61,7 @@ export const NtosAiRestorer = props => {
                 fontSize="20px"
                 color="good"
                 mt={1}>
-              RECONSTRUCTION IN PROGRESS
+                RECONSTRUCTION IN PROGRESS
               </Box>
             )}
             <Button

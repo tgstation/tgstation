@@ -114,6 +114,16 @@
 	icon_state = "[initial(icon_state)]"
 	update_icon()
 
+/obj/item/instrument/piano_synth/headphones/spacepods
+	name = "\improper Nanotrasen space pods"
+	desc = "Flex your money, AND ignore what everyone else says, all at once!"
+	icon_state = "spacepods"
+	item_state = "spacepods"
+	slot_flags = ITEM_SLOT_EARS
+	strip_delay = 100 //air pods don't fall out
+	instrumentRange = 0 //you're paying for quality here
+	custom_premium_price = 1800
+
 /obj/item/instrument/banjo
 	name = "banjo"
 	desc = "A 'Mura' brand banjo. It's pretty much just a drum with a neck and strings."

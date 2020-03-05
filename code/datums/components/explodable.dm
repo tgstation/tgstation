@@ -15,7 +15,7 @@
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/explodable_attack)
 	RegisterSignal(parent, COMSIG_TRY_STORAGE_INSERT, .proc/explodable_insert_item)
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, .proc/detonate)
-	if(ismovableatom(parent))
+	if(ismovable(parent))
 		RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, .proc/explodable_impact)
 		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/explodable_bump)
 		if(isitem(parent))

@@ -84,7 +84,7 @@ export const LanguageMenu = props => {
                 )}>
                 {language.desc}
                 {' '}
-                  Key: ,{language.key}
+                Key: ,{language.key}
                 {' '}
                 {!!language.shadow && '(gained from mob)'}
                 {' '}

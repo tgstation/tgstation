@@ -25,12 +25,14 @@ export const ProximitySensor = props => {
           <LabeledList.Item label="Detection Range">
             <Button
               icon="backward"
+              disabled={scanning}
               onClick={() => act('sense', { range: -1 })} />
             {' '}
             {String(sensitivity).padStart(1, '1')}
             {' '}
             <Button
               icon="forward"
+              disabled={scanning}
               onClick={() => act('sense', { range: 1 })} />
           </LabeledList.Item>
         </LabeledList>
@@ -47,11 +49,11 @@ export const ProximitySensor = props => {
         )}>
         <Button
           icon="fast-backward"
-          disabled={scanning}
+          disabled={scanning || timing}
           onClick={() => act('input', { adjust: -30 })} />
         <Button
           icon="backward"
-          disabled={scanning}
+          disabled={scanning || timing}
           onClick={() => act('input', { adjust: -1 })} />
         {' '}
         {String(minutes).padStart(2, '0')}:
@@ -59,11 +61,11 @@ export const ProximitySensor = props => {
         {' '}
         <Button
           icon="forward"
-          disabled={scanning}
+          disabled={scanning || timing}
           onClick={() => act('input', { adjust: 1 })} />
         <Button
           icon="fast-forward"
-          disabled={scanning}
+          disabled={scanning || timing}
           onClick={() => act('input', { adjust: 30 })} />
       </Section>
     </Fragment>

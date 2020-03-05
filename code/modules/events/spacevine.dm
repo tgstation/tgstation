@@ -22,7 +22,7 @@
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/T = pick(turfs)
-		new /datum/spacevine_controller(T, pick(subtypesof(/datum/spacevine_mutation)), rand(10,100), rand(5,10), src) //spawn a controller at turf with randomized stats and a single random mutation
+		new /datum/spacevine_controller(T, list(pick(subtypesof(/datum/spacevine_mutation))), rand(10,100), rand(5,10), src) //spawn a controller at turf with randomized stats and a single random mutation
 
 
 /datum/spacevine_mutation
@@ -351,6 +351,7 @@
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/structure/spacevine/Crossed(atom/movable/AM)
+	. = ..()
 	if(!isliving(AM))
 		return
 	for(var/datum/spacevine_mutation/SM in mutations)
@@ -419,7 +420,6 @@
 	if(muts && muts.len)
 		for(var/datum/spacevine_mutation/M in muts)
 			M.add_mutation_to_vinepiece(SV)
-		return
 	if(parent)
 		SV.mutations |= parent.mutations
 		var/parentcolor = parent.atom_colours[FIXED_COLOUR_PRIORITY]

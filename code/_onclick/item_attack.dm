@@ -1,11 +1,11 @@
 /**
-  *This is the proc that handles the order of an item_attack.
-  *The order of procs called is:
-  *tool_act on the target. If it returns TRUE, the chain will be stopped.
-  *pre_attack() on src. If this returns TRUE, the chain will be stopped.
-  *attackby on the target. If it returns TRUE, the chain will be stopped.
-  *and lastly
-  *afterattack. The return value does not matter.
+  * This is the proc that handles the order of an item_attack.
+  *
+  * The order of procs called is:
+  * * [/atom/proc/tool_act] on the target. If it returns TRUE, the chain will be stopped.
+  * * [/obj/item/proc/pre_attack] on src. If this returns TRUE, the chain will be stopped.
+  * * [/atom/proc/attackby] on the target. If it returns TRUE, the chain will be stopped.
+  * * [/obj/item/proc/afterattack]. The return value does not matter.
   */
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
 	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
@@ -19,18 +19,37 @@
 		return
 	afterattack(target, user, TRUE, params)
 
-// Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
+/// Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_NO_INTERACT)
 		return
 	interact(user)
 
+/**
+  * Called on the item before it hits something
+  *
+  * Arguments:
+  * * atom/A - The atom about to be hit
+  * * mob/living/user - The mob doing the htting
+  * * params - click params such as alt/shift etc
+  *
+  * See: [/obj/item/proc/melee_attack_chain]
+  */
 /obj/item/proc/pre_attack(atom/A, mob/living/user, params) //do stuff before attackby!
 	if(SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK, A, user, params) & COMPONENT_NO_ATTACK)
 		return TRUE
 	return FALSE //return TRUE to avoid calling attackby after this proc does stuff
 
-// No comment
+/**
+  * Called on an object being hit by an item
+  *
+  * Arguments:
+  * * obj/item/W - The item hitting this atom
+  * * mob/user - The wielder of this item
+  * * params - click params such as alt/shift etc
+  *
+  * See: [/obj/item/proc/melee_attack_chain]
+  */
 /atom/proc/attackby(obj/item/W, mob/user, params)
 	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, W, user, params) & COMPONENT_NO_AFTERATTACK)
 		return TRUE
@@ -45,7 +64,13 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	return I.attack(src, user)
 
-
+/**
+  * Called from [/mob/living/attackby]
+  *
+  * Arguments:
+  * * mob/living/M - The mob being hit by this item
+  * * mob/living/user - The mob hitting with this item
+  */
 /obj/item/proc/attack(mob/living/M, mob/living/user)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user) & COMPONENT_ITEM_NO_ATTACK)
 		return
@@ -75,7 +100,7 @@
 	add_fingerprint(user)
 
 
-//the equivalent of the standard version of attack() but for object targets.
+/// The equivalent of the standard version of [/obj/item/proc/attack] but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, O, user) & COMPONENT_NO_ATTACK_OBJ)
 		return
@@ -85,6 +110,7 @@
 	user.do_attack_animation(O)
 	O.attacked_by(src, user)
 
+/// Called from [/obj/item/proc/attack_obj] and [/obj/item/proc/attack] if the attack succeeds
 /atom/movable/proc/attacked_by()
 	return
 
@@ -115,13 +141,20 @@
 	else
 		return ..()
 
-// Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
-// Click parameters is the params string from byond Click() code, see that documentation.
+/**
+  * Last proc in the [/obj/item/proc/melee_attack_chain]
+  *
+  * Arguments:
+  * * atom/target - The thing that was hit
+  * * mob/user - The mob doing the hitting
+  * * proximity_flag - is 1 if this afterattack was called on something adjacent, in your square, or on your person.
+  * * click_parameters - is the params string from byond [/atom/proc/Click] code, see that documentation.
+  */
 /obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
 
-// Called if the target gets deleted by our attack
+/// Called if the target gets deleted by our attack
 /obj/item/proc/attack_qdeleted(atom/target, mob/user, proximity_flag, click_parameters)
 	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_QDELETED, target, user, proximity_flag, click_parameters)
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK_QDELETED, target, user, proximity_flag, click_parameters)
@@ -129,9 +162,9 @@
 /obj/item/proc/get_clamped_volume()
 	if(w_class)
 		if(force)
-			return CLAMP((force + w_class) * 4, 30, 100)// Add the item's force to its weight class and multiply by 4, then clamp the value between 30 and 100
+			return clamp((force + w_class) * 4, 30, 100)// Add the item's force to its weight class and multiply by 4, then clamp the value between 30 and 100
 		else
-			return CLAMP(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
+			return clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
 /mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area)
 	var/message_verb = "attacked"
