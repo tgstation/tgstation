@@ -98266,7 +98266,7 @@
 	pixel_x = -3;
 	pixel_y = 2
 	},
-/obj/item/broom,
+/obj/item/pushbroom,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},

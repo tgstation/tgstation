@@ -77104,7 +77104,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "vGs" = (
-/obj/item/broom,
+/obj/item/pushbroom,
 /obj/structure/closet{
 	name = "janitorial supplies"
 	},
