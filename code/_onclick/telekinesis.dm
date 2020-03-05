@@ -169,7 +169,7 @@
 	return TRUE
 
 /obj/item/tk_grab/proc/check_if_focusable(obj/target)
-	if(!tk_user || !istype(tk_user) || QDELETED(target) || !istype(target) || !tk_user.dna.check_mutation(TK))
+	if(!tk_user || !istype(tk_user) || QDELETED(target) || !istype(target) || (!tk_user.dna.check_mutation(TK) && !tk_user.mind.has_martialart(MARTIALART_STARTERSITH) ) ) //FULPSTATION Chaplain Starter Sith PR by Surrealistik Jan 2020; allows Sith telekinesis
 		qdel(src)
 		return
 	if(!tkMaxRangeCheck(tk_user, target) || target.anchored || !isturf(target.loc))

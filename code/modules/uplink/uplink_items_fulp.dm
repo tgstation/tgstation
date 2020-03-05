@@ -30,7 +30,56 @@
 	desc = "A handy firing pin that can only be installed into mech weapons. \
 			It also hides the equipped weapon from plain sight. \
 			Only one can fit on a mecha. \
-			This one comes complete with a handy firing pin that can only be installed into mech weapons"
+			This one comes complete with a handy firing pin that can only be installed into mech weapons."
 	item = /obj/item/storage/box/syndicate/bundle_mech
 	cost = 7 //So you cannot use it to get 3 unlocked mech weapons.
 	restricted_roles = list("Roboticist", "Research Director")
+
+/datum/uplink_item/role_restricted/sith_starter_kit
+	name = "Sith Starter Kit"
+	desc = "Has everything you need to get started with the Dark Side! \
+			Includes smelly old man robes, snazzy red light saber and genuine Sith sacred texts \
+			describing the secrets of saber fighting, force lightning and force push."
+	item = /obj/item/storage/box/syndicate/bundle_sith
+	cost = 19
+	restricted_roles = list("Chaplain", "Curator")
+
+/datum/uplink_item/role_restricted/laser_tag_kit_red
+	name = "X-TREME Laser Tag Kit (RADICAL RED)"
+	desc = "New X-TREME laser tag kit for when you want to play for keeps! \
+			Now with SUPER stun and RADICAL lethal mode! \
+			Comes complete with gun and reflective laser vest. Adult supervision recommended. \
+			Swipe gun with ID to toggle state of the art stealth parental locks!"
+	item = /obj/item/storage/box/syndicate/laser_tag_kit_red
+	cost = 14
+	restricted_roles = list("Clown", "Mime", "Assistant")
+
+/datum/uplink_item/role_restricted/laser_tag_kit_blue
+	name = "X-TREME Laser Tag Kit (BITCHIN' BLUE)"
+	desc = "New X-TREME laser tag kit for when you want to play for keeps! \
+			Now with SUPER stun and RADICAL lethal mode! \
+			Comes complete with gun and reflective laser vest. Adult supervision recommended. \
+			Swipe gun with ID to toggle state of the art stealth parental locks!"
+	item = /obj/item/storage/box/syndicate/laser_tag_kit_blue
+	cost = 14
+	restricted_roles = list("Clown", "Mime", "Assistant")
+
+/datum/uplink_item/role_restricted/laser_tag_partypack_red
+	name = "X-TREME Laser Tag Party Pack (RADICAL RED)"
+	desc = "The new X-TREME laser tag party pack is deadly fun for the whole family! \
+			Now with SUPER stun and RADICAL lethal mode! \
+			Comes complete with 4 guns and reflective laser vests. Adult supervision recommended. \
+			Swipe gun with ID to toggle state of the art stealth parental locks!"
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
+	item = /obj/structure/closet/crate/laser_tag_partypack_red
+	cost = 50
+
+/datum/uplink_item/role_restricted/laser_tag_partypack_blue
+	name = "X-TREME Laser Tag Party Pack (BITCHIN' BLUE)"
+	desc = "The new X-TREME laser tag party pack is deadly fun for the whole family! \
+			Now with SUPER stun and RADICAL lethal mode! \
+			Comes complete with 4 guns and reflective laser vests. Adult supervision recommended. \
+			Swipe gun with ID to toggle state of the art stealth parental locks!"
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
+	item = /obj/structure/closet/crate/laser_tag_partypack_blue
+	cost = 50
