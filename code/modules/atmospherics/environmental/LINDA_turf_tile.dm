@@ -29,6 +29,7 @@
 	var/datum/gas_mixture/turf/air
 
 	var/obj/effect/hotspot/active_hotspot
+	var/obj/effect/coldspot/active_coldspot
 	var/atmos_cooldown  = 0
 	var/planetary_atmos = FALSE //air will revert to initial_gas_mix over time
 

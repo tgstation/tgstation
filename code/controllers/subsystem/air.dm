@@ -10,6 +10,7 @@ SUBSYSTEM_DEF(air)
 	var/cost_groups = 0
 	var/cost_highpressure = 0
 	var/cost_hotspots = 0
+	var/cost_coldspots = 0
 	var/cost_superconductivity = 0
 	var/cost_pipenets = 0
 	var/cost_atmos_machinery = 0
@@ -17,6 +18,7 @@ SUBSYSTEM_DEF(air)
 	var/list/excited_groups = list()
 	var/list/active_turfs = list()
 	var/list/hotspots = list()
+	var/list/coldspots = list()
 	var/list/networks = list()
 	var/list/obj/machinery/atmos_machinery = list()
 	var/list/pipe_init_dirs_cache = list()
@@ -42,6 +44,7 @@ SUBSYSTEM_DEF(air)
 	msg += "EG:[round(cost_groups,1)]|"
 	msg += "HP:[round(cost_highpressure,1)]|"
 	msg += "HS:[round(cost_hotspots,1)]|"
+	msg += "CS:[round(cost_coldspots,1)]|"
 	msg += "SC:[round(cost_superconductivity,1)]|"
 	msg += "PN:[round(cost_pipenets,1)]|"
 	msg += "AM:[round(cost_atmos_machinery,1)]"
@@ -49,6 +52,7 @@ SUBSYSTEM_DEF(air)
 	msg += "AT:[active_turfs.len]|"
 	msg += "EG:[excited_groups.len]|"
 	msg += "HS:[hotspots.len]|"
+	msg += "CS:[coldspots.len]|"
 	msg += "PN:[networks.len]|"
 	msg += "HP:[high_pressure_delta.len]|"
 	msg += "AS:[active_super_conductivity.len]|"
@@ -116,6 +120,15 @@ SUBSYSTEM_DEF(air)
 		timer = TICK_USAGE_REAL
 		process_hotspots(resumed)
 		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		if(state != SS_RUNNING)
+			return
+		resumed = 0
+		currentpart = SSAIR_COLDSPOTS
+
+	if(currentpart == SSAIR_COLDSPOTS)
+		timer = TICK_USAGE_REAL
+		process_coldspots(resumed)
+		cost_coldspots = MC_AVERAGE(cost_coldspots, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -190,6 +203,19 @@ SUBSYSTEM_DEF(air)
 		if(MC_TICK_CHECK)
 			return
 
+/datum/controller/subsystem/air/proc/process_coldspots(resumed = 0)
+	if(!resumed)
+		src.currentrun = coldspots.Copy()
+	var/list/currentrun = src.currentrun
+	while(currentrun.len)
+		var/obj/effect/coldspot/H = currentrun[currentrun.len]
+		currentrun.len--
+		if (H)
+			H.process()
+		else
+			coldspots -= H
+		if(MC_TICK_CHECK)
+			return
 
 /datum/controller/subsystem/air/proc/process_high_pressure_delta(resumed = 0)
 	while (high_pressure_delta.len)

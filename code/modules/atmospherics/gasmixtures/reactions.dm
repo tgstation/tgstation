@@ -280,8 +280,8 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 			freon_burn_rate = min(freon_burn_rate,cached_gases[/datum/gas/freon][MOLES],cached_gases[/datum/gas/oxygen][MOLES]/oxygen_burn_rate) //Ensures matter is conserved properly
 			cached_gases[/datum/gas/freon][MOLES] = QUANTIZE(cached_gases[/datum/gas/freon][MOLES] - freon_burn_rate)
 			cached_gases[/datum/gas/oxygen][MOLES] = QUANTIZE(cached_gases[/datum/gas/oxygen][MOLES] - (freon_burn_rate * oxygen_burn_rate))
-	//			ASSERT_GAS(/datum/gas/carbon_dioxide,air)
-	//			cached_gases[/datum/gas/carbon_dioxide][MOLES] += plasma_burn_rate
+			ASSERT_GAS(/datum/gas/carbon_dioxide,air)
+			cached_gases[/datum/gas/carbon_dioxide][MOLES] += freon_burn_rate
 
 			energy_released += FIRE_FREON_ENERGY_RELEASED * (freon_burn_rate)
 
@@ -296,7 +296,7 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	if(istype(location))
 		temperature = air.temperature
 		if(temperature < COLD_FIRE_MAXIMUM_TEMPERATURE_TO_EXIST)
-			location.hotspot_expose(temperature, CELL_VOLUME)
+			location.coldspot_expose(temperature, CELL_VOLUME)
 			for(var/I in location)
 				var/atom/movable/item = I
 				item.temperature_expose(air, temperature, CELL_VOLUME)
