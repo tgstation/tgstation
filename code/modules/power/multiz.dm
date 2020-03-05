@@ -23,34 +23,37 @@
 		. += "<span class='notice'>The cable insulation is torn apart and the wires are frayed beyond use.</span>"
 	if(broken_status == RELAY_ADD_METAL)
 		. += "<span class='notice'>The cable insulation is torn apart and the wiring is exposed.</span>"
+	. += "<span class='notice'>above:[above]:[above?1:0], below:[below]:[below?1:0] </span>"
 
 /obj/machinery/power/deck_relay/attackby(obj/item/I, mob/user, params)
 	if(default_unfasten_wrench(user, I))
 		if(!anchored && broken_status == RELAY_OK)
 			break_connections()
+			return
 		return FALSE
-
-	else if(istype(I, /obj/item/stack/cable_coil) && broken_status == RELAY_ADD_CABLE)
+		. = ..()
+	if(istype(I, /obj/item/stack/cable_coil) && broken_status == RELAY_ADD_CABLE)
 		var/obj/item/stack/C = I
 		if(C.use(15))
 			to_chat(user, "<span class='notice'>You fix the frayed wires inside [src].</span>")
 			icon_state = "cablerelay-broken-cable"
 			broken_status = RELAY_ADD_METAL
+			return
 		else
 			to_chat(user, "You need 15 cables to rewire [src].")
-
-	else if(istype(I, /obj/item/stack/sheet/metal) && broken_status == RELAY_ADD_METAL)
+			return
+	if(istype(I, /obj/item/stack/sheet/metal) && broken_status == RELAY_ADD_METAL)
 		var/obj/item/stack/S = I
 		if(S.use(10))
 			to_chat(user, "<span class='notice'>You reseal the insulation for [src].</span>")
 			icon_state = "cablerelay"
 			broken_status = RELAY_OK
 			obj_integrity = max_integrity
+			return
 		else
 			to_chat(user, "You need 10 metal to mend [src].")
-
-	else
-		return ..()
+			return
+	. = ..()
 
 /obj/machinery/power/deck_relay/obj_break()
 	..()
@@ -70,22 +73,25 @@
 
 ///Lose connections and reset the merged powernet so it makes 2 new seperated ones
 /obj/machinery/power/deck_relay/proc/break_connections()
-	if(above)
-		var/turf/above_deck_relay = get_turf(above)
+	var/obj/machinery/power/deck_relay/old_above = above
+	var/obj/machinery/power/deck_relay/old_below = below
+	above = null
+	below = null
+
+	if(old_above)
+		old_above.below = null
+		var/turf/above_deck_relay = get_turf(old_above)
 		var/obj/structure/cable/above_cable = above_deck_relay.get_cable_node()
 		if(above_cable)
 			var/datum/powernet/above_powernet = new()
-			propagate_network(above_cable, above_powernet)
-		above.below = null
-		above = null
-	if(below)
-		var/turf/below_deck_relay = get_turf(below)
+			propagate_network(above_cable, above_powernet)	
+	if(old_below)
+		old_below.above = null
+		var/turf/below_deck_relay = get_turf(old_below)
 		var/obj/structure/cable/below_cable = below_deck_relay.get_cable_node()
 		if(below_cable)
 			var/datum/powernet/below_powernet = new()
 			propagate_network(below_cable, below_powernet)
-		below.above = null
-		below = null
 
 ///Allows you to scan the relay with a multitool to see stats/reconnect relays
 /obj/machinery/power/deck_relay/multitool_act(mob/user, obj/item/I)
@@ -99,46 +105,54 @@
 		to_chat(user, "<span class='danger'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]</span>")
 	if(!above && !below)
 		to_chat(user, "<span class='danger'>Cannot access valid powernet. Attempting to re-establish. Ensure any relays above and below are aligned properly and on cable nodes.</span>")
-		find_relays()
-		addtimer(CALLBACK(src, .proc/refresh), 20) //Wait a bit so we can find the one below, then get powering
+		find_relays(src,FALSE)
+		refresh() //Reload powernet
 	return TRUE
+
+/obj/machinery/power/deck_relay/proc/refresh() //Reload powernet
+	var/turf/deck_relay_turf = get_turf(src)
+	var/obj/structure/cable/my_cable = deck_relay_turf.get_cable_node()
+	if(my_cable)
+		var/datum/powernet/new_powernet = new()
+		propagate_network(my_cable, new_powernet)
 
 /obj/machinery/power/deck_relay/Initialize()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/find_relays), 30)
-	addtimer(CALLBACK(src, .proc/refresh), 50) //Wait a bit so we can find the one below, then get powering
-
-///Handles re-acquiring + merging powernets found by find_relays()
-/obj/machinery/power/deck_relay/proc/refresh()
-	if(above)
-		above.merge(src)
-	if(below)
-		below.merge(src)
-
-///Merges the two powernets connected to the deck relays
-/obj/machinery/power/deck_relay/proc/merge(var/obj/machinery/power/deck_relay/DR)
-	if(!DR)
-		return
-	var/turf/merge_from = get_turf(DR)
-	var/turf/merge_to = get_turf(src)
-	var/obj/structure/cable/C = merge_from.get_cable_node()
-	var/obj/structure/cable/XR = merge_to.get_cable_node()
-	if(C && XR)
-		merge_powernets(XR.powernet,C.powernet)//Bridge the powernets.
+	name = rand(1000)
+	find_relays(force = TRUE)
+	refresh()
 
 ///Locates relays that are above and below this object
-/obj/machinery/power/deck_relay/proc/find_relays()
+///If this going in infinite loop, someone bend your universe in donut
+///or i shitcode it
+/obj/machinery/power/deck_relay/proc/find_relays(from, force)
 	var/turf/T = get_turf(src)
 	if(!T || !istype(T))
 		return FALSE
-	below = null //in case we're re-establishing
-	above = null
-	var/obj/structure/cable/C = T.get_cable_node() //check if we have a node cable on the machine turf, the first found is picked
-	if(C && C.powernet)
-		C.powernet.add_machine(src) //Nice we're in.
-		powernet = C.powernet
-	below = locate(/obj/machinery/power/deck_relay) in(SSmapping.get_turf_below(T))
-	above = locate(/obj/machinery/power/deck_relay) in(SSmapping.get_turf_above(T))
+	to_chat(world, "<span class='danger'>[src] find_relays([from],[force])</span>")
+	if(from != below || force)
+		to_chat(world, "<span class='danger'>[src] re find below from [from]</span>")
+		below = null
+		below = locate(/obj/machinery/power/deck_relay) in(SSmapping.get_turf_below(T))
+		below?.find_relays(src, FALSE)
+
+	if(from != above || force)
+		to_chat(world, "<span class='danger'>[src] re find above from [from]</span>")
+		above = null
+		above = locate(/obj/machinery/power/deck_relay) in(SSmapping.get_turf_above(T))
+		above?.find_relays(src, FALSE)
+
 	if(below || above)
 		icon_state = "cablerelay-on"
 	return TRUE
+
+///refresh() on connect_to_network()
+/obj/machinery/power/deck_relay/connect_to_network()
+	to_chat(world, "<span class='danger'>[name] connect_to_network()</span>")
+	. = ..()
+
+///break_connections() on disconnect_from_network()
+/obj/machinery/power/deck_relay/disconnect_from_network()
+	to_chat(world, "<span class='danger'>[name] disconnect_from_network()</span>")
+	return ..()
+

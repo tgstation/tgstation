@@ -364,11 +364,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	for(var/obj/machinery/power/P in T1)
 		P.disconnect_from_network()
 
-	var/list/P_list = list()
-	for(var/dir_check in GLOB.cardinals)
-		if(linked_dirs & dir_check)
-			T1 = get_step(loc, dir_check)
-			P_list += locate(/obj/structure/cable) in T1
+	var/list/P_list = get_cable_connections()
 
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
 	if(remove)
