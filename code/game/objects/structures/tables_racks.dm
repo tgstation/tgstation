@@ -175,6 +175,26 @@
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
+	if(istype(I, /obj/item/riding_offhand))
+		var/obj/item/riding_offhand/riding_item = I
+		var/mob/living/carried_mob = riding_item.rider
+		if(carried_mob == user) //Piggyback user.
+			return
+		switch(user.a_intent)
+			if(INTENT_HARM)
+				user.unbuckle_mob(carried_mob)
+				tableheadsmash(user, carried_mob)
+			if(INTENT_HELP)
+				carried_mob.visible_message("<span class='notice'>[user] begins to place [carried_mob] onto [src]...</span>", \
+					"<span class='userdanger'>[user] begins to place [carried_mob] onto [src]...</span>")
+				if(do_after(user, 3.5 SECONDS, target = carried_mob))
+					user.unbuckle_mob(carried_mob)
+					tableplace(user, carried_mob)
+			else
+				user.unbuckle_mob(carried_mob)
+				tablepush(user, carried_mob)
+		return TRUE
+
 	if(user.a_intent != INTENT_HARM && !(I.item_flags & ABSTRACT))
 		if(user.transferItemToLoc(I, drop_location(), silent = FALSE))
 			var/list/click_params = params2list(params)
