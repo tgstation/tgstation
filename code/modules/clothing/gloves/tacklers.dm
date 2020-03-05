@@ -55,6 +55,8 @@
 /obj/item/clothing/gloves/tackler/combat
 	name = "gorilla gloves"
 	desc = "Premium quality combative gloves, heavily reinforced to give the user an edge in close combat tackles, though they are more taxing to use than normal gripper gloves. Fireproof to boot!"
+	icon_state = "black"
+	item_state = "blackgloves"
 
 	tackle_stam_cost = 35
 	base_knockdown = 1.5 SECONDS
@@ -66,7 +68,6 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-
 
 /obj/item/clothing/gloves/tackler/combat/insulated
 	name = "guerilla gloves"
