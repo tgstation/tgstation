@@ -54,6 +54,8 @@
 #define GELADIKINESIS		/datum/mutation/human/geladikinesis
 #define CRYOKINESIS /datum/mutation/human/cryokinesis
 #define SPIDER_WEB	/datum/mutation/human/webbing
+#define MARTYRDOM	/datum/mutation/human/martyrdom
+#define HARS		/datum/mutation/human/headless
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"

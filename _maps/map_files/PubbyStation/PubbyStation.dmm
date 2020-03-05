@@ -1626,7 +1626,7 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/AIsatextAS)
 "afn" = (
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/bookmanagement,
 /obj/structure/table,
 /obj/machinery/newscaster{
 	pixel_x = -32
@@ -44929,7 +44929,7 @@
 /area/library/lounge)
 "clp" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/bookmanagement,
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cls" = (
