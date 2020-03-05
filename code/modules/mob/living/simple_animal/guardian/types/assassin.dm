@@ -10,7 +10,7 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Space Ninja, a lethal, invisible assassin.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Assassin modules loaded. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's an assassin carp! Just when you thought it was safe to go back to the water... which is unhelpful, because we're in space.</span>"
-	hive_fluff_string = "<span class='holoparasite'>The mass seems to be able to attack with stealth causing massive damage.</span>"
+	miner_fluff_string = "<span class='holoparasite'>You encounter... Glass, a sharp, fragile attacker.</span>"
 	toggle_button_type = /obj/screen/guardian/ToggleMode/Assassin
 	var/toggle = FALSE
 	var/stealthcooldown = 160
