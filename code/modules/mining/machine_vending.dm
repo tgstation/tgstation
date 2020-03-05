@@ -218,8 +218,8 @@
 		new /datum/data/mining_equipment("Toolbelt",					/obj/item/storage/belt/utility,	    							350),
 		new /datum/data/mining_equipment("Royal Cape of the Liberator", /obj/item/bedsheet/rd/royal_cape, 								500),
 		new /datum/data/mining_equipment("Grey Slime Extract",			/obj/item/slime_extract/grey,									1000),
-		new /datum/data/mining_equipment("MegaSeed Servitor Refill",	/obj/item/vending_refill/hydroseeds,							500),
-		new /datum/data/mining_equipment("Rhinovirus culture bottle",	/obj/item/reagent_containers/glass/bottle/cold,					500),
+		new /datum/data/mining_equipment("MegaSeed Servitor Refill",	/obj/item/vending_refill/hydroseeds,							1000),
+		new /datum/data/mining_equipment("Rhinovirus culture bottle",	/obj/item/reagent_containers/glass/bottle/cold,					1000),
 		new /datum/data/mining_equipment("Modification Kit",    		/obj/item/borg/upgrade/modkit/trigger_guard,					1700),
 		new /datum/data/mining_equipment("The Liberator's Legacy",  	/obj/item/storage/box/rndboards,								2000)
 		)
