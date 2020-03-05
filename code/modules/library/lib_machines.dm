@@ -70,7 +70,7 @@
 
 /obj/machinery/computer/libraryconsole/Topic(href, href_list)
 	. = ..()
-	if(..())
+	if(.)
 		usr << browse(null, "window=publiclibrary")
 		onclose(usr, "publiclibrary")
 		return
