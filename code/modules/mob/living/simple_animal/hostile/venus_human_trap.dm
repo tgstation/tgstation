@@ -53,7 +53,7 @@
 /obj/effect/ebeam/vine/Crossed(atom/movable/AM)
 	if(isliving(AM))
 		var/mob/living/L = AM
-		if(!("vines" in L.faction))
+		if(!isvineimmune(L))
 			L.adjustBruteLoss(5)
 			to_chat(L, "<span class='alert'>You cut yourself on the thorny vines.</span>")
 
@@ -63,8 +63,8 @@
   * The result of a kudzu flower bud, these enemies use vines to drag prey close to them for attack.
   *
   * A carnivorious plant which uses vines to catch and ensnare prey.  Spawns from kudzu flower buds.
-  * Each one has a maximum of four vines, which can be attached to a variety of things.  Carbons are stunned when a vine is attached to them, and all living things are pulled closer over time.
-  * Attempting to attach a vine to something with a vine already attached to it will pull all living things closer on command.
+  * Each one has a maximum of four vines, which can be attached to a variety of things.  Carbons are stunned when a vine is attached to them, and movable entities are pulled closer over time.
+  * Attempting to attach a vine to something with a vine already attached to it will pull all movable targets closer on command.
   * Once the prey is in melee range, melee attacks from the venus human trap heals itself for 10% of its max health, assuming the target is alive.
   * Akin to certain spiders, venus human traps can also be possessed and controlled by ghosts.
   *
@@ -78,7 +78,7 @@
 	layer = SPACEVINE_MOB_LAYER
 	health = 50
 	maxHealth = 50
-	ranged = 1
+	ranged = TRUE
 	harm_intent_damage = 5
 	obj_damage = 60
 	melee_damage_lower = 25
@@ -89,7 +89,7 @@
 	unsuitable_atmos_damage = 0
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	faction = list("hostile","vines","plants")
-	del_on_death = 1
+	del_on_death = TRUE
 	/// A list of all the plant's vines
 	var/list/vines = list()
 	/// The maximum amount of vines a plant can have at one time
@@ -164,16 +164,17 @@
 /**
   * Manages how the vines should affect the things they're attached to.
   *
-  * Pulls all living targets of the vines closer to the plant
+  * Pulls all movable targets of the vines closer to the plant
   * If the target is on the same tile as the plant, destroy the vine
   * Removes any QDELETED vines from the vines list.
   */
 
 /mob/living/simple_animal/hostile/venus_human_trap/proc/pull_vines()
 	for(var/datum/beam/B in vines)
-		if(isliving(B.target))
-			var/mob/living/L = B.target
-			step(L,get_dir(L,src))
+		if(ismovableatom(B.target))
+			var/atom/movable/AM = B.target
+			if(!AM.anchored)
+				step(AM,get_dir(AM,src))
 		if(get_dist(src,B.target) == 0)
 			B.End()
 		if(QDELETED(B))
