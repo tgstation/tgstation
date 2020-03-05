@@ -55,7 +55,7 @@ export const GravityGenerator = props => {
               )}
               {charging_state === 2 && (
                 <Box color="average">
-                Discharging
+                  Discharging
                 </Box>
               )}
             </LabeledList.Item>

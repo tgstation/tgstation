@@ -33,6 +33,8 @@
 
 	var/tiled_dirt = FALSE // use smooth tiled dirt decal
 
+	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID	//when this be added to vis_contents of something it inherit something.plane and be associatet with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
+
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list("x", "y", "z")
 	if(var_name in banned_edits)
@@ -80,6 +82,15 @@
 	if (opacity)
 		has_opaque_atom = TRUE
 
+	if(custom_materials)
+
+		var/temp_list = list()
+		for(var/i in custom_materials)
+			temp_list[SSmaterials.GetMaterialRef(i)] = custom_materials[i] //Get the proper instanced version
+
+		custom_materials = null //Null the list to prepare for applying the materials properly
+		set_custom_materials(temp_list)
+
 	ComponentInitialize()
 
 	return INITIALIZE_HINT_NORMAL
@@ -104,8 +115,6 @@
 		var/turf/B = new world.turf(src)
 		for(var/A in B.contents)
 			qdel(A)
-		for(var/I in B.vars)
-			B.vars[I] = null
 		return
 	SSair.remove_from_active(src)
 	visibilityChanged()
@@ -174,7 +183,7 @@
 	target.zImpact(A, levels, src)
 	return TRUE
 
-/turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
+/turf/proc/handleRCL(obj/item/rcl/C, mob/user)
 	if(C.loaded)
 		for(var/obj/structure/pipe_cleaner/LC in src)
 			if(!LC.d1 || !LC.d2)
@@ -201,7 +210,7 @@
 		coil.place_turf(src, user)
 		return TRUE
 
-	else if(istype(C, /obj/item/twohanded/rcl))
+	else if(istype(C, /obj/item/rcl))
 		handleRCL(C, user)
 
 	return FALSE
@@ -424,7 +433,7 @@
 	for(var/V in contents)
 		var/atom/A = V
 		if(!QDELETED(A) && A.level >= affecting_level)
-			if(ismovableatom(A))
+			if(ismovable(A))
 				var/atom/movable/AM = A
 				if(!AM.ex_check(explosion_id))
 					continue

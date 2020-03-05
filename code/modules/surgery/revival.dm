@@ -27,15 +27,15 @@
 
 /datum/surgery_step/revive
 	name = "shock body"
-	implements = list(/obj/item/twohanded/shockpaddles = 100, /obj/item/melee/baton = 75, /obj/item/gun/energy = 60)
+	implements = list(/obj/item/shockpaddles = 100, /obj/item/melee/baton = 75, /obj/item/gun/energy = 60)
 	repeatable = TRUE
 	time = 120
 	experience_given = MEDICAL_SKILL_ADVANCED
 
 /datum/surgery_step/revive/tool_check(mob/user, obj/item/tool)
 	. = TRUE
-	if(istype(tool, /obj/item/twohanded/shockpaddles))
-		var/obj/item/twohanded/shockpaddles/S = tool
+	if(istype(tool, /obj/item/shockpaddles))
+		var/obj/item/shockpaddles/S = tool
 		if((S.req_defib && !S.defib.powered) || !S.wielded || S.cooldown || S.busy)
 			to_chat(user, "<span class='warning'>You need to wield both paddles, and [S.defib] must be powered!</span>")
 			return FALSE

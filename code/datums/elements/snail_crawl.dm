@@ -3,7 +3,7 @@
 
 /datum/element/snailcrawl/Attach(datum/target)
 	. = ..()
-	if(!ismovableatom(target))
+	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
 	var/P
 	if(iscarbon(target))

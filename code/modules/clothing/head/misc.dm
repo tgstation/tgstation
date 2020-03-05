@@ -146,6 +146,7 @@
 		to_chat(user, "<span class='boldnotice'>You can no longer speak like a pirate.</span>")
 
 /obj/item/clothing/head/pirate/captain
+	name = "pirate captain"
 	icon_state = "hgpiratecap"
 	item_state = "hgpiratecap"
 

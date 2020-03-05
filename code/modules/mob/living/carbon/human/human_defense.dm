@@ -101,19 +101,19 @@
 
 	for(var/obj/item/I in held_items)
 		if(!istype(I, /obj/item/clothing))
-			var/final_block_chance = I.block_chance - (CLAMP((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
+			var/final_block_chance = I.block_chance - (clamp((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
 			if(I.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 				return TRUE
 	if(wear_suit)
-		var/final_block_chance = wear_suit.block_chance - (CLAMP((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
+		var/final_block_chance = wear_suit.block_chance - (clamp((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
 		if(wear_suit.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return TRUE
 	if(w_uniform)
-		var/final_block_chance = w_uniform.block_chance - (CLAMP((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
+		var/final_block_chance = w_uniform.block_chance - (clamp((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
 		if(w_uniform.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return TRUE
 	if(wear_neck)
-		var/final_block_chance = wear_neck.block_chance - (CLAMP((armour_penetration-wear_neck.armour_penetration)/2,0,100)) + block_chance_modifier
+		var/final_block_chance = wear_neck.block_chance - (clamp((armour_penetration-wear_neck.armour_penetration)/2,0,100)) + block_chance_modifier
 		if(wear_neck.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return TRUE
   return FALSE
@@ -140,21 +140,6 @@
 		hitpush = FALSE
 		skipcatch = TRUE
 		blocked = TRUE
-	else if(I)
-		if(((throwingdatum ? throwingdatum.speed : I.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || I.embedding.embedded_ignore_throwspeed_threshold)
-			if(can_embed(I))
-				if(prob(I.embedding.embed_chance) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
-					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
-					var/obj/item/bodypart/L = pick(bodyparts)
-					L.embedded_objects |= I
-					I.add_mob_blood(src)//it embedded itself in you, of course it's bloody!
-					I.forceMove(src)
-					I.embedded(src)
-					L.receive_damage(I.w_class*I.embedding.embedded_impact_pain_multiplier)
-					visible_message("<span class='danger'>[I] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>[I] embeds itself in your [L.name]!</span>")
-					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
-					hitpush = FALSE
-					skipcatch = TRUE //can't catch the now embedded item
 
 	return ..()
 
@@ -191,7 +176,6 @@
 	var/hulk_verb = pick("smash","pummel")
 	if(check_shields(user, 15, "the [hulk_verb]ing"))
 		return
-	..()
 	playsound(loc, user.dna.species.attack_sound, 25, TRUE, -1)
 	visible_message("<span class='danger'>[user] [hulk_verb]ed [src]!</span>", \
 					"<span class='userdanger'>[user] [hulk_verb]ed [src]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, user)
@@ -746,7 +730,10 @@
 		to_chat(src, "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name][isdisabled][self_aware ? " has " : " is "][status].</span>")
 
 		for(var/obj/item/I in LB.embedded_objects)
-			to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
+			if(I.is_embed_harmless())
+				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] stuck to your [LB.name]!</a>")
+			else
+				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
 
 	for(var/t in missing)
 		to_chat(src, "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")

@@ -21,6 +21,8 @@
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
 	gold_core_spawnable = FRIENDLY_SPAWN
+	can_be_held = TRUE
+	held_state = "fox"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
