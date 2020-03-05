@@ -241,7 +241,7 @@
 		update_action_buttons_icon()
 
 	if(amount_grown >= SLIME_EVOLUTION_THRESHOLD && !buckled && !Target && !ckey)
-		if(is_adult)
+		if(is_adult && isturf(loc))
 			Reproduce()
 		else
 			Evolve()
