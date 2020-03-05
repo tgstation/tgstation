@@ -565,6 +565,7 @@ const ROUTES = {
   radioactive_microlaser: {
     component: () => RadioactiveMicrolaser,
     scrollable: false,
+    theme: 'syndicate',
   },
   remote_robot_control: {
     component: () => RemoteRobotControl,
