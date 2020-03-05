@@ -46,6 +46,8 @@
 		pack_type = pick(stray_spawnable_supply_packs)
 	var/datum/supply_pack/SP = new pack_type
 	var/obj/structure/closet/crate/C = SP.generate(null)
+	C.locked = FALSE //Unlock secure crates
+	C.update_icon()
 	new /obj/effect/DPtarget(LZ, /obj/structure/closet/supplypod, C)
 
 ///Picks an area that wouldn't risk critical damage if hit by a pod explosion
