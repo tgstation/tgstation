@@ -90,6 +90,7 @@
 
 	tackling = TRUE
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/checkObstacle)
+	playsound(user, 'sound/weapons/thudswoosh.ogg', 40, TRUE, -1)
 
 	if(can_see(user, A, 7))
 		user.visible_message("<span class='warning'>[user] leaps at [A]!</span>", "<span class='danger'>You leap at [A]!</span>")
@@ -131,7 +132,7 @@
 
 	if(!iscarbon(hit))
 		if(hit.density)
-			splat(user, hit)
+			return splat(user, hit)
 		return
 
 	var/mob/living/carbon/target = hit
@@ -312,20 +313,11 @@
 		var/obj/machinery/vending/darth_vendor = hit
 		darth_vendor.tilt(user, TRUE)
 		return
-	else if(hit.type in list(/obj/structure/window, /obj/structure/window/fulltile)) // only the boring normal windows
-		user.adjustStaminaLoss(30)
-		user.adjustBruteLoss(30)
-		user.Paralyze(30)
-		for(var/i = 0, i < speed * 2, i++)
-			var/obj/item/shard/shard = new /obj/item/shard(get_turf(user))
-			shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=1, pain_chance=5)
-			shard.AddElement(/datum/element/embed, shard.embedding)
-			user.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-			shard.embedding = list()
-			shard.AddElement(/datum/element/embed, shard.embedding)
-		var/obj/structure/W = hit
-		W.obj_destruction()
-		user.visible_message("<span class='danger'>[user] slams into [hit] and shatters it, shredding [user.p_them()]self with glass!</span>", "<span class='userdanger'>You slam into [hit] and shatter it, shredding yourself with glass!</span>")
+	else if(istype(hit, /obj/structure/window))
+		var/obj/structure/window/W = hit
+		splatWindow(user, W)
+		if(QDELETED(W))
+			return COMPONENT_MOVABLE_IMPACT_NEVERMIND
 		return
 
 	var/oopsie_mod = 0
@@ -410,6 +402,35 @@
 	QDEL_NULL(tackle)
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 
+///A special case for splatting for handling windows
+/datum/component/tackler/proc/splatWindow(mob/living/carbon/user, obj/structure/window/W)
+	playsound(user, "sound/effects/Glasshit.ogg", 140, TRUE)
+
+	if(W.type in list(/obj/structure/window, /obj/structure/window/fulltile, /obj/structure/window/unanchored, /obj/structure/window/fulltile/unanchored)) // boring unreinforced windows
+		for(var/i = 0, i < speed, i++)
+			var/obj/item/shard/shard = new /obj/item/shard(get_turf(user))
+			shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=3, pain_chance=5)
+			shard.AddElement(/datum/element/embed, shard.embedding)
+			user.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
+			shard.embedding = list()
+			shard.AddElement(/datum/element/embed, shard.embedding)
+		W.obj_destruction()
+		user.adjustStaminaLoss(10 * speed)
+		user.Paralyze(30)
+		user.visible_message("<span class='danger'>[user] slams into [W] and shatters it, shredding [user.p_them()]self with glass!</span>", "<span class='userdanger'>You slam into [W] and shatter it, shredding yourself with glass!</span>")
+
+	else
+		user.visible_message("<span class='danger'>[user] slams into [W] like a bug, then slowly slides off it!</span>", "<span class='userdanger'>You slam into [W] like a bug, then slowly slide off it!</span>")
+		user.Paralyze(10)
+		user.Knockdown(30)
+		W.take_damage(20 * speed)
+		user.adjustStaminaLoss(10 * speed)
+		user.adjustBruteLoss(5 * speed)
+
+/datum/component/tackler/proc/delayedSmash(obj/structure/window/W)
+	if(W)
+		W.obj_destruction()
+		playsound(W, "shatter", 70, TRUE)
 
 ///Check to see if we hit a table, and if so, make a big mess!
 /datum/component/tackler/proc/checkObstacle(mob/living/carbon/owner)
