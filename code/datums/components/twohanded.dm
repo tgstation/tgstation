@@ -107,7 +107,7 @@
 /datum/component/two_handed/proc/on_attack_self(datum/source, mob/user)
 	if(wielded)
 		unwield(user)
-	if(user.is_holding(parent))
+	else if(user.is_holding(parent))
 		wield(user)
 
 /**
