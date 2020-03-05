@@ -281,7 +281,7 @@
 	if(trydir)
 		if(AM.Move(get_step(T, trydir)))
 			return TRUE
-	for(var/direction in GLOB.cardinals)
+	for(var/direction in (GLOB.cardinals-trydir))
 		if(AM.Move(get_step(T, direction)))
 			return TRUE
 	return FALSE
