@@ -38,7 +38,13 @@
 
 ///Spawns a random supply pack, puts it in a pod, and spawns it on a random tile of the selected area
 /datum/round_event/stray_cargo/start()
-	var/turf/LZ = pick(get_area_turfs(impact_area))
+	var/list/turf/valid_turfs = get_area_turfs(impact_area)
+	//Only target non-dense turfs to prevent wall-embedded pods
+	for(var/i in valid_turfs)
+		var/turf/T = i
+		if(T.density)
+			valid_turfs -= T
+	var/turf/LZ = pick(valid_turfs)
 	var/pack_type
 	if(possible_pack_types.len)
 		pack_type = pick(possible_pack_types)
