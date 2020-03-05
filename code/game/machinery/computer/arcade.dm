@@ -78,7 +78,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	Reset()
 
 /obj/machinery/computer/arcade/proc/prizevend(mob/user, prizes = 1)
-	if(user.mind.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && HAS_TRAIT(user, TRAIT_GAMERGOD))
+	if(user.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && HAS_TRAIT(user, TRAIT_GAMERGOD))
 		visible_message("<span class='notice'>[user] inputs an intense cheat code!",\
 		"<span class='notice'>You hear a flurry of buttons being pressed.</span>")
 		say("CODE ACTIVATED: EXTRA PRIZES.")
@@ -212,8 +212,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		return
 
 	if (!blocked && !gameover)
-		var/gamerSkillLevel = usr.mind.get_skill_level(/datum/skill/gaming)
-		var/gamerSkill = usr.mind.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
+		var/gamerSkillLevel = usr.mind?.get_skill_level(/datum/skill/gaming)
+		var/gamerSkill = usr.mind?.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
 		if (href_list["attack"])
 			blocked = TRUE
 			var/attackamt = rand(2,6) + rand(0, gamerSkill)
@@ -346,7 +346,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			usr.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
 
-	user?.mind.adjust_experience(/datum/skill/gaming, xp_gained+1)//always gain at least 1 point of XP
+	user?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)//always gain at least 1 point of XP
 	blocked = FALSE
 	return
 
@@ -528,7 +528,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		gamers[gamer] = -1
 
 		gamer.client.give_award(/datum/award/achievement/misc/gamer, gamer) // PSYCH REPORT NOTE: patient kept rambling about how they did it for an "achievement", recommend continued holding for observation
-		gamer?.mind.adjust_experience(/datum/skill/gaming, 50) // cheevos make u better
+		gamer.mind?.adjust_experience(/datum/skill/gaming, 50) // cheevos make u better
 
 		if(!isnull(GLOB.data_core.general))
 			for(var/datum/data/record/R in GLOB.data_core.general)
@@ -570,7 +570,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 
 		dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];menu=1'>May They Rest In Peace</a></P>"
-		user?.mind.adjust_experience(/datum/skill/gaming, 10)//learning from your mistakes is the first rule of roguelikes
+		user?.mind?.adjust_experience(/datum/skill/gaming, 10)//learning from your mistakes is the first rule of roguelikes
 
 	else if(event)
 		dat = eventdat
@@ -611,9 +611,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		return
 	busy = TRUE
 
-	var/gamerSkillLevel = usr.mind.get_skill_level(/datum/skill/gaming)
-	var/gamerSkill = usr.mind.get_skill_modifier(/datum/skill/gaming, SKILL_PROBS_MODIFIER)
-	var/gamerSkillRands = usr.mind.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
+	var/gamerSkillLevel = usr.mind?.get_skill_level(/datum/skill/gaming)
+	var/gamerSkill = usr.mind?.get_skill_modifier(/datum/skill/gaming, SKILL_PROBS_MODIFIER)
+	var/gamerSkillRands = usr.mind?.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
 	var/xp_gained = 0
 	if (href_list["continue"]) //Continue your travels
 		if(gameStatus == ORION_STATUS_NORMAL && !event && turns != 7)
@@ -900,7 +900,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	add_fingerprint(usr)
 	updateUsrDialog()
 	busy = FALSE
-	usr?.mind.adjust_experience(/datum/skill/gaming, xp_gained+1)
+	usr?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)
 
 
 /obj/machinery/computer/arcade/orion_trail/proc/event()
@@ -1301,7 +1301,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		var/obj/item/bodypart/chopchop = c_user.get_bodypart(which_hand)
 		chopchop.dismember()
 		qdel(chopchop)
-		user?.mind.adjust_experience(/datum/skill/gaming, 100)
+		user.mind?.adjust_experience(/datum/skill/gaming, 100)
 		playsound(loc, 'sound/arcade/win.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 		prizevend(user, rand(3,5))
 	else
