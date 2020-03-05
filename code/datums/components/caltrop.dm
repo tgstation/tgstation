@@ -56,7 +56,7 @@
 			else
 				H.visible_message("<span class='danger'>[H] slides on [A]!</span>", \
 						"<span class='userdanger'>You slide on [A]!</span>")
-		H.apply_damage(damage, BRUTE, picked_def_zone)
 
 			cooldown = world.time
+		H.apply_damage(damage, BRUTE, picked_def_zone)
 		H.Paralyze(60)
