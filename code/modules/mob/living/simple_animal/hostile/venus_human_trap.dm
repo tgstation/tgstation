@@ -89,6 +89,7 @@
 	unsuitable_atmos_damage = 0
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	faction = list("hostile","vines","plants")
+	initial_language_holder = /datum/language_holder/venus
 	del_on_death = TRUE
 	/// A list of all the plant's vines
 	var/list/vines = list()
@@ -171,7 +172,7 @@
 
 /mob/living/simple_animal/hostile/venus_human_trap/proc/pull_vines()
 	for(var/datum/beam/B in vines)
-		if(ismovableatom(B.target))
+		if(istype(B.target, /atom/movable))
 			var/atom/movable/AM = B.target
 			if(!AM.anchored)
 				step(AM,get_dir(AM,src))
