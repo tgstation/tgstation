@@ -216,6 +216,8 @@
 #define COMSIG_LIVING_MINOR_SHOCK "living_minor_shock"			//sent by stuff like stunbatons and tasers: ()
 #define COMSIG_LIVING_REVIVE "living_revive"					//from base of mob/living/revive() (full_heal, admin_revive)
 #define COMSIG_LIVING_REGENERATE_LIMBS "living_regen_limbs"		//from base of /mob/living/regenerate_limbs(): (noheal, excluded_limbs)
+#define COMSIG_LIVING_ATTACH_LIMB "living_attach_limb"			//from base of /obj/item/bodypart/proc/attach_limb(): (new_limb, special) allows you to fail limb attachment
+	#define COMPONENT_NO_ATTACH 1
 #define COMSIG_PROCESS_BORGCHARGER_OCCUPANT "living_charge"		//sent from borg recharge stations: (amount, repairs)
 #define COMSIG_MOB_CLIENT_LOGIN "comsig_mob_client_login"		//sent when a mob/login() finishes: (client)
 #define COMSIG_BORG_SAFE_DECONSTRUCT "borg_safe_decon"			//sent from borg mobs to itself, for tools to catch an upcoming destroy() due to safe decon (rather than detonation)
@@ -275,6 +277,8 @@
 	#define COMPONENT_BLOCK_SHARPEN_BLOCKED 2
 	#define COMPONENT_BLOCK_SHARPEN_ALREADY 4
 	#define COMPONENT_BLOCK_SHARPEN_MAXED 8
+#define COMSIG_TOOL_IN_USE "tool_in_use"						///from base of [/obj/item/proc/tool_check_callback]: (mob/living/user)
+#define COMSIG_TOOL_START_USE "tool_start_use"					///from base of [/obj/item/proc/tool_start_check]: (mob/living/user)
 
 // /obj/item signals for economy
 #define COMSIG_ITEM_SOLD "item_sold"							//called when an item is sold by the exports subsystem

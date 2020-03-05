@@ -1054,7 +1054,7 @@
 			"key" = /obj/item/assembly/signaler/anomaly/bluespace,
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_WELDER,
-			"desc" = "Anomaly core socket is open.",
+			"desc" = "Bluespace anomaly core socket is open.",
 			"icon_state" = "phazon24"
 		)
 	)

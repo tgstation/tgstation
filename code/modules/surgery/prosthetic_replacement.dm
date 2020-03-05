@@ -72,7 +72,11 @@
 		tool = tool.contents[1]
 	if(istype(tool, /obj/item/bodypart) && user.temporarilyRemoveItemFromInventory(tool))
 		var/obj/item/bodypart/L = tool
-		L.attach_limb(target)
+		if(!L.attach_limb(target))
+			display_results(user, target, "<span class='warning'>You fail in replacing [target]'s [parse_zone(target_zone)]! Their body has rejected [L]!</span>",
+				"<span class='warning'>[user] fails to replace [target]'s [parse_zone(target_zone)]!</span>",
+				"<span class='warning'>[user] fails to replaces [target]'s [parse_zone(target_zone)]!</span>")
+			return
 		if(organ_rejection_dam)
 			target.adjustToxLoss(organ_rejection_dam)
 			experience_given -= (round(organ_rejection_dam/10))
@@ -83,7 +87,12 @@
 	else
 		var/obj/item/bodypart/L = target.newBodyPart(target_zone, FALSE, FALSE)
 		L.is_pseudopart = TRUE
-		L.attach_limb(target)
+		if(!L.attach_limb(target))
+			display_results(user, target, "<span class='warning'>You fail in attaching [target]'s [parse_zone(target_zone)]! Their body has rejected [L]!</span>",
+				"<span class='warning'>[user] fails to attach [target]'s [parse_zone(target_zone)]!</span>",
+				"<span class='warning'>[user] fails to attach [target]'s [parse_zone(target_zone)]!</span>")
+			L.forceMove(target.loc)
+			return
 		user.visible_message("<span class='notice'>[user] finishes attaching [tool]!</span>", "<span class='notice'>You attach [tool].</span>")
 		display_results(user, target, "<span class='notice'>You attach [tool].</span>",
 			"<span class='notice'>[user] finishes attaching [tool]!</span>",
