@@ -442,19 +442,19 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		if (h2ocomp < 0.30) //variability in the h2o penalty calculation depending on the %
 			h2ofixed = 1
-		else if (h2ocomp >= 0.30 && h2ocomp <= 0.50)
+		else if (h2ocomp <= 0.50)
 			h2ofixed = 0.5
 		else
 			h2ofixed = 2
 
 		//No less then zero, and no greater then one, we use this to do explosions and heat to power transfer
 		gasmix_power_ratio = min(max(((plasmacomp + o2comp + co2comp + h2ocomp + tritiumcomp + bzcomp - pluoxiumcomp - n2comp) * h2omalus), 0), 1)
-		//Minimum value of 1.5, maximum value of 27.8 (again changed and i don't know how to calculate it)
-		dynamic_heat_modifier = max(((plasmacomp * PLASMA_HEAT_PENALTY) + (o2comp * OXYGEN_HEAT_PENALTY)) * h2omalus + (h2ocomp * H2O_HEAT_PENALTY) * h2ofixed + (co2comp * CO2_HEAT_PENALTY) + (tritiumcomp * TRITIUM_HEAT_PENALTY) + ((pluoxiumcomp * PLUOXIUM_HEAT_PENALTY) * pluoxiumbonus) + (n2comp * NITROGEN_HEAT_PENALTY) + (bzcomp * BZ_HEAT_PENALTY), 0.5)
-		//Value between 6 and 1 (god everything is changing)
+		//Minimum value of 1.5, maximum value of 23
+		dynamic_heat_modifier = max(((plasmacomp * PLASMA_HEAT_PENALTY) + (o2comp * OXYGEN_HEAT_PENALTY) + (co2comp * CO2_HEAT_PENALTY) + (tritiumcomp * TRITIUM_HEAT_PENALTY) + ((pluoxiumcomp * PLUOXIUM_HEAT_PENALTY) * pluoxiumbonus) + (n2comp * NITROGEN_HEAT_PENALTY) + (bzcomp * BZ_HEAT_PENALTY)) * h2omalus + (h2ocomp * H2O_HEAT_PENALTY) * h2ofixed, 0.5)
+		//Value between 1 and 10
 		dynamic_heat_resistance = max((n2ocomp * N2O_HEAT_RESISTANCE) + ((h2ocomp * H2O_HEAT_RESISTANCE) * h2obonus) + ((pluoxiumcomp * PLUOXIUM_HEAT_RESISTANCE) * pluoxiumbonus), 1)
-		//Value between 30 and -5, used to determine radiation output as it concerns things like collecters (i dont know how to do the new math for this)
-		power_transmission_bonus = ((plasmacomp * gas_trans["PL"]) + (o2comp * gas_trans["O2"])) * h2omalus + ((h2ocomp * gas_trans["WV"])*h2obonus) + (bzcomp * gas_trans["BZ"]) + (tritiumcomp * gas_trans["TRIT"]) + ((pluoxiumcomp * gas_trans["PLX"]) * pluoxiumbonus)
+		//Value between 30 and -5, used to determine radiation output as it concerns things like collecters
+		power_transmission_bonus = ((plasmacomp * gas_trans["PL"]) + (o2comp * gas_trans["O2"]) + ((h2ocomp * gas_trans["WV"])*h2obonus) + (bzcomp * gas_trans["BZ"]) + (tritiumcomp * gas_trans["TRIT"]) + ((pluoxiumcomp * gas_trans["PLX"]) * pluoxiumbonus)) * h2omalus
 
 		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
 		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
@@ -508,9 +508,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		//Also keep in mind we are only adding this temperature to (efficiency)% of the one tile the rock
 		//is on. An increase of 4*C @ 25% efficiency here results in an increase of 1*C / (#tilesincore) overall.
-		//Power * 0.55 * (some value between 1.5 and 27.8) / 5
+		//Power * 0.55 * (some value between 1.5 and 23) / 5
 		removed.temperature += ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_MODIFIER)
-		//We can only emit so much heat, that being 2500*27.8
+		//We can only emit so much heat, that being 2500*23
 		removed.temperature = max(0, min(removed.temperature, 2500 * dynamic_heat_modifier))
 
 		//Calculate how much gas to release
