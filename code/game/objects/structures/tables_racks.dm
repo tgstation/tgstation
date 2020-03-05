@@ -185,9 +185,17 @@
 				user.unbuckle_mob(carried_mob)
 				tableheadsmash(user, carried_mob)
 			if(INTENT_HELP)
-				carried_mob.visible_message("<span class='notice'>[user] begins to place [carried_mob] onto [src]...</span>", \
-					"<span class='userdanger'>[user] begins to place [carried_mob] onto [src]...</span>")
-				if(do_after(user, 3.5 SECONDS, target = carried_mob))
+				var/tableplace_delay = 3.5 SECONDS
+				var/skills_space = ""
+				if(HAS_TRAIT(user, TRAIT_QUICKER_CARRY))
+					tableplace_delay = 2 SECONDS
+					skills_space = " expertly"
+				else if(HAS_TRAIT(user, TRAIT_QUICK_CARRY))
+					tableplace_delay = 2.75 SECONDS
+					skills_space = " quickly"
+				carried_mob.visible_message("<span class='notice'>[user] begins to[skills_space] place [carried_mob] onto [src]...</span>",
+					"<span class='userdanger'>[user] begins to[skills_space] place [carried_mob] onto [src]...</span>")
+				if(do_after(user, tableplace_delay, target = carried_mob))
 					user.unbuckle_mob(carried_mob)
 					tableplace(user, carried_mob)
 			else
