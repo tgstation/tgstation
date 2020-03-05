@@ -19,6 +19,7 @@
 #define CO2_HEAT_PENALTY 0.1
 #define NITROGEN_HEAT_PENALTY -1.5
 #define BZ_HEAT_PENALTY 5
+#define FREON_HEAT_PENALTY -10
 
 
 //All of these get divided by 10-bzcomp * 5 before having 1 added and being multiplied with power to determine rads
@@ -28,6 +29,7 @@
 #define BZ_TRANSMIT_MODIFIER -2
 #define TRITIUM_TRANSMIT_MODIFIER 30 //We divide by 10, so this works out to 3
 #define PLUOXIUM_TRANSMIT_MODIFIER -5 //Should halve the power output
+#define FREON_TRANSMIT_MODIFIER -9
 
 #define BZ_RADIOACTIVITY_MODIFIER 5 //Improves the effect of transmit modifiers
 
@@ -104,7 +106,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	critical_machine = TRUE
 
 	//If we ever start to care about all gasses, make this based on type and apply it as a for loop
-	var/list/gas_trans = list("PL" = PLASMA_TRANSMIT_MODIFIER, "O2" = OXYGEN_TRANSMIT_MODIFIER, "TRIT" = TRITIUM_TRANSMIT_MODIFIER, "PLX" = PLUOXIUM_TRANSMIT_MODIFIER, "BZ" = BZ_TRANSMIT_MODIFIER)
+	var/list/gas_trans = list("PL" = PLASMA_TRANSMIT_MODIFIER, "O2" = OXYGEN_TRANSMIT_MODIFIER, "TRIT" = TRITIUM_TRANSMIT_MODIFIER, "PLX" = PLUOXIUM_TRANSMIT_MODIFIER, "BZ" = BZ_TRANSMIT_MODIFIER, "FR" = FREON_TRANSMIT_MODIFIER)
 	var/gasefficency = 0.15
 
 	var/base_icon_state = "darkmatter"
@@ -138,8 +140,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/tritiumcomp = 0
 	var/bzcomp = 0
 	var/pluoxiumcomp = 0
+	var/freoncomp = 0
 
 	var/pluoxiumbonus = 0
+	var/freonbonus = 1
 
 	var/combined_gas = 0
 	var/gasmix_power_ratio = 0
@@ -428,6 +432,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		bzcomp += clamp(max(removed.gases[/datum/gas/bz][MOLES]/combined_gas, 0) - bzcomp, -1, gas_change_rate)
 		n2ocomp += clamp(max(removed.gases[/datum/gas/nitrous_oxide][MOLES]/combined_gas, 0) - n2ocomp, -1, gas_change_rate)
 		n2comp += clamp(max(removed.gases[/datum/gas/nitrogen][MOLES]/combined_gas, 0) - n2comp, -1, gas_change_rate)
+		freoncomp += clamp(max(removed.gases[/datum/gas/freon][MOLES]/combined_gas, 0) - freoncomp, -1, gas_change_rate)
 
 		//We're concerned about pluoxium being too easy to abuse at low percents, so we make sure there's a substantial amount.
 		if(pluoxiumcomp >= 0.15)
@@ -435,14 +440,19 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		else
 			pluoxiumbonus = 0
 
+		if(freoncomp <= 0.01)
+			freonbonus = 1
+		else
+			freonbonus = 0
+
 		//No less then zero, and no greater then one, we use this to do explosions and heat to power transfer
-		gasmix_power_ratio = min(max(plasmacomp + o2comp + co2comp + tritiumcomp + bzcomp - pluoxiumcomp - n2comp, 0), 1)
+		gasmix_power_ratio = min(max(plasmacomp + o2comp + co2comp + tritiumcomp + bzcomp - pluoxiumcomp - n2comp - freoncomp, 0), 1)
 		//Minimum value of 1.5, maximum value of 15
-		dynamic_heat_modifier = max((plasmacomp * PLASMA_HEAT_PENALTY) + (o2comp * OXYGEN_HEAT_PENALTY) + (co2comp * CO2_HEAT_PENALTY) + (tritiumcomp * TRITIUM_HEAT_PENALTY) + ((pluoxiumcomp * PLUOXIUM_HEAT_PENALTY) * pluoxiumbonus) + (n2comp * NITROGEN_HEAT_PENALTY) + (bzcomp * BZ_HEAT_PENALTY), 0.5)
+		dynamic_heat_modifier = max((plasmacomp * PLASMA_HEAT_PENALTY) + (o2comp * OXYGEN_HEAT_PENALTY) + (co2comp * CO2_HEAT_PENALTY) + (tritiumcomp * TRITIUM_HEAT_PENALTY) + ((pluoxiumcomp * PLUOXIUM_HEAT_PENALTY) * pluoxiumbonus) + (n2comp * NITROGEN_HEAT_PENALTY) + (bzcomp * BZ_HEAT_PENALTY) + (freoncomp * FREON_HEAT_PENALTY), 0.5)
 		//Value between 6 and 1
 		dynamic_heat_resistance = max((n2ocomp * N2O_HEAT_RESISTANCE) + ((pluoxiumcomp * PLUOXIUM_HEAT_RESISTANCE) * pluoxiumbonus), 1)
 		//Value between 30 and -5, used to determine radiation output as it concerns things like collecters
-		power_transmission_bonus = (plasmacomp * gas_trans["PL"]) + (o2comp * gas_trans["O2"]) + (bzcomp * gas_trans["BZ"]) + (tritiumcomp * gas_trans["TRIT"]) + ((pluoxiumcomp * gas_trans["PLX"]) * pluoxiumbonus)
+		power_transmission_bonus = ((plasmacomp * gas_trans["PL"]) + (o2comp * gas_trans["O2"]) + (bzcomp * gas_trans["BZ"]) + (tritiumcomp * gas_trans["TRIT"]) + ((pluoxiumcomp * gas_trans["PLX"]) * pluoxiumbonus) + (freoncomp * gas_trans["FR"])) * freonbonus
 
 		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
 		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)

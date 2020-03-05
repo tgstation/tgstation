@@ -1,5 +1,5 @@
 GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)) //the main four gases, which were at one time hardcoded
-GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/pluoxium, /datum/gas/stimulum, /datum/gas/nitryl))) //unable to react amongst themselves
+GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/pluoxium, /datum/gas/stimulum, /datum/gas/freon))) //unable to react amongst themselves
 
 /proc/meta_gas_list()
 	. = subtypesof(/datum/gas)
@@ -104,16 +104,6 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	dangerous = TRUE
 	rarity = 600
 
-/datum/gas/nitryl
-	id = "no2"
-	specific_heat = 20
-	name = "Nitryl"
-	gas_overlay = "nitryl"
-	moles_visible = MOLES_GAS_VISIBLE
-	dangerous = TRUE
-	fusion_power = 16
-	rarity = 100
-
 /datum/gas/tritium
 	id = "tritium"
 	specific_heat = 10
@@ -153,6 +143,14 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	gas_overlay = "miasma"
 	moles_visible = MOLES_GAS_VISIBLE * 60
 	rarity = 250
+
+/datum/gas/freon
+	id = "freon"
+	specific_heat = 300
+	name = "Freon"
+	gas_overlay = "freon"
+	moles_visible = MOLES_GAS_VISIBLE *30
+	rarity = 10
 
 /obj/effect/overlay/gas
 	icon = 'icons/effects/atmospherics.dmi'

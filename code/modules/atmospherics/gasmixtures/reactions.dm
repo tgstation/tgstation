@@ -238,6 +238,17 @@
 
 	return cached_results["fire"] ? REACTING : NO_REACTION
 
+datum/gas_reaction/freonfire
+	priority = -2
+	name = "Freon combustion"
+	id = "freonfire"
+
+datum/gas_reaction/freonfire/init_reqs()
+	min_requirements = list(
+		"TEMP" = FREON_FIRE_MINIMUM_TEMP
+		/datum/gas/oxigen = MINIMUM_MOLE_COUNT
+		/datum/gas/freon = MINIMUM_MOLE_COUNT
+
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again!
 //Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
 //6 reworks
@@ -307,9 +318,8 @@
 		cached_gases[/datum/gas/oxygen][MOLES] += FUSION_TRITIUM_MOLES_USED*(reaction_energy*FUSION_TRITIUM_CONVERSION_COEFFICIENT)
 		cached_gases[/datum/gas/nitrous_oxide][MOLES] += FUSION_TRITIUM_MOLES_USED*(reaction_energy*FUSION_TRITIUM_CONVERSION_COEFFICIENT)
 	else
-		air.assert_gases(/datum/gas/bz,/datum/gas/nitryl)
+		air.assert_gases(/datum/gas/bz)
 		cached_gases[/datum/gas/bz][MOLES] += FUSION_TRITIUM_MOLES_USED*(reaction_energy*-FUSION_TRITIUM_CONVERSION_COEFFICIENT)
-		cached_gases[/datum/gas/nitryl][MOLES] += FUSION_TRITIUM_MOLES_USED*(reaction_energy*-FUSION_TRITIUM_CONVERSION_COEFFICIENT)
 
 	if(reaction_energy)
 		if(location)
@@ -322,39 +332,6 @@
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY && (air.temperature <= FUSION_MAXIMUM_TEMPERATURE || reaction_energy <= 0))	//If above FUSION_MAXIMUM_TEMPERATURE, will only adjust temperature for endothermic reactions.
 			air.temperature = clamp(((air.temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB,INFINITY)
-		return REACTING
-
-/datum/gas_reaction/nitrylformation //The formation of nitryl. Endothermic. Requires N2O as a catalyst.
-	priority = 3
-	name = "Nitryl formation"
-	id = "nitrylformation"
-
-/datum/gas_reaction/nitrylformation/init_reqs()
-	min_requirements = list(
-		/datum/gas/oxygen = 20,
-		/datum/gas/nitrogen = 20,
-		/datum/gas/pluoxium = 5,
-		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST*60
-	)
-
-/datum/gas_reaction/nitrylformation/react(datum/gas_mixture/air)
-	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
-
-	var/old_heat_capacity = air.heat_capacity()
-	var/heat_efficency = min(temperature/(FIRE_MINIMUM_TEMPERATURE_TO_EXIST*100),cached_gases[/datum/gas/oxygen][MOLES],cached_gases[/datum/gas/nitrogen][MOLES])
-	var/energy_used = heat_efficency*NITRYL_FORMATION_ENERGY
-	ASSERT_GAS(/datum/gas/nitryl,air)
-	if ((cached_gases[/datum/gas/oxygen][MOLES] - heat_efficency < 0 )|| (cached_gases[/datum/gas/nitrogen][MOLES] - heat_efficency < 0)) //Shouldn't produce gas from nothing.
-		return NO_REACTION
-	cached_gases[/datum/gas/oxygen][MOLES] -= heat_efficency
-	cached_gases[/datum/gas/nitrogen][MOLES] -= heat_efficency
-	cached_gases[/datum/gas/nitryl][MOLES] += heat_efficency*2
-
-	if(energy_used > 0)
-		var/new_heat_capacity = air.heat_capacity()
-		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((temperature*old_heat_capacity - energy_used)/new_heat_capacity),TCMB)
 		return REACTING
 
 /datum/gas_reaction/bzformation //Formation of BZ by combining plasma and tritium at low pressures. Exothermic.
@@ -395,6 +372,40 @@
 			air.temperature = max(((temperature*old_heat_capacity + energy_released)/new_heat_capacity),TCMB)
 		return REACTING
 
+/datum/gas_reaction/freonformation
+	priority = 5
+	name = "Freon formation"
+	id = "freonformation"
+
+/datum/gas_reaction/freonformation/init_reqs()
+	min_requirements = list(
+		/datum/gas/plasma = 40,
+		/datum/gas/carbon_dioxide = 20,
+		/datum/gas/bz = 20,
+		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
+		)
+
+/datum/gas_reaction/freonformation/react(datum/gas_mixture/air)
+	var/list/cached_gases = air.gases
+	var/temperature = air.temperature
+	var/old_heat_capacity = air.heat_capacity()
+	var/heat_efficency = min(temperature/(FIRE_MINIMUM_TEMPERATURE_TO_EXIST*100), cached_gases[/datum/gas/plasma][MOLES], cached_gases[/datum/gas/carbon_dioxide][MOLES], cached_gases[/datum/gas/bz][MOLES])
+	var/energy_used = heat_efficency*100
+	ASSERT_GAS(/datum/gas/freon,air)
+	if ((cached_gases[/datum/gas/plasma][MOLES] - heat_efficency < 0 ) || (cached_gases[/datum/gas/carbon_dioxide][MOLES] - heat_efficency < 0) || (cached_gases[/datum/gas/bz][MOLES] - heat_efficency < 0)) //Shouldn't produce gas from nothing.
+		return NO_REACTION
+	cached_gases[/datum/gas/plasma][MOLES] -= heat_efficency*5
+	cached_gases[/datum/gas/carbon_dioxide][MOLES] -= heat_efficency
+	cached_gases[/datum/gas/bz][MOLES] -= heat_efficency/2
+	cached_gases[/datum/gas/freon][MOLES] += heat_efficency*2
+
+	if(energy_used > 0)
+		var/new_heat_capacity = air.heat_capacity()
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			air.temperature = max(((temperature*old_heat_capacity - energy_used)/new_heat_capacity),TCMB)
+		return REACTING
+
+
 /datum/gas_reaction/stimformation //Stimulum formation follows a strange pattern of how effective it will be at a given temperature, having some multiple peaks and some large dropoffs. Exo and endo thermic.
 	priority = 5
 	name = "Stimulum formation"
@@ -405,23 +416,21 @@
 		/datum/gas/tritium = 30,
 		/datum/gas/plasma = 10,
 		/datum/gas/bz = 20,
-		/datum/gas/nitryl = 30,
 		"TEMP" = STIMULUM_HEAT_SCALE/2)
 
 /datum/gas_reaction/stimformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
 
 	var/old_heat_capacity = air.heat_capacity()
-	var/heat_scale = min(air.temperature/STIMULUM_HEAT_SCALE,cached_gases[/datum/gas/tritium][MOLES],cached_gases[/datum/gas/plasma][MOLES],cached_gases[/datum/gas/nitryl][MOLES])
+	var/heat_scale = min(air.temperature/STIMULUM_HEAT_SCALE,cached_gases[/datum/gas/tritium][MOLES],cached_gases[/datum/gas/plasma][MOLES])
 	var/stim_energy_change = heat_scale + STIMULUM_FIRST_RISE*(heat_scale**2) - STIMULUM_FIRST_DROP*(heat_scale**3) + STIMULUM_SECOND_RISE*(heat_scale**4) - STIMULUM_ABSOLUTE_DROP*(heat_scale**5)
 
 	ASSERT_GAS(/datum/gas/stimulum,air)
-	if ((cached_gases[/datum/gas/tritium][MOLES] - heat_scale < 0 )|| (cached_gases[/datum/gas/plasma][MOLES] - heat_scale < 0) || (cached_gases[/datum/gas/nitryl][MOLES] - heat_scale < 0)) //Shouldn't produce gas from nothing.
+	if ((cached_gases[/datum/gas/tritium][MOLES] - heat_scale < 0 )|| (cached_gases[/datum/gas/plasma][MOLES] - heat_scale < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	cached_gases[/datum/gas/stimulum][MOLES]+= heat_scale/10
 	cached_gases[/datum/gas/tritium][MOLES] -= heat_scale
 	cached_gases[/datum/gas/plasma][MOLES] -= heat_scale
-	cached_gases[/datum/gas/nitryl][MOLES] -= heat_scale
 	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, STIMULUM_RESEARCH_AMOUNT*max(stim_energy_change,0))
 	if(stim_energy_change)
 		var/new_heat_capacity = air.heat_capacity()
@@ -494,7 +503,6 @@
 	min_requirements = list(
 		/datum/gas/pluoxium = STIM_BALL_GAS_AMOUNT,
 		/datum/gas/stimulum = STIM_BALL_GAS_AMOUNT,
-		/datum/gas/nitryl = MINIMUM_MOLE_COUNT,
 		/datum/gas/plasma = MINIMUM_MOLE_COUNT,
 		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 	)
@@ -507,8 +515,8 @@
 		location = get_turf(pick(pipenet.members))
 	else
 		location = get_turf(holder)
-	air.assert_gases(/datum/gas/water_vapor,/datum/gas/nitryl,/datum/gas/carbon_dioxide,/datum/gas/nitrogen)
-	var/ball_shot_angle = 180*cos(cached_gases[/datum/gas/water_vapor][MOLES]/cached_gases[/datum/gas/nitryl][MOLES])+180
+	air.assert_gases(/datum/gas/water_vapor,/datum/gas/carbon_dioxide,/datum/gas/nitrogen)
+	var/ball_shot_angle = 180*cos(cached_gases[/datum/gas/water_vapor][MOLES])+180
 	var/stim_used = min(STIM_BALL_GAS_AMOUNT/cached_gases[/datum/gas/plasma][MOLES],cached_gases[/datum/gas/stimulum][MOLES])
 	var/pluox_used = min(STIM_BALL_GAS_AMOUNT/cached_gases[/datum/gas/plasma][MOLES],cached_gases[/datum/gas/pluoxium][MOLES])
 	var/energy_released = stim_used*STIMULUM_HEAT_SCALE//Stimulum has a lot of stored energy, and breaking it up releases some of it
@@ -523,3 +531,6 @@
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = clamp((air.temperature*old_heat_capacity + energy_released)/new_heat_capacity,TCMB,INFINITY)
 		return REACTING
+
+/datum/gas_reaction/freon
+	priority = 5

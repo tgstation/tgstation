@@ -33,7 +33,7 @@
 	var/SA_para_min = 1 //Sleeping agent
 	var/SA_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas
-	var/gas_stimulation_min = 0.002 //Nitryl and Stimulum
+	var/gas_stimulation_min = 0.002 //Stimulum and Freon
 
 	var/oxy_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 	var/oxy_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
@@ -98,7 +98,7 @@
 
 	var/list/breath_gases = breath.gases
 
-	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitrogen, /datum/gas/tritium, /datum/gas/nitryl, /datum/gas/pluoxium, /datum/gas/stimulum)
+	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitrogen, /datum/gas/tritium, /datum/gas/freon, /datum/gas/pluoxium, /datum/gas/stimulum)
 
 	//Partial pressures in our breath
 	var/O2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/oxygen][MOLES])+(8*breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium][MOLES]))
@@ -271,23 +271,23 @@
 		else
 			H.radiation += trit_pp/10
 
-	// Nitryl
-		var/nitryl_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitryl][MOLES])
-		if (prob(nitryl_pp))
+	// Freon
+		var/freon_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/freon][MOLES])
+		if (prob(freon_pp))
 			to_chat(H, "<span class='alert'>Your mouth feels like it's burning!</span>")
-		if (nitryl_pp >40)
+		if (freon_pp >40)
 			H.emote("gasp")
 			H.adjustFireLoss(10)
-			if (prob(nitryl_pp/2))
+			if (prob(freon_pp/2))
 				to_chat(H, "<span class='alert'>Your throat closes up!</span>")
 				H.silent = max(H.silent, 3)
 		else
-			H.adjustFireLoss(nitryl_pp/4)
-		gas_breathed = breath_gases[/datum/gas/nitryl][MOLES]
+			H.adjustFireLoss(freon_pp/4)
+		gas_breathed = breath_gases[/datum/gas/freon][MOLES]
 		if (gas_breathed > gas_stimulation_min)
-			H.reagents.add_reagent(/datum/reagent/nitryl,1)
+			H.reagents.add_reagent(/datum/reagent/freon,1)
 
-		breath_gases[/datum/gas/nitryl][MOLES]-=gas_breathed
+		breath_gases[/datum/gas/freon][MOLES]-=gas_breathed
 
 	// Stimulum
 		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]

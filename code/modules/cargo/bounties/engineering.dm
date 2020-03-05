@@ -14,10 +14,10 @@
 		return FALSE
 	return T.air_contents.gases[gas_type][MOLES] >= moles_required
 
-/datum/bounty/item/engineering/gas/nitryl_tank
-	name = "Full Tank of Nitryl"
-	description = "The non-human staff of Station 88 has been volunteered to test performance enhancing drugs. Ship them a tank full of Nitryl so they can get started."
-	gas_type = /datum/gas/nitryl
+/datum/bounty/item/engineering/gas/freon_tank
+	name = "Full Tank of Freon"
+	description = "The SM of station 33 has started the delamination process. Deliver a tank of Freon gas to help them stop it!"
+	gas_type = /datum/gas/freon
 
 /datum/bounty/item/engineering/gas/tritium_tank
 	name = "Full Tank of Tritium"
