@@ -225,7 +225,8 @@
 		smoke.start()
 		qdel(src)
 		return
-	..()
+	return ..()
+
 
 /mob/living/simple_animal/chick
 	name = "\improper chick"
