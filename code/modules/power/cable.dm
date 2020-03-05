@@ -317,6 +317,20 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 				if(cable_layer == C.cable_layer)
 					. += C
 
+	var/obj/machinery/power/deck_relay/DR = locate(/obj/machinery/power/deck_relay)
+	if(DR)
+		var/turf/TmultiZ
+		if(DR.below)
+			TmultiZ = SSmapping.get_turf_below(T)
+			for(var/obj/structure/cable/C in TmultiZ)
+				if(cable_layer == C.cable_layer)
+					. += C
+		if(DR.above)
+			TmultiZ = SSmapping.get_turf_above(T)
+			for(var/obj/structure/cable/C in TmultiZ)
+				if(cable_layer == C.cable_layer)
+					. += C
+
 /obj/structure/cable/proc/get_machine_connections(powernetless_only)
 	. = list()
 	for(var/obj/machinery/power/P in get_turf(src))
