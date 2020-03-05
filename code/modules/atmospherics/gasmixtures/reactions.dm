@@ -245,9 +245,65 @@ datum/gas_reaction/freonfire
 
 datum/gas_reaction/freonfire/init_reqs()
 	min_requirements = list(
-		"TEMP" = FREON_FIRE_MINIMUM_TEMP
-		/datum/gas/oxigen = MINIMUM_MOLE_COUNT
+		"TEMP" = COLD_FIRE_MAXIMUM_TEMPERATURE_TO_EXIST,
+		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 		/datum/gas/freon = MINIMUM_MOLE_COUNT
+		)
+
+datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
+	var/energy_released = 0
+	var/old_heat_capacity = air.heat_capacity()
+	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
+	var/temperature = air.temperature
+	var/list/cached_results = air.reaction_results
+	cached_results["fire"] = 0
+	var/turf/open/location = isturf(holder) ? holder : null
+
+	//Handle freon burning
+	var/freon_burn_rate = 0
+	var/oxygen_burn_rate = 0
+	//more freon released at lower temperatures
+	var/temperature_scale = 0
+
+	if(temperature < FREON_LOWER_TEMPERATURE)
+		temperature_scale = 1
+	else
+		temperature_scale = (FREON_MAXIMUM_BURN_TEMPERATURE - temperature)/(	FREON_MAXIMUM_BURN_TEMPERATURE - FREON_LOWER_TEMPERATURE)
+	if(temperature_scale > 0)
+		oxygen_burn_rate = OXYGEN_BURN_RATE_BASE - temperature_scale
+		if(cached_gases[/datum/gas/oxygen][MOLES] > cached_gases[/datum/gas/freon][MOLES]*FREON_OXYGEN_FULLBURN)
+			freon_burn_rate = (cached_gases[/datum/gas/freon][MOLES]*temperature_scale)/FREON_BURN_RATE_DELTA
+		else
+			freon_burn_rate = (temperature_scale*(cached_gases[/datum/gas/oxygen][MOLES]/FREON_OXYGEN_FULLBURN))/FREON_BURN_RATE_DELTA
+
+		if(freon_burn_rate > MINIMUM_HEAT_CAPACITY)
+			freon_burn_rate = min(freon_burn_rate,cached_gases[/datum/gas/freon][MOLES],cached_gases[/datum/gas/oxygen][MOLES]/oxygen_burn_rate) //Ensures matter is conserved properly
+			cached_gases[/datum/gas/freon][MOLES] = QUANTIZE(cached_gases[/datum/gas/freon][MOLES] - freon_burn_rate)
+			cached_gases[/datum/gas/oxygen][MOLES] = QUANTIZE(cached_gases[/datum/gas/oxygen][MOLES] - (freon_burn_rate * oxygen_burn_rate))
+	//			ASSERT_GAS(/datum/gas/carbon_dioxide,air)
+	//			cached_gases[/datum/gas/carbon_dioxide][MOLES] += plasma_burn_rate
+
+			energy_released += FIRE_FREON_ENERGY_RELEASED * (freon_burn_rate)
+
+			cached_results["fire"] += (freon_burn_rate)*(1+oxygen_burn_rate)
+
+	if(energy_released < 0)
+		var/new_heat_capacity = air.heat_capacity()
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			air.temperature = (temperature*old_heat_capacity + energy_released)/new_heat_capacity
+
+	//let the floor know a fire is happening
+	if(istype(location))
+		temperature = air.temperature
+		if(temperature < COLD_FIRE_MAXIMUM_TEMPERATURE_TO_EXIST)
+			location.hotspot_expose(temperature, CELL_VOLUME)
+			for(var/I in location)
+				var/atom/movable/item = I
+				item.temperature_expose(air, temperature, CELL_VOLUME)
+			location.temperature_expose(air, temperature, CELL_VOLUME)
+
+	return cached_results["fire"] ? REACTING : NO_REACTION
+
 
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again!
 //Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
@@ -531,6 +587,3 @@ datum/gas_reaction/freonfire/init_reqs()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = clamp((air.temperature*old_heat_capacity + energy_released)/new_heat_capacity,TCMB,INFINITY)
 		return REACTING
-
-/datum/gas_reaction/freon
-	priority = 5

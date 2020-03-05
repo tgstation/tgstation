@@ -412,7 +412,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//This means we can only deal 1.8 damage per function call
 			damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage)
 
-		removed.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/nitrogen, /datum/gas/pluoxium, /datum/gas/tritium, /datum/gas/bz)
+		removed.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/nitrogen, /datum/gas/pluoxium, /datum/gas/tritium, /datum/gas/bz, /datum/gas/freon)
 		//calculating gas related values
 		//Wanna know a secret? See that max() to zero? it's used for error checking. If we get a mol count in the negative, we'll get a divide by zero error
 		combined_gas = max(removed.total_moles(), 0)

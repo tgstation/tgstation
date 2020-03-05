@@ -10,11 +10,12 @@
 #define FIRE_PLASMA_ENERGY_RELEASED			3000000	//Amount of heat released per mole of burnt plasma into the tile
 //General assmos defines.
 #define WATER_VAPOR_FREEZE					200
+#define FREON_BURN_RATE_DELTA				4
+#define FIRE_FREON_ENERGY_RELEASED			-3000
 
 #define N2O_DECOMPOSITION_MIN_ENERGY		1400
 #define N2O_DECOMPOSITION_ENERGY_RELEASED	200000
 
-#define NITRYL_FORMATION_ENERGY				100000
 #define TRITIUM_BURN_OXY_FACTOR				100
 #define TRITIUM_BURN_TRIT_FACTOR			10
 #define TRITIUM_BURN_RADIOACTIVITY_FACTOR	50000 	//The neutrons gotta go somewhere. Completely arbitrary number.
