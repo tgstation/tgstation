@@ -381,7 +381,8 @@
 "aaQ" = (
 /obj/machinery/door/window{
 	dir = 2;
-	name = "Secure Art Exhibition"
+	name = "Secure Art Exhibition";
+	req_access_txt = "37"
 	},
 /obj/structure/table/wood/fancy,
 /obj/structure/sign/painting/library_secure{
@@ -64400,7 +64401,8 @@
 	},
 /obj/machinery/door/window{
 	dir = 8;
-	name = "Library Desk"
+	name = "Library Desk";
+	req_access_txt = "37"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/library)
