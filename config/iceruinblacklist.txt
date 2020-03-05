@@ -15,3 +15,4 @@
 #_maps/RandomRuins/IceRuins/icemoon_underground_wrath.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_lavaland.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_bathhouse.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_wendigo_cave.dmm

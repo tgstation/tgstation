@@ -83,3 +83,9 @@
 	description = "A taste of paradise, locked in the hell of the Ice Moon."
 	suffix = "icemoon_underground_bathhouse.dmm"
 
+/datum/map_template/ruin/icemoon/underground/wendigo_cave
+	name = "Wendigo Cave"
+	id = "wendigocave"
+	description = "Into the jaws of the beast."
+	suffix = "icemoon_underground_wendigo_cave.dmm"
+
