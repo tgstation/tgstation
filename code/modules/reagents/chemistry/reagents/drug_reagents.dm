@@ -369,9 +369,10 @@
 	name = "Happiness"
 	description = "Fills you with ecstasic numbness and causes minor brain damage. Highly addictive. If overdosed causes sudden mood swings."
 	reagent_state = LIQUID
-	color = "#FFF378"
+	color = "#EE35FF"
 	addiction_threshold = 10
 	overdose_threshold = 20
+	taste_description = "paint thinner"
 
 /datum/reagent/drug/happiness/on_mob_metabolize(mob/living/L)
 	..()

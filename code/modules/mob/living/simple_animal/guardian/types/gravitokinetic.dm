@@ -49,6 +49,8 @@
 			remove_gravity(i)
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/add_gravity(atom/A, new_gravity = 2)
+	if(gravito_targets[A])
+		return
 	A.AddElement(/datum/element/forced_gravity, new_gravity)
 	gravito_targets[A] = new_gravity
 	RegisterSignal(A, COMSIG_MOVABLE_MOVED, .proc/__distance_check)

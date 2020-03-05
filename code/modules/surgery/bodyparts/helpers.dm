@@ -151,12 +151,14 @@
 	clear_alert("embeddedobject")
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
-/mob/living/carbon/proc/has_embedded_objects()
-	. = FALSE
+/mob/living/carbon/proc/has_embedded_objects(include_harmless=FALSE)
+	. = 0
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/L = X
 		for(var/obj/item/I in L.embedded_objects)
-			return TRUE
+			if(!include_harmless && I.is_embed_harmless())
+				continue
+			return 1
 
 
 //Helper for quickly creating a new limb - used by augment code in species.dm spec_attacked_by
@@ -288,7 +290,7 @@
 		body_plan_changed = TRUE
 		O.drop_limb(1)
 		qdel(O)
-		N.attach_limb(src)
+		N.attach_limb(src) //no sanity for if this fails here because we just dropped out a limb of the same zone, SHOULD be okay
 	if(body_plan_changed && ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(H.w_uniform)

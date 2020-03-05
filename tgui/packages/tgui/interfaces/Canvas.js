@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box } from '../components';
+import { Box, Button } from '../components';
 import { Component, createRef } from 'inferno';
 import { pureComponentHooks } from 'common/react';
 
@@ -73,7 +73,7 @@ class PaintCanvas extends Component {
         height={y_size || 300}
         {...rest}
         onClick={e => this.clickwrapper(e)}>
-          Canvas failed to render.
+        Canvas failed to render.
       </canvas>
     );
   }
@@ -85,6 +85,12 @@ export const Canvas = props => {
       <PaintCanvas
         value={data.grid}
         onCanvasClick={(x, y) => act("paint", { x, y })} />
-      <Box>{data.name}</Box>
+      <Box>
+        {!data.finalized
+        && <Button.Confirm
+          onClick={() => act("finalize")}
+          content="Finalize" />}
+        {data.name}
+      </Box>
     </Box>);
 };

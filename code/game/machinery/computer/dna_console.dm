@@ -523,7 +523,10 @@
 			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
 				var/num = 1+(i-1)*2
 				var/genenum = num+(DNA_SEQUENCE_LENGTH*2*(block-1))
-				temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
+				if(sequence[num] == "X")
+					temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a class='incompleteBlock' href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
+				else
+					temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
 			temp_html += "</tr><tr>"
 			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
 				temp_html += "<td><div class='statusLine'>|</div></td>"
@@ -531,7 +534,11 @@
 			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
 				var/num = i*2
 				var/genenum = num+(DNA_SEQUENCE_LENGTH*2*(block-1))
-				temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
+
+				if(sequence[num] == "X")
+					temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a class='incompleteBlock' href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
+				else
+					temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
 			temp_html += "</tr></table></div>"
 		temp_html += "<br><br><br><br><br>"
 	else
@@ -923,7 +930,7 @@
 
 		if("add_advinjector")
 			if(LAZYLEN(injector_selection) < max_injector_selections)
-				var/new_selection = input(usr, "Enter Adv. Injector name", "Advanced Injectors") as text|null
+				var/new_selection = stripped_input(usr, "Enter Adv. Injector name", "Advanced Injectors")
 				if(new_selection && !(new_selection in injector_selection))
 					injector_selection[new_selection] = list()
 
