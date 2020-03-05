@@ -5,6 +5,7 @@
 	alert_type = /obj/screen/alert/status_effect/freon
 	var/icon/cube
 	var/can_melt = TRUE
+	var/icewing = FALSE //Is checked to prevent icewing watcher freezing blasts from warming you up when they expire
 
 /obj/screen/alert/status_effect/freon
 	name = "Frozen Solid"
@@ -37,10 +38,12 @@
 	if(!owner.stat)
 		to_chat(owner, "<span class='notice'>The cube melts!</span>")
 	owner.cut_overlay(cube)
-	owner.adjust_bodytemperature(100)
+	if(!icewing)
+		owner.adjust_bodytemperature(100)
 	owner.update_mobility()
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
 
 /datum/status_effect/freon/watcher
-	duration = 8
+	duration = 20 //Gives them a moment to panic about losing control, combined with their slow this should be pretty hazardous as it is
 	can_melt = FALSE
+	icewing = TRUE

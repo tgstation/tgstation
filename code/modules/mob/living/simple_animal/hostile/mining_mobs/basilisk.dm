@@ -39,11 +39,21 @@
 /obj/projectile/temp/basilisk
 	name = "freezing blast"
 	icon_state = "ice_2"
-	damage = 0
+	damage = 15 //Allows projectile to harm races that warm up faster than they can chill, without making the chill so strong that a lizardperson dies by seeing it. Borgs take brute here
 	damage_type = BURN
-	nodamage = TRUE
+	nodamage = FALSE
 	flag = "energy"
-	temperature = -50 // Cools you down! per hit!
+	temperature = -50 // Practically speaking this only serves as a damage over time effect against lizard people, as most other races warm up plenty to ignore this effect entirely
+	var/slowdown = TRUE //Defines whether or not the target will have an on hit slow effect, borgs are immune
+
+/obj/projectile/temp/basilisk/on_hit(atom/target, blocked = 0) //Makes being hit a potential environmental threat again, as body temperature is a situational slowing tool that genocides lizardpeople
+	. = ..()
+	if(isliving(target) && slowdown)
+		var/mob/living/L = target
+		if(iscyborg(L))
+			return
+		L.add_movespeed_modifier(MOVESPEED_ID_BASILISK, update=TRUE, priority=100, multiplicative_slowdown=1)
+		addtimer(CALLBACK(L, /mob.proc/remove_movespeed_modifier, MOVESPEED_ID_BASILISK, TRUE), 5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/projectile/temp/basilisk/heated
 	name = "energy blast"
@@ -188,6 +198,7 @@ mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
 	damage_type = BURN
 	nodamage = FALSE
 	temperature = 200 // Heats you up! per hit!
+	slowdown = FALSE //This beam is not cold, and should not slow you
 
 /obj/projectile/temp/basilisk/magmawing/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -198,9 +209,10 @@ mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
 			L.IgniteMob()
 
 /obj/projectile/temp/basilisk/icewing
-	damage = 5
+	damage = 20 //Makes icewing projectiles at least hurt races that warm up faster than they can chill them by a reasonable amount
 	damage_type = BURN
 	nodamage = FALSE
+	temperature = -100 // We're going to make watchers great again! And make the lizardpeople pay for it!
 
 /obj/projectile/temp/basilisk/icewing/on_hit(atom/target, blocked = FALSE)
 	. = ..()
