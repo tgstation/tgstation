@@ -92,7 +92,7 @@
 	name = "Lightning Bolt"
 	desc = "Fire a lightning bolt at your foes! It will jump between targets, but can't knock them down."
 	school = "evocation"
-	charge_max = 200
+	charge_max = 100
 	clothes_req = FALSE
 	invocation = "P'WAH, UNLIM'TED P'WAH"
 	invocation_type = "shout"
