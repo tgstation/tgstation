@@ -93,16 +93,16 @@
 	desc = "Fire a lightning bolt at your foes! It will jump between targets, but can't knock them down."
 	school = "evocation"
 	charge_max = 200
-	clothes_req = TRUE
-	invocation = "UN'LTD P'WAH"
+	clothes_req = FALSE
+	invocation = "P'WAH, UNLIM'TED P'WAH"
 	invocation_type = "shout"
-	cooldown_min = 30
+	cooldown_min = 10
 	base_icon_state = "lightning"
 	action_icon_state = "lightning0"
 	sound = 'sound/magic/lightningbolt.ogg'
 	active = FALSE
 	projectile_var_overrides = list("zap_range" = 15, "zap_power" = 20000, "zap_flags" = ZAP_MOB_DAMAGE | ZAP_IS_TESLA)
-	active_msg = "You energize your hand with arcane lightning!"
+	active_msg = "You energize your hands with arcane lightning!"
 	deactive_msg = "You let the energy flow out of your hands back into yourself..."
 	projectile_type = /obj/projectile/magic/aoe/lightning
 
