@@ -22951,7 +22951,8 @@
 /area/medical/pharmacy)
 "bhc" = (
 /obj/machinery/camera{
-	c_tag = "Chemistry"
+	c_tag = "Chemistry";
+	network = list("ss13","medbay")
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -23002,7 +23003,8 @@
 /area/security/checkpoint/medical)
 "bhj" = (
 /obj/machinery/camera{
-	c_tag = "Security Post - Medbay"
+	c_tag = "Security Post - Medbay";
+	network = list("ss13","medbay")
 	},
 /obj/machinery/requests_console{
 	department = "Security";
@@ -42968,7 +42970,7 @@
 "clp" = (
 /obj/machinery/camera{
 	c_tag = "Chemistry Lab Northeast";
-	network = list("xeno","rd")
+	network = list("ss13","medbay")
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
@@ -50114,7 +50116,8 @@
 /obj/machinery/chem_dispenser,
 /obj/machinery/camera{
 	c_tag = "Chemistry Lab West";
-	dir = 4
+	dir = 4;
+	network = list("ss13","medbay")
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
@@ -51401,7 +51404,8 @@
 "oZc" = (
 /obj/machinery/camera{
 	c_tag = "Chemistry Lab East";
-	dir = 8
+	dir = 8;
+	network = list("ss13","medbay")
 	},
 /obj/machinery/light{
 	dir = 4
@@ -53430,7 +53434,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Chemistry Lab North";
-	network = list("xeno","rd")
+	network = list("ss13","medbay")
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
