@@ -312,6 +312,21 @@
 		var/obj/machinery/vending/darth_vendor = hit
 		darth_vendor.tilt(user, TRUE)
 		return
+	else if(hit.type in list(/obj/structure/window, /obj/structure/window/fulltile)) // only the boring normal windows
+		user.adjustStaminaLoss(30)
+		user.adjustBruteLoss(30)
+		user.Paralyze(30)
+		for(var/i = 0, i < speed * 2, i++)
+			var/obj/item/shard/shard = new /obj/item/shard(get_turf(user))
+			shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=1, pain_chance=5)
+			shard.AddElement(/datum/element/embed, shard.embedding)
+			user.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
+			shard.embedding = list()
+			shard.AddElement(/datum/element/embed, shard.embedding)
+		var/obj/structure/W = hit
+		W.obj_destruction()
+		user.visible_message("<span class='danger'>[user] slams into [hit] and shatters it, shredding [user.p_them()]self with glass!</span>", "<span class='userdanger'>You slam into [hit] and shatter it, shredding yourself with glass!</span>")
+		return
 
 	var/oopsie_mod = 0
 	var/danger_zone = (speed - 1) * 15 // for every extra speed we have over 1, take away 10 of the safest chance
