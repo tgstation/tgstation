@@ -1,4 +1,4 @@
-/datum/surgery/revival //not actually an advanced surgery anymore, I just don't want to risk moving this file to another location
+/datum/surgery/revival
 	name = "Revival"
 	desc = "An experimental surgical procedure which involves reconstruction and reactivation of the patient's brain even long after death. The body must still be able to sustain life."
 	steps = list(/datum/surgery_step/incise,
