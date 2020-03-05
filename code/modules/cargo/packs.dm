@@ -2535,7 +2535,7 @@
 ///Special supply crate that generates random syndicate gear up to a determined TC value
 /datum/supply_pack/misc/syndicate
 	name = "Assorted Syndicate Gear"
-	desc = "Contains a random assortment of syndicate gear collected over several failed syndicate plots."
+	desc = "Contains a random assortment of syndicate gear."
 	special = TRUE ///Cannot be ordered via cargo
 	contains = list()
 	crate_name = "syndicate gear crate"
