@@ -26,7 +26,7 @@
 	var/voice_unknown = FALSE ///This makes it so that your name shows up as unknown when wearing the mask.
 
 /obj/item/clothing/mask/infiltrator/equipped(mob/living/carbon/human/user, slot)
-	..()
+	. = ..()
 	if(slot != ITEM_SLOT_MASK)
 		return
 	to_chat(user, "You roll the balaclava over your face, and a data display appears before your eyes.")
