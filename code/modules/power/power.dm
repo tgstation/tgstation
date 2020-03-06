@@ -235,9 +235,10 @@
 		index++
 
 		PN.add_cable(working_cable)
-		found_machines += working_cable.get_machine_connections(skip_assigned_powernets)
-		if(!PM.connect_to_network()) //couldn't find a node on its turf...
-			PM.disconnect_from_network() //... so disconnect if already on a powernet
+		found_machines = working_cable.get_machine_connections(skip_assigned_powernets)
+		for(var/obj/machinery/power/PM in found_machines)
+			if(!PM.connect_to_network()) //couldn't find a node on its turf...
+				PM.disconnect_from_network() //... so disconnect if already on a powernet
 
 		var/list/connections = working_cable.get_cable_connections(skip_assigned_powernets)
 
