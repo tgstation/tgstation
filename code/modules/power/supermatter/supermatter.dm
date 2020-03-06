@@ -433,28 +433,32 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		else
 			h2obonus = 0
 
-		if (h2ocomp >= 0.15 && h2ocomp <= 0.45) //the engine will stop producing power from 15% to 45% h2o (slow down the o2 and plasma generation too)
-			h2omalus = 0.05
-		else if (h2ocomp < 0.05)
-			h2omalus = 1
-		else
-			h2omalus = 2  //when gas comp is above 0.45 or between 0.15 and 0.05, the engine will start to freak out (may need test on the amount of freak out)
+		switch(h2ocomp)
+			if (-INFINITY to 0.05) //non h2o delamination fix
+				h2omalus = 1
+			if(0.05 to 0.45) //the engine will stop producing power from 5% to 45% h2o (slow down the o2 and plasma generation too)
+				h2omalus = 0.05
+			if (0.45 to INFINITY)
+				h2omalus = 2  //when gas comp is above 0.45 the engine will start to freak out
 
-		if (h2ocomp < 0.30) //variability in the h2o penalty calculation depending on the %
-			h2ofixed = 1
-		else if (h2ocomp <= 0.50)
-			h2ofixed = 0.5
-		else
-			h2ofixed = 2
+		switch(h2ocomp)  //variability in the h2o penalty calculation depending on the %
+			if(-INFINITY to 0.30)
+				h2ofixed = 1
+			if(0.30 to 0.50)
+				h2ofixed = 0.5
+			if(0.5 to INFINITY)
+				h2ofixed = 2
 
 		//No less then zero, and no greater then one, we use this to do explosions and heat to power transfer
 		gasmix_power_ratio = min(max(((plasmacomp + o2comp + co2comp + h2ocomp + tritiumcomp + bzcomp - pluoxiumcomp - n2comp) * h2omalus), 0), 1)
 		//Minimum value of 1.5, maximum value of 23
-		dynamic_heat_modifier = max(((plasmacomp * PLASMA_HEAT_PENALTY) + (o2comp * OXYGEN_HEAT_PENALTY) + (co2comp * CO2_HEAT_PENALTY) + (tritiumcomp * TRITIUM_HEAT_PENALTY) + ((pluoxiumcomp * PLUOXIUM_HEAT_PENALTY) * pluoxiumbonus) + (n2comp * NITROGEN_HEAT_PENALTY) + (bzcomp * BZ_HEAT_PENALTY)) * h2omalus + (h2ocomp * H2O_HEAT_PENALTY) * h2ofixed, 0.5)
+		dynamic_heat_modifier = max(((plasmacomp * PLASMA_HEAT_PENALTY) + (o2comp * OXYGEN_HEAT_PENALTY) + (co2comp * CO2_HEAT_PENALTY) + (tritiumcomp * TRITIUM_HEAT_PENALTY) + \
+		((pluoxiumcomp * PLUOXIUM_HEAT_PENALTY) * pluoxiumbonus) + (n2comp * NITROGEN_HEAT_PENALTY) + (bzcomp * BZ_HEAT_PENALTY)) * h2omalus + (h2ocomp * H2O_HEAT_PENALTY) * h2ofixed, 0.5)
 		//Value between 1 and 10
 		dynamic_heat_resistance = max((n2ocomp * N2O_HEAT_RESISTANCE) + ((h2ocomp * H2O_HEAT_RESISTANCE) * h2obonus) + ((pluoxiumcomp * PLUOXIUM_HEAT_RESISTANCE) * pluoxiumbonus), 1)
 		//Value between 30 and -5, used to determine radiation output as it concerns things like collecters
-		power_transmission_bonus = ((plasmacomp * gas_trans["PL"]) + (o2comp * gas_trans["O2"]) + ((h2ocomp * gas_trans["WV"])*h2obonus) + (bzcomp * gas_trans["BZ"]) + (tritiumcomp * gas_trans["TRIT"]) + ((pluoxiumcomp * gas_trans["PLX"]) * pluoxiumbonus)) * h2omalus
+		power_transmission_bonus = ((plasmacomp * gas_trans["PL"]) + (o2comp * gas_trans["O2"]) + ((h2ocomp * gas_trans["WV"])*h2obonus) + (bzcomp * gas_trans["BZ"]) + \
+		(tritiumcomp * gas_trans["TRIT"]) + ((pluoxiumcomp * gas_trans["PLX"]) * pluoxiumbonus)) * h2omalus
 
 		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
 		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
