@@ -2,11 +2,15 @@
 	var/beauty = 0
 
 /datum/component/beauty/Initialize(beautyamount)
-	if(!isatom(parent))
+	if(!isatom(parent) || isarea(parent))
 		return COMPONENT_INCOMPATIBLE
+
 	beauty = beautyamount
-	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/enter_area)
-	RegisterSignal(parent, COMSIG_EXIT_AREA, .proc/exit_area)
+
+	if(ismovable(parent))
+		RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/enter_area)
+		RegisterSignal(parent, COMSIG_EXIT_AREA, .proc/exit_area)
+
 	var/area/A = get_area(parent)
 	if(A)
 		enter_area(null, A)

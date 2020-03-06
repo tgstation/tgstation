@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "Harmful embedded objects will no longer \"stick to people\" in descriptions, and will look \"embedded in\" as they should be."

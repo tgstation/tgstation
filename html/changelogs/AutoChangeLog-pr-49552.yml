@@ -1,4 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - bugfix: "Parallax shows planets and asteroids properly when you use remote vision."
