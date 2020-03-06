@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	icon_state = "l3-1-2-4-8-node"
 
 /obj/structure/cable/multilayer
-	name = "multilayer cable"
+	name = "multilayer cable hub"
 	desc = "A flexible, superconducting insulated multilayer hub for heavy-duty power transfer."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cable_bridge"
