@@ -708,7 +708,7 @@
 	desc = "A rudimentry leather sheath meant for holding a security katana."
 
 /obj/item/storage/belt/sheath/security/PopulateContents()
-	new /obj/item/melee/sabre/security(src)
+	new /obj/item/melee/sabre/security/loaded(src)
 	update_icon()
 
 /obj/item/storage/belt/sheath/security/hos/PopulateContents()
