@@ -158,6 +158,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOFLASH			"noflash" //Makes you immune to flashes
 #define TRAIT_XENO_IMMUNE		"xeno_immune"//prevents xeno huggies implanting skeletons
 #define TRAIT_NAIVE				"naive"
+#define TRAIT_PRIMITIVE			"primitive"
 #define TRAIT_GUNFLIP			"gunflip"
 #define TRAIT_SILENT_FOOTSTEPS	"silent_footsteps" //makes your footsteps completely silent
 

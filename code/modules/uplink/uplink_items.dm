@@ -390,7 +390,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Double-Bladed Energy Sword"
 	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
 			all energy projectiles, but requires two hands to wield."
-	item = /obj/item/twohanded/dualsaber
+	item = /obj/item/dualsaber
 	player_minimum = 25
 	cost = 16
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
@@ -571,7 +571,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat, \
 			gain skin as hard as steel and swat bullets from the air, but you also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/book/granter/martial/carp
-	cost = 15
+	cost = 17
 	surplus = 0
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
