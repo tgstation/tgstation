@@ -217,6 +217,9 @@
 	else
 		if(!deductcharge(cell_hit_cost))
 			return FALSE
+	if(HAS_TRAIT_FROM(L, TRAIT_IWASBATONED, user))
+		to_chat(user, "<span class='danger'>[L] manages to avoid the attack!</span>")
+		return FALSE
 
 	/// After a target is hit, we do a chunk of stamina damage, along with other effects.
 	/// After a period of time, we then check to see what stun duration we give.
@@ -242,6 +245,9 @@
 		H.forcesay(GLOB.hit_appends)
 
 	attack_cooldown_check = world.time + attack_cooldown
+
+	ADD_TRAIT(L, TRAIT_IWASBATONED, user)
+	addtimer(TRAIT_CALLBACK_REMOVE(L, TRAIT_IWASBATONED, user), attack_cooldown)
 
 	return 1
 
