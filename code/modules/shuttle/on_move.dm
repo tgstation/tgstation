@@ -352,7 +352,7 @@ All ShuttleMove procs go here
 	if(level==1)
 		hide(T.intact)
 	connect_wire(TRUE)
-	propogate_if_no_network()
+	propagate_if_no_network()
 
 /obj/structure/shuttle/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
