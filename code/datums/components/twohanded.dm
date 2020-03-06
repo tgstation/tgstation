@@ -177,7 +177,7 @@
  * * show_message (option) show a message to chat on unwield
  */
 /datum/component/two_handed/proc/unwield(mob/living/carbon/user, show_message=TRUE)
-	if(!wielded || !istype(user))
+	if(!wielded)
 		return
 
 	// wield update status
