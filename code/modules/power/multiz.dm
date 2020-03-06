@@ -153,4 +153,5 @@
 ///break_connections() on disconnect_from_network()
 /obj/machinery/power/deck_relay/disconnect_from_network()
 	to_chat(world, "<span class='danger'>[name] disconnect_from_network()</span>")
+	refresh()
 	return ..()
