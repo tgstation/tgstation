@@ -128,14 +128,14 @@
 	if(!T || !istype(T))
 		return FALSE
 	to_chat(world, "<span class='danger'>[src] find_relays([from],[force])</span>")
-	if(from != below || force)
-		to_chat(world, "<span class='danger'>[src] re find below from [from]</span>")
+	if(!below || (from && (from != below)) || force) 
+		to_chat(world, "<span class='danger'>[src] re find below [below] from [from]</span>")
 		below = null
 		below = locate(/obj/machinery/power/deck_relay) in(SSmapping.get_turf_below(T))
 		below?.find_relays(src, FALSE)
 
-	if(from != above || force)
-		to_chat(world, "<span class='danger'>[src] re find above from [from]</span>")
+	if(!above || force || (from && (from != above))) 
+		to_chat(world, "<span class='danger'>[src] re find above [above] from [from]</span>")
 		above = null
 		above = locate(/obj/machinery/power/deck_relay) in(SSmapping.get_turf_above(T))
 		above?.find_relays(src, FALSE)
@@ -153,4 +153,3 @@
 /obj/machinery/power/deck_relay/disconnect_from_network()
 	to_chat(world, "<span class='danger'>[name] disconnect_from_network()</span>")
 	return ..()
-
