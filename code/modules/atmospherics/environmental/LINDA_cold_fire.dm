@@ -99,27 +99,27 @@
 	var/heat_a = 255
 	var/greyscale_fire = 1 //This determines how greyscaled the fire is.
 
-	if(temperature < 5000) //This is where fire is very orange, we turn it into the normal fire texture here.
+	if(temperature > 270) //This is where fire is very orange, we turn it into the normal fire texture here.
 		var/normal_amt = gauss_lerp(temperature, 1000, 3000)
 		heat_r = LERP(heat_r,255,normal_amt)
 		heat_g = LERP(heat_g,255,normal_amt)
 		heat_b = LERP(heat_b,255,normal_amt)
 		heat_a -= gauss_lerp(temperature, -5000, 5000) * 128
 		greyscale_fire -= normal_amt
-	if(temperature > 40000) //Past this temperature the fire will gradually turn a bright purple
+	if(temperature < 270) //Past this temperature the fire will gradually turn a bright purple
 		var/purple_amt = temperature < LERP(40000,200000,0.5) ? gauss_lerp(temperature, 40000, 200000) : 1
 		heat_r = LERP(heat_r,255,purple_amt)
-	if(temperature > 200000 && temperature < 500000) //Somewhere at this temperature nitryl happens.
+	if(temperature < 200 && temperature > 150) //Somewhere at this temperature nitryl happens.
 		var/sparkle_amt = gauss_lerp(temperature, 200000, 500000)
 		var/mutable_appearance/sparkle_overlay = mutable_appearance('icons/effects/effects.dmi', "shieldsparkles")
 		sparkle_overlay.blend_mode = BLEND_ADD
 		sparkle_overlay.alpha = sparkle_amt * 255
 		add_overlay(sparkle_overlay)
-	if(temperature > 400000 && temperature < 1500000) //Lightning because very anime.
+	if(temperature < 150 && temperature > 100) //Lightning because very anime.
 		var/mutable_appearance/lightning_overlay = mutable_appearance(icon, "overcharged")
 		lightning_overlay.blend_mode = BLEND_ADD
 		add_overlay(lightning_overlay)
-	if(temperature > 4500000) //This is where noblium happens. Some fusion-y effects.
+	if(temperature < 100) //This is where noblium happens. Some fusion-y effects.
 		var/fusion_amt = temperature < LERP(4500000,12000000,0.5) ? gauss_lerp(temperature, 4500000, 12000000) : 1
 		var/mutable_appearance/fusion_overlay = mutable_appearance('icons/effects/atmospherics.dmi', "fusion_gas")
 		fusion_overlay.blend_mode = BLEND_ADD

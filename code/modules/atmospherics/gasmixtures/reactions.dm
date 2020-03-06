@@ -245,7 +245,6 @@ datum/gas_reaction/freonfire
 
 datum/gas_reaction/freonfire/init_reqs()
 	min_requirements = list(
-		"TEMP" = COLD_FIRE_MAXIMUM_TEMPERATURE_TO_EXIST,
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 		/datum/gas/freon = MINIMUM_MOLE_COUNT
 		)
@@ -256,17 +255,17 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
 	var/temperature = air.temperature
 	var/list/cached_results = air.reaction_results
-	cached_results["fire"] = 0
+	cached_results["cold_fire"] = 0
 	var/turf/open/location = isturf(holder) ? holder : null
 
 	//Handle freon burning
 	var/freon_burn_rate = 0
 	var/oxygen_burn_rate = 0
 	//more freon released at lower temperatures
-	var/temperature_scale = 0
+	var/temperature_scale = 1
 
 	if(temperature < FREON_LOWER_TEMPERATURE)
-		temperature_scale = 1
+		temperature_scale = 0
 	else
 		temperature_scale = (FREON_MAXIMUM_BURN_TEMPERATURE - temperature)/(	FREON_MAXIMUM_BURN_TEMPERATURE - FREON_LOWER_TEMPERATURE)
 	if(temperature_scale > 0)
@@ -285,7 +284,7 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 
 			energy_released += FIRE_FREON_ENERGY_RELEASED * (freon_burn_rate)
 
-			cached_results["fire"] += (freon_burn_rate)*(1+oxygen_burn_rate)
+			cached_results["cold_fire"] += (freon_burn_rate)*(1+oxygen_burn_rate)
 
 	if(energy_released < 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -302,7 +301,7 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 				item.temperature_expose(air, temperature, CELL_VOLUME)
 			location.temperature_expose(air, temperature, CELL_VOLUME)
 
-	return cached_results["fire"] ? REACTING : NO_REACTION
+	return cached_results["cold_fire"] ? REACTING : NO_REACTION
 
 
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again!
