@@ -1,4 +1,5 @@
-
+#define OWNER 0
+#define OVERRIDER 1
 /obj/item/organ/cyberimp
 	name = "cybernetic implant"
 	desc = "A state-of-the-art implant that improves a baseline's functionality."
@@ -157,6 +158,208 @@
 		to_chat(owner, "<span class='warning'>Your breathing tube suddenly closes!</span>")
 		owner.losebreath += 2
 
+/obj/item/organ/cyberimp/brain/neural_override
+	name = "neural override implant"
+	desc = "This cybernetic brain implant is imprinted with a sentient mind, and can take over the patient's body at will."
+	slot = ORGAN_SLOT_BRAIN_OVERRIDE
+	icon_state = "neural_override"
+	w_class = WEIGHT_CLASS_MEDIUM
+	var/current_controller = OWNER
+	var/obj/item/organ/brain/overrider_brain ///The brain stored inside the implant
+	var/mob/living/neural_storage/overrider/override_backseat ///Contains the implant mind's client when not controlling the mob
+	var/mob/living/neural_storage/victim/original_backseat ///Contains the original mind's client when not controlling the mob
+	var/datum/action/innate/override_implant/cease/return_control ///Action to return control of the body to the original owner
+
+/obj/item/organ/cyberimp/brain/neural_override/Insert(mob/living/carbon/C, special = 0, drop_if_replaced = TRUE)
+	..()
+	original_backseat = new(owner)
+
+/obj/item/organ/cyberimp/brain/neural_override/Remove(mob/living/carbon/C, special = FALSE)
+	//Make sure the original owner is left in control
+	if(current_controller == OVERRIDE)
+		switch_control()
+	QDEL_NULL(return_control) //Delete the action, since it's still associated with the mob
+	QDEL_NULL(original_backseat)
+	return ..()
+
+/obj/item/organ/cyberimp/brain/neural_override/Destroy()
+	//Even if it would normally be handled by Remove, this needs to be done before removing the brain or the controllers will remain permanently switched
+	if(owner && current_controller == OVERRIDE)
+		switch_control()
+	remove_brain()
+
+	return ..()
+
+///Switches control of the mob from the original to the overrider and viceversa
+/obj/item/organ/cyberimp/brain/neural_override/proc/switch_control()
+	if(QDELETED(owner) || QDELETED(override_backseat) || QDELETED(original_backseat))
+		return
+
+	var/mob/living/neural_storage/current_backseat
+	var/mob/living/neural_storage/free_backseat
+	if(current_controller == OWNER)
+		current_backseat = override_backseat
+		free_backseat = original_backseat
+	else
+		current_backseat = original_backseat
+		free_backseat = override_backseat
+
+	if(!current_backseat.mind)
+		return
+
+	log_game("[key_name(current_backseat)] assumed control of [key_name(owner)] due to [src]. (Original owner: [current_controller == OWNER ? owner.key : current_backseat.key])")
+	if(current_controller == OWNER)
+		to_chat(owner, "<span class='userdanger'>You suddenly lose control of your body!</span>")
+		to_chat(current_backseat, "<span class='notice'>You assume direct control of [owner]'s body.</span>")
+	else
+		to_chat(owner, "<span class='notice'>You release control of [owner]'s body.</span>")
+		to_chat(current_backseat, "<span class='userdanger'>You regain control of your body!</span>")
+
+	if(owner.mind)
+		owner.mind.transfer_to(free_backseat)
+	current_backseat.mind.transfer_to(owner)
+
+	current_controller = !current_controller
+
+	if(current_controller == OVERRIDE)
+		if(!return_control)
+			return_control = new(owner, src)
+		return_control.Grant(owner)
+	else
+		if(return_control)
+			return_control.Remove(owner)
+
+///The implant can be hit with a brain to install it as the overrider backseat
+/obj/item/organ/cyberimp/brain/neural_override/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/organ/brain))
+		var/obj/item/organ/brain/brain = I
+		if(brain.brainmob && brain.brainmob.mind && (brain.brainmob.client || brain.brainmob.grab_ghost())) //Check that the brain has a player controlling it
+			if(override_backseat) //Replace existing backseat with new one
+				remove_brain()
+			override_backseat = new(src, src)
+			to_chat(user, "<span class='notice'>You install [brain] into [src].</span>")
+			if(brain.brainmob.mind)
+				brain.brainmob.mind.transfer_to(override_backseat)
+		else
+			to_chat(user, "<span class='warning'>The implant's interface rejects the brain. It appears that it is no longer sentient.</span>")
+	else
+		return ..()
+
+///Removes the inserted brain and places the owner back inside
+/obj/item/organ/cyberimp/brain/neural_override/proc/remove_brain()
+	if(QDELETED(override_backseat) || QDELETED(overrider_brain))
+		return
+	overrider_brain.forceMove(drop_location())
+	if(override_backseat.mind)
+		override_backseat.mind.transfer_to(brain.brainmob)
+		to_chat(brain.brainmob, "<span class='warning'>You've been removed from [src].</span>")
+	QDEL_NULL(override_backseat)
+	overrider_brain = null
+
+
+///Shuts down the overrider and prevents them from taking control for 2-3 minutes
+/obj/item/organ/cyberimp/brain/neural_override/emp_act(severity)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
+		return
+	if(current_controller == OVERRIDER)
+		switch_control()
+		override_backseat.next_control = world.time + rand(1200, 1800)
+
+///Backseat mob holder for the [override implant] [/obj/item/organ/cyberimp/brain/neural_override].
+/mob/living/neural_storage
+	name = "neural storage"
+	real_name = "unknown conscience"
+	var/mob/living/carbon/body
+	var/obj/item/organ/cyberimp/brain/neural_override/implant
+
+///Original owner of the body, powerless while not in control
+/mob/living/neural_storage/victim
+
+///Sentience inside the implant, can control the body at will
+/mob/living/neural_storage/overrider
+	var/next_control = 0 ///Time until the overrider is allowed to take control again
+	var/datum/action/innate/override_implant/assume_control
+
+/mob/living/neural_storage/victim/Initialize(mapload, _implant)
+	implant = _implant
+	return ..()
+
+/mob/living/neural_storage/overrider/Initialize(mapload, _implant)
+	implant = _implant
+	assume_control = new(src, implant)
+	assume_control.Grant(src)
+	return ..()
+
+/mob/living/neural_storage/victim/Destroy()
+	implant = null
+	return ..()
+
+/mob/living/neural_storage/overrider/Destroy()
+	implant = null
+	assume_control.Remove(src)
+	QDEL_NULL(assume_control)
+	return ..()
+
+/mob/living/neural_storage/victim/Login()
+	..()
+	to_chat(src, "<span class='notice'>You're currently not in control of your body.</span>")
+
+/mob/living/neural_storage/overrider/Login()
+	..()
+	to_chat(src, "<span class='notice'>You're the mind inside [src]. Once installed into a body, you can assume control of it at any time.</span>")
+
+/mob/living/neural_storage/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	to_chat(src, "<span class='warning'>You cannot speak, you're not in control of your body!</span>")
+	return FALSE
+
+/mob/living/neural_storage/overrider/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	if(!implant.owner)
+		to_chat(src, "<span class='warning'>You cannot speak, you're not implanted inside anyone!</span>")
+		return FALSE
+	to_chat(src, "<b>Projected Thought:</b> \"[message]\"")
+	to_chat(implant.owner, "<span class='danger'><b>\[OVERRIDE\]:</b></span> \"[message]\"")
+	return FALSE
+
+/mob/living/neural_storage/emote(act, m_type = null, message = null, intentional = FALSE)
+	return FALSE
+
+///Action that triggers the [override implant][/obj/item/organ/cyberimp/brain/neural_override]'s mindswap function.
+/datum/action/innate/override_implant
+	name = "Assume Direct Control"
+	desc = "Override control of the body you're implanted in."
+	check_flags = NONE
+	button_icon_state = "slimeuse1" //todo
+	icon_icon = 'icons/mob/actions/actions_slime.dmi' //todo
+	background_icon_state = "bg_alien" //todo
+	var/obj/item/organ/cyberimp/brain/neural_override/implant
+
+/datum/action/innate/override_implant/New(_implant)
+	..()
+	implant = _implant
+
+/datum/action/innate/override_implant/IsAvailable()
+	if(..())
+		if(implant && implant.owner && (world.time > implant.next_control))
+			return TRUE
+		return FALSE
+
+/datum/action/innate/override_implant/Activate()
+	if(!implant || !implant.owner)
+		return
+	implant.switch_control()
+
+///Same as its parent, but with a different name/desc to show that it's returning control
+/datum/action/innate/override_implant/cease
+	name = "Stop Direct Control"
+	desc = "Stop overriding control of the body you're implanted in."
+
+/datum/action/innate/override_implant/cease/IsAvailable()
+	if(..())
+		if(implant.current_controller == OVERRIDE)
+			return TRUE
+		return FALSE
+
 //BOX O' IMPLANTS
 
 /obj/item/storage/box/cyber_implants
@@ -175,3 +378,6 @@
 	while(contents.len <= amount)
 		implant = pick(boxed)
 		new implant(src)
+
+#undef OWNER
+#undef OVERRIDER
