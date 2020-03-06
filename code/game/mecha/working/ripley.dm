@@ -14,11 +14,13 @@
 	max_equip = 6
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)
-	var/hides = 0
 	enclosed = FALSE //Normal ripley has an open cockpit design
 	enter_delay = 10 //can enter in a quarter of the time of other mechs
 	exit_delay = 10
 	opacity = FALSE //Ripley has a window
+	var/list/cargo = new
+	var/cargo_capacity = 15
+	var/hides = 0
 
 /obj/mecha/working/ripley/Move()
 	. = ..()
