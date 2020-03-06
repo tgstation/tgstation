@@ -116,9 +116,10 @@
 
 /obj/machinery/power/deck_relay/Initialize()
 	. = ..()
-	name = rand(1000)
-	find_relays(force = TRUE)
-	refresh()
+	name = "DR:[rand(1000,9999)]"
+	if(!above || !below)
+		find_relays(force = FALSE)
+		refresh()
 
 ///Locates relays that are above and below this object
 ///If this going in infinite loop, someone bend your universe in donut
