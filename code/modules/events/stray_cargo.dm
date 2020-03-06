@@ -12,7 +12,6 @@
 	announceChance = 75
 	var/list/possible_pack_types = list() ///List of possible supply packs dropped in the pod, if empty picks from the cargo list
 	var/static/list/stray_spawnable_supply_packs = list() ///List of default spawnable supply packs, filtered from the cargo list
-	var/pod_type = /obj/structure/closet/supplypod
 
 /datum/round_event/stray_cargo/announce(fake)
 	priority_announce("Stray cargo pod detected on long-range scanners. Expected location of impact: [impact_area.name].", "Collision Alert")
@@ -52,10 +51,16 @@
 	else
 		pack_type = pick(stray_spawnable_supply_packs)
 	var/datum/supply_pack/SP = new pack_type
-	var/obj/structure/closet/crate/C = SP.generate(null)
-	C.locked = FALSE //Unlock secure crates
-	C.update_icon()
-	new /obj/effect/DPtarget(LZ, pod_type, C)
+	var/obj/structure/closet/crate/crate = SP.generate(null)
+	crate.locked = FALSE //Unlock secure crates
+	crate.update_icon()
+	var/obj/structure/closet/supplypod/pod = make_pod()
+	new /obj/effect/DPtarget(LZ, pod, crate)
+
+///Handles the creation of the pod, in case it needs to be modified beforehand
+/datum/round_event/stray_cargo/proc/make_pod()
+	var/obj/structure/closet/supplypod/S = new
+	return S
 
 ///Picks an area that wouldn't risk critical damage if hit by a pod explosion
 /datum/round_event/stray_cargo/proc/find_event_area()
@@ -86,4 +91,9 @@
 
 /datum/round_event/stray_cargo/syndicate
 	possible_pack_types = list(/datum/supply_pack/misc/syndicate)
-	pod_type = /obj/structure/closet/supplypod/syndicate
+
+///Apply the syndicate pod skin
+/datum/round_event/stray_cargo/syndicate/make_pod()
+	var/obj/structure/closet/supplypod/S = new
+	S.setStyle(STYLE_SYNDICATE)
+	return S

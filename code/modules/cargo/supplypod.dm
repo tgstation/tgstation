@@ -51,12 +51,6 @@
 	explosionSize = list(0,0,1,2)
 	landingDelay = 15 //Slightly quicker than the supplypod
 
-///A syndicate reskin of a normal pod
-/obj/structure/closet/supplypod/syndicate
-	name = "syndicate supply pod"
-	desc = "A Syndicate supply drop pod."
-	style = STYLE_SYNDICATE
-
 /obj/structure/closet/supplypod/extractionpod
 	name = "Syndicate Extraction Pod"
 	desc = "A specalised, blood-red styled pod for extracting high-value targets out of active mission areas."
