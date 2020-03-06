@@ -22,9 +22,10 @@
 
 /obj/machinery/mineral/proc/register_input_turf()
 	input_turf = get_step(src, input_dir) // get the turf that players need to place the ore/items onto, defaults to NORTH at round start
-	if(input_turf && istype(input_turf)) // make sure there is actually a turf
+	if(input_turf) // make sure there is actually a turf
 		// listens for when an atom ENTERS the input_turf, tells the machine to deal with the ores/items
 		RegisterSignal(input_turf, COMSIG_ATOM_ENTERED, .proc/pickup_item)
+		RegisterSignal(input_turf, COMSIG_ATOM_CREATED, .proc/pickup_item)
 
 /obj/machinery/mineral/proc/unregister_input_turf()
 	if(input_turf)
