@@ -59,7 +59,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, .proc/registerTackle)
 
 /datum/component/tackler/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_MOVABLE_IMPACT))
+	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_MOVABLE_IMPACT, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_POST_THROW))
 
 ///Store the thrownthing datum for later use
 /datum/component/tackler/proc/registerTackle(mob/living/carbon/user, datum/thrownthing/TT)
@@ -78,7 +78,7 @@
 		to_chat(user, "<span class='warning'>You need free use of your hands to tackle!</span>")
 		return
 
-	if(user.lying)
+	if(!(user.mobility_flags & MOBILITY_STAND))
 		to_chat(user, "<span class='warning'>You must be standing to tackle!</span>")
 		return
 
