@@ -6,6 +6,7 @@
 	max_integrity = 60
 	point_return = 15
 	var/resource_delay = 0
+	resistance_flags = LAVA_PROOF
 
 /obj/structure/blob/resource/scannerreport()
 	return "Gradually supplies the blob with resources, increasing the rate of expansion."
