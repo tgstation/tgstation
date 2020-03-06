@@ -101,7 +101,7 @@
 		return TRUE
 	if(powernet && (above || below))//we have a powernet and at least one connected relay
 		to_chat(user, "<span class='danger'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]</span>")
-	if(!above && !below)
+	if(!above || !below)
 		to_chat(user, "<span class='danger'>Cannot access valid powernet. Attempting to re-establish. Ensure any relays above and below are aligned properly and on cable nodes.</span>")
 		find_relays(src,FALSE)
 		refresh() //Reload powernet
