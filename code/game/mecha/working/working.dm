@@ -1,7 +1,5 @@
 /obj/mecha/working
 	internal_damage_threshold = 60
-	var/list/cargo = new
-	var/cargo_capacity = 15
 
 /obj/mecha/working/Move()
 	. = ..()
