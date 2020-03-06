@@ -177,7 +177,7 @@
 		return
 	if(!isturf(owner.loc))//You can't use jet in nowhere or in mecha/closet
 		return
-	if(has_gravity(owner))//You don't want use jet in gravity
+	if(!(owner.is_flying() || owner.is_floating()) || owner.buckled)//You don't want use jet in gravity or while buckled.
 		return
 	if(owner.pulledby)//You don't must use jet if someone pull you
 		return
