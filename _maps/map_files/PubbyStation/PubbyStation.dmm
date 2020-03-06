@@ -43980,7 +43980,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 8
 	},
 /turf/open/floor/engine,
@@ -44006,7 +44006,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -50942,7 +50942,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 8
 	},
 /turf/open/floor/engine,
@@ -52127,18 +52127,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
-"jMt" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 4
-	},
-/obj/machinery/airalarm/engine{
-	pixel_y = 24
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
 "jMS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/spawner/xmastree,
@@ -54279,7 +54267,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -55856,7 +55844,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -56198,7 +56186,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 8
 	},
 /turf/open/floor/engine,
@@ -90579,7 +90567,7 @@ cgY
 uRk
 uRk
 uRk
-jMt
+dWO
 sWj
 bXk
 oex
