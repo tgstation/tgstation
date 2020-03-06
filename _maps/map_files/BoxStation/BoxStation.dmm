@@ -261,6 +261,7 @@
 "aaP" = (
 /obj/structure/table,
 /obj/item/kitchen/fork/plastic,
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aaR" = (
@@ -282,7 +283,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aaV" = (
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/bookmanagement,
 /obj/structure/table,
 /obj/machinery/newscaster{
 	pixel_x = -32
@@ -1522,6 +1523,7 @@
 	name = "Prison Wing APC";
 	pixel_y = 23
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aeg" = (
@@ -17203,7 +17205,7 @@
 /area/library)
 "aTd" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/bookmanagement,
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
@@ -42743,6 +42745,9 @@
 	dir = 4
 	},
 /obj/structure/closet/crate,
+/obj/item/stack/license_plates/empty/fifty,
+/obj/item/stack/license_plates/empty/fifty,
+/obj/item/stack/license_plates/empty/fifty,
 /turf/open/floor/plating,
 /area/security/prison)
 "cmC" = (
@@ -47648,6 +47653,9 @@
 	},
 /obj/effect/spawner/lootdrop/prison_contraband,
 /obj/structure/closet/crate,
+/obj/item/stack/license_plates/empty/fifty,
+/obj/item/stack/license_plates/empty/fifty,
+/obj/item/stack/license_plates/empty/fifty,
 /turf/open/floor/plating,
 /area/security/prison)
 "cGR" = (
@@ -51671,6 +51679,9 @@
 "nhE" = (
 /obj/machinery/vending/sustenance,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "nni" = (
@@ -52317,7 +52328,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/effect/mist,
 /turf/open/floor/plasteel/freezer,
 /area/security/prison/safe)
 "pdB" = (
@@ -52869,6 +52879,9 @@
 /obj/item/storage/fancy/egg_box,
 /obj/item/reagent_containers/food/condiment/flour,
 /obj/item/reagent_containers/food/condiment/rice,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "qrH" = (
@@ -52918,7 +52931,6 @@
 	dir = 8;
 	pixel_y = -4
 	},
-/obj/effect/mist,
 /turf/open/floor/plasteel/freezer,
 /area/security/prison/safe)
 "qBr" = (
@@ -53068,6 +53080,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/engine_smes)
+"reT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "rfW" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
@@ -53204,6 +53223,9 @@
 "rGZ" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "rHZ" = (
@@ -54914,7 +54936,7 @@
 /area/security/prison)
 "wdy" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/frame/machine,
+/obj/machinery/plate_press,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "wfU" = (
@@ -83992,10 +84014,10 @@ nFG
 qjJ
 teX
 aaG
-aat
+reT
 eDg
 aaG
-aat
+reT
 aaG
 aai
 gXs
