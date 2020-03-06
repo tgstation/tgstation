@@ -11,6 +11,7 @@
 	to_chat(victim, "<span class='danger'>*click*</span>")
 
 /obj/effect/mine/Crossed(AM as mob|obj)
+	. = ..()
 	if(isturf(loc))
 		if(ismob(AM))
 			var/mob/MM = AM

@@ -452,6 +452,7 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 	singular_name = "coal lump"
 	merge_type = /obj/item/stack/sheet/mineral/coal
 	grind_results = list(/datum/reagent/carbon = 20)
+	novariants = TRUE
 
 /obj/item/stack/sheet/mineral/coal/attackby(obj/item/W, mob/user, params)
 	if(W.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
