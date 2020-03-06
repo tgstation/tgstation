@@ -360,11 +360,12 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(!T1)
 		return
 
-	//clear the powernet of any machines on tile first
+	//first get actual possible conections
+	var/list/P_list = get_cable_connections()
+
+	//next clear the powernet of any machines on tile
 	for(var/obj/machinery/power/P in T1)
 		P.disconnect_from_network()
-
-	var/list/P_list = get_cable_connections()
 
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
 	if(remove)
