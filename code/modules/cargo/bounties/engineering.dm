@@ -16,7 +16,7 @@
 
 /datum/bounty/item/engineering/gas/freon_tank
 	name = "Full Tank of Freon"
-	description = "The SM of station 33 has started the delamination process. Deliver a tank of Freon gas to help them stop it!"
+	description = "The Supermatter of station 33 has started the delamination process. Deliver a tank of Freon gas to help them stop it!"
 	gas_type = /datum/gas/freon
 
 /datum/bounty/item/engineering/gas/tritium_tank
