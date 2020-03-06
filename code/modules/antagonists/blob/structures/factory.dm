@@ -6,12 +6,12 @@
 	max_integrity = 200
 	health_regen = 1
 	point_return = 25
+	resistance_flags = LAVA_PROOF
 	var/list/spores = list()
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
 	var/max_spores = 3
 	var/spore_delay = 0
 	var/spore_cooldown = 80 //8 seconds between spores and after spore death
-	resistance_flags = LAVA_PROOF
 
 
 /obj/structure/blob/factory/scannerreport()
