@@ -377,7 +377,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 ////////////////////////////////
 
 GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restraints", /obj/item/restraints/handcuffs/cable, 15),
-											new/datum/stack_recipe("cable bridge", /obj/structure/cable_bridge, 15)))
+											new/datum/stack_recipe("cable bridge", /obj/structure/cable_bridge, 5)))
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
@@ -579,6 +579,8 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 
 /obj/structure/cable_bridge/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
+	if(!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/stack/cable_coil(get_turf(loc), 5)
 	qdel(src)
 	return TRUE
 
