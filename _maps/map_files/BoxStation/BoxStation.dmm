@@ -261,7 +261,6 @@
 "aaP" = (
 /obj/structure/table,
 /obj/item/kitchen/fork/plastic,
-/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aaR" = (
@@ -484,6 +483,7 @@
 /area/security/prison)
 "abx" = (
 /obj/machinery/door/airlock/security/glass{
+	id_tag = permainner;
 	name = "Permabrig Transfer"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -786,11 +786,11 @@
 /area/security/prison)
 "acg" = (
 /obj/structure/table,
-/obj/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
 	id = "visitation";
 	name = "Visitation Shutters"
 	},
+/obj/machinery/door/window/southright,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aci" = (
@@ -1351,6 +1351,7 @@
 /area/security/prison)
 "adG" = (
 /obj/machinery/door/airlock/security/glass{
+	id_tag = permaouter;
 	name = "Permabrig Transfer";
 	req_access_txt = "2"
 	},
@@ -48561,6 +48562,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"cYX" = (
+/obj/structure/table,
+/obj/machinery/door/poddoor/shutters{
+	id = "visitation";
+	name = "Visitation Shutters"
+	},
+/obj/machinery/door/window/southleft,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "cYY" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -48935,6 +48945,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"egR" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "eja" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/computer/nanite_chamber_control{
@@ -49050,6 +49067,11 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
+"eGU" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "eIi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -49903,6 +49925,11 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"hEx" = (
+/obj/structure/weightmachine/weightlifter,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "hFg" = (
 /obj/machinery/door/airlock/external{
 	name = "Port Docking Bay 1";
@@ -50152,6 +50179,18 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/button/ignition{
+	id = "executionburn";
+	pixel_x = -24;
+	pixel_y = 5
+	},
+/obj/machinery/button/door{
+	id = "executionspaceblast";
+	name = "Vent to Space";
+	pixel_x = -25;
+	pixel_y = -5;
+	req_access_txt = "2"
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/execution/transfer)
 "iHT" = (
@@ -50295,10 +50334,6 @@
 	},
 /obj/structure/closet/crate/trashcart/laundry,
 /obj/effect/spawner/lootdrop/prison_contraband,
-/obj/item/bedsheet/red,
-/obj/item/bedsheet/red,
-/obj/item/bedsheet,
-/obj/item/bedsheet,
 /obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/under/rank/prisoner/skirt,
@@ -50557,6 +50592,14 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"jSi" = (
+/obj/machinery/camera{
+	c_tag = "Prison Visitation";
+	dir = 1;
+	network = list("ss13","prison")
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "jUW" = (
 /obj/machinery/camera/autoname{
 	dir = 4
@@ -51062,6 +51105,13 @@
 "ljx" = (
 /turf/closed/wall/r_wall,
 /area/medical/medbay/zone2)
+"llD" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "lqJ" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lantern,
@@ -51118,11 +51168,11 @@
 /obj/structure/window/reinforced/tinted{
 	dir = 8
 	},
-/obj/machinery/door/window/southleft,
 /obj/machinery/door/poddoor/shutters{
 	id = "visitation";
 	name = "Visitation Shutters"
 	},
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "lvw" = (
@@ -51378,17 +51428,17 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/button/ignition{
-	id = "executionburn";
-	pixel_x = 24;
-	pixel_y = 5
-	},
 /obj/machinery/button/door{
 	id = "executionfireblast";
 	name = "Transfer Area Lockdown";
 	pixel_x = 25;
 	pixel_y = -5;
 	req_access_txt = "2"
+	},
+/obj/machinery/button/flasher{
+	id = "executionflash";
+	pixel_x = 24;
+	pixel_y = 5
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/execution/transfer)
@@ -51469,6 +51519,9 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "mtK" = (
@@ -51516,6 +51569,15 @@
 /obj/machinery/vending/modularpc,
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"mGK" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "mJd" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -52528,6 +52590,23 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
+"pxc" = (
+/obj/structure/toilet/greyscale{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
+/area/security/prison/safe)
 "pxd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -53097,11 +53176,11 @@
 /obj/structure/window/reinforced/tinted{
 	dir = 4
 	},
-/obj/machinery/door/window/southright,
 /obj/machinery/door/poddoor/shutters{
 	id = "visitation";
 	name = "Visitation Shutters"
 	},
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "rkf" = (
@@ -53223,9 +53302,6 @@
 "rGZ" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
-/obj/machinery/light{
-	dir = 1
-	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "rHZ" = (
@@ -53518,6 +53594,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison/safe)
+"sCH" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "Prison Gate";
+	name = "prison blast door"
+	},
+/turf/open/floor/plating,
+/area/security/prison)
 "sEg" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -53670,6 +53754,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "tcB" = (
@@ -53943,6 +54028,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"txh" = (
+/obj/structure/window/reinforced/tinted{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "tCh" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
@@ -54081,6 +54172,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "tSB" = (
@@ -54169,6 +54261,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "uhH" = (
@@ -54194,12 +54287,12 @@
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "uks" = (
-/obj/machinery/sparker{
-	id = "executionburn";
-	pixel_x = 25
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/flasher{
+	id = "executionflash";
+	pixel_x = 25
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/execution/transfer)
@@ -54284,6 +54377,7 @@
 	dir = 4;
 	network = list("ss13","prison")
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "usX" = (
@@ -54379,12 +54473,12 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/flasher{
-	id = "executionflash";
-	pixel_y = 25
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/sparker{
+	id = "executionburn";
+	pixel_y = 25
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/execution/transfer)
@@ -54439,6 +54533,7 @@
 /area/science/research)
 "uJx" = (
 /obj/machinery/door/airlock/security/glass{
+	id_tag = permainner;
 	name = "Permabrig Transfer"
 	},
 /obj/structure/cable,
@@ -54985,18 +55080,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/button/flasher{
-	id = "executionflash";
-	pixel_x = 24;
-	pixel_y = 5
-	},
-/obj/machinery/button/door{
-	id = "executionspaceblast";
-	name = "Vent to Space";
-	pixel_x = 25;
-	pixel_y = -5;
-	req_access_txt = "7"
-	},
 /turf/open/floor/plasteel/dark,
 /area/security/execution/transfer)
 "wok" = (
@@ -55210,6 +55293,12 @@
 "wTB" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/security/prison)
+"wTN" = (
+/obj/structure/window/reinforced/tinted{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "wUa" = (
@@ -55525,6 +55614,7 @@
 /area/security/prison/safe)
 "xYb" = (
 /obj/machinery/door/airlock/security/glass{
+	id_tag = permaouter;
 	name = "Permabrig Transfer";
 	req_access_txt = "2"
 	},
@@ -77590,7 +77680,7 @@ aaG
 abF
 qDF
 usT
-acK
+eGU
 tHw
 hmo
 xrT
@@ -78360,7 +78450,7 @@ xUZ
 oTG
 wYM
 ogr
-oTG
+pxc
 wYM
 ogr
 oTG
@@ -80924,7 +81014,7 @@ gXs
 aai
 aaG
 kfJ
-aay
+mGK
 tbs
 aaA
 acd
@@ -81437,7 +81527,7 @@ aaB
 aaa
 aai
 aaG
-aaX
+aaW
 eDv
 aat
 tjJ
@@ -81693,7 +81783,7 @@ aaa
 aaB
 gXs
 aai
-hdq
+hEx
 aaX
 eDv
 aat
@@ -81950,7 +82040,7 @@ aaa
 aaB
 aaa
 aai
-aaG
+aat
 wdw
 dxh
 nLn
@@ -81965,7 +82055,7 @@ acd
 acd
 acd
 rMu
-aaG
+abL
 acg
 abL
 adb
@@ -82208,7 +82298,7 @@ aaB
 gXs
 aai
 hdq
-aaX
+aaW
 fLx
 spK
 gYE
@@ -82221,8 +82311,8 @@ aaF
 nhE
 aaJ
 acd
-fxe
-abD
+llD
+wTN
 rgf
 abD
 gXJ
@@ -82479,10 +82569,10 @@ aaG
 aat
 acd
 wCn
-abC
+txh
 ltH
 abC
-aaG
+jSi
 aai
 aeo
 fqL
@@ -82736,8 +82826,8 @@ aaL
 aaL
 aaY
 pSW
-aaG
-acg
+abL
+cYX
 abL
 ade
 adJ
@@ -82992,11 +83082,11 @@ aaG
 aaK
 aaP
 acd
-abA
-abA
+sCH
+sCH
 acd
-abA
-abA
+sCH
+sCH
 aai
 aeq
 tcB
@@ -83247,7 +83337,7 @@ add
 aaA
 aat
 add
-add
+egR
 acd
 oWJ
 aaK
