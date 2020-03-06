@@ -5,14 +5,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	/obj/item/clothing/head/chameleon/broken \
 	)))
 
-/mob/living/silicon/robot/attack_robot(mob/user)
-	. = ..()
-	if(user == src && has_buckled_mobs() && user.a_intent == INTENT_HELP)
-		for(var/i in buckled_mobs)
-			var/mob/buckmob = i
-			unbuckle_mob(buckmob)
-
-
 /mob/living/silicon/robot/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_WELDER && (user.a_intent != INTENT_HARM || user == src))
 		user.changeNext_move(CLICK_CD_MELEE)
