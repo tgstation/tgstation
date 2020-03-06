@@ -13,7 +13,6 @@
 	max_equip = 7
 	wreckage = /obj/structure/mecha_wreckage/clarke
 	enter_delay = 40
-	cargo_capacity = 1 //you either take the ore box or something else
 	canstrafe = FALSE
 	var/obj/structure/ore_box/box
 
