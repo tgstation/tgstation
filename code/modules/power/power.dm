@@ -234,21 +234,16 @@
 		working_cable = cables[index]
 		index++
 
+		PN.add_cable(working_cable)
+		found_machines += working_cable.get_machine_connections(skip_assigned_powernets)
+		if(!PM.connect_to_network()) //couldn't find a node on its turf...
+			PM.disconnect_from_network() //... so disconnect if already on a powernet
+
 		var/list/connections = working_cable.get_cable_connections(skip_assigned_powernets)
 
 		for(var/obj/structure/cable/cable_entry in connections)
 			if(!cables[cable_entry]) //Since it's an associated list, we can just do an access and check it's null before adding; prevents duplicate entries
 				cables[cable_entry] = TRUE
-
-	for(var/obj/structure/cable/cable_entry in cables)
-		PN.add_cable(cable_entry)
-		found_machines += cable_entry.get_machine_connections(skip_assigned_powernets)
-
-	//now that the powernet is set, connect found machines to it
-	for(var/obj/machinery/power/PM in found_machines)
-		if(!PM.connect_to_network()) //couldn't find a node on its turf...
-			PM.disconnect_from_network() //... so disconnect if already on a powernet
-
 
 //Merge two powernets, the bigger (in cable length term) absorbing the other
 /proc/merge_powernets(datum/powernet/net1, datum/powernet/net2)
