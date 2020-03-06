@@ -107,13 +107,6 @@
 		refresh() //Reload powernet
 	return TRUE
 
-/obj/machinery/power/deck_relay/proc/refresh() //Reload powernet
-	var/turf/deck_relay_turf = get_turf(src)
-	var/obj/structure/cable/my_cable = deck_relay_turf.get_cable_node()
-	if(my_cable)
-		var/datum/powernet/new_powernet = new()
-		propagate_network(my_cable, new_powernet)
-
 /obj/machinery/power/deck_relay/Initialize()
 	. = ..()
 	name = "DR:[rand(1000,9999)]"
@@ -145,13 +138,34 @@
 		icon_state = "cablerelay-on"
 	return TRUE
 
-///refresh() on connect_to_network()
+///find_relays() on connect_to_network()
 /obj/machinery/power/deck_relay/connect_to_network()
 	to_chat(world, "<span class='danger'>[name] connect_to_network()</span>")
+	find_relays(src, FALSE)
 	. = ..()
 
 ///break_connections() on disconnect_from_network()
 /obj/machinery/power/deck_relay/disconnect_from_network()
 	to_chat(world, "<span class='danger'>[name] disconnect_from_network()</span>")
-	refresh()
+	disconnect_from_bridge()
 	return ..()
+
+///Just disconnect this deck_relay from another
+/obj/machinery/power/deck_relay/proc/disconnect_from_bridge()
+	to_chat(world, "<span class='danger'>[src] disconnect_from_bridge()</span>")
+	if(below) 
+		to_chat(world, "<span class='danger'>[src] disconnect_from_bridge() below [below]</span>")
+		below.above = null
+		below = null
+	if(above) 
+		to_chat(world, "<span class='danger'>[src] disconnect_from_bridge() above [above]</span>")
+		above.below = null
+		above = null
+
+/obj/machinery/power/deck_relay/proc/refresh() //Reload powernet
+	var/turf/deck_relay_turf = get_turf(src)
+	var/obj/structure/cable/my_cable = deck_relay_turf.get_cable_node()
+	if(my_cable)
+		var/datum/powernet/new_powernet = new()
+		propagate_network(my_cable, new_powernet)
+
