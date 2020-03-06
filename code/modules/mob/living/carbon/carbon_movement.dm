@@ -18,7 +18,8 @@
 	if(istype(J) && (movement_dir || J.stabilizers) && J.on)
 		return TRUE
 
-	..()
+	if(..())
+		return TRUE
 
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
