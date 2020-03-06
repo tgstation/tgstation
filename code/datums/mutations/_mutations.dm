@@ -93,7 +93,7 @@
 	return
 
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
-	if(!owner || !istype(owner) || !(owner.dna.mutations.Remove(src)))
+	if(!istype(owner) || !(owner.dna.mutations.Remove(src)))
 		return TRUE
 	. = FALSE
 	if(text_lose_indication && owner.stat != DEAD)
