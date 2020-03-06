@@ -1481,6 +1481,7 @@
 #include "code\modules\assembly\timer.dm"
 #include "code\modules\assembly\voice.dm"
 #include "code\modules\atmospherics\multiz.dm"
+#include "code\modules\atmospherics\environmental\LINDA_cold_fire.dm"
 #include "code\modules\atmospherics\environmental\LINDA_fire.dm"
 #include "code\modules\atmospherics\environmental\LINDA_system.dm"
 #include "code\modules\atmospherics\environmental\LINDA_turf_tile.dm"
