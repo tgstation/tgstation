@@ -168,6 +168,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLOODCRAWL_EAT	"bloodcrawl_eat"
 #define TRAIT_SPACEWALK			"spacewalk"
 #define TRAIT_GAMERGOD			"gamer-god" //double arcade prizes
+#define TRAIT_GIANT				"giant"
+#define TRAIT_DWARF				"dwarf"
 
 //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it

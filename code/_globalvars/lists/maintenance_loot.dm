@@ -97,6 +97,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/clothing/glasses/science = 1,
 		/obj/item/clothing/glasses/meson = 1,
 		/obj/item/storage/belt/fannypack = 1,
+		/obj/item/clothing/gloves/tackler/offbrand = 1,
 		) = 1,
 
 	list(//construction and crafting

@@ -804,3 +804,11 @@
             /obj/item/stack/sheet/sinew = 5)
 	result = /obj/item/key/lasso
 	category = CAT_PRIMAL
+
+/datum/crafting_recipe/gripperoffbrand
+	name = "Improvised Gripper Gloves"
+	reqs = list(
+            /obj/item/clothing/gloves/fingerless = 1,
+            /obj/item/stack/sticky_tape = 1)
+	result = /obj/item/clothing/gloves/tackler/offbrand
+	category = CAT_CLOTHING
