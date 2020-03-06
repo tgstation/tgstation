@@ -15,6 +15,9 @@
 	maxbodytemp = 360
 	unique_name = 1
 	a_intent = INTENT_HARM
+	see_in_dark = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	initial_language_holder = /datum/language_holder/empty
 	var/mob/camera/blob/overmind = null
 	var/obj/structure/blob/factory/factory = null
 
@@ -56,8 +59,11 @@
 		return 1
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/proc/blob_chat(msg)
-	var/spanned_message = say_quote(msg)
+/mob/living/simple_animal/hostile/blob/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	if(!overmind)
+		..()
+		return
+	var/spanned_message = say_quote(message)
 	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [real_name]</b> [spanned_message]</font>"
 	for(var/M in GLOB.mob_list)
 		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
@@ -75,6 +81,7 @@
 	desc = "A floating, fragile spore."
 	icon_state = "blobpod"
 	icon_living = "blobpod"
+	health_doll_icon = "blobpod"
 	health = 30
 	maxHealth = 30
 	verb_say = "psychically pulses"
@@ -89,11 +96,11 @@
 	attack_verb_simple = "hit"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	movement_type = FLYING
-	del_on_death = 1
+	del_on_death = TRUE
 	deathmessage = "explodes into a cloud of gas!"
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
 	var/mob/living/carbon/human/oldguy
-	var/is_zombie = 0
+	var/is_zombie = FALSE
 	gold_core_spawnable = HOSTILE_SPAWN
 
 /mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, obj/structure/blob/factory/linked_node)
@@ -111,6 +118,26 @@
 	if(factory && z != factory.z)
 		death()
 	..()
+	
+/mob/living/simple_animal/hostile/blob/blobspore/attack_ghost(mob/user)
+	. = ..()
+	if(.)
+		return
+	humanize_pod(user)
+
+/mob/living/simple_animal/hostile/blob/blobspore/proc/humanize_pod(mob/user)
+	if((!overmind || istype(src, /mob/living/simple_animal/hostile/blob/blobspore/weak) || !istype(overmind.blobstrain, /datum/blobstrain/reagent/distributed_neurons)) && !is_zombie)
+		return
+	if(key || stat)
+		return
+	var/pod_ask = alert("Become a blob spore?", "Are you bulbous enough?", "Yes", "No")
+	if(pod_ask == "No" || !src || QDELETED(src))
+		return
+	if(key)
+		to_chat(user, "<span class='warning'>Someone else already took this spore!</span>")
+		return
+	key = user.key
+	log_game("[key_name(src)] took control of [name].")
 
 /mob/living/simple_animal/hostile/blob/blobspore/proc/Zombify(mob/living/carbon/human/H)
 	is_zombie = 1
@@ -215,8 +242,6 @@
 	force_threshold = 10
 	pressure_resistance = 50
 	mob_size = MOB_SIZE_LARGE
-	see_in_dark = 8
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	hud_type = /datum/hud/blobbernaut
 	var/independent = FALSE
 
