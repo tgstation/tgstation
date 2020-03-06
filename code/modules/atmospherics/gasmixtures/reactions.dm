@@ -239,7 +239,7 @@
 	return cached_results["fire"] ? REACTING : NO_REACTION
 
 datum/gas_reaction/freonfire
-	priority = -2
+	priority = -3
 	name = "Freon combustion"
 	id = "freonfire"
 
@@ -463,7 +463,7 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 
 
 /datum/gas_reaction/stimformation //Stimulum formation follows a strange pattern of how effective it will be at a given temperature, having some multiple peaks and some large dropoffs. Exo and endo thermic.
-	priority = 5
+	priority = 6
 	name = "Stimulum formation"
 	id = "stimformation"
 
@@ -495,7 +495,7 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 		return REACTING
 
 /datum/gas_reaction/nobliumformation //Hyper-Noblium formation is extrememly endothermic, but requires high temperatures to start. Due to its high mass, hyper-nobelium uses large amounts of nitrogen and tritium. BZ can be used as a catalyst to make it less endothermic.
-	priority = 6
+	priority = 7
 	name = "Hyper-Noblium condensation"
 	id = "nobformation"
 
@@ -551,7 +551,7 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	air.temperature += cleaned_air * 0.002
 
 /datum/gas_reaction/stim_ball
-	priority = 7
+	priority = 8
 	name ="Stimulum Energy Ball"
 	id = "stimball"
 
