@@ -38,6 +38,16 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	layer = WIRE_LAYER + 0.01
 	icon_state = "l3-1-2-4-8-node"
 
+/obj/structure/cable/multilayer
+	name = "multilayer cable"
+	desc = "A flexible, superconducting insulated multilayer hub for heavy-duty power transfer."
+	icon = 'icons/obj/power.dmi'
+	icon_state = "cable_bridge"
+	cable_layer = CABLE_LAYER_1|CABLE_LAYER_2|CABLE_LAYER_3
+
+/obj/structure/cable/multilayer/update_icon_state()
+	return
+
 /obj/structure/cable/Initialize(mapload)
 	. = ..()
 
@@ -376,8 +386,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 // Definitions
 ////////////////////////////////
 
-GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restraints", /obj/item/restraints/handcuffs/cable, 15),
-											new/datum/stack_recipe("cable bridge", /obj/structure/cable_bridge, 5)))
+GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restraints", /obj/item/restraints/handcuffs/cable, 15), new/datum/stack_recipe("cable bridge", /obj/structure/cable_bridge, 1), new/datum/stack_recipe("multilayer cable", /obj/structure/cable/multilayer, 1)))
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
@@ -580,7 +589,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 /obj/structure/cable_bridge/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/cable_coil(get_turf(loc), 5)
+		new /obj/item/stack/cable_coil(get_turf(loc), 1)
 	qdel(src)
 	return TRUE
 
