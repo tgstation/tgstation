@@ -158,6 +158,10 @@
 		to_chat(owner, "<span class='warning'>Your breathing tube suddenly closes!</span>")
 		owner.losebreath += 2
 
+/**
+* An implant that can be fitted with a sentient brain and implanted onto a victim.
+* Once implanted, the player controlling the brain can take control of the body at will.
+*/
 /obj/item/organ/cyberimp/brain/neural_override
 	name = "neural override implant"
 	desc = "This cybernetic brain implant is imprinted with a sentient mind, and can take over the patient's body at will."
@@ -171,7 +175,7 @@
 	var/datum/action/innate/override_implant/cease/return_control ///Action to return control of the body to the original owner
 
 /obj/item/organ/cyberimp/brain/neural_override/Insert(mob/living/carbon/C, special = 0, drop_if_replaced = TRUE)
-	..()
+	. = ..()
 	original_backseat = new(owner)
 
 /obj/item/organ/cyberimp/brain/neural_override/Remove(mob/living/carbon/C, special = FALSE)
@@ -234,28 +238,51 @@
 	if(istype(I, /obj/item/organ/brain))
 		var/obj/item/organ/brain/brain = I
 		if(brain.brainmob && brain.brainmob.mind && (brain.brainmob.client || brain.brainmob.grab_ghost())) //Check that the brain has a player controlling it
-			if(override_backseat) //Replace existing backseat with new one
+			if(overrider_brain) //Replace existing backseat with new one
 				remove_brain()
 			override_backseat = new(src, src)
 			to_chat(user, "<span class='notice'>You install [brain] into [src].</span>")
-			if(brain.brainmob.mind)
-				brain.brainmob.mind.transfer_to(override_backseat)
+			brain.brainmob.mind.transfer_to(override_backseat)
+			brain.organ_flags |= ORGAN_FROZEN
+			brain.forceMove(src)
+			overrider_brain = brain
+			update_icon()
 		else
 			to_chat(user, "<span class='warning'>The implant's interface rejects the brain. It appears that it is no longer sentient.</span>")
 	else
 		return ..()
 
-///Removes the inserted brain and places the owner back inside
+///Places the overrider's client back into the brain and removes it
 /obj/item/organ/cyberimp/brain/neural_override/proc/remove_brain()
 	if(QDELETED(override_backseat) || QDELETED(overrider_brain))
 		return
 	overrider_brain.forceMove(drop_location())
+	brain.organ_flags &= ~ORGAN_FROZEN
 	if(override_backseat.mind)
 		override_backseat.mind.transfer_to(brain.brainmob)
 		to_chat(brain.brainmob, "<span class='warning'>You've been removed from [src].</span>")
 	QDEL_NULL(override_backseat)
 	overrider_brain = null
+	update_icon()
 
+///Removes the inserted brain
+/obj/item/organ/cyberimp/brain/neural_override/AltClick(mob/user)
+	if(overrider_brain && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+		to_chat(user, "<span class='notice'>You remove [overrider_brain] from [src].</span>")
+		remove_brain()
+
+/obj/item/organ/cyberimp/brain/neural_override/update_icon_state()
+	if(overrider_brain)
+		icon_state = "neural_override_brain"
+	else
+		icon_state = "neural_override"
+
+/obj/item/organ/cyberimp/brain/neural_override/examine(mob/user)
+	. = ..()
+	if(!overrider_brain)
+		. += "<span class='notice'>Insert a conscious brain before implanting.</span>"
+	else
+		. += "<span class='notice'>Alt-click to remove [overrider_brain].</span>"
 
 ///Shuts down the overrider and prevents them from taking control for 2-3 minutes
 /obj/item/organ/cyberimp/brain/neural_override/emp_act(severity)
@@ -285,6 +312,7 @@
 	implant = _implant
 	return ..()
 
+///Grant the action to assume control of the body
 /mob/living/neural_storage/overrider/Initialize(mapload, _implant)
 	implant = _implant
 	assume_control = new(src, implant)
@@ -295,6 +323,7 @@
 	implant = null
 	return ..()
 
+///Clear the action to assume control of the body
 /mob/living/neural_storage/overrider/Destroy()
 	implant = null
 	assume_control.Remove(src)
@@ -303,24 +332,32 @@
 
 /mob/living/neural_storage/victim/Login()
 	..()
-	to_chat(src, "<span class='notice'>You're currently not in control of your body.</span>")
+	to_chat(src, "<span class='notice'>You're currently not in control of your body! All you can do is hope that you'll regain control of it eventually...</span>")
 
 /mob/living/neural_storage/overrider/Login()
 	..()
 	to_chat(src, "<span class='notice'>You're the mind inside [src]. Once installed into a body, you can assume control of it at any time.</span>")
 
+///The victim cannot speak while not in control
 /mob/living/neural_storage/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	to_chat(src, "<span class='warning'>You cannot speak, you're not in control of your body!</span>")
 	return FALSE
 
+///The overrider in the backseat can speak to its victim when implanted
 /mob/living/neural_storage/overrider/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(!implant.owner)
 		to_chat(src, "<span class='warning'>You cannot speak, you're not implanted inside anyone!</span>")
 		return FALSE
 	to_chat(src, "<b>Projected Thought:</b> \"[message]\"")
 	to_chat(implant.owner, "<span class='danger'><b>\[OVERRIDE\]:</b></span> \"[message]\"")
+	log_directed_talk(src, implant.owner, msg, LOG_SAY ,"override implant")
+	for(var/ded in GLOB.dead_mob_list)
+		if(!isobserver(ded))
+			continue
+		to_chat(ded, "[FOLLOW_LINK(ded, implant.owner)] <span class='boldnotice'>[implant.owner]'s <span class='danger'>Override Implant</span>:</span> \"[msg]\"")
 	return FALSE
 
+///Nothing there to emote with, really
 /mob/living/neural_storage/emote(act, m_type = null, message = null, intentional = FALSE)
 	return FALSE
 
