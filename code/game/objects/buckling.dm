@@ -20,7 +20,7 @@
 			if(user_unbuckle_mob(buckled_mobs[1],user))
 				return 1
 
-///literally just the above extension of attack_hand(), but for silicons instead (with an adjacency check, since attack_robot() doesn't require that)
+//literally just the above extension of attack_hand(), but for silicons instead (with an adjacency check, since attack_robot() doesn't require that)
 /atom/movable/attack_robot(mob/living/user)
 	. = ..()
 	if(.)
