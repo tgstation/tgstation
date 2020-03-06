@@ -71,8 +71,7 @@
 		urhealedamt_burn *= 0.55
 		umsg += " as best as you can while they have clothing on"
 		tmsg += " as best as they can while [target] has clothing on"
-	experience_given = CEILING(((urhealedamt_burn+urhealedamt_burn)/MEDICAL_SKILL_EASY),1)
-	target.heal_bodypart_damage(urhealedamt_brute,urhealedamt_burn)
+	experience_given = CEILING((target.heal_bodypart_damage(urhealedamt_brute,urhealedamt_burn)/5),1)
 	display_results(user, target, "<span class='notice'>[umsg].</span>",
 		"[tmsg].",
 		"[tmsg].")
