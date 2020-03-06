@@ -17587,7 +17587,7 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "aNv" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/atmospherics/components/unary/passive_vent,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "aNw" = (
@@ -47863,17 +47863,17 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/bot/medbot{
-	auto_patrol = 1;
-	desc = "A little medical robot, officially part of the Nanotrasen medical inspectorate. He looks somewhat underwhelmed.";
-	name = "Inspector Johnson"
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
+	},
+/mob/living/simple_animal/bot/medbot{
+	auto_patrol = 1;
+	desc = "A little medical robot, officially part of the Nanotrasen medical inspectorate. He looks somewhat underwhelmed.";
+	name = "Inspector Johnson"
 	},
 /turf/open/floor/plasteel/white/corner{
 	dir = 8
@@ -53261,16 +53261,12 @@
 	dir = 8;
 	network = list("ss13","engine")
 	},
-/obj/machinery/airalarm/engine{
-	dir = 8;
-	pixel_x = 24
-	},
 /obj/machinery/atmospherics/pipe/manifold/green/visible{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/engine,
-/area/engine/supermatter)
+/area/engine/engineering)
 "cpU" = (
 /obj/structure/table/glass,
 /obj/structure/window/reinforced,
@@ -54051,7 +54047,6 @@
 /area/crew_quarters/heads/cmo)
 "crC" = (
 /obj/structure/bed/dogbed/runtime,
-/mob/living/simple_animal/pet/cat/Runtime,
 /obj/item/toy/cattoy,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/airalarm{
@@ -54061,6 +54056,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
+/mob/living/simple_animal/pet/cat/Runtime,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/cmo)
 "crD" = (
@@ -65065,7 +65061,7 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "dbb" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1
 	},
 /turf/open/floor/engine,
@@ -68476,10 +68472,10 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dzq" = (
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/medical/virology)
 "dzI" = (
@@ -72990,8 +72986,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "mfI" = (
-/mob/living/carbon/monkey,
 /obj/structure/cable,
+/mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/medical/virology)
 "mha" = (
@@ -76423,10 +76419,10 @@
 /area/medical/medbay/central)
 "ubW" = (
 /obj/structure/flora/ausbushes/sparsegrass,
-/mob/living/carbon/monkey,
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/medical/virology)
 "ueg" = (
@@ -77170,13 +77166,13 @@
 	desc = "Presumably placed here by top men.";
 	name = "\improper Ark of the Covenant"
 	},
-/mob/living/simple_animal/pet/dog/corgi{
-	desc = "Make sure you give him plenty of bellyrubs, or he'll melt your skin off.";
-	name = "\improper Keeper of the Ark"
-	},
 /obj/item/toy/clockwork_watch{
 	desc = "An ancient piece of machinery, made from an unknown metal by an unknown maker.";
 	name = "\improper Ancient Relic"
+	},
+/mob/living/simple_animal/pet/dog/corgi{
+	desc = "Make sure you give him plenty of bellyrubs, or he'll melt your skin off.";
+	name = "\improper Keeper of the Ark"
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)

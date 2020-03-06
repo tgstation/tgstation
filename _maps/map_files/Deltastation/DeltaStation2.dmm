@@ -9950,7 +9950,7 @@
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "axy" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 8
 	},
 /turf/open/floor/engine,
@@ -9959,7 +9959,7 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "axA" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -13426,9 +13426,6 @@
 /area/engine/atmospherics_engine)
 "aEt" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/engine{
-	pixel_y = 23
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -13437,7 +13434,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/engine/supermatter)
+/area/engine/atmospherics_engine)
 "aEu" = (
 /obj/machinery/meter,
 /obj/effect/turf_decal/stripes/line{

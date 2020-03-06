@@ -4714,7 +4714,7 @@
 /turf/closed/wall,
 /area/medical/pharmacy)
 "als" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 8
 	},
 /turf/open/floor/engine,
@@ -26997,12 +26997,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/airalarm/engine{
-	pixel_y = 25
-	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/engine/supermatter)
+/area/engine/engine_room)
 "biX" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
@@ -50668,7 +50665,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "sYx" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 4
 	},
 /turf/open/floor/engine,

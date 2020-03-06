@@ -44174,10 +44174,6 @@
 	dir = 1;
 	name = "Gas to Filter"
 	},
-/obj/machinery/airalarm/engine{
-	dir = 4;
-	pixel_x = -23
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -47640,13 +47636,13 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "cEw" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 8
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "cEx" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 4
 	},
 /turf/open/floor/engine,
