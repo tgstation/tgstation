@@ -70,6 +70,14 @@
 	if(!user.in_throw_mode || user.get_active_held_item() || user.pulling || user.buckling)
 		return
 
+	if(HAS_TRAIT(user, TRAIT_HULK))
+		to_chat(user, "<span class='warning'>You're too angry to remember how to tackle!</span>")
+		return
+
+	if(user.restrained())
+		to_chat(user, "<span class='warning'>You need free use of your hands to tackle!</span>")
+		return
+
 	if(user.lying)
 		to_chat(user, "<span class='warning'>You must be standing to tackle!</span>")
 		return
@@ -255,6 +263,11 @@
 		if(T.is_holding_item_of_type(/obj/item/shield))
 			defense_mod += 2
 
+		if(islizard(T))
+			if(!T.getorganslot(ORGAN_SLOT_TAIL)) // lizards without tails are off-balance
+				defense_mod -= 1
+			else if(T.dna.species.is_wagging_tail()) // lizard tail wagging is robust and can swat away assailants!
+				defense_mod += 1
 
 	// OF-FENSE
 	var/mob/living/carbon/sacker = parent
@@ -269,8 +282,6 @@
 		attack_mod -= 2
 	if(HAS_TRAIT(sacker, TRAIT_GIANT))
 		attack_mod += 2
-	if(sacker.restrained())
-		attack_mod -= 4 // lol let 'em still try
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/S = sacker
@@ -278,7 +289,7 @@
 		var/suit_slot = S.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 		if(suit_slot && (istype(suit_slot,/obj/item/clothing/suit/armor/riot))) // tackling in riot armor is more effective, but tiring
 			attack_mod += 2
-			sacker.adjustStaminaLoss(10)
+			sacker.adjustStaminaLoss(20)
 
 	var/r = rand(-3, 3) - defense_mod + attack_mod + skill_mod
 	return r
@@ -321,7 +332,7 @@
 		return
 
 	var/oopsie_mod = 0
-	var/danger_zone = (speed - 1) * 15 // for every extra speed we have over 1, take away 10 of the safest chance
+	var/danger_zone = (speed - 1) * 15 // for every extra speed we have over 1, take away 15 of the safest chance
 	danger_zone = max(min(danger_zone, 100), 1)
 
 	if(ishuman(user))
@@ -342,7 +353,7 @@
 	oopsie += oopsie_mod
 
 	switch(oopsie)
-		if(99 to 100)
+		if(99 to INFINITY)
 			// can you imagine standing around minding your own business when all of the sudden some guy fucking launches himself into a wall at full speed and irreparably paralyzes himself?
 			user.visible_message("<span class='danger'>[user] slams face-first into [hit] at an awkward angle, severing [user.p_their()] spinal column with a sickening crack! Holy shit!</span>", "<span class='userdanger'>You slam face-first into [hit] at an awkward angle, severing your spinal column with a sickening crack! Holy shit!</span>")
 			user.adjustStaminaLoss(30)
