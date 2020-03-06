@@ -117,7 +117,7 @@
  * * user The mob/living/carbon that is wielding the item
  */
 /datum/component/two_handed/proc/wield(mob/living/carbon/user)
-	if(wielded || !istype(user))
+	if(wielded)
 		return
 	if(ismonkey(user))
 		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully.</span>")
@@ -266,11 +266,6 @@
 		return
 	if(held_item == parent)
 		return COMPONENT_BLOCK_SWAP
-	// check if we are holding an item with telekinesis, is that item our parent?
-	if(istype(held_item, /obj/item/tk_grab))
-		var/obj/item/tk_grab/tk_item = held_item
-		if (tk_item?.focus == parent)
-			return COMPONENT_BLOCK_SWAP
 
 /**
  * on_sharpen Triggers on usage of a sharpening stone on the item
