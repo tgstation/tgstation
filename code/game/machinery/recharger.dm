@@ -15,7 +15,7 @@
 	var/static/list/allowed_devices = typecacheof(list(
 		/obj/item/gun/energy,
 		/obj/item/melee/baton,
-		/obj/item/melee/sabre/secrutiy/,
+		/obj/item/melee/sabre/security/,
 		/obj/item/ammo_box/magazine/recharge,
 		/obj/item/modular_computer))
 
