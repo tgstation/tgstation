@@ -1,5 +1,0 @@
-author: "Cobby"
-delete-after: True
-changes: 
-  - balance: "Removes passive charging from defib mounts, allows them to be built roundstart."
-  - rscadd: "Adds PENLITE defib mount, which charges. No techweb changes."
