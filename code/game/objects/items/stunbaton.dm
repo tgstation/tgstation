@@ -280,10 +280,12 @@
 	force = 3
 	throwforce = 5
 	stun_time = 5 SECONDS
+	attack_cooldown = 4 SECONDS
 	cell_hit_cost = 2000
 	throw_stun_chance = 10
 	slot_flags = ITEM_SLOT_BACK
-	convertible = FALSE
+	stamina_loss_amt = 30
+	convertible = TRUE
 	var/obj/item/assembly/igniter/sparkler = 0
 
 /obj/item/melee/baton/cattleprod/Initialize()
@@ -309,7 +311,9 @@
 	throwforce = 5
 	throw_range = 5
 	cell_hit_cost = 2000
+	attack_cooldown = 6 SECONDS
 	throw_stun_chance = 99  //Have you prayed today?
+	stamina_loss_amt = 30
 	convertible = FALSE
 	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
 

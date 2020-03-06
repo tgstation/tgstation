@@ -226,6 +226,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/katana/cursed
 	slot_flags = null
 
+/obj/item/katana/on_exit_storage(datum/component/storage/concrete/S)
+	var/obj/item/storage/belt/sheath/B = S.real_location()
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, TRUE)
+
+/obj/item/katana/on_enter_storage(datum/component/storage/concrete/S)
+	var/obj/item/storage/belt/sheath/B = S.real_location()
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, TRUE)
+
 /obj/item/katana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] stomach open with [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
 	return(BRUTELOSS)

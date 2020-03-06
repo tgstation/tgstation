@@ -345,7 +345,7 @@
 				build_step--
 
 		if(ASSEMBLY_FOURTH_STEP)
-			if(istype(I, /obj/item/melee/baton))
+			if(istype(I, /obj/item/melee/baton/cattleprod))
 				if(!can_finish_build(I, user))
 					return
 				to_chat(user, "<span class='notice'>You complete the Securitron! Beep boop.</span>")

@@ -57,7 +57,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
 	obj_flags = UNIQUE_RENAME
-	force = 15
+	force = 22
 	throwforce = 10
 	w_class = WEIGHT_CLASS_BULKY
 	block_chance = 50
@@ -128,6 +128,42 @@
 		user.adjustBruteLoss(200)
 		user.death(FALSE)
 	REMOVE_TRAIT(src, TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
+
+/obj/item/melee/sabre/security
+	name = "security cryokatana"
+	desc = "A techblade katana that reduces the internal body temperature of those struck by the blade, as well as freezing them from the inside out. How does it do this? Cryotechnology!"
+	icon_state = "security_katana"
+	item_state = "security_katana"
+	force = 15
+	block_chance = 30
+	armour_penetration = 10
+
+/obj/item/melee/sabre/security/on_exit_storage(datum/component/storage/concrete/S)
+	var/obj/item/storage/belt/sheath/B = S.real_location()
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, TRUE)
+
+/obj/item/melee/sabre/security/on_enter_storage(datum/component/storage/concrete/S)
+	var/obj/item/storage/belt/sheath/B = S.real_location()
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, TRUE)
+
+/obj/item/melee/sabre/security/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	if(iscarbon(target))
+		var/mob/living/carbon/H = target
+		H.adjust_bodytemperature(-100)
+
+/obj/item/melee/sabre/security/hos
+	name = "head of security's cryokatana"
+	desc = "The head of security's personal cryotechblade. Finding him without it is a cause for concern."
+	icon_state = "hos_katana"
+	item_state = "hos_katana"
+	force = 18
+	block_chance = 50
+	armour_penetration = 40
 
 /obj/item/melee/beesword
 	name = "The Stinger"

@@ -90,7 +90,7 @@
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)
 	new /obj/item/storage/box/flashbangs(src)
 	new /obj/item/shield/riot/tele(src)
-	new /obj/item/storage/belt/security/full(src)
+	new /obj/item/storage/belt/sheath/security(src)
 	new /obj/item/gun/energy/e_gun/hos(src)
 	new /obj/item/pinpointer/nuke(src)
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
@@ -116,10 +116,11 @@
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/storage/box/zipties(src)
 	new /obj/item/storage/box/flashbangs(src)
-	new /obj/item/storage/belt/security/full(src)
+	new /obj/item/storage/belt/sheath/security(src)
 	new /obj/item/flashlight/seclite(src)
 	new /obj/item/clothing/gloves/krav_maga/sec(src)
 	new /obj/item/door_remote/head_of_security(src)
+	new /obj/item/reagent_containers/spray/pepper(src)
 	new /obj/item/gun/ballistic/shotgun/automatic/combat/compact(src)
 
 /obj/structure/closet/secure_closet/security
@@ -140,7 +141,9 @@
 
 /obj/structure/closet/secure_closet/security/sec/PopulateContents()
 	..()
-	new /obj/item/storage/belt/security/full(src)
+	new /obj/item/storage/belt/sheath/security(src)
+	new /obj/item/grenade/flashbang(src)
+	new /obj/item/reagent_containers/spray/pepper(src)
 
 /obj/structure/closet/secure_closet/security/cargo
 

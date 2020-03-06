@@ -672,3 +672,45 @@
 /obj/item/storage/belt/sabre/PopulateContents()
 	new /obj/item/melee/sabre(src)
 	update_icon()
+
+/obj/item/storage/belt/sheath
+	name = "katana sheath"
+	desc = "A rudimentry leather sheath meant for holding a katana."
+	icon_state = "security_katana_sheath"
+	item_state = "security_katana_sheath"
+	w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/storage/belt/sheath/PopulateContents()
+	new /obj/item/katana(src)
+	update_icon()
+
+/obj/item/storage/belt/sheath/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 1
+	STR.rustle_sound = FALSE
+	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.set_holdable(list(
+		/obj/item/melee/sabre/security,
+		/obj/item/katana
+		))
+
+/obj/item/storage/belt/sheath/update_icon_state()
+	icon_state = "security_katana_sheath"
+	item_state = "security_katana_sheath"
+	if(contents.len)
+		icon_state += "-sword"
+		item_state += "-sword"
+
+/obj/item/storage/belt/sheath/security
+	name = "security katana sheath"
+	desc = "A rudimentry leather sheath meant for holding a security katana."
+
+/obj/item/storage/belt/sheath/security/PopulateContents()
+	new /obj/item/melee/sabre/security(src)
+	update_icon()
+
+/obj/item/storage/belt/sheath/security/hos/PopulateContents()
+	new /obj/item/melee/sabre/security/hos(src)
+	update_icon()

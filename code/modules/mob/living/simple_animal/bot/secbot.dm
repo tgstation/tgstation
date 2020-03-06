@@ -23,7 +23,7 @@
 
 	a_intent = "harm"
 
-	var/baton_type = /obj/item/melee/baton
+	var/baton_type = /obj/item/melee/baton/cattleprod
 	var/obj/item/weapon
 	var/mob/living/carbon/target
 	var/oldtarget_name
