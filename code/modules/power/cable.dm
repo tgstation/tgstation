@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 /obj/structure/cable/update_icon_state()
 	if(!linked_dirs)
-		icon_state = "[cable_layer]-noconnection"
+		icon_state = "l[cable_layer]-noconnection"
 	else
 		var/list/dir_icon_list = list()
 		for(var/check_dir in GLOB.cardinals)
@@ -140,7 +140,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 					if(P.should_have_node())
 						dir_string = "[dir_string]-node"
 						break
-		dir_string = "[cable_layer]-[dir_string]"
+		dir_string = "l[cable_layer]-[dir_string]"
 		icon_state = dir_string
 
 
