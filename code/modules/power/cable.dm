@@ -317,19 +317,25 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 				if(cable_layer == C.cable_layer)
 					. += C
 
-	var/obj/machinery/power/deck_relay/DR = locate(/obj/machinery/power/deck_relay)
+	var/obj/machinery/power/deck_relay/DR = locate(/obj/machinery/power/deck_relay) in T
+	to_chat(world, "<span class='notice'>get_cable_connections() [DR]</span>")
 	if(DR)
+		to_chat(world, "<span class='danger'>get_cable_connections() locate [DR]</span>")
 		var/turf/TmultiZ
 		if(DR.below)
+			to_chat(world, "<span class='danger'>[DR] below [DR.below]</span>")
 			TmultiZ = SSmapping.get_turf_below(T)
 			for(var/obj/structure/cable/C in TmultiZ)
 				if(cable_layer == C.cable_layer)
 					. += C
 		if(DR.above)
+			to_chat(world, "<span class='danger'>[DR] above [DR.above]</span>")
 			TmultiZ = SSmapping.get_turf_above(T)
 			for(var/obj/structure/cable/C in TmultiZ)
 				if(cable_layer == C.cable_layer)
 					. += C
+
+
 
 /obj/structure/cable/proc/get_machine_connections(powernetless_only)
 	. = list()
@@ -338,14 +344,14 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			if(P.anchored)
 				. += P
 
-/obj/structure/cable/proc/auto_propogate_cut_cable(obj/O)
+/obj/structure/cable/proc/auto_propagate_cut_cable(obj/O)
 	if(O && !QDELETED(O))
 		var/datum/powernet/newPN = new()// creates a new powernet...
 		propagate_network(O, newPN)//... and propagates it to the other side of the cable
 
 //Makes a new network for the cable and propgates it.
-//If it finds another network in the process, aborts and uses that one and propogates off of it instead
-/obj/structure/cable/proc/propogate_if_no_network()
+//If it finds another network in the process, aborts and uses that one and propagates off of it instead
+/obj/structure/cable/proc/propagate_if_no_network()
 	if(powernet)
 		return
 	var/datum/powernet/newPN = new()
@@ -377,7 +383,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		if(first)
 			first = FALSE
 			continue
-		addtimer(CALLBACK(O, .proc/auto_propogate_cut_cable, O), 0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
+		addtimer(CALLBACK(O, .proc/auto_propagate_cut_cable, O), 0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
 
 ///////////////////////////////////////////////
 // The cable coil object, used for laying cable
