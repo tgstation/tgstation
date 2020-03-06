@@ -29,7 +29,7 @@
 
 /obj/machinery/mineral/proc/unregister_input_turf()
 	if(input_turf)
-		UnregisterSignal(input_turf, COMSIG_ATOM_ENTERED)
+		UnregisterSignal(input_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_CREATED))
 
 /obj/machinery/mineral/proc/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
 	return
