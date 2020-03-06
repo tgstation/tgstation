@@ -42,6 +42,7 @@
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
 	H.remove_hud_from(user)
 	voice_unknown = FALSE
+	return ..()
 
 /obj/item/clothing/mask/luchador
 	name = "Luchador Mask"
