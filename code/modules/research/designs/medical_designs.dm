@@ -427,6 +427,18 @@
 	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+///Design for [/obj/item/organ/cyberimp/brain/neural_override]
+/datum/design/cyberimp_override
+	name = "Neural Override Implant"
+	desc = "This cybernetic brain implant, when connected to a sentient brain, can be implanted to a host to let the brain take control of its body at will."
+	id = "ci-override"
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 80
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 1000, /datum/material/gold = 1500)
+	build_path = /obj/item/organ/cyberimp/brain/neural_override
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SECURITY
+
 /datum/design/cyberimp_nutriment
 	name = "Nutriment Pump Implant"
 	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
