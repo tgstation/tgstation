@@ -166,7 +166,6 @@
   * If the target is on the same tile as the plant, destroy the vine
   * Removes any QDELETED vines from the vines list.
   */
-
 /mob/living/simple_animal/hostile/venus_human_trap/proc/pull_vines()
 	for(var/datum/beam/B in vines)
 		if(istype(B.target, /atom/movable))
