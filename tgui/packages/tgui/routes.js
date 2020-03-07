@@ -98,6 +98,7 @@ import { ProximitySensor } from './interfaces/ProximitySensor';
 import { Radio } from './interfaces/Radio';
 import { RadioactiveMicrolaser } from './interfaces/RadioactiveMicrolaser';
 import { RemoteRobotControl } from './interfaces/RemoteRobotControl';
+import { RoboticsControlConsole } from './interfaces/RoboticsControlConsole';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { Roulette } from './interfaces/Roulette';
 import { SatelliteControl } from './interfaces/SatelliteControl';
@@ -583,6 +584,10 @@ const ROUTES = {
   },
   remote_robot_control: {
     component: () => RemoteRobotControl,
+    scrollable: true,
+  },
+  robotics_control_console: {
+    component: () => RoboticsControlConsole,
     scrollable: true,
   },
   roulette: {
