@@ -210,6 +210,9 @@
 /obj/item/melee/baton/proc/baton_effect(mob/living/L, mob/user)
 	if(shields_blocked(L, user))
 		return FALSE
+	if(HAS_TRAIT_FROM(L, TRAIT_IWASBATONED, user)) //no doublebaton abuse anon!
+		to_chat(user, "<span class='danger'>[L] manages to avoid the attack!</span>")
+		return FALSE
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
 		if(!R || !R.cell || !R.cell.use(cell_hit_cost))
@@ -217,10 +220,6 @@
 	else
 		if(!deductcharge(cell_hit_cost))
 			return FALSE
-	if(HAS_TRAIT_FROM(L, TRAIT_IWASBATONED, user))
-		to_chat(user, "<span class='danger'>[L] manages to avoid the attack!</span>")
-		return FALSE
-
 	/// After a target is hit, we do a chunk of stamina damage, along with other effects.
 	/// After a period of time, we then check to see what stun duration we give.
 	L.Jitter(20)
