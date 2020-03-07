@@ -202,7 +202,11 @@
 
 ///Make sure that the owner is not left stuck in an afk body
 /obj/item/organ/cyberimp/brain/neural_override/on_life()
-	if(owner && current_controller == OVERRIDER && (!owner.client || owner.stat == DEAD))
+	if(owner && current_controller == OVERRIDER && !owner.client)
+		switch_control()
+
+/obj/item/organ/cyberimp/brain/neural_override/on_mob_death(mob/living/L, gibbed)
+	if(owner && current_controller == OVERRIDER)
 		switch_control()
 
 ///Switches control of the mob from the original to the overrider and viceversa
