@@ -253,7 +253,7 @@
 		var/obj/item/organ/brain/brain = I
 		if(brain.brainmob && brain.brainmob.mind && (brain.brainmob.client || brain.brainmob.grab_ghost())) //Check that the brain has a player controlling it
 			if(overrider_brain) //Replace existing backseat with new one
-				remove_brain()
+				remove_brain(user)
 			override_backseat = new(src, src)
 			to_chat(user, "<span class='notice'>You install [brain] into [src].</span>")
 			brain.brainmob.mind.transfer_to(override_backseat)
@@ -267,10 +267,11 @@
 		return ..()
 
 ///Places the overrider's client back into the brain and removes it
-/obj/item/organ/cyberimp/brain/neural_override/proc/remove_brain()
+/obj/item/organ/cyberimp/brain/neural_override/proc/remove_brain(mob/living/user)
 	if(QDELETED(override_backseat) || QDELETED(overrider_brain))
 		return
-	overrider_brain.forceMove(drop_location())
+	if(!istype(user) || !Adjacent(user) || !user.put_in_active_hand(overrider_brain))
+		overrider_brain.forceMove(drop_location())
 	overrider_brain.organ_flags &= ~ORGAN_FROZEN
 	if(override_backseat.mind)
 		override_backseat.mind.transfer_to(overrider_brain.brainmob)
@@ -283,7 +284,7 @@
 /obj/item/organ/cyberimp/brain/neural_override/AltClick(mob/user)
 	if(overrider_brain && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		to_chat(user, "<span class='notice'>You remove [overrider_brain] from [src].</span>")
-		remove_brain()
+		remove_brain(user)
 
 /obj/item/organ/cyberimp/brain/neural_override/update_icon_state()
 	if(overrider_brain)
