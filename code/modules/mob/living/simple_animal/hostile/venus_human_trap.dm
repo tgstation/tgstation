@@ -147,7 +147,6 @@
   * Arguments:
   * * mob/user - The ghost to possibly control the plant
   */
-
 /mob/living/simple_animal/hostile/venus_human_trap/proc/humanize_plant(mob/user)
 	if(key || !playable_plant || stat)
 		return
