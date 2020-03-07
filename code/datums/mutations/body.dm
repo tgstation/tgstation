@@ -487,3 +487,96 @@
 /datum/mutation/human/headless/proc/abortattachment(datum/source, obj/item/bodypart/new_limb, special) //you aren't getting your head back
 	if(istype(new_limb, /obj/item/bodypart/head))
 		return COMPONENT_NO_ATTACH
+
+/datum/mutation/human/claws //not a spell, so doesn't use the "power" variable
+	name = "Claws"
+	desc = "An awakened mutation found in felinids that reshape the bone structure of the wrist to include claws."
+	quality = POSITIVE
+	text_gain_indication = "<span class='warning'>YThere is a sharp pain in your wrists!</span>"
+	text_lose_indication = "<span class'notice'>Your wrists painfully reform back to normal.</span>"
+	species_allowed = list("felinid")
+	difficulty = 16
+	instability = 30
+	var/datum/action/innate/toggle_claws/clawpower
+
+/datum/mutation/human/claws/on_acquiring()
+	. = ..()
+	if(.)
+		return
+	clawpower = new
+	clawpower.Grant(owner)
+
+/datum/mutation/human/claws/on_losing()
+	. = ..()
+	if(.)
+		return
+	if(clawpower.extended)
+		clawpower.Activate()
+	QDEL_NULL(clawpower)
+
+/datum/action/innate/toggle_claws
+	icon_icon = 'icons/mob/actions/actions_genetic.dmi'
+	background_icon_state = "bg_spell"
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "spikechemswap"
+	name = "Toggle Claws"
+	desc = "Extend or retract your claws."
+	var/extended = FALSE
+
+/datum/action/innate/toggle_claws/Activate()
+	var/mob/living/carbon/human/clawt_girl = owner
+	if(extended)
+		to_chat(clawt_girl, "<span class='notice'>You retract your claws.</span>")
+		for(var/obj/item/claw/C in clawt_girl.held_items)
+			if(istype(C)) //nodrop doesn't get replaced by claws, lets not delete nodrop items that aren't this
+				qdel(C)
+	else
+		to_chat(clawt_girl, "<span class='notice'>You extend your claws!</span>")
+		// Drop items in hands
+		// If you're lucky enough to have a TRAIT_NODROP item, then it stays.
+		for(var/V in clawt_girl.held_items)
+			var/obj/item/I = V
+			if(istype(I))
+				if(clawt_girl.dropItemToGround(I))
+					clawt_girl.put_in_hands(new /obj/item/claw()) //now it's an empty hand
+			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
+				clawt_girl.put_in_hands(new /obj/item/claw())
+	extended = !extended
+
+/obj/item/claw
+	name = "claw"
+	desc = "A claw made out of extended bone and freaky genetics. Fairly sharp, and always at the ready."
+	item_flags = ABSTRACT | DROPDEL
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "bloodhand_left"
+	var/icon_left = "bloodhand_left"
+	var/icon_right = "bloodhand_right"
+	hitsound = 'sound/weapons/slash.ogg'
+	pickup_sound = 'sound/items/unsheath.ogg'
+	drop_sound = 'sound/items/sheath.ogg'
+	force = 16
+	damtype = "brute"
+
+/obj/item/claw/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+
+/obj/item/claw/equipped(mob/user, slot)
+	. = ..()
+	//these are intentionally inverted
+	var/i = user.get_held_index_of_item(src)
+	if(!(i % 2))
+		icon_state = icon_left
+	else
+		icon_state = icon_right
+
+/obj/item/claw/suicide_act(mob/living/user)
+	playsound(src, 'sound/weapons/slash.ogg', 100, TRUE)
+	if(istype(user) && user.get_bodypart(BODY_ZONE_HEAD))
+		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
+		user.visible_message("<span class='suicide'>[user] begins to slice [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		myhead.dismember()
+	else
+		user.visible_message("<span class='suicide'>[user] begins to dice themselves apart with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (BRUTELOSS)
