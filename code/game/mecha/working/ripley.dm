@@ -4,8 +4,10 @@
 	icon_state = "ripley"
 	silicon_icon_state = "ripley-empty"
 	step_in = 1.5 //Move speed, lower is faster.
-	var/fast_pressure_step_in = 1.5 //step_in while in low pressure conditions
-	var/slow_pressure_step_in = 2 //step_in while in normal pressure conditions
+	///How fast the mech is in low pressure
+	var/fast_pressure_step_in = 1.5
+	///How fast the mech is in normal pressure
+	var/slow_pressure_step_in = 2
 	max_temperature = 20000
 	max_integrity = 200
 	lights_power = 7
@@ -18,9 +20,12 @@
 	enter_delay = 10 //can enter in a quarter of the time of other mechs
 	exit_delay = 10
 	opacity = FALSE //Ripley has a window
-	var/list/cargo = new
-	var/cargo_capacity = 15
+	///Amount of Goliath hides attached to the mech
 	var/hides = 0
+	///List of all things in Ripley's Cargo Compartment
+	var/list/cargo = new
+	///How much things Ripley can carry in their Cargo Compartment
+	var/cargo_capacity = 15
 
 /obj/mecha/working/ripley/Move()
 	. = ..()
@@ -180,8 +185,11 @@
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
 			to_chat(user, "<span class='warning'>You fail to push [O] out of [src]!</span>")
-
-
+/**
+  * Makes the mecha go faster and halves the mecha drill cooldown if in Lavaland pressure.
+  *
+  * Checks for Lavaland pressure, if that works out the mech's speed is equal to fast_pressure_step_in and the cooldown for the mecha drill is halved. If not it uses slow_pressure_step_in and drill cooldown is normal.
+  */
 /obj/mecha/working/ripley/proc/update_pressure()
 	var/turf/T = get_turf(loc)
 

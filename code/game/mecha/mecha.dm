@@ -25,11 +25,11 @@
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 1.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 0.5)
 	var/equipment_disabled = 0 //disabled due to EMP
-	///Keeps track of the mech's cell
+	/// Keeps track of the mech's cell
 	var/obj/item/stock_parts/cell/cell
-	///Keeps track of the mech's scanning module
+	/// Keeps track of the mech's scanning module
 	var/obj/item/stock_parts/scanning_module/scanmod
-	///Keeps track of the mech's capacitor
+	/// Keeps track of the mech's capacitor
 	var/obj/item/stock_parts/capacitor/capacitor
 	var/construction_state = MECHA_LOCKED
 	var/last_message = 0

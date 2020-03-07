@@ -1,3 +1,4 @@
+///Lavaproof, fireproof, fast mech with low armor and higher energy consumption, cannot strafe and has an internal ore box.
 /obj/mecha/working/clarke
 	desc = "Combining man and machine for a better, stronger engineer. Can even resist lava!"
 	name = "\improper Clarke"
@@ -14,6 +15,7 @@
 	wreckage = /obj/structure/mecha_wreckage/clarke
 	enter_delay = 40
 	canstrafe = FALSE
+	///handles an internal ore box for Clarke
 	var/obj/structure/ore_box/box
 
 /obj/mecha/working/clarke/Initialize()
@@ -48,14 +50,16 @@
 
 ////Ore Box Controls////
 
-/obj/item/mecha_parts/mecha_equipment/orebox_manager //Special equipment for Clarke
+///Special equipment for the Clarke mech, handles moving ore without giving the mech a hydraulic clamp and cargo compartment.
+/obj/item/mecha_parts/mecha_equipment/orebox_manager
 	name = "ore storage module"
 	desc = "An automated ore box management device."
 	icon_state = "mecha_clamp" //None of this should matter, this shouldn't ever exist outside a mech anyway.
 	selectable = FALSE
 	detachable = FALSE
 	salvageable = FALSE
-	var/obj/mecha/working/clarke/hostmech //New var to avoid istype checking every time the topic button is pressed. This will only work inside Clarke mechs
+	///Var to avoid istype checking every time the topic button is pressed. This will only work inside Clarke mechs.
+	var/obj/mecha/working/clarke/hostmech
 
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/attach(obj/mecha/M)
 	if(istype(M, /obj/mecha/working/clarke))
