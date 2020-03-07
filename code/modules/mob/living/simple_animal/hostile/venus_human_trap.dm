@@ -39,7 +39,6 @@
   *
   * Displays a message, spawns a human venus trap, then qdels itself.
   */	
-
 /obj/structure/alien/resin/flower_bud_enemy/proc/bear_fruit()
 	visible_message("<span class='danger'>the plant has borne fruit!</span>")
 	new /mob/living/simple_animal/hostile/venus_human_trap(get_turf(src))
