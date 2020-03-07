@@ -1419,7 +1419,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "do" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2905,7 +2905,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fT" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -5084,7 +5084,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "kh" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -6623,7 +6623,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "mQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	layer = 5
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -8100,7 +8100,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "pl" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -9125,7 +9125,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "rk" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	layer = 5
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -11897,7 +11897,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
