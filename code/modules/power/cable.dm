@@ -38,16 +38,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	layer = WIRE_LAYER + 0.01
 	icon_state = "l3-1-2-4-8-node"
 
-/obj/structure/cable/multilayer
-	name = "multilayer cable hub"
-	desc = "A flexible, superconducting insulated multilayer hub for heavy-duty power transfer."
-	icon = 'icons/obj/power.dmi'
-	icon_state = "cable_bridge"
-	cable_layer = CABLE_LAYER_1|CABLE_LAYER_2|CABLE_LAYER_3
-
-/obj/structure/cable/multilayer/update_icon_state()
-	return
-
 /obj/structure/cable/Initialize(mapload)
 	. = ..()
 
@@ -595,3 +585,35 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 
 #undef UNDER_SMES
 #undef UNDER_TERMINAL
+
+/obj/structure/cable/multilayer
+	name = "multilayer cable hub"
+	desc = "A flexible, superconducting insulated multilayer hub for heavy-duty power transfer."
+	icon = 'icons/obj/power.dmi'
+	icon_state = "cable_bridge"
+	cable_layer = CABLE_LAYER_1|CABLE_LAYER_2|CABLE_LAYER_3
+	layer = WIRE_LAYER - 0.01
+
+/obj/structure/cable/multilayer/update_icon_state()
+	return
+
+/obj/structure/cable/multilayer/Initialize(mapload)
+	. = ..()
+
+	for(var/obj/structure/cable/multilayer/MLC in get_turf(src))
+		if(MLC != src)
+			deconstruct()
+
+/obj/structure/cable/multilayer/examine(mob/user)
+	. += ..()
+	. += "<span class='notice'>Set L1:[cable_layer & CABLE_LAYER_1 ? "Connect" : "Disconnect"].</span>"
+	. += "<span class='notice'>Set L2:[cable_layer & CABLE_LAYER_2 ? "Connect" : "Disconnect"].</span>"
+	. += "<span class='notice'>Set L3:[cable_layer & CABLE_LAYER_3 ? "Connect" : "Disconnect"].</span>"
+
+/obj/structure/cable/multilayer/attack_hand(mob/user)
+	. = ..()
+	var/CL = input(user, "Please select a tayer to toggle", "multilayer cable hub") as null|anything in list(CABLE_LAYER_1, CABLE_LAYER_2, CABLE_LAYER_3)
+	if(cable_layer & CL)
+		cable_layer ^= CL
+	else
+		cable_layer |= CL
