@@ -473,11 +473,11 @@
 	. = ..()
 	if(.)
 		return TRUE
+	UnregisterSignal(owner, COMSIG_LIVING_ATTACH_LIMB)
 	var/successful = owner.regenerate_limb(BODY_ZONE_HEAD, noheal = TRUE) //noheal needs to be TRUE to prevent weird adding and removing mutation healing
 	if(!successful)
 		stack_trace("HARS mutation head regeneration failed! (usually caused by headless syndrome having a head)")
 		return TRUE
-	UnregisterSignal(owner, COMSIG_LIVING_ATTACH_LIMB)
 	owner.dna.species.regenerate_organs(owner, excluded_zones = list(BODY_ZONE_CHEST)) //only regenerate head
 	owner.apply_damage(damage = 50, damagetype = BRUTE, def_zone = BODY_ZONE_HEAD) //and this to DISCOURAGE organ farming, or at least not make it free.
 	owner.visible_message("<span class='warning'>[owner]'s head returns with a sickening crunch!</span>", "<span class='warning'>Your head regrows with a sickening crack! Ouch.</span>")
