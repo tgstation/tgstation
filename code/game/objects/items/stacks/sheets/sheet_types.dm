@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	singular_name = "plasteel sheet"
 	desc = "This sheet is an alloy of iron and plasma."
 	icon_state = "sheet-plasteel"
-	item_state = "sheet-metal"
+	item_state = "sheet-plasteel"
 	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT, /datum/material/plasma=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 10
 	flags_1 = CONDUCT_1
