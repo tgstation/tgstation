@@ -20,6 +20,15 @@
 	category = list("initial","Tools","Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/broom
+	name="Push Broom"
+	id="pushbroom"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 2000)
+	build_path = /obj/item/pushbroom
+	category = list("initial","Tools","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/crowbar
 	name = "Pocket Crowbar"
 	id = "crowbar"
@@ -1044,7 +1053,7 @@
 	id = "plastic_trees"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic = 8000)
-	build_path = /obj/item/twohanded/required/kirbyplants/fullysynthetic
+	build_path = /obj/item/kirbyplants/fullysynthetic
 	category = list("initial", "Misc")
 
 /datum/design/beads

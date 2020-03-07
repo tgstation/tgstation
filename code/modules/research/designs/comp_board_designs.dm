@@ -303,7 +303,7 @@
 	build_path = /obj/item/circuitboard/computer/nanite_cloud_controller
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-	
+
 /datum/design/board/advanced_camera
 	name = "Computer Design (Advanced Camera Console)"
 	desc = "Allows for the construction of circuit boards used to build advanced camera consoles."

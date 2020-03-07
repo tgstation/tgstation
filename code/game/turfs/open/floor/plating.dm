@@ -76,11 +76,16 @@
 			var/obj/item/stack/tile/W = C
 			if(!W.use(1))
 				return
-			var/turf/open/floor/T = PlaceOnTop(W.turf_type, flags = CHANGETURF_INHERIT_AIR)
-			if(istype(W, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
-				var/obj/item/stack/tile/light/L = W
-				var/turf/open/floor/light/F = T
-				F.state = L.state
+			if(istype(W, /obj/item/stack/tile/material))
+				var/turf/newturf = PlaceOnTop(/turf/open/floor/material, flags = CHANGETURF_INHERIT_AIR)
+				newturf.set_custom_materials(W.custom_materials)
+			else if(W.turf_type)
+				var/turf/open/floor/T = PlaceOnTop(W.turf_type, flags = CHANGETURF_INHERIT_AIR)
+				if(istype(W, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
+					var/obj/item/stack/tile/light/L = W
+					var/turf/open/floor/light/F = T
+					F.state = L.state
+
 			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 		else
 			to_chat(user, "<span class='warning'>This section is too damaged to support a tile! Use a welder to fix the damage.</span>")

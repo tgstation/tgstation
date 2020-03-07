@@ -25,7 +25,7 @@
 	desc = "Contains a set of armaments for the chaplain."
 
 /obj/item/choice_beacon/holy/canUseBeacon(mob/living/user)
-	if(user.mind && user.mind.isholy)
+	if(user.mind && user.mind.holy_role)
 		return ..()
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, TRUE)
@@ -213,7 +213,7 @@
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/nullrod/attack_self(mob/user)
-	if(user.mind && (user.mind.isholy) && !reskinned)
+	if(user.mind && (user.mind.holy_role) && !reskinned)
 		reskin_holy_weapon(user)
 
 /obj/item/nullrod/proc/reskin_holy_weapon(mob/M)
@@ -607,7 +607,7 @@
 
 /obj/item/nullrod/carp/attack_self(mob/living/user)
 	if(used_blessing)
-	else if(user.mind && (user.mind.isholy))
+	else if(user.mind && (user.mind.holy_role))
 		to_chat(user, "<span class='boldnotice'>You are blessed by Carp-Sie. Wild space carp will no longer attack you.</span>")
 		user.faction |= "carp"
 		used_blessing = TRUE
