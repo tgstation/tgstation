@@ -15,7 +15,7 @@
 	wreckage = /obj/structure/mecha_wreckage/clarke
 	enter_delay = 40
 	canstrafe = FALSE
-	///handles an internal ore box for Clarke
+	/// Handles an internal ore box for Clarke
 	var/obj/structure/ore_box/box
 
 /obj/mecha/working/clarke/Initialize()
@@ -58,7 +58,7 @@
 	selectable = FALSE
 	detachable = FALSE
 	salvageable = FALSE
-	///Var to avoid istype checking every time the topic button is pressed. This will only work inside Clarke mechs.
+	/// Var to avoid istype checking every time the topic button is pressed. This will only work inside Clarke mechs.
 	var/obj/mecha/working/clarke/hostmech
 
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/attach(obj/mecha/M)

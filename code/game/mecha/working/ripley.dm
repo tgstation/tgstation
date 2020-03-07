@@ -4,9 +4,9 @@
 	icon_state = "ripley"
 	silicon_icon_state = "ripley-empty"
 	step_in = 1.5 //Move speed, lower is faster.
-	///How fast the mech is in low pressure
+	/// How fast the mech is in low pressure
 	var/fast_pressure_step_in = 1.5
-	///How fast the mech is in normal pressure
+	/// How fast the mech is in normal pressure
 	var/slow_pressure_step_in = 2
 	max_temperature = 20000
 	max_integrity = 200
@@ -20,11 +20,11 @@
 	enter_delay = 10 //can enter in a quarter of the time of other mechs
 	exit_delay = 10
 	opacity = FALSE //Ripley has a window
-	///Amount of Goliath hides attached to the mech
+	/// Amount of Goliath hides attached to the mech
 	var/hides = 0
-	///List of all things in Ripley's Cargo Compartment
+	/// List of all things in Ripley's Cargo Compartment
 	var/list/cargo = new
-	///How much things Ripley can carry in their Cargo Compartment
+	/// How much things Ripley can carry in their Cargo Compartment
 	var/cargo_capacity = 15
 
 /obj/mecha/working/ripley/Move()
