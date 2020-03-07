@@ -92,10 +92,9 @@
 /mob/living/silicon/robot/proc/fulp_borg_unbuckle(mob/living/M) //Allows borgs to unbuckle people via loading them.
 	if(!M.buckled)
 		return
-	if(M.buckled)
-		M.buckled.unbuckle_mob(M, force = TRUE)
 	if(M.has_buckled_mobs())
 		M.unbuckle_all_mobs(force = TRUE)
+	M.buckled.unbuckle_mob(M, force = TRUE)
 
 /mob/living/silicon/robot/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, forced = FALSE) //Qualify of life; puts beaker in manipulator
 	. = ..()
