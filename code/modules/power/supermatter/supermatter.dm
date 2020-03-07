@@ -19,7 +19,7 @@
 #define CO2_HEAT_PENALTY 0.1
 #define NITROGEN_HEAT_PENALTY -1.5
 #define BZ_HEAT_PENALTY 5
-#define FREON_HEAT_PENALTY -10
+#define FREON_HEAT_PENALTY -10 //very good heat absorbtion and less plasma and o2 generation
 
 
 //All of these get divided by 10-bzcomp * 5 before having 1 added and being multiplied with power to determine rads
@@ -29,7 +29,7 @@
 #define BZ_TRANSMIT_MODIFIER -2
 #define TRITIUM_TRANSMIT_MODIFIER 30 //We divide by 10, so this works out to 3
 #define PLUOXIUM_TRANSMIT_MODIFIER -5 //Should halve the power output
-#define FREON_TRANSMIT_MODIFIER -9
+#define FREON_TRANSMIT_MODIFIER -9 //used to remove the power generation
 
 #define BZ_RADIOACTIVITY_MODIFIER 5 //Improves the effect of transmit modifiers
 
@@ -143,7 +143,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/freoncomp = 0
 
 	var/pluoxiumbonus = 0
-	var/freonbonus = 1
+	var/freonbonus = 1 //it allows us to remove the power generation while freon is inside the chamber
 
 	var/combined_gas = 0
 	var/gasmix_power_ratio = 0
@@ -443,7 +443,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(freoncomp <= 0.01)
 			freonbonus = 1
 		else
-			freonbonus = 0
+			freonbonus = 0 //stop any power generation
 
 		//No less then zero, and no greater then one, we use this to do explosions and heat to power transfer
 		gasmix_power_ratio = min(max(plasmacomp + o2comp + co2comp + tritiumcomp + bzcomp - pluoxiumcomp - n2comp - freoncomp, 0), 1)

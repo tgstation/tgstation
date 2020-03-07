@@ -11,7 +11,7 @@
 //General assmos defines.
 #define WATER_VAPOR_FREEZE					200
 #define FREON_BURN_RATE_DELTA				4
-#define FIRE_FREON_ENERGY_RELEASED			-200000
+#define FIRE_FREON_ENERGY_RELEASED			-200000 //amount of heat absorbed per mole of burnt freon in the tile
 
 #define N2O_DECOMPOSITION_MIN_ENERGY		1400
 #define N2O_DECOMPOSITION_ENERGY_RELEASED	200000
