@@ -7,7 +7,7 @@
 	circuit = /obj/item/circuitboard/computer/robotics
 	light_color = LIGHT_COLOR_PINK
 	ui_x = 500
-	ui_y = 500
+	ui_y = 460
 
 /obj/machinery/computer/robotics/proc/can_control(mob/user, mob/living/silicon/robot/R)
 	. = FALSE
@@ -49,7 +49,7 @@
 			continue
 		var/list/cyborg_data = list(
 			name = R.name,
-			can_move = (R.mobility_flags & MOBILITY_MOVE),
+			locked_down = R.lockcharge,
 			status = R.stat,
 			charge = R.cell ? round(R.cell.percent()) : null,
 			module = R.module ? "[R.module.name] Module" : "No Module Detected",

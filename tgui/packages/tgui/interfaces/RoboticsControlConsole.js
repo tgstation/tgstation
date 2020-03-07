@@ -68,9 +68,9 @@ const Cyborgs = props => {
                 })} />
             )}
             <Button
-              icon={cyborg.can_move ? 'lock' : 'unlock'}
-              color={cyborg.can_move ? 'default' : 'good'}
-              content={cyborg.can_move ? 'Lockdown' : 'Release'}
+              icon={cyborg.locked_down ? 'unlock' : 'lock'}
+              color={cyborg.locked_down ? 'good' : 'default'}
+              content={cyborg.locked_down ? "Release" : "Lockdown"}
               onClick={() => act(ref, 'stopbot', {
                 ref: cyborg.ref,
               })} />
@@ -87,14 +87,14 @@ const Cyborgs = props => {
           <LabeledList.Item label="Status">
             <Box color={cyborg.status
               ? 'bad'
-              : cyborg.can_move
-                ? 'good'
-                : 'average'}>
+              : cyborg.locked_down
+                ? 'average'
+                : 'good'}>
               {cyborg.status
                 ? "Not Responding"
-                : cyborg.can_move
-                  ? 'Nominal'
-                  : 'Locked Down'}
+                : cyborg.locked_down
+                  ? "Locked Down"
+                  : "Nominal"}
             </Box>
           </LabeledList.Item>
           <LabeledList.Item label="Charge">
