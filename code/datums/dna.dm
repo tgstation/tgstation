@@ -647,7 +647,7 @@
 
 
 /mob/living/carbon/human/proc/something_horrible_mindmelt()
-	if(!HAS_TRAIT(src, TRAIT_BLIND))
+	if(!is_blind())
 		var/obj/item/organ/eyes/eyes = locate(/obj/item/organ/eyes) in internal_organs
 		if(!eyes)
 			return

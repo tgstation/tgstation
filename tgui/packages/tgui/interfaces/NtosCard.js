@@ -4,8 +4,6 @@ import { Button, NoticeBox, Section, Tabs, Input } from '../components';
 import { AccessList } from './common/AccessList';
 import { map } from 'common/collections';
 
-
-
 export const NtosCard = props => {
   const { act, data } = useBackend(props);
 

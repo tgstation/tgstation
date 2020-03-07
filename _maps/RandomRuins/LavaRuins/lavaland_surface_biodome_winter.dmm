@@ -333,7 +333,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "KS" = (
-/obj/item/twohanded/required/chainsaw,
+/obj/item/chainsaw,
 /obj/structure/closet,
 /obj/machinery/light/small{
 	dir = 4
