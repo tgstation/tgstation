@@ -303,7 +303,7 @@
 			return
 		else
 			to_chat(user, "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>")
-			var/obj/item/dualsaber/toy/newSaber = new /obj/item/dualsaber/toy(user.loc)
+			var/obj/item/toy/dualsaber/newSaber = new /obj/item/toy/dualsaber(user.loc)
 			if(hacked) // That's right, we'll only check the "original" "sword".
 				newSaber.hacked = TRUE
 				newSaber.saber_color = "rainbow"
@@ -385,26 +385,60 @@
 	animate(src, transform=matrix())
 
 /*
- * Subtype of Double-Bladed Energy Swords
+ * Subtype of Double-Bladed Energy Swords. Sike, toy subtype now. Turns out we don't want swords transforming into the real thing after you switch them on.
  */
-/obj/item/dualsaber/toy
+/obj/item/toy/dualsaber
 	name = "double-bladed toy sword"
 	desc = "A cheap, plastic replica of TWO energy swords.  Double the fun!"
 	force = 0
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
+	icon = 'icons/obj/transforming_energy.dmi'
+	icon_state = "dualsaber0"
+	item_state = "dualsaber0"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	attack_verb = list("attacked", "struck", "hit")
+	var/active = 0
+	w_class = WEIGHT_CLASS_SMALL
+	var/hacked = FALSE
+	var/saber_color
 
-/obj/item/dualsaber/toy/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/two_handed, wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
+/obj/item/toy/dualsaber/attack_self(mob/user)
+	active = !( active )
+	if (active)
+		to_chat(user, "<span class='notice'>You extend the plastic blades with a quick flick of your wrist.</span>")
+		playsound(user, 'sound/weapons/saberon.ogg', 20, TRUE)
+		if(hacked)
+			icon_state = "dualsaberrainbow1"
+			item_state = "dualsaberrainbow1"
+		else
+			icon_state = "dualsaberblue1"
+			item_state = "dualsaberblue1"
+		w_class = WEIGHT_CLASS_BULKY
+	else
+		to_chat(user, "<span class='notice'>You push the plastic bladess back down into the handle.</span>")
+		playsound(user, 'sound/weapons/saberoff.ogg', 20, TRUE)
+		icon_state = "dualsaber0"
+		item_state = "dualsaber0"
+		w_class = WEIGHT_CLASS_SMALL
+	add_fingerprint(user)
 
-/obj/item/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	return 0
+/obj/item/toy/dualsaber/attackby(obj/item/W, mob/living/user, params)
+	if (W.tool_behaviour == TOOL_MULTITOOL)
+		if(!hacked)
+			hacked = TRUE
+			saber_color = "rainbow"
+			to_chat(user, "<span class='warning'>RNBW_ENGAGE</span>")
 
-/obj/item/dualsaber/toy/IsReflect() //Stops Toy Dualsabers from reflecting energy projectiles
-	return 0
+			if(active)
+				icon_state = "dualsaberrainbow1"
+				user.update_inv_hands()
+		else
+			to_chat(user, "<span class='warning'>It's already fabulous!</span>")
+	else
+		return ..()
 
 /obj/item/toy/katana
 	name = "replica katana"
