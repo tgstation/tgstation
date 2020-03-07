@@ -369,8 +369,9 @@
 		if(BODY_ZONE_R_LEG)
 			prosthetic = new/obj/item/bodypart/r_leg/robot/surplus(quirk_holder)
 			slot_string = "right leg"
-	prosthetic.replace_limb(H)
+	old_part.drop_limb(1)
 	qdel(old_part)
+	prosthetic.replace_limb(H)
 	H.regenerate_icons()
 
 /datum/quirk/prosthetic_limb/post_add()
