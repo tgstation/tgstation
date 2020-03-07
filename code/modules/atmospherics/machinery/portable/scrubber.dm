@@ -171,7 +171,7 @@
 				"[user] unanchors [src].", \
 				"<span class='notice'>You unanchor [src] [connected_port ? "and unfasten it from the port underneath it." : "."]</span>", \
 				"<span class='hear'>You hear a ratchet.</span>")
-			investigate_log("was unanchored [connected_port ? "and disconnected from [connected_port] " : NULL]by [key_name(user)].", INVESTIGATE_ATMOS)
+			investigate_log("was unanchored [connected_port ? "and disconnected from [connected_port] " : null]by [key_name(user)].", INVESTIGATE_ATMOS)
 			W.play_tool_sound(src)
 			if(connected_port)
 				disconnect()
