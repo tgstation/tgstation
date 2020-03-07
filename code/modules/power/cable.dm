@@ -1,6 +1,6 @@
 //Use this only for things that aren't a subtype of obj/machinery/power
 //For things that are, override "should_have_node()" on them
-GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/grille, /obj/structure/cable_bridge)))
+GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/grille)))
 
 #define UNDER_SMES -1
 #define UNDER_TERMINAL 1
@@ -23,18 +23,21 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
 	var/linked_dirs = 0 //bitflag
 	var/node = FALSE //used for sprites display
-	var/cable_layer = CABLE_LAYER_2
+	var/cable_layer = CABLE_LAYER_2			//bitflag
+	var/machinery_layer = MACHINERY_LAYER_1 //bitflag
 	var/datum/powernet/powernet
 
 /obj/structure/cable/layer1
 	color = "red"
 	cable_layer = CABLE_LAYER_1
+	machinery_layer = null
 	layer = WIRE_LAYER - 0.01
 	icon_state = "l1-1-2-4-8-node"
 
 /obj/structure/cable/layer3
 	color = "blue"
 	cable_layer = CABLE_LAYER_3
+	machinery_layer = null
 	layer = WIRE_LAYER + 0.01
 	icon_state = "l3-1-2-4-8-node"
 
@@ -309,10 +312,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/proc/get_cable_connections(powernetless_only)
 	. = list()
 	var/turf/T = get_turf(src)
-	if(locate(/obj/structure/cable_bridge) in T)
-		for(var/obj/structure/cable/C in T)
-			if(C != src)
-				. += C
 	for(var/check_dir in GLOB.cardinals)
 		if(linked_dirs & check_dir)
 			T = get_step(src, check_dir)
@@ -387,7 +386,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 // Definitions
 ////////////////////////////////
 
-GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restraints", /obj/item/restraints/handcuffs/cable, 15), new/datum/stack_recipe("cable bridge", /obj/structure/cable_bridge, 1), new/datum/stack_recipe("multilayer cable", /obj/structure/cable/multilayer, 1)))
+GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restraints", /obj/item/restraints/handcuffs/cable, 15), new/datum/stack_recipe("multilayer cable", /obj/structure/cable/multilayer, 1)))
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
@@ -569,35 +568,6 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	custom_materials = list()
 	cost = 1
 
-/obj/structure/cable_bridge
-	name = "cable bridge"
-	desc = "A bridge to connect different cable layers, or link terminals to incompatible cable layers."
-	icon = 'icons/obj/power.dmi'
-	icon_state = "cable_bridge"
-	level = 1 //is underfloor
-	layer = WIRE_LAYER + 0.02 //Above all the cables but below terminals
-	anchored = TRUE
-	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
-
-/obj/structure/cable_bridge/Initialize()
-	. = ..()
-	var/first = TRUE
-	var/datum/powernet/PN
-	for(var/obj/structure/cable/C in get_turf(src))
-		C.update_icon()
-		if(first == TRUE)
-			first = FALSE
-			PN = C.powernet
-			continue
-		propagate_network(C, PN)
-
-/obj/structure/cable_bridge/wirecutter_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/cable_coil(get_turf(loc), 1)
-	qdel(src)
-	return TRUE
-
 #undef UNDER_SMES
 #undef UNDER_TERMINAL
 
@@ -606,9 +576,16 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	desc = "A flexible, superconducting insulated multilayer hub for heavy-duty power transfer."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cable_bridge"
-	cable_layer = CABLE_LAYER_1|CABLE_LAYER_2|CABLE_LAYER_3
+	cable_layer = null
+	machinery_layer = MACHINERY_LAYER_1
 	layer = WIRE_LAYER - 0.02 //Disabled layers can lay over hub
 	color = "white"
+	var/obj/node/machinery_node
+
+/obj/node
+	icon = 'icons/obj/power_cond/layer_cable.dmi'
+	icon_state = "l2-noconnection"
+	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE|VIS_INHERIT_LAYER
 
 /obj/structure/cable/multilayer/update_icon_state()
 	return
@@ -623,6 +600,9 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	B += cable_layer&CABLE_LAYER_3?200:0
 
 	color = rgb(R, G, B)
+
+	machinery_node?.color = machinery_layer & MACHINERY_LAYER_1 ? "black" : "white"
+
 	return ..()
 
 /obj/structure/cable/multilayer/Initialize(mapload)
@@ -634,12 +614,20 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 			C.deconstruct()						// remove adversary cable
 	if(!mapload)
 		auto_propagate_cut_cable(src)
+	
+	machinery_node = new /obj/node()
+	vis_contents += machinery_node
+
+/obj/structure/cable/multilayer/Destroy()					// called when a cable is deleted
+	QDEL_NULL(machinery_node) 
+	return ..()									// then go ahead and delete the cable
 
 /obj/structure/cable/multilayer/examine(mob/user)
 	. += ..()
-	. += "<span class='notice'>Set L1:[cable_layer & CABLE_LAYER_1 ? "Connect" : "Disconnect"].</span>"
-	. += "<span class='notice'>Set L2:[cable_layer & CABLE_LAYER_2 ? "Connect" : "Disconnect"].</span>"
-	. += "<span class='notice'>Set L3:[cable_layer & CABLE_LAYER_3 ? "Connect" : "Disconnect"].</span>"
+	. += "<span class='notice'>L1:[cable_layer & CABLE_LAYER_1 ? "Connect" : "Disconnect"].</span>"
+	. += "<span class='notice'>L2:[cable_layer & CABLE_LAYER_2 ? "Connect" : "Disconnect"].</span>"
+	. += "<span class='notice'>L3:[cable_layer & CABLE_LAYER_3 ? "Connect" : "Disconnect"].</span>"
+	. += "<span class='notice'>M:[machinery_layer & MACHINERY_LAYER_1 ? "Connect" : "Disconnect"].</span>"
 
 /obj/structure/cable/multilayer/attack_hand(mob/living/user)
 	if(!user)
@@ -647,7 +635,8 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	var/list/layer_list = list(
 		"Layer 1" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-red"),
 		"Layer 2" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-yellow"),
-		"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue")
+		"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue"),
+		"Machinery" = image(icon = 'icons/obj/power.dmi', icon_state = "smes")
 		)
 	var/layer_result = show_radial_menu(user, src, layer_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -663,6 +652,12 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 		if("Layer 3")
 			CL = CABLE_LAYER_3
 			to_chat(user, "<span class='warning'>You toggle L3 connection.</span>")
+		if("Machinery")
+			if(machinery_layer & MACHINERY_LAYER_1)
+				machinery_layer ^= MACHINERY_LAYER_1
+			else
+				machinery_layer |= MACHINERY_LAYER_1
+			to_chat(user, "<span class='warning'>You toggle machinery connection.</span>")
 
 	cut_cable_from_powernet(FALSE)
 
