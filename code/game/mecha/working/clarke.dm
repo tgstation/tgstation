@@ -48,7 +48,7 @@
 		var/mob/living/brain/B = M.brainmob
 		hud.add_hud_to(B)
 
-////Ore Box Controls////
+//Ore Box Controls
 
 ///Special equipment for the Clarke mech, handles moving ore without giving the mech a hydraulic clamp and cargo compartment.
 /obj/item/mecha_parts/mecha_equipment/orebox_manager
