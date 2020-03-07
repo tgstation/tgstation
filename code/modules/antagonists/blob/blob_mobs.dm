@@ -20,6 +20,7 @@
 	initial_language_holder = /datum/language_holder/empty
 	var/mob/camera/blob/overmind = null
 	var/obj/structure/blob/factory/factory = null
+	var/independent = FALSE
 
 /mob/living/simple_animal/hostile/blob/update_icons()
 	if(overmind)
@@ -27,6 +28,13 @@
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
+/mob/living/simple_animal/hostile/blob/Initialize()
+	. = ..()
+	if(!independent) //no pulling people deep into the blob
+		verbs -= /mob/living/verb/pulled
+	else
+		pass_flags &= ~PASSBLOB
+		
 /mob/living/simple_animal/hostile/blob/Destroy()
 	if(overmind)
 		overmind.blob_mobs -= src
@@ -98,16 +106,18 @@
 	movement_type = FLYING
 	del_on_death = TRUE
 	deathmessage = "explodes into a cloud of gas!"
+	gold_core_spawnable = HOSTILE_SPAWN
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
 	var/mob/living/carbon/human/oldguy
 	var/is_zombie = FALSE
-	gold_core_spawnable = HOSTILE_SPAWN
 
 /mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, obj/structure/blob/factory/linked_node)
 	if(istype(linked_node))
 		factory = linked_node
 		factory.spores += src
 	. = ..()
+	if(linked_node.overmind && istype(linked_node.overmind.blobstrain, /datum/blobstrain/reagent/distributed_neurons) && !istype(src, /mob/living/simple_animal/hostile/blob/blobspore/weak))
+		notify_ghosts("A controllable spore has been created in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Spore Created")
 
 /mob/living/simple_animal/hostile/blob/blobspore/Life()
 	if(!is_zombie && isturf(src.loc))
@@ -161,6 +171,8 @@
 	oldguy = H
 	update_icons()
 	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
+	if(!key)
+		notify_ghosts("\A [src] has been created in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Blob Zombie Created")
 
 /mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
 	// On death, create a small smoke of harmful gas (s-Acid)
@@ -243,14 +255,6 @@
 	pressure_resistance = 50
 	mob_size = MOB_SIZE_LARGE
 	hud_type = /datum/hud/blobbernaut
-	var/independent = FALSE
-
-/mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
-	. = ..()
-	if(!independent) //no pulling people deep into the blob
-		verbs -= /mob/living/verb/pulled
-	else
-		pass_flags &= ~PASSBLOB
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
 	if(..())
