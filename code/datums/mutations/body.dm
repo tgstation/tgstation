@@ -492,7 +492,7 @@
 	name = "Claws"
 	desc = "An awakened mutation found in felinids that reshape the bone structure of the wrist to include claws."
 	quality = POSITIVE
-	text_gain_indication = "<span class='warning'>YThere is a sharp pain in your wrists!</span>"
+	text_gain_indication = "<span class='warning'>There is a sharp pain in your wrists!</span>"
 	text_lose_indication = "<span class'notice'>Your wrists painfully reform back to normal.</span>"
 	species_allowed = list("felinid")
 	difficulty = 16
