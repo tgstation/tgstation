@@ -51,7 +51,7 @@
 
 
 /obj/item/tank/jetpack/proc/turn_on(mob/user)
-	if(!allow_thrust(0.01))
+	if(!allow_thrust(0.01, user))
 		return
 	on = TRUE
 	icon_state = "[initial(icon_state)]-on"
@@ -85,8 +85,6 @@
 		allow_thrust(0.01, user)
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, mob/living/user)
-	if(!on)
-		return
 	if((num < 0.005 || air_contents.total_moles() < num))
 		turn_off(user)
 		return
