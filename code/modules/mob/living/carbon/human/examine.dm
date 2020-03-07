@@ -115,7 +115,7 @@
 		appears_dead = TRUE
 
 		var/obj/item/clothing/glasses/G = get_item_by_slot(ITEM_SLOT_EYES)
-		var/are_we_in_weekend_at_bernies = G && G.tint && buckled && istype(buckled, /obj/vehicle/ridden/wheelchair)
+		var/are_we_in_weekend_at_bernies = G?.tint && buckled && istype(buckled, /obj/vehicle/ridden/wheelchair)
 
 		if(isliving(user) && (HAS_TRAIT(user, TRAIT_NAIVE) || are_we_in_weekend_at_bernies))
 			just_sleeping = TRUE
