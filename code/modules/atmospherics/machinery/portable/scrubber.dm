@@ -169,7 +169,7 @@
 		if(anchored)
 			user.visible_message( \
 				"[user] unanchors [src].", \
-				"<span class='notice'>You unanchor [src] [connected_port ? "and unfasten it from the port underneath it." : "."]</span>", \
+				"<span class='notice'>You unanchor [src][connected_port ? " and unfasten it from the port underneath it." : "."]</span>", \
 				"<span class='hear'>You hear a ratchet.</span>")
 			investigate_log("was unanchored [connected_port ? "and disconnected from [connected_port] " : null]by [key_name(user)].", INVESTIGATE_ATMOS)
 			W.play_tool_sound(src)
@@ -190,7 +190,7 @@
 			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
 			W.play_tool_sound(src)
 			if(possible_port && connect(possible_port))
-				to_chat(user, "<span class='notice'>[name] automatically connects to the port underneath it.</span>")
+				to_chat(user, "<span class='notice'>[src] automatically connects to the port underneath it.</span>")
 				investigate_log("was anchored and connected to [possible_port] by [key_name(user)].", INVESTIGATE_ATMOS)
 			else
 				anchored = TRUE
