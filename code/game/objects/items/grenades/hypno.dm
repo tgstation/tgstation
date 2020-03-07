@@ -8,6 +8,7 @@
 	var/flashbang_range = 7
 
 /obj/item/grenade/hypnotic/prime()
+	. = ..()
 	update_mob()
 	var/flashbang_turf = get_turf(src)
 	if(!flashbang_turf)

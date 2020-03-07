@@ -86,6 +86,7 @@
 	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
 
 /obj/item/grenade/proc/prime()
+	SEND_SIGNAL(src, COMSIG_GRENADE_PRIME)
 
 /obj/item/grenade/proc/update_mob()
 	if(ismob(loc))

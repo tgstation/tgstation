@@ -44,6 +44,8 @@
 /obj/item/grenade/c4/prime()
 	if(QDELETED(src))
 		return
+
+	. = ..()
 	var/turf/location
 	if(target)
 		if(!QDELETED(target))

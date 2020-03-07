@@ -8,6 +8,7 @@
 	var/duration = 300
 
 /obj/item/grenade/antigravity/prime()
+	. = ..()
 	update_mob()
 
 	for(var/turf/T in view(range,src))

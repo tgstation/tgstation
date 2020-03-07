@@ -30,23 +30,31 @@
 	var/jostle_chance
 	var/jostle_pain_mult
 	var/pain_stam_pct
+	var/payload_type
 
-/datum/element/embed/Attach(datum/target, list/embedArgs)
+/datum/element/embed/Attach(datum/target, list/embedArgs, projectile_payload=/obj/item/shard)
 	. = ..()
 	parseArgs(arglist(embedArgs))
 
-	if(!isitem(target))
+	if(!isitem(target) && !isprojectile(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_MOVABLE_IMPACT_ZONE, .proc/checkEmbedMob)
-	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, .proc/checkEmbedOther)
-	RegisterSignal(target, COMSIG_ELEMENT_ATTACH, .proc/severancePackage)
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examined)
+	if(isitem(target))
+		RegisterSignal(target, COMSIG_MOVABLE_IMPACT_ZONE, .proc/checkEmbedMob)
+		RegisterSignal(target, COMSIG_MOVABLE_IMPACT, .proc/checkEmbedOther)
+		RegisterSignal(target, COMSIG_ELEMENT_ATTACH, .proc/severancePackage)
+		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examined)
+	else
+		payload_type = projectile_payload
+		RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/checkEmbedProjectile)
 
 
 /datum/element/embed/Detach(obj/item/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_ELEMENT_ATTACH, COMSIG_MOVABLE_IMPACT, COMSIG_PARENT_EXAMINE))
+	if(isitem(target))
+		UnregisterSignal(target, list(COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_ELEMENT_ATTACH, COMSIG_MOVABLE_IMPACT, COMSIG_PARENT_EXAMINE))
+	else
+		UnregisterSignal(target, list(COMSIG_PROJECTILE_SELF_ON_HIT))
 
 
 /// Checking to see if we're gonna embed into a human
@@ -129,3 +137,23 @@
 		examine_list += "[I] feels sticky, and could probably get stuck to someone if thrown properly!"
 	else
 		examine_list += "[I] has a fine point, and could probably embed in someone if thrown properly!"
+
+/datum/element/embed/proc/checkEmbedProjectile(obj/projectile/P, atom/movable/firer, atom/hit)
+	if(!iscarbon(hit) && !isclosedturf(hit))
+		Detach(P)
+		return // we don't care
+
+	var/obj/item/payload = new payload_type(get_turf(hit))
+
+	if(iscarbon(hit))
+		var/mob/living/carbon/C = hit
+		C.hitby(payload, skipcatch=TRUE, hitpush=FALSE)
+	else if(isclosedturf(hit))
+		var/turf/closed/T = hit
+		T.hitby(payload, skipcatch=TRUE, hitpush=FALSE)
+
+	Detach(P)
+	//QDEL_NULL(P)
+	return
+
+

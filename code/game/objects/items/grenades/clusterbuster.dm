@@ -15,6 +15,7 @@
 	var/segment_chance = 35
 
 /obj/item/grenade/clusterbuster/prime()
+	. = ..()
 	update_mob()
 	var/numspawned = rand(min_spawned,max_spawned)
 	var/again = 0

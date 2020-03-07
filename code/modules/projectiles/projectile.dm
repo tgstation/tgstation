@@ -109,6 +109,9 @@
 
 	var/temporary_unstoppable_movement = FALSE
 
+	///If defined, on hit we create an item of this type then call hitby() on the hit target with this
+	var/projectile_payload_type
+
 /obj/projectile/Initialize()
 	. = ..()
 	permutated = list()
@@ -119,7 +122,14 @@
 	if(range <= 0 && loc)
 		on_range()
 
+/obj/projectile/ComponentInitialize()
+	. = ..()
+
+	if(projectile_payload_type)
+		AddElement(/datum/element/embed, projectile_payload = projectile_payload_type)
+
 /obj/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_SWEET_FA)
 	qdel(src)
 
 //to get the correct limb (if any) for the projectile hit message
@@ -140,6 +150,9 @@
 /obj/projectile/proc/on_hit(atom/target, blocked = FALSE)
 	if(fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle)
+	// i know that this is probably more with wands and gun mods in mind, but it's a bit silly that the projectile on_hit signal doesn't ping the projectile itself.
+	// maybe we care what the projectile thinks! See about combining these via args some time when it's not 5AM
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle)
 	var/turf/target_loca = get_turf(target)
 
 	var/hitx

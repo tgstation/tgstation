@@ -8,6 +8,7 @@
 	var/deliveryamt = 1 // amount of type to deliver
 
 /obj/item/grenade/spawnergrenade/prime()			// Prime now just handles the two loops that query for people in lockers and people who can see it.
+	. = ..()
 	update_mob()
 	if(spawner_type && deliveryamt)
 		// Make a quick flash

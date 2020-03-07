@@ -7,6 +7,7 @@
 
 
 /obj/item/grenade/syndieminibomb/prime()
+	. = ..()
 	update_mob()
 	explosion(src.loc,1,2,4,flame_range = 2)
 	qdel(src)
@@ -17,6 +18,7 @@
 	icon_state = "concussion"
 
 /obj/item/grenade/syndieminibomb/concussion/prime()
+	. = ..()
 	update_mob()
 	explosion(src.loc,0,2,3,flame_range = 3)
 	qdel(src)
@@ -25,6 +27,19 @@
 	name = "frag grenade"
 	desc = "Fire in the hole."
 	icon_state = "frag"
+
+/obj/item/grenade/syndieminibomb/concussion/frag/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/pellet_cloud, projectile_type=/obj/projectile/bullet/pellet/shotgun_buckshot)
+
+/obj/item/grenade/syndieminibomb/concussion/drag
+	name = "drag grenade"
+	desc = "Fire in the hole."
+	icon_state = "frag"
+
+/obj/item/grenade/syndieminibomb/concussion/drag/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/pellet_cloud, projectile_type=/obj/projectile/bullet/pellet/shotgun_rubbershot)
 
 /obj/item/grenade/gluon
 	desc = "An advanced grenade that releases a harmful stream of gluons inducing radiation in those nearby. These gluon streams will also make victims feel exhausted, and induce shivering. This extreme coldness will also likely wet any nearby floors."
@@ -37,6 +52,7 @@
 	var/stamina_damage = 30
 
 /obj/item/grenade/gluon/prime()
+	. = ..()
 	update_mob()
 	playsound(loc, 'sound/effects/empulse.ogg', 50, TRUE)
 	radiation_pulse(src, rad_damage)

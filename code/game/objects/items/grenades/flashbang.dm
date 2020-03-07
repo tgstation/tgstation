@@ -7,6 +7,7 @@
 	var/flashbang_range = 7 //how many tiles away the mob will be stunned.
 
 /obj/item/grenade/flashbang/prime()
+	. = ..()
 	update_mob()
 	var/flashbang_turf = get_turf(src)
 	if(!flashbang_turf)
@@ -39,3 +40,32 @@
 			M.Paralyze(5)
 			M.Knockdown(30)
 		M.soundbang_act(1, max(200/max(1,distance), 60), rand(0, 5))
+
+/obj/item/grenade/primer
+	name = "primenade"
+	icon_state = "flashbang"
+	item_state = "flashbang"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
+
+	var/rots = 0
+
+/obj/item/grenade/primer/attack_self(mob/user)
+	. = ..()
+	if(active)
+		user.playsound_local(user, 'sound/misc/box_deploy.ogg', 50, TRUE)
+		rots++
+		user.changeNext_move(CLICK_CD_RAPID)
+
+/obj/item/grenade/primer/prime()
+	. = ..()
+	testing("Managed [rots] clicks")
+
+/obj/item/grenade/primer/prepperbang
+	name = "primenade"
+	icon_state = "flashbang"
+	item_state = "flashbang"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
+
+
