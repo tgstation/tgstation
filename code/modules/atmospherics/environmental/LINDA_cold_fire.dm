@@ -76,7 +76,7 @@
 			affected.temperature = temperature
 			affected.react(src)
 			temperature = affected.temperature
-			volume = affected.reaction_results["col fire"]*COLD_FIRE_GROWTH_RATE
+			volume = affected.reaction_results["cold fire"]*COLD_FIRE_GROWTH_RATE
 			location.assume_air(affected)
 
 	for(var/A in location)

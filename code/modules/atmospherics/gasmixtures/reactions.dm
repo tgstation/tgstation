@@ -264,10 +264,10 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	//more freon released at lower temperatures
 	var/temperature_scale = 1
 
-	if(temperature < FREON_LOWER_TEMPERATURE)
+	if(temperature < FREON_LOWER_TEMPERATURE) //stop the reaction when too cold
 		temperature_scale = 0
 	else
-		temperature_scale = (FREON_MAXIMUM_BURN_TEMPERATURE - temperature)/(	FREON_MAXIMUM_BURN_TEMPERATURE - FREON_LOWER_TEMPERATURE)
+		temperature_scale = (FREON_MAXIMUM_BURN_TEMPERATURE - temperature)/(FREON_MAXIMUM_BURN_TEMPERATURE - FREON_LOWER_TEMPERATURE)
 	if(temperature_scale > 0)
 		oxygen_burn_rate = OXYGEN_BURN_RATE_BASE - temperature_scale
 		if(cached_gases[/datum/gas/oxygen][MOLES] > cached_gases[/datum/gas/freon][MOLES]*FREON_OXYGEN_FULLBURN)

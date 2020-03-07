@@ -4,7 +4,7 @@
 	item_state = "hot-ice"
 	singular_name = "hot ice"
 	icon = 'icons/obj/stack_objects.dmi'
-	custom_materials = list(/datum/material/hot_ice=10000)
+	custom_materials = list(/datum/material/hot_ice=MINERAL_MATERIAL_AMOUNT)
 	grind_results = list(/datum/reagent/toxin/plasma = 200)
 	material_type = /datum/material/hot_ice
 
