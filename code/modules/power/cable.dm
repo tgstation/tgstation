@@ -50,6 +50,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	GLOB.cable_list += src //add it to the global cable list
 	Connect_cable()
 
+///Set the linked indicator bitflags
 /obj/structure/cable/proc/Connect_cable(clear_before_updating = FALSE)
 	var/under_thing = NONE
 	if(clear_before_updating)
@@ -571,6 +572,8 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 #undef UNDER_SMES
 #undef UNDER_TERMINAL
 
+
+///multilayer cable to connect different layers
 /obj/structure/cable/multilayer
 	name = "multilayer cable hub"
 	desc = "A flexible, superconducting insulated multilayer hub for heavy-duty power transfer."
@@ -679,6 +682,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 		return FALSE
 	return TRUE
 
+///Reset powernet in this hub.
 /obj/structure/cable/multilayer/proc/Reload()
 	var/turf/T = get_turf(src)
 	for(var/obj/structure/cable/C in T.contents - src)
@@ -688,4 +692,4 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 
 /obj/structure/cable/multilayer/CtrlClick(mob/living/user)
 	to_chat(user, "<span class='warning'>You pust reset button.</span>")
-	Reload()
+	addtimer(CALLBACK(src, .proc/Reload), 10, TIMER_UNIQUE) //spam protect
