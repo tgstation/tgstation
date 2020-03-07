@@ -191,6 +191,7 @@
 
 		to_chat(usr, "[readout.Join()]")
 
+///Used to convert armour values of clothing to IC "protection classes" to show the player
 /obj/item/clothing/proc/number_to_level(number)
 	switch (number)
 		if (1 to 19)
