@@ -68,7 +68,6 @@
   * Akin to certain spiders, venus human traps can also be possessed and controlled by ghosts.
   *
   */
-
 /mob/living/simple_animal/hostile/venus_human_trap
 	name = "venus human trap"
 	desc = "Now you know how the fly feels."
