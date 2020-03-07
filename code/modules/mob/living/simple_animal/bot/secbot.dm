@@ -44,15 +44,17 @@
 	var/payment_department = ACCOUNT_SEC
 
 /mob/living/simple_animal/bot/secbot/beepsky
-	name = "Officer Beep O'sky"
-	desc = "It's Officer Beep O'sky! Powered by a potato and a shot of whiskey."
+	name = "Commander Beep O'sky"
+	desc = "It's Commander Beep O'sky! Officially the superior officer of all bots on station, Beepsky remains as humble and dedicated to the law as the day he was first fabricated."
 	idcheck = FALSE
 	weaponscheck = FALSE
 	auto_patrol = TRUE
+	commissioned = TRUE
 
 /mob/living/simple_animal/bot/secbot/beepsky/jr
 	name = "Officer Pipsqueak"
-	desc = "It's Officer Beep O'sky's smaller, just-as aggressive cousin, Pipsqueak."
+	desc = "It's Commander Beep O'sky's smaller, just-as aggressive cousin, Pipsqueak."
+	commissioned = FALSE
 
 /mob/living/simple_animal/bot/secbot/beepsky/jr/Initialize()
 	. = ..()

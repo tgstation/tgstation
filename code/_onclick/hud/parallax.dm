@@ -324,11 +324,11 @@
 	layer = 30
 
 /obj/screen/parallax_layer/planet/update_status(mob/M)
-	var/turf/T = get_turf(M)
-	if(is_station_level(T.z))
-		invisibility = 0
-	else
-		invisibility = INVISIBILITY_ABSTRACT
+	var/client/C = M.client
+	var/turf/posobj = get_turf(C.eye)
+	if(!posobj)
+		return
+	invisibility = is_station_level(posobj.z) ? 0 : INVISIBILITY_ABSTRACT
 
 /obj/screen/parallax_layer/planet/update_o()
 	return //Shit wont move

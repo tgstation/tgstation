@@ -229,12 +229,10 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 ///Called when the obj is hit by a tesla bolt.
 /obj/proc/zap_act(power, zap_flags, shocked_targets)
 	if(QDELETED(src))
-		return
+		return 0
 	obj_flags |= BEING_SHOCKED
-	if(zap_flags & ZAP_IS_TESLA)
-		var/power_bounced = power / 2
-		tesla_zap(src, 3, power_bounced, zap_flags, shocked_targets)
 	addtimer(CALLBACK(src, .proc/reset_shocked), 10)
+	return power / 2
 
 //The surgeon general warns that being buckled to certain objects receiving powerful shocks is greatly hazardous to your health
 ///Only tesla coils, vehicles, and grounding rods currently call this because mobs are already targeted over all other objects, but this might be useful for more things later.

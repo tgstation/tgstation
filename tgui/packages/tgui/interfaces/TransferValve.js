@@ -44,7 +44,7 @@ export const TransferValve = props => {
             </LabeledList.Item>
           ) : (
             <NoticeBox textAlign="center">
-            Insert Assembly
+              Insert Assembly
             </NoticeBox>
           )}
         </LabeledList>
@@ -61,7 +61,7 @@ export const TransferValve = props => {
             </LabeledList.Item>
           ) : (
             <NoticeBox textAlign="center">
-            Insert Tank
+              Insert Tank
             </NoticeBox>
           )}
         </LabeledList>
@@ -78,7 +78,7 @@ export const TransferValve = props => {
             </LabeledList.Item>
           ) : (
             <NoticeBox textAlign="center">
-            Insert Tank
+              Insert Tank
             </NoticeBox>
           )}
         </LabeledList>
