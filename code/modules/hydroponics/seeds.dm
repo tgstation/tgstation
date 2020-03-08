@@ -49,6 +49,8 @@
 	var/weed_chance = 5
 	///Determines if the plant has had a graft removed or not.
 	var/grafted = FALSE
+	///Trait to be applied to plant grafts.
+	var/graft_gene
 
 /obj/item/seeds/Initialize(mapload, nogenes = 0)
 	. = ..()

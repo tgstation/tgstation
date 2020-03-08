@@ -75,6 +75,7 @@
 						/datum/reagent/toxin/lipolicide = 0.15,
 						/datum/reagent/drug/nicotine = 0.1)
 	rarity = 69
+	graft_gene = /datum/plant_gene/trait/glow/green
 
 
 // ---------------------------------------------------------------

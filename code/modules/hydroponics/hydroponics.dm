@@ -833,7 +833,9 @@
 			return
 		else if(myseed && myseed.grafted == FALSE)
 			user.visible_message("<span class='notice'>[user] grafts off a limb from [src].</span>", "<span class='notice'>You carefully graft off a portion of [src].</span>")
-			//var/obj/item/graft/snip = new /obj/item/graft(loc)
+			var/obj/item/graft/snip = new /obj/item/graft(loc)
+			if(myseed.graft_gene)
+				snip.stored_trait = new myseed.graft_gene
 			myseed.grafted = TRUE
 
 	else if(istype(O, /obj/item/graft))

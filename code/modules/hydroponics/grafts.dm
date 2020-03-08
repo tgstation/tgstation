@@ -9,12 +9,14 @@ A new subsystem for hydroponics, as a way to share specific traits into plants, 
 	icon_state = "graft_plant"
 	attack_verb = list("planted", "vegitized", "cropped", "reaped", "farmed")
 	///This stored the trait taken from the parent plant. Defaults to perenial growth.
-	var/datum/plant_gene/trait/stored_trait = /datum/plant_gene/trait/repeated_harvest
+	var/datum/plant_gene/trait/stored_trait
 	///Determines the appearance of the graft. Rudimentary right now so it just picks randomly.
 	var/graft_appearance
 
 /obj/item/graft/Initialize()
 	. = ..()
+	stored_trait = new /datum/plant_gene/trait/repeated_harvest //Default gene is repeated harvest.
+
 	graft_appearance = rand(100)
 	if(0 <= graft_appearance < 25)
 		icon_state = "graft_plant"
