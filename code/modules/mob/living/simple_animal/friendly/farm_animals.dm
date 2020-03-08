@@ -220,9 +220,7 @@
 	if(!stat && M.a_intent == INTENT_HELP)
 		to_chat(M, "<span class='nicegreen'>[src] whispers you some intense wisdoms and then dissapears!</span>")
 		M.mind?.adjust_experience(pick(subtypesof(/datum/skill)), 500)
-		var/datum/effect_system/smoke_spread/smoke = new
-		smoke.set_up(1, get_turf(src))
-		smoke.start()
+		do_smoke(1, get_turf(src))
 		qdel(src)
 		return
 	return ..()
