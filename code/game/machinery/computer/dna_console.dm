@@ -514,15 +514,8 @@
 			if(HM.chromosome_name)
 				chromosome_name = HM.chromosome_name
 			temp_html += "<div class='statusLine'>Chromosome status: [chromosome_name]<br></div>"
-			
-		// Build formatted string containing all valid chromosomes that this mutation can take.
-		var/valid_chrom_text = ""
-		for(var/i in 1 to LAZYLEN(HM.valid_chrom_list))
-			valid_chrom_text += "[HM.valid_chrom_list[i]]"
-			if(i < LAZYLEN(HM.valid_chrom_list))
-				valid_chrom_text += ", "
-		temp_html += "<div class='statusLine'>Compatible chromosomes: [valid_chrom_text]<br></div>"
-		
+		temp_html += "<div class='statusLine'>Compatible chromosomes: [jointext(HM.valid_chrom_list, ", ")]<br></div>"
+
 	temp_html += "<div class='statusLine'>Sequence:<br><br></div>"
 	if(!scrambled)
 		for(var/block in 1 to A.blocks)
