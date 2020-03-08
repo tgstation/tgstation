@@ -187,7 +187,9 @@
 					/obj/item/tank/internals/plasmaman/belt/full,
 					/obj/item/tank/internals/plasmaman/belt/full,
 					/obj/item/clothing/head/helmet/space/plasmaman,
-					/obj/item/clothing/head/helmet/space/plasmaman)
+					/obj/item/clothing/head/helmet/space/plasmaman,
+					/obj/item/clothing/gloves/color/plasmaman,
+					/obj/item/clothing/gloves/color/plasmaman)
 	crate_name = "plasmaman supply kit"
 
 /datum/supply_pack/emergency/radiation
@@ -600,7 +602,7 @@
 					/obj/item/clothing/suit/armor/vest/russian,
 					/obj/item/clothing/head/helmet/rus_helmet,
 					/obj/item/clothing/shoes/russian,
-					/obj/item/clothing/gloves/combat,
+					/obj/item/clothing/gloves/tackler/combat,
 					/obj/item/clothing/under/syndicate/rus_army,
 					/obj/item/clothing/under/costume/soviet,
 					/obj/item/clothing/mask/russian_balaclava,
@@ -627,8 +629,8 @@
 					/obj/item/clothing/mask/gas/sechailer/swat,
 					/obj/item/storage/belt/military/assault,
 					/obj/item/storage/belt/military/assault,
-					/obj/item/clothing/gloves/combat,
-					/obj/item/clothing/gloves/combat)
+					/obj/item/clothing/gloves/tackler/combat,
+					/obj/item/clothing/gloves/tackler/combat)
 	crate_name = "swat crate"
 
 /datum/supply_pack/security/armory/wt550_single
@@ -1027,6 +1029,13 @@
 	cost = 1000
 	contains = list(/obj/item/stack/sheet/cardboard/fifty)
 	crate_name = "cardboard sheets crate"
+
+/datum/supply_pack/materials/license50
+	name = "50 Empty License Plates"
+	desc = "Create a bunch of boxes."
+	cost = 1000  // 50 * 25 + 700 - 1000 = 950 credits profit
+	contains = list(/obj/item/stack/license_plates/empty/fifty)
+	crate_name = "empty license plate crate"
 
 /datum/supply_pack/materials/glass50
 	name = "50 Glass Sheets"
@@ -1458,7 +1467,7 @@
 					/obj/item/reagent_containers/glass/bucket,
 					/obj/item/reagent_containers/glass/bucket,
 					/obj/item/mop,
-					/obj/item/twohanded/broom,
+					/obj/item/pushbroom,
 					/obj/item/clothing/suit/caution,
 					/obj/item/clothing/suit/caution,
 					/obj/item/clothing/suit/caution,
@@ -1838,11 +1847,11 @@
 	name = "Potted Plants Crate"
 	desc = "Spruce up the station with these lovely plants! Contains a random assortment of five potted plants from Nanotrasen's potted plant research division. Warranty void if thrown."
 	cost = 700
-	contains = list(/obj/item/twohanded/required/kirbyplants/random,
-					/obj/item/twohanded/required/kirbyplants/random,
-					/obj/item/twohanded/required/kirbyplants/random,
-					/obj/item/twohanded/required/kirbyplants/random,
-					/obj/item/twohanded/required/kirbyplants/random)
+	contains = list(/obj/item/kirbyplants/random,
+					/obj/item/kirbyplants/random,
+					/obj/item/kirbyplants/random,
+					/obj/item/kirbyplants/random,
+					/obj/item/kirbyplants/random)
 	crate_name = "potted plants crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
@@ -2280,7 +2289,7 @@
 		if(prob(50))
 			the_toy = pickweight(GLOB.arcade_prize_pool)
 		else
-			the_toy = pick(subtypesof(/obj/item/toy/plush))
+			the_toy = pick(subtypesof(/obj/item/toy/plush) - typesof(/obj/item/toy/plush/goatplushie/angry/kinggoat))
 		new the_toy(.)
 
 /datum/supply_pack/costumes_toys/wizard
@@ -2393,7 +2402,7 @@
 	name = "Art Supplies"
 	desc = "Make some happy little accidents with a rapid pipe cleaner layer, three spraycans, and lots of crayons!"
 	cost = 1000
-	contains = list(/obj/item/twohanded/rcl,
+	contains = list(/obj/item/rcl,
 					/obj/item/storage/toolbox/artistic,
 					/obj/item/toy/crayon/spraycan,
 					/obj/item/toy/crayon/spraycan,

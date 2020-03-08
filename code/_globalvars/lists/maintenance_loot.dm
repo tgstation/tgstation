@@ -78,7 +78,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/geiger_counter = 1,
 		/obj/item/analyzer = 1,
 		/obj/item/mop = 1,
-		/obj/item/twohanded/broom = 1,
+		/obj/item/pushbroom = 1,
 		/obj/item/reagent_containers/glass/bucket = 1,
 		/obj/item/toy/crayon/spraycan = 1,
 		) = 1,
@@ -97,6 +97,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/clothing/glasses/science = 1,
 		/obj/item/clothing/glasses/meson = 1,
 		/obj/item/storage/belt/fannypack = 1,
+		/obj/item/clothing/gloves/tackler/offbrand = 1,
 		) = 1,
 
 	list(//construction and crafting
@@ -140,6 +141,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/bodybag = 1,
 		/obj/item/grenade/smokebomb = 1,
 		/obj/item/stack/spacecash/c10 = 1,
+		/obj/item/stack/sticky_tape = 1,
 
 		//light sources
 		/obj/item/flashlight = 1,
@@ -159,7 +161,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/roller = 1,
 		/obj/item/restraints/legcuffs/bola = 1,
 		/obj/item/restraints/handcuffs/cable = 1,
-		/obj/item/twohanded/spear = 1,
+		/obj/item/spear = 1,
 		/obj/item/shield/riot/buckler = 1,
 		/obj/item/grenade/iedcasing = 1,
 		/obj/item/melee/baton/cattleprod = 1,

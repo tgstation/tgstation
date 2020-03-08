@@ -428,6 +428,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "bs" = (

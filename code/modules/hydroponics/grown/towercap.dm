@@ -247,6 +247,7 @@
 	StartBurning()
 
 /obj/structure/bonfire/Crossed(atom/movable/AM)
+	. = ..()
 	if(burning & !grill)
 		Burn()
 

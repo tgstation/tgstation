@@ -560,3 +560,51 @@
 	build_path = /obj/item/construction/plumbing
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+
+
+/////////////////////////////////////////
+/////////////////Tape////////////////////
+/////////////////////////////////////////
+
+/datum/design/super_sticky_tape
+	name = "Super Sticky Tape"
+	id = "super_sticky_tape"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = 3000)
+	build_path = /obj/item/stack/sticky_tape/super
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/pointy_tape
+	name = "Pointy Tape"
+	id = "pointy_tape"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1500, /datum/material/plastic = 1000)
+	build_path = /obj/item/stack/sticky_tape/pointy
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+
+
+/////////////////////////////////////////
+////////////Tackle Gloves////////////////
+/////////////////////////////////////////
+
+/datum/design/tackle_dolphin
+	name = "Dolphin Gloves"
+	id = "tackle_dolphin"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = 2500)
+	build_path = /obj/item/clothing/gloves/tackler/dolphin
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/tackle_rocket
+	name = "Rocket Gloves"
+	id = "tackle_rocket"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plasma = 1000, /datum/material/plastic = 2000)
+	build_path = /obj/item/clothing/gloves/tackler/rocket
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
