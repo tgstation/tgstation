@@ -48,7 +48,7 @@ Difficulty: Extremely Hard
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Initialize()
 	. = ..()
-	AddComponent(/datum/component/knockback, 7, FALSE)
+	AddComponent(/datum/component/knockback, 7, FALSE, FALSE)
 	AddComponent(/datum/component/lifesteal, 50)
 
 /datum/action/innate/megafauna_attack/frost_orbs
@@ -128,9 +128,6 @@ Difficulty: Extremely Hard
 	armour_penetration = 100
 	speed = 4
 	damage_type = BRUTE
-
-/obj/projectile/snowball/fast
-	speed = 2
 
 /obj/projectile/ice_blast
 	name = "ice blast"
@@ -239,7 +236,7 @@ Difficulty: Extremely Hard
 		spin(100, 10)
 		SLEEP_CHECK_DEATH(60)
 		playsound(src, 'sound/effects/explosion3.ogg', 100, TRUE)
-		overlays += mutable_appearance('icons/effects/effects.dmi', "curse")
+		icon_state = "demonic_miner_phase2"
 		animate(src, pixel_y = pixel_y - 96, time = 8, flags = ANIMATION_END_NOW)
 		spin(8, 2)
 		SLEEP_CHECK_DEATH(8)
@@ -258,29 +255,49 @@ Difficulty: Extremely Hard
 		var/loot = rand(1, 3)
 		switch(loot)
 			if(1)
-				new /obj/item/gun/energy/snowball_machine_gun(T)
+				new /obj/item/resurrection_crystal(T)
 			if(2)
 				new /obj/item/clothing/shoes/winterboots/ice_boots/speedy(T)
 			if(3)
 				new /obj/item/pickaxe/drill/jackhammer/demonic(T)
 		. = ..()
 
-/obj/item/gun/energy/snowball_machine_gun
-	name = "snowball machine gun"
-	desc = "A self-charging poorly-rigged energy gun that fires energy particles that look like snowballs."
-	icon_state = "freezegun"
-	ammo_type = list(/obj/item/ammo_casing/energy/snowball)
-	selfcharge = TRUE
-	charge_delay = 4
-	burst_size = 3
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+/obj/item/resurrection_crystal
+	name = "resurrection crystal"
+	desc = "When used by anything holding it, this crystal gives them a second chance at life if they die."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "demonic_crystal"
 
-/obj/item/ammo_casing/energy/snowball
-	projectile_type = /obj/projectile/snowball/fast
-	select_name = "freeze"
-	e_cost = 20
-	delay = 0.5
-	fire_sound = 'sound/weapons/sonic_jackhammer.ogg'
+/obj/item/resurrection_crystal/attack_self(mob/living/user)
+	forceMove(user)
+	to_chat(user, "<span class='notice'>You feel a bit safer... but a demonic presence lurks in the back of your head...</span>")
+	RegisterSignal(user, COMSIG_MOB_DEATH, .proc/resurrect)
+
+/obj/item/resurrection_crystal/proc/resurrect(mob/living/user, gibbed)
+	user.visible_message("<span class='notice'>You see [user]'s soul dragged out of their body!</span>", "<span class='notice'>You feel your soul dragged away to a new life!</span>")
+	var/mob/living/carbon/human/H = new /mob/living/carbon/human()
+	randomize_human(H)
+	var/random_race = GLOB.species_list[pick(GLOB.roundstart_races)]
+	H.set_species(random_race)
+	var/list/valid_jobs = list()
+	for(var/random_job in subtypesof(/datum/job))
+		var/datum/job/J = new random_job()
+		if(J.total_positions == 1 || J.spawn_positions == 1)
+			continue
+		if(J.minimal_player_age > 0)
+			continue
+		if(J.faction != "Station")
+			continue
+		if(J.title in GLOB.command_positions)
+			continue
+		valid_jobs |= J
+		qdel(J)
+	var/datum/job/J = pick(valid_jobs)
+	J.equip(H, FALSE, TRUE, TRUE)
+	SSjob.SendToLateJoin(H)
+	user.mind.transfer_to(H) // second life
+	user.gib()
+	qdel(src)
 
 /obj/item/clothing/shoes/winterboots/ice_boots/speedy
 	name = "cursed ice hiking boots"
@@ -298,7 +315,7 @@ Difficulty: Extremely Hard
 
 /obj/item/pickaxe/drill/jackhammer/demonic/Initialize()
 	..()
-	AddComponent(/datum/component/knockback, 4, FALSE)
+	AddComponent(/datum/component/knockback, 4, FALSE, FALSE)
 	AddComponent(/datum/component/lifesteal, 5)
 
 /obj/item/crusher_trophy/ice_block_talisman

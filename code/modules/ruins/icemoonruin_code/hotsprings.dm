@@ -14,31 +14,26 @@ GLOBAL_LIST_EMPTY(cursed_minds)
 			return
 		GLOB.cursed_minds += L.mind
 		L.unequip_everything()
-		var/random_choice = pick("Mob", "Life")
+		var/random_choice = pick("Mob", "Appearance")
 		switch(random_choice)
 			if("Mob")
 				L = wabbajack(L, "animal")
 				var/turf/T = find_safe_turf()
 				L.forceMove(T)
+				to_chat(L, "<span class='notice'>You feel somehow... different?</span>")
 				to_chat(L, "<span class='notice'>You blink and find yourself in [get_area_name(T)].</span>")
-			if("Life")
+			if("Appearance")
 				var/mob/living/carbon/human/H = wabbajack(L, "humanoid")
 				randomize_human(H)
-				var/random_race = GLOB.species_list[pick(GLOB.roundstart_races)]
+				var/list/all_species = list()
+				for(var/stype in subtypesof(/datum/species))
+					var/datum/species/S = stype
+					if(initial(S.changesource_flags) & RACE_SWAP)
+						all_species += stype
+				var/random_race = pick(all_species)
 				H.set_species(random_race)
-				var/list/valid_jobs = list()
-				for(var/random_job in subtypesof(/datum/job))
-					var/datum/job/J = new random_job()
-					if(J.total_positions == 1 || J.spawn_positions == 1)
-						continue
-					if(J.minimal_player_age > 0)
-						continue
-					if(J.faction != "Station")
-						continue
-					if(J.title in GLOB.command_positions)
-						continue
-					valid_jobs |= J
-					qdel(J)
-				var/datum/job/J = pick(valid_jobs)
-				J.equip(H, FALSE, TRUE, TRUE)
-				SSjob.SendToLateJoin(H)
+				H.dna.unique_enzymes = H.dna.generate_unique_enzymes()
+				var/turf/T = find_safe_turf()
+				H.forceMove(T)
+				to_chat(H, "<span class='notice'>You feel somehow... different?</span>")
+				to_chat(H, "<span class='notice'>You blink and find yourself in [get_area_name(T)].</span>")
