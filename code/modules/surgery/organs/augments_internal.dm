@@ -171,7 +171,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	var/current_controller = OWNER ///Defines if the mob is currently being controlled by the original or the overrider
 	var/next_control = 0 ///Time until the overrider is allowed to take control again
-	var/obj/item/organ/brain/overrider_brain ///The brain stored inside the implant
+	var/obj/item/mmi/overrider_mmi ///The mmi stored inside the implant
 	var/mob/living/neural_storage/overrider/override_backseat ///Contains the implant mind's client when not controlling the mob
 	var/mob/living/neural_storage/victim/original_backseat ///Contains the original mind's client when not controlling the mob
 	var/datum/action/innate/override_implant/cease/return_control ///Action to return control of the body to the original owner
@@ -253,17 +253,16 @@
 
 ///The implant can be hit with a brain to install it as the overrider backseat
 /obj/item/organ/cyberimp/brain/neural_override/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/organ/brain))
-		var/obj/item/organ/brain/brain = I
-		if(brain.brainmob && brain.brainmob.mind && (brain.brainmob.client || brain.brainmob.grab_ghost())) //Check that the brain has a player controlling it
-			if(overrider_brain) //Replace existing backseat with new one
+	if(istype(I, /obj/item/mmi))
+		var/obj/item/mmi/mmi = I
+		if(mmi.brainmob && mmi.brainmob.mind && (mmi.brainmob.client || mmi.brainmob.grab_ghost())) //Check that the mmi has a player controlling it
+			if(overrider_mmi) //Replace existing backseat with new one
 				remove_brain(user)
 			override_backseat = new(src, src)
-			to_chat(user, "<span class='notice'>You install [brain] into [src].</span>")
-			brain.brainmob.mind.transfer_to(override_backseat)
-			brain.organ_flags |= ORGAN_FROZEN
-			brain.forceMove(src)
-			overrider_brain = brain
+			to_chat(user, "<span class='notice'>You install [mmi] into [src].</span>")
+			mmi.brainmob.mind.transfer_to(override_backseat)
+			mmi.forceMove(src)
+			overrider_mmi = mmi
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>The implant's interface rejects the brain. It appears that it is no longer sentient.</span>")
@@ -272,36 +271,35 @@
 
 ///Places the overrider's client back into the brain and removes it
 /obj/item/organ/cyberimp/brain/neural_override/proc/remove_brain(mob/living/user)
-	if(QDELETED(override_backseat) || QDELETED(overrider_brain))
+	if(QDELETED(override_backseat) || QDELETED(overrider_mmi))
 		return
-	if(!istype(user) || !Adjacent(user) || !user.put_in_active_hand(overrider_brain))
-		overrider_brain.forceMove(drop_location())
-	overrider_brain.organ_flags &= ~ORGAN_FROZEN
+	if(!istype(user) || !Adjacent(user) || !user.put_in_active_hand(overrider_mmi))
+		overrider_mmi.forceMove(drop_location())
 	if(override_backseat.mind)
-		override_backseat.mind.transfer_to(overrider_brain.brainmob)
-		to_chat(overrider_brain.brainmob, "<span class='warning'>You've been removed from [src].</span>")
+		override_backseat.mind.transfer_to(overrider_mmi.brainmob)
+		to_chat(overrider_mmi.brainmob, "<span class='warning'>You've been removed from [src].</span>")
 	QDEL_NULL(override_backseat)
-	overrider_brain = null
+	overrider_mmi = null
 	update_icon()
 
 ///Removes the inserted brain
 /obj/item/organ/cyberimp/brain/neural_override/AltClick(mob/user)
-	if(overrider_brain && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
-		to_chat(user, "<span class='notice'>You remove [overrider_brain] from [src].</span>")
+	if(overrider_mmi && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+		to_chat(user, "<span class='notice'>You remove [overrider_mmi] from [src].</span>")
 		remove_brain(user)
 
 /obj/item/organ/cyberimp/brain/neural_override/update_icon_state()
-	if(overrider_brain)
+	if(overrider_mmi)
 		icon_state = "override_implant_brain"
 	else
 		icon_state = "override_implant_empty"
 
 /obj/item/organ/cyberimp/brain/neural_override/examine(mob/user)
 	. = ..()
-	if(!overrider_brain)
+	if(!overrider_mmi)
 		. += "<span class='notice'>Insert a conscious brain before implanting.</span>"
 	else
-		. += "<span class='notice'>Alt-click to remove [overrider_brain].</span>"
+		. += "<span class='notice'>Alt-click to remove [overrider_mmi].</span>"
 
 ///Shuts down the overrider and prevents them from taking control for 2-3 minutes
 /obj/item/organ/cyberimp/brain/neural_override/emp_act(severity)
