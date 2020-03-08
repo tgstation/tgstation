@@ -18,8 +18,8 @@
 /obj/structure/chair/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>"
-	if(!has_buckled_mobs())
-		. += "<span class='notice'>Drag your sprite to sit in it.</span>"
+	if(!has_buckled_mobs() && (can_buckle == 1))
+		. += "<span class='notice'>While stood on the same tile as the chair, drag your sprite to sit in it.</span>"
 
 /obj/structure/chair/Initialize()
 	. = ..()
