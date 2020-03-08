@@ -17,14 +17,16 @@
 #define SKILL_EXP_LEGENDARY 2500
 
 //Skill modifier types
-#define SKILL_SPEED_MODIFIER "skill_speed_modifier"
+#define SKILL_SPEED_MODIFIER "skill_speed_modifier"//ideally added/subtracted in speed calculations to make you do stuff faster
+#define SKILL_PROBS_MODIFIER "skill_probability_modifier"//ideally added/subtracted where beneficial in prob(x) calls
+#define SKILL_RANDS_MODIFIER "skill_randomness_modifier"//ideally added/subtracted where beneficial in rand(x,y) calls
 
 
 // Gets the reference for the skill type that was given
 #define GetSkillRef(A) (SSskills.all_skills[A])
 
 //number defines
-#define CLEAN_SKILL_BEAUTY_ADJUSTMENT	15//It's a denominator so no 0. Higher number = less cleaning xp per cleanable
+#define CLEAN_SKILL_BEAUTY_ADJUSTMENT	-15//It's a denominator so no 0. Higher number = less cleaning xp per cleanable. Negative value means cleanables with negative beauty give xp.
 #define CLEAN_SKILL_GENERIC_WASH_XP	1.5//Value. Higher number = more XP when cleaning non-cleanables (walls/floors/lips)
 
 #define MEDICAL_SKILL_EASY 3 //Cannot be 0

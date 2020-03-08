@@ -18,16 +18,15 @@
 	GLOB.carbon_list -= src
 
 /mob/living/carbon/swap_hand(held_index)
+	. = ..()
+	if(!.)
+		var/obj/item/held_item = get_active_held_item()
+		to_chat(usr, "<span class='warning'>Your other hand is too busy holding [held_item].</span>")
+		return
+
 	if(!held_index)
 		held_index = (active_hand_index % held_items.len)+1
 
-	var/obj/item/item_in_hand = src.get_active_held_item()
-	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
-		var/obj/item/twohanded/TH = item_in_hand
-		if(istype(TH))
-			if(TH.wielded == 1)
-				to_chat(usr, "<span class='warning'>Your other hand is too busy holding [TH].</span>")
-				return
 	var/oindex = active_hand_index
 	active_hand_index = held_index
 	if(hud_used)
@@ -1038,3 +1037,33 @@
 	if(mood)
 		if(mood.sanity < SANITY_UNSTABLE)
 			return TRUE
+
+/mob/living/carbon/washed(var/atom/washer)
+	. = ..()
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
+
+	for(var/obj/item/I in held_items)
+		I.washed(washer)
+
+	if(back)
+		update_inv_back(0)
+
+	var/list/obscured = check_obscured_slots()
+
+	if(head && head.washed(washer))
+		update_inv_head()
+
+	if(glasses && !(ITEM_SLOT_EYES in obscured) && glasses.washed(washer))
+		update_inv_glasses()
+
+	if(wear_mask && !(ITEM_SLOT_MASK in obscured && wear_mask.washed(washer)))
+		update_inv_wear_mask()
+
+	if(ears && !(HIDEEARS in obscured) && ears.washed(washer))
+		update_inv_ears()
+
+	if(wear_neck && !(ITEM_SLOT_NECK in obscured) && wear_neck.washed(washer))
+		update_inv_neck()
+
+	if(shoes && !(HIDESHOES in obscured) && shoes.washed(washer))
+		update_inv_shoes()

@@ -86,6 +86,7 @@
 	var/mob/living/silicon/robot/deployed_shell = null //For shell control
 	var/datum/action/innate/deploy_shell/deploy_action = new
 	var/datum/action/innate/deploy_last_shell/redeploy_action = new
+	var/datum/action/innate/choose_modules/modules_action
 	var/chnotify = 0
 
 	var/multicam_on = FALSE
@@ -97,6 +98,8 @@
 
 	var/list/cam_hotkeys = new/list(9)
 	var/cam_prev
+
+	var/datum/robot_control/robot_control
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -194,6 +197,14 @@
 	malfhack = null
 
 	. = ..()
+
+/// Removes all malfunction-related abilities from the AI
+/mob/living/silicon/ai/proc/remove_malf_abilities()
+	QDEL_NULL(modules_action)
+	for(var/datum/AI_Module/AM in current_modules)
+		for(var/datum/action/A in actions)
+			if(istype(A, initial(AM.power_type)))
+				qdel(A)
 
 /mob/living/silicon/ai/IgniteMob()
 	fire_stacks = 0
@@ -358,13 +369,6 @@
 	else
 		mobility_flags = ALL
 
-/mob/living/silicon/ai/proc/ai_cancel_call()
-	set category = "Malfunction"
-	if(control_disabled)
-		to_chat(src, "<span class='warning'>Wireless control is disabled!</span>")
-		return
-	SSshuttle.cancelEvac(src)
-
 /mob/living/silicon/ai/restrained(ignore_grab)
 	. = 0
 
@@ -414,25 +418,6 @@
 		else
 			to_chat(src, "Target is not on or near any active cameras on the station.")
 		return
-	if(href_list["callbot"]) //Command a bot to move to a selected location.
-		if(call_bot_cooldown > world.time)
-			to_chat(src, "<span class='danger'>Error: Your last call bot command is still processing, please wait for the bot to finish calculating a route.</span>")
-			return
-		Bot = locate(href_list["callbot"]) in GLOB.alive_mob_list
-		if(!Bot || Bot.remote_disabled || control_disabled)
-			return //True if there is no bot found, the bot is manually emagged, or the AI is carded with wireless off.
-		waypoint_mode = 1
-		to_chat(src, "<span class='notice'>Set your waypoint by clicking on a valid location free of obstructions.</span>")
-		return
-	if(href_list["interface"]) //Remotely connect to a bot!
-		Bot = locate(href_list["interface"]) in GLOB.alive_mob_list
-		if(!Bot || Bot.remote_disabled || control_disabled)
-			return
-		Bot.attack_ai(src)
-	if(href_list["botrefresh"]) //Refreshes the bot control panel.
-		botcall()
-		return
-
 	if (href_list["ai_take_control"]) //Mech domination
 		var/obj/mecha/M = locate(href_list["ai_take_control"]) in GLOB.mechas_list
 		if (!M)
@@ -478,33 +463,11 @@
 	set category = "AI Commands"
 	set name = "Access Robot Control"
 	set desc = "Wirelessly control various automatic robots."
-	if(incapacitated())
-		return
 
-	if(control_disabled)
-		to_chat(src, "<span class='warning'>Wireless control is disabled.</span>")
-		return
-	var/turf/ai_current_turf = get_turf(src)
-	var/ai_Zlevel = ai_current_turf.z
-	var/d
-	d += "<A HREF=?src=[REF(src)];botrefresh=1>Query network status</A><br>"
-	d += "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Status</h3></td><td width='30%'><h3>Location</h3></td><td width='10%'><h3>Control</h3></td></tr>"
+	if(!robot_control)
+		robot_control = new(src)
 
-	for (Bot in GLOB.alive_mob_list)
-		if(Bot.z == ai_Zlevel && !Bot.remote_disabled) //Only non-emagged bots on the same Z-level are detected!
-			var/bot_mode = Bot.get_mode()
-			d += "<tr><td width='30%'>[Bot.hacked ? "<span class='bad'>(!)</span>" : ""] [Bot.name]</A> ([Bot.model])</td>"
-			//If the bot is on, it will display the bot's current mode status. If the bot is not mode, it will just report "Idle". "Inactive if it is not on at all.
-			d += "<td width='30%'>[bot_mode]</td>"
-			d += "<td width='30%'>[get_area_name(Bot, TRUE)]</td>"
-			d += "<td width='10%'><A HREF=?src=[REF(src)];interface=[REF(Bot)]>Interface</A></td>"
-			d += "<td width='10%'><A HREF=?src=[REF(src)];callbot=[REF(Bot)]>Call</A></td>"
-			d += "</tr>"
-			d = format_text(d)
-
-	var/datum/browser/popup = new(src, "botcall", "Remote Robot Control", 700, 400)
-	popup.set_content(d)
-	popup.open()
+	robot_control.ui_interact(src)
 
 /mob/living/silicon/ai/proc/set_waypoint(atom/A)
 	var/turf/turf_check = get_turf(A)
@@ -528,7 +491,6 @@
 	call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
 	Bot.call_bot(src, waypoint)
 	call_bot_cooldown = 0
-
 
 /mob/living/silicon/ai/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)
@@ -629,13 +591,6 @@
 	to_chat(src, "<span class='notice'>Switched to the \"[uppertext(network)]\" camera network.</span>")
 //End of code by Mord_Sith
 
-
-/mob/living/silicon/ai/proc/choose_modules()
-	set category = "Malfunction"
-	set name = "Choose Module"
-
-	malf_picker.use(src)
-
 /mob/living/silicon/ai/proc/ai_statuschange()
 	set category = "AI Commands"
 	set name = "AI Status"
@@ -731,15 +686,19 @@
 						holo_icon = getHologramIcon(icon(icon_list[input], input))
 	return
 
-/mob/living/silicon/ai/proc/corereturn()
-	set category = "Malfunction"
-	set name = "Return to Main Core"
+/datum/action/innate/core_return
+	name = "Return to Main Core"
+	desc = "Leave the APC and resume normal core operations."
+	icon_icon = 'icons/mob/actions/actions_AI.dmi'
+	button_icon_state = "ai_malf_core"
 
-	var/obj/machinery/power/apc/apc = src.loc
+/datum/action/innate/core_return/Activate()
+	var/obj/machinery/power/apc/apc = owner.loc
 	if(!istype(apc))
-		to_chat(src, "<span class='notice'>You are already in your Main Core.</span>")
+		to_chat(owner, "<span class='notice'>You are already in your Main Core.</span>")
 		return
 	apc.malfvacate()
+	qdel(src)
 
 /mob/living/silicon/ai/proc/toggle_camera_light()
 	camera_light_on = !camera_light_on
@@ -886,14 +845,30 @@
 		aiPDA.owner = newname
 		aiPDA.name = newname + " (" + aiPDA.ownjob + ")"
 
+/datum/action/innate/choose_modules
+	name = "Malfunction Modules"
+	desc = "Choose from a variety of insidious modules to aid you."
+	icon_icon = 'icons/mob/actions/actions_AI.dmi'
+	button_icon_state = "modules_menu"
+	var/datum/module_picker/module_picker
+
+/datum/action/innate/choose_modules/New(picker)
+	. = ..()
+	if(istype(picker, /datum/module_picker))
+		module_picker = picker
+	else
+		CRASH("choose_modules action created with non module picker")
+
+/datum/action/innate/choose_modules/Activate()
+	module_picker.ui_interact(owner)
 
 /mob/living/silicon/ai/proc/add_malf_picker()
-	to_chat(src, "In the top right corner of the screen you will find the Malfunctions tab, where you can purchase various abilities, from upgraded surveillance to station ending doomsday devices.")
+	to_chat(src, "In the top left corner of the screen you will find the Malfunction Modules button, where you can purchase various abilities, from upgraded surveillance to station ending doomsday devices.")
 	to_chat(src, "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds.")
 	view_core() //A BYOND bug requires you to be viewing your core before your verbs update
-	verbs += /mob/living/silicon/ai/proc/choose_modules
 	malf_picker = new /datum/module_picker
-
+	modules_action = new(malf_picker)
+	modules_action.Grant(src)
 
 /mob/living/silicon/ai/reset_perspective(atom/A)
 	if(camera_light_on)
@@ -901,7 +876,7 @@
 	if(istype(A, /obj/machinery/camera))
 		current = A
 	if(client)
-		if(ismovableatom(A))
+		if(ismovable(A))
 			if(A != GLOB.ai_camera_room_landmark)
 				end_multicam()
 			client.perspective = EYE_PERSPECTIVE

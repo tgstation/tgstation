@@ -450,3 +450,43 @@
 				F.name = created_name
 				qdel(I)
 				qdel(src)
+
+//Get cleaned
+/obj/item/bot_assembly/hygienebot
+	name = "incomplete hygienebot assembly"
+	desc = "Clear out the swamp once and for all"
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "drone"
+	created_name = "Hygienebot"
+
+/obj/item/bot_assembly/hygienebot/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	switch(build_step)
+		if(ASSEMBLY_FIRST_STEP)
+			if(I.tool_behaviour == TOOL_WELDER)
+				if(I.use_tool(src, user, 0, volume=40))
+					add_overlay("hs_hole")
+					to_chat(user, "<span class='notice'>You weld a water hole in [src]!</span>")
+					build_step++
+
+		if(ASSEMBLY_SECOND_STEP)
+			if(!can_finish_build(I, user))
+				return
+			if(istype(I, /obj/item/stack/ducts))
+				var/obj/item/stack/ducts/D = I
+				if(D.get_amount() < 1)
+					to_chat(user, "<span class='warning'>You need one fluid duct to finish [src]</span>")
+					return
+				to_chat(user, "<span class='notice'>You start to pipe up [src]...</span>")
+				if(do_after(user, 40, target = src))
+					if(D.get_amount() >= 1)
+						D.use(1)
+						to_chat(user, "<span class='notice'>You pipe up [src].</span>")
+						build_step++
+					else
+						return
+				var/mob/living/simple_animal/bot/hygienebot/H = new(drop_location())
+				H.name = created_name
+				qdel(I)
+				qdel(src)
+				return TRUE
