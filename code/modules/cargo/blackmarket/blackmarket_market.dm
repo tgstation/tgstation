@@ -35,14 +35,18 @@
 	for(var/datum/blackmarket_item/I in available_items[category])
 		if(I.type != item)
 			continue
+		var/token_price = I.token_price
 		var/price = I.price + shipping[method]
 		// I can't get the price of the item and shipping in a clean way to the UI, so I have to do this.
 		if(uplink.money < price)
 			to_chat("<span class='warning'>You don't have enough credits in [uplink] for [I] with [method] shipping.</span>")
 			return FALSE
-
+		if(uplink.tokens < token_price)
+			to_chat("<span class='warning'>You don't have enough antag tokens in [uplink] for [I].</span>")
+			return FALSE
 		if(I.buy(uplink, user, method))
 			uplink.money -= price
+			uplink.tokens -= token_price
 			return TRUE
 		return FALSE
 

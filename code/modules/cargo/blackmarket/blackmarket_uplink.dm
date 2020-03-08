@@ -1,5 +1,6 @@
 /obj/item/blackmarket_uplink
 	name = "Black Market Uplink"
+	desc = "An illicit device used for transponding with shady foreign merchants for less than legal goods."
 	icon = 'icons/obj/blackmarket.dmi'
 	icon_state = "uplink"
 
@@ -13,6 +14,8 @@
 
 	/// How much money is inserted into the uplink.
 	var/money = 0
+	/// How many antag tokens are in the uplink.
+	var/tokens = 0
 	/// List of typepaths for "/datum/blackmarket_market"s that this uplink can access.
 	var/list/accessible_markets = list(/datum/blackmarket_market/blackmarket)
 
@@ -24,7 +27,19 @@
 		if(categories && categories.len)
 			viewing_category = categories[1]
 
+/obj/item/blackmarket_uplink/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Insert cash, holochips or coins to add funds to the uplink.</span>"
+	. += "<span class='notice'>Alt-click to withdraw funds. This uplink contains [money] credits.</span>"
+	. += "<span class='notice'>Insert antag tokens for premium items.</span>"
+	. += "<span class='notice'>Ctrl-click to withdraw tokens. This uplink contains [tokens] antag tokens.</span>"
+
 /obj/item/blackmarket_uplink/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/coin/antagtoken))
+		tokens += 1
+		to_chat(user, "<span class='notice'>You slot [I] into [src] and it reports a total of [tokens] antag tokens inserted.</span>")
+		qdel(I)
+		return
 	if(istype(I, /obj/item/holochip) || istype(I, /obj/item/stack/spacecash) || istype(I, /obj/item/coin))
 		var/worth = I.get_item_credit_value()
 		if(!worth)
@@ -48,12 +63,31 @@
 	if(amount_to_remove > money)
 		to_chat(user, "<span class='warning'>There is only [money] credits in [src]</span>")
 		return
-
+	
 	var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
 	money -= amount_to_remove
 	holochip.name = "washed " + holochip.name
 	user.put_in_hands(holochip)
 	to_chat(user, "<span class='notice'>You withdraw [amount_to_remove] credits into a holochip.</span>")
+
+/obj/item/blackmarket_uplink/CtrlClick(mob/user)
+	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	
+	var/tokens_to_remove =  FLOOR(input(user, "How much do you want to withdraw? Current Amount: [tokens]", "Withdraw Tokens", 1) as num|null, 1)
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	
+	if(!tokens_to_remove || tokens_to_remove < 0)
+		return
+	if(tokens_to_remove > tokens)
+		to_chat(user, "<span class='warning'>There is only [tokens] antag tokens in [src]</span>")
+		return
+	
+	var/obj/item/coin/antagtoken/antagtoken = new (user.drop_location(), tokens_to_remove)
+	tokens -= tokens_to_remove
+	user.put_in_hands(antagtoken)
+	to_chat(user, "<span class='notice'>[tokens_to_remove] antag tokens spill out of the [src].</span>")
 
 /obj/item/blackmarket_uplink/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -70,6 +104,7 @@
 		for(var/delivery in market.shipping)
 			data["delivery_methods"] += list(list("name" = delivery, "price" = market.shipping[delivery]))
 	data["money"] = money
+	data["tokens"] = tokens
 	data["buying"] = buying
 	data["items"] = list()
 	data["viewing_category"] = viewing_category
@@ -81,6 +116,7 @@
 					"id" = I.type,
 					"name" = I.name,
 					"cost" = I.price,
+					"tokens" = I.token_price,
 					"amount" = I.stock,
 					"desc" = I.desc || I.name
 				))

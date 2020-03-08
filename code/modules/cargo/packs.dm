@@ -2100,7 +2100,7 @@
 	name = "Contraband Crate"
 	desc = "Psst.. bud... want some contraband? I can get you a poster, some nice cigs, dank, even some sponsored items...you know, the good stuff. Just keep it away from the cops, kay?"
 	contraband = TRUE
-	cost = 3000
+	cost = 5000
 	num_contained = 7
 	contains = list(/obj/item/poster/random_contraband,
 					/obj/item/poster/random_contraband,
@@ -2120,7 +2120,8 @@
 					/obj/item/storage/fancy/cigarettes/cigpack_shadyjims,
 					/obj/item/clothing/mask/gas/syndicate,
 					/obj/item/clothing/neck/necklace/dope,
-					/obj/item/vending_refill/donksoft)
+					/obj/item/vending_refill/donksoft,
+					/obj/item/coin/antagtoken)
 	crate_name = "crate"
 
 /datum/supply_pack/costumes_toys/foamforce

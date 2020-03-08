@@ -10,6 +10,8 @@
 
 	/// Price for the item, if not set creates a price according to the *_min and *_max vars.
 	var/price
+	/// Price in antag tokens for the item. It is always static regardless of the item price in credits.
+	var/token_price = 0
 	/// How many of this type of item is available, if not set creates a price according to the *_min and *_max vars.
 	var/stock
 
