@@ -229,6 +229,7 @@
 			var/obj/projectile/P = M
 			P.ignore_source_check = TRUE
 		return TRUE
+	return FALSE
 	// try to search for a new one if something was var edited etc
 	set_linked()
 	. = ..()

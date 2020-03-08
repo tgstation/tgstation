@@ -82,5 +82,5 @@
 		var/obj/item/storage/backpack/bag = H.get_item_by_slot(ITEM_SLOT_BACK)
 		if(istype(bag, /obj/item/storage/backpack/snail))
 			bag.emptyStorage()
-			H.temporarilyRemoveItemFromInventory(bag, TRUE)
+			H.doUnEquip(bag, TRUE, no_move = TRUE)
 			qdel(bag)

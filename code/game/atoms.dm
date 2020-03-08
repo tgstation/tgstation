@@ -141,7 +141,6 @@
   * * [/turf/open/space/Initialize]
   */
 /atom/proc/Initialize(mapload, ...)
-	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
@@ -224,7 +223,6 @@
 ///Can the mover object pass this atom, while heading for the target turf
 /atom/proc/CanPass(atom/movable/mover, turf/target)
 	SHOULD_CALL_PARENT(TRUE)
-	SHOULD_BE_PURE(TRUE)
 	if(mover.movement_type & UNSTOPPABLE)
 		return TRUE
 	. = CanAllowThrough(mover, target)
@@ -235,7 +233,6 @@
 /// Returns true or false to allow the mover to move through src
 /atom/proc/CanAllowThrough(atom/movable/mover, turf/target)
 	SHOULD_CALL_PARENT(TRUE)
-	SHOULD_BE_PURE(TRUE)
 	return !density
 
 /**

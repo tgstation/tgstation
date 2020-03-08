@@ -707,7 +707,6 @@
 /// Returns true or false to allow src to move through the blocker, mover has final say
 /atom/movable/proc/CanPassThrough(atom/blocker, turf/target, blocker_opinion)
 	SHOULD_CALL_PARENT(TRUE)
-	SHOULD_BE_PURE(TRUE)
 	return blocker_opinion
 
 /// called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
