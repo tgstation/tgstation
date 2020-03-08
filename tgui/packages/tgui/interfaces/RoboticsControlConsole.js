@@ -1,11 +1,10 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Box, Button, NoticeBox, Section, Tabs, LabeledList } from '../components';
 
 export const RoboticsControlConsole = props => {
   const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const {
     can_hack,
     cyborgs = [],
@@ -38,8 +37,7 @@ export const RoboticsControlConsole = props => {
 
 const Cyborgs = props => {
   const { state, cyborgs, can_hack } = props;
-  const { config } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
 
   if (!cyborgs.length) {
     return (
@@ -63,7 +61,7 @@ const Cyborgs = props => {
                 icon="terminal"
                 content="Hack"
                 color="bad"
-                onClick={() => act(ref, 'magbot', {
+                onClick={() => act('magbot', {
                   ref: cyborg.ref,
                 })} />
             )}
@@ -71,14 +69,14 @@ const Cyborgs = props => {
               icon={cyborg.locked_down ? 'unlock' : 'lock'}
               color={cyborg.locked_down ? 'good' : 'default'}
               content={cyborg.locked_down ? "Release" : "Lockdown"}
-              onClick={() => act(ref, 'stopbot', {
+              onClick={() => act('stopbot', {
                 ref: cyborg.ref,
               })} />
             <Button
               icon="bomb"
               content="Detonate"
               color="bad"
-              onClick={() => act(ref, 'killbot', {
+              onClick={() => act('killbot', {
                 ref: cyborg.ref,
               })} />
           </Fragment>
@@ -122,8 +120,7 @@ const Cyborgs = props => {
 
 const Drones = props => {
   const { state, drones } = props;
-  const { config } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
 
   if (!drones.length) {
     return (
@@ -145,7 +142,7 @@ const Drones = props => {
             icon="bomb"
             content="Detonate"
             color="bad"
-            onClick={() => act(ref, 'killdrone', {
+            onClick={() => act('killdrone', {
               ref: drone.ref,
             })} />
         )}>
