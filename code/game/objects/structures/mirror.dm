@@ -8,11 +8,13 @@
 	anchored = TRUE
 	max_integrity = 200
 	integrity_failure = 0.5
+	var/obj/effect/reflection = new
 
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
 	if(icon_state == "mirror_broke" && !broken)
 		obj_break(null, mapload)
+	proximity_monitor = new(src, 1)
 
 /obj/structure/mirror/attack_hand(mob/user)
 	. = ..()
@@ -59,6 +61,17 @@
 		if(desc == initial(desc))
 			desc = "Oh no, seven years of bad luck!"
 		broken = TRUE
+
+// If a mob is within 1 tile of the mirror, display their face in it. currently the face icon is the one we use for wanted posters.
+
+// TO TRY: add solid mask to effects icon
+
+/obj/structure/mirror/HasProximity(atom/movable/AM as mob|obj)
+	if(!isliving(AM))
+		return
+	reflection.vis_contents += AM
+	vis_contents += reflection
+	update_icon()
 
 /obj/structure/mirror/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
