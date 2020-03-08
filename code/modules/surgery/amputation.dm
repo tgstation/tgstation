@@ -9,9 +9,9 @@
 
 /datum/surgery_step/sever_limb
 	name = "sever limb"
-	implements = list(/obj/item/shears = 300, TOOL_SCALPEL = 100, TOOL_SAW = 100, /obj/item/melee/arm_blade = 80, /obj/item/twohanded/fireaxe = 50, /obj/item/hatchet = 40, /obj/item/kitchen/knife/butcher = 25)
+	implements = list(/obj/item/shears = 300, TOOL_SCALPEL = 100, TOOL_SAW = 100, /obj/item/melee/arm_blade = 80, /obj/item/fireaxe = 50, /obj/item/hatchet = 40, /obj/item/kitchen/knife/butcher = 25)
 	time = 64
-	experience_given = 5
+	experience_given = MEDICAL_SKILL_ORGAN_FIX
 
 /datum/surgery_step/sever_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to sever [target]'s [parse_zone(target_zone)]...</span>",

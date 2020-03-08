@@ -42,6 +42,7 @@ Contains:
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/deathsquad
 	dog_fashion = /datum/dog_fashion/back/deathsquad
+	cell = /obj/item/stock_parts/cell/bluespace
 
 	//NEW SWAT suit
 /obj/item/clothing/suit/space/swat
@@ -186,6 +187,12 @@ Contains:
 	strip_delay = 130
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	cell = /obj/item/stock_parts/cell/bluespace
+
+// ERT suit's gets EMP Protection
+/obj/item/clothing/suit/space/hardsuit/ert/Initialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_CONTENTS)
 
 	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
@@ -426,3 +433,4 @@ Contains:
 	armor = list("melee" = 60, "bullet" = 40, "laser" = 40, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	strip_delay = 130
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	cell = /obj/item/stock_parts/cell/hyper

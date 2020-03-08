@@ -199,7 +199,7 @@
 
 /mob/living/simple_animal/updatehealth()
 	..()
-	health = CLAMP(health, 0, maxHealth)
+	health = clamp(health, 0, maxHealth)
 
 /mob/living/simple_animal/update_stat()
 	if(status_flags & GODMODE)
@@ -592,17 +592,13 @@
 		mode()
 
 /mob/living/simple_animal/swap_hand(hand_index)
+	. = ..()
+	if(!.)
+		return
 	if(!dextrous)
-		return ..()
+		return
 	if(!hand_index)
 		hand_index = (active_hand_index % held_items.len)+1
-	var/obj/item/held_item = get_active_held_item()
-	if(held_item)
-		if(istype(held_item, /obj/item/twohanded))
-			var/obj/item/twohanded/T = held_item
-			if(T.wielded == 1)
-				to_chat(usr, "<span class='warning'>Your other hand is too busy holding [T].</span>")
-				return
 	var/oindex = active_hand_index
 	active_hand_index = hand_index
 	if(hud_used)
@@ -620,18 +616,12 @@
 
 /mob/living/simple_animal/update_inv_hands()
 	if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-		var/obj/item/l_hand = get_item_for_held_index(1)
-		var/obj/item/r_hand = get_item_for_held_index(2)
-		if(r_hand)
-			r_hand.layer = ABOVE_HUD_LAYER
-			r_hand.plane = ABOVE_HUD_PLANE
-			r_hand.screen_loc = ui_hand_position(get_held_index_of_item(r_hand))
-			client.screen |= r_hand
-		if(l_hand)
-			l_hand.layer = ABOVE_HUD_LAYER
-			l_hand.plane = ABOVE_HUD_PLANE
-			l_hand.screen_loc = ui_hand_position(get_held_index_of_item(l_hand))
-			client.screen |= l_hand
+		for(var/obj/item/I in held_items)
+			var/index = get_held_index_of_item(I)
+			I.layer = ABOVE_HUD_LAYER
+			I.plane = ABOVE_HUD_PLANE
+			I.screen_loc = ui_hand_position(index)
+			client.screen |= I
 
 //ANIMAL RIDING
 

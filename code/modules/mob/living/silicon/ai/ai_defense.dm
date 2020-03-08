@@ -1,9 +1,15 @@
 
-/mob/living/silicon/ai/attacked_by(obj/item/I, mob/living/user, def_zone)
-	if(I.force && I.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
+/mob/living/silicon/ai/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/aiModule))
+		var/obj/item/aiModule/MOD = W
+		if(!mind) //A player mind is required for law procs to run antag checks.
+			to_chat(user, "<span class='warning'>[src] is entirely unresponsive!</span>")
+			return
+		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
+		return
+	if(W.force && W.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()
 	return ..()
-
 
 /mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(!SSticker.HasRoundStarted())

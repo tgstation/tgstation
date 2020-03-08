@@ -88,12 +88,12 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	update_health_hud()
 
 /mob/living/simple_animal/hostile/asteroid/elite/update_health_hud()
-	if(hud_used)
-		var/severity = 0
-		var/healthpercent = (health/maxHealth) * 100
+	var/severity = 0
+	var/healthpercent = (health/maxHealth) * 100
+	if(hud_used?.healthdoll)
 		switch(healthpercent)
 			if(100 to INFINITY)
-				hud_used.healths.icon_state = "elite_health0"
+				severity = 0
 			if(80 to 100)
 				severity = 1
 			if(60 to 80)
@@ -108,11 +108,11 @@ While using this makes the system rely on OnFire, it still gives options for tim
 				severity = 6
 			else
 				severity = 7
-		hud_used.healths.icon_state = "elite_health[severity]"
-		if(severity > 0)
-			overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
-		else
-			clear_fullscreen("brute")
+		hud_used.healthdoll.icon_state = "elite_health[severity]"
+	if(severity > 0)
+		overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
+	else
+		clear_fullscreen("brute")
 
 //The Pulsing Tumor, the actual "spawn-point" of elites, handles the spawning, arena, and procs for dealing with basic scenarios.
 

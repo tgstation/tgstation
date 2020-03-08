@@ -41,9 +41,12 @@
 	if(is_banned_from(user.key, banType))
 		to_chat(user, "<span class='warning'>You are jobanned!</span>")
 		return
+	if(!allow_spawn(user))
+		return
 	if(QDELETED(src) || QDELETED(user))
 		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be revived!)",,"Yes","No")
+
 	if(ghost_role == "No" || !loc)
 		return
 	log_game("[key_name(user)] became [mob_name]")
@@ -64,6 +67,9 @@
 	if(!LAZYLEN(spawners))
 		GLOB.mob_spawners -= name
 	return ..()
+
+/obj/effect/mob_spawn/proc/allow_spawn(mob/user) //Override this to add spawn limits to a ghost role
+	return TRUE
 
 /obj/effect/mob_spawn/proc/special(mob/M)
 	return
@@ -462,21 +468,21 @@
 	outfit = /datum/outfit/nanotrasencommandercorpse
 
 /datum/outfit/nanotrasencommandercorpse
-	name = "Nanotrasen Private Security Commander"
+	name = "\improper Nanotrasen Private Security Commander"
 	uniform = /obj/item/clothing/under/rank/centcom/commander
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	ears = /obj/item/radio/headset/heads/captain
 	glasses = /obj/item/clothing/glasses/eyepatch
 	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
 	head = /obj/item/clothing/head/centhat
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/combat/swat
 	r_pocket = /obj/item/lighter
 	id = /obj/item/card/id
 
 
 /obj/effect/mob_spawn/human/nanotrasensoldier
-	name = "Nanotrasen Private Security Officer"
+	name = "\improper Nanotrasen Private Security Officer"
 	id_job = "Private Security Force"
 	id_access_list = list(ACCESS_CENT_CAPTAIN, ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_STORAGE, ACCESS_SECURITY, ACCESS_MECH_SECURITY)
 	outfit = /datum/outfit/nanotrasensoldiercorpse
@@ -486,7 +492,7 @@
 	uniform = /obj/item/clothing/under/rank/security/officer
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/storage/backpack/security
@@ -496,7 +502,7 @@
 /obj/effect/mob_spawn/human/commander/alive
 	death = FALSE
 	roundstart = FALSE
-	mob_name = "Nanotrasen Commander"
+	mob_name = "\improper Nanotrasen Commander"
 	name = "sleeper"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"

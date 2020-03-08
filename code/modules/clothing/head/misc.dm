@@ -146,6 +146,7 @@
 		to_chat(user, "<span class='boldnotice'>You can no longer speak like a pirate.</span>")
 
 /obj/item/clothing/head/pirate/captain
+	name = "pirate captain"
 	icon_state = "hgpiratecap"
 	item_state = "hgpiratecap"
 
@@ -207,6 +208,16 @@
 	item_state = "fedora"
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/fedora
+
+/obj/item/clothing/head/fedora/white
+	name = "white fedora"
+	icon_state = "fedora_white"
+	item_state = "fedora_white"
+
+/obj/item/clothing/head/fedora/beige
+	name = "beige fedora"
+	icon_state = "fedora_beige"
+	item_state = "fedora_beige"
 
 /obj/item/clothing/head/fedora/suicide_act(mob/user)
 	if(user.gender == FEMALE)

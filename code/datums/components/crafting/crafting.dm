@@ -385,19 +385,19 @@
 		return
 	switch(action)
 		if("make")
+			var/mob/user = usr
 			var/datum/crafting_recipe/TR = locate(params["recipe"]) in GLOB.crafting_recipes
 			busy = TRUE
-			ui_interact(usr)
-			var/atom/movable/result = construct_item(usr, TR)
+			ui_interact(user)
+			var/atom/movable/result = construct_item(user, TR)
 			if(!istext(result)) //We made an item and didn't get a fail message
-				if(ismob(usr)) //In case the user is actually possessing a non mob like a machine
-					var/mob/m = usr
-					m.put_in_hands(result)
+				if(ismob(user) && isitem(result)) //In case the user is actually possessing a non mob like a machine
+					user.put_in_hands(result)
 				else
-					result.forceMove(usr.loc)
-				to_chat(usr, "<span class='notice'>[TR.name] constructed.</span>")
+					result.forceMove(user.drop_location())
+				to_chat(user, "<span class='notice'>[TR.name] constructed.</span>")
 			else
-				to_chat(usr, "<span class='warning'>Construction failed[result]</span>")
+				to_chat(user, "<span class='warning'>Construction failed[result]</span>")
 			busy = FALSE
 		if("toggle_recipes")
 			display_craftable_only = !display_craftable_only

@@ -48,23 +48,7 @@
 							)
 
 /obj/machinery/autolathe/Initialize()
-	AddComponent(/datum/component/material_container,
-	list(/datum/material/iron,
-	/datum/material/glass,
-	/datum/material/gold,
-	/datum/material/silver,
-	/datum/material/diamond,
-	/datum/material/uranium,
-	/datum/material/plasma,
-	/datum/material/bluespace,
-	/datum/material/bananium,
-	/datum/material/titanium,
-	/datum/material/runite,
-	/datum/material/plastic,
-	/datum/material/adamantine,
-	/datum/material/mythril,
-	/datum/material/wood
-	), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
+	AddComponent(/datum/component/material_container, SSmaterials.materialtypes_by_category[MAT_CATEGORY_RIGID], 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
 	wires = new /datum/wires/autolathe(src)
@@ -173,7 +157,7 @@
 
 			var/multiplier = text2num(href_list["multiplier"])
 			var/is_stack = ispath(being_built.build_path, /obj/item/stack)
-			multiplier = CLAMP(multiplier,1,50)
+			multiplier = clamp(multiplier,1,50)
 
 			/////////////////
 

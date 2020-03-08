@@ -17,7 +17,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	ui_x = 375
 	ui_y = 125
-	
+
 	var/datum/callback/ev
 	var/event = ""
 	var/obj/machinery/keycard_auth/event_source
@@ -105,10 +105,10 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	message_admins("[ADMIN_LOOKUPFLW(triggerer)] triggered and [ADMIN_LOOKUPFLW(confirmer)] confirmed event [event]")
 
 	var/area/A1 = get_area(triggerer)
-	deadchat_broadcast(" triggered [event] at <span class='name'>[A1.name]</span>.", "<span class='name'>[triggerer]</span>", triggerer)
+	deadchat_broadcast(" triggered [event] at <span class='name'>[A1.name]</span>.", "<span class='name'>[triggerer]</span>", triggerer, message_type=DEADCHAT_ANNOUNCEMENT)
 
 	var/area/A2 = get_area(confirmer)
-	deadchat_broadcast(" confirmed [event] at <span class='name'>[A2.name]</span>.", "<span class='name'>[confirmer]</span>", confirmer)
+	deadchat_broadcast(" confirmed [event] at <span class='name'>[A2.name]</span>.", "<span class='name'>[confirmer]</span>", confirmer, message_type=DEADCHAT_ANNOUNCEMENT)
 	switch(event)
 		if(KEYCARD_RED_ALERT)
 			set_security_level(SEC_LEVEL_RED)
