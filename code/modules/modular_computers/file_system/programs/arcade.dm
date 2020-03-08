@@ -101,7 +101,7 @@
 	if(computer)
 		printer = computer.all_components[MC_PRINT]
 
-	var/gamerSkillLevel = user.mind?.get_skill_level(/datum/skill/gaming)
+	var/gamerSkillLevel = usr.mind?.get_skill_level(/datum/skill/gaming)
 	var/gamerSkill = usr.mind?.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
 	switch(action)
 		if("Attack")
