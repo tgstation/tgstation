@@ -203,7 +203,7 @@
 		return
 	RegisterSignal(created[1], COMSIG_PARENT_QDELETING, .proc/on_portal_destroy) //Gosh darn it kevinz.
 	RegisterSignal(created[2], COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
-	try_move_adjacent(created[1])
+	try_move_adjacent(created[1], user.dir)
 	active_portal_pairs[created[1]] = created[2]
 	var/obj/effect/portal/c1 = created[1]
 	var/obj/effect/portal/c2 = created[2]

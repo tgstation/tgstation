@@ -64,37 +64,6 @@
 			mutant_organs = list()
 	return ..()
 
-/datum/species/human/felinid/on_species_loss(mob/living/carbon/H, datum/species/new_species, pref_load)
-	var/obj/item/organ/ears/cat/ears = H.getorgan(/obj/item/organ/ears/cat)
-//	var/obj/item/organ/tail/cat/tail = H.getorgan(/obj/item/organ/tail/cat)
-
-	if(ears)
-		var/obj/item/organ/ears/NE
-		if(new_species && new_species.mutantears)
-			// Roundstart cat ears override new_species.mutantears, reset it here.
-			new_species.mutantears = initial(new_species.mutantears)
-			if(new_species.mutantears)
-				NE = new new_species.mutantears
-		if(!NE)
-			// Go with default ears
-			NE = new /obj/item/organ/ears
-		NE.Insert(H, drop_if_replaced = FALSE)
-
-/*
-	if(tail)
-		var/obj/item/organ/tail/NT
-		NT = locate(/obj/item/organ/tail) in new_species.mutant_organs
-		if(NT)
-			// Roundstart cat tail overrides new_species tail, reset it here.
-			new_species.mutanttail = initial(new_species.mutanttail)
-			if(new_species.mutanttail)
-				NT = new new_species.mutanttail
-		if(NT)
-			NT.Insert(H, drop_if_replaced = FALSE)
-		else
-			tail.Remove(H)
-*/
-
 /proc/mass_purrbation()
 	for(var/M in GLOB.mob_list)
 		if(ishuman(M))
