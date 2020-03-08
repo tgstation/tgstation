@@ -151,7 +151,7 @@
 /obj/machinery/portable_atmospherics/canister/freon
 	name = "freon canister"
 	desc = "Freon. Can absorb heat"
-	icon_state = "miasma"
+	icon_state = "freon"
 	gas_type = /datum/gas/freon
 	filled = 1
 

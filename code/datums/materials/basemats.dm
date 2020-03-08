@@ -258,14 +258,3 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	sheet_type = /obj/item/stack/sheet/hot_ice
 	value_per_unit = 0.5
 	beauty_modifier = 0.5
-
-/datum/material/hot_ice/on_applied(atom/source, amount, material_flags)
-	. = ..()
-	if(ismovable(source))
-		source.AddElement(/datum/element/firestacker, amount=1)
-		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, amount / 1250)
-
-/datum/material/hot_ice/on_removed(atom/source, material_flags)
-	. = ..()
-	source.RemoveElement(/datum/element/firestacker, amount=1)
-	qdel(source.GetComponent(/datum/component/explodable))

@@ -106,4 +106,4 @@
 	cost = 400
 	message = "cm3 of Hot Ice"
 	material_id = /datum/material/hot_ice
-	export_types = /obj/item/stack/hot_ice
+	export_types = /obj/item/stack/sheet/hot_ice
