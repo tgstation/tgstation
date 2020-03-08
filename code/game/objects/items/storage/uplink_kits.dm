@@ -6,7 +6,7 @@
 		if("recon")
 			new /obj/item/clothing/glasses/thermal/xray(src) // ~8 tc?
 			new /obj/item/storage/briefcase/launchpad(src) //6 tc
-			new	/obj/item/twohanded/binoculars(src) // 2 tc?
+			new	/obj/item/binoculars(src) // 2 tc?
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
 			new /obj/item/storage/box/syndie_kit/space(src) //4 tc
 			new /obj/item/grenade/syndieminibomb/concussion/frag(src) // ~2 tc each?
@@ -138,7 +138,7 @@
 			new /obj/item/chameleon(src) // 7 tc
 
 		if("darklord")
-			new /obj/item/twohanded/dualsaber(src)
+			new /obj/item/dualsaber(src)
 			new /obj/item/dnainjector/telemut/darkbundle(src)
 			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 			new /obj/item/card/id/syndicate(src)

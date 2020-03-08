@@ -18,7 +18,8 @@
 	premium = list(/obj/item/storage/belt/security/webbing = 5,
 				   /obj/item/coin/antagtoken = 1,
 				   /obj/item/clothing/head/helmet/blueshirt = 1,
-				   /obj/item/clothing/suit/armor/vest/blueshirt = 1)
+				   /obj/item/clothing/suit/armor/vest/blueshirt = 1,
+				   /obj/item/clothing/gloves/tackler = 5)
 	refill_canister = /obj/item/vending_refill/security
 	default_price = 650
 	extra_price = 700

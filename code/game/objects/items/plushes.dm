@@ -668,3 +668,11 @@
 	desc = "A plushie depicting one of the royal King Goat's guards, tasked to protecting the king at all costs and training new goat guards."
 	icon_state = "royalguardgoat"
 	throwforce = 15
+
+/obj/item/toy/plush/moth
+	name = "moth plushie"
+	desc = "A plushie depicting an adorable mothperson. It's a huggable bug!"
+	icon_state = "moffplush"
+	item_state = "moffplush"
+	attack_verb = list("fluttered", "flapped")
+	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)

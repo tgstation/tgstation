@@ -75,20 +75,23 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/sound/attack_sound = 'sound/weapons/punch1.ogg'
 	var/sound/miss_sound = 'sound/weapons/punchmiss.ogg'
 
-	//Breathing!
-	var/obj/item/organ/lungs/mutantlungs = null
+	//Breathing! Most changes are in mutantlungs, though
 	var/breathid = "o2"
 
-	var/obj/item/organ/brain/mutant_brain = /obj/item/organ/brain
-	var/obj/item/organ/heart/mutant_heart = /obj/item/organ/heart
+
+	//Do NOT remove by setting to null. use OR make a RESPECTIVE TRAIT (removing stomach? add the NOSTOMACH trait to your species)
+	//why does it work this way? because traits also disable the downsides of not having an organ, removing organs but not having the trait will make your species die
+	var/obj/item/organ/brain/mutantbrain = /obj/item/organ/brain
+	var/obj/item/organ/heart/mutantheart = /obj/item/organ/heart
+	var/obj/item/organ/lungs/mutantlungs = /obj/item/organ/lungs
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
-	var/obj/item/mutanthands
 	var/obj/item/organ/tongue/mutanttongue = /obj/item/organ/tongue
-	var/obj/item/organ/tail/mutanttail = null
-
-	var/obj/item/organ/liver/mutantliver
-	var/obj/item/organ/stomach/mutantstomach
+	var/obj/item/organ/liver/mutantliver = /obj/item/organ/liver
+	var/obj/item/organ/stomach/mutantstomach = /obj/item/organ/stomach
+	var/obj/item/organ/appendix/mutantappendix = /obj/item/organ/appendix
+	//only an honorary mutantthing because not an organ and not loaded in the same way, you've been warned to do your research
+	var/obj/item/mutanthands
 	var/override_float = FALSE
 
 	//Bitflag that controls what in game ways can select this species as a spawnable source
@@ -149,110 +152,47 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return 0
 	return 1
 
-//Will regenerate missing organs
-/datum/species/proc/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE)
-	var/obj/item/organ/brain/brain = C.getorganslot(ORGAN_SLOT_BRAIN)
-	var/obj/item/organ/heart/heart = C.getorganslot(ORGAN_SLOT_HEART)
-	var/obj/item/organ/lungs/lungs = C.getorganslot(ORGAN_SLOT_LUNGS)
-	var/obj/item/organ/appendix/appendix = C.getorganslot(ORGAN_SLOT_APPENDIX)
-	var/obj/item/organ/eyes/eyes = C.getorganslot(ORGAN_SLOT_EYES)
-	var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
-	var/obj/item/organ/tongue/tongue = C.getorganslot(ORGAN_SLOT_TONGUE)
-	var/obj/item/organ/liver/liver = C.getorganslot(ORGAN_SLOT_LIVER)
-	var/obj/item/organ/stomach/stomach = C.getorganslot(ORGAN_SLOT_STOMACH)
-	var/obj/item/organ/tail/tail = C.getorganslot(ORGAN_SLOT_TAIL)
 
-	var/should_have_brain = TRUE
-	var/should_have_heart = !(NOBLOOD in species_traits)
-	var/should_have_lungs = !(TRAIT_NOBREATH in inherent_traits)
-	var/should_have_appendix = !(TRAIT_NOHUNGER in inherent_traits)
-	var/should_have_eyes = TRUE
-	var/should_have_ears = TRUE
-	var/should_have_tongue = TRUE
-	var/should_have_liver = !(TRAIT_NOMETABOLISM in inherent_traits)
-	var/should_have_stomach = !(NOSTOMACH in species_traits)
-	var/should_have_tail = mutanttail
+/** regenerate_organs
+  * Corrects organs in a carbon, removing ones it doesn't need and adding ones it does
+  *
+  * takes all organ slots, removes organs a species should not have, adds organs a species should have.
+  * can use replace_current to refresh all organs, creating an entirely new set.
+  * Arguments:
+  * C - carbon, the owner of the species datum AKA whoever we're regenerating organs in
+  * old_species - datum, used when regenerate organs is called in a switching species to remove old mutant organs.
+  * replace_current - boolean, forces all old organs to get deleted whether or not they pass the species' ability to keep that organ
+  * excluded_zones - list, add zone defines to block organs inside of the zones from getting handled. see headless mutation for an example
+  */
+/datum/species/proc/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE,list/excluded_zones)
+	//what should be put in if there is no mutantorgan (brains handled seperately)
+	var/list/slot_mutantorgans = list(ORGAN_SLOT_BRAIN = mutantbrain, ORGAN_SLOT_HEART = mutantheart, ORGAN_SLOT_LUNGS = mutantlungs, ORGAN_SLOT_APPENDIX = mutantappendix, \
+	ORGAN_SLOT_EYES = mutanteyes, ORGAN_SLOT_EARS = mutantears, ORGAN_SLOT_TONGUE = mutanttongue, ORGAN_SLOT_LIVER = mutantliver, ORGAN_SLOT_STOMACH = mutantstomach)
 
-	if(heart && (!should_have_heart || replace_current))
-		heart.Remove(C,1)
-		QDEL_NULL(heart)
-	if(should_have_heart && !heart)
-		heart = new mutant_heart()
-		heart.Insert(C)
+	for(var/slot in list(ORGAN_SLOT_BRAIN, ORGAN_SLOT_HEART, ORGAN_SLOT_LUNGS, ORGAN_SLOT_APPENDIX, \
+	ORGAN_SLOT_EYES, ORGAN_SLOT_EARS, ORGAN_SLOT_TONGUE, ORGAN_SLOT_LIVER, ORGAN_SLOT_STOMACH))
 
-	if(lungs && (!should_have_lungs || replace_current))
-		lungs.Remove(C,1)
-		QDEL_NULL(lungs)
-	if(should_have_lungs && !lungs)
-		if(mutantlungs)
-			lungs = new mutantlungs()
-		else
-			lungs = new()
-		lungs.Insert(C)
+		var/obj/item/organ/oldorgan = C.getorganslot(slot) //used in removing
+		var/obj/item/organ/neworgan = slot_mutantorgans[slot] //used in adding
+		var/used_neworgan = FALSE
+		neworgan = new neworgan()
+		var/should_have = neworgan.get_availability(src) //organ proc that points back to a species trait (so if the species is supposed to have this organ)
 
-	if(liver && (!should_have_liver || replace_current))
-		liver.Remove(C,1)
-		QDEL_NULL(liver)
-	if(should_have_liver && !liver)
-		if(mutantliver)
-			liver = new mutantliver()
-		else
-			liver = new()
-		liver.Insert(C)
+		if(oldorgan && (!should_have || replace_current) && !(oldorgan.zone in excluded_zones))
+			if(slot == ORGAN_SLOT_BRAIN)
+				var/obj/item/organ/brain/brain = oldorgan
+				if(!brain.decoy_override)//"Just keep it if it's fake" - confucius, probably
+					brain.Remove(C,TRUE, TRUE) //brain argument used so it doesn't cause any... sudden death.
+					QDEL_NULL(brain)
+			oldorgan.Remove(C,TRUE)
+			QDEL_NULL(oldorgan)
 
-	if(stomach && (!should_have_stomach || replace_current))
-		stomach.Remove(C,1)
-		QDEL_NULL(stomach)
-	if(should_have_stomach && !stomach)
-		if(mutantstomach)
-			stomach = new mutantstomach()
-		else
-			stomach = new()
-		stomach.Insert(C)
+		if(!oldorgan && should_have && !(initial(neworgan.zone) in excluded_zones))
+			used_neworgan = TRUE
+			neworgan.Insert(C, TRUE, FALSE)
 
-	if(appendix && (!should_have_appendix || replace_current))
-		appendix.Remove(C,1)
-		QDEL_NULL(appendix)
-	if(should_have_appendix && !appendix)
-		appendix = new()
-		appendix.Insert(C)
-
-	if(tail && (!should_have_tail || replace_current))
-		tail.Remove(C,1)
-		QDEL_NULL(tail)
-	if(should_have_tail && !tail)
-		tail = new mutanttail()
-		tail.Insert(C)
-
-	if(C.get_bodypart(BODY_ZONE_HEAD))
-		if(brain && (replace_current || !should_have_brain))
-			if(!brain.decoy_override)//Just keep it if it's fake
-				brain.Remove(C,TRUE,TRUE)
-				QDEL_NULL(brain)
-		if(should_have_brain && !brain)
-			brain = new mutant_brain()
-			brain.Insert(C, TRUE, TRUE)
-
-		if(eyes && (replace_current || !should_have_eyes))
-			eyes.Remove(C,1)
-			QDEL_NULL(eyes)
-		if(should_have_eyes && !eyes)
-			eyes = new mutanteyes
-			eyes.Insert(C)
-
-		if(ears && (replace_current || !should_have_ears))
-			ears.Remove(C,1)
-			QDEL_NULL(ears)
-		if(should_have_ears && !ears)
-			ears = new mutantears
-			ears.Insert(C)
-
-		if(tongue && (replace_current || !should_have_tongue))
-			tongue.Remove(C,1)
-			QDEL_NULL(tongue)
-		if(should_have_tongue && !tongue)
-			tongue = new mutanttongue
-			tongue.Insert(C)
+		if(!used_neworgan)
+			qdel(neworgan)
 
 	if(old_species)
 		for(var/mutantorgan in old_species.mutant_organs)
@@ -261,9 +201,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				I.Remove(C)
 				QDEL_NULL(I)
 
-	for(var/path in mutant_organs)
-		var/obj/item/organ/I = new path()
-		I.Insert(C)
+	for(var/thing in mutant_organs)
+		var/current_organ = C.getorgan(thing)
+		if(!current_organ || replace_current)
+			var/obj/item/organ/missed = new thing()
+			missed.Insert(C, TRUE, FALSE)
 
 /datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	// Drop the items the new species can't wear
@@ -1653,7 +1595,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			firemodifier = min(firemodifier, 0)
 
 		// this can go below 5 at log 2.5
-		burn_damage = max(log(2 - firemodifier, (H.bodytemperature - bodytemp_normal)) - 5,0)
+		burn_damage = max(log(2 - firemodifier, (H.bodytemperature - H.get_body_temp_normal())) - 5,0)
 
 		// Display alerts based on the amount of fire damage being taken
 		if (burn_damage)
@@ -1758,7 +1700,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/natural_bodytemperature_stabilization(datum/gas_mixture/environment, mob/living/carbon/human/H)
 	var/areatemp = H.get_temperature(environment)
 	var/body_temp = H.bodytemperature // Get current body temperature
-	var/body_temperature_difference = bodytemp_normal - body_temp
+	var/body_temperature_difference = H.get_body_temp_normal() - body_temp
 	var/natural_change = 0
 
 	// We are very cold, increate body temperature
@@ -1767,12 +1709,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			bodytemp_autorecovery_min)
 
 	// we are cold, reduce the minimum increment and do not jump over the difference
-	else if(body_temp > bodytemp_cold_damage_limit && body_temp < bodytemp_normal)
+	else if(body_temp > bodytemp_cold_damage_limit && body_temp < H.get_body_temp_normal())
 		natural_change = max(body_temperature_difference * H.metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
 			min(body_temperature_difference, bodytemp_autorecovery_min / 4))
 
 	// We are hot, reduce the minimum increment and do not jump below the difference
-	else if(body_temp > bodytemp_normal && body_temp <= bodytemp_heat_damage_limit)
+	else if(body_temp > H.get_body_temp_normal() && body_temp <= bodytemp_heat_damage_limit)
 		natural_change = min(body_temperature_difference * H.metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
 			max(body_temperature_difference, -(bodytemp_autorecovery_min / 4)))
 
@@ -1782,7 +1724,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/thermal_protection = H.get_insulation_protection(body_temp + natural_change)
 	if(areatemp > body_temp) // It is hot here
-		if(body_temp < bodytemp_normal)
+		if(body_temp < H.get_body_temp_normal())
 			// Our bodytemp is below normal we are cold, insulation helps us retain body heat
 			// and will reduce the heat we lose to the environment
 			natural_change = (thermal_protection + 1) * natural_change
@@ -1792,7 +1734,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			natural_change = (1 / (thermal_protection + 1)) * natural_change
 	else // It is cold here
 		if(!H.on_fire) // If on fire ignore ignore local temperature in cold areas
-			if(body_temp < bodytemp_normal)
+			if(body_temp < H.get_body_temp_normal())
 				// Our bodytemp is below normal, insulation helps us retain body heat
 				// and will reduce the heat we lose to the environment
 				natural_change = (thermal_protection + 1) * natural_change
