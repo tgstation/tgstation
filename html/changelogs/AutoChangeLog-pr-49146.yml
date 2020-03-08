@@ -1,4 +1,0 @@
-author: "NoxVS"
-delete-after: True
-changes: 
-  - bugfix: "Nanotrasen has properly relabeled all cyborg limbs following their rediscovery of which direction is left and which is right"

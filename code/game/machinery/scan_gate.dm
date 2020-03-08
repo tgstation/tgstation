@@ -51,7 +51,10 @@
 		. += "<span class='notice'>The control panel is unlocked. Swipe an ID to lock it.</span>"
 
 /obj/machinery/scanner_gate/Crossed(atom/movable/AM)
-	..()
+	. = ..()
+	auto_scan(AM)
+
+/obj/machinery/scanner_gate/proc/auto_scan(atom/movable/AM)
 	if(!(machine_stat & (BROKEN|NOPOWER)) && isliving(AM))
 		perform_scan(AM)
 
@@ -216,7 +219,7 @@
 			. = TRUE
 		if("set_nanite_cloud")
 			var/new_cloud = text2num(params["new_cloud"])
-			nanite_cloud = CLAMP(round(new_cloud, 1), 1, 100)
+			nanite_cloud = clamp(round(new_cloud, 1), 1, 100)
 			. = TRUE
 		//Some species are not scannable, like abductors (too unknown), androids (too artificial) or skeletons (too magic)
 		if("set_target_species")

@@ -35,8 +35,8 @@
 #define VENTCRAWLER_ALWAYS 2
 
 //Bloodcrawling defines
-#define BLOODCRAWL 1
-#define BLOODCRAWL_EAT 2
+#define BLOODCRAWL 1 /// bloodcrawling, see: [/mob/living/var/bloodcrawl]
+#define BLOODCRAWL_EAT 2 /// crawling+mob devour
 
 //Mob bio-types flags
 #define MOB_ORGANIC 	1 << 0
@@ -242,9 +242,9 @@
 ///The shock doesn't stun.
 #define SHOCK_NOSTUN (1 << 3)
 
-#define INCORPOREAL_MOVE_BASIC 1
-#define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows
-#define INCORPOREAL_MOVE_JAUNT 3 // is blocked by holy water/salt
+#define INCORPOREAL_MOVE_BASIC 1 /// normal movement, see: [/mob/living/var/incorporeal_move]
+#define INCORPOREAL_MOVE_SHADOW 2 /// leaves a trail of shadows
+#define INCORPOREAL_MOVE_JAUNT 3 /// is blocked by holy water/salt
 
 //Secbot and ED209 judgement criteria bitflag values
 #define JUDGE_EMAGGED		(1<<0)

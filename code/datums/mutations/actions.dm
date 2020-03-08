@@ -54,9 +54,10 @@
 		var/old_target = tracking_target
 		possible = list()
 		var/list/prints = sniffed.return_fingerprints()
-		for(var/mob/living/carbon/C in GLOB.carbon_list)
-			if(prints[md5(C.dna.uni_identity)])
-				possible |= C
+		if(prints)
+			for(var/mob/living/carbon/C in GLOB.carbon_list)
+				if(prints[md5(C.dna.uni_identity)])
+					possible |= C
 		if(!length(possible))
 			to_chat(user,"<span class='warning'>Despite your best efforts, there are no scents to be found on [sniffed]...</span>")
 			return
@@ -342,11 +343,11 @@
 	chems = new
 	chems.transfered = embedded_mob
 	chems.spikey = src
-	to_chat(fired_by, "<span class='notice'>Link established! Use the \"Transfer Chemicals\" ability to send your chemicals to the linked target!")
+	to_chat(fired_by, "<span class='notice'>Link established! Use the \"Transfer Chemicals\" ability to send your chemicals to the linked target!</span>")
 	chems.Grant(fired_by)
 
 /obj/item/hardened_spike/chem/unembedded()
-	to_chat(fired_by, "<span class='warning'>Link lost!")
+	to_chat(fired_by, "<span class='warning'>Link lost!</span>")
 	QDEL_NULL(chems)
 	..()
 
@@ -397,19 +398,19 @@
 	action_icon = 'icons/mob/actions/actions_genetic.dmi'
 	action_icon_state = "lay_web"
 
-/obj/effect/proc_holder/spell/self/lay_genetic_web/cast_check(skipcharge = 0,mob/user = usr)
-	. = ..()
+/obj/effect/proc_holder/spell/self/lay_genetic_web/cast(list/targets, mob/user = usr)
+	var/failed = FALSE
 	if(!isturf(user.loc))
 		to_chat(user, "<span class='warning'>You can't lay webs here!</span>")
-		return FALSE
+		failed = TRUE
 	var/turf/T = get_turf(user)
 	var/obj/structure/spider/stickyweb/genetic/W = locate() in T
 	if(W)
 		to_chat(user, "<span class='warning'>There's already a web here!</span>")
+		failed = TRUE
+	if(failed)
+		revert_cast(user)
 		return FALSE
-
-/obj/effect/proc_holder/spell/self/lay_genetic_web/cast(list/targets, mob/user = usr)
-	var/turf/T = get_turf(user)
 
 	user.visible_message("<span class='notice'>[user] begins to secrete a sticky substance.</span>","<span class='notice'>You begin to lay a web.</span>")
 	if(!do_after(user, 4 SECONDS, target = T))

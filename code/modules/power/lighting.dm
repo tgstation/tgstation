@@ -243,6 +243,11 @@
 	status = LIGHT_BROKEN
 	icon_state = "tube-broken"
 
+/obj/machinery/light/dim
+	nightshift_allowed = FALSE
+	bulb_colour = "#FFDDCC"
+	bulb_power = 0.8
+
 // the smaller bulb light fixture
 
 /obj/machinery/light/small
@@ -335,8 +340,8 @@
 /obj/machinery/light/update_overlays()
 	. = ..()
 	if(on && status == LIGHT_OK)
-		var/mutable_appearance/glowybit = mutable_appearance(overlayicon, base_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE)
-		glowybit.alpha = CLAMP(light_power*250, 30, 200)
+		var/mutable_appearance/glowybit = mutable_appearance(overlayicon, base_state, layer, EMISSIVE_PLANE)
+		glowybit.alpha = clamp(light_power*250, 30, 200)
 		. += glowybit
 
 // update the icon_state and luminosity of the light depending on its state
