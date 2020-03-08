@@ -461,6 +461,7 @@
 	icon_state = ""
 	layer = ABOVE_ALL_MOB_LAYER
 	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/status = 0
 	var/delay = 0
 
