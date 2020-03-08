@@ -175,12 +175,12 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		qdel(src)
 		return
 	feedback_details += "Vent Coords: [center.x],[center.y],[center.z]"
-	var/obj/effect/plasma_image_holder/PIH = new(center)
-	var/image/plasma_image = image(image_icon, PIH, image_state, FLY_LAYER)
+	var/obj/effect/plasma_image_holder/pih = new(center)
+	var/image/plasma_image = image(image_icon, pih, image_state, FLY_LAYER)
 	plasma_image.alpha = 50
 	plasma_image.plane = GAME_PLANE
 	flood_images += plasma_image
-	flood_image_holders += PIH
+	flood_image_holders += pih
 	flood_turfs += center
 	if(target.client)
 		target.client.images |= flood_images
@@ -206,12 +206,12 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			var/turf/T = get_step(FT, dir)
 			if((T in flood_turfs) || !FT.CanAtmosPass(T))
 				continue
-			var/obj/effect/plasma_image_holder/PIH = new(T)
-			var/image/new_plasma = image(image_icon, PIH, image_state, FLY_LAYER)
+			var/obj/effect/plasma_image_holder/pih = new(T)
+			var/image/new_plasma = image(image_icon, pih, image_state, FLY_LAYER)
 			new_plasma.alpha = 50
 			new_plasma.plane = GAME_PLANE
 			flood_images += new_plasma
-			flood_image_holders += PIH
+			flood_image_holders += pih
 			flood_turfs += T
 	if(target.client)
 		target.client.images |= flood_images
