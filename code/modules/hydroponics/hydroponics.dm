@@ -836,6 +836,7 @@
 			var/obj/item/graft/snip = new /obj/item/graft(loc)
 			if(myseed.graft_gene)
 				snip.stored_trait = new myseed.graft_gene
+			snip.parent_seed = myseed
 			myseed.grafted = TRUE
 
 	else if(istype(O, /obj/item/graft))
@@ -844,10 +845,18 @@
 		if(!myseed)
 			to_chat(user, "<span class='notice'>The tray is empty.</span>")
 			return
-		if(!new_trait.can_add(myseed))
-			to_chat(user, "<span class='warning'>[myseed.plantname] rejects [snip]!</span>")
+		if(new_trait.can_add(myseed))
+			myseed.genes += snip.stored_trait
 			return
 		myseed.genes += snip.stored_trait
+		//Alright this one's a mess, but it's either 2/3rds of the difference of the two seed's respective stats, and the higher of the two is taken. Min 0, max 100.
+		myseed.potency =  round(clamp(max(myseed.potency,(myseed.potency+(2/3)*(snip.parent_seed.potency-myseed.potency))),0,100))
+		myseed.lifespan =  round(clamp(max(myseed.lifespan,(myseed.lifespan+(2/3)*(snip.parent_seed.lifespan-myseed.lifespan))),0,100))
+		myseed.endurance =  round(clamp(max(myseed.endurance,(myseed.endurance+(2/3)*(snip.parent_seed.endurance-myseed.endurance))),0,100))
+		myseed.production = round(clamp(max(myseed.production,(myseed.production+(2/3)*(snip.parent_seed.production-myseed.production))),0,100))
+		myseed.weed_rate = round(clamp(max(myseed.weed_rate,(myseed.weed_rate+(2/3)*(snip.parent_seed.weed_rate-myseed.weed_rate))),0,100))
+		myseed.weed_chance = round(clamp(max(myseed.weed_chance,(myseed.weed_chance+(2/3)*(snip.parent_seed.weed_chance-myseed.weed_chance))),0,100))
+		myseed.yield = round(clamp(max(myseed.yield,(myseed.yield+(2/3)*(snip.parent_seed.yield-myseed.yield))),0,10))
 		qdel(snip)
 		to_chat(user, "<span class='notice'>You carefully integrate the grafted plant limb onto [myseed.plantname].</span>")
 		return

@@ -12,6 +12,8 @@ A new subsystem for hydroponics, as a way to share specific traits into plants, 
 	var/datum/plant_gene/trait/stored_trait
 	///Determines the appearance of the graft. Rudimentary right now so it just picks randomly.
 	var/graft_appearance
+	///Seed type that the graft was taken from, used for applying parent stats.
+	var/obj/item/seeds/parent_seed = null
 
 /obj/item/graft/Initialize()
 	. = ..()
