@@ -1,5 +1,0 @@
-author: "nightred"
-delete-after: True
-changes: 
-  - code_imp: "Created two_handed component"
-  - refactor: "Updated all existing two handed items to use the new component"

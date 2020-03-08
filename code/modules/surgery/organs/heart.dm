@@ -91,6 +91,9 @@
 		owner.set_heartattack(TRUE)
 		failed = TRUE
 
+/obj/item/organ/heart/get_availability(datum/species/S)
+	return !(NOBLOOD in S.species_traits)
+
 /obj/item/organ/heart/cursed
 	name = "cursed heart"
 	desc = "A heart that, when inserted, will force you to pump it manually."

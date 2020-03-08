@@ -9,7 +9,7 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
 	exotic_bloodtype = "U"
 	use_skintones = TRUE
-	mutant_heart = /obj/item/organ/heart/vampire
+	mutantheart = /obj/item/organ/heart/vampire
 	mutanttongue = /obj/item/organ/tongue/vampire
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human

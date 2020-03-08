@@ -100,14 +100,14 @@
 		unwield(user, show_message=TRUE)
 	if(wielded)
 		unwield(user)
-	if(source == offhand_item && !QDELETED(src))
-		qdel(src)
+	if(source == offhand_item && !QDELETED(source))
+		qdel(source)
 
 /// Triggered on attack self of the item containing the component
 /datum/component/two_handed/proc/on_attack_self(datum/source, mob/user)
 	if(wielded)
 		unwield(user)
-	else
+	else if(user.is_holding(parent))
 		wield(user)
 
 /**
@@ -177,7 +177,7 @@
  * * show_message (option) show a message to chat on unwield
  */
 /datum/component/two_handed/proc/unwield(mob/living/carbon/user, show_message=TRUE)
-	if(!wielded || !user)
+	if(!wielded)
 		return
 
 	// wield update status
@@ -300,6 +300,10 @@
 	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/wielded = FALSE // Off Hand tracking of wielded status
+
+/obj/item/offhand/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /obj/item/offhand/Destroy()
 	wielded = FALSE
