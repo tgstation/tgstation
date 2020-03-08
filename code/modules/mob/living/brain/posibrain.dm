@@ -172,7 +172,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		. += "[dead_message]"
 		if(ask_role)
 			. += "<span class='notice'>Current consciousness seed: \"[ask_role]\"</span>"
-		. += "<span class='boldnotice'>Alt-click to set a consciousness seed, specifying what [src] will be used for. This can help generate a personality in that role.</span>"
+		. += "<span class='boldnotice'>Alt-click to set a consciousness seed, specifying what [src] will be used for. This can help generate a personality interested in that role.</span>"
 
 /obj/item/mmi/posibrain/Initialize()
 	. = ..()
