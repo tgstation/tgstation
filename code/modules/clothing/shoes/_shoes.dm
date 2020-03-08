@@ -132,7 +132,12 @@
 			return
 
 		to_chat(user, "<span class='notice'>You quietly set to work [tied ? "untying" : "knotting"] [loc]'s [src.name]...</span>")
-		if(do_after(user, lace_time, needhand=TRUE, target=src))
+
+		var/mod_time = lace_time
+		if(HAS_TRAIT(user, TRAIT_CLUMSY)) // based clowns trained their whole lives for this
+			mod_time *= 0.75
+
+		if(do_after(user, mod_time, needhand=TRUE, target=src))
 			if(tied == SHOES_UNTIED)
 				to_chat(user, "<span class='notice'>You knot [loc]'s [src.name].</span>")
 				knot(user)
