@@ -17,6 +17,7 @@
 	var/icon_dead					// Used to override dead icon (default is "[species]-dead"). You can use one dead icon for multiple closely related plants with it.
 	var/icon_harvest				// Used to override harvest icon (default is "[species]-harvest"). If null, plant will use [icon_grow][growthstages].
 
+<<<<<<< HEAD
 	/// How long before the plant begins to take damage from age.
 	var/lifespan = 25
 	/// Amount of health the plant has.
@@ -37,6 +38,20 @@
 	var/list/mutatelist = list()
 	/// Plant genes are stored here, see plant_genes.dm for more info.
 	var/list/genes = list()
+=======
+	var/lifespan = 25				// How long before the plant begins to take damage from age.
+	var/endurance = 15				// Amount of health the plant has.
+	var/maturation = 6				// Used to determine which sprite to switch to when growing.
+	var/production = 6				// Changes the amount of time needed for a plant to become harvestable.
+	var/yield = 3					// Amount of growns created per harvest. If is -1, the plant/shroom/weed is never meant to be harvested.
+	var/potency = 10				// The 'power' of a plant. Generally effects the amount of reagent in a plant, also used in other ways.
+	var/growthstages = 6			// Amount of growth sprites the plant has.
+	var/rarity = 0					// How rare the plant is. Used for giving points to cargo when shipping off to CentCom.
+	var/stability = 5				// Chance that a plant will mutate in each stage of it's life.
+
+	var/list/mutatelist = list()	// The type of plants that this plant can mutate into.
+	var/list/genes = list()			// Plant genes are stored here, see plant_genes.dm for more info.
+>>>>>>> greenhell
 	var/list/reagents_add = list()
 	// A list of reagents to add to product.
 	// Format: "reagent_id" = potency multiplier
@@ -76,6 +91,7 @@
 			genes += new /datum/plant_gene/core/production(production)
 		if(potency != -1)
 			genes += new /datum/plant_gene/core/potency(potency)
+			genes += new /datum/plant_gene/core/stability(stability)
 
 		for(var/p in genes)
 			if(ispath(p))
@@ -99,6 +115,7 @@
 	S.production = production
 	S.yield = yield
 	S.potency = potency
+	S.stability = stability
 	S.weed_rate = weed_rate
 	S.weed_chance = weed_chance
 	S.name = name
@@ -306,6 +323,13 @@
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/potency)
 		if(C)
 			C.value = potency
+
+/obj/item/seeds/proc/set_stability(adjustamt)
+	if(stability != -1)
+		stability = CLAMP(adjustamt, 0, 100)
+		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/stability)
+		if(C)
+			C.value = stability
 
 /obj/item/seeds/proc/set_weed_rate(adjustamt)
 	weed_rate = clamp(adjustamt, 0, 10)
