@@ -1,3 +1,4 @@
+import { Fragment } from 'inferno';
 import { useBackend } from "../backend";
 import { Section, Box, Button, NoticeBox, ProgressBar, LabeledList } from "../components";
 
@@ -15,7 +16,7 @@ export const AiRestorer = props => {
   } = data;
 
   return (
-    <Section>
+    <Fragment>
       {error && (
         <NoticeBox textAlign="center">
           {error}
@@ -33,7 +34,6 @@ export const AiRestorer = props => {
       {!!AI_present && (
         <Section
           title={ejectable ? "System Status" : name}
-          level={2}
           buttons={(
             <Box
               inline
@@ -82,6 +82,6 @@ export const AiRestorer = props => {
           </Section>
         </Section>
       )}
-    </Section>
+    </Fragment>
   );
 };
