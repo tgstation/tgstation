@@ -158,6 +158,13 @@
 	. = ..()
 	return default_deconstruction_crowbar(I) || .
 
+//for some reason, in testing, cyborgs were unable to unbuckle people from stasis beds unless this extension of attack_robot() here was present, so I guess it stays in
+/obj/machinery/stasis/attack_robot(mob/user)
+	if(Adjacent(user) && occupant)
+		unbuckle_mob(occupant)
+	else
+		..()
+
 /obj/machinery/stasis/nap_violation(mob/violator)
 	unbuckle_mob(violator, TRUE)
 #undef STASIS_TOGGLE_COOLDOWN
