@@ -26,20 +26,20 @@ export const Vending = props => {
   }
   return (
     <Fragment>
-      {data.onstation && (
+      {!!data.onstation && (
         <Section title="User">
           {data.user && (
             <Box>
-            Welcome, <b>{data.user.name}</b>,
+              Welcome, <b>{data.user.name}</b>,
               {' '}
               <b>{data.user.job || "Unemployed"}</b>!
               <br />
-            Your balance is <b>{data.user.cash} credits</b>.
+              Your balance is <b>{data.user.cash} credits</b>.
             </Box>
           ) || (
             <Box color="light-gray">
-            No registered ID card!<br />
-            Please contact your local HoP!
+              No registered ID card!<br />
+              Please contact your local HoP!
             </Box>
           )}
         </Section>

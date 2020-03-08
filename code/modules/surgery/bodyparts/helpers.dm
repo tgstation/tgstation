@@ -290,7 +290,7 @@
 		body_plan_changed = TRUE
 		O.drop_limb(1)
 		qdel(O)
-		N.attach_limb(src)
+		N.attach_limb(src) //no sanity for if this fails here because we just dropped out a limb of the same zone, SHOULD be okay
 	if(body_plan_changed && ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(H.w_uniform)

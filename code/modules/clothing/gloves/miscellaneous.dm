@@ -77,6 +77,8 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
+	permeability_coefficient = 0.05
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 95, "acid" = 95)
 
 /obj/item/clothing/gloves/color/plasmaman/black
 	name = "black envirogloves"
@@ -107,11 +109,13 @@
 	name = "engineering envirogloves"
 	icon_state = "engieplasma"
 	item_state = "engieplasma"
+	siemens_coefficient = 0
 
 /obj/item/clothing/gloves/color/plasmaman/atmos
 	name = "atmos envirogloves"
 	icon_state = "atmosplasma"
 	item_state = "atmosplasma"
+	siemens_coefficient = 0
 
 /obj/item/clothing/gloves/color/plasmaman/explorer
 	name = "explorer envirogloves"
@@ -123,6 +127,8 @@
 	desc = "Covers up those scandalous boney hands."
 	icon_state = "botanyplasma"
 	item_state = "botanyplasma"
+	permeability_coefficient = 0.05
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 95, "acid" = 95)
 
 /obj/item/clothing/gloves/color/plasmaman/prototype
 	name = "prototype envirogloves"
@@ -133,4 +139,4 @@
 	name = "clown envirogloves"
 	icon_state = "clownplasma"
 	item_state = "clownplasma"
-	
+
