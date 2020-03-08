@@ -17,6 +17,7 @@
 	resistance_flags = NONE
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	lace_time = 10 SECONDS
 
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
@@ -33,6 +34,7 @@
 	strip_delay = 5
 	equip_delay_other = 50
 	permeability_coefficient = 0.9
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
@@ -76,6 +78,7 @@
 	slowdown = SHOES_SLOWDOWN+1
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/clown
 	var/enabled_waddle = TRUE
+	lace_time = 16 SECONDS
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
@@ -125,6 +128,7 @@
 	resistance_flags = NONE
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	lace_time = 8 SECONDS
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
@@ -152,6 +156,7 @@
 	strip_delay = 20
 	equip_delay_other = 40
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	lace_time = 7 SECONDS
 
 /obj/item/clothing/shoes/workboots/mining
 	name = "mining boots"
@@ -332,6 +337,7 @@
 	icon_state = "rus_shoes"
 	item_state = "rus_shoes"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	lace_time = 8 SECONDS
 
 /obj/item/clothing/shoes/cowboy
 	name = "cowboy boots"
@@ -342,6 +348,7 @@
 	custom_price = 60
 	var/list/occupants = list()
 	var/max_occupants = 4
+	lace_time = 8 SECONDS
 
 /obj/item/clothing/shoes/cowboy/Initialize()
 	. = ..()
@@ -419,6 +426,7 @@
 	desc = "All this talk of antags, greytiding, and griefing... I just wanna grill for god's sake!"
 	name = "grilling sandals"
 	icon_state = "cookflops"
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/yakuza
 	name = "tojo clan shoes"

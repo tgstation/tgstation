@@ -157,8 +157,11 @@
 	if(ITEM_SLOT_FEET in obscured)
 		dat += "<tr><td><font color=grey><B>Shoes:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
 	else
-		dat += "<tr><td><B>Shoes:</B></td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_FEET]'>[(shoes && !(shoes.item_flags & ABSTRACT))		? shoes		: "<font color=grey>Empty</font>"]</A></td></tr>"
+		dat += "<tr><td><B>Shoes:</B></td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_FEET]'>[(shoes && !(shoes.item_flags & ABSTRACT))		? shoes		: "<font color=grey>Empty</font>"]</A>"
+		if(shoes && shoes.can_be_tied && shoes.tied != SHOES_KNOTTED)
+			dat += "&nbsp;<A href='?src=[REF(src)];shoes=[ITEM_SLOT_FEET]'>[shoes.tied ? "Untie shoes" : "Knot shoes"]</A>"
 
+		dat += "</td></tr>"
 	if(ITEM_SLOT_GLOVES in obscured)
 		dat += "<tr><td><font color=grey><B>Gloves:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
 	else
@@ -269,6 +272,9 @@
 			update_inv_w_uniform()
 			update_body()
 
+	var/mob/living/user = usr
+	if(istype(user) && href_list["shoes"] && (user.mobility_flags & MOBILITY_USE)) // we need to be on the ground, so we'll be a bit looser
+		shoes.handle_tying(usr)
 
 ///////HUDs///////
 	if(href_list["hud"])
@@ -726,8 +732,8 @@
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
 	cut_overlay(MA)
 
-/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
-	if(!(mobility_flags & MOBILITY_UI))
+/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, floor_okay=FALSE)
+	if(!(mobility_flags & MOBILITY_UI) && !floor_okay)
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
 	if(!Adjacent(M) && (M.loc != src))
