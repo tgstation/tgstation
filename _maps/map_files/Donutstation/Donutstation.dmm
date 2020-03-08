@@ -3457,8 +3457,7 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Civilian - Arcade";
-	dir = 2
+	c_tag = "Civilian - Arcade"
 	},
 /turf/open/floor/carpet/black,
 /area/crew_quarters/fitness/recreation)
@@ -4171,8 +4170,8 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aki" = (
-/obj/structure/table,
 /obj/item/electropack,
+/obj/structure/table,
 /obj/item/assembly/signaler,
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -4273,14 +4272,12 @@
 "aku" = (
 /obj/structure/stairs/north,
 /obj/structure/railing{
-	icon_state = "railing";
 	dir = 8
 	},
 /turf/open/floor/plasteel/stairs,
 /area/hydroponics)
 "akv" = (
 /obj/structure/railing{
-	icon_state = "railing";
 	dir = 8
 	},
 /turf/open/floor/plasteel/stairs,
@@ -7485,7 +7482,6 @@
 	dir = 8
 	},
 /obj/structure/railing{
-	icon_state = "railing";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -7507,7 +7503,6 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Prison Eastern Hall";
-	dir = 2;
 	network = list("ss13","Security","Prison")
 	},
 /turf/open/floor/plasteel,
@@ -8279,7 +8274,6 @@
 /area/security/brig)
 "asX" = (
 /obj/structure/railing{
-	icon_state = "railing";
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -8966,8 +8960,7 @@
 /area/engine/atmos)
 "auF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/mix_output{
-	dir = 8;
-	id_tag = "mix_out"
+	dir = 8
 	},
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
@@ -12105,7 +12098,6 @@
 	dir = 8
 	},
 /obj/structure/railing{
-	icon_state = "railing";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -12327,7 +12319,6 @@
 	dir = 4
 	},
 /obj/structure/railing{
-	icon_state = "railing";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -13063,7 +13054,6 @@
 	dir = 8
 	},
 /obj/structure/railing{
-	icon_state = "railing";
 	dir = 8
 	},
 /obj/machinery/vending/cola/random,
@@ -16357,7 +16347,7 @@
 /area/library)
 "aLD" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/bookmanagement,
 /turf/open/floor/carpet,
 /area/library)
 "aLE" = (
@@ -19541,7 +19531,7 @@
 /area/maintenance/disposal/incinerator)
 "aSY" = (
 /obj/structure/table,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/bookmanagement,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/prison/rec)
@@ -19699,7 +19689,6 @@
 	},
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Power Bridge Lower";
-	dir = 2;
 	network = list("AISat")
 	},
 /turf/open/floor/plasteel/dark,
@@ -20190,7 +20179,6 @@
 	},
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Antechamber North #2";
-	dir = 2;
 	network = list("AISat")
 	},
 /turf/open/floor/plasteel/dark,
@@ -20244,7 +20232,6 @@
 	},
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Antechamber Airlock West";
-	dir = 2;
 	network = list("AISat")
 	},
 /turf/open/floor/plasteel/dark,
@@ -20275,7 +20262,6 @@
 	},
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Antechamber Airlock East";
-	dir = 2;
 	network = list("AISat")
 	},
 /turf/open/floor/plasteel/dark,
@@ -20594,7 +20580,6 @@
 	},
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Exterior Bridge South";
-	dir = 2;
 	network = list("AISat")
 	},
 /obj/machinery/light/small{
@@ -20805,7 +20790,6 @@
 /obj/structure/lattice,
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Antechamber Exterior South";
-	dir = 2;
 	network = list("AISat")
 	},
 /turf/open/space/basic,
@@ -20814,7 +20798,6 @@
 /obj/structure/lattice,
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Antechamber Exterior South #2";
-	dir = 2;
 	network = list("AISat")
 	},
 /turf/open/space/basic,
@@ -25289,8 +25272,7 @@
 	},
 /obj/structure/table/glass,
 /obj/item/storage/box/masks{
-	pixel_x = 4;
-	pixel_z = 0
+	pixel_x = 4
 	},
 /obj/item/storage/box/gloves{
 	pixel_x = -4
@@ -37774,7 +37756,6 @@
 	dir = 8
 	},
 /obj/machinery/door/window/westleft{
-	dir = 8;
 	name = "Cargo Packages";
 	req_access_txt = "55"
 	},
@@ -46738,7 +46719,6 @@
 	height = 22;
 	id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Port";
-	roundstart_template = null;
 	width = 35
 	},
 /turf/open/space/basic,
@@ -48568,6 +48548,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"lMl" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/item/storage/box/prisoner,
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/security/processing)
 "lNg" = (
 /obj/machinery/door/airlock/public/glass,
 /obj/effect/turf_decal/delivery,
@@ -102507,7 +102493,7 @@ anY
 bEO
 aDP
 aDP
-aFX
+lMl
 aNU
 aNU
 aNU

@@ -481,7 +481,7 @@
 /area/security/prison)
 "abl" = (
 /obj/structure/table,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/bookmanagement,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -64517,7 +64517,7 @@
 /area/hallway/primary/central)
 "cVe" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/bookmanagement,
 /obj/structure/noticeboard{
 	desc = "A board for pinning important notices upon. Probably helpful for keeping track of requests.";
 	dir = 8;
@@ -77104,7 +77104,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "vGs" = (
-/obj/item/broom,
+/obj/item/pushbroom,
 /obj/structure/closet{
 	name = "janitorial supplies"
 	},

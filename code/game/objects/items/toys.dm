@@ -452,6 +452,7 @@
 		pop_burst()
 
 /obj/item/toy/snappop/Crossed(H as mob|obj)
+	. = ..()
 	if(ishuman(H) || issilicon(H)) //i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
 		if(issilicon(H) || M.m_intent == MOVE_INTENT_RUN)
