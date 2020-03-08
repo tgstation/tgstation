@@ -950,14 +950,8 @@
 	if(!myseed.get_gene(/datum/plant_gene/trait/repeated_harvest))
 		qdel(myseed)
 		myseed = null
-<<<<<<< HEAD
 		dead = FALSE
-		name = initial(name)
-		desc = initial(desc)
-=======
-		dead = 0
 		TRAY_NAME_UPDATE
->>>>>>> upstream/master
 	update_icon()
 
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.///
