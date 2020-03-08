@@ -430,7 +430,7 @@
 ///Design for [/obj/item/organ/cyberimp/brain/neural_override]
 /datum/design/cyberimp_override
 	name = "Neural Override Implant"
-	desc = "This cybernetic brain implant, when connected to a sentient brain, can be implanted to a host to let the brain take control of its body at will."
+	desc = "This cybernetic brain implant, when connected to an MMI or positronic brain, can be implanted to a host to let the brain take control of its body at will."
 	id = "ci-override"
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 80

@@ -164,7 +164,7 @@
 */
 /obj/item/organ/cyberimp/brain/neural_override
 	name = "neural override implant"
-	desc = "This cybernetic brain implant, when connected to a sentient brain, can be implanted to a host to let the brain take control of its body at will."
+	desc = "This cybernetic brain implant, when connected to an MMI or positronic brain, can be implanted to a host to let it take control of their body at will."
 	slot = ORGAN_SLOT_BRAIN_OVERRIDE
 	icon_state = "override_implant_empty"
 	implant_overlay = null
@@ -193,10 +193,10 @@
 	override_backseat.assume_control.UpdateButtonIcon()
 
 /obj/item/organ/cyberimp/brain/neural_override/Destroy()
-	//Even if it would normally be handled by Remove, this needs to be done before removing the brain or the controllers will remain permanently switched
+	//Even if it would normally be handled by Remove, this needs to be done before removing the mmi or the controllers will remain permanently switched
 	if(owner && current_controller == OVERRIDER)
 		switch_control()
-	remove_brain()
+	remove_mmi()
 
 	return ..()
 
@@ -257,7 +257,7 @@
 		var/obj/item/mmi/mmi = I
 		if(mmi.brainmob && mmi.brainmob.mind && (mmi.brainmob.client || mmi.brainmob.grab_ghost())) //Check that the mmi has a player controlling it
 			if(overrider_mmi) //Replace existing backseat with new one
-				remove_brain(user)
+				remove_mmi(user)
 			override_backseat = new(src, src)
 			to_chat(user, "<span class='notice'>You install [mmi] into [src].</span>")
 			mmi.brainmob.mind.transfer_to(override_backseat)
@@ -265,12 +265,12 @@
 			overrider_mmi = mmi
 			update_icon()
 		else
-			to_chat(user, "<span class='warning'>The implant's interface rejects the brain. It appears that it is no longer sentient.</span>")
+			to_chat(user, "<span class='warning'>The implant's interface rejects [mmi]. It appears that it lacks sentient thought.</span>")
 	else
 		return ..()
 
 ///Places the overrider's client back into the brain and removes it
-/obj/item/organ/cyberimp/brain/neural_override/proc/remove_brain(mob/living/user)
+/obj/item/organ/cyberimp/brain/neural_override/proc/remove_mmi(mob/living/user)
 	if(QDELETED(override_backseat) || QDELETED(overrider_mmi))
 		return
 	if(!istype(user) || !Adjacent(user) || !user.put_in_active_hand(overrider_mmi))
@@ -286,7 +286,7 @@
 /obj/item/organ/cyberimp/brain/neural_override/AltClick(mob/user)
 	if(overrider_mmi && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		to_chat(user, "<span class='notice'>You remove [overrider_mmi] from [src].</span>")
-		remove_brain(user)
+		remove_mmi(user)
 
 /obj/item/organ/cyberimp/brain/neural_override/update_icon_state()
 	if(overrider_mmi)
@@ -297,7 +297,7 @@
 /obj/item/organ/cyberimp/brain/neural_override/examine(mob/user)
 	. = ..()
 	if(!overrider_mmi)
-		. += "<span class='notice'>Insert a conscious brain before implanting.</span>"
+		. += "<span class='notice'>Insert a conscious MMI or positronic brain before implanting.</span>"
 	else
 		. += "<span class='notice'>Alt-click to remove [overrider_mmi].</span>"
 
@@ -349,10 +349,6 @@
 /mob/living/neural_storage/victim/Login()
 	..()
 	to_chat(src, "<span class='notice'>You're currently not in control of your body! All you can do is hope that you'll regain control of it eventually...</span>")
-
-/mob/living/neural_storage/overrider/Login()
-	..()
-	to_chat(src, "<span class='notice'>You're the mind inside [src]. Once installed into a body, you can assume control of it at any time.</span>")
 
 ///The victim cannot speak while not in control
 /mob/living/neural_storage/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
