@@ -89,8 +89,8 @@
 		return
 
 	var/list/tool_list = list(
-		"Up" = image(icon = 'icons/mob/actions/actions_minor_antag.dmi', icon_state = "beam_up"),
-		"Down" = image(icon = 'icons/mob/actions/actions_minor_antag.dmi', icon_state = "beam_down")
+		"Up" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "arrow", dir = NORTH),
+		"Down" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "arrow", dir = SOUTH)
 		)
 
 	if (up && down)
