@@ -4,6 +4,12 @@
 	caliber = "38"
 	max_ammo = 6
 
+/obj/item/ammo_box/magazine/internal/cylinder/rev8
+	name = "Modèle 1892 revolver cylinder"
+	ammo_type = /obj/item/ammo_casing/fo8
+	caliber = "8"
+	max_ammo = 6
+
 /obj/item/ammo_box/magazine/internal/cylinder/rev762
 	name = "\improper Nagant revolver cylinder"
 	ammo_type = /obj/item/ammo_casing/n762

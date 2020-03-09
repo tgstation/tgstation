@@ -51,6 +51,18 @@
 		/obj/item/ammo_box/c38 = 2)
 	generate_items_inside(items_inside,src)
 
+/obj/item/storage/belt/holster/detective/vpndet
+	name = "police nationale patrolman's holster"
+	desc = "A holster to carry a handgun and ammo."
+	icon_state = "vpndet"
+	item_state = "vpndet"
+
+/obj/item/storage/belt/holster/detective/vpndet/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/gun/ballistic/revolver/detective/modele1892 = 1,
+		/obj/item/ammo_box/fo8 = 2)
+	generate_items_inside(items_inside,src)
+
 /obj/item/storage/belt/holster/chameleon
 	name = "syndicate holster"
 	desc = "A two pouched hip holster that uses chameleon technology to disguise itself and any guns in it."

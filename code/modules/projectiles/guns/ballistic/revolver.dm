@@ -84,10 +84,7 @@
 						"Police Positive Special" = "detective_police",
 						"Blued Steel" = "detective_blued",
 						"Stainless Steel" = "detective_stainless",
-						"Gold Trim" = "detective_gold",
-						"Leopard Spots" = "detective_leopard",
-						"The Peacemaker" = "detective_peacemaker",
-						"Black Panther" = "detective_panther"
+						"Gold Trim" = "detective_gold"
 						)
 
 /obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
@@ -133,6 +130,14 @@
 			to_chat(user, "<span class='notice'>You remove the modifications on [src]. Now it will fire .38 rounds.</span>")
 	return TRUE
 
+/obj/item/gun/ballistic/revolver/detective/modele1892
+	name = "\improper Modèle 1892 revolver"
+	desc = "A french smokeless powder revolver produced by Manufacture d'armes de Saint-Étienne. Fires a special 8mm cartridge."
+	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
+	icon_state = "modele1892"
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev8
+	unique_reskin = null
+	obj_flags = null
 
 /obj/item/gun/ballistic/revolver/mateba
 	name = "\improper Unica 6 auto-revolver"

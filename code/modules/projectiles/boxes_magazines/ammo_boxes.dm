@@ -31,6 +31,15 @@
 	desc = "Designed to quickly reload revolvers. Iceblox bullets contain a cryogenic payload."
 	ammo_type = /obj/item/ammo_casing/c38/iceblox
 
+/obj/item/ammo_box/fo8
+	name = "speed loader (8mm French Ordnance)"
+	desc = "The future is now."
+	ammo_type = /obj/item/ammo_casing/fo8
+	icon_state = "8mmloader"
+	max_ammo = 6
+	multiple_sprites = AMMO_BOX_PER_BULLET
+	custom_materials = list(/datum/material/iron = 20000)
+
 /obj/item/ammo_box/c9mm
 	name = "ammo box (9mm)"
 	icon_state = "9mmbox"

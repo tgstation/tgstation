@@ -574,6 +574,14 @@
 	build_path = /obj/item/ammo_box/c38
 	category = list("initial", "Security")
 
+/datum/design/fo8
+	name = "Speed Loader (8mm French Ordnance)"
+	id = "fo8"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 20000)
+	build_path = /obj/item/ammo_box/fo8
+	category = list("initial", "Security")
+
 /datum/design/recorder
 	name = "Universal Recorder"
 	id = "recorder"

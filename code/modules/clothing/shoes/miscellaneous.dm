@@ -126,6 +126,12 @@
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 
+/obj/item/clothing/shoes/jackboots/vpndet
+	name = "police nationale service boots"
+	desc = "Walk in the footsteps of those who came before."
+	icon_state = "vpndet"
+	item_state = "vpndet"
+
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
 

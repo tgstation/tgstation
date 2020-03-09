@@ -8,6 +8,12 @@
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/fo8/sec
+	id = "fo8"
+	build_type = PROTOLATHE
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 /datum/design/c38_trac
 	name = "Speed Loader (.38 TRAC)"
 	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body."

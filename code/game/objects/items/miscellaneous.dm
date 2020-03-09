@@ -106,6 +106,52 @@
 	new /obj/item/toy/crayon/spraycan(src)
 	new /obj/item/clothing/shoes/sandal(src)
 
+/obj/item/choice_beacon/detective
+	name = "detective beacon"
+	desc = "Summons equipment befitting a detective."
+
+/obj/item/choice_beacon/detective/generate_display_names()
+	var/static/list/detective_item_list
+	if(!detective_item_list)
+		detective_item_list = list()
+		var/list/templist = typesof(/obj/item/storage/box/detective) //we have to convert type = name to name = type, how lovely!
+		for(var/V in templist)
+			var/atom/A = V
+			detective_item_list[initial(A.name)] = A
+	return detective_item_list
+
+
+/obj/item/storage/box/detective
+	name = "Classic Noir"
+
+/obj/item/storage/box/detective/PopulateContents()
+	new /obj/item/clothing/under/rank/security/detective(src)
+	new /obj/item/clothing/suit/det_suit(src)
+	new /obj/item/clothing/head/fedora/det_hat(src)
+	new /obj/item/clothing/shoes/sneakers/brown(src)
+	new /obj/item/storage/belt/holster/detective/full(src)
+
+/obj/item/storage/box/detective/grey
+	name = "L.A. Noir"
+
+/obj/item/storage/box/detective/grey/PopulateContents()
+	new /obj/item/clothing/under/rank/security/detective/grey(src)
+	new /obj/item/clothing/accessory/waistcoat(src)
+	new /obj/item/clothing/suit/det_suit/grey(src)
+	new /obj/item/clothing/head/fedora(src)
+	new /obj/item/clothing/shoes/sneakers/black(src)
+	new /obj/item/storage/belt/holster/detective/full(src)
+
+/obj/item/storage/box/detective/vnp
+	name = "Police Nationale Patrolman"
+
+/obj/item/storage/box/detective/vnp/PopulateContents()
+	new /obj/item/clothing/under/rank/security/detective/vpndet(src)
+	new /obj/item/clothing/head/vpndet(src)
+	new /obj/item/toy/crayon/spraycan(src)
+	new /obj/item/clothing/shoes/jackboots/vpndet(src)
+	new /obj/item/storage/belt/holster/detective/vpndet(src)
+
 /obj/item/choice_beacon/augments
 	name = "augment beacon"
 	desc = "Summons augmentations. Can be used 3 times!"

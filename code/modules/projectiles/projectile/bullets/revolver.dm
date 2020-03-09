@@ -55,6 +55,10 @@
 		var/mob/living/M = target
 		M.adjust_bodytemperature(((100-blocked)/100)*(temperature - M.bodytemperature))
 
+/obj/projectile/bullet/fo8
+	name = "8mm French Ordnance bullet"
+	damage = 25
+
 // .357 (Syndie Revolver)
 
 /obj/projectile/bullet/a357

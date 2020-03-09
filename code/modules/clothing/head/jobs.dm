@@ -95,6 +95,11 @@
 			else
 				to_chat(user, "<span class='warning'>You just took a candy corn! You should wait a couple minutes, lest you burn through your stash.</span>")
 
+/obj/item/clothing/head/vpndet
+	name = "police nationale patrolman's kepi"
+	desc = "Que reste-t-il de nos amours ?"
+	icon_state = "vpndet"
+	armor = list("melee" = 25, "bullet" = 5, "laser" = 25, "energy" = 35, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 50)
 
 //Mime
 /obj/item/clothing/head/beret

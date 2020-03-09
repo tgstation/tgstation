@@ -181,18 +181,11 @@
 
 /obj/structure/closet/secure_closet/detective/PopulateContents()
 	..()
+	new /obj/item/choice_beacon/detective(src)
 	new /obj/item/clothing/under/rank/security/detective(src)
-	new /obj/item/clothing/under/rank/security/detective/skirt(src)
 	new /obj/item/clothing/suit/det_suit(src)
 	new /obj/item/clothing/head/fedora/det_hat(src)
 	new /obj/item/clothing/gloves/color/black(src)
-	new /obj/item/clothing/under/rank/security/detective/grey(src)
-	new /obj/item/clothing/under/rank/security/detective/grey/skirt(src)
-	new /obj/item/clothing/accessory/waistcoat(src)
-	new /obj/item/clothing/suit/det_suit/grey(src)
-	new /obj/item/clothing/suit/det_suit/noir(src)
-	new /obj/item/clothing/head/fedora(src)
-	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/storage/box/evidence(src)
 	new /obj/item/radio/headset/headset_sec(src)
 	new /obj/item/detective_scanner(src)
@@ -200,10 +193,10 @@
 	new /obj/item/holosign_creator/security(src)
 	new /obj/item/reagent_containers/spray/pepper(src)
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
-	new /obj/item/storage/belt/holster/detective/full(src)
 	new /obj/item/pinpointer/crew(src)
 	new /obj/item/binoculars(src)
 	new /obj/item/storage/box/rxglasses/spyglasskit(src)
+
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections"
 	req_access = list(ACCESS_HOS)
