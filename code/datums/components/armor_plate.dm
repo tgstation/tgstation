@@ -77,7 +77,7 @@
 /datum/component/armor_plate/proc/dropplates(datum/source, force)
 	if(ismecha(parent)) //items didn't drop the plates before and it causes erroneous behavior for the time being with collapsible helmets
 		for(var/i in 1 to amount)
-			new upgrade_item(parent.drop_location())
+			new upgrade_item(drop_location())// component/drop_location() redirects to parent.drop_location()
 
 /datum/component/armor_plate/proc/apply_mech_overlays(obj/mecha/mech, list/overlays)
 	if(amount)
