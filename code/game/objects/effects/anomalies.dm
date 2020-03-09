@@ -84,10 +84,12 @@
 	if(I.tool_behaviour == TOOL_ANALYZER)
 		to_chat(user, "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code].</span>")
 
+///freeze the anomaly and dont let it move or do weird anomaly stuff
 /obj/effect/anomaly/proc/Suspend()
 	suspended = TRUE
 	countdown.stop()
 
+///unfreeze the anomaly and LET IT RIP
 /obj/effect/anomaly/proc/Unsuspend()
 	suspended = FALSE
 	countdown.start()
@@ -415,6 +417,7 @@
 		smoke.set_up(reagents, smoke_range, get_turf(src), TRUE)
 		smoke.start()
 
+///Set the reagent type of the anomaly, including the beautiful color
 /obj/effect/anomaly/fluid/proc/SetReagent(datum/reagent/R)
 	reagent_type = R
 
