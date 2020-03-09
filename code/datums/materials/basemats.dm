@@ -248,6 +248,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	if(istype(source, /obj/item))
 		qdel(source.GetComponent(/datum/component/fantasy))
 
+//formed when freon react with o2, emits a lot of plasma when heated
 /datum/material/hot_ice
 	name = "hot ice"
 	id = "hot ice"
@@ -261,8 +262,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/hot_ice/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	source.AddComponent(/datum/component/hot_ice, "plasma", amount*500, amount*20+300)
+	source.AddComponent(/datum/component/hot_ice, "plasma", amount*50, amount*20+300)
 
-/datum/material/hot_ice/on_removed_obj(atom/source, amount, material_flags)
+/datum/material/hot_ice/on_removed(atom/source, amount, material_flags)
 	. = ..()
 	qdel(source.GetComponent(/datum/component/hot_ice, "plasma", amount*50, amount*20+300))
