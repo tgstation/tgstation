@@ -229,3 +229,10 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
+
+/obj/item/clothing/under/rank/security/officer/beatcop
+	name = "space police uniform"
+	desc = "A police uniform often found in the lines at donut shops."
+	icon_state = "spacepolice_families"
+	item_state = "spacepolice_families"
+	can_adjust = FALSE

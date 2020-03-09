@@ -2,13 +2,14 @@
 /datum/species/human/felinid
 	name = "Felinid"
 	id = "felinid"
+	say_mod = "meows"
 	limbs_id = "human"
 
 	mutant_bodyparts = list("ears", "tail_human")
 	default_features = list("mcolor" = "FFF", "tail_human" = "Cat", "ears" = "Cat", "wings" = "None")
 
 	mutantears = /obj/item/organ/ears/cat
-	mutanttail = /obj/item/organ/tail/cat
+	mutant_organs = list(/obj/item/organ/tail/cat)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	var/original_felinid = TRUE //set to false for felinids created by mass-purrbation
 
@@ -60,36 +61,8 @@
 			var/obj/item/organ/tail/cat/tail = new
 			tail.Insert(H, drop_if_replaced = FALSE)
 		else
-			mutanttail = null
+			mutant_organs = list()
 	return ..()
-
-/datum/species/human/felinid/on_species_loss(mob/living/carbon/H, datum/species/new_species, pref_load)
-	var/obj/item/organ/ears/cat/ears = H.getorgan(/obj/item/organ/ears/cat)
-	var/obj/item/organ/tail/cat/tail = H.getorgan(/obj/item/organ/tail/cat)
-
-	if(ears)
-		var/obj/item/organ/ears/NE
-		if(new_species && new_species.mutantears)
-			// Roundstart cat ears override new_species.mutantears, reset it here.
-			new_species.mutantears = initial(new_species.mutantears)
-			if(new_species.mutantears)
-				NE = new new_species.mutantears
-		if(!NE)
-			// Go with default ears
-			NE = new /obj/item/organ/ears
-		NE.Insert(H, drop_if_replaced = FALSE)
-
-	if(tail)
-		var/obj/item/organ/tail/NT
-		if(new_species && new_species.mutanttail)
-			// Roundstart cat tail overrides new_species.mutanttail, reset it here.
-			new_species.mutanttail = initial(new_species.mutanttail)
-			if(new_species.mutanttail)
-				NT = new new_species.mutanttail
-		if(NT)
-			NT.Insert(H, drop_if_replaced = FALSE)
-		else
-			tail.Remove(H)
 
 /proc/mass_purrbation()
 	for(var/M in GLOB.mob_list)
@@ -140,8 +113,9 @@
 		for(var/obj/item/organ/current_organ in organs)
 			if(istype(current_organ, /obj/item/organ/tail/cat))
 				current_organ.Remove(H, TRUE)
-				if(target_species.mutanttail)
-					var/obj/item/organ/new_tail = new target_species.mutanttail
+				var/obj/item/organ/tail/new_tail = locate(/obj/item/organ/tail) in target_species.mutant_organs
+				if(new_tail)
+					new_tail = new new_tail()
 					new_tail.Insert(H, TRUE, FALSE)
 			if(istype(current_organ, /obj/item/organ/ears/cat))
 				var/obj/item/organ/new_ears = new target_species.mutantears

@@ -1051,10 +1051,10 @@
 			"desc" = "External armor is wrenched."
 		),
 		list(
-			"key" = /obj/item/assembly/signaler/anomaly,
+			"key" = /obj/item/assembly/signaler/anomaly/bluespace,
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_WELDER,
-			"desc" = "Anomaly core socket is open.",
+			"desc" = "Bluespace anomaly core socket is open.",
 			"icon_state" = "phazon24"
 		)
 	)
@@ -1189,8 +1189,8 @@
 				user.visible_message("<span class='notice'>[user] unfastens Phazon Armor Plates.</span>", "<span class='notice'>You unfasten Phazon Armor Plates.</span>")
 		if(26)
 			if(diff==FORWARD)
-				user.visible_message("<span class='notice'>[user] carefully inserts the anomaly core into [parent] and secures it.</span>",
-					"<span class='notice'>You slowly place the anomaly core into its socket and close its chamber.</span>")
+				user.visible_message("<span class='notice'>[user] carefully inserts the bluespace anomaly core into [parent] and secures it.</span>",
+					"<span class='notice'>You slowly place the bluespace anomaly core into its socket and close its chamber.</span>")
 	return TRUE
 
 //ODYSSEUS
