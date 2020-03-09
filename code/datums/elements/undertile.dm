@@ -1,6 +1,6 @@
 ///Add to an object if you want to be able to be hidden under tiles
 /datum/element/undertile
-	element_flags = ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE | COMPONENT_DUPE_HIGHLANDER
 
 	///the invisiblity trait applied, like TRAIT_T_RAY_VISIBLE
 	var/invisibility_trait
@@ -10,8 +10,10 @@
 	var/tile_overlay
 	///whether we use alpha or not. TRUE uses ALPHA_UNDERTILE because otherwise we have 200 different instances of this element for different alphas
 	var/use_alpha
+	///We will switch between anchored and unanchored. for stuff like satchels that shouldnt be pullable under tiles but are otherwise unanchored
+	var/use_anchor
 
-/datum/element/undertile/Attach(datum/target, invisibility_trait, invisibility_level = INVISIBILITY_MAXIMUM, tile_overlay, use_alpha = TRUE)
+/datum/element/undertile/Attach(datum/target, invisibility_trait, invisibility_level = INVISIBILITY_MAXIMUM, tile_overlay, use_alpha = TRUE, use_anchor = FALSE)
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
@@ -22,9 +24,7 @@
 	src.invisibility_level = invisibility_level
 	src.tile_overlay 		= tile_overlay
 	src.use_alpha			= use_alpha
-
-	var/atom/movable/AM = target
-	AM.anchored = TRUE
+	src.use_anchor			= use_anchor
 
 ///called when a tile has been covered or uncovered
 /datum/element/undertile/proc/hide(atom/movable/source, covered)
@@ -39,6 +39,8 @@
 			T.add_overlay(tile_overlay)
 		if(use_alpha)
 			source.alpha = ALPHA_UNDERTILE
+		if(use_anchor)
+			source.anchor = TRUE
 
 	else
 		if(invisibility_trait)
@@ -47,6 +49,8 @@
 			T.overlays -= tile_overlay
 		if(use_alpha)
 			source.alpha = 255
+		if(use_anchor)
+			source.anchor = FALSE
 
 /datum/element/undertile/Detach(atom/movable/AM, visibility_trait, invisibility_level = INVISIBILITY_MAXIMUM)
 	. = ..()
