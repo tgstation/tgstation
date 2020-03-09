@@ -31,7 +31,7 @@
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
 
-	var/mob/living/simple_animal/hostile/space_dragon/S = new ((pick(spawn_locs)))
+	var/mob/living/simple_animal/hostile/space_dragon/S = new (pick(spawn_locs))
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Space Dragon"
 	player_mind.special_role = "Space Dragon"
