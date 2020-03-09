@@ -10,14 +10,14 @@
 	var/adjusted_flags = null
 
 /obj/item/clothing/mask/attack_self(mob/user)
-	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))
-		TOGGLE_BITFIELD(clothing_flags, VOICEBOX_DISABLED)
-		var/status = !CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED)
+	if((clothing_flags & VOICEBOX_TOGGLABLE))
+		clothing_flags ^= (VOICEBOX_DISABLED)
+		var/status = !(clothing_flags & VOICEBOX_DISABLED)
 		to_chat(user, "<span class='notice'>You turn the voice box in [src] [status ? "on" : "off"].</span>")
 
 /obj/item/clothing/mask/equipped(mob/M, slot)
 	. = ..()
-	if (slot == SLOT_WEAR_MASK && modifies_speech)
+	if (slot == ITEM_SLOT_MASK && modifies_speech)
 		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	else
 		UnregisterSignal(M, COMSIG_MOB_SAY)

@@ -4,11 +4,11 @@
 
 	if(can_reenter_corpse && mind && mind.current)
 		if(A == mind.current || (mind.current in A)) // double click your corpse or whatever holds it
-			reenter_corpse()						// (cloning scanner, body bag, closet, mech, etc)
+			reenter_corpse()						// (body bag, closet, mech, etc)
 			return									// seems legit.
 
 	// Things you might plausibly want to follow
-	if(ismovableatom(A))
+	if(ismovable(A))
 		ManualFollow(A)
 
 	// Otherwise jump

@@ -1,8 +1,7 @@
 /mob/living/Initialize()
 	. = ..()
 	if(unique_name)
-		name = "[name] ([rand(1, 1000)])"
-		real_name = name
+		set_name()
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
@@ -57,9 +56,6 @@
 	adjustBruteLoss((levels * 5) ** 1.5)
 	Knockdown(levels * 50)
 
-/mob/living/proc/OpenCraftingMenu()
-	return
-
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A)
 	if(..()) //we are thrown onto something
@@ -74,7 +70,7 @@
 		var/obj/O = A
 		if(ObjBump(O))
 			return
-	if(ismovableatom(A))
+	if(ismovable(A))
 		var/atom/movable/AM = A
 		if(PushAM(AM, move_force))
 			return
@@ -271,6 +267,9 @@
 
 	pulling = AM
 	AM.pulledby = src
+
+	SEND_SIGNAL(src, COMSIG_LIVING_START_PULL, AM, state, force)
+
 	if(!supress_message)
 		var/sound_to_play = 'sound/weapons/thudswoosh.ogg'
 		if(ishuman(src))
@@ -493,6 +492,41 @@
 	update_stat()
 	med_hud_set_health()
 	med_hud_set_status()
+	update_health_hud()
+
+/mob/living/update_health_hud()
+	var/severity = 0
+	var/healthpercent = (health/maxHealth) * 100
+	if(hud_used?.healthdoll) //to really put you in the boots of a simplemob
+		var/obj/screen/healthdoll/living/livingdoll = hud_used.healthdoll
+		switch(healthpercent)
+			if(100 to INFINITY)
+				severity = 0
+			if(80 to 100)
+				severity = 1
+			if(60 to 80)
+				severity = 2
+			if(40 to 60)
+				severity = 3
+			if(20 to 40)
+				severity = 4
+			if(1 to 20)
+				severity = 5
+			else
+				severity = 6
+		livingdoll.icon_state = "living[severity]"
+		if(!livingdoll.filtered)
+			livingdoll.filtered = TRUE
+			var/icon/mob_mask = icon(icon, icon_state)
+			if(mob_mask.Height() > world.icon_size || mob_mask.Width() > world.icon_size)
+				var/health_doll_icon_state = health_doll_icon ? health_doll_icon : "megasprite"
+				mob_mask = icon('icons/mob/screen_gen.dmi', health_doll_icon_state) //swap to something generic if they have no special doll
+			UNLINT(livingdoll.filters += filter(type="alpha", icon = mob_mask))
+			livingdoll.filters += filter(type="drop_shadow", size = -1)
+	if(severity > 0)
+		overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
+	else
+		clear_fullscreen("brute")
 
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
 /mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE)
@@ -503,7 +537,7 @@
 		GLOB.dead_mob_list -= src
 		GLOB.alive_mob_list += src
 		set_suicide(FALSE)
-		stat = UNCONSCIOUS //the mob starts unconscious,
+		set_stat(UNCONSCIOUS) //the mob starts unconscious,
 		updatehealth() //then we check if the mob should wake up.
 		update_mobility()
 		update_sight()
@@ -543,9 +577,10 @@
 	setCloneLoss(0, 0)
 	remove_CC(FALSE)
 	set_disgust(0)
+	losebreath = 0
 	radiation = 0
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
-	bodytemperature = BODYTEMP_NORMAL
+	bodytemperature = get_body_temp_normal(apply_change=FALSE)
 	set_blindness(0)
 	set_blurriness(0)
 	set_dizziness(0)
@@ -575,7 +610,7 @@
 	return
 
 /mob/living/Move(atom/newloc, direct)
-	if(lying) 
+	if(lying)
 		if(direct & EAST)
 			lying = 90
 		if(direct & WEST)
@@ -755,7 +790,8 @@
 /mob/living/proc/get_visible_name()
 	return name
 
-/mob/living/update_gravity(has_gravity,override = 0)
+/mob/living/update_gravity(has_gravity, override)
+	. = ..()
 	if(!SSticker.HasRoundStarted())
 		return
 	if(has_gravity)
@@ -811,6 +847,8 @@
 		who.show_inv(src)
 	else
 		src << browse(null,"window=mob[REF(who)]")
+
+	who.update_equipment_speed_mods() // Updates speed in case stripped speed affecting item
 
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)
@@ -929,8 +967,11 @@
 	return TRUE
 
 /mob/living/proc/can_use_guns(obj/item/G)//actually used for more than guns!
+	if(G.trigger_guard == TRIGGER_GUARD_NONE)
+		to_chat(src, "<span class='warning'>You are unable to fire this!</span>")
+		return FALSE
 	if(G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
-		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		to_chat(src, "<span class='warning'>You try to fire [G], but can't use the trigger!</span>")
 		return FALSE
 	return TRUE
 
@@ -967,7 +1008,7 @@
 		return TRUE
 	return FALSE
 
-/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
+/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE)
 	stop_pulling()
 	. = ..()
 
@@ -999,7 +1040,7 @@
 	var/blocked = getarmor(null, "rad")
 
 	if(amount > RAD_BURN_THRESHOLD)
-		apply_damage(log(amount)*2, BURN, null, blocked)
+		apply_damage(RAD_BURN_CURVE(amount), BURN, null, blocked)
 
 	apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), EFFECT_IRRADIATE, blocked)
 
@@ -1044,7 +1085,7 @@
 		update_fire()
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-	fire_stacks = CLAMP(fire_stacks + add_fire_stacks, -20, 20)
+	fire_stacks = clamp(fire_stacks + add_fire_stacks, -20, 20)
 	if(on_fire && fire_stacks <= 0)
 		ExtinguishMob()
 
@@ -1071,6 +1112,11 @@
 		IgniteMob() // Ignite us
 
 //Mobs on Fire end
+
+//Washing
+/mob/living/washed(var/atom/washer)
+	. = ..()
+	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 // used by secbot and monkeys Crossed
 /mob/living/proc/knockOver(var/mob/living/carbon/C)
@@ -1239,18 +1285,24 @@
 	..()
 	update_z(new_z)
 
-/mob/living/MouseDrop(mob/over)
+/mob/living/MouseDrop_T(atom/dropping, atom/user)
+	var/mob/living/U = user
+	if(isliving(dropping))
+		var/mob/living/M = dropping
+		if(M.can_be_held && U.pulling == M)
+			M.mob_try_pickup(U)//blame kevinz
+			return//dont open the mobs inventory if you are picking them up
 	. = ..()
-	var/mob/living/user = usr
-	if(!istype(over) || !istype(user))
-		return
-	if(!over.Adjacent(src) || (user != src) || !canUseTopic(over))
-		return
-	if(can_be_held)
-		mob_try_pickup(over)
 
 /mob/living/proc/mob_pickup(mob/living/L)
-	return
+	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	L.visible_message("<span class='warning'>[L] scoops up [src]!</span>")
+	L.put_in_hands(holder)
+
+/mob/living/proc/set_name()
+	numba = rand(1, 1000)
+	name = "[name] ([numba])"
+	real_name = name
 
 /mob/living/proc/mob_try_pickup(mob/living/user)
 	if(!ishuman(user))
@@ -1334,7 +1386,7 @@
 	. = ..()
 	var/refid = REF(src)
 	. += {"
-		<br><font size='1'>[VV_HREF_TARGETREF_1V(refid, VV_HK_BASIC_EDIT, "[ckey || "no ckey"]", NAMEOF(src, ckey))] / [VV_HREF_TARGETREF_1V(refid, VV_HK_BASIC_EDIT, "[real_name || "no real name"]", NAMEOF(src, real_name))]</font>
+		<br><font size='1'>[VV_HREF_TARGETREF(refid, VV_HK_GIVE_DIRECT_CONTROL, "[ckey || "no ckey"]")] / [VV_HREF_TARGETREF_1V(refid, VV_HK_BASIC_EDIT, "[real_name || "no real name"]", NAMEOF(src, real_name))]</font>
 		<br><font size='1'>
 			BRUTE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brute' id='brute'>[getBruteLoss()]</a>
 			FIRE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=fire' id='fire'>[getFireLoss()]</a>
@@ -1345,3 +1397,64 @@
 			STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[getStaminaLoss()]</a>
 		</font>
 	"}
+
+/mob/living/proc/move_to_error_room()
+	var/obj/effect/landmark/error/error_landmark = locate(/obj/effect/landmark/error) in GLOB.landmarks_list
+	if(error_landmark)
+		forceMove(error_landmark.loc)
+	else
+		forceMove(locate(4,4,1)) //Even if the landmark is missing, this should put them in the error room.
+		//If you're here from seeing this error, I'm sorry. I'm so very sorry. The error landmark should be a sacred object that nobody has any business messing with, and someone did!
+		//Consider seeing a therapist.
+		var/ERROR_ERROR_LANDMARK_ERROR = "ERROR-ERROR: ERROR landmark missing!"
+		log_mapping(ERROR_ERROR_LANDMARK_ERROR)
+		CRASH(ERROR_ERROR_LANDMARK_ERROR)
+
+/**
+ * add_body_temperature_change Adds modifications to the body temperature
+ *
+ * This collects all body temperature changes that the mob is experiencing to the list body_temp_changes
+ * the aggrogate result is used to derive the new body temperature for the mob
+ *
+ * arguments:
+ * * key_name (str) The unique key for this change, if it already exist it will be overridden
+ * * amount (int) The amount of change from the base body temperature
+ */
+/mob/living/proc/add_body_temperature_change(key_name, amount)
+	body_temp_changes["[key_name]"] = amount
+
+/**
+ * remove_body_temperature_change Removes the modifications to the body temperature
+ *
+ * This removes the recorded change to body temperature from the body_temp_changes list
+ *
+ * arguments:
+ * * key_name (str) The unique key for this change that will be removed
+ */
+/mob/living/proc/remove_body_temperature_change(key_name)
+	body_temp_changes -= key_name
+
+/**
+ * get_body_temp_normal_change Returns the aggregate change to body temperature
+ *
+ * This aggregates all the changes in the body_temp_changes list and returns the result
+ */
+/mob/living/proc/get_body_temp_normal_change()
+	var/total_change = 0
+	if(body_temp_changes.len)
+		for(var/change in body_temp_changes)
+			total_change += body_temp_changes["[change]"]
+	return total_change
+
+/**
+ * get_body_temp_normal Returns the mobs normal body temperature with any modifications applied
+ *
+ * This applies the result from proc/get_body_temp_normal_change() against the BODYTEMP_NORMAL and returns the result
+ *
+ * arguments:
+ * * apply_change (optional) Default True This applies the changes to body temperature normal
+ */
+/mob/living/proc/get_body_temp_normal(apply_change=TRUE)
+	if(!apply_change)
+		return BODYTEMP_NORMAL
+	return BODYTEMP_NORMAL + get_body_temp_normal_change()

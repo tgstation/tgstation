@@ -151,7 +151,6 @@
 	breakouttime = 1 SECONDS
 
 /obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
-	..()
 	if(istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I
 		if (R.use(1))
@@ -229,7 +228,7 @@
 	. = ..()
 	update_icon()
 
-/obj/item/restraints/legcuffs/beartrap/update_icon()
+/obj/item/restraints/legcuffs/beartrap/update_icon_state()
 	icon_state = "[initial(icon_state)][armed]"
 
 /obj/item/restraints/legcuffs/beartrap/suicide_act(mob/user)
@@ -272,6 +271,7 @@
 					if(!C.legcuffed && C.get_num_legs(FALSE) >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
 						C.legcuffed = src
 						forceMove(C)
+						C.update_equipment_speed_mods()
 						C.update_inv_legcuffed()
 						SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 			else if(snap && isanimal(L))
@@ -314,11 +314,14 @@
 	name = "bola"
 	desc = "A restraining device designed to be thrown at the target. Upon connecting with said target, it will wrap around their legs, making it difficult for them to move quickly."
 	icon_state = "bola"
+	item_state = "bola"
+	lefthand_file = 'icons/mob/inhands/weapons/thrown_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/thrown_righthand.dmi'
 	breakouttime = 35//easy to apply, easy to break out of
 	gender = NEUTER
 	var/knockdown = 0
 
-/obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+/obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle = FALSE)
 	if(!..())
 		return
 	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, TRUE)
@@ -339,6 +342,7 @@
 		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
 		C.legcuffed = src
 		forceMove(C)
+		C.update_equipment_speed_mods()
 		C.update_inv_legcuffed()
 		SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")
@@ -349,6 +353,7 @@
 	name = "reinforced bola"
 	desc = "A strong bola, made with a long steel chain. It looks heavy, enough so that it could trip somebody."
 	icon_state = "bola_r"
+	item_state = "bola_r"
 	breakouttime = 70
 	knockdown = 35
 
@@ -356,6 +361,7 @@
 	name = "energy bola"
 	desc = "A specialized hard-light bola designed to ensnare fleeing criminals and aid in arrests."
 	icon_state = "ebola"
+	item_state = "ebola"
 	hitsound = 'sound/weapons/taserhit.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 	breakouttime = 60
@@ -371,6 +377,7 @@
 	name = "gonbola"
 	desc = "Hey, if you have to be hugged in the legs by anything, it might as well be this little guy."
 	icon_state = "gonbola"
+	item_state = "bola_r"
 	breakouttime = 300
 	slowdown = 0
 	var/datum/status_effect/gonbolaPacify/effectReference

@@ -136,7 +136,7 @@
 	if(!SSticker.HasRoundStarted())
 		alert("The game hasn't started yet!")
 		return
-	var/list/dat = list("<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1>")
+	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Round Status</title></head><body><h1><B>Round Status</B></h1>")
 	if(SSticker.mode.replacementmode)
 		dat += "Former Game Mode: <B>[SSticker.mode.name]</B><BR>"
 		dat += "Replacement Game Mode: <B>[SSticker.mode.replacementmode.name]</B><BR>"
@@ -151,10 +151,10 @@
 	else
 		var/timeleft = SSshuttle.emergency.timeLeft()
 		if(SSshuttle.emergency.mode == SHUTTLE_CALL)
-			dat += "ETA: <a href='?_src_=holder;[HrefToken()];edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]</a><BR>"
+			dat += "ETA: <a href='?_src_=holder;[HrefToken()];edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_leading(num2text(timeleft % 60), 2, "0")]</a><BR>"
 			dat += "<a href='?_src_=holder;[HrefToken()];call_shuttle=2'>Send Back</a><br>"
 		else
-			dat += "ETA: <a href='?_src_=holder;[HrefToken()];edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]</a><BR>"
+			dat += "ETA: <a href='?_src_=holder;[HrefToken()];edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_leading(num2text(timeleft % 60), 2, "0")]</a><BR>"
 	dat += "<B>Continuous Round Status</B><BR>"
 	dat += "<a href='?_src_=holder;[HrefToken()];toggle_continuous=1'>[CONFIG_GET(keyed_list/continuous)[SSticker.mode.config_tag] ? "Continue if antagonists die" : "End on antagonist death"]</a>"
 	if(CONFIG_GET(keyed_list/continuous)[SSticker.mode.config_tag])

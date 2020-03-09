@@ -6,4 +6,4 @@ Loosely adapted from /vg/. This is an entity component system for adding behavio
 
 See [this thread](https://tgstation13.org/phpBB/viewtopic.php?f=5&t=22674) for an introduction to the system as a whole.
 
-### See/Define signals and their arguments in [__DEFINES\components.dm](..\..\__DEFINES\components.dm)
+### See/Define signals and their arguments in [__DEFINES\components.dm](../../__DEFINES/components.dm)

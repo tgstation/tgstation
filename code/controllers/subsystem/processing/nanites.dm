@@ -9,7 +9,7 @@ PROCESSING_SUBSYSTEM_DEF(nanites)
 	var/neural_network_count = 0
 
 /datum/controller/subsystem/processing/nanites/proc/check_hardware(datum/nanite_cloud_backup/backup)
-	if(QDELETED(backup.storage) || (backup.storage.stat & (NOPOWER|BROKEN)))
+	if(QDELETED(backup.storage) || (backup.storage.machine_stat & (NOPOWER|BROKEN)))
 		return FALSE
 	return TRUE
 

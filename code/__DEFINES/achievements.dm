@@ -1,3 +1,5 @@
+// Keep the identifiers here below 32 characters, you can put the full display name in the actual achievement datum
+
 #define ACHIEVEMENT_DEFAULT "default"
 #define ACHIEVEMENT_SCORE "score"
 
@@ -10,6 +12,19 @@
 #define MEDAL_THANKSALOT 		"The Best Driver"
 #define MEDAL_HELBITALJANKEN	"Hel-bent on Winning"
 #define MEDAL_MATERIALCRAFT 	"Getting an Upgrade"
+#define MEDAL_DISKPLEASE	 	"Disk, Please!"
+#define MEDAL_GAMER			 	"I'm Not Important"
+#define MEDAL_VENDORSQUISH		"Teenage Anarchist"
+#define MEDAL_SWIRLIE			"Bowl-d"
+#define MEDAL_SELFOUCH			"Hands???"
+#define MEDAL_SANDMAN			"Mister Sandman"
+#define MEDAL_CLEANBOSS			"Cleanboss"
+#define MEDAL_RULE8				"Rule 8"
+#define MEDAL_LONGSHIFT			"longshift"
+#define MEDAL_SNAIL				"KKKiiilll mmmeee"
+
+//Skill medal hub IDs
+#define MEDAL_LEGENDARY_MINER		"Legendary Miner"
 
 
 //Boss medals
@@ -24,6 +39,7 @@
 #define BOSS_MEDAL_LEGION	  "Legion Killer"
 #define BOSS_MEDAL_TENDRIL	  "Tendril Exterminator"
 #define BOSS_MEDAL_SWARMERS   "Swarmer Beacon Killer"
+#define BOSS_MEDAL_KINGGOAT   "King Goat Killer"
 
 #define BOSS_MEDAL_MINER_CRUSHER	  	"Blood-drunk Miner Crusher"
 #define BOSS_MEDAL_BUBBLEGUM_CRUSHER  	"Bubblegum Crusher"
@@ -32,6 +48,7 @@
 #define BOSS_MEDAL_HIEROPHANT_CRUSHER 	"Hierophant Crusher"
 #define BOSS_MEDAL_LEGION_CRUSHER	 	"Legion Crusher"
 #define BOSS_MEDAL_SWARMERS_CRUSHER		"Swarmer Beacon Crusher"
+#define BOSS_MEDAL_KINGGOAT_CRUSHER		"King Goat Crusher"
 
 // Medal hub IDs for boss-kill scores
 #define BOSS_SCORE 	         "Bosses Killed"
@@ -42,4 +59,5 @@
 #define HIEROPHANT_SCORE 	 "Hierophants Killed"
 #define LEGION_SCORE 	     "Legion Killed"
 #define SWARMER_BEACON_SCORE "Swarmer Beacs Killed"
+#define KINGGOAT_SCORE 	     "King Goat Killed"
 #define TENDRIL_CLEAR_SCORE	 "Tendrils Killed"

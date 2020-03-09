@@ -33,7 +33,7 @@
 /obj/item/minigunpack/attack_hand(var/mob/living/carbon/user)
 	if(src.loc == user)
 		if(!armed)
-			if(user.get_item_by_slot(SLOT_BACK) == src)
+			if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
 				armed = 1
 				if(!user.put_in_hands(gun))
 					armed = 0
@@ -74,7 +74,7 @@
 				M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 
-/obj/item/minigunpack/update_icon()
+/obj/item/minigunpack/update_icon_state()
 	if(armed)
 		icon_state = "notholstered"
 	else

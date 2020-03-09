@@ -9,6 +9,8 @@
 	var/list/chems_needed = list()  //list of chems needed to complete the step. Even on success, the step will have no effect if there aren't the chems required in the mob.
 	var/require_all_chems = TRUE    //any on the list or all on the list?
 	var/silicons_obey_prob = FALSE
+	/// The amount of a experience given for successfully completing the step.
+	var/experience_given = MEDICAL_SKILL_EASY
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	var/success = FALSE
@@ -76,13 +78,16 @@
 		implement_speed_mod = implements[implement_type] / 100.0
 
 	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod)
-	var/modded_time = time * speed_mod
+	var/modded_time = time * speed_mod * user.mind.get_skill_modifier(/datum/skill/medical, SKILL_SPEED_MODIFIER)
+
 
 	fail_prob = min(max(0, modded_time - (time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)),99)//if modded_time > time * modifier, then fail_prob = modded_time - time*modifier. starts at 0, caps at 99
 	modded_time = min(modded_time, time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)//also if that, then cap modded_time at time*modifier
 
 	if(iscyborg(user))//any immunities to surgery slowdown should go in this check.
 		modded_time = time
+
+	var/was_sleeping = (target.stat != DEAD && target.IsSleeping())
 
 	if(do_after(user, modded_time, target = target))
 
@@ -95,12 +100,14 @@
 			if(failure(user, target, target_zone, tool, surgery, fail_prob))
 				advance = TRUE
 			if(chem_check_result)
-				if(.(user, target, target_zone, tool, surgery, try_to_fail)) //automatically re-attempt if failed for reason other than lack of required chemical
-					advance = TRUE
+				return .(user, target, target_zone, tool, surgery, try_to_fail) //automatically re-attempt if failed for reason other than lack of required chemical
 		if(advance && !repeatable)
 			surgery.status++
 			if(surgery.status > surgery.steps.len)
 				surgery.complete()
+
+	if(target.stat == DEAD && was_sleeping && user.client)
+		user.client.give_award(/datum/award/achievement/misc/sandman, user)
 
 	surgery.step_in_progress = FALSE
 	return advance
@@ -110,10 +117,12 @@
 		"<span class='notice'>[user] begins to perform surgery on [target].</span>",
 		"<span class='notice'>[user] begins to perform surgery on [target].</span>")
 
-/datum/surgery_step/proc/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You succeed.</span>",
-		"<span class='notice'>[user] succeeds!</span>",
-		"<span class='notice'>[user] finishes.</span>")
+/datum/surgery_step/proc/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = TRUE)
+	if(default_display_results)
+		display_results(user, target, "<span class='notice'>You succeed.</span>",
+				"<span class='notice'>[user] succeeds!</span>",
+				"<span class='notice'>[user] finishes.</span>")
+	user?.mind.adjust_experience(/datum/skill/medical, round(experience_given))
 	return TRUE
 
 /datum/surgery_step/proc/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, var/fail_prob = 0)

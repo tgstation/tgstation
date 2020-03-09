@@ -420,7 +420,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aM" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/item/radio/intercom{
@@ -446,7 +446,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aP" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/item/radio/intercom{
@@ -948,7 +948,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "ca" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel,
@@ -974,7 +974,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel,
@@ -1499,7 +1499,7 @@
 /area/shuttle/escape)
 "cX" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},

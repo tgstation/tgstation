@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/talk_key = get_key(message)
 
-	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE)
+	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE, MODE_SING = TRUE)
 
 	var/ic_blocked = FALSE
 	if(client && !forced && CHAT_FILTER_CHECK(message))
@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		ic_blocked = TRUE
 
 	if(sanitize)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message || message == "")
 		return
 
@@ -110,12 +110,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/in_critical = InCritical()
 
 	if(one_character_prefix[message_mode])
-		message = copytext(message, 2)
+		message = copytext_char(message, 2)
 	else if(message_mode || saymode)
-		message = copytext(message, 3)
-	if(findtext(message, " ", 1, 2))
-		message = copytext(message, 2)
-
+		message = copytext_char(message, 3)
+	message = trim_left(message)
+	if(!message)
+		return
 	if(message_mode == MODE_ADMIN)
 		if(client)
 			client.cmd_admin_say(message)
@@ -144,16 +144,15 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/datum/language/message_language = get_message_language(message)
 	if(message_language)
 		// No, you cannot speak in xenocommon just because you know the key
-		if(can_speak_in_language(message_language))
+		if(can_speak_language(message_language))
 			language = message_language
-		message = copytext(message, 3)
+		message = copytext_char(message, 3)
 
 		// Trim the space if they said ",0 I LOVE LANGUAGES"
-		if(findtext(message, " ", 1, 2))
-			message = copytext(message, 2)
+		message = trim_left(message)
 
 	if(!language)
-		language = get_default_language()
+		language = get_selected_language()
 
 	// Detection of language needs to be before inherent channels, because
 	// AIs use inherent channels for the holopad. Most inherent channels
@@ -178,8 +177,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		if(fullcrit)
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
-			var/message_len = length(message)
-			message = copytext(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
+			var/message_len = length_char(message)
+			message = copytext_char(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
 			message = Ellipsis(message, 10, 1)
 			last_words = message
 			message_mode = MODE_WHISPER_CRIT
@@ -199,6 +198,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(language)
 		var/datum/language/L = GLOB.language_datum_instances[language]
 		spans |= L.spans
+
+	if(message_mode == MODE_SING)
+		var/randomnote = pick("\u2669", "\u266A", "\u266B")
+		spans |= SPAN_SINGING
+		message = "[randomnote] [message] [randomnote]"
 
 	var/radio_return = radio(message, message_mode, spans, language)
 	if(radio_return & ITALICS)
@@ -227,9 +231,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return 1
 
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
-	. = ..()
+	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 	if(!client)
 		return
+
 	var/deaf_message
 	var/deaf_type
 	if(speaker != src)
@@ -242,7 +247,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 
 	show_message(message, MSG_AUDIBLE, deaf_message, deaf_type)
 	return message
@@ -254,19 +258,20 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		eavesdrop_range = EAVESDROP_EXTRA_RANGE
 	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
 	var/list/the_dead = list()
-	for(var/_M in GLOB.player_list)
-		var/mob/M = _M
-		if(M.stat != DEAD) //not dead, not important
-			continue
-		if(!client) //client is so that ghosts don't have to listen to mice
-			continue
-		if(get_dist(M, src) > 7 || M.z != z) //they're out of range of normal hearing
-			if(eavesdropping_modes[message_mode] && !(M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
+	if(client) //client is so that ghosts don't have to listen to mice
+		for(var/_M in GLOB.player_list)
+			var/mob/M = _M
+			if(QDELETED(M))	//Some times nulls and deleteds stay in this list. This is a workaround to prevent ic chat breaking for everyone when they do.
+				continue	//Remove if underlying cause (likely byond issue) is fixed. See TG PR #49004.
+			if(M.stat != DEAD) //not dead, not important
 				continue
-			if(!(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
-				continue
-		listening |= M
-		the_dead[M] = TRUE
+			if(get_dist(M, src) > 7 || M.z != z) //they're out of range of normal hearing
+				if(eavesdropping_modes[message_mode] && !(M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
+					continue
+				if(!(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
+					continue
+			listening |= M
+			the_dead[M] = TRUE
 
 	var/eavesdropping
 	var/eavesrendered
@@ -322,13 +327,13 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return 1
 
 /mob/living/proc/get_key(message)
-	var/key = copytext(message, 1, 2)
-	if(key in GLOB.department_radio_prefixes)
-		return lowertext(copytext(message, 2, 3))
+	var/key = message[1]
+	if((key in GLOB.department_radio_prefixes) && length(message) > length(key) + 1)
+		return lowertext(message[1 + length(key)])
 
 /mob/living/proc/get_message_language(message)
-	if(copytext(message, 1, 2) == ",")
-		var/key = copytext(message, 2, 3)
+	if(message[1] == ",")
+		var/key = message[1 + length(message[1])]
 		for(var/ld in GLOB.all_languages)
 			var/datum/language/LD = ld
 			if(initial(LD.key) == key)
@@ -362,7 +367,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		if(message_mode == MODE_HEADSET)
 			imp.radio.talk_into(src, message, , spans, language)
 			return ITALICS | REDUCE_RANGE
-		if(message_mode == MODE_DEPARTMENT || message_mode in GLOB.radiochannels)
+		if(message_mode == MODE_DEPARTMENT || (message_mode in imp.radio.channels))
 			imp.radio.talk_into(src, message, message_mode, spans, language)
 			return ITALICS | REDUCE_RANGE
 
@@ -381,7 +386,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 				return ITALICS | REDUCE_RANGE
 
 		if(MODE_INTERCOM)
-			for (var/obj/item/radio/intercom/I in view(1, null))
+			for (var/obj/item/radio/intercom/I in view(MODE_RANGE_INTERCOM, null))
 				I.talk_into(src, message, , spans, language)
 			return ITALICS | REDUCE_RANGE
 
@@ -399,17 +404,17 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		. = "stammers"
 	else if(derpspeech)
 		. = "gibbers"
+	else if(message_mode == MODE_SING)
+		. = verb_sing
 	else
 		. = ..()
 
 /mob/living/whisper(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	if(!message)
+		return
 	say("#[message]", bubble_type, spans, sanitize, language, ignore_spam, forced)
 
-/mob/living/get_language_holder(shadow=TRUE)
-	if(mind && shadow)
-		// Mind language holders shadow mob holders.
-		. = mind.get_language_holder()
-		if(.)
-			return .
-
+/mob/living/get_language_holder(get_minds = TRUE)
+	if(get_minds && mind)
+		return mind.get_language_holder()
 	. = ..()

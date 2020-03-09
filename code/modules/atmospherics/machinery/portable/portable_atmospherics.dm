@@ -93,7 +93,8 @@
 	return TRUE
 
 /obj/machinery/portable_atmospherics/AltClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, !ismonkey(user)))
+	. = ..()
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, !ismonkey(user)) || !can_interact(user))
 		return
 	if(holding)
 		to_chat(user, "<span class='notice'>You remove [holding] from [src].</span>")
@@ -106,29 +107,30 @@
 			"<span class='notice'>Click [src] with another gas tank to hot swap [holding].</span>"
 
 /obj/machinery/portable_atmospherics/proc/replace_tank(mob/living/user, close_valve, obj/item/tank/new_tank)
+	if(!user)
+		return FALSE
 	if(holding)
-		holding.forceMove(drop_location())
-		if(Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(holding)
+		user.put_in_hands(holding)
+		holding = null
 	if(new_tank)
 		holding = new_tank
-	else
-		holding = null
 	update_icon()
 	return TRUE
 
 /obj/machinery/portable_atmospherics/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/tank))
-		if(!(stat & BROKEN))
+		if(!(machine_stat & BROKEN))
 			var/obj/item/tank/T = W
 			if(!user.transferItemToLoc(T, src))
 				return
 			to_chat(user, "<span class='notice'>[holding ? "In one smooth motion you pop [holding] out of [src]'s connector and replace it with [T]" : "You insert [T] into [src]"].</span>")
+			investigate_log("had its internal [holding] swapped with [T] by [key_name(user)].", INVESTIGATE_ATMOS)
 			replace_tank(user, FALSE, T)
 			update_icon()
 	else if(W.tool_behaviour == TOOL_WRENCH)
-		if(!(stat & BROKEN))
+		if(!(machine_stat & BROKEN))
 			if(connected_port)
+				investigate_log("was disconnected from [connected_port] by [key_name(user)].", INVESTIGATE_ATMOS)
 				disconnect()
 				W.play_tool_sound(src)
 				user.visible_message( \
@@ -151,11 +153,12 @@
 					"<span class='notice'>You fasten [src] to the port.</span>", \
 					"<span class='hear'>You hear a ratchet.</span>")
 				update_icon()
+				investigate_log("was connected to [possible_port] by [key_name(user)].", INVESTIGATE_ATMOS)
 	else
 		return ..()
 
 /obj/machinery/portable_atmospherics/attacked_by(obj/item/I, mob/user)
-	if(I.force < 10 && !(stat & BROKEN))
+	if(I.force < 10 && !(machine_stat & BROKEN))
 		take_damage(0)
 	else
 		investigate_log("was smacked with \a [I] by [key_name(user)].", INVESTIGATE_ATMOS)

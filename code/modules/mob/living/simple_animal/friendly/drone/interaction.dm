@@ -50,6 +50,7 @@
 		to_chat(user, "<span class='notice'>You pick [src] up.</span>")
 		drop_all_held_items()
 		var/obj/item/clothing/head/mob_holder/drone/DH = new(get_turf(src), src)
+		DH.slot_flags = worn_slot_flags
 		user.put_in_hands(DH)
 
 /mob/living/simple_animal/drone/proc/try_reactivate(mob/living/user)
@@ -116,7 +117,7 @@
 	if(hack)
 		if(hacked)
 			return
-			Stun(40)
+		Stun(40)
 		visible_message("<span class='warning'>[src]'s display glows a vicious red!</span>", \
 						"<span class='userdanger'>ERROR: LAW OVERRIDE DETECTED</span>")
 		to_chat(src, "<span class='boldannounce'>From now on, these are your laws:</span>")

@@ -31,13 +31,13 @@
 		/datum/material/plastic,
 		/datum/material/runite
 	), MINERAL_MATERIAL_AMOUNT * 75, FALSE, /obj/item/stack)
-	chosen = getmaterialref(chosen)
+	chosen = SSmaterials.GetMaterialRef(chosen)
 
 
 /obj/machinery/mineral/mint/process()
 	var/turf/T = get_step(src, input_dir)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	
+
 	for(var/obj/item/stack/O in T)
 		var/inserted = materials.insert_item(O)
 		if(inserted)
@@ -59,7 +59,7 @@
 				for(var/coin_to_make in 1 to 5)
 					create_coins()
 					produced_coins++
-			else 
+			else
 				var/found_new = FALSE
 				for(var/datum/material/inserted_material in materials.materials)
 					var/amount = materials.get_material_amount(inserted_material)
@@ -67,7 +67,7 @@
 					if(amount)
 						chosen = inserted_material
 						found_new = TRUE
-				
+
 				if(!found_new)
 					processing = FALSE
 	else
@@ -86,7 +86,7 @@
 
 	for(var/datum/material/inserted_material in materials.materials)
 		var/amount = materials.get_material_amount(inserted_material)
-		
+
 		if(!amount)
 			continue
 
@@ -104,6 +104,11 @@
 	return data;
 
 /obj/machinery/mineral/mint/ui_act(action, params, datum/tgui/ui)
+
+	. = ..()
+	if(.)
+		return
+
 	switch(action)
 		if ("startpress")
 			if (!processing)

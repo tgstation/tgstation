@@ -59,6 +59,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 		new /obj/item/stock_parts/manipulator(src)
 		new /obj/item/stock_parts/micro_laser(src)
 		new /obj/item/stock_parts/matter_bin(src)
+		new /obj/item/stock_parts/cell/high(src)
 
 /obj/item/storage/part_replacer/bluespace/tier2
 
@@ -69,6 +70,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 		new /obj/item/stock_parts/manipulator/nano(src)
 		new /obj/item/stock_parts/micro_laser/high(src)
 		new /obj/item/stock_parts/matter_bin/adv(src)
+		new /obj/item/stock_parts/cell/super(src)
 
 /obj/item/storage/part_replacer/bluespace/tier3
 
@@ -79,6 +81,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 		new /obj/item/stock_parts/manipulator/pico(src)
 		new /obj/item/stock_parts/micro_laser/ultra(src)
 		new /obj/item/stock_parts/matter_bin/super(src)
+		new /obj/item/stock_parts/cell/hyper(src)
 
 /obj/item/storage/part_replacer/bluespace/tier4
 
@@ -89,6 +92,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 		new /obj/item/stock_parts/manipulator/femto(src)
 		new /obj/item/stock_parts/micro_laser/quadultra(src)
 		new /obj/item/stock_parts/matter_bin/bluespace(src)
+		new /obj/item/stock_parts/cell/bluespace(src)
 
 /obj/item/storage/part_replacer/cargo //used in a cargo crate
 
@@ -312,6 +316,12 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	icon_state = "subspace_transmitter"
 	desc = "A large piece of equipment used to open a window into the subspace dimension."
 	custom_materials = list(/datum/material/iron=50)
+
+/obj/item/stock_parts/card_reader
+	name = "card reader"
+	icon_state = "card_reader"
+	desc = "A small magnetic card reader, used for devices that take and transmit holocredits."
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=10)
 
 /obj/item/research//Makes testing much less of a pain -Sieve
 	name = "research"

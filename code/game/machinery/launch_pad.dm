@@ -81,7 +81,7 @@
 	ghost.forceMove(target)
 
 /obj/machinery/launchpad/proc/isAvailable()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		return FALSE
 	if(panel_open)
 		return FALSE
@@ -97,6 +97,15 @@
 		holder.loc = target_turf
 	else
 		holder.icon_state = null
+
+/obj/machinery/launchpad/proc/set_offset(x, y)
+	if(teleporting)
+		return
+	if(!isnull(x))
+		x_offset = clamp(x, -range, range)
+	if(!isnull(y))
+		y_offset = clamp(y, -range, range)
+	update_indicator()
 
 /obj/machinery/launchpad/proc/doteleport(mob/user, sending)
 	if(teleporting)
@@ -315,7 +324,7 @@
 /obj/item/launchpad_remote/ui_interact(mob/user, ui_key = "launchpad_remote", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "launchpad_remote", "Briefcase Launchpad Remote", 550, 400, master_ui, state) //width, height
+		ui = new(user, src, ui_key, "launchpad_remote", "Briefcase Launchpad Remote", 300, 240, master_ui, state) //width, height
 		ui.set_style("syndicate")
 		ui.open()
 
@@ -330,10 +339,9 @@
 		return data
 
 	data["pad_name"] = pad.display_name
-	data["abs_x"] = abs(pad.x_offset)
-	data["abs_y"] = abs(pad.y_offset)
-	data["north_south"] = pad.y_offset > 0 ? "N":"S"
-	data["east_west"] = pad.x_offset > 0 ? "E":"W"
+	data["range"] = pad.range
+	data["x"] = pad.x_offset
+	data["y"] = pad.y_offset
 	return data
 
 /obj/item/launchpad_remote/proc/teleport(mob/user, obj/machinery/launchpad/pad)
@@ -349,94 +357,33 @@
 	if(..())
 		return
 	switch(action)
-		if("right")
-			if(!pad.teleporting)
-				if(pad.x_offset < pad.range)
-					pad.x_offset++
-					pad.update_indicator()
+		if("set_pos")
+			var/new_x = text2num(params["x"])
+			var/new_y = text2num(params["y"])
+			pad.set_offset(new_x, new_y)
 			. = TRUE
-
-		if("left")
-			if(!pad.teleporting)
-				if(pad.x_offset > (pad.range * -1))
-					pad.x_offset--
-					pad.update_indicator()
+		if("move_pos")
+			var/plus_x = text2num(params["x"])
+			var/plus_y = text2num(params["y"])
+			pad.set_offset(
+				x = pad.x_offset + plus_x,
+				y = pad.y_offset + plus_y
+			)
 			. = TRUE
-
-		if("up")
-			if(!pad.teleporting)
-				if(pad.y_offset < pad.range)
-					pad.y_offset++
-					pad.update_indicator()
-			. = TRUE
-
-		if("down")
-			if(!pad.teleporting)
-				if(pad.y_offset > (pad.range * -1))
-					pad.y_offset--
-					pad.update_indicator()
-			. = TRUE
-
-		if("up-right")
-			if(!pad.teleporting)
-				if(pad.y_offset < pad.range)
-					pad.y_offset++
-				if(pad.x_offset < pad.range)
-					pad.x_offset++
-				pad.update_indicator()
-			. = TRUE
-
-		if("up-left")
-			if(!pad.teleporting)
-				if(pad.y_offset < pad.range)
-					pad.y_offset++
-				if(pad.x_offset > (pad.range * -1))
-					pad.x_offset--
-				pad.update_indicator()
-			. = TRUE
-
-		if("down-right")
-			if(!pad.teleporting)
-				if(pad.y_offset > (pad.range * -1))
-					pad.y_offset--
-				if(pad.x_offset < pad.range)
-					pad.x_offset++
-				pad.update_indicator()
-			. = TRUE
-
-		if("down-left")
-			if(!pad.teleporting)
-				if(pad.y_offset > (pad.range * -1))
-					pad.y_offset--
-				if(pad.x_offset > (pad.range * -1))
-					pad.x_offset--
-				pad.update_indicator()
-			. = TRUE
-
-		if("reset")
-			if(!pad.teleporting)
-				pad.y_offset = 0
-				pad.x_offset = 0
-				pad.update_indicator()
-			. = TRUE
-
 		if("rename")
 			. = TRUE
-			var/new_name = stripped_input(usr, "How do you want to rename the launchpad?", "Launchpad", pad.display_name, 15)
+			var/new_name = params["name"]
 			if(!new_name)
 				return
 			pad.display_name = new_name
-
 		if("remove")
 			. = TRUE
 			if(usr && alert(usr, "Are you sure?", "Unlink Launchpad", "I'm Sure", "Abort") != "Abort")
 				pad = null
-
 		if("launch")
 			sending = TRUE
 			teleport(usr, pad)
 			. = TRUE
-
 		if("pull")
 			sending = FALSE
 			teleport(usr, pad)

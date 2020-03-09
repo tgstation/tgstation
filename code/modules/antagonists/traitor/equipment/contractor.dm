@@ -35,6 +35,7 @@
 
 	var/list/assigned_targets = list() // used as a blacklist to make sure we're not assigning targets already assigned
 
+	var/contracts_completed = 0
 	var/contract_TC_payed_out = 0 // Keeping track for roundend reporting
 	var/contract_TC_to_redeem = 0 // Used internally and roundend reporting - what TC we have available to cashout.
 
@@ -56,8 +57,12 @@
 		CONTRACT_PAYOUT_SMALL
 	)
 
+	//What the fuck
+	if(length(to_generate) > length(GLOB.data_core.locked))
+		to_generate.Cut(1, length(GLOB.data_core.locked))
+
 	// We don't want the sum of all the payouts to be under this amount
-	var/lowest_TC_threshold = 30 
+	var/lowest_TC_threshold = 30
 
 	var/total = 0
 	var/lowest_paying_sum = 0
@@ -75,7 +80,7 @@
 	for (var/i = 1; i <= to_generate.len; i++)
 		var/datum/syndicate_contract/contract_to_add = new(owner, assigned_targets, to_generate[i])
 		var/contract_payout_total = contract_to_add.contract.payout + contract_to_add.contract.payout_bonus
-		
+
 		assigned_targets.Add(contract_to_add.contract.target)
 
 		if (!lowest_paying_contract || (contract_payout_total < lowest_paying_sum))
@@ -96,14 +101,14 @@
 	var/name // Name of item
 	var/desc // description of item
 	var/item // item path, no item path means the purchase needs it's own handle_purchase()
-	var/item_icon = "fa-broadcast-tower" // fontawesome icon to use inside the hub - https://fontawesome.com/icons/
+	var/item_icon = "broadcast-tower" // fontawesome icon to use inside the hub - https://fontawesome.com/icons/
 	var/limited = -1 // Any number above 0 for how many times it can be bought in a round for a single traitor. -1 is unlimited.
 	var/cost // Cost of the item in contract rep.
 
 /datum/contractor_item/contract_reroll
 	name = "Contract Reroll"
 	desc = "Request a reroll of your current contract list. Will generate a new target, payment, and dropoff for the contracts you currently have available."
-	item_icon = "fa-dice"
+	item_icon = "dice"
 	limited = 2
 	cost = 0
 
@@ -118,7 +123,7 @@
 				if (contract_check.contract.target)
 					new_target_list.Add(contract_check.contract.target)
 				continue
-		
+
 		/// Reroll contracts without duplicates
 		for(var/datum/syndicate_contract/rerolling_contract in hub.assigned_contracts)
 			if (rerolling_contract.status != CONTRACT_STATUS_ACTIVE && rerolling_contract.status != CONTRACT_STATUS_INACTIVE)
@@ -134,7 +139,7 @@
 	name = "Contractor Pinpointer"
 	desc = "A pinpointer that finds targets even without active suit sensors. Due to taking advantage of an exploit within the system, it can't pinpoint to the same accuracy as the traditional models. Becomes permanently locked to the user that first activates it."
 	item = /obj/item/pinpointer/crew/contractor
-	item_icon = "fa-search-location"
+	item_icon = "search-location"
 	limited = 2
 	cost = 1
 
@@ -142,14 +147,14 @@
 	name = "Fulton Extraction Kit"
 	desc = "For getting your target across the station to those difficult dropoffs. Place the beacon somewhere secure, and link the pack. Activating the pack on your target in space will send them over to the beacon - make sure they're not just going to run away though!"
 	item = /obj/item/storage/box/contractor/fulton_extraction
-	item_icon = "fa-parachute-box"
+	item_icon = "parachute-box"
 	limited = 1
 	cost = 1
 
 /datum/contractor_item/contractor_partner
 	name = "Reinforcements"
 	desc = "Upon purchase we'll contact available units in the area. Should there be an agent free, we'll send them down to assist you immediately. If no units are free, we give a full refund."
-	item_icon = "fa-user-friends"
+	item_icon = "user-friends"
 	limited = 1
 	cost = 2
 	var/datum/mind/partner_mind = null
@@ -175,7 +180,7 @@
 
 /datum/outfit/contractor_partner
 	name = "Contractor Support Unit"
-	
+
 	uniform = /obj/item/clothing/under/chameleon
 	suit = /obj/item/clothing/suit/chameleon
 	back = /obj/item/storage/backpack
@@ -186,12 +191,12 @@
 	id = /obj/item/card/id/syndicate
 	r_hand = /obj/item/storage/toolbox/syndicate
 
-	backpack_contents = list(/obj/item/storage/box/survival, /obj/item/implanter/uplink, /obj/item/clothing/mask/chameleon, 
+	backpack_contents = list(/obj/item/storage/box/survival, /obj/item/implanter/uplink, /obj/item/clothing/mask/chameleon,
 							/obj/item/storage/fancy/cigarettes/cigpack_syndicate, /obj/item/lighter)
 
 /datum/outfit/contractor_partner/post_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
-	var/obj/item/clothing/mask/cigarette/syndicate/cig = H.get_item_by_slot(SLOT_WEAR_MASK)
+	var/obj/item/clothing/mask/cigarette/syndicate/cig = H.get_item_by_slot(ITEM_SLOT_MASK)
 
 	// pre-light their cig
 	cig.light()
@@ -229,7 +234,7 @@
 /datum/contractor_item/blackout
 	name = "Blackout"
 	desc = "Request Syndicate Command to distrupt the station's powernet. Disables power across the station for a short duration."
-	item_icon = "fa-bolt"
+	item_icon = "bolt"
 	limited = 2
 	cost = 3
 
@@ -242,10 +247,10 @@
 
 // Subtract cost, and spawn if it's an item.
 /datum/contractor_item/proc/handle_purchase(var/datum/contractor_hub/hub, mob/living/user)
-	
+
 	if (hub.contract_rep >= cost)
 		hub.contract_rep -= cost
-	else 
+	else
 		return FALSE
 
 	if (limited >= 1)
@@ -259,7 +264,7 @@
 
 	if (item && ispath(item))
 		var/atom/item_to_create = new item(get_turf(user))
-		
+
 		if(user.put_in_hands(item_to_create))
 			to_chat(user, "<span class='notice'>Your purchase materializes into your hands!</span>")
 		else

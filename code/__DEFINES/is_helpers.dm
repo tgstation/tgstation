@@ -1,16 +1,6 @@
 // simple is_type and similar inline helpers
 
-#if DM_VERSION < 513
-#define islist(L) (istype(L, /list))
-#endif
-
 #define in_range(source, user) (get_dist(source, user) <= 1 && (get_step(source, 0)?:z) == (get_step(user, 0)?:z))
-
-#if DM_VERSION < 513
-#define ismovableatom(A) (istype(A, /atom/movable))
-#else
-#define ismovableatom(A) ismovable(A)
-#endif
 
 #define isatom(A) (isloc(A))
 
@@ -78,6 +68,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isfelinid(A) (is_species(A, /datum/species/human/felinid))
 #define isethereal(A) (is_species(A, /datum/species/ethereal))
 #define isvampire(A) (is_species(A,/datum/species/vampire))
+#define isdullahan(A) (is_species(A, /datum/species/dullahan))
 
 //more carbon mobs
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))

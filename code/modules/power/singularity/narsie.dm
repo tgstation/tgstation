@@ -36,6 +36,7 @@
 		var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/cult_effects.dmi', "ghostalertsie")
 		notify_ghosts("Nar'Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action=NOTIFY_ATTACK)
 	INVOKE_ASYNC(src, .proc/narsie_spawn_animation)
+	UnregisterSignal(src, COMSIG_ATOM_BSA_BEAM) //set up in /singularity/Initialize()
 
 /obj/singularity/narsie/large/cult  // For the new cult ending, guaranteed to end the round within 3 minutes
 	var/list/souls_needed = list()
@@ -65,34 +66,68 @@
 		if(player.stat != DEAD && player.loc && is_station_level(player.loc.z) && !iscultist(player) && !isanimal(player))
 			souls_needed[player] = TRUE
 	soul_goal = round(1 + LAZYLEN(souls_needed) * 0.75)
-	INVOKE_ASYNC(src, .proc/begin_the_end)
+	INVOKE_ASYNC(GLOBAL_PROC, .proc/begin_the_end)
 
-/obj/singularity/narsie/large/cult/proc/begin_the_end()
+/proc/begin_the_end()
 	sleep(50)
+	if(QDELETED(GLOB.cult_narsie)) // uno
+		priority_announce("Status report? We detected a anomaly, but it disappeared almost immediately.","Central Command Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
+		GLOB.cult_narsie = null
+		sleep(20)
+		INVOKE_ASYNC(GLOBAL_PROC, .proc/cult_ending_helper, 2)
+		return
 	priority_announce("An acausal dimensional event has been detected in your sector. Event has been flagged EXTINCTION-CLASS. Directing all available assets toward simulating solutions. SOLUTION ETA: 60 SECONDS.","Central Command Higher Dimensional Affairs", 'sound/misc/airraid.ogg')
 	sleep(500)
+	if(QDELETED(GLOB.cult_narsie)) // dos
+		priority_announce("Simulations aborted, sensors report that the acasual event is normalizing. Good work, crew.","Central Command Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
+		GLOB.cult_narsie = null
+		sleep(20)
+		INVOKE_ASYNC(GLOBAL_PROC, .proc/cult_ending_helper, 2)
+		return
 	priority_announce("Simulations on acausal dimensional event complete. Deploying solution package now. Deployment ETA: ONE MINUTE. ","Central Command Higher Dimensional Affairs")
 	sleep(50)
 	set_security_level("delta")
-	SSshuttle.registerHostileEnvironment(src)
+	SSshuttle.registerHostileEnvironment(GLOB.cult_narsie)
 	SSshuttle.lockdown = TRUE
 	sleep(600)
-	if(resolved == FALSE)
-		resolved = TRUE
+	if(QDELETED(GLOB.cult_narsie)) // tres
+		priority_announce("Normalization detected! Abort the solution package!","Central Command Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
+		GLOB.cult_narsie = null
+		sleep(20)
+		set_security_level("red")
+		SSshuttle.clearHostileEnvironment()
+		SSshuttle.lockdown = FALSE
+		INVOKE_ASYNC(GLOBAL_PROC, .proc/cult_ending_helper, 2)
+		return
+	if(GLOB.cult_narsie.resolved == FALSE)
+		GLOB.cult_narsie.resolved = TRUE
 		sound_to_playing_players('sound/machines/alarm.ogg')
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper), 120)
 
 /obj/singularity/narsie/large/cult/Destroy()
-	GLOB.cult_narsie = null
+	send_to_playing_players("<span class='narsie'>\"<b>[pick("Nooooo...", "Not die. How-", "Die. Mort-", "Sas tyen re-")]\"</b></span>")
+	sound_to_playing_players('sound/magic/demon_dies.ogg', 50)
+	var/list/all_cults = list()
+	for(var/datum/antagonist/cult/C in GLOB.antagonists)
+		if(!C.owner)
+			continue
+		all_cults |= C.cult_team
+	for(var/datum/team/cult/T in all_cults)
+		var/datum/objective/eldergod/summon_objective = locate() in T.objectives
+		if(summon_objective)
+			summon_objective.summoned = FALSE
+			summon_objective.killed = TRUE
 	return ..()
 
 /proc/ending_helper()
 	SSticker.force_ending = 1
 
-/proc/cult_ending_helper(var/no_explosion = 0)
-	if(no_explosion)
+/proc/cult_ending_helper(var/ending_type = 0)
+	if(ending_type == 2) //narsie fukkin died
+		Cinematic(CINEMATIC_CULT_FAIL,world,CALLBACK(GLOBAL_PROC,/proc/ending_helper))
+	else if(ending_type) //no explosion
 		Cinematic(CINEMATIC_CULT,world,CALLBACK(GLOBAL_PROC,/proc/ending_helper))
-	else
+	else // explosion
 		Cinematic(CINEMATIC_CULT_NUKE,world,CALLBACK(GLOBAL_PROC,/proc/ending_helper))
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
@@ -183,7 +218,7 @@
 //	if(defer_powernet_rebuild != 2)
 //		defer_powernet_rebuild = 1
 	for(var/atom/X in urange(consume_range,src,1))
-		if(isturf(X) || ismovableatom(X))
+		if(isturf(X) || ismovable(X))
 			consume(X)
 //	if(defer_powernet_rebuild != 2)
 //		defer_powernet_rebuild = 0

@@ -1,8 +1,8 @@
 /**
   * Datum which holds details of a running poll loaded from the database and supplementary info.
-  * 
+  *
   * Used to minimize the need for querying this data every time it's needed.
-  * 
+  *
   */
 /datum/poll_question
 	///Reference list of the options for this poll, not used by text response polls.
@@ -36,9 +36,9 @@
 
 /**
   * Datum which holds details of a poll option loaded from the database.
-  * 
+  *
   * Used to minimize the need for querying this data every time it's needed.
-  * 
+  *
   */
 /datum/poll_option
 	///Reference to the poll this option belongs to
@@ -62,7 +62,7 @@
 
 /**
   * Shows a list of all currently running polls and buttons to edit or delete them or create a new poll.
-  * 
+  *
   */
 /datum/admins/proc/poll_list_panel()
 	var/list/output = list("Currently running polls<br>Note when editing polls or their options changes are not saved until you press Submit Poll.<br><a href='?_src_=holder;[HrefToken()];newpoll=1'>New Poll</a><hr>")
@@ -86,7 +86,7 @@
 
 /**
   * Show the options for creating a poll or editing its parameters along with its linked options.
-  * 
+  *
   */
 /datum/admins/proc/poll_management_panel(datum/poll_question/poll)
 	var/list/output = list("<form method='get' action='?src=[REF(src)]'>[HrefTokenFormField()]")
@@ -230,10 +230,10 @@
 
 /**
   * Processes topic data from poll management panel.
-  * 
+  *
   * Reads through returned form data and assigns data to the poll datum, creating a new one if required, before passing it to be saved.
   * Also does some simple error checking to ensure the poll will be valid before creation.
-  * 
+  *
   */
 /datum/admins/proc/poll_parse_href(list/href_list, datum/poll_question/poll)
 	if(!check_rights(R_POLL))
@@ -250,7 +250,8 @@
 	if(!poll)
 		poll = new(creator = usr.client.ckey)
 		new_poll = TRUE
-	poll.poll_type = text2num(href_list["polltype"])
+	if(new_poll)
+		poll.poll_type = text2num(href_list["polltype"])
 	switch(href_list["radioduration"])
 		if("runfor")
 			duration = text2num(href_list["duration"])
@@ -296,7 +297,7 @@
 	if(error_state.len)
 		if(poll.edit_ready)
 			to_chat(usr, "<span class='danger'>Not all edits were applied because the following errors were present:\n[error_state.Join("\n")]</span>")
-		else	
+		else
 			to_chat(usr, "<span class='danger'>Poll not [poll ? "submitted" : "initialized"] because the following errors were present:\n[error_state.Join("\n")]</span>")
 			if(new_poll)
 				qdel(poll)
@@ -326,10 +327,10 @@
 
 /**
   * Sets a poll and its associated data as deleted in the database.
-  * 
+  *
   * Calls the procedure set_poll_deleted to set the deleted column to 1 for each row in the poll_ tables matching the poll id used.
   * Then deletes each option datum and finally the poll itself.
-  * 
+  *
   */
 /datum/poll_question/proc/delete_poll()
 	if(!check_rights(R_POLL))
@@ -350,14 +351,14 @@
 
 /**
   * Inserts or updates a poll question to the database.
-  * 
+  *
   * Uses INSERT ON DUPLICATE KEY UPDATE to handle both inserting and updating at once.
   * The start and end datetimes and poll id for new polls is then retrieved for the poll datum.
   * Arguments:
   * * clear_votes - When true will call clear_poll_votes() to delete all votes matching this poll id.
   * * duration - This can be either a timestamp or a number to be paired with interval.
   * * interval - A MySQL temporal interval unit from SECOND to YEAR.
-  * 
+  *
   */
 /datum/poll_question/proc/save_poll_data(clear_votes, duration, interval)
 	if(!check_rights(R_POLL))
@@ -372,7 +373,9 @@
 	var/question_sql = sanitizeSQL(question)
 	var/subtitle_sql = sanitizeSQL(subtitle)
 	var/admin_only_sql = sanitizeSQL(admin_only)
-	var/options_allowed_sql = sanitizeSQL(options_allowed)
+	var/options_allowed_sql = "[sanitizeSQL(options_allowed)]"
+	if(poll_type != POLLTYPE_MULTI)
+		options_allowed_sql = "NULL"
 	var/dont_show_sql = sanitizeSQL(dont_show)
 	var/allow_revoting_sql = sanitizeSQL(allow_revoting)
 	var/admin_ckey = sanitizeSQL(created_by)
@@ -389,7 +392,7 @@
 		start_datetime_sql = "'[sanitizeSQL(start_datetime)]'"
 	var/kn = key_name(usr)
 	var/kna = key_name_admin(usr)
-	var/datum/DBQuery/query_save_poll = SSdbcore.NewQuery("INSERT INTO [format_table_name("poll_question")] (id, polltype, created_datetime, starttime, endtime, question, subtitle, adminonly, multiplechoiceoptions, createdby_ckey, createdby_ip, dontshow, allow_revoting) VALUES ([poll_id_sql], '[poll_type_sql]', NOW(), [start_datetime_sql], [end_datetime_sql], '[question_sql]', '[subtitle_sql]', '[admin_only_sql]', '[options_allowed_sql]', '[admin_ckey]', INET_ATON('[admin_ip]'), '[dont_show_sql]', '[allow_revoting_sql]') ON DUPLICATE KEY UPDATE starttime = [start_datetime_sql], endtime = [end_datetime_sql], question = '[question_sql]', subtitle = '[subtitle_sql]', adminonly = '[subtitle_sql]', multiplechoiceoptions = '[options_allowed_sql]'', dontshow = '[dont_show_sql]', allow_revoting = '[allow_revoting_sql]'")
+	var/datum/DBQuery/query_save_poll = SSdbcore.NewQuery("INSERT INTO [format_table_name("poll_question")] (id, polltype, created_datetime, starttime, endtime, question, subtitle, adminonly, multiplechoiceoptions, createdby_ckey, createdby_ip, dontshow, allow_revoting) VALUES ([poll_id_sql], '[poll_type_sql]', NOW(), [start_datetime_sql], [end_datetime_sql], '[question_sql]', '[subtitle_sql]', '[admin_only_sql]', [options_allowed_sql], '[admin_ckey]', INET_ATON('[admin_ip]'), '[dont_show_sql]', '[allow_revoting_sql]') ON DUPLICATE KEY UPDATE starttime = [start_datetime_sql], endtime = [end_datetime_sql], question = '[question_sql]', subtitle = '[subtitle_sql]', adminonly = '[admin_only_sql]', multiplechoiceoptions = [options_allowed_sql], dontshow = '[dont_show_sql]', allow_revoting = '[allow_revoting_sql]'")
 	if(!query_save_poll.warn_execute())
 		qdel(query_save_poll)
 		return
@@ -418,11 +421,11 @@
 
 /**
   * Saves all options of a poll to the database.
-  * 
+  *
   * Saves all the created options for a poll when it's submitted to the DB for the first time and associated an id with the options.
   * Insertion and id querying for each option is done separately to ensure data integrity; this is less performant, but not significantly.
   * Using MassInsert() would mean having to query a list of rows by poll_id or matching by fields afterwards, which doesn't guarantee accuracy.
-  * 
+  *
   */
 /datum/poll_question/proc/save_all_options()
 	if(!SSdbcore.Connect())
@@ -441,7 +444,7 @@
 
 /**
   * Deletes all votes or text replies for this poll, depending on its type.
-  * 
+  *
   */
 /datum/poll_question/proc/clear_poll_votes()
 	if(!check_rights(R_POLL))
@@ -461,7 +464,7 @@
 
 /**
   * Show the options for creating a poll option or editing its parameters.
-  * 
+  *
   */
 /datum/admins/proc/poll_option_panel(datum/poll_question/poll, datum/poll_option/option)
 	var/list/output = list("<form method='get' action='?src=[REF(src)]'>[HrefTokenFormField()]")
@@ -502,20 +505,20 @@
 		<div class='inputbox'></div></label><br>
 		"}
 	output += "<input type='hidden' name='submitoption' value='[REF(option)]'><input type='hidden' name='submitoptionpoll' value='[REF(poll)]'><input type='submit' value='Add option'>"
-	var/panel_height = 120
+	var/panel_height = 130
 	if(poll.poll_type == POLLTYPE_RATING)
-		panel_height = 190
-	var/datum/browser/panel = new(usr, "popanel", "Poll Option Panel", 370, panel_height)
+		panel_height = 210
+	var/datum/browser/panel = new(usr, "popanel", "Poll Option Panel", 30, panel_height)
 	panel.add_stylesheet("admin_panelscss", 'html/admin/admin_panels.css')
 	panel.set_content(jointext(output, ""))
 	panel.open()
 
 /**
   * Processes topic data from poll option panel.
-  * 
+  *
   * Reads through returned form data and assigns data to the option datum, creating a new one if required, before passing it to be saved.
   * Also does some simple error checking to ensure the option will be valid before creation.
-  * 
+  *
   */
 /datum/admins/proc/poll_option_parse_href(list/href_list, datum/poll_question/poll, datum/poll_option/option)
 	if(!check_rights(R_POLL))
@@ -603,10 +606,10 @@
 
 /**
   * Inserts or updates a poll option to the database.
-  * 
+  *
   * Uses INSERT ON DUPLICATE KEY UPDATE to handle both inserting and updating at once.
   * The list of columns and values is built dynamically to avoid excess data being sent when not a rating type poll.
-  * 
+  *
   */
 /datum/poll_option/proc/save_option()
 	if(!check_rights(R_POLL))
@@ -648,7 +651,7 @@
 
 /**
   * Sets a poll option and its votes as deleted in the database then deletes its datum.
-  * 
+  *
   */
 /datum/poll_option/proc/delete_option()
 	if(!check_rights(R_POLL))
@@ -665,7 +668,7 @@
 
 /**
   * Loads all currently running server polls and their options to store both as datums.
-  * 
+  *
   */
 /proc/load_poll_data()
 	if(!SSdbcore.Connect())

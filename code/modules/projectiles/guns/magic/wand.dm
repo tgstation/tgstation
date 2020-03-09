@@ -1,6 +1,6 @@
 /obj/item/gun/magic/wand
 	name = "wand of nothing"
-	desc = "It's not just a stick, it's a MAGIC stick!"
+	desc = "It's not just a stick, it's a MAGIC stick! You shouldn't have this."
 	ammo_type = /obj/item/ammo_casing/magic
 	icon_state = "nothingwand"
 	item_state = "wand"
@@ -21,7 +21,7 @@
 	. = ..()
 	. += "Has [charges] charge\s remaining."
 
-/obj/item/gun/magic/wand/update_icon()
+/obj/item/gun/magic/wand/update_icon_state()
 	icon_state = "[initial(icon_state)][charges ? "" : "-drained"]"
 
 /obj/item/gun/magic/wand/attack(atom/target, mob/living/user)
@@ -140,6 +140,7 @@
 
 /obj/item/gun/magic/wand/polymorph/zap_self(mob/living/user)
 	..() //because the user mob ceases to exists by the time wabbajack fully resolves
+
 	wabbajack(user)
 	charges--
 
@@ -226,3 +227,13 @@
 	..()
 	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
 	charges--
+
+/////////////////////////////////////
+//WAND OF NOTHING
+/////////////////////////////////////
+
+/obj/item/gun/magic/wand/nothing
+	desc = "It's not just a stick, it's a MAGIC stick?"
+	ammo_type = /obj/item/ammo_casing/magic/nothing
+
+

@@ -24,7 +24,7 @@
 	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/bookmanagement,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
 "af" = (
@@ -166,7 +166,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "ar" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/toilet{
@@ -1071,7 +1071,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "bB" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/machinery/iv_drip,

@@ -394,7 +394,7 @@ CREATE TABLE `poll_textreply` (
   `ckey` varchar(32) NOT NULL,
   `ip` int(10) unsigned NOT NULL,
   `replytext` varchar(2048) NOT NULL,
-  `adminrank` varchar(32) NOT NULL DEFAULT 'Player',
+  `adminrank` varchar(32) NOT NULL,
   `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `idx_ptext_pollid_ckey` (`pollid`,`ckey`)
@@ -509,6 +509,46 @@ CREATE TABLE `stickyban_matched_cid` (
 	`last_matched` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (`stickyban`, `matched_cid`)
 ) ENGINE=InnoDB;
+
+--
+-- Table structure for table `achievements`
+--
+DROP TABLE IF EXISTS `achievements`;
+CREATE TABLE `achievements` (
+	`ckey` VARCHAR(32) NOT NULL,
+	`achievement_key` VARCHAR(32) NOT NULL,
+	`value` INT NULL,
+	`last_updated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (`ckey`,`achievement_key`)
+) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS `achievement_metadata`;
+CREATE TABLE `achievement_metadata` (
+	`achievement_key` VARCHAR(32) NOT NULL,
+	`achievement_version` SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+	`achievement_type` enum('achievement','score','award') NULL DEFAULT NULL,
+	`achievement_name` VARCHAR(64) NULL DEFAULT NULL,
+	`achievement_description` VARCHAR(512) NULL DEFAULT NULL,
+	PRIMARY KEY (`achievement_key`)
+) ENGINE=InnoDB;
+
+--
+-- Table structure for table `ticket`
+--
+DROP TABLE IF EXISTS `ticket`;
+CREATE TABLE `ticket` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `server_ip` int(10) unsigned NOT NULL,
+  `server_port` smallint(5) unsigned NOT NULL,
+  `round_id` int(11) unsigned NOT NULL,
+  `ticket` smallint(11) unsigned NOT NULL,
+  `action` varchar(20) NOT NULL DEFAULT 'Message',
+  `message` text NOT NULL,
+  `timestamp` datetime NOT NULL,
+  `recipient` varchar(32) DEFAULT NULL,
+  `sender` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DELIMITER $$
 CREATE PROCEDURE `set_poll_deleted`(

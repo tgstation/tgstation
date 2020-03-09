@@ -28,7 +28,7 @@
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/nugget = 1)
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	gold_core_spawnable = HOSTILE_SPAWN
+	gold_core_spawnable = FRIENDLY_SPAWN
 	var/stepped_sound = 'sound/effects/huuu.ogg'
 
 /mob/living/simple_animal/hostile/retaliate/frog/Initialize()
@@ -42,6 +42,7 @@
 		butcher_results = list(/obj/item/reagent_containers/food/snacks/nugget = 5)
 
 /mob/living/simple_animal/hostile/retaliate/frog/Crossed(AM as mob|obj)
+	. = ..()
 	if(!stat && isliving(AM))
 		var/mob/living/L = AM
 		if(L.mob_size > MOB_SIZE_TINY)

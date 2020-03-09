@@ -1,6 +1,6 @@
 /**
   * Shows a list of currently running polls a player can vote/has voted on
-  * 
+  *
   */
 /mob/dead/new_player/proc/handle_player_polling()
 	var/list/output = list("<div align='center'><B>Player polls</B><hr><table>")
@@ -15,7 +15,7 @@
 
 /**
   * Redirects a player to the correct poll window based on poll type.
-  * 
+  *
   */
 /mob/dead/new_player/proc/poll_player(datum/poll_question/poll)
 	if(!poll)
@@ -37,9 +37,9 @@
 
 /**
   * Shows voting window for an option type poll, listing its options and relevant details.
-  * 
+  *
   * If already voted on, the option a player voted for is pre-selected.
-  * 
+  *
   */
 /mob/dead/new_player/proc/poll_player_option(datum/poll_question/poll)
 	var/datum/DBQuery/query_option_get_voted = SSdbcore.NewQuery("SELECT optionid FROM [format_table_name("poll_vote")] WHERE pollid = [sanitizeSQL(poll.poll_id)] AND ckey = '[sanitizeSQL(ckey)]' AND deleted = 0")
@@ -78,9 +78,9 @@
 
 /**
   * Shows voting window for a text response type poll, listing its relevant details.
-  * 
+  *
   * If already responded to, the saved response of a player is shown.
-  * 
+  *
   */
 /mob/dead/new_player/proc/poll_player_text(datum/poll_question/poll)
 	var/datum/DBQuery/query_text_get_replytext = SSdbcore.NewQuery("SELECT replytext FROM [format_table_name("poll_textreply")] WHERE pollid = [sanitizeSQL(poll.poll_id)] AND ckey = '[sanitizeSQL(ckey)]' AND deleted = 0")
@@ -112,9 +112,9 @@
 
 /**
   * Shows voting window for a rating type poll, listing its options and relevant details.
-  * 
+  *
   * If already voted on, the options a player voted for are pre-selected.
-  * 
+  *
   */
 /mob/dead/new_player/proc/poll_player_rating(datum/poll_question/poll)
 	var/datum/DBQuery/query_rating_get_votes = SSdbcore.NewQuery("SELECT optionid, rating FROM [format_table_name("poll_vote")] WHERE pollid = [sanitizeSQL(poll.poll_id)] AND ckey = '[sanitizeSQL(ckey)]' AND deleted = 0")
@@ -164,9 +164,9 @@
 
 /**
   * Shows voting window for a multiple choice type poll, listing its options and relevant details.
-  * 
+  *
   * If already voted on, the options a player voted for are pre-selected.
-  * 
+  *
   */
 /mob/dead/new_player/proc/poll_player_multi(datum/poll_question/poll)
 	var/datum/DBQuery/query_multi_get_votes = SSdbcore.NewQuery("SELECT optionid FROM [format_table_name("poll_vote")] WHERE pollid = [sanitizeSQL(poll.poll_id)] AND ckey = '[sanitizeSQL(ckey)]' AND deleted = 0")
@@ -205,9 +205,9 @@
 
 /**
   * Shows voting window for an IRV type poll, listing its options and relevant details.
-  * 
+  *
   * If already voted on, the options are sorted how a player voted for them, otherwise they are randomly shuffled.
-  * 
+  *
   */
 /mob/dead/new_player/proc/poll_player_irv(datum/poll_question/poll)
 	var/datum/asset/irv_assets = get_asset_datum(/datum/asset/group/IRV)
@@ -220,7 +220,6 @@
 	while(query_irv_get_votes.NextRow())
 		voted_for += text2num(query_irv_get_votes.item[1])
 	qdel(query_irv_get_votes)
-
 	var/list/prepared_options = list()
 	//if they've already voted we use the order they voted in plus a shuffle of any options they haven't voted for, if any
 	if(length(voted_for))
@@ -238,6 +237,7 @@
 	else
 		prepared_options = shuffle(poll.options)
 	var/list/output = list({"<html><head><meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 	<script src="jquery.min.js"></script>
 	<script src="jquery-ui.custom-core-widgit-mouse-sortable-min.js"></script>
 	<style>
@@ -282,7 +282,7 @@
 	for(var/o in prepared_options)
 		var/datum/poll_option/option = o
 		output += "<li optionref='[REF(option)]' class='ranking'><span class='grippy'></span> [option.text]</li>\n"
-	output += "</ol><b><center>Least Preferred</center></b><br>"	
+	output += "</ol><b><center>Least Preferred</center></b><br>"
 	if(!length(voted_for) || poll.allow_revoting)
 		output += "<p><input type='submit' value='Vote'></form>"
 	output += "</div>"
@@ -290,11 +290,11 @@
 
 /**
   * Runs some poll validation before a vote is processed.
-  * 
+  *
   * Checks a player is who they claim to be and that a poll is actually still running.
   * Also loads the vote_id to pass onto single-option and text polls.
   * Increments the vote count when successful.
-  * 
+  *
   */
 /mob/dead/new_player/proc/vote_on_poll_handler(datum/poll_question/poll, href_list)
 	if(!SSdbcore.Connect())
@@ -354,7 +354,7 @@
 
 /**
   * Processes vote form data and saves results to the database for a option type poll.
-  * 
+  *
   */
 /mob/dead/new_player/proc/vote_on_poll_option(datum/poll_question/poll, href_list, admin_rank, sql_poll_id, vote_id)
 	if(!SSdbcore.Connect())
@@ -380,7 +380,7 @@
 
 /**
   * Processes response form data and saves results to the database for a text response type poll.
-  * 
+  *
   */
 /mob/dead/new_player/proc/vote_on_poll_text(href_list, admin_rank, sql_poll_id, vote_id)
 	if(!SSdbcore.Connect())
@@ -405,7 +405,7 @@
 
 /**
   * Processes vote form data and saves results to the database for a rating type poll.
-  * 
+  *
   */
 /mob/dead/new_player/proc/vote_on_poll_rating(datum/poll_question/poll, list/href_list, admin_rank, sql_poll_id)
 	if(!SSdbcore.Connect())
@@ -438,7 +438,7 @@
 
 /**
   * Processes vote form data and saves results to the database for a multiple choice type poll.
-  * 
+  *
   */
 /mob/dead/new_player/proc/vote_on_poll_multi(datum/poll_question/poll, list/href_list, admin_rank, sql_poll_id)
 	if(!SSdbcore.Connect())
@@ -472,7 +472,7 @@
 
 /**
   * Processes vote form data and saves results to the database for an IRV type poll.
-  * 
+  *
   */
 /mob/dead/new_player/proc/vote_on_poll_irv(datum/poll_question/poll, list/href_list, admin_rank, sql_poll_id)
 	log_sql("[json_encode(href_list)]")
@@ -489,7 +489,7 @@
 		var/datum/poll_option/option = locate(o) in poll.options
 		var/sql_option_id = sanitizeSQL(option.option_id)
 		sql_votes += list(list("datetime" = "Now()", "pollid" = "'[sql_poll_id]'", "optionid" = "'[sql_option_id]'", "ckey" = "'[sql_ckey]'", "ip" = "INET_ATON('[sql_ip]')", "adminrank" = "'[admin_rank]'"))
-	//IRV results are calculated based on id order, we delete all of a user's votes to avoid potential errors caused by revoting and option editing 
+	//IRV results are calculated based on id order, we delete all of a user's votes to avoid potential errors caused by revoting and option editing
 	var/datum/DBQuery/query_delete_irv_votes = SSdbcore.NewQuery("UPDATE [format_table_name("poll_vote")] SET deleted = 1 WHERE pollid = [sql_poll_id] AND ckey = '[sql_ckey]'")
 	if(!query_delete_irv_votes.warn_execute())
 		qdel(query_delete_irv_votes)

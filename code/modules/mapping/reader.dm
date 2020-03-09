@@ -93,7 +93,7 @@
 			gridSet.ycrd = text2num(dmmRegex.group[4])
 			gridSet.zcrd = text2num(dmmRegex.group[5])
 
-			bounds[MAP_MINX] = min(bounds[MAP_MINX], CLAMP(gridSet.xcrd, x_lower, x_upper))
+			bounds[MAP_MINX] = min(bounds[MAP_MINX], clamp(gridSet.xcrd, x_lower, x_upper))
 			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], gridSet.zcrd)
 			bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], gridSet.zcrd)
 
@@ -113,15 +113,15 @@
 			if(gridLines.len && gridLines[gridLines.len] == "")
 				gridLines.Cut(gridLines.len) // Remove only one blank line at the end.
 
-			bounds[MAP_MINY] = min(bounds[MAP_MINY], CLAMP(gridSet.ycrd, y_lower, y_upper))
+			bounds[MAP_MINY] = min(bounds[MAP_MINY], clamp(gridSet.ycrd, y_lower, y_upper))
 			gridSet.ycrd += gridLines.len - 1 // Start at the top and work down
-			bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(gridSet.ycrd, y_lower, y_upper))
+			bounds[MAP_MAXY] = max(bounds[MAP_MAXY], clamp(gridSet.ycrd, y_lower, y_upper))
 
 			var/maxx = gridSet.xcrd
 			if(gridLines.len) //Not an empty map
 				maxx = max(maxx, gridSet.xcrd + length(gridLines[1]) / key_len - 1)
 
-			bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], maxx), x_lower, x_upper)
+			bounds[MAP_MAXX] = clamp(max(bounds[MAP_MAXX], maxx), x_lower, x_upper)
 		CHECK_TICK
 
 	// Indicate failure to parse any coordinates by nulling bounds
@@ -138,6 +138,7 @@
 
 // Do not call except via load() above.
 /datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
+	PRIVATE_PROC(TRUE)
 	var/list/areaCache = list()
 	var/list/modelCache = build_cache(no_changeturf)
 	var/space_key = modelCache[SPACE_KEY]
@@ -241,7 +242,8 @@
 			var/variables_start = findtext(full_def, "{")
 			var/path_text = trim_text(copytext(full_def, 1, variables_start))
 			var/atom_def = text2path(path_text) //path definition, e.g /obj/foo/bar
-			old_position = dpos + 1
+			if(dpos)
+				old_position = dpos + length(model[dpos])
 
 			if(!ispath(atom_def, /atom)) // Skip the item if the path does not exist.  Fix your crap, mappers!
 				if(bad_paths)
@@ -253,7 +255,7 @@
 			var/list/fields = list()
 
 			if(variables_start)//if there's any variable
-				full_def = copytext(full_def,variables_start+1,length(full_def))//removing the last '}'
+				full_def = copytext(full_def, variables_start + length(full_def[variables_start]), -length(copytext_char(full_def, -1))) //removing the last '}'
 				fields = readlist(full_def, ";")
 				if(fields.len)
 					if(!trim(fields[fields.len]))
@@ -305,7 +307,7 @@
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
 	//first instance the /area and remove it from the members list
 	index = members.len
-	if(members[index] != /area/template_noop)		
+	if(members[index] != /area/template_noop)
 		var/atype = members[index]
 		world.preloader_setup(members_attributes[index], atype)//preloader for assigning  set variables on atom creation
 		var/atom/instance = areaCache[atype]
@@ -423,12 +425,13 @@
 
 		var/trim_left = trim_text(copytext(text,old_position,(equal_position ? equal_position : position)))
 		var/left_constant = delimiter == ";" ? trim_left : parse_constant(trim_left)
-		old_position = position + 1
+		if(position)
+			old_position = position + length(text[position])
 
 		if(equal_position && !isnum(left_constant))
 			// Associative var, so do the association.
 			// Note that numbers cannot be keys - the RHS is dropped if so.
-			var/trim_right = trim_text(copytext(text,equal_position+1,position))
+			var/trim_right = trim_text(copytext(text, equal_position + length(text[equal_position]), position))
 			var/right_constant = parse_constant(trim_right)
 			.[left_constant] = right_constant
 
@@ -442,12 +445,12 @@
 		return num
 
 	// string
-	if(findtext(text,"\"",1,2))
-		return copytext(text,2,findtext(text,"\"",3,0))
+	if(text[1] == "\"")
+		return copytext(text, length(text[1]) + 1, findtext(text, "\"", length(text[1]) + 1))
 
 	// list
-	if(copytext(text,1,6) == "list(")
-		return readlist(copytext(text,6,length(text)))
+	if(copytext(text, 1, 6) == "list(")//6 == length("list(") + 1
+		return readlist(copytext(text, 6, -1))
 
 	// typepath
 	var/path = text2path(text)
@@ -455,8 +458,8 @@
 		return path
 
 	// file
-	if(copytext(text,1,2) == "'")
-		return file(copytext(text,2,length(text)))
+	if(text[1] == "'")
+		return file(copytext_char(text, 2, -1))
 
 	// null
 	if(text == "null")

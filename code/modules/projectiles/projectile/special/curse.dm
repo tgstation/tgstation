@@ -17,9 +17,12 @@
 
 /obj/projectile/curse_hand/Initialize(mapload)
 	. = ..()
-	ENABLE_BITFIELD(movement_type, UNSTOPPABLE)
+	movement_type |= UNSTOPPABLE
 	handedness = prob(50)
 	icon_state = "cursehand[handedness]"
+
+/obj/projectile/curse_hand/update_icon_state()
+	icon_state = "[initial(icon_state)][handedness]"
 
 /obj/projectile/curse_hand/fire(setAngle)
 	if(starting)
@@ -28,7 +31,7 @@
 
 /obj/projectile/curse_hand/prehit(atom/target)
 	if(target == original)
-		DISABLE_BITFIELD(movement_type, UNSTOPPABLE)
+		movement_type &= ~(UNSTOPPABLE)
 	else if(!isturf(target))
 		return FALSE
 	return ..()
@@ -37,10 +40,11 @@
 	if(arm)
 		arm.End()
 		arm = null
-	if(CHECK_BITFIELD(movement_type, UNSTOPPABLE))
+	if((movement_type & UNSTOPPABLE))
 		playsound(src, 'sound/effects/curse3.ogg', 25, TRUE, -1)
 	var/turf/T = get_step(src, dir)
-	new/obj/effect/temp_visual/dir_setting/curse/hand(T, dir, handedness)
+	var/obj/effect/temp_visual/dir_setting/curse/hand/leftover = new(T, dir)
+	leftover.icon_state = icon_state
 	for(var/obj/effect/temp_visual/dir_setting/curse/grasp_portal/G in starting)
 		qdel(G)
 	new /obj/effect/temp_visual/dir_setting/curse/grasp_portal/fading(starting, dir)

@@ -178,19 +178,6 @@
 	density = TRUE
 	deconstructible = FALSE
 
-/obj/structure/fluff/railing
-	name = "railing"
-	desc = "Basic railing meant to protect idiots like you from falling."
-	icon = 'icons/obj/fluff.dmi'
-	icon_state = "railing"
-	density = TRUE
-	anchored = TRUE
-	deconstructible = FALSE
-
-/obj/structure/fluff/railing/corner
-	icon_state = "railing_corner"
-	density = FALSE
-
 /obj/structure/fluff/beach_towel
 	name = "beach towel"
 	desc = "A towel decorated in various beach-themed designs."
@@ -260,3 +247,17 @@
 	name = "clockwork golem scrap"
 	desc = "A pile of scrap metal. It seems damaged beyond repair."
 	icon_state = "clockgolem_dead"
+
+/obj/structure/fluff/hedge
+	name = "hedge"
+	desc = "A large bushy hedge."
+	icon = 'icons/obj/smooth_structures/hedge.dmi'
+	icon_state = "hedge"
+	smooth = SMOOTH_TRUE
+	canSmoothWith = list(/obj/structure/fluff/hedge, /obj/structure/fluff/hedge/opaque)
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/hedge/opaque //useful for mazes and such
+	opacity = 1

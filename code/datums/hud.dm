@@ -27,12 +27,14 @@ GLOBAL_LIST_INIT(huds, list(
 	ANTAG_HUD_SOULLESS = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_BROTHER = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_OBSESSED = new/datum/atom_hud/antag/hidden(),
-	ANTAG_HUD_FUGITIVE = new/datum/atom_hud/antag()
+	ANTAG_HUD_FUGITIVE = new/datum/atom_hud/antag(),
+	ANTAG_HUD_GANGSTER = new/datum/atom_hud/antag/hidden(),
+	ANTAG_HUD_SPACECOP = new/datum/atom_hud/antag()
 	))
 
 /datum/atom_hud
 	var/list/atom/hudatoms = list() //list of all atoms which display this hud
-	var/list/mob/hudusers = list() //list with all mobs who can see the hud
+	var/list/hudusers = list() //list with all mobs who can see the hud
 	var/list/hud_icons = list() //these will be the indexes for the atom's hud_list
 
 	var/list/next_time_allowed = list() //mobs associated with the next time this hud can be added to them

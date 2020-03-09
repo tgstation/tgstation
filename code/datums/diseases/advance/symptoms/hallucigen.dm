@@ -28,8 +28,10 @@ Bonus
 	symptom_delay_min = 25
 	symptom_delay_max = 90
 	var/fake_healthy = FALSE
-	threshold_desc = "<b>Stage Speed 7:</b> Increases the amount of hallucinations.<br>\
-					  <b>Stealth 4:</b> The virus mimics positive symptoms."
+	threshold_descs = list(
+		"Stage Speed 7" = "Increases the amount of hallucinations.",
+		"Stealth 4" = "The virus mimics positive symptoms.",
+	)
 
 /datum/symptom/hallucigen/Start(datum/disease/advance/A)
 	if(!..())

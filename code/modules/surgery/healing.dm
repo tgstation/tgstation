@@ -1,3 +1,5 @@
+#define PER_ITERATION_XP_CAP	MEDICAL_SKILL_MEDIUM //TW XP gain scales with repeated iterations so we cap it.
+
 /datum/surgery/healing
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
@@ -46,12 +48,13 @@
 		"<span class='notice'>[user] attempts to patch some of [target]'s [woundtype].</span>")
 
 /datum/surgery_step/heal/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
-	if(..())
-		while((brutehealing && target.getBruteLoss()) || (burnhealing && target.getFireLoss()))
-			if(!..())
-				break
+	if(!..())
+		return
+	while((brutehealing && target.getBruteLoss()) || (burnhealing && target.getFireLoss()))
+		if(!..())
+			break
 
-/datum/surgery_step/heal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/heal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/umsg = "You succeed in fixing some of [target]'s wounds" //no period, add initial space to "addons"
 	var/tmsg = "[user] fixes some of [target]'s wounds" //see above
 	var/urhealedamt_brute = brutehealing
@@ -68,14 +71,14 @@
 		urhealedamt_burn *= 0.55
 		umsg += " as best as you can while they have clothing on"
 		tmsg += " as best as they can while [target] has clothing on"
-	target.heal_bodypart_damage(urhealedamt_brute,urhealedamt_burn)
+	experience_given = CEILING((target.heal_bodypart_damage(urhealedamt_brute,urhealedamt_burn)/5),1)
 	display_results(user, target, "<span class='notice'>[umsg].</span>",
 		"[tmsg].",
 		"[tmsg].")
 	if(istype(surgery, /datum/surgery/healing))
 		var/datum/surgery/healing/the_surgery = surgery
 		the_surgery.antispam = TRUE
-	return TRUE
+	return ..()
 
 /datum/surgery_step/heal/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='warning'>You screwed up!</span>",
@@ -213,3 +216,5 @@
 		"<span class='warning'>[user] screws up!</span>",
 		"<span class='notice'>[user] fixes some of [target]'s wounds.</span>", TRUE)
 	target.take_bodypart_damage(5,5)
+
+#undef PER_ITERATION_XP_CAP

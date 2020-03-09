@@ -24,6 +24,12 @@
 		if(BURN)
 			playsound(loc, 'sound/items/welder.ogg', 80, TRUE)
 
+/obj/structure/sign/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+	user.examinate(src)
+
 /obj/structure/sign/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH && buildable_sign)
 		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
@@ -138,11 +144,11 @@
 	setDir(turn(dir, 90))
 
 /obj/structure/sign/nanotrasen
-	name = "\improper Nanotrasen Logo"
-	desc = "A sign with the Nanotrasen Logo on it. Glory to Nanotrasen!"
+	name = "\improper Nanotrasen logo"
+	desc = "A sign with the Nanotrasen logo on it. Glory to Nanotrasen!"
 	icon_state = "nanotrasen"
 
 /obj/structure/sign/logo
-	name = "nanotrasen logo"
+	name = "\improper Nanotrasen logo"
 	desc = "The Nanotrasen corporate logo."
 	icon_state = "nanotrasen_sign1"

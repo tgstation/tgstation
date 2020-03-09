@@ -1,4 +1,0 @@
-author: "Dingo-Dongler"
-delete-after: True
-changes: 
-  - tweak: "Adding a genetics disk to a dna console that already contains a disk will remove the old disk."

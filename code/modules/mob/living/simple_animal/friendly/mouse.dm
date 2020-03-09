@@ -28,6 +28,8 @@
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/chew_probability = 1
+	can_be_held = TRUE
+	held_state = "mouse_gray"
 
 /mob/living/simple_animal/mouse/Initialize()
 	. = ..()
@@ -79,6 +81,18 @@
 				else
 					C.deconstruct()
 					visible_message("<span class='warning'>[src] chews through the [C].</span>")
+	for(var/obj/item/reagent_containers/food/snacks/cheesewedge/cheese in range(1, src))
+		if(prob(10))
+			var/cap = CONFIG_GET(number/ratcap)
+			if(LAZYLEN(SSmobs.cheeserats) >= cap)
+				visible_message("<span class='warning'>[src] carefully eats the cheese, hiding it from the [cap] mice on the station!</span>")
+				qdel(cheese)
+				return
+			var/mob/living/newmouse = new /mob/living/simple_animal/mouse(loc)
+			SSmobs.cheeserats += newmouse
+			visible_message("<span class='notice'>[src] nibbles through the [cheese], attracting another mouse!</span>")
+			qdel(cheese)
+			return
 
 /*
  * Mouse types
@@ -87,6 +101,7 @@
 /mob/living/simple_animal/mouse/white
 	body_color = "white"
 	icon_state = "mouse_white"
+	held_state = "mouse_white"
 
 /mob/living/simple_animal/mouse/gray
 	body_color = "gray"
@@ -95,6 +110,11 @@
 /mob/living/simple_animal/mouse/brown
 	body_color = "brown"
 	icon_state = "mouse_brown"
+	held_state = "mouse_brown"
+
+/mob/living/simple_animal/mouse/Destroy()
+	SSmobs.cheeserats -= src
+	return ..()
 
 //TOM IS ALIVE! SQUEEEEEEEE~K :)
 /mob/living/simple_animal/mouse/brown/Tom

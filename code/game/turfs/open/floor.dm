@@ -111,9 +111,6 @@
 /turf/open/floor/attack_paw(mob/user)
 	return attack_hand(user)
 
-/turf/open/floor/proc/gets_drilled()
-	return
-
 /turf/open/floor/proc/break_tile_to_plating()
 	var/turf/open/floor/plating/T = make_plating()
 	if(!istype(T))
@@ -189,8 +186,11 @@
 		if(user && !silent)
 			to_chat(user, "<span class='notice'>You remove the floor tile.</span>")
 		if(floor_tile && make_tile)
-			new floor_tile(src)
+			spawn_tile()
 	return make_plating()
+
+/turf/open/floor/proc/spawn_tile()
+	new floor_tile(src)
 
 /turf/open/floor/singularity_pull(S, current_size)
 	..()
@@ -293,3 +293,14 @@
 			return TRUE
 
 	return FALSE
+
+/turf/open/floor/material
+	name = "plating"
+	desc = "A flooring made out of a certain material"
+	icon_state = "materialfloor"
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
+/turf/open/floor/material/spawn_tile()
+	for(var/i in custom_materials)
+		var/datum/material/M = i
+		new M.sheet_type(src, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))

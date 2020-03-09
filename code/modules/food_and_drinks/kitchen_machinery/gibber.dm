@@ -38,18 +38,18 @@
 			if(M.rating >= 2)
 				. += "<span class='notice'>Gibber has been upgraded to process inorganic materials.</span>"
 
-/obj/machinery/gibber/update_icon()
-	cut_overlays()
+/obj/machinery/gibber/update_overlays()
+	. = ..()
 	if (dirty)
-		add_overlay("grbloody")
-	if(stat & (NOPOWER|BROKEN))
+		. +="grbloody"
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if (!occupant)
-		add_overlay("grjam")
+		. += "grjam"
 	else if (operating)
-		add_overlay("gruse")
+		. += "gruse"
 	else
-		add_overlay("gridle")
+		. += "gridle"
 
 /obj/machinery/gibber/attack_paw(mob/user)
 	return attack_hand(user)
@@ -64,7 +64,7 @@
 	. = ..()
 	if(.)
 		return
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(operating)
 		to_chat(user, "<span class='danger'>It's locked and running.</span>")
@@ -216,7 +216,7 @@
 		meatslab.throw_at(pick(nearby_turfs),i,3)
 		for (var/turfs=1 to meat_produced)
 			var/turf/gibturf = pick(nearby_turfs)
-			if (!gibturf.density && src in view(gibturf))
+			if (!gibturf.density && (src in view(gibturf)))
 				new gibtype(gibturf,i,diseases)
 
 	pixel_x = initial(pixel_x) //return to its spot after shaking

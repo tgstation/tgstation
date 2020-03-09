@@ -54,7 +54,7 @@
 	name = "pack of rice seeds"
 	desc = "These may, or may not, grow into rice."
 	icon_state = "seed-rice"
-	species = /datum/reagent/consumable/rice
+	species = "rice"
 	plantname = "Rice Stalks"
 	product = /obj/item/reagent_containers/food/snacks/grown/rice
 	mutatelist = list()

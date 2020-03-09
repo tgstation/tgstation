@@ -63,8 +63,8 @@
 		// it's has TRAIT_NODROP
 		D.dropItemToGround(target, TRUE)
 		qdel(old_headgear)
-		// where is `SLOT_HEAD` defined? WHO KNOWS
-		D.equip_to_slot(new_headgear, SLOT_HEAD)
+		// where is `ITEM_SLOT_HEAD` defined? WHO KNOWS
+		D.equip_to_slot(new_headgear, ITEM_SLOT_HEAD)
 	return 1
 
 
@@ -380,7 +380,7 @@
 	chameleon_action.emp_randomise(INFINITY)
 
 /obj/item/clothing/gloves/chameleon
-	desc = "These gloves will protect the wearer from electric shock."
+	desc = "These gloves provide protection against electric shock."
 	name = "insulated gloves"
 	icon_state = "yellow"
 	item_state = "ygloves"

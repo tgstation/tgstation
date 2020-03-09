@@ -1,0 +1,5 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - bugfix: "offhand placeholder should not be droppable"
+  - bugfix: "no more holding objects in two hands with your mind"

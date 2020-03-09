@@ -65,7 +65,7 @@
 	else
 		to_chat(src, "<span class='warning'>You need to disable a module first!</span>")
 	if(.)
-		O.equipped(src, SLOT_HANDS)
+		O.equipped(src, ITEM_SLOT_HANDS)
 		O.mouse_opacity = initial(O.mouse_opacity)
 		O.layer = ABOVE_HUD_LAYER
 		O.plane = ABOVE_HUD_PLANE

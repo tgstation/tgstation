@@ -125,7 +125,6 @@
 		var/mob/living/carbon/monkey/M = affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
 		M.ventcrawler = VENTCRAWLER_ALWAYS
 
-
 /datum/disease/transformation/jungle_fever/stage_act()
 	..()
 	switch(stage)

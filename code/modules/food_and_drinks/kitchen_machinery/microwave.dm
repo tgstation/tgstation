@@ -82,12 +82,12 @@
 	else
 		. += "<span class='notice'>\The [src] is empty.</span>"
 
-	if(!(stat & (NOPOWER|BROKEN)))
+	if(!(machine_stat & (NOPOWER|BROKEN)))
 		. += "<span class='notice'>The status display reads:</span>\n"+\
 		"<span class='notice'>- Capacity: <b>[max_n_of_items]</b> items.</span>\n"+\
 		"<span class='notice'>- Cook time reduced by <b>[(efficiency - 1) * 25]%</b>.</span>"
 
-/obj/machinery/microwave/update_icon()
+/obj/machinery/microwave/update_icon_state()
 	if(broken)
 		icon_state = "mwb"
 	else if(dirty_anim_playing)
@@ -196,7 +196,7 @@
 
 	if(operating || panel_open || !anchored || !user.canUseTopic(src, !issilicon(user)))
 		return
-	if(isAI(user) && (stat & NOPOWER))
+	if(isAI(user) && (machine_stat & NOPOWER))
 		return
 
 	if(!length(ingredients))
@@ -211,7 +211,7 @@
 	// post choice verification
 	if(operating || panel_open || !anchored || !user.canUseTopic(src, !issilicon(user)))
 		return
-	if(isAI(user) && (stat & NOPOWER))
+	if(isAI(user) && (machine_stat & NOPOWER))
 		return
 
 	usr.set_machine(src)
@@ -230,7 +230,7 @@
 	ingredients.Cut()
 
 /obj/machinery/microwave/proc/cook()
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(operating || broken > 0 || panel_open || !anchored || dirty == 100)
 		return
@@ -286,8 +286,8 @@
 	loop(MICROWAVE_MUCK, 4)
 
 /obj/machinery/microwave/proc/loop(type, time, wait = max(12 - 2 * efficiency, 2)) // standard wait is 10
-	if(stat & (NOPOWER|BROKEN))
-		if(MICROWAVE_PRE)
+	if(machine_stat & (NOPOWER|BROKEN))
+		if(type == MICROWAVE_PRE)
 			pre_fail()
 		return
 	if(!time)
@@ -310,8 +310,8 @@
 	for(var/obj/item/O in ingredients)
 		O.microwave_act(src)
 		if(O.custom_materials && length(O.custom_materials))
-			if(O.custom_materials[getmaterialref(/datum/material/iron)])
-				metal += O.custom_materials[getmaterialref(/datum/material/iron)]
+			if(O.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)])
+				metal += O.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
 
 	if(metal)
 		spark()

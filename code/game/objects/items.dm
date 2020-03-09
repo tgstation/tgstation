@@ -4,10 +4,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // if true, everyone item when created will have its name changed to be
 // more... RPG-like.
 
+GLOBAL_VAR_INIT(stickpocalypse, FALSE) // if true, all non-embeddable items will be able to harmlessly stick to people when thrown
+GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to embed in people, takes precedence over stickpocalypse
+
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
-	///icon state name for inhanf overlays
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	///icon state name for inhand overlays
 	var/item_state = null
 	///Icon file for left hand inhand overlays
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -85,7 +89,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
 
-	var/datum/embedding_behavior/embedding
+	var/list/embedding = NONE
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
@@ -129,16 +133,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/Initialize()
 
-	if (attack_verb)
+	if(attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
 
 	. = ..()
 	for(var/path in actions_types)
 		new path(src)
 	actions_types = null
-
-	if(GLOB.rpg_loot_items)
-		AddComponent(/datum/component/fantasy)
 
 	if(force_string)
 		item_flags |= FORCE_STRING_OVERRIDE
@@ -148,16 +149,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			hitsound = 'sound/items/welder.ogg'
 		if(damtype == "brute")
 			hitsound = "swing_hit"
-
-	if (!embedding)
-		embedding = getEmbeddingBehavior()
-	else if (islist(embedding))
-		embedding = getEmbeddingBehavior(arglist(embedding))
-	else if (!istype(embedding, /datum/embedding_behavior))
-		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
-
-	if(sharpness) //give sharp objects butchering functionality, for consistency
-		AddComponent(/datum/component/butchering, 80 * toolspeed)
 
 /obj/item/Destroy()
 	item_flags &= ~DROPDEL	//prevent reqdels
@@ -177,6 +168,28 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		qdel(src)
+
+/obj/item/ComponentInitialize()
+	. = ..()
+
+	// this proc says it's for initializing components, but we're initializing elements too because it's you and me against the world >:)
+	if(embedding)
+		AddElement(/datum/element/embed, embedding)
+	else if(GLOB.embedpocalypse)
+		embedding = EMBED_POINTY
+		AddElement(/datum/element/embed, embedding)
+		name = "pointy [name]"
+	else if(GLOB.stickpocalypse)
+		embedding = EMBED_HARMLESS
+		AddElement(/datum/element/embed, embedding)
+		name = "sticky [name]"
+
+	if(GLOB.rpg_loot_items)
+		AddComponent(/datum/component/fantasy)
+
+	if(sharpness) //give sharp objects butchering functionality, for consistency
+		AddComponent(/datum/component/butchering, 80 * toolspeed)
+
 
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
@@ -263,7 +276,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	add_fingerprint(user)
 	ui_interact(user)
 
-/obj/item/ui_act(action, params)
+/obj/item/ui_act(action, list/params)
 	add_fingerprint(usr)
 	return ..()
 
@@ -401,7 +414,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
 	if(!silent)
 		playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE)
-
+	user?.update_equipment_speed_mods()
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -427,14 +440,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			A.Grant(user)
 	item_flags |= IN_INVENTORY
 	if(!initial)
-		if(equip_sound &&(slot_flags & slotdefine2slotbit(slot)))
+		if(equip_sound && (slot_flags & slot))
 			playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
-		else if(slot == SLOT_HANDS)
+		else if(slot == ITEM_SLOT_HANDS)
 			playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE)
+	user.update_equipment_speed_mods()
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user)
-	if(slot == SLOT_IN_BACKPACK || slot == SLOT_LEGCUFFED) //these aren't true slots, so avoid granting actions there
+	if(slot == ITEM_SLOT_BACKPACK || slot == ITEM_SLOT_LEGCUFFED) //these aren't true slots, so avoid granting actions there
 		return FALSE
 	return TRUE
 
@@ -529,7 +543,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
 			to_chat(M, "<span class='danger'>Your eyes start to bleed profusely!</span>")
-		if(!(HAS_TRAIT(M, TRAIT_BLIND) || HAS_TRAIT(M, TRAIT_NEARSIGHT)))
+		if(!(M.is_blind() || HAS_TRAIT(M, TRAIT_NEARSIGHT)))
 			to_chat(M, "<span class='danger'>You become nearsighted!</span>")
 		M.become_nearsighted(EYE_DAMAGE)
 		if(prob(50))
@@ -575,10 +589,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE)
 		return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
 
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE)
 	thrownby = thrower
 	callback = CALLBACK(src, .proc/after_throw, callback) //replace their callback with our own
-	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force)
+	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle)
 
 
 /obj/item/proc/after_throw(datum/callback/callback)
@@ -654,7 +668,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(ismob(location))
 		var/mob/M = location
 		var/success = FALSE
-		if(src == M.get_item_by_slot(SLOT_WEAR_MASK))
+		if(src == M.get_item_by_slot(ITEM_SLOT_MASK))
 			success = TRUE
 		if(success)
 			location = get_turf(M)
@@ -701,6 +715,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		..()
 
 /obj/item/proc/microwave_act(obj/machinery/microwave/M)
+	SEND_SIGNAL(src, COMSIG_ITEM_MICROWAVE_ACT, M)
 	if(istype(M) && M.dirty < 100)
 		M.dirty++
 
@@ -764,9 +779,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(tool_behaviour == TOOL_MINING && ishuman(user))
 		var/mob/living/carbon/human/H = user
-		skill_modifier = H.mind.get_skill_speed_modifier(/datum/skill/mining)
+		skill_modifier = H.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
 
-	delay *= toolspeed * skill_modifier	
+	delay *= toolspeed * skill_modifier
 
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)
@@ -801,7 +816,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // Called before use_tool if there is a delay, or by use_tool if there isn't.
 // Only ever used by welding tools and stacks, so it's not added on any other use_tool checks.
 /obj/item/proc/tool_start_check(mob/living/user, amount=0)
-	return tool_use_check(user, amount)
+	. = tool_use_check(user, amount)
+	if(.)
+		SEND_SIGNAL(src, COMSIG_TOOL_START_USE, user)
 
 // A check called by tool_start_check once, and by use_tool on every tick of delay.
 /obj/item/proc/tool_use_check(mob/living/user, amount)
@@ -822,9 +839,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 		playsound(target, played_sound, volume, TRUE)
 
-// Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
+/// Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
 /obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
-	return tool_use_check(user, amount) && (!extra_checks || extra_checks.Invoke())
+	SHOULD_NOT_OVERRIDE(TRUE)
+	. = tool_use_check(user, amount) && (!extra_checks || extra_checks.Invoke())
+	if(.)
+		SEND_SIGNAL(src, COMSIG_TOOL_IN_USE, user)
 
 // Returns a numeric value for sorting items used as parts in machines, so they can be replaced by the rped
 /obj/item/proc/get_part_rating()
@@ -845,13 +865,27 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			dropped(M, FALSE)
 	return ..()
 
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback)
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback, gentle = FALSE)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	return ..()
+
+/obj/item/proc/embedded(mob/living/carbon/human/embedded_mob)
+	return
+
+/obj/item/proc/unembedded()
+	return
 
 /obj/item/proc/canStrip(mob/stripper, mob/owner)
 	return !HAS_TRAIT(src, TRAIT_NODROP)
 
 /obj/item/proc/doStrip(mob/stripper, mob/owner)
 	return owner.dropItemToGround(src)
+
+/**
+  * Does the current embedding var meet the criteria for being harmless? Namely, does it explicitly define the pain multiplier and jostle pain mult to be 0? If so, return true.
+  */
+/obj/item/proc/is_embed_harmless()
+	if(embedding)
+		return !isnull(embedding["pain_mult"]) && !isnull(embedding["jostle_pain_mult"]) && embedding["pain_mult"] == 0 && embedding["jostle_pain_mult"] == 0
+

@@ -212,7 +212,7 @@
 /area/survivalpod)
 "I" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/machinery/light/small{

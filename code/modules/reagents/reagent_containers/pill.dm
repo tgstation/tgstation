@@ -188,7 +188,7 @@
 	desc = "I wouldn't eat this if I were you."
 	icon_state = "pill9"
 	color = "#454545"
-	list_reagents = list(/datum/reagent/mutationtoxin/shadow = 1)
+	list_reagents = list(/datum/reagent/mutationtoxin/shadow = 5)
 
 //////////////////////////////////////// drugs
 /obj/item/reagent_containers/pill/zoom
@@ -218,12 +218,6 @@
 	list_reagents = list(/datum/reagent/drug/aranesp = 10)
 	icon_state = "pill3"
 
-/obj/item/reagent_containers/pill/happiness
-	name = "happiness pill"
-	desc = "It has a creepy smiling face on it."
-	icon_state = "pill_happy"
-	list_reagents = list(/datum/reagent/drug/happiness = 10)
-
 /obj/item/reagent_containers/pill/floorpill
 	name = "floorpill"
 	desc = "A strange pill found in the depths of maintenance"
@@ -242,20 +236,20 @@
 /obj/item/reagent_containers/pill/potassiodide
 	name = "potassium iodide pill"
 	desc = "Used to reduce low radiation damage very effectively."
-	icon_state = "pill9"
+	icon_state = "pill11"
 	list_reagents = list(/datum/reagent/medicine/potass_iodide = 15)
 	rename_with_volume = TRUE
 
-/obj/item/reagent_containers/pill/trophazole
-	name = "trophazole pill"
-	desc = "Used to treat brute damage of minor and moderate severity.The carving in the pill says 'Eat before ingesting'."
-	icon_state = "pill9"
-	list_reagents = list(/datum/reagent/medicine/trophazole = 15)
+/obj/item/reagent_containers/pill/C2/probital
+	name = "Probital pill"
+	desc = "Used to treat brute damage of minor and moderate severity.The carving in the pill says 'Eat before ingesting'. Causes fatigue and diluted with granibitaluri."
+	icon_state = "pill12"
+	list_reagents = list(/datum/reagent/medicine/C2/probital = 5, /datum/reagent/medicine/granibitaluri = 10)
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/iron
 	name = "iron pill"
 	desc = "Used to reduce bloodloss slowly."
-	icon_state = "pill9"
+	icon_state = "pill8"
 	list_reagents = list(/datum/reagent/iron = 30)
 	rename_with_volume = TRUE

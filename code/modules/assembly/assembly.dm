@@ -16,7 +16,8 @@
 	throwforce = 2
 	throw_speed = 3
 	throw_range = 7
-
+	drop_sound = 'sound/items/handling/component_drop.ogg'
+	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 	var/is_position_sensitive = FALSE	//set to true if the device has different icons for each position.
 										//This will prevent things such as visible lasers from facing the incorrect direction when transformed by assembly_holder's update_icon()
 	var/secured = TRUE
@@ -25,7 +26,6 @@
 	var/wire_type = WIRE_RECEIVE | WIRE_PULSE
 	var/attachable = FALSE // can this be attached to wires
 	var/datum/wires/connected = null
-
 	var/next_activate = 0 //When we're next allowed to activate - for spam control
 
 /obj/item/assembly/get_part_rating()
@@ -33,14 +33,16 @@
 
 /obj/item/assembly/proc/on_attach()
 
-/obj/item/assembly/proc/on_detach() //call this when detaching it from a device. handles any special functions that need to be updated ex post facto
+//Call this when detaching it from a device. handles any special functions that need to be updated ex post facto
+/obj/item/assembly/proc/on_detach()
 	if(!holder)
 		return FALSE
 	forceMove(holder.drop_location())
 	holder = null
 	return TRUE
 
-/obj/item/assembly/proc/holder_movement()							//Called when the holder is moved
+//Called when the holder is moved
+/obj/item/assembly/proc/holder_movement()
 	if(!holder)
 		return FALSE
 	setDir(holder.dir)
@@ -52,7 +54,6 @@
 		return FALSE
 	return TRUE
 
-
 //Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
 /obj/item/assembly/proc/pulsed(radio = FALSE)
 	if(wire_type & WIRE_RECEIVE)
@@ -60,7 +61,6 @@
 	if(radio && (wire_type & WIRE_RADIO_RECEIVE))
 		INVOKE_ASYNC(src, .proc/activate)
 	return TRUE
-
 
 //Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct
 /obj/item/assembly/proc/pulse(radio = FALSE)
@@ -73,7 +73,6 @@
 		holder.process_activation(src, 0, 1)
 	return TRUE
 
-
 // What the device does when turned on
 /obj/item/assembly/proc/activate()
 	if(QDELETED(src) || !secured || (next_activate > world.time))
@@ -81,12 +80,10 @@
 	next_activate = world.time + 30
 	return TRUE
 
-
 /obj/item/assembly/proc/toggle_secure()
 	secured = !secured
 	update_icon()
 	return secured
-
 
 /obj/item/assembly/attackby(obj/item/W, mob/user, params)
 	if(isassembly(W))
@@ -114,7 +111,6 @@
 	. = ..()
 	. += "<span class='notice'>\The [src] [secured? "is secured and ready to be used!" : "can be attached to other things."]</span>"
 
-
 /obj/item/assembly/attack_self(mob/user)
 	if(!user)
 		return FALSE
@@ -124,3 +120,8 @@
 
 /obj/item/assembly/interact(mob/user)
 	return ui_interact(user)
+
+/obj/item/assembly/ui_host(mob/user)
+	if(holder)
+		return holder
+	return src

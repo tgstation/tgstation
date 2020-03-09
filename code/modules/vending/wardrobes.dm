@@ -2,8 +2,8 @@
 	icon_state = "refill_clothes"
 
 /obj/machinery/vending/wardrobe
-	default_price = 50
-	extra_price = 75
+	default_price = 350
+	extra_price = 450
 	payment_department = NO_FREEBIES
 	input_display_header = "Returned Clothing"
 
@@ -57,9 +57,9 @@
 					/obj/item/clothing/under/rank/medical/doctor/purple = 4,
 					/obj/item/clothing/under/rank/medical/doctor = 4,
 					/obj/item/clothing/suit/toggle/labcoat = 4,
-					/obj/item/clothing/suit/toggle/labcoat/emt = 4,
+					/obj/item/clothing/suit/toggle/labcoat/paramedic = 4,
 					/obj/item/clothing/shoes/sneakers/white = 4,
-					/obj/item/clothing/head/soft/emt = 4,
+					/obj/item/clothing/head/soft/paramedic = 4,
 					/obj/item/clothing/suit/apron/surgical = 4,
 					/obj/item/clothing/mask/surgical = 4)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
@@ -182,6 +182,7 @@
 					/obj/item/clothing/suit/hooded/wintercoat/hydro = 2,
 					/obj/item/clothing/suit/apron = 2,
 					/obj/item/clothing/suit/apron/overalls = 3,
+					/obj/item/clothing/suit/apron/waders = 3,
 					/obj/item/clothing/under/rank/civilian/hydroponics = 3,
 					/obj/item/clothing/under/rank/civilian/hydroponics/skirt = 3,
 					/obj/item/clothing/mask/bandana = 3,
@@ -283,6 +284,7 @@
 					/obj/item/clothing/under/rank/civilian/janitor/skirt = 2,
 					/obj/item/clothing/gloves/color/black = 2,
 					/obj/item/clothing/head/soft/purple = 2,
+					/obj/item/pushbroom = 2,
 					/obj/item/paint/paint_remover = 2,
 					/obj/item/melee/flyswatter = 2,
 					/obj/item/flashlight = 2,
@@ -346,7 +348,7 @@
 					/obj/item/clothing/suit/chaplainsuit/nun = 1,
 					/obj/item/clothing/head/nun_hood = 1,
 					/obj/item/clothing/suit/chaplainsuit/holidaypriest = 1,
-					/obj/item/clothing/suit/hooded/chaplainsuit/monkfrock = 1,
+					/obj/item/clothing/suit/hooded/chaplainsuit/monkhabit = 1,
 					/obj/item/storage/fancy/candle_box = 2,
 					/obj/item/clothing/head/kippah = 3,
 					/obj/item/clothing/suit/chaplainsuit/whiterobe = 1,
@@ -391,8 +393,8 @@
 	icon_state = "genedrobe"
 	product_ads = "Perfect for the mad scientist in you!"
 	vend_reply = "Thank you for using the GeneDrobe!"
-	products = list(/obj/item/clothing/under/rank/medical/geneticist = 2,
-					/obj/item/clothing/under/rank/medical/geneticist/skirt = 2,
+	products = list(/obj/item/clothing/under/rank/rnd/geneticist = 2,
+					/obj/item/clothing/under/rank/rnd/geneticist/skirt = 2,
 					/obj/item/clothing/shoes/sneakers/white = 2,
 					/obj/item/clothing/suit/toggle/labcoat/genetics = 2,
 					/obj/item/storage/backpack/genetics = 2,

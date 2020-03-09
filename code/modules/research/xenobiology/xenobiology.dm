@@ -11,11 +11,12 @@
 	throw_speed = 3
 	throw_range = 6
 	grind_results = list()
-	var/Uses = 1 // uses before it goes inert
-	var/qdel_timer = null // deletion timer, for delayed reactions
-	var/effectmod
-	var/list/activate_reagents = list() //Reagents required for activation
+	var/Uses = 1 ///uses before it goes inert
+	var/qdel_timer = null ///deletion timer, for delayed reactions
+	var/effectmod ///Which type of crossbred
+	var/list/activate_reagents = list() ///Reagents required for activation
 	var/recurring = FALSE
+	var/research ///Research point value for slime cores. These are defines stored in [/__DEFINES/research] - the actual values are updated there.
 
 /obj/item/slime_extract/examine(mob/user)
 	. = ..()
@@ -44,12 +45,24 @@
 	if(Uses)
 		grind_results[/datum/reagent/toxin/slimejelly] = 20
 
-//Effect when activated by a Luminescent. Separated into a minor and major effect. Returns cooldown in deciseconds.
+/**
+* Effect when activated by a Luminescent.
+*
+* This proc is called whenever a Luminescent consumes a slime extract. Each one is separated into major and minor effects depending on the extract. Cooldown is measured in deciseconds.
+*
+* * arg1 - The mob absorbing the slime extract.
+* * arg2 - The valid species for the absorbtion. Should always be a Luminescent unless something very major has changed.
+* * arg3 - Whether or not the activation is major or minor. Major activations have large, complex effects, minor are simple.
+*/
 /obj/item/slime_extract/proc/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	to_chat(user, "<span class='warning'>Nothing happened... This slime extract cannot be activated this way.</span>")
 	return 0
 
-//Core-crossing: Feeding adult slimes extracts to obtain a much more powerful, single extract.
+/**
+* Core-crossing: Feeding adult slimes extracts to obtain a much more powerful, single extract.
+*
+* By using a valid core on a living adult slime, then feeding it nine more of the same type, you can mutate it into more useful items. Not every slime type has an implemented core cross.
+*/
 /obj/item/slime_extract/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))
 		return ..()
@@ -79,6 +92,7 @@
 	icon_state = "grey slime extract"
 	effectmod = "reproductive"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
+	research = SLIME_RESEARCH_TIER_0
 
 /obj/item/slime_extract/grey/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -104,6 +118,7 @@
 	icon_state = "gold slime extract"
 	effectmod = "symbiont"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
+	research = SLIME_RESEARCH_TIER_4
 
 /obj/item/slime_extract/gold/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -133,6 +148,7 @@
 	icon_state = "silver slime extract"
 	effectmod = "consuming"
 	activate_reagents = list(/datum/reagent/toxin/plasma,/datum/reagent/water)
+	research = SLIME_RESEARCH_TIER_2
 
 /obj/item/slime_extract/silver/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -158,6 +174,7 @@
 	icon_state = "metal slime extract"
 	effectmod = "industrial"
 	activate_reagents = list(/datum/reagent/toxin/plasma,/datum/reagent/water)
+	research = SLIME_RESEARCH_TIER_1
 
 /obj/item/slime_extract/metal/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -182,6 +199,7 @@
 	icon_state = "purple slime extract"
 	effectmod = "regenerative"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
+	research = SLIME_RESEARCH_TIER_1
 
 /obj/item/slime_extract/purple/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -201,6 +219,7 @@
 	icon_state = "dark purple slime extract"
 	effectmod = "self-sustaining"
 	activate_reagents = list(/datum/reagent/toxin/plasma)
+	research = SLIME_RESEARCH_TIER_2
 
 /obj/item/slime_extract/darkpurple/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -224,6 +243,7 @@
 	icon_state = "orange slime extract"
 	effectmod = "burning"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
+	research = SLIME_RESEARCH_TIER_1
 
 /obj/item/slime_extract/orange/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -244,6 +264,7 @@
 	icon_state = "yellow slime extract"
 	effectmod = "charged"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
+	research = SLIME_RESEARCH_TIER_2
 
 /obj/item/slime_extract/yellow/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -267,6 +288,7 @@
 	icon_state = "red slime extract"
 	effectmod = "sanguine"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
+	research = SLIME_RESEARCH_TIER_4
 
 /obj/item/slime_extract/red/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -287,6 +309,7 @@
 	icon_state = "blue slime extract"
 	effectmod = "stabilized"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
+	research = SLIME_RESEARCH_TIER_1
 
 /obj/item/slime_extract/blue/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -307,6 +330,7 @@
 	icon_state = "dark blue slime extract"
 	effectmod = "chilling"
 	activate_reagents = list(/datum/reagent/toxin/plasma,/datum/reagent/water)
+	research = SLIME_RESEARCH_TIER_2
 
 /obj/item/slime_extract/darkblue/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -330,6 +354,7 @@
 	icon_state = "pink slime extract"
 	effectmod = "gentle"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
+	research = SLIME_RESEARCH_TIER_4
 
 /obj/item/slime_extract/pink/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -358,6 +383,7 @@
 	icon_state = "green slime extract"
 	effectmod = "mutative"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/uranium/radium)
+	research = SLIME_RESEARCH_TIER_4
 
 /obj/item/slime_extract/green/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -382,6 +408,7 @@
 	icon_state = "light pink slime extract"
 	effectmod = "loyal"
 	activate_reagents = list(/datum/reagent/toxin/plasma)
+	research = SLIME_RESEARCH_TIER_5
 
 /obj/item/slime_extract/lightpink/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -406,6 +433,7 @@
 	icon_state = "black slime extract"
 	effectmod = "transformative"
 	activate_reagents = list(/datum/reagent/toxin/plasma)
+	research = SLIME_RESEARCH_TIER_5
 
 /obj/item/slime_extract/black/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -427,6 +455,7 @@
 	icon_state = "oil slime extract"
 	effectmod = "detonating"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
+	research = SLIME_RESEARCH_TIER_5
 
 /obj/item/slime_extract/oil/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -450,6 +479,7 @@
 	icon_state = "adamantine slime extract"
 	effectmod = "crystalline"
 	activate_reagents = list(/datum/reagent/toxin/plasma)
+	research = SLIME_RESEARCH_TIER_5
 
 /obj/item/slime_extract/adamantine/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -483,6 +513,7 @@
 	var/teleport_x = 0
 	var/teleport_y = 0
 	var/teleport_z = 0
+	research = SLIME_RESEARCH_TIER_3
 
 /obj/item/slime_extract/bluespace/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -515,6 +546,7 @@
 	icon_state = "pyrite slime extract"
 	effectmod = "prismatic"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
+	research = SLIME_RESEARCH_TIER_3
 
 /obj/item/slime_extract/pyrite/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -542,6 +574,7 @@
 	icon_state = "cerulean slime extract"
 	effectmod = "recurring"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
+	research = SLIME_RESEARCH_TIER_3
 
 /obj/item/slime_extract/cerulean/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -562,6 +595,7 @@
 	icon_state = "sepia slime extract"
 	effectmod = "lengthened"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
+	research = SLIME_RESEARCH_TIER_3
 
 /obj/item/slime_extract/sepia/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -584,6 +618,7 @@
 	icon_state = "rainbow slime extract"
 	effectmod = "hyperchromatic"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,"lesser plasma",/datum/reagent/toxin/slimejelly,"holy water and uranium") //Curse this snowflake reagent list.
+	research = SLIME_RESEARCH_TIER_RAINBOW
 
 /obj/item/slime_extract/rainbow/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -604,6 +639,16 @@
 			return 150
 
 ////Slime-derived potions///
+
+/**
+* #Slime potions
+*
+* Feed slimes potions either by hand or using the slime console.
+*
+* Slime potions either augment the slime's behavior, its extract output, or its intelligence. These all come either from extract effects or cross cores.
+* A few of the more powerful ones can modify someone's equipment or gender.
+* New ones should probably be accessible only through cross cores as all the normal core types already have uses. Rule of thumb is 'stronger effects go in cross cores'.
+*/
 
 /obj/item/slimepotion
 	name = "slime potion"
@@ -641,7 +686,7 @@
 	M.set_nutrition(700)
 	to_chat(M, "<span class='warning'>You absorb the potion and feel your intense desire to feed melt away.</span>")
 	to_chat(user, "<span class='notice'>You feed the slime the potion, removing its hunger and calming it.</span>")
-	var/newname = copytext(sanitize_name(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
+	var/newname = sanitize_name(stripped_input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime", MAX_NAME_LEN))
 
 	if (!newname)
 		newname = "pet slime"
@@ -686,7 +731,7 @@
 		if(SM.flags_1 & HOLOGRAM_1) //Check to see if it's a holodeck creature
 			to_chat(SM, "<span class='userdanger'>You also become depressingly aware that you are not a real creature, but instead a holoform. Your existence is limited to the parameters of the holodeck.</span>")
 		to_chat(user, "<span class='notice'>[SM] accepts [src] and suddenly becomes attentive and aware. It worked!</span>")
-		SM.copy_known_languages_from(user, FALSE)
+		SM.copy_languages(user)
 		after_success(user, SM)
 		qdel(src)
 	else
@@ -804,7 +849,7 @@
 		return
 
 	to_chat(user, "<span class='notice'>You feed the slime the stabilizer. It is now less likely to mutate.</span>")
-	M.mutation_chance = CLAMP(M.mutation_chance-15,0,100)
+	M.mutation_chance = clamp(M.mutation_chance-15,0,100)
 	qdel(src)
 
 /obj/item/slimepotion/slime/mutator
@@ -828,7 +873,7 @@
 		return
 
 	to_chat(user, "<span class='notice'>You feed the slime the mutator. It is now more likely to mutate.</span>")
-	M.mutation_chance = CLAMP(M.mutation_chance+12,0,100)
+	M.mutation_chance = clamp(M.mutation_chance+12,0,100)
 	M.mutator_used = TRUE
 	qdel(src)
 
@@ -887,7 +932,7 @@
 		return
 	if(C.max_heat_protection_temperature >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
 		to_chat(user, "<span class='warning'>The [C] is already fireproof!</span>")
-		return ..()
+		return
 	to_chat(user, "<span class='notice'>You slather the blue gunk over the [C], fireproofing it.</span>")
 	C.name = "fireproofed [C.name]"
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
@@ -977,6 +1022,8 @@
 	var/obj/item/implant/radio/slime/imp = new(src)
 	imp.implant(M, user)
 	qdel(src)
+
+///Definitions for slime products that don't have anywhere else to go (Floor tiles, blueprints).
 
 /obj/item/stack/tile/bluespace
 	name = "bluespace floor tile"

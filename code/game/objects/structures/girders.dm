@@ -7,6 +7,7 @@
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
+	var/next_beep = 0 //Prevents spamming of the construction sound
 	max_integrity = 200
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
@@ -27,6 +28,12 @@
 			. += "<span class='notice'>[src] is disassembled! You probably shouldn't be able to see this examine message.</span>"
 
 /obj/structure/girder/attackby(obj/item/W, mob/user, params)
+	var/platingmodifier = 1
+	if(HAS_TRAIT(user, TRAIT_QUICK_BUILD))
+		platingmodifier = 0.7
+		if(next_beep <= world.time)
+			next_beep = world.time + 10
+			playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
 	add_fingerprint(user)
 
 	if(istype(W, /obj/item/gun/energy/plasmacutter))
@@ -89,7 +96,7 @@
 					to_chat(user, "<span class='warning'>You need two sheets of metal to create a false wall!</span>")
 					return
 				to_chat(user, "<span class='notice'>You start building a false wall...</span>")
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 20*platingmodifier, target = src))
 					if(S.get_amount() < 2)
 						return
 					S.use(2)
@@ -102,7 +109,7 @@
 					to_chat(user, "<span class='warning'>You need two sheets of metal to finish a wall!</span>")
 					return
 				to_chat(user, "<span class='notice'>You start adding plating...</span>")
-				if (do_after(user, 40, target = src))
+				if (do_after(user, 40*platingmodifier, target = src))
 					if(S.get_amount() < 2)
 						return
 					S.use(2)
@@ -132,7 +139,7 @@
 					if(S.get_amount() < 1)
 						return
 					to_chat(user, "<span class='notice'>You start finalizing the reinforced wall...</span>")
-					if(do_after(user, 50, target = src))
+					if(do_after(user, 50*platingmodifier, target = src))
 						if(S.get_amount() < 1)
 							return
 						S.use(1)
@@ -146,7 +153,7 @@
 					if(S.get_amount() < 1)
 						return
 					to_chat(user, "<span class='notice'>You start reinforcing the girder...</span>")
-					if(do_after(user, 60, target = src))
+					if(do_after(user, 60*platingmodifier, target = src))
 						if(S.get_amount() < 1)
 							return
 						S.use(1)
@@ -156,7 +163,7 @@
 						qdel(src)
 					return
 
-		if(S.sheettype && S.sheettype != "runed")
+		if(S.sheettype != "runed")
 			var/M = S.sheettype
 			if(state == GIRDER_DISPLACED)
 				if(S.get_amount() < 2)
@@ -182,7 +189,16 @@
 					S.use(2)
 					to_chat(user, "<span class='notice'>You add the plating.</span>")
 					var/turf/T = get_turf(src)
-					T.PlaceOnTop(text2path("/turf/closed/wall/mineral/[M]"))
+					if(S.walltype)
+						T.PlaceOnTop(S.walltype)
+					else
+						var/turf/newturf = T.PlaceOnTop(/turf/closed/wall/material)
+						var/list/material_list = list()
+						if(S.material_type)
+							material_list[SSmaterials.GetMaterialRef(S.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
+						if(material_list)
+							newturf.set_custom_materials(material_list)
+
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
@@ -271,18 +287,14 @@
 			qdel(src)
 		return TRUE
 
-/obj/structure/girder/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
+/obj/structure/girder/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if((mover.pass_flags & PASSGRILLE) || istype(mover, /obj/projectile))
 		return prob(girderpasschance)
-	else
-		if(istype(mover, /obj/projectile))
-			return prob(girderpasschance)
-		else
-			return 0
 
 /obj/structure/girder/CanAStarPass(ID, dir, caller)
 	. = !density
-	if(ismovableatom(caller))
+	if(ismovable(caller))
 		var/atom/movable/mover = caller
 		. = . || (mover.pass_flags & PASSGRILLE)
 

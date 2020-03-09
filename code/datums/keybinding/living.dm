@@ -2,6 +2,8 @@
 	category = CATEGORY_HUMAN
 	weight = WEIGHT_MOB
 
+/datum/keybinding/living/can_use(client/user)
+	return isliving(user.mob)
 
 /datum/keybinding/living/resist
 	hotkey_keys = list("B")

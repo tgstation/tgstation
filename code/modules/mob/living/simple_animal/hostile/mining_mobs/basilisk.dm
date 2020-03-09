@@ -26,7 +26,6 @@
 	melee_damage_upper = 12
 	attack_verb_continuous = "bites into"
 	attack_verb_simple = "bite into"
-	a_intent = INTENT_HARM
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	aggro_vision_range = 9
@@ -34,6 +33,8 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	loot = list(/obj/item/stack/ore/diamond{layer = ABOVE_MOB_LAYER},
 				/obj/item/stack/ore/diamond{layer = ABOVE_MOB_LAYER})
+	var/lava_drinker = TRUE
+	var/warmed_up = FALSE
 
 /obj/projectile/temp/basilisk
 	name = "freezing blast"
@@ -42,7 +43,16 @@
 	damage_type = BURN
 	nodamage = TRUE
 	flag = "energy"
-	temperature = 50
+	temperature = -50 // Cools you down! per hit!
+
+/obj/projectile/temp/basilisk/heated
+	name = "energy blast"
+	icon_state= "chronobolt"
+	damage = 40
+	damage_type = BRUTE
+	nodamage = FALSE
+	temperature = 0
+
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	if(..()) //we have a target
@@ -58,6 +68,27 @@
 		if(3)
 			adjustBruteLoss(110)
 
+/mob/living/simple_animal/hostile/asteroid/basilisk/AttackingTarget()
+	. = ..()
+	if(lava_drinker && !warmed_up && istype(target, /turf/open/lava))
+		visible_message("<span class='warning'>[src] begins to drink from [target]...</span>")
+		if(do_after(src, 70, target = target))
+			visible_message("<span class='warning'>[src] begins to fire up!</span>")
+			fully_heal()
+			icon_state = "Basilisk_alert"
+			set_varspeed(0)
+			warmed_up = TRUE
+			projectiletype = /obj/projectile/temp/basilisk/heated
+			addtimer(CALLBACK(src, .proc/cool_down), 3000)
+
+mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
+	visible_message("<span class='warning'>[src] appears to be cooling down...</span>")
+	if(stat != DEAD)
+		icon_state = "Basilisk"
+	set_varspeed(3)
+	warmed_up = FALSE
+	projectiletype = /obj/projectile/temp/basilisk
+
 //Watcher
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
 	name = "watcher"
@@ -67,6 +98,7 @@
 	icon_living = "watcher"
 	icon_aggro = "watcher"
 	icon_dead = "watcher_dead"
+	health_doll_icon = "watcher"
 	pixel_x = -10
 	throw_message = "bounces harmlessly off of"
 	melee_damage_lower = 15
@@ -80,8 +112,35 @@
 	movement_type = FLYING
 	robust_searching = 1
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
+	gold_core_spawnable = NO_SPAWN
 	loot = list()
 	butcher_results = list(/obj/item/stack/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
+	lava_drinker = FALSE
+	search_objects = 1
+	wanted_objects = list(/obj/item/pen/survival, /obj/item/stack/ore/diamond)
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Life()
+	. = ..()
+	if(stat == CONSCIOUS)
+		consume_bait()
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/proc/consume_bait()
+	var/obj/item/stack/ore/diamond/diamonds = locate(/obj/item/stack/ore/diamond) in oview(src, 9)
+	var/obj/item/pen/survival/bait = locate(/obj/item/pen/survival) in oview(src, 9)
+	if(!diamonds && !bait)
+		return
+	if(diamonds)
+		var/distanced = 0
+		distanced = get_dist(loc,diamonds.loc)
+		if(distanced <= 1 && diamonds)
+			qdel(diamonds)
+			src.visible_message("<span class='notice'>[src] consumes [diamonds], and it disappears! ...At least, you think.</span>")
+	if(bait)
+		var/distanceb = 0
+		distanceb = get_dist(loc,bait.loc)
+		if(distanceb <= 1 && bait)
+			qdel(bait)
+			src.visible_message("<span class='notice'>[src] examines [bait] closer, and telekinetically shatters the pen.</span>")
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize()
 	. = ..()
@@ -128,7 +187,7 @@
 	damage = 5
 	damage_type = BURN
 	nodamage = FALSE
-	temperature = 500 //Heats you up!
+	temperature = 200 // Heats you up! per hit!
 
 /obj/projectile/temp/basilisk/magmawing/on_hit(atom/target, blocked = FALSE)
 	. = ..()

@@ -4,10 +4,10 @@
 	var/catchphrase = "High Five!"
 	var/on_use_sound = null
 	var/obj/effect/proc_holder/spell/targeted/touch/attached_spell
-	icon = 'icons/obj/balloons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	lefthand_file = 'icons/mob/inhands/misc/touchspell_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'
-	icon_state = "syndballoon"
+	icon_state = "latexballon"
 	item_state = null
 	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
@@ -33,7 +33,8 @@
 	. = ..()
 	if(!proximity)
 		return
-	user.say(catchphrase, forced = "spell")
+	if(catchphrase)
+		user.say(catchphrase, forced = "spell")
 	playsound(get_turf(user), on_use_sound,50,TRUE)
 	charges--
 	if(charges <= 0)
@@ -73,7 +74,7 @@
 		if(part)
 			part.dismember()
 		return ..()
-	var/obj/item/clothing/suit/hooded/bloated_human/suit = M.get_item_by_slot(SLOT_WEAR_SUIT)
+	var/obj/item/clothing/suit/hooded/bloated_human/suit = M.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 	if(istype(suit))
 		M.visible_message("<span class='danger'>[M]'s [suit] explodes off of them into a puddle of gore!</span>")
 		M.dropItemToGround(suit)

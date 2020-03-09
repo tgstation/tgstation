@@ -1,6 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed floodlights not turning off properly when they're underpowered."
-  - bugfix: "Fixed emitters not changing icons properly when they're underpowered."
-  - bugfix: "Fixed liquid pumps turning on unintentionally when underpowered."

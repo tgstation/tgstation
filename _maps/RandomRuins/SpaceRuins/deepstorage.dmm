@@ -689,7 +689,7 @@
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "bR" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel,
@@ -1003,25 +1003,25 @@
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
-/obj/item/reagent_containers/glass/waterbottle/large{
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/glass/waterbottle/large{
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/glass/waterbottle/large{
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
 	pixel_x = -2
 	},
-/obj/item/reagent_containers/glass/waterbottle/large{
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
 	pixel_x = 5
 	},
-/obj/item/reagent_containers/glass/waterbottle/large{
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
 	pixel_x = 1;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/glass/waterbottle/large{
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
 	pixel_x = 8;
 	pixel_y = -3
 	},
@@ -1129,7 +1129,7 @@
 "cO" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{

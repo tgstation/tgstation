@@ -51,6 +51,7 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	see_in_dark = 7
 	can_be_held = TRUE
+	worn_slot_flags = ITEM_SLOT_HEAD
 	held_items = list(null, null)
 	var/staticChoice = "static"
 	var/list/staticChoices = list("static", "blank", "letter", "animal")
@@ -88,10 +89,10 @@
 
 	if(default_storage)
 		var/obj/item/I = new default_storage(src)
-		equip_to_slot_or_del(I, SLOT_GENERC_DEXTROUS_STORAGE)
+		equip_to_slot_or_del(I, ITEM_SLOT_DEX_STORAGE)
 	if(default_hatmask)
 		var/obj/item/I = new default_hatmask(src)
-		equip_to_slot_or_del(I, SLOT_HEAD)
+		equip_to_slot_or_del(I, ITEM_SLOT_HEAD)
 
 	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 

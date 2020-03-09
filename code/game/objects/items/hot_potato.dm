@@ -77,7 +77,7 @@
 			L.SetImmobilized(0)
 			L.SetParalyzed(0)
 			L.SetUnconscious(0)
-			L.reagents.add_reagent(/datum/reagent/medicine/muscle_stimulant, CLAMP(5 - L.reagents.get_reagent_amount(/datum/reagent/medicine/muscle_stimulant), 0, 5))	//If you don't have legs or get bola'd, tough luck!
+			L.reagents.add_reagent(/datum/reagent/medicine/muscle_stimulant, clamp(5 - L.reagents.get_reagent_amount(/datum/reagent/medicine/muscle_stimulant), 0, 5))	//If you don't have legs or get bola'd, tough luck!
 			colorize(L)
 
 /obj/item/hot_potato/examine(mob/user)
@@ -157,7 +157,7 @@
 	colorize(null)
 	active = FALSE
 
-/obj/item/hot_potato/update_icon()
+/obj/item/hot_potato/update_icon_state()
 	icon_state = active? icon_on : icon_off
 
 /obj/item/hot_potato/syndicate

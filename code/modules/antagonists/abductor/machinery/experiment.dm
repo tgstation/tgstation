@@ -210,7 +210,6 @@
 		open_machine()
 		SendBack(H)
 		return "<span class='bad'>Specimen braindead - disposed.</span>"
-	return "<span class='bad'>ERROR</span>"
 
 
 /obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
@@ -224,7 +223,7 @@
 	return
 
 
-/obj/machinery/abductor/experiment/update_icon()
+/obj/machinery/abductor/experiment/update_icon_state()
 	if(state_open)
 		icon_state = "experiment-open"
 	else

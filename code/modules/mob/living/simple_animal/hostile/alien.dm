@@ -132,6 +132,7 @@
 	icon_state = "alienq"
 	icon_living = "alienq"
 	icon_dead = "alienq_dead"
+	health_doll_icon = "alienq"
 	bubble_icon = "alienroyal"
 	move_to_delay = 4
 	maxHealth = 400
@@ -149,9 +150,12 @@
 /mob/living/simple_animal/hostile/alien/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
 		adjustBruteLoss(2)
+		throw_alert("temp", /obj/screen/alert/cold, 1)
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(20)
-
+		throw_alert("temp", /obj/screen/alert/hot, 3)
+	else
+		clear_alert("temp")
 
 /mob/living/simple_animal/hostile/alien/maid
 	name = "lusty xenomorph maid"
@@ -172,7 +176,7 @@
 	AddElement(/datum/element/cleaning)
 
 /mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
-	if(ismovableatom(target))
+	if(ismovable(target))
 		if(istype(target, /obj/effect/decal/cleanable))
 			visible_message("<span class='notice'>[src] cleans up \the [target].</span>")
 			qdel(target)

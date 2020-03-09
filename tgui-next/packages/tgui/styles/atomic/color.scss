@@ -1,5 +1,0 @@
-@each $color-name, $color-value in $color-fg-map {
-  .color-#{$color-name} {
-    color: $color-value !important;
-  }
-}

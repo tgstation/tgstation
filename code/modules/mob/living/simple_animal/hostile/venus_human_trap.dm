@@ -38,6 +38,7 @@
 
 
 /obj/effect/ebeam/vine/Crossed(atom/movable/AM)
+	. = ..()
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!("vines" in L.faction))
@@ -102,7 +103,7 @@
 		if(length(grasping) < max_grasps)
 			grasping:
 				for(var/mob/living/L in view(grasp_range, src))
-					if(L == src || faction_check_mob(L) || L in grasping || L == target)
+					if(L == src || faction_check_mob(L) || (L in grasping) || L == target)
 						continue
 					for(var/turf/T in getline(src,L))
 						if (T.density)
