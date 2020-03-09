@@ -368,14 +368,27 @@
 
 	aSignal = /obj/item/assembly/signaler/anomaly/fluid
 
+	///the type of reagent we use as smoke, color and from the anomaly pad
 	var/reagent_type
+	///the volume of our internal anomaly production
 	var/volume = 10
 
-	var/slip_time = 50
+	///how long our lube lasts in deciseconds
+	var/lube_time = 50
+	///chance we make lube
+	var/lube_chance = 20
+	///lube range
+	var/lube_range
+	///u of blood we drain per suck
 	var/blood_drain = 20
+	///blood drain range
+	var/blood_drain_range = 2
 
+	//chance per process that we smoke
 	var/smoke_chance = 10
+	///range of our smoke
 	var/smoke_range = 5
+	///volume of our smoke. If you increase this, increase volume too or there wont be enough smoke to spew
 	var/smoke_volume = 10
 
 /obj/effect/anomaly/fluid/Initialize()
@@ -387,10 +400,11 @@
 
 /obj/effect/anomaly/fluid/anomalyEffect()
 	..()
-	for(var/turf/open/OT in range(4, src))
-		OT.MakeSlippery(TURF_WET_LUBE, min_wet_time = slip_time)
+	if(lube_chance)
+		for(var/turf/open/OT in range(lube_range, src))
+			OT.MakeSlippery(TURF_WET_LUBE, min_wet_time = lube_time)
 
-	for(var/mob/living/carbon/C in range(2, src))
+	for(var/mob/living/carbon/C in range(blood_drain_range, src))
 		C.blood_volume = max(0, C.blood_volume - blood_drain)
 		to_chat(C, "<span class='boldwarning'>You feel drained!</span>")
 		playsound(C, 'sound/effects/splat.ogg', 50, TRUE)

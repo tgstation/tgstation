@@ -13,6 +13,7 @@
 
 	///this is the big beautiful anomaly floating ontop of us
 	var/obj/effect/anomaly/anomaly
+	///our base active power use. Decreases with laser efficiency and is * 0.1 for inactive
 	var/base_power = 500
 
 /obj/machinery/anomaly_pad/RefreshParts()
