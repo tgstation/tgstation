@@ -25,3 +25,11 @@ GLOBAL_VAR(bible_icon_state)
 GLOBAL_VAR(bible_item_state)
 GLOBAL_VAR(holy_weapon_type)
 GLOBAL_VAR(holy_armor_type)
+
+///All currently running polls held as datums
+GLOBAL_LIST_EMPTY(polls)
+GLOBAL_PROTECT(polls)
+
+///All poll option datums of running polls
+GLOBAL_LIST_EMPTY(poll_options)
+GLOBAL_PROTECT(poll_options)
