@@ -34,6 +34,7 @@ SUBSYSTEM_DEF(discord)
 	var/list/notify_members_cache = list() // Copy of previous list, so the SS doesnt have to fire if no new members have been added
 	var/list/people_to_notify = list() // People to notify on roundstart
 	var/list/account_link_cache = list() // List that holds accounts to link, used in conjunction with TGS
+	var/list/reverify_cache = list() // list of people who tried to reverify, so they can only do it once per round as a shitty slowdown
 	var/notify_file = file("data/notify.json")
 	var/enabled = 0 // Is TGS enabled (If not we wont fire because otherwise this is useless)
 

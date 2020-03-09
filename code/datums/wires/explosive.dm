@@ -43,7 +43,7 @@
 	message_admins("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
 	log_game("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
 	var/mob/M = get_mob_by_ckey(fingerprint)
-	var/turf/T = get_turf(M)	
+	var/turf/T = get_turf(M)
 	G.log_grenade(M, T)
 	G.prime()
 
@@ -113,8 +113,8 @@
 
 
 /datum/wires/explosive/gibtonite
-	holder_type = /obj/item/twohanded/required/gibtonite
+	holder_type = /obj/item/gibtonite
 
 /datum/wires/explosive/gibtonite/explode()
-	var/obj/item/twohanded/required/gibtonite/P = holder
+	var/obj/item/gibtonite/P = holder
 	P.GibtoniteReaction(null, 2)
