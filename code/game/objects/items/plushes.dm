@@ -291,9 +291,9 @@
 		return FALSE // some love is forbidden
 
 	if(prob(50))	//it has my eyes
-		plush_child = new type(get_turf(loc))
+		plush_child = new type(drop_location())
 	else	//it has your eyes
-		plush_child = new Daddy.type(get_turf(loc))
+		plush_child = new Daddy.type(drop_location())
 
 	plush_child.make_young(src, Daddy)
 

@@ -38,7 +38,7 @@
 		SSlighting.objects_queue -= src
 		if (loc != myturf)
 			var/turf/oldturf = get_turf(myturf)
-			var/turf/newturf = get_turf(loc)
+			var/turf/newturf = drop_location()
 			stack_trace("A lighting object was qdeleted with a different loc then it is suppose to have ([COORD(oldturf)] -> [COORD(newturf)])")
 		if (isturf(myturf))
 			myturf.lighting_object = null
@@ -54,7 +54,7 @@
 	if (loc != myturf)
 		if (loc)
 			var/turf/oldturf = get_turf(myturf)
-			var/turf/newturf = get_turf(loc)
+			var/turf/newturf = drop_location()
 			warning("A lighting object realised it's loc had changed in update() ([myturf]\[[myturf ? myturf.type : "null"]]([COORD(oldturf)]) -> [loc]\[[ loc ? loc.type : "null"]]([COORD(newturf)]))!")
 
 		qdel(src, TRUE)

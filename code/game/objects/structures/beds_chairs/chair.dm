@@ -299,7 +299,7 @@
 			return
 
 	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
-	var/obj/structure/chair/C = new origin_type(get_turf(loc))
+	var/obj/structure/chair/C = new origin_type(drop_location())
 	C.set_custom_materials(custom_materials)
 	TransferComponents(C)
 	C.setDir(dir)
@@ -313,9 +313,9 @@
 	remaining_mats-- //Part of the chair was rendered completely unusable. It magically dissapears. Maybe make some dirt?
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
-			new stack_type(get_turf(loc))
+			new stack_type(drop_location())
 	else if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)])
-		new /obj/item/stack/rods(get_turf(loc), 2)
+		new /obj/item/stack/rods(drop_location(), 2)
 	qdel(src)
 
 

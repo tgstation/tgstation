@@ -111,7 +111,7 @@ Slimecrossing Items
 		to_chat(user, "<span class='warning'>You can't fit more than one barrier in the same space!</span>")
 		return
 	to_chat(user, "<span class='notice'>You squeeze [src].</span>")
-	var/obj/B = new /obj/structure/barricade/slime(get_turf(loc))
+	var/obj/B = new /obj/structure/barricade/slime(drop_location())
 	B.visible_message("<span class='warning'>[src] suddenly grows into a large, gelatinous barrier!</span>")
 	qdel(src)
 

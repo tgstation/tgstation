@@ -35,7 +35,7 @@ Reproductive extracts:
 		playsound(src, 'sound/effects/splat.ogg', 40, TRUE)
 		last_produce = world.time
 		for(var/i = 0, i < cores, i++)
-			new extract_type(get_turf(loc))
+			new extract_type(drop_location())
 		cubes_eaten = 0
 
 /obj/item/slimecross/reproductive/proc/eat_cube(obj/item/reagent_containers/food/snacks/monkeycube, mob/user)

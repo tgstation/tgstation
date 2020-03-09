@@ -64,7 +64,7 @@
 
 /obj/projectile/energy/trap/on_hit(atom/target, blocked = FALSE)
 	if(!ismob(target) || blocked >= 100) //Fully blocked by mob or collided with dense object - drop a trap
-		new/obj/item/restraints/legcuffs/beartrap/energy(get_turf(loc))
+		new/obj/item/restraints/legcuffs/beartrap/energy(drop_location())
 	else if(iscarbon(target))
 		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy(get_turf(target))
 		B.Crossed(target)
