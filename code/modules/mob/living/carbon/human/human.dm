@@ -167,9 +167,15 @@
 	if(ITEM_SLOT_ICLOTHING in obscured)
 		dat += "<tr><td><font color=grey><B>Uniform:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
 	else
-		dat += "<tr><td><B>Uniform:</B></td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_ICLOTHING]'>[(w_uniform && !(w_uniform.item_flags & ABSTRACT)) ? w_uniform : "<font color=grey>Empty</font>"]</A></td></tr>"
+		dat += "<tr><td><B>Uniform:</B></td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_ICLOTHING]'>[(w_uniform && !(w_uniform.item_flags & ABSTRACT)) ? w_uniform : "<font color=grey>Empty</font>"]</A>"
+		if(w_uniform)
+			var/obj/item/clothing/under/U = w_uniform
+			if (U.can_adjust)
+				dat += "&nbsp;<A href='?src=[REF(src)];toggle_uniform=[ITEM_SLOT_ICLOTHING]'>Adjust</A>"
+		dat += "</td></tr>"
 
-	if((w_uniform == null && !(dna && dna.species.nojumpsuit)) || (ITEM_SLOT_ICLOTHING in obscured))
+	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_CHEST)
+	if((w_uniform == null && !(dna && dna.species.nojumpsuit) && !(O && O.status == BODYPART_ROBOTIC)) || (ITEM_SLOT_ICLOTHING in obscured))
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Pockets:</B></font></td></tr>"
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>ID:</B></font></td></tr>"
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Belt:</B></font></td></tr>"
@@ -213,21 +219,7 @@
 		var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
 		if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
 			return
-		var/time_taken = I.embedding.embedded_unsafe_removal_time*I.w_class
-		usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from [usr.p_their()] [L.name].</span>","<span class='notice'>You attempt to remove [I] from your [L.name]... (It will take [DisplayTimeText(time_taken)].)</span>")
-		if(do_after(usr, time_taken, needhand = 1, target = src))
-			if(!I || !L || I.loc != src || !(I in L.embedded_objects))
-				return
-			L.embedded_objects -= I
-			L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
-			I.forceMove(get_turf(src))
-			I.unembedded()
-			usr.put_in_hands(I)
-			usr.emote("scream")
-			usr.visible_message("<span class='notice'>[usr] successfully rips [I] out of [usr.p_their()] [L.name]!</span>", "<span class='notice'>You successfully remove [I] from your [L.name].</span>")
-			if(!has_embedded_objects())
-				clear_alert("embeddedobject")
-				SEND_SIGNAL(usr, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+		SEND_SIGNAL(src, COMSIG_HUMAN_EMBED_RIP, I, L)
 		return
 
 	if(href_list["item"]) //canUseTopic check for this is handled by mob/Topic()
@@ -267,6 +259,16 @@
 		else
 			// Display a warning if the user mocks up
 			to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
+
+	if(href_list["toggle_uniform"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+		var/obj/item/clothing/under/U = get_item_by_slot(ITEM_SLOT_ICLOTHING)
+		to_chat(src, "<span class='notice'>[usr.name] is trying to adjust your [U].</span>")
+		if(do_mob(usr, src, U.strip_delay/2))
+			to_chat(src, "<span class='notice'>[usr.name] successfully adjusted your [U].</span>")
+			U.toggle_jumpsuit_adjust()
+			update_inv_w_uniform()
+			update_body()
+
 
 ///////HUDs///////
 	if(href_list["hud"])

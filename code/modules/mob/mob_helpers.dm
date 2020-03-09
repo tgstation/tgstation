@@ -285,12 +285,9 @@
 	if(hud_used && hud_used.action_intent)
 		hud_used.action_intent.icon_state = "[a_intent]"
 
-///Checks if passed through item is blind
-/proc/is_blind(A)
-	if(ismob(A))
-		var/mob/B = A
-		return B.eye_blind
-	return FALSE
+///Checks if the mob is able to see or not. eye_blind is temporary blindness, the trait is if they're permanently blind.
+/mob/proc/is_blind()
+	return eye_blind ? TRUE : HAS_TRAIT(src, TRAIT_BLIND)
 
 ///Is the mob hallucinating?
 /mob/proc/hallucinating()
