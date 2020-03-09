@@ -258,3 +258,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	sheet_type = /obj/item/stack/sheet/hot_ice
 	value_per_unit = 0.5
 	beauty_modifier = 0.5
+
+/datum/material/hot_ice/on_applied(atom/source, amount, material_flags)
+    . = ..()
+    source.AddComponent(/datum/component/hot_ice)
+
+/datum/material/hot_ice/on_removed(atom/source, amount, material_flags)
+    . = ..()
+    qdel(source.GetComponent(/datum/component/hot_ice))
