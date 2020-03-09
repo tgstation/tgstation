@@ -22,16 +22,23 @@
 
 	var/recharge = TRUE
 	var/recharge_points = 0
-	var/recharge_points_max = 500
+	var/recharge_points_max = 300
 
 
 /obj/structure/destructible/dwarven/dwarven_sarcophagus/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>It is [(recharge_points*100)/recharge_points_max]% powered.</span>"
-	. += "<span class='notice'>Use ores to recharge!</span>"
+	. += "<span class='notice'>Use ores or hearts of foes to recharge!</span>"
 
-/obj/structure/destructible/dwarven/dwarven_sarcophagus/attackby(obj/item/stack/ore/I, mob/living/user, params)
-	recharge_points += I.amount * I.points
+/obj/structure/destructible/dwarven/dwarven_sarcophagus/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	if(istype(I,/obj/item/stack/ore))
+		var/obj/item/stack/ore/S = I
+		recharge_points += S.amount * S.points
+
+	if(istype(I,/obj/item/organ/heart))
+		recharge_points = recharge_points_max
+
 	qdel(I)
 	try_to_activate()
 	return
@@ -89,7 +96,7 @@
 	name = "Blood infuser"
 	icon_state = "blood_fountain"
 	desc = "A small tendril in pool of blood. It hungers..."
-	var/charge_amount = 30
+	var/charge_amount = 10
 	custom_materials  = list(/datum/material/gold = 20000)
 
 /obj/structure/destructible/dwarven/blood_pool/examine(mob/user)
@@ -119,7 +126,7 @@
 		to_chat(H, "<span class='notice'>You don't understand the instructions written in that ancient tongue.</span>")
 		return
 
-	if(charge_amount >= 30)
+	if(charge_amount >= 10)
 		to_chat(H, "<span class='notice'>You hear a faint whisper telling you to choose wiselty </span>")
 		var/choice
 		choice = alert(user,"You study the schematics etched into the stone...",,"Blitz rune","Air rune","Earth rune")

@@ -170,6 +170,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GAMERGOD "gamer-god" //double arcade prizes
 #define TRAIT_GIANT				"giant"
 #define TRAIT_DWARF				"dwarf"
+#define TRAIT_INSPIRED			"inspired"
 
 //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it

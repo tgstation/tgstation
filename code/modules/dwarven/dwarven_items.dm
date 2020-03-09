@@ -263,4 +263,17 @@
 	qdel(src)
 	. = ..()
 
+/obj/item/dwarven/forgotten_scripture
+	name = "Forgotten scriptures"
+	desc = "Ancient notes about inspiration and creation."
+	icon_state = "structure_print"
+	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/dwarven/forgotten_scripture/attack_self(mob/user)
+	. = ..()
+	if(HAS_TRAIT_FROM(user,TRAIT_INSPIRED,TRAIT_GENERIC))
+		to_chat(user, "<span class='notice'>You already feel inspired!</span>")
+		return
+	ADD_TRAIT(user,TRAIT_INSPIRED,TRAIT_GENERIC)
+	new /obj/effect/decal/cleanable/ash(get_turf(src))
+	qdel(src)

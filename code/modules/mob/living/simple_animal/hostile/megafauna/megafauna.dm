@@ -48,6 +48,7 @@
 	if(gps_name && true_spawn)
 		AddComponent(/datum/component/gps, gps_name)
 	apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
+	apply_status_effect(STATUS_EFFECT_DWARFDAMAGETRACKING)
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, MEGAFAUNA_TRAIT)
 	for(var/action_type in attack_action_types)
 		var/datum/action/innate/megafauna_attack/attack_action = new action_type()
@@ -72,9 +73,14 @@
 	else
 		var/datum/status_effect/crusher_damage/C = has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
 		var/crusher_kill = FALSE
+		var/datum/status_effect/dwarf_damage/D = has_status_effect(STATUS_EFFECT_DWARFDAMAGETRACKING)
 		if(C && crusher_loot && C.total_damage >= maxHealth * 0.6)
 			spawn_crusher_loot()
 			crusher_kill = TRUE
+
+		if(D && D.total_damage >= maxHealth * 0.6)
+			new /obj/item/dwarven/forgotten_scripture(get_turf(src))
+
 		if(true_spawn && !(flags_1 & ADMIN_SPAWNED_1))
 			var/tab = "megafauna_kills"
 			if(crusher_kill)

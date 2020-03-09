@@ -107,6 +107,8 @@
 
 #define STATUS_EFFECT_CRUSHERDAMAGETRACKING /datum/status_effect/crusher_damage //tracks total kinetic crusher damage on a target
 
+#define STATUS_EFFECT_DWARFDAMAGETRACKING /datum/status_effect/dwarf_damage //tracks total damage dealt by a dwarf on a target
+
 #define STATUS_EFFECT_SYPHONMARK /datum/status_effect/syphon_mark //tracks kills for the KA death syphon module
 
 #define STATUS_EFFECT_INLOVE /datum/status_effect/in_love //Displays you as being in love with someone else, and makes hearts appear around them.

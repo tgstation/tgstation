@@ -17,6 +17,7 @@ Mineral Sheets
 		- Mythril
 		- Alien Alloy
 		- Coal
+		-Dwarven Alloy
 */
 
 /*
@@ -482,3 +483,4 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 	novariants = TRUE
 	custom_materials = list(/datum/material/dwarven=MINERAL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/dwarven
+	walltype = /turf/closed/wall/mineral/dwarven

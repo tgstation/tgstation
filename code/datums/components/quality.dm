@@ -70,8 +70,12 @@ Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead bec
 /datum/component/quality/proc/generate_quality(quality_val,quality_skill_modifier)
 	quality_level = clamp(quality_val + quality_skill_modifier ,0,9) +1 // +1 because lists start with 1
 
-	if(quality_level == 10 && prob(0.01)) //Artifact roll
-		quality_level = 11
+	if(quality_level == 9 && prob(0.01)) //Artifact roll
+		quality_level = 10
+
+	if(HAS_TRAIT_FROM(creator,TRAIT_INSPIRED,TRAIT_GENERIC)) //we check if the guy killed a megafauna
+		quality_level = 10
+		REMOVE_TRAIT(creator,TRAIT_INSPIRED,TRAIT_GENERIC)
 
 	quality = quality_levels[quality_level]
 

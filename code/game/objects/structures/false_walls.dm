@@ -218,6 +218,16 @@
 	canSmoothWith = list(/obj/structure/falsewall/diamond, /turf/closed/wall/mineral/diamond)
 	max_integrity = 800
 
+/obj/structure/falsewall/dwarven
+	name = "dwarven wall"
+	desc = "A wall made of finest dwarven alloy, seems like a waste..."
+	icon = 'icons/turf/walls/dwarven_wall.dmi'
+	icon_state = "dwarven"
+	mineral = /obj/item/stack/sheet/mineral/dwarven
+	walltype = /turf/closed/wall/mineral/dwarven
+	canSmoothWith = list(/obj/structure/falsewall/dwarven, /turf/closed/wall/mineral/dwarven)
+	max_integrity = 800
+
 /obj/structure/falsewall/plasma
 	name = "plasma wall"
 	desc = "A wall with plasma plating. This is definitely a bad idea."

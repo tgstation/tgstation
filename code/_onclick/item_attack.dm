@@ -93,9 +93,18 @@
 	if(force && M == user && user.client)
 		user.client.give_award(/datum/award/achievement/misc/selfouch, user)
 
-	user.do_attack_animation(M)
-	M.attacked_by(src, user)
+	if(force && isdwarf(user))
+		var/datum/status_effect/dwarf_damage/C = M.has_status_effect(STATUS_EFFECT_DWARFDAMAGETRACKING)
+		var/target_health = M.health
 
+		user.do_attack_animation(M)
+		M.attacked_by(src, user)
+
+		if(!QDELETED(C) && !QDELETED(M))
+			C.total_damage += target_health - M.health
+	else
+		user.do_attack_animation(M)
+		M.attacked_by(src, user)
 	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 

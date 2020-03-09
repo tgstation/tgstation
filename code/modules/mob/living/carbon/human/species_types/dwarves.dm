@@ -11,12 +11,14 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 
 /datum/species/dwarf/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	ADD_TRAIT(C, TRAIT_DWARF, SPECIES_TRAIT)
 	C.transform = C.transform.Scale(1, 0.8)
-	passtable_on(C, INNATE_TRAIT)
+	passtable_on(C, SPECIES_TRAIT)
 	. = ..()
 
 /datum/species/dwarf/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	REMOVE_TRAIT(C, TRAIT_DWARF, SPECIES_TRAIT)
 	C.transform = C.transform.Scale(1, 1.25)
-	passtable_off(C, INNATE_TRAIT)
+	passtable_off(C, SPECIES_TRAIT)
 	. = ..()
 

@@ -34,6 +34,16 @@
 	explosion_block = 3
 	canSmoothWith = list(/turf/closed/wall/mineral/diamond, /obj/structure/falsewall/diamond)
 
+/turf/closed/wall/mineral/dwarven
+	name = "dwarven wall"
+	desc = "A wall made of finest dwarven alloy, seems like a waste..."
+	icon = 'icons/turf/walls/dwarven_wall.dmi'
+	icon_state = "dwarven"
+	sheet_type = /obj/item/stack/sheet/mineral/dwarven
+	slicing_duration = 200   //same as diamond
+	explosion_block = 4 //better explosion resist
+	canSmoothWith = list(/turf/closed/wall/mineral/dwarven, /obj/structure/falsewall/diamond)
+
 /turf/closed/wall/mineral/bananium
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"

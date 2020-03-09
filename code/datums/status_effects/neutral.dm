@@ -17,6 +17,13 @@
 	alert_type = null
 	var/total_damage = 0
 
+/datum/status_effect/dwarf_damage //tracks the damage dealt to this mob by dwarves crushers
+	id = "dwarf_damage"
+	duration = -1
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+	var/total_damage = 0
+
 /datum/status_effect/syphon_mark
 	id = "syphon_mark"
 	duration = 50
