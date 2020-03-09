@@ -114,6 +114,7 @@
 	pixel_y = 23
 	},
 /obj/structure/cable,
+/obj/item/storage/bag/trash,
 /turf/open/floor/plating,
 /area/security/prison)
 "aap" = (
@@ -1365,7 +1366,10 @@
 /area/security/prison)
 "adf" = (
 /obj/structure/toilet{
-	dir = 1
+	cistern = 1;
+	dir = 1;
+	icon_state = "toilet01";
+	open = 0
 	},
 /turf/open/floor/plasteel/freezer,
 /area/security/prison/toilet)

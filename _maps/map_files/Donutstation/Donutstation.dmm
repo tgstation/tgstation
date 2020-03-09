@@ -8093,6 +8093,18 @@
 /obj/machinery/atmospherics/pipe/simple/multiz,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"asv" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Security - Prison Rec Room";
+	dir = 9;
+	network = list("ss13","Security","Prison")
+	},
+/obj/item/storage/bag/trash,
+/turf/open/floor/plasteel,
+/area/security/prison/rec)
 "asw" = (
 /obj/machinery/vending/snack/random,
 /obj/effect/turf_decal/trimline/white/filled/line{
@@ -8141,6 +8153,15 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"asC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/toilet{
+	cistern = 1;
+	dir = 4;
+	icon_state = "toilet01"
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/prison)
 "asD" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -13153,6 +13174,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/processing)
+"aEd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/toilet{
+	cistern = 1;
+	dir = 8;
+	icon_state = "toilet01"
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/prison)
 "aEe" = (
 /obj/structure/sink{
 	dir = 8;
@@ -35723,13 +35753,6 @@
 "bAT" = (
 /turf/open/floor/carpet,
 /area/chapel/main)
-"bAU" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/toilet{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/security/prison)
 "bAV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -35910,13 +35933,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
-"bBm" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/toilet{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/security/prison)
 "bBn" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 8
@@ -40758,17 +40774,6 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/security/prison/visit)
-"bLc" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
-	dir = 1
-	},
-/obj/machinery/camera{
-	c_tag = "Security - Prison Rec Room";
-	dir = 9;
-	network = list("ss13","Security","Prison")
-	},
-/turf/open/floor/plasteel,
-/area/security/prison/rec)
 "bLd" = (
 /obj/machinery/light/small,
 /obj/machinery/power/deck_relay,
@@ -103764,13 +103769,13 @@ aiy
 bDN
 aMc
 aeZ
-bAU
+asC
 aiN
 bCt
 bCX
 bEf
 aiN
-bAU
+asC
 ajR
 bJx
 bJM
@@ -104535,13 +104540,13 @@ bBP
 bDY
 aMc
 afy
-bAU
+asC
 aiN
 bCx
 bCW
 bEE
 aiN
-bAU
+asC
 ajS
 bJx
 bLs
@@ -106334,13 +106339,13 @@ bAd
 bzl
 aPt
 ajF
-bBm
+aEd
 aiN
 bCD
 bCW
 bEW
 aiN
-bBm
+aEd
 ajX
 aiN
 bGM
@@ -107105,13 +107110,13 @@ bCP
 bES
 aPt
 ajG
-bBm
+aEd
 aiN
 bCH
 bDH
 bFb
 aiN
-bBm
+aEd
 akg
 aiN
 aij
@@ -107359,7 +107364,7 @@ aYw
 bjv
 bAb
 bCQ
-bLc
+asv
 aPt
 aiN
 aiN
