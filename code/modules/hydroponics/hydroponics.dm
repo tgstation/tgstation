@@ -951,11 +951,8 @@
 		qdel(myseed)
 		myseed = null
 		dead = FALSE
-<<<<<<< HEAD
-=======
 		name = initial(name)
 		desc = initial(desc)
->>>>>>> experimental_fix
 		TRAY_NAME_UPDATE
 	update_icon()
 

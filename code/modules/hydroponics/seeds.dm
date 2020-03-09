@@ -313,7 +313,7 @@
 
 /obj/item/seeds/proc/set_stability(adjustamt)
 	if(stability != -1)
-		stability = CLAMP(adjustamt, 0, 100)
+		stability = clamp(adjustamt, 0, 100)
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/stability)
 		if(C)
 			C.value = stability
