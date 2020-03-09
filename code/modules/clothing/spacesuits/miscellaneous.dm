@@ -13,6 +13,7 @@ Contains:
  - Freedom's spacesuit (freedom from vacuum's oppression)
  - Carp hardsuit
  - Bounty hunter hardsuit
+ - Blackmarket combat medic hardsuit
 */
 
 	//Death squad armored space suits, not hardsuits!
@@ -434,3 +435,22 @@ Contains:
 	strip_delay = 130
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	cell = /obj/item/stock_parts/cell/hyper
+
+//We can either be alive monsters or dead monsters, you choose.
+/obj/item/clothing/head/helmet/space/hardsuit/combatmedic
+	name = "endemic combat medic helmet"
+	desc = "The integrated helmet of the combat medic hardsuit, this has a bright, glowing facemask."
+	icon_state = "hardsuit0-combatmedic"
+	item_state = "hardsuit0-combatmedic"
+	armor = list("melee" = 35, "bullet" = 10, "laser" = 20, "energy" = 30, "bomb" = 5, "bio" = 100, "rad" = 50, "fire" = 65, "acid" = 75)
+	hardsuit_type = "combatmedic"
+
+/obj/item/clothing/suit/space/hardsuit/combatmedic
+	name = "endemic combat medic hardsuit"
+	desc = "The standard issue hardsuit of infectious disease officers, before the formation of ERT teams. This model is labeled 'Veradux'."
+	icon_state = "combatmedic"
+	item_state = "combatmedic"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/combatmedic
+	armor = list("melee" = 35, "bullet" = 10, "laser" = 20, "energy" = 30, "bomb" = 5, "bio" = 100, "rad" = 50, "fire" = 65, "acid" = 75)
+	allowed = list(/obj/item/gun, /obj/item/melee/baton, /obj/item/circular_saw, /obj/item/tank/internals, /obj/item/storage/box/pillbottles,\
+	/obj/item/storage/firstaid, /obj/item/stack/medical/gauze, /obj/item/stack/medical/suture, /obj/item/stack/medical/mesh, /obj/item/storage/bag/chemistry)
