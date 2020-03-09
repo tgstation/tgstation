@@ -29,6 +29,7 @@ SUBSYSTEM_DEF(discord)
 	name = "Discord"
 	wait = 3000
 	init_order = INIT_ORDER_DISCORD
+	wait_for_explosions = TRUE
 
 	var/list/notify_members = list() // People to save to notify file
 	var/list/notify_members_cache = list() // Copy of previous list, so the SS doesnt have to fire if no new members have been added

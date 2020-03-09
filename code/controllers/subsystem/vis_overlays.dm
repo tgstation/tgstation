@@ -3,6 +3,7 @@ SUBSYSTEM_DEF(vis_overlays)
 	wait = 1 MINUTES
 	priority = FIRE_PRIORITY_VIS
 	init_order = INIT_ORDER_VIS
+	wait_for_explosions = TRUE
 
 	var/list/vis_overlay_cache
 	var/list/unique_vis_overlays

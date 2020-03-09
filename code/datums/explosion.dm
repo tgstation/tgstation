@@ -131,11 +131,6 @@ GLOBAL_LIST_EMPTY(explosions)
 						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, 2.5))
 			EX_PREPROCESS_CHECK_TICK
 
-	//postpone processing for a bit
-	var/postponeCycles = max(round(devastation_range/8),1)
-	SSlighting.postpone(postponeCycles)
-	SSmachines.postpone(postponeCycles)
-
 	if(heavy_impact_range > 1)
 		var/datum/effect_system/explosion/E
 		if(smoke)

@@ -3,6 +3,7 @@ SUBSYSTEM_DEF(spacedrift)
 	priority = FIRE_PRIORITY_SPACEDRIFT
 	wait = 5
 	flags = SS_NO_INIT|SS_KEEP_TIMING
+	wait_for_explosions = TRUE
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun = list()

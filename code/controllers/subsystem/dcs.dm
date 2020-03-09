@@ -1,6 +1,7 @@
 PROCESSING_SUBSYSTEM_DEF(dcs)
 	name = "Datum Component System"
 	flags = SS_NO_INIT
+	wait_for_explosions = TRUE // experimental, remove if it causes issues
 
 	var/list/elements_by_type = list()
 

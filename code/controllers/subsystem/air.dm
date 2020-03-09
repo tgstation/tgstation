@@ -5,6 +5,7 @@ SUBSYSTEM_DEF(air)
 	wait = 5
 	flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+	wait_for_explosions = TRUE
 
 	var/cost_turfs = 0
 	var/cost_groups = 0
@@ -12,12 +13,14 @@ SUBSYSTEM_DEF(air)
 	var/cost_hotspots = 0
 	var/cost_superconductivity = 0
 	var/cost_pipenets = 0
+	var/cost_rebuilds = 0
 	var/cost_atmos_machinery = 0
 
 	var/list/excited_groups = list()
 	var/list/active_turfs = list()
 	var/list/hotspots = list()
 	var/list/networks = list()
+	var/list/pipenets_needing_rebuilt = list()
 	var/list/obj/machinery/atmos_machinery = list()
 	var/list/pipe_init_dirs_cache = list()
 
@@ -44,6 +47,7 @@ SUBSYSTEM_DEF(air)
 	msg += "HS:[round(cost_hotspots,1)]|"
 	msg += "SC:[round(cost_superconductivity,1)]|"
 	msg += "PN:[round(cost_pipenets,1)]|"
+	msg += "RB:[round(cost_rebuilds,1)]|"
 	msg += "AM:[round(cost_atmos_machinery,1)]"
 	msg += "} "
 	msg += "AT:[active_turfs.len]|"
@@ -67,6 +71,15 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/fire(resumed = 0)
 	var/timer = TICK_USAGE_REAL
+
+	if(pipenets_needing_rebuilt.len) // always do this nonsense first
+		var/oldpart = currentpart
+		rebuild_pipenets(resumed)
+		cost_rebuilds = MC_AVERAGE(cost_rebuilds, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		if(state != SS_RUNNING)
+			return
+		resumed = 0
+		currentpart = oldpart
 
 	if(currentpart == SSAIR_PIPENETS || !resumed)
 		process_pipenets(resumed)
@@ -147,6 +160,25 @@ SUBSYSTEM_DEF(air)
 		if(MC_TICK_CHECK)
 			return
 
+/datum/controller/subsystem/air/proc/add_to_rebuild_queue(atmos_machine)
+	if(istype(atmos_machine, /obj/machinery/atmospherics))
+		pipenets_needing_rebuilt += atmos_machine
+
+/datum/controller/subsystem/air/proc/rebuild_pipenets(resumed = 0)
+	if (!resumed)
+		src.currentrun = pipenets_needing_rebuilt.Copy()
+	//cache for sanic speed (lists are references anyways)
+	var/list/currentrun = src.currentrun
+	while(currentrun.len)
+		var/obj/machinery/atmospherics/thing = currentrun[currentrun.len]
+		currentrun.len--
+		if(thing && istype(thing, /obj/machinery/atmospherics)) // for some reason some pipenet datums keep making it into the queue and i'm not sure how, since its gated by an istype already
+			thing.build_network()
+			pipenets_needing_rebuilt.Remove(thing)
+		else
+			pipenets_needing_rebuilt.Remove(thing)
+		if(MC_TICK_CHECK)
+			return
 
 /datum/controller/subsystem/air/proc/process_atmos_machinery(resumed = 0)
 	var/seconds = wait * 0.1

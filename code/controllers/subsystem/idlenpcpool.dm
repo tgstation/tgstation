@@ -4,6 +4,7 @@ SUBSYSTEM_DEF(idlenpcpool)
 	priority = FIRE_PRIORITY_IDLE_NPC
 	wait = 60
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+	wait_for_explosions = TRUE
 
 	var/list/currentrun = list()
 	var/static/list/idle_mobs_by_zlevel[][]

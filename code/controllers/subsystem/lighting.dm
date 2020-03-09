@@ -3,6 +3,7 @@ SUBSYSTEM_DEF(lighting)
 	wait = 2
 	init_order = INIT_ORDER_LIGHTING
 	flags = SS_TICKER
+	wait_for_explosions = TRUE
 	var/static/list/sources_queue = list() // List of lighting sources queued for update.
 	var/static/list/corners_queue = list() // List of lighting corners queued for update.
 	var/static/list/objects_queue = list() // List of lighting objects queued for update.

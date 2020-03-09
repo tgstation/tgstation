@@ -5,6 +5,7 @@ SUBSYSTEM_DEF(processing)
 	priority = FIRE_PRIORITY_PROCESS
 	flags = SS_BACKGROUND|SS_POST_FIRE_TIMING|SS_NO_INIT
 	wait = 10
+	wait_for_explosions = TRUE // experimental
 
 	var/stat_tag = "P" //Used for logging
 	var/list/processing = list()
