@@ -388,7 +388,7 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 		S.rift_list += CR
 		to_chat(S, "<span class='boldwarning'>The rift has been summoned.  Prevent the crew from destroying it at all costs!</span>")
 		notify_ghosts("\[S] has opened a rift!", source = CR, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Rift Opened")
-		QDEL_NULL(src)
+		qdel(src)
 
 /**
   * # Carp Rift
