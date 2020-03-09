@@ -276,7 +276,7 @@
 			return
 		resin_cooldown = TRUE
 		R.remove_any(100)
-		var/obj/effect/resin_container/A = new (get_turf(src))
+		var/obj/effect/resin_container/A = new (drop_location())
 		log_game("[key_name(user)] used Resin Launcher at [AREACOORD(user)].")
 		playsound(src,'sound/items/syringeproj.ogg',40,TRUE)
 		for(var/a=0, a<5, a++)

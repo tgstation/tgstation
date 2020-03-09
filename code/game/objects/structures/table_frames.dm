@@ -62,7 +62,7 @@
 	qdel(src)
 
 /obj/structure/table_frame/deconstruct(disassembled = TRUE)
-	new framestack(get_turf(src), framestackamount)
+	new framestack(drop_location(), framestackamount)
 	qdel(src)
 
 /obj/structure/table_frame/narsie_act()

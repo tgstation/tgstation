@@ -117,7 +117,7 @@
 			to_chat(user, "<span class='notice'>You open the [initial(name)] assembly and remove the payload.</span>")
 			return
 		wires.detach_assembly(wires.get_wire(1))
-		new /obj/item/stack/cable_coil(get_turf(src),1)
+		new /obj/item/stack/cable_coil(drop_location(),1)
 		stage_change(GRENADE_EMPTY)
 		to_chat(user, "<span class='notice'>You remove the activation mechanism from the [initial(name)] assembly.</span>")
 	else

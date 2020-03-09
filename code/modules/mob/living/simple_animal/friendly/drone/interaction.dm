@@ -20,7 +20,7 @@
 						if(do_after(D, 60, 0, target = src))
 							D.visible_message("<span class='notice'>[D] repairs itself using [src]'s remains!</span>", "<span class='notice'>You repair yourself using [src]'s remains.</span>")
 							D.adjustBruteLoss(-src.maxHealth)
-							new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
+							new /obj/effect/decal/cleanable/oil/streak(drop_location())
 							qdel(src)
 						else
 							to_chat(D, "<span class='warning'>You need to remain still to cannibalize [src]!</span>")
@@ -49,7 +49,7 @@
 			return
 		to_chat(user, "<span class='notice'>You pick [src] up.</span>")
 		drop_all_held_items()
-		var/obj/item/clothing/head/mob_holder/drone/DH = new(get_turf(src), src)
+		var/obj/item/clothing/head/mob_holder/drone/DH = new(drop_location(), src)
 		DH.slot_flags = worn_slot_flags
 		user.put_in_hands(DH)
 

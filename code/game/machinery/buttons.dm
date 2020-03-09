@@ -94,7 +94,7 @@
 			W.play_tool_sound(src)
 			if(W.use_tool(src, user, 40))
 				to_chat(user, "<span class='notice'>You unsecure the button frame.</span>")
-				transfer_fingerprints_to(new /obj/item/wallframe/button(get_turf(src)))
+				transfer_fingerprints_to(new /obj/item/wallframe/button(drop_location()))
 				playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 				qdel(src)
 

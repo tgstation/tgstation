@@ -72,4 +72,4 @@
 			explosion(target, 0, 1, 1, 2)
 			return BULLET_ACT_HIT
 	//if(istype(target, /turf/closed) || ismecha(target))
-	new /obj/item/broken_missile(get_turf(src), 1)
+	new /obj/item/broken_missile(drop_location(), 1)

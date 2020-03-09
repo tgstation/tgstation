@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			prizeselect = pickweight(prize_override)
 		else
 			prizeselect = pickweight(GLOB.arcade_prize_pool)
-		var/atom/movable/the_prize = new prizeselect(get_turf(src))
+		var/atom/movable/the_prize = new prizeselect(drop_location())
 		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 		visible_message("<span class='notice'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
 
@@ -509,7 +509,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	if(gamers[gamer] == -1)
 		say("WARNING: Continued antisocial behavior detected: Dispensing self-help literature.")
-		new /obj/item/gamer_pamphlet(get_turf(src))
+		new /obj/item/gamer_pamphlet(drop_location())
 		gamers[gamer]--
 		return
 
@@ -857,7 +857,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 							say("WEEWOO! WEEWOO! Spaceport security en route!")
 							playsound(src, 'sound/items/weeoo1.ogg', 100, FALSE)
 							for(var/i, i<=3, i++)
-								var/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion/O = new/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion(get_turf(src))
+								var/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion/O = new/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion(drop_location())
 								O.target = usr
 
 

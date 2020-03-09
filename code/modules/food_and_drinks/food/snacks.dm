@@ -180,7 +180,7 @@ All foods are distributed among various categories. Use common sense.
 			if(contents.len >= 20)
 				to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
 				return 0
-			var/obj/item/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
+			var/obj/item/reagent_containers/food/snacks/customizable/C = new custom_food_type(drop_location())
 			C.initialize_custom_food(src, S, user)
 			return 0
 	var/sharp = W.get_sharpness()

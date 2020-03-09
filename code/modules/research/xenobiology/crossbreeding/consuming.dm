@@ -41,7 +41,7 @@ Consuming extracts:
 	..()
 
 /obj/item/slimecross/consuming/proc/spawncookie()
-	return new cookietype(get_turf(src))
+	return new cookietype(drop_location())
 
 /obj/item/slime_cookie //While this technically acts like food, it's so removed from it that I made it its' own type.
 	name = "error cookie"
@@ -453,7 +453,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/rainbow/spawncookie()
 	var/cookie_type = pick(subtypesof(/obj/item/slime_cookie))
-	var/obj/item/slime_cookie/S = new cookie_type(get_turf(src))
+	var/obj/item/slime_cookie/S = new cookie_type(drop_location())
 	S.name = "rainbow cookie"
 	S.desc = "A beautiful rainbow cookie, constantly shifting colors in the light."
 	S.icon_state = "rainbow"

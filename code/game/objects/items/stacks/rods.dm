@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 		else if(S.w_class > WEIGHT_CLASS_SMALL)
 			to_chat(user, "<span class='warning'>The ingredient is too big for [src]!</span>")
 		else
-			var/obj/item/reagent_containers/food/snacks/customizable/A = new/obj/item/reagent_containers/food/snacks/customizable/kebab(get_turf(src))
+			var/obj/item/reagent_containers/food/snacks/customizable/A = new/obj/item/reagent_containers/food/snacks/customizable/kebab(drop_location())
 			A.initialize_custom_food(src, S, user)
 	else
 		return ..()

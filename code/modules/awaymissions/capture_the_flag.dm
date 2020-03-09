@@ -38,7 +38,7 @@
 /obj/item/ctf/Initialize()
 	. = ..()
 	if(!reset)
-		reset = new reset_path(get_turf(src))
+		reset = new reset_path(drop_location())
 
 /obj/item/ctf/ComponentInitialize()
 	. = ..()
@@ -266,7 +266,7 @@
 	recently_dead_ckeys -= ckey
 
 /obj/machinery/capture_the_flag/proc/spawn_team_member(client/new_team_member)
-	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(src))
+	var/mob/living/carbon/human/M = new/mob/living/carbon/human(drop_location())
 	new_team_member.prefs.copy_to(M)
 	M.set_species(/datum/species/synth)
 	M.key = new_team_member.key
@@ -589,7 +589,7 @@
 	deploy_message = 0
 
 /obj/structure/barricade/security/ctf/make_debris()
-	new /obj/effect/ctf/dead_barricade(get_turf(src))
+	new /obj/effect/ctf/dead_barricade(drop_location())
 
 /obj/effect/ctf
 	density = FALSE
@@ -650,7 +650,7 @@
 
 /obj/effect/ctf/dead_barricade/proc/respawn()
 	if(!QDELETED(src))
-		new /obj/structure/barricade/security/ctf(get_turf(src))
+		new /obj/structure/barricade/security/ctf(drop_location())
 		qdel(src)
 
 

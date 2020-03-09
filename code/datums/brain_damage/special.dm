@@ -114,7 +114,7 @@
 		"slides out of a fold in spacetime")
 	to_chat(user, "<span class='notice'>You try to align with the bluespace stream...</span>")
 	if(do_after(user, 20, target = src))
-		new /obj/effect/temp_visual/bluespace_fissure(get_turf(src))
+		new /obj/effect/temp_visual/bluespace_fissure(drop_location())
 		new /obj/effect/temp_visual/bluespace_fissure(get_turf(linked_to))
 		user.forceMove(get_turf(linked_to))
 		user.visible_message("<span class='warning'>[user] [slip_in_message].</span>", null, null, null, user)

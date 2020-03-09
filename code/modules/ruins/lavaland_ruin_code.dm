@@ -94,7 +94,7 @@
 		if(species)
 			if(O.use(10))
 				to_chat(user, "<span class='notice'>You finish up the golem shell with ten sheets of [O].</span>")
-				new shell_type(get_turf(src), species, user)
+				new shell_type(drop_location(), species, user)
 				qdel(src)
 			else
 				to_chat(user, "<span class='warning'>You need at least ten sheets to finish a golem!</span>")
@@ -155,7 +155,7 @@
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms/space/Initialize()
 	. = ..()
 	if(prob(90)) //only has a 10% chance of existing, otherwise it'll just be a NPC syndie.
-		new /mob/living/simple_animal/hostile/syndicate/ranged(get_turf(src))
+		new /mob/living/simple_animal/hostile/syndicate/ranged(drop_location())
 		return INITIALIZE_HINT_QDEL
 
 /datum/outfit/lavaland_syndicate/comms

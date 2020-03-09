@@ -87,7 +87,7 @@
 	icon_state = initial(icon_state)
 
 /mob/living/simple_animal/hostile/mimic/crate/death()
-	var/obj/structure/closet/crate/C = new(get_turf(src))
+	var/obj/structure/closet/crate/C = new(drop_location())
 	// Put loot in crate
 	for(var/obj/O in src)
 		O.forceMove(C)
@@ -302,7 +302,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	toggle_open()
 
 /mob/living/simple_animal/hostile/mimic/xenobio/death()
-	var/obj/structure/closet/crate/C = new(get_turf(src))
+	var/obj/structure/closet/crate/C = new(drop_location())
 	// Put loot in crate
 	for(var/atom/movable/AM in src)
 		AM.forceMove(C)

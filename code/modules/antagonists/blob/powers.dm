@@ -47,7 +47,7 @@
 	if(placed && blob_core)
 		blob_core.forceMove(loc)
 	else
-		var/obj/structure/blob/core/core = new(get_turf(src), src, 1)
+		var/obj/structure/blob/core/core = new(drop_location(), src, 1)
 		core.overmind = src
 		blobs_legit += src
 		blob_core = core

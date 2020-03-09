@@ -109,7 +109,7 @@
 		melee_damage_lower = 30
 		melee_damage_upper = 30
 		update_icons()
-		new /obj/effect/temp_visual/mook_dust(get_turf(src))
+		new /obj/effect/temp_visual/mook_dust(drop_location())
 		playsound(src, 'sound/weapons/thudswoosh.ogg', 25, TRUE)
 		playsound(src, 'sound/voice/mook_leap_yell.ogg', 100, TRUE)
 		var/target_turf = get_turf(target)

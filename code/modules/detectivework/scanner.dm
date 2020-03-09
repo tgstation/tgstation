@@ -42,7 +42,7 @@
 
 /obj/item/detective_scanner/proc/PrintReport()
 	// Create our paper
-	var/obj/item/paper/P = new(get_turf(src))
+	var/obj/item/paper/P = new(drop_location())
 
 	//This could be a global count like sec and med record printouts. See GLOB.data_core.medicalPrintCount AKA datacore.dm
 	var frNum = ++forensicPrintCount

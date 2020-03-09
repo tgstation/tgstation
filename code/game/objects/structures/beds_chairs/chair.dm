@@ -67,7 +67,7 @@
 	return attack_hand(user)
 
 /obj/structure/chair/narsie_act()
-	var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))
+	var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(drop_location())
 	W.setDir(dir)
 	qdel(src)
 
@@ -278,7 +278,7 @@
 	return BRUTELOSS
 
 /obj/item/chair/narsie_act()
-	var/obj/item/chair/wood/W = new/obj/item/chair/wood(get_turf(src))
+	var/obj/item/chair/wood/W = new/obj/item/chair/wood(drop_location())
 	W.setDir(dir)
 	qdel(src)
 

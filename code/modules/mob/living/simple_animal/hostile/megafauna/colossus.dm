@@ -559,7 +559,7 @@ Difficulty: Very Hard
 
 /obj/machinery/anomalous_crystal/emitter/ActivationReaction(mob/user, method)
 	if(..())
-		var/obj/projectile/P = new generated_projectile(get_turf(src))
+		var/obj/projectile/P = new generated_projectile(drop_location())
 		P.setDir(dir)
 		switch(dir)
 			if(NORTH)

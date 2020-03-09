@@ -32,7 +32,7 @@
 /mob/living/simple_animal/hostile/blob/blob_act(obj/structure/blob/B)
 	if(stat != DEAD && health < maxHealth)
 		for(var/i in 1 to 2)
-			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
+			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(drop_location()) //hello yes you are being healed
 			if(overmind)
 				H.color = overmind.blobstrain.complementary_color
 			else
@@ -240,14 +240,14 @@
 		else
 			if(locate(/obj/structure/blob/core) in blobs_in_area)
 				adjustHealth(-maxHealth*0.1)
-				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
+				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(drop_location()) //hello yes you are being healed
 				if(overmind)
 					H.color = overmind.blobstrain.complementary_color
 				else
 					H.color = "#000000"
 			if(locate(/obj/structure/blob/node) in blobs_in_area)
 				adjustHealth(-maxHealth*0.05)
-				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src))
+				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(drop_location())
 				if(overmind)
 					H.color = overmind.blobstrain.complementary_color
 				else

@@ -217,7 +217,7 @@
 		fire_beam()
 
 /obj/machinery/power/emitter/proc/fire_beam(mob/user)
-	var/obj/projectile/P = new projectile_type(get_turf(src))
+	var/obj/projectile/P = new projectile_type(drop_location())
 	playsound(src, projectile_sound, 50, TRUE)
 	if(prob(35))
 		sparks.start()

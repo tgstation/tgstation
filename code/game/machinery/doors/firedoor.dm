@@ -193,7 +193,7 @@
 
 /obj/machinery/door/firedoor/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		var/obj/structure/firelock_frame/F = new assemblytype(get_turf(src))
+		var/obj/structure/firelock_frame/F = new assemblytype(drop_location())
 		if(disassembled)
 			F.constructionStep = CONSTRUCTION_PANEL_OPEN
 		else
@@ -320,9 +320,9 @@
 									 "<span class='notice'>You finish the firelock.</span>")
 				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 				if(reinforced)
-					new /obj/machinery/door/firedoor/heavy(get_turf(src))
+					new /obj/machinery/door/firedoor/heavy(drop_location())
 				else
-					new /obj/machinery/door/firedoor(get_turf(src))
+					new /obj/machinery/door/firedoor(drop_location())
 				qdel(src)
 				return
 			if(istype(C, /obj/item/stack/sheet/plasteel))
@@ -357,7 +357,7 @@
 					return
 				user.visible_message("<span class='notice'>[user] removes the wires from [src].</span>", \
 									 "<span class='notice'>You remove the wiring from [src], exposing the circuit board.</span>")
-				new/obj/item/stack/cable_coil(get_turf(src), 5)
+				new/obj/item/stack/cable_coil(drop_location(), 5)
 				constructionStep = CONSTRUCTION_GUTTED
 				update_icon()
 				return

@@ -72,9 +72,9 @@
 	if(W.tool_behaviour == TOOL_WRENCH && (metal_amt || glass_amt))
 		to_chat(user, "<span class='notice'>You dismantle [src].</span>")
 		if(metal_amt)
-			new /obj/item/stack/sheet/metal(get_turf(src), metal_amt)
+			new /obj/item/stack/sheet/metal(drop_location(), metal_amt)
 		if(glass_amt)
-			new /obj/item/stack/sheet/glass(get_turf(src), glass_amt)
+			new /obj/item/stack/sheet/glass(drop_location(), glass_amt)
 		qdel(src)
 
 

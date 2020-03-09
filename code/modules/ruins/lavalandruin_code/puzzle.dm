@@ -90,7 +90,7 @@
 	dispense_reward()
 
 /obj/effect/sliding_puzzle/proc/dispense_reward()
-	new reward_type(get_turf(src))
+	new reward_type(drop_location())
 
 /obj/effect/sliding_puzzle/proc/is_solvable()
 	var/list/current_ordering = list()

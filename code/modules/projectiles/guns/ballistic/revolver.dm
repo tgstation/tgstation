@@ -241,7 +241,7 @@
 
 /obj/item/gun/ballistic/revolver/russian/soul/shoot_self(mob/living/user)
 	..()
-	var/obj/item/soulstone/anybody/revolver/SS = new /obj/item/soulstone/anybody/revolver(get_turf(src))
+	var/obj/item/soulstone/anybody/revolver/SS = new /obj/item/soulstone/anybody/revolver(drop_location())
 	if(!SS.transfer_soul("FORCE", user)) //Something went wrong
 		qdel(SS)
 		return

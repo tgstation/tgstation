@@ -785,7 +785,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		if(I.use_tool(src, user, 30))
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			for(var/i = 1, i <= framestackamount, i++)
-				new framestack(get_turf(src))
+				new framestack(drop_location())
 			qdel(src)
 			return
 	if(istype(I, /obj/item/stack/sheet/mineral/abductor))

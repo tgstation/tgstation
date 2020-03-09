@@ -716,7 +716,7 @@
 
 /obj/structure/cloth_pile/burn()
 	visible_message("<span class='danger'>[src] burns into ash!</span>")
-	new /obj/effect/decal/cleanable/ash(get_turf(src))
+	new /obj/effect/decal/cleanable/ash(drop_location())
 	..()
 
 /obj/structure/cloth_pile/proc/revive(full_heal = FALSE, admin_revive = FALSE)
@@ -727,7 +727,7 @@
 		return
 
 	invisibility = INVISIBILITY_MAXIMUM //disappear before the animation
-	new /obj/effect/temp_visual/mummy_animation(get_turf(src))
+	new /obj/effect/temp_visual/mummy_animation(drop_location())
 	if(cloth_golem.revive(full_heal = TRUE, admin_revive = TRUE))
 		cloth_golem.grab_ghost() //won't pull if it's a suicide
 	sleep(20)

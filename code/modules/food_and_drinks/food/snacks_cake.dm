@@ -176,7 +176,7 @@
 	foodtype = GRAIN | DAIRY | JUNKFOOD | SUGAR
 
 /obj/item/reagent_containers/food/snacks/store/cake/birthday/microwave_act(obj/machinery/microwave/M) //super sekrit club
-	new /obj/item/clothing/head/hardhat/cakehat(get_turf(src))
+	new /obj/item/clothing/head/hardhat/cakehat(drop_location())
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/cakeslice/birthday
@@ -208,7 +208,7 @@
 	energy_bite(M, user)
 
 /obj/item/reagent_containers/food/snacks/store/cake/birthday/energy/microwave_act(obj/machinery/microwave/M) //super sekriter club
-	new /obj/item/clothing/head/hardhat/cakehat/energycake(get_turf(src))
+	new /obj/item/clothing/head/hardhat/cakehat/energycake(drop_location())
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/cakeslice/birthday/energy

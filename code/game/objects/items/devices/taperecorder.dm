@@ -217,7 +217,7 @@
 		return
 
 	to_chat(usr, "<span class='notice'>Transcript printed.</span>")
-	var/obj/item/paper/P = new /obj/item/paper(get_turf(src))
+	var/obj/item/paper/P = new /obj/item/paper(drop_location())
 	var/t1 = "<B>Transcript:</B><BR><BR>"
 	for(var/i = 1, mytape.storedinfo.len >= i, i++)
 		t1 += "[mytape.storedinfo[i]]<BR>"

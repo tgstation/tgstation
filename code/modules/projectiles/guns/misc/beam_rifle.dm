@@ -393,7 +393,7 @@
 	if(BB.firer)
 		firing_dir = BB.firer.dir
 	if(!BB.suppressed && firing_effect_type)
-		new firing_effect_type(get_turf(src), firing_dir)
+		new firing_effect_type(drop_location(), firing_dir)
 	BB.preparePixelProjectile(target, user, params, spread)
 	BB.fire(gun? gun.lastangle : null, null)
 	BB = null

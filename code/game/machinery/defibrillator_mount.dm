@@ -121,7 +121,7 @@
 /obj/machinery/defibrillator_mount/wrench_act(mob/living/user, obj/item/wrench/W)
 	if(!wallframe_type)
 		return ..()
-	new wallframe_type(get_turf(src))
+	new wallframe_type(drop_location())
 	qdel(src)
 	W.play_tool_sound(user)
 	to_chat(user, "<span class='notice'>You remove [src] from the wall.</span>")

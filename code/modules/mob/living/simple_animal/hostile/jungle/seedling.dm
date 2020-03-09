@@ -148,7 +148,7 @@
 	if(combatant_state == SEEDLING_STATE_ACTIVE && living_target && beam_id == solar_beam_identifier)
 		if(living_target.z == z)
 			update_icons()
-			var/obj/effect/temp_visual/solarbeam_killsat/S = new (get_turf(src))
+			var/obj/effect/temp_visual/solarbeam_killsat/S = new (drop_location())
 			var/matrix/starting = matrix()
 			starting.Scale(1,32)
 			starting.Translate(0,520)

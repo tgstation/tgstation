@@ -229,7 +229,7 @@
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawoff(mob/user)
 	. = ..()
 	if(. && slung) //sawing off the gun removes the sling
-		new /obj/item/stack/cable_coil(get_turf(src), 10)
+		new /obj/item/stack/cable_coil(drop_location(), 10)
 		slung = 0
 		update_icon()
 

@@ -202,7 +202,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/gold/process()
 	visible_message("<span class='warning'>[src] lets off a spark, and produces a living creature!</span>")
-	new /obj/effect/particle_effect/sparks(get_turf(src))
+	new /obj/effect/particle_effect/sparks(drop_location())
 	playsound(get_turf(src), "sparks", 50, TRUE)
 	create_random_mob(get_turf(src), HOSTILE_SPAWN)
 	spawned++
@@ -262,7 +262,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/adamantine/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] produces a fully formed golem shell!</span>")
-	new /obj/effect/mob_spawn/human/golem/servant(get_turf(src), /datum/species/golem/adamantine, user)
+	new /obj/effect/mob_spawn/human/golem/servant(drop_location(), /datum/species/golem/adamantine, user)
 	..()
 
 /obj/item/slimecross/charged/rainbow

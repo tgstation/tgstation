@@ -81,7 +81,7 @@
 	if(synth_acc.transfer_money(cust_acc, ppt_cost))
 		set_expression("veryhappy", 2 SECONDS)
 		say("<span class='robot'>That is [ppt_cost] credits. Here is your pinpointer.</span>")
-		var/obj/item/pinpointer/wayfinding/P = new /obj/item/pinpointer/wayfinding(get_turf(src))
+		var/obj/item/pinpointer/wayfinding/P = new /obj/item/pinpointer/wayfinding(drop_location())
 		user_spawn_cooldowns[user.real_name] = world.time + spawn_cooldown
 		user.put_in_hands(P)
 		P.owner = user.real_name

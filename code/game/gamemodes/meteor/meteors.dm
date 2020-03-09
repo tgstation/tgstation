@@ -179,7 +179,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 /obj/effect/meteor/proc/make_debris()
 	for(var/throws = dropamt, throws > 0, throws--)
 		var/thing_to_spawn = pick(meteordrop)
-		new thing_to_spawn(get_turf(src))
+		new thing_to_spawn(drop_location())
 
 /obj/effect/meteor/proc/chase_target(atom/chasing, delay = 1)
 	set waitfor = FALSE
@@ -265,7 +265,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 /obj/effect/meteor/irradiated/meteor_effect()
 	..()
 	explosion(src.loc, 0, 0, 4, 3, 0)
-	new /obj/effect/decal/cleanable/greenglow(get_turf(src))
+	new /obj/effect/decal/cleanable/greenglow(drop_location())
 	radiation_pulse(src, 500)
 
 //Meaty Ore
@@ -294,7 +294,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/meaty/make_debris()
 	..()
-	new meteorgibs(get_turf(src))
+	new meteorgibs(drop_location())
 
 
 /obj/effect/meteor/meaty/ram_turf(turf/T)
@@ -334,7 +334,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 /obj/effect/meteor/tunguska/Move()
 	. = ..()
 	if(.)
-		new /obj/effect/temp_visual/revenant(get_turf(src))
+		new /obj/effect/temp_visual/revenant(drop_location())
 
 /obj/effect/meteor/tunguska/meteor_effect()
 	..()

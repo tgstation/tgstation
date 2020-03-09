@@ -642,7 +642,7 @@
 	var/list/valid_animals = list(/mob/living/simple_animal/parrot, /mob/living/simple_animal/butterfly, /mob/living/simple_animal/pet/cat, /mob/living/simple_animal/pet/dog/corgi, /mob/living/simple_animal/crab, /mob/living/simple_animal/pet/fox, /mob/living/simple_animal/hostile/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/pet/dog/pug, /mob/living/simple_animal/hostile/bear, /mob/living/simple_animal/hostile/poison/bees, /mob/living/simple_animal/hostile/carp)
 	for(counter = 1; counter < animals; counter++)
 		var/mobType = pick(valid_animals)
-		new mobType(get_turf(src))
+		new mobType(drop_location())
 	warn_admins(user, "Mass Mob Spawn")
 	if(prob(60))
 		to_chat(user, "<span class='warning'>[src] falls apart!</span>")
@@ -654,7 +654,7 @@
 	var/counter
 	var/max = rand(5,10)
 	for(counter = 1; counter < max; counter++)
-		var/obj/item/relic/R = new type(get_turf(src))
+		var/obj/item/relic/R = new type(drop_location())
 		R.name = name
 		R.desc = desc
 		R.realName = realName

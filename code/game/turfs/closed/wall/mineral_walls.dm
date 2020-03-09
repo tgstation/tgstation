@@ -276,7 +276,7 @@
 			acted_explosion = E
 			break
 	if(acted_explosion && istype(acted_explosion.explosion_source, /obj/item/bombcore))
-		var/obj/item/bombcore/large/bombcore = new(get_turf(src))
+		var/obj/item/bombcore/large/bombcore = new(drop_location())
 		bombcore.detonate()
 	..()
 

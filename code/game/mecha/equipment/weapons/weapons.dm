@@ -40,7 +40,7 @@
 		A.firer = chassis.occupant
 		A.original = target
 		if(!A.suppressed && firing_effect_type)
-			new firing_effect_type(get_turf(src), chassis.dir)
+			new firing_effect_type(drop_location(), chassis.dir)
 
 		var/spread = 0
 		if(variance)

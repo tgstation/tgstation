@@ -16,7 +16,7 @@
 /obj/item/reagent_containers/food/snacks/burger/plain/Initialize()
 	. = ..()
 	if(prob(1))
-		new/obj/effect/particle_effect/smoke(get_turf(src))
+		new/obj/effect/particle_effect/smoke(drop_location())
 		playsound(src, 'sound/effects/smoke.ogg', 50, TRUE)
 		visible_message("<span class='warning'>Oh, ye gods! [src] is ruined! But what if...?</span>")
 		name = "steamed ham"

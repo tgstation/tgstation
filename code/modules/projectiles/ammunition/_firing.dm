@@ -45,7 +45,7 @@
 	if(BB.firer)
 		firing_dir = BB.firer.dir
 	if(!BB.suppressed && firing_effect_type)
-		new firing_effect_type(get_turf(src), firing_dir)
+		new firing_effect_type(drop_location(), firing_dir)
 
 	var/direct_target
 	if(targloc == curloc)

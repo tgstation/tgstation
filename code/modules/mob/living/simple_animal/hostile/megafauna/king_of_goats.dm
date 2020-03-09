@@ -284,7 +284,7 @@ Difficulty: Insanely Hard
 
 /mob/living/simple_animal/hostile/megafauna/king/proc/OnDeath()
 	visible_message("<span class='cult'>\The [src] lets loose a terrific wail as its wounds close shut with a flash of light, and its eyes glow even brighter than before!</span>")
-	new /mob/living/simple_animal/hostile/megafauna/king/phase2(get_turf(src))
+	new /mob/living/simple_animal/hostile/megafauna/king/phase2(drop_location())
 	qdel(src)
 
 /mob/living/simple_animal/hostile/megafauna/king/phase2/OnDeath()

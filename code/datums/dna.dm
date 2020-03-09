@@ -582,7 +582,7 @@
 				monkeyize()
 			if(1)
 				gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
-				new/obj/vehicle/ridden/wheelchair(get_turf(src)) //don't buckle, because I can't imagine to plethora of things to go through that could otherwise break
+				new/obj/vehicle/ridden/wheelchair(drop_location()) //don't buckle, because I can't imagine to plethora of things to go through that could otherwise break
 				to_chat(src, "<span class='warning'>My flesh turned into a wheelchair and I can't feel my legs.</span>")
 			if(2)
 				corgize()

@@ -234,7 +234,7 @@
 		alpha = i
 	visible_message("<span class='danger'>[src]'s body breaks apart into a fine pile of blue dust.</span>")
 	var/reforming_essence = essence_regen_cap //retain the gained essence capacity
-	var/obj/item/ectoplasm/revenant/R = new(get_turf(src))
+	var/obj/item/ectoplasm/revenant/R = new(drop_location())
 	R.essence = max(reforming_essence - 15 * perfectsouls, 75) //minus any perfect souls
 	R.old_key = client.key //If the essence reforms, the old revenant is put back in the body
 	R.revenant = src

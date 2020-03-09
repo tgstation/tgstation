@@ -28,7 +28,7 @@
 		H.update_body()
 
 /obj/effect/mob_spawn/human/seed_vault/Destroy()
-	new/obj/structure/fluff/empty_terrarium(get_turf(src))
+	new/obj/structure/fluff/empty_terrarium(drop_location())
 	return ..()
 
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
@@ -61,7 +61,7 @@
 /obj/structure/ash_walker_eggshell/Destroy()
 	if(!egg)
 		return ..()
-	var/mob/living/carbon/human/yolk = new /mob/living/carbon/human/(get_turf(src))
+	var/mob/living/carbon/human/yolk = new /mob/living/carbon/human/(drop_location())
 	yolk.fully_replace_character_name(null,random_unique_lizard_name(gender))
 	yolk.set_species(/datum/species/lizard/ashwalker)
 	yolk.underwear = "Nude"
@@ -145,7 +145,7 @@
 	assignedrole = "Exile"
 
 /obj/effect/mob_spawn/human/exile/Destroy()
-	new/obj/structure/fluff/empty_sleeper(get_turf(src))
+	new/obj/structure/fluff/empty_sleeper(drop_location())
 	return ..()
 
 /obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
@@ -302,7 +302,7 @@
 			it, and after a terrifying and fast ride for days, you landed here. You've had time to wisen up since then, and you think that your old friends wouldn't be laughing now."
 
 /obj/effect/mob_spawn/human/hermit/Destroy()
-	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
+	new/obj/structure/fluff/empty_cryostasis_sleeper(drop_location())
 	return ..()
 
 /datum/outfit/hermit
@@ -348,7 +348,7 @@
 
 
 /obj/effect/mob_spawn/human/prisoner_transport/Destroy()
-	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
+	new/obj/structure/fluff/empty_sleeper/syndicate(drop_location())
 	return ..()
 
 //Space Hotel Staff
@@ -396,7 +396,7 @@
 	belt = /obj/item/storage/belt/security/full
 
 /obj/effect/mob_spawn/human/hotel_staff/Destroy()
-	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
+	new/obj/structure/fluff/empty_sleeper/syndicate(drop_location())
 	..()
 
 /obj/effect/mob_spawn/human/demonic_friend

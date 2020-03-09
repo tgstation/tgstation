@@ -257,9 +257,9 @@
 			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 			user.visible_message("<span class='notice'>[user] places the glass on the solar assembly.</span>", "<span class='notice'>You place the glass on the solar assembly.</span>")
 			if(tracker)
-				new /obj/machinery/power/tracker(get_turf(src), src)
+				new /obj/machinery/power/tracker(drop_location(), src)
 			else
-				new /obj/machinery/power/solar(get_turf(src), src)
+				new /obj/machinery/power/solar(drop_location(), src)
 		else
 			to_chat(user, "<span class='warning'>You need two sheets of glass to put them into a solar panel!</span>")
 			return

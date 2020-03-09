@@ -192,7 +192,7 @@
 	Remove(owner)
 
 /mob/proc/reckon(turf/final)
-	new /obj/effect/temp_visual/cult/blood/out(get_turf(src))
+	new /obj/effect/temp_visual/cult/blood/out(drop_location())
 	forceMove(final)
 
 /datum/action/innate/cult/master/finalreck/proc/chant(chant_number)

@@ -174,7 +174,7 @@
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 100, FALSE)
 	ticket_number ++
 	to_chat(user, "<span class='notice'>You take a ticket from [src], looks like you're ticket number #[ticket_number]...</span>")
-	var/obj/item/ticket_machine_ticket/theirticket = new /obj/item/ticket_machine_ticket(get_turf(src))
+	var/obj/item/ticket_machine_ticket/theirticket = new /obj/item/ticket_machine_ticket(drop_location())
 	theirticket.name = "Ticket #[ticket_number]"
 	theirticket.maptext = "<font color='#000000'>[ticket_number]</font>"
 	theirticket.saved_maptext = "<font color='#000000'>[ticket_number]</font>"

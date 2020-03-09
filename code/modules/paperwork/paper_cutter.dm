@@ -87,8 +87,8 @@
 		to_chat(user, "<span class='notice'>You neatly cut [storedpaper].</span>")
 		storedpaper = null
 		qdel(storedpaper)
-		new /obj/item/paperslip(get_turf(src))
-		new /obj/item/paperslip(get_turf(src))
+		new /obj/item/paperslip(drop_location())
+		new /obj/item/paperslip(drop_location())
 		update_icon()
 
 /obj/item/papercutter/MouseDrop(atom/over_object)

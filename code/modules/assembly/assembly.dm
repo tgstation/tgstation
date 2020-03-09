@@ -89,7 +89,7 @@
 	if(isassembly(W))
 		var/obj/item/assembly/A = W
 		if((!A.secured) && (!secured))
-			holder = new/obj/item/assembly_holder(get_turf(src))
+			holder = new/obj/item/assembly_holder(drop_location())
 			holder.assemble(src,A,user)
 			to_chat(user, "<span class='notice'>You attach and secure \the [A] to \the [src]!</span>")
 		else

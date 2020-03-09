@@ -65,7 +65,7 @@
 			message_admins("[ADMIN_LOOKUPFLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_VERBOSEJMP(T)]")
 			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [AREACOORD(T)]")
 		template.load(deploy_location, centered = TRUE)
-		new /obj/effect/particle_effect/smoke(get_turf(src))
+		new /obj/effect/particle_effect/smoke(drop_location())
 		qdel(src)
 
 //Non-default pods

@@ -81,4 +81,4 @@
 	if(amounts[count]>0)
 		amounts[count]--
 		var/T = gland_types[count]
-		new T(get_turf(src))
+		new T(drop_location())

@@ -68,7 +68,7 @@
 
 /obj/item/shield/riot/proc/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/glassbr3.ogg', 100)
-	new /obj/item/shard((get_turf(src)))
+	new /obj/item/shard((drop_location()))
 
 /obj/item/shield/riot/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK)
 	if (obj_integrity <= damage)
@@ -99,7 +99,7 @@
 
 /obj/item/shield/riot/roman/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/grillehit.ogg', 100)
-	new /obj/item/stack/sheet/metal(get_turf(src))
+	new /obj/item/stack/sheet/metal(drop_location())
 
 /obj/item/shield/riot/buckler
 	name = "wooden buckler"
@@ -117,7 +117,7 @@
 
 /obj/item/shield/riot/buckler/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/bang.ogg', 50)
-	new /obj/item/stack/sheet/mineral/wood(get_turf(src))
+	new /obj/item/stack/sheet/mineral/wood(drop_location())
 
 /obj/item/shield/riot/flash
 	name = "strobe shield"

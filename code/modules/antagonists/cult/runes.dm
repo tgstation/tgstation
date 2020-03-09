@@ -245,7 +245,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	[brutedamage || burndamage ? "even as [convertee.p_their()] wounds heal and close" : "as the markings below [convertee.p_them()] glow a bloody red"]!</span>", \
  	"<span class='cultlarge'><i>AAAAAAAAAAAAAA-</i></span>")
 	SSticker.mode.add_cultist(convertee.mind, 1)
-	new /obj/item/melee/cultblade/dagger(get_turf(src))
+	new /obj/item/melee/cultblade/dagger(drop_location())
 	convertee.mind.special_role = ROLE_CULTIST
 	to_chat(convertee, "<span class='cult italic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
 	and something evil takes root.</b></span>")
@@ -285,7 +285,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	else
 		GLOB.sacrificed += sacrificial
 
-	new /obj/effect/temp_visual/cult/sac(get_turf(src))
+	new /obj/effect/temp_visual/cult/sac(drop_location())
 	for(var/M in invokers)
 		if(big_sac)
 			to_chat(M, "<span class='cultlarge'>\"Yes! This is the one I desire! You have done well.\"</span>")
@@ -295,7 +295,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			else
 				to_chat(M, "<span class='cultlarge'>\"I accept this meager sacrifice.\"</span>")
 
-	var/obj/item/soulstone/stone = new /obj/item/soulstone(get_turf(src))
+	var/obj/item/soulstone/stone = new /obj/item/soulstone(drop_location())
 	if(sacrificial.mind && !sacrificial.suiciding)
 		stone.invisibility = INVISIBILITY_MAXIMUM //so it's not picked up during transfer_soul()
 		stone.transfer_soul("FORCE", sacrificial, usr)

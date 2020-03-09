@@ -146,7 +146,7 @@
 			bulb.forceMove(loc)
 			bulb = null
 		if(disassembled)
-			var/obj/item/wallframe/flasher/F = new(get_turf(src))
+			var/obj/item/wallframe/flasher/F = new(drop_location())
 			transfer_fingerprints_to(F)
 			F.id = id
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)

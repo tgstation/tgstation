@@ -76,10 +76,10 @@
 			if(W.use_tool(src, user, 40, volume=50))
 				to_chat(user, "<span class='notice'>You weld the glass panel out.</span>")
 				if(heat_proof_finished)
-					new /obj/item/stack/sheet/rglass(get_turf(src))
+					new /obj/item/stack/sheet/rglass(drop_location())
 					heat_proof_finished = 0
 				else
-					new /obj/item/stack/sheet/glass(get_turf(src))
+					new /obj/item/stack/sheet/glass(drop_location())
 				glass = 0
 		else if(!anchored)
 			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \

@@ -14,7 +14,7 @@
 	. = ..()
 
 /turf/closed/wall/mineral/cult/devastate_wall()
-	new sheet_type(get_turf(src), sheet_amount)
+	new sheet_type(drop_location(), sheet_amount)
 
 /turf/closed/wall/mineral/cult/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
@@ -31,11 +31,11 @@
 	desc = "A cold stone wall engraved with indecipherable symbols. Studying them causes your head to pound."
 
 /turf/closed/wall/mineral/cult/artificer/break_wall()
-	new /obj/effect/temp_visual/cult/turf(get_turf(src))
+	new /obj/effect/temp_visual/cult/turf(drop_location())
 	return null //excuse me we want no runed metal here
 
 /turf/closed/wall/mineral/cult/artificer/devastate_wall()
-	new /obj/effect/temp_visual/cult/turf(get_turf(src))
+	new /obj/effect/temp_visual/cult/turf(drop_location())
 
 /turf/closed/wall/vault
 	icon = 'icons/turf/walls.dmi'

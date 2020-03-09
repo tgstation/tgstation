@@ -217,7 +217,7 @@
 	printpicture(user, picture)
 
 /obj/item/camera/proc/printpicture(mob/user, datum/picture/picture) //Normal camera proc for creating photos
-	var/obj/item/photo/p = new(get_turf(src), picture)
+	var/obj/item/photo/p = new(drop_location(), picture)
 	if(in_range(src, user)) //needed because of TK
 		user.put_in_hands(p)
 		pictures_left--

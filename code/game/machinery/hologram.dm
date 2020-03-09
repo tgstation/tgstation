@@ -338,7 +338,7 @@ obj/machinery/holopad/secure/Initialize()
 			offset = FALSE
 		var/turf/new_turf
 		if (!offset)
-			new_turf = get_turf(src)
+			new_turf = drop_location()
 		else
 			new_turf = get_step(src, GLOB.cardinals[offset])
 		replay_holo.forceMove(new_turf)

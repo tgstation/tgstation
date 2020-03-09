@@ -6,5 +6,5 @@
 /obj/effect/spawner/trap/Initialize(mapload)
 	..()
 	var/new_type = pick(subtypesof(/obj/structure/trap) - typesof(/obj/structure/trap/ctf))
-	new new_type(get_turf(src))
+	new new_type(drop_location())
 	return INITIALIZE_HINT_QDEL

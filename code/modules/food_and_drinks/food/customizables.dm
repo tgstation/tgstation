@@ -303,10 +303,10 @@
 			to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
 		else
 			if(reagents.has_reagent(/datum/reagent/water, 10)) //are we starting a soup or a salad?
-				var/obj/item/reagent_containers/food/snacks/customizable/A = new/obj/item/reagent_containers/food/snacks/customizable/soup(get_turf(src))
+				var/obj/item/reagent_containers/food/snacks/customizable/A = new/obj/item/reagent_containers/food/snacks/customizable/soup(drop_location())
 				A.initialize_custom_food(src, S, user)
 			else
-				var/obj/item/reagent_containers/food/snacks/customizable/A = new/obj/item/reagent_containers/food/snacks/customizable/salad(get_turf(src))
+				var/obj/item/reagent_containers/food/snacks/customizable/A = new/obj/item/reagent_containers/food/snacks/customizable/salad(drop_location())
 				A.initialize_custom_food(src, S, user)
 	else
 		. = ..()

@@ -34,7 +34,7 @@
 	if(!src || QDELETED(src))//we got toasted while animating
 		return
 	//Make space carp
-	var/mob/living/M = new mobtype(get_turf(src))
+	var/mob/living/M = new mobtype(drop_location())
 	//Make carp non-hostile to user, and their allies
 	if(owner)
 		var/list/factions = owner.faction.Copy()
@@ -68,7 +68,7 @@
 		sleep(6) //let the animation play out
 	
 		if(!QDELETED(src))
-			var/mob/living/M = new mobtype(get_turf(src))
+			var/mob/living/M = new mobtype(drop_location())
 			M.faction = list("neutral")
 			qdel(src)
 	return BRUTELOSS

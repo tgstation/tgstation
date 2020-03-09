@@ -393,11 +393,11 @@
 	else
 		switch(rand(1, 6))
 			if(1)
-				new /mob/living/simple_animal/hostile/construct/armored/hostile(get_turf(src))
+				new /mob/living/simple_animal/hostile/construct/armored/hostile(drop_location())
 			if(2)
-				new /mob/living/simple_animal/hostile/construct/wraith/hostile(get_turf(src))
+				new /mob/living/simple_animal/hostile/construct/wraith/hostile(drop_location())
 			if(3 to 6)
-				new /mob/living/simple_animal/hostile/construct/builder/hostile(get_turf(src))
+				new /mob/living/simple_animal/hostile/construct/builder/hostile(drop_location())
 	spawn_dust()
 	gib()
 	return TRUE

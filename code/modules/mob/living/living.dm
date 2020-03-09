@@ -1295,7 +1295,7 @@
 	. = ..()
 
 /mob/living/proc/mob_pickup(mob/living/L)
-	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	var/obj/item/clothing/head/mob_holder/holder = new(drop_location(), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
 	L.visible_message("<span class='warning'>[L] scoops up [src]!</span>")
 	L.put_in_hands(holder)
 

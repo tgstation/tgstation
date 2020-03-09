@@ -165,7 +165,7 @@
 
 		var/list/water_particles=list()
 		for(var/a=0, a<5, a++)
-			var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water(get_turf(src))
+			var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water(drop_location())
 			var/my_target = pick(the_targets)
 			water_particles[W] = my_target
 			// If precise, remove turf from targets so it won't be picked more than once

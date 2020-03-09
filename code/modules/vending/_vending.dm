@@ -455,7 +455,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				continue
 
 			R.amount--
-			new dump_path(get_turf(src))
+			new dump_path(drop_location())
 			break
 
 /obj/machinery/vending/proc/tilt(mob/fatty, crit=FALSE)
@@ -789,7 +789,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(icon_vend) //Show the vending animation if needed
 				flick(icon_vend,src)
 			playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
-			new R.product_path(get_turf(src))
+			new R.product_path(drop_location())
 			R.amount--
 			SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
 			vend_ready = TRUE

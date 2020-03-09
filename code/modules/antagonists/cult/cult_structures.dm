@@ -96,7 +96,7 @@
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		for(var/N in pickedtype)
-			new N(get_turf(src))
+			new N(drop_location())
 			to_chat(user, "<span class='cultitalic'>You kneel before the altar and your faith is rewarded with the [choice]!</span>")
 
 /obj/structure/destructible/cult/forge
@@ -136,7 +136,7 @@
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		for(var/N in pickedtype)
-			new N(get_turf(src))
+			new N(drop_location())
 			to_chat(user, "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating the [choice]!</span>")
 
 
@@ -170,7 +170,7 @@
 		for(var/mob/living/L in range(5, src))
 			if(iscultist(L) || isshade(L) || isconstruct(L))
 				if(L.health != L.maxHealth)
-					new /obj/effect/temp_visual/heal(get_turf(src), "#960000")
+					new /obj/effect/temp_visual/heal(drop_location(), "#960000")
 					if(ishuman(L))
 						L.adjustBruteLoss(-1, 0)
 						L.adjustFireLoss(-1, 0)
@@ -250,7 +250,7 @@
 	if(src && !QDELETED(src) && anchored && pickedtype.len && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		for(var/N in pickedtype)
-			new N(get_turf(src))
+			new N(drop_location())
 			to_chat(user, "<span class='cultitalic'>You summon the [choice] from the archives!</span>")
 
 /obj/effect/gateway

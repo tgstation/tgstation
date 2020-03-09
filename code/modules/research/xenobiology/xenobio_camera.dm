@@ -75,7 +75,7 @@
 	return ..()
 
 /obj/machinery/computer/camera_advanced/xenobio/CreateEye()
-	eyeobj = new /mob/camera/aiEye/remote/xenobio(get_turf(src))
+	eyeobj = new /mob/camera/aiEye/remote/xenobio(drop_location())
 	eyeobj.origin = src
 	eyeobj.visible_icon = TRUE
 	eyeobj.icon = 'icons/mob/cameramob.dmi'

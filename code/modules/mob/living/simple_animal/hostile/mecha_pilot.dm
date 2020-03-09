@@ -63,7 +63,7 @@
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/Initialize()
 	. = ..()
 	if(spawn_mecha_type)
-		var/obj/mecha/M = new spawn_mecha_type (get_turf(src))
+		var/obj/mecha/M = new spawn_mecha_type (drop_location())
 		if(istype(M))
 			enter_mecha(M)
 

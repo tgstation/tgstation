@@ -524,7 +524,7 @@ Difficulty: Hard
 	qdel(src)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Destroy()
-	new /obj/effect/decal/cleanable/blood(get_turf(src))
+	new /obj/effect/decal/cleanable/blood(drop_location())
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/CanAllowThrough(atom/movable/mover, turf/target)

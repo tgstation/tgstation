@@ -55,7 +55,7 @@
 /mob/living/simple_animal/bot/mulebot/Initialize(mapload)
 	. = ..()
 	if(prob(0.666) && mapload)
-		new /mob/living/simple_animal/bot/mulebot/paranormal(get_turf(src))
+		new /mob/living/simple_animal/bot/mulebot/paranormal(drop_location())
 		qdel(src)
 	wires = new /datum/wires/mulebot(src)
 	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech

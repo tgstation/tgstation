@@ -259,7 +259,7 @@
 		to_chat(user, "<span class='notice'>You start removing the inner grille...</span>")
 		if(tool.use_tool(src, user, 40, volume=100))
 			to_chat(user, "<span class='notice'>You remove the inner grille.</span>")
-			new /obj/item/stack/sheet/plasteel(get_turf(src))
+			new /obj/item/stack/sheet/plasteel(drop_location())
 			var/obj/structure/girder/G = new (loc)
 			transfer_fingerprints_to(G)
 			qdel(src)

@@ -31,7 +31,7 @@
 	obj_flags &= ~IN_USE
 	if(prob(win_prob))
 		playsound(src, 'sound/lavaland/cursed_slot_machine_jackpot.ogg', 50, FALSE)
-		new/obj/structure/cursed_money(get_turf(src))
+		new/obj/structure/cursed_money(drop_location())
 		if(user)
 			to_chat(user, "<span class='boldwarning'>You've hit jackpot. Laughter echoes around you as your reward appears in the machine's place.</span>")
 		qdel(src)

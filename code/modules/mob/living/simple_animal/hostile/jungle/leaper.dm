@@ -62,7 +62,7 @@
 
 /obj/effect/temp_visual/leaper_projectile_impact/Initialize()
 	. = ..()
-	new /obj/effect/decal/cleanable/leaper_sludge(get_turf(src))
+	new /obj/effect/decal/cleanable/leaper_sludge(drop_location())
 
 /obj/effect/decal/cleanable/leaper_sludge
 	name = "leaper sludge"
@@ -84,7 +84,7 @@
 	QDEL_IN(src, 100)
 
 /obj/structure/leaper_bubble/Destroy()
-	new /obj/effect/temp_visual/leaper_projectile_impact(get_turf(src))
+	new /obj/effect/temp_visual/leaper_projectile_impact(drop_location())
 	playsound(src,'sound/effects/snap.ogg',50, TRUE, -1)
 	return ..()
 

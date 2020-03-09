@@ -42,7 +42,7 @@
 				msg = harvest_message_high
 			to_chat(user, "<span class='notice'>[msg]</span>")
 		for(var/i in 1 to rand_harvested)
-			new harvest(get_turf(src))
+			new harvest(drop_location())
 
 	icon_state = "[base_icon]p"
 	name = harvested_name
@@ -315,10 +315,10 @@
 			to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
 		else
 			if(reagents.has_reagent(/datum/reagent/water, 10)) //are we starting a soup or a salad?
-				var/obj/item/reagent_containers/food/snacks/customizable/A = new/obj/item/reagent_containers/food/snacks/customizable/soup/ashsoup(get_turf(src))
+				var/obj/item/reagent_containers/food/snacks/customizable/A = new/obj/item/reagent_containers/food/snacks/customizable/soup/ashsoup(drop_location())
 				A.initialize_custom_food(src, S, user)
 			else
-				var/obj/item/reagent_containers/food/snacks/customizable/A = new/obj/item/reagent_containers/food/snacks/customizable/salad/ashsalad(get_turf(src))
+				var/obj/item/reagent_containers/food/snacks/customizable/A = new/obj/item/reagent_containers/food/snacks/customizable/salad/ashsalad(drop_location())
 				A.initialize_custom_food(src, S, user)
 	else
 		. = ..()

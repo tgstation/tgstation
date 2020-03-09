@@ -723,7 +723,7 @@ Difficulty: Hard
 			INVOKE_ASYNC(H, /obj/item/hierophant_club.proc/prepare_icon_update)
 			if(do_after(user, 50, target = src))
 				playsound(src,'sound/magic/blind.ogg', 200, TRUE, -4)
-				new /obj/effect/temp_visual/hierophant/telegraph/teleport(get_turf(src), user)
+				new /obj/effect/temp_visual/hierophant/telegraph/teleport(drop_location(), user)
 				to_chat(user, "<span class='hierophant_warning'>You collect [src], reattaching it to the club!</span>")
 				H.beacon = null
 				user.update_action_buttons_icon()

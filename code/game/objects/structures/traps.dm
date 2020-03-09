@@ -175,7 +175,7 @@
 /obj/structure/trap/fire/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'><B>Spontaneous combustion!</B></span>")
 	L.Paralyze(20)
-	new /obj/effect/hotspot(get_turf(src))
+	new /obj/effect/hotspot(drop_location())
 
 /obj/structure/trap/chill
 	name = "frost trap"
@@ -199,7 +199,7 @@
 	to_chat(L, "<span class='danger'><B>The ground quakes beneath your feet!</B></span>")
 	L.Paralyze(100)
 	L.adjustBruteLoss(35)
-	var/obj/structure/flora/rock/giant_rock = new(get_turf(src))
+	var/obj/structure/flora/rock/giant_rock = new(drop_location())
 	QDEL_IN(giant_rock, 200)
 
 

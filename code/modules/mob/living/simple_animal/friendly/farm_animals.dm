@@ -333,7 +333,7 @@
 	if((!stat && prob(3) && eggsleft > 0) && egg_type)
 		visible_message("<span class='alertalien'>[src] [pick(layMessage)]</span>")
 		eggsleft--
-		var/obj/item/E = new egg_type(get_turf(src))
+		var/obj/item/E = new egg_type(drop_location())
 		E.pixel_x = rand(-6,6)
 		E.pixel_y = rand(-6,6)
 		if(eggsFertile)
@@ -346,7 +346,7 @@
 		amount_grown += rand(1,2)
 		if(amount_grown >= 100)
 			visible_message("<span class='notice'>[src] hatches with a quiet cracking sound.</span>")
-			new /mob/living/simple_animal/chick(get_turf(src))
+			new /mob/living/simple_animal/chick(drop_location())
 			STOP_PROCESSING(SSobj, src)
 			qdel(src)
 	else

@@ -497,7 +497,7 @@
 	qdel(src)
 
 /mob/proc/become_overmind(starting_points = 60)
-	var/mob/camera/blob/B = new /mob/camera/blob(get_turf(src), starting_points)
+	var/mob/camera/blob/B = new /mob/camera/blob(drop_location(), starting_points)
 	B.key = key
 	. = B
 	qdel(src)
@@ -540,7 +540,7 @@
 	regenerate_icons()
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
-	var/mob/living/simple_animal/hostile/gorilla/new_gorilla = new (get_turf(src))
+	var/mob/living/simple_animal/hostile/gorilla/new_gorilla = new (drop_location())
 	new_gorilla.a_intent = INTENT_HARM
 	if(mind)
 		mind.transfer_to(new_gorilla)

@@ -42,7 +42,7 @@
 			if(!disassembled)
 				drop_amt -= 2
 			if(drop_amt > 0)
-				new material_drop_type(get_turf(src), drop_amt)
+				new material_drop_type(drop_location(), drop_amt)
 	qdel(src)
 
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////

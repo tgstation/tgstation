@@ -46,7 +46,7 @@ LINEN BINS
 
 /obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
-		var/obj/item/stack/sheet/cloth/C = new (get_turf(src), 3)
+		var/obj/item/stack/sheet/cloth/C = new (drop_location(), 3)
 		transfer_fingerprints_to(C)
 		C.add_fingerprint(user)
 		qdel(src)

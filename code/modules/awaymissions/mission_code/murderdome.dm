@@ -22,7 +22,7 @@
 	deploy_message = 0
 
 /obj/structure/barricade/security/murderdome/make_debris()
-	new /obj/effect/murderdome/dead_barricade(get_turf(src))
+	new /obj/effect/murderdome/dead_barricade(drop_location())
 
 /obj/effect/murderdome/dead_barricade
 	name = "dead barrier"
@@ -37,5 +37,5 @@
 
 /obj/effect/murderdome/dead_barricade/proc/respawn()
 	if(!QDELETED(src))
-		new /obj/structure/barricade/security/murderdome(get_turf(src))
+		new /obj/structure/barricade/security/murderdome(drop_location())
 		qdel(src)

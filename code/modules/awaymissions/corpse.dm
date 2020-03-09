@@ -78,7 +78,7 @@
 	return
 
 /obj/effect/mob_spawn/proc/create(ckey, newname)
-	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
+	var/mob/living/M = new mob_type(drop_location()) //living mobs only
 	if(!random || newname)
 		if(newname)
 			M.real_name = newname

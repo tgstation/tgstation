@@ -184,7 +184,7 @@
 		qdel(src)
 		return
 	if (style == STYLE_GONDOLA) //Checks if we are supposed to be a gondola pod. If so, create a gondolapod mob, and move this pod to nullspace. I'd like to give a shout out, to my man oranges
-		var/mob/living/simple_animal/pet/gondola/gondolapod/benis = new(get_turf(src), src)
+		var/mob/living/simple_animal/pet/gondola/gondolapod/benis = new(drop_location(), src)
 		benis.contents |= contents //Move the contents of this supplypod into the gondolapod mob.
 		moveToNullspace()
 		addtimer(CALLBACK(src, .proc/open, benis), openingDelay) //After the openingDelay passes, we use the open proc from this supplyprod while referencing the contents of the "holder", in this case the gondolapod mob

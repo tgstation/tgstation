@@ -10,7 +10,7 @@
 			if(islist(debris))
 				for(var/I in debris)
 					for(var/i in 1 to debris[I])
-						new I (get_turf(src))
+						new I (drop_location())
 		if(break_message)
 			visible_message(break_message)
 		if(break_sound)
