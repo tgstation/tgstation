@@ -54,10 +54,10 @@
 	update_icon()
 	return 1
 
-/obj/item/organ/heart/prepare_eat()
-	var/obj/S = ..()
-	S.icon_state = "heart-off"
-	return S
+/obj/item/organ/heart/OnEatFrom(eater, feeder)
+	. = ..()
+	beating = FALSE
+	update_icon()
 
 /obj/item/organ/heart/on_life()
 	..()
@@ -90,6 +90,9 @@
 				"<span class='userdanger'>You feel a terrible pain in your chest, as if your heart has stopped!</span>")
 		owner.set_heartattack(TRUE)
 		failed = TRUE
+
+/obj/item/organ/heart/get_availability(datum/species/S)
+	return !(NOBLOOD in S.species_traits)
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"

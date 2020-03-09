@@ -286,7 +286,7 @@
 					selectors_used |= query.where_switched
 					combined_refs |= query.select_refs
 					running -= query
-					if(!CHECK_BITFIELD(query.options, SDQL2_OPTION_DO_NOT_AUTOGC))
+					if(!(query.options & SDQL2_OPTION_DO_NOT_AUTOGC))
 						QDEL_IN(query, 50)
 					if(sequential && waiting_queue.len)
 						finished = FALSE
@@ -473,23 +473,23 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 		if("select")
 			switch(value)
 				if("force_nulls")
-					DISABLE_BITFIELD(options, SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS)
+					options &= ~(SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS)
 		if("proccall")
 			switch(value)
 				if("blocking")
-					ENABLE_BITFIELD(options, SDQL2_OPTION_BLOCKING_CALLS)
+					options |= SDQL2_OPTION_BLOCKING_CALLS
 		if("priority")
 			switch(value)
 				if("high")
-					ENABLE_BITFIELD(options, SDQL2_OPTION_HIGH_PRIORITY)
+					options |= SDQL2_OPTION_HIGH_PRIORITY
 		if("autogc")
 			switch(value)
 				if("keep_alive")
-					ENABLE_BITFIELD(options, SDQL2_OPTION_DO_NOT_AUTOGC)
+					options |= SDQL2_OPTION_DO_NOT_AUTOGC
 		if("sequential")
 			switch(value)
 				if("true")
-					ENABLE_BITFIELD(options,SDQL2_OPTION_SEQUENTIAL)
+					options |= SDQL2_OPTION_SEQUENTIAL
 
 /datum/SDQL2_query/proc/ARun()
 	INVOKE_ASYNC(src, .proc/Run)
@@ -1176,7 +1176,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 				char = query_text[i]
 
 				if(char == "\"")
-					if(query_text[i + length(char)] == "'")
+					if((i + length(char) <= len) && query_text[i + length(char)] == "'")
 						word += "\""
 						i += length(query_text[i + length(char)])
 

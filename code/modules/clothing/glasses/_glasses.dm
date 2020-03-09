@@ -46,7 +46,7 @@
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
 		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
-		if(!(HAS_TRAIT(H, TRAIT_BLIND)))
+		if(!H.is_blind())
 			if(H.glasses == src)
 				to_chat(H, "<span class='danger'>[src] overloads and blinds you!</span>")
 				H.flash_act(visual = 1)
@@ -295,6 +295,12 @@
 /obj/item/clothing/glasses/blindfold/dropped(mob/living/carbon/human/user)
 	..()
 	user.cure_blind("blindfold_[REF(src)]")
+
+/obj/item/clothing/glasses/trickblindfold
+	name = "blindfold"
+	desc = "A see-through blindfold perfect for cheating at games like pin the stun baton on the clown."
+	icon_state = "trickblindfold"
+	item_state = "blindfold"
 
 /obj/item/clothing/glasses/blindfold/white
 	name = "blind personnel blindfold"

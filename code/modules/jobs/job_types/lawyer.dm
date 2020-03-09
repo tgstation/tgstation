@@ -24,48 +24,20 @@
 	name = "Lawyer"
 	jobtype = /datum/job/lawyer
 
-	back = null
-	box = null//need to put it in backpack_contents instead since our backpack may not be on our back
 	belt = /obj/item/pda/lawyer
 	ears = /obj/item/radio/headset/headset_srvsec
 	uniform = /obj/item/clothing/under/rank/civilian/lawyer/bluesuit
 	suit = /obj/item/clothing/suit/toggle/lawyer
 	shoes = /obj/item/clothing/shoes/laceup
+	l_hand = /obj/item/storage/briefcase/lawyer
 	l_pocket = /obj/item/laser_pointer
 	r_pocket = /obj/item/clothing/accessory/lawyers_badge
 
 	chameleon_extras = /obj/item/stamp/law
 
-	//see pre_equip for department gear
-	backpack_contents = list(/obj/item/storage/box/survival) //transfered to briefcase contents if they have it
-	var/list/briefcase_contents = list()
-
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	switch(H.backpack)
-		if(GBACKPACK)
-			back = /obj/item/storage/backpack //Grey backpack
-		if(GSATCHEL)
-			back = /obj/item/storage/backpack/satchel //Grey satchel
-		if(GDUFFELBAG)
-			back = /obj/item/storage/backpack/duffelbag //Grey Duffel bag
-		if(LSATCHEL)
-			back = /obj/item/storage/backpack/satchel/leather //Leather Satchel
-		else //departmental
-			back = null //Department gear is a suitcase for lawyer
-			l_hand = /obj/item/storage/briefcase/lawyer
-			briefcase_contents.Add(backpack_contents)
-			backpack_contents = list()
-
-	//converts the uniform string into the path we'll wear, whether it's the skirt or regular variant
-	var/holder
-	if(H.jumpsuit_style == PREF_SKIRT)
-		holder = "[uniform]/skirt"
-		if(!text2path(holder))
-			holder = "[uniform]"
-	else
-		holder = "[uniform]"
-	uniform = text2path(holder)
+	..()
 	if(visualsOnly)
 		return
 
@@ -74,15 +46,3 @@
 	if(J.lawyers>1)
 		uniform = /obj/item/clothing/under/rank/civilian/lawyer/purpsuit
 		suit = /obj/item/clothing/suit/toggle/lawyer/purple
-
-/datum/outfit/job/lawyer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-	if(visualsOnly)
-		return
-	if(briefcase_contents)
-		for(var/path in briefcase_contents)
-			var/number = briefcase_contents[path]
-			if(!isnum(number))//Default to 1
-				number = 1
-			for(var/i in 1 to number)
-				H.equip_to_slot_or_del(new path(H),ITEM_SLOT_LHANDSTORE, TRUE)

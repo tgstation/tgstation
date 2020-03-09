@@ -1,5 +1,5 @@
 /datum/admins/proc/open_borgopanel(borgo in GLOB.silicon_mobs)
-	set category = "Admin"
+	set category = "Admin - Game"
 	set name = "Show Borg Panel"
 	set desc = "Show borg panel"
 
@@ -85,7 +85,7 @@
 		if ("set_charge")
 			var/newcharge = input("New charge (0-[borg.cell.maxcharge]):", borg.name, borg.cell.charge) as num|null
 			if (newcharge)
-				borg.cell.charge = CLAMP(newcharge, 0, borg.cell.maxcharge)
+				borg.cell.charge = clamp(newcharge, 0, borg.cell.maxcharge)
 				message_admins("[key_name_admin(user)] set the charge of [ADMIN_LOOKUPFLW(borg)] to [borg.cell.charge].")
 				log_admin("[key_name(user)] set the charge of [key_name(borg)] to [borg.cell.charge].")
 		if ("remove_cell")

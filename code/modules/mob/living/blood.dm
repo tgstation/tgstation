@@ -1,3 +1,5 @@
+#define BLOOD_DRIP_RATE_MOD 90 //Greater number means creating blood drips more often while bleeding
+
 /****************************************************
 				BLOOD SYSTEM
 ****************************************************/
@@ -87,7 +89,9 @@
 
 			//We want an accurate reading of .len
 			listclearnulls(BP.embedded_objects)
-			temp_bleed += 0.5*BP.embedded_objects.len
+			for(var/obj/item/embeddies in BP.embedded_objects)
+				if(!embeddies.is_embed_harmless())
+					temp_bleed += 0.5
 
 			if(brutedamage >= 20)
 				temp_bleed += (brutedamage * 0.013)
@@ -101,11 +105,12 @@
 /mob/living/carbon/proc/bleed(amt)
 	if(blood_volume)
 		blood_volume = max(blood_volume - amt, 0)
-		if(isturf(src.loc)) //Blood loss still happens in locker, floor stays clean
-			if(amt >= 10)
-				add_splatter_floor(src.loc)
-			else
-				add_splatter_floor(src.loc, 1)
+		if (prob(sqrt(amt)*BLOOD_DRIP_RATE_MOD))
+			if(isturf(src.loc)) //Blood loss still happens in locker, floor stays clean
+				if(amt >= 10)
+					add_splatter_floor(src.loc)
+				else
+					add_splatter_floor(src.loc, 1)
 
 /mob/living/carbon/human/bleed(amt)
 	amt *= physiology.bleed_mod
@@ -280,8 +285,7 @@
 	var/obj/effect/decal/cleanable/blood/B = locate() in T
 	if(!B)
 		B = new /obj/effect/decal/cleanable/blood/splatter(T, get_static_viruses())
-	if (B.bloodiness < MAX_SHOE_BLOODINESS) //add more blood, up to a limit
-		B.bloodiness += BLOOD_AMOUNT_PER_DECAL
+	B.bloodiness = min((B.bloodiness + BLOOD_AMOUNT_PER_DECAL),MAX_SHOE_BLOODINESS)
 	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
 	if(temp_blood_DNA)
 		B.add_blood_DNA(temp_blood_DNA)
