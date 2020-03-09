@@ -580,7 +580,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 /obj/structure/cable_bridge/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/cable_coil(get_turf(loc), 5)
+		new /obj/item/stack/cable_coil(drop_location(), 5)
 	qdel(src)
 	return TRUE
 
