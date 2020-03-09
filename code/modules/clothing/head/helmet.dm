@@ -304,6 +304,7 @@
 	item_state = "dwarven_helmet_greyscale"
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 	custom_materials = list(/datum/material/iron = 10000)
+	material_modifier = 0.15
 
 /obj/item/clothing/head/helmet/durathread
 	name = "durathread helmet"
