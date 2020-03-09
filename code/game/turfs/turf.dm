@@ -522,8 +522,12 @@
 			return I
 	return I
 
-/turf/AllowDrop()
+/turf/AllowDrop()// turf always valid place to drop something
 	return TRUE
+
+
+/turf/drop_location()// turf always valid place to drop something
+	return src
 
 /turf/proc/add_vomit_floor(mob/living/M, toxvomit = NONE, purge = FALSE)
 

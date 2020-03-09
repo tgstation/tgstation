@@ -400,8 +400,8 @@
 /atom/proc/is_drainable()
 	return reagents && (reagents.flags & DRAINABLE)
 
-/// Are you allowed to drop this atom
-/atom/proc/AllowDrop()
+/// Are you allowed drop to this atom
+/atom/AllowDrop()
 	return FALSE
 
 /atom/proc/CheckExit()
@@ -987,7 +987,7 @@
 	. += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir' id='dir'>[dir2text(dir) || dir]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
 
 ///Where atoms should drop if taken from this atom
-/atom/proc/drop_location()
+/atom/drop_location()
 	var/atom/L = loc
 	if(!L)
 		return null

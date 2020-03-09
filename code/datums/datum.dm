@@ -221,3 +221,16 @@
 		qdel(D)
 	else
 		return returned
+
+/**
+  * Causes a runtime error
+  */
+/datum/proc/AllowDrop()
+	CRASH("Bad op: datum/AllowDrop() called")
+
+/**
+  * Causes a runtime error
+  */
+/datum/proc/drop_location()
+	CRASH("Bad op: datum/drop_location() called")
+

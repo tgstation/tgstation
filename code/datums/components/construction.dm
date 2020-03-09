@@ -127,12 +127,6 @@
 	if(step["icon_state"])
 		parent_atom.icon_state = step["icon_state"]
 
-/datum/component/construction/proc/drop_location()
-	var/atom/parent_atom = parent
-	return parent_atom.drop_location()
-
-
-
 // Unordered construction.
 // Takes a list of part types, to be added in any order, as steps.
 // Calls spawn_result() when every type has been added.
