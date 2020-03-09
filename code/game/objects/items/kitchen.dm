@@ -150,13 +150,14 @@
 	var/bleed_stacks_per_hit = 3
 
 /obj/item/kitchen/knife/bloodletter/attack(mob/living/M, mob/living/carbon/user)
-	. =..()
-	if(istype(M) && (M.mob_biotypes & MOB_ORGANIC))
-		var/datum/status_effect/stacking/saw_bleed/bloodletting/B = M.has_status_effect(/datum/status_effect/stacking/saw_bleed/bloodletting)
-		if(!B)
-			M.apply_status_effect(/datum/status_effect/stacking/saw_bleed/bloodletting, bleed_stacks_per_hit)
-		else
-			B.add_stacks(bleed_stacks_per_hit)
+	. = ..()
+	if(!istype(M) || !(M.mob_biotypes & MOB_ORGANIC))
+		return
+	var/datum/status_effect/stacking/saw_bleed/bloodletting/B = M.has_status_effect(/datum/status_effect/stacking/saw_bleed/bloodletting)
+	if(!B)
+		M.apply_status_effect(/datum/status_effect/stacking/saw_bleed/bloodletting, bleed_stacks_per_hit)
+	else
+		B.add_stacks(bleed_stacks_per_hit)
 
 /obj/item/kitchen/knife/butcher
 	name = "butcher's cleaver"

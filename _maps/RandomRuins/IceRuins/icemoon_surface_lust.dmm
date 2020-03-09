@@ -1,30 +1,30 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/mineral/random/snow/no_caves,
-/area/icemoon/surface)
+/area/icemoon/surface/outdoors)
 "b" = (
 /obj/structure/sign/poster/contraband/lusty_xenomorph,
 /turf/closed/indestructible/syndicate,
-/area/icemoon/surface)
+/area/icemoon/surface/outdoors)
 "c" = (
 /turf/open/floor/mineral/diamond,
-/area/icemoon/surface)
+/area/icemoon/surface/outdoors)
 "d" = (
 /obj/item/reagent_containers/food/drinks/trophy/gold_cup,
 /turf/open/floor/mineral/diamond,
-/area/icemoon/surface)
+/area/icemoon/surface/outdoors)
 "e" = (
 /obj/item/greentext{
 	light_color = "#64C864";
 	light_range = 1
 	},
 /turf/open/floor/mineral/diamond,
-/area/icemoon/surface)
+/area/icemoon/surface/outdoors)
 "f" = (
 /obj/structure/falsewall/plastitanium,
 /obj/structure/sign/poster/contraband/lusty_xenomorph,
 /turf/open/floor/mineral/diamond,
-/area/icemoon/surface)
+/area/icemoon/surface/outdoors)
 
 (1,1,1) = {"
 a

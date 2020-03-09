@@ -190,8 +190,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	digResult = /obj/item/stack/sheet/mineral/snow
 	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/wolf = 50, /obj/structure/spawner/ice_moon = 3, \
 						  /mob/living/simple_animal/hostile/asteroid/polarbear = 30, /obj/structure/spawner/ice_moon/polarbear = 3, \
-						  /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow = 50, /obj/structure/spawner/ice_moon/snowlegion = 3, \
-						  /mob/living/simple_animal/hostile/asteroid/goldgrub = 10)
+						  /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow = 50, /mob/living/simple_animal/hostile/asteroid/goldgrub = 10)
 
 	flora_spawn_list = list(/obj/structure/flora/tree/pine = 2, /obj/structure/flora/grass/both = 12)
 	terrain_spawn_list = list()
@@ -201,6 +200,9 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	pick_tunnel_width = list("1" = 6, "2" = 1)
 
 /turf/open/floor/plating/asteroid/airless/cave/snow/underground
+	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/ice_demon = 50, /obj/structure/spawner/ice_moon/demonic_portal = 3, \
+						  /mob/living/simple_animal/hostile/asteroid/ice_whelp = 30, /obj/structure/spawner/ice_moon/demonic_portal/ice_whelp = 3, \
+						  /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow = 50, /obj/structure/spawner/ice_moon/demonic_portal/snowlegion = 3)
 	flora_spawn_list = list(/obj/structure/flora/rock/icy = 6, /obj/structure/flora/rock/pile/icy = 6)
 	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/snow/underground/has_data
 	choose_turf_type = null
@@ -307,11 +309,14 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 		if(!A.tunnel_allowed)
 			sanity = 0
 			return
+	var/flora_spawned = FALSE
+	var/terrain_spawned = FALSE
+	var/monster_spawned = FALSE
 	if(is_mining_level(z))
-		SpawnFlora(T)	//No space mushrooms, cacti.
-	SpawnTerrain(T)
-	SpawnMonster(T)		//Checks for danger area.
-	if(choose_turf_type)
+		flora_spawned = SpawnFlora(T)	//No space mushrooms, cacti.
+	terrain_spawned = SpawnTerrain(T)
+	monster_spawned = SpawnMonster(T)		//Checks for danger area.
+	if(choose_turf_type && !terrain_spawned && !flora_spawned && !monster_spawned) // don't spawn different turf types under flora or terrain
 		turf_type = pickweight(choose_turf_type)
 	T.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
 
@@ -345,7 +350,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 			megafauna_spawn_list.Remove(randumb)
 
 		if(randumb)
-			new randumb(T)
+			return new randumb(T)
 
 #undef SPAWN_MEGAFAUNA
 #undef SPAWN_BUBBLEGUM
@@ -360,7 +365,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 		for(var/obj/structure/flora/F in range(4, T)) //Allows for growing patches, but not ridiculous stacks of flora
 			if(!istype(F, randumb))
 				return
-		new randumb(T)
+		return new randumb(T)
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnTerrain(turf/T)
 	if(prob(1))
@@ -373,7 +378,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 			if(istype(F, randumb))
 				return
 		if(randumb)
-			new randumb(T)
+			return new randumb(T)
 
 /turf/open/floor/plating/asteroid/snow
 	gender = PLURAL

@@ -41,13 +41,13 @@
 
 /mob/living/simple_animal/hostile/asteroid/wolf/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(health <= maxHealth*0.1)
-		if(!retreat_message_said && target)
-			visible_message("<span class='danger'>The [name] tries to flee from [target]!</span>")
-			retreat_message_said = TRUE
-		retreat_distance = 30
-	else
+	if(health > maxHealth*0.1)
 		retreat_distance = initial(retreat_distance)
+		return
+	if(!retreat_message_said && target)
+		visible_message("<span class='danger'>The [name] tries to flee from [target]!</span>")
+		retreat_message_said = TRUE
+	retreat_distance = 30
 
 /mob/living/simple_animal/hostile/asteroid/wolf/Life()
 	. = ..()

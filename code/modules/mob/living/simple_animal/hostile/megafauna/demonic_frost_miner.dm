@@ -23,7 +23,7 @@ Difficulty: Extremely Hard
 	armour_penetration = 100
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	aggro_vision_range = 36 // large vision range so combat doesn't abruptly end when someone runs a bit away
+	aggro_vision_range = 18 // large vision range so combat doesn't abruptly end when someone runs a bit away
 	rapid_melee = 4
 	speed = 20
 	move_to_delay = 20
@@ -227,40 +227,42 @@ Difficulty: Extremely Hard
 	SetRecoveryTime(15, 20)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/check_enraged()
-	if(health <= maxHealth*0.25 && !enraged)
-		SetRecoveryTime(80, 80)
-		adjustHealth(-maxHealth)
-		enraged = TRUE
-		enraging = TRUE
-		animate(src, pixel_y = pixel_y + 96, time = 100, easing = ELASTIC_EASING)
-		spin(100, 10)
-		SLEEP_CHECK_DEATH(60)
-		playsound(src, 'sound/effects/explosion3.ogg', 100, TRUE)
-		icon_state = "demonic_miner_phase2"
-		animate(src, pixel_y = pixel_y - 96, time = 8, flags = ANIMATION_END_NOW)
-		spin(8, 2)
-		SLEEP_CHECK_DEATH(8)
-		for(var/mob/living/L in viewers(src))
-			shake_camera(L, 3, 2)
-		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-		setMovetype(movement_type | FLYING)
-		enraging = FALSE
-		adjustHealth(-maxHealth)
+	if(enraged)
+		return
+	if(health > maxHealth*0.25)
+		return
+	SetRecoveryTime(80, 80)
+	adjustHealth(-maxHealth)
+	enraged = TRUE
+	enraging = TRUE
+	animate(src, pixel_y = pixel_y + 96, time = 100, easing = ELASTIC_EASING)
+	spin(100, 10)
+	SLEEP_CHECK_DEATH(60)
+	playsound(src, 'sound/effects/explosion3.ogg', 100, TRUE)
+	icon_state = "demonic_miner_phase2"
+	animate(src, pixel_y = pixel_y - 96, time = 8, flags = ANIMATION_END_NOW)
+	spin(8, 2)
+	SLEEP_CHECK_DEATH(8)
+	for(var/mob/living/L in viewers(src))
+		shake_camera(L, 3, 2)
+	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+	setMovetype(movement_type | FLYING)
+	enraging = FALSE
+	adjustHealth(-maxHealth)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/death(gibbed, list/force_grant)
 	if(health > 0)
 		return
-	else
-		var/turf/T = get_turf(src)
-		var/loot = rand(1, 3)
-		switch(loot)
-			if(1)
-				new /obj/item/resurrection_crystal(T)
-			if(2)
-				new /obj/item/clothing/shoes/winterboots/ice_boots/speedy(T)
-			if(3)
-				new /obj/item/pickaxe/drill/jackhammer/demonic(T)
-		. = ..()
+	var/turf/T = get_turf(src)
+	var/loot = rand(1, 3)
+	switch(loot)
+		if(1)
+			new /obj/item/resurrection_crystal(T)
+		if(2)
+			new /obj/item/clothing/shoes/winterboots/ice_boots/speedy(T)
+		if(3)
+			new /obj/item/pickaxe/drill/jackhammer/demonic(T)
+	. = ..()
 
 /obj/item/resurrection_crystal
 	name = "resurrection crystal"

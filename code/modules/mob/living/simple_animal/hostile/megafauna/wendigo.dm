@@ -22,7 +22,7 @@ Difficulty: Very Hard
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	vision_range = 9
-	aggro_vision_range = 36 // man-eating for a reason
+	aggro_vision_range = 18 // man-eating for a reason
 	speed = 15
 	move_to_delay = 15
 	ranged = TRUE

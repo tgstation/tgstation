@@ -7,21 +7,27 @@
 
 	faction = list("mining")
 	max_mobs = 3
+	max_integrity = 250
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/wolf)
 
 	move_resist = INFINITY
 	anchored = TRUE
-	resistance_flags = INDESTRUCTIBLE // no you can't destroy a hole unfortunately
 
 /obj/structure/spawner/ice_moon/Initialize()
 	. = ..()
 	clear_rock()
 
+/obj/structure/spawner/ice_moon/deconstruct(disassembled)
+	destroy_message()
+	. = ..()
+
+/obj/structure/spawner/ice_moon/proc/destroy_message()
+	visible_message("<span class='userdanger'>[src] collapses, sealing everything inside!</span>")
+
 /obj/structure/spawner/ice_moon/proc/clear_rock()
 	for(var/turf/F in RANGE_TURFS(2, src))
-		if(get_dist(src, F) >= 2)
-			if(abs(src.x - F.x) + abs(src.y - F.y) > 3)
-				continue
+		if(abs(src.x - F.x) + abs(src.y - F.y) > 3)
+			continue
 		if(ismineralturf(F))
 			var/turf/closed/mineral/M = F
 			M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
@@ -37,5 +43,26 @@
 			var/turf/closed/mineral/M = F
 			M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
 
-/obj/structure/spawner/ice_moon/snowlegion
+/obj/structure/spawner/ice_moon/demonic_portal
+	name = "demonic portal"
+	desc = "A portal that goes to another world, normal creatures couldn't survive there."
+
+	icon_state = "nether"
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/ice_demon)
+
+/obj/structure/spawner/ice_moon/demonic_portal/destroy_message()
+	visible_message("<span class='userdanger'>[src] collapses, cutting it off from this world!</span>")
+
+/obj/structure/spawner/ice_moon/demonic_portal/clear_rock()
+	for(var/turf/F in RANGE_TURFS(3, src))
+		if(abs(src.x - F.x) + abs(src.y - F.y) > 5)
+			continue
+		if(ismineralturf(F))
+			var/turf/closed/mineral/M = F
+			M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
+
+/obj/structure/spawner/ice_moon/demonic_portal/ice_whelp
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/ice_whelp)
+
+/obj/structure/spawner/ice_moon/demonic_portal/snowlegion
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow)
