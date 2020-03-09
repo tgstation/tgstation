@@ -537,6 +537,4 @@
 
 ///Where atoms should drop if taken from this component
 /datum/component/drop_location()
-	var/atom/parent_atom = parent
-	return parent_atom.drop_location()
-
+	return parent.drop_location()
