@@ -467,7 +467,6 @@
 /obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"
 	},
-/obj/item/twohanded/dualsaber/toy,
 /obj/item/toy/nuke,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
@@ -648,11 +647,6 @@
 	pixel_x = -32
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
-"bT" = (
-/obj/structure/table/reinforced,
-/obj/item/twohanded/binoculars,
-/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bU" = (
 /obj/machinery/light,
@@ -3003,7 +2997,7 @@ aW
 bV
 bk
 bV
-bT
+bV
 bV
 bV
 bZ
