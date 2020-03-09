@@ -98,8 +98,7 @@
 
 /turf/open/floor/is_shielded()
 	for(var/obj/structure/A in contents)
-		if(A.level == 3)
-			return 1
+		return 1
 
 /turf/open/floor/blob_act(obj/structure/blob/B)
 	return

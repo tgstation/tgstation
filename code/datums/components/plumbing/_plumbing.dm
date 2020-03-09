@@ -17,8 +17,9 @@
 	var/turn_connects = TRUE
 
 /datum/component/plumbing/Initialize(start=TRUE, _turn_connects=TRUE) //turn_connects for wheter or not we spin with the object to change our pipes
-	if(parent && !ismovable(parent))
+	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
+
 	var/atom/movable/AM = parent
 	if(!AM.reagents)
 		return COMPONENT_INCOMPATIBLE

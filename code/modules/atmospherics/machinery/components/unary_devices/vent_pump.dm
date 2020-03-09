@@ -14,7 +14,6 @@
 	use_power = IDLE_POWER_USE
 	can_unwrench = TRUE
 	welded = FALSE
-	level = 1
 	layer = GAS_SCRUBBER_LAYER
 
 	var/id_tag = null

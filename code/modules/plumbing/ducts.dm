@@ -8,8 +8,6 @@ All the important duct code:
 	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
 	icon_state = "nduct"
 
-	level = 1 ///combined with the hide function it magically puts them under tiles
-
 	///bitfield with the directions we're connected in
 	var/connects
 	///set to TRUE to disable smart duct behaviour
@@ -68,8 +66,7 @@ All the important duct code:
 	if(active)
 		attempt_connect()
 
-	var/turf/T = get_turf(src)
-	hide(T.intact && mapload)
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
 ///start looking around us for stuff to connect to
 /obj/machinery/duct/proc/attempt_connect()
@@ -335,10 +332,6 @@ All the important duct code:
 	add_neighbour(D, direction)
 	connect_network(D, direction, TRUE)
 	update_icon()
-
-///called by the tile when 'intact' changes, wich is pretty much wheter theres a tile on the tile, if that makes sense
-/obj/machinery/duct/hide(var/intact)
-	invisibility = intact ? INVISIBILITY_MAXIMUM : 0	// hide if floor is intact
 
 ///has a total of 5 layers and doesnt give a shit about color. its also dumb so doesnt autoconnect.
 /obj/machinery/duct/multilayered

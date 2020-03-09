@@ -20,26 +20,31 @@
 		A.volume = 200
 		airs[i] = A
 
+/obj/machinery/atmospherics/components/Initialize()
+	. = ..()
+
+	RegisterSignal(src, COMSIG_OBJ_HIDE, .proc/hide_pipe)
+
 // Iconnery
 
 /obj/machinery/atmospherics/components/proc/update_icon_nopipes()
 	return
+
+/obj/machinery/atmospherics/components/proc/hide_pipe(datum/source, covered)
+	showpipe = !covered
+	update_icon()
 
 /obj/machinery/atmospherics/components/update_icon()
 	update_icon_nopipes()
 
 	underlays.Cut()
 
-	var/turf/T = loc
-	if(level == 2 || (istype(T) && !T.intact))
-		showpipe = TRUE
-		plane = GAME_PLANE
-	else
-		showpipe = FALSE
-		plane = FLOOR_PLANE
+
+
+	plane = showpipe ? GAME_PLANE : FLOOR_PLANE
 
 	if(!showpipe)
-		return //no need to update the pipes if they aren't showing
+		return
 
 	var/connected = 0 //Direction bitset
 
