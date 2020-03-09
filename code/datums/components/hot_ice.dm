@@ -12,9 +12,9 @@
 	var/turf/open/T = get_turf(parent)
 	var/obj/item/stack/sheet/hot_ice = parent
 	if(istype(hot_ice))
-		T.atmos_spawn_air("plasma=[hot_ice.amount*500];TEMP=[hot_ice.amount*500]")
-		message_admins("Plasma sheets ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
-		log_game("Plasma sheets ignited by [key_name(user)] in [AREACOORD(T)]")
+		T.atmos_spawn_air("plasma=[hot_ice.amount*500];TEMP=[hot_ice.amount*20+300]")
+		message_admins("Hot Ice ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
+		log_game("Hot Ice ignited by [key_name(user)] in [AREACOORD(T)]")
 
 /datum/component/hot_ice/proc/flame_react(datum/source, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
