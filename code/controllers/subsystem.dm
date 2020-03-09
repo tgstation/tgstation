@@ -104,7 +104,7 @@
 	if(!wait_for_explosions)
 		fire(resumed)
 	else
-		if(!GLOB.explosions.len)
+		if(!SSexplosions.is_exploding())
 			fire(resumed)
 	. = state
 	if (state == SS_SLEEPING)

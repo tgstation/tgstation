@@ -149,7 +149,6 @@ GLOBAL_LIST_EMPTY(explosions)
 
 	EX_PREPROCESS_CHECK_TICK
 
-	var/list/exploded_this_tick = list()	//open turfs that need to be blocked off while we sleep
 	var/list/affected_turfs = GatherSpiralTurfs(max_range, epicenter)
 
 	var/reactionary = CONFIG_GET(flag/reactionary_explosions)
@@ -160,12 +159,8 @@ GLOBAL_LIST_EMPTY(explosions)
 
 	//lists are guaranteed to contain at least 1 turf at this point
 
-	var/iteration = 0
-	var/affTurfLen = affected_turfs.len
-	var/expBlockLen = cached_exp_block.len
 	for(var/TI in affected_turfs)
 		var/turf/T = TI
-		++iteration
 		var/init_dist = cheap_hypotenuse(T.x, T.y, x0, y0)
 		var/dist = init_dist
 
@@ -187,8 +182,6 @@ GLOBAL_LIST_EMPTY(explosions)
 		else
 			dist = EXPLODE_NONE
 
-		//------- EX_ACT AND TURF FIRES -------
-
 		if(T == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
 			var/list/items = list()
 			for(var/I in T)
@@ -198,16 +191,27 @@ GLOBAL_LIST_EMPTY(explosions)
 			for(var/O in items)
 				var/atom/A = O
 				if(!QDELETED(A))
-					A.ex_act(dist)
+					switch(dist)
+						if(EXPLODE_DEVASTATE)
+							SSexplosions.highobj += A
+						if(EXPLODE_HEAVY)
+							SSexplosions.medobj += A
+						if(EXPLODE_LIGHT)
+							SSexplosions.lowobj += A
+		switch(dist)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highturf += T
+				T.explosion_id = id
+			if(EXPLODE_HEAVY)
+				SSexplosions.medturf += T
+				T.explosion_id = id
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowturf += T
+				T.explosion_id = id
+
 
 		if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 			new /obj/effect/hotspot(T) //Mostly for ambience!
-
-		if(dist > EXPLODE_NONE)
-			T.explosion_level = max(T.explosion_level, dist)	//let the bigger one have it
-			T.explosion_id = id
-			T.ex_act(dist)
-			exploded_this_tick += T
 
 		//--- THROW ITEMS AROUND ---
 
@@ -217,55 +221,6 @@ GLOBAL_LIST_EMPTY(explosions)
 				var/throw_range = rand(throw_dist, max_range)
 				var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
 				I.throw_at(throw_at, throw_range, EXPLOSION_THROW_SPEED)
-
-		//wait for the lists to repop
-		var/break_condition
-		if(reactionary)
-			//If we've caught up to the density checker thread and there are no more turfs to process
-			break_condition = iteration == expBlockLen && iteration < affTurfLen
-		else
-			//If we've caught up to the turf gathering thread and it's still running
-			break_condition = iteration == affTurfLen && !stopped
-
-		if(break_condition || TICK_CHECK)
-			stoplag()
-
-			if(!running)
-				break
-
-			//update the trackers
-			affTurfLen = affected_turfs.len
-			expBlockLen = cached_exp_block.len
-
-			if(break_condition)
-				if(reactionary)
-					//until there are more block checked turfs than what we are currently at
-					//or the explosion has stopped
-					UNTIL(iteration < affTurfLen || !running)
-				else
-					//until there are more gathered turfs than what we are currently at
-					//or there are no more turfs to gather/the explosion has stopped
-					UNTIL(iteration < expBlockLen || stopped)
-
-				if(!running)
-					break
-
-				//update the trackers
-				affTurfLen = affected_turfs.len
-				expBlockLen = cached_exp_block.len
-
-			var/circumference = (PI * (init_dist + 4) * 2) //+4 to radius to prevent shit gaps
-			if(exploded_this_tick.len > circumference)	//only do this every revolution
-				for(var/Unexplode in exploded_this_tick)
-					var/turf/UnexplodeT = Unexplode
-					UnexplodeT.explosion_level = 0
-				exploded_this_tick.Cut()
-
-	//unfuck the shit
-	for(var/Unexplode in exploded_this_tick)
-		var/turf/UnexplodeT = Unexplode
-		UnexplodeT.explosion_level = 0
-	exploded_this_tick.Cut()
 
 	var/took = (REALTIMEOFDAY - started_at) / 10
 
