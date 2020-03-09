@@ -8,12 +8,17 @@
 	anchored = TRUE
 	max_integrity = 200
 	integrity_failure = 0.5
-	var/obj/effect/reflection = new
+//  Container object for mobs reflected in the mirror; see HasProximity below
+	var/obj/effect/reflection
 
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
 	if(icon_state == "mirror_broke" && !broken)
 		obj_break(null, mapload)
+	reflection = new
+	reflection.appearance_flags = KEEP_TOGETHER
+	reflection.alpha = 150
+	reflection.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	proximity_monitor = new(src, 1)
 
 /obj/structure/mirror/attack_hand(mob/user)
@@ -56,22 +61,50 @@
 /obj/structure/mirror/obj_break(damage_flag, mapload)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		icon_state = "mirror_broke"
+		vis_contents -= reflection
 		if(!mapload)
 			playsound(src, "shatter", 70, TRUE)
-		if(desc == initial(desc))
-			desc = "Oh no, seven years of bad luck!"
+		desc = "Oh no, seven years of bad luck!"
 		broken = TRUE
 
-// If a mob is within 1 tile of the mirror, display their face in it. currently the face icon is the one we use for wanted posters.
-
-// TO TRY: add solid mask to effects icon
+/**
+  * If a (living, non-ghost) mob is within 2 tiles of the mirror, their reflection is displayed.
+  *
+  * The mob is added to the mirror container's vis_contents, which is scaled down, reflected, and alpha masked.
+  * The mirror container in turn has the reflection in its vis_contents.
+  */
 
 /obj/structure/mirror/HasProximity(atom/movable/AM as mob|obj)
-	if(!isliving(AM))
+	if(!isliving(AM) || broken)
 		return
+	RegisterSignal(AM, COMSIG_MOVABLE_MOVED, .proc/check_reflection, override = TRUE)
 	reflection.vis_contents += AM
+	reflection.filters += filter(type="alpha", icon = icon(src.icon, "mirror_mask"))
+	var/matrix/M = matrix()
+	M.Scale(0.75)
+	M.Multiply(matrix(-1, 0, 0, 0, 1, 0)) // reflection matrix
+	reflection.transform = M
 	vis_contents += reflection
+	if(AM.GetComponent(/datum/component/mood) && AM.GetComponent(/datum/component/mood).sanity <= SANITY_DISTURBED)
+		desc = "Despite everything, it's still you."
+	else
+		desc = "It's you!"
 	update_icon()
+
+
+/**
+  * If a reflected mob moves, check if they are no longer in range of the mirror, if so, remove their reflection
+  *
+  * If that mob is not directly in front of the mirror its reflection is also removed, to minimize mirrors having 2+ mobs
+  * Arguments:
+  * * AM: the mob reflected
+  */
+
+/obj/structure/mirror/proc/check_reflection(atom/movable/AM)
+	if((get_dist(src, AM) > 1) || (get_dir(src, AM) in GLOB.diagonals))
+		reflection.vis_contents -= AM
+	if(reflection.vis_contents.len == 0)
+		desc = initial(desc)
 
 /obj/structure/mirror/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
