@@ -24,10 +24,12 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	custom_materials = list(/datum/material/iron = 20000)
+	material_modifier = 0.15
 	attack_verb = list("smashed", "dented", "bludeoned")
 	hitsound = 'sound/weapons/smash.ogg'
 	sharpness = IS_BLUNT
 	var/wielded = FALSE
+
 
 /obj/item/war_hammer/Initialize()
 	. = ..()
@@ -53,6 +55,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	flags_1 = CONDUCT_1
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	material_modifier = 0.25
 
 /obj/item/hatchet/dwarven/axe
 	name = "dwarven hand axe"
@@ -74,6 +77,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	attack_verb = list("attacked", "poked", "jabbed", "tore", "gored")
 	custom_materials = list(/datum/material/iron = 10000)
+
 	force = 7
 	throwforce = 18
 	throw_speed = 4
