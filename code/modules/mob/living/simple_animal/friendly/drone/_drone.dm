@@ -51,6 +51,7 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	see_in_dark = 7
 	can_be_held = TRUE
+	worn_slot_flags = ITEM_SLOT_HEAD
 	held_items = list(null, null)
 	var/staticChoice = "static"
 	var/list/staticChoices = list("static", "blank", "letter", "animal")

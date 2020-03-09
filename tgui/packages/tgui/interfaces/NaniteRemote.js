@@ -109,16 +109,16 @@ export const NaniteRemote = props => {
           <Table>
             <Table.Row header>
               <Table.Cell width="35%">
-              Name
+                Name
               </Table.Cell>
               <Table.Cell width="20%">
-              Mode
+                Mode
               </Table.Cell>
               <Table.Cell collapsing>
-              Code
+                Code
               </Table.Cell>
               <Table.Cell collapsing>
-              Relay
+                Relay
               </Table.Cell>
             </Table.Row>
             {saved_settings.map(setting => (
@@ -156,7 +156,7 @@ export const NaniteRemote = props => {
           </Table>
         ) : (
           <NoticeBox>
-          No settings currently saved
+            No settings currently saved
           </NoticeBox>
         )}
       </Section>
