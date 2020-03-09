@@ -544,31 +544,42 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "trashbag"
 	list_reagents = list(/datum/reagent/consumable/prunomix = 50)
-	var/fermentation_time = 30 SECONDS // time between fermentation checks, see below
+	var/fermentation_time = 30 SECONDS /// time it takes to ferment
+	var/fermentation_time_remaining /// for partial fermentation
+	var/fermentation_timer 	/// store the timer id of fermentation
 
 /obj/item/reagent_containers/food/drinks/bottle/pruno/Initialize()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/check_fermentation), fermentation_time)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/check_fermentation)
+
+/obj/item/reagent_containers/food/drinks/bottle/pruno/Destroy()
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	return ..()
 
 // Checks to see if the pruno can ferment, i.e. is it inside a structure (e.g. toilet), or a machine (e.g. washer)?
-// if so, start countdown to ferment, if not, check again in fermentation_time seconds
 // TODO: make it so the washer spills reagents if a reagent container is in there, for now, you can wash pruno
 
 /obj/item/reagent_containers/food/drinks/bottle/pruno/proc/check_fermentation()
 	if (!(istype(loc, /obj/machinery) || istype(loc, /obj/structure)))
-		addtimer(CALLBACK(src, .proc/check_fermentation), fermentation_time)
+		if(fermentation_timer)
+			fermentation_time_remaining = timeleft(fermentation_timer)
+			deltimer(fermentation_timer)
+			fermentation_timer = null
 		return
-	addtimer(CALLBACK(src, .proc/do_fermentation), fermentation_time)
+	if(fermentation_timer)
+		return
+	if(!fermentation_time_remaining)
+		fermentation_time_remaining = fermentation_time
+	fermentation_timer = addtimer(CALLBACK(src, .proc/do_fermentation), fermentation_time_remaining, TIMER_UNIQUE|TIMER_STOPPABLE)
+	fermentation_time_remaining = null
 
 // actually ferment
 
 /obj/item/reagent_containers/food/drinks/bottle/pruno/proc/do_fermentation()
-	if (!(istype(loc, /obj/machinery) || istype(loc, /obj/structure))) // did someone take it out of the structure? start all over
-		addtimer(CALLBACK(src, .proc/check_fermentation), fermentation_time)
-		return
-	reagents.remove_all(50)
-	if(prob(10)) // closest thing we have to botulism
-		reagents.add_reagent(/datum/reagent/toxin/bad_food, 15)
+	fermentation_time_remaining = null
+	fermentation_timer = null
+	if(prob(10))
+		reagents.add_reagent(/datum/reagent/toxin/bad_food, 15) // closest thing we have to botulism
 		reagents.add_reagent(/datum/reagent/consumable/ethanol/pruno, 35)
 	else
 		reagents.add_reagent(/datum/reagent/consumable/ethanol/pruno, 50)
