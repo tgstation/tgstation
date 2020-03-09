@@ -32,7 +32,6 @@ SUBSYSTEM_DEF(explosions)
 
 	var/list/currentrun = list()
 	var/currentpart = SSAIR_PIPENETS
-	var/check_tick_for_turfs = TRUE
 
 
 /datum/controller/subsystem/explosions/stat_entry(msg)
@@ -150,10 +149,7 @@ SUBSYSTEM_DEF(explosions)
 			remove_from_lists(thing, ex_type, level)
 		else
 			remove_from_lists(thing, ex_type, level)
-		if(check_tick_for_turfs && ex_type == SSEX_TURF)
-			if(MC_TICK_CHECK)
-				return
-		else if(ex_type == SSEX_OBJ)
+		if(ex_type == SSEX_OBJ)
 			if(MC_TICK_CHECK)
 				return
 
