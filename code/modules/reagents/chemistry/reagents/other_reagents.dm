@@ -175,7 +175,7 @@
 
 	else if(istype(O, /obj/item/stack/sheet/hairlesshide))
 		var/obj/item/stack/sheet/hairlesshide/HH = O
-		new /obj/item/stack/sheet/wetleather(get_turf(HH), HH.amount)
+		new /obj/item/stack/sheet/wetleather(HH.drop_location(), HH.amount)
 		qdel(HH)
 
 /*
@@ -706,7 +706,7 @@
 	if(istype(O, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = O
 		reac_volume = min(reac_volume, M.amount)
-		new/obj/item/stack/tile/bronze(get_turf(M), reac_volume)
+		new/obj/item/stack/tile/bronze(M.drop_location(), reac_volume)
 		M.use(reac_volume)
 
 /datum/reagent/nitrogen

@@ -71,10 +71,10 @@
 				var/diff = loaded.amount % 30
 				if(diff)
 					loaded.use(diff)
-					new /obj/item/stack/pipe_cleaner_coil(get_turf(user), diff)
+					new /obj/item/stack/pipe_cleaner_coil(user.drop_location(), diff)
 				else
 					loaded.use(30)
-					new /obj/item/stack/pipe_cleaner_coil(get_turf(user), 30)
+					new /obj/item/stack/pipe_cleaner_coil(user.drop_location(), 30)
 			qdel(src)
 			return
 
@@ -83,10 +83,10 @@
 			var/diff = loaded.amount % 30
 			if(diff)
 				loaded.use(diff)
-				new /obj/item/stack/pipe_cleaner_coil(get_turf(user), diff)
+				new /obj/item/stack/pipe_cleaner_coil(user.drop_location(), diff)
 			else
 				loaded.use(30)
-				new /obj/item/stack/pipe_cleaner_coil(get_turf(user), 30)
+				new /obj/item/stack/pipe_cleaner_coil(user.drop_location(), 30)
 		loaded.max_amount = initial(loaded.max_amount)
 		if(!user.put_in_hands(loaded))
 			loaded.forceMove(get_turf(user))

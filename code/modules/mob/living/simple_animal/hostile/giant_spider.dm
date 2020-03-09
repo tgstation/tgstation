@@ -473,7 +473,7 @@
 			if(S.busy == LAYING_EGGS)
 				E = locate() in get_turf(S)
 				if(!E || !isturf(S.loc))
-					var/obj/structure/spider/eggcluster/C = new /obj/structure/spider/eggcluster(get_turf(S))
+					var/obj/structure/spider/eggcluster/C = new /obj/structure/spider/eggcluster(S.drop_location())
 					if(S.ckey)
 						C.player_spiders = TRUE
 					C.directive = S.directive

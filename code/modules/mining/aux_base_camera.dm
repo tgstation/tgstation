@@ -74,7 +74,7 @@
 		spawn_spot = src
 
 
-	eyeobj = new /mob/camera/aiEye/remote/base_construction(get_turf(spawn_spot))
+	eyeobj = new /mob/camera/aiEye/remote/base_construction(spawn_spot.drop_location())
 	eyeobj.origin = src
 
 

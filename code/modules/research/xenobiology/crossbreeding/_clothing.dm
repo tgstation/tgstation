@@ -92,7 +92,7 @@ Slimecrossing Armor
 			to_chat(owner, "<span class='warning'>The lens is oddly opaque...</span>")
 			return
 		to_chat(owner, "<span class='notice'>You channel nearby light into a glowing, ethereal prism.</span>")
-		new /obj/structure/light_prism(get_turf(owner), glasses.glasses_color)
+		new /obj/structure/light_prism(owner.drop_location(), glasses.glasses_color)
 
 /obj/item/clothing/head/peaceflower
 	name = "heroine bud"

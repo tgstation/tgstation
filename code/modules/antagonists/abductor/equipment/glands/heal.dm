@@ -163,14 +163,14 @@
 		playsound(owner, 'sound/magic/clockwork/anima_fragment_attack.ogg', 50, TRUE)
 		var/list/dirs = GLOB.alldirs.Copy()
 		for(var/i in 1 to 3)
-			var/obj/effect/decal/cleanable/robot_debris/debris = new(get_turf(owner))
+			var/obj/effect/decal/cleanable/robot_debris/debris = new(owner.drop_location())
 			debris.streak(dirs)
 	else
 		owner.visible_message("<span class='warning'>[owner]'s [chest.name] sheds off its damaged flesh, rapidly replacing it!</span>", "<span class='warning'>Your [chest.name] sheds off its damaged flesh, rapidly replacing it!</span>")
 		playsound(owner, 'sound/effects/splat.ogg', 50, TRUE)
 		var/list/dirs = GLOB.alldirs.Copy()
 		for(var/i in 1 to 3)
-			var/obj/effect/decal/cleanable/blood/gibs/gibs = new(get_turf(owner))
+			var/obj/effect/decal/cleanable/blood/gibs/gibs = new(owner.drop_location())
 			gibs.streak(dirs)
 
 	var/obj/item/bodypart/chest/new_chest = new(null)

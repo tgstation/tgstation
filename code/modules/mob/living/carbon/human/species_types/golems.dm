@@ -352,7 +352,7 @@
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
 	for(var/i=1, i <= rand(3,5), i++)
-		new /obj/item/stack/ore/glass(get_turf(H))
+		new /obj/item/stack/ore/glass(H.drop_location())
 	qdel(H)
 
 /datum/species/golem/sand/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
@@ -384,7 +384,7 @@
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
 	for(var/i=1, i <= rand(3,5), i++)
-		new /obj/item/shard(get_turf(H))
+		new /obj/item/shard(H.drop_location())
 	qdel(H)
 
 /datum/species/golem/glass/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
@@ -419,7 +419,7 @@
 
 /datum/species/golem/bluespace/proc/reactive_teleport(mob/living/carbon/human/H)
 	H.visible_message("<span class='warning'>[H] teleports!</span>", "<span class='danger'>You destabilize and teleport!</span>")
-	new /obj/effect/particle_effect/sparks(get_turf(H))
+	new /obj/effect/particle_effect/sparks(H.drop_location())
 	playsound(get_turf(H), "sparks", 50, TRUE)
 	do_teleport(H, get_turf(H), 6, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 	last_teleport = world.time
@@ -534,19 +534,19 @@
 /datum/species/golem/bananium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	..()
 	if(world.time > last_banana + banana_cooldown && M != H &&  M.a_intent != INTENT_HELP)
-		new/obj/item/grown/bananapeel/specialpeel(get_turf(H))
+		new/obj/item/grown/bananapeel/specialpeel(H.drop_location())
 		last_banana = world.time
 
 /datum/species/golem/bananium/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
 	..()
 	if(world.time > last_banana + banana_cooldown && user != H)
-		new/obj/item/grown/bananapeel/specialpeel(get_turf(H))
+		new/obj/item/grown/bananapeel/specialpeel(H.drop_location())
 		last_banana = world.time
 
 /datum/species/golem/bananium/on_hit(obj/projectile/P, mob/living/carbon/human/H)
 	..()
 	if(world.time > last_banana + banana_cooldown)
-		new/obj/item/grown/bananapeel/specialpeel(get_turf(H))
+		new/obj/item/grown/bananapeel/specialpeel(H.drop_location())
 		last_banana = world.time
 
 /datum/species/golem/bananium/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
@@ -557,7 +557,7 @@
 		if(I.thrownby == H) //No throwing stuff at yourself to make bananas
 			return 0
 		else
-			new/obj/item/grown/bananapeel/specialpeel(get_turf(H))
+			new/obj/item/grown/bananapeel/specialpeel(H.drop_location())
 			last_banana = world.time
 
 /datum/species/golem/bananium/spec_life(mob/living/carbon/human/H)
@@ -683,7 +683,7 @@
 		return
 
 	H.visible_message("<span class='danger'>[H] falls apart into a pile of bandages!</span>")
-	new /obj/structure/cloth_pile(get_turf(H), H)
+	new /obj/structure/cloth_pile(H.drop_location(), H)
 	..()
 
 /obj/structure/cloth_pile
@@ -1026,8 +1026,8 @@
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
 	for(var/i=1, i <= rand(3,5), i++)
-		new /obj/item/stack/sheet/mineral/snow(get_turf(H))
-	new /obj/item/reagent_containers/food/snacks/grown/carrot(get_turf(H))
+		new /obj/item/stack/sheet/mineral/snow(H.drop_location())
+	new /obj/item/reagent_containers/food/snacks/grown/carrot(H.drop_location())
 	qdel(H)
 
 /datum/species/golem/snow/on_species_gain(mob/living/carbon/C, datum/species/old_species)

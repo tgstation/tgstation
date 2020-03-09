@@ -418,7 +418,7 @@
 					to_chat(itemUser, "<span class='notice'>The Rod of Asclepius suddenly grows back out of your arm!</span>")
 			//Because a servant of medicines stops at nothing to help others, lets keep them on their toes and give them an additional boost.
 			if(itemUser.health < itemUser.maxHealth)
-				new /obj/effect/temp_visual/heal(get_turf(itemUser), "#375637")
+				new /obj/effect/temp_visual/heal(itemUser.drop_location(), "#375637")
 			itemUser.adjustBruteLoss(-1.5)
 			itemUser.adjustFireLoss(-1.5)
 			itemUser.adjustToxLoss(-1.5, forced = TRUE) //Because Slime People are people too
@@ -429,7 +429,7 @@
 		//Heal all those around you, unbiased
 		for(var/mob/living/L in view(7, owner))
 			if(L.health < L.maxHealth)
-				new /obj/effect/temp_visual/heal(get_turf(L), "#375637")
+				new /obj/effect/temp_visual/heal(L.drop_location(), "#375637")
 			if(iscarbon(L))
 				L.adjustBruteLoss(-3.5)
 				L.adjustFireLoss(-3.5)

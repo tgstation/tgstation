@@ -293,7 +293,7 @@
 				to_chat(user, "<span class='warning'>There's already resin here!</span>")
 				return
 		if(metal_synthesis_cooldown < 5)
-			var/obj/effect/particle_effect/foam/metal/resin/F = new (get_turf(target))
+			var/obj/effect/particle_effect/foam/metal/resin/F = new (target.drop_location())
 			F.amount = 0
 			metal_synthesis_cooldown++
 			addtimer(CALLBACK(src, .proc/reduce_metal_synth_cooldown), 10 SECONDS)

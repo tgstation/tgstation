@@ -115,7 +115,7 @@
 	to_chat(user, "<span class='notice'>You try to align with the bluespace stream...</span>")
 	if(do_after(user, 20, target = src))
 		new /obj/effect/temp_visual/bluespace_fissure(drop_location())
-		new /obj/effect/temp_visual/bluespace_fissure(get_turf(linked_to))
+		new /obj/effect/temp_visual/bluespace_fissure(linked_to.drop_location())
 		user.forceMove(get_turf(linked_to))
 		user.visible_message("<span class='warning'>[user] [slip_in_message].</span>", null, null, null, user)
 		user.visible_message("<span class='warning'>[user] [slip_out_message].</span>", "<span class='notice'>...and find your way to the other side.</span>")

@@ -153,7 +153,7 @@
 			starting.Scale(1,32)
 			starting.Translate(0,520)
 			S.transform = starting
-			var/obj/effect/temp_visual/solarbeam_killsat/K = new (get_turf(living_target))
+			var/obj/effect/temp_visual/solarbeam_killsat/K = new (living_target.drop_location())
 			var/matrix/final = matrix()
 			final.Scale(1,32)
 			final.Translate(0,512)

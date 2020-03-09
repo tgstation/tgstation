@@ -530,7 +530,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 
 	if(C.shock(user, 50))
 		if(prob(50)) //fail
-			new /obj/item/stack/cable_coil(get_turf(C), 1)
+			new /obj/item/stack/cable_coil(C.drop_location(), 1)
 			C.deconstruct()
 
 	return C

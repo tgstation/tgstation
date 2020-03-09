@@ -215,7 +215,7 @@
 			var/list/the_targets = list(T,T1,T2)
 			spawn(0)
 				for(var/a=0, a<5, a++)
-					var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water(get_turf(chassis))
+					var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water(chassis.drop_location())
 					if(!W)
 						return
 					var/turf/my_target = pick(the_targets)
@@ -373,7 +373,7 @@
 	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/attach(obj/mecha/M)
-	var/obj/mecha/working/ripley/mkii/N = new /obj/mecha/working/ripley/mkii(get_turf(M),1)
+	var/obj/mecha/working/ripley/mkii/N = new /obj/mecha/working/ripley/mkii(M.drop_location(),1)
 	if(!N)
 		return
 	QDEL_NULL(N.cell)

@@ -29,14 +29,14 @@
 	if(. && prob(40) && isliving(target))
 		var/mob/living/M = target
 		if(!M.anchored && M != summoner && !hasmatchingsummoner(M))
-			new /obj/effect/temp_visual/guardian/phase/out(get_turf(M))
+			new /obj/effect/temp_visual/guardian/phase/out(M.drop_location())
 			do_teleport(M, M, 10, channel = TELEPORT_CHANNEL_BLUESPACE)
 			for(var/mob/living/L in range(1, M))
 				if(hasmatchingsummoner(L)) //if the summoner matches don't hurt them
 					continue
 				if(L != src && L != summoner)
 					L.apply_damage(15, BRUTE)
-			new /obj/effect/temp_visual/explosion(get_turf(M))
+			new /obj/effect/temp_visual/explosion(M.drop_location())
 
 /mob/living/simple_animal/hostile/guardian/bomb/AltClickOn(atom/movable/A)
 	if(!istype(A))

@@ -418,7 +418,7 @@
 		to_chat(H, "Your gang is pretty packed right now. You don't need more members just yet. If the other families expand, you can recruit more members.")
 		return FALSE
 	to_chat(H, "You pull an induction package from your pockets and place it on the ground.")
-	var/obj/item/gang_induction_package/GP = new(get_turf(H))
+	var/obj/item/gang_induction_package/GP = new(H.drop_location())
 	GP.name = "\improper [my_gang_datum.name] signup package"
 	GP.gang_to_use = my_gang_datum.type
 	GP.team_to_use = my_gang_datum.my_gang

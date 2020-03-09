@@ -379,7 +379,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 
 /datum/action/innate/ai/ranged/override_machine/proc/animate_machine(obj/machinery/M)
 	if(M && !QDELETED(M))
-		new/mob/living/simple_animal/hostile/mimic/copy/machine(get_turf(M), M, owner, 1)
+		new/mob/living/simple_animal/hostile/mimic/copy/machine(M.drop_location(), M, owner, 1)
 
 /obj/effect/proc_holder/ranged_ai/override_machine
 	active = FALSE

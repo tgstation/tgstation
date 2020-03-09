@@ -254,7 +254,7 @@
 
 /obj/item/ammo_casing/energy/duel/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread, atom/fired_from)
 	. = ..()
-	var/obj/effect/temp_visual/dueling_chaff/C = new(get_turf(user))
+	var/obj/effect/temp_visual/dueling_chaff/C = new(user.drop_location())
 	C.setting = setting
 	C.update_icon()
 

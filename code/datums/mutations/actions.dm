@@ -171,7 +171,7 @@
 	if(!isturf(owner.loc))
 		return
 	if(prob((0.5+((100-dna.stability)/20))) * GET_MUTATION_SYNCHRONIZER(src)) //very rare, but enough to annoy you hopefully. +0.5 probability for every 10 points lost in stability
-		new /obj/effect/immortality_talisman/void(get_turf(owner), owner)
+		new /obj/effect/immortality_talisman/void(owner.drop_location(), owner)
 
 /obj/effect/proc_holder/spell/self/void
 	name = "Convoke Void" //magic the gathering joke here
@@ -190,7 +190,7 @@
 
 /obj/effect/proc_holder/spell/self/void/cast(list/targets, mob/user = usr)
 	. = ..()
-	new /obj/effect/immortality_talisman/void(get_turf(user), user)
+	new /obj/effect/immortality_talisman/void(user.drop_location(), user)
 
 /datum/mutation/human/self_amputation
 	name = "Autotomy"
@@ -271,7 +271,7 @@
 		return
 
 	tongue.Remove(C, special = TRUE)
-	var/obj/item/hardened_spike/spike = new spike_path(get_turf(C), C)
+	var/obj/item/hardened_spike/spike = new spike_path(C.drop_location(), C)
 	tongue.forceMove(spike)
 	spike.throw_at(get_edge_target_turf(C,C.dir), 14, 4, C)
 

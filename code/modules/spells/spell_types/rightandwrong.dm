@@ -117,7 +117,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 		H.log_message("was made into a survivalist, and trusts no one!", LOG_ATTACK, color="red")
 
 	var/gun_type = pick(GLOB.summoned_guns)
-	var/obj/item/gun/G = new gun_type(get_turf(H))
+	var/obj/item/gun/G = new gun_type(H.drop_location())
 	if (istype(G)) // The list contains some non-gun type guns like the speargun which do not have this proc
 		G.unlock()
 	playsound(get_turf(H),'sound/magic/summon_guns.ogg', 50, TRUE)
@@ -143,7 +143,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 		magic_type = pick(GLOB.summoned_special_magic)
 		lucky = TRUE
 
-	var/obj/item/M = new magic_type(get_turf(H))
+	var/obj/item/M = new magic_type(H.drop_location())
 	playsound(get_turf(H),'sound/magic/summon_magic.ogg', 50, TRUE)
 
 	var/in_hand = H.put_in_hands(M)

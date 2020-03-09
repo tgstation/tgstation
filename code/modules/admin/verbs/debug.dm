@@ -605,7 +605,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	spawn(30)
 		for(var/obj/machinery/the_singularitygen/G in GLOB.machines)
 			if(G.anchored)
-				var/obj/singularity/S = new /obj/singularity(get_turf(G), 50)
+				var/obj/singularity/S = new /obj/singularity(G.drop_location(), 50)
 //				qdel(G)
 				S.energy = 1750
 				S.current_size = 7

@@ -178,7 +178,7 @@
 	var/timestop_duration = 100
 
 /obj/effect/proc_holder/spell/aoe_turf/timestop/cast(list/targets, mob/user = usr)
-	new /obj/effect/timestop/magic(get_turf(user), timestop_range, timestop_duration, list(user))
+	new /obj/effect/timestop/magic(user.drop_location(), timestop_range, timestop_duration, list(user))
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
 	name = "Summon Carp"
@@ -308,7 +308,7 @@
 				M.adjustBruteLoss(5)
 				to_chat(M, "<span class='userdanger'>You're slammed into the floor by [user]!</span>")
 		else
-			new sparkle_path(get_turf(AM), get_dir(user, AM)) //created sparkles will disappear on their own
+			new sparkle_path(AM.drop_location(), get_dir(user, AM)) //created sparkles will disappear on their own
 			if(isliving(AM))
 				var/mob/living/M = AM
 				M.Paralyze(stun_amt)

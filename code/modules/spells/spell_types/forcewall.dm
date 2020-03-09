@@ -14,7 +14,7 @@
 	var/wall_type = /obj/effect/forcefield/wizard
 
 /obj/effect/proc_holder/spell/targeted/forcewall/cast(list/targets,mob/user = usr)
-	new wall_type(get_turf(user),user)
+	new wall_type(user.drop_location(),user)
 	if(user.dir == SOUTH || user.dir == NORTH)
 		new wall_type(get_step(user, EAST),user)
 		new wall_type(get_step(user, WEST),user)

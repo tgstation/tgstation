@@ -106,7 +106,7 @@
 		if(SLIME_ACTIVATE_MAJOR)
 			to_chat(user, "<span class='notice'>Your [name] starts pulsing...</span>")
 			if(do_after(user, 40, target = user))
-				var/mob/living/simple_animal/slime/S = new(get_turf(user), "grey")
+				var/mob/living/simple_animal/slime/S = new(user.drop_location(), "grey")
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				to_chat(user, "<span class='notice'>You spit out [S].</span>")
 				return 350
@@ -462,7 +462,7 @@
 		if(SLIME_ACTIVATE_MINOR)
 			to_chat(user, "<span class='warning'>You vomit slippery oil.</span>")
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			new /obj/effect/decal/cleanable/oil/slippery(get_turf(user))
+			new /obj/effect/decal/cleanable/oil/slippery(user.drop_location())
 			return 450
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -610,7 +610,7 @@
 		if(SLIME_ACTIVATE_MAJOR)
 			to_chat(user, "<span class='warning'>You feel time slow down...</span>")
 			if(do_after(user, 30, target = user))
-				new /obj/effect/timestop(get_turf(user), 2, 50, list(user))
+				new /obj/effect/timestop(user.drop_location(), 2, 50, list(user))
 				return 900
 
 /obj/item/slime_extract/rainbow

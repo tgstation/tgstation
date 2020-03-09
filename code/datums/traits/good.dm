@@ -70,7 +70,7 @@ datum/quirk/fan_clown
 
 /datum/quirk/fan_clown/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/clothing/accessory/fan_clown_pin/B = new(get_turf(H))
+	var/obj/item/clothing/accessory/fan_clown_pin/B = new(H.drop_location())
 	var/list/slots = list (
 		"backpack" = ITEM_SLOT_BACKPACK,
 		"hands" = ITEM_SLOT_HANDS,
@@ -88,7 +88,7 @@ datum/quirk/fan_mime
 
 /datum/quirk/fan_mime/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/clothing/accessory/fan_mime_pin/B = new(get_turf(H))
+	var/obj/item/clothing/accessory/fan_mime_pin/B = new(H.drop_location())
 	var/list/slots = list (
 		"backpack" = ITEM_SLOT_BACKPACK,
 		"hands" = ITEM_SLOT_HANDS,
@@ -152,7 +152,7 @@ datum/quirk/fan_mime
 
 /datum/quirk/musician/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/choice_beacon/music/B = new(get_turf(H))
+	var/obj/item/choice_beacon/music/B = new(H.drop_location())
 	var/list/slots = list (
 		"backpack" = ITEM_SLOT_BACKPACK,
 		"hands" = ITEM_SLOT_HANDS,
@@ -186,7 +186,7 @@ datum/quirk/fan_mime
 
 /datum/quirk/photographer/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/storage/photo_album/photo_album = new(get_turf(H))
+	var/obj/item/storage/photo_album/photo_album = new(H.drop_location())
 	var/list/album_slots = list (
 		"backpack" = ITEM_SLOT_BACKPACK,
 		"hands" = ITEM_SLOT_HANDS
@@ -195,7 +195,7 @@ datum/quirk/fan_mime
 	photo_album.persistence_id = "personal_[H.mind.key]" // this is a persistent album, the ID is tied to the account's key to avoid tampering
 	photo_album.persistence_load()
 	photo_album.name = "[H.real_name]'s photo album"
-	var/obj/item/camera/camera = new(get_turf(H))
+	var/obj/item/camera/camera = new(H.drop_location())
 	var/list/camera_slots = list (
 		"neck" = ITEM_SLOT_NECK,
 		"left pocket" = ITEM_SLOT_LPOCKET,
@@ -245,7 +245,7 @@ datum/quirk/fan_mime
 
 /datum/quirk/tagger/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/toy/crayon/spraycan/spraycan = new(get_turf(H))
+	var/obj/item/toy/crayon/spraycan/spraycan = new(H.drop_location())
 	H.put_in_hands(spraycan)
 	H.equip_to_slot(spraycan, ITEM_SLOT_BACKPACK)
 	H.regenerate_icons()

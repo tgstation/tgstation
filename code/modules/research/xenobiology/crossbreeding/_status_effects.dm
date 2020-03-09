@@ -99,7 +99,7 @@
 
 /datum/status_effect/frozenstasis/on_apply()
 	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/breakCube)
-	cube = new /obj/structure/ice_stasis(get_turf(owner))
+	cube = new /obj/structure/ice_stasis(owner.drop_location())
 	owner.forceMove(cube)
 	owner.status_flags |= GODMODE
 	return ..()
@@ -492,7 +492,7 @@ datum/status_effect/rebreathing/tick()
 		is_healing = TRUE
 	if(is_healing)
 		examine_text = "<span class='warning'>SUBJECTPRONOUN is regenerating slowly, purplish goo filling in small injuries!</span>"
-		new /obj/effect/temp_visual/heal(get_turf(owner), "#FF0000")
+		new /obj/effect/temp_visual/heal(owner.drop_location(), "#FF0000")
 	else
 		examine_text = null
 	..()
@@ -616,7 +616,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	else if(istype(O, /obj/item/stack/sheet/hairlesshide))
 		to_chat(owner, "<span class='warning'>[linked_extract] kept your hands wet! It wets [O]!</span>")
 		var/obj/item/stack/sheet/hairlesshide/HH = O
-		new /obj/item/stack/sheet/wetleather(get_turf(HH), HH.amount)
+		new /obj/item/stack/sheet/wetleather(HH.drop_location(), HH.amount)
 		qdel(HH)
 	..()
 

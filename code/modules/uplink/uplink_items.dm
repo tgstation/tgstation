@@ -119,7 +119,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 		return
 	var/atom/A
 	if(ispath(spawn_path))
-		A = new spawn_path(get_turf(user))
+		A = new spawn_path(user.drop_location())
 	else
 		A = spawn_path
 	if(ishuman(user) && istype(A, /obj/item))

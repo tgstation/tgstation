@@ -156,7 +156,7 @@
 		to_chat(M, "<span class='warning'>You can't lift this up when somebody's on it.</span>")
 		return
 	if(over_object == M)
-		var/board = new board_item_type(get_turf(M))
+		var/board = new board_item_type(M.drop_location())
 		M.put_in_hands(board)
 		qdel(src)
 

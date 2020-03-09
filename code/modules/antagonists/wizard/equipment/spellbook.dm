@@ -278,7 +278,7 @@
 
 
 /datum/spellbook_entry/item/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
-	new item_path(get_turf(user))
+	new item_path(user.drop_location())
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	return TRUE
 
@@ -371,8 +371,8 @@
 /datum/spellbook_entry/item/armor/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	. = ..()
 	if(.)
-		new /obj/item/clothing/shoes/sandal/magic(get_turf(user)) //In case they've lost them.
-		new /obj/item/clothing/gloves/color/purple(get_turf(user))//To complete the outfit
+		new /obj/item/clothing/shoes/sandal/magic(user.drop_location()) //In case they've lost them.
+		new /obj/item/clothing/gloves/color/purple(user.drop_location())//To complete the outfit
 
 /datum/spellbook_entry/item/contract
 	name = "Contract of Apprenticeship"
@@ -390,7 +390,7 @@
 /datum/spellbook_entry/item/guardian/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	. = ..()
 	if(.)
-		new /obj/item/paper/guides/antag/guardian/wizard(get_turf(user))
+		new /obj/item/paper/guides/antag/guardian/wizard(user.drop_location())
 
 /datum/spellbook_entry/item/bloodbottle
 	name = "Bottle of Blood"

@@ -24,7 +24,7 @@
 
 /obj/item/veilrender/attack_self(mob/user)
 	if(charges > 0)
-		new /obj/effect/rend(get_turf(user), spawn_type, spawn_amt, rend_desc, spawn_fast)
+		new /obj/effect/rend(user.drop_location(), spawn_type, spawn_amt, rend_desc, spawn_fast)
 		charges--
 		user.visible_message("<span class='boldannounce'>[src] hums with power as [user] deals a blow to [activate_descriptor] itself!</span>")
 	else

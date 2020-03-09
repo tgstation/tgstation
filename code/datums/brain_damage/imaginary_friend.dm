@@ -43,7 +43,7 @@
 	get_ghost()
 
 /datum/brain_trauma/special/imaginary_friend/proc/make_friend()
-	friend = new(get_turf(owner), src)
+	friend = new(owner.drop_location(), src)
 
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
 	set waitfor = FALSE
@@ -242,7 +242,7 @@
 	random_gain = FALSE
 
 /datum/brain_trauma/special/imaginary_friend/trapped_owner/make_friend()
-	friend = new /mob/camera/imaginary_friend/trapped(get_turf(owner), src)
+	friend = new /mob/camera/imaginary_friend/trapped(owner.drop_location(), src)
 
 /datum/brain_trauma/special/imaginary_friend/trapped_owner/reroll_friend() //no rerolling- it's just the last owner's hell
 	if(friend.client) //reconnected

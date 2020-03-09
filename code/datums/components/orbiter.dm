@@ -100,7 +100,7 @@
 	if(master.loc == oldloc)
 		return
 
-	var/turf/newturf = get_turf(master)
+	var/turf/newturf = master.drop_location()
 	if(!newturf)
 		qdel(src)
 

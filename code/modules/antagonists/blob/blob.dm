@@ -53,7 +53,7 @@
 	if(!blobtag)
 		Remove()
 		return
-	var/mob/camera/blob/B = new /mob/camera/blob(get_turf(old_body), blobtag.starting_points_human_blob)
+	var/mob/camera/blob/B = new /mob/camera/blob(old_body.drop_location(), blobtag.starting_points_human_blob)
 	owner.mind.transfer_to(B)
 	old_body.gib()
 	B.place_blob_core(blobtag.point_rate_human_blob, pop_override = TRUE)

@@ -292,7 +292,7 @@
 /datum/team/cult/proc/ascend(cultist)
 	if(ishuman(cultist))
 		var/mob/living/carbon/human/H = cultist
-		new /obj/effect/temp_visual/cult/sparks(get_turf(H), H.dir)
+		new /obj/effect/temp_visual/cult/sparks(H.drop_location(), H.dir)
 		var/istate = pick("halo1","halo2","halo3","halo4","halo5","halo6")
 		var/mutable_appearance/new_halo_overlay = mutable_appearance('icons/effects/32x64.dmi', istate, -HALO_LAYER)
 		H.overlays_standing[HALO_LAYER] = new_halo_overlay

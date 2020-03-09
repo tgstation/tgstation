@@ -720,7 +720,7 @@
 					H.adjustBruteLoss((overall_damage*ratio) * (H.getBruteLoss() / overall_damage), 0)
 					H.updatehealth()
 					playsound(get_turf(H), 'sound/magic/staff_healing.ogg', 25)
-					new /obj/effect/temp_visual/cult/sparks(get_turf(H))
+					new /obj/effect/temp_visual/cult/sparks(H.drop_location())
 					user.Beam(H,icon_state="sendbeam",time=15)
 			else
 				if(H.stat == DEAD)
@@ -736,7 +736,7 @@
 					playsound(get_turf(H), 'sound/magic/enter_blood.ogg', 50)
 					H.visible_message("<span class='danger'>[user] has drained some of [H]'s blood!</span>")
 					to_chat(user,"<span class='cultitalic'>Your blood rite gains 50 charges from draining [H]'s blood.</span>")
-					new /obj/effect/temp_visual/cult/sparks(get_turf(H))
+					new /obj/effect/temp_visual/cult/sparks(H.drop_location())
 				else
 					to_chat(user,"<span class='warning'>[H.p_theyre(TRUE)] missing too much blood - you cannot drain [H.p_them()] further!</span>")
 					return
@@ -768,7 +768,7 @@
 					temp += 30
 				else
 					temp += max((B.bloodiness**2)/800,1)
-				new /obj/effect/temp_visual/cult/turf/floor(get_turf(B))
+				new /obj/effect/temp_visual/cult/turf/floor(B.drop_location())
 				qdel(B)
 		for(var/obj/effect/decal/cleanable/trail_holder/TH in view(T, 2))
 			qdel(TH)
@@ -778,7 +778,7 @@
 			shoecheck.bloody_shoes[/datum/reagent/blood] = 0
 		if(temp)
 			user.Beam(T,icon_state="drainbeam",time=15)
-			new /obj/effect/temp_visual/cult/sparks(get_turf(user))
+			new /obj/effect/temp_visual/cult/sparks(user.drop_location())
 			playsound(T, 'sound/magic/enter_blood.ogg', 50)
 			to_chat(user, "<span class='cultitalic'>Your blood rite has gained [round(temp)] charge\s from blood sources around you!</span>")
 			uses += max(1, round(temp))

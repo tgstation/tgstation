@@ -20,7 +20,7 @@
 		if(!isspaceturf(T) && !istype(A, /area/shuttle))
 			for(var/obj/structure/blob/core/C in range(1, newB))
 				if(C.overmind == O)
-					newB.forceMove(get_turf(C))
+					newB.forceMove(C.drop_location())
 					C.forceMove(T)
 					C.setDir(get_dir(newB, C))
 					O.add_points(1)

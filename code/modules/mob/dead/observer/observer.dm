@@ -897,7 +897,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			continue
 
 		if(O.invisibility == INVISIBILITY_MAXIMUM)
-			var/image/I = new(loc = get_turf(O))
+			var/image/I = new(loc = O.drop_location())
 			var/mutable_appearance/MA = new(O)
 			MA.alpha = 128
 			MA.dir = O.dir

@@ -187,7 +187,7 @@
 	var/mob/oldbody = get_mob_by_key(ckey)
 	if(!isobserver(oldbody))
 		return
-	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(spawnpoint))
+	var/mob/living/carbon/human/M = new/mob/living/carbon/human(spawnpoint.drop_location())
 	oldbody.client.prefs.copy_to(M)
 	M.set_species(/datum/species/human) // Could use setting per team
 	M.equipOutfit(outfits[team] ? outfits[team] : default_outfit)
@@ -320,7 +320,7 @@
 	var/arena_turfs = get_arena_turfs()
 	for(var/mob/living/L in GLOB.mob_living_list)
 		if(L.stat != DEAD && (get_turf(L) in arena_turfs))
-			var/obj/item/reagent_containers/food/drinks/trophy/gold_cup/G = new(get_turf(L))
+			var/obj/item/reagent_containers/food/drinks/trophy/gold_cup/G = new(L.drop_location())
 			G.name = "[L.real_name]'s Trophy"
 
 /obj/machinery/computer/arena/ui_interact(mob/user, ui_key, datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state)

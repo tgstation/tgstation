@@ -475,7 +475,7 @@ RLD
 	if(!rcd_results)
 		return FALSE
 	var/delay = rcd_results["delay"] * delay_mod
-	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(A), delay, src.mode)
+	var/obj/effect/constructing_effect/rcd_effect = new(A.drop_location(), delay, src.mode)
 	if(checkResource(rcd_results["cost"], user))
 		if(do_after(user, delay, target = A))
 			if(checkResource(rcd_results["cost"], user))

@@ -614,7 +614,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if(!A.density)
 			continue
 		count++
-		var/obj/effect/hallucination/fake_door_lock/lock = new(get_turf(A))
+		var/obj/effect/hallucination/fake_door_lock/lock = new(A.drop_location())
 		lock.target = target
 		lock.airlock = A
 		locks += lock

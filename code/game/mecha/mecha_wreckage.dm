@@ -62,7 +62,7 @@
 		to_chat(user, "<span class='notice'>You fail to salvage anything valuable from [src]!</span>")
 		return
 	var/type = pick(welder_salvage)
-	var/N = new type(get_turf(user))
+	var/N = new type(user.drop_location())
 	user.visible_message("<span class='notice'>[user] cuts [N] from [src].</span>", "<span class='notice'>You cut [N] from [src].</span>")
 	if(!istype(N, /obj/item/stack))
 		welder_salvage -= type
@@ -74,7 +74,7 @@
 	if(wires_removed)
 		to_chat(user, "<span class='notice'>You don't see anything that can be cut with [I]!</span>")
 		return
-	var/N = new /obj/item/stack/cable_coil(get_turf(user), rand(1,3))
+	var/N = new /obj/item/stack/cable_coil(user.drop_location(), rand(1,3))
 	user.visible_message("<span class='notice'>[user] cuts [N] from [src].</span>", "<span class='notice'>You cut [N] from [src].</span>")
 	wires_removed = TRUE
 

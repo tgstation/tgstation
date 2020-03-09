@@ -383,7 +383,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					to_chat(user, "<span class='notice'>You start building a meter...</span>")
 					if(do_after(user, atmos_build_speed, target = A))
 						activate()
-						var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(get_turf(A))
+						var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(A.drop_location())
 						PM.setAttachLayer(piping_layer)
 						if(mode & WRENCH_MODE)
 							PM.wrench_act(user, src)
@@ -393,7 +393,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						activate()
 						var/obj/machinery/atmospherics/path = queued_p_type
 						var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
-						var/obj/item/pipe/P = new pipe_item_type(get_turf(A), queued_p_type, queued_p_dir)
+						var/obj/item/pipe/P = new pipe_item_type(A.drop_location(), queued_p_type, queued_p_dir)
 
 						if(queued_p_flipped && istype(P, /obj/item/pipe/trinary/flippable))
 							var/obj/item/pipe/trinary/flippable/F = P

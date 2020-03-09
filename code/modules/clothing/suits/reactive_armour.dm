@@ -239,7 +239,7 @@
 		if(!isturf(picked))
 			return
 		H.forceMove(picked)
-		new /obj/structure/table(get_turf(owner))
+		new /obj/structure/table(owner.drop_location())
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return 1
 	return 0

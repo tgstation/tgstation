@@ -273,7 +273,7 @@
 	S.add_atom_colour("#990000", FIXED_COLOUR_PRIORITY)
 	S.faction = list("cult")
 	playsound(get_turf(S), 'sound/effects/ghost.ogg', 100, TRUE)
-	new /obj/effect/temp_visual/cult/sac(get_turf(S))
+	new /obj/effect/temp_visual/cult/sac(S.drop_location())
 
 /obj/effect/proc_holder/spell/targeted/dominate/can_target(mob/living/target)
 	if(!isanimal(target) || target.stat)
@@ -321,4 +321,4 @@
 	for(var/obj/O in range(src,1))
 		if(O.density && !istype(O, /obj/structure/destructible/cult))
 			O.take_damage(90, BRUTE, "melee", 0)
-			new /obj/effect/temp_visual/cult/turf/floor(get_turf(O))
+			new /obj/effect/temp_visual/cult/turf/floor(O.drop_location())

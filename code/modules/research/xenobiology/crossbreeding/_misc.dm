@@ -84,7 +84,7 @@ Slimecrossing Items
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
 	if(!used) //refilling the film does not refill the timestop
-		new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
+		new /obj/effect/timestop(target.drop_location(), 2, 50, list(user))
 		used = TRUE
 		desc = "This camera has seen better days."
 	. = ..()

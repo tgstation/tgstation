@@ -68,7 +68,7 @@
 			if(operation == "remove organ/implant")
 				qdel(organ)
 			else if(I) // Put the implant in case.
-				var/obj/item/implantcase/case = new(get_turf(C))
+				var/obj/item/implantcase/case = new(C.drop_location())
 				case.imp = I
 				I.forceMove(case)
 				case.update_icon()

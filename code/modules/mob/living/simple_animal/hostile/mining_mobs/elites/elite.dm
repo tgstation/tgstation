@@ -210,7 +210,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		for(var/mob/living/simple_animal/hostile/asteroid/elite/elitehere in loc)
 			if(elitehere == mychild && activity == TUMOR_PASSIVE)
 				mychild.adjustHealth(-mychild.maxHealth*0.05)
-				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(mychild))
+				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(mychild.drop_location())
 				H.color = "#FF0000"
 
 /obj/structure/elite_tumor/attackby(obj/item/I, mob/user, params)

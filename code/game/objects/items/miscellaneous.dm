@@ -128,7 +128,7 @@
 	return augment_list
 
 /obj/item/choice_beacon/augments/spawn_option(obj/choice,mob/living/M)
-	new choice(get_turf(M))
+	new choice(M.drop_location())
 	to_chat(M, "<span class='hear'>You hear something crackle from the beacon for a moment before a voice speaks. \"Please stand by for a message from S.E.L.F. Message as follows: <b>Item request received. Your package has been transported, use the autosurgeon supplied to apply the upgrade.</b> Message ends.\"</span>")
 
 /obj/item/skub

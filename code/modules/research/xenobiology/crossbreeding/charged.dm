@@ -33,7 +33,7 @@ Charged extracts:
 	effect_desc = "Produces a slime reviver potion, which revives dead slimes."
 
 /obj/item/slimecross/charged/grey/do_effect(mob/user)
-	new /obj/item/slimepotion/slime_reviver(get_turf(user))
+	new /obj/item/slimepotion/slime_reviver(user.drop_location())
 	user.visible_message("<span class='notice'>[src] distills into a potion!</span>")
 	..()
 
@@ -52,7 +52,7 @@ Charged extracts:
 	effect_desc = "Creates a packet of omnizine."
 
 /obj/item/slimecross/charged/purple/do_effect(mob/user)
-	new /obj/item/slimecrossbeaker/omnizine(get_turf(user))
+	new /obj/item/slimecrossbeaker/omnizine(user.drop_location())
 	user.visible_message("<span class='notice'>[src] sparks, and floods with a regenerative solution!</span>")
 	..()
 
@@ -61,7 +61,7 @@ Charged extracts:
 	effect_desc = "Creates a potion that neuters the mutation chance of a slime, which passes on to new generations."
 
 /obj/item/slimecross/charged/blue/do_effect(mob/user)
-	new /obj/item/slimepotion/slime/chargedstabilizer(get_turf(user))
+	new /obj/item/slimepotion/slime/chargedstabilizer(user.drop_location())
 	user.visible_message("<span class='notice'>[src] distills into a potion!</span>")
 	..()
 
@@ -70,8 +70,8 @@ Charged extracts:
 	effect_desc = "Produces a bunch of metal and plasteel."
 
 /obj/item/slimecross/charged/metal/do_effect(mob/user)
-	new /obj/item/stack/sheet/metal(get_turf(user), 25)
-	new /obj/item/stack/sheet/plasteel(get_turf(user), 10)
+	new /obj/item/stack/sheet/metal(user.drop_location(), 25)
+	new /obj/item/stack/sheet/plasteel(user.drop_location(), 10)
 	user.visible_message("<span class='notice'>[src] grows into a plethora of metals!</span>")
 	..()
 
@@ -80,7 +80,7 @@ Charged extracts:
 	effect_desc = "Creates a hypercharged slime cell battery, which has high capacity and recharges constantly at a very fast rate."
 
 /obj/item/slimecross/charged/yellow/do_effect(mob/user)
-	new /obj/item/stock_parts/cell/high/slime/hypercharged(get_turf(user))
+	new /obj/item/stock_parts/cell/high/slime/hypercharged(user.drop_location())
 	user.visible_message("<span class='notice'>[src] sparks violently, and swells with electric power!</span>")
 	..()
 
@@ -89,7 +89,7 @@ Charged extracts:
 	effect_desc = "Creates several sheets of plasma."
 
 /obj/item/slimecross/charged/darkpurple/do_effect(mob/user)
-	new /obj/item/stack/sheet/mineral/plasma(get_turf(user), 10)
+	new /obj/item/stack/sheet/mineral/plasma(user.drop_location(), 10)
 	user.visible_message("<span class='notice'>[src] produces a large amount of plasma!</span>")
 	..()
 
@@ -98,7 +98,7 @@ Charged extracts:
 	effect_desc = "Produces a pressure proofing potion."
 
 /obj/item/slimecross/charged/darkblue/do_effect(mob/user)
-	new /obj/item/slimepotion/spaceproof(get_turf(user))
+	new /obj/item/slimepotion/spaceproof(user.drop_location())
 	user.visible_message("<span class='notice'>[src] distills into a potion!</span>")
 	..()
 
@@ -107,10 +107,10 @@ Charged extracts:
 	effect_desc = "Creates a slime cake and some drinks."
 
 /obj/item/slimecross/charged/silver/do_effect(mob/user)
-	new /obj/item/reagent_containers/food/snacks/store/cake/slimecake(get_turf(user))
+	new /obj/item/reagent_containers/food/snacks/store/cake/slimecake(user.drop_location())
 	for(var/i in 1 to 10)
 		var/drink_type = get_random_drink()
-		new drink_type(get_turf(user))
+		new drink_type(user.drop_location())
 	user.visible_message("<span class='notice'>[src] produces a party's worth of cake and drinks!</span>")
 	..()
 
@@ -119,7 +119,7 @@ Charged extracts:
 	effect_desc = "Makes a bluespace polycrystal."
 
 /obj/item/slimecross/charged/bluespace/do_effect(mob/user)
-	new /obj/item/stack/sheet/bluespace_crystal(get_turf(user), 10)
+	new /obj/item/stack/sheet/bluespace_crystal(user.drop_location(), 10)
 	user.visible_message("<span class='notice'>[src] produces several sheets of polycrystal!</span>")
 	..()
 
@@ -128,7 +128,7 @@ Charged extracts:
 	effect_desc = "Creates a camera obscura."
 
 /obj/item/slimecross/charged/sepia/do_effect(mob/user)
-	new /obj/item/camera/spooky(get_turf(user))
+	new /obj/item/camera/spooky(user.drop_location())
 	user.visible_message("<span class='notice'>[src] flickers in a strange, ethereal manner, and produces a camera!</span>")
 	..()
 
@@ -137,7 +137,7 @@ Charged extracts:
 	effect_desc = "Creates an extract enhancer, giving whatever it's used on five more uses."
 
 /obj/item/slimecross/charged/cerulean/do_effect(mob/user)
-	new /obj/item/slimepotion/enhancer/max(get_turf(user))
+	new /obj/item/slimepotion/enhancer/max(user.drop_location())
 	user.visible_message("<span class='notice'>[src] distills into a potion!</span>")
 	..()
 
@@ -146,7 +146,7 @@ Charged extracts:
 	effect_desc = "Creates bananium. Oh no."
 
 /obj/item/slimecross/charged/pyrite/do_effect(mob/user)
-	new /obj/item/stack/sheet/mineral/bananium(get_turf(user), 10)
+	new /obj/item/stack/sheet/mineral/bananium(user.drop_location(), 10)
 	user.visible_message("<span class='warning'>[src] solidifies with a horrifying banana stench!</span>")
 	..()
 
@@ -155,7 +155,7 @@ Charged extracts:
 	effect_desc = "Produces a lavaproofing potion"
 
 /obj/item/slimecross/charged/red/do_effect(mob/user)
-	new /obj/item/slimepotion/lavaproof(get_turf(user))
+	new /obj/item/slimepotion/lavaproof(user.drop_location())
 	user.visible_message("<span class='notice'>[src] distills into a potion!</span>")
 	..()
 
@@ -183,7 +183,7 @@ Charged extracts:
 	effect_desc = "Produces a... lovepotion... no ERP."
 
 /obj/item/slimecross/charged/pink/do_effect(mob/user)
-	new /obj/item/slimepotion/lovepotion(get_turf(user))
+	new /obj/item/slimepotion/lovepotion(user.drop_location())
 	user.visible_message("<span class='notice'>[src] distills into a potion!</span>")
 	..()
 
@@ -252,7 +252,7 @@ Charged extracts:
 	effect_desc = "Produces a pacification potion, which works on monsters and humanoids."
 
 /obj/item/slimecross/charged/lightpink/do_effect(mob/user)
-	new /obj/item/slimepotion/peacepotion(get_turf(user))
+	new /obj/item/slimepotion/peacepotion(user.drop_location())
 	user.visible_message("<span class='notice'>[src] distills into a potion!</span>")
 	..()
 
@@ -272,6 +272,6 @@ Charged extracts:
 /obj/item/slimecross/charged/rainbow/do_effect(mob/user)
 	user.visible_message("<span class='warning'>[src] swells and splits into three new slimes!</span>")
 	for(var/i in 1 to 3)
-		var/mob/living/simple_animal/slime/S = new(get_turf(user))
+		var/mob/living/simple_animal/slime/S = new(user.drop_location())
 		S.random_colour()
 	..()

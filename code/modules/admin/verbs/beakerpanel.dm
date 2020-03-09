@@ -21,7 +21,7 @@
 			var/obj/item/reagent_containers/container = beaker_panel_create_container(containerdata, get_turf(usr))
 			log_game("[key_name(usr)] spawned a [container] containing [pretty_string_from_reagent_list(container.reagents.reagent_list)]")
 		if ("spawngrenade")
-			var/obj/item/grenade/chem_grenade/grenade = new(get_turf(usr))
+			var/obj/item/grenade/chem_grenade/grenade = new(usr.drop_location())
 			var/containersdata = json_decode(href_list["containers"])
 			var/reagent_string
 			for (var/i in 1 to 2)

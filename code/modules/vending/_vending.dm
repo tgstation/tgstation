@@ -503,7 +503,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 					if(3) // glass candy
 						crit_rebate = 50
 						for(var/i = 0, i < num_shards, i++)
-							var/obj/item/shard/shard = new /obj/item/shard(get_turf(C))
+							var/obj/item/shard/shard = new /obj/item/shard(C.drop_location())
 							shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=1, pain_chance=5)
 							shard.AddElement(/datum/element/embed, shard.embedding)
 							C.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
@@ -521,7 +521,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 							O.dismember()
 							O.drop_organs()
 							qdel(O)
-							new /obj/effect/gibspawner/human/bodypartless(get_turf(C))
+							new /obj/effect/gibspawner/human/bodypartless(C.drop_location())
 
 				C.apply_damage(max(0, squish_damage - crit_rebate), forced=TRUE, spread_damage=TRUE)
 				C.AddElement(/datum/element/squish, 80 SECONDS)

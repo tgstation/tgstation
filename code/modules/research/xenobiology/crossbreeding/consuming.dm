@@ -246,7 +246,7 @@ Consuming extracts:
 
 	if(target)
 		do_teleport(M, target, 0, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
-		new /obj/effect/particle_effect/sparks(get_turf(M))
+		new /obj/effect/particle_effect/sparks(M.drop_location())
 		playsound(get_turf(M), "sparks", 50, TRUE)
 
 /obj/item/slimecross/consuming/sepia
@@ -278,7 +278,7 @@ Consuming extracts:
 /obj/item/slime_cookie/cerulean/do_effect(mob/living/M, mob/user)
 	if(prob(50))
 		to_chat(M, "<span class='notice'>A piece of [src] breaks off while you chew, and falls to the ground.</span>")
-		var/obj/item/slime_cookie/cerulean/C = new(get_turf(M))
+		var/obj/item/slime_cookie/cerulean/C = new(M.drop_location())
 		C.taste = taste + " and a sugar cookie"
 
 /obj/item/slimecross/consuming/pyrite
@@ -335,7 +335,7 @@ Consuming extracts:
 	taste = "red velvet and iron"
 
 /obj/item/slime_cookie/red/do_effect(mob/living/M, mob/user)
-	new /obj/effect/decal/cleanable/blood(get_turf(M))
+	new /obj/effect/decal/cleanable/blood(M.drop_location())
 	playsound(get_turf(M), 'sound/effects/splat.ogg', 10, TRUE)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
@@ -387,7 +387,7 @@ Consuming extracts:
 	var/obj/item/held = M.get_active_held_item() //This should be itself, but just in case...
 	M.dropItemToGround(held)
 	var/newcoin = /obj/item/coin/gold
-	var/obj/item/coin/C = new newcoin(get_turf(M))
+	var/obj/item/coin/C = new newcoin(M.drop_location())
 	playsound(get_turf(C), 'sound/items/coinflip.ogg', 50, TRUE)
 	M.put_in_hand(C)
 

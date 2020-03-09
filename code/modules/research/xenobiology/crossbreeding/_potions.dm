@@ -26,7 +26,7 @@ Slimecrossing Potions
 		to_chat(user, "<span class='warning'>[target] is too complex for the potion to clone!</span>")
 		return
 	var/path = S.type
-	var/obj/item/slime_extract/C = new path(get_turf(target))
+	var/obj/item/slime_extract/C = new path(target.drop_location())
 	C.Uses = S.Uses
 	to_chat(user, "<span class='notice'>You pour the potion onto [target], and the fluid solidifies into a copy of it!</span>")
 	qdel(src)

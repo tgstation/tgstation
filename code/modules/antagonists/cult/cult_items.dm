@@ -389,7 +389,7 @@
 	if(current_charges)
 		owner.visible_message("<span class='danger'>\The [attack_text] is deflected in a burst of blood-red sparks!</span>")
 		current_charges--
-		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
+		new /obj/effect/temp_visual/cult/sparks(owner.drop_location())
 		if(!current_charges)
 			owner.visible_message("<span class='danger'>The runed shield around [owner] suddenly disappears!</span>")
 			owner.update_inv_wear_suit()

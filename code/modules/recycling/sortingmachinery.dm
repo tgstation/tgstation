@@ -15,7 +15,7 @@
 	if(!do_after(user, 15, target = user))
 		return
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
-	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
+	new /obj/effect/decal/cleanable/wrapping(user.drop_location())
 	unwrap_contents()
 	qdel(src)
 
@@ -143,7 +143,7 @@
 		to_chat(user, "<span class='notice'>You successfully removed [O]'s wrapping !</span>")
 		O.forceMove(loc)
 		playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
-		new /obj/effect/decal/cleanable/wrapping(get_turf(user))
+		new /obj/effect/decal/cleanable/wrapping(user.drop_location())
 		unwrap_contents()
 		qdel(src)
 	else
@@ -181,7 +181,7 @@
 		var/atom/movable/AM = X
 		user.put_in_hands(AM)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
-	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
+	new /obj/effect/decal/cleanable/wrapping(user.drop_location())
 	qdel(src)
 
 /obj/item/smallDelivery/attack_self_tk(mob/user)
@@ -196,7 +196,7 @@
 			var/atom/movable/AM = X
 			AM.forceMove(src.loc)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
-	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
+	new /obj/effect/decal/cleanable/wrapping(user.drop_location())
 	unwrap_contents()
 	qdel(src)
 

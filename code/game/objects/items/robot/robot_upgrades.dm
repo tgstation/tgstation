@@ -450,7 +450,7 @@
 		var/obj/item/shockpaddles/cyborg/S = locate() in R.module
 		R.module.remove_module(S, TRUE)
 		if(backpack)
-			new /obj/item/defibrillator(get_turf(R))
+			new /obj/item/defibrillator(R.drop_location())
 			qdel(src)
 
 

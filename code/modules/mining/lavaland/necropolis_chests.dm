@@ -345,7 +345,7 @@
 	var/turf/T = get_turf(src)
 	new /obj/effect/temp_visual/warp_cube(T, user, teleport_color, TRUE)
 	SSblackbox.record_feedback("tally", "warp_cube", 1, type)
-	new /obj/effect/temp_visual/warp_cube(get_turf(linked), user, linked.teleport_color, FALSE)
+	new /obj/effect/temp_visual/warp_cube(linked.drop_location(), user, linked.teleport_color, FALSE)
 	var/obj/effect/warp_cube/link_holder = new /obj/effect/warp_cube(T)
 	user.forceMove(link_holder) //mess around with loc so the user can't wander around
 	sleep(2.5)
@@ -434,7 +434,7 @@
 		if(A.anchored)
 			return
 		A.visible_message("<span class='danger'>[A] is snagged by [firer]'s hook!</span>")
-		new /datum/forced_movement(A, get_turf(firer), 5, TRUE)
+		new /datum/forced_movement(A, firer.drop_location(), 5, TRUE)
 		if (isliving(target))
 			var/mob/living/fresh_meat = target
 			fresh_meat.Knockdown(knockdown_time)
@@ -482,7 +482,7 @@
 	if(cooldown < world.time)
 		SSblackbox.record_feedback("amount", "immortality_talisman_uses", 1)
 		cooldown = world.time + 600
-		new /obj/effect/immortality_talisman(get_turf(user), user)
+		new /obj/effect/immortality_talisman(user.drop_location(), user)
 	else
 		to_chat(user, "<span class='warning'>[src] is not ready yet!</span>")
 
@@ -585,7 +585,7 @@
 		return FALSE
 	to_chat(user, "<span class='notice'>You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops.</span>")
 	user.grant_all_languages()
-	new /obj/effect/decal/cleanable/ash(get_turf(user))
+	new /obj/effect/decal/cleanable/ash(user.drop_location())
 	qdel(src)
 
 
@@ -1129,7 +1129,7 @@
 /obj/item/hierophant_club/suicide_act(mob/living/user)
 	say("Xverwpsgexmrk...", forced = "hierophant club suicide")
 	user.visible_message("<span class='suicide'>[user] holds [src] into the air! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	new/obj/effect/temp_visual/hierophant/telegraph(get_turf(user))
+	new/obj/effect/temp_visual/hierophant/telegraph(user.drop_location())
 	playsound(user,'sound/machines/airlockopen.ogg', 75, TRUE)
 	user.visible_message("<span class='hierophant_warning'>[user] fades out, leaving [user.p_their()] belongings behind!</span>")
 	for(var/obj/item/I in user)
@@ -1159,7 +1159,7 @@
 			timer = world.time + cooldown_time
 			if(isliving(target) && chaser_timer <= world.time) //living and chasers off cooldown? fire one!
 				chaser_timer = world.time + chaser_cooldown
-				var/obj/effect/temp_visual/hierophant/chaser/C = new(get_turf(user), user, target, chaser_speed, friendly_fire_check)
+				var/obj/effect/temp_visual/hierophant/chaser/C = new(user.drop_location(), user, target, chaser_speed, friendly_fire_check)
 				C.damage = 30
 				C.monster_damage_boost = FALSE
 				log_combat(user, target, "fired a chaser at", src)

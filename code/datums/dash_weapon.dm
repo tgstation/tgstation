@@ -33,10 +33,10 @@
 		return
 	var/turf/T = get_turf(target)
 	if(target in view(user.client.view, user))
-		var/obj/spot1 = new phaseout(get_turf(user), user.dir)
+		var/obj/spot1 = new phaseout(user.drop_location(), user.dir)
 		user.forceMove(T)
 		playsound(T, dash_sound, 25, TRUE)
-		var/obj/spot2 = new phasein(get_turf(user), user.dir)
+		var/obj/spot2 = new phasein(user.drop_location(), user.dir)
 		spot1.Beam(spot2,beam_effect,time=20)
 		current_charges--
 		holder.update_action_buttons_icon()

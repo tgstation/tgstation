@@ -243,4 +243,4 @@
 
 /obj/item/crusher_trophy/broodmother_tongue/on_mark_detonation(mob/living/target, mob/living/user)
 	if(rand(1, 100) <= bonus_value && target.stat != DEAD)
-		new /obj/effect/temp_visual/goliath_tentacle/broodmother/patch(get_turf(target), user)
+		new /obj/effect/temp_visual/goliath_tentacle/broodmother/patch(target.drop_location(), user)

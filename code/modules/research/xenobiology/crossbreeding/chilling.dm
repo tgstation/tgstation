@@ -34,7 +34,7 @@ Chilling extracts:
 /obj/item/slimecross/chilling/grey/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] produces a few small, grey cubes</span>")
 	for(var/i in 1 to 3)
-		new /obj/item/barriercube(get_turf(user))
+		new /obj/item/barriercube(user.drop_location())
 	..()
 
 /obj/item/slimecross/chilling/orange
@@ -68,7 +68,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/blue/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] cracks, and spills out a liquid goo, which reforms into a mask!</span>")
-	new /obj/item/clothing/mask/nobreath(get_turf(user))
+	new /obj/item/clothing/mask/nobreath(user.drop_location())
 	..()
 
 /obj/item/slimecross/chilling/metal
@@ -137,7 +137,7 @@ Chilling extracts:
 	user.visible_message("<span class='notice'>[src] crumbles into icy powder, leaving behind several emergency food supplies!</span>")
 	var/amount = rand(5, 10)
 	for(var/i in 1 to amount)
-		new /obj/item/reagent_containers/food/snacks/rationpack(get_turf(user))
+		new /obj/item/reagent_containers/food/snacks/rationpack(user.drop_location())
 	..()
 
 /obj/item/slimecross/chilling/bluespace
@@ -199,7 +199,7 @@ Chilling extracts:
 /obj/item/slimecross/chilling/sepia/do_effect(mob/user)
 	user.visible_message("<span class='warning'>[src] shatters, freezing time itself!</span>")
 	allies -= user //support class
-	new /obj/effect/timestop(get_turf(user), 2, 300, allies)
+	new /obj/effect/timestop(user.drop_location(), 2, 300, allies)
 	..()
 
 /obj/item/slimecross/chilling/cerulean
@@ -219,7 +219,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/pyrite/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] crystallizes into a pair of spectacles!</span>")
-	new /obj/item/clothing/glasses/prism_glasses(get_turf(user))
+	new /obj/item/clothing/glasses/prism_glasses(user.drop_location())
 	..()
 
 /obj/item/slimecross/chilling/red
@@ -266,7 +266,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/pink/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] cracks like an egg, and an adorable puppy comes tumbling out!</span>")
-	new /mob/living/simple_animal/pet/dog/corgi/puppy/slime(get_turf(user))
+	new /mob/living/simple_animal/pet/dog/corgi/puppy/slime(user.drop_location())
 	..()
 
 /obj/item/slimecross/chilling/gold
@@ -275,7 +275,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/gold/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] lets off golden light as it melts and reforms into an egg-like device!</span>")
-	new /obj/item/capturedevice(get_turf(user))
+	new /obj/item/capturedevice(user.drop_location())
 	..()
 
 /obj/item/slimecross/chilling/oil
@@ -307,7 +307,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/lightpink/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] blooms into a beautiful flower!</span>")
-	new /obj/item/clothing/head/peaceflower(get_turf(user))
+	new /obj/item/clothing/head/peaceflower(user.drop_location())
 	..()
 
 /obj/item/slimecross/chilling/adamantine
@@ -316,7 +316,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/adamantine/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] creaks and breaks as it shifts into a heavy set of armor!</span>")
-	new /obj/item/clothing/suit/armor/heavy/adamantine(get_turf(user))
+	new /obj/item/clothing/suit/armor/heavy/adamantine(user.drop_location())
 	..()
 
 /obj/item/slimecross/chilling/rainbow

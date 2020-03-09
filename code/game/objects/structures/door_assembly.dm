@@ -142,7 +142,7 @@
 			if(state != AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS)
 				return
 			to_chat(user, "<span class='notice'>You cut the wires from the airlock assembly.</span>")
-			new/obj/item/stack/cable_coil(get_turf(user), 1)
+			new/obj/item/stack/cable_coil(user.drop_location(), 1)
 			state = AIRLOCK_ASSEMBLY_NEEDS_WIRES
 			name = "secured airlock assembly"
 

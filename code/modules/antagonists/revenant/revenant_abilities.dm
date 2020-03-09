@@ -204,7 +204,7 @@
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(4, 0, L)
 		s.start()
-		new /obj/effect/temp_visual/revenant(get_turf(L))
+		new /obj/effect/temp_visual/revenant(L.drop_location())
 		addtimer(CALLBACK(src, .proc/overload_shock, L, user), 20)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/proc/overload_shock(obj/machinery/light/L, mob/user)

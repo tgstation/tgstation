@@ -62,7 +62,7 @@
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(body)])")
 		body.ghostize(0)
 		body.key = C.key
-		new /obj/effect/temp_visual/gravpush(get_turf(body))
+		new /obj/effect/temp_visual/gravpush(body.drop_location())
 
 /obj/effect/fun_balloon/sentience/emergency_shuttle
 	name = "shuttle sentience fun balloon"
@@ -81,7 +81,7 @@
 /obj/effect/fun_balloon/scatter/effect()
 	for(var/mob/living/M in range(effect_range, get_turf(src)))
 		var/turf/T = find_safe_turf()
-		new /obj/effect/temp_visual/gravpush(get_turf(M))
+		new /obj/effect/temp_visual/gravpush(M.drop_location())
 		M.forceMove(T)
 		to_chat(M, "<span class='notice'>Pop!</span>")
 

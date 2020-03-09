@@ -59,7 +59,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	else if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/V = W
 		if (V.get_amount() >= 1 && get_amount() >= 1)
-			var/obj/item/stack/sheet/rglass/RG = new (get_turf(user))
+			var/obj/item/stack/sheet/rglass/RG = new (user.drop_location())
 			RG.add_fingerprint(user)
 			var/replace = user.get_inactive_held_item()==src
 			V.use(1)
@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/V = W
 		if (V.get_amount() >= 1 && get_amount() >= 1)
-			var/obj/item/stack/sheet/plasmarglass/RG = new (get_turf(user))
+			var/obj/item/stack/sheet/plasmarglass/RG = new (user.drop_location())
 			RG.add_fingerprint(user)
 			var/replace = user.get_inactive_held_item()==src
 			V.use(1)

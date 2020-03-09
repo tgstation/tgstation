@@ -45,7 +45,7 @@
 							return
 						if(is_blocked_turf(T, TRUE)) //don't try to sneak dense stuff on our tile during the wait.
 							return
-					H = new holosign_type(get_turf(target), src)
+					H = new holosign_type(target.drop_location(), src)
 					to_chat(user, "<span class='notice'>You create \a [H] with [src].</span>")
 				else
 					to_chat(user, "<span class='notice'>[src] is projecting at max capacity!</span>")

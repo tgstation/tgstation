@@ -199,7 +199,7 @@
 	notransform = TRUE
 	var/turf/new_turf = locate((target.x + rand(-3,3)),(target.y + rand(-3,3)),target.z)
 	if(player_hop)
-		new_turf = get_turf(target)
+		new_turf = target.drop_location()
 		hop_cooldown = world.time + PLAYER_HOP_DELAY
 	if(AIStatus == AI_ON && ranged_cooldown <= world.time)
 		projectile_ready = TRUE
@@ -217,7 +217,7 @@
 		addtimer(CALLBACK(src, .proc/OpenFire, target), 5)
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/BellyFlop()
-	var/turf/new_turf = get_turf(target)
+	var/turf/new_turf = target.drop_location()
 	hopping = TRUE
 	notransform = TRUE
 	new /obj/effect/temp_visual/leaper_crush(new_turf)

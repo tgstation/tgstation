@@ -171,7 +171,7 @@
 
 	usr.say("Rise, my creation! Off your page into this realm!", forced = "stickman summoning")
 	playsound(src.loc, 'sound/magic/summon_magic.ogg', 50, TRUE, TRUE)
-	var/mob/living/M = new /mob/living/simple_animal/hostile/stickman(get_turf(usr))
+	var/mob/living/M = new /mob/living/simple_animal/hostile/stickman(usr.drop_location())
 	var/list/factions = usr.faction
 	M.faction = factions
 	src.robe_charge = FALSE

@@ -180,7 +180,7 @@
 /obj/item/tk_grab/proc/apply_focus_overlay()
 	if(!focus)
 		return
-	new /obj/effect/temp_visual/telekinesis(get_turf(focus))
+	new /obj/effect/temp_visual/telekinesis(focus.drop_location())
 
 /obj/item/tk_grab/update_overlays()
 	. = ..()

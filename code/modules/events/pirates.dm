@@ -146,7 +146,7 @@
 		if(S.machine_stat & (NOPOWER|BROKEN))
 			continue
 		S.emp_act(1)
-		new /obj/effect/temp_visual/emp(get_turf(S))
+		new /obj/effect/temp_visual/emp(S.drop_location())
 
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
 	if(credits_stored)	// Prevents spamming empty holochips

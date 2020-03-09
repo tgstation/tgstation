@@ -150,7 +150,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/item/fulton_core/attack_self(mob/user)
 	if(do_after(user,15,target = user) && !QDELETED(src))
-		new /obj/structure/extraction_point(get_turf(user))
+		new /obj/structure/extraction_point(user.drop_location())
 		qdel(src)
 
 /obj/structure/extraction_point

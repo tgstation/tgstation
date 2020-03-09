@@ -263,7 +263,7 @@
 	user.playsound_local(user, 'sound/machines/uplinkpurchase.ogg', 100)
 
 	if (item && ispath(item))
-		var/atom/item_to_create = new item(get_turf(user))
+		var/atom/item_to_create = new item(user.drop_location())
 
 		if(user.put_in_hands(item_to_create))
 			to_chat(user, "<span class='notice'>Your purchase materializes into your hands!</span>")

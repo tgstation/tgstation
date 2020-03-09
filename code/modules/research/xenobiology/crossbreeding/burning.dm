@@ -32,7 +32,7 @@ Burning extracts:
 	effect_desc = "Creates a hungry and speedy slime that will love you forever."
 
 /obj/item/slimecross/burning/grey/do_effect(mob/user)
-	var/mob/living/simple_animal/slime/S = new(get_turf(user),"grey")
+	var/mob/living/simple_animal/slime/S = new(user.drop_location(),"grey")
 	S.visible_message("<span class='danger'>A baby slime emerges from [src], and it nuzzles [user] before burbling hungrily!</span>")
 	S.Friends[user] = 20 //Gas, gas, gas
 	S.bodytemperature = T0C + 400 //We gonna step on the gas.
@@ -59,7 +59,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/purple/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] fills with a bubbling liquid!</span>")
-	new /obj/item/slimecrossbeaker/autoinjector/slimestimulant(get_turf(user))
+	new /obj/item/slimecrossbeaker/autoinjector/slimestimulant(user.drop_location())
 	..()
 
 /obj/item/slimecross/burning/blue
@@ -155,7 +155,7 @@ Burning extracts:
 	for(var/mob/living/L in range(1, get_turf(user)))
 		if(L != user)
 			do_teleport(L, get_turf(L), 6, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE) //Somewhere between the effectiveness of fake and real BS crystal
-			new /obj/effect/particle_effect/sparks(get_turf(L))
+			new /obj/effect/particle_effect/sparks(L.drop_location())
 			playsound(get_turf(L), "sparks", 50, TRUE)
 	..()
 
@@ -165,7 +165,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/sepia/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] shapes itself into a camera!</span>")
-	new /obj/item/camera/rewind(get_turf(user))
+	new /obj/item/camera/rewind(user.drop_location())
 	..()
 
 /obj/item/slimecross/burning/cerulean
@@ -174,7 +174,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/cerulean/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] produces a potion!</span>")
-	new /obj/item/slimepotion/extract_cloner(get_turf(user))
+	new /obj/item/slimepotion/extract_cloner(user.drop_location())
 	..()
 
 /obj/item/slimecross/burning/pyrite
@@ -237,7 +237,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/pink/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] shrinks into a small, gel-filled pellet!</span>")
-	new /obj/item/slimecrossbeaker/pax(get_turf(user))
+	new /obj/item/slimecrossbeaker/pax(user.drop_location())
 	..()
 
 /obj/item/slimecross/burning/gold
@@ -266,7 +266,7 @@ Burning extracts:
 	var/turf/T = get_turf(src)
 	playsound(T, 'sound/effects/explosion2.ogg', 200, TRUE)
 	for(var/mob/living/M in range(2, T))
-		new /obj/effect/temp_visual/explosion(get_turf(M))
+		new /obj/effect/temp_visual/explosion(M.drop_location())
 		M.ex_act(EXPLODE_HEAVY)
 	qdel(src)
 
@@ -301,7 +301,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/adamantine/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] crystallizes into a large shield!</span>")
-	new /obj/item/shield/adamantineshield(get_turf(user))
+	new /obj/item/shield/adamantineshield(user.drop_location())
 	..()
 
 /obj/item/slimecross/burning/rainbow
@@ -310,5 +310,5 @@ Burning extracts:
 
 /obj/item/slimecross/burning/rainbow/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] flattens into a glowing rainbow blade.</span>")
-	new /obj/item/kitchen/knife/rainbowknife(get_turf(user))
+	new /obj/item/kitchen/knife/rainbowknife(user.drop_location())
 	..()

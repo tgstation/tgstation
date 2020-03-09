@@ -69,7 +69,7 @@ GENE SCANNER
 			continue
 
 		if(O.invisibility == INVISIBILITY_MAXIMUM || HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
-			var/image/I = new(loc = get_turf(O))
+			var/image/I = new(loc = O.drop_location())
 			var/mutable_appearance/MA = new(O)
 			MA.alpha = 128
 			MA.dir = O.dir

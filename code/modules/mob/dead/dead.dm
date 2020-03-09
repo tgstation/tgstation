@@ -36,7 +36,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 /mob/dead/forceMove(atom/destination)
 	var/turf/old_turf = get_turf(src)
-	var/turf/new_turf = get_turf(destination)
+	var/turf/new_turf = destination.drop_location()
 	if (old_turf?.z != new_turf?.z)
 		onTransitZ(old_turf?.z, new_turf?.z)
 	var/oldloc = loc

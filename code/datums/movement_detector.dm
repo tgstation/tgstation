@@ -37,7 +37,7 @@
   * This works by detecting movement of either the tracked object, or anything it is inside, recursively
   */
 /datum/movement_detector/proc/move_react(atom/movable/mover, atom/oldloc, direction)
-	var/turf/newturf = get_turf(tracked)
+	var/turf/newturf = tracked.drop_location()
 	
 	if(oldloc && !isturf(oldloc))
 		var/atom/target = oldloc

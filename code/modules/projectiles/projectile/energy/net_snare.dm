@@ -66,7 +66,7 @@
 	if(!ismob(target) || blocked >= 100) //Fully blocked by mob or collided with dense object - drop a trap
 		new/obj/item/restraints/legcuffs/beartrap/energy(drop_location())
 	else if(iscarbon(target))
-		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy(get_turf(target))
+		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy(target.drop_location())
 		B.Crossed(target)
 	..()
 
@@ -87,7 +87,7 @@
 		do_sparks(1, TRUE, src)
 		qdel(src)
 	if(iscarbon(target))
-		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(target))
+		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(target.drop_location())
 		B.Crossed(target)
 	QDEL_IN(src, 10)
 	..()

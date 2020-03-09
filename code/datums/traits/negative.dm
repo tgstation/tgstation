@@ -45,7 +45,7 @@
 
 /datum/quirk/blindness/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/clothing/glasses/blindfold/white/B = new(get_turf(H))
+	var/obj/item/clothing/glasses/blindfold/white/B = new(H.drop_location())
 	if(!H.equip_to_slot_if_possible(B, ITEM_SLOT_EYES, bypass_equip_delay_self = TRUE)) //if you can't put it on the user's eyes, put it in their hands, otherwise put it on their eyes
 		H.put_in_hands(B)
 	H.regenerate_icons()
@@ -175,7 +175,7 @@
 		/obj/item/toy/cards/deck,
 		/obj/item/lighter,
 		/obj/item/dice/d20)
-	heirloom = new heirloom_type(get_turf(quirk_holder))
+	heirloom = new heirloom_type(quirk_holder.drop_location())
 	var/list/slots = list(
 		"in your left pocket" = ITEM_SLOT_LPOCKET,
 		"in your right pocket" = ITEM_SLOT_RPOCKET,
@@ -262,7 +262,7 @@
 
 /datum/quirk/nearsighted/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/clothing/glasses/regular/glasses = new(get_turf(H))
+	var/obj/item/clothing/glasses/regular/glasses = new(H.drop_location())
 	H.put_in_hands(glasses)
 	H.equip_to_slot(glasses, ITEM_SLOT_EYES)
 	H.regenerate_icons() //this is to remove the inhand icon, which persists even if it's not in their hands
@@ -435,7 +435,7 @@
 		to_chat(H, "<span class='userdanger'>You think of a dumb thing you said a long time ago and scream internally.</span>")
 		dumb_thing = FALSE //only once per life
 		if(prob(1))
-			new/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato(get_turf(H)) //now that's what I call spaghetti code
+			new/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato(H.drop_location()) //now that's what I call spaghetti code
 
 /datum/quirk/junkie
 	name = "Junkie"

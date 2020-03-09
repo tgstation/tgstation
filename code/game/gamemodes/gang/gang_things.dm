@@ -24,7 +24,7 @@
 	swappin_sides.my_gang = team_to_use
 	team_to_use.add_member(user.mind)
 	for(var/threads in team_to_use.free_clothes)
-		new threads(get_turf(user))
+		new threads(user.drop_location())
 	if (!F.gangbangers.Find(user.mind))
 		F.gangbangers += user.mind
 	team_to_use.adjust_points(30)

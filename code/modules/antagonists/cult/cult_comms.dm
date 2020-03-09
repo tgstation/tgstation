@@ -453,7 +453,7 @@
 			playsound(target,'sound/magic/exit_blood.ogg')
 			attached_action.throwee.Beam(target,icon_state="sendbeam",time=4)
 			attached_action.throwee.forceMove(get_turf(target))
-			new /obj/effect/temp_visual/cult/sparks(get_turf(target), ranged_ability_user.dir)
+			new /obj/effect/temp_visual/cult/sparks(target.drop_location(), ranged_ability_user.dir)
 			attached_action.throwing = FALSE
 			attached_action.cooldown = world.time + attached_action.base_cooldown
 			remove_ranged_ability("<span class='cult'>A pulse of blood magic surges through you as you shift [attached_action.throwee] through time and space.</span>")

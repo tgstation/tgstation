@@ -535,7 +535,7 @@
 	return TRUE //This parent should never exist in-game outside admeme use, so why not let it be a creative thruster?
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/proc/generate_effect(var/movement_dir)
-	var/obj/effect/particle_effect/E = new effect_type(get_turf(chassis))
+	var/obj/effect/particle_effect/E = new effect_type(chassis.drop_location())
 	E.dir = turn(movement_dir, 180)
 	step(E, turn(movement_dir, 180))
 	QDEL_IN(E, 5)

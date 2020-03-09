@@ -209,7 +209,7 @@
 /obj/item/melee/arm_blade/dropped(mob/user)
 	..()
 	if(can_drop)
-		new /obj/item/melee/synthetic_arm_blade(get_turf(user))
+		new /obj/item/melee/synthetic_arm_blade(user.drop_location())
 
 /***************************************\
 |***********COMBAT TENTACLES*************|
