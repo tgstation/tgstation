@@ -19,7 +19,7 @@
 	. = ..()
 	. += "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>"
 	if(!has_buckled_mobs() && can_buckle)
-		. += "<span class='notice'>While stood on the same tile as the chair, drag your sprite to sit in it.</span>"
+		. += "<span class='notice'>While standing on [src], drag and drop your sprite onto [src] to buckle to it.</span>"
 
 /obj/structure/chair/Initialize()
 	. = ..()
