@@ -48,7 +48,7 @@ Difficulty: Extremely Hard
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Initialize()
 	. = ..()
-	AddComponent(/datum/component/knockback, 7, FALSE, FALSE)
+	AddComponent(/datum/component/knockback, 7, FALSE, TRUE)
 	AddComponent(/datum/component/lifesteal, 50)
 
 /datum/action/innate/megafauna_attack/frost_orbs
@@ -271,33 +271,23 @@ Difficulty: Extremely Hard
 	icon_state = "demonic_crystal"
 
 /obj/item/resurrection_crystal/attack_self(mob/living/user)
+	if(!iscarbon(user))
+		to_chat(user, "<span class='notice'>A dark presence stops you from absorbing the crystal.</span>")
+		return
 	forceMove(user)
 	to_chat(user, "<span class='notice'>You feel a bit safer... but a demonic presence lurks in the back of your head...</span>")
 	RegisterSignal(user, COMSIG_MOB_DEATH, .proc/resurrect)
 
-/obj/item/resurrection_crystal/proc/resurrect(mob/living/user, gibbed)
-	user.visible_message("<span class='notice'>You see [user]'s soul dragged out of their body!</span>", "<span class='notice'>You feel your soul dragged away to a new life!</span>")
-	var/mob/living/carbon/human/H = new /mob/living/carbon/human()
-	randomize_human(H)
-	var/random_race = GLOB.species_list[pick(GLOB.roundstart_races)]
-	H.set_species(random_race)
-	var/list/valid_jobs = list()
-	for(var/random_job in subtypesof(/datum/job))
-		var/datum/job/J = new random_job()
-		if(J.total_positions == 1 || J.spawn_positions == 1)
-			continue
-		if(J.minimal_player_age > 0)
-			continue
-		if(J.faction != "Station")
-			continue
-		if(J.title in GLOB.command_positions)
-			continue
-		valid_jobs |= J
-		qdel(J)
-	var/datum/job/J = pick(valid_jobs)
-	J.equip(H, FALSE, TRUE, TRUE)
-	SSjob.SendToLateJoin(H)
-	user.mind.transfer_to(H) // second life
+/obj/item/resurrection_crystal/proc/resurrect(mob/living/carbon/user, gibbed)
+	user.visible_message("<span class='notice'>You see [user]'s soul dragged out of their body!</span>", "<span class='notice'>You feel your soul dragged away to a fresh body!</span>")
+	var/typepath = user.type
+	var/turf/T = find_safe_turf()
+	var/mob/living/carbon/clone = new typepath(T)
+	clone.real_name = user.real_name
+	user.dna.transfer_identity(clone)
+	clone.updateappearance(mutcolor_update=1)
+	user.mind.transfer_to(clone) // second life
+	to_chat(clone, "<span class='notice'>You blink and find yourself in [get_area_name(T)].</span>")
 	user.gib()
 	qdel(src)
 
@@ -317,7 +307,7 @@ Difficulty: Extremely Hard
 
 /obj/item/pickaxe/drill/jackhammer/demonic/Initialize()
 	..()
-	AddComponent(/datum/component/knockback, 4, FALSE, FALSE)
+	AddComponent(/datum/component/knockback, 4, FALSE, TRUE)
 	AddComponent(/datum/component/lifesteal, 5)
 
 /obj/item/crusher_trophy/ice_block_talisman

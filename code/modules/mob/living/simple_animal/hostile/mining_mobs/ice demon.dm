@@ -9,13 +9,13 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	speak_emote = list("telepathically cries")
-	speed = 5
-	move_to_delay = 5
+	speed = 2
+	move_to_delay = 2
 	projectiletype = /obj/projectile/temp/basilisk/ice
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = TRUE
 	ranged_message = "manifests ice"
-	ranged_cooldown_time = 15
+	ranged_cooldown_time = 30
 	minimum_distance = 3
 	retreat_distance = 3
 	maxHealth = 150
@@ -57,8 +57,8 @@
 		possible_ends |= T
 	var/turf/end = pick(possible_ends)
 	do_teleport(src, end, 0,  channel=TELEPORT_CHANNEL_BLUESPACE, forced = TRUE)
+	SLEEP_CHECK_DEATH(15)
 	. = ..()
-	SLEEP_CHECK_DEATH(5)
 
 /mob/living/simple_animal/hostile/asteroid/ice_demon/Life()
 	. = ..()

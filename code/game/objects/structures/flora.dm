@@ -380,7 +380,7 @@
 	icon_state = "[icon_state][rand(1,3)]"
 
 /obj/structure/flora/rock/attackby(obj/item/W, mob/user, params)
-	if(!mineresult || W.tool_behaviour != TOOL_MINING)
+	if(!mineResult || W.tool_behaviour != TOOL_MINING)
 		return ..()
 	if(flags_1 & NODECONSTRUCT_1)
 		return ..()
