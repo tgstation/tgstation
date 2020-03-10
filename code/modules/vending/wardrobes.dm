@@ -251,6 +251,7 @@
 					/obj/item/clothing/shoes/laceup/digitigrade = 1,
 					/obj/item/storage/belt/bandolier = 1,
 					/obj/item/storage/pill_bottle/dice/hazard = 1,
+					/obj/item/clothing/suit/hooded/wintercoat/service/bartender = 2, //Placed by fulp, by Homingpenguins
 					/obj/item/storage/bag/money = 2)
 	premium = list(/obj/item/storage/box/dishdrive = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/bar_wardrobe
@@ -341,6 +342,7 @@
 					/obj/item/clothing/under/rank/civilian/lawyer/black/skirt = 1,
 					/obj/item/clothing/shoes/laceup = 2,
 					/obj/item/clothing/shoes/laceup/digitigrade = 1,
+					/obj/item/clothing/suit/hooded/wintercoat/security/lawyer = 2, //Placed by fulp, by Homingpenguins
 					/obj/item/clothing/accessory/lawyers_badge = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/law_wardrobe
 	payment_department = ACCOUNT_CIV
@@ -396,6 +398,7 @@
 					/obj/item/storage/backpack/chemistry = 2,
 					/obj/item/storage/backpack/satchel/chem = 2,
 					/obj/item/clothing/shoes/sneakers/brown/digitigrade = 1,
+					/obj/item/clothing/suit/hooded/wintercoat/medical/chem = 2, //Placed by fulp, by Homingpenguins
 					/obj/item/storage/bag/chemistry = 2)
 	contraband = list(/obj/item/reagent_containers/spray/syndicate = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/chem_wardrobe
@@ -415,6 +418,7 @@
 					/obj/item/clothing/suit/toggle/labcoat/genetics = 2,
 					/obj/item/storage/backpack/genetics = 2,
 					/obj/item/clothing/shoes/sneakers/brown/digitigrade = 1,
+					/obj/item/clothing/suit/hooded/wintercoat/medical/gen = 2, //Placed by fulp, by Homingpenguins
 					/obj/item/storage/backpack/satchel/gen = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/gene_wardrobe
 	payment_department = ACCOUNT_MED
