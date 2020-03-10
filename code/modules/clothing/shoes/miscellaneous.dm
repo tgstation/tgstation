@@ -128,7 +128,7 @@
 
 /obj/item/clothing/shoes/jackboots/vpndet
 	name = "police nationale service shoes"
-	desc = "Walk in the footsteps of those who came before."
+	desc = "Marchons, marchons ! Qu'un sang impur abreuve nos sillons !"
 	icon_state = "vpndet"
 	item_state = "vpndet"
 
