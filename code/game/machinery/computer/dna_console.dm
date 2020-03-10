@@ -421,7 +421,7 @@
 	*/
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "scan_consolenew", name, 400, 800, master_ui, state)
+		ui = new(user, src, ui_key, "scan_consolenew", name, 600, 800, master_ui, state)
 		ui.open()
 	//popup.set_content(temp_html.Join())
 	//popup.open()
@@ -448,6 +448,31 @@
 	data["UNCONSCIOUS"] = UNCONSCIOUS
 
 	return data
+
+/obj/machinery/computer/scan_consolenew/ui_act(action, params)
+	if(..())
+		return
+
+	add_fingerprint(usr)
+	usr.set_machine(src)
+
+	var/mob/living/carbon/viable_occupant = get_viable_occupant()
+
+
+	switch(action)
+		if("toggle_door")
+			if(connected)
+				connected.toggle_open(usr)
+		if("toggle_lock")
+			if(connected)
+				connected.locked = !connected.locked
+		if("scramble_dna")
+			if(viable_occupant && (scrambleready < world.time))
+				viable_occupant.dna.remove_all_mutations(list(MUT_NORMAL, MUT_EXTRA))
+				viable_occupant.dna.generate_dna_blocks()
+				scrambleready = world.time + SCRAMBLE_TIMEOUT
+				to_chat(usr,"<span class'notice'>DNA scrambled.</span>")
+				viable_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER*50/(connected.damage_coeff ** 2)
 
 /obj/machinery/computer/scan_consolenew/proc/display_inactive_sequence(mutation)
 	var/temp_html = ""
@@ -597,12 +622,12 @@
 	var/num = round(text2num(href_list["num"]))
 	var/last_change
 	switch(href_list["task"])
-		if("togglelock")
+		/*if("togglelock")
 			if(connected)
 				connected.locked = !connected.locked
 		if("toggleopen")
 			if(connected)
-				connected.toggle_open(usr)
+				connected.toggle_open(usr)*/
 		if("setduration")
 			if(!num)
 				num = round(input(usr, "Choose pulse duration:", "Input an Integer", null) as num|null)
@@ -615,13 +640,13 @@
 				radstrength = WRAP(num, 1, RADIATION_STRENGTH_MAX+1)
 		if("screen")
 			current_screen = href_list["text"]
-		if("scramble")
+		/*if("scramble")
 			if(viable_occupant && (scrambleready < world.time))
 				viable_occupant.dna.remove_all_mutations(list(MUT_NORMAL, MUT_EXTRA))
 				viable_occupant.dna.generate_dna_blocks()
 				scrambleready = world.time + SCRAMBLE_TIMEOUT
 				to_chat(usr,"<span class'notice'>DNA scrambled.</span>")
-				viable_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER*50/(connected.damage_coeff ** 2)
+				viable_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER*50/(connected.damage_coeff ** 2)*/
 
 		if("setbufferlabel")
 			var/text = sanitize(input(usr, "Input a new label:", "Input a Text", null) as text|null)

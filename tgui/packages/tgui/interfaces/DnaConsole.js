@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
 import { Fragment } from 'inferno';
-import { Section, Box, LabeledList, ProgressBar } from '../components';
+import { Section, Box, LabeledList, ProgressBar, Grid, Button } from '../components';
 
 export const DnaConsole = props => {
   const { act, data } = useBackend(props);
@@ -90,6 +90,38 @@ export const DnaConsole = props => {
                   </LabeledList.Item>
                 )}
             </LabeledList>
+          </Box>
+        </Section>
+        <Section
+          title="Commands"
+          textAlign="left">
+          <Box m={1}>
+            <Button
+              disabled={!data.IsScannerConnected}
+              content={data.IsScannerConnected
+                ? (data.ScannerOpen
+                  ? ("Close Scanner")
+                  : ("Open Scanner"))
+                : ("No Scanner")}
+              onClick={() => {
+                act("toggle_door");
+              }} />
+            <Button
+              disabled={!data.IsScannerConnected || data.ScannerOpen}
+              content={data.IsScannerConnected
+                ? (data.ScannerLocked
+                  ? ("Unlock Scanner")
+                  : ("Lock Scanner"))
+                : ("No Scanner")}
+              onClick={() => {
+                act("toggle_lock");
+              }} />
+            <Button
+              disabled={!data.IsScannerConnected || !data.IsViableSubject}
+              content={"Scramble DNA"}
+              onClick={() => {
+                act("scramble_dna");
+              }} />
           </Box>
         </Section>
       </Box>
