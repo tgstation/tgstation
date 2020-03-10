@@ -1,0 +1,4 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - bugfix: "Fixed ability to escape any sanitized string in goonchat"
