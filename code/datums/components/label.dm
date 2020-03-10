@@ -33,7 +33,7 @@
 	Since the parent already has a label, it will remove the old one from the parent's name, and apply the new one.
 */
 /datum/component/label/InheritComponent(datum/component/label/new_comp , i_am_original, _label_name)
-	removel_label()
+	remove_label()
 	if(new_comp)
 		label_name = new_comp.label_name
 	else
@@ -58,7 +58,7 @@
 	if(!istype(labeler) || labeler.mode)
 		return
 
-	removel_label()
+	remove_label()
 	playsound(parent, 'sound/items/poster_ripped.ogg', 20, TRUE)
 	to_chat(user, "<span class='warning'>You remove the label from [parent].</span>")
 	qdel(src) // Remove the component from the object.
@@ -81,7 +81,7 @@
 	owner.name += " ([label_name])"
 
 /// Removes the label from the parent's name
-/datum/component/label/proc/removel_label()
+/datum/component/label/proc/remove_label()
 	var/atom/owner = parent
 	owner.name = replacetext(owner.name, "([label_name])", "") // Remove the label text from the parent's name, wherever it's located.
 	owner.name = trim(owner.name) // Shave off any white space from the beginning or end of the parent's name.
