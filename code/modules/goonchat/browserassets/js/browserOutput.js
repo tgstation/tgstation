@@ -202,10 +202,6 @@ function getTextNodes(elem, pattern) {
 
 // Highlight all text terms matching the registered regex patterns
 function highlightTerms(el) {
-	if (!opts || !opts.highlightTerms || opts.highlightTerms.length == 0) {
-		return;
-	}
-
 	var pattern = new RegExp("(" + opts.highlightTerms.join('|') + ")", 'gi');
 	var nodes = getTextNodes(el, pattern);
 
