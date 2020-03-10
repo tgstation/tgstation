@@ -75,7 +75,9 @@
 /area/security/prison/toilet)
 "aak" = (
 /obj/structure/toilet{
-	dir = 4
+	cistern = 1;
+	dir = 4;
+	icon_state = "toilet01"
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -14742,6 +14744,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/item/storage/bag/trash,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aGK" = (

@@ -1,4 +1,0 @@
-author: "emptyexpression"
-delete-after: True
-changes: 
-  - rscadd: "Added simple indicator for incomplete DNA blocks"
