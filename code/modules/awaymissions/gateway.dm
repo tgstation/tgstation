@@ -134,7 +134,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 /obj/machinery/gateway
 	name = "gateway"
 	desc = "A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations."
-	icon = 'icons/obj/machines/gateway2.dmi'
+	icon = 'icons/obj/machines/gateway.dmi'
 	icon_state = "off"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/calibrated = TRUE
