@@ -967,8 +967,15 @@
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
 	if(pulling == target && grab_state >= GRAB_AGGRESSIVE && stat == CONSCIOUS)
+		if(check_zone(user.zone_selected))
+			visible_message("<span class='notice'>[src] starts cock-voring [target]!</span>")
+			target.say("NOOOO! HELP ME!!")
+			if(do_after(src, 50, TRUE, target))
+				target.say("AAAAAAAAAAAAAAAAAAAA!!")
+				visible_message("<span class='notice'>[target] is sucked into [src]'s cock, instantly killing them!</span>")
+				target.gib(null, null, TRUE, TRUE)
 		//If they dragged themselves and we're currently aggressively grabbing them try to piggyback
-		if(user == target && can_piggyback(target))
+		else if(user == target && can_piggyback(target))
 			piggyback(target)
 			return
 		//If you dragged them to you and you're aggressively grabbing try to fireman carry them
