@@ -1,5 +1,6 @@
 /datum/round_event_control/halloween_costumes
 	name = "Halloween Costume Drop"
+	holidayID = HALLOWEEN
 	typepath = /datum/round_event/halloween_costumes
 	weight = 80 //super likely to happen
 	min_players = 1
