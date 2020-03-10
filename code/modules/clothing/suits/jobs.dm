@@ -74,6 +74,19 @@
 	icon_state = "greydet"
 	item_state = "greydet"
 
+/obj/item/clothing/suit/hooded/cloak/goliath/vpndet
+	name = "police nationale winter cloak"
+	desc = "A stylish police cloak."
+	icon_state = "vpndet"
+	item_state = "vpndet"
+	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath/vpndet
+
+/obj/item/clothing/head/hooded/cloakhood/goliath/vpndet
+	name = "police nationale cloak hood"
+	icon_state = "vpnhood"
+	desc = "A stylish police hood."
+
+
 //Engineering
 /obj/item/clothing/suit/hazardvest
 	name = "hazard vest"

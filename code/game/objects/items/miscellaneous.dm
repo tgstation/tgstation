@@ -148,9 +148,9 @@
 /obj/item/storage/box/detective/vnp/PopulateContents()
 	new /obj/item/clothing/under/rank/security/detective/vpndet(src)
 	new /obj/item/clothing/head/vpndet(src)
-	new /obj/item/toy/crayon/spraycan(src)
 	new /obj/item/clothing/shoes/jackboots/vpndet(src)
 	new /obj/item/storage/belt/holster/detective/vpndet(src)
+	new /obj/item/clothing/suit/hooded/cloak/goliath/vpndet(src)
 
 /obj/item/choice_beacon/augments
 	name = "augment beacon"

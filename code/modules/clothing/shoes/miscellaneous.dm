@@ -127,7 +127,7 @@
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 
 /obj/item/clothing/shoes/jackboots/vpndet
-	name = "police nationale service boots"
+	name = "police nationale service shoes"
 	desc = "Walk in the footsteps of those who came before."
 	icon_state = "vpndet"
 	item_state = "vpndet"
