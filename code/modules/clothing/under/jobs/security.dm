@@ -108,12 +108,30 @@
 	sensor_mode = 3
 	random_sensor = FALSE
 
+/obj/item/clothing/under/rank/security/detective/skirt
+	name = "detective's suitskirt"
+	desc = "Someone who wears this means business."
+	icon_state = "detective_skirt"
+	item_state = "det"
+	body_parts_covered = CHEST|GROIN|ARMS
+	can_adjust = FALSE
+	fitted = FEMALE_UNIFORM_TOP
+
 /obj/item/clothing/under/rank/security/detective/grey
 	name = "noir suit"
 	desc = "A hard-boiled private investigator's grey suit, complete with tie clip."
 	icon_state = "greydet"
 	item_state = "greydet"
 	alt_covers_chest = TRUE
+
+/obj/item/clothing/under/rank/security/detective/grey/skirt
+	name = "noir suitskirt"
+	desc = "A hard-boiled private investigator's grey suitskirt, complete with tie clip."
+	icon_state = "greydet_skirt"
+	item_state = "greydet"
+	body_parts_covered = CHEST|GROIN|ARMS
+	can_adjust = FALSE
+	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/security/detective/vpndet
 	name = "police nationale patrolman uniform"

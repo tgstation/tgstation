@@ -136,10 +136,12 @@
 
 /obj/item/storage/box/detective/grey/PopulateContents()
 	new /obj/item/clothing/under/rank/security/detective/grey(src)
+	new /obj/item/clothing/under/rank/security/detective/grey/skirt(src)
 	new /obj/item/clothing/accessory/waistcoat(src)
 	new /obj/item/clothing/suit/det_suit/grey(src)
 	new /obj/item/clothing/head/fedora(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
+	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/storage/belt/holster/detective/full(src)
 
 /obj/item/storage/box/detective/vnp
