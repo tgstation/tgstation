@@ -178,7 +178,7 @@ function replaceRegex() {
 }
 
 // Get a highlight markup span
-function addHighlightMarkup() {
+function createHighlightMarkup() {
 	var extra = '';
 	if (opts.highlightColor) {
 		extra += ' style="background-color: ' + opts.highlightColor + '"';
@@ -214,7 +214,7 @@ function highlightTerms(el) {
 			// Get our highlighted span/text node
 			var toInsert = null;
 			if (pattern.test(chunk)) {
-				var tmpElem = $(addHighlightMarkup());
+				var tmpElem = $(createHighlightMarkup());
 				tmpElem.text(chunk);
 				toInsert = tmpElem;
 			}
