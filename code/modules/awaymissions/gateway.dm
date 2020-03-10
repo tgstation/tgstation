@@ -139,6 +139,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/calibrated = TRUE
 	var/destination_type = /datum/gateway_destination/gateway // Type of instanced gateway destination, needs to be subtype of /datum/gateway_destination/gateway
+	var/destination_name = "Unknown Gateway" // Name of the generated destination
 	var/datum/gateway_destination/gateway/destination // This is our own destination, pointing at this gateway
 	var/datum/gateway_destination/target // This is current active destination
 	var/obj/effect/gateway_portal_bumper/portal // bumper object, the thing that starts actual teleport
@@ -158,7 +159,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 /obj/machinery/gateway/proc/generate_destination()
 	destination = new destination_type
-	destination.name = name
+	destination.name = destination_name
 	destination.G = src
 	GLOB.gateway_destinations += destination
 
@@ -207,6 +208,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 /obj/machinery/gateway/centerstation
 	destination_type = /datum/gateway_destination/gateway/home
+	destination_name = "Home Gateway"
 
 /obj/machinery/gateway/centerstation/Initialize()
 	. = ..()
