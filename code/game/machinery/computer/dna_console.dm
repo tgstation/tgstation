@@ -64,6 +64,7 @@
 
 	var/is_scanner_connected = FALSE
 	var/is_viable_occupant = FALSE
+	var/is_scramble_ready = FALSE
 	var/obj/machinery/dna_scannernew/connected_scanner = null
 	var/mob/living/carbon/scanner_occupant = null
 	var/mob/living/carbon/check_occupant = null
@@ -154,6 +155,8 @@
 		connected_scanner = null
 		is_viable_occupant = FALSE
 		scanner_occupant = null
+
+	is_scramble_ready = (scrambleready < world.time)
 
 	/*var/list/status = list("<div class='statusDisplay'>")
 	status += "<div class='line'><div class='statusLabel'>Scanner:</div><div class='statusValue'>[scanner_status]</div></div>"
@@ -443,6 +446,8 @@
 		data["SubjectHealth"] = scanner_occupant.health
 		data["SubjectRads"] = scanner_occupant.radiation/(RAD_MOB_SAFE/100)
 		data["SubjectEnzymes"] = scanner_occupant.dna.unique_enzymes
+
+	data["IsScrambleReady"] = is_scramble_ready
 
 	data["CONSCIOUS"] = CONSCIOUS
 	data["UNCONSCIOUS"] = UNCONSCIOUS

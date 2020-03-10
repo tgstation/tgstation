@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
 import { Fragment } from 'inferno';
-import { Section, Box, LabeledList, ProgressBar, Grid, Button } from '../components';
+import { Section, Box, LabeledList, ProgressBar, Grid, Button, Tabs } from '../components';
 
 export const DnaConsole = props => {
   const { act, data } = useBackend(props);
@@ -77,7 +77,7 @@ export const DnaConsole = props => {
                           good: [0, 30],
                           olive: [-Infinity, 0],
                         }}>
-                        {data.SubjectRads}
+                        {data.SubjectRads}%
                       </ProgressBar>
                     </LabeledList.Item>
                     <LabeledList.Item label="Unique Enzymes">
@@ -97,7 +97,7 @@ export const DnaConsole = props => {
           textAlign="left">
           <Box m={1}>
             <Button
-              disabled={!data.IsScannerConnected}
+              disabled={!data.IsScannerConnected | data.ScannerLocked}
               content={data.IsScannerConnected
                 ? (data.ScannerOpen
                   ? ("Close Scanner")
@@ -117,13 +117,32 @@ export const DnaConsole = props => {
                 act("toggle_lock");
               }} />
             <Button
-              disabled={!data.IsScannerConnected || !data.IsViableSubject}
+              disabled={!data.IsScannerConnected
+                || !data.IsViableSubject
+                || !data.IsScrambleReady}
               content={"Scramble DNA"}
               onClick={() => {
                 act("scramble_dna");
               }} />
           </Box>
         </Section>
+        <Tabs vertical>
+          <Tabs.Tab
+            label="Mutations">
+          </Tabs.Tab>
+          <Tabs.Tab
+            label="Genetic Sequencer">
+          </Tabs.Tab>
+          <Tabs.Tab
+            label="Unique Identifiers">
+          </Tabs.Tab>
+          <Tabs.Tab
+            label="Advanced Injectors">
+          </Tabs.Tab>
+          <Tabs.Tab
+            label="Disk">
+          </Tabs.Tab>
+        </Tabs>
       </Box>
     </Section>
   );
