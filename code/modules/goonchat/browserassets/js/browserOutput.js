@@ -79,12 +79,6 @@ function clamp(val, min, max) {
 	return Math.max(min, Math.min(val, max))
 }
 
-function outerHTML(el) {
-    var wrap = document.createElement('div');
-    wrap.appendChild(el.cloneNode(true));
-    return wrap.innerHTML;
-}
-
 //Polyfill for fucking date now because of course IE8 and below don't support it
 if (!Date.now) {
 	Date.now = function now() {
@@ -183,57 +177,66 @@ function replaceRegex() {
 	$(this).removeAttr('replaceRegex');
 }
 
-//Actually turns the highlight term match into appropriate html
-function addHighlightMarkup(match) {
+// Get a highlight markup span
+function addHighlightMarkup() {
 	var extra = '';
 	if (opts.highlightColor) {
-		extra += ' style="background-color: '+opts.highlightColor+'"';
+		extra += ' style="background-color: ' + opts.highlightColor + '"';
 	}
-	return '<span class="highlight"'+extra+'>'+match+'</span>';
+	return '<span class="highlight"' + extra + '></span>';
 }
 
-//Highlights words based on user settings
+// Get all child text nodes that match a regex pattern
+function getTextNodes(elem, pattern) {
+	var result = $([]);
+	$(elem).contents().each(function(idx, child) {
+		if (child.nodeType === 3 && /\S/.test(child.nodeValue) && pattern.test(child.nodeValue)) {
+			result = result.add(child);
+		}
+		else {
+			result = result.add(getTextNodes(child, pattern));
+		}
+	});
+	return result;
+}
+
+// Highlight all text terms matching the registered regex patterns
 function highlightTerms(el) {
-	if (el.children.length > 0) {
-		for(var h = 0; h < el.children.length; h++){
-			highlightTerms(el.children[h]);
-		}
+	if (!opts || !opts.highlightTerms || opts.highlightTerms.length == 0) {
+		return;
 	}
 
-	var hasTextNode = false;
-	for (var node = 0; node < el.childNodes.length; node++)
-	{
-		if (el.childNodes[node].nodeType === 3)
-		{
-			hasTextNode = true;
-			break;
-		}
-	}
+	var pattern = new RegExp("(" + opts.highlightTerms.join('|') + ")", 'gi');
+	var nodes = getTextNodes(el, pattern);
 
-	if (hasTextNode) { //If element actually has text
-		var newText = '';
-		for (var c = 0; c < el.childNodes.length; c++) { //Each child element
-			if (el.childNodes[c].nodeType === 3) { //Is it text only?
-				var words = el.childNodes[c].data.split(' ');
-				for (var w = 0; w < words.length; w++) { //Each word in the text
-					var newWord = null;
-					for (var i = 0; i < opts.highlightTerms.length; i++) { //Each highlight term
-						if (opts.highlightTerms[i] && words[w].toLowerCase().indexOf(opts.highlightTerms[i].toLowerCase()) > -1) { //If a match is found
-							newWord = words[w].replace("<", "&lt;").replace(new RegExp(opts.highlightTerms[i], 'gi'), addHighlightMarkup);
-							break;
-						}
-						if (window.console)
-							console.log(newWord)
-					}
-					newText += newWord || words[w].replace("<", "&lt;");
-					newText += w >= words.length ? '' : ' ';
-				}
-			} else { //Every other type of element
-				newText += outerHTML(el.childNodes[c]);
+	nodes.each(function (idx, node) {
+		var content = $(node).text();
+		var parent = $(node).parent();
+		var pre = $(node.previousSibling);
+		$(node).remove();
+		content.split(pattern).forEach(function (chunk) {
+			// Get our highlighted span/text node
+			var toInsert = null;
+			if (pattern.test(chunk)) {
+				var tmpElem = $(addHighlightMarkup());
+				tmpElem.text(chunk);
+				toInsert = tmpElem;
 			}
-		}
-		el.innerHTML = newText;
-	}
+			else {
+				toInsert = document.createTextNode(chunk);
+			}
+
+			// Insert back into our element
+			if (pre.length == 0) {
+				var result = parent.prepend(toInsert);
+				pre = $(result[0].firstChild);
+			}
+			else {
+				pre.after(toInsert);
+				pre = $(pre[0].nextSibling);
+			}
+		});
+	});
 }
 
 function iconError(E) {
@@ -421,7 +424,7 @@ function output(message, flag) {
 		//Actually do the snap
 		//Stuff we can do after the message shows can go here, in the interests of responsiveness
 		if (opts.highlightTerms && opts.highlightTerms.length > 0) {
-			highlightTerms(entry);
+			highlightTerms($(entry));
 		}
 	}
 
