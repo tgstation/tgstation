@@ -80,11 +80,15 @@
 	icon_state = "vpndet"
 	item_state = "vpndet"
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath/vpndet
+	armor = list("melee" = 25, "bullet" = 10, "laser" = 25, "energy" = 35, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
+	cold_protection = CHEST|GROIN|ARMS
+	heat_protection = CHEST|GROIN|ARMS
 
 /obj/item/clothing/head/hooded/cloakhood/goliath/vpndet
 	name = "police nationale cloak hood"
 	icon_state = "vpnhood"
 	desc = "A stylish police hood."
+	armor = list("melee" = 25, "bullet" = 5, "laser" = 25, "energy" = 35, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 50)
 
 
 //Engineering
