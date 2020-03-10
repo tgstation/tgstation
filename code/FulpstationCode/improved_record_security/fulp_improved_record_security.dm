@@ -1,3 +1,15 @@
+/mob/living/simple_animal/bot/secbot/proc/fulp_threat_assess_carbon_filter(mob/living/carbon/C, judgement_criteria) //We check whether the target is carbon and threat assess appropriately
+	if(!C) //Sanity
+		return
+
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		threatlevel = H.assess_threat_fulp(judgement_criteria, src, FALSE, null, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
+		return
+
+	threatlevel = C.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
+
+
 
 /mob/living/simple_animal/bot/secbot/proc/arrest_security_record(mob/living/carbon/C, arrest_type, threat, location)
 
@@ -52,19 +64,18 @@
 	while(active2.fields[text("com_[]", counter)])
 		counter++
 
-	var/unknown = "NO"
-	if(C.check_unknown())
-		unknown = "YES"
-
-	var/weapons = "NO"
-	if(C.check_unauthorized_weapons(weaponcheck=CALLBACK(S, /mob/living/simple_animal/bot/secbot.proc/check_for_weapons)))
-		weapons = "YES"
-
 	var/t1 = "<b>[bot_authenticated] [arrest_type ? "Detained" : "Arrested"]:</b> [C.name], [assignment] <b>LOCATION:</b> [location]. <BR>\
-			<b>STATUS:</b> [active2.fields["criminal"]] <b>CONCEALED IDENTITY?:</b> [unknown]. <b>UNAUTHORIZED WEAPONS?:</b> [weapons]. <b>THREAT LEVEL:</b> [threat]."
+			<b>STATUS AT TIME OF ARREST:</b> [active2.fields["criminal"]] <b>THREAT LEVEL:</b> [threat].<BR>\
+			<b>WEAPON VIOLATION:</b> [S.weapons_violation ? "[S.weapons_violation]" : "N/A"] <BR>\
+			<b>SECBOT RETALIATION?</b> [S.harm_violation ? "TRUE" : "FALSE"] <b>ARRESTED FOR NO ID?</b> [S.id_violation ? "TRUE" : "FALSE"]"
 
 	active2.fields[text("com_[]", counter)] = text("<b>Made by [] ([]) on [] [], []</b><BR>[]", bot_authenticated, bot_rank, station_time_timestamp(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
 
+	//RESET VIOLATIONS
+	S.weapons_violation = null
+	S.harm_violation = null
+	S.id_violation = null
+	S.record_violation = null
 
 /mob/living/carbon/proc/check_unknown()
 	var/obj/item/card/id/idcard = get_idcard(FALSE)

@@ -175,7 +175,7 @@ Auto Patrol: []"},
 
 /mob/living/simple_animal/bot/secbot/proc/retaliate(mob/living/carbon/human/H)
 	var/judgement_criteria = judgement_criteria()
-	threatlevel = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
+	threatlevel = H.assess_threat_fulp(judgement_criteria, src, TRUE, null, weaponcheck=CALLBACK(src, .proc/check_for_weapons)) //FULPSTATION SECBOT FEEDBACK PR -Surrealistik Feb 2020
 	threatlevel += 6
 	if(threatlevel >= 4)
 		target = H
@@ -284,7 +284,7 @@ Auto Patrol: []"},
 		C.stuttering = 5
 		C.Paralyze(100)
 		var/mob/living/carbon/human/H = C
-		threat = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
+		threat = H.assess_threat_fulp(judgement_criteria, src, FALSE, null, weaponcheck=CALLBACK(src, .proc/check_for_weapons)) //FULPSTATION SECBOT FEEDBACK PR -Surrealistik Feb 2020
 	else
 		C.Paralyze(100)
 		C.stuttering = 5
@@ -416,7 +416,7 @@ Auto Patrol: []"},
 		if((C.name == oldtarget_name) && (world.time < last_found + 100))
 			continue
 
-		threatlevel = C.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
+		fulp_threat_assess_carbon_filter(C, judgement_criteria) //FULPSTATION SECBOT FEEDBACK PR -Surrealistik Feb 2020
 
 		if(!threatlevel)
 			continue
@@ -441,7 +441,7 @@ Auto Patrol: []"},
 
 /mob/living/simple_animal/bot/secbot/proc/check_for_weapons(var/obj/item/slot_item)
 	if(slot_item && (slot_item.item_flags & NEEDS_PERMIT))
-		return TRUE
+		return slot_item //FULPSTATION SECBOT FEEDBACK PR -Surrealistik Feb 2020
 	return FALSE
 
 /mob/living/simple_animal/bot/secbot/explode()

@@ -47,6 +47,11 @@
 
 /mob/living/simple_animal/bot/secbot
 	var/list/arrest_cooldown = list() //If you're in the list, we don't log the arrest
+	var/weapons_violation //Violation data for records/reporting
+	var/id_violation
+	var/record_violation
+	var/harm_violation
+
 
 //*************************************************************************
 //** FULPSTATION IMPROVED RECORD SECURITY PR -Surrealistik Oct 2019 ENDS
