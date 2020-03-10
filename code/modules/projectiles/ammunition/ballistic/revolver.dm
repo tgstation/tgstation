@@ -43,4 +43,4 @@
 	name = "8mm French Ordnance cartridge"
 	desc = "A 8mm French Ordnance cartridge"
 	caliber = "8"
-	projectile_type = /obj/projectile/bullet/fo8
+	projectile_type = /obj/projectile/bullet/c38/fo8
