@@ -229,13 +229,22 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 /////////////////////////////////////Away////////////////////////
 
 
+//Doesn't need control console or power, always links to home when interacting.
 /obj/machinery/gateway/away
 	density = TRUE
 	use_power = NO_POWER_USE
 
-//TODO make this work by autolinking to home even without control console
-/obj/machinery/gateway/away/admin
-	desc = "A mysterious gateway built by unknown hands, this one seems more compact."
+/obj/machinery/gateway/away/interact(mob/user, special_state)
+	. = ..()
+	if(!target)
+		if(!GLOB.the_gateway)
+			to_chat(user,"<span class='warning'>Home gateway is not responding!</span>")
+		if(GLOB.the_gateway.target)
+			to_chat(user,"<span class='warning'>Home gateway already in use!</span>")
+			return
+		activate(GLOB.the_gateway.destination)
+	else
+		deactivate()
 
 /obj/machinery/computer/gateway_control
 	name = "Gateway Control"
