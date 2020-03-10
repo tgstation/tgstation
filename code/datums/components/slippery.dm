@@ -21,5 +21,5 @@
 
 
 /datum/component/slippery/proc/Slip_on_wearer(datum/source, atom/movable/AM, mob/living/crossed)
-	if(crossed.lying && !crossed.buckle_lying)
+	if(!(crossed.mobility_flags & MOBILITY_STAND) && !crossed.buckle_lying)
 		Slip(source, AM)
