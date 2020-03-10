@@ -17,6 +17,7 @@ import { BrigTimer } from './interfaces/BrigTimer';
 import { Canister } from './interfaces/Canister';
 import { Canvas } from './interfaces/Canvas';
 import { Cargo, CargoExpress } from './interfaces/Cargo';
+import { CargoHoldTerminal } from './interfaces/CargoHoldTerminal';
 import { CellularEmporium } from './interfaces/CellularEmporium';
 import { CentcomPodLauncher } from './interfaces/CentcomPodLauncher';
 import { ChemAcclimator } from './interfaces/ChemAcclimator';
@@ -206,6 +207,10 @@ const ROUTES = {
   },
   cargo_express: {
     component: () => CargoExpress,
+    scrollable: true,
+  },
+  cargo_hold_terminal: {
+    component: () => CargoHoldTerminal,
     scrollable: true,
   },
   cellular_emporium: {
