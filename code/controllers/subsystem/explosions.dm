@@ -69,14 +69,51 @@ SUBSYSTEM_DEF(explosions)
 	if(lowturf.len || medturf.len || highturf.len || lowobj.len || medobj.len || highobj.len)
 		. = TRUE
 
+
 /datum/controller/subsystem/explosions/fire(resumed = 0)
 	var/timer = TICK_USAGE_REAL
 	if(currentpart == SSEXPLOSIONS_TURFS)
-		process_explosions(SSEX_TURF, SSEX_LOW, resumed)
+		src.currentrun = lowturf.Copy()
+		//cache for sanic speed (lists are references anyways)
+		var/list/currentrun = src.currentrun
+		while(currentrun.len)
+			var/atom/thing = currentrun[currentrun.len]
+			currentrun.len--
+			if(thing)
+				var/turf/T = thing
+				T.explosion_level = max(T.explosion_level, EXPLODE_LIGHT)
+				T.ex_act(EXPLODE_LIGHT)
+				lowturf.Remove(thing)
+			else
+				lowturf.Remove(thing)
 		cost_lowturf = MC_AVERAGE(cost_lowturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		process_explosions(SSEX_TURF, SSEX_MED, resumed)
+		src.currentrun = medturf.Copy()
+		//cache for sanic speed (lists are references anyways)
+		currentrun = src.currentrun
+		while(currentrun.len)
+			var/atom/thing = currentrun[currentrun.len]
+			currentrun.len--
+			if(thing)
+				var/turf/T = thing
+				T.explosion_level = max(T.explosion_level, EXPLODE_HEAVY)
+				T.ex_act(EXPLODE_HEAVY)
+				medturf.Remove(thing)
+			else
+				medturf.Remove(thing)
 		cost_medturf = MC_AVERAGE(cost_medturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		process_explosions(SSEX_TURF, SSEX_HIGH, resumed)
+		src.currentrun = highturf.Copy()
+		//cache for sanic speed (lists are references anyways)
+		currentrun = src.currentrun
+		while(currentrun.len)
+			var/atom/thing = currentrun[currentrun.len]
+			currentrun.len--
+			if(thing)
+				var/turf/T = thing
+				T.explosion_level = max(T.explosion_level, EXPLODE_DEVASTATE)
+				T.ex_act(EXPLODE_DEVASTATE)
+				highturf.Remove(thing)
+			else
+				highturf.Remove(thing)
 		cost_highturf = MC_AVERAGE(cost_highturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 
@@ -86,94 +123,47 @@ SUBSYSTEM_DEF(explosions)
 		currentpart = SSEXPLOSIONS_OBJECTS
 
 	if(currentpart == SSEXPLOSIONS_OBJECTS)
-		process_explosions(SSEX_OBJ, SSEX_HIGH, resumed)
+		src.currentrun = highobj.Copy()
+		//cache for sanic speed (lists are references anyways)
+		var/list/currentrun = src.currentrun
+		while(currentrun.len)
+			var/atom/thing = currentrun[currentrun.len]
+			currentrun.len--
+			if(thing)
+				var/obj/O = thing
+				O.ex_act(EXPLODE_DEVASTATE)
+				highobj.Remove(thing)
+			else
+				highobj.Remove(thing)
 		cost_highobj = MC_AVERAGE(cost_highobj, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		process_explosions(SSEX_OBJ, SSEX_MED, resumed)
+		src.currentrun = medobj.Copy()
+		//cache for sanic speed (lists are references anyways)
+		currentrun = src.currentrun
+		while(currentrun.len)
+			var/atom/thing = currentrun[currentrun.len]
+			currentrun.len--
+			if(thing)
+				var/obj/O = thing
+				O.ex_act(EXPLODE_HEAVY)
+				medobj.Remove(thing)
+			else
+				medobj.Remove(thing)
 		cost_medobj = MC_AVERAGE(cost_medobj, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		process_explosions(SSEX_OBJ, SSEX_LOW, resumed)
+		src.currentrun = lowobj.Copy()
+		//cache for sanic speed (lists are references anyways)
+		currentrun = src.currentrun
+		while(currentrun.len)
+			var/atom/thing = currentrun[currentrun.len]
+			currentrun.len--
+			if(thing)
+				var/obj/O = thing
+				O.ex_act(EXPLODE_LIGHT)
+				lowobj.Remove(thing)
+			else
+				lowobj.Remove(thing)
 		cost_lowobj = MC_AVERAGE(cost_lowobj, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-
-
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSEXPLOSIONS_TURFS
 	currentpart = SSEXPLOSIONS_TURFS
-
-/datum/controller/subsystem/explosions/proc/remove_from_lists(atom_to_remove, type_of_atom, level)
-	switch(type_of_atom)
-		if(SSEX_TURF)
-			switch(level)
-				if(SSEX_LOW)
-					lowturf.Remove(atom_to_remove)
-				if(SSEX_MED)
-					medturf.Remove(atom_to_remove)
-				if(SSEX_HIGH)
-					highturf.Remove(atom_to_remove)
-		if(SSEX_OBJ)
-			switch(level)
-				if(SSEX_LOW)
-					lowobj.Remove(atom_to_remove)
-				if(SSEX_MED)
-					medobj.Remove(atom_to_remove)
-				if(SSEX_HIGH)
-					highobj.Remove(atom_to_remove)
-
-
-/datum/controller/subsystem/explosions/proc/process_explosions(ex_type, level, resumed = 0)
-	if (!resumed)
-		switch(ex_type)
-			if(SSEX_TURF)
-				switch(level)
-					if(SSEX_LOW)
-						src.currentrun = lowturf.Copy()
-					if(SSEX_MED)
-						src.currentrun = medturf.Copy()
-					if(SSEX_HIGH)
-						src.currentrun = highturf.Copy()
-			if(SSEX_OBJ)
-				switch(level)
-					if(SSEX_LOW)
-						src.currentrun = lowobj.Copy()
-					if(SSEX_MED)
-						src.currentrun = medobj.Copy()
-					if(SSEX_HIGH)
-						src.currentrun = highobj.Copy()
-	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
-	while(currentrun.len)
-		var/turf/thing = currentrun[currentrun.len]
-		currentrun.len--
-		if(thing)
-			explode_thing(thing, ex_type, level)
-			remove_from_lists(thing, ex_type, level)
-		else
-			remove_from_lists(thing, ex_type, level)
-		if(ex_type == SSEX_OBJ)
-			if(MC_TICK_CHECK)
-				return
-
-
-/datum/controller/subsystem/explosions/proc/explode_thing(atom_to_explode, ex_type, level)
-	switch(ex_type)
-		if(SSEX_TURF)
-			var/turf/T = atom_to_explode
-			switch(level)
-				if(SSEX_LOW)
-					T.explosion_level = max(T.explosion_level, EXPLODE_LIGHT)
-					T.ex_act(EXPLODE_LIGHT)
-				if(SSEX_MED)
-					T.explosion_level = max(T.explosion_level, EXPLODE_HEAVY)
-					T.ex_act(EXPLODE_HEAVY)
-				if(SSEX_HIGH)
-					T.explosion_level = max(T.explosion_level, EXPLODE_DEVASTATE)
-					T.ex_act(EXPLODE_DEVASTATE)
-		if(SSEX_OBJ)
-			var/obj/O = atom_to_explode
-			switch(level)
-				if(SSEX_LOW)
-					O.ex_act(EXPLODE_LIGHT)
-				if(SSEX_MED)
-					O.ex_act(EXPLODE_HEAVY)
-				if(SSEX_HIGH)
-					O.ex_act(EXPLODE_DEVASTATE)
