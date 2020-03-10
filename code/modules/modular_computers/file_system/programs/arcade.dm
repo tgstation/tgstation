@@ -94,7 +94,7 @@
 	data["BossID"] = "boss[boss_id].gif"
 	return data
 
-/datum/computer_file/program/arcade/ui_act(action, list/params, mob/user)
+/datum/computer_file/program/arcade/ui_act(action, list/params)
 	if(..())
 		return TRUE
 	var/obj/item/computer_hardware/printer/printer
