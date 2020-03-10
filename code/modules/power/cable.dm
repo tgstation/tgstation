@@ -434,6 +434,8 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	return TRUE
 
 /obj/item/stack/cable_coil/CtrlClick(mob/living/user)
+	if(loc!=user)
+		return ..()
 	if(!user)
 		return
 	var/list/layer_list = list(
