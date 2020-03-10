@@ -157,11 +157,11 @@
 				computer.visible_message("<span class='notice'>\The [computer] prints out paper.</span>")
 				if(ticket_count >= 1)
 					new /obj/item/stack/arcadeticket((get_turf(computer)), 1)
-					to_chat(user, "<span class='notice'>[src] dispenses a ticket!</span>")
+					to_chat(usr, "<span class='notice'>[src] dispenses a ticket!</span>")
 					ticket_count -= 1
 					printer.stored_paper -= 1
 				else
-					to_chat(user, "<span class='notice'>You don't have any stored tickets!</span>")
+					to_chat(usr, "<span class='notice'>You don't have any stored tickets!</span>")
 				return TRUE
 		if("Start_Game")
 			game_active = TRUE
