@@ -250,7 +250,12 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 /obj/machinery/computer/gateway_control
 	name = "Gateway Control"
+	desc = "Human friendly interface to the mysterious gate next to it."
 	var/obj/machinery/gateway/G
+
+/obj/machinery/computer/gateway_control/Initialize(mapload, obj/item/circuitboard/C)
+	. = ..()
+	try_to_linkup()
 
 /obj/machinery/computer/gateway_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state = GLOB.default_state)
 	. = ..()
