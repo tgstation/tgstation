@@ -1,4 +1,0 @@
-author: "Arkatos and actionninja"
-delete-after: True
-changes: 
-  - rscadd: "AI system integrity restorer now uses tgui."
