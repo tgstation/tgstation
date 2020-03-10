@@ -9,7 +9,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/fo8/sec
-	id = "fo8"
+	id = "sec_fo8"
 	build_type = PROTOLATHE
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
