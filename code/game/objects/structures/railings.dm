@@ -13,6 +13,7 @@
 	climbable = FALSE
 
 /obj/structure/railing/attackby(obj/item/I, mob/living/user, params)
+	..()
 	add_fingerprint(user)
 
 	if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP)
@@ -53,8 +54,8 @@
 /obj/structure/railing/CheckExit(atom/movable/O, turf/target)
 	..()
 	if(get_dir(loc, target) & dir)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/structure/railing/corner/CheckExit()
-	return 1
+	return TRUE

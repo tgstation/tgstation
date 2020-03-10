@@ -93,22 +93,22 @@
 	return
 
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
-	if(owner && istype(owner) && (owner.dna.mutations.Remove(src)))
-		if(text_lose_indication && owner.stat != DEAD)
-			to_chat(owner, text_lose_indication)
-		if(visual_indicators.len)
-			var/list/mut_overlay = list()
-			if(owner.overlays_standing[layer_used])
-				mut_overlay = owner.overlays_standing[layer_used]
-			owner.remove_overlay(layer_used)
-			mut_overlay.Remove(get_visual_indicator())
-			owner.overlays_standing[layer_used] = mut_overlay
-			owner.apply_overlay(layer_used)
-		if(power)
-			owner.RemoveSpell(power)
-			qdel(src)
-		return 0
-	return 1
+	if(!istype(owner) || !(owner.dna.mutations.Remove(src)))
+		return TRUE
+	. = FALSE
+	if(text_lose_indication && owner.stat != DEAD)
+		to_chat(owner, text_lose_indication)
+	if(visual_indicators.len)
+		var/list/mut_overlay = list()
+		if(owner.overlays_standing[layer_used])
+			mut_overlay = owner.overlays_standing[layer_used]
+		owner.remove_overlay(layer_used)
+		mut_overlay.Remove(get_visual_indicator())
+		owner.overlays_standing[layer_used] = mut_overlay
+		owner.apply_overlay(layer_used)
+	if(power)
+		owner.RemoveSpell(power)
+		qdel(src)
 
 /mob/living/carbon/proc/update_mutations_overlay()
 	return
