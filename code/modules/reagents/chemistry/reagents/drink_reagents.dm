@@ -913,5 +913,4 @@
 	if(M.getToxLoss() && prob(30))
 		M.adjustToxLoss(-1, 0)
 	..()
-	. = 1
-
+	. = TRUE

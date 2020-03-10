@@ -317,7 +317,7 @@
 	. = ..()
 	if(M.stat == DEAD)
 		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.p_them()].</span>")
-		return
+		return FALSE
 	if(iscarbon(M))
 		return heal_carbon(M, user, heal, heal)
 	if(isanimal(M))
