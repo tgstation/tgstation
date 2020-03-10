@@ -293,7 +293,8 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 	if(GLOB.radial_menus[uniqueid])
 		if(!no_repeat_close)
-			GLOB.radial_menus[uniqueid].finished = TRUE
+			var/datum/radial_menu/menu = GLOB.radial_menus[uniqueid]
+			menu.finished = TRUE
 		return
 
 	var/datum/radial_menu/menu = new
