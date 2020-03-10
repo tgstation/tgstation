@@ -132,7 +132,7 @@
 
 /obj/item/gun/ballistic/revolver/detective/modele1892
 	name = "\improper Modèle 1892 revolver"
-	desc = "A french smokeless powder revolver produced by Manufacture d'armes de Saint-Étienne. Fires a special 8mm cartridge."
+	desc = "A French smokeless powder revolver produced by Manufacture d'armes de Saint-Étienne. Fires a special 8mm cartridge."
 	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
 	icon_state = "modele1892"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev8
