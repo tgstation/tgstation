@@ -19,7 +19,7 @@
 #define SCANNER_ACTION_MIXED 4
 
 /obj/machinery/computer/scan_consolenew
-	name = "\improper DNA scanner access console"
+	name = "scan_consolenew"
 	desc = "Scan DNA."
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
@@ -61,6 +61,12 @@
 	var/obj/machinery/dna_scannernew/connected = null
 	var/obj/item/disk/data/diskette = null
 	var/list/delayed_action = null
+
+	var/is_scanner_connected = FALSE
+	var/is_viable_occupant = FALSE
+	var/obj/machinery/dna_scannernew/connected_scanner = null
+	var/mob/living/carbon/scanner_occupant = null
+	var/mob/living/carbon/check_occupant = null
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/disk/data)) //INSERT SOME DISKETTES
@@ -123,63 +129,38 @@
 	else
 		. += "<span class='notice'>JOKER algorithm available in about [round(0.00166666667 * (jokerready - world.time))] minutes.</span>"
 
-/obj/machinery/computer/scan_consolenew/ui_interact(mob/user, last_change)
+/obj/machinery/computer/scan_consolenew/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	. = ..()
-	if(!user)
-		return
-	var/datum/browser/popup = new(user, "scannernew", "DNA Modifier Console", 800, 630) // Set up the popup browser window
-	if(user.client)
-		var/datum/asset/simple/assets =  get_asset_datum(/datum/asset/simple/genetics)
-		assets.send(user.client)
-	popup.add_stylesheet("scannernew", 'html/browser/scannernew.css')
 
-	var/mob/living/carbon/viable_occupant
-	var/list/occupant_status = list("<div class='line'><div class='statusLabel'>Subject Status:</div><div class='statusValue'>")
-	var/scanner_status
-	var/list/temp_html = list()
+	to_chat(usr,"<span class'notice'>Running UI Interact logic.</span>")
+
 	if(connected && connected.is_operational())
-		if(connected.occupant)	//set occupant_status message
-			viable_occupant = connected.occupant
-			if(viable_occupant.has_dna() && !HAS_TRAIT(viable_occupant, TRAIT_RADIMMUNE) && !HAS_TRAIT(viable_occupant, TRAIT_BADDNA) || (connected.scan_level == 3)) //occupant is viable for dna modification
-				occupant_status += "[viable_occupant.name] => "
-				switch(viable_occupant.stat)
-					if(CONSCIOUS)
-						occupant_status += "<span class='good'>Conscious</span>"
-					if(UNCONSCIOUS)
-						occupant_status += "<span class='average'>Unconscious</span>"
-					else
-						occupant_status += "<span class='bad'>DEAD</span>"
-				occupant_status += "</div></div>"
-				occupant_status += "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [viable_occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[viable_occupant.health] %</div></div>"
-				occupant_status += "<div class='line'><div class='statusLabel'>Radiation Level:</div><div class='progressBar'><div style='width: [viable_occupant.radiation/(RAD_MOB_SAFE/100)]%;' class='progressFill bad'></div></div><div class='statusValue'>[viable_occupant.radiation/(RAD_MOB_SAFE/100)] %</div></div>"
-				occupant_status += "<div class='line'><div class='statusLabel'>Unique Enzymes :</div><div class='statusValue'><span class='highlight'>[viable_occupant.dna.unique_enzymes]</span></div></div>"
-				occupant_status += "<div class='line'><div class='statusLabel'>Last Operation:</div><div class='statusValue'>[last_change ? last_change : "----"]</div></div>"
+		is_scanner_connected = TRUE
+		connected_scanner = connected
+		if(connected_scanner.occupant)	//set occupant_status message
+			check_occupant = connected_scanner.occupant
+			if(check_occupant.has_dna() && !HAS_TRAIT(check_occupant, TRAIT_RADIMMUNE) && !HAS_TRAIT(check_occupant, TRAIT_BADDNA) || (connected_scanner.scan_level == 3)) //occupant is viable for dna modification
+				is_viable_occupant = TRUE
+				scanner_occupant = check_occupant
 			else
-				viable_occupant = null
-				occupant_status += "<span class='bad'>Invalid DNA structure</span></div></div>"
+				is_viable_occupant = FALSE
+				scanner_occupant = null
 		else
-			occupant_status += "<span class='bad'>No subject detected</span></div></div>"
-
-		if(connected.state_open)
-			scanner_status = "Open"
-		else
-			scanner_status = "Closed"
-			if(connected.locked)
-				scanner_status += "<span class='bad'>(Locked)</span>"
-			else
-				scanner_status += "<span class='good'>(Unlocked)</span>"
-
+			is_viable_occupant = FALSE
+			scanner_occupant = null
 
 	else
-		occupant_status += "<span class='bad'>----</span></div></div>"
-		scanner_status += "<span class='bad'>Error: No scanner detected</span>"
+		is_scanner_connected = FALSE
+		connected_scanner = null
+		is_viable_occupant = FALSE
+		scanner_occupant = null
 
-	var/list/status = list("<div class='statusDisplay'>")
+	/*var/list/status = list("<div class='statusDisplay'>")
 	status += "<div class='line'><div class='statusLabel'>Scanner:</div><div class='statusValue'>[scanner_status]</div></div>"
-	status += occupant_status
+	status += occupant_status*/
 
 
-	status += "<div class='line'><h3>Radiation Emitter Status</h3></div>"
+	/*status += "<div class='line'><h3>Radiation Emitter Status</h3></div>"
 	var/stddev = radstrength*RADIATION_STRENGTH_MULTIPLIER
 	status += "<div class='line'><div class='statusLabel'>Output Level:</div><div class='statusValue'>[radstrength]</div></div>"
 	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Mutation:</div><div class='statusValue'>(-[stddev] to +[stddev] = 68 %) (-[2*stddev] to +[2*stddev] = 95 %)</div></div>"
@@ -437,9 +418,36 @@
 				temp_html += "</div><br>"
 			else
 				temp_html += "----------"
+	*/
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "scan_consolenew", name, 400, 800, master_ui, state)
+		ui.open()
+	//popup.set_content(temp_html.Join())
+	//popup.open()
 
-	popup.set_content(temp_html.Join())
-	popup.open()
+/obj/machinery/computer/scan_consolenew/ui_data(mob/user)
+	var/list/data = list()
+
+	to_chat(usr,"<span class'notice'>DNA Console data updated.</span>")
+
+	data["IsScannerConnected"] = is_scanner_connected
+	if(is_scanner_connected)
+		data["ScannerOpen"] = connected_scanner.state_open
+		data["ScannerLocked"] = connected_scanner.locked
+
+	data["IsViableSubject"] = is_viable_occupant
+	if(is_viable_occupant)
+		data["SubjectName"] = scanner_occupant.name
+		data["SubjectStatus"] = scanner_occupant.stat
+		data["SubjectHealth"] = scanner_occupant.health
+		data["SubjectRads"] = scanner_occupant.radiation/(RAD_MOB_SAFE/100)
+		data["SubjectEnzymes"] = scanner_occupant.dna.unique_enzymes
+
+	data["CONSCIOUS"] = CONSCIOUS
+	data["UNCONSCIOUS"] = UNCONSCIOUS
+
+	return data
 
 /obj/machinery/computer/scan_consolenew/proc/display_inactive_sequence(mutation)
 	var/temp_html = ""
