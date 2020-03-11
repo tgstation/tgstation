@@ -12,7 +12,7 @@
 	///Reagents that further speed up growth, but aren't needed.  Assoc list of reagent datum || bonus growth per tick
 	var/list/supplementary_reagents
 	///Reagents that surpress growth. Assoc list of reagent datum || lost growth per tick
-	var/list/surpressive_reagents
+	var/list/suppressive_reagents
 	///This var modifies how much this micro_organism is affected by viruses. Higher is more slowdown
 	var/virus_suspectibility = 1
 	///This var defines how much % the organism grows per process(), without modifiers, if you have all required reagents
@@ -54,10 +54,10 @@
 		reagents.remove_reagent(i, REAGENTS_METABOLISM)
 
 	//Handle degrowth based on supressive reagents here.
-	for(var/i in surpressive_reagents)
+	for(var/i in suppressive_reagents)
 		if(!reagents.has_reagent(i, REAGENTS_METABOLISM))
 			continue
-		. += surpressive_reagents[i]
+		. += suppressive_reagents[i]
 		reagents.remove_reagent(i, REAGENTS_METABOLISM)
 
 	//Handle debuffing growth based on viruses here.
@@ -107,7 +107,7 @@
 	if(show_needs)
 		. += ReturnReagentText("It requires:", required_reagents)
 		. += ReturnReagentText("It likes:", supplementary_reagents)
-		. += ReturnReagentText("It hates:", surpressive_reagents)
+		. += ReturnReagentText("It hates:", suppressive_reagents)
 
 ///Return a nice list of all the reagents in a specific category with a specific prefix. This needs to be reworked because the formatting sucks ass.
 /datum/micro_organism/cell_line/proc/ReturnReagentText(var/prefix_text = "It requires:", var/list/reagentlist)
