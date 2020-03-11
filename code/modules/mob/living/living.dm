@@ -529,7 +529,23 @@
 		clear_fullscreen("brute")
 
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
-/mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE)
+/mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE, excess_healing = 0)
+	if(excess_healing)
+		if(iscarbon(src) && excess_healing)
+			var/mob/living/carbon/C = src
+			if(!(C.dna?.species && (NOBLOOD in C.dna.species.species_traits)))
+				C.blood_volume += (excess_healing*2)//1 excess = 10 blood
+
+			for(var/i in C.internal_organs)
+				var/obj/item/organ/O = i
+				if(O.organ_flags & ORGAN_SYNTHETIC)
+					continue
+				O.applyOrganDamage(excess_healing*-1)//1 excess = 5 organ damage healed
+
+		adjustOxyLoss(-20, TRUE)
+		adjustToxLoss(-20, TRUE) //slime friendly
+		updatehealth()
+		grab_ghost()
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
 		fully_heal(admin_revive = admin_revive)
@@ -548,6 +564,9 @@
 			for(var/S in mind.spell_list)
 				var/obj/effect/proc_holder/spell/spell = S
 				spell.updateButtonIcon()
+		if(excess_healing)
+			emote("gasp")
+			log_combat(src, src, "revived")
 
 /mob/living/proc/remove_CC(should_update_mobility = TRUE)
 	SetStun(0, FALSE)
