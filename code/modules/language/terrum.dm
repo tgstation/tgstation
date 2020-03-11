@@ -4,6 +4,7 @@
 	speech_verb = "rumbles"
 	ask_verb = "questions"
 	exclaim_verb = "tremors"
+	sing_verb = "yodels"
 	key = "g"
 	space_chance = 40
 	syllables = list(

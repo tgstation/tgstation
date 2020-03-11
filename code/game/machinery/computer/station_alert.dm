@@ -33,13 +33,13 @@
 		data["alarms"][class] = list()
 		for(var/area in alarms[class])
 			data["alarms"][class] += area
-	
+
 	return data
 
 /obj/machinery/computer/station_alert/proc/triggerAlarm(class, area/A, O, obj/source)
 	if(source.z != z)
 		return
-	if(stat & (BROKEN))
+	if(machine_stat & (BROKEN))
 		return
 
 	var/list/L = alarms[class]
@@ -63,7 +63,7 @@
 
 
 /obj/machinery/computer/station_alert/proc/cancelAlarm(class, area/A, obj/origin)
-	if(stat & (BROKEN))
+	if(machine_stat & (BROKEN))
 		return
 	var/list/L = alarms[class]
 	var/cleared = 0
@@ -80,7 +80,7 @@
 
 /obj/machinery/computer/station_alert/update_overlays()
 	. = ..()
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	var/active_alarms = FALSE
 	for(var/cat in alarms)

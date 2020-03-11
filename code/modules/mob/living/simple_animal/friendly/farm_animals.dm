@@ -12,16 +12,15 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 4)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 4, /obj/item/clothing/head/goatpelt = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
-	faction = list("neutral")
+	faction = list("goat")
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	attack_same = 1
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -170,6 +169,7 @@
 	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
+	D.drive_verb = "ride"
 
 /mob/living/simple_animal/cow/Life()
 	. = ..()
@@ -201,6 +201,30 @@
 					"<span class='revennotice'>[internal]</span>")
 	else
 		..()
+
+///Wisdom cow, gives XP to a random skill and speaks wisdoms
+/mob/living/simple_animal/cow/wisdom
+	name = "wisdom cow"
+	desc = "Known for its wisdom, shares it with all"
+	gold_core_spawnable = FALSE
+	tame_chance = 0
+	bonus_tame_chance = 0
+	speak_chance = 15
+
+/mob/living/simple_animal/cow/wisdom/Initialize()
+	. = ..()
+	speak = GLOB.wisdoms //Done here so it's setup properly
+
+///Give intense wisdom to the attacker if they're being friendly about it
+/mob/living/simple_animal/cow/wisdom/attack_hand(mob/living/carbon/M)
+	if(!stat && M.a_intent == INTENT_HELP)
+		to_chat(M, "<span class='nicegreen'>[src] whispers you some intense wisdoms and then dissapears!</span>")
+		M.mind?.adjust_experience(pick(subtypesof(/datum/skill)), 500)
+		do_smoke(1, get_turf(src))
+		qdel(src)
+		return
+	return ..()
+
 
 /mob/living/simple_animal/chick
 	name = "\improper chick"

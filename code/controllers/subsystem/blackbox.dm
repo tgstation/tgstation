@@ -270,6 +270,25 @@ Versioning
 	key = new_key
 	key_type = new_key_type
 
+/datum/controller/subsystem/blackbox/proc/LogAhelp(ticket, action, message, recipient, sender)
+
+	if(!SSdbcore.Connect())
+		return
+
+	ticket = sanitizeSQL(ticket)
+	action = sanitizeSQL(action)
+	message = sanitizeSQL(message)
+	recipient = recipient ? "'[sanitizeSQL(recipient)]'" : "NULL"
+	sender = sender ? "'[sanitizeSQL(sender)]'" : "NULL"
+	var/server_ip = sanitizeSQL(world.internet_address)
+	var/server_port = sanitizeSQL(world.port)
+	var/round_id = sanitizeSQL(GLOB.round_id)
+
+	var/datum/DBQuery/query_log_ahelp = SSdbcore.NewQuery("INSERT INTO [format_table_name("ticket")] (ticket, action, message, recipient, sender, server_ip, server_port, round_id, timestamp) VALUES ('[ticket]', '[action]', '[message]', [recipient], [sender], INET_ATON(IF('[server_ip]' LIKE '', '0', '[server_ip]')), '[server_port]','[round_id]', '[SQLtime()]')")
+	query_log_ahelp.Execute()
+	qdel(query_log_ahelp)
+
+
 /datum/controller/subsystem/blackbox/proc/ReportDeath(mob/living/L)
 	set waitfor = FALSE
 	if(sealed)

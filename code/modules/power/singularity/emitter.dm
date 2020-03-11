@@ -1,8 +1,3 @@
-//emitter construction defines
-#define EMITTER_UNWRENCHED 0
-#define EMITTER_WRENCHED 1
-#define EMITTER_WELDED 2
-
 /obj/machinery/power/emitter
 	name = "emitter"
 	desc = "A heavy-duty industrial laser, often used in containment fields and power generation."
@@ -23,11 +18,11 @@
 	var/active = FALSE
 	var/powered = FALSE
 	var/fire_delay = 100
-	var/maximum_fire_delay = 100
-	var/minimum_fire_delay = 20
+	var/maximum_fire_delay = 100 //10 seconds
+	var/minimum_fire_delay = 20 // 2 seconds
 	var/last_shot = 0
 	var/shot_number = 0
-	var/state = EMITTER_UNWRENCHED
+	var/welded = FALSE ///if it's welded down to the ground or not. the emitter will not fire while unwelded. if set to true, the emitter will start anchored as well.
 	var/locked = FALSE
 	var/allow_switch_interact = TRUE
 
@@ -45,8 +40,9 @@
 	var/last_projectile_params
 
 
-/obj/machinery/power/emitter/anchored
-	anchored = TRUE
+/obj/machinery/power/emitter/welded/Initialize()
+	welded = TRUE
+	return ..()
 
 /obj/machinery/power/emitter/ctf
 	name = "Energy Cannon"
@@ -55,14 +51,16 @@
 	idle_power_usage = FALSE
 	locked = TRUE
 	req_access_txt = "100"
-	state = EMITTER_WELDED
+	welded = TRUE
 	use_power = FALSE
 
 /obj/machinery/power/emitter/Initialize()
 	. = ..()
 	RefreshParts()
 	wires = new /datum/wires/emitter(src)
-	if(state == EMITTER_WELDED && anchored)
+	if(welded)
+		if(!anchored)
+			setAnchored(TRUE)
 		connect_to_network()
 
 	sparks = new
@@ -72,6 +70,11 @@
 /obj/machinery/power/emitter/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+
+/obj/machinery/power/emitter/setAnchored(anchorvalue)
+	. = ..()
+	if(!anchored && welded) //make sure they're keep in sync in case it was forcibly unanchored by badmins or by a megafauna.
+		welded = FALSE
 
 /obj/machinery/power/emitter/RefreshParts()
 	var/max_firedelay = 120
@@ -91,8 +94,21 @@
 
 /obj/machinery/power/emitter/examine(mob/user)
 	. = ..()
+	if(welded)
+		. += "<span class='info'>It's moored firmly to the floor. You can unsecure its moorings with a <b>welder</b>.</span>"
+	else if(anchored)
+		. += "<span class='info'>It's currently anchored to the floor. You can secure its moorings with a <b>welder</b>, or remove it with a <b>wrench</b>.</span>"
+	else
+		. += "<span class='info'>It's not anchored to the floor. You can secure it in place with a <b>wrench</b>.</span>"
+
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Emitting one beam each <b>[fire_delay*0.1]</b> seconds.<br>Power consumption at <b>[active_power_usage]W</b>.</span>"
+		if(!active)
+			. += "<span class='notice'>Its status display is currently turned off.</span>"
+		else if(!powered)
+			. += "<span class='notice'>Its status display is glowing faintly.</span>"
+		else
+			. += "<span class='notice'>Its status display reads: Emitting one beam every <b>[DisplayTimeText(fire_delay)]</b>.</span>"
+			. += "<span class='notice'>Power consumption at <b>[DisplayPower(active_power_usage)]</b>.</span>"
 
 /obj/machinery/power/emitter/ComponentInitialize()
 	. = ..()
@@ -105,9 +121,7 @@
 	return TRUE
 
 /obj/machinery/power/emitter/should_have_node()
-	if(state == EMITTER_WELDED)
-		return TRUE
-	return FALSE
+	return welded
 
 /obj/machinery/power/emitter/Destroy()
 	if(SSticker.IsRoundInProgress())
@@ -118,7 +132,7 @@
 	QDEL_NULL(sparks)
 	return ..()
 
-/obj/machinery/power/emitter/update_icon()
+/obj/machinery/power/emitter/update_icon_state()
 	if(active && powernet)
 		icon_state = avail(active_power_usage) ? icon_state_on : icon_state_underpowered
 	else
@@ -126,7 +140,7 @@
 
 /obj/machinery/power/emitter/interact(mob/user)
 	add_fingerprint(user)
-	if(state == EMITTER_WELDED)
+	if(welded)
 		if(!powernet)
 			to_chat(user, "<span class='warning'>\The [src] isn't connected to a wire!</span>")
 			return TRUE
@@ -154,18 +168,17 @@
 
 /obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/M)
 	if(ismegafauna(M) && anchored)
-		state = EMITTER_UNWRENCHED
-		anchored = FALSE
+		setAnchored(FALSE)
 		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
 	else
-		..()
-	if(!anchored)
+		. = ..()
+	if(. && !anchored)
 		step(src, get_dir(M, src))
 
 /obj/machinery/power/emitter/process()
-	if(stat & (BROKEN))
+	if(machine_stat & (BROKEN))
 		return
-	if(state != EMITTER_WELDED || (!powernet && active_power_usage))
+	if(!welded || (!powernet && active_power_usage))
 		active = FALSE
 		update_icon()
 		return
@@ -197,7 +210,7 @@
 /obj/machinery/power/emitter/proc/fire_beam_pulse()
 	if(!check_delay())
 		return FALSE
-	if(state != EMITTER_WELDED)
+	if(!welded)
 		return FALSE
 	if(surplus() >= active_power_usage)
 		add_load(active_power_usage)
@@ -205,7 +218,7 @@
 
 /obj/machinery/power/emitter/proc/fire_beam(mob/user)
 	var/obj/projectile/P = new projectile_type(get_turf(src))
-	playsound(get_turf(src), projectile_sound, 50, TRUE)
+	playsound(src, projectile_sound, 50, TRUE)
 	if(prob(35))
 		sparks.start()
 	P.firer = user ? user : src
@@ -232,20 +245,12 @@
 			to_chat(user, "<span class='warning'>Turn \the [src] off first!</span>")
 		return FAILED_UNFASTEN
 
-	else if(state == EMITTER_WELDED)
+	else if(welded)
 		if(!silent)
 			to_chat(user, "<span class='warning'>[src] is welded to the floor!</span>")
 		return FAILED_UNFASTEN
 
 	return ..()
-
-/obj/machinery/power/emitter/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
-	. = ..()
-	if(. == SUCCESSFUL_UNFASTEN)
-		if(anchored)
-			state = EMITTER_WRENCHED
-		else
-			state = EMITTER_UNWRENCHED
 
 /obj/machinery/power/emitter/wrench_act(mob/living/user, obj/item/I)
 	..()
@@ -253,36 +258,37 @@
 	return TRUE
 
 /obj/machinery/power/emitter/welder_act(mob/living/user, obj/item/I)
-	. = ..()
+	..()
 	if(active)
-		to_chat(user, "<span class='warning'>Turn \the [src] off first!</span>")
+		to_chat(user, "<span class='warning'>Turn [src] off first!</span>")
 		return TRUE
 
-	switch(state)
-		if(EMITTER_UNWRENCHED)
-			to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")
-		if(EMITTER_WRENCHED)
-			if(!I.tool_start_check(user, amount=0))
-				return TRUE
-			user.visible_message("<span class='notice'>[user.name] starts to weld the [name] to the floor.</span>", \
-				"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
-				"<span class='hear'>You hear welding.</span>")
-			if(I.use_tool(src, user, 20, volume=50) && state == EMITTER_WRENCHED)
-				state = EMITTER_WELDED
-				to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
-				connect_to_network()
-				update_cable_icons_on_turf(get_turf(src))
-		if(EMITTER_WELDED)
-			if(!I.tool_start_check(user, amount=0))
-				return TRUE
-			user.visible_message("<span class='notice'>[user.name] starts to cut the [name] free from the floor.</span>", \
-				"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
-				"<span class='hear'>You hear welding.</span>")
-			if(I.use_tool(src, user, 20, volume=50) && state == EMITTER_WELDED)
-				state = EMITTER_WRENCHED
-				to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
-				disconnect_from_network()
-				update_cable_icons_on_turf(get_turf(src))
+	if(welded)
+		if(!I.tool_start_check(user, amount=0))
+			return TRUE
+		user.visible_message("<span class='notice'>[user.name] starts to cut the [name] free from the floor.</span>", \
+			"<span class='notice'>You start to cut [src] free from the floor...</span>", \
+			"<span class='hear'>You hear welding.</span>")
+		if(I.use_tool(src, user, 20, volume=50) && welded)
+			welded = FALSE
+			to_chat(user, "<span class='notice'>You cut [src] free from the floor.</span>")
+			disconnect_from_network()
+			update_cable_icons_on_turf(get_turf(src))
+
+	else if(anchored)
+		if(!I.tool_start_check(user, amount=0))
+			return TRUE
+		user.visible_message("<span class='notice'>[user.name] starts to weld the [name] to the floor.</span>", \
+			"<span class='notice'>You start to weld [src] to the floor...</span>", \
+			"<span class='hear'>You hear welding.</span>")
+		if(I.use_tool(src, user, 20, volume=50) && anchored)
+			welded = TRUE
+			to_chat(user, "<span class='notice'>You weld [src] to the floor.</span>")
+			connect_to_network()
+			update_cable_icons_on_turf(get_turf(src))
+
+	else
+		to_chat(user, "<span class='warning'>[src] needs to be wrenched to the floor!</span>")
 
 	return TRUE
 
@@ -512,7 +518,3 @@
 	else if (E.charge < 10)
 		playsound(src,'sound/machines/buzz-sigh.ogg', 50, TRUE)
 
-
-#undef EMITTER_UNWRENCHED
-#undef EMITTER_WRENCHED
-#undef EMITTER_WELDED

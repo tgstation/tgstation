@@ -75,8 +75,6 @@
 		recharge_newshot()
 	return 1
 
-/obj/item/gun/magic/update_icon()
-	return
 
 /obj/item/gun/magic/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, "<span class='warning'>The [name] whizzles quietly.</span>")

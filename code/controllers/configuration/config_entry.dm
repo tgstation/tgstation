@@ -98,7 +98,7 @@
 		return FALSE
 	var/temp = text2num(trim(str_val))
 	if(!isnull(temp))
-		config_entry_value = CLAMP(integer ? round(temp) : temp, min_val, max_val)
+		config_entry_value = clamp(integer ? round(temp) : temp, min_val, max_val)
 		if(config_entry_value != temp && !(datum_flags & DF_VAR_EDITED))
 			log_config("Changing [name] from [temp] to [config_entry_value]!")
 		return TRUE
@@ -163,7 +163,8 @@
 
 	if(key_pos || value_mode == VALUE_MODE_FLAG)
 		key_name = lowertext(copytext(str_val, 1, key_pos))
-		key_value = copytext(str_val, key_pos + 1)
+		if(key_pos)
+			key_value = copytext(str_val, key_pos + length(str_val[key_pos]))
 		var/new_key
 		var/new_value
 		var/continue_check_value

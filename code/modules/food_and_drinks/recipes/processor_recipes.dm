@@ -3,6 +3,7 @@
 	var/output
 	var/time = 40
 	var/required_machine = /obj/machinery/processor
+	var/multiplier = 1 //This multiplies the number of products produced per object processed.
 
 /datum/food_processor_process/meat
 	input = /obj/item/reagent_containers/food/snacks/meat/slab
@@ -52,3 +53,8 @@
 	input = /mob/living/simple_animal/slime
 	output = null
 	required_machine = /obj/machinery/processor/slime
+
+/datum/food_processor_process/towercap
+	input = /obj/item/grown/log
+	output = /obj/item/popsicle_stick
+	multiplier = 3

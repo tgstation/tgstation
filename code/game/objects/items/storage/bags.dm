@@ -57,14 +57,14 @@
 
 /obj/item/storage/bag/trash/update_icon_state()
 	switch(contents.len)
-		if(0)
-			icon_state = "[initial(icon_state)]"
-		if(0 to 11)
-			icon_state = "[initial(icon_state)]1"
+		if(20 to INFINITY)
+			icon_state = "[initial(icon_state)]3"
 		if(11 to 20)
 			icon_state = "[initial(icon_state)]2"
+		if(1 to 11)
+			icon_state = "[initial(icon_state)]1"
 		else
-			icon_state = "[initial(icon_state)]3"
+			icon_state = "[initial(icon_state)]"
 
 /obj/item/storage/bag/trash/cyborg
 	insertable = FALSE

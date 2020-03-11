@@ -316,3 +316,13 @@
 	build_path = /obj/item/stock_parts/subspace/transmitter
 	category = list("Stock Parts")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/card_reader
+	name = "Card Reader"
+	desc = "A small magnetic card reader, used for devices that take and transmit holocredits."
+	id = "c-reader"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron=50, /datum/material/glass=10)
+	build_path = /obj/item/stock_parts/card_reader
+	category = list("Stock Parts")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL

@@ -202,7 +202,7 @@
 		create_gas()
 	pump = new(src, FALSE)
 	pump.on = TRUE
-	pump.stat = 0
+	pump.machine_stat = 0
 	pump.build_network()
 
 /obj/machinery/portable_atmospherics/canister/Destroy()
@@ -224,61 +224,25 @@
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 	air_contents.gases[/datum/gas/nitrogen][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
-#define CANISTER_UPDATE_HOLDING		(1<<0)
-#define CANISTER_UPDATE_CONNECTED	(1<<1)
-#define CANISTER_UPDATE_EMPTY		(1<<2)
-#define CANISTER_UPDATE_LOW			(1<<3)
-#define CANISTER_UPDATE_MEDIUM		(1<<4)
-#define CANISTER_UPDATE_FULL		(1<<5)
-#define CANISTER_UPDATE_DANGER		(1<<6)
-/obj/machinery/portable_atmospherics/canister/update_icon()
-	if(stat & BROKEN)
-		cut_overlays()
+/obj/machinery/portable_atmospherics/canister/update_icon_state()
+	if(machine_stat & BROKEN)
 		icon_state = "[icon_state]-1"
-		return
 
-	var/last_update = update
-	update = 0
-
+/obj/machinery/portable_atmospherics/canister/update_overlays()
+	. = ..()
 	if(holding)
-		update |= CANISTER_UPDATE_HOLDING
+		. += "can-open"
 	if(connected_port)
-		update |= CANISTER_UPDATE_CONNECTED
+		. += "can-connector"
 	var/pressure = air_contents.return_pressure()
-	if(pressure < 10)
-		update |= CANISTER_UPDATE_EMPTY
-	else if(pressure < 5 * ONE_ATMOSPHERE)
-		update |= CANISTER_UPDATE_LOW
-	else if(pressure < 10 * ONE_ATMOSPHERE)
-		update |= CANISTER_UPDATE_MEDIUM
-	else if(pressure < 40 * ONE_ATMOSPHERE)
-		update |= CANISTER_UPDATE_FULL
-	else
-		update |= CANISTER_UPDATE_DANGER
-
-	if(update == last_update)
-		return
-
-	cut_overlays()
-	if(update & CANISTER_UPDATE_HOLDING)
-		add_overlay("can-open")
-	if(update & CANISTER_UPDATE_CONNECTED)
-		add_overlay("can-connector")
-	if(update & CANISTER_UPDATE_LOW)
-		add_overlay("can-o0")
-	else if(update & CANISTER_UPDATE_MEDIUM)
-		add_overlay("can-o1")
-	else if(update & CANISTER_UPDATE_FULL)
-		add_overlay("can-o2")
-	else if(update & CANISTER_UPDATE_DANGER)
-		add_overlay("can-o3")
-#undef CANISTER_UPDATE_HOLDING
-#undef CANISTER_UPDATE_CONNECTED
-#undef CANISTER_UPDATE_EMPTY
-#undef CANISTER_UPDATE_LOW
-#undef CANISTER_UPDATE_MEDIUM
-#undef CANISTER_UPDATE_FULL
-#undef CANISTER_UPDATE_DANGER
+	if(pressure >= 40 * ONE_ATMOSPHERE)
+		. += "can-o3"
+	else if(pressure >= 10 * ONE_ATMOSPHERE)
+		. += "can-o2"
+	else if(pressure >= 5 * ONE_ATMOSPHERE)
+		. += "can-o1"
+	else if(pressure >= 10)
+		. += "can-o0"
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
@@ -287,7 +251,7 @@
 
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!(stat & BROKEN))
+		if(!(machine_stat & BROKEN))
 			canister_break()
 		if(disassembled)
 			new /obj/item/stack/sheet/metal (loc, 10)
@@ -300,7 +264,7 @@
 	if(user.a_intent == INTENT_HARM)
 		return FALSE
 
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		if(!I.tool_start_check(user, amount=0))
 			return TRUE
 		to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
@@ -339,13 +303,13 @@
 		if(close_valve)
 			valve_open = FALSE
 			update_icon()
-			investigate_log("Valve was <b>closed</b> by [key_name(user)].<br>", INVESTIGATE_ATMOS)
+			investigate_log("Valve was <b>closed</b> by [key_name(user)].", INVESTIGATE_ATMOS)
 		else if(valve_open && holding)
-			investigate_log("[key_name(user)] started a transfer into [holding].<br>", INVESTIGATE_ATMOS)
+			investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/canister/process_atmos()
 	..()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return PROCESS_KILL
 	if(timing && valve_timer < world.time)
 		valve_open = !valve_open
@@ -439,7 +403,7 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				release_pressure = CLAMP(round(pressure), can_min_release_pressure, can_max_release_pressure)
+				release_pressure = clamp(round(pressure), can_min_release_pressure, can_max_release_pressure)
 				investigate_log("was set to [release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 		if("valve")
 			var/logmsg
@@ -483,7 +447,7 @@
 					var/N = text2num(user_input)
 					if(!N)
 						return
-					timer_set = CLAMP(N,minimum_timer_set,maximum_timer_set)
+					timer_set = clamp(N,minimum_timer_set,maximum_timer_set)
 					log_admin("[key_name(usr)] has activated a prototype valve timer")
 					. = TRUE
 				if("toggle_timer")

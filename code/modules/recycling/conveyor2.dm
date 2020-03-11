@@ -110,14 +110,14 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		movedir = backwards
 	update()
 
-/obj/machinery/conveyor/update_icon()
-	if(stat & BROKEN)
+/obj/machinery/conveyor/update_icon_state()
+	if(machine_stat & BROKEN)
 		icon_state = "conveyor-broken"
 	else
 		icon_state = "conveyor[operating * verted]"
 
 /obj/machinery/conveyor/proc/update()
-	if(stat & BROKEN || !operable || stat & NOPOWER)
+	if(machine_stat & BROKEN || !operable || machine_stat & NOPOWER)
 		operating = FALSE
 		update_icon()
 		return FALSE
@@ -126,7 +126,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	// machine process
 	// move items to the target location
 /obj/machinery/conveyor/process()
-	if(stat & (BROKEN | NOPOWER))
+	if(machine_stat & (BROKEN | NOPOWER))
 		return
 	//If the conveyor is broken or already moving items
 	if(!operating || conveying)
@@ -159,21 +159,21 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		user.visible_message("<span class='notice'>[user] struggles to pry up \the [src] with \the [I].</span>", \
 		"<span class='notice'>You struggle to pry up \the [src] with \the [I].</span>")
 		if(I.use_tool(src, user, 40, volume=40))
-			if(!(stat & BROKEN))
+			if(!(machine_stat & BROKEN))
 				var/obj/item/stack/conveyor/C = new /obj/item/stack/conveyor(loc, 1, TRUE, id)
 				transfer_fingerprints_to(C)
 			to_chat(user, "<span class='notice'>You remove the conveyor belt.</span>")
 			qdel(src)
 
 	else if(I.tool_behaviour == TOOL_WRENCH)
-		if(!(stat & BROKEN))
+		if(!(machine_stat & BROKEN))
 			I.play_tool_sound(src)
 			setDir(turn(dir,-45))
 			update_move_direction()
 			to_chat(user, "<span class='notice'>You rotate [src].</span>")
 
 	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(!(stat & BROKEN))
+		if(!(machine_stat & BROKEN))
 			verted = verted * -1
 			update_move_direction()
 			to_chat(user, "<span class='notice'>You reverse [src]'s direction.</span>")
@@ -263,7 +263,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 // update the icon depending on the position
 
-/obj/machinery/conveyor_switch/update_icon()
+/obj/machinery/conveyor_switch/update_icon_state()
 	if(position<0)
 		if(invert_icon)
 			icon_state = "switch-fwd"

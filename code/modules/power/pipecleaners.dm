@@ -85,8 +85,8 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	// ensure d1 & d2 reflect the icon_state for entering and exiting pipe_cleaner
 	var/dash = findtext(icon_state, "-")
-	d1 = text2num( copytext( icon_state, 1, dash ) )
-	d2 = text2num( copytext( icon_state, dash+1 ) )
+	d1 = text2num(copytext(icon_state, 1, dash))
+	d2 = text2num(copytext(icon_state, dash + length(icon_state[dash])))
 
 	if(d1)
 		stored = new/obj/item/stack/pipe_cleaner_coil(null,2,pipe_cleaner_color)

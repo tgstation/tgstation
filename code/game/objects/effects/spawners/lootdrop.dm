@@ -10,7 +10,6 @@
 /obj/effect/spawner/lootdrop/Initialize(mapload)
 	..()
 	if(loot && loot.len)
-		var/turf/T = get_turf(src)
 		var/loot_spawned = 0
 		while((lootcount-loot_spawned) && loot.len)
 			var/lootspawn = pickweight(loot)
@@ -20,7 +19,7 @@
 				loot.Remove(lootspawn)
 
 			if(lootspawn)
-				var/atom/movable/spawned_loot = new lootspawn(T)
+				var/atom/movable/spawned_loot = new lootspawn(loc)
 				if (!fan_out_items)
 					if (pixel_x != 0)
 						spawned_loot.pixel_x = pixel_x
@@ -68,7 +67,8 @@
 				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
 				/obj/item/bikehorn/golden,
 				/obj/item/grenade/clusterbuster,
-				/obj/item/storage/box/syndie_kit/throwing_weapons = 3)
+				/obj/item/storage/box/syndie_kit/throwing_weapons = 3,
+				/obj/item/gun/ballistic/revolver/mateba)
 
 /obj/effect/spawner/lootdrop/gambling
 	name = "gambling valuables spawner"
@@ -170,7 +170,7 @@
 				)
 
 /obj/effect/spawner/lootdrop/organ_spawner
-	name = "organ spawner"
+	name = "ayylien organ spawner"
 	loot = list(
 		/obj/item/organ/heart/gland/electric = 3,
 		/obj/item/organ/heart/gland/trauma = 4,
@@ -185,6 +185,28 @@
 		/obj/item/organ/body_egg/alien_embryo = 1,
 		/obj/item/organ/regenerative_core = 2)
 	lootcount = 3
+
+/obj/effect/spawner/lootdrop/memeorgans
+	name = "meme organ spawner"
+	loot = list(
+		/obj/item/organ/ears/penguin,
+		/obj/item/organ/ears/cat,
+		/obj/item/organ/eyes/moth,
+		/obj/item/organ/eyes/snail,
+		/obj/item/organ/tongue/bone,
+		/obj/item/organ/tongue/fly,
+		/obj/item/organ/tongue/snail,
+		/obj/item/organ/tongue/lizard,
+		/obj/item/organ/tongue/alien,
+		/obj/item/organ/tongue/ethereal,
+		/obj/item/organ/tongue/robot,
+		/obj/item/organ/tongue/zombie,
+		/obj/item/organ/appendix,
+		/obj/item/organ/liver/fly,
+		/obj/item/organ/lungs/plasmaman,
+		/obj/item/organ/tail/cat,
+		/obj/item/organ/tail/lizard)
+	lootcount = 5
 
 /obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner
 	name = "2% chance xeno egg spawner"
@@ -339,14 +361,12 @@
 /obj/effect/spawner/lootdrop/techstorage/medical
 	name = "medical circuit board spawner"
 	loot = list(
-				/obj/item/circuitboard/computer/cloning,
-				/obj/item/circuitboard/machine/clonepod,
 				/obj/item/circuitboard/machine/chem_dispenser,
 				/obj/item/circuitboard/computer/scan_consolenew,
 				/obj/item/circuitboard/computer/med_data,
 				/obj/item/circuitboard/machine/smoke_machine,
 				/obj/item/circuitboard/machine/chem_master,
-				/obj/item/circuitboard/machine/clonescanner,
+				/obj/item/circuitboard/machine/dnascanner,
 				/obj/item/circuitboard/computer/pandemic
 				)
 
@@ -372,6 +392,15 @@
 				/obj/item/circuitboard/computer/mecha_control,
 				/obj/item/circuitboard/computer/apc_control,
 				/obj/item/circuitboard/computer/robotics
+				)
+
+/obj/effect/spawner/lootdrop/mafia_outfit
+	name = "mafia outfit spawner"
+	loot = list(
+				/obj/effect/spawner/bundle/costume/mafia = 20,
+				/obj/effect/spawner/bundle/costume/mafia/white = 5,
+				/obj/effect/spawner/bundle/costume/mafia/checkered = 2,
+				/obj/effect/spawner/bundle/costume/mafia/beige = 5
 				)
 
 //finds the probabilities of items spawning from a loot spawner's loot pool

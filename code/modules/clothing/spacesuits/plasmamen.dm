@@ -51,17 +51,16 @@
 	var/smile_color = "#FF0000"
 	var/visor_icon = "envisor"
 	var/smile_state = "envirohelm_smile"
-	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_welding_screen/plasmaman)
+	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES | PEPPERPROOF
-	visor_flags_inv = HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF
+	visor_flags_inv = HIDEEYES|HIDEFACE
 
 /obj/item/clothing/head/helmet/space/plasmaman/Initialize()
 	. = ..()
 	visor_toggling()
 	update_icon()
-	cut_overlays()
 
 /obj/item/clothing/head/helmet/space/plasmaman/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
@@ -85,11 +84,9 @@
 	else
 		cut_overlays()
 
-/obj/item/clothing/head/helmet/space/plasmaman/update_icon()
-	cut_overlays()
-	add_overlay(visor_icon)
-	..()
-	actions_types = list(/datum/action/item_action/toggle_helmet_light)
+/obj/item/clothing/head/helmet/space/plasmaman/update_overlays()
+	. = ..()
+	. += visor_icon
 
 /obj/item/clothing/head/helmet/space/plasmaman/attackby(obj/item/C, mob/living/user)
 	. = ..()
@@ -158,6 +155,12 @@
 	desc = "A plasmaman containment helmet designed for the warden, a pair of white stripes being added to differeciate them from other members of security."
 	icon_state = "warden_envirohelm"
 	item_state = "warden_envirohelm"
+
+/obj/item/clothing/head/helmet/space/plasmaman/prisoner
+	name = "prisoner's plasma envirosuit helmet"
+	desc = "A plasmaman containment helmet for prisoners."
+	icon_state = "prisoner_envirohelm"
+	item_state = "prisoner_envirohelm"
 
 /obj/item/clothing/head/helmet/space/plasmaman/medical
 	name = "medical doctor's plasma envirosuit helmet"
