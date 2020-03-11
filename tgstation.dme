@@ -1818,6 +1818,8 @@
 #include "code\modules\events\wizard\rpgloot.dm"
 #include "code\modules\events\wizard\shuffle.dm"
 #include "code\modules\events\wizard\summons.dm"
+#include "code\modules\experisci\experiment\experiment.dm"
+#include "code\modules\experisci\experiment\item_scanning.dm"
 #include "code\modules\fields\fields.dm"
 #include "code\modules\fields\gravity.dm"
 #include "code\modules\fields\peaceborg_dampener.dm"
