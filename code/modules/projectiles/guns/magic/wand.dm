@@ -10,6 +10,10 @@
 	var/variable_charges = TRUE
 
 /obj/item/gun/magic/wand/Initialize()
+	if(type == /obj/item/gun/magic/wand)
+		visible_message("<span class='warning'>[src] disappears!</span>")
+		qdel(src)
+		return
 	if(prob(75) && variable_charges) //25% chance of listed max charges, 50% chance of 1/2 max charges, 25% chance of 1/3 max charges
 		if(prob(33))
 			max_charges = CEILING(max_charges / 3, 1)
@@ -30,10 +34,6 @@
 	..()
 
 /obj/item/gun/magic/wand/afterattack(atom/target, mob/living/user)
-	if(type == /obj/item/gun/magic/wand)
-		qdel(src)
-		to_chat(user, "<span class='warning'>You suddenly forget what you were doing.</span>")
-		return
 	if(!charges)
 		shoot_with_empty_chamber(user)
 		return
