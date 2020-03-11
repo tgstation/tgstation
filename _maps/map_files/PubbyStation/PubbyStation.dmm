@@ -6703,7 +6703,6 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "arR" = (
-/obj/machinery/computer/prisoner/management,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -6711,6 +6710,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/machinery/computer/rdconsole/core,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "arS" = (
@@ -25983,9 +25983,6 @@
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/aft)
 "boX" = (
-/obj/machinery/computer/rdconsole/robotics{
-	dir = 4
-	},
 /obj/machinery/button/door{
 	id = "robotics";
 	name = "Shutters Control Button";
@@ -25996,6 +25993,9 @@
 /obj/machinery/light_switch{
 	pixel_x = -25;
 	pixel_y = -8
+	},
+/obj/machinery/computer/rdconsole/production{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
@@ -26070,7 +26070,6 @@
 /turf/open/floor/plasteel/dark,
 /area/science/explab)
 "bpe" = (
-/obj/machinery/computer/rdconsole/experiment,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -26085,6 +26084,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/computer/rdconsole/production,
 /turf/open/floor/plasteel/dark,
 /area/science/explab)
 "bpf" = (
@@ -28722,10 +28722,10 @@
 /turf/closed/wall,
 /area/maintenance/department/engine)
 "bvw" = (
-/obj/machinery/computer/rdconsole/core{
+/obj/effect/turf_decal/delivery,
+/obj/machinery/computer/rdconsole/production{
 	dir = 4
 	},
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "bvx" = (

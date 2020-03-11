@@ -17056,7 +17056,6 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "aRo" = (
-/obj/machinery/modular_computer/console/preset/command,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -17064,6 +17063,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/machinery/computer/rdconsole/core,
 /turf/open/floor/plasteel,
 /area/bridge)
 "aRp" = (
@@ -23146,7 +23146,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "bhw" = (
-/obj/machinery/computer/rdconsole/robotics,
+/obj/machinery/computer/rdconsole/production,
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "bhx" = (
@@ -25497,7 +25497,7 @@
 /turf/closed/wall/r_wall,
 /area/science/research)
 "bnn" = (
-/obj/machinery/computer/rdconsole/core{
+/obj/machinery/computer/rdconsole/production{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
