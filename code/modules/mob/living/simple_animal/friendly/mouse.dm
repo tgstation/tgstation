@@ -28,12 +28,9 @@
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/chew_probability = 1
-<<<<<<< HEAD
-	faction = list("rat")
-=======
 	can_be_held = TRUE
 	held_state = "mouse_gray"
->>>>>>> upstream/master
+	faction = list("rat")
 
 /mob/living/simple_animal/mouse/Initialize()
 	. = ..()
