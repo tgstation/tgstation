@@ -10,6 +10,7 @@
 	maxHealth = 70
 	health = 70
 	see_in_dark = 5
+	obj_damage = 10
 	butcher_results = list(/obj/item/clothing/head/crown = 1,)
 	response_help_continuous = "glares at"
 	response_help_simple = "glare at"
@@ -26,6 +27,8 @@
 	faction = list("rat")
 	var/datum/action/cooldown/coffer
 	var/datum/action/cooldown/riot
+	///Number assigned to rats and mice, checked when determining infighting.
+	var/faction_num = 0
 
 /mob/living/simple_animal/hostile/regalrat/Initialize()
 	. = ..()
@@ -33,12 +36,25 @@
 	riot = new /datum/action/cooldown/riot
 	coffer.Grant(src)
 	riot.Grant(src)
+	faction_num = rand(1,999)
 
 /mob/living/simple_animal/hostile/regalrat/handle_automated_action()
 	if(prob(20))
 		riot.Trigger()
 	else if(prob(50))
 		coffer.Trigger()
+	. = ..()
+
+/mob/living/simple_animal/hostile/regalrat/CanAttack(atom/the_target)
+	if(istype(the_target, /mob/living/simple_animal/hostile/regalrat))
+		return TRUE
+	if(istype(the_target, /mob/living/simple_animal/hostile/rat))
+		var/mob/living/simple_animal/hostile/rat/R = the_target
+		if(R.faction_num == faction_num)
+			return FALSE
+		else
+			return TRUE
+	. = ..()
 
 /**
   *This action creates trash, money, dirt, and cheese.
@@ -56,7 +72,7 @@
 		return FALSE
 	var/turf/T = get_turf(owner)
 	var/loot = rand(1,100)
-	var/trashpick = list(/obj/item/cigbutt,
+	var/static/trashpick = list(/obj/item/cigbutt,
 			/obj/item/trash/cheesie,
 			/obj/item/trash/candy,
 			/obj/item/trash/chips,
@@ -66,7 +82,7 @@
 			/obj/item/trash/raisins,
 			/obj/item/trash/sosjerky,
 			/obj/item/trash/syndi_cakes)
-	var/coinpick = list(/obj/item/coin/iron,
+	var/static/coinpick = list(/obj/item/coin/iron,
 			/obj/item/coin/silver,
 			/obj/item/coin/plastic,
 			/obj/item/coin/titanium)
@@ -99,6 +115,7 @@
 /**
   *This action checks all nearby mice, and converts them into hostile rats. If no mice are nearby, creates a new one.
   */
+
 /datum/action/cooldown/riot
 	name = "Raise Army"
 	desc = "Raise an army out of the hordes of mice and pests crawling around the maintenance shafts."
@@ -106,22 +123,26 @@
 	button_icon_state = "riot"
 	background_icon_state = "bg_clock"
 	cooldown_time = 80
+	///Checks to see if there are any nearby mice. Does not count Rats.
 	var/something_from_nothing = FALSE
 
 /datum/action/cooldown/riot/Trigger()
 	if(!..())
 		return FALSE
 	for(var/mob/living/simple_animal/mouse/M in oview(owner, 5))
-		var/mob/living/simple_animal/hostile/R = new /mob/living/simple_animal/hostile/rat(get_turf(M))
+		var/mob/living/simple_animal/hostile/rat/R = new /mob/living/simple_animal/hostile/rat(get_turf(M))
 		something_from_nothing = TRUE
 		if(M.mind)
 			M.mind.transfer_to(R)
+		if(istype(owner,/mob/living/simple_animal/hostile/regalrat))
+			var/mob/living/simple_animal/hostile/regalrat/giantrat = owner
+			R.faction_num = giantrat.faction_num
 		qdel(M)
 	if(!something_from_nothing)
 		new /mob/living/simple_animal/mouse(owner.loc)
-		owner.visible_message("<span class='warning'>[owner] commands a mouse to it's side!</span>")
+		owner.visible_message("<span class='warning'>[owner] commands a mouse to its side!</span>")
 	else
-		owner.visible_message("<span class='warning'>[owner] commands it's army to action, mutating them into rats!</span>")
+		owner.visible_message("<span class='warning'>[owner] commands its army to action, mutating them into rats!</span>")
 	something_from_nothing = FALSE
 	StartCooldown()
 
@@ -134,9 +155,10 @@
 	speak = list("Skree!","SKREEE!","Squeak?")
 	speak_emote = list("squeaks")
 	emote_hear = list("Hisses.")
-	emote_see = list("runs in a circle.", "stands on it's hind legs.")
+	emote_see = list("runs in a circle.", "stands on its hind legs.")
 	melee_damage_lower = 3
 	melee_damage_upper = 5
+	obj_damage = 5
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
@@ -149,3 +171,19 @@
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	faction = list("rat")
+	var/faction_num
+
+/mob/living/simple_animal/hostile/rat/CanAttack(atom/the_target)
+	if(istype(the_target, /mob/living/simple_animal/hostile/regalrat))
+		var/mob/living/simple_animal/hostile/regalrat/R = the_target
+		if(R.faction_num == faction_num)
+			return FALSE
+		else
+			return TRUE
+	if(istype(the_target, /mob/living/simple_animal/hostile/rat))
+		var/mob/living/simple_animal/hostile/rat/R = the_target
+		if(R.faction_num == faction_num)
+			return FALSE
+		else
+			return TRUE
+	. = ..()
