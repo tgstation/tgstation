@@ -50,7 +50,7 @@ RLD
 
 /obj/item/construction/examine(mob/user)
 	. = ..()
-	. += "\A [src]. It currently holds [matter]/[max_matter] matter-units."
+	. += "It currently holds [matter]/[max_matter] matter-units."
 	if(upgrade & RCD_UPGRADE_SILO_LINK)
 		. += "Remote storage link state: [silo_link ? "[silo_mats.on_hold() ? "ON HOLD" : "ON"]" : "OFF"]."
 		if(silo_link && silo_mats.mat_container && !silo_mats.on_hold())
