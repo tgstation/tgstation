@@ -47,15 +47,14 @@
   * * target - The item to attempt to scan
   */
 /datum/experiment/item/proc/scan_item(obj/item/target)
-	. = FALSE
 	if (scanned >= goal || !istype(target, item_path))
-		return
+		return FALSE
 	if (destructive)
 		scanned++
 		qdel(target)
 		return TRUE
 	else if (target in seen_objects)
-		return
+		return FALSE
 	else
 		seen_objects += target
 		scanned++
