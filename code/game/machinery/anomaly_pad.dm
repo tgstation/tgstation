@@ -1,3 +1,4 @@
+///Magical pad that suspends anomalies. Simply apply an anomaly core and it will make the anomaly fly above it
 /obj/machinery/anomaly_pad
 	name = "anomaly pad"
 	desc = "If an anomaly core is applied, this machine will keep it stable and suspended. Looks beautiful and cannot possibly go wrong."
@@ -85,6 +86,7 @@
 
 	update_icon_state()
 
+///Exactly the same as a normal anomaly pad, but this one only takes fluescent anomalies and can also drain their reagents.
 /obj/machinery/anomaly_pad/liquid
 	name = "chemical anomaly pad"
 	desc = "Drains a fluescent anomolies imprinted reagent with extreme efficiency."
@@ -93,9 +95,12 @@
 
 	circuit = /obj/item/circuitboard/machine/anomaly_pad_liquid
 
+	///Max volume of the pad
 	var/volume = 1000
+	///Max anomaly drainage rate
 	var/speed = 100
-	var/reagent_type //alright, it'd be gross to make another anomaly var for the fluescent anom, so just track the reagent_type here
+	///alright, it'd be gross to make another anomaly var for the fluescent anom, so just track the reagent_type here
+	var/reagent_type 
 
 /obj/machinery/anomaly_pad/liquid/Initialize()
 	. = ..()
