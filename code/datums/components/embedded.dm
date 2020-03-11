@@ -146,10 +146,10 @@
 	var/mob/living/carbon/human/victim = parent
 
 	var/chance = jostle_chance
-	if(victim.m_intent == MOVE_INTENT_WALK || victim.lying)
+	if(victim.m_intent == MOVE_INTENT_WALK || !(victim.mobility_flags & MOBILITY_STAND))
 		chance *= 0.5
 
-	if(prob(chance))
+	if(harmful && prob(chance))
 		var/damage = weapon.w_class * jostle_pain_mult
 		L.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage)
 		to_chat(victim, "<span class='userdanger'>[weapon] embedded in your [L.name] jostles and stings!</span>")
@@ -223,7 +223,7 @@
 	if(victim.stat == DEAD)
 		return
 
-	if(harmful  && prob(pain_chance))
+	if(harmful && prob(pain_chance))
 		var/damage = weapon.w_class * pain_mult
 		L.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage)
 		to_chat(victim, "<span class='userdanger'>[weapon] embedded in your [L.name] hurts!</span>")

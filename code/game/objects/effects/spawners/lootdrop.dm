@@ -67,7 +67,8 @@
 				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
 				/obj/item/bikehorn/golden,
 				/obj/item/grenade/clusterbuster,
-				/obj/item/storage/box/syndie_kit/throwing_weapons = 3)
+				/obj/item/storage/box/syndie_kit/throwing_weapons = 3,
+				/obj/item/gun/ballistic/revolver/mateba)
 
 /obj/effect/spawner/lootdrop/gambling
 	name = "gambling valuables spawner"
@@ -169,7 +170,7 @@
 				)
 
 /obj/effect/spawner/lootdrop/organ_spawner
-	name = "organ spawner"
+	name = "ayylien organ spawner"
 	loot = list(
 		/obj/item/organ/heart/gland/electric = 3,
 		/obj/item/organ/heart/gland/trauma = 4,
@@ -184,6 +185,28 @@
 		/obj/item/organ/body_egg/alien_embryo = 1,
 		/obj/item/organ/regenerative_core = 2)
 	lootcount = 3
+
+/obj/effect/spawner/lootdrop/memeorgans
+	name = "meme organ spawner"
+	loot = list(
+		/obj/item/organ/ears/penguin,
+		/obj/item/organ/ears/cat,
+		/obj/item/organ/eyes/moth,
+		/obj/item/organ/eyes/snail,
+		/obj/item/organ/tongue/bone,
+		/obj/item/organ/tongue/fly,
+		/obj/item/organ/tongue/snail,
+		/obj/item/organ/tongue/lizard,
+		/obj/item/organ/tongue/alien,
+		/obj/item/organ/tongue/ethereal,
+		/obj/item/organ/tongue/robot,
+		/obj/item/organ/tongue/zombie,
+		/obj/item/organ/appendix,
+		/obj/item/organ/liver/fly,
+		/obj/item/organ/lungs/plasmaman,
+		/obj/item/organ/tail/cat,
+		/obj/item/organ/tail/lizard)
+	lootcount = 5
 
 /obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner
 	name = "2% chance xeno egg spawner"

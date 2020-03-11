@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - balance: "rcd silo link tech node now costs 5000 points instead of 25000"

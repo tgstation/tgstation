@@ -1,0 +1,4 @@
+author: "SteelSlayer"
+delete-after: True
+changes: 
+  - code_imp: "Fixes up the label component's code to work as it was intended to."

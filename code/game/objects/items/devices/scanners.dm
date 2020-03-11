@@ -302,15 +302,15 @@ GENE SCANNER
 		var/datum/species/S = H.dna.species
 		var/mutant = H.dna.check_mutation(HULK) \
 			|| S.mutantlungs != initial(S.mutantlungs) \
-			|| S.mutant_brain != initial(S.mutant_brain) \
-			|| S.mutant_heart != initial(S.mutant_heart) \
+			|| S.mutantbrain != initial(S.mutantbrain) \
+			|| S.mutantheart != initial(S.mutantheart) \
 			|| S.mutanteyes != initial(S.mutanteyes) \
 			|| S.mutantears != initial(S.mutantears) \
 			|| S.mutanthands != initial(S.mutanthands) \
 			|| S.mutanttongue != initial(S.mutanttongue) \
-			|| S.mutanttail != initial(S.mutanttail) \
 			|| S.mutantliver != initial(S.mutantliver) \
 			|| S.mutantstomach != initial(S.mutantstomach) \
+			|| S.mutantappendix != initial(S.mutantappendix) \
 			|| S.flying_species != initial(S.flying_species)
 
 		render_list += "<span class='info ml-1'>Species: [S.name][mutant ? "-derived mutant" : ""]</span>\n"

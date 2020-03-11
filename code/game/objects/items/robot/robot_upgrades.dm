@@ -440,19 +440,19 @@
 		if(BP)
 			BP.deactivate(R, user)
 			to_chat(user, "<span class='notice'>You remove the defibrillator unit to make room for the compact upgrade.</span>")
-		var/obj/item/twohanded/shockpaddles/cyborg/S = new(R.module)
+		var/obj/item/shockpaddles/cyborg/S = new(R.module)
 		R.module.basic_modules += S
 		R.module.add_module(S, FALSE, TRUE)
 
 /obj/item/borg/upgrade/defib/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		var/obj/item/twohanded/shockpaddles/cyborg/S = locate() in R.module
+		var/obj/item/shockpaddles/cyborg/S = locate() in R.module
 		R.module.remove_module(S, TRUE)
 		if(backpack)
 			new /obj/item/defibrillator(get_turf(R))
 			qdel(src)
-		
+
 
 /obj/item/borg/upgrade/processor
 	name = "medical cyborg surgical processor"
