@@ -94,8 +94,10 @@
 			return
 	for(var/obj/item/reagent_containers/food/snacks/royalcheese/bigcheese in range(1, src))
 		visible_message("<span class='warning'>[src] devours [bigcheese]! He morphs into something... greater!</span>")
-		var/mob/living/simple_animal/hostile/regalrat = new /mob/living/simple_animal/hostile/regalrat
+		var/mob/living/simple_animal/hostile/regalrat = new /mob/living/simple_animal/hostile/regalrat(loc)
 		regalrat.say("RISE, MY SUBJECTS! SCREEEEEEE!", language = /datum/language/aphasia)
+		if(mind)
+			src.mind.transfer_to(regalrat)
 		qdel(bigcheese)
 		qdel(src)
 		return

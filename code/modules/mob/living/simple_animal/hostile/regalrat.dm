@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/regalrat
-	name = "Regal Rat"
-	desc = "An evolved rat, created through some strange science. It leads nearby rats with deadly efficiency to protect its kingdom."
+	name = "regal rat"
+	desc = "An evolved rat, created through some strange science. It leads nearby rats with deadly efficiency to protect its kingdom. Not technically a king."
 	icon_state = "regalrat"
 	icon_living = "regalrat"
 	icon_dead = "regalrat_dead"
@@ -24,21 +24,27 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	ventcrawler = VENTCRAWLER_ALWAYS
 	faction = list("rat")
-	var/datum/action/innate/regalrat/coffer
+	var/datum/action/cooldown/coffer
+	var/datum/action/cooldown/riot
 
 /mob/living/simple_animal/hostile/regalrat/Initialize()
 	. = ..()
-	coffer = new
+	coffer = new /datum/action/cooldown/coffer
+	riot = new /datum/action/cooldown/riot
 	coffer.Grant(src)
+	riot.Grant(src)
 
-/datum/action/innate/regalrat
-	background_icon_state = "bg_default"
-
-/datum/action/innate/regalrat/coffer
+/datum/action/cooldown/coffer
 	name = "Fill Coffers"
 	desc = "Your newly granted regality and poise let you scavenge for lost junk, but more importantly, cheese."
+	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	background_icon_state = "bg_clock"
+	button_icon_state = "coffer"
+	cooldown_time = 50
 
-/datum/action/innate/regalrat/coffer/Activate()
+/datum/action/cooldown/coffer/Trigger()
+	if(!..())
+		return FALSE
 	var/mob/living/simple_animal/hostile/regalrat/R = owner
 	var/turf/T = get_turf(R)
 	var/loot = rand(1,100) //100 different crates with varying chances of spawning
@@ -46,20 +52,71 @@
 		if(1 to 5)
 			to_chat(R, "<span class='notice'>Score! You find some cheese!</span>")
 			new /obj/item/reagent_containers/food/snacks/cheesewedge(T)
-		if(6 to 20)
+		if(6 to 10)
 			to_chat(R, "<span class='notice'>You find some leftover coins. More for the royal treasury!</span>")
-			new /obj/item/coin/silver(T)
-			new /obj/item/coin/iron(T)
-		if(21)
+			for(var/i = 1 to rand(1,5))
+				new /obj/item/coin/iron(T)
+		if(11)
 			to_chat(R, "<span class='notice'>You find a... Hunh. This coin doesn't look right.</span>")
 			var/rarecoin = rand(1,2)
 			if (rarecoin == 1)
 				new /obj/item/coin/twoheaded(T)
 			else
 				new /obj/item/coin/antagtoken(T)
-		if(22 to 40)
+		if(12 to 40)
 			to_chat(R, "<span class='notice'>You just find more garbage and dirt. Lovely, but beneath you now.</span>")
 			new /obj/effect/decal/cleanable/dirt(T)
 			new /obj/item/trash/can/food/beans(T)
 		if(41 to 100)
 			to_chat(R, "<span class='notice'>Drat. Nothing.</span>")
+			new /obj/effect/decal/cleanable/dirt(T)
+	StartCooldown()
+
+/datum/action/cooldown/riot
+	name = "Raise Army"
+	desc = "Raise an army out of the hordes of mice and pests crawling around the maintenance shafts."
+	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon_state = "riot"
+	background_icon_state = "bg_clock"
+	cooldown_time = 80
+	var/something_from_nothing = FALSE
+
+/datum/action/cooldown/riot/Trigger()
+	if(!..())
+		return FALSE
+	for(var/mob/living/simple_animal/mouse/M in oview(owner, 5))
+		var/mob/living/simple_animal/hostile/R = new /mob/living/simple_animal/hostile/rat(get_turf(M))
+		owner.say("")
+		something_from_nothing = TRUE
+		if(M.mind)
+			M.mind.transfer_to(R)
+		qdel(M)
+	if(!something_from_nothing)
+		new /mob/living/simple_animal/mouse(owner.loc)
+	something_from_nothing = FALSE
+	StartCooldown()
+
+/mob/living/simple_animal/hostile/rat
+	name = "rat"
+	desc = "It's a nasty, ugly, evil, disease-ridden rodent with anger issues."
+	icon_state = "mouse_gray"
+	icon_living = "mouse_gray"
+	icon_dead = "mouse_gray_dead"
+	speak = list("Skree!","SKREEE!","Squeak?")
+	speak_emote = list("squeaks")
+	emote_hear = list("Hisses.")
+	emote_see = list("runs in a circle.", "stands on it's hind legs.")
+	melee_damage_lower = 3
+	melee_damage_upper = 5
+	speak_chance = 1
+	turns_per_move = 5
+	see_in_dark = 6
+	maxHealth = 15
+	health = 15
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/mouse = 1)
+	density = FALSE
+	ventcrawler = VENTCRAWLER_ALWAYS
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	mob_size = MOB_SIZE_TINY
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	faction = list("rat")
