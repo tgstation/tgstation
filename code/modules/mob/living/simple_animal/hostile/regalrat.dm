@@ -47,7 +47,17 @@
 		return FALSE
 	var/mob/living/simple_animal/hostile/regalrat/R = owner
 	var/turf/T = get_turf(R)
-	var/loot = rand(1,100) //100 different crates with varying chances of spawning
+	var/loot = rand(1,100)
+	var/trashpick = list(/obj/item/cigbutt = 1,
+			/obj/item/trash/cheesie = 1,
+			/obj/item/trash/candy = 1,
+			/obj/item/trash/chips = 1,
+			/obj/item/trash/pistachios = 1,
+			/obj/item/trash/plate = 1,
+			/obj/item/trash/popcorn = 1,
+			/obj/item/trash/raisins = 1,
+			/obj/item/trash/sosjerky = 1,
+			/obj/item/trash/syndi_cakes = 1)
 	switch(loot)
 		if(1 to 5)
 			to_chat(R, "<span class='notice'>Score! You find some cheese!</span>")
@@ -64,9 +74,10 @@
 			else
 				new /obj/item/coin/antagtoken(T)
 		if(12 to 40)
+			var/pickedtrash = pick(trashpick)
 			to_chat(R, "<span class='notice'>You just find more garbage and dirt. Lovely, but beneath you now.</span>")
 			new /obj/effect/decal/cleanable/dirt(T)
-			new /obj/item/trash/can/food/beans(T)
+			new pickedtrash(T)
 		if(41 to 100)
 			to_chat(R, "<span class='notice'>Drat. Nothing.</span>")
 			new /obj/effect/decal/cleanable/dirt(T)

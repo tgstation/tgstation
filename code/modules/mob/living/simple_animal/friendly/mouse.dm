@@ -66,6 +66,9 @@
 		if(!stat)
 			var/mob/M = AM
 			to_chat(M, "<span class='notice'>[icon2html(src, M)] Squeak!</span>")
+	if(istype(AM, /obj/item/reagent_containers/food/snacks/royalcheese))
+		evolve()
+		qdel(AM)
 	..()
 
 /mob/living/simple_animal/mouse/handle_automated_action()
@@ -84,25 +87,35 @@
 					visible_message("<span class='warning'>[src] chews through the [C].</span>")
 	for(var/obj/item/reagent_containers/food/snacks/cheesewedge/cheese in range(1, src))
 		if(prob(10))
-			var/cap = CONFIG_GET(number/ratcap)
-			if(LAZYLEN(SSmobs.cheeserats) >= cap)
-				visible_message("<span class='warning'>[src] carefully eats the cheese, hiding it from the [cap] mice on the station!</span>")
-				qdel(cheese)
-				return
-			var/mob/living/newmouse = new /mob/living/simple_animal/mouse(loc)
-			SSmobs.cheeserats += newmouse
-			visible_message("<span class='notice'>[src] nibbles through the [cheese], attracting another mouse!</span>")
+			be_fruitful()
 			qdel(cheese)
 			return
-	for(var/obj/item/reagent_containers/food/snacks/royalcheese/bigcheese in range(1, src))
-		visible_message("<span class='warning'>[src] devours [bigcheese]! He morphs into something... greater!</span>")
-		var/mob/living/simple_animal/hostile/regalrat = new /mob/living/simple_animal/hostile/regalrat(loc)
-		regalrat.say("RISE, MY SUBJECTS! SCREEEEEEE!", language = /datum/language/aphasia)
-		if(mind)
-			src.mind.transfer_to(regalrat)
-		qdel(bigcheese)
-		qdel(src)
+
+/mob/living/simple_animal/mouse/Life(seconds, times_fired)
+	. = ..()
+	if(stat != CONSCIOUS)
 		return
+	for(var/obj/item/reagent_containers/food/snacks/royalcheese/bigcheese in range(1, src))
+		evolve()
+		qdel(bigcheese)
+		return
+
+/mob/living/simple_animal/mouse/proc/be_fruitful()
+	var/cap = CONFIG_GET(number/ratcap)
+	if(LAZYLEN(SSmobs.cheeserats) >= cap)
+		visible_message("<span class='warning'>[src] carefully eats the cheese, hiding it from the [cap] mice on the station!</span>")
+		return
+	var/mob/living/newmouse = new /mob/living/simple_animal/mouse(loc)
+	SSmobs.cheeserats += newmouse
+	visible_message("<span class='notice'>[src] nibbles through the cheese, attracting another mouse!</span>")
+
+/mob/living/simple_animal/mouse/proc/evolve()
+	visible_message("<span class='warning'>[src] devours the cheese! He morphs into something... greater!</span>")
+	var/mob/living/simple_animal/hostile/regalrat = new /mob/living/simple_animal/hostile/regalrat(loc)
+	regalrat.say("RISE, MY SUBJECTS! SCREEEEEEE!")
+	if(src.mind)
+		mind.transfer_to(regalrat)
+	qdel(src)
 
 /*
  * Mouse types
