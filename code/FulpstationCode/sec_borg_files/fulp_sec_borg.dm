@@ -49,7 +49,7 @@
 	if(R.cell.charge < R.cell.use(charge_cost)) //Not enough energy to regenerate reagents.
 		return
 
-	if(reagents.total_volume >= volume)
+	if(volume >= reagents.total_volume) //If we have maximum reagents, we don't use energy to produce any.
 		return
 
 	R.cell.use(charge_cost)
