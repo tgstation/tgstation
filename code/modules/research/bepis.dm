@@ -279,7 +279,7 @@
 	. = TRUE
 
 /obj/item/bepis_voucher
-	name = "reserach voucher"
+	name = "research voucher"
 	desc = "A token to redeem an all expense paid research reward from the BEPIS. Obtained for advancing critical areas in the field of science."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "science_voucher"
