@@ -1,0 +1,4 @@
+author: "LemonInTheDark: applying head to wall, ArcaneDefence: doing the brunt of the debugging and work"
+delete-after: True
+changes: 
+  - bugfix: "Fixes Strange Reagent's inconsistent revival."
