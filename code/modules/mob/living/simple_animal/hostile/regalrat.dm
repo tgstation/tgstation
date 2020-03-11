@@ -34,7 +34,7 @@
 	coffer.Grant(src)
 	riot.Grant(src)
 
-/mob/living/simple_animal/hostile/regalrat/Life()
+/mob/living/simple_animal/hostile/regalrat/handle_automated_action()
 	if(prob(20))
 		riot.Trigger()
 	else if(prob(50))
