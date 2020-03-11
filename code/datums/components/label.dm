@@ -75,7 +75,7 @@
 /datum/component/label/proc/Examine(datum/source, mob/user, list/examine_list)
 	examine_list += "<span class='notice'>It has a label with some words written on it. Use a hand labeler to remove it.</span>"
 
-/// Applys a label to the name of the parent in the format of: "parent_name (label)"
+/// Applies a label to the name of the parent in the format of: "parent_name (label)"
 /datum/component/label/proc/apply_label()
 	var/atom/owner = parent
 	owner.name += " ([label_name])"
