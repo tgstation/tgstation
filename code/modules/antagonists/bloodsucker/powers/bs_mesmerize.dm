@@ -52,7 +52,7 @@
 			to_chat(owner, "<span class='warning'>Your victim is not [(target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKEDEATH))?"alive":"conscious"].</span>")
 		return FALSE
 	// Check: Target has eyes?
-	if (!target.getorganslot("eyes"))
+	if (!target.getorganslot(ORGAN_SLOT_EYES))
 		if (display_error)
 			to_chat(owner, "<span class='warning'>They have no eyes!</span>")
 		return FALSE
