@@ -84,7 +84,7 @@
 						/obj/item/clothing/under/color/lightpurple,
 						/obj/item/toy/crayon/spraycan)
 	var/list/cop_roles = list("Security Officer", "Warden", "Detective", "Head of Security")
-	gang_objective = "We're looking to make a with the security pigs on this station after the shift. We scratch their back, they scratch ours. You feel me? Keep all of security safe from any trouble, and make sure they get out alive."
+	gang_objective = "We're looking to make a deal with the security pigs on this station after the shift. We scratch their back, they scratch ours. You feel me? Keep all of security safe from any trouble, and make sure they get out alive."
 	antag_hud_name = "Ballas"
 
 /datum/antagonist/gang/purple/check_gang_objective()
