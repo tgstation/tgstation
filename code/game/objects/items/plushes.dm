@@ -680,7 +680,7 @@
 
 /obj/item/toy/plush/moth/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins staring deeply into the eyes of [src]!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	if(do_after(user, 50, target = user))
+	if(do_after(user, 50, target = user) && !user.hellbound)
 		souls++
 		switch(souls)
 			if(1 to 2)
