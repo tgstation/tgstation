@@ -363,7 +363,7 @@
 	if( T && prob(turf_removal_chance) )
 		T.ex_act(ex_act_force)
 
-////////////////////////////////////////
+///An anomaly that lubes, drains blood and spews random reagent smoke
 /obj/effect/anomaly/fluid
 	name = "liquescent anomaly"
 	icon_state = "wetball"
