@@ -35,6 +35,8 @@
 	var/obj/item/slimepotion/slime/current_potion
 	var/max_slimes = 5
 	var/monkeys = 0
+	///Boolean shared across all arrays to track if a voucher's been claimed
+	var/static/voucher_claimed = FALSE
 
 	icon_screen = "slime_comp"
 	icon_keyboard = "rd_key"
@@ -185,6 +187,10 @@
 				visible_message("<span class='notice'>You insert [E] into a slot on the [src]. It pings and prints out some research notes worth [E.research] points!</span>")
 				new /obj/item/research_notes(drop_location(), E.research, "xenobiology")
 				SSresearch.slime_already_researched[E.type] = TRUE
+				if(istype(E, /obj/item/slime_extract/rainbow) && voucher_claimed == FALSE)
+					visible_message("<span class='notice'>The data from [E] seems to be quite comprehensive! [src] prints out a reward certificate for the BEPIS!</span>")
+					new /obj/item/bepis_voucher(drop_location(), E.research, "xenobiology")
+					voucher_claimed = TRUE
 				qdel(O)
 				return
 		else

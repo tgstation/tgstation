@@ -65,6 +65,16 @@
 		else
 			say("No account detected on card. Aborting.")
 		return
+	if(istype(O, /obj/item/bepis_voucher))
+		if((SSresearch.techweb_nodes_experimental.len > 0))
+			new /obj/item/disk/tech_disk/major(loc)
+			say("Calculating appropriate reward data. Dispensing technology disk.")
+		else
+			var/reward = pick(minor_rewards)
+			new reward(loc)
+			say("Calculating appropriate reward data. Dispensing supplemental technology.")
+		qdel(O)
+
 	return ..()
 
 /obj/machinery/rnd/bepis/RefreshParts()
@@ -267,3 +277,10 @@
 			account = null
 			say("Account settings reset.")
 	. = TRUE
+
+/obj/item/bepis_voucher
+	name = "reserach voucher"
+	desc = "A token to redeem an all expense paid research reward from the BEPIS. Obtained for advancing critical areas in the field of science."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "science_voucher"
+	w_class = WEIGHT_CLASS_TINY

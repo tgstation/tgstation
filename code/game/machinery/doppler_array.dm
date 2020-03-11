@@ -9,6 +9,8 @@
 	var/max_dist = 150
 	verb_say = "states coldly"
 	var/list/message_log = list()
+	///Boolean shared across all arrays to track if a voucher's been claimed
+	var/static/voucher_claimed = FALSE
 
 /obj/machinery/doppler_array/Initialize()
 	. = ..()
@@ -135,6 +137,10 @@
 		point_gain = (83300 * orig_light_range) / (orig_light_range + 3000)
 	else
 		point_gain = TECHWEB_BOMB_POINTCAP
+		if(voucher_claimed == FALSE)
+			say("Maximum expectations exceeded. Printing research credit.")
+			new /obj/item/bepis_voucher(src.drop_location())
+			voucher_claimed = TRUE
 
 	/*****The Point Capper*****/
 	if(point_gain > linked_techweb.largest_bomb_value)
