@@ -34,6 +34,15 @@
 	coffer.Grant(src)
 	riot.Grant(src)
 
+/mob/living/simple_animal/hostile/regalrat/Life()
+	if(prob(20))
+		riot.Trigger()
+	else if(prob(50))
+		coffer.Trigger()
+
+/**
+  *This action creates trash, money, dirt, and cheese.
+  */
 /datum/action/cooldown/coffer
 	name = "Fill Coffers"
 	desc = "Your newly granted regality and poise let you scavenge for lost junk, but more importantly, cheese."
@@ -45,29 +54,33 @@
 /datum/action/cooldown/coffer/Trigger()
 	if(!..())
 		return FALSE
-	var/mob/living/simple_animal/hostile/regalrat/R = owner
-	var/turf/T = get_turf(R)
+	var/turf/T = get_turf(owner)
 	var/loot = rand(1,100)
-	var/trashpick = list(/obj/item/cigbutt = 1,
-			/obj/item/trash/cheesie = 1,
-			/obj/item/trash/candy = 1,
-			/obj/item/trash/chips = 1,
-			/obj/item/trash/pistachios = 1,
-			/obj/item/trash/plate = 1,
-			/obj/item/trash/popcorn = 1,
-			/obj/item/trash/raisins = 1,
-			/obj/item/trash/sosjerky = 1,
-			/obj/item/trash/syndi_cakes = 1)
+	var/trashpick = list(/obj/item/cigbutt,
+			/obj/item/trash/cheesie,
+			/obj/item/trash/candy,
+			/obj/item/trash/chips,
+			/obj/item/trash/pistachios,
+			/obj/item/trash/plate,
+			/obj/item/trash/popcorn,
+			/obj/item/trash/raisins,
+			/obj/item/trash/sosjerky,
+			/obj/item/trash/syndi_cakes)
+	var/coinpick = list(/obj/item/coin/iron,
+			/obj/item/coin/silver,
+			/obj/item/coin/plastic,
+			/obj/item/coin/titanium)
 	switch(loot)
 		if(1 to 5)
-			to_chat(R, "<span class='notice'>Score! You find some cheese!</span>")
+			to_chat(owner, "<span class='notice'>Score! You find some cheese!</span>")
 			new /obj/item/reagent_containers/food/snacks/cheesewedge(T)
 		if(6 to 10)
-			to_chat(R, "<span class='notice'>You find some leftover coins. More for the royal treasury!</span>")
-			for(var/i = 1 to rand(1,5))
-				new /obj/item/coin/iron(T)
+			var/pickedcoin = pick(coinpick)
+			to_chat(owner, "<span class='notice'>You find some leftover coins. More for the royal treasury!</span>")
+			for(var/i = 1 to rand(1,3))
+				new pickedcoin(T)
 		if(11)
-			to_chat(R, "<span class='notice'>You find a... Hunh. This coin doesn't look right.</span>")
+			to_chat(owner, "<span class='notice'>You find a... Hunh. This coin doesn't look right.</span>")
 			var/rarecoin = rand(1,2)
 			if (rarecoin == 1)
 				new /obj/item/coin/twoheaded(T)
@@ -75,14 +88,17 @@
 				new /obj/item/coin/antagtoken(T)
 		if(12 to 40)
 			var/pickedtrash = pick(trashpick)
-			to_chat(R, "<span class='notice'>You just find more garbage and dirt. Lovely, but beneath you now.</span>")
+			to_chat(owner, "<span class='notice'>You just find more garbage and dirt. Lovely, but beneath you now.</span>")
 			new /obj/effect/decal/cleanable/dirt(T)
 			new pickedtrash(T)
 		if(41 to 100)
-			to_chat(R, "<span class='notice'>Drat. Nothing.</span>")
+			to_chat(owner, "<span class='notice'>Drat. Nothing.</span>")
 			new /obj/effect/decal/cleanable/dirt(T)
 	StartCooldown()
 
+/**
+  *This action checks all nearby mice, and converts them into hostile rats. If no mice are nearby, creates a new one.
+  */
 /datum/action/cooldown/riot
 	name = "Raise Army"
 	desc = "Raise an army out of the hordes of mice and pests crawling around the maintenance shafts."
@@ -97,13 +113,15 @@
 		return FALSE
 	for(var/mob/living/simple_animal/mouse/M in oview(owner, 5))
 		var/mob/living/simple_animal/hostile/R = new /mob/living/simple_animal/hostile/rat(get_turf(M))
-		owner.say("")
 		something_from_nothing = TRUE
 		if(M.mind)
 			M.mind.transfer_to(R)
 		qdel(M)
 	if(!something_from_nothing)
 		new /mob/living/simple_animal/mouse(owner.loc)
+		owner.visible_message("<span class='warning'>[owner] commands a mouse to it's side!</span>")
+	else
+		owner.visible_message("<span class='warning'>[owner] commands it's army to action, mutating them into rats!</span>")
 	something_from_nothing = FALSE
 	StartCooldown()
 
