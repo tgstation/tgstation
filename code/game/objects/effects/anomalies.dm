@@ -8,7 +8,8 @@
 	anchored = TRUE
 	light_range = 3
 
-	var/suspended = FALSE //true for no move and no magic lightning fire explosions. used by anomaly pads
+	///true for no move and no magic lightning fire explosions. used by anomaly pads. Please call Suspend and Unsuspend to change this
+	var/suspended = FALSE 
 	var/movechance = 70
 	var/obj/item/assembly/signaler/anomaly/aSignal = /obj/item/assembly/signaler/anomaly
 	var/area/impact_area
