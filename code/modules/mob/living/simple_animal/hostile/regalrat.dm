@@ -132,7 +132,7 @@
 	for(var/mob/living/simple_animal/mouse/M in oview(owner, 5))
 		var/mob/living/simple_animal/hostile/rat/R = new /mob/living/simple_animal/hostile/rat(get_turf(M))
 		something_from_nothing = TRUE
-		if(M.mind)
+		if(M.mind && stat == CONSCIOUS)
 			M.mind.transfer_to(R)
 		if(istype(owner,/mob/living/simple_animal/hostile/regalrat))
 			var/mob/living/simple_animal/hostile/regalrat/giantrat = owner
