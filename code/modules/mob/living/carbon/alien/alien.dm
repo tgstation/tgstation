@@ -151,59 +151,60 @@ Des: Removes all infected images from the alien.
 	action_icon_state = "alien_evolve_larva"
 
 /obj/effect/proc_holder/alien/evolve/fire(mob/living/carbon/alien/user)
-	var/mob/living/carbon/alien/L = user
-	if(L.handcuffed || L.legcuffed)
+	var/mob/living/carbon/alien/A = user
+	if(A.handcuffed || A.legcuffed)
 		to_chat(user, "<span class='warning'>You cannot evolve when you are cuffed!</span>")
 		return
-
-	if(L.amount_grown >= L.max_grown)	//TODO ~Carn //TODO WHAT YOU FUCK ~Fikou
-		to_chat(L, "<span class='name'>You are growing! It is time to choose a caste.</span>")
-		var/alien_caste = input(src, "Please choose which alien caste you shall belong to.", "Text", default_class) as null|anything in evolution_paths
-		if(user.incapacitated()) //something happened to us while we were choosing.
-			return
-		var/mob/living/carbon/alien/new_xeno
-		if(!alien_caste || !(alien_caste in evolution_paths))
+	if(islarva(A))
+		var/mob/living/carbon/alien/larva/L
+		if(!(L.amount_grown >= L.max_grown))	//TODO ~Carn //TODO WHAT YOU FUCK ~Fikou
+			to_chat(user, "<span class='warning'>You are not fully grown!</span>")
 			return 0
-		if(!isturf(user.loc))
-			to_chat(user, "<span class='warning'>You can't evolve here!</span>")
-			return 0
-		switch(alien_caste)
-			if("Larva")
-				new_xeno = new /mob/living/carbon/alien/larva(L.loc)
-			if("Sentinel")
-				new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(L.loc)
-			if("Drone")
-				new_xeno = new /mob/living/carbon/alien/humanoid/drone(L.loc)
-			if("Hunter")
-				new_xeno = new /mob/living/carbon/alien/humanoid/hunter(L.loc)
-			if("Praetorian")
-				var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)
-				if(!node) //Players are Murphy's Law. We may not expect there to ever be a living xeno with no hivenode, but they _WILL_ make it happen.
-					to_chat(user, "<span class='danger'>Without the hivemind, you can't possibly hold the responsibility of leadership!</span>")
-					return 0
-				if(!get_alien_type(/mob/living/carbon/alien/humanoid/royal))
-					new_xeno = new /mob/living/carbon/alien/humanoid/royal/praetorian(L.loc)
-				else
-					to_chat(user, "<span class='warning'>We already have a living royal!</span>")
-					return 0
-			if("Queen")
-				var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)
-				if(!node) //Just in case this particular Praetorian gets violated and kept by the RD as a replacement for Lamarr.
-					to_chat(user, "<span class='warning'>Without the hivemind, you would be unfit to rule as queen!</span>")
-					return 0
-				if(node.recent_queen_death)
-					to_chat(user, "<span class='warning'>You are still too burdened with guilt to evolve into a queen.</span>")
-					return 0
-				if(!get_alien_type(/mob/living/carbon/alien/humanoid/royal/queen))
-					new_xeno = new /mob/living/carbon/alien/humanoid/royal/queen(L.loc)
-				else
-					to_chat(user, "<span class='warning'>We already have an alive queen!</span>")
-					return 0
-			else
-				to_chat(user, "<span class='warning'>Something went very wrong, you tried to become a xeno type you shouldn't be! Yell at the coders.</span>")
+	to_chat(L, "<span class='name'>You are growing! It is time to choose a caste.</span>")
+	var/alien_caste = input(src, "Please choose which alien caste you shall belong to.", "Text") as null|anything in evolution_paths
+	if(user.incapacitated()) //something happened to us while we were choosing.
+		return
+	var/mob/living/carbon/alien/new_xeno
+	if(!alien_caste || !(alien_caste in evolution_paths))
+		return 0
+	if(!isturf(user.loc))
+		to_chat(user, "<span class='warning'>You can't evolve here!</span>")
+		return 0
+	switch(alien_caste)
+		if("Larva")
+			new_xeno = new /mob/living/carbon/alien/larva(L.loc)
+		if("Sentinel")
+			new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(L.loc)
+		if("Drone")
+			new_xeno = new /mob/living/carbon/alien/humanoid/drone(L.loc)
+		if("Hunter")
+			new_xeno = new /mob/living/carbon/alien/humanoid/hunter(L.loc)
+		if("Praetorian")
+			var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)
+			if(!node) //Players are Murphy's Law. We may not expect there to ever be a living xeno with no hivenode, but they _WILL_ make it happen.
+				to_chat(user, "<span class='danger'>Without the hivemind, you can't possibly hold the responsibility of leadership!</span>")
 				return 0
+			if(!get_alien_type(/mob/living/carbon/alien/humanoid/royal))
+				new_xeno = new /mob/living/carbon/alien/humanoid/royal/praetorian(L.loc)
+			else
+				to_chat(user, "<span class='warning'>We already have a living royal!</span>")
+				return 0
+		if("Queen")
+			var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)
+			if(!node) //Just in case this particular Praetorian gets violated and kept by the RD as a replacement for Lamarr.
+				to_chat(user, "<span class='warning'>Without the hivemind, you would be unfit to rule as queen!</span>")
+				return 0
+			if(node.recent_queen_death)
+				to_chat(user, "<span class='warning'>You are still too burdened with guilt to evolve into a queen.</span>")
+				return 0
+			if(!get_alien_type(/mob/living/carbon/alien/humanoid/royal/queen))
+				new_xeno = new /mob/living/carbon/alien/humanoid/royal/queen(L.loc)
+			else
+				to_chat(user, "<span class='warning'>We already have an alive queen!</span>")
+				return 0
+		else
+			to_chat(user, "<span class='warning'>Something went very wrong, you tried to become a xeno type you shouldn't be! Yell at the coders.</span>")
+			return 0
 		L.alien_evolve(new_xeno)
 		return 0
-	else
-		to_chat(user, "<span class='warning'>You are not fully grown!</span>")
-		return 0
+
