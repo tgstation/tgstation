@@ -96,8 +96,8 @@
 	if(stat != CONSCIOUS)
 		return
 	for(var/obj/item/reagent_containers/food/snacks/royalcheese/bigcheese in range(1, src))
-		evolve()
 		qdel(bigcheese)
+		evolve()
 		return
 
 /**

@@ -37,6 +37,11 @@
 	coffer.Grant(src)
 	riot.Grant(src)
 	faction_num = rand(1,999)
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the Royal Rat, cheesey be his crown?", ROLE_SENTIENCE, null, FALSE, 100, POLL_IGNORE_SENTIENCE_POTION)
+	if(LAZYLEN(candidates))
+		var/mob/dead/observer/C = pick(candidates)
+		src.key = C.key
+		notify_ghosts("All rise for the rat king, ascendant to the throne in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Rat Created")
 
 /mob/living/simple_animal/hostile/regalrat/handle_automated_action()
 	if(prob(20))
@@ -46,15 +51,17 @@
 	. = ..()
 
 /mob/living/simple_animal/hostile/regalrat/CanAttack(atom/the_target)
-	if(istype(the_target, /mob/living/simple_animal/hostile/regalrat))
-		return TRUE
-	if(istype(the_target, /mob/living/simple_animal/hostile/rat))
-		var/mob/living/simple_animal/hostile/rat/R = the_target
-		if(R.faction_num == faction_num)
-			return FALSE
-		else
+	if(istype(the_target,/mob/living/simple_animal))
+		var/mob/living/A = the_target
+		if(istype(the_target, /mob/living/simple_animal/hostile/regalrat) && A.stat == CONSCIOUS)
 			return TRUE
-	. = ..()
+		if(istype(the_target, /mob/living/simple_animal/hostile/rat) && A.stat == CONSCIOUS)
+			var/mob/living/simple_animal/hostile/rat/R = the_target
+			if(R.faction_num == faction_num)
+				return FALSE
+			else
+				return TRUE
+		. = ..()
 
 /**
   *This action creates trash, money, dirt, and cheese.
@@ -82,18 +89,27 @@
 			/obj/item/trash/raisins,
 			/obj/item/trash/sosjerky,
 			/obj/item/trash/syndi_cakes)
+	var/static/coinpick = list(/obj/item/coin/iron,
+			/obj/item/coin/silver,
+			/obj/item/coin/plastic,
+			/obj/item/coin/titanium)
 	switch(loot)
 		if(1 to 5)
 			to_chat(owner, "<span class='notice'>Score! You find some cheese!</span>")
 			new /obj/item/reagent_containers/food/snacks/cheesewedge(T)
-		if(6)
+		if(6 to 10)
+			var/pickedcoin = pick(coinpick)
+			to_chat(owner, "<span class='notice'>You find some leftover coins. More for the royal treasury!</span>")
+			for(var/i = 1 to rand(1,3))
+				new pickedcoin(T)
+		if(11)
 			to_chat(owner, "<span class='notice'>You find a... Hunh. This coin doesn't look right.</span>")
 			var/rarecoin = rand(1,2)
 			if (rarecoin == 1)
 				new /obj/item/coin/twoheaded(T)
 			else
 				new /obj/item/coin/antagtoken(T)
-		if(7 to 40)
+		if(12 to 40)
 			var/pickedtrash = pick(trashpick)
 			to_chat(owner, "<span class='notice'>You just find more garbage and dirt. Lovely, but beneath you now.</span>")
 			new /obj/effect/decal/cleanable/dirt(T)
@@ -165,16 +181,35 @@
 	var/faction_num
 
 /mob/living/simple_animal/hostile/rat/CanAttack(atom/the_target)
-	if(istype(the_target, /mob/living/simple_animal/hostile/regalrat))
-		var/mob/living/simple_animal/hostile/regalrat/R = the_target
-		if(R.faction_num == faction_num)
-			return FALSE
-		else
-			return TRUE
-	if(istype(the_target, /mob/living/simple_animal/hostile/rat))
-		var/mob/living/simple_animal/hostile/rat/R = the_target
-		if(R.faction_num == faction_num)
-			return FALSE
-		else
-			return TRUE
+	if(istype(the_target,/mob/living/simple_animal))
+		var/mob/living/A = the_target
+		if(istype(the_target, /mob/living/simple_animal/hostile/regalrat) && A.stat == CONSCIOUS)
+			var/mob/living/simple_animal/hostile/regalrat/R = the_target
+			if(R.faction_num == faction_num)
+				return FALSE
+			else
+				return TRUE
+		if(istype(the_target, /mob/living/simple_animal/hostile/rat) && A.stat == CONSCIOUS)
+			var/mob/living/simple_animal/hostile/rat/R = the_target
+			if(R.faction_num == faction_num)
+				return FALSE
+			else
+				return TRUE
 	. = ..()
+
+/mob/living/simple_animal/hostile/rat/handle_automated_action()
+	. = ..()
+	if(prob(40))
+		var/turf/open/floor/F = get_turf(src)
+		if(istype(F) && !F.intact)
+			var/obj/structure/cable/C = locate() in F
+			if(C && prob(15))
+				if(C.avail())
+					visible_message("<span class='warning'>[src] chews through the [C]. It's toast!</span>")
+					playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
+					C.deconstruct()
+					death()
+			else if(C.avail())
+				visible_message("<span class='warning'>[src] chews through the [C]. It looks unharmed!</span>")
+				playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
+				C.deconstruct()
