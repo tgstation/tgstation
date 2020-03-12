@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - bugfix: "Wand of nothing on the theatre stage on Donut can now be used by pacifists"
