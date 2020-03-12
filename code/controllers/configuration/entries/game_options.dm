@@ -390,3 +390,18 @@
 	min_val = 0
 
 /datum/config_entry/flag/dynamic_config_enabled
+
+/datum/config_entry/string/dwarves_flavour_text
+	config_entry_value = "Milennia have passed since your grand civilization last stood. \
+	You remember the prophecies of a great disaster, in fear of death you volountereed for your blood to be sealed within the lava sarcophagus. \
+	Last thing you remember is a bright light before you awakened from slumber, even though the sarcophagus is damaged it can still revive your dead brotheren. \
+	Now you are filled with the desire to expand and regrow your civilization once more. Expand and crush whoever steps on your path, but remember Gold is worth more than blood!<br>\
+	FOR MORE INFORMATION REGARDING DWARVES CHECK OUT THE WIKI ARTICLE: https://tgstation13.org/wiki/Dwarf "
+
+/datum/config_entry/string/dwarves_tenants
+	config_entry_value = "<span class='warning'><B>As a dwarf you must follow these 5 tenats:</B><br> \
+						You may never kill or maim another dwarf intentionally outside of a duel!<br> \
+						Your honor shall never be shattered!<br> \
+						Expand your emprire and crush anyone who resists!<br> \
+						Foreigners are not welcome in your territory!<br> \
+						You may never leave this ashen land for it is your homeland!<br>" \

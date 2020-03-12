@@ -43,18 +43,17 @@
 	mob_species = /datum/species/dwarf
 	outfit = /datum/outfit/dwarven
 	short_desc = "You are an ancient dwarf awakened from your slumber to regrow your once grand empire."
-	flavour_text = "Milennia have passed since your grand civilization last stood. \
-	You remember the prophecies of a great disaster, in fear of death you volountereed for your blood to be sealed within the lava sarcophagus. \
-	Last thing you remember is a bright light before you awakened from slumber, even though the sarcophagus is damaged it can still revive your dead brotheren. \
-	Now you are filled with the desire to expand and regrow your civilization once more. Expand and crush whoever steps on your path, but remember Gold is worth more than blood!\
-	For more information regarding dwarves check out the wiki article: https://tgstation13.org/wiki/Dwarf "
+	flavour_text = ""
 	assignedrole = "Dwarf"
 
 /obj/effect/mob_spawn/human/dwarven_sarcophagus/Initialize(mapload)
 	. = ..()
+	flavour_text = CONFIG_GET(string/dwarves_flavour_text)
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("A Dwarf is ready to awaken at [A.name]", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_DWARF)
+	if(mapload)
+		GLOB.dwarven_empire.show_roundend_report = TRUE // We want it to show if dwarves are available
 
 /obj/effect/mob_spawn/human/dwarven_sarcophagus/special(mob/living/new_spawn)
 

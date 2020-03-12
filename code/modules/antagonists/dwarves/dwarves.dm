@@ -2,7 +2,7 @@ GLOBAL_DATUM_INIT(dwarven_empire,/datum/team/dwarves,new) //All dorfs are one bi
 
 /datum/team/dwarves
 	name = "Dwarven Empire"
-	show_roundend_report = TRUE // FALSE until i figure out the multiple dwarven empires bug
+	show_roundend_report = FALSE // FALSE until i figure out the multiple dwarven empires bug
 
 /datum/antagonist/dwarf
 	name = "Dwarf"
@@ -22,9 +22,5 @@ GLOBAL_DATUM_INIT(dwarven_empire,/datum/team/dwarves,new) //All dorfs are one bi
 	return dwarf_team
 
 /datum/antagonist/dwarf/greet()
-	to_chat(owner.current, "<span class='warning'>As a dwarf you must follow these 5 tenats:</span><br>")
-	to_chat(owner.current, "<span class='warning'>You may never kill or maim another dwarf intentionally outside of a duel!</span><br>")
-	to_chat(owner.current, "<span class='warning'>Fortune is worth more than spilt blood!</span><br>")
-	to_chat(owner.current, "<span class='warning'>Expand your emprire and crush anyone who resists!</span><br>")
-	to_chat(owner.current, "<span class='warning'>Trade and barter with foreigners, force shall be applied only when they provoke you!</span><br>")
-	to_chat(owner.current, "<span class='warning'>You may never leave this ashen land for it is your homeland!</span><br>")
+	var/message = CONFIG_GET(string/dwarves_tenants)
+	to_chat(owner.current, message)
