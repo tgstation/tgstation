@@ -257,7 +257,7 @@
 	// Soul
 	owner.current.hellbound = TRUE
 	owner.hasSoul = FALSE 		// If false, renders the character unable to sell their soul.
-	owner.isholy = FALSE 		// is this person a chaplain or admin role allowed to use bibles
+	owner.holy_role = FALSE 		// is this person a chaplain or admin role allowed to use bibles
 
 	// Disabilities
 	CureDisabilities()
