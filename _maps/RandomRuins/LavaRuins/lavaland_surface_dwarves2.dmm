@@ -10,17 +10,17 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "aA" = (
-/obj/structure/stone_tile/block{
+/obj/structure/stone_tile/surrounding_tile{
 	dir = 8
 	},
-/obj/structure/stone_tile/cracked{
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 1
 	},
-/obj/structure/stone_tile,
-/obj/item/pickaxe,
-/obj/effect/mapping_helpers/no_lava,
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/dwarves)
 "aE" = (
 /obj/structure/stone_tile/block{
@@ -161,6 +161,18 @@
 /obj/effect/mapping_helpers/no_lava,
 /obj/effect/mapping_helpers/no_lava,
 /turf/closed/mineral/volcanic/lava_land_surface,
+/area/ruin/unpowered/dwarves)
+"fJ" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/dwarves)
 "gc" = (
 /obj/effect/mapping_helpers/no_lava,
@@ -567,6 +579,26 @@
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
+"yc" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked,
+/turf/open/lava/smooth/lava_land_surface,
+/area/ruin/unpowered/dwarves)
+"yi" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/ruin/unpowered/dwarves)
 "yk" = (
 /obj/structure/stone_tile/block{
 	dir = 8
@@ -716,6 +748,19 @@
 	},
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/dwarves)
+"Ci" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/dwarves)
 "Cp" = (
 /obj/structure/stone_tile/block{
@@ -884,6 +929,19 @@
 /obj/item/stack/ore/titanium,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
+"GB" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/turf/open/lava/smooth/lava_land_surface,
+/area/ruin/unpowered/dwarves)
 "Im" = (
 /obj/structure/stone_tile/slab/cracked,
 /obj/item/stack/sheet/mineral/wood,
@@ -926,17 +984,10 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/dwarves)
 "Js" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile,
 /obj/effect/mob_spawn/human/dwarven_sarcophagus,
-/obj/effect/mapping_helpers/no_lava,
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/obj/structure/stone_tile/surrounding/cracked,
+/obj/structure/stone_tile/cracked,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/dwarves)
 "JF" = (
 /obj/structure/stone_tile/surrounding_tile/cracked{
@@ -1032,6 +1083,16 @@
 	},
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/dwarves)
+"Ls" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/dwarves)
 "Lx" = (
 /obj/structure/stone_tile/surrounding_tile,
@@ -1235,6 +1296,19 @@
 /obj/item/stack/ore/silver,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
+"Um" = (
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/ruin/unpowered/dwarves)
 "UL" = (
 /obj/structure/stone_tile/block{
 	dir = 8
@@ -1818,9 +1892,9 @@ gy
 OF
 zN
 Wj
-Wj
-nC
-UQ
+Um
+fJ
+Ci
 UQ
 UQ
 UQ
@@ -1852,9 +1926,9 @@ zB
 zv
 Cr
 rU
-rU
+yi
 Js
-UQ
+yc
 UQ
 qw
 qw
@@ -1887,8 +1961,8 @@ zv
 EH
 Wj
 aA
-Wj
-qw
+Ls
+GB
 qw
 qw
 qw
