@@ -1,5 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - bugfix: "Removes two Box chem factory cameras from xeno and RD networks"
-  - tweak: "Adds Box chem factory, pharmacy and med sec post to medbay network (listed on CMO telescreen)"
