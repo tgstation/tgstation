@@ -44377,7 +44377,7 @@
 	dir = 8
 	},
 /obj/item/toy/figure/mime,
-/obj/item/gun/magic/wand,
+/obj/item/gun/magic/wand/nothing,
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
 "caf" = (

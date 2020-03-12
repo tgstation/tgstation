@@ -1,0 +1,4 @@
+author: "RaveRadbury"
+delete-after: True
+changes: 
+  - bugfix: "prisoner slots can no longer be opened on the HOP console"
