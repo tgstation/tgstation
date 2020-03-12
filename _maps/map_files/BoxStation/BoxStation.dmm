@@ -1554,8 +1554,9 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "/area/security/prison";
+	dir = 1;
 	name = "Prison Wing APC";
-	pixel_y = 26
+	pixel_y = 23
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
