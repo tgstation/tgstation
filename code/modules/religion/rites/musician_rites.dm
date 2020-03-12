@@ -61,7 +61,7 @@
 		L.adjustFireLoss(-healy_juice)
 
 /datum/religion_rites/song_tuner/pain
-	name = "Song of Pain"
+	name = "Sorrow Song"
 	desc = "Sing a melancholic song, hurting those around you. Works less effectively on fellow priests."
 	repeats_okay = FALSE
 
