@@ -10,7 +10,6 @@
 	layer = ABOVE_MOB_LAYER
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/medical_kiosk
-	payment_department = ACCOUNT_MED
 	var/obj/item/scanner_wand
 	var/default_price = 15          //I'm defaulting to a low price on this, but in the future I wouldn't have an issue making it more or less expensive.
 	var/active_price = 15           //Change by using a multitool on the board.
@@ -20,46 +19,17 @@
 	var/scan_active_2 = FALSE 		//as above, symptom scan
 	var/scan_active_3 = FALSE    	//as above, radiological scan
 	var/scan_active_4 = FALSE		//as above, chemical/hallucinations.
-	var/paying_customer = FALSE		//Ticked yes if passing inuse()
 
-	var/datum/bank_account/account  //payer's account.
-	var/mob/living/carbon/human/H   //The person using the console in each instance. Used for paying for the kiosk.
 	var/mob/living/carbon/human/altPatient   //If scanning someone else, this will be the target.
-	var/obj/item/card/id/C          //the account of the person using the console.
 
 /obj/machinery/medical_kiosk/Initialize() //loaded subtype for mapping use
 	. = ..()
 	scanner_wand = new/obj/item/scanner_wand(src)
 
 /obj/machinery/medical_kiosk/proc/inuse()  //Verifies that the user can use the interface, followed by showing medical information.
-	if (pandemonium == TRUE)
-		active_price += (rand(10,30)) //The wheel of capitalism says health care ain't cheap.
-	if(!istype(C))
-		say("No ID card detected.") // No unidentified crew.
-		return
-	if(C.registered_account)
-		account = C.registered_account
-	else
-		say("No account detected.")  //No homeless crew.
-		return
-	if(account?.account_job?.paycheck_department == payment_department)
-		use_power(20)
-		paying_customer = TRUE
-		say("Hello, esteemed medical staff!")
-		RefreshParts()
-		return
-	if(!account.has_money(active_price))
-		say("You do not possess the funds to purchase this.")  //No jobless crew, either.
-		return
-	else
-		account.adjust_money(-active_price)
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_MED)
-		if(D)
-			D.adjust_money(active_price)
-		use_power(20)
-		paying_customer = TRUE
+	use_power(20)
+	say("Hello, esteemed crew member!")
 	icon_state = "kiosk_active"
-	say("Thank you for your patronage!")
 	RefreshParts()
 	return
 
@@ -176,8 +146,6 @@
 		ui.open()
 		icon_state = "kiosk_off"
 		RefreshParts()
-		H = user
-		C = H.get_idcard(TRUE)
 
 /obj/machinery/medical_kiosk/ui_data(mob/living/carbon/human/user)
 	var/list/data = list()
@@ -336,24 +304,16 @@
 	switch(action)
 		if("beginScan_1")
 			inuse()
-			if(paying_customer == TRUE)
-				scan_active_1 = TRUE
-				paying_customer = FALSE
+			scan_active_1 = TRUE
 		if("beginScan_2")
 			inuse()
-			if(paying_customer == TRUE)
-				scan_active_2 = TRUE
-				paying_customer = FALSE
+			scan_active_2 = TRUE
 		if("beginScan_3")
 			inuse()
-			if(paying_customer == TRUE)
-				scan_active_3 = TRUE
-				paying_customer = FALSE
+			scan_active_3 = TRUE
 		if("beginScan_4")
 			inuse()
-			if(paying_customer == TRUE)
-				scan_active_4 = TRUE
-				paying_customer = FALSE
+			scan_active_4 = TRUE
 		if("clearTarget")
 			altPatient = null
 			clearScans()

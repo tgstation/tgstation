@@ -8,7 +8,6 @@
 	var/giftwrapped = FALSE
 	var/sortTag = 0
 	var/obj/item/paper/note
-	var/obj/item/barcode/sticker
 
 /obj/structure/bigDelivery/interact(mob/user)
 	to_chat(user, "<span class='notice'>You start to unwrap the package...</span>")
@@ -16,7 +15,6 @@
 		return
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
-	unwrap_contents()
 	qdel(src)
 
 /obj/structure/bigDelivery/Destroy()
@@ -37,8 +35,6 @@
 		else
 			. += "There's a [note.name] attached to it..."
 			. += note.examine(user)
-	if(sticker)
-		. += "There's a barcode attached to the side."
 
 /obj/structure/bigDelivery/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/destTagger))
@@ -101,17 +97,10 @@
 		O.forceMove(loc)
 		playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 		new /obj/effect/decal/cleanable/wrapping(get_turf(user))
-		unwrap_contents()
 		qdel(src)
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
 			to_chat(user, "<span class='warning'>You fail to remove [O]'s wrapping!</span>")
-
-/obj/structure/bigDelivery/proc/unwrap_contents()
-	if(!sticker)
-		return
-	for(var/obj/I in src.GetAllContents())
-		SEND_SIGNAL(I, COMSIG_STRUCTURE_UNWRAPPED)
 
 /obj/item/smallDelivery
 	name = "parcel"
@@ -122,7 +111,6 @@
 	var/giftwrapped = 0
 	var/sortTag = 0
 	var/obj/item/paper/note
-	var/obj/item/barcode/sticker
 
 /obj/item/smallDelivery/contents_explosion(severity, target)
 	for(var/atom/movable/AM in contents)
@@ -133,7 +121,6 @@
 	if(!do_after(user, 15, target = user))
 		return
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
-	unwrap_contents()
 	for(var/X in contents)
 		var/atom/movable/AM = X
 		user.put_in_hands(AM)
@@ -154,7 +141,6 @@
 			AM.forceMove(src.loc)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
-	unwrap_contents()
 	qdel(src)
 
 /obj/item/smallDelivery/examine(mob/user)
@@ -165,8 +151,6 @@
 		else
 			. += "There's a [note.name] attached to it..."
 			. += note.examine(user)
-	if(sticker)
-		. += "There's a barcode attached to the side."
 
 /obj/item/smallDelivery/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/destTagger))
@@ -213,12 +197,6 @@
 		if(giftwrapped)
 			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
 		add_overlay(overlaystring)
-
-/obj/item/smallDelivery/proc/unwrap_contents()
-	if(!sticker)
-		return
-	for(var/obj/I in src.GetAllContents())
-		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
 
 /obj/item/destTagger
 	name = "destination tagger"

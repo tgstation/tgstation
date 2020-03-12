@@ -282,14 +282,6 @@
 #define COMSIG_TOOL_IN_USE "tool_in_use"						///from base of [/obj/item/proc/tool_check_callback]: (mob/living/user)
 #define COMSIG_TOOL_START_USE "tool_start_use"					///from base of [/obj/item/proc/tool_start_check]: (mob/living/user)
 
-// /obj/item signals for economy
-#define COMSIG_ITEM_SOLD "item_sold"							//called when an item is sold by the exports subsystem
-#define COMSIG_STRUCTURE_UNWRAPPED "structure_unwrapped"		//called when a wrapped up structure is opened by hand
-#define COMSIG_ITEM_UNWRAPPED "item_unwrapped"					//called when a wrapped up item is opened by hand
-	#define COMSIG_ITEM_SPLIT_VALUE  1
-#define COMSIG_ITEM_SPLIT_PROFIT "item_split_profits"			//Called when getting the item's exact ratio for cargo's profit.
-
-
 // /obj/item/clothing signals
 #define COMSIG_SHOES_STEP_ACTION "shoes_step_action"			//from base of obj/item/clothing/shoes/proc/step_action(): ()
 #define COMSIG_SUIT_SPACE_TOGGLE "suit_space_toggle"			//from base of /obj/item/clothing/suit/space/proc/toggle_spacesuit(): (obj/item/clothing/suit/space/suit)
