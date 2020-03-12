@@ -13,6 +13,8 @@
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/apply_moodlet)
 
 /datum/component/art/proc/apply_moodlet(mob/M, impress)
+	if(!isliving(M))
+		return
 	M.visible_message("<span class='notice'>[M] stops and looks intently at [parent].</span>", \
 						 "<span class='notice'>You stop to take in [parent].</span>")
 	switch(impress)
@@ -42,6 +44,8 @@
 /datum/component/art/rev
 
 /datum/component/art/rev/apply_moodlet(mob/M, impress)
+	if(!isliving(M))
+		return
 	M.visible_message("<span class='notice'>[M] stops to inspect [parent].</span>", \
 						 "<span class='notice'>You take in [parent], inspecting the fine craftsmanship of the proletariat.</span>")
 
