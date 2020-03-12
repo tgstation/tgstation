@@ -99380,7 +99380,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple,
-/obj/machinery/rnd/bepis,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "dFY" = (

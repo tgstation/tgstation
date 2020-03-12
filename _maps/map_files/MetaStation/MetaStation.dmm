@@ -73736,7 +73736,6 @@
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "obb" = (
-/obj/machinery/rnd/bepis,
 /turf/open/floor/circuit,
 /area/science/misc_lab/range)
 "obv" = (
@@ -76396,7 +76395,6 @@
 /area/maintenance/port/aft)
 "tVY" = (
 /obj/structure/table,
-/obj/item/storage/bag/money,
 /turf/open/floor/circuit,
 /area/science/misc_lab/range)
 "tXK" = (

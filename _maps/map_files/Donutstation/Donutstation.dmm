@@ -22490,10 +22490,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/security)
-"aYZ" = (
-/obj/machinery/rnd/bepis,
-/turf/open/floor/engine,
-/area/science/explab)
 "aZa" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -76245,7 +76241,7 @@ aCh
 aCM
 bTU
 acp
-aYZ
+acw
 acw
 adk
 adG

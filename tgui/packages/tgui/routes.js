@@ -12,7 +12,6 @@ import { AtmosPump } from './interfaces/AtmosPump';
 import { BankMachine } from './interfaces/BankMachine';
 import { BlackmarketUplink } from './interfaces/BlackmarketUplink';
 import { BluespaceArtillery } from './interfaces/BluespaceArtillery';
-import { Bepis } from './interfaces/Bepis';
 import { BorgPanel } from './interfaces/BorgPanel';
 import { BrigTimer } from './interfaces/BrigTimer';
 import { Canister } from './interfaces/Canister';
@@ -169,10 +168,6 @@ const ROUTES = {
   },
   atmos_pump: {
     component: () => AtmosPump,
-    scrollable: false,
-  },
-  bepis: {
-    component: () => Bepis,
     scrollable: false,
   },
   bank_machine: {

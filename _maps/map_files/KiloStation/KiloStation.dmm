@@ -25030,7 +25030,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/machinery/rnd/bepis,
+/obj/structure/fluff/hedge,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hor)
 "aNB" = (

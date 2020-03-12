@@ -37370,9 +37370,6 @@
 	},
 /turf/open/floor/plating,
 /area/security/checkpoint/engineering)
-"bTl" = (
-/turf/open/floor/engine,
-/area/science/misc_lab)
 "bTo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -51843,7 +51840,6 @@
 	},
 /area/science/research)
 "qbW" = (
-/obj/machinery/rnd/bepis,
 /turf/open/floor/engine,
 /area/science/misc_lab)
 "qcV" = (
@@ -101291,10 +101287,10 @@ uCq
 bYm
 uvi
 cbb
-bTl
+qbW
 eyF
-bTl
-bTl
+qbW
+qbW
 bQZ
 cgt
 cvO
@@ -101548,9 +101544,9 @@ bYj
 bYl
 uvi
 cbb
-bTl
-bTl
-bTl
+qbW
+qbW
+qbW
 ceQ
 bQZ
 cOe
@@ -101805,10 +101801,10 @@ bPs
 bYo
 bSc
 cbb
-bTl
+qbW
 tKG
-bTl
-bTl
+qbW
+qbW
 bQZ
 cgu
 chA
@@ -102316,10 +102312,10 @@ oUq
 bQZ
 ulo
 bQZ
-bTl
+qbW
 bTo
 cbb
-bTl
+qbW
 bQZ
 cmo
 cNW
@@ -102573,10 +102569,10 @@ wfU
 bQZ
 tbd
 bQZ
-bTl
+qbW
 bTo
 sSW
-bTl
+qbW
 bQZ
 cOe
 cNW
@@ -102830,9 +102826,9 @@ bVs
 bQZ
 bXt
 caX
-bTl
+qbW
 itG
-bTl
+qbW
 cbV
 bQZ
 cOe
@@ -103089,8 +103085,8 @@ oHU
 bZc
 qbW
 kLM
-bTl
-bTl
+qbW
+qbW
 bQZ
 cOe
 ceR
@@ -103342,12 +103338,12 @@ vPE
 kwK
 bVt
 bQZ
-bTl
-bTl
-bTl
-bTl
-bTl
-bTl
+qbW
+qbW
+qbW
+qbW
+qbW
+qbW
 bQZ
 cOx
 sLv
