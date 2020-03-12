@@ -31,7 +31,8 @@
 		if(Q.stat == DEAD)
 			continue
 		if(Q.client)
-			name = "alien princess ([rand(1, 999)])"	//if this is too cutesy feel free to change it/remove it.
+			name = "alien princess"	//if this is too cutesy feel free to change it/remove it.
+			set_name()
 			break
 
 	real_name = src.name

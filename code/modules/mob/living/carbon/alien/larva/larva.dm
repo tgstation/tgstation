@@ -16,13 +16,12 @@
 
 	rotate_on_lying = 0
 	bodyparts = list(/obj/item/bodypart/chest/larva, /obj/item/bodypart/head/larva)
-
+	evolution_paths = list("Hunter", "Sentinel", "Drone")
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/larva/Initialize()
 
 	AddAbility(new/obj/effect/proc_holder/alien/hide(null))
-	AddAbility(new/obj/effect/proc_holder/alien/larva_evolve(null))
 	. = ..()
 
 /mob/living/carbon/alien/larva/create_internal_organs()
