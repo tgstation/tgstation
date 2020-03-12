@@ -94,14 +94,14 @@
 	data["BossID"] = "boss[boss_id].gif"
 	return data
 
-/datum/computer_file/program/arcade/ui_act(action, list/params, mob/user)
+/datum/computer_file/program/arcade/ui_act(action, list/params)
 	if(..())
 		return TRUE
 	var/obj/item/computer_hardware/printer/printer
 	if(computer)
 		printer = computer.all_components[MC_PRINT]
 
-	var/gamerSkillLevel = user.mind?.get_skill_level(/datum/skill/gaming)
+	var/gamerSkillLevel = usr.mind?.get_skill_level(/datum/skill/gaming)
 	var/gamerSkill = usr.mind?.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
 	switch(action)
 		if("Attack")
@@ -157,11 +157,11 @@
 				computer.visible_message("<span class='notice'>\The [computer] prints out paper.</span>")
 				if(ticket_count >= 1)
 					new /obj/item/stack/arcadeticket((get_turf(computer)), 1)
-					to_chat(user, "<span class='notice'>[src] dispenses a ticket!</span>")
+					to_chat(usr, "<span class='notice'>[src] dispenses a ticket!</span>")
 					ticket_count -= 1
 					printer.stored_paper -= 1
 				else
-					to_chat(user, "<span class='notice'>You don't have any stored tickets!</span>")
+					to_chat(usr, "<span class='notice'>You don't have any stored tickets!</span>")
 				return TRUE
 		if("Start_Game")
 			game_active = TRUE
