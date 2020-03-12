@@ -16,7 +16,7 @@
 
 GLOBAL_VAR_INIT(deaths_during_shift, 0)
 /datum/game_mode/gang
-	name = "Families"
+	name = "families"
 	config_tag = "families"
 	antag_flag = ROLE_TRAITOR
 	false_report_weight = 5
