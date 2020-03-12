@@ -139,6 +139,8 @@
 				else
 					sleep(tempo)
 		repeat--
+		SEND_SIGNAL(instrumentObj, COMSIG_SONG_REPEAT, src)
+		SEND_SIGNAL(user, COMSIG_SONG_REPEAT, src)
 	toggle_playing(user, FALSE)
 	repeat = 0
 	updateDialog(user)
@@ -307,14 +309,16 @@
 	new_tempo = abs(new_tempo)
 	return max(round(new_tempo, world.tick_lag), world.tick_lag)
 
-/datum/song/proc/toggle_playing(user, new_play_state)
+/datum/song/proc/toggle_playing(mob/user, new_play_state)
 	playing = new_play_state
 	if(playing)
 		INVOKE_ASYNC(src, .proc/playsong, user)
-		SEND_SIGNAL(instrumentObj, COMSIG_SONG_START)
+		SEND_SIGNAL(instrumentObj, COMSIG_SONG_START, src)
+		SEND_SIGNAL(user, COMSIG_SONG_START, src)
 	else
 		hearing_mobs = null
 		SEND_SIGNAL(instrumentObj, COMSIG_SONG_END)
+		SEND_SIGNAL(user, COMSIG_SONG_END)
 
 // subclass for handheld instruments, like violin
 /datum/song/handheld

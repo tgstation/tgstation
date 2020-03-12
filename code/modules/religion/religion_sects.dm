@@ -56,7 +56,7 @@
 		if(initial(RI.favor_cost))
 			name_entry += " ([initial(RI.favor_cost)] favor)"
 
-		. += list(name_entry = i)
+		. += list("[name_entry]" = i)
 
 /// Activates once selected
 /datum/religion_sect/proc/on_select()
@@ -193,3 +193,17 @@
 	adjust_favor(round(the_cell.charge/3000), L)
 	to_chat(L, "<span class='notice'>You offer [the_cell]'s power to [GLOB.deity], pleasing them.</span>")
 	qdel(I)
+
+//Music
+/datum/religion_sect/musical
+	name = "Songs of Praise"
+	desc = "A sect dedicated to music, these priests have been known to spend most of their lives drafting their (often final) compositions."
+	convert_opener = "🎵 Let your heart match the tempo, your ears hear the pitch, and your soul dance for eternity. 🎵"
+	alignment = ALIGNMENT_NEUT
+	desired_items = list()
+	rites_list = list(/datum/religion_rites/song_tuner/evangelism,/datum/religion_rites/song_tuner/sooth,/datum/religion_rites/song_tuner/pain,/datum/religion_rites/song_tuner/lullaby)
+	altar_icon_state = "altar_music"
+	max_favor = 100
+
+/datum/religion_sect/musical/sect_bless(mob/living/L, mob/living/user)
+	return FALSE

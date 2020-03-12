@@ -74,7 +74,10 @@
 		else
 			performing_rite.invoke_effect(user, src)
 			sect_to_altar.adjust_favor(performing_rite.favor_cost*-1)
-			QDEL_NULL(performing_rite)
+			if(performing_rite.auto_delete)
+				QDEL_NULL(performing_rite)
+			else
+				performing_rite = null
 		return
 
 	if(user.mind.holy_role != HOLY_ROLE_HIGHPRIEST)

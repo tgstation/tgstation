@@ -343,8 +343,9 @@
 #define COMSIG_SPECIES_LOSS "species_loss"						//from datum/species/on_species_loss(): (datum/species/lost_species)
 
 // /datum/song signals
-#define COMSIG_SONG_START 	"song_start"						//sent to the instrument when a song starts playing
-#define COMSIG_SONG_END		"song_end"							//sent to the instrument when a song stops playing
+#define COMSIG_SONG_START 	"song_start"						//sent to the instrument (and player if available) when a song starts playing (datum/song)
+#define COMSIG_SONG_END		"song_end"							//sent to the instrument (and player if available) when a song stops playing
+#define COMSIG_SONG_REPEAT	"song_repeat"						//sent to the instrument (and player if available) when a song repeats (datum/song)
 
 /*******Component Specific Signals*******/
 //Janitor

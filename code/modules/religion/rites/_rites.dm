@@ -10,6 +10,8 @@
 /// message when you invoke
 	var/invoke_msg
 	var/favor_cost = 0
+/// does the altar auto-delete the rite 
+	var/auto_delete = TRUE
 
 ///Called to perform the invocation of the rite, with args being the performer and the altar where it's being performed. Maybe you want it to check for something else?
 /datum/religion_rites/proc/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
