@@ -1,5 +1,0 @@
-author: "ArcaneDefence"
-delete-after: True
-changes: 
-  - rscadd: "The secway key now has a unique suicide"
-  - rscadd: "The janicart key now has a uniquer suicide that respects janitorial skill"

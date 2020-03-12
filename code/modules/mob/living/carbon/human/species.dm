@@ -189,7 +189,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		if(!oldorgan && should_have && !(initial(neworgan.zone) in excluded_zones))
 			used_neworgan = TRUE
-			neworgan.Insert(C)
+			neworgan.Insert(C, TRUE, FALSE)
 
 		if(!used_neworgan)
 			qdel(neworgan)
@@ -201,9 +201,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				I.Remove(C)
 				QDEL_NULL(I)
 
-	for(var/path in mutant_organs)
-		var/obj/item/organ/I = new path()
-		I.Insert(C)
+	for(var/thing in mutant_organs)
+		var/current_organ = C.getorgan(thing)
+		if(!current_organ || replace_current)
+			var/obj/item/organ/missed = new thing()
+			missed.Insert(C, TRUE, FALSE)
 
 /datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	// Drop the items the new species can't wear

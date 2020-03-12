@@ -24,7 +24,7 @@ matrix:
           - $HOME/SpacemanDMM
       install:
         - tools/travis/install_build_tools.sh
-        - tools/travis/build_spaceman_dmm.sh dreamchecker
+        - tools/travis/install_spaceman_dmm.sh dreamchecker
       script:
         - tools/travis/check_filedirs.sh tgstation.dme
         - tools/travis/check_changelogs.sh
