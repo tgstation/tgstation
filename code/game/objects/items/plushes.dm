@@ -22,6 +22,7 @@
 	var/heartbroken = FALSE
 	var/vowbroken = FALSE
 	var/young = FALSE
+///Prevents players from cutting stuffing out of a plushie if true
 	var/divine = FALSE
 	var/mood_message
 	var/list/love_message
@@ -676,23 +677,18 @@
 	item_state = "moffplush"
 	attack_verb = list("fluttered", "flapped")
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
-	var/souls = 0
+///Used to track how many people killed themselves with item/toy/plush/moth
+	var/suicide_count = 0
 
 /obj/item/toy/plush/moth/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] begins staring deeply into the eyes of [src]!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	if(do_after(user, 50, target = user) && !user.hellbound)
-		souls++
-		switch(souls)
-			if(1 to 2)
-				desc = "A plushie depicting an unsettling mothperson. After eating [souls] [souls == 1 ? "soul" : "souls"] it's not looking so huggable now..."
-			if(3 to INFINITY)
-				desc = "A plushie depicting a creepy mothperson. It's eaten [souls] souls! I don't think I want to hug it any more!"
-				divine = TRUE
-				resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
-		user.visible_message("<span class='suicide'>[src] rips the soul out of [user] and consumes it!</span>")
-		playsound(src, 'sound/hallucinations/wail.ogg', 50, TRUE, -1)
-		user.unequip_everything()
-		user.dust()
-		return MANUAL_SUICIDE
-	user.visible_message("<span class='suicide'>[user] couldn't do it!</span>")
-	return SHAME
+	user.visible_message("<span class='suicide'>[user] stares deeply into the eyes of [src] and it begins consuming [user.p_them()]!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	suicide_count++
+	if(suicide_count < 3)
+		desc = "A plushie depicting an unsettling mothperson. After killing [suicide_count] [suicide_count == 1 ? "person" : "people"] it's not looking so huggable now..."
+	else
+		desc = "A plushie depicting a creepy mothperson. It's killed [suicide_count] people! I don't think I want to hug it any more!"
+		divine = TRUE
+		resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
+	playsound(src, 'sound/hallucinations/wail.ogg', 50, TRUE, -1)
+	user.dust(just_ash = FALSE, drop_items = TRUE)
+	return MANUAL_SUICIDE

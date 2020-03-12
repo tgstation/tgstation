@@ -27,14 +27,13 @@
 	return
 
 /mob/living/dust(just_ash, drop_items, force)
-	death(TRUE)
-
 	if(drop_items)
 		unequip_everything()
 
 	if(buckled)
 		buckled.unbuckle_mob(src, force = TRUE)
 
+	death(TRUE)
 	dust_animation()
 	spawn_dust(just_ash)
 	QDEL_IN(src,5) // since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play. Looks much nicer and doesn't cause multiple runtimes.
