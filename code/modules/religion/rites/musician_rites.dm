@@ -83,7 +83,7 @@
 /datum/religion_rites/song_tuner/lullaby
 	name = "Lullaby"
 	desc = "Sing a lullaby, tiring those around you and eventually putting them to sleep. Does not work on fellow priests."
-	favor = 20
+	favor_cost = 20
 	repeats_okay = FALSE
 
 /datum/religion_rites/song_tuner/lullaby/song_effect(atom/A, datum/song/S)
