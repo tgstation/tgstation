@@ -196,7 +196,7 @@
 		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
 		/obj/item/circular_saw,
-		/obj/item/twohanded/shockpaddles/cyborg,
+		/obj/item/shockpaddles/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/holobed_projector/robot,
 		/obj/item/borg/cyborghug/medical,
