@@ -159,6 +159,11 @@ Des: Removes all infected images from the alien.
 		if(!(L.amount_grown >= L.max_grown))	//TODO ~Carn //TODO WHAT YOU FUCK ~Fikou
 			to_chat(user, "<span class='warning'>You are not fully grown!</span>")
 			return 0
+	else
+		var/obj/item/organ/alien/plasmavessel/vessel = user.getorgan(/obj/item/organ/alien/plasmavessel)
+		if(vessel.storedPlasma < vessel.max_plasma)
+			to_chat(user, "<span class='warning'>You do not have enough plasma to grow!</span>")
+			return 0
 	to_chat(user, "<span class='name'>You are growing! It is time to choose a caste.</span>")
 	var/evolutions = user.evolution_paths
 	var/alien_caste = input(user, "Please choose which alien caste you shall belong to.", "Text") as null|anything in evolutions
