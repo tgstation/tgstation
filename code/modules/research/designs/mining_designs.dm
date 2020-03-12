@@ -131,3 +131,13 @@
 	build_path = /obj/item/borg/upgrade/modkit/aoe/turfs
 	category = list("Mining Designs", "Cyborg Upgrade Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+
+/datum/design/diamondpen
+	name = "Diamond Survival Pen"
+	desc = "A pen that has built in chemical reflectors that watchers crave. Throw it in the direction of one to draw it's fire!"
+	id = "dpen"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron=10, /datum/material/diamond=100, /datum/material/titanium = 10)
+	build_path = /obj/item/pen/survival
+	category = list("Mining Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO

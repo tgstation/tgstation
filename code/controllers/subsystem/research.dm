@@ -250,8 +250,6 @@ SUBSYSTEM_DEF(research)
 			D.unlocked_by += node.id
 		if(node.hidden)
 			techweb_nodes_hidden[node.id] = TRUE
-		if(node.experimental)
-			techweb_nodes_experimental[node.id] = TRUE
 		CHECK_TICK
 	generate_techweb_unlock_linking()
 

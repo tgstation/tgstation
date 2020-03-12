@@ -226,14 +226,6 @@
 	category = list("Research Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/board/bepis
-	name = "Machine Design (B.E.P.I.S. Board)"
-	desc = "The circuit board for a B.E.P.I.S."
-	id = "bepis"
-	build_path = /obj/item/circuitboard/machine/bepis
-	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
 /datum/design/board/protolathe
 	name = "Machine Design (Protolathe Board)"
 	desc = "The circuit board for a protolathe."
@@ -618,3 +610,11 @@
 	build_path = /obj/item/circuitboard/machine/sheetifier
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
+/datum/design/board/partypod
+	name = "Party Pod"
+	desc = "The circuit board for a Party Pod. Contains trace amounts of lead."
+	id = "sleeperpod"
+	build_path = /obj/item/circuitboard/machine/sleeper/party
+	category = list ("Medical Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE | DEPARTMENTAL_FLAG_MEDICAL

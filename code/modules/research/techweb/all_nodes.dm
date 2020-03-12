@@ -74,7 +74,7 @@
 	display_name = "Advanced Biotechnology"
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
-	design_ids = list("piercesyringe", "crewpinpointer", "smoke_machine", "plasmarefiller", "limbgrower", "meta_beaker", "healthanalyzer_advanced", "harvester", "holobarrier_med", "detective_scanner", "defibrillator_compact")
+	design_ids = list("piercesyringe", "crewpinpointer", "smoke_machine", "plasmarefiller", "limbgrower", "meta_beaker", "healthanalyzer_advanced", "harvester", "holobarrier_med", "detective_scanner", "defibrillator_compact", "sprayoncan", "sleeperpod")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -153,7 +153,7 @@
 	display_name = "Advanced Engineering"
 	description = "Pushing the boundaries of physics, one chainsaw-fist at a time."
 	prereq_ids = list("engineering", "emp_basic")
-	design_ids = list("engine_goggles", "magboots", "forcefield_projector", "weldingmask", "rcd_loaded", "rpd_loaded", "sheetifier")
+	design_ids = list("engine_goggles", "magboots", "forcefield_projector", "weldingmask", "rcd_loaded", "rpd_loaded", "sheetifier", "decalpainter", "polycircuit")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -183,6 +183,42 @@
 	design_ids = list("smes", "super_cell", "hyper_cell", "super_capacitor", "superpacman", "mrspacman", "power_turbine", "power_turbine_console", "power_compressor", "circulator", "teg")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
+
+/datum/techweb_node/light_apps
+	id = "light_apps"
+	display_name = "Illumination Applications"
+	description = "Applications of lighting and vision technology not originally thought to be commercially viable."
+	prereq_ids = list("engineering")
+	design_ids = list("bright_helmet", "rld_mini")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 1000
+
+/datum/techweb_node/rolling_table
+	id = "rolling_table"
+	display_name = "Advanced Wheel Applications"
+	description = "Adding wheels to things can lead to extremely beneficial outcomes."
+	prereq_ids = list("engineering")
+	design_ids = list("rolling_table")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+	export_price = 800
+
+/datum/techweb_node/Mauna_Mug
+	id = "mauna_mug"
+	display_name = "Mauna Mug"
+	description = "A bored scientist was thinking to himself for very long...and then realized his coffee got cold! He made this invention to solve this extreme problem."
+	prereq_ids = list("adv_power, biotech")
+	design_ids = list("mauna_mug")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+	export_price = 500
+
+/datum/techweb_node/spec_eng
+	id = "spec_eng"
+	display_name = "Specialized Engineering"
+	description = "Conventional wisdom has deemed these engineering products 'technically' safe, but far too dangerous to traditionally condone."
+	prereq_ids = list("adv_engi, basic_plasma")
+	design_ids = list("lava_rods", "eng_gloves")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
+	export_price = 1000
 
 /////////////////////////Bluespace tech/////////////////////////
 /datum/techweb_node/bluespace_basic //Bluespace-memery
@@ -466,6 +502,16 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
 
+/datum/techweb_node/interrogation
+	id = "interrogation"
+	display_name = "Enhanced Interrogation Technology"
+	description = "By cross-referencing several declassified documents from past dictatorial regimes, we were able to develop an incredibly effective interrogation device. \
+	Ethical concerns about loss of free will do not apply to criminals, according to galactic law."
+	prereq_ids = list("sec_basic, weaponry, neural_programming")
+	design_ids = list("hypnochair")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
+	export_price = 1500
+
 ////////////////////////Medical////////////////////////
 /datum/techweb_node/genetics
 	id = "genetics"
@@ -546,7 +592,7 @@
 	display_name = "Mining Technology"
 	description = "Better than Efficiency V."
 	prereq_ids = list("engineering", "basic_plasma")
-	design_ids = list("drill", "superresonator", "triggermod", "damagemod", "cooldownmod", "rangemod", "ore_redemption", "mining_equipment_vendor", "cargoexpress", "plasmacutter")//e a r l y    g a  m e)
+	design_ids = list("drill", "superresonator", "triggermod", "damagemod", "cooldownmod", "rangemod", "ore_redemption", "mining_equipment_vendor", "cargoexpress", "plasmacutter", "dpen")//e a r l y    g a  m e)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -594,6 +640,34 @@
 	prereq_ids = list("base")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 	export_price = 5000
+
+/datum/techweb_node/aus_security
+	id = "aus_security"
+	display_name = "Australicus Security Protocols"
+	description = "It is said that security in the Australicus sector is tight, so we took some pointers from their equipment. Thankfully, our sector lacks any signs of these, 'dropbears'."
+	prereq_ids = list("sec_basic, weaponry")
+	design_ids = list("pin_explorer", "stun_boomerang")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 6000)
+	export_price = 3000
+
+/datum/techweb_node/tackle_advanced
+	id = "tackle_advanced"
+	display_name = "Advanced Grapple Technology"
+	description = "Nanotrasen would like to remind its researching staff that it is never acceptable to \"glomp\" your coworkers, and further \"scientific trials\" on the subject \
+	will no longer be accepted in its academic journals."
+	prereq_ids = list("sec_basic, biotech")
+	design_ids = list("tackle_dolphin", "tackle_rocket")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 1200
+
+/datum/techweb_node/sticky_advanced
+	id = "sticky_advanced"
+	display_name = "Advanced Sticky Technology"
+	description = "Taking a good joke too far? Nonsense!"
+	prereq_ids = list("engineering, janitor")
+	design_ids = list("super_sticky_tape", "pointy_tape")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 1200
 
 /datum/techweb_node/rcd_upgrade
 	id = "rcd_upgrade"
@@ -1009,8 +1083,6 @@
 	design_ids = list("kickstart_nanites","factory_nanites","tinker_nanites","offline_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 2500)
 	export_price = 2500
-	hidden = TRUE
-	experimental = TRUE
 
 ////////////////////////Alien technology////////////////////////
 /datum/techweb_node/alientech //AYYYYYYYYLMAOO tech
@@ -1073,100 +1145,6 @@
 		if(!UI.item || !UI.illegal_tech)
 			continue
 		boost_item_paths |= UI.item	//allows deconning to unlock.
-
-
-////////////////////////B.E.P.I.S. Locked Techs////////////////////////
-/datum/techweb_node/light_apps
-	id = "light_apps"
-	display_name = "Illumination Applications"
-	description = "Applications of lighting and vision technology not originally thought to be commercially viable."
-	prereq_ids = list("base")
-	design_ids = list("bright_helmet", "rld_mini")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	export_price = 2500
-	hidden = TRUE
-	experimental = TRUE
-
-/datum/techweb_node/rolling_table
-	id = "rolling_table"
-	display_name = "Advanced Wheel Applications"
-	description = "Adding wheels to things can lead to extremely beneficial outcomes."
-	prereq_ids = list("base")
-	design_ids = list("rolling_table")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	export_price = 2500
-	hidden = TRUE
-	experimental = TRUE
-
-/datum/techweb_node/Mauna_Mug
-	id = "mauna_mug"
-	display_name = "Mauna Mug"
-	description = "A bored scientist was thinking to himself for very long...and then realized his coffee got cold! He made this invention to solve this extreme problem."
-	prereq_ids = list("base")
-	design_ids = list("mauna_mug")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	export_price = 2500
-	hidden = TRUE
-	experimental = TRUE
-
-/datum/techweb_node/spec_eng
-	id = "spec_eng"
-	display_name = "Specialized Engineering"
-	description = "Conventional wisdom has deemed these engineering products 'technically' safe, but far too dangerous to traditionally condone."
-	prereq_ids = list("base")
-	design_ids = list("lava_rods", "eng_gloves")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	export_price = 2500
-	hidden = TRUE
-	experimental = TRUE
-
-/datum/techweb_node/aus_security
-	id = "aus_security"
-	display_name = "Australicus Security Protocols"
-	description = "It is said that security in the Australicus sector is tight, so we took some pointers from their equipment. Thankfully, our sector lacks any signs of these, 'dropbears'."
-	prereq_ids = list("base")
-	design_ids = list("pin_explorer", "stun_boomerang")
-
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	export_price = 2500
-	hidden = TRUE
-	experimental = TRUE
-
-/datum/techweb_node/interrogation
-	id = "interrogation"
-	display_name = "Enhanced Interrogation Technology"
-	description = "By cross-referencing several declassified documents from past dictatorial regimes, we were able to develop an incredibly effective interrogation device. \
-	Ethical concerns about loss of free will do not apply to criminals, according to galactic law."
-	prereq_ids = list("base")
-	design_ids = list("hypnochair")
-
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
-	export_price = 3500
-	hidden = TRUE
-	experimental = TRUE
-
-/datum/techweb_node/sticky_advanced
-	id = "sticky_advanced"
-	display_name = "Advanced Sticky Technology"
-	description = "Taking a good joke too far? Nonsense!"
-	design_ids = list("super_sticky_tape", "pointy_tape")
-
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	export_price = 2500
-	hidden = TRUE
-	experimental = TRUE
-
-/datum/techweb_node/tackle_advanced
-	id = "tackle_advanced"
-	display_name = "Advanced Grapple Technology"
-	description = "Nanotrasen would like to remind its researching staff that it is never acceptable to \"glomp\" your coworkers, and further \"scientific trials\" on the subject \
-	will no longer be accepted in its academic journals."
-	design_ids = list("tackle_dolphin", "tackle_rocket")
-
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	export_price = 2500
-	hidden = TRUE
-	experimental = TRUE
 
 //Helpers for debugging/balancing the techweb in its entirety!
 /proc/total_techweb_exports()

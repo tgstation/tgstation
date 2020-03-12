@@ -93,6 +93,36 @@
 	category = list("Tool Designs")
 	departmental_flags =  DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
 
+/datum/design/sprayoncan
+	name = "Spray-on Insulation"
+	desc = "A can of compressed liquid that when applied to the hands, creates a thick coating of heavy, insulating rubber. Wears off over time, but doesn't come off easily."
+	id = "sprayoncan"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 4000, /datum/material/plastic = 2000)
+	build_path = /obj/item/toy/sprayoncan
+	category = list("Tool Designs")
+	departmental_flags =  DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
+
+/datum/design/decalpainter
+	name = "Decal Painter"
+	desc = "A high pressure paint sprayer that uses toner to create floor decals, similar to those found on station. They shatter and break when crowbarred however."
+	id = "decalpainter"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 2000, /datum/material/glass=500)
+	build_path = /obj/item/airlock_painter/decal
+	category = list("Tool Designs")
+	departmental_flags =  DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
+
+/datum/design/polycircuit
+	name = "Polycircuit Stack"
+	desc = "A densely packed group of low-tech circuits used across station. Individually useful, but wire management is an issue."
+	id = "polycircuit"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1800, /datum/material/glass = 1000)
+	build_path = /obj/item/stack/circuit_stack
+	category = list("Tool Designs")
+	departmental_flags =  DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
+
 /////////////////////////////////////////
 //////////////Alien Tools////////////////
 /////////////////////////////////////////
