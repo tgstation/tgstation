@@ -9,7 +9,7 @@
 	description = "NT default research technologies."
 	// Default research tech, prevents bricking
 	design_ids = list("basic_matter_bin", "basic_cell", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani", "c-reader", "desttagger", "salestagger", "handlabel", "packagewrap",
-					"destructive_analyzer", "circuit_imprinter", "experimentor", "rdconsole", "bepis", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab",
+					"destructive_analyzer", "circuit_imprinter", "experimentor", "rdconsole", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab",
 					"paystand", "space_heater", "bucket", "sec_rshot", "sec_beanbag_slug", "sec_bshot", "sec_slug", "sec_Islug", "sec_dart", "sec_38", "rglass", "plasteel",
 					"plastitanium", "plasmaglass", "plasmareinforcedglass", "titaniumglass", "plastitaniumglass", "plastic_knife", "plastic_fork", "plastic_spoon")
 
@@ -206,7 +206,7 @@
 	id = "mauna_mug"
 	display_name = "Mauna Mug"
 	description = "A bored scientist was thinking to himself for very long...and then realized his coffee got cold! He made this invention to solve this extreme problem."
-	prereq_ids = list("adv_power, biotech")
+	prereq_ids = list("adv_power", "biotech")
 	design_ids = list("mauna_mug")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 	export_price = 500
@@ -215,7 +215,7 @@
 	id = "spec_eng"
 	display_name = "Specialized Engineering"
 	description = "Conventional wisdom has deemed these engineering products 'technically' safe, but far too dangerous to traditionally condone."
-	prereq_ids = list("adv_engi, basic_plasma")
+	prereq_ids = list("adv_engi", "basic_plasma")
 	design_ids = list("lava_rods", "eng_gloves")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 1000
@@ -507,7 +507,7 @@
 	display_name = "Enhanced Interrogation Technology"
 	description = "By cross-referencing several declassified documents from past dictatorial regimes, we were able to develop an incredibly effective interrogation device. \
 	Ethical concerns about loss of free will do not apply to criminals, according to galactic law."
-	prereq_ids = list("sec_basic, weaponry, neural_programming")
+	prereq_ids = list("sec_basic", "weaponry", "neural_programming")
 	design_ids = list("hypnochair")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 	export_price = 1500
@@ -645,7 +645,7 @@
 	id = "aus_security"
 	display_name = "Australicus Security Protocols"
 	description = "It is said that security in the Australicus sector is tight, so we took some pointers from their equipment. Thankfully, our sector lacks any signs of these, 'dropbears'."
-	prereq_ids = list("sec_basic, weaponry")
+	prereq_ids = list("sec_basic", "weaponry")
 	design_ids = list("pin_explorer", "stun_boomerang")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 6000)
 	export_price = 3000
@@ -655,7 +655,7 @@
 	display_name = "Advanced Grapple Technology"
 	description = "Nanotrasen would like to remind its researching staff that it is never acceptable to \"glomp\" your coworkers, and further \"scientific trials\" on the subject \
 	will no longer be accepted in its academic journals."
-	prereq_ids = list("sec_basic, biotech")
+	prereq_ids = list("sec_basic", "biotech")
 	design_ids = list("tackle_dolphin", "tackle_rocket")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 1200
@@ -664,7 +664,7 @@
 	id = "sticky_advanced"
 	display_name = "Advanced Sticky Technology"
 	description = "Taking a good joke too far? Nonsense!"
-	prereq_ids = list("engineering, janitor")
+	prereq_ids = list("engineering", "janitor")
 	design_ids = list("super_sticky_tape", "pointy_tape")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 1200
