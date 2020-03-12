@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "The flying speed slowdown while hurt now actually affects flying mobs and not floating ones."
