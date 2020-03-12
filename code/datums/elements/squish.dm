@@ -17,7 +17,7 @@
 		return ELEMENT_INCOMPATIBLE
 
 	var/mob/living/carbon/C = target
-	var/was_lying = (C.lying != 0) // is our spessmen sideways? the eternal question..
+	var/was_lying = !(C.mobility_flags & MOBILITY_STAND)
 	addtimer(CALLBACK(src, .proc/Detach, C, was_lying, reverse), duration)
 
 	if(reverse)
@@ -28,7 +28,7 @@
 /datum/element/squish/Detach(mob/living/carbon/C, was_lying, reverse)
 	. = ..()
 	if(istype(C))
-		var/is_lying = (C.lying != 0)
+		var/is_lying = !(C.mobility_flags & MOBILITY_STAND)
 
 		if(reverse)
 			is_lying = !is_lying
