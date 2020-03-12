@@ -212,6 +212,11 @@
 	mood_change = -8
 	timeout = 3 MINUTES
 
+/datum/mood_event/forsaken //used for religeons that add a bad blessing instead of a good one
+	description = "<span class='warning'>I've been forsaken by a higher power.</span>\n"
+	mood_change = -3
+	timeout = 8 MINUTES
+
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/surgery
 	description = "<span class='boldwarning'>HE'S CUTTING ME OPEN!!</span>\n"

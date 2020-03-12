@@ -22,6 +22,8 @@
 	#define COMPONENT_GLOB_BLOCK_CINEMATIC 1
 /// ingame button pressed (/obj/machinery/button/button)
 #define COMSIG_GLOB_BUTTON_PRESSED "!button_pressed"
+/// security level changed (blue to delta from nuke set would trigger this) (new_level)
+#define COMSIG_GLOB_SECURITYLEVEL_CHANGED "!securitylevel_changed"
 
 // signals from globally accessible objects
 /// from SSsun when the sun changes position : (azimuth)
