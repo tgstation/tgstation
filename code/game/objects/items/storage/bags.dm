@@ -38,6 +38,7 @@
 	item_state = "trashbag"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
+	custom_materials = list(/datum/material/plastic = 3000)
 
 	w_class = WEIGHT_CLASS_BULKY
 	var/insertable = TRUE
