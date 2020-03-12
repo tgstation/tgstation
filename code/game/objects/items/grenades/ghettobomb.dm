@@ -16,6 +16,8 @@
 	active = 0
 	det_time = 50
 	display_timer = 0
+	var/check_parts = FALSE
+	var/obj/item/reagent_containers/food/drinks/soda_cans/drink_can
 	var/range = 3
 	var/list/times
 
@@ -30,17 +32,30 @@
 		det_time = rand(30,80)
 	else
 		range = pick(2,2,2,3,3,3,4)
+	if(check_parts) //since construction code calls this itself, no need to always call it. This does have the downside that adminspawned ones can potentially not have cans if they don't use the /spawned subtype.
+		CheckParts()
+
+/obj/item/grenade/iedcasing/spawned
+	check_parts = TRUE
+
+/obj/item/grenade/iedcasing/spawned/Initialize()
+	drink_can = new /obj/item/reagent_containers/food/drinks/soda_cans/cola(src)
+	return ..()
 
 /obj/item/grenade/iedcasing/CheckParts(list/parts_list)
 	..()
-	var/obj/item/reagent_containers/food/drinks/soda_cans/can = locate() in contents
-	if(can)
-		can.pixel_x = 0 //Reset the sprite's position to make it consistent with the rest of the IED
-		can.pixel_y = 0
-		var/mutable_appearance/can_underlay = new(can)
-		can_underlay.layer = FLOAT_LAYER
-		can_underlay.plane = FLOAT_PLANE
-		underlays += can_underlay
+	if(!drink_can)
+		drink_can = locate(/obj/item/reagent_containers/food/drinks/soda_cans) in contents
+		if(!drink_can)
+			stack_trace("[src] generated without a soda can!") //this shouldn't happen.
+			qdel(src)
+			return
+	drink_can.pixel_x = 0 //Reset the sprite's position to make it consistent with the rest of the IED
+	drink_can.pixel_y = 0
+	var/mutable_appearance/can_underlay = new(drink_can)
+	can_underlay.layer = FLOAT_LAYER
+	can_underlay.plane = FLOAT_PLANE
+	underlays += can_underlay
 
 
 /obj/item/grenade/iedcasing/attack_self(mob/user) //
