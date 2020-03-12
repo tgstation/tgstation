@@ -82,27 +82,18 @@
 			/obj/item/trash/raisins,
 			/obj/item/trash/sosjerky,
 			/obj/item/trash/syndi_cakes)
-	var/static/coinpick = list(/obj/item/coin/iron,
-			/obj/item/coin/silver,
-			/obj/item/coin/plastic,
-			/obj/item/coin/titanium)
 	switch(loot)
 		if(1 to 5)
 			to_chat(owner, "<span class='notice'>Score! You find some cheese!</span>")
 			new /obj/item/reagent_containers/food/snacks/cheesewedge(T)
-		if(6 to 10)
-			var/pickedcoin = pick(coinpick)
-			to_chat(owner, "<span class='notice'>You find some leftover coins. More for the royal treasury!</span>")
-			for(var/i = 1 to rand(1,3))
-				new pickedcoin(T)
-		if(11)
+		if(6)
 			to_chat(owner, "<span class='notice'>You find a... Hunh. This coin doesn't look right.</span>")
 			var/rarecoin = rand(1,2)
 			if (rarecoin == 1)
 				new /obj/item/coin/twoheaded(T)
 			else
 				new /obj/item/coin/antagtoken(T)
-		if(12 to 40)
+		if(7 to 40)
 			var/pickedtrash = pick(trashpick)
 			to_chat(owner, "<span class='notice'>You just find more garbage and dirt. Lovely, but beneath you now.</span>")
 			new /obj/effect/decal/cleanable/dirt(T)
@@ -132,7 +123,7 @@
 	for(var/mob/living/simple_animal/mouse/M in oview(owner, 5))
 		var/mob/living/simple_animal/hostile/rat/R = new /mob/living/simple_animal/hostile/rat(get_turf(M))
 		something_from_nothing = TRUE
-		if(M.mind && stat == CONSCIOUS)
+		if(M.mind && M.stat == CONSCIOUS)
 			M.mind.transfer_to(R)
 		if(istype(owner,/mob/living/simple_animal/hostile/regalrat))
 			var/mob/living/simple_animal/hostile/regalrat/giantrat = owner
