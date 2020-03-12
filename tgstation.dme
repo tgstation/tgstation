@@ -2841,6 +2841,7 @@
 #include "code\modules\spells\spell_types\aimed.dm"
 #include "code\modules\spells\spell_types\area_teleport.dm"
 #include "code\modules\spells\spell_types\barnyard.dm"
+#include "code\modules\spells\spell_types\blind.dm"
 #include "code\modules\spells\spell_types\bloodcrawl.dm"
 #include "code\modules\spells\spell_types\charge.dm"
 #include "code\modules\spells\spell_types\conjure.dm"
