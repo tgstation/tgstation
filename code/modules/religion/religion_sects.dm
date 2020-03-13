@@ -273,10 +273,63 @@
 					playsound(user, "punch", 25, TRUE, -1)
 					sleep(1)
 			return TRUE
-/*
+
 /datum/religion_sect/druidism
 	name = "Jungle's Bounty"
 	desc = "A sect that reaps the rewards of the harvest."
 	convert_opener = "Let the beauty of nature flourish, follower of the earth!<br>Plants readying for harvest will grant you favor, but they do not heal organic limbs. You can now sacrifice cells, with favor depending on their charge."
 	alignment = ALIGNMENT_GOOD
-*/
+	desired_items = list(/obj/item/reagent_containers/food/snacks/grown)
+
+/datum/religion_sect/druidism/can_sacrifice(obj/item/I, mob/living/L)
+	if(!..())
+		return FALSE
+	var/obj/item/reagent_containers/food/snacks/grown/harvest = I
+	if(harvest.foodtype & NONE)
+		to_chat("<span class='notice'>[GLOB.deity] appreciates all branches of nature, but [harvest] does not have power to bring out.</span>")
+		return FALSE
+	return TRUE
+
+//will NOT work with the bible, must be called by the sacrifice. the wording is changed, moodlet gone, and it just works in a "mass blessing" kind of way
+/datum/religion_sect/druidism/sect_bless(mob/living/L, mob/living/user, sacrificed_fruit = FALSE)
+	if(!sacrificed_fruit)
+		return FALSE
+	var/mob/living/carbon/human/H = L
+	for(var/X in H.bodyparts)
+		var/obj/item/bodypart/BP = X
+		if(BP.status == BODYPART_ROBOTIC)
+			H.visible_message("<span class='notice'>[H] has been rejected by [GLOB.deity]!</span>")
+			to_chat(H, "<span class='boldnotice'>\"You are an unholy abomination! I have nothing to give you.\"</span>")
+			return TRUE
+
+	var/heal_amt = 10
+	var/list/hurt_limbs = H.get_damaged_bodyparts(1, 1, null, BODYPART_ORGANIC)
+
+	if(hurt_limbs.len)
+		for(var/X in hurt_limbs)
+			var/obj/item/bodypart/affecting = X
+			if(affecting.heal_damage(heal_amt, heal_amt, null, BODYPART_ORGANIC))
+				H.update_damage_overlays()
+		H.visible_message("<span class='notice'>[H] has been restored with the power of [GLOB.deity]!</span>")
+		to_chat(H, "<span class='boldnotice'>May the power of [GLOB.deity] compel you to be healed!</span>")
+		playsound(user, "punch", 25, TRUE, -1)
+	return TRUE
+
+/datum/religion_sect/druidism/on_sacrifice(obj/item/I, mob/living/L) //how the druids use their bible, it's split into food types and given out in an aoe
+	if(!is_type_in_typecache(I, desired_items_typecache))
+		return
+	var/obj/item/reagent_containers/food/snacks/grown/harvest = I
+	to_chat(L, "<span class='notice'>You unleash the power of [harvest]! [GLOB.deity] has given you favor.</span>")
+	for(var/mob/living/carbon/human/H in range(src, 7))
+		if(H == L)
+			continue
+		flash_color(H, flash_color="#1dda17", flash_time= 4 SECONDS)
+		if(harvest.foodtype & FRUIT)//the mood of the bible
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "bounty", /datum/mood_event/blessing)
+		if(harvest.foodtype & VEGETABLES)//the heal of the bible
+			sect_bless(H, L, TRUE)
+		if(harvest.foodtype & GRAIN) //hey why not some speed
+			H.add_movespeed_modifier(MOVESPEED_ID_HARVEST, update=TRUE, priority=100, multiplicative_slowdown=-1)
+			addtimer(CALLBACK(H, .proc/remove_movespeed_modifier, MOVESPEED_ID_HARVEST, TRUE), 10 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE) //if this is done again just refresh the speedboost
+	adjust_favor(1, L)
+	qdel(I)
