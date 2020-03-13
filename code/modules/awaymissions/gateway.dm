@@ -309,7 +309,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 			return TRUE
 
 /obj/machinery/computer/gateway_control/proc/try_to_linkup()
-	G = locate(/obj/machinery/gateway) in view(7)
+	G = locate(/obj/machinery/gateway) in view(7,get_turf(src))
 
 /obj/machinery/computer/gateway_control/proc/try_to_connect(datum/gateway_destination/D)
 	if(!D || !G)
