@@ -185,7 +185,7 @@
 	H.hairstyle = "Bald"
 	H.update_hair()
 	RegisterSignal(H, COMSIG_CARBON_EQUIP_HAT, .proc/check_if_covered)
-	RegisterSignal(H, COMSIG_MOB_POST_UNEQUIP_ITEM, .proc/check_if_uncovered)
+	RegisterSignal(H, COMSIG_CARBON_UNEQUIP_HAT, .proc/check_if_uncovered)
 
 /datum/quirk/bald/remove()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -210,7 +210,7 @@
 	H.equip_in_one_of_slots(W, slots , qdel_on_fail = TRUE)
 
 /datum/quirk/bald/proc/check_if_covered(mob/user, obj/item/hat)
-	if(istype(clothing, /obj/item/clothing/head/wig))
+	if(istype(hat, /obj/item/clothing/head/wig))
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/confident_mane) //Our head is covered, but also by a wig so we're happy.
 	else
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "bad_hair_day") //Our head is covered
