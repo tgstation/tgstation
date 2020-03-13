@@ -25,14 +25,10 @@
 	charge_max = 400 // needs to be higher than the duration or it'll be permanent
 	sound = 'sound/magic/blind.ogg'
 
-/obj/effect/proc_holder/spell/pointed/trigger/blind/InterceptClickOn(mob/living/caller, params, atom/target)
-	if(..())
+/obj/effect/proc_holder/spell/pointed/trigger/blind/intercept_check(mob/user, atom/target)
+	if(!..())
 		return FALSE
 	if(!isliving(target))
-		to_chat(ranged_ability_user, "<span class='warning'>You can only blind living beings!</span>")
+		to_chat(user, "<span class='warning'>You can only blind living beings!</span>")
 		return FALSE
-	if(!cast_check(user = ranged_ability_user))
-		return FALSE
-	perform(list(target), user = ranged_ability_user)
-	remove_ranged_ability()
 	return TRUE

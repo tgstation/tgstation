@@ -26,7 +26,7 @@
 		add_ranged_ability(user, msg, TRUE)
 		on_activation(user)
 
- /**
+/**
   *
   * What happens upon pointed spell activation.
   *
@@ -51,3 +51,25 @@
 		return
 	action.button_icon_state = "[base_icon_state][active]"
 	action.UpdateButtonIcon()
+
+/obj/effect/proc_holder/spell/pointed/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(..())
+		return FALSE
+	if(!intercept_check(ranged_ability_user, target))
+		return FALSE
+	if(!cast_check(user = ranged_ability_user))
+		return FALSE
+	perform(list(target), user = ranged_ability_user)
+	remove_ranged_ability()
+	return TRUE
+
+ /**
+  *
+  * Specific spell checks for InterceptClickOn() targets.
+  *
+  * user mob The mob using the ranged spell via intercept.
+  * target atom The atom being targeted by the spell via intercept.
+  *
+ **/
+/obj/effect/proc_holder/spell/pointed/proc/intercept_check(mob/user, atom/target)
+	return TRUE
