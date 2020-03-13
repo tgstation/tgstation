@@ -5,7 +5,8 @@
 	alert_type = /obj/screen/alert/status_effect/freon
 	var/icon/cube
 	var/can_melt = TRUE
-	var/icewing = FALSE //Is checked to prevent icewing watcher freezing blasts from warming you up when they expire
+///Prevents the frozen solid debuff from restoring body temperature when it expires
+	var/icewing = FALSE
 
 /obj/screen/alert/status_effect/freon
 	name = "Frozen Solid"

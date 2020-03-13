@@ -44,7 +44,8 @@
 	nodamage = FALSE
 	flag = "energy"
 	temperature = -50 // Practically speaking this only serves as a damage over time effect against lizard people, as most other races warm up plenty to ignore this effect entirely
-	var/slowdown = TRUE //Defines whether or not the target will have an on hit slow effect, borgs are immune
+///Applies an on-hit slowdown that borgs are immune to if true
+	var/slowdown = TRUE
 
 /obj/projectile/temp/basilisk/on_hit(atom/target, blocked = 0) //Makes being hit a potential environmental threat again, as body temperature is a situational slowing tool that genocides lizardpeople
 	. = ..()
