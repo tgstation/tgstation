@@ -158,7 +158,7 @@
 	var/searJuices = H.getFireLoss_nonProsthetic() / 10
 
 	// Step 2) Bleed out those juices by warmth, minus burn damage.
-	H.bleed_rate = CLAMP((H.bodytemperature - 285) / 20 - searJuices, 0, 5) // Every 20 points above 285 increases bleed rate. Don't worry, you're cold blooded.
+	H.bleed_rate = clamp((H.bodytemperature - 285) / 20 - searJuices, 0, 5) // Every 20 points above 285 increases bleed rate. Don't worry, you're cold blooded.
 
 	// Step 3) If we're salted, we'll bleed more (it gets reset next tick)
 	if (dehydrate > 0)
@@ -186,7 +186,7 @@
 		if("Security Officer", "Warden", "Detective", "Head of Security", "Deputy")
 			newSash = new /obj/item/clothing/under/bodysash/security()
 		// Medical
-		if("Medical Doctor", "Chemist", "Geneticist", "Virologist", "Chief Medical Officer")
+		if("Medical Doctor", "Chemist", "Geneticist", "Virologist", "Chief Medical Officer", "Paramedic")
 			newSash = new /obj/item/clothing/under/bodysash/medical()
 		// Science
 		if("Scientist", "Roboticist", "Research Director")

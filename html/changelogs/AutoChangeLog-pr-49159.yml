@@ -1,9 +1,0 @@
-author: "fluffe9911"
-delete-after: True
-changes: 
-  - rscadd: "King Goat achievements"
-  - tweak: "King Goat spells per phase lowered from 10 to 5"
-  - tweak: "King Goat goes back to normal speed after casting super speed spell 2x faster"
-  - bugfix: "Hiro teleport no longer works in NOTELEPORT areas"
-  - bugfix: "moved king goat file to proper area"
-  - tweak: "better goat hoof and goat gun sprite courtesy of Usnavi!"

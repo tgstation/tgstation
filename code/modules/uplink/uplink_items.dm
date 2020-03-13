@@ -390,7 +390,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Double-Bladed Energy Sword"
 	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
 			all energy projectiles, but requires two hands to wield."
-	item = /obj/item/twohanded/dualsaber
+	item = /obj/item/dualsaber
 	player_minimum = 25
 	cost = 16
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
@@ -569,7 +569,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/stealthy_weapons/martialarts
 	name = "Martial Arts Scroll"
 	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat, \
-			deflecting all ranged weapon fire, but you also refuse to use dishonorable ranged weaponry."
+			gain skin as hard as steel and swat bullets from the air, but you also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/book/granter/martial/carp
 	cost = 17
 	surplus = 0
@@ -1486,6 +1486,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	restricted = TRUE
 	cost = 7
 	limited_stock = 1
+
+/datum/uplink_item/device_tools/guerillagloves
+	name = "Guerilla Gloves"
+	desc = "A pair of highly robust combat gripper gloves that excels at performing takedowns at close range, with an added lining of insulation. Careful not to hit a wall!"
+	item = /obj/item/clothing/gloves/tackler/combat/insulated
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	cost = 2
 
 // Implants
 /datum/uplink_item/implants

@@ -49,97 +49,11 @@
 	if(R.cell.charge < R.cell.use(charge_cost)) //Not enough energy to regenerate reagents.
 		return
 
-	if(reagents.total_volume >= volume)
+	if(volume >= reagents.total_volume) //If we have maximum reagents, we don't use energy to produce any.
 		return
 
 	R.cell.use(charge_cost)
 	reagents.add_reagent(generate_type, generate_amount)
-
-//*******************************************
-//SEC CAMERA UPLINK ITEM AND UPGRADE - BEGINS
-//*******************************************
-
-/obj/item/handheld_camera_monitor/cyborg
-
-	name = "security camera remote uplink"
-	desc = "Used to remotely access the station's camera network."
-	icon = 'icons/obj/device.dmi'
-	icon_state	= "camera_bug"
-	actions_types = list(/datum/action/item_action/camera_uplink)
-	var/sound = SEC_BODY_CAM_SOUND
-
-/obj/item/handheld_camera_monitor/cyborg/attack_self(mob/user)
-	for(var/obj/machinery/computer/security/S in GLOB.machines)
-		if(istype(S, /obj/machinery/computer/security/telescreen) || S.is_operational()) //Filter out telescreens and broken/depowered consoles
-			continue
-		else
-			playsound(src, sound, get_clamped_volume(), TRUE, -1)
-			S.interact(user)
-			return
-
-		if(!S)
-			playsound(src, 'sound/machines/buzz-two.ogg', get_clamped_volume(), TRUE, -1)
-			to_chat(user,"<span class='warning'>ERROR: No functioning security consoles found for uplink.</span>")
-
-	return
-
-/obj/machinery/computer/security/proc/check_handheld_camera_monitor(mob/user) //Checks for a handheld camera uplink when using camera monitors.
-	if(user.check_for_item(/obj/item/handheld_camera_monitor))
-		return TRUE
-	return FALSE
-
-/obj/item/handheld_camera_monitor/cyborg/camera_uplink/ui_action_click()
-	if(..())
-		return
-	if(!issilicon(usr))
-		return
-	var/obj/item/handheld_camera_monitor/cyborg/PP = usr.check_for_item(/obj/item/handheld_camera_monitor)
-	if(!PP)
-		return
-	PP.attack_self(usr)
-
-/datum/action/item_action/camera_uplink
-	name = "Camera Uplink"
-	desc = "Uplink to the station's camera network."
-
-
-
-/obj/item/borg/upgrade/camera_uplink
-	name = "cyborg camera uplink"
-	desc = "A module that permits remote access to the station's camera network."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "camera_bug"
-	require_module = TRUE
-	module_type = list(/obj/item/robot_module/security)
-
-
-/obj/item/borg/upgrade/camera_uplink/action(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if(.)
-
-		var/obj/item/handheld_camera_monitor/cyborg/PP = locate() in R.module
-		if(PP)
-			to_chat(user, "<span class='warning'>This unit is already equipped with a [PP]!</span>")
-			return FALSE
-
-		PP = new(R.module)
-		R.module.basic_modules += PP
-		R.module.add_module(PP, FALSE, TRUE)
-		//camera_uplink = new /datum/action/item_action/camera_uplink(src)
-		//camera_uplink.Grant(R)
-
-
-/obj/item/borg/upgrade/camera_uplink/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if (.)
-		//camera_uplink.Remove(R)
-		//QDEL_NULL(camera_uplink)
-		var/obj/item/handheld_camera_monitor/cyborg/PP = locate() in R.module
-		R.module.remove_module(PP, TRUE)
-
-//*******************************************
-//SEC CAMERA UPLINK ITEM AND UPGRADE - ENDS
-//*******************************************
 
 
 //*******************************************
@@ -279,6 +193,28 @@
 	use_cyborg_cell = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 
+//Where we check to see if station is on red alert and the lethal mode can be used.
+
+/obj/item/gun/energy/e_gun/cyborg/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	if(!check_alert_level())
+		return
+	return ..()
+
+/obj/item/gun/energy/e_gun/cyborg/proc/check_alert_level()
+	var/mob/living/silicon/robot/R = loc
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	if(!R || !iscyborg(R))
+		return FALSE
+
+	if((GLOB.security_level < SEC_LEVEL_RED && shot.harmful) && !R.emagged) //If we're emagged we don't care about alert level
+		playsound(loc, 'sound/machines/buzz-two.ogg', get_clamped_volume(), TRUE, -1)
+		to_chat(loc,"<span class='warning'>ERROR: Weapon cannot fire on lethal modes while the alert level is less than red.</span>")
+		return FALSE
+
+	return TRUE
+
+//Sec Egun Lethal Upgrade
+
 /obj/item/borg/upgrade/e_gun_lethal
 	name = "cyborg lethal mode unlock"
 	desc = "A module that unlocks the lethal mode for a cyborg's integrated energy gun for use during red alert."
@@ -310,25 +246,7 @@
 		if(!R.emagged) //If we're emagged, don't revert.
 			T.ammo_type = initial(T.ammo_type)
 
-//Where we check to see if station is on red alert and the lethal mode can be used.
-
-/obj/item/gun/energy/e_gun/cyborg/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	if(!check_alert_level())
-		return
-	return ..()
-
-/obj/item/gun/energy/e_gun/cyborg/proc/check_alert_level()
-	var/mob/living/silicon/robot/R = loc
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if(!R || !iscyborg(R))
-		return FALSE
-
-	if((GLOB.security_level < SEC_LEVEL_RED && shot.harmful) && !R.emagged) //If we're emagged we don't care about alert level
-		playsound(loc, 'sound/machines/buzz-two.ogg', get_clamped_volume(), TRUE, -1)
-		to_chat(loc,"<span class='warning'>ERROR: Weapon cannot fire on lethal modes while the alert level is less than red.</span>")
-		return FALSE
-
-	return TRUE
+//Sec e-gun cooler upgrade
 
 /obj/item/borg/upgrade/e_gun_cooler
 	name = "cyborg energy gun cooling module"
@@ -407,6 +325,89 @@
 //*******************************************
 
 //*******************************************
+//SEC CAMERA UPLINK ITEM AND UPGRADE - BEGINS
+//*******************************************
+
+/obj/item/handheld_camera_monitor/cyborg
+	name = "security camera remote uplink"
+	desc = "Used to remotely access the station's camera network."
+	icon = 'icons/obj/device.dmi'
+	icon_state	= "camera_bug"
+	actions_types = list(/datum/action/item_action/camera_uplink)
+	var/sound = SEC_BODY_CAM_SOUND
+
+/obj/item/handheld_camera_monitor/cyborg/attack_self(mob/user)
+	for(var/obj/machinery/computer/security/S in GLOB.machines)
+		if(istype(S, /obj/machinery/computer/security/telescreen) || !S.is_operational()) //Filter out telescreens and broken/depowered consoles
+			continue
+		else
+			playsound(src, sound, get_clamped_volume(), TRUE, -1)
+			S.interact(user)
+			return
+
+		if(!S)
+			playsound(src, 'sound/machines/buzz-two.ogg', get_clamped_volume(), TRUE, -1)
+			to_chat(user,"<span class='warning'>ERROR: No functioning security consoles found for uplink.</span>")
+
+	return
+
+/obj/machinery/computer/security/proc/check_handheld_camera_monitor(mob/user) //Checks for a handheld camera uplink when using camera monitors.
+	if(user.check_for_item(/obj/item/handheld_camera_monitor))
+		return TRUE
+	return FALSE
+
+/obj/item/handheld_camera_monitor/cyborg/ui_action_click()
+	if(..())
+		return
+	if(!issilicon(usr))
+		return
+	var/obj/item/handheld_camera_monitor/cyborg/PP = usr.check_for_item(/obj/item/handheld_camera_monitor)
+	if(!PP)
+		return
+
+/datum/action/item_action/camera_uplink
+	name = "Camera Network Uplink"
+	desc = "Uplink to the station's camera network."
+
+
+/obj/item/borg/upgrade/camera_uplink
+	name = "cyborg camera uplink"
+	desc = "A module that permits remote access to the station's camera network."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "camera_bug"
+	require_module = TRUE
+	module_type = list(/obj/item/robot_module/security)
+
+
+/obj/item/borg/upgrade/camera_uplink/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+
+		var/obj/item/handheld_camera_monitor/cyborg/PP = locate() in R.module
+		if(PP)
+			to_chat(user, "<span class='warning'>This unit is already equipped with a [PP]!</span>")
+			return FALSE
+
+		PP = new(R.module)
+		R.module.basic_modules += PP
+		R.module.add_module(PP, FALSE, TRUE)
+		//camera_uplink = new /datum/action/item_action/camera_uplink(src)
+		//camera_uplink.Grant(R)
+
+
+/obj/item/borg/upgrade/camera_uplink/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		//camera_uplink.Remove(R)
+		//QDEL_NULL(camera_uplink)
+		var/obj/item/handheld_camera_monitor/cyborg/PP = locate() in R.module
+		R.module.remove_module(PP, TRUE)
+
+//*******************************************
+//SEC CAMERA UPLINK ITEM AND UPGRADE - ENDS
+//*******************************************
+
+//*******************************************
 //CYBORG RECORD UPLINK ITEM AND UPGRADE - BEGINS
 //*******************************************
 
@@ -421,7 +422,7 @@
 
 /obj/item/handheld_sec_record_uplink/cyborg/attack_self(mob/user)
 	for(var/obj/machinery/computer/secure_data/S in GLOB.machines)
-		if(S.is_operational()) //Filter out broken/depowered consoles
+		if(!S.is_operational()) //Filter out broken/depowered consoles
 			continue
 		else
 			playsound(src, sound, get_clamped_volume(), TRUE, -1)
@@ -443,11 +444,11 @@
 	var/obj/item/handheld_sec_record_uplink/cyborg/PP = usr.check_for_item(/obj/item/handheld_sec_record_uplink)
 	if(!PP)
 		return
-	PP.attack_self(usr)
 
 /datum/action/item_action/sec_record_uplink
 	name = "Security Record Uplink"
 	desc = "Uplink to the station's security record database."
+
 
 //*******************************************
 //CYBORG RECORD UPLINK ITEM AND UPGRADE - ENDS
@@ -531,7 +532,7 @@
 		if(emagged)
 			T.ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 		else if(!locate(/obj/item/borg/upgrade/e_gun_lethal) in upgrades) //Only revert if we don't have the requisite upgrade for lethals
-			T.ammo_type = initial(T.ammo_type)
+			T.ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 		T.update_ammo_types()
 
 /mob/proc/check_for_item(typepath)

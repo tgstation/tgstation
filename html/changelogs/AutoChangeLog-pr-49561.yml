@@ -1,4 +1,0 @@
-author: "bobbahbrown"
-delete-after: True
-changes: 
-  - bugfix: "Fixed unsanitized blob broadcast allowing html injection"

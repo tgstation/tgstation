@@ -224,6 +224,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mode)
 
+	//FULPSTATION: Suffocating carbons can't speak (see breath.dm) (PR #252)
+	check_if_can_breathe(src)
+	//END FULPSTATION
+
 	if(succumbed)
 		succumb(1)
 		to_chat(src, compose_message(src, language, message, , spans, message_mode))
@@ -328,7 +332,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/proc/get_key(message)
 	var/key = message[1]
-	if(key in GLOB.department_radio_prefixes)
+	if((key in GLOB.department_radio_prefixes) && length(message) > length(key) + 1)
 		return lowertext(message[1 + length(key)])
 
 /mob/living/proc/get_message_language(message)

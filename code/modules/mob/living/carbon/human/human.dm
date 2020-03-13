@@ -167,9 +167,15 @@
 	if(ITEM_SLOT_ICLOTHING in obscured)
 		dat += "<tr><td><font color=grey><B>Uniform:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
 	else
-		dat += "<tr><td><B>Uniform:</B></td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_ICLOTHING]'>[(w_uniform && !(w_uniform.item_flags & ABSTRACT)) ? w_uniform : "<font color=grey>Empty</font>"]</A></td></tr>"
+		dat += "<tr><td><B>Uniform:</B></td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_ICLOTHING]'>[(w_uniform && !(w_uniform.item_flags & ABSTRACT)) ? w_uniform : "<font color=grey>Empty</font>"]</A>"
+		if(w_uniform)
+			var/obj/item/clothing/under/U = w_uniform
+			if (U.can_adjust)
+				dat += "&nbsp;<A href='?src=[REF(src)];toggle_uniform=[ITEM_SLOT_ICLOTHING]'>Adjust</A>"
+		dat += "</td></tr>"
 
-	if((w_uniform == null && !(dna && dna.species.nojumpsuit)) || (ITEM_SLOT_ICLOTHING in obscured))
+	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_CHEST)
+	if((w_uniform == null && !(dna && dna.species.nojumpsuit) && !(O && O.status == BODYPART_ROBOTIC)) || (ITEM_SLOT_ICLOTHING in obscured))
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Pockets:</B></font></td></tr>"
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>ID:</B></font></td></tr>"
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Belt:</B></font></td></tr>"
@@ -253,6 +259,16 @@
 		else
 			// Display a warning if the user mocks up
 			to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
+
+	if(href_list["toggle_uniform"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+		var/obj/item/clothing/under/U = get_item_by_slot(ITEM_SLOT_ICLOTHING)
+		to_chat(src, "<span class='notice'>[usr.name] is trying to adjust your [U].</span>")
+		if(do_mob(usr, src, U.strip_delay/2))
+			to_chat(src, "<span class='notice'>[usr.name] successfully adjusted your [U].</span>")
+			U.toggle_jumpsuit_adjust()
+			update_inv_w_uniform()
+			update_body()
+
 
 ///////HUDs///////
 	if(href_list["hud"])
@@ -1067,7 +1083,7 @@
 	var/health_deficiency = max((maxHealth - health), staminaloss)
 	if(health_deficiency >= 40)
 		add_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN, override = TRUE, multiplicative_slowdown = (health_deficiency / 75), blacklisted_movetypes = FLOATING|FLYING)
-		add_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN_FLYING, override = TRUE, multiplicative_slowdown = (health_deficiency / 25), movetypes = FLOATING)
+		add_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN_FLYING, override = TRUE, multiplicative_slowdown = (health_deficiency / 25), movetypes = FLYING, blacklisted_movetypes = FLOATING)
 	else
 		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
 		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN_FLYING)

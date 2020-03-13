@@ -89,7 +89,7 @@
 	// Heads?
 	if (target_role == "HEAD")
 		target_amount = rand(1, round(SSticker.mode.num_players() / 20))
-		target_amount = CLAMP(target_amount,1,3)
+		target_amount = clamp(target_amount,1,3)
 	// Department?
 	else
 		switch(target_role)
@@ -104,7 +104,7 @@
 			if("Quartermaster")
 				department_string = "Cargo"
 		target_amount = rand(round(SSticker.mode.num_players() / 20), round(SSticker.mode.num_players() / 10))
-		target_amount = CLAMP(target_amount, 2, 4)
+		target_amount = clamp(target_amount, 2, 4)
 	..()
 
 //						EXPLANATION

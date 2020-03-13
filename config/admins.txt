@@ -21,25 +21,25 @@ Kasabaru = Admin
 Dr. Fake Name = Admin
 tamaguen = Admin
 Misdoubtful = Admin
+Samuuu3 = Admin
 
 #Admin Jrs
 Glubtok = Admin Jr.
 Shadowflame909 = Admin Jr.
-Samuuu3 = Admin Jr.
 SpacingNevada = Admin Jr.
+papaporopaprito = Admin Jr.
 
 #Admin Candidates
 BLU_REMOTE = Admin Candidate
-papaporopaprito = Admin Candidate
 BringTheBoom = Admin Candidate
 Saliferous = Admin Candidate
+Guillaume Prata = Admin Candidate
+Sliggist = Admin Candidate
 
 #MODERATORS
 Shmiff = Moderator
 Heliocintrini = Moderator
 TheTeenyTiny = Moderator
-Sliggist = Moderator
-Guillaume Prata = Moderator
 Shadowtail117 = Moderator
 Toxika = Moderator
 SkyCinnamon = Moderator
@@ -47,6 +47,7 @@ Buzzardman2 = Moderator
 Beardlessjoe = Moderator
 atlasrules87 = Moderator
 Abraxis12Gaming = Moderator
+Mizalona = Moderator
 
 #DEFROCKED
 #RaveMaster93 = Admin
@@ -66,7 +67,7 @@ Abraxis12Gaming = Moderator
 #Axolotl123 = Admin
 #Idontcareacount = Admin
 #Bricksqwad = Admin
-#ImpendingRiot = Moderator
+ImpendingRiot = Moderator
 #Hydraliks = Moderator
 #DrTarry = Moderator
 #HorusTheHelpful = Moderator

@@ -403,26 +403,25 @@
 /*Suffix: Combo of healing, prob gonna get wack REAL fast*/
 /datum/reagent/medicine/C2/instabitaluri
 	name = "Synthflesh (Instabitaluri)"
-	description = "Has a 100% chance of instantly healing brute and burn damage at the cost of toxicity (75% of damage healed). Touch application only."
+	description = "Heals brute and burn damage at the cost of toxicity (66% of damage healed). Touch application only."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
 /datum/reagent/medicine/C2/instabitaluri/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
-		var/mob/living/carbon/Carbies = M
-		if (Carbies.stat == DEAD)
+		var/mob/living/carbon/carbies = M
+		if (carbies.stat == DEAD)
 			show_message = 0
 		if(method in list(PATCH, TOUCH))
-			var/harmies = min(Carbies.getBruteLoss(),Carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
-			var/burnies = min(Carbies.getFireLoss(),Carbies.adjustFireLoss(-1.25 * reac_volume)*-1)
-			Carbies.adjustToxLoss((harmies+burnies)*0.66)
+			var/harmies = min(carbies.getBruteLoss(),carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
+			var/burnies = min(carbies.getFireLoss(),carbies.adjustFireLoss(-1.25 * reac_volume)*-1)
+			carbies.adjustToxLoss((harmies+burnies)*0.66)
 			if(show_message)
-				to_chat(Carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
-			SEND_SIGNAL(Carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
-			//Has to be at less than TRESHOLD_UNHUSK burn damage and have 100 isntabitaluri before unhusking. Corpses dont metabolize.
-			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && Carbies.getFireLoss() < TRESHOLD_UNHUSK && Carbies.reagents.has_reagent(/datum/reagent/medicine/C2/instabitaluri, 100))
-				Carbies.cure_husk("burn")
-				Carbies.visible_message("<span class='nicegreen'>With most of the burnt off flesh replaced, [Carbies] looks a lot healthier.</span>")
+				to_chat(carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
+			SEND_SIGNAL(carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
+			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && carbies.getFireLoss() < THRESHOLD_UNHUSK && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/C2/instabitaluri) + reac_volume >= 100))
+				carbies.cure_husk("burn")
+				carbies.visible_message("<span class='nicegreen'>A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!") //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
 	..()
 	return TRUE
 
