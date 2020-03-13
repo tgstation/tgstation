@@ -1,0 +1,6 @@
+author: "Bawhoppen"
+delete-after: True
+changes: 
+  - rscadd: "Permabrig redesigned for Boxstation. (Other maps hopefully coming in time...)"
+  - rscadd: "Prisoners now may start with some contraband hidden around on Box."
+  - rscadd: "Box Permabrig now has a license plate pressing machine, which allows raw license plates (from cargo), to be exported for a profit. Of course, this requires some effort on the prisoner's part."
