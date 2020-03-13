@@ -208,8 +208,6 @@
 #define COMSIG_MOB_EMOTE "mob_emote" // from /mob/living/emote(): ()
 #define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"					//from base of mob/swap_hand(): (obj/item)
 	#define COMPONENT_BLOCK_SWAP 1
-#define COMSIG_MOB_EQUIPPED_ITEM "mob_equip_item"						//from base of obj/item/equipped()
-#define COMSIG_MOB_DROPPED_ITEM "mob_drop_item"							//from base of obj/item/dropped()
 
 // /mob/living signals
 #define COMSIG_LIVING_RESIST "living_resist"					//from base of mob/living/resist() (/mob/living)
@@ -241,6 +239,8 @@
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"					//from base of mob/living/carbon/soundbang_act(): (list(intensity))
 #define COMSIG_CARBON_GAIN_ORGAN "carbon_gain_organ"				//from /item/organ/proc/Insert() (/obj/item/organ/)
 #define COMSIG_CARBON_LOSE_ORGAN "carbon_lose_organ"				//from /item/organ/proc/Remove() (/obj/item/organ/)
+#define COMSIG_CARBON_EQUIP_HAT "carbon_equip_hat"					//from /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop, silent)
+#define COMSIG_CARBON_UNEQUIP_HAT "carbon_unequip_hat"				//from /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop, silent)
 
 // /mob/living/simple_animal/hostile signals
 #define COMSIG_HOSTILE_ATTACKINGTARGET "hostile_attackingtarget"
