@@ -1,47 +1,53 @@
+/// Station home gateway
 GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
+/// List of possible gateway destinations.
 GLOBAL_LIST_EMPTY(gateway_destinations)
 
-/// Corresponds to single entry in gateway control
+/**
+  * Corresponds to single entry in gateway control.
+  *
+  * Will NOT be added automatically to GLOB.gateway_destinations list.
+  */
 /datum/gateway_destination
 	var/name = "Unknown Destination"
-	var/wait = 0 // How long after roundstart this destination becomes active
-	var/enabled = TRUE //If disabled, the destination won't be availible
-	var/hidden = FALSE // Will not show on gateway controls at all.
+	var/wait = 0 /// How long after roundstart this destination becomes active
+	var/enabled = TRUE /// If disabled, the destination won't be availible
+	var/hidden = FALSE /// Will not show on gateway controls at all.
 
-/// Can a gateway link to this destination right now.
+/* Can a gateway link to this destination right now. */
 /datum/gateway_destination/proc/is_availible()
 	return enabled && world.time >= wait
 
-/// Returns user-friendly description why you can't connect to this destination display in UI
+/* Returns user-friendly description why you can't connect to this destination, displayed in UI */
 /datum/gateway_destination/proc/get_availible_reason()
 	. = "Unreachable"
 	if(world.time < wait)
 		. = "Connection desynchronized. Recalibration in progress."
 
-// Check if the movable is allowed to arrive (exile implants mostly)
+/* Check if the movable is allowed to arrive at this destination (exile implants mostly) */
 /datum/gateway_destination/proc/incoming_pass_check(atom/movable/AM)
 	return TRUE
 
-/// Get the actual turf we'll arrive at
+/* Get the actual turf we'll arrive at */
 /datum/gateway_destination/proc/get_target_turf()
 	CRASH("get target turf not implemented for this destination type")
 
-/// Things to do after arrival
+/* Called after moving the movable to target turf */
 /datum/gateway_destination/proc/post_transfer(atom/movable/AM)
 	if (ismob(AM))
 		var/mob/M = AM
 		if (M.client)
 			M.client.move_delay = max(world.time + 5, M.client.move_delay)
 
-/// Called when gateway activates with this destination.
+/* Called when gateway activates with this destination. */
 /datum/gateway_destination/proc/activate(obj/machinery/gateway/activated)
 	return
 
-/// Called when gateway targeting this destination deactivates.
+/* Called when gateway targeting this destination deactivates. */
 /datum/gateway_destination/proc/deactivate(obj/machinery/gateway/deactivated)
 	return
 
-/// Returns data used by gateway controller ui
+/* Returns data used by gateway controller ui */
 /datum/gateway_destination/proc/get_ui_data()
 	. = list()
 	.["ref"] = REF(src)
@@ -51,16 +57,16 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	if(wait)
 		.["timeout"] = max(1 - (wait - world.time) / wait, 0)
 
-/// Destination is another gateway
+/* Destination is another gateway */
 /datum/gateway_destination/gateway
 	var/obj/machinery/gateway/G
 
-// We set the target gateway target to activator
+/* We set the target gateway target to activator gateway */
 /datum/gateway_destination/gateway/activate(obj/machinery/gateway/activated)
 	if(!G.target)
 		G.activate(activated)
 
-// We turn off the target gateway too
+/* We turn off the target gateway if it's linked with us */
 /datum/gateway_destination/gateway/deactivate(obj/machinery/gateway/deactivated)
 	if(G.target == deactivated.destination)
 		G.deactivate()
@@ -84,7 +90,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	. = ..()
 	AM.setDir(SOUTH)
 
-/// Special home destination, so we can check exile implants
+/* Special home destination, so we can check exile implants */
 /datum/gateway_destination/gateway/home
 
 /datum/gateway_destination/gateway/home/incoming_pass_check(atom/movable/AM)
@@ -110,20 +116,21 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	return FALSE
 
 
-/// Destination is one ore more turfs - created by landmarks
+/* Destination is one ore more turfs - created by landmarks */
 /datum/gateway_destination/point
 	var/list/target_turfs = list()
-	var/id /// Used by away landmarks
+	/// Used by away landmarks
+	var/id
 
 /datum/gateway_destination/point/get_target_turf()
 	return pick(target_turfs)
 
+/* Dense invisible object starting the teleportation. Created by gateways on activation. */
 /obj/effect/gateway_portal_bumper
 	var/obj/machinery/gateway/gateway
 	density = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
 
-//okay, here's the good teleporting stuff
 /obj/effect/gateway_portal_bumper/Bumped(atom/movable/AM)
 	gateway.Transfer(AM)
 
@@ -137,13 +144,8 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	icon = 'icons/obj/machines/gateway.dmi'
 	icon_state = "off"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	var/calibrated = TRUE
-	var/destination_type = /datum/gateway_destination/gateway // Type of instanced gateway destination, needs to be subtype of /datum/gateway_destination/gateway
-	var/destination_name = "Unknown Gateway" // Name of the generated destination
-	var/datum/gateway_destination/gateway/destination // This is our own destination, pointing at this gateway
-	var/datum/gateway_destination/target // This is current active destination
-	var/obj/effect/gateway_portal_bumper/portal // bumper object, the thing that starts actual teleport
 
+	// 3x2 offset by one row
 	pixel_x = -32
 	pixel_y = -32
 	bound_height = 64
@@ -151,6 +153,22 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	bound_x = -32
 	bound_y = 0
 	density = TRUE
+
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 100
+	active_power_usage = 5000
+
+	var/calibrated = TRUE
+	/// Type of instanced gateway destination, needs to be subtype of /datum/gateway_destination/gateway
+	var/destination_type = /datum/gateway_destination/gateway
+	/// Name of the generated destination
+	var/destination_name = "Unknown Gateway"
+	/// This is our own destination, pointing at this gateway
+	var/datum/gateway_destination/gateway/destination
+	/// This is current active destination
+	var/datum/gateway_destination/target
+	/// bumper object, the thing that starts actual teleport
+	var/obj/effect/gateway_portal_bumper/portal
 
 /obj/machinery/gateway/Initialize()
 	generate_destination()
@@ -168,6 +186,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	target = null
 	dest.deactivate(src)
 	QDEL_NULL(portal)
+	use_power = IDLE_POWER_USE
 	update_icon()
 
 /obj/machinery/gateway/process()
@@ -175,9 +194,6 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		if(target)
 			deactivate()
 		return
-
-	if(target)
-		use_power(5000)
 
 /obj/machinery/gateway/update_icon_state()
 	if(target)
@@ -198,6 +214,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	target = D
 	target.activate(destination)
 	generate_bumper()
+	use_power = ACTIVE_POWER_USE
 	update_icon()
 
 /obj/machinery/gateway/proc/Transfer(atom/movable/AM)
@@ -206,6 +223,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	AM.forceMove(target.get_target_turf())
 	target.post_transfer(AM)
 
+/* Station's primary gateway */
 /obj/machinery/gateway/centerstation
 	destination_type = /datum/gateway_destination/gateway/home
 	destination_name = "Home Gateway"
@@ -228,10 +246,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		calibrated = TRUE
 	return TRUE
 
-/////////////////////////////////////Away////////////////////////
-
-
-//Doesn't need control console or power, always links to home when interacting.
+/* Doesn't need control console or power, always links to home when interacting. */
 /obj/machinery/gateway/away
 	density = TRUE
 	use_power = NO_POWER_USE
@@ -248,6 +263,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	else
 		deactivate()
 
+/* Gateway control computer */
 /obj/machinery/computer/gateway_control
 	name = "Gateway Control"
 	desc = "Human friendly interface to the mysterious gate next to it."
