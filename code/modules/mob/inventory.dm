@@ -317,13 +317,7 @@
 			else
 				I.forceMove(newloc)
 		I.dropped(src, silent)
-		PostUnEquip(I, force, newloc, no_move, invdrop, silent)
 	return TRUE
-
-///Called after you unequip something; allows us to do things after the item moves out of your inventory
-/mob/proc/PostUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
-
-	return
 
 //Outdated but still in use apparently. This should at least be a human proc.
 //Daily reminder to murder this - Remie.
