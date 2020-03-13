@@ -177,6 +177,7 @@
 	gain_text = "<span class='notice'>Your head is as smooth as can be, it's terrible.</span>"
 	lose_text = "<span class='notice'>Your head itches, could it be... growing hair?!</span>"
 	medical_record_text = "Patient starkly refused to take off headwear during examination."
+	///The user's starting hairstyle
 	var/old_hair
 
 /datum/quirk/bald/add()
@@ -184,8 +185,8 @@
 	old_hair = H.hairstyle
 	H.hairstyle = "Bald"
 	H.update_hair()
-	RegisterSignal(H, COMSIG_CARBON_EQUIP_HAT, .proc/check_if_covered)
-	RegisterSignal(H, COMSIG_CARBON_UNEQUIP_HAT, .proc/check_if_uncovered)
+	RegisterSignal(H, COMSIG_CARBON_EQUIP_HAT, .proc/equip_hat)
+	RegisterSignal(H, COMSIG_CARBON_UNEQUIP_HAT, .proc/unequip_hat)
 
 /datum/quirk/bald/remove()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -209,11 +210,13 @@
 	)
 	H.equip_in_one_of_slots(W, slots , qdel_on_fail = TRUE)
 
-/datum/quirk/bald/proc/check_if_covered(mob/user, obj/item/hat)
+///Checks if the headgear equipped is a wig and sets the mood event accordingly
+/datum/quirk/bald/proc/equip_hat(mob/user, obj/item/hat)
 	if(istype(hat, /obj/item/clothing/head/wig))
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/confident_mane) //Our head is covered, but also by a wig so we're happy.
 	else
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "bad_hair_day") //Our head is covered
 
-/datum/quirk/bald/proc/check_if_uncovered(mob/user, obj/item/clothing, force, newloc, no_move, invdrop, silent)
+///Applies a bad moodlet for having an uncovered head
+/datum/quirk/bald/proc/unequip_hat(mob/user, obj/item/clothing, force, newloc, no_move, invdrop, silent)
 	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/bald)
