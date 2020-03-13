@@ -132,7 +132,8 @@
 
 /obj/singularity/Bump(atom/A)
 	consume(A)
-	step(src, drifting_dir)
+	if(QDELETED(A)) // don't keep moving into objects that weren't destroyed infinitely
+		step(src, drifting_dir)
 	return
 
 /obj/singularity/Crossed(atom/A)
