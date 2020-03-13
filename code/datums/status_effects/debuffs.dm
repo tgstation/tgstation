@@ -635,3 +635,18 @@
 		to_chat(owner, fake_msg)
 
 	msg_stage++
+
+/datum/status_effect/holoburn
+	id = "holoburn"
+	status_type = STATUS_EFFECT_REPLACE
+	tick_interval = 10
+	duration = 100
+	alert_type = null
+
+/datum/status_effect/holoburn/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+	
+/datum/status_effect/holoburn/tick()
+	owner.adjustFireLoss(3)

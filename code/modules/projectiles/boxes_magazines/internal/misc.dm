@@ -9,3 +9,9 @@
 	ammo_type = /obj/item/ammo_casing/magic/hook
 	caliber = "hook"
 	max_ammo = 1
+
+/obj/item/ammo_box/magazine/internal/holorifle
+	name = "holorifle internal tube"
+	ammo_type = /obj/item/ammo_casing/microfusion
+	caliber = "microfusion"
+	max_ammo = 4

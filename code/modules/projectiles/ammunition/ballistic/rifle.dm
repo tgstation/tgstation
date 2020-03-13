@@ -26,3 +26,11 @@
 	caliber = "40mm"
 	icon_state = "40mmHE"
 	projectile_type = /obj/projectile/bullet/a40mm
+
+/obj/item/ammo_casing/microfusion
+	name = "microfusion cell"
+	desc = "A specialized cell that generates immense power in a single burst. Horribly inefficient compared to standard internal energy cells, as the cell burns out once expended."
+	icon_state = "microfusion-casing"
+	caliber = "microfusion"
+	icon_state = "microfusion"
+	projectile_type = /obj/projectile/energy/holo
