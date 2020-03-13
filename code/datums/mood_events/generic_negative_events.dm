@@ -212,6 +212,8 @@
 	mood_change = -8
 	timeout = 3 MINUTES
 
+/datum/mood_event/graverobbing
+
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/surgery
 	description = "<span class='boldwarning'>HE'S CUTTING ME OPEN!!</span>\n"
@@ -224,3 +226,6 @@
 /datum/mood_event/nanite_sadness/add_effects(message)
 	description = "<span class='warning robot'>+++++++[message]+++++++</span>\n"
 
+/datum/mood_event/bald
+	description ="<span class='warning'>I need something to cover my head...</span>\n"
+	mood_change = -3

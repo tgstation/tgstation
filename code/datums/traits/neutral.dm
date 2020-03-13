@@ -168,3 +168,54 @@
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
 	to_chat(quirk_holder, "<span class='notice'>There is a pinpointer [where], which can help you find your way around. Click in-hand to activate.</span>")
+
+/datum/quirk/bald
+	name = "Smooth-Headed"
+	desc = "You have no hair and are quite insecure about it! Keep your wig on, or at least your head covered up."
+	value = 0
+	mob_trait = TRAIT_BALD
+	gain_text = "<span class='notice'>Your head is as smooth as can be, it's terrible.</span>"
+	lose_text = "<span class='notice'>Your head itches, could it be... growing hair?!</span>"
+	medical_record_text = "Patient starkly refused to take off headwear during examination."
+	var/old_hair
+
+/datum/quirk/bald/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	old_hair = H.hairstyle
+	H.hairstyle = "Bald"
+	H.update_hair()
+	RegisterSignal(H, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_DROPPED_ITEM), .proc/check_headgear)
+
+/datum/quirk/bald/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.hairstyle = old_hair
+	H.update_hair()
+	UnregisterSignal(H, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_DROPPED_ITEM))
+	SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "bad_hair_day")
+
+/datum/quirk/bald/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/clothing/head/wig/natural/W = new(get_turf(H))
+	if (old_hair == "Bald")
+		W.hairstyle = pick(GLOB.hairstyles_list - "Bald")
+	else
+		W.hairstyle = old_hair
+	W.update_icon()
+	var/list/slots = list (
+		"head" = ITEM_SLOT_HEAD,
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"hands" = ITEM_SLOT_HANDS,
+	)
+	H.equip_in_one_of_slots(W, slots , qdel_on_fail = TRUE)
+
+/datum/quirk/bald/proc/check_headgear(mob/user, obj/item/hat, slot)
+	var/mob/living/carbon/human/H = quirk_holder
+	if (slot == ITEM_SLOT_HEAD)
+		var/obj/item/I = H.head
+		if(istype(I, /obj/item/clothing/head/wig))
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/confident_mane)
+		else
+			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "bad_hair_day")
+		return
+	if (!H.head)
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/bald)
