@@ -212,8 +212,6 @@
 	mood_change = -8
 	timeout = 3 MINUTES
 
-/datum/mood_event/graverobbing
-
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/surgery
 	description = "<span class='boldwarning'>HE'S CUTTING ME OPEN!!</span>\n"
