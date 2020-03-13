@@ -455,7 +455,7 @@
 	description = "Mixture of leftover prison foods served on previous days."
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#3E4A00" // rgb: 62, 74, 0
-	taste_description = "imprisonment"
+	taste_description = "your imprisonment"
 
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal())
