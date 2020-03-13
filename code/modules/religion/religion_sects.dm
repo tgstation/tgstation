@@ -201,7 +201,8 @@
 	name = "Sleeping Gods"
 	desc = "A sect that has fallen into dormancy."
 	convert_opener = "The gods have been silent. Where have you gone?!<br>You have no powers... But, in the darkest hour you will rise to save them all."
-	alignment = ALIGNMENT_GOOD
+	alignment = ALIGNMENT_GOOD //ancient defenders?
+	altar_icon_state = "sacrificealtar" //just no candles or the like, pretty dull altar
 	/// the current security level as a number, used to give out rewards
 	var/chaos_level = 0
 
@@ -277,18 +278,10 @@
 /datum/religion_sect/druidism
 	name = "Jungle's Bounty"
 	desc = "A sect that reaps the rewards of the harvest."
-	convert_opener = "Let the beauty of nature flourish, follower of the earth!<br>Plants readying for harvest will grant you favor, but they do not heal organic limbs. You can now sacrifice cells, with favor depending on their charge."
-	alignment = ALIGNMENT_GOOD
+	convert_opener = "Let the beauty of nature flourish, follower of the earth!<br>You may sacrifice fruit to bless everyone around you based on the food type of the plant. Gain enough favor this way, and you will be able to create thorn gear and convert swaths of the station to jungle."
+	alignment = ALIGNMENT_GOOD//good guy druids
+	altar_icon_state = "druidaltar" //a weird flower is growing on the altar
 	desired_items = list(/obj/item/reagent_containers/food/snacks/grown)
-
-/datum/religion_sect/druidism/can_sacrifice(obj/item/I, mob/living/L)
-	if(!..())
-		return FALSE
-	var/obj/item/reagent_containers/food/snacks/grown/harvest = I
-	if(harvest.foodtype & NONE)
-		to_chat("<span class='notice'>[GLOB.deity] appreciates all branches of nature, but [harvest] does not have power to bring out.</span>")
-		return FALSE
-	return TRUE
 
 //will NOT work with the bible, must be called by the sacrifice. the wording is changed, moodlet gone, and it just works in a "mass blessing" kind of way
 /datum/religion_sect/druidism/sect_bless(mob/living/L, mob/living/user, sacrificed_fruit = FALSE)
@@ -315,6 +308,18 @@
 		playsound(user, "punch", 25, TRUE, -1)
 	return TRUE
 
+/datum/religion_sect/druidism/can_sacrifice(obj/item/I, mob/living/L)
+	if(!..())
+		return FALSE
+	var/obj/item/reagent_containers/food/snacks/grown/harvest = I
+	if(harvest.foodtype & NONE) //none
+		to_chat("<span class='notice'>[GLOB.deity] appreciates all creations of nature, but [harvest] does not have any particular power to bring out.</span>")
+		return FALSE
+	if(!(harvest.foodtype & (FRUIT|VEGETABLES|GRAIN))) //something wild like meatwheat
+		to_chat("<span class='notice'>[GLOB.deity] appreciates all creations of nature, but [harvest]'s power is too unique to unleash.</span>")
+		return FALSE
+	return TRUE
+
 /datum/religion_sect/druidism/on_sacrifice(obj/item/I, mob/living/L) //how the druids use their bible, it's split into food types and given out in an aoe
 	if(!is_type_in_typecache(I, desired_items_typecache))
 		return
@@ -330,6 +335,6 @@
 			sect_bless(H, L, TRUE)
 		if(harvest.foodtype & GRAIN) //hey why not some speed
 			H.add_movespeed_modifier(MOVESPEED_ID_HARVEST, update=TRUE, priority=100, multiplicative_slowdown=-1)
-			addtimer(CALLBACK(H, .proc/remove_movespeed_modifier, MOVESPEED_ID_HARVEST, TRUE), 10 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE) //if this is done again just refresh the speedboost
+			addtimer(CALLBACK(H, /mob/.proc/remove_movespeed_modifier, MOVESPEED_ID_HARVEST, TRUE), 10 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE) //if this is done again just refresh the speedboost
 	adjust_favor(1, L)
 	qdel(I)
