@@ -75,3 +75,64 @@
 	human2borg.set_species(/datum/species/android)
 	human2borg.visible_message("<span class='notice'>[human2borg] has been converted by the rite of [name]!</span>")
 	return TRUE
+
+/*********DRUIDS!**********/
+
+/datum/religion_rites/druid
+	var/required_thing = list(/obj/item/reagent_containers/food/snacks/grown)
+	var/obj/found_thing
+
+/datum/religion_rites/druid/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+	var/turf/T = get_turf(AOG)
+	for(var/obj/i in T)
+		if(i in required_thing)
+			found_thing = i
+	if(!found_thing)
+		return FALSE
+	return ..()
+
+/datum/religion_rites/druid/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	var/turf/T = get_turf(AOG)
+	if(!(found_thing in T))
+		return FALSE
+	return ..()
+
+/datum/religion_rites/druid/create
+	name = "Jungle Armor"
+	desc = "Create some druid clothing. Mostly shows how wonderful you are! Needs a plant on the altar."
+	ritual_length = 30 SECONDS
+	ritual_invocations = list("Nature is beautiful...",
+						"... Nature is meaningful...",
+						"... Nature is robust...")
+	invoke_msg = "... So lets make use of it! This piece is done!"
+	favor_cost = 50
+
+/datum/religion_rites/druid/create/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(!AOG?.buckled_mobs?.len)
+		return FALSE
+	var/mob/living/carbon/human/human2borg
+	for(var/i in AOG.buckled_mobs)
+		if(istype(i,/mob/living/carbon/human))
+			human2borg = i
+			break
+	if(!human2borg)
+		return FALSE
+	human2borg.set_species(/datum/species/android)
+	human2borg.visible_message("<span class='notice'>[human2borg] has been converted by the rite of [name]!</span>")
+	return TRUE
+
+/datum/religion_rites/druid/upgrade
+	name = "Jungle Upgrade"
+	desc = "Upgrade druid gear placed on the altar! Stun the station! Needs the basic druid clothing you intend to upgrade on the altar."
+	ritual_length = 30 SECONDS
+	ritual_invocations = list("This needs more potency...",
+						"... This needs more yield...",
+						"... This needs more panache...")
+	invoke_msg = "... So by the power of our wonderful god...This piece has improved!"
+	favor_cost = 200
+	required_thing = list(/obj/item/clothing/head/druid)
+
+/obj/item/clothing/head/druid
+	name = "druidic crown"
+	desc = "Like the tuning forks for druids, really. They love this shit."
+	icon_state = "druidbasic"

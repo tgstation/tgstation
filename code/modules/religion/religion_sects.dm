@@ -240,7 +240,7 @@
 			to_chat(am_i_holy_living, "<span class='warning'>[godmessage]</span>")
 			if(wings && ishuman(am_i_holy_living))
 				var/mob/living/carbon/human/holyhumie = am_i_holy_living
-				holyhumie.dna.species.GiveSpeciesFlight()
+				holyhumie.dna?.species.GiveSpeciesFlight()
 
 /datum/religion_sect/fallen/sect_bless(mob/living/L, mob/living/user)
 	switch(chaos_level)
@@ -278,14 +278,14 @@
 /datum/religion_sect/druidism
 	name = "Jungle's Bounty"
 	desc = "A sect that reaps the rewards of the harvest."
-	convert_opener = "Let the beauty of nature flourish, follower of the earth!<br>You may sacrifice fruit to bless everyone around you based on the food type of the plant. Gain enough favor this way, and you will be able to create thorn gear and convert swaths of the station to jungle."
+	convert_opener = "Let the beauty of nature flourish, follower of the earth!<br>You may sacrifice fruit to bless everyone around you based on the food type of the plant. Gain enough favor this way, and you will be able to create druidic gear."
 	alignment = ALIGNMENT_GOOD//good guy druids
 	altar_icon_state = "druidaltar" //a weird flower is growing on the altar
 	desired_items = list(/obj/item/reagent_containers/food/snacks/grown)
 
 //will NOT work with the bible, must be called by the sacrifice. the wording is changed, moodlet gone, and it just works in a "mass blessing" kind of way
-/datum/religion_sect/druidism/sect_bless(mob/living/L, mob/living/user, sacrificed_fruit = FALSE)
-	if(!sacrificed_fruit)
+/datum/religion_sect/druidism/sect_bless(mob/living/L, mob/living/user, obj/item/reagent_containers/food/snacks/grown/sacrificed_fruit)
+	if(!sacrificed_fruit) //bible disabled
 		return FALSE
 	var/mob/living/carbon/human/H = L
 	for(var/X in H.bodyparts)
@@ -315,7 +315,7 @@
 	if(harvest.foodtype & NONE) //none
 		to_chat("<span class='notice'>[GLOB.deity] appreciates all creations of nature, but [harvest] does not have any particular power to bring out.</span>")
 		return FALSE
-	if(!(harvest.foodtype & (FRUIT|VEGETABLES|GRAIN))) //something wild like meatwheat
+	if(!(harvest.foodtype & (FRUIT|VEGETABLES|GRAIN|MEAT))) //something wild like meatwheat
 		to_chat("<span class='notice'>[GLOB.deity] appreciates all creations of nature, but [harvest]'s power is too unique to unleash.</span>")
 		return FALSE
 	return TRUE
@@ -325,16 +325,23 @@
 		return
 	var/obj/item/reagent_containers/food/snacks/grown/harvest = I
 	to_chat(L, "<span class='notice'>You unleash the power of [harvest]! [GLOB.deity] has given you favor.</span>")
-	for(var/mob/living/carbon/human/H in range(src, 7))
-		if(H == L)
-			continue
-		flash_color(H, flash_color="#1dda17", flash_time= 4 SECONDS)
-		if(harvest.foodtype & FRUIT)//the mood of the bible
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "bounty", /datum/mood_event/blessing)
-		if(harvest.foodtype & VEGETABLES)//the heal of the bible
-			sect_bless(H, L, TRUE)
-		if(harvest.foodtype & GRAIN) //hey why not some speed
-			H.add_movespeed_modifier(MOVESPEED_ID_HARVEST, update=TRUE, priority=100, multiplicative_slowdown=-1)
-			addtimer(CALLBACK(H, /mob/.proc/remove_movespeed_modifier, MOVESPEED_ID_HARVEST, TRUE), 10 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE) //if this is done again just refresh the speedboost
-	adjust_favor(1, L)
+	var/favor_amt = 1
+	if(harvest.foodtype & MEAT) //no buffs or anything, but it gives more favor
+		to_chat(L, "<span class='notice'>You are favored with [harvest]'s meatiness!</span>")
+		favor_amt++
+	else
+		for(var/mob/living/carbon/human/H in range(src, 7))
+			if(H == L)
+				continue
+			flash_color(H, flash_color="#1dda17", flash_time= 4 SECONDS)
+			if(harvest.foodtype & FRUIT)//the mood of the bible
+				to_chat(L, "<span class='notice'>You are blessed with [harvest]'s fruitiness!</span>")
+				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "bounty", /datum/mood_event/blessing)
+			else if(harvest.foodtype & VEGETABLES)//the heal of the bible
+				to_chat(L, "<span class='notice'>You are healed with [harvest]'s healthiness!</span>")
+				sect_bless(H, L, TRUE)
+			else  //GRAIN (it wasnt anything else) hey why not some speed
+				to_chat(L, "<span class='notice'>You are quickened with [harvest]'s strength!</span>")
+				H.add_movespeed_modifier(MOVESPEED_ID_HARVEST, update=TRUE, priority=100, multiplicative_slowdown=-0.5)
+	adjust_favor(favor_amt, L)
 	qdel(I)
