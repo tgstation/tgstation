@@ -640,7 +640,7 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/petersondisappointed.ogg'\
 		)
 	for(var/mob/M in GLOB.player_list)
-		if(M.client.prefs.toggles & SOUND_ENDOFROUND)
+		if(M.client.prefs?.toggles & SOUND_ENDOFROUND)
 			SEND_SOUND(M.client, sound(round_end_sound))
 
 	text2file(login_music, "data/last_round_lobby_music.txt")
