@@ -85,6 +85,7 @@
 #define JP_HIGH 3
 
 //randomised elements
+#define RANDOM_HARDCORE "random_hardcore"
 #define RANDOM_NAME "random_name"
 #define RANDOM_NAME_ANTAG "random_name_antag"
 #define RANDOM_BODY "random_body"
@@ -106,3 +107,18 @@
 #define RANDOM_FACIAL_HAIRSTYLE "random_facial_hairstyle"
 #define RANDOM_SKIN_TONE "random_skin_tone"
 #define RANDOM_EYE_COLOR "random_eye_color"
+
+///Random hardcore quirks, path || scorevalue
+#define RANDOM_HARDCOR_QUIRKS = list(/datum/quirk/unstable = 2,\
+/datum/quirk/junkie = 2,\
+/datum/quirk/insanity = 2,\
+/datum/quirk/pushover = 1,\
+/datum/quirk/prosthetic_limb = 1,\
+/datum/quirk/prosopagnosia = 1,\
+/datum/quirk/prosopagnosia = 1,\
+/datum/quirk/prosopagnosia = 1,\
+/datum/quirk/prosopagnosia = 1,\
+/datum/quirk/prosopagnosia = 1,\
+/datum/quirk/prosopagnosia = 1,\
+/datum/quirk/prosopagnosia = 1,\
+/datum/quirk/prosopagnosia = 1,\)

@@ -46,6 +46,38 @@
 	if(randomise[RANDOM_NAME])
 		real_name = pref_species.random_name(gender,1)
 
+/datum/preferences/proc/hardcore_random_setup()
+
+/datum/preferences/proc/random_quirks()
+	var/list/available_quirks = SSquirks.quirks
+	for(var/V in SSquirks.quirks)
+			var/datum/quirk/T = SSquirks.quirks[V]
+			var/quirk_name = initial(T.name)
+			var/has_quirk
+			var/quirk_cost = initial(T.value) * -1
+			var/lock_reason = "This trait is unavailable."
+			var/quirk_conflict = FALSE
+			for(var/_V in all_quirks)
+				if(_V == quirk_name)
+					has_quirk = TRUE
+			if(initial(T.mood_quirk) && CONFIG_GET(flag/disable_human_mood))
+				lock_reason = "Mood is disabled."
+				quirk_conflict = TRUE
+			if(has_quirk)
+				if(quirk_conflict)
+					all_quirks -= quirk_name
+					has_quirk = FALSE
+				else
+					quirk_cost *= -1 //invert it back, since we'd be regaining this amount
+			if(quirk_cost > 0)
+				quirk_cost = "+[quirk_cost]"
+			var/font_color = "#AAAAFF"
+			if(initial(T.value) != 0)
+				font_color = initial(T.value) > 0 ? "#AAFFAA" : "#FFAAAA"
+			if(quirk_conflict)
+				dat += "<font color='[font_color]'>[quirk_name]</font> - [initial(T.desc)] \
+				<font color='red'><b>LOCKED: [lock_reason]</b></font><br>"
+
 /datum/preferences/proc/update_preview_icon()
 	// Determine what job is marked as 'High' priority, and dress them up as such.
 	var/datum/job/previewJob
