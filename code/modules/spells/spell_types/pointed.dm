@@ -25,6 +25,7 @@
 		msg = "<span class='notice'>[active_msg] <B>Left-click to activate spell on a target!</B></span>"
 		add_ranged_ability(user, msg, TRUE)
 		on_activation(user)
+
  /**
   *
   * What happens upon pointed spell activation.
@@ -50,17 +51,3 @@
 		return
 	action.button_icon_state = "[base_icon_state][active]"
 	action.UpdateButtonIcon()
-
-/obj/effect/proc_holder/spell/pointed/InterceptClickOn(mob/living/caller, params, atom/target)
-	if(..())
-		return FALSE
-	if(!cast_check(TRUE, ranged_ability_user))
-		remove_ranged_ability()
-		return FALSE
-	return TRUE
-
-/obj/effect/proc_holder/spell/pointed/cast(list/targets, mob/living/user)
-	remove_ranged_ability()
-	charge_counter = 0
-	start_recharge()
-	on_deactivation(user)
