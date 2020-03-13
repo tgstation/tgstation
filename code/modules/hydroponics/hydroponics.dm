@@ -205,6 +205,24 @@
 					myseed.adjust_yield(-rand(1,2)) //Weeds choke out the plant's ability to bear more fruit.
 					myseed.yield = min((myseed.yield),3,10)
 
+//This is the part with pollination
+			pollinate()
+
+//This is where stability mutations exist now.
+			if(myseed.stability >= 60)
+				if(prob((myseed.stability)/2))
+					mutatespecie()
+					myseed.stability = myseed.stability/2
+			else if(myseed.stability >= 40 && myseed.stability < 59)
+				if(prob(40))
+					hardmutate()
+			else if(myseed.stability >= 20 && myseed.stability < 39)
+				if(prob(40))
+					mutate()
+			else if (myseed.stability >= 80)
+				if(prob(20))
+					mutate(0, 0, 0, 0, 0, 0, 0, 10, 0) //Exceedingly low odds of gaining a trait.
+
 //Health & Age///////////////////////////////////////////////////////////
 
 			// Plant dies if plant_health <= 0
@@ -217,8 +235,8 @@
 				adjustHealth(-rand(1,5) / rating)
 
 			// Harvest code
-			if(age > myseed.production && (age - lastproduce) > myseed.production && (!harvest && !dead))
-				nutrimentMutation()
+			/*if(age > myseed.production && (age - lastproduce) > myseed.production && (!harvest && !dead))
+				nutrimentMutation() */
 				if(myseed && myseed.yield != -1) // Unharvestable shouldn't be harvested
 					harvest = TRUE
 				else
@@ -390,13 +408,13 @@
 	visible_message("<span class='warning'>The [oldPlantName] is overtaken by some [myseed.plantname]!</span>")
 	TRAY_NAME_UPDATE
 
-/obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0) // Mutates the current seed
+/obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0, stabmut = 3) // Mutates the current seed
 	if(!myseed)
 		return
-	myseed.mutate(lifemut, endmut, productmut, yieldmut, potmut, wrmut, wcmut, traitmut)
+	myseed.mutate(lifemut, endmut, productmut, yieldmut, potmut, wrmut, wcmut, traitmut, stabmut)
 
 /obj/machinery/hydroponics/proc/hardmutate()
-	mutate(4, 10, 2, 4, 50, 4, 10, 3)
+	mutate(4, 10, 2, 4, 50, 4, 10, 0, 4)
 
 
 /obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
@@ -456,6 +474,18 @@
 		update_icon()
 		dead = TRUE
 
+/obj/machinery/hydroponics/proc/pollinate()
+	for(var/obj/machinery/hydroponics/T in oview(src, 1))
+		if(T.myseed && !T.dead)
+			T.myseed.potency =  round(clamp((T.myseed.potency+(1/10)*(myseed.potency-T.myseed.potency)),0,100))
+			T.myseed.stability =  round(clamp((T.myseed.stability+(1/10)*(myseed.stability-T.myseed.stability)),0,100))
+			T.myseed.yield =  round(clamp((T.myseed.yield+(1/2)*(myseed.yield-T.myseed.yield)),0,10))
+			if(myseed.stability >= 20 && prob(70))
+				var/datum/reagent/picked_reagent = (pick(T.myseed.reagents_add))
+				var/datum/plant_gene/reagent/reagent_gene = new /datum/plant_gene/reagent(picked_reagent, 0.05) //I cannot figure out how to copy over the keyed value from the reagents_add list so for now this works, skog you'll want to fix this before merge
+				if(reagent_gene.can_add(myseed))
+					myseed.genes += reagent_gene
+					return
 
 
 /obj/machinery/hydroponics/proc/mutatepest(mob/user)
@@ -838,10 +868,7 @@
 			return
 		if(new_trait.can_add(myseed))
 			myseed.genes += snip.stored_trait
-			return
-		myseed.genes += snip.stored_trait
 		//Alright this one's a mess, but it's either 2/3rds of the difference of the two seed's respective stats, and the higher of the two is taken. Min 0, max 100.
-		myseed.potency =  round(clamp(max(myseed.potency,(myseed.potency+(2/3)*(snip.parent_seed.potency-myseed.potency))),0,100))
 		myseed.lifespan =  round(clamp(max(myseed.lifespan,(myseed.lifespan+(2/3)*(snip.parent_seed.lifespan-myseed.lifespan))),0,100))
 		myseed.endurance =  round(clamp(max(myseed.endurance,(myseed.endurance+(2/3)*(snip.parent_seed.endurance-myseed.endurance))),0,100))
 		myseed.production = round(clamp(max(myseed.production,(myseed.production+(2/3)*(snip.parent_seed.production-myseed.production))),0,100))

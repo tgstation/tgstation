@@ -9,6 +9,7 @@
 	maturation = 10
 	production = 1
 	yield = 5
+	stability = 15
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	mutatelist = list(/obj/item/seeds/carrot/parsnip)
@@ -69,6 +70,7 @@
 	lifespan = 60
 	endurance = 50
 	yield = 6
+	stability = 10
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
 	mutatelist = list(/obj/item/seeds/redbeet)
@@ -95,6 +97,7 @@
 	lifespan = 60
 	endurance = 50
 	yield = 6
+	stability = 15
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
 	genes = list(/datum/plant_gene/trait/maxchem)

@@ -39,8 +39,8 @@
 	var/list/mutatelist = list()
 	/// Plant genes are stored here, see plant_genes.dm for more info.
 	var/list/genes = list()
+	/// A list of reagents to add to product.
 	var/list/reagents_add = list()
-	// A list of reagents to add to product.
 	// Format: "reagent_id" = potency multiplier
 	// Stronger reagents must always come first to avoid being displaced by weaker ones.
 	// Total amount of any reagent in plant is calculated by formula: 1 + round(potency * multiplier)
@@ -51,7 +51,7 @@
 	var/weed_chance = 5
 	///Determines if the plant has had a graft removed or not.
 	var/grafted = FALSE
-	///Trait to be applied to plant grafts.
+	///Trait to be applied when grafting a plant.
 	var/graft_gene
 
 /obj/item/seeds/Initialize(mapload, nogenes = 0)
@@ -136,12 +136,13 @@
 	if(g)
 		g.mutability_flags &=  ~mutability
 
-/obj/item/seeds/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0)
+/obj/item/seeds/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0, stabmut = 3)
 	adjust_lifespan(rand(-lifemut,lifemut))
 	adjust_endurance(rand(-endmut,endmut))
 	adjust_production(rand(-productmut,productmut))
 	adjust_yield(rand(-yieldmut,yieldmut))
 	adjust_potency(rand(-potmut,potmut))
+	adjust_stability(rand(-stabmut,stabmut))
 	adjust_weed_rate(rand(-wrmut, wrmut))
 	adjust_weed_chance(rand(-wcmut, wcmut))
 	if(prob(traitmut))
@@ -261,6 +262,13 @@
 		if(C)
 			C.value = potency
 
+/obj/item/seeds/proc/adjust_stability(adjustamt)
+	if(stability != -1)
+		stability = clamp(stability + adjustamt, 0, 100)
+		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/stability)
+		if(C)
+			C.value = stability
+
 /obj/item/seeds/proc/adjust_weed_rate(adjustamt)
 	weed_rate = clamp(weed_rate + adjustamt, 0, 10)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_rate)
@@ -350,6 +358,7 @@
 		text += "- Production speed: [production]\n"
 	text += "- Endurance: [endurance]\n"
 	text += "- Lifespan: [lifespan]\n"
+	text += "- Stability: [stability]\n"
 	text += "- Weed Growth Rate: [weed_rate]\n"
 	text += "- Weed Vulnerability: [weed_chance]\n"
 	if(rarity)

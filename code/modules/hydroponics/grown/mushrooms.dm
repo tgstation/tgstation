@@ -18,6 +18,7 @@
 	production = 5
 	yield = 4
 	potency = 15
+	stability = 30
 	growthstages = 4
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
@@ -45,6 +46,7 @@
 	maturation = 10
 	production = 5
 	yield = 4
+	stability = 30
 	growthstages = 3
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
@@ -100,6 +102,7 @@
 	production = 1
 	yield = 5
 	potency = 15
+	stability = 10
 	growthstages = 3
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
@@ -193,6 +196,7 @@
 	production = 1
 	yield = 5
 	potency = 15
+	stability = 20
 	growthstages = 3
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
@@ -251,6 +255,7 @@
 	production = 1
 	yield = 3 //-> spread
 	potency = 30 //-> brightness
+	stability = 20
 	growthstages = 4
 	rarity = 20
 	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/plant_type/fungal_metabolism)
