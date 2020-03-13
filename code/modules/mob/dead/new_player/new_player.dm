@@ -499,6 +499,10 @@
 	H.name = real_name
 
 	. = H
+
+	if(CONFIG_GET(flag/bay_station_mode))
+		immerse_player(H)
+
 	new_character = .
 	if(transfer_after)
 		transfer_character()

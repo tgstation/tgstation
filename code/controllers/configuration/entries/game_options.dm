@@ -173,6 +173,8 @@
 
 /datum/config_entry/flag/arrivals_shuttle_require_undocked	//Require the arrivals shuttle to be undocked before latejoiners can join
 
+/datum/config_entry/flag/bay_station_mode	//Require players to be fully immersed
+
 /datum/config_entry/flag/arrivals_shuttle_require_safe_latejoin	//Require the arrivals shuttle to be operational in order for latejoiners to join
 
 /datum/config_entry/string/alert_green
