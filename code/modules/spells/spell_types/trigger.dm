@@ -24,4 +24,3 @@
 			spell.perform(list(target),0)
 		for(var/obj/effect/proc_holder/spell/spell in linked_spells)
 			spell.perform(list(target),0)
-	..()
