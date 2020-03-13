@@ -184,7 +184,8 @@
 	old_hair = H.hairstyle
 	H.hairstyle = "Bald"
 	H.update_hair()
-	RegisterSignal(H, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_DROPPED_ITEM), .proc/check_headgear)
+	RegisterSignal(H, COMSIG_MOB_EQUIPPED_ITEM, .proc/check_if_covered)
+	RegisterSignal(H, COMSIG_MOB_DROPPED_ITEM, .proc/check_if_uncovered)
 
 /datum/quirk/bald/remove()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -208,14 +209,15 @@
 	)
 	H.equip_in_one_of_slots(W, slots , qdel_on_fail = TRUE)
 
-/datum/quirk/bald/proc/check_headgear(mob/user, obj/item/hat, slot)
+/datum/quirk/bald/proc/check_if_covered(mob/user, obj/item/clothing, slot)
 	var/mob/living/carbon/human/H = quirk_holder
-	if (slot == ITEM_SLOT_HEAD)
-		var/obj/item/I = H.head
-		if(istype(I, /obj/item/clothing/head/wig))
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/confident_mane)
-		else
-			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "bad_hair_day")
+	if (slot != ITEM_SLOT_HEAD)
 		return
-	if (!H.head)
+	if(istype(clothing, /obj/item/clothing/head/wig))
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/confident_mane) //Our head is covered, but also by a wig so we're happy.
+	else
+		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "bad_hair_day") //Our head is covered
+
+/datum/quirk/bald/proc/check_if_uncovered(mob/user, obj/item/clothing)
+	if(clothing.slot = ITEM_SLOT_HEAD) //Youre taking me hat off nooo thats cringeee
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/bald)
