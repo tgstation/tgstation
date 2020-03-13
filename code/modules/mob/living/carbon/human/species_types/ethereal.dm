@@ -26,7 +26,7 @@
 	// Cold temperatures hurt faster as it is harder to move with out the heat energy
 	bodytemp_cold_damage_limit = (T20C - 10) // about 10c
 	hair_color = "fixedmutcolor"
-	hair_alpha = 180
+	hair_alpha = 140
 	var/current_color
 	var/EMPeffect = FALSE
 	var/emageffect = FALSE
