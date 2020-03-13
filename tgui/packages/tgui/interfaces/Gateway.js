@@ -26,7 +26,7 @@ export const Gateway = props => {
   {
     return (
       <Section title={current_target.name} textAlign="center">
-        <Icon name="dungeon" size={4} color="green" />
+        <Icon name="rainbow" size={4} color="green" />
         <Button
           fluid
           onClick={() => act("deactivate")}>
@@ -34,6 +34,10 @@ export const Gateway = props => {
         </Button>
       </Section>
     );
+  }
+
+  if (!destinations.length) {
+    return (<Section>No gateway nodes detected.</Section>);
   }
 
   const GatewayDest = dest => {
