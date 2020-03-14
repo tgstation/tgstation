@@ -59,32 +59,33 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 /* Destination is another gateway */
 /datum/gateway_destination/gateway
-	var/obj/machinery/gateway/G
+	/// The gateway this destination points at
+	var/obj/machinery/gateway/target_gateway
 
 /* We set the target gateway target to activator gateway */
 /datum/gateway_destination/gateway/activate(obj/machinery/gateway/activated)
-	if(!G.target)
-		G.activate(activated)
+	if(!target_gateway.target)
+		target_gateway.activate(activated)
 
 /* We turn off the target gateway if it's linked with us */
 /datum/gateway_destination/gateway/deactivate(obj/machinery/gateway/deactivated)
-	if(G.target == deactivated.destination)
-		G.deactivate()
+	if(target_gateway.target == deactivated.destination)
+		target_gateway.deactivate()
 
 /datum/gateway_destination/gateway/is_availible()
-	return ..() && G.calibrated && !G.target && G.powered()
+	return ..() && target_gateway.calibrated && !target_gateway.target && target_gateway.powered()
 
 /datum/gateway_destination/gateway/get_availible_reason()
 	. = ..()
-	if(!G.calibrated)
+	if(!target_gateway.calibrated)
 		. = "Exit gateway malfunction. Manual recalibration required."
-	if(G.target)
+	if(target_gateway.target)
 		. = "Exit gateway in use."
-	if(!G.powered())
+	if(!target_gateway.powered())
 		. = "Exit gateway unpowered."
 
 /datum/gateway_destination/gateway/get_target_turf()
-	return get_step(G.portal,SOUTH)
+	return get_step(target_gateway.portal,SOUTH)
 
 /datum/gateway_destination/gateway/post_transfer(atom/movable/AM)
 	. = ..()
@@ -100,12 +101,12 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	else
 		for(var/mob/living/L in AM.contents)
 			if(check_exile_implant(L))
-				G.say("Rejecting [AM]: Exile implant detected in contained lifeform.")
+				target_gateway.say("Rejecting [AM]: Exile implant detected in contained lifeform.")
 				return FALSE
 	if(AM.has_buckled_mobs())
 		for(var/mob/living/L in AM.buckled_mobs)
 			if(check_exile_implant(L))
-				G.say("Rejecting [AM]: Exile implant detected in close proximity lifeform.")
+				target_gateway.say("Rejecting [AM]: Exile implant detected in close proximity lifeform.")
 				return FALSE
 	return TRUE
 
@@ -178,7 +179,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 /obj/machinery/gateway/proc/generate_destination()
 	destination = new destination_type
 	destination.name = destination_name
-	destination.G = src
+	destination.target_gateway = src
 	GLOB.gateway_destinations += destination
 
 /obj/machinery/gateway/proc/deactivate()
