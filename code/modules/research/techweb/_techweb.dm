@@ -229,10 +229,13 @@
 /datum/techweb/proc/have_experiments_for_node(datum/techweb_node/node)
 	. = TRUE
 	for (var/experiment_type in node.experiments)
-		for (var/datum/experiment/e in active_experiments)
+		var/datum/experiment/found = null
+		for (var/datum/experiment/e in completed_experiments)
 			if (e.type == experiment_type)
+				found = e
 				break
-		return FALSE
+		if (!found)
+			return FALSE
 
 /datum/techweb/proc/add_experiment(experiment_type)
 	. = TRUE

@@ -19,7 +19,7 @@
   *
   * Initializes the internal scanned atoms list to keep track of which atoms have already been scanned
   */
-/datum/experiment/scanning/proc/Initialize()
+/datum/experiment/scanning/New()
 	for (var/a in required_atoms)
 		scanned[a] = list()
 

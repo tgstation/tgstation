@@ -16,7 +16,7 @@
   * Initializes the internal scanned atoms list to keep a counter for each atom
   * Note we do not keep track of items scanned as they are destroyed after scanning
   */
-/datum/experiment/scanning/destructive/Initialize()
+/datum/experiment/scanning/destructive/New()
 	for (var/a in required_atoms)
 		scanned[a] = 0
 
