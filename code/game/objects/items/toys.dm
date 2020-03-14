@@ -394,11 +394,8 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
+	two_hand_force = 0
 	attack_verb = list("attacked", "struck", "hit")
-
-/obj/item/dualsaber/toy/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/two_handed, wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
 
 /obj/item/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return 0

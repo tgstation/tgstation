@@ -33,6 +33,7 @@
 				3
 			],
 			"protected_roles": [
+				"Prisoner",
 				"Security Officer",
 				"Warden",
 				"Detective",

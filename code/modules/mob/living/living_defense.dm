@@ -78,6 +78,8 @@
 		if(!blocked)
 			visible_message("<span class='danger'>[src] is hit by [I]!</span>", \
 							"<span class='userdanger'>You're hit by [I]!</span>")
+			if(!I.throwforce)
+				return
 			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
 			apply_damage(I.throwforce, dtype, zone, armor)
 			if(I.thrownby)

@@ -1487,6 +1487,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 7
 	limited_stock = 1
 
+/datum/uplink_item/device_tools/guerillagloves
+	name = "Guerilla Gloves"
+	desc = "A pair of highly robust combat gripper gloves that excels at performing takedowns at close range, with an added lining of insulation. Careful not to hit a wall!"
+	item = /obj/item/clothing/gloves/tackler/combat/insulated
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	cost = 2
+
 // Implants
 /datum/uplink_item/implants
 	category = "Implants"
