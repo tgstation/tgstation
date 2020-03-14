@@ -596,7 +596,7 @@
 /datum/status_effect/fake_virus
 	id = "fake_virus"
 	duration = 1800//3 minutes
-	status_type = STATUS_EFFECT_REFRESH
+	status_type = STATUS_EFFECT_REPLACE
 	tick_interval = 1
 	alert_type = null
 	var/msg_stage = 0//so you dont get the most intense messages immediately
@@ -638,7 +638,7 @@
 
 /datum/status_effect/holoburn
 	id = "holoburn"
-	status_type = STATUS_EFFECT_REPLACE
+	status_type = STATUS_EFFECT_REFRESH
 	tick_interval = 10
 	duration = 100
 	alert_type = null
