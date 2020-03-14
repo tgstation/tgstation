@@ -60,6 +60,8 @@ export class Dropdown extends Component {
     const {
       color = 'default',
       over,
+      noscroll,
+      nochevron,
       width,
       onClick,
       selected,
@@ -80,7 +82,7 @@ export class Dropdown extends Component {
           'width': width,
         }}
         className={classes([
-          'Dropdown__menu',
+          (noscroll && 'Dropdown__menu-noscroll') || ('Dropdown__menu'),
           over && 'Dropdown__over',
         ])}>
         {this.buildMenu()}
@@ -104,9 +106,12 @@ export class Dropdown extends Component {
           <span className="Dropdown__selected-text">
             {this.state.selected}
           </span>
-          <span className="Dropdown__arrow-button">
-            <Icon name={adjustedOpen ? 'chevron-up' : 'chevron-down'} />
-          </span>
+          { nochevron
+            ? (false)
+            : (
+              <span className="Dropdown__arrow-button">
+                <Icon name={adjustedOpen ? 'chevron-up' : 'chevron-down'} />
+              </span>)}
         </Box>
         {menu}
       </div>
