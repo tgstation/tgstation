@@ -378,12 +378,10 @@
 	result = /obj/item/gun/ballistic/shotgun/holorifle
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/cable_coil = 15,
-				/obj/item/weaponcrafting/receiver = 1,
-				/obj/item/weaponcrafting/stock = 1,
+				/obj/item/gun/ballistic/shotgun/riot = 1,
 				/obj/item/stack/packageWrap = 5,
 				/obj/item/stock_parts/capacitor/super = 1,
-				/obj/item/circuitboard/machine/holopad = 1,
-				/obj/item/pipe = 2)
+				/obj/item/circuitboard/machine/holopad = 1)
 	tools = list(TOOL_WELDER, TOOL_WRENCH, TOOL_WIRECUTTER, TOOL_MULTITOOL)
 	time = 300
 	category = CAT_WEAPONRY
