@@ -315,7 +315,7 @@
 	time = 12
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
-	
+
 /datum/crafting_recipe/microfusion
 	name = "Microfusion Cell"
 	result = /obj/item/ammo_casing/microfusion
@@ -372,7 +372,7 @@
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
-	
+
 /datum/crafting_recipe/holorifle //gonna need to work for this
 	name = "Holorifle"
 	result = /obj/item/gun/ballistic/shotgun/holorifle
@@ -381,7 +381,6 @@
 				/obj/item/weaponcrafting/receiver = 1,
 				/obj/item/weaponcrafting/stock = 1,
 				/obj/item/stack/packageWrap = 5,
-				/obj/item/ammo_casing/microfusion = 4,
 				/obj/item/stock_parts/capacitor/super = 1,
 				/obj/item/circuitboard/machine/holopad = 1,
 				/obj/item/pipe = 2)
