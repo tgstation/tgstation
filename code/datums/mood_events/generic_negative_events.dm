@@ -212,6 +212,14 @@
 	mood_change = -8
 	timeout = 3 MINUTES
 
+/datum/mood_event/deaths_door
+	description = "<span class='boldwarning'>This is it... I'm really going to die.</span>\n"
+	mood_change = -20
+
+/datum/mood_event/gunpoint
+	description = "<span class='boldwarning'>This guy is insane! I better be careful....</span>\n"
+	mood_change = -10
+
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/surgery
 	description = "<span class='boldwarning'>HE'S CUTTING ME OPEN!!</span>\n"
@@ -223,4 +231,3 @@
 
 /datum/mood_event/nanite_sadness/add_effects(message)
 	description = "<span class='warning robot'>+++++++[message]+++++++</span>\n"
-
