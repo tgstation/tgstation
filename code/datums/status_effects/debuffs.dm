@@ -596,7 +596,7 @@
 /datum/status_effect/fake_virus
 	id = "fake_virus"
 	duration = 1800//3 minutes
-	status_type = STATUS_EFFECT_REPLACE
+	status_type = STATUS_EFFECT_REFRESH
 	tick_interval = 1
 	alert_type = null
 	var/msg_stage = 0//so you dont get the most intense messages immediately
@@ -642,11 +642,19 @@
 	tick_interval = 10
 	duration = 100
 	alert_type = null
+	var/icon/burn
 
-/datum/status_effect/holoburn/on_creation(mob/living/new_owner, set_duration)
-	if(isnum(set_duration))
-		duration = set_duration
-	. = ..()
-	
+/datum/status_effect/holoburn/on_apply()
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		burn = icon('icons/mob/onfire.dmi', "holoburn")
+		C.add_overlay(burn)
+	else
+		burn = icon('icons/mob/onfire.dmi', "generic_holoburn")
+		owner.add_overlay(burn)
+
 /datum/status_effect/holoburn/tick()
 	owner.adjustFireLoss(3)
+
+/datum/status_effect/holoburn/on_remove()
+	owner.cut_overlay(burn)
