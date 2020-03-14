@@ -139,9 +139,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			return FALSE
 		if(QDELETED(loaded_item) || QDELETED(linked_console) || !user.Adjacent(linked_console) || QDELETED(src))
 			return FALSE
-		var/loaded_type = loaded_item.type
-		if(destroy_item(loaded_item))
-			// nada
+		destroy_item(loaded_item)
 	return TRUE
 
 /obj/machinery/rnd/destructive_analyzer/proc/unload_item()

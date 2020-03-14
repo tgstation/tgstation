@@ -505,11 +505,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			if(SSresearch.science_tech)
 				if(drunkenness >= 12.9 && drunkenness <= 13.8)
 					drunkenness = round(drunkenness, 0.01)
-					var/ballmer_percent = 0
-					if(drunkenness == 13.35) // why run math if I dont have to
-						ballmer_percent = 1
-					else
-						ballmer_percent = (-abs(drunkenness - 13.35) / 0.9) + 1
 					if(prob(5))
 						say(pick_list_replacements(VISTA_FILE, "ballmer_good_msg"), forced = "ballmer")
 				if(drunkenness > 26) // by this point you're into windows ME territory
