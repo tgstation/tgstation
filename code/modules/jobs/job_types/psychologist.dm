@@ -24,16 +24,11 @@
 
 //	ears = /obj/item/radio/headset/headset_psych
 	uniform = /obj/item/clothing/under/suit/black
-//	head =
 	shoes = /obj/item/clothing/shoes/laceup
-//	suit =
-//	gloves =
-//	belt =
 	id = /obj/item/card/id
-//	l_pocket =
-//	suit_store =
 //	backpack_contents = list()
-	pda_slot = /obj/item/pda/medical
+	belt = /obj/item/pda/medical
+	pda_slot = ITEM_SLOT_BELT
 	l_hand = /obj/item/clipboard
 
 //	backpack = /obj/item/storage/backpack/medic
