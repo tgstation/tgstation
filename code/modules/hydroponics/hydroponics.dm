@@ -725,6 +725,8 @@
 
 /obj/machinery/hydroponics/CtrlClick(mob/user)
 	. = ..()
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
 	if(!powered())
 		to_chat(user, "<span class='warning'>[name] has no power.</span>")
 	self_sustaining = !self_sustaining

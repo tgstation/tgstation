@@ -20,11 +20,26 @@ A new subsystem for hydroponics, as a way to share specific traits into plants, 
 	stored_trait = new /datum/plant_gene/trait/repeated_harvest //Default gene is repeated harvest.
 
 	graft_appearance = rand(100)
-	if(0 <= graft_appearance < 25)
-		icon_state = "graft_plant"
-	else if (25 <= graft_appearance < 50)
-		icon_state = "graft_flower"
-	else if (50 <= graft_appearance <= 95)
-		icon_state = "graft_mushroom"
-	else
-		icon_state = "graft_doom"
+	switch(graft_appearance)
+		if(0 to 25)
+			icon_state = "graft_plant"
+		if (26 to 50)
+			icon_state = "graft_flower"
+		if (51 to 95)
+			icon_state = "graft_mushroom"
+		if(96 to 100)
+			icon_state = "graft_doom"
+
+/obj/item/graft/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/plant_analyzer))
+		to_chat(user, get_graft_text())
+	. = ..()
+
+/obj/item/graft/proc/get_graft_text()
+	var/text = ""
+		text += "- Plant Graft -\n"
+	if(parent_seed)
+		text += "- Parent Plant Name:[parent_seed.plantname] -\n"
+	if(stored_trait)
+		text += "- Graftable Traits:[stored_trait.get_name()] -\n"
+	return text
