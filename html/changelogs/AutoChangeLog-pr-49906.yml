@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed IEDs spawned in maintenance at roundstart or via slime cores not having cans."
