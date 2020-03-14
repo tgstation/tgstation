@@ -1,6 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - bugfix: "Slimes try don't split while not in suitable container."
-  - bugfix: "On slime split new slimes appears in turf."
-  - bugfix: "On slime death new slime appears in turf."
