@@ -12,9 +12,6 @@
 	/// A brief description of the experiment to be shown as details
 	var/description = "Base experiment"
 
-/datum/experiment/New()
-	CRASH("You cannot instance the base experiment.")
-
 /**
   * Checks if the experiment is complete
   *
