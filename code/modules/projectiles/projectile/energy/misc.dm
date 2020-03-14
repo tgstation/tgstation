@@ -24,8 +24,9 @@
 	damage = 30
 	damage_type = BURN
 	range = 14
-	
-/obj/projectile/energy/on_hit(target)
+
+/obj/projectile/energy/holo/on_hit(target)
+	. = ..()
 	if(isliving(target))
 		var/mob/living/L = target
 		L.apply_status_effect(STATUS_EFFECT_HOLOBURN, firer)
