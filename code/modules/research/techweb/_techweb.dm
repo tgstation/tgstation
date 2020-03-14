@@ -228,9 +228,31 @@
 
 /datum/techweb/proc/have_experiments_for_node(datum/techweb_node/node)
 	. = TRUE
-	for (var/datum/experiment/e in node.experiments)
-		if (!(e in completed_experiments))
+	for (var/experiment_type in node.experiments)
+		for (var/datum/experiment/e in active_experiments)
+			if (e.type == experiment_type)
+				break
+		return FALSE
+
+/datum/techweb/proc/add_experiment(experiment_type)
+	. = TRUE
+	// check active experiments for experiment of this type
+	for (var/i in active_experiments)
+		var/datum/experiment/E = i
+		if (E.type == experiment_type)
 			return FALSE
+	// check completed experiments for experiments of this type
+	for (var/i in completed_experiments)
+		var/datum/experiment/E = i
+		if (E.type == experiment_type)
+			return FALSE
+	active_experiments += new experiment_type()
+
+/datum/techweb/proc/add_experiments(list/experiment_list)
+	. = TRUE
+	for (var/e in experiment_list)
+		var/datum/experiment/E = e
+		. = . && add_experiment(E)
 
 /datum/techweb/proc/printout_points()
 	return techweb_point_display_generic(research_points)
@@ -250,7 +272,10 @@
 	researched_nodes[node.id] = TRUE				//Add to our researched list
 	for(var/id in node.unlock_ids)
 		visible_nodes[id] = TRUE
-		update_node_status(SSresearch.techweb_node_by_id(id))
+		var/datum/techweb_node/n = SSresearch.techweb_node_by_id(id)
+		if (n.experiments.len > 0)
+			add_experiments(n.experiments)
+		update_node_status(n)
 	for(var/id in node.design_ids)
 		add_design_by_id(id)
 	update_node_status(node)

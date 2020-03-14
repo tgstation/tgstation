@@ -35,7 +35,7 @@
 	/// The category of the node
 	var/category = "Misc"
 	/// The list of experiments required to research the node
-	/var/list/experiments = list()
+	var/list/experiments = list()
 
 /datum/techweb_node/error_node
 	id = "ERROR"
