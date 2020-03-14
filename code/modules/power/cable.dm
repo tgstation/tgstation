@@ -452,24 +452,34 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	var/list/layer_list = list(
 		"Layer 1" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-red"),
 		"Layer 2" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-yellow"),
-		"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue")
+		"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue"),
+		"Multilayer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cable_bridge")
 		)
 	var/layer_result = show_radial_menu(user, src, layer_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(layer_result)
 		if("Layer 1")
+			icon_state = "coil"
 			color = "red"
 			target_type = /obj/structure/cable/layer1
 			target_layer = CABLE_LAYER_1
 		if("Layer 2")
+			icon_state = "coil"
 			color = "yellow"
 			target_type = /obj/structure/cable
 			target_layer = CABLE_LAYER_2
 		if("Layer 3")
+			icon_state = "coil"
 			color = "blue"
 			target_type = /obj/structure/cable/layer3
 			target_layer = CABLE_LAYER_3
+		if("Multilayer cable hub")
+			icon_state = "cable_bridge"
+			color = "white"
+			target_type = /obj/structure/cable/multilayer
+			target_layer = null
+	update_icon()
 
 
 ///////////////////////////////////
@@ -494,6 +504,10 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 
 
 /obj/item/stack/cable_coil/update_icon()
+	if(icon_state == "cable_bridge")
+		name = "multilayer cable hub"
+		return
+
 	icon_state = "[initial(item_state)][amount < 3 ? amount : ""]"
 	name = "cable [amount < 3 ? "piece" : "coil"]"
 
