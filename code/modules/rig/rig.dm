@@ -34,6 +34,10 @@
 	var/interface_break = FALSE
 	///How much part complexity can this RIG carry
 	var/complexity_max = 15
+	///If the RIG is really strong and you don't want it to be upgraded/has modules that shouldn't be obtainable by taking them out/has an infinite battery this prevents putting new parts in or old parts out
+	var/no_customization = FALSE
+	///How much battery power the RIG uses per tick
+	var/battery_usage = 0
 
 /obj/item/rig/control/Initialize()
 	..()
