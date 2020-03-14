@@ -160,4 +160,5 @@
 
 /obj/machinery/stasis/nap_violation(mob/violator)
 	unbuckle_mob(violator, TRUE)
+
 #undef STASIS_TOGGLE_COOLDOWN
