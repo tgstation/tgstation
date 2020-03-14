@@ -1,27 +1,47 @@
-
-//Used \n[\s]*origin_tech[\s]*=[\s]*"[\S]+" to delete all origin techs.
-//Or \n[\s]*origin_tech[\s]*=[\s]list\([A-Z_\s=0-9,]*\)
-//Used \n[\s]*req_tech[\s]*=[\s]*list\(["a-z\s=0-9,]*\) to delete all req_techs.
-
-//Techweb datums are meant to store unlocked research, being able to be stored on research consoles, servers, and disks. They are NOT global.
+/**
+  * # Techweb
+  *
+  * A datum representing a research techweb
+  *
+  * Techweb datums are meant to store unlocked research, being able to be stored
+  * on research consoles, servers, and disks. They are NOT global.
+  */
 /datum/techweb
-	var/list/researched_nodes = list()		//Already unlocked and all designs are now available. Assoc list, id = TRUE
-	var/list/visible_nodes = list()			//Visible nodes, doesn't mean it can be researched. Assoc list, id = TRUE
-	var/list/available_nodes = list()		//Nodes that can immediately be researched, all reqs met. assoc list, id = TRUE
-	var/list/researched_designs = list()	//Designs that are available for use. Assoc list, id = TRUE
-	var/list/custom_designs = list()		//Custom inserted designs like from disks that should survive recalculation.
-	var/list/boosted_nodes = list()			//Already boosted nodes that can't be boosted again. node id = path of boost object.
-	var/list/hidden_nodes = list()			//Hidden nodes. id = TRUE. Used for unhiding nodes when requirements are met by removing the entry of the node.
-	var/list/deconstructed_items = list()						//items already deconstructed for a generic point boost. path = list(point_type = points)
-	var/list/research_points = list()										//Available research points. type = number
+	/// Already unlocked and all designs are now available. Assoc list, id = TRUE
+	var/list/researched_nodes = list()
+	/// Visible nodes, doesn't mean it can be researched. Assoc list, id = TRUE
+	var/list/visible_nodes = list()
+	/// Nodes that can immediately be researched, all reqs met. assoc list, id = TRUE
+	var/list/available_nodes = list()
+	/// Designs that are available for use. Assoc list, id = TRUE
+	var/list/researched_designs = list()
+	/// Custom inserted designs like from disks that should survive recalculation.
+	var/list/custom_designs = list()
+	/// Already boosted nodes that can't be boosted again. node id = path of boost object.
+	var/list/boosted_nodes = list()
+	/// Hidden nodes. id = TRUE. Used for unhiding nodes when requirements are met by removing the entry of the node.
+	var/list/hidden_nodes = list()
+	/// Items already deconstructed for a generic point boost, path = list(point_type = points)
+	var/list/deconstructed_items = list()
+	/// Available research points, type = number
+	var/list/research_points = list()
 	var/list/obj/machinery/computer/rdconsole/consoles_accessing = list()
 	var/id = "generic"
-	var/list/research_logs = list()								//IC logs.
+	/// IC logs
+	var/list/research_logs = list()
 	var/largest_bomb_value = 0
-	var/organization = "Third-Party"							//Organization name, used for display.
-	var/list/last_bitcoins = list()								//Current per-second production, used for display only.
-	var/list/discovered_mutations = list()                           //Mutations discovered by genetics, this way they are shared and cant be destroyed by destroying a single console
-	var/list/tiers = list()										//Assoc list, id = number, 1 is available, 2 is all reqs are 1, so on
+	/// Organization name, used for display
+	var/organization = "Third-Party"
+	/// Current per-second production, used for display only.
+	var/list/last_bitcoins = list()
+	/// Mutations discovered by genetics, this way they are shared and cant be destroyed by destroying a single console
+	var/list/discovered_mutations = list()
+	/// Assoc list, id = number, 1 is available, 2 is all reqs are 1, so on
+	var/list/tiers = list()
+	/// Available experiments
+	var/list/active_experiments = list()
+	/// Completed experiments
+	var/list/completed_experiments = list()
 
 /datum/techweb/New()
 	SSresearch.techwebs += src
@@ -206,6 +226,12 @@
 			return FALSE
 	return TRUE
 
+/datum/techweb/proc/have_experiments_for_node(datum/techweb_node/node)
+	. = TRUE
+	for (var/datum/experiment/e in node.experiments)
+		if (!(e in completed_experiments))
+			return FALSE
+
 /datum/techweb/proc/printout_points()
 	return techweb_point_display_generic(research_points)
 
@@ -217,7 +243,7 @@
 		return FALSE
 	update_node_status(node)
 	if(!force)
-		if(!available_nodes[node.id] || (auto_adjust_cost && (!can_afford(node.get_price(src)))))
+		if(!available_nodes[node.id] || (auto_adjust_cost && (!can_afford(node.get_price(src)))) || !have_experiments_for_node(node))
 			return FALSE
 	if(auto_adjust_cost)
 		remove_point_list(node.get_price(src))
