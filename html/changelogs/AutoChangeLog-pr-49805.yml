@@ -1,0 +1,4 @@
+author: "TheMythicGhost"
+delete-after: True
+changes: 
+  - rscadd: "Adds a way to turn off end of round sounds. Finally, peace has returned to eardrums everywhere."
