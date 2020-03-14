@@ -8054,6 +8054,8 @@
 	pixel_y = 2
 	},
 /obj/structure/toilet{
+	cistern = 1;
+	icon_state = "toilet01";
 	pixel_y = 16
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -86854,6 +86856,8 @@
 	pixel_y = 2
 	},
 /obj/structure/toilet{
+	cistern = 1;
+	icon_state = "toilet01";
 	pixel_y = 16
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -90447,6 +90451,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/storage/bag/trash,
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "cIq" = (
@@ -93621,6 +93626,8 @@
 	pixel_y = 2
 	},
 /obj/structure/toilet{
+	cistern = 1;
+	icon_state = "toilet01";
 	pixel_y = 16
 	},
 /obj/effect/turf_decal/tile/neutral{

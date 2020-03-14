@@ -1892,6 +1892,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/storage/bag/trash,
 /turf/open/floor/plasteel/freezer,
 /area/security/prison)
 "agd" = (

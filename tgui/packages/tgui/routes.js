@@ -1,6 +1,7 @@
 import { Achievements } from './interfaces/Achievements';
 import { AiAirlock } from './interfaces/AiAirlock';
 import { AirAlarm } from './interfaces/AirAlarm';
+import { AiRestorer } from './interfaces/AiRestorer';
 import { AirlockElectronics } from './interfaces/AirlockElectronics';
 import { Apc } from './interfaces/Apc';
 import { AtmosAlertConsole } from './interfaces/AtmosAlertConsole';
@@ -41,6 +42,7 @@ import { EightBallVote } from './interfaces/EightBallVote';
 import { Electropack } from './interfaces/Electropack';
 import { EmergencyShuttleConsole } from './interfaces/EmergencyShuttleConsole';
 import { EngravedMessage } from './interfaces/EngravedMessage';
+import { ExosuitControlConsole } from './interfaces/ExosuitControlConsole';
 import { Gps } from './interfaces/Gps';
 import { GravityGenerator } from './interfaces/GravityGenerator';
 import { GulagTeleporterConsole } from './interfaces/GulagTeleporterConsole';
@@ -67,7 +69,6 @@ import { NaniteProgrammer } from './interfaces/NaniteProgrammer';
 import { NaniteRemote } from './interfaces/NaniteRemote';
 import { NotificationPreferences } from './interfaces/NotificationPreferences';
 import { NtnetRelay } from './interfaces/NtnetRelay';
-import { NtosAiRestorer } from './interfaces/NtosAiRestorer';
 import { NtosArcade } from './interfaces/NtosArcade';
 import { NtosCard } from './interfaces/NtosCard';
 import { NtosConfiguration } from './interfaces/NtosConfiguration';
@@ -112,6 +113,7 @@ import { SpaceHeater } from './interfaces/SpaceHeater';
 import { SpawnersMenu } from './interfaces/SpawnersMenu';
 import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
+import { SyndContractor } from './interfaces/SyndContractor';
 import { Tank } from './interfaces/Tank';
 import { TankDispenser } from './interfaces/TankDispenser';
 import { Teleporter } from './interfaces/Teleporter';
@@ -123,7 +125,6 @@ import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
 import { Vending } from './interfaces/Vending';
 import { Wires } from './interfaces/Wires';
-import { SyndContractor } from './interfaces/SyndContractor';
 
 const ROUTES = {
   achievements: {
@@ -136,6 +137,10 @@ const ROUTES = {
   },
   airalarm: {
     component: () => AirAlarm,
+    scrollable: true,
+  },
+  ai_restorer: {
+    component: () => AiRestorer,
     scrollable: true,
   },
   airlock_electronics: {
@@ -303,6 +308,10 @@ const ROUTES = {
     component: () => EngravedMessage,
     scrollable: false,
   },
+  exosuit_control_console: {
+    component: () => ExosuitControlConsole,
+    scrollable: true,
+  },
   gps: {
     component: () => Gps,
     scrollable: true,
@@ -414,7 +423,7 @@ const ROUTES = {
     scrollable: false,
   },
   ntos_ai_restorer: {
-    component: () => NtosAiRestorer,
+    component: () => AiRestorer,
     wrapper: () => NtosWrapper,
     scrollable: true,
     theme: 'ntos',

@@ -1,5 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - tweak: "You can now use the strip menu to adjust the jumpsuit style of other people"
-  - bugfix: "Humans with robot torsos can have their belt, ID, pockets slots correctly accessed through the strip menu"

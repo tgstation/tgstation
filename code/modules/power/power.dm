@@ -354,7 +354,7 @@
 // Misc.
 ///////////////////////////////////////////////
 
-// return a cable on layer if there's one on the turf, null if there isn't one
+// return a cable able connect to machinery on layer if there's one on the turf, null if there isn't one
 /turf/proc/get_cable_node(machinery_layer = MACHINERY_LAYER_1)
 	if(!can_have_cabling())
 		return null
