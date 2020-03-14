@@ -387,8 +387,6 @@
 	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= reaction_efficency
 	cached_gases[/datum/gas/plasma][MOLES]  -= 2*reaction_efficency
 
-	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, min((reaction_efficency**2)*BZ_RESEARCH_SCALE),BZ_RESEARCH_MAX_AMOUNT)
-
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
@@ -422,7 +420,6 @@
 	cached_gases[/datum/gas/tritium][MOLES] -= heat_scale
 	cached_gases[/datum/gas/plasma][MOLES] -= heat_scale
 	cached_gases[/datum/gas/nitryl][MOLES] -= heat_scale
-	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, STIMULUM_RESEARCH_AMOUNT*max(stim_energy_change,0))
 	if(stim_energy_change)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
@@ -451,7 +448,6 @@
 	cached_gases[/datum/gas/tritium][MOLES] -= 10*nob_formed
 	cached_gases[/datum/gas/nitrogen][MOLES] -= 20*nob_formed
 	cached_gases[/datum/gas/hypernoblium][MOLES]+= nob_formed
-	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, nob_formed*NOBLIUM_RESEARCH_AMOUNT)
 
 	if (nob_formed)
 		var/new_heat_capacity = air.heat_capacity()

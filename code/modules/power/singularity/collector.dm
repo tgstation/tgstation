@@ -78,7 +78,6 @@
 			if(D)
 				D.adjust_money(bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
 			stored_research += bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE*PRIVATE_TECHWEB_GAIN
-			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE*PUBLIC_TECHWEB_GAIN)
 			stored_energy-=bitcoins_mined
 
 /obj/machinery/power/rad_collector/interact(mob/user)
