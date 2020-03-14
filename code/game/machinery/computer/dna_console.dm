@@ -514,6 +514,8 @@
 			if(HM.chromosome_name)
 				chromosome_name = HM.chromosome_name
 			temp_html += "<div class='statusLine'>Chromosome status: [chromosome_name]<br></div>"
+		temp_html += "<div class='statusLine'>Compatible chromosomes: [jointext(HM.valid_chrom_list, ", ")]<br></div>"
+
 	temp_html += "<div class='statusLine'>Sequence:<br><br></div>"
 	if(!scrambled)
 		for(var/block in 1 to A.blocks)
