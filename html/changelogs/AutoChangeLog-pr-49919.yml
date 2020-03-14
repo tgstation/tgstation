@@ -1,0 +1,5 @@
+author: "LemonInTheDark with thanks to ArcaneDefense"
+delete-after: True
+changes: 
+  - tweak: "Makes borg mesons non full-bright"
+  - bugfix: "Fixes mining drone mesons being non full-bright"
