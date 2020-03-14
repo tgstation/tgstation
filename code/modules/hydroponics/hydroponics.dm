@@ -475,7 +475,7 @@
 			T.myseed.potency =  round(clamp((T.myseed.potency+(1/10)*(myseed.potency-T.myseed.potency)),0,100))
 			T.myseed.stability =  round(clamp((T.myseed.stability+(1/10)*(myseed.stability-T.myseed.stability)),0,100))
 			T.myseed.yield =  round(clamp((T.myseed.yield+(1/2)*(myseed.yield-T.myseed.yield)),0,10))
-			if(myseed.stability >= 20 && prob(70))
+			if(myseed.stability >= 20 && prob(70) && T.myseed.reagents_add)
 				var/datum/reagent/picked_reagent = (pick(T.myseed.reagents_add))
 				var/datum/plant_gene/reagent/reagent_gene = new /datum/plant_gene/reagent(picked_reagent, 0.05) //I cannot figure out how to copy over the keyed value from the reagents_add list so for now this works, skog you'll want to fix this before merge
 				if(reagent_gene.can_add(myseed))
