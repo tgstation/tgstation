@@ -16,12 +16,12 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 /* Can a gateway link to this destination right now. */
 /datum/gateway_destination/proc/is_availible()
-	return enabled && world.time >= wait
+	return enabled && (world.time - SSticker.round_start_time >= wait)
 
 /* Returns user-friendly description why you can't connect to this destination, displayed in UI */
 /datum/gateway_destination/proc/get_availible_reason()
 	. = "Unreachable"
-	if(world.time < wait)
+	if(world.time - SSticker.round_start_time < wait)
 		. = "Connection desynchronized. Recalibration in progress."
 
 /* Check if the movable is allowed to arrive at this destination (exile implants mostly) */
@@ -55,7 +55,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	.["availible"] = is_availible()
 	.["reason"] = get_availible_reason()
 	if(wait)
-		.["timeout"] = max(1 - (wait - world.time) / wait, 0)
+		.["timeout"] = max(1 - (wait - (world.time - SSticker.round_start_time)) / wait, 0)
 
 /* Destination is another gateway */
 /datum/gateway_destination/gateway
