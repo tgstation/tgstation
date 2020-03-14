@@ -1,5 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - code_imp: "get_cable_node() can take custom layer to check"
-  - code_imp: "cable layers bitwise suitable"

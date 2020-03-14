@@ -1,4 +1,0 @@
-author: "spookydonut"
-delete-after: True
-changes: 
-  - bugfix: "barometer timers should be more accurate"
