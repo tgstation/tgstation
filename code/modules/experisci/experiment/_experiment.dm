@@ -11,6 +11,8 @@
 	var/name = "Experiment"
 	/// A brief description of the experiment to be shown as details
 	var/description = "Base experiment"
+	/// A list of types that are allowed to experiment with this datum
+	var/allowed_experimentors = list()
 
 /**
   * Checks if the experiment is complete

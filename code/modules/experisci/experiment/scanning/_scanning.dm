@@ -9,6 +9,7 @@
 /datum/experiment/scanning
 	name = "Scanning Experiment"
 	description = "Base experiment for scanning atoms"
+	allowed_experimentors = list(/obj/item/experi_scanner)
 	/// The typepaths and number of atoms that must be scanned
 	var/list/required_atoms = list()
 	/// The list of atoms with sub-lists of atom references for scanned atoms contributing to the experiment
@@ -59,7 +60,7 @@
   * Arguments:
   * * target - The atom to attempt to scan
   */
-/datum/experiment/scanning/proc/scan_item(atom/target)
+/datum/experiment/scanning/proc/scan_atom(atom/target)
 	. = FALSE
 	var/idx = get_contributing_index(target)
 	if (idx)

@@ -43,7 +43,7 @@
   * Arguments:
   * * target - The atom to attempt to scan
   */
-/datum/experiment/scanning/destructive/scan_item(atom/target)
+/datum/experiment/scanning/destructive/scan_atom(atom/target)
 	. = FALSE
 	var/idx = get_contributing_index(target)
 	if (idx)
