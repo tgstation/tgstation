@@ -56,6 +56,9 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 				if(!QDELETED(thing))
 					report.exported_atoms_ref += thing
 				break
+		if(!sold && thing.custom_materials)
+			var/datum/export/S = new /datum/export
+			S.sell_material_item(thing, report, dry_run, apply_elastic, profit_ratio)
 		if(!dry_run && (sold || delete_unsold))
 			if(ismob(thing))
 				thing.investigate_log("deleted through cargo export",INVESTIGATE_CARGO)
@@ -66,7 +69,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 /datum/export
 	var/unit_name = ""				// Unit name. Only used in "Received [total_amount] [name]s [message]." message
 	var/message = ""
-	var/cost = 100					// Cost of item, in cargo credits. Must not alow for infinite price dupes, see above.
+	var/cost = 1					// Cost of item, in cargo credits. Must not alow for infinite price dupes, see above.
 	var/k_elasticity = 1/30			//coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity"
 	var/list/export_types = list()	// Type of the exported object. If none, the export datum is considered base type.
 	var/include_subtypes = TRUE		// Set to FALSE to make the datum apply only to a strict type.
@@ -125,15 +128,28 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 		return FALSE
 	return TRUE
 
-// Called only once, when the object is actually sold by the datum.
-// Adds item's cost and amount to the current export cycle.
-// get_cost, get_amount and applies_to do not neccesary mean a successful sale.
+/**
+  * Calculates the exact export value of the object, while factoring in all the relivant variables.
+  *
+  * Called only once, when the object is actually sold by the datum.
+  * Adds item's cost and amount to the current export cycle.
+  * get_cost, get_amount and applies_to do not neccesary mean a successful sale.
+  *
+  */
 /datum/export/proc/sell_object(obj/O, datum/export_report/report, dry_run = TRUE, allowed_categories = EXPORT_CARGO , apply_elastic = TRUE)
+	///This is the value of the object, as derived from export datums.
 	var/the_cost = get_cost(O, allowed_categories , apply_elastic)
+	///This is the value of the object, as derived from material datums. Overwritten by the_cost if it's defined.
+	var/the_material_cost = get_material_cost(O)
+	///Quantity of the object in question.
 	var/amount = get_amount(O)
+	///Utilized in the pricetag component. Splits the object's profit when it has a pricetag by the specified amount.
 	var/profit_ratio = 0
-	if(amount <=0 || the_cost <=0)
+
+	if(amount <=0 || the_cost <=0 && the_material_cost <=0)
 		return FALSE
+	if(the_cost <= 1 && the_material_cost > 0)
+		the_cost = the_material_cost
 	if(dry_run == FALSE)
 		if(SEND_SIGNAL(O, COMSIG_ITEM_SOLD, item_value = get_cost(O, allowed_categories , apply_elastic)) & COMSIG_ITEM_SPLIT_VALUE)
 			profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT)
@@ -182,6 +198,45 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	return msg
 
 GLOBAL_LIST_EMPTY(exports_list)
+
+/datum/export/proc/get_material_cost(atom/movable/A)
+	var/value = 0
+	if(A.custom_materials)
+		for(var/i in A.custom_materials)
+			var/datum/material/M = i
+			value += M.value_per_unit * A.custom_materials[M]
+	value = round(value)
+	return value
+
+/datum/export/proc/sell_material_item(obj/O, datum/export_report/report, dry_run = TRUE, apply_elastic = TRUE)
+	///This is the value of the object, as derived from material datums.
+	var/material_cost = get_material_cost(O)
+	///Quantity of the object in question.
+	var/amount = get_amount(O)
+	///Utilized in the pricetag component. Splits the object's profit when it has a pricetag by the specified amount.
+	var/profit_ratio = 0
+
+	if(amount <=0 || material_cost <=0)
+		return FALSE
+	if(dry_run == FALSE)
+		if(SEND_SIGNAL(O, COMSIG_ITEM_SOLD, item_value = material_cost & COMSIG_ITEM_SPLIT_VALUE))
+			profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT)
+			material_cost = material_cost*((100-profit_ratio)/100)
+	else
+		profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT)
+		material_cost = material_cost*((100-profit_ratio)/100)
+	report.total_value[src] += material_cost
+
+	if(istype(O, /datum/export/material))
+		report.total_amount[src] += amount*MINERAL_MATERIAL_AMOUNT
+	else
+		report.total_amount[src] += amount
+
+	if(!dry_run)
+		if(apply_elastic)
+			cost *= NUM_E**(-1*k_elasticity*amount)		//marginal cost modifier
+		SSblackbox.record_feedback("nested tally", "export_sold_cost", 1, list("[O.type]", "[material_cost]"))
+	return TRUE
 
 /proc/setupExports()
 	for(var/subtype in subtypesof(/datum/export))
