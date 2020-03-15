@@ -31,11 +31,9 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/electropack/attack_hand(mob/user)
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(src == C.back)
-			to_chat(user, "<span class='warning'>You need help taking this off!</span>")
-			return
+	if(!is_interactive(user))
+		to_chat(user, "<span class='warning'>You need help taking this off!</span>")
+		return
 	return ..()
 
 /obj/item/electropack/attackby(obj/item/W, mob/user, params)
@@ -85,11 +83,23 @@
 	frequency = new_frequency
 	SSradio.add_object(src, frequency, RADIO_SIGNALER)
 
+/**
+  * is_interactive: Checks if mob is allowed to interact with the item
+  *
+  * Arguments:
+  * * user - mob for who we are checking if he can interact with the item
+  */
+/obj/item/electropack/proc/is_interactive(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(C.back == src)
+			return FALSE
+	return TRUE
+
 /obj/item/electropack/ui_status(mob/user)
-	var/mob/living/carbon/C = user
-	if(C?.back == src)
-		return UI_CLOSE
-	return ..()
+	if(is_interactive(user))
+		return ..()
+	return UI_CLOSE
 
 /obj/item/electropack/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -110,9 +120,7 @@
 /obj/item/electropack/ui_act(action, params)
 	if(..())
 		return
-
-	var/mob/living/carbon/C = usr
-	if(C?.back == src)
+	if(!is_interactive(usr))
 		return
 
 	switch(action)
