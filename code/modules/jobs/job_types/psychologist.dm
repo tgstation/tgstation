@@ -26,7 +26,7 @@
 	uniform = /obj/item/clothing/under/suit/black
 	shoes = /obj/item/clothing/shoes/laceup
 	id = /obj/item/card/id
-//	backpack_contents = list()
+	backpack_contents = list(/obj/item/storage/pill_bottle/happy, /obj/item/storage/pill_bottle/lsd, /obj/item/storage/pill_bottle/psicodine)
 	belt = /obj/item/pda/medical
 	pda_slot = ITEM_SLOT_BELT
 	l_hand = /obj/item/clipboard
@@ -35,4 +35,4 @@
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
-//	chameleon_extras =
+	chameleon_extras = 0
