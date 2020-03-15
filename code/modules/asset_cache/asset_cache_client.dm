@@ -1,9 +1,10 @@
 
 /client
 	var/list/sent_assets = list() // List of all asset filenames sent to this client by the asset cache, along with their assoicated md5s
-	var/list/completed_asset_jobs = list() // List of all completed blocking send jobs awaiting acknowledgement by send_asset
+	var/list/completed_asset_jobs = list() /// List of all completed blocking send jobs awaiting acknowledgement by send_asset
 	var/list/sending_assets = list() /// List of all assets currently being sent in blocking mode
-	var/last_asset_job = 0 // Last asset send job id.
+	var/last_asset_job = 0 /// Last asset send job id.
+	var/last_completed_asset_job = 0
 
 /// Process asset cache client topic calls for "asset_cache_confirm_arrival=[INT]"
 /client/proc/asset_cache_confirm_arrival(job_id)
@@ -11,6 +12,7 @@
 		//because we skip the limiter, we have to make sure this is a valid arrival and not somebody tricking us into letting them append to a list without limit.
 	if (asset_cache_job > 0 && asset_cache_job <= last_asset_job && !(asset_cache_job in completed_asset_jobs))
 		completed_asset_jobs += asset_cache_job
+		last_completed_asset_job = max(last_completed_asset_job, asset_cache_job)
 	else
 		return asset_cache_job || TRUE
 
