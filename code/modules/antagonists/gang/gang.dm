@@ -380,7 +380,7 @@
 	points += points_to_adjust
 
 /datum/team/gang/roundend_report()
-	return "<div class='panel redborder'><br></div>"
+	return
 
 /datum/action/cooldown/spawn_induction_package
 	name = "Create Induction Package"
@@ -411,6 +411,8 @@
 		for(var/datum/mind/gangers in TT.members)
 			if(ishuman(gangers.current) && gangers.current.client && !gangers.current.stat)
 				alive_gangsters++
+		if(!alive_gangsters || TT.members.len <= 1) // Dead or inactive gangs don't count towards the cap.
+			continue
 		if(TT != my_gang_datum.my_gang)
 			if(alive_gangsters < lowest_gang_count)
 				lowest_gang_count = alive_gangsters
