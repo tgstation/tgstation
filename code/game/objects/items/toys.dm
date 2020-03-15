@@ -181,9 +181,9 @@
 /obj/item/toy/spinningtoy/suicide_act(mob/living/carbon/user)
 	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 	if(!myhead)
-		user.visible_message("<span class='suicide'>[user] starts consuming [src]... but they have no mouth!") // and i must scream
+		user.visible_message("<span class='suicide'>[user] tries consuming [src]... but they have no mouth!") // and i must scream
 		return SHAME
-	user.visible_message("<span class='suicide'>[user] starts consuming [src]! It looks like [user.p_theyre()] trying to commit suicicide!</span>")
+	user.visible_message("<span class='suicide'>[user] consumes [src]! It looks like [user.p_theyre()] trying to commit suicicide!</span>")
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	qdel(src)
 	return OXYLOSS // You know how most small toys in the EU have that 3+ onion head icon and a warning that says "Unsuitable for children under 3 years of age due to small parts - choking hazard"? This is why.
