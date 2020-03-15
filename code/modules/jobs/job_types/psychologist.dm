@@ -1,12 +1,12 @@
 /datum/job/psychologist
 	title = "Psychologist"
 	flag = PSYCHOLOGIST
-	department_head = list("Chief Medical Officer", "Head of Personnel")
+	department_head = list("Head of Personnel","Chief Medical Officer")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the chief medical officer and the head of personnel"
+	supervisors = "the head of personnel and the chief medical officer"
 	selection_color = "#dddddd"
 
 	outfit = /datum/outfit/job/psychologist
