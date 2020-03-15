@@ -479,3 +479,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 		var/datum/tts/TTS = new /datum/tts()
 		TTS.say(client, tts_message, voice = tts_voice, volume_mod = tts_volume_mod, language = tts_language)
+
+		if (!hud_used)
+			return
+		if (!hud_used.tts)
+			return
+		hud_used.tts.icon_state = "tts_cooldown"
