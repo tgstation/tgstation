@@ -58,14 +58,15 @@
 	free_clothes = list(/obj/item/clothing/suit/jacket/letterman_red,
 						/obj/item/clothing/under/color/red,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective = "The Spinward Stellar Coalition police intend to interfere with our operations, by sending an undercover cop. Find him and eliminate him."
+	gang_objective = "The Spinward Stellar Coalition police intend to interfere with our operations, by sending undercover cops. Find them and eliminate them all."
 	antag_hud_name = "Triad"
 
 /datum/antagonist/gang/red/check_gang_objective()
 	var/datum/game_mode/gang/F = SSticker.mode
-	var/mob/living/carbon/human/H = F.undercover_cop.current
-	if(considered_alive(H))
-		return FALSE
+	for(var/H in F.undercover_cops)
+		var/mob/living/carbon/human/HU = H.current
+		if(considered_alive(HU))
+			return FALSE
 	return TRUE
 
 /datum/antagonist/gang/purple

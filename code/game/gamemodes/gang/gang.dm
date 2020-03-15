@@ -108,7 +108,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			var/datum/mind/undercover_cop = antag_pick(antag_candidates)
 			undercover_cops += undercover_cop
 			pigs += undercover_cop
-			log_game("[key_name(gangbanger)] has been selected as a replacement undercover cop!")
+			log_game("[key_name(undercover_cop)] has been selected as a replacement undercover cop!")
 	for(var/datum/mind/undercover_cop in undercover_cops)
 		var/datum/antagonist/ert/families/undercover_cop/one_eight_seven_on_an_undercover_cop = new()
 		undercover_cop.add_antag_datum(one_eight_seven_on_an_undercover_cop)
