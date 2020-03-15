@@ -127,7 +127,7 @@
 		return
 
 	var/mob/living/carbon/human/our_guy
-	if(ishumanbasic(loc))
+	if(ishuman(loc))
 		our_guy = loc
 
 	tied = state
