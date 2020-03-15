@@ -13492,7 +13492,7 @@
 	},
 /obj/machinery/door/window/westleft{
 	name = "Soothing Nature Exhibit";
-	req_access_txt = "9"
+	req_access_txt = "70"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
