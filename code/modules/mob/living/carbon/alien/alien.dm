@@ -15,6 +15,7 @@
 	var/obj/item/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/has_fine_manipulation = 0
 	var/move_delay_add = 0 // movement delay to add
+	///What Xenomorphs it can evolve into
 	var/list/evolution_paths
 
 	status_flags = CANUNCONSCIOUS|CANPUSH
@@ -150,6 +151,7 @@ Des: Removes all infected images from the alien.
 
 	action_icon_state = "alien_evolve_larva"
 
+///Evolves the Xenomorph if it has full progress as a larva or full plasma as a humanoid xeno, evolves into one of the evolution_paths
 /obj/effect/proc_holder/alien/evolve/fire(mob/living/carbon/alien/user)
 	. = FALSE
 	if(user.handcuffed || user.legcuffed)
