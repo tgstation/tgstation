@@ -580,6 +580,15 @@
 	target = null
 	visible_message("<span class='notice'>[src] looks disinterested.</span>")
 
+/obj/item/toy/plush/goatplushie/angry/emag_act(mob/user)
+	if (obj_flags&EMAGGED)
+		visible_message("<span class='notice'>[src] already looks angry enough, you shouldn't anger it more.</span>")
+		return
+	cooldown_modifier = 5
+	throwforce = 20
+	obj_flags |= EMAGGED
+	visible_message("<span class='danger'>[src] stares at [user] angrily before going docile.</span>")
+
 /obj/item/toy/plush/goatplushie/angry/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
