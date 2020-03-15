@@ -82,9 +82,6 @@
 		if (istype(target, a) && seen && seen.len < required_atoms[a] && !(target in seen))
 			return a
 
-/datum/experiment/scanning/can_sabotage()
-	. = ..()
-
 /**
   * Attempts to sabotage the experiment
   *

@@ -9,6 +9,16 @@
 	/// Holds the currently selected experiment
 	var/datum/experiment/selected_experiment
 
+/**
+  * Attempts to have a user select an experiment from the connected techweb
+  *
+  * This proc attempts to have a user select an experiment from a filtered list developed
+  * from the active experiments on the connected techweb.
+  * Arguments:
+  * * user - The user to show the select prompt to
+  * * experiment_types - A collection of /datum/experiment typepaths to filter the experiments shown
+  * * strict_types - Boolean operator to determine if type paths have to absolute matches or not
+  */
 /datum/component/experiment_consumer/proc/select_experiment(mob/user, var/list/experiment_types = null, strict_types = FALSE)
 	if (!linked_web)
 		to_chat(user, "<span class='notice'>There is no linked research server to get experiments from.</span>")
@@ -18,10 +28,13 @@
 	for (var/datum/experiment/e in linked_web.active_experiments)
 		if (parent.type in e.allowed_experimentors)
 			var/matched_type = null
-			for (var/i in experiment_types)
-				if (istype(e, i))
-					matched_type = i
-					break
+			if (strict_types)
+				matched_type = e.type in experiment_types ? e.type : null
+			else
+				for (var/i in experiment_types)
+					if (istype(e, i))
+						matched_type = i
+						break
 			if (matched_type)
 				experiments[e.name] = e
 	if (experiments.len == 0)
@@ -36,16 +49,34 @@
 	else
 		to_chat(user, "<span class='notice'>You decide not to change the selected experiment.</span>")
 
+/**
+  * Attempts to link this experiment_consumer to a provided techweb
+  *
+  * This proc attempts to link the consumer to a provided techweb, overriding the existing techweb if relevant
+  * Arguments:
+  * * new_web - The new techweb to link to
+  */
 /datum/component/experiment_consumer/proc/link_techweb(datum/techweb/new_web)
 	if (new_web == linked_web)
 		return
 	selected_experiment = null
 	linked_web = new_web
 
+/**
+  * Unlinks this consumer from its techweb
+  */
 /datum/component/experiment_consumer/proc/unlink_techweb()
 	selected_experiment = null
 	linked_web = null
 
+/**
+  * Attempts to have a user select a techweb on a rnd server from the same z-level as them
+  *
+  * This proc attempts to find rnd servers on the same z-level as the user and has them select a server
+  * from those found to use as a source for connecting to a new techweb
+  * Arguments:
+  * * user - The user to show the select prompt to
+  */
 /datum/component/experiment_consumer/proc/select_techweb(mob/user)
 	var/list/servers = get_available_servers()
 	if (servers.len == 0)
@@ -62,6 +93,12 @@
 	else
 		to_chat(user, "<span class='notice'>You decide not to change the linked research server.</span>")
 
+/**
+  * Attempts to get rnd servers on the same z-level as a provided turf
+  *
+  * Arguments:
+  * * pos - The turf to get servers on the same z-level of
+  */
 /datum/component/experiment_consumer/proc/get_available_servers(var/turf/pos = null)
 	if (!pos)
 		pos = get_turf(parent)
