@@ -129,7 +129,7 @@
 	resistance_flags = NONE
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
-	lace_time = 10 SECONDS
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
@@ -354,7 +354,7 @@
 	custom_price = 60
 	var/list/occupants = list()
 	var/max_occupants = 4
-	lace_time = 8 SECONDS
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/cowboy/Initialize()
 	. = ..()
