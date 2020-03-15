@@ -58,6 +58,7 @@
 
 /obj/machinery/hydroponics/constructable/examine(mob/user)
 	. = ..()
+		. += "<span class='notice'>Use <b>Ctrl-Click</b> to activate autogrow. <b>Alt-Click</b> to empty the tray's nutrients.</span>"
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Tray efficiency at <b>[rating*100]%</b>.</span>"
 
@@ -628,6 +629,7 @@
 				snip.stored_trait = new myseed.graft_gene
 			snip.parent_seed = myseed
 			myseed.grafted = TRUE
+			adjustHealth(-5)
 
 	else if(istype(O, /obj/item/graft))
 		var/obj/item/graft/snip = O

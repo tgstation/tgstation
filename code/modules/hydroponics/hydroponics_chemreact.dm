@@ -1,6 +1,6 @@
 /**
   *This is NOW the gradual affects that each chemical applies on every process() proc. Nutrients now use a more robust reagent holder in order to apply less insane
-  * stat changes as opposed to 271 lines of individual statline effects.
+  * stat changes as opposed to 271 lines of individual statline effects. Shoutout to the original comments on chems, I just cleaned a few up.
   */
 
 /obj/machinery/hydroponics/proc/applyChemicals(datum/reagents/S, mob/user)
@@ -49,19 +49,21 @@
 			myseed.adjust_potency(round(S.get_reagent_amount(/datum/reagent/plantnutriment/robustharvestnutriment) * 0.5))
 			myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/plantnutriment/robustharvestnutriment) * 0.1))
 
-	// Antitoxin binds shit pretty well. So the tox goes significantly down
+	// Antitoxin binds plants pretty well. So the tox goes significantly down
 	if(S.has_reagent(/datum/reagent/medicine/C2/multiver, 1))
 		adjustToxic(-round(S.get_reagent_amount(/datum/reagent/medicine/C2/multiver) * 2))
 
-	// NIGGA, YOU JUST WENT ON FULL RETARD.
+	// Are you a bad enough dude to poison your own plants?
 	if(S.has_reagent(/datum/reagent/toxin, 1))
 		adjustToxic(round(S.get_reagent_amount(/datum/reagent/toxin) * 2))
 
-	// Milk is good for humans, but bad for plants. The sugars canot be used by plants, and the milk fat fucks up growth. Not shrooms though. I can't deal with this now...
+	// Milk is good for humans, but bad for plants. The sugars cannot be used by plants, and the milk fat harms growth. Not shrooms though. I can't deal with this now...
 	if(S.has_reagent(/datum/reagent/consumable/milk, 1))
-		adjustWater(round(S.get_reagent_amount(/datum/reagent/consumable/milk) * 0.9))
+		adjustWater(round(S.get_reagent_amount(/datum/reagent/consumable/milk) * 0.3))
+		if(myseed)
+			myseed.adjust_potency(-S.get_reagent_amount(/datum/reagent/consumable/milk) * 0.5)
 
-	// Beer is a chemical composition of alcohol and various other things. It's a shitty nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
+	// Beer is a chemical composition of alcohol and various other things. It's a garbage nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
 	if(S.has_reagent(/datum/reagent/consumable/ethanol/beer, 1))
 		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/consumable/ethanol/beer) * 0.05))
 		adjustWater(round(S.get_reagent_amount(/datum/reagent/consumable/ethanol/beer) * 0.7))
@@ -100,12 +102,12 @@
 			adjustWeeds(rand(1,2))
 			adjustPests(rand(1,2))
 
-	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO decreases stability.
+	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO increases stability.
 	if(S.has_reagent(/datum/reagent/water/holywater, 1))
 		adjustWater(round(S.get_reagent_amount(/datum/reagent/water/holywater) * 1))
 		adjustHealth(round(S.get_reagent_amount(/datum/reagent/water/holywater) * 0.1))
 		if(myseed)
-			myseed.adjust_stability(-round(S.get_reagent_amount(/datum/reagent/water/holywater) * 0.15))
+			myseed.adjust_stability(round(S.get_reagent_amount(/datum/reagent/water/holywater) * 0.15))
 
 	// A variety of nutrients are dissolved in club soda, without sugar.
 	// These nutrients include carbon, oxygen, hydrogen, phosphorous, potassium, sulfur and sodium, all of which are needed for healthy plant growth.
@@ -113,7 +115,7 @@
 		adjustWater(round(S.get_reagent_amount(/datum/reagent/consumable/sodawater) * 1))
 		adjustHealth(round(S.get_reagent_amount(/datum/reagent/consumable/sodawater) * 0.1))
 
-	// Man, you guys are retards
+	// ...Why? I mean, clearly someone had to have done this and thought, well, acid doesn't hurt plants, but what brought us here, to this point?
 	if(S.has_reagent(/datum/reagent/toxin/acid, 1))
 		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/toxin/acid) * 1))
 		adjustToxic(round(S.get_reagent_amount(/datum/reagent/toxin/acid) * 1.5))
@@ -172,6 +174,7 @@
 		if (myseed)
 			myseed.adjust_production(-round(salt/10)-prob(salt%10))
 			myseed.adjust_potency(round(salt*1))
+
 	// Ash is also used IRL in gardening, as a fertilizer enhancer and weed killer
 	if(S.has_reagent(/datum/reagent/ash, 1))
 		adjustHealth(round(S.get_reagent_amount(/datum/reagent/ash) * 1))
@@ -184,6 +187,11 @@
 			myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/diethylamine) * 1))
 			myseed.adjust_stability(-round(S.get_reagent_amount(/datum/reagent/diethylamine) * 1))
 		adjustPests(-rand(1,2))
+
+	//It has stable IN THE NAME. IT WAS MADE FOR THIS MOMENT.
+	if(S.has_reagent(/datum/reagent/stabilizing_agent, 1))
+		if(myseed)
+			myseed.adjust_stability(-1)
 
 	// Compost, effectively
 	if(S.has_reagent(/datum/reagent/consumable/nutriment, 1))
