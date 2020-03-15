@@ -63,9 +63,9 @@
 
 /datum/antagonist/gang/red/check_gang_objective()
 	var/datum/game_mode/gang/F = SSticker.mode
-	for(var/H in F.undercover_cops)
-		var/mob/living/carbon/human/HU = H.current
-		if(considered_alive(HU))
+	for(var/datum/mind/M in F.undercover_cops)
+		var/mob/living/carbon/human/H = M.current
+		if(considered_alive(H))
 			return FALSE
 	return TRUE
 
