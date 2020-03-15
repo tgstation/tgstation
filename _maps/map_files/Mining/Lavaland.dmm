@@ -1003,7 +1003,8 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "da" = (
-/obj/machinery/mineral/mint,
+/obj/item/reagent_containers/food/snacks/mint,
+/obj/structure/closet/crate,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "db" = (
