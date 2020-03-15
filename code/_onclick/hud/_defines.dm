@@ -73,6 +73,7 @@
 #define ui_internal "EAST-1:28,CENTER-3:10"
 #define ui_mood "EAST-1:28,CENTER:17"
 #define ui_spacesuit "EAST-1:28,CENTER-4:10"
+#define ui_tts "EAST-1:28,CENTER-4:12"
 
 //Pop-up inventory
 #define ui_shoes "WEST+1:8,SOUTH:5"

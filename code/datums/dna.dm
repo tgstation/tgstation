@@ -14,6 +14,7 @@
 	var/mutation_index[DNA_MUTATION_BLOCKS] //List of which mutations this carbon has and its assigned block
 	var/stability = 100
 	var/scrambled = FALSE //Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
+	var/tts_voice = ""
 
 /datum/dna/New(mob/living/new_holder)
 	if(istype(new_holder))
@@ -44,6 +45,7 @@
 	destination.dna.features = features.Copy()
 	destination.dna.real_name = real_name
 	destination.dna.temporary_mutations = temporary_mutations.Copy()
+	destination.dna.tts_voice = tts_voice
 	if(transfer_SE)
 		destination.dna.mutation_index = mutation_index
 
@@ -56,6 +58,7 @@
 	new_dna.species = new species.type
 	new_dna.real_name = real_name
 	new_dna.mutations = mutations.Copy()
+	new_dna.tts_voice = tts_voice
 
 //See mutation.dm for what 'class' does. 'time' is time till it removes itself in decimals. 0 for no timer
 /datum/dna/proc/add_mutation(mutation, class = MUT_OTHER, time)
@@ -168,6 +171,14 @@
 		. += random_string(DNA_UNIQUE_ENZYMES_LEN, GLOB.hex_characters)
 	return .
 
+/datum/dna/proc/create_random_voice()
+	var/mob/living/carbon/human/H = holder
+	if (H)
+		if (H.gender == FEMALE)
+			tts_voice = pick("betty", "rita", "ursula", "wendy")
+		else
+			tts_voice = pick("dennis", "frank", "harry", "kit", "paul")
+
 /datum/dna/proc/update_ui_block(blocknumber)
 	if(!blocknumber || !ishuman(holder))
 		return
@@ -248,6 +259,7 @@
 /datum/dna/proc/update_dna_identity()
 	uni_identity = generate_uni_identity()
 	unique_enzymes = generate_unique_enzymes()
+	create_random_voice()
 
 /datum/dna/proc/initialize_dna(newblood_type, skip_index = FALSE)
 	if(newblood_type)
@@ -257,6 +269,7 @@
 	if(!skip_index) //I hate this
 		generate_dna_blocks()
 	features = random_features()
+	create_random_voice()
 
 
 /datum/dna/stored //subtype used by brain mob's stored_dna

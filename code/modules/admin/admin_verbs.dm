@@ -102,7 +102,8 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/polymorph_all,
 	/client/proc/show_tip,
 	/client/proc/smite,
-	/client/proc/admin_away
+	/client/proc/admin_away,
+	/client/proc/play_tts()
 	))
 GLOBAL_PROTECT(admin_verbs_fun)
 GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/admins/proc/podspawn_atom, /datum/admins/proc/spawn_cargo, /datum/admins/proc/spawn_objasmob, /client/proc/respawn_character, /datum/admins/proc/beaker_panel))
@@ -166,6 +167,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/cmd_display_overlay_log,
 	/client/proc/reload_configuration,
 	/datum/admins/proc/create_or_modify_area,
+	/client/proc/start_tts_engine
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
@@ -708,3 +710,34 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
+
+/client/proc/play_tts()
+	set category = "Fun"
+	set name = "Play TTS"
+	if (!CONFIG_GET(flag/enable_tts))
+		to_chat(usr, "<span='warning'>Text-to-Speech is not enabled!</span>")
+		return
+
+	var/input = input(usr, "Please enter a message to send to the server", "Text to Speech", "")
+	if(input)
+		var/datum/tts/T = new /datum/tts()
+		T.say(src, input, is_global=TRUE)
+
+		to_chat(world, "<span class='boldannounce'>An admin used Text-to-Speech: [input]</span>")
+		log_admin("[key_name(src)] used Text-to-Speech: [input]")
+		message_admins("[key_name_admin(src)] used Text-to-Speech: [input]")
+
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "Play TTS")
+
+/client/proc/start_tts_engine()
+	set category = "Debug"
+	set name = "Start TTS Engine"
+
+	if (!check_rights(R_DEBUG))
+		return
+	if (!CONFIG_GET(flag/enable_tts))
+		to_chat(usr, "<span='warning'>Text-to-Speech is not enabled!</span>")
+		return
+
+	if (SStts)
+		SStts.start_engine()

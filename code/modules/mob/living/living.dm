@@ -1477,3 +1477,6 @@
 	if(!apply_change)
 		return BODYTEMP_NORMAL
 	return BODYTEMP_NORMAL + get_body_temp_normal_change()
+
+/mob/living/proc/update_tts_hud()
+	icon_state = "tts_ready"
