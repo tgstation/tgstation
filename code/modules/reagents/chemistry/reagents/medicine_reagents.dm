@@ -1061,7 +1061,7 @@
 	self_consuming = TRUE
 
 /datum/reagent/medicine/higadrite/on_mob_metabolize(mob/living/M)
-	..()
+	. = ..()
 	ADD_TRAIT(M, TRAIT_STABLELIVER, type)
 
 /datum/reagent/medicine/higadrite/on_mob_end_metabolize(mob/living/M)
