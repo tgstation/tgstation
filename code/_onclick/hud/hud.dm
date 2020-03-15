@@ -59,6 +59,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/obj/screen/internals
 	var/obj/screen/wanted_lvl
 	var/obj/screen/spacesuit
+	var/obj/screen/tts
 	// subtypes can override this to force a specific UI style
 	var/ui_style
 
@@ -111,6 +112,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	wanted_lvl = null
 	internals = null
 	spacesuit = null
+	tts = null
 	lingchemdisplay = null
 	devilsouldisplay = null
 	lingstingdisplay = null

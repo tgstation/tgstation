@@ -347,6 +347,13 @@
 	icon_state = "spacesuit_0"
 	screen_loc = ui_spacesuit
 
+/obj/screen/tts
+	icon = 'icons/mob/screen_gen.dmi'
+	name = "tts"
+	icon_state = "tts_ready"
+	screen_loc = ui_tts
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
 /obj/screen/mov_intent
 	name = "run/walk toggle"
 	icon = 'icons/mob/screen_midnight.dmi'

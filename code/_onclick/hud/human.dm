@@ -318,6 +318,10 @@
 	spacesuit.hud = src
 	infodisplay += spacesuit
 
+	tts = new /obj/screen/tts
+	tts.hud = src
+	infodisplay += tts
+
 	healths = new /obj/screen/healths()
 	healths.hud = src
 	infodisplay += healths
