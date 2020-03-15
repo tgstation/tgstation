@@ -146,6 +146,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		to_chat(gangbanger.current, "<B>As you're the first gangster, your uniform and spraycan are in your inventory!</B>")
 	addtimer(CALLBACK(src, .proc/announce_gang_locations), 5 MINUTES)
 	addtimer(CALLBACK(src, .proc/five_minute_warning), time_to_end - 5 MINUTES)
+	SSshuttle.registerHostileEnvironment(src)
 	gamemode_ready = TRUE
 	..()
 
@@ -155,7 +156,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		var/datum/team/gang/G = GG
 		readable_gang_names += "[G.name]"
 	var/finalized_gang_names = english_list(readable_gang_names)
-	priority_announce("Julio G coming to you live from Radio Los Spess! We've been hearing reports of gang activity on [station_name()], with the [finalized_gang_names] duking it out, looking for fresh territory and drugs to sling! Stay safe out there for the hour 'till the space cops get there, and keep it cool, yeah? Play music, not gunshots, I say. Peace out!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
+	priority_announce("Julio G coming to you live from Radio Los Spess! We've been hearing reports of gang activity on [station_name()], with the [finalized_gang_names] duking it out, looking for fresh territory and drugs to sling! Stay safe out there for the hour 'till the space cops get there, and keep it cool, yeah?\n\n The local jump gates are shut down for about an hour due to some maintenance troubles, so if you wanna split from the area you're gonna have to wait an hour. \n Play music, not gunshots, I say. Peace out!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
 	sent_announcement = TRUE
 
 /datum/game_mode/gang/proc/five_minute_warning()
@@ -332,7 +333,6 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			log_game("[key_name(cop)] has been selected as an [ert_antag.name]")
 			numagents--
 	cops_arrived = TRUE
-	SSshuttle.registerHostileEnvironment(src)
 	addtimer(CALLBACK(src, .proc/end_hostile_sit), 10 MINUTES)
 	return TRUE
 
