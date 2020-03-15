@@ -147,11 +147,7 @@ effective or pretty fucking useless.
 		if("radintensity")
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
-			if(target == "input")
-				target = input("New output target (1-20):", name, intensity) as num|null
-				if(!isnull(target) && !..())
-					. = TRUE
-			else if(target == "min")
+			if(target == "min")
 				target = 1
 				. = TRUE
 			else if(target == "max")
@@ -169,11 +165,7 @@ effective or pretty fucking useless.
 		if("radwavelength")
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
-			if(target == "input")
-				target = input("New output target (0-120):", name, wavelength) as num|null
-				if(!isnull(target) && !..())
-					. = TRUE
-			else if(target == "min")
+			if(target == "min")
 				target = 0
 				. = TRUE
 			else if(target == "max")

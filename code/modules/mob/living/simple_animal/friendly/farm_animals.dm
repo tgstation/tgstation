@@ -218,7 +218,7 @@
 ///Give intense wisdom to the attacker if they're being friendly about it
 /mob/living/simple_animal/cow/wisdom/attack_hand(mob/living/carbon/M)
 	if(!stat && M.a_intent == INTENT_HELP)
-		to_chat(M, "<span class='nicegreen'>[src] whispers you some intense wisdoms and then dissapears!</span>")
+		to_chat(M, "<span class='nicegreen'>[src] whispers you some intense wisdoms and then disappears!</span>")
 		M.mind?.adjust_experience(pick(subtypesof(/datum/skill)), 500)
 		do_smoke(1, get_turf(src))
 		qdel(src)

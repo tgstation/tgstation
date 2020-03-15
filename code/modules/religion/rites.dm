@@ -59,6 +59,7 @@
 
 /datum/religion_rites/synthconversion/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!AOG?.buckled_mobs?.len)
+		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [AOG].</span>")
 		return FALSE
 	return ..()
 
