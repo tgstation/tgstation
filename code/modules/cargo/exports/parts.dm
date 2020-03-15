@@ -30,7 +30,7 @@
 //Processors.
 
 /datum/export/modular_part/processor
-	cost = 60
+	cost = 40
 	unit_name = "computer processor"
 	export_types = list(/obj/item/computer_hardware/processor_unit)
 	include_subtypes = FALSE
@@ -97,7 +97,7 @@
 	include_subtypes = TRUE
 
 /datum/export/modular_part/intellicard
-	cost = 20
+	cost = 40
 	unit_name = "computer intellicard slot"
 	export_types = list(/obj/item/computer_hardware/ai_slot)
 	include_subtypes = TRUE
