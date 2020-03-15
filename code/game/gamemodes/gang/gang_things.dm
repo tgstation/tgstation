@@ -15,6 +15,7 @@
 		to_chat(user, "As a police officer, you can't join this family. However, you pretend to accept it to keep your cover up.")
 		for(var/threads in team_to_use.free_clothes)
 			new threads(get_turf(user))
+		qdel(src)
 		return
 	var/datum/antagonist/gang/is_gangster = user.mind.has_antag_datum(/datum/antagonist/gang)
 	if(is_gangster && is_gangster.starter_gangster)
