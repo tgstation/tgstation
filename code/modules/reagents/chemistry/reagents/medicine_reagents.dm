@@ -1060,7 +1060,7 @@
 	color = "#FF3542"
 	self_consuming = TRUE
 
-/datum/reagent/medicine/higadrite/on_mob_add(mob/living/M)
+/datum/reagent/medicine/higadrite/on_mob_metabolize(mob/living/M)
 	..()
 	ADD_TRAIT(M, TRAIT_STABLELIVER, type)
 
