@@ -323,3 +323,48 @@
 //---------------------------------------------------------------------------
 //** Makes the emag much more expensive and introduces a 6 TC budget emag
 //***************************************************************************
+
+
+//***************************************************************************
+//** FULPSTATION SYNDIBORG DISGUISE MENU by Surrealistik March 2020 BEGINS
+//---------------------------------------------------------------------------
+//** Lets medical and engineering syndiborgs choose a disguise from a list.
+//** Also tweaks the medical syndiborg, removing emag and granting more med items
+//***************************************************************************
+/obj/item/borg_chameleon //List of available disguises
+	var/disguise_text //for feedback
+
+/obj/item/robot_module/syndicate_medical
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/reagent_containers/borghypo/syndicate,
+		/obj/item/shockpaddles/syndicate/cyborg,
+		/obj/item/healthanalyzer,
+		/obj/item/borg/apparatus/beaker,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/surgical_drapes,
+		/obj/item/retractor,
+		/obj/item/hemostat,
+		/obj/item/cautery,
+		/obj/item/surgicaldrill,
+		/obj/item/scalpel,
+		/obj/item/melee/transforming/energy/sword/cyborg/saw,
+		/obj/item/holobed_projector/robot,
+		/obj/item/crowbar/cyborg,
+		/obj/item/extinguisher/mini,
+		/obj/item/pinpointer/syndicate_cyborg,
+		/obj/item/stack/medical/gauze/cyborg,
+		/obj/item/gun/medbeam,
+		/obj/item/organ_storage,
+		/obj/item/borg/cyborghug/medical,
+		/obj/item/borg/lollipop,
+		/obj/item/borg_chameleon
+		)
+
+//***************************************************************************
+//** FULPSTATION SYNDIBORG DISGUISE MENU by Surrealistik March 2020 ENDS
+//---------------------------------------------------------------------------
+//** Lets medical and engineering syndiborgs choose a disguise from a list.
+//** Also tweaks the medical syndiborg, removing emag and granting more med items
+//***************************************************************************

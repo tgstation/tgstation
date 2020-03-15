@@ -869,6 +869,7 @@
 #include "code\FulpstationCode\fulp_medborg\fulp_medborg_updates.dm"
 #include "code\FulpstationCode\fulp_medborg\medborg_holobed.dm"
 #include "code\FulpstationCode\fulp_husk_fix\fulp_husk_fix.dm"
+#include "code\FulpstationCode\fulp_syndiborg_files\fulp_syndicate_medborg.dm"
 #include "code\game\alternate_appearance.dm"
 #include "code\game\atoms.dm"
 #include "code\game\atoms_movable.dm"
